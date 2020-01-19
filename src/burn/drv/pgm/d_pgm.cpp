@@ -6047,3 +6047,37 @@ struct BurnDriver BurnDrvEspgalbl = {
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
+
+// 西游释厄传-群魔乱舞(新版208版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
+// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=695504&fromuid=150233
+
+static struct BurnRomInfo oldsplusnrRomDesc[] = {
+	{ "p05301n_v208.rom",	0x400000, 0x97A7CF98, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t05301.rom",			0x800000, 0x8257bbb0, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a05301n.rom",		0x800000, 0x3D3125FF, 3 | BRF_GRA },	 	//  2 Sprite Color Data
+	{ "a05302n.rom",		0x800000, 0x4ED9028C, 3 | BRF_GRA },		//  3
+	{ "a05303.rom",			0x800000, 0x13475d85, 3 | BRF_GRA },		//  4
+	{ "a05304.rom",			0x800000, 0xf03ef7a6, 3 | BRF_GRA },		//  5
+
+	{ "b05301n.rom",		0x800000, 0x13702BBF, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
+	{ "b05302n.rom",		0x800000, 0xB9F75120, 4 | BRF_GRA },		//  7
+
+	{ "m05301.rom",			0x400000, 0x86ec83bc, 5 | BRF_SND },		//  8 Samples
+
+	{ "oldsplus_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(oldsplusnr, oldsplusnr, pgm)
+STD_ROM_FN(oldsplusnr)
+
+struct BurnDriver BurnDrvoldsplusnr = {
+	"oldsplusnr", "oldsplus", "pgm", NULL, "2020",
+	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
+	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

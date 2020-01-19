@@ -1548,7 +1548,6 @@ static INT32 TcsFrame()
         BurnSoundClear();
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	bprintf(0, _T("endofframe  z80 cycl  %d     m6809 cycl  %d\n"), ZetTotalCycles(), M6809TotalCycles());
 
 	M6809Close();
 	ZetClose();

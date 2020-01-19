@@ -1941,7 +1941,7 @@ static INT32 maxrpm_write_callback(UINT8 address, UINT8 data)
 				if (maxrpm_adc_select < 2) { // p2 gas, p1 gas
 					latched_input = ProcessAnalog(analogs[maxrpm_adc_select], 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x30, 0xff);
 				} else { // p2 wheel, p1 wheel
-					latched_input = ProcessAnalog(analogs[maxrpm_adc_select], 1, INPUT_DEADZONE, 0x40, 0xb4);
+					latched_input = ProcessAnalog(analogs[maxrpm_adc_select], (maxrpm_adc_select == 2) ? 0 : 1, INPUT_DEADZONE, 0x40, 0xb4);
 				}
 			}
 

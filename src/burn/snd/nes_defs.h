@@ -89,10 +89,10 @@ typedef struct square_s
    uint8 regs[4];
    INT32 vbl_length;
    INT32 freq;
-   float phaseacc;
-   float output_vol;
-   float env_phase;
-   float sweep_phase;
+   INT32 phaseacc;
+   INT32 output_vol;
+   INT32 env_phase;
+   INT32 sweep_phase;
    uint8 adder;
    uint8 env_vol;
    boolean enabled;
@@ -105,7 +105,7 @@ typedef struct triangle_s
    INT32 linear_length;
    INT32 vbl_length;
    INT32 write_latency;
-   float phaseacc;
+   INT32 phaseacc;
    uint8 output_vol;
    uint8 adder;
    boolean counter_started;
@@ -118,9 +118,9 @@ typedef struct noise_s
    uint8 regs[4]; /* regs[1] unused */
    INT32 cur_pos;
    INT32 vbl_length;
-   float phaseacc;
-   float output_vol;
-   float env_phase;
+   INT32 phaseacc;
+   INT32 output_vol;
+   INT32 env_phase;
    uint8 env_vol;
    boolean enabled;
 } noise_t;
@@ -132,8 +132,7 @@ typedef struct dpcm_s
    uint32 address;
    uint32 length;
    INT32 bits_left;
-   float phaseacc;
-   float output_vol;
+   INT32 phaseacc;
    uint8 cur_byte;
    uint8 dmc_buffer;
    uint8 dmc_buffer_filled;

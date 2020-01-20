@@ -10188,6 +10188,7 @@ DRV		BurnDrvSpnchoutj;
 DRV		BurnDrvSpnchouta;
 DRV		BurnDrvSpnchout;
 DRV		BurnDrvCpsSpf2tb;
+DRV		BurnDrvCpsSpf2tcb;
 DRV		BurnDrvCpsSpf2ta;
 DRV		BurnDrvCpsSpf2t;
 DRV		BurnDrvCpsSpf2th;
@@ -12398,6 +12399,7 @@ DRV		BurnDrvpce_xevious;
 DRV		BurnDrvXexexa;
 DRV		BurnDrvXexex;
 DRV		BurnDrvXexexj;
+DRV		BurnDrvoldsplusnr;
 DRV		BurnDrvmd_xiaomo;
 DRV		BurnDrvmd_xinqig;
 DRV		BurnDrvmd_xinqig1;
@@ -22788,6 +22790,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpnchouta,			// Super Punch-Out!! (Rev A)
 	&BurnDrvSpnchout,			// Super Punch-Out!! (Rev B)
 	&BurnDrvCpsSpf2tb,			// Super Puzzle Fighter II Turbo (Boss Hack)(USA 960620)
+	&BurnDrvCpsSpf2tcb,			// Super Puzzle Fighter II Turbo (Color Blind Hack)
 	&BurnDrvCpsSpf2ta,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960529 Asia)
 	&BurnDrvCpsSpf2t,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960529 Euro)
 	&BurnDrvCpsSpf2th,			// Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960531 Hispanic)
@@ -24998,6 +25001,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXexexa,				// Xexex (ver AAA)
 	&BurnDrvXexex,				// Xexex (ver EAA)
 	&BurnDrvXexexj,				// Xexex (ver JAA)
+	&BurnDrvoldsplusnr,			// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
 	&BurnDrvmd_xiaomo,			// Xiao Monv - Magic Girl (Chi)
 	&BurnDrvmd_xinqig,			// Xin Qi Gai Wang Zi (Chi)
 	&BurnDrvmd_xinqig1,			// Xin Qi Gai Wang Zi (Chi, Alt)

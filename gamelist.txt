@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12319 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12321 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9970,6 +9970,7 @@ This list contains all games supported by FinalBurn Neo.
 | spnchouta	|  	| Super Punch-Out!! (Rev A)				| spnchout	| 1984	| Nintendo	| Miscellaneous	| 					|
 | spnchout	|  	| Super Punch-Out!! (Rev B)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | spf2tb	|  	| Super Puzzle Fighter II Turbo (Boss Hack)(USA 960620)	| spf2t		| 200?	| Hack		| CPS2		| 					|
+| spf2tcb	|  	| Super Puzzle Fighter II Turbo (Color Blind Hack)	| spf2t		| 1996	| Capcom	| CPS2		| 					|
 | spf2ta	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|
 | spf2t		|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | 		| 1996	| Capcom	| CPS2		| 					|
 | spf2th	|  	| Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 | spf2t		| 1996	| Capcom	| CPS2		| 					|
@@ -12130,6 +12131,7 @@ This list contains all games supported by FinalBurn Neo.
 | xexexa	|  	| Xexex (ver AAA)					| xexex		| 1991	| Konami	| GX067		| 					|
 | xexex		|  	| Xexex (ver EAA)					| 		| 1991	| Konami	| GX067		| 					|
 | xexexj	|  	| Xexex (ver JAA)					| xexex		| 1991	| Konami	| GX067		| 					|
+| oldsplusnr	|  	| Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 | oldsplus	| 2020	| Hack		| PolyGameMaster| Incomplete Dump			|
 | md_xiaomo	|  	| Xiao Monv - Magic Girl (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_xinqig	|  	| Xin Qi Gai Wang Zi (Chi)				| 		| 1996	| C&E		| Sega Megadrive| 					|
 | md_xinqig1	|  	| Xin Qi Gai Wang Zi (Chi, Alt)				| md_xinqig	| 1996	| C&E		| Sega Megadrive| 					|

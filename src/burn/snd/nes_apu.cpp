@@ -67,7 +67,7 @@
 struct nesapu_info
 {
 	apu_t   APU;			       /* Actual APUs */
-	float   apu_incsize;           /* Adjustment increment */
+	INT32   apu_incsize;           /* Adjustment increment */
 	UINT32 samps_per_sync;        /* Number of samples per vsync */
 	UINT32 buffer_size;           /* Actual buffer size in bytes */
 	UINT32 real_rate;             /* Actual playback rate */
@@ -259,7 +259,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    }
    else
    {
-	   chan->env_phase -= (float) info->apu_incsize;//4;
+	   chan->env_phase -= 4;
 	   while (chan->env_phase < 0)
 	   {
 		   chan->env_phase += env_delay;
@@ -296,7 +296,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
        || (chan->freq >> 16) < 8)
       return 0;
 
-   chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
+   chan->phaseacc -= 4;
 
    while (chan->phaseacc < 0)
    {
@@ -309,7 +309,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    else {
 	   if (chan->env_vol > 0xf) output = 0;
 	   else
-		   output = 0x0f - (chan->env_vol&0xf);
+		   output = 0x0f - (chan->env_vol & 0xf);
    }
 
    if (env_starting) chan->env_vol = 0;
@@ -365,22 +365,15 @@ static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
    if ((freq > 1 && freq <= 0x7fd) == 0) /* inaudible */
       return chan->output_vol;
 
-   chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
+   chan->phaseacc -= 4;
    while (chan->phaseacc < 0)
    {
 	   chan->phaseacc += freq;
 	   chan->adder = (chan->adder + 1) & 0x1F;
 
 	   output = tri_steps[chan->adder];
-#if 0
-	  output = (chan->adder & 7) << 1;
-      if (chan->adder & 8)
-         output = 0x10 - output;
-      if (chan->adder & 0x10)
-		  output = -output;
-#endif
 
-      chan->output_vol = output;
+	   chan->output_vol = output;
    }
 
    return (int8) chan->output_vol;
@@ -426,7 +419,7 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
       return 0;
 
    freq = noise_freq[chan->regs[2] & 0x0F];
-   chan->phaseacc -= (float) info->apu_incsize; /* # of cycles per sample */
+   chan->phaseacc -= 4;
    while (chan->phaseacc < 0)
    {
       chan->phaseacc += freq;
@@ -443,9 +436,12 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
    else
 	   outvol = 0x0F - chan->env_vol;
 
-   output = info->noise_lut[chan->cur_pos] & 0xf;
+   output = info->noise_lut[chan->cur_pos];
    if (output > outvol)
       output = outvol;
+
+   if (info->noise_lut[chan->cur_pos] & 0x80) /* make it negative */
+      output = 0;
 
    return (int8) output;
 }
@@ -455,8 +451,8 @@ static void apu_update(struct nesapu_info *info);
 // parts from dink's unfinished nes-apu
 static inline void apu_dpcmreset(dpcm_t *chan)
 {
-	chan->address = 0xC000 + (uint16) (chan->regs[2] << 6);
-	chan->length = (uint16) (chan->regs[3] << 4) + 1;
+	chan->address = 0xC000 + (UINT16)(chan->regs[2] << 6);
+	chan->length = (UINT16)(chan->regs[3] << 4) + 1;
 }
 
 static INT32 apu_dpcm_loadbyte(dpcm_t *chan)
@@ -1016,7 +1012,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 	info->samps_per_sync = 7457; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
-	info->apu_incsize = (float) (clock / (float) info->real_rate);
+	//info->apu_incsize = 4; //(float) (clock / (float) info->real_rate);
 	//bprintf(0, _T("apu_incsize: %f\n"), info->apu_incsize);
 
 	/* Use initializer calls */

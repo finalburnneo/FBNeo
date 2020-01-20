@@ -8,6 +8,7 @@ static INT32 nBurnYM2413SoundRate;
 static INT16* pBuffer;
 static INT16* pYM2413Buffer[2];
 
+static INT32 nAddSound;
 static INT32 nBurnPosition;
 static UINT32 nSampleSize;
 static INT32 nFractionalPosition;
@@ -59,9 +60,14 @@ static void YM2413RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 		
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
-			
-		pSoundBuf[(n << 1) + 0] = nLeftSample;
-		pSoundBuf[(n << 1) + 1] = nRightSample;
+
+		if (nAddSound) {
+			pSoundBuf[(n << 1) + 0] = BURN_SND_CLIP(pSoundBuf[(n << 1) + 0] + nLeftSample);
+			pSoundBuf[(n << 1) + 1] = BURN_SND_CLIP(pSoundBuf[(n << 1) + 1] + nRightSample);
+		} else {
+			pSoundBuf[(n << 1) + 0] = nLeftSample;
+			pSoundBuf[(n << 1) + 1] = nRightSample;
+		}
 	}
 }
 
@@ -72,6 +78,15 @@ void BurnYM2413Reset()
 #endif
 
 	YM2413ResetChip(0);
+}
+
+void BurnYM2413VRC7Reset()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Reset called without init\n"));
+#endif
+
+	YM2413ResetChipVRC7(0);
 }
 
 void BurnYM2413Exit()
@@ -91,8 +106,15 @@ void BurnYM2413Exit()
 
 INT32 BurnYM2413Init(INT32 nClockFrequency)
 {
+	return BurnYM2413Init(nClockFrequency, 0);
+}
+
+INT32 BurnYM2413Init(INT32 nClockFrequency, INT32 nAdd)
+{
 	DebugSnd_YM2413Initted = 1;
-	
+
+	nAddSound = nAdd;
+
 	if (nBurnSoundRate <= 0) {
 		YM2413Init(1, nClockFrequency, 11025);
 		return 0;

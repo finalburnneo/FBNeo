@@ -85,7 +85,7 @@ static INT32 dsp_enable = 0;
 
 static INT32 nDrvSndROMLen[4];
 static INT32 nDrvGfxROMLen;
-static INT32 nDrvGfxROM2Len;
+static INT64 nDrvGfxROM2Len;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];

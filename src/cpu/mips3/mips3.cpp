@@ -41,6 +41,7 @@ mips3::mips3() : m_tlb_entries(48)
 
 mips3::~mips3()
 {
+    tlb_exit();
 }
 
 void mips3::reset()

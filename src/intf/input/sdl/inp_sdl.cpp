@@ -208,10 +208,10 @@ int SDLinpMouseAxis(int i, int nAxis)
 	}
 
 	switch (nAxis) {
-		case 0:
-			return SDLinpMouseState.xdelta;
-		case 1:
-			return SDLinpMouseState.ydelta;
+	case 0:
+		return SDLinpMouseState.xdelta;
+	case 1:
+		return SDLinpMouseState.ydelta;
 	}
 
 	return 0;
@@ -236,22 +236,22 @@ static int JoystickState(int i, int nSubCode)
 		}
 
 		switch (nSubCode) {
-			case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -DEADZONE;		// Left
-			case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > DEADZONE;		// Right
-			case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -DEADZONE;		// Up
-			case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > DEADZONE;		// Down
-			case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -DEADZONE;
-			case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > DEADZONE;
-			case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -DEADZONE;
-			case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > DEADZONE;
-			case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -DEADZONE;
-			case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > DEADZONE;
-			case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -DEADZONE;
-			case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > DEADZONE;
-			case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -DEADZONE;
-			case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > DEADZONE;
-			case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -DEADZONE;
-			case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > DEADZONE;
+		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -DEADZONE;		// Left
+		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > DEADZONE;		// Right
+		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -DEADZONE;		// Up
+		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > DEADZONE;		// Down
+		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -DEADZONE;
+		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > DEADZONE;
+		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -DEADZONE;
+		case 0x07: return SDL_JoystickGetAxis(JoyList[i], 3) > DEADZONE;
+		case 0x08: return SDL_JoystickGetAxis(JoyList[i], 4) < -DEADZONE;
+		case 0x09: return SDL_JoystickGetAxis(JoyList[i], 4) > DEADZONE;
+		case 0x0A: return SDL_JoystickGetAxis(JoyList[i], 5) < -DEADZONE;
+		case 0x0B: return SDL_JoystickGetAxis(JoyList[i], 5) > DEADZONE;
+		case 0x0C: return SDL_JoystickGetAxis(JoyList[i], 6) < -DEADZONE;
+		case 0x0D: return SDL_JoystickGetAxis(JoyList[i], 6) > DEADZONE;
+		case 0x0E: return SDL_JoystickGetAxis(JoyList[i], 7) < -DEADZONE;
+		case 0x0F: return SDL_JoystickGetAxis(JoyList[i], 7) > DEADZONE;
 		}
 	}
 	if (nSubCode < 0x20) {										// POV hat controls
@@ -260,14 +260,14 @@ static int JoystickState(int i, int nSubCode)
 		}
 
 		switch (nSubCode & 3) {
-			case 0:												// Left
-				return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2) & SDL_HAT_LEFT;
-			case 1:												// Right
-				return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2) & SDL_HAT_RIGHT;
-			case 2:												// Up
-				return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2) & SDL_HAT_UP;
-			case 3:												// Down
-				return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2) & SDL_HAT_DOWN;
+		case 0:												// Left
+			return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2)& SDL_HAT_LEFT;
+		case 1:												// Right
+			return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2)& SDL_HAT_RIGHT;
+		case 2:												// Up
+			return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2)& SDL_HAT_UP;
+		case 3:												// Down
+			return SDL_JoystickGetHat(JoyList[i], (nSubCode & 0x0F) >> 2)& SDL_HAT_DOWN;
 		}
 
 		return 0;
@@ -286,12 +286,12 @@ static int JoystickState(int i, int nSubCode)
 static int CheckMouseState(unsigned int nSubCode)
 {
 	switch (nSubCode & 0x7F) {
-		case 0:
-			return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
-		case 1:
-			return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
-		case 2:
-			return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
+	case 0:
+		return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+	case 1:
+		return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
+	case 2:
+		return (SDLinpMouseState.buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
 	}
 
 	return 0;
@@ -401,7 +401,8 @@ int SDLinpFind(bool CreateBaseline)
 			if (nDeltaY != 0) {
 				return 0x8000 | 1;
 			}
-		} else {
+		}
+		else {
 			if (nDeltaX != 0) {
 				return 0x8000 | 0;
 			}
@@ -431,31 +432,31 @@ int SDLinpGetControlName(int nCode, TCHAR* pszDeviceName, TCHAR* pszControlName)
 	}
 
 	switch (nCode & 0xC000) {
-		case 0x0000: {
-			_tcscpy(pszDeviceName, _T("System keyboard"));
+	case 0x0000: {
+		_tcscpy(pszDeviceName, _T("System keyboard"));
 
-			break;
+		break;
+	}
+	case 0x4000: {
+		int i = (nCode >> 8) & 0x3F;
+
+		if (i >= nJoystickCount) {				// This joystick isn't connected
+			return 0;
 		}
-		case 0x4000: {
-			int i = (nCode >> 8) & 0x3F;
+		_tsprintf(pszDeviceName, "%hs", SDL_JoystickName(i));
 
-			if (i >= nJoystickCount) {				// This joystick isn't connected
-				return 0;
-			}
-			_tsprintf(pszDeviceName, "%hs", SDL_JoystickName(i));
+		break;
+	}
+	case 0x8000: {
+		int i = (nCode >> 8) & 0x3F;
 
-			break;
+		if (i >= 1) {
+			return 0;
 		}
-		case 0x8000: {
-			int i = (nCode >> 8) & 0x3F;
+		_tcscpy(pszDeviceName, _T("System mouse"));
 
-			if (i >= 1) {
-				return 0;
-			}
-			_tcscpy(pszDeviceName, _T("System mouse"));
-
-			break;
-		}
+		break;
+	}
 	}
 
 	return 0;

@@ -25,6 +25,11 @@ void mips3::tlb_init()
     m_tlb = new tlb_entry[m_tlb_entries];
 }
 
+void mips3::tlb_exit()
+{
+    delete[] m_tlb;
+}
+
 void mips3::tlb_flush()
 {
     for (int i = 0; i < m_tlb_entries; i++) {

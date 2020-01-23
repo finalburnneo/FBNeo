@@ -26,6 +26,8 @@ extern bool bRunPause;
 extern bool bAlwaysProcessKeyboardInput;
 TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize);
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
+#define _TtoA(a)	TCHARToANSI(a, NULL, 0)
+#define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)
 bool AppProcessKeyboardInput();
 
 // drv.cpp
@@ -39,6 +41,12 @@ int AppError(TCHAR* szText, int bWarning);
 
 //run.cpp
 extern int RunReset();
+#define MESSAGE_MAX_FRAMES 180 // assuming 60fps this would be 3 seconds...
+#define MESSAGE_MAX_LENGTH 255
+
+extern UINT32 messageFrames;
+extern char lastMessage[MESSAGE_MAX_LENGTH];
+void UpdateMessage(char* message);
 
 // media.cpp
 int MediaInit();

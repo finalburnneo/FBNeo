@@ -77,7 +77,6 @@ static INT32 usemcu = 0;
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
 static INT32 Skyrobo = 0;
-static INT32 fiftysevenhertz = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
@@ -822,7 +821,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (((6000.0 / nBurnFPS) * 6000000.000) / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()
@@ -1105,9 +1104,8 @@ static INT32 DrvExit()
 	Terrafjb = 0;
 	Kozuremode = 0;
 	Skyrobo = 0;
-	fiftysevenhertz = 0;
 
-	BurnSetRefreshRate(60.00);
+	BurnSetRefreshRate(59.08);
 
 	return 0;
 }
@@ -1347,7 +1345,7 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 262;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
+	INT32 nTotalCycles[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	if (usemcu) nTotalCycles[2] /= 12; // i8751 internal divider (12)
@@ -1523,10 +1521,8 @@ static INT32 ArmedfInit()
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
 
 	if (nRet == 0) {
-		DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1743,8 +1739,8 @@ static INT32 KozureInit()
 		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
 		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
 
-		DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1997,10 +1993,8 @@ static INT32 TerrafInit()
 	if (nRet == 0) {
 		if (BurnLoadRom(nb1414_blit_data,	14, 1)) return 1;
 
-		DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;

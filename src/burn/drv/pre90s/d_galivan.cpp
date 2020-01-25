@@ -548,6 +548,8 @@ static INT32 DrvInit(INT32 game)
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
+	BurnSetRefreshRate(59.94);
+
 	game_mode = game;
 
 	if (game == 0)

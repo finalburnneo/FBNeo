@@ -2983,6 +2983,7 @@ static INT32 DrvDraw()
 		INT32 global_sizex = xoffs & 0x0c00;
 		INT32 global_sizey = yoffs & 0x0c00;
 
+		INT32 special = num & 0x4000; // grdians : force an offset / colour instead of using the ones specified ?
 		INT32 use_global_size = num & 0x1000;
 
 		xoffs &= 0x3ff;
@@ -3035,6 +3036,7 @@ static INT32 DrvDraw()
 				INT32 height   = ((sy & 0xfc00) >> 10) + 1;
 
 				sx &= 0x3ff;
+				if (special) sy -= 0x90;
 				sy &= 0x1ff;
 				scrollx &= 0x3ff;
 				scrolly &= 0x1ff;
@@ -3115,9 +3117,11 @@ static INT32 DrvDraw()
 
 				code &= ~((sizex+1) * (sizey+1) - 1);	// see myangel, myangel2 and grdians
 
-				for (y = 0; y <= sizey; y++)
+				for (y = 0; y <= sizey; y++) {
+					if (special) color = 0x7ff;
 					for (x = 0; x <= sizex; x++)
 						drawgfx( code++, color << 4, flipx, flipy, sx + (flipx ? sizex-x : x) * 8, sy + (flipy ? sizey-y : y) * 8 );
+				}
 
 			}
 

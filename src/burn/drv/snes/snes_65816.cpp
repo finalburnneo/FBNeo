@@ -33,28 +33,28 @@ void updatecpumode()
 }
 
 /*Addressing modes*/
-static inline UINT32 absolute()
+static UINT32 absolute()
 {
 	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc);
 	snes_cpu.pc += 2;
 	return temp | snes_cpu.dbr;
 }
 
-static inline UINT32 absolutex()
+static UINT32 absolutex()
 {
 	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + REG_XW() + snes_cpu.dbr;
 	snes_cpu.pc += 2;
 	return temp;
 }
 
-static inline UINT32 absolutey()
+static UINT32 absolutey()
 {
 	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + REG_YW() + snes_cpu.dbr;
 	snes_cpu.pc += 2;
 	return temp;
 }
 
-static inline UINT32 absolutelong()
+static UINT32 absolutelong()
 {
 	UINT32 temp = readmemw(snes_cpu.pbr | snes_cpu.pc);
 	snes_cpu.pc += 2;
@@ -63,7 +63,7 @@ static inline UINT32 absolutelong()
 	return temp;
 }
 
-static inline UINT32 absolutelongx()
+static UINT32 absolutelongx()
 {
 	UINT32 temp = (readmemw(snes_cpu.pbr | snes_cpu.pc)) + REG_XW();
 	snes_cpu.pc += 2;
@@ -72,7 +72,7 @@ static inline UINT32 absolutelongx()
 	return temp;
 }
 
-static inline UINT32 zeropage() /*It's actually direct page, but I'm used to calling it zero page*/
+static UINT32 zeropage() /*It's actually direct page, but I'm used to calling it zero page*/
 {
 	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc);
 	snes_cpu.pc++;
@@ -85,7 +85,7 @@ static inline UINT32 zeropage() /*It's actually direct page, but I'm used to cal
 	return temp & 0xFFFF;
 }
 
-static inline UINT32 zeropagex()
+static UINT32 zeropagex()
 {
 	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + REG_XW();
 	snes_cpu.pc++;
@@ -102,7 +102,7 @@ static inline UINT32 zeropagex()
 	return temp & 0xFFFF;
 }
 
-static inline UINT32 zeropagey()
+static UINT32 zeropagey()
 {
 	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc) + REG_YW();
 	snes_cpu.pc++;
@@ -119,7 +119,7 @@ static inline UINT32 zeropagey()
 	return temp & 0xFFFF;
 }
 
-static inline UINT32 stack()
+static UINT32 stack()
 {
 	UINT32 temp = snes_readmem(snes_cpu.pbr | snes_cpu.pc);
 	snes_cpu.pc++;
@@ -127,40 +127,40 @@ static inline UINT32 stack()
 	return temp & 0xFFFF;
 }
 
-static inline UINT32 indirect()
+static UINT32 indirect()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF;
 	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.dbr;
 }
 
-static inline UINT32 indirectx()
+static UINT32 indirectx()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp + REG_XW()) & 0xFFFF;
 	snes_cpu.pc++;
 	return (readmemw(temp)) + snes_cpu.dbr;
 }
-static inline UINT32 jindirectx() /*JSR (,x) uses p.pbr instead of p.dbr, and 2 byte address insted of 1 + p.dp*/
+static UINT32 jindirectx() /*JSR (,x) uses p.pbr instead of p.dbr, and 2 byte address insted of 1 + p.dp*/
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + (snes_readmem((snes_cpu.pbr | snes_cpu.pc) + 1) << 8) + REG_XW()) + snes_cpu.pbr;
 	snes_cpu.pc += 2;
 	return temp;
 }
 
-static inline UINT32 indirecty()
+static UINT32 indirecty()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF;
 	snes_cpu.pc++;
 	return (readmemw(temp)) + REG_YW() + snes_cpu.dbr;
 }
-static inline UINT32 sindirecty()
+static UINT32 sindirecty()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + REG_SW()) & 0xFFFF;
 	snes_cpu.pc++;
 	return (readmemw(temp)) + REG_YW() + snes_cpu.dbr;
 }
 
-static inline UINT32 indirectl()
+static UINT32 indirectl()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF;
 	snes_cpu.pc++;
@@ -168,7 +168,7 @@ static inline UINT32 indirectl()
 	return address;
 }
 
-static inline UINT32 indirectly()
+static UINT32 indirectly()
 {
 	UINT32 temp = (snes_readmem(snes_cpu.pbr | snes_cpu.pc) + snes_cpu.dp) & 0xFFFF;
 	snes_cpu.pc++;

@@ -323,7 +323,6 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		memset(szGameNameBuffer, 0, 255);
 		memset(szManufacturer, 0, 255);
 		memset(szManufacturerBuffer, 0, 255);
-
 		strcpy(szGameName, DecorateGameName(nBurnDrvActive));
 		ReplaceAmpersand(szGameNameBuffer, szGameName);
 		memset(szGameName, 0, 255);

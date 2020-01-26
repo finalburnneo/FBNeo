@@ -2,8 +2,8 @@
 // Stub version for SDL/Pi
 #include "burner.h"
 
-INT32 nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
-INT32 nReplayUndoCount = 0;
+INT32  nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
+INT32  nReplayUndoCount = 0;
 UINT32 nReplayCurrentFrame = 0;
 UINT32 nStartFrame = 0;
 

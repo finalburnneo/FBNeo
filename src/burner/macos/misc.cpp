@@ -47,3 +47,8 @@
 	return (char*)pszInString;
 #endif
 }
+
+TCHAR* GetIsoPath()
+{
+    return NULL;
+}

@@ -13,11 +13,10 @@ static int nInitedSubsytems = 0;
 
 static int nGamesWidth = 0, nGamesHeight = 0; // screen size
 
-static SDL_Surface *screen=NULL;
-static unsigned char *texture = NULL;
-static unsigned char *gamescreen=NULL;
+static SDL_Surface* screen = NULL;
+static unsigned char* texture = NULL;
+static unsigned char* gamescreen = NULL;
 
-static GLint color_type = GL_RGB;
 static GLint texture_type = GL_UNSIGNED_BYTE;
 
 static int nTextureWidth = 512;
@@ -28,17 +27,6 @@ static int nUseBlitter;
 
 static int nRotateGame = 0;
 static bool bFlipped = false;
-
-static int PrimClear()
-{
-	return 0;
-}
-
-// Create a secondary DD surface for the screen
-static int BlitFXMakeSurf()
-{
-	return 0;
-}
 
 static int BlitFXExit()
 {
@@ -54,7 +42,8 @@ static int GetTextureSize(int Size)
 {
 	int nTextureSize = 128;
 
-	while (nTextureSize < Size) {
+	while (nTextureSize < Size)
+	{
 		nTextureSize <<= 1;
 	}
 
@@ -71,10 +60,13 @@ static int BlitFXInit()
 
 	SetBurnHighCol(nVidImageDepth);
 
-	if (!nRotateGame) {
+	if (!nRotateGame)
+	{
 		nVidImageWidth = nGamesWidth;
 		nVidImageHeight = nGamesHeight;
-	} else {
+	}
+	else
+	{
 		nVidImageWidth = nGamesHeight;
 		nVidImageHeight = nGamesWidth;
 	}
@@ -84,19 +76,20 @@ static int BlitFXInit()
 
 	nMemLen = nVidImageWidth * nVidImageHeight * nVidImageBPP;
 
-	printf("nVidImageWidth=%d nVidImageHeight=%d nVidImagePitch=%d\n",
-		nVidImageWidth, nVidImageHeight, nVidImagePitch);
-	printf("nTextureWidth=%d nTextureHeight=%d TexturePitch=%d\n",
-		nTextureWidth, nTextureHeight, nTextureWidth * nVidImageBPP);
+	printf("nVidImageWidth=%d nVidImageHeight=%d nVidImagePitch=%d\n", nVidImageWidth, nVidImageHeight, nVidImagePitch);
+	printf("nTextureWidth=%d nTextureHeight=%d TexturePitch=%d\n", nTextureWidth, nTextureHeight, nTextureWidth * nVidImageBPP);
 
-	texture = (unsigned char *)malloc(nTextureWidth * nTextureHeight * nVidImageBPP);
+	texture = (unsigned char*)malloc(nTextureWidth * nTextureHeight * nVidImageBPP);
 
-	gamescreen = (unsigned char *)malloc(nMemLen);
-	if (gamescreen) {
+	gamescreen = (unsigned char*)malloc(nMemLen);
+	if (gamescreen)
+	{
 		memset(gamescreen, 0, nMemLen);
 		pVidImage = gamescreen;
 		return 0;
-	} else {
+	}
+	else
+	{
 		pVidImage = NULL;
 		return 1;
 	}
@@ -108,7 +101,8 @@ static int Exit()
 {
 	BlitFXExit();
 
-	if (!(nInitedSubsytems & SDL_INIT_VIDEO)) {
+	if (!(nInitedSubsytems & SDL_INIT_VIDEO))
+	{
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 
@@ -119,14 +113,14 @@ static int Exit()
 
 void init_gl()
 {
-	const unsigned char *glVersion;
-	int isGL12 = GL_FALSE;
-
 	printf("opengl config\n");
 
-	if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) || (nVidImageBPP != 3)) {
+	if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) || (nVidImageBPP != 3))
+	{
 		texture_type = GL_UNSIGNED_SHORT_5_6_5;
-	} else {
+	}
+	else
+	{
 		texture_type = GL_UNSIGNED_BYTE;
 	}
 
@@ -141,16 +135,18 @@ void init_gl()
 	glEnable(GL_TEXTURE_2D);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight,
-		     0, GL_RGB, texture_type, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	if (!nRotateGame) {
+	if (!nRotateGame)
+	{
 		glRotatef(0.0, 0.0, 0.0, 1.0);
-	 	glOrtho(0, nGamesWidth, nGamesHeight, 0, -1, 1);
-	} else {
+		glOrtho(0, nGamesWidth, nGamesHeight, 0, -1, 1);
+	}
+	else
+	{
 		glRotatef((bFlipped ? 270.0 : 90.0), 0.0, 0.0, 1.0);
 		glOrtho(0, nGamesHeight, nGamesWidth, 0, -1, 1);
 	}
@@ -169,14 +165,19 @@ int VidSScaleImage(RECT* pRect)
 	int nWidth = pRect->right - pRect->left;
 	int nHeight = pRect->bottom - pRect->top;
 
-	if (bVidFullStretch) { // Arbitrary stretch
+	if (bVidFullStretch)
+	{ // Arbitrary stretch
 		return 0;
 	}
 
-	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED))) {
+	if (bDrvOkay)
+	{
+		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		{
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-		} else {
+		}
+		else
+		{
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
 		}
 	}
@@ -185,17 +186,23 @@ int VidSScaleImage(RECT* pRect)
 	nScrnHeight = nGameAspectY;
 
 	int nWidthScratch = nHeight * nVidScrnAspectY * nGameAspectX * nScrnWidth /
-			    (nScrnHeight * nVidScrnAspectX * nGameAspectY);
+		(nScrnHeight * nVidScrnAspectX * nGameAspectY);
 
-	if (nWidthScratch > nWidth) {	// The image is too wide
-		if (nGamesWidth < nGamesHeight) { // Vertical games
+	if (nWidthScratch > nWidth)
+	{ // The image is too wide
+		if (nGamesWidth < nGamesHeight)
+		{ // Vertical games
 			nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth /
-				  (nScrnHeight * nVidScrnAspectX * nGameAspectX);
-		} else {		// Horizontal games
-			nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight /
-				  (nScrnWidth * nVidScrnAspectY * nGameAspectX);
+				(nScrnHeight * nVidScrnAspectX * nGameAspectX);
 		}
-	} else {
+		else
+		{ // Horizontal games
+			nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight /
+				(nScrnWidth * nVidScrnAspectY * nGameAspectX);
+		}
+	}
+	else
+	{
 		nWidth = nWidthScratch;
 	}
 
@@ -214,7 +221,8 @@ static int Init()
 {
 	nInitedSubsytems = SDL_WasInit(SDL_INIT_VIDEO);
 
-	if (!(nInitedSubsytems & SDL_INIT_VIDEO)) {
+	if (!(nInitedSubsytems & SDL_INIT_VIDEO))
+	{
 		SDL_InitSubSystem(SDL_INIT_VIDEO);
 	}
 
@@ -227,24 +235,35 @@ static int Init()
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nGamesWidth, &nGamesHeight);
 
-		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+		{
 			printf("Vertical\n");
 			nRotateGame = 1;
 		}
 
-		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
+		{
 			printf("Flipped\n");
 			bFlipped = true;
-		} 
+		}
 	}
 
-	if (!nRotateGame) {
+	if (!nRotateGame)
+	{
 		nTextureWidth = GetTextureSize(nGamesWidth);
 		nTextureHeight = GetTextureSize(nGamesHeight);
-	} else {
+	}
+	else
+	{
 		nTextureWidth = GetTextureSize(nGamesHeight);
 		nTextureHeight = GetTextureSize(nGamesWidth);
 	}
+
+	printf("Checking video modes\n");
+	const SDL_VideoInfo* info = SDL_GetVideoInfo(); //<-- calls SDL_GetVideoInfo();
+	int screenWidth = info->current_w;
+	int screenHeight = info->current_h;
+	printf("screen w: %i h: %i\n", screenWidth, screenHeight);
 
 	nSize = 2;
 	bVidScanlines = 0;
@@ -258,9 +277,18 @@ static int Init()
 	printf("correctx before %d, %d\n", test_rect.right, test_rect.bottom);
 	VidSScaleImage(&test_rect);
 	printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
+	// Make the window as big as possible, but not too big..
+	if (test_rect.right > test_rect.bottom)
+	{
+		nSize = floor(screenWidth / test_rect.right) - 1;
+	}
+	else
+	{
+		nSize = floor(screenHeight / test_rect.bottom) - 1;
+	}
 
 	screen = SDL_SetVideoMode(test_rect.right * nSize,
-				  test_rect.bottom * nSize, 32, SDL_OPENGL);
+		test_rect.bottom * nSize, 32, SDL_OPENGL);
 
 	// Initialize the buffer surfaces
 	BlitFXInit();
@@ -274,21 +302,29 @@ static int Init()
 // Run one frame and render the screen
 static int Frame(bool bRedraw) // bRedraw = 0
 {
-	if (pVidImage == NULL) {
+	if (pVidImage == NULL)
+	{
 		return 1;
 	}
 
-	if (bDrvOkay) {
-		if (bRedraw) { // Redraw current frame
-			if (BurnDrvRedraw()) {
+	if (bDrvOkay)
+	{
+		if (bRedraw)
+		{ // Redraw current frame
+			if (BurnDrvRedraw())
+			{
 				BurnDrvFrame(); // No redraw function provided, advance one frame
 			}
-		} else {
+		}
+		else
+		{
 			BurnDrvFrame(); // Run one frame and draw the screen
 		}
 
 		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
+		{
 			pVidTransCallback();
+		}
 	}
 
 	return 0;
@@ -298,17 +334,18 @@ static void SurfToTex()
 {
 	int nVidPitch = nTextureWidth * nVidImageBPP;
 
-	unsigned char *ps = (unsigned char *)gamescreen;
-	unsigned char *pd = (unsigned char *)texture;
+	unsigned char* ps = (unsigned char*)gamescreen;
+	unsigned char* pd = (unsigned char*)texture;
 
-	for (int y = nVidImageHeight; y--;) {
+	for (int y = nVidImageHeight; y--;)
+	{
 		memcpy(pd, ps, nVidImagePitch);
 		pd += nVidPitch;
 		ps += nVidImagePitch;
 	}
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0,
-		     GL_RGB, texture_type, texture);
+		GL_RGB, texture_type, texture);
 }
 
 static void TexToQuad()
@@ -324,7 +361,7 @@ static void TexToQuad()
 	glVertex2i(nTextureWidth, 0);
 	glEnd();
 	glFinish();
- }
+}
 
 // Paint the BlitFX surface onto the primary surface
 static int Paint(int bValidate)
@@ -343,7 +380,8 @@ static int Paint(int bValidate)
 	gettimeofday(&end, NULL);
 	sec = end.tv_sec - start.tv_sec;
 	usec = end.tv_usec - start.tv_usec;
-	if (usec < 0) {
+	if (usec < 0)
+	{
 		usec += 1000000;
 		sec--;
 	}
@@ -353,21 +391,21 @@ static int Paint(int bValidate)
 	return 0;
 }
 
-static int vidScale(RECT *, int, int)
+static int vidScale(RECT*, int, int)
 {
 	return 0;
 }
 
 
-static int GetSettings(InterfaceInfo *pInfo)
+static int GetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
 
-	_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i× zoom)"),
-					VidSoftFXGetEffect(nUseBlitter), nSize);
+	_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%iï¿½ zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
 	IntInfoAddStringModule(pInfo, szString);
 
-	if (nRotateGame) {
+	if (nRotateGame)
+	{
 		IntInfoAddStringModule(pInfo, _T("Using software rotation"));
 	}
 

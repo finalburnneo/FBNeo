@@ -13359,7 +13359,8 @@ static INT32 JumpbugInit()
 	
 	GalPostLoadCallbackFunction = MapJumpbug;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
-	
+	GalSoundSubType = 1; // diff. AY8910 clock
+
 	nRet = GalInit();
 	
 	GalRenderBackgroundFunction = JumpbugDrawBackground;
@@ -13393,7 +13394,8 @@ static INT32 LeversInit()
 	
 	GalPostLoadCallbackFunction = LeversPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
-	
+	GalSoundSubType = 1; // diff. AY8910 clock
+
 	nRet = GalInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);

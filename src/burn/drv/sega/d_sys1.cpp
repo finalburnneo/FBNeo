@@ -168,6 +168,35 @@ static struct BurnInputInfo MyheroInputList[] = {
 
 STDINPUTINFO(Myhero)
 
+static struct BurnInputInfo RegulusInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+
+	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
+
+	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 2" },
+
+	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , System1InputPort2 + 3, "service"   },
+	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Regulus)
+
 static struct BurnInputInfo SeganinjInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
@@ -6762,7 +6791,7 @@ struct BurnDriver BurnDrvRegulus = {
 	"Regulus (315-5033, rev. A)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusDIPInfo,
+	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
@@ -6772,7 +6801,7 @@ struct BurnDriver BurnDrvReguluso = {
 	"Regulus (315-5033)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusoRomInfo, RegulusoRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusoDIPInfo,
+	NULL, RegulusoRomInfo, RegulusoRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusoDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
@@ -6782,7 +6811,7 @@ struct BurnDriver BurnDrvRegulusu = {
 	"Regulus (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusuRomInfo, RegulusuRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusDIPInfo,
+	NULL, RegulusuRomInfo, RegulusuRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };

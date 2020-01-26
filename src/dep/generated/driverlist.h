@@ -8425,7 +8425,7 @@ DRV		BurnDrvmd_roman3k2;
 DRV		BurnDrvmd_roman3k3;
 DRV		BurnDrvMSX_romancia;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvRtriv;			// Incorrect colors
+DRV		BurnDrvRtriv;			// Incorrect colors [NOT WORKING]
 #endif
 DRV		BurnDrvRompers;
 DRV		BurnDrvRomperso;
@@ -21027,7 +21027,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_roman3k3,		// Romance of the Three Kingdoms III - Dragon of Destiny (USA)
 	&BurnDrvMSX_romancia,		// Romancia (Jpn)
 #if defined FBNEO_DEBUG
-	&BurnDrvRtriv,				// Romar Triv [Incorrect colors]
+	&BurnDrvRtriv,				// Romar Triv [Incorrect colors, NOT WORKING]
 #endif
 	&BurnDrvRompers,			// Rompers (Japan, new version (Rev B))
 	&BurnDrvRomperso,			// Rompers (Japan, old version)

@@ -7954,8 +7954,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_rampage	|  	| Rampage (Euro, USA, Bra)				| 		| 1988	| Sega		| Sega Master Sy| 					|
 | rampage2	|  	| Rampage (Rev 2, 8/4/86)				| rampage	| 1986	| Bally Midway	| MCR3		| 					|
 | rampage	|  	| Rampage (Rev 3, 8/27/86)				| 		| 1986	| Bally Midway	| MCR3		| 					|
-| rmpgwt11	|  	| Rampage: World Tour (rev 1.1)				| rmpgwt	| 1997	| Midway	| MIDWAY Wolf-Un| 					|
-| rmpgwt	|  	| Rampage: World Tour (rev 1.3)				| 		| 1997	| Midway	| MIDWAY Wolf-Un| 					|
+| rmpgwt11	|  	| Rampage: World Tour (rev 1.1)				| rmpgwt	| 1997	| Midway	| MIDWAY Wolf-Un| Player #2 not working, please use Play|
+| rmpgwt	|  	| Rampage: World Tour (rev 1.3)				| 		| 1997	| Midway	| MIDWAY Wolf-Un| Player #2 not working, please use Play|
 | sms_rampart	|  	| Rampart (Euro)					| 		| 1991	| Tengen	| Sega Master Sy| 					|
 | rampartj	| D NW	| Rampart (Japan, Joystick)				| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
 | rampart2p	| D NW	| Rampart (Joystick)					| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
@@ -8246,7 +8246,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_roman3k2	|  	| Romance of the Three Kingdoms II (USA)		| 		| 1991	| Koei		| Sega Megadrive| 					|
 | md_roman3k3	|  	| Romance of the Three Kingdoms III - Dragon of Destiny | 		| 1993	| Koei		| Sega Megadrive| 					|
 | msx_romancia	|  	| Romancia (Jpn)					| 		| 1987	| Nihon Falcom	| MSX		| 					|
-| rtriv		| D	| Romar Triv						| 		| 198?	| Romar		| Miscellaneous	| Incorrect colors			|
+| rtriv		| D NW	| Romar Triv						| 		| 198?	| Romar		| Miscellaneous	| Incorrect colors			|
 | rompers	|  	| Rompers (Japan, new version (Rev B))			| 		| 1989	| Namco		| System 1	| 					|
 | romperso	|  	| Rompers (Japan, old version)				| rompers	| 1989	| Namco		| System 1	| 					|
 | md_dinho98	|  	| Ronaldinho 98 (Pirate)				| md_issdx	| 199?	| <unlicensed>	| Sega Megadrive| 					|

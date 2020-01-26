@@ -1313,7 +1313,7 @@ STD_ROM_FN(rmpgwt)
 
 struct BurnDriver BurnDrvRmpgwt = {
 	"rmpgwt", NULL, NULL, NULL, "1997",
-	"Rampage: World Tour (rev 1.3)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"Rampage: World Tour (rev 1.3)\0", "Player #2 not working, please use Player #3", "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, rmpgwtRomInfo, rmpgwtRomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
@@ -1361,7 +1361,7 @@ STD_ROM_FN(rmpgwt11)
 
 struct BurnDriver BurnDrvRmpgwt11 = {
 	"rmpgwt11", "rmpgwt", NULL, NULL, "1997",
-	"Rampage: World Tour (rev 1.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"Rampage: World Tour (rev 1.1)\0", "Player #2 not working, please use Player #3", "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, rmpgwt11RomInfo, rmpgwt11RomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,

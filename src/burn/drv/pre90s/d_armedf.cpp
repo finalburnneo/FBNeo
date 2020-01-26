@@ -821,7 +821,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (((6000.0 / nBurnFPS) * 6000000.000) / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()
@@ -1260,7 +1260,7 @@ static void draw_sprites(INT32 priority)
 		sy -= yoffset;
 		sx -= xoffset;
 
-		if (sx < -15 || sy < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
+		if (code > 0x7ff || sx < -15 || sy < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		// Render sprites with CLUT
 		if (flipy) flipy  = 0x0f;

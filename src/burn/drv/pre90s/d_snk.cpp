@@ -100,8 +100,8 @@ static struct BurnInputInfo PsychosInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
@@ -4238,11 +4238,11 @@ static INT32 PsychosInit()
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachYM3526(&ZetConfig, 4000000);
-	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler, &DrvSynchroniseStream, 1);
 	BurnTimerAttachY8950(&ZetConfig, 4000000);
-	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

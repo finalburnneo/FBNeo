@@ -9,6 +9,9 @@
 #include "taito_m68705.h"
 #include "ay8910.h"
 
+// for 2-player / 2-joystick (netplay, etc)
+#define NO_COCTAIL_FLIPPING 1
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -47,101 +50,117 @@ static INT32 game_select = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[1];
-static UINT8 DrvInputs[2];
+static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo PitnrunInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Pitnrun)
 
 static struct BurnInputInfo JumpkunInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Jumpkun)
 
 static struct BurnDIPInfo JumpkunDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x01, NULL			},
+	{0x11, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x0a, 0x01, 0x07, 0x00, "2 Coins 1 Credits"	},
-	{0x0a, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
-	{0x0a, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
-	{0x0a, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
-	{0x0a, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x0a, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
-	{0x0a, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
-	{0x0a, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
+	{0x11, 0x01, 0x07, 0x00, "2 Coins 1 Credits"	},
+	{0x11, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
+	{0x11, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x11, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
+	{0x11, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x11, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
+	{0x11, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
+	{0x11, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x0a, 0x01, 0x10, 0x00, "2"			},
-	{0x0a, 0x01, 0x10, 0x10, "4"			},
+	{0x11, 0x01, 0x10, 0x00, "2"			},
+	{0x11, 0x01, 0x10, 0x10, "4"			},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0a, 0x01, 0x20, 0x00, "Off"			},
-	{0x0a, 0x01, 0x20, 0x20, "On"			},
+	{0x11, 0x01, 0x20, 0x00, "Off"			},
+	{0x11, 0x01, 0x20, 0x20, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0a, 0x01, 0x40, 0x00, "Upright"		},
-	{0x0a, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0x11, 0x01, 0x40, 0x00, "Upright"		},
+	{0x11, 0x01, 0x40, 0x40, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Invincibility (Cheat)"},
-	{0x0a, 0x01, 0x80, 0x00, "Off"			},
-	{0x0a, 0x01, 0x80, 0x80, "On"			},
+	{0x11, 0x01, 0x80, 0x00, "Off"			},
+	{0x11, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Jumpkun)
 
 static struct BurnDIPInfo PitnrunDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x01, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x09, 0x01, 0x07, 0x00, "2 Coins 1 Credits"	},
-	{0x09, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
-	{0x09, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
-	{0x09, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
-	{0x09, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x09, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
-	{0x09, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
-	{0x09, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
+	{0x0f, 0x01, 0x07, 0x00, "2 Coins 1 Credits"	},
+	{0x0f, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
+	{0x0f, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
+	{0x0f, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x0f, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
+	{0x0f, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
+	{0x0f, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
 
-	{0   , 0xfe, 0   ,    0, "Gasoline Count"	},
-	{0x09, 0x01, 0x20, 0x00, "10 Up or 10 Down"	},
-	{0x09, 0x01, 0x20, 0x20, "20 Up or 20 Down"	},
+	{0   , 0xfe, 0   ,    2, "Gasoline Count"	},
+	{0x0f, 0x01, 0x20, 0x00, "10 Up or 10 Down"	},
+	{0x0f, 0x01, 0x20, 0x20, "20 Up or 20 Down"	},
 
-	{0   , 0xfe, 0   ,    0, "Cabinet"		},
-	{0x09, 0x01, 0x40, 0x00, "Upright"		},
-	{0x09, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x40, 0x00, "Upright"		},
+	{0x0f, 0x01, 0x40, 0x40, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "No Hit (Cheat)"	},
-	{0x09, 0x01, 0x80, 0x00, "Off"			},
-	{0x09, 0x01, 0x80, 0x80, "On"			},
+	{0x0f, 0x01, 0x80, 0x00, "Off"			},
+	{0x0f, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Pitnrun)
@@ -219,7 +238,7 @@ static UINT8 __fastcall pitnrun_main_read(UINT16 address)
 			return DrvDips[0];
 
 		case 0xb800:
-			return DrvInputs[1];
+			return (flipscreen[0]) ? DrvInputs[2] : DrvInputs[1];
 
 		case 0xd000:
 			return standard_taito_mcu_read();
@@ -614,15 +633,17 @@ static void draw_sprites()
 		INT32 flipx = DrvSprRAM[offs+1] & 0x40;
 		INT32 code  =(DrvSprRAM[offs + 1] & 0x3f) | ((DrvSprRAM[offs + 2] & 0x80) >> 1) | ((DrvSprRAM[offs + 2] & 0x40) << 1);
 
-		if (flipscreen[0])
-		{
-			sx = 256 - sx;
-			flipx = !flipx;
-		}
-		if (flipscreen[1])
-		{
-			sy = 240 - sy;
-			flipy = !flipy;
+		if (!NO_COCTAIL_FLIPPING) {
+			if (flipscreen[0])
+			{
+				sx = 256 - sx;
+				flipx = !flipx;
+			}
+			if (flipscreen[1])
+			{
+				sy = 240 - sy;
+				flipy = !flipy;
+			}
 		}
 
 		if (flipy) {
@@ -650,7 +671,9 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
+	if (!NO_COCTAIL_FLIPPING) {
+		GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
+	}
 
 	if ((ha_data & 0x04) == 0) {
 		GenericTilemapSetScrollX(1, scrollx);
@@ -681,11 +704,12 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 2);
+		memset (DrvInputs, 0, 3);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 	}
 
@@ -697,7 +721,7 @@ static INT32 DrvFrame()
 	{
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
-		if (i == (nInterleave - 1) && nmi_enable) ZetNmi(); 
+		if (i == (nInterleave - 1) && nmi_enable) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);

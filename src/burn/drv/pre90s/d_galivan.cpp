@@ -37,7 +37,8 @@ static UINT16 scrolly;
 static UINT8 flipscreen;
 static UINT8 soundlatch;
 static UINT8 bankdata;
-static UINT8 display_disable;
+static UINT8 display_bg_disable;
+static UINT8 display_tx_disable;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -317,10 +318,11 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 			if ((data & 0x80) == 0 && scrollx & 0x8000)
 			{
 				scrollx &= 0x7fff;
-				sprite_priority = data & 0x20;
-				display_disable = data & 0x40;
 			}
 
+			sprite_priority = data & 0x20;
+			display_bg_disable = data & 0x40;
+			display_tx_disable = data & 0x80;
 			scrollx = (scrollx & 0x00ff) | (data << 8);
 		}
 		return;
@@ -341,7 +343,7 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 		case 0x80:
 			// coin counter = data & 0x03
 			flipscreen = data & 0x04;
-			display_disable = data & 0x10;
+			display_bg_disable = data & 0x10;
 			bankswitch((data & 0xc0) >> 6);
 		return;
 
@@ -452,7 +454,10 @@ static INT32 DrvDoReset()
 	scrolly = 0;
 	flipscreen = 0;
 	soundlatch = 0;
-	display_disable = 0;
+	display_bg_disable = 0;
+	display_tx_disable = 0;
+
+	nb_1414m4_init8b();
 
 	return 0;
 }
@@ -475,9 +480,9 @@ static INT32 MemIndex()
 
 	nb1414_blit_data8b	= Next; Next += 0x004000;
 
-	DrvColTable		= Next; Next += 0x001180;
+	DrvColTable		= Next; Next += 0x001200;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x1180 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x1200 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -493,14 +498,23 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvPaletteTable()
+static void DrvPaletteTable(INT32 mode)
 {
-	for (INT32 i = 0; i < 0x80; i++) {
-		DrvColTable[i] = i;
+	if (mode == 0)
+	{
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColTable[i] = (i & 0x0f) | ((i >> ((i & 0x08) ? 2 : 0)) & 0x30);
+		}
+	}
+	else
+	{
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColTable[i] = i & 0x7f;
+		}
 	}
 
 	for (INT32 i = 0; i < 0x100; i++) {
-		DrvColTable[i+0x80] = 0xc0 | ((i >> ((i&8)>>2)) & 0x30) | (i & 0x0f);
+		DrvColTable[i+0x100] = 0xc0 | ((i >> ((i&8)>>2)) & 0x30) | (i & 0x0f);
 	}
 
 	for (INT32 i = 0; i < 0x1000; i++) {
@@ -513,7 +527,7 @@ static void DrvPaletteTable()
 		else
 			ctabentry = 0x80 | (DrvColPROM[0x300 + (i >> 4)] & 0x0f) | ((i & 0x03) << 4);
 
-		DrvColTable[0x180 + i_swapped] = ctabentry;
+		DrvColTable[0x200 + i_swapped] = ctabentry;
 	}
 }
 
@@ -533,6 +547,8 @@ static INT32 DrvInit(INT32 game)
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
+
+	BurnSetRefreshRate(59.94);
 
 	game_mode = game;
 
@@ -605,7 +621,7 @@ static INT32 DrvInit(INT32 game)
 	DrvNibbleExpand(DrvGfxROM0, 0x08000);
 	DrvNibbleExpand(DrvGfxROM1, 0x20000);
 	DrvNibbleExpand(DrvGfxROM2, 0x20000);
-	DrvPaletteTable();
+	DrvPaletteTable(game);
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -680,24 +696,26 @@ static void DrvPaletteInit()
 		tab[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
 	}
 
-	for (INT32 i = 0; i < 0x1180; i++) {
+	for (INT32 i = 0; i < 0x1200; i++) {
 		DrvPalette[i] = tab[DrvColTable[i]];
 	}
 }
 
 static void draw_fg_layer(INT32 mode)
 {
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
+	for (INT32 i = 0; i < 32 * 32; i++)
 	{
-		INT32 sy = (offs & 0x1f) * 8;
-		INT32 sx = (offs / 0x20) * 8;
+		INT32 sy = (i & 0x1f) * 8;
+		INT32 sx = (i / 0x20) * 8;
 
+		INT32 offs = i;
+		if (offs < 0x12 && mode)
+		{
+			offs = 0x12;
+		}
 		INT32 attr  = DrvVidRAM[offs + 0x400];
 		INT32 code  = DrvVidRAM[offs] | ((attr & 0x03) << 8);
-		INT32 color = (attr >> ((mode) ? 2 : 5)) & 7;
-
-		if(offs < 0x12 && mode)
-			code = attr = 0x01;
+		INT32 color = (mode) ? (attr >> 2) & 7 : (attr >> 3) & 15;
 
 	//	necessary??
 	//	INT32 category = -1;
@@ -734,7 +752,7 @@ static void draw_bg_layer(INT32 mode)
 		INT32 code = DrvMapROM[offs] + ((attr & 0x03) << 8);
 		INT32 color = ((attr & 0x60) >> 3) | ((mode) ? ((attr & 0x0c) >> 2) : ((attr & 0x18) >> 3));
 
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy, ((0x80/0x10)+color), 4, 0, DrvGfxROM1);
+		Render16x16Tile_Clip(pTransDraw, code, sx, sy, ((0x100/0x10)+color), 4, 0, DrvGfxROM1);
 	}
 }
 
@@ -762,15 +780,15 @@ static void draw_sprites(INT32 mode)
 
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			}
 		}
 	}
@@ -783,14 +801,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	if (display_disable || (nBurnLayer & 1) == 0) {
+	if (display_bg_disable || (nBurnLayer & 1) == 0) {
 		BurnTransferClear(); // 0 should fill black
 	} else {
 		draw_bg_layer(game_mode);
 	}
 
 	if ((nBurnLayer & 2) && sprite_priority == 0) draw_sprites(game_mode);
-	if (nBurnLayer & 4) draw_fg_layer(game_mode);
+	if (nBurnLayer & 4 && display_tx_disable == 0) draw_fg_layer(game_mode);
 	if ((nBurnLayer & 8) && sprite_priority != 0) draw_sprites(game_mode);
 
 	BurnTransferCopy(DrvPalette);
@@ -805,7 +823,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetNewFrame();
-	nb1414_frame8b++;
 
 	{
 		DrvInputs[0] = 0xff;
@@ -889,7 +906,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(bankdata);
-		SCAN_VAR(display_disable);
+		SCAN_VAR(display_bg_disable);
+		SCAN_VAR(display_tx_disable);
+
+		nb_1414m4_scan8b();
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -11,6 +11,7 @@
 //#include <fstream>
 //#include <array>
 #include <cmath>
+#include <stdint.h>
 
 
 namespace tms

@@ -77,7 +77,6 @@ static INT32 usemcu = 0;
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
 static INT32 Skyrobo = 0;
-static INT32 fiftysevenhertz = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
@@ -305,7 +304,7 @@ STDDIPINFO(Armedf)
 
 static struct BurnDIPInfo KozureDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xcf, NULL					},
+	{0x15, 0xff, 0xff, 0x4f, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
@@ -314,45 +313,55 @@ static struct BurnDIPInfo KozureDIPList[]=
 	{0x15, 0x01, 0x03, 0x01, "5"					},
 	{0x15, 0x01, 0x03, 0x00, "6"					},
 
-	{0   , 0xfe, 0   ,    2, "1st Bonus Life"			},
-	{0x15, 0x01, 0x04, 0x04, "None"					},
-	{0x15, 0x01, 0x04, 0x00, "50k"					},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x15, 0x01, 0x0c, 0x08, "50k then every 60k"	},
+	{0x15, 0x01, 0x0c, 0x00, "50k then every 90k"	},
+	{0x15, 0x01, 0x0c, 0x0c, "Every 60k"			},
+	{0x15, 0x01, 0x0c, 0x04, "Every 90k"			},
 
-	{0   , 0xfe, 0   ,    2, "2nd Bonus Life"			},
-	{0x15, 0x01, 0x08, 0x08, "60k"					},
-	{0x15, 0x01, 0x08, 0x00, "90k"					},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x15, 0x01, 0x10, 0x10, "Off"					},
+	{0x15, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
-	{0x15, 0x01, 0x0c, 0x08, "50k then every 60k"			},
-	{0x15, 0x01, 0x0c, 0x00, "50k then every 90k"			},
-	{0x15, 0x01, 0x0c, 0x0c, "Every 60k"				},
-	{0x15, 0x01, 0x0c, 0x04, "Every 90k"				},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x20, 0x00, "Upright"				},
+	{0x15, 0x01, 0x20, 0x20, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
 	{0x15, 0x01, 0x40, 0x40, "Easy"					},
 	{0x15, 0x01, 0x40, 0x00, "Hard"					},
 
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x15, 0x01, 0x80, 0x00, "Off"					},
+	{0x15, 0x01, 0x80, 0x80, "On"					},
+
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credit"			},
-	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
-	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
-	{0x16, 0x01, 0x03, 0x00, "Free Play"				},
+	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x16, 0x01, 0x03, 0x00, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credit"			},
-	{0x16, 0x01, 0x0c, 0x04, "2 Coins 3 Credits"			},
-	{0x16, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"			},
-	{0x16, 0x01, 0x0c, 0x08, "1 Coin  6 Credits"			},
+	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0c, 0x04, "2 Coins 3 Credits"	},
+	{0x16, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"	},
+	{0x16, 0x01, 0x0c, 0x08, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Allow Continue"			},
-	{0x16, 0x01, 0x30, 0x30, "No"					},
-	{0x16, 0x01, 0x30, 0x20, "3 Times"				},
-	{0x16, 0x01, 0x30, 0x10, "5 Times"				},
-	{0x16, 0x01, 0x30, 0x00, "Yes"					},
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x16, 0x01, 0x10, 0x00, "Off"					},
+	{0x16, 0x01, 0x10, 0x10, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x16, 0x01, 0x20, 0x00, "Off"					},
+	{0x16, 0x01, 0x20, 0x20, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x16, 0x01, 0x40, 0x00, "No"					},
 	{0x16, 0x01, 0x40, 0x40, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Infinite Timer (Cheat)" },
+	{0x16, 0x01, 0x80, 0x80, "No"					},
+	{0x16, 0x01, 0x80, 0x00, "Yes"					},
 };
 
 STDDIPINFO(Kozure)
@@ -812,7 +821,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (((6000.0 / nBurnFPS) * 6000000.000) / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()
@@ -846,6 +855,8 @@ static INT32 DrvDoReset()
 	fg_scrollx = 0;
 	waiting_msb = 0;
 	scroll_msb = 0;
+
+	nb_1414m4_init();
 
 	return 0;
 }
@@ -1093,9 +1104,8 @@ static INT32 DrvExit()
 	Terrafjb = 0;
 	Kozuremode = 0;
 	Skyrobo = 0;
-	fiftysevenhertz = 0;
 
-	BurnSetRefreshRate(60.00);
+	BurnSetRefreshRate(59.08);
 
 	return 0;
 }
@@ -1335,14 +1345,13 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 262;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
+	INT32 nTotalCycles[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	if (usemcu) nTotalCycles[2] /= 12; // i8751 internal divider (12)
 
 	SekOpen(0);
 	ZetOpen(0);
-	nb1414_frame++;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1418,6 +1427,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fg_scrollx);
 		SCAN_VAR(waiting_msb);
 		SCAN_VAR(scroll_msb);
+
+		nb_1414m4_scan();
 	}
 
 	return 0;
@@ -1510,10 +1521,8 @@ static INT32 ArmedfInit()
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
 
 	if (nRet == 0) {
-		DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1730,8 +1739,8 @@ static INT32 KozureInit()
 		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
 		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
 
-		DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1984,10 +1993,8 @@ static INT32 TerrafInit()
 	if (nRet == 0) {
 		if (BurnLoadRom(nb1414_blit_data,	14, 1)) return 1;
 
-		DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;

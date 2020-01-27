@@ -8,6 +8,8 @@
 .DS_Store
 obj/
 ._*
+gamelist.txt
+src/dep/generated/
 fbneo
 roms
 joyconfig
@@ -27,3 +29,5 @@ fbneo.dat
 src/burner/libretro/ctvmake
 src/burner/libretro/m68kmake
 src/burner/libretro/pgmspritecreate
+!gamelist.txt
+!src/dep/generated/

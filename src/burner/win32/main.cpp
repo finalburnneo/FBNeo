@@ -966,6 +966,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfofdsonly")) == 0) {
+			write_datfile(DAT_FDS_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;

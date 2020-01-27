@@ -227,7 +227,63 @@ static void SwapSystemToCheck()
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PUBLIC_MASK:
-			snprintf(systemName, MAX_PATH, "Sega Megadrive / Sega Genesis");
+			snprintf(systemName, MAX_PATH, "CAPCOM");
+			nSystemToCheckMask = HARDWARE_PREFIX_CAPCOM;
+			break;
+		case HARDWARE_PREFIX_CAPCOM:
+			snprintf(systemName, MAX_PATH, "SEGA");
+			nSystemToCheckMask = HARDWARE_PREFIX_SEGA;
+			break;
+		case HARDWARE_PREFIX_SEGA:
+			snprintf(systemName, MAX_PATH, "Konami");
+			nSystemToCheckMask = HARDWARE_PREFIX_KONAMI;
+			break;
+		case HARDWARE_PREFIX_KONAMI:
+			snprintf(systemName, MAX_PATH, "Toaplan");
+			nSystemToCheckMask = HARDWARE_PREFIX_TOAPLAN;
+			break;
+		case HARDWARE_PREFIX_TOAPLAN:
+			snprintf(systemName, MAX_PATH, "SNK");
+			nSystemToCheckMask = HARDWARE_PREFIX_SNK;
+			break;
+		case HARDWARE_PREFIX_SNK:
+			snprintf(systemName, MAX_PATH, "CAVE");
+			nSystemToCheckMask = HARDWARE_PREFIX_CAVE;
+			break;
+		case HARDWARE_PREFIX_CAVE:
+			snprintf(systemName, MAX_PATH, "IGS PGM");
+			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
+			break;
+		case HARDWARE_PREFIX_IGS_PGM:
+			snprintf(systemName, MAX_PATH, "Taito");
+			nSystemToCheckMask = HARDWARE_PREFIX_TAITO;
+			break;
+		case HARDWARE_PREFIX_TAITO:
+			snprintf(systemName, MAX_PATH, "Psikyo");
+			nSystemToCheckMask = HARDWARE_PREFIX_PSIKYO;
+			break;
+		case HARDWARE_PREFIX_PSIKYO:
+			snprintf(systemName, MAX_PATH, "Kaneko");
+			nSystemToCheckMask = HARDWARE_PREFIX_KANEKO;
+			break;
+		case HARDWARE_PREFIX_KANEKO:
+			snprintf(systemName, MAX_PATH, "IREM");
+			nSystemToCheckMask = HARDWARE_PREFIX_IREM;
+			break;
+		case HARDWARE_PREFIX_IREM:
+			snprintf(systemName, MAX_PATH, "Data East");
+			nSystemToCheckMask = HARDWARE_PREFIX_DATAEAST;
+			break;
+		case HARDWARE_PREFIX_DATAEAST:
+			snprintf(systemName, MAX_PATH, "Seta");
+			nSystemToCheckMask = HARDWARE_PREFIX_SETA;
+			break;
+		case HARDWARE_PREFIX_SETA:
+			snprintf(systemName, MAX_PATH, "Technos");
+			nSystemToCheckMask = HARDWARE_PREFIX_TECHNOS;
+			break;
+		case HARDWARE_PREFIX_TECHNOS:
+			snprintf(systemName, MAX_PATH, "Sega Megadrive / Genesis");
 			nSystemToCheckMask = HARDWARE_SEGA_MEGADRIVE;
 			break;
 		case HARDWARE_SEGA_MEGADRIVE:

@@ -69,7 +69,7 @@ depobj += neocdlist.o \
 		2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o \
 		\
 		inp_pi.o aud_sdl.o support_paths.o \
-		ips_manager.o scrn.o cd_isowav.o cdsound.o config.o \
+		ips_manager.o scrn.o config.o \
 		main_pi.o run_pi.o stringset.o bzip.o drv.o media.o inpdipsw.o \
 		matrix.o vid_pi.o dynhuff.o replay.o
 

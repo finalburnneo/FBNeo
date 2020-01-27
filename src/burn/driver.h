@@ -26,6 +26,10 @@
 #define FBA
 #define FBANEO
 
+#ifndef M_PI // SDL2 is making this not found
+#define M_PI 3.14159265358979323846264338327950288
+#endif
+
 typedef unsigned char						UINT8;
 typedef signed char 						INT8;
 typedef unsigned short						UINT16;

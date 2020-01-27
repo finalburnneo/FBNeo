@@ -1595,7 +1595,7 @@ SNES_INLINE static unsigned int CalcCol(UINT16 nColour)
 	//g = pal5bit(nColour >> 5);
 	//b = pal5bit(nColour >> 10);
 
-	r = (nColour & 0x7C00) >> 7;  // Red 
+	r = (nColour & 0x7C00) >> 7;  // Red
 	r |= r >> 0;
 	g = (nColour & 0x03E0) >> 2;	// Green
 	g |= g >> 5;
@@ -1802,7 +1802,7 @@ void dohdma(int line)
 			hdmaaddr[c] = dmasrc[c];
 			hdmacount[c] = 0;
 			//                                if (c==2)
-			//                                printf("Reset HDMA %i loading from %02X%04X %i\n",c,dmabank[c],hdmaaddr[c],hdmacount[c]);
+			//                               /src/burn("Reset HDMA %i loading from %02X%04X %i\n",c,dmabank[c],hdmaaddr[c],hdmacount[c]);
 		}
 		if (hdmaena & (1 << c) && hdmacount[c] != -1)
 		{
@@ -1961,7 +1961,7 @@ void dumphdma()
 	int c;
 	for (c = 0; c < 8; c++)
 	{
-		printf("HDMA %i %s - src %06X dest %04X mode %02X stat %i len %i\n", c, (hdmaena & (1 << c)) ? "on" : "off", (dmabank[c] << 16) | dmasrc[c], dmadest[c], dmactrl[c], hdmastat[c], hdmacount[c]);
+	//	printf("HDMA %i %s - src %06X dest %04X mode %02X stat %i len %i\n", c, (hdmaena & (1 << c)) ? "on" : "off", (dmabank[c] << 16) | dmasrc[c], dmadest[c], dmactrl[c], hdmastat[c], hdmacount[c]);
 	}
 }
 
@@ -2467,7 +2467,7 @@ void writeppu(UINT16 offset, UINT8 data)
 		break;
 
 	default:
-		printf("%x, %x", offset, data);
+		//printf("%x, %x", offset, data);
 		break;
 	}
 }

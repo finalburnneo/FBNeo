@@ -636,7 +636,7 @@ static int GameInfoInit()
 #endif
 
 #define MAXFAVORITES 2000
-char szFavorites[MAXFAVORITES][28];
+char szFavorites[MAXFAVORITES][68];
 INT32 nFavorites = 0;
 
 void LoadFavorites()
@@ -661,8 +661,8 @@ void LoadFavorites()
 				nLen--;
 			}
 
-			if (strlen(szTemp) < 25 && strlen(szTemp) > 2) {
-				strncpy(szFavorites[nFavorites++], szTemp, 25);
+			if (strlen(szTemp) < 65 && strlen(szTemp) > 1) {
+				strncpy(szFavorites[nFavorites++], szTemp, 65);
 				//bprintf(0, _T("Loaded: %S.\n"), szFavorites[nFavorites-1]);
 			}
 		}
@@ -701,7 +701,7 @@ INT32 CheckFavorites(char *name)
 static void AddFavorite(UINT8 addf)
 {
 	UINT32 nOldDrvSelect = nBurnDrvActive;
-	char szBoardName[28] = "";
+	char szBoardName[68] = "";
 
 	LoadFavorites();
 

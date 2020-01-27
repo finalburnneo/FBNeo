@@ -6,7 +6,7 @@ This is the official repository of FinalBurn Neo, an Emulator for Arcade Games &
 Use of this program and its source code is subject to the license conditions provided in the [license.txt](/src/license.txt) file in the src folder.
 
 # Work in Progress builds
-If the below build status badge is green, you can download the latest builds from [this repository](https://github.com/finalburnneo/FBNeo-WIP-Storage-Facility/releases/tag/appveyor-build). Please note that if the below build status badge is not green then the build will be out of date. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have. 
+If the below build status badge is green, you can download the latest builds from [this repository](https://github.com/finalburnneo/FBNeo-WIP-Storage-Facility/releases/tag/appveyor-build). Please note that if the below build status badge is not green then the build will be out of date. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8rkefxtvxd3cllag/branch/master?svg=true)](https://ci.appveyor.com/project/tmaul/fbneo-kbhgd/branch/master)
 
@@ -18,7 +18,9 @@ macOS [build instructions](README-macOS.md) and [releases](https://github.com/fb
 
 [LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for most platforms.
 
-For SDL builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm)
+For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm)
+
+For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm)
 
 # Reporting Issues
 

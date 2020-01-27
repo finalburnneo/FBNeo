@@ -511,7 +511,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />	  
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
@@ -536,29 +536,29 @@
     <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp" />
     <ClCompile Include="generated\m68kops.c" />
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
-%(Filename).exe &gt; generated\ctv.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp
+%(Filename).exe &gt; generated\ctv.h
 
 del %(Filename).obj
 
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\generated\ctv.h</Outputs>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
-%(Filename).exe &gt; generated\ctv.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp
+%(Filename).exe &gt; generated\ctv.h
 
 del %(Filename).obj
 
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\generated\ctv.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
-%(Filename).exe &gt; generated\ctv.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp
+%(Filename).exe &gt; generated\ctv.h
 
 del %(Filename).obj
 
 del %(Filename).exe</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp 
-%(Filename).exe &gt; generated\ctv.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl ..\..\src\burn\drv\capcom\%(Filename).cpp
+%(Filename).exe &gt; generated\ctv.h
 
 del %(Filename).obj
 
@@ -771,24 +771,24 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_draw.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_run.cpp" />
     <CustomBuild Include="..\..\src\burn\drv\pgm\pgm_sprite_create.cpp">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
-%(Filename).exe &gt; generated\pgm_sprite.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp
+%(Filename).exe &gt; generated\pgm_sprite.h
 del %(Filename).obj
 del %(Filename).exe
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pgm_sprite.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
-%(Filename).exe &gt; generated\pgm_sprite.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp
+%(Filename).exe &gt; generated\pgm_sprite.h
 del %(Filename).obj
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pgm_sprite.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
-%(Filename).exe &gt; generated\pgm_sprite.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp
+%(Filename).exe &gt; generated\pgm_sprite.h
 del %(Filename).obj
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pgm_sprite.h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp 
-%(Filename).exe &gt; generated\pgm_sprite.h 
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl ..\..\src\burn\drv\pgm\%(Filename).cpp
+%(Filename).exe &gt; generated\pgm_sprite.h
 del %(Filename).obj
 del %(Filename).exe</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pgm_sprite.h</Outputs>

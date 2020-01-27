@@ -7,7 +7,7 @@
 ** Copyright (C) 2001, 2002, 2003 Jarek Burczynski (bujar at mame dot net)
 ** Copyright (C) 1998 Tatsuyuki Satoh , MultiArcadeMachineEmulator development
 **
-** Version 1.4 (final beta) 
+** Version 1.4 (final beta)
 **
 ** Additional code & fixes by Eke-Eke for Genesis Plus GX
 **
@@ -31,7 +31,7 @@
 ** 12-03-2017 Eke-Eke (Genesis Plus GX):
 **  - fixed Op1 self-feedback regression introduced by previous modifications
 **  - removed one-sample extra delay on Op1 calculated output
-**  - refactored chan_calc() function 
+**  - refactored chan_calc() function
 **
 ** 01-09-2012 Eke-Eke (Genesis Plus GX):
 **  - removed input clock / output samplerate frequency ratio, chip now always run at (original) internal sample frequency
@@ -48,7 +48,7 @@
 **  - adjusted lowest EG rates increment values
 **  - fixed Attack Rate not being updated in some specific cases (Batman & Robin intro)
 **  - fixed EG behavior when Attack Rate is maximal
-**  - fixed EG behavior when SL=0 (Mega Turrican tracks 03,09...) or/and Key ON occurs at minimal attenuation 
+**  - fixed EG behavior when SL=0 (Mega Turrican tracks 03,09...) or/and Key ON occurs at minimal attenuation
 **  - implemented EG output immediate changes on register writes
 **  - fixed YM2612 initial values (after the reset): fixes missing intro in B.O.B
 **  - implemented Detune overflow (Ariel, Comix Zone, Shaq Fu, Spiderman & many other games using GEMS sound engine)
@@ -646,7 +646,7 @@ static YM2612 ym2612;
 static INT32  m2,c1,c2;   /* Phase Modulation input for operators 2,3,4 */
 static INT32  mem;        /* one sample delay memory */
 static INT32  out_fm[8];  /* outputs of working channels */
-static UINT32 bitmask;    /* working channels output bitmasking (DAC quantization) */ 
+static UINT32 bitmask;    /* working channels output bitmasking (DAC quantization) */
 
 
 INLINE void FM_KEYON(FM_CH *CH , int s )
@@ -867,9 +867,9 @@ INLINE void set_timers(int v )
     ym2612.OPN.ST.TAC = ym2612.OPN.ST.TAL;
   if ((v&2) && !(ym2612.OPN.ST.mode&2))
     ym2612.OPN.ST.TBC = ym2612.OPN.ST.TBL;
-  
+
   /* reset Timers flags */
-  ym2612.OPN.ST.status &= (~v >> 4); 
+  ym2612.OPN.ST.status &= (~v >> 4);
 
   ym2612.OPN.ST.mode = v;
 }
@@ -1034,7 +1034,7 @@ INLINE void set_sr(FM_SLOT *SLOT,int v)
 INLINE void set_sl_rr(FM_SLOT *SLOT,int v)
 {
   SLOT->sl = sl_table[ v>>4 ];
-  
+
   /* check EG state changes */
   if ((SLOT->state == EG_DEC) && (SLOT->volume >= (INT32)(SLOT->sl)))
     SLOT->state = EG_SUS;
@@ -1305,7 +1305,7 @@ INLINE void update_ssg_eg_channels(FM_CH *CH)
 INLINE void update_phase_lfo_slot(FM_SLOT *SLOT, UINT32 pm, UINT8 kc, UINT32 fc)
 {
   INT32 lfo_fn_offset = lfo_pm_table[(((fc & 0x7f0) >> 4) << 8) + pm];
-  
+
   if (lfo_fn_offset)  /* LFO phase modulation active */
   {
     /* block is not modified by LFO PM */
@@ -1329,7 +1329,7 @@ INLINE void update_phase_lfo_slot(FM_SLOT *SLOT, UINT32 pm, UINT8 kc, UINT32 fc)
 INLINE void update_phase_lfo_channel(FM_CH *CH)
 {
   UINT32 fc = CH->block_fnum;
-  
+
   INT32 lfo_fn_offset = lfo_pm_table[(((fc & 0x7f0) >> 4) << 8) + CH->pms + ym2612.OPN.LFO_PM];
 
   if (lfo_fn_offset)  /* LFO phase modulation active */
@@ -1741,7 +1741,7 @@ INLINE void OPNWriteReg(int r, int v)
             ym2612.OPN.SL3.block_fnum[c] = (blk<<11) | fn;
             ym2612.CH[2].SLOT[SLOT1].Incr=-1;
           }
-          break;            
+          break;
         case 3:    /* 0xac-0xae : 3CH FNUM2,BLK */
           if(r < 0x100)
             ym2612.OPN.SL3.fn_h = v&0x3f;
@@ -1756,7 +1756,7 @@ INLINE void OPNWriteReg(int r, int v)
           CH->ALGO = v&7;
           CH->FB   = SIN_BITS - ((v>>3)&7);
           setup_connection( CH, c );
-          break;        
+          break;
         }
         case 1:    /* 0xb4-0xb6 : L , R , AMS , PMS */
           /* b0-2 PMS */
@@ -1873,7 +1873,7 @@ static void init_tables(void)
       UINT32 offset_fnum_bit;
       UINT32 bit_tmp;
 
-      for (step=0; step<8; step++) 
+      for (step=0; step<8; step++)
       {
         value = 0;
         for (bit_tmp=0; bit_tmp<7; bit_tmp++) /* 7 bits */
@@ -1942,7 +1942,7 @@ void MDYM2612Reset(void)
 
   ym2612.dacen            = 0;
   ym2612.dacout           = 0;
- 
+
   set_timers(0x30);
   ym2612.OPN.ST.TB = 0;
   ym2612.OPN.ST.TBL = 256 << 4;
@@ -2044,7 +2044,7 @@ void MDYM2612Update(INT16 **buffer, int length)
     refresh_fc_eg_chan(&ym2612.CH[2]);
   }
   else
-  {  
+  {
     /* 3SLOT MODE (operator order is 0,1,3,2) */
     if(ym2612.CH[2].SLOT[SLOT1].Incr==-1)
     {

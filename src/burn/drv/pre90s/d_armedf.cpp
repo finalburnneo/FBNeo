@@ -1248,7 +1248,7 @@ static void draw_sprites(INT32 priority)
 		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
-		code       &= 0xfff;
+		code       &= 0x7ff;
 
 		if (*flipscreen) {
 			sx = 320 - sx + 176;
@@ -1260,7 +1260,7 @@ static void draw_sprites(INT32 priority)
 		sy -= yoffset;
 		sx -= xoffset;
 
-		if (code > 0x7ff || sx < -15 || sy < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
+		if (sx < -15 || sy < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		// Render sprites with CLUT
 		if (flipy) flipy  = 0x0f;

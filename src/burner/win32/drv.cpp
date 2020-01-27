@@ -5,9 +5,9 @@
 int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
 TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") },
-											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("spectrum/") },
-											{ _T("msx/") }, { _T("sms/") }, { _T("gamegear/") }, { _T("sg1000/") }, { _T("coleco/") },
-											{ _T("tg16/") }, { _T("sgx/") }, { _T("pce/") }, { _T("megadriv/") }, { _T("roms/") } };
+											{ _T("") }, { _T("roms/nes/") }, { _T("roms/nes_fds/") }, { _T("roms/nes_hb/") }, { _T("roms/spectrum/") },
+											{ _T("roms/msx/") }, { _T("roms/sms/") }, { _T("roms/gamegear/") }, { _T("roms/sg1000/") }, { _T("roms/coleco/") },
+											{ _T("roms/tg16/") }, { _T("roms/sgx/") }, { _T("roms/pce/") }, { _T("roms/megadrive/") }, { _T("roms/") } };
 
 static bool bSaveRAM = false;
 

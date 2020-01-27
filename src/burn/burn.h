@@ -441,6 +441,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_SEGA_GAME_GEAR					(0x12000000)
 #define HARDWARE_PREFIX_MSX                             (0x1C000000)
 #define HARDWARE_PREFIX_SPECTRUM                        (0x1D000000)
+#define HARDWARE_PREFIX_NES                             (0x1E000000)
 
 #define HARDWARE_MISC_PRE90S							(HARDWARE_PREFIX_MISC_PRE90S)
 #define HARDWARE_MISC_POST90S							(HARDWARE_PREFIX_MISC_POST90S)
@@ -664,6 +665,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_MIDWAY_WUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00030000)
 #define HARDWARE_MIDWAY_YUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00040000)
 
+#define HARDWARE_NES									(HARDWARE_PREFIX_NES)
 
 // flags for the genre member
 #define GBF_HORSHOOT									(1 << 0)

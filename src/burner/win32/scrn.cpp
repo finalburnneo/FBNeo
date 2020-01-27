@@ -331,6 +331,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_GAMEGEAR_ONLY) _sntprintf(szConsoleString, 64, _T(", Game Gear only"));
 	if (bType == DAT_MSX_ONLY) _sntprintf(szConsoleString, 64, _T(", MSX 1 Games only"));
 	if (bType == DAT_SPECTRUM_ONLY) _sntprintf(szConsoleString, 64, _T(", ZX Spectrum Games only"));
+	if (bType == DAT_NES_ONLY) _sntprintf(szConsoleString, 64, _T(", NES Games only"));
 
 	TCHAR szProgramString[25];
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
@@ -428,6 +429,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", ZX Spectrum Games only"));
 	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", NES Games only"));
+	create_datfile(szFilename, DAT_NES_ONLY);
 
 	return nRet;
 }
@@ -859,7 +863,7 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 		nBurnDrvActive = j;
 		if (!_tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
 			nBurnDrvActive = nOldDrvSelect;
-			nDialogSelect = j;
+			nDialogSelect = nOldDlgSelected = j;
 			SplashDestroy(1);
 			StopReplay();
 
@@ -897,7 +901,7 @@ int StartFromReset(TCHAR *szDriverName)
 	bLoading = 1;
 
 	nBurnDrvActive = nOldDrvSelect;
-	nDialogSelect = nOldDrvSelect;
+	nDialogSelect = nOldDlgSelected = nOldDrvSelect;
 	SplashDestroy(1);
 	StopReplay();
 
@@ -1138,7 +1142,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				ScrnSize();
 				ScrnTitle();
 				MenuEnableItems();
-				nDialogSelect = -1;
+				//nDialogSelect = -1;
 				nBurnDrvActive = ~0U;
 
 				POST_INITIALISE_MESSAGE;
@@ -2292,6 +2296,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_SPECTRUM_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_NES_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_NES_ONLY);
 			}
 			break;
 

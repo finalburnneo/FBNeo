@@ -204,6 +204,7 @@ BEGIN
 	IDS_SEL_COLECO				"ColecoVision"
 	IDS_SEL_GG					"Game Gear"
 	IDS_SEL_MSX					"MSX"
+	IDS_SEL_NES                 "NES"
 	IDS_SEL_SPECTRUM			"ZX Spectrum"
 	IDS_SEL_MIDWAY				"Midway"
 	IDS_SEL_CAPCOM_GRP			"Capcom"

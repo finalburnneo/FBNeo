@@ -680,10 +680,10 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 
 void MonitorAutoCheck()
 {
-	RECT rect;
+	//RECT rect;
 	int numScreens;
 
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
+	//SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
 
 	numScreens = GetSystemMetrics(SM_CMONITORS);
 
@@ -961,6 +961,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfonesonly")) == 0) {
+			write_datfile(DAT_NES_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;
@@ -1051,7 +1056,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[34][MAX_PATH] = {
+	TCHAR szSupportDirs[][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -1076,20 +1081,24 @@ static void CreateSupportFolders()
 		{_T("support/pcbs/")},
 		{_T("support/history/")},
 		{_T("neocdiso/")},
-		// the below are named after the MESS software lists
-		{_T("megadriv/")},
-		{_T("pce/")},
-		{_T("sgx/")},
-		{_T("tg16/")},
-		{_T("sg1000/")},
-		{_T("coleco/")},
-		{_T("sms/")},
-		{_T("gamegear/")},
-		{_T("msx/")},
-		{_T("spectrum/")},
+		// rom directories
+		{_T("roms/megadrive/")},
+		{_T("roms/pce/")},
+		{_T("roms/sgx/")},
+		{_T("roms/tg16/")},
+		{_T("roms/sg1000/")},
+		{_T("roms/coleco/")},
+		{_T("roms/sms/")},
+		{_T("roms/gamegear/")},
+		{_T("roms/msx/")},
+		{_T("roms/spectrum/")},
+		{_T("roms/nes/")},
+		{_T("roms/nes_fds/")},
+		{_T("roms/nes_hb/")},
+		{_T("\0")} // END of list
 	};
 
-	for(int x = 0; x < 34; x++) {
+	for(int x = 0; szSupportDirs[x][0] != '\0'; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

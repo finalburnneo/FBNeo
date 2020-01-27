@@ -315,6 +315,7 @@ extern UINT_PTR nTimer;
 extern HBITMAP hPrevBmp;
 extern HBITMAP hTitleBmp;
 extern int nDialogSelect;
+extern int nOldDlgSelected;
 void CreateToolTipForRect(HWND hwndParent, PTSTR pszText);
 int SelMVSDialog();
 void LoadDrvIcons();

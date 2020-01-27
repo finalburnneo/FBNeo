@@ -42,7 +42,7 @@ typedef struct tagIMAGE {
  #include "burner_win32.h"
 #elif defined (BUILD_MACOS)
  #include "burner_macos.h"
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
  #include "burner_sdl.h"
 #elif defined (_XBOX) && !defined(__LIBRETRO__)
  #include "burner_xbox.h"
@@ -182,6 +182,8 @@ void ComputeGammaLUT();
 #define DAT_MSX_ONLY        9
 #define DAT_SPECTRUM_ONLY   10
 #define DAT_NEOGEO_ONLY		11
+#define DAT_NES_ONLY        12
+#define DAT_FDS_ONLY        13
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

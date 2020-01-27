@@ -3,9 +3,9 @@
 #include "burner.h"
 #include <process.h>
 
-// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, decocass, midssio, cchip)
+// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, decocass, midssio, cchip, fdsbios)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
-#define REDUCE_TOTAL_SETS_BIOS		13
+#define REDUCE_TOTAL_SETS_BIOS		14
 
 UINT_PTR nTimer					= 0;
 UINT_PTR nInitPreviewTimer		= 0;
@@ -123,6 +123,8 @@ HTREEITEM hFilterMegadrive			= NULL;
 HTREEITEM hFilterPce				= NULL;
 //HTREEITEM hFilterSnes				= NULL;
 HTREEITEM hFilterMsx				= NULL;
+HTREEITEM hFilterNes				= NULL;
+HTREEITEM hFilterFds				= NULL;
 HTREEITEM hFilterSms				= NULL;
 HTREEITEM hFilterGg					= NULL;
 HTREEITEM hFilterSg1000				= NULL;
@@ -261,8 +263,12 @@ static int SpecValue			= HARDWARE_PREFIX_SPECTRUM >> 24;
 static int MASKSPECTRUM			= 1 << SpecValue;
 static int MidwayValue			= HARDWARE_PREFIX_MIDWAY >> 24;
 static int MASKMIDWAY			= 1 << MidwayValue;
+static int NesValue				= HARDWARE_PREFIX_NES >> 24;
+static int MASKNES				= 1 << NesValue;
+static int FdsValue				= HARDWARE_PREFIX_FDS >> 24;
+static int MASKFDS				= 1 << FdsValue;
 
-static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY; // | MASKSNES
+static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS;
 
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -443,6 +449,24 @@ static TCHAR* MangleGamename(const TCHAR* szOldName, bool /*bRemoveArticle*/)
 	} else {
 		_tcscpy(pszName, szOldName);
 	}
+#endif
+
+#if 0
+	static TCHAR szPrefix[256] = _T("");
+	// dink's prefix-izer - it's useless...
+	_tcscpy(szPrefix, BurnDrvGetText(DRV_NAME));
+	int use_prefix = 0;
+	int nn_len = 0;
+	for (int i = 0; i < 6; i++) {
+		if (szPrefix[i] == _T('_')) {
+			szNewName[nn_len++] = _T(' ');
+			use_prefix = 1;
+			break;
+		} else {
+			szNewName[nn_len++] = towupper(szPrefix[i]);
+		}
+	}
+	if (use_prefix == 0) nn_len = 0;
 #endif
 
 #if 1
@@ -1321,6 +1345,8 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_NES			, hFilterNes			, nLoadMenuShowX & MASKNES							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_FDS			, hFilterFds			, nLoadMenuShowX & MASKFDS							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
 
@@ -1336,7 +1362,7 @@ static void CreateFilters()
 	TreeView_SelectSetFirstVisible(hFilterList, hFavorites);
 }
 
-#define ICON_MAXCONSOLES 7
+#define ICON_MAXCONSOLES 10
 
 enum {
 	ICON_MEGADRIVE = 0,
@@ -1346,7 +1372,9 @@ enum {
 	ICON_SMS = 4,
 	ICON_GG = 5,
 	ICON_MSX = 6,
-	ICON_SPECTRUM = 6
+	ICON_SPECTRUM = 7,
+	ICON_NES = 8,
+	ICON_FDS = 9
 };
 
 static HICON hConsDrvIcon[ICON_MAXCONSOLES];
@@ -1390,8 +1418,14 @@ void LoadDrvIcons()
 		_stprintf(szIcon, _T("%smsx_icon.ico"), szAppIconsPath);
 		hConsDrvIcon[ICON_MSX] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 
-		_stprintf(szIcon, _T("%spectrum_icon.ico"), szAppIconsPath);
+		_stprintf(szIcon, _T("%sspectrum_icon.ico"), szAppIconsPath);
 		hConsDrvIcon[ICON_SPECTRUM] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%snes_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_NES] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%sfds_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_FDS] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 	}
 
 	unsigned int nOldDrvSel = nBurnDrvActive;
@@ -1410,6 +1444,8 @@ void LoadDrvIcons()
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
+			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
+			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS)
 			)) {
 			continue; // Skip everything but arcade
 		}
@@ -1453,6 +1489,16 @@ void LoadDrvIcons()
 
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
 			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SPECTRUM];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_NES];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_FDS];
 			continue;
 		}
 
@@ -1566,6 +1612,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		TreeView_SetItemHeight(hSelList, cyItem);
 
+		if (nDialogSelect == -1) nDialogSelect = nOldDlgSelected;
 		if (nDialogSelect > -1) {
 			for (unsigned int i = 0; i < nTmpDrvCount; i++) {
 				if (nBurnDrv[i].nBurnDrvNo == nDialogSelect) {
@@ -1647,6 +1694,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterNes, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterFds, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMidway, FALSE);
 
 				nLoadMenuShowX |= MASKALL;
@@ -1685,6 +1734,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterNes, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterFds, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMidway, TRUE);
 
 				nLoadMenuShowX &= (0xFFFFFFFF - MASKALL); //0xf8000000; make this dynamic for future hardware additions -dink
@@ -1921,6 +1972,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterColeco)			_ToggleGameListing(nLoadMenuShowX, MASKCOLECO);
 		if (hItemChanged == hFilterMsx)				_ToggleGameListing(nLoadMenuShowX, MASKMSX);
 		if (hItemChanged == hFilterSpectrum)		_ToggleGameListing(nLoadMenuShowX, MASKSPECTRUM);
+		if (hItemChanged == hFilterNes)				_ToggleGameListing(nLoadMenuShowX, MASKNES);
+		if (hItemChanged == hFilterFds)				_ToggleGameListing(nLoadMenuShowX, MASKFDS);
 		if (hItemChanged == hFilterMidway)			_ToggleGameListing(nLoadMenuShowX, MASKMIDWAY);
 
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);

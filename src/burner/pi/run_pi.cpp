@@ -14,7 +14,7 @@ static unsigned int nNormalLast = 0;		// Last value of timeGetTime()
 static int nNormalFrac = 0;					// Extra fraction we did
 
 static bool bAppDoStep = 0;
-static bool bAppDoFast = 0;
+bool bAppDoFast = 0;
 static int nFastSpeed = 6;
 
 int SaveNVRAM();

@@ -1002,8 +1002,6 @@
 		FEED9DFA23576B9F00B7AF83 /* support_paths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DF923576B9F00B7AF83 /* support_paths.cpp */; };
 		FEED9DFC23576BD500B7AF83 /* inpdipsw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */; };
 		FEED9DFE23576C2500B7AF83 /* scrn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DFD23576C2500B7AF83 /* scrn.cpp */; };
-		FEED9E0323576D1B00B7AF83 /* cdsound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0023576D1B00B7AF83 /* cdsound.cpp */; settings = {COMPILER_FLAGS = "-Wno-return-type"; }; };
-		FEED9E0423576D1B00B7AF83 /* cd_isowav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0123576D1B00B7AF83 /* cd_isowav.cpp */; };
 		FEED9E0623576DD800B7AF83 /* ips_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0523576DD800B7AF83 /* ips_manager.cpp */; };
 		FEED9E0823576E1900B7AF83 /* stated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0723576E1900B7AF83 /* stated.cpp */; };
 		FEED9E0A23576E3800B7AF83 /* replay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E0923576E3800B7AF83 /* replay.cpp */; };
@@ -2535,9 +2533,6 @@
 		FEED9DF923576B9F00B7AF83 /* support_paths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = support_paths.cpp; sourceTree = "<group>"; };
 		FEED9DFB23576BD500B7AF83 /* inpdipsw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inpdipsw.cpp; sourceTree = "<group>"; };
 		FEED9DFD23576C2500B7AF83 /* scrn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrn.cpp; sourceTree = "<group>"; };
-		FEED9E0023576D1B00B7AF83 /* cdsound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cdsound.cpp; sourceTree = "<group>"; };
-		FEED9E0123576D1B00B7AF83 /* cd_isowav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cd_isowav.cpp; sourceTree = "<group>"; };
-		FEED9E0223576D1B00B7AF83 /* cdsound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdsound.h; sourceTree = "<group>"; };
 		FEED9E0523576DD800B7AF83 /* ips_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ips_manager.cpp; sourceTree = "<group>"; };
 		FEED9E0723576E1900B7AF83 /* stated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stated.cpp; sourceTree = "<group>"; };
 		FEED9E0923576E3800B7AF83 /* replay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = replay.cpp; sourceTree = "<group>"; };
@@ -4788,9 +4783,6 @@
 		FEED9DFF23576D1B00B7AF83 /* sdl */ = {
 			isa = PBXGroup;
 			children = (
-				FEED9E0023576D1B00B7AF83 /* cdsound.cpp */,
-				FEED9E0123576D1B00B7AF83 /* cd_isowav.cpp */,
-				FEED9E0223576D1B00B7AF83 /* cdsound.h */,
 			);
 			path = sdl;
 			sourceTree = "<group>";
@@ -5371,7 +5363,6 @@
 				FE1B24C423561A750065200C /* sms.cpp in Sources */,
 				FE1B264423561A770065200C /* cps.cpp in Sources */,
 				FE1B275823561A780065200C /* d_timelimt.cpp in Sources */,
-				FEED9E0423576D1B00B7AF83 /* cd_isowav.cpp in Sources */,
 				FE1B23DB23561A750065200C /* upd7725.cpp in Sources */,
 				FE1B275123561A780065200C /* d_himesiki.cpp in Sources */,
 				FE1B245523561A750065200C /* crc32.c in Sources */,
@@ -5770,7 +5761,6 @@
 				FE1B26EC23561A780065200C /* d_kncljoe.cpp in Sources */,
 				FE1B277F23561A790065200C /* ym2151.c in Sources */,
 				FE1B244223561A750065200C /* Sha256.c in Sources */,
-				FEED9E0323576D1B00B7AF83 /* cdsound.cpp in Sources */,
 				FE1B271523561A780065200C /* d_blockade.cpp in Sources */,
 				FE1B25E123561A760065200C /* d_ajax.cpp in Sources */,
 				FE1B23D423561A750065200C /* konami.cpp in Sources */,

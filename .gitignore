@@ -3,7 +3,22 @@
 ################################################################################
 
 /.vs
+.vscode
 /projectfiles/visualstudio-2019/enc_temp_folder
+.DS_Store
+obj/
+._*
+fbneo
+roms
+joyconfig
+fbneo.ini
+xcuserdata
+project.xcworkspace
+projectfiles/xcode/build
+nvram
+*.nvr
+config/*
+fbneo.dat
 
 # libretro
 *.so

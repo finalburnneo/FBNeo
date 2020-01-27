@@ -38,6 +38,11 @@ static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
 static char* gameAv = NULL;
+static unsigned int *filterGames= NULL;
+static int filterGamesCount;
+static bool bShowAvailableOnly = true;
+static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+static char systemName[MAX_PATH] = { 0 };
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -152,41 +157,131 @@ int WriteGameAvb()
 	return 0;
 }
 
-static unsigned int *filterGames= NULL;
-static int filterGamesCount;
-
+static bool CheckIfSystem(INT32 gameTocheck)
+{
+	int currentSelected = nBurnDrvActive;
+	nBurnDrvActive = gameTocheck;
+	
+	bool bRet = false;
+	if (HARDWARE_PUBLIC_MASK == nSystemToCheckMask)
+	{
+		bRet = true;
+	}
+	else if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == nSystemToCheckMask)
+	{
+		bRet = true;
+	}
+		
+	nBurnDrvActive = currentSelected;
+	return bRet;
+}
 
 static void DoFilterGames()
 {
 	int count = 0;
-	
+	startGame = -gamesperscreen_halfway + 1;
 	if (filterGames!=NULL)
 	{
 		free(filterGames);
 		filterGames = NULL;
 	}
-	
-	for(int i = 0; i < nBurnDrvCount; i++)
+
+	if (bShowAvailableOnly)
 	{
-		if (gameAv[i])
+		for(int i = 0; i < nBurnDrvCount; i++)
 		{
-			count++;			
+			if (gameAv[i] && CheckIfSystem(i))
+			{
+				count++;			
+			}
+		}
+		
+		filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
+		
+		filterGamesCount = 0;
+		
+		for(int i = 0; i < nBurnDrvCount; i++)
+		{
+			if (gameAv[i] && CheckIfSystem(i))
+			{
+				filterGames[filterGamesCount] = i;		
+				filterGamesCount++;
+			}
 		}
 	}
-	
-	filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
-	
-	filterGamesCount = 0;
-	
-	for(int i = 0; i < nBurnDrvCount; i++)
+	else
 	{
-		if (gameAv[i])
+		filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
+		filterGamesCount = 0;
+		for(int i = 0; i < nBurnDrvCount; i++)
 		{
 			filterGames[filterGamesCount] = i;		
 			filterGamesCount++;
 		}
 	}
 }
+
+
+static void SwapSystemToCheck()
+{
+	switch(nSystemToCheckMask)
+	{
+		case HARDWARE_PUBLIC_MASK:
+			snprintf(systemName, MAX_PATH, "Sega Megadrive / Sega Genesis");
+			nSystemToCheckMask = HARDWARE_SEGA_MEGADRIVE;
+			break;
+		case HARDWARE_SEGA_MEGADRIVE:
+			snprintf(systemName, MAX_PATH, "NEC PC Engine");
+			nSystemToCheckMask = HARDWARE_PCENGINE_PCENGINE;
+			break;
+		case HARDWARE_PCENGINE_PCENGINE:
+			snprintf(systemName, MAX_PATH, "NEC Turbographx 16");
+			nSystemToCheckMask = HARDWARE_PCENGINE_TG16;
+			break;
+		case HARDWARE_PCENGINE_TG16:
+			snprintf(systemName, MAX_PATH, "NEC SGX");
+			nSystemToCheckMask = HARDWARE_PCENGINE_SGX;
+			break;
+		case HARDWARE_PCENGINE_SGX:
+			snprintf(systemName, MAX_PATH, "Sega SG-1000");
+			nSystemToCheckMask = HARDWARE_SEGA_SG1000;
+			break;
+		case HARDWARE_SEGA_SG1000:
+			snprintf(systemName, MAX_PATH, "ColecoVision");
+			nSystemToCheckMask = HARDWARE_COLECO;
+			break;
+		case HARDWARE_COLECO:
+			snprintf(systemName, MAX_PATH, "Sega Master System");
+			nSystemToCheckMask = HARDWARE_SEGA_MASTER_SYSTEM;
+			break;
+		case HARDWARE_SEGA_MASTER_SYSTEM:
+			snprintf(systemName, MAX_PATH, "Sega Game Gear");
+			nSystemToCheckMask = HARDWARE_SEGA_GAME_GEAR;
+			break;
+		case HARDWARE_SEGA_GAME_GEAR:
+			snprintf(systemName, MAX_PATH, "MSX");
+			nSystemToCheckMask = HARDWARE_MSX;
+			break;
+		case HARDWARE_MSX:
+			snprintf(systemName, MAX_PATH, "Sinclar Spectrum");
+			nSystemToCheckMask = HARDWARE_SPECTRUM;
+			break;
+//		case HARDWARE_SPECTRUM:
+//			snprintf(systemName, MAX_PATH, "Nintendo Entertainment System / Famicom");
+	//		nSystemToCheckMask = HARDWARE_NES;
+		//	break;
+//		case HARDWARE_NES:
+//			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
+	//		nSystemToCheckMask = HARDWARE_FDS;
+		//	break;			
+		default:
+			snprintf(systemName, MAX_PATH, "Everything");
+			nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+			break;
+	}
+	DoFilterGames();
+}
+
 
 static int DoCheck(TCHAR* buffPos)
 {
@@ -467,8 +562,8 @@ void gui_render()
 	}
 
 	incolor(fbn_color, /* unused */ 0);
-	inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
-	inprint(sdlRenderer, "=============", 10, 20);
+	inprint(sdlRenderer, "FinalBurn Neo ** F1 - Rescan / F2 - Show/Hide Missing / F3 - System Filter / F12 - Quit **", 10, 10);
+	inprint(sdlRenderer, systemName, 10, 20);
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
@@ -613,6 +708,13 @@ int gui_process()
 					break;
 				case SDLK_F1:
 					RefreshRomList(true);
+					break;
+				case SDLK_F2:
+					bShowAvailableOnly = !bShowAvailableOnly;
+					DoFilterGames();
+					break;
+				case SDLK_F3:
+					SwapSystemToCheck();
 					break;
 				case SDLK_F12:
 					quit = 1;

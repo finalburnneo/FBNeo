@@ -152,6 +152,41 @@ int WriteGameAvb()
 	return 0;
 }
 
+static unsigned int *filterGames= NULL;
+static int filterGamesCount;
+
+
+static void DoFilterGames()
+{
+	int count = 0;
+	
+	if (filterGames!=NULL)
+	{
+		free(filterGames);
+		filterGames = NULL;
+	}
+	
+	for(int i = 0; i < nBurnDrvCount; i++)
+	{
+		if (gameAv[i])
+		{
+			count++;			
+		}
+	}
+	
+	filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
+	
+	filterGamesCount = 0;
+	
+	for(int i = 0; i < nBurnDrvCount; i++)
+	{
+		if (gameAv[i])
+		{
+			filterGames[filterGamesCount] = i;		
+			filterGamesCount++;
+		}
+	}
+}
 
 static int DoCheck(TCHAR* buffPos)
 {
@@ -237,6 +272,9 @@ int CheckGameAvb()
 		free(buffer);
 		buffer = NULL;
 	}
+	
+	DoFilterGames();
+	
 	return bOK;
 }
 
@@ -428,15 +466,15 @@ void gui_render()
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
-		if (i > 0 && i < nBurnDrvCount)
-		{
-			nBurnDrvActive = i;
+		if (i > 0 && i < filterGamesCount)
+		{			
+			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)
 			{
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
-				gametoplay = i;
+				gametoplay = filterGames[i];
 
 				fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
 				SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
@@ -588,9 +626,9 @@ int gui_process()
 			startGame = -gamesperscreen_halfway + 1;
 		}
 
-		if (startGame > (int)nBurnDrvCount - (int)gamesperscreen_halfway - 1)
+		if (startGame > (int)filterGamesCount - (int)gamesperscreen_halfway - 1)
 		{
-			startGame = nBurnDrvCount - gamesperscreen_halfway - 1;
+			startGame = filterGamesCount - gamesperscreen_halfway - 1;
 		}
 
 		if (previousSelected != gametoplay)

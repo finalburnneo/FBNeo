@@ -342,6 +342,12 @@ void gui_exit()
 	SDL_GameControllerClose( gGameController );
 	gGameController = NULL;
 
+	if (filterGames!=NULL)
+	{
+		free(filterGames);
+		filterGames = NULL;
+	}
+	
 	kill_inline_font();
 	SDL_DestroyTexture(titleTexture);
 	SDL_DestroyRenderer(sdlRenderer);

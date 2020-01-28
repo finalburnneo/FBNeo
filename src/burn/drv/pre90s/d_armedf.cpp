@@ -821,7 +821,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (((6000.0 / nBurnFPS) * 6000000.000) / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()
@@ -1248,7 +1248,7 @@ static void draw_sprites(INT32 priority)
 		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
-		code       &= 0xfff;
+		code       &= 0x7ff;
 
 		if (*flipscreen) {
 			sx = 320 - sx + 176;

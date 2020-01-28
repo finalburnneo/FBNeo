@@ -372,19 +372,7 @@ static tilemap_callback( layer0 )
 	INT32 color = attr & 0xf;
 
 	TILE_SET_INFO(0, code, color, TILE_FLIPXY((attr & 0x30) >> 4));
-}
-
-static tilemap_callback( layer1 )
-{
-	INT32 attr = DrvVidRAM[offs * 2 + 1];
-	INT32 code = DrvVidRAM[offs * 2 + 0] | ((attr << 2) & 0x300);
-
-	INT32 color = attr & 0xf;
-
-	INT32 flags = TILE_FLIPXY((attr & 0x30) >> 4);
-	if (color == 0xf) flags |= TILE_GROUP(1);
-
-	TILE_SET_INFO(0, code, color, flags);
+	*category = (color == 0xf) ? 1 : 0;
 }
 
 static INT32 DrvInit(void (*pRomCallback)(), INT32 soundromsmall, INT32 gfxtype)
@@ -448,16 +436,12 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 soundromsmall, INT32 gfxtype)
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer0_map_callback, 8, 8, 64, 32);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, layer1_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 0xf);
-	GenericTilemapSetGfx(1, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 0xf); // this needed? -dink
 	GenericTilemapSetScrollRows(0, 4);
-	GenericTilemapSetScrollRows(1, 4);
-	GenericTilemapSetTransMask(1, 0, 0x3f);
 	GenericTilemapSetScrollRow(0, 3, 0);
-	GenericTilemapSetScrollRow(1, 3, 0);
 	GenericTilemapSetOffsets(0, -8, 0);
-	GenericTilemapSetOffsets(1, -8, 0);
+	GenericTilemapSetTransSplit(0, 0, 0xff, 0x00);
+	GenericTilemapSetTransSplit(0, 1, 0x3f, 0xc0);
 	if (YFlipping) GenericTilemapSetFlip(TMAP_GLOBAL, TMAP_FLIPY);
 	DrvDoReset();
 
@@ -522,9 +506,9 @@ static void DrvPaletteInit()
 static void draw_sprites()
 {
 	if (YFlipping) {
-		GenericTilesSetClip(0,240,64,256); // shtrider
+		GenericTilesSetClip(0, 240, 64, 256); // shtrider
 	} else {
-		GenericTilesSetClip(0,240,0,192); // everything else
+		GenericTilesSetClip(0, 240,  0, 192); // everything else
 	}
 
 	for (INT32 offs = 0x200 - 4; offs >= 0; offs -= 4)
@@ -559,14 +543,15 @@ static INT32 DrvDraw()
 
 	for (INT32 i = 0; i < 3; i++) {
 		GenericTilemapSetScrollRow(0, i, scrollx);
-		GenericTilemapSetScrollRow(1, i, scrollx);
 	}
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_FORCEOPAQUE);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -601,10 +586,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		nCyclesDone[1] += M6803Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6803);
 		MSM5205Update(); // adpcm update samples
 	}
 

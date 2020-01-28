@@ -26,6 +26,7 @@ static UINT8 *DrvZ80Ram           = NULL;
 static UINT8 *DrvProms            = NULL;
 static UINT8 *DrvSpritePalBank    = NULL;
 static UINT8 *DrvSpriteRam        = NULL;
+static UINT8 *DrvSpriteRamBuffer  = NULL;
 static UINT8 *DrvBgVideoRam       = NULL;
 static UINT8 *DrvFgVideoRam       = NULL;
 static UINT8 *DrvChars            = NULL;
@@ -701,6 +702,7 @@ static INT32 MemIndex()
 	
 	Drv68KRam              = Next; Next += 0x001000;
 	DrvSpriteRam           = Next; Next += 0x002000;
+	DrvSpriteRamBuffer     = Next; Next += 0x002000;
 	DrvBgVideoRam          = Next; Next += 0x001000;
 	DrvFgVideoRam          = Next; Next += 0x001000;
 	DrvZ80Ram              = Next; Next += 0x001000;
@@ -1653,7 +1655,7 @@ static void DrvRenderFgLayer()
 
 static void DrawSprites()
 {
-	UINT16 *pSource = (UINT16*)DrvSpriteRam;
+	UINT16 *pSource = (UINT16*)DrvSpriteRamBuffer;
 	INT32 TransparentPen = 0x00;
 	if (DrvIsHorekid) TransparentPen = 0x0f;
 
@@ -1797,6 +1799,7 @@ static INT32 DrvFrame()
 	ZetClose();
 	
 	if (pBurnDraw) DrvDraw();
+	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x002000);
 
 	return 0;
 }

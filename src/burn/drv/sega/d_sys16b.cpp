@@ -8624,6 +8624,40 @@ static INT32 MvpjInit()
 	return nRet;
 }
 
+static UINT8 Passsht4ReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x0800: {
+			return 0xff - System16Input[0];
+		}
+
+		case 0x1800: {
+			return 0xff - System16Input[1];
+		}
+
+		case 0x1801: {
+			return 0xff - System16Input[2];
+		}
+
+		case 0x1802: {
+			return 0xff - System16Input[3];
+		}
+
+		case 0x1803: {
+			return 0xff - System16Input[4];
+		}
+	}
+
+	return sega_315_5195_io_read(offset);
+}
+
+static INT32 Passsht4Init()
+{
+	sega_315_5195_custom_io_do = Passsht4ReadIO;
+
+	return System16Init();
+}
+
 static void PassshtbMap68K()
 {
 	SekInit(0, 0x68000);
@@ -10026,7 +10060,7 @@ struct BurnDriver BurnDrvPassshta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtaRomInfo, PassshtaRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10036,7 +10070,7 @@ struct BurnDriver BurnDrvPassshtad = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtadRomInfo, PassshtadRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10046,7 +10080,7 @@ struct BurnDriver BurnDrvPassshtj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtjRomInfo, PassshtjRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10056,7 +10090,7 @@ struct BurnDriver BurnDrvPassshtjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtjdRomInfo, PassshtjdRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10076,7 +10110,7 @@ struct BurnDriver BurnDrvCencourt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_SPORTSMISC, 0,
 	NULL, CencourtRomInfo, CencourtRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, CencourtDIPInfo,
-	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Passsht4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

@@ -163,6 +163,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 	nBurnDrvActive = gameTocheck;
 
 	bool bRet = false;
+
 	if (HARDWARE_PUBLIC_MASK == nSystemToCheckMask)
 	{
 		bRet = true;
@@ -232,6 +233,14 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_PREFIX_CAPCOM;
 			break;
 		case HARDWARE_PREFIX_CAPCOM:
+			snprintf(systemName, MAX_PATH, "Pre 1990s");
+			nSystemToCheckMask = HARDWARE_MISC_PRE90S;
+			break;
+		case HARDWARE_MISC_PRE90S:
+			snprintf(systemName, MAX_PATH, "Post 1990s");
+			nSystemToCheckMask = HARDWARE_MISC_POST90S;
+			break;
+		case HARDWARE_MISC_POST90S:
 			snprintf(systemName, MAX_PATH, "SEGA");
 			nSystemToCheckMask = HARDWARE_PREFIX_SEGA;
 			break;
@@ -244,10 +253,10 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_PREFIX_TOAPLAN;
 			break;
 		case HARDWARE_PREFIX_TOAPLAN:
-			snprintf(systemName, MAX_PATH, "SNK");
-			nSystemToCheckMask = HARDWARE_PREFIX_SNK;
+			snprintf(systemName, MAX_PATH, "SNK NeoGeo");
+			nSystemToCheckMask = HARDWARE_SNK_NEOGEO;
 			break;
-		case HARDWARE_PREFIX_SNK:
+		case HARDWARE_SNK_NEOGEO:
 			snprintf(systemName, MAX_PATH, "CAVE");
 			nSystemToCheckMask = HARDWARE_PREFIX_CAVE;
 			break;

@@ -3205,6 +3205,8 @@ static INT32 DrvDraw()
 	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) == 0) { // 1 = Blank Screen
 		rectangle cliprect;
 		GenericTilesGetClip(&cliprect.min_x, &cliprect.max_x, &cliprect.min_y, &cliprect.max_y);
+		cliprect.max_x -= 1;
+		cliprect.max_y -= 1;
 		draw_sprites(cliprect);
 	}
 

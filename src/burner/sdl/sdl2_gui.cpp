@@ -111,11 +111,11 @@ void star_render(SDL_Renderer* renderer)
 
 static void CreateRomDatName(TCHAR* szRomDat)
 {
-#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	_stprintf(szRomDat, _T("%s/roms.found"), SDL_GetPrefPath("fbneo", "config"));
 #else
 	_stprintf(szRomDat, _T("fbneo.dat"));
-#endif 
+#endif
 
 
 	return;
@@ -161,7 +161,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 {
 	int currentSelected = nBurnDrvActive;
 	nBurnDrvActive = gameTocheck;
-	
+
 	bool bRet = false;
 	if (HARDWARE_PUBLIC_MASK == nSystemToCheckMask)
 	{
@@ -171,7 +171,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 	{
 		bRet = true;
 	}
-		
+
 	nBurnDrvActive = currentSelected;
 	return bRet;
 }
@@ -179,7 +179,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 static void DoFilterGames()
 {
 	int count = 0;
-	startGame = -gamesperscreen_halfway + 1;
+
 	if (filterGames!=NULL)
 	{
 		free(filterGames);
@@ -192,19 +192,19 @@ static void DoFilterGames()
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
-				count++;			
+				count++;
 			}
 		}
-		
+
 		filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
-		
+
 		filterGamesCount = 0;
-		
+
 		for(int i = 0; i < nBurnDrvCount; i++)
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
-				filterGames[filterGamesCount] = i;		
+				filterGames[filterGamesCount] = i;
 				filterGamesCount++;
 			}
 		}
@@ -215,7 +215,7 @@ static void DoFilterGames()
 		filterGamesCount = 0;
 		for(int i = 0; i < nBurnDrvCount; i++)
 		{
-			filterGames[filterGamesCount] = i;		
+			filterGames[filterGamesCount] = i;
 			filterGamesCount++;
 		}
 	}
@@ -224,6 +224,7 @@ static void DoFilterGames()
 
 static void SwapSystemToCheck()
 {
+	startGame = -gamesperscreen_halfway + 1;
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PUBLIC_MASK:
@@ -329,7 +330,7 @@ static void SwapSystemToCheck()
 //		case HARDWARE_NES:
 //			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
 	//		nSystemToCheckMask = HARDWARE_FDS;
-		//	break;			
+		//	break;
 		default:
 			snprintf(systemName, MAX_PATH, "Everything");
 			nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
@@ -423,9 +424,9 @@ int CheckGameAvb()
 		free(buffer);
 		buffer = NULL;
 	}
-	
+
 	DoFilterGames();
-	
+
 	return bOK;
 }
 
@@ -498,7 +499,7 @@ void gui_exit()
 		free(filterGames);
 		filterGames = NULL;
 	}
-	
+
 	kill_inline_font();
 	SDL_DestroyTexture(titleTexture);
 	SDL_DestroyRenderer(sdlRenderer);
@@ -624,7 +625,7 @@ void gui_render()
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
 		if (i > 0 && i < filterGamesCount)
-		{			
+		{
 			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)
 			{

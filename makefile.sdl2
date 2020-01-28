@@ -76,8 +76,8 @@ depobj	+= 	neocdlist.o \
 ifdef FORCE_PULSE_AUDIO
 alldir	+= 	intf/audio/linux
 
-depobj	+= 	aud_pulse_simple.o 
-endif 
+depobj	+= 	aud_pulse_simple.o
+endif
 
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \
@@ -104,7 +104,9 @@ else
 lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm
 endif
 
-
+ifdef FORCE_PULSE_AUDIO
+lib += -lpthread -lpulse-simple
+endif
 
 ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
@@ -200,7 +202,7 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 
 ifdef FORCE_PULSE_AUDIO
 	DEF	:= $(DEF) -DFORCE_PULSE_AUDIO
-endif 
+endif
 
 ifdef WINDOWS
 	DEF	:= $(DEF) -DSDL_WINDOWS

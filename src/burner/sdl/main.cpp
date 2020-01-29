@@ -149,6 +149,13 @@ void generateDats()
 
 	sprintf(filename, "%sFBNeo_-_Neogeo.dat", SDL_GetPrefPath("fbneo", "dats"));
 	create_datfile(filename, DAT_NEOGEO_ONLY);
+
+	sprintf(filename, "%sFBNeo_-_Nintendo_Entertainment_System.dat", SDL_GetPrefPath("fbneo", "dats"));
+	create_datfile(filename, DAT_NES_ONLY);
+
+	sprintf(filename, "%sFBNeo_-_Nintendo_Famicom_Disk_System.dat", SDL_GetPrefPath("fbneo", "dats"));
+	create_datfile(filename, DAT_FDS_ONLY);
+
 #else
 	printf("Creating fbneo dats\n");
 
@@ -191,6 +198,12 @@ void generateDats()
 
 	sprintf(filename, "FBNeo_-_Neogeo.dat");
 	create_datfile(filename, DAT_NEOGEO_ONLY);
+
+	sprintf(filename, "FBNeo_-_Nintendo_Entertainment_System.dat");
+	create_datfile(filename, DAT_NES_ONLY);
+
+	sprintf(filename, "FBNeo_-_Nintendo_Famicom_Disk_System.dat");
+	create_datfile(filename, DAT_FDS_ONLY);
 #endif
 }
 

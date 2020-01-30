@@ -420,14 +420,13 @@ static inline void BlockgalMakeInputs()
 }
 
 #define SYSTEM1_COINAGE(dipval)								\
-	{0   , 0xfe, 0   , 16   , "Coin A"                },				\
+	{0   , 0xfe, 0   , 15   , "Coin A"                },				\
 	{dipval, 0x01, 0x0f, 0x07, "4 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x08, "3 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x09, "2 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x05, "2 Coins 1 Credit 4/2 5/3 6/4"},			\
 	{dipval, 0x01, 0x0f, 0x04, "2 Coins 1 Credit 4/3"   },				\
 	{dipval, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"       },				\
-	{dipval, 0x01, 0x0f, 0x00, "1 Coin  1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x03, "1 Coin  1 Credit 5/6"   },				\
 	{dipval, 0x01, 0x0f, 0x02, "1 Coin  1 Credit 4/5"   },				\
 	{dipval, 0x01, 0x0f, 0x01, "1 Coin  1 Credit 2/3"   },				\
@@ -438,14 +437,13 @@ static inline void BlockgalMakeInputs()
 	{dipval, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"      },				\
 	{dipval, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"      },				\
 											\
-	{0   , 0xfe, 0   , 16   , "Coin B"                },				\
+	{0   , 0xfe, 0   , 15   , "Coin B"                },				\
 	{dipval, 0x01, 0xf0, 0x70, "4 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x80, "3 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x90, "2 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x50, "2 Coins 1 Credit 4/2 5/3 6/4"},			\
 	{dipval, 0x01, 0xf0, 0x40, "2 Coins 1 Credit 4/3"   },				\
 	{dipval, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"       },				\
-	{dipval, 0x01, 0xf0, 0x00, "1 Coin  1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x30, "1 Coin  1 Credit 5/6"   },				\
 	{dipval, 0x01, 0xf0, 0x20, "1 Coin  1 Credit 4/5"   },				\
 	{dipval, 0x01, 0xf0, 0x10, "1 Coin  1 Credit 2/3"   },				\

@@ -132,6 +132,8 @@ void retro_set_environment(retro_environment_t cb)
 		{ "Nec PC-Engine", "pce", subsystem_rom, 1, RETRO_GAME_TYPE_PCE },
 		{ "Nec SuperGrafX", "sgx", subsystem_rom, 1, RETRO_GAME_TYPE_SGX },
 		{ "Nec TurboGrafx-16", "tg16", subsystem_rom, 1, RETRO_GAME_TYPE_TG },
+		{ "Nintendo Entertainment System", "nes", subsystem_rom, 1, RETRO_GAME_TYPE_NES },
+		{ "Nintendo Family Disk System", "fds", subsystem_rom, 1, RETRO_GAME_TYPE_FDS },
 		{ "Sega GameGear", "gg", subsystem_rom, 1, RETRO_GAME_TYPE_GG },
 		{ "Sega Master System", "sms", subsystem_rom, 1, RETRO_GAME_TYPE_SMS },
 		{ "Sega Megadrive", "md", subsystem_rom, 1, RETRO_GAME_TYPE_MD },
@@ -790,6 +792,12 @@ int CreateAllDatfiles()
 	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, ZX Spectrum Games only");
 	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
 
+	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, NES Games only");
+	create_datfile(szFilename, DAT_NES_ONLY);
+
+	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, FDS Games only");
+	create_datfile(szFilename, DAT_FDS_ONLY);
+
 	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Neogeo only");
 	create_datfile(szFilename, DAT_NEOGEO_ONLY);
 
@@ -1145,6 +1153,9 @@ static bool retro_load_game_common()
 	// Initialize Samples path
 	snprintf (szAppSamplesPath, sizeof(szAppSamplesPath), "%s%cfbneo%csamples%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
 
+	// Initialize Blend path
+	snprintf (szAppBlendPath, sizeof(szAppBlendPath), "%s%cfbneo%cblend%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
+
 	// Initialize HDD path
 	snprintf (szAppHDDPath, sizeof(szAppHDDPath), "%s%c", g_rom_dir, path_default_slash_c());
 
@@ -1302,6 +1313,14 @@ bool retro_load_game(const struct retro_game_info *info)
 			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem tg identified from parent folder\n");
 			prefix = "tg_";
 		}
+		if(strcmp(g_rom_parent_dir, "nes")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem nes identified from parent folder\n");
+			prefix = "nes_";
+		}
+		if(strcmp(g_rom_parent_dir, "fds")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem fds identified from parent folder\n");
+			prefix = "fds_";
+		}
 		if(strcmp(g_rom_parent_dir, "neocd")==0) {
 			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
 			prefix = "";
@@ -1356,6 +1375,12 @@ bool retro_load_game_special(unsigned game_type, const struct retro_game_info *i
 			break;
 		case RETRO_GAME_TYPE_TG:
 			prefix = "tg_";
+			break;
+		case RETRO_GAME_TYPE_NES:
+			prefix = "nes_";
+			break;
+		case RETRO_GAME_TYPE_FDS:
+			prefix = "fds_";
 			break;
 		case RETRO_GAME_TYPE_NEOCD:
 			prefix = "";

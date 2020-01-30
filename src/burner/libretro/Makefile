@@ -527,21 +527,21 @@ endif
 ifeq ($(DEBUG_ASAN), 1)
 	DEBUG = 1
 	DEBUG_UBSAN = 0
-	CFLAGS += -lasan -fsanitize=address
-	CXXFLAGS += -lasan -fsanitize=address
+	CFLAGS += -fsanitize=address
+	CXXFLAGS += -fsanitize=address
 	LDFLAGS += -lasan -fsanitize=address
 endif
 
 ifeq ($(DEBUG_UBSAN), 1)
 	DEBUG = 1
-	CFLAGS += -lubsan -fsanitize=undefined
-	CXXFLAGS += -lubsan -fsanitize=undefined
+	CFLAGS += -fsanitize=undefined
+	CXXFLAGS += -fsanitize=undefined
 	LDFLAGS += -lubsan -fsanitize=undefined
 endif
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -O1 -g -DFBNEO_DEBUG
-	CXXFLAGS += -O1 -g -DFBNEO_DEBUG
+	CFLAGS += -O0 -g -DFBNEO_DEBUG
+	CXXFLAGS += -O0 -g -DFBNEO_DEBUG
 else
 	ifeq (,$(findstring msvc,$(platform)))
 		CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer

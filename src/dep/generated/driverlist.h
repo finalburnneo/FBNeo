@@ -20722,7 +20722,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_rambo3,			// Rambo III (Euro)
 	&BurnDrvsms_rambo3,			// Rambo III (Euro, USA, Bra)
 	&BurnDrvRambo3,				// Rambo III (Europe)
-	&BurnDrvRambo3p,			// Rambo III (Europe, Proti?)
+	&BurnDrvRambo3p,			// Rambo III (Europe, Proto?)
 	&BurnDrvRambo3u,			// Rambo III (US)
 	&BurnDrvmd_rambo3a,			// Rambo III (World)
 	&BurnDrvmd_rambo3,			// Rambo III (World, v1.1)

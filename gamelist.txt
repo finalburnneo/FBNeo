@@ -7946,7 +7946,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_rambo3	|  	| Rambo III (Euro)					| 		| 1988	| Ocean Software| MSX		| 					|
 | sms_rambo3	|  	| Rambo III (Euro, USA, Bra)				| 		| 1988	| Sega		| Sega Master Sy| 					|
 | rambo3	|  	| Rambo III (Europe)					| 		| 1989	| Taito Europe C| Taito B System| 					|
-| rambo3p	|  	| Rambo III (Europe, Proti?)				| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
+| rambo3p	|  	| Rambo III (Europe, Proto?)				| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
 | rambo3u	|  	| Rambo III (US)					| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
 | md_rambo3a	|  	| Rambo III (World)					| md_rambo3	| 1989	| Sega		| Sega Megadrive| 					|
 | md_rambo3	|  	| Rambo III (World, v1.1)				| 		| 1989	| Sega		| Sega Megadrive| 					|

@@ -6,9 +6,17 @@ This is the official repository of FinalBurn Neo, an Emulator for Arcade Games &
 Use of this program and its source code is subject to the license conditions provided in the [license.txt](/src/license.txt) file in the src folder.
 
 # Work in Progress builds
-If the below build status badge is green, you can download the latest builds from [this repository](https://github.com/finalburnneo/FBNeo-WIP-Storage-Facility/releases/tag/appveyor-build). Please note that if the below build status badge is not green then the build will be out of date. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have.
+If the below build status badge is green, you can download the latest builds from [this repository](https://github.com/finalburnneo/FBNeo-WIP-Storage-Facility/releases/tag/appveyor-build). Please note that if the below build status badge is not green then the build will be out of date. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have. Also note that the dates might be wrong against the downloads, but if the badge is green the downloads *will* be of the latest commit. 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8rkefxtvxd3cllag/branch/master?svg=true)](https://ci.appveyor.com/project/tmaul/fbneo-kbhgd/branch/master)
+
+Here is the build status of the other versions for which we don't supply a binary directly. A red badge against a platform will indicate that something is wrong with that build. Currenty Raspberry Pi builds are missing from CI, but will one day be added:
+
+![SDL2](https://github.com/finalburnneo/FBNeo/workflows/SDL2%20CI/badge.svg)
+![SDL1.2](https://github.com/finalburnneo/FBNeo/workflows/SDL1.2%20CI/badge.svg)
+![macOS](https://github.com/finalburnneo/FBNeo/workflows/macOS%20CI/badge.svg)
+![VS X64](https://github.com/finalburnneo/FBNeo/workflows/VS2019%20x64%20CI/badge.svg)
+![VS win32](https://github.com/finalburnneo/FBNeo/workflows/VS2019%20win32%20CI/badge.svg)
 
 # Ports
 
@@ -60,13 +68,13 @@ void FunctionName(UINT8 var1, UINT16 var2)
 ```
 ## Source tree structure
 
-The source for FBNeo is layed out in a similar way to how things were in the days of the original FinalBurn. It's just that there are now more of them as the emulator has grown significantly.
+The source for FBNeo is layed out in a similar way to how things were in the days of the original FinalBurn. It's just that there are now more directories and source files as the emulator has grown significantly.
 ```
 src/
 --/burn			<-- This is where the emulation code lives
 ----/devices		<-- This is where emulated devices (EEPROMS, etc) live
 ----/drv		<-- This is where the drivers for Games and Systems live
-----/snd		<-- This is where the emulation for sound chips and other sound generate devices live
+----/snd		<-- This is where the emulation for sound chips and other sound generating devices live
 --/burner		<-- This is where the frontend code lives
 --/cpu			<-- This is where the CPU emulation lives
 --/dep			<-- This is where external dependencies live (such as libpng)

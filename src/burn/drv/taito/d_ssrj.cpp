@@ -29,58 +29,62 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo SsrjInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"P1 Coin",						BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start (Easy)",				BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Start (Normal)",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
+	{"P1 Start (Difficult)",		BIT_DIGITAL,	DrvJoy1 + 6,	"p3 start"	},
+	{"P1 Start (Vary Difficult)",	BIT_DIGITAL,	DrvJoy1 + 7,	"p4 start"	},
+	{"P1 Button 1",					BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"	},
+	{"P1 Button 2",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
 
-	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Left",						BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",					BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",						BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",						BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",						BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",						BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Ssrj)
 
 static struct BurnDIPInfo SsrjDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xc0, NULL					},
-	{0x08, 0xff, 0xff, 0x48, NULL					},
+	{0x0b, 0xff, 0xff, 0xc0, NULL					},
+	{0x0c, 0xff, 0xff, 0x48, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x07, 0x01, 0x30, 0x10, "Easy"					},
-	{0x07, 0x01, 0x30, 0x00, "Normal"				},
-	{0x07, 0x01, 0x30, 0x20, "Difficult"			},
-	{0x07, 0x01, 0x30, 0x30, "Very Difficult"		},
+	{0x0b, 0x01, 0x30, 0x10, "Easy"					},
+	{0x0b, 0x01, 0x30, 0x00, "Normal"				},
+	{0x0b, 0x01, 0x30, 0x20, "Difficult"			},
+	{0x0b, 0x01, 0x30, 0x30, "Very Difficult"		},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x07, 0x01, 0x40, 0x40, "Off"					},
-	{0x07, 0x01, 0x40, 0x00, "On"					},
+	{0x0b, 0x01, 0x40, 0x40, "Off"					},
+	{0x0b, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "No Hit"				},
-	{0x07, 0x01, 0x80, 0x80, "Off"					},
-	{0x07, 0x01, 0x80, 0x00, "On"					},
+	{0x0b, 0x01, 0x80, 0x80, "Off"					},
+	{0x0b, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    7, "Coinage"				},
-	{0x08, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
-	{0x08, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
-	{0x08, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
-	{0x08, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
-	{0x08, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
-	{0x08, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
-	{0x08, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x0c, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
+	{0x0c, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
+	{0x0c, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
+	{0x0c, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x0c, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
+	{0x0c, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
+	{0x0c, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x08, 0x01, 0x08, 0x08, "Off"					},
-	{0x08, 0x01, 0x08, 0x00, "On"					},
+	{0x0c, 0x01, 0x08, 0x08, "Off"					},
+	{0x0c, 0x01, 0x08, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Controls"				},
-	{0x08, 0x01, 0x30, 0x00, "Type 1"				},
-	{0x08, 0x01, 0x30, 0x10, "Type 2"				},
-	{0x08, 0x01, 0x30, 0x20, "Type 3"				},
-	{0x08, 0x01, 0x30, 0x30, "Type 4"				},
+	{0x0c, 0x01, 0x30, 0x00, "Type 1"				},
+	{0x0c, 0x01, 0x30, 0x10, "Type 2"				},
+	{0x0c, 0x01, 0x30, 0x20, "Type 3"				},
+	{0x0c, 0x01, 0x30, 0x30, "Type 4"				},
 };
 
 STDDIPINFO(Ssrj)
@@ -369,12 +373,14 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = 0x08;
-		DrvInputs[1] = 0x01;
+		DrvInputs[1] = 0x0f;
 		for (INT32 i = 0; i < 4; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		DrvInputs[1] |= (DrvJoy2[0] ? 0xf : 0);
+		for (INT32 i = 0; i < 4; i++) {
+			DrvInputs[1] ^= (DrvJoy1[i + 4] & 1) << i;
+		}
 	}
 
 	ZetOpen(0);

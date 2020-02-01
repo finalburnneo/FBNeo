@@ -1,4 +1,4 @@
-name: VS2019 x86 CI
+name: VS2019 x64 CI
 
 on: [push]
 

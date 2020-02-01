@@ -525,7 +525,6 @@ void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
 		!_tcscmp(szResXY, _T("1120x832"))	||
 		!_tcscmp(szResXY, _T("1152x864"))	||
 		!_tcscmp(szResXY, _T("1280x960"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	||
 		!_tcscmp(szResXY, _T("1400x1050"))	||
 		!_tcscmp(szResXY, _T("1600x1200"))	||
 		!_tcscmp(szResXY, _T("2048x1536"))	||
@@ -585,7 +584,6 @@ void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
 		!_tcscmp(szResXY, _T("832x1120"))	||
 		!_tcscmp(szResXY, _T("864x1152"))	||
 		!_tcscmp(szResXY, _T("960x1280"))	||
-		!_tcscmp(szResXY, _T("1024x1280"))	||
 		!_tcscmp(szResXY, _T("1050x1400"))	||
 		!_tcscmp(szResXY, _T("1200x1600"))	||
 		!_tcscmp(szResXY, _T("1536x2048"))	||

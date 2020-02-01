@@ -104,6 +104,7 @@ static struct BurnInputInfo ArmedfInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Armedf)
@@ -136,6 +137,7 @@ static struct BurnInputInfo Cclimbr2InputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Cclimbr2)
@@ -242,6 +244,7 @@ static struct BurnDIPInfo ArmedfDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xdf, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
+	{0x17, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -298,6 +301,10 @@ static struct BurnDIPInfo ArmedfDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
 	{0x16, 0x01, 0x40, 0x40, "Off"					},
 	{0x16, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Armedf)
@@ -306,6 +313,7 @@ static struct BurnDIPInfo KozureDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0x4f, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
+	{0x17, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -362,6 +370,10 @@ static struct BurnDIPInfo KozureDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Infinite Timer (Cheat)" },
 	{0x16, 0x01, 0x80, 0x80, "No"					},
 	{0x16, 0x01, 0x80, 0x00, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x17, 0x01, 0x02, 0x02, "Off"					},
+	{0x17, 0x01, 0x02, 0x00, "On"					},
 };
 
 STDDIPINFO(Kozure)
@@ -370,6 +382,7 @@ static struct BurnDIPInfo Cclimbr2DIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xcf, NULL					},
 	{0x18, 0xff, 0xff, 0xff, NULL					},
+	{0x19, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x17, 0x01, 0x03, 0x03, "3"					},
@@ -418,6 +431,10 @@ static struct BurnDIPInfo Cclimbr2DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Partial Invulnerability (Cheat)"	},
 	{0x18, 0x01, 0x40, 0x40, "Off"					},
 	{0x18, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x19, 0x01, 0x02, 0x02, "Off"		},
+	{0x19, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Cclimbr2)
@@ -426,6 +443,7 @@ static struct BurnDIPInfo LegionDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xf7, NULL					},
 	{0x16, 0xff, 0xff, 0xff, NULL					},
+	{0x17, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -476,6 +494,10 @@ static struct BurnDIPInfo LegionDIPList[]=
 	{0   , 0xfe, 0   ,    2, "P2 Invulnerability (Cheat)"		},
 	{0x16, 0x01, 0x80, 0x80, "Off"					},
 	{0x16, 0x01, 0x80, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Legion)
@@ -484,6 +506,7 @@ static struct BurnDIPInfo TerrafDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xcf, NULL					},
 	{0x16, 0xff, 0xff, 0x3f, NULL					},
+	{0x17, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -532,6 +555,10 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x16, 0x01, 0xc0, 0x80, "Only 3 Times"				},
 	{0x16, 0x01, 0xc0, 0x40, "Only 5 Times"				},
 	{0x16, 0x01, 0xc0, 0x00, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Terraf)
@@ -750,7 +777,7 @@ static UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x78002:
-			return DrvInputs[1];
+			return (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
 
 		case 0x78004:
 			return DrvInputs[2];
@@ -1147,7 +1174,7 @@ static inline void AssembleInputs()
 	if (scroll_type == 1) {
 		UINT16 *ptr = (UINT16*)Drv68KRAM2;
 		ptr[0] = DrvInputs[0];
-		ptr[1] = DrvInputs[1];
+		ptr[1] = (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
 		ptr[2] = DrvInputs[2];
 		ptr[3] = DrvInputs[3];
 	}

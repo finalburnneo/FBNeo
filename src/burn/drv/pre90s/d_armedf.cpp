@@ -482,7 +482,7 @@ STDDIPINFO(Legion)
 
 static struct BurnDIPInfo TerrafDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x0f, NULL					},
+	{0x15, 0xff, 0xff, 0xcf, NULL					},
 	{0x16, 0xff, 0xff, 0x3f, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
@@ -490,14 +490,6 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x15, 0x01, 0x03, 0x02, "4"					},
 	{0x15, 0x01, 0x03, 0x01, "5"					},
 	{0x15, 0x01, 0x03, 0x00, "6"					},
-
-	{0   , 0xfe, 0   ,    2, "1st Bonus Life"			},
-	{0x15, 0x01, 0x04, 0x04, "20k"					},
-	{0x15, 0x01, 0x04, 0x00, "50k"					},
-
-	{0   , 0xfe, 0   ,    2, "2nd Bonus Life"			},
-	{0x15, 0x01, 0x08, 0x08, "60k"					},
-	{0x15, 0x01, 0x08, 0x00, "90k"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
 	{0x15, 0x01, 0x0c, 0x0c, "20k then every 60k"			},
@@ -509,7 +501,17 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x15, 0x01, 0x10, 0x10, "Off"					},
 	{0x15, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x20, 0x00, "Upright"				},
+	{0x15, 0x01, 0x20, 0x20, "Cocktail"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x15, 0x01, 0xc0, 0xc0, "Easy"					},
+	{0x15, 0x01, 0xc0, 0x80, "Normal"				},
+	{0x15, 0x01, 0xc0, 0x40, "Hard"					},
+	{0x15, 0x01, 0xc0, 0x00, "Hardest"				},
+
+{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credits"			},
 	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
 	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
@@ -1067,8 +1069,8 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACInit(1, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1520,11 +1522,6 @@ static INT32 ArmedfInit()
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
 
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
-
 	return nRet;
 }
 
@@ -1738,9 +1735,6 @@ static INT32 KozureInit()
 	if (nRet == 0) {
 		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
 		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
-
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1992,9 +1986,6 @@ static INT32 TerrafInit()
 
 	if (nRet == 0) {
 		if (BurnLoadRom(nb1414_blit_data,	14, 1)) return 1;
-
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -2049,11 +2040,6 @@ static INT32 TerrafbInit()
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
-
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
 
 	return nRet;
 }
@@ -2179,11 +2165,6 @@ static INT32 TerrafjbInit()
 
 	INT32 nRet = DrvInit(TerrafjbLoadRoms, Cclimbr268KInit, 0xf800);
 
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
-
 	return nRet;
 }
 
@@ -2269,11 +2250,6 @@ static INT32 SkyRoboInit()
 	Skyrobo = 1;
 
 	INT32 nRet = DrvInit(SkyroboLoadRoms, Bigfghtr68KInit, 0xf800);
-
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
 
 	return nRet;
 }

@@ -1,7 +1,7 @@
 // Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)
 /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo sdodgebRomDesc[] = {
+static struct BurnRomInfo sdodgebhRomDesc[] = {
 	{ "208-p1.p1",    0x200000, 0xE6E58566, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
 	{ "208-s1.s1",    0x020000, 0x64abd6b3, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
@@ -31,7 +31,7 @@ struct BurnDriver BurnDrvsdodgebh = {
 
 // Magical Drop III (Secret Character Hack)
 
-static struct BurnRomInfo magdrop3RomDesc[] = {
+static struct BurnRomInfo magdrop3bhRomDesc[] = {
 	{ "233_boss-p1.p1",    0x100000, 0x80BFE2A9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "233-s1.s1",    0x020000, 0x7399e68a, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -50,7 +50,7 @@ static struct BurnRomInfo magdrop3RomDesc[] = {
 STDROMPICKEXT(magdrop3bh, magdrop3bh, neogeo)
 STD_ROM_FN(magdrop3bh)
 
-struct BurnDriver BurnDrvmagdrop3 = {
+struct BurnDriver BurnDrvmagdrop3bh = {
 	"magdrop3bh", NULL, "neogeo", NULL, "1997",
 	"Magical Drop III (Secret Character Hack)\0", NULL, "Data East Corporation", "Neo Geo MVS",
 	L"Magical Drop III\0\u30DE\u30B8\u30AB\u30EB\u30C9\u30ED\u30C3\u30D7III\0", NULL, NULL, NULL,
@@ -84,7 +84,7 @@ static struct BurnRomInfo wakuwak7bhRomDesc[] = {
 STDROMPICKEXT(wakuwak7bh, wakuwak7bh, neogeo)
 STD_ROM_FN(wakuwak7bh)
 
-struct BurnDriver BurnDrvwakuwak7 = {
+new: struct BurnDriver BurnDrvwakuwak7bh = {
 	"wakuwak7bh", NULL, "neogeo", NULL, "1996",
 	"Waku Waku 7 (Boss Hack)\0", NULL, "Sunsoft", "Neo Geo MVS",
 	L"Waku Waku 7\0\u308F\u304F\u308F\u304F\uFF17\0", NULL, NULL, NULL,
@@ -94,7 +94,7 @@ struct BurnDriver BurnDrvwakuwak7 = {
 	0x1000,	304, 224, 4, 3
 };
 
-Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) (NGM-2400)
+// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) (NGM-2400)
 
 static struct BurnRomInfo rbff2bhRomDesc[] = {
 	{ "240-p1fc.p1",    0x100000, 0xD01854FA, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -120,12 +120,12 @@ static struct BurnRomInfo rbff2bhRomDesc[] = {
 STDROMPICKEXT(rbff2bh, rbff2bh, neogeo)
 STD_ROM_FN(rbff2bh)
 
-struct BurnDriver BurnDrvrbff2 = {
+struct BurnDriver BurnDrvrbff2bh = {
 	"rbff2bh", NULL, "neogeo", NULL, "1998",
 	"Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) (NGM-2400)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Real Bout Fatal Fury 2 - The Newcomers\0Real Bout \u9913\u72FC\u4F1D\u8AAC\uFF12 (NGM-2400)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_FATFURY,
-	NULL, rbff2bhRomInfo, rbff2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, rbff2bhRomInfo, rbff2bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
@@ -157,7 +157,7 @@ static struct BurnRomInfo rbffspbhRomDesc[] = {
 STDROMPICKEXT(rbffspbh, rbffspbh, neogeo)
 STD_ROM_FN(rbffspbh)
 
-struct BurnDriver BurnDrvrbffspec = {
+struct BurnDriver BurnDrvrbffspbh = {
 	"rbffspec", NULL, "neogeo", NULL, "1996",
 	"Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,

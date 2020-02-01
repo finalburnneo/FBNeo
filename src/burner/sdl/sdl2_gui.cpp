@@ -164,13 +164,131 @@ static bool CheckIfSystem(INT32 gameTocheck)
 
 	bool bRet = false;
 
-	if (HARDWARE_PUBLIC_MASK == nSystemToCheckMask)
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == nSystemToCheckMask)
 	{
 		bRet = true;
 	}
-	else if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == nSystemToCheckMask)
+
+	switch (nSystemToCheckMask)
 	{
-		bRet = true;
+		case HARDWARE_PREFIX_CAPCOM:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_CAPCOM_CPS1:
+				case HARDWARE_CAPCOM_CPS1_QSOUND:
+				case HARDWARE_CAPCOM_CPS1_GENERIC:
+				case HARDWARE_CAPCOM_CPSCHANGER:
+				case HARDWARE_CAPCOM_CPS2:
+				case HARDWARE_CAPCOM_CPS2_SIMM:
+				case HARDWARE_CAPCOM_CPS3:
+					bRet = true;
+					break;
+			}
+			break;	
+		case HARDWARE_PREFIX_SEGA:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_SEGA_SYSTEMX:
+				case HARDWARE_SEGA_SYSTEMY:
+				case HARDWARE_SEGA_SYSTEM16A:
+				case HARDWARE_SEGA_SYSTEM16B:
+				case HARDWARE_SEGA_SYSTEM16M:
+				case HARDWARE_SEGA_SYSTEM18:
+				case HARDWARE_SEGA_HANGON:
+				case HARDWARE_SEGA_OUTRUN:
+				case HARDWARE_SEGA_SYSTEM1:
+				case HARDWARE_SEGA_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_KONAMI:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_KONAMI_68K_Z80:
+				case HARDWARE_KONAMI_68K_ONLY:
+					bRet = true;
+					break;
+			}
+			break;
+			
+		case HARDWARE_PREFIX_TOAPLAN:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_TOAPLAN_RAIZING:
+				case HARDWARE_TOAPLAN_68K_Zx80:
+				case HARDWARE_TOAPLAN_68K_ONLY:
+				case HARDWARE_TOAPLAN_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_TAITO:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_TAITO_TAITOZ:
+				case HARDWARE_TAITO_TAITOF2:
+				case HARDWARE_TAITO_MISC:
+				case HARDWARE_TAITO_TAITOX:
+				case HARDWARE_TAITO_TAITOB:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_IREM:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_IREM_M62:
+				case HARDWARE_IREM_M63:
+				case HARDWARE_IREM_M72:
+				case HARDWARE_IREM_M90:
+				case HARDWARE_IREM_M92:
+				case HARDWARE_IREM_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		
+		case HARDWARE_PREFIX_KANEKO:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_KANEKO16:
+				case HARDWARE_KANEKO_MISC:
+				case HARDWARE_KANEKO_SKNS:
+					bRet = true;
+					break;
+			}
+			break;
+
+		case HARDWARE_PREFIX_SETA:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_SETA1:
+				case HARDWARE_SETA2:
+				case HARDWARE_SETA_SSV:
+					bRet = true;
+					break;
+			}
+			break;
+
+		case HARDWARE_PREFIX_MIDWAY:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_MIDWAY_KINST:
+				case HARDWARE_MIDWAY_TUNIT:
+				case HARDWARE_MIDWAY_WUNIT:
+				case HARDWARE_MIDWAY_YUNIT:				
+					bRet = true;
+					break;
+			}
+			break;
+		
+			
+		case HARDWARE_PUBLIC_MASK:
+			bRet = true;
+			break;
+		default:
+			break;
 	}
 
 	nBurnDrvActive = currentSelected;
@@ -229,7 +347,7 @@ static void SwapSystemToCheck()
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PUBLIC_MASK:
-			snprintf(systemName, MAX_PATH, "CAPCOM");
+			snprintf(systemName, MAX_PATH, "CAPCOM CPS1/2/3");
 			nSystemToCheckMask = HARDWARE_PREFIX_CAPCOM;
 			break;
 		case HARDWARE_PREFIX_CAPCOM:
@@ -241,6 +359,10 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_MISC_POST90S;
 			break;
 		case HARDWARE_MISC_POST90S:
+			snprintf(systemName, MAX_PATH, "Midway");
+			nSystemToCheckMask = HARDWARE_PREFIX_MIDWAY;
+			break;
+		case HARDWARE_PREFIX_MIDWAY:
 			snprintf(systemName, MAX_PATH, "SEGA");
 			nSystemToCheckMask = HARDWARE_PREFIX_SEGA;
 			break;

@@ -18350,7 +18350,7 @@ static struct BurnRomInfo wakuwak7bhRomDesc[] = {
 STDROMPICKEXT(wakuwak7bh, wakuwak7bh, neogeo)
 STD_ROM_FN(wakuwak7bh)
 
-new: struct BurnDriver BurnDrvwakuwak7bh = {
+struct BurnDriver BurnDrvwakuwak7bh = {
 	"wakuwak7bh", NULL, "neogeo", NULL, "1996",
 	"Waku Waku 7 (Boss Hack)\0", NULL, "Sunsoft", "Neo Geo MVS",
 	L"Waku Waku 7\0\u308F\u304F\u308F\u304F\uFF17\0", NULL, NULL, NULL,

@@ -307,7 +307,7 @@ static void DoFilterGames()
 
 	if (bShowAvailableOnly)
 	{
-		for(int i = 0; i < nBurnDrvCount; i++)
+		for(INT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
@@ -319,7 +319,7 @@ static void DoFilterGames()
 
 		filterGamesCount = 0;
 
-		for(int i = 0; i < nBurnDrvCount; i++)
+		for(INT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
@@ -332,7 +332,7 @@ static void DoFilterGames()
 	{
 		filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
 		filterGamesCount = 0;
-		for(int i = 0; i < nBurnDrvCount; i++)
+		for(INT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			filterGames[filterGamesCount] = i;
 			filterGamesCount++;
@@ -469,6 +469,70 @@ static void SwapSystemToCheck()
 	}
 	DoFilterGames();
 }
+
+char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+UINT8 currentLetterCount = 0;
+
+void findNextLetter()
+{
+	int currentSelected = nBurnDrvActive;
+	bool found = false;
+	
+	currentLetterCount++;
+	if (currentLetterCount >= 27)
+	{
+		currentLetterCount = 0;
+	}
+	char letterToFind = searchLetters[currentLetterCount];
+	
+	char checkChar;
+	
+	for (int i = 0; i < filterGamesCount; i++)
+	{
+		nBurnDrvActive = filterGames[i];
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		if (!found && (checkChar == letterToFind))
+		{
+			found = true;
+			startGame = i;
+			startGame -= gamesperscreen_halfway;
+		}
+	}
+		
+	nBurnDrvActive = currentSelected;
+}
+
+
+void findPrevLetter()
+{
+	int currentSelected = nBurnDrvActive;
+	bool found = false;
+
+	if (currentLetterCount == 0)
+	{
+		currentLetterCount = 27;
+	}
+	currentLetterCount--;
+	
+	char letterToFind = searchLetters[currentLetterCount];
+	
+	char checkChar;
+	
+	for (int i = 0; i < filterGamesCount; i++)
+	{
+		nBurnDrvActive = filterGames[i];
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		if (!found && (checkChar == letterToFind))
+		{
+			found = true;
+			startGame = i;
+			startGame -= gamesperscreen_halfway;
+		}
+	}
+		
+	nBurnDrvActive = currentSelected;
+}
+
 
 
 static int DoCheck(TCHAR* buffPos)
@@ -832,7 +896,14 @@ int gui_process()
 		{
 			RefreshRomList(true);
 		}
-
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
+		{
+			findPrevLetter();
+		}
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
+		{
+			findNextLetter();
+		}
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)
@@ -886,7 +957,12 @@ int gui_process()
 				case SDLK_RIGHT:
 					startGame += 10;
 					break;
-
+				case SDLK_w:
+					findNextLetter();
+					break;
+				case SDLK_q:
+					findPrevLetter();
+					break;
 				case SDLK_RETURN:
 					nBurnDrvActive = gametoplay;
 					if (gameAv[nBurnDrvActive])

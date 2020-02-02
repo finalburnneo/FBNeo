@@ -79,8 +79,15 @@ The above will give you a nicely scalend game screen and the menu for launching 
 
 ## In-game controls
 
-'tab' brings up the in game menu
-'f12' quit game. This will return you to the game select menu if run with '-menu'. Press 'f12' again to quit 
-'f1' fast forward game. Also rescans roms when in the menu
-'f11' show FPS counter
+'tab' - brings up the in game menu
+'F12' - quit game.
+'F1' - fast forward game.
+'F11' - show FPS counter
 
+## SDL2 in menu controls
+
+'F1' - Rescan current roms
+'F2' - enable/disable filtering
+'F3' - Swap current system
+'F12' - quit menu. This will return you to the game select menu if run with '-menu'. Press 'f12' again to quit 
+'q'/'w' - Skip to next letter

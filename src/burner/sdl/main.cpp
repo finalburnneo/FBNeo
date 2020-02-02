@@ -23,7 +23,7 @@ bool bRunPause = 0;
 bool bAppFullscreen = 0;
 bool bAlwaysProcessKeyboardInput = 0;
 int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
-bool saveconfig = 1;
+bool bSaveconfig = 1;
 bool bIntegerScale = false;
 
 TCHAR szAppBurnVer[16];
@@ -36,8 +36,9 @@ static char* szSDLHDDPath = NULL;
 static char* szSDLSamplePath = NULL;
 #endif
 
-#define set_commandline_option(i,v) i = v; saveconfig = 0;
-#define set_commandline_option_string(i, v, length) snprintf(i, length, v); saveconfig = 0;
+#define set_commandline_option_not_config(i,v) i = v;
+#define set_commandline_option(i,v) i = v; bSaveconfig = 0;
+#define set_commandline_option_string(i, v, length) snprintf(i, length, v); bSaveconfig = 0;
 
 int parseSwitches(int argc, char* argv[])
 {
@@ -55,7 +56,8 @@ int parseSwitches(int argc, char* argv[])
 
 		if (strcmp(argv[i] + 1, "menu") == 0)
 		{
-			set_commandline_option(usemenu, 1)
+			set_commandline_option_not_config(usemenu, 1)
+			
 		}
 
 		if (strcmp(argv[i] + 1, "novsync") == 0)
@@ -70,7 +72,7 @@ int parseSwitches(int argc, char* argv[])
 
 		if (strcmp(argv[i] + 1, "dat") == 0)
 		{
-			set_commandline_option(dat, 1)
+			set_commandline_option_not_config(dat, 1)
 		}
 
 		if (strcmp(argv[i] + 1, "fullscreen") == 0)
@@ -221,7 +223,7 @@ void DoGame(int gameToRun)
 		printf("There was an error loading your selected game.\n");
 	}
 
-	if (saveconfig)
+	if (bSaveconfig)
 	{
 		ConfigAppSave();
 	}
@@ -283,7 +285,7 @@ int main(int argc, char* argv[])
 	fail = ConfigAppLoad();
 	if (fail)
 	{
-		if (saveconfig)
+		if (bSaveconfig)
 		{
 			ConfigAppSave();
 		}
@@ -375,7 +377,7 @@ int main(int argc, char* argv[])
 	fail = ConfigAppLoad();
 	if (fail)
 	{
-		if (saveconfig)
+		if (bSaveconfig)
 		{
 			ConfigAppSave();
 		}

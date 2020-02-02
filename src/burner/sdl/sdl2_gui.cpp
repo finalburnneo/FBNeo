@@ -307,7 +307,7 @@ static void DoFilterGames()
 
 	if (bShowAvailableOnly)
 	{
-		for(INT32 i = 0; i < nBurnDrvCount; i++)
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
@@ -319,7 +319,7 @@ static void DoFilterGames()
 
 		filterGamesCount = 0;
 
-		for(INT32 i = 0; i < nBurnDrvCount; i++)
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			if (gameAv[i] && CheckIfSystem(i))
 			{
@@ -332,7 +332,7 @@ static void DoFilterGames()
 	{
 		filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
 		filterGamesCount = 0;
-		for(INT32 i = 0; i < nBurnDrvCount; i++)
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			filterGames[filterGamesCount] = i;
 			filterGamesCount++;
@@ -642,7 +642,7 @@ void RefreshRomList(bool force_rescan)
 		return;
 	}
 
-	for (UINT32 i = 0; i < nBurnDrvCount; i++)
+	for (INT32 i = 0; i < nBurnDrvCount; i++)
 	{
 		nBurnDrvActive = i;
 		switch (BzipOpen(true))

@@ -30,7 +30,6 @@ static UINT8 DrvReset;
 
 static UINT8 *soundlatch;
 static UINT8 *DrvBgCtrl;
-static INT32 *DrvBgPos;
 
 static INT32 vblank;
 
@@ -188,8 +187,6 @@ static INT32 MemIndex()
 	DrvVidRegs	= Next;
 	DrvBgCtrl	= Next;
 	soundlatch	= Next + 1; Next += 0x000008;
-
-	DrvBgPos	= (INT32*)Next; Next += 0x00001 * sizeof(INT32);
 
 	RamEnd		= Next;
 
@@ -439,35 +436,6 @@ static void draw_background()
 			pTransDraw[sy * nScreenWidth + sx] = pen;
 		}
 	}
-
-#if 0
-	INT32 pos = (*DrvBgPos >> 4) & 0x3ff;
-
-	for (INT32 i = 0; i < 0x1000; i++)
-	{
-		INT32 offs = ((*DrvBgCtrl << 9) & 0x6000) + (i << 1);
-		INT32 attr = DrvGfxROM1[offs];
-		INT32 x    = (DrvGfxROM1[offs + 1] << 1) + (i & 1) + pos + ((i & 8) << 6);
-		INT32 y    = ((i >> 4) << 3) | (i & 7);
-		INT32 pen	 = (attr & 0x7f) | 0x100;
-
-		if (*DrvBgCtrl & 1)
-		{
-			x = 0x400 - (x & 0x3ff);
-			y = 0x100 - (y & 0x0ff);
-		}
-
-		for (INT32 j = 0; j <= ((attr & 0x80) ? 0 : 3); j++)
-		{
-			INT32 sx = ((((j >> 0) & 1) + x) & 0x1ff) - 0x60;
-			INT32 sy = ((((j >> 1) & 1) + y) & 0x0ff) - 0x10;
-
-			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-			pTransDraw[sy * nScreenWidth + sx] = pen;
-		}
-	}
-#endif
 }
 
 static INT32 DrvDraw()
@@ -485,8 +453,6 @@ static INT32 DrvDraw()
 	draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
-
-	*DrvBgPos += (*DrvBgCtrl >> 1) & 7;
 
 	return 0;
 }

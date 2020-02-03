@@ -596,7 +596,7 @@ struct BurnDriver BurnDrvExerizer = {
 	"exerizer", "skyfox", NULL, NULL, "1987",
 	"Exerizer (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, exerizerRomInfo, exerizerRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4

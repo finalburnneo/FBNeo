@@ -334,8 +334,11 @@ static void DoFilterGames()
 		filterGamesCount = 0;
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
-			filterGames[filterGamesCount] = i;
-			filterGamesCount++;
+			if (CheckIfSystem(i))
+			{
+				filterGames[filterGamesCount] = i;
+				filterGamesCount++;
+			}
 		}
 	}
 }

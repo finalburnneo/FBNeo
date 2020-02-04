@@ -13,17 +13,18 @@ jobs:
       working-directory: projectfiles/visualstudio-2019
       run: |
            msbuild fba_vs2010.vcxproj /m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
-    - name: make artifacts
-      run: |
-           mkdir fbn-win32-vs
-           cd fbn-win32-vs
-           cp ../projectfiles/visualstudio-2019/Win32/Release/*.exe .
-           cp ../fba.chm .
-           cp ../*.zip .
-           cp ../src/license.txt .
-           cp ../whatsnew.html .
-    - name: upload vs x86 artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: fbn-win32-vs
-        path: fbn-win32-vs
+#    - name: make artifacts
+#      run: |
+#           mkdir fbn-win32-vs
+#           cd fbn-win32-vs
+#           cp ../projectfiles/visualstudio-2019/Win32/Release/*.exe .
+#           cp ../fba.chm .
+#           cp ../*.zip .
+#           cp ../src/license.txt .
+#           cp ../whatsnew.html .
+#    - name: upload vs x86 artifacts
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: fbn-win32-vs
+#        path: fbn-win32-vs
+#

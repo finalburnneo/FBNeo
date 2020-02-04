@@ -39,12 +39,12 @@ static SDL_Rect dest_title_texture_rect;
 
 static char* gameAv = NULL;
 static unsigned int *filterGames= NULL;
-static int filterGamesCount;
+static int filterGamesCount = 0;
 static bool bShowAvailableOnly = true;
 static bool bShowClones = true;
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
 static char systemName[MAX_PATH] = { 0 };
-static int gameSelectedFromFilter = 0;
+static int gameSelectedFromFilter = -1;
 static char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 static UINT8 currentLetterCount = 0;
 
@@ -846,9 +846,8 @@ void gui_init()
 	{
 		startGame = nBurnDrvActive - gamesperscreen_halfway;
 	}
-
-
 	RefreshRomList(false);
+	DoFilterGames();
 }
 
 void gui_render()

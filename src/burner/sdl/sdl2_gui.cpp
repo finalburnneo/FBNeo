@@ -41,8 +41,10 @@ static char* gameAv = NULL;
 static unsigned int *filterGames= NULL;
 static int filterGamesCount;
 static bool bShowAvailableOnly = true;
+static bool bShowClones = true;
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
 static char systemName[MAX_PATH] = { 0 };
+static int gameSelectedFromFilter = 0;
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -298,7 +300,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 static void DoFilterGames()
 {
 	int count = 0;
-
+	int currentSelected = nBurnDrvActive;
 	if (filterGames!=NULL)
 	{
 		free(filterGames);
@@ -309,9 +311,21 @@ static void DoFilterGames()
 	{
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
+			nBurnDrvActive = i;
 			if (gameAv[i] && CheckIfSystem(i))
 			{
-				count++;
+				if(bShowClones)
+				{
+					count++;
+				}
+				else
+				{
+					if (BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{
+						count++;
+					}
+				}
+				
 			}
 		}
 
@@ -321,10 +335,23 @@ static void DoFilterGames()
 
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
+			nBurnDrvActive = i;
 			if (gameAv[i] && CheckIfSystem(i))
 			{
-				filterGames[filterGamesCount] = i;
-				filterGamesCount++;
+				if(bShowClones)
+				{
+					filterGames[filterGamesCount] = i;
+					filterGamesCount++;
+				}
+				else
+				{
+					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{
+						filterGames[filterGamesCount] = i;
+						filterGamesCount++;
+					}
+				}
+
 			}
 		}
 	}
@@ -334,13 +361,27 @@ static void DoFilterGames()
 		filterGamesCount = 0;
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
+			nBurnDrvActive = i;
 			if (CheckIfSystem(i))
 			{
-				filterGames[filterGamesCount] = i;
-				filterGamesCount++;
+				if(bShowClones)
+				{				
+					filterGames[filterGamesCount] = i;
+					filterGamesCount++;
+				}
+				else
+				{
+					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{					
+						filterGames[filterGamesCount] = i;
+						filterGamesCount++;					
+					}
+				}
 			}
 		}
 	}
+	nBurnDrvActive = currentSelected;
+	
 }
 
 
@@ -794,7 +835,16 @@ void gui_init()
 	gamesperscreen = (nVidGuiHeight - 100) / 10;
 	gamesperscreen_halfway = gamesperscreen / 2;
 
-	startGame = nBurnDrvActive - gamesperscreen_halfway;
+	// assume if the filter list exists we are returning from a launched game.
+	if (filterGamesCount > 0)
+	{
+		startGame = gameSelectedFromFilter - gamesperscreen_halfway;
+	}
+	else
+	{
+		startGame = nBurnDrvActive - gamesperscreen_halfway;
+	}
+
 
 	RefreshRomList(false);
 }
@@ -831,6 +881,7 @@ void gui_render()
 				//incolor(select_color, /* unused */ 0);
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = filterGames[i];
+				gameSelectedFromFilter = i;
 
 				fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
 				SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
@@ -890,6 +941,7 @@ int gui_process()
 		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
 		{
 			nBurnDrvActive = gametoplay;
+
 			if (gameAv[nBurnDrvActive])
 			{
 				return gametoplay;
@@ -982,6 +1034,10 @@ int gui_process()
 					break;
 				case SDLK_F3:
 					SwapSystemToCheck();
+					break;
+				case SDLK_F4:
+					bShowClones = !bShowClones;
+					DoFilterGames();
 					break;
 				case SDLK_F12:
 					quit = 1;

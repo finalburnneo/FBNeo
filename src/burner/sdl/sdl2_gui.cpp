@@ -873,7 +873,7 @@ void gui_render()
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
-		if (i > 0 && i < filterGamesCount)
+		if (i >= 0 && i < filterGamesCount)
 		{
 			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)

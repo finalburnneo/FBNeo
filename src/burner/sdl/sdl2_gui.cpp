@@ -45,6 +45,10 @@ static bool bShowClones = true;
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
 static char systemName[MAX_PATH] = { 0 };
 static int gameSelectedFromFilter = 0;
+static char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+static UINT8 currentLetterCount = 0;
+
+
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -514,8 +518,6 @@ static void SwapSystemToCheck()
 	DoFilterGames();
 }
 
-char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-UINT8 currentLetterCount = 0;
 
 void findNextLetter()
 {
@@ -867,7 +869,7 @@ void gui_render()
 	}
 
 	incolor(fbn_color, /* unused */ 0);
-	inprint(sdlRenderer, "FinalBurn Neo ** F1 - Rescan / F2 - Show/Hide Missing / F3 - System Filter / F12 - Quit **", 10, 10);
+	inprint(sdlRenderer, "FinalBurn Neo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 10);
 	inprint(sdlRenderer, systemName, 10, 20);
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)

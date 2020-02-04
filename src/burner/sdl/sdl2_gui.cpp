@@ -1001,11 +1001,27 @@ int gui_process()
 				case SDLK_UP:
 					startGame--;
 					break;
-
+					
 				case SDLK_DOWN:
 					startGame++;
 					break;
-
+					
+				case SDLK_HOME:
+					startGame = -gamesperscreen_halfway;
+					break;
+					
+				case SDLK_END:
+					startGame = filterGamesCount;
+					break;
+					
+				case SDLK_PAGEUP:
+					startGame -= gamesperscreen_halfway;
+					break;
+					
+				case SDLK_PAGEDOWN:
+					startGame += gamesperscreen_halfway;
+					break;
+				
 				case SDLK_LEFT:
 					startGame -= 10;
 					break;
@@ -1013,6 +1029,7 @@ int gui_process()
 				case SDLK_RIGHT:
 					startGame += 10;
 					break;
+										
 				case SDLK_w:
 					findNextLetter();
 					break;

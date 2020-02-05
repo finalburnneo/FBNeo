@@ -30,13 +30,13 @@ static UINT8 DrvReset;
 
 static UINT8 *soundlatch;
 static UINT8 *DrvBgCtrl;
-static INT32 *DrvBgPos;
 
 static INT32 vblank;
 
 static struct BurnInputInfo SkyfoxInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
@@ -54,27 +54,27 @@ STDINPUTINFO(Skyfox)
 
 static struct BurnDIPInfo SkyfoxDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x6f, NULL			},
-	{0x0a, 0xff, 0xff, 0xf0, NULL			},
-	{0x0b, 0xff, 0xff, 0xfa, NULL			},
+	{0x0a, 0xff, 0xff, 0x6f, NULL			},
+	{0x0b, 0xff, 0xff, 0xf0, NULL			},
+	{0x0c, 0xff, 0xff, 0xfa, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x09, 0x01, 0x18, 0x00, "20K"			},
-	{0x09, 0x01, 0x18, 0x08, "30K"			},
-	{0x09, 0x01, 0x18, 0x10, "40K"			},
-	{0x09, 0x01, 0x18, 0x18, "50K"			},
+	{0x0a, 0x01, 0x18, 0x00, "20K"			},
+	{0x0a, 0x01, 0x18, 0x08, "30K"			},
+	{0x0a, 0x01, 0x18, 0x10, "40K"			},
+	{0x0a, 0x01, 0x18, 0x18, "50K"			},
 	
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x09, 0x01, 0x20, 0x20, "Medium"		},
-	{0x09, 0x01, 0x20, 0x00, "Hard"			},
+	{0x0a, 0x01, 0x20, 0x20, "Medium"		},
+	{0x0a, 0x01, 0x20, 0x00, "Hard"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x09, 0x01, 0x40, 0x40, "Off"			},
-	{0x09, 0x01, 0x40, 0x00, "On"			},
+	{0x0a, 0x01, 0x40, 0x40, "Off"			},
+	{0x0a, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x09, 0x01, 0x80, 0x00, "Upright"		},
-	{0x09, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0x0a, 0x01, 0x80, 0x00, "Upright"		},
+	{0x0a, 0x01, 0x80, 0x80, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
 	{0x0a, 0x01, 0x0e, 0x0e, "5 Coins 1 Credits"	},
@@ -87,12 +87,12 @@ static struct BurnDIPInfo SkyfoxDIPList[]=
 	{0x0a, 0x01, 0x0e, 0x0c, "1 Coin  4 Credits"	},
 
 	{0   , 0xfe, 0   ,    6, "Lives"		},
-	{0x0b, 0x01, 0x07, 0x00, "1"			},
-	{0x0b, 0x01, 0x07, 0x01, "2"			},
-	{0x0b, 0x01, 0x07, 0x02, "3"			},
-	{0x0b, 0x01, 0x07, 0x03, "4"			},
-	{0x0b, 0x01, 0x07, 0x04, "5"			},
-	{0x0b, 0x01, 0x07, 0x07, "Infinite (Cheat)"	},
+	{0x0c, 0x01, 0x07, 0x00, "1"			},
+	{0x0c, 0x01, 0x07, 0x01, "2"			},
+	{0x0c, 0x01, 0x07, 0x02, "3"			},
+	{0x0c, 0x01, 0x07, 0x03, "4"			},
+	{0x0c, 0x01, 0x07, 0x04, "5"			},
+	{0x0c, 0x01, 0x07, 0x07, "Infinite (Cheat)"	},
 };
 
 STDDIPINFO(Skyfox)
@@ -176,7 +176,7 @@ static INT32 MemIndex()
 
 	DrvColPROM	= Next; Next += 0x000300;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -187,8 +187,6 @@ static INT32 MemIndex()
 	DrvVidRegs	= Next;
 	DrvBgCtrl	= Next;
 	soundlatch	= Next + 1; Next += 0x000008;
-
-	DrvBgPos	= (INT32*)Next; Next += 0x00001 * sizeof(INT32);
 
 	RamEnd		= Next;
 
@@ -235,11 +233,6 @@ static void DrvPaletteInit()
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
-	}
-
-	for (INT32 i = 0; i < 256; i++)
-	{
-		DrvPalette[i | 0x100] = BurnHighCol(i,i,i,0);
 	}
 }
 
@@ -318,12 +311,14 @@ static INT32 DrvInit()
 	ZetSetReadHandler(skyfox_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 1748000, NULL, 0);
-	BurnTimerAttachZet(1748000);
+	BurnYM2203Init(2, 14318181 / 8, NULL, 0);
+	BurnTimerAttachZet(14318181 / 8);
 	BurnYM2203SetAllRoutes(0, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+
+	BurnSetRefreshRate(62.65);
 
 	DrvDoReset();
 
@@ -417,29 +412,27 @@ static void draw_sprites()
 
 static void draw_background()
 {
-	INT32 pos = (*DrvBgPos >> 4) & 0x3ff;
+	INT32 blinking = (*DrvBgCtrl & 0x8) ? 1 : 0;
+	INT32 pattern = (*DrvBgCtrl & 0x6) >> 1;
 
 	for (INT32 i = 0; i < 0x1000; i++)
 	{
-		INT32 offs = ((*DrvBgCtrl << 9) & 0x6000) + (i << 1);
-		INT32 attr = DrvGfxROM1[offs];
-		INT32 x    = (DrvGfxROM1[offs + 1] << 1) + (i & 1) + pos + ((i & 8) << 6);
-		INT32 y    = ((i >> 4) << 3) | (i & 7);
-		INT32 pen	 = (attr & 0x7f) | 0x100;
+		INT32 ramoffset = 0x4e0 + (i & 0xf) * 2;
+		INT32 pos = DrvSprRAM[ramoffset + 1] * 2 + ((DrvSprRAM[ramoffset] & 0x80) ? 1 : 0);
 
-		if (*DrvBgCtrl & 1)
+		INT32 offs = (i * 2) % 0x2000 + pattern * 0x2000;
+
+		INT32 pen = DrvGfxROM1[offs];
+		INT32 sx = (DrvGfxROM1[offs + 1] * 2 + pos - 5) % 512;
+		INT32 sy = ((i >> 4) - 15) % 256;
+
+
+		/* This looks perfect at first glance.
+			but when strict compared on "1UP START" screen,
+			it seems the blinking pattern in each star may be different. */
+		if (((*DrvBgCtrl >> 4) & 3) != (pen & 3) || !blinking)
 		{
-			x = 0x400 - (x & 0x3ff);
-			y = 0x100 - (y & 0x0ff);
-		}
-
-		for (INT32 j = 0; j <= ((attr & 0x80) ? 0 : 3); j++)
-		{
-			INT32 sx = ((((j >> 0) & 1) + x) & 0x1ff) - 0x60;
-			INT32 sy = ((((j >> 1) & 1) + y) & 0x0ff) - 0x10;
-
 			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
 			pTransDraw[sy * nScreenWidth + sx] = pen;
 		}
 	}
@@ -460,8 +453,6 @@ static INT32 DrvDraw()
 	draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
-
-	*DrvBgPos += (*DrvBgCtrl >> 1) & 7;
 
 	return 0;
 }
@@ -484,7 +475,7 @@ static INT32 DrvFrame()
 
 	INT32 nCycleSegment;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 4000000 / 60, 1748000 / 60 };
+	INT32 nCyclesTotal[2] = { 4000000 / 62.65, 14318181 / 8 / 62.65 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -571,7 +562,43 @@ struct BurnDriver BurnDrvSkyfox = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, skyfoxRomInfo, skyfoxRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 320, 3, 4
+};
+
+
+// Exerizer (Japan)
+
+static struct BurnRomInfo exerizerRomDesc[] = {
+	{ "1.2v",			0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.3v",			0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "9.5n",			0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "3-1.7w",			0x10000, 0x3a17a929, 3 | BRF_GRA },           //  3 Sprites
+	{ "4.7u",			0x10000, 0x358053bb, 3 | BRF_GRA },           //  4
+	{ "5-1.7t",			0x10000, 0xc1215a6e, 3 | BRF_GRA },           //  5
+	{ "6.7s",			0x10000, 0xcc37e15d, 3 | BRF_GRA },           //  6
+	{ "7.7p",			0x10000, 0xc9bbfe5c, 3 | BRF_GRA },           //  7
+	{ "8.7n",			0x10000, 0x0e3edc49, 3 | BRF_GRA },           //  8
+
+	{ "10.5e",			0x08000, 0x19f58f9c, 4 | BRF_GRA },           //  9 Starfield
+
+	{ "r.1c",			0x00100, 0x79913c7f, 5 | BRF_GRA },           // 10 Color Proms
+	{ "g.1b",			0x00100, 0xfb73d434, 5 | BRF_GRA },           // 11
+	{ "b.1d",			0x00100, 0x60d2ab41, 5 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(exerizer)
+STD_ROM_FN(exerizer)
+
+struct BurnDriver BurnDrvExerizer = {
+	"exerizer", "skyfox", NULL, NULL, "1987",
+	"Exerizer (Japan)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, exerizerRomInfo, exerizerRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };
 
@@ -579,16 +606,16 @@ struct BurnDriver BurnDrvSkyfox = {
 // Exerizer (Japan) (bootleg)
 
 static struct BurnRomInfo exerizrbRomDesc[] = {
-	{ "1-a",		0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1-a",			0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "skyfox2.bin",	0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "skyfox9.bin",	0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "1-c",		0x10000, 0x450e9381, 3 | BRF_GRA },           //  3 Sprites
+	{ "1-c",			0x10000, 0x450e9381, 3 | BRF_GRA },           //  3 Sprites
 	{ "skyfox4.bin",	0x10000, 0x358053bb, 3 | BRF_GRA },           //  4
-	{ "1-e",		0x10000, 0x50a38c60, 3 | BRF_GRA },           //  5
+	{ "1-e",			0x10000, 0x50a38c60, 3 | BRF_GRA },           //  5
 	{ "skyfox6.bin",	0x10000, 0xcc37e15d, 3 | BRF_GRA },           //  6
-	{ "1-g",		0x10000, 0xc9bbfe5c, 3 | BRF_GRA },           //  7
+	{ "1-g",			0x10000, 0xc9bbfe5c, 3 | BRF_GRA },           //  7
 	{ "skyfox8.bin",	0x10000, 0x0e3edc49, 3 | BRF_GRA },           //  8
 
 	{ "skyfox10.bin",	0x08000, 0x19f58f9c, 4 | BRF_GRA },           //  9 Starfield
@@ -607,6 +634,6 @@ struct BurnDriver BurnDrvExerizrb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, exerizrbRomInfo, exerizrbRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };

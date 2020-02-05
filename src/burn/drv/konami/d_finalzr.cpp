@@ -538,8 +538,8 @@ static void draw_fg_layer()
 {
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
-		INT32 sx = ((offs & 0x1f) * 8) - 16;
-		if (sx >= 24) continue;
+		INT32 sx = ((offs & 0x1f) * 8) - 8;
+		if (sx >= 32) continue;
 		INT32 sy = ((offs / 0x20) * 8) - 16;
 		if (sy < 0 || sy >= nScreenHeight) continue;
 

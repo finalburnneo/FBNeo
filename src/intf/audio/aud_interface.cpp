@@ -21,8 +21,14 @@ static UINT32 nAudActive = 0;
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_MACOS)
     extern struct AudOut AudOutMacOS;
-#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
+#elif defined (BUILD_SDL) 
 	extern struct AudOut AudOutSDL;
+#elif defined (BUILD_SDL2)
+	#if defined (FORCE_PULSE_AUDIO)
+		extern struct AudOut AudOutPulseSimple;
+	#else
+		extern struct AudOut AudOutSDL;
+	#endif
 #elif defined (_XBOX)
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_QT)
@@ -39,8 +45,14 @@ static struct AudOut *pAudOut[]=
 	&AudOutXAudio2,
 #elif defined (BUILD_MACOS)
     &AudOutMacOS,
-#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
+#elif defined (BUILD_SDL) 
 	&AudOutSDL,
+#elif defined (BUILD_SDL2)
+	#if defined (FORCE_PULSE_AUDIO)
+		&AudOutPulseSimple,
+	#else
+		&AudOutSDL,
+	#endif
 #elif defined (_XBOX)
 	&AudOutXAudio2,
 #elif defined (BUILD_QT)

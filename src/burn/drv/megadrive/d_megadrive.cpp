@@ -43224,3 +43224,165 @@ struct BurnDriver BurnDrvmd_xenocrisis = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// 16-Bit Rhythm Land
+static struct BurnRomInfo md_16bitrhythmldRomDesc[] = {
+	{ "16-Bit Rhythm Land (HB).bin", 3145728, 0x67271302, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_16bitrhythmld)
+STD_ROM_FN(md_16bitrhythmld)
+
+struct BurnDriver BurnDrvmd_16bitrhythmld = {
+	"md_16bitrhythmld", NULL, NULL, NULL, "2018",
+	"16-Bit Rhythm Land (HB)\0", NULL, "Columbus Circle", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_16bitrhythmldRomInfo, md_16bitrhythmldRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Canon - Legend of the New Gods (HB)
+static struct BurnRomInfo md_canonRomDesc[] = {
+	{ "Canon - Legend of the New Gods (HB).bin", 2097152, 0xf85dd66d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_canon)
+STD_ROM_FN(md_canon)
+
+struct BurnDriver BurnDrvmd_canon = {
+	"md_canon", NULL, NULL, NULL, "2015",
+	"Canon - Legend of the New Gods (HB)\0", NULL, "Piko Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_canonRomInfo, md_canonRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Coffee Crisis (HB)
+static struct BurnRomInfo md_coffeecrisisRomDesc[] = {
+	{ "Coffee Crisis (HB).bin", 4194304, 0x8534ed7c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_coffeecrisis)
+STD_ROM_FN(md_coffeecrisis)
+
+struct BurnDriver BurnDrvmd_coffeecrisis = {
+	"md_coffeecrisis", NULL, NULL, NULL, "2017",
+	"Coffee Crisis (HB)\0", NULL, "Mega Cat Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_coffeecrisisRomInfo, md_coffeecrisisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Escape 2042 (HB)
+static struct BurnRomInfo md_escape2042RomDesc[] = {
+	{ "Escape 2042 (HB).bin", 4194304, 0x0d81511c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_escape2042)
+STD_ROM_FN(md_escape2042)
+
+struct BurnDriver BurnDrvmd_escape2042 = {
+	"md_escape2042", NULL, NULL, NULL, "2018",
+	"Escape 2042 (HB)\0", NULL, "OrionSoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_escape2042RomInfo, md_escape2042RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Little Medusa (HB)
+static struct BurnRomInfo md_littlemedusaRomDesc[] = {
+	{ "Little Medusa (HB).bin", 2097152, 0x931dd919, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_littlemedusa)
+STD_ROM_FN(md_littlemedusa)
+
+struct BurnDriver BurnDrvmd_littlemedusa = {
+	"md_littlemedusa", NULL, NULL, NULL, "2018",
+	"Little Medusa (HB)\0", NULL, "Mega Cat Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_littlemedusaRomInfo, md_littlemedusaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Magic Pockets (HB)
+static struct BurnRomInfo md_magicpocketsRomDesc[] = {
+	{ "Magic Pockets (HB).bin", 3407872, 0xcdfc764f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_magicpockets)
+STD_ROM_FN(md_magicpockets)
+
+struct BurnDriver BurnDrvmd_magicpockets = {
+	"md_magicpockets", NULL, NULL, NULL, "2018",
+	"Magic Pockets (HB)\0", NULL, "The Bitmap Brothers", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_magicpocketsRomInfo, md_magicpocketsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Smart Mouse (HB)
+static struct BurnRomInfo md_smartmouseRomDesc[] = {
+	{ "Smart Mouse (HB).bin", 524288, 0xfb01c832, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_smartmouse)
+STD_ROM_FN(md_smartmouse)
+
+struct BurnDriver BurnDrvmd_smartmouse = {
+	"md_smartmouse", NULL, NULL, NULL, "199X",
+	"Smart Mouse (HB)\0", NULL, "Chuanpu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_smartmouseRomInfo, md_smartmouseRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Switch Blade MD (HB)
+static struct BurnRomInfo md_switchbladRomDesc[] = {
+	{ "Switch Blade MD (HB).bin", 1048576, 0x53dd2706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_switchblad)
+STD_ROM_FN(md_switchblad)
+
+struct BurnDriver BurnDrvmd_switchblad = {
+	"md_switchblad", NULL, NULL, NULL, "2018",
+	"Switch Blade MD (HB)\0", NULL, "Piko Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_switchbladRomInfo, md_switchbladRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tanzer (HB)
+static struct BurnRomInfo md_tanzerRomDesc[] = {
+	{ "Tanzer (HB).bin", 4063232, 0x33e80d0d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tanzer)
+STD_ROM_FN(md_tanzer)
+
+struct BurnDriver BurnDrvmd_tanzer = {
+	"md_tanzer", NULL, NULL, NULL, "2019",
+	"Tanzer (HB)\0", NULL, "Mega Cat Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tanzerRomInfo, md_tanzerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

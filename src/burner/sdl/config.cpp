@@ -94,6 +94,32 @@ int ConfigAppLoad()
 		STR(szAppRomPaths[17]);
 		STR(szAppRomPaths[18]);
 		STR(szAppRomPaths[19]);
+		STR(szAppPreviewsPath);
+		STR(szAppTitlesPath);
+		STR(szAppCheatsPath);
+		STR(szAppHiscorePath);
+		STR(szAppSamplesPath);
+		STR(szAppHDDPath);
+		STR(szAppIpsPath);
+		STR(szAppIconsPath);
+		STR(szAppBlendPath);
+		STR(szAppSelectPath);
+		STR(szAppVersusPath);
+		STR(szAppHowtoPath);
+		STR(szAppScoresPath);
+		STR(szAppBossesPath);
+		STR(szAppGameoverPath);
+		STR(szAppFlyersPath);
+		STR(szAppMarqueesPath);
+		STR(szAppControlsPath);
+		STR(szAppCabinetsPath);
+		STR(szAppPCBsPath);
+		STR(szAppHistoryPath);
+		STR(szAppEEPROMPath);
+		STR(szAppListsPath);
+		STR(szAppDatListsPath);
+		STR(szAppArchivesPath);
+	
 #undef STR
 #undef FLT
 #undef VAR
@@ -149,7 +175,7 @@ int ConfigAppSave()
 	_ftprintf(f, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);
 
-	fprintf(f, "\n// The paths to search for rom zips. (include trailing backslash)\n");
+	fprintf(f, "\n// The paths to search for rom zips. (include trailing slash)\n");
 	STR(szAppRomPaths[0]);
 	STR(szAppRomPaths[1]);
 	STR(szAppRomPaths[2]);
@@ -170,7 +196,56 @@ int ConfigAppSave()
 	STR(szAppRomPaths[17]);
 	STR(szAppRomPaths[18]);
 	STR(szAppRomPaths[19]);
-
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppPreviewsPath);
+	fprintf(f, "\n// Path to titlescreen images for use on the menu (include trailing slash)\n");
+	STR(szAppTitlesPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppCheatsPath);
+	fprintf(f, "\n// Hiscore save path (include trailing slash)\n");
+	STR(szAppHiscorePath);
+	fprintf(f, "\n// Game Samples (where required) (include trailing slash)\n");
+	STR(szAppSamplesPath);
+	fprintf(f, "\n// HDD image path (include trailing slash)\n");
+	STR(szAppHDDPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppIpsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppIconsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppBlendPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppSelectPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppVersusPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppHowtoPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppScoresPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppBossesPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppGameoverPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppFlyersPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppMarqueesPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppControlsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppCabinetsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppPCBsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppHistoryPath);
+	fprintf(f, "\n// EEPROM save path (include trailing slash)\n");
+	STR(szAppEEPROMPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppListsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppDatListsPath);
+	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	STR(szAppArchivesPath);
 	fprintf(f, "\n\n\n");
 
 #undef STR

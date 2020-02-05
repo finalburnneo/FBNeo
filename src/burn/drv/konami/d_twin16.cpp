@@ -921,7 +921,7 @@ static INT32 MemIndex()
 
 static void expand4bpp(UINT8 *src, UINT8 *dst, INT32 len)
 {
-	for (INT32 i = len-1; i > 0; i--) {
+	for (INT32 i = len-1; i >= 0; i--) {
 		dst[i * 2 + 0] = src[i] >> 4;
 		dst[i * 2 + 1] = src[i] & 0x0f;
 	}

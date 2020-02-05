@@ -17435,13 +17435,20 @@ static struct BurnRomInfo cphdRomDesc[] = {
 STDROMPICKEXT(cphd, cphd, neogeo)
 STD_ROM_FN(cphd)
 
+static INT32 CphdInit()
+{
+	cphdmode = 1;
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvcphd = {
 	"cphd", NULL, "neogeo", NULL, "2013",
 	"Crouching Poney Hidden Dragon (DEMO)\0", NULL, "Le Cortex", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, cphdRomInfo, cphdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	CphdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

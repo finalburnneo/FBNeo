@@ -26,9 +26,9 @@ macOS [build instructions](README-macOS.md) and [releases](https://github.com/fb
 
 [LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for most platforms.
 
-For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm)
+For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm) [instructions](README-SDL.md)
 
-For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm)
+For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm) [instructions](README-SDL.md)
 
 # Reporting Issues
 

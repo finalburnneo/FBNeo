@@ -212,6 +212,7 @@ static INT32 nSoundPrevReply;
 #endif
 
 INT32 s1945pmode = 0;
+INT32 cphdmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
 INT32 vlinermode = 0;
 
@@ -1887,7 +1888,8 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	// notes: value too high, and breaks nam1975 voice after coin up
 	// stikers 1945p: goes really slow
 	// pulstar: music/bonus count noise at end of level
-	neogeoSynchroniseZ80(0x24);
+	// cphd: ugh.
+	neogeoSynchroniseZ80((cphdmode) ? 0x64 : 0x24);
 #endif
 }
 
@@ -4471,6 +4473,7 @@ INT32 NeoExit()
 	NeoCDInfo_Exit();
 
 	s1945pmode = 0;
+	cphdmode = 0;
 	fatfury2mode = 0;
 	vlinermode = 0;
 

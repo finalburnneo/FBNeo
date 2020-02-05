@@ -38,6 +38,17 @@ static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
 static char* gameAv = NULL;
+static unsigned int *filterGames= NULL;
+static int filterGamesCount = 0;
+static bool bShowAvailableOnly = true;
+static bool bShowClones = true;
+static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+static char systemName[MAX_PATH] = { 0 };
+static int gameSelectedFromFilter = -1;
+static char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+static UINT8 currentLetterCount = 0;
+
+
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -106,11 +117,11 @@ void star_render(SDL_Renderer* renderer)
 
 static void CreateRomDatName(TCHAR* szRomDat)
 {
-#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	_stprintf(szRomDat, _T("%s/roms.found"), SDL_GetPrefPath("fbneo", "config"));
 #else
 	_stprintf(szRomDat, _T("fbneo.dat"));
-#endif 
+#endif
 
 
 	return;
@@ -151,6 +162,423 @@ int WriteGameAvb()
 
 	return 0;
 }
+
+static bool CheckIfSystem(INT32 gameTocheck)
+{
+	int currentSelected = nBurnDrvActive;
+	nBurnDrvActive = gameTocheck;
+
+	bool bRet = false;
+
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == nSystemToCheckMask)
+	{
+		bRet = true;
+	}
+
+	switch (nSystemToCheckMask)
+	{
+		case HARDWARE_PREFIX_CAPCOM:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_CAPCOM_CPS1:
+				case HARDWARE_CAPCOM_CPS1_QSOUND:
+				case HARDWARE_CAPCOM_CPS1_GENERIC:
+				case HARDWARE_CAPCOM_CPSCHANGER:
+				case HARDWARE_CAPCOM_CPS2:
+				case HARDWARE_CAPCOM_CPS2_SIMM:
+				case HARDWARE_CAPCOM_CPS3:
+					bRet = true;
+					break;
+			}
+			break;	
+		case HARDWARE_PREFIX_SEGA:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_SEGA_SYSTEMX:
+				case HARDWARE_SEGA_SYSTEMY:
+				case HARDWARE_SEGA_SYSTEM16A:
+				case HARDWARE_SEGA_SYSTEM16B:
+				case HARDWARE_SEGA_SYSTEM16M:
+				case HARDWARE_SEGA_SYSTEM18:
+				case HARDWARE_SEGA_HANGON:
+				case HARDWARE_SEGA_OUTRUN:
+				case HARDWARE_SEGA_SYSTEM1:
+				case HARDWARE_SEGA_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_KONAMI:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_KONAMI_68K_Z80:
+				case HARDWARE_KONAMI_68K_ONLY:
+					bRet = true;
+					break;
+			}
+			break;
+			
+		case HARDWARE_PREFIX_TOAPLAN:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_TOAPLAN_RAIZING:
+				case HARDWARE_TOAPLAN_68K_Zx80:
+				case HARDWARE_TOAPLAN_68K_ONLY:
+				case HARDWARE_TOAPLAN_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_TAITO:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_TAITO_TAITOZ:
+				case HARDWARE_TAITO_TAITOF2:
+				case HARDWARE_TAITO_MISC:
+				case HARDWARE_TAITO_TAITOX:
+				case HARDWARE_TAITO_TAITOB:
+					bRet = true;
+					break;
+			}
+			break;
+		case HARDWARE_PREFIX_IREM:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_IREM_M62:
+				case HARDWARE_IREM_M63:
+				case HARDWARE_IREM_M72:
+				case HARDWARE_IREM_M90:
+				case HARDWARE_IREM_M92:
+				case HARDWARE_IREM_MISC:
+					bRet = true;
+					break;
+			}
+			break;
+		
+		case HARDWARE_PREFIX_KANEKO:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_KANEKO16:
+				case HARDWARE_KANEKO_MISC:
+				case HARDWARE_KANEKO_SKNS:
+					bRet = true;
+					break;
+			}
+			break;
+
+		case HARDWARE_PREFIX_SETA:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_SETA1:
+				case HARDWARE_SETA2:
+				case HARDWARE_SETA_SSV:
+					bRet = true;
+					break;
+			}
+			break;
+
+		case HARDWARE_PREFIX_MIDWAY:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_MIDWAY_KINST:
+				case HARDWARE_MIDWAY_TUNIT:
+				case HARDWARE_MIDWAY_WUNIT:
+				case HARDWARE_MIDWAY_YUNIT:				
+					bRet = true;
+					break;
+			}
+			break;
+		
+			
+		case HARDWARE_PUBLIC_MASK:
+			bRet = true;
+			break;
+		default:
+			break;
+	}
+
+	nBurnDrvActive = currentSelected;
+	return bRet;
+}
+
+static void DoFilterGames()
+{
+	int count = 0;
+	int currentSelected = nBurnDrvActive;
+	if (filterGames!=NULL)
+	{
+		free(filterGames);
+		filterGames = NULL;
+	}
+
+	if (bShowAvailableOnly)
+	{
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
+		{
+			nBurnDrvActive = i;
+			if (gameAv[i] && CheckIfSystem(i))
+			{
+				if(bShowClones)
+				{
+					count++;
+				}
+				else
+				{
+					if (BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{
+						count++;
+					}
+				}
+				
+			}
+		}
+
+		filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
+
+		filterGamesCount = 0;
+
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
+		{
+			nBurnDrvActive = i;
+			if (gameAv[i] && CheckIfSystem(i))
+			{
+				if(bShowClones)
+				{
+					filterGames[filterGamesCount] = i;
+					filterGamesCount++;
+				}
+				else
+				{
+					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{
+						filterGames[filterGamesCount] = i;
+						filterGamesCount++;
+					}
+				}
+
+			}
+		}
+	}
+	else
+	{
+		filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
+		filterGamesCount = 0;
+		for(UINT32 i = 0; i < nBurnDrvCount; i++)
+		{
+			nBurnDrvActive = i;
+			if (CheckIfSystem(i))
+			{
+				if(bShowClones)
+				{				
+					filterGames[filterGamesCount] = i;
+					filterGamesCount++;
+				}
+				else
+				{
+					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
+					{					
+						filterGames[filterGamesCount] = i;
+						filterGamesCount++;					
+					}
+				}
+			}
+		}
+	}
+	nBurnDrvActive = currentSelected;
+	
+}
+
+
+static void SwapSystemToCheck()
+{
+	startGame = -gamesperscreen_halfway + 1;
+	switch(nSystemToCheckMask)
+	{
+		case HARDWARE_PUBLIC_MASK:
+			snprintf(systemName, MAX_PATH, "CAPCOM CPS1/2/3");
+			nSystemToCheckMask = HARDWARE_PREFIX_CAPCOM;
+			break;
+		case HARDWARE_PREFIX_CAPCOM:
+			snprintf(systemName, MAX_PATH, "Pre 1990s");
+			nSystemToCheckMask = HARDWARE_MISC_PRE90S;
+			break;
+		case HARDWARE_MISC_PRE90S:
+			snprintf(systemName, MAX_PATH, "Post 1990s");
+			nSystemToCheckMask = HARDWARE_MISC_POST90S;
+			break;
+		case HARDWARE_MISC_POST90S:
+			snprintf(systemName, MAX_PATH, "Midway");
+			nSystemToCheckMask = HARDWARE_PREFIX_MIDWAY;
+			break;
+		case HARDWARE_PREFIX_MIDWAY:
+			snprintf(systemName, MAX_PATH, "SEGA");
+			nSystemToCheckMask = HARDWARE_PREFIX_SEGA;
+			break;
+		case HARDWARE_PREFIX_SEGA:
+			snprintf(systemName, MAX_PATH, "Konami");
+			nSystemToCheckMask = HARDWARE_PREFIX_KONAMI;
+			break;
+		case HARDWARE_PREFIX_KONAMI:
+			snprintf(systemName, MAX_PATH, "Toaplan");
+			nSystemToCheckMask = HARDWARE_PREFIX_TOAPLAN;
+			break;
+		case HARDWARE_PREFIX_TOAPLAN:
+			snprintf(systemName, MAX_PATH, "SNK NeoGeo");
+			nSystemToCheckMask = HARDWARE_SNK_NEOGEO;
+			break;
+		case HARDWARE_SNK_NEOGEO:
+			snprintf(systemName, MAX_PATH, "CAVE");
+			nSystemToCheckMask = HARDWARE_PREFIX_CAVE;
+			break;
+		case HARDWARE_PREFIX_CAVE:
+			snprintf(systemName, MAX_PATH, "IGS PGM");
+			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
+			break;
+		case HARDWARE_PREFIX_IGS_PGM:
+			snprintf(systemName, MAX_PATH, "Taito");
+			nSystemToCheckMask = HARDWARE_PREFIX_TAITO;
+			break;
+		case HARDWARE_PREFIX_TAITO:
+			snprintf(systemName, MAX_PATH, "Psikyo");
+			nSystemToCheckMask = HARDWARE_PREFIX_PSIKYO;
+			break;
+		case HARDWARE_PREFIX_PSIKYO:
+			snprintf(systemName, MAX_PATH, "Kaneko");
+			nSystemToCheckMask = HARDWARE_PREFIX_KANEKO;
+			break;
+		case HARDWARE_PREFIX_KANEKO:
+			snprintf(systemName, MAX_PATH, "IREM");
+			nSystemToCheckMask = HARDWARE_PREFIX_IREM;
+			break;
+		case HARDWARE_PREFIX_IREM:
+			snprintf(systemName, MAX_PATH, "Data East");
+			nSystemToCheckMask = HARDWARE_PREFIX_DATAEAST;
+			break;
+		case HARDWARE_PREFIX_DATAEAST:
+			snprintf(systemName, MAX_PATH, "Seta");
+			nSystemToCheckMask = HARDWARE_PREFIX_SETA;
+			break;
+		case HARDWARE_PREFIX_SETA:
+			snprintf(systemName, MAX_PATH, "Technos");
+			nSystemToCheckMask = HARDWARE_PREFIX_TECHNOS;
+			break;
+		case HARDWARE_PREFIX_TECHNOS:
+			snprintf(systemName, MAX_PATH, "Sega Megadrive / Genesis");
+			nSystemToCheckMask = HARDWARE_SEGA_MEGADRIVE;
+			break;
+		case HARDWARE_SEGA_MEGADRIVE:
+			snprintf(systemName, MAX_PATH, "NEC PC Engine");
+			nSystemToCheckMask = HARDWARE_PCENGINE_PCENGINE;
+			break;
+		case HARDWARE_PCENGINE_PCENGINE:
+			snprintf(systemName, MAX_PATH, "NEC Turbographx 16");
+			nSystemToCheckMask = HARDWARE_PCENGINE_TG16;
+			break;
+		case HARDWARE_PCENGINE_TG16:
+			snprintf(systemName, MAX_PATH, "NEC SGX");
+			nSystemToCheckMask = HARDWARE_PCENGINE_SGX;
+			break;
+		case HARDWARE_PCENGINE_SGX:
+			snprintf(systemName, MAX_PATH, "Sega SG-1000");
+			nSystemToCheckMask = HARDWARE_SEGA_SG1000;
+			break;
+		case HARDWARE_SEGA_SG1000:
+			snprintf(systemName, MAX_PATH, "ColecoVision");
+			nSystemToCheckMask = HARDWARE_COLECO;
+			break;
+		case HARDWARE_COLECO:
+			snprintf(systemName, MAX_PATH, "Sega Master System");
+			nSystemToCheckMask = HARDWARE_SEGA_MASTER_SYSTEM;
+			break;
+		case HARDWARE_SEGA_MASTER_SYSTEM:
+			snprintf(systemName, MAX_PATH, "Sega Game Gear");
+			nSystemToCheckMask = HARDWARE_SEGA_GAME_GEAR;
+			break;
+		case HARDWARE_SEGA_GAME_GEAR:
+			snprintf(systemName, MAX_PATH, "MSX");
+			nSystemToCheckMask = HARDWARE_MSX;
+			break;
+		case HARDWARE_MSX:
+			snprintf(systemName, MAX_PATH, "Sinclar Spectrum");
+			nSystemToCheckMask = HARDWARE_SPECTRUM;
+			break;
+//		case HARDWARE_SPECTRUM:
+//			snprintf(systemName, MAX_PATH, "Nintendo Entertainment System / Famicom");
+	//		nSystemToCheckMask = HARDWARE_NES;
+		//	break;
+//		case HARDWARE_NES:
+//			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
+	//		nSystemToCheckMask = HARDWARE_FDS;
+		//	break;
+		default:
+			snprintf(systemName, MAX_PATH, "Everything");
+			nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+			break;
+	}
+	DoFilterGames();
+}
+
+
+void findNextLetter()
+{
+	int currentSelected = nBurnDrvActive;
+	bool found = false;
+	
+	currentLetterCount++;
+	if (currentLetterCount >= 27)
+	{
+		currentLetterCount = 0;
+	}
+	char letterToFind = searchLetters[currentLetterCount];
+	
+	char checkChar;
+	
+	for (int i = 0; i < filterGamesCount; i++)
+	{
+		nBurnDrvActive = filterGames[i];
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		if (!found && (checkChar == letterToFind))
+		{
+			found = true;
+			startGame = i;
+			startGame -= gamesperscreen_halfway;
+		}
+	}
+		
+	nBurnDrvActive = currentSelected;
+}
+
+
+void findPrevLetter()
+{
+	int currentSelected = nBurnDrvActive;
+	bool found = false;
+
+	if (currentLetterCount == 0)
+	{
+		currentLetterCount = 27;
+	}
+	currentLetterCount--;
+	
+	char letterToFind = searchLetters[currentLetterCount];
+	
+	char checkChar;
+	
+	for (int i = 0; i < filterGamesCount; i++)
+	{
+		nBurnDrvActive = filterGames[i];
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		if (!found && (checkChar == letterToFind))
+		{
+			found = true;
+			startGame = i;
+			startGame -= gamesperscreen_halfway;
+		}
+	}
+		
+	nBurnDrvActive = currentSelected;
+}
+
 
 
 static int DoCheck(TCHAR* buffPos)
@@ -237,6 +665,9 @@ int CheckGameAvb()
 		free(buffer);
 		buffer = NULL;
 	}
+
+	DoFilterGames();
+
 	return bOK;
 }
 
@@ -257,7 +688,7 @@ void RefreshRomList(bool force_rescan)
 		return;
 	}
 
-	for (UINT32 i = 0; i < nBurnDrvCount; i++)
+	for (INT32 i = 0; i < nBurnDrvCount; i++)
 	{
 		nBurnDrvActive = i;
 		switch (BzipOpen(true))
@@ -303,6 +734,12 @@ void gui_exit()
 {
 	SDL_GameControllerClose( gGameController );
 	gGameController = NULL;
+
+	if (filterGames!=NULL)
+	{
+		free(filterGames);
+		filterGames = NULL;
+	}
 
 	kill_inline_font();
 	SDL_DestroyTexture(titleTexture);
@@ -400,9 +837,17 @@ void gui_init()
 	gamesperscreen = (nVidGuiHeight - 100) / 10;
 	gamesperscreen_halfway = gamesperscreen / 2;
 
-	startGame = nBurnDrvActive - gamesperscreen_halfway;
-
+	// assume if the filter list exists we are returning from a launched game.
+	if (filterGamesCount > 0)
+	{
+		startGame = gameSelectedFromFilter - gamesperscreen_halfway;
+	}
+	else
+	{
+		startGame = nBurnDrvActive - gamesperscreen_halfway;
+	}
 	RefreshRomList(false);
+	DoFilterGames();
 }
 
 void gui_render()
@@ -423,20 +868,21 @@ void gui_render()
 	}
 
 	incolor(fbn_color, /* unused */ 0);
-	inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
-	inprint(sdlRenderer, "=============", 10, 20);
+	inprint(sdlRenderer, "FinalBurn Neo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 10);
+	inprint(sdlRenderer, systemName, 10, 20);
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
-		if (i > 0 && i < nBurnDrvCount)
+		if (i >= 0 && i < filterGamesCount)
 		{
-			nBurnDrvActive = i;
+			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)
 			{
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
-				gametoplay = i;
+				gametoplay = filterGames[i];
+				gameSelectedFromFilter = i;
 
 				fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
 				SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
@@ -496,6 +942,7 @@ int gui_process()
 		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
 		{
 			nBurnDrvActive = gametoplay;
+
 			if (gameAv[nBurnDrvActive])
 			{
 				return gametoplay;
@@ -505,7 +952,14 @@ int gui_process()
 		{
 			RefreshRomList(true);
 		}
-
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
+		{
+			findPrevLetter();
+		}
+		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
+		{
+			findNextLetter();
+		}
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)
@@ -547,11 +1001,27 @@ int gui_process()
 				case SDLK_UP:
 					startGame--;
 					break;
-
+					
 				case SDLK_DOWN:
 					startGame++;
 					break;
-
+					
+				case SDLK_HOME:
+					startGame = -gamesperscreen_halfway;
+					break;
+					
+				case SDLK_END:
+					startGame = filterGamesCount;
+					break;
+					
+				case SDLK_PAGEUP:
+					startGame -= gamesperscreen_halfway;
+					break;
+					
+				case SDLK_PAGEDOWN:
+					startGame += gamesperscreen_halfway;
+					break;
+				
 				case SDLK_LEFT:
 					startGame -= 10;
 					break;
@@ -559,7 +1029,13 @@ int gui_process()
 				case SDLK_RIGHT:
 					startGame += 10;
 					break;
-
+										
+				case SDLK_w:
+					findNextLetter();
+					break;
+				case SDLK_q:
+					findPrevLetter();
+					break;
 				case SDLK_RETURN:
 					nBurnDrvActive = gametoplay;
 					if (gameAv[nBurnDrvActive])
@@ -569,6 +1045,17 @@ int gui_process()
 					break;
 				case SDLK_F1:
 					RefreshRomList(true);
+					break;
+				case SDLK_F2:
+					bShowAvailableOnly = !bShowAvailableOnly;
+					DoFilterGames();
+					break;
+				case SDLK_F3:
+					SwapSystemToCheck();
+					break;
+				case SDLK_F4:
+					bShowClones = !bShowClones;
+					DoFilterGames();
 					break;
 				case SDLK_F12:
 					quit = 1;
@@ -588,9 +1075,9 @@ int gui_process()
 			startGame = -gamesperscreen_halfway + 1;
 		}
 
-		if (startGame > (int)nBurnDrvCount - (int)gamesperscreen_halfway - 1)
+		if (startGame > (int)filterGamesCount - (int)gamesperscreen_halfway - 1)
 		{
-			startGame = nBurnDrvCount - gamesperscreen_halfway - 1;
+			startGame = filterGamesCount - gamesperscreen_halfway - 1;
 		}
 
 		if (previousSelected != gametoplay)

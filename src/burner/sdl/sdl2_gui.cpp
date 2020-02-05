@@ -391,7 +391,7 @@ static void DoFilterGames()
 
 static void SwapSystemToCheck()
 {
-	startGame = -gamesperscreen_halfway + 1;
+	startGame = -gamesperscreen_halfway;
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PUBLIC_MASK:
@@ -1070,9 +1070,9 @@ int gui_process()
 		}
 
 		// TODO: Need to put more clamping logic here....
-		if (startGame < -(int)gamesperscreen_halfway + 1)
+		if (startGame < -(int)gamesperscreen_halfway)
 		{
-			startGame = -gamesperscreen_halfway + 1;
+			startGame = -gamesperscreen_halfway;
 		}
 
 		if (startGame > (int)filterGamesCount - (int)gamesperscreen_halfway - 1)

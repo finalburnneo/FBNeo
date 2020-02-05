@@ -24,7 +24,7 @@ Raspberry Pi [build instructions](README-PI.md).
 
 macOS [build instructions](README-macOS.md) and [releases](https://github.com/fbn-mac/FBNeo/releases).
 
-[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for most platforms.
+[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for a lot of cool platforms.
 
 For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm) [instructions](README-SDL.md)
 
@@ -97,4 +97,4 @@ signed int64	INT64;
 unsigned int64  UINT64;
 
 ```
-It is recommended that you take a look at the other #defines and things in the header files in Burn and Burner, and don't forget that some of the existing code in the intf directory will come in handy for new ports. 
+It is recommended that you take a look at the other #defines and structs in the header files in Burn and Burner, and don't forget that some of the existing code in the intf directory will come in handy for new ports. 

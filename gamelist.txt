@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12321 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12331 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -28,6 +28,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_16tongnk	|  	| 16 Ton (Jpn, Game no Kandume MegaCD Rip)		| md_16ton	| 1991	| Sega		| Sega Megadrive| 					|
 | md_16ton	|  	| 16 Ton (Jpn, SegaNet)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_16zhan	|  	| 16 Zhang Ma Jiang (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| md_16bitrhythmld|  	| 16-Bit Rhythm Land (HB)				| 		| 2018	| Columbus Circl| Sega Megadrive| 					|
 | cprogolf18	|  	| 18 Challenge Pro Golf (DECO Cassette) (Japan)		| cprogolf	| 1982	| Data East Corp| Cassette Syste| 					|
 | progolf	|  	| 18 Holes Pro Golf (set 1)				| 		| 1981	| Data East Corp| Miscellaneous	| 					|
 | progolfa	| D NW	| 18 Holes Pro Golf (set 2)				| progolf	| 1981	| Data East Corp| Miscellaneous	| 					|
@@ -1482,6 +1483,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_cannonfgt	|  	| Cannon Fighter					| 		| 1984	| Policy	| MSX		| 					|
 | md_cfodder	|  	| Cannon Fodder (Euro)					| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | msx_cannont	|  	| Cannon Turbo (Jpn)					| 		| 198?	| Brother Kougyo| MSX		| 					|
+| md_canon	|  	| Canon - Legend of the New Gods (HB)			| 		| 2015	| Piko Interacti| Sega Megadrive| 					|
 | canvas	|  	| Canvas Croquis					| 		| 1985	| SNK		| Miscellaneous	| 					|
 | canyonp	|  	| Canyon Bomber (prototype)				| canyon	| 1977	| Atari		| Miscellaneous	| No sound				|
 | canyon	|  	| Canyon Bomber						| 		| 1977	| Atari		| Miscellaneous	| No sound				|
@@ -1858,6 +1860,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_cocakid	|  	| Coca Cola Kid (Jpn)					| 		| 1994	| Sega		| Sega Game Gear| 					|
 | ladybugb2	|  	| Coccinelle (bootleg of Lady Bug, set 2)		| ladybug	| 1981	| bootleg (Model| Miscellaneous	| 					|
 | cnbe		|  	| Codename - Blut Engel (2006-01-19)			| 		| 2006	| blastar@gmx.ne| Neo Geo MVS	| 					|
+| md_coffeecrisis|  	| Coffee Crisis (HB)					| 		| 2017	| Mega Cat Studi| Sega Megadrive| 					|
 | cv_coldblood	|  	| Cold Blood						| 		| 1981	| Activision	| ColecoVision	| 					|
 | cv_cvjoytest	|  	| ColecoVision Joystick Test				| 		| 1983	| Coleco	| ColecoVision	| 					|
 | cv_sgmtest	|  	| ColecoVision SuperGame Module (SGM) Test		| 		| 200x	| Coleco	| ColecoVision	| 					|
@@ -3039,6 +3042,7 @@ This list contains all games supported by FinalBurn Neo.
 | enforce	|  	| Enforce (World)					| 		| 1988	| Taito Corporat| Taito Z	| 					|
 | enmadaio	|  	| Enma Daio (Japan)					| 		| 1993	| Toaplan / Tait| Toaplan GP9001| Game unplayable.			|
 | gg_ernieeg	|  	| Ernie Els Golf (Euro)					| 		| 1994	| Codemasters	| Sega Game Gear| 					|
+| md_escape2042	|  	| Escape 2042 (HB)					| 		| 2018	| OrionSoft	| Sega Megadrive| 					|
 | md_tazmars	|  	| Escape from Mars Starring Taz (Euro)			| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_tazmarsp11	|  	| Escape from Mars Starring Taz (Prototype, 19940309)	| md_tazmars	| 1994	| Sega		| Sega Megadrive| 					|
 | md_tazmarsp10	|  	| Escape from Mars Starring Taz (Prototype, 19940418)	| md_tazmars	| 1994	| Sega		| Sega Megadrive| 					|
@@ -3107,6 +3111,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_exerion2	|  	| Exerion II - Zorni (Jpn)				| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | msx_exerion2a	|  	| Exerion II - Zorni (Jpn, Alt)				| msx_exerion2	| 1985	| Toshiba EMI	| MSX		| 					|
 | exerizerb	|  	| Exerizer (Japan) (bootleg)				| skyfox	| 1987	| Jaleco	| Miscellaneous	| 					|
+| exerizer	|  	| Exerizer (Japan)					| skyfox	| 1987	| Jaleco	| Miscellaneous	| 					|
 | md_exile	|  	| Exile (USA)						| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | md_exilej	|  	| Exile - Toki no Hazama e (Jpn)			| md_exile	| 1991	| Riot		| Sega Megadrive| 					|
 | md_exosquad	|  	| Exo Squad (Euro)					| 		| 1995	| Virgin Interac| Sega Megadrive| 					|
@@ -5434,6 +5439,7 @@ This list contains all games supported by FinalBurn Neo.
 | liquidku	|  	| Liquid Kids (US)					| liquidk	| 1990	| Taito America | Taito F2	| 					|
 | liquidk	|  	| Liquid Kids (World)					| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | lithero	|  	| Little Hero						| kidniki	| 1987	| bootleg	| Irem M62	| 					|
+| md_littlemedusa|  	| Little Medusa (HB)					| 		| 2018	| Mega Cat Studi| Sega Megadrive| 					|
 | livequiz	|  	| Live Quiz Show					| 		| 1999	| Andamiro Enter| Andamiro Midas| 					|
 | msx_livingstone2|  	| Livingstone Supongo II				| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_livingstone|  	| Livingstone Supongo					| 		| 1986	| Opera Soft	| MSX		| 					|
@@ -5559,6 +5565,7 @@ This list contains all games supported by FinalBurn Neo.
 | magicbub	|  	| Magic Bubble						| 		| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
 | gg_rayearth	|  	| Magic Knight Rayearth (Jpn)				| 		| 1994	| Sega		| Sega Game Gear| 					|
 | gg_rayeart2	|  	| Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)| 		| 1995	| Sega		| Sega Game Gear| 					|
+| md_magicpockets|  	| Magic Pockets (HB)					| 		| 2018	| The Bitmap Bro| Sega Megadrive| 					|
 | magipur	|  	| Magic Purple						| 		| 1996	| Unico		| Miscellaneous	| 					|
 | mswordj	|  	| Magic Sword (23.06.1990 Japan)			| msword	| 1990	| Capcom	| CPS1		| 					|
 | mswordr1	|  	| Magic Sword - heroic fantasy (23.06.1990 other country| msword	| 1990	| Capcom	| CPS1		| 					|
@@ -8833,6 +8840,7 @@ This list contains all games supported by FinalBurn Neo.
 | slyspy3	|  	| Sly Spy (US revision 3)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
 | slyspy	|  	| Sly Spy (US revision 4)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
 | msx_smackwac	|  	| Smack Wacker (Euro)					| 		| 1986	| Eaglesoft	| MSX		| 					|
+| md_smartmouse	|  	| Smart Mouse (HB)					| 		| 199X	| Chuanpu	| Sega Megadrive| 					|
 | sms_smashtv	|  	| Smash T.V. (Euro)					| 		| 1992	| Flying Edge	| Sega Master Sy| 					|
 | gg_smashtv	|  	| Smash T.V. (World)					| 		| 1992	| Flying Edge	| Sega Game Gear| 					|
 | spec_smashtv	|  	| Smash TV (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
@@ -10118,6 +10126,7 @@ This list contains all games supported by FinalBurn Neo.
 | swimmer	|  	| Swimmer (set 1)					| 		| 1982	| Tehkan	| Miscellaneous	| 					|
 | msx_swing	|  	| Swing (Jpn)						| 		| 1985	| Pony Canyon	| MSX		| 					|
 | msx_swinga	|  	| Swing (Jpn, Alt)					| msx_swing	| 1985	| Pony Canyon	| MSX		| 					|
+| md_switchblad	|  	| Switch Blade MD (HB)					| 		| 2018	| Piko Interacti| Sega Megadrive| 					|
 | spec_swiv	|  	| SWIV (128K)						| 		| 1991	| Storm Software| ZX Spectrum	| 					|
 | cv_sword	|  	| Sword and Sorcerer (Prototype)			| 		| 1983	| Coleco	| ColecoVision	| 					|
 | md_swordsod	|  	| Sword of Sodan (Euro, USA)				| 		| 1990	| Electronic Art| Sega Megadrive| 					|
@@ -10200,6 +10209,7 @@ This list contains all games supported by FinalBurn Neo.
 | tankfrce4	|  	| Tank Force (US, 4 Players)				| tankfrce	| 1991	| Namco		| System 1	| 					|
 | cv_tankwars	|  	| Tank Wars						| 		| 1983	| Telegames	| ColecoVision	| 					|
 | md_tank2011	|  	| Tanki 2011 (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
+| md_tanzer	|  	| Tanzer (HB)						| 		| 2019	| Mega Cat Studi| Sega Megadrive| 					|
 | taotaido	|  	| Tao Taido (set 1)					| 		| 1993	| Video System C| Miscellaneous	| 					|
 | taotaidoa	|  	| Tao Taido (set 2)					| taotaido	| 1993	| Video System C| Miscellaneous	| 					|
 | sg1k_wboyt	|  	| Taotailang (Tw)					| sg1k_wboy	| 1986?	| Unknown	| Sega SG-1000	| 					|

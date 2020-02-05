@@ -26,6 +26,7 @@ DRV		BurnDrvmd_13mahjan;
 DRV		BurnDrvmd_16tongnk;
 DRV		BurnDrvmd_16ton;
 DRV		BurnDrvmd_16zhan;
+DRV		BurnDrvmd_16bitrhythmld;
 DRV		BurnDrvCprogolf18;
 DRV		BurnDrvProgolf;
 #if defined FBNEO_DEBUG
@@ -1504,6 +1505,7 @@ DRV		BurnDrvCandance;
 DRV		BurnDrvMSX_cannonfgt;
 DRV		BurnDrvmd_cfodder;
 DRV		BurnDrvMSX_cannont;
+DRV		BurnDrvmd_canon;
 DRV		BurnDrvCanvas;
 DRV		BurnDrvCanyonp;
 DRV		BurnDrvCanyon;
@@ -1892,6 +1894,7 @@ DRV		BurnDrvCobracom;
 DRV		BurnDrvgg_cocakid;
 DRV		BurnDrvLadybugb2;
 DRV		BurnDrvcnbe;
+DRV		BurnDrvmd_coffeecrisis;
 DRV		BurnDrvcv_coldblood;
 DRV		BurnDrvcv_cvjoytest;
 DRV		BurnDrvcv_sgmtest;
@@ -3109,6 +3112,7 @@ DRV		BurnDrvEnforceja;
 DRV		BurnDrvEnforce;
 DRV		BurnDrvEnmadaio;
 DRV		BurnDrvgg_ernieeg;
+DRV		BurnDrvmd_escape2042;
 DRV		BurnDrvmd_tazmars;
 DRV		BurnDrvmd_tazmarsp11;
 DRV		BurnDrvmd_tazmarsp10;
@@ -3177,6 +3181,7 @@ DRV		BurnDrvsg1k_exeriont;
 DRV		BurnDrvMSX_exerion2;
 DRV		BurnDrvMSX_exerion2a;
 DRV		BurnDrvExerizrb;
+DRV		BurnDrvExerizer;
 DRV		BurnDrvmd_exile;
 DRV		BurnDrvmd_exilej;
 DRV		BurnDrvmd_exosquad;
@@ -5556,6 +5561,7 @@ DRV		BurnDrvmd_lionkin3;
 DRV		BurnDrvLiquidku;
 DRV		BurnDrvLiquidk;
 DRV		BurnDrvLithero;
+DRV		BurnDrvmd_littlemedusa;
 DRV		BurnDrvLivequiz;
 DRV		BurnDrvMSX_livingstone2;
 DRV		BurnDrvMSX_livingstone;
@@ -5685,6 +5691,7 @@ DRV		BurnDrvmd_mbubble;
 DRV		BurnDrvMagicbub;
 DRV		BurnDrvgg_rayearth;
 DRV		BurnDrvgg_rayeart2;
+DRV		BurnDrvmd_magicpockets;
 DRV		BurnDrvMagipur;
 DRV		BurnDrvCpsMswordj;
 DRV		BurnDrvCpsMswordr1;
@@ -9027,6 +9034,7 @@ DRV		BurnDrvSlyspy2;
 DRV		BurnDrvSlyspy3;
 DRV		BurnDrvSlyspy;
 DRV		BurnDrvMSX_smackwac;
+DRV		BurnDrvmd_smartmouse;
 DRV		BurnDrvsms_smashtv;
 DRV		BurnDrvgg_smashtv;
 DRV		BurnSpecsmashtv;
@@ -10340,6 +10348,7 @@ DRV		BurnDrvCsweetht;
 DRV		BurnDrvSwimmer;
 DRV		BurnDrvMSX_swing;
 DRV		BurnDrvMSX_swinga;
+DRV		BurnDrvmd_switchblad;
 DRV		BurnSpecswiv;
 DRV		BurnDrvcv_sword;
 DRV		BurnDrvmd_swordsod;
@@ -10422,6 +10431,7 @@ DRV		BurnDrvTankfrce;
 DRV		BurnDrvTankfrce4;
 DRV		BurnDrvcv_tankwars;
 DRV		BurnDrvmd_tank2011;
+DRV		BurnDrvmd_tanzer;
 DRV		BurnDrvTaotaido;
 DRV		BurnDrvTaotaidoa;
 DRV		BurnDrvsg1k_wboyt;
@@ -12628,6 +12638,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_16tongnk,		// 16 Ton (Jpn, Game no Kandume MegaCD Rip)
 	&BurnDrvmd_16ton,			// 16 Ton (Jpn, SegaNet)
 	&BurnDrvmd_16zhan,			// 16 Zhang Ma Jiang (Chi)
+	&BurnDrvmd_16bitrhythmld,	// 16-Bit Rhythm Land (HB)
 	&BurnDrvCprogolf18,			// 18 Challenge Pro Golf (DECO Cassette) (Japan)
 	&BurnDrvProgolf,			// 18 Holes Pro Golf (set 1)
 #if defined FBNEO_DEBUG
@@ -14106,6 +14117,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_cannonfgt,		// Cannon Fighter
 	&BurnDrvmd_cfodder,			// Cannon Fodder (Euro)
 	&BurnDrvMSX_cannont,		// Cannon Turbo (Jpn)
+	&BurnDrvmd_canon,			// Canon - Legend of the New Gods (HB)
 	&BurnDrvCanvas,				// Canvas Croquis
 	&BurnDrvCanyonp,			// Canyon Bomber (prototype)
 	&BurnDrvCanyon,				// Canyon Bomber
@@ -14494,6 +14506,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_cocakid,			// Coca Cola Kid (Jpn)
 	&BurnDrvLadybugb2,			// Coccinelle (bootleg of Lady Bug, set 2)
 	&BurnDrvcnbe,				// Codename - Blut Engel (2006-01-19)
+	&BurnDrvmd_coffeecrisis,	// Coffee Crisis (HB)
 	&BurnDrvcv_coldblood,		// Cold Blood
 	&BurnDrvcv_cvjoytest,		// ColecoVision Joystick Test
 	&BurnDrvcv_sgmtest,			// ColecoVision SuperGame Module (SGM) Test
@@ -15711,6 +15724,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvEnforce,			// Enforce (World)
 	&BurnDrvEnmadaio,			// Enma Daio (Japan)
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
+	&BurnDrvmd_escape2042,		// Escape 2042 (HB)
 	&BurnDrvmd_tazmars,			// Escape from Mars Starring Taz (Euro)
 	&BurnDrvmd_tazmarsp11,		// Escape from Mars Starring Taz (Prototype, 19940309)
 	&BurnDrvmd_tazmarsp10,		// Escape from Mars Starring Taz (Prototype, 19940418)
@@ -15779,6 +15793,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_exerion2,		// Exerion II - Zorni (Jpn)
 	&BurnDrvMSX_exerion2a,		// Exerion II - Zorni (Jpn, Alt)
 	&BurnDrvExerizrb,			// Exerizer (Japan) (bootleg)
+	&BurnDrvExerizer,			// Exerizer (Japan)
 	&BurnDrvmd_exile,			// Exile (USA)
 	&BurnDrvmd_exilej,			// Exile - Toki no Hazama e (Jpn)
 	&BurnDrvmd_exosquad,		// Exo Squad (Euro)
@@ -18158,6 +18173,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLiquidku,			// Liquid Kids (US)
 	&BurnDrvLiquidk,			// Liquid Kids (World)
 	&BurnDrvLithero,			// Little Hero
+	&BurnDrvmd_littlemedusa,	// Little Medusa (HB)
 	&BurnDrvLivequiz,			// Live Quiz Show
 	&BurnDrvMSX_livingstone2,	// Livingstone Supongo II
 	&BurnDrvMSX_livingstone,	// Livingstone Supongo
@@ -18287,6 +18303,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMagicbub,			// Magic Bubble
 	&BurnDrvgg_rayearth,		// Magic Knight Rayearth (Jpn)
 	&BurnDrvgg_rayeart2,		// Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)
+	&BurnDrvmd_magicpockets,	// Magic Pockets (HB)
 	&BurnDrvMagipur,			// Magic Purple
 	&BurnDrvCpsMswordj,			// Magic Sword (23.06.1990 Japan)
 	&BurnDrvCpsMswordr1,		// Magic Sword - heroic fantasy (23.06.1990 other country)
@@ -21629,6 +21646,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSlyspy3,			// Sly Spy (US revision 3)
 	&BurnDrvSlyspy,				// Sly Spy (US revision 4)
 	&BurnDrvMSX_smackwac,		// Smack Wacker (Euro)
+	&BurnDrvmd_smartmouse,		// Smart Mouse (HB)
 	&BurnDrvsms_smashtv,		// Smash T.V. (Euro)
 	&BurnDrvgg_smashtv,			// Smash T.V. (World)
 	&BurnSpecsmashtv,			// Smash TV (128K)
@@ -22942,6 +22960,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSwimmer,			// Swimmer (set 1)
 	&BurnDrvMSX_swing,			// Swing (Jpn)
 	&BurnDrvMSX_swinga,			// Swing (Jpn, Alt)
+	&BurnDrvmd_switchblad,		// Switch Blade MD (HB)
 	&BurnSpecswiv,				// SWIV (128K)
 	&BurnDrvcv_sword,			// Sword and Sorcerer (Prototype)
 	&BurnDrvmd_swordsod,		// Sword of Sodan (Euro, USA)
@@ -23024,6 +23043,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTankfrce4,			// Tank Force (US, 4 Players)
 	&BurnDrvcv_tankwars,		// Tank Wars
 	&BurnDrvmd_tank2011,		// Tanki 2011 (Rus)
+	&BurnDrvmd_tanzer,			// Tanzer (HB)
 	&BurnDrvTaotaido,			// Tao Taido (set 1)
 	&BurnDrvTaotaidoa,			// Tao Taido (set 2)
 	&BurnDrvsg1k_wboyt,			// Taotailang (Tw)

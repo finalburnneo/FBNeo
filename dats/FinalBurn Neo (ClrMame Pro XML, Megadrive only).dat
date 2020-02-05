@@ -47,6 +47,13 @@
 		<rom name="16 zhang ma jiang (chi) (unl).bin" size="1048576" crc="36407c82"/>
 		<driver status="good"/>
 	</game>
+	<game name="16bitrhythmld">
+		<description>16-Bit Rhythm Land (HB)</description>
+		<year>2018</year>
+		<manufacturer>Columbus Circle</manufacturer>
+		<rom name="16-Bit Rhythm Land (HB).bin" size="3145728" crc="67271302"/>
+		<driver status="good"/>
+	</game>
 	<game name="2psymmac">
 		<description>2 in 1 - Psycho Pinball &amp; Micro Machines (Euro)</description>
 		<year>1993</year>
@@ -1679,6 +1686,13 @@
 		<rom name="cannon fodder (euro).bin" size="1572864" crc="ad217654"/>
 		<driver status="good"/>
 	</game>
+	<game name="canon">
+		<description>Canon - Legend of the New Gods (HB)</description>
+		<year>2015</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Canon - Legend of the New Gods (HB).bin" size="2097152" crc="f85dd66d"/>
+		<driver status="good"/>
+	</game>
 	<game name="havoc">
 		<description>Capt'n Havoc (Euro)</description>
 		<year>1994</year>
@@ -2055,6 +2069,13 @@
 		<year>1995</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="coach k college basketball (usa).bin" size="2097152" crc="67c309c6"/>
+		<driver status="good"/>
+	</game>
+	<game name="coffeecrisis">
+		<description>Coffee Crisis (HB)</description>
+		<year>2017</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Coffee Crisis (HB).bin" size="4194304" crc="8534ed7c"/>
 		<driver status="good"/>
 	</game>
 	<game name="colleg96">
@@ -3644,6 +3665,13 @@
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="empire of steel (euro).bin" size="1048576" crc="e5517b77"/>
+		<driver status="good"/>
+	</game>
+	<game name="escape2042">
+		<description>Escape 2042 (HB)</description>
+		<year>2018</year>
+		<manufacturer>OrionSoft</manufacturer>
+		<rom name="Escape 2042 (HB).bin" size="4194304" crc="0d81511c"/>
 		<driver status="good"/>
 	</game>
 	<game name="tazmars">
@@ -6378,6 +6406,13 @@
 		<rom name="shi zi wang 3 - the lion king 3 (chi) (unl).bin" size="2097152" crc="c004219d"/>
 		<driver status="good"/>
 	</game>
+	<game name="littlemedusa">
+		<description>Little Medusa (HB)</description>
+		<year>2018</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Little Medusa (HB).bin" size="2097152" crc="931dd919"/>
+		<driver status="good"/>
+	</game>
 	<game name="lobo">
 		<description>Lobo (USA, Prototype)</description>
 		<year>1996</year>
@@ -6531,6 +6566,13 @@
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="magic_bubble.bin" size="524288" crc="ce4a0c46"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="magicpockets">
+		<description>Magic Pockets (HB)</description>
+		<year>2018</year>
+		<manufacturer>The Bitmap Brothers</manufacturer>
+		<rom name="Magic Pockets (HB).bin" size="3407872" crc="cdfc764f"/>
+		<driver status="good"/>
 	</game>
 	<game name="magichat">
 		<description>Magical Hat no Buttobi Turbo! Daibouken (Jpn)</description>
@@ -11003,6 +11045,13 @@
 		<rom name="slime world (jpn).bin" size="524288" crc="7ff5529f"/>
 		<driver status="good"/>
 	</game>
+	<game name="smartmouse">
+		<description>Smart Mouse (HB)</description>
+		<year>199X</year>
+		<manufacturer>Chuanpu</manufacturer>
+		<rom name="Smart Mouse (HB).bin" size="524288" crc="fb01c832"/>
+		<driver status="good"/>
+	</game>
 	<game name="snakernr">
 		<description>Snake Rattle n' Roll (Euro)</description>
 		<year>1993</year>
@@ -12871,6 +12920,13 @@
 		<rom name="swamp thing proto.bin" size="4194304" crc="e6ebe9d5"/>
 		<driver status="good"/>
 	</game>
+	<game name="switchblad">
+		<description>Switch Blade MD (HB)</description>
+		<year>2018</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Switch Blade MD (HB).bin" size="1048576" crc="53dd2706"/>
+		<driver status="good"/>
+	</game>
 	<game name="swordsod">
 		<description>Sword of Sodan (Euro, USA)</description>
 		<year>1990</year>
@@ -13023,6 +13079,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="tank 2011 (unl).bin" size="524288" crc="03739820"/>
+		<driver status="good"/>
+	</game>
+	<game name="tanzer">
+		<description>Tanzer (HB)</description>
+		<year>2019</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Tanzer (HB).bin" size="4063232" crc="33e80d0d"/>
 		<driver status="good"/>
 	</game>
 	<game name="trgearth">

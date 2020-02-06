@@ -32,7 +32,7 @@ For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, per
 
 # Reporting Issues
 
-Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FBNeo) or report on the forums at [Neosource](https://neo-source.com)
+Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FBNeo/issues) or report on the forums at [Neosource](https://neo-source.com)
 
 # What about FB Alpha?
 

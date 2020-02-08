@@ -1,10 +1,10 @@
 version: 1.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2015
 
 shallow_clone: true
 clone_depth: 1
 install:
-  - set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm
@@ -24,7 +24,6 @@ artifacts:
     name: win32-bin-gcc  
   - path: fbn-win32-debug-gcc.7z
     name: win32-bin-debug-gcc	
-# Test scripts
 test: off
 
 deploy:

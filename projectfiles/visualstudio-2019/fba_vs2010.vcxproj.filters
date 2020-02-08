@@ -4128,6 +4128,11 @@
     <ClCompile Include="..\..\src\burner\dynhuff.cpp">
       <Filter>burner</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

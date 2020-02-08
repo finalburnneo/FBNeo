@@ -632,8 +632,8 @@ else
 	@echo Making normal build...
 endif
 	@echo
-	@mingw-mkdir -p $(foreach dir, $(alldir),$(objdir)$(dir))
-	@mingw-mkdir -p $(srcdir)dep/generated
+	@mkdir $(foreach dir, $(alldir),$(objdir)$(dir))
+	@mkdir $(srcdir)dep/generated
 
 cleandep:
 	@echo Removing depend files from $(objdir)...

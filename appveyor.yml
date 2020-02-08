@@ -4,7 +4,7 @@ image: Visual Studio 2015
 shallow_clone: true
 clone_depth: 1
 install:
-  - set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm

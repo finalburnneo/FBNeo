@@ -1,5 +1,5 @@
 version: 1.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2015
 
 shallow_clone: true
 clone_depth: 1
@@ -23,7 +23,6 @@ artifacts:
     name: win32-bin-gcc  
   - path: fbn-win32-debug-gcc.7z
     name: win32-bin-debug-gcc	
-# Test scripts
 test: off
 
 deploy:

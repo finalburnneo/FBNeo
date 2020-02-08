@@ -10,7 +10,7 @@ install:
   - choco install nasm
   - set PATH="C:\Program Files\NASM";%PATH%
 build_script:
-  - 7z e %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z * -r -aoa
+  - 7z e %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw * -r -aoa
   - 7z a fbn-code.7z %APPVEYOR_BUILD_FOLDER%\*      
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
   - 7z a fbn-win32-gcc.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      

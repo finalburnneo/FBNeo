@@ -38,7 +38,7 @@ build_script:
   - if "%build_type%"=="fbn-latestgcc-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
   - if "%build_type%"=="fbn-latestgcc-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
 after_build:
-	set package_name=%build_type%
+  - set package_name=%build_type%
 artifacts:
   - path: %build_type%.7z
     name: $(packagename)

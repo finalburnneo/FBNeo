@@ -18439,3 +18439,4 @@ struct BurnDriver BurnDrvrbffspbh = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
+

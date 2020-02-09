@@ -15,9 +15,6 @@ environment:
       build_type: fbn-xp-debug-gcc
 shallow_clone: true
 clone_depth: 1
-cache:
-  - C:\ProgramData\chocolatey\bin -> appveyor.yml
-  - C:\ProgramData\chocolatey\lib -> appveyor.yml
 install:
   - if "%build_type%"=="fbn-xp-gcc" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - if "%build_type%"=="fbn-xp-debug-gcc" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"

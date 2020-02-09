@@ -1,29 +1,47 @@
 version: 1.0.{build}
 image: Visual Studio 2015
 
+environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      build_type: fbn-latestgcc
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      build_type: fbn-latestgcc-debug
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      build_type: fbn-source
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      build_type: fbn-xp
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      build_type: fbn-xp-debug
+
 shallow_clone: true
 clone_depth: 1
 install:
-  - set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-xp" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-xp-debug" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-latestgcc" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-latestgcc-debug" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm
   - set PATH="C:\Program Files\NASM";%PATH%
 build_script:
-  - 7z a fbn-code.7z %APPVEYOR_BUILD_FOLDER%\*      
-  - 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
-  - 7z a fbn-win32-gcc.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
-  - 7z a fbn-win32-debug-gcc.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
-
+  - if "%build_type%"=="fbn-source" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*      
+  - if "%build_type%"=="fbn-xp" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
+  - if "%build_type%"=="fbn-xp" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
+  - if "%build_type%"=="fbn-xp" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - if "%build_type%"=="fbn-xp-debug" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
+  - if "%build_type%"=="fbn-xp-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
+  - if "%build_type%"=="fbn-xp-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
+  - if "%build_type%"=="fbn-latestgcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1 USE_UCRT=1"
+  - if "%build_type%"=="fbn-latestgcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - if "%build_type%"=="fbn-latestgcc-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
+  - if "%build_type%"=="fbn-latestgcc-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+after_build:
+	set package_name=%build_type%
 artifacts:
-  - path: fbn-code.7z
-    name: source
-  - path: fbn-win32-gcc.7z
-    name: win32-bin-gcc  
-  - path: fbn-win32-debug-gcc.7z
-    name: win32-bin-debug-gcc	
+  - path: %build_type%.7z
+    name: $(packagename)
 test: off
 
 deploy:
@@ -36,5 +54,5 @@ deploy:
   auth_token:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
-  artifact: source, win32-bin-gcc, win32-bin-debug-gcc
+  artifact: $(packagename)
   

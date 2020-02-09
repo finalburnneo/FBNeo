@@ -37,11 +37,10 @@ build_script:
   - if "%build_type%"=="fbn-latestgcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - if "%build_type%"=="fbn-latestgcc-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
   - if "%build_type%"=="fbn-latestgcc-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
-after_build:
-  - set package_name=%build_type%
+
 artifacts:
   - path: %build_type%.7z
-    name: $(packagename)
+    name: $(build_type)
 test: off
 
 deploy:
@@ -54,5 +53,5 @@ deploy:
   auth_token:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
-  artifact: $(packagename)
+  artifact: $(build_type)
   

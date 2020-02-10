@@ -5705,6 +5705,7 @@ DRV		BurnDrvMgcrsytlj;
 DRV		BurnDrvMgcrsytlo;
 DRV		BurnDrvMgcrsytl;
 DRV		BurnDrvMagdrop;
+DRV		BurnDrvmagdrop3bh;
 DRV		BurnDrvmagdrop3;
 DRV		BurnDrvmagdrop2;
 DRV		BurnDrvMagdropp;
@@ -8180,6 +8181,8 @@ DRV		BurnDrvrbff1;
 DRV		BurnDrvrbff2k;
 DRV		BurnDrvrbff2h;
 DRV		BurnDrvrbff2;
+DRV		BurnDrvrbff2bh;
+DRV		BurnDrvrbffspbh;
 DRV		BurnDrvrbffspeck;
 DRV		BurnDrvrbffspec;
 DRV		BurnDrvMSX_realtenn;
@@ -9919,6 +9922,7 @@ DRV		BurnDrvS1945ii;
 DRV		BurnDrvs1945p;
 DRV		BurnDrvpce_stripf2;
 DRV		BurnDrvStrongx;
+DRV		BurnDrvStuntair;
 DRV		BurnSpecstuntcar;
 DRV		BurnSpecstuntcar_48;
 #if defined FBNEO_DEBUG
@@ -10065,6 +10069,7 @@ DRV		BurnDrvmd_supdaisn;
 DRV		BurnDrvcv_superdk;
 DRV		BurnDrvcv_suprdkjr;
 DRV		BurnDrvSpdodgeb;
+DRV		BurnDrvsdodgebh;
 DRV		BurnDrvsdodgeb;
 DRV		BurnDrvmd_sdkong99;
 DRV		BurnDrvmd_sdkong99a;
@@ -11875,6 +11880,7 @@ DRV		BurnDrvWwjgtin;
 DRV		BurnDrvpce_waiwaimj;
 DRV		BurnDrvsms_waimanu;
 DRV		BurnDrvMj4simai;
+DRV		BurnDrvwakuwak7bh;
 DRV		BurnDrvwakuwak7;
 DRV		BurnDrvUltracin;
 DRV		BurnDrvpce_valkyrie;
@@ -18317,6 +18323,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMgcrsytlo,			// Magical Crystals (World, 91/12/10)
 	&BurnDrvMgcrsytl,			// Magical Crystals (World, 92/01/10)
 	&BurnDrvMagdrop,			// Magical Drop (Japan, Version 1.1, 1995.06.21)
+	&BurnDrvmagdrop3bh,			// Magical Drop III (Secret Character Hack)
 	&BurnDrvmagdrop3,			// Magical Drop III
 	&BurnDrvmagdrop2,			// Magical Drop II
 	&BurnDrvMagdropp,			// Magical Drop Plus 1 (Japan, Version 2.1, 1995.09.12)
@@ -20792,6 +20799,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvrbff2k,				// Real Bout Fatal Fury 2 - The Newcomers (Korean release)
 	&BurnDrvrbff2h,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)
 	&BurnDrvrbff2,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)
+	&BurnDrvrbff2bh,			// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) (NGM-2400)
+	&BurnDrvrbffspbh,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack)
 	&BurnDrvrbffspeck,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)
 	&BurnDrvrbffspec,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special
 	&BurnDrvMSX_realtenn,		// Real Tennis (Jpn)
@@ -22531,6 +22540,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvs1945p,				// Strikers 1945 Plus
 	&BurnDrvpce_stripf2,		// Strip Fighter II
 	&BurnDrvStrongx,			// Strong X
+	&BurnDrvStuntair,			// Stunt Air
 	&BurnSpecstuntcar,			// Stunt Car Racer (128K)
 	&BurnSpecstuntcar_48,		// Stunt Car Racer (48K)
 #if defined FBNEO_DEBUG
@@ -22677,6 +22687,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_superdk,			// Super DK! (Prototype)
 	&BurnDrvcv_suprdkjr,		// Super DK! Junior (Prototype)
 	&BurnDrvSpdodgeb,			// Super Dodge Ball (US)
+	&BurnDrvsdodgebh,			// Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)
 	&BurnDrvsdodgeb,			// Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu
 	&BurnDrvmd_sdkong99,		// Super Donkey Kong 99 (Protected) [no comment, NOT WORKING]
 	&BurnDrvmd_sdkong99a,		// Super Donkey Kong 99 (Unprotected)
@@ -24487,6 +24498,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_waiwaimj,		// Wai Wai Mahjong - Yukaina Janyuu Tachi
 	&BurnDrvsms_waimanu,		// Waimanu: Scary Monsters Saga
 	&BurnDrvMj4simai,			// Wakakusamonogatari Mahjong Yonshimai (Japan)
+	&BurnDrvwakuwak7bh,			// Waku Waku 7 (Boss Hack)
 	&BurnDrvwakuwak7,			// Waku Waku 7
 	&BurnDrvUltracin,			// Waku Waku Ultraman Racing
 	&BurnDrvpce_valkyrie,		// Walkuere no Densetsu

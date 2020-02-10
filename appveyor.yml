@@ -4,39 +4,38 @@ image: Visual Studio 2015
 environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      build_type: fbn-latestgcc
+      build_type: fbn-win32-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      build_type: fbn-latestgcc-debug
+      build_type: fbn-win32-debug-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       build_type: fbn-source
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      build_type: fbn-xp
+      build_type: fbn-xp-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      build_type: fbn-xp-debug
-
+      build_type: fbn-xp-debug-gcc
 shallow_clone: true
 clone_depth: 1
 install:
-  - if "%build_type%"=="fbn-xp" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
-  - if "%build_type%"=="fbn-xp-debug" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
-  - if "%build_type%"=="fbn-latestgcc" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
-  - if "%build_type%"=="fbn-latestgcc-debug" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-xp-gcc" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-xp-debug-gcc" set "PATH=C:\DXSDK;C:\MinGW\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-win32-gcc" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
+  - if "%build_type%"=="fbn-win32-debug-gcc" set "PATH=C:\DXSDK;C:\msys64\usr\bin;C:\msys64\mingw32\bin;C:\Windows\System32;C:\Windows;%PATH%"
   - set MSYSTEM=MINGW32
   - set PreferredToolArchitecture=x86
   - choco install nasm
   - set PATH="C:\Program Files\NASM";%PATH%
 build_script:
   - if "%build_type%"=="fbn-source" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*      
-  - if "%build_type%"=="fbn-xp" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
-  - if "%build_type%"=="fbn-xp" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
-  - if "%build_type%"=="fbn-xp" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
-  - if "%build_type%"=="fbn-xp-debug" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
-  - if "%build_type%"=="fbn-xp-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
-  - if "%build_type%"=="fbn-xp-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
-  - if "%build_type%"=="fbn-latestgcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1 USE_UCRT=1"
-  - if "%build_type%"=="fbn-latestgcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
-  - if "%build_type%"=="fbn-latestgcc-debug" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
-  - if "%build_type%"=="fbn-latestgcc-debug" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - if "%build_type%"=="fbn-xp-gcc" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
+  - if "%build_type%"=="fbn-xp-gcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1"
+  - if "%build_type%"=="fbn-xp-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - if "%build_type%"=="fbn-xp-debug-gcc" 7z x %APPVEYOR_BUILD_FOLDER%\src\dep\mingw\dxsdk.7z -o%APPVEYOR_BUILD_FOLDER%\src\dep\mingw -r -aoa  
+  - if "%build_type%"=="fbn-xp-debug-gcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1"
+  - if "%build_type%"=="fbn-xp-debug-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html        
+  - if "%build_type%"=="fbn-win32-gcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && mingw32-make mingw510 -j5 RELEASEBUILD=1 SKIPDEPEND=1 USE_UCRT=1"
+  - if "%build_type%"=="fbn-win32-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
+  - if "%build_type%"=="fbn-win32-debug-gcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
+  - if "%build_type%"=="fbn-win32-debug-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
 
 artifacts:
   - path: $(build_type).7z

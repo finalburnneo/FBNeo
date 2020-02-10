@@ -991,6 +991,7 @@
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
 		FE3BD61623A4979700570784 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FE3BD61523A4979700570784 /* License.rtf */; };
+		FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE65925223EFE87200CA92B2 /* d_stuntair.cpp */; };
 		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
 		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
@@ -2510,6 +2511,7 @@
 		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
 		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
 		FE3BD61523A4979700570784 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
+		FE65925223EFE87200CA92B2 /* d_stuntair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stuntair.cpp; sourceTree = "<group>"; };
 		FE811004236B73BD000B5F73 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
@@ -4334,6 +4336,7 @@
 				FE1B218B23561A6E0065200C /* d_sstrangr.cpp */,
 				FE1B216023561A6D0065200C /* d_starwars.cpp */,
 				FE1B214F23561A6D0065200C /* d_stfight.cpp */,
+				FE65925223EFE87200CA92B2 /* d_stuntair.cpp */,
 				FE1B20FB23561A6D0065200C /* d_sub.cpp */,
 				FE1B212723561A6D0065200C /* d_suna8.cpp */,
 				FE1B217723561A6E0065200C /* d_tagteam.cpp */,
@@ -5597,6 +5600,7 @@
 				FE1B267423561A770065200C /* d_bublbobl.cpp in Sources */,
 				FE1B267F23561A770065200C /* d_ssrj.cpp in Sources */,
 				FEED9E152358414300B7AF83 /* stringset.cpp in Sources */,
+				FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */,
 				FE1B26DB23561A780065200C /* d_beaminv.cpp in Sources */,
 				FE1B259F23561A760065200C /* timeplt_snd.cpp in Sources */,
 				FE1B26F723561A780065200C /* d_hvyunit.cpp in Sources */,

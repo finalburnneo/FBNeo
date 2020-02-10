@@ -33,7 +33,7 @@
 {
     switch ([value integerValue]) {
         case FBROMSET_STATUS_OK:
-        case 1:
+        case 2:
             return [NSImage imageNamed:@"NSStatusAvailable"];
         default:
             return [NSImage imageNamed:@"NSStatusNone"];

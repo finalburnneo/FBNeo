@@ -205,13 +205,6 @@
 		FE1B24E723561A760065200C /* d_gauntlet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1023561A670065200C /* d_gauntlet.cpp */; };
 		FE1B24E823561A760065200C /* d_relief.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1123561A670065200C /* d_relief.cpp */; };
 		FE1B24E923561A760065200C /* d_badlands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1223561A670065200C /* d_badlands.cpp */; };
-		FE1B24EA23561A760065200C /* snes_dsp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1423561A670065200C /* snes_dsp.cpp */; };
-		FE1B24EB23561A760065200C /* snes_io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1523561A670065200C /* snes_io.cpp */; };
-		FE1B24EC23561A760065200C /* snes_ppu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1623561A670065200C /* snes_ppu.cpp */; };
-		FE1B24ED23561A760065200C /* snes_spc700.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1723561A670065200C /* snes_spc700.cpp */; };
-		FE1B24EE23561A760065200C /* snes_65816.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1A23561A670065200C /* snes_65816.cpp */; };
-		FE1B24EF23561A760065200C /* snes_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1B23561A670065200C /* snes_main.cpp */; };
-		FE1B24F023561A760065200C /* d_snes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1C23561A670065200C /* d_snes.cpp */; };
 		FE1B24F123561A760065200C /* d_parent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1D23561A670065200C /* d_parent.cpp */; };
 		FE1B24F223561A760065200C /* d_esd16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F1F23561A670065200C /* d_esd16.cpp */; };
 		FE1B24F323561A760065200C /* d_suna16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1F2023561A670065200C /* d_suna16.cpp */; };
@@ -1525,15 +1518,6 @@
 		FE1B1F1023561A670065200C /* d_gauntlet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_gauntlet.cpp; sourceTree = "<group>"; };
 		FE1B1F1123561A670065200C /* d_relief.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_relief.cpp; sourceTree = "<group>"; };
 		FE1B1F1223561A670065200C /* d_badlands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_badlands.cpp; sourceTree = "<group>"; };
-		FE1B1F1423561A670065200C /* snes_dsp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_dsp.cpp; sourceTree = "<group>"; };
-		FE1B1F1523561A670065200C /* snes_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_io.cpp; sourceTree = "<group>"; };
-		FE1B1F1623561A670065200C /* snes_ppu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_ppu.cpp; sourceTree = "<group>"; };
-		FE1B1F1723561A670065200C /* snes_spc700.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_spc700.cpp; sourceTree = "<group>"; };
-		FE1B1F1823561A670065200C /* snes_65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = snes_65816.h; sourceTree = "<group>"; };
-		FE1B1F1923561A670065200C /* snes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = snes.h; sourceTree = "<group>"; };
-		FE1B1F1A23561A670065200C /* snes_65816.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_65816.cpp; sourceTree = "<group>"; };
-		FE1B1F1B23561A670065200C /* snes_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = snes_main.cpp; sourceTree = "<group>"; };
-		FE1B1F1C23561A670065200C /* d_snes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_snes.cpp; sourceTree = "<group>"; };
 		FE1B1F1D23561A670065200C /* d_parent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_parent.cpp; sourceTree = "<group>"; };
 		FE1B1F1F23561A670065200C /* d_esd16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_esd16.cpp; sourceTree = "<group>"; };
 		FE1B1F2023561A670065200C /* d_suna16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_suna16.cpp; sourceTree = "<group>"; };
@@ -3434,7 +3418,6 @@
 				FE1B1F8123561A690065200C /* sega */,
 				FE1B204223561A6B0065200C /* sg1000 */,
 				FE1B1ED423561A670065200C /* sms */,
-				FE1B1F1323561A670065200C /* snes */,
 				FE1B207823561A6B0065200C /* spectrum */,
 				FE1B20A723561A6C0065200C /* taito */,
 				FE1B205423561A6B0065200C /* toaplan */,
@@ -3553,22 +3536,6 @@
 				FE1B1F1223561A670065200C /* d_badlands.cpp */,
 			);
 			path = atari;
-			sourceTree = "<group>";
-		};
-		FE1B1F1323561A670065200C /* snes */ = {
-			isa = PBXGroup;
-			children = (
-				FE1B1F1423561A670065200C /* snes_dsp.cpp */,
-				FE1B1F1523561A670065200C /* snes_io.cpp */,
-				FE1B1F1623561A670065200C /* snes_ppu.cpp */,
-				FE1B1F1723561A670065200C /* snes_spc700.cpp */,
-				FE1B1F1823561A670065200C /* snes_65816.h */,
-				FE1B1F1923561A670065200C /* snes.h */,
-				FE1B1F1A23561A670065200C /* snes_65816.cpp */,
-				FE1B1F1B23561A670065200C /* snes_main.cpp */,
-				FE1B1F1C23561A670065200C /* d_snes.cpp */,
-			);
-			path = snes;
 			sourceTree = "<group>";
 		};
 		FE1B1F1E23561A670065200C /* pst90s */ = {
@@ -5054,7 +5021,6 @@
 				FE1B27D823561A790065200C /* x2212.cpp in Sources */,
 				FE1B23A023561A750065200C /* m68kcpu.c in Sources */,
 				FE1B25A923561A760065200C /* d_88games.cpp in Sources */,
-				FE1B24EF23561A760065200C /* snes_main.cpp in Sources */,
 				FE1B241723561A750065200C /* pngwio.c in Sources */,
 				FE1B245823561A750065200C /* gzlib.c in Sources */,
 				FE1B242D23561A750065200C /* Bcj2.c in Sources */,
@@ -5100,7 +5066,6 @@
 				FE1B27DF23561A790065200C /* namcoio.cpp in Sources */,
 				FE1B279223561A790065200C /* ics2115.cpp in Sources */,
 				FE1B276F23561A790065200C /* msm5205.cpp in Sources */,
-				FE1B24EA23561A760065200C /* snes_dsp.cpp in Sources */,
 				FE1B241623561A750065200C /* pngerror.c in Sources */,
 				FE1B251923561A760065200C /* d_dcon.cpp in Sources */,
 				FE1B24F623561A760065200C /* d_fuukifg2.cpp in Sources */,
@@ -5184,7 +5149,6 @@
 				FE1B260023561A760065200C /* neo_palette.cpp in Sources */,
 				FE1B24B423561A750065200C /* d_m63.cpp in Sources */,
 				FE1B277023561A790065200C /* burn_ym2151.cpp in Sources */,
-				FE1B24ED23561A760065200C /* snes_spc700.cpp in Sources */,
 				FE1B251223561A760065200C /* d_targeth.cpp in Sources */,
 				FE1B25BC23561A760065200C /* konamiic.cpp in Sources */,
 				FE1B26F623561A780065200C /* d_sidearms.cpp in Sources */,
@@ -5428,7 +5392,6 @@
 				FE1B24AC23561A750065200C /* burn_led.cpp in Sources */,
 				FE1B1092235615940065200C /* AppDelegate.m in Sources */,
 				FE1B25F323561A760065200C /* dcs2k.cpp in Sources */,
-				FE1B24EE23561A760065200C /* snes_65816.cpp in Sources */,
 				FE1B279323561A790065200C /* es8712.cpp in Sources */,
 				FE1B26DC23561A780065200C /* d_funkybee.cpp in Sources */,
 				FE1B263223561A770065200C /* fcrash_snd.cpp in Sources */,
@@ -5704,7 +5667,6 @@
 				FE1B25C323561A760065200C /* konamigx.cpp in Sources */,
 				FE1B274023561A780065200C /* d_tempest.cpp in Sources */,
 				FE1B25B023561A760065200C /* d_fastlane.cpp in Sources */,
-				FE1B24EC23561A760065200C /* snes_ppu.cpp in Sources */,
 				FE1B27B523561A790065200C /* burn_gun.cpp in Sources */,
 				FE1B266F23561A770065200C /* d_darius2.cpp in Sources */,
 				FE1B25CA23561A760065200C /* d_contra.cpp in Sources */,
@@ -5935,7 +5897,6 @@
 				FE1B244C23561A750065200C /* 7zCrcOpt.c in Sources */,
 				FE1B269523561A770065200C /* d_exedexes.cpp in Sources */,
 				FE1B26C823561A770065200C /* d_calorie.cpp in Sources */,
-				FE1B24EB23561A760065200C /* snes_io.cpp in Sources */,
 				FE1B27BD23561A790065200C /* gaelco_crypt.cpp in Sources */,
 				FE1B271B23561A780065200C /* d_invaders.cpp in Sources */,
 				FE1B263823561A770065200C /* ctv.cpp in Sources */,
@@ -5979,7 +5940,6 @@
 				FE1B258D23561A760065200C /* d_dec0.cpp in Sources */,
 				FE1B24B923561A750065200C /* d_m52.cpp in Sources */,
 				FE1B26C223561A770065200C /* d_cloak.cpp in Sources */,
-				FE1B24F023561A760065200C /* d_snes.cpp in Sources */,
 				FE1B24A323561A750065200C /* aud_dsp.cpp in Sources */,
 				FE1B251B23561A760065200C /* d_xorworld.cpp in Sources */,
 				FE1B26B423561A770065200C /* d_amspdwy.cpp in Sources */,

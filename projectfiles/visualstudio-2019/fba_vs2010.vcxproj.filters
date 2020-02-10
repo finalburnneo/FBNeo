@@ -274,9 +274,6 @@
     <ClInclude Include="..\..\src\burn\drv\sega\sys16.h">
       <Filter>Burn\drv\sega</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\snes\snes.h">
-      <Filter>Burn\drv\snes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\burn\drv\taito\taito.h">
       <Filter>Burn\drv\taito</Filter>
     </ClInclude>
@@ -2051,24 +2048,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp">
       <Filter>Burn\drv\sega</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_65816.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_io.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_main.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_ppu.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_spc700.cpp">
-      <Filter>Burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\cchip.cpp">
       <Filter>Burn\drv\taito</Filter>
@@ -4092,9 +4071,6 @@
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
       <Filter>cpus\mips</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp">
-      <Filter>Burn\drv\snes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
@@ -4188,9 +4164,6 @@
     </Filter>
     <Filter Include="Burn\drv\sega">
       <UniqueIdentifier>{33f8a601-1bcb-458c-8818-aff159407b66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Burn\drv\snes">
-      <UniqueIdentifier>{92c33e19-ba3d-48e8-aaa5-0be3efbbd9bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Burn\drv\taito">
       <UniqueIdentifier>{cfa988bf-dda1-4336-b896-65c08a977e45}</UniqueIdentifier>

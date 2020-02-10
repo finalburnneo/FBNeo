@@ -475,7 +475,7 @@ static INT32 DrvFrame()
 
 	INT32 nCycleSegment;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 4000000 / 62.65, 14318181 / 8 / 62.65 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)4000000 / 62.65), (INT32)((double)14318181 / 8 / 62.65) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)

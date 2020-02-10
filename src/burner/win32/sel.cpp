@@ -1051,7 +1051,9 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 
 		BurnDrvGetAspect(&ax, &ay);
 
-		if (!_tcsncmp(BurnDrvGetText(DRV_NAME), _T("wrally2"), 7)) {
+		// If a game uses pixel aspect ratio (aspect ratio == pixel size) default to 4:3
+		// for Titles and Previews (otherwise the pictures weirdly draw ontop of the UI)
+		if (!_tcsncmp(BurnDrvGetText(DRV_NAME), _T("wrally2"), 7) || ax > 100) {
 			ax = 4;
 			ay = 3;
 		}

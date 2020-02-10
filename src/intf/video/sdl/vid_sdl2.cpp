@@ -132,7 +132,7 @@ SDL_Texture* LoadOverlayImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture
 		if (nRotateGame)
 		{
 			dstrect.y = desty + (desty/2);
-			dstrect.x = destx - (destx/2);
+			dstrect.x = (screenw - destx) / 2;
 			dstrect.h = destw;
 			dstrect.w = desth;
 
@@ -426,7 +426,7 @@ static int Paint(int bValidate)
 	SDL_RenderClear(sdlRenderer);
 
 	if (nRotateGame)
-	{SDL_Point window_size = {nVidImageHeight, nVidImageWidth};
+	{
 		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
 		if (nRotateGame && bFlipped)
 		{

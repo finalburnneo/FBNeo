@@ -60,7 +60,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 #ifndef _WIN32
 	snprintf(titlePath, MAX_PATH, "%s%s.png", "/usr/local/share/titles/", BurnDrvGetTextA(0));
 #else
-	snprintf(titlePath, MAX_PATH, "\\support\\titles\\%s.png", BurnDrvGetTextA(0));
+	snprintf(titlePath, MAX_PATH, "support\\titles\\%s.png", BurnDrvGetTextA(0));
 #endif
 
 	loadedTexture = IMG_LoadTexture(renderer, titlePath);
@@ -73,8 +73,17 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 
 	dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
 	dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h / 2); // the y coordinate
-	dest_title_texture_rect.w = w; //the width of the texture
-	dest_title_texture_rect.h = h; //the height of the texture
+	dest_title_texture_rect.w = w;
+	dest_title_texture_rect.h = h;
+	if (!(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL))
+	{
+		int GameAspectX = 4, GameAspectY = 3;
+		BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+
+		dest_title_texture_rect.w = w;
+		dest_title_texture_rect.h = w * GameAspectY / GameAspectX;
+	}
+
 	nBurnDrvActive = currentSelected;
 	return loadedTexture;
 }
@@ -391,7 +400,7 @@ static void DoFilterGames()
 
 static void SwapSystemToCheck()
 {
-	startGame = -gamesperscreen_halfway + 1;
+	startGame = -gamesperscreen_halfway;
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PUBLIC_MASK:
@@ -1070,9 +1079,9 @@ int gui_process()
 		}
 
 		// TODO: Need to put more clamping logic here....
-		if (startGame < -(int)gamesperscreen_halfway + 1)
+		if (startGame < -(int)gamesperscreen_halfway)
 		{
-			startGame = -gamesperscreen_halfway + 1;
+			startGame = -gamesperscreen_halfway;
 		}
 
 		if (startGame > (int)filterGamesCount - (int)gamesperscreen_halfway - 1)

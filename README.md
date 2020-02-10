@@ -1,6 +1,8 @@
 # FinalBurn Neo
 Official Forum: https://neo-source.com
 
+Discord: https://discord.gg/8EGVd9v
+
 This is the official repository of FinalBurn Neo, an Emulator for Arcade Games & Select Consoles. It is based on the emulators FinalBurn and old versions of [MAME](https://www.mamedev.org)
 
 Use of this program and its source code is subject to the license conditions provided in the [license.txt](/src/license.txt) file in the src folder.
@@ -24,15 +26,15 @@ Raspberry Pi [build instructions](README-PI.md).
 
 macOS [build instructions](README-macOS.md) and [releases](https://github.com/fbn-mac/FBNeo/releases).
 
-[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for most platforms.
+[LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for a lot of cool platforms.
 
-For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm)
+For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm) [instructions](README-SDL.md)
 
-For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm)
+For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm) [instructions](README-SDL.md)
 
 # Reporting Issues
 
-Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FBNeo) or report on the forums at [Neosource](https://neo-source.com)
+Please raise an issue on the [project GitHub](https://github.com/finalburnneo/FBNeo/issues) or report on the forums at [Neosource](https://neo-source.com)
 
 # What about FB Alpha?
 
@@ -97,4 +99,4 @@ signed int64	INT64;
 unsigned int64  UINT64;
 
 ```
-It is recommended that you take a look at the other #defines and things in the header files in Burn and Burner, and don't forget that some of the existing code in the intf directory will come in handy for new ports. 
+It is recommended that you take a look at the other #defines and structs in the header files in Burn and Burner, and don't forget that some of the existing code in the intf directory will come in handy for new ports. 

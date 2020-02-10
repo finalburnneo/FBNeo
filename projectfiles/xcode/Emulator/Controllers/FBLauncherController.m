@@ -62,8 +62,17 @@
 - (void) awakeFromNib
 {
     if ([NSFileManager.defaultManager fileExistsAtPath:self.setCachePath]) {
+        int reqdCacheVersion = [NSBundle.mainBundle.infoDictionary[@"FBSetCacheVersion"] intValue];
+        int cachedVersion = [NSUserDefaults.standardUserDefaults integerForKey:@"cachedVersion"];
+
+        NSLog(@"Checking cache data; required:(%d); present:(%d)",
+              reqdCacheVersion, cachedVersion);
+
         // Restore from cache
-        NSArray<FBROMSet *> *cached = [NSKeyedUnarchiver unarchiveObjectWithFile:self.setCachePath];
+        NSArray<FBROMSet *> *cached = nil;
+        if (cachedVersion == reqdCacheVersion)
+            cached = [NSKeyedUnarchiver unarchiveObjectWithFile:self.setCachePath];
+
         if (cached) {
             [self reloadSets:cached];
 
@@ -121,6 +130,8 @@
     // Save to cache
     [NSKeyedArchiver archiveRootObject:romSets
                                 toFile:self.setCachePath];
+    [NSUserDefaults.standardUserDefaults setInteger:[NSBundle.mainBundle.infoDictionary[@"FBSetCacheVersion"] intValue]
+                                            forKey:@"cachedVersion"];
 
     [self reloadSets:romSets];
 }

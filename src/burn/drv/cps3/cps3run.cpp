@@ -631,6 +631,24 @@ void __fastcall cps3WriteByte(UINT32 addr, UINT8 data)
 	}
 }
 
+#define max(a,b) (((a)>(b))?(a):(b))
+#define min(a,b) (((a)<(b))?(a):(b))
+
+static inline UINT8 get_fade(INT32 c, INT32 f)
+{
+	// bit 7 unknown
+	// bit 6 fade enable / disable
+	// bit 5 fade mode
+	// bit 4-0 fade value
+	if (f & 0x40) // Fading enable / disable
+	{
+		f &= 0x3f;
+		c = (f & 0x20) ? (c + (((0x1f - c) * (f & 0x1f)) / 0x1f)) : ((c * f) / 0x1f);
+		c = max(0, min(0x1f, c));
+	}
+	return c;
+}
+
 void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 {
 	addr &= 0xc7ffffff;
@@ -685,12 +703,11 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 				UINT32 r = (coldata & 0x001F) >>  0;
 				UINT32 g = (coldata & 0x03E0) >>  5;
 				UINT32 b = (coldata & 0x7C00) >> 10;
-				if (paldma_fade!=0) {
-					INT32 fade;
-					fade = (paldma_fade & 0x3f000000)>>24; r = (r*fade)>>5; if (r>0x1f) r = 0x1f;
-					fade = (paldma_fade & 0x003f0000)>>16; g = (g*fade)>>5; if (g>0x1f) g = 0x1f;
-					fade = (paldma_fade & 0x0000003f)>> 0; b = (b*fade)>>5; if (b>0x1f) b = 0x1f;
-					coldata = (r << 0) | (g << 5) | (b << 10);
+				if (paldma_fade & 0x40400040) {
+					r = get_fade(r, (paldma_fade & 0x7f000000)>>24);
+					g = get_fade(g, (paldma_fade & 0x007f0000)>>16);
+					b = get_fade(b, (paldma_fade & 0x0000007f)>>0);
+					coldata = (coldata & 0x8000) | (r << 0) | (g << 5) | (b << 10);
 				}
 				
 				r = r << 3;

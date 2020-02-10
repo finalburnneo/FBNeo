@@ -13,8 +13,6 @@ environment:
       build_type: fbn-xp-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       build_type: fbn-xp-debug-gcc
-  WEBHOOK_URL:
-    secure: MtzvpGQsU1pPgtoADomhnkURQYa12RBdKVAoM8eOPmGrPyLg7rb3zE3OvrOUf9PiYVymm25ttKwRSftBd4DFLAr3NOdL69HEOGfxAmxvdL54i3GNkdlp/w+9Zh3ShZggX4G2hMuJlBIiIxpF1hxpwGO2nO4VLcWikS6/DbSyrn0=	  
 shallow_clone: true
 clone_depth: 1
 install:
@@ -53,9 +51,3 @@ deploy:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
   artifact: $(build_type)
-on_success:
-  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
-  - ps: ./send.ps1 success $env:WEBHOOK_URL
-on_failure:
-  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
-  - ps: ./send.ps1 failure $env:WEBHOOK_URL  

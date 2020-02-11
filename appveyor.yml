@@ -36,12 +36,10 @@ build_script:
   - if "%build_type%"=="fbn-win32-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\*.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
   - if "%build_type%"=="fbn-win32-debug-gcc" bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && rm -rf obj && mingw32-make mingw510 -j5 SKIPDEPEND=1 USE_UCRT=1"
   - if "%build_type%"=="fbn-win32-debug-gcc" 7z a %build_type%.7z %APPVEYOR_BUILD_FOLDER%\fbneod.exe %APPVEYOR_BUILD_FOLDER%\fba.chm  %APPVEYOR_BUILD_FOLDER%\*.zip %APPVEYOR_BUILD_FOLDER%\src\license.txt %APPVEYOR_BUILD_FOLDER%\whatsnew.html      
-
 artifacts:
   - path: $(build_type).7z
     name: $(build_type)
 test: off
-
 deploy:
 - provider: GitHub
   tag: appveyor-build
@@ -53,4 +51,3 @@ deploy:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility
   artifact: $(build_type)
-  

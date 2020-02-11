@@ -49,7 +49,15 @@ static INT32 nRomGfxLen;
 
 static INT32 is_samshoot = 0;
 
-#define M68K_CYCS	50000000 / 3
+static INT32 nExtraCycles = 0;
+
+static INT32 raster_extra;
+static INT32 raster_latch;
+static INT32 raster_pos;
+static INT32 raster_en;
+static INT32 scanline;
+
+static INT32 M68K_CYCS = 50000000 / 3;
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -1595,9 +1603,18 @@ void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 			}
 			break;
-		case 0x3c: // Raster IRQ related
+		case 0x3c: // Raster IRQ enable/arm
+			raster_en = wordValue & 1;
+			raster_extra = 0;
+			raster_pos = raster_latch;
+			if (raster_pos == scanline) {
+				// the first scanline to start the raster chain is weird
+				raster_pos = (scanline + 1);
+				raster_extra = 1;
+			}
 			break;
-		case 0x3e: // Raster IRQ related
+		case 0x3e: // Raster IRQ latch
+			raster_latch = wordValue;
 			break;
 	}
 }
@@ -1631,6 +1648,10 @@ static INT32 DrvDoReset()
 //	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
+
+	x1010Reset();
+
+	nExtraCycles = 0;
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gundamex")) {
 		EEPROMReset(); // gundam
@@ -1734,7 +1755,7 @@ static INT32 grdiansInit()
 		SekMapMemory((UINT8 *)RamPal,
 									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xC60000, 0xC6003F, MAP_RAM);	// Video Registers
+									0xC60000, 0xC6003F, MAP_READ | MAP_FETCH);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
 									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
@@ -1772,11 +1793,12 @@ static INT32 grdiansInit()
 	
 	GenericTilesInit();
 
-	x1010_sound_init(50000000 / 3, 0x0000);
+	M68K_CYCS = 32530470 / 2;
+	x1010_sound_init(M68K_CYCS, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -2854,6 +2876,8 @@ static INT32 grdiansExit()
 	HasNVRam = 0;
 	is_samshoot = 0;
 
+	M68K_CYCS = 50000000 / 3;
+
 //	bMahjong = 0;
 
 	return 0;
@@ -3192,33 +3216,64 @@ static void draw_sprites(const rectangle &cliprect)
 	}
 }
 
-static INT32 DrvDraw()
+static INT32 lastline = 0;
+static rectangle cliprect, defcliprect;
+
+static INT32 DrvDrawBegin()
 {
 	if (bRecalcPalette) {
 		for (INT32 i=0;i<0x08000; i++)
 			CurPal[i] = CalcCol( RamPal[i] );
-		bRecalcPalette = 0;	
+		bRecalcPalette = 0;
 	}
 
+	if (!pBurnDraw) return 0;
 	BurnTransferClear();
+	GenericTilesGetClip(&cliprect.min_x, &cliprect.max_x, &cliprect.min_y, &cliprect.max_y);
+	cliprect.max_x -= 1;
+	cliprect.max_y -= 1;
+	defcliprect = cliprect;
 
+	cliprect.max_y = 0;
+	lastline = 0;
+
+	return 0;
+}
+
+static INT32 DrvDrawScanline(INT32 drawto)
+{
+	if (drawto < 1) return 0;
+	cliprect.max_y = drawto;
+	cliprect.min_y = lastline;
+	lastline = drawto;
 	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) == 0) { // 1 = Blank Screen
-		rectangle cliprect;
-		GenericTilesGetClip(&cliprect.min_x, &cliprect.max_x, &cliprect.min_y, &cliprect.max_y);
-		cliprect.max_x -= 1;
-		cliprect.max_y -= 1;
-		draw_sprites(cliprect);
+		if (pBurnDraw)
+			draw_sprites(cliprect);
 	}
 
+	return 0;
+}
+
+static INT32 DrvDrawEnd()
+{
+	DrvDrawScanline(defcliprect.max_y);
 	BurnTransferCopy(CurPal);
 
 	return 0;
 }
 
+static INT32 DrvDraw()
+{
+	DrvDrawBegin();
 
-#define M68K_CYCS_PER_FRAME	(M68K_CYCS / 60)
-#define	SETA2_INTER_LEAVE		32
-#define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / SETA2_INTER_LEAVE)
+	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) == 0) { // 1 = Blank Screen
+		draw_sprites(cliprect);
+	}
+
+	DrvDrawEnd();
+
+	return 0;
+}
 
 static INT32 grdiansFrame()
 {
@@ -3241,37 +3296,57 @@ static INT32 grdiansFrame()
 		DrvInput[6] |= (DrvJoy5[i] & 1) << i;
 	}
 
-	INT32 nCyclesDone = 0;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
+	INT32 nCyclesDone = nExtraCycles;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
 
 	SekNewFrame();
 
 	SekOpen(0);
-
-	for(INT32 i=0; i<SETA2_INTER_LEAVE; i++) {
-		nCyclesNext += M68K_CYCS_PER_INTER;
+	DrvDrawBegin();
+	for (INT32 i = 0; i < nInterleave; i++) {
+		nCyclesNext += nCyclesTotal;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
-		for (INT32 j=0;j<3;j++)
-		if (tmp68301_timer[j]) {
-			tmp68301_timer_counter[j] += nCyclesExec;
-			if (tmp68301_timer_counter[j] >= tmp68301_timer[j]) {
-				// timer[j] timeout !
-				tmp68301_timer[j] = 0;
-				tmp68301_timer_counter[j] = 0;
-				tmp68301_timer_callback(j);
+		scanline = i; // this should be _before_ the SekRun() above, but the
+		// raster chain won't kick-off.  probably something I overlooked.. -dink
+
+		if (raster_en && i == raster_pos) {
+			tmp68301_update_irq_state(1);
+			DrvDrawScanline(i);
+			if (raster_extra) { // first raster line is "special"
+				nCyclesExec += SekRun( nCyclesTotal / 2 ); // 1/2 line
+				nCyclesDone += nCyclesExec;
+				raster_extra = 0;
 			}
 		}
-	}
 
-	tmp68301_update_irq_state(0);
+		for (INT32 j=0;j<3;j++) {
+			if (tmp68301_timer[j]) {
+				tmp68301_timer_counter[j] += nCyclesExec;
+				if (tmp68301_timer_counter[j] >= tmp68301_timer[j]) {
+					// timer[j] timeout !
+					tmp68301_timer[j] = 0;
+					tmp68301_timer_counter[j] = 0;
+					nCyclesDone += SekRun(200); // avoid masking raster irq
+					tmp68301_timer_callback(j);
+				}
+			}
+		}
+
+		if (i == 232-1) {
+			tmp68301_update_irq_state(0);
+		}
+	}
+	nExtraCycles = SekTotalCycles() - (M68K_CYCS / 60);
 
 	SekClose();
 
 	if (pBurnDraw)
-		DrvDraw();
+		DrvDrawEnd();
 
 	if (pBurnSoundOut)
 		x1010_sound_update();
@@ -3319,6 +3394,8 @@ static INT32 samshootFrame()
 		DrvAnalogInput[3] = (UINT8)y1 + 22;
 	}
 
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
 	INT32 nCyclesDone = 0;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
@@ -3327,8 +3404,8 @@ static INT32 samshootFrame()
 
 	SekOpen(0);
 
-	for(INT32 i=0; i<SETA2_INTER_LEAVE; i++) {
-		nCyclesNext += M68K_CYCS_PER_INTER;
+	for (INT32 i = 0; i < nInterleave; i++) {
+		nCyclesNext += nCyclesTotal;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
@@ -3389,19 +3466,25 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 		
 		x1010_scan(nAction, pnMin);
 
-		BurnGunScan();
-
-		// Scan Input state
-		SCAN_VAR(DrvInput);
+		if (nBurnGunNumPlayers) BurnGunScan();
 
 		// Scan TMP 68301 Chip state
 		SCAN_VAR(tmp68301_timer);
 		SCAN_VAR(tmp68301_timer_counter);
 		SCAN_VAR(tmp68301_irq_vector);
 
+		// Raster stuff (grdians: fire in intro, heli-crash @ shortly after game start)
+		SCAN_VAR(raster_extra);
+		SCAN_VAR(raster_latch);
+		SCAN_VAR(raster_pos);
+		SCAN_VAR(raster_en);
+
+		// Keep track of cycles between frames
+		SCAN_VAR(nExtraCycles);
+
 		if (nAction & ACB_WRITE) {
 
-			// palette changed 
+			// palette changed
 			bRecalcPalette = 1;
 
 			// x1-010 bank changed

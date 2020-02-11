@@ -496,8 +496,7 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 
 static UINT8 __fastcall deco32_z80_sound_read_port(UINT16 port)
 {
-	if (port > 0xffff) return 0;
-	return deco32_sound_rom[port];
+	return deco32_sound_rom[port & 0xffff];
 }
 
 void deco32_z80_sound_reset()
@@ -984,7 +983,7 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 	switch (address & ~3)
 	{
 		case 0x1201fc: deco32_soundlatch_write(data); return;
-		case 0x12002c: if (game_select != 1) return; // fghthist only
+		case 0x12002c: if (game_select != 1) return; // fghthist only (ignore compiler warning -dink)
 		case 0x150000: // fghthist / nslasher
 			if (game_select == 3) {
 				tattass_control_write(data);

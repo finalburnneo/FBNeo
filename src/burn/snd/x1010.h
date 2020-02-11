@@ -43,6 +43,8 @@ void x1010_sound_init(UINT32 base_clock, INT32 address);
 void x1010_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void x1010_scan(INT32 nAction,INT32 *pnMin);
 void x1010_exit();
+void x1010Reset();
+void x1010Enable(INT32 data);
 
 #define BURN_SND_X1010_ROUTE_1		0
 #define BURN_SND_X1010_ROUTE_2		1

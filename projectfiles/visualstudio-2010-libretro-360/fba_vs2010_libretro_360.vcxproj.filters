@@ -114,9 +114,6 @@
     <Filter Include="Source Files\burn\drv\sega">
       <UniqueIdentifier>{a16f8dee-998c-4c1c-a8a2-787b8191c4b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\burn\drv\snes">
-      <UniqueIdentifier>{6f9fd21b-f948-49f2-b50d-55ebd40a2c1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\burn\drv\taito">
       <UniqueIdentifier>{44d80511-457a-4de2-81ef-0324f6950b51}</UniqueIdentifier>
     </Filter>
@@ -154,18 +151,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burner\zipfn.cpp">
       <Filter>Source Files\burner</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_io.cpp">
-      <Filter>Source Files\burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_spc700.cpp">
-      <Filter>Source Files\burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_main.cpp">
-      <Filter>Source Files\burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_ppu.cpp">
-      <Filter>Source Files\burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\qs_z.cpp">
       <Filter>Source Files\burn\drv\capcom</Filter>

@@ -1257,28 +1257,6 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="snes"
-						Filter="">
-						<File
-							RelativePath="..\..\src\burn\drv\snes\d_snes.cpp">
-						</File>
-						<File
-							RelativePath="..\..\src\burn\drv\snes\snes_65816.cpp">
-						</File>
-						<File
-							RelativePath="..\..\src\burn\drv\snes\snes_io.cpp">
-						</File>
-						<File
-							RelativePath="..\..\src\burn\drv\snes\snes_main.cpp">
-						</File>
-						<File
-							RelativePath="..\..\src\burn\drv\snes\snes_ppu.cpp">
-						</File>
-						<File
-							RelativePath="..\..\src\burn\drv\snes\snes_spc700.cpp">
-						</File>
-					</Filter>
-					<Filter
 						Name="taito"
 						Filter="">
 						<File

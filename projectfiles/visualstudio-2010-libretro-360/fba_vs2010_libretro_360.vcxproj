@@ -350,10 +350,6 @@
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_io.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_main.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_ppu.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_spc700.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\cchip.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_arkanoid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_ashnojoe.cpp" />

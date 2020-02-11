@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12337 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12332 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9920,10 +9920,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_smario2	|  	| Super Mario 2 1998					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smbbc	|  	| Super Mario Bros. + Battle City (Rus)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smb4md	|  	| Super Mario Bros. 4 MD				| 		| 2010	| Mairtrus	| Sega Megadrive| 					|
-| smw		| D	| Super Mario World (Europe) (Rev 1)			| 		| 1986	| Nintendo	| Miscellaneous	| 					|
-| smwa		| D	| Super Mario World (Europe)				| 		| 1986	| Nintendo	| Miscellaneous	| 					|
-| smwj		| D	| Super Mario World (Japan)				| 		| 1986	| Nintendo	| Miscellaneous	| 					|
-| smwu		| D	| Super Mario World (USA)				| 		| 1986	| Nintendo	| Miscellaneous	| 					|
 | md_smario64h	|  	| Super Mario World 64 (Hacked Protection)		| md_smario64	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_smario64	|   NW	| Super Mario World 64					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_smb	|  	| Super Mario World ~ Super Mario Bros. (Pirate)	| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -10404,7 +10400,6 @@ This list contains all games supported by FinalBurn Neo.
 | gg_tesserae	|  	| Tesserae (Euro, USA)					| 		| 1993	| GameTek	| Sega Game Gear| 					|
 | md_td2	|  	| Test Drive II - The Duel (Euro, USA)			| 		| 1992	| Ballistic	| Sega Megadrive| 					|
 | ctsttape	|  	| Test Tape (DECO Cassette) (US)			| 		| 1981	| Data East Corp| Cassette Syste| 					|
-| test_adc	| D	| test_adc						| 		| 1986	| Nintendo	| Miscellaneous	| 					|
 | msx_tetrahor	|  	| Tetra Horror (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
 | msx_tetrahora	|  	| Tetra Horror (Jpn, Alt)				| msx_tetrahor	| 1983	| ASCII		| MSX		| 					|
 | atetrisb	|  	| Tetris (bootleg set 1)				| atetris	| 1988	| bootleg	| Miscellaneous	| 					|

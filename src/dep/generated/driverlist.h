@@ -10136,12 +10136,6 @@ DRV		BurnDrvmd_smario2a;
 DRV		BurnDrvmd_smario2;
 DRV		BurnDrvmd_smbbc;
 DRV		BurnDrvmd_smb4md;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvrSMW;			// no comment
-DRV		BurnDrvrSuperMarioWorldEurope;// no comment
-DRV		BurnDrvrSuperMarioWorldJapan;// no comment
-DRV		BurnDrvrSuperMarioWorldUSA;// no comment
-#endif
 DRV		BurnDrvmd_smario64h;
 DRV		BurnDrvmd_smario64;
 DRV		BurnDrvmd_smb;
@@ -10628,9 +10622,6 @@ DRV		BurnDrvCterrani;
 DRV		BurnDrvgg_tesserae;
 DRV		BurnDrvmd_td2;
 DRV		BurnDrvCtsttape;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvrtest_adc;		// no comment
-#endif
 DRV		BurnDrvMSX_tetrahor;
 DRV		BurnDrvMSX_tetrahora;
 DRV		BurnDrvAtetrisb;
@@ -22754,12 +22745,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smario2,			// Super Mario 2 1998
 	&BurnDrvmd_smbbc,			// Super Mario Bros. + Battle City (Rus)
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
-#if defined FBNEO_DEBUG
-	&BurnDrvrSMW,				// Super Mario World (Europe) (Rev 1) [no comment]
-	&BurnDrvrSuperMarioWorldEurope,// Super Mario World (Europe) [no comment]
-	&BurnDrvrSuperMarioWorldJapan,// Super Mario World (Japan) [no comment]
-	&BurnDrvrSuperMarioWorldUSA,// Super Mario World (USA) [no comment]
-#endif
 	&BurnDrvmd_smario64h,		// Super Mario World 64 (Hacked Protection)
 	&BurnDrvmd_smario64,		// Super Mario World 64 [no comment, NOT WORKING]
 	&BurnDrvmd_smb,				// Super Mario World ~ Super Mario Bros. (Pirate)
@@ -23246,9 +23231,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_tesserae,		// Tesserae (Euro, USA)
 	&BurnDrvmd_td2,				// Test Drive II - The Duel (Euro, USA)
 	&BurnDrvCtsttape,			// Test Tape (DECO Cassette) (US)
-#if defined FBNEO_DEBUG
-	&BurnDrvrtest_adc,			// test_adc [no comment]
-#endif
 	&BurnDrvMSX_tetrahor,		// Tetra Horror (Jpn)
 	&BurnDrvMSX_tetrahora,		// Tetra Horror (Jpn, Alt)
 	&BurnDrvAtetrisb,			// Tetris (bootleg set 1)

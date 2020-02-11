@@ -1064,7 +1064,7 @@ static INT32 Cps3Reset()
 	Cps3PatchRegion();
 	
 	// [CD-ROM not emulated] All CHD drivers cause a Guru Meditation with the normal bios boot.
-	if(!BurnDrvGetHardwareCode() & HARDWARE_CAPCOM_CPS3_NO_CD){
+	if ((!BurnDrvGetHardwareCode()) & HARDWARE_CAPCOM_CPS3_NO_CD){
 		// normal boot
 		Sh2Reset();
 	} else {
@@ -1208,8 +1208,8 @@ INT32 cps3Init()
 		Sh2SetWriteWordHandler(1, cps3C0WriteWord);
 		Sh2SetWriteLongHandler(1, cps3C0WriteLong);
 
-		if( !BurnDrvGetHardwareCode() & HARDWARE_CAPCOM_CPS3_NO_CD ) 
-		{		
+		if ((!BurnDrvGetHardwareCode()) & HARDWARE_CAPCOM_CPS3_NO_CD) 
+		{
 			if (cps3_isSpecial) {
 				Sh2MapMemory(RomGame,	0x06000000, 0x06ffffff, MAP_READ);	// Decrypted SH2 Code
 				Sh2MapMemory(RomGame_D,	0x06000000, 0x06ffffff, MAP_FETCH);	// Decrypted SH2 Code
@@ -1567,7 +1567,13 @@ static void cps3_drawgfxzoom_1(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 #endif
 }
 
-static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 alpha)
+enum
+{
+	CPS3_TRANSPARENCY_PEN_INDEX,
+	CPS3_TRANSPARENCY_PEN_INDEX_BLEND
+};
+
+static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 alpha, INT32 transparency)
 {
 	//if (!scalex || !scaley) return;
 
@@ -1624,8 +1630,8 @@ static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 		}
 
 		if( ex > sx ) {
-			switch( alpha ) {
-			case 0:
+			switch( transparency ) {
+			case CPS3_TRANSPARENCY_PEN_INDEX:
 				for( INT32 y=sy; y<ey; y++ ) {
 					UINT8 * source = source_base + (y_index>>16) * 16;
 					UINT32 * dest = RamScreen + y * 512 * 2;
@@ -1636,13 +1642,13 @@ static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 #else
 						UINT8 c = source[ (x_index>>16) ^ 3 ];
 #endif
-						if( c )	dest[x] = pal | c;
+						if( c )	dest[x] = pal<<alpha | c;
 						x_index += dx;
 					}
 					y_index += dy;
 				}
 				break;
-			case 6:
+			case CPS3_TRANSPARENCY_PEN_INDEX_BLEND:
 				for( INT32 y=sy; y<ey; y++ ) {
 					UINT8 * source = source_base + (y_index>>16) * 16;
 					UINT32 * dest = RamScreen + y * 512 * 2;
@@ -1653,27 +1659,11 @@ static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 #else
 						UINT8 c = source[ (x_index>>16) ^ 3 ];
 #endif
-						dest[x] |= ((c&0x0000f) << 13);
-						x_index += dx;
-					}
-					y_index += dy;
-				}
-				break;
-			case 8:
-				for( INT32 y=sy; y<ey; y++ ) {
-					UINT8 * source = source_base + (y_index>>16) * 16;
-					UINT32 * dest = RamScreen + y * 512 * 2;
-					INT32 x_index = x_index_base;
-					for(INT32 x=sx; x<ex; x++ ) {
-#if BE_GFX_CRAM
-						UINT8 c = source[ (x_index>>16) ];
-#else
-						UINT8 c = source[ (x_index>>16) ^ 3 ];
-#endif
-
 						if (c) {
-							dest[x] |= 0x8000;
-							if (pal&0x10000) dest[x] |= 0x10000;
+							if (alpha == 6)
+								dest[x] |= (c & 0xf) << 13;
+							else
+								dest[x] |= ((c & 1) << 15) | ((pal & 0x1) << 16);
 						}
 						x_index += dx;
 					}
@@ -1723,9 +1713,9 @@ static void cps3_draw_tilemapsprite_line(INT32 drawline, UINT32 * regs )
 			INT32 xflip,yflip;
 
 			dat = RamSpr[mapbase+((tileline&63)*64)+((x+scrollx/16)&63)];
-			tileno = (dat & 0xffff0000)>>17;
+			tileno = (dat & 0xfffe0000)>>17;
 			colour = (dat & 0x000001ff)>>0;
-			bpp = (dat & 0x0000200)>>9;
+			bpp =    (dat & 0x00000200)>>9;
 			yflip  = (dat & 0x00000800)>>11;
 			xflip  = (dat & 0x00001000)>>12;
 
@@ -1794,12 +1784,15 @@ INT32 DrvCps3Draw()
 	// Draw Sprites
 	{
 		for (INT32 i=0x00000/4;i<0x2000/4;i+=4) {
-			INT32 xpos		= (RamSpr[i+1]&0x03ff0000)>>16;
-			INT32 ypos		= (RamSpr[i+1]&0x000003ff)>>0;
+
+			if (RamSpr[i+0]&0x80000000) break;
 
 			INT32 gscroll		= (RamSpr[i+0]&0x70000000)>>28;
 			INT32 length		= (RamSpr[i+0]&0x01ff0000)>>14; // how many entries in the sprite table
 			UINT32 start		= (RamSpr[i+0]&0x00007ff0)>>4;
+
+			INT32 xpos			= (RamSpr[i+1]&0x03ff0000)>>16;
+			INT32 ypos			= (RamSpr[i+1]&0x000003ff)>>0;
 
 			INT32 whichbpp		= (RamSpr[i+2]&0x40000000)>>30; // not 100% sure if this is right, jojo title / characters
 			INT32 whichpal		= (RamSpr[i+2]&0x20000000)>>29;
@@ -1813,29 +1806,30 @@ INT32 DrvCps3Draw()
 			INT32 gscrolly		= (RamVReg[gscroll]&0x000003ff)>>0;
 			
 			start = (start * 0x100) >> 2;
-
-			if ((RamSpr[i+0]&0xf0000000) == 0x80000000) break;	
 		
 			for (INT32 j=0; j<length; j+=4) {
 				
 				UINT32 value1 = (RamSpr[start+j+0]);
 				UINT32 value2 = (RamSpr[start+j+1]);
 				UINT32 value3 = (RamSpr[start+j+2]);
+
+				INT32 tilestable[4] = { 8,1,2,4 };
+
 				UINT32 tileno = (value1&0xfffe0000)>>17;
-				INT32 count;
-				INT32 xpos2 = (value2 & 0x03ff0000)>>16;
-				INT32 ypos2 = (value2 & 0x000003ff)>>0;
 				INT32 flipx = (value1 & 0x00001000)>>12;
 				INT32 flipy = (value1 & 0x00000800)>>11;
 				INT32 alpha = (value1 & 0x00000400)>>10; //? this one is used for alpha effects on warzard
 				INT32 bpp =   (value1 & 0x00000200)>>9;
 				INT32 pal =   (value1 & 0x000001ff);
 
-				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24);
-				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16);
+				INT32 count;
+				INT32 xpos2 = (value2 & 0x03ff0000)>>16;
+				INT32 ypos2 = (value2 & 0x000003ff)>>0;
+
+				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24)+1;
+				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16)+1;
 				INT32 xx,yy;
 
-				INT32 tilestable[4] = { 8,1,2,4 };
 				INT32 ysize2 = ((value3 & 0x0000000c)>>2);
 				INT32 xsize2 = ((value3 & 0x00000003)>>0);
 				UINT32 xinc,yinc;
@@ -1894,6 +1888,14 @@ INT32 DrvCps3Draw()
 
 					if (flipy) ypos2-= ((ysize2*16*yinc)>>16);
 
+					/* use the palette value from the main list or the sublists? */
+					INT32 actualpal = whichpal ? global_pal : pal;
+
+					/* use the bpp value from the main list or the sublists? */
+					INT32 color_granularity = ((whichbpp ? global_bpp : bpp) ? 6 : 8);
+
+					INT32 trans = (global_alpha || alpha) ? CPS3_TRANSPARENCY_PEN_INDEX_BLEND : CPS3_TRANSPARENCY_PEN_INDEX;
+
 					{
 						count = 0;
 						for (xx=0;xx<xsize2+1;xx++) {
@@ -1909,7 +1911,6 @@ INT32 DrvCps3Draw()
 
 							for (yy=0;yy<ysize2+1;yy++) {
 								INT32 current_ypos;
-								INT32 actualpal;
 
 								if (flipy) current_ypos = (ypos+ypos2+((yy*16*yinc)>>16));
 								else current_ypos = (ypos+ypos2-((yy*16*yinc)>>16));
@@ -1921,34 +1922,8 @@ INT32 DrvCps3Draw()
 
 								if (current_ypos&0x200) current_ypos-=0x400;
 
-								/* use the palette value from the main list or the sublists? */
-								if (whichpal) actualpal = global_pal;
-								else actualpal = pal;
-								
-								/* use the bpp value from the main list or the sublists? */
-								INT32 color_granularity;
-								if (whichbpp) {
-									if (!global_bpp) color_granularity = 8;
-									else color_granularity = 6;
-								} else {
-									if (!bpp) color_granularity = 8;
-									else color_granularity = 6;
-								}
-								actualpal <<= color_granularity;
-
 								{
-									INT32 realtileno = tileno+count;
-
-									if (global_alpha || alpha) {
-										// fix jojo's title in it's intro ???
-										if ( global_alpha && (global_pal & 0x100))
-											actualpal &= 0x0ffff;
-
-										cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, color_granularity);
-
-									} else {
-										cps3_drawgfxzoom_2(realtileno,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, 0);
-									}
+									cps3_drawgfxzoom_2(tileno+count,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, color_granularity, trans);
 									count++;
 								}
 							}

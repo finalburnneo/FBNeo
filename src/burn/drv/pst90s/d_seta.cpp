@@ -3935,21 +3935,6 @@ static void __fastcall setaSoundRegWriteByte8bit(UINT32 sekAddress, UINT8 byteVa
 	x1_010_chip->reg[offset] = byteValue;
 }
 
-void x1010Reset()
-{
-	x1_010_chip->sound_enable = 1; // enabled by default?
-	memset (x1_010_chip->reg,         0, 0x2000);
-	memset (x1_010_chip->HI_WORD_BUF, 0, 0x2000);
-	memset (x1_010_chip->smp_offset,  0, SETA_NUM_CHANNELS * sizeof(INT32));
-	memset (x1_010_chip->env_offset,  0, SETA_NUM_CHANNELS * sizeof(INT32));
-	memset (x1_010_chip->sound_banks, 0, SETA_NUM_BANKS * sizeof(INT32));
-}
-
-void x1010Enable(INT32 data)
-{
-	x1_010_chip->sound_enable = data;
-}
-
 static void set_pcm_bank(INT32 data)
 {
 	INT32 new_bank = (data >> 3) & 0x07;

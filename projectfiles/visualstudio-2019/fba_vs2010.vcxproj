@@ -139,7 +139,6 @@
     <ClInclude Include="..\..\src\burn\drv\sms\smssystem.h" />
     <ClInclude Include="..\..\src\burn\drv\sms\smstms.h" />
     <ClInclude Include="..\..\src\burn\drv\sms\smsvdp.h" />
-    <ClInclude Include="..\..\src\burn\drv\snes\snes.h" />
     <ClInclude Include="..\..\src\burn\drv\spectrum\spectrum.h" />
     <ClInclude Include="..\..\src\burn\drv\taito\cchip.h" />
     <ClInclude Include="..\..\src\burn\drv\taito\taito.h" />
@@ -517,7 +516,6 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_dsp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
@@ -1143,12 +1141,6 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sms\smssystem.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smstms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smsvdp.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_65816.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_io.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_main.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_ppu.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_spc700.cpp" />
     <ClCompile Include="..\..\src\burn\drv\spectrum\d_spectrum.cpp" />
     <ClCompile Include="..\..\src\burn\drv\spectrum\spectrum_states.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\cchip.cpp" />

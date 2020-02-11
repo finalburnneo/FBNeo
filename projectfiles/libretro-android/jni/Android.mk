@@ -76,7 +76,7 @@ BURN_BLACKLIST := $(FBA_BURNER_DIR)/un7z.cpp \
 	$(FBA_BURN_DIR)/drv/capcom/ctv_make.cpp
 
 ifeq ($(HAVE_GRIFFIN), 1)
-GRIFFIN_CXX_SRC_FILES := $(GRIFFIN_DIR)/cps12.cpp $(GRIFFIN_DIR)/cps3.cpp $(GRIFFIN_DIR)/neogeo.cpp $(GRIFFIN_DIR)/pgm.cpp $(GRIFFIN_DIR)/snes.cpp $(GRIFFIN_DIR)/galaxian.cpp
+GRIFFIN_CXX_SRC_FILES := $(GRIFFIN_DIR)/cps12.cpp $(GRIFFIN_DIR)/cps3.cpp $(GRIFFIN_DIR)/neogeo.cpp $(GRIFFIN_DIR)/pgm.cpp $(GRIFFIN_DIR)/galaxian.cpp
 GRIFFIN_CXX_SRC_FILES += $(GRIFFIN_DIR)/cpu-m68k.cpp
 BURN_BLACKLIST += $(FBA_CPU_DIR)/m68000_intf.cpp
 else
@@ -85,7 +85,6 @@ CPS3_DIR := $(FBA_BURN_DRIVERS_DIR)/cps3
 GALAXIAN_DIR := $(FBA_BURN_DRIVERS_DIR)/galaxian
 NEOGEO_DIR := $(FBA_BURN_DRIVERS_DIR)/neogeo
 PGM_DIR := $(FBA_BURN_DRIVERS_DIR)/pgm
-SNES_DIR := $(FBA_BURN_DRIVERS_DIR)/snes
 M68K_DIR := $(FBA_CPU_DIR)/m68k
 endif
 
@@ -107,7 +106,6 @@ FBA_BURN_DIRS := $(FBA_BURN_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/psikyo \
 	$(FBA_BURN_DRIVERS_DIR)/pst90s \
 	$(FBA_BURN_DRIVERS_DIR)/sega \
-	$(SNES_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/taito \
 	$(FBA_BURN_DRIVERS_DIR)/toaplan
 

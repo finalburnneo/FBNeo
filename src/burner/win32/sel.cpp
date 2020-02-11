@@ -121,7 +121,6 @@ HTREEITEM hFilterMiscPre90s			= NULL;
 HTREEITEM hFilterMiscPost90s		= NULL;
 HTREEITEM hFilterMegadrive			= NULL;
 HTREEITEM hFilterPce				= NULL;
-//HTREEITEM hFilterSnes				= NULL;
 HTREEITEM hFilterMsx				= NULL;
 HTREEITEM hFilterNes				= NULL;
 HTREEITEM hFilterFds				= NULL;
@@ -247,8 +246,6 @@ static int MegadriveValue		= HARDWARE_PREFIX_SEGA_MEGADRIVE >> 24;
 static int MASKMEGADRIVE		= 1 << MegadriveValue;
 static int PCEngineValue		= HARDWARE_PREFIX_PCENGINE >> 24;
 static int MASKPCENGINE			= 1 << PCEngineValue;
-//static int SnesValue			= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
-//static int MASKSNES				= 1 << SnesValue;
 static int SmsValue				= HARDWARE_PREFIX_SEGA_MASTER_SYSTEM >> 24;
 static int MASKSMS				= 1 << SmsValue;
 static int GgValue				= HARDWARE_PREFIX_SEGA_GAME_GEAR >> 24;
@@ -1343,7 +1340,6 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TECHNOS		, hFilterTechnos		, nLoadMenuShowX & MASKTECHNOS						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TOAPLAN		, hFilterToaplan		, nLoadMenuShowX & MASKTOAPLAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PCE			, hFilterPce			, nLoadMenuShowX & MASKPCENGINE						);
-//	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
@@ -1689,7 +1685,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPce, FALSE);
-//				_TreeView_SetCheckState(hFilterList, hFilterSnes, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSms, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterGg, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, FALSE);
@@ -1729,7 +1724,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPce, TRUE);
-//				_TreeView_SetCheckState(hFilterList, hFilterSnes, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSms, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterGg, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, TRUE);
@@ -1967,7 +1961,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterMiscPost90s)		_ToggleGameListing(nLoadMenuShowX, MASKMISCPOST90S);
 		if (hItemChanged == hFilterMegadrive)		_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
 		if (hItemChanged == hFilterPce)				_ToggleGameListing(nLoadMenuShowX, MASKPCENGINE);
-//		if (hItemChanged == hFilterSnes)			_ToggleGameListing(nLoadMenuShowX, MASKSNES);
 		if (hItemChanged == hFilterSms)				_ToggleGameListing(nLoadMenuShowX, MASKSMS);
 		if (hItemChanged == hFilterGg)				_ToggleGameListing(nLoadMenuShowX, MASKGG);
 		if (hItemChanged == hFilterSg1000)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);

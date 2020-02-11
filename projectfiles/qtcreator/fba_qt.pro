@@ -24,7 +24,6 @@ DRV_PGM         = true
 DRV_PRE90S      = true
 DRV_PST90S      = true
 DRV_SEGA        = true
-DRV_SNES        = true
 DRV_TAITO       = true
 DRV_TOAPLAN     = true
 DRV_PSIKYO      = true
@@ -231,7 +230,6 @@ $$DRV_CAVE:DRIVERLIST_PATHS += $$SRC/burn/drv/cave
 $$DRV_CPS3:DRIVERLIST_PATHS += $$SRC/burn/drv/cps3
 $$DRV_IREM:DRIVERLIST_PATHS += $$SRC/burn/drv/irem
 $$DRV_SEGA:DRIVERLIST_PATHS += $$SRC/burn/drv/sega
-$$DRV_SNES:DRIVERLIST_PATHS += $$SRC/burn/drv/snes
 $$DRV_TAITO:DRIVERLIST_PATHS += $$SRC/burn/drv/taito
 $$DRV_CAPCOM:DRIVERLIST_PATHS += $$SRC/burn/drv/capcom
 $$DRV_NEOGEO:DRIVERLIST_PATHS += $$SRC/burn/drv/neogeo
@@ -476,17 +474,6 @@ $$DRV_SMS {
         HEADERS += $$files(../../src/burn/drv/sms/*.h)
         SOURCES += $$files(../../src/burn/drv/sms/*.cpp)
 }
-
-#===============================================================================
-#                               SNES DRIVERS
-#===============================================================================
-$$DRV_SNES {
-	message("SNES drivers enabled")
-
-        HEADERS += $$files(../../src/burn/drv/snes/*.h)
-        SOURCES += $$files(../../src/burn/drv/snes/*.cpp)
-}
-
 
 #===============================================================================
 #                                TAITO DRIVERS

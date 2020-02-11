@@ -82,9 +82,6 @@ mingw471: FORCE
 mingw510: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC510=1
 
-mamemingw: FORCE
-	@$(MAKE) -s -f makefile.mamemingw
-
 sdl: FORCE
 	@$(MAKE) -s -f makefile.sdl
 

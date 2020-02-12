@@ -631,21 +631,14 @@ void __fastcall cps3WriteByte(UINT32 addr, UINT8 data)
 	}
 }
 
-#define max(a,b) (((a)>(b))?(a):(b))
-#define min(a,b) (((a)<(b))?(a):(b))
-
-static inline UINT8 get_fade(INT32 c, INT32 f)
+inline static UINT8 cps3_get_fade(INT32 c, INT32 f)
 {
-	// bit 7 unknown
+	// bit 7 unused, explicit masked out
 	// bit 6 fade enable / disable
-	// bit 5 fade mode
+	// bit 5 fade mode (1 = invert input values and output)
 	// bit 4-0 fade value
 	if (f & 0x40) // Fading enable / disable
-	{
-		f &= 0x3f;
-		c = (f & 0x20) ? (c + (((0x1f - c) * (f & 0x1f)) / 0x1f)) : ((c * f) / 0x1f);
-		c = max(0, min(0x1f, c));
-	}
+		c = (f & 0x20) ? ((((c ^ 0x1f) * (~f & 0x1f)) >> 5) ^ 0x1f) : (c * (f & 0x1f) >> 5);
 	return c;
 }
 
@@ -704,9 +697,9 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 				UINT32 g = (coldata & 0x03E0) >>  5;
 				UINT32 b = (coldata & 0x7C00) >> 10;
 				if (paldma_fade & 0x40400040) {
-					r = get_fade(r, (paldma_fade & 0x7f000000)>>24);
-					g = get_fade(g, (paldma_fade & 0x007f0000)>>16);
-					b = get_fade(b, (paldma_fade & 0x0000007f)>>0);
+					r = cps3_get_fade(r, (paldma_fade & 0x7f000000)>>24);
+					g = cps3_get_fade(g, (paldma_fade & 0x007f0000)>>16);
+					b = cps3_get_fade(b, (paldma_fade & 0x0000007f)>>0);
 					coldata = (coldata & 0x8000) | (r << 0) | (g << 5) | (b << 10);
 				}
 				
@@ -1731,8 +1724,6 @@ static INT32 WideScreenFrameDelay = 0;
 
 INT32 DrvCps3Draw()
 {
-	INT32 bg_drawn[4] = { 0, 0, 0, 0 };
-
 	UINT32 fullscreenzoom = RamVReg[ 6 * 4 + 3 ] & 0xff;
 	UINT32 fullscreenzoomwidecheck = RamVReg[6 * 4 + 1];
 	
@@ -1841,27 +1832,18 @@ INT32 DrvCps3Draw()
 					if (nBurnLayer & 1)
 					{
 						INT32 tilemapnum = ((value3 & 0x00000030)>>4);
-						INT32 startline;
-						INT32 endline;
-						INT32 height = (value3 & 0x7f000000)>>24;
-						UINT32 * regs;
+						UINT32 * regs = RamVReg + 8 + tilemapnum * 4;
 
-						regs = RamVReg + 8 + tilemapnum * 4;
-						endline = value2;
-						startline = endline - height;
-
-						startline &=0x3ff;
-						endline &=0x3ff;
-
-						if (bg_drawn[tilemapnum]==0)
+						for (yy = 0; yy <= ysizedraw2; yy++)
 						{
-							UINT32 srcy = 0;
-							for (INT32 ry = 0; ry < 224; ry++, srcy += fsz) {
-								cps3_draw_tilemapsprite_line( srcy >> 16, regs );
-							}
-						}
+							INT32 cury_pos = ypos2 + gscrolly - yy;
+							cury_pos = ~cury_pos;
+							cury_pos -= 18;
+							cury_pos &= 0x3ff;
 
-						bg_drawn[tilemapnum] = 1;
+							if (cury_pos >= 0 && cury_pos <= cps3_gfx_max_y)
+								cps3_draw_tilemapsprite_line(cury_pos, regs);
+						}
 					}
 				} else {
 					if (~nSpriteEnable & 1) continue;

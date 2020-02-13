@@ -449,7 +449,6 @@ static void cps3_process_character_dma(UINT32 address)
 		UINT32 real_length      = (((dat1&0x001fffff)+1)<<3);
 		
 		if (dat1==0x01000000) break;	// end of list marker
-		if (dat1==0x13131313) break;	// our default fill
 		
 		switch ( dat1 & 0x00e00000 ) {
 		case 0x00800000:
@@ -1718,7 +1717,7 @@ static void cps3_draw_tilemapsprite_line(INT32 drawline, UINT32 * regs )
 			scrollx =  (regs[0]&0xffff0000)>>16;
 		} else {
 			scrollx =  (regs[0]&0xffff0000)>>16;
-			scrollx+= (RamSpr[linebase+((line+16-4)&0x3ff)]>>16)&0x3ff;
+			scrollx+= (RamSpr[linebase+((line+16)&0x3ff)]>>16)&0x3ff; // test case: sfiii Ryu's stage 2nd round floor
 		}
 
 		if (drawline>cps3_gfx_max_y+4) return;

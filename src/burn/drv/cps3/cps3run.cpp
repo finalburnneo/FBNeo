@@ -35,6 +35,7 @@ static UINT8 *RomUser;
 
 static UINT8 *RamMain;
 static UINT32 *RamSpr;
+static UINT32 *SprList;
 static UINT16 *RamPal;
 
 static UINT32 *RamCRam;
@@ -82,6 +83,9 @@ static UINT32 paldma_length = 0;
 
 static UINT32 chardma_source = 0;
 static UINT32 chardma_table_address = 0;
+
+static UINT16 spritelist_dma = 0;
+static UINT16 prev;
 
 static INT32 cps3_gfx_width, cps3_gfx_height;
 static INT32 cps3_gfx_max_x, cps3_gfx_max_y;
@@ -498,6 +502,7 @@ static INT32 MemIndex()
 
 	RamPal		= (UINT16 *) Next; Next += 0x0020000 * sizeof(UINT16);
 	RamSpr		= (UINT32 *) Next; Next += 0x0020000 * sizeof(UINT32);
+	SprList		= (UINT32 *) Next; Next += 0x80000/4 * sizeof(UINT32);
 
 	RamCRam		= (UINT32 *) Next; Next += 0x0200000 * sizeof(UINT32);
 	RamSS		= (UINT32 *) Next; Next += 0x0004000 * sizeof(UINT32);
@@ -647,7 +652,26 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 	addr &= 0xc7ffffff;
 	
 	switch (addr) {
-	
+
+	case 0x040c0080: break;
+	case 0x040c0082:
+		prev = spritelist_dma;
+		spritelist_dma = data;
+		if ((spritelist_dma & 8) && !(prev & 8)) // 0->1
+		{
+			for (int i = 0; i < 0x2000/4; i += 4)
+			{
+				memcpy(SprList + i, RamSpr + i, 4*sizeof(UINT32)); // copy main list record
+				UINT32 dat = RamSpr[i];
+				if (dat & 0x80000000)
+					break;
+				UINT32 offs =   (dat & 0x00007fff) << 2;
+				UINT32 length = (dat & 0x01ff0000) >> 16;
+				memcpy(SprList + offs, RamSpr + offs, length*4*sizeof(UINT32)); // copy sublist
+			}
+		}
+		break;
+
 	case 0x040c0084: break;
 	case 0x040c0086:
 		if (cram_bank != data) {
@@ -1080,6 +1104,7 @@ static INT32 Cps3Reset()
 	}
 
 	cps3_current_eeprom_read = 0;
+	spritelist_dma = 0;
 	cps3SndReset();
 	cps3_reset = 0;
 
@@ -1120,7 +1145,8 @@ INT32 cps3Init()
 	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);										// blank all memory
-	MemIndex();	
+	MemIndex();
+	SprList[0] = 0x80000000;
 	
 	// load and decode bios roms
 	ii = 0; offset = 0;
@@ -1776,22 +1802,22 @@ INT32 DrvCps3Draw()
 	{
 		for (INT32 i=0x00000/4;i<0x2000/4;i+=4) {
 
-			if (RamSpr[i+0]&0x80000000) break;
+			if (SprList[i+0]&0x80000000) break;
 
-			INT32 gscroll		= (RamSpr[i+0]&0x70000000)>>28;
-			INT32 length		= (RamSpr[i+0]&0x01ff0000)>>14; // how many entries in the sprite table
-			UINT32 start		= (RamSpr[i+0]&0x00007ff0)>>4;
+			INT32 gscroll		= (SprList[i+0]&0x70000000)>>28;
+			INT32 length		= (SprList[i+0]&0x01ff0000)>>14; // how many entries in the sprite table
+			UINT32 start		= (SprList[i+0]&0x00007ff0)>>4;
 
-			INT32 xpos			= (RamSpr[i+1]&0x03ff0000)>>16;
-			INT32 ypos			= (RamSpr[i+1]&0x000003ff)>>0;
+			INT32 xpos			= (SprList[i+1]&0x03ff0000)>>16;
+			INT32 ypos			= (SprList[i+1]&0x000003ff)>>0;
 
-			INT32 whichbpp		= (RamSpr[i+2]&0x40000000)>>30; // not 100% sure if this is right, jojo title / characters
-			INT32 whichpal		= (RamSpr[i+2]&0x20000000)>>29;
-			INT32 global_xflip	= (RamSpr[i+2]&0x10000000)>>28;
-			INT32 global_yflip	= (RamSpr[i+2]&0x08000000)>>27;
-			INT32 global_alpha	= (RamSpr[i+2]&0x04000000)>>26; // alpha / shadow? set on sfiii2 shadows, and big black image in jojo intro
-			INT32 global_bpp	= (RamSpr[i+2]&0x02000000)>>25;
-			INT32 global_pal	= (RamSpr[i+2]&0x01ff0000)>>16;
+			INT32 whichbpp		= (SprList[i+2]&0x40000000)>>30; // not 100% sure if this is right, jojo title / characters
+			INT32 whichpal		= (SprList[i+2]&0x20000000)>>29;
+			INT32 global_xflip	= (SprList[i+2]&0x10000000)>>28;
+			INT32 global_yflip	= (SprList[i+2]&0x08000000)>>27;
+			INT32 global_alpha	= (SprList[i+2]&0x04000000)>>26; // alpha / shadow? set on sfiii2 shadows, and big black image in jojo intro
+			INT32 global_bpp	= (SprList[i+2]&0x02000000)>>25;
+			INT32 global_pal	= (SprList[i+2]&0x01ff0000)>>16;
 
 			INT32 gscrollx		= (RamVReg[gscroll]&0x03ff0000)>>16;
 			INT32 gscrolly		= (RamVReg[gscroll]&0x000003ff)>>0;
@@ -1800,9 +1826,9 @@ INT32 DrvCps3Draw()
 		
 			for (INT32 j=0; j<length; j+=4) {
 				
-				UINT32 value1 = (RamSpr[start+j+0]);
-				UINT32 value2 = (RamSpr[start+j+1]);
-				UINT32 value3 = (RamSpr[start+j+2]);
+				UINT32 value1 = (SprList[start+j+0]);
+				UINT32 value2 = (SprList[start+j+1]);
+				UINT32 value3 = (SprList[start+j+2]);
 
 				INT32 tilestable[4] = { 8,1,2,4 };
 
@@ -2060,6 +2086,12 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "Sprite RAM";
 		BurnAcb(&ba);
 
+		ba.Data		= SprList;
+		ba.nLen		= 0x0080000;
+		ba.nAddress = 0;
+		ba.szName	= "Sprite List";
+		BurnAcb(&ba);
+
 		ba.Data		= RamSS;
 		ba.nLen		= 0x0010000;
 		ba.nAddress = 0;
@@ -2131,6 +2163,8 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(chardma_source);
 		SCAN_VAR(chardma_table_address);
+
+		SCAN_VAR(spritelist_dma);
 		
 		//SCAN_VAR(main_flash);
 		

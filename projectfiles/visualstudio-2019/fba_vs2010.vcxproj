@@ -106,6 +106,7 @@
     <ClInclude Include="..\..\src\burn\drv\konami\k007342_k007420.h" />
     <ClInclude Include="..\..\src\burn\drv\konami\konamiic.h" />
     <ClInclude Include="..\..\src\burn\drv\konami\timeplt_snd.h" />
+    <ClInclude Include="..\..\src\burn\drv\megadrive\mdeeprom.h" />
     <ClInclude Include="..\..\src\burn\drv\megadrive\megadrive.h" />
     <ClInclude Include="..\..\src\burn\drv\midway\dcs2k.h" />
     <ClInclude Include="..\..\src\burn\drv\midway\ide.h" />
@@ -503,6 +504,7 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />

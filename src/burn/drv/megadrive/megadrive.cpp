@@ -31,6 +31,7 @@
 #include "megadrive.h"
 #include "bitswap.h"
 #include "m68000_debug.h"
+#include "mdeeprom.h" // i2c eeprom for MD
 
 //#define CYCDBUG
 
@@ -437,7 +438,7 @@ static UINT16 __fastcall MegadriveReadWord(UINT32 sekAddress)
 			bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
 		}
 	}
-	return 0;
+	return 0xffff;
 }
 
 static UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
@@ -470,7 +471,7 @@ static UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
 		}
 	}
-	return 0;
+	return 0xff;
 }
 
 static void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d); // forward
@@ -549,7 +550,7 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 		default: {
 			if (!bNoDebug)
-				bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
+				bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x (PC: %X, PPC: %x)\n"), byteValue, sekAddress, SekGetPC(-1), SekGetPPC(-1));
 		}
 	}
 }
@@ -1506,6 +1507,10 @@ static INT32 MegadriveResetDo()
 		}
 		RamMisc->SRamReadOnly = 0;
 	}
+
+	RamMisc->I2CClk = 0;
+	RamMisc->I2CMem = 0;
+
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	teamplayer_reset();
 
@@ -2821,7 +2826,7 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 
-	switch ((BurnDrvGetHardwareCode() & 0xff)) {
+	switch ((BurnDrvGetHardwareCode() & 0xc0)) {
 		case HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY:
 			FourWayPlayMode = 1;
 			break;
@@ -2950,64 +2955,86 @@ static void __fastcall Megadrive6658ARegWriteWord(UINT32 sekAddress, UINT16 word
 
 static UINT8 __fastcall WboyVEEPROMReadByte(UINT32 sekAddress)
 {
-	if (sekAddress & 1) return ~RamMisc->I2CMem & 1;
+	if (sekAddress == 0x200001) return EEPROM_read();
 
-	bprintf(PRINT_NORMAL, _T("WboyVEEPROM Read Byte %x\n"), sekAddress);
+	if (sekAddress < 0x300000) {
+		return RomMain[sekAddress^1];
+	}
 
-	return 0;
+	return 0xff;
 }
 
 static UINT16 __fastcall WboyVEEPROMReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("WboyVEEPROM Read Word %x\n"), sekAddress);
+	if (sekAddress == 0x200001) return EEPROM_read();
 
-	return 0;
+	if (sekAddress < 0x300000) {
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[sekAddress >> 1];
+	}
+
+	return 0xffff;
 }
 
 static void __fastcall WboyVEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if (sekAddress & 1) {
-		RamMisc->I2CClk = (byteValue & 0x0002) >> 1;
-		RamMisc->I2CMem = (byteValue & 0x0001);
+	if (sekAddress == 0x200001) {
+		EEPROM_write8(sekAddress, byteValue);
 		return;
 	}
-
-	bprintf(PRINT_NORMAL, _T("WboyVEEPROM write byte value %02x to location %08x\n"), byteValue, sekAddress);
 }
 
 static void __fastcall WboyVEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	bprintf(PRINT_NORMAL, _T("WboyVEEPROM write word value %04x to location %08x\n"), wordValue, sekAddress);
+	if (sekAddress == 0x200001)
+		EEPROM_write16(wordValue);
 }
 
 static UINT8 __fastcall NbajamEEPROMReadByte(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("Nbajam Read Byte %x\n"), sekAddress);
+	if (sekAddress == 0x200001) return EEPROM_read();
 
-	return 0;
+	if (sekAddress < 0x300000) {
+		return RomMain[sekAddress^1];
+	}
+
+	return 0xff;
 }
 
-static UINT16 __fastcall NbajamEEPROMReadWord(UINT32 /*sekAddress*/)
+static UINT16 __fastcall NbajamEEPROMReadWord(UINT32 sekAddress)
 {
-	return RamMisc->I2CMem & 1;
+	if (sekAddress == 0x200001) return EEPROM_read();
+
+	if (sekAddress < 0x300000) {
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[sekAddress >> 1];
+	}
+
+	return 0xffff;
 }
 
 static void __fastcall NbajamEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	bprintf(PRINT_NORMAL, _T("Nbajam write byte value %02x to location %08x\n"), byteValue, sekAddress);
+	if (sekAddress == 0x200001) {
+		EEPROM_write8(sekAddress, byteValue);
+		return;
+	}
 }
 
-static void __fastcall NbajamEEPROMWriteWord(UINT32 /*sekAddress*/, UINT16 wordValue)
+static void __fastcall NbajamEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	RamMisc->I2CClk = (wordValue & 0x0002) >> 1;
-	RamMisc->I2CMem = (wordValue & 0x0001);
+	if (sekAddress == 0x200001)
+		EEPROM_write16(wordValue);
 }
 
 static UINT8 __fastcall NbajamteEEPROMReadByte(UINT32 sekAddress)
-{ // this is enough to get the game booting and working, but with no real serial eeprom handling
+{
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
-		if (sekAddress & 1) return RamMisc->I2CMem & 1;
-		return 0;
+		UINT16 d = EEPROM_read();
+		if (!(sekAddress & 1))
+			d >>= 8;
+
+		return d;
 	}
 
 	if (sekAddress < 0x300000) {
@@ -3019,6 +3046,10 @@ static UINT8 __fastcall NbajamteEEPROMReadByte(UINT32 sekAddress)
 
 static UINT16 __fastcall NbajamteEEPROMReadWord(UINT32 sekAddress)
 {
+	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
+		return EEPROM_read();
+	}
+
 	if (sekAddress < 0x300000) {
 		UINT16 *Rom = (UINT16*)RomMain;
 		return Rom[sekAddress >> 1];
@@ -3029,17 +3060,15 @@ static UINT16 __fastcall NbajamteEEPROMReadWord(UINT32 sekAddress)
 
 static void __fastcall NbajamteEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if (sekAddress == 0x200001) {
-//		RamMisc->I2CClk = (wordValue & 0x0002) >> 1;
-		RamMisc->I2CMem = (byteValue & 0x0001);
-		return;
+	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
+		EEPROM_write8(sekAddress, byteValue);
 	}
 }
 
 static void __fastcall NbajamteEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	if (sekAddress == 0x200001) {
-		RamMisc->I2CMem = (wordValue & 0x0001);
+	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
+		EEPROM_write16(wordValue);
 		return;
 	}
 }
@@ -3190,6 +3219,8 @@ static void MegadriveSetupSRAM()
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, generic Sega style.\n"));
+		EEPROM_init(SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
 		SekSetReadByteHandler(5, WboyVEEPROMReadByte);
@@ -3199,8 +3230,10 @@ static void MegadriveSetupSRAM()
 		SekClose();
 	}
 
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
+	if ((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NBAJam.\n"));
+		EEPROM_init(2, 1, 0, 1, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
 		SekSetReadByteHandler(5, NbajamEEPROMReadByte);
@@ -3212,6 +3245,8 @@ static void MegadriveSetupSRAM()
 
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NFL_QB_96) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_C_SLAM)) {
 		RamMisc->SRamHasSerialEEPROM = 1;
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NBAJamTE.\n"));
+		EEPROM_init(2, 8, 0, 0, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
 		SekSetReadByteHandler(5, NbajamteEEPROMReadByte);
@@ -3304,35 +3339,6 @@ static void MegadriveSetupSRAM()
 	}
 }
 
-static void sram_patch_megaman()
-{
-	UINT16 *rom = (UINT16*)RomMain;
-	// code to allow use of sram in megaman, which is i2c eeprom(not impl. yet)
-	rom[0x0018e/2] = 0x125a;	rom[0x001b2/2] = 0xf820;
-	rom[0x001ba/2] = 0x3fff;	rom[0x0036a/2] = 0x4e71;
-	rom[0x003a4/2] = 0x4e71;	rom[0x6db4e/2] = 0x4e71;
-	rom[0x6db50/2] = 0x4e71;	rom[0x6db5c/2] = 0x40ce;
-	rom[0x6db76/2] = 0x0050;	rom[0x6db8c/2] = 0x40ce;
-	rom[0x6dba8/2] = 0x003e;	rom[0x6dbb8/2] = 0x4e71;
-	rom[0x6dbba/2] = 0x4e71;	rom[0x6dbbc/2] = 0x60fa;
-	rom[0x6dbbe/2] = 0x4e71;	rom[0x6dbc0/2] = 0x4e71;
-	rom[0x6dbc2/2] = 0x4e71;	rom[0x6dbc4/2] = 0x4e71;
-	rom[0x6dbc6/2] = 0x4a41;	rom[0x6dbc8/2] = 0x6606;
-	rom[0x6dbca/2] = 0x45f9;	rom[0x6dbce/2] = 0x0101;
-	rom[0x6dbd0/2] = 0x1412;	rom[0x6dbd2/2] = 0xe14a;
-	rom[0x6dbd4/2] = 0x142a;	rom[0x6dbd6/2] = 0x0002;
-	rom[0x6dbd8/2] = 0x45ea;	rom[0x6dbda/2] = 0x0004;
-	rom[0x6dbdc/2] = 0x4e75;	rom[0x6dbde/2] = 0x4e71;
-	rom[0x6dbe0/2] = 0x4e71;	rom[0x6dbe2/2] = 0x4e71;
-	rom[0x6dbe4/2] = 0x4e71;	rom[0x6dbe6/2] = 0x4a41;
-	rom[0x6dbe8/2] = 0x6606;	rom[0x6dbea/2] = 0x45f9;
-	rom[0x6dbec/2] = 0x0020;	rom[0x6dbee/2] = 0x0101;
-	rom[0x6dbf0/2] = 0x1542;	rom[0x6dbf2/2] = 0x0002;
-	rom[0x6dbf4/2] = 0xe04a;	rom[0x6dbf6/2] = 0x1482;
-	rom[0x6dbf8/2] = 0x45ea;	rom[0x6dbfa/2] = 0x0004;
-	rom[0x6dbfc/2] = 0x4e75;	rom[0x6dbfe/2] = 0x4e71;
-}
-
 static INT32 __fastcall MegadriveTAScallback(void)
 {
 	return 0; // disable
@@ -3349,11 +3355,6 @@ INT32 MegadriveInit()
 
 	MegadriveLoadRoms(0);
 	if (MegadriveLoadRoms(1)) return 1;
-
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "megaman")) {
-		bprintf(0, _T("Megaman SRAM fix activated!\n"));
-		sram_patch_megaman(); // after rom-load (must!)
-	}
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
@@ -4854,6 +4855,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		BurnMD2612Scan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
+		EEPROM_scan();
 
 		SCAN_VAR(Scanline);
 		SCAN_VAR(Z80HasBus);
@@ -4873,7 +4875,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		BurnRandomScan(nAction);
 	}
 
-	if (nAction & ACB_NVRAM && RamMisc->SRamDetected) {
+	if ((nAction & ACB_NVRAM && RamMisc->SRamDetected) || RamMisc->SRamHasSerialEEPROM) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= SRam;

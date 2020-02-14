@@ -11,6 +11,8 @@ Sound emulation by Philip Bennett
 
 SCSI code by ElSemi
 
+Latest fixes by MetalliC
+
 **********************************************************************
 
 Port to FBA by OopsWare

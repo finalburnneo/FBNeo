@@ -1844,8 +1844,8 @@ INT32 DrvCps3Draw()
 				INT32 xpos2 = (value2 & 0x03ff0000)>>16;
 				INT32 ypos2 = (value2 & 0x000003ff)>>0;
 
-				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24)+1;
-				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16)+1;
+				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24);
+				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16);
 				INT32 xx,yy;
 
 				INT32 ysize2 = ((value3 & 0x0000000c)>>2);

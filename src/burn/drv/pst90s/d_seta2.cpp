@@ -3316,13 +3316,14 @@ static INT32 grdiansFrame()
 		// raster chain won't kick-off.  probably something I overlooked.. -dink
 
 		if (raster_en && i == raster_pos) {
-			tmp68301_update_irq_state(1);
-			DrvDrawScanline(i);
 			if (raster_extra) { // first raster line is "special"
-				nCyclesExec += SekRun( nCyclesTotal / 2 ); // 1/2 line
-				nCyclesDone += nCyclesExec;
+				INT32 c = SekRun( nCyclesTotal / 2 ); // run 1/2 line
+				nCyclesExec += c;
+				nCyclesDone += c;
 				raster_extra = 0;
 			}
+			tmp68301_update_irq_state(1);
+			DrvDrawScanline(i);
 		}
 
 		for (INT32 j=0;j<3;j++) {
@@ -3332,22 +3333,22 @@ static INT32 grdiansFrame()
 					// timer[j] timeout !
 					tmp68301_timer[j] = 0;
 					tmp68301_timer_counter[j] = 0;
-					nCyclesDone += SekRun(200); // avoid masking raster irq
+					nCyclesDone += SekRun(1); // avoid masking raster irq
 					tmp68301_timer_callback(j);
 				}
 			}
 		}
 
 		if (i == 232-1) {
+			if (pBurnDraw)
+				DrvDrawEnd();
+
 			tmp68301_update_irq_state(0);
 		}
 	}
 	nExtraCycles = SekTotalCycles() - (M68K_CYCS / 60);
 
 	SekClose();
-
-	if (pBurnDraw)
-		DrvDrawEnd();
 
 	if (pBurnSoundOut)
 		x1010_sound_update();

@@ -147,7 +147,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \
 			\
-			megadrive.o stm95.o \
+			megadrive.o stm95.o mdeeprom.o \
 			\
 			pce.o \
 			\

@@ -5978,6 +5978,7 @@ DRV		BurnDrvCpsMmancp2ur1;
 DRV		BurnDrvCpsMegamana;
 DRV		BurnDrvCpsMegaman;
 DRV		BurnDrvCpsMmancp2u;
+DRV		BurnDrvmd_megamaneu;
 DRV		BurnDrvmd_megaman;
 DRV		BurnDrvCpsMegaman2a;
 DRV		BurnDrvCpsMegamn2d;
@@ -13700,7 +13701,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_blockrun,		// Blockade Runner (Jpn)
 	&BurnDrvcv_blockrun,		// Blockade Runner
 	&BurnDrvBlockade,			// Blockade
-	&BurnDrvmd_blockb,			// Blockbuster World Video Game Championship II (USA) [no comment, NOT WORKING]
+	&BurnDrvmd_blockb,			// Blockbuster World Video Game Championship II (USA)
 	&BurnDrvBlkbustr,			// BlockBuster
 	&BurnDrvmd_blockout,		// Blockout (World)
 	&BurnDrvpce_blodia,			// Blodia
@@ -18587,7 +18588,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMegamana,		// Mega Man - the power battle (951006 Asia)
 	&BurnDrvCpsMegaman,			// Mega Man - the power battle (951006 USA)
 	&BurnDrvCpsMmancp2u,		// Mega Man - The Power Battle (951006 USA, SAMPLE Version)
-	&BurnDrvmd_megaman,			// Mega Man - The Wily Wars (Euro)
+	&BurnDrvmd_megamaneu,		// Mega Man - The Wily Wars (Euro)
+	&BurnDrvmd_megaman,			// Mega Man - The Wily Wars (USA)
 	&BurnDrvCpsMegaman2a,		// Mega Man 2 - the power fighters (960708 Asia)
 	&BurnDrvCpsMegamn2d,		// Mega Man 2 - the power fighters (960708 USA Phoenix Edition)
 	&BurnDrvCpsMegaman2,		// Mega Man 2 - the power fighters (960708 USA)
@@ -21001,7 +21003,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsRockmanj,		// Rockman - the power battle (950922 Japan)
 	&BurnDrvCpsRockman2j,		// Rockman 2 - the power fighters (960708 Japan)
 	&BurnDrvmd_rockman,			// Rockman Mega World (Jpn)
-	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt) [Play md_rockman or md_megaman instead!, NOT WORKING]
+	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt)
 	&BurnDrvmd_rockmnx3,		// Rockman X3
 	&BurnDrvCpsRmancp2j,		// Rockman: The Power Battle (950922 Japan)
 	&BurnDrvsms_rocky,			// Rocky (World)

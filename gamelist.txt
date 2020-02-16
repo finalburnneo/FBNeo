@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12332 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12333 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1073,7 +1073,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
-| md_blockb	|   NW	| Blockbuster World Video Game Championship II (USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
+| md_blockb	|  	| Blockbuster World Video Game Championship II (USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | blkbustr	|  	| BlockBuster						| mrjong	| 1983	| Kiwako (ECI li| Miscellaneous	| 					|
 | md_blockout	|  	| Blockout (World)					| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | pce_blodia	|  	| Blodia						| 		| 1990	| Hudson	| PC Engine	| 					|
@@ -5850,7 +5850,8 @@ This list contains all games supported by FinalBurn Neo.
 | megamana	|  	| Mega Man - the power battle (951006 Asia)		| megaman	| 1995	| Capcom	| CPS1		| 					|
 | megaman	|  	| Mega Man - the power battle (951006 USA)		| 		| 1995	| Capcom	| CPS1		| 					|
 | mmancp2u	|  	| Mega Man - The Power Battle (951006 USA, SAMPLE Versio| megaman	| 1995	| Capcom	| CPS2		| 					|
-| md_megaman	|  	| Mega Man - The Wily Wars (Euro)			| 		| 1994	| Capcom	| Sega Megadrive| 					|
+| md_megamaneu	|  	| Mega Man - The Wily Wars (Euro)			| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
+| md_megaman	|  	| Mega Man - The Wily Wars (USA)			| 		| 1994	| Capcom	| Sega Megadrive| 					|
 | megaman2a	|  	| Mega Man 2 - the power fighters (960708 Asia)		| megaman2	| 1996	| Capcom	| CPS2		| 					|
 | megamn2d	|  	| Mega Man 2 - the power fighters (960708 USA Phoenix Ed| megaman2	| 1996	| bootleg	| CPS2		| 					|
 | megaman2	|  	| Mega Man 2 - the power fighters (960708 USA)		| 		| 1996	| Capcom	| CPS2		| 					|
@@ -8214,7 +8215,7 @@ This list contains all games supported by FinalBurn Neo.
 | rockmanj	|  	| Rockman - the power battle (950922 Japan)		| megaman	| 1995	| Capcom	| CPS1		| 					|
 | rockman2j	|  	| Rockman 2 - the power fighters (960708 Japan)		| megaman2	| 1996	| Capcom	| CPS2		| 					|
 | md_rockman	|  	| Rockman Mega World (Jpn)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
-| md_rockman1	|   NW	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| Play md_rockman or md_megaman instead!|
+| md_rockman1	|  	| Rockman Mega World (Jpn, Alt)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|
 | md_rockmnx3	|  	| Rockman X3						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | rmancp2j	|  	| Rockman: The Power Battle (950922 Japan)		| megaman	| 1999	| Capcom	| CPS2		| 					|
 | sms_rocky	|  	| Rocky (World)						| 		| 1987	| Sega		| Sega Master Sy| 					|

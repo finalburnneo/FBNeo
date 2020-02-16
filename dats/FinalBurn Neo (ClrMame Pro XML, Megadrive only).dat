@@ -1257,7 +1257,7 @@
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="blockbuster world video game championship ii (usa).bin" size="4194304" crc="4385e366"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="blockout">
 		<description>Blockout (World)</description>
@@ -6896,11 +6896,18 @@
 		<rom name="mpr-15009.bin" size="1048576" crc="db753224"/>
 		<driver status="good"/>
 	</game>
-	<game name="megaman">
+	<game name="megamaneu" cloneof="megaman" romof="megaman">
 		<description>Mega Man - The Wily Wars (Euro)</description>
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="mega man - the wily wars (euro).bin" size="2097152" crc="dcf6e8b2"/>
+		<driver status="good"/>
+	</game>
+	<game name="megaman">
+		<description>Mega Man - The Wily Wars (USA)</description>
+		<year>1994</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="mega man - the wily wars (usa).bin" size="2097152" crc="0cd405db"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaqbert11">
@@ -10220,11 +10227,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="rockman1" cloneof="megaman" romof="megaman">
-		<description>Rockman Mega World (Jpn, Alt) [Play md_rockman or md_megaman instead!]</description>
+		<description>Rockman Mega World (Jpn, Alt)</description>
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="rockman mega world (jpn) (alt).bin" size="2097152" crc="85c956ef"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="rockmnx3">
 		<description>Rockman X3</description>

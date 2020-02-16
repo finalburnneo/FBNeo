@@ -1000,6 +1000,9 @@
     <ClInclude Include="..\..\src\burner\dynhuff.h">
       <Filter>burner</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\megadrive\mdeeprom.h">
+      <Filter>Burn\drv\megadrive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4108,6 +4111,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exprraid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp">
       <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp">
+      <Filter>Burn\drv\megadrive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

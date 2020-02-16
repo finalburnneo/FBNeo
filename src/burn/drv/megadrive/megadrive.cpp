@@ -2953,88 +2953,10 @@ static void __fastcall Megadrive6658ARegWriteWord(UINT32 sekAddress, UINT16 word
 	bprintf(PRINT_NORMAL, _T("6658A Reg write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
 
-static UINT8 __fastcall WboyVEEPROMReadByte(UINT32 sekAddress)
-{
-	if (sekAddress == 0x200001) return EEPROM_read();
-
-	if (sekAddress < 0x300000) {
-		return RomMain[sekAddress^1];
-	}
-
-	return 0xff;
-}
-
-static UINT16 __fastcall WboyVEEPROMReadWord(UINT32 sekAddress)
-{
-	if (sekAddress == 0x200001) return EEPROM_read();
-
-	if (sekAddress < 0x300000) {
-		UINT16 *Rom = (UINT16*)RomMain;
-		return Rom[sekAddress >> 1];
-	}
-
-	return 0xffff;
-}
-
-static void __fastcall WboyVEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	if (sekAddress == 0x200001) {
-		EEPROM_write8(sekAddress, byteValue);
-		return;
-	}
-}
-
-static void __fastcall WboyVEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
-{
-	if (sekAddress == 0x200001)
-		EEPROM_write16(wordValue);
-}
-
-static UINT8 __fastcall NbajamEEPROMReadByte(UINT32 sekAddress)
-{
-	if (sekAddress == 0x200001) return EEPROM_read();
-
-	if (sekAddress < 0x300000) {
-		return RomMain[sekAddress^1];
-	}
-
-	return 0xff;
-}
-
-static UINT16 __fastcall NbajamEEPROMReadWord(UINT32 sekAddress)
-{
-	if (sekAddress == 0x200001) return EEPROM_read();
-
-	if (sekAddress < 0x300000) {
-		UINT16 *Rom = (UINT16*)RomMain;
-		return Rom[sekAddress >> 1];
-	}
-
-	return 0xffff;
-}
-
-static void __fastcall NbajamEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	if (sekAddress == 0x200001) {
-		EEPROM_write8(sekAddress, byteValue);
-		return;
-	}
-}
-
-static void __fastcall NbajamEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
-{
-	if (sekAddress == 0x200001)
-		EEPROM_write16(wordValue);
-}
-
-static UINT8 __fastcall NbajamteEEPROMReadByte(UINT32 sekAddress)
+static UINT8 __fastcall x200000EEPROMReadByte(UINT32 sekAddress)
 {
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
-		UINT16 d = EEPROM_read();
-		if (!(sekAddress & 1))
-			d >>= 8;
-
-		return d;
+		return EEPROM_read8(sekAddress);
 	}
 
 	if (sekAddress < 0x300000) {
@@ -3044,7 +2966,7 @@ static UINT8 __fastcall NbajamteEEPROMReadByte(UINT32 sekAddress)
 	}
 }
 
-static UINT16 __fastcall NbajamteEEPROMReadWord(UINT32 sekAddress)
+static UINT16 __fastcall x200000EEPROMReadWord(UINT32 sekAddress)
 {
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
 		return EEPROM_read();
@@ -3058,14 +2980,14 @@ static UINT16 __fastcall NbajamteEEPROMReadWord(UINT32 sekAddress)
 	}
 }
 
-static void __fastcall NbajamteEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall x200000EEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
 		EEPROM_write8(sekAddress, byteValue);
 	}
 }
 
-static void __fastcall NbajamteEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall x200000EEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
 		EEPROM_write16(wordValue);
@@ -3073,63 +2995,37 @@ static void __fastcall NbajamteEEPROMWriteWord(UINT32 sekAddress, UINT16 wordVal
 	}
 }
 
-static UINT8 __fastcall EANhlpaEEPROMReadByte(UINT32 sekAddress)
-{
-	bprintf(PRINT_NORMAL, _T("EANhlpa Read Byte %x\n"), sekAddress);
-
-	return 0;
-}
-
-static UINT16 __fastcall EANhlpaEEPROMReadWord(UINT32 /*sekAddress*/)
-{
-	return (RamMisc->I2CMem & 1) << 7;
-}
-
-static void __fastcall EANhlpaEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	bprintf(PRINT_NORMAL, _T("EANhlpa write byte value %02x to location %08x\n"), byteValue, sekAddress);
-}
-
-static void __fastcall EANhlpaEEPROMWriteWord(UINT32 /*sekAddress*/, UINT16 wordValue)
-{
-	RamMisc->I2CClk = ((wordValue & 0x0040) >> 6);
-	RamMisc->I2CMem = ((wordValue & 0x0080) >> 7);
-}
-
 static UINT8 __fastcall CodemastersEEPROMReadByte(UINT32 sekAddress)
 {
-	if (sekAddress & 1) return RamMisc->I2CMem & 1;
+	if (sekAddress == 0x380001) {
+		return EEPROM_read8(sekAddress);
+	}
 
-	bprintf(PRINT_NORMAL, _T("Codemasters Read Byte %x\n"), sekAddress);
-
-	return 0;
+	return 0xff;
 }
 
 static UINT16 __fastcall CodemastersEEPROMReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("Codemasters Read Word %x\n"), sekAddress);
+	if (sekAddress == 0x380001) {
+		return EEPROM_read();
+	}
 
-	return 0;
+	return 0xffff;
 }
 
 static void __fastcall CodemastersEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if (sekAddress & 1) {
-		RamMisc->I2CClk = (byteValue & 0x0002) >> 1;
-		RamMisc->I2CMem = (byteValue & 0x0001);
-		return;
-	} else {
-		RamMisc->I2CClk = (byteValue & 0x0002) >> 1;
-		RamMisc->I2CMem = (byteValue & 0x0001);
-		return;
+	if (sekAddress >= 0x300000 && sekAddress <= 0x300001) {
+		EEPROM_write8(sekAddress, byteValue);
 	}
-
-	bprintf(PRINT_NORMAL, _T("Codemasters write byte value %02x to location %08x\n"), byteValue, sekAddress);
 }
 
 static void __fastcall CodemastersEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	bprintf(PRINT_NORMAL, _T("Codemasters write word value %04x to location %08x\n"), wordValue, sekAddress);
+	if (sekAddress >= 0x300000 && sekAddress <= 0x300001) {
+		EEPROM_write16(wordValue);
+		return;
+	}
 }
 
 static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byteValue)
@@ -3139,7 +3035,7 @@ static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byt
 		RamMisc->SRamReg |= byteValue;
 		RamMisc->SRamActive = RamMisc->SRamReg & SR_MAPPED;
 		RamMisc->SRamReadOnly = RamMisc->SRamReg & SR_READONLY;
-		bprintf(0, _T("SRam Status: %S%S\n"), RamMisc->SRamActive ? "Active " : "", RamMisc->SRamReadOnly ? "ReadOnly" : "");
+		bprintf(0, _T("SRam Status: %S%S\n"), RamMisc->SRamActive ? "Active " : "Disabled ", RamMisc->SRamReadOnly ? "ReadOnly" : "Read/Write");
 	}
 }
 
@@ -3219,14 +3115,14 @@ static void MegadriveSetupSRAM()
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
-		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, generic Sega style.\n"));
-		EEPROM_init(SRam);
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, generic Sega.\n"));
+		EEPROM_init(0, 1, 0, 0, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(5, WboyVEEPROMReadByte);
-		SekSetReadWordHandler(5, WboyVEEPROMReadWord);
-		SekSetWriteByteHandler(5, WboyVEEPROMWriteByte);
-		SekSetWriteWordHandler(5, WboyVEEPROMWriteWord);
+		SekSetReadByteHandler(5, x200000EEPROMReadByte);
+		SekSetReadWordHandler(5, x200000EEPROMReadWord);
+		SekSetWriteByteHandler(5, x200000EEPROMWriteByte);
+		SekSetWriteWordHandler(5, x200000EEPROMWriteWord);
 		SekClose();
 	}
 
@@ -3236,10 +3132,10 @@ static void MegadriveSetupSRAM()
 		EEPROM_init(2, 1, 0, 1, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(5, NbajamEEPROMReadByte);
-		SekSetReadWordHandler(5, NbajamEEPROMReadWord);
-		SekSetWriteByteHandler(5, NbajamEEPROMWriteByte);
-		SekSetWriteWordHandler(5, NbajamEEPROMWriteWord);
+		SekSetReadByteHandler(5, x200000EEPROMReadByte);
+		SekSetReadWordHandler(5, x200000EEPROMReadWord);
+		SekSetWriteByteHandler(5, x200000EEPROMWriteByte);
+		SekSetWriteWordHandler(5, x200000EEPROMWriteWord);
 		SekClose();
 	}
 
@@ -3249,26 +3145,30 @@ static void MegadriveSetupSRAM()
 		EEPROM_init(2, 8, 0, 0, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(5, NbajamteEEPROMReadByte);
-		SekSetReadWordHandler(5, NbajamteEEPROMReadWord);
-		SekSetWriteByteHandler(5, NbajamteEEPROMWriteByte);
-		SekSetWriteWordHandler(5, NbajamteEEPROMWriteWord);
+		SekSetReadByteHandler(5, x200000EEPROMReadByte);
+		SekSetReadWordHandler(5, x200000EEPROMReadWord);
+		SekSetWriteByteHandler(5, x200000EEPROMWriteByte);
+		SekSetWriteWordHandler(5, x200000EEPROMWriteWord);
 		SekClose();
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_EA_NHLPA) {
 		RamMisc->SRamHasSerialEEPROM = 1;
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NHLPA/Rings of Power.\n"));
+		EEPROM_init(1, 6, 7, 7, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
-		SekSetReadByteHandler(5, EANhlpaEEPROMReadByte);
-		SekSetReadWordHandler(5, EANhlpaEEPROMReadWord);
-		SekSetWriteByteHandler(5, EANhlpaEEPROMWriteByte);
-		SekSetWriteWordHandler(5, EANhlpaEEPROMWriteWord);
+		SekSetReadByteHandler(5, x200000EEPROMReadByte);
+		SekSetReadWordHandler(5, x200000EEPROMReadWord);
+		SekSetWriteByteHandler(5, x200000EEPROMWriteByte);
+		SekSetWriteWordHandler(5, x200000EEPROMWriteWord);
 		SekClose();
 	}
 
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CODE_MASTERS) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART_SEPROM)) {
 		RamMisc->SRamHasSerialEEPROM = 1;
+		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, Codemasters.\n"));
+		EEPROM_init(2, 9, 8, 7, SRam);
 		SekOpen(0);
 		SekMapHandler(5, 0x300000, 0x300001, MAP_WRITE);
 		SekSetWriteByteHandler(5, CodemastersEEPROMWriteByte);

@@ -252,3 +252,11 @@ UINT32 EEPROM_read()
 
 	return (d << eeprom.eeprom_bit_out);
 }
+
+UINT32 EEPROM_read8(UINT32 a)
+{
+	UINT32 d = EEPROM_read();
+	if (!(a & 1))
+		d >>= 8;
+	return d;
+}

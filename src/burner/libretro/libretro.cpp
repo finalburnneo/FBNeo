@@ -74,6 +74,7 @@ INT32 nReplayStatus = 0;
 INT32 nIpsMaxFileLen = 0;
 unsigned nGameType = 0;
 static INT32 nGameWidth, nGameHeight;
+static INT32 bDisableSerialize = 0;
 
 static unsigned int BurnDrvGetIndexByName(const char* name);
 char* DecorateGameName(UINT32 nBurnDrv);
@@ -852,6 +853,7 @@ void retro_reset()
 void retro_run()
 {
 	pBurnDraw = pVidImage;
+	bDisableSerialize = 0;
 
 	InputMake();
 
@@ -893,6 +895,8 @@ void retro_run()
 		if (old_g_opt_neo_geo_mode != g_opt_neo_geo_mode)
 		{
 			retro_reset();
+			// Readahead randomly crashes the core when switching bios
+			bDisableSerialize = 1;
 		}
 	}
 }
@@ -926,6 +930,8 @@ static int burn_dummy_state_cb(BurnArea *pba)
 
 size_t retro_serialize_size()
 {
+	if (bDisableSerialize == 1)
+		return 0;
 	int result = -1;
 	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
 	kNetGame = result & 4 ? 1 : 0;
@@ -942,6 +948,8 @@ size_t retro_serialize_size()
 
 bool retro_serialize(void *data, size_t size)
 {
+	if (bDisableSerialize == 1)
+		return false;
 	int result = -1;
 	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
 	kNetGame = result & 4 ? 1 : 0;
@@ -964,6 +972,8 @@ bool retro_serialize(void *data, size_t size)
 
 bool retro_unserialize(const void *data, size_t size)
 {
+	if (bDisableSerialize == 1)
+		return false;
 	int result = -1;
 	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
 	kNetGame = result & 4 ? 1 : 0;

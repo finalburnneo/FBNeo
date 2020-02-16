@@ -49,22 +49,24 @@ It is either not supported or you have a bad rom. Build a valid romset with clrm
 There is also a few games marked as not working, try one of their clones.
 
 ### Game XXX has graphical glitches, why ?
-Most likely the same as above, make sure you have the right romset.
-If the problem persist, write a report with a screenshot and the name of the platform you are using.
+Write a report with details on the issue and your platform.
 
 ### Game XXX runs slowly, why ?
 Your hardware is probably too slow to run the game with normal settings. Try the following :
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
 * Try setting a value for frameskip in core options.
-* Try disabling rewind, runahead, and anything related to the savestates system in retroarch.
+* Try lowering CPU clock in core options
+* Try disabling rewind, runahead, or any other retroarch setting known for increasing overhead.
 * Try lowering audio settings in the core options.
-* If it is not enough, upgrade or overclock your hardware.
+* If it is not enough, upgrade/overclock your hardware, or use another core.
+
+We won't accept requests for "making the core faster", as far as we are concerned this core has a good balance between accuracy & speed, and for the most part will already run really well on cheap arm socs (rpi3, ...).
 
 ### Game XXX has choppy sound, why ?
 Most likely for the same reason as above.
 
 ### Game XXX runs faster in MAME2003/MAME2010, why ?
-This is not MAME, we are using different code. 
+This is not MAME, we are generally using a more "up-to-date" code. 
 Overall, FB Alpha is slower than old MAME version but more accurate and less buggy.
 This libretro port also support various features which are usually buggy or absent in MAME cores (netplay, rewind, retroachievements, ...). It takes some resources.
 

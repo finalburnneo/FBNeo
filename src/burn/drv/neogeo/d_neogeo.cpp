@@ -1299,7 +1299,7 @@ static pSekWriteWordHandler pSMABankswitchHandler[MAX_SLOT] = { NULL, };
 void NeoSMABankswitch()
 {
 	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FE3FF, MAP_ROM);
-	if (nNeoSMARNGAddress[nNeoActiveSlot][0] > 0 || nNeoSMARNGAddress[nNeoActiveSlot][1] > 0) {
+	if (nNeoSMARNGAddress[nNeoActiveSlot][0] != NULL || nNeoSMARNGAddress[nNeoActiveSlot][1] != NULL) {
 		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 	} else {
 		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFFFF, MAP_ROM);

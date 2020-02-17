@@ -990,6 +990,7 @@
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
+		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */; };
@@ -2509,6 +2510,8 @@
 		FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBVideo.mm; sourceTree = "<group>"; };
 		FEC5D3D7235C160600ABA9FB /* FBScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScreenView.h; sourceTree = "<group>"; };
 		FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBScreenView.mm; sourceTree = "<group>"; };
+		FED03ADC23FAF8E900E99A10 /* mdeeprom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdeeprom.h; sourceTree = "<group>"; };
+		FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mdeeprom.cpp; sourceTree = "<group>"; };
 		FEDA8F87235D226E007A4D26 /* FBInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBInput.mm; sourceTree = "<group>"; };
 		FEDA8F88235D226E007A4D26 /* FBInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInput.h; sourceTree = "<group>"; };
 		FEDA8F8C235EB561007A4D26 /* README-macOS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "README-macOS.md"; path = "../../README-macOS.md"; sourceTree = "<group>"; };
@@ -3428,10 +3431,12 @@
 		FE1B1EC023561A670065200C /* megadrive */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B1EC123561A670065200C /* megadrive.h */,
 				FE1B1EC223561A670065200C /* d_megadrive.cpp */,
-				FE1B1EC323561A670065200C /* stm95.cpp */,
+				FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */,
+				FED03ADC23FAF8E900E99A10 /* mdeeprom.h */,
 				FE1B1EC423561A670065200C /* megadrive.cpp */,
+				FE1B1EC123561A670065200C /* megadrive.h */,
+				FE1B1EC323561A670065200C /* stm95.cpp */,
 			);
 			path = megadrive;
 			sourceTree = "<group>";
@@ -5397,6 +5402,7 @@
 				FE1B263223561A770065200C /* fcrash_snd.cpp in Sources */,
 				FE1B270423561A780065200C /* d_snk68.cpp in Sources */,
 				FE1B259423561A760065200C /* d_sidepckt.cpp in Sources */,
+				FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */,
 				FE1B275023561A780065200C /* d_skyfox.cpp in Sources */,
 				FE1B23F223561A750065200C /* pic16c5x.cpp in Sources */,
 				FE1B24B523561A750065200C /* d_m62.cpp in Sources */,

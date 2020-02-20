@@ -96,13 +96,15 @@ struct nesapu_info
 
 static nesapu_info nesapu_chips[CHIP_NUM];
 
+static INT32 cycles_per_frame;
+
 #if 0
 INT32 nes_scanline();
 #endif
 
 static UINT32 nes_nesapu_sync(INT32 samples_rate)
 {
-	return (samples_rate * M6502TotalCycles()) / 29781 /* (341*262 / 3) + 0.5 */;
+	return (samples_rate * M6502TotalCycles()) / cycles_per_frame; /* ntsc: (341*262 / 3) + 0.5 pal: (341*312 / 3.2) + 0.5*/
 }
 
 //enum nesapu_mixermodes { MIXER_APU = 0x01, MIXER_EXT = 0x02 };
@@ -811,7 +813,7 @@ static void apu_update(struct nesapu_info *info)
 		//  slight/faint buzz when level starts is _normal_ (aka: not a bug)
 
 		// mix new dmc engine (29781 samples/frame) with the rest  MIXER
-		INT32 dmcoffs = (29781 * (startpos + i)) / info->samps_per_sync;
+		INT32 dmcoffs = (cycles_per_frame * (startpos + i)) / info->samps_per_sync;
 		INT32 dmc = dmc_buffer[dmcoffs];
 		INT32 ext = nes_ext_buffer[dmcoffs];
 
@@ -996,11 +998,16 @@ void nesapuReset()
 
 void nesapuInit(INT32 chip, INT32 clock, INT32 bAdd)
 {
-	nesapuInit(chip, clock, nes_nesapu_sync, bAdd);
+	nesapuInit(chip, clock, 0, nes_nesapu_sync, bAdd);
+}
+
+void nesapuInitPal(INT32 chip, INT32 clock, INT32 bAdd)
+{
+	nesapuInit(chip, clock, 1, nes_nesapu_sync, bAdd);
 }
 
 /* INITIALIZE APU SYSTEM */
-void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_per_frame), INT32 bAdd)
+void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(INT32 samples_per_frame), INT32 bAdd)
 {
 	DebugSnd_NESAPUSndInitted = 1;
 
@@ -1009,6 +1016,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 	memset(info, 0, sizeof(nesapu_info));
 
 	/* Initialize global variables */
+	cycles_per_frame = (is_pal) ? 33248 : 29781;
 	info->samps_per_sync = 7457; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
@@ -1034,9 +1042,9 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 	info->pSyncCallback = pSyncCallback;
 
 	info->bAdd = bAdd;
-
-	dmc_buffer = (UINT8*)BurnMalloc((29781 + 5) * 2);
-	nes_ext_buffer = (INT16*)BurnMalloc((29781 + 5) * 2 * 2);
+	// cycles per frame: 29781 ntsc, 33248 pal
+	dmc_buffer = (UINT8*)BurnMalloc((cycles_per_frame + 5) * 2);
+	nes_ext_buffer = (INT16*)BurnMalloc((cycles_per_frame + 5) * 2 * 2);
 	nes_ext_sound_cb = NULL;
 	nesapu_mixermode = 0xff; // enable all
 

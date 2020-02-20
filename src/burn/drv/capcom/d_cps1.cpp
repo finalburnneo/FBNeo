@@ -18405,6 +18405,29 @@ void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
 	RAM[((a & 0xffff) >> 1)] = d;
 }
 
+static void WofhPatch()
+{
+	// The following patches fix the boss not coming out on 1st stage, and maybe also fix other things. They are from FBAS.
+	CpsRom[0x10CDC] = 0x12;
+	CpsRom[0x10CDD] = 0xC1;
+	CpsRom[0x10CDE] = 0x12;
+	CpsRom[0x10CDF] = 0x8D;
+	CpsRom[0x10CEA] = 0x14;
+	CpsRom[0x10CEB] = 0xC1;
+	CpsRom[0x10CEC] = 0x14;
+	CpsRom[0x10CED] = 0x8D;
+	CpsRom[0x147F0] = 0xAE;
+	CpsRom[0x147F1] = 0x01;
+	CpsRom[0x147F2] = 0x1E;
+	CpsRom[0x147F3] = 0x00;
+	CpsRom[0x147F4] = 0x28;
+	CpsRom[0x147F5] = 0x54;
+	CpsRom[0x147F7] = 0x00;
+	CpsRom[0x14800] = 0x28;
+	CpsRom[0x14801] = 0x54;
+	CpsRom[0x14803] = 0x00;
+}
+
 static INT32 WofhInit()
 {
 	INT32 nRet = 0;
@@ -18418,6 +18441,7 @@ static INT32 WofhInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	AmendProgRomCallback = WofhPatch;
 	
 	nRet = TwelveMhzInit();
 	

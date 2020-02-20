@@ -2,8 +2,9 @@
 enum nesapu_mixermodes { MIXER_APU = 0x01, MIXER_EXT = 0x02 };
 extern INT32 nesapu_mixermode;
 
-void nesapuInit(INT32 chip, INT32 clock, INT32 bAdd); // for d_nes
-void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_per_frame), INT32 nAdd);
+void nesapuInitPal(INT32 chip, INT32 clock, INT32 bAdd); // pal nes
+void nesapuInit(INT32 chip, INT32 clock, INT32 bAdd); // ntsc nes
+void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(INT32 samples_per_frame), INT32 nAdd);
 void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples);
 void nesapuSetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void nesapuExit();

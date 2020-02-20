@@ -18076,6 +18076,14 @@ static struct BurnRomInfo kof99eurRomDesc[] = {
 
 STDROMPICKEXT(kof99eur, kof99eur, neogeo)
 STD_ROM_FN(kof99eur)
+	
+static INT32 Kof99TimePatchInit() // We need this patch to get timer working properly!
+{
+ 	INT32 nRet = NeoInit();
+	UINT8* ROM = (UINT8*)Neo68KROMActive;
+	ROM[0x2ABE9] = 0x65;
+	return nRet;
+}
 
 struct BurnDriver BurnDrvkof99eur = {
 	"kof99eur", "kof99", "neogeo", NULL, "201?",
@@ -18083,7 +18091,7 @@ struct BurnDriver BurnDrvkof99eur = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99eurRomInfo, kof99eurRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	Kof99TimePatchInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -18121,7 +18129,7 @@ struct BurnDriver BurnDrvkof99sr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99srRomInfo, kof99srRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	Kof99TimePatchInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

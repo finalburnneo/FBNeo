@@ -682,7 +682,7 @@ static INT32 CommonInit(INT32 (*pInitCallback)(), INT32 punchout, INT32 reverse_
 	vlm5030Init(0, 3580000, punchout_vlm_sync, DrvVLMROM, 0x4000, 1);
 	vlm5030SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
-	nesapuInit(0, 1789773, punchout_nesapu_sync, 0);
+	nesapuInit(0, 1789773, 0, punchout_nesapu_sync, 0);
 	nesapuSetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

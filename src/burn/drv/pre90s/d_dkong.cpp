@@ -1578,10 +1578,10 @@ static INT32 Dkong3Init()
 	M6502SetReadHandler(dkong3_sound1_read);
 	M6502Close();
 
-	nesapuInit(0, 1789773, dkong3_nesapu_sync, 0);
+	nesapuInit(0, 1789773, 0, dkong3_nesapu_sync, 0);
 	nesapuSetAllRoutes(0, 0.95, BURN_SND_ROUTE_BOTH);
 
-	nesapuInit(1, 1789773, dkong3_nesapu_sync, 1);
+	nesapuInit(1, 1789773, 0, dkong3_nesapu_sync, 1);
 	nesapuSetAllRoutes(1, 0.95, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12333 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12335 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7850,6 +7850,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_rcgp	|  	| R.C. Grand Prix (Euro, USA, Bra)			| 		| 1989	| Sega		| Sega Master Sy| 					|
 | sms_rcgpp	|  	| R.C. Grand Prix (Prototype)				| sms_rcgp	| 1989	| Sega		| Sega Master Sy| 					|
 | gg_rcgp	|  	| R.C. Grand Prix (USA, SMS Mode)			| 		| 1992	| Absolute Enter| Sega Game Gear| 					|
+| rabbit	|  	| Rabbit (Asia 3/6)					| 		| 1997	| Aorn / Electro| Miscellaneous	| 					|
+| rabbitjt	|  	| Rabbit (Japan, location test)				| rabbit	| 1996	| Aorn / Electro| Miscellaneous	| 					|
 | rpunch	|  	| Rabbit Punch (US)					| rabiolep	| 1987	| V-System Co. (| Miscellaneous	| 					|
 | rabiolep	|  	| Rabio Lepus (Japan)					| 		| 1987	| V-System Co.	| Miscellaneous	| 					|
 | pce_rabiolep	|  	| Rabio Lepus Special					| 		| 1990	| Video System	| PC Engine	| 					|

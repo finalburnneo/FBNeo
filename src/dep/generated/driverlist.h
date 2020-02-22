@@ -8024,6 +8024,8 @@ DRV		BurnDrvmd_rbibb4;
 DRV		BurnDrvsms_rcgp;
 DRV		BurnDrvsms_rcgpp;
 DRV		BurnDrvgg_rcgp;
+DRV		BurnDrvRabbit;
+DRV		BurnDrvRabbitjt;
 DRV		BurnDrvRpunch;
 DRV		BurnDrvRabiolep;
 DRV		BurnDrvpce_rabiolep;
@@ -20634,6 +20636,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_rcgp,			// R.C. Grand Prix (Euro, USA, Bra)
 	&BurnDrvsms_rcgpp,			// R.C. Grand Prix (Prototype)
 	&BurnDrvgg_rcgp,			// R.C. Grand Prix (USA, SMS Mode)
+	&BurnDrvRabbit,				// Rabbit (Asia 3/6)
+	&BurnDrvRabbitjt,			// Rabbit (Japan, location test)
 	&BurnDrvRpunch,				// Rabbit Punch (US)
 	&BurnDrvRabiolep,			// Rabio Lepus (Japan)
 	&BurnDrvpce_rabiolep,		// Rabio Lepus Special

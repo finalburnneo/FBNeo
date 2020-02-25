@@ -68,6 +68,8 @@ static UINT8 DrvInputs[6];
 
 static INT32 is_shufshot = 0;
 
+static INT32 is_16bit = 0;
+
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
@@ -2599,7 +2601,13 @@ static UINT8 itech32_sound_read(UINT16 address)
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
-		memset (AllRam, 0, RamEnd - AllRam);
+		memset(DrvPalRAM, 0, 0x20000);
+		memset(DrvM6809RAM, 0, 0x2000);
+		memset(video_regs, 0, 0x80);
+		if (is_16bit == 0) {
+			// w/16bit games: Drv68KRAM is also NVRAM :)
+			memset(Drv68KRAM, 0, 0x10000);
+		}
 	}
 
 	memcpy (Drv68KRAM, Drv68KROM, 0x80); // copy vectors (before 68k RESET!!)
@@ -2828,6 +2836,8 @@ static INT32 TimekillInit()
 
 	itech32VideoInit(512, 2, nGfxROMLen);
 
+	is_16bit = 1;
+
 	DrvDoReset(1);
 
 	return 0;
@@ -2870,6 +2880,8 @@ static INT32 Common16BitInit()
 	GenericTilesInit();
 
 	itech32VideoInit(1024, 1, nGfxROMLen);
+
+	is_16bit = 1;
 
 	DrvDoReset(1);
 
@@ -2941,6 +2953,7 @@ static INT32 DrvExit()
 	Trackball_Type = -1;
 
 	is_shufshot = 0;
+	is_16bit = 0;
 
 	return 0;
 }
@@ -3184,11 +3197,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x04000;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
+		if (is_16bit) {
+			ScanVar(Drv68KRAM, 0x10000, "NV RAM");
+		} else {
+			ScanVar(DrvNVRAM,  0x04000, "NV RAM");
+		}
 	}
 
 	if (nAction & ACB_WRITE)

@@ -41,6 +41,13 @@
 
    - Various bugs concerning the DPCM channel fixed. (Oliver Achten)
    - Fixed $4015 read behaviour. (Oliver Achten) :: Actually, this broke it -dink
+   - Oct xx, 2019 (dink)
+	   completely re-impl dmc (dpcm) channel because fixing it was not an option
+   - Nov 13, 2019 (dink)
+	   MMC5 2x square: read/write address | 0x80
+   - Feb 20, 2020 (dink)
+       fix sweep unit
+       add sweep unit augmented negation mode for first square channel
 
  *****************************************************************************/
 
@@ -231,7 +238,7 @@ const UINT8 pulse_dty[4][8] = {
 };
 
 /* OUTPUT SQUARE WAVE SAMPLE (VALUES FROM -16 to +15) */
-static int8 apu_square(struct nesapu_info *info, square_t *chan)
+static int8 apu_square(struct nesapu_info *info, square_t *chan, INT32 first_channel)
 {
    INT32 env_delay;
    INT32 sweep_delay;
@@ -249,15 +256,11 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    /* enveloping */
    env_delay = info->sync_times1[chan->regs[0] & 0x0F] + 1;
 
-   int env_starting = 0;
-
    /* decay is at a rate of (env_regs + 1) / 240 secs */
    if (chan->env_vol >= 0x10) {
-	   chan->env_vol++;
-	   if (chan->env_vol == 0xff) env_starting = 1;
+	   chan->env_vol = 0;
 	   chan->env_phase = env_delay; // restart env phase
 	   chan->phaseacc = (chan->freq >> 16);
-	   chan->adder = 0;
    }
    else
    {
@@ -273,7 +276,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    }
 
    /* vbl length counter */
-   if (chan->vbl_length > 0 && 0 == (chan->regs [0] & 0x20))
+   if (chan->vbl_length > 0 && 0 == (chan->regs[0] & 0x20))
       chan->vbl_length--;
 
    if (0 == chan->vbl_length)
@@ -284,11 +287,11 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
    {
       sweep_delay = info->sync_times1[(chan->regs[1] >> 4) & 7];
       chan->sweep_phase -= 2;
-      while (chan->sweep_phase < 0)
+      while (chan->sweep_phase <= 0)
       {
          chan->sweep_phase += sweep_delay;
          if (chan->regs[1] & 8)
-            chan->freq -= chan->freq >> (chan->regs[1] & 7);
+            chan->freq -= (chan->freq >> (chan->regs[1] & 7)) + (first_channel << 16);
          else
             chan->freq += chan->freq >> (chan->regs[1] & 7);
       }
@@ -313,8 +316,6 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
 	   else
 		   output = 0x0f - (chan->env_vol & 0xf);
    }
-
-   if (env_starting) chan->env_vol = 0;
 
    if (pulse_dty[(chan->regs[0] & 0xc0) >> 6][chan->adder >> 1] == 0)
 	   output = 0;
@@ -549,7 +550,7 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
    case APU_WRB1:
    case APU_WRA1|0x80:    // mmc5
    case APU_WRB1|0x80:
-      info->APU.squ[chan].regs[1] = value;
+	  info->APU.squ[chan].regs[1] = value;
 	  //if (chan==1) bprintf(0, _T("sq1.r1: %X\n"), value);
       break;
 
@@ -559,7 +560,7 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
    case APU_WRB2|0x80:
       info->APU.squ[chan].regs[2] = value;
       if (info->APU.squ[chan].enabled)
-         info->APU.squ[chan].freq = ((((info->APU.squ[chan].regs[3] & 7) << 8) + value) + 1) << 16;
+         info->APU.squ[chan].freq = (info->APU.squ[chan].freq & 0xff00ffff) + (value << 16);
 	  //if (chan==1) bprintf(0, _T("sq1.r2: %X      enabled %x\n"), value, info->APU.squ[chan].enabled);
       break;
 
@@ -573,8 +574,9 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
       if (info->APU.squ[chan].enabled)
       {
 		  info->APU.squ[chan].vbl_length = info->vbl_times[value >> 3];
-		  info->APU.squ[chan].env_vol = 0xd0; // env-delay startup (8 clocks). (click reduction, testcase: smb world 1-2)
-		  info->APU.squ[chan].freq = ((((value & 7) << 8) + info->APU.squ[chan].regs[2]) + 1) << 16;
+		  info->APU.squ[chan].env_vol = 0xff; // env-restart
+		  info->APU.squ[chan].freq = (info->APU.squ[chan].freq & 0x00ffffff) + ((value & 0x7) << (16+8));
+		  info->APU.squ[chan].adder = 0; // restart pulse phase
 	  }
 
       break;
@@ -721,7 +723,7 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
       {
          info->APU.squ[1].enabled = false;
          info->APU.squ[1].vbl_length = 0;
-      }
+	  }
 
       if (value & 0x04)
          info->APU.tri.enabled = TRUE;
@@ -800,10 +802,10 @@ static void apu_update(struct nesapu_info *info)
 
 	for (INT32 i = 0; i < samples; i++)
 	{
-		square1 = apu_square(info, &info->APU.squ[0]);
-		square2 = apu_square(info, &info->APU.squ[1]);
-		square3 = apu_square(info, &info->APU.squ[2]); // mmc5
-		square4 = apu_square(info, &info->APU.squ[3]); // mmc5
+		square1 = apu_square(info, &info->APU.squ[0], 1);
+		square2 = apu_square(info, &info->APU.squ[1], 0);
+		square3 = apu_square(info, &info->APU.squ[2], 0); // mmc5
+		square4 = apu_square(info, &info->APU.squ[3], 0); // mmc5
 		INT32 triangle = apu_triangle(info, &info->APU.tri);
 		INT32 noise = apu_noise(info, &info->APU.noi);
 
@@ -943,8 +945,6 @@ UINT8 nesapuRead(INT32 chip, INT32 address)
 	}
 }
 
-// MMC5 2x square: write address | 0x80 -dink (fbn team, november 13)
-
 /* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
 void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
 {
@@ -1017,7 +1017,7 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 
 	/* Initialize global variables */
 	cycles_per_frame = (is_pal) ? 33248 : 29781;
-	info->samps_per_sync = 7457; //(rate * 100) / nBurnFPS;
+	info->samps_per_sync = 7445; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
 	//info->apu_incsize = 4; //(float) (clock / (float) info->real_rate);

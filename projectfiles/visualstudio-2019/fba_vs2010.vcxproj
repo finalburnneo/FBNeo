@@ -178,6 +178,7 @@
     <ClInclude Include="..\..\src\burn\snd\fmopl.h" />
     <ClInclude Include="..\..\src\burn\snd\gaelco.h" />
     <ClInclude Include="..\..\src\burn\snd\hc55516.h" />
+    <ClInclude Include="..\..\src\burn\snd\i5000.h" />
     <ClInclude Include="..\..\src\burn\snd\ics2115.h" />
     <ClInclude Include="..\..\src\burn\snd\iremga20.h" />
     <ClInclude Include="..\..\src\burn\snd\k005289.h" />
@@ -516,6 +517,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
@@ -525,6 +527,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\i5000.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">

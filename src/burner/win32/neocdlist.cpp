@@ -108,6 +108,7 @@ struct NGCDGAME games[] =
 	{ _T("lastblad")	, _T("The Last Blade / Bakumatsu Roman - Gekka no Kenshi")	, _T("1997")	, _T("SNK")					, 0x0234 },		//
 	{ _T("rbff2")		, _T("Real Bout Fatal Fury 2 / Garou Densetsu 2 - Aratanaru Tatakai"), _T("1998"), _T("SNK")			, 0x0240 },		//
 	{ _T("mslug2")		, _T("Metal Slug 2 - Super Vehicle-001/II")					, _T("1998")	, _T("SNK")					, 0x0241 },		//
+	{ _T("mslug2")		, _T("Metal Slug 2 Turbo - Super Vehicle-001/II")			, _T("1998")	, _T("SNK")					, 0x0941 },		//
 	{ _T("kof98")		, _T("The King of Fighters '98 - The Slugfest")				, _T("1998")	, _T("SNK")					, 0x0242 },		//
 	{ _T("lastbld2")	, _T("The Last Blade 2")									, _T("1998")	, _T("SNK")					, 0x0243 },		//
 	{ _T("kof99")		, _T("The King of Fighters '99 - Millennium Battle")		, _T("1999")	, _T("SNK")					, 0x0251 },		//

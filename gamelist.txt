@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12335 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+12336 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8906,6 +8906,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_solitair	|  	| Solitaire Funpak (USA)				| 		| 1994	| Interplay	| Sega Game Gear| 					|
 | gg_solitarp	|  	| Solitaire Poker (Euro, USA)				| 		| 1991	| Sega		| Sega Game Gear| 					|
 | solfigtr	|  	| Solitary Fighter (World)				| 		| 1991	| Taito Corporat| Taito F2	| 					|
+| slspirit	|  	| Solite Spirits					| 		| 1999	| Promat	| Miscellaneous	| 					|
 | sms_solomon	|  	| Solomon no Kagi - Oujo Rihita no Namida (Jpn)		| 		| 1988	| Salio		| Sega Master Sy| 					|
 | spec_solomon	|  	| Solomon's Key (48K)					| 		| 1987	| U.S. Gold	| ZX Spectrum	| 					|
 | solomonj	|  	| Solomon's Key (Japan)					| solomon	| 1986	| Tecmo		| Miscellaneous	| 					|

@@ -9102,6 +9102,7 @@ DRV		BurnDrvmd_soleils;
 DRV		BurnDrvgg_solitair;
 DRV		BurnDrvgg_solitarp;
 DRV		BurnDrvSolfigtr;
+DRV		BurnDrvSlspirit;
 DRV		BurnDrvsms_solomon;
 DRV		BurnSpecsolomon;
 DRV		BurnDrvSolomonj;
@@ -21714,6 +21715,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_solitair,		// Solitaire Funpak (USA)
 	&BurnDrvgg_solitarp,		// Solitaire Poker (Euro, USA)
 	&BurnDrvSolfigtr,			// Solitary Fighter (World)
+	&BurnDrvSlspirit,			// Solite Spirits
 	&BurnDrvsms_solomon,		// Solomon no Kagi - Oujo Rihita no Namida (Jpn)
 	&BurnSpecsolomon,			// Solomon's Key (48K)
 	&BurnDrvSolomonj,			// Solomon's Key (Japan)

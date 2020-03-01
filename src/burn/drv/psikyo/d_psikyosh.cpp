@@ -1701,6 +1701,7 @@ static INT32 Tgm2Init()
 	speedhack_pc[1] = 0x06028cac;
 	//speedhack_pc[2] = 0x06029272; // bad!! (game logic, etc)
 	speedhack_pc[3] = 0x06028ef2;
+	BurnSetRefreshRate(61.621);
 
 	return DrvInit(Tgm2LoadCallback, 1, 0x2c00000, 0x0c00000);
 }

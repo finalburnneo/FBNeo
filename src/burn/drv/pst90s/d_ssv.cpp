@@ -94,7 +94,7 @@ static UINT8 DrvJoy6[8];
 static UINT8 DrvJoy7[8];
 static UINT8 DrvJoy8[8];
 static UINT8 DrvInputs[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 static INT32 line_cycles_total = 0;
@@ -132,6 +132,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -1067,6 +1068,7 @@ static struct BurnDIPInfo Drifto94DIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xff, NULL			},
 	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x15, 0x01, 0x01, 0x01, "Off"			},
@@ -1113,6 +1115,10 @@ static struct BurnDIPInfo Drifto94DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Save Best Time"	},
 	{0x16, 0x01, 0x40, 0x00, "No"			},
 	{0x16, 0x01, 0x40, 0x40, "Yes"			},
+
+	{0   , 0xfe, 0   ,    2, "Refresh Rate"		},
+	{0x17, 0x01, 0x01, 0x01, "60.18"			},
+	{0x17, 0x01, 0x01, 0x00, "60.00"			},
 };
 
 STDDIPINFO(Drifto94)
@@ -4511,6 +4517,10 @@ static INT32 Drifto94Init()
 {
 	watchdog_disable = 1;
 	use_hblank = 1;
+
+	if (DrvDips[2] & 1) {
+		BurnSetRefreshRate(60.186);
+	}
 
 	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1, 0.80);
 }

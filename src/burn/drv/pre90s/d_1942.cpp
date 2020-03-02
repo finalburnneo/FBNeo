@@ -3,6 +3,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "bitswap.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -827,22 +828,22 @@ static void DrvCalcPalette()
 	for (i = 0; i < 256; i++) {
 		INT32 bit0, bit1, bit2, bit3, r, g, b;
 		
-		bit0 = (DrvPromRed[i] >> 0) & 0x01;
-		bit1 = (DrvPromRed[i] >> 1) & 0x01;
-		bit2 = (DrvPromRed[i] >> 2) & 0x01;
-		bit3 = (DrvPromRed[i] >> 3) & 0x01;
+		bit0 = BIT(DrvPromRed[i], 0);
+		bit1 = BIT(DrvPromRed[i], 1);
+		bit2 = BIT(DrvPromRed[i], 2);
+		bit3 = BIT(DrvPromRed[i], 3);
 		r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 		
-		bit0 = (DrvPromGreen[i] >> 0) & 0x01;
-		bit1 = (DrvPromGreen[i] >> 1) & 0x01;
-		bit2 = (DrvPromGreen[i] >> 2) & 0x01;
-		bit3 = (DrvPromGreen[i] >> 3) & 0x01;
+		bit0 = BIT(DrvPromGreen[i], 0);
+		bit1 = BIT(DrvPromGreen[i], 1);
+		bit2 = BIT(DrvPromGreen[i], 2);
+		bit3 = BIT(DrvPromGreen[i], 3);
 		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 		
-		bit0 = (DrvPromBlue[i] >> 0) & 0x01;
-		bit1 = (DrvPromBlue[i] >> 1) & 0x01;
-		bit2 = (DrvPromBlue[i] >> 2) & 0x01;
-		bit3 = (DrvPromBlue[i] >> 3) & 0x01;
+		bit0 = BIT(DrvPromBlue[i], 0);
+		bit1 = BIT(DrvPromBlue[i], 1);
+		bit2 = BIT(DrvPromBlue[i], 2);
+		bit3 = BIT(DrvPromBlue[i], 3);
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 		
 		Palette[i] = BurnHighCol(r, g, b, 0);
@@ -866,23 +867,64 @@ static void DrvCalcPalette()
 
 static void DrvRenderSpriteLayer()
 {
-	for (INT32 Offset = 0x80 - 4; Offset >= 0; Offset -= 4) {
-		INT32 i, Code, Colour, sx, sy, Dir;
+	for (int y = 0; y <= nScreenHeight; y++) {
+		// the y-16 and y-15 values are guessed and might be wrong, MAME is using y and y, it won't work here though -barbudreadmon
+		GenericTilesSetClip(-1, -1, y-16, y-15);
+		UINT8 objdata[4];
+		UINT8 v = y - 1;
+		for (int h = 496; h >= 128; h -= 16)
+		{
+			const bool objcnt4 = BIT(h, 8) != BIT(~h, 7);
+			const bool objcnt3 = (BIT(v, 7) && objcnt4) != BIT(~h, 7);
+			UINT8 obj_idx = (h >> 4) & 7;
+			obj_idx |= objcnt3 ? 0x08 : 0x00;
+			obj_idx |= objcnt4 ? 0x10 : 0x00;
+			obj_idx <<= 2;
+			for (INT32 i = 0; i < 4; i++)
+				objdata[i] = DrvSpriteRam[obj_idx | i];
 
-		Code = (DrvSpriteRam[Offset] & 0x7f) + (4 * (DrvSpriteRam[Offset + 1] & 0x20)) + (2 * (DrvSpriteRam[Offset] & 0x80));
-		Colour = DrvSpriteRam[Offset + 1] & 0x0f;
-		sx = DrvSpriteRam[Offset + 3] - (0x10 * (DrvSpriteRam[Offset + 1] & 0x10));
-		sy = DrvSpriteRam[Offset + 2];
-		Dir = 1;
+			INT32 code = (objdata[0] & 0x7f) + ((objdata[1] & 0x20) << 2) + ((objdata[0] & 0x80) << 1);
+			INT32 col = objdata[1] & 0x0f;
+			INT32 sx = objdata[3] - 0x10 * (objdata[1] & 0x10);
+			INT32 sy = objdata[2];
+			INT32 dir = 1;
 
-		i = (DrvSpriteRam[Offset + 1] & 0xc0) >> 6;
-		if (i == 2) i = 3;
+			UINT8 valpha = (UINT8)sy;
+			UINT8 v2c = (UINT8)(~v) + 0xff;
+			UINT8 lvbeta = v2c + valpha;
+			UINT8 vbeta = ~lvbeta;
+			bool vleq = (vbeta <= ((~valpha) & 0xff));
+			bool vinlen = 1;
+			UINT8 vlen = objdata[1] >> 6;
+			switch (vlen & 3)
+			{
+			case 0:
+				vinlen = BIT(lvbeta, 7) && BIT(lvbeta, 6) && BIT(lvbeta, 5) && BIT(lvbeta, 4);
+				break;
+			case 1:
+				vinlen = BIT(lvbeta, 7) && BIT(lvbeta, 6) && BIT(lvbeta, 5);
+				break;
+			case 2:
+				vinlen = BIT(lvbeta, 7) && BIT(lvbeta, 6);
+				break;
+			case 3:
+				vinlen = true;
+				break;
+			}
+			bool vinzone = !(vleq && vinlen);
 
-		do {
-			Render16x16Tile_Mask_Clip(pTransDraw, Code + i, sx, (sy + (16 * i) * Dir) - 16, Colour, 4, 15, 1280, DrvSprites);
+			/* handle double / quadruple height */
+			INT32 i = (objdata[1] & 0xc0) >> 6;
+			if (i == 2) i = 3;
 
-			i--;
-		} while (i >= 0);
+			if (!vinzone)
+			{
+				do {
+					Render16x16Tile_Mask_Clip(pTransDraw, code + i, sx, (sy + (16 * i) * dir) - 16, col, 4, 15, 1280, DrvSprites);
+				} while (i-- > 0);
+			}
+		}
+		GenericTilesClearClip();
 	}
 }
 

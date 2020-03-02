@@ -53,6 +53,26 @@ static struct BurnInputInfo SuperchsInputList[] =
 STDINPUTINFO(Superchs)
 #undef A
 
+static INT32 analog_adder = 0;
+static INT32 analog_target = 0;
+
+static void PdriftAnalogTick()
+{
+	INT32 amt = 3;
+	INT32 span = abs(analog_adder - analog_target);
+	if (span > 0x50) amt = 0x10;
+	if (span > 0x60) amt = 0x20;
+	if (span > 0x70) amt = 0x30;
+
+	for (INT32 x = 0; x < amt; x++) {
+		if (analog_adder > analog_target)
+			analog_adder--;
+		else if (analog_adder < analog_target)
+			analog_adder++;
+		else analog_adder = analog_target;
+	}
+}
+
 static void SuperchsMakeInputs()
 {
 	TaitoInput[0] = 0x7f;// bit 7 is eeprom read
@@ -68,6 +88,8 @@ static void SuperchsMakeInputs()
 	BurnShiftInputCheckToggle(TaitoInputPort1[5]);
 
 	TaitoInput[1] = (TaitoInput[1] & ~0x20) | ((bBurnShiftStatus) ? 0x20 : 0x00);
+
+	analog_target = ProcessAnalog(TaitoAnalogPort0, 1, 1, 0x20, 0xe0);
 }
 
 static struct BurnRomInfo SuperchsRomDesc[] = {
@@ -239,6 +261,8 @@ static INT32 MemIndex()
 
 static INT32 SuperchsDoReset()
 {
+	analog_adder = analog_target = 0x80;
+
 	TaitoDoReset();
 
 	SuperchsCoinWord = 0;
@@ -275,7 +299,8 @@ static UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 		}
 
 		case 0x340000: {
-			return ProcessAnalog(TaitoAnalogPort0, 1, 1, 0x20, 0xe0);
+			PdriftAnalogTick();
+			return analog_adder;
 		}
 
 		case 0x340001: {
@@ -840,6 +865,8 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(SuperchsCoinWord);
 		SCAN_VAR(SuperchsCpuACtrl);
+		SCAN_VAR(analog_adder);
+		SCAN_VAR(analog_target);
 	}
 
 	return 0;

@@ -867,7 +867,7 @@ static void DrvCalcPalette()
 
 static void DrvRenderSpriteLayer()
 {
-	for (int y = 0; y <= nScreenHeight; y++) {
+	for (int y = 16; y <= nScreenHeight + 16; y++) {
 		// the y-16 and y-15 values are guessed and might be wrong, MAME is using y and y, it won't work here though -barbudreadmon
 		GenericTilesSetClip(-1, -1, y-16, y-15);
 		UINT8 objdata[4];

@@ -9,8 +9,11 @@
 #include "burn_ym2413.h"	// mapper 85 (vrc7 / lagrange point)
 #include "burn_gun.h"		// zapper games
 #include "burn_led.h"		// fds disk status
+#if !defined (_MSC_VER)
 #include <unistd.h>         // for unlink()/rename() in ips_patch()/ips_make()
+#endif
 #include <errno.h>          // .. unlink()/rename()
+
 
 static UINT8 DrvReset = 0;
 static UINT32 DrvPalette[(0x40 * 8) /*nes*/ + 0x100 /*icons*/];

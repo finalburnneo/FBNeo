@@ -5335,3 +5335,21 @@ struct BurnDriver BurnDrvcv_starfortress = {
 	272, 228, 4, 3
 };
 
+// Pac Man Collection
+
+static struct BurnRomInfo cv_pacmancolRomDesc[] = {
+	{ "pac-man-collection-2008.rom",	0x20000, 0xf3ccacb3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pacmancol, cv_pacmancol, cv_coleco)
+STD_ROM_FN(cv_pacmancol)
+
+struct BurnDriver BurnDrvcv_pacmancol = {
+	"cv_pacmancol", NULL, "cv_coleco", NULL, "2008",
+	"Pac Man Collection\0", NULL, "OPCODE", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_pacmancolRomInfo, cv_pacmancolRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

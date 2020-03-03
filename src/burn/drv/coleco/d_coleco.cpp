@@ -39,6 +39,8 @@ static INT32 use_SGM = 0;
 static INT32 SGM_map_24k;
 static INT32 SGM_map_8k;
 
+static UINT8 dip_changed;
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -116,6 +118,10 @@ static struct BurnDIPInfo ColecoDIPList[]=
 	{0   , 0xfe, 0,       2, "Bypass bios intro (hack)"	},
 	{0x26, 0x01, 0x10, 0x00, "Off"				},
 	{0x26, 0x01, 0x10, 0x10, "On"				},
+
+	{0   , 0xfe, 0,       2, "Sprite Limit (hack)"	},
+	{0x26, 0x01, 0x20, 0x00, "Enabled"				},
+	{0x26, 0x01, 0x20, 0x20, "Disabled"				},
 };
 
 STDDIPINFO(Coleco)
@@ -375,6 +381,8 @@ static INT32 DrvDoReset()
     SGM_map_24k = 0;
     SGM_map_8k = 0;
 
+	dip_changed = DrvDips[1];
+
 	return 0;
 }
 
@@ -499,6 +507,8 @@ static INT32 DrvInit()
 	ZetClose();
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, coleco_vdp_interrupt);
+	TMS9928ASetSpriteslimit((DrvDips[1] & 0x20) ? 0 : 1);
+	bprintf(0, _T("Sprite Limit: %S\n"), (DrvDips[1] & 0x20) ? "Disabled" : "Enabled");
 
 	SN76489AInit(0, 3579545, 0);
     SN76496SetBuffered(ZetTotalCycles, 3579545);
@@ -556,6 +566,12 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		if ((dip_changed ^ DrvDips[1]) & 0x20) {
+			TMS9928ASetSpriteslimit((DrvDips[1] & 0x20) ? 0 : 1);
+			dip_changed = DrvDips[1];
+		}
+
 	}
 
 	INT32 nInterleave = 256;

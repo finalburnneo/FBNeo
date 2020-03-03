@@ -6992,7 +6992,6 @@ DRV		BurnDrvnes_battlecity;
 DRV		BurnDrvnes_battleship;
 DRV		BurnDrvnes_battletoads;
 DRV		BurnDrvnes_battldoudra;
-DRV		BurnDrvbcputime;
 DRV		BurnDrvnes_bee52;
 DRV		BurnDrvnes_beerslinger;
 DRV		BurnDrvnes_beetlejuice;
@@ -7008,9 +7007,6 @@ DRV		BurnDrvnes_bioniccommando;
 DRV		BurnDrvnes_birdweek;
 DRV		BurnDrvnes_bladebuster;
 DRV		BurnDrvnes_bladesofsteel;
-DRV		BurnDrvbpalpowertest;
-DRV		BurnDrvbpaltest;
-DRV		BurnDrvbspriteram;
 DRV		BurnDrvnes_blastermaster;
 DRV		BurnDrvnes_blodilan;
 DRV		BurnDrvnes_blowemout;
@@ -7110,7 +7106,6 @@ DRV		BurnDrvnes_cosmogenesis;
 DRV		BurnDrvnes_cosmopolgal_1;
 DRV		BurnDrvnes_cosmopolgal;
 DRV		BurnDrvnes_cowboykid;
-DRV		BurnDrvbcpuall;
 DRV		BurnDrvnes_crashnboy;
 DRV		BurnDrvnes_crayoshicha;
 DRV		BurnDrvnes_crazyclimber;
@@ -7265,7 +7260,6 @@ DRV		BurnDrvnes_freedomforce;
 DRV		BurnDrvnes_fridaythe13th;
 DRV		BurnDrvnes_frontline;
 DRV		BurnDrvnes_fudoumyououden;
-DRV		BurnDrvnes_full;
 DRV		BurnDrvnes_gijoeareamhe;
 DRV		BurnDrvnes_gijoeatlfa;
 DRV		BurnDrvnes_gaiapolis;
@@ -7627,7 +7621,6 @@ DRV		BurnDrvnes_nekkekoukunkun;
 DRV		BurnDrvnes_nekkestrbas;
 DRV		BurnDrvnes_neoheiali;
 DRV		BurnDrvnes_nesopetougol;
-DRV		BurnDrvnestest;
 DRV		BurnDrvnes_newghoii;
 DRV		BurnDrvnes_newyornya;
 DRV		BurnDrvnes_newzeasto;
@@ -7841,12 +7834,6 @@ DRV		BurnDrvnes_speluii_1;
 DRV		BurnDrvnes_speluii;
 DRV		BurnDrvnes_spideman;
 DRV		BurnDrvnes_splathou;
-DRV		BurnDrvbsprite1;
-DRV		BurnDrvbsprite2;
-DRV		BurnDrvbsprite3;
-DRV		BurnDrvbsprite4;
-DRV		BurnDrvbsprite5;
-DRV		BurnDrvbsprite6;
 DRV		BurnDrvnes_spyhunter;
 DRV		BurnDrvnes_spyvsspy;
 DRV		BurnDrvnes_sqoon;
@@ -8016,12 +8003,10 @@ DRV		BurnDrvnes_utsurundesu;
 DRV		BurnDrvnes_valis;
 DRV		BurnDrvnes_valkynobou_1;
 DRV		BurnDrvnes_valkynobou;
-DRV		BurnDrvbvbl;
 DRV		BurnDrvnes_vice;
 DRV		BurnDrvnes_nesvircle;
 DRV		BurnDrvnes_volguardii;
 DRV		BurnDrvnes_volleyball;
-DRV		BurnDrvbbvram;
 DRV		BurnDrvnes_wackyraces;
 DRV		BurnDrvnes_wagyanland;
 DRV		BurnDrvnes_wagyanland2;
@@ -8066,7 +8051,6 @@ DRV		BurnDrvnes_yumepenmon_1;
 DRV		BurnDrvnes_yumepenmon;
 DRV		BurnDrvnes_yuuyuuhakfin;
 DRV		BurnDrvnes_zanac;
-DRV		BurnDrvnes_ruder;
 DRV		BurnDrvnes_zeldaii;
 DRV		BurnDrvnes_zen;
 DRV		BurnDrvnes_zhenbenxiyouji;
@@ -20924,7 +20908,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_battleship,		// NES Battleship (USA)
 	&BurnDrvnes_battletoads,	// NES Battletoads (USA)
 	&BurnDrvnes_battldoudra,	// NES Battletoads-Double Dragon (USA)
-	&BurnDrvbcputime,			// NES bcputime
 	&BurnDrvnes_bee52,			// NES Bee 52 (USA) (Unl)
 	&BurnDrvnes_beerslinger,	// NES BeerSlinger (HB)
 	&BurnDrvnes_beetlejuice,	// NES Beetlejuice (USA)
@@ -20940,9 +20923,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_birdweek,		// NES Bird Week (Japan)
 	&BurnDrvnes_bladebuster,	// NES Blade Buster (HB)
 	&BurnDrvnes_bladesofsteel,	// NES Blades of Steel (USA)
-	&BurnDrvbpalpowertest,		// NES Blargg pal power on test
-	&BurnDrvbpaltest,			// NES Blargg pal ram test
-	&BurnDrvbspriteram,			// NES Blargg sprite ram
 	&BurnDrvnes_blastermaster,	// NES Blaster Master (USA)
 	&BurnDrvnes_blodilan,		// NES Blodia Land - Puzzle Quest (Japan)
 	&BurnDrvnes_blowemout,		// NES Blow'Em Out! (HB)
@@ -21042,7 +21022,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_cosmopolgal_1,	// NES Cosmo Police Galivan (Japan)
 	&BurnDrvnes_cosmopolgal,	// NES Cosmo Police Galivan (T-eng)
 	&BurnDrvnes_cowboykid,		// NES Cowboy Kid (USA)
-	&BurnDrvbcpuall,			// NES cpu all instructions
 	&BurnDrvnes_crashnboy,		// NES Crash 'n' the Boys - Street Challenge (USA)
 	&BurnDrvnes_crayoshicha,	// NES Crayon Shin-chan - Ora to Poi Poi (Japan)
 	&BurnDrvnes_crazyclimber,	// NES Crazy Climber (Japan)
@@ -21197,7 +21176,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_fridaythe13th,	// NES Friday the 13th (USA)
 	&BurnDrvnes_frontline,		// NES Front Line (Japan)
 	&BurnDrvnes_fudoumyououden,	// NES Fudou Myouou Den (Japan)
-	&BurnDrvnes_full,			// NES full nes palette (Blargg)
 	&BurnDrvnes_gijoeareamhe,	// NES G.I. Joe - A Real American Hero (USA)
 	&BurnDrvnes_gijoeatlfa,		// NES G.I. Joe - The Atlantis Factor (USA)
 	&BurnDrvnes_gaiapolis,		// NES Gaiapolis (Asia)
@@ -21559,7 +21537,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nekkestrbas,	// NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)
 	&BurnDrvnes_neoheiali,		// NES NEO Heiankyo Alien (HB)
 	&BurnDrvnes_nesopetougol,	// NES NES Open Tournament Golf (USA)
-	&BurnDrvnestest,			// NES nestest
 	&BurnDrvnes_newghoii,		// NES New Ghostbusters II (Japan)
 	&BurnDrvnes_newyornya,		// NES New York Nyankies (Japan)
 	&BurnDrvnes_newzeasto,		// NES New Zealand Story, The (Europe)
@@ -21773,12 +21750,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_speluii,		// NES Spelunker II - Yuusha e no Chousen (T-eng)
 	&BurnDrvnes_spideman,		// NES Spider-Man - Return of the Sinister Six (USA)
 	&BurnDrvnes_splathou,		// NES Splatter House - Wanpaku Graffiti (Japan)
-	&BurnDrvbsprite1,			// NES sprite test 1
-	&BurnDrvbsprite2,			// NES sprite test 2
-	&BurnDrvbsprite3,			// NES sprite test 3
-	&BurnDrvbsprite4,			// NES sprite test 4
-	&BurnDrvbsprite5,			// NES sprite test 5
-	&BurnDrvbsprite6,			// NES sprite test 6
 	&BurnDrvnes_spyhunter,		// NES Spy Hunter (USA)
 	&BurnDrvnes_spyvsspy,		// NES Spy vs Spy (USA)
 	&BurnDrvnes_sqoon,			// NES Sqoon (USA)
@@ -21948,12 +21919,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_valis,			// NES Valis - The Fantastic Soldier (Japan)
 	&BurnDrvnes_valkynobou_1,	// NES Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)
 	&BurnDrvnes_valkynobou,		// NES Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)
-	&BurnDrvbvbl,				// NES VBL test
 	&BurnDrvnes_vice,			// NES Vice - Project Doom (USA)
 	&BurnDrvnes_nesvircle,		// NES Virus Cleaner (HB)
 	&BurnDrvnes_volguardii,		// NES Volguard II (Japan)
 	&BurnDrvnes_volleyball,		// NES Volleyball (USA)
-	&BurnDrvbbvram,				// NES VRAM test
 	&BurnDrvnes_wackyraces,		// NES Wacky Races (USA)
 	&BurnDrvnes_wagyanland,		// NES Wagyan Land (Japan)
 	&BurnDrvnes_wagyanland2,	// NES Wagyan Land 2 (Japan)
@@ -21998,7 +21967,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_yumepenmon,		// NES Yume Penguin Monogatari (T-eng)
 	&BurnDrvnes_yuuyuuhakfin,	// NES Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
 	&BurnDrvnes_zanac,			// NES Zanac (USA)
-	&BurnDrvnes_ruder,			// NES Zapper ruder (test) (HB)
 	&BurnDrvnes_zeldaii,		// NES Zelda II - The Adventure of Link (USA)
 	&BurnDrvnes_zen,			// NES Zen - Intergalactic Ninja (USA)
 	&BurnDrvnes_zhenbenxiyouji,	// NES Zhen Ben Xi You Ji (Asia) (Unl)

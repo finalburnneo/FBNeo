@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13655 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13639 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6844,7 +6844,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_battleship|  	| NES Battleship (USA)					| 		| 1993	| Mindscape	| Miscellaneous	| 					|
 | nes_battletoads|  	| NES Battletoads (USA)					| 		| 1991	| Tradewest	| Miscellaneous	| 					|
 | nes_battldoudra|  	| NES Battletoads-Double Dragon (USA)			| 		| 1993	| Tradewest	| Miscellaneous	| 					|
-| nes_bcputime	|  	| NES bcputime						| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_bee52	|  	| NES Bee 52 (USA) (Unl)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
 | nes_beerslinger|  	| NES BeerSlinger (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
 | nes_beetlejuice|  	| NES Beetlejuice (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
@@ -6860,9 +6859,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_birdweek	|  	| NES Bird Week (Japan)					| 		| 1986	| Toemiland	| Miscellaneous	| 					|
 | nes_bladebuster|  	| NES Blade Buster (HB)					| 		| 2011	| HLC! Project (| Miscellaneous	| 					|
 | nes_bladesofsteel|  	| NES Blades of Steel (USA)				| 		| 1988	| Konami	| Miscellaneous	| 					|
-| nes_blarggppu	|  	| NES Blargg pal power on test				| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_blarggppu	|  	| NES Blargg pal ram test				| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_blarggppu	|  	| NES Blargg sprite ram					| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_blastermaster|  	| NES Blaster Master (USA)				| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
 | nes_blodilan	|  	| NES Blodia Land - Puzzle Quest (Japan)		| 		| 1990	| Tonkin House	| Miscellaneous	| 					|
 | nes_blowemout	|  	| NES Blow'Em Out! (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
@@ -6962,7 +6958,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_cosmopolgal_1|  	| NES Cosmo Police Galivan (Japan)			| nes_cosmopolgal| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_cosmopolgal|  	| NES Cosmo Police Galivan (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_cowboykid	|  	| NES Cowboy Kid (USA)					| 		| 1992	| Romstar	| Miscellaneous	| 					|
-| nes_bcputime	|  	| NES cpu all instructions				| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_crashnboy	|  	| NES Crash 'n' the Boys - Street Challenge (USA)	| 		| 1992	| Technos	| Miscellaneous	| 					|
 | nes_crayoshicha|  	| NES Crayon Shin-chan - Ora to Poi Poi (Japan)		| 		| 1993	| Bandai	| Miscellaneous	| 					|
 | nes_crazyclimber|  	| NES Crazy Climber (Japan)				| 		| 1986	| Nichibutsu	| Miscellaneous	| 					|
@@ -7117,7 +7112,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_fridaythe13th|  	| NES Friday the 13th (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
 | nes_frontline	|  	| NES Front Line (Japan)				| 		| 1985	| Taito		| Miscellaneous	| 					|
 | nes_fudoumyououden|  	| NES Fudou Myouou Den (Japan)				| nes_demonsword| 1988	| Taito		| Miscellaneous	| 					|
-| nes_full	|  	| NES full nes palette (Blargg)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_gijoeareamhe|  	| NES G.I. Joe - A Real American Hero (USA)		| 		| 1991	| Taxan		| Miscellaneous	| 					|
 | nes_gijoeatlfa|  	| NES G.I. Joe - The Atlantis Factor (USA)		| 		| 1992	| Capcom	| Miscellaneous	| 					|
 | nes_gaiapolis	|  	| NES Gaiapolis (Asia)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -7479,7 +7473,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nekkestrbas|  	| NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_neoheiali	|  	| NES NEO Heiankyo Alien (HB)				| 		| 2017	| Hyperware Co.	| Miscellaneous	| 					|
 | nes_nesopetougol|  	| NES NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
-| nes_nestest	|  	| NES nestest						| 		| 1986	| Kevtris	| Miscellaneous	| 					|
 | nes_newghoii	|  	| NES New Ghostbusters II (Japan)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
 | nes_newyornya	|  	| NES New York Nyankies (Japan)				| nes_rockinkats| 1991	| Atlus		| Miscellaneous	| 					|
 | nes_newzeasto	|  	| NES New Zealand Story, The (Europe)			| nes_kiwikra	| 1991	| Ocean		| Miscellaneous	| 					|
@@ -7693,12 +7686,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_speluii	|  	| NES Spelunker II - Yuusha e no Chousen (T-eng)	| 		| 1987	| Irem		| Miscellaneous	| 					|
 | nes_spideman	|  	| NES Spider-Man - Return of the Sinister Six (USA)	| 		| 1992	| LJN		| Miscellaneous	| 					|
 | nes_splathou	|  	| NES Splatter House - Wanpaku Graffiti (Japan)		| 		| 1989	| Namco		| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 1					| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 2					| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 3					| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 4					| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 5					| 		| 1986	| Blargg	| Miscellaneous	| 					|
-| nes_bsprites	|  	| NES sprite test 6					| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_spyhunter	|  	| NES Spy Hunter (USA)					| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
 | nes_spyvsspy	|  	| NES Spy vs Spy (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
 | nes_sqoon	|  	| NES Sqoon (USA)					| 		| 1987	| Irem		| Miscellaneous	| 					|
@@ -7868,12 +7855,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_valis	|  	| NES Valis - The Fantastic Soldier (Japan)		| 		| 1987	| Tokuma Shoten	| Miscellaneous	| 					|
 | nes_valkynobou_1|  	| NES Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)| nes_valkynobou| 1986	| Namco		| Miscellaneous	| 					|
 | nes_valkynobou|  	| NES Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)| 		| 1986	| Namco		| Miscellaneous	| 					|
-| nes_blarggppu	|  	| NES VBL test						| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_vice	|  	| NES Vice - Project Doom (USA)				| 		| 1991	| Sammy		| Miscellaneous	| 					|
 | nes_nesvircle	|  	| NES Virus Cleaner (HB)				| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
 | nes_volguardii|  	| NES Volguard II (Japan)				| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
 | nes_volleyball|  	| NES Volleyball (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
-| nes_blarggppu	|  	| NES VRAM test						| 		| 1986	| Blargg	| Miscellaneous	| 					|
 | nes_wackyraces|  	| NES Wacky Races (USA)					| 		| 1992	| Atlus		| Miscellaneous	| 					|
 | nes_wagyanland|  	| NES Wagyan Land (Japan)				| 		| 1989	| Namco		| Miscellaneous	| 					|
 | nes_wagyanland2|  	| NES Wagyan Land 2 (Japan)				| 		| 1990	| Namco		| Miscellaneous	| 					|
@@ -7918,7 +7903,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_yumepenmon|  	| NES Yume Penguin Monogatari (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_yuuyuuhakfin|  	| NES Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Ja| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_zanac	|  	| NES Zanac (USA)					| 		| 1987	| FCI		| Miscellaneous	| 					|
-| nes_ruder	|  	| NES Zapper ruder (test) (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_zeldaii	|  	| NES Zelda II - The Adventure of Link (USA)		| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_zen	|  	| NES Zen - Intergalactic Ninja (USA)			| 		| 1993	| Konami	| Miscellaneous	| 					|
 | nes_zhenbenxiyouji|  	| NES Zhen Ben Xi You Ji (Asia) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|

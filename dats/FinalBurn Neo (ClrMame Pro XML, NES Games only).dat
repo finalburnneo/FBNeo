@@ -810,13 +810,6 @@
 		<rom name="Battletoads-Double Dragon (USA).nes" size="262160" crc="53b02f3d"/>
 		<driver status="good"/>
 	</game>
-	<game name="bcputime">
-		<description>NES bcputime</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="cpu_timing_test.nes" size="16400" crc="161bc1fe"/>
-		<driver status="good"/>
-	</game>
 	<game name="bee52">
 		<description>NES Bee 52 (USA) (Unl)</description>
 		<year>1992</year>
@@ -920,27 +913,6 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Blades of Steel (USA).nes" size="131088" crc="b9bcf910"/>
-		<driver status="good"/>
-	</game>
-	<game name="blarggppu">
-		<description>NES Blargg pal power on test</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="power_up_palette.nes" size="16400" crc="156f41f0"/>
-		<driver status="good"/>
-	</game>
-	<game name="blarggppu">
-		<description>NES Blargg pal ram test</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="palette_ram.nes" size="16400" crc="5d447e3c"/>
-		<driver status="good"/>
-	</game>
-	<game name="blarggppu">
-		<description>NES Blargg sprite ram</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="sprite_ram.nes" size="16400" crc="d8d42111"/>
 		<driver status="good"/>
 	</game>
 	<game name="blastermaster">
@@ -1634,13 +1606,6 @@
 		<year>1992</year>
 		<manufacturer>Romstar</manufacturer>
 		<rom name="Cowboy Kid (USA).nes" size="524304" crc="b150ae9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bcputime">
-		<description>NES cpu all instructions</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="all_instrs.nes" size="262160" crc="a4400963"/>
 		<driver status="good"/>
 	</game>
 	<game name="crashnboy">
@@ -2719,13 +2684,6 @@
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Fudou Myouou Den (Japan).nes" size="393232" crc="64d10448"/>
-		<driver status="good"/>
-	</game>
-	<game name="full">
-		<description>NES full nes palette (Blargg)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="full_nes_palette2.nes" size="16400" crc="85784e11"/>
 		<driver status="good"/>
 	</game>
 	<game name="gijoeareamhe">
@@ -5255,13 +5213,6 @@
 		<rom name="NES Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
 		<driver status="good"/>
 	</game>
-	<game name="nestest">
-		<description>NES nestest</description>
-		<year>1986</year>
-		<manufacturer>Kevtris</manufacturer>
-		<rom name="nestest.nes" size="24592" crc="9e179d92"/>
-		<driver status="good"/>
-	</game>
 	<game name="newghoii">
 		<description>NES New Ghostbusters II (Japan)</description>
 		<year>1990</year>
@@ -6753,48 +6704,6 @@
 		<rom name="Splatter House - Wanpaku Graffiti (Japan).nes" size="262160" crc="b7eeb48b"/>
 		<driver status="good"/>
 	</game>
-	<game name="bsprites">
-		<description>NES sprite test 1</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="01.basics.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bsprites">
-		<description>NES sprite test 2</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="02.alignment.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bsprites">
-		<description>NES sprite test 3</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="03.corners.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bsprites">
-		<description>NES sprite test 4</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="04.flip.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bsprites">
-		<description>NES sprite test 5</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="05.left_clip.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
-	<game name="bsprites">
-		<description>NES sprite test 6</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="06.right_edge.nes" size="16400" crc="ee115c9a"/>
-		<driver status="good"/>
-	</game>
 	<game name="spyhunter">
 		<description>NES Spy Hunter (USA)</description>
 		<year>1987</year>
@@ -7978,13 +7887,6 @@
 		<rom name="Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng).nes" size="65552" crc="e901fdd7"/>
 		<driver status="good"/>
 	</game>
-	<game name="blarggppu">
-		<description>NES VBL test</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="vbl_clear_time.nes" size="16400" crc="1e381801"/>
-		<driver status="good"/>
-	</game>
 	<game name="vice">
 		<description>NES Vice - Project Doom (USA)</description>
 		<year>1991</year>
@@ -8011,13 +7913,6 @@
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Volleyball (USA).nes" size="40976" crc="c0056ceb"/>
-		<driver status="good"/>
-	</game>
-	<game name="blarggppu">
-		<description>NES VRAM test</description>
-		<year>1986</year>
-		<manufacturer>Blargg</manufacturer>
-		<rom name="vram_access.nes" size="16400" crc="ee115c9a"/>
 		<driver status="good"/>
 	</game>
 	<game name="wackyraces">
@@ -8326,13 +8221,6 @@
 		<year>1987</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Zanac (USA).nes" size="131088" crc="2165c0c2"/>
-		<driver status="good"/>
-	</game>
-	<game name="ruder">
-		<description>NES Zapper ruder (test) (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="ruder (HB).nes" size="24592" crc="4c5c6008"/>
 		<driver status="good"/>
 	</game>
 	<game name="zeldaii">

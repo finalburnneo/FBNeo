@@ -36,6 +36,8 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_neogeo.o \
 			\
+			d_nes.o \
+			\
 			d_pgm.o \
 			\
 			d_psikyo.o d_psikyo4.o d_psikyosh.o \

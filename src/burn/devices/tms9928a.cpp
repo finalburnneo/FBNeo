@@ -264,7 +264,7 @@ void TMS9928AWriteRegs(INT32 data)
 
 void TMS9928ASetSpriteslimit(INT32 limit)
 {
-	tms.LimitSprites = limit;
+	tms.LimitSprites = limit; /* on or off! -dink */
 }
 
 static inline UINT8 readvmem(INT32 vaddr)
@@ -491,7 +491,8 @@ static void TMS9928AScanline_INT(INT32 vpos)
 					if ( num_sprites == 5 )
 					{
 						fifth_encountered = true;
-						break;
+						if (tms.LimitSprites)
+							break;
 					}
 
 					if ( sprite_mag )

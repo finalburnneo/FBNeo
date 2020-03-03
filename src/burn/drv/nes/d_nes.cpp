@@ -10117,9 +10117,9 @@ struct BurnDriver BurnDrvfds_zeldanoden = {
 
 
 // CPU TESTS
-
-#define WINNERS_DONT_USE_DRUGS 1
-#ifdef WINNERS_DONT_USE_DRUGS
+/*
+#define WINNERS_DONT_USE_DRUGS 0
+#if WINNERS_DONT_USE_DRUGS
 
 static struct BurnRomInfo nestestRomDesc[] = {
 	{ "nestest.nes",          24592, 0x9e179d92, BRF_ESS | BRF_PRG },
@@ -10414,7 +10414,7 @@ struct BurnDriver BurnDrvnes_ruder = {
 
 
 #endif
-
+*/
 
 // Homebrew (hand-added)
 static struct BurnRomInfo nes_mysticoriginsRomDesc[] = {

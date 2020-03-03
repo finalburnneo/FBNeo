@@ -7911,8 +7911,10 @@ static INT32 NESFrame()
 			M6502Run(cyc_counter - M6502TotalCycles());
 			// to debug game hard-lock: uncomment and press n 4 times to get pc.
 			// tip: 99.9% its either a mapper bug or game needs ALT_TIMING flag
+#if defined (FBNEO_DEBUG)
 			extern int counter;
 			if (counter == -4) bprintf(0, _T("PC:  %x   tc: %d   cyc_ctr: %d\n"), M6502GetPC(-1), M6502TotalCycles(), cyc_counter);
+#endif
 		}
 
 		if (mapper_cycle) mapper_cycle();

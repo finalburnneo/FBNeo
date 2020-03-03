@@ -1294,7 +1294,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			DrvSoundLatch = Data;
 			if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
 				M6809Open(0);
-				M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_ACK);
+				M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_HOLD);
 				M6809Close();
 			}
 
@@ -1487,7 +1487,6 @@ UINT8 DrvDdragonM6809ReadByte(UINT16 Address)
 {
 	switch (Address) {
 		case 0x1000: {
-			M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			return DrvSoundLatch;
 		}
 
@@ -2099,10 +2098,10 @@ static INT32 DrvMachineInit()
 		M6809SetWriteHandler(DrvDdragonM6809WriteByte);
 		M6809Close();
 
-		BurnYM2151Init(3579545);
+		BurnYM2151Init(3579545, 1);
+		BurnTimerAttachM6809(1500000);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
-		BurnYM2151SetInterleave((272/2) + 1); // "BurnYM2151Render()" called this many times per frame
 
 		MSM5205Init(0, DrvSynchroniseStream, 375000, DrvMSM5205Vck0, MSM5205_S48_4B, 1);
 		MSM5205Init(1, DrvSynchroniseStream, 375000, DrvMSM5205Vck1, MSM5205_S48_4B, 1);
@@ -2169,10 +2168,10 @@ static INT32 Drv2MachineInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvSoundCPURam);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151Init(3579545, 1);
+	BurnTimerAttachZet(3579545);
 	BurnYM2151SetIrqHandler(&Ddragon2YM2151IrqHandler);
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
-	BurnYM2151SetInterleave((272/2) + 1); // "BurnYM2151Render()" called this many times per frame
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2632,9 +2631,8 @@ static INT32 DrvFrame()
 		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
 			nCurrentCPU = 2;
 			M6809Open(0);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
+			BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
+			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[nCurrentCPU]);
 			if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205UpdateScanline(i);
 			M6809Close();
 		}
@@ -2642,10 +2640,8 @@ static INT32 DrvFrame()
 		if (DrvSoundCPUType == DD_CPU_TYPE_Z80) {
 			nCurrentCPU = 2;
 			ZetOpen(1);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = ZetRun(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
+			BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
+			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[nCurrentCPU]);
 			ZetClose();
 		}
 
@@ -2672,7 +2668,7 @@ static INT32 DrvFrame()
 			HD6309Close();
 		}
 
-		if (pBurnSoundOut && i&1) { // ym2151 does not like high interleave, so run it every other
+		if (pBurnSoundOut && i%8 == 7) { // ym2151 does not like high interleave, so run it every other
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 

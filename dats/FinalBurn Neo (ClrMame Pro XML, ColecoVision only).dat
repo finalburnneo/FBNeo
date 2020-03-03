@@ -1527,6 +1527,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacmancol" romof="coleco">
+		<description>Pac Man Collection</description>
+		<year>2008</year>
+		<manufacturer>OPCODE</manufacturer>
+		<rom name="pac-man-collection-2008.rom" size="131072" crc="f3ccacb3"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacman" romof="coleco">
 		<description>Pac-Man (Prototype)</description>
 		<year>1983</year>

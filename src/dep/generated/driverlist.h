@@ -3353,6 +3353,127 @@ DRV		BurnDrvmd_fatalsmarties;
 DRV		BurnDrvMSX_fathom;
 DRV		BurnDrvcv_fathom;
 DRV		BurnDrvmd_fatman;
+DRV		BurnDrvfds_19neunzehn;
+DRV		BurnDrvfds_adiannotsue;
+DRV		BurnDrvfds_aisenshinicol;
+DRV		BurnDrvfds_akitsunofusnoka;
+DRV		BurnDrvfds_akumajoudracula;
+DRV		BurnDrvfds_akuusenrai;
+DRV		BurnDrvfds_allnignipsupmabr;
+DRV		BurnDrvfds_appletowmon;
+DRV		BurnDrvfds_armananokiseki;
+DRV		BurnDrvfds_bakutpatkun;
+DRV		BurnDrvfds_bigchadogspi;
+DRV		BurnDrvfds_bigchagogobo;
+DRV		BurnDrvfds_bigchagunfig;
+DRV		BurnDrvfds_bigchajuusen;
+DRV		BurnDrvfds_biomirbokupa;
+DRV		BurnDrvfds_bomberman;
+DRV		BurnDrvfds_bubblebobble;
+DRV		BurnDrvfds_burgertime;
+DRV		BurnDrvfds_chitetaiord;
+DRV		BurnDrvfds_clucluland;
+DRV		BurnDrvfds_coconaworld;
+DRV		BurnDrvfds_dandy;
+DRV		BurnDrvfds_digdug;
+DRV		BurnDrvfds_digdugii;
+DRV		BurnDrvfds_dirtypai;
+DRV		BurnDrvfds_dokidokipanic;
+DRV		BurnDrvfds_donkeykong;
+DRV		BurnDrvfds_donkeykongjr;
+DRV		BurnDrvfds_dracuii;
+DRV		BurnDrvfds_druid;
+DRV		BurnDrvfds_eggerland;
+DRV		BurnDrvfds_eggerlan;
+DRV		BurnDrvfds_electrician1;
+DRV		BurnDrvfds_electrician;
+DRV		BurnDrvfds_excitsoc;
+DRV		BurnDrvfds_fairypin;
+DRV		BurnDrvfds_falsion;
+DRV		BurnDrvfds_famicgrapri;
+DRV		BurnDrvfds_famicgrapriii;
+DRV		BurnDrvfds_famimdisvol1;
+DRV		BurnDrvfds_famimdisvol2;
+DRV		BurnDrvfds_famimdisvol3;
+DRV		BurnDrvfds_famimdisvol4;
+DRV		BurnDrvfds_famimdisvol5;
+DRV		BurnDrvfds_famimdisvol6;
+DRV		BurnDrvfds_finalcom;
+DRV		BurnDrvfds_firebam;
+DRV		BurnDrvfds_firerock;
+DRV		BurnDrvfds_fuuunshoken;
+DRV		BurnDrvfds_galaga;
+DRV		BurnDrvfds_galaxian;
+DRV		BurnDrvfds_gallfor;
+DRV		BurnDrvfds_gingaden;
+DRV		BurnDrvfds_golf;
+DRV		BurnDrvfds_golfjapcou;
+DRV		BurnDrvfds_golfuscourse;
+DRV		BurnDrvfds_goonies;
+DRV		BurnDrvfds_greenberet;
+DRV		BurnDrvfds_gunsmoke;
+DRV		BurnDrvfds_gyruss1;
+DRV		BurnDrvfds_gyruss;
+DRV		BurnDrvfds_halleywars;
+DRV		BurnDrvfds_haokunnofusnata;
+DRV		BurnDrvfds_hikarshi;
+DRV		BurnDrvfds_icehockey;
+DRV		BurnDrvfds_fdsirqtest;
+DRV		BurnDrvfds_jikaishometmag;
+DRV		BurnDrvfds_kaettmarbro;
+DRV		BurnDrvfds_kamenridbla;
+DRV		BurnDrvfds_kickandrun;
+DRV		BurnDrvfds_kickcha;
+DRV		BurnDrvfds_kikikai;
+DRV		BurnDrvfds_kinni;
+DRV		BurnDrvfds_knighlor;
+DRV		BurnDrvfds_konekmon;
+DRV		BurnDrvfds_linknobou;
+DRV		BurnDrvfds_lutter;
+DRV		BurnDrvfds_maerchenveil;
+DRV		BurnDrvfds_magmapro;
+DRV		BurnDrvfds_matounohou;
+DRV		BurnDrvfds_metroid;
+DRV		BurnDrvfds_moerotwi;
+DRV		BurnDrvfds_montyonrun;
+DRV		BurnDrvfds_moonballmagic;
+DRV		BurnDrvfds_mystemurcas;
+DRV		BurnDrvfds_nazonomur;
+DRV		BurnDrvfds_otocky;
+DRV		BurnDrvfds_patla;
+DRV		BurnDrvfds_progolsarkagnoto;
+DRV		BurnDrvfds_puttputtgolf;
+DRV		BurnDrvfds_puzzleboys;
+DRV		BurnDrvfds_radicbomjirkun;
+DRV		BurnDrvfds_reflectworld;
+DRV		BurnDrvfds_relics;
+DRV		BurnDrvfds_replicart;
+DRV		BurnDrvfds_rogerrabbit;
+DRV		BurnDrvfds_sectionz;
+DRV		BurnDrvfds_silvi;
+DRV		BurnDrvfds_smashpingpong;
+DRV		BurnDrvfds_superboyallan;
+DRV		BurnDrvfds_superlodrun;
+DRV		BurnDrvfds_superlodrunii;
+DRV		BurnDrvfds_supermarbro;
+DRV		BurnDrvfds_supermarbro2;
+DRV		BurnDrvfds_fdsbios;
+DRV		BurnDrvfds_tamafri;
+DRV		BurnDrvfds_tennis;
+DRV		BurnDrvfds_tobiddai;
+DRV		BurnDrvfds_topplezip;
+DRV		BurnDrvfds_trans;
+DRV		BurnDrvfds_ultra;
+DRV		BurnDrvfds_ultra2;
+DRV		BurnDrvfds_volleyball;
+DRV		BurnDrvfds_vsexcitebike;
+DRV		BurnDrvfds_wakusatogai;
+DRV		BurnDrvfds_wardnernomori;
+DRV		BurnDrvfds_wreckingcrew;
+DRV		BurnDrvfds_youkaiyashiki;
+DRV		BurnDrvfds_yuumaze;
+DRV		BurnDrvfds_zanac;
+DRV		BurnDrvfds_zeldanoden;
 DRV		BurnDrvsg1k_feilang;
 DRV		BurnDrvsg1k_feilanga;
 DRV		BurnDrvsms_felipe;
@@ -6757,6 +6878,1203 @@ DRV		BurnDrvturfmast;
 DRV		BurnDrvNeocup98;
 DRV		BurnDrvneotet;
 DRV		BurnDrvneo3ddmo;
+DRV		BurnDrvnes_10yardfight;
+DRV		BurnDrvnes_1942;
+DRV		BurnDrvnes_1943;
+DRV		BurnDrvnes_2010;
+DRV		BurnDrvnes_3dbatworru;
+DRV		BurnDrvnes_720degrees;
+DRV		BurnDrvnes_8eyes;
+DRV		BurnDrvnes_8bitrhylan;
+DRV		BurnDrvnes_abadox;
+DRV		BurnDrvnes_action52;
+DRV		BurnDrvnes_actio53vol1stbu;
+DRV		BurnDrvnes_actio53vol2doac;
+DRV		BurnDrvnes_actio53vol3retw;
+DRV		BurnDrvnes_actioinnewyor;
+DRV		BurnDrvnes_addamfam;
+DRV		BurnDrvnes_addamfampugsschu;
+DRV		BurnDrvnes_adventureisland;
+DRV		BurnDrvnes_advenisl3;
+DRV		BurnDrvnes_advenislii_1;
+DRV		BurnDrvnes_advenislii;
+DRV		BurnDrvnes_advenisliv_1;
+DRV		BurnDrvnes_advenisliv;
+DRV		BurnDrvnes_adveninmagkin;
+DRV		BurnDrvnes_advenbaybil;
+DRV		BurnDrvnes_advendinrik;
+DRV		BurnDrvnes_advengilsisl;
+DRV		BurnDrvnes_advenlol;
+DRV		BurnDrvnes_advenlol2;
+DRV		BurnDrvnes_advenlol3;
+DRV		BurnDrvnes_advenradgra;
+DRV		BurnDrvnes_advenrocandbulandfr;
+DRV		BurnDrvnes_adventomsaw;
+DRV		BurnDrvnes_afterburner;
+DRV		BurnDrvnes_afterburnerii;
+DRV		BurnDrvnes_airfortress;
+DRV		BurnDrvnes_airwolf_2;
+DRV		BurnDrvnes_airwolf_1;
+DRV		BurnDrvnes_airwolf;
+DRV		BurnDrvnes_akumaden;
+DRV		BurnDrvnes_akumajoudracula;
+DRV		BurnDrvnes_akumaspe;
+DRV		BurnDrvnes_alunsjrturra;
+DRV		BurnDrvnes_alfommagla;
+DRV		BurnDrvnes_alfonsarcadv;
+DRV		BurnDrvnes_alfredchicken;
+DRV		BurnDrvnes_alien3;
+DRV		BurnDrvnes_aliensyndrome;
+DRV		BurnDrvnes_almosthero;
+DRV		BurnDrvnes_alphamission;
+DRV		BurnDrvnes_alterego;
+DRV		BurnDrvnes_amagon;
+DRV		BurnDrvnes_amazorundie_1;
+DRV		BurnDrvnes_amazorundie;
+DRV		BurnDrvnes_amerigla;
+DRV		BurnDrvnes_antaradv;
+DRV		BurnDrvnes_anticipation;
+DRV		BurnDrvnes_archriv;
+DRV		BurnDrvnes_archon;
+DRV		BurnDrvnes_argus;
+DRV		BurnDrvnes_arkanoid;
+DRV		BurnDrvnes_arkanoidii;
+DRV		BurnDrvnes_arkistasring;
+DRV		BurnDrvnes_armadillo_1;
+DRV		BurnDrvnes_armadillo;
+DRV		BurnDrvnes_asmikkunland;
+DRV		BurnDrvnes_assimilate;
+DRV		BurnDrvnes_asterix;
+DRV		BurnDrvnes_astrofan_1;
+DRV		BurnDrvnes_astrofan;
+DRV		BurnDrvnes_astrorobosasa;
+DRV		BurnDrvnes_astyanax;
+DRV		BurnDrvnes_athena;
+DRV		BurnDrvnes_atlantisnonazo;
+DRV		BurnDrvnes_attacanigak_1;
+DRV		BurnDrvnes_attacanigak;
+DRV		BurnDrvnes_attackiltom;
+DRV		BurnDrvnes_bwings;
+DRV		BurnDrvnes_babelnotou;
+DRV		BurnDrvnes_babyboomer;
+DRV		BurnDrvnes_backfut;
+DRV		BurnDrvnes_backfutpariiiii;
+DRV		BurnDrvnes_baddudes;
+DRV		BurnDrvnes_badnewbas;
+DRV		BurnDrvnes_badstrbra;
+DRV		BurnDrvnes_balloonfight;
+DRV		BurnDrvnes_baltron;
+DRV		BurnDrvnes_banana;
+DRV		BurnDrvnes_bananaprince_2;
+DRV		BurnDrvnes_bananaprince_1;
+DRV		BurnDrvnes_bananaprince;
+DRV		BurnDrvnes_bandikinancchi;
+DRV		BurnDrvnes_barkebilstrish;
+DRV		BurnDrvnes_basewars;
+DRV		BurnDrvnes_baseballstars;
+DRV		BurnDrvnes_basebstaii;
+DRV		BurnDrvnes_basesloaded;
+DRV		BurnDrvnes_basesloaii;
+DRV		BurnDrvnes_bashibaz;
+DRV		BurnDrvnes_bassedefadv;
+DRV		BurnDrvnes_batmaretjok;
+DRV		BurnDrvnes_batmavidgam;
+DRV		BurnDrvnes_batmanreturns;
+DRV		BurnDrvnes_batsuterii;
+DRV		BurnDrvnes_battlebaseball;
+DRV		BurnDrvnes_battlechess;
+DRV		BurnDrvnes_battleformula;
+DRV		BurnDrvnes_battlkid;
+DRV		BurnDrvnes_battlkid2;
+DRV		BurnDrvnes_battloly;
+DRV		BurnDrvnes_battletank;
+DRV		BurnDrvnes_battlecity;
+DRV		BurnDrvnes_battleship;
+DRV		BurnDrvnes_battletoads;
+DRV		BurnDrvnes_battldoudra;
+DRV		BurnDrvbcputime;
+DRV		BurnDrvnes_bee52;
+DRV		BurnDrvnes_beerslinger;
+DRV		BurnDrvnes_beetlejuice;
+DRV		BurnDrvnes_bignosfreout;
+DRV		BurnDrvnes_bignoscav;
+DRV		BurnDrvnes_bigfoot;
+DRV		BurnDrvnes_billtedsexcvigaad;
+DRV		BurnDrvnes_binaryland;
+DRV		BurnDrvnes_bioforceape;
+DRV		BurnDrvnes_biomirbokupa;
+DRV		BurnDrvnes_biosendan;
+DRV		BurnDrvnes_bioniccommando;
+DRV		BurnDrvnes_birdweek;
+DRV		BurnDrvnes_bladebuster;
+DRV		BurnDrvnes_bladesofsteel;
+DRV		BurnDrvbpalpowertest;
+DRV		BurnDrvbpaltest;
+DRV		BurnDrvbspriteram;
+DRV		BurnDrvnes_blastermaster;
+DRV		BurnDrvnes_blodilan;
+DRV		BurnDrvnes_blowemout;
+DRV		BurnDrvnes_bluemarlinthe;
+DRV		BurnDrvnes_bluesbro;
+DRV		BurnDrvnes_bokosukawars;
+DRV		BurnDrvnes_bombsweeper;
+DRV		BurnDrvnes_bomberman;
+DRV		BurnDrvnes_bombermanii;
+DRV		BurnDrvnes_bonksadventure;
+DRV		BurnDrvnes_boobykids;
+DRV		BurnDrvnes_boogerman;
+DRV		BurnDrvnes_mojontwiboo;
+DRV		BurnDrvnes_boulderdash;
+DRV		BurnDrvnes_bramstosdra;
+DRV		BurnDrvnes_breakthru;
+DRV		BurnDrvnes_bubblebobble;
+DRV		BurnDrvnes_bubblbobpar2;
+DRV		BurnDrvnes_buckyohare;
+DRV		BurnDrvnes_bugsbunbirblo;
+DRV		BurnDrvnes_bugsbuncracas;
+DRV		BurnDrvnes_bumpnjump;
+DRV		BurnDrvnes_buraifighter_1;
+DRV		BurnDrvnes_buraifighter;
+DRV		BurnDrvnes_burgertime;
+DRV		BurnDrvnes_buzzwaldog;
+DRV		BurnDrvnes_cabal;
+DRV		BurnDrvnes_californiagames;
+DRV		BurnDrvnes_capcosgolmedch92;
+DRV		BurnDrvnes_captaameandave;
+DRV		BurnDrvnes_captacom;
+DRV		BurnDrvnes_captained;
+DRV		BurnDrvnes_captaplaandpla;
+DRV		BurnDrvnes_captainsaver;
+DRV		BurnDrvnes_captainsilver;
+DRV		BurnDrvnes_captainskyhawk;
+DRV		BurnDrvnes_captaintsubasa;
+DRV		BurnDrvnes_captatsuvolii_1;
+DRV		BurnDrvnes_captatsuvolii;
+DRV		BurnDrvnes_casinokid;
+DRV		BurnDrvnes_casinokid2;
+DRV		BurnDrvnes_castelian;
+DRV		BurnDrvnes_castleexcellent;
+DRV		BurnDrvnes_castleofdeceit;
+DRV		BurnDrvnes_castleofdragon;
+DRV		BurnDrvnes_castlevania;
+DRV		BurnDrvnes_castlii;
+DRV		BurnDrvnes_castliii;
+DRV		BurnDrvnes_catnintey_1;
+DRV		BurnDrvnes_catnintey;
+DRV		BurnDrvnes_chacknpop;
+DRV		BurnDrvnes_challdra;
+DRV		BurnDrvnes_challenger;
+DRV		BurnDrvnes_champbow;
+DRV		BurnDrvnes_champlodrun;
+DRV		BurnDrvnes_chaosworld_1;
+DRV		BurnDrvnes_chaosworld;
+DRV		BurnDrvnes_mojontwichegod;
+DRV		BurnDrvnes_mojontwichewri;
+DRV		BurnDrvnes_chestfie;
+DRV		BurnDrvnes_chikichimacmoura;
+DRV		BurnDrvnes_chiller;
+DRV		BurnDrvnes_chipndalresra;
+DRV		BurnDrvnes_chipndalresra2;
+DRV		BurnDrvnes_chitesenvaz;
+DRV		BurnDrvnes_chiyonoooi;
+DRV		BurnDrvnes_choplifter;
+DRV		BurnDrvnes_choujyou;
+DRV		BurnDrvnes_choujsenjet_1;
+DRV		BurnDrvnes_choujsenjet;
+DRV		BurnDrvnes_choujsenwar;
+DRV		BurnDrvnes_chubbycherub;
+DRV		BurnDrvnes_chuukataisen;
+DRV		BurnDrvnes_circuscaper;
+DRV		BurnDrvnes_circuscharlie;
+DRV		BurnDrvnes_cityconnection;
+DRV		BurnDrvnes_citytrouble;
+DRV		BurnDrvnes_clashatdem;
+DRV		BurnDrvnes_cliffhanger;
+DRV		BurnDrvnes_clucluland;
+DRV		BurnDrvnes_cobracommand;
+DRV		BurnDrvnes_cobramission;
+DRV		BurnDrvnes_cobratriangle;
+DRV		BurnDrvnes_cocoron_1;
+DRV		BurnDrvnes_cocoron;
+DRV		BurnDrvnes_codenam;
+DRV		BurnDrvnes_commando;
+DRV		BurnDrvnes_conan;
+DRV		BurnDrvnes_conqucrypal;
+DRV		BurnDrvnes_contra_1;
+DRV		BurnDrvnes_contra;
+DRV		BurnDrvnes_contraforce;
+DRV		BurnDrvnes_coolworld;
+DRV		BurnDrvnes_correbenny;
+DRV		BurnDrvnes_cosmicepsilon;
+DRV		BurnDrvnes_cosmogenesis;
+DRV		BurnDrvnes_cosmopolgal_1;
+DRV		BurnDrvnes_cosmopolgal;
+DRV		BurnDrvnes_cowboykid;
+DRV		BurnDrvbcpuall;
+DRV		BurnDrvnes_crashnboy;
+DRV		BurnDrvnes_crayoshicha;
+DRV		BurnDrvnes_crazyclimber;
+DRV		BurnDrvnes_creepybrawlers;
+DRV		BurnDrvnes_crimebusters;
+DRV		BurnDrvnes_crisisforce;
+DRV		BurnDrvnes_crossfire;
+DRV		BurnDrvnes_crypto;
+DRV		BurnDrvnes_crystalis;
+DRV		BurnDrvnes_cyberstaser;
+DRV		BurnDrvnes_cyber;
+DRV		BurnDrvnes_cyclerac;
+DRV		BurnDrvnes_dai2jisuprota_1;
+DRV		BurnDrvnes_dai2jisuprota;
+DRV		BurnDrvnes_daikunogensan;
+DRV		BurnDrvnes_daikunogensan2;
+DRV		BurnDrvnes_dannysulsindhe;
+DRV		BurnDrvnes_daoshuai;
+DRV		BurnDrvnes_darkman;
+DRV		BurnDrvnes_darkwingduck;
+DRV		BurnDrvnes_dashgalinalias;
+DRV		BurnDrvnes_dashyarou;
+DRV		BurnDrvnes_davidcrasaboyandhis;
+DRV		BurnDrvnes_daydredav;
+DRV		BurnDrvnes_daysofthunder;
+DRV		BurnDrvnes_deadfox;
+DRV		BurnDrvnes_deadlytowers;
+DRV		BurnDrvnes_deathrace;
+DRV		BurnDrvnes_deathbots;
+DRV		BurnDrvnes_deblock;
+DRV		BurnDrvnes_defenderii;
+DRV		BurnDrvnes_defencro;
+DRV		BurnDrvnes_dejavu;
+DRV		BurnDrvnes_demonsword;
+DRV		BurnDrvnes_dengeki;
+DRV		BurnDrvnes_destiear;
+DRV		BurnDrvnes_destructorel;
+DRV		BurnDrvnes_devilman_1;
+DRV		BurnDrvnes_devilman;
+DRV		BurnDrvnes_devilworld;
+DRV		BurnDrvnes_diehard;
+DRV		BurnDrvnes_digdug;
+DRV		BurnDrvnes_digdugii;
+DRV		BurnDrvnes_digdugiitroinpa;
+DRV		BurnDrvnes_digger;
+DRV		BurnDrvnes_digitdevmonmegte_1;
+DRV		BurnDrvnes_digitdevmonmegte;
+DRV		BurnDrvnes_digitdevmonmegteii_1;
+DRV		BurnDrvnes_digitdevmonmegteii;
+DRV		BurnDrvnes_dokidokyuu;
+DRV		BurnDrvnes_dondokodon;
+DRV		BurnDrvnes_dondokodon2;
+DRV		BurnDrvnes_donaldland;
+DRV		BurnDrvnes_donkeykong;
+DRV		BurnDrvnes_donkeykongjr;
+DRV		BurnDrvnes_doolybravoland;
+DRV		BurnDrvnes_doordoor;
+DRV		BurnDrvnes_doraemon;
+DRV		BurnDrvnes_dorae_1;
+DRV		BurnDrvnes_dorae;
+DRV		BurnDrvnes_doubledragon;
+DRV		BurnDrvnes_doubldraii;
+DRV		BurnDrvnes_doubldraiii;
+DRV		BurnDrvnes_doubledribble;
+DRV		BurnDrvnes_doublestrike;
+DRV		BurnDrvnes_doughboy;
+DRV		BurnDrvnes_downtnekkousorda;
+DRV		BurnDrvnes_downtnekmon;
+DRV		BurnDrvnes_downtspekunkunnojid;
+DRV		BurnDrvnes_drchaos;
+DRV		BurnDrvnes_drjekandmrhy;
+DRV		BurnDrvnes_drmario;
+DRV		BurnDrvnes_dracsnightout;
+DRV		BurnDrvnes_dragonbuster;
+DRV		BurnDrvnes_dragobusii_1;
+DRV		BurnDrvnes_dragobusii;
+DRV		BurnDrvnes_dragonfighter;
+DRV		BurnDrvnes_dragonpower;
+DRV		BurnDrvnes_dragoscr;
+DRV		BurnDrvnes_dragospiaraden;
+DRV		BurnDrvnes_dragospinewleg;
+DRV		BurnDrvnes_dragonwarrior;
+DRV		BurnDrvnes_dragowarii;
+DRV		BurnDrvnes_dragowariii;
+DRV		BurnDrvnes_dragowariv;
+DRV		BurnDrvnes_dragonslair;
+DRV		BurnDrvnes_draiocht;
+DRV		BurnDrvnes_dropzone;
+DRV		BurnDrvnes_druaganotou;
+DRV		BurnDrvnes_duckhunt;
+DRV		BurnDrvnes_ducktales;
+DRV		BurnDrvnes_ducktales2;
+DRV		BurnDrvnes_dynamitebatman;
+DRV		BurnDrvnes_dynow;
+DRV		BurnDrvnes_earthbound;
+DRV		BurnDrvnes_egypt;
+DRV		BurnDrvnes_elevatoraction;
+DRV		BurnDrvnes_elimiboadue;
+DRV		BurnDrvnes_elnarknozaihou;
+DRV		BurnDrvnes_empircit;
+DRV		BurnDrvnes_eskimbobdeledi;
+DRV		BurnDrvnes_esperboukentai;
+DRV		BurnDrvnes_esperdre2;
+DRV		BurnDrvnes_espitundherpim;
+DRV		BurnDrvnes_excitebike;
+DRV		BurnDrvnes_excitingboxing;
+DRV		BurnDrvnes_exerion;
+DRV		BurnDrvnes_expedition;
+DRV		BurnDrvnes_f1race;
+DRV		BurnDrvnes_f1sensation;
+DRV		BurnDrvnes_f1circus;
+DRV		BurnDrvnes_famicjum;
+DRV		BurnDrvnes_famicjumii;
+DRV		BurnDrvnes_familyboxing;
+DRV		BurnDrvnes_familypicross;
+DRV		BurnDrvnes_familypinball;
+DRV		BurnDrvnes_fantasyzone;
+DRV		BurnDrvnes_fantazonii;
+DRV		BurnDrvnes_faria;
+DRV		BurnDrvnes_faxanadu;
+DRV		BurnDrvnes_felixthecat;
+DRV		BurnDrvnes_ferragrapricha;
+DRV		BurnDrvnes_festersquest;
+DRV		BurnDrvnes_fightinggolf;
+DRV		BurnDrvnes_finalcombat;
+DRV		BurnDrvnes_finalfantasy;
+DRV		BurnDrvnes_finalfan12_1;
+DRV		BurnDrvnes_finalfan12;
+DRV		BurnDrvnes_finalfantasyii;
+DRV		BurnDrvnes_finalfaniii;
+DRV		BurnDrvnes_finalfanvii;
+DRV		BurnDrvnes_finalfanviiadvchv11;
+DRV		BurnDrvnes_finallap;
+DRV		BurnDrvnes_firenice;
+DRV		BurnDrvnes_firedragon;
+DRV		BurnDrvnes_fireemb;
+DRV		BurnDrvnes_fireembgai;
+DRV		BurnDrvnes_firehawk;
+DRV		BurnDrvnes_fistnorsta;
+DRV		BurnDrvnes_flappy;
+DRV		BurnDrvnes_flintresdinhop;
+DRV		BurnDrvnes_flintsuratdinpe;
+DRV		BurnDrvnes_flipull_1;
+DRV		BurnDrvnes_flipull;
+DRV		BurnDrvnes_flyindra;
+DRV		BurnDrvnes_flyinghero;
+DRV		BurnDrvnes_flyingwarriors;
+DRV		BurnDrvnes_formationz;
+DRV		BurnDrvnes_frank;
+DRV		BurnDrvnes_freefall;
+DRV		BurnDrvnes_freedomforce;
+DRV		BurnDrvnes_fridaythe13th;
+DRV		BurnDrvnes_frontline;
+DRV		BurnDrvnes_fudoumyououden;
+DRV		BurnDrvnes_full;
+DRV		BurnDrvnes_gijoeareamhe;
+DRV		BurnDrvnes_gijoeatlfa;
+DRV		BurnDrvnes_gaiapolis;
+DRV		BurnDrvnes_galaccru;
+DRV		BurnDrvnes_galaga;
+DRV		BurnDrvnes_galaxian;
+DRV		BurnDrvnes_galaxy5000;
+DRV		BurnDrvnes_gameparty;
+DRV		BurnDrvnes_ganbaregoemon2;
+DRV		BurnDrvnes_ganbagoegai_1;
+DRV		BurnDrvnes_ganbagoegai;
+DRV		BurnDrvnes_ganbagoegai2_1;
+DRV		BurnDrvnes_ganbagoegai2;
+DRV		BurnDrvnes_ganbagoe;
+DRV		BurnDrvnes_ganbapenrac;
+DRV		BurnDrvnes_garfi;
+DRV		BurnDrvnes_gargosqueii;
+DRV		BurnDrvnes_gauntlet;
+DRV		BurnDrvnes_gauntletii;
+DRV		BurnDrvnes_gegegnokit;
+DRV		BurnDrvnes_geimos;
+DRV		BurnDrvnes_gekityonbat;
+DRV		BurnDrvnes_gemfire;
+DRV		BurnDrvnes_genghiskhan;
+DRV		BurnDrvnes_georgforskobo;
+DRV		BurnDrvnes_getemgary;
+DRV		BurnDrvnes_getsufuumaden;
+DRV		BurnDrvnes_ghostlion;
+DRV		BurnDrvnes_ghostbusters;
+DRV		BurnDrvnes_ghostbustersii;
+DRV		BurnDrvnes_ghostsngoblins;
+DRV		BurnDrvnes_ghoulschool;
+DRV		BurnDrvnes_gimmick;
+DRV		BurnDrvnes_glukthuwar;
+DRV		BurnDrvnes_godsla;
+DRV		BurnDrvnes_golf;
+DRV		BurnDrvnes_golgo13;
+DRV		BurnDrvnes_goonies;
+DRV		BurnDrvnes_gooniesiithe;
+DRV		BurnDrvnes_gorbynopipdai;
+DRV		BurnDrvnes_gotcha;
+DRV		BurnDrvnes_gradius_1;
+DRV		BurnDrvnes_gradius;
+DRV		BurnDrvnes_gradiusii;
+DRV		BurnDrvnes_granavesubla;
+DRV		BurnDrvnes_greatbatcyb;
+DRV		BurnDrvnes_greattank;
+DRV		BurnDrvnes_greml2;
+DRV		BurnDrvnes_gruni2;
+DRV		BurnDrvnes_guardleg;
+DRV		BurnDrvnes_guardicgaiden;
+DRV		BurnDrvnes_guerrillawar;
+DRV		BurnDrvnes_guevara;
+DRV		BurnDrvnes_gumshoe;
+DRV		BurnDrvnes_gunnac_1;
+DRV		BurnDrvnes_gunnac;
+DRV		BurnDrvnes_gunsight;
+DRV		BurnDrvnes_gundec;
+DRV		BurnDrvnes_gunsmoke;
+DRV		BurnDrvnes_gunhed;
+DRV		BurnDrvnes_gyrodine;
+DRV		BurnDrvnes_gyromite;
+DRV		BurnDrvnes_gyruss;
+DRV		BurnDrvnes_haradiuszero;
+DRV		BurnDrvnes_harleglo;
+DRV		BurnDrvnes_hatris;
+DRV		BurnDrvnes_halloween85;
+DRV		BurnDrvnes_halloween86;
+DRV		BurnDrvnes_halloween86alt;
+DRV		BurnDrvnes_heavybarrel;
+DRV		BurnDrvnes_heavyshreddin;
+DRV		BurnDrvnes_hebereke;
+DRV		BurnDrvnes_hector87;
+DRV		BurnDrvnes_heisetenbak_1;
+DRV		BurnDrvnes_heisetenbak;
+DRV		BurnDrvnes_hellfighter;
+DRV		BurnDrvnes_hellokitnooha;
+DRV		BurnDrvnes_hellokitwor;
+DRV		BurnDrvnes_higem;
+DRV		BurnDrvnes_highspeed;
+DRV		BurnDrvnes_hinothouhen_1;
+DRV		BurnDrvnes_hinothouhen;
+DRV		BurnDrvnes_hitlenofuk;
+DRV		BurnDrvnes_hogansalley;
+DRV		BurnDrvnes_hokutonoken;
+DRV		BurnDrvnes_hokutonoken2;
+DRV		BurnDrvnes_holydiver;
+DRV		BurnDrvnes_homealone;
+DRV		BurnDrvnes_homealo2;
+DRV		BurnDrvnes_hook;
+DRV		BurnDrvnes_hottanochitan;
+DRV		BurnDrvnes_huangdi;
+DRV		BurnDrvnes_hudsonhawk;
+DRV		BurnDrvnes_hugeinsect;
+DRV		BurnDrvnes_huntredoct;
+DRV		BurnDrvnes_iceclimber;
+DRV		BurnDrvnes_icehockey;
+DRV		BurnDrvnes_ikariwarriors;
+DRV		BurnDrvnes_ikariwarii;
+DRV		BurnDrvnes_ikariwariii;
+DRV		BurnDrvnes_ikeikenekhocbu;
+DRV		BurnDrvnes_ikki;
+DRV		BurnDrvnes_imagefight;
+DRV		BurnDrvnes_immortalthe;
+DRV		BurnDrvnes_imposmisii;
+DRV		BurnDrvnes_increcradum;
+DRV		BurnDrvnes_indiajonandlascr;
+DRV		BurnDrvnes_indiajonandtemdo;
+DRV		BurnDrvnes_indivisible;
+DRV		BurnDrvnes_infiltrator;
+DRV		BurnDrvnes_insectorx;
+DRV		BurnDrvnes_irontan;
+DRV		BurnDrvnes_irons;
+DRV		BurnDrvnes_isolatedwarrior;
+DRV		BurnDrvnes_ivanirostessuoffro;
+DRV		BurnDrvnes_jleafigsoc;
+DRV		BurnDrvnes_jleawingoa;
+DRV		BurnDrvnes_jacknicgre18homachg;
+DRV		BurnDrvnes_jackal;
+DRV		BurnDrvnes_jackiechan_1;
+DRV		BurnDrvnes_jackiechan;
+DRV		BurnDrvnes_jajamnodai;
+DRV		BurnDrvnes_jamesbondjr;
+DRV		BurnDrvnes_jaws;
+DRV		BurnDrvnes_jesus_1;
+DRV		BurnDrvnes_jesus;
+DRV		BurnDrvnes_jetpaco;
+DRV		BurnDrvnes_jetsons;
+DRV		BurnDrvnes_jigokgokmar;
+DRV		BurnDrvnes_jikuuyuu;
+DRV		BurnDrvnes_jimmyconten;
+DRV		BurnDrvnes_jj;
+DRV		BurnDrvnes_joemac;
+DRV		BurnDrvnes_johnelwsqua;
+DRV		BurnDrvnes_jongbou;
+DRV		BurnDrvnes_jordavsbir;
+DRV		BurnDrvnes_joshubatjer;
+DRV		BurnDrvnes_journsil;
+DRV		BurnDrvnes_joust;
+DRV		BurnDrvnes_jovialrace;
+DRV		BurnDrvnes_joymechfight_1;
+DRV		BurnDrvnes_joymechfight;
+DRV		BurnDrvnes_jujudensetsu;
+DRV		BurnDrvnes_jumboozanoholinonep;
+DRV		BurnDrvnes_jumpikid;
+DRV		BurnDrvnes_junglebookthe;
+DRV		BurnDrvnes_jurassicboy;
+DRV		BurnDrvnes_jurassicpark;
+DRV		BurnDrvnes_justbreed_1;
+DRV		BurnDrvnes_justbreed;
+DRV		BurnDrvnes_justiceduel;
+DRV		BurnDrvnes_juuouki_1;
+DRV		BurnDrvnes_juuouki;
+DRV		BurnDrvnes_juurysoumetsto;
+DRV		BurnDrvnes_kabuki;
+DRV		BurnDrvnes_kage;
+DRV		BurnDrvnes_kagenodensetsu;
+DRV		BurnDrvnes_kageroudensetsu;
+DRV		BurnDrvnes_kaikeyanmar;
+DRV		BurnDrvnes_kaikeyanmar2;
+DRV		BurnDrvnes_kaikeyanmar3;
+DRV		BurnDrvnes_kakefkunnojumte;
+DRV		BurnDrvnes_kamenoong;
+DRV		BurnDrvnes_kamennoninaka;
+DRV		BurnDrvnes_kamennoninhan;
+DRV		BurnDrvnes_kamenriderclub;
+DRV		BurnDrvnes_kanshnagkannotogots;
+DRV		BurnDrvnes_karakkendenmuslo;
+DRV		BurnDrvnes_karatechamp;
+DRV		BurnDrvnes_karatekidthe;
+DRV		BurnDrvnes_karateka;
+DRV		BurnDrvnes_karnov;
+DRV		BurnDrvnes_kerokerkernoda_1;
+DRV		BurnDrvnes_kerokerkernoda;
+DRV		BurnDrvnes_kerokerkernoda2_1;
+DRV		BurnDrvnes_kerokerkernoda2;
+DRV		BurnDrvnes_keropkernosplbo;
+DRV		BurnDrvnes_kickmaster;
+DRV		BurnDrvnes_kicklecubicle;
+DRV		BurnDrvnes_kiddracula;
+DRV		BurnDrvnes_kidicarus;
+DRV		BurnDrvnes_kidkloinnigmawo;
+DRV		BurnDrvnes_kidkooandquesewohe;
+DRV		BurnDrvnes_kidnik;
+DRV		BurnDrvnes_kiddysuninfan;
+DRV		BurnDrvnes_kidousenzgun_1;
+DRV		BurnDrvnes_kidousenzgun;
+DRV		BurnDrvnes_kingkon2_1;
+DRV		BurnDrvnes_kingkon2;
+DRV		BurnDrvnes_kingofkings;
+DRV		BurnDrvnes_kingkin;
+DRV		BurnDrvnes_kingsknight;
+DRV		BurnDrvnes_kingsquestv;
+DRV		BurnDrvnes_kinni;
+DRV		BurnDrvnes_kirakirstanigac;
+DRV		BurnDrvnes_kirakirstanigdx;
+DRV		BurnDrvnes_kirakirstaniggo;
+DRV		BurnDrvnes_kirbysadv;
+DRV		BurnDrvnes_kiterdai;
+DRV		BurnDrvnes_kittyscatch;
+DRV		BurnDrvnes_kiwikra;
+DRV		BurnDrvnes_klashball;
+DRV		BurnDrvnes_klax;
+DRV		BurnDrvnes_knightrider;
+DRV		BurnDrvnes_kokoadventure;
+DRV		BurnDrvnes_konamspoinseo;
+DRV		BurnDrvnes_krazykreatures;
+DRV		BurnDrvnes_krioncon;
+DRV		BurnDrvnes_krustsfunhou;
+DRV		BurnDrvnes_kungfu;
+DRV		BurnDrvnes_kungfuheroes;
+DRV		BurnDrvnes_kuniokunnoneksole;
+DRV		BurnDrvnes_kyoursenjuu;
+DRV		BurnDrvnes_kyuukyokutiger;
+DRV		BurnDrvnes_lagrangepoint_1;
+DRV		BurnDrvnes_lagrangepoint;
+DRV		BurnDrvnes_lalathemagical;
+DRV		BurnDrvnes_laserinvasion;
+DRV		BurnDrvnes_lastactionhero;
+DRV		BurnDrvnes_lastarmageddon;
+DRV		BurnDrvnes_lastninjathe;
+DRV		BurnDrvnes_laststa;
+DRV		BurnDrvnes_lawnmower;
+DRV		BurnDrvnes_layla;
+DRV		BurnDrvnes_leetresfiggo;
+DRV		BurnDrvnes_legacwiz;
+DRV		BurnDrvnes_legenbal;
+DRV		BurnDrvnes_legenkag;
+DRV		BurnDrvnes_legenzel;
+DRV		BurnDrvnes_legendarywings;
+DRV		BurnDrvnes_legendsofowlia;
+DRV		BurnDrvnes_lemmings;
+DRV		BurnDrvnes_lethalweapon;
+DRV		BurnDrvnes_lifeforce;
+DRV		BurnDrvnes_littlemedusa;
+DRV		BurnDrvnes_littlmer_1;
+DRV		BurnDrvnes_littlmer;
+DRV		BurnDrvnes_littlnem;
+DRV		BurnDrvnes_littlninbro;
+DRV		BurnDrvnes_littlesamson;
+DRV		BurnDrvnes_lizard;
+DRV		BurnDrvnes_loderunner;
+DRV		BurnDrvnes_logjammers;
+DRV		BurnDrvnes_lonerangerthe;
+DRV		BurnDrvnes_loopz;
+DRV		BurnDrvnes_lotlot;
+DRV		BurnDrvnes_lowgman;
+DRV		BurnDrvnes_lunarlimit;
+DRV		BurnDrvnes_lunarpool;
+DRV		BurnDrvnes_lupinsan_1;
+DRV		BurnDrvnes_lupinsan;
+DRV		BurnDrvnes_mckids;
+DRV		BurnDrvnes_mule;
+DRV		BurnDrvnes_muscle;
+DRV		BurnDrvnes_machrider;
+DRV		BurnDrvnes_madcity;
+DRV		BurnDrvnes_madmax;
+DRV		BurnDrvnes_mafatcon;
+DRV		BurnDrvnes_magicblock;
+DRV		BurnDrvnes_magicdarts;
+DRV		BurnDrvnes_magicdragon;
+DRV		BurnDrvnes_magicjohn;
+DRV		BurnDrvnes_magicjohsfasbr;
+DRV		BurnDrvnes_magicsch;
+DRV		BurnDrvnes_magickidsdor;
+DRV		BurnDrvnes_magictarkun;
+DRV		BurnDrvnes_magictarkun2;
+DRV		BurnDrvnes_magician;
+DRV		BurnDrvnes_magmax;
+DRV		BurnDrvnes_maharaja_1;
+DRV		BurnDrvnes_maharaja;
+DRV		BurnDrvnes_majorleague;
+DRV		BurnDrvnes_majorleabas;
+DRV		BurnDrvnes_majoudenii;
+DRV		BurnDrvnes_makaimura;
+DRV		BurnDrvnes_makaimuraarcade;
+DRV		BurnDrvnes_maniacmansion;
+DRV		BurnDrvnes_mappy;
+DRV		BurnDrvnes_mappykids;
+DRV		BurnDrvnes_mappyland;
+DRV		BurnDrvnes_marblemadness;
+DRV		BurnDrvnes_mariobros;
+DRV		BurnDrvnes_mashieiydenwatga_1;
+DRV		BurnDrvnes_mashieiydenwatga;
+DRV		BurnDrvnes_mastechuanddruhu;
+DRV		BurnDrvnes_mastershooter;
+DRV		BurnDrvnes_matendouji;
+DRV		BurnDrvnes_maxwar;
+DRV		BurnDrvnes_mechaatt;
+DRV		BurnDrvnes_megaman;
+DRV		BurnDrvnes_megaman2;
+DRV		BurnDrvnes_megaman3;
+DRV		BurnDrvnes_megaman3imp;
+DRV		BurnDrvnes_megaman3rev;
+DRV		BurnDrvnes_megaman4;
+DRV		BurnDrvnes_megaman5;
+DRV		BurnDrvnes_megaman6;
+DRV		BurnDrvnes_megamancx;
+DRV		BurnDrvnes_meikyjiidab;
+DRV		BurnDrvnes_meikyuujima;
+DRV		BurnDrvnes_menacebeach;
+DRV		BurnDrvnes_mendelpalace;
+DRV		BurnDrvnes_metalfighter;
+DRV		BurnDrvnes_metalforce;
+DRV		BurnDrvnes_metalgear;
+DRV		BurnDrvnes_metalmax;
+DRV		BurnDrvnes_metalmec;
+DRV		BurnDrvnes_metalstorm;
+DRV		BurnDrvnes_metrocross;
+DRV		BurnDrvnes_metroid;
+DRV		BurnDrvnes_metrorogdaw;
+DRV		BurnDrvnes_mickemouiii;
+DRV		BurnDrvnes_mickemou;
+DRV		BurnDrvnes_micromachines;
+DRV		BurnDrvnes_micromages;
+DRV		BurnDrvnes_miedow;
+DRV		BurnDrvnes_mig29;
+DRV		BurnDrvnes_mightybombjack;
+DRV		BurnDrvnes_mightfinfig;
+DRV		BurnDrvnes_miketysspunout;
+DRV		BurnDrvnes_millipede;
+DRV		BurnDrvnes_miniputt;
+DRV		BurnDrvnes_missiimp;
+DRV		BurnDrvnes_mitokou;
+DRV		BurnDrvnes_mitsumegatooru;
+DRV		BurnDrvnes_moaikun;
+DRV		BurnDrvnes_moerotwi;
+DRV		BurnDrvnes_mojontwimul;
+DRV		BurnDrvnes_monopoly;
+DRV		BurnDrvnes_monstinmypoc;
+DRV		BurnDrvnes_monsterparty;
+DRV		BurnDrvnes_monsttrural;
+DRV		BurnDrvnes_mooncrystal_1;
+DRV		BurnDrvnes_mooncrystal;
+DRV		BurnDrvnes_moonranger;
+DRV		BurnDrvnes_mortalkombat4;
+DRV		BurnDrvnes_mother;
+DRV		BurnDrvnes_motoccha_1;
+DRV		BurnDrvnes_motoccha;
+DRV		BurnDrvnes_motorcitpat;
+DRV		BurnDrvnes_mottoabudek;
+DRV		BurnDrvnes_mourysenmad_1;
+DRV		BurnDrvnes_mourysenmad;
+DRV		BurnDrvnes_mspacman;
+DRV		BurnDrvnes_muppeadv;
+DRV		BurnDrvnes_musasnoken;
+DRV		BurnDrvnes_mutanvir;
+DRV		BurnDrvnes_mysteryquest;
+DRV		BurnDrvnes_mysticorigins;
+DRV		BurnDrvnes_namcoclassic;
+DRV		BurnDrvnes_namcoclassicii;
+DRV		BurnDrvnes_nantebas_1;
+DRV		BurnDrvnes_nantebas;
+DRV		BurnDrvnes_narc;
+DRV		BurnDrvnes_nebsanddebs;
+DRV		BurnDrvnes_nekkekakden_1;
+DRV		BurnDrvnes_nekkekakden;
+DRV		BurnDrvnes_nekkekoukunkun;
+DRV		BurnDrvnes_nekkestrbas;
+DRV		BurnDrvnes_neoheiali;
+DRV		BurnDrvnes_nesopetougol;
+DRV		BurnDrvnestest;
+DRV		BurnDrvnes_newghoii;
+DRV		BurnDrvnes_newyornya;
+DRV		BurnDrvnes_newzeasto;
+DRV		BurnDrvnes_nigelmansworchch;
+DRV		BurnDrvnes_nightonelmstra;
+DRV		BurnDrvnes_nightshade;
+DRV		BurnDrvnes_ninjacopsaizou;
+DRV		BurnDrvnes_ninjacrusaders;
+DRV		BurnDrvnes_ninjagaiden;
+DRV		BurnDrvnes_ninjagaiii;
+DRV		BurnDrvnes_ninjagaiiii;
+DRV		BurnDrvnes_ninjahatkun;
+DRV		BurnDrvnes_ninjajaj_1;
+DRV		BurnDrvnes_ninjajaj;
+DRV		BurnDrvnes_ninjajajkun;
+DRV		BurnDrvnes_ninjakid;
+DRV		BurnDrvnes_ninjaryuden;
+DRV		BurnDrvnes_ninjaryudenii;
+DRV		BurnDrvnes_ninjaryudeniii;
+DRV		BurnDrvnes_ninjakunashnosh;
+DRV		BurnDrvnes_ninjakunmajnobo;
+DRV		BurnDrvnes_ninjarahoi_1;
+DRV		BurnDrvnes_ninjarahoi;
+DRV		BurnDrvnes_ninteworcup;
+DRV		BurnDrvnes_noahsark;
+DRV		BurnDrvnes_nomolos;
+DRV		BurnDrvnes_northsouth;
+DRV		BurnDrvnes_nutsmilk;
+DRV		BurnDrvnes_obakenoqtar;
+DRV		BurnDrvnes_onyankotown;
+DRV		BurnDrvnes_operationwolf;
+DRV		BurnDrvnes_outlanders;
+DRV		BurnDrvnes_overhorizon;
+DRV		BurnDrvnes_overlord;
+DRV		BurnDrvnes_pow;
+DRV		BurnDrvnes_pacland;
+DRV		BurnDrvnes_pacman;
+DRV		BurnDrvnes_pacmania;
+DRV		BurnDrvnes_palamedes;
+DRV		BurnDrvnes_palamii;
+DRV		BurnDrvnes_panicdizzy;
+DRV		BurnDrvnes_panicrestaurant;
+DRV		BurnDrvnes_paperboy;
+DRV		BurnDrvnes_paperboy2;
+DRV		BurnDrvnes_papillongals;
+DRV		BurnDrvnes_parallelworld;
+DRV		BurnDrvnes_parasolhenbee;
+DRV		BurnDrvnes_parasstaraiislii;
+DRV		BurnDrvnes_parodiusda;
+DRV		BurnDrvnes_peepartime;
+DRV		BurnDrvnes_penguinkunwars;
+DRV		BurnDrvnes_perfectbowling;
+DRV		BurnDrvnes_perfectpair;
+DRV		BurnDrvnes_perman;
+DRV		BurnDrvnes_permapar2;
+DRV		BurnDrvnes_pesterminator;
+DRV		BurnDrvnes_peterpanpir;
+DRV		BurnDrvnes_phantomfighter;
+DRV		BurnDrvnes_pictionary;
+DRV		BurnDrvnes_pinbot;
+DRV		BurnDrvnes_pinball;
+DRV		BurnDrvnes_pinbacvbyred;
+DRV		BurnDrvnes_pinballquest;
+DRV		BurnDrvnes_pizzapop;
+DRV		BurnDrvnes_plasmaball_1;
+DRV		BurnDrvnes_plasmaball;
+DRV		BurnDrvnes_platoon;
+DRV		BurnDrvnes_popoteam;
+DRV		BurnDrvnes_pockezau;
+DRV		BurnDrvnes_pooyan;
+DRV		BurnDrvnes_popeye;
+DRV		BurnDrvnes_powerblade;
+DRV		BurnDrvnes_powerblade2;
+DRV		BurnDrvnes_powerblazer;
+DRV		BurnDrvnes_powerpunchii;
+DRV		BurnDrvnes_powersoccer;
+DRV		BurnDrvnes_predator;
+DRV		BurnDrvnes_princeofpersia;
+DRV		BurnDrvnes_princtominsalki;
+DRV		BurnDrvnes_prowrestling;
+DRV		BurnDrvnes_punchout;
+DRV		BurnDrvnes_punisherthe;
+DRV		BurnDrvnes_pussnboo;
+DRV		BurnDrvnes_puyopuyo;
+DRV		BurnDrvnes_puzznic;
+DRV		BurnDrvnes_pyokonodai;
+DRV		BurnDrvnes_qboy;
+DRV		BurnDrvnes_qbert;
+DRV		BurnDrvnes_qix;
+DRV		BurnDrvnes_quattadv;
+DRV		BurnDrvnes_quattroarcade;
+DRV		BurnDrvnes_quattrosports;
+DRV		BurnDrvnes_questforge;
+DRV		BurnDrvnes_questofkithe_1;
+DRV		BurnDrvnes_questofkithe;
+DRV		BurnDrvnes_quinty;
+DRV		BurnDrvnes_rbibaseball;
+DRV		BurnDrvnes_rbibas2;
+DRV		BurnDrvnes_rbibas3;
+DRV		BurnDrvnes_rcproam;
+DRV		BurnDrvnes_rcproamii;
+DRV		BurnDrvnes_racketattack;
+DRV		BurnDrvnes_racketsrivals;
+DRV		BurnDrvnes_radracer;
+DRV		BurnDrvnes_radracerii;
+DRV		BurnDrvnes_radrac;
+DRV		BurnDrvnes_radiasen_1;
+DRV		BurnDrvnes_radiasen;
+DRV		BurnDrvnes_rafworld;
+DRV		BurnDrvnes_raid2020;
+DRV		BurnDrvnes_raidonbunbay;
+DRV		BurnDrvnes_rainbisloce;
+DRV		BurnDrvnes_rainbisltai;
+DRV		BurnDrvnes_rallybike;
+DRV		BurnDrvnes_rambo;
+DRV		BurnDrvnes_rampage;
+DRV		BurnDrvnes_rampart;
+DRV		BurnDrvnes_redarremerii;
+DRV		BurnDrvnes_renstisho;
+DRV		BurnDrvnes_renegade;
+DRV		BurnDrvnes_ringking;
+DRV		BurnDrvnes_rivercitran;
+DRV		BurnDrvnes_roadfighter;
+DRV		BurnDrvnes_roadrunner;
+DRV		BurnDrvnes_roadblasters;
+DRV		BurnDrvnes_robowarrior;
+DRV		BurnDrvnes_roboccowars;
+DRV		BurnDrvnes_robocop;
+DRV		BurnDrvnes_robocop2;
+DRV		BurnDrvnes_robocop3;
+DRV		BurnDrvnes_robocvster;
+DRV		BurnDrvnes_robodemons;
+DRV		BurnDrvnes_rocknball;
+DRV		BurnDrvnes_rockball;
+DRV		BurnDrvnes_rocketeerthe;
+DRV		BurnDrvnes_rockinkats;
+DRV		BurnDrvnes_rockman;
+DRV		BurnDrvnes_rockm2;
+DRV		BurnDrvnes_rockm3;
+DRV		BurnDrvnes_rockm4;
+DRV		BurnDrvnes_rockm5;
+DRV		BurnDrvnes_rockm6;
+DRV		BurnDrvnes_rodland;
+DRV		BurnDrvnes_rollerball;
+DRV		BurnDrvnes_rollergames;
+DRV		BurnDrvnes_rollingthunder_1;
+DRV		BurnDrvnes_rollingthunder;
+DRV		BurnDrvnes_romancia;
+DRV		BurnDrvnes_rushnattack;
+DRV		BurnDrvnes_rygar;
+DRV		BurnDrvnes_scat;
+DRV		BurnDrvnes_saiyuukiworld;
+DRV		BurnDrvnes_saiyuwor2;
+DRV		BurnDrvnes_salamander;
+DRV		BurnDrvnes_sansaranaga_1;
+DRV		BurnDrvnes_sansaranaga;
+DRV		BurnDrvnes_saturnsmash;
+DRV		BurnDrvnes_secretties;
+DRV		BurnDrvnes_sectionz;
+DRV		BurnDrvnes_seicross;
+DRV		BurnDrvnes_senjounoookami;
+DRV		BurnDrvnes_shadonin;
+DRV		BurnDrvnes_shadowgate;
+DRV		BurnDrvnes_shanghai;
+DRV		BurnDrvnes_shatterhand;
+DRV		BurnDrvnes_shin4ninuchma;
+DRV		BurnDrvnes_shinobi;
+DRV		BurnDrvnes_shockwave;
+DRV		BurnDrvnes_shootingrange;
+DRV		BurnDrvnes_shufflepuckcafe_1;
+DRV		BurnDrvnes_shufflepuckcafe;
+DRV		BurnDrvnes_sidepocket;
+DRV		BurnDrvnes_sidewinder;
+DRV		BurnDrvnes_silentservice;
+DRV		BurnDrvnes_silkworm;
+DRV		BurnDrvnes_silvereagle;
+DRV		BurnDrvnes_silversurfer;
+DRV		BurnDrvnes_simpsbarvsspamu;
+DRV		BurnDrvnes_simpsbarvswor;
+DRV		BurnDrvnes_simpsbarmeeradman;
+DRV		BurnDrvnes_sinkingfeeling;
+DRV		BurnDrvnes_sirababol;
+DRV		BurnDrvnes_skateboy;
+DRV		BurnDrvnes_skateordie;
+DRV		BurnDrvnes_skateordie2;
+DRV		BurnDrvnes_skiordie;
+DRV		BurnDrvnes_skullcro;
+DRV		BurnDrvnes_skydestroyer;
+DRV		BurnDrvnes_skykid;
+DRV		BurnDrvnes_skyshark;
+DRV		BurnDrvnes_slalom;
+DRV		BurnDrvnes_smashtv;
+DRV		BurnDrvnes_snakeratnrol;
+DRV		BurnDrvnes_snakesrevenge;
+DRV		BurnDrvnes_snoopssilsposp;
+DRV		BurnDrvnes_snowbrothers;
+DRV		BurnDrvnes_soccer;
+DRV		BurnDrvnes_soccelea;
+DRV		BurnDrvnes_solarjet;
+DRV		BurnDrvnes_solomonskey;
+DRV		BurnDrvnes_solstice;
+DRV		BurnDrvnes_solst;
+DRV		BurnDrvnes_sonson;
+DRV		BurnDrvnes_spaceharrier;
+DRV		BurnDrvnes_spacehunter;
+DRV		BurnDrvnes_spaceinvaders;
+DRV		BurnDrvnes_spartanx;
+DRV		BurnDrvnes_spartanx2;
+DRV		BurnDrvnes_spelunker;
+DRV		BurnDrvnes_speluii_1;
+DRV		BurnDrvnes_speluii;
+DRV		BurnDrvnes_spideman;
+DRV		BurnDrvnes_splathou;
+DRV		BurnDrvbsprite1;
+DRV		BurnDrvbsprite2;
+DRV		BurnDrvbsprite3;
+DRV		BurnDrvbsprite4;
+DRV		BurnDrvbsprite5;
+DRV		BurnDrvbsprite6;
+DRV		BurnDrvnes_spyhunter;
+DRV		BurnDrvnes_spyvsspy;
+DRV		BurnDrvnes_sqoon;
+DRV		BurnDrvnes_stanley;
+DRV		BurnDrvnes_starevil;
+DRV		BurnDrvnes_starforce;
+DRV		BurnDrvnes_stargate;
+DRV		BurnDrvnes_starluster;
+DRV		BurnDrvnes_starsoldier;
+DRV		BurnDrvnes_startre25tann;
+DRV		BurnDrvnes_startrenexgen;
+DRV		BurnDrvnes_startrevfinfr;
+DRV		BurnDrvnes_starvoyager;
+DRV		BurnDrvnes_starwars_2;
+DRV		BurnDrvnes_starwars_1;
+DRV		BurnDrvnes_starwars;
+DRV		BurnDrvnes_starwar;
+DRV		BurnDrvnes_starshiphector;
+DRV		BurnDrvnes_startropics;
+DRV		BurnDrvnes_startii;
+DRV		BurnDrvnes_sted_1;
+DRV		BurnDrvnes_sted;
+DRV		BurnDrvnes_stickhun;
+DRV		BurnDrvnes_stinger;
+DRV		BurnDrvnes_streefig201;
+DRV		BurnDrvnes_streetheroes;
+DRV		BurnDrvnes_strider;
+DRV		BurnDrvnes_strikewolf;
+DRV		BurnDrvnes_stuntkids;
+DRV		BurnDrvnes_sugorque_1;
+DRV		BurnDrvnes_sugorque;
+DRV		BurnDrvnes_sukebandeka3;
+DRV		BurnDrvnes_summecar92;
+DRV		BurnDrvnes_sunman;
+DRV		BurnDrvnes_superarabian;
+DRV		BurnDrvnes_superbatpun;
+DRV		BurnDrvnes_superc;
+DRV		BurnDrvnes_supercars;
+DRV		BurnDrvnes_superdodgeball;
+DRV		BurnDrvnes_supergun;
+DRV		BurnDrvnes_smb;
+DRV		BurnDrvnes_smb2;
+DRV		BurnDrvnes_smb2j;
+DRV		BurnDrvnes_smb3;
+DRV		BurnDrvnes_superpainter;
+DRV		BurnDrvnes_superpang;
+DRV		BurnDrvnes_superpang2;
+DRV		BurnDrvnes_superpinball;
+DRV		BurnDrvnes_superpitfall;
+DRV		BurnDrvnes_superpit30t;
+DRV		BurnDrvnes_superrugby;
+DRV		BurnDrvnes_supershi;
+DRV		BurnDrvnes_superspivbal;
+DRV		BurnDrvnes_supersprint;
+DRV		BurnDrvnes_superspyhunter;
+DRV		BurnDrvnes_superstarforce;
+DRV		BurnDrvnes_superturrican;
+DRV		BurnDrvnes_superuwol;
+DRV		BurnDrvnes_superxev;
+DRV		BurnDrvnes_superman;
+DRV		BurnDrvnes_swampthing;
+DRV		BurnDrvnes_sweethome_1;
+DRV		BurnDrvnes_sweethome;
+DRV		BurnDrvnes_swordmaster;
+DRV		BurnDrvnes_tc2;
+DRV		BurnDrvnes_tcsurfdesign;
+DRV		BurnDrvnes_tagteawre;
+DRV		BurnDrvnes_taitochasehq;
+DRV		BurnDrvnes_taiyonoyuufir_1;
+DRV		BurnDrvnes_taiyonoyuufir;
+DRV		BurnDrvnes_takahmeinobugho;
+DRV		BurnDrvnes_talespin;
+DRV		BurnDrvnes_targetrenegade;
+DRV		BurnDrvnes_tasac;
+DRV		BurnDrvnes_tashimasnoprigaip;
+DRV		BurnDrvnes_tatakchorobseitr;
+DRV		BurnDrvnes_tatakrahman;
+DRV		BurnDrvnes_tatakainobanka;
+DRV		BurnDrvnes_tecmobaseball;
+DRV		BurnDrvnes_tecmobowl;
+DRV		BurnDrvnes_tecmocup;
+DRV		BurnDrvnes_tecmonbabas;
+DRV		BurnDrvnes_tecmosuperbowl;
+DRV		BurnDrvnes_tecmoworcupsoc;
+DRV		BurnDrvnes_tecmoworwre;
+DRV		BurnDrvnes_tmnt;
+DRV		BurnDrvnes_tmntii;
+DRV		BurnDrvnes_tmntiii;
+DRV		BurnDrvnes_tmnttoufig;
+DRV		BurnDrvnes_tenkanogoi;
+DRV		BurnDrvnes_tenkabus;
+DRV		BurnDrvnes_tennis;
+DRV		BurnDrvnes_teraonodosooz;
+DRV		BurnDrvnes_termi2;
+DRV		BurnDrvnes_terminatorthe;
+DRV		BurnDrvnes_terracresta;
+DRV		BurnDrvnes_tetra;
+DRV		BurnDrvnes_tetris;
+DRV		BurnDrvnes_tetris2;
+DRV		BurnDrvnes_tetri2bom;
+DRV		BurnDrvnes_tetsuwanatom;
+DRV		BurnDrvnes_meating;
+DRV		BurnDrvnes_thexder;
+DRV		BurnDrvnes_threestooges;
+DRV		BurnDrvnes_thundlig;
+DRV		BurnDrvnes_thunderwarrior;
+DRV		BurnDrvnes_thunderbirds;
+DRV		BurnDrvnes_thunderbolt2;
+DRV		BurnDrvnes_thundercade;
+DRV		BurnDrvnes_tigerheli;
+DRV		BurnDrvnes_timediveonman;
+DRV		BurnDrvnes_timelord;
+DRV		BurnDrvnes_timezone;
+DRV		BurnDrvnes_tinasadvisliii;
+DRV		BurnDrvnes_tinasadvisl;
+DRV		BurnDrvnes_tinasadvislii;
+DRV		BurnDrvnes_tinytooadv;
+DRV		BurnDrvnes_tinytooadv2molaheyo;
+DRV		BurnDrvnes_tinytooadv2trinwa;
+DRV		BurnDrvnes_titan;
+DRV		BurnDrvnes_titanwarriors;
+DRV		BurnDrvnes_totheearth;
+DRV		BurnDrvnes_toki;
+DRV		BurnDrvnes_tokkyshisol;
+DRV		BurnDrvnes_tokorsannomammosemo;
+DRV		BurnDrvnes_tomjerultgamcatandm;
+DRV		BurnDrvnes_toobin;
+DRV		BurnDrvnes_topgun;
+DRV		BurnDrvnes_topgunsecmis;
+DRV		BurnDrvnes_totalrecall;
+DRV		BurnDrvnes_totallyrad;
+DRV		BurnDrvnes_totsumac;
+DRV		BurnDrvnes_touhourououmu;
+DRV		BurnDrvnes_toukonclub;
+DRV		BurnDrvnes_towerdru;
+DRV		BurnDrvnes_toxiccrusaders;
+DRV		BurnDrvnes_trackfield;
+DRV		BurnDrvnes_trackfieldii;
+DRV		BurnDrvnes_treasuremaster;
+DRV		BurnDrvnes_trog;
+DRV		BurnDrvnes_trojan;
+DRV		BurnDrvnes_tsupparioozumou;
+DRV		BurnDrvnes_twincobra;
+DRV		BurnDrvnes_twindragons;
+DRV		BurnDrvnes_twindracomedi;
+DRV		BurnDrvnes_twineagle;
+DRV		BurnDrvnes_twinbee;
+DRV		BurnDrvnes_twinb3;
+DRV		BurnDrvnes_uschavba;
+DRV		BurnDrvnes_uchuukeisdf;
+DRV		BurnDrvnes_uchuucoscar;
+DRV		BurnDrvnes_ufouria;
+DRV		BurnDrvnes_ultimaexodus;
+DRV		BurnDrvnes_ultimqueava;
+DRV		BurnDrvnes_ultimwardes;
+DRV		BurnDrvnes_ultimmorkom3;
+DRV		BurnDrvnes_ultimstu;
+DRV		BurnDrvnes_uncanxmen;
+DRV		BurnDrvnes_unchartedwaters;
+DRV		BurnDrvnes_uninvited;
+DRV		BurnDrvnes_univesol_1;
+DRV		BurnDrvnes_univesol;
+DRV		BurnDrvnes_urbanchampion;
+DRV		BurnDrvnes_urbanstrike;
+DRV		BurnDrvnes_uruseyat;
+DRV		BurnDrvnes_utsurundesu;
+DRV		BurnDrvnes_valis;
+DRV		BurnDrvnes_valkynobou_1;
+DRV		BurnDrvnes_valkynobou;
+DRV		BurnDrvbvbl;
+DRV		BurnDrvnes_vice;
+DRV		BurnDrvnes_nesvircle;
+DRV		BurnDrvnes_volguardii;
+DRV		BurnDrvnes_volleyball;
+DRV		BurnDrvbbvram;
+DRV		BurnDrvnes_wackyraces;
+DRV		BurnDrvnes_wagyanland;
+DRV		BurnDrvnes_wagyanland2;
+DRV		BurnDrvnes_wagyanland3;
+DRV		BurnDrvnes_waiwaiworld;
+DRV		BurnDrvnes_waiwaiwor2;
+DRV		BurnDrvnes_wall;
+DRV		BurnDrvnes_wallstreetkid;
+DRV		BurnDrvnes_wanpakoknogouwo;
+DRV		BurnDrvnes_warioswoods;
+DRV		BurnDrvnes_warpman;
+DRV		BurnDrvnes_waynesworld;
+DRV		BurnDrvnes_werew;
+DRV		BurnDrvnes_whereintimiscasa;
+DRV		BurnDrvnes_whereswaldo;
+DRV		BurnDrvnes_whompem;
+DRV		BurnDrvnes_widget;
+DRV		BurnDrvnes_wildgunman;
+DRV		BurnDrvnes_willow;
+DRV		BurnDrvnes_wingmad;
+DRV		BurnDrvnes_wits;
+DRV		BurnDrvnes_wizarwar;
+DRV		BurnDrvnes_wizarwariii;
+DRV		BurnDrvnes_wolverine;
+DRV		BurnDrvnes_woodypoko;
+DRV		BurnDrvnes_worldchamp;
+DRV		BurnDrvnes_wrathblaman;
+DRV		BurnDrvnes_wreckingcrew;
+DRV		BurnDrvnes_wurm;
+DRV		BurnDrvnes_xevious;
+DRV		BurnDrvnes_xexyz;
+DRV		BurnDrvnes_xiaohonmao;
+DRV		BurnDrvnes_yiearkungfu;
+DRV		BurnDrvnes_yonoid;
+DRV		BurnDrvnes_yoshi;
+DRV		BurnDrvnes_yoshiscookie;
+DRV		BurnDrvnes_youkaiclub;
+DRV		BurnDrvnes_youkaidouchuuki;
+DRV		BurnDrvnes_youkaikurabu;
+DRV		BurnDrvnes_youngindjonchr;
+DRV		BurnDrvnes_yumepenmon_1;
+DRV		BurnDrvnes_yumepenmon;
+DRV		BurnDrvnes_yuuyuuhakfin;
+DRV		BurnDrvnes_zanac;
+DRV		BurnDrvnes_ruder;
+DRV		BurnDrvnes_zeldaii;
+DRV		BurnDrvnes_zen;
+DRV		BurnDrvnes_zhenbenxiyouji;
+DRV		BurnDrvnes_zombiecalavera;
+DRV		BurnDrvnes_zombiehunter;
+DRV		BurnDrvnes_zombienation;
+DRV		BurnDrvnes_zoomisec;
+DRV		BurnDrvnes_zunousengal;
 DRV		BurnDrvMSX_nkoshien;
 DRV		BurnDrvNetwars;
 DRV		BurnDrvpce_neutopi2;
@@ -7151,6 +8469,7 @@ DRV		BurnDrvPacnpal2;
 DRV		BurnDrvPacnpal;
 DRV		BurnDrvpacmanfm;
 DRV		BurnDrvpacmanug;
+DRV		BurnDrvcv_pacmancol;
 DRV		BurnDrvgg_pacattak;
 DRV		BurnDrvmd_pacattak;
 DRV		BurnDrvpacgal;
@@ -15966,6 +17285,127 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fathom,			// Fathom (Jpn)
 	&BurnDrvcv_fathom,			// Fathom
 	&BurnDrvmd_fatman,			// Fatman (Jpn)
+	&BurnDrvfds_19neunzehn,		// FDS 19 - Neunzehn (Japan)
+	&BurnDrvfds_adiannotsue,	// FDS Adian no Tsue (Japan)
+	&BurnDrvfds_aisenshinicol,	// FDS Ai Senshi Nicol (Japan)
+	&BurnDrvfds_akitsunofusnoka,// FDS Aki to Tsukasa no Fushigi no Kabe (Japan)
+	&BurnDrvfds_akumajoudracula,// FDS Akumajou Dracula (Japan)
+	&BurnDrvfds_akuusenrai,		// FDS Akuu Senki Raijin (Japan)
+	&BurnDrvfds_allnignipsupmabr,// FDS All Night Nippon Super Mario Brothers (Japan)
+	&BurnDrvfds_appletowmon,	// FDS Apple Town Monogatari - Little Computer People (Japan)
+	&BurnDrvfds_armananokiseki,	// FDS Armana no Kiseki (Japan)
+	&BurnDrvfds_bakutpatkun,	// FDS Bakutoushi Patton-kun (Japan)
+	&BurnDrvfds_bigchadogspi,	// FDS Big Challenge! Dogfight Spirit (Japan)
+	&BurnDrvfds_bigchagogobo,	// FDS Big Challenge! Go! Go! Bowling (Japan)
+	&BurnDrvfds_bigchagunfig,	// FDS Big Challenge! Gun Fighter (Japan)
+	&BurnDrvfds_bigchajuusen,	// FDS Big Challenge! Juudou Senshuken (Japan)
+	&BurnDrvfds_biomirbokupa,	// FDS Bio Miracle Bokutte Upa (Japan)
+	&BurnDrvfds_bomberman,		// FDS Bomber Man (Japan)
+	&BurnDrvfds_bubblebobble,	// FDS Bubble Bobble (Japan)
+	&BurnDrvfds_burgertime,		// FDS BurgerTime (Japan)
+	&BurnDrvfds_chitetaiord,	// FDS Chitei Tairiku Ordola (Japan)
+	&BurnDrvfds_clucluland,		// FDS Clu Clu Land (Japan)
+	&BurnDrvfds_coconaworld,	// FDS Cocona World (Japan)
+	&BurnDrvfds_dandy,			// FDS Dandy - Zeuon no Fukkatsu (Japan)
+	&BurnDrvfds_digdug,			// FDS Dig Dug (Japan)
+	&BurnDrvfds_digdugii,		// FDS Dig Dug II (Japan)
+	&BurnDrvfds_dirtypai,		// FDS Dirty Pair - Project Eden (Japan)
+	&BurnDrvfds_dokidokipanic,	// FDS Doki Doki Panic (Japan)
+	&BurnDrvfds_donkeykong,		// FDS Donkey Kong (Japan)
+	&BurnDrvfds_donkeykongjr,	// FDS Donkey Kong Jr. (Japan)
+	&BurnDrvfds_dracuii,		// FDS Dracula II - Noroi no Fuuin (Japan)
+	&BurnDrvfds_druid,			// FDS Druid - Kyoufu no Tobira (Japan)
+	&BurnDrvfds_eggerland,		// FDS Egger Land (Japan)
+	&BurnDrvfds_eggerlan,		// FDS Egger Land - Souzou e no Tabidachi (Japan)
+	&BurnDrvfds_electrician1,	// FDS Electrician (Japan)
+	&BurnDrvfds_electrician,	// FDS Electrician (T-eng)
+	&BurnDrvfds_excitsoc,		// FDS Exciting Soccer - Konami Cup (Japan)
+	&BurnDrvfds_fairypin,		// FDS Fairy Pinball - Yousei Tachi no Pinball (Japan)
+	&BurnDrvfds_falsion,		// FDS Falsion (Japan)
+	&BurnDrvfds_famicgrapri,	// FDS Famicom Grand Prix - F1 Race (Japan)
+	&BurnDrvfds_famicgrapriii,	// FDS Famicom Grand Prix II - 3D Hot Rally (Japan)
+	&BurnDrvfds_famimdisvol1,	// FDS Famimaga Disk Vol. 1 - Hong Kong (Japan)
+	&BurnDrvfds_famimdisvol2,	// FDS Famimaga Disk Vol. 2 - Panic Space (Japan)
+	&BurnDrvfds_famimdisvol3,	// FDS Famimaga Disk Vol. 3 - All 1 (Japan)
+	&BurnDrvfds_famimdisvol4,	// FDS Famimaga Disk Vol. 4 - Clox (Japan)
+	&BurnDrvfds_famimdisvol5,	// FDS Famimaga Disk Vol. 5 - Puyo Puyo (Japan)
+	&BurnDrvfds_famimdisvol6,	// FDS Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)
+	&BurnDrvfds_finalcom,		// FDS Final Command - Akai Yousai (Japan)
+	&BurnDrvfds_firebam,		// FDS Fire Bam (Japan)
+	&BurnDrvfds_firerock,		// FDS Fire Rock (Japan)
+	&BurnDrvfds_fuuunshoken,	// FDS Fuuun Shourin Ken (Japan)
+	&BurnDrvfds_galaga,			// FDS Galaga (Japan)
+	&BurnDrvfds_galaxian,		// FDS Galaxian (Japan)
+	&BurnDrvfds_gallfor,		// FDS Gall Force - Eternal Story (Japan)
+	&BurnDrvfds_gingaden,		// FDS Ginga Denshou - Galaxy Odyssey (Japan)
+	&BurnDrvfds_golf,			// FDS Golf (Japan)
+	&BurnDrvfds_golfjapcou,		// FDS Golf - Japan Course (Japan)
+	&BurnDrvfds_golfuscourse,	// FDS Golf - US Course (Japan)
+	&BurnDrvfds_goonies,		// FDS Goonies (Japan)
+	&BurnDrvfds_greenberet,		// FDS Green Beret (Japan)
+	&BurnDrvfds_gunsmoke,		// FDS Gun.Smoke (Japan)
+	&BurnDrvfds_gyruss1,		// FDS Gyruss (Japan)
+	&BurnDrvfds_gyruss,			// FDS Gyruss (T-eng)
+	&BurnDrvfds_halleywars,		// FDS Halley Wars (Japan)
+	&BurnDrvfds_haokunnofusnata,// FDS Hao-kun no Fushigi na Tabi (Japan)
+	&BurnDrvfds_hikarshi,		// FDS Hikari Shinwa - Palthena no Kagami (Japan)
+	&BurnDrvfds_icehockey,		// FDS Ice Hockey (Japan)
+	&BurnDrvfds_fdsirqtest,		// FDS IRQ Test (Sour, v7)
+	&BurnDrvfds_jikaishometmag,	// FDS Jikai Shounen Met Mag (Japan)
+	&BurnDrvfds_kaettmarbro,	// FDS Kaettekita Mario Brothers (Japan)
+	&BurnDrvfds_kamenridbla,	// FDS Kamen Rider Black - Taiketsu Shadow Moon (Japan)
+	&BurnDrvfds_kickandrun,		// FDS Kick and Run (Japan)
+	&BurnDrvfds_kickcha,		// FDS Kick Challenger - Air Foot (Japan)
+	&BurnDrvfds_kikikai,		// FDS Kiki Kaikai - Dotou Hen (Japan)
+	&BurnDrvfds_kinni,			// FDS Kinnikuman - Kinnikusei Oui Soudatsusen (Japan)
+	&BurnDrvfds_knighlor,		// FDS Knight Lore - Majou no Ookami Otoko (Japan)
+	&BurnDrvfds_konekmon,		// FDS Koneko Monogatari - The Adventures of Chatran (Japan)
+	&BurnDrvfds_linknobou,		// FDS Link no Bouken - The Legend of Zelda 2 (Japan)
+	&BurnDrvfds_lutter,			// FDS Lutter (Japan)
+	&BurnDrvfds_maerchenveil,	// FDS Maerchen Veil (Japan)
+	&BurnDrvfds_magmapro,		// FDS Magma Project - Hacker (Japan)
+	&BurnDrvfds_matounohou,		// FDS Matou no Houkai - The Hero of Babel (Japan)
+	&BurnDrvfds_metroid,		// FDS Metroid (Japan)
+	&BurnDrvfds_moerotwi,		// FDS Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)
+	&BurnDrvfds_montyonrun,		// FDS Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)
+	&BurnDrvfds_moonballmagic,	// FDS Moonball Magic (Japan)
+	&BurnDrvfds_mystemurcas,	// FDS Mysterious Murasame Castle (T-Eng)
+	&BurnDrvfds_nazonomur,		// FDS Nazo no Murasamejou (Japan)
+	&BurnDrvfds_otocky,			// FDS Otocky (Japan)
+	&BurnDrvfds_patla,			// FDS Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan)
+	&BurnDrvfds_progolsarkagnoto,// FDS Pro Golfer Saru - Kage no Tournament (Japan)
+	&BurnDrvfds_puttputtgolf,	// FDS Putt Putt Golf (Japan)
+	&BurnDrvfds_puzzleboys,		// FDS Puzzle Boys (Japan)
+	&BurnDrvfds_radicbomjirkun,	// FDS Radical Bomber!! Jirai-kun (Japan)
+	&BurnDrvfds_reflectworld,	// FDS Reflect World (Japan)
+	&BurnDrvfds_relics,			// FDS Relics - Ankoku Yousai (Japan)
+	&BurnDrvfds_replicart,		// FDS Replicart (Japan)
+	&BurnDrvfds_rogerrabbit,	// FDS Roger Rabbit (Japan)
+	&BurnDrvfds_sectionz,		// FDS Section-Z (Japan)
+	&BurnDrvfds_silvi,			// FDS Silviana - Ai Ippai no Little Angel (Japan)
+	&BurnDrvfds_smashpingpong,	// FDS Smash Ping Pong (Japan)
+	&BurnDrvfds_superboyallan,	// FDS Super Boy Allan (Japan)
+	&BurnDrvfds_superlodrun,	// FDS Super Lode Runner (Japan)
+	&BurnDrvfds_superlodrunii,	// FDS Super Lode Runner II (Japan)
+	&BurnDrvfds_supermarbro,	// FDS Super Mario Brothers (Japan)
+	&BurnDrvfds_supermarbro2,	// FDS Super Mario Brothers 2 (Japan)
+	&BurnDrvfds_fdsbios,		// FDS System BIOS [BIOS only, NOT WORKING]
+	&BurnDrvfds_tamafri,		// FDS Tama & Friends - 3 Choume Daibouken (Japan)
+	&BurnDrvfds_tennis,			// FDS Tennis (Japan)
+	&BurnDrvfds_tobiddai,		// FDS Tobidase Daisakusen (Japan)
+	&BurnDrvfds_topplezip,		// FDS Topple Zip (Japan)
+	&BurnDrvfds_trans,			// FDS Transformers - The Headmasters (Japan)
+	&BurnDrvfds_ultra,			// FDS Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)
+	&BurnDrvfds_ultra2,			// FDS Ultraman 2 - Shutsugeki Katoku Tai (Japan)
+	&BurnDrvfds_volleyball,		// FDS Volleyball (Japan)
+	&BurnDrvfds_vsexcitebike,	// FDS Vs. Excitebike (Japan)
+	&BurnDrvfds_wakusatogai,	// FDS Wakusei Aton Gaiden (Japan)
+	&BurnDrvfds_wardnernomori,	// FDS Wardner no Mori (Japan)
+	&BurnDrvfds_wreckingcrew,	// FDS Wrecking Crew (Japan)
+	&BurnDrvfds_youkaiyashiki,	// FDS Youkai Yashiki (Japan)
+	&BurnDrvfds_yuumaze,		// FDS Yuu Maze (Japan)
+	&BurnDrvfds_zanac,			// FDS Zanac (Japan)
+	&BurnDrvfds_zeldanoden,		// FDS Zelda no Densetsu - The Hyrule Fantasy (Japan)
 	&BurnDrvsg1k_feilang,		// Fei Lang (Tw)
 	&BurnDrvsg1k_feilanga,		// Fei Lang ~ Choplifter (Tw, Alt)
 	&BurnDrvsms_felipe,			// Felipe em Acao (Bra)
@@ -19370,6 +20810,1203 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNeocup98,			// Neo-Geo Cup '98 - The Road to the Victory
 	&BurnDrvneotet,				// NeoGeo 2-Player Tetris
 	&BurnDrvneo3ddmo,			// NeoGeo 3D! Demo
+	&BurnDrvnes_10yardfight,	// NES 10-Yard Fight (USA)
+	&BurnDrvnes_1942,			// NES 1942 (Japan, USA)
+	&BurnDrvnes_1943,			// NES 1943 - The Battle of Midway (USA)
+	&BurnDrvnes_2010,			// NES 2010 - Street Fighter (Japan)
+	&BurnDrvnes_3dbatworru,		// NES 3-D Battles of World Runner, The (USA)
+	&BurnDrvnes_720degrees,		// NES 720 Degrees (USA)
+	&BurnDrvnes_8eyes,			// NES 8 Eyes (USA)
+	&BurnDrvnes_8bitrhylan,		// NES 8-Bit Rhythm Land (HB)
+	&BurnDrvnes_abadox,			// NES Abadox - The Deadly Inner War (USA)
+	&BurnDrvnes_action52,		// NES Action 52 (USA)
+	&BurnDrvnes_actio53vol1stbu,// NES Action 53 vol 1 Streemerz Bundle (HB)
+	&BurnDrvnes_actio53vol2doac,// NES Action 53 vol 2 Double Action (HB)
+	&BurnDrvnes_actio53vol3retw,// NES Action 53 vol 3 Revenge of the Twins (HB)
+	&BurnDrvnes_actioinnewyor,	// NES Action in New York (Europe)
+	&BurnDrvnes_addamfam,		// NES Addams Family, The (USA)
+	&BurnDrvnes_addamfampugsschu,// NES Addams Family, The - Pugsley's Scavenger Hunt (USA)
+	&BurnDrvnes_adventureisland,// NES Adventure Island (USA)
+	&BurnDrvnes_advenisl3,		// NES Adventure Island 3 (USA)
+	&BurnDrvnes_advenislii_1,	// NES Adventure Island II (USA) (Beta)
+	&BurnDrvnes_advenislii,		// NES Adventure Island II (USA)
+	&BurnDrvnes_advenisliv_1,	// NES Adventure Island IV (Japan)
+	&BurnDrvnes_advenisliv,		// NES Adventure Island IV (T-Eng)
+	&BurnDrvnes_adveninmagkin,	// NES Adventures in the Magic Kingdom (USA)
+	&BurnDrvnes_advenbaybil,	// NES Adventures of Bayou Billy, The (USA)
+	&BurnDrvnes_advendinrik,	// NES Adventures of Dino Riki (USA)
+	&BurnDrvnes_advengilsisl,	// NES Adventures of Gilligan's Island, The (USA)
+	&BurnDrvnes_advenlol,		// NES Adventures of Lolo (USA)
+	&BurnDrvnes_advenlol2,		// NES Adventures of Lolo 2 (USA)
+	&BurnDrvnes_advenlol3,		// NES Adventures of Lolo 3 (USA)
+	&BurnDrvnes_advenradgra,	// NES Adventures of Rad Gravity, The (USA)
+	&BurnDrvnes_advenrocandbulandfr,// NES Adventures of Rocky and Bullwinkle and Friends, The (USA)
+	&BurnDrvnes_adventomsaw,	// NES Adventures of Tom Sawyer (USA)
+	&BurnDrvnes_afterburner,	// NES After Burner (USA)
+	&BurnDrvnes_afterburnerii,	// NES After Burner II (Japan)
+	&BurnDrvnes_airfortress,	// NES Air Fortress (USA)
+	&BurnDrvnes_airwolf_2,		// NES Airwolf (Japan)
+	&BurnDrvnes_airwolf_1,		// NES Airwolf (T-eng)
+	&BurnDrvnes_airwolf,		// NES Airwolf (USA)
+	&BurnDrvnes_akumaden,		// NES Akumajou Densetsu (Japan)
+	&BurnDrvnes_akumajoudracula,// NES Akumajou Dracula (Japan)
+	&BurnDrvnes_akumaspe,		// NES Akumajou Special - Boku Dracula-kun (Japan)
+	&BurnDrvnes_alunsjrturra,	// NES Al Unser Jr. Turbo Racing (USA)
+	&BurnDrvnes_alfommagla,		// NES Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)
+	&BurnDrvnes_alfonsarcadv,	// NES Alfonzo's Arctic Adventure (HB)
+	&BurnDrvnes_alfredchicken,	// NES Alfred Chicken (USA)
+	&BurnDrvnes_alien3,			// NES Alien 3 (USA)
+	&BurnDrvnes_aliensyndrome,	// NES Alien Syndrome (USA)
+	&BurnDrvnes_almosthero,		// NES Almost Hero (HB)
+	&BurnDrvnes_alphamission,	// NES Alpha Mission (USA)
+	&BurnDrvnes_alterego,		// NES Alter Ego (HB)
+	&BurnDrvnes_amagon,			// NES Amagon (USA)
+	&BurnDrvnes_amazorundie_1,	// NES Amazons Running Diet (Japan)
+	&BurnDrvnes_amazorundie,	// NES Amazons Running Diet (USA)
+	&BurnDrvnes_amerigla,		// NES American Gladiators (USA)
+	&BurnDrvnes_antaradv,		// NES Antarctic Adventure (Japan)
+	&BurnDrvnes_anticipation,	// NES Anticipation (USA)
+	&BurnDrvnes_archriv,		// NES Arch Rivals - A Basketbrawl! (USA)
+	&BurnDrvnes_archon,			// NES Archon (USA)
+	&BurnDrvnes_argus,			// NES Argus (Japan)
+	&BurnDrvnes_arkanoid,		// NES Arkanoid (USA)
+	&BurnDrvnes_arkanoidii,		// NES Arkanoid II (Japan)
+	&BurnDrvnes_arkistasring,	// NES Arkista's Ring (USA)
+	&BurnDrvnes_armadillo_1,	// NES Armadillo (Japan)
+	&BurnDrvnes_armadillo,		// NES Armadillo (T-eng)
+	&BurnDrvnes_asmikkunland,	// NES Asmik-kun Land (Japan)
+	&BurnDrvnes_assimilate,		// NES Assimilate (HB)
+	&BurnDrvnes_asterix,		// NES Asterix (Europe)
+	&BurnDrvnes_astrofan_1,		// NES Astro Fang - Super Machine (Japan)
+	&BurnDrvnes_astrofan,		// NES Astro Fang - Super Machine (T-eng)
+	&BurnDrvnes_astrorobosasa,	// NES Astro Robo Sasa (Japan)
+	&BurnDrvnes_astyanax,		// NES Astyanax (USA)
+	&BurnDrvnes_athena,			// NES Athena (USA)
+	&BurnDrvnes_atlantisnonazo,	// NES Atlantis no Nazo (Japan)
+	&BurnDrvnes_attacanigak_1,	// NES Attack Animal Gakuen (Japan)
+	&BurnDrvnes_attacanigak,	// NES Attack Animal Gakuen (T-eng)
+	&BurnDrvnes_attackiltom,	// NES Attack of the Killer Tomatoes (USA)
+	&BurnDrvnes_bwings,			// NES B-Wings (Japan)
+	&BurnDrvnes_babelnotou,		// NES Babel no Tou (Japan)
+	&BurnDrvnes_babyboomer,		// NES Baby Boomer (USA)
+	&BurnDrvnes_backfut,		// NES Back to the Future (USA)
+	&BurnDrvnes_backfutpariiiii,// NES Back to the Future Part II & III (USA)
+	&BurnDrvnes_baddudes,		// NES Bad Dudes (USA)
+	&BurnDrvnes_badnewbas,		// NES Bad News Baseball (USA)
+	&BurnDrvnes_badstrbra,		// NES Bad Street Brawler (USA)
+	&BurnDrvnes_balloonfight,	// NES Balloon Fight (USA)
+	&BurnDrvnes_baltron,		// NES Baltron (Japan)
+	&BurnDrvnes_banana,			// NES Banana (Japan)
+	&BurnDrvnes_bananaprince_2,	// NES Banana Prince (Germany)
+	&BurnDrvnes_bananaprince_1,	// NES Banana Prince (Japan)
+	&BurnDrvnes_bananaprince,	// NES Banana Prince (T-Eng)
+	&BurnDrvnes_bandikinancchi,	// NES Bandit Kings of Ancient China (USA)
+	&BurnDrvnes_barkebilstrish,	// NES Barker Bill's Trick Shooting (USA)
+	&BurnDrvnes_basewars,		// NES Base Wars (USA)
+	&BurnDrvnes_baseballstars,	// NES Baseball Stars (USA)
+	&BurnDrvnes_basebstaii,		// NES Baseball Stars II (USA)
+	&BurnDrvnes_basesloaded,	// NES Bases Loaded (USA)
+	&BurnDrvnes_basesloaii,		// NES Bases Loaded II - Second Season (USA)
+	&BurnDrvnes_bashibaz,		// NES Bashi Bazook - Morphoid Masher (USA) (Proto)
+	&BurnDrvnes_bassedefadv,	// NES Basse Def Adventures (HB)
+	&BurnDrvnes_batmaretjok,	// NES Batman - Return of the Joker (USA)
+	&BurnDrvnes_batmavidgam,	// NES Batman - The Video Game (USA)
+	&BurnDrvnes_batmanreturns,	// NES Batman Returns (USA)
+	&BurnDrvnes_batsuterii,		// NES Batsu & Terii (Japan)
+	&BurnDrvnes_battlebaseball,	// NES Battle Baseball (Japan)
+	&BurnDrvnes_battlechess,	// NES Battle Chess (USA)
+	&BurnDrvnes_battleformula,	// NES Battle Formula (Japan)
+	&BurnDrvnes_battlkid,		// NES Battle Kid - Fortress of Peril (Japan)
+	&BurnDrvnes_battlkid2,		// NES Battle Kid 2 - Mountain of Torment (USA)
+	&BurnDrvnes_battloly,		// NES Battle of Olympus, The (USA)
+	&BurnDrvnes_battletank,		// NES Battle Tank (USA)
+	&BurnDrvnes_battlecity,		// NES BattleCity (Japan)
+	&BurnDrvnes_battleship,		// NES Battleship (USA)
+	&BurnDrvnes_battletoads,	// NES Battletoads (USA)
+	&BurnDrvnes_battldoudra,	// NES Battletoads-Double Dragon (USA)
+	&BurnDrvbcputime,			// NES bcputime
+	&BurnDrvnes_bee52,			// NES Bee 52 (USA) (Unl)
+	&BurnDrvnes_beerslinger,	// NES BeerSlinger (HB)
+	&BurnDrvnes_beetlejuice,	// NES Beetlejuice (USA)
+	&BurnDrvnes_bignosfreout,	// NES Big Nose Freaks Out (USA)
+	&BurnDrvnes_bignoscav,		// NES Big Nose the Caveman (USA)
+	&BurnDrvnes_bigfoot,		// NES Bigfoot (USA)
+	&BurnDrvnes_billtedsexcvigaad,// NES Bill & Ted's Excellent Video Game Adventure (USA)
+	&BurnDrvnes_binaryland,		// NES Binary Land (Japan)
+	&BurnDrvnes_bioforceape,	// NES Bio Force Ape (Japan) (En) (Proto)
+	&BurnDrvnes_biomirbokupa,	// NES Bio Miracle Bokutte Upa (Japan)
+	&BurnDrvnes_biosendan,		// NES Bio Senshi Dan - Increaser Tono Tatakai (Japan)
+	&BurnDrvnes_bioniccommando,	// NES Bionic Commando (USA)
+	&BurnDrvnes_birdweek,		// NES Bird Week (Japan)
+	&BurnDrvnes_bladebuster,	// NES Blade Buster (HB)
+	&BurnDrvnes_bladesofsteel,	// NES Blades of Steel (USA)
+	&BurnDrvbpalpowertest,		// NES Blargg pal power on test
+	&BurnDrvbpaltest,			// NES Blargg pal ram test
+	&BurnDrvbspriteram,			// NES Blargg sprite ram
+	&BurnDrvnes_blastermaster,	// NES Blaster Master (USA)
+	&BurnDrvnes_blodilan,		// NES Blodia Land - Puzzle Quest (Japan)
+	&BurnDrvnes_blowemout,		// NES Blow'Em Out! (HB)
+	&BurnDrvnes_bluemarlinthe,	// NES Blue Marlin, The (USA)
+	&BurnDrvnes_bluesbro,		// NES Blues Brothers, The (USA)
+	&BurnDrvnes_bokosukawars,	// NES Bokosuka Wars (Japan)
+	&BurnDrvnes_bombsweeper,	// NES Bomb Sweeper (HB)
+	&BurnDrvnes_bomberman,		// NES Bomberman (USA)
+	&BurnDrvnes_bombermanii,	// NES Bomberman II (USA)
+	&BurnDrvnes_bonksadventure,	// NES Bonk's Adventure (USA)
+	&BurnDrvnes_boobykids,		// NES Booby Kids (Japan)
+	&BurnDrvnes_boogerman,		// NES Boogerman (Unl)
+	&BurnDrvnes_mojontwiboo,	// NES Bootee (HB)
+	&BurnDrvnes_boulderdash,	// NES Boulder Dash (USA)
+	&BurnDrvnes_bramstosdra,	// NES Bram Stoker's Dracula (USA)
+	&BurnDrvnes_breakthru,		// NES BreakThru (USA)
+	&BurnDrvnes_bubblebobble,	// NES Bubble Bobble (USA)
+	&BurnDrvnes_bubblbobpar2,	// NES Bubble Bobble Part 2 (USA)
+	&BurnDrvnes_buckyohare,		// NES Bucky O'Hare (USA)
+	&BurnDrvnes_bugsbunbirblo,	// NES Bugs Bunny Birthday Blowout, The (USA)
+	&BurnDrvnes_bugsbuncracas,	// NES Bugs Bunny Crazy Castle, The (USA)
+	&BurnDrvnes_bumpnjump,		// NES Bump'n'Jump (USA)
+	&BurnDrvnes_buraifighter_1,	// NES Burai Fighter (Japan)
+	&BurnDrvnes_buraifighter,	// NES Burai Fighter (USA)
+	&BurnDrvnes_burgertime,		// NES BurgerTime (USA)
+	&BurnDrvnes_buzzwaldog,		// NES Buzz & Waldog (USA) (Proto) (Unl)
+	&BurnDrvnes_cabal,			// NES Cabal (USA)
+	&BurnDrvnes_californiagames,// NES California Games (USA)
+	&BurnDrvnes_capcosgolmedch92,// NES Capcom's Gold Medal Challenge '92 (USA)
+	&BurnDrvnes_captaameandave,	// NES Captain America and the Avengers (USA)
+	&BurnDrvnes_captacom,		// NES Captain Comic - The Adventure (USA)
+	&BurnDrvnes_captained,		// NES Captain ED (Japan)
+	&BurnDrvnes_captaplaandpla,	// NES Captain Planet and the Planeteers (USA)
+	&BurnDrvnes_captainsaver,	// NES Captain Saver (Japan)
+	&BurnDrvnes_captainsilver,	// NES Captain Silver (Japan)
+	&BurnDrvnes_captainskyhawk,	// NES Captain Skyhawk (USA) (Rev A)
+	&BurnDrvnes_captaintsubasa,	// NES Captain Tsubasa (Japan)
+	&BurnDrvnes_captatsuvolii_1,// NES Captain Tsubasa Vol. II - Super Striker (Japan).nes
+	&BurnDrvnes_captatsuvolii,	// NES Captain Tsubasa Vol. II - Super Striker (T-eng).nes
+	&BurnDrvnes_casinokid,		// NES Casino Kid (USA)
+	&BurnDrvnes_casinokid2,		// NES Casino Kid 2 (USA)
+	&BurnDrvnes_castelian,		// NES Castelian (USA)
+	&BurnDrvnes_castleexcellent,// NES Castle Excellent (Japan)
+	&BurnDrvnes_castleofdeceit,	// NES Castle of Deceit (USA)
+	&BurnDrvnes_castleofdragon,	// NES Castle of Dragon (USA)
+	&BurnDrvnes_castlevania,	// NES Castlevania (USA)
+	&BurnDrvnes_castlii,		// NES Castlevania II - Simon's Quest (USA)
+	&BurnDrvnes_castliii,		// NES Castlevania III - Dracula's Curse (USA)
+	&BurnDrvnes_catnintey_1,	// NES Cat Ninden Teyandee (Japan)
+	&BurnDrvnes_catnintey,		// NES Cat Ninden Teyandee (T-eng)
+	&BurnDrvnes_chacknpop,		// NES Chack'n Pop (Japan)
+	&BurnDrvnes_challdra,		// NES Challenge of the Dragon (USA)
+	&BurnDrvnes_challenger,		// NES Challenger (Japan)
+	&BurnDrvnes_champbow,		// NES Championship Bowling (USA)
+	&BurnDrvnes_champlodrun,	// NES Championship Lode Runner (Japan)
+	&BurnDrvnes_chaosworld_1,	// NES Chaos World (Japan)
+	&BurnDrvnes_chaosworld,		// NES Chaos World (T-eng)
+	&BurnDrvnes_mojontwichegod,	// NES Cheril The Goddess (HB)
+	&BurnDrvnes_mojontwichewri,	// NES Cheril The Writer (HB)
+	&BurnDrvnes_chestfie,		// NES Chester Field - Ankoku Shin e no Chousen (Japan)
+	&BurnDrvnes_chikichimacmoura,// NES Chiki Chiki Machine Mou Race (Japan)
+	&BurnDrvnes_chiller,		// NES Chiller (USA)
+	&BurnDrvnes_chipndalresra,	// NES Chip 'n Dale - Rescue Rangers (USA)
+	&BurnDrvnes_chipndalresra2,	// NES Chip 'n Dale - Rescue Rangers 2 (USA)
+	&BurnDrvnes_chitesenvaz,	// NES Chitei Senkuu Vazolder (Japan)
+	&BurnDrvnes_chiyonoooi,		// NES Chiyonofuji no Ooichou (Japan)
+	&BurnDrvnes_choplifter,		// NES Choplifter (Japan)
+	&BurnDrvnes_choujyou,		// NES Choujikuu Yousai - Macross (Japan)
+	&BurnDrvnes_choujsenjet_1,	// NES Choujin Sentai Jetman (Japan)
+	&BurnDrvnes_choujsenjet,	// NES Choujin Sentai Jetman (T-eng)
+	&BurnDrvnes_choujsenwar,	// NES Choujinrou Senki Warwolf (Japan)
+	&BurnDrvnes_chubbycherub,	// NES Chubby Cherub (USA)
+	&BurnDrvnes_chuukataisen,	// NES Chuuka Taisen (Japan)
+	&BurnDrvnes_circuscaper,	// NES Circus Caper (USA)
+	&BurnDrvnes_circuscharlie,	// NES Circus Charlie (Japan)
+	&BurnDrvnes_cityconnection,	// NES City Connection (USA)
+	&BurnDrvnes_citytrouble,	// NES City Trouble (HB)
+	&BurnDrvnes_clashatdem,		// NES Clash at Demonhead (USA)
+	&BurnDrvnes_cliffhanger,	// NES Cliffhanger (USA)
+	&BurnDrvnes_clucluland,		// NES Clu Clu Land (World)
+	&BurnDrvnes_cobracommand,	// NES Cobra Command (USA)
+	&BurnDrvnes_cobramission,	// NES Cobra Mission (Asia)
+	&BurnDrvnes_cobratriangle,	// NES Cobra Triangle (USA)
+	&BurnDrvnes_cocoron_1,		// NES Cocoron (Japan)
+	&BurnDrvnes_cocoron,		// NES Cocoron (T-eng)
+	&BurnDrvnes_codenam,		// NES Code Name - Viper (USA)
+	&BurnDrvnes_commando,		// NES Commando (USA)
+	&BurnDrvnes_conan,			// NES Conan (USA)
+	&BurnDrvnes_conqucrypal,	// NES Conquest of the Crystal Palace (USA)
+	&BurnDrvnes_contra_1,		// NES Contra (Japan)
+	&BurnDrvnes_contra,			// NES Contra (USA)
+	&BurnDrvnes_contraforce,	// NES Contra Force (USA)
+	&BurnDrvnes_coolworld,		// NES Cool World (USA)
+	&BurnDrvnes_correbenny,		// NES Corre Benny (Spain)
+	&BurnDrvnes_cosmicepsilon,	// NES Cosmic Epsilon (Japan)
+	&BurnDrvnes_cosmogenesis,	// NES Cosmo Genesis (Japan)
+	&BurnDrvnes_cosmopolgal_1,	// NES Cosmo Police Galivan (Japan)
+	&BurnDrvnes_cosmopolgal,	// NES Cosmo Police Galivan (T-eng)
+	&BurnDrvnes_cowboykid,		// NES Cowboy Kid (USA)
+	&BurnDrvbcpuall,			// NES cpu all instructions
+	&BurnDrvnes_crashnboy,		// NES Crash 'n' the Boys - Street Challenge (USA)
+	&BurnDrvnes_crayoshicha,	// NES Crayon Shin-chan - Ora to Poi Poi (Japan)
+	&BurnDrvnes_crazyclimber,	// NES Crazy Climber (Japan)
+	&BurnDrvnes_creepybrawlers,	// NES Creepy Brawlers (HB)
+	&BurnDrvnes_crimebusters,	// NES Crime Busters (USA)
+	&BurnDrvnes_crisisforce,	// NES Crisis Force (Japan)
+	&BurnDrvnes_crossfire,		// NES Cross Fire (Japan)
+	&BurnDrvnes_crypto,			// NES Crypto (HB)
+	&BurnDrvnes_crystalis,		// NES Crystalis (USA)
+	&BurnDrvnes_cyberstaser,	// NES Cyber Stadium Series - Base Wars (USA)
+	&BurnDrvnes_cyber,			// NES Cybernoid - The Fighting Machine (USA)
+	&BurnDrvnes_cyclerac,		// NES Cycle Race - Road Man (Japan)
+	&BurnDrvnes_dai2jisuprota_1,// NES Dai-2-ji Super Robot Taisen (Japan)
+	&BurnDrvnes_dai2jisuprota,	// NES Dai-2-ji Super Robot Taisen (T-eng)
+	&BurnDrvnes_daikunogensan,	// NES Daiku no Gen-san (Japan)
+	&BurnDrvnes_daikunogensan2,	// NES Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)
+	&BurnDrvnes_dannysulsindhe,	// NES Danny Sullivan's Indy Heat (USA)
+	&BurnDrvnes_daoshuai,		// NES Dao Shuai (Asia) (Unl)
+	&BurnDrvnes_darkman,		// NES Darkman (USA)
+	&BurnDrvnes_darkwingduck,	// NES Darkwing Duck (USA)
+	&BurnDrvnes_dashgalinalias,	// NES Dash Galaxy in the Alien Asylum (USA)
+	&BurnDrvnes_dashyarou,		// NES Dash Yarou (Japan)
+	&BurnDrvnes_davidcrasaboyandhis,// NES David Crane's A Boy and His Blob - Trouble on Blobolonia (USA)
+	&BurnDrvnes_daydredav,		// NES Day Dreamin' Davey (USA)
+	&BurnDrvnes_daysofthunder,	// NES Days of Thunder (USA)
+	&BurnDrvnes_deadfox,		// NES Dead Fox (Japan)
+	&BurnDrvnes_deadlytowers,	// NES Deadly Towers (USA)
+	&BurnDrvnes_deathrace,		// NES Death Race (USA) (Unl)
+	&BurnDrvnes_deathbots,		// NES Deathbots (USA) (Rev 1) (Unl)
+	&BurnDrvnes_deblock,		// NES Deblock (Japan)
+	&BurnDrvnes_defenderii,		// NES Defender II (USA)
+	&BurnDrvnes_defencro,		// NES Defender of the Crown (USA)
+	&BurnDrvnes_dejavu,			// NES Deja Vu (USA)
+	&BurnDrvnes_demonsword,		// NES Demon Sword (USA)
+	&BurnDrvnes_dengeki,		// NES Dengeki - Big Bang! (Japan)
+	&BurnDrvnes_destiear,		// NES Destination Earthstar (USA)
+	&BurnDrvnes_destructorel,	// NES Destructor, El (Spain) (Gluk Video) (Unl)
+	&BurnDrvnes_devilman_1,		// NES Devil Man (Japan)
+	&BurnDrvnes_devilman,		// NES Devil Man (T-eng)
+	&BurnDrvnes_devilworld,		// NES Devil World (Japan) (Rev A)
+	&BurnDrvnes_diehard,		// NES Die Hard (USA)
+	&BurnDrvnes_digdug,			// NES Dig Dug (Japan)
+	&BurnDrvnes_digdugii,		// NES Dig Dug II (Japan)
+	&BurnDrvnes_digdugiitroinpa,// NES Dig Dug II - Trouble in Paradise (USA)
+	&BurnDrvnes_digger,			// NES Digger - The Legend of the Lost City (USA)
+	&BurnDrvnes_digitdevmonmegte_1,// NES Digital Devil Monogatari - Megami Tensei (Japan)
+	&BurnDrvnes_digitdevmonmegte,// NES Digital Devil Monogatari - Megami Tensei (T-eng)
+	&BurnDrvnes_digitdevmonmegteii_1,// NES Digital Devil Monogatari - Megami Tensei II (Japan)
+	&BurnDrvnes_digitdevmonmegteii,// NES Digital Devil Monogatari - Megami Tensei II (T-eng)
+	&BurnDrvnes_dokidokyuu,		// NES Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan)
+	&BurnDrvnes_dondokodon,		// NES Don Doko Don (Japan)
+	&BurnDrvnes_dondokodon2,	// NES Don Doko Don 2 (Japan)
+	&BurnDrvnes_donaldland,		// NES Donald Land (Japan)
+	&BurnDrvnes_donkeykong,		// NES Donkey Kong (World) (Rev A)
+	&BurnDrvnes_donkeykongjr,	// NES Donkey Kong Jr. (World) (Rev A)
+	&BurnDrvnes_doolybravoland,	// NES Dooly Bravo Land (Korea)
+	&BurnDrvnes_doordoor,		// NES Door Door (Japan)
+	&BurnDrvnes_doraemon,		// NES Doraemon (Japan) (Rev A)
+	&BurnDrvnes_dorae_1,		// NES Doraemon - Giga Zombie no Gyakushuu (Japan)
+	&BurnDrvnes_dorae,			// NES Doraemon - Giga Zombie no Gyakushuu (T-eng)
+	&BurnDrvnes_doubledragon,	// NES Double Dragon (USA)
+	&BurnDrvnes_doubldraii,		// NES Double Dragon II - The Revenge (USA)
+	&BurnDrvnes_doubldraiii,	// NES Double Dragon III - The Sacred Stones (USA)
+	&BurnDrvnes_doubledribble,	// NES Double Dribble (USA)
+	&BurnDrvnes_doublestrike,	// NES Double Strike (USA)
+	&BurnDrvnes_doughboy,		// NES Dough Boy (Japan)
+	&BurnDrvnes_downtnekkousorda,// NES Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (Japan)
+	&BurnDrvnes_downtnekmon,	// NES Downtown - Nekketsu Monogatari (Japan)
+	&BurnDrvnes_downtspekunkunnojid,// NES Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)
+	&BurnDrvnes_drchaos,		// NES Dr. Chaos (USA)
+	&BurnDrvnes_drjekandmrhy,	// NES Dr. Jekyll and Mr. Hyde (USA)
+	&BurnDrvnes_drmario,		// NES Dr. Mario (Japan, USA) (Rev A).nes
+	&BurnDrvnes_dracsnightout,	// NES Drac's Night Out (USA) (Prototype)
+	&BurnDrvnes_dragonbuster,	// NES Dragon Buster (Japan)
+	&BurnDrvnes_dragobusii_1,	// NES Dragon Buster II - Yami no Fuuin (Japan)
+	&BurnDrvnes_dragobusii,		// NES Dragon Buster II - Yami no Fuuin (T-eng)
+	&BurnDrvnes_dragonfighter,	// NES Dragon Fighter (USA)
+	&BurnDrvnes_dragonpower,	// NES Dragon Power (USA)
+	&BurnDrvnes_dragoscr,		// NES Dragon Scroll - Yomigaerishi Maryuu (Japan)
+	&BurnDrvnes_dragospiaraden,	// NES Dragon Spirit - Aratanaru Densetsu (Japan)
+	&BurnDrvnes_dragospinewleg,	// NES Dragon Spirit - The New Legend (USA)
+	&BurnDrvnes_dragonwarrior,	// NES Dragon Warrior (USA)
+	&BurnDrvnes_dragowarii,		// NES Dragon Warrior II (USA)
+	&BurnDrvnes_dragowariii,	// NES Dragon Warrior III (USA)
+	&BurnDrvnes_dragowariv,		// NES Dragon Warrior IV (USA)
+	&BurnDrvnes_dragonslair,	// NES Dragon's Lair (USA)
+	&BurnDrvnes_draiocht,		// NES Draiocht (HB)
+	&BurnDrvnes_dropzone,		// NES Dropzone (Europe)
+	&BurnDrvnes_druaganotou,	// NES Druaga no Tou (Japan)
+	&BurnDrvnes_duckhunt,		// NES Duck Hunt (USA)
+	&BurnDrvnes_ducktales,		// NES DuckTales (USA)
+	&BurnDrvnes_ducktales2,		// NES DuckTales 2 (USA)
+	&BurnDrvnes_dynamitebatman,	// NES Dynamite Batman (Japan)
+	&BurnDrvnes_dynow,			// NES Dynowarz - Destruction of Spondylus (USA)
+	&BurnDrvnes_earthbound,		// NES Earthbound (USA) (Prototype)
+	&BurnDrvnes_egypt,			// NES Egypt (Japan)
+	&BurnDrvnes_elevatoraction,	// NES Elevator Action (USA)
+	&BurnDrvnes_elimiboadue,	// NES Eliminator Boat Duel (USA)
+	&BurnDrvnes_elnarknozaihou,	// NES Elnark no Zaihou (Japan)
+	&BurnDrvnes_empircit,		// NES Empire City - 1931 (Japan)
+	&BurnDrvnes_eskimbobdeledi,	// NES Eskimo Bob Deluxe Edition (HB)
+	&BurnDrvnes_esperboukentai,	// NES Esper Bouken Tai (Japan)
+	&BurnDrvnes_esperdre2,		// NES Esper Dream 2 - Aratanaru Tatakai (Japan)
+	&BurnDrvnes_espitundherpim,	// NES Espitenen und herr pimponen (HB)
+	&BurnDrvnes_excitebike,		// NES Excitebike (Japan, USA)
+	&BurnDrvnes_excitingboxing,	// NES Exciting Boxing (Japan)
+	&BurnDrvnes_exerion,		// NES Exerion (Japan)
+	&BurnDrvnes_expedition,		// NES Expedition (HB)
+	&BurnDrvnes_f1race,			// NES F-1 Race (Japan)
+	&BurnDrvnes_f1sensation,	// NES F-1 Sensation (Japan)
+	&BurnDrvnes_f1circus,		// NES F1 Circus (Japan)
+	&BurnDrvnes_famicjum,		// NES Famicom Jump - Eiyuu Retsuden (Japan)
+	&BurnDrvnes_famicjumii,		// NES Famicom Jump II - Saikyou no 7 Nin (Japan)
+	&BurnDrvnes_familyboxing,	// NES Family Boxing (Japan)
+	&BurnDrvnes_familypicross,	// NES Family Picross! (HB)
+	&BurnDrvnes_familypinball,	// NES Family Pinball (Japan)
+	&BurnDrvnes_fantasyzone,	// NES Fantasy Zone (Japan)
+	&BurnDrvnes_fantazonii,		// NES Fantasy Zone II - Opa-Opa no Namida (Japan)
+	&BurnDrvnes_faria,			// NES Faria - A World of Mystery & Danger! (USA)
+	&BurnDrvnes_faxanadu,		// NES Faxanadu (USA) (Rev A)
+	&BurnDrvnes_felixthecat,	// NES Felix the Cat (USA)
+	&BurnDrvnes_ferragrapricha,	// NES Ferrari Grand Prix Challenge (USA)
+	&BurnDrvnes_festersquest,	// NES Fester's Quest (USA)
+	&BurnDrvnes_fightinggolf,	// NES Fighting Golf (Japan)
+	&BurnDrvnes_finalcombat,	// NES Final Combat (Asia) (NTSC) (Unl)
+	&BurnDrvnes_finalfantasy,	// NES Final Fantasy (USA)
+	&BurnDrvnes_finalfan12_1,	// NES Final Fantasy 1 & 2 (Japan)
+	&BurnDrvnes_finalfan12,		// NES Final Fantasy 1 & 2 (T-eng)
+	&BurnDrvnes_finalfantasyii,	// NES Final Fantasy II (USA) (Proto)
+	&BurnDrvnes_finalfaniii,	// NES Final Fantasy III (Japan)
+	&BurnDrvnes_finalfanvii,	// NES Final Fantasy VII (Ch)
+	&BurnDrvnes_finalfanviiadvchv11,// NES Final Fantasy VII - Advent Children v1.1 (Ch)
+	&BurnDrvnes_finallap,		// NES Final Lap (Japan)
+	&BurnDrvnes_firenice,		// NES Fire 'n Ice (USA)
+	&BurnDrvnes_firedragon,		// NES Fire Dragon (Asia)
+	&BurnDrvnes_fireemb,		// NES Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan)
+	&BurnDrvnes_fireembgai,		// NES Fire Emblem Gaiden (Japan)
+	&BurnDrvnes_firehawk,		// NES Fire Hawk (USA) (Unl)
+	&BurnDrvnes_fistnorsta,		// NES Fist of the North Star (USA)
+	&BurnDrvnes_flappy,			// NES Flappy (Japan)
+	&BurnDrvnes_flintresdinhop,	// NES Flintstones, The - The Rescue of Dino & Hoppy (USA)
+	&BurnDrvnes_flintsuratdinpe,// NES Flintstones, The - The Surprise at Dinosaur Peak! (USA)
+	&BurnDrvnes_flipull_1,		// NES Flipull - An Exciting Cube Game (Japan) (En) (Rev 1)
+	&BurnDrvnes_flipull,		// NES Flipull - An Exciting Cube Game (Japan)
+	&BurnDrvnes_flyindra,		// NES Flying Dragon - The Secret Scroll (USA)
+	&BurnDrvnes_flyinghero,		// NES Flying Hero (Japan)
+	&BurnDrvnes_flyingwarriors,	// NES Flying Warriors (USA)
+	&BurnDrvnes_formationz,		// NES Formation Z (Japan) (Rev A)
+	&BurnDrvnes_frank,			// NES Frankenstein - The Monster Returns (USA)
+	&BurnDrvnes_freefall,		// NES Free Fall (USA) (Proto)
+	&BurnDrvnes_freedomforce,	// NES Freedom Force (USA)
+	&BurnDrvnes_fridaythe13th,	// NES Friday the 13th (USA)
+	&BurnDrvnes_frontline,		// NES Front Line (Japan)
+	&BurnDrvnes_fudoumyououden,	// NES Fudou Myouou Den (Japan)
+	&BurnDrvnes_full,			// NES full nes palette (Blargg)
+	&BurnDrvnes_gijoeareamhe,	// NES G.I. Joe - A Real American Hero (USA)
+	&BurnDrvnes_gijoeatlfa,		// NES G.I. Joe - The Atlantis Factor (USA)
+	&BurnDrvnes_gaiapolis,		// NES Gaiapolis (Asia)
+	&BurnDrvnes_galaccru,		// NES Galactic Crusader (USA) (Unl)
+	&BurnDrvnes_galaga,			// NES Galaga - Demons of Death (USA)
+	&BurnDrvnes_galaxian,		// NES Galaxian (Japan)
+	&BurnDrvnes_galaxy5000,		// NES Galaxy 5000 (USA)
+	&BurnDrvnes_gameparty,		// NES Game Party (Japan)
+	&BurnDrvnes_ganbaregoemon2,	// NES Ganbare Goemon 2 (Japan)
+	&BurnDrvnes_ganbagoegai_1,	// NES Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)
+	&BurnDrvnes_ganbagoegai,	// NES Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)
+	&BurnDrvnes_ganbagoegai2_1,	// NES Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)
+	&BurnDrvnes_ganbagoegai2,	// NES Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)
+	&BurnDrvnes_ganbagoe,		// NES Ganbare Goemon! - Karakuri Douchuu (Japan)
+	&BurnDrvnes_ganbapenrac,	// NES Ganbare Pennant Race! (Japan)
+	&BurnDrvnes_garfi,			// NES Garfield - A Week of Garfield (Japan)
+	&BurnDrvnes_gargosqueii,	// NES Gargoyle's Quest II (USA)
+	&BurnDrvnes_gauntlet,		// NES Gauntlet (USA)
+	&BurnDrvnes_gauntletii,		// NES Gauntlet II (USA)
+	&BurnDrvnes_gegegnokit,		// NES Gegege no Kitarou - Youkai Daimakyou (Japan)
+	&BurnDrvnes_geimos,			// NES Geimos (Japan)
+	&BurnDrvnes_gekityonbat,	// NES Gekitotsu Yonku Battle (Japan)
+	&BurnDrvnes_gemfire,		// NES Gemfire (USA)
+	&BurnDrvnes_genghiskhan,	// NES Genghis Khan (USA)
+	&BurnDrvnes_georgforskobo,	// NES George Foreman's KO Boxing (USA)
+	&BurnDrvnes_getemgary,		// NES Get'Em Gary (HB)
+	&BurnDrvnes_getsufuumaden,	// NES Getsu Fuuma Den (Japan)
+	&BurnDrvnes_ghostlion,		// NES Ghost Lion (USA)
+	&BurnDrvnes_ghostbusters,	// NES Ghostbusters (USA)
+	&BurnDrvnes_ghostbustersii,	// NES Ghostbusters II (USA)
+	&BurnDrvnes_ghostsngoblins,	// NES Ghosts'n Goblins (USA)
+	&BurnDrvnes_ghoulschool,	// NES Ghoul School (USA)
+	&BurnDrvnes_gimmick,		// NES Gimmick! (Japan)
+	&BurnDrvnes_glukthuwar,		// NES Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)
+	&BurnDrvnes_godsla,			// NES God Slayer - Haruka Tenkuu no Sonata (Japan)
+	&BurnDrvnes_golf,			// NES Golf (USA)
+	&BurnDrvnes_golgo13,		// NES Golgo 13 - Top Secret Episode (USA)
+	&BurnDrvnes_goonies,		// NES Goonies (Japan)
+	&BurnDrvnes_gooniesiithe,	// NES Goonies II, The (USA)
+	&BurnDrvnes_gorbynopipdai,	// NES Gorby no Pipeline Daisakusen (Japan)
+	&BurnDrvnes_gotcha,			// NES Gotcha! - The Sport! (USA)
+	&BurnDrvnes_gradius_1,		// NES Gradius (Japan)
+	&BurnDrvnes_gradius,		// NES Gradius (USA)
+	&BurnDrvnes_gradiusii,		// NES Gradius II (Japan)
+	&BurnDrvnes_granavesubla,	// NES Gran Aventura Submarina, La (Spain)
+	&BurnDrvnes_greatbatcyb,	// NES Great Battle Cyber (Japan)
+	&BurnDrvnes_greattank,		// NES Great Tank (Japan)
+	&BurnDrvnes_greml2,			// NES Gremlins 2 - The New Batch (USA)
+	&BurnDrvnes_gruni2,			// NES Gruniozerca 2 - The Great Cavy Rescue! (HB)
+	&BurnDrvnes_guardleg,		// NES Guardian Legend, The (USA)
+	&BurnDrvnes_guardicgaiden,	// NES Guardic Gaiden (Japan)
+	&BurnDrvnes_guerrillawar,	// NES Guerrilla War (USA)
+	&BurnDrvnes_guevara,		// NES Guevara (Japan)
+	&BurnDrvnes_gumshoe,		// NES Gumshoe (USA)
+	&BurnDrvnes_gunnac_1,		// NES Gun Nac (Japan)
+	&BurnDrvnes_gunnac,			// NES Gun Nac (USA)
+	&BurnDrvnes_gunsight,		// NES Gun Sight (Japan)
+	&BurnDrvnes_gundec,			// NES Gun-Dec (Japan)
+	&BurnDrvnes_gunsmoke,		// NES Gun.Smoke (USA)
+	&BurnDrvnes_gunhed,			// NES Gunhed - Aratanaru Tatakai (Japan)
+	&BurnDrvnes_gyrodine,		// NES Gyrodine (Japan)
+	&BurnDrvnes_gyromite,		// NES Gyromite (USA)
+	&BurnDrvnes_gyruss,			// NES Gyruss (USA)
+	&BurnDrvnes_haradiuszero,	// NES Haradius Zero (HB)
+	&BurnDrvnes_harleglo,		// NES Harlem Globetrotters (USA)
+	&BurnDrvnes_hatris,			// NES Hatris (USA)
+	&BurnDrvnes_halloween85,	// NES Haunted Halloween'85 (HB)
+	&BurnDrvnes_halloween86,	// NES Haunted Halloween'86 (HB)
+	&BurnDrvnes_halloween86alt,	// NES Haunted Halloween'86 (HB, alt)
+	&BurnDrvnes_heavybarrel,	// NES Heavy Barrel (USA)
+	&BurnDrvnes_heavyshreddin,	// NES Heavy Shreddin' (USA)
+	&BurnDrvnes_hebereke,		// NES Hebereke (Japan)
+	&BurnDrvnes_hector87,		// NES Hector '87 (Japan)
+	&BurnDrvnes_heisetenbak_1,	// NES Heisei Tensai Bakabon (Japan)
+	&BurnDrvnes_heisetenbak,	// NES Heisei Tensai Bakabon (T-Eng)
+	&BurnDrvnes_hellfighter,	// NES Hell Fighter (Asia) (PAL) (Unl)
+	&BurnDrvnes_hellokitnooha,	// NES Hello Kitty no Ohanabatake (Japan)
+	&BurnDrvnes_hellokitwor,	// NES Hello Kitty World (Japan)
+	&BurnDrvnes_higem,			// NES Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan)
+	&BurnDrvnes_highspeed,		// NES High Speed (USA)
+	&BurnDrvnes_hinothouhen_1,	// NES Hinotori Houou Hen - Gaou no Bouken (Japan)
+	&BurnDrvnes_hinothouhen,	// NES Hinotori Houou Hen - Gaou no Bouken (T-Eng)
+	&BurnDrvnes_hitlenofuk,		// NES Hitler no Fukkatsu - Top Secret (Japan)
+	&BurnDrvnes_hogansalley,	// NES Hogan's Alley (USA)
+	&BurnDrvnes_hokutonoken,	// NES Hokuto no Ken (Japan)
+	&BurnDrvnes_hokutonoken2,	// NES Hokuto no Ken 2 (Japan)
+	&BurnDrvnes_holydiver,		// NES Holy Diver (Japan)
+	&BurnDrvnes_homealone,		// NES Home Alone (USA) (Rev A)
+	&BurnDrvnes_homealo2,		// NES Home Alone 2 - Lost in New York (USA)
+	&BurnDrvnes_hook,			// NES Hook (USA)
+	&BurnDrvnes_hottanochitan,	// NES Hottaaman no Chitei Tanken (Japan)
+	&BurnDrvnes_huangdi,		// NES Huang Di (Asia) (Unl)
+	&BurnDrvnes_hudsonhawk,		// NES Hudson Hawk (USA)
+	&BurnDrvnes_hugeinsect,		// NES Huge Insect (Asia) (Unl)
+	&BurnDrvnes_huntredoct,		// NES Hunt for Red October, The (USA)
+	&BurnDrvnes_iceclimber,		// NES Ice Climber (USA, Europe)
+	&BurnDrvnes_icehockey,		// NES Ice Hockey (USA)
+	&BurnDrvnes_ikariwarriors,	// NES Ikari Warriors (USA) (Rev A)
+	&BurnDrvnes_ikariwarii,		// NES Ikari Warriors II - Victory Road (USA)
+	&BurnDrvnes_ikariwariii,	// NES Ikari Warriors III - The Rescue (USA)
+	&BurnDrvnes_ikeikenekhocbu,	// NES Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)
+	&BurnDrvnes_ikki,			// NES Ikki (Japan)
+	&BurnDrvnes_imagefight,		// NES Image Fight (USA)
+	&BurnDrvnes_immortalthe,	// NES Immortal, The (USA)
+	&BurnDrvnes_imposmisii,		// NES Impossible Mission II (USA)
+	&BurnDrvnes_increcradum,	// NES Incredible Crash Dummies, The (USA)
+	&BurnDrvnes_indiajonandlascr,// NES Indiana Jones and the Last Crusade (USA)
+	&BurnDrvnes_indiajonandtemdo,// NES Indiana Jones and the Temple of Doom (USA) (Rev A)
+	&BurnDrvnes_indivisible,	// NES Indivisible (HB)
+	&BurnDrvnes_infiltrator,	// NES Infiltrator (USA)
+	&BurnDrvnes_insectorx,		// NES Insector X (Japan)
+	&BurnDrvnes_irontan,		// NES Iron Tank - The Invasion of Normandy (USA)
+	&BurnDrvnes_irons,			// NES Ironsword - Wizards & Warriors II (USA)
+	&BurnDrvnes_isolatedwarrior,// NES Isolated Warrior (USA)
+	&BurnDrvnes_ivanirostessuoffro,// NES Ivan 'Ironman' Stewart's Super Off Road (USA)
+	&BurnDrvnes_jleafigsoc,		// NES J.League Fighting Soccer - The King of Ace Strikers (Japan).nes
+	&BurnDrvnes_jleawingoa,		// NES J.League Winning Goal (Japan).nes
+	&BurnDrvnes_jacknicgre18homachg,// NES Jack Nicklaus' Greatest 18 Holes of Major Championship Golf (USA)
+	&BurnDrvnes_jackal,			// NES Jackal (USA)
+	&BurnDrvnes_jackiechan_1,	// NES Jackie Chan (Japan)
+	&BurnDrvnes_jackiechan,		// NES Jackie Chan (USA)
+	&BurnDrvnes_jajamnodai,		// NES Jajamaru no Daibouken (Japan)
+	&BurnDrvnes_jamesbondjr,	// NES James Bond Jr (USA)
+	&BurnDrvnes_jaws,			// NES Jaws (USA)
+	&BurnDrvnes_jesus_1,		// NES Jesus - Kyoufu no Bio Monster (Japan)
+	&BurnDrvnes_jesus,			// NES Jesus - Kyoufu no Bio Monster (T-eng)
+	&BurnDrvnes_jetpaco,		// NES Jet-Paco (HB)
+	&BurnDrvnes_jetsons,		// NES Jetsons, The - Cogswell's Caper (USA)
+	&BurnDrvnes_jigokgokmar,	// NES Jigoku Gokuraku Maru (Japan)
+	&BurnDrvnes_jikuuyuu,		// NES Jikuu Yuuden - Debias (Japan)
+	&BurnDrvnes_jimmyconten,	// NES Jimmy Connors Tennis (USA)
+	&BurnDrvnes_jj,				// NES JJ (Japan)
+	&BurnDrvnes_joemac,			// NES Joe & Mac (USA)
+	&BurnDrvnes_johnelwsqua,	// NES John Elway's Quarterback (USA)
+	&BurnDrvnes_jongbou,		// NES Jongbou (Japan)
+	&BurnDrvnes_jordavsbir,		// NES Jordan vs Bird - One On One (USA)
+	&BurnDrvnes_joshubatjer,	// NES Joshua & the Battle of Jericho (USA)
+	&BurnDrvnes_journsil,		// NES Journey to Silius (USA)
+	&BurnDrvnes_joust,			// NES Joust (USA)
+	&BurnDrvnes_jovialrace,		// NES Jovial Race (Unk)
+	&BurnDrvnes_joymechfight_1,	// NES Joy Mech Fight (Japan)
+	&BurnDrvnes_joymechfight,	// NES Joy Mech Fight (T-eng)
+	&BurnDrvnes_jujudensetsu,	// NES JuJu Densetsu (Japan)
+	&BurnDrvnes_jumboozanoholinonep,// NES Jumbo Ozaki no Hole in One Professional (Japan)
+	&BurnDrvnes_jumpikid,		// NES Jumpin' Kid - Jack to Mame no Ki Monogatari (Japan)
+	&BurnDrvnes_junglebookthe,	// NES Jungle Book, The (USA)
+	&BurnDrvnes_jurassicboy,	// NES Jurassic Boy (Asia) (Unl)
+	&BurnDrvnes_jurassicpark,	// NES Jurassic Park (USA)
+	&BurnDrvnes_justbreed_1,	// NES Just Breed (Japan)
+	&BurnDrvnes_justbreed,		// NES Just Breed (T-Eng)
+	&BurnDrvnes_justiceduel,	// NES Justice Duel (HB)
+	&BurnDrvnes_juuouki_1,		// NES Juuouki (Japan)
+	&BurnDrvnes_juuouki,		// NES Juuouki (T-eng)
+	&BurnDrvnes_juurysoumetsto,	// NES Juuryoku Soukou Metal Storm (Japan)
+	&BurnDrvnes_kabuki,			// NES Kabuki - Quantum Fighter (USA)
+	&BurnDrvnes_kage,			// NES Kage (Japan)
+	&BurnDrvnes_kagenodensetsu,	// NES Kage no Densetsu (Japan)
+	&BurnDrvnes_kageroudensetsu,// NES Kagerou Densetsu (Japan)
+	&BurnDrvnes_kaikeyanmar,	// NES Kaiketsu Yancha Maru (Japan)
+	&BurnDrvnes_kaikeyanmar2,	// NES Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)
+	&BurnDrvnes_kaikeyanmar3,	// NES Kaiketsu Yancha Maru 3 - Taiketsu! Zouringen (Japan)
+	&BurnDrvnes_kakefkunnojumte,// NES Kakefu-kun no Jump Tengoku - Speed Jigoku (Japan)
+	&BurnDrvnes_kamenoong,		// NES Kame no Ongaeshi - Urashima Densetsu (Japan)
+	&BurnDrvnes_kamennoninaka,	// NES Kamen no Ninja - Akakage (Japan)
+	&BurnDrvnes_kamennoninhan,	// NES Kamen no Ninja - Hanamaru (Japan)
+	&BurnDrvnes_kamenriderclub,	// NES Kamen Rider Club (Japan)
+	&BurnDrvnes_kanshnagkannotogots,// NES Kanshakudama Nage Kantarou no Toukaidou Gojuusan Tsugi (Japan)
+	&BurnDrvnes_karakkendenmuslo,// NES Karakuri Kengou Den Musashi Lord - Karakuribito Hashiru (Japan)
+	&BurnDrvnes_karatechamp,	// NES Karate Champ (USA) (Rev A)
+	&BurnDrvnes_karatekidthe,	// NES Karate Kid, The (USA)
+	&BurnDrvnes_karateka,		// NES Karateka (Japan)
+	&BurnDrvnes_karnov,			// NES Karnov (USA)
+	&BurnDrvnes_kerokerkernoda_1,// NES Kero Kero Keroppi no Daibouken (Japan)
+	&BurnDrvnes_kerokerkernoda,	// NES Kero Kero Keroppi no Daibouken (T-eng)
+	&BurnDrvnes_kerokerkernoda2_1,// NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Japan)
+	&BurnDrvnes_kerokerkernoda2,// NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)
+	&BurnDrvnes_keropkernosplbo,// NES Keroppi to Keroriinu no Splash Bomb! (Japan)
+	&BurnDrvnes_kickmaster,		// NES Kick Master (USA)
+	&BurnDrvnes_kicklecubicle,	// NES Kickle Cubicle (USA)
+	&BurnDrvnes_kiddracula,		// NES Kid Dracula (English)
+	&BurnDrvnes_kidicarus,		// NES Kid Icarus (USA, Europe)
+	&BurnDrvnes_kidkloinnigmawo,// NES Kid Klown in Night Mayor World (USA)
+	&BurnDrvnes_kidkooandquesewohe,// NES Kid Kool and the Quest for the Seven Wonder Herbs (USA)
+	&BurnDrvnes_kidnik,			// NES Kid Niki - Radical Ninja (USA) (Rev A)
+	&BurnDrvnes_kiddysuninfan,	// NES Kiddy Sun in Fantasia (Taiwan)
+	&BurnDrvnes_kidousenzgun_1,	// NES Kidou Senshi Z Gundam - Hot Scramble (Japan) (Final Version)
+	&BurnDrvnes_kidousenzgun,	// NES Kidou Senshi Z Gundam - Hot Scramble (Japan)
+	&BurnDrvnes_kingkon2_1,		// NES King Kong 2 - Ikari no Megaton Punch (Japan)
+	&BurnDrvnes_kingkon2,		// NES King Kong 2 - Ikari no Megaton Punch (T-eng)
+	&BurnDrvnes_kingofkings,	// NES King of Kings (Japan)
+	&BurnDrvnes_kingkin,		// NES King of Kings, The (USA) (v5.0) (Unl)
+	&BurnDrvnes_kingsknight,	// NES King's Knight (USA)
+	&BurnDrvnes_kingsquestv,	// NES King's Quest V (USA)
+	&BurnDrvnes_kinni,			// NES Kinnikuman - Muscle Tag Match (Japan)
+	&BurnDrvnes_kirakirstanigac,// NES Kira Kira Star Night AC (HB)
+	&BurnDrvnes_kirakirstanigdx,// NES Kira Kira Star Night DX (HB)
+	&BurnDrvnes_kirakirstaniggo,// NES Kira Kira Star Night GOLD (HB)
+	&BurnDrvnes_kirbysadv,		// NES Kirby's Adventure (USA) (Rev A)
+	&BurnDrvnes_kiterdai,		// NES Kiteretsu Daihyakka (Japan)
+	&BurnDrvnes_kittyscatch,	// NES Kitty's Catch (USA)
+	&BurnDrvnes_kiwikra,		// NES Kiwi Kraze - A Bird-Brained Adventure! (USA)
+	&BurnDrvnes_klashball,		// NES KlashBall (USA)
+	&BurnDrvnes_klax,			// NES Klax (USA) (Unl)
+	&BurnDrvnes_knightrider,	// NES Knight Rider (USA)
+	&BurnDrvnes_kokoadventure,	// NES Koko Adventure (Korea)
+	&BurnDrvnes_konamspoinseo,	// NES Konamic Sports in Seoul (Japan)
+	&BurnDrvnes_krazykreatures,	// NES Krazy Kreatures (USA) (Unl)
+	&BurnDrvnes_krioncon,		// NES Krion Conquest, The (USA)
+	&BurnDrvnes_krustsfunhou,	// NES Krusty's Fun House (USA)
+	&BurnDrvnes_kungfu,			// NES Kung Fu (Japan, USA)
+	&BurnDrvnes_kungfuheroes,	// NES Kung-Fu Heroes (USA)
+	&BurnDrvnes_kuniokunnoneksole,// NES Kunio-kun no Nekketsu Soccer League (Japan)
+	&BurnDrvnes_kyoursenjuu,	// NES Kyouryuu Sentai Juuranger (Japan)
+	&BurnDrvnes_kyuukyokutiger,	// NES Kyuukyoku Tiger (Japan)
+	&BurnDrvnes_lagrangepoint_1,// NES Lagrange Point (Japan)
+	&BurnDrvnes_lagrangepoint,	// NES Lagrange Point (T-eng)
+	&BurnDrvnes_lalathemagical,	// NES Lala the Magical (HB)
+	&BurnDrvnes_laserinvasion,	// NES Laser Invasion (USA)
+	&BurnDrvnes_lastactionhero,	// NES Last Action Hero (USA)
+	&BurnDrvnes_lastarmageddon,	// NES Last Armageddon (Japan)
+	&BurnDrvnes_lastninjathe,	// NES Last Ninja, The (USA)
+	&BurnDrvnes_laststa,		// NES Last Starfighter, The (USA)
+	&BurnDrvnes_lawnmower,		// NES Lawn Mower (HB)
+	&BurnDrvnes_layla,			// NES Layla (Japan)
+	&BurnDrvnes_leetresfiggo,	// NES Lee Trevino's Fighting Golf (USA)
+	&BurnDrvnes_legacwiz,		// NES Legacy of the Wizard (USA)
+	&BurnDrvnes_legenbal,		// NES Legend of Balubalouk (Japan)
+	&BurnDrvnes_legenkag,		// NES Legend of Kage, The (USA)
+	&BurnDrvnes_legenzel,		// NES Legend of Zelda, The (USA) (Rev A)
+	&BurnDrvnes_legendarywings,	// NES Legendary Wings (USA)
+	&BurnDrvnes_legendsofowlia,	// NES Legends of Owlia (HB)
+	&BurnDrvnes_lemmings,		// NES Lemmings (USA)
+	&BurnDrvnes_lethalweapon,	// NES Lethal Weapon (USA)
+	&BurnDrvnes_lifeforce,		// NES Life Force (USA)
+	&BurnDrvnes_littlemedusa,	// NES Little Medusa (HB)
+	&BurnDrvnes_littlmer_1,		// NES Little Mermaid, The (Japan)
+	&BurnDrvnes_littlmer,		// NES Little Mermaid, The (USA)
+	&BurnDrvnes_littlnem,		// NES Little Nemo - The Dream Master (USA)
+	&BurnDrvnes_littlninbro,	// NES Little Ninja Brothers (USA)
+	&BurnDrvnes_littlesamson,	// NES Little Samson (USA)
+	&BurnDrvnes_lizard,			// NES Lizard (HB)
+	&BurnDrvnes_loderunner,		// NES Lode Runner (USA)
+	&BurnDrvnes_logjammers,		// NES Log Jammers (HB)
+	&BurnDrvnes_lonerangerthe,	// NES Lone Ranger, The (USA)
+	&BurnDrvnes_loopz,			// NES Loopz (USA)
+	&BurnDrvnes_lotlot,			// NES Lot Lot (Japan)
+	&BurnDrvnes_lowgman,		// NES Low G Man - The Low Gravity Man (USA)
+	&BurnDrvnes_lunarlimit,		// NES Lunar Limit (HB)
+	&BurnDrvnes_lunarpool,		// NES Lunar Pool (USA)
+	&BurnDrvnes_lupinsan_1,		// NES Lupin Sansei - Pandora no Isan (Japan)
+	&BurnDrvnes_lupinsan,		// NES Lupin Sansei - Pandora no Isan (T-eng)
+	&BurnDrvnes_mckids,			// NES M.C. Kids (USA)
+	&BurnDrvnes_mule,			// NES M.U.L.E. (USA)
+	&BurnDrvnes_muscle,			// NES M.U.S.C.L.E. (USA).nes
+	&BurnDrvnes_machrider,		// NES Mach Rider (USA)
+	&BurnDrvnes_madcity,		// NES Mad City (Japan)
+	&BurnDrvnes_madmax,			// NES Mad Max (USA)
+	&BurnDrvnes_mafatcon,		// NES Mafat Conspiracy - Golgo 13 (USA)
+	&BurnDrvnes_magicblock,		// NES Magic Block (Mega Soft)
+	&BurnDrvnes_magicdarts,		// NES Magic Darts (USA)
+	&BurnDrvnes_magicdragon,	// NES Magic Dragon (Japan)
+	&BurnDrvnes_magicjohn,		// NES Magic John (Japan)
+	&BurnDrvnes_magicjohsfasbr,	// NES Magic Johnson's Fast Break (USA)
+	&BurnDrvnes_magicsch,		// NES Magic of Scheherazade, The (USA)
+	&BurnDrvnes_magickidsdor,	// NES Magical Kid's Doropie (Japan)
+	&BurnDrvnes_magictarkun,	// NES Magical Taruruuto-kun - Fantastic World!! (Japan)
+	&BurnDrvnes_magictarkun2,	// NES Magical Taruruuto-kun 2 - Mahou Daibouken (Japan)
+	&BurnDrvnes_magician,		// NES Magician (USA)
+	&BurnDrvnes_magmax,			// NES Magmax (USA)
+	&BurnDrvnes_maharaja_1,		// NES Maharaja (Japan)
+	&BurnDrvnes_maharaja,		// NES Maharaja (T-eng)
+	&BurnDrvnes_majorleague,	// NES Major League (Japan)
+	&BurnDrvnes_majorleabas,	// NES Major League Baseball (USA) (Rev A)
+	&BurnDrvnes_majoudenii,		// NES Majou Densetsu II - Daimashikyou Galious (Japan)
+	&BurnDrvnes_makaimura,		// NES Makaimura (Japan)
+	&BurnDrvnes_makaimuraarcade,// NES Makaimura Arcade (Japan)
+	&BurnDrvnes_maniacmansion,	// NES Maniac Mansion (USA)
+	&BurnDrvnes_mappy,			// NES Mappy (Japan)
+	&BurnDrvnes_mappykids,		// NES Mappy Kids (Japan)
+	&BurnDrvnes_mappyland,		// NES Mappy-Land (USA)
+	&BurnDrvnes_marblemadness,	// NES Marble Madness (USA)
+	&BurnDrvnes_mariobros,		// NES Mario Bros. (World)
+	&BurnDrvnes_mashieiydenwatga_1,// NES Mashin Eiyuu Den Wataru Gaiden (Japan)
+	&BurnDrvnes_mashieiydenwatga,// NES Mashin Eiyuu Den Wataru Gaiden (T-eng)
+	&BurnDrvnes_mastechuanddruhu,// NES Master Chu and the Drunkard Hu (USA) (Unl)
+	&BurnDrvnes_mastershooter,	// NES Master Shooter (Unl)
+	&BurnDrvnes_matendouji,		// NES Matendouji (Japan)
+	&BurnDrvnes_maxwar,			// NES Max Warrior - Wakusei Kaigenrei (Japan)
+	&BurnDrvnes_mechaatt,		// NES Mechanized Attack (USA)
+	&BurnDrvnes_megaman,		// NES Mega Man (USA)
+	&BurnDrvnes_megaman2,		// NES Mega Man 2 (USA)
+	&BurnDrvnes_megaman3,		// NES Mega Man 3 (USA)
+	&BurnDrvnes_megaman3imp,	// NES Mega Man 3 Improvement (Hack v2.22)
+	&BurnDrvnes_megaman3rev,	// NES Mega Man 3 Revamped (Hack v1.1)
+	&BurnDrvnes_megaman4,		// NES Mega Man 4 (USA) (Rev A)
+	&BurnDrvnes_megaman5,		// NES Mega Man 5 (USA)
+	&BurnDrvnes_megaman6,		// NES Mega Man 6 (USA)
+	&BurnDrvnes_megamancx,		// NES Mega Man CX (USA)
+	&BurnDrvnes_meikyjiidab,	// NES Meikyuu Jiin Dababa (Japan)
+	&BurnDrvnes_meikyuujima,	// NES Meikyuu-jima (Japan)
+	&BurnDrvnes_menacebeach,	// NES Menace Beach (USA) (Unl)
+	&BurnDrvnes_mendelpalace,	// NES Mendel Palace (USA)
+	&BurnDrvnes_metalfighter,	// NES Metal Fighter (Asia) (Sachen) (Unl)
+	&BurnDrvnes_metalforce,		// NES Metal Force (Korea) (Unl)
+	&BurnDrvnes_metalgear,		// NES Metal Gear (USA)
+	&BurnDrvnes_metalmax,		// NES Metal Max (Japan)
+	&BurnDrvnes_metalmec,		// NES Metal Mech - Man & Machine (USA)
+	&BurnDrvnes_metalstorm,		// NES Metal Storm (USA)
+	&BurnDrvnes_metrocross,		// NES Metro-Cross (Japan)
+	&BurnDrvnes_metroid,		// NES Metroid (USA)
+	&BurnDrvnes_metrorogdaw,	// NES Metroid - Rogue Dawn (USA)
+	&BurnDrvnes_mickemouiii,	// NES Mickey Mouse III - Yume Fuusen (Japan)
+	&BurnDrvnes_mickemou,		// NES Mickey Mousecapade (USA)
+	&BurnDrvnes_micromachines,	// NES Micro Machines (USA) (Unl)
+	&BurnDrvnes_micromages,		// NES Micro Mages
+	&BurnDrvnes_miedow,			// NES Miedow (HB)
+	&BurnDrvnes_mig29,			// NES MiG 29 - Soviet Fighter (USA) (Unl)
+	&BurnDrvnes_mightybombjack,	// NES Mighty Bomb Jack (USA)
+	&BurnDrvnes_mightfinfig,	// NES Mighty Final Fight (USA)
+	&BurnDrvnes_miketysspunout,	// NES Mike Tyson's Punch-Out!! (Japan, USA) (Rev A)
+	&BurnDrvnes_millipede,		// NES Millipede (USA)
+	&BurnDrvnes_miniputt,		// NES Mini Putt (Japan)
+	&BurnDrvnes_missiimp,		// NES Mission Impossible (USA)
+	&BurnDrvnes_mitokou,		// NES Mito Koumon - Sekai Manyuu Ki (Japan)
+	&BurnDrvnes_mitsumegatooru,	// NES Mitsume ga Tooru (Japan)
+	&BurnDrvnes_moaikun,		// NES Moai-kun (Japan)
+	&BurnDrvnes_moerotwi,		// NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)
+	&BurnDrvnes_mojontwimul,	// NES Mojon Twins Multicart (HB)
+	&BurnDrvnes_monopoly,		// NES Monopoly (USA)
+	&BurnDrvnes_monstinmypoc,	// NES Monster in My Pocket (USA)
+	&BurnDrvnes_monsterparty,	// NES Monster Party (USA)
+	&BurnDrvnes_monsttrural,	// NES Monster Truck Rally (USA)
+	&BurnDrvnes_mooncrystal_1,	// NES Moon Crystal (Japan)
+	&BurnDrvnes_mooncrystal,	// NES Moon Crystal (T-eng)
+	&BurnDrvnes_moonranger,		// NES Moon Ranger (USA) (Unl)
+	&BurnDrvnes_mortalkombat4,	// NES Mortal Kombat 4 (Unl)
+	&BurnDrvnes_mother,			// NES Mother (Japan)
+	&BurnDrvnes_motoccha_1,		// NES Motocross Champion (Japan)
+	&BurnDrvnes_motoccha,		// NES Motocross Champion (T-eng)
+	&BurnDrvnes_motorcitpat,	// NES Motor City Patrol (USA)
+	&BurnDrvnes_mottoabudek,	// NES Mottomo Abunai Deka (Japan)
+	&BurnDrvnes_mourysenmad_1,	// NES Mouryou Senki Madara (Japan)
+	&BurnDrvnes_mourysenmad,	// NES Mouryou Senki Madara (T-eng)
+	&BurnDrvnes_mspacman,		// NES Ms. Pac-Man (USA)
+	&BurnDrvnes_muppeadv,		// NES Muppet Adventure - Chaos at the Carnival (USA)
+	&BurnDrvnes_musasnoken,		// NES Musashi no Ken - Tadaima Shugyou Chuu (Japan)
+	&BurnDrvnes_mutanvir,		// NES Mutant Virus, The (USA)
+	&BurnDrvnes_mysteryquest,	// NES Mystery Quest (USA)
+	&BurnDrvnes_mysticorigins,	// NES Mystic Origins (HB)
+	&BurnDrvnes_namcoclassic,	// NES Namco Classic (Japan)
+	&BurnDrvnes_namcoclassicii,	// NES Namco Classic II (Japan)
+	&BurnDrvnes_nantebas_1,		// NES Nantettatte!! Baseball (Japan)
+	&BurnDrvnes_nantebas,		// NES Nantettatte!! Baseball (T-eng)
+	&BurnDrvnes_narc,			// NES NARC (USA)
+	&BurnDrvnes_nebsanddebs,	// NES Nebs and Debs (HB)
+	&BurnDrvnes_nekkekakden_1,	// NES Nekketsu Kakutou Densetsu (Japan)
+	&BurnDrvnes_nekkekakden,	// NES Nekketsu Kakutou Densetsu (T-eng)
+	&BurnDrvnes_nekkekoukunkun,	// NES Nekketsu Kouha Kunio-kun (Japan)
+	&BurnDrvnes_nekkestrbas,	// NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)
+	&BurnDrvnes_neoheiali,		// NES NEO Heiankyo Alien (HB)
+	&BurnDrvnes_nesopetougol,	// NES NES Open Tournament Golf (USA)
+	&BurnDrvnestest,			// NES nestest
+	&BurnDrvnes_newghoii,		// NES New Ghostbusters II (Japan)
+	&BurnDrvnes_newyornya,		// NES New York Nyankies (Japan)
+	&BurnDrvnes_newzeasto,		// NES New Zealand Story, The (Europe)
+	&BurnDrvnes_nigelmansworchch,// NES Nigel Mansell's World Championship Challenge (USA)
+	&BurnDrvnes_nightonelmstra,	// NES Nightmare on Elm Street, A (USA)
+	&BurnDrvnes_nightshade,		// NES Nightshade (USA)
+	&BurnDrvnes_ninjacopsaizou,	// NES Ninja Cop Saizou (Japan)
+	&BurnDrvnes_ninjacrusaders,	// NES Ninja Crusaders (USA)
+	&BurnDrvnes_ninjagaiden,	// NES Ninja Gaiden (USA)
+	&BurnDrvnes_ninjagaiii,		// NES Ninja Gaiden II - The Dark Sword of Chaos (USA)
+	&BurnDrvnes_ninjagaiiii,	// NES Ninja Gaiden III - The Ancient Ship of Doom (USA)
+	&BurnDrvnes_ninjahatkun,	// NES Ninja Hattori-kun - Ninja wa Syugyou de Gozaru (Japan)
+	&BurnDrvnes_ninjajaj_1,		// NES Ninja Jajamaru - Ginga Daisakusen (Japan)
+	&BurnDrvnes_ninjajaj,		// NES Ninja Jajamaru - Ginga Daisakusen (T-eng)
+	&BurnDrvnes_ninjajajkun,	// NES Ninja Jajamaru-kun (Japan)
+	&BurnDrvnes_ninjakid,		// NES Ninja Kid (USA)
+	&BurnDrvnes_ninjaryuden,	// NES Ninja Ryuuken Den (Japan)
+	&BurnDrvnes_ninjaryudenii,	// NES Ninja Ryuuken Den II - Ankoku no Jashin Ken (Japan)
+	&BurnDrvnes_ninjaryudeniii,	// NES Ninja Ryuuken Den III - Yomi no Hakobune (Japan)
+	&BurnDrvnes_ninjakunashnosh,// NES Ninja-kun - Ashura no Shou (Japan)
+	&BurnDrvnes_ninjakunmajnobo,// NES Ninja-kun - Majou no Bouken (Japan) (Rev 1)
+	&BurnDrvnes_ninjarahoi_1,	// NES Ninjara Hoi! (Japan)
+	&BurnDrvnes_ninjarahoi,		// NES Ninjara Hoi! (T-eng)
+	&BurnDrvnes_ninteworcup,	// NES Nintendo World Cup (USA)
+	&BurnDrvnes_noahsark,		// NES Noah's Ark (Europe)
+	&BurnDrvnes_nomolos,		// NES Nomolos (HB)
+	&BurnDrvnes_northsouth,		// NES North & South (USA)
+	&BurnDrvnes_nutsmilk,		// NES Nuts & Milk (Japan)
+	&BurnDrvnes_obakenoqtar,	// NES Obake no Q Tarou - Wanwan Panic (Japan)
+	&BurnDrvnes_onyankotown,	// NES Onyanko Town (Japan)
+	&BurnDrvnes_operationwolf,	// NES Operation Wolf (USA)
+	&BurnDrvnes_outlanders,		// NES Outlanders (Japan)
+	&BurnDrvnes_overhorizon,	// NES Over Horizon (Japan)
+	&BurnDrvnes_overlord,		// NES Overlord (USA)
+	&BurnDrvnes_pow,			// NES P.O.W. - Prisoners of War (USA)
+	&BurnDrvnes_pacland,		// NES Pac-Land (Japan)
+	&BurnDrvnes_pacman,			// NES Pac-Man (USA) (Namco)
+	&BurnDrvnes_pacmania,		// NES Pac-Mania (USA) (Unl)
+	&BurnDrvnes_palamedes,		// NES Palamedes (USA)
+	&BurnDrvnes_palamii,		// NES Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)
+	&BurnDrvnes_panicdizzy,		// NES Panic Dizzy (HB)
+	&BurnDrvnes_panicrestaurant,// NES Panic Restaurant (USA)
+	&BurnDrvnes_paperboy,		// NES Paperboy (USA)
+	&BurnDrvnes_paperboy2,		// NES Paperboy 2 (USA)
+	&BurnDrvnes_papillongals,	// NES Papillon Gals (Japan) (Unl)
+	&BurnDrvnes_parallelworld,	// NES Parallel World (Japan)
+	&BurnDrvnes_parasolhenbee,	// NES Parasol Henbee (Japan)
+	&BurnDrvnes_parasstaraiislii,// NES Parasol Stars - Rainbow Islands II (Europe)
+	&BurnDrvnes_parodiusda,		// NES Parodius Da! (Japan)
+	&BurnDrvnes_peepartime,		// NES Peepar Time (Japan)
+	&BurnDrvnes_penguinkunwars,	// NES Penguin-kun Wars (Japan)
+	&BurnDrvnes_perfectbowling,	// NES Perfect Bowling (Japan)
+	&BurnDrvnes_perfectpair,	// NES Perfect Pair (HB)
+	&BurnDrvnes_perman,			// NES Perman (Japan)
+	&BurnDrvnes_permapar2,		// NES Perman Part 2 - Himitsu Kessha Madoodan o Taose! (Japan)
+	&BurnDrvnes_pesterminator,	// NES Pesterminator (USA) (Unl)
+	&BurnDrvnes_peterpanpir,	// NES Peter Pan & The Pirates (USA)
+	&BurnDrvnes_phantomfighter,	// NES Phantom Fighter (USA)
+	&BurnDrvnes_pictionary,		// NES Pictionary (USA)
+	&BurnDrvnes_pinbot,			// NES Pin Bot (USA)
+	&BurnDrvnes_pinball,		// NES Pinball (USA)
+	&BurnDrvnes_pinbacvbyred,	// NES Pinball CV by Redrum (Hack)
+	&BurnDrvnes_pinballquest,	// NES Pinball Quest (USA)
+	&BurnDrvnes_pizzapop,		// NES Pizza Pop! (Japan)
+	&BurnDrvnes_plasmaball_1,	// NES Plasma Ball (Japan)
+	&BurnDrvnes_plasmaball,		// NES Plasma Ball (T-eng)
+	&BurnDrvnes_platoon,		// NES Platoon (USA)
+	&BurnDrvnes_popoteam,		// NES Po Po Team (Taiwan)
+	&BurnDrvnes_pockezau,		// NES Pocket Zaurus - Juu Ouken no Nazo (Japan)
+	&BurnDrvnes_pooyan,			// NES Pooyan (Japan)
+	&BurnDrvnes_popeye,			// NES Popeye (World) (Rev A)
+	&BurnDrvnes_powerblade,		// NES Power Blade (USA)
+	&BurnDrvnes_powerblade2,	// NES Power Blade 2 (USA)
+	&BurnDrvnes_powerblazer,	// NES Power Blazer (Japan)
+	&BurnDrvnes_powerpunchii,	// NES Power Punch II (USA)
+	&BurnDrvnes_powersoccer,	// NES Power Soccer (Japan)
+	&BurnDrvnes_predator,		// NES Predator (USA)
+	&BurnDrvnes_princeofpersia,	// NES Prince of Persia (USA)
+	&BurnDrvnes_princtominsalki,// NES Princess Tomato in Salad Kingdom (USA)
+	&BurnDrvnes_prowrestling,	// NES Pro Wrestling (USA)
+	&BurnDrvnes_punchout,		// NES Punch-Out!! (USA)
+	&BurnDrvnes_punisherthe,	// NES Punisher, The (USA)
+	&BurnDrvnes_pussnboo,		// NES Puss 'n Boots - Pero's Great Adventure (USA)
+	&BurnDrvnes_puyopuyo,		// NES Puyo Puyo (Japan)
+	&BurnDrvnes_puzznic,		// NES Puzznic (USA)
+	&BurnDrvnes_pyokonodai,		// NES Pyokotan no Daimeiro (Japan)
+	&BurnDrvnes_qboy,			// NES Q Boy (Asia) (Unl)
+	&BurnDrvnes_qbert,			// NES Q-bert (USA)
+	&BurnDrvnes_qix,			// NES QIX (USA)
+	&BurnDrvnes_quattadv,		// NES Quattro Adventure (USA) (Unl)
+	&BurnDrvnes_quattroarcade,	// NES Quattro Arcade (USA) (Unl)
+	&BurnDrvnes_quattrosports,	// NES Quattro Sports (USA) (Unl)
+	&BurnDrvnes_questforge,		// NES Quest Forge (HB)
+	&BurnDrvnes_questofkithe_1,	// NES Quest of Ki, The (Japan)
+	&BurnDrvnes_questofkithe,	// NES Quest of Ki, The (T-eng)
+	&BurnDrvnes_quinty,			// NES Quinty (Japan)
+	&BurnDrvnes_rbibaseball,	// NES R.B.I. Baseball (USA).nes
+	&BurnDrvnes_rbibas2,		// NES R.B.I. Baseball 2 (USA).nes
+	&BurnDrvnes_rbibas3,		// NES R.B.I. Baseball 3 (USA).nes
+	&BurnDrvnes_rcproam,		// NES R.C. Pro-Am (USA) (Rev A)
+	&BurnDrvnes_rcproamii,		// NES R.C. Pro-Am II (USA)
+	&BurnDrvnes_racketattack,	// NES Racket Attack (USA)
+	&BurnDrvnes_racketsrivals,	// NES Rackets & Rivals (Europe)
+	&BurnDrvnes_radracer,		// NES Rad Racer (USA)
+	&BurnDrvnes_radracerii,		// NES Rad Racer II (USA)
+	&BurnDrvnes_radrac,			// NES Rad Racket - Deluxe Tennis II (USA)
+	&BurnDrvnes_radiasen_1,		// NES Radia Senki - Reimei Hen (Japan)
+	&BurnDrvnes_radiasen,		// NES Radia Senki - Reimei Hen (T-eng)
+	&BurnDrvnes_rafworld,		// NES Raf World (Japan)
+	&BurnDrvnes_raid2020,		// NES Raid 2020 (USA) (Unl)
+	&BurnDrvnes_raidonbunbay,	// NES Raid on Bungeling Bay (USA)
+	&BurnDrvnes_rainbisloce,	// NES Rainbow Islands - Ocean (Europe)
+	&BurnDrvnes_rainbisltai,	// NES Rainbow Islands - Taito (USA)
+	&BurnDrvnes_rallybike,		// NES Rally Bike (USA)
+	&BurnDrvnes_rambo,			// NES Rambo (USA) (Rev A)
+	&BurnDrvnes_rampage,		// NES Rampage (USA)
+	&BurnDrvnes_rampart,		// NES Rampart (USA)
+	&BurnDrvnes_redarremerii,	// NES Red Arremer II (Japan)
+	&BurnDrvnes_renstisho,		// NES Ren & Stimpy Show, The - Buckeroo$! (USA)
+	&BurnDrvnes_renegade,		// NES Renegade (USA)
+	&BurnDrvnes_ringking,		// NES Ring King (USA)
+	&BurnDrvnes_rivercitran,	// NES River City Ransom (USA)
+	&BurnDrvnes_roadfighter,	// NES Road Fighter (Japan)
+	&BurnDrvnes_roadrunner,		// NES Road Runner (USA) (Unl)
+	&BurnDrvnes_roadblasters,	// NES RoadBlasters (USA)
+	&BurnDrvnes_robowarrior,	// NES Robo Warrior (USA)
+	&BurnDrvnes_roboccowars,	// NES Robocco Wars (Japan)
+	&BurnDrvnes_robocop,		// NES RoboCop (USA)
+	&BurnDrvnes_robocop2,		// NES RoboCop 2 (USA) (Rev A)
+	&BurnDrvnes_robocop3,		// NES RoboCop 3 (USA)
+	&BurnDrvnes_robocvster,		// NES RoboCop Vs The Terminator (USA)
+	&BurnDrvnes_robodemons,		// NES Robodemons (USA) (Unl)
+	&BurnDrvnes_rocknball,		// NES Rock 'n' Ball (USA)
+	&BurnDrvnes_rockball,		// NES Rockball (Asia) (Unl)
+	&BurnDrvnes_rocketeerthe,	// NES Rocketeer, The (USA)
+	&BurnDrvnes_rockinkats,		// NES Rockin' Kats (USA)
+	&BurnDrvnes_rockman,		// NES Rockman (Japan)
+	&BurnDrvnes_rockm2,			// NES Rockman 2 - Dr. Wily no Nazo (Japan)
+	&BurnDrvnes_rockm3,			// NES Rockman 3 - Dr. Wily no Saigo! (Japan)
+	&BurnDrvnes_rockm4,			// NES Rockman 4 - Aratanaru Yabou!! (Japan)
+	&BurnDrvnes_rockm5,			// NES Rockman 5 - Blues no Wana! (Japan)
+	&BurnDrvnes_rockm6,			// NES Rockman 6 - Shijou Saidai no Tatakai!! (Japan)
+	&BurnDrvnes_rodland,		// NES Rod Land (Europe)
+	&BurnDrvnes_rollerball,		// NES Rollerball (USA)
+	&BurnDrvnes_rollergames,	// NES Rollergames (USA)
+	&BurnDrvnes_rollingthunder_1,// NES Rolling Thunder (Japan)
+	&BurnDrvnes_rollingthunder,	// NES Rolling Thunder (USA) (Unl)
+	&BurnDrvnes_romancia,		// NES Romancia (Japan)
+	&BurnDrvnes_rushnattack,	// NES Rush'n Attack (USA)
+	&BurnDrvnes_rygar,			// NES Rygar (USA) (Rev A)
+	&BurnDrvnes_scat,			// NES S.C.A.T. - Special Cybernetic Attack Team (USA)
+	&BurnDrvnes_saiyuukiworld,	// NES Saiyuuki World (Japan)
+	&BurnDrvnes_saiyuwor2,		// NES Saiyuuki World 2 - Tenjoukai no Majin (Japan)
+	&BurnDrvnes_salamander,		// NES Salamander (Japan)
+	&BurnDrvnes_sansaranaga_1,	// NES Sansara Naga (Japan)
+	&BurnDrvnes_sansaranaga,	// NES Sansara Naga (T-eng)
+	&BurnDrvnes_saturnsmash,	// NES Saturn Smash (HB)
+	&BurnDrvnes_secretties,		// NES Secret Ties (USA) (Proto)
+	&BurnDrvnes_sectionz,		// NES Section-Z (USA)
+	&BurnDrvnes_seicross,		// NES Seicross (USA)
+	&BurnDrvnes_senjounoookami,	// NES Senjou no Ookami (Japan)
+	&BurnDrvnes_shadonin,		// NES Shadow of the Ninja (USA)
+	&BurnDrvnes_shadowgate,		// NES Shadowgate (USA)
+	&BurnDrvnes_shanghai,		// NES Shanghai (Japan)
+	&BurnDrvnes_shatterhand,	// NES Shatterhand (USA)
+	&BurnDrvnes_shin4ninuchma,	// NES Shin 4 Nin Uchi Mahjong (Japan)
+	&BurnDrvnes_shinobi,		// NES Shinobi (USA) (Unl)
+	&BurnDrvnes_shockwave,		// NES Shockwave (USA)
+	&BurnDrvnes_shootingrange,	// NES Shooting Range (USA)
+	&BurnDrvnes_shufflepuckcafe_1,// NES Shufflepuck Cafe (Japan)
+	&BurnDrvnes_shufflepuckcafe,// NES Shufflepuck Cafe (T-Eng)
+	&BurnDrvnes_sidepocket,		// NES Side Pocket (USA)
+	&BurnDrvnes_sidewinder,		// NES Sidewinder (USA)
+	&BurnDrvnes_silentservice,	// NES Silent Service (USA)
+	&BurnDrvnes_silkworm,		// NES Silk Worm (USA)
+	&BurnDrvnes_silvereagle,	// NES Silver Eagle (Taiwan)
+	&BurnDrvnes_silversurfer,	// NES Silver Surfer (USA)
+	&BurnDrvnes_simpsbarvsspamu,// NES Simpsons, The - Bart vs. the Space Mutants (USA) (Rev A)
+	&BurnDrvnes_simpsbarvswor,	// NES Simpsons, The - Bart vs. the World (USA)
+	&BurnDrvnes_simpsbarmeeradman,// NES Simpsons, The - Bartman Meets Radioactive Man (USA)
+	&BurnDrvnes_sinkingfeeling,	// NES Sinking Feeling (HB)
+	&BurnDrvnes_sirababol,		// NES Sir Ababol (HB)
+	&BurnDrvnes_skateboy,		// NES Skate Boy (Spain) (Gluk Video) (Unl)
+	&BurnDrvnes_skateordie,		// NES Skate or Die (USA)
+	&BurnDrvnes_skateordie2,	// NES Skate or Die 2 - The Search for Double Trouble (USA)
+	&BurnDrvnes_skiordie,		// NES Ski or Die (USA)
+	&BurnDrvnes_skullcro,		// NES Skull & Crossbones (USA) (Unl)
+	&BurnDrvnes_skydestroyer,	// NES Sky Destroyer (Japan)
+	&BurnDrvnes_skykid,			// NES Sky Kid (USA)
+	&BurnDrvnes_skyshark,		// NES Sky Shark (USA) (Rev 0A)
+	&BurnDrvnes_slalom,			// NES Slalom (USA)
+	&BurnDrvnes_smashtv,		// NES Smash T.V. (USA)
+	&BurnDrvnes_snakeratnrol,	// NES Snake Rattle n Roll (USA)
+	&BurnDrvnes_snakesrevenge,	// NES Snake's Revenge (USA)
+	&BurnDrvnes_snoopssilsposp,	// NES Snoopy's Silly Sports Spectacular (USA)
+	&BurnDrvnes_snowbrothers,	// NES Snow Brothers (USA)
+	&BurnDrvnes_soccer,			// NES Soccer (USA)
+	&BurnDrvnes_soccelea,		// NES Soccer League - Winner's Cup (Japan)
+	&BurnDrvnes_solarjet,		// NES Solar Jetman - Hunt for the Golden Warpship (USA)
+	&BurnDrvnes_solomonskey,	// NES Solomon's Key (USA)
+	&BurnDrvnes_solstice,		// NES Solstice (Japan)
+	&BurnDrvnes_solst,			// NES Solstice - The Quest for the Staff of Demnos (USA)
+	&BurnDrvnes_sonson,			// NES Son Son (Japan)
+	&BurnDrvnes_spaceharrier,	// NES Space Harrier (Japan)
+	&BurnDrvnes_spacehunter,	// NES Space Hunter (Japan)
+	&BurnDrvnes_spaceinvaders,	// NES Space Invaders (Japan)
+	&BurnDrvnes_spartanx,		// NES Spartan X (Japan)
+	&BurnDrvnes_spartanx2,		// NES Spartan X 2 (Japan)
+	&BurnDrvnes_spelunker,		// NES Spelunker (USA)
+	&BurnDrvnes_speluii_1,		// NES Spelunker II - Yuusha e no Chousen (Japan)
+	&BurnDrvnes_speluii,		// NES Spelunker II - Yuusha e no Chousen (T-eng)
+	&BurnDrvnes_spideman,		// NES Spider-Man - Return of the Sinister Six (USA)
+	&BurnDrvnes_splathou,		// NES Splatter House - Wanpaku Graffiti (Japan)
+	&BurnDrvbsprite1,			// NES sprite test 1
+	&BurnDrvbsprite2,			// NES sprite test 2
+	&BurnDrvbsprite3,			// NES sprite test 3
+	&BurnDrvbsprite4,			// NES sprite test 4
+	&BurnDrvbsprite5,			// NES sprite test 5
+	&BurnDrvbsprite6,			// NES sprite test 6
+	&BurnDrvnes_spyhunter,		// NES Spy Hunter (USA)
+	&BurnDrvnes_spyvsspy,		// NES Spy vs Spy (USA)
+	&BurnDrvnes_sqoon,			// NES Sqoon (USA)
+	&BurnDrvnes_stanley,		// NES Stanley - The Search for Dr. Livingston (USA).nes
+	&BurnDrvnes_starevil,		// NES Star Evil (HB)
+	&BurnDrvnes_starforce,		// NES Star Force (USA)
+	&BurnDrvnes_stargate,		// NES Star Gate (Japan)
+	&BurnDrvnes_starluster,		// NES Star Luster (Japan)
+	&BurnDrvnes_starsoldier,	// NES Star Soldier (USA)
+	&BurnDrvnes_startre25tann,	// NES Star Trek - 25th Anniversary (USA)
+	&BurnDrvnes_startrenexgen,	// NES Star Trek - The Next Generation (USA)
+	&BurnDrvnes_startrevfinfr,	// NES Star Trek V - The Final Frontier (Prototype)
+	&BurnDrvnes_starvoyager,	// NES Star Voyager (USA)
+	&BurnDrvnes_starwars_2,		// NES Star Wars (Namco) (Japan)
+	&BurnDrvnes_starwars_1,		// NES Star Wars (Namco) (T-eng)
+	&BurnDrvnes_starwars,		// NES Star Wars (USA)
+	&BurnDrvnes_starwar,		// NES Star Wars - The Empire Strikes Back (USA)
+	&BurnDrvnes_starshiphector,	// NES Starship Hector (USA)
+	&BurnDrvnes_startropics,	// NES StarTropics (USA)
+	&BurnDrvnes_startii,		// NES Startropics II - Zoda's Revenge (USA)
+	&BurnDrvnes_sted_1,			// NES Sted - Iseki Wakusei no Yabou (Japan)
+	&BurnDrvnes_sted,			// NES Sted - Iseki Wakusei no Yabou (T-eng)
+	&BurnDrvnes_stickhun,		// NES Stick Hunter - Exciting Ice Hockey (Japan)
+	&BurnDrvnes_stinger,		// NES Stinger (USA)
+	&BurnDrvnes_streefig201,	// NES Street Fighter 2010 - The Final Fight (USA)
+	&BurnDrvnes_streetheroes,	// NES Street Heroes (Taiwan)
+	&BurnDrvnes_strider,		// NES Strider (USA)
+	&BurnDrvnes_strikewolf,		// NES Strike Wolf (USA)
+	&BurnDrvnes_stuntkids,		// NES Stunt Kids (USA) (Unl)
+	&BurnDrvnes_sugorque_1,		// NES Sugoro Quest - Dice no Senshitachi (Japan)
+	&BurnDrvnes_sugorque,		// NES Sugoro Quest - Dice no Senshitachi (T-eng)
+	&BurnDrvnes_sukebandeka3,	// NES Sukeban Deka 3 (Japan)
+	&BurnDrvnes_summecar92,		// NES Summer Carnival '92 - Recca (Japan)
+	&BurnDrvnes_sunman,			// NES Sunman (Europe) (Prototype)
+	&BurnDrvnes_superarabian,	// NES Super Arabian (Japan)
+	&BurnDrvnes_superbatpun,	// NES Super Bat Puncher (Demo)
+	&BurnDrvnes_superc,			// NES Super C (USA)
+	&BurnDrvnes_supercars,		// NES Super Cars (USA)
+	&BurnDrvnes_superdodgeball,	// NES Super Dodge Ball (USA)
+	&BurnDrvnes_supergun,		// NES Super Gun (USA)
+	&BurnDrvnes_smb,			// NES Super Mario Bros. (World)
+	&BurnDrvnes_smb2,			// NES Super Mario Bros. 2 (USA) (Rev A)
+	&BurnDrvnes_smb2j,			// NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes
+	&BurnDrvnes_smb3,			// NES Super Mario Bros. 3 (USA) (Rev A)
+	&BurnDrvnes_superpainter,	// NES Super Painter (HB)
+	&BurnDrvnes_superpang,		// NES Super Pang (Taiwan)
+	&BurnDrvnes_superpang2,		// NES Super Pang 2 (Taiwan)
+	&BurnDrvnes_superpinball,	// NES Super Pinball (Japan)
+	&BurnDrvnes_superpitfall,	// NES Super Pitfall (USA)
+	&BurnDrvnes_superpit30t,	// NES Super Pitfall 30th (HB)
+	&BurnDrvnes_superrugby,		// NES Super Rugby (Japan)
+	&BurnDrvnes_supershi,		// NES Super Shinobi, The (Unl)
+	&BurnDrvnes_superspivbal,	// NES Super Spike V'Ball (USA)
+	&BurnDrvnes_supersprint,	// NES Super Sprint (USA)
+	&BurnDrvnes_superspyhunter,	// NES Super Spy Hunter (USA)
+	&BurnDrvnes_superstarforce,	// NES Super Star Force (Japan)
+	&BurnDrvnes_superturrican,	// NES Super Turrican (Europe)
+	&BurnDrvnes_superuwol,		// NES Super UWOL (HB)
+	&BurnDrvnes_superxev,		// NES Super Xevious - Gump no Nazo (Japan)
+	&BurnDrvnes_superman,		// NES Superman (USA)
+	&BurnDrvnes_swampthing,		// NES Swamp Thing (USA)
+	&BurnDrvnes_sweethome_1,	// NES Sweet Home (Eng Hack)
+	&BurnDrvnes_sweethome,		// NES Sweet Home (Japan)
+	&BurnDrvnes_swordmaster,	// NES Sword Master (USA)
+	&BurnDrvnes_tc2,			// NES T&C 2 - Thrilla's Surfari (USA)
+	&BurnDrvnes_tcsurfdesign,	// NES T&C Surf Design (USA)
+	&BurnDrvnes_tagteawre,		// NES Tag Team Wrestling (USA)
+	&BurnDrvnes_taitochasehq,	// NES Taito Chase H.Q. (Japan)
+	&BurnDrvnes_taiyonoyuufir_1,// NES Taiyou no Yuusha Firebird (Japan)
+	&BurnDrvnes_taiyonoyuufir,	// NES Taiyou no Yuusha Firebird (T-eng)
+	&BurnDrvnes_takahmeinobugho,// NES Takahashi Meijin no Bugutte Honey (Japan)
+	&BurnDrvnes_talespin,		// NES TaleSpin (USA)
+	&BurnDrvnes_targetrenegade,	// NES Target Renegade (USA)
+	&BurnDrvnes_tasac,			// NES Tasac (Taiwan)
+	&BurnDrvnes_tashimasnoprigaip,// NES Tashiro Masashi no Princess ga Ippai (Japan)
+	&BurnDrvnes_tatakchorobseitr,// NES Tatakae! Chou Robot Seimeitai Transformers - Convoy no Nazo (Japan)
+	&BurnDrvnes_tatakrahman,	// NES Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (Japan)
+	&BurnDrvnes_tatakainobanka,	// NES Tatakai no Banka (Japan) (Rev A)
+	&BurnDrvnes_tecmobaseball,	// NES Tecmo Baseball (USA)
+	&BurnDrvnes_tecmobowl,		// NES Tecmo Bowl (USA)
+	&BurnDrvnes_tecmocup,		// NES Tecmo Cup - Soccer Game (USA)
+	&BurnDrvnes_tecmonbabas,	// NES Tecmo NBA Basketball (USA)
+	&BurnDrvnes_tecmosuperbowl,	// NES Tecmo Super Bowl (USA)
+	&BurnDrvnes_tecmoworcupsoc,	// NES Tecmo World Cup Soccer (Japan)
+	&BurnDrvnes_tecmoworwre,	// NES Tecmo World Wrestling (USA)
+	&BurnDrvnes_tmnt,			// NES Teenage Mutant Ninja Turtles (USA)
+	&BurnDrvnes_tmntii,			// NES Teenage Mutant Ninja Turtles II - The Arcade Game (USA)
+	&BurnDrvnes_tmntiii,		// NES Teenage Mutant Ninja Turtles III - The Manhattan Project (USA)
+	&BurnDrvnes_tmnttoufig,		// NES Teenage Mutant Ninja Turtles Tournament Fighters (USA)
+	&BurnDrvnes_tenkanogoi,		// NES Tenka no Goikenban - Mito Koumon (Japan)
+	&BurnDrvnes_tenkabus,		// NES Tenkaichi Bushi - Keru Naguuru (Japan)
+	&BurnDrvnes_tennis,			// NES Tennis (USA)
+	&BurnDrvnes_teraonodosooz,	// NES Terao no Dosukoi Oozumou (Japan)
+	&BurnDrvnes_termi2,			// NES Terminator 2 - Judgment Day (USA)
+	&BurnDrvnes_terminatorthe,	// NES Terminator, The (USA)
+	&BurnDrvnes_terracresta,	// NES Terra Cresta (USA)
+	&BurnDrvnes_tetra,			// NES Tetrastar - The Fighter (Japan)
+	&BurnDrvnes_tetris,			// NES Tetris (USA)
+	&BurnDrvnes_tetris2,		// NES Tetris 2 (USA)
+	&BurnDrvnes_tetri2bom,		// NES Tetris 2 + Bombliss (Japan)
+	&BurnDrvnes_tetsuwanatom,	// NES Tetsuwan Atom (Japan)
+	&BurnDrvnes_meating,		// NES The Meating - Cafeparty Demo (HB)
+	&BurnDrvnes_thexder,		// NES Thexder (Japan)
+	&BurnDrvnes_threestooges,	// NES Three Stooges (USA)
+	&BurnDrvnes_thundlig,		// NES Thunder & Lightning (USA)
+	&BurnDrvnes_thunderwarrior,	// NES Thunder Warrior (Asia) (Unl)
+	&BurnDrvnes_thunderbirds,	// NES Thunderbirds (USA)
+	&BurnDrvnes_thunderbolt2,	// NES Thunderbolt 2 (Ch)
+	&BurnDrvnes_thundercade,	// NES Thundercade (USA)
+	&BurnDrvnes_tigerheli,		// NES Tiger-Heli (USA)
+	&BurnDrvnes_timediveonman,	// NES Time Diver Eon Man (USA)
+	&BurnDrvnes_timelord,		// NES Time Lord (USA)
+	&BurnDrvnes_timezone,		// NES Time Zone (Japan)
+	&BurnDrvnes_tinasadvisliii,	// NES Tina's Advanture Island III (USA)
+	&BurnDrvnes_tinasadvisl,	// NES Tina's Adventure Island (USA)
+	&BurnDrvnes_tinasadvislii,	// NES Tina's Adventure Island II (USA)
+	&BurnDrvnes_tinytooadv,		// NES Tiny Toon Adventures (USA)
+	&BurnDrvnes_tinytooadv2molaheyo,// NES Tiny Toon Adventures 2 - Montana Land he Youkoso (Japan)
+	&BurnDrvnes_tinytooadv2trinwa,// NES Tiny Toon Adventures 2 - Trouble in Wackyland (USA)
+	&BurnDrvnes_titan,			// NES Titan (Japan)
+	&BurnDrvnes_titanwarriors,	// NES Titan Warriors (USA) (Proto)
+	&BurnDrvnes_totheearth,		// NES To The Earth (USA)
+	&BurnDrvnes_toki,			// NES Toki (USA)
+	&BurnDrvnes_tokkyshisol,	// NES Tokkyuu Shirei Solbrain (Japan)
+	&BurnDrvnes_tokorsannomammosemo,// NES Tokoro-san no Mamoru mo Semeru mo (Japan)
+	&BurnDrvnes_tomjerultgamcatandm,// NES Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA)
+	&BurnDrvnes_toobin,			// NES Toobin' (USA)
+	&BurnDrvnes_topgun,			// NES Top Gun (USA) (Rev A)
+	&BurnDrvnes_topgunsecmis,	// NES Top Gun - The Second Mission (USA)
+	&BurnDrvnes_totalrecall,	// NES Total Recall (USA)
+	&BurnDrvnes_totallyrad,		// NES Totally Rad (USA)
+	&BurnDrvnes_totsumac,		// NES Totsuzen! Machoman (Japan)
+	&BurnDrvnes_touhourououmu,	// NES TouhouRououmu (HB)
+	&BurnDrvnes_toukonclub,		// NES Toukon Club (Japan)
+	&BurnDrvnes_towerdru,		// NES Tower of Druaga, The (Japan)
+	&BurnDrvnes_toxiccrusaders,	// NES Toxic Crusaders (USA)
+	&BurnDrvnes_trackfield,		// NES Track & Field (USA)
+	&BurnDrvnes_trackfieldii,	// NES Track & Field II (USA) (Rev A)
+	&BurnDrvnes_treasuremaster,	// NES Treasure Master (USA)
+	&BurnDrvnes_trog,			// NES Trog (USA)
+	&BurnDrvnes_trojan,			// NES Trojan (USA)
+	&BurnDrvnes_tsupparioozumou,// NES Tsuppari Oozumou (Japan)
+	&BurnDrvnes_twincobra,		// NES Twin Cobra (USA)
+	&BurnDrvnes_twindragons,	// NES Twin Dragons (HB)
+	&BurnDrvnes_twindracomedi,	// NES Twin Dragons Compo Edition (HB)
+	&BurnDrvnes_twineagle,		// NES Twin Eagle (USA)
+	&BurnDrvnes_twinbee,		// NES TwinBee (Japan)
+	&BurnDrvnes_twinb3,			// NES TwinBee 3 - Poko Poko Daimaou (Japan)
+	&BurnDrvnes_uschavba,		// NES U.S. Championship V'Ball (Japan)
+	&BurnDrvnes_uchuukeisdf,	// NES Uchuu Keibitai SDF (Japan)
+	&BurnDrvnes_uchuucoscar,	// NES Uchuusen Cosmo Carrier (Japan)
+	&BurnDrvnes_ufouria,		// NES Ufouria - The Saga (Europe)
+	&BurnDrvnes_ultimaexodus,	// NES Ultima - Exodus (USA)
+	&BurnDrvnes_ultimqueava,	// NES Ultima - Quest of the Avatar (USA)
+	&BurnDrvnes_ultimwardes,	// NES Ultima - Warriors of Destiny (USA)
+	&BurnDrvnes_ultimmorkom3,	// NES Ultimate Mortal Kombat 3 (Unl)
+	&BurnDrvnes_ultimstu,		// NES Ultimate Stuntman, The (USA) (Unl)
+	&BurnDrvnes_uncanxmen,		// NES Uncanny X-Men, The (USA)
+	&BurnDrvnes_unchartedwaters,// NES Uncharted Waters (USA)
+	&BurnDrvnes_uninvited,		// NES Uninvited (USA)
+	&BurnDrvnes_univesol_1,		// NES Universe Soldiers, The (Ch)
+	&BurnDrvnes_univesol,		// NES Universe Soldiers, The (Unknown) (Unl)
+	&BurnDrvnes_urbanchampion,	// NES Urban Champion (World)
+	&BurnDrvnes_urbanstrike,	// NES Urban Strike (USA)
+	&BurnDrvnes_uruseyat,		// NES Urusei Yatsura - Lum no Wedding Bell (Japan)
+	&BurnDrvnes_utsurundesu,	// NES Utsurun Desu (Japan)
+	&BurnDrvnes_valis,			// NES Valis - The Fantastic Soldier (Japan)
+	&BurnDrvnes_valkynobou_1,	// NES Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)
+	&BurnDrvnes_valkynobou,		// NES Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)
+	&BurnDrvbvbl,				// NES VBL test
+	&BurnDrvnes_vice,			// NES Vice - Project Doom (USA)
+	&BurnDrvnes_nesvircle,		// NES Virus Cleaner (HB)
+	&BurnDrvnes_volguardii,		// NES Volguard II (Japan)
+	&BurnDrvnes_volleyball,		// NES Volleyball (USA)
+	&BurnDrvbbvram,				// NES VRAM test
+	&BurnDrvnes_wackyraces,		// NES Wacky Races (USA)
+	&BurnDrvnes_wagyanland,		// NES Wagyan Land (Japan)
+	&BurnDrvnes_wagyanland2,	// NES Wagyan Land 2 (Japan)
+	&BurnDrvnes_wagyanland3,	// NES Wagyan Land 3 (Japan)
+	&BurnDrvnes_waiwaiworld,	// NES Wai Wai World (Japan)
+	&BurnDrvnes_waiwaiwor2,		// NES Wai Wai World 2 - SOS!! Paseri Jou (Japan)
+	&BurnDrvnes_wall,			// NES wall (Demo)
+	&BurnDrvnes_wallstreetkid,	// NES Wall Street Kid (USA)
+	&BurnDrvnes_wanpakoknogouwo,// NES Wanpaku Kokkun no Gourmet World (Japan)
+	&BurnDrvnes_warioswoods,	// NES Wario's Woods (USA)
+	&BurnDrvnes_warpman,		// NES Warpman (Japan)
+	&BurnDrvnes_waynesworld,	// NES Wayne's World (USA)
+	&BurnDrvnes_werew,			// NES Werewolf - The Last Warrior (USA)
+	&BurnDrvnes_whereintimiscasa,// NES Where in Time is Carmen Sandiego (USA)
+	&BurnDrvnes_whereswaldo,	// NES Where's Waldo (USA)
+	&BurnDrvnes_whompem,		// NES Whomp 'Em (USA)
+	&BurnDrvnes_widget,			// NES Widget (USA)
+	&BurnDrvnes_wildgunman,		// NES Wild Gunman (World) (Rev A)
+	&BurnDrvnes_willow,			// NES Willow (USA)
+	&BurnDrvnes_wingmad,		// NES Wing of Madoola, The (Japan)
+	&BurnDrvnes_wits,			// NES Wit's (Japan)
+	&BurnDrvnes_wizarwar,		// NES Wizards & Warriors (USA)
+	&BurnDrvnes_wizarwariii,	// NES Wizards & Warriors III - Kuros - Visions of Power (USA)
+	&BurnDrvnes_wolverine,		// NES Wolverine (USA)
+	&BurnDrvnes_woodypoko,		// NES Woody Poko (Japan)
+	&BurnDrvnes_worldchamp,		// NES World Champ (USA)
+	&BurnDrvnes_wrathblaman,	// NES Wrath of the Black Manta (USA) (Rev A)
+	&BurnDrvnes_wreckingcrew,	// NES Wrecking Crew (World)
+	&BurnDrvnes_wurm,			// NES Wurm - Journey to the Center of the Earth! (USA)
+	&BurnDrvnes_xevious,		// NES Xevious - The Avenger (USA)
+	&BurnDrvnes_xexyz,			// NES Xexyz (USA)
+	&BurnDrvnes_xiaohonmao,		// NES Xiao Hong Mao - Little Red Hood (Ch)
+	&BurnDrvnes_yiearkungfu,	// NES Yie Ar Kung-Fu (Japan) (Rev 1.4)
+	&BurnDrvnes_yonoid,			// NES Yo! Noid (USA)
+	&BurnDrvnes_yoshi,			// NES Yoshi (USA)
+	&BurnDrvnes_yoshiscookie,	// NES Yoshi's Cookie (USA)
+	&BurnDrvnes_youkaiclub,		// NES Youkai Club (Japan)
+	&BurnDrvnes_youkaidouchuuki,// NES Youkai Douchuuki (Japan)
+	&BurnDrvnes_youkaikurabu,	// NES Youkai Kurabu (Japan)
+	&BurnDrvnes_youngindjonchr,	// NES Young Indiana Jones Chronicles, The (USA)
+	&BurnDrvnes_yumepenmon_1,	// NES Yume Penguin Monogatari (Japan)
+	&BurnDrvnes_yumepenmon,		// NES Yume Penguin Monogatari (T-eng)
+	&BurnDrvnes_yuuyuuhakfin,	// NES Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
+	&BurnDrvnes_zanac,			// NES Zanac (USA)
+	&BurnDrvnes_ruder,			// NES Zapper ruder (test) (HB)
+	&BurnDrvnes_zeldaii,		// NES Zelda II - The Adventure of Link (USA)
+	&BurnDrvnes_zen,			// NES Zen - Intergalactic Ninja (USA)
+	&BurnDrvnes_zhenbenxiyouji,	// NES Zhen Ben Xi You Ji (Asia) (Unl)
+	&BurnDrvnes_zombiecalavera,	// NES Zombie Calavera (HB)
+	&BurnDrvnes_zombiehunter,	// NES Zombie Hunter (Japan)
+	&BurnDrvnes_zombienation,	// NES Zombie Nation (USA)
+	&BurnDrvnes_zoomisec,		// NES Zooming Secretary (HB)
+	&BurnDrvnes_zunousengal,	// NES Zunou Senkan Galg (Japan)
 	&BurnDrvMSX_nkoshien,		// Nessen Koushien (Jpn)
 	&BurnDrvNetwars,			// Net Wars
 	&BurnDrvpce_neutopi2,		// Neutopia II
@@ -19764,6 +22401,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacnpal,			// Pac & Pal
 	&BurnDrvpacmanfm,			// Pac Man (FAMARE S.A. bootleg of Puck Man)
 	&BurnDrvpacmanug,			// Pac Man (U.G. bootleg of Puck Man)
+	&BurnDrvcv_pacmancol,		// Pac Man Collection
 	&BurnDrvgg_pacattak,		// Pac-Attack (Euro, USA)
 	&BurnDrvmd_pacattak,		// Pac-Attack (USA)
 	&BurnDrvpacgal,				// Pac-Gal

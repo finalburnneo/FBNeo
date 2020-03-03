@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-12336 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13655 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3279,6 +3279,127 @@ This list contains all games supported by FinalBurn Neo.
 | msx_fathom	|  	| Fathom (Jpn)						| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_fathom	|  	| Fathom						| 		| 1983	| Imagic	| ColecoVision	| 					|
 | md_fatman	|  	| Fatman (Jpn)						| md_slaughtr	| 1990	| Sanritsu Denki| Sega Megadrive| 					|
+| fds_19neunzehn|  	| FDS 19 - Neunzehn (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_adiannotsue|  	| FDS Adian no Tsue (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_aisenshinicol|  	| FDS Ai Senshi Nicol (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_akitsunofusnoka|  	| FDS Aki to Tsukasa no Fushigi no Kabe (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_akumajoudracula|  	| FDS Akumajou Dracula (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_akuusenrai|  	| FDS Akuu Senki Raijin (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_allnignipsupmabr|  	| FDS All Night Nippon Super Mario Brothers (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_appletowmon|  	| FDS Apple Town Monogatari - Little Computer People (Ja| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_armananokiseki|  	| FDS Armana no Kiseki (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bakutpatkun|  	| FDS Bakutoushi Patton-kun (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bigchadogspi|  	| FDS Big Challenge! Dogfight Spirit (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bigchagogobo|  	| FDS Big Challenge! Go! Go! Bowling (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bigchagunfig|  	| FDS Big Challenge! Gun Fighter (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bigchajuusen|  	| FDS Big Challenge! Juudou Senshuken (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_biomirbokupa|  	| FDS Bio Miracle Bokutte Upa (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bomberman	|  	| FDS Bomber Man (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_bubblebobble|  	| FDS Bubble Bobble (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_burgertime|  	| FDS BurgerTime (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_chitetaiord|  	| FDS Chitei Tairiku Ordola (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_clucluland|  	| FDS Clu Clu Land (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_coconaworld|  	| FDS Cocona World (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dandy	|  	| FDS Dandy - Zeuon no Fukkatsu (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_digdug	|  	| FDS Dig Dug (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_digdugii	|  	| FDS Dig Dug II (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dirtypai	|  	| FDS Dirty Pair - Project Eden (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dokidokipanic|  	| FDS Doki Doki Panic (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_donkeykong|  	| FDS Donkey Kong (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_donkeykongjr|  	| FDS Donkey Kong Jr. (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dracuii	|  	| FDS Dracula II - Noroi no Fuuin (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_druid	|  	| FDS Druid - Kyoufu no Tobira (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_eggerland	|  	| FDS Egger Land (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_eggerlan	|  	| FDS Egger Land - Souzou e no Tabidachi (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_electrician1|  	| FDS Electrician (Japan)				| fds_electrician| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_electrician|  	| FDS Electrician (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_excitsoc	|  	| FDS Exciting Soccer - Konami Cup (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_fairypin	|  	| FDS Fairy Pinball - Yousei Tachi no Pinball (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_falsion	|  	| FDS Falsion (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famicgrapri|  	| FDS Famicom Grand Prix - F1 Race (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famicgrapriii|  	| FDS Famicom Grand Prix II - 3D Hot Rally (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol1|  	| FDS Famimaga Disk Vol. 1 - Hong Kong (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol2|  	| FDS Famimaga Disk Vol. 2 - Panic Space (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol3|  	| FDS Famimaga Disk Vol. 3 - All 1 (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol4|  	| FDS Famimaga Disk Vol. 4 - Clox (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol5|  	| FDS Famimaga Disk Vol. 5 - Puyo Puyo (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_famimdisvol6|  	| FDS Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_finalcom	|  	| FDS Final Command - Akai Yousai (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_firebam	|  	| FDS Fire Bam (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_firerock	|  	| FDS Fire Rock (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_fuuunshoken|  	| FDS Fuuun Shourin Ken (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_galaga	|  	| FDS Galaga (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_galaxian	|  	| FDS Galaxian (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_gallfor	|  	| FDS Gall Force - Eternal Story (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_gingaden	|  	| FDS Ginga Denshou - Galaxy Odyssey (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_golf	|  	| FDS Golf (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_golfjapcou|  	| FDS Golf - Japan Course (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_golfuscourse|  	| FDS Golf - US Course (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_goonies	|  	| FDS Goonies (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_greenberet|  	| FDS Green Beret (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_gunsmoke	|  	| FDS Gun.Smoke (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_gyruss1	|  	| FDS Gyruss (Japan)					| fds_gyruss	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_gyruss	|  	| FDS Gyruss (T-eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_halleywars|  	| FDS Halley Wars (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_haokunnofusnata|  	| FDS Hao-kun no Fushigi na Tabi (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_hikarshi	|  	| FDS Hikari Shinwa - Palthena no Kagami (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_icehockey	|  	| FDS Ice Hockey (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_fdsirqtest|  	| FDS IRQ Test (Sour, v7)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_jikaishometmag|  	| FDS Jikai Shounen Met Mag (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kaettmarbro|  	| FDS Kaettekita Mario Brothers (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kamenridbla|  	| FDS Kamen Rider Black - Taiketsu Shadow Moon (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kickandrun|  	| FDS Kick and Run (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kickcha	|  	| FDS Kick Challenger - Air Foot (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kikikai	|  	| FDS Kiki Kaikai - Dotou Hen (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_kinni	|  	| FDS Kinnikuman - Kinnikusei Oui Soudatsusen (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_knighlor	|  	| FDS Knight Lore - Majou no Ookami Otoko (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_konekmon	|  	| FDS Koneko Monogatari - The Adventures of Chatran (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_linknobou	|  	| FDS Link no Bouken - The Legend of Zelda 2 (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_lutter	|  	| FDS Lutter (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_maerchenveil|  	| FDS Maerchen Veil (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_magmapro	|  	| FDS Magma Project - Hacker (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_matounohou|  	| FDS Matou no Houkai - The Hero of Babel (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_metroid	|  	| FDS Metroid (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_moerotwi	|  	| FDS Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_montyonrun|  	| FDS Monty on the Run - Monty no Doki Doki Dai Dassou (| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_moonballmagic|  	| FDS Moonball Magic (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_mystemurcas|  	| FDS Mysterious Murasame Castle (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_nazonomur	|  	| FDS Nazo no Murasamejou (Japan)			| fds_mystemurcas| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_otocky	|  	| FDS Otocky (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_patla	|  	| FDS Patlabor - The Mobile Police - Dai 2 Shoutai Shuts| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_progolsarkagnoto|  	| FDS Pro Golfer Saru - Kage no Tournament (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_puttputtgolf|  	| FDS Putt Putt Golf (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_puzzleboys|  	| FDS Puzzle Boys (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_radicbomjirkun|  	| FDS Radical Bomber!! Jirai-kun (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_reflectworld|  	| FDS Reflect World (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_relics	|  	| FDS Relics - Ankoku Yousai (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_replicart	|  	| FDS Replicart (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_rogerrabbit|  	| FDS Roger Rabbit (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_sectionz	|  	| FDS Section-Z (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_silvi	|  	| FDS Silviana - Ai Ippai no Little Angel (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_smashpingpong|  	| FDS Smash Ping Pong (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_superboyallan|  	| FDS Super Boy Allan (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_superlodrun|  	| FDS Super Lode Runner (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_superlodrunii|  	| FDS Super Lode Runner II (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_supermarbro|  	| FDS Super Mario Brothers (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_supermarbro2|  	| FDS Super Mario Brothers 2 (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_fdsbios	|   NW	| FDS System BIOS					| 		| 198x	| NES		| NES		| BIOS only				|
+| fds_tamafri	|  	| FDS Tama & Friends - 3 Choume Daibouken (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_tennis	|  	| FDS Tennis (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_tobiddai	|  	| FDS Tobidase Daisakusen (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_topplezip	|  	| FDS Topple Zip (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_trans	|  	| FDS Transformers - The Headmasters (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_ultra	|  	| FDS Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_ultra2	|  	| FDS Ultraman 2 - Shutsugeki Katoku Tai (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_volleyball|  	| FDS Volleyball (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_vsexcitebike|  	| FDS Vs. Excitebike (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_wakusatogai|  	| FDS Wakusei Aton Gaiden (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_wardnernomori|  	| FDS Wardner no Mori (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_wreckingcrew|  	| FDS Wrecking Crew (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_youkaiyashiki|  	| FDS Youkai Yashiki (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_yuumaze	|  	| FDS Yuu Maze (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_zanac	|  	| FDS Zanac (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_zeldanoden|  	| FDS Zelda no Densetsu - The Hyrule Fantasy (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sg1k_feilang	|  	| Fei Lang (Tw)						| sg1k_choplift	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | sg1k_feilanga	|  	| Fei Lang ~ Choplifter (Tw, Alt)			| sg1k_choplift	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | sms_felipe	|  	| Felipe em Acao (Bra)					| sms_teddyboy	| 19??	| Tec Toy	| Sega Master Sy| 					|
@@ -6609,6 +6730,1203 @@ This list contains all games supported by FinalBurn Neo.
 | neocup98	|  	| Neo-Geo Cup '98 - The Road to the Victory		| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | neotet	|  	| NeoGeo 2-Player Tetris				| 		| 2013	| Crim/Stephen	| Neo Geo	| 					|
 | neo3ddmo	|  	| NeoGeo 3D! Demo					| 		| 2012	| Oxygene	| Neo Geo	| 					|
+| nes_10yardfight|  	| NES 10-Yard Fight (USA)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_1942	|  	| NES 1942 (Japan, USA)					| 		| 1985	| Capcom	| Miscellaneous	| 					|
+| nes_1943	|  	| NES 1943 - The Battle of Midway (USA)			| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_2010	|  	| NES 2010 - Street Fighter (Japan)			| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_3dbatworru|  	| NES 3-D Battles of World Runner, The (USA)		| 		| 1987	| Acclaim	| Miscellaneous	| 					|
+| nes_720degrees|  	| NES 720 Degrees (USA)					| 		| 1989	| Mindscape	| Miscellaneous	| 					|
+| nes_8eyes	|  	| NES 8 Eyes (USA)					| 		| 1990	| Taxan		| Miscellaneous	| 					|
+| nes_8bitrhylan|  	| NES 8-Bit Rhythm Land (HB)				| 		| 2018	| Columbus Circl| Miscellaneous	| 					|
+| nes_abadox	|  	| NES Abadox - The Deadly Inner War (USA)		| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
+| nes_action52	|  	| NES Action 52 (USA)					| 		| 1991	| Active Enterpr| Miscellaneous	| 					|
+| nes_actio53vol1stbu|  	| NES Action 53 vol 1 Streemerz Bundle (HB)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_actio53vol2doac|  	| NES Action 53 vol 2 Double Action (HB)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_actio53vol3retw|  	| NES Action 53 vol 3 Revenge of the Twins (HB)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_actioinnewyor|  	| NES Action in New York (Europe)			| nes_scat	| 1992	| Infogrames	| Miscellaneous	| 					|
+| nes_addamfam	|  	| NES Addams Family, The (USA)				| 		| 1992	| Ocean		| Miscellaneous	| 					|
+| nes_addamfampugsschu|  	| NES Addams Family, The - Pugsley's Scavenger Hunt (USA| 		| 1993	| Ocean		| Miscellaneous	| 					|
+| nes_adventureisland|  	| NES Adventure Island (USA)				| 		| 1988	| Hudson Soft	| Miscellaneous	| 					|
+| nes_advenisl3	|  	| NES Adventure Island 3 (USA)				| 		| 1992	| Hudson Soft	| Miscellaneous	| 					|
+| nes_advenislii_1|  	| NES Adventure Island II (USA) (Beta)			| nes_advenislii| 1991	| Hudson Soft	| Miscellaneous	| 					|
+| nes_advenislii|  	| NES Adventure Island II (USA)				| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
+| nes_advenisliv_1|  	| NES Adventure Island IV (Japan)			| nes_advenisliv| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_advenisliv|  	| NES Adventure Island IV (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_adveninmagkin|  	| NES Adventures in the Magic Kingdom (USA)		| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_advenbaybil|  	| NES Adventures of Bayou Billy, The (USA)		| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_advendinrik|  	| NES Adventures of Dino Riki (USA)			| 		| 1989	| Hudson Soft	| Miscellaneous	| 					|
+| nes_advengilsisl|  	| NES Adventures of Gilligan's Island, The (USA)	| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_advenlol	|  	| NES Adventures of Lolo (USA)				| 		| 1989	| HAL Laboratory| Miscellaneous	| 					|
+| nes_advenlol2	|  	| NES Adventures of Lolo 2 (USA)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
+| nes_advenlol3	|  	| NES Adventures of Lolo 3 (USA)			| 		| 1991	| HAL Laboratory| Miscellaneous	| 					|
+| nes_advenradgra|  	| NES Adventures of Rad Gravity, The (USA)		| 		| 1990	| Activision	| Miscellaneous	| 					|
+| nes_advenrocandbulandfr|  	| NES Adventures of Rocky and Bullwinkle and Friends, Th| 	| 1992	| THQ		| Miscellaneous	| 					|
+| nes_adventomsaw|  	| NES Adventures of Tom Sawyer (USA)			| 		| 1989	| Seta		| Miscellaneous	| 					|
+| nes_afterburner|  	| NES After Burner (USA)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_afterburnerii|  	| NES After Burner II (Japan)				| 		| 1989	| Sunsoft	| Miscellaneous	| 					|
+| nes_airfortress|  	| NES Air Fortress (USA)				| 		| 1989	| HAL Laboratory| Miscellaneous	| 					|
+| nes_airwolf_2	|  	| NES Airwolf (Japan)					| nes_airwolf	| 1988	| Kyugo Boueki	| Miscellaneous	| 					|
+| nes_airwolf_1	|  	| NES Airwolf (T-eng)					| nes_airwolf	| 1988	| Kyugo Boueki	| Miscellaneous	| 					|
+| nes_airwolf	|  	| NES Airwolf (USA)					| 		| 1989	| Acclaim	| Miscellaneous	| 					|
+| nes_akumaden	|  	| NES Akumajou Densetsu (Japan)				| nes_castliii	| 1989	| Konami	| Miscellaneous	| 					|
+| nes_akumajoudracula|  	| NES Akumajou Dracula (Japan)				| nes_castlevania| 1993	| Konami	| Miscellaneous	| 					|
+| nes_akumaspe	|  	| NES Akumajou Special - Boku Dracula-kun (Japan)	| nes_kiddracula| 1990	| Konami	| Miscellaneous	| 					|
+| nes_alunsjrturra|  	| NES Al Unser Jr. Turbo Racing (USA)			| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_alfommagla|  	| NES Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_alfonsarcadv|  	| NES Alfonzo's Arctic Adventure (HB)			| 		| 2018	| Spoony Bard Pr| Miscellaneous	| 					|
+| nes_alfredchicken|  	| NES Alfred Chicken (USA)				| 		| 1994	| Mindscape	| Miscellaneous	| 					|
+| nes_alien3	|  	| NES Alien 3 (USA)					| 		| 1993	| LJN		| Miscellaneous	| 					|
+| nes_aliensyndrome|  	| NES Alien Syndrome (USA)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_almosthero|  	| NES Almost Hero (HB)					| 		| 2016	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_alphamission|  	| NES Alpha Mission (USA)				| 		| 1987	| SNK		| Miscellaneous	| 					|
+| nes_alterego	|  	| NES Alter Ego (HB)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_amagon	|  	| NES Amagon (USA)					| 		| 1989	| Sammy		| Miscellaneous	| 					|
+| nes_amazorundie_1|  	| NES Amazons Running Diet (Japan)			| nes_amazorundie| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_amazorundie|  	| NES Amazons Running Diet (USA)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_amerigla	|  	| NES American Gladiators (USA)				| 		| 1991	| GameTek	| Miscellaneous	| 					|
+| nes_antaradv	|  	| NES Antarctic Adventure (Japan)			| 		| 1985	| Konami	| Miscellaneous	| 					|
+| nes_anticipation|  	| NES Anticipation (USA)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_archriv	|  	| NES Arch Rivals - A Basketbrawl! (USA)		| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_archon	|  	| NES Archon (USA)					| 		| 1989	| Activision	| Miscellaneous	| 					|
+| nes_argus	|  	| NES Argus (Japan)					| 		| 1986	| Jaleco	| Miscellaneous	| 					|
+| nes_arkanoid	|  	| NES Arkanoid (USA)					| 		| 1987	| Taito		| Miscellaneous	| 					|
+| nes_arkanoidii|  	| NES Arkanoid II (Japan)				| 		| 1988	| Taito		| Miscellaneous	| 					|
+| nes_arkistasring|  	| NES Arkista's Ring (USA)				| 		| 1990	| Sammy		| Miscellaneous	| 					|
+| nes_armadillo_1|  	| NES Armadillo (Japan)					| nes_armadillo	| 1991	| IGS		| Miscellaneous	| 					|
+| nes_armadillo	|  	| NES Armadillo (T-eng)					| 		| 1991	| IGS		| Miscellaneous	| 					|
+| nes_asmikkunland|  	| NES Asmik-kun Land (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_assimilate|  	| NES Assimilate (HB)					| 		| 2012	| Nessylum	| Miscellaneous	| 					|
+| nes_asterix	|  	| NES Asterix (Europe)					| 		| 1993	| Infogrames	| Miscellaneous	| 					|
+| nes_astrofan_1|  	| NES Astro Fang - Super Machine (Japan)		| nes_astrofan	| 1990	| A Wave	| Miscellaneous	| 					|
+| nes_astrofan	|  	| NES Astro Fang - Super Machine (T-eng)		| 		| 1990	| A Wave	| Miscellaneous	| 					|
+| nes_astrorobosasa|  	| NES Astro Robo Sasa (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
+| nes_astyanax	|  	| NES Astyanax (USA)					| 		| 1990	| Jaleco	| Miscellaneous	| 					|
+| nes_athena	|  	| NES Athena (USA)					| 		| 1987	| SNK		| Miscellaneous	| 					|
+| nes_atlantisnonazo|  	| NES Atlantis no Nazo (Japan)				| 		| 1986	| Sunsoft	| Miscellaneous	| 					|
+| nes_attacanigak_1|  	| NES Attack Animal Gakuen (Japan)			| nes_attacanigak| 1987	| Pony Canyon	| Miscellaneous	| 					|
+| nes_attacanigak|  	| NES Attack Animal Gakuen (T-eng)			| 		| 1987	| Pony Canyon	| Miscellaneous	| 					|
+| nes_attackiltom|  	| NES Attack of the Killer Tomatoes (USA)		| 		| 1992	| THQ		| Miscellaneous	| 					|
+| nes_bwings	|  	| NES B-Wings (Japan)					| 		| 1986	| Data East	| Miscellaneous	| 					|
+| nes_babelnotou|  	| NES Babel no Tou (Japan)				| 		| 1986	| Namco		| Miscellaneous	| 					|
+| nes_babyboomer|  	| NES Baby Boomer (USA)					| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| nes_backfut	|  	| NES Back to the Future (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
+| nes_backfutpariiiii|  	| NES Back to the Future Part II & III (USA)		| 		| 1990	| LJN		| Miscellaneous	| 					|
+| nes_baddudes	|  	| NES Bad Dudes (USA)					| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_badnewbas	|  	| NES Bad News Baseball (USA)				| 		| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_badstrbra	|  	| NES Bad Street Brawler (USA)				| 		| 1989	| Mattel	| Miscellaneous	| 					|
+| nes_balloonfight|  	| NES Balloon Fight (USA)				| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| nes_baltron	|  	| NES Baltron (Japan)					| 		| 1986	| Toei Animation| Miscellaneous	| 					|
+| nes_banana	|  	| NES Banana (Japan)					| 		| 1986	| Victor	| Miscellaneous	| 					|
+| nes_bananaprince_2|  	| NES Banana Prince (Germany)				| nes_bananaprince| 1992	| Takara	| Miscellaneous	| 					|
+| nes_bananaprince_1|  	| NES Banana Prince (Japan)				| nes_bananaprince| 1992	| Takara	| Miscellaneous	| 					|
+| nes_bananaprince|  	| NES Banana Prince (T-Eng)				| 		| 1992	| Takara	| Miscellaneous	| 					|
+| nes_bandikinancchi|  	| NES Bandit Kings of Ancient China (USA)		| 		| 1990	| Koei		| Miscellaneous	| 					|
+| nes_barkebilstrish|  	| NES Barker Bill's Trick Shooting (USA)		| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_basewars	|  	| NES Base Wars (USA)					| 		| 1991	| Ultra Games	| Miscellaneous	| 					|
+| nes_baseballstars|  	| NES Baseball Stars (USA)				| 		| 1989	| SNK		| Miscellaneous	| 					|
+| nes_basebstaii|  	| NES Baseball Stars II (USA)				| 		| 1992	| Romstar	| Miscellaneous	| 					|
+| nes_basesloaded|  	| NES Bases Loaded (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_basesloaii|  	| NES Bases Loaded II - Second Season (USA)		| 		| 1990	| Jaleco	| Miscellaneous	| 					|
+| nes_bashibaz	|  	| NES Bashi Bazook - Morphoid Masher (USA) (Proto)	| 		| 0000	| Jaleco	| Miscellaneous	| 					|
+| nes_bassedefadv|  	| NES Basse Def Adventures (HB)				| 		| 2019	| Broke Studio	| Miscellaneous	| 					|
+| nes_batmaretjok|  	| NES Batman - Return of the Joker (USA)		| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
+| nes_batmavidgam|  	| NES Batman - The Video Game (USA)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_batmanreturns|  	| NES Batman Returns (USA)				| 		| 1993	| Konami	| Miscellaneous	| 					|
+| nes_batsuterii|  	| NES Batsu & Terii (Japan)				| 		| 1987	| Use		| Miscellaneous	| 					|
+| nes_battlebaseball|  	| NES Battle Baseball (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_battlechess|  	| NES Battle Chess (USA)				| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_battleformula|  	| NES Battle Formula (Japan)				| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
+| nes_battlkid	|  	| NES Battle Kid - Fortress of Peril (Japan)		| 		| 2010	| Sivak		| Miscellaneous	| 					|
+| nes_battlkid2	|  	| NES Battle Kid 2 - Mountain of Torment (USA)		| 		| 2012	| Sivak		| Miscellaneous	| 					|
+| nes_battloly	|  	| NES Battle of Olympus, The (USA)			| 		| 1989	| Broderbund	| Miscellaneous	| 					|
+| nes_battletank|  	| NES Battle Tank (USA)					| 		| 1990	| Absolute	| Miscellaneous	| 					|
+| nes_battlecity|  	| NES BattleCity (Japan)				| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_battleship|  	| NES Battleship (USA)					| 		| 1993	| Mindscape	| Miscellaneous	| 					|
+| nes_battletoads|  	| NES Battletoads (USA)					| 		| 1991	| Tradewest	| Miscellaneous	| 					|
+| nes_battldoudra|  	| NES Battletoads-Double Dragon (USA)			| 		| 1993	| Tradewest	| Miscellaneous	| 					|
+| nes_bcputime	|  	| NES bcputime						| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bee52	|  	| NES Bee 52 (USA) (Unl)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_beerslinger|  	| NES BeerSlinger (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
+| nes_beetlejuice|  	| NES Beetlejuice (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
+| nes_bignosfreout|  	| NES Big Nose Freaks Out (USA)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_bignoscav	|  	| NES Big Nose the Caveman (USA)			| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| nes_bigfoot	|  	| NES Bigfoot (USA)					| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_billtedsexcvigaad|  	| NES Bill & Ted's Excellent Video Game Adventure (USA)	| 		| 1991	| LJN		| Miscellaneous	| 					|
+| nes_binaryland|  	| NES Binary Land (Japan)				| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
+| nes_bioforceape|  	| NES Bio Force Ape (Japan) (En) (Proto)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_biomirbokupa|  	| NES Bio Miracle Bokutte Upa (Japan)			| 		| 1993	| Konami	| Miscellaneous	| 					|
+| nes_biosendan	|  	| NES Bio Senshi Dan - Increaser Tono Tatakai (Japan)	| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| nes_bioniccommando|  	| NES Bionic Commando (USA)				| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_birdweek	|  	| NES Bird Week (Japan)					| 		| 1986	| Toemiland	| Miscellaneous	| 					|
+| nes_bladebuster|  	| NES Blade Buster (HB)					| 		| 2011	| HLC! Project (| Miscellaneous	| 					|
+| nes_bladesofsteel|  	| NES Blades of Steel (USA)				| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_blarggppu	|  	| NES Blargg pal power on test				| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_blarggppu	|  	| NES Blargg pal ram test				| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_blarggppu	|  	| NES Blargg sprite ram					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_blastermaster|  	| NES Blaster Master (USA)				| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| nes_blodilan	|  	| NES Blodia Land - Puzzle Quest (Japan)		| 		| 1990	| Tonkin House	| Miscellaneous	| 					|
+| nes_blowemout	|  	| NES Blow'Em Out! (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
+| nes_bluemarlinthe|  	| NES Blue Marlin, The (USA)				| 		| 1992	| HOT・B	| Miscellaneous	| 					|
+| nes_bluesbro	|  	| NES Blues Brothers, The (USA)				| 		| 1992	| Titus		| Miscellaneous	| 					|
+| nes_bokosukawars|  	| NES Bokosuka Wars (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
+| nes_bombsweeper|  	| NES Bomb Sweeper (HB)					| 		| 2002	| SNOWBRO	| Miscellaneous	| 					|
+| nes_bomberman	|  	| NES Bomberman (USA)					| 		| 1989	| Hudson Soft	| Miscellaneous	| 					|
+| nes_bombermanii|  	| NES Bomberman II (USA)				| 		| 1993	| Hudson Soft	| Miscellaneous	| 					|
+| nes_bonksadventure|  	| NES Bonk's Adventure (USA)				| 		| 1994	| Hudson Soft	| Miscellaneous	| 					|
+| nes_boobykids	|  	| NES Booby Kids (Japan)				| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
+| nes_boogerman	|  	| NES Boogerman (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mojontwiboo|  	| NES Bootee (HB)					| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
+| nes_boulderdash|  	| NES Boulder Dash (USA)				| 		| 1990	| JVC		| Miscellaneous	| 					|
+| nes_bramstosdra|  	| NES Bram Stoker's Dracula (USA)			| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_breakthru	|  	| NES BreakThru (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
+| nes_bubblebobble|  	| NES Bubble Bobble (USA)				| 		| 1988	| Taito		| Miscellaneous	| 					|
+| nes_bubblbobpar2|  	| NES Bubble Bobble Part 2 (USA)			| 		| 1993	| Taito		| Miscellaneous	| 					|
+| nes_buckyohare|  	| NES Bucky O'Hare (USA)				| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_bugsbunbirblo|  	| NES Bugs Bunny Birthday Blowout, The (USA)		| 		| 1990	| Kemco		| Miscellaneous	| 					|
+| nes_bugsbuncracas|  	| NES Bugs Bunny Crazy Castle, The (USA)		| 		| 1989	| Kemco		| Miscellaneous	| 					|
+| nes_bumpnjump	|  	| NES Bump'n'Jump (USA)					| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
+| nes_buraifighter_1|  	| NES Burai Fighter (Japan)				| nes_buraifighter| 1990	| Taito		| Miscellaneous	| 					|
+| nes_buraifighter|  	| NES Burai Fighter (USA)				| 		| 1990	| Taxan		| Miscellaneous	| 					|
+| nes_burgertime|  	| NES BurgerTime (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
+| nes_buzzwaldog|  	| NES Buzz & Waldog (USA) (Proto) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_cabal	|  	| NES Cabal (USA)					| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
+| nes_californiagames|  	| NES California Games (USA)				| 		| 1989	| Milton Bradley| Miscellaneous	| 					|
+| nes_capcosgolmedch92|  	| NES Capcom's Gold Medal Challenge '92 (USA)		| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_captaameandave|  	| NES Captain America and the Avengers (USA)		| 		| 1991	| Data East	| Miscellaneous	| 					|
+| nes_captacom	|  	| NES Captain Comic - The Adventure (USA)		| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| nes_captained	|  	| NES Captain ED (Japan)				| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
+| nes_captaplaandpla|  	| NES Captain Planet and the Planeteers (USA)		| 		| 1991	| Mindscape	| Miscellaneous	| 					|
+| nes_captainsaver|  	| NES Captain Saver (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_captainsilver|  	| NES Captain Silver (Japan)				| 		| 1988	| Tokuma Shoten	| Miscellaneous	| 					|
+| nes_captainskyhawk|  	| NES Captain Skyhawk (USA) (Rev A)			| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
+| nes_captaintsubasa|  	| NES Captain Tsubasa (Japan)				| nes_tecmocup	| 1988	| Tecmo		| Miscellaneous	| 					|
+| nes_captatsuvolii_1|  	| NES Captain Tsubasa Vol. II - Super Striker (Japan).ne| nes_captatsuvolii| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_captatsuvolii|  	| NES Captain Tsubasa Vol. II - Super Striker (T-eng).ne| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_casinokid	|  	| NES Casino Kid (USA)					| 		| 1989	| Sofel		| Miscellaneous	| 					|
+| nes_casinokid2|  	| NES Casino Kid 2 (USA)				| 		| 1993	| Sofel		| Miscellaneous	| 					|
+| nes_castelian	|  	| NES Castelian (USA)					| 		| 1991	| Triffix	| Miscellaneous	| 					|
+| nes_castleexcellent|  	| NES Castle Excellent (Japan)				| 		| 1986	| ASCII		| Miscellaneous	| 					|
+| nes_castleofdeceit|  	| NES Castle of Deceit (USA)				| 		| 1990	| Bunch Games	| Miscellaneous	| 					|
+| nes_castleofdragon|  	| NES Castle of Dragon (USA)				| 		| 1990	| Seta		| Miscellaneous	| 					|
+| nes_castlevania|  	| NES Castlevania (USA)					| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_castlii	|  	| NES Castlevania II - Simon's Quest (USA)		| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_castliii	|  	| NES Castlevania III - Dracula's Curse (USA)		| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_catnintey_1|  	| NES Cat Ninden Teyandee (Japan)			| nes_catnintey	| 1991	| Tecmo		| Miscellaneous	| 					|
+| nes_catnintey	|  	| NES Cat Ninden Teyandee (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_chacknpop	|  	| NES Chack'n Pop (Japan)				| 		| 1985	| Taito		| Miscellaneous	| 					|
+| nes_challdra	|  	| NES Challenge of the Dragon (USA)			| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
+| nes_challenger|  	| NES Challenger (Japan)				| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
+| nes_champbow	|  	| NES Championship Bowling (USA)			| 		| 1989	| Romstar	| Miscellaneous	| 					|
+| nes_champlodrun|  	| NES Championship Lode Runner (Japan)			| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
+| nes_chaosworld_1|  	| NES Chaos World (Japan)				| nes_chaosworld| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_chaosworld|  	| NES Chaos World (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mojontwichegod|  	| NES Cheril The Goddess (HB)				| 		| 2017	| Mojon Twins	| Miscellaneous	| 					|
+| nes_mojontwichewri|  	| NES Cheril The Writer (HB)				| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
+| nes_chestfie	|  	| NES Chester Field - Ankoku Shin e no Chousen (Japan)	| 		| 1987	| Vic Tokai	| Miscellaneous	| 					|
+| nes_chikichimacmoura|  	| NES Chiki Chiki Machine Mou Race (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_chiller	|  	| NES Chiller (USA)					| 		| 1990	| AGCI		| Miscellaneous	| 					|
+| nes_chipndalresra|  	| NES Chip 'n Dale - Rescue Rangers (USA)		| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_chipndalresra2|  	| NES Chip 'n Dale - Rescue Rangers 2 (USA)		| 		| 1994	| Capcom	| Miscellaneous	| 					|
+| nes_chitesenvaz|  	| NES Chitei Senkuu Vazolder (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_chiyonoooi|  	| NES Chiyonofuji no Ooichou (Japan)			| 		| 1990	| Face		| Miscellaneous	| 					|
+| nes_choplifter|  	| NES Choplifter (Japan)				| 		| 1986	| Jaleco	| Miscellaneous	| 					|
+| nes_choujyou	|  	| NES Choujikuu Yousai - Macross (Japan)		| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_choujsenjet_1|  	| NES Choujin Sentai Jetman (Japan)			| nes_choujsenjet| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_choujsenjet|  	| NES Choujin Sentai Jetman (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_choujsenwar|  	| NES Choujinrou Senki Warwolf (Japan)			| 		| 1991	| Takara	| Miscellaneous	| 					|
+| nes_chubbycherub|  	| NES Chubby Cherub (USA)				| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_chuukataisen|  	| NES Chuuka Taisen (Japan)				| 		| 1989	| Taito		| Miscellaneous	| 					|
+| nes_circuscaper|  	| NES Circus Caper (USA)				| 		| 1990	| Toho		| Miscellaneous	| 					|
+| nes_circuscharlie|  	| NES Circus Charlie (Japan)				| 		| 1986	| Soft Pro	| Miscellaneous	| 					|
+| nes_cityconnection|  	| NES City Connection (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_citytrouble|  	| NES City Trouble (HB)					| 		| 2016	| Den Kat Games	| Miscellaneous	| 					|
+| nes_clashatdem|  	| NES Clash at Demonhead (USA)				| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
+| nes_cliffhanger|  	| NES Cliffhanger (USA)					| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_clucluland|  	| NES Clu Clu Land (World)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_cobracommand|  	| NES Cobra Command (USA)				| 		| 1988	| Data East	| Miscellaneous	| 					|
+| nes_cobramission|  	| NES Cobra Mission (Asia)				| 		| 1994	| Asder		| Miscellaneous	| 					|
+| nes_cobratriangle|  	| NES Cobra Triangle (USA)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_cocoron_1	|  	| NES Cocoron (Japan)					| nes_cocoron	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_cocoron	|  	| NES Cocoron (T-eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_codenam	|  	| NES Code Name - Viper (USA)				| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_commando	|  	| NES Commando (USA)					| 		| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_conan	|  	| NES Conan (USA)					| 		| 1991	| Mindscape	| Miscellaneous	| 					|
+| nes_conqucrypal|  	| NES Conquest of the Crystal Palace (USA)		| 		| 1990	| Asmik		| Miscellaneous	| 					|
+| nes_contra_1	|  	| NES Contra (Japan)					| nes_contra	| 1988	| Konami	| Miscellaneous	| 					|
+| nes_contra	|  	| NES Contra (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_contraforce|  	| NES Contra Force (USA)				| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_coolworld	|  	| NES Cool World (USA)					| 		| 1993	| Ocean		| Miscellaneous	| 					|
+| nes_correbenny|  	| NES Corre Benny (Spain)				| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
+| nes_cosmicepsilon|  	| NES Cosmic Epsilon (Japan)				| 		| 1989	| Asmik		| Miscellaneous	| 					|
+| nes_cosmogenesis|  	| NES Cosmo Genesis (Japan)				| nes_starvoyager| 1986	| ASCII		| Miscellaneous	| 					|
+| nes_cosmopolgal_1|  	| NES Cosmo Police Galivan (Japan)			| nes_cosmopolgal| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_cosmopolgal|  	| NES Cosmo Police Galivan (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_cowboykid	|  	| NES Cowboy Kid (USA)					| 		| 1992	| Romstar	| Miscellaneous	| 					|
+| nes_bcputime	|  	| NES cpu all instructions				| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_crashnboy	|  	| NES Crash 'n' the Boys - Street Challenge (USA)	| 		| 1992	| Technos	| Miscellaneous	| 					|
+| nes_crayoshicha|  	| NES Crayon Shin-chan - Ora to Poi Poi (Japan)		| 		| 1993	| Bandai	| Miscellaneous	| 					|
+| nes_crazyclimber|  	| NES Crazy Climber (Japan)				| 		| 1986	| Nichibutsu	| Miscellaneous	| 					|
+| nes_creepybrawlers|  	| NES Creepy Brawlers (HB)				| 		| 1989?	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_crimebusters|  	| NES Crime Busters (USA)				| 		| 1989	| Gradiente	| Miscellaneous	| 					|
+| nes_crisisforce|  	| NES Crisis Force (Japan)				| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_crossfire	|  	| NES Cross Fire (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_crypto	|  	| NES Crypto (HB)					| 		| 2016	| EEMU		| Miscellaneous	| 					|
+| nes_crystalis	|  	| NES Crystalis (USA)					| 		| 1990	| SNK		| Miscellaneous	| 					|
+| nes_cyberstaser|  	| NES Cyber Stadium Series - Base Wars (USA)		| 		| 1991	| Ultra Games	| Miscellaneous	| 					|
+| nes_cyber	|  	| NES Cybernoid - The Fighting Machine (USA)		| 		| 1989	| Acclaim	| Miscellaneous	| 					|
+| nes_cyclerac	|  	| NES Cycle Race - Road Man (Japan)			| 		| 1988	| Tokyo Shoseki	| Miscellaneous	| 					|
+| nes_dai2jisuprota_1|  	| NES Dai-2-ji Super Robot Taisen (Japan)		| nes_dai2jisuprota| 1991	| Banpresto	| Miscellaneous	| 					|
+| nes_dai2jisuprota|  	| NES Dai-2-ji Super Robot Taisen (T-eng)		| 		| 1991	| Banpresto	| Miscellaneous	| 					|
+| nes_daikunogensan|  	| NES Daiku no Gen-san (Japan)				| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_daikunogensan2|  	| NES Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Ja| 		| 1993	| Irem		| Miscellaneous	| 					|
+| nes_dannysulsindhe|  	| NES Danny Sullivan's Indy Heat (USA)			| 		| 1992	| Tradewest	| Miscellaneous	| 					|
+| nes_daoshuai	|  	| NES Dao Shuai (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_darkman	|  	| NES Darkman (USA)					| 		| 1991	| Ocean		| Miscellaneous	| 					|
+| nes_darkwingduck|  	| NES Darkwing Duck (USA)				| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_dashgalinalias|  	| NES Dash Galaxy in the Alien Asylum (USA)		| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_dashyarou	|  	| NES Dash Yarou (Japan)				| 		| 1990	| Visco		| Miscellaneous	| 					|
+| nes_davidcrasaboyandhis|  	| NES David Crane's A Boy and His Blob - Trouble on Blob| 	| 1990	| Absolute	| Miscellaneous	| 					|
+| nes_daydredav	|  	| NES Day Dreamin' Davey (USA)				| 		| 1992	| HAL Laboratory| Miscellaneous	| 					|
+| nes_daysofthunder|  	| NES Days of Thunder (USA)				| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_deadfox	|  	| NES Dead Fox (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_deadlytowers|  	| NES Deadly Towers (USA)				| 		| 1987	| Broderbund	| Miscellaneous	| 					|
+| nes_deathrace	|  	| NES Death Race (USA) (Unl)				| 		| 1990	| AGCI		| Miscellaneous	| 					|
+| nes_deathbots	|  	| NES Deathbots (USA) (Rev 1) (Unl)			| 		| 1990	| AVE		| Miscellaneous	| 					|
+| nes_deblock	|  	| NES Deblock (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_defenderii|  	| NES Defender II (USA)					| 		| 1988	| HAL Laboratory| Miscellaneous	| 					|
+| nes_defencro	|  	| NES Defender of the Crown (USA)			| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
+| nes_dejavu	|  	| NES Deja Vu (USA)					| 		| 1990	| Kemco		| Miscellaneous	| 					|
+| nes_demonsword|  	| NES Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_dengeki	|  	| NES Dengeki - Big Bang! (Japan)			| nes_clashatdem| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_destiear	|  	| NES Destination Earthstar (USA)			| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_destructorel|  	| NES Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
+| nes_devilman_1|  	| NES Devil Man (Japan)					| nes_devilman	| 1989	| Namco		| Miscellaneous	| 					|
+| nes_devilman	|  	| NES Devil Man (T-eng)					| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_devilworld|  	| NES Devil World (Japan) (Rev A)			| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_diehard	|  	| NES Die Hard (USA)					| 		| 1992	| Activision	| Miscellaneous	| 					|
+| nes_digdug	|  	| NES Dig Dug (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_digdugii	|  	| NES Dig Dug II (Japan)				| 		| 1986	| Namco		| Miscellaneous	| 					|
+| nes_digdugiitroinpa|  	| NES Dig Dug II - Trouble in Paradise (USA)		| 		| 1989	| Bandai	| Miscellaneous	| 					|
+| nes_digger	|  	| NES Digger - The Legend of the Lost City (USA)	| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
+| nes_digitdevmonmegte_1|  	| NES Digital Devil Monogatari - Megami Tensei (Japan)| nes_digitdevmonmegte| 1987	| Namco		| Miscellaneous	| 					|
+| nes_digitdevmonmegte|  	| NES Digital Devil Monogatari - Megami Tensei (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_digitdevmonmegteii_1|  	| NES Digital Devil Monogatari - Megami Tensei II (Japan| nes_digitdevmonmegteii| 1990| Namco	| Miscellaneous	| 					|
+| nes_digitdevmonmegteii|  	| NES Digital Devil Monogatari - Megami Tensei II (T-eng| 	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dokidokyuu|  	| NES Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan| 		| 1991	| Vap		| Miscellaneous	| 					|
+| nes_dondokodon|  	| NES Don Doko Don (Japan)				| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_dondokodon2|  	| NES Don Doko Don 2 (Japan)				| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_donaldland|  	| NES Donald Land (Japan)				| 		| 1988	| Data East	| Miscellaneous	| 					|
+| nes_donkeykong|  	| NES Donkey Kong (World) (Rev A)			| 		| 1983	| Nintendo	| Miscellaneous	| 					|
+| nes_donkeykongjr|  	| NES Donkey Kong Jr. (World) (Rev A)			| 		| 1983	| Nintendo	| Miscellaneous	| 					|
+| nes_doolybravoland|  	| NES Dooly Bravo Land (Korea)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_doordoor	|  	| NES Door Door (Japan)					| 		| 1985	| Enix		| Miscellaneous	| 					|
+| nes_doraemon	|  	| NES Doraemon (Japan) (Rev A)				| 		| 1986	| Hudson Soft	| Miscellaneous	| 					|
+| nes_dorae_1	|  	| NES Doraemon - Giga Zombie no Gyakushuu (Japan)	| nes_dorae	| 1990	| Epoch		| Miscellaneous	| 					|
+| nes_dorae	|  	| NES Doraemon - Giga Zombie no Gyakushuu (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_doubledragon|  	| NES Double Dragon (USA)				| 		| 1988	| Technos	| Miscellaneous	| 					|
+| nes_doubldraii|  	| NES Double Dragon II - The Revenge (USA)		| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_doubldraiii|  	| NES Double Dragon III - The Sacred Stones (USA)	| 		| 1991	| Acclaim	| Miscellaneous	| 					|
+| nes_doubledribble|  	| NES Double Dribble (USA)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_doublestrike|  	| NES Double Strike (USA)				| 		| 1990	| AVE		| Miscellaneous	| 					|
+| nes_doughboy	|  	| NES Dough Boy (Japan)					| 		| 1985	| Kemco		| Miscellaneous	| 					|
+| nes_downtnekkousorda|  	| NES Downtown - Nekketsu Koushinkyoku - Soreyuke Daiund| 		| 1990	| Technos	| Miscellaneous	| 					|
+| nes_downtnekmon|  	| NES Downtown - Nekketsu Monogatari (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_downtspekunkunnojid|  	| NES Downtown Special - Kunio-kun no Jidaigeki Da yo Ze| 	| 1991	| Technos	| Miscellaneous	| 					|
+| nes_drchaos	|  	| NES Dr. Chaos (USA)					| 		| 1988	| FCI		| Miscellaneous	| 					|
+| nes_drjekandmrhy|  	| NES Dr. Jekyll and Mr. Hyde (USA)			| 		| 1989	| Bandai	| Miscellaneous	| 					|
+| nes_drmario	|  	| NES Dr. Mario (Japan, USA) (Rev A).nes		| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_dracsnightout|  	| NES Drac's Night Out (USA) (Prototype)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragonbuster|  	| NES Dragon Buster (Japan)				| 		| 1987	| Namco		| Miscellaneous	| 					|
+| nes_dragobusii_1|  	| NES Dragon Buster II - Yami no Fuuin (Japan)		| nes_dragobusii| 1989	| Namco		| Miscellaneous	| 					|
+| nes_dragobusii|  	| NES Dragon Buster II - Yami no Fuuin (T-eng)		| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_dragonfighter|  	| NES Dragon Fighter (USA)				| 		| 1992	| Sofel		| Miscellaneous	| 					|
+| nes_dragonpower|  	| NES Dragon Power (USA)				| 		| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_dragoscr	|  	| NES Dragon Scroll - Yomigaerishi Maryuu (Japan)	| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_dragospiaraden|  	| NES Dragon Spirit - Aratanaru Densetsu (Japan)	| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_dragospinewleg|  	| NES Dragon Spirit - The New Legend (USA)		| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_dragonwarrior|  	| NES Dragon Warrior (USA)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_dragowarii|  	| NES Dragon Warrior II (USA)				| 		| 1990	| Enix		| Miscellaneous	| 					|
+| nes_dragowariii|  	| NES Dragon Warrior III (USA)				| 		| 1992	| Enix		| Miscellaneous	| 					|
+| nes_dragowariv|  	| NES Dragon Warrior IV (USA)				| 		| 1992	| Enix		| Miscellaneous	| 					|
+| nes_dragonslair|  	| NES Dragon's Lair (USA)				| 		| 1990	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_draiocht	|  	| NES Draiocht (HB)					| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_dropzone	|  	| NES Dropzone (Europe)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
+| nes_druaganotou|  	| NES Druaga no Tou (Japan)				| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_duckhunt	|  	| NES Duck Hunt (USA)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_ducktales	|  	| NES DuckTales (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_ducktales2|  	| NES DuckTales 2 (USA)					| 		| 1993	| Capcom	| Miscellaneous	| 					|
+| nes_dynamitebatman|  	| NES Dynamite Batman (Japan)				| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
+| nes_dynow	|  	| NES Dynowarz - Destruction of Spondylus (USA)		| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_earthbound|  	| NES Earthbound (USA) (Prototype)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_egypt	|  	| NES Egypt (Japan)					| 		| 1991	| Human Entertai| Miscellaneous	| 					|
+| nes_elevatoraction|  	| NES Elevator Action (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
+| nes_elimiboadue|  	| NES Eliminator Boat Duel (USA)			| 		| 1991	| Electro Brain	| Miscellaneous	| 					|
+| nes_elnarknozaihou|  	| NES Elnark no Zaihou (Japan)				| 		| 1987	| Towa Chiki	| Miscellaneous	| 					|
+| nes_empircit	|  	| NES Empire City - 1931 (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_eskimbobdeledi|  	| NES Eskimo Bob Deluxe Edition (HB)			| 		| 2019	| Spoony Bard Pr| Miscellaneous	| 					|
+| nes_esperboukentai|  	| NES Esper Bouken Tai (Japan)				| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| nes_esperdre2	|  	| NES Esper Dream 2 - Aratanaru Tatakai (Japan)		| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_espitundherpim|  	| NES Espitenen und herr pimponen (HB)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_excitebike|  	| NES Excitebike (Japan, USA)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_excitingboxing|  	| NES Exciting Boxing (Japan)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_exerion	|  	| NES Exerion (Japan)					| 		| 1985	| Jaleco	| Miscellaneous	| 					|
+| nes_expedition|  	| NES Expedition (HB)					| 		| 2017	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_f1race	|  	| NES F-1 Race (Japan)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_f1sensation|  	| NES F-1 Sensation (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_f1circus	|  	| NES F1 Circus (Japan)					| 		| 1992	| Nichibutsu	| Miscellaneous	| 					|
+| nes_famicjum	|  	| NES Famicom Jump - Eiyuu Retsuden (Japan)		| 		| 1989	| Bandai	| Miscellaneous	| 					|
+| nes_famicjumii|  	| NES Famicom Jump II - Saikyou no 7 Nin (Japan)	| 		| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_familyboxing|  	| NES Family Boxing (Japan)				| 		| 1987	| Namco		| Miscellaneous	| 					|
+| nes_familypicross|  	| NES Family Picross! (HB)				| 		| 2018	| FG Software	| Miscellaneous	| 					|
+| nes_familypinball|  	| NES Family Pinball (Japan)				| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_fantasyzone|  	| NES Fantasy Zone (Japan)				| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
+| nes_fantazonii|  	| NES Fantasy Zone II - Opa-Opa no Namida (Japan)	| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| nes_faria	|  	| NES Faria - A World of Mystery & Danger! (USA)	| 		| 1991	| Nexoft	| Miscellaneous	| 					|
+| nes_faxanadu	|  	| NES Faxanadu (USA) (Rev A)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_felixthecat|  	| NES Felix the Cat (USA)				| 		| 1992	| Hudson Soft	| Miscellaneous	| 					|
+| nes_ferragrapricha|  	| NES Ferrari Grand Prix Challenge (USA)		| 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| nes_festersquest|  	| NES Fester's Quest (USA)				| 		| 1989	| Sunsoft	| Miscellaneous	| 					|
+| nes_fightinggolf|  	| NES Fighting Golf (Japan)				| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_finalcombat|  	| NES Final Combat (Asia) (NTSC) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_finalfantasy|  	| NES Final Fantasy (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_finalfan12_1|  	| NES Final Fantasy 1 & 2 (Japan)			| nes_finalfan12| 1994	| Square	| Miscellaneous	| 					|
+| nes_finalfan12|  	| NES Final Fantasy 1 & 2 (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_finalfantasyii|  	| NES Final Fantasy II (USA) (Proto)			| 		| 0000	| Square	| Miscellaneous	| 					|
+| nes_finalfaniii|  	| NES Final Fantasy III (Japan)				| 		| 1990	| Square	| Miscellaneous	| 					|
+| nes_finalfanvii|  	| NES Final Fantasy VII (Ch)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_finalfanviiadvchv11|  	| NES Final Fantasy VII - Advent Children v1.1 (Ch)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_finallap	|  	| NES Final Lap (Japan)					| 		| 1988	| Namco		| Miscellaneous	| 					|
+| nes_firenice	|  	| NES Fire 'n Ice (USA)					| 		| 1993	| Tecmo		| Miscellaneous	| 					|
+| nes_firedragon|  	| NES Fire Dragon (Asia)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_fireemb	|  	| NES Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Ja| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_fireembgai|  	| NES Fire Emblem Gaiden (Japan)			| 		| 1992	| Nintendo	| Miscellaneous	| 					|
+| nes_firehawk	|  	| NES Fire Hawk (USA) (Unl)				| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| nes_fistnorsta|  	| NES Fist of the North Star (USA)			| 		| 1989	| Taxan		| Miscellaneous	| 					|
+| nes_flappy	|  	| NES Flappy (Japan)					| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
+| nes_flintresdinhop|  	| NES Flintstones, The - The Rescue of Dino & Hoppy (USA| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_flintsuratdinpe|  	| NES Flintstones, The - The Surprise at Dinosaur Peak! | 		| 1994	| Taito		| Miscellaneous	| 					|
+| nes_flipull_1	|  	| NES Flipull - An Exciting Cube Game (Japan) (En) (Rev | nes_flipull	| 1989	| Taito		| Miscellaneous	| 					|
+| nes_flipull	|  	| NES Flipull - An Exciting Cube Game (Japan)		| 		| 1989	| Taito		| Miscellaneous	| 					|
+| nes_flyindra	|  	| NES Flying Dragon - The Secret Scroll (USA)		| 		| 1989	| Culture Brain	| Miscellaneous	| 					|
+| nes_flyinghero|  	| NES Flying Hero (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_flyingwarriors|  	| NES Flying Warriors (USA)				| 		| 1991	| Culture Brain	| Miscellaneous	| 					|
+| nes_formationz|  	| NES Formation Z (Japan) (Rev A)			| 		| 1985	| Jaleco	| Miscellaneous	| 					|
+| nes_frank	|  	| NES Frankenstein - The Monster Returns (USA)		| 		| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_freefall	|  	| NES Free Fall (USA) (Proto)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_freedomforce|  	| NES Freedom Force (USA)				| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| nes_fridaythe13th|  	| NES Friday the 13th (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
+| nes_frontline	|  	| NES Front Line (Japan)				| 		| 1985	| Taito		| Miscellaneous	| 					|
+| nes_fudoumyououden|  	| NES Fudou Myouou Den (Japan)				| nes_demonsword| 1988	| Taito		| Miscellaneous	| 					|
+| nes_full	|  	| NES full nes palette (Blargg)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_gijoeareamhe|  	| NES G.I. Joe - A Real American Hero (USA)		| 		| 1991	| Taxan		| Miscellaneous	| 					|
+| nes_gijoeatlfa|  	| NES G.I. Joe - The Atlantis Factor (USA)		| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_gaiapolis	|  	| NES Gaiapolis (Asia)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_galaccru	|  	| NES Galactic Crusader (USA) (Unl)			| 		| 1990	| Sachen / Joy V| Miscellaneous	| 					|
+| nes_galaga	|  	| NES Galaga - Demons of Death (USA)			| 		| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_galaxian	|  	| NES Galaxian (Japan)					| 		| 1984	| Namco		| Miscellaneous	| 					|
+| nes_galaxy5000|  	| NES Galaxy 5000 (USA)					| 		| 1991	| Activision	| Miscellaneous	| 					|
+| nes_gameparty	|  	| NES Game Party (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ganbaregoemon2|  	| NES Ganbare Goemon 2 (Japan)				| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoegai_1|  	| NES Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)| nes_ganbagoegai| 1990	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoegai|  	| NES Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ganbagoegai2_1|  	| NES Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)	| nes_ganbagoegai2| 1992	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoegai2|  	| NES Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)	| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoe	|  	| NES Ganbare Goemon! - Karakuri Douchuu (Japan)	| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_ganbapenrac|  	| NES Ganbare Pennant Race! (Japan)			| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_garfi	|  	| NES Garfield - A Week of Garfield (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_gargosqueii|  	| NES Gargoyle's Quest II (USA)				| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_gauntlet	|  	| NES Gauntlet (USA)					| 		| 1988	| Tengen	| Miscellaneous	| 					|
+| nes_gauntletii|  	| NES Gauntlet II (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_gegegnokit|  	| NES Gegege no Kitarou - Youkai Daimakyou (Japan)	| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_geimos	|  	| NES Geimos (Japan)					| 		| 1985	| ASCII		| Miscellaneous	| 					|
+| nes_gekityonbat|  	| NES Gekitotsu Yonku Battle (Japan)			| 		| 1989	| Irem		| Miscellaneous	| 					|
+| nes_gemfire	|  	| NES Gemfire (USA)					| 		| 1992	| Koei		| Miscellaneous	| 					|
+| nes_genghiskhan|  	| NES Genghis Khan (USA)				| 		| 1990	| Koei		| Miscellaneous	| 					|
+| nes_georgforskobo|  	| NES George Foreman's KO Boxing (USA)			| 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| nes_getemgary	|  	| NES Get'Em Gary (HB)					| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
+| nes_getsufuumaden|  	| NES Getsu Fuuma Den (Japan)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_ghostlion	|  	| NES Ghost Lion (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ghostbusters|  	| NES Ghostbusters (USA)				| 		| 1988	| Activision	| Miscellaneous	| 					|
+| nes_ghostbustersii|  	| NES Ghostbusters II (USA)				| 		| 1990	| Activision	| Miscellaneous	| 					|
+| nes_ghostsngoblins|  	| NES Ghosts'n Goblins (USA)				| 		| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_ghoulschool|  	| NES Ghoul School (USA)				| 		| 1992	| Electro Brain	| Miscellaneous	| 					|
+| nes_gimmick	|  	| NES Gimmick! (Japan)					| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
+| nes_glukthuwar|  	| NES Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
+| nes_godsla	|  	| NES God Slayer - Haruka Tenkuu no Sonata (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_golf	|  	| NES Golf (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_golgo13	|  	| NES Golgo 13 - Top Secret Episode (USA)		| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
+| nes_goonies	|  	| NES Goonies (Japan)					| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_gooniesiithe|  	| NES Goonies II, The (USA)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_gorbynopipdai|  	| NES Gorby no Pipeline Daisakusen (Japan)		| 		| 1991	| Tokuma Shoten	| Miscellaneous	| 					|
+| nes_gotcha	|  	| NES Gotcha! - The Sport! (USA)			| 		| 1987	| LJN		| Miscellaneous	| 					|
+| nes_gradius_1	|  	| NES Gradius (Japan)					| nes_gradius	| 1986	| Konami	| Miscellaneous	| 					|
+| nes_gradius	|  	| NES Gradius (USA)					| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_gradiusii	|  	| NES Gradius II (Japan)				| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_granavesubla|  	| NES Gran Aventura Submarina, La (Spain)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_greatbatcyb|  	| NES Great Battle Cyber (Japan)			| 		| 1992	| Banpresto	| Miscellaneous	| 					|
+| nes_greattank	|  	| NES Great Tank (Japan)				| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_greml2	|  	| NES Gremlins 2 - The New Batch (USA)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_gruni2	|  	| NES Gruniozerca 2 - The Great Cavy Rescue! (HB)	| 		| 2019	| Lukasz Kur & M| Miscellaneous	| 					|
+| nes_guardleg	|  	| NES Guardian Legend, The (USA)			| 		| 1989	| Broderbund	| Miscellaneous	| 					|
+| nes_guardicgaiden|  	| NES Guardic Gaiden (Japan)				| nes_guardleg	| 1987	| Irem		| Miscellaneous	| 					|
+| nes_guerrillawar|  	| NES Guerrilla War (USA)				| 		| 1989	| SNK		| Miscellaneous	| 					|
+| nes_guevara	|  	| NES Guevara (Japan)					| nes_guerrillawar| 1988	| SNK		| Miscellaneous	| 					|
+| nes_gumshoe	|  	| NES Gumshoe (USA)					| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| nes_gunnac_1	|  	| NES Gun Nac (Japan)					| nes_gunnac	| 1990	| Tonkin House	| Miscellaneous	| 					|
+| nes_gunnac	|  	| NES Gun Nac (USA)					| 		| 1991	| Nexoft	| Miscellaneous	| 					|
+| nes_gunsight	|  	| NES Gun Sight (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_gundec	|  	| NES Gun-Dec (Japan)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_gunsmoke	|  	| NES Gun.Smoke (USA)					| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_gunhed	|  	| NES Gunhed - Aratanaru Tatakai (Japan)		| 		| 1990	| Varie		| Miscellaneous	| 					|
+| nes_gyrodine	|  	| NES Gyrodine (Japan)					| 		| 1986	| Taito		| Miscellaneous	| 					|
+| nes_gyromite	|  	| NES Gyromite (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_gyruss	|  	| NES Gyruss (USA)					| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
+| nes_haradiuszero|  	| NES Haradius Zero (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_harleglo	|  	| NES Harlem Globetrotters (USA)			| 		| 1991	| GameTek	| Miscellaneous	| 					|
+| nes_hatris	|  	| NES Hatris (USA)					| 		| 1992	| Bullet-Proof S| Miscellaneous	| 					|
+| nes_halloween85|  	| NES Haunted Halloween'85 (HB)				| 		| 2015	| Retrotainment | Miscellaneous	| 					|
+| nes_halloween86|  	| NES Haunted Halloween'86 (HB)				| 		| 2016	| Retrotainment | Miscellaneous	| 					|
+| nes_halloween86alt|  	| NES Haunted Halloween'86 (HB, alt)			| nes_halloween86| 2016	| Retrotainment | Miscellaneous	| 					|
+| nes_heavybarrel|  	| NES Heavy Barrel (USA)				| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_heavyshreddin|  	| NES Heavy Shreddin' (USA)				| 		| 1990	| Parker Brother| Miscellaneous	| 					|
+| nes_hebereke	|  	| NES Hebereke (Japan)					| nes_ufouria	| 1991	| Sunsoft	| Miscellaneous	| 					|
+| nes_hector87	|  	| NES Hector '87 (Japan)				| 		| 1987	| Hudson Soft	| Miscellaneous	| 					|
+| nes_heisetenbak_1|  	| NES Heisei Tensai Bakabon (Japan)			| nes_heisetenbak| 1991	| Namco		| Miscellaneous	| 					|
+| nes_heisetenbak|  	| NES Heisei Tensai Bakabon (T-Eng)			| 		| 1991	| Namco		| Miscellaneous	| 					|
+| nes_hellfighter|  	| NES Hell Fighter (Asia) (PAL) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_hellokitnooha|  	| NES Hello Kitty no Ohanabatake (Japan)		| 		| 1992	| Character Soft| Miscellaneous	| 					|
+| nes_hellokitwor|  	| NES Hello Kitty World (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_higem	|  	| NES Higemaru - Makai-jima - Nanatsu no Shima Daibouken| 		| 1987	| Capcom	| Miscellaneous	| 					|
+| nes_highspeed	|  	| NES High Speed (USA)					| 		| 1991	| Tradewest	| Miscellaneous	| 					|
+| nes_hinothouhen_1|  	| NES Hinotori Houou Hen - Gaou no Bouken (Japan)	| nes_hinothouhen| 1987	| Konami	| Miscellaneous	| 					|
+| nes_hinothouhen|  	| NES Hinotori Houou Hen - Gaou no Bouken (T-Eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_hitlenofuk|  	| NES Hitler no Fukkatsu - Top Secret (Japan)		| nes_bioniccommando| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_hogansalley|  	| NES Hogan's Alley (USA)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_hokutonoken|  	| NES Hokuto no Ken (Japan)				| 		| 1986	| Toei Animation| Miscellaneous	| 					|
+| nes_hokutonoken2|  	| NES Hokuto no Ken 2 (Japan)				| 		| 1987	| Toei Animation| Miscellaneous	| 					|
+| nes_holydiver	|  	| NES Holy Diver (Japan)				| 		| 1989	| Irem		| Miscellaneous	| 					|
+| nes_homealone	|  	| NES Home Alone (USA) (Rev A)				| 		| 1991	| THQ		| Miscellaneous	| 					|
+| nes_homealo2	|  	| NES Home Alone 2 - Lost in New York (USA)		| 		| 1992	| THQ		| Miscellaneous	| 					|
+| nes_hook	|  	| NES Hook (USA)					| 		| 1992	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_hottanochitan|  	| NES Hottaaman no Chitei Tanken (Japan)		| 		| 1986	| Use		| Miscellaneous	| 					|
+| nes_huangdi	|  	| NES Huang Di (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_hudsonhawk|  	| NES Hudson Hawk (USA)					| 		| 1992	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_hugeinsect|  	| NES Huge Insect (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_huntredoct|  	| NES Hunt for Red October, The (USA)			| 		| 1991	| Hi Tech Expres| Miscellaneous	| 					|
+| nes_iceclimber|  	| NES Ice Climber (USA, Europe)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_icehockey	|  	| NES Ice Hockey (USA)					| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_ikariwarriors|  	| NES Ikari Warriors (USA) (Rev A)			| 		| 1987	| SNK		| Miscellaneous	| 					|
+| nes_ikariwarii|  	| NES Ikari Warriors II - Victory Road (USA)		| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_ikariwariii|  	| NES Ikari Warriors III - The Rescue (USA)		| 		| 1991	| SNK		| Miscellaneous	| 					|
+| nes_ikeikenekhocbu|  	| NES Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dair| 		| 1992	| Technos	| Miscellaneous	| 					|
+| nes_ikki	|  	| NES Ikki (Japan)					| 		| 1985	| Sunsoft	| Miscellaneous	| 					|
+| nes_imagefight|  	| NES Image Fight (USA)					| 		| 1990	| Irem		| Miscellaneous	| 					|
+| nes_immortalthe|  	| NES Immortal, The (USA)				| 		| 1990	| Electronic Art| Miscellaneous	| 					|
+| nes_imposmisii|  	| NES Impossible Mission II (USA)			| 		| 1989	| AVE		| Miscellaneous	| 					|
+| nes_increcradum|  	| NES Incredible Crash Dummies, The (USA)		| 		| 1994	| LJN		| Miscellaneous	| 					|
+| nes_indiajonandlascr|  	| NES Indiana Jones and the Last Crusade (USA)		| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_indiajonandtemdo|  	| NES Indiana Jones and the Temple of Doom (USA) (Rev A)| 		| 1988	| Mindscape	| Miscellaneous	| 					|
+| nes_indivisible|  	| NES Indivisible (HB)					| 		| 201x	| Lab Zero Games| Miscellaneous	| 					|
+| nes_infiltrator|  	| NES Infiltrator (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_insectorx	|  	| NES Insector X (Japan)				| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_irontan	|  	| NES Iron Tank - The Invasion of Normandy (USA)	| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_irons	|  	| NES Ironsword - Wizards & Warriors II (USA)		| 		| 1989	| Acclaim	| Miscellaneous	| 					|
+| nes_isolatedwarrior|  	| NES Isolated Warrior (USA)				| 		| 1991	| NTVIC		| Miscellaneous	| 					|
+| nes_ivanirostessuoffro|  	| NES Ivan 'Ironman' Stewart's Super Off Road (USA)| 		| 1990	| Tradewest	| Miscellaneous	| 					|
+| nes_jleafigsoc|  	| NES J.League Fighting Soccer - The King of Ace Striker| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_jleawingoa|  	| NES J.League Winning Goal (Japan).nes			| 		| 1994	| Electronic Art| Miscellaneous	| 					|
+| nes_jacknicgre18homachg|  	| NES Jack Nicklaus' Greatest 18 Holes of Major Champion| 	| 1990	| Konami	| Miscellaneous	| 					|
+| nes_jackal	|  	| NES Jackal (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_jackiechan_1|  	| NES Jackie Chan (Japan)				| nes_jackiechan| 1991	| Hudson Soft	| Miscellaneous	| 					|
+| nes_jackiechan|  	| NES Jackie Chan (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
+| nes_jajamnodai|  	| NES Jajamaru no Daibouken (Japan)			| 		| 1986	| Jaleco	| Miscellaneous	| 					|
+| nes_jamesbondjr|  	| NES James Bond Jr (USA)				| 		| 1992	| THQ		| Miscellaneous	| 					|
+| nes_jaws	|  	| NES Jaws (USA)					| 		| 1987	| LJN		| Miscellaneous	| 					|
+| nes_jesus_1	|  	| NES Jesus - Kyoufu no Bio Monster (Japan)		| nes_jesus	| 1989	| King Records	| Miscellaneous	| 					|
+| nes_jesus	|  	| NES Jesus - Kyoufu no Bio Monster (T-eng)		| 		| 1989	| King Records	| Miscellaneous	| 					|
+| nes_jetpaco	|  	| NES Jet-Paco (HB)					| 		| 2015	| Mojon Twins	| Miscellaneous	| 					|
+| nes_jetsons	|  	| NES Jetsons, The - Cogswell's Caper (USA)		| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_jigokgokmar|  	| NES Jigoku Gokuraku Maru (Japan)			| nes_kabuki	| 1990	| Pack-In-Video	| Miscellaneous	| 					|
+| nes_jikuuyuu	|  	| NES Jikuu Yuuden - Debias (Japan)			| 		| 1987	| Namco		| Miscellaneous	| 					|
+| nes_jimmyconten|  	| NES Jimmy Connors Tennis (USA)			| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
+| nes_jj	|  	| NES JJ (Japan)					| 		| 1987	| Square	| Miscellaneous	| 					|
+| nes_joemac	|  	| NES Joe & Mac (USA)					| 		| 1992	| Data East	| Miscellaneous	| 					|
+| nes_johnelwsqua|  	| NES John Elway's Quarterback (USA)			| 		| 1989	| Tradewest	| Miscellaneous	| 					|
+| nes_jongbou	|  	| NES Jongbou (Japan)					| 		| 1987	| KAC		| Miscellaneous	| 					|
+| nes_jordavsbir|  	| NES Jordan vs Bird - One On One (USA)			| 		| 1989	| Milton Bradley| Miscellaneous	| 					|
+| nes_joshubatjer|  	| NES Joshua & the Battle of Jericho (USA)		| 		| 1992	| Wisdom Tree	| Miscellaneous	| 					|
+| nes_journsil	|  	| NES Journey to Silius (USA)				| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_joust	|  	| NES Joust (USA)					| 		| 1988	| HAL Laboratory| Miscellaneous	| 					|
+| nes_jovialrace|  	| NES Jovial Race (Unk)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_joymechfight_1|  	| NES Joy Mech Fight (Japan)				| nes_joymechfight| 1993	| Nintendo	| Miscellaneous	| 					|
+| nes_joymechfight|  	| NES Joy Mech Fight (T-eng)				| 		| 1993	| Nintendo	| Miscellaneous	| 					|
+| nes_jujudensetsu|  	| NES JuJu Densetsu (Japan)				| nes_toki	| 1991	| Taito		| Miscellaneous	| 					|
+| nes_jumboozanoholinonep|  	| NES Jumbo Ozaki no Hole in One Professional (Japan)| 		| 1988	| HAL Laboratory| Miscellaneous	| 					|
+| nes_jumpikid	|  	| NES Jumpin' Kid - Jack to Mame no Ki Monogatari (Japan| 		| 1990	| Asmik		| Miscellaneous	| 					|
+| nes_junglebookthe|  	| NES Jungle Book, The (USA)				| 		| 1994	| Virgin Games	| Miscellaneous	| 					|
+| nes_jurassicboy|  	| NES Jurassic Boy (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_jurassicpark|  	| NES Jurassic Park (USA)				| 		| 1993	| Ocean		| Miscellaneous	| 					|
+| nes_justbreed_1|  	| NES Just Breed (Japan)				| nes_justbreed	| 1992	| Enix		| Miscellaneous	| 					|
+| nes_justbreed	|  	| NES Just Breed (T-Eng)				| 		| 1992	| Enix		| Miscellaneous	| 					|
+| nes_justiceduel|  	| NES Justice Duel (HB)					| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_juuouki_1	|  	| NES Juuouki (Japan)					| nes_juuouki	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_juuouki	|  	| NES Juuouki (T-eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_juurysoumetsto|  	| NES Juuryoku Soukou Metal Storm (Japan)		| 		| 1992	| Irem		| Miscellaneous	| 					|
+| nes_kabuki	|  	| NES Kabuki - Quantum Fighter (USA)			| 		| 1991	| HAL Laboratory| Miscellaneous	| 					|
+| nes_kage	|  	| NES Kage (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kagenodensetsu|  	| NES Kage no Densetsu (Japan)				| nes_legenkag	| 1986	| Taito		| Miscellaneous	| 					|
+| nes_kageroudensetsu|  	| NES Kagerou Densetsu (Japan)				| 		| 1990	| Pixel		| Miscellaneous	| 					|
+| nes_kaikeyanmar|  	| NES Kaiketsu Yancha Maru (Japan)			| 		| 1987	| Irem		| Miscellaneous	| 					|
+| nes_kaikeyanmar2|  	| NES Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)	| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_kaikeyanmar3|  	| NES Kaiketsu Yancha Maru 3 - Taiketsu! Zouringen (Japa| 		| 1993	| Irem		| Miscellaneous	| 					|
+| nes_kakefkunnojumte|  	| NES Kakefu-kun no Jump Tengoku - Speed Jigoku (Japan)	| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
+| nes_kamenoong	|  	| NES Kame no Ongaeshi - Urashima Densetsu (Japan)	| 		| 1988	| Hudson Soft	| Miscellaneous	| 					|
+| nes_kamennoninaka|  	| NES Kamen no Ninja - Akakage (Japan)			| 		| 1988	| Toei Animation| Miscellaneous	| 					|
+| nes_kamennoninhan|  	| NES Kamen no Ninja - Hanamaru (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kamenriderclub|  	| NES Kamen Rider Club (Japan)				| 		| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_kanshnagkannotogots|  	| NES Kanshakudama Nage Kantarou no Toukaidou Gojuusan T| 	| 1986	| Sunsoft	| Miscellaneous	| 					|
+| nes_karakkendenmuslo|  	| NES Karakuri Kengou Den Musashi Lord - Karakuribito Ha| 		| 1991	| Yutaka	| Miscellaneous	| 					|
+| nes_karatechamp|  	| NES Karate Champ (USA) (Rev A)			| 		| 1986	| Data East	| Miscellaneous	| 					|
+| nes_karatekidthe|  	| NES Karate Kid, The (USA)				| 		| 1987	| LJN		| Miscellaneous	| 					|
+| nes_karateka	|  	| NES Karateka (Japan)					| 		| 1985	| Soft Pro	| Miscellaneous	| 					|
+| nes_karnov	|  	| NES Karnov (USA)					| 		| 1988	| Data East	| Miscellaneous	| 					|
+| nes_kerokerkernoda_1|  	| NES Kero Kero Keroppi no Daibouken (Japan)		| nes_kerokerkernoda| 1991	| Character Soft| Miscellaneous	| 					|
+| nes_kerokerkernoda|  	| NES Kero Kero Keroppi no Daibouken (T-eng)		| 		| 1991	| Character Soft| Miscellaneous	| 					|
+| nes_kerokerkernoda2_1|  	| NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa O| nes_kerokerkernoda2| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kerokerkernoda2|  	| NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa O| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_keropkernosplbo|  	| NES Keroppi to Keroriinu no Splash Bomb! (Japan)	| 		| 1993	| Character Soft| Miscellaneous	| 					|
+| nes_kickmaster|  	| NES Kick Master (USA)					| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_kicklecubicle|  	| NES Kickle Cubicle (USA)				| 		| 1990	| Irem		| Miscellaneous	| 					|
+| nes_kiddracula|  	| NES Kid Dracula (English)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kidicarus	|  	| NES Kid Icarus (USA, Europe)				| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_kidkloinnigmawo|  	| NES Kid Klown in Night Mayor World (USA)		| 		| 1993	| Kemco		| Miscellaneous	| 					|
+| nes_kidkooandquesewohe|  	| NES Kid Kool and the Quest for the Seven Wonder Herbs | 	| 1990	| Vic Tokai	| Miscellaneous	| 					|
+| nes_kidnik	|  	| NES Kid Niki - Radical Ninja (USA) (Rev A)		| 		| 1987	| Data East	| Miscellaneous	| 					|
+| nes_kiddysuninfan|  	| NES Kiddy Sun in Fantasia (Taiwan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kidousenzgun_1|  	| NES Kidou Senshi Z Gundam - Hot Scramble (Japan) (Fina| nes_kidousenzgun| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_kidousenzgun|  	| NES Kidou Senshi Z Gundam - Hot Scramble (Japan)	| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_kingkon2_1|  	| NES King Kong 2 - Ikari no Megaton Punch (Japan)	| nes_kingkon2	| 1986	| Konami	| Miscellaneous	| 					|
+| nes_kingkon2	|  	| NES King Kong 2 - Ikari no Megaton Punch (T-eng)	| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_kingofkings|  	| NES King of Kings (Japan)				| 		| 1988	| Namco		| Miscellaneous	| 					|
+| nes_kingkin	|  	| NES King of Kings, The (USA) (v5.0) (Unl)		| 		| 1991	| Wisdom Tree	| Miscellaneous	| 					|
+| nes_kingsknight|  	| NES King's Knight (USA)				| 		| 1986	| Square	| Miscellaneous	| 					|
+| nes_kingsquestv|  	| NES King's Quest V (USA)				| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_kinni	|  	| NES Kinnikuman - Muscle Tag Match (Japan)		| 		| 1985	| Bandai	| Miscellaneous	| 					|
+| nes_kirakirstanigac|  	| NES Kira Kira Star Night AC (HB)			| 		| 2017	| RIKI		| Miscellaneous	| 					|
+| nes_kirakirstanigdx|  	| NES Kira Kira Star Night DX (HB)			| 		| 2016	| RIKI		| Miscellaneous	| 					|
+| nes_kirakirstaniggo|  	| NES Kira Kira Star Night GOLD (HB)			| 		| 2016	| RIKI		| Miscellaneous	| 					|
+| nes_kirbysadv	|  	| NES Kirby's Adventure (USA) (Rev A)			| 		| 1993	| Nintendo	| Miscellaneous	| 					|
+| nes_kiterdai	|  	| NES Kiteretsu Daihyakka (Japan)			| 		| 1990	| Epoch		| Miscellaneous	| 					|
+| nes_kittyscatch|  	| NES Kitty's Catch (USA)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kiwikra	|  	| NES Kiwi Kraze - A Bird-Brained Adventure! (USA)	| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_klashball	|  	| NES KlashBall (USA)					| 		| 1991	| Sofel		| Miscellaneous	| 					|
+| nes_klax	|  	| NES Klax (USA) (Unl)					| 		| 1990	| Tengen	| Miscellaneous	| 					|
+| nes_knightrider|  	| NES Knight Rider (USA)				| 		| 1989	| Acclaim	| Miscellaneous	| 					|
+| nes_kokoadventure|  	| NES Koko Adventure (Korea)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_konamspoinseo|  	| NES Konamic Sports in Seoul (Japan)			| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_krazykreatures|  	| NES Krazy Kreatures (USA) (Unl)			| 		| 1990	| AVE		| Miscellaneous	| 					|
+| nes_krioncon	|  	| NES Krion Conquest, The (USA)				| 		| 1991	| Vic Tokai	| Miscellaneous	| 					|
+| nes_krustsfunhou|  	| NES Krusty's Fun House (USA)				| 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| nes_kungfu	|  	| NES Kung Fu (Japan, USA)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_kungfuheroes|  	| NES Kung-Fu Heroes (USA)				| 		| 1989	| Culture Brain	| Miscellaneous	| 					|
+| nes_kuniokunnoneksole|  	| NES Kunio-kun no Nekketsu Soccer League (Japan)	| 		| 1993	| Technos	| Miscellaneous	| 					|
+| nes_kyoursenjuu|  	| NES Kyouryuu Sentai Juuranger (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_kyuukyokutiger|  	| NES Kyuukyoku Tiger (Japan)				| nes_twincobra	| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
+| nes_lagrangepoint_1|  	| NES Lagrange Point (Japan)				| nes_lagrangepoint| 1991	| Konami	| Miscellaneous	| 					|
+| nes_lagrangepoint|  	| NES Lagrange Point (T-eng)				| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_lalathemagical|  	| NES Lala the Magical (HB)				| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
+| nes_laserinvasion|  	| NES Laser Invasion (USA)				| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_lastactionhero|  	| NES Last Action Hero (USA)				| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_lastarmageddon|  	| NES Last Armageddon (Japan)				| 		| 1990	| Yutaka	| Miscellaneous	| 					|
+| nes_lastninjathe|  	| NES Last Ninja, The (USA)				| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_laststa	|  	| NES Last Starfighter, The (USA)			| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_lawnmower	|  	| NES Lawn Mower (HB)					| 		| 2011	| Shiru		| Miscellaneous	| 					|
+| nes_layla	|  	| NES Layla (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_leetresfiggo|  	| NES Lee Trevino's Fighting Golf (USA)			| 		| 1988	| SNK		| Miscellaneous	| 					|
+| nes_legacwiz	|  	| NES Legacy of the Wizard (USA)			| 		| 1989	| Broderbund	| Miscellaneous	| 					|
+| nes_legenbal	|  	| NES Legend of Balubalouk (Japan)			| 		| 1986	| Vic Tokai	| Miscellaneous	| 					|
+| nes_legenkag	|  	| NES Legend of Kage, The (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
+| nes_legenzel	|  	| NES Legend of Zelda, The (USA) (Rev A)		| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_legendarywings|  	| NES Legendary Wings (USA)				| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_legendsofowlia|  	| NES Legends of Owlia (HB)				| 		| 2014	| Nintendo	| Miscellaneous	| 					|
+| nes_lemmings	|  	| NES Lemmings (USA)					| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
+| nes_lethalweapon|  	| NES Lethal Weapon (USA)				| 		| 1993	| Ocean		| Miscellaneous	| 					|
+| nes_lifeforce	|  	| NES Life Force (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_littlemedusa|  	| NES Little Medusa (HB)				| 		| 2018	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_littlmer_1|  	| NES Little Mermaid, The (Japan)			| nes_littlmer	| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_littlmer	|  	| NES Little Mermaid, The (USA)				| 		| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_littlnem	|  	| NES Little Nemo - The Dream Master (USA)		| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_littlninbro|  	| NES Little Ninja Brothers (USA)			| 		| 1990	| Culture Brain	| Miscellaneous	| 					|
+| nes_littlesamson|  	| NES Little Samson (USA)				| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_lizard	|  	| NES Lizard (HB)					| 		| 2018	| Brad Smith	| Miscellaneous	| 					|
+| nes_loderunner|  	| NES Lode Runner (USA)					| 		| 1987	| Broderbund	| Miscellaneous	| 					|
+| nes_logjammers|  	| NES Log Jammers (HB)					| 		| 2017	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_lonerangerthe|  	| NES Lone Ranger, The (USA)				| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_loopz	|  	| NES Loopz (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_lotlot	|  	| NES Lot Lot (Japan)					| 		| 1985	| Tokuma Shoten	| Miscellaneous	| 					|
+| nes_lowgman	|  	| NES Low G Man - The Low Gravity Man (USA)		| 		| 1990	| Taxan		| Miscellaneous	| 					|
+| nes_lunarlimit|  	| NES Lunar Limit (HB)					| 		| 2017	| pubby		| Miscellaneous	| 					|
+| nes_lunarpool	|  	| NES Lunar Pool (USA)					| 		| 1987	| FCI		| Miscellaneous	| 					|
+| nes_lupinsan_1|  	| NES Lupin Sansei - Pandora no Isan (Japan)		| nes_lupinsan	| 1987	| Namco		| Miscellaneous	| 					|
+| nes_lupinsan	|  	| NES Lupin Sansei - Pandora no Isan (T-eng)		| 		| 1987	| Namco		| Miscellaneous	| 					|
+| nes_mckids	|  	| NES M.C. Kids (USA)					| 		| 1992	| Virgin Games	| Miscellaneous	| 					|
+| nes_mule	|  	| NES M.U.L.E. (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_muscle	|  	| NES M.U.S.C.L.E. (USA).nes				| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_machrider	|  	| NES Mach Rider (USA)					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_madcity	|  	| NES Mad City (Japan)					| nes_advenbaybil| 1988	| Konami	| Miscellaneous	| 					|
+| nes_madmax	|  	| NES Mad Max (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_mafatcon	|  	| NES Mafat Conspiracy - Golgo 13 (USA)			| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
+| nes_magicblock|  	| NES Magic Block (Mega Soft)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_magicdarts|  	| NES Magic Darts (USA)					| 		| 1991	| Romstar	| Miscellaneous	| 					|
+| nes_magicdragon|  	| NES Magic Dragon (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_magicjohn	|  	| NES Magic John (Japan)				| nes_totallyrad| 1990	| Jaleco	| Miscellaneous	| 					|
+| nes_magicjohsfasbr|  	| NES Magic Johnson's Fast Break (USA)			| 		| 1990	| Tradewest	| Miscellaneous	| 					|
+| nes_magicsch	|  	| NES Magic of Scheherazade, The (USA)			| 		| 1989	| Culture Brain	| Miscellaneous	| 					|
+| nes_magickidsdor|  	| NES Magical Kid's Doropie (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_magictarkun|  	| NES Magical Taruruuto-kun - Fantastic World!! (Japan)	| 		| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_magictarkun2|  	| NES Magical Taruruuto-kun 2 - Mahou Daibouken (Japan)	| 		| 1992	| Bandai	| Miscellaneous	| 					|
+| nes_magician	|  	| NES Magician (USA)					| 		| 1991	| Taxan		| Miscellaneous	| 					|
+| nes_magmax	|  	| NES Magmax (USA)					| 		| 1988	| FCI		| Miscellaneous	| 					|
+| nes_maharaja_1|  	| NES Maharaja (Japan)					| nes_maharaja	| 1989	| Sunsoft	| Miscellaneous	| 					|
+| nes_maharaja	|  	| NES Maharaja (T-eng)					| 		| 1989	| Sunsoft	| Miscellaneous	| 					|
+| nes_majorleague|  	| NES Major League (Japan)				| 		| 1989	| Irem		| Miscellaneous	| 					|
+| nes_majorleabas|  	| NES Major League Baseball (USA) (Rev A)		| 		| 1988	| LJN		| Miscellaneous	| 					|
+| nes_majoudenii|  	| NES Majou Densetsu II - Daimashikyou Galious (Japan)	| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_makaimura	|  	| NES Makaimura (Japan)					| nes_ghostsngoblins| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_makaimuraarcade|  	| NES Makaimura Arcade (Japan)				| nes_ghostsngoblins| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_maniacmansion|  	| NES Maniac Mansion (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_mappy	|  	| NES Mappy (Japan)					| 		| 1984	| Namco		| Miscellaneous	| 					|
+| nes_mappykids	|  	| NES Mappy Kids (Japan)				| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_mappyland	|  	| NES Mappy-Land (USA)					| 		| 1989	| Taxan		| Miscellaneous	| 					|
+| nes_marblemadness|  	| NES Marble Madness (USA)				| 		| 1989	| Milton Bradley| Miscellaneous	| 					|
+| nes_mariobros	|  	| NES Mario Bros. (World)				| 		| 1983	| Nintendo	| Miscellaneous	| 					|
+| nes_mashieiydenwatga_1|  	| NES Mashin Eiyuu Den Wataru Gaiden (Japan)	| nes_mashieiydenwatga| 1990	| Hudson Soft	| Miscellaneous	| 					|
+| nes_mashieiydenwatga|  	| NES Mashin Eiyuu Den Wataru Gaiden (T-eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mastechuanddruhu|  	| NES Master Chu and the Drunkard Hu (USA) (Unl)	| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| nes_mastershooter|  	| NES Master Shooter (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_matendouji|  	| NES Matendouji (Japan)				| 		| 1990	| Bothtec (Quest| Miscellaneous	| 					|
+| nes_maxwar	|  	| NES Max Warrior - Wakusei Kaigenrei (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mechaatt	|  	| NES Mechanized Attack (USA)				| 		| 1990	| SNK		| Miscellaneous	| 					|
+| nes_megaman	|  	| NES Mega Man (USA)					| 		| 1987	| Capcom	| Miscellaneous	| 					|
+| nes_megaman2	|  	| NES Mega Man 2 (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_megaman3	|  	| NES Mega Man 3 (USA)					| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_megaman3imp|  	| NES Mega Man 3 Improvement (Hack v2.22)		| nes_megaman3	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_megaman3rev|  	| NES Mega Man 3 Revamped (Hack v1.1)			| nes_megaman3	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_megaman4	|  	| NES Mega Man 4 (USA) (Rev A)				| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_megaman5	|  	| NES Mega Man 5 (USA)					| 		| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_megaman6	|  	| NES Mega Man 6 (USA)					| 		| 1994	| Nintendo	| Miscellaneous	| 					|
+| nes_megamancx	|  	| NES Mega Man CX (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_meikyjiidab|  	| NES Meikyuu Jiin Dababa (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_meikyuujima|  	| NES Meikyuu-jima (Japan)				| 		| 1990	| Irem		| Miscellaneous	| 					|
+| nes_menacebeach|  	| NES Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
+| nes_mendelpalace|  	| NES Mendel Palace (USA)				| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
+| nes_metalfighter|  	| NES Metal Fighter (Asia) (Sachen) (Unl)		| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| nes_metalforce|  	| NES Metal Force (Korea) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_metalgear	|  	| NES Metal Gear (USA)					| 		| 1988	| Ultra Games	| Miscellaneous	| 					|
+| nes_metalmax	|  	| NES Metal Max (Japan)					| 		| 1991	| Data East	| Miscellaneous	| 					|
+| nes_metalmec	|  	| NES Metal Mech - Man & Machine (USA)			| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_metalstorm|  	| NES Metal Storm (USA)					| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_metrocross|  	| NES Metro-Cross (Japan)				| 		| 1986	| Namco		| Miscellaneous	| 					|
+| nes_metroid	|  	| NES Metroid (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_metrorogdaw|  	| NES Metroid - Rogue Dawn (USA)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mickemouiii|  	| NES Mickey Mouse III - Yume Fuusen (Japan)		| 		| 1992	| Kemco		| Miscellaneous	| 					|
+| nes_mickemou	|  	| NES Mickey Mousecapade (USA)				| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_micromachines|  	| NES Micro Machines (USA) (Unl)			| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_micromages|  	| NES Micro Mages					| 		| 2019	| Morphcat Games| Miscellaneous	| 					|
+| nes_miedow	|  	| NES Miedow (HB)					| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
+| nes_mig29	|  	| NES MiG 29 - Soviet Fighter (USA) (Unl)		| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_mightybombjack|  	| NES Mighty Bomb Jack (USA)				| 		| 1987	| Tecmo		| Miscellaneous	| 					|
+| nes_mightfinfig|  	| NES Mighty Final Fight (USA)				| 		| 1993	| Capcom	| Miscellaneous	| 					|
+| nes_miketysspunout|  	| NES Mike Tyson's Punch-Out!! (Japan, USA) (Rev A)	| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_millipede	|  	| NES Millipede (USA)					| 		| 1988	| HAL Laboratory| Miscellaneous	| 					|
+| nes_miniputt	|  	| NES Mini Putt (Japan)					| 		| 1991	| A Wave	| Miscellaneous	| 					|
+| nes_missiimp	|  	| NES Mission Impossible (USA)				| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_mitokou	|  	| NES Mito Koumon - Sekai Manyuu Ki (Japan)		| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| nes_mitsumegatooru|  	| NES Mitsume ga Tooru (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_moaikun	|  	| NES Moai-kun (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_moerotwi	|  	| NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mojontwimul|  	| NES Mojon Twins Multicart (HB)			| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
+| nes_monopoly	|  	| NES Monopoly (USA)					| 		| 1991	| Parker Brother| Miscellaneous	| 					|
+| nes_monstinmypoc|  	| NES Monster in My Pocket (USA)			| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_monsterparty|  	| NES Monster Party (USA)				| 		| 1989	| Bandai	| Miscellaneous	| 					|
+| nes_monsttrural|  	| NES Monster Truck Rally (USA)				| 		| 1991	| INTV		| Miscellaneous	| 					|
+| nes_mooncrystal_1|  	| NES Moon Crystal (Japan)				| nes_mooncrystal| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mooncrystal|  	| NES Moon Crystal (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_moonranger|  	| NES Moon Ranger (USA) (Unl)				| 		| 1990	| Bunch Games	| Miscellaneous	| 					|
+| nes_mortalkombat4|  	| NES Mortal Kombat 4 (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mother	|  	| NES Mother (Japan)					| nes_earthbound| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_motoccha_1|  	| NES Motocross Champion (Japan)			| nes_motoccha	| 1989	| Konami	| Miscellaneous	| 					|
+| nes_motoccha	|  	| NES Motocross Champion (T-eng)			| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_motorcitpat|  	| NES Motor City Patrol (USA)				| 		| 1992	| Matchbox	| Miscellaneous	| 					|
+| nes_mottoabudek|  	| NES Mottomo Abunai Deka (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mourysenmad_1|  	| NES Mouryou Senki Madara (Japan)			| nes_mourysenmad| 1990	| Konami	| Miscellaneous	| 					|
+| nes_mourysenmad|  	| NES Mouryou Senki Madara (T-eng)			| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_mspacman	|  	| NES Ms. Pac-Man (USA)					| 		| 1993	| Namco		| Miscellaneous	| 					|
+| nes_muppeadv	|  	| NES Muppet Adventure - Chaos at the Carnival (USA)	| 		| 1990	| Hi Tech Expres| Miscellaneous	| 					|
+| nes_musasnoken|  	| NES Musashi no Ken - Tadaima Shugyou Chuu (Japan)	| 		| 1986	| Taito		| Miscellaneous	| 					|
+| nes_mutanvir	|  	| NES Mutant Virus, The (USA)				| 		| 1992	| American Softw| Miscellaneous	| 					|
+| nes_mysteryquest|  	| NES Mystery Quest (USA)				| 		| 1989	| Taxan		| Miscellaneous	| 					|
+| nes_mysticorigins|  	| NES Mystic Origins (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_namcoclassic|  	| NES Namco Classic (Japan)				| 		| 1988	| Namco		| Miscellaneous	| 					|
+| nes_namcoclassicii|  	| NES Namco Classic II (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|
+| nes_nantebas_1|  	| NES Nantettatte!! Baseball (Japan)			| nes_nantebas	| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_nantebas	|  	| NES Nantettatte!! Baseball (T-eng)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_narc	|  	| NES NARC (USA)					| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_nebsanddebs|  	| NES Nebs and Debs (HB)				| 		| 2018	| Dullahan	| Miscellaneous	| 					|
+| nes_nekkekakden_1|  	| NES Nekketsu Kakutou Densetsu (Japan)			| nes_nekkekakden| 1992	| Technos	| Miscellaneous	| 					|
+| nes_nekkekakden|  	| NES Nekketsu Kakutou Densetsu (T-eng)			| 		| 1992	| Technos	| Miscellaneous	| 					|
+| nes_nekkekoukunkun|  	| NES Nekketsu Kouha Kunio-kun (Japan)			| 		| 1987	| Technos	| Miscellaneous	| 					|
+| nes_nekkestrbas|  	| NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_neoheiali	|  	| NES NEO Heiankyo Alien (HB)				| 		| 2017	| Hyperware Co.	| Miscellaneous	| 					|
+| nes_nesopetougol|  	| NES NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
+| nes_nestest	|  	| NES nestest						| 		| 1986	| Kevtris	| Miscellaneous	| 					|
+| nes_newghoii	|  	| NES New Ghostbusters II (Japan)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
+| nes_newyornya	|  	| NES New York Nyankies (Japan)				| nes_rockinkats| 1991	| Atlus		| Miscellaneous	| 					|
+| nes_newzeasto	|  	| NES New Zealand Story, The (Europe)			| nes_kiwikra	| 1991	| Ocean		| Miscellaneous	| 					|
+| nes_nigelmansworchch|  	| NES Nigel Mansell's World Championship Challenge (USA)| 		| 1993	| GameTek	| Miscellaneous	| 					|
+| nes_nightonelmstra|  	| NES Nightmare on Elm Street, A (USA)			| 		| 1990	| LJN		| Miscellaneous	| 					|
+| nes_nightshade|  	| NES Nightshade (USA)					| 		| 1992	| Ultra Games	| Miscellaneous	| 					|
+| nes_ninjacopsaizou|  	| NES Ninja Cop Saizou (Japan)				| 		| 1989	| Kyugo Boueki	| Miscellaneous	| 					|
+| nes_ninjacrusaders|  	| NES Ninja Crusaders (USA)				| 		| 1990	| Sammy		| Miscellaneous	| 					|
+| nes_ninjagaiden|  	| NES Ninja Gaiden (USA)				| 		| 1989	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjagaiii|  	| NES Ninja Gaiden II - The Dark Sword of Chaos (USA)	| 		| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjagaiiii|  	| NES Ninja Gaiden III - The Ancient Ship of Doom (USA)	| 		| 1991	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjahatkun|  	| NES Ninja Hattori-kun - Ninja wa Syugyou de Gozaru (Ja| 		| 1986	| Hudson Soft	| Miscellaneous	| 					|
+| nes_ninjajaj_1|  	| NES Ninja Jajamaru - Ginga Daisakusen (Japan)		| nes_ninjajaj	| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_ninjajaj	|  	| NES Ninja Jajamaru - Ginga Daisakusen (T-eng)		| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_ninjajajkun|  	| NES Ninja Jajamaru-kun (Japan)			| 		| 1985	| Jaleco	| Miscellaneous	| 					|
+| nes_ninjakid	|  	| NES Ninja Kid (USA)					| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_ninjaryuden|  	| NES Ninja Ryuuken Den (Japan)				| nes_ninjagaiden| 1988	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjaryudenii|  	| NES Ninja Ryuuken Den II - Ankoku no Jashin Ken (Japan| nes_ninjagaiii| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjaryudeniii|  	| NES Ninja Ryuuken Den III - Yomi no Hakobune (Japan)	| nes_ninjagaiiii| 1991	| Tecmo		| Miscellaneous	| 					|
+| nes_ninjakunashnosh|  	| NES Ninja-kun - Ashura no Shou (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ninjakunmajnobo|  	| NES Ninja-kun - Majou no Bouken (Japan) (Rev 1)	| 		| 1985	| Jaleco	| Miscellaneous	| 					|
+| nes_ninjarahoi_1|  	| NES Ninjara Hoi! (Japan)				| nes_ninjarahoi| 1990	| ASCII		| Miscellaneous	| 					|
+| nes_ninjarahoi|  	| NES Ninjara Hoi! (T-eng)				| 		| 1990	| ASCII		| Miscellaneous	| 					|
+| nes_ninteworcup|  	| NES Nintendo World Cup (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_noahsark	|  	| NES Noah's Ark (Europe)				| 		| 0000	| Konami	| Miscellaneous	| 					|
+| nes_nomolos	|  	| NES Nomolos (HB)					| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
+| nes_northsouth|  	| NES North & South (USA)				| 		| 1990	| Kemco		| Miscellaneous	| 					|
+| nes_nutsmilk	|  	| NES Nuts & Milk (Japan)				| 		| 1984	| Hudson Soft	| Miscellaneous	| 					|
+| nes_obakenoqtar|  	| NES Obake no Q Tarou - Wanwan Panic (Japan)		| 		| 1985	| Bandai	| Miscellaneous	| 					|
+| nes_onyankotown|  	| NES Onyanko Town (Japan)				| 		| 1985	| Pony Canyon	| Miscellaneous	| 					|
+| nes_operationwolf|  	| NES Operation Wolf (USA)				| 		| 1989	| Taito		| Miscellaneous	| 					|
+| nes_outlanders|  	| NES Outlanders (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_overhorizon|  	| NES Over Horizon (Japan)				| 		| 1992	| Takara	| Miscellaneous	| 					|
+| nes_overlord	|  	| NES Overlord (USA)					| 		| 1993	| Virgin Games	| Miscellaneous	| 					|
+| nes_pow	|  	| NES P.O.W. - Prisoners of War (USA)			| 		| 1989	| SNK		| Miscellaneous	| 					|
+| nes_pacland	|  	| NES Pac-Land (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_pacman	|  	| NES Pac-Man (USA) (Namco)				| 		| 1993	| Namco		| Miscellaneous	| 					|
+| nes_pacmania	|  	| NES Pac-Mania (USA) (Unl)				| 		| 1990	| Tengen	| Miscellaneous	| 					|
+| nes_palamedes	|  	| NES Palamedes (USA)					| 		| 1990	| HOT・B	| Miscellaneous	| 					|
+| nes_palamii	|  	| NES Palamedes II - Star Twinkle, Hoshi no Mabataki (Ja| 		| 1991	| HOT・B	| Miscellaneous	| 					|
+| nes_panicdizzy|  	| NES Panic Dizzy (HB)					| 		| 1989?	| Oliver Twins	| Miscellaneous	| 					|
+| nes_panicrestaurant|  	| NES Panic Restaurant (USA)				| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_paperboy	|  	| NES Paperboy (USA)					| 		| 1988	| Mindscape	| Miscellaneous	| 					|
+| nes_paperboy2	|  	| NES Paperboy 2 (USA)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
+| nes_papillongals|  	| NES Papillon Gals (Japan) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_parallelworld|  	| NES Parallel World (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_parasolhenbee|  	| NES Parasol Henbee (Japan)				| 		| 1991	| Epoch		| Miscellaneous	| 					|
+| nes_parasstaraiislii|  	| NES Parasol Stars - Rainbow Islands II (Europe)	| 		| 1991	| Ocean		| Miscellaneous	| 					|
+| nes_parodiusda|  	| NES Parodius Da! (Japan)				| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_peepartime|  	| NES Peepar Time (Japan)				| 		| 1990	| Sanritsu	| Miscellaneous	| 					|
+| nes_penguinkunwars|  	| NES Penguin-kun Wars (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
+| nes_perfectbowling|  	| NES Perfect Bowling (Japan)				| 		| 1989	| Tonkin House	| Miscellaneous	| 					|
+| nes_perfectpair|  	| NES Perfect Pair (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
+| nes_perman	|  	| NES Perman (Japan)					| 		| 1990	| Irem		| Miscellaneous	| 					|
+| nes_permapar2	|  	| NES Perman Part 2 - Himitsu Kessha Madoodan o Taose! (| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_pesterminator|  	| NES Pesterminator (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
+| nes_peterpanpir|  	| NES Peter Pan & The Pirates (USA)			| 		| 1991	| THQ		| Miscellaneous	| 					|
+| nes_phantomfighter|  	| NES Phantom Fighter (USA)				| 		| 1990	| FCI		| Miscellaneous	| 					|
+| nes_pictionary|  	| NES Pictionary (USA)					| 		| 1990	| LJN		| Miscellaneous	| 					|
+| nes_pinbot	|  	| NES Pin Bot (USA)					| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_pinball	|  	| NES Pinball (USA)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_pinbacvbyred|  	| NES Pinball CV by Redrum (Hack)			| nes_pinball	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_pinballquest|  	| NES Pinball Quest (USA)				| 		| 1990	| Jaleco	| Miscellaneous	| 					|
+| nes_pizzapop	|  	| NES Pizza Pop! (Japan)				| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_plasmaball_1|  	| NES Plasma Ball (Japan)				| nes_plasmaball| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_plasmaball|  	| NES Plasma Ball (T-eng)				| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_platoon	|  	| NES Platoon (USA)					| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
+| nes_popoteam	|  	| NES Po Po Team (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_pockezau	|  	| NES Pocket Zaurus - Juu Ouken no Nazo (Japan)		| 		| 1987	| Bandai	| Miscellaneous	| 					|
+| nes_pooyan	|  	| NES Pooyan (Japan)					| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
+| nes_popeye	|  	| NES Popeye (World) (Rev A)				| 		| 1986	| Nintendo	| Miscellaneous	| 					|
+| nes_powerblade|  	| NES Power Blade (USA)					| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_powerblade2|  	| NES Power Blade 2 (USA)				| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_powerblazer|  	| NES Power Blazer (Japan)				| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_powerpunchii|  	| NES Power Punch II (USA)				| 		| 1992	| American Softw| Miscellaneous	| 					|
+| nes_powersoccer|  	| NES Power Soccer (Japan)				| 		| 1990	| Tokuma Shoten	| Miscellaneous	| 					|
+| nes_predator	|  	| NES Predator (USA)					| 		| 1989	| Activision	| Miscellaneous	| 					|
+| nes_princeofpersia|  	| NES Prince of Persia (USA)				| 		| 1992	| Virgin Games	| Miscellaneous	| 					|
+| nes_princtominsalki|  	| NES Princess Tomato in Salad Kingdom (USA)		| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
+| nes_prowrestling|  	| NES Pro Wrestling (USA)				| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_punchout	|  	| NES Punch-Out!! (USA)					| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_punisherthe|  	| NES Punisher, The (USA)				| 		| 1990	| LJN		| Miscellaneous	| 					|
+| nes_pussnboo	|  	| NES Puss 'n Boots - Pero's Great Adventure (USA)	| 		| 1990	| Electro Brain	| Miscellaneous	| 					|
+| nes_puyopuyo	|  	| NES Puyo Puyo (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_puzznic	|  	| NES Puzznic (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_pyokonodai|  	| NES Pyokotan no Daimeiro (Japan)			| 		| 1993	| Sunsoft	| Miscellaneous	| 					|
+| nes_qboy	|  	| NES Q Boy (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_qbert	|  	| NES Q-bert (USA)					| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
+| nes_qix	|  	| NES QIX (USA)						| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_quattadv	|  	| NES Quattro Adventure (USA) (Unl)			| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_quattroarcade|  	| NES Quattro Arcade (USA) (Unl)			| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_quattrosports|  	| NES Quattro Sports (USA) (Unl)			| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_questforge|  	| NES Quest Forge (HB)					| 		| 1989?	| Ludosity	| Miscellaneous	| 					|
+| nes_questofkithe_1|  	| NES Quest of Ki, The (Japan)				| nes_questofkithe| 1988	| Namco		| Miscellaneous	| 					|
+| nes_questofkithe|  	| NES Quest of Ki, The (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_quinty	|  	| NES Quinty (Japan)					| nes_mendelpalace| 1989	| Namco		| Miscellaneous	| 					|
+| nes_rbibaseball|  	| NES R.B.I. Baseball (USA).nes				| 		| 1988	| Tengen	| Miscellaneous	| 					|
+| nes_rbibas2	|  	| NES R.B.I. Baseball 2 (USA).nes			| 		| 1990	| Tengen	| Miscellaneous	| 					|
+| nes_rbibas3	|  	| NES R.B.I. Baseball 3 (USA).nes			| 		| 1991	| Tengen	| Miscellaneous	| 					|
+| nes_rcproam	|  	| NES R.C. Pro-Am (USA) (Rev A)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_rcproamii	|  	| NES R.C. Pro-Am II (USA)				| 		| 1992	| Tradewest	| Miscellaneous	| 					|
+| nes_racketattack|  	| NES Racket Attack (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_racketsrivals|  	| NES Rackets & Rivals (Europe)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_radracer	|  	| NES Rad Racer (USA)					| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_radracerii|  	| NES Rad Racer II (USA)				| 		| 1990	| Square	| Miscellaneous	| 					|
+| nes_radrac	|  	| NES Rad Racket - Deluxe Tennis II (USA)		| 		| 1991	| AVE		| Miscellaneous	| 					|
+| nes_radiasen_1|  	| NES Radia Senki - Reimei Hen (Japan)			| nes_radiasen	| 1991	| Tecmo		| Miscellaneous	| 					|
+| nes_radiasen	|  	| NES Radia Senki - Reimei Hen (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_rafworld	|  	| NES Raf World (Japan)					| nes_journsil	| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_raid2020	|  	| NES Raid 2020 (USA) (Unl)				| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| nes_raidonbunbay|  	| NES Raid on Bungeling Bay (USA)			| 		| 1987	| Broderbund	| Miscellaneous	| 					|
+| nes_rainbisloce|  	| NES Rainbow Islands - Ocean (Europe)			| 		| 1988	| Ocean		| Miscellaneous	| 					|
+| nes_rainbisltai|  	| NES Rainbow Islands - Taito (USA)			| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_rallybike	|  	| NES Rally Bike (USA)					| 		| 1990	| Romstar	| Miscellaneous	| 					|
+| nes_rambo	|  	| NES Rambo (USA) (Rev A)				| 		| 1988	| Acclaim	| Miscellaneous	| 					|
+| nes_rampage	|  	| NES Rampage (USA)					| 		| 1988	| Data East	| Miscellaneous	| 					|
+| nes_rampart	|  	| NES Rampart (USA)					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_redarremerii|  	| NES Red Arremer II (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_renstisho	|  	| NES Ren & Stimpy Show, The - Buckeroo$! (USA)		| 		| 1993	| THQ		| Miscellaneous	| 					|
+| nes_renegade	|  	| NES Renegade (USA)					| 		| 1988	| Taito		| Miscellaneous	| 					|
+| nes_ringking	|  	| NES Ring King (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
+| nes_rivercitran|  	| NES River City Ransom (USA)				| 		| 1990	| Technos	| Miscellaneous	| 					|
+| nes_roadfighter|  	| NES Road Fighter (Japan)				| 		| 1985	| Konami	| Miscellaneous	| 					|
+| nes_roadrunner|  	| NES Road Runner (USA) (Unl)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_roadblasters|  	| NES RoadBlasters (USA)				| 		| 1990	| Mindscape	| Miscellaneous	| 					|
+| nes_robowarrior|  	| NES Robo Warrior (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_roboccowars|  	| NES Robocco Wars (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_robocop	|  	| NES RoboCop (USA)					| 		| 1989	| Data East	| Miscellaneous	| 					|
+| nes_robocop2	|  	| NES RoboCop 2 (USA) (Rev A)				| 		| 1991	| Data East	| Miscellaneous	| 					|
+| nes_robocop3	|  	| NES RoboCop 3 (USA)					| 		| 1992	| Ocean		| Miscellaneous	| 					|
+| nes_robocvster|  	| NES RoboCop Vs The Terminator (USA)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_robodemons|  	| NES Robodemons (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
+| nes_rocknball	|  	| NES Rock 'n' Ball (USA)				| 		| 1990	| NTVIC		| Miscellaneous	| 					|
+| nes_rockball	|  	| NES Rockball (Asia) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_rocketeerthe|  	| NES Rocketeer, The (USA)				| 		| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_rockinkats|  	| NES Rockin' Kats (USA)				| 		| 1991	| Atlus		| Miscellaneous	| 					|
+| nes_rockman	|  	| NES Rockman (Japan)					| nes_megaman	| 1987	| Capcom	| Miscellaneous	| 					|
+| nes_rockm2	|  	| NES Rockman 2 - Dr. Wily no Nazo (Japan)		| nes_megaman2	| 1988	| Capcom	| Miscellaneous	| 					|
+| nes_rockm3	|  	| NES Rockman 3 - Dr. Wily no Saigo! (Japan)		| nes_megaman3	| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_rockm4	|  	| NES Rockman 4 - Aratanaru Yabou!! (Japan)		| nes_megaman4	| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_rockm5	|  	| NES Rockman 5 - Blues no Wana! (Japan)		| nes_megaman5	| 1992	| Capcom	| Miscellaneous	| 					|
+| nes_rockm6	|  	| NES Rockman 6 - Shijou Saidai no Tatakai!! (Japan)	| nes_megaman6	| 1993	| Capcom	| Miscellaneous	| 					|
+| nes_rodland	|  	| NES Rod Land (Europe)					| 		| 1993	| Storm		| Miscellaneous	| 					|
+| nes_rollerball|  	| NES Rollerball (USA)					| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
+| nes_rollergames|  	| NES Rollergames (USA)					| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_rollingthunder_1|  	| NES Rolling Thunder (Japan)				| nes_rollingthunder| 1989	| Namco		| Miscellaneous	| 					|
+| nes_rollingthunder|  	| NES Rolling Thunder (USA) (Unl)			| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_romancia	|  	| NES Romancia (Japan)					| 		| 1987	| Tokyo Shoseki	| Miscellaneous	| 					|
+| nes_rushnattack|  	| NES Rush'n Attack (USA)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_rygar	|  	| NES Rygar (USA) (Rev A)				| 		| 1987	| Tecmo		| Miscellaneous	| 					|
+| nes_scat	|  	| NES S.C.A.T. - Special Cybernetic Attack Team (USA)	| 		| 1991	| Natsume	| Miscellaneous	| 					|
+| nes_saiyuukiworld|  	| NES Saiyuuki World (Japan)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| nes_saiyuwor2	|  	| NES Saiyuuki World 2 - Tenjoukai no Majin (Japan)	| nes_whompem	| 1990	| Jaleco	| Miscellaneous	| 					|
+| nes_salamander|  	| NES Salamander (Japan)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_sansaranaga_1|  	| NES Sansara Naga (Japan)				| nes_sansaranaga| 1990	| Victor	| Miscellaneous	| 					|
+| nes_sansaranaga|  	| NES Sansara Naga (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_saturnsmash|  	| NES Saturn Smash (HB)					| 		| 2019	| FG Software	| Miscellaneous	| 					|
+| nes_secretties|  	| NES Secret Ties (USA) (Proto)				| 		| 0000	| Vic Tokai	| Miscellaneous	| 					|
+| nes_sectionz	|  	| NES Section-Z (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_seicross	|  	| NES Seicross (USA)					| 		| 1988	| FCI		| Miscellaneous	| 					|
+| nes_senjounoookami|  	| NES Senjou no Ookami (Japan)				| 		| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_shadonin	|  	| NES Shadow of the Ninja (USA)				| 		| 1990	| Natsume	| Miscellaneous	| 					|
+| nes_shadowgate|  	| NES Shadowgate (USA)					| 		| 1989	| Kemco		| Miscellaneous	| 					|
+| nes_shanghai	|  	| NES Shanghai (Japan)					| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
+| nes_shatterhand|  	| NES Shatterhand (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_shin4ninuchma|  	| NES Shin 4 Nin Uchi Mahjong (Japan)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
+| nes_shinobi	|  	| NES Shinobi (USA) (Unl)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_shockwave	|  	| NES Shockwave (USA)					| 		| 1990	| AGCI		| Miscellaneous	| 					|
+| nes_shootingrange|  	| NES Shooting Range (USA)				| 		| 1989	| Bandai	| Miscellaneous	| 					|
+| nes_shufflepuckcafe_1|  	| NES Shufflepuck Cafe (Japan)				| nes_shufflepuckcafe| 1990	| Pony Canyon	| Miscellaneous	| 					|
+| nes_shufflepuckcafe|  	| NES Shufflepuck Cafe (T-Eng)				| 		| 1990	| Pony Canyon	| Miscellaneous	| 					|
+| nes_sidepocket|  	| NES Side Pocket (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
+| nes_sidewinder|  	| NES Sidewinder (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_silentservice|  	| NES Silent Service (USA)				| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
+| nes_silkworm	|  	| NES Silk Worm (USA)					| 		| 1990	| Sammy		| Miscellaneous	| 					|
+| nes_silvereagle|  	| NES Silver Eagle (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_silversurfer|  	| NES Silver Surfer (USA)				| 		| 1990	| Arcadia	| Miscellaneous	| 					|
+| nes_simpsbarvsspamu|  	| NES Simpsons, The - Bart vs. the Space Mutants (USA) (| 		| 1991	| Acclaim	| Miscellaneous	| 					|
+| nes_simpsbarvswor|  	| NES Simpsons, The - Bart vs. the World (USA)		| 		| 1991	| Acclaim	| Miscellaneous	| 					|
+| nes_simpsbarmeeradman|  	| NES Simpsons, The - Bartman Meets Radioactive Man (USA| 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| nes_sinkingfeeling|  	| NES Sinking Feeling (HB)				| 		| 2017	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_sirababol	|  	| NES Sir Ababol (HB)					| 		| 2013	| Mojon Twins	| Miscellaneous	| 					|
+| nes_skateboy	|  	| NES Skate Boy (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
+| nes_skateordie|  	| NES Skate or Die (USA)				| 		| 1988	| Ultra Games	| Miscellaneous	| 					|
+| nes_skateordie2|  	| NES Skate or Die 2 - The Search for Double Trouble (US| 		| 1990	| Electronic Art| Miscellaneous	| 					|
+| nes_skiordie	|  	| NES Ski or Die (USA)					| 		| 1991	| Ultra Games	| Miscellaneous	| 					|
+| nes_skullcro	|  	| NES Skull & Crossbones (USA) (Unl)			| 		| 1990	| Tengen	| Miscellaneous	| 					|
+| nes_skydestroyer|  	| NES Sky Destroyer (Japan)				| 		| 1985	| Taito		| Miscellaneous	| 					|
+| nes_skykid	|  	| NES Sky Kid (USA)					| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
+| nes_skyshark	|  	| NES Sky Shark (USA) (Rev 0A)				| 		| 1989	| Taito		| Miscellaneous	| 					|
+| nes_slalom	|  	| NES Slalom (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_smashtv	|  	| NES Smash T.V. (USA)					| 		| 1991	| Acclaim	| Miscellaneous	| 					|
+| nes_snakeratnrol|  	| NES Snake Rattle n Roll (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_snakesrevenge|  	| NES Snake's Revenge (USA)				| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_snoopssilsposp|  	| NES Snoopy's Silly Sports Spectacular (USA)		| 		| 1990	| Kemco		| Miscellaneous	| 					|
+| nes_snowbrothers|  	| NES Snow Brothers (USA)				| 		| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_soccer	|  	| NES Soccer (USA)					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_soccelea	|  	| NES Soccer League - Winner's Cup (Japan)		| 		| 1988	| Data East	| Miscellaneous	| 					|
+| nes_solarjet	|  	| NES Solar Jetman - Hunt for the Golden Warpship (USA)	| 		| 1990	| Tradewest	| Miscellaneous	| 					|
+| nes_solomonskey|  	| NES Solomon's Key (USA)				| 		| 1987	| Tecmo		| Miscellaneous	| 					|
+| nes_solstice	|  	| NES Solstice (Japan)					| 		| 1990	| Epic / Sony Re| Miscellaneous	| 					|
+| nes_solst	|  	| NES Solstice - The Quest for the Staff of Demnos (USA)| 		| 1990	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_sonson	|  	| NES Son Son (Japan)					| 		| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_spaceharrier|  	| NES Space Harrier (Japan)				| 		| 1989	| Takara	| Miscellaneous	| 					|
+| nes_spacehunter|  	| NES Space Hunter (Japan)				| 		| 1986	| Kemco		| Miscellaneous	| 					|
+| nes_spaceinvaders|  	| NES Space Invaders (Japan)				| 		| 1985	| Taito		| Miscellaneous	| 					|
+| nes_spartanx	|  	| NES Spartan X (Japan)					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_spartanx2	|  	| NES Spartan X 2 (Japan)				| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_spelunker	|  	| NES Spelunker (USA)					| 		| 1987	| Broderbund	| Miscellaneous	| 					|
+| nes_speluii_1	|  	| NES Spelunker II - Yuusha e no Chousen (Japan)	| nes_speluii	| 1987	| Irem		| Miscellaneous	| 					|
+| nes_speluii	|  	| NES Spelunker II - Yuusha e no Chousen (T-eng)	| 		| 1987	| Irem		| Miscellaneous	| 					|
+| nes_spideman	|  	| NES Spider-Man - Return of the Sinister Six (USA)	| 		| 1992	| LJN		| Miscellaneous	| 					|
+| nes_splathou	|  	| NES Splatter House - Wanpaku Graffiti (Japan)		| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 1					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 2					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 3					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 4					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 5					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_bsprites	|  	| NES sprite test 6					| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_spyhunter	|  	| NES Spy Hunter (USA)					| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
+| nes_spyvsspy	|  	| NES Spy vs Spy (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
+| nes_sqoon	|  	| NES Sqoon (USA)					| 		| 1987	| Irem		| Miscellaneous	| 					|
+| nes_stanley	|  	| NES Stanley - The Search for Dr. Livingston (USA).nes	| 		| 1992	| Electro Brain	| Miscellaneous	| 					|
+| nes_starevil	|  	| NES Star Evil (HB)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_starforce	|  	| NES Star Force (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
+| nes_stargate	|  	| NES Star Gate (Japan)					| 		| 1987	| HAL Laboratory| Miscellaneous	| 					|
+| nes_starluster|  	| NES Star Luster (Japan)				| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_starsoldier|  	| NES Star Soldier (USA)				| 		| 1989	| Taxan		| Miscellaneous	| 					|
+| nes_startre25tann|  	| NES Star Trek - 25th Anniversary (USA)		| 		| 1992	| Ultra Games	| Miscellaneous	| 					|
+| nes_startrenexgen|  	| NES Star Trek - The Next Generation (USA)		| 		| 1993	| Absolute	| Miscellaneous	| 					|
+| nes_startrevfinfr|  	| NES Star Trek V - The Final Frontier (Prototype)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_starvoyager|  	| NES Star Voyager (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|
+| nes_starwars_2|  	| NES Star Wars (Namco) (Japan)				| nes_starwars	| 1987	| Namco		| Miscellaneous	| 					|
+| nes_starwars_1|  	| NES Star Wars (Namco) (T-eng)				| nes_starwars	| 1987	| Namco		| Miscellaneous	| 					|
+| nes_starwars	|  	| NES Star Wars (USA)					| 		| 1991	| JVC		| Miscellaneous	| 					|
+| nes_starwar	|  	| NES Star Wars - The Empire Strikes Back (USA)		| 		| 1992	| JVC		| Miscellaneous	| 					|
+| nes_starshiphector|  	| NES Starship Hector (USA)				| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
+| nes_startropics|  	| NES StarTropics (USA)					| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_startii	|  	| NES Startropics II - Zoda's Revenge (USA)		| 		| 1994	| Nintendo	| Miscellaneous	| 					|
+| nes_sted_1	|  	| NES Sted - Iseki Wakusei no Yabou (Japan)		| nes_sted	| 1990	| KAC		| Miscellaneous	| 					|
+| nes_sted	|  	| NES Sted - Iseki Wakusei no Yabou (T-eng)		| 		| 1990	| KAC		| Miscellaneous	| 					|
+| nes_stickhun	|  	| NES Stick Hunter - Exciting Ice Hockey (Japan)	| 		| 1987	| KAC		| Miscellaneous	| 					|
+| nes_stinger	|  	| NES Stinger (USA)					| nes_moerotwi	| 1987	| Konami	| Miscellaneous	| 					|
+| nes_streefig201|  	| NES Street Fighter 2010 - The Final Fight (USA)	| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_streetheroes|  	| NES Street Heroes (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_strider	|  	| NES Strider (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_strikewolf|  	| NES Strike Wolf (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_stuntkids	|  	| NES Stunt Kids (USA) (Unl)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| nes_sugorque_1|  	| NES Sugoro Quest - Dice no Senshitachi (Japan)	| nes_sugorque	| 1991	| Technos	| Miscellaneous	| 					|
+| nes_sugorque	|  	| NES Sugoro Quest - Dice no Senshitachi (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_sukebandeka3|  	| NES Sukeban Deka 3 (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_summecar92|  	| NES Summer Carnival '92 - Recca (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_sunman	|  	| NES Sunman (Europe) (Prototype)			| 		| 0000	| Sunsoft	| Miscellaneous	| 					|
+| nes_superarabian|  	| NES Super Arabian (Japan)				| 		| 1985	| Sunsoft	| Miscellaneous	| 					|
+| nes_superbatpun|  	| NES Super Bat Puncher (Demo)				| 		| 2011	| Morphcat Games| Miscellaneous	| 					|
+| nes_superc	|  	| NES Super C (USA)					| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_supercars	|  	| NES Super Cars (USA)					| 		| 1991	| Electro Brain	| Miscellaneous	| 					|
+| nes_superdodgeball|  	| NES Super Dodge Ball (USA)				| 		| 1989	| Sony (CSG) Ima| Miscellaneous	| 					|
+| nes_supergun	|  	| NES Super Gun (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_smb	|  	| NES Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_smb2	|  	| NES Super Mario Bros. 2 (USA) (Rev A)			| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_smb2j	|  	| NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_smb3	|  	| NES Super Mario Bros. 3 (USA) (Rev A)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_superpainter|  	| NES Super Painter (HB)				| 		| 2015	| Retro Souls	| Miscellaneous	| 					|
+| nes_superpang	|  	| NES Super Pang (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_superpang2|  	| NES Super Pang 2 (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_superpinball|  	| NES Super Pinball (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_superpitfall|  	| NES Super Pitfall (USA)				| 		| 1987	| Activision	| Miscellaneous	| 					|
+| nes_superpit30t|  	| NES Super Pitfall 30th (HB)				| 		| 2016	| Nintendo	| Miscellaneous	| 					|
+| nes_superrugby|  	| NES Super Rugby (Japan)				| 		| 1989	| TSS		| Miscellaneous	| 					|
+| nes_supershi	|  	| NES Super Shinobi, The (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_superspivbal|  	| NES Super Spike V'Ball (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_supersprint|  	| NES Super Sprint (USA)				| 		| 1988	| Tengen	| Miscellaneous	| 					|
+| nes_superspyhunter|  	| NES Super Spy Hunter (USA)				| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
+| nes_superstarforce|  	| NES Super Star Force (Japan)				| 		| 1986	| Tecmo		| Miscellaneous	| 					|
+| nes_superturrican|  	| NES Super Turrican (Europe)				| 		| 1993	| Imagineer	| Miscellaneous	| 					|
+| nes_superuwol	|  	| NES Super UWOL (HB)					| 		| 2015	| Mojon Twins	| Miscellaneous	| 					|
+| nes_superxev	|  	| NES Super Xevious - Gump no Nazo (Japan)		| 		| 1986	| Namco		| Miscellaneous	| 					|
+| nes_superman	|  	| NES Superman (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
+| nes_swampthing|  	| NES Swamp Thing (USA)					| 		| 1992	| THQ		| Miscellaneous	| 					|
+| nes_sweethome_1|  	| NES Sweet Home (Eng Hack)				| nes_sweethome	| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_sweethome	|  	| NES Sweet Home (Japan)				| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_swordmaster|  	| NES Sword Master (USA)				| 		| 1992	| Activision	| Miscellaneous	| 					|
+| nes_tc2	|  	| NES T&C 2 - Thrilla's Surfari (USA)			| 		| 1992	| LJN		| Miscellaneous	| 					|
+| nes_tcsurfdesign|  	| NES T&C Surf Design (USA)				| 		| 1988	| LJN		| Miscellaneous	| 					|
+| nes_tagteawre	|  	| NES Tag Team Wrestling (USA)				| 		| 1986	| Data East	| Miscellaneous	| 					|
+| nes_taitochasehq|  	| NES Taito Chase H.Q. (Japan)				| 		| 1989	| Taito		| Miscellaneous	| 					|
+| nes_taiyonoyuufir_1|  	| NES Taiyou no Yuusha Firebird (Japan)			| nes_taiyonoyuufir| 1992	| Irem		| Miscellaneous	| 					|
+| nes_taiyonoyuufir|  	| NES Taiyou no Yuusha Firebird (T-eng)			| 		| 1992	| Irem		| Miscellaneous	| 					|
+| nes_takahmeinobugho|  	| NES Takahashi Meijin no Bugutte Honey (Japan)		| 		| 1987	| Hudson Soft	| Miscellaneous	| 					|
+| nes_talespin	|  	| NES TaleSpin (USA)					| 		| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_targetrenegade|  	| NES Target Renegade (USA)				| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_tasac	|  	| NES Tasac (Taiwan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tashimasnoprigaip|  	| NES Tashiro Masashi no Princess ga Ippai (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tatakchorobseitr|  	| NES Tatakae! Chou Robot Seimeitai Transformers - Convo| 		| 1986	| Takara	| Miscellaneous	| 					|
+| nes_tatakrahman|  	| NES Tatakae!! Rahmen Man - Sakuretsu Choujin 102 Gei (| 		| 1988	| Shinsei	| Miscellaneous	| 					|
+| nes_tatakainobanka|  	| NES Tatakai no Banka (Japan) (Rev A)			| nes_trojan	| 1986	| Capcom	| Miscellaneous	| 					|
+| nes_tecmobaseball|  	| NES Tecmo Baseball (USA)				| 		| 1989	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmobowl	|  	| NES Tecmo Bowl (USA)					| 		| 1989	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmocup	|  	| NES Tecmo Cup - Soccer Game (USA)			| 		| 1992	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmonbabas|  	| NES Tecmo NBA Basketball (USA)			| 		| 1992	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmosuperbowl|  	| NES Tecmo Super Bowl (USA)				| 		| 1991	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmoworcupsoc|  	| NES Tecmo World Cup Soccer (Japan)			| 		| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_tecmoworwre|  	| NES Tecmo World Wrestling (USA)			| 		| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_tmnt	|  	| NES Teenage Mutant Ninja Turtles (USA)		| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
+| nes_tmntii	|  	| NES Teenage Mutant Ninja Turtles II - The Arcade Game | 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_tmntiii	|  	| NES Teenage Mutant Ninja Turtles III - The Manhattan P| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_tmnttoufig|  	| NES Teenage Mutant Ninja Turtles Tournament Fighters (| 		| 1994	| Konami	| Miscellaneous	| 					|
+| nes_tenkanogoi|  	| NES Tenka no Goikenban - Mito Koumon (Japan)		| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
+| nes_tenkabus	|  	| NES Tenkaichi Bushi - Keru Naguuru (Japan)		| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_tennis	|  	| NES Tennis (USA)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_teraonodosooz|  	| NES Terao no Dosukoi Oozumou (Japan)			| 		| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_termi2	|  	| NES Terminator 2 - Judgment Day (USA)			| 		| 1992	| LJN		| Miscellaneous	| 					|
+| nes_terminatorthe|  	| NES Terminator, The (USA)				| 		| 1992	| Mindscape	| Miscellaneous	| 					|
+| nes_terracresta|  	| NES Terra Cresta (USA)				| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
+| nes_tetra	|  	| NES Tetrastar - The Fighter (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tetris	|  	| NES Tetris (USA)					| 		| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_tetris2	|  	| NES Tetris 2 (USA)					| 		| 1993	| Nintendo	| Miscellaneous	| 					|
+| nes_tetri2bom	|  	| NES Tetris 2 + Bombliss (Japan)			| 		| 1991	| Bullet-Proof S| Miscellaneous	| 					|
+| nes_tetsuwanatom|  	| NES Tetsuwan Atom (Japan)				| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_meating	|  	| NES The Meating - Cafeparty Demo (HB)			| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
+| nes_thexder	|  	| NES Thexder (Japan)					| 		| 1985	| Square	| Miscellaneous	| 					|
+| nes_threestooges|  	| NES Three Stooges (USA)				| 		| 1989	| Activision	| Miscellaneous	| 					|
+| nes_thundlig	|  	| NES Thunder & Lightning (USA)				| 		| 1990	| Romstar	| Miscellaneous	| 					|
+| nes_thunderwarrior|  	| NES Thunder Warrior (Asia) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_thunderbirds|  	| NES Thunderbirds (USA)				| 		| 1990	| Activision	| Miscellaneous	| 					|
+| nes_thunderbolt2|  	| NES Thunderbolt 2 (Ch)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_thundercade|  	| NES Thundercade (USA)					| 		| 1989	| Sammy		| Miscellaneous	| 					|
+| nes_tigerheli	|  	| NES Tiger-Heli (USA)					| 		| 1987	| Acclaim	| Miscellaneous	| 					|
+| nes_timediveonman|  	| NES Time Diver Eon Man (USA)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_timelord	|  	| NES Time Lord (USA)					| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
+| nes_timezone	|  	| NES Time Zone (Japan)					| 		| 1991	| Sigma Enterpri| Miscellaneous	| 					|
+| nes_tinasadvisliii|  	| NES Tina's Advanture Island III (USA)			| nes_advenisl3	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tinasadvisl|  	| NES Tina's Adventure Island (USA)			| nes_adventureisland| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tinasadvislii|  	| NES Tina's Adventure Island II (USA)			| nes_advenislii| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tinytooadv|  	| NES Tiny Toon Adventures (USA)			| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_tinytooadv2molaheyo|  	| NES Tiny Toon Adventures 2 - Montana Land he Youkoso (| nes_tinytooadv2trinwa| 1992| Konami	| Miscellaneous	| 					|
+| nes_tinytooadv2trinwa|  	| NES Tiny Toon Adventures 2 - Trouble in Wackyland (USA| 		| 1993	| Konami	| Miscellaneous	| 					|
+| nes_titan	|  	| NES Titan (Japan)					| 		| 1990	| Sofel		| Miscellaneous	| 					|
+| nes_titanwarriors|  	| NES Titan Warriors (USA) (Proto)			| 		| 0000	| Capcom	| Miscellaneous	| 					|
+| nes_totheearth|  	| NES To The Earth (USA)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
+| nes_toki	|  	| NES Toki (USA)					| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_tokkyshisol|  	| NES Tokkyuu Shirei Solbrain (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tokorsannomammosemo|  	| NES Tokoro-san no Mamoru mo Semeru mo (Japan)	| 		| 1987	| Epic / Sony Re| Miscellaneous	| 					|
+| nes_tomjerultgamcatandm|  	| NES Tom & Jerry - The Ultimate Game of Cat and Mouse! | 	| 1991	| Hi Tech Expres| Miscellaneous	| 					|
+| nes_toobin	|  	| NES Toobin' (USA)					| 		| 1989	| Tengen	| Miscellaneous	| 					|
+| nes_topgun	|  	| NES Top Gun (USA) (Rev A)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_topgunsecmis|  	| NES Top Gun - The Second Mission (USA)		| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_totalrecall|  	| NES Total Recall (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
+| nes_totallyrad|  	| NES Totally Rad (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_totsumac	|  	| NES Totsuzen! Machoman (Japan)			| nes_amagon	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_touhourououmu|  	| NES TouhouRououmu (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_toukonclub|  	| NES Toukon Club (Japan)				| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_towerdru	|  	| NES Tower of Druaga, The (Japan)			| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_toxiccrusaders|  	| NES Toxic Crusaders (USA)				| 		| 1992	| Bandai	| Miscellaneous	| 					|
+| nes_trackfield|  	| NES Track & Field (USA)				| 		| 1987	| Konami	| Miscellaneous	| 					|
+| nes_trackfieldii|  	| NES Track & Field II (USA) (Rev A)			| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_treasuremaster|  	| NES Treasure Master (USA)				| 		| 1991	| American Softw| Miscellaneous	| 					|
+| nes_trog	|  	| NES Trog (USA)					| 		| 1991	| Acclaim	| Miscellaneous	| 					|
+| nes_trojan	|  	| NES Trojan (USA)					| 		| 1987	| Capcom	| Miscellaneous	| 					|
+| nes_tsupparioozumou|  	| NES Tsuppari Oozumou (Japan)				| 		| 1987	| Tecmo		| Miscellaneous	| 					|
+| nes_twincobra	|  	| NES Twin Cobra (USA)					| 		| 1990	| Sammy		| Miscellaneous	| 					|
+| nes_twindragons|  	| NES Twin Dragons (HB)					| 		| 2017	| BROKE STUDIO	| Miscellaneous	| 					|
+| nes_twindracomedi|  	| NES Twin Dragons Compo Edition (HB)			| nes_twindragons| 2016	| Nintendo	| Miscellaneous	| 					|
+| nes_twineagle	|  	| NES Twin Eagle (USA)					| 		| 1989	| Romstar	| Miscellaneous	| 					|
+| nes_twinbee	|  	| NES TwinBee (Japan)					| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_twinb3	|  	| NES TwinBee 3 - Poko Poko Daimaou (Japan)		| 		| 1989	| Konami	| Miscellaneous	| 					|
+| nes_uschavba	|  	| NES U.S. Championship V'Ball (Japan)			| 		| 1989	| Technos	| Miscellaneous	| 					|
+| nes_uchuukeisdf|  	| NES Uchuu Keibitai SDF (Japan)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
+| nes_uchuucoscar|  	| NES Uchuusen Cosmo Carrier (Japan)			| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| nes_ufouria	|  	| NES Ufouria - The Saga (Europe)			| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
+| nes_ultimaexodus|  	| NES Ultima - Exodus (USA)				| 		| 1989	| FCI		| Miscellaneous	| 					|
+| nes_ultimqueava|  	| NES Ultima - Quest of the Avatar (USA)		| 		| 1990	| FCI		| Miscellaneous	| 					|
+| nes_ultimwardes|  	| NES Ultima - Warriors of Destiny (USA)		| 		| 1993	| FCI		| Miscellaneous	| 					|
+| nes_ultimmorkom3|  	| NES Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ultimstu	|  	| NES Ultimate Stuntman, The (USA) (Unl)		| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| nes_uncanxmen	|  	| NES Uncanny X-Men, The (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
+| nes_unchartedwaters|  	| NES Uncharted Waters (USA)				| 		| 1991	| Koei		| Miscellaneous	| 					|
+| nes_uninvited	|  	| NES Uninvited (USA)					| 		| 1991	| Kemco		| Miscellaneous	| 					|
+| nes_univesol_1|  	| NES Universe Soldiers, The (Ch)			| nes_univesol	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_univesol	|  	| NES Universe Soldiers, The (Unknown) (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_urbanchampion|  	| NES Urban Champion (World)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_urbanstrike|  	| NES Urban Strike (USA)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_uruseyat	|  	| NES Urusei Yatsura - Lum no Wedding Bell (Japan)	| 		| 1986	| Jaleco	| Miscellaneous	| 					|
+| nes_utsurundesu|  	| NES Utsurun Desu (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_valis	|  	| NES Valis - The Fantastic Soldier (Japan)		| 		| 1987	| Tokuma Shoten	| Miscellaneous	| 					|
+| nes_valkynobou_1|  	| NES Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)| nes_valkynobou| 1986	| Namco		| Miscellaneous	| 					|
+| nes_valkynobou|  	| NES Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)| 		| 1986	| Namco		| Miscellaneous	| 					|
+| nes_blarggppu	|  	| NES VBL test						| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_vice	|  	| NES Vice - Project Doom (USA)				| 		| 1991	| Sammy		| Miscellaneous	| 					|
+| nes_nesvircle	|  	| NES Virus Cleaner (HB)				| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
+| nes_volguardii|  	| NES Volguard II (Japan)				| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
+| nes_volleyball|  	| NES Volleyball (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_blarggppu	|  	| NES VRAM test						| 		| 1986	| Blargg	| Miscellaneous	| 					|
+| nes_wackyraces|  	| NES Wacky Races (USA)					| 		| 1992	| Atlus		| Miscellaneous	| 					|
+| nes_wagyanland|  	| NES Wagyan Land (Japan)				| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_wagyanland2|  	| NES Wagyan Land 2 (Japan)				| 		| 1990	| Namco		| Miscellaneous	| 					|
+| nes_wagyanland3|  	| NES Wagyan Land 3 (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|
+| nes_waiwaiworld|  	| NES Wai Wai World (Japan)				| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_waiwaiwor2|  	| NES Wai Wai World 2 - SOS!! Paseri Jou (Japan)	| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_wall	|  	| NES wall (Demo)					| 		| 1999	| Chris Covell	| Miscellaneous	| 					|
+| nes_wallstreetkid|  	| NES Wall Street Kid (USA)				| 		| 1990	| Sofel		| Miscellaneous	| 					|
+| nes_wanpakoknogouwo|  	| NES Wanpaku Kokkun no Gourmet World (Japan)		| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_warioswoods|  	| NES Wario's Woods (USA)				| 		| 1994	| Nintendo	| Miscellaneous	| 					|
+| nes_warpman	|  	| NES Warpman (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_waynesworld|  	| NES Wayne's World (USA)				| 		| 1993	| THQ		| Miscellaneous	| 					|
+| nes_werew	|  	| NES Werewolf - The Last Warrior (USA)			| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_whereintimiscasa|  	| NES Where in Time is Carmen Sandiego (USA)		| 		| 1991	| Konami	| Miscellaneous	| 					|
+| nes_whereswaldo|  	| NES Where's Waldo (USA)				| 		| 1991	| THQ		| Miscellaneous	| 					|
+| nes_whompem	|  	| NES Whomp 'Em (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
+| nes_widget	|  	| NES Widget (USA)					| 		| 1992	| Atlus		| Miscellaneous	| 					|
+| nes_wildgunman|  	| NES Wild Gunman (World) (Rev A)			| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_willow	|  	| NES Willow (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
+| nes_wingmad	|  	| NES Wing of Madoola, The (Japan)			| 		| 1986	| Sunsoft	| Miscellaneous	| 					|
+| nes_wits	|  	| NES Wit's (Japan)					| 		| 1990	| Athena	| Miscellaneous	| 					|
+| nes_wizarwar	|  	| NES Wizards & Warriors (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|
+| nes_wizarwariii|  	| NES Wizards & Warriors III - Kuros - Visions of Power | 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| nes_wolverine	|  	| NES Wolverine (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
+| nes_woodypoko	|  	| NES Woody Poko (Japan)				| 		| 1987	| dB-SOFT	| Miscellaneous	| 					|
+| nes_worldchamp|  	| NES World Champ (USA)					| 		| 1991	| Romstar	| Miscellaneous	| 					|
+| nes_wrathblaman|  	| NES Wrath of the Black Manta (USA) (Rev A)		| 		| 1990	| Taito		| Miscellaneous	| 					|
+| nes_wreckingcrew|  	| NES Wrecking Crew (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
+| nes_wurm	|  	| NES Wurm - Journey to the Center of the Earth! (USA)	| 		| 1991	| Asmik		| Miscellaneous	| 					|
+| nes_xevious	|  	| NES Xevious - The Avenger (USA)			| 		| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_xexyz	|  	| NES Xexyz (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
+| nes_xiaohonmao|  	| NES Xiao Hong Mao - Little Red Hood (Ch)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_yiearkungfu|  	| NES Yie Ar Kung-Fu (Japan) (Rev 1.4)			| 		| 1985	| Konami	| Miscellaneous	| 					|
+| nes_yonoid	|  	| NES Yo! Noid (USA)					| 		| 1990	| Capcom	| Miscellaneous	| 					|
+| nes_yoshi	|  	| NES Yoshi (USA)					| 		| 1992	| Nintendo	| Miscellaneous	| 					|
+| nes_yoshiscookie|  	| NES Yoshi's Cookie (USA)				| 		| 1993	| Nintendo	| Miscellaneous	| 					|
+| nes_youkaiclub|  	| NES Youkai Club (Japan)				| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| nes_youkaidouchuuki|  	| NES Youkai Douchuuki (Japan)				| 		| 1988	| Namco		| Miscellaneous	| 					|
+| nes_youkaikurabu|  	| NES Youkai Kurabu (Japan)				| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| nes_youngindjonchr|  	| NES Young Indiana Jones Chronicles, The (USA)		| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| nes_yumepenmon_1|  	| NES Yume Penguin Monogatari (Japan)			| nes_yumepenmon| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_yumepenmon|  	| NES Yume Penguin Monogatari (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_yuuyuuhakfin|  	| NES Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Ja| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_zanac	|  	| NES Zanac (USA)					| 		| 1987	| FCI		| Miscellaneous	| 					|
+| nes_ruder	|  	| NES Zapper ruder (test) (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_zeldaii	|  	| NES Zelda II - The Adventure of Link (USA)		| 		| 1988	| Nintendo	| Miscellaneous	| 					|
+| nes_zen	|  	| NES Zen - Intergalactic Ninja (USA)			| 		| 1993	| Konami	| Miscellaneous	| 					|
+| nes_zhenbenxiyouji|  	| NES Zhen Ben Xi You Ji (Asia) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_zombiecalavera|  	| NES Zombie Calavera (HB)				| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
+| nes_zombiehunter|  	| NES Zombie Hunter (Japan)				| 		| 1987	| Hi-Score Softw| Miscellaneous	| 					|
+| nes_zombienation|  	| NES Zombie Nation (USA)				| 		| 1991	| Meldac	| Miscellaneous	| 					|
+| nes_zoomisec	|  	| NES Zooming Secretary (HB)				| 		| 2011	| Pinwizz & Shir| Miscellaneous	| 					|
+| nes_zunousengal|  	| NES Zunou Senkan Galg (Japan)				| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
 | msx_nkoshien	|  	| Nessen Koushien (Jpn)					| 		| 1984	| Casio		| MSX		| 					|
 | netwars	|  	| Net Wars						| 		| 1983	| Orca (Esco Tra| Miscellaneous	| 					|
 | pce_neutopi2	|  	| Neutopia II						| 		| 1991	| Hudson	| PC Engine	| 					|
@@ -6997,6 +8315,7 @@ This list contains all games supported by FinalBurn Neo.
 | pacnpal	|  	| Pac & Pal						| 		| 1983	| Namco		| Miscellaneous	| 					|
 | pacmanfm	|  	| Pac Man (FAMARE S.A. bootleg of Puck Man)		| puckman	| 1980	| bootleg (FAMAR| Pac-man	| 					|
 | pacmanug	|  	| Pac Man (U.G. bootleg of Puck Man)			| puckman	| 1980	| bootleg (U.G.)| Pac-man	| 					|
+| cv_pacmancol	|  	| Pac Man Collection					| 		| 2008	| OPCODE	| ColecoVision	| 					|
 | gg_pacattak	|  	| Pac-Attack (Euro, USA)				| 		| 1994	| Namco		| Sega Game Gear| 					|
 | md_pacattak	|  	| Pac-Attack (USA)					| md_pacpanic	| 1993	| Namco		| Sega Megadrive| 					|
 | pacgal	|  	| Pac-Gal						| mspacman	| 1981	| hack		| Pac-man	| 					|

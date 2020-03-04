@@ -1411,6 +1411,18 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// Tutankham
+	if ((parentrom && strcmp(parentrom, "tutankhm") == 0) ||
+		(drvname && strcmp(drvname, "tutankhm") == 0)
+	) {
+		if (strcmp("Right Stick Left", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Right Stick Left / Right");
+		}
+		if (strcmp("Right Stick Right", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
+		}
+	}
+
 	// Handle megadrive
 	if ((systemname && strcmp(systemname, "Sega Megadrive") == 0)) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)

@@ -4124,6 +4124,9 @@
     <ClCompile Include="..\..\src\burn\snd\i5000.cpp">
       <Filter>Burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp">
+      <Filter>Burn\drv\nes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4356,6 +4359,9 @@
     </Filter>
     <Filter Include="Burn\drv\sg1000">
       <UniqueIdentifier>{e008f0f5-b81e-4ee2-8f94-de0da8aed2ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Burn\drv\nes">
+      <UniqueIdentifier>{670eb4c6-09c9-404c-a214-f66311e17aee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

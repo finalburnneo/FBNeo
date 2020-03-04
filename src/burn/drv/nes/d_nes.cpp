@@ -9,8 +9,11 @@
 #include "burn_ym2413.h"	// mapper 85 (vrc7 / lagrange point)
 #include "burn_gun.h"		// zapper games
 #include "burn_led.h"		// fds disk status
+#if !defined (_MSC_VER)
 #include <unistd.h>         // for unlink()/rename() in ips_patch()/ips_make()
+#endif
 #include <errno.h>          // .. unlink()/rename()
+
 
 static UINT8 DrvReset = 0;
 static UINT32 DrvPalette[(0x40 * 8) /*nes*/ + 0x100 /*icons*/];
@@ -7908,8 +7911,10 @@ static INT32 NESFrame()
 			M6502Run(cyc_counter - M6502TotalCycles());
 			// to debug game hard-lock: uncomment and press n 4 times to get pc.
 			// tip: 99.9% its either a mapper bug or game needs ALT_TIMING flag
+#if defined (FBNEO_DEBUG)
 			extern int counter;
 			if (counter == -4) bprintf(0, _T("PC:  %x   tc: %d   cyc_ctr: %d\n"), M6502GetPC(-1), M6502TotalCycles(), cyc_counter);
+#endif
 		}
 
 		if (mapper_cycle) mapper_cycle();

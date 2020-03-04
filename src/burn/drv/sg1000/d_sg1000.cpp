@@ -53,9 +53,9 @@ static struct BurnDIPInfo Sg1000DIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x00, NULL					},
 
-	{0   , 0xfe, 0,       2, "Sprite Limit (hack)"	},
+	{0   , 0xfe, 0,       2, "Sprite Limit"	},
 	{0x0e, 0x01, 0x20, 0x00, "Enabled"				},
-	{0x0e, 0x01, 0x20, 0x20, "Disabled"				},
+	{0x0e, 0x01, 0x20, 0x20, "Disabled (hack)"				},
 };
 
 STDDIPINFO(Sg1000)

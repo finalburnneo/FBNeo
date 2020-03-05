@@ -48,15 +48,9 @@ static INT32 Riot = 0;
 
 static INT32 FstarfrcSoundLatch;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
-
 static struct BurnInputInfo FstarfrcInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , FstarfrcInputPort0 + 14, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , FstarfrcInputPort0 +  6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , FstarfrcInputPort0 + 15, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , FstarfrcInputPort0 +  7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , FstarfrcInputPort0 + 14, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , FstarfrcInputPort0 +  6, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , FstarfrcInputPort0 +  3, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , FstarfrcInputPort0 +  2, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , FstarfrcInputPort0 +  1, "p1 left"   },
@@ -64,6 +58,8 @@ static struct BurnInputInfo FstarfrcInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , FstarfrcInputPort0 +  4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , FstarfrcInputPort0 +  5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , FstarfrcInputPort0 + 15, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , FstarfrcInputPort0 +  7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , FstarfrcInputPort0 + 11, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , FstarfrcInputPort0 + 10, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , FstarfrcInputPort0 +  9, "p2 left"   },
@@ -79,11 +75,8 @@ static struct BurnInputInfo FstarfrcInputList[] = {
 STDINPUTINFO(Fstarfrc)
 
 static struct BurnInputInfo RiotInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , FstarfrcInputPort0 + 14, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , FstarfrcInputPort0 +  6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , FstarfrcInputPort0 + 15, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , FstarfrcInputPort0 +  7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , FstarfrcInputPort0 + 14, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , FstarfrcInputPort0 +  6, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , FstarfrcInputPort0 +  3, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , FstarfrcInputPort0 +  2, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , FstarfrcInputPort0 +  1, "p1 left"   },
@@ -92,6 +85,8 @@ static struct BurnInputInfo RiotInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , FstarfrcInputPort0 +  4, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , FstarfrcInputPort0 +  5, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , FstarfrcInputPort0 + 15, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , FstarfrcInputPort0 +  7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , FstarfrcInputPort0 + 11, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , FstarfrcInputPort0 + 10, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , FstarfrcInputPort0 +  9, "p2 left"   },
@@ -462,9 +457,7 @@ static void __fastcall FstarfrcWriteByte(UINT32 a, UINT8 d)
 	switch (a) {
 		case 0x150011: {
 			FstarfrcSoundLatch = d & 0xff;
-			ZetOpen(0);
 			ZetNmi();
-			ZetClose();
 			return;
 		}
 	}
@@ -581,9 +574,7 @@ static void __fastcall GinkunWriteByte(UINT32 a, UINT8 d)
 
 		case 0x150011: {
 			FstarfrcSoundLatch = d & 0xff;
-			ZetOpen(0);
 			ZetNmi();
-			ZetClose();
 			return;
 		}
 	}
@@ -1205,53 +1196,46 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 
 	if (FstarfrcReset) DrvDoReset();
 
 	FstarfrcMakeInputs();
 
-	nCyclesTotal[0] = (24000000 / 2) / 60;
-	nCyclesTotal[1] = (8000000 / 2) / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesTotal[2] = { (24000000 / 2) / 60, (8000000 / 2) / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	INT32 nSoundBufferPos = 0;
 
 	SekNewFrame();
 
 	SekOpen(0);
+	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-
-		// Run Z80
-		nCurrentCPU = 1;
-		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		ZetClose();
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-			ZetOpen(0);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
+		if (i == 239) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+			SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
+		}
+		if (i == 239+16) {
+			SekSetIRQLine(5, CPU_IRQSTATUS_NONE);
+		}
 	}
 
-	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	SekClose();
+	ZetClose();
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
@@ -1264,10 +1248,6 @@ static INT32 DrvFrame()
 			ZetClose();
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;
@@ -1298,16 +1278,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		// Scan critical driver variables
 		SCAN_VAR(FstarfrcSoundLatch);
-		SCAN_VAR(FstarfrcInput);
-		SCAN_VAR(FstarfrcDip);
 		SCAN_VAR(CharScrollX);
 		SCAN_VAR(CharScrollY);
 		SCAN_VAR(Scroll1X);
 		SCAN_VAR(Scroll1Y);
 		SCAN_VAR(Scroll2X);
 		SCAN_VAR(Scroll2Y);
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 	}
 
 	return 0;

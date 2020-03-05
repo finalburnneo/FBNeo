@@ -40,6 +40,10 @@ INT32 GamcMisc(struct GameInp* pgi, char* szi, INT32 nPlayer)
 				KEY(FBK_T);
 				return 0;
 			}
+			if (strcmp(szi, "swap") == 0) {
+				KEY(FBK_S);
+				return 0;
+			}
 
 			if (strcmp(szi, "op menu" ) == 0) {
 				KEY(FBK_F);

@@ -95,15 +95,14 @@ Input Definitions
 ===============================================================================================*/
 
 static struct BurnInputInfo BlockgalInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 6, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort0 + 2, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort0 + 3, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 7, "p2 fire 1" },
@@ -117,15 +116,14 @@ static struct BurnInputInfo BlockgalInputList[] = {
 STDINPUTINFO(Blockgal)
 
 static struct BurnInputInfo FlickyInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
@@ -140,11 +138,8 @@ static struct BurnInputInfo FlickyInputList[] = {
 STDINPUTINFO(Flicky)
 
 static struct BurnInputInfo MyheroInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -152,6 +147,8 @@ static struct BurnInputInfo MyheroInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -169,11 +166,8 @@ static struct BurnInputInfo MyheroInputList[] = {
 STDINPUTINFO(Myhero)
 
 static struct BurnInputInfo RegulusInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -181,6 +175,8 @@ static struct BurnInputInfo RegulusInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -198,11 +194,8 @@ static struct BurnInputInfo RegulusInputList[] = {
 STDINPUTINFO(Regulus)
 
 static struct BurnInputInfo SeganinjInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -211,6 +204,8 @@ static struct BurnInputInfo SeganinjInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -229,17 +224,16 @@ static struct BurnInputInfo SeganinjInputList[] = {
 STDINPUTINFO(Seganinj)
 
 static struct BurnInputInfo UpndownInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -256,16 +250,15 @@ static struct BurnInputInfo UpndownInputList[] = {
 STDINPUTINFO(Upndown)
 
 static struct BurnInputInfo WboyInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 1" },
@@ -281,11 +274,8 @@ static struct BurnInputInfo WboyInputList[] = {
 STDINPUTINFO(Wboy)
 
 static struct BurnInputInfo WmatchInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left Up"        , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Left Down"      , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left Left"      , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -296,6 +286,8 @@ static struct BurnInputInfo WmatchInputList[] = {
 	{"P1 Right Right"    , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 4" },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 6, "p1 fire 5" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left Up"        , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Left Down"      , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left Left"      , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -316,11 +308,8 @@ static struct BurnInputInfo WmatchInputList[] = {
 STDINPUTINFO(Wmatch)
 
 static struct BurnInputInfo ChplftbInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -328,6 +317,8 @@ static struct BurnInputInfo ChplftbInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -346,25 +337,24 @@ static struct BurnInputInfo ChplftbInputList[] = {
 STDINPUTINFO(Chplftb)
 
 static struct BurnInputInfo UfosensiInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
-	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
-	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , System1InputPort0 + 0, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
-	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 2" },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 2" },
 	{"P2 Fire 3"         , BIT_DIGITAL  , System1InputPort1 + 0, "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },

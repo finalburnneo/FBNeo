@@ -4856,7 +4856,7 @@ static UINT8 __fastcall System1Z802ProgRead(UINT16 a)
 		}
 	}
 
-	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
+	//bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
 	return 0;
 }
 
@@ -5809,10 +5809,6 @@ static INT32 ChplftbInit()
 		System1RowScroll = 1;
 		ZetOpen(0);
 
-		ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
-		ZetMapArea(0xe7c0, 0xe7ff, 1, System1ScrollXRam);
-		ZetMapArea(0xe7c0, 0xe7ff, 2, System1ScrollXRam);
-
 		ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
 		ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
 		ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
@@ -6309,6 +6305,7 @@ static void System2DrawBgLayer(INT32 trasp)
 {
 	INT32 scrollx = (System1VideoRam[0x7c0] >> 1) + ((System1VideoRam[0x7c1] & 1) << 7) - 256 + 5;
 	INT32 scrolly = -System1VideoRam[0x7ba];
+	if (System1RowScroll) scrollx = 0;
 
 	for (INT32 page = 0; page < 4; page++)
 	{
@@ -6324,13 +6321,11 @@ static void System2DrawBgLayer(INT32 trasp)
 		{
 			for (INT32 col = 0; col < 32 * 8; col += 8)
 			{
-				INT32 x = (startx + col) & 0x1ff;
-				INT32 y = (starty + row) & 0x1ff;
-
 				if (System1RowScroll) {
-					System1BgScrollX = (System1ScrollXRam[((row/8) * 2) & ~1] >> 1) + ((System1ScrollXRam[((row/8) * 2) | 1] & 1) << 7);
-					x += System1BgScrollX;
+					System1BgScrollX = (((System1ScrollXRam[(row/4)] + (System1ScrollXRam[(row/4) + 1] << 8)) & 0x1ff) >> 1) - 256 + 5;
 				}
+				INT32 x = (startx + System1BgScrollX + col) & 0x1ff;
+				INT32 y = (starty + row) & 0x1ff;
 
 				if (x > 256) x -= 512;
 				if (y > 224) y -= 512;

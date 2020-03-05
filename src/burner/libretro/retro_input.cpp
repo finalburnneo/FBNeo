@@ -460,7 +460,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 {
 	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
 	const char * drvname	= BurnDrvGetTextA(DRV_NAME);
-	const char * systemname = BurnDrvGetTextA(DRV_SYSTEM);
+	int nHardwareCode = BurnDrvGetHardwareCode();
 
 	if (nDeviceType[nPlayer] == RETRO_DEVICE_POINTER && BurnGunIsActive()) {
 		if (strcmp("x-axis", szi + 3) == 0) {
@@ -1424,7 +1424,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle megadrive
-	if ((systemname && strcmp(systemname, "Sega Megadrive") == 0)) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_SEGA_MEGADRIVE) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)
 		// Use same layout as arcade
 		if ((parentrom && strcmp(parentrom, "md_sf2") == 0) ||
@@ -1463,7 +1463,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle MSX
-	if ((systemname && strcmp(systemname, "MSX") == 0)) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_MSX) {
 		if (strcmp("Button 1", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
@@ -1503,7 +1503,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle Coleco
-	if ((systemname && strcmp(systemname, "ColecoVision") == 0)) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_COLECO) {
 		if (strcmp("1", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
 		}
@@ -1728,12 +1728,14 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		}
 	}
 
-	const char * systemname = BurnDrvGetTextA(DRV_SYSTEM);
 	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
 	const char * drvname	= BurnDrvGetTextA(DRV_NAME);
+	int nHardwareCode = BurnDrvGetHardwareCode();
+
+	// We can't handle the following "special" mappings in GameInpSpecialOne (they'll fail computing nPlayer)
 
 	// Handle Spectrum
-	if ((systemname && strcmp(systemname, "ZX Spectrum") == 0)) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_SPECTRUM) {
 		if (strcmp("keyb_A", szi) == 0)
 			GameInpDigital2RetroInpKey(pgi, 0, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_B", szi) == 0)
@@ -1848,8 +1850,17 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 			GameInpDigital2RetroInpKey(pgi, 0, RETROK_COMMA, szn, RETRO_DEVICE_KEYBOARD);
 	}
 
+	// FDS disk buttons
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_FDS) {
+		if (strcmp("Swap Disk Side", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
+		}
+		if (strcmp("Eject/Insert Disk", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L3, szn);
+		}
+	}
+
 	// Qix service buttons are somehow needed
-	// We can't handle this in GameInpSpecialOne (fails to compute nPlayer)
 	if ((parentrom && strcmp(parentrom, "qix") == 0) ||
 		(drvname && strcmp(drvname, "qix") == 0)
 	) {

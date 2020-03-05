@@ -4214,6 +4214,7 @@ static void mapper64_cycle()
 			if (mapper64_irqcount == 0xff && mapper64_irqenable) {
 				mapper64_reload = 1;
 				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+				M6502Idle(4);
 			}
 		}
 	}

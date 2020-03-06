@@ -42421,6 +42421,24 @@ struct BurnDriver BurnDrvmd_sbash = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sonic the Hedgehog 2 XL (Onion Ring Hack)
+static struct BurnRomInfo md_sonic2xlRomDesc[] = {
+	{ "sonic2xl.bin", 0x400000, 0x9459fbfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic2xl)
+STD_ROM_FN(md_sonic2xl)
+
+struct BurnDriver BurnDrvmd_sonic2xl = {
+	"md_sonic2xl", "md_sonic2", NULL, NULL, "2016",
+	"Sonic the Hedgehog 2 XL (Onion Ring Hack)\0", NULL, "Captain Bozo, Ranger", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonic2xlRomInfo, md_sonic2xlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Sonic 2 Battle Race (Hack By ColinC10)
 static struct BurnRomInfo md_sonic2brcRomDesc[] = {
 	{ "Sonic2BattleRace.bin", 0x200000, 0xBE6D9178, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

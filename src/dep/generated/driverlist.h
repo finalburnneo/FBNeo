@@ -10531,6 +10531,7 @@ DRV		BurnDrvmd_sonic2p1;
 DRV		BurnDrvmd_sonic2b;
 DRV		BurnDrvmd_sonic2;
 DRV		BurnDrvmd_sonic2c;
+DRV		BurnDrvmd_sonic2xl;
 DRV		BurnDrvmd_sonic3;
 DRV		BurnDrvmd_sonic3j;
 DRV		BurnDrvmd_sonic3pir;
@@ -24447,6 +24448,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sonic2b,			// Sonic the Hedgehog 2 (World, Rev. 01a)
 	&BurnDrvmd_sonic2,			// Sonic the Hedgehog 2 (World, Rev. A)
 	&BurnDrvmd_sonic2c,			// Sonic the Hedgehog 2 (World, Rev. SC02)
+	&BurnDrvmd_sonic2xl,		// Sonic the Hedgehog 2 XL (Onion Ring Hack)
 	&BurnDrvmd_sonic3,			// Sonic the Hedgehog 3 (Euro)
 	&BurnDrvmd_sonic3j,			// Sonic the Hedgehog 3 (Jpn, Kor)
 	&BurnDrvmd_sonic3pir,		// Sonic the Hedgehog 3 (Pirate)

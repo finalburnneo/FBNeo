@@ -11576,6 +11576,13 @@
 		<rom name="sonic the hedgehog 2 (world) (rev sc02).bin" size="1048576" crc="f23ad4b3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonic2xl" cloneof="sonic2" romof="sonic2">
+		<description>Sonic the Hedgehog 2 XL (Onion Ring Hack)</description>
+		<year>2016</year>
+		<manufacturer>Captain Bozo, Ranger</manufacturer>
+		<rom name="sonic2xl.bin" size="4194304" crc="9459fbfb"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonic3">
 		<description>Sonic the Hedgehog 3 (Euro)</description>
 		<year>1994</year>

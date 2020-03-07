@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13639 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13640 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10335,6 +10335,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sonic2b	|  	| Sonic the Hedgehog 2 (World, Rev. 01a)		| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_sonic2	|  	| Sonic the Hedgehog 2 (World, Rev. A)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_sonic2c	|  	| Sonic the Hedgehog 2 (World, Rev. SC02)		| md_sonic2	| 1992	| Sega		| Sega Megadrive| 					|
+| md_sonic2xl	|  	| Sonic the Hedgehog 2 XL (Onion Ring Hack)		| md_sonic2	| 2016	| Captain Bozo, | Sega Megadrive| 					|
 | md_sonic3	|  	| Sonic the Hedgehog 3 (Euro)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_sonic3j	|  	| Sonic the Hedgehog 3 (Jpn, Kor)			| md_sonic3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_sonic3pir	|  	| Sonic the Hedgehog 3 (Pirate)				| md_sonic3	| 1994?	| <unlicensed>	| Sega Megadrive| 					|

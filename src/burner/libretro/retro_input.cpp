@@ -1375,7 +1375,9 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(parentrom && strcmp(parentrom, "mk2") == 0) ||
 		(drvname && strcmp(drvname, "mk2") == 0) ||
 		(parentrom && strcmp(parentrom, "mk3") == 0) ||
-		(drvname && strcmp(drvname, "mk3") == 0)
+		(drvname && strcmp(drvname, "mk3") == 0) ||
+		(parentrom && strcmp(parentrom, "umk3") == 0) ||
+		(drvname && strcmp(drvname, "umk3") == 0)
 	) {
 		if (strcmp("High Punch", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);

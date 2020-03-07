@@ -4056,7 +4056,7 @@ static void VasaraV60Map()
 	v60MapMemory(DrvSprRAM,			0x100000, 0x13ffff, MAP_RAM);
 	v60MapMemory(DrvPalRAM,			0x140000, 0x15ffff, MAP_ROM); // handler
 	v60MapMemory(DrvV60RAM1,		0x160000, 0x17ffff, MAP_RAM);
-	v60MapMemory(DrvV60ROM,			0xc00000, 0xffffff, MAP_ROM);	
+	v60MapMemory(DrvV60ROM,			0xc00000, 0xffffff, MAP_ROM);
 	v60SetWriteWordHandler(common_main_write_word);
 	v60SetWriteByteHandler(common_main_write_byte);
 	v60SetReadWordHandler(common_main_read_word);
@@ -4065,7 +4065,12 @@ static void VasaraV60Map()
 
 static INT32 VasaraInit()
 {
-	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, 1, -1, -1, 0.80);
+	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, 1, -1, -1, 2.80);
+}
+
+static INT32 Vasara2Init()
+{
+	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, 1, -1, -1, 1.80);
 }
 
 struct BurnDriver BurnDrvVasara = {
@@ -4105,7 +4110,7 @@ struct BurnDriver BurnDrvVasara2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, vasara2RomInfo, vasara2RomName, NULL, NULL, NULL, NULL, VasaraInputInfo, Vasara2DIPInfo,
-	VasaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	Vasara2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	240, 336, 3, 4
 };
 
@@ -4136,7 +4141,7 @@ struct BurnDriver BurnDrvVasara2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, vasara2aRomInfo, vasara2aRomName, NULL, NULL, NULL, NULL, VasaraInputInfo, Vasara2DIPInfo,
-	VasaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	Vasara2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	240, 336, 3, 4
 };
 
@@ -4189,7 +4194,7 @@ static INT32 SurvartsInit()
 
 static INT32 DynagearInit()
 {
-	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.20);
+	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.30);
 }
 
 struct BurnDriver BurnDrvSurvarts = {
@@ -4449,7 +4454,7 @@ static INT32 Twineag2Init()
 	interrupt_ultrax = 1;
 	watchdog_disable = 1;
 
-	return DrvCommonInit(Twineag2V60Map, NULL, 0, 0, 1, 0, 1, 0.80);
+	return DrvCommonInit(Twineag2V60Map, NULL, 0, 0, 1, 0, 1, 1.80);
 }
 
 struct BurnDriver BurnDrvTwineag2 = {
@@ -4522,7 +4527,7 @@ static INT32 Drifto94Init()
 		BurnSetRefreshRate(60.186);
 	}
 
-	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1, 0.80);
+	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1, 1.80);
 }
 
 struct BurnDriver BurnDrvDrifto94 = {
@@ -4672,7 +4677,7 @@ static INT32 UltraxInit()
 {
 	interrupt_ultrax = 1;
 
-	return DrvCommonInit(UltraxV60Map, NULL, 0, 0, 1, 0, 1, 0.80);
+	return DrvCommonInit(UltraxV60Map, NULL, 0, 0, 1, 0, 1, 1.80);
 }
 
 struct BurnDriver BurnDrvUltrax = {
@@ -4766,7 +4771,7 @@ static INT32 StmbladeInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 0.80);
+	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 1.80);
 }
 
 struct BurnDriver BurnDrvStmblade = {
@@ -4892,7 +4897,7 @@ static INT32 MsliderInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1, 2.80);
+	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1, 3.30);
 }
 
 struct BurnDriver BurnDrvMslider = {
@@ -4980,7 +4985,7 @@ static INT32 GdfsInit()
 	watchdog_disable = 1;
 	BurnGunInit(2, false);
 
-	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 0.80);
+	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 1.80);
 }
 
 struct BurnDriver BurnDrvGdfs = {

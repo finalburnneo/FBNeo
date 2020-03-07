@@ -425,6 +425,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		Cart.CHRRamSize = 0x8000;
 	}
 
+	if (Cart.Crc == 0xf4a24d8b) {
+		Cart.CHRRamSize = 0x4000; // Nalle Land 16k chr ram
+	}
+
 	if (Cart.Crc == 0xf0847322) {
 		Cart.CHRRamSize = 0x4000; // 16k chr-ram for Videomation
 	}
@@ -10454,6 +10458,23 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_nallelandRomDesc[] = {
+	{ "Nalle Land (HB, v034).nes",          32784, 0xf4a24d8b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nalleland)
+STD_ROM_FN(nes_nalleland)
+
+struct BurnDriver BurnDrvnes_nalleland = {
+	"nes_nalleland", NULL, NULL, NULL, "2020",
+	"NES Nalle Land (HB, v034)\0", NULL, "Benjamin Larsson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nallelandRomInfo, nes_nallelandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_mysticoriginsRomDesc[] = {
 	{ "Mystic Origins (HB).nes",          524304, 0x249c666e, BRF_ESS | BRF_PRG },
 };

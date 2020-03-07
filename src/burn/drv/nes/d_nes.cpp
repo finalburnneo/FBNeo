@@ -920,6 +920,8 @@ static UINT32 CHRMap[8];
 static UINT8  CHRType[8]; // enum { MEM_RAM = 0, MEM_ROM };
 static UINT8  mapper_regs[0x20]; // General-purpose mapper registers (8bit)
 static UINT16 mapper_regs16[0x20]; // General-purpose mapper registers (16bit)
+static INT32 mapper_irq_exec; // cycle-delayed irq for mapper_irq();
+static void mapper_irq(INT32 cyc); // forward
 
 // mapping expansion ram/rom (6000 - 7fff)  refer to mapper69 for hookup info
 static INT32 PRGExpMap;
@@ -3080,8 +3082,7 @@ static void mapper18_cycle()
 		UINT16 count = mapper18_irqcount & mapper18_irqmask;
 		count--;
 		if (count == 0) {
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Stall(5); // fix jeebies in pizza-pop (mid-hud) and magic john (intro)
+			mapper_irq(5); // 5 cyc delay fixes jeebies in pizza-pop (mid-hud) and magic john (intro)
 		}
 		mapper18_irqcount = (mapper18_irqcount & ~mapper18_irqmask) | (count & mapper18_irqmask);
 	}
@@ -3500,8 +3501,7 @@ static void vrc2vrc4_cycle()
 		if (mapper23_irqmode) { // cycle mode
 			mapper23_irqcount++;
 			if (mapper23_irqcount >= 0x100) {
-				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Stall(5);
+				mapper_irq(5);
 				mapper23_irqcount = mapper23_irqlatch;
 			}
 		} else {
@@ -3510,8 +3510,7 @@ static void vrc2vrc4_cycle()
 				mapper23_irqcycle -= 341;
 				mapper23_irqcount++;
 				if (mapper23_irqcount == 0x100) {
-					M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-					M6502Stall(5);
+					mapper_irq(5);
 					mapper23_irqcount = mapper23_irqlatch;
 				}
 			}
@@ -3721,8 +3720,7 @@ static void vrc6_cycle()
 		if (mapper24_irqmode) { // cycle mode
 			mapper24_irqcount++;
 			if (mapper24_irqcount >= 0x100) {
-				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Stall(5);
+				mapper_irq(0);
 				mapper24_irqcount = mapper24_irqlatch;
 			}
 		} else {
@@ -3731,8 +3729,7 @@ static void vrc6_cycle()
 				mapper24_irqcycle -= 341;
 				mapper24_irqcount++;
 				if (mapper24_irqcount == 0x100) {
-					M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-					M6502Stall(5);
+					mapper_irq(0);
 					mapper24_irqcount = mapper24_irqlatch;
 				}
 			}
@@ -4123,14 +4120,14 @@ static UINT8 mapper120_exp_read(UINT16 address)
 #undef mapper120_prg
 
 // --[ mapper 64 - Tengen (Atari)
-#define mapper64_mirror		(mapper_regs[0x1f - 0])
-#define mapper64_regnum		(mapper_regs[0x1f - 1])
-#define mapper64_reload		(mapper_regs[0x1f - 2])
-#define mapper64_irqmode	(mapper_regs[0x1f - 3])
-#define mapper64_irqenable	(mapper_regs[0x1f - 4])
-#define mapper64_irqlatch	(mapper_regs[0x1f - 5])
-#define mapper64_irqcount	(mapper_regs[0x1f - 6])
-#define mapper64_irqcountsc	(mapper_regs[0x1f - 7])
+#define mapper64_mirror			(mapper_regs[0x1f - 0])
+#define mapper64_regnum			(mapper_regs[0x1f - 1])
+#define mapper64_reload			(mapper_regs[0x1f - 2])
+#define mapper64_irqmode		(mapper_regs[0x1f - 3])
+#define mapper64_irqenable		(mapper_regs[0x1f - 4])
+#define mapper64_irqlatch		(mapper_regs[0x1f - 5])
+#define mapper64_irqcount		(mapper_regs[0x1f - 6])
+#define mapper64_irqprescale	(mapper_regs[0x1f - 7])
 
 static void mapper64_write(UINT16 address, UINT8 data)
 {
@@ -4145,24 +4142,19 @@ static void mapper64_write(UINT16 address, UINT8 data)
 
 			case 0xC000:
 				mapper64_irqlatch = data;
-				if (mapper64_reload)
-					mapper64_irqcount = mapper64_irqlatch;
 				break;
 			case 0xC001:
 				mapper64_reload = 1;
-				mapper64_irqcount = (mapper64_irqlatch) ? mapper64_irqlatch | 1 : 0;
+				mapper64_irqprescale = 0;
 				mapper64_irqmode = data & 1;
 				break;
 			case 0xE000:
 				mapper64_irqenable = 0;
-				if (mapper64_reload)
-					mapper64_irqcount = mapper64_irqlatch;
 				M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				break;
 			case 0xE001:
 				mapper64_irqenable = 1;
-				if (mapper64_reload)
-					mapper64_irqcount = mapper64_irqlatch;
+				M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				break;
         }
 	}
@@ -4191,15 +4183,24 @@ static void mapper64_map()
 	set_mirroring(mapper64_mirror ? HORIZONTAL : VERTICAL);
 }
 
+static void mapper64_irq_reload_logic()
+{
+	if (mapper64_reload) {
+		mapper64_irqcount = (mapper64_irqlatch) ? mapper64_irqlatch | 1 : 0;
+		mapper64_reload = 0;
+	} else if (mapper64_irqcount == 0) {
+		mapper64_irqcount = mapper64_irqlatch;
+	} else mapper64_irqcount --;
+}
+
 static void mapper64_scanline()
 {
-	if (mapper64_irqmode == 0 && scanline != 240) {
-		mapper64_reload = 0;
-		mapper64_irqcount--;
-		if (mapper64_irqcount == 0xff && mapper64_irqenable) {
-			mapper64_reload = 1;
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Idle(4); // needs a slight delay (klax ship jitters, skull & crossbones hud jitter)
+	if (mapper64_irqmode == 0) {
+
+		mapper64_irq_reload_logic();
+
+		if (mapper64_irqcount == 0 && mapper64_irqenable) {
+			mapper_irq(1); // assert irq in 1 m2 cycle
 		}
 	}
 }
@@ -4207,14 +4208,14 @@ static void mapper64_scanline()
 static void mapper64_cycle()
 {
 	if (mapper64_irqmode == 1) {
-		mapper64_irqcountsc++;
-		while (mapper64_irqcountsc >= 4) {
-			mapper64_irqcountsc -= 4;
-			mapper64_irqcount--;
-			if (mapper64_irqcount == 0xff && mapper64_irqenable) {
-				mapper64_reload = 1;
-				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Idle(4);
+		mapper64_irqprescale++;
+		while (mapper64_irqprescale == 4) {
+			mapper64_irqprescale = 0;
+
+			mapper64_irq_reload_logic();
+
+			if (mapper64_irqcount == 0 && mapper64_irqenable) {
+				mapper_irq(4); // assert irq in 4 m2 cycles
 			}
 		}
 	}
@@ -4227,6 +4228,7 @@ static void mapper64_cycle()
 #undef mapper64_irqenable
 #undef mapper64_irqlatch
 #undef mapper64_irqcount
+#undef mapper64_irqprescale
 
 // --[ mapper 65 - irem h3001(?): Spartan X2, Kaiketsu Yanchamaru 3: Taiketsu! Zouringen,
 #define mapper65_mirror		(mapper_regs[0x1f - 0])
@@ -4832,7 +4834,7 @@ static void vrc7_cycle()
 			mapper85_irqcount++;
 			if (mapper85_irqcount >= 0x100) {
 				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Stall(4);
+				mapper_irq(4);
 				mapper85_irqcount = mapper85_irqlatch;
 			}
 		} else {
@@ -4842,7 +4844,7 @@ static void vrc7_cycle()
 				mapper85_irqcount++;
 				if (mapper85_irqcount == 0x100) {
 					M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-					M6502Stall(4);
+					mapper_irq(4);
 					mapper85_irqcount = mapper85_irqlatch;
 				}
 			}
@@ -5672,6 +5674,7 @@ static void mapper_scan(INT32 nAction, INT32 *pnMin)
 
 	SCAN_VAR(mapper_regs);
 	SCAN_VAR(mapper_regs16);
+	SCAN_VAR(mapper_irq_exec);
 
 	if (mapper_scan_cb) {
 		mapper_scan_cb();
@@ -6564,6 +6567,27 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 	}
 	return retval;
+}
+
+static void mapper_irq(INT32 delay_cyc)
+{
+	if (delay_cyc == 0) { // irq now
+		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+	} else { // irq later (after 'cyc' m2 cycles)
+		mapper_irq_exec = delay_cyc;
+	}
+}
+
+static void mapper_run()
+{
+	if (mapper_irq_exec) {
+		mapper_irq_exec--;
+		if (mapper_irq_exec == 0) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
+	}
+
+	if (mapper_cycle) mapper_cycle();
 }
 
 // --------[ end Mappers
@@ -7925,7 +7949,7 @@ static INT32 NESFrame()
 #endif
 		}
 
-		if (mapper_cycle) mapper_cycle();
+		mapper_run();
 
 		INT32 p_cyc = (cyc_counter * nes_ppu_cyc_mult) - ppu_framecycles;
 		if (p_cyc > 0) {

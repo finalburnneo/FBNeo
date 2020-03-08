@@ -663,6 +663,13 @@
 		<rom name="Base Wars (USA).nes" size="262160" crc="eed00ddf"/>
 		<driver status="good"/>
 	</game>
+	<game name="basebsim1000">
+		<description>NES Baseball Simulator 1.000 (USA)</description>
+		<year>1990</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Baseball Simulator 1.000 (USA).nes" size="262160" crc="469b04f6"/>
+		<driver status="good"/>
+	</game>
 	<game name="baseballstars">
 		<description>NES Baseball Stars (USA)</description>
 		<year>1989</year>
@@ -948,6 +955,13 @@
 		<year>1992</year>
 		<manufacturer>Titus</manufacturer>
 		<rom name="Blues Brothers, The (USA).nes" size="131088" crc="ac273c14"/>
+		<driver status="good"/>
+	</game>
+	<game name="bobl">
+		<description>NES bobl (HB)</description>
+		<year>2020</year>
+		<manufacturer>Morphcat Games</manufacturer>
+		<rom name="bobl (HB).nes" size="65552" crc="b5340d71"/>
 		<driver status="good"/>
 	</game>
 	<game name="bokosukawars">
@@ -1783,7 +1797,7 @@
 		<rom name="Days of Thunder (USA).nes" size="393232" crc="3616c7dd"/>
 		<driver status="good"/>
 	</game>
-	<game name="deadfox">
+	<game name="deadfox" cloneof="codenam" romof="codenam">
 		<description>NES Dead Fox (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -2922,6 +2936,20 @@
 		<year>1992</year>
 		<manufacturer>Gluk Video</manufacturer>
 		<rom name="Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl).nes" size="262160" crc="5d615d1d"/>
+		<driver status="good"/>
+	</game>
+	<game name="goal">
+		<description>NES Goal! (USA)</description>
+		<year>1989</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Goal! (USA).nes" size="393232" crc="ab800243"/>
+		<driver status="good"/>
+	</game>
+	<game name="goaltwo">
+		<description>NES Goal! Two (USA)</description>
+		<year>1992</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Goal! Two (USA).nes" size="262160" crc="c5b01401"/>
 		<driver status="good"/>
 	</game>
 	<game name="godsla">
@@ -5129,6 +5157,13 @@
 		<rom name="Mystic Origins (HB).nes" size="524304" crc="249c666e"/>
 		<driver status="good"/>
 	</game>
+	<game name="nalleland">
+		<description>NES Nalle Land (HB, v034)</description>
+		<year>2020</year>
+		<manufacturer>Benjamin Larsson</manufacturer>
+		<rom name="Nalle Land (HB, v034).nes" size="32784" crc="f4a24d8b"/>
+		<driver status="good"/>
+	</game>
 	<game name="namcoclassic">
 		<description>NES Namco Classic (Japan)</description>
 		<year>1988</year>
@@ -5400,6 +5435,13 @@
 		<year>1990</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="North &amp; South (USA).nes" size="262160" crc="840c3b42"/>
+		<driver status="good"/>
+	</game>
+	<game name="novasqu">
+		<description>NES Nova the Squirrel (HB)</description>
+		<year>2018</year>
+		<manufacturer>NovaSquirrel</manufacturer>
+		<rom name="Nova the Squirrel (HB).nes" size="262160" crc="0b752bee"/>
 		<driver status="good"/>
 	</game>
 	<game name="nutsmilk">
@@ -6219,6 +6261,13 @@
 		<year>1990</year>
 		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Rollerball (USA).nes" size="163856" crc="e45a440d"/>
+		<driver status="good"/>
+	</game>
+	<game name="rollerac">
+		<description>NES Rollerblade Racer (USA)</description>
+		<year>1993</year>
+		<manufacturer>Hi Tech Expressions</manufacturer>
+		<rom name="Rollerblade Racer (USA).nes" size="262160" crc="09e3c83b"/>
 		<driver status="good"/>
 	</game>
 	<game name="rollergames">
@@ -7999,6 +8048,13 @@
 		<rom name="Wayne's World (USA).nes" size="262160" crc="9a5e089d"/>
 		<driver status="good"/>
 	</game>
+	<game name="wcwworchawre">
+		<description>NES WCW World Championship Wrestling (USA)</description>
+		<year>1990</year>
+		<manufacturer>FCI</manufacturer>
+		<rom name="WCW World Championship Wrestling (USA).nes" size="262160" crc="7434dc82"/>
+		<driver status="good"/>
+	</game>
 	<game name="werew">
 		<description>NES Werewolf - The Last Warrior (USA)</description>
 		<year>1990</year>
@@ -8081,6 +8137,13 @@
 		<year>1991</year>
 		<manufacturer>LJN</manufacturer>
 		<rom name="Wolverine (USA).nes" size="262160" crc="1fd46615"/>
+		<driver status="good"/>
+	</game>
+	<game name="wonderlanddizzy">
+		<description>NES Wonderland Dizzy (HB)</description>
+		<year>1989?</year>
+		<manufacturer>Oliver Twins</manufacturer>
+		<rom name="Wonderland Dizzy (HB).nes" size="262160" crc="62c97c6c"/>
 		<driver status="good"/>
 	</game>
 	<game name="woodypoko">

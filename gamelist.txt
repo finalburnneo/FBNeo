@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13640 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13649 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6823,6 +6823,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_bandikinancchi|  	| NES Bandit Kings of Ancient China (USA)		| 		| 1990	| Koei		| Miscellaneous	| 					|
 | nes_barkebilstrish|  	| NES Barker Bill's Trick Shooting (USA)		| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | nes_basewars	|  	| NES Base Wars (USA)					| 		| 1991	| Ultra Games	| Miscellaneous	| 					|
+| nes_basebsim1000|  	| NES Baseball Simulator 1.000 (USA)			| 		| 1990	| Culture Brain	| Miscellaneous	| 					|
 | nes_baseballstars|  	| NES Baseball Stars (USA)				| 		| 1989	| SNK		| Miscellaneous	| 					|
 | nes_basebstaii|  	| NES Baseball Stars II (USA)				| 		| 1992	| Romstar	| Miscellaneous	| 					|
 | nes_basesloaded|  	| NES Bases Loaded (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
@@ -6864,6 +6865,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_blowemout	|  	| NES Blow'Em Out! (HB)					| 		| 1989?	| Second Dimensi| Miscellaneous	| 					|
 | nes_bluemarlinthe|  	| NES Blue Marlin, The (USA)				| 		| 1992	| HOT・B	| Miscellaneous	| 					|
 | nes_bluesbro	|  	| NES Blues Brothers, The (USA)				| 		| 1992	| Titus		| Miscellaneous	| 					|
+| nes_bobl	|  	| NES bobl (HB)						| 		| 2020	| Morphcat Games| Miscellaneous	| 					|
 | nes_bokosukawars|  	| NES Bokosuka Wars (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
 | nes_bombsweeper|  	| NES Bomb Sweeper (HB)					| 		| 2002	| SNOWBRO	| Miscellaneous	| 					|
 | nes_bomberman	|  	| NES Bomberman (USA)					| 		| 1989	| Hudson Soft	| Miscellaneous	| 					|
@@ -6983,7 +6985,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_davidcrasaboyandhis|  	| NES David Crane's A Boy and His Blob - Trouble on Blob| 	| 1990	| Absolute	| Miscellaneous	| 					|
 | nes_daydredav	|  	| NES Day Dreamin' Davey (USA)				| 		| 1992	| HAL Laboratory| Miscellaneous	| 					|
 | nes_daysofthunder|  	| NES Days of Thunder (USA)				| 		| 1990	| Mindscape	| Miscellaneous	| 					|
-| nes_deadfox	|  	| NES Dead Fox (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_deadfox	|  	| NES Dead Fox (Japan)					| nes_codenam	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_deadlytowers|  	| NES Deadly Towers (USA)				| 		| 1987	| Broderbund	| Miscellaneous	| 					|
 | nes_deathrace	|  	| NES Death Race (USA) (Unl)				| 		| 1990	| AGCI		| Miscellaneous	| 					|
 | nes_deathbots	|  	| NES Deathbots (USA) (Rev 1) (Unl)			| 		| 1990	| AVE		| Miscellaneous	| 					|
@@ -7146,6 +7148,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ghoulschool|  	| NES Ghoul School (USA)				| 		| 1992	| Electro Brain	| Miscellaneous	| 					|
 | nes_gimmick	|  	| NES Gimmick! (Japan)					| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
 | nes_glukthuwar|  	| NES Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
+| nes_goal	|  	| NES Goal! (USA)					| 		| 1989	| Jaleco	| Miscellaneous	| 					|
+| nes_goaltwo	|  	| NES Goal! Two (USA)					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | nes_godsla	|  	| NES God Slayer - Haruka Tenkuu no Sonata (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_golf	|  	| NES Golf (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
 | nes_golgo13	|  	| NES Golgo 13 - Top Secret Episode (USA)		| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
@@ -7461,6 +7465,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mutanvir	|  	| NES Mutant Virus, The (USA)				| 		| 1992	| American Softw| Miscellaneous	| 					|
 | nes_mysteryquest|  	| NES Mystery Quest (USA)				| 		| 1989	| Taxan		| Miscellaneous	| 					|
 | nes_mysticorigins|  	| NES Mystic Origins (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_nalleland	|  	| NES Nalle Land (HB, v034)				| 		| 2020	| Benjamin Larss| Miscellaneous	| 					|
 | nes_namcoclassic|  	| NES Namco Classic (Japan)				| 		| 1988	| Namco		| Miscellaneous	| 					|
 | nes_namcoclassicii|  	| NES Namco Classic II (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|
 | nes_nantebas_1|  	| NES Nantettatte!! Baseball (Japan)			| nes_nantebas	| 1990	| Sunsoft	| Miscellaneous	| 					|
@@ -7500,6 +7505,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_noahsark	|  	| NES Noah's Ark (Europe)				| 		| 0000	| Konami	| Miscellaneous	| 					|
 | nes_nomolos	|  	| NES Nomolos (HB)					| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
 | nes_northsouth|  	| NES North & South (USA)				| 		| 1990	| Kemco		| Miscellaneous	| 					|
+| nes_novasqu	|  	| NES Nova the Squirrel (HB)				| 		| 2018	| NovaSquirrel	| Miscellaneous	| 					|
 | nes_nutsmilk	|  	| NES Nuts & Milk (Japan)				| 		| 1984	| Hudson Soft	| Miscellaneous	| 					|
 | nes_obakenoqtar|  	| NES Obake no Q Tarou - Wanwan Panic (Japan)		| 		| 1985	| Bandai	| Miscellaneous	| 					|
 | nes_onyankotown|  	| NES Onyanko Town (Japan)				| 		| 1985	| Pony Canyon	| Miscellaneous	| 					|
@@ -7617,6 +7623,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_rockm6	|  	| NES Rockman 6 - Shijou Saidai no Tatakai!! (Japan)	| nes_megaman6	| 1993	| Capcom	| Miscellaneous	| 					|
 | nes_rodland	|  	| NES Rod Land (Europe)					| 		| 1993	| Storm		| Miscellaneous	| 					|
 | nes_rollerball|  	| NES Rollerball (USA)					| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
+| nes_rollerac	|  	| NES Rollerblade Racer (USA)				| 		| 1993	| Hi Tech Expres| Miscellaneous	| 					|
 | nes_rollergames|  	| NES Rollergames (USA)					| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
 | nes_rollingthunder_1|  	| NES Rolling Thunder (Japan)				| nes_rollingthunder| 1989	| Namco		| Miscellaneous	| 					|
 | nes_rollingthunder|  	| NES Rolling Thunder (USA) (Unl)			| 		| 1989	| Tengen	| Miscellaneous	| 					|
@@ -7871,6 +7878,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_warioswoods|  	| NES Wario's Woods (USA)				| 		| 1994	| Nintendo	| Miscellaneous	| 					|
 | nes_warpman	|  	| NES Warpman (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
 | nes_waynesworld|  	| NES Wayne's World (USA)				| 		| 1993	| THQ		| Miscellaneous	| 					|
+| nes_wcwworchawre|  	| NES WCW World Championship Wrestling (USA)		| 		| 1990	| FCI		| Miscellaneous	| 					|
 | nes_werew	|  	| NES Werewolf - The Last Warrior (USA)			| 		| 1990	| Data East	| Miscellaneous	| 					|
 | nes_whereintimiscasa|  	| NES Where in Time is Carmen Sandiego (USA)		| 		| 1991	| Konami	| Miscellaneous	| 					|
 | nes_whereswaldo|  	| NES Where's Waldo (USA)				| 		| 1991	| THQ		| Miscellaneous	| 					|
@@ -7883,6 +7891,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_wizarwar	|  	| NES Wizards & Warriors (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|
 | nes_wizarwariii|  	| NES Wizards & Warriors III - Kuros - Visions of Power | 		| 1992	| Acclaim	| Miscellaneous	| 					|
 | nes_wolverine	|  	| NES Wolverine (USA)					| 		| 1991	| LJN		| Miscellaneous	| 					|
+| nes_wonderlanddizzy|  	| NES Wonderland Dizzy (HB)				| 		| 1989?	| Oliver Twins	| Miscellaneous	| 					|
 | nes_woodypoko	|  	| NES Woody Poko (Japan)				| 		| 1987	| dB-SOFT	| Miscellaneous	| 					|
 | nes_worldchamp|  	| NES World Champ (USA)					| 		| 1991	| Romstar	| Miscellaneous	| 					|
 | nes_wrathblaman|  	| NES Wrath of the Black Manta (USA) (Rev A)		| 		| 1990	| Taito		| Miscellaneous	| 					|

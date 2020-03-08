@@ -6971,6 +6971,7 @@ DRV		BurnDrvnes_bananaprince;
 DRV		BurnDrvnes_bandikinancchi;
 DRV		BurnDrvnes_barkebilstrish;
 DRV		BurnDrvnes_basewars;
+DRV		BurnDrvnes_basebsim1000;
 DRV		BurnDrvnes_baseballstars;
 DRV		BurnDrvnes_basebstaii;
 DRV		BurnDrvnes_basesloaded;
@@ -7012,6 +7013,7 @@ DRV		BurnDrvnes_blodilan;
 DRV		BurnDrvnes_blowemout;
 DRV		BurnDrvnes_bluemarlinthe;
 DRV		BurnDrvnes_bluesbro;
+DRV		BurnDrvnes_bobl;
 DRV		BurnDrvnes_bokosukawars;
 DRV		BurnDrvnes_bombsweeper;
 DRV		BurnDrvnes_bomberman;
@@ -7294,6 +7296,8 @@ DRV		BurnDrvnes_ghostsngoblins;
 DRV		BurnDrvnes_ghoulschool;
 DRV		BurnDrvnes_gimmick;
 DRV		BurnDrvnes_glukthuwar;
+DRV		BurnDrvnes_goal;
+DRV		BurnDrvnes_goaltwo;
 DRV		BurnDrvnes_godsla;
 DRV		BurnDrvnes_golf;
 DRV		BurnDrvnes_golgo13;
@@ -7609,6 +7613,7 @@ DRV		BurnDrvnes_musasnoken;
 DRV		BurnDrvnes_mutanvir;
 DRV		BurnDrvnes_mysteryquest;
 DRV		BurnDrvnes_mysticorigins;
+DRV		BurnDrvnes_nalleland;
 DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
 DRV		BurnDrvnes_nantebas_1;
@@ -7648,6 +7653,7 @@ DRV		BurnDrvnes_ninteworcup;
 DRV		BurnDrvnes_noahsark;
 DRV		BurnDrvnes_nomolos;
 DRV		BurnDrvnes_northsouth;
+DRV		BurnDrvnes_novasqu;
 DRV		BurnDrvnes_nutsmilk;
 DRV		BurnDrvnes_obakenoqtar;
 DRV		BurnDrvnes_onyankotown;
@@ -7765,6 +7771,7 @@ DRV		BurnDrvnes_rockm5;
 DRV		BurnDrvnes_rockm6;
 DRV		BurnDrvnes_rodland;
 DRV		BurnDrvnes_rollerball;
+DRV		BurnDrvnes_rollerac;
 DRV		BurnDrvnes_rollergames;
 DRV		BurnDrvnes_rollingthunder_1;
 DRV		BurnDrvnes_rollingthunder;
@@ -8019,6 +8026,7 @@ DRV		BurnDrvnes_wanpakoknogouwo;
 DRV		BurnDrvnes_warioswoods;
 DRV		BurnDrvnes_warpman;
 DRV		BurnDrvnes_waynesworld;
+DRV		BurnDrvnes_wcwworchawre;
 DRV		BurnDrvnes_werew;
 DRV		BurnDrvnes_whereintimiscasa;
 DRV		BurnDrvnes_whereswaldo;
@@ -8031,6 +8039,7 @@ DRV		BurnDrvnes_wits;
 DRV		BurnDrvnes_wizarwar;
 DRV		BurnDrvnes_wizarwariii;
 DRV		BurnDrvnes_wolverine;
+DRV		BurnDrvnes_wonderlanddizzy;
 DRV		BurnDrvnes_woodypoko;
 DRV		BurnDrvnes_worldchamp;
 DRV		BurnDrvnes_wrathblaman;
@@ -20888,6 +20897,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_bandikinancchi,	// NES Bandit Kings of Ancient China (USA)
 	&BurnDrvnes_barkebilstrish,	// NES Barker Bill's Trick Shooting (USA)
 	&BurnDrvnes_basewars,		// NES Base Wars (USA)
+	&BurnDrvnes_basebsim1000,	// NES Baseball Simulator 1.000 (USA)
 	&BurnDrvnes_baseballstars,	// NES Baseball Stars (USA)
 	&BurnDrvnes_basebstaii,		// NES Baseball Stars II (USA)
 	&BurnDrvnes_basesloaded,	// NES Bases Loaded (USA)
@@ -20929,6 +20939,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_blowemout,		// NES Blow'Em Out! (HB)
 	&BurnDrvnes_bluemarlinthe,	// NES Blue Marlin, The (USA)
 	&BurnDrvnes_bluesbro,		// NES Blues Brothers, The (USA)
+	&BurnDrvnes_bobl,			// NES bobl (HB)
 	&BurnDrvnes_bokosukawars,	// NES Bokosuka Wars (Japan)
 	&BurnDrvnes_bombsweeper,	// NES Bomb Sweeper (HB)
 	&BurnDrvnes_bomberman,		// NES Bomberman (USA)
@@ -21211,6 +21222,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ghoulschool,	// NES Ghoul School (USA)
 	&BurnDrvnes_gimmick,		// NES Gimmick! (Japan)
 	&BurnDrvnes_glukthuwar,		// NES Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)
+	&BurnDrvnes_goal,			// NES Goal! (USA)
+	&BurnDrvnes_goaltwo,		// NES Goal! Two (USA)
 	&BurnDrvnes_godsla,			// NES God Slayer - Haruka Tenkuu no Sonata (Japan)
 	&BurnDrvnes_golf,			// NES Golf (USA)
 	&BurnDrvnes_golgo13,		// NES Golgo 13 - Top Secret Episode (USA)
@@ -21526,6 +21539,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mutanvir,		// NES Mutant Virus, The (USA)
 	&BurnDrvnes_mysteryquest,	// NES Mystery Quest (USA)
 	&BurnDrvnes_mysticorigins,	// NES Mystic Origins (HB)
+	&BurnDrvnes_nalleland,		// NES Nalle Land (HB, v034)
 	&BurnDrvnes_namcoclassic,	// NES Namco Classic (Japan)
 	&BurnDrvnes_namcoclassicii,	// NES Namco Classic II (Japan)
 	&BurnDrvnes_nantebas_1,		// NES Nantettatte!! Baseball (Japan)
@@ -21565,6 +21579,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_noahsark,		// NES Noah's Ark (Europe)
 	&BurnDrvnes_nomolos,		// NES Nomolos (HB)
 	&BurnDrvnes_northsouth,		// NES North & South (USA)
+	&BurnDrvnes_novasqu,		// NES Nova the Squirrel (HB)
 	&BurnDrvnes_nutsmilk,		// NES Nuts & Milk (Japan)
 	&BurnDrvnes_obakenoqtar,	// NES Obake no Q Tarou - Wanwan Panic (Japan)
 	&BurnDrvnes_onyankotown,	// NES Onyanko Town (Japan)
@@ -21682,6 +21697,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_rockm6,			// NES Rockman 6 - Shijou Saidai no Tatakai!! (Japan)
 	&BurnDrvnes_rodland,		// NES Rod Land (Europe)
 	&BurnDrvnes_rollerball,		// NES Rollerball (USA)
+	&BurnDrvnes_rollerac,		// NES Rollerblade Racer (USA)
 	&BurnDrvnes_rollergames,	// NES Rollergames (USA)
 	&BurnDrvnes_rollingthunder_1,// NES Rolling Thunder (Japan)
 	&BurnDrvnes_rollingthunder,	// NES Rolling Thunder (USA) (Unl)
@@ -21936,6 +21952,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_warioswoods,	// NES Wario's Woods (USA)
 	&BurnDrvnes_warpman,		// NES Warpman (Japan)
 	&BurnDrvnes_waynesworld,	// NES Wayne's World (USA)
+	&BurnDrvnes_wcwworchawre,	// NES WCW World Championship Wrestling (USA)
 	&BurnDrvnes_werew,			// NES Werewolf - The Last Warrior (USA)
 	&BurnDrvnes_whereintimiscasa,// NES Where in Time is Carmen Sandiego (USA)
 	&BurnDrvnes_whereswaldo,	// NES Where's Waldo (USA)
@@ -21948,6 +21965,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_wizarwar,		// NES Wizards & Warriors (USA)
 	&BurnDrvnes_wizarwariii,	// NES Wizards & Warriors III - Kuros - Visions of Power (USA)
 	&BurnDrvnes_wolverine,		// NES Wolverine (USA)
+	&BurnDrvnes_wonderlanddizzy,// NES Wonderland Dizzy (HB)
 	&BurnDrvnes_woodypoko,		// NES Woody Poko (Japan)
 	&BurnDrvnes_worldchamp,		// NES World Champ (USA)
 	&BurnDrvnes_wrathblaman,	// NES Wrath of the Black Manta (USA) (Rev A)

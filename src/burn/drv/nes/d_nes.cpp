@@ -10463,6 +10463,23 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_boblRomDesc[] = {
+	{ "bobl (HB).nes",          65552, 0xb5340d71, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bobl)
+STD_ROM_FN(nes_bobl)
+
+struct BurnDriver BurnDrvnes_bobl = {
+	"nes_bobl", NULL, NULL, NULL, "2020",
+	"NES bobl (HB)\0", NULL, "Morphcat Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_boblRomInfo, nes_boblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_novasquRomDesc[] = {
 	{ "Nova the Squirrel (HB).nes",          262160, 0x0b752bee, BRF_ESS | BRF_PRG },
 };

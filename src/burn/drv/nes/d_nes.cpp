@@ -11399,6 +11399,23 @@ struct BurnDriver BurnDrvnes_panicdizzy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_wonderlanddizzyRomDesc[] = {
+	{ "Wonderland Dizzy (HB).nes",          262160, 0x62c97c6c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wonderlanddizzy)
+STD_ROM_FN(nes_wonderlanddizzy)
+
+struct BurnDriver BurnDrvnes_wonderlanddizzy = {
+	"nes_wonderlanddizzy", NULL, NULL, NULL, "1989?",
+	"NES Wonderland Dizzy (HB)\0", NULL, "Oliver Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_wonderlanddizzyRomInfo, nes_wonderlanddizzyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_perfectpairRomDesc[] = {
 	{ "Perfect Pair (HB).nes",          40976, 0xefef8b35, BRF_ESS | BRF_PRG },
 };

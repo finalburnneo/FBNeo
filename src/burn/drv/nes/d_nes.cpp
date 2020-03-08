@@ -370,6 +370,8 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		return 1;
 	}
 
+	INT32 nes20 = (ROMData[7] & 0xc) == 0x8;
+
 	memset(&Cart, 0, sizeof(Cart));
 
 	Cart.Crc = ROMCRC;
@@ -421,27 +423,24 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	// Default CHR-Ram size (8k), always set-up (for advanced mappers, etc)
 	Cart.CHRRamSize = 0x2000;
 
-	if (Cart.Mapper == 30) {
-		Cart.CHRRamSize = 0x8000;
+	if (nes20) {
+		// NES2.0 header specifies CHR-Ram size (Nalle Land, Haunted Halloween '86)
+		Cart.CHRRamSize = 64 << (ROMData[0xb] & 0xf);
 	}
 
-	if (Cart.Crc == 0xf4a24d8b) {
-		Cart.CHRRamSize = 0x4000; // Nalle Land 16k chr ram
+	if (Cart.Mapper == 30) { // UNROM-512 defaults to 32k chr-ram
+		Cart.CHRRamSize = 0x8000;
 	}
 
 	if (Cart.Crc == 0xf0847322) {
 		Cart.CHRRamSize = 0x4000; // 16k chr-ram for Videomation
 	}
 
-	if (Cart.Crc == 0x454252a4 || Cart.Crc == 0xd008091a) {
-		Cart.CHRRamSize = 0x8000; // 32k for Halloween '86 & alt set
-	}
-
 	if (Cart.Crc == 0xdd65a6cc) { // Street Heroes 262
 		Cart.Mapper = 262;
 	}
 
-	if (Cart.Crc == 0xd2f19ba1) { // Haradius Zero flash-version
+	if (Cart.Crc == 0xd2f19ba1) { // Haradius Zero (flash-version)
 		Cart.Mapper = 303; // fake mapper#
 	}
 
@@ -459,6 +458,12 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	// set-up Cart PRG-RAM/WORK-RAM (6000-7fff)
 
 	Cart.WorkRAMSize = (Cart.Mapper != 5) ? 0x2000 : (8 * 0x2000);
+
+	if (nes20) {
+		// NES2.0 header specifies NV-Ram size (ex. Nova the Squirrel)
+		Cart.WorkRAMSize = 64 << ((ROMData[0xa] & 0xf0) >> 4);
+	}
+
 	switch (ROMCRC) {
 		case 0x478a04d8:
 			Cart.WorkRAMSize = 0x4000; // Genghis Khan 16k SRAM/WRAM
@@ -10458,6 +10463,23 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_novasquRomDesc[] = {
+	{ "Nova the Squirrel (HB).nes",          262160, 0x0b752bee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_novasqu)
+STD_ROM_FN(nes_novasqu)
+
+struct BurnDriver BurnDrvnes_novasqu = {
+	"nes_novasqu", NULL, NULL, NULL, "2018",
+	"NES Nova the Squirrel (HB)\0", NULL, "NovaSquirrel", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_novasquRomInfo, nes_novasquRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_nallelandRomDesc[] = {
 	{ "Nalle Land (HB, v034).nes",          32784, 0xf4a24d8b, BRF_ESS | BRF_PRG },
 };

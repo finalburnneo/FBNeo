@@ -104,6 +104,9 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_JOYSLIDER) {
 			// Get state of the axis
 			nAdd = CinpJoyAxis(pgi->Input.Slider.JoyAxis.nJoy, pgi->Input.Slider.JoyAxis.nAxis);
+
+			if (nAdd != 0) bGotKey = 1;
+
 			nAdd /= 0x80;
 				// May 30, 2019 -dink
 				// Was "nAdd /= 0x100;" - Current gamepads w/ thumbsticks
@@ -118,11 +121,16 @@ static INT32 InputTick()
 		nAdd /= 0x100;
 
 		if (pgi->Input.Slider.nSliderCenter && !bGotKey) {						// Attact to center
-			INT32 v = pgi->Input.Slider.nSliderValue - 0x8000;
-			v *= (pgi->Input.Slider.nSliderCenter - 1);
-			v /= pgi->Input.Slider.nSliderCenter;
-			v += 0x8000;
-			pgi->Input.Slider.nSliderValue = v;
+			if (pgi->Input.Slider.nSliderCenter == 1) {
+				// Fastest Auto-Center speed, center immediately when key/button is released
+				pgi->Input.Slider.nSliderValue = 0x8000;
+			} else {
+				INT32 v = pgi->Input.Slider.nSliderValue - 0x8000;
+				v *= (pgi->Input.Slider.nSliderCenter - 1);
+				v /= pgi->Input.Slider.nSliderCenter;
+				v += 0x8000;
+				pgi->Input.Slider.nSliderValue = v;
+			}
 		}
 
 		pgi->Input.Slider.nSliderValue += nAdd;

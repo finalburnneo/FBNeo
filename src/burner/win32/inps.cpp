@@ -270,16 +270,37 @@ int InpsUpdate()
 	bDigitalAnalog = (nButtonState & BST_CHECKED);
 
 	if (bDigitalAnalog) {
-		if (!bPrevDigitalAnalog)
+		if (!bPrevDigitalAnalog) {
 			nDlgState = 4;
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL), SW_HIDE);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), SW_SHOW);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S2), SW_SHOW);
+
+			if (bGrewDialog == false) {
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL), SW_HIDE);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), SW_SHOW);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S2), SW_SHOW);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_DIGLABEL), SW_SHOW);
+
+				// Make dialog longer to make room for the Speed: slider
+				RECT rect = { 0, 0, 4, 8 };
+				MapDialogRect(hInpsDlg, &rect);
+				int nSize = rect.bottom * 2;
+				GetWindowRect(hInpsDlg, &rect);
+				MoveWindow(hInpsDlg, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + nSize, TRUE);
+				bGrewDialog = true;
+			}
+		}
 	} else {
 		if (bPrevDigitalAnalog) {
 			nDlgState = 4;
 
 			if (bGrewDialog) {
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL), SW_SHOW);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), SW_HIDE);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S2), SW_HIDE);
+				ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_DIGLABEL), SW_HIDE);
+
+				wchar_t szString[MAX_PATH] = _T("");
+				SetWindowText(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), szString);
+
 				RECT rect = { 0, 0, 4, 8 };
 				MapDialogRect(hInpsDlg, &rect);
 				int nSize = 0-(rect.bottom * 2);
@@ -288,14 +309,6 @@ int InpsUpdate()
 				bGrewDialog = false;
 			}
 		}
-
-		wchar_t szString[MAX_PATH] = _T("");
-		SetWindowText(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), szString);
-
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL), SW_SHOW);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), SW_HIDE);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S2), SW_HIDE);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_DIGLABEL), SW_HIDE);
 	}
 
 	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_GRABMOUSE, BM_GETSTATE, 0, 0);
@@ -387,19 +400,6 @@ int InpsUpdate()
 
 		swprintf(szString, _T("%s"), InputCodeDesc(nInputCode));
 		SetWindowText(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), szString);
-
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL), SW_HIDE);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S1), SW_SHOW);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_CONTROL_S2), SW_SHOW);
-		ShowWindow(GetDlgItem(hInpsDlg, IDC_INPS_DIGLABEL), SW_SHOW);
-
-		// Make dialog longer to make room for the Speed: slider
-		RECT rect = { 0, 0, 4, 8 };
-		MapDialogRect(hInpsDlg, &rect);
-		int nSize = rect.bottom * 2;
-		GetWindowRect(hInpsDlg, &rect);
-		MoveWindow(hInpsDlg, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + nSize, TRUE);
-		bGrewDialog = true;
 
 		nDlgState = 0x0100 | 4;
 	}

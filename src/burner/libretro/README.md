@@ -18,11 +18,27 @@ You can emulate consoles (with specific romsets, dats are also in the [dats](/da
 * Nec PC-Engine : `pce`
 * Nec SuperGrafX : `sgx`
 * Nec TurboGrafx-16 : `tg`
+* Nintendo Entertainment System : `nes`
+* Nintendo Family Disk System : `fds`
 * Sega GameGear : `gg`
 * Sega Master System : `sms`
 * Sega Megadrive : `md`
 * Sega SG-1000 : `sg1k`
 * ZX Spectrum : `spec`
+
+It's also possible to use folder's name for detection (this second method was added because some devices aren't compatible with subsystems) :
+* CBS ColecoVision : `coleco`
+* MSX 1 : `msx`
+* Nec PC-Engine : `pce`
+* Nec SuperGrafX : `sgx`
+* Nec TurboGrafx-16 : `tg16`
+* Nintendo Entertainment System : `nes`
+* Nintendo Family Disk System : `fds`
+* Sega GameGear : `gamegear`
+* Sega Master System : `sms`
+* Sega Megadrive : `megadriv`
+* Sega SG-1000 : `sg1000`
+* ZX Spectrum : `spectrum`
 
 ## Samples
 
@@ -38,6 +54,12 @@ We don't have a convenient tool like the MAME OSD, instead we use the retroarch 
 For those who don't want to fully customize their mapping, there are 2 convenient presets you can apply by changing the "device type" for a player in this menu :
 * **Classic** : it will apply the original neogeo cd "square" mapping in neogeo games, and use L/R as 5th and 6th button for 6 buttons games like Street Fighter II.
 * **Modern** : it will apply the King of fighters mapping from Playstation 1 and above in neogeo fighting games, and it will use R1/R2 as 5th and 6th button for 6 buttons games like Street Fighter II (for the same reason as the neogeo games), this is really convenient for most arcade sticks.
+
+The following "device type" also exist, but they won't be compatible with every games :
+* **Mouse (ball only)** : it will use mouse/trackball for analog movements, buttons will stay on retropad
+* **Mouse (full)** : same as above, but the buttons will be on the mouse
+* **Pointer** : it will use "pointer" device (can be a mouse/trackball) to determine coordinates on screen, buttons will stay on retropad
+* **Lightgun** : it will use lightgun to determine coordinates on screen, buttons will be on the lightgun too.
 
 ## Frequently asked questions
 
@@ -76,8 +98,8 @@ There should be partial support through the new API relying on main ram expositi
 ### Neogeo CD doesn't work, why ?
 There are several things to know :
 * You need a copy of neocdz.zip and neogeo.zip in your libretro system directory
-* You need to add `--subsystem neocd` to the command line
-* Supported format are ccd/sub/img iso (trurip), and single file MODE1/2352 bin/cue (use utilities like "CDmage" to convert your iso if needed)
+* You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
+* Supported format are ccd/sub/img (trurip), and single file MODE1/2352 bin/cue (use utilities like "CDmage" to convert your iso if needed), **they must not be compressed**
 
 You can convert your unsupported isos by following this tutorial :
 * Get [CDMage 1.02.1](https://www.videohelp.com/software/CDMage) (freeware & no ads)
@@ -91,3 +113,9 @@ There are several things to know :
 * It is only running at playable speed on x86_64 (other arch will basically need a cpu at 4Ghz because they lack a mips3 dynarec), and the core needs to be built like this to enable this dynarec : `make -j5 -C src/burner/libretro USE_X64_DRC=1`
 * If your rom is at `ROM_DIRECTORY/kinst.zip`, you'll need the uncompressed disc image at `ROM_DIRECTORY/kinst/kinst.img`
 * To get the uncompressed disc image, you'll need to use the chdman tool from MAME on the chd from mame, the command looks like this : `chdman extracthd -i kinst.chd -o kinst.img`
+
+### Hiscore won't work, why ?
+Having hiscore.dat and the core option enabled doesn't guarantee hiscores will work for a specific game, sometimes a driver will be missing the necessary code. You can request support in the issue tracker as long as the request is reasonable (i.e avoid making a list of several dozens/hundreds of games)
+
+### On my android device, game XXX is closing my app at launch, why ?
+Android OS has one of the worst features ever created : it kills an app if it considers it's taking too long to display something, no question asked ! Furthermore 2 devices will have 2 different time limit (how the time limit is calculated is a mystery). There is basically nothing we can do about this : some android devices won't be able to run the bigger romsets because loading the zip into memory is taking too long for them.

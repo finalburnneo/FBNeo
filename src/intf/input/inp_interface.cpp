@@ -83,6 +83,8 @@ static INT32 InputTick()
 
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
 		INT32 nAdd = 0;
+		INT32 bGotKey = 0;
+
 		if ((pgi->nInput &  GIT_GROUP_SLIDER) == 0) {				// not a slider
 			continue;
 		}
@@ -90,9 +92,11 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_KEYSLIDER) {
 			// Get states of the two keys
 			if (CinpState(pgi->Input.Slider.SliderAxis.nSlider[0]))	{
+				bGotKey = 1;
 				nAdd -= 0x100;
 			}
 			if (CinpState(pgi->Input.Slider.SliderAxis.nSlider[1]))	{
+				bGotKey = 1;
 				nAdd += 0x100;
 			}
 		}
@@ -113,7 +117,7 @@ static INT32 InputTick()
 		nAdd *= pgi->Input.Slider.nSliderSpeed;
 		nAdd /= 0x100;
 
-		if (pgi->Input.Slider.nSliderCenter) {						// Attact to center
+		if (pgi->Input.Slider.nSliderCenter && !bGotKey) {						// Attact to center
 			INT32 v = pgi->Input.Slider.nSliderValue - 0x8000;
 			v *= (pgi->Input.Slider.nSliderCenter - 1);
 			v /= pgi->Input.Slider.nSliderCenter;
@@ -123,11 +127,11 @@ static INT32 InputTick()
 
 		pgi->Input.Slider.nSliderValue += nAdd;
 		// Limit slider
-		if (pgi->Input.Slider.nSliderValue < 0x0100) {
-			pgi->Input.Slider.nSliderValue = 0x0100;
+		if (pgi->Input.Slider.nSliderValue < 0x0000) {
+			pgi->Input.Slider.nSliderValue = 0x0000;
 		}
-		if (pgi->Input.Slider.nSliderValue > 0xFF00) {
-			pgi->Input.Slider.nSliderValue = 0xFF00;
+		if (pgi->Input.Slider.nSliderValue > 0xFFFF) {
+			pgi->Input.Slider.nSliderValue = 0xFFFF;
 		}
 	}
 	return 0;
@@ -250,6 +254,17 @@ INT32 InputMake(bool bCopy)
 				if (pgi->nType == BIT_ANALOG_REL) {
 					nSlider -= 0x8000;
 					nSlider >>= 4;
+				}
+
+				nSlider *= nAnalogSpeed;
+				nSlider >>= 8;
+
+				// Clip axis to 16 bits (signed)
+				if (nSlider < -32768) {
+					nSlider = -32768;
+				}
+				if (nSlider >  32767) {
+					nSlider =  32767;
 				}
 
 				pgi->Input.nVal = (UINT16)nSlider;

@@ -39,7 +39,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvJoy5[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
@@ -69,6 +69,7 @@ static struct BurnInputInfo BzoneInputList[] = {
 	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",				BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Bzone)
@@ -91,6 +92,7 @@ static struct BurnInputInfo RedbaronInputList[] = {
 	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",				BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 #undef A
 
@@ -121,6 +123,7 @@ static struct BurnInputInfo BradleyInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 #undef A
 
@@ -182,6 +185,10 @@ static struct BurnDIPInfo BzoneDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x0c, 0x01, 0x10, 0x00, "On"					},
 	{0x0c, 0x01, 0x10, 0x10, "Off"					},
+
+	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
+	{0x0d, 0x01, 0x01, 0x00, "No"					},
+	{0x0d, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Bzone)
@@ -224,6 +231,10 @@ static struct BurnDIPInfo RedbaronDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x0d, 0x01, 0x10, 0x00, "On"					},
 	{0x0d, 0x01, 0x10, 0x10, "Off"					},
+
+	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
+	{0x0e, 0x01, 0x01, 0x00, "No"					},
+	{0x0e, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Redbaron)
@@ -284,6 +295,10 @@ static struct BurnDIPInfo BradleyDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x14, 0x01, 0x10, 0x00, "On"					},
 	{0x14, 0x01, 0x10, 0x10, "Off"					},
+
+	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
+	{0x15, 0x01, 0x01, 0x00, "No"					},
+	{0x15, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Bradley)
@@ -529,6 +544,28 @@ static INT32 redbaron_port0_read(INT32 /*offset*/)
 	return analog[input_select];
 }
 
+static INT32 res_check()
+{
+	if (DrvDips[3] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 1080) {
+			vector_rescale((1080*(redbaron || redbarona ? 520 : 580)/400), 1080);
+			return 1;
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 400) {
+			vector_rescale((redbaron || redbarona ? 520 : 580), 400);
+			return 1;
+		}
+	}
+	return 0;
+}
+
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -561,6 +598,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	x_target = y_target = 0x80;
 	x_adder = y_adder = 0x80;
+
+	res_check();
 
 	return 0;
 }
@@ -822,6 +861,8 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
+
+	if (res_check()) return 0; // resolution was changed
 
 	vector_set_clip(0x20, nScreenWidth-0x20, 0, nScreenHeight);
 

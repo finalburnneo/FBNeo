@@ -34,7 +34,7 @@ static UINT8 soundlatch;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
@@ -61,6 +61,7 @@ static struct BurnInputInfo OmegraceInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Omegrace)
@@ -120,6 +121,10 @@ static struct BurnDIPInfo OmegraceDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x11, 0x01, 0x80, 0x80, "Off"				},
 	{0x11, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
+	{0x12, 0x01, 0x01, 0x00, "No"					},
+	{0x12, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Omegrace)
@@ -223,6 +228,28 @@ static UINT8 __fastcall omegrace_sound_read_port(UINT16 port)
 	return 0;
 }
 
+static INT32 res_check()
+{
+	if (DrvDips[3] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 1080) {
+			vector_rescale(1080, 1080);
+			return 1;
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 800) {
+			vector_rescale(800, 800);
+			return 1;
+		}
+	}
+	return 0;
+}
+
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -247,6 +274,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	soundlatch = 0;
 	avgletsgo = 0;
 	DrvPaddle[0] = DrvPaddle[1] = 0;
+
+	res_check();
 
 	return 0;
 }
@@ -388,6 +417,8 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
+
+	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 

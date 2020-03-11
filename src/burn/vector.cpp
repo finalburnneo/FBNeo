@@ -77,7 +77,10 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
-	BurnDrvSetVisibleSize(x, y);
+	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+		BurnDrvSetVisibleSize(y, x);
+	else
+		BurnDrvSetVisibleSize(x, y);
 	Reinitialise();
 	GenericTilesExit();
 	GenericTilesInit(); // create pTransDraw w/ new size

@@ -9529,6 +9529,7 @@ DRV		BurnDrvRelief3;
 DRV		BurnSpecrenegade;
 DRV		BurnSpecrenegade_48;
 DRV		BurnDrvsms_renegade;
+DRV		BurnDrvRenegadeb;
 DRV		BurnDrvRenegade;
 DRV		BurnSpecrenegad2;
 DRV		BurnSpecrenegad3;
@@ -23455,6 +23456,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecrenegade,			// Renegade (128K)
 	&BurnSpecrenegade_48,		// Renegade (48K)
 	&BurnDrvsms_renegade,		// Renegade (Euro, Bra)
+	&BurnDrvRenegadeb,			// Renegade (US bootleg)
 	&BurnDrvRenegade,			// Renegade (US)
 	&BurnSpecrenegad2,			// Renegade II - Target Renegade (128K)
 	&BurnSpecrenegad3,			// Renegade III - The Final Chapter (128K)

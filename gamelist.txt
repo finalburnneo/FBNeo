@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13649 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13650 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6921,7 +6921,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mojontwichegod|  	| NES Cheril The Goddess (HB)				| 		| 2017	| Mojon Twins	| Miscellaneous	| 					|
 | nes_mojontwichewri|  	| NES Cheril The Writer (HB)				| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
 | nes_chestfie	|  	| NES Chester Field - Ankoku Shin e no Chousen (Japan)	| 		| 1987	| Vic Tokai	| Miscellaneous	| 					|
-| nes_chikichimacmoura|  	| NES Chiki Chiki Machine Mou Race (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_chikichimacmoura|  	| NES Chiki Chiki Machine Mou Race (Japan)		| nes_wackyraces| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_chiller	|  	| NES Chiller (USA)					| 		| 1990	| AGCI		| Miscellaneous	| 					|
 | nes_chipndalresra|  	| NES Chip 'n Dale - Rescue Rangers (USA)		| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | nes_chipndalresra2|  	| NES Chip 'n Dale - Rescue Rangers 2 (USA)		| 		| 1994	| Capcom	| Miscellaneous	| 					|
@@ -6931,7 +6931,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_choujyou	|  	| NES Choujikuu Yousai - Macross (Japan)		| 		| 1985	| Namco		| Miscellaneous	| 					|
 | nes_choujsenjet_1|  	| NES Choujin Sentai Jetman (Japan)			| nes_choujsenjet| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_choujsenjet|  	| NES Choujin Sentai Jetman (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_choujsenwar|  	| NES Choujinrou Senki Warwolf (Japan)			| 		| 1991	| Takara	| Miscellaneous	| 					|
+| nes_choujsenwar|  	| NES Choujinrou Senki Warwolf (Japan)			| nes_werew	| 1991	| Takara	| Miscellaneous	| 					|
 | nes_chubbycherub|  	| NES Chubby Cherub (USA)				| 		| 1986	| Bandai	| Miscellaneous	| 					|
 | nes_chuukataisen|  	| NES Chuuka Taisen (Japan)				| 		| 1989	| Taito		| Miscellaneous	| 					|
 | nes_circuscaper|  	| NES Circus Caper (USA)				| 		| 1990	| Toho		| Miscellaneous	| 					|
@@ -7442,7 +7442,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mitokou	|  	| NES Mito Koumon - Sekai Manyuu Ki (Japan)		| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
 | nes_mitsumegatooru|  	| NES Mitsume ga Tooru (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_moaikun	|  	| NES Moai-kun (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_moerotwi	|  	| NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_moerotwi	|  	| NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)	| 		| 1986	| Konami	| Miscellaneous	| 					|
 | nes_mojontwimul|  	| NES Mojon Twins Multicart (HB)			| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
 | nes_monopoly	|  	| NES Monopoly (USA)					| 		| 1991	| Parker Brother| Miscellaneous	| 					|
 | nes_monstinmypoc|  	| NES Monster in My Pocket (USA)			| 		| 1992	| Konami	| Miscellaneous	| 					|
@@ -7581,7 +7581,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_rcproam	|  	| NES R.C. Pro-Am (USA) (Rev A)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_rcproamii	|  	| NES R.C. Pro-Am II (USA)				| 		| 1992	| Tradewest	| Miscellaneous	| 					|
 | nes_racketattack|  	| NES Racket Attack (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
-| nes_racketsrivals|  	| NES Rackets & Rivals (Europe)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_racketsrivals|  	| NES Rackets & Rivals (Europe)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
 | nes_radracer	|  	| NES Rad Racer (USA)					| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_radracerii|  	| NES Rad Racer II (USA)				| 		| 1990	| Square	| Miscellaneous	| 					|
 | nes_radrac	|  	| NES Rad Racket - Deluxe Tennis II (USA)		| 		| 1991	| AVE		| Miscellaneous	| 					|
@@ -9351,6 +9351,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_renegade	|  	| Renegade (128K)					| 		| 1987	| Imagine Softwa| ZX Spectrum	| 					|
 | spec_renegade_48|  	| Renegade (48K)					| spec_renegade	| 1987	| Imagine Softwa| ZX Spectrum	| 					|
 | sms_renegade	|  	| Renegade (Euro, Bra)					| 		| 1993	| Sega		| Sega Master Sy| 					|
+| renegadeb	|  	| Renegade (US bootleg)					| renegade	| 1986	| bootleg	| Miscellaneous	| 					|
 | renegade	|  	| Renegade (US)						| 		| 1986	| Technos (Taito| Miscellaneous	| 					|
 | spec_renegad2	|  	| Renegade II - Target Renegade (128K)			| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | spec_renegad3	|  	| Renegade III - The Final Chapter (128K)		| 		| 1989	| Imagine Softwa| ZX Spectrum	| 					|

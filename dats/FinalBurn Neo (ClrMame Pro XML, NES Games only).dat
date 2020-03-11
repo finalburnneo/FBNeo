@@ -1349,7 +1349,7 @@
 		<rom name="Chester Field - Ankoku Shin e no Chousen (Japan).nes" size="131088" crc="a6f40bd1"/>
 		<driver status="good"/>
 	</game>
-	<game name="chikichimacmoura">
+	<game name="chikichimacmoura" cloneof="wackyraces" romof="wackyraces">
 		<description>NES Chiki Chiki Machine Mou Race (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1419,7 +1419,7 @@
 		<rom name="Choujin Sentai Jetman (T-eng).nes" size="262160" crc="7649c688"/>
 		<driver status="good"/>
 	</game>
-	<game name="choujsenwar">
+	<game name="choujsenwar" cloneof="werew" romof="werew">
 		<description>NES Choujinrou Senki Warwolf (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Takara</manufacturer>
@@ -4998,8 +4998,8 @@
 	</game>
 	<game name="moerotwi">
 		<description>NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1986</year>
+		<manufacturer>Konami</manufacturer>
 		<rom name="Moero TwinBee - Cinnamon Hakase o Sukue! (Japan).nes" size="131088" crc="ac0a622b"/>
 		<driver status="good"/>
 	</game>
@@ -5971,7 +5971,7 @@
 	</game>
 	<game name="racketsrivals">
 		<description>NES Rackets &amp; Rivals (Europe)</description>
-		<year>1989?</year>
+		<year>1989</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Rackets &amp; Rivals (Europe).nes" size="262160" crc="a535e1be"/>
 		<driver status="good"/>

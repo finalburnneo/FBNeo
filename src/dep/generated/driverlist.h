@@ -7938,6 +7938,7 @@ DRV		BurnDrvnes_termi2;
 DRV		BurnDrvnes_terminatorthe;
 DRV		BurnDrvnes_terracresta;
 DRV		BurnDrvnes_tetra;
+DRV		BurnDrvnes_tetris_1;
 DRV		BurnDrvnes_tetris;
 DRV		BurnDrvnes_tetris2;
 DRV		BurnDrvnes_tetri2bom;
@@ -21865,6 +21866,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_terminatorthe,	// NES Terminator, The (USA)
 	&BurnDrvnes_terracresta,	// NES Terra Cresta (USA)
 	&BurnDrvnes_tetra,			// NES Tetrastar - The Fighter (Japan)
+	&BurnDrvnes_tetris_1,		// NES Tetris (Tengen) (USA)
 	&BurnDrvnes_tetris,			// NES Tetris (USA)
 	&BurnDrvnes_tetris2,		// NES Tetris 2 (USA)
 	&BurnDrvnes_tetri2bom,		// NES Tetris 2 + Bombliss (Japan)

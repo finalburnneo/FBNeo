@@ -7432,6 +7432,13 @@
 		<rom name="Tetrastar - The Fighter (Japan).nes" size="524304" crc="16745bf4"/>
 		<driver status="good"/>
 	</game>
+	<game name="tetris_1" cloneof="tetris" romof="tetris">
+		<description>NES Tetris (Tengen) (USA)</description>
+		<year>1989</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="Tetris (Tengen) (USA).nes" size="49168" crc="88f071c3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tetris">
 		<description>NES Tetris (USA)</description>
 		<year>1989</year>

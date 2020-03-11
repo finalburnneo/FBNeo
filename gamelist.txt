@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13650 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13651 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7790,6 +7790,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_terminatorthe|  	| NES Terminator, The (USA)				| 		| 1992	| Mindscape	| Miscellaneous	| 					|
 | nes_terracresta|  	| NES Terra Cresta (USA)				| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
 | nes_tetra	|  	| NES Tetrastar - The Fighter (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tetris_1	|  	| NES Tetris (Tengen) (USA)				| nes_tetris	| 1989	| Tengen	| Miscellaneous	| 					|
 | nes_tetris	|  	| NES Tetris (USA)					| 		| 1989	| Nintendo	| Miscellaneous	| 					|
 | nes_tetris2	|  	| NES Tetris 2 (USA)					| 		| 1993	| Nintendo	| Miscellaneous	| 					|
 | nes_tetri2bom	|  	| NES Tetris 2 + Bombliss (Japan)			| 		| 1991	| Bullet-Proof S| Miscellaneous	| 					|

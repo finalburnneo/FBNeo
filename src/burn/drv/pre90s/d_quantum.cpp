@@ -288,7 +288,7 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale(1080, 1080*600/900);
+			vector_rescale((1080*600/900), 1080);
 			return 1;
 		}
 	} else {
@@ -296,7 +296,7 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 900) {
-			vector_rescale(900, 600);
+			vector_rescale(600, 900);
 			return 1;
 		}
 	}

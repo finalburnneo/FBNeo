@@ -232,6 +232,42 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
+static struct BurnRomInfo DrvubRomDesc[] = {
+	{ "nb-5.ic51",     0x08000, 0xba683ddf, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
+	{ "40.ic51",       0x08000, 0x3dbaac11, BRF_ESS | BRF_PRG }, //	 1  bootleg
+	
+	{ "n0-5.ic13",     0x08000, 0x3587de3b, BRF_ESS | BRF_PRG }, //  2	M6809 Program Code
+	
+	{ "nc-5.bin",      0x08000, 0x9adfaa5d, BRF_GRA },	     //  3	Characters
+	
+	{ "n1-5.ic1",      0x08000, 0x4a9f47f3, BRF_GRA },	     //  4	Tiles
+	{ "n6-5.ic28",     0x08000, 0xd62a0aa8, BRF_GRA },	     //  5
+	{ "n7-5.ic27",     0x08000, 0x7ca5a532, BRF_GRA },	     //  6
+	{ "n2-5.ic14",     0x08000, 0x8d2e7982, BRF_GRA },	     //  7
+	{ "n8-5.ic26",     0x08000, 0x0dba31d3, BRF_GRA },	     //  8
+	{ "n9-5.ic25",     0x08000, 0x5b621b6a, BRF_GRA },	     //  9
+	
+	{ "nh-5.bin",      0x08000, 0xdcd7857c, BRF_GRA },	     //  10	Sprites
+	{ "nd-5.bin",      0x08000, 0x2de1717c, BRF_GRA },	     //  11
+	{ "nj-5.bin",      0x08000, 0x0f96a18e, BRF_GRA },	     //  12
+	{ "nn-5.bin",      0x08000, 0x1bf15787, BRF_GRA },	     //  13
+	{ "ne-5.bin",      0x08000, 0x924c7388, BRF_GRA },	     //  14
+	{ "nk-5.bin",      0x08000, 0x69499a94, BRF_GRA },	     //  15
+	{ "ni-5.bin",      0x08000, 0x6f597ed2, BRF_GRA },	     //  16
+	{ "nf-5.bin",      0x08000, 0x0efc8d45, BRF_GRA },	     //  17
+	{ "nl-5.bin",      0x08000, 0x14778336, BRF_GRA },	     //  18
+	{ "no-5.bin",      0x08000, 0x147dd23b, BRF_GRA },	     //  19
+	{ "ng-5.bin",      0x08000, 0xa8ee3720, BRF_GRA },	     //  20
+	{ "nm-5.bin",      0x08000, 0xc100258e, BRF_GRA },	     //  21
+	
+	{ "n3-5.ic33",     0x08000, 0x78fd6190, BRF_GRA },	     //  22	ADPCM
+	{ "n4-5.ic32",     0x08000, 0x6557564c, BRF_GRA },	     //  23
+	{ "n5-5.ic31",     0x08000, 0x7ee43a3c, BRF_GRA },	     //  24	
+};
+
+STD_ROM_PICK(Drvub)
+STD_ROM_FN(Drvub)
+
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "ta18-10.bin",   0x08000, 0xa90cf44a, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
 	{ "ta18-11.bin",   0x08000, 0xf240f5cd, BRF_ESS | BRF_PRG }, //	 1
@@ -1116,6 +1152,16 @@ struct BurnDriver BurnDrvKuniokun = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x100, 240, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvRenegadeb = {
+	"renegadeb", "renegade", NULL, NULL, "1986",
+	"Renegade (US bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
+	NULL, DrvubRomInfo, DrvubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	KuniokunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
 };
 

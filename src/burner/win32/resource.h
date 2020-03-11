@@ -97,6 +97,13 @@
 #define IDC_INPD_ANSLIDER					20022
 #define IDC_INPD_ANEDIT						20023
 
+#define IDC_INPS_CONTROL_S1					20024
+#define IDC_INPS_CONTROL_S2					20025
+
+#define IDC_INPS_MAPDIG						20026
+#define IDC_INPS_DIGSLIDER					20027
+#define IDC_INPS_DIGLABEL					20028
+
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051
 #define IDC_SHOWLICENSE						20052

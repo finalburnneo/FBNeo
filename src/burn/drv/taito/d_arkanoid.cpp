@@ -966,7 +966,7 @@ static void arkanoid_m68705_portC_read()
 	if (!mcu_sent) portC_in |= 0x02;
 }
 
-static INT32 arkanoid_mcu_run(INT32 cyc)
+static INT32 arkanoid_mcu_Run(INT32 cyc)
 {
 	if (cyc < 1) return 0;
 
@@ -989,7 +989,7 @@ static void arkanoid_mcu_sync()
 {
 	INT32 cyc = (ZetTotalCycles() / 8) - m6805TotalCycles();
 	if (cyc > 0) {
-		arkanoid_mcu_run(cyc);
+		arkanoid_mcu_Run(cyc);
 	}
 }
 
@@ -1332,10 +1332,10 @@ static INT32 DrvFrame()
 		}
 
 		nAnalogAxis[0] -= DrvAxis[0];
-		DrvInputs[2] = (~nAnalogAxis[0] >> 8) & 0xfe;
+		DrvInputs[2] = (~nAnalogAxis[0] >> 8) & 0xff;
 
 		nAnalogAxis[1] -= DrvAxis[1];
-		DrvInputs[3] = (~nAnalogAxis[1] >> 8) & 0xfe;
+		DrvInputs[3] = (~nAnalogAxis[1] >> 8) & 0xff;
 	}
 
 	INT32 nInterleave = 264;
@@ -1348,7 +1348,7 @@ static INT32 DrvFrame()
 	m6805Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 
 		if (i == 240-1) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -1359,7 +1359,7 @@ static INT32 DrvFrame()
 		}
 
 		if (use_mcu) {
-			arkanoid_mcu_run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, arkanoid_mcu_);
 		}
 	}
 

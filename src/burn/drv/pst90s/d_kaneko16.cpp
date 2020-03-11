@@ -5083,6 +5083,8 @@ static INT32 ExplbrkrInit()
 	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	AY8910SetBuffered(SekTotalCycles, 12000000);
+	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
@@ -5477,6 +5479,8 @@ static INT32 MgcrystlInit()
 	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	AY8910SetBuffered(SekTotalCycles, 12000000);
+	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 4) / 165, 1);

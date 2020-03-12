@@ -47,9 +47,10 @@ static UINT32 FDSFrameDiskIcon;
 static UINT32 NESMode = 0;
 #define NO_WORKRAM		0x0001 // 6000-7fff reads data openbus
 #define BUS_CONFLICTS	0x0002 // rom conflicts with writes, needs special handling
-#define USE_4SCORE      0x0100 // 4-Player device
-#define USE_ZAPPER      0x0200 // Zapper Gun device
-#define MAPPER_NOCLEAR  0x0400 // preserve mapper regs on soft-reset
+#define USE_4SCORE      0x0100 // 4-Player device (NES)
+#define USE_HORI4P      0x0200 // 4-Player device (Famicom)
+#define USE_ZAPPER      0x0400 // Zapper Gun device
+#define MAPPER_NOCLEAR  0x0800 // preserve mapper regs on soft-reset
 #define IS_PAL          0x1000 // PAL-mode (not fully supported)
 #define IS_FDS          0x2000 // Famicom Disk System
 #define SHOW_OVERSCAN   0x4000 // - for debugging -
@@ -503,7 +504,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	// Game-specific stuff:
 	NESMode = 0;
 
-	if (Cart.Mapper == 7 || Cart.Mirroring == 4)
+	if (Cart.Mapper == 7 || Cart.Mirroring == 4) // Mapper 7 or 4-way mirroring usually gets no workram (6000-7fff)
 		NESMode |= NO_WORKRAM;
 
 	NESMode |= (ROMCRC == 0xab29ab28) ? BUS_CONFLICTS : 0; // Dropzone
@@ -7452,9 +7453,13 @@ static UINT8 nes_read_joy(INT32 port)
 		JoyShifter[port&1] |= 0x80000000; // feed high bit so reads past our data return high
 		// note, some games (f.ex: paperboy) relies on the open bus bits in the high nibble
 
+		if (NESMode & USE_HORI4P) {
+			ret <<= 1; // hori is read on d1
+		}
+
 		// MIC "blow" hack (read on 1p controller address, yet, mic is on 2p controller!)
 		if (NESMode & IS_FDS && port == 0) {
-			if (DrvInputs[1] & ((1<<2) | (1<<3))) { // (2p select / start)
+			if (DrvInputs[1] & ((1<<2) | (1<<3))) { // check if 2p select or start pressed. note: famicom 2p controller doesn't have start or select, we use it as a MIC button.
 				ret |= 4;
 			}
 		}
@@ -7491,14 +7496,22 @@ static void psg_io_write(UINT16 address, UINT8 data)
 	if (address == 0x4016)
 	{
 		if ((JoyStrobe & 1) && (~data & 1)) {
-			if ((NESMode & USE_4SCORE)) {
-				// 4-player adapter
-				JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8) | (bitrev_table[0x10] << 16);
-				JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8) | (bitrev_table[0x20] << 16);
-			} else {
-				// standard nes controllers
-				JoyShifter[0] = DrvInputs[0] | 0xffffff00;
-				JoyShifter[1] = DrvInputs[1] | 0xffffff00;
+			switch (NESMode & (USE_4SCORE | USE_HORI4P)) {
+				case USE_4SCORE:
+					// "Four Score" 4-player adapter (NES / World)
+					JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8) | (bitrev_table[0x10] << 16);
+					JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8) | (bitrev_table[0x20] << 16);
+					break;
+				case USE_HORI4P:
+					// "Hori" 4-player adapter (Japanese / Famicom)
+					JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8) | (bitrev_table[0x20] << 16);
+					JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8) | (bitrev_table[0x10] << 16);
+					break;
+				default:
+					// standard nes controllers
+					JoyShifter[0] = DrvInputs[0] | 0xffffff00;
+					JoyShifter[1] = DrvInputs[1] | 0xffffff00;
+					break;
 			}
 		}
 		JoyStrobe = data;
@@ -7698,6 +7711,19 @@ static INT32 NES4ScoreInit()
 
 	NESMode |= USE_4SCORE;
 
+	bprintf(0, _T("*  FourScore 4 Player device.\n"));
+
+	return rc;
+}
+
+static INT32 NESHori4pInit()
+{
+	INT32 rc = NESInit();
+
+	NESMode |= USE_HORI4P;
+
+	bprintf(0, _T("*  Hori 4 Player device.\n"));
+
 	return rc;
 }
 
@@ -7707,6 +7733,8 @@ static INT32 NESZapperInit()
 
 	NESMode |= USE_ZAPPER;
 	BurnGunInit(1, true);
+
+	bprintf(0, _T("*  Zapper on Port #2.\n"));
 
 	return rc;
 }
@@ -16411,9 +16439,9 @@ struct BurnDriver BurnDrvnes_downtnekkousorda = {
 	"nes_downtnekkousorda", NULL, NULL, NULL, "1990",
 	"NES Downtown - Nekketsu Koushinkyoku - Soreyuke Daiundoukai (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_downtnekkousordaRomInfo, nes_downtnekkousordaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_downtnekkousordaRomInfo, nes_downtnekkousordaRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -19454,9 +19482,9 @@ struct BurnDriver BurnDrvnes_ikeikenekhocbu = {
 	"nes_ikeikenekhocbu", NULL, NULL, NULL, "1992",
 	"NES Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_ikeikenekhocbuRomInfo, nes_ikeikenekhocbuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ikeikenekhocbuRomInfo, nes_ikeikenekhocbuRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -21239,9 +21267,9 @@ struct BurnDriver BurnDrvnes_kuniokunnoneksole = {
 	"nes_kuniokunnoneksole", NULL, NULL, NULL, "1993",
 	"NES Kunio-kun no Nekketsu Soccer League (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_kuniokunnoneksoleRomInfo, nes_kuniokunnoneksoleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_kuniokunnoneksoleRomInfo, nes_kuniokunnoneksoleRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -23041,9 +23069,9 @@ struct BurnDriver BurnDrvnes_moerotwi = {
 	"nes_moerotwi", NULL, NULL, NULL, "1986",
 	"NES Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_moerotwiRomInfo, nes_moerotwiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_moerotwiRomInfo, nes_moerotwiRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -23483,9 +23511,9 @@ struct BurnDriver BurnDrvnes_nekkekakden_1 = {
 	"nes_nekkekakden_1", "nes_nekkekakden", NULL, NULL, "1992",
 	"NES Nekketsu Kakutou Densetsu (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_nekkekakden_1RomInfo, nes_nekkekakden_1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nekkekakden_1RomInfo, nes_nekkekakden_1RomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -23500,9 +23528,9 @@ struct BurnDriver BurnDrvnes_nekkekakden = {
 	"nes_nekkekakden", NULL, NULL, NULL, "1992",
 	"NES Nekketsu Kakutou Densetsu (T-eng)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_nekkekakdenRomInfo, nes_nekkekakdenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nekkekakdenRomInfo, nes_nekkekakdenRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -29469,7 +29497,7 @@ struct BurnDriver BurnDrvnes_uschavba = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_uschavbaRomInfo, nes_uschavbaRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
-	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -30215,9 +30243,9 @@ struct BurnDriver BurnDrvnes_wits = {
 	"nes_wits", NULL, NULL, NULL, "1990",
 	"NES Wit's (Japan)\0", NULL, "Athena", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_witsRomInfo, nes_witsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_witsRomInfo, nes_witsRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

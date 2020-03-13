@@ -526,6 +526,8 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		}
 		return;
 
+		case 0xA11000: return; // external cart-dram refresh register? (puggsy spams this)
+
 		case 0xA11100: {
 			if (byteValue & 1) {
 				z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)

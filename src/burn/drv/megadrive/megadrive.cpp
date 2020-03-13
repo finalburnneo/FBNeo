@@ -758,6 +758,7 @@ static void DmaSlow(INT32 len)
 		break;
 	}
 	// remember addr
+	RamVReg->reg[0x13] = RamVReg->reg[0x14] = 0; // Dino Dini's Soccer (E) (by Haze)
 	RamVReg->addr = (UINT16)a;
 }
 
@@ -788,6 +789,7 @@ static void DmaCopy(INT32 len)
 	}
 	// remember addr
 	RamVReg->addr = a;
+	RamVReg->reg[0x13] = RamVReg->reg[0x14] = 0; // Dino Dini's Soccer (E) (by Haze)
 	rendstatus |= 0x10;
 }
 
@@ -3126,7 +3128,7 @@ static void MegadriveSetupSRAM()
 		SekClose();
 	}
 
-	if ((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
+	if (((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NBAJam.\n"));
 		EEPROM_init(2, 1, 0, 1, SRam);

@@ -9627,7 +9627,7 @@ static struct BurnRomInfo md_dinodiniRomDesc[] = {
 STD_ROM_PICK(md_dinodini)
 STD_ROM_FN(md_dinodini)
 
-struct BurnDriverD BurnDrvmd_dinodini = {
+struct BurnDriver BurnDrvmd_dinodini = {
 	"md_dinodini", NULL, NULL, NULL, "1994",
 	"Dino Dini's Soccer (Euro)\0", NULL, "Virgin Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

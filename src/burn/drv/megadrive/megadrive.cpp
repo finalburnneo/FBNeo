@@ -112,6 +112,7 @@ struct PicoVideo {
 	UINT8 pending_ints;	// pending interrupts: ??VH????
 	INT8 lwrite_cnt;        // VDP write count during active display line
 	UINT16 v_counter;       // V-counter
+	INT32 h_mask;
 };
 
 #define SR_MAPPED   (1 << 0)
@@ -1102,6 +1103,13 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				}
 
 				if (num == 5) if (RamVReg->reg[num]^oldreg) rendstatus |= 1;//PDRAW_SPRITES_MOVED;
+
+				if (num == 11) {
+					const UINT8 h_msks[4] = { 0x00, 0x07, 0xf8, 0xff };
+					RamVReg->h_mask = h_msks[RamVReg->reg[11] & 3];
+				}
+
+
 //				else if(num == 0xc) Pico.m.dirtyPal = 2; // renderers should update their palettes if sh/hi mode is changed
 			} else {
 				// High word of command:
@@ -3780,8 +3788,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 	else          ts.nametab=(RamVReg->reg[4] & 0x07)<<12; // B
 
 	htab = RamVReg->reg[13] << 9; // Horizontal scroll table address
-	if ( RamVReg->reg[11] & 2)     htab += Scanline<<1; // Offset by line
-	if ((RamVReg->reg[11] & 1)==0) htab &= ~0xf; // Offset by tile
+	htab += (Scanline & RamVReg->h_mask) << 1;
 	htab += plane; // A or B
 
 	// Get horizontal scroll value, will be masked later

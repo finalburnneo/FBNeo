@@ -518,7 +518,8 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x4df9d7c8) ? ALT_TIMING : 0; // overlord
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
-	NESMode |= (ROMCRC == 0xab21ab5f) ? IS_PAL : 0; // noah's ark
+	NESMode |= (ROMCRC == 0xe2685bbf) ? IS_PAL : 0; // Kick Off
+	NESMode |= (ROMCRC == 0xab21ab5f) ? IS_PAL : 0; // Noah's Ark
 	NESMode |= (ROMCRC == 0xab29ab28) ? IS_PAL : 0; // Dropzone
 	NESMode |= (ROMCRC == 0xde7e6767) ? IS_PAL : 0; // Asterix
 	NESMode |= (ROMCRC == 0xdc7a16e6) ? IS_PAL : 0; // Parasol Stars
@@ -14346,7 +14347,7 @@ STD_ROM_FN(nes_captatsuvolii_1)
 
 struct BurnDriver BurnDrvnes_captatsuvolii_1 = {
 	"nes_captatsuvolii_1", "nes_captatsuvolii", NULL, NULL, "1990",
-	"NES Captain Tsubasa Vol. II - Super Striker (Japan).nes\0", NULL, "Tecmo", "Miscellaneous",
+	"NES Captain Tsubasa Vol. II - Super Striker (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_captatsuvolii_1RomInfo, nes_captatsuvolii_1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -14363,7 +14364,7 @@ STD_ROM_FN(nes_captatsuvolii)
 
 struct BurnDriver BurnDrvnes_captatsuvolii = {
 	"nes_captatsuvolii", NULL, NULL, NULL, "1989?",
-	"NES Captain Tsubasa Vol. II - Super Striker (T-eng).nes\0", NULL, "Nintendo", "Miscellaneous",
+	"NES Captain Tsubasa Vol. II - Super Striker (T-eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_captatsuvoliiRomInfo, nes_captatsuvoliiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -16522,7 +16523,7 @@ STD_ROM_FN(nes_drmario)
 
 struct BurnDriver BurnDrvnes_drmario = {
 	"nes_drmario", NULL, NULL, NULL, "1990",
-	"NES Dr. Mario (Japan, USA) (Rev A).nes\0", NULL, "Nintendo", "Miscellaneous",
+	"NES Dr. Mario (Japan, USA) (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_drmarioRomInfo, nes_drmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19718,7 +19719,7 @@ STD_ROM_FN(nes_jleafigsoc)
 
 struct BurnDriver BurnDrvnes_jleafigsoc = {
 	"nes_jleafigsoc", NULL, NULL, NULL, "1989?",
-	"NES J.League Fighting Soccer - The King of Ace Strikers (Japan).nes\0", NULL, "Nintendo", "Miscellaneous",
+	"NES J.League Fighting Soccer - The King of Ace Strikers (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_jleafigsocRomInfo, nes_jleafigsocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19735,7 +19736,7 @@ STD_ROM_FN(nes_jleawingoa)
 
 struct BurnDriver BurnDrvnes_jleawingoa = {
 	"nes_jleawingoa", NULL, NULL, NULL, "1994",
-	"NES J.League Winning Goal (Japan).nes\0", NULL, "Electronic Arts", "Miscellaneous",
+	"NES J.League Winning Goal (Japan)\0", NULL, "Electronic Arts", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_jleawingoaRomInfo, nes_jleawingoaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20746,6 +20747,23 @@ struct BurnDriver BurnDrvnes_kickmaster = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_kickoffRomDesc[] = {
+	{ "Kick Off (Europe).nes",          131088, 0xe2685bbf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kickoff)
+STD_ROM_FN(nes_kickoff)
+
+struct BurnDriver BurnDrvnes_kickoff = {
+	"nes_kickoff", NULL, NULL, NULL, "1992",
+	"NES Kick Off (Europe)\0", NULL, "Imagineer", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_kickoffRomInfo, nes_kickoffRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_kicklecubicleRomDesc[] = {
 	{ "Kickle Cubicle (USA).nes",          262160, 0xe783d470, BRF_ESS | BRF_PRG },
 };
@@ -21150,6 +21168,23 @@ struct BurnDriver BurnDrvnes_kokoadventure = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kokoadventureRomInfo, nes_kokoadventureRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_konamhypsocRomDesc[] = {
+	{ "Konami Hyper Soccer (Europe).nes",          131088, 0x144435af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_konamhypsoc)
+STD_ROM_FN(nes_konamhypsoc)
+
+struct BurnDriver BurnDrvnes_konamhypsoc = {
+	"nes_konamhypsoc", NULL, NULL, NULL, "1992",
+	"NES Konami Hyper Soccer (Europe)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_konamhypsocRomInfo, nes_konamhypsocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21860,7 +21895,7 @@ STD_ROM_FN(nes_muscle)
 
 struct BurnDriver BurnDrvnes_muscle = {
 	"nes_muscle", NULL, NULL, NULL, "1986",
-	"NES M.U.S.C.L.E. (USA).nes\0", NULL, "Bandai", "Miscellaneous",
+	"NES M.U.S.C.L.E. (USA)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_muscleRomInfo, nes_muscleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25158,7 +25193,7 @@ STD_ROM_FN(nes_rbibaseball)
 
 struct BurnDriver BurnDrvnes_rbibaseball = {
 	"nes_rbibaseball", NULL, NULL, NULL, "1988",
-	"NES R.B.I. Baseball (USA).nes\0", NULL, "Tengen", "Miscellaneous",
+	"NES R.B.I. Baseball (USA)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_rbibaseballRomInfo, nes_rbibaseballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25175,7 +25210,7 @@ STD_ROM_FN(nes_rbibas2)
 
 struct BurnDriver BurnDrvnes_rbibas2 = {
 	"nes_rbibas2", NULL, NULL, NULL, "1990",
-	"NES R.B.I. Baseball 2 (USA).nes\0", NULL, "Tengen", "Miscellaneous",
+	"NES R.B.I. Baseball 2 (USA)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_rbibas2RomInfo, nes_rbibas2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25192,7 +25227,7 @@ STD_ROM_FN(nes_rbibas3)
 
 struct BurnDriver BurnDrvnes_rbibas3 = {
 	"nes_rbibas3", NULL, NULL, NULL, "1991",
-	"NES R.B.I. Baseball 3 (USA).nes\0", NULL, "Tengen", "Miscellaneous",
+	"NES R.B.I. Baseball 3 (USA)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_rbibas3RomInfo, nes_rbibas3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -27164,7 +27199,7 @@ STD_ROM_FN(nes_stanley)
 
 struct BurnDriver BurnDrvnes_stanley = {
 	"nes_stanley", NULL, NULL, NULL, "1992",
-	"NES Stanley - The Search for Dr. Livingston (USA).nes\0", NULL, "Electro Brain", "Miscellaneous",
+	"NES Stanley - The Search for Dr. Livingston (USA)\0", NULL, "Electro Brain", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_stanleyRomInfo, nes_stanleyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -27793,7 +27828,7 @@ STD_ROM_FN(nes_smb2j)
 
 struct BurnDriver BurnDrvnes_smb2j = {
 	"nes_smb2j", NULL, NULL, NULL, "1989?",
-	"NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes\0", NULL, "Nintendo", "Miscellaneous",
+	"NES Super Mario Bros. 2 J (Japan, MMC3 Conversion)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_smb2jRomInfo, nes_smb2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -29212,6 +29247,23 @@ struct BurnDriver BurnDrvnes_topgunsecmis = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_topstrikerRomDesc[] = {
+	{ "Top Striker (Japan).nes",          262160, 0xb1e92643, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_topstriker)
+STD_ROM_FN(nes_topstriker)
+
+struct BurnDriver BurnDrvnes_topstriker = {
+	"nes_topstriker", NULL, NULL, NULL, "1992",
+	"NES Top Striker (Japan)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_topstrikerRomInfo, nes_topstrikerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_totalrecallRomDesc[] = {
 	{ "Total Recall (USA).nes",          131088, 0x178cb593, BRF_ESS | BRF_PRG },
 };
@@ -29599,6 +29651,40 @@ struct BurnDriver BurnDrvnes_ultimwardes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ultimwardesRomInfo, nes_ultimwardesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ultimleasoc_1RomDesc[] = {
+	{ "Ultimate League Soccer (Italy).nes",          98320, 0x44197811, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultimleasoc_1)
+STD_ROM_FN(nes_ultimleasoc_1)
+
+struct BurnDriver BurnDrvnes_ultimleasoc_1 = {
+	"nes_ultimleasoc_1", "nes_ultimleasoc", NULL, NULL, "1991",
+	"NES Ultimate League Soccer (Italy)\0", NULL, "AVE", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ultimleasoc_1RomInfo, nes_ultimleasoc_1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ultimleasocRomDesc[] = {
+	{ "Ultimate League Soccer (USA).nes",          98320, 0x38fb271b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultimleasoc)
+STD_ROM_FN(nes_ultimleasoc)
+
+struct BurnDriver BurnDrvnes_ultimleasoc = {
+	"nes_ultimleasoc", NULL, NULL, NULL, "1991",
+	"NES Ultimate League Soccer (USA)\0", NULL, "AVE", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ultimleasocRomInfo, nes_ultimleasocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

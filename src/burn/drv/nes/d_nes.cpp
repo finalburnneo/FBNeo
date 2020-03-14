@@ -24,7 +24,8 @@ static UINT8 NESJoy2[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 NESJoy3[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 NESJoy4[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvInputs[4]   = { 0, 0, 0, 0 };
-static UINT8 DrvDips[1]     = { 0 };
+static UINT8 DrvDips[2]     = { 0, 0 };
+
 static UINT32 JoyShifter[2] = { 0, 0 };
 static UINT8 JoyStrobe      = 0;
 
@@ -84,6 +85,7 @@ static struct BurnInputInfo NESInputList[] =
 
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
+	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
 };
 
 STDINPUTINFO(NES)
@@ -107,6 +109,7 @@ static struct BurnInputInfo NESZapperInputList[] =
 
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
+	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
 };
 #undef A
 STDINPUTINFO(NESZapper)
@@ -151,6 +154,7 @@ static struct BurnInputInfo NES4ScoreInputList[] =
 
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
+	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
 };
 
 STDINPUTINFO(NES4Score)
@@ -179,6 +183,7 @@ static struct BurnInputInfo NESFDSInputList[] =
 
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
+	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
 };
 
 STDINPUTINFO(NESFDS)
@@ -187,10 +192,15 @@ static struct BurnDIPInfo NESDIPList[] =
 {
 	{0x11, 0xf0, 0xff, 0xff, "dip_offset" },
 	{0x00, 0xff, 0xff, 0x00, NULL},
+	{0x01, 0xff, 0xff, 0x00, NULL},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
 	{0x00, 0x01, 0x01, 0x01, "Off"	},
 	{0x00, 0x01, 0x01, 0x00, "On"	},
+
+	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"	},
+	{0x01, 0x01, 0x01, 0x01, "4:3"	},
 };
 
 STDDIPINFO(NES)
@@ -199,10 +209,15 @@ static struct BurnDIPInfo NESZapperDIPList[] =
 {
 	{0x0d, 0xf0, 0xff, 0xff, "dip_offset" },
 	{0x00, 0xff, 0xff, 0x00, NULL},
+	{0x01, 0xff, 0xff, 0x00, NULL},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
 	{0x00, 0x01, 0x01, 0x01, "Off"	},
 	{0x00, 0x01, 0x01, 0x00, "On"	},
+
+	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"	},
+	{0x01, 0x01, 0x01, 0x01, "4:3"	},
 };
 
 STDDIPINFO(NESZapper)
@@ -211,10 +226,15 @@ static struct BurnDIPInfo NES4ScoreDIPList[] =
 {
 	{0x21, 0xf0, 0xff, 0xff, "dip_offset" },
 	{0x00, 0xff, 0xff, 0x00, NULL},
+	{0x01, 0xff, 0xff, 0x00, NULL},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
 	{0x00, 0x01, 0x01, 0x01, "Off"	},
 	{0x00, 0x01, 0x01, 0x00, "On"	},
+
+	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"	},
+	{0x01, 0x01, 0x01, 0x01, "4:3"	},
 };
 
 STDDIPINFO(NES4Score)
@@ -223,6 +243,7 @@ static struct BurnDIPInfo NESFDSDIPList[] =
 {
 	{0x12, 0xf0, 0xff, 0xff, "dip_offset" },
 	{0x00, 0xff, 0xff, 0x00, NULL},
+	{0x01, 0xff, 0xff, 0x00, NULL},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
 	{0x00, 0x01, 0x01, 0x01, "Off"	},
@@ -231,6 +252,10 @@ static struct BurnDIPInfo NESFDSDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Auto Insert/Eject" },
 	{0x00, 0x01, 0x02, 0x02, "Off"	},
 	{0x00, 0x01, 0x02, 0x00, "On"	},
+
+	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"	},
+	{0x01, 0x01, 0x01, 0x01, "4:3"	},
 };
 
 STDDIPINFO(NESFDS)
@@ -7652,6 +7677,24 @@ static INT32 DrvDoReset()
 
 	cyc_counter = 0;
 	mega_cyc_counter = 0;
+
+	{
+		INT32 nAspectX, nAspectY;
+		BurnDrvGetAspect(&nAspectX, &nAspectY);
+		if (DrvDips[1] & 1) { // 4:3
+			if (nAspectX != 4) {
+				bprintf(0, _T("*  NES: Changing to 4:3 aspect\n"));
+				BurnDrvSetAspect(4, 3);
+				Reinitialise();
+			}
+		} else { // no aspect ratio handling
+			if (nAspectX != SCREEN_WIDTH) {
+				bprintf(0, _T("*  NES: Changing to pixel aspect\n"));
+				BurnDrvSetAspect(SCREEN_WIDTH, SCREEN_HEIGHT);
+				Reinitialise();
+			}
+		}
+	}
 
 	return 0;
 }

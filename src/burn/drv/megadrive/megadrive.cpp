@@ -112,6 +112,7 @@ struct PicoVideo {
 	UINT8 pending_ints;	// pending interrupts: ??VH????
 	INT8 lwrite_cnt;        // VDP write count during active display line
 	UINT16 v_counter;       // V-counter
+	INT32 h_mask;
 };
 
 #define SR_MAPPED   (1 << 0)
@@ -525,6 +526,8 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		}
 		return;
 
+		case 0xA11000: return; // external cart-dram refresh register? (puggsy spams this)
+
 		case 0xA11100: {
 			if (byteValue & 1) {
 				z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
@@ -758,6 +761,7 @@ static void DmaSlow(INT32 len)
 		break;
 	}
 	// remember addr
+	RamVReg->reg[0x13] = RamVReg->reg[0x14] = 0; // Dino Dini's Soccer (E) (by Haze)
 	RamVReg->addr = (UINT16)a;
 }
 
@@ -788,6 +792,7 @@ static void DmaCopy(INT32 len)
 	}
 	// remember addr
 	RamVReg->addr = a;
+	RamVReg->reg[0x13] = RamVReg->reg[0x14] = 0; // Dino Dini's Soccer (E) (by Haze)
 	rendstatus |= 0x10;
 }
 
@@ -1100,6 +1105,13 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				}
 
 				if (num == 5) if (RamVReg->reg[num]^oldreg) rendstatus |= 1;//PDRAW_SPRITES_MOVED;
+
+				if (num == 11) {
+					const UINT8 h_msks[4] = { 0x00, 0x07, 0xf8, 0xff };
+					RamVReg->h_mask = h_msks[RamVReg->reg[11] & 3];
+				}
+
+
 //				else if(num == 0xc) Pico.m.dirtyPal = 2; // renderers should update their palettes if sh/hi mode is changed
 			} else {
 				// High word of command:
@@ -3126,7 +3138,7 @@ static void MegadriveSetupSRAM()
 		SekClose();
 	}
 
-	if ((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
+	if (((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NBAJam.\n"));
 		EEPROM_init(2, 1, 0, 1, SRam);
@@ -3597,18 +3609,19 @@ static INT32 TileFlipZSH(INT32 sx,INT32 addr,INT32 pal,INT32 zval)
 	return 1; // Tile blank
 }
 
-static void DrawStrip(struct TileStrip *ts, INT32 sh)
+static void DrawStrip(struct TileStrip *ts, INT32 sh, INT32 cellskip)
 {
 	INT32 tilex=0,dx=0,ty=0,code=0,addr=0,cells;
 	INT32 oldcode=-1,blank=-1; // The tile we know is blank
 	INT32 pal=0;
 
 	// Draw tiles across screen:
-	tilex = (-ts->hscroll)>>3;
+	tilex = ((-ts->hscroll)>>3) + cellskip;
 	ty = (ts->line&7)<<1; // Y-Offset into tile
 	dx = ((ts->hscroll-1)&7)+1;
-	cells = ts->cells;
+	cells = ts->cells - cellskip;
 	if(dx != 8) cells++; // have hscroll, need to draw 1 cell more
+	dx += cellskip<<3;
 
 	for (; cells; dx+=8,tilex++,cells--) {
 		INT32 zero=0;
@@ -3641,7 +3654,7 @@ static void DrawStrip(struct TileStrip *ts, INT32 sh)
 	*ts->hc = 0;
 }
 
-static void DrawStripVSRam(struct TileStrip *ts, INT32 plane, INT32 sh)
+static void DrawStripVSRam(struct TileStrip *ts, INT32 plane, INT32 sh, INT32 cellskip)
 {
 	INT32 tilex=0,dx=0,ty=0,code=0,addr=0,cell=0,nametabadd=0;
 	INT32 oldcode=-1,blank=-1; // The tile we know is blank
@@ -3661,6 +3674,10 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane, INT32 sh)
 		nametabadd = (line>>3)<<(ts->line>>24);		// .. and shift[width]
 		ty = (line&7)<<1;							// Y-Offset into tile
 	}
+
+	cell += cellskip;
+	tilex += cellskip;
+	dx += cellskip<<3;
 
 	for (; cell < ts->cells; dx+=8,tilex++,cell++) {
 		INT32 zero=0;
@@ -3746,7 +3763,7 @@ static void DrawStripInterlace(struct TileStrip *ts)
 	*ts->hc = 0;
 }
 
-static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
+static void DrawLayer(INT32 plane, INT32 *hcache, INT32 cellskip, INT32 maxcells, INT32 sh)
 {
 	const INT8 shift[4]={5,6,5,7}; // 32,64 or 128 sized tilemaps (2 is invalid)
 	struct TileStrip ts;
@@ -3778,8 +3795,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 	else          ts.nametab=(RamVReg->reg[4] & 0x07)<<12; // B
 
 	htab = RamVReg->reg[13] << 9; // Horizontal scroll table address
-	if ( RamVReg->reg[11] & 2)     htab += Scanline<<1; // Offset by line
-	if ((RamVReg->reg[11] & 1)==0) htab &= ~0xf; // Offset by tile
+	htab += (Scanline & RamVReg->h_mask) << 1;
 	htab += plane; // A or B
 
 	// Get horizontal scroll value, will be masked later
@@ -3798,7 +3814,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 		// we have 2-cell column based vscroll
 		// luckily this doesn't happen too often
 		ts.line = ymask | (shift[width]<<24); // save some stuff instead of line
-		if (nBurnLayer & 2) DrawStripVSRam(&ts, plane, sh);
+		if (nBurnLayer & 2) DrawStripVSRam(&ts, plane, sh, cellskip);
 	} else {
 		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 
@@ -3806,7 +3822,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 		ts.line = (vscroll+Scanline)&ymask;
 		ts.nametab += (ts.line>>3)<<shift[width];
 
-		if (nBurnLayer & 4) DrawStrip(&ts, sh);
+		if (nBurnLayer & 4) DrawStrip(&ts, sh, cellskip);
 	}
 }
 
@@ -4392,15 +4408,15 @@ static INT32 DrawDisplay(INT32 sh)
 		}
 	}
 
-	DrawLayer(1, HighCacheB, maxcells, sh);
+	DrawLayer(1, HighCacheB, 0, maxcells, sh);
 	if(hvwind == 1)
 		DrawWindow(0, maxcells>>1, 0, sh); // HighCacheAW
 	else if(hvwind == 2) {
 		// ahh, we have vertical window
-		DrawLayer(0, HighCacheA, (win&0x80) ? edge<<1 : maxcells, sh);
+		DrawLayer(0, HighCacheA, (win&0x80) ? 0 : edge<<1, (win&0x80) ? edge<<1 : maxcells, sh);
 		DrawWindow((win&0x80) ? edge : 0, (win&0x80) ? maxcells>>1 : edge, 0, sh); // HighCacheW
 	} else
-		DrawLayer(0, HighCacheA, maxcells, sh);
+		DrawLayer(0, HighCacheA, 0, maxcells, sh);
 	if (nSpriteEnable & 1) DrawAllSprites(HighCacheS, maxw, 0, sh);
 
 	if(HighCacheB[0])

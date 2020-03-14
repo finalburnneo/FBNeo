@@ -223,6 +223,8 @@ inline static INT32 SekCurrentScanline()
 	return SekTotalCycles() / nSekCyclesScanline;
 }
 
+// Mask off address bits (usually top, default is 0xffffff)
+void SekSetAddressMask(UINT32 nAddressMask);
 
 // Map areas of memory
 INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType);

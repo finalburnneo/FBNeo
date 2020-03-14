@@ -594,6 +594,8 @@ static void SaveHardwarePreset()
 {
 	TCHAR *szDefaultCpsFile = _T("config\\presets\\cps.ini");
 	TCHAR *szDefaultNeogeoFile = _T("config\\presets\\neogeo.ini");
+	TCHAR *szDefaultNESFile = _T("config\\presets\\nes.ini");
+	TCHAR *szDefaultFDSFile = _T("config\\presets\\fds.ini");
 	TCHAR *szDefaultPgmFile = _T("config\\presets\\pgm.ini");
 	TCHAR *szFileName = _T("config\\presets\\preset.ini");
 	TCHAR *szHardwareString = _T("Generic hardware");
@@ -608,6 +610,16 @@ static void SaveHardwarePreset()
 	if (nHardwareFlag == HARDWARE_SNK_NEOGEO) {
 		szFileName = szDefaultNeogeoFile;
 		szHardwareString = _T("Neo-Geo hardware");
+	}
+
+	if (nHardwareFlag == HARDWARE_NES) {
+		szFileName = szDefaultNESFile;
+		szHardwareString = _T("NES hardware");
+	}
+
+	if (nHardwareFlag == HARDWARE_FDS) {
+		szFileName = szDefaultFDSFile;
+		szHardwareString = _T("FDS hardware");
 	}
 
 	if (nHardwareFlag == HARDWARE_IGS_PGM) {

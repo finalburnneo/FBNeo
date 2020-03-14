@@ -1642,6 +1642,8 @@ INT32 ConfigGameLoadHardwareDefaults()
 {
 	TCHAR *szDefaultCpsFile = _T("config/presets/cps.ini");
 	TCHAR *szDefaultNeogeoFile = _T("config/presets/neogeo.ini");
+	TCHAR *szDefaultNESFile = _T("config/presets/nes.ini");
+	TCHAR *szDefaultFDSFile = _T("config/presets/fds.ini");
 	TCHAR *szDefaultPgmFile = _T("config/presets/pgm.ini");
 	TCHAR *szFileName = _T("");
 	INT32 nApplyHardwareDefaults = 0;
@@ -1655,6 +1657,16 @@ INT32 ConfigGameLoadHardwareDefaults()
 
 	if (nHardwareFlag == HARDWARE_SNK_NEOGEO || nHardwareFlag == HARDWARE_SNK_NEOCD) {
 		szFileName = szDefaultNeogeoFile;
+		nApplyHardwareDefaults = 1;
+	}
+
+	if (nHardwareFlag == HARDWARE_NES) {
+		szFileName = szDefaultNESFile;
+		nApplyHardwareDefaults = 1;
+	}
+
+	if (nHardwareFlag == HARDWARE_FDS) {
+		szFileName = szDefaultFDSFile;
 		nApplyHardwareDefaults = 1;
 	}
 

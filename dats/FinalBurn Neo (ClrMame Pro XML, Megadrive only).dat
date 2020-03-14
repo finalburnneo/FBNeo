@@ -3086,6 +3086,13 @@
 		<rom name="dick vitale's 'awesome, baby!' college hoops (usa).bin" size="2097152" crc="1312cf22"/>
 		<driver status="good"/>
 	</game>
+	<game name="dinodini">
+		<description>Dino Dini's Soccer (Euro)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="dino dini's soccer (euro).bin" size="1048576" crc="4608f53a"/>
+		<driver status="good"/>
+	</game>
 	<game name="dinoland">
 		<description>Dino Land (USA)</description>
 		<year>1991</year>

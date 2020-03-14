@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13651 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13656 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2482,7 +2482,7 @@ This list contains all games supported by FinalBurn Neo.
 | dimahoou	|  	| Dimahoo (000121 USA)					| dimahoo	| 2000	| 8ing / Raizing| CPS2		| 					|
 | dingoe	| D NW	| Dingo (encrypted)					| dingo		| 1983	| Ashby Computer| Galaxian	| Encrypted				|
 | dingo		|  	| Dingo							| 		| 1983	| Ashby Computer| Galaxian	| 					|
-| md_dinodini	| D	| Dino Dini's Soccer (Euro)				| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
+| md_dinodini	|  	| Dino Dini's Soccer (Euro)				| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | md_dinoland	|  	| Dino Land (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | dinorexj	|  	| Dino Rex (Japan)					| dinorex	| 1992	| Taito Corporat| Taito F2	| 					|
 | dinorexu	|  	| Dino Rex (US)						| dinorex	| 1992	| Taito America | Taito F2	| 					|
@@ -6898,8 +6898,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_captainsilver|  	| NES Captain Silver (Japan)				| 		| 1988	| Tokuma Shoten	| Miscellaneous	| 					|
 | nes_captainskyhawk|  	| NES Captain Skyhawk (USA) (Rev A)			| 		| 1990	| Milton Bradley| Miscellaneous	| 					|
 | nes_captaintsubasa|  	| NES Captain Tsubasa (Japan)				| nes_tecmocup	| 1988	| Tecmo		| Miscellaneous	| 					|
-| nes_captatsuvolii_1|  	| NES Captain Tsubasa Vol. II - Super Striker (Japan).ne| nes_captatsuvolii| 1990	| Tecmo		| Miscellaneous	| 					|
-| nes_captatsuvolii|  	| NES Captain Tsubasa Vol. II - Super Striker (T-eng).ne| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_captatsuvolii_1|  	| NES Captain Tsubasa Vol. II - Super Striker (Japan)	| nes_captatsuvolii| 1990	| Tecmo		| Miscellaneous	| 					|
+| nes_captatsuvolii|  	| NES Captain Tsubasa Vol. II - Super Striker (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_casinokid	|  	| NES Casino Kid (USA)					| 		| 1989	| Sofel		| Miscellaneous	| 					|
 | nes_casinokid2|  	| NES Casino Kid 2 (USA)				| 		| 1993	| Sofel		| Miscellaneous	| 					|
 | nes_castelian	|  	| NES Castelian (USA)					| 		| 1991	| Triffix	| Miscellaneous	| 					|
@@ -7031,7 +7031,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_downtspekunkunnojid|  	| NES Downtown Special - Kunio-kun no Jidaigeki Da yo Ze| 	| 1991	| Technos	| Miscellaneous	| 					|
 | nes_drchaos	|  	| NES Dr. Chaos (USA)					| 		| 1988	| FCI		| Miscellaneous	| 					|
 | nes_drjekandmrhy|  	| NES Dr. Jekyll and Mr. Hyde (USA)			| 		| 1989	| Bandai	| Miscellaneous	| 					|
-| nes_drmario	|  	| NES Dr. Mario (Japan, USA) (Rev A).nes		| 		| 1990	| Nintendo	| Miscellaneous	| 					|
+| nes_drmario	|  	| NES Dr. Mario (Japan, USA) (Rev A)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | nes_dracsnightout|  	| NES Drac's Night Out (USA) (Prototype)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_dragonbuster|  	| NES Dragon Buster (Japan)				| 		| 1987	| Namco		| Miscellaneous	| 					|
 | nes_dragobusii_1|  	| NES Dragon Buster II - Yami no Fuuin (Japan)		| nes_dragobusii| 1989	| Namco		| Miscellaneous	| 					|
@@ -7232,7 +7232,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_isolatedwarrior|  	| NES Isolated Warrior (USA)				| 		| 1991	| NTVIC		| Miscellaneous	| 					|
 | nes_ivanirostessuoffro|  	| NES Ivan 'Ironman' Stewart's Super Off Road (USA)| 		| 1990	| Tradewest	| Miscellaneous	| 					|
 | nes_jleafigsoc|  	| NES J.League Fighting Soccer - The King of Ace Striker| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_jleawingoa|  	| NES J.League Winning Goal (Japan).nes			| 		| 1994	| Electronic Art| Miscellaneous	| 					|
+| nes_jleawingoa|  	| NES J.League Winning Goal (Japan)			| 		| 1994	| Electronic Art| Miscellaneous	| 					|
 | nes_jacknicgre18homachg|  	| NES Jack Nicklaus' Greatest 18 Holes of Major Champion| 	| 1990	| Konami	| Miscellaneous	| 					|
 | nes_jackal	|  	| NES Jackal (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
 | nes_jackiechan_1|  	| NES Jackie Chan (Japan)				| nes_jackiechan| 1991	| Hudson Soft	| Miscellaneous	| 					|
@@ -7294,6 +7294,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_kerokerkernoda2|  	| NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa O| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_keropkernosplbo|  	| NES Keroppi to Keroriinu no Splash Bomb! (Japan)	| 		| 1993	| Character Soft| Miscellaneous	| 					|
 | nes_kickmaster|  	| NES Kick Master (USA)					| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_kickoff	|  	| NES Kick Off (Europe)					| 		| 1992	| Imagineer	| Miscellaneous	| 					|
 | nes_kicklecubicle|  	| NES Kickle Cubicle (USA)				| 		| 1990	| Irem		| Miscellaneous	| 					|
 | nes_kiddracula|  	| NES Kid Dracula (English)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_kidicarus	|  	| NES Kid Icarus (USA, Europe)				| 		| 1987	| Nintendo	| Miscellaneous	| 					|
@@ -7321,6 +7322,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_klax	|  	| NES Klax (USA) (Unl)					| 		| 1990	| Tengen	| Miscellaneous	| 					|
 | nes_knightrider|  	| NES Knight Rider (USA)				| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | nes_kokoadventure|  	| NES Koko Adventure (Korea)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_konamhypsoc|  	| NES Konami Hyper Soccer (Europe)			| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_konamspoinseo|  	| NES Konamic Sports in Seoul (Japan)			| 		| 1989	| Konami	| Miscellaneous	| 					|
 | nes_krazykreatures|  	| NES Krazy Kreatures (USA) (Unl)			| 		| 1990	| AVE		| Miscellaneous	| 					|
 | nes_krioncon	|  	| NES Krion Conquest, The (USA)				| 		| 1991	| Vic Tokai	| Miscellaneous	| 					|
@@ -7369,7 +7371,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_lupinsan	|  	| NES Lupin Sansei - Pandora no Isan (T-eng)		| 		| 1987	| Namco		| Miscellaneous	| 					|
 | nes_mckids	|  	| NES M.C. Kids (USA)					| 		| 1992	| Virgin Games	| Miscellaneous	| 					|
 | nes_mule	|  	| NES M.U.L.E. (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
-| nes_muscle	|  	| NES M.U.S.C.L.E. (USA).nes				| 		| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_muscle	|  	| NES M.U.S.C.L.E. (USA)				| 		| 1986	| Bandai	| Miscellaneous	| 					|
 | nes_machrider	|  	| NES Mach Rider (USA)					| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | nes_madcity	|  	| NES Mad City (Japan)					| nes_advenbaybil| 1988	| Konami	| Miscellaneous	| 					|
 | nes_madmax	|  	| NES Mad Max (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
@@ -7575,9 +7577,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_questofkithe_1|  	| NES Quest of Ki, The (Japan)				| nes_questofkithe| 1988	| Namco		| Miscellaneous	| 					|
 | nes_questofkithe|  	| NES Quest of Ki, The (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_quinty	|  	| NES Quinty (Japan)					| nes_mendelpalace| 1989	| Namco		| Miscellaneous	| 					|
-| nes_rbibaseball|  	| NES R.B.I. Baseball (USA).nes				| 		| 1988	| Tengen	| Miscellaneous	| 					|
-| nes_rbibas2	|  	| NES R.B.I. Baseball 2 (USA).nes			| 		| 1990	| Tengen	| Miscellaneous	| 					|
-| nes_rbibas3	|  	| NES R.B.I. Baseball 3 (USA).nes			| 		| 1991	| Tengen	| Miscellaneous	| 					|
+| nes_rbibaseball|  	| NES R.B.I. Baseball (USA)				| 		| 1988	| Tengen	| Miscellaneous	| 					|
+| nes_rbibas2	|  	| NES R.B.I. Baseball 2 (USA)				| 		| 1990	| Tengen	| Miscellaneous	| 					|
+| nes_rbibas3	|  	| NES R.B.I. Baseball 3 (USA)				| 		| 1991	| Tengen	| Miscellaneous	| 					|
 | nes_rcproam	|  	| NES R.C. Pro-Am (USA) (Rev A)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_rcproamii	|  	| NES R.C. Pro-Am II (USA)				| 		| 1992	| Tradewest	| Miscellaneous	| 					|
 | nes_racketattack|  	| NES Racket Attack (USA)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
@@ -7696,7 +7698,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_spyhunter	|  	| NES Spy Hunter (USA)					| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
 | nes_spyvsspy	|  	| NES Spy vs Spy (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
 | nes_sqoon	|  	| NES Sqoon (USA)					| 		| 1987	| Irem		| Miscellaneous	| 					|
-| nes_stanley	|  	| NES Stanley - The Search for Dr. Livingston (USA).nes	| 		| 1992	| Electro Brain	| Miscellaneous	| 					|
+| nes_stanley	|  	| NES Stanley - The Search for Dr. Livingston (USA)	| 		| 1992	| Electro Brain	| Miscellaneous	| 					|
 | nes_starevil	|  	| NES Star Evil (HB)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_starforce	|  	| NES Star Force (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | nes_stargate	|  	| NES Star Gate (Japan)					| 		| 1987	| HAL Laboratory| Miscellaneous	| 					|
@@ -7735,7 +7737,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_supergun	|  	| NES Super Gun (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smb	|  	| NES Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | nes_smb2	|  	| NES Super Mario Bros. 2 (USA) (Rev A)			| 		| 1988	| Nintendo	| Miscellaneous	| 					|
-| nes_smb2j	|  	| NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_smb2j	|  	| NES Super Mario Bros. 2 J (Japan, MMC3 Conversion)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smb3	|  	| NES Super Mario Bros. 3 (USA) (Rev A)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | nes_superpainter|  	| NES Super Painter (HB)				| 		| 2015	| Retro Souls	| Miscellaneous	| 					|
 | nes_superpang	|  	| NES Super Pang (Taiwan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -7823,6 +7825,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_toobin	|  	| NES Toobin' (USA)					| 		| 1989	| Tengen	| Miscellaneous	| 					|
 | nes_topgun	|  	| NES Top Gun (USA) (Rev A)				| 		| 1987	| Konami	| Miscellaneous	| 					|
 | nes_topgunsecmis|  	| NES Top Gun - The Second Mission (USA)		| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_topstriker|  	| NES Top Striker (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|
 | nes_totalrecall|  	| NES Total Recall (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | nes_totallyrad|  	| NES Totally Rad (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
 | nes_totsumac	|  	| NES Totsuzen! Machoman (Japan)			| nes_amagon	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -7849,7 +7852,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ultimaexodus|  	| NES Ultima - Exodus (USA)				| 		| 1989	| FCI		| Miscellaneous	| 					|
 | nes_ultimqueava|  	| NES Ultima - Quest of the Avatar (USA)		| 		| 1990	| FCI		| Miscellaneous	| 					|
 | nes_ultimwardes|  	| NES Ultima - Warriors of Destiny (USA)		| 		| 1993	| FCI		| Miscellaneous	| 					|
-| nes_ultimmorkom3|  	| NES Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_ultimleasoc_1|  	| NES Ultimate League Soccer (Italy)			| nes_ultimleasoc| 1991	| AVE		| Miscellaneous	| 					|
+| nes_ultimleasoc|  	| NES Ultimate League Soccer (USA)			| 		| 1991	| AVE		| Miscellaneous	| 					|
+| nes_ultimmorkom3|  	| NES Ultimate Mortal Kombat 3 (Hack)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_ultimstu	|  	| NES Ultimate Stuntman, The (USA) (Unl)		| 		| 1991	| Camerica	| Miscellaneous	| 					|
 | nes_uncanxmen	|  	| NES Uncanny X-Men, The (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
 | nes_unchartedwaters|  	| NES Uncharted Waters (USA)				| 		| 1991	| Koei		| Miscellaneous	| 					|

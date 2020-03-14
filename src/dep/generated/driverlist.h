@@ -2534,9 +2534,7 @@ DRV		BurnDrvCpsDimahoou;
 DRV		BurnDrvDingoe;			// Encrypted [NOT WORKING]
 #endif
 DRV		BurnDrvDingo;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvmd_dinodini;		// no comment
-#endif
+DRV		BurnDrvmd_dinodini;
 DRV		BurnDrvmd_dinoland;
 DRV		BurnDrvDinorexj;
 DRV		BurnDrvDinorexu;
@@ -7442,6 +7440,7 @@ DRV		BurnDrvnes_kerokerkernoda2_1;
 DRV		BurnDrvnes_kerokerkernoda2;
 DRV		BurnDrvnes_keropkernosplbo;
 DRV		BurnDrvnes_kickmaster;
+DRV		BurnDrvnes_kickoff;
 DRV		BurnDrvnes_kicklecubicle;
 DRV		BurnDrvnes_kiddracula;
 DRV		BurnDrvnes_kidicarus;
@@ -7469,6 +7468,7 @@ DRV		BurnDrvnes_klashball;
 DRV		BurnDrvnes_klax;
 DRV		BurnDrvnes_knightrider;
 DRV		BurnDrvnes_kokoadventure;
+DRV		BurnDrvnes_konamhypsoc;
 DRV		BurnDrvnes_konamspoinseo;
 DRV		BurnDrvnes_krazykreatures;
 DRV		BurnDrvnes_krioncon;
@@ -7971,6 +7971,7 @@ DRV		BurnDrvnes_tomjerultgamcatandm;
 DRV		BurnDrvnes_toobin;
 DRV		BurnDrvnes_topgun;
 DRV		BurnDrvnes_topgunsecmis;
+DRV		BurnDrvnes_topstriker;
 DRV		BurnDrvnes_totalrecall;
 DRV		BurnDrvnes_totallyrad;
 DRV		BurnDrvnes_totsumac;
@@ -7997,6 +7998,8 @@ DRV		BurnDrvnes_ufouria;
 DRV		BurnDrvnes_ultimaexodus;
 DRV		BurnDrvnes_ultimqueava;
 DRV		BurnDrvnes_ultimwardes;
+DRV		BurnDrvnes_ultimleasoc_1;
+DRV		BurnDrvnes_ultimleasoc;
 DRV		BurnDrvnes_ultimmorkom3;
 DRV		BurnDrvnes_ultimstu;
 DRV		BurnDrvnes_uncanxmen;
@@ -16462,9 +16465,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDingoe,				// Dingo (encrypted) [Encrypted, NOT WORKING]
 #endif
 	&BurnDrvDingo,				// Dingo
-#if defined FBNEO_DEBUG
-	&BurnDrvmd_dinodini,		// Dino Dini's Soccer (Euro) [no comment]
-#endif
+	&BurnDrvmd_dinodini,		// Dino Dini's Soccer (Euro)
 	&BurnDrvmd_dinoland,		// Dino Land (USA)
 	&BurnDrvDinorexj,			// Dino Rex (Japan)
 	&BurnDrvDinorexu,			// Dino Rex (US)
@@ -20974,8 +20975,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_captainsilver,	// NES Captain Silver (Japan)
 	&BurnDrvnes_captainskyhawk,	// NES Captain Skyhawk (USA) (Rev A)
 	&BurnDrvnes_captaintsubasa,	// NES Captain Tsubasa (Japan)
-	&BurnDrvnes_captatsuvolii_1,// NES Captain Tsubasa Vol. II - Super Striker (Japan).nes
-	&BurnDrvnes_captatsuvolii,	// NES Captain Tsubasa Vol. II - Super Striker (T-eng).nes
+	&BurnDrvnes_captatsuvolii_1,// NES Captain Tsubasa Vol. II - Super Striker (Japan)
+	&BurnDrvnes_captatsuvolii,	// NES Captain Tsubasa Vol. II - Super Striker (T-eng)
 	&BurnDrvnes_casinokid,		// NES Casino Kid (USA)
 	&BurnDrvnes_casinokid2,		// NES Casino Kid 2 (USA)
 	&BurnDrvnes_castelian,		// NES Castelian (USA)
@@ -21107,7 +21108,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_downtspekunkunnojid,// NES Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)
 	&BurnDrvnes_drchaos,		// NES Dr. Chaos (USA)
 	&BurnDrvnes_drjekandmrhy,	// NES Dr. Jekyll and Mr. Hyde (USA)
-	&BurnDrvnes_drmario,		// NES Dr. Mario (Japan, USA) (Rev A).nes
+	&BurnDrvnes_drmario,		// NES Dr. Mario (Japan, USA) (Rev A)
 	&BurnDrvnes_dracsnightout,	// NES Drac's Night Out (USA) (Prototype)
 	&BurnDrvnes_dragonbuster,	// NES Dragon Buster (Japan)
 	&BurnDrvnes_dragobusii_1,	// NES Dragon Buster II - Yami no Fuuin (Japan)
@@ -21307,8 +21308,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_irons,			// NES Ironsword - Wizards & Warriors II (USA)
 	&BurnDrvnes_isolatedwarrior,// NES Isolated Warrior (USA)
 	&BurnDrvnes_ivanirostessuoffro,// NES Ivan 'Ironman' Stewart's Super Off Road (USA)
-	&BurnDrvnes_jleafigsoc,		// NES J.League Fighting Soccer - The King of Ace Strikers (Japan).nes
-	&BurnDrvnes_jleawingoa,		// NES J.League Winning Goal (Japan).nes
+	&BurnDrvnes_jleafigsoc,		// NES J.League Fighting Soccer - The King of Ace Strikers (Japan)
+	&BurnDrvnes_jleawingoa,		// NES J.League Winning Goal (Japan)
 	&BurnDrvnes_jacknicgre18homachg,// NES Jack Nicklaus' Greatest 18 Holes of Major Championship Golf (USA)
 	&BurnDrvnes_jackal,			// NES Jackal (USA)
 	&BurnDrvnes_jackiechan_1,	// NES Jackie Chan (Japan)
@@ -21370,6 +21371,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_kerokerkernoda2,// NES Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)
 	&BurnDrvnes_keropkernosplbo,// NES Keroppi to Keroriinu no Splash Bomb! (Japan)
 	&BurnDrvnes_kickmaster,		// NES Kick Master (USA)
+	&BurnDrvnes_kickoff,		// NES Kick Off (Europe)
 	&BurnDrvnes_kicklecubicle,	// NES Kickle Cubicle (USA)
 	&BurnDrvnes_kiddracula,		// NES Kid Dracula (English)
 	&BurnDrvnes_kidicarus,		// NES Kid Icarus (USA, Europe)
@@ -21397,6 +21399,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_klax,			// NES Klax (USA) (Unl)
 	&BurnDrvnes_knightrider,	// NES Knight Rider (USA)
 	&BurnDrvnes_kokoadventure,	// NES Koko Adventure (Korea)
+	&BurnDrvnes_konamhypsoc,	// NES Konami Hyper Soccer (Europe)
 	&BurnDrvnes_konamspoinseo,	// NES Konamic Sports in Seoul (Japan)
 	&BurnDrvnes_krazykreatures,	// NES Krazy Kreatures (USA) (Unl)
 	&BurnDrvnes_krioncon,		// NES Krion Conquest, The (USA)
@@ -21445,7 +21448,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_lupinsan,		// NES Lupin Sansei - Pandora no Isan (T-eng)
 	&BurnDrvnes_mckids,			// NES M.C. Kids (USA)
 	&BurnDrvnes_mule,			// NES M.U.L.E. (USA)
-	&BurnDrvnes_muscle,			// NES M.U.S.C.L.E. (USA).nes
+	&BurnDrvnes_muscle,			// NES M.U.S.C.L.E. (USA)
 	&BurnDrvnes_machrider,		// NES Mach Rider (USA)
 	&BurnDrvnes_madcity,		// NES Mad City (Japan)
 	&BurnDrvnes_madmax,			// NES Mad Max (USA)
@@ -21651,9 +21654,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_questofkithe_1,	// NES Quest of Ki, The (Japan)
 	&BurnDrvnes_questofkithe,	// NES Quest of Ki, The (T-eng)
 	&BurnDrvnes_quinty,			// NES Quinty (Japan)
-	&BurnDrvnes_rbibaseball,	// NES R.B.I. Baseball (USA).nes
-	&BurnDrvnes_rbibas2,		// NES R.B.I. Baseball 2 (USA).nes
-	&BurnDrvnes_rbibas3,		// NES R.B.I. Baseball 3 (USA).nes
+	&BurnDrvnes_rbibaseball,	// NES R.B.I. Baseball (USA)
+	&BurnDrvnes_rbibas2,		// NES R.B.I. Baseball 2 (USA)
+	&BurnDrvnes_rbibas3,		// NES R.B.I. Baseball 3 (USA)
 	&BurnDrvnes_rcproam,		// NES R.C. Pro-Am (USA) (Rev A)
 	&BurnDrvnes_rcproamii,		// NES R.C. Pro-Am II (USA)
 	&BurnDrvnes_racketattack,	// NES Racket Attack (USA)
@@ -21772,7 +21775,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_spyhunter,		// NES Spy Hunter (USA)
 	&BurnDrvnes_spyvsspy,		// NES Spy vs Spy (USA)
 	&BurnDrvnes_sqoon,			// NES Sqoon (USA)
-	&BurnDrvnes_stanley,		// NES Stanley - The Search for Dr. Livingston (USA).nes
+	&BurnDrvnes_stanley,		// NES Stanley - The Search for Dr. Livingston (USA)
 	&BurnDrvnes_starevil,		// NES Star Evil (HB)
 	&BurnDrvnes_starforce,		// NES Star Force (USA)
 	&BurnDrvnes_stargate,		// NES Star Gate (Japan)
@@ -21811,7 +21814,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_supergun,		// NES Super Gun (USA)
 	&BurnDrvnes_smb,			// NES Super Mario Bros. (World)
 	&BurnDrvnes_smb2,			// NES Super Mario Bros. 2 (USA) (Rev A)
-	&BurnDrvnes_smb2j,			// NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes
+	&BurnDrvnes_smb2j,			// NES Super Mario Bros. 2 J (Japan, MMC3 Conversion)
 	&BurnDrvnes_smb3,			// NES Super Mario Bros. 3 (USA) (Rev A)
 	&BurnDrvnes_superpainter,	// NES Super Painter (HB)
 	&BurnDrvnes_superpang,		// NES Super Pang (Taiwan)
@@ -21899,6 +21902,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_toobin,			// NES Toobin' (USA)
 	&BurnDrvnes_topgun,			// NES Top Gun (USA) (Rev A)
 	&BurnDrvnes_topgunsecmis,	// NES Top Gun - The Second Mission (USA)
+	&BurnDrvnes_topstriker,		// NES Top Striker (Japan)
 	&BurnDrvnes_totalrecall,	// NES Total Recall (USA)
 	&BurnDrvnes_totallyrad,		// NES Totally Rad (USA)
 	&BurnDrvnes_totsumac,		// NES Totsuzen! Machoman (Japan)
@@ -21925,7 +21929,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ultimaexodus,	// NES Ultima - Exodus (USA)
 	&BurnDrvnes_ultimqueava,	// NES Ultima - Quest of the Avatar (USA)
 	&BurnDrvnes_ultimwardes,	// NES Ultima - Warriors of Destiny (USA)
-	&BurnDrvnes_ultimmorkom3,	// NES Ultimate Mortal Kombat 3 (Unl)
+	&BurnDrvnes_ultimleasoc_1,	// NES Ultimate League Soccer (Italy)
+	&BurnDrvnes_ultimleasoc,	// NES Ultimate League Soccer (USA)
+	&BurnDrvnes_ultimmorkom3,	// NES Ultimate Mortal Kombat 3 (Hack)
 	&BurnDrvnes_ultimstu,		// NES Ultimate Stuntman, The (USA) (Unl)
 	&BurnDrvnes_uncanxmen,		// NES Uncanny X-Men, The (USA)
 	&BurnDrvnes_unchartedwaters,// NES Uncharted Waters (USA)

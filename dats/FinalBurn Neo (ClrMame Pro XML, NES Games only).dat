@@ -1189,14 +1189,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="captatsuvolii_1" cloneof="captatsuvolii" romof="captatsuvolii">
-		<description>NES Captain Tsubasa Vol. II - Super Striker (Japan).nes</description>
+		<description>NES Captain Tsubasa Vol. II - Super Striker (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Captain Tsubasa Vol. II - Super Striker (Japan).nes" size="393232" crc="14a366bb"/>
 		<driver status="good"/>
 	</game>
 	<game name="captatsuvolii">
-		<description>NES Captain Tsubasa Vol. II - Super Striker (T-eng).nes</description>
+		<description>NES Captain Tsubasa Vol. II - Super Striker (T-eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Captain Tsubasa Vol. II - Super Striker (T-eng).nes" size="393232" crc="465917f7"/>
@@ -2120,7 +2120,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="drmario">
-		<description>NES Dr. Mario (Japan, USA) (Rev A).nes</description>
+		<description>NES Dr. Mario (Japan, USA) (Rev A)</description>
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Dr. Mario (Japan, USA) (Rev A).nes" size="65552" crc="7623dffd"/>
@@ -3520,14 +3520,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="jleafigsoc">
-		<description>NES J.League Fighting Soccer - The King of Ace Strikers (Japan).nes</description>
+		<description>NES J.League Fighting Soccer - The King of Ace Strikers (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="J.League Fighting Soccer - The King of Ace Strikers (Japan).nes" size="262160" crc="6975d3cd"/>
 		<driver status="good"/>
 	</game>
 	<game name="jleawingoa">
-		<description>NES J.League Winning Goal (Japan).nes</description>
+		<description>NES J.League Winning Goal (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="J.League Winning Goal (Japan).nes" size="262160" crc="e043afbe"/>
@@ -3960,6 +3960,13 @@
 		<rom name="Kick Master (USA).nes" size="262160" crc="7b978bac"/>
 		<driver status="good"/>
 	</game>
+	<game name="kickoff">
+		<description>NES Kick Off (Europe)</description>
+		<year>1992</year>
+		<manufacturer>Imagineer</manufacturer>
+		<rom name="Kick Off (Europe).nes" size="131088" crc="e2685bbf"/>
+		<driver status="good"/>
+	</game>
 	<game name="kicklecubicle">
 		<description>NES Kickle Cubicle (USA)</description>
 		<year>1990</year>
@@ -4147,6 +4154,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Koko Adventure (Korea).nes" size="262160" crc="a86e4d73"/>
+		<driver status="good"/>
+	</game>
+	<game name="konamhypsoc">
+		<description>NES Konami Hyper Soccer (Europe)</description>
+		<year>1992</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Konami Hyper Soccer (Europe).nes" size="131088" crc="144435af"/>
 		<driver status="good"/>
 	</game>
 	<game name="konamspoinseo">
@@ -4486,7 +4500,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="muscle">
-		<description>NES M.U.S.C.L.E. (USA).nes</description>
+		<description>NES M.U.S.C.L.E. (USA)</description>
 		<year>1986</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="M.U.S.C.L.E. (USA).nes" size="24592" crc="edee9759"/>
@@ -5928,21 +5942,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbibaseball">
-		<description>NES R.B.I. Baseball (USA).nes</description>
+		<description>NES R.B.I. Baseball (USA)</description>
 		<year>1988</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="R.B.I. Baseball (USA).nes" size="98320" crc="39207888"/>
 		<driver status="good"/>
 	</game>
 	<game name="rbibas2">
-		<description>NES R.B.I. Baseball 2 (USA).nes</description>
+		<description>NES R.B.I. Baseball 2 (USA)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="R.B.I. Baseball 2 (USA).nes" size="196624" crc="bb49df09"/>
 		<driver status="good"/>
 	</game>
 	<game name="rbibas3">
-		<description>NES R.B.I. Baseball 3 (USA).nes</description>
+		<description>NES R.B.I. Baseball 3 (USA)</description>
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="R.B.I. Baseball 3 (USA).nes" size="196624" crc="d0f5ffd3"/>
@@ -6775,7 +6789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stanley">
-		<description>NES Stanley - The Search for Dr. Livingston (USA).nes</description>
+		<description>NES Stanley - The Search for Dr. Livingston (USA)</description>
 		<year>1992</year>
 		<manufacturer>Electro Brain</manufacturer>
 		<rom name="Stanley - The Search for Dr. Livingston (USA).nes" size="262160" crc="4871ef6e"/>
@@ -7048,7 +7062,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb2j">
-		<description>NES Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes</description>
+		<description>NES Super Mario Bros. 2 J (Japan, MMC3 Conversion)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes" size="81936" crc="0133ebf9"/>
@@ -7663,6 +7677,13 @@
 		<rom name="Top Gun - The Second Mission (USA).nes" size="262160" crc="4519fb7a"/>
 		<driver status="good"/>
 	</game>
+	<game name="topstriker">
+		<description>NES Top Striker (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Top Striker (Japan).nes" size="262160" crc="b1e92643"/>
+		<driver status="good"/>
+	</game>
 	<game name="totalrecall">
 		<description>NES Total Recall (USA)</description>
 		<year>1990</year>
@@ -7845,11 +7866,25 @@
 		<rom name="Ultima - Warriors of Destiny (USA).nes" size="262160" crc="2d8c2829"/>
 		<driver status="good"/>
 	</game>
+	<game name="ultimleasoc_1" cloneof="ultimleasoc" romof="ultimleasoc">
+		<description>NES Ultimate League Soccer (Italy)</description>
+		<year>1991</year>
+		<manufacturer>AVE</manufacturer>
+		<rom name="Ultimate League Soccer (Italy).nes" size="98320" crc="44197811"/>
+		<driver status="good"/>
+	</game>
+	<game name="ultimleasoc">
+		<description>NES Ultimate League Soccer (USA)</description>
+		<year>1991</year>
+		<manufacturer>AVE</manufacturer>
+		<rom name="Ultimate League Soccer (USA).nes" size="98320" crc="38fb271b"/>
+		<driver status="good"/>
+	</game>
 	<game name="ultimmorkom3">
-		<description>NES Ultimate Mortal Kombat 3 (Unl)</description>
+		<description>NES Ultimate Mortal Kombat 3 (Hack)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Ultimate Mortal Kombat 3 (Unl).nes" size="1048592" crc="c9495564"/>
+		<rom name="Ultimate Mortal Kombat 3 (Hack).nes" size="2097168" crc="a0a183e6"/>
 		<driver status="good"/>
 	</game>
 	<game name="ultimstu">

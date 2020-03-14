@@ -25,6 +25,8 @@ INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nS
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
 
+static UINT32 nSekAddressMask[SEK_MAX], nSekAddressMaskActive;
+
 static INT32 core_idle(INT32 cycles)
 {
 	SekRunAdjust(cycles);
@@ -146,7 +148,7 @@ unsigned int m68k_read8(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read8 0x%08X\n"), a);
 
@@ -162,7 +164,7 @@ unsigned int m68k_fetch8(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch8 0x%08X\n"), a);
 
@@ -178,7 +180,7 @@ void m68k_write8(unsigned int a, unsigned char d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write8 0x%08X\n"), a);
 
@@ -195,7 +197,7 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -210,7 +212,7 @@ unsigned int m68k_read16(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read16 0x%08X\n"), a);
 
@@ -233,7 +235,7 @@ unsigned int m68k_fetch16(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch16 0x%08X\n"), a);
 
@@ -248,7 +250,7 @@ void m68k_write16(unsigned int a, unsigned short d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
 
@@ -280,7 +282,7 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -294,7 +296,7 @@ unsigned int m68k_read32(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read32 0x%08X\n"), a);
 
@@ -328,7 +330,7 @@ unsigned int m68k_fetch32(unsigned int a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch32 0x%08X\n"), a);
 
@@ -345,7 +347,7 @@ void m68k_write32(unsigned int a, unsigned int d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write32 0x%08X\n"), a);
 
@@ -380,7 +382,7 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -434,7 +436,7 @@ void SekWriteLongROM(UINT32 a, UINT32 d) { WriteLongROM(a, d); }
 extern "C" unsigned int m68k_checkpc(UINT32 pc)
 {
 	pc -= c68k[nSekActive].membase; // Get real pc
-	pc &= 0xffffff;
+	pc &= nSekAddressMaskActive;
 
 	c68k[nSekActive].membase = (uintptr_t)FIND_F(pc) - (pc & ~SEK_PAGEM);
 
@@ -823,6 +825,8 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	}
 #endif
 
+	nSekAddressMask[nCount] = 0xffffff;
+
 	nSekCycles[nCount] = 0;
 	nSekIRQPending[nCount] = 0;
 	nSekRESETLine[nCount] = 0;
@@ -945,6 +949,8 @@ void SekOpen(const INT32 i)
 		nSekActive = i;
 
 		pSekExt = SekExt[nSekActive];						// Point to cpu context
+
+		nSekAddressMaskActive = nSekAddressMask[nSekActive];
 
 #ifdef EMU_C68K
 		if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
@@ -1438,6 +1444,17 @@ void SekDbgDisableBreakpoints()
 
 // ----------------------------------------------------------------------------
 // Memory map setup
+
+void SekSetAddressMask(UINT32 nAddressMask)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetAddressMask called without init\n"));
+	if (nSekActive == -1) { bprintf(PRINT_ERROR, _T("SekSetAddressMask called when no CPU open\n")); return; }
+	if ((nAddressMask & 1) == 0) bprintf(PRINT_ERROR, _T("SekSetAddressMask called with invalid mask! (%x)\n"), nAddressMask);
+#endif
+
+	nSekAddressMask[nSekActive] = nSekAddressMaskActive = nAddressMask;
+}
 
 // Note - each page is 1 << SEK_BITS.
 INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)

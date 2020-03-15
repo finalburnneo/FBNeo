@@ -16217,6 +16217,24 @@ struct BurnDriver BurnDrvnes_devilworld = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_diabloiiRomDesc[] = {
+	{ "Diablo II (Hack).nes",          2097168, 0xb870d5cd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_diabloii)
+STD_ROM_FN(nes_diabloii)
+
+struct BurnDriver BurnDrvnes_diabloii = {
+	"nes_diabloii", NULL, NULL, NULL, "1989?",
+	"NES Diablo II (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_diabloiiRomInfo, nes_diabloiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+
 static struct BurnRomInfo nes_diehardRomDesc[] = {
 	{ "Die Hard (USA).nes",          262160, 0x65eec6e7, BRF_ESS | BRF_PRG },
 };

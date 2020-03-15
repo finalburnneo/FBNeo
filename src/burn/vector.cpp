@@ -31,7 +31,9 @@ static float vector_intens      = 1.0;
 static INT32 vector_antialias   = 1;
 static INT32 vector_beam        = 0x0001f65e; // 16.16 beam width
 
+#ifndef __LIBRETRO__
 static UINT8 *pBurnDrawBAD      = NULL;
+#endif
 
 #define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
 
@@ -79,7 +81,9 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
+#ifndef __LIBRETRO__
 	pBurnDrawBAD = pBurnDraw; // note invalidated pBurnDraw (see draw_vector() notes)
+#endif
 
 	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		BurnDrvSetVisibleSize(y, x);
@@ -266,13 +270,14 @@ static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT3
 
 void draw_vector(UINT32 *palette)
 {
+#ifndef __LIBRETRO__
 	if (pBurnDrawBAD == pBurnDraw) {
 		// Reinitialise() could take 1-2 frames to complete, during that time
 		// we can't draw since pBurnDraw is invalid.
 		bprintf(0, _T("draw_vector(): ignored this draw (waiting for re-init)!\n"));
 		return;
 	} else pBurnDrawBAD = NULL;
-
+#endif
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;
@@ -303,30 +308,19 @@ void draw_vector(UINT32 *palette)
 		for (INT32 y = 0; y < nScreenHeight; y++)
 		{
 			if (y < clip_ymin || y > clip_ymax) continue;
+			UINT32 idx = (y * nScreenWidth);
 
 			for (INT32 x = 0; x < nScreenWidth; x++)
 			{
 				if (x < clip_xmin || x > clip_xmax) continue;
 
-				UINT32 idx = (y * nScreenWidth) + x;
-				UINT32 p = pBitmap[idx];
+				UINT32 p = pBitmap[idx + x];
 
 				if (p) {
-					PutPix(pBurnDraw + idx * nBurnBpp, BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0));
+					PutPix(pBurnDraw + (idx + x) * nBurnBpp, BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0));
 				}
 			}
 		}
-
-#if 0
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
-		{
-			UINT32 p = pBitmap[i];
-			
-			if (p) {
-				PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0));
-			}
-		}
-#endif
 	}
 }
 

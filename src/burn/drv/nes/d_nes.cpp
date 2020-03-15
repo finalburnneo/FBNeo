@@ -454,7 +454,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		Cart.CHRRamSize = 64 << (ROMData[0xb] & 0xf);
 	}
 
-	if (Cart.Mapper == 30) { // UNROM-512 defaults to 32k chr-ram
+	if (Cart.Mapper == 30 || Cart.Mapper == 111) { // UNROM-512, GTROM(Cheapocabra) defaults to 32k chr-ram
 		Cart.CHRRamSize = 0x8000;
 	}
 
@@ -543,6 +543,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x4df9d7c8) ? ALT_TIMING : 0; // overlord
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
+	NESMode |= (ROMCRC == 0xb7987bed) ? IS_PAL : 0; // Stein's Gate
 	NESMode |= (ROMCRC == 0xe2685bbf) ? IS_PAL : 0; // Kick Off
 	NESMode |= (ROMCRC == 0xab21ab5f) ? IS_PAL : 0; // Noah's Ark
 	NESMode |= (ROMCRC == 0xab29ab28) ? IS_PAL : 0; // Dropzone
@@ -4126,6 +4127,31 @@ static UINT8 mapper108_exp_read(UINT16 address)
 
 #undef mapper108_prg
 
+// --[ mapper 111 Cheapocabra (GTROM)
+#define mapper111_reg		(mapper_regs[0x1f - 0])
+
+static void mapper111_write(UINT16 address, UINT8 data)
+{
+	if ((address >= 0x5000 && address <= 0x5fff) || (address >= 0x7000 && address <= 0x7fff)) {
+		mapper111_reg = data;
+		mapper_map();
+	}
+}
+
+static void mapper111_map()
+{
+	mapper_map_prg(32, 0, mapper111_reg & 0xf);
+	mapper_map_chr(8, 0, (mapper111_reg >> 4) & 0x1);
+
+	INT32 nt = (mapper111_reg & 0x20) ? (0x4000 + 0x2000) : (0x4000 + 0x0000);
+
+	for (INT32 i = 0; i < 4; i++) {
+		nametable_mapraw(i & 3, Cart.CHRRam + nt + (i * 0x400), MEM_RAM);
+	}
+}
+
+#undef mapper111_reg
+
 // --[ mapper 120 Tobidase Daisakusen (Japan) FDS Conv. *game is buggy*
 #define mapper120_prg		(mapper_regs[0x1f - 0])
 
@@ -6059,6 +6085,15 @@ static INT32 mapper_init(INT32 mappernum)
 			psg_area_write = mapper108_write; // just to silent debug msgs
 			mapper_map   = mapper108_map;
 			cart_exp_read = mapper108_exp_read;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 111: { // Cheapocabra (GTROM)
+			cart_exp_write = mapper111_write;
+			psg_area_write = mapper111_write;
+			mapper_map   = mapper111_map;
 			mapper_map();
 			retval = 0;
 			break;

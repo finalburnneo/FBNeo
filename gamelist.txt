@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13656 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13668 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6858,6 +6858,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_biosendan	|  	| NES Bio Senshi Dan - Increaser Tono Tatakai (Japan)	| 		| 1987	| Jaleco	| Miscellaneous	| 					|
 | nes_bioniccommando|  	| NES Bionic Commando (USA)				| 		| 1988	| Capcom	| Miscellaneous	| 					|
 | nes_birdweek	|  	| NES Bird Week (Japan)					| 		| 1986	| Toemiland	| Miscellaneous	| 					|
+| nes_blackboxcha|  	| NES Black Box Challenge (HB)				| 		| 2017	| Sly Dog Studio| Miscellaneous	| 					|
 | nes_bladebuster|  	| NES Blade Buster (HB)					| 		| 2011	| HLC! Project (| Miscellaneous	| 					|
 | nes_bladesofsteel|  	| NES Blades of Steel (USA)				| 		| 1988	| Konami	| Miscellaneous	| 					|
 | nes_blastermaster|  	| NES Blaster Master (USA)				| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
@@ -6941,6 +6942,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_clashatdem|  	| NES Clash at Demonhead (USA)				| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
 | nes_cliffhanger|  	| NES Cliffhanger (USA)					| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
 | nes_clucluland|  	| NES Clu Clu Land (World)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_cmc80sdemo|  	| NES CMC 80's Demo (HB)				| 		| 2000	| Chris Covell	| Miscellaneous	| 					|
 | nes_cobracommand|  	| NES Cobra Command (USA)				| 		| 1988	| Data East	| Miscellaneous	| 					|
 | nes_cobramission|  	| NES Cobra Mission (Asia)				| 		| 1994	| Asder		| Miscellaneous	| 					|
 | nes_cobratriangle|  	| NES Cobra Triangle (USA)				| 		| 1989	| Nintendo	| Miscellaneous	| 					|
@@ -7000,6 +7002,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_devilman_1|  	| NES Devil Man (Japan)					| nes_devilman	| 1989	| Namco		| Miscellaneous	| 					|
 | nes_devilman	|  	| NES Devil Man (T-eng)					| 		| 1989	| Namco		| Miscellaneous	| 					|
 | nes_devilworld|  	| NES Devil World (Japan) (Rev A)			| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| nes_diabloii	|  	| NES Diablo II (Hack)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_diehard	|  	| NES Die Hard (USA)					| 		| 1992	| Activision	| Miscellaneous	| 					|
 | nes_digdug	|  	| NES Dig Dug (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
 | nes_digdugii	|  	| NES Dig Dug II (Japan)				| 		| 1986	| Namco		| Miscellaneous	| 					|
@@ -7054,6 +7057,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ducktales2|  	| NES DuckTales 2 (USA)					| 		| 1993	| Capcom	| Miscellaneous	| 					|
 | nes_dynamitebatman|  	| NES Dynamite Batman (Japan)				| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
 | nes_dynow	|  	| NES Dynowarz - Destruction of Spondylus (USA)		| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_et	|  	| NES E.T. - The Extra Terrestrial (HB)			| 		| 2014	| Khan Games	| Miscellaneous	| 					|
 | nes_earthbound|  	| NES Earthbound (USA) (Prototype)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_egypt	|  	| NES Egypt (Japan)					| 		| 1991	| Human Entertai| Miscellaneous	| 					|
 | nes_elevatoraction|  	| NES Elevator Action (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
@@ -7100,6 +7104,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_firehawk	|  	| NES Fire Hawk (USA) (Unl)				| 		| 1991	| Camerica	| Miscellaneous	| 					|
 | nes_fistnorsta|  	| NES Fist of the North Star (USA)			| 		| 1989	| Taxan		| Miscellaneous	| 					|
 | nes_flappy	|  	| NES Flappy (Japan)					| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
+| nes_flappybird|  	| NES Flappy Bird (HB)					| 		| 2014	| Nioreh	| Miscellaneous	| 					|
+| nes_fleademo	|  	| NES flea! demo (HB)					| 		| 2019	| Lowtek	| Miscellaneous	| 					|
 | nes_flintresdinhop|  	| NES Flintstones, The - The Rescue of Dino & Hoppy (USA| 		| 1991	| Taito		| Miscellaneous	| 					|
 | nes_flintsuratdinpe|  	| NES Flintstones, The - The Surprise at Dinosaur Peak! | 		| 1994	| Taito		| Miscellaneous	| 					|
 | nes_flipull_1	|  	| NES Flipull - An Exciting Cube Game (Japan) (En) (Rev | nes_flipull	| 1989	| Taito		| Miscellaneous	| 					|
@@ -7335,6 +7341,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_lagrangepoint_1|  	| NES Lagrange Point (Japan)				| nes_lagrangepoint| 1991	| Konami	| Miscellaneous	| 					|
 | nes_lagrangepoint|  	| NES Lagrange Point (T-eng)				| 		| 1991	| Konami	| Miscellaneous	| 					|
 | nes_lalathemagical|  	| NES Lala the Magical (HB)				| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
+| nes_larry	|  	| NES Larry (HB)					| 		| 2014	| Khan Games	| Miscellaneous	| 					|
+| nes_larry_1	|  	| NES Larry (HB, alt)					| nes_larry	| 2014	| Khan Games	| Miscellaneous	| 					|
 | nes_laserinvasion|  	| NES Laser Invasion (USA)				| 		| 1991	| Konami	| Miscellaneous	| 					|
 | nes_lastactionhero|  	| NES Last Action Hero (USA)				| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
 | nes_lastarmageddon|  	| NES Last Armageddon (Japan)				| 		| 1990	| Yutaka	| Miscellaneous	| 					|
@@ -7461,6 +7469,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mottoabudek|  	| NES Mottomo Abunai Deka (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_mourysenmad_1|  	| NES Mouryou Senki Madara (Japan)			| nes_mourysenmad| 1990	| Konami	| Miscellaneous	| 					|
 | nes_mourysenmad|  	| NES Mouryou Senki Madara (T-eng)			| 		| 1990	| Konami	| Miscellaneous	| 					|
+| nes_mrsplash	|  	| NES Mr. Splash (HB)					| 		| 2008	| Project F	| Miscellaneous	| 					|
 | nes_mspacman	|  	| NES Ms. Pac-Man (USA)					| 		| 1993	| Namco		| Miscellaneous	| 					|
 | nes_muppeadv	|  	| NES Muppet Adventure - Chaos at the Carnival (USA)	| 		| 1990	| Hi Tech Expres| Miscellaneous	| 					|
 | nes_musasnoken|  	| NES Musashi no Ken - Tadaima Shugyou Chuu (Japan)	| 		| 1986	| Taito		| Miscellaneous	| 					|
@@ -7480,6 +7489,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nekkestrbas|  	| NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_neoheiali	|  	| NES NEO Heiankyo Alien (HB)				| 		| 2017	| Hyperware Co.	| Miscellaneous	| 					|
 | nes_nesopetougol|  	| NES NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
+| nes_nesscape	|  	| NES NESscape (HB)					| 		| 2019	| Khan Games	| Miscellaneous	| 					|
 | nes_newghoii	|  	| NES New Ghostbusters II (Japan)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
 | nes_newyornya	|  	| NES New York Nyankies (Japan)				| nes_rockinkats| 1991	| Atlus		| Miscellaneous	| 					|
 | nes_newzeasto	|  	| NES New Zealand Story, The (Europe)			| nes_kiwikra	| 1991	| Ocean		| Miscellaneous	| 					|
@@ -7717,6 +7727,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_startii	|  	| NES Startropics II - Zoda's Revenge (USA)		| 		| 1994	| Nintendo	| Miscellaneous	| 					|
 | nes_sted_1	|  	| NES Sted - Iseki Wakusei no Yabou (Japan)		| nes_sted	| 1990	| KAC		| Miscellaneous	| 					|
 | nes_sted	|  	| NES Sted - Iseki Wakusei no Yabou (T-eng)		| 		| 1990	| KAC		| Miscellaneous	| 					|
+| nes_steinsgate|  	| NES Steins Gate (HB)					| 		| 2018	| Chiyomaru	| Miscellaneous	| 					|
 | nes_stickhun	|  	| NES Stick Hunter - Exciting Ice Hockey (Japan)	| 		| 1987	| KAC		| Miscellaneous	| 					|
 | nes_stinger	|  	| NES Stinger (USA)					| nes_moerotwi	| 1987	| Konami	| Miscellaneous	| 					|
 | nes_streefig201|  	| NES Street Fighter 2010 - The Final Fight (USA)	| 		| 1990	| Capcom	| Miscellaneous	| 					|
@@ -7751,6 +7762,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_supersprint|  	| NES Super Sprint (USA)				| 		| 1988	| Tengen	| Miscellaneous	| 					|
 | nes_superspyhunter|  	| NES Super Spy Hunter (USA)				| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
 | nes_superstarforce|  	| NES Super Star Force (Japan)				| 		| 1986	| Tecmo		| Miscellaneous	| 					|
+| nes_supertiltbro|  	| NES Super Tilt Bro (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_superturrican|  	| NES Super Turrican (Europe)				| 		| 1993	| Imagineer	| Miscellaneous	| 					|
 | nes_superuwol	|  	| NES Super UWOL (HB)					| 		| 2015	| Mojon Twins	| Miscellaneous	| 					|
 | nes_superxev	|  	| NES Super Xevious - Gump no Nazo (Japan)		| 		| 1986	| Namco		| Miscellaneous	| 					|

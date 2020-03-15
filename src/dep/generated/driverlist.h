@@ -7004,6 +7004,7 @@ DRV		BurnDrvnes_biomirbokupa;
 DRV		BurnDrvnes_biosendan;
 DRV		BurnDrvnes_bioniccommando;
 DRV		BurnDrvnes_birdweek;
+DRV		BurnDrvnes_blackboxcha;
 DRV		BurnDrvnes_bladebuster;
 DRV		BurnDrvnes_bladesofsteel;
 DRV		BurnDrvnes_blastermaster;
@@ -7087,6 +7088,7 @@ DRV		BurnDrvnes_citytrouble;
 DRV		BurnDrvnes_clashatdem;
 DRV		BurnDrvnes_cliffhanger;
 DRV		BurnDrvnes_clucluland;
+DRV		BurnDrvnes_cmc80sdemo;
 DRV		BurnDrvnes_cobracommand;
 DRV		BurnDrvnes_cobramission;
 DRV		BurnDrvnes_cobratriangle;
@@ -7146,6 +7148,7 @@ DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvnes_devilman_1;
 DRV		BurnDrvnes_devilman;
 DRV		BurnDrvnes_devilworld;
+DRV		BurnDrvnes_diabloii;
 DRV		BurnDrvnes_diehard;
 DRV		BurnDrvnes_digdug;
 DRV		BurnDrvnes_digdugii;
@@ -7200,6 +7203,7 @@ DRV		BurnDrvnes_ducktales;
 DRV		BurnDrvnes_ducktales2;
 DRV		BurnDrvnes_dynamitebatman;
 DRV		BurnDrvnes_dynow;
+DRV		BurnDrvnes_et;
 DRV		BurnDrvnes_earthbound;
 DRV		BurnDrvnes_egypt;
 DRV		BurnDrvnes_elevatoraction;
@@ -7246,6 +7250,8 @@ DRV		BurnDrvnes_fireembgai;
 DRV		BurnDrvnes_firehawk;
 DRV		BurnDrvnes_fistnorsta;
 DRV		BurnDrvnes_flappy;
+DRV		BurnDrvnes_flappybird;
+DRV		BurnDrvnes_fleademo;
 DRV		BurnDrvnes_flintresdinhop;
 DRV		BurnDrvnes_flintsuratdinpe;
 DRV		BurnDrvnes_flipull_1;
@@ -7481,6 +7487,8 @@ DRV		BurnDrvnes_kyuukyokutiger;
 DRV		BurnDrvnes_lagrangepoint_1;
 DRV		BurnDrvnes_lagrangepoint;
 DRV		BurnDrvnes_lalathemagical;
+DRV		BurnDrvnes_larry;
+DRV		BurnDrvnes_larry_1;
 DRV		BurnDrvnes_laserinvasion;
 DRV		BurnDrvnes_lastactionhero;
 DRV		BurnDrvnes_lastarmageddon;
@@ -7607,6 +7615,7 @@ DRV		BurnDrvnes_motorcitpat;
 DRV		BurnDrvnes_mottoabudek;
 DRV		BurnDrvnes_mourysenmad_1;
 DRV		BurnDrvnes_mourysenmad;
+DRV		BurnDrvnes_mrsplash;
 DRV		BurnDrvnes_mspacman;
 DRV		BurnDrvnes_muppeadv;
 DRV		BurnDrvnes_musasnoken;
@@ -7626,6 +7635,7 @@ DRV		BurnDrvnes_nekkekoukunkun;
 DRV		BurnDrvnes_nekkestrbas;
 DRV		BurnDrvnes_neoheiali;
 DRV		BurnDrvnes_nesopetougol;
+DRV		BurnDrvnes_nesscape;
 DRV		BurnDrvnes_newghoii;
 DRV		BurnDrvnes_newyornya;
 DRV		BurnDrvnes_newzeasto;
@@ -7863,6 +7873,7 @@ DRV		BurnDrvnes_startropics;
 DRV		BurnDrvnes_startii;
 DRV		BurnDrvnes_sted_1;
 DRV		BurnDrvnes_sted;
+DRV		BurnDrvnes_steinsgate;
 DRV		BurnDrvnes_stickhun;
 DRV		BurnDrvnes_stinger;
 DRV		BurnDrvnes_streefig201;
@@ -7897,6 +7908,7 @@ DRV		BurnDrvnes_superspivbal;
 DRV		BurnDrvnes_supersprint;
 DRV		BurnDrvnes_superspyhunter;
 DRV		BurnDrvnes_superstarforce;
+DRV		BurnDrvnes_supertiltbro;
 DRV		BurnDrvnes_superturrican;
 DRV		BurnDrvnes_superuwol;
 DRV		BurnDrvnes_superxev;
@@ -20935,6 +20947,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_biosendan,		// NES Bio Senshi Dan - Increaser Tono Tatakai (Japan)
 	&BurnDrvnes_bioniccommando,	// NES Bionic Commando (USA)
 	&BurnDrvnes_birdweek,		// NES Bird Week (Japan)
+	&BurnDrvnes_blackboxcha,	// NES Black Box Challenge (HB)
 	&BurnDrvnes_bladebuster,	// NES Blade Buster (HB)
 	&BurnDrvnes_bladesofsteel,	// NES Blades of Steel (USA)
 	&BurnDrvnes_blastermaster,	// NES Blaster Master (USA)
@@ -21018,6 +21031,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_clashatdem,		// NES Clash at Demonhead (USA)
 	&BurnDrvnes_cliffhanger,	// NES Cliffhanger (USA)
 	&BurnDrvnes_clucluland,		// NES Clu Clu Land (World)
+	&BurnDrvnes_cmc80sdemo,		// NES CMC 80's Demo (HB)
 	&BurnDrvnes_cobracommand,	// NES Cobra Command (USA)
 	&BurnDrvnes_cobramission,	// NES Cobra Mission (Asia)
 	&BurnDrvnes_cobratriangle,	// NES Cobra Triangle (USA)
@@ -21077,6 +21091,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_devilman_1,		// NES Devil Man (Japan)
 	&BurnDrvnes_devilman,		// NES Devil Man (T-eng)
 	&BurnDrvnes_devilworld,		// NES Devil World (Japan) (Rev A)
+	&BurnDrvnes_diabloii,		// NES Diablo II (Hack)
 	&BurnDrvnes_diehard,		// NES Die Hard (USA)
 	&BurnDrvnes_digdug,			// NES Dig Dug (Japan)
 	&BurnDrvnes_digdugii,		// NES Dig Dug II (Japan)
@@ -21131,6 +21146,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ducktales2,		// NES DuckTales 2 (USA)
 	&BurnDrvnes_dynamitebatman,	// NES Dynamite Batman (Japan)
 	&BurnDrvnes_dynow,			// NES Dynowarz - Destruction of Spondylus (USA)
+	&BurnDrvnes_et,				// NES E.T. - The Extra Terrestrial (HB)
 	&BurnDrvnes_earthbound,		// NES Earthbound (USA) (Prototype)
 	&BurnDrvnes_egypt,			// NES Egypt (Japan)
 	&BurnDrvnes_elevatoraction,	// NES Elevator Action (USA)
@@ -21177,6 +21193,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_firehawk,		// NES Fire Hawk (USA) (Unl)
 	&BurnDrvnes_fistnorsta,		// NES Fist of the North Star (USA)
 	&BurnDrvnes_flappy,			// NES Flappy (Japan)
+	&BurnDrvnes_flappybird,		// NES Flappy Bird (HB)
+	&BurnDrvnes_fleademo,		// NES flea! demo (HB)
 	&BurnDrvnes_flintresdinhop,	// NES Flintstones, The - The Rescue of Dino & Hoppy (USA)
 	&BurnDrvnes_flintsuratdinpe,// NES Flintstones, The - The Surprise at Dinosaur Peak! (USA)
 	&BurnDrvnes_flipull_1,		// NES Flipull - An Exciting Cube Game (Japan) (En) (Rev 1)
@@ -21412,6 +21430,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_lagrangepoint_1,// NES Lagrange Point (Japan)
 	&BurnDrvnes_lagrangepoint,	// NES Lagrange Point (T-eng)
 	&BurnDrvnes_lalathemagical,	// NES Lala the Magical (HB)
+	&BurnDrvnes_larry,			// NES Larry (HB)
+	&BurnDrvnes_larry_1,		// NES Larry (HB, alt)
 	&BurnDrvnes_laserinvasion,	// NES Laser Invasion (USA)
 	&BurnDrvnes_lastactionhero,	// NES Last Action Hero (USA)
 	&BurnDrvnes_lastarmageddon,	// NES Last Armageddon (Japan)
@@ -21538,6 +21558,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mottoabudek,	// NES Mottomo Abunai Deka (Japan)
 	&BurnDrvnes_mourysenmad_1,	// NES Mouryou Senki Madara (Japan)
 	&BurnDrvnes_mourysenmad,	// NES Mouryou Senki Madara (T-eng)
+	&BurnDrvnes_mrsplash,		// NES Mr. Splash (HB)
 	&BurnDrvnes_mspacman,		// NES Ms. Pac-Man (USA)
 	&BurnDrvnes_muppeadv,		// NES Muppet Adventure - Chaos at the Carnival (USA)
 	&BurnDrvnes_musasnoken,		// NES Musashi no Ken - Tadaima Shugyou Chuu (Japan)
@@ -21557,6 +21578,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nekkestrbas,	// NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)
 	&BurnDrvnes_neoheiali,		// NES NEO Heiankyo Alien (HB)
 	&BurnDrvnes_nesopetougol,	// NES NES Open Tournament Golf (USA)
+	&BurnDrvnes_nesscape,		// NES NESscape (HB)
 	&BurnDrvnes_newghoii,		// NES New Ghostbusters II (Japan)
 	&BurnDrvnes_newyornya,		// NES New York Nyankies (Japan)
 	&BurnDrvnes_newzeasto,		// NES New Zealand Story, The (Europe)
@@ -21794,6 +21816,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_startii,		// NES Startropics II - Zoda's Revenge (USA)
 	&BurnDrvnes_sted_1,			// NES Sted - Iseki Wakusei no Yabou (Japan)
 	&BurnDrvnes_sted,			// NES Sted - Iseki Wakusei no Yabou (T-eng)
+	&BurnDrvnes_steinsgate,		// NES Steins Gate (HB)
 	&BurnDrvnes_stickhun,		// NES Stick Hunter - Exciting Ice Hockey (Japan)
 	&BurnDrvnes_stinger,		// NES Stinger (USA)
 	&BurnDrvnes_streefig201,	// NES Street Fighter 2010 - The Final Fight (USA)
@@ -21828,6 +21851,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_supersprint,	// NES Super Sprint (USA)
 	&BurnDrvnes_superspyhunter,	// NES Super Spy Hunter (USA)
 	&BurnDrvnes_superstarforce,	// NES Super Star Force (Japan)
+	&BurnDrvnes_supertiltbro,	// NES Super Tilt Bro (HB)
 	&BurnDrvnes_superturrican,	// NES Super Turrican (Europe)
 	&BurnDrvnes_superuwol,		// NES Super UWOL (HB)
 	&BurnDrvnes_superxev,		// NES Super Xevious - Gump no Nazo (Japan)

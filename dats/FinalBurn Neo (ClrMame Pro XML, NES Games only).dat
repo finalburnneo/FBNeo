@@ -908,6 +908,13 @@
 		<rom name="Bird Week (Japan).nes" size="24592" crc="d9b9b3ab"/>
 		<driver status="good"/>
 	</game>
+	<game name="blackboxcha">
+		<description>NES Black Box Challenge (HB)</description>
+		<year>2017</year>
+		<manufacturer>Sly Dog Studios</manufacturer>
+		<rom name="Black Box Challenge (HB).nes" size="524304" crc="6b30c83b"/>
+		<driver status="good"/>
+	</game>
 	<game name="bladebuster">
 		<description>NES Blade Buster (HB)</description>
 		<year>2011</year>
@@ -1489,6 +1496,13 @@
 		<rom name="Clu Clu Land (World).nes" size="24592" crc="c36a135a"/>
 		<driver status="good"/>
 	</game>
+	<game name="cmc80sdemo">
+		<description>NES CMC 80's Demo (HB)</description>
+		<year>2000</year>
+		<manufacturer>Chris Covell</manufacturer>
+		<rom name="CMC 80's Demo (HB).nes" size="49168" crc="0135b0e8"/>
+		<driver status="good"/>
+	</game>
 	<game name="cobracommand">
 		<description>NES Cobra Command (USA)</description>
 		<year>1988</year>
@@ -1902,6 +1916,13 @@
 		<rom name="Devil World (Japan) (Rev A).nes" size="24592" crc="9fc60476"/>
 		<driver status="good"/>
 	</game>
+	<game name="diabloii">
+		<description>NES Diablo II (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Diablo II (Hack).nes" size="2097168" crc="b870d5cd"/>
+		<driver status="good"/>
+	</game>
 	<game name="diehard">
 		<description>NES Die Hard (USA)</description>
 		<year>1992</year>
@@ -2280,6 +2301,13 @@
 		<rom name="Dynowarz - Destruction of Spondylus (USA).nes" size="262160" crc="d05a18b7"/>
 		<driver status="good"/>
 	</game>
+	<game name="et">
+		<description>NES E.T. - The Extra Terrestrial (HB)</description>
+		<year>2014</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="E.T. - The Extra Terrestrial (HB).nes" size="131088" crc="ad871918"/>
+		<driver status="good"/>
+	</game>
 	<game name="earthbound">
 		<description>NES Earthbound (USA) (Prototype)</description>
 		<year>1989?</year>
@@ -2600,6 +2628,20 @@
 		<year>1985</year>
 		<manufacturer>dB-SOFT</manufacturer>
 		<rom name="Flappy (Japan).nes" size="40976" crc="31ad3838"/>
+		<driver status="good"/>
+	</game>
+	<game name="flappybird">
+		<description>NES Flappy Bird (HB)</description>
+		<year>2014</year>
+		<manufacturer>Nioreh</manufacturer>
+		<rom name="Flappy Bird (HB).nes" size="24592" crc="3653c07d"/>
+		<driver status="good"/>
+	</game>
+	<game name="fleademo">
+		<description>NES flea! demo (HB)</description>
+		<year>2019</year>
+		<manufacturer>Lowtek</manufacturer>
+		<rom name="flea! demo (HB).nes" size="524304" crc="6d18f7c4"/>
 		<driver status="good"/>
 	</game>
 	<game name="flintresdinhop">
@@ -4247,6 +4289,20 @@
 		<rom name="Lala the Magical (HB).nes" size="81936" crc="496c2e59"/>
 		<driver status="good"/>
 	</game>
+	<game name="larry">
+		<description>NES Larry (HB)</description>
+		<year>2014</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Larry (HB).nes" size="524304" crc="96f31fb9"/>
+		<driver status="good"/>
+	</game>
+	<game name="larry_1" cloneof="larry" romof="larry">
+		<description>NES Larry (HB, alt)</description>
+		<year>2014</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Larry (HB, alt).nes" size="524304" crc="2c8d188e"/>
+		<driver status="good"/>
+	</game>
 	<game name="laserinvasion">
 		<description>NES Laser Invasion (USA)</description>
 		<year>1991</year>
@@ -5129,6 +5185,13 @@
 		<rom name="Mouryou Senki Madara (T-eng).nes" size="524304" crc="d9dcee07"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrsplash">
+		<description>NES Mr. Splash (HB)</description>
+		<year>2008</year>
+		<manufacturer>Project F</manufacturer>
+		<rom name="Mr. Splash (HB).nes" size="750052" crc="8b86978b"/>
+		<driver status="good"/>
+	</game>
 	<game name="mspacman">
 		<description>NES Ms. Pac-Man (USA)</description>
 		<year>1993</year>
@@ -5260,6 +5323,13 @@
 		<year>1991</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="NES Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
+		<driver status="good"/>
+	</game>
+	<game name="nesscape">
+		<description>NES NESscape (HB)</description>
+		<year>2019</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="NESscape (HB).nes" size="524304" crc="60b6ad99"/>
 		<driver status="good"/>
 	</game>
 	<game name="newghoii">
@@ -6921,6 +6991,13 @@
 		<rom name="Sted - Iseki Wakusei no Yabou (T-eng).nes" size="262160" crc="5e63ec57"/>
 		<driver status="good"/>
 	</game>
+	<game name="steinsgate">
+		<description>NES Steins Gate (HB)</description>
+		<year>2018</year>
+		<manufacturer>Chiyomaru</manufacturer>
+		<rom name="Steins Gate (HB).nes" size="786235" crc="b7987bed"/>
+		<driver status="good"/>
+	</game>
 	<game name="stickhun">
 		<description>NES Stick Hunter - Exciting Ice Hockey (Japan)</description>
 		<year>1987</year>
@@ -7157,6 +7234,13 @@
 		<year>1986</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Super Star Force (Japan).nes" size="131088" crc="0ca0b143"/>
+		<driver status="good"/>
+	</game>
+	<game name="supertiltbro">
+		<description>NES Super Tilt Bro (HB)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Tilt Bro (HB).nes" size="524304" crc="58829008"/>
 		<driver status="good"/>
 	</game>
 	<game name="superturrican">

@@ -10723,25 +10723,25 @@ struct BurnDriver BurnDrvnes_mrsplash = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_nesscapeRomDesc[] = {
-	{ "NESscape (HB).nes",          524304, 0x60b6ad99, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo nes_nescapeRomDesc[] = {
+	{ "NEScape (HB).nes",          524304, 0x60b6ad99, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_nesscape)
-STD_ROM_FN(nes_nesscape)
+STD_ROM_PICK(nes_nescape)
+STD_ROM_FN(nes_nescape)
 
-struct BurnDriver BurnDrvnes_nesscape = {
-	"nes_nesscape", NULL, NULL, NULL, "2019",
-	"NES NESscape (HB)\0", NULL, "Khan Games", "Miscellaneous",
+struct BurnDriver BurnDrvnes_nescape = {
+	"nes_nescape", NULL, NULL, NULL, "2019",
+	"NES NEScape (HB)\0", NULL, "Khan Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_nesscapeRomInfo, nes_nesscapeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_nescapeRomInfo, nes_nescapeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 static struct BurnRomInfo nes_steinsgateRomDesc[] = {
-	{ "Steins Gate (HB).nes",          786235, 0xb7987bed, BRF_ESS | BRF_PRG },
+	{ "Steins Gate (HB).nes",          786448, 0x547c4f1d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_steinsgate)

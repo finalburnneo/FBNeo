@@ -538,12 +538,12 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
+	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
 	NESMode |= (ROMCRC == 0xa2d504a8) ? ALT_TIMING : 0; // assimilate
 	NESMode |= (ROMCRC == 0x4df9d7c8) ? ALT_TIMING : 0; // overlord
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
-	NESMode |= (ROMCRC == 0xb7987bed) ? IS_PAL : 0; // Stein's Gate
 	NESMode |= (ROMCRC == 0xe2685bbf) ? IS_PAL : 0; // Kick Off
 	NESMode |= (ROMCRC == 0xab21ab5f) ? IS_PAL : 0; // Noah's Ark
 	NESMode |= (ROMCRC == 0xab29ab28) ? IS_PAL : 0; // Dropzone
@@ -7259,7 +7259,7 @@ static void scanlinestate(INT32 state)
 		}
 
 		// Signal scanline to mapper: (+20 gets rid of jitter in Kirby, Yume Penguin Monogatari, Klax, ...)
-		if (pixel == (260+20) && RENDERING && mapper_scanline) mapper_scanline();
+		if (pixel == (260+20) /*&& RENDERING*/ && mapper_scanline) mapper_scanline();
 		// Mapper callback w/ppu_bus_address - used by mmc2/mmc4 (mapper9/mapper10)
 		if (mapper_ppu_clock) mapper_ppu_clock(ppu_bus_address); // ppu callback (visible lines)
     }

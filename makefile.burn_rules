@@ -19,7 +19,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_actfancr.o d_backfire.o d_boogwing.o d_brkthru.o d_bwing.o d_cbuster.o d_chanbara.o d_cninja.o d_darkseal.o d_dassault.o d_dblewing.o d_dec0.o \
 			d_decocass.o d_deco156.o d_deco32.o d_decomlc.o d_dec8.o d_dietgogo.o d_dreambal.o d_funkyjet.o d_karnov.o d_kchamp.o d_lemmings.o d_liberate.o d_metlclsh.o \
-			d_pktgaldx.o d_progolf.o d_rohga.o d_shootout.o d_sidepckt.o d_simpl156.o d_stadhero.o d_supbtime.o d_tumblep.o d_vaportra.o \
+			d_pktgaldx.o d_progolf.o d_rohga.o d_shootout.o d_sidepckt.o d_simpl156.o d_sshangha.o d_stadhero.o d_supbtime.o d_tumblep.o d_vaportra.o \
 			\
 			d_galaxian.o \
 			\

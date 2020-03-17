@@ -43,7 +43,7 @@ static UINT8 DrvJoy10[8];
 static UINT8 DrvJoy11[8];
 static UINT8 DrvJoy12[8];
 static UINT8 DrvJoy13[8];
-static UINT8 DrvDips[1];
+static UINT8 DrvDips[3];
 static UINT8 DrvInputs[14];
 static UINT8 DrvReset;
 

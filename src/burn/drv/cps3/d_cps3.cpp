@@ -1723,3 +1723,37 @@ struct BurnDriver BurnDrvWarzardr1 = {
 	redearthInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };
+
+// CPS-3 Hacks
+
+// -------------------------------------------------------------------------
+// Street Fighter III 3rd Strike: Fight for the Future (4rd Arrange Edition 2013)
+// -------------------------------------------------------------------------
+
+static struct BurnRomInfo sfiii4nRomDesc[] = {
+
+	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii4-simm1.0",					0x800000, 0x0b82c2c0, BRF_ESS | BRF_PRG },
+	{ "sfiii4-simm2.0",					0x800000, 0x5ca8faba, BRF_ESS | BRF_PRG },
+	{ "sfiii4-simm3.0",					0x800000, 0xb37cf960, BRF_GRA },
+	{ "sfiii4-simm3.1",					0x800000, 0x450ec982, BRF_GRA },
+	{ "sfiii4-simm4.0",					0x800000, 0x632c965f, BRF_GRA },
+	{ "sfiii4-simm4.1",					0x800000, 0x7a4c5f33, BRF_GRA },
+	{ "sfiii4-simm5.0",					0x800000, 0x8562358e, BRF_GRA },
+	{ "sfiii4-simm5.1",					0x800000, 0x1f6de73d, BRF_GRA },
+	{ "sfiii4-simm6.0",					0x800000, 0xbc9487b7, BRF_GRA },
+	{ "sfiii4-simm6.1",					0x800000, 0xb813a1b1, BRF_GRA }
+};
+
+STD_ROM_PICK(sfiii4n)
+STD_ROM_FN(sfiii4n)
+
+struct BurnDriver BurnDrvSfiii4n = {
+	"sfiii4n", "sfiii3", NULL, NULL, "2013",
+	"Street Fighter III 3rd Strike: Fight for the Future (4rd Arrange Edition 2013)\0", NULL, "hack", "CPS-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, FBF_SF,
+	NULL, sfiii4nRomInfo, sfiii4nRomName, NULL, NULL, NULL, NULL, cps3InputInfo, japanDIPInfo,
+	sfiii3Init, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};

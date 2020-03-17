@@ -1169,12 +1169,21 @@ INT32 cps3Init()
 	ii = 0;	offset = 0;
 	while (BurnDrvGetRomInfo(&pri, ii) == 0) {
 		if (pri.nType & BRF_PRG) {
-			nRet = BurnLoadRom(RomGame + offset + 0, ii + 0, 4); if (nRet != 0) return 1;
-			nRet = BurnLoadRom(RomGame + offset + 1, ii + 1, 4); if (nRet != 0) return 1;
-			nRet = BurnLoadRom(RomGame + offset + 2, ii + 2, 4); if (nRet != 0) return 1;
-			nRet = BurnLoadRom(RomGame + offset + 3, ii + 3, 4); if (nRet != 0) return 1;
-			offset += pri.nLen * 4;
-			ii += 4;
+			if (pri.nLen == 0x800000) // sfiii4n
+			{
+				nRet = BurnLoadRom(RomGame + offset, ii, 1); if (nRet != 0) return 1;
+				offset += pri.nLen;
+				ii++;
+			}
+			else
+			{
+				nRet = BurnLoadRom(RomGame + offset + 0, ii + 0, 4); if (nRet != 0) return 1;
+				nRet = BurnLoadRom(RomGame + offset + 1, ii + 1, 4); if (nRet != 0) return 1;
+				nRet = BurnLoadRom(RomGame + offset + 2, ii + 2, 4); if (nRet != 0) return 1;
+				nRet = BurnLoadRom(RomGame + offset + 3, ii + 3, 4); if (nRet != 0) return 1;
+				offset += pri.nLen * 4;
+				ii += 4;
+			}
 		} else {
 			ii++;
 		}
@@ -1188,10 +1197,19 @@ INT32 cps3Init()
 	ii = 0;	offset = 0;
 	while (BurnDrvGetRomInfo(&pri, ii) == 0) {
 		if (pri.nType & (BRF_GRA | BRF_SND)) {
-			BurnLoadRom(RomUser + offset + 0, ii + 0, 2);
-			BurnLoadRom(RomUser + offset + 1, ii + 1, 2);
-			offset += pri.nLen * 2;
-			ii += 2;
+			if (pri.nLen == 0x800000) // sfiii4n
+			{
+				BurnLoadRom(RomUser + offset, ii, 1);
+				offset += pri.nLen;
+				ii++;
+			}
+			else
+			{
+				BurnLoadRom(RomUser + offset + 0, ii + 0, 2);
+				BurnLoadRom(RomUser + offset + 1, ii + 1, 2);
+				offset += pri.nLen * 2;
+				ii += 2;
+			}
 		} else {
 			ii++;
 		}

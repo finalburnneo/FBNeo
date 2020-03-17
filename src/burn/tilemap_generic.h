@@ -134,9 +134,16 @@ void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll);
 // Set scroll value for individual column. Must set GenericTilemapSetScrollCols first!
 void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll);
 
-// Set video offsets, this allows adjusting where the tilemap is displayed on the screen
-// This is applied AFTER the scroll values
+// Set video offsets, this allows adjusting where the tilemap is displayed on the screen.
+// This is applied AFTER the scroll values - this one assumes flipped screen uses same offsets.
+// TMAP_GLOBAL can be used for this function
 void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y);
+
+// Set video offsets, this allows adjusting where the tilemap is displayed on the screen. This 
+// is applied AFTER the scroll values - use this one if offsets are different when the screen
+// is flipped.
+// TMAP_GLOBAL can be used for this function
+void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y, INT32 x_flipped, INT32 y_flipped);
 
 // Used to flip the tilemap on the screen vertically or horizontally
 // Very useful for *flipscreen

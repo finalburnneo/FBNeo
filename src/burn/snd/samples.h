@@ -6,21 +6,27 @@
 // May cause momentary stutter while sample loads.
 #define SAMPLE_NOSTORE		(0<<3) // only keep in memory while playing
 
-void BurnSamplePlay(INT32 sample);
-void BurnSamplePause(INT32 sample);
-void BurnSampleResume(INT32 sample);
-void BurnSampleStop(INT32 sample);
-
-void BurnSampleSetLoop(INT32 sample, bool dothis);
-
-INT32  BurnSampleGetStatus(INT32 sample);
 #define SAMPLE_PLAYING		(1<<0) // playing
 #define SAMPLE_PAUSED		(1<<1) // paused
 #define SAMPLE_STOPPED		(  0 ) // stopped
 #define SAMPLE_INVALID		( -1 ) // invalid
 
-INT32  BurnSampleGetPosition(INT32 sample);
+void BurnSamplePlay(INT32 sample);
+void BurnSamplePause(INT32 sample);
+void BurnSampleResume(INT32 sample);
+void BurnSampleStop(INT32 sample);
+void BurnSampleSetLoop(INT32 sample, bool dothis);
+INT32 BurnSampleGetStatus(INT32 sample);
+INT32 BurnSampleGetPosition(INT32 sample);
 void BurnSampleSetPosition(INT32 sample, UINT32 position);
+
+void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop = false);
+void BurnSampleChannelPause(INT32 channel, bool pause);
+void BurnSampleChannelStop(INT32 channel);
+INT32 BurnSampleGetChannelStatus(INT32 channel);
+INT32 BurnSampleChannelGetPosition(INT32 channel);
+void BurnSampleChannelSetPosition(INT32 channel, UINT32 position);
+INT32 BurnSampleGetChannelSample(); // which sample is playing in this channel?
 
 // how fast is playback for this sample? (0-400%)
 void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate); 

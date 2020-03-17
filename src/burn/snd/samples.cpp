@@ -4,6 +4,7 @@
 #include "samples.h"
 
 #define SAMPLE_DIRECTORY	szAppSamplesPath
+#define MAX_CHANNEL			32
 
 #define get_long()	((ptr[3] << 24) | (ptr[2] << 16) | (ptr[1] << 8) | (ptr[0] << 0))
 #define get_short()	((ptr[1] << 8) | (ptr[0] << 0))
@@ -32,7 +33,8 @@ struct sample_format
 
 static struct sample_format *samples		= NULL; // store samples
 static struct sample_format *sample_ptr		= NULL; // generic pointer for sample
-
+static INT32 sample_channels[MAX_CHANNEL];			// channel handling
+	
 static void make_raw(UINT8 *src, UINT32 len)
 {
 	UINT8 *ptr = src;
@@ -174,6 +176,16 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 void BurnSampleInitOne(INT32); // below...
 
+INT32 BurnSampleGetChannelSample(INT32 channel)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetChannelSample called without init\n"));
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleGetChannelSample called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	return sample_channels[channel];
+}
+
 void BurnSamplePlay(INT32 sample)
 {
 #if defined FBNEO_DEBUG
@@ -194,6 +206,30 @@ void BurnSamplePlay(INT32 sample)
 	sample_ptr->position = 0;
 }
 
+void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleChannelPlay called without init\n"));
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelPlay called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	sample_channels[channel] = sample;
+
+	if (sample >= nTotalSamples) return;
+
+	sample_ptr = &samples[sample];
+
+	if (sample_ptr->flags & SAMPLE_IGNORE) return;
+
+	if (sample_ptr->flags & SAMPLE_NOSTORE) {
+		BurnSampleInitOne(sample);
+	}
+
+	sample_ptr->playing = 1;
+	sample_ptr->position = 0;
+	sample_ptr->loop = (loop ? 1 : 0);
+}
+
 void BurnSamplePause(INT32 sample)
 {
 #if defined FBNEO_DEBUG
@@ -204,6 +240,19 @@ void BurnSamplePause(INT32 sample)
 
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 0;
+}
+
+void BurnSampleChannelPause(INT32 channel, bool pause)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleChannelPause called without init\n"));
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelPause called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	if (sample_channels[channel] >= nTotalSamples) return;
+
+	sample_ptr = &samples[sample_channels[channel]];
+	sample_ptr->playing = pause ? 0 : 1;
 }
 
 void BurnSampleResume(INT32 sample)
@@ -230,6 +279,15 @@ void BurnSampleStop(INT32 sample)
 	sample_ptr->playing = 0;
 	sample_ptr->position = 0;
 	//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
+}
+
+void BurnSampleChannelStop(INT32 channel)
+{
+#if defined FBNEO_DEBUG
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelStop called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	BurnSampleStop(sample_channels[channel]);
 }
 
 void BurnSampleSetLoop(INT32 sample, bool dothis)
@@ -259,6 +317,15 @@ INT32 BurnSampleGetStatus(INT32 sample)
 	return (sample_ptr->playing) ? SAMPLE_PLAYING : SAMPLE_STOPPED;
 }
 
+INT32 BurnSampleGetChannelStatus(INT32 channel)
+{
+#if defined FBNEO_DEBUG
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleGetChannelStatus called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	return BurnSampleGetStatus(sample_channels[channel]);
+}
+
 INT32 BurnSampleGetPosition(INT32 sample)
 {
 #if defined FBNEO_DEBUG
@@ -271,6 +338,15 @@ INT32 BurnSampleGetPosition(INT32 sample)
 	return (sample_ptr->position / 0x10000);
 }
 
+INT32 BurnSampleChannelGetPosition(INT32 channel)
+{
+#if defined FBNEO_DEBUG
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelGetPosition called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	return BurnSampleGetPosition(sample_channels[channel]);
+}
+
 void BurnSampleSetPosition(INT32 sample, UINT32 position)
 {
 #if defined FBNEO_DEBUG
@@ -281,6 +357,15 @@ void BurnSampleSetPosition(INT32 sample, UINT32 position)
 
 	sample_ptr = &samples[sample];
 	sample_ptr->position = position * 0x10000;
+}
+
+void BurnSampleChannelSetPosition(INT32 channel, UINT32 position)
+{
+#if defined FBNEO_DEBUG
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelSetPosition called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	BurnSampleSetPosition(sample_channels[channel], position);
 }
 
 void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
@@ -301,6 +386,8 @@ void BurnSampleReset()
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleReset called without init\n"));
 #endif
+
+	memset (sample_channels, 0, sizeof(sample_channels));
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnSampleStop(i);
@@ -642,5 +729,7 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(sample_ptr->position);
 			SCAN_VAR(sample_ptr->playback_rate);
 		}
+
+		SCAN_VAR(sample_channels);
 	}
 }

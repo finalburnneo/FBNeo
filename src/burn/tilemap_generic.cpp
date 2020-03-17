@@ -19,8 +19,8 @@ struct GenericTilemap {
 	INT32 *scrollx_table;
 	INT32 *scrolly_table;
 	INT32 priority;
-	INT32 xoffset;
-	INT32 yoffset;
+	INT32 xoffset[2]; // not flipscreen, flipscreen
+	INT32 yoffset[2]; // not flipscreen, flipscreen
 	UINT32 flags;
 	UINT8 *transparent[256];	// 0 draw, 1 skip
 	INT32 transcolor;
@@ -84,8 +84,8 @@ void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void 
 	cur_map->scrollx_table = NULL;
 	cur_map->scrolly_table = NULL;
 
-	cur_map->xoffset = 0;
-	cur_map->yoffset = 0;
+	cur_map->xoffset[0] = cur_map->xoffset[1] = 0;
+	cur_map->yoffset[0] = cur_map->yoffset[1] = 0;
 
 	cur_map->transparent[0] = (UINT8*)BurnMalloc(0x100); // allocate 0 by default
 
@@ -188,9 +188,10 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
 			cur_map = &maps[i];
 			if (cur_map->initialized) {
-				cur_map->xoffset = x;
-				cur_map->yoffset = y;
-
+				cur_map->xoffset[0] = x;
+				cur_map->yoffset[0] = y;
+				cur_map->xoffset[1] = x;
+				cur_map->yoffset[1] = y;
 				counter++;
 			}
 		}
@@ -214,9 +215,63 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 	}
 #endif
 
-	cur_map->xoffset = x;
-	cur_map->yoffset = y;
+	cur_map->xoffset[0] = x;
+	cur_map->yoffset[0] = y;
+	cur_map->xoffset[1] = x;
+	cur_map->yoffset[1] = y;
 }
+
+void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y, INT32 x_flipped, INT32 y_flipped)
+{
+#if defined FBNEO_DEBUG
+	if (which >= MAX_TILEMAPS) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetOffsets(%d, %d, %d, %d, %d); called with impossible tilemap!\n"), which, x, y, x_flipped, y_flipped);
+		return;
+	}
+#endif
+
+	// set offsets globally
+	if (which == TMAP_GLOBAL)
+	{
+		INT32 counter = 0;
+
+		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
+			cur_map = &maps[i];
+			if (cur_map->initialized) {
+				cur_map->xoffset[0] = x;
+				cur_map->yoffset[0] = y;
+				cur_map->xoffset[1] = x_flipped;
+				cur_map->yoffset[1] = y_flipped;
+				counter++;
+			}
+		}
+
+#if defined FBNEO_DEBUG
+		if (counter == 0) {
+			bprintf (PRINT_NORMAL, _T("GenericTilemapSetOffsets(TMAP_GLOBAL, %d, %d, %d, %d); called, but there are no initialized tilemaps!\n"), x, y, x_flipped, y_flipped);
+		}
+#endif
+
+		return;
+	}
+
+	// set offsets to a single tile map
+	cur_map = &maps[which];
+
+#if defined FBNEO_DEBUG
+	if (cur_map->initialized == 0) {
+		bprintf (PRINT_ERROR, _T("GenericTilemapSetOffsets(%d, %d, %d, %d, %d); called without initialized tilemap!\n"), which, x, y, x_flipped, y_flipped);
+		return;
+	}
+#endif
+
+	cur_map->xoffset[0] = x;
+	cur_map->yoffset[0] = y;
+	cur_map->xoffset[1] = x_flipped;
+	cur_map->yoffset[1] = y_flipped;
+}
+
+
 
 void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 {
@@ -843,6 +898,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 	INT32 tgroup = (priority >> 8) & 0xff;
 	priority &= 0xff;
 
+	INT32 x_offset = cur_map->xoffset[(cur_map->flags & TMAP_FLIPX) ? 1 : 0];
+	INT32 y_offset = cur_map->yoffset[(cur_map->flags & TMAP_FLIPY) ? 1 : 0];
+
 	// column (less than tile size) and line scroll
 	if ((cur_map->scrolly_table != NULL) && (cur_map->scroll_cols > cur_map->mwidth))
 	{
@@ -856,11 +914,11 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			{
 				INT32 sx;
 				if (cur_map->scrollx_table != NULL)
-					sx = (x + cur_map->scrollx_table[(y * cur_map->scroll_rows) / scrymod] - cur_map->xoffset) % scrxmod;
+					sx = (x + cur_map->scrollx_table[(y * cur_map->scroll_rows) / scrymod] - x_offset) % scrxmod;
 				else
-					sx = (x + cur_map->scrolly - cur_map->xoffset) % scrxmod;
+					sx = (x + cur_map->scrolly - x_offset) % scrxmod;
 
-				INT32 sy = (y + cur_map->scrolly_table[(sx * cur_map->scroll_cols) / scrxmod] - cur_map->yoffset) % scrymod;
+				INT32 sy = (y + cur_map->scrolly_table[(sx * cur_map->scroll_cols) / scrxmod] - y_offset) % scrymod;
 
 				INT32 row = sy / cur_map->theight;
 				INT32 col = sx / cur_map->twidth;
@@ -962,9 +1020,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 		for (INT32 y = miny; y < maxy; y++, prio += bitmap_width) // line by line
 		{
-			INT32 scrolly = (cur_map->scrolly + y + cur_map->yoffset) % (cur_map->mheight * cur_map->theight);
+			INT32 scrolly = (cur_map->scrolly + y + y_offset) % (cur_map->mheight * cur_map->theight);
 
-			INT32 scrollx = cur_map->scrollx_table[(scrolly * cur_map->scroll_rows) / (cur_map->mheight * cur_map->theight)] - cur_map->xoffset;
+			INT32 scrollx = cur_map->scrollx_table[(scrolly * cur_map->scroll_rows) / (cur_map->mheight * cur_map->theight)] - x_offset;
 
 			scrollx %= (cur_map->twidth * cur_map->mwidth);
 
@@ -1098,11 +1156,11 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 	// scrollx and scrolly
 	else if (cur_map->scroll_rows <= 1 && cur_map->scroll_cols <= 1) // one scroll row and column. Fast!
 	{
-		INT32 syshift = ((cur_map->scrolly - cur_map->yoffset) % cur_map->theight);
-		INT32 scrolly = ((cur_map->scrolly - cur_map->yoffset) / cur_map->theight) * cur_map->theight;
+		INT32 syshift = ((cur_map->scrolly - y_offset) % cur_map->theight);
+		INT32 scrolly = ((cur_map->scrolly - y_offset) / cur_map->theight) * cur_map->theight;
 
-		INT32 sxshift = ((cur_map->scrollx - cur_map->xoffset) % cur_map->twidth);
-		INT32 scrollx = ((cur_map->scrollx - cur_map->xoffset) / cur_map->twidth) * cur_map->twidth;
+		INT32 sxshift = ((cur_map->scrollx - x_offset) % cur_map->twidth);
+		INT32 scrollx = ((cur_map->scrollx - x_offset) / cur_map->twidth) * cur_map->twidth;
 
 		// start drawing at tile-border, and let RenderCustomTile..Clip() take care of the sub-tile clipping.
 		INT32 starty = miny - (miny % cur_map->theight);
@@ -1407,8 +1465,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		INT32 flipx = flags & TILE_FLIPX;
 		INT32 flipy = flags & TILE_FLIPY;
 
-		sx += cur_map->xoffset;
-		sy += cur_map->yoffset;
+		sx += x_offset;
+		sy += y_offset;
 
 		if (cur_map->flags & TMAP_FLIPY) {
 			sy = ((maxy - miny) - cur_map->theight) - sy;

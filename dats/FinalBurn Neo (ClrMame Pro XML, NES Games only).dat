@@ -5325,11 +5325,11 @@
 		<rom name="NES Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
 		<driver status="good"/>
 	</game>
-	<game name="nesscape">
-		<description>NES NESscape (HB)</description>
+	<game name="nescape">
+		<description>NES NEScape (HB)</description>
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
-		<rom name="NESscape (HB).nes" size="524304" crc="60b6ad99"/>
+		<rom name="NEScape (HB).nes" size="524304" crc="60b6ad99"/>
 		<driver status="good"/>
 	</game>
 	<game name="newghoii">
@@ -6995,7 +6995,7 @@
 		<description>NES Steins Gate (HB)</description>
 		<year>2018</year>
 		<manufacturer>Chiyomaru</manufacturer>
-		<rom name="Steins Gate (HB).nes" size="786235" crc="b7987bed"/>
+		<rom name="Steins Gate (HB).nes" size="786448" crc="547c4f1d"/>
 		<driver status="good"/>
 	</game>
 	<game name="stickhun">

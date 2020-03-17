@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13668 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13679 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -98,6 +98,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_3in1fwt	|  	| 3 in 1 Flashback - World Championship Soccer - Tecmo W| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_3in1rmb	|  	| 3 in 1 Road Rash - Ms. Pac-Man - Block Out (Pirate)	| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_3ninja	|  	| 3 Ninjas Kick Back (USA)				| 		| 1994	| Psygnosis	| Sega Megadrive| 					|
+| 3on3dunk	|  	| 3 On 3 Dunk Madness (US, prototype? 1997/02/04)	| 		| 1996	| Video System C| Miscellaneous	| 					|
 | 3x3puzzl	|  	| 3X3 Puzzle (Enterprise)				| 		| 1998	| Ace Enterprise| Miscellaneous	| 					|
 | 3x3puzzla	|  	| 3X3 Puzzle (Normal)					| 3x3puzzl	| 1998	| Ace Enterprise| Miscellaneous	| 					|
 | 4enraya	|  	| 4 En Raya (set 1)					| 		| 1990	| IDSA		| Miscellaneous	| 					|
@@ -165,6 +166,7 @@ This list contains all games supported by FinalBurn Neo.
 | afightera	|  	| Action Fighter (unprotected)				| afighter	| 1986	| Sega		| System 16A	| 					|
 | afighterb	|  	| Action Fighter (unprotected, analog controls)		| afighter	| 1986	| Sega		| System 16A	| 					|
 | afighter	|  	| Action Fighter, FD1089A 317-0018			| 		| 1986	| Sega		| System 16A	| 					|
+| actionhw	|  	| Action Hollywood					| 		| 1995	| TCH		| Miscellaneous	| 					|
 | md_ar		|  	| Action Replay (Euro)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | msx_actman	|  	| Actman (Jpn)						| 		| 1985	| ASCII		| MSX		| 					|
 | msx_actmana	|  	| Actman (Jpn, Alt)					| msx_actman	| 1985	| ASCII		| MSX		| 					|
@@ -5097,6 +5099,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_kickrush	|  	| Kick and Rush (Jpn)					| gg_tengenwc	| 1993	| SIMS		| Sega Game Gear| 					|
 | kickboy	|  	| Kick Boy						| 		| 1983	| Nichibutsu	| Miscellaneous	| 					|
 | kftgoal	| D NW	| Kick for the Goal					| wpksoc	| 1995	| Jaleco	| Irem M107	| 					|
+| kickgoal	|  	| Kick Goal (set 1)					| 		| 1995	| TCH		| Miscellaneous	| 					|
+| kickgoala	|  	| Kick Goal (set 2)					| kickgoal	| 1995	| TCH		| Miscellaneous	| 					|
 | msx_kickit	|  	| Kick It (Jpn)						| 		| 1986	| HAL Kenkyuujo	| MSX		| 					|
 | msx_kickita	|  	| Kick It (Jpn, Alt)					| msx_kickit	| 1986	| HAL Kenkyuujo	| MSX		| 					|
 | spec_kickoff	|  	| Kick Off (48K)					| 		| 1989	| Anco Software	| ZX Spectrum	| 					|
@@ -5740,6 +5744,7 @@ This list contains all games supported by FinalBurn Neo.
 | hypreact	|  	| Mahjong Hyper Reaction (Japan)			| 		| 1995	| Sammy		| SSV		| 					|
 | hypreac2	|  	| Mahjong Hyper Reaction 2 (Japan)			| 		| 1997	| Sammy		| SSV		| 					|
 | mahretsu	|  	| Mahjong Kyo Retsuden (NGM-004)(NGH-004)		| 		| 1990	| SNK		| Neo Geo MVS	| 					|
+| mjkjidai	|  	| Mahjong Kyou Jidai (Japan)				| 		| 1986	| Sanritsu	| Miscellaneous	| 					|
 | mjnquest	|  	| Mahjong Quest (Japan)					| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | mjnquestb	|  	| Mahjong Quest (No Nudity)				| mjnquest	| 1990	| Taito Corporat| Taito F2	| 					|
 | sms_mjsengok	|  	| Mahjong Sengoku Jidai (Jpn, HK)			| 		| 1987	| Sega		| Sega Master Sy| 					|
@@ -7489,7 +7494,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nekkestrbas|  	| NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_neoheiali	|  	| NES NEO Heiankyo Alien (HB)				| 		| 2017	| Hyperware Co.	| Miscellaneous	| 					|
 | nes_nesopetougol|  	| NES NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
-| nes_nesscape	|  	| NES NESscape (HB)					| 		| 2019	| Khan Games	| Miscellaneous	| 					|
+| nes_nescape	|  	| NES NEScape (HB)					| 		| 2019	| Khan Games	| Miscellaneous	| 					|
 | nes_newghoii	|  	| NES New Ghostbusters II (Japan)			| 		| 1990	| HAL Laboratory| Miscellaneous	| 					|
 | nes_newyornya	|  	| NES New York Nyankies (Japan)				| nes_rockinkats| 1991	| Atlus		| Miscellaneous	| 					|
 | nes_newzeasto	|  	| NES New Zealand Story, The (Europe)			| nes_kiwikra	| 1991	| Ocean		| Miscellaneous	| 					|
@@ -9119,6 +9124,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_champicet|  	| Qugunqiu (Tw)						| sg1k_champice	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | qadjr		|  	| Quiz & Dragons (940921 Japan Resale Ver.)		| qad		| 1992	| Capcom	| CPS1		| 					|
 | qad		|  	| Quiz & Dragons (capcom quiz game 920701 USA)		| 		| 1992	| Capcom	| CPS1		| 					|
+| inufuku	|  	| Quiz & Variety Sukusuku Inufuku (Japan)		| 		| 1998	| Video System C| Miscellaneous	| 					|
 | quizmoon	| D	| Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku T| 		| 1997	| Banpresto	| Miscellaneous	| 					|
 | qzchikyu	|  	| Quiz Chikyu Bouei Gun (Japan)				| 		| 1991	| Taito Corporat| Taito F2	| 					|
 | qcrayon	|  	| Quiz Crayon Shinchan (Japan)				| 		| 1993	| Taito Corporat| Taito F2	| 					|
@@ -10917,6 +10923,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfiii2n	|  	| Street Fighter III 2nd Impact: Giant Attack (Asia 9709| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
 | sfiii2j	|  	| Street Fighter III 2nd Impact: Giant Attack (Japan 970| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
 | sfiii2	|  	| Street Fighter III 2nd Impact: Giant Attack (USA 97093| 		| 1997	| Capcom	| CPS-3		| 					|
+| sfiii4n	|  	| Street Fighter III 3rd Strike: Fight for the Future (4| sfiii3	| 2013	| hack		| CPS-3		| 					|
 | sfiii3r1	|  	| Street Fighter III 3rd Strike: Fight for the Future (E| sfiii3	| 1999	| Capcom	| CPS-3		| 					|
 | sfiii3	|  	| Street Fighter III 3rd Strike: Fight for the Future (E| 		| 1999	| Capcom	| CPS-3		| 					|
 | sfiii3jr1	|  	| Street Fighter III 3rd Strike: Fight for the Future (J| sfiii3	| 1999	| Capcom	| CPS-3		| 					|
@@ -11335,6 +11342,10 @@ This list contains all games supported by FinalBurn Neo.
 | gg_suprjedi	|  	| Super Return of the Jedi (Euro, USA)			| 		| 1995	| Black Pearl	| Sega Game Gear| 					|
 | suprridr	|  	| Super Rider						| 		| 1983	| Taito Corporat| Miscellaneous	| 					|
 | md_srobowrs	|  	| Super Robot Wars (Rus)				| md_trgearth	| 199?	| Glorysun	| Sega Megadrive| 					|
+| sshanghaj	|  	| Super Shanghai Dragon's Eye (Japan)			| sshangha	| 1992	| Hot-B Co., Ltd| Miscellaneous	| 					|
+| sshanghak	|  	| Super Shanghai Dragon's Eye (Korea)			| sshangha	| 1992	| Hot-B Co., Ltd| Miscellaneous	| 					|
+| sshangha	|  	| Super Shanghai Dragon's Eye (World)			| 		| 1992	| Hot-B Co., Ltd| Miscellaneous	| 					|
+| sshanghab	|  	| Super Shanghai Dragon's Eye (World, bootleg)		| sshangha	| 1992	| bootleg	| Miscellaneous	| 					|
 | ssideki	|  	| Super Sidekicks / Tokuten Ou				| 		| 1992	| SNK		| Neo Geo MVS	| 					|
 | ssideki2	|  	| Super Sidekicks 2 - The World Championship / Tokuten O| 		| 1994	| SNK		| Neo Geo MVS	| 					|
 | ssideki3	|  	| Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - ei| 		| 1995	| SNK		| Neo Geo MVS	| 					|

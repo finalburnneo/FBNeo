@@ -100,6 +100,7 @@ DRV		BurnDrv3Countba;
 DRV		BurnDrvmd_3in1fwt;
 DRV		BurnDrvmd_3in1rmb;
 DRV		BurnDrvmd_3ninja;
+DRV		BurnDrvDunk3on3;
 DRV		BurnDrvPuzzl3x3;
 DRV		BurnDrvPuzzl3x3a;
 DRV		BurnDrvEnraya4;
@@ -167,6 +168,7 @@ DRV		BurnDrvAfightere;
 DRV		BurnDrvAFightera;
 DRV		BurnDrvAFighterb;
 DRV		BurnDrvAFighter;
+DRV		BurnDrvActionhw;
 DRV		BurnDrvmd_ar;
 DRV		BurnDrvMSX_actman;
 DRV		BurnDrvMSX_actmana;
@@ -5209,6 +5211,8 @@ DRV		BurnDrvKickboy;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvKftgoal;			// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvKickgoal;
+DRV		BurnDrvKickgoala;
 DRV		BurnDrvMSX_kickit;
 DRV		BurnDrvMSX_kickita;
 DRV		BurnSpeckickoff;
@@ -5864,6 +5868,7 @@ DRV		BurnDrvHotgmcki;
 DRV		BurnDrvHypreact;
 DRV		BurnDrvHypreac2;
 DRV		BurnDrvMahretsu;
+DRV		BurnDrvMjkjidai;
 DRV		BurnDrvMjnquest;
 DRV		BurnDrvMjnquestb;
 DRV		BurnDrvsms_mjsengok;
@@ -7635,7 +7640,7 @@ DRV		BurnDrvnes_nekkekoukunkun;
 DRV		BurnDrvnes_nekkestrbas;
 DRV		BurnDrvnes_neoheiali;
 DRV		BurnDrvnes_nesopetougol;
-DRV		BurnDrvnes_nesscape;
+DRV		BurnDrvnes_nescape;
 DRV		BurnDrvnes_newghoii;
 DRV		BurnDrvnes_newyornya;
 DRV		BurnDrvnes_newzeasto;
@@ -9289,6 +9294,7 @@ DRV		BurnDrvQuesters;
 DRV		BurnDrvsg1k_champicet;
 DRV		BurnDrvCpsQadjr;
 DRV		BurnDrvCpsQad;
+DRV		BurnDrvInufuku;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvQuizmoon;		// no comment
 #endif
@@ -11119,6 +11125,7 @@ DRV		BurnDrvCpsSf2ceb;
 DRV		BurnDrvSfiii2n;
 DRV		BurnDrvSfiii2j;
 DRV		BurnDrvSfiii2;
+DRV		BurnDrvSfiii4n;
 DRV		BurnDrvSfiii3r1;
 DRV		BurnDrvSfiii3;
 DRV		BurnDrvSfiii3jr1;
@@ -11549,6 +11556,10 @@ DRV		BurnDrvSrmp4o;
 DRV		BurnDrvgg_suprjedi;
 DRV		BurnDrvSuprridr;
 DRV		BurnDrvmd_srobowrs;
+DRV		BurnDrvSshanghaj;
+DRV		BurnDrvSshanghak;
+DRV		BurnDrvSshangha;
+DRV		BurnDrvSshanghab;
 DRV		BurnDrvSsideki;
 DRV		BurnDrvSsideki2;
 DRV		BurnDrvSsideki3;
@@ -14043,6 +14054,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_3in1fwt,			// 3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)
 	&BurnDrvmd_3in1rmb,			// 3 in 1 Road Rash - Ms. Pac-Man - Block Out (Pirate)
 	&BurnDrvmd_3ninja,			// 3 Ninjas Kick Back (USA)
+	&BurnDrvDunk3on3,			// 3 On 3 Dunk Madness (US, prototype? 1997/02/04)
 	&BurnDrvPuzzl3x3,			// 3X3 Puzzle (Enterprise)
 	&BurnDrvPuzzl3x3a,			// 3X3 Puzzle (Normal)
 	&BurnDrvEnraya4,			// 4 En Raya (set 1)
@@ -14110,6 +14122,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAFightera,			// Action Fighter (unprotected)
 	&BurnDrvAFighterb,			// Action Fighter (unprotected, analog controls)
 	&BurnDrvAFighter,			// Action Fighter, FD1089A 317-0018
+	&BurnDrvActionhw,			// Action Hollywood
 	&BurnDrvmd_ar,				// Action Replay (Euro)
 	&BurnDrvMSX_actman,			// Actman (Jpn)
 	&BurnDrvMSX_actmana,		// Actman (Jpn, Alt)
@@ -19152,6 +19165,8 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvKftgoal,			// Kick for the Goal [no comment, NOT WORKING]
 #endif
+	&BurnDrvKickgoal,			// Kick Goal (set 1)
+	&BurnDrvKickgoala,			// Kick Goal (set 2)
 	&BurnDrvMSX_kickit,			// Kick It (Jpn)
 	&BurnDrvMSX_kickita,		// Kick It (Jpn, Alt)
 	&BurnSpeckickoff,			// Kick Off (48K)
@@ -19807,6 +19822,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHypreact,			// Mahjong Hyper Reaction (Japan)
 	&BurnDrvHypreac2,			// Mahjong Hyper Reaction 2 (Japan)
 	&BurnDrvMahretsu,			// Mahjong Kyo Retsuden (NGM-004)(NGH-004)
+	&BurnDrvMjkjidai,			// Mahjong Kyou Jidai (Japan)
 	&BurnDrvMjnquest,			// Mahjong Quest (Japan)
 	&BurnDrvMjnquestb,			// Mahjong Quest (No Nudity)
 	&BurnDrvsms_mjsengok,		// Mahjong Sengoku Jidai (Jpn, HK)
@@ -21578,7 +21594,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nekkestrbas,	// NES Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)
 	&BurnDrvnes_neoheiali,		// NES NEO Heiankyo Alien (HB)
 	&BurnDrvnes_nesopetougol,	// NES NES Open Tournament Golf (USA)
-	&BurnDrvnes_nesscape,		// NES NESscape (HB)
+	&BurnDrvnes_nescape,		// NES NEScape (HB)
 	&BurnDrvnes_newghoii,		// NES New Ghostbusters II (Japan)
 	&BurnDrvnes_newyornya,		// NES New York Nyankies (Japan)
 	&BurnDrvnes_newzeasto,		// NES New Zealand Story, The (Europe)
@@ -23232,6 +23248,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_champicet,		// Qugunqiu (Tw)
 	&BurnDrvCpsQadjr,			// Quiz & Dragons (940921 Japan Resale Ver.)
 	&BurnDrvCpsQad,				// Quiz & Dragons (capcom quiz game 920701 USA)
+	&BurnDrvInufuku,			// Quiz & Variety Sukusuku Inufuku (Japan)
 #if defined FBNEO_DEBUG
 	&BurnDrvQuizmoon,			// Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un [no comment]
 #endif
@@ -25062,6 +25079,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSfiii2n,			// Street Fighter III 2nd Impact: Giant Attack (Asia 970930, NO CD)
 	&BurnDrvSfiii2j,			// Street Fighter III 2nd Impact: Giant Attack (Japan 970930)
 	&BurnDrvSfiii2,				// Street Fighter III 2nd Impact: Giant Attack (USA 970930)
+	&BurnDrvSfiii4n,			// Street Fighter III 3rd Strike: Fight for the Future (4rd Arrange Edition 2013)
 	&BurnDrvSfiii3r1,			// Street Fighter III 3rd Strike: Fight for the Future (Euro 990512)
 	&BurnDrvSfiii3,				// Street Fighter III 3rd Strike: Fight for the Future (Euro 990608)
 	&BurnDrvSfiii3jr1,			// Street Fighter III 3rd Strike: Fight for the Future (Japan 990512)
@@ -25492,6 +25510,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_suprjedi,		// Super Return of the Jedi (Euro, USA)
 	&BurnDrvSuprridr,			// Super Rider
 	&BurnDrvmd_srobowrs,		// Super Robot Wars (Rus)
+	&BurnDrvSshanghaj,			// Super Shanghai Dragon's Eye (Japan)
+	&BurnDrvSshanghak,			// Super Shanghai Dragon's Eye (Korea)
+	&BurnDrvSshangha,			// Super Shanghai Dragon's Eye (World)
+	&BurnDrvSshanghab,			// Super Shanghai Dragon's Eye (World, bootleg)
 	&BurnDrvSsideki,			// Super Sidekicks / Tokuten Ou
 	&BurnDrvSsideki2,			// Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)
 	&BurnDrvSsideki3,			// Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi

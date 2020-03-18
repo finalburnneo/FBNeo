@@ -505,6 +505,7 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\cps_scr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_sshangha.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
@@ -516,7 +517,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />

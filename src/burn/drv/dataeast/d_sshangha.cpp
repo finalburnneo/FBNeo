@@ -475,13 +475,13 @@ static INT32 DrvInit()
 
 	BurnYM2203Init(1, 4000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.90, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.90, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.90, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1023924 / 132, 1);
-	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	// for sprite and background mixing
@@ -678,9 +678,9 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 
 		if (i == 7) deco16_vblank ^= 1;
 
@@ -691,12 +691,12 @@ static INT32 DrvFrame()
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	ZetClose();
 	SekClose();
 
@@ -729,7 +729,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-	
+
 		deco_146_104_scan();
 
 		deco16Scan();

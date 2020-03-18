@@ -48,54 +48,54 @@ static UINT8 DrvInputs[14];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo MjkjidaiInputList[] = {
-	{"Coin",			BIT_DIGITAL,	DrvJoy13 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy6 + 0,	"p1 start"	},
-	{"A",				BIT_DIGITAL,	DrvJoy1 + 0,	"mah a"		},
-	{"B",				BIT_DIGITAL,	DrvJoy1 + 1,	"mah b"		},
-	{"C",				BIT_DIGITAL,	DrvJoy1 + 2,	"mah c"		},
-	{"D",				BIT_DIGITAL,	DrvJoy1 + 3,	"mah d"		},
-	{"E",				BIT_DIGITAL,	DrvJoy2 + 0,	"mah e"		},
-	{"F",				BIT_DIGITAL,	DrvJoy2 + 1,	"mah f"		},
-	{"G",				BIT_DIGITAL,	DrvJoy2 + 2,	"mah g"		},
-	{"H",				BIT_DIGITAL,	DrvJoy2 + 3,	"mah h"		},
-	{"I",				BIT_DIGITAL,	DrvJoy3 + 0,	"mah i"		},
-	{"J",				BIT_DIGITAL,	DrvJoy3 + 1,	"mah j"		},
-	{"K",				BIT_DIGITAL,	DrvJoy3 + 2,	"mah k"		},
-	{"L",				BIT_DIGITAL,	DrvJoy3 + 3,	"mah l"		},
-	{"M",				BIT_DIGITAL,	DrvJoy4 + 0,	"mah m"		},
-	{"N",				BIT_DIGITAL,	DrvJoy4 + 1,	"mah n"		},
-	{"Pon",				BIT_DIGITAL,	DrvJoy4 + 3,	"mah pon"	},
-	{"Chi",				BIT_DIGITAL,	DrvJoy4 + 2,	"mah chi"	},
-	{"Kan",				BIT_DIGITAL,	DrvJoy5 + 0,	"mah kan"	},
-	{"Ron",				BIT_DIGITAL,	DrvJoy5 + 2,	"mah ron"	},
-	{"Reach",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah reach"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy13 + 7,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy6 + 0,	"p1 start"	},
+	{"P1 A",				BIT_DIGITAL,	DrvJoy1 + 0,	"mah a"		},
+	{"P1 B",				BIT_DIGITAL,	DrvJoy1 + 1,	"mah b"		},
+	{"P1 C",				BIT_DIGITAL,	DrvJoy1 + 2,	"mah c"		},
+	{"P1 D",				BIT_DIGITAL,	DrvJoy1 + 3,	"mah d"		},
+	{"P1 E",				BIT_DIGITAL,	DrvJoy2 + 0,	"mah e"		},
+	{"P1 F",				BIT_DIGITAL,	DrvJoy2 + 1,	"mah f"		},
+	{"P1 G",				BIT_DIGITAL,	DrvJoy2 + 2,	"mah g"		},
+	{"P1 H",				BIT_DIGITAL,	DrvJoy2 + 3,	"mah h"		},
+	{"P1 I",				BIT_DIGITAL,	DrvJoy3 + 0,	"mah i"		},
+	{"P1 J",				BIT_DIGITAL,	DrvJoy3 + 1,	"mah j"		},
+	{"P1 K",				BIT_DIGITAL,	DrvJoy3 + 2,	"mah k"		},
+	{"P1 L",				BIT_DIGITAL,	DrvJoy3 + 3,	"mah l"		},
+	{"P1 M",				BIT_DIGITAL,	DrvJoy4 + 0,	"mah m"		},
+	{"P1 N",				BIT_DIGITAL,	DrvJoy4 + 1,	"mah n"		},
+	{"P1 Pon",				BIT_DIGITAL,	DrvJoy4 + 3,	"mah pon"	},
+	{"P1 Chi",				BIT_DIGITAL,	DrvJoy4 + 2,	"mah chi"	},
+	{"P1 Kan",				BIT_DIGITAL,	DrvJoy5 + 0,	"mah kan"	},
+	{"P1 Ron",				BIT_DIGITAL,	DrvJoy5 + 2,	"mah ron"	},
+	{"P1 Reach",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah reach"	},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy12 + 0,	"p2 start"	},
-	{"A",				BIT_DIGITAL,	DrvJoy7 + 0,	"mah a"		},
-	{"B",				BIT_DIGITAL,	DrvJoy7 + 1,	"mah b"		},
-	{"C",				BIT_DIGITAL,	DrvJoy7 + 2,	"mah c"		},
-	{"D",				BIT_DIGITAL,	DrvJoy7 + 3,	"mah d"		},
-	{"E",				BIT_DIGITAL,	DrvJoy8 + 0,	"mah e"		},
-	{"F",				BIT_DIGITAL,	DrvJoy8 + 1,	"mah f"		},
-	{"G",				BIT_DIGITAL,	DrvJoy8 + 2,	"mah g"		},
-	{"H",				BIT_DIGITAL,	DrvJoy8 + 3,	"mah h"		},
-	{"I",				BIT_DIGITAL,	DrvJoy9 + 0,	"mah i"		},
-	{"J",				BIT_DIGITAL,	DrvJoy9 + 1,	"mah j"		},
-	{"K",				BIT_DIGITAL,	DrvJoy9 + 2,	"mah k"		},
-	{"L",				BIT_DIGITAL,	DrvJoy9 + 3,	"mah l"		},
-	{"M",				BIT_DIGITAL,	DrvJoy10 + 0,	"mah m"		},
-	{"N",				BIT_DIGITAL,	DrvJoy10 + 1,	"mah n"		},
-	{"Pon",				BIT_DIGITAL,	DrvJoy10 + 3,	"mah pon"	},
-	{"Chi",				BIT_DIGITAL,	DrvJoy10 + 2,	"mah chi"	},
-	{"Kan",				BIT_DIGITAL,	DrvJoy11 + 0,	"mah kan"	},
-	{"Ron",				BIT_DIGITAL,	DrvJoy11 + 2,	"mah ron"	},
-	{"Reach",			BIT_DIGITAL,	DrvJoy11 + 1,	"mah reach"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy12 + 0,	"p2 start"	},
+	{"P2 A",				BIT_DIGITAL,	DrvJoy7 + 0,	"mah a"		},
+	{"P2 B",				BIT_DIGITAL,	DrvJoy7 + 1,	"mah b"		},
+	{"P2 C",				BIT_DIGITAL,	DrvJoy7 + 2,	"mah c"		},
+	{"P2 D",				BIT_DIGITAL,	DrvJoy7 + 3,	"mah d"		},
+	{"P2 E",				BIT_DIGITAL,	DrvJoy8 + 0,	"mah e"		},
+	{"P2 F",				BIT_DIGITAL,	DrvJoy8 + 1,	"mah f"		},
+	{"P2 G",				BIT_DIGITAL,	DrvJoy8 + 2,	"mah g"		},
+	{"P2 H",				BIT_DIGITAL,	DrvJoy8 + 3,	"mah h"		},
+	{"P2 I",				BIT_DIGITAL,	DrvJoy9 + 0,	"mah i"		},
+	{"P2 J",				BIT_DIGITAL,	DrvJoy9 + 1,	"mah j"		},
+	{"P2 K",				BIT_DIGITAL,	DrvJoy9 + 2,	"mah k"		},
+	{"P2 L",				BIT_DIGITAL,	DrvJoy9 + 3,	"mah l"		},
+	{"P2 M",				BIT_DIGITAL,	DrvJoy10 + 0,	"mah m"		},
+	{"P2 N",				BIT_DIGITAL,	DrvJoy10 + 1,	"mah n"		},
+	{"P2 Pon",				BIT_DIGITAL,	DrvJoy10 + 3,	"mah pon"	},
+	{"P2 Chi",				BIT_DIGITAL,	DrvJoy10 + 2,	"mah chi"	},
+	{"P2 Kan",				BIT_DIGITAL,	DrvJoy11 + 0,	"mah kan"	},
+	{"P2 Ron",				BIT_DIGITAL,	DrvJoy11 + 2,	"mah ron"	},
+	{"P2 Reach",			BIT_DIGITAL,	DrvJoy11 + 1,	"mah reach"	},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Clear Settings",	BIT_DIGITAL,	DrvJoy13 + 6,	"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Clear Settings",		BIT_DIGITAL,	DrvJoy13 + 6,	"service"	},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Mjkjidai)
@@ -377,7 +377,6 @@ static INT32 DrvExit()
 	SN76496Exit();;
 	ZetExit();
 	MSM5205Exit();
-	SN76496Exit();
 	ppi8255_exit();
 	GenericTilesExit();
 
@@ -490,7 +489,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (nmi_enable && i == (nInterleave - 1)) ZetNmi();
 
 		MSM5205Update();

@@ -431,7 +431,7 @@ static INT32 DrvExit()
 	EEPROMExit();
 
 	BurnYM2610Exit();
-	
+
 	ZetExit();
 	SekExit();
 
@@ -497,19 +497,19 @@ static void draw_sprites()
 			INT32 priority_mask = priority_table[pri];
 
 			INT32 ystart, yend, yinc;
-		
+
 			if (!flipy) { ystart = 0; yend = ysize+1; yinc = 1; }
 			else         { ystart = ysize; yend = -1; yinc = -1; }
-		
+
 			INT32 ycnt = ystart;
 
 			while (ycnt != yend)
 			{
 				INT32 xstart, xend, xinc;
-		
+
 				if (!flipx) { xstart = 0; xend = xsize+1; xinc = 1; }
 				else        { xstart = xsize; xend = -1; xinc = -1; }
-		
+
 				INT32 xcnt = xstart;
 				while (xcnt != xend)
 				{
@@ -519,7 +519,7 @@ static void draw_sprites()
 					RenderZoomedPrioSprite(pTransDraw, gfx->gfxbase, startno, color, 0xf, -0x200+ox + xcnt * zoomx/2, oy + ycnt * zoomy/2, 	 flipx, flipy, 16, 16, zoomx << 11, zoomy << 11, priority_mask);
 					RenderZoomedPrioSprite(pTransDraw, gfx->gfxbase, startno, color, 0xf, ox + xcnt * zoomx/2,        -0x200+oy + ycnt * zoomy/2, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11, priority_mask);
 					RenderZoomedPrioSprite(pTransDraw, gfx->gfxbase, startno, color, 0xf, -0x200+ox + xcnt * zoomx/2, -0x200+oy + ycnt * zoomy/2, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11, priority_mask);
-	
+
 					xcnt+=xinc;
 					map++;
 				}
@@ -596,7 +596,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
@@ -610,7 +610,7 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}

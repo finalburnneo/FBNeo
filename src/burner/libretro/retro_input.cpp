@@ -1426,7 +1426,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle megadrive
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_SEGA_MEGADRIVE) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)
 		// Use same layout as arcade
 		if ((parentrom && strcmp(parentrom, "md_sf2") == 0) ||
@@ -1465,7 +1465,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle MSX
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_MSX) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
 		if (strcmp("Button 1", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
@@ -1505,7 +1505,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	}
 
 	// Handle Coleco
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_COLECO) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
 		if (strcmp("1", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
 		}
@@ -1737,7 +1737,7 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	// We can't handle the following "special" mappings in GameInpSpecialOne (they'll fail computing nPlayer)
 
 	// Handle Spectrum
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_SPECTRUM) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
 		if (strcmp("keyb_A", szi) == 0)
 			GameInpDigital2RetroInpKey(pgi, 0, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_B", szi) == 0)
@@ -1853,7 +1853,7 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	}
 
 	// FDS disk buttons
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_FDS) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
 		if (strcmp("Swap Disk Side", szn) == 0) {
 			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
 		}

@@ -7,71 +7,63 @@ bool bMainRamFound = false;
 
 int StateGetMainRamAcb(BurnArea *pba)
 {
-	int nHardwareCode = BurnDrvGetHardwareCode();
-
 	if(!pba->szName)
 		return 0;
 
-	// Neogeo / PGM
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO
-	 || (nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_PREFIX_IGS_PGM) {
-		if (strcmp(pba->szName, "68K RAM") == 0) {
-			MainRamData = pba->Data;
-			MainRamSize = pba->nLen;
-			bMainRamFound = true;
+	switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+	{
+		case HARDWARE_CAPCOM_CPS1:
+		case HARDWARE_CAPCOM_CPS1_QSOUND:
+		case HARDWARE_CAPCOM_CPS1_GENERIC:
+		case HARDWARE_CAPCOM_CPSCHANGER:
+		case HARDWARE_CAPCOM_CPS2:
+			if (strcmp(pba->szName, "CpsRamFF") == 0) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
 			return 0;
-		}
-	}
-
-	// Psikyo (psikyosh and psikyo4 uses "All RAM")
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_PREFIX_PSIKYO) {
-		if ((strcmp(pba->szName, "All RAM") == 0) || (strcmp(pba->szName, "68K RAM") == 0)) {
-			MainRamData = pba->Data;
-			MainRamSize = pba->nLen;
-			bMainRamFound = true;
+		case HARDWARE_CAPCOM_CPS3:
+			if (strcmp(pba->szName, "Main RAM") == 0) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
 			return 0;
-		}
-	}
-
-	// Cave (gaia driver uses "68K RAM")
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_PREFIX_CAVE) {
-		if ((strcmp(pba->szName, "RAM") == 0) || (strcmp(pba->szName, "68K RAM") == 0)) {
-			MainRamData = pba->Data;
-			MainRamSize = pba->nLen;
-			bMainRamFound = true;
+		case HARDWARE_SNK_NEOGEO:
+		case HARDWARE_IGS_PGM:
+			if (strcmp(pba->szName, "68K RAM") == 0) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
 			return 0;
-		}
-	}
-
-	// CPS1 / CPS2
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) & HARDWARE_PREFIX_CAPCOM) {
-		if (strcmp(pba->szName, "CpsRamFF") == 0) {
-			MainRamData = pba->Data;
-			MainRamSize = pba->nLen;
-			bMainRamFound = true;
+		case HARDWARE_PSIKYO:
+			// Psikyo (psikyosh and psikyo4 uses "All RAM")
+			if ((strcmp(pba->szName, "All RAM") == 0) || (strcmp(pba->szName, "68K RAM") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
 			return 0;
-		}
-	}
-
-	// CPS3
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS3) {
-		if (strcmp(pba->szName, "Main RAM") == 0) {
-			MainRamData = pba->Data;
-			MainRamSize = pba->nLen;
-			bMainRamFound = true;
+		case HARDWARE_CAVE_68K_Z80:
+		case HARDWARE_CAVE_68K_ONLY:
+			// Cave (gaia driver uses "68K RAM")
+			if ((strcmp(pba->szName, "RAM") == 0) || (strcmp(pba->szName, "68K RAM") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
 			return 0;
-		}
+		default:
+			// For all other systems (?), main ram seems to be identified by either "All Ram" or "All RAM"
+			if ((strcmp(pba->szName, "All Ram") == 0) || (strcmp(pba->szName, "All RAM") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
+			return 0;
 	}
-
-	// For all other systems (?), main ram seems to be identified by either "All Ram" or "All RAM"
-	if ((strcmp(pba->szName, "All Ram") == 0) || (strcmp(pba->szName, "All RAM") == 0)) {
-		MainRamData = pba->Data;
-		MainRamSize = pba->nLen;
-		bMainRamFound = true;
-		return 0;
-	}
-
-	return 0;
 }
 
 void *retro_get_memory_data(unsigned id)

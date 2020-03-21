@@ -1187,8 +1187,7 @@ static bool retro_load_game_common()
 			return false;
 		}
 
-		const char * boardrom = BurnDrvGetTextA(DRV_BOARDROM);
-		is_neogeo_game = (boardrom && strcmp(boardrom, "neogeo") == 0);
+		is_neogeo_game = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
 
 		// Define nMaxPlayers early;
 		nMaxPlayers = BurnDrvGetMaxPlayers();

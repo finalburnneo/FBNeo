@@ -4532,8 +4532,8 @@ static struct BurnRomInfo twinqixRomDesc[] = {
 	{ "snd-14.b10",		0x80000, 0x26312451, TAITO_ES5505_BYTESWAP },    // 16
 	{ "snd-15.b11",		0x80000, 0x2edaa9dc, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 },       		   // 18 plds
-	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 },       		   // 19
+	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 18 plds
+	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 19
 	{ "pal16l8b.b24",	0x104, 0x0b73a7d1, 0 },                    // 20
 	{ "pal16l8b.b57",	0x104, 0x74b4d8be, 0 },                    // 21
 	{ "pal16l8b.b58",	0x104, 0x17e2c9b8, 0 },                    // 22
@@ -5299,11 +5299,11 @@ static struct BurnRomInfo pbobble3jRomDesc[] = {
 	{ "e29-04.ic39",	0x200000, 0xd1f42457, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e29-05.ic41",	0x200000, 0xe33c1234, TAITO_ES5505_BYTESWAP },    // 13
 	
-	{ "d77-12.ic48.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-14.ic21.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-11.ic37.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-09.ic14.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-10.ic28.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-12.ic48.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-14.ic21.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-11.ic37.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-09.ic14.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-10.ic28.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(pbobble3j)

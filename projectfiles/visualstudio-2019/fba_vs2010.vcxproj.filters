@@ -4127,6 +4127,18 @@
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp">
       <Filter>Burn\drv\nes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_sshangha.cpp">
+      <Filter>Burn\drv\dataeast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mjkjidai.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

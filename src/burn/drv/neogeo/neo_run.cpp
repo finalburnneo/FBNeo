@@ -440,11 +440,11 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) {
-		nNewBIOS = 34;
+		nNewBIOS = 35;
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
-		nNewBIOS = 35;
+		nNewBIOS = 36;
 	}
 
 	// The most recent MVS models doesn't have a Z80 BIOS
@@ -3686,7 +3686,7 @@ static INT32 neogeoReset()
 	if (nNeoSystemType & NEO_SYS_CART) {
 		NeoLoad68KBIOS(NeoSystem & 0x3f);
 
-		if (nBIOS == -1 || nBIOS == 33) {
+		if (nBIOS == -1 || nBIOS == 34) {
 			// Write system type & region code into BIOS ROM
 			*((UINT16*)(Neo68KBIOS + 0x000400)) = BURN_ENDIAN_SWAP_INT16(((NeoSystem & 4) << 13) | (NeoSystem & 0x03));
 		}
@@ -3713,21 +3713,22 @@ static INT32 neogeoReset()
 				case 0x10: { bprintf(PRINT_IMPORTANT, _T("Emulating using AES Asia BIOS\n")); break; }
 				case 0x11: { bprintf(PRINT_IMPORTANT, _T("Emulating using Development Kit BIOS\n")); break; }
 				case 0x12: { bprintf(PRINT_IMPORTANT, _T("Emulating using Deck ver. 6 (Git Ver 1.3) BIOS\n")); break; }
-				case 0x13: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.3 BIOS\n")); break; }
-				case 0x14: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.2 BIOS\n")); break; }
-				case 0x15: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.1 BIOS\n")); break; }
-				case 0x16: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.0 BIOS\n")); break; }
-				case 0x17: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 BIOS\n")); break; }
-				case 0x18: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 (alt) BIOS\n")); break; }
-				case 0x19: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.2 BIOS\n")); break; }
-				case 0x1a: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.1 BIOS\n")); break; }
-				case 0x1b: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.0 BIOS\n")); break; }
-				case 0x1c: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.3 BIOS\n")); break; }
-				case 0x1d: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 BIOS\n")); break; }
-				case 0x1e: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 (alt) BIOS\n")); break; }
-				case 0x1f: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.1 BIOS\n")); break; }
-				case 0x20: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.0 BIOS\n")); break; }
-				case 0x21: { bprintf(PRINT_IMPORTANT, _T("Emulating using NeoOpen BIOS v0.1 beta BIOS\n")); break; }
+				case 0x13: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 4.0 BIOS\n")); break; }
+				case 0x14: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.3 BIOS\n")); break; }
+				case 0x15: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.2 BIOS\n")); break; }
+				case 0x16: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.1 BIOS\n")); break; }
+				case 0x17: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.0 BIOS\n")); break; }
+				case 0x18: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 BIOS\n")); break; }
+				case 0x19: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 (alt) BIOS\n")); break; }
+				case 0x1a: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.2 BIOS\n")); break; }
+				case 0x1b: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.1 BIOS\n")); break; }
+				case 0x1c: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.0 BIOS\n")); break; }
+				case 0x1d: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.3 BIOS\n")); break; }
+				case 0x1e: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 BIOS\n")); break; }
+				case 0x1f: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 (alt) BIOS\n")); break; }
+				case 0x20: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.1 BIOS\n")); break; }
+				case 0x21: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.0 BIOS\n")); break; }
+				case 0x22: { bprintf(PRINT_IMPORTANT, _T("Emulating using NeoOpen BIOS v0.1 beta BIOS\n")); break; }
 			}
 		}
 
@@ -4291,25 +4292,25 @@ INT32 NeoInit()
 	}
 
 	if (nNeoSystemType & NEO_SYS_PCB) {
-		BurnLoadRom(Neo68KBIOS, 0x00080 +     35, 1);
+		BurnLoadRom(Neo68KBIOS, 0x00080 +     36, 1);
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
-		BurnLoadRom(NeoZ80BIOS,		0x00000 + 36, 1);
-		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 37, 1);
-		BurnLoadRom(NeoZoomROM,		0x00000 + 38, 1);
+		BurnLoadRom(NeoZ80BIOS,		0x00000 + 37, 1);
+		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 38, 1);
+		BurnLoadRom(NeoZoomROM,		0x00000 + 39, 1);
 	} else {
 
 		// Still load the Z80 BIOS & text layer data for AES systems, since it might be switched to MVS later
 
 		if (nNeoSystemType & NEO_SYS_PCB) {
 			bZ80BIOS = false;
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 37, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 38, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 38, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 39, 1);
 		} else {
-			BurnLoadRom(NeoZ80BIOS,		0x00080 + 36, 1);
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 37, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 38, 1);
+			BurnLoadRom(NeoZ80BIOS,		0x00080 + 37, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 38, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 39, 1);
 		}
 	}
 	BurnUpdateProgress(0.0, _T("Preprocessing text layer graphics...")/*, BST_PROCESS_TXT*/, 0);

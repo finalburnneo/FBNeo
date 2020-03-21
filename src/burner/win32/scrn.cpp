@@ -2042,6 +2042,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bAutoLoadGameList = !bAutoLoadGameList;
 			break;
 
+		case MENU_AUTOSCANGAMELIST:
+			bSkipStartupCheck = !bSkipStartupCheck;
+			break;
+
 		case MENU_SAVEHISCORES:
 			EnableHiscores = !EnableHiscores;
 			break;

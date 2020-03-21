@@ -632,9 +632,9 @@ static struct BurnRomInfo snowbro2nyRomDesc[] = {
 
 	{ "rom4-tp-033.u33",    	0x080000, 0x638f341e, BRF_SND },		   //  5 MSM6295 ADPCM data
 	
-	{ "13_gal16v8-25lnc.u91",	0x0117, 0x00000000, BRF_OPT },     	   	   //  6 PLDs
-	{ "14_gal16v8-25lnc.u92",	0x0117, 0x00000000, BRF_OPT },     	   	   //  7
-	{ "15_gal16v8-25lnc.u93",	0x0117, 0x00000000, BRF_OPT },     	   	   //  8
+	{ "13_gal16v8-25lnc.u91",	0x0117, 0x00000000, BRF_NODUMP },     	   	   //  6 PLDs
+	{ "14_gal16v8-25lnc.u92",	0x0117, 0x00000000, BRF_NODUMP },     	   	   //  7
+	{ "15_gal16v8-25lnc.u93",	0x0117, 0x00000000, BRF_NODUMP },     	   	   //  8
 };
 
 

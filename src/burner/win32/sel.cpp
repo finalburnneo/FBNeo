@@ -2427,7 +2427,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotWorking, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 								rect.left += nIconsSizeXY + 4;
 							} else {
-								if (!(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo])) {
+								if (!(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo]) && !bSkipStartupCheck) {
 									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 									rect.left += nIconsSizeXY + 4;
 								} else {

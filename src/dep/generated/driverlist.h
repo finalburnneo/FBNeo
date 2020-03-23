@@ -8013,6 +8013,7 @@ DRV		BurnDrvnes_totsumac;
 DRV		BurnDrvnes_touhourououmu;
 DRV		BurnDrvnes_toukonclub;
 DRV		BurnDrvnes_towerdru;
+DRV		BurnDrvnes_towerofturmoil;
 DRV		BurnDrvnes_toxiccrusaders;
 DRV		BurnDrvnes_trackfield;
 DRV		BurnDrvnes_trackfieldii;
@@ -21991,6 +21992,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_touhourououmu,	// NES TouhouRououmu (HB)
 	&BurnDrvnes_toukonclub,		// NES Toukon Club (Japan)
 	&BurnDrvnes_towerdru,		// NES Tower of Druaga, The (Japan)
+	&BurnDrvnes_towerofturmoil,	// NES Tower of Turmoil (HB, v1.03)
 	&BurnDrvnes_toxiccrusaders,	// NES Toxic Crusaders (USA)
 	&BurnDrvnes_trackfield,		// NES Track & Field (USA)
 	&BurnDrvnes_trackfieldii,	// NES Track & Field II (USA) (Rev A)

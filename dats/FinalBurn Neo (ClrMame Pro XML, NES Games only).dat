@@ -7936,6 +7936,13 @@
 		<rom name="Tower of Druaga, The (Japan).nes" size="40976" crc="0c045fb9"/>
 		<driver status="good"/>
 	</game>
+	<game name="towerofturmoil">
+		<description>NES Tower of Turmoil (HB, v1.03)</description>
+		<year>2019</year>
+		<manufacturer>CutterCross</manufacturer>
+		<rom name="Tower of Turmoil (HB, v1.03).nes" size="524304" crc="89cbd840"/>
+		<driver status="good"/>
+	</game>
 	<game name="toxiccrusaders">
 		<description>NES Toxic Crusaders (USA)</description>
 		<year>1992</year>

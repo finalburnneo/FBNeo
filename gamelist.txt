@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13703 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13704 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7867,6 +7867,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_touhourououmu|  	| NES TouhouRououmu (HB)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_toukonclub|  	| NES Toukon Club (Japan)				| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | nes_towerdru	|  	| NES Tower of Druaga, The (Japan)			| 		| 1985	| Namco		| Miscellaneous	| 					|
+| nes_towerofturmoil|  	| NES Tower of Turmoil (HB, v1.03)			| 		| 2019	| CutterCross	| Miscellaneous	| 					|
 | nes_toxiccrusaders|  	| NES Toxic Crusaders (USA)				| 		| 1992	| Bandai	| Miscellaneous	| 					|
 | nes_trackfield|  	| NES Track & Field (USA)				| 		| 1987	| Konami	| Miscellaneous	| 					|
 | nes_trackfieldii|  	| NES Track & Field II (USA) (Rev A)			| 		| 1989	| Konami	| Miscellaneous	| 					|

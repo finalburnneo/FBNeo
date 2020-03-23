@@ -794,8 +794,9 @@ static int SelListMake()
 		if (nBurnDrv[i].bIsParent && ((nLoadMenuShowY & AUTOEXPAND) || !gameAv[nBurnDrv[i].nBurnDrvNo] || !CheckWorkingStatus(nBurnDrv[i].nBurnDrvNo))) {
 			for (j = 0; j < nTmpDrvCount; j++) {
 
-				// Expand the branch only if a working clone is available
-				if (gameAv[nBurnDrv[j].nBurnDrvNo]) {
+				// Expand the branch only if a working clone is available -or-
+				// If ROM Scanning is disabled (bSkipStartupCheck==1) and expand clones is set. -dink March 22, 2020
+				if ( gameAv[nBurnDrv[j].nBurnDrvNo] || (bSkipStartupCheck && (nLoadMenuShowY & AUTOEXPAND)) ) {
 					nBurnDrvActive = nBurnDrv[j].nBurnDrvNo;
 					if (BurnDrvGetTextA(DRV_PARENT)) {
 						if (strcmp(nBurnDrv[i].pszROMName, BurnDrvGetTextA(DRV_PARENT)) == 0) {

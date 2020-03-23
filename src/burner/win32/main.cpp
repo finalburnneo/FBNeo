@@ -1136,13 +1136,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 
 	AppDirectory();								// Set current directory to be the applications directory
 
-#ifdef INCLUDE_AVI_RECORDING
-#define DIRCNT 10
-#else
-#define DIRCNT 9
-#endif
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[DIRCNT][MAX_PATH] = {
+	TCHAR szDirs[][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
@@ -1155,16 +1150,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 #ifdef INCLUDE_AVI_RECORDING
 		{_T("avi")},
 #endif
+		{_T("\0")} // END of list
 	};
 
-	for(int x = 0; x < DIRCNT; x++) {
+	for(int x = 0; szDirs[x][0] != '\0'; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
-#undef DIRCNT
 
-	//
-
-	{
+	{                                           // Init Win* Common Controls lib
 		INITCOMMONCONTROLSEX initCC = {
 			sizeof(INITCOMMONCONTROLSEX),
 			ICC_BAR_CLASSES | ICC_COOL_CLASSES | ICC_LISTVIEW_CLASSES | ICC_PROGRESS_CLASS | ICC_TREEVIEW_CLASSES,

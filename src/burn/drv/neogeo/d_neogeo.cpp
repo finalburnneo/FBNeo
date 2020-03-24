@@ -12882,12 +12882,7 @@ struct BurnDriver BurnDrvtwsoc96 = {
 static struct BurnRomInfo fightfevRomDesc[] = {
 	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
 
-#if !defined ROM_VERIFY
-	{ "060-s1.s1",    0x020000, 0x7f012104, 2 | BRF_GRA },           //  2 Text layer tiles
-#else
 	{ "060-s1.s1",    0x020000, 0xd62a72e9, 2 | BRF_GRA },           //  2 Text layer tiles
-	// 1 byte diff at offset 0 : 11 ; 00
-#endif
 
 	{ "060-c1.c1",    0x200000, 0x8908fff9, 3 | BRF_GRA },           //  2 Sprite data
 	{ "060-c2.c2",    0x200000, 0xc6649492, 3 | BRF_GRA },           //  3 
@@ -12923,12 +12918,7 @@ static struct BurnRomInfo fightfevaRomDesc[] = {
 	{ "viccom_1.ep1",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
 	{ "viccom_2.ep2",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
 	
-#if !defined ROM_VERIFY
-	{ "060-s1.s1",    0x020000, 0x7f012104, 2 | BRF_GRA },           //  2 Text layer tiles
-#else
 	{ "060-s1.s1",    0x020000, 0xd62a72e9, 2 | BRF_GRA },           //  2 Text layer tiles
-	// 1 byte diff at offset 0 : 11 ; 00
-#endif
 
 	{ "060-c1.c1",    0x200000, 0x8908fff9, 3 | BRF_GRA },           //  2 Sprite data 		/ VIC931600
 	{ "060-c2.c2",    0x200000, 0xc6649492, 3 | BRF_GRA },           //  3 					/ VIC931600

@@ -3615,7 +3615,7 @@
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
 		<rom name="060-p1.p1" size="1048576" crc="2a104b50"/>
-		<rom name="060-s1.s1" size="131072" crc="7f012104"/>
+		<rom name="060-s1.s1" size="131072" crc="d62a72e9"/>
 		<rom name="060-c1.c1" size="2097152" crc="8908fff9"/>
 		<rom name="060-c2.c2" size="2097152" crc="c6649492"/>
 		<rom name="060-c3.c3" size="2097152" crc="0956b437"/>
@@ -3668,7 +3668,7 @@
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
 		<rom name="060-p1.p1" merge="060-p1.p1" size="1048576" crc="2a104b50"/>
-		<rom name="060-s1.s1" merge="060-s1.s1" size="131072" crc="7f012104"/>
+		<rom name="060-s1.s1" merge="060-s1.s1" size="131072" crc="d62a72e9"/>
 		<rom name="060-c1.c1" merge="060-c1.c1" size="2097152" crc="8908fff9"/>
 		<rom name="060-c2.c2" merge="060-c2.c2" size="2097152" crc="c6649492"/>
 		<rom name="060-c3.c3" merge="060-c3.c3" size="2097152" crc="0956b437"/>

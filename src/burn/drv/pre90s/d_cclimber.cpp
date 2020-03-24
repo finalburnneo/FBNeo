@@ -85,9 +85,9 @@ static struct BurnInputInfo CclimberInputList[] = {
 	{"P2 Left (right)"   , BIT_DIGITAL  , DrvJoy2 + 6, "p4 left"  },
 	{"P2 Right (right)"  , BIT_DIGITAL  , DrvJoy2 + 7, "p4 right" },
 
-	{"Reset"             , BIT_DIGITAL  , &DrvReset    , "reset"    },
-	{"Dip"               , BIT_DIPSWITCH, DrvDips + 0  , "dip"      },
-	{"Dip"               , BIT_DIPSWITCH, DrvDips + 1  , "dip"      },
+	{"Reset"             , BIT_DIGITAL  , &DrvReset  , "reset"    },
+	{"Dip A"             , BIT_DIPSWITCH, DrvDips + 0, "dip"      },
+	{"Dip B"             , BIT_DIPSWITCH, DrvDips + 1, "dip"      },
 };
 
 STDINPUTINFO(Cclimber)
@@ -633,7 +633,9 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 
 		case 0xa001:
 		case 0xa002:
-			flipscreen[address & 1] = 0; // data & 1; ignore flipscreen
+			// Note: coctail can't be unflipped without breaking other games :(
+			// Note2: find a better way..
+			flipscreen[address & 1] = data & 1;
 		return;
 
 		case 0xa003:

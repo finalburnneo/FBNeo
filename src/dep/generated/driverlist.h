@@ -7115,6 +7115,8 @@ DRV		BurnDrvnes_cosmogenesis;
 DRV		BurnDrvnes_cosmopolgalj;
 DRV		BurnDrvnes_cosmopolgal;
 DRV		BurnDrvnes_cowboykid;
+DRV		BurnDrvnes_cowligam2ndadv;
+DRV		BurnDrvnes_cowligamadv;
 DRV		BurnDrvnes_crashnboy;
 DRV		BurnDrvnes_crayoshicha;
 DRV		BurnDrvnes_crazyclimber;
@@ -7977,7 +7979,9 @@ DRV		BurnDrvnes_tetris;
 DRV		BurnDrvnes_tetris2;
 DRV		BurnDrvnes_tetri2bom;
 DRV		BurnDrvnes_tetsuwanatom;
+DRV		BurnDrvnes_madwiz;
 DRV		BurnDrvnes_meating;
+DRV		BurnDrvnes_riseamo;
 DRV		BurnDrvnes_thexder;
 DRV		BurnDrvnes_threestooges;
 DRV		BurnDrvnes_thundlig;
@@ -21094,6 +21098,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_cosmopolgalj,	// NES Cosmo Police Galivan (Japan)
 	&BurnDrvnes_cosmopolgal,	// NES Cosmo Police Galivan (T-eng)
 	&BurnDrvnes_cowboykid,		// NES Cowboy Kid (USA)
+	&BurnDrvnes_cowligam2ndadv,	// NES Cowlitz Gamers 2nd Adventure (HB)
+	&BurnDrvnes_cowligamadv,	// NES Cowlitz Gamers Adventure (HB)
 	&BurnDrvnes_crashnboy,		// NES Crash 'n' the Boys - Street Challenge (USA)
 	&BurnDrvnes_crayoshicha,	// NES Crayon Shin-chan - Ora to Poi Poi (Japan)
 	&BurnDrvnes_crazyclimber,	// NES Crazy Climber (Japan)
@@ -21956,7 +21962,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tetris2,		// NES Tetris 2 (USA)
 	&BurnDrvnes_tetri2bom,		// NES Tetris 2 + Bombliss (Japan)
 	&BurnDrvnes_tetsuwanatom,	// NES Tetsuwan Atom (Japan)
+	&BurnDrvnes_madwiz,			// NES The Mad Wizard - A Candelabra Chronicle (HB)
 	&BurnDrvnes_meating,		// NES The Meating - Cafeparty Demo (HB)
+	&BurnDrvnes_riseamo,		// NES The Rise of Amondus (HB)
 	&BurnDrvnes_thexder,		// NES Thexder (Japan)
 	&BurnDrvnes_threestooges,	// NES Three Stooges (USA)
 	&BurnDrvnes_thundlig,		// NES Thunder & Lightning (USA)

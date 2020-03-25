@@ -1650,6 +1650,20 @@
 		<rom name="Cowboy Kid (USA).nes" size="524304" crc="b150ae9a"/>
 		<driver status="good"/>
 	</game>
+	<game name="cowligam2ndadv">
+		<description>NES Cowlitz Gamers 2nd Adventure (HB)</description>
+		<year>2017</year>
+		<manufacturer>Cowlitz</manufacturer>
+		<rom name="Cowlitz Gamers 2nd Adventure (HB).nes" size="131088" crc="0db2dd59"/>
+		<driver status="good"/>
+	</game>
+	<game name="cowligamadv">
+		<description>NES Cowlitz Gamers Adventure (HB)</description>
+		<year>2016</year>
+		<manufacturer>Cowlitz</manufacturer>
+		<rom name="Cowlitz Gamers Adventure (HB).nes" size="32784" crc="0ae2354b"/>
+		<driver status="good"/>
+	</game>
 	<game name="crashnboy">
 		<description>NES Crash 'n' the Boys - Street Challenge (USA)</description>
 		<year>1992</year>
@@ -7684,11 +7698,25 @@
 		<rom name="Tetsuwan Atom (Japan).nes" size="262160" crc="6673e5da"/>
 		<driver status="good"/>
 	</game>
+	<game name="madwiz">
+		<description>NES The Mad Wizard - A Candelabra Chronicle (HB)</description>
+		<year>2014</year>
+		<manufacturer>Robert L. Bryant</manufacturer>
+		<rom name="The Mad Wizard - A Candelabra Chronicle (HB).nes" size="131088" crc="7750dac6"/>
+		<driver status="good"/>
+	</game>
 	<game name="meating">
 		<description>NES The Meating - Cafeparty Demo (HB)</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="The Meating - Cafeparty Demo (HB).nes" size="262160" crc="e704ef0a"/>
+		<driver status="good"/>
+	</game>
+	<game name="riseamo">
+		<description>NES The Rise of Amondus (HB)</description>
+		<year>2015</year>
+		<manufacturer>Robert L. Bryant</manufacturer>
+		<rom name="The Rise of Amondus (HB).nes" size="131088" crc="b15ac0fe"/>
 		<driver status="good"/>
 	</game>
 	<game name="thexder">

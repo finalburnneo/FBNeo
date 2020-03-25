@@ -1880,6 +1880,13 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		}
 	}
 
+	// Sega system 24 "Service 1" button seems required to navigate in service menu
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM24) {
+		if (strcmp("Service 1", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R, szn);
+		}
+	}
+
 	// Store the pgi that controls the reset input
 	if (strcmp(szi, "reset") == 0) {
 		pgi->nInput = GIT_SWITCH;

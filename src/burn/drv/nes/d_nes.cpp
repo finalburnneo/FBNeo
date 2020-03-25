@@ -2458,6 +2458,8 @@ static void mapper303_scan()
 	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper303 HighScore Sector");
 }
 
+static UINT8 *mmc5_mask; // mmc3/mmc5 ppumask-sniffer // 0x18 = rendering
+
 static void mapper04_scanline()
 {
 	INT32 cnt = mapper4_irqcount;
@@ -2469,7 +2471,9 @@ static void mapper04_scanline()
 	}
 
 	if (cnt && mapper4_irqenable && mapper4_irqcount == 0) {
-		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (mmc5_mask[0] & 0x18) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
 	}
 }
 
@@ -2483,10 +2487,9 @@ static void mapper04_scanline()
 // ---[ mapper 05 (MMC5) Castlevania III, Uchuu Keibitai SDF
 // PPU Hooks
 static UINT8 *mmc5_nt_ram; // pointer to our ppu's nt ram
-static UINT8 mmc5_mask; // mmc5 ppumask-sniffer // 0x18 = rend
-static UINT8 mmc5_ctrl; // mmc5 ppuctrl-sniffer // 0x20 = 8x16 spr
-#define MMC5RENDERING (mmc5_mask & 0x18)
-#define MMC58x16 (mmc5_ctrl & 0x20)
+static UINT8 *mmc5_ctrl; // mmc5 ppuctrl-sniffer // 0x20 = 8x16 spr
+#define MMC5RENDERING (mmc5_mask[0] & 0x18)
+#define MMC58x16 (mmc5_ctrl[0] & 0x20)
 
 // Mapper registers & ram
 static UINT8 mmc5_expram[1024];
@@ -2548,8 +2551,6 @@ static void mapper5_reset()
 
 static void mapper5_scan()
 {
-	SCAN_VAR(mmc5_mask);
-	SCAN_VAR(mmc5_ctrl);
 	SCAN_VAR(mmc5_expram);
 }
 
@@ -7015,7 +7016,6 @@ static void ppu_write(UINT16 reg, UINT8 data)
 			}
 
 			ctrl.reg = data;
-			mmc5_ctrl = data;
 			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d\n"), ctrl.reg, scanline, pixel, nCurrentFrame);
 			tAddr = (tAddr & 0x73ff) | ((data & 0x3) << 10);
 
@@ -7031,7 +7031,6 @@ static void ppu_write(UINT16 reg, UINT8 data)
 				ppu_bus_address = vAddr & 0x3fff;
 			}
 			mask.reg = data;
-			mmc5_mask = data;
 			ppu_pal_emphasis = (data >> 5) * 0x40;
 			if (NESMode & IS_PAL) {
 				ppu_pal_emphasis = (((data & 0x80) | ((data & 0x40) >> 1) | ((data & 0x20) << 1)) >> 5) * 0x40;
@@ -7502,6 +7501,9 @@ static void ppu_reset()
 	ctrl.reg = 0;
 	mask.reg = 0;
 	status.reg = 0;
+
+	mmc5_mask = &mask.reg; // point to ppumask register
+	mmc5_ctrl = &ctrl.reg; // point to ppuctrl register
 
 	sprite_height = 8;
 	v_incr = 1;
@@ -10659,6 +10661,74 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_cowligam2ndadvRomDesc[] = {
+	{ "Cowlitz Gamers 2nd Adventure (HB).nes",          131088, 0x0db2dd59, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cowligam2ndadv)
+STD_ROM_FN(nes_cowligam2ndadv)
+
+struct BurnDriver BurnDrvnes_cowligam2ndadv = {
+	"nes_cowligam2ndadv", NULL, NULL, NULL, "2017",
+	"NES Cowlitz Gamers 2nd Adventure (HB)\0", NULL, "Cowlitz", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_cowligam2ndadvRomInfo, nes_cowligam2ndadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_cowligamadvRomDesc[] = {
+	{ "Cowlitz Gamers Adventure (HB).nes",          32784, 0x0ae2354b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cowligamadv)
+STD_ROM_FN(nes_cowligamadv)
+
+struct BurnDriver BurnDrvnes_cowligamadv = {
+	"nes_cowligamadv", NULL, NULL, NULL, "2016",
+	"NES Cowlitz Gamers Adventure (HB)\0", NULL, "Cowlitz", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_cowligamadvRomInfo, nes_cowligamadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_madwizRomDesc[] = {
+	{ "The Mad Wizard - A Candelabra Chronicle (HB).nes",          131088, 0x7750dac6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_madwiz)
+STD_ROM_FN(nes_madwiz)
+
+struct BurnDriver BurnDrvnes_madwiz = {
+	"nes_madwiz", NULL, NULL, NULL, "2014",
+	"NES The Mad Wizard - A Candelabra Chronicle (HB)\0", NULL, "Robert L. Bryant", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_madwizRomInfo, nes_madwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_riseamoRomDesc[] = {
+	{ "The Rise of Amondus (HB).nes",          131088, 0xb15ac0fe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_riseamo)
+STD_ROM_FN(nes_riseamo)
+
+struct BurnDriver BurnDrvnes_riseamo = {
+	"nes_riseamo", NULL, NULL, NULL, "2015",
+	"NES The Rise of Amondus (HB)\0", NULL, "Robert L. Bryant", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_riseamoRomInfo, nes_riseamoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_towerofturmoilRomDesc[] = {
 	{ "Tower of Turmoil (HB, v1.03).nes",          524304, 0x89cbd840, BRF_ESS | BRF_PRG },
 };

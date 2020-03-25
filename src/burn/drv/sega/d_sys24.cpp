@@ -3067,7 +3067,7 @@ struct BurnDriver BurnDrvHotrod = {
 	"hotrod", NULL, NULL, NULL, "1988",
 	"Hot Rod (World, 3 Players, Turbo set 1, Floppy Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodRomInfo, hotrodRomName, NULL, NULL, NULL, NULL, HotrodInputInfo, HotrodDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3090,7 +3090,7 @@ struct BurnDriver BurnDrvHotroda = {
 	"hotroda", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (World, 3 Players, Turbo set 2, Floppy Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodaRomInfo, hotrodaRomName, NULL, NULL, NULL, NULL, HotrodInputInfo, HotrodDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3113,7 +3113,7 @@ struct BurnDriver BurnDrvHotrodja = {
 	"hotrodja", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (Japan, 4 Players, Floppy Based, Rev B)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodjaRomInfo, hotrodjaRomName, NULL, NULL, NULL, NULL, HotrodjInputInfo, HotrodjDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3136,7 +3136,7 @@ struct BurnDriver BurnDrvHotrodj = {
 	"hotrodj", "hotrod", NULL, NULL, "1988",
 	"Hot Rod (Japan, 4 Players, Floppy Based, Rev C)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, hotrodjRomInfo, hotrodjRomName, NULL, NULL, NULL, NULL, HotrodjInputInfo, HotrodjDIPInfo,
 	HotrodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3174,7 +3174,7 @@ struct BurnDriver BurnDrvQgh = {
 	"qgh", NULL, NULL, NULL, "1994",
 	"Quiz Ghost Hunter (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_QUIZ, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_QUIZ, 0,
 	NULL, qghRomInfo, qghRomName, NULL, NULL, NULL, NULL, DrvInputInfo, QghDIPInfo,
 	QghInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3205,7 +3205,7 @@ struct BurnDriver BurnDrvSspirits = {
 	"sspirits", NULL, NULL, NULL, "1988",
 	"Scramble Spirits (World, Floppy Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_VERSHOOT, 0,
 	NULL, sspiritsRomInfo, sspiritsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SspiritsDIPInfo,
 	SspiritsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384, 496, 3, 4
@@ -3228,7 +3228,7 @@ struct BurnDriver BurnDrvSspiritj = {
 	"sspiritj", "sspirits", NULL, NULL, "1988",
 	"Scramble Spirits (Japan, Floppy DS3-5000-02-REV-A Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_VERSHOOT, 0,
 	NULL, sspiritjRomInfo, sspiritjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SspiritsDIPInfo,
 	SspiritsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384, 496, 3, 4
@@ -3253,7 +3253,7 @@ struct BurnDriver BurnDrvSspirtfc = {
 	"sspirtfc", "sspirits", NULL, NULL, "1988",
 	"Scramble Spirits (World, Floppy Based, FD1094 317-0058-02c)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_VERSHOOT, 0,
 	NULL, sspirtfcRomInfo, sspirtfcRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SspiritsDIPInfo,
 	SspiritsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384, 496, 3, 4
@@ -3289,7 +3289,7 @@ struct BurnDriver BurnDrvBnzabros = {
 	"bnzabros", NULL, NULL, NULL, "1990",
 	"Bonanza Bros (US, Floppy DS3-5000-07d? Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, bnzabrosRomInfo, bnzabrosRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BnzabrosDIPInfo,
 	BnzabrosInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3317,7 +3317,7 @@ struct BurnDriver BurnDrvBnzabrosj = {
 	"bnzabrosj", "bnzabros", NULL, NULL, "1990",
 	"Bonanza Bros (Japan, Floppy DS3-5000-07b Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, bnzabrosjRomInfo, bnzabrosjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BnzabrosDIPInfo,
 	BnzabrosInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3349,7 +3349,7 @@ struct BurnDriver BurnDrvQrouka = {
 	"qrouka", NULL, NULL, NULL, "1991",
 	"Quiz Rouka Ni Tattenasai (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_QUIZ, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_QUIZ, 0,
 	NULL, qroukaRomInfo, qroukaRomName, NULL, NULL, NULL, NULL, QroukaInputInfo, QroukaDIPInfo,
 	QroukaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3385,7 +3385,7 @@ struct BurnDriver BurnDrvQuizmeku = {
 	"quizmeku", NULL, NULL, NULL, "1992",
 	"Quiz Mekurumeku Story (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_QUIZ, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_QUIZ, 0,
 	NULL, quizmekuRomInfo, quizmekuRomName, NULL, NULL, NULL, NULL, QuizmekuInputInfo, QuizmekuDIPInfo,
 	QuizmekuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3428,7 +3428,7 @@ struct BurnDriver BurnDrvDcclub = {
 	"dcclub", NULL, NULL, NULL, "1991",
 	"Dynamic Country Club (World, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, dcclubRomInfo, dcclubRomName, NULL, NULL, NULL, NULL, SgmastjInputInfo, DcclubDIPInfo,
 	DcclubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3453,7 +3453,7 @@ struct BurnDriver BurnDrvDcclubfd = {
 	"dcclubfd", "dcclub", NULL, NULL, "1991",
 	"Dynamic Country Club (US, Floppy Based, FD1094 317-0058-09d)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, dcclubfdRomInfo, dcclubfdRomName, NULL, NULL, NULL, NULL, SgmastjInputInfo, DcclubDIPInfo,
 	DcclubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3479,7 +3479,7 @@ struct BurnDriver BurnDrvDcclubj = {
 	"dcclubj", "dcclub", NULL, NULL, "1991",
 	"Dynamic Country Club (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, dcclubjRomInfo, dcclubjRomName, NULL, NULL, NULL, NULL, SgmastjInputInfo, DcclubDIPInfo,
 	DcclubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3512,7 +3512,7 @@ struct BurnDriver BurnDrvSgmast = {
 	"sgmast", NULL, NULL, NULL, "1989",
 	"Super Masters Golf (World?, Floppy Based, FD1094 317-0058-05d?)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, sgmastRomInfo, sgmastRomName, NULL, NULL, NULL, NULL, SgmastInputInfo, SgmastDIPInfo,
 	SgmastInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3537,7 +3537,7 @@ struct BurnDriver BurnDrvSgmastc = {
 	"sgmastc", "sgmast", NULL, NULL, "1989",
 	"Jumbo Ozaki Super Masters Golf (World, Floppy Based, FD1094 317-0058-05c)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, sgmastcRomInfo, sgmastcRomName, NULL, NULL, NULL, NULL, SgmastInputInfo, SgmastDIPInfo,
 	SgmastInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3568,7 +3568,7 @@ struct BurnDriver BurnDrvSgmastj = {
 	"sgmastj", "sgmast", NULL, NULL, "1989",
 	"Jumbo Ozaki Super Masters Golf (Japan, Floppy Based, FD1094 317-0058-05b)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_SPORTSMISC, 0,
 	NULL, sgmastjRomInfo, sgmastjRomName, NULL, NULL, NULL, NULL, SgmastjInputInfo, SgmastjDIPInfo,
 	SgmastjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3606,7 +3606,7 @@ struct BurnDriverD BurnDrvMahmajn = {
 	"mahmajn", NULL, NULL, NULL, "1992",
 	"Tokoro San no MahMahjan (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MAHJONG, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
 	NULL, mahmajnRomInfo, mahmajnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, QghDIPInfo, //MahmajnInputInfo, MahmajnDIPInfo,
 	MahmajnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3644,7 +3644,7 @@ struct BurnDriverD BurnDrvMahmajn2 = {
 	"mahmajn2", NULL, NULL, NULL, "1994",
 	"Tokoro San no MahMahjan 2 (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MAHJONG, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
 	NULL, mahmajn2RomInfo, mahmajn2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, QghDIPInfo, //MahmajnInputInfo, MahmajnDIPInfo,
 	Mahmajn2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3677,7 +3677,7 @@ struct BurnDriver BurnDrvQsww = {
 	"qsww", NULL, NULL, NULL, "1991",
 	"Quiz Syukudai wo Wasuremashita (Japan, Floppy Based, FD1094 317-0058-08b)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_QUIZ, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_QUIZ, 0,
 	NULL, qswwRomInfo, qswwRomName, NULL, NULL, NULL, NULL, DrvInputInfo, QswwDIPInfo,
 	QswwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3710,7 +3710,7 @@ struct BurnDriver BurnDrvGground = {
 	"gground", NULL, NULL, NULL, "1988",
 	"Gain Ground (World, 3 Players, Floppy Based, FD1094 317-0058-03d Rev A)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ggroundRomInfo, ggroundRomName, NULL, NULL, NULL, NULL, GgroundInputInfo, GgroundDIPInfo,
 	GgroundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384,496, 3, 4
@@ -3735,7 +3735,7 @@ struct BurnDriver BurnDrvGgroundj = {
 	"ggroundj", "gground", NULL, NULL, "1988",
 	"Gain Ground (Japan, 2 Players, Floppy Based, FD1094 317-0058-03b)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ggroundjRomInfo, ggroundjRomName, NULL, NULL, NULL, NULL, GgroundjInputInfo, GgroundjDIPInfo,
 	GgroundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384,496, 3, 4
@@ -3768,7 +3768,7 @@ struct BurnDriver BurnDrvCrkdown = {
 	"crkdown", NULL, NULL, NULL, "1989",
 	"Crack Down (World, Floppy Based, FD1094 317-0058-04c)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, crkdownRomInfo, crkdownRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3793,7 +3793,7 @@ struct BurnDriver BurnDrvCrkdownu = {
 	"crkdownu", "crkdown", NULL, NULL, "1989",
 	"Crack Down (US, Floppy Based, FD1094 317-0058-04d)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, crkdownuRomInfo, crkdownuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3818,7 +3818,7 @@ struct BurnDriver BurnDrvCrkdownj = {
 	"crkdownj", "crkdown", NULL, NULL, "1989",
 	"Crack Down (Japan, Floppy Based, FD1094 317-0058-04b Rev A)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, crkdownjRomInfo, crkdownjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3853,7 +3853,7 @@ struct BurnDriver BurnDrvRoughrac = {
 	"roughrac", NULL, NULL, NULL, "1990",
 	"Rough Racer (Japan, Floppy Based, FD1094 317-0058-06b)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_RACING, 0,
 	NULL, roughracRomInfo, roughracRomName, NULL, NULL, NULL, NULL, RoughracInputInfo, RoughracDIPInfo,
 	RoughracInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3

@@ -43420,3 +43420,21 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Water Margin - Tales of Clouds Winds (USA)
+static struct BurnRomInfo md_wmarginRomDesc[] = {
+	{ "Water Margin - Tales of Clouds Winds (USA).bin", 2097152, 0x7f93b916, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_wmargin)
+STD_ROM_FN(md_wmargin)
+
+struct BurnDriver BurnDrvmd_wmargin = {
+	"md_wmargin", NULL, NULL, NULL, "2015",
+	"Water Margin - Tales of Clouds Winds (USA)\0", NULL, "Piko Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_wmarginRomInfo, md_wmarginRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

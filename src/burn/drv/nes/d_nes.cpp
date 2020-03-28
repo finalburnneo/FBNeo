@@ -7793,9 +7793,10 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 	nesapuReset();
-	if (RESETMode == RESET_POWER) {
+	//	if (RESETMode == RESET_POWER) {
+	// Nebs 'n Debs thinks we're in 50hz/PAL mode on reset if we don't reset PPU here..
 		ppu_reset();
-	}
+	//	}
 	mapper_reset();
 
 	JoyShifter[0] = JoyShifter[1] = 0xffffffff;

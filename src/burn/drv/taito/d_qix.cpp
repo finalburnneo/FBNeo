@@ -1885,7 +1885,7 @@ static INT32 SlitherInit()
 
 struct BurnDriver BurnDrvSlither = {
 	"slither", NULL, NULL, NULL, "1982",
-	"Slither (set 1)\0", NULL, "Century II", "Miscellaneous",
+	"Slither (set 1)\0", "Press 'P2 Start' to exit settings screen", "Century II", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, slitherRomInfo, slitherRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,
@@ -1916,7 +1916,7 @@ STD_ROM_FN(slithera)
 
 struct BurnDriver BurnDrvSlithera = {
 	"slithera", "slither", NULL, NULL, "1982",
-	"Slither (set 2)\0", NULL, "Century II", "Miscellaneous",
+	"Slither (set 2)\0", "Press 'P2 Start' to exit settings screen", "Century II", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, slitheraRomInfo, slitheraRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,

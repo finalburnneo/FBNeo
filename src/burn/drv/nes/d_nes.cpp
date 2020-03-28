@@ -20237,16 +20237,33 @@ struct BurnDriver BurnDrvnes_increcradum = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_indiajonandlascrtRomDesc[] = {
+	{ "Indiana Jones and the Last Crusade (USA) (Taito).nes",          262160, 0xda23166a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_indiajonandlascrt)
+STD_ROM_FN(nes_indiajonandlascrt)
+
+struct BurnDriver BurnDrvnes_indiajonandlascrt = {
+	"nes_indiajonandlascrt", "nes_indiajonandlascr", NULL, NULL, "1991",
+	"NES Indiana Jones and the Last Crusade (USA) (Taito)\0", NULL, "Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_indiajonandlascrtRomInfo, nes_indiajonandlascrtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_indiajonandlascrRomDesc[] = {
-	{ "Indiana Jones and the Last Crusade (USA).nes",          262160, 0xda23166a, BRF_ESS | BRF_PRG },
+	{ "Indiana Jones and the Last Crusade (USA) (UBI Soft).nes",          131088, 0xed5fa6c4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_indiajonandlascr)
 STD_ROM_FN(nes_indiajonandlascr)
 
 struct BurnDriver BurnDrvnes_indiajonandlascr = {
-	"nes_indiajonandlascr", NULL, NULL, NULL, "1991",
-	"NES Indiana Jones and the Last Crusade (USA)\0", NULL, "Taito", "Miscellaneous",
+	"nes_indiajonandlascr", NULL, NULL, NULL, "1993",
+	"NES Indiana Jones and the Last Crusade (USA) (UBI Soft)\0", NULL, "UBI Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_indiajonandlascrRomInfo, nes_indiajonandlascrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

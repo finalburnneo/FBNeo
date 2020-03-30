@@ -262,6 +262,11 @@ static UINT8 mcs51_readop_arg_dat(INT32 address)
 	return mcs51_program_data[((address)&0xfff)];
 }
 
+static UINT8 i8052_readop_arg_dat(INT32 address)
+{
+	return mcs51_program_data[((address)&0x1fff)];
+}
+
 static UINT8 ds5002fp_readop_arg_dat(INT32 address)
 {
 	return mcs51_program_data[((address)&0x7fff)];
@@ -345,11 +350,21 @@ struct _mcs51_state_t
 
 	/* Serial Port TX/RX Callbacks */
 	// TODO: Move to special port r/w
-	//mcs51_serial_tx_func serial_tx_callback;	//Call back funciton when sending data out of serial port
-	//mcs51_serial_rx_func serial_rx_callback;	//Call back function to retrieve data when receiving serial port data
+	void  (*serial_tx_callback)(UINT8 data);	//Call back funciton when sending data out of serial port
+	UINT8 (*serial_rx_callback)();	//Call back function to retrieve data when receiving serial port data
 };
 
 mcs51_state_t mcs51_state;
+
+void mcs51_set_serial_tx_callback(void  (*callback)(UINT8 data))
+{
+	mcs51_state.serial_tx_callback = callback;
+}
+
+void mcs51_set_serial_rx_callback(UINT8 (*callback)())
+{
+	mcs51_state.serial_rx_callback = callback;
+}
 
 /***************************************************************************
     MACROS
@@ -973,8 +988,8 @@ static INLINE void transmit_receive(int source)
 			mcs51_state.uart.bits_to_send--;
 			if(mcs51_state.uart.bits_to_send == 0) {
 				//Call the callback function
-				//if(mcs51_state.serial_tx_callback)
-				//	mcs51_state.serial_tx_callback(mcs51_state.device, mcs51_state.uart.data_out);
+				if(mcs51_state.serial_tx_callback)
+					mcs51_state.serial_tx_callback(mcs51_state.uart.data_out);
 				//Set Interrupt Flag
 				SET_TI(1);
 			}
@@ -992,8 +1007,8 @@ static INLINE void transmit_receive(int source)
 			{
 				int data = 0;
 				//Call our callball function to retrieve the data
-				//if(mcs51_state.serial_rx_callback)
-				//	data = mcs51_state.serial_rx_callback(mcs51_state.device);
+				if(mcs51_state.serial_rx_callback)
+					data = mcs51_state.serial_rx_callback();
 				LOG(("RX Deliver %d\n", data));
 				SET_SBUF(data);
 				//Flag the IRQ
@@ -2391,9 +2406,6 @@ void ds5002fp_init (UINT8 mcon, UINT8 rpctl, UINT8 crc)
 }
 
 
-
-
-#if 0
 /****************************************************************************
  * 8052 Section
  ****************************************************************************/
@@ -2408,7 +2420,7 @@ static void i8052_sfr_write(INT32 offset, UINT8 data)
 		case ADDR_RCAP2H:
 		case ADDR_TL2:
 		case ADDR_TH2:
-			mcs51_state.data->write_byte((INT32) offset | 0x100, data);
+			mcs51_state.sfr_ram[offset] = data;
 			break;
 
 		default:
@@ -2426,16 +2438,15 @@ static UINT8 i8052_sfr_read(INT32 offset)
 		case ADDR_RCAP2H:
 		case ADDR_TL2:
 		case ADDR_TH2:
-			return mcs51_state.data->read_byte((INT32) offset | 0x100);
+			return mcs51_state.sfr_ram[offset];
 		default:
 			return mcs51_sfr_read(offset);
 	}
 }
 
-static CPU_INIT( i8052 )
+void i8052_init()
 {
-	 = get_safe_token(device);
-	CPU_INIT_CALL(mcs51);
+	mcs51_init();
 
 	mcs51_state.ram_mask = 0xFF;			/* 256 bytes of ram */
 	mcs51_state.num_interrupts = 6;			/* 6 interrupts */
@@ -2443,8 +2454,11 @@ static CPU_INIT( i8052 )
 	mcs51_state.features |= FEATURE_I8052;
 	mcs51_state.sfr_read = i8052_sfr_read;
 	mcs51_state.sfr_write = i8052_sfr_write;
+
+	cpu_readop_arg_dat = i8052_readop_arg_dat;
 }
 
+#if 0
 /****************************************************************************
  * 80C52 Section
  ****************************************************************************/

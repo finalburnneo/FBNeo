@@ -12595,7 +12595,7 @@ struct BurnDriver BurnDrvpbobbl2n = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Pochi and Nyaa (Ver 2.00)
+// Pochi and Nyaa (Ver 2.02)
 /* Encrypted Set */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pnyaaRomDesc[] = {
@@ -12630,15 +12630,15 @@ INT32 pnyaaInit()
 
 struct BurnDriver BurnDrvpnyaa = {
 	"pnyaa", NULL, "neogeo", NULL, "2003",
-	"Pochi and Nyaa (Ver 2.00)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
-	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.00)\0", NULL, NULL, NULL,
+	"Pochi and Nyaa (Ver 2.02)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
+	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.02)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_PUZZLE, 0,
 	NULL, pnyaaRomInfo, pnyaaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	pnyaaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
-// Pochi and Nyaa (Ver 2.02)
+// Pochi and Nyaa (Ver 2.00)
 /* Encrypted Set */ /* MVS ONLY RELEASE */
 // this version does not show the web address on the title screen
 
@@ -12659,8 +12659,8 @@ STD_ROM_FN(pnyaaa)
 
 struct BurnDriver BurnDrvpnyaaa = {
 	"pnyaaa", "pnyaa", "neogeo", NULL, "2003",
-	"Pochi and Nyaa (Ver 2.02)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
-	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.02)\0", NULL, NULL, NULL,
+	"Pochi and Nyaa (Ver 2.00)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
+	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.00)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_PUZZLE, 0,
 	NULL, pnyaaaRomInfo, pnyaaaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	pnyaaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

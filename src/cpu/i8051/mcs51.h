@@ -105,6 +105,10 @@ void mcs51_set_read_handler(UINT8 (*pointer)(INT32));
 void mcs51_scan(INT32 nAction);
 extern UINT8 *mcs51_program_data;
 
+void i8052_init();
+void mcs51_set_serial_tx_callback(void  (*callback)(UINT8 data));
+void mcs51_set_serial_rx_callback(UINT8 (*callback)());
+
 extern void ds5002fp_init(UINT8 mcon, UINT8 rpctl, UINT8 crc); // default: 0, 0, 0
 #define ds5002fp_reset                  mcs51_reset
 #define ds5002fp_exit                   mcs51_exit

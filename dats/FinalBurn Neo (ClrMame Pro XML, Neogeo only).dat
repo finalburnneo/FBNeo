@@ -9588,15 +9588,15 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
-	<game name="pnyaa" romof="neogeo">
+	<game name="pnyaaa" cloneof="pnyaa" romof="pnyaa">
 		<description>Pochi and Nyaa (Ver 2.00)</description>
 		<year>2003</year>
 		<manufacturer>Aiky / Taito</manufacturer>
-		<rom name="pn202.p1" size="1048576" crc="bf34e71c"/>
-		<rom name="267-c1.c1" size="8388608" crc="5eebee65"/>
-		<rom name="267-c2.c2" size="8388608" crc="2b67187b"/>
-		<rom name="267-m1.m1" size="524288" crc="c7853ccd"/>
-		<rom name="267-v1.v1" size="4194304" crc="e2e8e917"/>
+		<rom name="267-p1.p1" size="1048576" crc="112fe2c0"/>
+		<rom name="267-c1.c1" merge="267-c1.c1" size="8388608" crc="5eebee65"/>
+		<rom name="267-c2.c2" merge="267-c2.c2" size="8388608" crc="2b67187b"/>
+		<rom name="267-m1.m1" merge="267-m1.m1" size="524288" crc="c7853ccd"/>
+		<rom name="267-v1.v1" merge="267-v1.v1" size="4194304" crc="e2e8e917"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -9637,15 +9637,15 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
-	<game name="pnyaaa" cloneof="pnyaa" romof="pnyaa">
+	<game name="pnyaa" romof="neogeo">
 		<description>Pochi and Nyaa (Ver 2.02)</description>
 		<year>2003</year>
 		<manufacturer>Aiky / Taito</manufacturer>
-		<rom name="267-p1.p1" size="1048576" crc="112fe2c0"/>
-		<rom name="267-c1.c1" merge="267-c1.c1" size="8388608" crc="5eebee65"/>
-		<rom name="267-c2.c2" merge="267-c2.c2" size="8388608" crc="2b67187b"/>
-		<rom name="267-m1.m1" merge="267-m1.m1" size="524288" crc="c7853ccd"/>
-		<rom name="267-v1.v1" merge="267-v1.v1" size="4194304" crc="e2e8e917"/>
+		<rom name="pn202.p1" size="1048576" crc="bf34e71c"/>
+		<rom name="267-c1.c1" size="8388608" crc="5eebee65"/>
+		<rom name="267-c2.c2" size="8388608" crc="2b67187b"/>
+		<rom name="267-m1.m1" size="524288" crc="c7853ccd"/>
+		<rom name="267-v1.v1" size="4194304" crc="e2e8e917"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

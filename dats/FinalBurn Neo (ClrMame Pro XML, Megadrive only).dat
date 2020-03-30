@@ -1777,6 +1777,13 @@
 		<rom name="castlevania - the new generation (euro) (beta).bin" size="1048576" crc="84cd103a"/>
 		<driver status="good"/>
 	</game>
+	<game name="cavestory">
+		<description>Cave Story Doukutsu (HB, v0.5.2)</description>
+		<year>2004</year>
+		<manufacturer>Studio Pixel</manufacturer>
+		<rom name="Cave Story Doukutsu (v0.5.2).bin" size="4079616" crc="292080ae"/>
+		<driver status="good"/>
+	</game>
 	<game name="centur">
 		<description>Centurion - Defender of Rome (Euro, USA)</description>
 		<year>1991</year>
@@ -3126,6 +3133,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (usa) (beta).bin" size="2097152" crc="8c60ef73"/>
+		<driver status="good"/>
+	</game>
+	<game name="aladdinfc" cloneof="aladdin" romof="aladdin">
+		<description>Disney's Aladdin - Final Cut (USA)</description>
+		<year>2019</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Aladdin - Final Cut (USA).bin" size="4194304" crc="05cbb78e"/>
 		<driver status="good"/>
 	</game>
 	<game name="ariel">
@@ -15343,6 +15357,13 @@
 		<rom name="warsong (usa).bin" size="524288" crc="4b680285"/>
 		<driver status="good"/>
 	</game>
+	<game name="wmargin">
+		<description>Water Margin - A Tale of Clouds and Wind (USA)</description>
+		<year>2015</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Water Margin - A Tale of Clouds and Wind (USA).bin" size="2097152" crc="7f93b916"/>
+		<driver status="good"/>
+	</game>
 	<game name="waterwld">
 		<description>WaterWorld (Euro, Prototype)</description>
 		<year>1995?</year>
@@ -16517,6 +16538,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="yang jia jiang - yang warrior family (chi) (unl).bin" size="2097152" crc="6604a79e"/>
+		<driver status="good"/>
+	</game>
+	<game name="yazzie">
+		<description>Yazzie (HB)</description>
+		<year>2020</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="Yazzie.bin" size="655360" crc="93d5ad8a"/>
 		<driver status="good"/>
 	</game>
 	<game name="yogibear">

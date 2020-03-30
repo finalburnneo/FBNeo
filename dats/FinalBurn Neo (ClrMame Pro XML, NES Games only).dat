@@ -3568,11 +3568,18 @@
 		<rom name="Incredible Crash Dummies, The (USA).nes" size="393232" crc="8c684ea4"/>
 		<driver status="good"/>
 	</game>
-	<game name="indiajonandlascr">
-		<description>NES Indiana Jones and the Last Crusade (USA)</description>
+	<game name="indiajonandlascrt" cloneof="indiajonandlascr" romof="indiajonandlascr">
+		<description>NES Indiana Jones and the Last Crusade (USA) (Taito)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="Indiana Jones and the Last Crusade (USA).nes" size="262160" crc="da23166a"/>
+		<rom name="Indiana Jones and the Last Crusade (USA) (Taito).nes" size="262160" crc="da23166a"/>
+		<driver status="good"/>
+	</game>
+	<game name="indiajonandlascr">
+		<description>NES Indiana Jones and the Last Crusade (USA) (UBI Soft)</description>
+		<year>1993</year>
+		<manufacturer>UBI Soft</manufacturer>
+		<rom name="Indiana Jones and the Last Crusade (USA) (UBI Soft).nes" size="131088" crc="ed5fa6c4"/>
 		<driver status="good"/>
 	</game>
 	<game name="indiajonandtemdo">

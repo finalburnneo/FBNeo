@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13708 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13713 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1580,6 +1580,7 @@ This list contains all games supported by FinalBurn Neo.
 | catapult	| D NW	| Catapult						| 		| 1982	| Epos Corporati| EPOS Tristar	| Bad dump				|
 | ctrpllrp	|  	| Caterpillar Pacman Hack				| puckman	| 1982	| hack		| Pac-man	| 					|
 | catt		|  	| Catt (Japan)						| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
+| md_cavestory	|  	| Cave Story Doukutsu (HB, v0.5.2)			| 		| 2004	| Studio Pixel	| Sega Megadrive| 					|
 | cavelon	|  	| Cavelon						| 		| 1983	| Jetsoft	| Galaxian	| 					|
 | cninjabl	|  	| Caveman Ninja (bootleg)				| cninja	| 1991	| bootleg	| DECO IC16	| 					|
 | cninjau	|  	| Caveman Ninja (US ver 4)				| cninja	| 1991	| Data East Corp| DECO IC16	| 					|
@@ -2511,6 +2512,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_aladdinp1	|  	| Disney's Aladdin (Prototype, 19940113)		| gg_aladdin	| 1994	| Sega		| Sega Game Gear| 					|
 | md_aladdinu	|  	| Disney's Aladdin (USA)				| md_aladdin	| 1993	| Sega		| Sega Megadrive| 					|
 | md_aladdinup	|  	| Disney's Aladdin (USA, Prototype)			| md_aladdin	| 1993	| Sega		| Sega Megadrive| 					|
+| md_aladdinfc	|  	| Disney's Aladdin - Final Cut (USA)			| md_aladdin	| 2019	| Sega		| Sega Megadrive| 					|
 | sms_ariel	|  	| Disney's Ariel The Little Mermaid (Bra)		| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | gg_ariel	|  	| Disney's Ariel the Little Mermaid (Euro, USA)		| 		| 1991	| Sega		| Sega Game Gear| 					|
 | md_ariel	|  	| Disney's Ariel the Little Mermaid (Euro, USA)		| 		| 1992	| Sega		| Sega Megadrive| 					|
@@ -7243,7 +7245,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_immortalthe|  	| NES Immortal, The (USA)				| 		| 1990	| Electronic Art| Miscellaneous	| 					|
 | nes_imposmisii|  	| NES Impossible Mission II (USA)			| 		| 1989	| AVE		| Miscellaneous	| 					|
 | nes_increcradum|  	| NES Incredible Crash Dummies, The (USA)		| 		| 1994	| LJN		| Miscellaneous	| 					|
-| nes_indiajonandlascr|  	| NES Indiana Jones and the Last Crusade (USA)		| 		| 1991	| Taito		| Miscellaneous	| 					|
+| nes_indiajonandlascrt|  	| NES Indiana Jones and the Last Crusade (USA) (Taito)	| nes_indiajonandlascr| 1991	| Taito		| Miscellaneous	| 					|
+| nes_indiajonandlascr|  	| NES Indiana Jones and the Last Crusade (USA) (UBI Soft| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
 | nes_indiajonandtemdo|  	| NES Indiana Jones and the Temple of Doom (USA) (Rev A)| 		| 1988	| Mindscape	| Miscellaneous	| 					|
 | nes_indivisible|  	| NES Indivisible (HB)					| 		| 201x	| Lab Zero Games| Miscellaneous	| 					|
 | nes_infiltrator|  	| NES Infiltrator (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
@@ -8769,8 +8772,8 @@ This list contains all games supported by FinalBurn Neo.
 | pnicku	| X	| Pnickies (940608 USA)					| pnickj	| 1994	| Compile (Capco| CPS1		| 					|
 | md_pocahont	|  	| Pocahontas (Euro)					| 		| 1996	| Sega		| Sega Megadrive| 					|
 | md_pocahontu	|  	| Pocahontas (USA)					| md_pocahont	| 1996	| Disney Interac| Sega Megadrive| 					|
-| pnyaa		|  	| Pochi and Nyaa (Ver 2.00)				| 		| 2003	| Aiky / Taito	| Neo Geo MVS	| 					|
-| pnyaaa	|  	| Pochi and Nyaa (Ver 2.02)				| pnyaa		| 2003	| Aiky / Taito	| Neo Geo MVS	| 					|
+| pnyaaa	|  	| Pochi and Nyaa (Ver 2.00)				| pnyaa		| 2003	| Aiky / Taito	| Neo Geo MVS	| 					|
+| pnyaa		|  	| Pochi and Nyaa (Ver 2.02)				| 		| 2003	| Aiky / Taito	| Neo Geo MVS	| 					|
 | pfghtj	|  	| Pocket Fighter (970904 Japan)				| sgemf		| 1997	| Capcom	| CPS2		| 					|
 | pktgaldxa	|  	| Pocket Gal Deluxe (Asia v3.00)			| pktgaldx	| 1993	| Data East Corp| DECO IC16	| 					|
 | pktgaldx	|  	| Pocket Gal Deluxe (Euro v3.00)			| 		| 1992	| Data East Corp| DECO IC16	| 					|
@@ -10204,8 +10207,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_slightmg_48|  	| Slightly Magic (48K)					| spec_slightmg	| 1990	| Codemasters	| ZX Spectrum	| 					|
 | md_slimewj	|  	| Slime World (Jpn)					| md_slimew	| 1992	| Micro World	| Sega Megadrive| 					|
 | cv_danslither	|  	| Slither (Joystick Version)				| cv_slither	| 1983	| Coleco*Daniel | ColecoVision	| 					|
-| slither	|  	| Slither (set 1)					| 		| 1982	| Century II	| Miscellaneous	| 					|
-| slithera	|  	| Slither (set 2)					| slither	| 1982	| Century II	| Miscellaneous	| 					|
+| slither	|  	| Slither (set 1)					| 		| 1982	| Century II	| Miscellaneous	| Press 'P2 Start' to exit settings scre|
+| slithera	|  	| Slither (set 2)					| slither	| 1982	| Century II	| Miscellaneous	| Press 'P2 Start' to exit settings scre|
 | cv_slither	|  	| Slither						| 		| 1983	| Coleco	| ColecoVision	| 					|
 | cv_slurpy	|  	| Slurpy						| 		| 1984	| Xonox		| ColecoVision	| 					|
 | slyspy2	|  	| Sly Spy (US revision 2)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
@@ -13055,6 +13058,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_warsong	|  	| Warsong (USA)						| 		| 1991	| Treco		| Sega Megadrive| 					|
 | watrball	|  	| Water Balls						| 		| 1996	| ABM		| Miscellaneous	| 					|
 | msx_waterdrv	|  	| Water Driver (Jpn)					| 		| 1984	| Colpax?	| MSX		| 					|
+| md_wmargin	|  	| Water Margin - A Tale of Clouds and Wind (USA)	| 		| 2015	| Piko Interacti| Sega Megadrive| 					|
 | wmatch	|  	| Water Match (315-5064)				| 		| 1984	| Sega		| System 1	| 					|
 | waterski	|  	| Water Ski						| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
 | md_waterwld	|  	| WaterWorld (Euro, Prototype)				| 		| 1995?	| Ocean		| Sega Megadrive| 					|
@@ -13546,6 +13550,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hadesa	|  	| Yami no Ryuuou - Hades no Monshou (Jpn, Alt)		| msx_hades	| 1986	| Casio		| MSX		| 					|
 | md_yangji	|  	| Yang Jia Jiang - Yang Warrior Family (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | yankeedo	|  	| Yankee DO!						| mrdo		| 1982	| hack		| Miscellaneous	| 					|
+| md_yazzie	|  	| Yazzie (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
 | yellowcbb	|  	| Yellow Cab (bootleg)					| kamikcab	| 1984	| bootleg	| Miscellaneous	| 					|
 | yellowcbj	|  	| Yellow Cab (Japan)					| kamikcab	| 1984	| Data East Corp| Miscellaneous	| 					|
 | msx_yellowsb	|  	| Yellow Submarine (Jpn)				| 		| 1987	| Brother Kougyo| MSX		| 					|

@@ -1610,6 +1610,7 @@ DRV		BurnDrvCatapult;		// Bad dump [NOT WORKING]
 #endif
 DRV		BurnDrvctrpllrp;
 DRV		BurnDrvCatt;
+DRV		BurnDrvmd_cavestory;
 DRV		BurnDrvCavelon;
 DRV		BurnDrvCninjabl;
 DRV		BurnDrvCninjau;
@@ -2563,6 +2564,7 @@ DRV		BurnDrvgg_aladdinp2;
 DRV		BurnDrvgg_aladdinp1;
 DRV		BurnDrvmd_aladdinu;
 DRV		BurnDrvmd_aladdinup;
+DRV		BurnDrvmd_aladdinfc;
 DRV		BurnDrvsms_ariel;
 DRV		BurnDrvgg_ariel;
 DRV		BurnDrvmd_ariel;
@@ -7389,6 +7391,7 @@ DRV		BurnDrvnes_imagefight;
 DRV		BurnDrvnes_immortalthe;
 DRV		BurnDrvnes_imposmisii;
 DRV		BurnDrvnes_increcradum;
+DRV		BurnDrvnes_indiajonandlascrt;
 DRV		BurnDrvnes_indiajonandlascr;
 DRV		BurnDrvnes_indiajonandtemdo;
 DRV		BurnDrvnes_indivisible;
@@ -8931,8 +8934,8 @@ DRV		BurnDrvCpsPnickj;
 //		BurnDrvCpsPnicku;		// no comment
 DRV		BurnDrvmd_pocahont;
 DRV		BurnDrvmd_pocahontu;
-DRV		BurnDrvpnyaa;
 DRV		BurnDrvpnyaaa;
+DRV		BurnDrvpnyaa;
 DRV		BurnDrvCpsPfghtj;
 DRV		BurnDrvPktgaldxa;
 DRV		BurnDrvPktgaldx;
@@ -13301,6 +13304,7 @@ DRV		BurnDrvMSX_warroida;
 DRV		BurnDrvmd_warsong;
 DRV		BurnDrvWatrball;
 DRV		BurnDrvMSX_waterdrv;
+DRV		BurnDrvmd_wmargin;
 DRV		BurnDrvWmatch;
 DRV		BurnDrvWaterski;
 DRV		BurnDrvmd_waterwld;
@@ -13808,6 +13812,7 @@ DRV		BurnDrvMSX_hades;
 DRV		BurnDrvMSX_hadesa;
 DRV		BurnDrvmd_yangji;
 DRV		BurnDrvyankeedo;
+DRV		BurnDrvmd_yazzie;
 DRV		BurnDrvYellowcbb;
 DRV		BurnDrvYellowcbj;
 DRV		BurnDrvMSX_yellowsb;
@@ -15593,6 +15598,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvctrpllrp,			// Caterpillar Pacman Hack
 	&BurnDrvCatt,				// Catt (Japan)
+	&BurnDrvmd_cavestory,		// Cave Story Doukutsu (HB, v0.5.2)
 	&BurnDrvCavelon,			// Cavelon
 	&BurnDrvCninjabl,			// Caveman Ninja (bootleg)
 	&BurnDrvCninjau,			// Caveman Ninja (US ver 4)
@@ -16546,6 +16552,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_aladdinp1,		// Disney's Aladdin (Prototype, 19940113)
 	&BurnDrvmd_aladdinu,		// Disney's Aladdin (USA)
 	&BurnDrvmd_aladdinup,		// Disney's Aladdin (USA, Prototype)
+	&BurnDrvmd_aladdinfc,		// Disney's Aladdin - Final Cut (USA)
 	&BurnDrvsms_ariel,			// Disney's Ariel The Little Mermaid (Bra)
 	&BurnDrvgg_ariel,			// Disney's Ariel the Little Mermaid (Euro, USA)
 	&BurnDrvmd_ariel,			// Disney's Ariel the Little Mermaid (Euro, USA)
@@ -21372,7 +21379,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_immortalthe,	// NES Immortal, The (USA)
 	&BurnDrvnes_imposmisii,		// NES Impossible Mission II (USA)
 	&BurnDrvnes_increcradum,	// NES Incredible Crash Dummies, The (USA)
-	&BurnDrvnes_indiajonandlascr,// NES Indiana Jones and the Last Crusade (USA)
+	&BurnDrvnes_indiajonandlascrt,// NES Indiana Jones and the Last Crusade (USA) (Taito)
+	&BurnDrvnes_indiajonandlascr,// NES Indiana Jones and the Last Crusade (USA) (UBI Soft)
 	&BurnDrvnes_indiajonandtemdo,// NES Indiana Jones and the Temple of Doom (USA) (Rev A)
 	&BurnDrvnes_indivisible,	// NES Indivisible (HB)
 	&BurnDrvnes_infiltrator,	// NES Infiltrator (USA)
@@ -22914,8 +22922,8 @@ static struct BurnDriver* pDriver[] = {
 //	&BurnDrvCpsPnicku,			// Pnickies (940608 USA) [no comment]
 	&BurnDrvmd_pocahont,		// Pocahontas (Euro)
 	&BurnDrvmd_pocahontu,		// Pocahontas (USA)
-	&BurnDrvpnyaa,				// Pochi and Nyaa (Ver 2.00)
-	&BurnDrvpnyaaa,				// Pochi and Nyaa (Ver 2.02)
+	&BurnDrvpnyaaa,				// Pochi and Nyaa (Ver 2.00)
+	&BurnDrvpnyaa,				// Pochi and Nyaa (Ver 2.02)
 	&BurnDrvCpsPfghtj,			// Pocket Fighter (970904 Japan)
 	&BurnDrvPktgaldxa,			// Pocket Gal Deluxe (Asia v3.00)
 	&BurnDrvPktgaldx,			// Pocket Gal Deluxe (Euro v3.00)
@@ -27284,6 +27292,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_warsong,			// Warsong (USA)
 	&BurnDrvWatrball,			// Water Balls
 	&BurnDrvMSX_waterdrv,		// Water Driver (Jpn)
+	&BurnDrvmd_wmargin,			// Water Margin - A Tale of Clouds and Wind (USA)
 	&BurnDrvWmatch,				// Water Match (315-5064)
 	&BurnDrvWaterski,			// Water Ski
 	&BurnDrvmd_waterwld,		// WaterWorld (Euro, Prototype)
@@ -27791,6 +27800,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hadesa,			// Yami no Ryuuou - Hades no Monshou (Jpn, Alt)
 	&BurnDrvmd_yangji,			// Yang Jia Jiang - Yang Warrior Family (Chi)
 	&BurnDrvyankeedo,			// Yankee DO!
+	&BurnDrvmd_yazzie,			// Yazzie (HB)
 	&BurnDrvYellowcbb,			// Yellow Cab (bootleg)
 	&BurnDrvYellowcbj,			// Yellow Cab (Japan)
 	&BurnDrvMSX_yellowsb,		// Yellow Submarine (Jpn)

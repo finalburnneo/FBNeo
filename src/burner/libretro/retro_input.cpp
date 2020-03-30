@@ -1724,6 +1724,15 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 						case 8:
 							GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
 							break;
+						case 9:
+							GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R3, description);
+							break;
+						case 10:
+							GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
+							break;
+						default:
+							log_cb(RETRO_LOG_ERROR, "We don't know where to map \"%s\" for player %d, every button seems to be already in use, but maybe the analog sticks aren't : the game will probably be unplayable, but maybe you can submit a good mapping using also the analog sticks at https://github.com/libretro/FBNeo/issues.\n", description, nPlayer+1);
+							break;
 					}
 				}
 			}

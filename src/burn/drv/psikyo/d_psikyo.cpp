@@ -1,5 +1,5 @@
 // Psikyo MC68EC020 based hardware
-// Based by MAME driver by Luca Elia,Olivier Galibert,Paul Priest
+// Driver and Emulation by Jan Klaassen
 #include "psikyo.h"
 #include "burn_ym2610.h"
 #include "burn_ymf278b.h"

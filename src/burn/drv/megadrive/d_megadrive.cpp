@@ -2812,6 +2812,25 @@ struct BurnDriver BurnDrvmd_aladdin = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Disney's Aladdin - Final Cut (USA)
+static struct BurnRomInfo md_aladdinfcRomDesc[] = {
+	{ "Aladdin - Final Cut (USA).bin", 0x400000, 0x05cbb78e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aladdinfc)
+STD_ROM_FN(md_aladdinfc)
+
+struct BurnDriver BurnDrvmd_aladdinfc = {
+	"md_aladdinfc", "md_aladdin", NULL, NULL, "2019",
+	"Disney's Aladdin - Final Cut (USA)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_aladdinfcRomInfo, md_aladdinfcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+
 // Disney's Aladdin (Jpn)
 static struct BurnRomInfo md_aladdinjRomDesc[] = {
 	{ "aladdin (jpn).bin", 0x200000, 0xfb5aacf0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43417,6 +43436,60 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_tanzerRomInfo, md_tanzerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Water Margin - A Tale of Clouds and Wind (USA)
+static struct BurnRomInfo md_wmarginRomDesc[] = {
+	{ "Water Margin - A Tale of Clouds and Wind (USA).bin", 2097152, 0x7f93b916, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_wmargin)
+STD_ROM_FN(md_wmargin)
+
+struct BurnDriver BurnDrvmd_wmargin = {
+	"md_wmargin", NULL, NULL, NULL, "2015",
+	"Water Margin - A Tale of Clouds and Wind (USA)\0", NULL, "Piko Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_wmarginRomInfo, md_wmarginRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Cave Story Doukutsu (v0.5.2)
+static struct BurnRomInfo md_cavestoryRomDesc[] = {
+	{ "Cave Story Doukutsu (v0.5.2).bin", 0x3e4000, 0x292080ae, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cavestory)
+STD_ROM_FN(md_cavestory)
+
+struct BurnDriver BurnDrvmd_cavestory = {
+	"md_cavestory", NULL, NULL, NULL, "2004",
+	"Cave Story Doukutsu (HB, v0.5.2)\0", NULL, "Studio Pixel", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_cavestoryRomInfo, md_cavestoryRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Yazzie (HB)
+static struct BurnRomInfo md_yazzieRomDesc[] = {
+	{ "Yazzie.bin", 0xa0000, 0x93d5ad8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_yazzie)
+STD_ROM_FN(md_yazzie)
+
+struct BurnDriver BurnDrvmd_yazzie = {
+	"md_yazzie", NULL, NULL, NULL, "2020",
+	"Yazzie (HB)\0", NULL, "RetroSouls", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_yazzieRomInfo, md_yazzieRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

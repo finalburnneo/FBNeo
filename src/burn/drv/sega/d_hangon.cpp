@@ -1165,6 +1165,8 @@ void HangonPPI0WritePortB(UINT8 data)
 	System16VideoEnable = data & 0x10;
 	System16SpriteShadow = ~data & 0x40;
 	System16ScreenFlip = data & 0x80;
+
+	ZetSetRESETLine(0, (~data & 0x20) ? 1 : 0);
 }
 
 void HangonPPI0WritePortC(UINT8 data)
@@ -1172,7 +1174,7 @@ void HangonPPI0WritePortC(UINT8 data)
 	System16ColScroll = ~data & 0x04;
 	System16RowScroll = ~data & 0x02;
 	
-	if (!(data & 0x80)) {
+	if (~data & 0x80) {
 		ZetOpen(0);
 		ZetNmi();
 		nSystem16CyclesDone[2] += ZetRun(100);
@@ -1188,23 +1190,12 @@ UINT8 HangonPPI1ReadPortC()
 void HangonPPI1WritePortA(UINT8 data)
 {
 	System16AnalogSelect = (data >> 2) & 3;
-	
-	if (!(data & 0x40)) {
-		INT32 nLastCPU = nSekActive;
-		SekClose();
-		SekOpen(1);
-		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		SekClose();
-		SekOpen(nLastCPU);
+
+	if (~data & 0x40) {
+		SekSetIRQLine(1, 4, CPU_IRQSTATUS_AUTO);
 	}
-	if (data & 0x20) {
-		INT32 nLastCPU = nSekActive;
-		SekClose();
-		SekOpen(1);
-		SekReset();
-		SekClose();
-		SekOpen(nLastCPU);
-	}
+
+	SekSetRESETLine(1, (data & 0x20) ? 1 : 0);
 }
 
 UINT16 __fastcall HangonReadWord(UINT32 a)

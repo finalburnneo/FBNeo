@@ -4471,7 +4471,7 @@ static struct BurnRomInfo ddp3RomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
@@ -4513,7 +4513,7 @@ static struct BurnRomInfo ddp3aRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
@@ -4546,7 +4546,7 @@ static struct BurnRomInfo ddp3bRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },	 		//  5 Samples
 
@@ -4579,7 +4579,7 @@ static struct BurnRomInfo ddp3cRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
@@ -4612,7 +4612,7 @@ static struct BurnRomInfo ddp3blkRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
@@ -4671,7 +4671,7 @@ static struct BurnRomInfo ddp3blkaRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x17731c9d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
@@ -5940,7 +5940,7 @@ static struct BurnRomInfo ddpdojblkblRomDesc[] = {
 	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064_corrupt.u1",	0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
 	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 

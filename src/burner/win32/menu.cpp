@@ -1010,6 +1010,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_HIGHRESTIMER, bEnableHighResTimer ? MF_CHECKED : MF_UNCHECKED);
 #if defined (FBNEO_DEBUG)
 	CheckMenuItem(hMenu, MENU_DEBUGCONSOLE, bDisableDebugConsole ? MF_UNCHECKED : MF_CHECKED);
+#else
+	DeleteMenu(hMenu, MENU_DEBUGCONSOLE, MF_BYCOMMAND);
 #endif
 	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST, bAutoLoadGameList ? MF_CHECKED : MF_UNCHECKED);

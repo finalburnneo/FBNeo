@@ -4536,6 +4536,55 @@ struct BurnDriver BurnDrvDdp3a = {
 };
 
 
+// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, location test)
+
+static struct BurnRomInfo ddpdojpRomDesc[] = {
+	{ "pgmbios.u20.27c210",			0x020000, 0x1d2a7c15, 0 | BRF_PRG | BRF_ESS }, //  0 68K BIOS (pgm location test)
+	{ "ca008.cod_prom.u13.27c322",	0x400000, 0x2ba7fa3b, 1 | BRF_PRG | BRF_ESS }, //  1 68K Code
+
+	{ "fnt_cg.0_cgrom0.u8.27c322",	0x400000, 0x1805e198, 2 | BRF_GRA },           //  2 Tile data
+	{ "fnt_cg.1_cgrom1.u10.27c322",	0x400000, 0xf06ce99c, 2 | BRF_GRA },           //  3
+
+	{ "sp_cg.0_imcs0.u11.27c322",	0x400000, 0xc66bdd8e, 3 | BRF_GRA },           //  4 Sprite Color Data
+	{ "sp_cg.1_imcs1.u13.27c322",	0x400000, 0xd30eac89, 3 | BRF_GRA },           //  5
+	{ "sp_cg.2_imcs2.u15.27c322",	0x400000, 0xf31b010e, 3 | BRF_GRA },           //  6
+	{ "sp_cg.3_imcs3.u17.27c322",	0x400000, 0x01ec23f5, 3 | BRF_GRA },           //  7
+
+	{ "sp_mp.0_bitcs0.u5.27c322",	0x400000, 0xe30494a4, 4 | BRF_GRA },           //  8 Sprite Masks & Color Indexes
+	{ "sp_mp.1_bitcs1.u6.27c322",	0x400000, 0x0239daec, 4 | BRF_GRA },           //  9
+
+	{ "sndmask.rom_mcs1.u3.27c322",	0x400000, 0x5a0dbd76, 5 | BRF_SND },           // 10 Samples
+
+	{ "ddp3_defaults.nv",			0x020000, 0x571e96c0, 0 | BRF_OPT },           // 11 NV RAM
+};
+
+STDROMPICKEXT(ddpdojp, ddpdojp, ddp3Bios) // custom bios
+STD_ROM_FN(ddpdojp)
+
+static INT32 ddpdojpInit()
+{
+	INT32 nRet = pgmInit();
+
+	if (!nRet) {
+		pgm_cave_refresh = 1;
+
+		BurnLoadRom(PGM68KBIOS, 0, 1);	// load custom 68k bios
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvDdpdojp = {
+	"ddpdojp", "ddp3", NULL, NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, location test)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, ddpdojpRomInfo, ddpdojpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ddpdojpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
 // DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)
 
 static struct BurnRomInfo ddp3bRomDesc[] = {

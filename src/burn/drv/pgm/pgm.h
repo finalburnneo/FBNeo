@@ -13,6 +13,7 @@ extern INT32 nPGMSPRMaskMaskLen;
 extern INT32 nPGMTileROMLen;
 extern INT32 nPGMExternalARMLen;
 
+extern UINT8 *PGM68KBIOS;
 extern UINT8 *PGM68KRAM;
 extern UINT8 *PGM68KROM;
 extern UINT8 *PGMTileROM;

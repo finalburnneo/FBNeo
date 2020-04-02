@@ -641,11 +641,11 @@ void qs1000_reset()
 
 void qs1000_init(UINT8 *program_rom, UINT8 *samples, INT32 samplesize)
 {
-	mcs51_program_data = program_rom; // program, 0x8000 in size
 	sample_rom = samples;
 	sample_len = samplesize;
 
 	i8052_init();
+	mcs51_set_program_data(program_rom);
 	mcs51_set_write_handler(qs1000_write_port);
 	mcs51_set_read_handler(qs1000_read_port);
 	mcs51_set_serial_rx_callback(qs1000_rx_serial);

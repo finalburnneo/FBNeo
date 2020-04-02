@@ -130,9 +130,9 @@ void mermaidReset()
 
 void mermaidInit(UINT8 *rom, UINT8 *inputs)
 {
-	mcs51_program_data=rom;
 	mermaid_inputs = inputs;
 	mcs51_init ();
+	mcs51_set_program_data(rom);
 	mcs51_set_write_handler(mermaid_write_port);
 	mcs51_set_read_handler(mermaid_read_port);
 	mermaid_initted = 1;

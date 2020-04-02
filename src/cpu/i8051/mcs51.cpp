@@ -252,53 +252,6 @@ struct _mcs51_uart
 	UINT8	delay_cycles;	//Gross Hack;
 };
 
-UINT8 *mcs51_program_data = NULL;
-static UINT8 (*cpu_readop_arg_dat)(INT32) = NULL;
-static void (*mcs51_write_port)(INT32,UINT8) = NULL;
-static UINT8 (*mcs51_read_port)(INT32) = NULL;
-
-static UINT8 mcs51_readop_arg_dat(INT32 address)
-{
-	return mcs51_program_data[((address)&0xfff)];
-}
-
-static UINT8 i8052_readop_arg_dat(INT32 address)
-{
-	return mcs51_program_data[((address)&0x7fff)]; // internal rom 0x1fff, though.
-}
-
-static UINT8 ds5002fp_readop_arg_dat(INT32 address)
-{
-	return mcs51_program_data[((address)&0x7fff)];
-}
-
-void mcs51_set_write_handler(void (*pointer)(INT32,UINT8))
-{
-	mcs51_write_port = pointer;
-}
-
-void mcs51_set_read_handler(UINT8 (*pointer)(INT32))
-{
-	mcs51_read_port = pointer;
-}
-
-static UINT8 io_read_byte(INT32 offset)
-{
-	if (mcs51_read_port) {
-		return mcs51_read_port(offset);
-	}
-
-	return 0;
-}
-
-static void io_write_byte(INT32 offset, UINT8 data)
-{
-	if (mcs51_write_port) {
-		mcs51_write_port(offset,data);
-		return;
-	}
-}
-
 typedef struct _mcs51_state_t mcs51_state_t;
 struct _mcs51_state_t
 {
@@ -352,9 +305,42 @@ struct _mcs51_state_t
 	// TODO: Move to special port r/w
 	void  (*serial_tx_callback)(UINT8 data);	//Call back funciton when sending data out of serial port
 	UINT8 (*serial_rx_callback)();	//Call back function to retrieve data when receiving serial port data
+
+	UINT32 mcs51_program_address_mask;
+	UINT8 *mcs51_program_data;
+
+	void (*mcs51_write_port)(INT32,UINT8);
+	UINT8 (*mcs51_read_port)(INT32);
 };
 
+static INT32 mcs51_active_cpu = -1; // default to -1
+static INT32 multi_cpu_mode = 0; 
+
 mcs51_state_t mcs51_state;
+mcs51_state_t mcs51_state_store[2];
+
+INT32 mcs51GetActive()
+{
+	return mcs51_active_cpu;
+}
+
+void mcs51Open(INT32 nCpu)
+{
+	if (nCpu != mcs51_active_cpu)
+	{
+		memcpy (&mcs51_state, &mcs51_state_store[nCpu], sizeof(mcs51_state));
+		mcs51_active_cpu = nCpu;
+	}
+}
+
+void mcs51Close()
+{
+	if (mcs51_active_cpu != -1)
+	{
+		memcpy (&mcs51_state_store[mcs51_active_cpu], &mcs51_state, sizeof(mcs51_state));
+		mcs51_active_cpu = -1;
+	}
+}
 
 void mcs51_set_serial_tx_callback(void  (*callback)(UINT8 data))
 {
@@ -365,6 +351,44 @@ void mcs51_set_serial_rx_callback(UINT8 (*callback)())
 {
 	mcs51_state.serial_rx_callback = callback;
 }
+
+static inline UINT8 cpu_readop_arg_dat(INT32 address)
+{
+	return mcs51_state.mcs51_program_data[((address)&mcs51_state.mcs51_program_address_mask)];
+}
+
+void mcs51_set_program_data(UINT8 *rom)
+{
+	mcs51_state.mcs51_program_data = rom;
+}
+
+void mcs51_set_write_handler(void (*pointer)(INT32,UINT8))
+{
+	mcs51_state.mcs51_write_port = pointer;
+}
+
+void mcs51_set_read_handler(UINT8 (*pointer)(INT32))
+{
+	mcs51_state.mcs51_read_port = pointer;
+}
+
+static UINT8 io_read_byte(INT32 offset)
+{
+	if (mcs51_state.mcs51_read_port) {
+		return mcs51_state.mcs51_read_port(offset);
+	}
+
+	return 0;
+}
+
+static void io_write_byte(INT32 offset, UINT8 data)
+{
+	if (mcs51_state.mcs51_write_port) {
+		mcs51_state.mcs51_write_port(offset,data);
+		return;
+	}
+}
+
 
 /***************************************************************************
     MACROS
@@ -2071,6 +2095,13 @@ INT32 mcs51TotalCycles()
 void mcs51NewFrame()
 {
 	mcs51_state.total_cycles = 0;
+
+	if (multi_cpu_mode) {
+		for (INT32 i = 0; i < 2; i++) {
+			mcs51_state_t *ptr = &mcs51_state_store[i];
+			ptr->total_cycles = 0;
+		}
+	}
 }
 
 void mcs51RunEnd(void)
@@ -2081,12 +2112,29 @@ void mcs51RunEnd(void)
 void mcs51_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		struct BurnArea ba;
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &mcs51_state;
-		ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
-		ba.szName = "i8051 Regs";
-		BurnAcb(&ba);
+		if (multi_cpu_mode)
+		{
+			for (INT32 i = 0; i < 2; i++) {
+				mcs51_state_t *ptr = &mcs51_state_store[i];
+
+				struct BurnArea ba;
+				memset(&ba, 0, sizeof(ba));
+				ba.Data	  = &ptr;
+				ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
+				ba.szName = "i8051 Regs #x";
+				ba.szName[12] = '0' + i;
+				BurnAcb(&ba);
+			}
+		}
+		else
+		{
+			struct BurnArea ba;
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = &mcs51_state;
+			ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
+			ba.szName = "i8051 Regs";
+			BurnAcb(&ba);
+		}
 	}
 }
 
@@ -2188,7 +2236,7 @@ void mcs51_init (void)
 	mcs51_state.sfr_read = mcs51_sfr_read;
 	mcs51_state.sfr_write = mcs51_sfr_write;
 
-	cpu_readop_arg_dat = mcs51_readop_arg_dat;
+	mcs51_state.mcs51_program_address_mask = 0xfff;
 
 #if 0
 	/* ensure these pointers are set before get_info is called */
@@ -2210,11 +2258,13 @@ void mcs51_init (void)
 #endif
 }
 
-/*static CPU_INIT( i80c51 )
+void mcs51Init(INT32 cpu)
 {
-	CPU_INIT_CALL(mcs51);
-	mcs51_state.features |= FEATURE_CMOS;
-}*/
+	multi_cpu_mode = 1;
+	mcs51Open(cpu);
+	mcs51_init ();
+	mcs51Close();
+}
 
 /* Reset registers to the initial values */
 void mcs51_reset (void)
@@ -2301,10 +2351,10 @@ void mcs51_reset (void)
 /* Shut down CPU core */
 void mcs51_exit(void)
 {
-	mcs51_read_port = NULL;
-	mcs51_write_port = NULL;
-	mcs51_program_data = NULL;
-	cpu_readop_arg_dat = NULL;
+	memset (&mcs51_state, 0, sizeof(mcs51_state));
+	memset (&mcs51_state_store, 0, sizeof(mcs51_state_store));
+	mcs51_active_cpu = -1;
+	multi_cpu_mode = 0;
 }
 
 /****************************************************************************
@@ -2388,7 +2438,7 @@ void ds5002fp_init (UINT8 mcon, UINT8 rpctl, UINT8 crc)
 
 	mcs51_init();
 
-	cpu_readop_arg_dat = ds5002fp_readop_arg_dat;
+	mcs51_state.mcs51_program_address_mask = 0x7fff;
 
 	mcs51_state.ds5002fp.config.mcon = mcon;
 	mcs51_state.ds5002fp.config.rpctl = rpctl;
@@ -2405,6 +2455,27 @@ void ds5002fp_init (UINT8 mcon, UINT8 rpctl, UINT8 crc)
 #endif
 }
 
+void ds5002fpInit(INT32 cpu, UINT8 mcon, UINT8 rpctl, UINT8 crc)
+{
+	multi_cpu_mode = 1;
+	mcs51Open(cpu);
+	ds5002fp_init(mcon, rpctl, crc);
+	mcs51Close();
+}
+
+void i80c51_init()
+{
+	mcs51_init();
+	mcs51_state.features |= FEATURE_CMOS;
+}
+
+void i80c51Init(INT32 cpu)
+{
+	multi_cpu_mode = 1;
+	mcs51Open(cpu);
+	i80c51_init();
+	mcs51Close();
+}
 
 /****************************************************************************
  * 8052 Section
@@ -2455,8 +2526,16 @@ void i8052_init()
 	mcs51_state.sfr_read = i8052_sfr_read;
 	mcs51_state.sfr_write = i8052_sfr_write;
 
-	cpu_readop_arg_dat = i8052_readop_arg_dat;
+	mcs51_state.mcs51_program_address_mask = 0x7fff; // internal rom mask is 0x1fff, 0x7fff needed for qs1000 device
 }
+
+void i8052Init(INT32 cpu)
+{
+	mcs51Open(cpu);
+	i8052_init();
+	mcs51Close();
+}
+
 
 #if 0
 /****************************************************************************

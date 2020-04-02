@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13713 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13717 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2093,6 +2093,7 @@ This list contains all games supported by FinalBurn Neo.
 | crzrallya	|  	| Crazy Rally (set 2)					| crzrally	| 1985	| Tecfri	| Miscellaneous	| Graphics issues on some levels	|
 | msx_crazytrn	|  	| Crazy Train (Jpn)					| 		| 1983	| Sony		| MSX		| 					|
 | msx_crazytrna	|  	| Crazy Train (Jpn, Alt)				| msx_crazytrn	| 1983	| Sony		| MSX		| 					|
+| crazywar	|  	| Crazy War						| 		| 2002	| Eolith	| Miscellaneous	| 					|
 | mooncrsl	|  	| Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)| mooncrst	| 1980	| bootleg (Lagun| Galaxian	| 					|
 | crimecj	|  	| Crime City (Japan)					| crimec	| 1989	| Taito Corporat| Taito B System| 					|
 | crimecu	|  	| Crime City (US)					| crimec	| 1989	| Taito America | Taito B System| 					|
@@ -2572,6 +2573,7 @@ This list contains all games supported by FinalBurn Neo.
 | ddonpacha	|  	| DoDonPachi (Arrange Mode version 1.1, hack by Trap15)	| ddonpach	| 2012	| hack / Trap15	| Cave		| 					|
 | ddonpach	|  	| DoDonPachi (International, master ver. 97/02/05)	| 		| 1997	| Atlus / Cave	| Cave		| 					|
 | ddonpachj	|  	| DoDonPachi (Japan, master ver. 97/02/05)		| ddonpach	| 1997	| Atlus / Cave	| Cave		| 					|
+| ddpdojp	|  	| DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, l| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddpdojb	|  	| DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)	| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddpdoja	|  	| DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)	| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddpdoj	|  	| DoDonPachi Dai-Ou-Jou (V101, Japan)			| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
@@ -2708,6 +2710,7 @@ This list contains all games supported by FinalBurn Neo.
 | dblpointd	|  	| Double Point (Dong Bang Electron, bootleg?)		| dblpoint	| 1995	| Dong Bang Elec| Miscellaneous	| 					|
 | dblpoint	|  	| Double Point						| 		| 1995	| Min Corp.	| Miscellaneous	| 					|
 | sms_doubltgt	|  	| Double Target - Cynthia no Nemuri (Jpn)		| sms_quartet	| 1987	| Sega		| Sega Master Sy| 					|
+| dblewinga	|  	| Double Wings (Asia)					| dblewing	| 1993	| Mitchell	| DECO IC16	| 					|
 | dblewing	|  	| Double Wings						| 		| 1993	| Mitchell	| DECO IC16	| 					|
 | pce_download1	|  	| Download (Alt)					| pce_download	| 1990	| NEC Avenue	| PC Engine	| 					|
 | pce_download	|  	| Download						| 		| 1990	| NEC Avenue	| PC Engine	| 					|
@@ -3759,6 +3762,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_glocp	|  	| G-LOC Air Battle (World, Prototype)			| md_gloc	| 1993	| Sega		| Sega Megadrive| 					|
 | glocr360j	|  	| G-LOC R360 (Japan)					| gloc		| 1990	| Sega		| Y-Board	| 					|
 | glocr360	|  	| G-LOC R360 (World)					| gloc		| 1990	| Sega		| Y-Board	| 					|
+| gstream	|  	| G-Stream G2020					| 		| 2002	| Oriental Soft | Miscellaneous	| 					|
 | gijoea	|  	| G.I. Joe (Asia, AA)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoej	|  	| G.I. Joe (Japan, JAA)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoeu	|  	| G.I. Joe (US, UAB)					| gijoe		| 1992	| Konami	| GX069		| 					|

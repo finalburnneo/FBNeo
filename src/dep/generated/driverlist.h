@@ -2135,6 +2135,7 @@ DRV		BurnDrvCrzrally;
 DRV		BurnDrvCrzrallya;
 DRV		BurnDrvMSX_crazytrn;
 DRV		BurnDrvMSX_crazytrna;
+DRV		BurnDrvCrazywar;
 DRV		BurnDrvMooncrsl;
 DRV		BurnDrvCrimecj;
 DRV		BurnDrvCrimecu;
@@ -2624,6 +2625,7 @@ DRV		BurnDrvDodgeman;
 DRV		BurnDrvDoDonpachia;
 DRV		BurnDrvDoDonpachi;
 DRV		BurnDrvDoDonpachiJ;
+DRV		BurnDrvDdpdojp;
 DRV		BurnDrvDdp3c;
 DRV		BurnDrvDdp3b;
 DRV		BurnDrvDdp3a;
@@ -2768,6 +2770,7 @@ DRV		BurnDrvsms_doublhwkp;
 DRV		BurnDrvDblpoind;
 DRV		BurnDrvDblpoint;
 DRV		BurnDrvsms_doubltgt;
+DRV		BurnDrvDblewinga;
 DRV		BurnDrvDblewing;
 DRV		BurnDrvpce_download1;
 DRV		BurnDrvpce_download;
@@ -3839,6 +3842,7 @@ DRV		BurnDrvmd_gloc;
 DRV		BurnDrvmd_glocp;
 DRV		BurnDrvGlocr360j;
 DRV		BurnDrvGlocr360;
+DRV		BurnDrvGstream;
 DRV		BurnDrvGijoea;
 DRV		BurnDrvGijoej;
 DRV		BurnDrvGijoeu;
@@ -16123,6 +16127,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCrzrallya,			// Crazy Rally (set 2)
 	&BurnDrvMSX_crazytrn,		// Crazy Train (Jpn)
 	&BurnDrvMSX_crazytrna,		// Crazy Train (Jpn, Alt)
+	&BurnDrvCrazywar,			// Crazy War
 	&BurnDrvMooncrsl,			// Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)
 	&BurnDrvCrimecj,			// Crime City (Japan)
 	&BurnDrvCrimecu,			// Crime City (US)
@@ -16612,6 +16617,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDoDonpachia,		// DoDonPachi (Arrange Mode version 1.1, hack by Trap15)
 	&BurnDrvDoDonpachi,			// DoDonPachi (International, master ver. 97/02/05)
 	&BurnDrvDoDonpachiJ,		// DoDonPachi (Japan, master ver. 97/02/05)
+	&BurnDrvDdpdojp,			// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, location test)
 	&BurnDrvDdp3c,				// DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)
 	&BurnDrvDdp3b,				// DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)
 	&BurnDrvDdp3a,				// DoDonPachi Dai-Ou-Jou (V101, Japan)
@@ -16756,6 +16762,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDblpoind,			// Double Point (Dong Bang Electron, bootleg?)
 	&BurnDrvDblpoint,			// Double Point
 	&BurnDrvsms_doubltgt,		// Double Target - Cynthia no Nemuri (Jpn)
+	&BurnDrvDblewinga,			// Double Wings (Asia)
 	&BurnDrvDblewing,			// Double Wings
 	&BurnDrvpce_download1,		// Download (Alt)
 	&BurnDrvpce_download,		// Download
@@ -17827,6 +17834,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_glocp,			// G-LOC Air Battle (World, Prototype)
 	&BurnDrvGlocr360j,			// G-LOC R360 (Japan)
 	&BurnDrvGlocr360,			// G-LOC R360 (World)
+	&BurnDrvGstream,			// G-Stream G2020
 	&BurnDrvGijoea,				// G.I. Joe (Asia, AA)
 	&BurnDrvGijoej,				// G.I. Joe (Japan, JAA)
 	&BurnDrvGijoeu,				// G.I. Joe (US, UAB)
@@ -20501,7 +20509,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mk2,				// Mortal Kombat II (World)
 	&BurnDrvMk2chal,			// Mortal Kombat II Challenger (hack)
 	&BurnDrvmk2p,				// Mortal Kombat II Plus (Beta 2, Hack)
-	&BurnDrvMk2ute,				// Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.052)
+	&BurnDrvMk2ute,				// Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.053)
 	&BurnDrvmd_mkr,				// Mortal Kombat Revelations (Hack, Version 1.0)
 	&BurnDrvMosaica,			// Mosaic (Fuuki)
 	&BurnDrvMosaic,				// Mosaic

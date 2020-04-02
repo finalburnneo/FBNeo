@@ -264,7 +264,7 @@ static UINT8 mcs51_readop_arg_dat(INT32 address)
 
 static UINT8 i8052_readop_arg_dat(INT32 address)
 {
-	return mcs51_program_data[((address)&0x1fff)];
+	return mcs51_program_data[((address)&0x7fff)]; // internal rom 0x1fff, though.
 }
 
 static UINT8 ds5002fp_readop_arg_dat(INT32 address)

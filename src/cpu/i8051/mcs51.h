@@ -97,14 +97,28 @@ extern INT32 mcs51TotalCycles();
 extern void  mcs51NewFrame();
 extern INT32 mcs51Idle(INT32 cycles);
 
-extern void  mcs51_set_irq_line(int irqline, int state);
+void mcs51_set_program_data(UINT8 *rom);
+
+void mcs51_set_irq_line(int irqline, int state);
 void mcs51_iram_fill(UINT8 *src, UINT32 size);
 void mcs51_iram_get(UINT8 *dst, UINT32 size);
 void mcs51_set_write_handler(void (*pointer)(INT32,UINT8));
 void mcs51_set_read_handler(UINT8 (*pointer)(INT32));
 void mcs51_scan(INT32 nAction);
-extern UINT8 *mcs51_program_data;
 
+
+//-----------------------------------------------
+// multi-cpu support
+void mcs51Init(INT32 cpu);
+void ds5002fpInit(INT32 cpu, UINT8 mcon, UINT8 rpctl, UINT8 crc);
+void i80c51Init(INT32 cpu);
+void i8052Init(INT32 cpu);
+void mcs51Open(INT32 nCpu);
+void mcs51Close();
+INT32 mcs51GetActive();
+//-----------------------------------------------
+
+void i80c51_init();
 void i8052_init();
 void mcs51_set_serial_tx_callback(void  (*callback)(UINT8 data));
 void mcs51_set_serial_rx_callback(UINT8 (*callback)());

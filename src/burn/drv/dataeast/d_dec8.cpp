@@ -1004,8 +1004,8 @@ static void DrvMCUReset(); // forward
 
 static void DrvMCUInit()
 {
-	mcs51_program_data = DrvMCURom;
-	mcs51_init ();
+	mcs51_init();
+	mcs51_set_program_data(DrvMCURom);
 	mcs51_set_write_handler(mcu_write_port);
 	mcs51_set_read_handler(mcu_read_port);
 

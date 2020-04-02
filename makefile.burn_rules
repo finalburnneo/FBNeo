@@ -1,7 +1,7 @@
 alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom burn/drv/cave burn/drv/coleco burn/drv/cps3 burn/drv/dataeast \
 			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/midway burn/drv/pce burn/drv/pst90s burn/drv/pre90s burn/drv/neogeo burn/drv/nes \
 			burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/msx burn/drv/spectrum burn/drv/taito \
-			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/adsp2100 cpu/konami cpu/mips3 cpu/m68k \
+			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/e132xs cpu/h6280 cpu/hd6309 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/adsp2100 cpu/konami cpu/mips3 cpu/m68k \
 			cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/tms32010 cpu/tms34010 cpu/upd7725 cpu/upd7810 \
 			cpu/v60 cpu/z80 cpu/z180
 
@@ -113,7 +113,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			m68000_intf.o mips3_intf.o nec_intf.o pic16c5x_intf.o s2650_intf.o tlcs90_intf.o tms34010.o tms34010_optable.o tms34010_intf.o z80_intf.o \
 			z180_intf.o  \
 			\
-			arm.o arm7.o h6280.o hd6309.o i8039.o i8x41.o mcs51.o konami.o m6502.o m6800.o m6805.o m6809.o nec.o pic16c5x.o s2650.o sh2.o tms32010.o tlcs90.o \
+			arm.o arm7.o e132xs.o h6280.o hd6309.o i8039.o i8x41.o mcs51.o konami.o m6502.o m6800.o m6805.o m6809.o nec.o pic16c5x.o s2650.o sh2.o tms32010.o tlcs90.o \
 			upd7725.o upd7810.o v25.o v60.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o \
 			\
 			cop0.o cop1.o mips3.o \

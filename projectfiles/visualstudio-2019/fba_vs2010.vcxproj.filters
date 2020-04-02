@@ -1006,6 +1006,15 @@
     <ClInclude Include="..\..\src\burn\snd\i5000.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\qs1000.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpu\e132xs\e132xs.h">
+      <Filter>cpus\e132xs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpu\e132xs_intf.h">
+      <Filter>cpus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4139,6 +4148,21 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mjkjidai.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\qs1000.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp">
+      <Filter>cpus\e132xs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_gstream.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4375,6 +4399,9 @@
     <Filter Include="Burn\drv\nes">
       <UniqueIdentifier>{670eb4c6-09c9-404c-a214-f66311e17aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cpus\e132xs">
+      <UniqueIdentifier>{9a8ac64b-becf-4203-b8a7-345308b6514e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\burn\burn_sound_a.asm">
@@ -4406,6 +4433,9 @@
     </None>
     <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt">
       <Filter>libs\libpng</Filter>
+    </None>
+    <None Include="..\..\src\cpu\e132xs\e132xsop.inc">
+      <Filter>cpus\e132xs</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

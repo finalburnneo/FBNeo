@@ -151,6 +151,7 @@ static struct BurnInputInfo BoonggabInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	A("P1 Paddle",		BIT_ANALOG_REL, &DrvPaddle,		"p1 z-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 3"	},
@@ -158,7 +159,6 @@ static struct BurnInputInfo BoonggabInputList[] = {
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 5"	},
 	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 6"	},
 	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 7"	},
-	A("P1 Paddle",		BIT_ANALOG_REL, &DrvPaddle,		"p1 z-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"service"	},
@@ -2585,7 +2585,7 @@ static INT32 BoonggabInit()
 
 struct BurnDriver BurnDrvBoonggab = {
 	"boonggab", NULL, NULL, NULL, "2001",
-	"Boong-Ga Boong-Ga (Spank'em!)\0", "needs very special inputs hooked up", "Taff System", "Miscellaneous",
+	"Boong-Ga Boong-Ga (Spank'em!)\0", NULL, "Taff System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, boonggabRomInfo, boonggabRomName, NULL, NULL, NULL, NULL, BoonggabInputInfo, NULL,

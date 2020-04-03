@@ -73,6 +73,7 @@
     <ClInclude Include="..\..\src\burn\devices\nmk004.h" />
     <ClInclude Include="..\..\src\burn\devices\nmk112.h" />
     <ClInclude Include="..\..\src\burn\devices\pandora.h" />
+    <ClInclude Include="..\..\src\burn\devices\qs1000.h" />
     <ClInclude Include="..\..\src\burn\devices\resnet.h" />
     <ClInclude Include="..\..\src\burn\devices\seibucop.h" />
     <ClInclude Include="..\..\src\burn\devices\seibusnd.h" />
@@ -235,6 +236,8 @@
     <ClInclude Include="..\..\src\cpu\arm7\arm7core.h" />
     <ClInclude Include="..\..\src\cpu\arm7_intf.h" />
     <ClInclude Include="..\..\src\cpu\arm_intf.h" />
+    <ClInclude Include="..\..\src\cpu\e132xs\e132xs.h" />
+    <ClInclude Include="..\..\src\cpu\e132xs_intf.h" />
     <ClInclude Include="..\..\src\cpu\h6280\h6280.h" />
     <ClInclude Include="..\..\src\cpu\h6280\h6280ops.h" />
     <ClInclude Include="..\..\src\cpu\h6280_intf.h" />
@@ -458,6 +461,7 @@
     <ClCompile Include="..\..\src\burn\devices\nmk004.cpp" />
     <ClCompile Include="..\..\src\burn\devices\nmk112.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pandora.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\qs1000.cpp" />
     <ClCompile Include="..\..\src\burn\devices\resnet.cpp" />
     <ClCompile Include="..\..\src\burn\devices\seibucop.cpp" />
     <ClCompile Include="..\..\src\burn\devices\seibusnd.cpp" />
@@ -518,11 +522,14 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_gstream.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
@@ -535,6 +542,7 @@
     <ClCompile Include="..\..\src\burn\snd\i5000.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
+    <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -1592,6 +1600,7 @@ del build_details.exe
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\burn\burn_sound_a.asm" />
+    <None Include="..\..\src\cpu\e132xs\e132xsop.inc" />
     <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt" />
     <None Include="..\..\src\dep\libs\zlib\zconf.h.in" />
     <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm" />

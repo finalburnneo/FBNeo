@@ -215,6 +215,7 @@ DRV		BurnDrvpce_aburner2;
 DRV		BurnDrvAburner;
 DRV		BurnSpecaburner;
 DRV		BurnDrvMSX_afteroids;
+DRV		BurnDrvAoh;
 DRV		BurnDrvSuperbon;
 DRV		BurnDrvAgentx1;
 DRV		BurnDrvAgentx2;
@@ -1227,6 +1228,7 @@ DRV		BurnDrvBoomrang;
 DRV		BurnDrvBoomranga;
 DRV		BurnDrvMSX_boomrang;
 DRV		BurnDrvMSX_boomranga;
+DRV		BurnDrvBoonggab;
 DRV		BurnDrvMSX_booty;
 DRV		BurnDrvMSX_bop;
 DRV		BurnDrvsg1k_bordrlin;
@@ -2039,6 +2041,8 @@ DRV		BurnDrvCookbiba;
 DRV		BurnDrvCookbib2;
 DRV		BurnDrvCookbib2a;
 DRV		BurnDrvCookbib3;
+DRV		BurnDrvCoolminii;
+DRV		BurnDrvCoolmini;
 DRV		BurnDrvgg_coolspot;
 DRV		BurnDrvmd_coolspot;
 DRV		BurnDrvsms_coolspot;
@@ -2370,6 +2374,7 @@ DRV		BurnDrvmd_dashdes;
 DRV		BurnDrvmd_dashdesp2;
 DRV		BurnDrvsms_datastorm;
 DRV		BurnDrvDquizgo;
+DRV		BurnDrvDquizgo2;
 DRV		BurnDrvpowj;
 DRV		BurnDrvmd_amaznten;
 DRV		BurnDrvmd_drscj;
@@ -2513,6 +2518,7 @@ DRV		BurnDrvmd_dicktr;
 DRV		BurnDrvmd_dickvitl;
 DRV		BurnDrvsg1k_elevatort;
 DRV		BurnDrvpce_diehard;
+DRV		BurnDrvDtfamily;
 DRV		BurnDrvDietgoe;
 DRV		BurnDrvDietgo;
 DRV		BurnDrvDietgoj;
@@ -2963,6 +2969,7 @@ DRV		BurnDrvDynablst;
 DRV		BurnDrvDcclubj;
 DRV		BurnDrvDcclubfd;
 DRV		BurnDrvDcclub;
+DRV		BurnDrvDynabomb;
 DRV		BurnDrvMSX_dynabowl;
 DRV		BurnDrvMSX_dynadan;
 DRV		BurnDrvsms_dynduke;
@@ -3568,6 +3575,7 @@ DRV		BurnDrvCpsFfightu2;
 DRV		BurnDrvCpsFfight;
 DRV		BurnDrvCpsFfighta;
 DRV		BurnDrvCpsFfightae;
+DRV		BurnDrvFinalgdr;
 DRV		BurnDrvMSX_fjustice;
 DRV		BurnDrvMSX_fjusticeb;
 DRV		BurnDrvMSX_fjusticea;
@@ -5073,6 +5081,8 @@ DRV		BurnDrvMSX_jumping;
 DRV		BurnDrvJumping;
 DRV		BurnDrvJumpinga;
 DRV		BurnDrvJumpingi;
+DRV		BurnDrvJmpbreak;
+DRV		BurnDrvJmpbreaka;
 DRV		BurnDrvJcross;
 DRV		BurnDrvMSX_jumpjack;
 DRV		BurnDrvJjack;
@@ -5596,6 +5606,7 @@ DRV		BurnDrvLohtj;
 DRV		BurnDrvLoht;
 DRV		BurnDrvpce_loht;
 DRV		BurnDrvtg_loht;
+DRV		BurnDrvLegendoh;
 DRV		BurnDrvsms_legndill;
 DRV		BurnDrvgg_legndill;
 DRV		BurnDrvgg_legndillp6;
@@ -5767,6 +5778,9 @@ DRV		BurnDrvLlander;
 DRV		BurnDrvLlandert;		// no comment
 #endif
 DRV		BurnSpeclrescue;
+DRV		BurnDrvLuplup10;
+DRV		BurnDrvLuplup29;
+DRV		BurnDrvLuplup;
 DRV		BurnDrvcv_mash;
 DRV		BurnDrvmd_m1abrams;
 DRV		BurnDrvMSX_mdroid;
@@ -6351,6 +6365,8 @@ DRV		BurnDrvsms_missil3d;
 DRV		BurnDrvM660b;
 DRV		BurnDrvM660j;
 DRV		BurnDrvM660;
+DRV		BurnDrvMisncrfta;
+DRV		BurnDrvMisncrft;
 DRV		BurnDrvCmissnx;
 DRV		BurnDrvMrviking;
 DRV		BurnDrvMrvikingj;
@@ -6543,6 +6559,7 @@ DRV		BurnDrvsg1k_castlet;
 DRV		BurnDrvMSX_mrchin;
 DRV		BurnDrvMSX_mrchink;
 DRV		BurnDrvMSX_mrcrack;
+DRV		BurnDrvMrdig;
 DRV		BurnDrvMSX_mrdo;
 DRV		BurnDrvMSX_mrdok;
 DRV		BurnDrvcv_mrdoa;
@@ -6563,6 +6580,10 @@ DRV		BurnDrvMrheli;
 DRV		BurnDrvpce_mrheli1;
 DRV		BurnDrvpce_mrheli;
 DRV		BurnDrvMrjong;
+DRV		BurnDrvMrkicker;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvMrkickera;		// no comment [NOT WORKING]
+#endif
 DRV		BurnDrvMrkougb;
 DRV		BurnDrvMrkougb2;
 DRV		BurnDrvMrkougar2;
@@ -8138,6 +8159,7 @@ DRV		BurnDrvmd_n3dgwaia;
 DRV		BurnDrvtg_advislnd;
 DRV		BurnDrvNewapunk;
 DRV		BurnDrvsms_newbogl2;
+DRV		BurnDrvNewxpang;
 DRV		BurnDrvNewfanta;
 DRV		BurnDrvNewfant;
 DRV		BurnDrvmd_newhoriz;
@@ -8978,6 +9000,7 @@ DRV		BurnDrvPolluxa2;
 DRV		BurnDrvPompingw;
 DRV		BurnDrvponpokov;
 DRV		BurnDrvponpoko;
+DRV		BurnDrvPoosho;
 DRV		BurnDrvPootan;
 DRV		BurnDrvMSX_pooyan;
 DRV		BurnDrvsms_pooyan;
@@ -9233,6 +9256,8 @@ DRV		BurnDrvCpsPzloop2;
 DRV		BurnDrvmd_ichir;
 DRV		BurnDrvmd_tantr;
 DRV		BurnDrvgg_tantr;
+DRV		BurnDrvPuzlbanga;
+DRV		BurnDrvPuzlbang;
 DRV		BurnDrvPbobble;
 DRV		BurnDrvgg_pbobble;
 DRV		BurnDrvpbobblenb;
@@ -10852,6 +10877,7 @@ DRV		BurnDrvgg_sporttrv;
 DRV		BurnDrvgg_sprtrvce;
 DRV		BurnDrvmd_spotgo;
 DRV		BurnDrvmd_spotgou;
+DRV		BurnDrvSpotty;
 DRV		BurnDrvSpringer;
 DRV		BurnSpecspyhunt;
 DRV		BurnDrvSpyhuntp;
@@ -11390,6 +11416,8 @@ DRV		BurnDrvsms_sboy1;
 DRV		BurnDrvsms_sboy2;
 DRV		BurnDrvMSX_sboy2;
 DRV		BurnDrvMSX_sboy2a;
+DRV		BurnDrvSb2003a;
+DRV		BurnDrvSb2003;
 DRV		BurnDrvsms_suprbubl;
 DRV		BurnDrvmd_suprbubl;
 #if defined FBNEO_DEBUG
@@ -11509,6 +11537,7 @@ DRV		BurnDrvSuprleag;
 DRV		BurnDrvmd_suprleagj;
 DRV		BurnDrvSuprloco;
 DRV		BurnDrvSuprlocoo;
+DRV		BurnDrvSuplup;
 DRV		BurnDrvmd_smario2a;
 DRV		BurnDrvmd_smario2;
 DRV		BurnDrvmd_smbbc;
@@ -12760,6 +12789,7 @@ DRV		BurnDrvCprogolf;
 DRV		BurnDrvcv_ttennis;
 DRV		BurnDrvKaratblj;
 DRV		BurnDrvmd_toxicc;
+DRV		BurnDrvToyland;
 DRV		BurnDrvpce_toyshopb;
 DRV		BurnDrvmd_toystory;
 DRV		BurnDrvmd_toystoryu;
@@ -13045,6 +13075,9 @@ DRV		BurnDrvmd_valis3;
 DRV		BurnDrvMSX_valkyr;
 DRV		BurnDrvValkyrie;
 DRV		BurnDrvValtric;
+DRV		BurnDrvVamphalfr1;
+DRV		BurnDrvVamphalf;
+DRV		BurnDrvVamphalfk;
 DRV		BurnDrvsms_vampire;
 DRV		BurnDrvgg_vampire;
 DRV		BurnDrvCpsVampjr1;
@@ -13398,6 +13431,7 @@ DRV		BurnDrvmd_winx;
 DRV		BurnDrvmd_winx3d;
 DRV		BurnDrvWiping;
 DRV		BurnDrvWits;
+DRV		BurnDrvWivernwg;
 DRV		BurnDrvWizt;
 DRV		BurnDrvWizta;
 DRV		BurnDrvmd_wiznlizu;
@@ -13481,6 +13515,7 @@ DRV		BurnDrvgg_woodypop1;
 DRV		BurnDrvgg_woodypop;
 DRV		BurnDrvsms_woodypop;
 DRV		BurnDrvcv_wordfeud;
+DRV		BurnDrvWorldadv;
 DRV		BurnDrvpce_wbeach;
 DRV		BurnDrvmd_wcsb;
 DRV		BurnDrvmd_wcs;
@@ -13679,6 +13714,8 @@ DRV		BurnDrvWwfmania;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvWyvernf0;
 DRV		BurnDrvWyvernf0a;
+DRV		BurnDrvWyvernwg;
+DRV		BurnDrvWyvernwga;
 DRV		BurnDrvXmultiplm72;
 DRV		BurnDrvXmultipl;
 #if defined FBNEO_DEBUG
@@ -13842,6 +13879,9 @@ DRV		BurnDrvmd_yogibear;
 DRV		BurnDrvYoukaidk2;
 DRV		BurnDrvYoukaidk1;
 DRV		BurnDrvsg1k_homemjt;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvYorijori;		// no comment [NOT WORKING]
+#endif
 DRV		BurnDrvmd_ysonic2;
 DRV		BurnDrvYoujyudn;
 DRV		BurnDrvpce_youkaid;
@@ -14207,6 +14247,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAburner,			// After Burner
 	&BurnSpecaburner,			// Afterburner (48K)
 	&BurnDrvMSX_afteroids,		// Afteroids
+	&BurnDrvAoh,				// Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)
 	&BurnDrvSuperbon,			// Agent Super Bond (scobra hardware)
 	&BurnDrvAgentx1,			// Agent X (prototype, rev 1)
 	&BurnDrvAgentx2,			// Agent X (prototype, rev 2)
@@ -15219,6 +15260,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBoomranga,			// Boomer Rang'r / Genesis (set 2)
 	&BurnDrvMSX_boomrang,		// Boomerang (Jpn)
 	&BurnDrvMSX_boomranga,		// Boomerang (Jpn, Alt)
+	&BurnDrvBoonggab,			// Boong-Ga Boong-Ga (Spank'em!)
 	&BurnDrvMSX_booty,			// Booty (Euro)
 	&BurnDrvMSX_bop,			// Bop! (Euro)
 	&BurnDrvsg1k_bordrlin,		// Borderline (Euro, Jpn)
@@ -16031,6 +16073,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCookbib2,			// Cookie & Bibi 2 (set 1)
 	&BurnDrvCookbib2a,			// Cookie & Bibi 2 (set 2)
 	&BurnDrvCookbib3,			// Cookie & Bibi 3
+	&BurnDrvCoolminii,			// Cool Minigame Collection (Italy)
+	&BurnDrvCoolmini,			// Cool Minigame Collection
 	&BurnDrvgg_coolspot,		// Cool Spot (Euro)
 	&BurnDrvmd_coolspot,		// Cool Spot (Euro)
 	&BurnDrvsms_coolspot,		// Cool Spot (Euro)
@@ -16362,6 +16406,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dashdesp2,		// Dashin' Desperadoes (USA, Prototype)
 	&BurnDrvsms_datastorm,		// Data Storm (Version 1.0)
 	&BurnDrvDquizgo,			// Date Quiz Go Go (Korea)
+	&BurnDrvDquizgo2,			// Date Quiz Go Go Episode 2
 	&BurnDrvpowj,				// Datsugoku - Prisoners of War (Japan)
 	&BurnDrvmd_amaznten,		// David Crane's Amazing Tennis (USA)
 	&BurnDrvmd_drscj,			// David Robinson Basketball (Jpn)
@@ -16505,6 +16550,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dickvitl,		// Dick Vitale's 'Awesome, Baby!' College Hoops (USA)
 	&BurnDrvsg1k_elevatort,		// Die Dui Die (Tw)
 	&BurnDrvpce_diehard,		// Die Hard
+	&BurnDrvDtfamily,			// Diet Family
 	&BurnDrvDietgoe,			// Diet Go Go (Euro v1.1 1992.08.04)
 	&BurnDrvDietgo,				// Diet Go Go (Euro v1.1 1992.09.26)
 	&BurnDrvDietgoj,			// Diet Go Go (Japan v1.1 1992.09.26)
@@ -16955,6 +17001,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDcclubj,			// Dynamic Country Club (Japan, ROM Based)
 	&BurnDrvDcclubfd,			// Dynamic Country Club (US, Floppy Based, FD1094 317-0058-09d)
 	&BurnDrvDcclub,				// Dynamic Country Club (World, ROM Based)
+	&BurnDrvDynabomb,			// Dynamite Bomber (Korea, Rev 1.5)
 	&BurnDrvMSX_dynabowl,		// Dynamite Bowl (Jpn)
 	&BurnDrvMSX_dynadan,		// Dynamite Dan (Euro)
 	&BurnDrvsms_dynduke,		// Dynamite Duke (Euro, Bra)
@@ -17560,6 +17607,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsFfight,			// Final Fight (World, set 1)
 	&BurnDrvCpsFfighta,			// Final Fight (World, set 2)
 	&BurnDrvCpsFfightae,		// Final Fight 30th Anniversary Edition
+	&BurnDrvFinalgdr,			// Final Godori (Korea, version 2.20.5915)
 	&BurnDrvMSX_fjustice,		// Final Justice (Jpn)
 	&BurnDrvMSX_fjusticeb,		// Final Justice (Jpn, Alt 2)
 	&BurnDrvMSX_fjusticea,		// Final Justice (Jpn, Alt)
@@ -19065,6 +19113,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJumping,			// Jumping (set 1)
 	&BurnDrvJumpinga,			// Jumping (set 2)
 	&BurnDrvJumpingi,			// Jumping (set 3, Imnoe PCB)
+	&BurnDrvJmpbreak,			// Jumping Break (set 1)
+	&BurnDrvJmpbreaka,			// Jumping Break (set 2)
 	&BurnDrvJcross,				// Jumping Cross
 	&BurnDrvMSX_jumpjack,		// Jumping Jack (Euro)
 	&BurnDrvJjack,				// Jumping Jack
@@ -19588,6 +19638,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLoht,				// Legend of Hero Tonma
 	&BurnDrvpce_loht,			// Legend of Hero Tonma
 	&BurnDrvtg_loht,			// Legend of Hero Tonma
+	&BurnDrvLegendoh,			// Legend of Heroes
 	&BurnDrvsms_legndill,		// Legend of Illusion Starring Mickey Mouse (Bra)
 	&BurnDrvgg_legndill,		// Legend of Illusion Starring Mickey Mouse (Euro, USA)
 	&BurnDrvgg_legndillp6,		// Legend of Illusion Starring Mickey Mouse (Prototype, 19940922)
@@ -19759,6 +19810,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLlandert,			// Lunar Lander (screen test) [no comment]
 #endif
 	&BurnSpeclrescue,			// Lunar Rescue (48K)
+	&BurnDrvLuplup10,			// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 1.05 / 981214)
+	&BurnDrvLuplup29,			// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 2.9 / 990108)
+	&BurnDrvLuplup,				// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 3.0 / 990128)
 	&BurnDrvcv_mash,			// M*A*S*H (Prototype)
 	&BurnDrvmd_m1abrams,		// M-1 Abrams Battle Tank (Euro, USA)
 	&BurnDrvMSX_mdroid,			// M-Droid (Euro)
@@ -20343,6 +20397,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvM660b,				// Mission 660 (bootleg)
 	&BurnDrvM660j,				// Mission 660 (Japan)
 	&BurnDrvM660,				// Mission 660 (US)
+	&BurnDrvMisncrfta,			// Mission Craft (version 2.4)
+	&BurnDrvMisncrft,			// Mission Craft (version 2.7)
 	&BurnDrvCmissnx,			// Mission-X (DECO Cassette) (US)
 	&BurnDrvMrviking,			// Mister Viking (315-5041)
 	&BurnDrvMrvikingj,			// Mister Viking (315-5041, Japan)
@@ -20535,6 +20591,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mrchin,			// Mr. Chin (Jpn)
 	&BurnDrvMSX_mrchink,		// Mr. Chin (Kor)
 	&BurnDrvMSX_mrcrack,		// Mr. Cracksman
+	&BurnDrvMrdig,				// Mr. Dig
 	&BurnDrvMSX_mrdo,			// Mr. Do (Jpn)
 	&BurnDrvMSX_mrdok,			// Mr. Do (Kor)
 	&BurnDrvcv_mrdoa,			// Mr. Do! (Alt)
@@ -20555,6 +20612,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_mrheli1,		// Mr. Heli no Daibouken (Alt)
 	&BurnDrvpce_mrheli,			// Mr. Heli no Daibouken
 	&BurnDrvMrjong,				// Mr. Jong (Japan)
+	&BurnDrvMrkicker,			// Mr. Kicker (F-E1-16-010 PCB)
+#if defined FBNEO_DEBUG
+	&BurnDrvMrkickera,			// Mr. Kicker (SEMICOM-003b PCB) [no comment, NOT WORKING]
+#endif
 	&BurnDrvMrkougb,			// Mr. Kougar (bootleg set 1)
 	&BurnDrvMrkougb2,			// Mr. Kougar (bootleg set 2)
 	&BurnDrvMrkougar2,			// Mr. Kougar (earlier)
@@ -22130,6 +22191,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_advislnd,		// New Adventure Island
 	&BurnDrvNewapunk,			// New Atomic Punk - Global Quest (US)
 	&BurnDrvsms_newbogl2,		// New Boggle Boggle 2 (Kor)
+	&BurnDrvNewxpang,			// New Cross Pang
 	&BurnDrvNewfanta,			// New Fantasia (1994 copyright)
 	&BurnDrvNewfant,			// New Fantasia (1995 copyright)
 	&BurnDrvmd_newhoriz,		// New Horizons (USA)
@@ -22970,6 +23032,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPompingw,			// Pomping World (Japan)
 	&BurnDrvponpokov,			// Ponpoko (Venture Line)
 	&BurnDrvponpoko,			// Ponpoko
+	&BurnDrvPoosho,				// Poosho Poosho
 	&BurnDrvPootan,				// Pootan
 	&BurnDrvMSX_pooyan,			// Pooyan (Jpn)
 	&BurnDrvsms_pooyan,			// Pooyan (Kor)
@@ -23225,6 +23288,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ichir,			// Puzzle & Action - Ichidant-R (Jpn)
 	&BurnDrvmd_tantr,			// Puzzle & Action - Tant-R (Jpn)
 	&BurnDrvgg_tantr,			// Puzzle and Action Tant~R (Jpn)
+	&BurnDrvPuzlbanga,			// Puzzle Bang Bang (Korea, version 2.8 / 990106)
+	&BurnDrvPuzlbang,			// Puzzle Bang Bang (Korea, version 2.9 / 990108)
 	&BurnDrvPbobble,			// Puzzle Bobble (Japan, B-System)
 	&BurnDrvgg_pbobble,			// Puzzle Bobble (Jpn)
 	&BurnDrvpbobblenb,			// Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg)
@@ -24844,6 +24909,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_sprtrvce,		// Sports Trivia - Championship Edition (Euro, USA)
 	&BurnDrvmd_spotgo,			// Spot Goes to Hollywood (Euro)
 	&BurnDrvmd_spotgou,			// Spot Goes to Hollywood (USA)
+	&BurnDrvSpotty,				// Spotty (Ver. 2.0.2)
 	&BurnDrvSpringer,			// Springer
 	&BurnSpecspyhunt,			// Spy Hunter (48K)
 	&BurnDrvSpyhuntp,			// Spy Hunter (Playtronic license)
@@ -25382,6 +25448,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_sboy2,			// Super Boy II (Kor)
 	&BurnDrvMSX_sboy2,			// Super Boy II. (Kor)
 	&BurnDrvMSX_sboy2a,			// Super Boy II. (Kor, Alt)
+	&BurnDrvSb2003a,			// Super Bubble 2003 (Asia, Ver 1.0)
+	&BurnDrvSb2003,				// Super Bubble 2003 (World, Ver 1.0)
 	&BurnDrvsms_suprbubl,		// Super Bubble Bobble (Kor)
 	&BurnDrvmd_suprbubl,		// Super Bubble Bobble MD (Chi)
 #if defined FBNEO_DEBUG
@@ -25501,6 +25569,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_suprleagj,		// Super League (Jpn)
 	&BurnDrvSuprloco,			// Super Locomotive (Rev.A)
 	&BurnDrvSuprlocoo,			// Super Locomotive
+	&BurnDrvSuplup,				// Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0 / 990518)
 	&BurnDrvmd_smario2a,		// Super Mario 2 (Alt?) [no comment, NOT WORKING]
 	&BurnDrvmd_smario2,			// Super Mario 2 1998
 	&BurnDrvmd_smbbc,			// Super Mario Bros. + Battle City (Rus)
@@ -26752,6 +26821,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_ttennis,			// Tournament Tennis
 	&BurnDrvKaratblj,			// Toushin Blazers (Japan, Tecmo license)
 	&BurnDrvmd_toxicc,			// Toxic Crusaders (USA)
+	&BurnDrvToyland,			// Toy Land Adventure
 	&BurnDrvpce_toyshopb,		// Toy Shop Boys
 	&BurnDrvmd_toystory,		// Toy Story (Euro)
 	&BurnDrvmd_toystoryu,		// Toy Story (USA)
@@ -27037,6 +27107,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_valkyr,			// Valkyr (Euro)
 	&BurnDrvValkyrie,			// Valkyrie No Densetsu (Japan)
 	&BurnDrvValtric,			// Valtric
+	&BurnDrvVamphalfr1,			// Vamf x1/2 (Europe, version 1.0.0903)
+	&BurnDrvVamphalf,			// Vamf x1/2 (Europe, version 1.1.0908)
+	&BurnDrvVamphalfk,			// Vamp x1/2 (Korea, version 1.1.0908)
 	&BurnDrvsms_vampire,		// Vampire (Euro, Prototype)
 	&BurnDrvgg_vampire,			// Vampire - Master of Darkness (USA)
 	&BurnDrvCpsVampjr1,			// Vampire - the night warriors (940630 Japan)
@@ -27390,6 +27463,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_winx3d,			// Winx 3D Volshebnoe Priklyuchenie (Rus)
 	&BurnDrvWiping,				// Wiping
 	&BurnDrvWits,				// Wit's (Japan)
+	&BurnDrvWivernwg,			// Wivern Wings
 	&BurnDrvWizt,				// Wiz (Taito, set 1)
 	&BurnDrvWizta,				// Wiz (Taito, set 2)
 	&BurnDrvmd_wiznlizu,		// Wiz'n'Liz (USA)
@@ -27473,6 +27547,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_woodypop,		// Woody Pop (Euro, USA, v1.1)
 	&BurnDrvsms_woodypop,		// Woody Pop - Shinjinrui no Block Kuzushi (Jpn, MyCard)
 	&BurnDrvcv_wordfeud,		// Word Feud
+	&BurnDrvWorldadv,			// World Adventure
 	&BurnDrvpce_wbeach,			// World Beach Volley
 	&BurnDrvmd_wcsb,			// World Championship Soccer (USA) ~ World Cup Soccer (Jpn)
 	&BurnDrvmd_wcs,				// World Championship Soccer (USA, Rev. B) ~ World Cup Soccer (Jpn, Rev. B)
@@ -27671,6 +27746,8 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvWyvernf0,			// Wyvern F-0 (Rev 1)
 	&BurnDrvWyvernf0a,			// Wyvern F-0
+	&BurnDrvWyvernwg,			// Wyvern Wings (set 1)
+	&BurnDrvWyvernwga,			// Wyvern Wings (set 2)
 	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72 PCB version)
 	&BurnDrvXmultipl,			// X Multiply (World, M81 PCB version)
 #if defined FBNEO_DEBUG
@@ -27834,6 +27911,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvYoukaidk2,			// Yokai Douchuuki (Japan, new version (YD2, Rev B))
 	&BurnDrvYoukaidk1,			// Yokai Douchuuki (Japan, old version (YD1))
 	&BurnDrvsg1k_homemjt,		// Yon-nin Mahjong (Tw)
+#if defined FBNEO_DEBUG
+	&BurnDrvYorijori,			// Yori Jori Kuk Kuk [no comment, NOT WORKING]
+#endif
 	&BurnDrvmd_ysonic2,			// Yoshi in Sonic the Hedgehog 2 (Hack, Beta)
 	&BurnDrvYoujyudn,			// Youjyuden (Japan)
 	&BurnDrvpce_youkaid,		// Youkai Douchuuki

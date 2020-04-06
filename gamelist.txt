@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13753 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13756 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1210,7 +1210,7 @@ This list contains all games supported by FinalBurn Neo.
 | boomranga	|  	| Boomer Rang'r / Genesis (set 2)			| boomrang	| 1983	| Data East Corp| Miscellaneous	| 					|
 | msx_boomrang	|  	| Boomerang (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
 | msx_boomranga	|  	| Boomerang (Jpn, Alt)					| msx_boomrang	| 1984	| ASCII		| MSX		| 					|
-| boonggab	|  	| Boong-Ga Boong-Ga (Spank'em!)				| 		| 2001	| Taff System	| Miscellaneous	| needs very special inputs hooked up	|
+| boonggab	|  	| Boong-Ga Boong-Ga (Spank'em!)				| 		| 2001	| Taff System	| Miscellaneous	| 					|
 | msx_booty	|  	| Booty (Euro)						| 		| 1988	| Eurosoft	| MSX		| 					|
 | msx_bop	|  	| Bop! (Euro)						| 		| 1986	| Bug-Byte Softw| MSX		| 					|
 | sg1k_bordrlin	|  	| Borderline (Euro, Jpn)				| 		| 1983	| Sega		| Sega SG-1000	| 					|
@@ -4309,6 +4309,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gulkavea	|  	| Gulkave (Jpn, Alt)					| msx_gulkave	| 1986	| Pony Canyon	| MSX		| 					|
 | msx_gulkavek	|  	| Gulkave (Kor)						| msx_gulkave	| 198?	| ProSoft	| MSX		| 					|
 | sg1k_gulkavek	|  	| Gulkave (Kor)						| sg1k_gulkave	| 198?	| Unknown	| Sega SG-1000	| 					|
+| gulunpa	|   NW	| Gulun.Pa! (Japan 931220 L)				| 		| 1993	| Capcom	| Miscellaneous	| Corrupt GFX Roms			|
 | gumbo		|  	| Gumbo							| 		| 1994	| Min Corp.	| Miscellaneous	| 					|
 | gunfront	|  	| Gun & Frontier (World)				| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | gunball	|  	| Gun Ball (Japan)					| nitrobal	| 1992	| Data East Corp| DECO IC16	| 					|
@@ -6986,6 +6987,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_conqucrypal|  	| NES Conquest of the Crystal Palace (USA)		| 		| 1990	| Asmik		| Miscellaneous	| 					|
 | nes_contraj	|  	| NES Contra (Japan)					| nes_contra	| 1988	| Konami	| Miscellaneous	| 					|
 | nes_contra	|  	| NES Contra (USA)					| 		| 1988	| Konami	| Miscellaneous	| 					|
+| nes_contrredfalwar|  	| NES Contra - Red Falcon War (USA)			| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_contrrevredfal|  	| NES Contra - Revenge of the Red Falcon (USA)		| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_contraforce|  	| NES Contra Force (USA)				| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_coolworld	|  	| NES Cool World (USA)					| 		| 1993	| Ocean		| Miscellaneous	| 					|
 | nes_correbenny|  	| NES Corre Benny (Spain)				| 		| 1992	| Gluk Video	| Miscellaneous	| 					|

@@ -34,19 +34,19 @@ static INT32 CtvDo208_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -142,19 +142,19 @@ static INT32 CtvDo232_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -198,19 +198,19 @@ static INT32 CtvDo308_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -306,19 +306,19 @@ static INT32 CtvDo332_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -362,19 +362,19 @@ static INT32 CtvDo408_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -470,19 +470,19 @@ static INT32 CtvDo432_cf_()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 0
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -530,19 +530,19 @@ static INT32 CtvDo208_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -582,19 +582,19 @@ static INT32 CtvDo216_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -634,19 +634,19 @@ static INT32 CtvDo232_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -690,19 +690,19 @@ static INT32 CtvDo308_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -742,19 +742,19 @@ static INT32 CtvDo316_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -794,19 +794,19 @@ static INT32 CtvDo332_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -850,19 +850,19 @@ static INT32 CtvDo408_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -902,19 +902,19 @@ static INT32 CtvDo416_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 10  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -954,19 +954,19 @@ static INT32 CtvDo432_cfm()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 1
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1014,19 +1014,19 @@ static INT32 CtvDo208_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1066,19 +1066,23 @@ static INT32 CtvDo216_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo216r__b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo216r_fb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo216rc_b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo216rcfb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1118,19 +1122,19 @@ static INT32 CtvDo232_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1174,19 +1178,19 @@ static INT32 CtvDo308_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1226,19 +1230,23 @@ static INT32 CtvDo316_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo316r__b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo316r_fb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo316rc_b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo316rcfb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1278,19 +1286,19 @@ static INT32 CtvDo332_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1334,19 +1342,19 @@ static INT32 CtvDo408_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 8  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1386,19 +1394,23 @@ static INT32 CtvDo416_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo416r__b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo416r_fb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+static INT32 CtvDo416rc_b()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+static INT32 CtvDo416rcfb()
+#include "ctv_do.h"
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1438,19 +1450,19 @@ static INT32 CtvDo432_cfb()
 
 #define CU_CARE  (0)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
 #define CU_CARE  (1)
 #define CU_FLIPX (0)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #define CU_FLIPX (1)
-// Invalid combination of capabilities.
+// Invalid combination of capabilities. rows 1  size 20  mask 2
 #undef  CU_FLIPX
 #undef  CU_CARE
 
@@ -1540,7 +1552,7 @@ static CtvDoFn CtvDo2b[0x20]={
 CtvDo208___b,CtvDo208__fb,CtvDo208_c_b,CtvDo208_cfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo216___b,CtvDo216__fb,CtvDo216_c_b,CtvDo216_cfb,
-CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
+CtvDo216r__b,CtvDo216r_fb,CtvDo216rc_b,CtvDo216rcfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo232___b,CtvDo232__fb,CtvDo232_c_b,CtvDo232_cfb,
@@ -1551,7 +1563,7 @@ static CtvDoFn CtvDo3b[0x20]={
 CtvDo308___b,CtvDo308__fb,CtvDo308_c_b,CtvDo308_cfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo316___b,CtvDo316__fb,CtvDo316_c_b,CtvDo316_cfb,
-CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
+CtvDo316r__b,CtvDo316r_fb,CtvDo316rc_b,CtvDo316rcfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo332___b,CtvDo332__fb,CtvDo332_c_b,CtvDo332_cfb,
@@ -1562,7 +1574,7 @@ static CtvDoFn CtvDo4b[0x20]={
 CtvDo408___b,CtvDo408__fb,CtvDo408_c_b,CtvDo408_cfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo416___b,CtvDo416__fb,CtvDo416_c_b,CtvDo416_cfb,
-CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
+CtvDo416r__b,CtvDo416r_fb,CtvDo416rc_b,CtvDo416rcfb,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo_______,CtvDo_______,CtvDo_______,CtvDo_______,
 CtvDo432___b,CtvDo432__fb,CtvDo432_c_b,CtvDo432_cfb,

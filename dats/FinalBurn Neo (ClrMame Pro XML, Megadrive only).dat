@@ -3139,7 +3139,7 @@
 		<description>Disney's Aladdin - Final Cut (USA)</description>
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="Aladdin - Final Cut (USA).bin" size="4194304" crc="05cbb78e"/>
+		<rom name="Aladdin - Final Cut (USA).bin" size="2384052" crc="dd66b3fa"/>
 		<driver status="good"/>
 	</game>
 	<game name="ariel">

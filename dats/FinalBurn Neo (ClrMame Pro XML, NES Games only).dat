@@ -1594,6 +1594,20 @@
 		<rom name="Contra (USA).nes" size="131088" crc="c50a8304"/>
 		<driver status="good"/>
 	</game>
+	<game name="contrredfalwar" cloneof="contra" romof="contra">
+		<description>NES Contra - Red Falcon War (USA)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Contra - Red Falcon War (USA).nes" size="262160" crc="59ef411a"/>
+		<driver status="good"/>
+	</game>
+	<game name="contrrevredfal" cloneof="contra" romof="contra">
+		<description>NES Contra - Revenge of the Red Falcon (USA)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Contra - Revenge of the Red Falcon (USA).nes" size="262160" crc="fa28193b"/>
+		<driver status="good"/>
+	</game>
 	<game name="contraforce">
 		<description>NES Contra Force (USA)</description>
 		<year>1992</year>

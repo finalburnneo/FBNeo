@@ -4397,6 +4397,7 @@ DRV		BurnDrvsg1k_gulkave;
 DRV		BurnDrvMSX_gulkavea;
 DRV		BurnDrvMSX_gulkavek;
 DRV		BurnDrvsg1k_gulkavek;
+DRV		BurnDrvGulunpa;
 DRV		BurnDrvGumbo;
 DRV		BurnDrvGunfront;
 DRV		BurnDrvGunball;
@@ -7134,6 +7135,8 @@ DRV		BurnDrvnes_conan;
 DRV		BurnDrvnes_conqucrypal;
 DRV		BurnDrvnes_contraj;
 DRV		BurnDrvnes_contra;
+DRV		BurnDrvnes_contrredfalwar;
+DRV		BurnDrvnes_contrrevredfal;
 DRV		BurnDrvnes_contraforce;
 DRV		BurnDrvnes_coolworld;
 DRV		BurnDrvnes_correbenny;
@@ -18429,6 +18432,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gulkavea,		// Gulkave (Jpn, Alt)
 	&BurnDrvMSX_gulkavek,		// Gulkave (Kor)
 	&BurnDrvsg1k_gulkavek,		// Gulkave (Kor)
+	&BurnDrvGulunpa,			// Gulun.Pa! (Japan 931220 L) [Corrupt GFX Roms, NOT WORKING]
 	&BurnDrvGumbo,				// Gumbo
 	&BurnDrvGunfront,			// Gun & Frontier (World)
 	&BurnDrvGunball,			// Gun Ball (Japan)
@@ -21166,6 +21170,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_conqucrypal,	// NES Conquest of the Crystal Palace (USA)
 	&BurnDrvnes_contraj,		// NES Contra (Japan)
 	&BurnDrvnes_contra,			// NES Contra (USA)
+	&BurnDrvnes_contrredfalwar,	// NES Contra - Red Falcon War (USA)
+	&BurnDrvnes_contrrevredfal,	// NES Contra - Revenge of the Red Falcon (USA)
 	&BurnDrvnes_contraforce,	// NES Contra Force (USA)
 	&BurnDrvnes_coolworld,		// NES Cool World (USA)
 	&BurnDrvnes_correbenny,		// NES Corre Benny (Spain)

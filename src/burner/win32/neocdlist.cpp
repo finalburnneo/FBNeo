@@ -47,6 +47,7 @@ struct NGCDGAME games[] =
 	{ _T("tophuntr")	, _T("Top Hunter - Roddy & Cathy")							, _T("1994")	, _T("SNK")					, 0x0046 },		//
 	{ _T("fatfury2")	, _T("Fatal Fury 2 / Garou Densetsu 2 - Aratanaru Tatakai")	, _T("1994")	, _T("SNK")					, 0x0047 },		//
 	{ _T("janshin")		, _T("Janshin Densetsu - Quest of the Jongmaster")			, _T("1995")	, _T("Yubis")				, 0x0048 },		//
+	{ _T("treascb")		, _T("Treasure of the Caribbean")							, _T("1994")	, _T("FACE/NCI")			, 0x1048 },		// custom id
 	{ _T("ncommand")	, _T("Ninja Commando")										, _T("1992")	, _T("SNK")					, 0x0050 },		//
 	{ _T("viewpoin")	, _T("Viewpoint")											, _T("1992")	, _T("Sammy/Aicom")			, 0x0051 },		//
 	{ _T("ssideki")		, _T("Super Sidekicks / Tokuten Oh")						, _T("1993")	, _T("SNK")					, 0x0052 },		//
@@ -64,6 +65,7 @@ struct NGCDGAME games[] =
 	{ _T("wjammers")	, _T("Windjammers / Flying Power Disc")						, _T("1994")	, _T("Data East")			, 0x0065 },		//
 	{ _T("karnovr")		, _T("Karnov's Revenge / Fighters History Dynamite")		, _T("1994")	, _T("Data East")			, 0x0066 },		//
 	{ _T("pspikes2")	, _T("Power Spikes II")										, _T("1994")	, _T("Video System")		, 0x0068 },		//
+	{ _T("b2b")			, _T("Bang Bang Busters")									, _T("2000")	, _T("Visco")				, 0x0071 },		//
 	{ _T("aodk")		, _T("Aggressors of Dark Kombat / Tsuukai GanGan Koushinkyoku")	, _T("1994"), _T("SNK/ADK")				, 0x0074 },		//
 	{ _T("sonicwi2")	, _T("Aero Fighters 2 / Sonic Wings 2")						, _T("1994")	, _T("Video System")		, 0x0075 },		//
 	{ _T("galaxyfg")	, _T("Galaxy Fight - Universal Warriors")					, _T("1995")	, _T("Sunsoft")				, 0x0078 },		//
@@ -260,6 +262,11 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
 				strncpy(File, File, LEN_FI);
 				File[LEN_FI] = 0;
+
+				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
+				if(nID == 0x0048 && Data[0x67] == 0x08) {
+					nID = 0x1048;
+				}
 
 				// King of Fighters '94, The (1994)(SNK)(JP)
 				// 10-6-1994 (P1.PRG)

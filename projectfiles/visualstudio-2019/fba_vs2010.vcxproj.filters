@@ -4163,6 +4163,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

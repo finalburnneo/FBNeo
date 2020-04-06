@@ -2814,7 +2814,7 @@ struct BurnDriver BurnDrvmd_aladdin = {
 
 // Disney's Aladdin - Final Cut (USA)
 static struct BurnRomInfo md_aladdinfcRomDesc[] = {
-	{ "Aladdin - Final Cut (USA).bin", 0x400000, 0x05cbb78e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Aladdin - Final Cut (USA).bin", 0x2460b4, 0xdd66b3fa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aladdinfc)

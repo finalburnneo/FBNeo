@@ -251,6 +251,11 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 				strncpy(File, File, LEN_FI);
 				File[LEN_FI] = 0;
 
+				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
+				if(nID == 0x0048 && Data[0x67] == 0x08) {
+					nID = 0x1048;
+				}
+
 				// King of Fighters '94, The (1994)(SNK)(JP)
 				// 10-6-1994 (P1.PRG)
 				if(nID == 0x0055 && Data[0x67] == 0xDE) {

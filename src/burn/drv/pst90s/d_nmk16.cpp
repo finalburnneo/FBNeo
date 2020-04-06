@@ -2873,6 +2873,10 @@ static void __fastcall bjtwin_main_write_byte(UINT32 address, UINT8 data)
 				*tilebank = data;
 			}
 		return;
+
+		case 0x094003:
+			DrvScrollRAM[0] = data;
+		return;
 	}
 }
 
@@ -2907,6 +2911,10 @@ static void __fastcall bjtwin_main_write_word(UINT32 address, UINT16 data)
 			if ((data & 0xff) != 0xff) {
 				*tilebank = data;
 			}
+		return;
+
+		case 0x094002:
+			DrvScrollRAM[0] = data & 0xff;
 		return;
 	}
 }
@@ -5033,7 +5041,7 @@ static void draw_gunnail_background(UINT8 *ram)
 	}
 }
 
-static void draw_bjtwin_background(INT32 scrollx)
+static void draw_bjtwin_background(INT32 scrollx, INT32 scrolly)
 {
 	UINT16 *vram = (UINT16*)DrvBgRAM0;
 
@@ -5042,7 +5050,7 @@ static void draw_bjtwin_background(INT32 scrollx)
 		INT32 sx = (offs >> 5) << 3;
 		INT32 sy = (offs & 0x1f) << 3;
 
-		sy -= global_y_offset;
+		sy -= global_y_offset + scrolly;
 		sx = (((sx - scrollx) + 8) & 0x1ff) - 8;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
@@ -5445,7 +5453,7 @@ static INT32 BjtwinDraw()
 
 	DrvPaletteRecalc();
 
-	draw_bjtwin_background(-64);
+	draw_bjtwin_background(-64, DrvScrollRAM[0]);
 
 	draw_sprites(0, 0x100, 0x0f, 3);
 	draw_sprites(0, 0x100, 0x0f, 2);

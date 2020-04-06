@@ -112,8 +112,8 @@ static struct BurnInputInfo Sb2003InputList[] = {
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 4"	},
 
@@ -123,8 +123,8 @@ static struct BurnInputInfo Sb2003InputList[] = {
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 4"	},
 
@@ -514,6 +514,7 @@ static INT32 LimenkoCommonInit(INT32 cputype, INT32 cpuclock, INT32 (*pLoadRoms)
 			qs1000_init(DrvQSROM, DrvSndROM, 0x400000);
 			qs1000_set_write_handler(3, qs1000_p3_write);
 			qs1000_set_read_handler(1, qs1000_p1_read);
+			qs1000_set_volume(2.00);
 
 			sound_type = 0;
 		}
@@ -521,7 +522,7 @@ static INT32 LimenkoCommonInit(INT32 cputype, INT32 cpuclock, INT32 (*pLoadRoms)
 
 		case 1:
 		{
-			i80c51_init(); // add to fbn mcs51 core!! (option there, but disabled)
+			i80c51_init();
 			mcs51_set_program_data(DrvQSROM); // not really qs!
 			mcs51_set_write_handler(spotty_sound_write);
 			mcs51_set_read_handler(spotty_sound_read);

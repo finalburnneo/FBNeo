@@ -2473,6 +2473,39 @@ static struct BurnDIPInfo DaimakaiDIPList[]=
 
 STDDIPINFO(Daimakai)
 
+static struct BurnDIPInfo GulunpaDIPList[]=
+{
+	{0x12, 0xf0, 0xff, 0xff, "-dip offset-"     	  },
+	{0x00, 0xff, 0xff, 0x00, NULL					  },
+	{0x01, 0xff, 0xff, 0x00, NULL					  },
+	{0x02, 0xff, 0xff, 0x00, NULL					  },
+
+	// Dip A
+	CPS1_COINAGE_1(0x00)
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x01)
+
+	// Dip C
+	{0   , 0xfe, 0   ,    2, "Freeze"				  },
+	{0x02, 0x01, 0x08, 0x00, "Off"					  },
+	{0x02, 0x01, 0x08, 0x08, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			  },
+	{0x02, 0x01, 0x10, 0x00, "Off"					  },
+	{0x02, 0x01, 0x10, 0x10, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			  },
+	{0x02, 0x01, 0x20, 0x00, "Off"					  },
+	{0x02, 0x01, 0x20, 0x20, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "Game Mode"			  },
+	{0x02, 0x01, 0x80, 0x00, "Game"					  },
+	{0x02, 0x01, 0x80, 0x80, "Test"					  },
+};
+
+STDDIPINFO(Gulunpa)
+
 static struct BurnDIPInfo KnightsDIPList[]=
 {
 	// Defaults
@@ -6889,6 +6922,24 @@ static struct BurnRomInfo DaimakaibRomDesc[] = {
 
 STD_ROM_PICK(Daimakaib)
 STD_ROM_FN(Daimakaib)
+
+static struct BurnRomInfo gulunpaRomDesc[] = {
+	{ "26",		0x20000, 0xf30ffa29, BRF_PRG | BRF_ESS | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "30",		0x20000, 0x5d35f737, BRF_PRG | BRF_ESS | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "1",		0x80000, 0x3cf0546b, BRF_GRA | CPS1_TILES },
+	{ "2",		0x80000, 0xad033bce, BRF_GRA | CPS1_TILES },
+	{ "3",		0x80000, 0x36c3951a, BRF_GRA | CPS1_TILES },
+	{ "4",		0x80000, 0xff0cb826, BRF_GRA | CPS1_TILES },
+
+	{ "9",		0x10000, 0x15afd06f, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18",		0x20000, 0x9997a34f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19",		0x20000, 0xe95270ac, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(gulunpa)
+STD_ROM_FN(gulunpa)
 
 static struct BurnRomInfo KnightsRomDesc[] = {
 	{ "kr_23e.8f",     0x080000, 0x1b3997eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14368,6 +14419,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "pang3j"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"      , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"    , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
+	{ "gulunpa"     , CPS_B_21_DEF, mapper_gulun , 0, NULL                },
 	{ "punisher"    , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisheru"   , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherj"   , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
@@ -19730,6 +19782,16 @@ struct BurnDriver BurnDrvCpsDaimakaib = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
 	NULL, DaimakaibRomInfo, DaimakaibRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
 	DaimakaibInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGulunpa = {
+	"gulunpa", NULL, NULL, NULL, "1993",
+	"Gulun.Pa! (Japan 931220 L)\0", "Corrupt GFX Roms", "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
+	NULL, gulunpaRomInfo, gulunpaRomName, NULL, NULL, NULL, NULL, NTFOInputInfo, GulunpaDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

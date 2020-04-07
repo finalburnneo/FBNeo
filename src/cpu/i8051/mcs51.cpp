@@ -2531,6 +2531,7 @@ void i8052_init()
 
 void i8052Init(INT32 cpu)
 {
+	multi_cpu_mode = 1;
 	mcs51Open(cpu);
 	i8052_init();
 	mcs51Close();

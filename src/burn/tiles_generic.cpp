@@ -65,16 +65,16 @@ INT32 GenericTilesExit()
 
 void GenericTilesSetClip(INT32 nMinx, INT32 nMaxx, INT32 nMiny, INT32 nMaxy)
 {
-	if (nMinx > -1) nScreenWidthMin = nMinx;
-	if (nMaxx > -1) nScreenWidthMax = nMaxx;
-	if (nMiny > -1) nScreenHeightMin = nMiny;
-	if (nMaxy > -1) nScreenHeightMax = nMaxy;
-
 	if (nMinx < 0) nMinx = 0;
 	if (nMiny < 0) nMiny = 0;
 
 	if (nMaxx > nScreenWidth) nMaxx = nScreenWidth;
 	if (nMaxy > nScreenHeight) nMaxy = nScreenHeight;
+
+	if (nMinx > -1) nScreenWidthMin = nMinx;
+	if (nMaxx > -1) nScreenWidthMax = nMaxx;
+	if (nMiny > -1) nScreenHeightMin = nMiny;
+	if (nMaxy > -1) nScreenHeightMax = nMaxy;
 }
 
 void GenericTilesGetClip(INT32 *nMinx, INT32 *nMaxx, INT32 *nMiny, INT32 *nMaxy)

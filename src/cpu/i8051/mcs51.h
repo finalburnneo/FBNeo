@@ -113,6 +113,7 @@ void mcs51Init(INT32 cpu);
 void ds5002fpInit(INT32 cpu, UINT8 mcon, UINT8 rpctl, UINT8 crc);
 void i80c51Init(INT32 cpu);
 void i8052Init(INT32 cpu);
+void i80c52Init(INT32 cpu);
 void mcs51Open(INT32 nCpu);
 void mcs51Close();
 INT32 mcs51GetActive();
@@ -120,6 +121,7 @@ INT32 mcs51GetActive();
 
 void i80c51_init();
 void i8052_init();
+void i80c52_init();
 void mcs51_set_serial_tx_callback(void  (*callback)(UINT8 data));
 void mcs51_set_serial_rx_callback(UINT8 (*callback)());
 

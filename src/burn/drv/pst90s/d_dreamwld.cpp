@@ -36,6 +36,10 @@ static UINT8 DrvDips[2];
 
 static UINT8 *DrvOkiBank;
 
+static UINT8 prot_p1;
+static UINT8 prot_p2;
+static UINT8 prot_latch;
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
@@ -276,10 +280,6 @@ static struct BurnDIPInfo GaialastDIPList[]=
 
 STDDIPINFO(Gaialast)
 
-static UINT8 prot_p1;
-static UINT8 prot_p2;
-static UINT8 prot_latch;
-
 static UINT8 mcs51_read_port(INT32 port)
 {
 	switch (port)
@@ -462,6 +462,9 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	mcs51_reset();
+	prot_p1 = 0;
+	prot_p2 = 0;
+	prot_latch = 0;
 
 	MSM6295Reset();
 
@@ -919,6 +922,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		mcs51_scan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
+
+		SCAN_VAR(prot_p1);
+		SCAN_VAR(prot_p2);
+		SCAN_VAR(prot_latch);
 
 		if (nAction & ACB_WRITE) {
 			dreamwld_oki_setbank(0, DrvOkiBank[0]);

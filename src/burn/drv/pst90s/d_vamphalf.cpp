@@ -1213,7 +1213,7 @@ static void aoh_draw_sprites()
 {
 	UINT16 *ram = (UINT16*)DrvTileRAM;
 
-	for (INT32 y = (16 & ~15); y <= ((256 - 1) | 15); y += 16)
+	for (INT32 y = (16 & ~15); y <= ((240 - 1) | 15); y += 16)
 	{
 		GenericTilesSetClip(-1, -1, y-16, y+15+1-16); // +1 ?
 

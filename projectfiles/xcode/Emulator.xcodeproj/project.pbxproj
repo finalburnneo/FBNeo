@@ -992,7 +992,6 @@
 		FE8329102439A3A000059993 /* d_gstream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83290C2439A3A000059993 /* d_gstream.cpp */; };
 		FE8329112439A3A000059993 /* d_limenko.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83290D2439A3A000059993 /* d_limenko.cpp */; };
 		FE8329122439A3A000059993 /* d_vamphalf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83290E2439A3A000059993 /* d_vamphalf.cpp */; };
-		FE8329182439A3E000059993 /* e132xsop.inc in Sources */ = {isa = PBXBuildFile; fileRef = FE8329162439A3E000059993 /* e132xsop.inc */; };
 		FE8329192439A3E000059993 /* e132xs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE8329172439A3E000059993 /* e132xs.cpp */; };
 		FE83291C2439A41300059993 /* qs1000.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83291B2439A41200059993 /* qs1000.cpp */; };
 		FE8868352410D54D0022BEE6 /* d_nes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE8868342410D54D0022BEE6 /* d_nes.cpp */; };
@@ -4870,7 +4869,7 @@
 		FE1B1085235615940065200C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1110;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Akop Karapetyan";
 				TargetAttributes = {
 					FE1B108C235615940065200C = {
@@ -5432,7 +5431,6 @@
 				FE1B254E23561A760065200C /* d_missb2.cpp in Sources */,
 				FE1B257123561A760065200C /* gal_stars.cpp in Sources */,
 				FE1B260523561A760065200C /* d_snowbro2.cpp in Sources */,
-				FE8329182439A3E000059993 /* e132xsop.inc in Sources */,
 				FE1B27A023561A790065200C /* tms36xx.cpp in Sources */,
 				FE1B23B623561A750065200C /* h6280.cpp in Sources */,
 				FE1B26DD23561A780065200C /* d_iqblock.cpp in Sources */,
@@ -6209,7 +6207,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6222,7 +6220,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 1.03;
+				MARKETING_VERSION = 1.04;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",
@@ -6269,7 +6267,7 @@
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6282,7 +6280,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 1.03;
+				MARKETING_VERSION = 1.04;
 				OTHER_CFLAGS = (
 					"-DINLINE=\"static inline\"",
 					"-DUSE_SPEEDHACKS",

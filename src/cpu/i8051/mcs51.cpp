@@ -2538,7 +2538,6 @@ void i8052Init(INT32 cpu)
 }
 
 
-#if 0
 /****************************************************************************
  * 80C52 Section
  ****************************************************************************/
@@ -2562,7 +2561,7 @@ static void i80c52_sfr_write(INT32 offset, UINT8 data)
 			i8052_sfr_write(offset, data);
 			return;
 	}
-	mcs51_state.data->write_byte((INT32) offset | 0x100, data);
+	mcs51_state.sfr_ram[offset] = data;
 }
 
 static UINT8 i80c52_sfr_read(INT32 offset)
@@ -2573,22 +2572,30 @@ static UINT8 i80c52_sfr_read(INT32 offset)
 		case ADDR_IPH:
 		case ADDR_SADDR:
 		case ADDR_SADEN:
-			return mcs51_state.data->read_byte((INT32) offset | 0x100);
+			return mcs51_state.sfr_ram[offset];
 		default:
 			return i8052_sfr_read(offset);
 	}
 }
 
-static CPU_INIT( i80c52 )
+void i80c52_init()
 {
-	 = get_safe_token(device);
-	CPU_INIT_CALL(i8052);
+	i8052_init();
 
 	mcs51_state.features |= (FEATURE_I80C52 | FEATURE_CMOS);
 	mcs51_state.sfr_read = i80c52_sfr_read;
 	mcs51_state.sfr_write = i80c52_sfr_write;
 }
 
+void i80c52Init(INT32 cpu)
+{
+	multi_cpu_mode = 1;
+	mcs51Open(cpu);
+	i80c52_init();
+	mcs51Close();
+}
+
+#if 0
 static CPU_INIT( i80c31 )
 {
 	 = get_safe_token(device);

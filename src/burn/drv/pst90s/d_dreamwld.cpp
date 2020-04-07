@@ -3,6 +3,7 @@
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
+#include "mcs51.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -10,12 +11,12 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
+static UINT8 *DrvProtROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
-static UINT8 *DrvProtData;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprBuf2;
@@ -34,33 +35,31 @@ static UINT32 DrvInputs;
 static UINT8 DrvDips[2];
 
 static UINT8 *DrvOkiBank;
-static INT32 protindex = 0;
-static INT32 protsize;
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 31,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 30,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 28,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 23,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 22,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 20,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Common)
@@ -277,6 +276,43 @@ static struct BurnDIPInfo GaialastDIPList[]=
 
 STDDIPINFO(Gaialast)
 
+static UINT8 prot_p1;
+static UINT8 prot_p2;
+static UINT8 prot_latch;
+
+static UINT8 mcs51_read_port(INT32 port)
+{
+	switch (port)
+	{
+		case MCS51_PORT_P2:
+			return prot_p2;
+	}
+
+	return 0;
+}
+
+static void mcs51_write_port(INT32 port, UINT8 data)
+{
+	switch (port)
+	{
+		case MCS51_PORT_P1:
+			prot_p1 = data;
+		return;
+
+		case MCS51_PORT_P2: {
+			for (INT32 i = 0; i < 8; i++) {
+				if ((prot_p2 & (1 << i)) != (data & (1 << i))) {
+					if (data & (1 << i) && i == 1) {
+						prot_latch = prot_p1;
+					}
+				}
+			}
+		}
+		prot_p2 = data;
+		return;
+	}
+}
+
 inline static void palette_write(INT32 offset)
 {
 	offset &= 0x1ffe;
@@ -327,8 +363,8 @@ static UINT8 __fastcall dreamwld_read_byte(UINT32 address)
 			return MSM6295Read(1);
 
 		case 0xc00030:
-			protindex++;
-			return DrvProtData[(protindex-1) % protsize];
+			prot_p2 &= 0xf7;
+			return prot_latch;
 	}
 
 	bprintf (PRINT_NORMAL, _T("%5.5x, rb\n"), address);
@@ -378,8 +414,10 @@ static void __fastcall dreamwld_write_byte(UINT32 address, UINT8 data)
 		case 0xc0fffe:
 		case 0xc0ffff:
 		case 0xc00010:
+			return;
+
 		case 0xc00020:
-			// NOP
+			prot_p2 &= 0xfb;
 		return;
 
 		case 0xc0002c:
@@ -423,9 +461,9 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset();
+	mcs51_reset();
 
-	protindex = 0;
+	MSM6295Reset();
 
 	dreamwld_oki_setbank(0, 0);
 	dreamwld_oki_setbank(1, 0); // dreamwld
@@ -447,7 +485,7 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x0200000;
 
-	DrvProtData	= Next; Next += 0x0001000;
+	DrvProtROM	= Next; Next += 0x0002000;
 
 	MSM6295ROM	= Next;
 	DrvSndROM0	= Next; Next += 0x0080000;
@@ -486,82 +524,10 @@ static INT32 DreamwldRomLoad()
 	if (BurnLoadRom(Drv68KROM  + 0x000001,  2, 4)) return 1;
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
 
-	if (BurnLoadRom(DrvProtData,            5, 1)) return 1;
-	protsize = 0x6c9;
+	if (BurnLoadRom(DrvProtROM,             4, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0,             6, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1,             7, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0,             8, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1,             9, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  10, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  11, 2)) return 1;
-
-	return 0;
-}
-
-static INT32 BaryonRomLoad()
-{
-	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
-
-	if (BurnLoadRom(DrvProtData,            5, 1)) return 1;
-	protsize = 0x6bd;
-
-	if (BurnLoadRom(DrvSndROM0,             6, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0,             7, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  8, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1,             9, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  10, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  11, 2)) return 1;
-
-	return 0;
-}
-
-static INT32 CutefghtRomLoad()
-{
-	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
-
-	if (BurnLoadRom(DrvProtData,            5, 1)) return 1;
-	protsize = 0x701;
-
-	if (BurnLoadRom(DrvSndROM0,             6, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1,             7, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0,             8, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  9, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x400000, 10, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x600000, 11, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1,            12, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  13, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  14, 2)) return 1;
-
-	return 0;
-}
-
-static INT32 RolcrushRomLoad()
-{
-	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
-
-	if (BurnLoadRom(DrvProtData,            5, 1)) return 1;
-	protsize = 0x745;
-
-	if (BurnLoadRom(DrvSndROM0,             6, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0,             5, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1,             6, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0,             7, 1)) return 1;
 
@@ -573,6 +539,74 @@ static INT32 RolcrushRomLoad()
 	return 0;
 }
 
+static INT32 BaryonRomLoad()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
+
+	if (BurnLoadRom(DrvProtROM,             4, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0,             5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0,             6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  7, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1,             8, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x00000,   9, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  10, 2)) return 1;
+
+	return 0;
+}
+
+static INT32 CutefghtRomLoad()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
+
+	if (BurnLoadRom(DrvProtROM,             4, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0,             5, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1,             6, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0,             7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x600000, 10, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1,            11, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  12, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  13, 2)) return 1;
+
+	return 0;
+}
+
+static INT32 RolcrushRomLoad()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
+
+	if (BurnLoadRom(DrvProtROM,             4, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0,             5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0,             6, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1,             7, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x00000,   8, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00001,   9, 2)) return 1;
+
+	return 0;
+}
+
 static INT32 GaialastRomLoad()
 {
 	if (BurnLoadRom(Drv68KROM  + 0x000003,  0, 4)) return 1;
@@ -580,19 +614,18 @@ static INT32 GaialastRomLoad()
 	if (BurnLoadRom(Drv68KROM  + 0x000002,  2, 4)) return 1;
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  3, 4)) return 1;
 
-	if (BurnLoadRom(DrvProtData,            5, 1)) return 1;
-	protsize = 0x6c9;
+	if (BurnLoadRom(DrvProtROM,             4, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0,             6, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0,             5, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0,             7, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  8, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0,             6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x200000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  8, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM1,            10, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1,             9, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  11, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  12, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00000,  10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x00001,  11, 2)) return 1;
 
 	return 0;
 }
@@ -612,7 +645,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 		if (pInitCallback) {
 			if (pInitCallback()) return 1;
 		}
-			
+
 		DrvGfxDecode(DrvGfxROM0, 0x800000);
 		DrvGfxDecode(DrvGfxROM1, 0x400000);
 	}
@@ -633,6 +666,11 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	SekSetReadWordHandler(0,	dreamwld_read_word);
 	//SekSetReadLongHandler(0,	dreamwld_read_long);
 	SekClose();
+
+	i80c52_init();
+	mcs51_set_program_data(DrvProtROM);
+	mcs51_set_write_handler(mcs51_write_port);
+	mcs51_set_read_handler(mcs51_read_port);
 
 	MSM6295Init(0, 1000000 / 165, 1);
 	MSM6295Init(1, 1000000 / 165, 1); // dreamwld
@@ -655,6 +693,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 static INT32 DrvExit()
 {
 	SekExit();
+
+	mcs51_exit();
 
 	MSM6295Exit();
 
@@ -824,19 +864,19 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = (16000000 * 100) / 5779;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[2] = {(16000000 * 100) / 5779, (16000000 * 100) / 5779 / 12 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal - nCyclesDone) / (nInterleave - i);
-		nCyclesDone += SekRun(nSegment);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, mcs51);
 
 		if (i == 224) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_ACK); // Oddity: _AUTO doesn't work here..
-			nCyclesDone += SekRun(50);
+			nCyclesDone[0] += SekRun(50);
 			SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		}
 	}
@@ -876,6 +916,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
+		mcs51_scan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
 
@@ -897,21 +938,19 @@ static struct BurnRomInfo baryonRomDesc[] = {
 	{ "3_semicom",		0x040000, 0x0ae6d86e, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "5_semicom",		0x040000, 0x15917c9d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",		0x002000, 0x1ee7896c, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x0006bd, 0x117f32a8, 3 | BRF_PRG | BRF_ESS }, //  5 Protection data
+	{ "1_semicom",		0x080000, 0xe0349074, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "1_semicom",		0x080000, 0xe0349074, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "10_semicom",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  6 Sprites
+	{ "11_semicom",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  7
 
-	{ "10_semicom",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  7 Sprites
-	{ "11_semicom",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  8
+	{ "8_semicom",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  8 Background Tiles
 
-	{ "8_semicom",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  9 Background Tiles
+	{ "6_semicom",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           //  9 Sprite Lookup Table
+	{ "7_semicom",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 10
 
-	{ "6_semicom",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           // 10 Sprite Lookup Table
-	{ "7_semicom",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 11
-
-	{ "9_semicom",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
+	{ "9_semicom",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 11 Unknown
 };
 
 STD_ROM_PICK(baryon)
@@ -941,21 +980,19 @@ static struct BurnRomInfo baryonaRomDesc[] = {
 	{ "5.bin",		0x040000, 0x63d5e7cb, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "6.bin",		0x040000, 0xabccbb3d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",	0x002000, 0x1ee7896c, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x0006bd, 0x117f32a8, 3 | BRF_PRG | BRF_ESS }, //  5 Protection data
+	{ "1.bin",		0x080000, 0xe0349074, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "1.bin",		0x080000, 0xe0349074, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "9.bin",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  6 Sprites
+	{ "11.bin",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  7
 
-	{ "9.bin",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  7 Sprites
-	{ "11.bin",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  8
+	{ "2.bin",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  8 Background Tiles
 
-	{ "2.bin",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  9 Background Tiles
+	{ "8.bin",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           //  9 Sprite Lookup Table
+	{ "10.bin",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 10
 
-	{ "8.bin",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           // 10 Sprite Lookup Table
-	{ "10.bin",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 11
-
-	{ "7.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
+	{ "7.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 11 Unknown
 };
 
 STD_ROM_PICK(baryona)
@@ -979,25 +1016,23 @@ static struct BurnRomInfo cutefghtRomDesc[] = {
 	{ "4_semicom",		0x080000, 0x476a3bf5, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "6_semicom",		0x080000, 0x47440088, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",		0x002000, 0x7d9acd7d, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x000701, 0x764c3c0e, 3 | BRF_GRA },           //  5 Protection data
+	{ "2_semicom",		0x080000, 0x694ddaf9, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "2_semicom",		0x080000, 0x694ddaf9, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "1_semicom",		0x080000, 0xfa3b6890, 5 | BRF_SND },           //  6 Oki #1 samples
 
-	{ "1_semicom",		0x080000, 0xfa3b6890, 5 | BRF_SND },           //  7 Oki #1 samples
+	{ "10_semicom",		0x200000, 0x62bf1e6e, 6 | BRF_GRA },           //  7 Sprites
+	{ "11_semicom",		0x200000, 0x796f23a7, 6 | BRF_GRA },           //  8
+	{ "13_semicom",		0x200000, 0x24222b3c, 6 | BRF_GRA },           //  9
+	{ "14_semicom",		0x200000, 0x385b69d7, 6 | BRF_GRA },           // 10
 
-	{ "10_semicom",		0x200000, 0x62bf1e6e, 6 | BRF_GRA },           //  8 Sprites
-	{ "11_semicom",		0x200000, 0x796f23a7, 6 | BRF_GRA },           //  9
-	{ "13_semicom",		0x200000, 0x24222b3c, 6 | BRF_GRA },           // 10
-	{ "14_semicom",		0x200000, 0x385b69d7, 6 | BRF_GRA },           // 11
+	{ "12_semicom",		0x200000, 0x45d29c22, 7 | BRF_GRA },           // 11 Background Tiles
 
-	{ "12_semicom",		0x200000, 0x45d29c22, 7 | BRF_GRA },           // 12 Background Tiles
+	{ "7_semicom",		0x020000, 0x39454102, 8 | BRF_GRA },           // 12 Sprite Lookup Table
+	{ "8_semicom",		0x020000, 0xfccb1b13, 8 | BRF_GRA },           // 13
 
-	{ "7_semicom",		0x020000, 0x39454102, 8 | BRF_GRA },           // 13 Sprite Lookup Table
-	{ "8_semicom",		0x020000, 0xfccb1b13, 8 | BRF_GRA },           // 14
-
-	{ "9_semicom",		0x010000, 0x0da8db45, 9 | BRF_OPT },           // 15 unknown
+	{ "9_semicom",		0x010000, 0x0da8db45, 9 | BRF_OPT },           // 14 unknown
 };
 
 STD_ROM_PICK(cutefght)
@@ -1027,20 +1062,18 @@ static struct BurnRomInfo rolcrushRomDesc[] = {
 	{ "mx27c2000_1.bin",	0x040000, 0xa37e15b2, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "mx27c2000_3.bin",	0x040000, 0x7af59294, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",			0x002000, 0x9185e237, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x000745, 0x06b8a880, 3 | BRF_GRA },           //  5 Protection data
+	{ "mx27c4000_5.bin",	0x080000, 0x7afa6adb, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "mx27c4000_5.bin",	0x080000, 0x7afa6adb, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "m27c160.8.bin",		0x200000, 0xa509bc36, 5 | BRF_GRA },           //  6 Sprites
 
-	{ "m27c160.8.bin",	0x200000, 0xa509bc36, 5 | BRF_GRA },           //  7 Sprites
+	{ "m27c160.10.bin",		0x200000, 0x739b0cb0, 6 | BRF_GRA },           //  7 Background Tiles
 
-	{ "m27c160.10.bin",	0x200000, 0x739b0cb0, 6 | BRF_GRA },           //  8 Background Tiles
+	{ "tms27c010_7.bin",	0x020000, 0x4cb84384, 7 | BRF_GRA },           //  8 Sprite Lookup Table
+	{ "tms27c010_6.bin",	0x020000, 0x0c9d197a, 7 | BRF_GRA },           //  9
 
-	{ "tms27c010_7.bin",	0x020000, 0x4cb84384, 7 | BRF_GRA },           //  9 Sprite Lookup Table
-	{ "tms27c010_6.bin",	0x020000, 0x0c9d197a, 7 | BRF_GRA },           // 10
-
-	{ "mx27c512.9.bin",	0x010000, 0x0da8db45, 8 | BRF_OPT },           // 11 unknown
+	{ "mx27c512.9.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 10 unknown
 };
 
 STD_ROM_PICK(rolcrush)
@@ -1070,20 +1103,18 @@ static struct BurnRomInfo rolcrushaRomDesc[] = {
 	{ "1",			0x040000, 0xef23ccf3, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "3",			0x040000, 0xecb2f9da, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",	0x002000, 0x9185e237, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x000745, 0x06b8a880, 3 | BRF_GRA },           //  5 Protection data
+	{ "5",			0x080000, 0x7afa6adb, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "5",			0x080000, 0x7afa6adb, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "8",			0x200000, 0x01446191, 5 | BRF_GRA },           //  6 Sprites
 
-	{ "8",			0x200000, 0x01446191, 5 | BRF_GRA },           //  7 Sprites
+	{ "10",			0x200000, 0x8cb75392, 6 | BRF_GRA },           //  7 Background Tiles
 
-	{ "10",			0x200000, 0x8cb75392, 6 | BRF_GRA },           //  8 Background Tiles
+	{ "7",			0x020000, 0x23d641e4, 7 | BRF_GRA },           //  8 Sprite Lookup Table
+	{ "6",			0x020000, 0x5934dac9, 7 | BRF_GRA },           //  9
 
-	{ "7",			0x020000, 0x23d641e4, 7 | BRF_GRA },           //  9 Sprite Lookup Table
-	{ "6",			0x020000, 0x5934dac9, 7 | BRF_GRA },           // 10
-
-	{ "9",			0x010000, 0x0da8db45, 8 | BRF_OPT },           // 11 unknown
+	{ "9",			0x010000, 0x0da8db45, 8 | BRF_OPT },           // 10 unknown
 };
 
 STD_ROM_PICK(rolcrusha)
@@ -1108,22 +1139,20 @@ static struct BurnRomInfo gaialastRomDesc[] = {
 	{ "3",			0x040000, 0xa8e845d8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "5",			0x040000, 0xc55f6f11, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "87c52.mcu",		0x010000, 0x00000000, 2 | BRF_NODUMP },        //  4 MCU code
+	{ "mcu.bin",	0x002000, 0xfb3db92b, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
 
-	{ "protdata.bin",	0x0006c9, 0xd3403b7b, 3 | BRF_GRA },           //  Protection data
+	{ "1",			0x080000, 0x2dbad410, 4 | BRF_SND },           //  5 Oki #0 samples
 
-	{ "1",			0x080000, 0x2dbad410, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "10",			0x200000, 0x5822ef93, 5 | BRF_GRA },           //  6 Sprites
+	{ "11",			0x200000, 0xf4f5770d, 5 | BRF_GRA },           //  7
+	{ "12",			0x200000, 0xa1f04571, 5 | BRF_GRA },           //  8
 
-	{ "10",			0x200000, 0x5822ef93, 5 | BRF_GRA },           //  7 Sprites
-	{ "11",			0x200000, 0xf4f5770d, 5 | BRF_GRA },           //  8
-	{ "12",			0x200000, 0xa1f04571, 5 | BRF_GRA },           //  9
+	{ "8",			0x200000, 0x32d16985, 6 | BRF_GRA },           //  9 Background Tiles
 
-	{ "8",			0x200000, 0x32d16985, 6 | BRF_GRA },           // 10 Background Tiles
+	{ "6",			0x020000, 0x5c82feed, 7 | BRF_GRA },           // 10 Sprite Lookup Table
+	{ "7",			0x020000, 0x9d7f04ae, 7 | BRF_GRA },           // 11
 
-	{ "6",			0x020000, 0x5c82feed, 7 | BRF_GRA },           // 11 Sprite Lookup Table
-	{ "7",			0x020000, 0x9d7f04ae, 7 | BRF_GRA },           // 12
-
-	{ "9",			0x010000, 0x0da8db45, 8 | BRF_OPT },           // 13 unknown
+	{ "9",			0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 unknown
 };
 
 STD_ROM_PICK(gaialast)
@@ -1154,8 +1183,6 @@ static struct BurnRomInfo dreamwldRomDesc[] = {
 	{ "4.bin",			0x040000, 0x3ef5d51b, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "87c51rap.bin",	0x002000, 0x987bbfe8, 2 | BRF_PRG | BRF_ESS }, //  4 MCU code
-
-	{ "protdata.bin",	0x0006c9, 0xf284b2fd, 3 | BRF_PRG | BRF_ESS }, //  5 Protection data
 
 	{ "5.bin",			0x080000, 0x9689570a, 4 | BRF_SND },           //  6 Oki #0 samples
 	

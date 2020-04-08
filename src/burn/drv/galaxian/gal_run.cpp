@@ -621,7 +621,9 @@ INT32 GalInit()
 	GenericTilesInit();
 	
 	GalColourDepth = 2;
-	
+
+	GalScreenUnflipper = 1; // unflip coctail!
+
 	// Reset the driver
 	GalDoReset();
 
@@ -1613,6 +1615,8 @@ INT32 GalExit()
 	GalVBlank = 0;
 	
 	GalColourDepth = 0;
+
+	GalScreenUnflipper = 0;
 
 	return 0;
 }

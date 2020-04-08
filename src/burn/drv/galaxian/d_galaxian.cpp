@@ -1487,6 +1487,15 @@ static struct BurnInputInfo RockclimInputList[] =
 	{"P1 Rght Stick Left" , BIT_DIGITAL   , GalInputPort0 + 2, "p2 left"   },
 	{"P1 Rght Stick Right", BIT_DIGITAL   , GalInputPort0 + 3, "p2 right"  },
 
+	{"P2 Left Stick Up"   , BIT_DIGITAL   , GalInputPort2 + 6, "p3 up"     },
+	{"P2 Left Stick Down" , BIT_DIGITAL   , GalInputPort2 + 7, "p3 down"   },
+	{"P2 Left Stick Left" , BIT_DIGITAL   , GalInputPort2 + 4, "p3 left"   },
+	{"P2 Left Stick Right", BIT_DIGITAL   , GalInputPort2 + 5, "p3 right"  },
+	{"P2 Rght Stick Up"   , BIT_DIGITAL   , GalInputPort2 + 2, "p4 up"     },
+	{"P2 Rght Stick Down" , BIT_DIGITAL   , GalInputPort2 + 3, "p4 down"   },
+	{"P2 Rght Stick Left" , BIT_DIGITAL   , GalInputPort2 + 0, "p4 left"   },
+	{"P2 Rght Stick Right", BIT_DIGITAL   , GalInputPort2 + 1, "p4 right"  },
+
 	{"Reset"              , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Dip 1"              , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
 	{"Dip 2"              , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
@@ -5267,73 +5276,78 @@ static struct BurnDIPInfo RescueDIPList[]=
 	
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x10, 0x01, 0x08, 0x08, "Easy"                   },
-	{0x10, 0x01, 0x08, 0x00, "Hard"                   },	
+	{0x10, 0x01, 0x08, 0x00, "Hard"                   },
 };
 
 STDDIPINFO(Rescue)
 
 static struct BurnDIPInfo RockclimDIPList[]=
 {
+	// Dip Offset
+	{0x15, 0xf0, 0xff, 0xff, NULL                     },
 	// Default Values
-	{0x0d, 0xff, 0xff, 0x40, NULL                     },
-	{0x0e, 0xff, 0xff, 0xc0, NULL                     },
-	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0x40, NULL                     },
+	{0x01, 0xff, 0xff, 0xc0, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
+	{0x03, 0xff, 0xff, 0xff, NULL                     },
 	
 	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x00, 0x01, 0x40, 0x00, "Upright"                },
+	{0x00, 0x01, 0x40, 0x40, "Coctail"                },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0e, 0x01, 0x40, 0x00, "30000"                  },
-	{0x0e, 0x01, 0x40, 0x40, "50000"                  },
+	{0x01, 0x01, 0x40, 0x00, "30000"                  },
+	{0x01, 0x01, 0x40, 0x40, "50000"                  },
 	
 	{0   , 0xfe, 0   , 2   , "Coin Slots"             },
-	{0x0e, 0x01, 0x80, 0x80, "1"                      },
-	{0x0e, 0x01, 0x80, 0x00, "2"                      },
+	{0x01, 0x01, 0x80, 0x80, "1"                      },
+	{0x01, 0x01, 0x80, 0x00, "2"                      },
 	
 	// Dip 3	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x0f, 0x01, 0x03, 0x00, "3"                      },
-	{0x0f, 0x01, 0x03, 0x01, "4"                      },
-	{0x0f, 0x01, 0x03, 0x02, "5"                      },
-	{0x0f, 0x01, 0x03, 0x03, "6"                      },
+	{0x02, 0x01, 0x03, 0x00, "3"                      },
+	{0x02, 0x01, 0x03, 0x01, "4"                      },
+	{0x02, 0x01, 0x03, 0x02, "5"                      },
+	{0x02, 0x01, 0x03, 0x03, "6"                      },
 	
 	// Dip 4
 	{0   , 0xfe, 0   , 16  , "Coin A"                 },
-	{0x10, 0x01, 0x0f, 0x00, "9 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x01, "8 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x02, "7 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x03, "6 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x04, "5 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x05, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x06, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x07, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0a, "1 Coin  6 Plays"        },
-	{0x10, 0x01, 0x0f, 0x09, "1 Coin  7 Plays"        },
-	{0x10, 0x01, 0x0f, 0x08, "1 Coin  8 Plays"        },
+	{0x03, 0x01, 0x0f, 0x00, "9 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x01, "8 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x02, "7 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x03, "6 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x04, "5 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x05, "4 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x06, "3 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x07, "2 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
+	{0x03, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0a, "1 Coin  6 Plays"        },
+	{0x03, 0x01, 0x0f, 0x09, "1 Coin  7 Plays"        },
+	{0x03, 0x01, 0x0f, 0x08, "1 Coin  8 Plays"        },
 	
 	{0   , 0xfe, 0   , 16  , "Coin B"                 },
-	{0x10, 0x01, 0xf0, 0x00, "9 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x10, "8 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x20, "7 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x30, "6 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x40, "5 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x50, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x60, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x70, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
-	{0x10, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
-	{0x10, 0x01, 0xf0, 0xa0, "1 Coin  6 Plays"        },
-	{0x10, 0x01, 0xf0, 0x90, "1 Coin  7 Plays"        },
-	{0x10, 0x01, 0xf0, 0x80, "1 Coin  8 Plays"        },
+	{0x03, 0x01, 0xf0, 0x00, "9 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x10, "8 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x20, "7 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x30, "6 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x40, "5 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x50, "4 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x60, "3 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x70, "2 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x03, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
+	{0x03, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
+	{0x03, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
+	{0x03, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
+	{0x03, 0x01, 0xf0, 0xa0, "1 Coin  6 Plays"        },
+	{0x03, 0x01, 0xf0, 0x90, "1 Coin  7 Plays"        },
+	{0x03, 0x01, 0xf0, 0x80, "1 Coin  8 Plays"        },
 };
 
 STDDIPINFO(Rockclim)
@@ -12998,6 +13012,10 @@ STD_ROM_FN(Rockclim)
 UINT8 __fastcall RockclimZ80Read(UINT16 a)
 {
 	switch (a) {
+		case 0x5800: {
+			return GalInput[2];
+		}
+
 		case 0x8800: {
 			return GalInput[3] | GalDip[3];
 		}
@@ -13011,11 +13029,16 @@ UINT8 __fastcall RockclimZ80Read(UINT16 a)
 		}
 		
 		case 0xb000: {
-			return GalInput[2] | GalDip[2];
+			return GalDip[2];
 		}
 		
 		case 0xb800: {
 			// watchdog read
+			return 0xff;
+		}
+
+		case 0xffff: {
+			// ????
 			return 0xff;
 		}
 		
@@ -13024,13 +13047,13 @@ UINT8 __fastcall RockclimZ80Read(UINT16 a)
 		}
 	}
 
-	return 0xff;
+	return 0x00;
 }
 
 void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x9800 && a <= 0x98ff) {
-		INT32 Offset = a - 0x9800;
+		INT32 Offset = a & 0xff;
 		
 		GalSpriteRam[Offset] = d;
 		
@@ -13067,7 +13090,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa000:
 		case 0xa001:
 		case 0xa002: {
-			GalGfxBank[a - 0xa000] = d;
+			GalGfxBank[a & 3] = d;
 			return;
 		}
 		
@@ -13080,7 +13103,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa005:
 		case 0xa006:
 		case 0xa007: {
-			GalaxianLfoFreqWrite(a - 0xa004, d);
+			GalaxianLfoFreqWrite(a & 3, d);
 			return;
 		}
 		
@@ -13092,7 +13115,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa805:
 		case 0xa806:
 		case 0xa807: {
-			GalaxianSoundWrite(a - 0xa800, d);
+			GalaxianSoundWrite(a & 7, d);
 			return;
 		}
 		
@@ -13137,6 +13160,7 @@ static void RockclimPostLoad()
 	ZetOpen(0);
 	ZetSetReadHandler(RockclimZ80Read);
 	ZetSetWriteHandler(RockclimZ80Write);
+	ZetMapMemory(GalVideoRam, 0x9400, 0x97ff, MAP_READ);
 	ZetMapArea(0x4000, 0x47ff, 0, GalVideoRam2);
 	ZetMapArea(0x4000, 0x47ff, 1, GalVideoRam2);
 	ZetMapArea(0x4000, 0x47ff, 2, GalVideoRam2);
@@ -13145,6 +13169,7 @@ static void RockclimPostLoad()
 	ZetMapArea(0x5000, 0x53ff, 2, GalZ80Ram1 + 0x400);
 	ZetMapArea(0x6000, 0x7fff, 0, GalZ80Rom1 + 0x4000);
 	ZetMapArea(0x6000, 0x7fff, 2, GalZ80Rom1 + 0x4000);
+	ZetUnmapMemory(0x5800, 0x58ff, MAP_RAM);
 	ZetClose();
 }
 
@@ -13156,7 +13181,9 @@ static INT32 RockclimInit()
 	RockclimTiles = (UINT8*)BurnMalloc(0x100 * 8 * 8);
 	
 	nRet = GalInit();
-	
+
+	GalScreenUnflipper = 1; // unflip coctail!
+
 	INT32 RockclimPlaneOffsets[4] = {4, 0, 0x8004, 0x8000};
 	INT32 RockclimCharXOffsets[8] = {3, 2, 1, 0, 11, 10, 9, 8};
 	INT32 RockclimCharYOffsets[8] = {0, 16, 32, 48, 64, 80, 96, 112};
@@ -13362,6 +13389,7 @@ static INT32 JumpbugInit()
 	GalSoundSubType = 1; // diff. AY8910 clock
 
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = JumpbugDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -13395,7 +13423,7 @@ static INT32 LeversInit()
 	GalPostLoadCallbackFunction = LeversPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
 	GalSoundSubType = 1; // diff. AY8910 clock
-
+	
 	nRet = GalInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
@@ -13444,6 +13472,7 @@ static INT32 BongoInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_BONGOAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
@@ -13890,6 +13919,7 @@ static INT32 CheckmanInit()
 	GalTilesSharedRomSize = 0x1000;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
@@ -13941,6 +13971,7 @@ static INT32 CheckmanjInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
@@ -13968,6 +13999,7 @@ static INT32 DingoInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
 	Dingo = 1;
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -14004,6 +14036,7 @@ static INT32 DingoeInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -14666,6 +14699,7 @@ static INT32 KingballInit()
 	GalTilesSharedRomSize = 0x1000;	
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
@@ -15039,8 +15073,10 @@ static INT32 FroggerEncGfxInit()
 
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
-	
-	FroggerAdjust = 1;	
+
+	GalScreenUnflipper = 1; // unflip coctail!
+
+	FroggerAdjust = 1;
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
 	GalDrawBulletsFunction = NULL;
@@ -15073,6 +15109,8 @@ static INT32 FroggermcInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
 	GalDrawBulletsFunction = NULL;
@@ -15091,6 +15129,8 @@ static INT32 FroggersInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	KonamiPPIInit();
 	
@@ -15186,6 +15226,8 @@ static INT32 FroggrsInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	KonamiPPIInit();
 	
@@ -15599,6 +15641,8 @@ static INT32 TurtlesInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = TurtlesDrawBackground;
 	GalDrawBulletsFunction = NULL;

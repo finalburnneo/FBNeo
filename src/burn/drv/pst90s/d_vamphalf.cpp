@@ -1281,9 +1281,6 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	E132XSNewFrame();
-	mcs51NewFrame();
-
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
 
@@ -1306,6 +1303,9 @@ static INT32 DrvFrame()
 		}
 	}
 
+	E132XSNewFrame();
+	if (sound_type == 2) mcs51NewFrame();
+
 	INT32 nSegment;
 	INT32 nInterleave = 10;
 	INT32 nSoundBufferPos = 0;
@@ -1313,6 +1313,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	E132XSOpen(0);
+	if (sound_type == 2) mcs51Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1358,6 +1359,7 @@ static INT32 DrvFrame()
 		}
 	}
 
+	if (sound_type == 2) mcs51Close();
 	E132XSClose();
 
 	if (pBurnDraw) {

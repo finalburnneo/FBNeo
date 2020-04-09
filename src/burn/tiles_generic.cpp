@@ -271,6 +271,35 @@ INT32 BurnTransferInit()
 	return 0;
 }
 
+void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY)
+{
+	if (bFlipX) {
+		UINT16 *tmp = (UINT16*)pBurnDraw; // :D
+		for (INT32 y = 0; y < nScreenHeight; y++)
+		{
+			UINT16 *line = pTransDraw + y * nScreenWidth;
+			for (INT32 x = 0; x < nScreenWidth; x++)
+			{
+				tmp[(nScreenWidth - 1) - x] = line[x];
+			}
+			memcpy (line, tmp, nScreenWidth * 2);
+		}
+	}
+	if (bFlipY) {
+		UINT16 *tmp = (UINT16*)pBurnDraw;
+		UINT16 *src1 = pTransDraw;
+		UINT16 *src2 = pTransDraw + (nScreenHeight-1) * nScreenWidth;
+
+		for (INT32 y = 0; y < nScreenHeight / 2; y++) {
+			memcpy (tmp,  src1, nScreenWidth * 2);
+			memcpy (src1, src2, nScreenWidth * 2);
+			memcpy (src2, tmp,  nScreenWidth * 2);
+			src1 += nScreenWidth;
+			src2 -= nScreenWidth;
+		}
+	}
+}
+
 /*================================================================================================
 Graphics Decoding
 ================================================================================================*/

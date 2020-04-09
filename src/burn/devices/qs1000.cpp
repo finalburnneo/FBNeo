@@ -631,7 +631,10 @@ static UINT8 qs1000_rx_serial()
 
 void qs1000_reset()
 {
+	mcs51Open(0);
 	mcs51_reset();
+	mcs51Close();
+
 	memset (m_channels, 0, sizeof(m_channels));
 	memset (ram, 0, sizeof(ram));
 	memset (wave_regs, 0, sizeof(wave_regs));
@@ -644,11 +647,14 @@ void qs1000_init(UINT8 *program_rom, UINT8 *samples, INT32 samplesize)
 	sample_rom = samples;
 	sample_len = samplesize;
 
-	i8052_init();
+	i8052Init(0);
+	mcs51Open(0);
 	mcs51_set_program_data(program_rom);
 	mcs51_set_write_handler(qs1000_write_port);
 	mcs51_set_read_handler(qs1000_read_port);
 	mcs51_set_serial_rx_callback(qs1000_rx_serial);
+	mcs51Close();
+
 	qs1000_p1_out = NULL;
 	qs1000_p2_out = NULL;
 	qs1000_p3_out = NULL;
@@ -732,12 +738,41 @@ void qs1000_set_bankedrom(UINT8 *rom)
 void qs1000_serial_in(UINT8 data)
 {
 	serial_data_in = data;
+	
+	INT32 active = mcs51GetActive();
+	
+	if (active != 0)
+	{
+		mcs51Close();
+		mcs51Open(0);
+	}
 
 	mcs51_set_irq_line(MCS51_RX_LINE, CPU_IRQSTATUS_ACK);
 	mcs51_set_irq_line(MCS51_RX_LINE, CPU_IRQSTATUS_NONE);
+	
+	if (active != 0)
+	{
+		mcs51Close();
+		mcs51Open(active);
+	}
 }
 
 void qs1000_set_irq(int state)
 {
+	INT32 active = mcs51GetActive();
+
+	if (active != 0)
+	{
+		mcs51Close();
+		mcs51Open(0);
+	}
+	
 	mcs51_set_irq_line(MCS51_INT1_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	
+	if (active != 0)
+	{
+		mcs51Close();
+		mcs51Open(active);
+	}
 }
+

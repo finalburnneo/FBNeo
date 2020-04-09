@@ -413,7 +413,9 @@ static INT32 DrvDoReset()
 
 		case 1: // spotty
 		{
+			mcs51Open(0);
 			mcs51_reset();
+			mcs51Close();
 			MSM6295Reset();
 		}
 		break;
@@ -523,9 +525,11 @@ static INT32 LimenkoCommonInit(INT32 cputype, INT32 cpuclock, INT32 (*pLoadRoms)
 		case 1:
 		{
 			i80c51_init();
+			mcs51Open(0);
 			mcs51_set_program_data(DrvQSROM); // not really qs!
 			mcs51_set_write_handler(spotty_sound_write);
 			mcs51_set_read_handler(spotty_sound_read);
+			mcs51Close();
 
 			MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, 0);
 			MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -873,6 +877,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	E132XSOpen(0);
+	mcs51Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -890,6 +895,7 @@ static INT32 DrvFrame()
 		}
 	}
 
+	mcs51Close();
 	E132XSClose();
 
 	if (pBurnDraw) {

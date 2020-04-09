@@ -1554,8 +1554,9 @@ static void draw_bg_layer(UINT8 *ram, UINT8 *ctrl, UINT8 *gfx, INT32 coff, INT32
 	{
 		INT32 xscroll[256];
 
+		scrollx = 0;
 		for (INT32 i = 0; i < 256; i++) {
-			xscroll[i] = ((DrvRowRAM[i*2]<<8)+DrvRowRAM[i*2+1])&0x1ff;
+			xscroll[i] = (((ctrl[0x10] << 8) | ctrl[0x11]) + ((DrvRowRAM[i*2]<<8)+DrvRowRAM[i*2+1]))&0x1ff;
 		}
 
 		for (INT32 offs = 0; offs < 32 * 32; offs++)
@@ -1655,6 +1656,8 @@ static INT32 DrvDraw()
 			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
 		}
 	}
+
+	BurnTransferClear();
 
 	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x200, 0x0f, 0x7ff, 0, 0);
 	draw_sprites1(0);

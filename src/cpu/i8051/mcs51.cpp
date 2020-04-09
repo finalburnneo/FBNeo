@@ -2110,14 +2110,11 @@ void mcs51_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		for (INT32 i = 0; i < ((multi_cpu_mode) ? 2 : 1); i++) {
-			mcs51_state_t *ptr = &mcs51_state_store[i];
-
 			struct BurnArea ba;
 			memset(&ba, 0, sizeof(ba));
-			ba.Data	  = &ptr;
+			ba.Data	  = &mcs51_state_store[i];
 			ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
-			ba.szName = "i8051 Regs #x";
-			ba.szName[12] = '0' + i;
+			ba.szName = "i8051 Regs";
 			BurnAcb(&ba);
 		}
 	}

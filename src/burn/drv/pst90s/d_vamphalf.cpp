@@ -1348,8 +1348,8 @@ static INT32 DrvFrame()
 				nSegment = nBurnSoundLen - nSoundBufferPos;
 				if (nSegment > 0) {
 					BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-					MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 				}
+				MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 			break;
 
 			case 2:

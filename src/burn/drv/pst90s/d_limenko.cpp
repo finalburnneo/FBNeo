@@ -516,7 +516,7 @@ static INT32 LimenkoCommonInit(INT32 cputype, INT32 cpuclock, INT32 (*pLoadRoms)
 			qs1000_init(DrvQSROM, DrvSndROM, 0x400000);
 			qs1000_set_write_handler(3, qs1000_p3_write);
 			qs1000_set_read_handler(1, qs1000_p1_read);
-			qs1000_set_volume(2.00);
+			qs1000_set_volume(3.00);
 
 			sound_type = 0;
 		}

@@ -306,8 +306,8 @@ static void sound_stream_update(INT16 *outputL, INT16 *outputR, int samples)
 					chan.m_addr = (chan.m_addr + (chan.m_acc >> 18)) & QS1000_ADDRESS_MASK;
 					chan.m_acc &= ((1 << 18) - 1);
 
-					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * 4 * lvol * vol) >> 12));
-					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * 4 * rvol * vol) >> 12));
+					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * 8 * lvol * vol) >> 12));
+					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * 8 * rvol * vol) >> 12));
 				}
 			}
 			else
@@ -335,8 +335,8 @@ static void sound_stream_update(INT16 *outputL, INT16 *outputR, int samples)
 					chan.m_addr = (chan.m_addr + (chan.m_acc >> 18)) & QS1000_ADDRESS_MASK;
 					chan.m_acc &= ((1 << 18) - 1);
 
-					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * lvol * vol) >> 12));
-					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * rvol * vol) >> 12));
+					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * 8 * lvol * vol) >> 12));
+					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * 8 * rvol * vol) >> 12));
 				}
 			}
 		}
@@ -406,8 +406,8 @@ void qs1000_update(INT16 *outputs, INT32 samples_len)
 		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition >> 16) - 1]);
 		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition >> 16) - 0]);
 
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0] * 8, nLeftSample[1] * 8, nLeftSample[2] * 8, nLeftSample[3] * 8);
-		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0] * 8, nRightSample[1] * 8, nRightSample[2] * 8, nRightSample[3] * 8);
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
 
 		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample  * qs1000_mastervol);
 		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample * qs1000_mastervol);
@@ -664,7 +664,7 @@ void qs1000_init(UINT8 *program_rom, UINT8 *samples, INT32 samplesize)
 
 	okiadpcm_compute_tables();
 
-	qs1000_mastervol = 1.00;
+	qs1000_mastervol = 3.00;
 
 	// resampling l/r buffers
 	qs1000_rate = 24000000 / 32;
@@ -732,6 +732,7 @@ void qs1000_set_read_handler(INT32 port, UINT8 (*handler)())
 
 void qs1000_set_bankedrom(UINT8 *rom)
 {
+	UpdateStream(SyncInternal());
 	banked_rom = rom;
 }
 

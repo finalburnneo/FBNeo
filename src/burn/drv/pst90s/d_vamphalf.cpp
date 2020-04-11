@@ -1089,7 +1089,7 @@ static void sound_type_2_init()
 	qs1000_init(DrvQSROM, DrvSndROM[0], sound_size[0]);
 	qs1000_set_write_handler(3, qs1000_p3_write);
 	qs1000_set_read_handler(1, qs1000_p1_read);
-	qs1000_set_volume(6.00);
+	qs1000_set_volume(4.00);
 	sound_type = 2;
 }
 
@@ -1348,8 +1348,8 @@ static INT32 DrvFrame()
 				nSegment = nBurnSoundLen - nSoundBufferPos;
 				if (nSegment > 0) {
 					BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-					MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 				}
+				MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 			break;
 
 			case 2:
@@ -2080,7 +2080,7 @@ static INT32 MisncrftInit()
 
 	INT32 rc = CommonInit(TYPE_GMS30C2116, misncrft_io_write, misncrft_io_read, sound_type_2_init, 0, 0);
 	if (!rc) {
-		qs1000_set_volume(2.00);
+		qs1000_set_volume(1.00);
 	}
 	return rc;
 }

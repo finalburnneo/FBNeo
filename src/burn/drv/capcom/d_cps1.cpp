@@ -6927,7 +6927,7 @@ static struct BurnRomInfo gulunpaRomDesc[] = {
 	{ "26",		0x20000, 0xf30ffa29, BRF_PRG | BRF_ESS | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "30",		0x20000, 0x5d35f737, BRF_PRG | BRF_ESS | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "1",		0x80000, 0x3cf0546b, BRF_GRA | CPS1_TILES },
+	{ "1",		0x80000, 0xb55e648f, BRF_GRA | CPS1_TILES },
 	{ "2",		0x80000, 0xad033bce, BRF_GRA | CPS1_TILES },
 	{ "3",		0x80000, 0x36c3951a, BRF_GRA | CPS1_TILES },
 	{ "4",		0x80000, 0xff0cb826, BRF_GRA | CPS1_TILES },

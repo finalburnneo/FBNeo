@@ -19787,7 +19787,7 @@ struct BurnDriver BurnDrvCpsDaimakaib = {
 
 struct BurnDriver BurnDrvGulunpa = {
 	"gulunpa", NULL, NULL, NULL, "1993",
-	"Gulun.Pa! (Japan 931220 L)\0", "Corrupt GFX Roms", "Capcom", "Miscellaneous",
+	"Gulun.Pa! (Japan 931220 L)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
 	NULL, gulunpaRomInfo, gulunpaRomName, NULL, NULL, NULL, NULL, NTFOInputInfo, GulunpaDIPInfo,

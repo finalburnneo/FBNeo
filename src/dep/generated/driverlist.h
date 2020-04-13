@@ -2125,14 +2125,12 @@ DRV		BurnDrvCrazyfgt;
 DRV		BurnDrvCkongg;
 DRV		BurnDrvCkongmc;
 DRV		BurnDrvCkongs;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvCkongpt2b;		// no comment [NOT WORKING]
-DRV		BurnDrvCkongpt2b2;		// no comment
-DRV		BurnDrvCkongpt2j;		// no comment
-DRV		BurnDrvCkongpt2jeu;		// no comment
-DRV		BurnDrvCkongpt2;		// no comment
-DRV		BurnDrvCkongpt2a;		// no comment
-#endif
+DRV		BurnDrvCkongpt2b;
+DRV		BurnDrvCkongpt2b2;
+DRV		BurnDrvCkongpt2j;
+DRV		BurnDrvCkongpt2jeu;
+DRV		BurnDrvCkongpt2;
+DRV		BurnDrvCkongpt2a;
 DRV		BurnDrvCkong;
 DRV		BurnDrvCrzrallyg;
 DRV		BurnDrvCrzrally;
@@ -16160,14 +16158,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCkongg,				// Crazy Kong (bootleg on Galaxian hardware)
 	&BurnDrvCkongmc,			// Crazy Kong (bootleg on Moon Cresta hardware)
 	&BurnDrvCkongs,				// Crazy Kong (Scramble hardware)
-#if defined FBNEO_DEBUG
-	&BurnDrvCkongpt2b,			// Crazy Kong Part II (alternative levels) [no comment, NOT WORKING]
-	&BurnDrvCkongpt2b2,			// Crazy Kong Part II (bootleg) [no comment]
-	&BurnDrvCkongpt2j,			// Crazy Kong Part II (Japan) [no comment]
-	&BurnDrvCkongpt2jeu,		// Crazy Kong Part II (Jeutel bootleg) [no comment]
-	&BurnDrvCkongpt2,			// Crazy Kong Part II (set 1) [no comment]
-	&BurnDrvCkongpt2a,			// Crazy Kong Part II (set 2) [no comment]
-#endif
+	&BurnDrvCkongpt2b,			// Crazy Kong Part II (alternative levels)
+	&BurnDrvCkongpt2b2,			// Crazy Kong Part II (bootleg)
+	&BurnDrvCkongpt2j,			// Crazy Kong Part II (Japan)
+	&BurnDrvCkongpt2jeu,		// Crazy Kong Part II (Jeutel bootleg)
+	&BurnDrvCkongpt2,			// Crazy Kong Part II (set 1)
+	&BurnDrvCkongpt2a,			// Crazy Kong Part II (set 2)
 	&BurnDrvCkong,				// Crazy Kong
 	&BurnDrvCrzrallyg,			// Crazy Rally (Gecas license)
 	&BurnDrvCrzrally,			// Crazy Rally (set 1)
@@ -18432,7 +18428,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gulkavea,		// Gulkave (Jpn, Alt)
 	&BurnDrvMSX_gulkavek,		// Gulkave (Kor)
 	&BurnDrvsg1k_gulkavek,		// Gulkave (Kor)
-	&BurnDrvGulunpa,			// Gulun.Pa! (Japan 931220 L) [Corrupt GFX Roms, NOT WORKING]
+	&BurnDrvGulunpa,			// Gulun.Pa! (Japan 931220 L)
 	&BurnDrvGumbo,				// Gumbo
 	&BurnDrvGunfront,			// Gun & Frontier (World)
 	&BurnDrvGunball,			// Gun Ball (Japan)

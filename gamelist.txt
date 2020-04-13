@@ -2085,12 +2085,12 @@ This list contains all games supported by FinalBurn Neo.
 | ckongg	|  	| Crazy Kong (bootleg on Galaxian hardware)		| ckong		| 1981	| bootleg	| Galaxian	| 					|
 | ckongmc	|  	| Crazy Kong (bootleg on Moon Cresta hardware)		| ckong		| 1981	| bootleg	| Galaxian	| 					|
 | ckongs	|  	| Crazy Kong (Scramble hardware)			| ckong		| 1981	| bootleg	| Galaxian	| 					|
-| ckongpt2b	| D NW	| Crazy Kong Part II (alternative levels)		| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
-| ckongpt2b2	| D	| Crazy Kong Part II (bootleg)				| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
-| ckongpt2j	| D	| Crazy Kong Part II (Japan)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
-| ckongpt2jeu	| D	| Crazy Kong Part II (Jeutel bootleg)			| ckongpt2	| 1981	| bootleg (Jeute| Miscellaneous	| 					|
-| ckongpt2	| D	| Crazy Kong Part II (set 1)				| 		| 1981	| Falcon	| Miscellaneous	| 					|
-| ckongpt2a	| D	| Crazy Kong Part II (set 2)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
+| ckongpt2b	|  	| Crazy Kong Part II (alternative levels)		| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
+| ckongpt2b2	|  	| Crazy Kong Part II (bootleg)				| ckongpt2	| 1981	| bootleg	| Miscellaneous	| 					|
+| ckongpt2j	|  	| Crazy Kong Part II (Japan)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
+| ckongpt2jeu	|  	| Crazy Kong Part II (Jeutel bootleg)			| ckongpt2	| 1981	| bootleg (Jeute| Miscellaneous	| 					|
+| ckongpt2	|  	| Crazy Kong Part II (set 1)				| 		| 1981	| Falcon	| Miscellaneous	| 					|
+| ckongpt2a	|  	| Crazy Kong Part II (set 2)				| ckongpt2	| 1981	| Falcon	| Miscellaneous	| 					|
 | ckong		|  	| Crazy Kong						| 		| 1981	| Kyoei / Falcon| Miscellaneous	| 					|
 | crzrallyg	|  	| Crazy Rally (Gecas license)				| crzrally	| 1985	| Tecfri (Gecas | Miscellaneous	| Graphics issues on some levels	|
 | crzrally	|  	| Crazy Rally (set 1)					| 		| 1985	| Tecfri	| Miscellaneous	| Graphics issues on some levels	|
@@ -4309,7 +4309,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gulkavea	|  	| Gulkave (Jpn, Alt)					| msx_gulkave	| 1986	| Pony Canyon	| MSX		| 					|
 | msx_gulkavek	|  	| Gulkave (Kor)						| msx_gulkave	| 198?	| ProSoft	| MSX		| 					|
 | sg1k_gulkavek	|  	| Gulkave (Kor)						| sg1k_gulkave	| 198?	| Unknown	| Sega SG-1000	| 					|
-| gulunpa	|   NW	| Gulun.Pa! (Japan 931220 L)				| 		| 1993	| Capcom	| Miscellaneous	| Corrupt GFX Roms			|
+| gulunpa	|  	| Gulun.Pa! (Japan 931220 L)				| 		| 1993	| Capcom	| Miscellaneous	| 					|
 | gumbo		|  	| Gumbo							| 		| 1994	| Min Corp.	| Miscellaneous	| 					|
 | gunfront	|  	| Gun & Frontier (World)				| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | gunball	|  	| Gun Ball (Japan)					| nitrobal	| 1992	| Data East Corp| DECO IC16	| 					|

@@ -54,6 +54,7 @@ static UINT8 DrvDips[2];
 static INT32 game_select;
 static INT32 silvland = 0;
 static INT32 ckong = 0;
+static INT32 ckongb = 0;
 static INT32 gfx0_cont800 = 0;
 static INT32 uses_sub;
 static UINT8 bigsprite_index;
@@ -276,7 +277,7 @@ STDDIPINFO(Ckong)
 
 static struct BurnDIPInfo CkongbDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x80, NULL		},
+	{0x0f, 0xff, 0xff, 0x82, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0f, 0x01, 0x03, 0x00, "1"		},
@@ -309,7 +310,7 @@ STDDIPINFO(Ckongb)
 
 static struct BurnDIPInfo Ckongb2DIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x80, NULL		},
+	{0x0f, 0xff, 0xff, 0x81, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0f, 0x01, 0x03, 0x00, "2"		},
@@ -642,6 +643,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 			if (game_select == 6) {
 				swimmer_sidebg = data;
 			}
+			if (ckongb) interrupt_enable = data;
 		return;
 
 		case 0xa004:
@@ -707,7 +709,7 @@ static UINT8 __fastcall cclimber_read(UINT16 address)
 		case 0xb000:
 			return DrvDips[0];
 		case 0xb800:
-			return DrvInputs[2];
+			return (DrvDips[1] & 0x10) | (DrvInputs[2] & ~0x10);
 		case 0xba00:
 			return DrvInputs[3];
 
@@ -1297,6 +1299,7 @@ static INT32 DrvExit()
 	uses_sub = 0;
 	silvland = 0;
 	ckong = 0;
+	ckongb = 0;
 	gfx0_cont800 = 0;
 	uses_samples = 0;
 
@@ -1848,6 +1851,19 @@ static INT32 ckongInit()
 	return DrvInit();
 }
 
+static INT32 ckongbInit()
+{
+	ckongb = 1;
+
+	INT32 rc = ckongInit();
+	if (!rc) {
+		for (INT32 i = 0; i < 0x6000; i++) {
+			DrvZ80ROM[i] = DrvZ80ROM[i] ^ 0xf0;
+		}
+	}
+	return rc;
+}
+
 // Crazy Kong Part II (set 1)
 
 static struct BurnRomInfo ckongpt2RomDesc[] = {
@@ -1877,7 +1893,7 @@ static struct BurnRomInfo ckongpt2RomDesc[] = {
 STD_ROM_PICK(ckongpt2)
 STD_ROM_FN(ckongpt2)
 
-struct BurnDriverD BurnDrvCkongpt2 = {
+struct BurnDriver BurnDrvCkongpt2 = {
 	"ckongpt2", NULL, NULL, NULL, "1981",
 	"Crazy Kong Part II (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1917,7 +1933,7 @@ static struct BurnRomInfo ckongpt2aRomDesc[] = {
 STD_ROM_PICK(ckongpt2a)
 STD_ROM_FN(ckongpt2a)
 
-struct BurnDriverD BurnDrvCkongpt2a = {
+struct BurnDriver BurnDrvCkongpt2a = {
 	"ckongpt2a", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (set 2)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1957,7 +1973,7 @@ static struct BurnRomInfo ckongpt2jRomDesc[] = {
 STD_ROM_PICK(ckongpt2j)
 STD_ROM_FN(ckongpt2j)
 
-struct BurnDriverD BurnDrvCkongpt2j = {
+struct BurnDriver BurnDrvCkongpt2j = {
 	"ckongpt2j", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (Japan)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1997,7 +2013,7 @@ static struct BurnRomInfo ckongpt2jeuRomDesc[] = {
 STD_ROM_PICK(ckongpt2jeu)
 STD_ROM_FN(ckongpt2jeu)
 
-struct BurnDriverD BurnDrvCkongpt2jeu = {
+struct BurnDriver BurnDrvCkongpt2jeu = {
 	"ckongpt2jeu", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (Jeutel bootleg)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2037,13 +2053,13 @@ static struct BurnRomInfo ckongpt2bRomDesc[] = {
 STD_ROM_PICK(ckongpt2b)
 STD_ROM_FN(ckongpt2b)
 
-struct BurnDriverD BurnDrvCkongpt2b = {
+struct BurnDriver BurnDrvCkongpt2b = {
 	"ckongpt2b", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (alternative levels)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2bRomInfo, ckongpt2bRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongbDIPInfo,
-	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	ckongbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
 
@@ -2077,18 +2093,18 @@ static struct BurnRomInfo ckongpt2b2RomDesc[] = {
 STD_ROM_PICK(ckongpt2b2)
 STD_ROM_FN(ckongpt2b2)
 
-struct BurnDriverD BurnDrvCkongpt2b2 = {
+struct BurnDriver BurnDrvCkongpt2b2 = {
 	"ckongpt2b2", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2b2RomInfo, ckongpt2b2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, Ckongb2DIPInfo,
-	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	ckongbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
 
 
-// Crazy Kong (not working but needed as parent)
+// Crazy Kong
 
 static struct BurnRomInfo ckongRomDesc[] = {
 	{ "falcon7",	0x1000, 0x2171cac3, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu

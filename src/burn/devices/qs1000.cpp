@@ -335,8 +335,8 @@ static void sound_stream_update(INT16 *outputL, INT16 *outputR, int samples)
 					chan.m_addr = (chan.m_addr + (chan.m_acc >> 18)) & QS1000_ADDRESS_MASK;
 					chan.m_acc &= ((1 << 18) - 1);
 
-					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * 8 * lvol * vol) >> 12));
-					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * 8 * rvol * vol) >> 12));
+					outputL[samp] = BURN_SND_CLIP(outputL[samp] + ((result * 3 * lvol * vol) >> 12));
+					outputR[samp] = BURN_SND_CLIP(outputR[samp] + ((result * 3 * rvol * vol) >> 12));
 				}
 			}
 		}

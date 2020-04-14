@@ -284,7 +284,9 @@ struct _mcs51_state_t
 	/* Internal Ram */
 	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
 	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
-	INT32   total_cycles;
+	INT32	total_cycles;
+
+	UINT8	forced_inputs[4];
 
 	/* DS5002FP */
 	struct {
@@ -2171,10 +2173,10 @@ static UINT8 mcs51_sfr_read(INT32 offset)
 	{
 		/* Read/Write/Modify operations read the port latch ! */
 		/* Move to memory map */
-		case ADDR_P0:	return RWM ? P0 : P0 & IN(MCS51_PORT_P0);
-		case ADDR_P1:	return RWM ? P1 : P1 & IN(MCS51_PORT_P1);
-		case ADDR_P2:	return RWM ? P2 : P2 & IN(MCS51_PORT_P2);
-		case ADDR_P3:	return RWM ? P3 : P3 & IN(MCS51_PORT_P3)
+		case ADDR_P0:	return RWM ? P0 : (P0 | mcs51_state->forced_inputs[0]) & IN(MCS51_PORT_P0);
+		case ADDR_P1:	return RWM ? P1 : (P1 | mcs51_state->forced_inputs[1]) & IN(MCS51_PORT_P1);
+		case ADDR_P2:	return RWM ? P2 : (P2 | mcs51_state->forced_inputs[2]) & IN(MCS51_PORT_P2);
+		case ADDR_P3:	return RWM ? P3 : (P3 | mcs51_state->forced_inputs[3]) & IN(MCS51_PORT_P3)
 							& ~(GET_BIT(mcs51_state->last_line_state, MCS51_INT0_LINE) ? 4 : 0)
 							& ~(GET_BIT(mcs51_state->last_line_state, MCS51_INT1_LINE) ? 8 : 0);
 
@@ -2265,6 +2267,11 @@ void mcs51_reset (void)
 	//Clear Ram (w/0xff)
 	memset(&mcs51_state->internal_ram,0xff,sizeof(mcs51_state->internal_ram));
 
+	mcs51_state->forced_inputs[0] = 0;
+	mcs51_state->forced_inputs[1] = 0;
+	mcs51_state->forced_inputs[2] = 0;
+	mcs51_state->forced_inputs[3] = 0;
+
 	/* these are all defined reset states */
 	PC = 0;
 	SP = 0x7;
@@ -2337,6 +2344,11 @@ void mcs51_exit(void)
 	mcs51_state = NULL;
 	mcs51_active_cpu = -1;
 	multi_cpu_mode = 0;
+}
+
+void mcs51_set_forced_input(INT32 select, UINT8 data)
+{
+	mcs51_state->forced_inputs[select & 3] = data;
 }
 
 /****************************************************************************

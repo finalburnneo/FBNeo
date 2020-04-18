@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13756 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13760 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3858,6 +3858,10 @@ This list contains all games supported by FinalBurn Neo.
 | galmedes	|  	| Galmedes (Japan)					| 		| 1992	| Visco		| Taito Misc	| 					|
 | galhustl	|  	| Gals Hustler						| pgalvip	| 1997	| ACE Internatio| Miscellaneous	| 					|
 | galpanic	|  	| Gals Panic (Unprotected)				| 		| 1990	| Kaneko	| Miscellaneous	| 					|
+| galpani3	|  	| Gals Panic 3 (Euro)					| 		| 1995	| Kaneko	| Miscellaneous	| 					|
+| galpani3hk	|  	| Gals Panic 3 (Hong Kong)				| galpani3	| 1995	| Kaneko	| Miscellaneous	| 					|
+| galpani3j	|  	| Gals Panic 3 (Japan)					| galpani3	| 1995	| Kaneko	| Miscellaneous	| 					|
+| galpani3k	|  	| Gals Panic 3 (Korea)					| galpani3	| 1995	| Kaneko	| Miscellaneous	| 					|
 | galpani4	|  	| Gals Panic 4 (Europe)					| 		| 1996	| Kaneko	| Super Kaneko N| No sound.  Use a clone, instead!	|
 | galpani4j	|  	| Gals Panic 4 (Japan)					| galpani4	| 1996	| Kaneko	| Super Kaneko N| 					|
 | galpani4k	|  	| Gals Panic 4 (Korea)					| galpani4	| 1996	| Kaneko	| Super Kaneko N| 					|

@@ -3936,6 +3936,10 @@ DRV		BurnDrvGallop;
 DRV		BurnDrvGalmedes;
 DRV		BurnDrvGalhustl;
 DRV		BurnDrvGalpanic;
+DRV		BurnDrvGalpani3;
+DRV		BurnDrvGalpani3hk;
+DRV		BurnDrvGalpani3j;
+DRV		BurnDrvGalpani3k;
 DRV		BurnDrvGalpani4;
 DRV		BurnDrvGalpani4j;
 DRV		BurnDrvGalpani4k;
@@ -17969,6 +17973,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalmedes,			// Galmedes (Japan)
 	&BurnDrvGalhustl,			// Gals Hustler
 	&BurnDrvGalpanic,			// Gals Panic (Unprotected)
+	&BurnDrvGalpani3,			// Gals Panic 3 (Euro)
+	&BurnDrvGalpani3hk,			// Gals Panic 3 (Hong Kong)
+	&BurnDrvGalpani3j,			// Gals Panic 3 (Japan)
+	&BurnDrvGalpani3k,			// Gals Panic 3 (Korea)
 	&BurnDrvGalpani4,			// Gals Panic 4 (Europe)
 	&BurnDrvGalpani4j,			// Gals Panic 4 (Japan)
 	&BurnDrvGalpani4k,			// Gals Panic 4 (Korea)

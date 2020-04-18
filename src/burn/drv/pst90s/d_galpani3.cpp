@@ -1,10 +1,6 @@
 // FinalBurn Neo Kaneko Gals Panic 3 driver module
 // Based on MAME driver by David Haywood
 
-// Tofix/Todo:
-//   Game crashes in while changing settings if the processor is 68000.
-//   Currently set to 68ec020 to avoid this.
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "sknsspr.h"
@@ -32,6 +28,8 @@ static UINT16 *DrvFrameBuffer[3];
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static INT32 nExtraCycles;
 
 static INT32 scrollx[3];
 static INT32 scrolly[3];
@@ -379,6 +377,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	prio_scrollx = 0;
 	prio_scrolly = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -471,7 +471,7 @@ static INT32 DrvInit()
 		toybox_decrypt_rom();
 	}
 
-	SekInit(0, 0x68ec020); // really a 68000, but game settings crashes with 68000?
+	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,						0x000000, 0x17ffff, MAP_ROM);
 	SekMapMemory(Drv68KRAM,						0x200000, 0x20ffff, MAP_RAM);
@@ -684,16 +684,14 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 512;
 	INT32 nCyclesTotal[1] = { 14318181 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		CPU_RUN(0, Sek);
-
 		if (i ==   0) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 128) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		if (i == 240) {
@@ -702,6 +700,7 @@ static INT32 DrvFrame()
 			}
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
+		CPU_RUN(0, Sek);
 	}
 
 	if (pBurnSoundOut) {
@@ -709,6 +708,8 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	return 0;
 }
@@ -742,6 +743,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(prio_scrolly);
 		SCAN_VAR(regs1);
 		SCAN_VAR(toybox_mcu_com);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

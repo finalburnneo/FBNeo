@@ -1425,6 +1425,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// Two Tiger
+	if ((parentrom && strcmp(parentrom, "twotiger") == 0) ||
+		(drvname && strcmp(drvname, "twotiger") == 0)
+	) {
+		if (strcmp("& P2 Dogfight Start", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, "P1 & P2 Dogfight Start");
+		}
+	}
+
 	// Handle megadrive
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
 		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)

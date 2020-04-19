@@ -973,6 +973,7 @@
 		FE1B283F23561A7A0065200C /* gamc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B235A23561A740065200C /* gamc.cpp */; };
 		FE1B287A23561A7A0065200C /* un7z.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239C23561A740065200C /* un7z.cpp */; };
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
+		FE1E0C7B244C2BD600C774C3 /* d_galpani3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */; };
 		FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6A923615B3400B9D150 /* LogViewer.xib */; };
 		FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */; };
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
@@ -2495,6 +2496,7 @@
 		FE1B239E23561A750065200C /* sshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sshot.cpp; sourceTree = "<group>"; };
 		FE1B287E23561D1A0065200C /* tchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tchar.h; sourceTree = "<group>"; };
 		FE1B287F235626280065200C /* burner_macos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_macos.h; sourceTree = "<group>"; };
+		FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_galpani3.cpp; sourceTree = "<group>"; };
 		FE2BC6AA23615B3400B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LogViewer.xib; sourceTree = "<group>"; };
 		FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogViewerController.h; sourceTree = "<group>"; };
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
@@ -3611,6 +3613,7 @@
 				FE1B1F2923561A680065200C /* d_gaelco.cpp */,
 				FE1B1F7323561A680065200C /* d_gaelco2.cpp */,
 				FE1B1F6E23561A680065200C /* d_gaiden.cpp */,
+				FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */,
 				FE1B1F4E23561A680065200C /* d_galpanic.cpp */,
 				FE1B1F3923561A680065200C /* d_galspnbl.cpp */,
 				FE1B1F7723561A680065200C /* d_glass.cpp */,
@@ -5786,6 +5789,7 @@
 				FE1B27D623561A790065200C /* sknsspr.cpp in Sources */,
 				FE1B272023561A780065200C /* d_vastar.cpp in Sources */,
 				FE1B254323561A760065200C /* d_gumbo.cpp in Sources */,
+				FE1E0C7B244C2BD600C774C3 /* d_galpani3.cpp in Sources */,
 				FE1B263D23561A770065200C /* ps_m.cpp in Sources */,
 				FE1B26C923561A770065200C /* d_dribling.cpp in Sources */,
 				FE1B23B423561A750065200C /* nec_intf.cpp in Sources */,

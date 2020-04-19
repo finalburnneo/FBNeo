@@ -499,7 +499,7 @@ static void draw_bitmap(INT32 line)
 
 	for (INT32 y = lastline + SCREEN_START_OFFSET; y < line + SCREEN_START_OFFSET; y++)
 	{
-		if ((y - SCREEN_START_OFFSET) > nScreenHeight) break;
+		if ((y - SCREEN_START_OFFSET) >= nScreenHeight) break;
 		UINT16 *dst = pTransDraw + (y - SCREEN_START_OFFSET) * nScreenWidth;
 		INT32 effy = (y ^ flip) * 64;
 

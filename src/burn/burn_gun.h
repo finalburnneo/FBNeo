@@ -59,6 +59,7 @@ void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r);
 // Configure if an axis (Port) is reversed (1) or normal (0)
 void BurnTrackballConfig(INT32 dev, INT32 PortA_rev, INT32 PortB_rev);
 void BurnTrackballConfigStartStopPoints(INT32 dev, INT32 PortA_Start, INT32 PortA_Stop, INT32 PortB_Start, INT32 PortB_Stop);
+void BurnTrackballSetVelocityCurve(INT32 bLogarithmic); // mostly for itech32
 
 // Read the position counter (8/16bit)
 UINT8 BurnTrackballRead(INT32 dev, INT32 isB);

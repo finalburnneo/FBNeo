@@ -130,7 +130,7 @@ const uint m68ki_shift_32_table[65] =
 const uint8 m68ki_exception_cycle_table[4][256] =
 {
 	{ /* 000 */
-		  4, /*  0: Reset - Initial Stack Pointer                      */
+		 40, /*  0: Reset - Initial Stack Pointer                      */
 		  4, /*  1: Reset - Initial Program Counter                    */
 		 50, /*  2: Bus Error                             (unemulated) */
 		 50, /*  3: Address Error                         (unemulated) */
@@ -203,7 +203,7 @@ const uint8 m68ki_exception_cycle_table[4][256] =
 		  4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
 	},
 	{ /* 010 */
-		  4, /*  0: Reset - Initial Stack Pointer                      */
+		 40, /*  0: Reset - Initial Stack Pointer                      */
 		  4, /*  1: Reset - Initial Program Counter                    */
 		126, /*  2: Bus Error                             (unemulated) */
 		126, /*  3: Address Error                         (unemulated) */

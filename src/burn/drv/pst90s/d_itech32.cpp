@@ -2213,28 +2213,20 @@ static void __fastcall common32_main_write_byte(UINT32 address, UINT8 data)
 
 static UINT8 wcbowl_track_read(INT32 player)
 {
+	BurnTrackballUpdate(player);
 	return (BurnTrackballRead(player, 0) & 0xf) | ((BurnTrackballRead(player, 1) & 0xf) << 4);
 }
 
 static UINT16 track_read_8bit(INT32 player)
 {
+	BurnTrackballUpdate(player);
 	return (BurnTrackballRead(player, 0) & 0xff) | ((BurnTrackballRead(player, 1) & 0xff) << 8);
-}
-
-static INT32 shufshot_weird_y(INT16 ana)
-{
-	// todo: revisit at a later time.
-	// "git 'r dun"-style
-	if (ana > 1024) ana = 1024;
-	if (ana < -1024) ana = -1024;
-	ana /= 256; // -4 - +4
-	ana *= 0.9; // tone it down a bit..
-	return (ana);
 }
 
 static UINT32 track_read_4bit(INT32 player)
 {
 	if (tb_last_read[player] != scanline) {
+		BurnTrackballUpdate(player);
 		INT32 curx = BurnTrackballRead(player, 0);
 		INT32 cury = BurnTrackballRead(player, 1);
 
@@ -2251,11 +2243,6 @@ static UINT32 track_read_4bit(INT32 player)
 		else if (dy > 0x80) dy -= 0x100;
 		if (dy > 7) dy = 7;
 		else if (dy < -7) dy = -7;
-
-		if (is_shufshot) {
-			// keep shufshot happy...
-			dy = shufshot_weird_y((player == 0) ? DrvAnalogPort1 : DrvAnalogPort3);
-		}
 
 		tb_effy[player] = (tb_effy[player] + dy) & 0xff;
 		INT32 upper = tb_effy[player] & 15;
@@ -2829,6 +2816,7 @@ static INT32 TimekillInit()
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL); // not on this hardware (32-bit only!)
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
@@ -2874,6 +2862,7 @@ static INT32 Common16BitInit()
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL); // not on this hardware (32-bit only!)
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
@@ -2922,6 +2911,7 @@ static INT32 Common32BitInit(UINT32 prot_addr, INT32 plane_num, INT32 color_bank
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL);
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
@@ -3049,12 +3039,10 @@ static INT32 DrvFrame()
 
 		if (Trackball_Type != -1) {
 			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
-			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x06, 0x0a);
-			BurnTrackballUpdate(0);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x01, 0x20);
 
 			BurnTrackballConfig(1, AXIS_REVERSED, AXIS_NORMAL);
-			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x06, 0x0a);
-			BurnTrackballUpdate(1);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x01, 0x20);
         }
 
         DrvDips[0] = (DrvDips[0] & ~1) | (~DrvSvc0[0] & 1); // F2 (svc mode)
@@ -3077,16 +3065,11 @@ static INT32 DrvFrame()
 			scanline_interrupt();
 		}
 
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6809);
 
 		// iq_132 -- hack!!! until we have via emulation!
 		if ((i % (nInterleave/4))==((nInterleave/4)-1)) M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-
-		if ((i%64) == 63 && Trackball_Type != -1) {
-			BurnTrackballUpdate(0);
-			BurnTrackballUpdate(1);
-		}
 
 		if (i == (nScreenHeight - 1)) {
 			vblank = 1;

@@ -387,7 +387,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Master Boy (1987, Z80 hardware, set 1)
+// Master Boy (1987, Z80 hardware, Covielsa, set 1)
 
 static struct BurnRomInfo mastboyoRomDesc[] = {
 	{ "mastboy_27256.ic14",			0x08000, 0xa212ff85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -417,7 +417,7 @@ static INT32 mastboyoInit()
 
 struct BurnDriver BurnDrvMastboyo = {
 	"mastboyo", NULL, NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, set 1)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
+	"Master Boy (1987, Z80 hardware, Covielsa, set 1)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, mastboyoRomInfo, mastboyoRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
@@ -425,7 +425,7 @@ struct BurnDriver BurnDrvMastboyo = {
 	256, 224, 4, 3
 };
 
-// Master Boy (1987, Z80 hardware, set 2)
+// Master Boy (1987, Z80 hardware, Covielsa, set 2)
 
 static struct BurnRomInfo mastboyoaRomDesc[] = {
 	{ "masterboy-1987-27128-ic14.bin",			0x04000, 0xd05a22eb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -452,10 +452,40 @@ static INT32 mastboyoaInit()
 
 struct BurnDriver BurnDrvMastboyoa = {
 	"mastboyoa", "mastboyo", NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, set 2)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
+	"Master Boy (1987, Z80 hardware, Covielsa, set 2)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, mastboyoaRomInfo, mastboyoaRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Master Boy (1987, Z80 hardware, Ichi-Funtel)
+
+static struct BurnRomInfo mastboyobRomDesc[] = {
+	{ "mb_p1.ic14",			0x04000, 0x9ff8d386, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "mb_3.ic9",			0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mb_4.ic8",			0x08000, 0xc4844264, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mb_1.ic11",			0x08000, 0xf5a9bf63, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mb_2.ic10",			0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "fij.c36",			0x04000, 0xbdd0f821, 2 | BRF_GRA },           //  5 Graphics
+
+	{ "h_82s129.ic39",		0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  6 Color data
+	{ "l_82s129.ic40",		0x00100, 0x4d061216, 3 | BRF_GRA },           //  7
+
+	{ "d_82s129.ic23.bin",		0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  8 Unused PROM
+};
+
+STD_ROM_PICK(mastboyob)
+STD_ROM_FN(mastboyob)
+
+struct BurnDriver BurnDrvMastboyob = {
+	"mastboyob", "mastboyo", NULL, NULL, "1987",
+	"Master Boy (1987, Z80 hardware, Ichi-Funtel)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	NULL, mastboyobRomInfo, mastboyobRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

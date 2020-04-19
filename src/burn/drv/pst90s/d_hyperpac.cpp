@@ -1227,6 +1227,8 @@ static INT32 SnowbrosDoReset()
 
 	BurnYM3812Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4195,7 +4197,7 @@ struct BurnDriver BurnDrvSnowbros = {
 	"snowbros", NULL, NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (set 1)\0", NULL, "Toaplan", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbrosRomInfo, SnowbrosRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4205,7 +4207,7 @@ struct BurnDriver BurnDrvSnowbroa = {
 	"snowbrosa", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (set 2)\0", NULL, "Toaplan", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbroaRomInfo, SnowbroaRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4215,7 +4217,7 @@ struct BurnDriver BurnDrvSnowbrob = {
 	"snowbrosb", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (set 3)\0", NULL, "Toaplan", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbrobRomInfo, SnowbrobRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4225,7 +4227,7 @@ struct BurnDriver BurnDrvSnowbroc = {
 	"snowbrosc", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (set 4)\0", NULL, "Toaplan", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbrocRomInfo, SnowbrocRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4235,7 +4237,7 @@ struct BurnDriver BurnDrvSnowbroj = {
 	"snowbrosj", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (Japan)\0", NULL, "Toaplan", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbrojRomInfo, SnowbrojRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4245,7 +4247,7 @@ struct BurnDriver BurnDrvSnowbrod = {
 	"snowbrosd", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (Dooyong license)\0", NULL, "Toaplan (Dooyong license)", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbrodRomInfo, SnowbrodRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	SnowbrosInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4255,7 +4257,7 @@ struct BurnDriver BurnDrvWintbob = {
 	"wintbob", "snowbros", NULL, NULL, "1990",
 	"The Winter Bobble (bootleg)\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, WintbobRomInfo, WintbobRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	WintbobInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -4265,7 +4267,7 @@ struct BurnDriver BurnDrvSnowbroswb = {
 	"snowbroswb", "snowbros", NULL, NULL, "1990",
 	"Snow Bros. - Nick & Tom (The Winter Bobble hardware bootleg)\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, SnowbroswbRomInfo, SnowbroswbRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
 	WintbobInit, SnowbrosExit, SnowbrosFrame, SnowbrosRender, SnowbrosScan,
 	NULL, 0x200, 256, 224, 4, 3

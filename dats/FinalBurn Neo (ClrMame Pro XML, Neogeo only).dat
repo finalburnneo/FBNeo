@@ -4970,7 +4970,7 @@
 		<rom name="048-p1.p1" size="1048576" crc="fa818cbb"/>
 		<rom name="048-s1.s1" size="131072" crc="8285b25a"/>
 		<rom name="048-c1.c1" size="2097152" crc="3fa890e9"/>
-		<rom name="048-c2.c1" size="2097152" crc="59c48ad8"/>
+		<rom name="048-c2.c2" size="2097152" crc="59c48ad8"/>
 		<rom name="048-m1.m1" size="131072" crc="310467c7"/>
 		<rom name="048-v1.v1" size="2097152" crc="f1947d2b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>

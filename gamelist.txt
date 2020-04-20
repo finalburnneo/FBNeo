@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13760 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13768 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2409,7 +2409,8 @@ This list contains all games supported by FinalBurn Neo.
 | demonwld3	|  	| Demon's World / Horror Story (set 4)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld4	|  	| Demon's World / Horror Story (set 5)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | msx_demonia	|  	| Demonia						| 		| 1986	| Microids	| MSX		| 					|
-| denjinmk	|  	| Denjin Makai						| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
+| denjinmk	|  	| Denjin Makai (set 1)					| 		| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
+| denjinmka	|  	| Denjin Makai (set 2)					| denjinmk	| 1994	| Winkysoft (Ban| Miscellaneous	| 					|
 | depthcho	| D	| Depthcharge (older)					| depthch	| 1977	| Gremlin	| Vic Dual	| No sound				|
 | depthch	| D	| Depthcharge						| 		| 1977	| Gremlin	| Vic Dual	| No sound				|
 | deroona	|  	| Deroon DeroDero (alt set)				| deroon	| 1995	| Tecmo		| Miscellaneous	| 					|
@@ -3466,9 +3467,6 @@ This list contains all games supported by FinalBurn Neo.
 | ffantasy	|  	| Fighting Fantasy (Japan revision 3)			| hippodrm	| 1989	| Data East Corp| DEC0		| 					|
 | ffantasyb	|  	| Fighting Fantasy (Japan revision ?)			| hippodrm	| 1989	| Data East Corp| DEC0		| 					|
 | ffantasya	|  	| Fighting Fantasy (Japan)				| hippodrm	| 1989	| Data East Corp| DEC0		| 					|
-| fitegolfu	|  	| Fighting Golf (US)					| fitegolf	| 1988	| SNK		| Miscellaneous	| 					|
-| fitegolf2	|  	| Fighting Golf (US, Ver 2)				| fitegolf	| 1988	| SNK		| Miscellaneous	| 					|
-| fitegolf	|  	| Fighting Golf (World?)				| 		| 1988	| SNK		| Miscellaneous	| 					|
 | fhawkj	|  	| Fighting Hawk (Japan)					| fhawk		| 1988	| Taito Corporat| Taito L System| 					|
 | fhawk		|  	| Fighting Hawk (World)					| 		| 1988	| Taito Corporat| Taito L System| 					|
 | cfghtice	|  	| Fighting Ice Hockey (DECO Cassette) (US)		| 		| 1984	| Data East Corp| Cassette Syste| 					|
@@ -4950,7 +4948,7 @@ This list contains all games supported by FinalBurn Neo.
 | joyman	|  	| Joyman						| puckman	| 1982	| hack		| Pac-man	| 					|
 | jrpacman	|  	| Jr. Pac-Man (11/9/83)					| 		| 1983	| Bally Midway	| Miscellaneous	| 					|
 | jrpacmanf	|  	| Jr. Pac-Man (speedup hack)				| jrpacman	| 1983	| hack		| Miscellaneous	| 					|
-| jt104		|  	| JT-104 (title screen modification of Rad Action)	| ninjakd2	| 1987	| UPL (United Am| Miscellaneous	| 					|
+| jt104		|  	| JT 104 / NinjaKun Ashura no Shou			| ninjakd2	| 1987	| UPL (United Am| Miscellaneous	| 					|
 | gg_jdredd	|  	| Judge Dredd (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Game Gear| 					|
 | jdreddp	| D NW	| Judge Dredd (rev TA1 7/12/92, location test)		| 		| 1995	| Midway	| Midway T-Unit	| 					|
 | md_jdreddp1	|  	| Judge Dredd (USA, Prototype)				| md_jdredd	| 1995	| Acclaim Entert| Sega Megadrive| 					|
@@ -5487,6 +5485,9 @@ This list contains all games supported by FinalBurn Neo.
 | ledstorm	|  	| Led Storm (US)					| madgear	| 1988	| Capcom	| Miscellaneous	| 					|
 | leds2011u	|  	| Led Storm Rally 2011 (US)				| leds2011	| 1988	| Capcom	| Miscellaneous	| 					|
 | leds2011	|  	| Led Storm Rally 2011 (World)				| 		| 1988	| Capcom	| Miscellaneous	| 					|
+| fitegolfu	|  	| Lee Trevino's Fighting Golf (US, Ver 2, set 1)	| fitegolf	| 1988	| SNK		| Miscellaneous	| 					|
+| fitegolfua	|  	| Lee Trevino's Fighting Golf (US, Ver 2, set 2)	| fitegolf	| 1988	| SNK		| Miscellaneous	| 					|
+| fitegolf	|  	| Lee Trevino's Fighting Golf (World?)			| 		| 1988	| SNK		| Miscellaneous	| 					|
 | lohtb		|  	| Legend of Hero Tonma (bootleg, set 1)			| loht		| 1989	| bootleg	| Irem M72	| 					|
 | lohtb2	|  	| Legend of Hero Tonma (bootleg, set 2)			| loht		| 1989	| bootleg	| Irem M72	| 					|
 | lohtj		|  	| Legend of Hero Tonma (Japan)				| loht		| 1989	| Irem		| Irem M72	| 					|
@@ -5929,8 +5930,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_mask2	|  	| Mask II (Euro)					| 		| 1987	| Gremlin Graphi| MSX		| 					|
 | msx_mask3	|  	| Mask III - Venom Strikes Back (Euro)			| 		| 1988	| Gremlin Graphi| MSX		| 					|
 | kamenrid	|  	| Masked Riders Club Battle Race			| 		| 1993	| Banpresto / To| Seta		| 					|
-| mastboyo	|  	| Master Boy (1987, Z80 hardware, set 1)		| 		| 1987	| Gaelco (Coviel| Miscellaneous	| 					|
-| mastboyoa	|  	| Master Boy (1987, Z80 hardware, set 2)		| mastboyo	| 1987	| Gaelco (Coviel| Miscellaneous	| 					|
+| mastboyo	|  	| Master Boy (1987, Z80 hardware, Covielsa, set 1)	| 		| 1987	| Gaelco (Coviel| Miscellaneous	| 					|
+| mastboyoa	|  	| Master Boy (1987, Z80 hardware, Covielsa, set 2)	| mastboyo	| 1987	| Gaelco (Coviel| Miscellaneous	| 					|
+| mastboyob	|  	| Master Boy (1987, Z80 hardware, Ichi-Funtel)		| mastboyo	| 1987	| Gaelco (Ichi-F| Miscellaneous	| 					|
 | gg_mastdark	|  	| Master of Darkness (Euro)				| 		| 1993	| Sega		| Sega Game Gear| 					|
 | sms_mastdark	|  	| Master of Darkness (Euro, Bra)			| 		| 1992	| Sega		| Sega Master Sy| 					|
 | md_mastermj	|  	| Master of Monsters (Jpn)				| md_masterm	| 1991	| Toshiba EMI	| Sega Megadrive| 					|
@@ -6437,6 +6439,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_mrdok	|  	| Mr. Do (Kor)						| msx_mrdo	| 198?	| Zemina	| MSX		| 					|
 | cv_mrdoa	|  	| Mr. Do! (Alt)						| cv_mrdo	| 1983	| Coleco	| ColecoVision	| 					|
 | mrdofix	|  	| Mr. Do! (bugfixed)					| mrdo		| 1982	| Universal (Tai| Miscellaneous	| 					|
+| mrdofabr	|  	| Mr. Do! (Fabremar bootleg)				| mrdo		| 1982	| Bootleg (Fabre| Miscellaneous	| 					|
 | mrdoy		|  	| Mr. Do! (prototype)					| mrdo		| 1982	| Universal	| Miscellaneous	| 					|
 | mrdot		|  	| Mr. Do! (Taito license)				| mrdo		| 1982	| Universal (Tai| Miscellaneous	| 					|
 | msx_mrdovsun	|  	| Mr. Do! vs Unicorns (Jpn)				| 		| 1984	| Sony		| MSX		| 					|
@@ -9371,7 +9374,8 @@ This list contains all games supported by FinalBurn Neo.
 | rmpgwt	|  	| Rampage: World Tour (rev 1.3)				| 		| 1997	| Midway	| MIDWAY Wolf-Un| Player #2 not working, please use Play|
 | sms_rampart	|  	| Rampart (Euro)					| 		| 1991	| Tengen	| Sega Master Sy| 					|
 | rampartj	| D NW	| Rampart (Japan, Joystick)				| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
-| rampart2p	| D NW	| Rampart (Joystick)					| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
+| rampart2p	| D NW	| Rampart (Joystick, bigger ROMs)			| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
+| rampart2pa	| D NW	| Rampart (Joystick, smaller ROMs)			| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
 | md_rampartj	|  	| Rampart (Jpn, Kor)					| md_rampart	| 1992	| Tengen	| Sega Megadrive| 					|
 | rampart	| D NW	| Rampart (Trackball)					| 		| 1990	| Atari Games	| Miscellaneous	| 					|
 | md_rampart	|  	| Rampart (USA)						| 		| 1991	| Tengen	| Sega Megadrive| 					|
@@ -10552,7 +10556,8 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_spacemnt	|  	| Space Mountain (Jpn, OMV)				| 		| 1983	| Tsukuda Origin| Sega SG-1000	| 					|
 | msx_spacemouse|  	| Space Mouse						| 		| 201x	| H. Kobo	| MSX		| 					|
 | cv_panic	|  	| Space Panic						| 		| 1983	| Coleco	| ColecoVision	| 					|
-| spaceplt	|  	| Space Pilot						| timeplt	| 1982	| bootleg	| GX393		| 					|
+| spaceplt	|  	| Space Pilot (set 1)					| timeplt	| 1982	| bootleg	| GX393		| 					|
+| spaceplta	|  	| Space Pilot (set 2)					| timeplt	| 1982	| bootleg	| GX393		| 					|
 | spcpostn	|  	| Space Position (Japan)				| 		| 1986	| Sega / Nasco	| Miscellaneous	| 					|
 | sraider	|  	| Space Raider						| 		| 1982	| Universal	| Miscellaneous	| 					|
 | msx_srescue	|  	| Space Rescue (Euro)					| 		| 1988	| Eurosoft	| MSX		| 					|
@@ -11183,7 +11188,8 @@ This list contains all games supported by FinalBurn Neo.
 | sathena	|  	| Super Athena (bootleg)				| athena	| 1987	| bootleg	| Miscellaneous	| 					|
 | sbagmani	|  	| Super Bagman (Itisa, Spain)				| sbagman	| 1984	| Valadon Automa| Miscellaneous	| 					|
 | sbagmans	|  	| Super Bagman (Stern Electronics)			| sbagman	| 1984	| Valadon Automa| Miscellaneous	| 					|
-| sbagman	|  	| Super Bagman						| 		| 1984	| Valadon Automa| Miscellaneous	| 					|
+| sbagman2	|  	| Super Bagman (version 3?)				| sbagman	| 1984	| Valadon Automa| Miscellaneous	| 					|
+| sbagman	|  	| Super Bagman (version 5)				| 		| 1984	| Valadon Automa| Miscellaneous	| 					|
 | superbar	|  	| Super Bar						| wiggie	| 1994	| Promat	| Seta		| 					|
 | md_2020bb	|  	| Super Baseball 2020 (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | sms_suprbskt	|  	| Super Basketball (USA, CES Demo)			| 		| 1989?	| Unknown	| Sega Master Sy| 					|
@@ -11982,6 +11988,7 @@ This list contains all games supported by FinalBurn Neo.
 | elecyoyo	|  	| The Electric Yo-Yo (set 1)				| 		| 1982	| Taito America | Miscellaneous	| 					|
 | elecyoyo2	|  	| The Electric Yo-Yo (set 2)				| elecyoyo	| 1982	| Taito America | Miscellaneous	| 					|
 | esb		|  	| The Empire Strikes Back				| 		| 1985	| Atari Games	| Miscellaneous	| 					|
+| theendss	|  	| The End (SegaSA / Sonic)				| theend	| 1981	| bootleg (Sonic| Galaxian	| 					|
 | theends	|  	| The End (Stern)					| theend	| 1980	| Konami (Stern | Galaxian	| 					|
 | theend	|  	| The End						| 		| 1980	| Konami	| Galaxian	| 					|
 | gg_excdizzy	|  	| The Excellent Dizzy Collection (Euro, SMS Mode)	| 		| 1995	| Codemasters	| Sega Game Gear| 					|
@@ -12419,6 +12426,7 @@ This list contains all games supported by FinalBurn Neo.
 | timefgtr	|  	| Time Fighter (Time Pilot conversion on Galaxian hardwa| 		| 198?	| Taito do Brasi| Galaxian	| Bad Colours				|
 | md_timekill	|  	| Time Killers (Euro)					| 		| 1996	| Black Pearl	| Sega Megadrive| 					|
 | md_timekillu	|  	| Time Killers (USA)					| md_timekill	| 1996	| Black Pearl	| Sega Megadrive| 					|
+| timekill100	|  	| Time Killers (v1.00)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill121	|  	| Time Killers (v1.21)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill121a	|  	| Time Killers (v1.21, alternate ROM board)		| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill131	|  	| Time Killers (v1.31)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|

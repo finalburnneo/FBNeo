@@ -2454,6 +2454,7 @@ DRV		BurnDrvDemonwld3;
 DRV		BurnDrvDemonwld4;
 DRV		BurnDrvMSX_demonia;
 DRV		BurnDrvDenjinmk;
+DRV		BurnDrvDenjinmka;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvDepthcho;		// No sound
 DRV		BurnDrvDepthch;			// No sound
@@ -3536,9 +3537,6 @@ DRV		BurnDrvFfantasyj;
 DRV		BurnDrvFfantasy;
 DRV		BurnDrvFfantasyb;
 DRV		BurnDrvFfantasya;
-DRV		BurnDrvFitegolfu;
-DRV		BurnDrvFitegolf2;
-DRV		BurnDrvFitegolf;
 DRV		BurnDrvFhawkj;
 DRV		BurnDrvFhawk;
 DRV		BurnDrvCfghtice;
@@ -5603,6 +5601,9 @@ DRV		BurnDrvcv_leeper;
 DRV		BurnDrvMadgearu;
 DRV		BurnDrvLeds2011u;
 DRV		BurnDrvLeds2011;
+DRV		BurnDrvFitegolfu;
+DRV		BurnDrvFitegolfua;
+DRV		BurnDrvFitegolf;
 DRV		BurnDrvLohtb;
 DRV		BurnDrvLohtb2;
 DRV		BurnDrvLohtj;
@@ -6055,6 +6056,7 @@ DRV		BurnDrvMSX_mask3;
 DRV		BurnDrvKamenrid;
 DRV		BurnDrvMastboyo;
 DRV		BurnDrvMastboyoa;
+DRV		BurnDrvMastboyob;
 DRV		BurnDrvgg_mastdark;
 DRV		BurnDrvsms_mastdark;
 DRV		BurnDrvmd_mastermj;
@@ -6567,6 +6569,7 @@ DRV		BurnDrvMSX_mrdo;
 DRV		BurnDrvMSX_mrdok;
 DRV		BurnDrvcv_mrdoa;
 DRV		BurnDrvmrdofix;
+DRV		BurnDrvmrdofabr;
 DRV		BurnDrvmrdoy;
 DRV		BurnDrvmrdot;
 DRV		BurnDrvMSX_mrdovsun;
@@ -9545,6 +9548,7 @@ DRV		BurnDrvsms_rampart;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvRampartj;		// no comment [NOT WORKING]
 DRV		BurnDrvRampart2p;		// no comment [NOT WORKING]
+DRV		BurnDrvRampart2pa;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvmd_rampartj;
 #if defined FBNEO_DEBUG
@@ -10749,6 +10753,7 @@ DRV		BurnDrvsg1k_spacemnt;
 DRV		BurnDrvMSX_spacemouse;
 DRV		BurnDrvcv_panic;
 DRV		BurnDrvSpaceplt;
+DRV		BurnDrvSpaceplta;
 DRV		BurnDrvSpcpostn;
 DRV		BurnDrvSraider;
 DRV		BurnDrvMSX_srescue;
@@ -11389,6 +11394,7 @@ DRV		BurnDrvCsuperas;
 DRV		BurnDrvSathena;
 DRV		BurnDrvSbagmani;
 DRV		BurnDrvSbagmans;
+DRV		BurnDrvSbagman2;
 DRV		BurnDrvSbagman;
 DRV		BurnDrvSuperbar;
 DRV		BurnDrvmd_2020bb;
@@ -12202,6 +12208,7 @@ DRV		BurnDrvmd_earthdef;
 DRV		BurnDrvElecyoyo;
 DRV		BurnDrvElecyoyo2;
 DRV		BurnDrvEsb;
+DRV		BurnDrvTheendss;
 DRV		BurnDrvTheends;
 DRV		BurnDrvTheend;
 DRV		BurnDrvgg_excdizzy;
@@ -12641,6 +12648,7 @@ DRV		BurnDrvmd_timedom;
 DRV		BurnDrvTimefgtr;
 DRV		BurnDrvmd_timekill;
 DRV		BurnDrvmd_timekillu;
+DRV		BurnDrvTimekill100;
 DRV		BurnDrvTimekill121;
 DRV		BurnDrvTimekill121a;
 DRV		BurnDrvTimekill131;
@@ -16490,7 +16498,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDemonwld3,			// Demon's World / Horror Story (set 4)
 	&BurnDrvDemonwld4,			// Demon's World / Horror Story (set 5)
 	&BurnDrvMSX_demonia,		// Demonia
-	&BurnDrvDenjinmk,			// Denjin Makai
+	&BurnDrvDenjinmk,			// Denjin Makai (set 1)
+	&BurnDrvDenjinmka,			// Denjin Makai (set 2)
 #if defined FBNEO_DEBUG
 	&BurnDrvDepthcho,			// Depthcharge (older) [No sound]
 	&BurnDrvDepthch,			// Depthcharge [No sound]
@@ -17573,9 +17582,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFfantasy,			// Fighting Fantasy (Japan revision 3)
 	&BurnDrvFfantasyb,			// Fighting Fantasy (Japan revision ?)
 	&BurnDrvFfantasya,			// Fighting Fantasy (Japan)
-	&BurnDrvFitegolfu,			// Fighting Golf (US)
-	&BurnDrvFitegolf2,			// Fighting Golf (US, Ver 2)
-	&BurnDrvFitegolf,			// Fighting Golf (World?)
 	&BurnDrvFhawkj,				// Fighting Hawk (Japan)
 	&BurnDrvFhawk,				// Fighting Hawk (World)
 	&BurnDrvCfghtice,			// Fighting Ice Hockey (DECO Cassette) (US)
@@ -19089,7 +19095,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvjoyman,				// Joyman
 	&BurnDrvJrpacman,			// Jr. Pac-Man (11/9/83)
 	&BurnDrvJrpacmanf,			// Jr. Pac-Man (speedup hack)
-	&BurnDrvJt104,				// JT-104 (title screen modification of Rad Action)
+	&BurnDrvJt104,				// JT 104 / NinjaKun Ashura no Shou
 	&BurnDrvgg_jdredd,			// Judge Dredd (Euro, USA)
 #if defined FBNEO_DEBUG
 	&BurnDrvJdreddp,			// Judge Dredd (rev TA1 7/12/92, location test) [no comment, NOT WORKING]
@@ -19640,6 +19646,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMadgearu,			// Led Storm (US)
 	&BurnDrvLeds2011u,			// Led Storm Rally 2011 (US)
 	&BurnDrvLeds2011,			// Led Storm Rally 2011 (World)
+	&BurnDrvFitegolfu,			// Lee Trevino's Fighting Golf (US, Ver 2, set 1)
+	&BurnDrvFitegolfua,			// Lee Trevino's Fighting Golf (US, Ver 2, set 2)
+	&BurnDrvFitegolf,			// Lee Trevino's Fighting Golf (World?)
 	&BurnDrvLohtb,				// Legend of Hero Tonma (bootleg, set 1)
 	&BurnDrvLohtb2,				// Legend of Hero Tonma (bootleg, set 2)
 	&BurnDrvLohtj,				// Legend of Hero Tonma (Japan)
@@ -20090,8 +20099,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mask2,			// Mask II (Euro)
 	&BurnDrvMSX_mask3,			// Mask III - Venom Strikes Back (Euro)
 	&BurnDrvKamenrid,			// Masked Riders Club Battle Race
-	&BurnDrvMastboyo,			// Master Boy (1987, Z80 hardware, set 1)
-	&BurnDrvMastboyoa,			// Master Boy (1987, Z80 hardware, set 2)
+	&BurnDrvMastboyo,			// Master Boy (1987, Z80 hardware, Covielsa, set 1)
+	&BurnDrvMastboyoa,			// Master Boy (1987, Z80 hardware, Covielsa, set 2)
+	&BurnDrvMastboyob,			// Master Boy (1987, Z80 hardware, Ichi-Funtel)
 	&BurnDrvgg_mastdark,		// Master of Darkness (Euro)
 	&BurnDrvsms_mastdark,		// Master of Darkness (Euro, Bra)
 	&BurnDrvmd_mastermj,		// Master of Monsters (Jpn)
@@ -20604,6 +20614,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mrdok,			// Mr. Do (Kor)
 	&BurnDrvcv_mrdoa,			// Mr. Do! (Alt)
 	&BurnDrvmrdofix,			// Mr. Do! (bugfixed)
+	&BurnDrvmrdofabr,			// Mr. Do! (Fabremar bootleg)
 	&BurnDrvmrdoy,				// Mr. Do! (prototype)
 	&BurnDrvmrdot,				// Mr. Do! (Taito license)
 	&BurnDrvMSX_mrdovsun,		// Mr. Do! vs Unicorns (Jpn)
@@ -23581,7 +23592,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_rampart,		// Rampart (Euro)
 #if defined FBNEO_DEBUG
 	&BurnDrvRampartj,			// Rampart (Japan, Joystick) [no comment, NOT WORKING]
-	&BurnDrvRampart2p,			// Rampart (Joystick) [no comment, NOT WORKING]
+	&BurnDrvRampart2p,			// Rampart (Joystick, bigger ROMs) [no comment, NOT WORKING]
+	&BurnDrvRampart2pa,			// Rampart (Joystick, smaller ROMs) [no comment, NOT WORKING]
 #endif
 	&BurnDrvmd_rampartj,		// Rampart (Jpn, Kor)
 #if defined FBNEO_DEBUG
@@ -24785,7 +24797,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_spacemnt,		// Space Mountain (Jpn, OMV)
 	&BurnDrvMSX_spacemouse,		// Space Mouse
 	&BurnDrvcv_panic,			// Space Panic
-	&BurnDrvSpaceplt,			// Space Pilot
+	&BurnDrvSpaceplt,			// Space Pilot (set 1)
+	&BurnDrvSpaceplta,			// Space Pilot (set 2)
 	&BurnDrvSpcpostn,			// Space Position (Japan)
 	&BurnDrvSraider,			// Space Raider
 	&BurnDrvMSX_srescue,		// Space Rescue (Euro)
@@ -25426,7 +25439,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSathena,			// Super Athena (bootleg)
 	&BurnDrvSbagmani,			// Super Bagman (Itisa, Spain)
 	&BurnDrvSbagmans,			// Super Bagman (Stern Electronics)
-	&BurnDrvSbagman,			// Super Bagman
+	&BurnDrvSbagman2,			// Super Bagman (version 3?)
+	&BurnDrvSbagman,			// Super Bagman (version 5)
 	&BurnDrvSuperbar,			// Super Bar
 	&BurnDrvmd_2020bb,			// Super Baseball 2020 (Euro, USA)
 	&BurnDrvsms_suprbskt,		// Super Basketball (USA, CES Demo)
@@ -26239,6 +26253,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvElecyoyo,			// The Electric Yo-Yo (set 1)
 	&BurnDrvElecyoyo2,			// The Electric Yo-Yo (set 2)
 	&BurnDrvEsb,				// The Empire Strikes Back
+	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
 	&BurnDrvTheends,			// The End (Stern)
 	&BurnDrvTheend,				// The End
 	&BurnDrvgg_excdizzy,		// The Excellent Dizzy Collection (Euro, SMS Mode)
@@ -26678,6 +26693,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTimefgtr,			// Time Fighter (Time Pilot conversion on Galaxian hardware)
 	&BurnDrvmd_timekill,		// Time Killers (Euro)
 	&BurnDrvmd_timekillu,		// Time Killers (USA)
+	&BurnDrvTimekill100,		// Time Killers (v1.00)
 	&BurnDrvTimekill121,		// Time Killers (v1.21)
 	&BurnDrvTimekill121a,		// Time Killers (v1.21, alternate ROM board)
 	&BurnDrvTimekill131,		// Time Killers (v1.31)

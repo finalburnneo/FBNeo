@@ -6768,6 +6768,29 @@ static struct BurnRomInfo GalaxbsfRomDesc[] = {
 STD_ROM_PICK(Galaxbsf)
 STD_ROM_FN(Galaxbsf)
 
+static struct BurnRomInfo Galaxbsf2RomDesc[] = {
+	{ "gal00eg.ic41",  0x00400, 0x7c44510c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal01eg.ic5",   0x00400, 0x2a426500, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal02.ic6",     0x00400, 0x30e28016, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal03.ic7",     0x00400, 0xde7e7770, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal04.ic8",     0x00400, 0xa916c919, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal05.ic9",     0x00400, 0x9175882b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal06.ic10",    0x00400, 0x1237b9da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal07eg.ic11",  0x00400, 0x16144658, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal08.ic12",    0x00400, 0x901894cc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal09.ic13",    0x00400, 0x5876f695, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "galaxian.1h",   0x00800, 0x39fb43a4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "galaxian.1k",   0x00800, 0x7e3f56a2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	
+	{ "gal00eg.ic4",   0x00400, 0x1038467f, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Galaxbsf2)
+STD_ROM_FN(Galaxbsf2)
+
 static struct BurnRomInfo GalaxianblRomDesc[] = {
 	{ "gal00eg.ic4",   0x00400, 0x7c44510c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "gal01eg.ic5",   0x00400, 0x2a426500, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6788,6 +6811,40 @@ static struct BurnRomInfo GalaxianblRomDesc[] = {
 
 STD_ROM_PICK(Galaxianbl)
 STD_ROM_FN(Galaxianbl)
+
+static struct BurnRomInfo Galaxianbl2RomDesc[] = {
+	// same program as galaxianbl, but double sized ROMs. GFX ROMs are the same as kamakazi3's.
+	{ "h7.7h",     	   0x00800, 0xd09b9f1a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "j7.7j",         0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "k7.7k",         0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "l7.7l",         0x00800, 0x9471cdd3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "m7.7m",     	   0x00800, 0x5766c95b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "kl1.1kl",       0x00800, 0x977e37cf, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "hj1.1hj",       0x00800, 0xd0ba22c9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6331-1j.6l",    0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianbl2)
+STD_ROM_FN(Galaxianbl2)
+
+static struct BurnRomInfo Galaxianbl3RomDesc[] = {
+	// many similarities with zerotimemc
+	{ "1r.bin",        0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2r.bin",        0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3r.bin",        0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4r.bin",        0x00800, 0x89b76ca0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5r.bin",        0x00800, 0x863a688f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1kl.bin",       0x00800, 0x977e37cf, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "2hj.bin",       0x00800, 0xd0ba22c9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "im8610.6l",     0x00020, 0x4a3c88a5, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianbl3)
+STD_ROM_FN(Galaxianbl3)
 
 static struct BurnRomInfo Kamakazi3RomDesc[] = {
 	{ "f_r_a.bin",     0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7035,12 +7092,42 @@ struct BurnDriver BurnDrvGalaxbsf = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvGalaxbsf2 = {
+	"galaxbsf2", "galaxian", NULL, NULL, "1979",
+	"Galaxian (bootleg, set 3)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxbsf2RomInfo, Galaxbsf2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvGalaxianbl = {
 	"galaxianbl", "galaxian", NULL, NULL, "1979",
 	"Galaxian (bootleg, set 2)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxianblRomInfo, GalaxianblRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianblDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianbl2 = {
+	"galaxianbl2", "galaxian", NULL, NULL, "1979",
+	"Galaxian (bootleg, set 4)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxianbl2RomInfo, Galaxianbl2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianblDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianbl3 = {
+	"galaxianbl3", "galaxian", NULL, NULL, "1979",
+	"Galaxian (Spanish bootleg)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxianbl3RomInfo, Galaxianbl3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

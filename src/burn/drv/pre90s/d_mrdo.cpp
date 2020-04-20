@@ -756,6 +756,48 @@ struct BurnDriver BurnDrvmrdoy = {
 };
 
 
+// Mr. Do! (Fabremar bootleg)
+/* The white garbled graphics on the title screen should be the Fabremar logo (32px height), but it's drawn as
+   16px height, like the original Taito logo. Since the F4 ROM had a different label than the others and it matches
+   with 'mrdot', someone probably replaced the original F4 Fabremar ROM with the one from Taito. */
+   
+static struct BurnRomInfo mrdofabrRomDesc[] = {
+	{ "md_fabre.a4",  0x2000, 0x62593aed, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "md_fabre.b4",  0x2000, 0x710058d8, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "md_fabre.c4",  0x2000, 0x467d12d8, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "md_fabre.f4",  0x2000, 0xfce9afeb, 1 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "md_fabre.t8",  0x1000, 0xf2dff901, 2 | BRF_GRA },	       //  4 FG Tiles
+	{ "md_fabre.u8",  0x1000, 0xf3e443bd, 2 | BRF_GRA },	       //  5
+
+	{ "md_fabre.r8",  0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
+	{ "md_fabre.n8",  0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
+
+	{ "md_fabre.h5",  0x1000, 0xe1218cc5, 4 | BRF_GRA },	       //  8 Sprite Tiles
+	{ "md_fabre.k5",  0x1000, 0xb1f68b04, 4 | BRF_GRA },	       //  9
+
+	{ "82s123.u2",    0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
+	{ "82s123.t2",    0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
+	{ "82s123.f10n",  0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
+	{ "82s123.j10",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "pal16r6.j2",   0x0117, 0xbadf5876, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(mrdofabr)
+STD_ROM_FN(mrdofabr)
+
+struct BurnDriver BurnDrvmrdofabr = {
+	"mrdofabr", "mrdo", NULL, NULL, "1982",
+	"Mr. Do! (Fabremar bootleg)\0", NULL, "Bootleg (Fabremar)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mrdofabrRomInfo, mrdofabrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
+	192, 240, 3, 4
+};
+
+
 // Yankee DO!
 
 static struct BurnRomInfo yankeedoRomDesc[] = {

@@ -7828,17 +7828,17 @@ struct BurnDriver BurnDrvAso = {
 // Alpha Mission
 
 static struct BurnRomInfo alphamisRomDesc[] = {
-	{ "p1.rom",		0x04000, 0x69af874b, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "p2.rom",		0x04000, 0x7707bfe3, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "p3.rom",		0x04000, 0xb970d642, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "p1.rom",			0x04000, 0x69af874b, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.rom",			0x04000, 0x7707bfe3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p3.rom",			0x04000, 0xb970d642, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "p4.rom",		0x04000, 0x91a89d3c, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
-	{ "p5.d2",		0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
-	{ "p6.d1",		0x04000, 0xc0bfdf1f, 2 | BRF_ESS | BRF_PRG }, //  5
+	{ "p4.rom",			0x04000, 0x91a89d3c, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
+	{ "p5.d2",			0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
+	{ "p6.d1",			0x04000, 0xc0bfdf1f, 2 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "p7.f4",		0x04000, 0xdbc19736, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
-	{ "p8.f3",		0x04000, 0x537726a9, 3 | BRF_ESS | BRF_PRG }, //  7
-	{ "p9.f2",		0x04000, 0xaef5a4f4, 3 | BRF_ESS | BRF_PRG }, //  8
+	{ "p7.f4",			0x04000, 0xdbc19736, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
+	{ "p8.f3",			0x04000, 0x537726a9, 3 | BRF_ESS | BRF_PRG }, //  7
+	{ "p9.f2",			0x04000, 0xaef5a4f4, 3 | BRF_ESS | BRF_PRG }, //  8
 
 	{ "p14.rom",		0x02000, 0xacbe29b2, 4 | BRF_GRA },	      //  9 Text Characters
 
@@ -7874,17 +7874,17 @@ struct BurnDriver BurnDrvAlphamis = {
 // Arian Mission
 
 static struct BurnRomInfo arianRomDesc[] = {
-	{ "p1.d8",		0x04000, 0x0ca89307, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "p2.d7",		0x04000, 0x724518c3, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "p3.d6",		0x04000, 0x4d8db650, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "p1.d8",			0x04000, 0x0ca89307, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.d7",			0x04000, 0x724518c3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p3.d6",			0x04000, 0x4d8db650, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "p4.d3",		0x04000, 0x47baf1db, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
-	{ "p5.d2",		0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
-	{ "p6.d1",		0x04000, 0xc0bfdf1f, 2 | BRF_ESS | BRF_PRG }, //  5
+	{ "p4.d3",			0x04000, 0x47baf1db, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
+	{ "p5.d2",			0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
+	{ "p6.d1",			0x04000, 0xc0bfdf1f, 2 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "p7.f4",		0x04000, 0xdbc19736, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
-	{ "p8.f3",		0x04000, 0x537726a9, 3 | BRF_ESS | BRF_PRG }, //  7
-	{ "p9.f2",		0x04000, 0xaef5a4f4, 3 | BRF_ESS | BRF_PRG }, //  8
+	{ "p7.f4",			0x04000, 0xdbc19736, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
+	{ "p8.f3",			0x04000, 0x537726a9, 3 | BRF_ESS | BRF_PRG }, //  7
+	{ "p9.f2",			0x04000, 0xaef5a4f4, 3 | BRF_ESS | BRF_PRG }, //  8
 
 	{ "p14.h1",			0x02000, 0xe599bd30, 4 | BRF_GRA },	      //  9 Text Characters
 
@@ -7917,33 +7917,33 @@ struct BurnDriver BurnDrvArian = {
 };
 
 
-// Fighting Golf (World?)
+// Lee Trevino's Fighting Golf (World?)
 
 static struct BurnRomInfo fitegolfRomDesc[] = {
-	{ "gu2.4p",		0x04000, 0x19be7ad6, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "gu1.4m",		0x08000, 0xbc32568f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "gu2.4p",			0x04000, 0x19be7ad6, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "gu1.4m",			0x08000, 0xbc32568f, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "gu6.8p",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
-	{ "gu5.8m",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
+	{ "gu6.8p",			0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "gu5.8m",			0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "gu3.6g",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
-	{ "gu4.6k",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
+	{ "gu3.6g",			0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "gu4.6k",			0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "3.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
-	{ "1.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
-	{ "2.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
+	{ "3.2c",			0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
+	{ "1.1b",			0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
+	{ "2.1c",			0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
 
-	{ "gu8.2d",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      	  //  9 Text Characters
+	{ "gu8.2d",			0x04000, 0xf1628dcf, 4 | BRF_GRA },	      	  //  9 Text Characters
 
-	{ "gu7.2b",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      	  // 10 Background Characters
+	{ "gu7.2b",			0x08000, 0x4655f94e, 6 | BRF_GRA },	      	  // 10 Background Characters
 
-	{ "gu9.2p",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      	  // 11 Sprites
-	{ "gu10.2rs",	0x08000, 0xb3acdac2, 9 | BRF_GRA },	      	  // 12
-	{ "gu11.2t",	0x08000, 0xb99cf73b, 9 | BRF_GRA },	      	  // 13
+	{ "gu9.2p",			0x08000, 0xd4957ec5, 9 | BRF_GRA },	      	  // 11 Sprites
+	{ "gu10.2rs",		0x08000, 0xb3acdac2, 9 | BRF_GRA },	      	  // 12
+	{ "gu11.2t",		0x08000, 0xb99cf73b, 9 | BRF_GRA },	      	  // 13
 
-	{ "a6001-1.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      	  // 14 PLDs
-	{ "a6001-3.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      	  // 15
-	{ "a6001-2.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      	  // 16
+	{ "a6001-1.6c",		0x00104, 0xde291f4e, 0 | BRF_OPT },	      	  // 14 PLDs
+	{ "a6001-3.3f",		0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      	  // 15
+	{ "a6001-2.6r",		0x00144, 0x0f011673, 0 | BRF_OPT },	      	  // 16
 };
 
 STD_ROM_PICK(fitegolf)
@@ -7951,7 +7951,7 @@ STD_ROM_FN(fitegolf)
 
 struct BurnDriver BurnDrvFitegolf = {
 	"fitegolf", NULL, NULL, NULL, "1988",
-	"Fighting Golf (World?)\0", NULL, "SNK", "Miscellaneous",
+	"Lee Trevino's Fighting Golf (World?)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fitegolfRomInfo, fitegolfRomName, NULL, NULL, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo,
@@ -7960,33 +7960,34 @@ struct BurnDriver BurnDrvFitegolf = {
 };
 
 
-// Fighting Golf (US)
+// Lee Trevino's Fighting Golf (US, Ver 2, set 1)
+/* Later US version containing enhancements to make the game a little easier */
 
 static struct BurnRomInfo fitegolfuRomDesc[] = {
-	{ "np45.4p",	0x04000, 0x16e8e763, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "mn45.4m",	0x08000, 0xa4fa09d5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "gu2_ver2.4p",	0x04000, 0x16e8e763, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "gu1_ver2.4m",	0x08000, 0xa4fa09d5, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "gu6.8p",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
-	{ "gu5.8m",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
+	{ "gu6.8p",			0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "gu5.8m",			0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "gu3.6g",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
-	{ "gu4.6k",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
+	{ "gu3.6g",			0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "gu4.6k",			0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "3.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
-	{ "1.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
-	{ "2.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
+	{ "3.2c",			0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
+	{ "1.1b",			0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
+	{ "2.1c",			0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
 
-	{ "gu8.2d",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      	  //  9 Text Characters
+	{ "gu8.2d",			0x04000, 0xf1628dcf, 4 | BRF_GRA },	      	  //  9 Text Characters
 
-	{ "gu7.2b",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      	  // 10 Background Characters
+	{ "gu7.2b",			0x08000, 0x4655f94e, 6 | BRF_GRA },	      	  // 10 Background Characters
 
-	{ "gu9.2p",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      	  // 11 Sprites
-	{ "gu10.2rs",	0x08000, 0xb3acdac2, 9 | BRF_GRA },	      	  // 12
-	{ "gu11.2t",	0x08000, 0xb99cf73b, 9 | BRF_GRA },	      	  // 13
+	{ "gu9.2p",			0x08000, 0xd4957ec5, 9 | BRF_GRA },	      	  // 11 Sprites
+	{ "gu10.2rs",		0x08000, 0xb3acdac2, 9 | BRF_GRA },	      	  // 12
+	{ "gu11.2t",		0x08000, 0xb99cf73b, 9 | BRF_GRA },	      	  // 13
 
-	{ "a6001-1.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      	  // 14 PLDs
-	{ "a6001-3.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      	  // 15
-	{ "a6001-2.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      	  // 16
+	{ "a6001-1.6c",		0x00104, 0xde291f4e, 0 | BRF_OPT },	      	  // 14 PLDs
+	{ "a6001-3.3f",		0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      	  // 15
+	{ "a6001-2.6r",		0x00144, 0x0f011673, 0 | BRF_OPT },	      	  // 16
 };
 
 STD_ROM_PICK(fitegolfu)
@@ -7994,7 +7995,7 @@ STD_ROM_FN(fitegolfu)
 
 struct BurnDriver BurnDrvFitegolfu = {
 	"fitegolfu", "fitegolf", NULL, NULL, "1988",
-	"Fighting Golf (US)\0", NULL, "SNK", "Miscellaneous",
+	"Lee Trevino's Fighting Golf (US, Ver 2, set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fitegolfuRomInfo, fitegolfuRomName, NULL, NULL, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo,
@@ -8003,9 +8004,9 @@ struct BurnDriver BurnDrvFitegolfu = {
 };
 
 
-// Fighting Golf (US, Ver 2)
+// Lee Trevino's Fighting Golf (US, Ver 2, set 2)
 
-static struct BurnRomInfo fitegolf2RomDesc[] = {
+static struct BurnRomInfo fitegolfuaRomDesc[] = {
 	{ "fg_ver2_6.4e",	0x04000, 0x4cc9ef0c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 	{ "fg_ver2_7.g4",	0x04000, 0x144b0beb, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "fg_ver2_8.4h",	0x04000, 0x057888c9, 1 | BRF_ESS | BRF_PRG }, //  2
@@ -8035,15 +8036,15 @@ static struct BurnRomInfo fitegolf2RomDesc[] = {
 	{ "pal20l8a.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      	  // 19
 };
 
-STD_ROM_PICK(fitegolf2)
-STD_ROM_FN(fitegolf2)
+STD_ROM_PICK(fitegolfua)
+STD_ROM_FN(fitegolfua)
 
-struct BurnDriver BurnDrvFitegolf2 = {
-	"fitegolf2", "fitegolf", NULL, NULL, "1988",
-	"Fighting Golf (US, Ver 2)\0", NULL, "SNK", "Miscellaneous",
+struct BurnDriver BurnDrvFitegolfua = {
+	"fitegolfua", "fitegolf", NULL, NULL, "1988",
+	"Lee Trevino's Fighting Golf (US, Ver 2, set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, fitegolf2RomInfo, fitegolf2RomName, NULL, NULL, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo,
+	NULL, fitegolfuaRomInfo, fitegolfuaRomName, NULL, NULL, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo,
 	FitegolfInit, DrvExit, FitegolfFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };

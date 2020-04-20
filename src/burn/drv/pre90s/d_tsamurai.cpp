@@ -1955,23 +1955,23 @@ struct BurnDriver BurnDrvVsgongf = {
 // Ring Fighter (set 1)
 
 static struct BurnRomInfo ringfgtRomDesc[] = {
-	{ "rft04-1",		0x2000, 0x11030866, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "rft03-1",		0x2000, 0x357a2085, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rft_04-1.5a",	0x2000, 0x11030866, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "rft_03-1.5c",	0x2000, 0x357a2085, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "6.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-	{ "5.5l",		0x2000, 0x76dbfde9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rtf_01.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "rft_02.5l",		0x2000, 0x76dbfde9, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "rft05",		0x1000, 0xa7b732fd, 3 | BRF_GRA },           //  4 Background Tiles
-	{ "rft06",		0x1000, 0xff2721f7, 3 | BRF_GRA },           //  5
-	{ "rft07",		0x1000, 0xec1d7ba4, 3 | BRF_GRA },           //  6
+	{ "rft_05.6f",		0x1000, 0xa7b732fd, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "rft_06.7f",		0x1000, 0xff2721f7, 3 | BRF_GRA },           //  5
+	{ "rft_07.8f",		0x1000, 0xec1d7ba4, 3 | BRF_GRA },           //  6
 
-	{ "rft08",		0x2000, 0x80d67d28, 4 | BRF_GRA },           //  7 Sprites
-	{ "rft09",		0x2000, 0xea8f0656, 4 | BRF_GRA },           //  8
-	{ "rft10",		0x2000, 0x833ca89f, 4 | BRF_GRA },           //  9
+	{ "rft_08.15j",		0x2000, 0x80d67d28, 4 | BRF_GRA },           //  7 Sprites
+	{ "rft_09.15h",		0x2000, 0xea8f0656, 4 | BRF_GRA },           //  8
+	{ "rft_10.15f",		0x2000, 0x833ca89f, 4 | BRF_GRA },           //  9
 
-	{ "clr.6s",		0x0100, 0x578bfbea, 5 | BRF_GRA },           // 10 Color Proms
-	{ "clr.6r",		0x0100, 0x3ec00739, 5 | BRF_GRA },           // 11
-	{ "clr.6p",		0x0100, 0x0e4fd17a, 5 | BRF_GRA },           // 12
+	{ "rft-11.6s",		0x0100, 0x578bfbea, 5 | BRF_GRA },           // 10 Color Proms
+	{ "rft-12.6r",		0x0100, 0x3ec00739, 5 | BRF_GRA },           // 11
+	{ "rft-13.6p",		0x0100, 0x0e4fd17a, 5 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(ringfgt)
@@ -1998,23 +1998,23 @@ struct BurnDriver BurnDrvRingfgt = {
 // Ring Fighter (set 2)
 
 static struct BurnRomInfo ringfgt2RomDesc[] = {
-	{ "rft.04",		0x2000, 0x6b9b3f3d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "rft.03",		0x2000, 0x1821974b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rft_04.5a",		0x2000, 0x6b9b3f3d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "rft_03.5c",		0x2000, 0x1821974b, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "6.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-	{ "5.5l",		0x2000, 0x76dbfde9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rft_01.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "rft_02.5l",		0x2000, 0x76dbfde9, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "rft05",		0x1000, 0xa7b732fd, 3 | BRF_GRA },           //  4 Background Tiles
-	{ "rft06",		0x1000, 0xff2721f7, 3 | BRF_GRA },           //  5
-	{ "rft07",		0x1000, 0xec1d7ba4, 3 | BRF_GRA },           //  6
+	{ "rft_05.6f",		0x1000, 0xa7b732fd, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "rft_06.7f",		0x1000, 0xff2721f7, 3 | BRF_GRA },           //  5
+	{ "rft_07.8f",		0x1000, 0xec1d7ba4, 3 | BRF_GRA },           //  6
 
-	{ "rft08",		0x2000, 0x80d67d28, 4 | BRF_GRA },           //  7 Sprites
-	{ "rft09",		0x2000, 0xea8f0656, 4 | BRF_GRA },           //  8
-	{ "rft10",		0x2000, 0x833ca89f, 4 | BRF_GRA },           //  9
+	{ "rft_08.15j",		0x2000, 0x80d67d28, 4 | BRF_GRA },           //  7 Sprites
+	{ "rft_09.15h",		0x2000, 0xea8f0656, 4 | BRF_GRA },           //  8
+	{ "rft_10.15f",		0x2000, 0x833ca89f, 4 | BRF_GRA },           //  9
 
-	{ "clr.6s",		0x0100, 0x578bfbea, 5 | BRF_GRA },           // 10 Color Proms
-	{ "clr.6r",		0x0100, 0x3ec00739, 5 | BRF_GRA },           // 11
-	{ "clr.6p",		0x0100, 0x0e4fd17a, 5 | BRF_GRA },           // 12
+	{ "rft-11.6s",		0x0100, 0x578bfbea, 5 | BRF_GRA },           // 10 Color Proms
+	{ "rft-12.6r",		0x0100, 0x3ec00739, 5 | BRF_GRA },           // 11
+	{ "rft-13.6p",		0x0100, 0x0e4fd17a, 5 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(ringfgt2)

@@ -786,16 +786,16 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Time Pilot
 
 static struct BurnRomInfo timepltRomDesc[] = {
-	{ "tm1",		0x2000, 0x1551f1b9, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "tm2",		0x2000, 0x58636cb5, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tm3",		0x2000, 0xff4e0d83, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tm1",			0x2000, 0x1551f1b9, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tm2",			0x2000, 0x58636cb5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tm3",			0x2000, 0xff4e0d83, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tm7",		0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "tm7",			0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tm6",		0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
+	{ "tm6",			0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
 
-	{ "tm4",		0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
-	{ "tm5",		0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
+	{ "tm4",			0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
+	{ "tm5",			0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
 
 	{ "timeplt.b4",		0x0020, 0x34c91839, 5 | BRF_GRA },           //  7 Color PROMs
 	{ "timeplt.b5",		0x0020, 0x463b2b07, 5 | BRF_GRA },           //  8
@@ -829,12 +829,12 @@ static struct BurnRomInfo timepltaRomDesc[] = {
 	{ "cd_e2.bin",		0x2000, 0x38b0c72a, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "cd_e3.bin",		0x2000, 0x83846870, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tm7",		0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "tm7",			0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tm6",		0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
+	{ "tm6",			0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
 
-	{ "tm4",		0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
-	{ "tm5",		0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
+	{ "tm4",			0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
+	{ "tm5",			0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
 
 	{ "timeplt.b4",		0x0020, 0x34c91839, 5 | BRF_GRA },           //  7 Color PROMs
 	{ "timeplt.b5",		0x0020, 0x463b2b07, 5 | BRF_GRA },           //  8
@@ -859,16 +859,16 @@ struct BurnDriver BurnDrvTimeplta = {
 // Time Pilot (Centuri)
 
 static struct BurnRomInfo timepltcRomDesc[] = {
-	{ "cd1y",		0x2000, 0x83ec72c2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "cd2y",		0x2000, 0x0dcf5287, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cd3y",		0x2000, 0xc789b912, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cd1y",			0x2000, 0x83ec72c2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "cd2y",			0x2000, 0x0dcf5287, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cd3y",			0x2000, 0xc789b912, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tm7",		0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "tm7",			0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tm6",		0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
+	{ "tm6",			0x2000, 0xc2507f40, 3 | BRF_GRA },           //  4 Characters
 
-	{ "tm4",		0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
-	{ "tm5",		0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
+	{ "tm4",			0x2000, 0x7e437c3e, 4 | BRF_GRA },           //  5 Sprites
+	{ "tm5",			0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
 
 	{ "timeplt.b4",		0x0020, 0x34c91839, 5 | BRF_GRA },           //  7 Color PROMs
 	{ "timeplt.b5",		0x0020, 0x463b2b07, 5 | BRF_GRA },           //  8
@@ -890,19 +890,19 @@ struct BurnDriver BurnDrvTimepltc = {
 };
 
 
-// Space Pilot
+// Space Pilot (set 1)
 
 static struct BurnRomInfo spacepltRomDesc[] = {
-	{ "sp1",		0x2000, 0xac8ca3ae, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sp2",		0x2000, 0x1f0308ef, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sp3",		0x2000, 0x90aeca50, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sp1",			0x2000, 0xac8ca3ae, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sp2",			0x2000, 0x1f0308ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sp3",			0x2000, 0x90aeca50, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tm7",		0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "tm7",			0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "sp6",		0x2000, 0x76caa8af, 3 | BRF_GRA },           //  4 Characters
+	{ "sp6",			0x2000, 0x76caa8af, 3 | BRF_GRA },           //  4 Characters
 
-	{ "sp4",		0x2000, 0x3781ce7a, 4 | BRF_GRA },           //  5 Sprites
-	{ "tm5",		0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
+	{ "sp4",			0x2000, 0x3781ce7a, 4 | BRF_GRA },           //  5 Sprites
+	{ "tm5",			0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
 
 	{ "timeplt.b4",		0x0020, 0x34c91839, 5 | BRF_GRA },           //  7 Color PROMs
 	{ "timeplt.b5",		0x0020, 0x463b2b07, 5 | BRF_GRA },           //  8
@@ -915,10 +915,44 @@ STD_ROM_FN(spaceplt)
 
 struct BurnDriver BurnDrvSpaceplt = {
 	"spaceplt", "timeplt", NULL, NULL, "1982",
-	"Space Pilot\0", NULL, "bootleg", "GX393",
+	"Space Pilot (set 1)\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
+	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
+	224, 256, 3, 4
+};
+
+
+// Space Pilot (set 2)
+
+static struct BurnRomInfo spacepltaRomDesc[] = {
+	{ "1",				0x2000, 0xc6672087, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2",				0x2000, 0x5b246c47, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3",				0x2000, 0xcc9e745e, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "4",				0x1000, 0xd66da813, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "5",				0x2000, 0x76caa8af, 3 | BRF_GRA },           //  4 Characters
+
+	{ "6",				0x2000, 0x86ab1ae7, 4 | BRF_GRA },           //  5 Sprites
+	{ "7",				0x2000, 0xe8ca87b9, 4 | BRF_GRA },           //  6
+
+	{ "timeplt.b4",		0x0020, 0x34c91839, 5 | BRF_GRA },           //  7 Color PROMs
+	{ "timeplt.b5",		0x0020, 0x463b2b07, 5 | BRF_GRA },           //  8
+	{ "timeplt.e9",		0x0100, 0x4bbb2150, 5 | BRF_GRA },           //  9
+	{ "timeplt.e12",	0x0100, 0xf7b7663e, 5 | BRF_GRA },           // 10
+};
+
+STD_ROM_PICK(spaceplta)
+STD_ROM_FN(spaceplta)
+
+struct BurnDriver BurnDrvSpaceplta = {
+	"spaceplta", "timeplt", NULL, NULL, "1982",
+	"Space Pilot (set 2)\0", NULL, "bootleg", "GX393",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, spacepltaRomInfo, spacepltaRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
 };

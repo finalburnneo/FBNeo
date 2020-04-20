@@ -1394,9 +1394,58 @@ struct BurnDriver BurnDrvBagmanj = {
 };
 
 
-// Super Bagman
+// Super Bagman (version 5)
 
 static struct BurnRomInfo sbagmanRomDesc[] = {
+	{ "sb5v5.9e",		0x1000, 0xb61029ea, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "sb6v4.9f",		0x1000, 0xbb6a6883, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sb7v4.9j",		0x1000, 0xa62b6b77, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sb8v3.9k",		0x1000, 0xb94fbb73, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sb9v3.9m",		0x1000, 0x601f34ba, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sb10v3.9n",		0x1000, 0x5f750918, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sb13v5.8d",		0x1000, 0xe0e920f6, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sb14v3.8f",		0x1000, 0x83b10139, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sb15v3.8j",		0x1000, 0xfe924879, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sb16v3.8k",		0x1000, 0xb77eb1f5, 1 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "sb2v3.1e",		0x1000, 0xf4d3d4e6, 2 | BRF_GRA },           // 10 Graphics
+	{ "sb4v3.1j",		0x1000, 0x2c6a510d, 2 | BRF_GRA },           // 11
+	{ "sb1v3.1c",		0x1000, 0xa046ff44, 2 | BRF_GRA },           // 12
+	{ "sb3v3.1f",		0x1000, 0xa4422da4, 2 | BRF_GRA },           // 13
+
+	// not dumped for this set
+	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 14 Color Data
+	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 15
+
+	// not dumped for this set
+	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 16 TMS5110 State Machine
+
+	{ "b11v3.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 17 TMS5110 Speech Data
+	{ "b12v3.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 18
+};
+
+STD_ROM_PICK(sbagman)
+STD_ROM_FN(sbagman)
+
+static INT32 SbagmanInit()
+{
+	return BagmanCommonInit(1, 0);
+}
+
+struct BurnDriver BurnDrvSbagman = {
+	"sbagman", NULL, NULL, NULL, "1984",
+	"Super Bagman (version 5)\0", NULL, "Valadon Automation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, sbagmanRomInfo, sbagmanRomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
+	SbagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Super Bagman (version 3?)
+
+static struct BurnRomInfo sbagman2RomDesc[] = {
 	{ "5.9e",			0x1000, 0x1b1d6b0a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "6.9f",			0x1000, 0xac49cb82, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "7.9j",			0x1000, 0x9a1c778d, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1422,20 +1471,15 @@ static struct BurnRomInfo sbagmanRomDesc[] = {
 	{ "12.9t",			0x1000, 0xb2120edd, 5 | BRF_SND },           // 18
 };
 
-STD_ROM_PICK(sbagman)
-STD_ROM_FN(sbagman)
+STD_ROM_PICK(sbagman2)
+STD_ROM_FN(sbagman2)
 
-static INT32 SbagmanInit()
-{
-	return BagmanCommonInit(1, 0);
-}
-
-struct BurnDriver BurnDrvSbagman = {
-	"sbagman", NULL, NULL, NULL, "1984",
-	"Super Bagman\0", NULL, "Valadon Automation", "Miscellaneous",
+struct BurnDriver BurnDrvSbagman2 = {
+	"sbagman2", "sbagman", NULL, NULL, "1984",
+	"Super Bagman (version 3?)\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, sbagmanRomInfo, sbagmanRomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, sbagman2RomInfo, sbagman2RomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
 	SbagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

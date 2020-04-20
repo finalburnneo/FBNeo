@@ -707,7 +707,7 @@ struct BurnDriverD BurnDrvRampart = {
 };
 
 
-// Rampart (Joystick)
+// Rampart (Joystick, bigger ROMs)
 
 static struct BurnRomInfo rampart2pRomDesc[] = {
 	{ "136082-1033.13l",			0x80000, 0x5c36795f, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
@@ -740,11 +740,58 @@ static INT32 Rampart2pInit()
 
 struct BurnDriverD BurnDrvRampart2p = {
 	"rampart2p", "rampart", NULL, NULL, "1990",
-	"Rampart (Joystick)\0", NULL, "Atari Games", "Miscellaneous",
+	"Rampart (Joystick, bigger ROMs)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 3, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rampart2pRomInfo, rampart2pRomName, NULL, NULL, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
 	Rampart2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	336, 240, 4, 3
+};
+
+
+// Rampart (Joystick, smaller ROMs)
+// original Atari PCB but with mostly hand-written labels, uses smaller ROMs for the main CPU
+
+static struct BurnRomInfo rampart2paRomDesc[] = {
+	{ "0h.13k-l",					0x20000, 0xd4e26d0f, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
+	{ "0l.13h",						0x20000, 0xed2a49bd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1h.13l",						0x20000, 0xb232b807, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1l.13h-j",					0x20000, 0xa2db78b1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2h.13m",						0x20000, 0x37b32b7e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "2l.13j",						0x20000, 0x00cd567b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "3h.13n",						0x20000, 0xc23b1c98, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "3l.13k",						0x20000, 0x0a12ca83, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "atr.2n",						0x20000, 0xefa38bef, 2 | BRF_GRA },           //  8 Sprites
+
+	{ "arom0_2_player_136082-1007.2d",	0x20000, 0xc96a0fc3, 3 | BRF_SND },       //  9 Samples
+	{ "arom1_2_player_136082-1006.1d",	0x20000, 0x518218d9, 3 | BRF_SND },       // 10
+
+	{ "rampart-eeprom.bin",			0x00800, 0x0be57615, 4 | BRF_PRG | BRF_ESS }, // 11 Default EEPROM Data
+
+	{ "gal16v8-136082-1000.1j",		0x00117, 0x18f82b38, 5 | BRF_OPT },           // 12 PLDs
+	{ "gal16v8-136082-1001.4l",		0x00117, 0x74d75d68, 5 | BRF_OPT },           // 13
+	{ "gal16v8-136082-1002.7k",		0x00117, 0xf593401f, 5 | BRF_OPT },           // 14
+	{ "gal20v8-136082-1003.8j",		0x00157, 0x67bb9705, 5 | BRF_OPT },           // 15
+	{ "gal20v8-136082-1004.8m",		0x00157, 0x0001ed7d, 5 | BRF_OPT },           // 16
+	{ "gal16v8-136082-1005.12c",	0x00117, 0x42c05114, 5 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(rampart2pa)
+STD_ROM_FN(rampart2pa)
+
+static INT32 Rampart2paInit()
+{
+	return DrvInit(1, 1);
+}
+
+struct BurnDriverD BurnDrvRampart2pa = {
+	"rampart2pa", "rampart", NULL, NULL, "1990",
+	"Rampart (Joystick, smaller ROMs)\0", NULL, "Atari Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, rampart2paRomInfo, rampart2paRomName, NULL, NULL, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
+	Rampart2paInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };
 

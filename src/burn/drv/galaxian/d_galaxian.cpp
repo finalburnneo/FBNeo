@@ -15829,6 +15829,26 @@ static struct BurnRomInfo TheendsRomDesc[] = {
 STD_ROM_PICK(Theends)
 STD_ROM_FN(Theends)
 
+static struct BurnRomInfo TheendssRomDesc[] = {
+	{ "the_end_ss_2.bin",		0x00800, 0x326e1f69, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic14",    	0x00800, 0x950f0a07, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss_1.bin",    	0x00800, 0x93b47650, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic16",    	0x00800, 0x380a0017, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic17",    	0x00800, 0xaf067b7f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic18",    	0x00800, 0xa0411b93, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "the_end_ss.ic56",    	0x00800, 0x7a141f29, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "the_end_ss.ic55",    	0x00800, 0x218497c1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "the_end_ss.ic30",    	0x00800, 0x527fd384, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "the_end_ss.ic31",    	0x00800, 0xaf6d09b6, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "6331-1j.86",    			0x00020, 0x24652bc4, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Theendss)
+STD_ROM_FN(Theendss)
+
 static struct BurnRomInfo ScrambleRomDesc[] = {
 	{ "s1.2d",         0x00800, 0xea35ccaa, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "s2.2e",         0x00800, 0xe7bba1b3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -17848,6 +17868,16 @@ struct BurnDriver BurnDrvTheends = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, TheendsRomInfo, TheendsRomName, NULL, NULL, NULL, NULL, TheendInputInfo, TheendDIPInfo,
+	TheendInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTheendss = {
+	"theendss", "theend", NULL, NULL, "1981",
+	"The End (SegaSA / Sonic)\0", NULL, "bootleg (Sonic)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, TheendssRomInfo, TheendssRomName, NULL, NULL, NULL, NULL, TheendInputInfo, TheendDIPInfo,
 	TheendInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

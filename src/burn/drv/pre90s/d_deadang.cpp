@@ -926,7 +926,7 @@ STD_ROM_FN(ghunters)
 
 struct BurnDriver BurnDrvGhunters = {
 	"ghunters", "deadang", NULL, NULL, "1988",
-	"Gang Hunter / Dead Angle (Spain)\0", NULL, "Seibu Kaihatsu (Segasa/Sonic license)", "Miscellaneous",
+	"Gang Hunter / Dead Angle (Spain)\0", NULL, "Seibu Kaihatsu (SegaSA / Sonic license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ghuntersRomInfo, ghuntersRomName, NULL, NULL, NULL, NULL, DeadangInputInfo, GhunterDIPInfo,

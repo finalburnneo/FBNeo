@@ -3393,6 +3393,43 @@ struct BurnDriver BurnDrvTimekill121a = {
 };
 
 
+// Time Killers (v1.00)
+/* Version 1.00? - actual version not shown (3-tier board set: P/N 1050 Rev 1, P/N 1051 Rev 0 &  P/N 1052 Rev 2) */
+
+static struct BurnRomInfo timekill100RomDesc[] = {
+	{ "tk00.bim_u54.u54",					0x040000, 0x2b379f30, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "tk01.bim_u53.u53",					0x040000, 0xe43e029c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "timekillsnd_u17.u17",				0x020000, 0xab1684c3, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+
+	{ "time_killers_0.rom0",				0x200000, 0x94cbf6f8, 3 | BRF_GRA },           //  3 Graphics (Blitter data)
+	{ "time_killers_1.rom1",				0x200000, 0xc07dea98, 3 | BRF_GRA },           //  4
+	{ "time_killers_2.rom2",				0x200000, 0x183eed2a, 3 | BRF_GRA },           //  5
+	{ "time_killers_3.rom3",				0x200000, 0xb1da1058, 3 | BRF_GRA },           //  6
+	{ "timekill_grom01.grom1",				0x020000, 0xb030c3d9, 3 | BRF_GRA },           //  7
+	{ "timekill_grom02.grom2",				0x020000, 0xe98492a4, 3 | BRF_GRA },           //  8
+	{ "timekill_grom03.grom3",				0x020000, 0x6088fa64, 3 | BRF_GRA },           //  9
+	{ "timekill_grom04.grom4",				0x020000, 0x95be2318, 3 | BRF_GRA },           // 10
+
+	{ "tksrom00_u18.u18",					0x080000, 0x79d8b83a, 6 | BRF_SND },           // 11 Ensoniq Bank 2
+	{ "tksrom01_u20.u20",					0x080000, 0xec01648c, 6 | BRF_SND },           // 12
+	{ "tksrom02_u26.u26",					0x080000, 0x051ced3e, 6 | BRF_SND },           // 13
+};
+
+STD_ROM_PICK(timekill100)
+STD_ROM_FN(timekill100)
+
+struct BurnDriver BurnDrvTimekill100 = {
+	"timekill100", "timekill", NULL, NULL, "1992",
+	"Time Killers (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, timekill100RomInfo, timekill100RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
+	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	384, 240, 4, 3
+};
+
+
 // Blood Storm (v2.22)
 
 static struct BurnRomInfo bloodstmRomDesc[] = {

@@ -2203,9 +2203,54 @@ struct BurnDriver BurnDrvGodzilla = {
 };
 
 
-// Denjin Makai
+// Denjin Makai (set 1)
 
 static struct BurnRomInfo denjinmkRomDesc[] = {
+	{ "denjin_1.u025",				0x040000, 0xb23a6e6f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "denjin_2.u024",				0x040000, 0x4fde59e7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "denjin_3.u026",				0x040000, 0x4f10292b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "denjin_4.u023",				0x040000, 0x209f1f6b, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "denjin_7.u1016",				0x010000, 0x970f36dd, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "denjin_6.u0620",				0x010000, 0xe1f759b1, 3 | BRF_GRA },           //  5 Characters
+	{ "denjin_5.u0615",				0x010000, 0xcc36af0d, 3 | BRF_GRA },           //  6
+
+	{ "obj-0-3.748",				0x200000, 0x67c26a67, 4 | BRF_GRA },           //  7 Sprites
+	{ "obj-4-5.756",				0x100000, 0x01f8d4e6, 4 | BRF_GRA },           //  8
+	{ "obj-6-7.743",				0x100000, 0xe5805757, 4 | BRF_GRA },           //  9
+	{ "obj-8-9.757",				0x100000, 0xc8f7e1c9, 4 | BRF_GRA },           // 10
+
+	{ "bg-1-ab.618",				0x100000, 0xeaad151a, 5 | BRF_GRA },           // 11 Background Tiles
+
+	{ "bg-2-ab.617",				0x100000, 0x40938f74, 6 | BRF_GRA },           // 12 Midground Tiles
+
+	{ "bg-3-ab.619",				0x100000, 0xde7366ee, 7 | BRF_GRA },           // 13 Foreground Tiles
+
+	{ "denjin_8.u0922",				0x040000, 0xa11adb8f, 8 | BRF_SND },           // 14 Samples
+
+	{ "copx-d2.313",				0x080000, 0x7c52581b, 9 | BRF_PRG | BRF_ESS }, // 15 COP ROM
+
+	{ "s68e08.844",					0x000200, 0x96f7646e, 0 | BRF_GRA },           // 16 Priority PROM?
+};
+
+STD_ROM_PICK(denjinmk)
+STD_ROM_FN(denjinmk)
+
+struct BurnDriver BurnDrvDenjinmk = {
+	"denjinmk", NULL, NULL, NULL, "1994",
+	"Denjin Makai (set 1)\0", NULL, "Winkysoft (Banpresto license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, denjinmkRomInfo, denjinmkRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
+	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
+	320, 256, 4, 3
+};
+
+
+// Denjin Makai (set 2)
+
+static struct BurnRomInfo denjinmkaRomDesc[] = {
 	{ "rom1.025",					0x040000, 0x44a648e8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "rom2.024",					0x040000, 0xe5ee8fe0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rom3.026",					0x040000, 0x781b942e, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2234,15 +2279,15 @@ static struct BurnRomInfo denjinmkRomDesc[] = {
 	{ "s68e08.844",					0x000200, 0x96f7646e, 0 | BRF_GRA },           // 16 Priority PROM?
 };
 
-STD_ROM_PICK(denjinmk)
-STD_ROM_FN(denjinmk)
+STD_ROM_PICK(denjinmka)
+STD_ROM_FN(denjinmka)
 
-struct BurnDriver BurnDrvDenjinmk = {
-	"denjinmk", NULL, NULL, NULL, "1994",
-	"Denjin Makai\0", NULL, "Winkysoft (Banpresto license)", "Miscellaneous",
+struct BurnDriver BurnDrvDenjinmka = {
+	"denjinmka", "denjinmk", NULL, NULL, "1994",
+	"Denjin Makai (set 2)\0", NULL, "Winkysoft (Banpresto license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, denjinmkRomInfo, denjinmkRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, denjinmkaRomInfo, denjinmkaRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
 	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 256, 4, 3
 };

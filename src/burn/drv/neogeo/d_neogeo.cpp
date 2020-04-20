@@ -11177,7 +11177,7 @@ static struct BurnRomInfo janshinRomDesc[] = {
 	{ "048-s1.s1",    0x020000, 0x8285b25a, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
 	{ "048-c1.c1",    0x200000, 0x3fa890e9, 3 | BRF_GRA },           //  2 Sprite data / mask rom TC5316200
-	{ "048-c2.c1",    0x200000, 0x59c48ad8, 3 | BRF_GRA },           //  3 / mask rom TC5316200
+	{ "048-c2.c2",    0x200000, 0x59c48ad8, 3 | BRF_GRA },           //  3 / mask rom TC5316200
 
 	{ "048-m1.m1",    0x020000, 0x310467c7, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code / mask rom TC531001
 

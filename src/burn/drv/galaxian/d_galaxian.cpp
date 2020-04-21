@@ -10938,6 +10938,27 @@ static struct BurnRomInfo Sirio2aRomDesc[] = {
 STD_ROM_PICK(Sirio2a)
 STD_ROM_FN(Sirio2a)
 
+static struct BurnRomInfo AtaqandrRomDesc[] = {
+	{ "ataque_androide_1.bin",  	0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_2.bin",  	0x00800, 0x382f5e37, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_3.bin",  	0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_4.bin", 		0x00800, 0x73d0b1f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_5.bin",  	0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_6.bin",  	0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_7.bin",  	0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_8.bin",  	0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "ataque_androide_d.bin", 		0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_c.bin",		0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_b.bin",		0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_a.bin", 		0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "ataque_androide_p.bin",      0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Ataqandr)
+STD_ROM_FN(Ataqandr)
+
 static struct BurnRomInfo SstarcrsRomDesc[] = {
 	{ "ss1",           0x00800, 0x2ff72897, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "ss2",           0x00800, 0x565e7880, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11784,6 +11805,16 @@ struct BurnDriver BurnDrvSirio2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Sirio2aRomInfo, Sirio2aRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvAtaqandr = {
+	"ataqandr", "mooncrst", NULL, NULL, "1980?",
+	"Ataque Androide - Moon Cresta (FAR S.A. Spanish bootleg)\0", NULL, "bootleg (FAR S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, AtaqandrRomInfo, AtaqandrRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

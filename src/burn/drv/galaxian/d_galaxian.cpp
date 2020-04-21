@@ -6692,6 +6692,22 @@ static struct BurnRomInfo ZerotimeRomDesc[] = {
 STD_ROM_PICK(Zerotime)
 STD_ROM_FN(Zerotime)
 
+static struct BurnRomInfo GalaktronRomDesc[] = {
+	{ "galaktron_g1.bin",   0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g2.bin",   0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g3.bin",   0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g4.bin",   0x00800, 0x786d690a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g5.bin",   0x00800, 0x9c1821bb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "galaktron_c2.bin",   0x00800, 0x1b13ca05, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "galaktron_c1.bin",   0x00800, 0x5cd7df03, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "galaktron_pr.bin",   0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaktron)
+STD_ROM_FN(Galaktron)
+
 // Late-to-market bootleg with PCB mods to use a single program rom
 // Datamat is the old name of Datasat, a technical service and distributor of arcade PCB's from the 80's and 90's.
 // A lot of the bootleg PCB's around Spain have Datamat stickers on the roms. It was one of the most important PCB sellers/distributors in the country from the era.
@@ -7044,7 +7060,7 @@ struct BurnDriver BurnDrvAstrians = {
 
 struct BurnDriver BurnDrvZerotime = {
 	"zerotime", "galaxian", NULL, NULL, "1979",
-	"Zero Time\0", NULL, "Petaco S.A", "Galaxian",
+	"Zero Time (Petaco S.A.)\0", NULL, "bootleg? (Petaco S.A.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimeRomInfo, ZerotimeRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
@@ -7052,9 +7068,19 @@ struct BurnDriver BurnDrvZerotime = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvGalaktron = {
+	"galaktron", "galaxian", NULL, NULL, "1979",
+	"Galaktron (Petaco S.A.)\0", NULL, "bootleg (Petaco S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaktronRomInfo, GalaktronRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvZerotimed = {
 	"zerotimed", "galaxian", NULL, NULL, "1979",
-	"Zero Time (Datamat)\0", NULL, "Datamat", "Galaxian",
+	"Zero Time (Datamat)\0", NULL, "bootleg (Datamat)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimedRomInfo, ZerotimedRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,

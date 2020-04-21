@@ -5010,6 +5010,36 @@ struct BurnDriver BurnDrvDharma = {
 };
 
 
+// Dharma Doujou (Germany)
+
+static struct BurnRomInfo dharmagRomDesc[] = {
+	{ "dd__wga5.u39",		0x020000, 0xb08664f7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dd__wga6.u42",		0x020000, 0x4ae89edc, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "dd__wa-8.u9",		0x020000, 0xaf7ebc4c, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "dd__wa-2.u4",		0x080000, 0x2c67a5c8, 3 | BRF_GRA },           //  3 Graphics
+	{ "dd__wa-4.u5",		0x080000, 0x36ca7848, 3 | BRF_GRA },           //  4
+	{ "dd__wa-1.u10",		0x080000, 0xd8034574, 3 | BRF_GRA },           //  5
+	{ "dd__wa-3.u11",		0x080000, 0xfe320fa3, 3 | BRF_GRA },           //  6
+
+	{ "dd__wa-7.u3",		0x040000, 0x7ce817eb, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(dharmag)
+STD_ROM_FN(dharmag)
+
+struct BurnDriver BurnDrvDharmag = {
+	"dharmag", "dharma", NULL, NULL, "1994",
+	"Dharma Doujou (Germany)\0", NULL, "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, dharmagRomInfo, dharmagRomName, NULL, NULL, NULL, NULL, PururunInputInfo, DharmaDIPInfo,
+	dharmaInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+
+
 // Dharma Doujou (Japan)
 
 static struct BurnRomInfo dharmajRomDesc[] = {

@@ -673,7 +673,7 @@ static struct BurnRomInfo dblewingRomDesc[] = {
 STD_ROM_PICK(dblewing)
 STD_ROM_FN(dblewing)
 	
-// Double Wings Asia
+// Double Wings (Asia)
 
 /*
 The most noticeable difference with the set below is that it doesn't use checkpoints, but respawns you when you die.
@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvDblewing = {
 };
 
 struct BurnDriver BurnDrvDblewinga = {
-	"dblewinga", "dblewing", NULL, NULL, "1993",
+	"dblewinga", "dblewing", NULL, NULL, "1994",
 	"Double Wings (Asia)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,

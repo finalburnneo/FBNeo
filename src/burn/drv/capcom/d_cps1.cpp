@@ -8213,6 +8213,31 @@ STD_ROM_PICK(Pang3b)
 STD_ROM_FN(Pang3b)
 
 static struct BurnRomInfo Pang3b2RomDesc[] = {
+	// This bootleg uses an original B-13 chip top and original main board. ROM content is the same as pang3, but split differently
+	{ "16.u70",   	   0x040000, 0x8d3fd82c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "14.u72",   	   0x040000, 0x654904c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "15.u71",   	   0x040000, 0x42774e37, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "13.u73",   	   0x040000, 0x531ea745, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "4.u68",    	   0x080000, 0x45fc0a81, BRF_GRA | CPS1_TILES },
+	{ "2.u66",    	   0x080000, 0x27668828, BRF_GRA | CPS1_TILES },
+	{ "10.u69",    	   0x080000, 0xe051b2e9, BRF_GRA | CPS1_TILES },
+	{ "8.u63",    	   0x080000, 0x4a68b194, BRF_GRA | CPS1_TILES },
+	{ "3.u67",    	   0x080000, 0x91c8d782, BRF_GRA | CPS1_TILES },
+	{ "1.u65",    	   0x080000, 0xfe32af5d, BRF_GRA | CPS1_TILES },
+	{ "9.u62",    	   0x080000, 0xf0bba5c7, BRF_GRA | CPS1_TILES },
+	{ "7.u64",    	   0x080000, 0xc60c5e75, BRF_GRA | CPS1_TILES },
+
+	{ "11.u32",    	   0x020000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM }, // == pa3_11.11f but different size, resized by bootlegger
+
+	{ "5.u34",    	   0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "6.u33",    	   0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Pang3b2)
+STD_ROM_FN(Pang3b2)
+
+static struct BurnRomInfo Pang3b3RomDesc[] = {
 	{ "pa3_17bl.11l",  0x080000, 0x3b5d99de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "pa3_16bl.10l",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -8233,10 +8258,10 @@ static struct BurnRomInfo Pang3b2RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b2)
-STD_ROM_FN(Pang3b2)
+STD_ROM_PICK(Pang3b3)
+STD_ROM_FN(Pang3b3)
 
-static struct BurnRomInfo Pang3b3RomDesc[] = {
+static struct BurnRomInfo Pang3b4RomDesc[] = {
 	{ "17.11l",        0x080000, 0xf62425e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "16.10l",        0x080000, 0x7169ea67, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -8257,8 +8282,8 @@ static struct BurnRomInfo Pang3b3RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b3)
-STD_ROM_FN(Pang3b3)
+STD_ROM_PICK(Pang3b4)
+STD_ROM_FN(Pang3b4)
 
 static struct BurnRomInfo Pang3jRomDesc[] = {
 	{ "pa3j_17.11l",   0x080000, 0x21f6e51f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14485,8 +14510,9 @@ static const struct GameConfig ConfigTable[] =
 	{ "pang3r1"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3r1a"    , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b2"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b2"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b3"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b4"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
 	{ "pang3j"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"      , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"    , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
@@ -20270,9 +20296,9 @@ struct BurnDriver BurnDrvCpsPang3b = {
 
 struct BurnDriver BurnDrvCpsPang3b2 = {
 	"pang3b2", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (bootleg set 2, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (bootleg set 2, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3b2RomInfo, Pang3b2RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
 	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -20280,10 +20306,20 @@ struct BurnDriver BurnDrvCpsPang3b2 = {
 
 struct BurnDriver BurnDrvCpsPang3b3 = {
 	"pang3b3", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (bootleg set 3, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (bootleg set 3, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3b3RomInfo, Pang3b3RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
+	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPang3b4 = {
+	"pang3b4", "pang3", NULL, NULL, "1995",
+	"Pang! 3 (bootleg set 4, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	NULL, Pang3b4RomInfo, Pang3b4RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
 	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

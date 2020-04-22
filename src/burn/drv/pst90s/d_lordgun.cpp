@@ -37,13 +37,14 @@ static UINT16 *scrollx;
 static UINT16 *scrolly;
 static UINT16 *priority;
 static UINT8 *soundlatch;
-static INT8 *okibank;
+static UINT8 *okibank;
 
 static UINT8 *DrvTransTable[5];
 static UINT16 *draw_bitmap[5];
 
 static UINT8 aliencha_dip_sel;
 static UINT8 lordgun_whitescreen;
+static INT32 eeprom_old;
 
 static UINT16 lordgun_protection_data;
 
@@ -406,35 +407,17 @@ static void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x502000:
-			scrollx[0] = data;
-		return;
-
 		case 0x502200:
-			scrollx[1] = data;
-		return;
-
 		case 0x502400:
-			scrollx[2] = data;
-		return;
-
 		case 0x502600:
-			scrollx[3] = data;
+			scrollx[(address >> 9) & 3] = data;
 		return;
 
 		case 0x502800:
-			scrolly[0] = data;
-		return;
-
 		case 0x502a00:
-			scrolly[1] = data;
-		return;
-
 		case 0x502c00:
-			scrolly[2] = data;
-		return;
-
 		case 0x502e00:
-			scrolly[3] = data;
+			scrolly[(address >> 9) & 3] = data;
 		return;
 
 		case 0x503000:
@@ -530,6 +513,8 @@ static UINT8 __fastcall lordgun_read_byte(UINT32 address)
 
 static void set_oki_bank(INT32 bank)
 {
+	okibank[0] = bank;
+
 	bank = (bank >> 1) & 1;
 	MSM6295SetBank(0, DrvSndROM[0] + (bank * 0x40000), 0, 0x3ffff);
 }
@@ -610,10 +595,8 @@ static UINT8 lordgun_dip_read()
 
 static void lordgun_eeprom_write(UINT8 data)
 {
-	static INT32 old;
-
 	for (INT32 i = 0; i < 2; i++)
-		if ((data & (0x04 << i)) && !(old & (0x04 << i)))
+		if ((data & (0x04 << i)) && !(eeprom_old & (0x04 << i)))
 			lordgun_update_gun(i);
 
 	// coin counter 0x01 (0)
@@ -622,7 +605,7 @@ static void lordgun_eeprom_write(UINT8 data)
 
 	lordgun_whitescreen = data & 0x80;
 
-	old = data;
+	eeprom_old = data;
 }
 
 static void aliencha_eeprom_write(UINT8 data)
@@ -684,6 +667,7 @@ static INT32 DrvDoReset()
 
 	aliencha_dip_sel	= 0;
 	lordgun_whitescreen	= 0;
+	eeprom_old = 0;
 
 	// rom hacks
 	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "aliencha", 8)) {
@@ -756,7 +740,7 @@ static INT32 MemIndex()
 
 	soundlatch	= Next; Next += 0x000002;
 
-	okibank		= (INT8*)Next; Next += 0x000001;
+	okibank		= Next; Next += 0x000001;
 
 	RamEnd		= Next;
 
@@ -865,8 +849,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295Init(1, 1000000 / 132, 1); // aliencha
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
 	MSM6295SetBank(0, DrvSndROM[0], 0, 0x3ffff);
 	MSM6295SetBank(1, DrvSndROM[1], 0, 0x3ffff);
 
@@ -1212,9 +1196,7 @@ static INT32 DrvDraw()
 	DrvPaletteRecalc();
 
 	if (lordgun_whitescreen) {
-		for (INT32 o = 0; o < nScreenWidth * nScreenHeight; o++) {
-			pTransDraw[o] = 0x800; // white!!
-		}
+		BurnTransferClear(0x800);
 
 		BurnTransferCopy(DrvPalette);
 		return 0;
@@ -1256,9 +1238,7 @@ static INT32 lordgunDraw()
 {
 	DrvDraw();
 
-	for (INT32 i = 0; i < BurnDrvGetMaxPlayers(); i++) {
-		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
-	}
+	BurnGunDrawTargets();
 
 	return 0;
 }
@@ -1396,22 +1376,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYMF278BScan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
+		MSM6295Scan(nAction, pnMin);
 
+		ppi8255_scan();
 		BurnGunScan();
 		EEPROMScan(nAction, pnMin);
 
 		SCAN_VAR(aliencha_dip_sel);
 		SCAN_VAR(lordgun_whitescreen);
 		SCAN_VAR(lordgun_protection_data);
+		SCAN_VAR(eeprom_old);
 
-		SCAN_VAR(lordgun_gun_hw_x[0]);
-		SCAN_VAR(lordgun_gun_hw_y[0]);
-		SCAN_VAR(lordgun_gun_hw_x[1]);
-		SCAN_VAR(lordgun_gun_hw_y[1]);
+		SCAN_VAR(lordgun_gun_hw_x);
+		SCAN_VAR(lordgun_gun_hw_y);
 	}
 
 	if (nAction & ACB_WRITE) {
-		set_oki_bank(*okibank);
+		set_oki_bank(okibank[0]);
 	}
 
 	return 0;

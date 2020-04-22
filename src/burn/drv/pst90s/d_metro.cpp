@@ -46,8 +46,6 @@ static UINT8 *DrvK053936CRAM;
 static UINT8 *DrvUpdRAM;
 static UINT8 *DrvZ80RAM;
 
-static UINT8 DrvRecalc;
-
 static UINT16 soundlatch;
 static UINT8 requested_int[8];
 static INT32 irq_levels[8];
@@ -3927,6 +3925,17 @@ static INT32 daitoridInit()
 	return nRet;
 }
 
+static INT32 puzzliaInit()
+{
+	main_cpu_cycles = 16000000 / 58;
+
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
+	
+	i4x00_set_offsets(-2, -2, -2);
+
+	return nRet;
+}
+
 static void toride2gMapCallback()
 {
 	metro_common_map_ram(0xc00000, 0x400000, 1, 1);
@@ -5368,7 +5377,7 @@ struct BurnDriver BurnDrv_3kokushi = {
 };
 
 
-// Puzzli
+// Puzzli (revision B)
 
 static struct BurnRomInfo puzzliRomDesc[] = {
 	{ "pz_jb5.20e",			0x020000, 0x33bbbd28, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -5389,11 +5398,41 @@ STD_ROM_FN(puzzli)
 
 struct BurnDriver BurnDrvPuzzli = {
 	"puzzli", NULL, NULL, NULL, "1995",
-	"Puzzli\0", NULL, "Metro / Banpresto", "Miscellaneous",
+	"Puzzli (revision B)\0", NULL, "Metro / Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzliRomInfo, puzzliRomName, NULL, NULL, NULL, NULL, PuzzliInputInfo, PuzzliDIPInfo,
 	daitoridInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Puzzli (revision A)
+
+static struct BurnRomInfo puzzliaRomDesc[] = {
+	{ "pz-ja-5.20e",		0x020000, 0x4e162574, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pz-jb-6.20c",		0x020000, 0x19210626, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pz-ja-8.3i",			0x020000, 0xfd492a57, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "pz-ja-2.14i",		0x080000, 0x0c0997d4, 3 | BRF_GRA },           //  3 Graphics
+	{ "pz-ja-4.18i",		0x080000, 0x576bc5c2, 3 | BRF_GRA },           //  4
+	{ "pz-ja-1.12i",		0x080000, 0x29f01eb3, 3 | BRF_GRA },           //  5
+	{ "pz-ja-3.16i",		0x080000, 0x6753e282, 3 | BRF_GRA },           //  6
+
+	{ "pz-ja-7.3g",			0x040000, 0xde285717, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(puzzlia)
+STD_ROM_FN(puzzlia)
+
+struct BurnDriver BurnDrvPuzzlia = {
+	"puzzlia", "puzzli", NULL, NULL, "1995",
+	"Puzzli (revision A)\0", NULL, "Metro / Banpresto", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, puzzliaRomInfo, puzzliaRomName, NULL, NULL, NULL, NULL, PuzzliInputInfo, PuzzliDIPInfo,
+	puzzliaInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
 };
 

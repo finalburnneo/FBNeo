@@ -319,6 +319,25 @@ static struct BurnRomInfo FstarfrcjRomDesc[] = {
 STD_ROM_PICK(Fstarfrcj)
 STD_ROM_FN(Fstarfrcj)
 
+static struct BurnRomInfo FstarfrcwRomDesc[] = {
+	{ "1.bin",         0x40000, 0x5bc0a9d2, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "2.bin",         0x40000, 0x8ec787cb, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "fstarf03.rom",  0x20000, 0x54375335, BRF_GRA },			 //  2
+	{ "fstarf05.rom",  0x80000, 0x77a281e7, BRF_GRA },			 //  3
+	{ "fstarf04.rom",  0x80000, 0x398a920d, BRF_GRA },			 //  4
+	{ "fstarf09.rom",  0x80000, 0xd51341d2, BRF_GRA },			 //  5
+	{ "fstarf06.rom",  0x80000, 0x07e40e87, BRF_GRA },			 //  6
+
+	{ "fstarf07.rom",  0x10000, 0xe0ad5de1, BRF_PRG | BRF_SND }, //  7	Z80 Program Code
+
+	{ "fstarf08.rom",  0x20000, 0xf0ad5693, BRF_SND },			 //  8	Samples
+};
+
+
+STD_ROM_PICK(Fstarfrcw)
+STD_ROM_FN(Fstarfrcw)
+
 static struct BurnRomInfo GinkunRomDesc[] = {
 	{ "ginkun01.i01",  0x40000, 0x98946fd5, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "ginkun02.i02",  0x40000, 0xe98757f6, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -1305,6 +1324,16 @@ struct BurnDriver BurnDrvFstarfrcj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, FstarfrcjRomInfo, FstarfrcjRomName, NULL, NULL, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
+	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x2000, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFstarfrcw = {
+	"fstarfrcw", "fstarfrc", NULL, NULL, "1992",
+	"Final Star Force (World?)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, FstarfrcwRomInfo, FstarfrcwRomName, NULL, NULL, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
 	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 224, 256, 3, 4
 };

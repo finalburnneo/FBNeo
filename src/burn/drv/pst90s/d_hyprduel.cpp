@@ -17,8 +17,6 @@ static UINT8 *DrvGfxROM[4];
 static UINT8 *DrvSndROM;
 static UINT8 *DrvShareRAM[3];
 
-static UINT8 DrvRecalc;
-
 static INT32 cpu_trigger;
 static INT32 requested_int;
 static INT32 vblank_end_timer;

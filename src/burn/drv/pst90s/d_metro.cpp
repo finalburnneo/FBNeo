@@ -46,8 +46,6 @@ static UINT8 *DrvK053936CRAM;
 static UINT8 *DrvUpdRAM;
 static UINT8 *DrvZ80RAM;
 
-static UINT8 DrvRecalc;
-
 static UINT16 soundlatch;
 static UINT8 requested_int[8];
 static INT32 irq_levels[8];

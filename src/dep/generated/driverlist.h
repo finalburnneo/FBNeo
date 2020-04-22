@@ -3599,6 +3599,7 @@ DRV		BurnDrvpce_finalsols;
 DRV		BurnDrvpce_finalsol;
 DRV		BurnDrvFstarfrcj;
 DRV		BurnDrvFstarfrc;
+DRV		BurnDrvFstarfrcw;
 DRV		BurnDrvcv_finaltst;
 DRV		BurnDrvFinalttr;
 DRV		BurnDrvMSX_fzone;
@@ -3913,6 +3914,7 @@ DRV		BurnDrvGalaxianmo;
 DRV		BurnDrvGalaxian;
 DRV		BurnDrvGalaxiana;
 DRV		BurnDrvGalaxrf;
+DRV		BurnDrvGalaxianrp;
 DRV		BurnDrvGalaxianbl3;
 DRV		BurnDrvGalaxiant;
 DRV		BurnDrvGalaxrcgg;
@@ -6367,9 +6369,8 @@ DRV		BurnDrvMissmw96;
 DRV		BurnDrvmspacmanbgd;
 DRV		BurnDrvmspacmanblt;
 DRV		BurnDrvMspuzzlg;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvMspuzzlen;		// no comment [NOT WORKING]
-#endif
+DRV		BurnDrvMspuzzlea;
+DRV		BurnDrvMspuzzleb;
 DRV		BurnDrvMspuzzle;
 DRV		BurnDrvMissw96a;
 DRV		BurnDrvMissw96b;
@@ -8658,6 +8659,7 @@ DRV		BurnDrvCpsPang3;
 DRV		BurnDrvCpsPang3b;
 DRV		BurnDrvCpsPang3b2;
 DRV		BurnDrvCpsPang3b3;
+DRV		BurnDrvCpsPang3b4;
 DRV		BurnDrvCpsPang3j;
 DRV		BurnDrvpanicbom;
 DRV		BurnSpecpandizzy;
@@ -9305,9 +9307,10 @@ DRV		BurnDrvPuzlstar;
 DRV		BurnDrvUoPoko;
 DRV		BurnDrvUoPokoj;
 DRV		BurnDrvJoyjoy;
+DRV		BurnDrvPuzzlia;
+DRV		BurnDrvPuzzli;
 DRV		BurnDrvPuzzli2;
 DRV		BurnDrvPuzzli2s;
-DRV		BurnDrvPuzzli;
 DRV		BurnDrvgg_ichirgg;
 DRV		BurnDrvPuzzlovek;
 DRV		BurnDrvPuzzlove;
@@ -9485,6 +9488,7 @@ DRV		BurnDrvRaidendxk;
 DRV		BurnDrvRaidendxpt;
 DRV		BurnDrvRaidendx;
 DRV		BurnDrvRaidendxu;
+DRV		BurnDrvRaiden2eup;
 DRV		BurnDrvRaiden2eg;
 DRV		BurnDrvRaiden2ea;
 DRV		BurnDrvRaiden2e;
@@ -10795,7 +10799,6 @@ DRV		BurnDrvspeakres;
 DRV		BurnDrvsms_sci;
 DRV		BurnDrvsms_scip;
 DRV		BurnDrvScij;
-DRV		BurnDrvScinegro;
 DRV		BurnDrvSciu;
 DRV		BurnDrvSci;
 DRV		BurnDrvScia;
@@ -10803,8 +10806,9 @@ DRV		BurnDrvpce_sci;
 DRV		BurnDrvcv_spectron;
 DRV		BurnDrvSpec2kh;
 DRV		BurnDrvSpec2k;
-DRV		BurnDrvSpdball;
 DRV		BurnDrvSpeedbal;
+DRV		BurnDrvSpeedbala;
+DRV		BurnDrvSpdball;
 DRV		BurnDrvSpdcoin;
 DRV		BurnDrvSpeedspn;
 DRV		BurnDrvsms_speedbl;
@@ -11668,6 +11672,7 @@ DRV		BurnDrvgg_ssinv;
 DRV		BurnDrvMacross;
 DRV		BurnDrvMacross2g;
 DRV		BurnDrvMacross2;
+DRV		BurnDrvScin;
 DRV		BurnDrvSsrj;
 DRV		BurnSpecsupespri;
 DRV		BurnDrvSstarcrs;
@@ -17660,6 +17665,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_finalsol,		// Final Soldier
 	&BurnDrvFstarfrcj,			// Final Star Force (Japan)
 	&BurnDrvFstarfrc,			// Final Star Force (US)
+	&BurnDrvFstarfrcw,			// Final Star Force (World?)
 	&BurnDrvcv_finaltst,		// Final Test Cartridge (Prototype)
 	&BurnDrvFinalttr,			// Final Tetris
 	&BurnDrvMSX_fzone,			// Final Zone (Jpn)
@@ -17974,6 +17980,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalaxian,			// Galaxian (Namco set 1)
 	&BurnDrvGalaxiana,			// Galaxian (Namco set 2)
 	&BurnDrvGalaxrf,			// Galaxian (Recreativos Franco S.A. Spanish bootleg)
+	&BurnDrvGalaxianrp,			// Galaxian (Rene Pierre bootleg)
 	&BurnDrvGalaxianbl3,		// Galaxian (Spanish bootleg)
 	&BurnDrvGalaxiant,			// Galaxian (Taito)
 	&BurnDrvGalaxrcgg,			// Galaxian Growing Galaxip / Galaxian Nave Creciente (Recreativos Covadonga Spanish bootleg)
@@ -20428,9 +20435,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmspacmanbgd,		// Miss Pukman ('Made in Greece' Datamat bootleg)
 	&BurnDrvmspacmanblt,		// Miss Pukman ('Made in Greece' Triunvi bootleg)
 	&BurnDrvMspuzzlg,			// Miss Puzzle (Clone of Gumbo)
-#if defined FBNEO_DEBUG
-	&BurnDrvMspuzzlen,			// Miss Puzzle (Nudes) [no comment, NOT WORKING]
-#endif
+	&BurnDrvMspuzzlea,			// Miss Puzzle (Nudes, less explicit)
+	&BurnDrvMspuzzleb,			// Miss Puzzle (Nudes, more explicit)
 	&BurnDrvMspuzzle,			// Miss Puzzle
 	&BurnDrvMissw96a,			// Miss World '96 (Nude) (set 2)
 	&BurnDrvMissw96b,			// Miss World '96 (Nude) (set 3)
@@ -22717,8 +22723,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsPang3r1a,		// Pang! 3 (950511 Euro, alt)
 	&BurnDrvCpsPang3,			// Pang! 3 (950601 Euro)
 	&BurnDrvCpsPang3b,			// Pang! 3 (bootleg set 1, 950511 Euro)
-	&BurnDrvCpsPang3b2,			// Pang! 3 (bootleg set 2, 950511 Euro)
-	&BurnDrvCpsPang3b3,			// Pang! 3 (bootleg set 3, 950601 Euro)
+	&BurnDrvCpsPang3b2,			// Pang! 3 (bootleg set 2, 950601 Euro) [no comment, NOT WORKING]
+	&BurnDrvCpsPang3b3,			// Pang! 3 (bootleg set 3, 950511 Euro)
+	&BurnDrvCpsPang3b4,			// Pang! 3 (bootleg set 4, 950601 Euro)
 	&BurnDrvCpsPang3j,			// Pang! 3: Kaitou Tachi no Karei na Gogo (950511 Japan)
 	&BurnDrvpanicbom,			// Panic Bomber
 	&BurnSpecpandizzy,			// Panic Dizzy (128K)
@@ -23366,9 +23373,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUoPoko,				// Puzzle Uo Poko (International, ver. 98/02/06)
 	&BurnDrvUoPokoj,			// Puzzle Uo Poko (Japan, ver. 98/02/06)
 	&BurnDrvJoyjoy,				// Puzzled / Joy Joy Kid (NGM-021)(NGH-021)
+	&BurnDrvPuzzlia,			// Puzzli (revision A)
+	&BurnDrvPuzzli,				// Puzzli (revision B)
 	&BurnDrvPuzzli2,			// Puzzli 2 (V100)
 	&BurnDrvPuzzli2s,			// Puzzli 2 Super (V200)
-	&BurnDrvPuzzli,				// Puzzli
 	&BurnDrvgg_ichirgg,			// Puzzlle and Action Ichidant~R GG (Jpn)
 	&BurnDrvPuzzlovek,			// PuzzLove (Korea)
 	&BurnDrvPuzzlove,			// PuzzLove
@@ -23546,6 +23554,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRaidendxpt,			// Raiden DX (Portugal)
 	&BurnDrvRaidendx,			// Raiden DX (UK)
 	&BurnDrvRaidendxu,			// Raiden DX (US)
+	&BurnDrvRaiden2eup,			// Raiden II (easier, US, prototype? 11-16)
 	&BurnDrvRaiden2eg,			// Raiden II (Easy Version, Germany)
 	&BurnDrvRaiden2ea,			// Raiden II (Easy Version, Japan?)
 	&BurnDrvRaiden2e,			// Raiden II (Easy Version, Korea?)
@@ -24856,7 +24865,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_sci,			// Special Criminal Investigation (Euro)
 	&BurnDrvsms_scip,			// Special Criminal Investigation (Euro, Prototype)
 	&BurnDrvScij,				// Special Criminal Investigation (Japan)
-	&BurnDrvScinegro,			// Special Criminal Investigation (Negro bootleg)
 	&BurnDrvSciu,				// Special Criminal Investigation (US)
 	&BurnDrvSci,				// Special Criminal Investigation (World set 1)
 	&BurnDrvScia,				// Special Criminal Investigation (World set 2)
@@ -24864,8 +24872,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_spectron,		// Spectron
 	&BurnDrvSpec2kh,			// Spectrum 2000 (horizontal, buggy) (Europe)
 	&BurnDrvSpec2k,				// Spectrum 2000 (vertical, Korea)
+	&BurnDrvSpeedbal,			// Speed Ball (set 1)
+	&BurnDrvSpeedbala,			// Speed Ball (set 2)
 	&BurnDrvSpdball,			// Speed Ball - Contest at Neonworld (prototype)
-	&BurnDrvSpeedbal,			// Speed Ball
 	&BurnDrvSpdcoin,			// Speed Coin (prototype)
 	&BurnDrvSpeedspn,			// Speed Spin
 	&BurnDrvsms_speedbl,		// Speedball (Image Works) (Euro)
@@ -25729,6 +25738,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMacross,			// Super Spacefortress Macross / Chou-Jikuu Yousai Macross
 	&BurnDrvMacross2g,			// Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (GAMEST review build)
 	&BurnDrvMacross2,			// Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II
+	&BurnDrvScin,				// Super Special Criminal Investigation (Negro Torino hack)
 	&BurnDrvSsrj,				// Super Speed Race Junior (Japan)
 	&BurnSpecsupespri,			// Super Sprint (48K)
 	&BurnDrvSstarcrs,			// Super Star Crest

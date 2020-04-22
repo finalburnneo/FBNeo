@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13784 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13791 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3527,6 +3527,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_finalsol	|  	| Final Soldier						| 		| 1991	| Hudson	| PC Engine	| 					|
 | fstarfrcj	|  	| Final Star Force (Japan)				| fstarfrc	| 1992	| Tecmo		| Miscellaneous	| 					|
 | fstarfrc	|  	| Final Star Force (US)					| 		| 1992	| Tecmo		| Miscellaneous	| 					|
+| fstarfrcw	|  	| Final Star Force (World?)				| fstarfrc	| 1992	| Tecmo		| Miscellaneous	| 					|
 | cv_finaltst	|  	| Final Test Cartridge (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | finalttr	|  	| Final Tetris						| 		| 1993	| Jeil Computer | Kaneko Pandora| 					|
 | msx_fzone	|  	| Final Zone (Jpn)					| 		| 1986	| Nihon Telenet	| MSX		| 					|
@@ -3835,6 +3836,7 @@ This list contains all games supported by FinalBurn Neo.
 | galaxian	|  	| Galaxian (Namco set 1)				| 		| 1979	| Namco		| Galaxian	| 					|
 | galaxiana	|  	| Galaxian (Namco set 2)				| galaxian	| 1979	| Namco		| Galaxian	| 					|
 | galaxrf	|  	| Galaxian (Recreativos Franco S.A. Spanish bootleg)	| galaxian	| 1980	| bootleg (Recre| Galaxian	| 					|
+| galaxianrp	|  	| Galaxian (Rene Pierre bootleg)			| galaxian	| 1979	| bootleg (Valad| Galaxian	| 					|
 | galaxianbl3	|  	| Galaxian (Spanish bootleg)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | galaxiant	|  	| Galaxian (Taito)					| galaxian	| 1979	| Namco (Taito l| Galaxian	| 					|
 | galaxrcgg	|  	| Galaxian Growing Galaxip / Galaxian Nave Creciente (Re| galaxian	| 1980	| bootleg (Recre| Galaxian	| 					|
@@ -6241,7 +6243,8 @@ This list contains all games supported by FinalBurn Neo.
 | mspacmanbgd	|  	| Miss Pukman ('Made in Greece' Datamat bootleg)	| mspacman	| 1992	| bootleg (Datam| Pac-man	| 					|
 | mspacmanblt	|  	| Miss Pukman ('Made in Greece' Triunvi bootleg)	| mspacman	| 1991	| bootleg (Triun| Pac-man	| 					|
 | mspuzzleg	|  	| Miss Puzzle (Clone of Gumbo)				| gumbo		| 1994	| Min Corp.	| Miscellaneous	| 					|
-| mspuzzlen	| D NW	| Miss Puzzle (Nudes)					| mspuzzle	| 1994	| Min Corp.	| Miscellaneous	| 					|
+| mspuzzlea	|  	| Miss Puzzle (Nudes, less explicit)			| mspuzzle	| 1994	| Min Corp.	| Miscellaneous	| 					|
+| mspuzzleb	|  	| Miss Puzzle (Nudes, more explicit)			| mspuzzle	| 1994	| Min Corp.	| Miscellaneous	| imperfect graphics			|
 | mspuzzle	|  	| Miss Puzzle						| 		| 1994	| Min Corp.	| Miscellaneous	| 					|
 | missw96a	|  	| Miss World '96 (Nude) (set 2)				| missw96	| 1996	| Comad		| Miscellaneous	| 					|
 | missw96b	|  	| Miss World '96 (Nude) (set 3)				| missw96	| 1996	| Comad		| Miscellaneous	| 					|
@@ -8502,8 +8505,9 @@ This list contains all games supported by FinalBurn Neo.
 | pang3r1a	|  	| Pang! 3 (950511 Euro, alt)				| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | pang3		|  	| Pang! 3 (950601 Euro)					| 		| 1995	| Mitchell	| CPS1		| 					|
 | pang3b	|  	| Pang! 3 (bootleg set 1, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
-| pang3b2	|  	| Pang! 3 (bootleg set 2, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
-| pang3b3	|  	| Pang! 3 (bootleg set 3, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
+| pang3b2	|   NW	| Pang! 3 (bootleg set 2, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
+| pang3b3	|  	| Pang! 3 (bootleg set 3, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
+| pang3b4	|  	| Pang! 3 (bootleg set 4, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | pang3j	|  	| Pang! 3: Kaitou Tachi no Karei na Gogo (950511 Japan)	| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | panicbom	|  	| Panic Bomber						| 		| 1994	| Eighting / Hud| Neo Geo MVS	| 					|
 | spec_pandizzy	|  	| Panic Dizzy (128K)					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
@@ -9135,9 +9139,10 @@ This list contains all games supported by FinalBurn Neo.
 | uopoko	|  	| Puzzle Uo Poko (International, ver. 98/02/06)		| 		| 1999	| Cave / Jaleco	| Cave		| 					|
 | uopokoj	|  	| Puzzle Uo Poko (Japan, ver. 98/02/06)			| uopoko	| 1999	| Cave / Jaleco	| Cave		| 					|
 | joyjoy	|  	| Puzzled / Joy Joy Kid (NGM-021)(NGH-021)		| 		| 1990	| SNK		| Neo Geo MVS	| 					|
+| puzzlia	|  	| Puzzli (revision A)					| puzzli	| 1995	| Metro / Banpre| Miscellaneous	| 					|
+| puzzli	|  	| Puzzli (revision B)					| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | puzzli2	|  	| Puzzli 2 (V100)					| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
 | puzzli2s	|  	| Puzzli 2 Super (V200)					| puzzli2	| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
-| puzzli	|  	| Puzzli						| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | gg_ichirgg	|  	| Puzzlle and Action Ichidant~R GG (Jpn)		| 		| 1994	| Sega		| Sega Game Gear| 					|
 | puzzlovek	|  	| PuzzLove (Korea)					| puzzlove	| 1994	| Para		| Miscellaneous	| 					|
 | puzzlove	|  	| PuzzLove						| 		| 1994	| Para		| Miscellaneous	| 					|
@@ -9313,6 +9318,7 @@ This list contains all games supported by FinalBurn Neo.
 | raidendxpt	|  	| Raiden DX (Portugal)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendx	|  	| Raiden DX (UK)					| 		| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendxu	|  	| Raiden DX (US)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
+| raiden2eup	|  	| Raiden II (easier, US, prototype? 11-16)		| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2eg	|  	| Raiden II (Easy Version, Germany)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2ea	|  	| Raiden II (Easy Version, Japan?)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2e	|  	| Raiden II (Easy Version, Korea?)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
@@ -10597,7 +10603,6 @@ This list contains all games supported by FinalBurn Neo.
 | sms_sci	|  	| Special Criminal Investigation (Euro)			| 		| 1992	| Sega		| Sega Master Sy| 					|
 | sms_scip	|  	| Special Criminal Investigation (Euro, Prototype)	| sms_sci	| 1992	| Sega		| Sega Master Sy| 					|
 | scij		|  	| Special Criminal Investigation (Japan)		| sci		| 1989	| Taito Corporat| Taito Z	| 					|
-| scinegro	|  	| Special Criminal Investigation (Negro bootleg)	| sci		| 1989	| Negro		| Taito Z	| 					|
 | sciu		|  	| Special Criminal Investigation (US)			| sci		| 1989	| Taito America | Taito Z	| 					|
 | sci		|  	| Special Criminal Investigation (World set 1)		| 		| 1989	| Taito Corporat| Taito Z	| 					|
 | scia		|  	| Special Criminal Investigation (World set 2)		| sci		| 1989	| Taito Corporat| Taito Z	| 					|
@@ -10605,8 +10610,9 @@ This list contains all games supported by FinalBurn Neo.
 | cv_spectron	|  	| Spectron						| 		| 1983	| Spectravideo	| ColecoVision	| 					|
 | spec2kh	|  	| Spectrum 2000 (horizontal, buggy) (Europe)		| spec2k	| 2000	| Yona Tech	| NMK16		| 					|
 | spec2k	|  	| Spectrum 2000 (vertical, Korea)			| 		| 2000	| Yona Tech	| NMK16		| 					|
+| speedbal	|  	| Speed Ball (set 1)					| 		| 1987	| Tecfri / Desys| Miscellaneous	| 					|
+| speedbala	|  	| Speed Ball (set 2)					| speedbal	| 1987	| Tecfri / Desys| Miscellaneous	| 					|
 | spdball	|  	| Speed Ball - Contest at Neonworld (prototype)		| 		| 1985	| Williams	| 6809 System	| 					|
-| speedbal	|  	| Speed Ball						| 		| 1987	| Tecfri / Desys| Miscellaneous	| 					|
 | spdcoin	|  	| Speed Coin (prototype)				| 		| 1984	| Stern		| Galaxian	| 					|
 | speedspn	|  	| Speed Spin						| 		| 1994	| TCH		| Miscellaneous	| 					|
 | sms_speedbl	|  	| Speedball (Image Works) (Euro)			| 		| 1990	| Image Works	| Sega Master Sy| 					|
@@ -11454,6 +11460,7 @@ This list contains all games supported by FinalBurn Neo.
 | macross	|  	| Super Spacefortress Macross / Chou-Jikuu Yousai Macros| 		| 1992	| Banpresto	| NMK16		| 					|
 | macross2g	|  	| Super Spacefortress Macross II / Chou-Jikuu Yousai Mac| macross2	| 1993	| Banpresto	| NMK16		| 					|
 | macross2	|  	| Super Spacefortress Macross II / Chou-Jikuu Yousai Mac| 		| 1993	| Banpresto	| NMK16		| 					|
+| scin		|  	| Super Special Criminal Investigation (Negro Torino hac| sci		| 1989	| hack (Negro To| Taito Z	| 					|
 | ssrj		|  	| Super Speed Race Junior (Japan)			| 		| 1985	| Taito Corporat| Miscellaneous	| Weird colors				|
 | spec_supespri	|  	| Super Sprint (48K)					| 		| 1987	| Activision	| ZX Spectrum	| 					|
 | sstarcrs	|  	| Super Star Crest					| mooncrst	| 1980?	| Nichibutsu (Ta| Galaxian	| 					|

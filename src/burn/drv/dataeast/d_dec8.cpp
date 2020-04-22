@@ -2543,7 +2543,9 @@ static struct BurnRomInfo cobracomRomDesc[] = {
 	{ "el04.13a",	0x10000, 0xd80a49ce, 6 }, // 13
 	{ "el07.18a",	0x10000, 0x6d771fc3, 6 }, // 14
 	
-	{ "pt-0.16h",	0x00117, 0xadd5074f, 7 }, // 15 plds
+	{ "eh15.12f",	0x00200, 0x279e540c, 7 }, // 15 proms
+	
+	{ "pt-0.16h",	0x00117, 0xadd5074f, 8 }, // 16 plds
 };
 
 STD_ROM_PICK(cobracom)
@@ -2608,7 +2610,9 @@ static struct BurnRomInfo cobracomaRomDesc[] = {
 	{ "el04.13a",	0x10000, 0xd80a49ce, 6 }, // 13
 	{ "el07.18a",	0x10000, 0x6d771fc3, 6 }, // 14
 	
-	{ "pt-0.16h",	0x00117, 0xadd5074f, 7 }, // 15 plds
+	{ "eh15.12f",	0x00200, 0x279e540c, 7 }, // 15 proms
+	
+	{ "pt-0.16h",	0x00117, 0xadd5074f, 8 }, // 16 plds
 };
 
 STD_ROM_PICK(cobracoma)
@@ -2649,7 +2653,9 @@ static struct BurnRomInfo cobracombRomDesc[] = {
 	{ "el04.13a",	0x10000, 0xd80a49ce, 6 }, // 13
 	{ "el07.18a",	0x10000, 0x6d771fc3, 6 }, // 14
 	
-	{ "pt-0.16h",	0x00117, 0xadd5074f, 7 }, // 15 plds
+	{ "eh15.12f",	0x00200, 0x279e540c, 7 }, // 15 proms
+	
+	{ "pt-0.16h",	0x00117, 0xadd5074f, 8 }, // 16 plds
 };
 
 STD_ROM_PICK(cobracomb)
@@ -2690,7 +2696,9 @@ static struct BurnRomInfo cobracmjRomDesc[] = {
 	{ "eh04.13a",	0x10000, 0xd80a49ce, 6 }, // 13
 	{ "eh07.18a",	0x10000, 0x6d771fc3, 6 }, // 14
 	
-	{ "pt-0.16h",	0x00117, 0xadd5074f, 7 }, // 15 plds
+	{ "eh15.12f",	0x00200, 0x279e540c, 7 }, // 15 proms
+	
+	{ "pt-0.16h",	0x00117, 0xadd5074f, 8 }, // 16 plds
 };
 
 STD_ROM_PICK(cobracmj)
@@ -2789,31 +2797,40 @@ struct BurnDriver BurnDrvCobracomib = {
 
 // Cobra-Command (Japan, bootleg)
 // f205v id 375
-// This PCB has been manufactured in Italy, roms are the same as "Cobra-Command (Japan)" already in MAME,  but divided into different size eprom chips //
+// bootleg of the Japanese release manufactured in Italy. Contents are the same but for PROMs and PAL
+// main PCB is marked: "LC" on component side ("LC" is the Italian for "Lato Componenti" which translates to "Components Side")
+// main PCB is marked: "LS" on solder side ("LS" is the Italian for "Lato Saldature" which translates to "Solders Side") 
 
 static struct BurnRomInfo cobracomjbRomDesc[] = {
-	{ "4.bin",		0x08000, 0x868637e1, 1 }, //  0 maincpu
-	{ "3.bin",		0x10000, 0x7c878a83, 1 }, //  1
-	{ "2.bin",		0x10000, 0x04505acb, 1 }, //  2
+	{ "cobra4.bin",			0x08000, 0x868637e1, 1 }, //  0 maincpu
+	{ "cobra3.bin",			0x10000, 0x7c878a83, 1 }, //  1
+	{ "cobra2.bin",			0x10000, 0x04505acb, 1 }, //  2
 
-	{ "5.bin",		0x08000, 0x62ca5e89, 2 }, //  3 audiocpu
+	{ "cobra5.bin",			0x08000, 0x62ca5e89, 2 }, //  3 audiocpu
 
-	{ "1.bin",	    0x08000, 0x47246177, 3 }, //  4 gfx1
+	{ "cobra1.bin",	    	0x08000, 0x47246177, 3 }, //  4 gfx1
 
-	{ "13.bin",		0x10000, 0xd96b6797, 4 }, //  5 gfx2
-	{ "12.bin",		0x10000, 0x3fef9c02, 4 }, //  6
-	{ "11.bin",		0x10000, 0xbfae6c34, 4 }, //  7
-	{ "10.bin",		0x10000, 0xd56790f8, 4 }, //  8
+	{ "cob17.bin",			0x10000, 0xd96b6797, 4 }, //  5 gfx2
+	{ "cob16.bin",			0x10000, 0x3fef9c02, 4 }, //  6
+	{ "cob15.bin",			0x10000, 0xbfae6c34, 4 }, //  7
+	{ "cob14.bin",			0x10000, 0xd56790f8, 4 }, //  8
 
-	{ "6.bin",		0x08000, 0xc991298f, 5 }, //  9 gfx4
-	{ "7.bin",		0x08000, 0xf5e267e5, 5 }, // 10
-	{ "8.bin",		0x08000, 0x6bcc5982, 5 }, // 11
-	{ "9.bin",		0x08000, 0xc90443b5, 5 }, // 12
+	{ "cobra6.bin",			0x08000, 0xc991298f, 5 }, //  9 gfx4
+	{ "cobra7.bin",			0x08000, 0xf5e267e5, 5 }, // 10
+	{ "cobra8.bin",			0x08000, 0x6bcc5982, 5 }, // 11
+	{ "cobra9.bin",			0x08000, 0xc90443b5, 5 }, // 12
 
-	{ "17.bin",		0x10000, 0x1c4f6033, 6 }, // 13 gfx3
-	{ "16.bin",		0x10000, 0xd24ba794, 6 }, // 14
-	{ "15.bin",		0x10000, 0xd80a49ce, 6 }, // 15
-	{ "14.bin",		0x10000, 0x6d771fc3, 6 }, // 16
+	{ "cob13.bin",			0x10000, 0x1c4f6033, 6 }, // 13 gfx3
+	{ "cob12.bin",			0x10000, 0xd24ba794, 6 }, // 14
+	{ "cob11.bin",			0x10000, 0xd80a49ce, 6 }, // 15
+	{ "cob10.bin",			0x10000, 0x6d771fc3, 6 }, // 16
+	
+	{ "63s481n.3",			0x00200, 0x279e540c, 7 }, // 17 proms
+	{ "am27s21pc.1",		0x00100, 0x9f6aa3e5, 7 }, // 18
+	{ "am27s21pc.2",		0x00100, 0xaf46d1ee, 7 }, // 19
+	{ "am27s21pc.3",		0x00100, 0x1e4189e8, 7 }, // 20
+	
+	{ "pal1618a-2cn.bin",	0x00104, 0x3ef8cf68, 8 }, // 21 plds
 };
 
 STD_ROM_PICK(cobracomjb)

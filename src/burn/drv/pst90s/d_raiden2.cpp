@@ -3560,6 +3560,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
+/* Raiden II */
 
 // Raiden II (US, set 1)
 
@@ -3603,43 +3604,43 @@ struct BurnDriver BurnDrvRaiden2 = {
 };
 
 
-// Raiden II (US, set 2)
+// Raiden II (Germany)
 
-static struct BurnRomInfo raiden2uRomDesc[] = {
-	{ "1.u0211",					0x080000, 0xb16df955, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "2.u0212",					0x080000, 0x2a14b112, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo raiden2gRomDesc[] = {
+	{ "prg0.u0211",					0x080000, 0x09475ec4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "prg1g.u0212",				0x080000, 0x41001d2e, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
 
-	{ "seibu5.u1110",				0x010000, 0x6d362472, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "snd.u1110",  				0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "seibu7.u0724",				0x020000, 0xc7aa4d00, 4 | BRF_GRA },           //  4 Characters
+	{ "seibu7.u0724",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
 
 	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
 	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
 
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
-	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
-	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+	{ "raiden_2_seibu_obj-1.u0811", 0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082", 	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837", 0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836", 0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
 
-	{ "seibu6.u1017",				0x040000, 0xfab9f8e4, 7 | BRF_SND },           // 11 OKI #0 Samples
+	{ "seibu6.u1017",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
+	{ "jj4b02__ami18cv8-15.u0342.jed", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	       // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
 };
 
-STD_ROM_PICK(raiden2u)
-STD_ROM_FN(raiden2u)
+STD_ROM_PICK(raiden2g)
+STD_ROM_FN(raiden2g)
 
-struct BurnDriver BurnDrvRaiden2u = {
-	"raiden2u", "raiden2", NULL, NULL, "1993",
-	"Raiden II (US, set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+struct BurnDriver BurnDrvRaiden2g = {
+	"raiden2g", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raiden2uRomInfo, raiden2uRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2gRomInfo, raiden2gRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
 	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3729,6 +3730,176 @@ struct BurnDriver BurnDrvRaiden2j = {
 };
 
 
+// Raiden II (Switzerland)
+// original board with serial # 0008307
+
+static struct BurnRomInfo raiden2swRomDesc[] = {
+	{ "seibu_1.u0211",				0x080000, 0x09475ec4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu_2.u0212",				0x080000, 0x59abc2ec, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
+
+	{ "seibu_5.u1110",				0x010000, 0xc2028ba2, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "seibu_7.u0724",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "seibu_6.u1017",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
+};
+
+STD_ROM_PICK(raiden2sw)
+STD_ROM_FN(raiden2sw)
+
+struct BurnDriver BurnDrvRaiden2sw = {
+	"raiden2sw", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2swRomInfo, raiden2swRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden II (France)
+// original board with serial # 12476 that matches raiden2nl set except the region and Audio CPU
+
+static struct BurnRomInfo raiden2fRomDesc[] = {
+	{ "1_u0211.bin",				0x080000, 0x53be3dd0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu2_u0212.bin",			0x080000, 0x8dcd8a8d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+
+	{ "seibu5_u1110.bin",			0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "7_u0724.bin",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "6_u1017.bin",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
+};
+
+STD_ROM_PICK(raiden2f)
+STD_ROM_FN(raiden2f)
+
+struct BurnDriver BurnDrvRaiden2f = {
+	"raiden2f", "raiden2", NULL, NULL, "1993",
+	"Raiden II (France)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2fRomInfo, raiden2fRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden II (Holland)
+
+static struct BurnRomInfo raiden2nlRomDesc[] = {
+	{ "1_u0211.bin",				0x080000, 0x53be3dd0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "2_u0212.bin",				0x080000, 0x88829c08, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+
+	{ "5_u1110.bin",				0x010000, 0x8f130589, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "7_u0724.bin",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "6_u1017.bin",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
+};
+
+STD_ROM_PICK(raiden2nl)
+STD_ROM_FN(raiden2nl)
+
+struct BurnDriver BurnDrvRaiden2nl = {
+	"raiden2nl", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Holland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2nlRomInfo, raiden2nlRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden II (US, set 2)
+
+static struct BurnRomInfo raiden2uRomDesc[] = {
+	{ "1.u0211",					0x080000, 0xb16df955, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "2.u0212",					0x080000, 0x2a14b112, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
+
+	{ "seibu5.u1110",				0x010000, 0x6d362472, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "seibu7.u0724",				0x020000, 0xc7aa4d00, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "seibu6.u1017",				0x040000, 0xfab9f8e4, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
+};
+
+STD_ROM_PICK(raiden2u)
+STD_ROM_FN(raiden2u)
+
+struct BurnDriver BurnDrvRaiden2u = {
+	"raiden2u", "raiden2", NULL, NULL, "1993",
+	"Raiden II (US, set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2uRomInfo, raiden2uRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
 // Raiden II (Italy)
 
 static struct BurnRomInfo raiden2iRomDesc[] = {
@@ -3813,173 +3984,21 @@ struct BurnDriver BurnDrvRaiden2k = {
 };
 
 
-// Raiden II (Holland)
+/*
+Raiden 2, Seibu License, Easy Version
 
-static struct BurnRomInfo raiden2nlRomDesc[] = {
-	{ "1_u0211.bin",				0x080000, 0x53be3dd0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "2_u0212.bin",				0x080000, 0x88829c08, 1 | BRF_PRG | BRF_ESS }, //  1
+According to DragonKnight Zero's excellent Raiden 2
+FAQ this PCB is the easy version.
 
-	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+The different versions may be identified by the high score
+screen. The easy version has the Raiden MK-II in colour
+on a black background whereas the hard version has a sepia shot
+of an ascending fighter.
 
-	{ "5_u1110.bin",				0x010000, 0x8f130589, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+The entire FAQ is available here:
+http://www.gamefaqs.com/coinop/arcade/game/10729.html
 
-	{ "7_u0724.bin",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
-
-	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
-	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
-
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
-	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
-	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
-
-	{ "6_u1017.bin",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
-
-	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
-	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
-};
-
-STD_ROM_PICK(raiden2nl)
-STD_ROM_FN(raiden2nl)
-
-struct BurnDriver BurnDrvRaiden2nl = {
-	"raiden2nl", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Holland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raiden2nlRomInfo, raiden2nlRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
-	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Raiden II (Switzerland)
-
-static struct BurnRomInfo raiden2swRomDesc[] = {
-	{ "seibu_1.u0211",				0x080000, 0x09475ec4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "seibu_2.u0212",				0x080000, 0x59abc2ec, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
-
-	{ "seibu_5.u1110",				0x010000, 0xc2028ba2, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
-
-	{ "seibu_7.u0724",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
-
-	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
-	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
-
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
-	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
-	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
-
-	{ "seibu_6.u1017",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
-
-	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
-	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
-};
-
-STD_ROM_PICK(raiden2sw)
-STD_ROM_FN(raiden2sw)
-
-struct BurnDriver BurnDrvRaiden2sw = {
-	"raiden2sw", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raiden2swRomInfo, raiden2swRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
-	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Raiden II (France)
-
-static struct BurnRomInfo raiden2fRomDesc[] = {
-	{ "1_u0211.bin",				0x080000, 0x53be3dd0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "seibu2_u0212.bin",			0x080000, 0x8dcd8a8d, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
-
-	{ "seibu5_u1110.bin",			0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
-
-	{ "7_u0724.bin",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
-
-	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
-	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
-
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
-	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
-	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
-
-	{ "6_u1017.bin",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
-
-	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 13 pals
-	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
-};
-
-STD_ROM_PICK(raiden2f)
-STD_ROM_FN(raiden2f)
-
-struct BurnDriver BurnDrvRaiden2f = {
-	"raiden2f", "raiden2", NULL, NULL, "1993",
-	"Raiden II (France)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raiden2fRomInfo, raiden2fRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
-	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Raiden II (Germany)
-
-static struct BurnRomInfo raiden2gRomDesc[] = {
-	{ "prg0.u0211",					0x080000, 0x09475ec4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "prg1g.u0212",				0x080000, 0x41001d2e, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
-
-	{ "snd.u1110",  				0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
-
-	{ "seibu7.u0724",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
-
-	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
-	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
-
-	{ "raiden_2_seibu_obj-1.u0811", 0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082", 	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
-	{ "raiden_2_seibu_obj-3.u0837", 0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
-	{ "raiden_2_seibu_obj-4.u0836", 0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
-
-	{ "seibu6.u1017",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
-
-	{ "jj4b02__ami18cv8-15.u0342.jed", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	       // 13 Pals
-	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 14
-};
-
-STD_ROM_PICK(raiden2g)
-STD_ROM_FN(raiden2g)
-
-struct BurnDriver BurnDrvRaiden2g = {
-	"raiden2g", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raiden2gRomInfo, raiden2gRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
-	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
+*/
 
 // Raiden II (Easy Version, Korea?)
 
@@ -4066,6 +4085,7 @@ struct BurnDriver BurnDrvRaiden2ea = {
 
 
 // Raiden II (Easy Version, US set 2)
+// same as raiden2ea, different region
 
 static struct BurnRomInfo raiden2euRomDesc[] = {
 	{ "seibu_1.u0211",				0x080000, 0xd7041be4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4108,6 +4128,7 @@ struct BurnDriver BurnDrvRaiden2eu = {
 
 
 // Raiden II (Easy Version, US set 1)
+// sort of a mixture of raiden2e easy set with voice ROM of raiden2ea and 2f and a unique sound ROM
 
 static struct BurnRomInfo raiden2euaRomDesc[] = {
 	{ "seibu__1.27c020j.u1210",			0x040000, 0xed1514e3, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4155,10 +4176,10 @@ struct BurnDriver BurnDrvRaiden2eua = {
 // this is the same code revision as raiden2eua but a german region
 
 static struct BurnRomInfo raiden2egRomDesc[] = {
-	{ "raiden_2_1.bin",				0x040000, 0xed1514e3, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "raiden_2_2.bin",				0x040000, 0xbb6ecf2a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "raiden_2_3.bin",				0x040000, 0x6a01d52c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "raiden_2_4.bin",				0x040000, 0x81273f33, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "raiden_2_1.u1210",			0x040000, 0xed1514e3, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "raiden_2_2.u1211",			0x040000, 0xbb6ecf2a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "raiden_2_3.u129",			0x040000, 0x6a01d52c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "raiden_2_4.u1212",			0x040000, 0x81273f33, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  4 COPX MCU data
 
@@ -4196,7 +4217,52 @@ struct BurnDriver BurnDrvRaiden2eg = {
 };
 
 
+// Raiden II (easier, US, prototype? 11-16)
+
+static struct BurnRomInfo raiden2eupRomDesc[] = {
+	{ "prg0 11-16.u1210",			0x040000, 0x0a68a400, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "prg1 11-16.u1211",			0x040000, 0x45a01ebe, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "prg2 11-16.u129",			0x040000, 0x9a6e33d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "prg3a 11-16.u1212",			0x040000, 0x42ce511b, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  4 COPX MCU data
+
+	{ "sound 11-12.bin",			0x010000, 0x4fac206c, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "fix.bin",					0x020000, 0x6a6fa0de, 4 | BRF_GRA },           //  6 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  7 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  8
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           // 11
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 12
+
+	{ "pcm 11-11.bin",				0x040000, 0xc541c729, 7 | BRF_SND },           // 13 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP },        // 15 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000335, 0xd1a039af, 0 | BRF_OPT },	       // 16
+};
+
+STD_ROM_PICK(raiden2eup)
+STD_ROM_FN(raiden2eup)
+
+struct BurnDriver BurnDrvRaiden2eup = {
+	"raiden2eup", "raiden2", NULL, NULL, "1993",
+	"Raiden II (easier, US, prototype? 11-16)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2eupRomInfo, raiden2eupRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
 // Raiden II (harder, Raiden DX Hardware)
+// this set is very weird, it's Raiden II on a Raiden DX board, I'm assuming for now that it uses Raiden DX graphics, but could be wrong.
 
 static struct BurnRomInfo raiden2dxRomDesc[] = {
 	{ "u1210.bin",				0x080000, 0x413241e0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4238,6 +4304,8 @@ struct BurnDriver BurnDrvRaiden2dx = {
 };
 
 
+/* Raiden DX sets */
+
 // Raiden DX (UK)
 
 static struct BurnRomInfo raidendxRomDesc[] = {
@@ -4274,6 +4342,88 @@ struct BurnDriver BurnDrvRaidendx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxRomInfo, raidendxRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
+	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden DX (Germany)
+
+static struct BurnRomInfo raidendxgRomDesc[] = {
+	{ "1d.u1210",				0x080000, 0x14d725fc, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "2d.u1211",				0x080000, 0x5e7e45cb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3d.u129",				0x080000, 0xf0a47e67, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4d.u1212",				0x080000, 0x6bde6edc, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "copx-d2.u0313",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+
+	{ "seibu_5.u1110",			0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "seibu_7.u0724",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+
+	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
+	{ "dx_back-2.u0714",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+
+	{ "raiden_2_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "dx_obj-3.u0837",			0x200000, 0xba381227, 6 | BRF_GRA },           // 11
+	{ "dx_obj-4.u0836",			0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
+
+	{ "seibu_6.u1017",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",		0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+};
+
+STD_ROM_PICK(raidendxg)
+STD_ROM_FN(raidendxg)
+
+struct BurnDriver BurnDrvRaidendxg = {
+	"raidendxg", "raidendx", NULL, NULL, "1994",
+	"Raiden DX (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raidendxgRomInfo, raidendxgRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
+	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden DX (Portugal)
+
+static struct BurnRomInfo raidendxptRomDesc[] = {
+	{ "seibu_1d.u1210",				0x080000, 0x14d725fc, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu_2d.u1211",				0x080000, 0x5e7e45cb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu_3d.u129",				0x080000, 0xf0a47e67, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "seibu_4d.u1212",				0x080000, 0xe4fa53ac, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+
+	{ "seibu_5.u1110",				0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "seibu_7.u0724",				0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+
+	{ "dx_back-1.u075",				0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
+	{ "dx_back-2.u0714",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+
+	{ "raiden_2_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "dx_obj-3.u0837",				0x200000, 0xba381227, 6 | BRF_GRA },           // 11
+	{ "dx_obj-4.u0836",				0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
+
+	{ "seibu_6.u1017",				0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+};
+
+STD_ROM_PICK(raidendxpt)
+STD_ROM_FN(raidendxpt)
+
+struct BurnDriver BurnDrvRaidendxpt = {
+	"raidendxpt", "raidendx", NULL, NULL, "1994",
+	"Raiden DX (Portugal)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raidendxptRomInfo, raidendxptRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -4438,88 +4588,6 @@ struct BurnDriver BurnDrvRaidendxu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
-	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Raiden DX (Germany)
-
-static struct BurnRomInfo raidendxgRomDesc[] = {
-	{ "1d.u1210",				0x080000, 0x14d725fc, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "2d.u1211",				0x080000, 0x5e7e45cb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3d.u129",				0x080000, 0xf0a47e67, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4d.u1212",				0x080000, 0x6bde6edc, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "copx-d2.u0313",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
-
-	{ "seibu_5.u1110",			0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
-
-	{ "seibu_7.u0724",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
-
-	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back-2.u0714",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
-
-	{ "raiden_2_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
-	{ "raiden_2_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
-	{ "dx_obj-3.u0837",			0x200000, 0xba381227, 6 | BRF_GRA },           // 11
-	{ "dx_obj-4.u0836",			0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
-
-	{ "seibu_6.u1017",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",		0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
-};
-
-STD_ROM_PICK(raidendxg)
-STD_ROM_FN(raidendxg)
-
-struct BurnDriver BurnDrvRaidendxg = {
-	"raidendxg", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxgRomInfo, raidendxgRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
-	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Raiden DX (Portugal)
-
-static struct BurnRomInfo raidendxptRomDesc[] = {
-	{ "seibu_1d.u1210",				0x080000, 0x14d725fc, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "seibu_2d.u1211",				0x080000, 0x5e7e45cb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "seibu_3d.u129",				0x080000, 0xf0a47e67, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "seibu_4d.u1212",				0x080000, 0xe4fa53ac, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
-
-	{ "seibu_5.u1110",				0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
-
-	{ "seibu_7.u0724",				0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
-
-	{ "dx_back-1.u075",				0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back-2.u0714",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
-
-	{ "raiden_2_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
-	{ "raiden_2_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
-	{ "dx_obj-3.u0837",				0x200000, 0xba381227, 6 | BRF_GRA },           // 11
-	{ "dx_obj-4.u0836",				0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
-
-	{ "seibu_6.u1017",				0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
-
-	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
-};
-
-STD_ROM_PICK(raidendxpt)
-STD_ROM_FN(raidendxpt)
-
-struct BurnDriver BurnDrvRaidendxpt = {
-	"raidendxpt", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Portugal)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxptRomInfo, raidendxptRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -4690,6 +4758,8 @@ struct BurnDriver BurnDrvRaidendxch = {
 };
 
 
+/* Zero Team sets */
+
 // Zero Team USA (set 1, US, Fabtek license)
 
 static struct BurnRomInfo zeroteamRomDesc[] = {
@@ -4734,6 +4804,7 @@ struct BurnDriver BurnDrvZeroteam = {
 
 
 // Zero Team (set 2, Japan? (earlier?))
+// No licensee, original japan?
 
 static struct BurnRomInfo zeroteamaRomDesc[] = {
 	{ "1.u024.5k",				0x040000, 0xbd7b3f3a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4776,7 +4847,16 @@ struct BurnDriver BurnDrvZeroteama = {
 };
 
 
+/* this set, consisting of updated program ROMs, is a later version or hack of zero team to incorporate the writing
+of the fg sei251 'key data' to the pcb on bootup (like raiden 2 does) rather than relying on the sram to hold the
+keys as programmed from factory (or via the suicide revival kit below); hence this ROMset is immune to the common
+problem of the 3.6v lithium battery dying and the missing keys to cause the sprites to show up as gibberish */
+// note: it is possible *but not proven* that this specific set in mame is a frankenstein-hybrid of the japan and us
+// sets, using the sound and char ROMs from us set and code from later japan set. This would make sense if it was dumped
+// from a 'fixed, suicide free' modified us board where someone swapped in the later suicideless japan code ROMs.
+
 // Zero Team (set 3, Japan? (later batteryless))
+// No licensee, later japan?
 
 static struct BurnRomInfo zeroteambRomDesc[] = {
 	{ "1b.u024.5k",				0x040000, 0x157743d0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4820,6 +4900,7 @@ struct BurnDriver BurnDrvZeroteamb = {
 
 
 // Zero Team (set 4, Taiwan, Liang Hwa license)
+// Liang Hwa, Taiwan licensee, no special word under logo on title
 
 static struct BurnRomInfo zeroteamcRomDesc[] = {
 	{ "b1.u024.5k",				0x040000, 0x528de3b9, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4863,6 +4944,8 @@ struct BurnDriver BurnDrvZeroteamc = {
 
 
 // Zero Team (set 5, Korea, Dream Soft license)
+// Dream Soft, Korea licensee, no special word under logo on title; board had serial 'no 1041' on it.
+// this is weird, on other zt sets the ROM order is 1 3 2 4, but this one is 1 3 4 2. blame seibu or whoever marked the ROMs, which were labeled in pen
 
 static struct BurnRomInfo zeroteamdRomDesc[] = {
 	{ "1.d.u024.5k",			0x040000, 0x6cc279be, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4906,6 +4989,7 @@ struct BurnDriver BurnDrvZeroteamd = {
 
 
 // Zero Team Selection
+// No license, displays 'Selection' under logo
 
 static struct BurnRomInfo zeroteamsRomDesc[] = {
 	{ "1_sel.bin",				0x040000, 0xd99d6273, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4947,6 +5031,17 @@ struct BurnDriver BurnDrvZeroteams = {
 	320, 256, 4, 3
 };
 
+
+/*
+"Zero Team Suicide Revival Kit"
+As the name implies, this is used to give life again to a "suicided" ZT PCB, where the 3.6v
+lithium battery which backs up the FG/sprite encryption keys has died, and the sprites display
+as garbage blocks.
+To use: replace the 3.6v battery with a working one, and then remove the normal four code ROMs
+and install these instead.
+Boot the pcb, it should rewrite the sei251 decryption keys and display a message on screen.
+Next, turn off power and reinsert the old code ROMs, and the pcb should now have working sprites.
+*/
 
 // Zero Team Suicide Revival Kit
 
@@ -4990,6 +5085,9 @@ struct BurnDriver BurnDrvZeroteamsr = {
 	320, 256, 4, 3
 };
 
+
+/* X Se Dae Quiz
+Seibu/Dream Island, 1995 */
 
 // X Se Dae Quiz (Korea)
 

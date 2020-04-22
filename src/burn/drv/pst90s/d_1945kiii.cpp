@@ -124,6 +124,56 @@ static struct BurnDIPInfo _1945kiiiDIPList[] = {
 
 STDDIPINFO(_1945kiii)
 
+static struct BurnDIPInfo _1945kiiioldDIPList[] = {
+	{0x14, 0xFF, 0xFF, 0xef, NULL					},
+	
+	{0,    0xFE, 0,    8,	 "Coin 1"				},
+	{0x14, 0x01, 0x07, 0x07, "1 coin  1 credit"		},
+	{0x14, 0x01, 0x07, 0x06, "2 coins 1 credit"		},
+	{0x14, 0x01, 0x07, 0x05, "3 coins 1 credit"		},
+	{0x14, 0x01, 0x07, 0x04, "1 coin 2 credits"		},
+	{0x14, 0x01, 0x07, 0x03, "Free Play"			},
+	{0x14, 0x01, 0x07, 0x02, "1 coin 1 credit"		},
+	{0x14, 0x01, 0x07, 0x01, "1 coin 1 credit"		},
+	{0x14, 0x01, 0x07, 0x00, "1 coin 1 credit"		},
+
+	{0,    0xFE, 0,    4,	 "Difficulty"			},
+	{0x14, 0x01, 0x18, 0x18, "Hardest"				},
+	{0x14, 0x01, 0x18, 0x10, "Hard"					},
+	{0x14, 0x01, 0x18, 0x08, "Normal"				},
+	{0x14, 0x01, 0x18, 0x00, "Easy"					},
+
+	{0,    0xFE, 0,    4,	 "Lives"				},
+	{0x14, 0x01, 0x60, 0x60, "3"					},
+	{0x14, 0x01, 0x60, 0x40, "2"					},
+	{0x14, 0x01, 0x60, 0x20, "4"					},
+	{0x14, 0x01, 0x60, 0x00, "5"					},
+};
+
+STDDIPINFO(_1945kiiiold)
+
+static struct BurnDIPInfo SoliteDIPList[] = {
+	{0x14, 0xFF, 0xFF, 0xef, NULL					},
+	
+	{0,    0xFE, 0,    8,	 "Coin 1"				},
+	{0x14, 0x01, 0x07, 0x07, "1 coin  1 credit"		},
+	{0x14, 0x01, 0x07, 0x06, "2 coins 1 credit"		},
+	{0x14, 0x01, 0x07, 0x05, "3 coins 1 credit"		},
+	{0x14, 0x01, 0x07, 0x04, "1 coin 2 credits"		},
+	{0x14, 0x01, 0x07, 0x03, "Free Play"			},
+	{0x14, 0x01, 0x07, 0x02, "1 coin 1 credit"		},
+	{0x14, 0x01, 0x07, 0x01, "1 coin 1 credit"		},
+	{0x14, 0x01, 0x07, 0x00, "1 coin 1 credit"		},
+
+	{0,    0xFE, 0,    4,	 "Difficulty"			},
+	{0x14, 0x01, 0x18, 0x18, "Hardest"				},
+	{0x14, 0x01, 0x18, 0x10, "Hard"					},
+	{0x14, 0x01, 0x18, 0x08, "Normal"				},
+	{0x14, 0x01, 0x18, 0x00, "Easy"					},
+};
+
+STDDIPINFO(Solite)
+
 static struct BurnDIPInfo FlagrallDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0xa3, NULL					},
@@ -547,6 +597,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // 1945k III (newer, OPCX2 PCB)
 
 static struct BurnRomInfo _1945kiiiRomDesc[] = {
+//	{ "prg-1.u51",	0x040000, 0xc4bbae5d, BRF_ESS | BRF_PRG },	//  0 68000 code 
+//	{ "prg-2.u52", 	0x040000, 0x092abf2e, BRF_ESS | BRF_PRG }, 	//  1
 	{ "prg-1.u51",	0x080000, 0x6b345f27, BRF_ESS | BRF_PRG },	//  0 68000 code 
 	{ "prg-2.u52", 	0x080000, 0xce09b98c, BRF_ESS | BRF_PRG }, 	//  1
 	
@@ -579,10 +631,11 @@ struct BurnDriver BurnDrv1945kiii = {
 };
 
 
-
 // 1945k III (older, OPCX1 PCB)
 
 static struct BurnRomInfo _1945kiiioRomDesc[] = {
+//	{ "3.u34",		0x40000, 0xbcfb8b84, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
+//	{ "4.u35",		0x40000, 0xec1234a5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.u34",		0x80000, 0x5515baa0, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
 	{ "4.u35",		0x80000, 0xfd177664, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -618,7 +671,7 @@ struct BurnDriver BurnDrv1945kiiio = {
 	"1945k III (older, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, _1945kiiioRomInfo, _1945kiiioRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
+	NULL, _1945kiiioRomInfo, _1945kiiioRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiioldDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
 };
@@ -627,6 +680,8 @@ struct BurnDriver BurnDrv1945kiiio = {
 // 1945k III (newer, OPCX1 PCB)
 
 static struct BurnRomInfo _1945kiiinRomDesc[] = {
+//	{ "u34",		0x40000, 0x234a55a5, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
+//	{ "u35",		0x40000, 0x1e6e23a5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "u34",		0x80000, 0xd0cf4f03, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
 	{ "u35",		0x80000, 0x056c64ed, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -696,7 +751,7 @@ struct BurnDriver BurnDrvSlspirit = {
 	"Solite Spirits\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, slspiritRomInfo, slspiritRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
+	NULL, slspiritRomInfo, slspiritRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, SoliteDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
 };

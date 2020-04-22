@@ -21,6 +21,8 @@ static INT32 screen_control;
 
 static INT32 flipscreen;
 
+UINT8 DrvRecalc;
+
 static UINT8 *gfx8x8x8;
 static UINT8 *gfx4x8x8;
 static UINT32 graphics_length;
@@ -33,6 +35,11 @@ static UINT16 (*irq_cause_read_cb)() = NULL;
 static void (*irq_cause_write_cb)(UINT16 data) = NULL;
 static void (*soundlatch_write_cb)(UINT16 data) = NULL;
 static void (*additional_video_chips_cb)() = NULL;
+
+static INT32 lastline = 0;
+static INT32 clip_min_y = 0;
+static INT32 clip_max_y = 0;
+INT32 i4x00_raster_update = 0;
 
 static void palette_update()
 {
@@ -250,7 +257,7 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 	sx += tilemap_scrolldx[layer] * (flipscreen ? 1 : -1);
 
-	for (INT32 y = 0; y < scrheight; y++)
+	for (INT32 y = clip_min_y; y < clip_max_y; y++)
 	{
 		int scrolly = (sy+y-wy)&(windowheight-1);
 		int x;
@@ -336,35 +343,69 @@ static void draw_layers(int pri)
 	}
 }
 
-INT32 i4x00_draw()
+// partial updates & draw-zone
+
+void i4x00_draw_begin()
 {
-//	if (DrvRecalc) {
-//		palette_update();
-//		DrvRecalc = 0;
-//	}
+	lastline = 0;
+
+	if (!pBurnDraw) return;
+
+	if (DrvRecalc) {
+		palette_update();
+		DrvRecalc = 0;
+	}
 
 	UINT16 *m_videoregs = (UINT16*)VideoRegs;
 
 	BurnTransferClear((m_videoregs[0x12 / 2] & 0x0fff));
+}
+
+void i4x00_draw_scanline(INT32 drawto)
+{
+	if (drawto > nScreenHeight) drawto = nScreenHeight;
+	if (!pBurnDraw || drawto < 1 || drawto == lastline) return;
+
+	clip_min_y = lastline;
+	clip_max_y = drawto;
+    //bprintf(0, _T("drawscanline ystart = %d  yend = %d\n"), clip_min_y, clip_max_y);
+	GenericTilesSetClip(0, nScreenWidth, clip_min_y, clip_max_y); // for sprites
+	lastline = drawto;
 
 	if ((screen_control & 2) == 0)
 	{
 		flipscreen = screen_control & 1;
-	
+
 		if (additional_video_chips_cb) {
 			additional_video_chips_cb();
 		}
-	
+
 		for (INT32 pri = 3; pri >= 0; pri--)
 		{
 			if (nBurnLayer & 2) draw_layers(pri);
 		}
-			
+
 		if (nSpriteEnable & 1) draw_sprites();
 	}
 
+	GenericTilesClearClip();
+}
+
+void i4x00_draw_end()
+{
+	if (!pBurnDraw) return;
+
+	i4x00_draw_scanline(nScreenHeight);
+
 	BurnTransferCopy(BurnPalette);
-		
+}
+
+INT32 i4x00_draw()
+{
+	i4x00_draw_begin();
+	i4x00_draw_scanline(nScreenHeight);
+	i4x00_draw_end();
+
 	return 0;
 }
 
@@ -519,6 +560,7 @@ static void __fastcall i4x00_write_word(UINT32 address, UINT16 data)
 
 	if (address >= 0x78870 && address <= 0x7887b) {
 		*((UINT16*)(ScrollRegs + (address & 0xf))) = data;
+		i4x00_raster_update = 1;
 		return;
 	}
 
@@ -611,7 +653,7 @@ static UINT16 __fastcall i4x00_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffff000) == 0x76000) {
-		UINT16 *dst = (UINT16*)VideoRAM[0];
+		UINT16 *dst = (UINT16*)VideoRAM[1];
 		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
 	}
 
@@ -689,6 +731,8 @@ void i4x00_reset()
 	screen_control = 0;
 	i4x00_irq_enable = 0xff;
 	i4x00_blitter_timer = -1;
+
+	i4x00_raster_update = 0;
 }
 
 void i4x00_set_offsets(INT32 layer0, INT32 layer1, INT32 layer2)

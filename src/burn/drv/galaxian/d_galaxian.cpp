@@ -14569,6 +14569,8 @@ static void MShuttleCommonInit()
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 
 	GalIrqType = GAL_IRQ_TYPE_IRQ0;
+
+	GalScreenUnflipper = 0; // coctail unflipping not needed
 }
 
 static INT32 MshuttleInit()

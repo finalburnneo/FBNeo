@@ -1892,12 +1892,13 @@ DRV		BurnDrvmd_coachk;
 DRV		BurnDrvMSX_coastrac;
 DRV		BurnDrvMSX_coastracb;
 DRV		BurnDrvMSX_coastraca;
-DRV		BurnDrvCobracomb;
+DRV		BurnDrvCobracomib;
 DRV		BurnDrvCobracmj;
 DRV		BurnDrvCobracomjb;
 DRV		BurnDrvCobracmja;
 DRV		BurnDrvCobracoma;
 DRV		BurnDrvCobracom;
+DRV		BurnDrvCobracomb;
 DRV		BurnDrvgg_cocakid;
 DRV		BurnDrvLadybugb2;
 DRV		BurnDrvcnbe;
@@ -12918,9 +12919,10 @@ DRV		BurnDrvmd_tunshi1;
 DRV		BurnDrvmd_tunshi;
 DRV		BurnDrvcv_tunnels;
 DRV		BurnDrvTurboa;
+DRV		BurnDrvTurbod;
 DRV		BurnDrvTurboc;
 DRV		BurnDrvTurbob;
-DRV		BurnDrvTurbod;
+DRV		BurnDrvTurboe;
 DRV		BurnDrvTurbo;
 DRV		BurnDrvTurbofrcu;
 DRV		BurnDrvTurbofrc;
@@ -13068,10 +13070,11 @@ DRV		BurnDrvmd_undeade;
 DRV		BurnDrvmd_undead;
 DRV		BurnDrvUndrfirej;
 DRV		BurnDrvUndrfire;
-DRV		BurnDrvUccopsar;
 DRV		BurnDrvUccopsj;
 DRV		BurnDrvUccopsu;
 DRV		BurnDrvUccops;
+DRV		BurnDrvUccopsaru;
+DRV		BurnDrvUccopsar;
 DRV		BurnDrvMSX_undergnd;
 DRV		BurnDrvmd_univsold;
 DRV		BurnDrvMSX_univunk;
@@ -15958,12 +15961,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_coastrac,		// Coaster Race (Jpn)
 	&BurnDrvMSX_coastracb,		// Coaster Race (Jpn, Alt 2)
 	&BurnDrvMSX_coastraca,		// Coaster Race (Jpn, Alt)
-	&BurnDrvCobracomb,			// Cobra-Command (Italian bootleg)
+	&BurnDrvCobracomib,			// Cobra-Command (Italian bootleg)
 	&BurnDrvCobracmj,			// Cobra-Command (Japan)
 	&BurnDrvCobracomjb,			// Cobra-Command (Japan, bootleg)
 	&BurnDrvCobracmja,			// Cobra-Command (Japan?, set 2)
 	&BurnDrvCobracoma,			// Cobra-Command (World/US revision 4)
 	&BurnDrvCobracom,			// Cobra-Command (World/US revision 5)
+	&BurnDrvCobracomb,			// Cobra-Command (World/US)
 	&BurnDrvgg_cocakid,			// Coca Cola Kid (Jpn)
 	&BurnDrvLadybugb2,			// Coccinelle (bootleg of Lady Bug, set 2)
 	&BurnDrvcnbe,				// Codename - Blut Engel (2006-01-19)
@@ -26984,9 +26988,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tunshi,			// Tun Shi Tian Di III (China, Simple Chinese)
 	&BurnDrvcv_tunnels,			// Tunnels and Trolls (Demo)
 	&BurnDrvTurboa,				// Turbo (encrypted, program 1262-1264)
-	&BurnDrvTurboc,				// Turbo (encrypted, program 1363-1365 rev A)
-	&BurnDrvTurbob,				// Turbo (encrypted, program 1363-1365 rev B)
-	&BurnDrvTurbod,				// Turbo (encrypted, program 1363-1365)
+	&BurnDrvTurbod,				// Turbo (encrypted, program 1363-1365 rev A)
+	&BurnDrvTurboc,				// Turbo (encrypted, program 1363-1365 rev B)
+	&BurnDrvTurbob,				// Turbo (encrypted, program 1363-1365 rev C)
+	&BurnDrvTurboe,				// Turbo (encrypted, program 1363-1365)
 	&BurnDrvTurbo,				// Turbo (program 1513-1515)
 	&BurnDrvTurbofrcu,			// Turbo Force (US)
 	&BurnDrvTurbofrc,			// Turbo Force (World, set 1)
@@ -27134,10 +27139,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_undead,			// Undead Line (Jpn)
 	&BurnDrvUndrfirej,			// Under Fire (Japan)
 	&BurnDrvUndrfire,			// Under Fire (World)
-	&BurnDrvUccopsar,			// Undercover Cops (Alpha Renewal Version)
 	&BurnDrvUccopsj,			// Undercover Cops (Japan)
 	&BurnDrvUccopsu,			// Undercover Cops (US)
 	&BurnDrvUccops,				// Undercover Cops (World)
+	&BurnDrvUccopsaru,			// Undercover Cops - Alpha Renewal Version (US)
+	&BurnDrvUccopsar,			// Undercover Cops - Alpha Renewal Version (World)
 	&BurnDrvMSX_undergnd,		// Underground (Spa)
 	&BurnDrvmd_univsold,		// Universal Soldier (Euro, USA)
 	&BurnDrvMSX_univunk,		// Universe Unknown

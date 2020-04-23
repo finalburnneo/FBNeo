@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13791 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13794 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1858,12 +1858,13 @@ This list contains all games supported by FinalBurn Neo.
 | msx_coastrac	|  	| Coaster Race (Jpn)					| 		| 1986	| Sony		| MSX		| 					|
 | msx_coastracb	|  	| Coaster Race (Jpn, Alt 2)				| msx_coastrac	| 1986	| Sony		| MSX		| 					|
 | msx_coastraca	|  	| Coaster Race (Jpn, Alt)				| msx_coastrac	| 1986	| Sony		| MSX		| 					|
-| cobracomb	|  	| Cobra-Command (Italian bootleg)			| cobracom	| 1988	| bootleg	| DEC8		| 					|
+| cobracomib	|  	| Cobra-Command (Italian bootleg)			| cobracom	| 1988	| bootleg	| DEC8		| 					|
 | cobracomj	|  	| Cobra-Command (Japan)					| cobracom	| 1988	| Data East Corp| DEC8		| 					|
 | cobracomjb	|  	| Cobra-Command (Japan, bootleg)			| cobracom	| 1988	| bootleg	| DEC8		| 					|
 | cobracomja	|  	| Cobra-Command (Japan?, set 2)				| cobracom	| 1988	| Data East Corp| DEC8		| 					|
 | cobracoma	|  	| Cobra-Command (World/US revision 4)			| cobracom	| 1988	| Data East Corp| DEC8		| 					|
 | cobracom	|  	| Cobra-Command (World/US revision 5)			| 		| 1988	| Data East Corp| DEC8		| 					|
+| cobracomb	|  	| Cobra-Command (World/US)				| cobracom	| 1988	| Data East Corp| DEC8		| 					|
 | gg_cocakid	|  	| Coca Cola Kid (Jpn)					| 		| 1994	| Sega		| Sega Game Gear| 					|
 | ladybugb2	|  	| Coccinelle (bootleg of Lady Bug, set 2)		| ladybug	| 1981	| bootleg (Model| Miscellaneous	| 					|
 | cnbe		|  	| Codename - Blut Engel (2006-01-19)			| 		| 2006	| blastar@gmx.ne| Neo Geo MVS	| 					|
@@ -12690,9 +12691,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_tunshi	|  	| Tun Shi Tian Di III (China, Simple Chinese)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | cv_tunnels	|  	| Tunnels and Trolls (Demo)				| 		| 1983	| Coleco	| ColecoVision	| 					|
 | turboa	|  	| Turbo (encrypted, program 1262-1264)			| turbo		| 1981	| Sega		| Z80-3D	| 					|
-| turboc	|  	| Turbo (encrypted, program 1363-1365 rev A)		| turbo		| 1981	| Sega		| Z80-3D	| 					|
-| turbob	|  	| Turbo (encrypted, program 1363-1365 rev B)		| turbo		| 1981	| Sega		| Z80-3D	| 					|
-| turbod	|  	| Turbo (encrypted, program 1363-1365)			| turbo		| 1981	| Sega		| Z80-3D	| 					|
+| turbod	|  	| Turbo (encrypted, program 1363-1365 rev A)		| turbo		| 1981	| Sega		| Z80-3D	| 					|
+| turboc	|  	| Turbo (encrypted, program 1363-1365 rev B)		| turbo		| 1981	| Sega		| Z80-3D	| 					|
+| turbob	|  	| Turbo (encrypted, program 1363-1365 rev C)		| turbo		| 1981	| Sega		| Z80-3D	| 					|
+| turboe	|  	| Turbo (encrypted, program 1363-1365)			| turbo		| 1981	| Sega		| Z80-3D	| 					|
 | turbo		|  	| Turbo (program 1513-1515)				| 		| 1981	| Sega		| Z80-3D	| 					|
 | turbofrcu	|  	| Turbo Force (US)					| turbofrc	| 1991	| Video System C| Video System	| 					|
 | turbofrc	|  	| Turbo Force (World, set 1)				| 		| 1991	| Video System C| Video System	| 					|
@@ -12834,10 +12836,11 @@ This list contains all games supported by FinalBurn Neo.
 | md_undead	|  	| Undead Line (Jpn)					| 		| 1991	| Palsoft	| Sega Megadrive| 					|
 | undrfirej	|  	| Under Fire (Japan)					| undrfire	| 1993	| Taito Corporat| K1100744A	| 					|
 | undrfire	|  	| Under Fire (World)					| 		| 1993	| Taito Corporat| K1100744A	| 					|
-| uccopsar	|  	| Undercover Cops (Alpha Renewal Version)		| uccops	| 1992	| Irem		| Irem M92	| 					|
 | uccopsj	|  	| Undercover Cops (Japan)				| uccops	| 1992	| Irem		| Irem M92	| 					|
 | uccopsu	|  	| Undercover Cops (US)					| uccops	| 1992	| Irem		| Irem M92	| 					|
 | uccops	|  	| Undercover Cops (World)				| 		| 1992	| Irem		| Irem M92	| 					|
+| uccopsaru	|  	| Undercover Cops - Alpha Renewal Version (US)		| uccops	| 1992	| Irem America	| Irem M92	| 					|
+| uccopsar	|  	| Undercover Cops - Alpha Renewal Version (World)	| uccops	| 1992	| Irem		| Irem M92	| 					|
 | msx_undergnd	|  	| Underground (Spa)					| 		| 1988	| System 4	| MSX		| 					|
 | md_univsold	|  	| Universal Soldier (Euro, USA)				| 		| 1992	| Ballistic	| Sega Megadrive| 					|
 | msx_univunk	|  	| Universe Unknown					| 		| 2005	| Infinite	| MSX		| 					|

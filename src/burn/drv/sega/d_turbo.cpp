@@ -2578,12 +2578,12 @@ struct BurnDriver BurnDrvTurboa = {
 };
 
 
-// Turbo (encrypted, program 1363-1365 rev B)
+// Turbo (encrypted, program 1363-1365 rev C)
 
 static struct BurnRomInfo turbobRomDesc[] = {
-	{ "epr-1363_t5b.ic76",	0x2000, 0xf7f28149, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
-	{ "epr-1364_t5a.ic89",	0x2000, 0x6a341693, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "epr-1365_t5a.ic103",	0x2000, 0x3b6b0dc8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-1363_t5c.ic76",	0x2000, 0xa9c9571e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
+	{ "epr-1364_t5c.ic89",	0x2000, 0xdc1f8352, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-1365_t5c.ic103",	0x2000, 0x6edc455f, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "epr-1246.prom-ic84",	0x2000, 0x555bfe9a, 2 | BRF_GRA },           //  3 Sprites
 	{ "epr-1247.prom-ic86",	0x2000, 0xc8c5e4d5, 2 | BRF_GRA },           //  4
@@ -2630,7 +2630,7 @@ STD_ROM_FN(turbob)
 
 struct BurnDriver BurnDrvTurbob = {
 	"turbob", "turbo", NULL, "turbo", "1981",
-	"Turbo (encrypted, program 1363-1365 rev B)\0", NULL, "Sega", "Z80-3D",
+	"Turbo (encrypted, program 1363-1365 rev C)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbobRomInfo, turbobRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
@@ -2639,10 +2639,10 @@ struct BurnDriver BurnDrvTurbob = {
 };
 
 
-// Turbo (encrypted, program 1363-1365 rev A)
+// Turbo (encrypted, program 1363-1365 rev B)
 
 static struct BurnRomInfo turbocRomDesc[] = {
-	{ "epr-1363_t5a.ic76",	0x2000, 0x5c110fb6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
+	{ "epr-1363_t5b.ic76",	0x2000, 0xf7f28149, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
 	{ "epr-1364_t5a.ic89",	0x2000, 0x6a341693, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "epr-1365_t5a.ic103",	0x2000, 0x3b6b0dc8, 1 | BRF_PRG | BRF_ESS }, //  2
 
@@ -2691,7 +2691,7 @@ STD_ROM_FN(turboc)
 
 struct BurnDriver BurnDrvTurboc = {
 	"turboc", "turbo", NULL, "turbo", "1981",
-	"Turbo (encrypted, program 1363-1365 rev A)\0", NULL, "Sega", "Z80-3D",
+	"Turbo (encrypted, program 1363-1365 rev B)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbocRomInfo, turbocRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
@@ -2700,12 +2700,12 @@ struct BurnDriver BurnDrvTurboc = {
 };
 
 
-// Turbo (encrypted, program 1363-1365)
+// Turbo (encrypted, program 1363-1365 rev A)
 
 static struct BurnRomInfo turbodRomDesc[] = {
-	{ "1363.ic76",			0x2000, 0xb6329a00, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
-	{ "1364.ic89",			0x2000, 0x3192f83b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "1365.ic103",			0x2000, 0x23a3303a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-1363_t5a.ic76",	0x2000, 0x5c110fb6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
+	{ "epr-1364_t5a.ic89",	0x2000, 0x6a341693, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-1365_t5a.ic103",	0x2000, 0x3b6b0dc8, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "epr-1246.prom-ic84",	0x2000, 0x555bfe9a, 2 | BRF_GRA },           //  3 Sprites
 	{ "epr-1247.prom-ic86",	0x2000, 0xc8c5e4d5, 2 | BRF_GRA },           //  4
@@ -2752,10 +2752,71 @@ STD_ROM_FN(turbod)
 
 struct BurnDriver BurnDrvTurbod = {
 	"turbod", "turbo", NULL, "turbo", "1981",
-	"Turbo (encrypted, program 1363-1365)\0", NULL, "Sega", "Z80-3D",
+	"Turbo (encrypted, program 1363-1365 rev A)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbodRomInfo, turbodRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
+	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 512, 3, 4
+};
+
+
+// Turbo (encrypted, program 1363-1365)
+
+static struct BurnRomInfo turboeRomDesc[] = {
+	{ "1363.ic76",			0x2000, 0xb6329a00, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (Encrypted)
+	{ "1364.ic89",			0x2000, 0x3192f83b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1365.ic103",			0x2000, 0x23a3303a, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "epr-1246.prom-ic84",	0x2000, 0x555bfe9a, 2 | BRF_GRA },           //  3 Sprites
+	{ "epr-1247.prom-ic86",	0x2000, 0xc8c5e4d5, 2 | BRF_GRA },           //  4
+	{ "epr-1248.prom-ic88",	0x2000, 0x82fe5b94, 2 | BRF_GRA },           //  5
+	{ "epr-1249.prom-ic90",	0x2000, 0xe258e009, 2 | BRF_GRA },           //  6
+	{ "epr-1250.prom-ic108",0x2000, 0xaee6e05e, 2 | BRF_GRA },           //  7
+	{ "epr-1251.prom-ic92",	0x2000, 0x292573de, 2 | BRF_GRA },           //  8
+	{ "epr-1252.prom-ic110",0x2000, 0xaee6e05e, 2 | BRF_GRA },           //  9
+	{ "epr-1253.prom-ic94",	0x2000, 0x92783626, 2 | BRF_GRA },           // 10
+	{ "epr-1254.prom-ic112",0x2000, 0xaee6e05e, 2 | BRF_GRA },           // 11
+	{ "epr-1255.prom-ic32",	0x2000, 0x485dcef9, 2 | BRF_GRA },           // 12
+	{ "epr-1256.prom-ic47",	0x2000, 0xaee6e05e, 2 | BRF_GRA },           // 13
+	{ "epr-1257.prom-ic34",	0x2000, 0x4ca984ce, 2 | BRF_GRA },           // 14
+	{ "epr-1258.prom-ic49",	0x2000, 0xaee6e05e, 2 | BRF_GRA },           // 15
+
+	{ "epr-1244.cpu-ic111",	0x0800, 0x17f67424, 3 | BRF_GRA },           // 16 Foreground Tiles
+	{ "epr-1245.cpu-ic122",	0x0800, 0x2ba0b46b, 3 | BRF_GRA },           // 17
+
+	{ "epr-1125.cpu-ic1",	0x0800, 0x65b5d44b, 4 | BRF_GRA },           // 18 Road Data
+	{ "epr-1126.cpu-ic2",	0x0800, 0x685ace1b, 4 | BRF_GRA },           // 19
+	{ "epr-1127.cpu-ic13",	0x0800, 0x9233c9ca, 4 | BRF_GRA },           // 20
+	{ "epr-1238.cpu-ic14",	0x0800, 0xd94fd83f, 4 | BRF_GRA },           // 21
+	{ "epr-1239.cpu-ic27",	0x0800, 0x4c41124f, 4 | BRF_GRA },           // 22
+	{ "epr-1240.cpu-ic28",	0x0800, 0x371d6282, 4 | BRF_GRA },           // 23
+	{ "epr-1241.cpu-ic41",	0x0800, 0x1109358a, 4 | BRF_GRA },           // 24
+	{ "epr-1242.cpu-ic42",	0x0800, 0x04866769, 4 | BRF_GRA },           // 25
+	{ "epr-1243.cpu-ic74",	0x0800, 0x29854c48, 4 | BRF_GRA },           // 26
+
+	{ "pr-1114.prom-ic13",	0x0020, 0x78aded46, 5 | BRF_GRA },           // 27 Color / Video PROMs
+	{ "pr-1115.prom-ic18",	0x0020, 0x5394092c, 5 | BRF_GRA },           // 28
+	{ "pr-1116.prom-ic20",	0x0020, 0x3956767d, 5 | BRF_GRA },           // 29
+	{ "pr-1117.prom-ic21",	0x0020, 0xf06d9907, 5 | BRF_GRA },           // 30
+	{ "pr-1118.cpu-ic99",	0x0100, 0x07324cfd, 5 | BRF_GRA },           // 31
+	{ "pr-1119.cpu-ic50",	0x0200, 0x57ebd4bc, 5 | BRF_GRA },           // 32
+	{ "pr-1120.cpu-ic62",	0x0200, 0x8dd4c8a8, 5 | BRF_GRA },           // 33
+	{ "pr-1121.prom-ic29",	0x0200, 0x7692f497, 5 | BRF_GRA },           // 34
+	{ "pr-1122.prom-ic11",	0x0400, 0x1a86ce70, 5 | BRF_GRA },           // 35
+	{ "pr-1123.prom-ic12",	0x0400, 0x02d2cb52, 5 | BRF_GRA },           // 36
+	{ "pr-1279.sound-ic40",	0x0020, 0xb369a6ae, 5 | BRF_GRA },           // 37
+};
+
+STD_ROM_PICK(turboe)
+STD_ROM_FN(turboe)
+
+struct BurnDriver BurnDrvTurboe = {
+	"turboe", "turbo", NULL, "turbo", "1981",
+	"Turbo (encrypted, program 1363-1365)\0", NULL, "Sega", "Z80-3D",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	NULL, turboeRomInfo, turboeRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
 };

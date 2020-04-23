@@ -8454,43 +8454,48 @@ struct BurnDriver BurnDrvIkariram = {
 
 
 // Victory Road
+// A6002UP03-02 PCB
 
 static struct BurnRomInfo victroadRomDesc[] = {
-	{ "p1.p4",		0x10000, 0xe334acef, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p1.p4",			0x10000, 0xe334acef, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 
-	{ "p2.p8",		0x10000, 0x907fac83, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 Code
+	{ "p2.p8",			0x10000, 0x907fac83, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 Code
 
-	{ "p3.k7",		0x10000, 0xbac745f6, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 Code
+	{ "p3.k7",			0x10000, 0xbac745f6, 3 | BRF_ESS | BRF_PRG }, //  2 Z80 #2 Code
 
-	{ "mb7122e.1k",	0x00400, 0x491ab831, 14 | BRF_GRA },	      //  3 Color Data
-	{ "mb7122e.2l",	0x00400, 0x8feca424, 14 | BRF_GRA },	      //  4
-	{ "mb7122e.1l",	0x00400, 0x220076ca, 14 | BRF_GRA },	      //  5
+	{ "c1_mb7122e.1k",	0x00400, 0x491ab831, 14 | BRF_GRA },	      //  3 Color Data
+	{ "c2_mb7122e.2l",	0x00400, 0x8feca424, 14 | BRF_GRA },	      //  4
+	{ "c3_mb7122e.1l",	0x00400, 0x220076ca, 14 | BRF_GRA },	      //  5
+		
+	{ "p7.b3",			0x04000, 0x2b6ed95b, 4 | BRF_GRA },	      	  //  6 Text Characters
 
-	{ "p7.b3",		0x04000, 0x2b6ed95b, 4 | BRF_GRA },	      	  //  6 Text Characters
+	{ "p17.cd4",		0x08000, 0x19d4518c, 6 | BRF_GRA },           //  7 Background Characters
+	{ "p18.cd2",		0x08000, 0xd818be43, 6 | BRF_GRA },           //  8
+	{ "p19.b4",			0x08000, 0xd64e0f89, 6 | BRF_GRA },           //  9
+	{ "p20.b2",			0x08000, 0xedba0f31, 6 | BRF_GRA },           // 10
 
-	{ "p17.cd4",	0x08000, 0x19d4518c, 6 | BRF_GRA },           //  7 Background Characters
-	{ "p18.cd2",	0x08000, 0xd818be43, 6 | BRF_GRA },           //  8
-	{ "p19.b4",		0x08000, 0xd64e0f89, 6 | BRF_GRA },           //  9
-	{ "p20.b2",		0x08000, 0xedba0f31, 6 | BRF_GRA },           // 10
+	{ "p8.d3",			0x08000, 0xdf7f252a, 9 | BRF_GRA },           // 11 16x16 Sprites
+	{ "p9.ef3",			0x08000, 0x9897bc05, 9 | BRF_GRA },           // 12
+	{ "p10.gh3",		0x08000, 0xecd3c0ea, 9 | BRF_GRA },           // 13
 
-	{ "p8.d3",		0x08000, 0xdf7f252a, 9 | BRF_GRA },           // 11 16x16 Sprites
-	{ "p9.ef3",		0x08000, 0x9897bc05, 9 | BRF_GRA },           // 12
-	{ "p10.gh3",	0x08000, 0xecd3c0ea, 9 | BRF_GRA },           // 13
+	{ "p11.m4",			0x08000, 0x668b25a4, 10 | BRF_GRA },          // 14 32x32 Sprites
+	{ "p14.m2",			0x08000, 0xa7031d4a, 10 | BRF_GRA },          // 15
+	{ "p12.np4",		0x08000, 0xf44e95fa, 10 | BRF_GRA },          // 16
+	{ "p15.np2",		0x08000, 0x120d2450, 10 | BRF_GRA },          // 17
+	{ "p13.r4",			0x08000, 0x980ca3d8, 10 | BRF_GRA },          // 18
+	{ "p16.r2",			0x08000, 0x9f820e8a, 10 | BRF_GRA },          // 19
 
-	{ "p11.m4",		0x08000, 0x668b25a4, 10 | BRF_GRA },          // 14 32x32 Sprites
-	{ "p14.m2",		0x08000, 0xa7031d4a, 10 | BRF_GRA },          // 15
-	{ "p12.np4",	0x08000, 0xf44e95fa, 10 | BRF_GRA },          // 16
-	{ "p15.np2",	0x08000, 0x120d2450, 10 | BRF_GRA },          // 17
-	{ "p13.r4",		0x08000, 0x980ca3d8, 10 | BRF_GRA },          // 18
-	{ "p16.r2",		0x08000, 0x9f820e8a, 10 | BRF_GRA },          // 19
-
-	{ "p4.ef5",		0x10000, 0xe10fb8cc, 15 | BRF_SND },          // 20 Samples
-	{ "p5.g5",		0x10000, 0x93e5f110, 15 | BRF_SND },          // 21
+	{ "p4.ef5",			0x10000, 0xe10fb8cc, 15 | BRF_SND },          // 20 Samples
+	{ "p5.g5",			0x10000, 0x93e5f110, 15 | BRF_SND },          // 21
 	
-	{ "pal20l8",	0x00144, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
-	{ "a6002-3.p2",	0x00104, 0x036b1a16, 0 | BRF_OPT },
-	{ "a5004-1.d6",	0x00104, 0x311e5ae6, 0 | BRF_OPT },
-	{ "a5004-4.s8",	0x00104, 0xfad4c493, 0 | BRF_OPT },
+	 // for rotary joystick decoding, same for both players 
+	{ "1_mb7134e.1d", 	0x01000, 0x5ab67bfc, 0 | BRF_GRA | BRF_OPT }, 
+	{ "1_mb7134e.2d", 	0x01000, 0x5ab67bfc, 0 | BRF_GRA | BRF_OPT }, 
+	
+	{ "a6002-2.r5",		0x00144, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "a6002-3.p2",		0x00104, 0x036b1a16, 0 | BRF_OPT },
+	{ "a5004-1.d6",		0x00104, 0x311e5ae6, 0 | BRF_OPT },
+	{ "a5004-4.s8",		0x00104, 0xfad4c493, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(victroad)

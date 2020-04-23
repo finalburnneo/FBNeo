@@ -669,120 +669,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// X-Men (4 Players ver UBB)
-
-static struct BurnRomInfo xmenRomDesc[] = {
-	{ "065-ubb04.10d",	0x020000, 0xf896c93b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "065-ubb05.10f",	0x020000, 0xe02e5d64, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
-
-	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
-
-	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
-	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
-	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
-	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
-
-	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
-
-	{ "xmen_ubb.nv",    0x000080, 0x52f334ba, BRF_OPT },
-};
-
-STD_ROM_PICK(xmen)
-STD_ROM_FN(xmen)
-
-struct BurnDriver BurnDrvXmen = {
-	"xmen", NULL, NULL, NULL, "1992",
-	"X-Men (4 Players ver UBB)\0", NULL, "Konami", "GX065",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenRomInfo, xmenRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
-};
-
-
-// X-Men (4 Players ver AEA)
-
-static struct BurnRomInfo xmenaRomDesc[] = {
-	{ "065-aea04.10d",	0x020000, 0x0e8d2e98, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "065-aea05.10f",	0x020000, 0x0b742a4e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
-
-	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
-
-	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
-	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
-	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
-	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
-
-	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
-
-	{ "xmen_aea.nv",    0x000080, 0xd73d4f20, BRF_OPT },
-};
-
-STD_ROM_PICK(xmena)
-STD_ROM_FN(xmena)
-
-struct BurnDriver BurnDrvXmena = {
-	"xmena", "xmen", NULL, NULL, "1992",
-	"X-Men (4 Players ver AEA)\0", NULL, "Konami", "GX065",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenaRomInfo, xmenaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
-};
-
-
-// X-Men (4 Players ver ADA)
-
-static struct BurnRomInfo xmenaaRomDesc[] = {
-	{ "065-ada04.10d",	0x020000, 0xb8276624, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "065-ada05.10f",	0x020000, 0xc68582ad, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
-
-	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
-
-	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
-	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
-	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
-	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
-
-	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
-
-	{ "xmen_ada.nv",    0x000080, 0xa77a3891, BRF_OPT },
-};
-
-STD_ROM_PICK(xmenaa)
-STD_ROM_FN(xmenaa)
-
-struct BurnDriver BurnDrvXmenaa = {
-	"xmenaa", "xmen", NULL, NULL, "1992",
-	"X-Men (4 Players ver ADA)\0", NULL, "Konami", "GX065",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenaaRomInfo, xmenaaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
-};
-
-
 // X-Men (4 Players ver EBA)
 
-static struct BurnRomInfo xmeneRomDesc[] = {
+static struct BurnRomInfo xmenRomDesc[] = {
 	{ "065-eba04.10d",	0x020000, 0x3588c5ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "065-eba05.10f",	0x020000, 0x79ce32f8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -803,15 +692,89 @@ static struct BurnRomInfo xmeneRomDesc[] = {
 	{ "xmen_eba.nv",    0x000080, 0x37f8e77a, BRF_OPT },
 };
 
-STD_ROM_PICK(xmene)
-STD_ROM_FN(xmene)
+STD_ROM_PICK(xmen)
+STD_ROM_FN(xmen)
 
-struct BurnDriver BurnDrvXmene = {
-	"xmene", "xmen", NULL, NULL, "1992",
+struct BurnDriver BurnDrvXmen = {
+	"xmen", NULL, NULL, NULL, "1992",
 	"X-Men (4 Players ver EBA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, xmenRomInfo, xmenRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
+// X-Men (4 Players ver UBB)
+
+static struct BurnRomInfo xmenuRomDesc[] = {
+	{ "065-ubb04.10d",	0x020000, 0xf896c93b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-ubb05.10f",	0x020000, 0xe02e5d64, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
+
+	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
+	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
+	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
+	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
+
+	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
+
+	{ "xmen_ubb.nv",    0x000080, 0x52f334ba, BRF_OPT },
+};
+
+STD_ROM_PICK(xmenu)
+STD_ROM_FN(xmenu)
+
+struct BurnDriver BurnDrvXmenu = {
+	"xmenu", "xmen", NULL, NULL, "1992",
+	"X-Men (4 Players ver UBB)\0", NULL, "Konami", "GX065",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmeneRomInfo, xmeneRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenuRomInfo, xmenuRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
+// X-Men (4 Players ver UEB)
+
+static struct BurnRomInfo xmenuaRomDesc[] = {
+	{ "065-ueb04.10d",	0x020000, 0xeee4e7ef, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-ueb05.10f",	0x020000, 0xc3b2ffde, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
+
+	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
+	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
+	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
+	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
+
+	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
+
+	{ "xmen_ueb.nv",    0x000080, 0xdb85fef4, BRF_OPT },
+};
+
+STD_ROM_PICK(xmenua)
+STD_ROM_FN(xmenua)
+
+struct BurnDriver BurnDrvXmenua = {
+	"xmenua", "xmen", NULL, NULL, "1992",
+	"X-Men (4 Players ver UEB)\0", NULL, "Konami", "GX065",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, xmenuaRomInfo, xmenuaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };
@@ -891,6 +854,80 @@ struct BurnDriver BurnDrvXmenja = {
 };
 
 
+// X-Men (4 Players ver AEA)
+
+static struct BurnRomInfo xmenaRomDesc[] = {
+	{ "065-aea04.10d",	0x020000, 0x0e8d2e98, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-aea05.10f",	0x020000, 0x0b742a4e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
+
+	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
+	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
+	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
+	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
+
+	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
+
+	{ "xmen_aea.nv",    0x000080, 0xd73d4f20, BRF_OPT },
+};
+
+STD_ROM_PICK(xmena)
+STD_ROM_FN(xmena)
+
+struct BurnDriver BurnDrvXmena = {
+	"xmena", "xmen", NULL, NULL, "1992",
+	"X-Men (4 Players ver AEA)\0", NULL, "Konami", "GX065",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, xmenaRomInfo, xmenaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
+// X-Men (4 Players ver ADA)
+
+static struct BurnRomInfo xmenaaRomDesc[] = {
+	{ "065-ada04.10d",	0x020000, 0xb8276624, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-ada05.10f",	0x020000, 0xc68582ad, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
+
+	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
+	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
+	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
+	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
+
+	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
+
+	{ "xmen_ada.nv",    0x000080, 0xa77a3891, BRF_OPT },
+};
+
+STD_ROM_PICK(xmenaa)
+STD_ROM_FN(xmenaa)
+
+struct BurnDriver BurnDrvXmenaa = {
+	"xmenaa", "xmen", NULL, NULL, "1992",
+	"X-Men (4 Players ver ADA)\0", NULL, "Konami", "GX065",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, xmenaaRomInfo, xmenaaRomName, NULL, NULL, NULL, NULL, XmenInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
 // X-Men (2 Players ver EAA)
 
 static struct BurnRomInfo xmen2peRomDesc[] = {
@@ -965,43 +1002,6 @@ struct BurnDriver BurnDrvXmen2pu = {
 };
 
 
-// X-Men (2 Players ver AAA)
-
-static struct BurnRomInfo xmen2paRomDesc[] = {
-	{ "065-aaa04.10d",	0x020000, 0x7f8b27c2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "065-aaa05.10f",	0x020000, 0x841ed636, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
-
-	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
-
-	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
-	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
-	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
-	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
-
-	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
-
-	{ "xmen_aaa.nv",    0x000080, 0x750fd447, BRF_OPT },
-};
-
-STD_ROM_PICK(xmen2pa)
-STD_ROM_FN(xmen2pa)
-
-struct BurnDriver BurnDrvXmen2pa = {
-	"xmen2pa", "xmen", NULL, NULL, "1992",
-	"X-Men (2 Players ver AAA)\0", NULL, "Konami", "GX065",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmen2paRomInfo, xmen2paRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
-};
-
-
 // X-Men (2 Players ver JAA)
 
 static struct BurnRomInfo xmen2pjRomDesc[] = {
@@ -1034,6 +1034,43 @@ struct BurnDriver BurnDrvXmen2pj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, xmen2pjRomInfo, xmen2pjRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
+// X-Men (2 Players ver AAA)
+
+static struct BurnRomInfo xmen2paRomDesc[] = {
+	{ "065-aaa04.10d",	0x020000, 0x7f8b27c2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-aaa05.10f",	0x020000, 0x841ed636, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "065-a01.6f",		0x020000, 0x147d3a4d, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "065-a08.15l",	0x100000, 0x6b649aca, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "065-a07.16l",	0x100000, 0xc5dc8fc4, 3 | BRF_GRA },           //  6
+
+	{ "065-a09.2h",		0x100000, 0xea05d52f, 4 | BRF_GRA },           //  7 Sprites
+	{ "065-a10.2l",		0x100000, 0x96b91802, 4 | BRF_GRA },           //  8
+	{ "065-a12.1h",		0x100000, 0x321ed07a, 4 | BRF_GRA },           //  9
+	{ "065-a11.1l",		0x100000, 0x46da948e, 4 | BRF_GRA },           // 10
+
+	{ "065-a06.1f",		0x200000, 0x5adbcee0, 5 | BRF_SND },           // 11 K054539 Samples
+
+	{ "xmen_aaa.nv",    0x000080, 0x750fd447, BRF_OPT },
+};
+
+STD_ROM_PICK(xmen2pa)
+STD_ROM_FN(xmen2pa)
+
+struct BurnDriver BurnDrvXmen2pa = {
+	"xmen2pa", "xmen", NULL, NULL, "1992",
+	"X-Men (2 Players ver AAA)\0", NULL, "Konami", "GX065",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, xmen2paRomInfo, xmen2paRomName, NULL, NULL, NULL, NULL, Xmen2pInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

@@ -137,9 +137,10 @@ INT32 SekGetActive();
 INT32 SekShouldInterrupt();
 void SekBurnUntilInt();
 
-#define SEK_IRQSTATUS_NONE (0x0000)
-#define SEK_IRQSTATUS_AUTO (0x2000)
-#define SEK_IRQSTATUS_ACK  (0x1000)
+#define SEK_IRQSTATUS_NONE  (0x0000)
+#define SEK_IRQSTATUS_VAUTO (0x4000)
+#define SEK_IRQSTATUS_AUTO  (0x2000)
+#define SEK_IRQSTATUS_ACK   (0x1000)
 
 void SekSetIRQLine(const INT32 line, INT32 status);
 void SekSetIRQLine(INT32 nCPU, const INT32 line, INT32 status);

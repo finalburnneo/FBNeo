@@ -621,6 +621,12 @@ static void __fastcall i4x00_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
+	if (address >= 0x78840 && address <= 0x7884d) {
+		BlitRegs[(address & 0xf) ^ 1] = data;
+		if (address == 0x7884c) blitter_write();
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x788a3:

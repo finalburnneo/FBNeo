@@ -846,6 +846,12 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 		m68k_set_irq(0);
 		nSekIRQPending[nSekActive] = 0;
 	}
+
+	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_VAUTO &&
+		(nSekIRQPending[nSekActive] & 0x0007) == nIRQ) {
+		m68k_set_virq(nIRQ, 0);
+		nSekIRQPending[nSekActive] = 0;
+	}
 	
 	if (pSekExt->IrqCallback) {
 		return pSekExt->IrqCallback(nIRQ);
@@ -1559,9 +1565,8 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
 #endif
 
-	if (nstatus != 0 && nstatus != 1) {
-		bprintf(0, _T("SekSetVIRQLine(%d, %d); only supports ACK or NONE! \n"), line, nstatus);
-		return;
+	if (nstatus == CPU_IRQSTATUS_AUTO) {
+		nstatus = 4; // special handling for virq
 	}
 
 	INT32 status = nstatus << 12; // needed for compatibility

@@ -2358,13 +2358,17 @@ static struct BurnDIPInfo GhoulsDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "5"                      },
 	{0x14, 0x01, 0x03, 0x03, "6"                      },
 
-	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x14, 0x01, 0x10, 0x00, "Off"                    },
 	{0x14, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x00, "Off"                    },
+	{0x14, 0x01, 0x20, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x14, 0x01, 0x40, 0x40, "Off"                    },
-	{0x14, 0x01, 0x40, 0x00, "On"                     },
+	{0x14, 0x01, 0x40, 0x40, "No"                     },
+	{0x14, 0x01, 0x40, 0x00, "Yes"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
@@ -7239,11 +7243,7 @@ static struct BurnRomInfo KodRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
-#else
-	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "kd29b.1a",      0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -7278,11 +7278,7 @@ static struct BurnRomInfo Kodr1RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
-#else
-	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "kd29b.1a",      0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -7317,11 +7313,7 @@ static struct BurnRomInfo Kodr2RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
-#else
-	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "kd29b.1a",      0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -7356,11 +7348,7 @@ static struct BurnRomInfo KoduRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
-#else
-	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "kd29b.1a",      0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -7392,11 +7380,7 @@ static struct BurnRomInfo KodjRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
-#else
-	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "kd29b.1a",      0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -8237,7 +8221,37 @@ static struct BurnRomInfo Pang3b2RomDesc[] = {
 STD_ROM_PICK(Pang3b2)
 STD_ROM_FN(Pang3b2)
 
+/* An interesting single board bootleg which is an almost exact replica of the official Pang3 A/B board circuitry condensed onto a single pcb.
+   All component refs match the official 89626A short 10MHz A board and 94916-10 pang3 exclusive B board.
+   Uses pin compatible clone CPS-A/B chips which are marked 27C634 and 27C633 respectively, the clone B is a CPS-B-17.
+   They appear to be 3.3v chips as the common bootlegger trick of stepping down the supply voltage with power diodes is used.
+   Main code has been hacked to use the CPS-B-17 rather than official CPS-B-21 config.
+   All PALs confirmed to match official A/B board PALs.
+   Uses same encryption and mach215 security pld as official.
+*/
 static struct BurnRomInfo Pang3b3RomDesc[] = {
+	{ "u1111_17.bin",  0x080000, 0xdd3b95c0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "u1011_16.bin",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "pa3-01m.2c",    0x200000, 0x068a152c, BRF_GRA | CPS1_TILES },
+	{ "pa3-07m.2f",    0x200000, 0x3a4a619d, BRF_GRA | CPS1_TILES },
+
+	{ "u11f1.bin",     0x010000, 0x278d786c, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "pa3_05.10d",    0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "pa3_06.11d",    0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "cp1b1f.1f",     0x000117, 0x3979b8e3, BRF_OPT },	// b-board PLDs
+	{ "cp1b8k.8k",     0x000117, 0x8a52ea7a, BRF_OPT },
+	{ "cp1b9k.9k",     0x000117, 0xa754bdc3, BRF_OPT },
+};
+
+STD_ROM_PICK(Pang3b3)
+STD_ROM_FN(Pang3b3)
+
+static struct BurnRomInfo Pang3b4RomDesc[] = {
 	{ "pa3_17bl.11l",  0x080000, 0x3b5d99de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "pa3_16bl.10l",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -8258,10 +8272,10 @@ static struct BurnRomInfo Pang3b3RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b3)
-STD_ROM_FN(Pang3b3)
+STD_ROM_PICK(Pang3b4)
+STD_ROM_FN(Pang3b4)
 
-static struct BurnRomInfo Pang3b4RomDesc[] = {
+static struct BurnRomInfo Pang3b5RomDesc[] = {
 	{ "17.11l",        0x080000, 0xf62425e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "16.10l",        0x080000, 0x7169ea67, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -8282,8 +8296,8 @@ static struct BurnRomInfo Pang3b4RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b4)
-STD_ROM_FN(Pang3b4)
+STD_ROM_PICK(Pang3b5)
+STD_ROM_FN(Pang3b5)
 
 static struct BurnRomInfo Pang3jRomDesc[] = {
 	{ "pa3j_17.11l",   0x080000, 0x21f6e51f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -8407,12 +8421,7 @@ static struct BurnRomInfo PunisherRomDesc[] = {
 	
 	A_BOARD_QSOUND_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "ps63b.1a",      0x000117, 0x03a758b0, BRF_OPT },	// b-board PLDs
-#else
-	{ "ps63b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
@@ -8454,12 +8463,7 @@ static struct BurnRomInfo PunisheruRomDesc[] = {
 	
 	A_BOARD_QSOUND_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "ps63b.1a",      0x000117, 0x03a758b0, BRF_OPT },	// b-board PLDs
-#else
-	{ "ps63b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
@@ -8495,12 +8499,7 @@ static struct BurnRomInfo PunisherjRomDesc[] = {
 	
 	A_BOARD_QSOUND_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "ps63b.1a",      0x000117, 0x03a758b0, BRF_OPT },	// b-board PLDs
-#else
-	{ "ps63b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
@@ -8542,12 +8541,7 @@ static struct BurnRomInfo PunisherhRomDesc[] = {
 	
 	A_BOARD_QSOUND_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "ps63b.1a",      0x000117, 0x03a758b0, BRF_OPT },	// b-board PLDs
-#else
-	{ "ps63b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
@@ -13740,7 +13734,7 @@ static struct BurnRomInfo WofRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13777,7 +13771,7 @@ static struct BurnRomInfo Wofr1RomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13814,7 +13808,7 @@ static struct BurnRomInfo WofuRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13851,7 +13845,7 @@ static struct BurnRomInfo WofjRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13888,7 +13882,7 @@ static struct BurnRomInfo WofaRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13930,7 +13924,7 @@ static struct BurnRomInfo WofchRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -13972,7 +13966,7 @@ static struct BurnRomInfo WofchdxRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 
@@ -14511,8 +14505,9 @@ static const struct GameConfig ConfigTable[] =
 	{ "pang3r1a"    , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b2"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b3"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b3"     , CPS_B_17	  , mapper_pang3 , 0, NULL                },
 	{ "pang3b4"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b5"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
 	{ "pang3j"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"      , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"    , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
@@ -20316,10 +20311,20 @@ struct BurnDriver BurnDrvCpsPang3b3 = {
 
 struct BurnDriver BurnDrvCpsPang3b4 = {
 	"pang3b4", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (bootleg set 4, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (bootleg set 4, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3b4RomInfo, Pang3b4RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
+	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPang3b5 = {
+	"pang3b5", "pang3", NULL, NULL, "1995",
+	"Pang! 3 (bootleg set 5, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	NULL, Pang3b5RomInfo, Pang3b5RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
 	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22909,7 +22914,7 @@ static struct BurnRomInfo wofchpRomDesc[] = {
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
 	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
-	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d9k1.9k",       0x000117, 0x6c35c805, BRF_OPT },
 	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
 };
 

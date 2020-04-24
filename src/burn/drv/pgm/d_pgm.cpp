@@ -541,7 +541,7 @@ static struct BurnRomInfo thegladBIOSRomDesc[] = {
 
 	{ "pgm_m01s.u4", 		0x200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
-	{ "bios.42",      		0x020000, 0x517cf7a2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001-01J, custom 02/25/03 17:51:01)
+	{ "bios.u42",      		0x020000, 0x517cf7a2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001-01J, custom 02/25/03 17:51:01)
 };
 
 static struct BurnRomInfo dmnfrntBIOSRomDesc[] = {

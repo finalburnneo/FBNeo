@@ -824,8 +824,8 @@ static struct BurnRomInfo route16RomDesc[] = {
 	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, //  8
 	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, //  9
 
-	{ "im5623.f10",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
-	{ "im5623.f12",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
+	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
 	
 	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
@@ -859,8 +859,10 @@ static struct BurnRomInfo route16aRomDesc[] = {
 	{ "tvg62.b2",     	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
 	{ "tvg63.b3",     	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
 
-	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 10 Graphics
-	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
+	{ "mb7052.59",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
+	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	
+	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
 
 STD_ROM_PICK(route16a)
@@ -917,8 +919,10 @@ static struct BurnRomInfo route16bRomDesc[] = {
 	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
 	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
 
-	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 10 Graphics
-	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
+	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
+	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	
+	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
 
 STD_ROM_PICK(route16b)
@@ -975,8 +979,10 @@ static struct BurnRomInfo route16cRomDesc[] = {
 	{ "route16.b2",   	0x0800, 0x529cad13, 2 | BRF_ESS | BRF_PRG }, //  8
 	{ "route16.b3",   	0x0800, 0x3bd8b899, 2 | BRF_ESS | BRF_PRG }, //  9
 
-	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 10 Graphics
-	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
+	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
+	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	
+	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
 };
 
 STD_ROM_PICK(route16c)

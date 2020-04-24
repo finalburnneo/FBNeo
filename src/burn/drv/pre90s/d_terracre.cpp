@@ -352,7 +352,7 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	{ "1.4b",      		0x08000, 0x60932770, BRF_ESS | BRF_PRG },	 //  0	68000 Program Code
 	{ "3.4d",      		0x08000, 0xcb36240e, BRF_ESS | BRF_PRG },	 //  1
 	{ "2.6b",      		0x08000, 0x539352f2, BRF_ESS | BRF_PRG },	 //  2
-	{ "bk1_4.6d",      	0x08000, 0x19387586, BRF_ESS | BRF_PRG },	 //  3
+	{ "4.6d",      		0x08000, 0x19387586, BRF_ESS | BRF_PRG },	 //  3
 	
 	{ "11.15b",    		0x04000, 0x604c3b11, BRF_ESS | BRF_PRG },	 //  4	Z80 Program Code
 	{ "12.17b",    		0x04000, 0xaffc898d, BRF_ESS | BRF_PRG },	 //  5

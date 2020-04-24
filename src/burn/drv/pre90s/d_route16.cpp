@@ -809,9 +809,44 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Route 16 (set 1)
+// Route 16 (Sun Electronics)
 
 static struct BurnRomInfo route16RomDesc[] = {
+	{ "stvg54.a0",     	0x0800, 0xb8471cdc, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "stvg55.a1",     	0x0800, 0x3ec52fe5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "stvg56.a2",     	0x0800, 0xa8e92871, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "stvg57.a3",     	0x0800, 0xa0fc9fc5, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "stvg58.a4",     	0x0800, 0xcc95c02c, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "tvg59.a5",     	0x0800, 0xa39ef648, 1 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "stvg60.b0",     	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
+	{ "stvg61.b1",     	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, //  7
+	{ "tsvg62.b2",     	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, //  8
+	{ "stvg63.b3",     	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, //  9
+
+	{ "im5623.f10",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 10 Graphics
+	{ "im5623.f12",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     	 // 11
+	
+	{ "mb8841",			0x0800, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 12 mcu
+};
+
+STD_ROM_PICK(route16)
+STD_ROM_FN(route16)
+
+struct BurnDriver BurnDrvroute16 = {
+	"route16", NULL, NULL, NULL, "1981",
+	"Route 16 (Sun Electronics)\0", NULL, "Sun Electronics", "Route 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, route16RomInfo, route16RomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	256, 256, 3, 4
+};
+
+
+// Route 16 (Centuri license, set 1)
+
+static struct BurnRomInfo route16aRomDesc[] = {
 	{ "tvg54.a0",     	0x0800, 0xaef9ffc1, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 	{ "tvg55.a1",     	0x0800, 0x389bc077, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "tvg56.a2",     	0x0800, 0x1065a468, 1 | BRF_ESS | BRF_PRG }, //  2
@@ -828,10 +863,10 @@ static struct BurnRomInfo route16RomDesc[] = {
 	{ "mb7052.61",    	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
 };
 
-STD_ROM_PICK(route16)
-STD_ROM_FN(route16)
+STD_ROM_PICK(route16a)
+STD_ROM_FN(route16a)
 
-static INT32 route16Init()
+static INT32 route16aInit()
 {
 	INT32 nRet = DrvInit();
 
@@ -856,20 +891,20 @@ static INT32 route16Init()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvroute16 = {
-	"route16", NULL, NULL, NULL, "1981",
-	"Route 16 (set 1)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
+struct BurnDriver BurnDrvroute16a = {
+	"route16a", "route16", NULL, NULL, "1981",
+	"Route 16 (Centuri license, set 1)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, route16RomInfo, route16RomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
-	route16Init, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, route16aRomInfo, route16aRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	route16aInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 
 
-// Route 16 (set 2)
+// Route 16 (Centuri license, set 2)
 
-static struct BurnRomInfo route16aRomDesc[] = {
+static struct BurnRomInfo route16bRomDesc[] = {
 	{ "vg-54",        	0x0800, 0x0c966319, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 	{ "vg-55",        	0x0800, 0xa6a8c212, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "vg-56",        	0x0800, 0x5c74406a, 1 | BRF_ESS | BRF_PRG }, //  2
@@ -886,10 +921,10 @@ static struct BurnRomInfo route16aRomDesc[] = {
 	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
 };
 
-STD_ROM_PICK(route16a)
-STD_ROM_FN(route16a)
+STD_ROM_PICK(route16b)
+STD_ROM_FN(route16b)
 
-static INT32 route16aInit()
+static INT32 route16bInit()
 {
 	INT32 nRet = DrvInit();
 
@@ -914,18 +949,18 @@ static INT32 route16aInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvroute16a = {
-	"route16a", "route16", NULL, NULL, "1981",
-	"Route 16 (set 2)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
+struct BurnDriver BurnDrvroute16b = {
+	"route16b", "route16", NULL, NULL, "1981",
+	"Route 16 (Centuri license, set 2)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, route16aRomInfo, route16aRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
-	route16aInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	NULL, route16bRomInfo, route16bRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	route16bInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 
 
-// Route 16 (set 3, bootleg?)
+// Route 16 (Centuri license, set 3, bootleg?)
 
 static struct BurnRomInfo route16cRomDesc[] = {
 	{ "route16.a0",  	0x0800, 0x8f9101bd, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -966,7 +1001,7 @@ static INT32 route16cInit()
 
 struct BurnDriver BurnDrvroute16c = {
 	"route16c", "route16", NULL, NULL, "1981",
-	"Route 16 (set 3, bootleg?)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
+	"Route 16 (Centuri license, set 3, bootleg?)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16cRomInfo, route16cRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,

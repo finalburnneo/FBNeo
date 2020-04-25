@@ -3295,26 +3295,26 @@ static INT32 SrdarwinFrame()
 // Super Real Darwin (World)
 
 static struct BurnRomInfo srdarwinRomDesc[] = {
-	{ "dy01-e.b14",		0x10000, 0x176e9299, 1 }, //  0 maincpu
-	{ "dy00.b16",		0x10000, 0x2bf6b461, 1 }, //  1
+	{ "dy_01-e.b14",	0x10000, 0x176e9299, 1 }, //  0 maincpu
+	{ "dy_00.b16",		0x10000, 0x2bf6b461, 1 }, //  1
 
-	{ "dy04.d7",		0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
+	{ "dy_04.d7",		0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
 
-	{ "dy05.b6",		0x04000, 0x8780e8a3, 3 }, //  3 gfx1
+	{ "dy_05.b6",		0x04000, 0x8780e8a3, 3 }, //  3 gfx1
 
-	{ "dy07.h16",		0x08000, 0x97eaba60, 4 }, //  4 gfx2
-	{ "dy06.h14",		0x08000, 0xc279541b, 4 }, //  5
-	{ "dy09.k13",		0x08000, 0xd30d1745, 4 }, //  6
-	{ "dy08.k11",		0x08000, 0x71d645fd, 4 }, //  7
-	{ "dy11.k16",		0x08000, 0xfd9ccc5b, 4 }, //  8
-	{ "dy10.k14",		0x08000, 0x88770ab8, 4 }, //  9
+	{ "dy_07.h16",		0x08000, 0x97eaba60, 4 }, //  4 gfx2
+	{ "dy_06.h14",		0x08000, 0xc279541b, 4 }, //  5
+	{ "dy_09.k13",		0x08000, 0xd30d1745, 4 }, //  6
+	{ "dy_08.k11",		0x08000, 0x71d645fd, 4 }, //  7
+	{ "dy_11.k16",		0x08000, 0xfd9ccc5b, 4 }, //  8
+	{ "dy_10.k14",		0x08000, 0x88770ab8, 4 }, //  9
 
-	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
-	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
+	{ "dy_03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
+	{ "dy_02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6 }, // 12 i8751 microcontroller
+	{ "dy-e.d11",		0x01000, 0x11cd6ca4, 6 }, // 12 i8751 microcontroller
 
-	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
+	{ "dy_12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
 
 STD_ROM_PICK(srdarwin)
@@ -3334,26 +3334,26 @@ struct BurnDriver BurnDrvSrdarwin = {
 // Super Real Darwin (Japan)
 
 static struct BurnRomInfo srdarwnjRomDesc[] = {
-	{ "dy_01.rom",			0x10000, 0x1eeee4ff, 1 }, //  0 maincpu
-	{ "dy00.b16",			0x10000, 0x2bf6b461, 1 }, //  1
+	{ "dy_01.b14",			0x10000, 0x1eeee4ff, 1 }, //  0 maincpu
+	{ "dy_00.b16",			0x10000, 0x2bf6b461, 1 }, //  1
 
-	{ "dy04.d7",			0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
+	{ "dy_04.d7",			0x08000, 0x2ae3591c, 2 }, //  2 audiocpu
 
-	{ "dy05.b6",			0x04000, 0x8780e8a3, 3 }, //  3 gfx1
+	{ "dy_05.b6",			0x04000, 0x8780e8a3, 3 }, //  3 gfx1
 
-	{ "dy07.h16",			0x08000, 0x97eaba60, 4 }, //  4 gfx2
-	{ "dy06.h14",			0x08000, 0xc279541b, 4 }, //  5
-	{ "dy09.k13",			0x08000, 0xd30d1745, 4 }, //  6
-	{ "dy08.k11",			0x08000, 0x71d645fd, 4 }, //  7
-	{ "dy11.k16",			0x08000, 0xfd9ccc5b, 4 }, //  8
-	{ "dy10.k14",			0x08000, 0x88770ab8, 4 }, //  9
+	{ "dy_07.h16",			0x08000, 0x97eaba60, 4 }, //  4 gfx2
+	{ "dy_06.h14",			0x08000, 0xc279541b, 4 }, //  5
+	{ "dy_09.k13",			0x08000, 0xd30d1745, 4 }, //  6
+	{ "dy_08.k11",			0x08000, 0x71d645fd, 4 }, //  7
+	{ "dy_11.k16",			0x08000, 0xfd9ccc5b, 4 }, //  8
+	{ "dy_10.k14",			0x08000, 0x88770ab8, 4 }, //  9
 
-	{ "dy03.b4",			0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
-	{ "dy02.b5",			0x10000, 0x522d9a9e, 5 }, // 11
+	{ "dy_03.b4",			0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
+	{ "dy_02.b5",			0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h_japan.mcu",	0x01000, 0x4ac2ca9d, 6 }, // 12 mcu
+	{ "dy.d11",				0x01000, 0x4ac2ca9d, 6 }, // 12 mcu
 
-	{ "dy12.f4",			0x00100, 0xebfaaed9, 7 }, // 13 proms
+	{ "dy_12.f4",			0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
 
 STD_ROM_PICK(srdarwnj)

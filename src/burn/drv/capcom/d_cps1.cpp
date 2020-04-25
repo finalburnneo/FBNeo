@@ -14373,6 +14373,29 @@ static struct BurnRomInfo Wofr1blRomDesc[] = {
 STD_ROM_PICK(Wofr1bl)
 STD_ROM_FN(Wofr1bl)
 
+static struct BurnRomInfo WofpicRomDesc[] = {
+	{ "2.4m",   	   0x080000, 0x61fd0a01, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1.4m",    	   0x080000, 0xd2ae67a8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.1m",    	   0x020000, 0xfe5eee87, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.1m",    	   0x020000, 0x739379be, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+
+	{ "m12073-2",      0x080000, 0xc8dcaa95, BRF_GRA | CPS1_TILES },
+	{ "m12223-2",      0x080000, 0x1ab0000c, BRF_GRA | CPS1_TILES },
+	{ "m12223-1",      0x080000, 0x8425ff6b, BRF_GRA | CPS1_TILES },
+	{ "m12073-1",      0x080000, 0x24ce197b, BRF_GRA | CPS1_TILES },
+	{ "m12073-6",      0x080000, 0x9d20ef9b, BRF_GRA | CPS1_TILES },
+	{ "m12073-5",      0x080000, 0x90c93dd2, BRF_GRA | CPS1_TILES },
+	{ "m12073-4",      0x080000, 0x219fd7e2, BRF_GRA | CPS1_TILES },
+	{ "m12073-3",      0x080000, 0xefc17c9a, BRF_GRA | CPS1_TILES },
+	
+	{ "pic.bin",   	   0x001007, 0x00000000, BRF_PRG | CPS1_PIC | BRF_NODUMP},
+	
+	{ "ma12073.4mm",   0x080000, 0xac421276, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Wofpic)
+STD_ROM_FN(Wofpic)
+
 static struct BurnRomInfo WofjhRomDesc[] = {
 	{ "tk2j23h.bin",   0x080000, 0x84d38575, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "tk2j22c.bin",   0x080000, 0xb74b09ac, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14834,7 +14857,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofsja"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsjb"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
 	{ "wofsjc"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
-	{ "wofr1bl"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "wofr1bl"     , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "wofpic"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofabl"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -22293,6 +22317,16 @@ struct BurnDriver BurnDrvCpsWofr1bl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wofr1blRomInfo, Wofr1blRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
+	Wofr1blInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofpic = {
+	"wofpic", "wof", NULL, NULL, "1992",
+	"Warriors of Fate (bootleg with PIC16C57, 921002 etc)\0", "no sound", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, WofpicRomInfo, WofpicRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	Wofr1blInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

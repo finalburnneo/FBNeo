@@ -16067,9 +16067,47 @@ struct BurnDriver BurnDrvmslug3v = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 5 (bootleg)
+// Metal Slug 5 (bootleg, set 1)
 
 static struct BurnRomInfo mslug5bRomDesc[] = {
+	{ "ms5b-p1.bin",   0x100000, 0x1376f43c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "ms5b-p2.bin",   0x400000, 0x4becfba0, 1 | BRF_ESS | BRF_PRG }, //  1
+	
+	{ "ms5b-s1.bin",   0x020000, 0x3a427c9f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "ms5b-c1.bin",   0x800000, 0x4b0e5998, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms5b-c2.bin",   0x800000, 0x022fc30b, 3 | BRF_GRA },           //  4 
+	{ "ms5b-c3.bin",   0x800000, 0xead86d28, 3 | BRF_GRA },           //  5 
+	{ "ms5b-c4.bin",   0x800000, 0x0be6be35, 3 | BRF_GRA },           //  6 
+	{ "ms5b-c5.bin",   0x800000, 0x2a23e569, 3 | BRF_GRA },           //  7 
+	{ "ms5b-c6.bin",   0x800000, 0x6eb6bc9e, 3 | BRF_GRA },           //  8 
+	{ "ms5b-c7.bin",   0x800000, 0x57f4e53f, 3 | BRF_GRA },           //  9 
+	{ "ms5b-c8.bin",   0x800000, 0x9d59ff7c, 3 | BRF_GRA },           // 10 
+
+	{ "ms5b-m1.bin",   0x020000, 0xbf1601bc, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "ms5b-v1.bin",   0x400000, 0xe3f9fd75, 5 | BRF_SND },           // 12 Sound data
+	{ "ms5b-v2.bin",   0x400000, 0xa53618f6, 5 | BRF_SND },           // 13
+	{ "ms5b-v3.bin",   0x400000, 0x14f000ee, 5 | BRF_SND },           // 14
+	{ "ms5b-v4.bin",   0x400000, 0x0ccee813, 5 | BRF_SND },           // 15	
+};
+
+STDROMPICKEXT(mslug5b, mslug5b, neogeo)
+STD_ROM_FN(mslug5b)
+
+struct BurnDriver BurnDrvmslug5b = {
+	"mslug5b", "mslug5", "neogeo", NULL, "2003",
+	"Metal Slug 5 (bootleg, set 1)\0", NULL, "bootleg", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5bRomInfo, mslug5bRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (bootleg, set 2)
+
+static struct BurnRomInfo mslug5b2RomDesc[] = {
 	{ "ms5-p1b.bin",   0x500000, 0xd05853ea, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "268-c1c.bin",   0x800000, 0xab7c389a, 3 | BRF_GRA },           //  1 Sprite data
@@ -16087,10 +16125,10 @@ static struct BurnRomInfo mslug5bRomDesc[] = {
 	{ "268-v2c.bin",   0x800000, 0xc40613ed, 5 | BRF_SND },           // 11 
 };
 
-STDROMPICKEXT(mslug5b, mslug5b, neogeo)
-STD_ROM_FN(mslug5b)
+STDROMPICKEXT(mslug5b2, mslug5b2, neogeo)
+STD_ROM_FN(mslug5b2)
 
-static void mslug5bCallback()
+static void mslug5b2Callback()
 {
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x500000);
 	
@@ -16107,12 +16145,12 @@ static void mslug5bCallback()
 	}
 }
 
-static INT32 mslug5bInit()
+static INT32 mslug5b2Init()
 {
 	INT32 nRet;
 
 	nNeoProtectionXor = 0x19;
-	NeoCallbackActive->pInitialise = mslug5bCallback;
+	NeoCallbackActive->pInitialise = mslug5b2Callback;
 
 	nRet = NeoPVCInit();
 
@@ -16125,13 +16163,13 @@ static INT32 mslug5bInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvmslug5b = {
-	"mslug5b", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 (bootleg)\0", NULL, "bootleg", "Neo Geo MVS",
+struct BurnDriver BurnDrvmslug5b2 = {
+	"mslug5b2", "mslug5", "neogeo", NULL, "2003",
+	"Metal Slug 5 (bootleg, set 2)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug5bRomInfo, mslug5bRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug5bInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, mslug5b2RomInfo, mslug5b2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug5b2Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

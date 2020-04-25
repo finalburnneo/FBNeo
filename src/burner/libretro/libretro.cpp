@@ -739,16 +739,16 @@ static void SetRotation()
 	switch (BurnDrvGetFlags() & (BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL))
 	{
 		case BDF_ORIENTATION_VERTICAL:
-			rotation = (bVerticalMode ? 0 : 1);
+			rotation = (nVerticalMode == 1 ? 0 : (nVerticalMode == 2 ? 2 : 1));
 			break;
 		case BDF_ORIENTATION_FLIPPED:
-			rotation = (bVerticalMode ? 1 : 2);
+			rotation = (nVerticalMode == 1 ? 1 : (nVerticalMode == 2 ? 3 : 2));
 			break;
 		case BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED:
-			rotation = (bVerticalMode ? 2 : 3);
+			rotation = (nVerticalMode == 1 ? 2 : (nVerticalMode == 2 ? 0 : 3));
 			break;
 		default:
-			rotation = (bVerticalMode ? 3 : 0);;
+			rotation = (nVerticalMode == 1 ? 3 : (nVerticalMode == 2 ? 1 : 0));;
 			break;
 	}
 	environ_cb(RETRO_ENVIRONMENT_SET_ROTATION, &rotation);
@@ -876,14 +876,14 @@ void retro_run()
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{
 		neo_geo_modes old_g_opt_neo_geo_mode = g_opt_neo_geo_mode;
-		bool old_bVerticalMode = bVerticalMode;
+		UINT32 old_nVerticalMode = nVerticalMode;
 
 		check_variables();
 
 		apply_dipswitch_from_variables();
 
 		// change orientation/geometry if vertical mode was toggled on/off
-		if (old_bVerticalMode != bVerticalMode)
+		if (old_nVerticalMode != nVerticalMode)
 		{
 			SetRotation();
 			struct retro_system_av_info av_info;
@@ -1007,7 +1007,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	int maximum = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;
 	struct retro_game_geometry geom = { (unsigned)nGameWidth, (unsigned)nGameHeight, (unsigned)maximum, (unsigned)maximum };
 
-	geom.aspect_ratio = (bVerticalMode ? ((float)game_aspect_y / (float)game_aspect_x) : ((float)game_aspect_x / (float)game_aspect_y));
+	geom.aspect_ratio = (nVerticalMode != 0 ? ((float)game_aspect_y / (float)game_aspect_x) : ((float)game_aspect_x / (float)game_aspect_y));
 
 	struct retro_system_timing timing = { (nBurnFPS / 100.0), (nBurnFPS / 100.0) * nAudSegLen };
 

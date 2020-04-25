@@ -55,9 +55,9 @@ struct GameInp *pgi_reset;
 struct GameInp *pgi_diag;
 bool is_neogeo_game = false;
 bool allow_neogeo_mode = true;
-bool bVerticalMode = false;
 bool bAllowDepth32 = false;
 bool bLoadSubsystemByParent = true;
+UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
 UINT8 *diag_input;
@@ -97,6 +97,7 @@ static const struct retro_core_option_definition var_fbneo_vertical_mode = {
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },
+		{ "alternate", NULL },
 		{ NULL, NULL },
 	},
 	"disabled"
@@ -810,9 +811,11 @@ void check_variables(void)
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		if (strcmp(var.value, "enabled") == 0)
-			bVerticalMode = true;
+			nVerticalMode = 1;
+		else if (strcmp(var.value, "alternate") == 0)
+			nVerticalMode = 2;
 		else
-			bVerticalMode = false;
+			nVerticalMode = 0;
 	}
 
 	var.key = var_fbneo_load_subsystem_from_parent.key;

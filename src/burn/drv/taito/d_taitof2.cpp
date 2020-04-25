@@ -3879,18 +3879,18 @@ STD_ROM_PICK(Driftoutj)
 STD_ROM_FN(Driftoutj)
 
 static struct BurnRomInfo DriveoutRomDesc[] = {
-	{ "driveout.003",       0x080000, 0xdc431e4e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "driveout.002",       0x080000, 0x6f9063f4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "4.u3",       		0x080000, 0xdc431e4e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "5.u2",       		0x080000, 0x6f9063f4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "driveout.020",       0x008000, 0x99aaeb2e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "3.u20",       		0x008000, 0x99aaeb2e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
-	{ "driveout.084",       0x040000, 0x530ac420, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "driveout.081",       0x040000, 0x0e9a3e9e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "6.u84",       		0x040000, 0x530ac420, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "7.u81",       		0x040000, 0x0e9a3e9e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	
-	{ "do_piv.rom",         0x080000, 0xc4f012f7, BRF_GRA | TAITO_CHARS_PIVOT },
+	{ "8.u37",         		0x080000, 0xc4f012f7, BRF_GRA | TAITO_CHARS_PIVOT },
 	
-	{ "driveout.028",       0x080000, 0xcbde0b66, BRF_SND | TAITO_MSM6295 },
-	{ "driveout.029",       0x020000, 0x0aba2026, BRF_SND | TAITO_MSM6295 },
+	{ "1.u28",       		0x080000, 0xcbde0b66, BRF_SND | TAITO_MSM6295 },
+	{ "2.u29",       		0x020000, 0x0aba2026, BRF_SND | TAITO_MSM6295 },
 };
 
 STD_ROM_PICK(Driveout)

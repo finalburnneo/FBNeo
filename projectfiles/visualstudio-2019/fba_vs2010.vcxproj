@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\src\burn\devices\earom.h" />
     <ClInclude Include="..\..\src\burn\devices\eeprom.h" />
     <ClInclude Include="..\..\src\burn\devices\gaelco_crypt.h" />
+    <ClInclude Include="..\..\src\burn\devices\i4x00.h" />
     <ClInclude Include="..\..\src\burn\devices\joyprocess.h" />
     <ClInclude Include="..\..\src\burn\devices\kaneko_tmap.h" />
     <ClInclude Include="..\..\src\burn\devices\mathbox.h" />
@@ -444,6 +445,7 @@
     <ClCompile Include="..\..\src\burn\devices\earom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\eeprom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\gaelco_crypt.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\i4x00.cpp" />
     <ClCompile Include="..\..\src\burn\devices\joyprocess.cpp" />
     <ClCompile Include="..\..\src\burn\devices\kaneko_tmap.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mathbox.cpp" />
@@ -524,6 +526,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_galpani3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_gstream.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_hyprduel.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />

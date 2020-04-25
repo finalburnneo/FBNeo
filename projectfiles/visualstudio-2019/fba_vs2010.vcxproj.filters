@@ -1015,6 +1015,9 @@
     <ClInclude Include="..\..\src\cpu\e132xs_intf.h">
       <Filter>cpus</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\i4x00.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4168,6 +4171,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_galpani3.cpp">
       <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_hyprduel.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\i4x00.cpp">
+      <Filter>Burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

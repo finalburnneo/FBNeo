@@ -880,6 +880,80 @@ struct BurnDriver BurnDrvGijoeu = {
 };
 
 
+// G.I. Joe (US, UAA)
+
+static struct BurnRomInfo gijoeuaRomDesc[] = {
+	{ "069uaa03.14e",	0x040000, 0xcfb1af44, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "069uaa02.18e",	0x040000, 0x3e6a56cd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "069a12.13e",		0x040000, 0x75a7585c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "069a11.16e",		0x040000, 0x3153e788, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "069a01.7c",		0x010000, 0x74172b99, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+// the GFX ROMs are smaller and believed to have the same content as the other sets, in fact the game runs fine. Still better to have them dumped
+// only 4 GFX ROMs were dumped from this PCB because the others are soldered ant the dumper didn't want to risk damage
+//	{ "069a10al.d7",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  5 K056832 Characters
+//	{ "069a10ah.d9",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  6
+//	{ "069a09al.d3",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  7
+//	{ "069a09ah.d5",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  8
+//	{ "069a10bl.j7",	0x040000, 0x087d8e25, 3 | BRF_GRA }, 			  //  9
+//	{ "069a10bh.j9",	0x040000, 0xfc7ad198, 3 | BRF_GRA }, 			  // 10
+//	{ "069a09bl.j3",	0x040000, 0x385217cc, 3 | BRF_GRA }, 			  // 11
+//	{ "069a09bh.j5",	0x040000, 0xc6d43c8a, 3 | BRF_GRA }, 			  // 12
+// 	overlay standard ROMs for now
+	{ "069a10.18j",		0x100000, 0x4c6743ee, 3 | BRF_GRA },           //  5 K056832 Characters
+	{ "069a09.16j",		0x100000, 0xe6e36b05, 3 | BRF_GRA },           //  6
+
+//	{ "069a08al.k3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 13 K053246 Sprites
+//	{ "069a08ah.n3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 14
+//	{ "069a05al.k5",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 15
+//	{ "069a05ah.n5",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 16
+//	{ "069a07al.k7",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 15
+//	{ "069a07ah.n7",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 16
+//	{ "069a06al.k9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 17
+//	{ "069a06ah.n9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 18
+//	{ "069a08bl.l3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 19
+//	{ "069a08bh.p3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 20
+//	{ "069a05bl.l5",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 21
+//	{ "069a05bh.p5",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 22
+//	{ "069a07bl.l7",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 23
+//	{ "069a07bh.p7",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 24
+//	{ "069a06bl.l9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 25
+//	{ "069a06bh.p9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 26
+// 	overlay standard ROMs for now
+	{ "069a08.6h",		0x100000, 0x325477d4, 4 | BRF_GRA },           //  7 K053247 Sprites
+	{ "069a05.1h",		0x100000, 0xc4ab07ed, 4 | BRF_GRA },           //  8
+	{ "069a07.4h",		0x100000, 0xccaa3971, 4 | BRF_GRA },           //  9
+	{ "069a06.2h",		0x100000, 0x63eba8e1, 4 | BRF_GRA },           // 10
+	
+//	{ "069a04a.g2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 27 k054539
+//	{ "069a04b.j2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 28
+//	{ "069a04c.k2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 29
+//	{ "069a04d.l2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 30
+//	{ "069a04e.n2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 31
+//	{ "069a04f.p2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 32
+//	{ "069a04g.r2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 33
+//	{ "069a04h.s2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 34
+// 	overlay standard ROMs for now
+	{ "069a04.1e",		0x200000, 0x11d6dcd6, 5 | BRF_SND },           // 11 k054539
+
+	{ "er5911.7d",		0x000080, 0x33b07813, 6 | BRF_OPT },           // 12 eeprom data
+};
+
+STD_ROM_PICK(gijoeua)
+STD_ROM_FN(gijoeua)
+
+struct BurnDriver BurnDrvGijoeua = {
+	"gijoeua", "gijoe", NULL, NULL, "1992",
+	"G.I. Joe (US, UAA)\0", NULL, "Konami", "GX069",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	NULL, gijoeuaRomInfo, gijoeuaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
 // G.I. Joe (Japan, JAA)
 
 static struct BurnRomInfo gijoejRomDesc[] = {

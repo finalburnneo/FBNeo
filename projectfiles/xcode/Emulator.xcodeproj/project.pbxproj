@@ -974,6 +974,8 @@
 		FE1B287A23561A7A0065200C /* un7z.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239C23561A740065200C /* un7z.cpp */; };
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
 		FE1E0C7B244C2BD600C774C3 /* d_galpani3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */; };
+		FE1E0C7E245333E600C774C3 /* i4x00.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7C245333E500C774C3 /* i4x00.cpp */; };
+		FE1E0C802453340600C774C3 /* d_hyprduel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */; };
 		FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6A923615B3400B9D150 /* LogViewer.xib */; };
 		FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */; };
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
@@ -2497,6 +2499,9 @@
 		FE1B287E23561D1A0065200C /* tchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tchar.h; sourceTree = "<group>"; };
 		FE1B287F235626280065200C /* burner_macos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_macos.h; sourceTree = "<group>"; };
 		FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_galpani3.cpp; sourceTree = "<group>"; };
+		FE1E0C7C245333E500C774C3 /* i4x00.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i4x00.cpp; sourceTree = "<group>"; };
+		FE1E0C7D245333E500C774C3 /* i4x00.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i4x00.h; sourceTree = "<group>"; };
+		FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_hyprduel.cpp; sourceTree = "<group>"; };
 		FE2BC6AA23615B3400B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LogViewer.xib; sourceTree = "<group>"; };
 		FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogViewerController.h; sourceTree = "<group>"; };
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
@@ -3622,6 +3627,7 @@
 				FE83290C2439A3A000059993 /* d_gstream.cpp */,
 				FE1B1F7123561A680065200C /* d_gumbo.cpp */,
 				FE1B1F5D23561A680065200C /* d_hyperpac.cpp */,
+				FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */,
 				FEE7CC42242285FC00B311BC /* d_inufuku.cpp */,
 				FE1B1F4723561A680065200C /* d_itech32.cpp */,
 				FE1B1F6923561A680065200C /* d_jchan.cpp */,
@@ -4576,6 +4582,8 @@
 				FE1B228923561A710065200C /* eeprom.h */,
 				FE1B229223561A710065200C /* gaelco_crypt.cpp */,
 				FE1B22B923561A710065200C /* gaelco_crypt.h */,
+				FE1E0C7C245333E500C774C3 /* i4x00.cpp */,
+				FE1E0C7D245333E500C774C3 /* i4x00.h */,
 				FE1B22B423561A710065200C /* joyprocess.cpp */,
 				FE1B22D623561A720065200C /* joyprocess.h */,
 				FE1B22A923561A710065200C /* kaneko_tmap.cpp */,
@@ -5516,6 +5524,7 @@
 				FE1B26FF23561A780065200C /* d_seicross.cpp in Sources */,
 				FE1B245B23561A750065200C /* gzwrite.c in Sources */,
 				FE1B278223561A790065200C /* tms5110.cpp in Sources */,
+				FE1E0C7E245333E600C774C3 /* i4x00.cpp in Sources */,
 				FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */,
 				FE1B26A223561A770065200C /* d_snk.cpp in Sources */,
 				FE1B271723561A780065200C /* d_travrusa.cpp in Sources */,
@@ -5878,6 +5887,7 @@
 				FE1B271423561A780065200C /* d_wwfsstar.cpp in Sources */,
 				FE1B259823561A760065200C /* d_decomlc.cpp in Sources */,
 				FE1B269123561A770065200C /* d_1942.cpp in Sources */,
+				FE1E0C802453340600C774C3 /* d_hyprduel.cpp in Sources */,
 				FE1B276523561A790065200C /* debug_track.cpp in Sources */,
 				FE1B265523561A770065200C /* d_taitox.cpp in Sources */,
 				FE1B26A623561A770065200C /* d_sauro.cpp in Sources */,

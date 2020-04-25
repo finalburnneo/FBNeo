@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13794 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13808 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3731,8 +3731,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_frontlin	|  	| Front Line (Jpn)					| 		| 1984	| Taito		| MSX		| 					|
 | msx_frontlinb	|  	| Front Line (Jpn, Alt 2)				| msx_frontlin	| 1984	| Taito		| MSX		| 					|
 | msx_frontlina	|  	| Front Line (Jpn, Alt)					| msx_frontlin	| 1984	| Taito		| MSX		| 					|
+| frontlin	|  	| Front Line (set 1)					| 		| 1982	| Taito Corporat| Taito SJ Syste| 					|
+| frontlina	|  	| Front Line (set 2)					| frontlin	| 1982	| Taito Corporat| Taito SJ Syste| 					|
 | cv_frontlin	|  	| Front Line						| 		| 1983	| Coleco	| ColecoVision	| 					|
-| frontlin	|  	| Front Line						| 		| 1982	| Taito Corporat| Taito SJ Syste| 					|
 | cv_frostbite	|  	| Frost Bite						| 		| 1983	| Activision	| ColecoVision	| 					|
 | msx_fruitpanic|  	| Fruit Panic						| 		| 1984	| Pony Canyon	| MSX		| 					|
 | msx_fruitsrc	|  	| Fruit Search (Jpn)					| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
@@ -3776,6 +3777,7 @@ This list contains all games supported by FinalBurn Neo.
 | gstream	|  	| G-Stream G2020					| 		| 2002	| Oriental Soft | Miscellaneous	| 					|
 | gijoea	|  	| G.I. Joe (Asia, AA)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoej	|  	| G.I. Joe (Japan, JAA)					| gijoe		| 1992	| Konami	| GX069		| 					|
+| gijoeua	|  	| G.I. Joe (US, UAA)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoeu	|  	| G.I. Joe (US, UAB)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoe		|  	| G.I. Joe (World, EAB, set 1)				| 		| 1992	| Konami	| GX069		| 					|
 | gijoeea	|  	| G.I. Joe (World, EB8, prototype?)			| gijoe		| 1992	| Konami	| GX069		| 					|
@@ -4308,6 +4310,7 @@ This list contains all games supported by FinalBurn Neo.
 | gwarb		|  	| Guerrilla War (Joystick hack bootleg)			| gwar		| 1987	| bootleg	| Miscellaneous	| 					|
 | gwar		|  	| Guerrilla War (US)					| 		| 1987	| SNK		| Miscellaneous	| 					|
 | gwara		|  	| Guerrilla War (Version 1)				| gwar		| 1987	| SNK		| Miscellaneous	| 					|
+| gwarab	|  	| Guerrilla War (Version 1, set 2)			| gwar		| 1987	| SNK		| Miscellaneous	| 					|
 | gwarj		|  	| Guevara (Japan)					| gwar		| 1987	| SNK		| Miscellaneous	| 					|
 | gulfstrmk	|  	| Gulf Storm (Korea)					| gulfstrm	| 1991	| Dooyong	| Miscellaneous	| 					|
 | gulfstrmm	|  	| Gulf Storm (Media Shoji)				| gulfstrm	| 1991	| Dooyong (Media| Miscellaneous	| 					|
@@ -4990,7 +4993,8 @@ This list contains all games supported by FinalBurn Neo.
 | jumpingi	|  	| Jumping (set 3, Imnoe PCB)				| rbisland	| 1988	| bootleg (Seyut| Taito Misc	| 					|
 | jmpbreak	|  	| Jumping Break (set 1)					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | jmpbreaka	|  	| Jumping Break (set 2)					| jmpbreak	| 1999	| F2 System	| Miscellaneous	| 					|
-| jcross	|  	| Jumping Cross						| 		| 1984	| SNK		| Miscellaneous	| 					|
+| jcross	|  	| Jumping Cross (set 1)					| 		| 1984	| SNK		| Miscellaneous	| 					|
+| jcrossa	|  	| Jumping Cross (set 2)					| jcross	| 1984	| SNK		| Miscellaneous	| 					|
 | msx_jumpjack	|  	| Jumping Jack (Euro)					| 		| 1986	| Livewire Softw| MSX		| 					|
 | jjack		|  	| Jumping Jack						| 		| 1984	| Universal	| Miscellaneous	| 					|
 | jpopnics	|  	| Jumping Pop (Nics, Korean bootleg of Plump Pop)	| 		| 1992	| Nics		| Miscellaneous	| 					|
@@ -6347,7 +6351,8 @@ This list contains all games supported by FinalBurn Neo.
 | mooncrstg	|  	| Moon Cresta (Gremlin)					| mooncrst	| 1980	| Gremlin	| Galaxian	| 					|
 | mooncrstuk	|  	| Moon Cresta (Nichibutsu UK)				| mooncrst	| 1980	| Nichibutsu UK	| Galaxian	| 					|
 | mooncrstuku	|  	| Moon Cresta (Nichibutsu UK, unencrypted)		| mooncrst	| 1980	| Nichibutsu UK	| Galaxian	| 					|
-| mooncrstu	|  	| Moon Cresta (Nichibutsu USA, unencrypted)		| mooncrst	| 1980	| Nichibutsu USA| Galaxian	| 					|
+| mooncrstu	|  	| Moon Cresta (Nichibutsu USA, encrypted)		| mooncrst	| 1980	| Nichibutsu USA| Galaxian	| 					|
+| mooncrstuu	|  	| Moon Cresta (Nichibutsu USA, unencrypted)		| mooncrst	| 1980	| Nichibutsu USA| Galaxian	| 					|
 | mooncrst	|  	| Moon Cresta (Nichibutsu)				| 		| 1980	| Nichibutsu	| Galaxian	| 					|
 | mooncrsto	|  	| Moon Cresta (Nichibutsu, old rev)			| mooncrst	| 1980	| Nichibutsu	| Galaxian	| 					|
 | mooncptc	|  	| Moon Cresta (Petaco S.A. Spanish bootleg)		| mooncrst	| 1980?	| bootleg (Petac| Galaxian	| 					|
@@ -8508,7 +8513,8 @@ This list contains all games supported by FinalBurn Neo.
 | pang3b	|  	| Pang! 3 (bootleg set 1, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | pang3b2	|   NW	| Pang! 3 (bootleg set 2, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | pang3b3	|  	| Pang! 3 (bootleg set 3, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
-| pang3b4	|  	| Pang! 3 (bootleg set 4, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
+| pang3b4	|  	| Pang! 3 (bootleg set 4, 950511 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
+| pang3b5	|  	| Pang! 3 (bootleg set 5, 950601 Euro)			| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | pang3j	|  	| Pang! 3: Kaitou Tachi no Karei na Gogo (950511 Japan)	| pang3		| 1995	| Mitchell	| CPS1		| 					|
 | panicbom	|  	| Panic Bomber						| 		| 1994	| Eighting / Hud| Neo Geo MVS	| 					|
 | spec_pandizzy	|  	| Panic Dizzy (128K)					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
@@ -9662,6 +9668,7 @@ This list contains all games supported by FinalBurn Neo.
 | rollace2	|  	| Roller Aces (set 2)					| fightrol	| 1983	| Kaneko (Willia| Miscellaneous	| 					|
 | msx_rollerbl	|  	| Roller Ball (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_rollerbla	|  	| Roller Ball (Jpn, Alt)				| msx_rollerbl	| 1984	| HAL Kenkyuujo	| MSX		| 					|
+| rjammer	|  	| Roller Jammer						| 		| 1984	| Nichibutsu / A| Miscellaneous	| 					|
 | rollergj	|  	| Rollergames (Japan)					| rollerg	| 1991	| Konami	| GX999		| 					|
 | rollerg	|  	| Rollergames (US)					| 		| 1991	| Konami	| GX999		| 					|
 | rolcrusha	|  	| Rolling Crush (version 1.03.E - 1999/01/29)		| rolcrush	| 1999	| SemiCom / Exit| Miscellaneous	| 					|
@@ -9694,9 +9701,10 @@ This list contains all games supported by FinalBurn Neo.
 | roughrac	|  	| Rough Racer (Japan, Floppy Based, FD1094 317-0058-06b)| 		| 1990	| Sega		| System 24	| 					|
 | roundup	|  	| Round-Up						| 		| 1981	| Taito Corporat| Miscellaneous	| 					|
 | route16bl	|  	| Route 16 (bootleg)					| route16	| 1981	| bootleg (Leisu| Route 16	| 					|
-| route16	|  	| Route 16 (set 1)					| 		| 1981	| Tehkan/Sun (Ce| Route 16	| 					|
-| route16a	|  	| Route 16 (set 2)					| route16	| 1981	| Tehkan/Sun (Ce| Route 16	| 					|
-| route16c	|  	| Route 16 (set 3, bootleg?)				| route16	| 1981	| Tehkan/Sun (Ce| Route 16	| 					|
+| route16a	|  	| Route 16 (Centuri license, set 1)			| route16	| 1981	| Tehkan / Sun E| Route 16	| 					|
+| route16b	|  	| Route 16 (Centuri license, set 2)			| route16	| 1981	| Tehkan / Sun E| Route 16	| 					|
+| route16c	|  	| Route 16 (Centuri license, set 3, bootleg?)		| route16	| 1981	| Tehkan / Sun E| Route 16	| 					|
+| route16	|  	| Route 16 (Sun Electronics)				| 		| 1981	| Sun Electronic| Route 16	| 					|
 | routex	|  	| Route X (bootleg)					| route16	| 1981	| bootleg	| Route 16	| 					|
 | rascot	| D	| Royal Ascot						| 		| 19??	| ????		| X-Board	| 					|
 | md_royalbld	|  	| Royal Blood (Jpn)					| md_gemfire	| 1992	| Koei		| Sega Megadrive| 					|
@@ -10908,6 +10916,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2ed		|  	| Street Fighter II - The World Warrior (910318 World)	| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2jf		|  	| Street Fighter II - The World Warrior (910411 Japan)	| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2uf		|  	| Street Fighter II - The World Warrior (910411 USA)	| sf2		| 1991	| Capcom	| CPS1		| 					|
+| sf2ef		|  	| Street Fighter II - The World Warrior (910411 World)	| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2jh		|  	| Street Fighter II - The World Warrior (910522 Japan)	| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2ug		|  	| Street Fighter II - The World Warrior (910522 USA, rev| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2uh		|  	| Street Fighter II - The World Warrior (910522 USA, rev| sf2		| 1991	| Capcom	| CPS1		| 					|
@@ -10934,19 +10943,19 @@ This list contains all games supported by FinalBurn Neo.
 | sf2thndr	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2m1		|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceeab	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab3	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab4	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab5	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2m3		|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2m10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab2	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2m8		|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2cems6a	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab3	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab4	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab5	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab6	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceblp	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab7	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab8	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| Some graphic issues due to roms	|
 | sf2ceuab9	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| Some graphic issues due to roms	|
 | sf2cejabl	|  	| Street Fighter II' - Champion Edition (920322 Japan bo| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -10966,7 +10975,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2rb		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb2	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb3	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2m4		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2rb4	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb5	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb6	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2re		|  	| Street Fighter II' - Champion Edition (RE, bootleg)	| sf2ce		| 1992	| bootleg	| CPS1		| imperfect graphics			|
@@ -12681,6 +12690,8 @@ This list contains all games supported by FinalBurn Neo.
 | pce_tsuppari	|  	| Tsuppari Oozumou - Heisei Ban				| 		| 1993	| Naxat		| PC Engine	| 					|
 | pce_baibai	|  	| Tsuru Teruhito no Jissen Kabushiki Bai Bai Game	| 		| 1989	| Intec		| PC Engine	| 					|
 | sms_ttoriui	|  	| Ttoriui Moheom (Kor)					| sms_myhero	| 19??	| Unknown	| Sega Master Sy| 					|
+| tubepb	|  	| Tube Panic (bootleg)					| tubep		| 1984	| bootleg	| Miscellaneous	| 					|
+| tubep		|  	| Tube Panic						| 		| 1984	| Nichibutsu / F| Miscellaneous	| 					|
 | tubeit	|  	| Tube-It						| cachat	| 1993	| bootleg	| Taito L System| 					|
 | msx_tuma7	|  	| Tuma 7						| 		| 1990	| Delta Software| MSX		| 					|
 | tumbleb	|  	| Tumble Pop (bootleg set 1)				| tumblep	| 1991	| Data East Corp| Miscellaneous	| 					|
@@ -12909,6 +12920,7 @@ This list contains all games supported by FinalBurn Neo.
 | vandykejal2	|  	| Vandyke (Jaleco, Set 2)				| vandyke	| 1990	| UPL (Jaleco li| NMK16		| 					|
 | vandyke	|  	| Vandyke (Japan)					| 		| 1990	| UPL		| NMK16		| 					|
 | vanguardc	|  	| Vanguard (Centuri)					| vanguard	| 1981	| SNK (Centuri l| Miscellaneous	| 					|
+| vanguardg	|  	| Vanguard (Germany)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguardj	|  	| Vanguard (Japan)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguard	|  	| Vanguard (SNK)					| 		| 1981	| SNK		| Miscellaneous	| 					|
 | vangrd2	|  	| Vanguard II						| 		| 1984	| SNK		| Miscellaneous	| 					|
@@ -13127,7 +13139,8 @@ This list contains all games supported by FinalBurn Neo.
 | wofr1		|  	| Warriors of Fate (921002 etc)				| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofu		|  	| Warriors of Fate (921031 USA)				| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wof		|  	| Warriors of Fate (921031 World)			| 		| 1992	| Capcom	| CPS1 / QSound	| 					|
-| wofb		|  	| Warriors of Fate (bootleg, 921002 etc)		| wof		| 1992	| bootleg	| CPS1		| 					|
+| wofpic	|  	| Warriors of Fate (bootleg with PIC16C57, 921002 etc)	| wof		| 1992	| bootleg	| CPS1		| no sound				|
+| wofr1bl	|  	| Warriors of Fate (bootleg, 921002 etc)		| wof		| 1992	| bootleg	| CPS1		| 					|
 | woffr		| X	| Warriors of Fate (French Translation)			| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | msx_warroid	|  	| Warroid (Jpn)						| 		| 1985	| ASCII		| MSX		| 					|
 | msx_warroida	|  	| Warroid (Jpn, Alt)					| msx_warroid	| 1985	| ASCII		| MSX		| 					|
@@ -13508,10 +13521,11 @@ This list contains all games supported by FinalBurn Neo.
 | xmen2pu	|  	| X-Men (2 Players ver UAB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenaa	|  	| X-Men (4 Players ver ADA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmena		|  	| X-Men (4 Players ver AEA)				| xmen		| 1992	| Konami	| GX065		| 					|
-| xmene		|  	| X-Men (4 Players ver EBA)				| xmen		| 1992	| Konami	| GX065		| 					|
+| xmen		|  	| X-Men (4 Players ver EBA)				| 		| 1992	| Konami	| GX065		| 					|
 | xmenj		|  	| X-Men (4 Players ver JBA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenja	|  	| X-Men (4 Players ver JEA)				| xmen		| 1992	| Konami	| GX065		| 					|
-| xmen		|  	| X-Men (4 Players ver UBB)				| 		| 1992	| Konami	| GX065		| 					|
+| xmenu		|  	| X-Men (4 Players ver UBB)				| xmen		| 1992	| Konami	| GX065		| 					|
+| xmenua	|  	| X-Men (4 Players ver UEB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmen6p	| D NW	| X-Men (6 Players ver ECB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmen6pu	| D NW	| X-Men (6 Players ver UCB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | md_xmen	|  	| X-Men (Euro)						| 		| 1993	| Sega		| Sega Megadrive| 					|

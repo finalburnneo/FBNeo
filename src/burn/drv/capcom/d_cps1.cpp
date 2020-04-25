@@ -14348,7 +14348,7 @@ static struct BurnRomInfo WofsjcRomDesc[] = {
 STD_ROM_PICK(Wofsjc)
 STD_ROM_FN(Wofsjc)
 
-static struct BurnRomInfo WofbRomDesc[] = {
+static struct BurnRomInfo Wofr1blRomDesc[] = {
 	{ "3-f2ab.040",    0x080000, 0x61fd0a01, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "1-9207.040",    0x080000, 0x7f59e24c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "4-d4d2.010",    0x020000, 0xfe5eee87, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14370,8 +14370,8 @@ static struct BurnRomInfo WofbRomDesc[] = {
 	{ "3js_19.rom",    0x020000, 0x068741db, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Wofb)
-STD_ROM_FN(Wofb)
+STD_ROM_PICK(Wofr1bl)
+STD_ROM_FN(Wofr1bl)
 
 static struct BurnRomInfo WofjhRomDesc[] = {
 	{ "tk2j23h.bin",   0x080000, 0x84d38575, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14834,7 +14834,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofsja"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsjb"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
 	{ "wofsjc"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
-	{ "wofb"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "wofr1bl"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofabl"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -18671,12 +18671,12 @@ void __fastcall WofhInputWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall WofbFFWriteByte(UINT32 a, UINT8 d)
+void __fastcall Wofr1blFFWriteByte(UINT32 a, UINT8 d)
 {
 	CpsRamFF[((a & 0xffff) ^ 1)] = d;
 }
 
-void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
+void __fastcall Wofr1blFFWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xff639a: {
@@ -18749,8 +18749,8 @@ static INT32 WofhInit()
 	SekSetReadByteHandler(4, Wofh135ReadByte);
 	SekSetReadWordHandler(4, Wofh135ReadWord);
 	SekMapHandler(5, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(5, WofbFFWriteByte);
-	SekSetWriteWordHandler(5, WofbFFWriteWord);
+	SekSetWriteByteHandler(5, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(5, Wofr1blFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -18810,8 +18810,8 @@ static INT32 SgyxzInit()
 	SekSetReadByteHandler(4, Wofh135ReadByte);
 	SekSetReadWordHandler(4, Wofh135ReadWord);
 	SekMapHandler(5, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(5, WofbFFWriteByte);
-	SekSetWriteWordHandler(5, WofbFFWriteWord);
+	SekSetWriteByteHandler(5, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(5, Wofr1blFFWriteWord);
 	SekMapHandler(6, 0x900000, 0x9007FF, MAP_WRITE);
 	SekSetWriteLongHandler(6, SgyxzSpriteRamWriteLong);
 	SekClose();
@@ -18855,8 +18855,8 @@ static INT32 Wof3jsaInit()
 	SekSetWriteByteHandler(3, WofhInputWriteByte);
 	SekSetWriteWordHandler(3, WofhInputWriteWord);
 	SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(4, WofbFFWriteByte);
-	SekSetWriteWordHandler(4, WofbFFWriteWord);
+	SekSetWriteByteHandler(4, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(4, Wofr1blFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -18965,8 +18965,8 @@ static INT32 Wof3sjInit()
 	SekSetWriteByteHandler(3, Wof3sjInputWriteByte);
 	SekSetWriteWordHandler(3, Wof3sjInputWriteWord);
 	SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(4, WofbFFWriteByte);
-	SekSetWriteWordHandler(4, WofbFFWriteWord);
+	SekSetWriteByteHandler(4, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(4, Wofr1blFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -18991,8 +18991,8 @@ static INT32 WofsjInit()
 	SekSetWriteByteHandler(3, Wof3sjInputWriteByte);
 	SekSetWriteWordHandler(3, Wof3sjInputWriteWord);
 	SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(4, WofbFFWriteByte);
-	SekSetWriteWordHandler(4, WofbFFWriteWord);
+	SekSetWriteByteHandler(4, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(4, Wofr1blFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -19009,7 +19009,7 @@ static INT32 WofsjbInit()
 	return TwelveMhzInit();
 }
 
-void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
+void __fastcall Wofr1bl98WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x980000: {
@@ -19101,7 +19101,7 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-static INT32 WofbInit()
+static INT32 Wofr1blInit()
 {
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
@@ -19122,10 +19122,10 @@ static INT32 WofbInit()
 	SekOpen(0);
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
 	SekMapHandler(1, 0x980000, 0x98ffff, MAP_WRITE);
-	SekSetWriteWordHandler(1, Wofb98WriteWord);
+	SekSetWriteWordHandler(1, Wofr1bl98WriteWord);
 	SekMapHandler(2, 0xff0000, 0xffffff, MAP_WRITE);
-	SekSetWriteByteHandler(2, WofbFFWriteByte);
-	SekSetWriteWordHandler(2, WofbFFWriteWord);
+	SekSetWriteByteHandler(2, Wofr1blFFWriteByte);
+	SekSetWriteWordHandler(2, Wofr1blFFWriteWord);
 	SekClose();
 	
 	// scroll3 ram offset
@@ -22287,13 +22287,13 @@ struct BurnDriver BurnDrvCpsWofsjc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsWofb = {
-	"wofb", "wof", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsWofr1bl = {
+	"wofr1bl", "wof", NULL, NULL, "1992",
 	"Warriors of Fate (bootleg, 921002 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, WofbRomInfo, WofbRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
-	WofbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Wofr1blRomInfo, Wofr1blRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
+	Wofr1blInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

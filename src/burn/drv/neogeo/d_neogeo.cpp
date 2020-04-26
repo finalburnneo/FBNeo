@@ -16079,8 +16079,8 @@ static struct BurnRomInfo mslug5bRomDesc[] = {
 	{ "ms5b-c2.bin",   0x800000, 0x022fc30b, 3 | BRF_GRA },           //  4 
 	{ "ms5b-c3.bin",   0x800000, 0xead86d28, 3 | BRF_GRA },           //  5 
 	{ "ms5b-c4.bin",   0x800000, 0x0be6be35, 3 | BRF_GRA },           //  6 
-	{ "ms5b-c5.bin",   0x800000, 0x2a23e569, 3 | BRF_GRA },           //  7 
-	{ "ms5b-c6.bin",   0x800000, 0x6eb6bc9e, 3 | BRF_GRA },           //  8 
+	{ "ms5b-c5.bin",   0x200000, 0x2a23e569, 3 | BRF_GRA },           //  7 
+	{ "ms5b-c6.bin",   0x200000, 0x6eb6bc9e, 3 | BRF_GRA },           //  8 
 	{ "ms5b-c7.bin",   0x800000, 0x57f4e53f, 3 | BRF_GRA },           //  9 
 	{ "ms5b-c8.bin",   0x800000, 0x9d59ff7c, 3 | BRF_GRA },           // 10 
 

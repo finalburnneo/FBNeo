@@ -1933,7 +1933,7 @@ static struct BurnRomInfo ridheroRomDesc[] = {
 	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
 	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
 	
-	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, BRF_OPT }, 
+	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu				/ Hitachi HD6301V1 MCU
 	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
@@ -1972,7 +1972,7 @@ static struct BurnRomInfo ridherohRomDesc[] = {
 	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
 	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
 	
-	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, BRF_OPT }, 
+	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu				/ Hitachi HD6301V1 MCU
 	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
@@ -2377,7 +2377,6 @@ struct BurnDriver BurnDrvBurningfh = {
 
 // Burning Fight (prototype, older)
 /* early prototype - all roms were hand labeled with CRCs, dumps verified against them */
-/* AES VERSION */
 
 static struct BurnRomInfo burningfpRomDesc[] = {
 	{ "018_p1_9397.p1",    0x080000, 0x5b4032e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -2427,9 +2426,8 @@ struct BurnDriver BurnDrvBurningfp = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Burning Fight (prototype, ver 23.3, 910326)
+// Burning Fight (prototype, near final, ver 23.3, 910326)
 /* later prototype - Sx, Vx and Cx data all matches final game, but with different rom arranagement, Px & Mx unique */
-/* MVS VERSION */
 
 static struct BurnRomInfo burningfpaRomDesc[] = {
 	{ "018_p1_1f28.podd",  0x080000, 0xf7d15752, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -2459,10 +2457,51 @@ STD_ROM_FN(burningfpa)
 
 struct BurnDriver BurnDrvBurningfpa = {
 	"burningfpa", "burningf", "neogeo", NULL, "1991",
-	"Burning Fight (prototype, ver 23.3, 910326)\0", NULL, "SNK", "Neo Geo MVS",
+	"Burning Fight (prototype, near final, ver 23.3, 910326)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SCRFIGHT, 0,
 	NULL, burningfpaRomInfo, burningfpaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	BurningfpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Burning Fight (prototype, newer, V07)
+/* later prototype, but Sx, Cx, Vx etc. not yet final, Eproms are labeled Ver07 from Feb 1991 */
+
+static struct BurnRomInfo burningfpbRomDesc[] = {
+	{ "p1.bin",  		   0x080000, 0xf05ce157, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "p2.bin", 		   0x080000, 0x768ddc90, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "s1.bin",    		   0x020000, 0x3effc183, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "c1.bin",    		   0x080000, 0x8fd6a9bb, 3 | BRF_GRA },           //  3 Sprite data
+	{ "c2.bin",    		   0x080000, 0x7c3464b8, 3 | BRF_GRA },           //  4
+	{ "c3.bin",    		   0x080000, 0x0ac8f1be, 3 | BRF_GRA },           //  5
+	{ "c4.bin",    		   0x080000, 0x3af6b235, 3 | BRF_GRA },           //  6
+	{ "c5.bin",    		   0x080000, 0x707205ab, 3 | BRF_GRA },           //  7
+	{ "c6.bin",    		   0x080000, 0x10d0d2cf, 3 | BRF_GRA },           //  8
+	{ "c7.bin",    		   0x080000, 0xdef06900, 3 | BRF_GRA },           //  9
+	{ "c8.bin",    		   0x080000, 0x6fdc1691, 3 | BRF_GRA },           //  10	
+
+	{ "m1.bin",    		   0x020000, 0x3031af09, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "v11.bin",  		   0x080000, 0x20b40b70, 5 | BRF_SND },           //  12 Sound data
+	{ "v12.bin",  		   0x080000, 0xa0bcf260, 5 | BRF_SND },           //  13
+	{ "v13.bin",  		   0x080000, 0xa4e0e58a, 5 | BRF_SND },           //  14
+	{ "v24-bad.bin",  	   0x080000, 0x4389e65a, 0 | BRF_SND },           //  15 chip was physically damaged
+	// load over it with the final data, could be different however
+	{ "018_v24_22ee.v24",  0x080000, 0x924e3d69, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(burningfpb, burningfpb, neogeo)
+STD_ROM_FN(burningfpb)
+
+struct BurnDriver BurnDrvBurningfpb = {
+	"burningfpb", "burningf", "neogeo", NULL, "1991",
+	"Burning Fight (prototype, newer, V07)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SCRFIGHT, 0,
+	NULL, burningfpbRomInfo, burningfpbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	BurningfpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

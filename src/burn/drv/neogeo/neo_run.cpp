@@ -674,6 +674,7 @@ static INT32 LoadRoms()
 	if (!strcmp("alpham2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
 	if (!strcmp("burningfp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
 	if (!strcmp("burningfpa", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
+	if (!strcmp("burningfpb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
 	if (!strcmp("gpilotsp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
 	if (!strcmp("lresortp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
 	if (!strcmp("kotm2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x300000;

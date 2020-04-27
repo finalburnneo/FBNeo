@@ -826,7 +826,7 @@ static inline void do_speedhack(UINT32 address)
 	if (address == speedhack_address) {
 		if (E132XSGetPC(0) == speedhack_pc) {
 			if (E132XSInterruptActive()) {
-				E132XSRunEnd();
+				E132XSRunEndBurnAllCycles();
 			} else {
 				E132XSBurnCycles(50);
 			}

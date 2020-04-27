@@ -6943,6 +6943,22 @@ static struct BurnRomInfo GalaxianrpRomDesc[] = {
 STD_ROM_PICK(Galaxianrp)
 STD_ROM_FN(Galaxianrp)
 
+static struct BurnRomInfo GalaxyxRomDesc[] = {
+	{ "sg1",    	   0x00800, 0xd493cfd1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg2",    	   0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg3",    	   0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg4",    	   0x00800, 0x04329e33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg5.7l",    	   0x00800, 0x878de26d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "sg6.1h",    	   0x00800, 0x39fb43a4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sg7.1k",    	   0x00800, 0x7e3f56a2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "sgprom.6l",     0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxyx)
+STD_ROM_FN(Galaxyx)
+
 static struct BurnRomInfo GalaxrfggRomDesc[] = {
 	{ "gxrf.7f",       0x01000, 0xc06eeb10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "gxrf.7j",       0x01000, 0x182ff334, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7219,7 +7235,17 @@ struct BurnDriver BurnDrvGalaxianrp = {
 	"Galaxian (Rene Pierre bootleg)\0", NULL, "bootleg (Valadon Automation / Rene Pierre)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, GalaxianrpRomInfo, GalaxianrpRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
+	NULL, GalaxianrpRomInfo, GalaxianrpRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxyx = {
+	"galaxyx", "galaxian", NULL, NULL, "1979",
+	"Galaxy X (bootleg of Galaxian)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxyxRomInfo, GalaxyxRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

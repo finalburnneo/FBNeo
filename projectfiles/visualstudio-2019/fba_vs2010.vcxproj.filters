@@ -4178,6 +4178,9 @@
     <ClCompile Include="..\..\src\burn\devices\i4x00.cpp">
       <Filter>Burn\devices</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

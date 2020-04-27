@@ -21,6 +21,7 @@ void E132XSInit(INT32 cpu, INT32 type, INT32 clock);
 void E132XSOpen(INT32 cpu);
 void E132XSClose();
 INT32 E132XSRun(INT32);
+INT32 E132XSIdle(INT32);
 void E132XSReset();
 void E132XSExit();
 void E132XSNewFrame();
@@ -41,7 +42,9 @@ void E132XSMapMemory(UINT8 *ptr, UINT32 start, UINT32 end, INT32 flags);
 
 // for speed hacking!
 INT32 E132XSInterruptActive();
+void E132XSBurnUntilInt();
 UINT32 E132XSGetPC(INT32);
 void E132XSRunEnd();
+void E132XSRunEndBurnAllCycles();
 INT32 E132XSBurnCycles(INT32 cycles);
 INT64 E132XSTotalCycles();

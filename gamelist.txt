@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13808 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13833 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1387,8 +1387,9 @@ This list contains all games supported by FinalBurn Neo.
 | pce_burnangl	|  	| Burning Angels					| 		| 1990	| Naxat		| PC Engine	| 					|
 | burningfh	|  	| Burning Fight (NGH-018)(US)				| burningf	| 1991	| SNK		| Neo Geo AES	| 					|
 | burningf	|  	| Burning Fight (NGM-018)(NGH-018)			| 		| 1991	| SNK		| Neo Geo MVS	| 					|
+| burningfpa	|  	| Burning Fight (prototype, near final, ver 23.3, 910326| burningf	| 1991	| SNK		| Neo Geo MVS	| 					|
+| burningfpb	|  	| Burning Fight (prototype, newer, V07)			| burningf	| 1991	| SNK		| Neo Geo MVS	| 					|
 | burningfp	|  	| Burning Fight (prototype, older)			| burningf	| 1991	| SNK		| Neo Geo MVS	| 					|
-| burningfpa	|  	| Burning Fight (prototype, ver 23.3, 910326)		| burningf	| 1991	| SNK		| Neo Geo MVS	| 					|
 | md_burnforc	|  	| Burning Force (Euro)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | burnforc	|  	| Burning Force (Japan, new version (Rev C))		| 		| 1989	| Namco		| System 2	| 					|
 | burnforco	|  	| Burning Force (Japan, old version)			| burnforc	| 1989	| Namco		| System 2	| 					|
@@ -1480,6 +1481,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_candoon	|  	| Candoo Ninja (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
 | msx_candoona	|  	| Candoo Ninja (Jpn, Alt)				| msx_candoon	| 1984	| ASCII		| MSX		| 					|
 | candory	|  	| Candory (Bootleg)					| ponpoko	| 1982	| Bootleg	| Pac-man	| 					|
+| candy		|  	| Candy Candy						| 		| 1999	| Eolith	| Miscellaneous	| 					|
 | msx_cannonbl	|  	| Cannon Ball (Jpn)					| 		| 1983	| Hudson Soft	| MSX		| 					|
 | msx_cannonbla	|  	| Cannon Ball (Jpn, Alt)				| msx_cannonbl	| 1983	| Hudson Soft	| MSX		| 					|
 | cannonbp	|  	| Cannon Ball (Pacman Hardware)				| 		| 1985	| Novomatic	| Pac-man	| wrong colors				|
@@ -2353,7 +2355,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_deadmoon	|  	| Dead Moon - Tsuki Sekai no Akumu			| 		| 1990	| B.S.S.	| PC Engine	| 					|
 | tg_deadmoon	|  	| Dead Moon						| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | md_deadlymv	|  	| Deadly Moves (USA)					| 		| 1992	| Kaneko	| Sega Megadrive| 					|
-| deathbrd	|  	| Death Brade (Japan ver JM-3)				| mutantf	| 1992	| Data East Corp| DECO IC16	| 					|
+| deathbrd	|  	| Death Brade (Japan ver JM-3)				| mutantf	| 1991	| Data East Corp| DECO IC16	| 					|
 | md_deathcal	|  	| Death Caliber (Rus)					| 		| 199?	| Tomsoft	| Sega Megadrive| 					|
 | md_deathdl	|  	| Death Duel (USA)					| 		| 1992	| Razorsoft	| Sega Megadrive| 					|
 | msx_deathwish3|  	| Death Wish 3						| 		| 1987	| Gremlin	| MSX		| 					|
@@ -3682,6 +3684,8 @@ This list contains all games supported by FinalBurn Neo.
 | formatz	|  	| Formation Z						| 		| 1984	| Jaleco	| Miscellaneous	| 					|
 | md_formula1	|  	| Formula One (USA)					| md_f1		| 1993	| Tengen	| Sega Megadrive| 					|
 | md_fastfur5	|  	| Forsazh 5 Bystraya ~ Fast and the Furious 5 Quick (Rus| md_combatca	| 199?	| <unknown>	| Sega Megadrive| 					|
+| fort2ba	|  	| Fortress 2 Blue Arcade (Korea) (ver 1.00 / pcb ver 3.0| fort2b	| 2001	| Eolith	| Miscellaneous	| 					|
+| fort2b	|  	| Fortress 2 Blue Arcade (World) (ver 1.01 / pcb ver 3.0| 		| 2001	| Eolith	| Miscellaneous	| 					|
 | cv_fortune	|  	| Fortune Builder					| 		| 1984	| Coleco	| ColecoVision	| 					|
 | fourtraxa	| D NW	| Four Trax (Asia)					| fourtrax	| 1989	| Namco		| System 2	| Imperfect graphics, sound and inputs	|
 | fourtrax	| D NW	| Four Trax (World)					| 		| 1989	| Namco		| System 2	| Imperfect graphics, sound and inputs	|
@@ -3861,6 +3865,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_gforce2	|  	| Galaxy Force II (World, Rev. B)			| 		| 1991	| CRI ~ Sega	| Sega Megadrive| 					|
 | galaxygn	|  	| Galaxy Gunners					| 		| 1989	| Electronic Dev| Miscellaneous	| No Sound.				|
 | galwars2	|  	| Galaxy Wars II (Defender bootleg)			| defender	| 1981	| bootleg (Sonic| 6809 System	| 					|
+| galaxyx	|  	| Galaxy X (bootleg of Galaxian)			| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | msx_galforce	|  	| Gall Force - Defense of Chaos (Jpn)			| 		| 1986	| Sony		| MSX		| 					|
 | msx_galforcea	|  	| Gall Force - Defense of Chaos (Jpn, Alt)		| msx_galforce	| 1986	| Sony		| MSX		| 					|
 | gallag	|  	| Gallag						| galaga	| 1981	| bootleg	| Miscellaneous	| 					|
@@ -4189,6 +4194,7 @@ This list contains all games supported by FinalBurn Neo.
 | imsorryj	|  	| Gonbee no I'm Sorry (315-5110, Japan)			| imsorry	| 1985	| Coreland / Seg| System 1	| 					|
 | gondou	| D NW	| Gondomania (US)					| gondo		| 1987	| Data East USA	| DEC8		| Broken inputs				|
 | gondo		| D NW	| Gondomania (World)					| 		| 1987	| Data East USA	| DEC8		| Broken inputs				|
+| ironfortc	|  	| Gongtit Jiucoi Iron Fortress (Hong Kong)		| ironfort	| 1998	| Eolith (Excell| Miscellaneous	| 					|
 | msx_gonzzalezz|  	| Gonzzalezz 						| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_goody	|  	| Goody (Spa)						| 		| 1987	| Opera Soft	| MSX		| 					|
 | md_goofy	|  	| Goofy's Hysterical History Tour (USA)			| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
@@ -4335,6 +4341,7 @@ This list contains all games supported by FinalBurn Neo.
 | bangj		|  	| Gun Gabacho (Japan)					| bang		| 1998	| Gaelco	| Miscellaneous	| 					|
 | gunhohki	|  	| Gun Hohki (Japan)					| mysticri	| 1992	| Irem		| Irem M92	| 					|
 | gunmast	|  	| Gun Master						| 		| 1994	| Metro		| Miscellaneous	| 					|
+| gunsmokeg	|  	| Gun.Smoke (Germany, censored)				| gunsmoke	| 1986	| Capcom	| Miscellaneous	| 					|
 | gunsmokej	|  	| Gun.Smoke (Japan, 851115)				| gunsmoke	| 1985	| Capcom	| Miscellaneous	| 					|
 | sms_gunsmoke	|  	| Gun.Smoke (Kor)					| 		| 1990	| ProSoft	| Sega Master Sy| 					|
 | gunsmokeua	|  	| Gun.Smoke (US, 851115, set 1)				| gunsmoke	| 1986	| Capcom (Romsta| Miscellaneous	| 					|
@@ -4547,6 +4554,12 @@ This list contains all games supported by FinalBurn Neo.
 | hexa		|  	| Hexa							| 		| 199?	| D. R. Korea	| Arkanoid	| 					|
 | hexionb	|  	| Hexion (Bootleg, Asia ver. AAA)			| hexion	| 1992	| Bootleg	| GX122		| 					|
 | hexion	|  	| Hexion (Japan ver. JAB)				| 		| 1992	| Konami	| GX122		| 					|
+| hidnctcha	|  	| Hidden Catch (World) / Tul Lin Gu Lim Chat Ki '98 (Kor| hidnctch	| 1998	| Eolith	| Miscellaneous	| 					|
+| hidnctch	|  	| Hidden Catch (World) / Tul Lin Gu Lim Chat Ki '98 (Kor| 		| 1998	| Eolith	| Miscellaneous	| 					|
+| hidctch2a	|  	| Hidden Catch 2 (pcb ver 1.00) (Kor/Eng/Jpn/Chi)	| hidctch2	| 1999	| Eolith	| Miscellaneous	| 					|
+| hidctch2	|  	| Hidden Catch 2 (pcb ver 3.03) (Kor/Eng) (AT89c52 prote| 		| 1999	| Eolith	| Miscellaneous	| 					|
+| hidnc2k	|  	| Hidden Catch 2000 (AT89c52 protected)			| 		| 1999	| Eolith	| Miscellaneous	| 					|
+| hidctch3	|  	| Hidden Catch 3 (ver 1.00 / pcb ver 3.05)		| 		| 2000	| Eolith	| Miscellaneous	| 					|
 | sms_highsc	|  	| High School! Kimengumi (Jpn)				| 		| 1986	| Sega		| Sega Master Sy| 					|
 | md_havocu	|  	| High Seas Havoc (USA)					| md_havoc	| 1993	| Data East	| Sega Megadrive| 					|
 | hwrace	|  	| High Way Race						| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
@@ -4795,6 +4808,7 @@ This list contains all games supported by FinalBurn Neo.
 | iqblock	|  	| IQ-Block						| 		| 1993	| IGS		| Miscellaneous	| 					|
 | md_iraqwara	|  	| Iraq War 2003 (Alt)					| md_iraqwar	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_iraqwar	|  	| Iraq War 2003						| 		| 199?	| Tomsoft	| Sega Megadrive| 					|
+| ironfort	|  	| Iron Fortress						| 		| 1998	| Eolith	| Miscellaneous	| 					|
 | ironhors	|  	| Iron Horse						| 		| 1986	| Konami	| GX560		| 					|
 | gg_ironman	|  	| Iron Man X-O Manowar in Heavy Metal (Euro, USA)	| 		| 1996	| Acclaim Entert| Sega Game Gear| 					|
 | gg_ironman1	|  	| Iron Man X-O Manowar in Heavy Metal (USA, Alt)	| gg_ironman	| 1996	| Acclaim Entert| Sega Game Gear| 					|
@@ -5438,6 +5452,9 @@ This list contains all games supported by FinalBurn Neo.
 | pce_ladyswrd	|  	| Lady Sword						| 		| 19??	| Game Express	| PC Engine	| 					|
 | md_lakers	|  	| Lakers versus Celtics and the NBA Playoffs (USA)	| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | sms_lambo	|  	| Lambo (Demo)						| 		| 2015	| Genesis Projec| Sega Master Sy| 					|
+| landbrkb	|  	| Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb| landbrk	| 1999	| Eolith	| Miscellaneous	| 					|
+| landbrk	|  	| Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb| 		| 1999	| Eolith	| Miscellaneous	| 					|
+| landbrka	|  	| Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb| landbrk	| 1999	| Eolith	| Miscellaneous	| 					|
 | landmakrj	|  	| Land Maker (Ver 2.01J 1998/06/01)			| landmakr	| 1998	| Taito Corporat| Taito F3 Syste| 					|
 | landmakrp	|  	| Land Maker (Ver 2.02O 1998/06/02) (Prototype)		| landmakr	| 1998	| Taito Corporat| Taito F3 Syste| 					|
 | landmakr	|  	| Land Maker (Ver 2.02O 1998/06/02)			| 		| 1998	| Taito Corporat| Taito F3 Syste| 					|
@@ -5597,6 +5614,7 @@ This list contains all games supported by FinalBurn Neo.
 | loffire	|  	| Line of Fire / Bakudan Yarou (World, FD1094 317-0136)	| 		| 1989	| Sega		| X-Board	| 					|
 | md_supmagic	|  	| Linghuan Daoshi Super Magician (Chi)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | cv_linklogc	|  	| Linking Logic						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
+| linkypip	|  	| Linky Pipe						| 		| 1998	| Eolith	| Miscellaneous	| 					|
 | md_lionkin3b	|  	| Lion King 3 (Alt 2?)					| md_lionkin3	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_lionkin3a	|  	| Lion King 3 (Alt?)					| md_lionkin3	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_lionkin3	|  	| Lion King 3						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -6098,7 +6116,8 @@ This list contains all games supported by FinalBurn Neo.
 | mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega		| Neo Geo MVS	| 					|
 | mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega		| Neo Geo MVS	| 					|
 | ms4plus	|  	| Metal Slug 4 Plus (bootleg)				| mslug4	| 2002	| bootleg	| Neo Geo MVS	| 					|
-| mslug5b	|  	| Metal Slug 5 (bootleg)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
+| mslug5b	|   NW	| Metal Slug 5 (bootleg, set 1)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
+| mslug5b2	|  	| Metal Slug 5 (bootleg, set 2)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | ms5pcb	|  	| Metal Slug 5 (JAMMA PCB)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | mslug5g	|  	| Metal Slug 5 (Multifunction Hack)			| mslug5	| 2017	| hack		| Neo Geo MVS	| 					|
 | mslug5h	|  	| Metal Slug 5 (NGH-2680)				| mslug5	| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
@@ -6561,10 +6580,10 @@ This list contains all games supported by FinalBurn Neo.
 | mustachei	|  	| Mustache Boy (Italy)					| mustache	| 1987	| Seibu Kaihatsu| Miscellaneous	| 					|
 | mustache	|  	| Mustache Boy (Japan)					| 		| 1987	| Seibu Kaihatsu| Miscellaneous	| 					|
 | alibabab	|  	| Mustafa and 40 Thieves (bootleg)			| alibaba	| 1982	| bootleg	| Pac-man	| 					|
-| mutantf2	|  	| Mutant Fighter (World ver EM-2)			| mutantf	| 1992	| Data East Corp| DECO IC16	| 					|
-| mutantf3	|  	| Mutant Fighter (World ver EM-3)			| mutantf	| 1992	| Data East Corp| DECO IC16	| 					|
-| mutantf4	|  	| Mutant Fighter (World ver EM-4)			| mutantf	| 1992	| Data East Corp| DECO IC16	| 					|
-| mutantf	|  	| Mutant Fighter (World ver EM-5)			| 		| 1992	| Data East Corp| DECO IC16	| 					|
+| mutantf2	|  	| Mutant Fighter (World ver EM-2)			| mutantf	| 1991	| Data East Corp| DECO IC16	| 					|
+| mutantf3	|  	| Mutant Fighter (World ver EM-3)			| mutantf	| 1991	| Data East Corp| DECO IC16	| 					|
+| mutantf4	|  	| Mutant Fighter (World ver EM-4)			| mutantf	| 1991	| Data East Corp| DECO IC16	| 					|
+| mutantf	|  	| Mutant Fighter (World ver EM-5)			| 		| 1991	| Data East Corp| DECO IC16	| 					|
 | md_mlfootb	|  	| Mutant League Football (Euro, USA)			| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_mlfootbj	|  	| Mutant League Football (Jpn)				| md_mlfootb	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_mlhockey	|  	| Mutant League Hockey (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -8043,6 +8062,7 @@ This list contains all games supported by FinalBurn Neo.
 | newxpang	|  	| New Cross Pang					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | newfanta	|  	| New Fantasia (1994 copyright)				| newfant	| 1995	| Comad / New Ja| Miscellaneous	| 					|
 | newfant	|  	| New Fantasia (1995 copyright)				| 		| 1995	| Comad / New Ja| Miscellaneous	| 					|
+| nhidctch	|  	| New Hidden Catch (World) / New Tul Lin Gu Lim Chat Ki | 		| 1999	| Eolith	| Miscellaneous	| 					|
 | md_newhoriz	|  	| New Horizons (USA)					| 		| 1994	| Koei		| Sega Megadrive| 					|
 | sms_novdmvdp	|  	| New Order vs Depeche Mode vs Daft Punk - (Sterbinszky | 		| 2019	| Maxim		| Sega Master Sy| 					|
 | newpuckx	|  	| New Puck-X						| puckman	| 1980	| hack		| Pac-man	| 					|
@@ -8586,6 +8606,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_pegasus	|  	| Pegasus (Jpn)						| 		| 1986	| Victor	| MSX		| 					|
 | md_pele	|  	| Pele! (Euro, USA)					| 		| 1993	| Accolade	| Sega Megadrive| 					|
 | md_pele2	|  	| Pele's World Tournament Soccer (Euro, USA)		| 		| 1994	| Accolade	| Sega Megadrive| 					|
+| penfan	|  	| Penfan Girls - Step1. Mild Mind (set 1)		| 		| 1999	| Eolith	| Miscellaneous	| 					|
+| penfana	|  	| Penfan Girls - Step1. Mild Mind (set 2)		| penfan	| 1999	| Eolith	| Miscellaneous	| 					|
 | pengob	|  	| Pengo (bootleg)					| pengo		| 1982	| Bootleg	| Pac-man	| 					|
 | gg_pengo	|  	| Pengo (Euro, USA)					| 		| 1991	| Sega		| Sega Game Gear| 					|
 | gg_pengoj	|  	| Pengo (Jpn)						| gg_pengo	| 1990	| Sega		| Sega Game Gear| 					|
@@ -9140,6 +9162,7 @@ This list contains all games supported by FinalBurn Neo.
 | pzlbowl	|  	| Puzzle De Bowling (Japan)				| 		| 1999	| Nihon System /| Newer Seta	| 					|
 | puzzldpr	|  	| Puzzle De Pon! R!					| puzzledp	| 1997	| Visco		| Neo Geo MVS	| 					|
 | puzzledp	|  	| Puzzle De Pon!					| 		| 1995	| Visco		| Neo Geo MVS	| 					|
+| puzzlekg	|  	| Puzzle King (Dance & Puzzle)				| 		| 1998	| Eolith	| Miscellaneous	| 					|
 | 4in1boot	|  	| Puzzle King						| 		| 2002	| K1 Soft	| Kaneko Pandora| 					|
 | msx_puzpanic	|  	| Puzzle Panic (Jpn)					| 		| 1986	| System Soft	| MSX		| 					|
 | puzlstar	|  	| Puzzle Star (V100MG)					| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
@@ -9282,6 +9305,7 @@ This list contains all games supported by FinalBurn Neo.
 | rpunch	|  	| Rabbit Punch (US)					| rabiolep	| 1987	| V-System Co. (| Miscellaneous	| 					|
 | rabiolep	|  	| Rabio Lepus (Japan)					| 		| 1987	| V-System Co.	| Miscellaneous	| 					|
 | pce_rabiolep	|  	| Rabio Lepus Special					| 		| 1990	| Video System	| PC Engine	| 					|
+| raccoon	|  	| Raccoon World						| 		| 1998	| Eolith	| Miscellaneous	| 					|
 | md_racedriv	|  	| Race Drivin' (USA)					| 		| 1993	| Tengen	| Sega Megadrive| 					|
 | racingbj	|  	| Racing Beat (Japan)					| racingb	| 1991	| Taito Corporat| Taito Z	| 					|
 | racingb	|  	| Racing Beat (World)					| 		| 1991	| Taito Corporat| Taito Z	| 					|
@@ -10822,6 +10846,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_starquak	|  	| Starquake (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
 | msx_starship	|  	| Starship Simulator (Jpn)				| 		| 1984	| ASCII		| MSX		| 					|
 | msx_starshipa	|  	| Starship Simulator (Jpn, Alt)				| msx_starship	| 1984	| ASCII		| MSX		| 					|
+| stealsee	|  	| Steal See						| 		| 2000	| Moov Generatio| Miscellaneous	| 					|
 | cv_steam	|  	| Steamroller (Prototype)				| 		| 1984	| Activision	| ColecoVision	| 					|
 | md_steelemp	|  	| Steel Empire (USA)					| md_empsteel	| 1992	| Flying Edge	| Sega Megadrive| 					|
 | stlforce	|  	| Steel Force						| 		| 1994	| Electronic Dev| Miscellaneous	| 					|
@@ -10943,12 +10968,12 @@ This list contains all games supported by FinalBurn Neo.
 | sf2thndr	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceeab	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab3	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab4	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab5	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
-| sf2ceuab	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuabl	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab2	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab3	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|

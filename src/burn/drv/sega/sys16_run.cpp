@@ -385,7 +385,9 @@ static INT32 System16DoReset()
 	System16ColScroll = 0;
 	System16RowScroll = 0;
 	System16MCUData = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 

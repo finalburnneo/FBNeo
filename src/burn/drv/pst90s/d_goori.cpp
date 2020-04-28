@@ -51,18 +51,6 @@ static struct BurnInputInfo GooriInputList[] = {
 
 STDINPUTINFO(Goori)
 
-static void __fastcall goori_write_word(UINT32 address, UINT16 data)
-{
-	switch (address)
-	{
-		case 0x800000:
-			// ?
-		return;
-	}
-
-	bprintf (0, _T("WW: %5.5x, %4.4x\n"), address,data);
-}
-
 static void __fastcall goori_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
@@ -82,17 +70,10 @@ static void __fastcall goori_write_byte(UINT32 address, UINT8 data)
 
 		case 0x30000f:
 			EEPROMWriteBit((data & 0x0004) >> 2);
-			EEPROMSetCSLine((data & 0x0001) ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);
+			EEPROMSetCSLine((~data & 0x0001) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 			EEPROMSetClockLine((data & 0x0002) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 		return;
 	}
-}
-
-static UINT16 __fastcall goori_read_word(UINT32 address)
-{
-	bprintf (0, _T("RW: %5.5x\n"), address);
-
-	return 0;
 }
 
 static UINT8 __fastcall goori_read_byte(UINT32 address)
@@ -112,7 +93,7 @@ static UINT8 __fastcall goori_read_byte(UINT32 address)
 			return DrvInputs[1];
 
 		case 0x500004:
-			return DrvInputs[2];
+			return (DrvInputs[2] & ~0x80) | ((EEPROMRead()) ? 0x80 : 0x00);
 	}
 
 	return 0;
@@ -214,9 +195,7 @@ static INT32 DrvInit()
 	SekMapMemory(DrvBgRAM,			0x400000, 0x400fff, MAP_RAM);
 	SekMapMemory(BurnPalRAM,		0x600000, 0x603fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x700000, 0x701fff, MAP_RAM);
-	SekSetWriteWordHandler(0,		goori_write_word);
 	SekSetWriteByteHandler(0,		goori_write_byte);
-	SekSetReadWordHandler(0,		goori_read_word);
 	SekSetReadByteHandler(0,		goori_read_byte);
 	SekClose();
 
@@ -367,6 +346,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
+		EEPROMScan(nAction, pnMin);
 	}
 
 	return 0;

@@ -4184,6 +4184,15 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+	<ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+	<ClCompile Include="..\..\src\burn\drv\pst90s\d_f-32.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+	<ClCompile Include="..\..\src\burn\drv\pst90s\d_goori.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

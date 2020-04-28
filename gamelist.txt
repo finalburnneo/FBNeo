@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13833 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13836 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4198,6 +4198,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gonzzalezz|  	| Gonzzalezz 						| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_goody	|  	| Goody (Spa)						| 		| 1987	| Opera Soft	| MSX		| 					|
 | md_goofy	|  	| Goofy's Hysterical History Tour (USA)			| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
+| goori		|  	| Goori Goori						| 		| 1999	| Unico		| Miscellaneous	| 					|
 | cv_gorf	|  	| Gorf							| 		| 1983	| Coleco	| ColecoVision	| 					|
 | msx_ggeftsdp	|  	| Gorgeous Gemma in Escape from the Space Disposal Plane| 		| 2013	| Impulse9	| MSX		| 					|
 | gorkans	|  	| Gorkans						| mrtnt		| 1983	| Techstar	| Pac-man	| 					|
@@ -5244,6 +5245,7 @@ This list contains all games supported by FinalBurn Neo.
 | klax		|  	| Klax (version 6)					| 		| 1989	| Atari Games	| Miscellaneous	| 					|
 | pce_klax	|  	| Klax							| 		| 1990	| Tengen	| PC Engine	| 					|
 | tg_klax	|  	| Klax							| 		| 1990	| Tengen	| TurboGrafx 16	| 					|
+| klondkp	|  	| KlonDike+						| 		| 1999	| Eolith	| Miscellaneous	| 					|
 | knightb	|  	| Knight Boy						| kikikai	| 1986	| bootleg	| Miscellaneous	| 					|
 | spec_kniglore	|  	| Knight Lore (48K)					| 		| 1984	| Ultimate Play | ZX Spectrum	| 					|
 | msx_knightlr	|  	| Knight Lore (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
@@ -6448,6 +6450,7 @@ This list contains all games supported by FinalBurn Neo.
 | mk2p		|  	| Mortal Kombat II Plus (Beta 2, Hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
 | mk2ute	|  	| Mortal Kombat II Ultimate Tournament Edition (hack, V5| mk2		| 2014	| hack		| Midway T-Unit	| 					|
 | md_mkr	|  	| Mortal Kombat Revelations (Hack, Version 1.0)		| md_umk3t	| 2012	| 2012 SMOKE	| Sega Megadrive| 					|
+| mosaicf2	|  	| Mosaic (F2 System)					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | mosaica	|  	| Mosaic (Fuuki)					| mosaic	| 1990	| Space (Fuuki l| Miscellaneous	| 					|
 | mosaic	|  	| Mosaic						| 		| 1990	| Space		| Miscellaneous	| 					|
 | pce_motorod2a	|  	| Moto Roader II (Alt)					| pce_motorod2	| 1991	| Masiya	| PC Engine	| 					|

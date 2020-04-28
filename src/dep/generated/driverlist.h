@@ -4282,6 +4282,7 @@ DRV		BurnDrvIronfortc;
 DRV		BurnDrvMSX_gonzzalezz;
 DRV		BurnDrvMSX_goody;
 DRV		BurnDrvmd_goofy;
+DRV		BurnDrvGoori;
 DRV		BurnDrvcv_gorf;
 DRV		BurnDrvMSX_ggeftsdp;
 DRV		BurnDrvgorkans;
@@ -5358,6 +5359,7 @@ DRV		BurnDrvKlax5bl;			// no comment [NOT WORKING]
 DRV		BurnDrvKlax;
 DRV		BurnDrvpce_klax;
 DRV		BurnDrvtg_klax;
+DRV		BurnDrvKlondkp;
 DRV		BurnDrvKnightb;
 DRV		BurnSpeckniglore;
 DRV		BurnDrvMSX_knightlr;
@@ -6576,6 +6578,7 @@ DRV		BurnDrvMk2chal;
 DRV		BurnDrvmk2p;
 DRV		BurnDrvMk2ute;
 DRV		BurnDrvmd_mkr;
+DRV		BurnDrvMosaicf2;
 DRV		BurnDrvMosaica;
 DRV		BurnDrvMosaic;
 DRV		BurnDrvpce_motorod2a;
@@ -18390,6 +18393,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gonzzalezz,		// Gonzzalezz 
 	&BurnDrvMSX_goody,			// Goody (Spa)
 	&BurnDrvmd_goofy,			// Goofy's Hysterical History Tour (USA)
+	&BurnDrvGoori,				// Goori Goori
 	&BurnDrvcv_gorf,			// Gorf
 	&BurnDrvMSX_ggeftsdp,		// Gorgeous Gemma in Escape from the Space Disposal Planet
 	&BurnDrvgorkans,			// Gorkans
@@ -19466,6 +19470,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKlax,				// Klax (version 6)
 	&BurnDrvpce_klax,			// Klax
 	&BurnDrvtg_klax,			// Klax
+	&BurnDrvKlondkp,			// KlonDike+
 	&BurnDrvKnightb,			// Knight Boy
 	&BurnSpeckniglore,			// Knight Lore (48K)
 	&BurnDrvMSX_knightlr,		// Knight Lore (Jpn)
@@ -20684,6 +20689,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmk2p,				// Mortal Kombat II Plus (Beta 2, Hack)
 	&BurnDrvMk2ute,				// Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.053)
 	&BurnDrvmd_mkr,				// Mortal Kombat Revelations (Hack, Version 1.0)
+	&BurnDrvMosaicf2,			// Mosaic (F2 System)
 	&BurnDrvMosaica,			// Mosaic (Fuuki)
 	&BurnDrvMosaic,				// Mosaic
 	&BurnDrvpce_motorod2a,		// Moto Roader II (Alt)

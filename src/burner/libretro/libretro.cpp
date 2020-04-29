@@ -368,10 +368,6 @@ static bool apply_dipswitch_from_variables()
 	{
 		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
 
-		// Games which needs a specific bios don't handle alternative bioses very well
-		if (is_neogeo_game && !allow_neogeo_mode && dip_option->friendly_name.compare("BIOS") == 0)
-			continue;
-
 		var.key = dip_option->option_name.c_str();
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false)
 			continue;

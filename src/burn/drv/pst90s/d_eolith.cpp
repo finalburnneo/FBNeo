@@ -431,11 +431,11 @@ STDDIPINFO(Ironfortc)
 
 static struct BurnDIPInfo HidnctchDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x02, NULL						},
+	{0x13, 0xff, 0xff, 0x03, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x13, 0x01, 0x01, 0x00, "Off"						},
-	{0x13, 0x01, 0x01, 0x01, "On"						},
+	{0x13, 0x01, 0x01, 0x01, "Off"						},
+	{0x13, 0x01, 0x01, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Counters"			},
 	{0x13, 0x01, 0x02, 0x02, "Off"						},
@@ -1102,9 +1102,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static void patch_mcu_protection(UINT32 address)
 {
-	UINT32 *rombase = (UINT32*)DrvMainROM;
-
-	rombase[address/4] = (rombase[address/4] & 0xffff) | 0x03000000; // Change BR to NOP
+	UINT32 *rombase = (UINT32*)DrvBootROM;
+	rombase[address/4] = (rombase[address/4] & 0xffff0000) | 0x0300; // Change BR to NOP
 }
 
 

@@ -16134,13 +16134,52 @@ static struct BurnRomInfo mslug5bRomDesc[] = {
 STDROMPICKEXT(mslug5b, mslug5b, neogeo)
 STD_ROM_FN(mslug5b)
 
+static void mslug5b_cx_decode()
+{
+	UINT8 *tmp = NeoSpriteROM[nNeoActiveSlot] + 0x2400000; // use empty space as buffer
+
+	// swap chunks
+	for (INT32 i = 0; i < 0x4000000; i += 0x200000) {
+		memcpy (tmp + 0x000000, NeoSpriteROM[nNeoActiveSlot] + i + 0x100000, 0x080000);
+		memcpy (tmp + 0x080000, NeoSpriteROM[nNeoActiveSlot] + i + 0x080000, 0x080000);
+		memcpy (NeoSpriteROM[nNeoActiveSlot] + i + 0x80000, tmp, 0x100000);
+	}
+}
+
+static void mslug5b_vx_decrypt()
+{
+	for (INT32 i = 0; i < 0x1000000; i += 2)
+		YM2610ADPCMAROM[nNeoActiveSlot][i + 1] = BITSWAP08(YM2610ADPCMAROM[nNeoActiveSlot][i + 1], 3, 2, 4, 1, 5, 0, 6, 7);
+}
+
+static void mslug5bCallback()
+{
+	svcsplus_sx_decode();
+	mslug5b_cx_decode();
+}
+
+static INT32 mslug5bInit()
+{
+	INT32 nRet;
+
+	NeoCallbackActive->pInitialise = mslug5bCallback;
+
+ 	nRet = NeoInit();
+
+	if (nRet == 0) {
+		mslug5b_vx_decrypt();
+	}
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvmslug5b = {
 	"mslug5b", "mslug5", "neogeo", NULL, "2003",
 	"Metal Slug 5 (bootleg, set 1)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5bRomInfo, mslug5bRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5bInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

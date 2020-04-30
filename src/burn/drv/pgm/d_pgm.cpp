@@ -1864,11 +1864,12 @@ static struct BurnRomInfo kovshRomDesc[] = {
 	{ "a0600.u2",	   	0x800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a0601.u4",	   	0x800000, 0xff7a4373, 3 | BRF_GRA },			//  3
 	{ "a0602.u6",	   	0x800000, 0xe7a32959, 3 | BRF_GRA },			//  4
-	// is the size is correct for PGM A0604 V200 or last 4mb 0-filled?
-	{ "a0604_v200.u9",	0x400000, 0x26b59fd3, 3 | BRF_GRA },			//  5 
+	// PGM A0604 V200 same data and size as PGM A0540 in KOVSHP ?
+	{ "a0604_v200.u9",	0x800000, 0x4fd3413e, 3 | BRF_GRA },			//  5 
 
 	{ "b0600.u5",	   	0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b0602_v200.u7",	0x100000, 0x9df77934, 4 | BRF_GRA },			//  7
+	// PGM B0602 V200 same data and size as PGM B0540 in KOVSHP ?
+	{ "b0602_v200.u7",	0x800000, 0x60999757, 4 | BRF_GRA },			//  7
 
 	{ "m0600.u3",	   	0x400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
 	

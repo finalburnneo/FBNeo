@@ -603,6 +603,7 @@ static void __fastcall rjammer_sub_write_port(UINT16 port, UINT8 data)
 
 static void __fastcall rjammer_sound_write_port(UINT16 port, UINT8 data)
 {
+	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	switch (port & 0xff)
 	{
 		case 0x10:
@@ -610,12 +611,12 @@ static void __fastcall rjammer_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x18:
-			MSM5205PlaymodeWrite(0, (data & 1) ? MSM5205_S48_4B : MSM5205_S96_4B);
+			MSM5205PlaymodeWrite(0, (data & 1) ? MSM5205_S48_4B : MSM5205_S64_4B);
 		return;
 
 		case 0x80:
 			ls377 = data;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ls74 = 0;
 		return;
 
 		case 0x90:
@@ -647,17 +648,16 @@ static UINT8 __fastcall rjammer_sound_read_port(UINT16 port)
 
 static void rjammer_adpcm_vck()
 {
-	ls74 = (ls74 + 1) & 1;
-
-	if (ls74 == 1)
+	if (ls74 == 0)
 	{
 		MSM5205DataWrite(0, ls377 & 0x0f);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 	else
 	{
 		MSM5205DataWrite(0, (ls377 >> 4) & 0x0f);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
+	ls74 ^= 1;
 }
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
@@ -1080,16 +1080,16 @@ static INT32 RjammerInit()
 	NSC8105SetWriteHandler(tubep_mcu_write);
 	NSC8105Close();
 
-	AY8910Init(0, 1248000, 0);
-	AY8910Init(1, 1248000, 0);
-	AY8910Init(2, 1248000, 0);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910Init(0, 1248000, 1);
+	AY8910Init(1, 1248000, 1);
+	AY8910Init(2, 1248000, 1);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 2496000);
 
-	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, rjammer_adpcm_vck, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, rjammer_adpcm_vck, MSM5205_S48_4B, 0);
+	MSM5205SetRoute(0, 1.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1447,7 +1447,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(2);
 		CPU_RUN(2, Zet);
-		if (i == 63 || i == 191) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if ((i == 63 || i == 191) && !rjammer) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		if (rjammer) MSM5205UpdateScanline(i);
 		ZetClose();
 
@@ -1469,12 +1469,13 @@ static INT32 DrvFrame()
 	NSC8105Close();
 
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		if (rjammer) {
 			ZetOpen(2);
 			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 			ZetClose();
+			BurnSoundDCFilter(); // deal with rjammer's ugly msm5205 waveform
 		}
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

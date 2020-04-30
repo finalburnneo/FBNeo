@@ -20353,7 +20353,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvms4plus,			// Metal Slug 4 Plus (bootleg)
-	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1) [no comment, NOT WORKING]
+	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack)

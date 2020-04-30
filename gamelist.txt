@@ -6118,7 +6118,7 @@ This list contains all games supported by FinalBurn Neo.
 | mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega		| Neo Geo MVS	| 					|
 | mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega		| Neo Geo MVS	| 					|
 | ms4plus	|  	| Metal Slug 4 Plus (bootleg)				| mslug4	| 2002	| bootleg	| Neo Geo MVS	| 					|
-| mslug5b	|   NW	| Metal Slug 5 (bootleg, set 1)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
+| mslug5b	|  	| Metal Slug 5 (bootleg, set 1)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b2	|  	| Metal Slug 5 (bootleg, set 2)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | ms5pcb	|  	| Metal Slug 5 (JAMMA PCB)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | mslug5g	|  	| Metal Slug 5 (Multifunction Hack)			| mslug5	| 2017	| hack		| Neo Geo MVS	| 					|

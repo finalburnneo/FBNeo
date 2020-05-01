@@ -1008,18 +1008,8 @@ unsigned char m6803_internal_registers_r(unsigned short offset)
 		case 0x0a:
 			return m6800.counter.b.l;
 		case 0x0b:
-			if(!(m6800.pending_tcsr&TCSR_OCF))
-			{
-				m6800.tcsr &= ~TCSR_OCF;
-				MODIFIED_tcsr;
-			}
 			return m6800.output_compare.b.h;
 		case 0x0c:
-			if(!(m6800.pending_tcsr&TCSR_OCF))
-			{
-				m6800.tcsr &= ~TCSR_OCF;
-				MODIFIED_tcsr;
-			}
 			return m6800.output_compare.b.l;
 		case 0x0d:
 			if(!(m6800.pending_tcsr&TCSR_ICF))
@@ -1161,6 +1151,12 @@ void m6803_internal_registers_w(unsigned short offset, unsigned char data)
 			MODIFIED_counters;
 			break;
 		case 0x0b:
+			// M6801U4.pdf pg.25 bottom-left "OCFI is cleared by reading the TCSR or the TSR (with OCFI set) and then writing to output compare register 1 ($OB or $OC); or during reset..." -dink [April 30, 2020]
+			if(!(m6800.pending_tcsr&TCSR_OCF))
+			{
+				m6800.tcsr &= ~TCSR_OCF;
+				MODIFIED_tcsr;
+			}
 			if( m6800.output_compare.b.h != data)
 			{
 				m6800.output_compare.b.h = data;
@@ -1168,6 +1164,12 @@ void m6803_internal_registers_w(unsigned short offset, unsigned char data)
 			}
 			break;
 		case 0x0c:
+			// M6801U4.pdf pg.25 bottom-left "OCFI is cleared by reading the TCSR or the TSR (with OCFI set) and then writing to output compare register 1 ($OB or $OC); or during reset..." -dink [April 30, 2020]
+			if(!(m6800.pending_tcsr&TCSR_OCF))
+			{
+				m6800.tcsr &= ~TCSR_OCF;
+				MODIFIED_tcsr;
+			}
 			if( m6800.output_compare.b.l != data)
 			{
 				m6800.output_compare.b.l = data;

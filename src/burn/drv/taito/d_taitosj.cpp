@@ -370,11 +370,11 @@ static struct BurnDIPInfo SpacecrDIPList[]=
 	{0x10, 0x01, 0x20, 0x00, "No"					},
 	{0x10, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
+	{0   , 0xfe, 0   ,    2, "Infinite Lives"		},
 	{0x10, 0x01, 0x40, 0x40, "Off"					},
 	{0x10, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x10, 0x01, 0x80, 0x80, "A and B"				},
 	{0x10, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -478,11 +478,11 @@ static struct BurnDIPInfo JunglekDIPList[]=
 	{0x12, 0x01, 0x20, 0x00, "No"					},
 	{0x12, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Infinite Lives"		},
-	{0x12, 0x01, 0x40, 0x40, "No"					},
-	{0x12, 0x01, 0x40, 0x00, "Yes"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x12, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x12, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x12, 0x01, 0x80, 0x80, "A and B"				},
 	{0x12, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -540,11 +540,11 @@ static struct BurnDIPInfo PiratpetDIPList[]=
 	{0x12, 0x01, 0x20, 0x00, "No"					},
 	{0x12, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Free Game (Cheat)"	},
+	{0   , 0xfe, 0   ,    2, "Infinite Lives"		},
 	{0x12, 0x01, 0x40, 0x40, "No"					},
 	{0x12, 0x01, 0x40, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x12, 0x01, 0x80, 0x80, "A and B"				},
 	{0x12, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -563,13 +563,13 @@ static struct BurnDIPInfo AlpineDIPList[]=
 	{0x0c, 0x01, 0x03, 0x02, "1000-2500"			},
 	{0x0c, 0x01, 0x03, 0x03, "2000-4000"			},
 
-	{0   , 0xfe, 0   ,    0, "Time"					},
+	{0   , 0xfe, 0   ,    0, "Game Time"			},
 	{0x0c, 0x01, 0x18, 0x00, "1:00"					},
 	{0x0c, 0x01, 0x18, 0x08, "1:30"					},
 	{0x0c, 0x01, 0x18, 0x10, "2:00"					},
 	{0x0c, 0x01, 0x18, 0x18, "2:30"					},
 
-	{0   , 0xfe, 0   ,    4, "Race End Time Bonus"	},
+	{0   , 0xfe, 0   ,    4, "End of Race Time Bonus"	},
 	{0x0c, 0x01, 0x20, 0x20, "0:10"					},
 	{0x0c, 0x01, 0x20, 0x00, "0:20"					},
 
@@ -584,30 +584,30 @@ static struct BurnDIPInfo AlpineDIPList[]=
 	COMMON_COIN_DIPS(0x0d)
 
 	{0   , 0xfe, 0   ,    16, "1st Extended Time"	},
-	{0x0e, 0x01, 0x03, 0x00, "10k"					},
-	{0x0e, 0x01, 0x03, 0x01, "15k"					},
-	{0x0e, 0x01, 0x03, 0x02, "20k"					},
-	{0x0e, 0x01, 0x03, 0x03, "25k"					},
+	{0x0e, 0x01, 0x03, 0x00, "10000"				},
+	{0x0e, 0x01, 0x03, 0x01, "15000"				},
+	{0x0e, 0x01, 0x03, 0x02, "20000"				},
+	{0x0e, 0x01, 0x03, 0x03, "25000"				},
 
 	{0   , 0xfe, 0   ,    4, "Extended Time Every"	},
-	{0x0e, 0x01, 0x1c, 0x00, "5k"					},
-	{0x0e, 0x01, 0x1c, 0x04, "6k"					},
-	{0x0e, 0x01, 0x1c, 0x08, "7k"					},
-	{0x0e, 0x01, 0x1c, 0x0c, "8k"					},
-	{0x0e, 0x01, 0x1c, 0x10, "9k"					},
-	{0x0e, 0x01, 0x1c, 0x14, "10k"					},
-	{0x0e, 0x01, 0x1c, 0x18, "11k"					},
-	{0x0e, 0x01, 0x1c, 0x1c, "12k"					},
+	{0x0e, 0x01, 0x1c, 0x00, "5000"					},
+	{0x0e, 0x01, 0x1c, 0x04, "6000"					},
+	{0x0e, 0x01, 0x1c, 0x08, "7000"					},
+	{0x0e, 0x01, 0x1c, 0x0c, "8000"					},
+	{0x0e, 0x01, 0x1c, 0x10, "9000"					},
+	{0x0e, 0x01, 0x1c, 0x14, "10000"				},
+	{0x0e, 0x01, 0x1c, 0x18, "11000"				},
+	{0x0e, 0x01, 0x1c, 0x1c, "12000"				},
 
 	{0   , 0xfe, 0   ,    8, "Year Display"			},
 	{0x0e, 0x01, 0x20, 0x00, "No"					},
 	{0x0e, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x0e, 0x01, 0x40, 0x40, "Off"					},
-	{0x0e, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x0e, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x0e, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x0e, 0x01, 0x80, 0x80, "A and B"				},
 	{0x0e, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -626,7 +626,7 @@ static struct BurnDIPInfo AlpineaDIPList[]=
 	{0x0c, 0x01, 0x03, 0x02, "1000-2500"			},
 	{0x0c, 0x01, 0x03, 0x03, "2000-4000"			},
 
-	{0   , 0xfe, 0   ,    0, "Time"					},
+	{0   , 0xfe, 0   ,    0, "Game Time"			},
 	{0x0c, 0x01, 0x18, 0x00, "1:00"					},
 	{0x0c, 0x01, 0x18, 0x08, "1:30"					},
 	{0x0c, 0x01, 0x18, 0x10, "2:00"					},
@@ -647,30 +647,30 @@ static struct BurnDIPInfo AlpineaDIPList[]=
 	COMMON_COIN_DIPS(0x0d)
 
 	{0   , 0xfe, 0   ,    16, "1st Extended Time"	},
-	{0x0e, 0x01, 0x03, 0x00, "10k"					},
-	{0x0e, 0x01, 0x03, 0x01, "15k"					},
-	{0x0e, 0x01, 0x03, 0x02, "20k"					},
-	{0x0e, 0x01, 0x03, 0x03, "25k"					},
+	{0x0e, 0x01, 0x03, 0x00, "10000"				},
+	{0x0e, 0x01, 0x03, 0x01, "15000"				},
+	{0x0e, 0x01, 0x03, 0x02, "20000"				},
+	{0x0e, 0x01, 0x03, 0x03, "25000"				},
 
 	{0   , 0xfe, 0   ,    4, "Extended Time Every"	},
-	{0x0e, 0x01, 0x1c, 0x00, "5k"					},
-	{0x0e, 0x01, 0x1c, 0x04, "6k"					},
-	{0x0e, 0x01, 0x1c, 0x08, "7k"					},
-	{0x0e, 0x01, 0x1c, 0x0c, "8k"					},
-	{0x0e, 0x01, 0x1c, 0x10, "9k"					},
-	{0x0e, 0x01, 0x1c, 0x14, "10k"					},
-	{0x0e, 0x01, 0x1c, 0x18, "11k"					},
-	{0x0e, 0x01, 0x1c, 0x1c, "12k"					},
+	{0x0e, 0x01, 0x1c, 0x00, "5000"					},
+	{0x0e, 0x01, 0x1c, 0x04, "6000"					},
+	{0x0e, 0x01, 0x1c, 0x08, "7000"					},
+	{0x0e, 0x01, 0x1c, 0x0c, "8000"					},
+	{0x0e, 0x01, 0x1c, 0x10, "9000"					},
+	{0x0e, 0x01, 0x1c, 0x14, "10000"				},
+	{0x0e, 0x01, 0x1c, 0x18, "11000"				},
+	{0x0e, 0x01, 0x1c, 0x1c, "12000"				},
 
 	{0   , 0xfe, 0   ,    8, "Year Display"			},
 	{0x0e, 0x01, 0x20, 0x00, "No"					},
 	{0x0e, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x0e, 0x01, 0x40, 0x40, "Off"					},
-	{0x0e, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x0e, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x0e, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x0e, 0x01, 0x80, 0x80, "A and B"				},
 	{0x0e, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -711,11 +711,11 @@ static struct BurnDIPInfo TimetunlDIPList[]=
 	{0x0e, 0x01, 0x20, 0x00, "No"					},
 	{0x0e, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x0e, 0x01, 0x40, 0x40, "Off"					},
-	{0x0e, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x0e, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x0e, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x0e, 0x01, 0x80, 0x80, "A and B"				},
 	{0x0e, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -768,11 +768,11 @@ static struct BurnDIPInfo ElevatorDIPList[]=
 	{0x14, 0x01, 0x20, 0x00, "No"					},
 	{0x14, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"					},
-	{0x14, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x14, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x14, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x14, 0x01, 0x80, 0x80, "A and B"				},
 	{0x14, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -789,7 +789,7 @@ static struct BurnDIPInfo WaterskiDIPList[]=
 	{0x0e, 0x01, 0x04, 0x04, "Off"					},
 	{0x0e, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Time"					},
+	{0   , 0xfe, 0   ,    4, "Game Time"			},
 	{0x0e, 0x01, 0x18, 0x00, "2:00"					},
 	{0x0e, 0x01, 0x18, 0x08, "2:10"					},
 	{0x0e, 0x01, 0x18, 0x10, "2:20"					},
@@ -813,11 +813,11 @@ static struct BurnDIPInfo WaterskiDIPList[]=
 	{0x10, 0x01, 0x20, 0x00, "No"					},
 	{0x10, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x10, 0x01, 0x40, 0x40, "Off"					},
-	{0x10, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x10, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x10, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x10, 0x01, 0x80, 0x80, "A and B"				},
 	{0x10, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -856,11 +856,11 @@ static struct BurnDIPInfo BioatackDIPList[]=
 	{0x12, 0x01, 0x20, 0x00, "No"					},
 	{0x12, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x12, 0x01, 0x40, 0x40, "Off"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x12, 0x01, 0x40, 0x40, "No Hit"				},
 	{0x12, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x12, 0x01, 0x80, 0x80, "A and B"				},
 	{0x12, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -911,11 +911,11 @@ static struct BurnDIPInfo FrontlinDIPList[]=
 	{0x1d, 0x01, 0x20, 0x00, "No"					},
 	{0x1d, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x1d, 0x01, 0x40, 0x40, "Off"					},
-	{0x1d, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x1d, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x1d, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x1d, 0x01, 0x80, 0x80, "A and B"				},
 	{0x1d, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -958,11 +958,11 @@ static struct BurnDIPInfo WwesternDIPList[]=
 
 	COMMON_COIN_DIPS(0x1c)
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x1d, 0x01, 0x40, 0x40, "Off"					},
-	{0x1d, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x1d, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x1d, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x1d, 0x01, 0x80, 0x80, "A and B"				},
 	{0x1d, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -1013,11 +1013,11 @@ static struct BurnDIPInfo TinstarDIPList[]=
 	{0x1d, 0x01, 0x20, 0x00, "No"					},
 	{0x1d, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x1d, 0x01, 0x40, 0x40, "Off"					},
-	{0x1d, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x1d, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x1d, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x1d, 0x01, 0x80, 0x80, "A and B"				},
 	{0x1d, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -1054,11 +1054,11 @@ static struct BurnDIPInfo SfposeidDIPList[]=
 	{0x14, 0x01, 0x20, 0x00, "No"					},
 	{0x14, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"					},
-	{0x14, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x14, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x14, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x14, 0x01, 0x80, 0x80, "A and B"				},
 	{0x14, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -1097,11 +1097,11 @@ static struct BurnDIPInfo HwraceDIPList[]=
 	{0x14, 0x01, 0x20, 0x00, "No"					},
 	{0x14, 0x01, 0x20, 0x20, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"					},
-	{0x14, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Hit Detection"		},
+	{0x14, 0x01, 0x40, 0x40, "Normal Game"			},
+	{0x14, 0x01, 0x40, 0x00, "No Hit"				},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"				},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
 	{0x14, 0x01, 0x80, 0x80, "A and B"				},
 	{0x14, 0x01, 0x80, 0x00, "A only"				},
 };
@@ -3220,35 +3220,28 @@ struct BurnDriver BurnDrvFrontlina = {
 };
 
 
-// Elevator Action (5 pcb version, 1.1)
+// Elevator Action (BA3, 4 pcb version, 1.1)
+// later 4 board set, with rom data on 2764s, split between gfx and cpu data.
 
 static struct BurnRomInfo elevatorRomDesc[] = {
-	{ "ea_12.2732.ic69",	0x1000, 0x24e277ef, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "ea_13.2732.ic68",	0x1000, 0x13702e39, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ea_14.2732.ic67",	0x1000, 0x46f52646, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ea_15.2732.ic66",	0x1000, 0xe22fe57e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ea_16.2732.ic65",	0x1000, 0xc10691d7, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ea_17.2732.ic64",	0x1000, 0x8913b293, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "ea_18.2732.ic55",	0x1000, 0x1cabda08, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "ea_19.2732.ic54",	0x1000, 0xf4647b4f, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "ba3__01.2764.ic1",		0x2000, 0xda775a24, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "ba3__02.2764.ic2",		0x2000, 0xfbfd8b3a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ba3__03-1.2764.ic3",		0x2000, 0xa2e69833, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ba3__04-1.2764.ic6",		0x2000, 0x2b78c462, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ea_9.2732.ic70",		0x1000, 0x6d5f57cb, 2 | BRF_PRG | BRF_ESS }, //  8 Sound Z80 Code
-	{ "ea_10.2732.ic71",	0x1000, 0xf0a769a1, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "ba3__09.2732.ic70",		0x1000, 0x6d5f57cb, 2 | BRF_PRG | BRF_ESS }, //  4 Sound Z80 Code
+	{ "ba3__10.2732.ic71",		0x1000, 0xf0a769a1, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ea_20.2732.ic1",		0x1000, 0xbbbb3fba, 3 | BRF_GRA },           // 10 Graphics data
-	{ "ea_21.2732.ic2",		0x1000, 0x639cc2fd, 3 | BRF_GRA },           // 11
-	{ "ea_22.2732.ic3",		0x1000, 0x61317eea, 3 | BRF_GRA },           // 12
-	{ "ea_23.2732.ic4",		0x1000, 0x55446482, 3 | BRF_GRA },           // 13
-	{ "ea_24.2732.ic5",		0x1000, 0x77895c0f, 3 | BRF_GRA },           // 14
-	{ "ea_25.2732.ic6",		0x1000, 0x9a1b6901, 3 | BRF_GRA },           // 15
-	{ "ea_26.2732.ic7",		0x1000, 0x839112ec, 3 | BRF_GRA },           // 16
-	{ "ea_27.2732.ic8",		0x1000, 0xdb7ff692, 3 | BRF_GRA },           // 17
+	{ "ba3__05.2764.ic4",		0x2000, 0x6c4ee58f, 3 | BRF_GRA },           //  6 Graphics data
+	{ "ba3__06.2764.ic5",		0x2000, 0x41ab0afc, 3 | BRF_GRA },           //  7
+	{ "ba3__07.2764.ic9",		0x2000, 0xefe43731, 3 | BRF_GRA },           //  8
+	{ "ba3__08.2764.ic10",		0x2000, 0x3ca20696, 3 | BRF_GRA },           //  9
 
-	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 18 Layer Priority
+	{ "eb16.ic22",				0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 10 Layer Priority
 
-	{ "ba3__11.mc68705p3.ic4", 0x0800, 0x9ce75afc, 5 | BRF_PRG | BRF_ESS }, // 19 M68705 MCU Code
+	{ "ba3__11.mc68705p3.ic24",	0x0800, 0x9ce75afc, 5 | BRF_PRG | BRF_ESS }, // 11 M68705 MCU Code
 
-	{ "ww15.pal16l8.ic24.jed.bin",	0x0117, 0xc3ec20d6, 0 | BRF_OPT },   // 20 pal
+	{ "ww15.pal16l8.ic24.jed.bin",	0x0117, 0xc3ec20d6, 0 | BRF_OPT },   // 12 pal
 };
 
 STD_ROM_PICK(elevator)
@@ -3261,10 +3254,56 @@ static INT32 elevatorInit()
 
 struct BurnDriver BurnDrvElevator = {
 	"elevator", NULL, NULL, NULL, "1983",
-	"Elevator Action (5 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Elevator Action (BA3, 4 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elevatorRomInfo, elevatorRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
+	elevatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	256, 224, 4, 3
+};
+
+
+// Elevator Action (EA, 5 pcb version, 1.1)
+// 5 board set, using 2732s on both mainboard and square rom board, and 68705 on daughterboard at bottom of stack, upside down
+
+static struct BurnRomInfo elevatoraRomDesc[] = {
+	{ "ea_12.2732.ic69",	   0x1000, 0x24e277ef, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "ea_13.2732.ic68",	   0x1000, 0x13702e39, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ea_14.2732.ic67",	   0x1000, 0x46f52646, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ea_15.2732.ic66",	   0x1000, 0xe22fe57e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ea_16.2732.ic65",	   0x1000, 0xc10691d7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ea_17.2732.ic64",	   0x1000, 0x8913b293, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ea_18.2732.ic55",	   0x1000, 0x1cabda08, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "ea_19.2732.ic54",	   0x1000, 0xf4647b4f, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ea_9.2732.ic70",		   0x1000, 0x6d5f57cb, 2 | BRF_PRG | BRF_ESS }, //  8 Sound Z80 Code
+	{ "ea_10.2732.ic71",	   0x1000, 0xf0a769a1, 2 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "ea_20.2732.ic1",		   0x1000, 0xbbbb3fba, 3 | BRF_GRA },           // 10 Graphics data
+	{ "ea_21.2732.ic2",		   0x1000, 0x639cc2fd, 3 | BRF_GRA },           // 11
+	{ "ea_22.2732.ic3",		   0x1000, 0x61317eea, 3 | BRF_GRA },           // 12
+	{ "ea_23.2732.ic4",		   0x1000, 0x55446482, 3 | BRF_GRA },           // 13
+	{ "ea_24.2732.ic5",		   0x1000, 0x77895c0f, 3 | BRF_GRA },           // 14
+	{ "ea_25.2732.ic6",		   0x1000, 0x9a1b6901, 3 | BRF_GRA },           // 15
+	{ "ea_26.2732.ic7",		   0x1000, 0x839112ec, 3 | BRF_GRA },           // 16
+	{ "ea_27.2732.ic8",		   0x1000, 0xdb7ff692, 3 | BRF_GRA },           // 17
+
+	{ "eb16.ic22",			   0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 18 Layer Priority
+
+	{ "ba3__11.mc68705p3.ic4", 0x0800, 0x9ce75afc, 5 | BRF_PRG | BRF_ESS }, // 19 M68705 MCU Code
+
+	{ "ww15.pal16l8.ic24.jed.bin",	0x0117, 0xc3ec20d6, 0 | BRF_OPT },   // 20 pal
+};
+
+STD_ROM_PICK(elevatora)
+STD_ROM_FN(elevatora)
+
+struct BurnDriver BurnDrvElevatora = {
+	"elevatora", "elevator", NULL, NULL, "1983",
+	"Elevator Action (EA, 5 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, elevatoraRomInfo, elevatoraRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
 	elevatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3315,43 +3354,6 @@ struct BurnDriver BurnDrvElevatorb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elevatorbRomInfo, elevatorbRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
 	elevatorbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
-	256, 224, 4, 3
-};
-
-
-// Elevator Action (4 pcb version, 1.1)
-
-static struct BurnRomInfo elevator4RomDesc[] = {
-	{ "ba3__01.2764.ic1",	0x2000, 0xda775a24, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "ba3__02.2764.ic2",	0x2000, 0xfbfd8b3a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ba3__03-1.2764.ic3",	0x2000, 0xa2e69833, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ba3__04-1.2764.ic6",	0x2000, 0x2b78c462, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "ba3__09.2732.ic70",	0x1000, 0x6d5f57cb, 2 | BRF_PRG | BRF_ESS }, //  4 Sound Z80 Code
-	{ "ba3__10.2732.ic71",	0x1000, 0xf0a769a1, 2 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "ba3__05.2764.ic4",	0x2000, 0x6c4ee58f, 3 | BRF_GRA },           //  6 Graphics data
-	{ "ba3__06.2764.ic5",	0x2000, 0x41ab0afc, 3 | BRF_GRA },           //  7
-	{ "ba3__07.2764.ic9",	0x2000, 0xefe43731, 3 | BRF_GRA },           //  8
-	{ "ba3__08.2764.ic10",	0x2000, 0x3ca20696, 3 | BRF_GRA },           //  9
-
-	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 10 Layer Priority
-
-	{ "ba3__11.mc68705p3.ic24",	0x0800, 0x9ce75afc, 5 | BRF_PRG | BRF_ESS }, // 11 M68705 MCU Code
-
-	{ "ww15.pal16l8.ic24.jed.bin",	0x0117, 0xc3ec20d6, 0 | BRF_OPT },   // 12 pal
-};
-
-STD_ROM_PICK(elevator4)
-STD_ROM_FN(elevator4)
-
-struct BurnDriver BurnDrvElevator4 = {
-	"elevator4", "elevator", NULL, NULL, "1983",
-	"Elevator Action (4 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, elevator4RomInfo, elevator4RomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
-	elevatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
 

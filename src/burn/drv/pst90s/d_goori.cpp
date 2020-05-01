@@ -356,16 +356,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Goori Goori
 
 static struct BurnRomInfo gooriRomDesc[] = {
-	{ "2",				0x040000, 0x82eae7bf, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "3",				0x040000, 0x39093929, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2",						0x040000, 0x82eae7bf, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "3",						0x040000, 0x39093929, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "goori04ol.16m",	0x200000, 0xf26451b9, 2 | BRF_GRA },           //  2 Sprites
-	{ "goori05oh.16m",	0x200000, 0x058ceaec, 2 | BRF_GRA },           //  3
+	{ "mx29f1610ml_obj_16m_l",	0x200000, 0xf26451b9, 2 | BRF_GRA },           //  2 Sprites
+	{ "mx29f1610ml_obj_16m_h",	0x200000, 0x058ceaec, 2 | BRF_GRA },           //  3
 
-	{ "goori06cl.16m",	0x200000, 0x8603a662, 3 | BRF_GRA },           //  4 Background Tiles
-	{ "goori07ch.16m",	0x200000, 0x4223383e, 3 | BRF_GRA },           //  5
+	{ "mx29f1610ml_scr_16m_l",	0x200000, 0x8603a662, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "mx29f1610ml_scr_16m_h",	0x200000, 0x4223383e, 3 | BRF_GRA },           //  5
 
-	{ "1",				0x040000, 0xc74351b9, 4 | BRF_SND },           //  6 Samples
+	{ "1",						0x040000, 0xc74351b9, 4 | BRF_SND },           //  6 Samples
 };
 
 STD_ROM_PICK(goori)

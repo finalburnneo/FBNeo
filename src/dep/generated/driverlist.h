@@ -3090,9 +3090,9 @@ DRV		BurnDrvmd_elvientoj;
 DRV		BurnDrvmd_elviento;
 DRV		BurnDrvmd_elemastj;
 DRV		BurnDrvmd_elemast;
-DRV		BurnDrvElevator4;
 DRV		BurnDrvElevator;
 DRV		BurnDrvElevatorb;
+DRV		BurnDrvElevatora;
 DRV		BurnDrvMSX_elevator;
 DRV		BurnDrvsg1k_elevator;
 DRV		BurnDrvElvact2u;
@@ -17201,9 +17201,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_elviento,		// El Viento (USA)
 	&BurnDrvmd_elemastj,		// Elemental Master (Jpn)
 	&BurnDrvmd_elemast,			// Elemental Master (USA)
-	&BurnDrvElevator4,			// Elevator Action (4 pcb version, 1.1)
-	&BurnDrvElevator,			// Elevator Action (5 pcb version, 1.1)
+	&BurnDrvElevator,			// Elevator Action (BA3, 4 pcb version, 1.1)
 	&BurnDrvElevatorb,			// Elevator Action (bootleg)
+	&BurnDrvElevatora,			// Elevator Action (EA, 5 pcb version, 1.1)
 	&BurnDrvMSX_elevator,		// Elevator Action (Jpn)
 	&BurnDrvsg1k_elevator,		// Elevator Action (Jpn)
 	&BurnDrvElvact2u,			// Elevator Action II (Ver 2.2A 1995/02/20)

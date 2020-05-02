@@ -864,13 +864,18 @@ static struct BurnRomInfo commandob3RomDesc[] = {
 STD_ROM_PICK(commandob3)
 STD_ROM_FN(commandob3)
 
+static INT32 Commandob3Init()
+{
+	return DrvInit(0,1);
+}
+
 struct BurnDriver BurnDrvCommandob3 = {
 	"commandob3", "commando", NULL, NULL, "1985",
 	"Commando (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, commandob3RomInfo, commandob3RomName, NULL, NULL, NULL, NULL, CommandoInputInfo, CommandoDIPInfo,
-	CommandoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	Commandob3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

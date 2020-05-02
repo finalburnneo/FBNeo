@@ -186,8 +186,8 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 	for ( int i = 0; i < 4; i++ ) {
 		rom[i]= &ic->rom[ic->channels[i].start + ( ic->channels[i].bank << 16 ) + 1];
 		delta[i] = (ic->delta_table[ic->channels[i].rate] * nUpdateStep) >> 15;
-		lvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][1];
-		rvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][0];
+		lvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][0];
+		rvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][1];
 		end[i] = ic->channels[i].size - 1;
 		pos[i] = ic->channels[i].pos;
 		play[i] = ic->channels[i].play;

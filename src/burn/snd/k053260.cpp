@@ -245,8 +245,8 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 					}
 
 					if ( ic->mode & 2 ) {
-						dataL += ( d * lvol[i] ) >> 15;
-						dataR += ( d * rvol[i] ) >> 15;
+						dataL += ( d * lvol[i] ) >> 16;
+						dataR += ( d * rvol[i] ) >> 16;
 					}
 				}
 			}

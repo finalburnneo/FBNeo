@@ -11309,6 +11309,23 @@ struct BurnDriver BurnDrvnes_gruni2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_gruni3RomDesc[] = {
+	{ "Gruniozerca 3 - The Great Cavy Clean-Up! (HB).nes",          65552, 0xa92f5930, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gruni3)
+STD_ROM_FN(nes_gruni3)
+
+struct BurnDriver BurnDrvnes_gruni3 = {
+	"nes_gruni3", NULL, NULL, NULL, "2019",
+	"NES Gruniozerca 3 - The Great Cavy Clean-Up! (HB)\0", NULL, "Lukasz Kur & M-Tee", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_gruni3RomInfo, nes_gruni3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_lalathemagicalRomDesc[] = {
 	{ "Lala the Magical (HB).nes",          81936, 0x496c2e59, BRF_ESS | BRF_PRG },
 };

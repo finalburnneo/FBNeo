@@ -751,6 +751,10 @@ static INT32 DrvInit(INT32 game)
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
 
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "mexico86a")) {
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
+		}
+
 		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1;
 
 		if (BurnLoadRom(DrvZ80ROM2 + 0x00000, k++, 1)) return 1;

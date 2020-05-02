@@ -160,6 +160,19 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 #endif
 
 	static const INT8 dpcmcnv[] = { 0,1,2,4,8,16,32,64, -128, -64, -32, -16, -8, -4, -2, -1};
+	// Pan multipliers.  Set according to integer angles in degrees, amusingly.
+	// Exact precision hard to know, the floating point-ish output format makes
+	// comparisons iffy.  So we used a 1.16 format.   [O. Galibert, P. Bennett]
+	const INT32 pan_mul[8][2] = {
+		{     0,     0 }, // No sound for pan 0
+		{ 65536,     0 }, //  0 degrees
+		{ 59870, 26656 }, // 24 degrees
+		{ 53684, 37950 }, // 35 degrees
+		{ 46341, 46341 }, // 45 degrees
+		{ 37950, 53684 }, // 55 degrees
+		{ 26656, 59870 }, // 66 degrees
+		{     0, 65536 }  // 90 degrees
+	};
 
 	INT32 lvol[4], rvol[4], play[4], loop[4], ppcm[4];
 	UINT8 *rom[4];
@@ -173,8 +186,8 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 	for ( int i = 0; i < 4; i++ ) {
 		rom[i]= &ic->rom[ic->channels[i].start + ( ic->channels[i].bank << 16 ) + 1];
 		delta[i] = (ic->delta_table[ic->channels[i].rate] * nUpdateStep) >> 15;
-		lvol[i] = ic->channels[i].volume * ic->channels[i].pan;
-		rvol[i] = ic->channels[i].volume * ( 8 - ic->channels[i].pan );
+		lvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][1];
+		rvol[i] = ic->channels[i].volume * pan_mul[ic->channels[i].pan][0];
 		end[i] = ic->channels[i].size - 1;
 		pos[i] = ic->channels[i].pos;
 		play[i] = ic->channels[i].play;
@@ -232,8 +245,8 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 					}
 
 					if ( ic->mode & 2 ) {
-						dataL += ( d * lvol[i] ) >> 2;
-						dataR += ( d * rvol[i] ) >> 2;
+						dataL += ( d * lvol[i] ) >> 15;
+						dataR += ( d * rvol[i] ) >> 15;
 					}
 				}
 			}

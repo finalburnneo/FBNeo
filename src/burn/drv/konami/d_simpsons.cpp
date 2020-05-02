@@ -35,6 +35,8 @@ static INT32 init_eeprom_count;
 static INT32 simpsons_firq_enabled;
 static INT32 K053246Irq;
 
+static INT32 fa00_timer;
+
 static INT32 bg_colorbase;
 static INT32 sprite_colorbase;
 static INT32 layer_colorbase[3];
@@ -49,77 +51,75 @@ static UINT8 DrvDiag;
 static UINT8 DrvReset;
 static UINT8 DrvInputs[5];
 
-static INT32 nCyclesDone[2];
-
 static struct BurnInputInfo SimpsonsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy5 + 2,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy5 + 3,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 fire 2"	},
 
-	{"Diagnostics",		BIT_DIGITAL,	&DrvDiag,	"diag"		},
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Diagnostics",		BIT_DIGITAL,	&DrvDiag,		"diag"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 };
 
 STDINPUTINFO(Simpsons)
 
 static struct BurnInputInfo Simpsons2pInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Diagnostics",		BIT_DIGITAL,	&DrvDiag,	"diag"		},
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Diagnostics",		BIT_DIGITAL,	&DrvDiag,		"diag"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 };
 
 STDINPUTINFO(Simpsons2p)
 
-void simpsons_main_write(UINT16 address, UINT8 data)
+static void simpsons_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -182,7 +182,7 @@ void simpsons_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 simpsons_main_read(UINT16 address)
+static UINT8 simpsons_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -223,8 +223,8 @@ UINT8 simpsons_main_read(UINT16 address)
 			return K053260Read(0, (address & 1)+2);
 		
 		case 0x1fc8:
-      		case 0x1fc9:
-         		return K053246Read(address & 1);
+		case 0x1fc9:
+			return K053246Read(address & 1);
 
 		case 0x1fca:
 			return 0; // watchdog
@@ -263,7 +263,7 @@ static void DrvZ80Bankswitch(INT32 data)
 	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + nBank);
 }
 
-void __fastcall simpsons_sound_write(UINT16 address, UINT8 data)
+static void __fastcall simpsons_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -276,8 +276,8 @@ void __fastcall simpsons_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xfa00:
-			nCyclesDone[1] += ZetRun(100);
-			ZetNmi();
+			fa00_timer = 89;
+			ZetRunEnd();
 		return;
 
 		case 0xfe00:
@@ -291,7 +291,7 @@ void __fastcall simpsons_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall simpsons_sound_read(UINT16 address)
+static UINT8 __fastcall simpsons_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -371,6 +371,7 @@ static INT32 DrvDoReset()
 
 	simpsons_firq_enabled = 0;
 	K053246Irq = 0;
+	fa00_timer = 0;
 
 	return 0;
 }
@@ -383,9 +384,9 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x100000;
-	DrvGfxROMExp0		= Next; Next += 0x200000;
+	DrvGfxROMExp0	= Next; Next += 0x200000;
 	DrvGfxROM1		= Next; Next += 0x400000;
-	DrvGfxROMExp1		= Next; Next += 0x800000;
+	DrvGfxROMExp1	= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x200000;
 
@@ -409,19 +410,20 @@ static INT32 MemIndex()
 
 static const eeprom_interface simpsons_eeprom_intf =
 {
-	7,			// address bits
-	8,			// data bits
+	7,				// address bits
+	8,				// data bits
 	"011000",		// read command
 	"011100",		// write command
-	0,			// erase command
-	"0100000000000",	// lock command
-	"0100110000000",	// unlock command
+	0,				// erase command
+	"0100000000000",// lock command
+	"0100110000000",// unlock command
 	0,
 	0
 };
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(59.18);
 	GenericTilesInit();
 
 	AllMem = NULL;
@@ -487,13 +489,14 @@ static INT32 DrvInit()
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, DrvK053247Callback, 0x03 /* shadows & highlights */);
 	K053247SetSpriteOffset(-59, -39);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151Init(3579545, 1);
+	BurnTimerAttachZet(3579545*2); // *2 = better sync maggie & sax
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.00, BURN_SND_ROUTE_BOTH); // not connected
 
 	K053260Init(0, 3579545, DrvSndROM, 0x140000);
-	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_RIGHT);
-	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.75, BURN_SND_ROUTE_LEFT);
+	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -599,7 +602,7 @@ static INT32 DrvFrame()
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 
-	  // Clear Opposites
+		// Clear Opposites
 		if ((DrvInputs[0] & 0x0c) == 0) DrvInputs[0] |= 0x0c;
 		if ((DrvInputs[0] & 0x03) == 0) DrvInputs[0] |= 0x03;
 		if ((DrvInputs[1] & 0x0c) == 0) DrvInputs[1] |= 0x0c;
@@ -610,22 +613,16 @@ static INT32 DrvFrame()
 		if ((DrvInputs[3] & 0x03) == 0) DrvInputs[3] |= 0x03;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
-	
-	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
+	INT32 nCyclesTotal[2] = { (INT32)(3000000 / 59.18), (INT32)((3579545*2) / 59.18) };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	ZetOpen(0);
 	konamiOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = konamiRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
+		CPU_RUN(0, konami);
 
 		if (i == 1 && K053246Irq && simpsons_firq_enabled) {
 			konamiSetIrqLine(KONAMI_FIRQ_LINE, CPU_IRQSTATUS_AUTO);
@@ -633,10 +630,13 @@ static INT32 DrvFrame()
 
 		K053246Irq = K053246_is_IRQ_enabled();
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+
+		if (fa00_timer) {
+			BurnTimerUpdate(ZetTotalCycles() + 89);
+			ZetNmi();
+			fa00_timer = 0;
+		}
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -646,7 +646,7 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-
+	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (K053246Irq) simpsons_objdma();
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
@@ -669,7 +669,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -677,7 +677,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -699,6 +699,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(init_eeprom_count);
 		SCAN_VAR(simpsons_firq_enabled);
 		SCAN_VAR(K053246Irq);
+		SCAN_VAR(fa00_timer);
 	}
 
 	if (nAction & ACB_WRITE) {

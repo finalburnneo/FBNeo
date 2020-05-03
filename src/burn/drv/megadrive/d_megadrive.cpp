@@ -43493,3 +43493,21 @@ struct BurnDriver BurnDrvmd_yazzie = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Devwill Too (HB)
+static struct BurnRomInfo md_devwilltooRomDesc[] = {
+	{ "Devwill Too.bin", 4194304, 0x34031793, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_devwilltoo)
+STD_ROM_FN(md_devwilltoo)
+
+struct BurnDriver BurnDrvmd_devwilltoo = {
+	"md_devwilltoo", NULL, NULL, NULL, "2020",
+	"Devwill Too (HB)\0", NULL, "Mega Cat Studios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_devwilltooRomInfo, md_devwilltooRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -71,7 +71,7 @@ depobj += neocdlist.o \
 		inp_pi.o aud_sdl.o support_paths.o \
 		ips_manager.o scrn.o config.o \
 		main_pi.o run_pi.o stringset.o bzip.o drv.o media.o inpdipsw.o \
-		matrix.o vid_pi.o dynhuff.o replay.o
+		matrix.o vid_pi.o dynhuff.o replay.o cd_sdl2.o
 
 ifdef BUILD_DRM
   depobj += pigl_drm.o

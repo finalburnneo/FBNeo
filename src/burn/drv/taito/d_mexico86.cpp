@@ -6,6 +6,7 @@
 #include "burn_ym2203.h"
 #include "bitswap.h"
 #include "taito_m68705.h"
+#include "m6800_intf.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -28,10 +29,10 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 nExtraCycles;
+
 static INT32 nBankData;
 static INT32 nCharBank;
 static INT32 nSoundCPUHalted;
-static INT32 nMCUHalted;
 static INT32 nSubCPUHalted;
 static INT32 mcu_running;
 static INT32 mcu_initialised;
@@ -40,10 +41,10 @@ static INT32 coin_fract;
 static INT32 mcu_address;
 static INT32 mcu_latch;
 
-static INT32 has_mcu = 0;
+static INT32 has_mcu = 0; // 1 = taito-style 68705 (bootleg mcu), 2 = 6801u4 (real mcu)
 static INT32 has_sub = 0;
 
-static INT32 is_mexico86 = 0;
+static void (*screen_update)();
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -56,6 +57,11 @@ static UINT8 DrvJoy8[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
+
+// 6801u4 mcu: kicknrun, kicknrunu, kikikai (when dumped)
+static UINT8 ddr1, ddr2, ddr3, ddr4;
+static UINT8 port1_in, port2_in, port3_in, port4_in;
+static UINT8 port1_out, port2_out, port3_out, port4_out;
 
 static struct BurnInputInfo KikikaiInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -276,28 +282,36 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf008:
-		{
-			nMCUHalted = ~data & 0x02;
-			if (nMCUHalted && has_mcu) {
-				m6805Open(0);
-				m6805Reset();
-				m6805Close();
+			{
+				mcu_running = data & 2;
+
+				if (!mcu_running)
+					mcu_initialised = 0;
+
+				if (!mcu_running) {
+					switch (has_mcu) {
+						case 1:
+							m6805Open(0);
+							m6805Reset();
+							m6805Close();
+							break;
+						case 2:
+							M6801Open(0);
+							M6801Reset();
+							M6801Close();
+							break;
+					}
+				}
+
+				nSoundCPUHalted = ~data & 0x04;
+				if (nSoundCPUHalted) {
+					ZetReset(1);
+				}
 			}
-
-			nSoundCPUHalted = ~data & 0x04;
-			if (nSoundCPUHalted) {
-				ZetReset(1);
-			}
-
-			mcu_running = data & 2;
-
-			if (!mcu_running)
-				mcu_initialised = 0;
-		}
-		return;
+			return;
 
 		case 0xf018:
-		return; // nop
+			return; // wdt?
 	}
 }
 
@@ -367,6 +381,7 @@ static UINT8 __fastcall mexico86_sub_read(UINT16 address)
 	return 0;
 }
 
+// bootleg mcu
 static void mexico86_m68705_portB_out(UINT8 *data)
 {
 	if ((ddrB & 0x01) && (~*data & 0x01) && (portB_out & 0x01))
@@ -381,7 +396,7 @@ static void mexico86_m68705_portB_out(UINT8 *data)
 
 	if ((ddrB & 0x08) && (~*data & 0x08) && (portB_out & 0x08))
 	{
-		if (*data & 0x10)    /* read */
+		if (*data & 0x10) // read
 		{
 			if (*data & 0x04)
 			{
@@ -418,6 +433,128 @@ static m68705_interface mexico86_m68705_interface = {
 	NULL /* portA */, NULL                      /* portB */, mexico86_m68705_portC_in /* portC */
 };
 
+// real mcu - M6801U4
+static UINT8 mcu_read(UINT16 address)
+{
+	if (address >= 0x0080 && address <= 0x00ff) {
+		return DrvMCURAM[address & 0x7f];
+	}
+
+	if (address >= 0x0008 && address <= 0x001f) {
+		return m6803_internal_registers_r(address);
+	}
+
+	switch (address) {
+		case 0x00: {
+			return ddr1;
+		}
+
+		case 0x01: {
+			return ddr2;
+		}
+
+		case 0x02: {
+			port1_in = DrvInputs[0];
+			return (port1_out & ddr1) | (port1_in & ~ddr1);
+		}
+
+		case 0x03: {
+			return (port2_out & ddr2) | (port2_in & ~ddr2);
+		}
+
+		case 0x04: {
+			return ddr3;
+		}
+
+		case 0x05: {
+			return ddr4;
+		}
+
+		case 0x06: {
+			return (port3_out & ddr3) | (port3_in & ~ddr3);
+		}
+
+		case 0x07: {
+			return (port4_out & ddr4) | (port4_in & ~ddr4);
+		}
+	}
+
+	bprintf(PRINT_NORMAL, _T("M6801 Read Byte -> %04X\n"), address);
+
+	return 0;
+}
+
+static void mcu_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x0080 && address <= 0x00ff) {
+		DrvMCURAM[address & 0x7f] = data;
+		return;
+	}
+
+	if (address >= 0x0008 && address <= 0x001f) {
+		m6803_internal_registers_w(address, data);
+		return;
+	}
+
+	switch (address) {
+		case 0x00: {
+			ddr1 = data;
+			return;
+		}
+
+		case 0x01: {
+			ddr2 = data;
+			return;
+		}
+
+		case 0x02: {
+			// bits 0, 1 - coin counters (low -> high transition)
+			// bits 4, 5 - coin lockouts (inverted)
+			port1_out = data;
+			return;
+		}
+
+		case 0x03: {
+			if ((port2_out & 0x4) && (~data & 0x4)) { // clock
+				if (data & 0x10) { // read (shared mem, inputs)
+					if (data & 0x1) {
+						port3_in = DrvPrtRAM[port4_out];
+					} else {
+						port3_in = DrvInputs[(port4_out & 1) + 1];
+					}
+				} else { // write shared mem
+					DrvPrtRAM[port4_out] = port3_out;
+				}
+			}
+
+			port2_out = data;
+			return;
+		}
+
+		case 0x04: {
+			ddr3 = data;
+			return;
+		}
+
+		case 0x05: {
+			ddr4 = data;
+			return;
+		}
+
+		case 0x06: {
+			port3_out = data;
+			return;
+		}
+
+		case 0x07: {
+			port4_out = data;
+			return;
+		}
+	}
+
+	bprintf(PRINT_NORMAL, _T("M6801 Write Byte -> %04X, %02X\n"), address, data);
+}
+
 static UINT8 YM2203_read_portA(UINT32)
 {
 	return DrvDips[0];
@@ -446,13 +583,32 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	m67805_taito_reset();
+	switch (has_mcu) {
+		case 1:
+			m67805_taito_reset();
+			break;
+		case 2:
+			M6801Open(0);
+			M6801Reset();
+			M6801Close();
+			port1_in = 0x00;
+			port2_in = 0x00;
+			port3_in = 0x00;
+			port4_in = 0x00;
+			port1_out = 0x00;
+			port2_out = 0x00;
+			port3_out = 0x00;
+			port4_out = 0x00;
+			ddr1 = 0x00;
+			ddr2 = 0x00;
+			ddr3 = 0x00;
+			ddr4 = 0x00;
+	}
 
 	nExtraCycles = 0;
 	nBankData = 0;
 	nCharBank = 0;
 	nSoundCPUHalted = 0;
-	nMCUHalted = 0;
 	nSubCPUHalted = (has_sub && (DrvDips[1] & 0x80)); // 4-player board
 
 	mcu_running = 0;
@@ -474,7 +630,7 @@ static INT32 MemIndex()
 	DrvZ80ROM0		= Next; Next += 0x020000;
 	DrvZ80ROM1		= Next; Next += 0x008000;
 	DrvZ80ROM2		= Next; Next += 0x004000;
-	DrvMCUROM		= Next; Next += 0x000800;
+	DrvMCUROM		= Next; Next += 0x001000;
 
 	DrvGfxROM		= Next; Next += 0x080000;
 
@@ -497,6 +653,10 @@ static INT32 MemIndex()
 	return 0;
 }
 
+// forward
+static void screen_update_mexico86();
+static void screen_update_kikikai();
+
 static INT32 DrvGfxDecode(INT32 swap)
 {
 	INT32 Plane[4] = { 0x20000*8, 0x20000*8+4, 0, 4 };
@@ -509,7 +669,7 @@ static INT32 DrvGfxDecode(INT32 swap)
 	}
 
 	if (swap) swap = 0x8000;
-	
+
 	for (INT32 i = 0; i < 0x40000; i++) tmp[i] = DrvGfxROM[i^swap] ^ 0xff; // invert
 
 	GfxDecode(0x2000, 4, 8, 8, Plane, XOffs, YOffs, 0x80, tmp, DrvGfxROM);
@@ -552,7 +712,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 0;
+		has_mcu = 0; // set "has_mcu = 2" when mcu dump is available
 		has_sub = 0;
 	}
 	else if (game == 1) // knightb
@@ -581,7 +741,7 @@ static INT32 DrvInit(INT32 game)
 		has_mcu = 1;
 		has_sub = 0;
 	}
-	else if (game == 2) // mexico86 & kicknrun
+	else if (game == 2 || game == 3) // mexico86 & kicknrun
 	{
 		INT32 k = 0;
 		if (BurnLoadRom(DrvGfxROM  + 0x00000, k++, 1)) return 1;
@@ -589,13 +749,11 @@ static INT32 DrvInit(INT32 game)
 		memcpy(DrvZ80ROM0 + 0x18000, DrvGfxROM + 0x08000, 0x8000);
 		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, k++, 1)) return 1;
 
-		if (strstr(BurnDrvGetTextA(DRV_NAME), "kicknrun")) {
-			// "PS4 STOP ERROR" message removal -dink (march 09, 2019)
-			DrvZ80ROM0[0x22f] = 0x18; // jr over mcu check
-			DrvZ80ROM0[0x7d1] = 0x18; // rom check
-		}
-
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
+
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "mexico86a")) {
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
+		}
 
 		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1;
 
@@ -620,9 +778,14 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 1;
+		switch (game) {
+			case 2: has_mcu = 2; break; // M68001u4 real MCU / kicknrun
+			case 3: has_mcu = 1; break; // m68705 (bootleg) / mexico86
+		}
 		has_sub = 1; // cpu for 4player mode
 	}
+
+	screen_update = (game >= 2) ? screen_update_mexico86 : screen_update_kikikai;
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -637,7 +800,7 @@ static INT32 DrvInit(INT32 game)
 	ZetSetWriteHandler(mexico86_main_write);
 	ZetSetReadHandler(mexico86_main_read);
 	ZetClose();
-	
+
 	ZetInit(1);
 	ZetOpen(1);
 	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
@@ -656,7 +819,19 @@ static INT32 DrvInit(INT32 game)
 	ZetSetReadHandler(mexico86_sub_read);
 	ZetClose();
 
-	m67805_taito_init(DrvMCUROM, DrvMCURAM, &mexico86_m68705_interface); // not on kiki
+	switch (has_mcu) {
+		case 1:
+			m67805_taito_init(DrvMCUROM, DrvMCURAM, &mexico86_m68705_interface); // not on kiki
+			break;
+		case 2:
+			M6801Init(0);
+			M6801Open(0);
+			M6801MapMemory(DrvMCUROM, 0xf000, 0xffff, MAP_ROM);
+			M6801SetReadHandler(mcu_read);
+			M6801SetWriteHandler(mcu_write);
+			M6801Close();
+			break;
+	}
 
 	BurnYM2203Init(1,  3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &YM2203_read_portA, &YM2203_read_portB, NULL, NULL);
@@ -675,19 +850,21 @@ static INT32 DrvInit(INT32 game)
 
 static INT32 DrvExit()
 {
-	has_mcu = 0;
-	has_sub = 0;
-
 	GenericTilesExit();
 
 	ZetExit();
-	m67805_taito_exit();
+
+	switch (has_mcu) {
+		case 1: m67805_taito_exit(); break;
+		case 2: M6801Exit(); break;
+	}
 
 	BurnYM2203Exit();
 
 	BurnFree(AllMem);
 
-	is_mexico86 = 0;
+	has_mcu = 0;
+	has_sub = 0;
 
 	return 0;
 }
@@ -838,17 +1015,14 @@ static INT32 DrvDraw()
 
 	BurnTransferClear(0x100);
 
-	if (is_mexico86)
-		screen_update_mexico86();
-	else
-		screen_update_kikikai();
+	screen_update();
 
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
 
-static void mcu_simulate()
+static void mcu_simulate() // kikikai
 {
 	UINT8 *protection_ram = DrvPrtRAM;
 
@@ -990,7 +1164,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		DrvInputs[0] = 0xff;
+		DrvInputs[0] = (has_mcu == 2) ? 0x00 : 0xff; // 6801u4 mcu - active high coins!
 		DrvInputs[1] = 0xff;
 		DrvInputs[2] = 0xff;
 		DrvInputs[3] = 0xff;
@@ -1018,18 +1192,18 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		if (i == 255 && !has_mcu) {
-			UINT8 *protection_ram = DrvPrtRAM;
-			if (mcu_running) mcu_simulate();
-			ZetSetVector(protection_ram[0]);
+		CPU_RUN(0, Zet);
+
+		if (i == 255 && (has_mcu == 0 || has_mcu == 2)) {
+			if (mcu_running && has_mcu == 0) mcu_simulate(); // kikikai mcu sim
+		    ZetSetVector(DrvPrtRAM[0]);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
 		if (nSoundCPUHalted) {
-			ZetIdle(((nCyclesTotal[1] / nInterleave) * (i + 1)) - ZetTotalCycles());
+			CPU_IDLE_SYNCINT(1, Zet);
 		} else {
 			BurnTimerUpdate((nCyclesTotal[1] / nInterleave) * (i + 1));
 		}
@@ -1039,25 +1213,35 @@ static INT32 DrvFrame()
 		if (has_sub && !nSubCPUHalted)
 		{
 			ZetOpen(2);
-			nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, Zet);
 			if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 		}
 
-		if (nMCUHalted || !has_mcu) {
-			nCyclesDone[3] += ((i + 1) * nCyclesTotal[3] / nInterleave) - nCyclesDone[3];
-		} else {
+		if (!mcu_running || !has_mcu)
+		{
+			CPU_IDLE_NULL(3);
+		}
+		else if (has_mcu == 1)
+		{
 			m6805Open(0);
-			nCyclesDone[3] += m6805Run(((i + 1) * nCyclesTotal[3] / nInterleave) - nCyclesDone[3]);
+			CPU_RUN(3, m6805);
 			if (i == 255) m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			m6805Close();
+		}
+		else if (has_mcu == 2)
+		{
+			M6801Open(0);
+			CPU_RUN(3, M6801);
+			if (i == 255) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			M6801Close();
 		}
 	}
 
 	ZetOpen(1);
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1075,7 +1259,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029672;
 	}
@@ -1090,12 +1274,33 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		m68705_taito_scan(nAction);
+
+		switch (has_mcu) {
+			case 1:
+				m68705_taito_scan(nAction);
+				break;
+			case 2:
+				M6801Scan(nAction);
+				break;
+		}
 
 		BurnYM2203Scan(nAction, pnMin);
 
 		SCAN_VAR(mcu_address);
 		SCAN_VAR(mcu_latch);
+
+		SCAN_VAR(ddr1);
+		SCAN_VAR(ddr2);
+		SCAN_VAR(ddr3);
+		SCAN_VAR(ddr4);
+		SCAN_VAR(port1_in);
+		SCAN_VAR(port2_in);
+		SCAN_VAR(port3_in);
+		SCAN_VAR(port4_in);
+		SCAN_VAR(port1_out);
+		SCAN_VAR(port2_out);
+		SCAN_VAR(port3_out);
+		SCAN_VAR(port4_out);
 
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(nBankData);
@@ -1204,7 +1409,7 @@ static struct BurnRomInfo kicknrunRomDesc[] = {
 
 	{ "a87-06.f6",			0x08000, 0x1625b587, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a87-01.g8",			0x00800, 0x8e821fa0, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 Code
+	{ "a87-01_jph1021p.h8",	0x01000, 0x9451e880, 3 | BRF_PRG | BRF_ESS }, //  3 M6801u4 Code
 
 	{ "a87-09-1",			0x04000, 0x6a2ad32f, 4 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
@@ -1223,8 +1428,6 @@ STD_ROM_FN(kicknrun)
 
 static INT32 KicknrunInit()
 {
-	is_mexico86 = 1;
-
 	return DrvInit(2);
 }
 
@@ -1247,7 +1450,7 @@ static struct BurnRomInfo kicknrunuRomDesc[] = {
 
 	{ "a87-06.f6",			0x08000, 0x1625b587, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a87-01.g8",			0x00800, 0x8e821fa0, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 Code
+	{ "a87-01_jph1021p.h8",	0x01000, 0x9451e880, 3 | BRF_PRG | BRF_ESS }, //  3 M6801u4 Code
 
 	{ "a87-09-1",			0x04000, 0x6a2ad32f, 4 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
@@ -1300,13 +1503,18 @@ static struct BurnRomInfo mexico86RomDesc[] = {
 STD_ROM_PICK(mexico86)
 STD_ROM_FN(mexico86)
 
+static INT32 Mexico86Init()
+{
+	return DrvInit(3);
+}
+
 struct BurnDriver BurnDrvMexico86 = {
 	"mexico86", "kicknrun", NULL, NULL, "1986",
 	"Mexico 86 (bootleg of Kick and Run) (set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, mexico86RomInfo, mexico86RomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
-	KicknrunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
+	Mexico86Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3
 };
 
@@ -1314,15 +1522,15 @@ struct BurnDriver BurnDrvMexico86 = {
 // Mexico 86 (bootleg of Kick and Run) (set 2)
 
 static struct BurnRomInfo mexico86aRomDesc[] = {
-	{ "2.bin",				0x10000, 0x397c93ad, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code 
+	{ "2.bin",				0x10000, 0x397c93ad, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "1.bin",				0x10000, 0x0b93e68e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "3x.bin",				0x08000, 0xabbbf6c4, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code 
+	{ "3x.bin",				0x08000, 0xabbbf6c4, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 	{ "3.bin",				0x08000, 0x1625b587, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "68_h.bin",			0x00800, 0xff92f816, 3 | BRF_PRG | BRF_ESS }, //  4 M68705 Code
 
-	{ "8.bin",				0x04000, 0x6a2ad32f, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #2 Code 
+	{ "8.bin",				0x04000, 0x6a2ad32f, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #2 Code
 
 	{ "4.bin",				0x10000, 0x57cfdbca, 5 | BRF_GRA },           //  6 Graphics
 	{ "5.bin",				0x08000, 0xe42fa143, 5 | BRF_GRA },           //  7
@@ -1351,7 +1559,7 @@ struct BurnDriverD BurnDrvMexico86a = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, mexico86aRomInfo, mexico86aRomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
-	KicknrunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
+	Mexico86Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3
 };
 

@@ -1687,7 +1687,7 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire && GalIrqFire) {
 				if (GalIrqType == GAL_IRQ_TYPE_NMI) ZetNmi();
-				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				GalIrqFire = 0;
 			}
 			ZetClose();
@@ -1842,7 +1842,14 @@ INT32 GalFrame()
  			}
 		}
 	}
-	
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
+		// add samples!
+		if (pBurnSoundOut) {
+			cclimber_sample_render(pBurnSoundOut, nBurnSoundLen);
+		}
+	}
+
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910) {
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

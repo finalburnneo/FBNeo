@@ -316,6 +316,9 @@ void GalRenderSoundSamples(INT16 *pSoundBuf, INT32 nLength);
 void GalaxianSoundWrite(UINT32 Offset, UINT8 d);
 void GalaxianLfoFreqWrite(UINT32 Offset, UINT8 d);
 void GalaxianSoundUpdateTimers();
+void cclimber_sample_render(INT16 *buffer, INT32 nLen);
+void cclimber_sample_scan();
+void cclimber_sample_num(UINT32, UINT32 data);
 
 // gal_stars.cpp
 extern INT32 GalStarsEnable;

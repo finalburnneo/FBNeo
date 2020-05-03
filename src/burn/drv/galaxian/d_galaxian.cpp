@@ -4846,7 +4846,7 @@ static struct BurnDIPInfo MshuttleDIPList[]=
 {
 	// Default Values
 	{0x0d, 0xff, 0xff, 0x00, NULL                     },
-	{0x0e, 0xff, 0xff, 0x80, NULL                     },
+	{0x0e, 0xff, 0xff, 0x00, NULL                     },
 	{0x0f, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip 1
@@ -14387,8 +14387,8 @@ static struct BurnRomInfo MshuttleRomDesc[] = {
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "my07",          0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06",   	   0x01000, 0x466415f2, BRF_SND | BRF_OPT },
+	{ "my07",          0x01000, 0x522a2920, BRF_SND },	// Samples
+	{ "my06",   	   0x01000, 0x466415f2, BRF_SND },
 };
 
 STD_ROM_PICK(Mshuttle)
@@ -14408,8 +14408,8 @@ static struct BurnRomInfo Mshuttle2RomDesc[] = {
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "my07",          0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06",          0x01000, 0x6d2dd711, BRF_SND | BRF_OPT },
+	{ "my07",          0x01000, 0x522a2920, BRF_SND },	// Samples
+	{ "my06",          0x01000, 0x6d2dd711, BRF_SND },
 };
 
 STD_ROM_PICK(Mshuttle2)
@@ -14429,8 +14429,8 @@ static struct BurnRomInfo MshuttleaRomDesc[] = {
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "my07.4p",       0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06.4s",       0x01000, 0x466415f2, BRF_SND | BRF_OPT },
+	{ "my07.4p",       0x01000, 0x522a2920, BRF_SND },	// Samples
+	{ "my06.4s",       0x01000, 0x466415f2, BRF_SND },
 };
 
 STD_ROM_PICK(Mshuttlea)
@@ -14450,8 +14450,8 @@ static struct BurnRomInfo MshuttlejRomDesc[] = {
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "my07",          0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06",          0x01000, 0x6d2dd711, BRF_SND | BRF_OPT },
+	{ "my07",          0x01000, 0x522a2920, BRF_SND },	// Samples
+	{ "my06",          0x01000, 0x6d2dd711, BRF_SND },
 };
 
 STD_ROM_PICK(Mshuttlej)
@@ -14471,12 +14471,99 @@ static struct BurnRomInfo Mshuttlej2RomDesc[] = {
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "my07",          0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06.4r",       0x01000, 0x4162be4d, BRF_SND | BRF_OPT },
+	{ "my07",          0x01000, 0x522a2920, BRF_SND },	// Samples
+	{ "my06.4r",       0x01000, 0x4162be4d, BRF_SND },
 };
 
 STD_ROM_PICK(Mshuttlej2)
 STD_ROM_FN(Mshuttlej2)
+
+// cclimber sample player
+static INT32 sample_num = 0;
+static INT32 sample_freq = 0;
+static INT32 sample_vol = 0;
+
+static INT32 sample_len = 0;
+static INT32 sample_pos = -1; // -1 not playing, 0 start
+
+static INT16 *samplebuf = NULL;
+static UINT8 *mshuttle_samples = NULL;
+
+void cclimber_sample_num(UINT32, UINT32 data)
+{
+	sample_num = data;
+}
+
+void cclimber_sample_scan()
+{
+	SCAN_VAR(sample_num);
+	SCAN_VAR(sample_freq);
+	SCAN_VAR(sample_vol);
+	SCAN_VAR(sample_len);
+	SCAN_VAR(sample_pos);
+}
+
+void cclimber_sample_render(INT16 *buffer, INT32 nLen)
+{
+	if (sample_pos < 0) return; // stopped
+
+	if ((sample_pos >> 16) >= 0x10000 ) {
+		sample_pos = -1; // stop
+		return;
+	}
+
+	INT32 step = (sample_freq << 16) / nBurnSoundRate;
+	INT32 pos = 0;
+	INT16 *rom = samplebuf;
+
+	while (pos < nLen)
+	{
+		INT32 sample = (INT32)(rom[(sample_pos >> 16)] * 0.2);
+
+		buffer[0] = BURN_SND_CLIP((INT32)(buffer[0] + sample));
+		buffer[1] = BURN_SND_CLIP((INT32)(buffer[1] + sample));
+
+		sample_pos += step;
+
+		buffer+=2;
+		pos++;
+
+		if (sample_pos >= 0xfff0000 || (sample_pos >> 16) >= sample_len) {
+			sample_pos = -1; // stop
+			break;
+		}
+	}
+}
+
+// 4bit decodMshuttleExiter from mame
+#define SAMPLE_CONV4(a) (0x1111*((a&0x0f))-0x8000)
+
+static void cclimber_sample_start()
+{
+	const UINT8 *rom = mshuttle_samples;
+
+	if (!rom) return;
+
+	INT32 len = 0;
+	INT32 start = 32 * sample_num;
+
+	while (start + len < 0x2000 && rom[start+len] != 0x70)
+	{
+		INT32 sample;
+
+		sample = (rom[start + len] & 0xf0) >> 4;
+		samplebuf[2*len] = SAMPLE_CONV4(sample) * sample_vol / 31;
+
+		sample = rom[start + len] & 0x0f;
+		samplebuf[2*len + 1] = SAMPLE_CONV4(sample) * sample_vol / 31;
+
+		len++;
+	}
+	sample_len = len * 2;
+	sample_pos = 0;
+}
+
+// end sample player
 
 UINT8 __fastcall MshuttleZ80PortRead(UINT16 a)
 {
@@ -14514,20 +14601,20 @@ void __fastcall MshuttleZ80PortWrite(UINT16 a, UINT8 d)
 
 void __fastcall MshuttleZ80Write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x9800 && a <= 0x98ff) {
-		INT32 Offset = a - 0x9800;
-		
+	if ((a & 0xf800) == 0x9800) {
+		INT32 Offset = a & 0xff;
+
 		GalSpriteRam[Offset] = d;
-		
+
 		if (Offset < 0x40) {
 			if ((Offset & 0x01) == 0) {
 				GalScrollVals[Offset >> 1] = d;
 			}
 		}
-		
+
 		return;
 	}
-	
+
 	switch (a) {
 		case 0xa000: {
 			GalIrqFire = d & 1;
@@ -14541,13 +14628,13 @@ void __fastcall MshuttleZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xa002: {
-			GalFlipScreenX = d & 1;
-			GalFlipScreenY = d & 1;
+			GalFlipScreenX = (d & 1);
+			GalFlipScreenY = (d & 1);
 			return;
 		}
 		
 		case 0xa004: {
-			// cclimber_sample_trigger_w
+			if (d != 0) cclimber_sample_start();
 			return;
 		}
 		
@@ -14557,12 +14644,12 @@ void __fastcall MshuttleZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xa800: {
-			// cclimber_sample_rate_w
+			sample_freq = 3072000 / 4 / (256 - d);
 			return;
 		}
 		
 		case 0xb000: {
-			// cclimber_sample_volume_w
+			sample_vol = d & 0x1f;
 			return;
 		}
 	}
@@ -14575,6 +14662,9 @@ static void MapMshuttle()
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x4fff, 0, GalZ80Rom1);
 	ZetMapArea(0x0000, 0x4fff, 2, GalZ80Rom1Op, GalZ80Rom1);
+	ZetMapArea(0x9400, 0x97ff, 0, GalVideoRam); // mirror
+	ZetMapArea(0x9400, 0x97ff, 1, GalVideoRam);
+	ZetMapArea(0x9400, 0x97ff, 2, GalVideoRam);
 	ZetSetWriteHandler(MshuttleZ80Write);
 	ZetSetInHandler(MshuttleZ80PortRead);
 	ZetSetOutHandler(MshuttleZ80PortWrite);
@@ -14586,16 +14676,16 @@ static void MshuttleDecrypt()
 	GalZ80Rom1Op = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	
 	static const UINT8 ConvTable[8][16] = {
-		{ 0x40, 0x41, 0x44, 0x15, 0x05, 0x51, 0x54, 0x55, 0x50, 0x00, 0x01, 0x04, (UINT8)-1, 0x10, 0x11, 0x14 },
+		{ 0x40, 0x41, 0x44, 0x15, 0x05, 0x51, 0x54, 0x55, 0x50, 0x00, 0x01, 0x04, 0xff, 0x10, 0x11, 0x14 },
 		{ 0x45, 0x51, 0x55, 0x44, 0x40, 0x11, 0x05, 0x41, 0x10, 0x14, 0x54, 0x50, 0x15, 0x04, 0x00, 0x01 },
-		{ 0x11, 0x14, 0x10, 0x00, 0x44, 0x05, (UINT8)-1, 0x04, 0x45, 0x15, 0x55, 0x50, (UINT8)-1, 0x01, 0x54, 0x51 },
-		{ 0x14, 0x01, 0x11, 0x10, 0x50, 0x15, 0x00, 0x40, 0x04, 0x51, 0x45, 0x05, 0x55, 0x54, (UINT8)-1, 0x44 },
-		{ 0x04, 0x10, (UINT8)-1, 0x40, 0x15, 0x41, 0x50, 0x50, 0x11, (UINT8)-1, 0x14, 0x00, 0x51, 0x45, 0x55, 0x01 },
-		{ 0x44, 0x45, 0x00, 0x51, (UINT8)-1, (UINT8)-1, 0x15, 0x11, 0x01, 0x10, 0x04, 0x55, 0x05, 0x40, 0x50, 0x41 },
-		{ 0x51, 0x00, 0x01, 0x05, 0x04, 0x55, 0x54, 0x50, 0x41, (UINT8)-1, 0x11, 0x15, 0x14, 0x10, 0x44, 0x40 },
-		{ 0x05, 0x04, 0x51, 0x01, (UINT8)-1, (UINT8)-1, 0x55, (UINT8)-1, 0x00, 0x50, 0x15, 0x14, 0x44, 0x41, 0x40, 0x54 },
+		{ 0x11, 0x14, 0x10, 0x00, 0x44, 0x05, 0xff, 0x04, 0x45, 0x15, 0x55, 0x50, 0xff, 0x01, 0x54, 0x51 },
+		{ 0x14, 0x01, 0x11, 0x10, 0x50, 0x15, 0x00, 0x40, 0x04, 0x51, 0x45, 0x05, 0x55, 0x54, 0xff, 0x44 },
+		{ 0x04, 0x10, 0xff, 0x40, 0x15, 0x41, 0x50, 0x50, 0x11, 0xff, 0x14, 0x00, 0x51, 0x45, 0x55, 0x01 },
+		{ 0x44, 0x45, 0x00, 0x51, 0xff, 0xff, 0x15, 0x11, 0x01, 0x10, 0x04, 0x55, 0x05, 0x40, 0x50, 0x41 },
+		{ 0x51, 0x00, 0x01, 0x05, 0x04, 0x55, 0x54, 0x50, 0x41, 0xff, 0x11, 0x15, 0x14, 0x10, 0x44, 0x40 },
+		{ 0x05, 0x04, 0x51, 0x01, 0xff, 0xff, 0x55, 0xff, 0x00, 0x50, 0x15, 0x14, 0x44, 0x41, 0x40, 0x54 }
 	};
-	
+
 	for (UINT32 Offset = 0x0000; Offset < GalZ80Rom1Size; Offset++) {
 		INT32 i, j;
 		UINT8 Src;
@@ -14627,7 +14717,12 @@ static void MShuttleCommonInit()
 
 	GalIrqType = GAL_IRQ_TYPE_IRQ0;
 
-	GalScreenUnflipper = 0; // coctail unflipping not needed
+	GalScreenUnflipper = 1; // coctail unflipping not needed
+
+	samplebuf = (INT16*)BurnMalloc(0x10000 * sizeof(INT16));
+	mshuttle_samples = BurnMalloc(0x2000);
+	BurnLoadRom(mshuttle_samples + 0x0000, 10, 1);
+	BurnLoadRom(mshuttle_samples + 0x1000, 11, 1);
 }
 
 static INT32 MshuttleInit()
@@ -14689,53 +14784,61 @@ static INT32 MshuttlejInit()
 	return nRet;
 }
 
+static INT32 MshuttleExit()
+{
+	BurnFree(mshuttle_samples);
+	BurnFree(samplebuf);
+
+	return GalExit();
+}
+
 struct BurnDriver BurnDrvMshuttle = {
 	"mshuttle", NULL, NULL, NULL, "1981",
-	"Moon Shuttle (US? set 1)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (US? set 1)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MshuttleRomInfo, MshuttleRomName, NULL, NULL, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
-	MshuttleInit, GalExit, GalFrame, GalDraw, GalScan,
+	MshuttleInit, MshuttleExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvMshuttle2 = {
 	"mshuttle2", "mshuttle", NULL, NULL, "1981",
-	"Moon Shuttle (US? set 2)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (US? set 2)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Mshuttle2RomInfo, Mshuttle2RomName, NULL, NULL, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
-	MshuttleInit, GalExit, GalFrame, GalDraw, GalScan,
+	MshuttleInit, MshuttleExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvMshuttlea = {
 	"mshuttlea", "mshuttle", NULL, NULL, "1981",
-	"Moon Shuttle (US, version A)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (US, version A)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MshuttleaRomInfo, MshuttleaRomName, NULL, NULL, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
-	MshuttleInit, GalExit, GalFrame, GalDraw, GalScan,
+	MshuttleInit, MshuttleExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvMshuttlej = {
 	"mshuttlej", "mshuttle", NULL, NULL, "1981",
-	"Moon Shuttle (Japan)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (Japan)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MshuttlejRomInfo, MshuttlejRomName, NULL, NULL, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
-	MshuttlejInit, GalExit, GalFrame, GalDraw, GalScan,
+	MshuttlejInit, MshuttleExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvMshuttlej2 = {
 	"mshuttlej2", "mshuttle", NULL, NULL, "1981",
-	"Moon Shuttle (Japan set 2)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (Japan set 2)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Mshuttlej2RomInfo, Mshuttlej2RomName, NULL, NULL, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
-	MshuttlejInit, GalExit, GalFrame, GalDraw, GalScan,
+	MshuttlejInit, MshuttleExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };
 

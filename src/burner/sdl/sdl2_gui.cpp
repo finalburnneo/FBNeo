@@ -131,8 +131,6 @@ static void CreateRomDatName(TCHAR* szRomDat)
 #else
 	_stprintf(szRomDat, _T("fbneo.dat"));
 #endif
-
-
 	return;
 }
 
@@ -199,7 +197,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 					bRet = true;
 					break;
 			}
-			break;	
+			break;
 		case HARDWARE_PREFIX_SEGA:
 			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
 			{
@@ -226,7 +224,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 					break;
 			}
 			break;
-			
+
 		case HARDWARE_PREFIX_TOAPLAN:
 			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
 			{
@@ -263,7 +261,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 					break;
 			}
 			break;
-		
+
 		case HARDWARE_PREFIX_KANEKO:
 			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
 			{
@@ -292,13 +290,13 @@ static bool CheckIfSystem(INT32 gameTocheck)
 				case HARDWARE_MIDWAY_KINST:
 				case HARDWARE_MIDWAY_TUNIT:
 				case HARDWARE_MIDWAY_WUNIT:
-				case HARDWARE_MIDWAY_YUNIT:				
+				case HARDWARE_MIDWAY_YUNIT:
 					bRet = true;
 					break;
 			}
 			break;
-		
-			
+
+
 		case HARDWARE_PUBLIC_MASK:
 			bRet = true;
 			break;
@@ -338,7 +336,7 @@ static void DoFilterGames()
 						count++;
 					}
 				}
-				
+
 			}
 		}
 
@@ -378,23 +376,23 @@ static void DoFilterGames()
 			if (CheckIfSystem(i))
 			{
 				if(bShowClones)
-				{				
+				{
 					filterGames[filterGamesCount] = i;
 					filterGamesCount++;
 				}
 				else
 				{
 					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
-					{					
+					{
 						filterGames[filterGamesCount] = i;
-						filterGamesCount++;					
+						filterGamesCount++;
 					}
 				}
 			}
 		}
 	}
 	nBurnDrvActive = currentSelected;
-	
+
 }
 
 
@@ -511,14 +509,14 @@ static void SwapSystemToCheck()
 			snprintf(systemName, MAX_PATH, "Sinclar Spectrum");
 			nSystemToCheckMask = HARDWARE_SPECTRUM;
 			break;
-//		case HARDWARE_SPECTRUM:
-//			snprintf(systemName, MAX_PATH, "Nintendo Entertainment System / Famicom");
-	//		nSystemToCheckMask = HARDWARE_NES;
-		//	break;
-//		case HARDWARE_NES:
-//			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
-	//		nSystemToCheckMask = HARDWARE_FDS;
-		//	break;
+		case HARDWARE_SPECTRUM:
+			snprintf(systemName, MAX_PATH, "Nintendo Entertainment System / Famicom");
+			nSystemToCheckMask = HARDWARE_NES;
+			break;
+		case HARDWARE_NES:
+			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
+			nSystemToCheckMask = HARDWARE_FDS;
+			break;
 		default:
 			snprintf(systemName, MAX_PATH, "Everything");
 			nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
@@ -532,20 +530,20 @@ void findNextLetter()
 {
 	int currentSelected = nBurnDrvActive;
 	bool found = false;
-	
+
 	currentLetterCount++;
 	if (currentLetterCount >= 27)
 	{
 		currentLetterCount = 0;
 	}
 	char letterToFind = searchLetters[currentLetterCount];
-	
+
 	char checkChar;
-	
+
 	for (int i = 0; i < filterGamesCount; i++)
 	{
 		nBurnDrvActive = filterGames[i];
-		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0];
 		if (!found && (checkChar == letterToFind))
 		{
 			found = true;
@@ -553,7 +551,7 @@ void findNextLetter()
 			startGame -= gamesperscreen_halfway;
 		}
 	}
-		
+
 	nBurnDrvActive = currentSelected;
 }
 
@@ -568,15 +566,15 @@ void findPrevLetter()
 		currentLetterCount = 27;
 	}
 	currentLetterCount--;
-	
+
 	char letterToFind = searchLetters[currentLetterCount];
-	
+
 	char checkChar;
-	
+
 	for (int i = 0; i < filterGamesCount; i++)
 	{
 		nBurnDrvActive = filterGames[i];
-		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0]; 
+		checkChar = BurnDrvGetTextA(DRV_FULLNAME)[0];
 		if (!found && (checkChar == letterToFind))
 		{
 			found = true;
@@ -584,7 +582,7 @@ void findPrevLetter()
 			startGame -= gamesperscreen_halfway;
 		}
 	}
-		
+
 	nBurnDrvActive = currentSelected;
 }
 
@@ -1010,27 +1008,27 @@ int gui_process()
 				case SDLK_UP:
 					startGame--;
 					break;
-					
+
 				case SDLK_DOWN:
 					startGame++;
 					break;
-					
+
 				case SDLK_HOME:
 					startGame = -gamesperscreen_halfway;
 					break;
-					
+
 				case SDLK_END:
 					startGame = filterGamesCount;
 					break;
-					
+
 				case SDLK_PAGEUP:
 					startGame -= gamesperscreen_halfway;
 					break;
-					
+
 				case SDLK_PAGEDOWN:
 					startGame += gamesperscreen_halfway;
 					break;
-				
+
 				case SDLK_LEFT:
 					startGame -= 10;
 					break;
@@ -1038,7 +1036,7 @@ int gui_process()
 				case SDLK_RIGHT:
 					startGame += 10;
 					break;
-										
+
 				case SDLK_w:
 					findNextLetter();
 					break;

@@ -6,7 +6,7 @@
 struct GenericTilemap {
 	UINT8 initialized;
 	INT32 (*pScan)(INT32 col, INT32 row);
-	void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags, INT32 *category);
+	void (*pTile)(INT32 offs, GenericTilemapCallbackStruct *sTile);
 	UINT8 enable;
 	UINT32 mwidth;
 	UINT32 mheight;
@@ -33,7 +33,7 @@ static GenericTilemap maps[MAX_TILEMAPS];
 static GenericTilemap *cur_map;
 GenericTilesGfx GenericGfxData[MAX_TILEMAPS];
 
-void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags, INT32 *category), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
+void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, GenericTilemapCallbackStruct *sTile), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
 {
 #if defined FBNEO_DEBUG
 	if (Debug_GenericTilesInitted == 0) {
@@ -901,6 +901,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 	INT32 x_offset = cur_map->xoffset[(cur_map->flags & TMAP_FLIPX) ? 1 : 0];
 	INT32 y_offset = cur_map->yoffset[(cur_map->flags & TMAP_FLIPY) ? 1 : 0];
 
+	struct GenericTilemapCallbackStruct sTileData;
+
 	// column (less than tile size) and line scroll
 	if ((cur_map->scrolly_table != NULL) && (cur_map->scroll_cols > cur_map->mwidth))
 	{
@@ -933,17 +935,18 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					bx = (bitmap_width - cur_map->twidth) - bx;
 				}
 
-				INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
-				UINT32 flags;
+				INT32 offset = cur_map->pScan(col,row);
 
 				if (cur_map->dirty_tiles_enable) {
 					if (cur_map->dirty_tiles[offset] == 0) continue;
 					cur_map->dirty_tiles[offset] = 0;
 				}
 
-				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
+				sTileData.category = 0;
 
-				category |= category_or;
+				cur_map->pTile(offset, &sTileData);
+
+				UINT32 category = sTileData.category | category_or;
 				
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -951,33 +954,33 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[sTileData.gfx];
 
 #if defined FBNEO_DEBUG
 				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, sTileData.gfx);
 					continue;
 				}
 
 				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
 				{
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, sTileData.gfx, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
 					continue;
 				}
 #endif
 
-				code %= gfx->code_mask;
+				sTileData.code %= gfx->code_mask;
 
 				if (opaque == 0)
 				{
-					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
-						if (cur_map->skip_tiles[gfxnum][code])
+					if (cur_map->skip_tiles[sTileData.gfx] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+						if (cur_map->skip_tiles[sTileData.gfx][sTileData.code])
 							continue; 
 
-					if (flags & TILE_SKIP) continue; // skip this tile
+					if (sTileData.flags & TILE_SKIP) continue; // skip this tile
 
-					if (flags & TILE_GROUP_ENABLE) {
-						group = (flags >> 16) & 0xff;
+					if (sTileData.flags & TILE_GROUP_ENABLE) {
+						INT32 group = (sTileData.flags >> 16) & 0xff;
 
 						if (group != tgroup) {
 							continue;
@@ -985,10 +988,10 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				color = ((color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
+				sTileData.color = ((sTileData.color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
 
-				INT32 flipx = flags & TILE_FLIPX; 
-				INT32 flipy = flags & TILE_FLIPY;
+				INT32 flipx = sTileData.flags & TILE_FLIPX; 
+				INT32 flipy = sTileData.flags & TILE_FLIPY;
 				if (cur_map->flags & TMAP_FLIPY) flipy ^= TILE_FLIPY;
 				if (cur_map->flags & TMAP_FLIPX) flipy ^= TILE_FLIPX;
 
@@ -997,13 +1000,13 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				goffs *= cur_map->twidth;
 				if (flipx) { goffs += (cur_map->twidth  - 1) - (sx % cur_map->twidth);  } else { goffs += (sx % cur_map->twidth); }
 
-				UINT8 *gfxsrc = gfx->gfxbase + (code * cur_map->twidth * cur_map->theight) + goffs;
+				UINT8 *gfxsrc = gfx->gfxbase + (sTileData.code * cur_map->twidth * cur_map->theight) + goffs;
 
 				UINT8 *trans_ptr = cur_map->transparent[category];
 
 				if (trans_ptr[*gfxsrc] == 0)
 				{
-					Bitmap[y * bitmap_width + x] = *gfxsrc + color;
+					Bitmap[y * bitmap_width + x] = *gfxsrc + sTileData.color;
 					pPrioDraw[y * bitmap_width + x] = priority | (pPrioDraw[y * bitmap_width + x] & GenericTilesPRIMASK);
 				}
 			}
@@ -1043,18 +1046,18 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			{
 				INT32 sx = x;
 				INT32 col = ((x + scrollx) % (cur_map->mwidth * cur_map->twidth)) / cur_map->twidth;
-
-				INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
-				UINT32 flags;
+				INT32 offset = cur_map->pScan(col,row);
 
 				if (cur_map->dirty_tiles_enable) {
 					if (cur_map->dirty_tiles[offset] == 0) continue;
 					cur_map->dirty_tiles[offset] = 0;
 				}
 
-				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
+				sTileData.category = 0;
 
-				category |= category_or;
+				cur_map->pTile(offset, &sTileData);
+
+				UINT32 category = sTileData.category | category_or;
 				
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1062,33 +1065,33 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[sTileData.gfx];
 
 #if defined FBNEO_DEBUG
 				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, sTileData.gfx);
 					continue;
 				}
 
 				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
 				{
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, sTileData.gfx, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
 					continue;
 				}
 #endif
 
-				code %= gfx->code_mask;
+				sTileData.code %= gfx->code_mask;
 
 				if (opaque == 0)
 				{
-					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
-						if (cur_map->skip_tiles[gfxnum][code])
+					if (cur_map->skip_tiles[sTileData.gfx] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+						if (cur_map->skip_tiles[sTileData.gfx][sTileData.code])
 							continue; 
 
-					if (flags & TILE_SKIP) continue; // skip this tile
+					if (sTileData.flags & TILE_SKIP) continue; // skip this tile
 
-					if (flags & TILE_GROUP_ENABLE) {
-						group = (flags >> 16) & 0xff;
+					if (sTileData.flags & TILE_GROUP_ENABLE) {
+						INT32 group = (sTileData.flags >> 16) & 0xff;
 
 						if (group != tgroup) {
 							continue;
@@ -1096,10 +1099,10 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				color = ((color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
+				sTileData.color = ((sTileData.color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
 
-				INT32 flipx = flags & TILE_FLIPX; 
-				INT32 flipy = flags & TILE_FLIPY;
+				INT32 flipx = sTileData.flags & TILE_FLIPX; 
+				INT32 flipy = sTileData.flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
 					flipy ^= TILE_FLIPY;
@@ -1117,7 +1120,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					flipx ^= TILE_FLIPX;
 				}
 
-				UINT8 *gfxsrc = gfx->gfxbase + (code * cur_map->twidth * cur_map->theight) + (scy * cur_map->twidth);
+				UINT8 *gfxsrc = gfx->gfxbase + (sTileData.code * cur_map->twidth * cur_map->theight) + (scy * cur_map->twidth);
 				UINT8 *trans_ptr = cur_map->transparent[category];
 
 				if (flipx)
@@ -1130,7 +1133,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 						if (dst < minx || dst >= maxx) continue;
 
 						if (trans_ptr[gfxsrc[flip_wide - dx]] == 0) {
-							dest[dst] = color + gfxsrc[flip_wide - dx];
+							dest[dst] = sTileData.color + gfxsrc[flip_wide - dx];
 							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
@@ -1143,7 +1146,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 						if (dst < minx || dst >= maxx) continue;
 
 						if (trans_ptr[gfxsrc[dx]] == 0) {
-							dest[dst] = color + gfxsrc[dx];
+							dest[dst] = sTileData.color + gfxsrc[dx];
 							prio[dst] = priority | (prio[dst] & GenericTilesPRIMASK);
 						}
 					}
@@ -1192,18 +1195,18 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			{
 				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
 
-				INT32 code, color, group, gfxnum, category = 0;
 				INT32 offset = cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight);
-				UINT32 flags;
 
 				if (cur_map->dirty_tiles_enable) {
 					if (cur_map->dirty_tiles[offset] == 0) continue;
 					cur_map->dirty_tiles[offset] = 0;
 				}
 
-				cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
+				sTileData.category = 0;
 
-				category |= category_or;
+				cur_map->pTile(offset, &sTileData);
+
+				UINT32 category = sTileData.category | category_or;
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -1211,35 +1214,35 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+				GenericTilesGfx *gfx = &GenericGfxData[sTileData.gfx];
 
 #if defined FBNEO_DEBUG
 				if (gfx->gfxbase == NULL) {
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, sTileData.gfx);
 					continue;
 				}
 
 				if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
 				{
-					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+					bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, sTileData.gfx, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
 					continue;
 				}
 #endif
 
-				code %= gfx->code_mask;
+				sTileData.code %= gfx->code_mask;
 
 				if (opaque == 0)
 				{
-					if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT)) {	// skip this tile
-						if (cur_map->skip_tiles[gfxnum][code]) {
+					if (cur_map->skip_tiles[sTileData.gfx] && (cur_map->flags & TMAP_TRANSPARENT)) {	// skip this tile
+						if (cur_map->skip_tiles[sTileData.gfx][sTileData.code]) {
 							continue;
 						}
 					}
 
-					if (flags & TILE_SKIP) continue; // skip this tile
+					if (sTileData.flags & TILE_SKIP) continue; // skip this tile
 
-					if (flags & TILE_GROUP_ENABLE) {
-						group = (flags >> 16) & 0xff;
+					if (sTileData.flags & TILE_GROUP_ENABLE) {
+						INT32 group = (sTileData.flags >> 16) & 0xff;
 	
 						if (group != tgroup) {
 							continue;
@@ -1247,13 +1250,13 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					}
 				}
 
-				color &= gfx->color_mask;
+				sTileData.color &= gfx->color_mask;
 
 				INT32 sy = y - syshift;
 				INT32 sx = x - sxshift;
 
-				INT32 flipx = flags & TILE_FLIPX; 
-				INT32 flipy = flags & TILE_FLIPY;
+				INT32 flipx = sTileData.flags & TILE_FLIPX; 
+				INT32 flipy = sTileData.flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
 					// part of clip fix (save for reimpl)
@@ -1276,35 +1279,35 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				if (sx < minx || sy < miny || sx >= (INT32)(maxx - cur_map->twidth - 1) || sy >= (INT32)(maxy - cur_map->theight - 1))
 				{
-					if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+					if ((cur_map->flags & TMAP_TRANSPARENT) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_Mask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_Mask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_Mask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_Mask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}
 					}
-					else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+					else if ((cur_map->flags & TMAP_TRANSMASK) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_TransMask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_TransMask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_TransMask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_TransMask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}	
 					}
@@ -1312,50 +1315,50 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}
 					}
 				} 
 				else
 				{
-					if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+					if ((cur_map->flags & TMAP_TRANSPARENT) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_Mask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_Mask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_Mask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_Mask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_Mask(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}
 					}
-					else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+					else if ((cur_map->flags & TMAP_TRANSMASK) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_TransMask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_TransMask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_TransMask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_TransMask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_TransMask(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}	
 					}
@@ -1363,15 +1366,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 					{
 						if (flipy) {
 							if (flipx) {
-								RenderCustomTile_Prio_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						} else {
 							if (flipx) {
-								RenderCustomTile_Prio_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							} else {
-								RenderCustomTile_Prio(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+								RenderCustomTile_Prio(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 							}
 						}
 					}
@@ -1388,17 +1391,18 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		INT32 col = offs % cur_map->mwidth; //x
 		INT32 row = offs / cur_map->mwidth; //y
 
-		INT32 code, color, group, gfxnum, category = 0, offset = cur_map->pScan(col,row);
-		UINT32 flags;
+		INT32 offset = cur_map->pScan(col,row);
 
 		if (cur_map->dirty_tiles_enable) {
 			if (cur_map->dirty_tiles[offset] == 0) continue;
 			cur_map->dirty_tiles[offset] = 0;
 		}
 
-		cur_map->pTile(offset, &gfxnum, &code, &color, &flags, &category);
+		sTileData.category = 0;
 
-		category |= category_or;
+		cur_map->pTile(offset, &sTileData);
+
+		UINT32 category = sTileData.category | category_or;
 
 		if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 			if (cur_map->transparent[category] == NULL) {
@@ -1406,33 +1410,33 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			}
 		}
 
-		GenericTilesGfx *gfx = &GenericGfxData[gfxnum];
+		GenericTilesGfx *gfx = &GenericGfxData[sTileData.gfx];
 
 #if defined FBNEO_DEBUG
 		if (gfx->gfxbase == NULL) {
-			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, sTileData.gfx);
 			continue;
 		}
 
 		if (((UINT32)gfx->width != cur_map->twidth) || ((UINT32)gfx->height != cur_map->theight))
 		{
-			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, gfxnum, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
+			bprintf (PRINT_ERROR,_T("GenericTilemapDraw(%d) gfx[%d] tile dimensions (%dx%d do not match tilemap tile dimensions (%dx%d)!\n"), which, sTileData.gfx, gfx->width, gfx->height, cur_map->twidth, cur_map->theight);
 			continue;
 		}
 #endif
 
-		code %= gfx->code_mask;
+		sTileData.code %= gfx->code_mask;
 
 		if (opaque == 0)
 		{
-			if (cur_map->skip_tiles[gfxnum] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
-				if (cur_map->skip_tiles[gfxnum][code])
+			if (cur_map->skip_tiles[sTileData.gfx] && (cur_map->flags & TMAP_TRANSPARENT))	// skip this tile
+				if (cur_map->skip_tiles[sTileData.gfx][sTileData.code])
 					continue; 
 
-			if (flags & TILE_SKIP) continue; // skip this tile
+			if (sTileData.flags & TILE_SKIP) continue; // skip this tile
 
-			if (flags & TILE_GROUP_ENABLE) {
-				group = (flags >> 16) & 0xff;
+			if (sTileData.flags & TILE_GROUP_ENABLE) {
+				INT32 group = (sTileData.flags >> 16) & 0xff;
 
 				if (group != tgroup) {
 					continue;
@@ -1440,7 +1444,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			}
 		}
 
-		color &= gfx->color_mask;
+		sTileData.color &= gfx->color_mask;
 
 		INT32 sx = col * cur_map->twidth;
 		INT32 sy = row * cur_map->theight;
@@ -1462,8 +1466,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		if (sx < (INT32)(1-cur_map->twidth)) sx += cur_map->twidth * cur_map->mwidth;
 		if (sy < (INT32)(1-cur_map->theight)) sy += cur_map->theight * cur_map->mheight;
 
-		INT32 flipx = flags & TILE_FLIPX;
-		INT32 flipy = flags & TILE_FLIPY;
+		INT32 flipx = sTileData.flags & TILE_FLIPX;
+		INT32 flipy = sTileData.flags & TILE_FLIPY;
 
 		sx += x_offset;
 		sy += y_offset;
@@ -1485,35 +1489,35 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 		if (sx < minx || sy < miny || sx >= (INT32)(maxx - cur_map->twidth - 1) || sy >= (INT32)(maxy - cur_map->theight - 1))
 		{
-			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+			if ((cur_map->flags & TMAP_TRANSPARENT) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_Mask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_Mask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_Mask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_Mask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}
 			}
-			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+			else if ((cur_map->flags & TMAP_TRANSMASK) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_TransMask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_TransMask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_TransMask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_TransMask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}	
 			}
@@ -1521,50 +1525,50 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Clip(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}
 			}
 		} 
 		else
 		{
-			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+			if ((cur_map->flags & TMAP_TRANSPARENT) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_Mask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_Mask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_Mask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_Mask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_Mask(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transcolor, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}
 			}
-			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
+			else if ((cur_map->flags & TMAP_TRANSMASK) && (sTileData.flags & TILE_OPAQUE) == 0 && opaque == 0 && opaque2 == 0)
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_TransMask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_TransMask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_TransMask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_TransMask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_TransMask(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, cur_map->transparent[category], gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}	
 			}
@@ -1572,15 +1576,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 			{
 				if (flipy) {
 					if (flipx) {
-						RenderCustomTile_Prio_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipY(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				} else {
 					if (flipx) {
-						RenderCustomTile_Prio_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio_FlipX(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					} else {
-						RenderCustomTile_Prio(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+						RenderCustomTile_Prio(Bitmap, cur_map->twidth, cur_map->theight, sTileData.code, sx, sy, sTileData.color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
 					}
 				}
 			}
@@ -1639,7 +1643,7 @@ void GenericTilemapDumpToBitmap()
 	if (nBurnBpp < 3) {
 		bprintf (PRINT_ERROR, _T("GenericTilemapDumptoBitmap called with pBurnBpp < 24 bit\n"));
 		return;
-	}	
+	}
 #endif
 
 	GenericTilemap *tmp_map = cur_map;
@@ -1682,6 +1686,8 @@ void GenericTilemapDumpToBitmap()
 		0x00, 0x00, 0x00, 0x00
 	};
 
+	struct GenericTilemapCallbackStruct sTileData;
+
 	for (INT32 i = 0; i < MAX_TILEMAPS; i++)
 	{
 		cur_map = &maps[i];
@@ -1714,20 +1720,18 @@ void GenericTilemapDumpToBitmap()
 				for (UINT32 col = 0; col < cur_map->mwidth; col++)
 				{
 					INT32 sx = col * cur_map->twidth;
-					INT32 code, color, gfxnum, category = 0;
-					UINT32 flags;
 
-					cur_map->pTile(cur_map->pScan(col, row), &gfxnum, &code, &color, &flags, &category);
+					cur_map->pTile(cur_map->pScan(col, row), &sTileData);
 
 					{
-						GenericTilesGfx *gfxptr = &GenericGfxData[gfxnum];
+						GenericTilesGfx *gfxptr = &GenericGfxData[sTileData.gfx];
 
-						UINT8 *gfx = gfxptr->gfxbase + (code * gfxptr->width * gfxptr->height);
+						UINT8 *gfx = gfxptr->gfxbase + ((sTileData.code % gfxptr->code_mask) * gfxptr->width * gfxptr->height);
 
-						UINT32 *palette = pBurnDrvPalette + (((color & gfxptr->color_mask) << gfxptr->depth) + gfxptr->color_offset);
+						UINT32 *palette = pBurnDrvPalette + (((sTileData.color & gfxptr->color_mask) << gfxptr->depth) + gfxptr->color_offset);
 
-						INT32 flipx = (flags & TILE_FLIPX) ? (gfxptr->width-1) : 0;
-						INT32 flipy = (flags & TILE_FLIPY) ? (gfxptr->height-1) : 0;
+						INT32 flipx = (sTileData.flags & TILE_FLIPX) ? (gfxptr->width-1) : 0;
+						INT32 flipy = (sTileData.flags & TILE_FLIPY) ? (gfxptr->height-1) : 0;
 
 						UINT32 *dest = bitmap + (sy * tmap_width) + sx;
 

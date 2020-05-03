@@ -1065,7 +1065,7 @@ static tilemap_callback( mappy_bg )
 	UINT8 attr = DrvVidRAM[offs + 0x800];
 
 	TILE_SET_INFO(0, code, attr, TILE_GROUP((attr >> 6) & 1));
-	*category = attr & 0x3f;
+	sTile->category = attr & 0x3f;
 }
 
 static tilemap_callback( superpac_bg )

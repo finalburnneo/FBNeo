@@ -372,7 +372,7 @@ static tilemap_callback( layer0 )
 	INT32 color = attr & 0xf;
 
 	TILE_SET_INFO(0, code, color, TILE_FLIPXY((attr & 0x30) >> 4));
-	*category = (color == 0xf) ? 1 : 0;
+	sTile->category = (color == 0xf) ? 1 : 0;
 }
 
 static INT32 DrvInit(void (*pRomCallback)(), INT32 soundromsmall, INT32 gfxtype)

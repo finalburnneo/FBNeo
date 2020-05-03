@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13836 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13840 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2465,6 +2465,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_devilishj	|  	| Devilish (Jpn)					| gg_devilish	| 1991	| Genki		| Sega Game Gear| 					|
 | gg_devilishu	|  	| Devilish (USA)					| gg_devilish	| 1991	| Sage's Creatio| Sega Game Gear| 					|
 | md_devilish	|  	| Devilish - The Next Possession (USA)			| 		| 1992	| Sage's Creatio| Sega Megadrive| 					|
+| md_devwilltoo	|  	| Devwill Too (HB)					| 		| 2020	| Mega Cat Studi| Sega Megadrive| 					|
 | dharmag	|  	| Dharma Doujou (Germany)				| dharma	| 1994	| Metro		| Miscellaneous	| 					|
 | dharmaj	|  	| Dharma Doujou (Japan)					| dharma	| 1994	| Metro		| Miscellaneous	| 					|
 | dharmak	|  	| Dharma Doujou (Korea)					| dharma	| 1994	| Metro		| Miscellaneous	| 					|
@@ -6386,11 +6387,11 @@ This list contains all games supported by FinalBurn Neo.
 | moonqsr	|  	| Moon Quasar						| 		| 1980	| Nichibutsu	| Galaxian	| 					|
 | mranger	|  	| Moon Ranger (bootleg of Moon Patrol)			| mpatrol	| 1982	| bootleg	| Miscellaneous	| 					|
 | msx_moonridr	|  	| Moon Rider (Euro)					| msx_starbugg	| 1986	| Eaglesoft	| MSX		| 					|
-| mshuttlej2	|  	| Moon Shuttle (Japan set 2)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
-| mshuttlej	|  	| Moon Shuttle (Japan)					| mshuttle	| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
-| mshuttlea	|  	| Moon Shuttle (US, version A)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
-| mshuttle	|  	| Moon Shuttle (US? set 1)				| 		| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
-| mshuttle2	|  	| Moon Shuttle (US? set 2)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| Incomplete Sound			|
+| mshuttlej2	|  	| Moon Shuttle (Japan set 2)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| 					|
+| mshuttlej	|  	| Moon Shuttle (Japan)					| mshuttle	| 1981	| Nichibutsu	| Galaxian	| 					|
+| mshuttlea	|  	| Moon Shuttle (US, version A)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| 					|
+| mshuttle	|  	| Moon Shuttle (US? set 1)				| 		| 1981	| Nichibutsu	| Galaxian	| 					|
+| mshuttle2	|  	| Moon Shuttle (US? set 2)				| mshuttle	| 1981	| Nichibutsu	| Galaxian	| 					|
 | mooncmw	|  	| Moon War (Moon Cresta bootleg)			| mooncrst	| 198?	| bootleg	| Galaxian	| 					|
 | moonwarp	|  	| Moon War (prototype on Frenzy hardware)		| 		| 1981	| Stern Electron| Miscellaneous	| 					|
 | cv_moonswpra	|  	| Moonsweeper (Alt)					| cv_moonswpr	| 1983	| Imagic	| ColecoVision	| 					|
@@ -7261,6 +7262,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_greattank	|  	| NES Great Tank (Japan)				| 		| 1988	| SNK		| Miscellaneous	| 					|
 | nes_greml2	|  	| NES Gremlins 2 - The New Batch (USA)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
 | nes_gruni2	|  	| NES Gruniozerca 2 - The Great Cavy Rescue! (HB)	| 		| 2019	| Lukasz Kur & M| Miscellaneous	| 					|
+| nes_gruni3	|  	| NES Gruniozerca 3 - The Great Cavy Clean-Up! (HB)	| 		| 2019	| Lukasz Kur & M| Miscellaneous	| 					|
 | nes_guardleg	|  	| NES Guardian Legend, The (USA)			| 		| 1989	| Broderbund	| Miscellaneous	| 					|
 | nes_guardicgaiden|  	| NES Guardic Gaiden (Japan)				| nes_guardleg	| 1987	| Irem		| Miscellaneous	| 					|
 | nes_guerrillawar|  	| NES Guerrilla War (USA)				| 		| 1989	| SNK		| Miscellaneous	| 					|
@@ -7748,6 +7750,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_sansaranagaj|  	| NES Sansara Naga (Japan)				| nes_sansaranaga| 1990	| Victor	| Miscellaneous	| 					|
 | nes_sansaranaga|  	| NES Sansara Naga (T-eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_saturnsmash|  	| NES Saturn Smash (HB)					| 		| 2019	| FG Software	| Miscellaneous	| 					|
+| nes_scramble	|  	| NES Scramble (HB)					| 		| 2017	| Khan Games	| Miscellaneous	| 					|
 | nes_secretties|  	| NES Secret Ties (USA) (Proto)				| 		| 0000	| Vic Tokai	| Miscellaneous	| 					|
 | nes_sectionz	|  	| NES Section-Z (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_seicross	|  	| NES Seicross (USA)					| 		| 1988	| FCI		| Miscellaneous	| 					|
@@ -7969,6 +7972,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ultimaexodus|  	| NES Ultima - Exodus (USA)				| 		| 1989	| FCI		| Miscellaneous	| 					|
 | nes_ultimqueava|  	| NES Ultima - Quest of the Avatar (USA)		| 		| 1990	| FCI		| Miscellaneous	| 					|
 | nes_ultimwardes|  	| NES Ultima - Warriors of Destiny (USA)		| 		| 1993	| FCI		| Miscellaneous	| 					|
+| nes_ultimfrocha|  	| NES Ultimate Frogger Champion (HB)			| 		| 2019	| Khan Games	| Miscellaneous	| 					|
 | nes_ultimleasoci|  	| NES Ultimate League Soccer (Italy)			| nes_ultimleasoc| 1991	| AVE		| Miscellaneous	| 					|
 | nes_ultimleasoc|  	| NES Ultimate League Soccer (USA)			| 		| 1991	| AVE		| Miscellaneous	| 					|
 | nes_ultimmorkom3h|  	| NES Ultimate Mortal Kombat 3 (Hack)			| nes_ultimmorkom3| 1989?	| Nintendo	| Miscellaneous	| 					|

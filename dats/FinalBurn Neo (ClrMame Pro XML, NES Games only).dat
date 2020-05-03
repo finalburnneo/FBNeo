@@ -3176,6 +3176,13 @@
 		<rom name="Gruniozerca 2 - The Great Cavy Rescue! (HB).nes" size="65552" crc="911a2917"/>
 		<driver status="good"/>
 	</game>
+	<game name="gruni3">
+		<description>NES Gruniozerca 3 - The Great Cavy Clean-Up! (HB)</description>
+		<year>2019</year>
+		<manufacturer>Lukasz Kur &amp; M-Tee</manufacturer>
+		<rom name="Gruniozerca 3 - The Great Cavy Clean-Up! (HB).nes" size="65552" crc="a92f5930"/>
+		<driver status="good"/>
+	</game>
 	<game name="guardleg">
 		<description>NES Guardian Legend, The (USA)</description>
 		<year>1989</year>
@@ -6585,6 +6592,13 @@
 		<rom name="Saturn Smash (HB).nes" size="65552" crc="abc36edb"/>
 		<driver status="good"/>
 	</game>
+	<game name="scramble">
+		<description>NES Scramble (HB)</description>
+		<year>2017</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Scramble (HB).nes" size="131088" crc="ca6130a6"/>
+		<driver status="good"/>
+	</game>
 	<game name="secretties">
 		<description>NES Secret Ties (USA) (Proto)</description>
 		<year>0000</year>
@@ -8130,6 +8144,13 @@
 		<year>1993</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Ultima - Warriors of Destiny (USA).nes" size="262160" crc="2d8c2829"/>
+		<driver status="good"/>
+	</game>
+	<game name="ultimfrocha">
+		<description>NES Ultimate Frogger Champion (HB)</description>
+		<year>2019</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Ultimate Frogger Champion (HB).nes" size="49168" crc="ab862073"/>
 		<driver status="good"/>
 	</game>
 	<game name="ultimleasoci" cloneof="ultimleasoc" romof="ultimleasoc">

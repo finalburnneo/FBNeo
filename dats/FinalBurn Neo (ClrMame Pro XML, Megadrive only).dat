@@ -3065,6 +3065,13 @@
 		<rom name="devilish - the next possession (usa).bin" size="524288" crc="d3f300ac"/>
 		<driver status="good"/>
 	</game>
+	<game name="devwilltoo">
+		<description>Devwill Too (HB)</description>
+		<year>2020</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Devwill Too.bin" size="4194304" crc="34031793"/>
+		<driver status="good"/>
+	</game>
 	<game name="diablo" cloneof="fatallab" romof="fatallab">
 		<description>Diablo (Rus)</description>
 		<year>199?</year>

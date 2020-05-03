@@ -2511,6 +2511,7 @@ DRV		BurnDrvgg_devilish;
 DRV		BurnDrvgg_devilishj;
 DRV		BurnDrvgg_devilishu;
 DRV		BurnDrvmd_devilish;
+DRV		BurnDrvmd_devwilltoo;
 DRV		BurnDrvDharmag;
 DRV		BurnDrvDharmaj;
 DRV		BurnDrvDharmak;
@@ -7405,6 +7406,7 @@ DRV		BurnDrvnes_greatbatcyb;
 DRV		BurnDrvnes_greattank;
 DRV		BurnDrvnes_greml2;
 DRV		BurnDrvnes_gruni2;
+DRV		BurnDrvnes_gruni3;
 DRV		BurnDrvnes_guardleg;
 DRV		BurnDrvnes_guardicgaiden;
 DRV		BurnDrvnes_guerrillawar;
@@ -7892,6 +7894,7 @@ DRV		BurnDrvnes_salamander;
 DRV		BurnDrvnes_sansaranagaj;
 DRV		BurnDrvnes_sansaranaga;
 DRV		BurnDrvnes_saturnsmash;
+DRV		BurnDrvnes_scramble;
 DRV		BurnDrvnes_secretties;
 DRV		BurnDrvnes_sectionz;
 DRV		BurnDrvnes_seicross;
@@ -8113,6 +8116,7 @@ DRV		BurnDrvnes_ufouria;
 DRV		BurnDrvnes_ultimaexodus;
 DRV		BurnDrvnes_ultimqueava;
 DRV		BurnDrvnes_ultimwardes;
+DRV		BurnDrvnes_ultimfrocha;
 DRV		BurnDrvnes_ultimleasoci;
 DRV		BurnDrvnes_ultimleasoc;
 DRV		BurnDrvnes_ultimmorkom3h;
@@ -16622,6 +16626,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_devilishj,		// Devilish (Jpn)
 	&BurnDrvgg_devilishu,		// Devilish (USA)
 	&BurnDrvmd_devilish,		// Devilish - The Next Possession (USA)
+	&BurnDrvmd_devwilltoo,		// Devwill Too (HB)
 	&BurnDrvDharmag,			// Dharma Doujou (Germany)
 	&BurnDrvDharmaj,			// Dharma Doujou (Japan)
 	&BurnDrvDharmak,			// Dharma Doujou (Korea)
@@ -21516,6 +21521,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_greattank,		// NES Great Tank (Japan)
 	&BurnDrvnes_greml2,			// NES Gremlins 2 - The New Batch (USA)
 	&BurnDrvnes_gruni2,			// NES Gruniozerca 2 - The Great Cavy Rescue! (HB)
+	&BurnDrvnes_gruni3,			// NES Gruniozerca 3 - The Great Cavy Clean-Up! (HB)
 	&BurnDrvnes_guardleg,		// NES Guardian Legend, The (USA)
 	&BurnDrvnes_guardicgaiden,	// NES Guardic Gaiden (Japan)
 	&BurnDrvnes_guerrillawar,	// NES Guerrilla War (USA)
@@ -22003,6 +22009,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_sansaranagaj,	// NES Sansara Naga (Japan)
 	&BurnDrvnes_sansaranaga,	// NES Sansara Naga (T-eng)
 	&BurnDrvnes_saturnsmash,	// NES Saturn Smash (HB)
+	&BurnDrvnes_scramble,		// NES Scramble (HB)
 	&BurnDrvnes_secretties,		// NES Secret Ties (USA) (Proto)
 	&BurnDrvnes_sectionz,		// NES Section-Z (USA)
 	&BurnDrvnes_seicross,		// NES Seicross (USA)
@@ -22224,6 +22231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ultimaexodus,	// NES Ultima - Exodus (USA)
 	&BurnDrvnes_ultimqueava,	// NES Ultima - Quest of the Avatar (USA)
 	&BurnDrvnes_ultimwardes,	// NES Ultima - Warriors of Destiny (USA)
+	&BurnDrvnes_ultimfrocha,	// NES Ultimate Frogger Champion (HB)
 	&BurnDrvnes_ultimleasoci,	// NES Ultimate League Soccer (Italy)
 	&BurnDrvnes_ultimleasoc,	// NES Ultimate League Soccer (USA)
 	&BurnDrvnes_ultimmorkom3h,	// NES Ultimate Mortal Kombat 3 (Hack)

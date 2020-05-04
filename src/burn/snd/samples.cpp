@@ -666,6 +666,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 			// if sample position is greater than length, stop playback
 			if ((length - current_pos) <= 0) {
 				BurnSampleStop(i);
+				pos = 0;
 				continue;
 			}
 
@@ -685,6 +686,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 				// if sample position is greater than length, stop playback
 				if ((sample_ptr->length - current_pos) <= 0) {
 					BurnSampleStop(i);
+					pos = 0;
 					break;
 				}
 			}

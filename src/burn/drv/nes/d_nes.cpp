@@ -8248,7 +8248,6 @@ static INT32 NESScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_NVRAM) {
 		if (Cart.BatteryBackedSRAM) {
-			bprintf(0, _T("Scanning Battery-backed sRAM\n"));
 			ScanVar(Cart.WorkRAM, Cart.WorkRAMSize, "s-ram");
 		}
 

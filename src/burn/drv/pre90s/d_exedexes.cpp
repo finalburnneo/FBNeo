@@ -245,7 +245,7 @@ static tilemap_callback( text )
 	INT32 attr = DrvColRAM[offs];
 
 	TILE_SET_INFO(0, DrvVidRAM[offs] + ((attr & 0x80) << 1), attr & 0x3f, 0);
-	*category = attr & 0x3f;
+	sTile->category = attr & 0x3f;
 }
 
 static tilemap_scan( background )

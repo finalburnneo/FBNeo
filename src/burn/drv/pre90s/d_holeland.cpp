@@ -374,7 +374,7 @@ static tilemap_callback( holeland )
 
 	TILE_SET_INFO(0, code, (palette_offset << 4) | (attr >> 4), TILE_FLIPYX(attr >> 2));
 
-	*category = attr >> 7; // 0x20 in crzrally, but not used
+	sTile->category = attr >> 7; // 0x20 in crzrally, but not used
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)

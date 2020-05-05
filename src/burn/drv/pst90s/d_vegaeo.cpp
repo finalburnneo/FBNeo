@@ -443,6 +443,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	E132XSOpen(0);
+	mcs51Open(0);
 
 	vblank = 0;
 
@@ -459,6 +460,7 @@ static INT32 DrvFrame()
 		qs1000_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	mcs51Close();
 	E132XSClose();
 
 	if (pBurnDraw) {

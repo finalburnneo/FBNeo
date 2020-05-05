@@ -323,7 +323,7 @@ static tilemap_callback( fg )
 	INT32 code = DrvVidRAM[offs] + ((attr & 0xe0) << 2);
 
 	TILE_SET_INFO(1, code, attr & 0x1f, 0);
-	*category = attr & 0x1f;
+	sTile->category = attr & 0x1f;
 }
 
 static INT32 MemIndex()

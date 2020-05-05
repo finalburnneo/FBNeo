@@ -114,7 +114,7 @@ static m6800_Regs m6800;
 #define OC		m6800.output_compare.w.l
 #define OCH		m6800.output_compare.w.h
 #define OCD		m6800.output_compare.d
-#define TOH		m6800.timer_over.w.l
+#define TOH		m6800.timer_over.w.h
 #define TOD		m6800.timer_over.d
 
 //static PAIR ea; 		/* effective address */
@@ -548,8 +548,13 @@ void m6800_reset_soft(void)
 	m6800.irq_state[M6800_TIN_LINE] = 0;
 	m6800.ic_eddge = 0;
 
+	m6800.port1_data = 0x00;
 	m6800.port1_ddr = 0x00;
 	m6800.port2_ddr = 0x00;
+	m6800.port3_ddr = 0x00;
+	m6800.portx_ddr[0] = 0x00;
+	m6800.portx_ddr[1] = 0x00;
+
 	/* TODO: on reset port 2 should be read to determine the operating mode (bits 0-2) */
 	m6800.tcsr = 0x00;
 	m6800.pending_tcsr = 0x00;
@@ -969,6 +974,23 @@ void M6800RunEnd()
 }
 
 #if (HAS_M6803||HAS_HD63701)
+// xdinkx
+unsigned char hd63xy_internal_registers_r(unsigned short offset)
+{
+	switch (offset)
+	{
+		case 0x15: // port 5 data read
+			return (M6800_io_read_byte_8(HD63701_PORT5) & (m6800.portx_ddr[0] ^ 0xff))
+				| (m6800.portx_data[0] & m6800.portx_ddr[0]);
+		case 0x17: // port 6 data read
+			return (M6800_io_read_byte_8(HD63701_PORT6) & (m6800.portx_ddr[1] ^ 0xff))
+				| (m6800.portx_data[1] & m6800.portx_ddr[1]);
+		case 0x18: // port 7 data read
+			return 0xe0 | m6800.portx_data[2];
+	}
+
+	return m6803_internal_registers_r(offset);
+}
 
 unsigned char m6803_internal_registers_r(unsigned short offset)
 {
@@ -1044,6 +1066,64 @@ unsigned char m6803_internal_registers_r(unsigned short offset)
 		default:
 //			logerror("CPU #%d PC %04x: warning - read from reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
 			return 0;
+	}
+}
+
+void hd63xy_internal_registers_w(unsigned short offset, unsigned char data)
+{
+	switch (offset)
+	{
+		case 0x15: // port 5 data write
+			m6800.portx_data[0] = data;
+			if(m6800.portx_ddr[0] == 0xff)
+				M6800_io_write_byte_8(HD63701_PORT5,m6800.portx_data[0]);
+			else
+				M6800_io_write_byte_8(HD63701_PORT5,(m6800.portx_data[0] & m6800.portx_ddr[0])
+					| (M6800_io_read_byte_8(HD63701_PORT5) & (m6800.portx_ddr[0] ^ 0xff)));
+			break;
+
+		case 0x16: // port 6 ddr write
+			if (m6800.portx_ddr[1] != data)
+			{
+			   m6800.portx_ddr[1] = data;
+				if(m6800.portx_ddr[1] == 0xff)
+					M6800_io_write_byte_8(HD63701_PORT6,m6800.portx_data[1]);
+				else
+					M6800_io_write_byte_8(HD63701_PORT6,(m6800.portx_data[1] & m6800.portx_ddr[1])
+						| (M6800_io_read_byte_8(HD63701_PORT6) & (m6800.portx_ddr[1] ^ 0xff)));
+			}
+			break;
+
+		case 0x17: // port 6 data write
+			m6800.portx_data[1] = data;
+			if(m6800.portx_ddr[1] == 0xff)
+				M6800_io_write_byte_8(HD63701_PORT6,m6800.portx_data[1]);
+			else
+				M6800_io_write_byte_8(HD63701_PORT6,(m6800.portx_data[1] & m6800.portx_ddr[1])
+					| (M6800_io_read_byte_8(HD63701_PORT6) & (m6800.portx_ddr[1] ^ 0xff)));
+			break;
+
+		case 0x18: // port 7 data write
+			m6800.portx_data[2] = data & 0x1f;
+			M6800_io_write_byte_8(HD63701_PORT7,m6800.portx_data[2]);
+			break;
+
+		case 0x20: // port 5 ddr write
+			if (m6800.portx_ddr[0] != data)
+			{
+				m6800.portx_ddr[0] = data;
+				if(m6800.portx_ddr[0] == 0xff)
+					M6800_io_write_byte_8(HD63701_PORT5,m6800.portx_data[0]);
+				else
+					M6800_io_write_byte_8(HD63701_PORT5,(m6800.portx_data[0] & m6800.portx_ddr[0])
+						| (M6800_io_read_byte_8(HD63701_PORT5) & (m6800.portx_ddr[0] ^ 0xff)));
+			}
+			break;
+
+
+		default:
+			m6803_internal_registers_w(offset, data);
+			break;
 	}
 }
 

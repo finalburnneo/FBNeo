@@ -962,13 +962,13 @@ static INT32 TubepbInit()
 	ZetSetInHandler(tubep_sound_read_port);
 	ZetClose();
 
-	NSC8105Init(0); // actually m6802, but works with this...
-	NSC8105Open(0);
-	NSC8105MapMemory(DrvSprColRAM,			0x0000, 0x03ff, MAP_RAM);
-	NSC8105MapMemory(DrvShareRAM[1],		0x0800, 0x0fff, MAP_RAM);
-	NSC8105MapMemory(DrvMCUROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
-	NSC8105SetWriteHandler(tubep_mcu_write);
-	NSC8105Close();
+	M6800Init(0);
+	M6800Open(0);
+	M6800MapMemory(DrvSprColRAM,			0x0000, 0x03ff, MAP_RAM);
+	M6800MapMemory(DrvShareRAM[1],			0x0800, 0x0fff, MAP_RAM);
+	M6800MapMemory(DrvMCUROM + 0xc000,		0xc000, 0xffff, MAP_ROM);
+	M6800SetWriteHandler(tubep_mcu_write);
+	M6800Close(); // from now on, this cpu will be accessed via NSC8105* function aliases.
 
 	AY8910Init(0, 1248000, 0);
 	AY8910Init(1, 1248000, 0);

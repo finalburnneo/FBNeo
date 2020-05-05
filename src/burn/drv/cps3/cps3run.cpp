@@ -1886,7 +1886,7 @@ INT32 DrvCps3Draw()
 							cury_pos -= 18;
 							cury_pos &= 0x3ff;
 
-							if (cury_pos >= 0 && cury_pos <= cps3_gfx_max_y)
+							if (cury_pos >= 0 && cury_pos <= cps3_gfx_max_y+1)
 								cps3_draw_tilemapsprite_line(cury_pos, regs);
 						}
 					}

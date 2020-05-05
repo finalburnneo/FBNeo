@@ -451,7 +451,7 @@ static tilemap_callback( txt )
 	INT32 color = DrvTileAttrRAM[offs];
 
 	TILE_SET_INFO(0, code, color, 0);
-	*category = color;
+	sTile->category = color;
 }
 
 static tilemap_callback( bg1 )

@@ -5,11 +5,13 @@
 #define MAX_CPU     8
 
 INT32 nM6800Count = 0; // note: is 0 when 1 cpu is in use. also, 0 when no cpus are in use.
-static INT32 nActiveCPU = 0;
+static INT32 nActiveCPU = -1;
 
 static M6800Ext *M6800CPUContext = NULL;
 
 static INT32 nM6800CyclesDone[MAX_CPU];
+static INT32 (*cpu_execute[MAX_CPU])(INT32);
+
 INT32 nM6800CyclesTotal;
 
 static void m6800_core_set_irq(INT32 cpu, INT32 line, INT32 state)
@@ -50,25 +52,6 @@ cpu_core_config M6800Config =  // M6802, M6808
 	0
 };
 
-static void hd63701_core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		if (active != -1) M6800Close();
-		M6800Open(cpu);
-	}
-
-	HD63701SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		M6800Close();
-		if (active != -1) M6800Open(active);
-	}
-}
-
 cpu_core_config HD63701Config =
 {
 	"HD63701",
@@ -80,32 +63,13 @@ cpu_core_config HD63701Config =
 	M6800TotalCycles,
 	M6800NewFrame,
 	M6800Idle,
-	hd63701_core_set_irq, // different
+	m6800_core_set_irq,
 	HD63701Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
-
-static void m6803_core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		if (active != -1) M6800Close();
-		M6800Open(cpu);
-	}
-
-	M6803SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		M6800Close();
-		if (active != -1) M6800Open(active);
-	}
-}
 
 cpu_core_config M6803Config =  // M6801, M6803
 {
@@ -118,32 +82,13 @@ cpu_core_config M6803Config =  // M6801, M6803
 	M6800TotalCycles,
 	M6800NewFrame,
 	M6800Idle,
-	m6803_core_set_irq,
+	m6800_core_set_irq,
 	M6803Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
-
-static void m6801_core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		if (active != -1) M6800Close();
-		M6800Open(cpu);
-	}
-
-	M6801SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		M6800Close();
-		if (active != -1) M6800Open(active);
-	}
-}
 
 cpu_core_config M6801Config =
 {
@@ -156,33 +101,13 @@ cpu_core_config M6801Config =
 	M6800TotalCycles,
 	M6800NewFrame,
 	M6800Idle,
-	m6801_core_set_irq,
+	m6800_core_set_irq,
 	M6803Run,		// different
 	M6800RunEnd,
 	M6800Reset,
 	0x10000,
 	0
 };
-
-
-static void msc8105_core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		if (active != -1) M6800Close();
-		M6800Open(cpu);
-	}
-
-	NSC8105SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		M6800Close();
-		if (active != -1) M6800Open(active);
-	}
-}
 
 cpu_core_config NSC8105Config =
 {
@@ -195,7 +120,7 @@ cpu_core_config NSC8105Config =
 	M6800TotalCycles,
 	M6800NewFrame,
 	M6800Idle,
-	msc8105_core_set_irq,
+	m6800_core_set_irq,
 	NSC8105Run,		// different
 	M6800RunEnd,
 	M6800Reset,
@@ -273,11 +198,11 @@ void M6800Open(INT32 num)
 	if (num > nM6800Count) bprintf(PRINT_ERROR, _T("M6800Open called with invalid index %x\n"), num);
 	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("M6800Open called when CPU already open with index %x\n"), num);
 #endif
-	//bprintf(0, _T("open m680x cpu: %d\n"), num);
+
 	nActiveCPU = num;
 
 	m6800_set_context(&M6800CPUContext[nActiveCPU].reg);
-	
+
 	nM6800CyclesTotal = nM6800CyclesDone[nActiveCPU];
 }
 
@@ -287,12 +212,11 @@ void M6800Close()
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Close called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800Close called when no CPU open\n"));
 #endif
-	//bprintf(0, _T("close m680x cpu: %d\n"), nActiveCPU);
 
 	m6800_get_context(&M6800CPUContext[nActiveCPU].reg);
-	
+
 	nM6800CyclesDone[nActiveCPU] = nM6800CyclesTotal;
-	
+
 	nActiveCPU = -1;
 }
 
@@ -334,6 +258,8 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 			for (INT32 j = 0; j < (0x0100 * 3); j++) {
 				M6800CPUContext[i].pMemMap[j] = NULL;
 			}
+
+			cpu_execute[i] = NULL;
 		}
 	}
 
@@ -344,30 +270,35 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 	if (type == CPU_TYPE_M6800) {
 		m6800_init();
 
+		cpu_execute[num] = m6800_execute;
 		CpuCheatRegister(num, &M6800Config);
 	}
 
 	if (type == CPU_TYPE_HD63701) {
 		hd63701_init();
 
+		cpu_execute[num] = hd63701_execute;
 		CpuCheatRegister(num, &HD63701Config);
 	}
 
 	if (type == CPU_TYPE_M6803) {
 		m6803_init();
 
+		cpu_execute[num] = m6803_execute;
 		CpuCheatRegister(num, &M6803Config);
 	}
 
 	if (type == CPU_TYPE_M6801) {
 		m6801_init();
 
+		cpu_execute[num] = m6803_execute; // really
 		CpuCheatRegister(num, &M6801Config);
 	}
 
 	if (type == CPU_TYPE_NSC8105) {
 		nsc8105_init();
 
+		cpu_execute[num] = nsc8105_execute;
 		CpuCheatRegister(num, &NSC8105Config);
 	}
 
@@ -408,12 +339,13 @@ void M6800Exit()
 #endif
 
 	nM6800Count = 0;
+	nActiveCPU = -1;
 
 	if (M6800CPUContext) {
 		free(M6800CPUContext);
 		M6800CPUContext = NULL;
 	}
-	
+
 	DebugCPU_M6800Initted = 0;
 }
 
@@ -422,13 +354,12 @@ void M6800SetIRQLine(INT32 vector, INT32 status)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6800) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
 #endif
 
 	if (status == CPU_IRQSTATUS_NONE) {
 		m6800_set_irq_line(vector, 0);
 	}
-	
+
 	if (status == CPU_IRQSTATUS_ACK) {
 		m6800_set_irq_line(vector, 1);
 	}
@@ -436,124 +367,12 @@ void M6800SetIRQLine(INT32 vector, INT32 status)
 	if (status == CPU_IRQSTATUS_HOLD) {
 		m6800_set_irq_line(vector, 2);
 	}
-	
+
 	if (status == CPU_IRQSTATUS_AUTO) {
 		m6800_set_irq_line(vector, 1);
-		m6800_execute(0);
+		cpu_execute[nActiveCPU](0);
 		m6800_set_irq_line(vector, 0);
-		m6800_execute(0);
-	}
-}
-
-void HD63701SetIRQLine(INT32 vector, INT32 status)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_HD63701) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called with invalid CPU Type\n"));
-#endif
-
-	if (status == CPU_IRQSTATUS_NONE) {
-		m6800_set_irq_line(vector, 0);
-	}
-	
-	if (status == CPU_IRQSTATUS_ACK) {
-		m6800_set_irq_line(vector, 1);
-	}
-
-	if (status == CPU_IRQSTATUS_HOLD) {
-		m6800_set_irq_line(vector, 2);
-	}
-	
-	if (status == CPU_IRQSTATUS_AUTO) {
-		m6800_set_irq_line(vector, 1);
-		hd63701_execute(0);
-		m6800_set_irq_line(vector, 0);
-		hd63701_execute(0);
-	}
-}
-
-void M6803SetIRQLine(INT32 vector, INT32 status)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6803) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called with invalid CPU Type\n"));
-#endif
-
-	if (status == CPU_IRQSTATUS_NONE) {
-		m6800_set_irq_line(vector, 0);
-	}
-	
-	if (status == CPU_IRQSTATUS_ACK) {
-		m6800_set_irq_line(vector, 1);
-	}
-
-	if (status == CPU_IRQSTATUS_HOLD) {
-		m6800_set_irq_line(vector, 2);
-	}
-	
-	if (status == CPU_IRQSTATUS_AUTO) {
-		m6800_set_irq_line(vector, 1);
-		m6803_execute(0);
-		m6800_set_irq_line(vector, 0);
-		m6803_execute(0);
-	}
-}
-
-void M6801SetIRQLine(INT32 vector, INT32 status)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6801SetIRQLine called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6801SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
-#endif
-
-	if (status == CPU_IRQSTATUS_NONE) {
-		m6800_set_irq_line(vector, 0);
-	}
-	
-	if (status == CPU_IRQSTATUS_ACK) {
-		m6800_set_irq_line(vector, 1);
-	}
-
-	if (status == CPU_IRQSTATUS_HOLD) {
-		m6800_set_irq_line(vector, 2);
-	}
-	
-	if (status == CPU_IRQSTATUS_AUTO) {
-		m6800_set_irq_line(vector, 1);
-		m6803_execute(0);
-		m6800_set_irq_line(vector, 0);
-		m6803_execute(0);
-	}
-}
-
-void NSC8105SetIRQLine(INT32 vector, INT32 status)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_NSC8105) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called with invalid CPU Type\n"));
-#endif
-
-	if (status == CPU_IRQSTATUS_NONE) {
-		m6800_set_irq_line(vector, 0);
-	}
-	
-	if (status == CPU_IRQSTATUS_ACK) {
-		m6800_set_irq_line(vector, 1);
-	}
-
-	if (status == CPU_IRQSTATUS_HOLD) {
-		m6800_set_irq_line(vector, 2);
-	}
-	
-	if (status == CPU_IRQSTATUS_AUTO) {
-		m6800_set_irq_line(vector, 1);
-		nsc8105_execute(0);
-		m6800_set_irq_line(vector, 0);
-		nsc8105_execute(0);
+		cpu_execute[nActiveCPU](0);
 	}
 }
 
@@ -562,58 +381,12 @@ INT32 M6800Run(INT32 cycles)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Run called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800Run called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6800) bprintf(PRINT_ERROR, _T("M6800Run called with invalid CPU Type\n"));
 #endif
 
-	cycles = m6800_execute(cycles);
-	
+	cycles = cpu_execute[nActiveCPU](cycles);
+
 	nM6800CyclesTotal += cycles;
-	
-	return cycles;
-}
 
-INT32 HD63701Run(INT32 cycles)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("HD63701Run called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD63701Run called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_HD63701) bprintf(PRINT_ERROR, _T("HD63701Run called with invalid CPU Type\n"));
-#endif
-
-	cycles = hd63701_execute(cycles);
-	
-	nM6800CyclesTotal += cycles;
-	
-	return cycles;
-}
-
-INT32 M6803Run(INT32 cycles)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6803Run called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6803Run called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6803 && M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6803Run called with invalid CPU Type\n"));
-#endif
-
-	cycles = m6803_execute(cycles);
-	
-	nM6800CyclesTotal += cycles;
-	
-	return cycles;
-}
-
-INT32 NSC8105Run(INT32 cycles)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105Run called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("NSC8105Run called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_NSC8105) bprintf(PRINT_ERROR, _T("NSC8105Run called with invalid CPU Type\n"));
-#endif
-
-	cycles = nsc8105_execute(cycles);
-	
-	nM6800CyclesTotal += cycles;
-	
 	return cycles;
 }
 
@@ -712,12 +485,12 @@ UINT8 M6800ReadByte(UINT16 Address)
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
 	if (M6800CPUContext[nActiveCPU].ReadByte != NULL) {
 		return M6800CPUContext[nActiveCPU].ReadByte(Address);
 	}
-	
+
 	return 0;
 }
 
@@ -729,7 +502,7 @@ void M6800WriteByte(UINT16 Address, UINT8 Data)
 		pr[Address & 0xff] = Data;
 		return;
 	}
-	
+
 	// check handler
 	if (M6800CPUContext[nActiveCPU].WriteByte != NULL) {
 		M6800CPUContext[nActiveCPU].WriteByte(Address, Data);
@@ -744,12 +517,12 @@ UINT8 M6800ReadOp(UINT16 Address)
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
 	if (M6800CPUContext[nActiveCPU].ReadOp != NULL) {
 		return M6800CPUContext[nActiveCPU].ReadOp(Address);
 	}
-	
+
 	return 0;
 }
 
@@ -760,12 +533,12 @@ UINT8 M6800ReadOpArg(UINT16 Address)
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
-	
+
 	// check handler
 	if (M6800CPUContext[nActiveCPU].ReadOpArg != NULL) {
 		return M6800CPUContext[nActiveCPU].ReadOpArg(Address);
 	}
-	
+
 	return 0;
 }
 
@@ -775,7 +548,7 @@ UINT8 M6800ReadPort(UINT16 Address)
 	if (M6800CPUContext[nActiveCPU].ReadPort != NULL) {
 		return M6800CPUContext[nActiveCPU].ReadPort(Address);
 	}
-	
+
 	return 0;
 }
 
@@ -804,7 +577,7 @@ void M6800WriteRom(UINT32 Address, UINT8 Data)
 	if (pr != NULL) {
 		pr[Address & 0xff] = Data;
 	}
-	
+
 	if (pw != NULL) {
 		pw[Address & 0xff] = Data;
 	}
@@ -827,7 +600,7 @@ INT32 M6800Scan(INT32 nAction)
 #endif
 
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 i = 0; i < nM6800Count+1; i++) { // this will only work for 1 cpu (that's all this interface currently supports)
+		for (INT32 i = 0; i < nM6800Count+1; i++) {
 			struct BurnArea ba;
 
 			memset(&ba, 0, sizeof(ba));
@@ -841,7 +614,7 @@ INT32 M6800Scan(INT32 nAction)
 			SCAN_VAR(M6800CPUContext[i].nCyclesLeft);
 			SCAN_VAR(nM6800CyclesDone[i]);
 		}
-		
+
 		SCAN_VAR(nM6800CyclesTotal);
 	}
 

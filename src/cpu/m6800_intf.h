@@ -10,7 +10,7 @@ typedef void (*pWritePortHandler)(UINT16 a, UINT8 d);
 struct M6800Ext {
 
 	m6800_Regs reg;
-	
+
 	UINT8* pMemMap[0x100 * 3];
 
 	pReadByteHandler ReadByte;
@@ -28,20 +28,20 @@ struct M6800Ext {
 
 
 #define HD63701_INPUT_LINE_NMI	M6800_INPUT_LINE_NMI
-#define HD63701_IRQ_LINE	M6800_IRQ_LINE
-#define HD63701_TIN_LINE	M6800_TIN_LINE
+#define HD63701_IRQ_LINE		M6800_IRQ_LINE
+#define HD63701_TIN_LINE		M6800_TIN_LINE
 
 #define M6801_INPUT_LINE_NMI	M6800_INPUT_LINE_NMI
-#define M6801_IRQ_LINE		M6800_IRQ_LINE
-#define M6801_TIN_LINE		M6800_TIN_LINE
+#define M6801_IRQ_LINE			M6800_IRQ_LINE
+#define M6801_TIN_LINE			M6800_TIN_LINE
 
 #define M6803_INPUT_LINE_NMI	M6800_INPUT_LINE_NMI
-#define M6803_IRQ_LINE		M6800_IRQ_LINE
-#define M6803_TIN_LINE		M6800_TIN_LINE
+#define M6803_IRQ_LINE			M6800_IRQ_LINE
+#define M6803_TIN_LINE			M6800_TIN_LINE
 
 #define NSC8105_INPUT_LINE_NMI	M6800_INPUT_LINE_NMI
-#define NSC8105_IRQ_LINE	M6800_IRQ_LINE
-#define NSC8105_TIN_LINE	M6800_TIN_LINE
+#define NSC8105_IRQ_LINE		M6800_IRQ_LINE
+#define NSC8105_TIN_LINE		M6800_TIN_LINE
 
 #define CPU_TYPE_M6800		1
 #define CPU_TYPE_HD63701	2
@@ -55,15 +55,15 @@ extern INT32 nM6800CyclesTotal;
 
 void M6800Reset();
 #define HD63701Reset		M6800Reset
-#define M6803Reset		M6800Reset
-#define M6801Reset		M6800Reset
-#define NSC8105Reset         M6800Reset
+#define M6803Reset			M6800Reset
+#define M6801Reset			M6800Reset
+#define NSC8105Reset		M6800Reset
 
 void M6800ResetSoft();
-#define HD63701ResetSoft		M6800ResetSoft
+#define HD63701ResetSoft	M6800ResetSoft
 #define M6803ResetSoft		M6800ResetSoft
 #define M6801ResetSoft		M6800ResetSoft
-#define NSC8105ResetSoft         M6800ResetSoft
+#define NSC8105ResetSoft    M6800ResetSoft
 
 void M6800NewFrame();
 #define HD63701NewFrame		M6800NewFrame
@@ -79,46 +79,46 @@ INT32 M6801Init(INT32 num);
 INT32 NSC8105Init(INT32 num);
 
 void M6800Exit();
-#define HD63701Exit		M6800Exit
-#define M6803Exit		M6800Exit
-#define M6801Exit		M6800Exit
-#define NSC8105Exit		M6800Exit
+#define HD63701Exit			M6800Exit
+#define M6803Exit			M6800Exit
+#define M6801Exit			M6800Exit
+#define NSC8105Exit			M6800Exit
 
 void M6800SetIRQLine(INT32 vector, INT32 status);
-void HD63701SetIRQLine(INT32 vector, INT32 status);
-void M6803SetIRQLine(INT32 vector, INT32 status);
-void M6801SetIRQLine(INT32 vector, INT32 status);
-void NSC8105SetIRQLine(INT32 vector, INT32 status);
+#define M6801SetIRQLine		M6800SetIRQLine
+#define HD63701SetIRQLine	M6800SetIRQLine
+#define M6803SetIRQLine		M6800SetIRQLine
+#define NSC8105SetIRQLine	M6800SetIRQLine
 
 INT32 M6800Run(INT32 cycles);
-INT32 HD63701Run(INT32 cycles);
-INT32 M6803Run(INT32 cycles);
-#define M6801Run(nCycles)	M6803Run(nCycles)
-INT32 NSC8105Run(INT32 cycles);
+#define M6801Run			M6800Run
+#define HD63701Run			M6800Run
+#define M6803Run			M6800Run
+#define NSC8105Run			M6800Run
 
 void M6800RunEnd();
 #define HD63701RunEnd		M6800RunEnd
-#define M6803RunEnd		M6800RunEnd
-#define M6801RunEnd		M6800RunEnd
+#define M6803RunEnd			M6800RunEnd
+#define M6801RunEnd			M6800RunEnd
 #define NSC8105RunEnd		M6800RunEnd
 
 UINT32 M6800GetPC(INT32);
 #define HD63701GetPC		M6800GetPC
-#define M6803GetPC		M6800GetPC
-#define M6801GetPC		M6800GetPC
+#define M6803GetPC			M6800GetPC
+#define M6801GetPC			M6800GetPC
 #define NSC8105GetPC		M6800GetPC
 
 INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 #define HD63701MapMemory	M6800MapMemory
 #define M6803MapMemory		M6800MapMemory
 #define M6801MapMemory		M6800MapMemory
-#define NSC8105MapMemory		M6800MapMemory
+#define NSC8105MapMemory	M6800MapMemory
 
 void M6800SetReadHandler(UINT8 (*pHandler)(UINT16));
 #define HD63701SetReadHandler	M6800SetReadHandler
 #define M6803SetReadHandler		M6800SetReadHandler
 #define M6801SetReadHandler		M6800SetReadHandler
-#define NSC8105SetReadHandler		M6800SetReadHandler
+#define NSC8105SetReadHandler	M6800SetReadHandler
 
 void M6800SetWriteHandler(void (*pHandler)(UINT16, UINT8));
 #define HD63701SetWriteHandler	M6800SetWriteHandler
@@ -142,7 +142,7 @@ void M6800SetReadPortHandler(UINT8 (*pHandler)(UINT16));
 #define HD63701SetReadPortHandler	M6800SetReadPortHandler
 #define M6803SetReadPortHandler		M6800SetReadPortHandler
 #define M6801SetReadPortHandler		M6800SetReadPortHandler
-#define NSC8105SetReadPortHandler		M6800SetReadPortHandler
+#define NSC8105SetReadPortHandler	M6800SetReadPortHandler
 
 void M6800SetWritePortHandler(void (*pHandler)(UINT16, UINT8));
 #define HD63701SetWritePortHandler	M6800SetWritePortHandler

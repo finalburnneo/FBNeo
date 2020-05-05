@@ -172,8 +172,10 @@ void BurnYM2151Exit()
 
 	YM2151Shutdown();
 
-	if (YM2151BurnTimer)
+	if (YM2151BurnTimer) {
 		BurnTimerExit();
+		YM2151BurnTimer = 0;
+	}
 
 	BurnFree(pBuffer);
 	

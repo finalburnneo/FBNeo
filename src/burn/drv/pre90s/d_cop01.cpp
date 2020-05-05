@@ -435,7 +435,7 @@ static tilemap_callback( bg )
 	if (attr & 0x10) pri = 0;
 
 	TILE_SET_INFO(0, code + ((attr & 0x03) << 8), attr >> 2, TILE_GROUP(pri));
-	*category = pri;
+	sTile->category = pri;
 }
 
 static tilemap_callback( fg )

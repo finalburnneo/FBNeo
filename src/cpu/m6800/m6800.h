@@ -37,10 +37,12 @@ typedef struct
 	UINT8	port2_ddr;
 	UINT8	port3_ddr;
 	UINT8	port4_ddr;
+	UINT8   portx_ddr[3];
 	UINT8	port1_data;
 	UINT8	port2_data;
 	UINT8	port3_data;
 	UINT8	port4_data;
+	UINT8   portx_data[3];
 	UINT8	tcsr, rmcr;			/* Timer Control and Status Register */
 	UINT8	pending_tcsr;	/* pending IRQ flag for clear IRQflag process */
 	UINT8	irq2;			/* IRQ2 flags */
@@ -101,8 +103,14 @@ int nsc8105_execute(int cycles);
 
 void m6800_set_irq_line(int irqline, int state);
 
+// m6801/m6803 internal registers (0x00..0x1f)
 void m6803_internal_registers_w(unsigned short offset, unsigned char data);
 unsigned char m6803_internal_registers_r(unsigned short offset);
+
+// hd63701x/y internal registers (0x00..0x20)
+unsigned char hd63xy_internal_registers_r(unsigned short offset);
+void hd63xy_internal_registers_w(unsigned short offset, unsigned char data);
+
 
 //extern void m6800_get_info(UINT32 state, cpuinfo *info);
 
@@ -235,6 +243,9 @@ void hd63701_trap_pc(void);
 #define HD63701_PORT2 M6803_PORT2
 #define HD63701_PORT3 M6803_PORT3
 #define HD63701_PORT4 M6803_PORT4
+#define HD63701_PORT5 0x104
+#define HD63701_PORT6 0x105
+#define HD63701_PORT7 0x106
 
 //READ8_HANDLER( hd63701_internal_registers_r );
 //WRITE8_HANDLER( hd63701_internal_registers_w );

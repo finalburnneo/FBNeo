@@ -200,7 +200,7 @@ static tilemap_callback( bg )
 	INT32 color = attr >> 4;
 
 	TILE_SET_INFO(0, code, color, (attr & 0x08) ? TILE_FLIPX : 0);
-	*category = color;
+	sTile->category = color;
 }
 
 static tilemap_callback( fg )
@@ -210,7 +210,7 @@ static tilemap_callback( fg )
 	INT32 color = attr >> 3;
 
 	TILE_SET_INFO(1, code, color, (attr & 0x04) ? TILE_FLIPX : 0);
-	*category = color;
+	sTile->category = color;
 }
 
 static INT32 DrvDoReset()

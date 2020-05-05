@@ -469,7 +469,7 @@ static tilemap_callback( bg )
 	INT32 flags = TILE_FLIPYX((attr & 0x30) >> 4) | TILE_GROUP((attr >> 7)&1);
 
 	TILE_SET_INFO(0, code, color, flags);
-	*category = color;
+	sTile->category = color;
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)

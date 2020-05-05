@@ -406,7 +406,7 @@ static tilemap_callback( bg )
 	INT32 Code = DrvBgVideoRAM[offs] + ((Attr & 0xc0) << 2);
 
 	TILE_SET_INFO(0, Code, Attr/*&7*/, TILE_FLIPYX(Attr >> 4));
-	*category = (Attr >> 3) & 1;
+	sTile->category = (Attr >> 3) & 1;
 }
 
 static tilemap_callback( fg )

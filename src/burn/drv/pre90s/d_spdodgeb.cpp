@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6809_intf.h"
+#include "m6800_intf.h"
 #include "burn_ym3812.h"
 #include "msm5205.h"
 
@@ -20,6 +21,7 @@ static UINT8 *DrvSndROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvM6502RAM;
 static UINT8 *DrvM6809RAM;
+static UINT8 *DrvMCURAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 
@@ -41,11 +43,8 @@ static INT32 spritebank;
 static INT32 bankdata;
 
 static UINT8 mcu_inputs[5];
-static INT32 mcu63701_command;
-static INT32 mcu63701_busy;
-static INT32 mcu_last_port[2];
-static INT32 mcu_last_dash[2];
-static INT32 mcu_tapc[4];
+static INT32 mcu_status;
+static UINT8 mcu_latch;
 
 static INT32 adpcm_pos[2];
 static INT32 adpcm_end[2];
@@ -86,7 +85,7 @@ static struct BurnDIPInfo SpdodgebDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xc0, NULL					},
 	{0x13, 0xff, 0xff, 0xff, NULL					},
-	{0x14, 0xff, 0xff, 0x00, NULL					},
+	{0x14, 0xff, 0xff, 0x3f, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
 	{0x12, 0x01, 0xc0, 0x80, "Easy"					},
@@ -123,97 +122,30 @@ static struct BurnDIPInfo SpdodgebDIPList[]=
 	{0x13, 0x01, 0x80, 0x80, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"				},
-	{0x14, 0x01, 0x40, 0x00, "Off"					},
-	{0x14, 0x01, 0x40, 0x40, "On"					},
+	{0x14, 0x01, 0x02, 0x02, "Off"					},
+	{0x14, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x14, 0x01, 0x80, 0x80, "No"					},
-	{0x14, 0x01, 0x80, 0x00, "Yes"					},
+	{0x14, 0x01, 0x04, 0x00, "No"					},
+	{0x14, 0x01, 0x04, 0x04, "Yes"					},
 };
 
 STDDIPINFO(Spdodgeb)
-
-static void mcu63705_update_inputs()
-{
-#define DBLTAP_TOLERANCE 5
-
-#define R 0x01
-#define L 0x02
-#define A 0x10
-#define D 0x20
-
-	UINT8 curr_port[2];
-	UINT8 curr_dash[2];
-
-	for (INT32 p=0; p<=1; p++)
-	{
-		curr_port[p] = DrvInputs[1 + p]; //ioport(p ? "P2" : "P1")->read();
-		curr_dash[p] = 0;
-
-		if (curr_port[p] & R)
-		{
-			if (!(mcu_last_port[p] & R))
-			{
-				if (mcu_tapc[p]) curr_dash[p] |= R; else mcu_tapc[p] = DBLTAP_TOLERANCE;
-			}
-			else if (mcu_last_dash[p] & R) curr_dash[p] |= R;
-		}
-		else if (curr_port[p] & L)
-		{
-			if (!(mcu_last_port[p] & L))
-			{
-				if (mcu_tapc[p+2]) curr_dash[p] |= L; else mcu_tapc[p+2] = DBLTAP_TOLERANCE;
-			}
-			else if (mcu_last_dash[p] & L) curr_dash[p] |= L;
-		}
-
-		if (curr_port[p] & A && !(mcu_last_port[p] & A)) curr_dash[p] |= A;
-		if (curr_port[p] & D && !(mcu_last_port[p] & D)) curr_dash[p] |= D;
-
-		mcu_last_port[p] = curr_port[p];
-		mcu_last_dash[p] = curr_dash[p];
-
-		if (mcu_tapc[p  ]) mcu_tapc[p  ]--;
-		if (mcu_tapc[p+2]) mcu_tapc[p+2]--;
-	}
-
-	mcu_inputs[0] = curr_port[0] & 0xcf;
-	mcu_inputs[1] = curr_port[1] & 0x0f;
-	mcu_inputs[2] = curr_dash[0];
-	mcu_inputs[3] = curr_dash[1];
-
-#undef DBLTAP_TOLERANCE
-#undef R
-#undef L
-#undef A
-#undef D
-}
-
-static UINT8 mcu63701_r(INT32 offset)
-{
-	if (mcu63701_command == 0)
-	{
-		return 0x6a;
-	}
-	else
-	{
-		switch (offset)
-		{
-			default:
-			case 0: return mcu_inputs[0];
-			case 1: return mcu_inputs[1];
-			case 2: return mcu_inputs[2];
-			case 3: return mcu_inputs[3];
-			case 4: return DrvDips[2];
-		}
-	}
-}
 
 static void bankswitch(INT32 bank)
 {
 	bankdata = bank;
 
 	M6502MapMemory(DrvM6502ROM + (bank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+}
+
+static void mcu_sync()
+{
+	INT32 cyc = ((M6502TotalCycles() * 4) / 2) - HD63701TotalCycles();
+
+	if (cyc > 0) {
+		HD63701Run(cyc);
+	}
 }
 
 static void spdodgeb_main_write(UINT16 address, UINT8 data)
@@ -223,8 +155,12 @@ static void spdodgeb_main_write(UINT16 address, UINT8 data)
 		case 0x3000:
 		case 0x3001:
 		case 0x3003:
-		case 0x3005:
 		return; // nop
+
+		case 0x3005:
+			mcu_sync();
+			HD63701SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		return;
 
 		case 0x3002:
 			soundlatch = data;
@@ -245,8 +181,8 @@ static void spdodgeb_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3800:
-			mcu63701_command = data;
-			mcu63705_update_inputs();
+			mcu_sync();
+			mcu_latch = data;
 		return;
 	}
 }
@@ -259,8 +195,8 @@ static UINT8 spdodgeb_main_read(UINT16 address)
 		{
 			UINT8 ret = DrvInputs[0] & 0x3c;
 			ret ^= vblank ? 1 : 0;
-			mcu63701_busy ^= 1;
-			ret ^= mcu63701_busy ? 2 : 0;
+			mcu_sync();
+			ret |= (mcu_status & 0x80) ? 2 : 0;
 			return ret;
 		}
 
@@ -272,7 +208,7 @@ static UINT8 spdodgeb_main_read(UINT16 address)
 		case 0x3803:
 		case 0x3804:
 		case 0x3805:
-			return mcu63701_r((address & 7) - 1);
+			return mcu_inputs[(address & 7) - 1];
 	}
 
 	return 0;
@@ -334,6 +270,65 @@ static UINT8 spdodgeb_sound_read(UINT16 address)
 		case 0x2800:
 		case 0x2801:
 			return BurnYM3812Read(0, address & 1);
+	}
+
+	return 0;
+}
+
+static void spdodgeb_mcu_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x0000 && address <= 0x0027) {
+		hd63xy_internal_registers_w(address, data);
+	}
+
+	if (address >= 0x0040 && address <= 0x013f) {
+		DrvMCURAM[address - 0x40] = data;
+	}
+
+	if (address >= 0x8081 && address <= 0x8085) {
+		mcu_inputs[address - 0x8081] = data;
+	}
+}
+
+static UINT8 spdodgeb_mcu_read(UINT16 address)
+{
+	if (address >= 0x0000 && address <= 0x0027) {
+		return hd63xy_internal_registers_r(address);
+	}
+
+	if (address >= 0x0040 && address <= 0x013f) {
+		return DrvMCURAM[address - 0x40];
+	}
+
+	if (address == 0x8080) {
+		return mcu_latch;
+	}
+
+	return 0xff;
+}
+
+static void spdodgeb_mcu_write_port(UINT16 port, UINT8 data)
+{
+	switch (port & 0x1ff)
+	{
+		case HD63701_PORT5:
+			mcu_status = data & 0xc0;
+		return;
+	}
+}
+
+static UINT8 spdodgeb_mcu_read_port(UINT16 port)
+{
+	switch (port & 0x1ff)
+	{
+		case HD63701_PORT2:
+			return DrvInputs[1];
+
+		case HD63701_PORT6:
+			return DrvInputs[2];
+
+		case HD63701_PORT5:
+			return DrvDips[2];
 	}
 
 	return 0;
@@ -406,17 +401,19 @@ static INT32 DrvDoReset()
 	MSM5205Reset();
 	M6809Close();
 
+	HD63701Open(0);
+	HD63701Reset();
+	HD63701Close();
+
 	soundlatch = 0;
 	scrollx = 0;
 	flipscreen = 0;
 	tilebank = 0;
 	spritebank = 0;
 
-	mcu63701_command = 0;
-	mcu63701_busy = 0;
-	mcu_last_port[0] = mcu_last_port[1] = 0;
-	mcu_last_dash[0] = mcu_last_dash[1] = 0;
-	mcu_tapc[0] = mcu_tapc[1] = 0;
+	mcu_latch = 0;
+	mcu_status = 0;
+	memset(mcu_inputs, 0, sizeof(mcu_inputs));
 
 	adpcm_pos[0] = adpcm_pos[1] = 0;
 	adpcm_end[0] = adpcm_end[1] = 0;
@@ -446,6 +443,7 @@ static INT32 MemIndex()
 
 	DrvM6502RAM		= Next; Next += 0x001000;
 	DrvM6809RAM		= Next; Next += 0x001000;
+	DrvMCURAM		= Next; Next += 0x000200;
 	DrvVidRAM		= Next; Next += 0x001000;
 	DrvSprRAM		= Next; Next += 0x000100;
 
@@ -535,6 +533,15 @@ static INT32 DrvInit()
 	M6809SetReadHandler(spdodgeb_sound_read);
 	M6809Close();
 
+	HD63701Init(0);
+	HD63701Open(0);
+	HD63701MapMemory(DrvMCUROM,			0xc000, 0xffff, MAP_ROM);
+	HD63701SetReadHandler(spdodgeb_mcu_read);
+	HD63701SetWriteHandler(spdodgeb_mcu_write);
+	HD63701SetReadPortHandler(spdodgeb_mcu_read_port);
+	HD63701SetWritePortHandler(spdodgeb_mcu_write_port);
+	HD63701Close();
+
 	BurnYM3812Init(1, 3000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachYM3812(&M6809Config, 2000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
@@ -559,6 +566,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	M6502Exit();
 	M6809Exit();
+	HD63701Exit();
 
 	MSM5205Exit();
 	BurnYM3812Exit();
@@ -698,8 +706,8 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = DrvDips[0] | 0x3c;
-		DrvInputs[1] = 0;
-		DrvInputs[2] = 0;
+		DrvInputs[1] = 0xff;
+		DrvInputs[2] = 0xff;
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -710,14 +718,16 @@ static INT32 DrvFrame()
 
 	M6809NewFrame();
 	M6502NewFrame(); // this cpu is not using a timer, but this is needed for cpu synch.
+	HD63701NewFrame();
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal[2] = { (INT32)(2000000 / 57.44853), (INT32)(2000000 / 57.44853) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[3] = { (INT32)(2000000 / 57.44853), (INT32)(2000000 / 57.44853), (INT32)(4000000 / 57.44853) };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	MSM5205NewFrame(0, 2000000, nInterleave);
 	M6809Open(0);
 	M6502Open(0);
+	HD63701Open(0);
 
 	vblank = 0;
 	lastline = 0;
@@ -737,6 +747,8 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 		MSM5205UpdateScanline(i);
+
+		mcu_sync(); // HD63701
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
@@ -749,6 +761,7 @@ static INT32 DrvFrame()
 
 	M6502Close();
 	M6809Close();
+	HD63701Close();
 
 	if (pBurnDraw) {
 		DrvPartialDrawFinish();
@@ -775,6 +788,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 		M6809Scan(nAction);
+		HD63701Scan(nAction);
 		MSM5205Scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
 
@@ -785,12 +799,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(spritebank);
 		SCAN_VAR(bankdata);
 
+		SCAN_VAR(mcu_latch);
+		SCAN_VAR(mcu_status);
 		SCAN_VAR(mcu_inputs);
-		SCAN_VAR(mcu63701_command);
-		SCAN_VAR(mcu63701_busy);
-		SCAN_VAR(mcu_last_port);
-		SCAN_VAR(mcu_last_dash);
-		SCAN_VAR(mcu_tapc);
 
 		SCAN_VAR(adpcm_pos);
 		SCAN_VAR(adpcm_end);

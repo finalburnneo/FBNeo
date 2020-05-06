@@ -27701,3 +27701,22 @@ struct BurnDriver BurnDrvsms_voyage = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Sydney Hunter and the Sacred Tribe
+
+static struct BurnRomInfo sms_sydhuntRomDesc[] = {
+	{ "Sydney Hunter.sms",	131072, 0xe3060500, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sydhunt)
+STD_ROM_FN(sms_sydhunt)
+
+struct BurnDriver BurnDrvsms_sydhunt = {
+	"sms_sydhunt", NULL, NULL, NULL, "2017",
+	"Sydney Hunter and the Sacred Tribe\0", NULL, "Oscar Toledo G.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_sydhuntRomInfo, sms_sydhuntRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

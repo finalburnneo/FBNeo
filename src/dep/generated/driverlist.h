@@ -11642,6 +11642,7 @@ DRV		BurnDrvmd_swordsod;
 DRV		BurnDrvmd_swordsodj;
 DRV		BurnDrvmd_vermil;
 DRV		BurnDrvmd_sydvalis;
+DRV		BurnDrvsms_sydhunt;
 DRV		BurnDrvgg_sylvane;
 DRV		BurnDrvgg_sylvan;
 DRV		BurnDrvmd_sylvestr;
@@ -25756,6 +25757,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_swordsodj,		// Sword of Sodan (Jpn)
 	&BurnDrvmd_vermil,			// Sword of Vermilion (Euro, USA)
 	&BurnDrvmd_sydvalis,		// Syd of Valis (USA)
+	&BurnDrvsms_sydhunt,		// Sydney Hunter and the Sacred Tribe
 	&BurnDrvgg_sylvane,			// Sylvan Tale (Hack, English)
 	&BurnDrvgg_sylvan,			// Sylvan Tale (Jpn)
 	&BurnDrvmd_sylvestr,		// Sylvester & Tweety in Cagey Capers (Euro)

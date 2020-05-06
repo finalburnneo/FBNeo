@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13839 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13840 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -11426,6 +11426,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_swordsodj	|  	| Sword of Sodan (Jpn)					| md_swordsod	| 1990	| Sega		| Sega Megadrive| 					|
 | md_vermil	|  	| Sword of Vermilion (Euro, USA)			| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_sydvalis	|  	| Syd of Valis (USA)					| 		| 1992	| Renovation	| Sega Megadrive| 					|
+| sms_sydhunt	|  	| Sydney Hunter and the Sacred Tribe			| 		| 2017	| Oscar Toledo G| Sega Master Sy| 					|
 | gg_sylvane	|  	| Sylvan Tale (Hack, English)				| gg_sylvan	| 2001	| Sega		| Sega Game Gear| 					|
 | gg_sylvan	|  	| Sylvan Tale (Jpn)					| 		| 1995	| Sega		| Sega Game Gear| 					|
 | md_sylvestr	|  	| Sylvester & Tweety in Cagey Capers (Euro)		| 		| 1994	| Time Warner In| Sega Megadrive| 					|

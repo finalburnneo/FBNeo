@@ -1613,12 +1613,12 @@ enum
 
 static void cps3_drawgfxzoom_2(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 alpha, INT32 transparency)
 {
-	//if (!scalex || !scaley) return;
+	if (!scalex || !scaley) return;
 
 	UINT8 * source_base = (UINT8 *) RamCRam + code * 256;
 	
 	INT32 sprite_screen_height = (scaley * 16 + 0x8000) >> 16;
-	INT32 sprite_screen_width  = (scalex * 16 + 0x8000) >> 16;	
+	INT32 sprite_screen_width  = (scalex * 16 + 0x8000) >> 16;
 	if (sprite_screen_width && sprite_screen_height) {
 		// compute sprite increment per screen pixel
 		INT32 dx = (16 << 16) / sprite_screen_width;
@@ -1862,8 +1862,8 @@ INT32 DrvCps3Draw()
 				INT32 xpos2 = (value2 & 0x03ff0000)>>16;
 				INT32 ypos2 = (value2 & 0x000003ff)>>0;
 
-				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24);
-				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16);
+				INT32 ysizedraw2 = ((value3 & 0x7f000000)>>24) + 1;
+				INT32 xsizedraw2 = ((value3 & 0x007f0000)>>16) + 1;
 				INT32 xx,yy;
 
 				INT32 ysize2 = ((value3 & 0x0000000c)>>2);
@@ -1896,8 +1896,16 @@ INT32 DrvCps3Draw()
 					ysize2 = tilestable[ysize2];
 					xsize2 = tilestable[xsize2];
 
-					xinc = ((xsizedraw2+1)<<16) / ((xsize2*0x10));
-					yinc = ((ysizedraw2+1)<<16) / ((ysize2*0x10));
+					xinc = ((xsizedraw2)<<16) / ((xsize2));
+					yinc = ((ysizedraw2)<<16) / ((ysize2));
+
+					UINT32 xscale = xinc / 16;
+					UINT32 yscale = yinc / 16;
+
+					/* Let's approximate to the nearest greater integer value
+					 to avoid holes in between tiles */
+					if (xscale & 0xffff)    xscale += (1<<16) / 16;
+					if (yscale & 0xffff)    yscale += (1<<16) / 16;
 
 					xsize2-=1;
 					ysize2-=1;
@@ -1905,15 +1913,15 @@ INT32 DrvCps3Draw()
 					flipx ^= global_xflip;
 					flipy ^= global_yflip;
 
-					if (!flipx) xpos2+=((xsizedraw2+1)/2);
-					else xpos2-=((xsizedraw2+1)/2);
+					if (!flipx) xpos2 += (xsizedraw2 / 2);
+					else xpos2 -= (xsizedraw2 / 2);
 
-					ypos2+=((ysizedraw2+1)/2);
+					ypos2 += (ysizedraw2 / 2);
 
-					if (!flipx) xpos2-= (((xsize2+1)*16*xinc)>>16);
-					else  xpos2+= (((xsize2)*16*xinc)>>16);
+					if (!flipx) xpos2 -= ((xsize2 + 1) * xinc) >> 16;
+					else  xpos2 += (xsize2 * xinc) >> 16;
 
-					if (flipy) ypos2-= ((ysize2*16*yinc)>>16);
+					if (flipy) ypos2 -= (ysize2 * yinc) >> 16;
 
 					/* use the palette value from the main list or the sublists? */
 					INT32 actualpal = whichpal ? global_pal : pal;
@@ -1928,8 +1936,8 @@ INT32 DrvCps3Draw()
 						for (xx=0;xx<xsize2+1;xx++) {
 							INT32 current_xpos;
 
-							if (!flipx) current_xpos = (xpos+xpos2+((xx*16*xinc)>>16)  );
-							else current_xpos = (xpos+xpos2-((xx*16*xinc)>>16));
+							if (!flipx) current_xpos = (xpos + xpos2 + ((xx * xinc) >> 16));
+							else current_xpos = (xpos + xpos2 - ((xx * xinc) >> 16));
 
 							current_xpos += gscrollx;
 							current_xpos += 1;
@@ -1939,8 +1947,8 @@ INT32 DrvCps3Draw()
 							for (yy=0;yy<ysize2+1;yy++) {
 								INT32 current_ypos;
 
-								if (flipy) current_ypos = (ypos+ypos2+((yy*16*yinc)>>16));
-								else current_ypos = (ypos+ypos2-((yy*16*yinc)>>16));
+								if (flipy) current_ypos = (ypos + ypos2 + ((yy * yinc) >> 16));
+								else current_ypos = (ypos + ypos2 - ((yy * yinc) >> 16));
 
 								current_ypos += gscrolly;
 								current_ypos = 0x3ff-current_ypos;
@@ -1950,7 +1958,7 @@ INT32 DrvCps3Draw()
 								if (current_ypos&0x200) current_ypos-=0x400;
 
 								{
-									cps3_drawgfxzoom_2(tileno+count,actualpal,flipx,flipy,current_xpos,current_ypos,xinc,yinc, color_granularity, trans);
+									cps3_drawgfxzoom_2(tileno+count,actualpal,flipx,flipy,current_xpos,current_ypos,xscale,yscale, color_granularity, trans);
 									count++;
 								}
 							}

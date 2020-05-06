@@ -2099,7 +2099,7 @@ struct BurnDriver BurnDrvCkongpt2b2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2b2RomInfo, ckongpt2b2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, Ckongb2DIPInfo,
-	ckongbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
 

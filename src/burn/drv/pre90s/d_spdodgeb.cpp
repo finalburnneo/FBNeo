@@ -891,27 +891,27 @@ struct BurnDriver BurnDrvNkdodge = {
 // Nekketsu Koukou Dodgeball Bu (Japan, bootleg)
 
 static struct BurnRomInfo nkdodgebRomDesc[] = {
-	{ "12.bin",		0x10000, 0xaa674fd8, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "12.bin",			0x10000, 0xaa674fd8, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
 
-	{ "22j5-0.33",	0x08000, 0xc31e264e, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 Code
+	{ "22j5-0.33",		0x08000, 0xc31e264e, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 Code
 
-	{ "63701.bin",	0x04000, 0x00000000, 3 | BRF_NODUMP | BRF_PRG | BRF_OPT }, //  2 HD63701Y0 Code
+	{ "hd63701y0p.n12",	0x04000, 0x7162a97b, 3 | BRF_PRG | BRF_ESS }, //  2 HD63701Y0 Code
 
-	{ "10.bin",		0x10000, 0x442326fd, 4 | BRF_GRA },           //  3 Characters
-	{ "11.bin",		0x10000, 0x2140b070, 4 | BRF_GRA },           //  4
-	{ "9.bin",		0x10000, 0x18660ac1, 4 | BRF_GRA },           //  5
-	{ "8.bin",		0x10000, 0x5caae3c9, 4 | BRF_GRA },           //  6
+	{ "10.bin",			0x10000, 0x442326fd, 4 | BRF_GRA },           //  3 Characters
+	{ "11.bin",			0x10000, 0x2140b070, 4 | BRF_GRA },           //  4
+	{ "9.bin",			0x10000, 0x18660ac1, 4 | BRF_GRA },           //  5
+	{ "8.bin",			0x10000, 0x5caae3c9, 4 | BRF_GRA },           //  6
 
-	{ "2.bin",		0x10000, 0x1271583e, 5 | BRF_GRA },           //  7 Sprites
-	{ "1.bin",		0x10000, 0x5ae6cccf, 5 | BRF_GRA },           //  8
-	{ "4.bin",		0x10000, 0xf5022822, 5 | BRF_GRA },           //  9
-	{ "3.bin",		0x10000, 0x05a71179, 5 | BRF_GRA },           // 10
+	{ "2.bin",			0x10000, 0x1271583e, 5 | BRF_GRA },           //  7 Sprites
+	{ "1.bin",			0x10000, 0x5ae6cccf, 5 | BRF_GRA },           //  8
+	{ "4.bin",			0x10000, 0xf5022822, 5 | BRF_GRA },           //  9
+	{ "3.bin",			0x10000, 0x05a71179, 5 | BRF_GRA },           // 10
 
-	{ "22j6-0.83",	0x10000, 0x744a26e3, 6 | BRF_SND },           // 11 MSM5205 Samples
-	{ "22j7-0.82",	0x10000, 0x2fa1de21, 6 | BRF_SND },           // 12
+	{ "22j6-0.83",		0x10000, 0x744a26e3, 6 | BRF_SND },           // 11 MSM5205 Samples
+	{ "22j7-0.82",		0x10000, 0x2fa1de21, 6 | BRF_SND },           // 12
 
-	{ "27s191.bin",	0x00800, 0x317e42ea, 7 | BRF_GRA },           // 13 Color Data
-	{ "82s137.bin",	0x00400, 0x6059f401, 7 | BRF_GRA },           // 14
+	{ "27s191.bin",		0x00800, 0x317e42ea, 7 | BRF_GRA },           // 13 Color Data
+	{ "82s137.bin",		0x00400, 0x6059f401, 7 | BRF_GRA },           // 14
 };
 
 STD_ROM_PICK(nkdodgeb)

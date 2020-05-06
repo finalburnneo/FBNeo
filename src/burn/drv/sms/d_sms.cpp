@@ -27720,3 +27720,60 @@ struct BurnDriver BurnDrvsms_sydhunt = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Heroes Against Demons (v1.03)
+
+static struct BurnRomInfo sms_hadRomDesc[] = {
+	{ "HeroesAgainstDemons_1.03.sms",	131072, 0x35f47e0a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_had)
+STD_ROM_FN(sms_had)
+
+struct BurnDriver BurnDrvsms_had = {
+	"sms_had", NULL, NULL, NULL, "2020",
+	"Heroes Against Demons (v1.03)\0", NULL, "Ichigo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Lucky Penguin (v1.1)
+
+static struct BurnRomInfo sms_luckypengRomDesc[] = {
+	{ "LuckyPenguin-SMS-1.1.sms",	49152, 0x69699887, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_luckypeng)
+STD_ROM_FN(sms_luckypeng)
+
+struct BurnDriver BurnDrvsms_luckypeng = {
+	"sms_luckypeng", NULL, NULL, NULL, "2020",
+	"Lucky Penguin (v1.1)\0", NULL, "Denine", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_luckypengRomInfo, sms_luckypengRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monster Crunch (v1.00)
+
+static struct BurnRomInfo sms_moncrunchRomDesc[] = {
+	{ "MonsterCrunch-SMS-1.00.sms",	32768, 0x7eacf20c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_moncrunch)
+STD_ROM_FN(sms_moncrunch)
+
+struct BurnDriver BurnDrvsms_moncrunch = {
+	"sms_moncrunch", NULL, NULL, NULL, "2020",
+	"Monster Crunch (v1.00)\0", NULL, "Ichigo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_moncrunchRomInfo, sms_moncrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

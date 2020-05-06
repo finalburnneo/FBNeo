@@ -917,7 +917,7 @@ static tilemap_callback( bg2 )
 	INT32 Attr = DrvBg2Tilemap[offs * 2 + 1];
 	INT32 Code = DrvBg2Tilemap[offs * 2 + 0];
 
-	TILE_SET_INFO(0, Code, ((Attr >> 2) & 0xf) + 0x18, TILE_FLIPYX(Attr >> 6));
+	TILE_SET_INFO(0, Code, ((Attr >> 2) & 0xf), TILE_FLIPYX(Attr >> 6));
 }
 
 static tilemap_callback( bg1 )
@@ -925,7 +925,9 @@ static tilemap_callback( bg1 )
 	INT32 Attr = DrvBgTilemap[offs * 2 + 1];
 	INT32 Code = DrvBgTilemap[offs * 2 + 0] + ((Attr & 0x01) << 8);
 
-	TILE_SET_INFO(1, Code, ((Attr >> 2) & 0xf) + 0x08, TILE_FLIPYX(Attr >> 6));
+	sTile->category = (Attr >> 2) & 0xf;
+
+	TILE_SET_INFO(1, Code, ((Attr >> 2) & 0xf), TILE_FLIPYX(Attr >> 6));
 }
 
 static tilemap_callback( fg )
@@ -1059,12 +1061,17 @@ static INT32 CommonInit(INT32 (*load)())
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg2_map_callback, 32, 32, 2048,  8);
 	GenericTilemapInit(1, TILEMAP_SCAN_COLS, bg1_map_callback, 32, 32, 2048,  8);
 	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fg_map_callback,   8,  8,   32, 32);
-	GenericTilemapSetGfx(0, DrvBg2Tiles, 4, 32, 32, 0x20000, 0x000, 0x3f);
-	GenericTilemapSetGfx(1, DrvBgTiles,  4, 32, 32, 0x80000, 0x000, 0x3f);
+	GenericTilemapSetGfx(0, DrvBg2Tiles, 4, 32, 32, 0x20000, 0x180, 0x0f);
+	GenericTilemapSetGfx(1, DrvBgTiles,  4, 32, 32, 0x80000, 0x080, 0x0f);
 	GenericTilemapSetGfx(2, DrvChars,    2,  8,  8, 0x20000, 0x000, 0x1f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
-	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
+
+	GenericTilemapCategoryConfig(1, 0x100);
+	for (INT32 i = 0; i < 0x100; i++) {
+		UINT8 color = ((DrvPromBgPalBank[i] & 0x03) << 4) | (DrvPromBgLookup[i] & 0x0f);
+		GenericTilemapSetCategoryEntry(1, i / 16, i % 16, (color == 0x0f) ? 1 : 0);
+	}
 
 	// Reset the driver
 	DrvDoReset(1);

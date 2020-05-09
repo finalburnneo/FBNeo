@@ -3586,8 +3586,8 @@ static struct BurnRomInfo raiden2RomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	       // 13 Pals
-	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	       // 14
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
 STD_ROM_PICK(raiden2)
@@ -3628,7 +3628,7 @@ static struct BurnRomInfo raiden2gRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3670,7 +3670,7 @@ static struct BurnRomInfo raiden2hkRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3712,7 +3712,7 @@ static struct BurnRomInfo raiden2jRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3755,7 +3755,7 @@ static struct BurnRomInfo raiden2swRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3798,7 +3798,7 @@ static struct BurnRomInfo raiden2fRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3840,7 +3840,7 @@ static struct BurnRomInfo raiden2nlRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3882,7 +3882,7 @@ static struct BurnRomInfo raiden2uRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3924,7 +3924,7 @@ static struct BurnRomInfo raiden2iRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -3966,7 +3966,7 @@ static struct BurnRomInfo raiden2kRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -4024,7 +4024,7 @@ static struct BurnRomInfo raiden2eRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -4066,7 +4066,7 @@ static struct BurnRomInfo raiden2eaRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -4109,7 +4109,7 @@ static struct BurnRomInfo raiden2euRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 13 Pals
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
 	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
@@ -4154,8 +4154,8 @@ static struct BurnRomInfo raiden2euaRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",				0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   	   // 15 Pals
-	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   	   // 16
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
 STD_ROM_PICK(raiden2eua)
@@ -4199,8 +4199,8 @@ static struct BurnRomInfo raiden2egRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 15 Pals
-	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 16
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
 STD_ROM_PICK(raiden2eg)
@@ -4243,8 +4243,8 @@ static struct BurnRomInfo raiden2eupRomDesc[] = {
 
 	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 
-	{ "jj4b02__ami18cv8-15.u0342", 		0x000288, 0x00000000, 0 | BRF_NODUMP },	   // 15 Pals
-	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 16
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
 };
 
 STD_ROM_PICK(raiden2eup)

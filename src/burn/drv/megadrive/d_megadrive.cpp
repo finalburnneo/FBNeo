@@ -43511,3 +43511,60 @@ struct BurnDriver BurnDrvmd_devwilltoo = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Chip's Challenge v1.2 (HB)
+
+static struct BurnRomInfo md_chipschRomDesc[] = {
+	{ "chipschallenge_v12.bin", 1179648, 0x20755e62, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_chipsch)
+STD_ROM_FN(md_chipsch)
+
+struct BurnDriver BurnDrvmd_chipsch = {
+	"md_chipsch", NULL, NULL, NULL, "2020",
+	"Chip's Challenge (HB, v1.2)\0", NULL, "PortableDev", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_chipschRomInfo, md_chipschRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Deflektor v1.1 (HB)
+
+static struct BurnRomInfo md_deflektorRomDesc[] = {
+	{ "deflektor_v11.bin", 655360, 0x36a58102, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_deflektor)
+STD_ROM_FN(md_deflektor)
+
+struct BurnDriver BurnDrvmd_deflektor = {
+	"md_deflektor", NULL, NULL, NULL, "2019",
+	"Deflektor (HB, v1.1)\0", NULL, "PortableDev", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_deflektorRomInfo, md_deflektorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rick Dangerous 2 v1.1 (HB)
+
+static struct BurnRomInfo md_rickdang2RomDesc[] = {
+	{ "rickdangerous2_v11.bin", 1310720, 0x4366add7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rickdang2)
+STD_ROM_FN(md_rickdang2)
+
+struct BurnDriver BurnDrvmd_rickdang2 = {
+	"md_rickdang2", NULL, NULL, NULL, "2018",
+	"Rick Dangerous 2 (HB, v1.1)\0", NULL, "PortableDev", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_rickdang2RomInfo, md_rickdang2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

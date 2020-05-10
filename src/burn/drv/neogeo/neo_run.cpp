@@ -76,7 +76,7 @@
 #include "neocdlist.h"
 
 // #undef USE_SPEEDHACKS
-
+#define IRQ_TWEAK 3 // test-fix for Spin Master
 // #define LOG_IRQ
 // #define LOG_DRAW
 
@@ -4890,12 +4890,12 @@ INT32 NeoFrame()
 				bForcePartialRender = bRenderImage;
 				if (bForcePartialRender) {
 					nSliceStart = nSliceEnd;
-					nSliceEnd = SekCurrentScanline() - 5;
+					nSliceEnd = SekCurrentScanline() - 5 + IRQ_TWEAK;
 				}
 			} else {
 				if (bForcePartialRender) {
 					nSliceStart = nSliceEnd;
-					nSliceEnd = SekCurrentScanline() - 6;
+					nSliceEnd = SekCurrentScanline() - 6 + IRQ_TWEAK;
 				}
 			}
 
@@ -4956,7 +4956,7 @@ INT32 NeoFrame()
 				if (bForcePartialRender) {
 
 					nSliceStart = nSliceEnd;
-					nSliceEnd = SekCurrentScanline() - 5;
+					nSliceEnd = SekCurrentScanline() - 5 + IRQ_TWEAK;
 
 					if (nSliceEnd > 240) {
 						nSliceEnd = 240;

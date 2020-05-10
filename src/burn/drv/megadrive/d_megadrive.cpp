@@ -43512,21 +43512,21 @@ struct BurnDriver BurnDrvmd_devwilltoo = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Chip's Challenge v1.2 (HB)
+// Chip's Challenge (HB, v1.3)
 
-static struct BurnRomInfo md_chipschRomDesc[] = {
-	{ "chipschallenge_v12.bin", 1179648, 0x20755e62, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+static struct BurnRomInfo md_chipsch13RomDesc[] = {
+	{ "chipschallenge_v13.bin", 1310720, 0xa7783390, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_chipsch)
-STD_ROM_FN(md_chipsch)
+STD_ROM_PICK(md_chipsch13)
+STD_ROM_FN(md_chipsch13)
 
-struct BurnDriver BurnDrvmd_chipsch = {
-	"md_chipsch", NULL, NULL, NULL, "2020",
-	"Chip's Challenge (HB, v1.2)\0", NULL, "PortableDev", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_chipsch13 = {
+	"md_chipsch13", NULL, NULL, NULL, "2020",
+	"Chip's Challenge (HB, v1.3)\0", NULL, "PortableDev", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_chipschRomInfo, md_chipschRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_chipsch13RomInfo, md_chipsch13RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

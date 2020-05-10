@@ -27683,20 +27683,20 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 	256, 192, 4, 3
 };
 
-// Voyage - A Sorceress Vacation v1.0 (build 684)
+// Voyage - A Sorceress Vacation v1.03
 
 static struct BurnRomInfo sms_voyageRomDesc[] = {
-	{ "Voyage - A Sorceress Vacation v1.0 (build 684).sms",	0x80000, 0x80afc57a, BRF_PRG | BRF_ESS },
+	{ "Voyage - A Sorceress Vacation v1.03.sms",	524288, 0x7aff90b0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_voyage)
 STD_ROM_FN(sms_voyage)
 
 struct BurnDriver BurnDrvsms_voyage = {
-	"sms_voyage", NULL, NULL, NULL, "2019",
-	"Voyage - A Sorceress Vacation (HB, v1.0 build 684)\0", NULL, "SNAGS", "Sega Master System",
+	"sms_voyage", NULL, NULL, NULL, "2020",
+	"Voyage - A Sorceress Vacation (HB, v1.03)\0", NULL, "SNAGS", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_voyageRomInfo, sms_voyageRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27774,6 +27774,44 @@ struct BurnDriver BurnDrvsms_moncrunch = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_moncrunchRomInfo, sms_moncrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow (HB, rev3)
+
+static struct BurnRomInfo sms_tosRomDesc[] = {
+	{ "Tower_of_Sorrow_REV3.sms",	524288, 0xd0e103d9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tos)
+STD_ROM_FN(sms_tos)
+
+struct BurnDriver BurnDrvsms_tos = {
+	"sms_tos", NULL, NULL, NULL, "2020",
+	"Tower of Sorrow (HB, rev3)\0", NULL, "Steiger", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_tosRomInfo, sms_tosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Galactic Boogers (HB)
+
+static struct BurnRomInfo sms_gboogersRomDesc[] = {
+	{ "Galactic Boogers.sms",	1048576, 0xb5dac318, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gboogers)
+STD_ROM_FN(sms_gboogers)
+
+struct BurnDriver BurnDrvsms_gboogers = {
+	"sms_gboogers", NULL, NULL, NULL, "2020",
+	"Galactic Boogers (HB)\0", NULL, "YETI", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_gboogersRomInfo, sms_gboogersRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

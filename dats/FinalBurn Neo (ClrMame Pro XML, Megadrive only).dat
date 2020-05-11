@@ -1959,6 +1959,13 @@
 		<rom name="chinese fighter iii (unl, alt).bin" size="2097152" crc="6f98247d"/>
 		<driver status="good"/>
 	</game>
+	<game name="chipsch13">
+		<description>Chip's Challenge (HB, v1.3)</description>
+		<year>2020</year>
+		<manufacturer>PortableDev</manufacturer>
+		<rom name="chipschallenge_v13.bin" size="1310720" crc="a7783390"/>
+		<driver status="good"/>
+	</game>
 	<game name="miracle9">
 		<description>Chou Kyuukai Miracle Nine (Jpn)</description>
 		<year>1995</year>
@@ -2951,6 +2958,13 @@
 		<year>199?</year>
 		<manufacturer>Tomsoft</manufacturer>
 		<rom name="deer hunter.bin" size="1048576" crc="da11978b"/>
+		<driver status="good"/>
+	</game>
+	<game name="deflektor">
+		<description>Deflektor (HB, v1.1)</description>
+		<year>2019</year>
+		<manufacturer>PortableDev</manufacturer>
+		<rom name="deflektor_v11.bin" size="655360" crc="36a58102"/>
 		<driver status="good"/>
 	</game>
 	<game name="demoman">
@@ -10006,6 +10020,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="rick dangerous (unl).bin" size="4063232" crc="545cbbe4"/>
+		<driver status="good"/>
+	</game>
+	<game name="rickdang2">
+		<description>Rick Dangerous 2 (HB, v1.1)</description>
+		<year>2018</year>
+		<manufacturer>PortableDev</manufacturer>
+		<rom name="rickdangerous2_v11.bin" size="1310720" crc="4366add7"/>
 		<driver status="good"/>
 	</game>
 	<game name="riddle">

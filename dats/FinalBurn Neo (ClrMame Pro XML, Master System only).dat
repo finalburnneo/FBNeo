@@ -412,7 +412,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="baraburu10">
-		<description>Bara Buruu (Version 1.0)</description>
+		<description>Bara Buruu (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BaraBuruu-SMS-1.00.sms" size="131072" crc="43e39aa4"/>
@@ -496,7 +496,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="brucelee10">
-		<description>Bruce Lee (Version 1.0)</description>
+		<description>Bruce Lee (HB, v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BruceLee-SMS-1.00.sms" size="131072" crc="37e27a38"/>
@@ -797,14 +797,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="darc10">
-		<description>DARC (Version 1.0) [Turn ON 'FM Emulation' in Dips for music/sfx!]</description>
+		<description>DARC (HB, v1.0) [Turn ON 'FM Emulation' in Dips for music/sfx!]</description>
 		<year>2015</year>
 		<manufacturer>Zipper</manufacturer>
 		<rom name="DARC.sms" size="524288" crc="61b3c657"/>
 		<driver status="good"/>
 	</game>
 	<game name="datastorm10">
-		<description>Data Storm (Version 1.0)</description>
+		<description>Data Storm (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="datastorm.sms" size="32768" crc="37b775d6"/>
@@ -1217,7 +1217,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fpigarus">
-		<description>Flight of Pigarus (Version 1.0)</description>
+		<description>Flight of Pigarus (HB, v1.0)</description>
 		<year>2018</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="FlightOfPigarus-SMS-1.00.sms" size="262144" crc="838574d1"/>
@@ -1270,6 +1270,13 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gain ground [proto].bin" size="262144" crc="d40d03c7"/>
+		<driver status="good"/>
+	</game>
+	<game name="gboogers">
+		<description>Galactic Boogers (HB)</description>
+		<year>2020</year>
+		<manufacturer>YETI</manufacturer>
+		<rom name="Galactic Boogers.sms" size="1048576" crc="b5dac318"/>
 		<driver status="good"/>
 	</game>
 	<game name="galactpr">
@@ -1329,7 +1336,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="punpun">
-		<description>Geki Oko PunPun Maru (Version 20151031b?)</description>
+		<description>Geki Oko PunPun Maru ((HB, v20151031b)</description>
 		<year>2013</year>
 		<manufacturer>Future Driver</manufacturer>
 		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
@@ -1664,6 +1671,13 @@
 		<rom name="heavyweight champ (europe).bin" size="262144" crc="fdab876a"/>
 		<driver status="good"/>
 	</game>
+	<game name="had">
+		<description>Heroes Against Demons (HB, v1.03)</description>
+		<year>2020</year>
+		<manufacturer>Ichigo</manufacturer>
+		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
+		<driver status="good"/>
+	</game>
 	<game name="highsc">
 		<description>High School! Kimengumi (Jpn)</description>
 		<year>1986</year>
@@ -1966,10 +1980,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostraider101">
-		<description>Lost Raider (Version 1.01)</description>
+		<description>Lost Raider (HB, v1.01)</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckypeng">
+		<description>Lucky Penguin (HB, v1.1)</description>
+		<year>2020</year>
+		<manufacturer>Denine</manufacturer>
+		<rom name="LuckyPenguin-SMS-1.1.sms" size="49152" crc="69699887"/>
 		<driver status="good"/>
 	</game>
 	<game name="mjsengok">
@@ -2127,7 +2148,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moggym100">
-		<description>Moggy Master (Version 1.00)</description>
+		<description>Moggy Master (HB, v1.00)</description>
 		<year>2015</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="mojon-twins--moggy-master.sms" size="65536" crc="039539df"/>
@@ -2159,6 +2180,13 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="monopoly [proto].bin" size="131072" crc="7e9d87fc"/>
+		<driver status="good"/>
+	</game>
+	<game name="moncrunch">
+		<description>Monster Crunch (HB, v1.00)</description>
+		<year>2020</year>
+		<manufacturer>Ichigo</manufacturer>
+		<rom name="MonsterCrunch-SMS-1.00.sms" size="32768" crc="7eacf20c"/>
 		<driver status="good"/>
 	</game>
 	<game name="montezum">
@@ -2869,7 +2897,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="silvervalley">
-		<description>Silver Valley</description>
+		<description>Silver Valley (HB)</description>
 		<year>2018</year>
 		<manufacturer>MIKGAMES / Enrique Ruiz</manufacturer>
 		<rom name="silvervalley-final.sms" size="262144" crc="2774b5cc"/>
@@ -3379,6 +3407,13 @@
 		<rom name="mpr-15506.ic1" size="262144" crc="6f9ac98f"/>
 		<driver status="good"/>
 	</game>
+	<game name="sydhunt">
+		<description>Sydney Hunter and the Sacred Tribe (HB)</description>
+		<year>2017</year>
+		<manufacturer>Oscar Toledo G.</manufacturer>
+		<rom name="Sydney Hunter.sms" size="131072" crc="e3060500"/>
+		<driver status="good"/>
+	</game>
 	<game name="t2ag">
 		<description>T2 - The Arcade Game (Euro)</description>
 		<year>1993</year>
@@ -3785,6 +3820,13 @@
 		<rom name="toto world 3 (korea) (unl).bin" size="262144" crc="4f8d75ec"/>
 		<driver status="good"/>
 	</game>
+	<game name="tos">
+		<description>Tower of Sorrow (HB, rev3)</description>
+		<year>2020</year>
+		<manufacturer>Steiger</manufacturer>
+		<rom name="Tower_of_Sorrow_REV3.sms" size="524288" crc="d0e103d9"/>
+		<driver status="good"/>
+	</game>
 	<game name="transbot">
 		<description>TransBot (Euro, USA, Bra)</description>
 		<year>1985</year>
@@ -3877,14 +3919,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="voyage">
-		<description>Voyage - A Sorceress Vacation (v1.0 build 684)</description>
-		<year>2019</year>
+		<description>Voyage - A Sorceress Vacation (HB, v1.03)</description>
+		<year>2020</year>
 		<manufacturer>SNAGS</manufacturer>
-		<rom name="Voyage - A Sorceress Vacation v1.0 (build 684).sms" size="524288" crc="80afc57a"/>
+		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="7aff90b0"/>
 		<driver status="good"/>
 	</game>
 	<game name="WaimanuSMS">
-		<description>Waimanu: Scary Monsters Saga</description>
+		<description>Waimanu: Scary Monsters Saga (HB)</description>
 		<year>2015</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WaimanuSMS.sms" size="131072" crc="195c3f78"/>
@@ -3905,7 +3947,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wekainvaders10">
-		<description>Weka Invaders (Version 1.0)</description>
+		<description>Weka Invaders (HB, v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WekaInvaders.sms" size="294912" crc="54b2fcf8"/>
@@ -3940,7 +3982,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarriors">
-		<description>Wing Warriors (April 18, 2019 Test)</description>
+		<description>Wing Warriors (HB, April 18, 2019 Test)</description>
 		<year>2019</year>
 		<manufacturer>Kitmaker</manufacturer>
 		<rom name="WingWarriors.sms" size="131072" crc="14e13a82"/>

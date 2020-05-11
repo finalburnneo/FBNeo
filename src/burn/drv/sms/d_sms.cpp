@@ -27370,7 +27370,7 @@ STD_ROM_FN(sms_darc)
 
 struct BurnDriver BurnDrvsms_darc = {
 	"sms_darc10", NULL, NULL, NULL, "2015",
-	"DARC (Version 1.0)\0", "Turn ON 'FM Emulation' in Dips for music/sfx!", "Zipper", "Sega Master System",
+	"DARC (HB, v1.0)\0", "Turn ON 'FM Emulation' in Dips for music/sfx!", "Zipper", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27389,7 +27389,7 @@ STD_ROM_FN(sms_lostraider101)
 
 struct BurnDriver BurnDrvsms_lostraider101 = {
 	"sms_lostraider101", NULL, NULL, NULL, "2015",
-	"Lost Raider (Version 1.01)\0", NULL, "Vingazole & Ichigobankai", "Sega Master System",
+	"Lost Raider (HB, v1.01)\0", NULL, "Vingazole & Ichigobankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_lostraider101RomInfo, sms_lostraider101RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27408,7 +27408,7 @@ STD_ROM_FN(sms_moggym100)
 
 struct BurnDriver BurnDrvsms_moggym100 = {
 	"sms_moggym100", NULL, NULL, NULL, "2015",
-	"Moggy Master (Version 1.00)\0", NULL, "Mojon Twins", "Sega Master System",
+	"Moggy Master (HB, v1.00)\0", NULL, "Mojon Twins", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_moggym100RomInfo, sms_moggym100RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27427,7 +27427,7 @@ STD_ROM_FN(sms_punpun)
 
 struct BurnDriver BurnDrvsms_punpun = {
 	"sms_punpun", NULL, NULL, NULL, "2013",
-	"Geki Oko PunPun Maru (Version 20151031b?)\0", NULL, "Future Driver", "Sega Master System",
+	"Geki Oko PunPun Maru ((HB, v20151031b)\0", NULL, "Future Driver", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_JAPANESE, GBF_MISC, 0,
 	SMSGetZipName, sms_punpunRomInfo, sms_punpunRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27446,7 +27446,7 @@ STD_ROM_FN(sms_waimanu)
 
 struct BurnDriver BurnDrvsms_waimanu = {
 	"sms_WaimanuSMS", NULL, NULL, NULL, "2015",
-	"Waimanu: Scary Monsters Saga\0", NULL, "Disjointed Studio", "Sega Master System",
+	"Waimanu: Scary Monsters Saga (HB)\0", NULL, "Disjointed Studio", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_waimanuRomInfo, sms_waimanuRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27465,7 +27465,7 @@ STD_ROM_FN(sms_brucelee)
 
 struct BurnDriver BurnDrvsms_brucelee = {
 	"sms_brucelee10", NULL, NULL, NULL, "2015",
-	"Bruce Lee (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	"Bruce Lee (HB, v1.0)\0", NULL, "Kagesan", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_bruceleeRomInfo, sms_bruceleeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27503,7 +27503,7 @@ STD_ROM_FN(sms_baraburu)
 
 struct BurnDriver BurnDrvsms_baraburu = {
 	"sms_baraburu10", NULL, NULL, NULL, "2016",
-	"Bara Buruu (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	"Bara Buruu (HB, v1.0)\0", NULL, "Kagesan", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_baraburuRomInfo, sms_baraburuRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27522,7 +27522,7 @@ STD_ROM_FN(sms_datastorm)
 
 struct BurnDriver BurnDrvsms_datastorm = {
 	"sms_datastorm10", NULL, NULL, NULL, "2016",
-	"Data Storm (Version 1.0)\0", NULL, "haroldoop", "Sega Master System",
+	"Data Storm (HB, v1.0)\0", NULL, "haroldoop", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_datastormRomInfo, sms_datastormRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27560,7 +27560,7 @@ STD_ROM_FN(sms_wekainvaders)
 
 struct BurnDriver BurnDrvsms_wekainvaders = {
 	"sms_wekainvaders10", NULL, NULL, NULL, "2017",
-	"Weka Invaders (Version 1.0)\0", NULL, "Disjointed Studio", "Sega Master System",
+	"Weka Invaders (HB, v1.0)\0", NULL, "Disjointed Studio", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_wekainvadersRomInfo, sms_wekainvadersRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27579,7 +27579,7 @@ STD_ROM_FN(sms_silvervalley)
 
 struct BurnDriver BurnDrvsms_silvervalley = {
 	"sms_silvervalley", NULL, NULL, NULL, "2018",
-	"Silver Valley\0", NULL, "MIKGAMES / Enrique Ruiz", "Sega Master System",
+	"Silver Valley (HB)\0", NULL, "MIKGAMES / Enrique Ruiz", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_silvervalleyRomInfo, sms_silvervalleyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27636,7 +27636,7 @@ STD_ROM_FN(sms_fpigarus)
 
 struct BurnDriver BurnDrvsms_fpigarus = {
 	"sms_fpigarus", NULL, NULL, NULL, "2018",
-	"Flight of Pigarus (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	"Flight of Pigarus (HB, v1.0)\0", NULL, "Kagesan", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_fpigarusRomInfo, sms_fpigarusRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27655,7 +27655,7 @@ STD_ROM_FN(sms_wingwarriors)
 
 struct BurnDriver BurnDrvsms_wingwarriors = {
 	"sms_wingwarriors", NULL, NULL, NULL, "2019",
-	"Wing Warriors (April 18, 2019 Test)\0", NULL, "Kitmaker", "Sega Master System",
+	"Wing Warriors (HB, April 18, 2019 Test)\0", NULL, "Kitmaker", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_wingwarriorsRomInfo, sms_wingwarriorsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27683,20 +27683,20 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 	256, 192, 4, 3
 };
 
-// Voyage - A Sorceress Vacation v1.0 (build 684)
+// Voyage - A Sorceress Vacation v1.03
 
 static struct BurnRomInfo sms_voyageRomDesc[] = {
-	{ "Voyage - A Sorceress Vacation v1.0 (build 684).sms",	0x80000, 0x80afc57a, BRF_PRG | BRF_ESS },
+	{ "Voyage - A Sorceress Vacation v1.03.sms",	524288, 0x7aff90b0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_voyage)
 STD_ROM_FN(sms_voyage)
 
 struct BurnDriver BurnDrvsms_voyage = {
-	"sms_voyage", NULL, NULL, NULL, "2019",
-	"Voyage - A Sorceress Vacation (v1.0 build 684)\0", NULL, "SNAGS", "Sega Master System",
+	"sms_voyage", NULL, NULL, NULL, "2020",
+	"Voyage - A Sorceress Vacation (HB, v1.03)\0", NULL, "SNAGS", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_voyageRomInfo, sms_voyageRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27713,10 +27713,105 @@ STD_ROM_FN(sms_sydhunt)
 
 struct BurnDriver BurnDrvsms_sydhunt = {
 	"sms_sydhunt", NULL, NULL, NULL, "2017",
-	"Sydney Hunter and the Sacred Tribe\0", NULL, "Oscar Toledo G.", "Sega Master System",
+	"Sydney Hunter and the Sacred Tribe (HB)\0", NULL, "Oscar Toledo G.", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_sydhuntRomInfo, sms_sydhuntRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Heroes Against Demons (v1.03)
+
+static struct BurnRomInfo sms_hadRomDesc[] = {
+	{ "HeroesAgainstDemons_1.03.sms",	131072, 0x35f47e0a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_had)
+STD_ROM_FN(sms_had)
+
+struct BurnDriver BurnDrvsms_had = {
+	"sms_had", NULL, NULL, NULL, "2020",
+	"Heroes Against Demons (HB, v1.03)\0", NULL, "Ichigo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Lucky Penguin (v1.1)
+
+static struct BurnRomInfo sms_luckypengRomDesc[] = {
+	{ "LuckyPenguin-SMS-1.1.sms",	49152, 0x69699887, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_luckypeng)
+STD_ROM_FN(sms_luckypeng)
+
+struct BurnDriver BurnDrvsms_luckypeng = {
+	"sms_luckypeng", NULL, NULL, NULL, "2020",
+	"Lucky Penguin (HB, v1.1)\0", NULL, "Denine", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_luckypengRomInfo, sms_luckypengRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monster Crunch (v1.00)
+
+static struct BurnRomInfo sms_moncrunchRomDesc[] = {
+	{ "MonsterCrunch-SMS-1.00.sms",	32768, 0x7eacf20c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_moncrunch)
+STD_ROM_FN(sms_moncrunch)
+
+struct BurnDriver BurnDrvsms_moncrunch = {
+	"sms_moncrunch", NULL, NULL, NULL, "2020",
+	"Monster Crunch (HB, v1.00)\0", NULL, "Ichigo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_moncrunchRomInfo, sms_moncrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tower of Sorrow (HB, rev3)
+
+static struct BurnRomInfo sms_tosRomDesc[] = {
+	{ "Tower_of_Sorrow_REV3.sms",	524288, 0xd0e103d9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tos)
+STD_ROM_FN(sms_tos)
+
+struct BurnDriver BurnDrvsms_tos = {
+	"sms_tos", NULL, NULL, NULL, "2020",
+	"Tower of Sorrow (HB, rev3)\0", NULL, "Steiger", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_tosRomInfo, sms_tosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Galactic Boogers (HB)
+
+static struct BurnRomInfo sms_gboogersRomDesc[] = {
+	{ "Galactic Boogers.sms",	1048576, 0xb5dac318, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gboogers)
+STD_ROM_FN(sms_gboogers)
+
+struct BurnDriver BurnDrvsms_gboogers = {
+	"sms_gboogers", NULL, NULL, NULL, "2020",
+	"Galactic Boogers (HB)\0", NULL, "YETI", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_gboogersRomInfo, sms_gboogersRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

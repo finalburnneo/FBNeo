@@ -74,6 +74,44 @@ static UINT8 M6809ReadOpArgDummyHandler(UINT16)
 	return 0;
 }
 
+// ## M6809CPUPush() / M6809CPUPop() ## internal helpers for sending signals to other 68k's
+struct m6809pstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static m6809pstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
+
+static void M6809CPUPush(INT32 nCPU)
+{
+	m6809pstack *p = &pstack[pstacknum++];
+
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("M6809CPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
+
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = M6809GetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) M6809Close();
+		M6809Open(p->nPushedCPU);
+	}
+}
+
+static void M6809CPUPop()
+{
+	m6809pstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		M6809Close();
+		if (p->nHostCPU != -1) M6809Open(p->nHostCPU);
+	}
+}
+
 void M6809Reset()
 {
 #if defined FBNEO_DEBUG
@@ -82,6 +120,19 @@ void M6809Reset()
 #endif
 
 	m6809_reset();
+}
+
+void M6809Reset(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Reset called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	M6809Reset();
+
+	M6809CPUPop();
 }
 
 UINT16 M6809GetPC()
@@ -125,6 +176,21 @@ INT32 M6809TotalCycles()
 	return nM6809CyclesTotal + m6809_get_segmentcycles();
 }
 
+INT32 M6809TotalCycles(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809TotalCycles called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	INT32 nRet = M6809TotalCycles();
+
+	M6809CPUPop();
+
+	return nRet;
+}
+
 INT32 M6809Idle(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
@@ -134,6 +200,21 @@ INT32 M6809Idle(INT32 cycles)
 	nM6809CyclesTotal += cycles;
 
 	return cycles;
+}
+
+INT32 M6809Idle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Idle called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	INT32 nRet = M6809Idle(nCycles);
+
+	M6809CPUPop();
+
+	return nRet;
 }
 
 UINT8 M6809CheatRead(UINT32 a)
@@ -238,7 +319,7 @@ INT32 M6809GetActive()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809GetActive called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809GetActive called when no CPU open\n"));
+	//if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809GetActive called when no CPU open\n"));
 #endif
 
 	return nActiveCPU;
@@ -271,6 +352,19 @@ void M6809SetIRQLine(INT32 vector, INT32 status)
 	}
 }
 
+void M6809SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetIRQLine called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	M6809SetIRQLine(line, status);
+
+	M6809CPUPop();
+}
+
 INT32 M6809Run(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
@@ -283,6 +377,21 @@ INT32 M6809Run(INT32 cycles)
 	nM6809CyclesTotal += cycles;
 	
 	return cycles;
+}
+
+INT32 M6809Run(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Run called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	INT32 nRet = M6809Run(nCycles);
+
+	M6809CPUPop();
+
+	return nRet;
 }
 
 void M6809RunEnd()

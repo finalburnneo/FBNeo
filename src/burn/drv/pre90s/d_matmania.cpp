@@ -622,7 +622,11 @@ static INT32 DrvInit(INT32 game)
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// both
-	DACInit(0, 0, 1, (maniach) ? M6809TotalCycles : M6502TotalCycles, (maniach) ? 1500000 : 1200000);
+	if (maniach) {
+		DACInit(0, 0, 1, M6809TotalCycles, 1500000);
+	} else {
+		DACInit(0, 0, 1, M6502TotalCycles, 1200000);
+	}
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

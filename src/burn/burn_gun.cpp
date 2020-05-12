@@ -431,7 +431,7 @@ void BurnTrackballSetVelocityCurve(INT32 bLogarithmic)
 
 	if (bLogarithmic) {
 		for (INT32 i = 0; i < 0x100; i++) {
-			CURVE[i] = 1 + (log(i) * 1.2);
+			CURVE[i] = 1 + (log((double)i) * 1.2);
 		}
 	} else {
 		for (INT32 i = 0; i < 0x100; i++) {

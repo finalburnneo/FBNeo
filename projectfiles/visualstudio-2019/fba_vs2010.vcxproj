@@ -526,10 +526,10 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\pst90s\d_f-32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_f-32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_galpani3.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\pst90s\d_goori.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_goori.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_gstream.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_hyprduel.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
@@ -537,7 +537,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_shangha3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />

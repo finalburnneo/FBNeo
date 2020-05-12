@@ -64,7 +64,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	title_texture_rect.h = h; //the height of the texture
 
 	dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-	dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h / 2); // the y coordinate
+	dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
 	dest_title_texture_rect.w = w;
 	dest_title_texture_rect.h = h;
 	if (!(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL))
@@ -828,12 +828,10 @@ void gui_render()
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
 
-	// Game info box
-	renderPanel(sdlRenderer, nVidGuiWidth/2,nVidGuiHeight/2,  nVidGuiWidth/2,nVidGuiHeight/2, 0x00, 0x8f, 0x00);
-
 	// Selected game background
 	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
-
+	// game info
+	renderPanel(sdlRenderer,  0, thirdscreenheight*2, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 	if (titleTexture != NULL) // JUST FOR TESTING!!
 	{
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
@@ -856,7 +854,6 @@ void gui_render()
 				gametoplay = filterGames[i];
 				gameSelectedFromFilter = i;
 
-				renderPanel(sdlRenderer,  0, thirdscreenheight*2, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 				incolor(info_color, /* unused */ 0);
 				char infoLine[512];
 				snprintf(infoLine, 512, "Year: %s - Manufacturer: %s - System: %s", BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_SYSTEM));
@@ -1064,7 +1061,7 @@ int gui_process()
 				title_texture_rect.h = h; //the height of the texture
 
 				dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-				dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h / 2); // the y coordinate
+				dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
 				dest_title_texture_rect.w = w;
 				dest_title_texture_rect.h = h;
 			}

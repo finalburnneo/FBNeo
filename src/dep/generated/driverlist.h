@@ -1244,6 +1244,7 @@ DRV		BurnDrvcv_blockrun;
 DRV		BurnDrvBlockade;
 DRV		BurnDrvmd_blockb;
 DRV		BurnDrvBlkbustr;
+DRV		BurnDrvBlocken;
 DRV		BurnDrvmd_blockout;
 DRV		BurnDrvnes_blodilan;
 DRV		BurnDrvpce_blodia;
@@ -5041,6 +5042,7 @@ DRV		BurnDrvHwchampjd;
 DRV		BurnDrvHwchampj;
 DRV		BurnDrvHwchamp;
 DRV		BurnDrvnes_hebereke;
+DRV		BurnDrvHeberpop;
 DRV		BurnDrvnes_hector87;
 DRV		BurnDrvsg1k_heibaiqi;
 DRV		BurnDrvmd_heitao;
@@ -8288,6 +8290,7 @@ DRV		BurnDrvParodiuse;
 DRV		BurnDrvpce_parodius;
 DRV		BurnDrvmd_partyq;
 DRV		BurnDrvPrtytime;
+DRV		BurnDrvPasha2;
 DRV		BurnDrvPpchamp;
 DRV		BurnSpecpassshot;
 DRV		BurnSpecpassshot_48;
@@ -9957,6 +9960,10 @@ DRV		BurnDrvgg_shangh2;
 DRV		BurnDrvmd_shangh2;
 DRV		BurnDrvmd_shangh2p;
 DRV		BurnDrvmd_shangh2p1;
+DRV		BurnDrvShangha3j;
+DRV		BurnDrvShangha3u;
+DRV		BurnDrvShangha3up;
+DRV		BurnDrvShangha3;
 DRV		BurnDrvpce_shanghai;
 DRV		BurnDrvShaolins;
 DRV		BurnDrvShaolinb;
@@ -15367,6 +15374,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlockade,			// Blockade
 	&BurnDrvmd_blockb,			// Blockbuster World Video Game Championship II (USA)
 	&BurnDrvBlkbustr,			// BlockBuster
+	&BurnDrvBlocken,			// Blocken (Japan)
 	&BurnDrvmd_blockout,		// Blockout (World)
 	&BurnDrvnes_blodilan,		// Blodia Land - Puzzle Quest (Japan)
 	&BurnDrvpce_blodia,			// Blodia
@@ -19164,6 +19172,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHwchampj,			// Heavyweight Champ (Japan, FD1094 317-0046)
 	&BurnDrvHwchamp,			// Heavyweight Champ
 	&BurnDrvnes_hebereke,		// Hebereke (Japan)
+	&BurnDrvHeberpop,			// Hebereke no Popoon (Japan)
 	&BurnDrvnes_hector87,		// Hector '87 (Japan)
 	&BurnDrvsg1k_heibaiqi,		// Hei Bai Qi (Tw)
 	&BurnDrvmd_heitao,			// Hei Tao 2 - Super Big 2 (Chi)
@@ -22411,6 +22420,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_parodius,		// Parodius da! - Shinwa Kara Owarai He
 	&BurnDrvmd_partyq,			// Party Quiz Mega Q (Jpn)
 	&BurnDrvPrtytime,			// Party Time: Gonta the Diver II / Ganbare! Gonta!! 2 (World Release)
+	&BurnDrvPasha2,				// Pasha Pasha 2
 	&BurnDrvPpchamp,			// Pasha Pasha Champ Mini Game Festival
 	&BurnSpecpassshot,			// Passing Shot (128K)
 	&BurnSpecpassshot_48,		// Passing Shot (48K)
@@ -24080,6 +24090,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shangh2,			// Shanghai II - Dragon's Eye (USA)
 	&BurnDrvmd_shangh2p,		// Shanghai II - Dragon's Eye (USA, Prototype)
 	&BurnDrvmd_shangh2p1,		// Shanghai II - Dragon's Eye (USA, Prototype, Alt)
+	&BurnDrvShangha3j,			// Shanghai III (Japan)
+	&BurnDrvShangha3u,			// Shanghai III (US)
+	&BurnDrvShangha3up,			// Shanghai III (US, prototype)
+	&BurnDrvShangha3,			// Shanghai III (World)
 	&BurnDrvpce_shanghai,		// Shanghai
 	&BurnDrvShaolins,			// Shao-lin's Road (set 1)
 	&BurnDrvShaolinb,			// Shao-lin's Road (set 2)

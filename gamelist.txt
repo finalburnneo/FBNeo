@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13848 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13855 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1226,6 +1226,7 @@ This list contains all games supported by FinalBurn Neo.
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
 | md_blockb	|  	| Blockbuster World Video Game Championship II (USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | blkbustr	|  	| BlockBuster						| mrjong	| 1983	| Kiwako (ECI li| Miscellaneous	| 					|
+| blocken	|  	| Blocken (Japan)					| 		| 1994	| Visco / KID	| Miscellaneous	| 					|
 | md_blockout	|  	| Blockout (World)					| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | nes_blodilan	|  	| Blodia Land - Puzzle Quest (Japan)			| 		| 1990	| Tonkin House	| Miscellaneous	| 					|
 | pce_blodia	|  	| Blodia						| 		| 1990	| Hudson	| PC Engine	| 					|
@@ -4953,6 +4954,7 @@ This list contains all games supported by FinalBurn Neo.
 | hwchampj	|  	| Heavyweight Champ (Japan, FD1094 317-0046)		| hwchamp	| 1987	| Sega		| System 16B	| 					|
 | hwchamp	|  	| Heavyweight Champ					| 		| 1987	| Sega		| System 16B	| 					|
 | nes_hebereke	|  	| Hebereke (Japan)					| nes_ufouria	| 1991	| Sunsoft	| Miscellaneous	| 					|
+| heberpop	|  	| Hebereke no Popoon (Japan)				| 		| 1994	| Sunsoft / Atlu| Miscellaneous	| 					|
 | nes_hector87	|  	| Hector '87 (Japan)					| 		| 1987	| Hudson Soft	| Miscellaneous	| 					|
 | sg1k_heibaiqi	|  	| Hei Bai Qi (Tw)					| sg1k_othello	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | md_heitao	|  	| Hei Tao 2 - Super Big 2 (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -8136,6 +8138,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_parodius	|  	| Parodius da! - Shinwa Kara Owarai He			| 		| 1992	| Konami	| PC Engine	| 					|
 | md_partyq	|  	| Party Quiz Mega Q (Jpn)				| 		| 1993	| Sega		| Sega Megadrive| 					|
 | prtytime	|  	| Party Time: Gonta the Diver II / Ganbare! Gonta!! 2 (W| 		| 1995	| Mitchell	| Simple 156	| 					|
+| pasha2	|  	| Pasha Pasha 2						| 		| 1998	| Dong Sung	| Miscellaneous	| Incomplete sound			|
 | ppchamp	|  	| Pasha Pasha Champ Mini Game Festival			| gotcha	| 1997	| Dongsung	| Miscellaneous	| 					|
 | spec_passshot	|  	| Passing Shot (128K)					| 		| 1989	| Image Works	| ZX Spectrum	| 					|
 | spec_passshot_48|  	| Passing Shot (48K)					| spec_passshot	| 1989	| Image Works	| ZX Spectrum	| 					|
@@ -9771,6 +9774,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_shangh2	|  	| Shanghai II - Dragon's Eye (USA)			| 		| 1994	| Activision	| Sega Megadrive| 					|
 | md_shangh2p	|  	| Shanghai II - Dragon's Eye (USA, Prototype)		| md_shangh2	| 1994	| Activision	| Sega Megadrive| 					|
 | md_shangh2p1	|  	| Shanghai II - Dragon's Eye (USA, Prototype, Alt)	| md_shangh2	| 1994	| Activision	| Sega Megadrive| 					|
+| shangha3j	|  	| Shanghai III (Japan)					| shangha3	| 1993	| Sunsoft	| Miscellaneous	| 					|
+| shangha3u	|  	| Shanghai III (US)					| shangha3	| 1993	| Sunsoft	| Miscellaneous	| 					|
+| shangha3up	|  	| Shanghai III (US, prototype)				| shangha3	| 1993	| Sunsoft	| Miscellaneous	| 					|
+| shangha3	|  	| Shanghai III (World)					| 		| 1993	| Sunsoft	| Miscellaneous	| 					|
 | pce_shanghai	|  	| Shanghai						| 		| 1987	| Hudson	| PC Engine	| 					|
 | shaolins	|  	| Shao-lin's Road (set 1)				| kicker	| 1985	| Konami	| GX477		| 					|
 | shaolinb	|  	| Shao-lin's Road (set 2)				| kicker	| 1985	| Konami	| GX477		| 					|

@@ -693,6 +693,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define GBF_RUNGUN  									(1 << 21)
 #define GBF_STRATEGY									(1 << 22)
 #define GBF_VECTOR                                      (1 << 23)
+#define GBF_RPG                                         (1 << 24)
 
 // flags for the family member
 #define FBF_MSLUG										(1 << 0)

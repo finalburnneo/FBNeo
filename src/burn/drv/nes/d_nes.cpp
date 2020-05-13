@@ -2472,7 +2472,7 @@ static void mapper04_scanline()
 	}
 
 	if (cnt && mapper4_irqenable && mapper4_irqcount == 0) {
-		if (mmc5_mask[0] & 0x18) {
+		if (mmc5_mask[0] & 0x18) { // aka if (RENDERING)
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 	}
@@ -4331,12 +4331,14 @@ static void mapper64_irq_reload_logic()
 
 static void mapper64_scanline()
 {
-	if (mapper64_irqmode == 0) {
+	if (mmc5_mask[0] & 0x18) { // aka if (RENDERING) ...
+		if (mapper64_irqmode == 0) {
 
-		mapper64_irq_reload_logic();
+			mapper64_irq_reload_logic();
 
-		if (mapper64_irqcount == 0 && mapper64_irqenable) {
-			mapper_irq(1); // assert irq in 1 m2 cycle
+			if (mapper64_irqcount == 0 && mapper64_irqenable) {
+				mapper_irq(1); // assert irq in 1 m2 cycle
+			}
 		}
 	}
 }
@@ -7347,8 +7349,9 @@ static void scanlinestate(INT32 state)
 			ppu_bus_address = 0x2000 | (vAddr & 0x0fff);
 		}
 
-		// Signal scanline to mapper: (+20 gets rid of jitter in Kirby, Yume Penguin Monogatari, Klax, ...)
-		if (pixel == (260+20) /*&& RENDERING*/ && mapper_scanline) mapper_scanline();
+		// Signal scanline to mapper: (+18 gets rid of jitter in Kirby, Yume Penguin Monogatari, Klax, ...)
+		// Note: was 20, but caused occasional flickering in the rasterized water in "Kira Kira Star Night GOLD" (maybe the others in the series, too?)
+		if (pixel == (260+18) /*&& RENDERING*/ && mapper_scanline) mapper_scanline();
 		// Mapper callback w/ppu_bus_address - used by mmc2/mmc4 (mapper9/mapper10)
 		if (mapper_ppu_clock) mapper_ppu_clock(ppu_bus_address); // ppu callback (visible lines)
     }

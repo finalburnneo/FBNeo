@@ -18,6 +18,11 @@ static int startGame = 0; // game at top of list as it is displayed on the menu
 static unsigned int gamesperscreen = 12;
 static unsigned int gamesperscreen_halfway = 6;
 static unsigned int gametoplay = 0;
+static unsigned int halfscreenheight = 0;
+static unsigned int halfscreenwidth = 0;
+static unsigned int thirdscreenheight =0;
+static unsigned int thirdscreenwidth =0;
+
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 SDL_GameController* gGameController = NULL;
@@ -59,7 +64,7 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	title_texture_rect.h = h; //the height of the texture
 
 	dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-	dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h / 2); // the y coordinate
+	dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
 	dest_title_texture_rect.w = w;
 	dest_title_texture_rect.h = h;
 	if (!(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL))
@@ -796,7 +801,12 @@ void gui_init()
 	inrenderer(sdlRenderer);
 	prepare_inline_font();
 
-	gamesperscreen = (nVidGuiHeight - 100) / 10;
+	halfscreenheight = nVidGuiHeight / 2;
+	halfscreenwidth = nVidGuiWidth / 2;
+	thirdscreenheight =nVidGuiHeight/ 3;
+	thirdscreenwidth = nVidGuiWidth / 2;
+
+	gamesperscreen = (thirdscreenheight * 2) / 11;
 	gamesperscreen_halfway = gamesperscreen / 2;
 
 	// assume if the filter list exists we are returning from a launched game.
@@ -818,10 +828,10 @@ void gui_render()
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
 
-	SDL_Rect fillRect = { 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12};
-	SDL_SetRenderDrawColor(sdlRenderer, 0x41, 0x1d, 0x62, 0xFF);
-	SDL_RenderFillRect(sdlRenderer, &fillRect);
-
+	// Selected game background
+	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
+	// game info
+	renderPanel(sdlRenderer,  0, thirdscreenheight*2, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 	if (titleTexture != NULL) // JUST FOR TESTING!!
 	{
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
@@ -843,10 +853,6 @@ void gui_render()
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = filterGames[i];
 				gameSelectedFromFilter = i;
-
-				fillRect = { 0, nVidGuiHeight - 70, nVidGuiWidth, nVidGuiHeight };
-				SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 0xFF);
-				SDL_RenderFillRect(sdlRenderer, &fillRect);
 
 				incolor(info_color, /* unused */ 0);
 				char infoLine[512];
@@ -1048,14 +1054,14 @@ int gui_process()
 			{
 				int w, h;
 				titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
-				SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);				
+				SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
 				title_texture_rect.x = 0; //the x coordinate
 				title_texture_rect.y = 0; // the y coordinate
 				title_texture_rect.w = w; //the width of the texture
 				title_texture_rect.h = h; //the height of the texture
 
 				dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-				dest_title_texture_rect.y = (nVidGuiHeight / 2) - (h / 2); // the y coordinate
+				dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
 				dest_title_texture_rect.w = w;
 				dest_title_texture_rect.h = h;
 			}

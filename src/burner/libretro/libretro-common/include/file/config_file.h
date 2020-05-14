@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (config_file.h).
@@ -59,6 +59,7 @@ struct config_file
    struct config_entry_list *last;
    unsigned include_depth;
    bool guaranteed_no_duplicates;
+   bool modified;
 
    struct config_include_list *includes;
 };

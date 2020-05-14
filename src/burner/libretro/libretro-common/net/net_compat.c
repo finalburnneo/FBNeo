@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (net_compat.c).
@@ -94,7 +94,7 @@ char *inet_ntoa(struct SceNetInAddr in)
 {
 	static char ip_addr[INET_ADDRSTRLEN + 1];
 
-   if (inet_ntop_compat(AF_INET, &in, ip_addr, INET_ADDRSTRLEN) == NULL)
+   if (!inet_ntop_compat(AF_INET, &in, ip_addr, INET_ADDRSTRLEN))
 		strlcpy(ip_addr, "Invalid", sizeof(ip_addr));
 
 	return ip_addr;
@@ -149,12 +149,16 @@ int retro_epoll_fd;
 #define SOC_ALIGN       0x1000
 #define SOC_BUFFERSIZE  0x100000
 static u32* _net_compat_net_memory;
-#elif defined(_WIN32)
+#endif
+
+#if defined(_WIN32)
 int inet_aton(const char *cp, struct in_addr *inp)
 {
 	uint32_t addr = 0;
+#ifndef _XBOX
 	if (cp == 0 || inp == 0)
 		return -1;
+#endif
 
 	addr = inet_addr(cp);
 	if (addr == INADDR_NONE || addr == INADDR_ANY)
@@ -184,7 +188,8 @@ int getaddrinfo_retro(const char *node, const char *service,
    }
 
 #if defined(WIIU)
-   if (node == NULL) {
+   if (!node)
+   {
       /* Wii U's socket library chokes on NULL node */
       if (hints->ai_flags & AI_PASSIVE)
          node = "0.0.0.0";
@@ -329,7 +334,7 @@ bool network_init(void)
    socket_lib_init();
 #elif defined(_3DS)
     _net_compat_net_memory = (u32*)memalign(SOC_ALIGN, SOC_BUFFERSIZE);
-	if (_net_compat_net_memory == NULL)
+	if (!_net_compat_net_memory)
 		return false;
 	Result ret = socInit(_net_compat_net_memory, SOC_BUFFERSIZE);//WIFI init
 	if (ret != 0)
@@ -386,13 +391,6 @@ uint16_t inet_htons(uint16_t hostshort)
 #endif
 }
 
-#ifdef _XBOX
-static int inet_aton(const char *cp, struct in_addr *addr)
-{
-  addr->s_addr = inet_addr(cp);
-  return (addr->s_addr == INADDR_NONE) ? 0 : 1;
-}
-#endif
 
 int inet_ptrton(int af, const char *src, void *dst)
 {

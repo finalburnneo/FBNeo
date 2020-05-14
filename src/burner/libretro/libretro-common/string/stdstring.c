@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (stdstring.c).
@@ -25,6 +25,18 @@
 
 #include <string/stdstring.h>
 #include <encodings/utf.h>
+
+char *string_init(const char *src)
+{
+   return src ? strdup(src) : NULL;
+}
+
+void string_set(char **string, const char *src)
+{
+   free(*string);
+   *string = src ? strdup(src) : NULL;
+}
+
 
 char *string_to_upper(char *s)
 {
@@ -319,11 +331,24 @@ void string_remove_all_chars(char *str, char c)
    *write_ptr = '\0';
 }
 
+/* Replaces every instance of character 'find' in 'str'
+ * with character 'replace' */
+void string_replace_all_chars(char *str, char find, char replace)
+{
+   char *str_ptr = str;
+
+   if (string_is_empty(str))
+      return;
+
+   while ((str_ptr = strchr(str_ptr, find)))
+      *str_ptr++ = replace;
+}
+
 /* Converts string to unsigned integer.
  * Returns 0 if string is invalid  */
-unsigned string_to_unsigned(char *str)
+unsigned string_to_unsigned(const char *str)
 {
-   char *ptr = NULL;
+   const char *ptr = NULL;
 
    if (string_is_empty(str))
       return 0;
@@ -335,4 +360,37 @@ unsigned string_to_unsigned(char *str)
    }
 
    return (unsigned)strtoul(str, NULL, 10);
+}
+
+/* Converts hexadecimal string to unsigned integer.
+ * Handles optional leading '0x'.
+ * Returns 0 if string is invalid  */
+unsigned string_hex_to_unsigned(const char *str)
+{
+   const char *hex_str = str;
+   const char *ptr     = NULL;
+   size_t len;
+
+   if (string_is_empty(str))
+      return 0;
+
+   /* Remove leading '0x', if required */
+   len = strlen(str);
+
+   if (len >= 2)
+      if ((str[0] == '0') &&
+          ((str[1] == 'x') || (str[1] == 'X')))
+         hex_str = str + 2;
+
+   if (string_is_empty(hex_str))
+      return 0;
+
+   /* Check for valid characters */
+   for (ptr = hex_str; *ptr != '\0'; ptr++)
+   {
+      if (!isxdigit(*ptr))
+         return 0;
+   }
+
+   return (unsigned)strtoul(hex_str, NULL, 16);
 }

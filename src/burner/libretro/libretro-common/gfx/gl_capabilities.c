@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (gl_capabilities.c).
@@ -300,7 +300,7 @@ bool gl_check_capability(enum gl_capability_enum enum_idx)
       case GL_CAPS_BGRA8888:
 #ifdef HAVE_OPENGLES
          /* There are both APPLE and EXT variants. */
-         if (gl_query_extension("BGRA8888") && !strstr(renderer, "VideoCore"))
+         if (gl_query_extension("BGRA8888"))
             return true;
 #else
          return true;

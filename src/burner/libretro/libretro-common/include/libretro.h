@@ -1,4 +1,4 @@
-/* Copyright (C) 2010-2018 The RetroArch team
+/* Copyright (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this libretro API header (libretro.h).
@@ -1246,6 +1246,47 @@ enum retro_mod
                                             * default when calling SET_VARIABLES/SET_CORE_OPTIONS.
                                             */
 
+#define RETRO_ENVIRONMENT_GET_PREFERRED_HW_RENDER 56
+                                           /* unsigned * --
+                                            *
+                                            * Allows an implementation to ask frontend preferred hardware
+                                            * context to use. Core should use this information to deal
+                                            * with what specific context to request with SET_HW_RENDER.
+                                            *
+                                            * 'data' points to an unsigned variable
+                                            */
+
+#define RETRO_ENVIRONMENT_GET_DISK_CONTROL_INTERFACE_VERSION 57
+                                           /* unsigned * --
+                                            * Unsigned value is the API version number of the disk control
+                                            * interface supported by the frontend. If callback return false,
+                                            * API version is assumed to be 0.
+                                            *
+                                            * In legacy code, the disk control interface is defined by passing
+                                            * a struct of type retro_disk_control_callback to
+                                            * RETRO_ENVIRONMENT_SET_DISK_CONTROL_INTERFACE.
+                                            * This may be still be done regardless of the disk control
+                                            * interface version.
+                                            *
+                                            * If version is >= 1 however, the disk control interface may
+                                            * instead be defined by passing a struct of type
+                                            * retro_disk_control_ext_callback to
+                                            * RETRO_ENVIRONMENT_SET_DISK_CONTROL_EXT_INTERFACE.
+                                            * This allows the core to provide additional information about
+                                            * disk images to the frontend and/or enables extra
+                                            * disk control functionality by the frontend.
+                                            */
+
+#define RETRO_ENVIRONMENT_SET_DISK_CONTROL_EXT_INTERFACE 58
+                                           /* const struct retro_disk_control_ext_callback * --
+                                            * Sets an interface which frontend can use to eject and insert
+                                            * disk images, and also obtain information about individual
+                                            * disk image files registered by the core.
+                                            * This is used for games which consist of multiple images and
+                                            * must be manually swapped out by the user (e.g. PSX, floppy disk
+                                            * based systems).
+                                            */
+
 /* VFS functionality */
 
 /* File paths:
@@ -1922,6 +1963,10 @@ enum retro_sensor_action
 {
    RETRO_SENSOR_ACCELEROMETER_ENABLE = 0,
    RETRO_SENSOR_ACCELEROMETER_DISABLE,
+   RETRO_SENSOR_GYROSCOPE_ENABLE,
+   RETRO_SENSOR_GYROSCOPE_DISABLE,
+   RETRO_SENSOR_ILLUMINANCE_ENABLE,
+   RETRO_SENSOR_ILLUMINANCE_DISABLE,
 
    RETRO_SENSOR_DUMMY = INT_MAX
 };
@@ -1930,6 +1975,10 @@ enum retro_sensor_action
 #define RETRO_SENSOR_ACCELEROMETER_X 0
 #define RETRO_SENSOR_ACCELEROMETER_Y 1
 #define RETRO_SENSOR_ACCELEROMETER_Z 2
+#define RETRO_SENSOR_GYROSCOPE_X 3
+#define RETRO_SENSOR_GYROSCOPE_Y 4
+#define RETRO_SENSOR_GYROSCOPE_Z 5
+#define RETRO_SENSOR_ILLUMINANCE 6
 
 typedef bool (RETRO_CALLCONV *retro_set_sensor_state_t)(unsigned port,
       enum retro_sensor_action action, unsigned rate);
@@ -2287,7 +2336,8 @@ struct retro_keyboard_callback
    retro_keyboard_event_t callback;
 };
 
-/* Callbacks for RETRO_ENVIRONMENT_SET_DISK_CONTROL_INTERFACE.
+/* Callbacks for RETRO_ENVIRONMENT_SET_DISK_CONTROL_INTERFACE &
+ * RETRO_ENVIRONMENT_SET_DISK_CONTROL_EXT_INTERFACE.
  * Should be set for implementations which can swap out multiple disk
  * images in runtime.
  *
@@ -2345,6 +2395,53 @@ typedef bool (RETRO_CALLCONV *retro_replace_image_index_t)(unsigned index,
  * with replace_image_index. */
 typedef bool (RETRO_CALLCONV *retro_add_image_index_t)(void);
 
+/* Sets initial image to insert in drive when calling
+ * core_load_game().
+ * Since we cannot pass the initial index when loading
+ * content (this would require a major API change), this
+ * is set by the frontend *before* calling the core's
+ * retro_load_game()/retro_load_game_special() implementation.
+ * A core should therefore cache the index/path values and handle
+ * them inside retro_load_game()/retro_load_game_special().
+ * - If 'index' is invalid (index >= get_num_images()), the
+ *   core should ignore the set value and instead use 0
+ * - 'path' is used purely for error checking - i.e. when
+ *   content is loaded, the core should verify that the
+ *   disk specified by 'index' has the specified file path.
+ *   This is to guard against auto selecting the wrong image
+ *   if (for example) the user should modify an existing M3U
+ *   playlist. We have to let the core handle this because
+ *   set_initial_image() must be called before loading content,
+ *   i.e. the frontend cannot access image paths in advance
+ *   and thus cannot perform the error check itself.
+ *   If set path and content path do not match, the core should
+ *   ignore the set 'index' value and instead use 0
+ * Returns 'false' if index or 'path' are invalid, or core
+ * does not support this functionality
+ */
+typedef bool (RETRO_CALLCONV *retro_set_initial_image_t)(unsigned index, const char *path);
+
+/* Fetches the path of the specified disk image file.
+ * Returns 'false' if index is invalid (index >= get_num_images())
+ * or path is otherwise unavailable.
+ */
+typedef bool (RETRO_CALLCONV *retro_get_image_path_t)(unsigned index, char *path, size_t len);
+
+/* Fetches a core-provided 'label' for the specified disk
+ * image file. In the simplest case this may be a file name
+ * (without extension), but for cores with more complex
+ * content requirements information may be provided to
+ * facilitate user disk swapping - for example, a core
+ * running floppy-disk-based content may uniquely label
+ * save disks, data disks, level disks, etc. with names
+ * corresponding to in-game disk change prompts (so the
+ * frontend can provide better user guidance than a 'dumb'
+ * disk index value).
+ * Returns 'false' if index is invalid (index >= get_num_images())
+ * or label is otherwise unavailable.
+ */
+typedef bool (RETRO_CALLCONV *retro_get_image_label_t)(unsigned index, char *label, size_t len);
+
 struct retro_disk_control_callback
 {
    retro_set_eject_state_t set_eject_state;
@@ -2356,6 +2453,27 @@ struct retro_disk_control_callback
 
    retro_replace_image_index_t replace_image_index;
    retro_add_image_index_t add_image_index;
+};
+
+struct retro_disk_control_ext_callback
+{
+   retro_set_eject_state_t set_eject_state;
+   retro_get_eject_state_t get_eject_state;
+
+   retro_get_image_index_t get_image_index;
+   retro_set_image_index_t set_image_index;
+   retro_get_num_images_t  get_num_images;
+
+   retro_replace_image_index_t replace_image_index;
+   retro_add_image_index_t add_image_index;
+
+   /* NOTE: Frontend will only attempt to record/restore
+    * last used disk index if both set_initial_image()
+    * and get_image_path() are implemented */
+   retro_set_initial_image_t set_initial_image; /* Optional - may be NULL */
+
+   retro_get_image_path_t get_image_path;       /* Optional - may be NULL */
+   retro_get_image_label_t get_image_label;     /* Optional - may be NULL */
 };
 
 enum retro_pixel_format

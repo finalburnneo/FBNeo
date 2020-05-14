@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (rxml.h).
@@ -63,5 +63,7 @@ void rxml_free_document(rxml_document_t *doc);
 struct rxml_node *rxml_root_node(rxml_document_t *doc);
 
 const char *rxml_node_attrib(struct rxml_node *node, const char *attrib);
+
+RETRO_END_DECLS
 
 #endif

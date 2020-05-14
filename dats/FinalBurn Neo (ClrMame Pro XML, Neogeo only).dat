@@ -15014,9 +15014,9 @@
 		<description>The King of Fighters '95 (Special 2017, hack) [Hack]</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="084-p1sp.p1" size="1048576" crc="8bcca012"/>
+		<rom name="084-p1sp.p1" size="1048576" crc="b3c26333"/>
 		<rom name="084-p2sp.p2" size="1048576" crc="5cb1af9e"/>
-		<rom name="084-p3sp.p3" size="131072" crc="030e71cb"/>
+		<rom name="084-p3sp.p3" size="131072" crc="7eddc5d8"/>
 		<rom name="084-s1sp.s1" size="131072" crc="83cbae60"/>
 		<rom name="084-c1.c1" merge="084-c1.c1" size="4194304" crc="fe087e32"/>
 		<rom name="084-c2.c2" merge="084-c2.c2" size="4194304" crc="07864e09"/>

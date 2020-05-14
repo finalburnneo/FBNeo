@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (memory_stream.h).
@@ -55,6 +55,8 @@ int64_t memstream_seek(memstream_t *stream, int64_t offset, int whence);
 void memstream_set_buffer(uint8_t *buffer, uint64_t size);
 
 uint64_t memstream_get_last_size(void);
+
+uint64_t memstream_get_ptr(memstream_t *stream);
 
 RETRO_END_DECLS
 

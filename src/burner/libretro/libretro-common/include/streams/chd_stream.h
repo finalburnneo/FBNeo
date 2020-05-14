@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (chd_stream.h).
@@ -56,6 +56,10 @@ void chdstream_rewind(chdstream_t *stream);
 int64_t chdstream_seek(chdstream_t *stream, int64_t offset, int whence);
 
 ssize_t chdstream_get_size(chdstream_t *stream);
+
+uint32_t chdstream_get_track_start(chdstream_t* stream);
+
+uint32_t chdstream_get_frame_size(chdstream_t* stream);
 
 RETRO_END_DECLS
 

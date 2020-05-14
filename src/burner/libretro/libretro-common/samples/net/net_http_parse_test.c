@@ -1,7 +1,7 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (null_resampler.c).
+ * The following license statement only applies to this file (net_http_parse_test.c).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
@@ -20,39 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
+#include <stdio.h>
+#include <compat/strcasestr.h>
 
-#include <audio/audio_resampler.h>
-
-typedef struct rarch_null_resampler
+int main(int argc, char *argv[])
 {
-   void *empty;
-} rarch_null_resampler_t;
+   char link[1024];
+   char name[1024];
+   const char *line  = "<a href=\"http://www.test.com/somefile.zip\">Test</a>\n";
 
-static void resampler_null_process(
-      void *re_, struct resampler_data *data)
-{
+   link[0] = name[0] = '\0';
+
+   string_parse_html_anchor(line, link, name, sizeof(link), sizeof(name));
+
+   printf("link: %s\nname: %s\n", link, name);
+
+   return 1;
 }
-
-static void resampler_null_free(void *re_)
-{
-}
-
-static void *resampler_null_init(const struct resampler_config *config,
-      double bandwidth_mod,
-      enum resampler_quality quality,
-      resampler_simd_mask_t mask)
-{
-   return (void*)0;
-}
-
-retro_resampler_t null_resampler = {
-   resampler_null_init,
-   resampler_null_process,
-   resampler_null_free,
-   RESAMPLER_API_VERSION,
-   "null",
-   "null"
-};

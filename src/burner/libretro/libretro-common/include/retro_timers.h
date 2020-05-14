@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (retro_timers.h).
@@ -68,7 +68,7 @@ extern int nanosleep(const struct timespec *rqtp, struct timespec *rmtp);
 
 static int nanosleepDOS(const struct timespec *rqtp, struct timespec *rmtp)
 {
-   usleep(1000000 * rqtp->tv_sec + rqtp->tv_nsec / 1000);
+   usleep(1000000L * rqtp->tv_sec + rqtp->tv_nsec / 1000);
 
    if (rmtp)
       rmtp->tv_sec = rmtp->tv_nsec=0;

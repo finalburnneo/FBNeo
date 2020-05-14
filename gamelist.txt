@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13855 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13856 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -271,6 +271,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_airdiverj	|  	| Air Diver (Jpn)					| md_airdiver	| 1990	| Asmik Ace	| Sega Megadrive| 					|
 | md_airdiver	|  	| Air Diver (USA)					| 		| 1990	| Seismic	| Sega Megadrive| 					|
 | airduelm72	|  	| Air Duel (Japan, M72 PCB version)			| airduel	| 1990	| Irem		| Irem M72	| 					|
+| airduelu	|  	| Air Duel (US, location test)				| airduel	| 1990	| Irem		| Irem M82	| 					|
 | airduel	|  	| Air Duel (World, M82-A-A + M82-B-A)			| 		| 1990	| Irem		| Irem M82	| 					|
 | nes_airfortress|  	| Air Fortress (USA)					| 		| 1989	| HAL Laboratory| Miscellaneous	| 					|
 | agallet	|  	| Air Gallet (Europe)					| 		| 1996	| BanPresto / Ga| Cave		| 					|
@@ -4449,7 +4450,7 @@ This list contains all games supported by FinalBurn Neo.
 | gigandes	|  	| Gigandes						| 		| 1989	| East Technolog| Taito X	| 					|
 | gigasb	|  	| Gigas (bootleg)					| gigas		| 1986	| bootleg	| Miscellaneous	| 					|
 | gigas		|  	| Gigas (MC-8123, 317-5002)				| 		| 1986	| SEGA		| Miscellaneous	| 					|
-| gigasm2	|   NW	| Gigas Mark II (MC-8123, 317-5002)			| 		| 1986	| SEGA		| Miscellaneous	| Please use gigasm2b instead!		|
+| gigasm2	|  	| Gigas Mark II (MC-8123, 317-5002)			| 		| 1986	| SEGA		| Miscellaneous	| 					|
 | gigasm2b	|  	| Gigas Mark II						| gigasm2	| 1986	| bootleg	| Miscellaneous	| 					|
 | nes_gimmick	|  	| Gimmick! (Japan)					| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
 | fds_gingaden	|  	| Ginga Denshou - Galaxy Odyssey (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|

@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (s16_to_float.c).
@@ -113,7 +113,11 @@ void convert_s16_to_float(float *out,
       i       = 0;
    }
 
-#elif defined(_MIPS_ARCH_ALLEGREX)
+#endif
+
+   gain = gain / 0x8000;
+
+#if defined(_MIPS_ARCH_ALLEGREX)
 #ifdef DEBUG
    /* Make sure the buffer is 16 byte aligned, this should be the
     * default behaviour of malloc in the PSPSDK.
@@ -121,7 +125,6 @@ void convert_s16_to_float(float *out,
    retro_assert(((uintptr_t)out & 0xf) == 0);
 #endif
 
-   gain = gain / 0x8000;
    __asm__ (
          ".set    push                    \n"
          ".set    noreorder               \n"
@@ -166,7 +169,6 @@ void convert_s16_to_float(float *out,
    }
 
 #endif
-   gain    = gain / 0x8000;
 
    for (; i < samples; i++)
       out[i] = (float)in[i] * gain;

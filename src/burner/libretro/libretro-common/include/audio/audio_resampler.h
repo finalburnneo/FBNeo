@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (audio_resampler.h).
@@ -155,7 +155,6 @@ extern retro_resampler_t sinc_resampler;
 extern retro_resampler_t CC_resampler;
 #endif
 extern retro_resampler_t nearest_resampler;
-extern retro_resampler_t null_resampler;
 
 /**
  * audio_resampler_driver_find_handle:

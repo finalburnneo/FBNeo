@@ -273,6 +273,7 @@ DRV		BurnDrvAirbustr;
 DRV		BurnDrvmd_airdiverj;
 DRV		BurnDrvmd_airdiver;
 DRV		BurnDrvAirduelm72;
+DRV		BurnDrvAirduelu;
 DRV		BurnDrvAirduel;
 DRV		BurnDrvnes_airfortress;
 DRV		BurnDrvAirGallet;
@@ -14403,6 +14404,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_airdiverj,		// Air Diver (Jpn)
 	&BurnDrvmd_airdiver,		// Air Diver (USA)
 	&BurnDrvAirduelm72,			// Air Duel (Japan, M72 PCB version)
+	&BurnDrvAirduelu,			// Air Duel (US, location test)
 	&BurnDrvAirduel,			// Air Duel (World, M82-A-A + M82-B-A)
 	&BurnDrvnes_airfortress,	// Air Fortress (USA)
 	&BurnDrvAirGallet,			// Air Gallet (Europe)
@@ -18661,7 +18663,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGigandes,			// Gigandes
 	&BurnDrvGigasb,				// Gigas (bootleg)
 	&BurnDrvGigas,				// Gigas (MC-8123, 317-5002)
-	&BurnDrvGigasm2,			// Gigas Mark II (MC-8123, 317-5002) [Please use gigasm2b instead!, NOT WORKING]
+	&BurnDrvGigasm2,			// Gigas Mark II (MC-8123, 317-5002)
 	&BurnDrvGigasm2b,			// Gigas Mark II
 	&BurnDrvnes_gimmick,		// Gimmick! (Japan)
 	&BurnDrvfds_gingaden,		// Ginga Denshou - Galaxy Odyssey (Japan)

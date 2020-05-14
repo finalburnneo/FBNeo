@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (memmap.h).
@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#if defined(__CELLOS_LV2__) || defined(PSP) || defined(PS2) || defined(GEKKO) || defined(VITA) || defined(_XBOX) || defined(_3DS) || defined(WIIU) || defined(SWITCH)
+#if defined(__CELLOS_LV2__) || defined(PSP) || defined(PS2) || defined(GEKKO) || defined(VITA) || defined(_XBOX) || defined(_3DS) || defined(WIIU) || defined(SWITCH) || defined(HAVE_LIBNX)
 /* No mman available */
 #elif defined(_WIN32) && !defined(_XBOX)
 #include <windows.h>

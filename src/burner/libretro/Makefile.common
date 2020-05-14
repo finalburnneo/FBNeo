@@ -190,6 +190,7 @@ FBNEO_SRC_DIRS := $(FBNEO_BURNER_DIR) $(FBNEO_BURN_DIRS) $(FBNEO_CPU_DIRS) $(FBN
 
 ifneq ($(STATIC_LINKING), 1)
 	SOURCES_C += $(LIBRETRO_COMM_DIR)/file/file_path.c \
+		$(LIBRETRO_COMM_DIR)/file/file_path_io.c \
 		$(LIBRETRO_COMM_DIR)/encodings/encoding_utf.c \
 		$(LIBRETRO_COMM_DIR)/compat/compat_posix_string.c \
 		$(LIBRETRO_COMM_DIR)/compat/compat_strcasestr.c \

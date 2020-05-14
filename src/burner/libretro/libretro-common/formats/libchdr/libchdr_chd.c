@@ -826,14 +826,13 @@ chd_error chd_open_file(RFILE *file, int mode, chd_file *parent, chd_file **chd)
 	if (newchd->header.version < 5)
 	{
 		err = map_read(newchd);
-		if (err != CHDERR_NONE)
-			EARLY_EXIT(err);
 	}
 	else
 	{
 		err = decompress_v5_map(newchd, &(newchd->header));
-        (void)err;
 	}
+	if (err != CHDERR_NONE)
+		EARLY_EXIT(err);
 
 #ifdef NEED_CACHE_HUNK
 	/* allocate and init the hunk cache */
@@ -1037,6 +1036,9 @@ void chd_close(chd_file *chd)
 		for (i = 0 ; i < 4 ; i++)
       {
          void* codec = NULL;
+         if (!chd->codecintf[i])
+            continue;
+
          switch (chd->codecintf[i]->compression)
          {
             case CHD_CODEC_CD_LZMA:
@@ -1679,6 +1681,8 @@ static chd_error hunk_read_into_memory(chd_file *chd, UINT32 hunknum, UINT8 *des
             bytes = read_compressed(chd, blockoffs, blocklen);
             if (bytes == NULL)
                return CHDERR_READ_ERROR;
+            if (!chd->codecintf[rawmap[0]])
+               return CHDERR_UNSUPPORTED_FORMAT;
 				switch (chd->codecintf[rawmap[0]]->compression)
 				{
 					case CHD_CODEC_CD_LZMA:

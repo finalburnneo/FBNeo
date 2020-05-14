@@ -1,4 +1,4 @@
-/* Copyright  (C) 2010-2018 The RetroArch team
+/* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
  * The following license statement only applies to this file (net_http.h).
@@ -41,6 +41,8 @@ bool net_http_connection_iterate(struct http_connection_t *conn);
 bool net_http_connection_done(struct http_connection_t *conn);
 
 void net_http_connection_free(struct http_connection_t *conn);
+
+void net_http_connection_set_user_agent(struct http_connection_t* conn, const char* user_agent);
 
 const char *net_http_connection_url(struct http_connection_t *conn);
 

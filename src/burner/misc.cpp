@@ -250,7 +250,7 @@ TCHAR* DecorateGenreInfo()
 		}
 
 		if (nGenre & GBF_PLATFORM) {
-				_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_PLATFORM, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_PLATFORM, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
@@ -309,6 +309,11 @@ TCHAR* DecorateGenreInfo()
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
+		if (nGenre & GBF_RPG) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_RPG, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
 		szDecoratedGenre[_tcslen(szDecoratedGenre) - 2] = _T('\0');
 	}
 
@@ -362,6 +367,16 @@ TCHAR* DecorateGenreInfo()
 
 		if (nFamily & FBF_SONIC) {
 			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_SONIC, true));
+			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
+		}
+
+		if (nFamily & FBF_DONPACHI) {
+			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_DONPACHI, true));
+			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
+		}
+
+		if (nFamily & FBF_MAHOU) {
+			_stprintf(szFamily + _tcslen(szFamily), FBALoadStringEx(hAppInst, IDS_FAMILY_MAHOU, true));
 			_stprintf(szFamily + _tcslen(szFamily), _T(", "));
 		}
 

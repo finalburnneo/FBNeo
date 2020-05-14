@@ -1004,6 +1004,8 @@
 		FE92E3FB2458859600693C0C /* d_eolith16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F82458859500693C0C /* d_eolith16.cpp */; };
 		FE92E3FC2458859600693C0C /* d_goori.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F92458859600693C0C /* d_goori.cpp */; };
 		FEA1AB8823B5D49700D6082A /* d_spdodgeb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */; };
+		FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6D246A6E03008938BC /* d_pasha2.cpp */; };
+		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
@@ -2544,6 +2546,8 @@
 		FE92E3F92458859600693C0C /* d_goori.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_goori.cpp; sourceTree = "<group>"; };
 		FE9A990D235F82C900507894 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FEA1AB8723B5D49700D6082A /* d_spdodgeb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spdodgeb.cpp; sourceTree = "<group>"; };
+		FEA35F6D246A6E03008938BC /* d_pasha2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_pasha2.cpp; sourceTree = "<group>"; };
+		FEA35F6E246A6E03008938BC /* d_shangha3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_shangha3.cpp; sourceTree = "<group>"; };
 		FEA5E79023563F5400DA2D9D /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		FEA5E79C23564A3200DA2D9D /* cave_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7AE23564A6400DA2D9D /* cave_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cave_sprite_func.pl; sourceTree = "<group>"; };
@@ -3666,6 +3670,7 @@
 				FE1B1F2223561A670065200C /* d_ohmygod.cpp */,
 				FE1B1F5823561A680065200C /* d_oneshot.cpp */,
 				FE1B1F3D23561A680065200C /* d_onetwo.cpp */,
+				FEA35F6D246A6E03008938BC /* d_pasha2.cpp */,
 				FE1B1F2623561A680065200C /* d_pass.cpp */,
 				FE1B1F6D23561A680065200C /* d_patapata.cpp */,
 				FE1B1F3323561A680065200C /* d_pipedrm.cpp */,
@@ -3682,6 +3687,7 @@
 				FE1B1F7523561A680065200C /* d_seta.cpp */,
 				FE1B1F6123561A680065200C /* d_seta2.cpp */,
 				FE1B1F3223561A680065200C /* d_shadfrce.cpp */,
+				FEA35F6E246A6E03008938BC /* d_shangha3.cpp */,
 				FE1B1F4223561A680065200C /* d_silkroad.cpp */,
 				FE1B1F4923561A680065200C /* d_silvmil.cpp */,
 				FE1B1F2E23561A680065200C /* d_speedspn.cpp */,
@@ -5198,6 +5204,7 @@
 				FE1B262E23561A770065200C /* cpst.cpp in Sources */,
 				FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */,
 				FE1B242123561A750065200C /* png.c in Sources */,
+				FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */,
 				FE1B24F823561A760065200C /* d_fuukifg3.cpp in Sources */,
 				FE1B27D423561A790065200C /* 8255ppi.cpp in Sources */,
 				FE1B255123561A760065200C /* d_yunsung8.cpp in Sources */,
@@ -6045,6 +6052,7 @@
 				FE1B24BB23561A750065200C /* irem_cpu.cpp in Sources */,
 				FE1B24CA23561A750065200C /* cave.cpp in Sources */,
 				FE1B264223561A770065200C /* cps_rw.cpp in Sources */,
+				FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */,
 				FE1B25EC23561A760065200C /* d_mogura.cpp in Sources */,
 				FE1B268223561A770065200C /* pgm_run.cpp in Sources */,
 				FE1B25C123561A760065200C /* d_mikie.cpp in Sources */,

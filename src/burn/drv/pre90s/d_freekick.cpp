@@ -53,27 +53,27 @@ static UINT8 pbillrdmode = 0;
 static void DrvPaletteInit();
 
 static struct BurnInputInfo PbillrdInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
 };
 
 STDINPUTINFO(Pbillrd)
@@ -89,7 +89,7 @@ static struct BurnDIPInfo PbillrdDIPList[]=
 	{0x11, 0x01, 0x01, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Ball"		},
-	{0x11, 0x01, 0x06, 0x06, "10000, 30000 & 50000 Points"		},
+	{0x11, 0x01, 0x06, 0x06, "10000, 30000 & 50000 Points"},
 	{0x11, 0x01, 0x06, 0x02, "20000 & 60000 Points"		},
 	{0x11, 0x01, 0x06, 0x04, "30000 & 80000 Points"		},
 	{0x11, 0x01, 0x06, 0x00, "Only 20000 Points"		},
@@ -151,24 +151,24 @@ STDDIPINFO(Pbillrd)
 
 static struct BurnInputInfo GigasInputList[] = {
 
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
 };
 
 STDINPUTINFO(Gigas)
@@ -183,9 +183,9 @@ static struct BurnDIPInfo GigasDIPList[]=
 	{0x0d, 0x01, 0x01, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"		},
+	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"},
 	{0x0d, 0x01, 0x06, 0x02, "20000 & 60000 Points"		},
-	{0x0d, 0x01, 0x06, 0x04, "30000 & 80000, Every 80000 Points"		},
+	{0x0d, 0x01, 0x06, 0x04, "30000 & 80000, Every 80000 Points"},
 	{0x0d, 0x01, 0x06, 0x00, "Only 20000 Points"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
@@ -255,9 +255,9 @@ static struct BurnDIPInfo Gigasm2DIPList[]=
 	{0x0d, 0x01, 0x01, 0x00, "5"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"		},
+	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"},
 	{0x0d, 0x01, 0x06, 0x02, "20000 & 60000 Points"		},
-	{0x0d, 0x01, 0x06, 0x04, "30000 & 80000, Every 80000 Points"		},
+	{0x0d, 0x01, 0x06, 0x04, "30000 & 80000, Every 80000 Points"},
 	{0x0d, 0x01, 0x06, 0x00, "Only 20000 Points"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
@@ -324,8 +324,8 @@ static struct BurnDIPInfo OmegaDIPList[]=
 	{0x0f, 0xff, 0xff, 0xc3, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"		},
-	{0x0d, 0x01, 0x06, 0x02, "30000 & 80000, Every 80000 Points"		},
+	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"},
+	{0x0d, 0x01, 0x06, 0x02, "30000 & 80000, Every 80000 Points"},
 	{0x0d, 0x01, 0x06, 0x04, "20000 & 60000 Points"		},
 	{0x0d, 0x01, 0x06, 0x00, "Only 20000 Points"		},
 
@@ -383,28 +383,28 @@ static struct BurnDIPInfo OmegaDIPList[]=
 STDDIPINFO(Omega)
 
 static struct BurnInputInfo FreekckInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
 };
 
 STDINPUTINFO(Freekck)
@@ -493,28 +493,28 @@ STDDIPINFO(Freekck)
 
 static struct BurnInputInfo CountrunInputList[] = {
 
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,		"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDip + 2,		"dip"		},
 };
 
 STDINPUTINFO(Countrun)
@@ -622,7 +622,7 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-void freekick_draw_sprite(INT32 offs)
+static void freekick_draw_sprite(INT32 offs)
 {
 	INT32 sx = DrvSprRAM[offs + 3];
 	INT32 sy = 232 - DrvSprRAM[offs + 0];
@@ -632,28 +632,7 @@ void freekick_draw_sprite(INT32 offs)
 	INT32 flipy  = !(DrvSprRAM[offs + 2] & 0x40);
 	INT32 color = DrvSprRAM[offs + 2] & 0x1f;
 
-	if (flipy)
-	{
-		if (flipx)
-		{
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-		else
-		{
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-	}
-	else
-	{
-		if (flipx)
-		{
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-		else
-		{
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 256, DrvGfxROM1);
 }
 
 static void gigas_draw_sprite(INT32 offs)
@@ -682,28 +661,7 @@ static void gigas_draw_sprite(INT32 offs)
 		flipy = !flipy;
 	}
 
-	if (flipy) 
-	{
-		if (flipx) 
-		{
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-		else
-		{
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-	}
-	else
-	{
-		if (flipx)
-		{
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		} 
-		else 
-		{
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 256, DrvGfxROM1);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 256, DrvGfxROM1);
 }
 
 static INT32 DrvDraw()
@@ -797,7 +755,7 @@ static void __fastcall freekick_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall freekick_read(UINT16 address)
+static UINT8 __fastcall freekick_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -909,7 +867,7 @@ static void __fastcall gigas_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall gigas_read(UINT16 address)
+static UINT8 __fastcall gigas_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -936,7 +894,7 @@ UINT8 __fastcall gigas_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall freekick_in(UINT16 address)
+static UINT8 __fastcall freekick_in(UINT16 address)
 {
 	switch (address & 0xff)
 	{
@@ -949,7 +907,7 @@ UINT8 __fastcall freekick_in(UINT16 address)
 	return 0;
 }
 
-void __fastcall freekick_out(UINT16 address, UINT8 data)
+static void __fastcall freekick_out(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
@@ -990,7 +948,7 @@ static UINT8 freekick_ppiread_2_c()
 	return DrvDip[2];
 }
 
-UINT8 __fastcall gigas_in(UINT16 address)
+static UINT8 __fastcall gigas_in(UINT16 address)
 {
 	switch (address & 0xff)
 	{
@@ -1009,7 +967,7 @@ UINT8 __fastcall gigas_in(UINT16 address)
 	return 0;
 }
 
-void __fastcall gigas_out(UINT16 address, UINT8 data)
+static void __fastcall gigas_out(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
@@ -1103,12 +1061,6 @@ static void DrvPaletteInit()
 	}
 }
 
-/*static INT32 GigasDecode()
-{
-	mc8123_decrypt_rom(0, 0, DrvMainROM, DrvMainROM + 0x10000, MC8123Key);
-	return 0;
-}*/
-
 static INT32 LoadRoms()
 {
 	INT32 rom_number = 0;
@@ -1147,7 +1099,8 @@ static INT32 LoadRoms()
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "omega") ||
 		!strcmp(BurnDrvGetTextA(DRV_NAME), "omegaa") ||
-	    !strcmp(BurnDrvGetTextA(DRV_NAME), "gigas"))
+		!strcmp(BurnDrvGetTextA(DRV_NAME), "gigas") ||
+	    !strcmp(BurnDrvGetTextA(DRV_NAME), "gigasm2"))
 	{
 		if (BurnLoadRom(DrvMainROM,  rom_number++, 1)) return 1;
 		if (BurnLoadRom(DrvMainROM + 0x04000,  rom_number++, 1)) return 1;
@@ -1188,8 +1141,6 @@ static INT32 LoadRoms()
 	if (BurnLoadRom(DrvGfxROM1  + 0x00000,  rom_number++, 1)) return 1; // ( "1.3p", 0x00000, 0x04000
 	if (BurnLoadRom(DrvGfxROM1  + 0x04000,  rom_number++, 1)) return 1; // ( "3.3l", 0x04000, 0x04000
 	if (BurnLoadRom(DrvGfxROM1  + 0x08000,  rom_number++, 1)) return 1; // ( "2.3n", 0x08000, 0x04000
-	// Opcode Decryption PROMS
-	//		GigasDecode(); - not used due to incomplete "gigas" romset.
 
 	// Palette
 	if (BurnLoadRom(DrvColPROM + 0x000000,	rom_number++, 1)) return 1; // ( "3a.bin", 0x0000, 0x0100
@@ -1872,6 +1823,8 @@ static struct BurnRomInfo gigasm2RomDesc[] = {
 	{ "18.8n",			0x04000, 0x32e83d80, BRF_ESS | BRF_PRG }, //  0 maincpu
 	{ "17.8r",			0x08000, 0x460dadd2, BRF_ESS | BRF_PRG }, //  1
 
+	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, // 14
+
 	{ "14.3k",			0x04000, 0x20b3405f, BRF_GRA }, 		  //  2 gfx1
 	{ "15.3h",			0x04000, 0xd04ecfa8, BRF_GRA }, 		  //  3
 	{ "16.3g",			0x04000, 0x33776801, BRF_GRA }, 		  //  4
@@ -1886,17 +1839,15 @@ static struct BurnRomInfo gigasm2RomDesc[] = {
 	{ "tbp24s10n.3d",	0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
 	{ "tbp24s10n.3b",	0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 12
 	{ "tbp24s10n.3c",	0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
-
-	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, // 14
 };
 STD_ROM_PICK(gigasm2)
 STD_ROM_FN(gigasm2)
 
 struct BurnDriver BurnDrvGigasm2 = {
 	"gigasm2", NULL, NULL, NULL, "1986",
-	"Gigas Mark II (MC-8123, 317-5002)\0", "Please use gigasm2b instead!", "SEGA", "Miscellaneous",
+	"Gigas Mark II (MC-8123, 317-5002)\0", NULL, "SEGA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasm2RomInfo, gigasm2RomName, NULL, NULL, NULL, NULL, GigasInputInfo, Gigasm2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

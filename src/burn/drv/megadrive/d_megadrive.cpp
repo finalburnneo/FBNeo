@@ -43579,7 +43579,7 @@ static struct BurnRomInfo md_glufRomDesc[] = {
 STD_ROM_PICK(md_gluf)
 STD_ROM_FN(md_gluf)
 
-struct BurnDriver BurnDrvmd_glug = {
+struct BurnDriver BurnDrvmd_gluf = {
 	"md_gluf", NULL, NULL, NULL, "2020",
 	"GLUF (HB)\0", NULL, "RetroSouls", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

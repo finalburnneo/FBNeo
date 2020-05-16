@@ -236,6 +236,7 @@
 #define IDS_GENRE_STRATEGY              (IDS_STRING +  694)
 #define IDS_GENRE_ACTION                (IDS_STRING +  696)
 #define IDS_GENRE_RPG                   (IDS_STRING +  698)
+#define IDS_GENRE_SIM                   (IDS_STRING +  700)
 
 #define IDS_FAMILY						(IDS_STRING +  740)
 #define IDS_FAMILY_MSLUG				(IDS_STRING +  742)

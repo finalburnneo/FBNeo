@@ -237,6 +237,7 @@ BEGIN
     IDS_GENRE_STRATEGY          "Strategy"
     IDS_GENRE_ACTION            "Action (Classic)"
     IDS_GENRE_RPG               "RPG"
+    IDS_GENRE_SIM               "Simulator"
 
 	IDS_FAMILY					"Family"
 	IDS_FAMILY_MSLUG			"Metal Slug"

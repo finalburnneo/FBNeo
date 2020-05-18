@@ -48,7 +48,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="16bitrhythmld">
-		<description>16-Bit Rhythm Land (HB)</description>
+		<description>16-Bit Rhythm Land (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Columbus Circle</manufacturer>
 		<rom name="16-Bit Rhythm Land (HB).bin" size="3145728" crc="67271302"/>
@@ -1687,7 +1687,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="canon">
-		<description>Canon - Legend of the New Gods (HB)</description>
+		<description>Canon - Legend of the New Gods (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Canon - Legend of the New Gods (HB).bin" size="2097152" crc="f85dd66d"/>
@@ -1778,7 +1778,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cavestory">
-		<description>Cave Story Doukutsu (HB, v0.5.2)</description>
+		<description>Cave Story Doukutsu (HB, v0.5.2) [Homebrew]</description>
 		<year>2004</year>
 		<manufacturer>Studio Pixel</manufacturer>
 		<rom name="Cave Story Doukutsu (v0.5.2).bin" size="4079616" crc="292080ae"/>
@@ -1960,7 +1960,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chipsch13">
-		<description>Chip's Challenge (HB, v1.3)</description>
+		<description>Chip's Challenge (HB, v1.3) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>PortableDev</manufacturer>
 		<rom name="chipschallenge_v13.bin" size="1310720" crc="a7783390"/>
@@ -2086,7 +2086,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="coffeecrisis">
-		<description>Coffee Crisis (HB)</description>
+		<description>Coffee Crisis (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Coffee Crisis (HB).bin" size="4194304" crc="8534ed7c"/>
@@ -2961,7 +2961,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deflektor">
-		<description>Deflektor (HB, v1.1)</description>
+		<description>Deflektor (HB, v1.1) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>PortableDev</manufacturer>
 		<rom name="deflektor_v11.bin" size="655360" crc="36a58102"/>
@@ -3080,7 +3080,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="devwilltoo">
-		<description>Devwill Too (HB)</description>
+		<description>Devwill Too (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Devwill Too.bin" size="4194304" crc="34031793"/>
@@ -3710,7 +3710,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="escape2042">
-		<description>Escape 2042 (HB)</description>
+		<description>Escape 2042 (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>OrionSoft</manufacturer>
 		<rom name="Escape 2042 (HB).bin" size="4194304" crc="0d81511c"/>
@@ -4794,6 +4794,13 @@
 		<year>1992</year>
 		<manufacturer>NCS</manufacturer>
 		<rom name="advanced busterhawk gleylancer (jpn).bin" size="1048576" crc="42cf9b5b"/>
+		<driver status="good"/>
+	</game>
+	<game name="gluf">
+		<description>GLUF (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="glufPD.bin" size="1048576" crc="ce5afac9"/>
 		<driver status="good"/>
 	</game>
 	<game name="gods">
@@ -6449,7 +6456,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlemedusa">
-		<description>Little Medusa (HB)</description>
+		<description>Little Medusa (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Little Medusa (HB).bin" size="2097152" crc="931dd919"/>
@@ -6610,7 +6617,7 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="magicpockets">
-		<description>Magic Pockets (HB)</description>
+		<description>Magic Pockets (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>The Bitmap Brothers</manufacturer>
 		<rom name="Magic Pockets (HB).bin" size="3407872" crc="cdfc764f"/>
@@ -10023,7 +10030,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rickdang2">
-		<description>Rick Dangerous 2 (HB, v1.1)</description>
+		<description>Rick Dangerous 2 (HB, v1.1) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>PortableDev</manufacturer>
 		<rom name="rickdangerous2_v11.bin" size="1310720" crc="4366add7"/>
@@ -11102,7 +11109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smartmouse">
-		<description>Smart Mouse (HB)</description>
+		<description>Smart Mouse (HB) [Homebrew]</description>
 		<year>199X</year>
 		<manufacturer>Chuanpu</manufacturer>
 		<rom name="Smart Mouse (HB).bin" size="524288" crc="fb01c832"/>
@@ -12984,7 +12991,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="switchblad">
-		<description>Switch Blade MD (HB)</description>
+		<description>Switch Blade MD (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Switch Blade MD (HB).bin" size="1048576" crc="53dd2706"/>
@@ -13145,7 +13152,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tanzer">
-		<description>Tanzer (HB)</description>
+		<description>Tanzer (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Tanzer (HB).bin" size="4063232" crc="33e80d0d"/>
@@ -16569,7 +16576,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yazzie">
-		<description>Yazzie (HB)</description>
+		<description>Yazzie (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Yazzie.bin" size="655360" crc="93d5ad8a"/>

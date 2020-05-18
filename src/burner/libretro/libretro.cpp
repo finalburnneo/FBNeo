@@ -1205,16 +1205,18 @@ static bool retro_load_game_common()
 #ifdef USE_CYCLONE
 		SetSekCpuCore();
 #endif
+
 		if (!open_archive()) {
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch this game, some files are missing.\n");
+			log_cb(RETRO_LOG_ERROR, "[FBNEO] Missing files, aborting.\n");
 			return false;
 		}
+		log_cb(RETRO_LOG_INFO, "[FBNEO] No missing files, proceeding\n");
 
 		// Announcing to fbneo which samplerate we want
-		nBurnSoundRate = g_audio_samplerate;
-
 		// Some game drivers won't initialize with an undefined nBurnSoundLen
+		nBurnSoundRate = g_audio_samplerate;
 		init_audio_buffer(nBurnSoundRate, 6000);
+		log_cb(RETRO_LOG_INFO, "[FBNEO] Samplerate set to %d\n", nBurnSoundRate);
 
 		// Start CD reader emulation if needed
 		if (nGameType == RETRO_GAME_TYPE_NEOCD) {
@@ -1225,19 +1227,22 @@ static bool retro_load_game_common()
 
 		// Apply dipswitches
 		apply_dipswitch_from_variables();
+		log_cb(RETRO_LOG_INFO, "[FBNEO] Applied dipswitches from core options\n");
 
 		// Initialize game driver
 		BurnDrvInit();
+		log_cb(RETRO_LOG_INFO, "[FBNEO] Initializing driver for %s\n", g_driver_name);
 
 		// Now we know real game fps, let's initialize sound buffer again
 		init_audio_buffer(nBurnSoundRate, nBurnFPS);
+		log_cb(RETRO_LOG_INFO, "[FBNEO] Adjusted audio buffer to match driver's refresh rate (%f Hz)\n", (nBurnFPS/100.0f));
 
 		// Get MainRam for RetroAchievements support
 		INT32 nMin = 0;
 		BurnAcb = StateGetMainRamAcb;
 		BurnAreaScan(ACB_FULLSCAN, &nMin);
 		if (bMainRamFound) {
-			log_cb(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p %zu\n", MainRamData, MainRamSize);
+			log_cb(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", MainRamData, MainRamSize);
 		}
 
 		// Loading minimal savestate (not exactly sure why it is needed)
@@ -1260,7 +1265,7 @@ static bool retro_load_game_common()
 			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 
 		// Initialization done
-		log_cb(RETRO_LOG_INFO, "Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
+		log_cb(RETRO_LOG_INFO, "[FBNEO] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
 		driver_inited = true;
 
 		return true;

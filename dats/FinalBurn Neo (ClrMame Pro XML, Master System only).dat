@@ -3624,8 +3624,8 @@
 		<rom name="dinosaur dooley, the (korea) (unl).bin" size="131072" crc="32f4b791"/>
 		<driver status="good"/>
 	</game>
-	<game name="excdizzy">
-		<description>The Excellent Dizzy Collection (Euro, USA, Prototype)</description>
+	<game name="excdizzy" cloneof="xcdizzy" romof="xcdizzy">
+		<description>The Excellent Dizzy Collection (Euro, USA, Prototype) [unfinished proto, play 'gg_excdizzy' instead!]</description>
 		<year>19??</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="excellent dizzy collection, the (usa, europe) (en,fr,de,es,it) (proto).bin" size="262144" crc="8813514b"/>

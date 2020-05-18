@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13856 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13858 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4474,6 +4474,7 @@ This list contains all games supported by FinalBurn Neo.
 | gblchmp	|  	| Global Champion (Ver 2.1A 1994/07/29)			| kaiserkn	| 1994	| Taito America | Taito F3 Syste| 					|
 | sms_globald	|  	| Global Defense (Euro, USA)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_globaldp	|  	| Global Defense (Euro, USA, Prototype)			| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
+| md_gluf	|  	| GLUF (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
 | nes_glukthuwar|  	| Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)	| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | go2000	|  	| Go 2000						| 		| 2000	| SunA?		| Miscellaneous	| 					|
 | gogold	|  	| Go For The Gold (Japan)				| recordbr	| 1988	| Taito Corporat| Taito H System| 					|
@@ -11918,7 +11919,7 @@ This list contains all games supported by FinalBurn Neo.
 | theends	|  	| The End (Stern)					| theend	| 1980	| Konami (Stern | Galaxian	| 					|
 | theend	|  	| The End						| 		| 1980	| Konami	| Galaxian	| 					|
 | gg_excdizzy	|  	| The Excellent Dizzy Collection (Euro, SMS Mode)	| 		| 1995	| Codemasters	| Sega Game Gear| 					|
-| sms_excdizzy	|  	| The Excellent Dizzy Collection (Euro, USA, Prototype)	| 		| 19??	| Codemasters	| Sega Master Sy| 					|
+| sms_excdizzy	|  	| The Excellent Dizzy Collection (Euro, USA, Prototype)	| gg_excdizzy	| 19??	| Codemasters	| Sega Master Sy| unfinished proto, play 'gg_excdizzy' i|
 | gg_excdizzyp	|  	| The Excellent Dizzy Collection (Prototype, SMS Mode)	| gg_excdizzy	| 1995	| Codemasters	| Sega Game Gear| 					|
 | md_faerytal	|  	| The Faery Tale Adventure (Euro, USA)			| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | flstoryj	|  	| The FairyLand Story (Japan)				| flstory	| 1985	| Taito		| Miscellaneous	| 					|
@@ -12783,7 +12784,7 @@ This list contains all games supported by FinalBurn Neo.
 | umk3		|  	| Ultimate Mortal Kombat 3 (rev 1.2)			| 		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | nes_ultimmorkom3|  	| Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
-| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-| umk3		| 2018	| hack		| MIDWAY Wolf-Un| 					|
+| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-| umk3		| 2018	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| 2011 Nemesis_c| Sega Megadrive| 					|
 | umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|
@@ -12880,6 +12881,7 @@ This list contains all games supported by FinalBurn Neo.
 | vhunt2r1	|  	| Vampire Hunter 2 - darkstalkers revenge (970913 Japan)| vhunt2	| 1997	| Capcom	| CPS2		| 					|
 | vhunt2	|  	| Vampire Hunter 2 - darkstalkers revenge (970929 Japan)| 		| 1997	| Capcom	| CPS2		| 					|
 | vsava		|  	| Vampire Savior - the lord of vampire (970519 Asia)	| vsav		| 1997	| Capcom	| CPS2		| 					|
+| vsavb		|  	| Vampire Savior - the lord of vampire (970519 Brazil)	| vsav		| 1997	| Capcom	| CPS2		| 					|
 | vsavd		|  	| Vampire Savior - the lord of vampire (970519 Euro Phoe| vsav		| 1997	| bootleg	| CPS2		| 					|
 | vsav		|  	| Vampire Savior - the lord of vampire (970519 Euro)	| 		| 1997	| Capcom	| CPS2		| 					|
 | vsavh		|  	| Vampire Savior - the lord of vampire (970519 Hispanic)| vsav		| 1997	| Capcom	| CPS2		| 					|

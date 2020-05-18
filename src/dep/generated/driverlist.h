@@ -4556,6 +4556,7 @@ DRV		BurnDrvMSX_glidera;
 DRV		BurnDrvGblchmp;
 DRV		BurnDrvsms_globald;
 DRV		BurnDrvsms_globaldp;
+DRV		BurnDrvmd_gluf;
 DRV		BurnDrvnes_glukthuwar;
 DRV		BurnDrvGo2000;
 DRV		BurnDrvGogold;
@@ -13114,6 +13115,7 @@ DRV		BurnDrvCpsVhunt2d;
 DRV		BurnDrvCpsVhunt2r1;
 DRV		BurnDrvCpsVhunt2;
 DRV		BurnDrvCpsVsava;
+DRV		BurnDrvCpsVsavb;
 DRV		BurnDrvCpsVsavd;
 DRV		BurnDrvCpsVsav;
 DRV		BurnDrvCpsVsavh;
@@ -18687,6 +18689,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGblchmp,			// Global Champion (Ver 2.1A 1994/07/29)
 	&BurnDrvsms_globald,		// Global Defense (Euro, USA)
 	&BurnDrvsms_globaldp,		// Global Defense (Euro, USA, Prototype)
+	&BurnDrvmd_gluf,			// GLUF (HB)
 	&BurnDrvnes_glukthuwar,		// Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)
 	&BurnDrvGo2000,				// Go 2000
 	&BurnDrvGogold,				// Go For The Gold (Japan)
@@ -27148,7 +27151,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)
 	&BurnDrvnes_ultimmorkom3,	// Ultimate Mortal Kombat 3 (Unl)
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
-	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2019-07-04)
+	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-05-06)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini V13 (Hack)
 	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
@@ -27245,6 +27248,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsVhunt2r1,		// Vampire Hunter 2 - darkstalkers revenge (970913 Japan)
 	&BurnDrvCpsVhunt2,			// Vampire Hunter 2 - darkstalkers revenge (970929 Japan)
 	&BurnDrvCpsVsava,			// Vampire Savior - the lord of vampire (970519 Asia)
+	&BurnDrvCpsVsavb,			// Vampire Savior - the lord of vampire (970519 Brazil)
 	&BurnDrvCpsVsavd,			// Vampire Savior - the lord of vampire (970519 Euro Phoenix Edition)
 	&BurnDrvCpsVsav,			// Vampire Savior - the lord of vampire (970519 Euro)
 	&BurnDrvCpsVsavh,			// Vampire Savior - the lord of vampire (970519 Hispanic)

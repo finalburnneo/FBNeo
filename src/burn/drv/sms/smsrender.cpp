@@ -411,6 +411,8 @@ void render_obj_sms(INT16 line)
 
 	INT32 width = 8;
 
+	if (line > 0xff) return;
+
 	/* Adjust dimensions for double size sprites */
 	if(vdp.reg[1] & 0x01)
 		width *= 2;

@@ -239,6 +239,8 @@ void vdp_write(INT32 offset, UINT8 data)
 	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
 	{
 		/* render next line now BEFORE updating register */
+		// note: the if below prevents screen clear (fill) w/backdrop color
+		// before the frame is blitted.
 		if (vdp.line+1 < vdp.lpf) render_line((vdp.line+1)%vdp.lpf);
 	}
 
@@ -325,7 +327,8 @@ UINT8 vdp_read(INT32 offset)
 			{
 				if (line == vdp.height) vdp.status |= 0x80;
 				line = (line + 1)%vdp.lpf;
-				render_line(line);
+				if (line != 0) // prevent clear screen before the buffer is blitted! (fantdizzy)
+					render_line(line);
 			}
 
 			/* low 5 bits return non-zero data (fixes PGA Tour Golf course map introduction) */

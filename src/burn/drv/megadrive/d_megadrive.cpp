@@ -43588,3 +43588,22 @@ struct BurnDriver BurnDrvmd_gluf = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Madou Monogatari I (Hack, English)
+// http://www.romhacking.net/translations/5388/
+static struct BurnRomInfo md_madoumoneRomDesc[] = {
+	{ "madou monogatari i (english translation).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madoumone)
+STD_ROM_FN(md_madoumone)
+
+struct BurnDriver BurnDrvmd_madoumone = {
+	"md_madoumone", "md_madoumon", NULL, NULL, "2020",
+	"Madou Monogatari I (Hack, English)\0", NULL, "Compile", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

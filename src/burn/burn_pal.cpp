@@ -3,6 +3,7 @@
 
 UINT32 *BurnPalette = NULL;
 UINT8 *BurnPalRAM = NULL;
+UINT8 BurnRecalc;
 
 //-------------------------------------------------------------------------------------
 

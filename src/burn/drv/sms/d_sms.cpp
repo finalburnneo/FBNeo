@@ -15950,7 +15950,7 @@ struct BurnDriver BurnDrvgg_fantdizz = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE | HARDWARE_SMS_MAPPER_CODIES, GBF_MISC, 0,
 	GGGetZipName, gg_fantdizzRomInfo, gg_fantdizzRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
+	256, 224, 4, 3
 };
 
 

@@ -15193,7 +15193,7 @@ static struct BurnRomInfo kof96aRomDesc[] = {
 	{ "214-epr.ep2",  0x080000, 0x6abc7ae5, 1 | BRF_ESS | BRF_PRG }, //  1 					/ 27C4096 / 27C4096
 	{ "214-epr.ep3",  0x080000, 0xa588dff4, 1 | BRF_ESS | BRF_PRG }, //  2 					/ 27C240  / 27C4096
 	{ "214-epr.ep4",  0x080000, 0x6d6f17eb, 1 | BRF_ESS | BRF_PRG }, //  3 					/ 27C240  / 27C4096
-	{ "214-p5.p5",    0x200000, 0xbf81a853, 1 | BRF_ESS | BRF_PRG }, //  4 					/ TC5316200CP */
+	{ "214-p5.p5",    0x200000, 0xd388f4da, 1 | BRF_ESS | BRF_PRG }, //  4 					/ TC5316200CP */
 
 	{ "214-s1.s1",    0x020000, 0x1254cbdb, 2 | BRF_GRA },           //  5 Text layer tiles / TC531000
 

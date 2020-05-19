@@ -5031,7 +5031,6 @@ static void lastmiss_main_write(UINT16 address, UINT8 data)
 
 		case 0x1807:
 			*flipscreen = data;
-			bprintf(0, _T("flipscreen  = %x\n"), data);
 		return;
 
 		case 0x180c:

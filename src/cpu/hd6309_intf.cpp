@@ -68,6 +68,44 @@ static UINT8 HD6309ReadOpArgDummyHandler(UINT16)
 	return 0;
 }
 
+// ## HD6309CPUPush() / HD6309CPUPop() ## internal helpers for sending signals to other hd6309's
+struct hd6309pstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static hd6309pstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
+
+static void HD6309CPUPush(INT32 nCPU)
+{
+	hd6309pstack *p = &pstack[pstacknum++];
+
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("HD6309CPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
+
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = HD6309GetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) HD6309Close();
+		HD6309Open(p->nPushedCPU);
+	}
+}
+
+static void HD6309CPUPop()
+{
+	hd6309pstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		HD6309Close();
+		if (p->nHostCPU != -1) HD6309Open(p->nHostCPU);
+	}
+}
+
 void HD6309Reset()
 {
 #if defined FBNEO_DEBUG
@@ -77,6 +115,19 @@ void HD6309Reset()
 	hd6309_reset();
 }
 
+void HD6309Reset(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Reset called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	HD6309Reset();
+
+	HD6309CPUPop();
+}
+
 INT32 HD6309TotalCycles()
 {
 #if defined FBNEO_DEBUG
@@ -84,6 +135,21 @@ INT32 HD6309TotalCycles()
 #endif
 
 	return nHD6309CyclesTotal + hd6309_segmentcycles();
+}
+
+INT32 HD6309TotalCycles(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309TotalCycles called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	INT32 nRet = HD6309TotalCycles();
+
+	HD6309CPUPop();
+
+	return nRet;
 }
 
 void HD6309NewFrame()
@@ -107,6 +173,21 @@ INT32 HD6309Idle(INT32 cycles)
 	nHD6309CyclesTotal += cycles;
 
 	return cycles;
+}
+
+INT32 HD6309Idle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Idle called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	INT32 nRet = HD6309Idle(nCycles);
+
+	HD6309CPUPop();
+
+	return nRet;
 }
 
 UINT8 HD6309CheatRead(UINT32 a)
@@ -208,7 +289,6 @@ INT32 HD6309GetActive()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetActive called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309GetActive called when no CPU open\n"));
 #endif
 
 	return nActiveCPU;
@@ -241,6 +321,19 @@ void HD6309SetIRQLine(INT32 vector, INT32 status)
 	}
 }
 
+void HD6309SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetIRQLine called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	HD6309SetIRQLine(line, status);
+
+	HD6309CPUPop();
+}
+
 INT32 HD6309Run(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
@@ -253,6 +346,21 @@ INT32 HD6309Run(INT32 cycles)
 	nHD6309CyclesTotal += cycles;
 	
 	return cycles;
+}
+
+INT32 HD6309Run(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Run called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	INT32 nRet = HD6309Run(nCycles);
+
+	HD6309CPUPop();
+
+	return nRet;
 }
 
 UINT32 HD6309GetPC(INT32)

@@ -6595,6 +6595,13 @@
 		<rom name="madden nfl 98 (usa).bin" size="2097152" crc="e051ea62"/>
 		<driver status="good"/>
 	</game>
+	<game name="madoumone" cloneof="madoumon" romof="madoumon">
+		<description>Madou Monogatari I (Hack, English)</description>
+		<year>2020</year>
+		<manufacturer>Compile</manufacturer>
+		<rom name="madou monogatari i (english translation).bin" size="4194304" crc="fac8d75d"/>
+		<driver status="good"/>
+	</game>
 	<game name="madoumon">
 		<description>Madou Monogatari I (Jpn)</description>
 		<year>1996</year>

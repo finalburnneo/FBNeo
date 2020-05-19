@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13858 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13859 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6370,6 +6370,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_madden97	|  	| Madden NFL 97 (Euro, USA)				| 		| 1997	| Electronic Art| Sega Megadrive| 					|
 | md_madden98	|  	| Madden NFL 98 (USA)					| 		| 1997	| Electronic Art| Sega Megadrive| 					|
 | gg_madoumna	|  	| Madou Monogatari A - Dokidoki Vacation (Jpn)		| 		| 1995	| Compile	| Sega Game Gear| 					|
+| md_madoumone	|  	| Madou Monogatari I (Hack, English)			| md_madoumon	| 2020	| Compile	| Sega Megadrive| 					|
 | md_madoumon	|  	| Madou Monogatari I (Jpn)				| 		| 1996	| Compile	| Sega Megadrive| 					|
 | gg_madoumone	|  	| Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English| gg_madoumon	| 2010	| Sega		| Sega Game Gear| 					|
 | gg_madoumon	|  	| Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)		| 		| 1993	| Sega		| Sega Game Gear| 					|

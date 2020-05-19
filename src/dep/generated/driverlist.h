@@ -6492,6 +6492,7 @@ DRV		BurnDrvmd_madden96;
 DRV		BurnDrvmd_madden97;
 DRV		BurnDrvmd_madden98;
 DRV		BurnDrvgg_madoumna;
+DRV		BurnDrvmd_madoumone;
 DRV		BurnDrvmd_madoumon;
 DRV		BurnDrvgg_madoumone;
 DRV		BurnDrvgg_madoumon;
@@ -20625,6 +20626,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_madden97,		// Madden NFL 97 (Euro, USA)
 	&BurnDrvmd_madden98,		// Madden NFL 98 (USA)
 	&BurnDrvgg_madoumna,		// Madou Monogatari A - Dokidoki Vacation (Jpn)
+	&BurnDrvmd_madoumone,		// Madou Monogatari I (Hack, English)
 	&BurnDrvmd_madoumon,		// Madou Monogatari I (Jpn)
 	&BurnDrvgg_madoumone,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)
 	&BurnDrvgg_madoumon,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)

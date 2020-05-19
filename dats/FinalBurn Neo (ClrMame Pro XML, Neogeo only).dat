@@ -15381,7 +15381,7 @@
 		<rom name="214-epr.ep2" size="524288" crc="6abc7ae5"/>
 		<rom name="214-epr.ep3" size="524288" crc="a588dff4"/>
 		<rom name="214-epr.ep4" size="524288" crc="6d6f17eb"/>
-		<rom name="214-p5.p5" size="2097152" crc="bf81a853"/>
+		<rom name="214-p5.p5" size="2097152" crc="d388f4da"/>
 		<rom name="214-s1.s1" merge="214-s1.s1" size="131072" crc="1254cbdb"/>
 		<rom name="214-c1.c1" merge="214-c1.c1" size="4194304" crc="7ecf4aa2"/>
 		<rom name="214-c2.c2" merge="214-c2.c2" size="4194304" crc="05b54f37"/>

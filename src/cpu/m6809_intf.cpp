@@ -12,11 +12,6 @@ static M6809Ext *m6809CPUContext = NULL;
 static INT32 nM6809CyclesDone[MAX_CPU];
 INT32 nM6809CyclesTotal;
 
-static INT32 core_idle(INT32 cycles)
-{
-	return M6809Idle(cycles);
-}
-
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
 	INT32 active = nActiveCPU;
@@ -46,7 +41,7 @@ cpu_core_config M6809Config =
 	M6809GetActive,
 	M6809TotalCycles,
 	M6809NewFrame,
-	core_idle,	
+	M6809Idle,
 	core_set_irq,
 	M6809Run,
 	M6809RunEnd,
@@ -74,7 +69,7 @@ static UINT8 M6809ReadOpArgDummyHandler(UINT16)
 	return 0;
 }
 
-// ## M6809CPUPush() / M6809CPUPop() ## internal helpers for sending signals to other 68k's
+// ## M6809CPUPush() / M6809CPUPop() ## internal helpers for sending signals to other m6809's
 struct m6809pstack {
 	INT32 nHostCPU;
 	INT32 nPushedCPU;

@@ -258,11 +258,7 @@ static void toypop_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xf000) == 0x9000) {
 		sound_in_reset = address & 0x800;
 		if (sound_in_reset) {
-			M6809Close();
-			M6809Open(1);
-			M6809Reset();
-			M6809Close();
-			M6809Open(0);
+			M6809Reset(1);
 		}
 		return;
 	}

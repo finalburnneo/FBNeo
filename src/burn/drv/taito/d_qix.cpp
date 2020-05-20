@@ -306,11 +306,7 @@ static UINT8 qix_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8c00:
-			M6809Close();
-			M6809Open(1);
-			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(0);
+			M6809SetIRQLine(1, 1, CPU_IRQSTATUS_ACK);
 			return 0xff;
 
 		case 0x8c01:
@@ -356,11 +352,7 @@ static void qix_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x8c00:
-			M6809Close();
-			M6809Open(1);
-			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(0);
+			M6809SetIRQLine(1, 1, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x8c01:
@@ -399,11 +391,7 @@ static UINT8 qix_video_read(UINT16 address)
 			return 0; // ??
 
 		case 0x8c00:
-			M6809Close();
-			M6809Open(0);
-			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(1);
+			M6809SetIRQLine(0, 1, CPU_IRQSTATUS_ACK);
 			return 0xff;
 
 		case 0x8c01:
@@ -462,11 +450,7 @@ static void qix_video_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x8c00:
-			M6809Close();
-			M6809Open(0);
-			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(1);
+			M6809SetIRQLine(0, 1, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x8c01:

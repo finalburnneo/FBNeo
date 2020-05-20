@@ -3251,8 +3251,8 @@ static struct BurnRomInfo Wboy4RomDesc[] = {
 	{ "epr-7609.ic64",     0x004000, 0x87ecba53, BRF_GRA },		  //  4 Tiles
 	{ "epr-7608.ic66",     0x004000, 0xe812b3ec, BRF_GRA },		  //  5 Tiles
 
-	{ "7578.87",           0x008000, 0x6ff1637f, BRF_GRA },		  //  6 Sprites
-	{ "7577.86",           0x008000, 0x58b3705e, BRF_GRA },		  //  7 Sprites
+	{ "epr-7578.87",       0x008000, 0x6ff1637f, BRF_GRA },		  //  6 Sprites
+	{ "epr-7577.86",       0x008000, 0x58b3705e, BRF_GRA },		  //  7 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  8 Timing PROM
 };

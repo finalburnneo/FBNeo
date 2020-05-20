@@ -5411,7 +5411,7 @@ struct BurnDriver BurnDrvPuzzli = {
 
 static struct BurnRomInfo puzzliaRomDesc[] = {
 	{ "pz-ja-5.20e",		0x020000, 0x4e162574, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "pz-jb-6.20c",		0x020000, 0x19210626, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pz-ja-6.20c",		0x020000, 0x19210626, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "pz-ja-8.3i",			0x020000, 0xfd492a57, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
 

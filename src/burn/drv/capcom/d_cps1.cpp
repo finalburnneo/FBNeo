@@ -8961,7 +8961,7 @@ static struct BurnRomInfo Sf2eeRomDesc[] = {
 	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
 #endif
 	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
-	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x5c3cbb67, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2ee)
@@ -9003,7 +9003,7 @@ static struct BurnRomInfo Sf2efRomDesc[] = {
 	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
 #endif
 	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
-	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2ef)
@@ -9445,7 +9445,7 @@ static struct BurnRomInfo Sf2ueRomDesc[] = {
 	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
 #endif
 	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
-	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x5c3cbb67, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2ue)

@@ -474,7 +474,7 @@ static struct BurnRomInfo mastboyobRomDesc[] = {
 	{ "h_82s129.ic39",		0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  6 Color data
 	{ "l_82s129.ic40",		0x00100, 0x4d061216, 3 | BRF_GRA },           //  7
 
-	{ "d_82s129.ic23.bin",		0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  8 Unused PROM
+	{ "d_82s129.ic23",		0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  8 Unused PROM
 };
 
 STD_ROM_PICK(mastboyob)

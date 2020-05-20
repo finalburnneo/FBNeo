@@ -1992,7 +1992,7 @@ static struct BurnRomInfo ckongpt2jeuRomDesc[] = {
 	{ "9.5h",			0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ckjeu10.dat",	0x1000, 0x7e6eeec4, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "11.5l",			0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ckjeu12.dat",	0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ckjeu12.dat",	0x1000, 0x0532f270, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "6.11n",			0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
 	{ "5.11l",			0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7

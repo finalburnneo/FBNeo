@@ -8495,7 +8495,7 @@ static struct BurnRomInfo ikarijpbRomDesc[] = {
 	{ "2.2j",			0x00400, 0x0703a770, 14 | BRF_GRA },	      //  7
 	{ "3.1j",			0x00400, 0x0a11cdde, 14 | BRF_GRA },	      //  8
 
-	{ "p73b",			0x04000, 0x9e88f536, 4 | BRF_GRA },	      	  //  9 Text Characters
+	{ "p7.3b",			0x04000, 0x9e88f536, 4 | BRF_GRA },	      	  //  9 Text Characters
 	
 	{ "p17.4d",			0x08000, 0xe0dba976, 6 | BRF_GRA },	      	  // 10 Background Tiles
 	{ "p18.2d",			0x08000, 0x24947d5f, 6 | BRF_GRA },	      	  // 11
@@ -9086,11 +9086,11 @@ static struct BurnRomInfo tdfever2RomDesc[] = {
 	{ "tdii20.8k",		0x10000, 0x86cbb2e6, 6 | BRF_GRA },           // 12
 
 	{ "td13.2t",		0x10000, 0x88e2e819, 8 | BRF_GRA },           // 13 32x32 Sprites
-	{ "tdii4.2s",		0x10000, 0xc9bb9138, 8 | BRF_GRA },           // 14
+	{ "tdii14.2s",		0x10000, 0xc9bb9138, 8 | BRF_GRA },           // 14
 	{ "td11.2r",		0x10000, 0xa0d53fbd, 8 | BRF_GRA },           // 15
 	{ "tdii12.2p",		0x10000, 0xd43abc81, 8 | BRF_GRA },           // 16
 	{ "td9.2n",			0x10000, 0xa8979657, 8 | BRF_GRA },           // 17
-	{ "tdiii10.2l",		0x10000, 0xc93b6cd3, 8 | BRF_GRA },           // 18
+	{ "tdii10.2l",		0x10000, 0xc93b6cd3, 8 | BRF_GRA },           // 18
 	{ "td7.2k",			0x10000, 0x72a5590d, 8 | BRF_GRA },           // 19
 	{ "tdii8.2j",		0x10000, 0x4845e78b, 8 | BRF_GRA },           // 20
 

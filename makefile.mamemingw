@@ -95,8 +95,11 @@ ifdef UNICODE
 # lib	= -lunicows
 endif
 
-lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi -ladvapi32 -lsetupapi -lole32 -luuid -lwininet
+lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi -ladvapi32 -lsetupapi -lole32 -luuid -lwininet 
 
+ifdef INCLUDE_AVI_RECORDING
+lib +=	-lvfw32
+endif
 
 depobj	+=	resource.o \
 
@@ -632,8 +635,10 @@ else
 	@echo Making normal build...
 endif
 	@echo
-	@mingw-mkdir -p $(foreach dir, $(alldir),$(objdir)$(dir))
-	@mingw-mkdir -p $(srcdir)dep/generated
+	-@cmd /q /e:on /c for %i in ($(foreach dir,$(alldir),$(subst /,\,$(objdir)$(dir))),) do mkdir %i \>nul 2\>nul
+	-@cmd /q /e:on /c mkdir $(subst /,\,$(srcdir))dep\generated
+
+
 
 cleandep:
 	@echo Removing depend files from $(objdir)...

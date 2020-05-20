@@ -1590,27 +1590,15 @@ static void io_chip_w(UINT32 offset, UINT16 d)
 			System16VideoEnable = d & 0x80;
 			
 			if (d & 0x04) {
-				INT32 nLastCPU = nSekActive;
-				SekClose();
-				SekOpen(2);
-				SekReset();
-				SekClose();
-				SekOpen(nLastCPU);
+				SekReset(2);
 			}
 			
 			if (d & 0x08) {
-				INT32 nLastCPU = nSekActive;
-				SekClose();
-				SekOpen(1);
-				SekReset();
-				SekClose();
-				SekOpen(nLastCPU);
+				SekReset(1);
 			}
 			
 			if (!(d & 0x10)) {
-				ZetOpen(0);
-				ZetReset();
-				ZetClose();
+				ZetReset(0);
 			}
 			
 			return;
@@ -1705,9 +1693,7 @@ void __fastcall YBoardWriteByte(UINT32 a, UINT8 d)
 	switch (a) {
 		case 0x082001: {
 			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
+			ZetNmi(0);
 			return;
 		}
 	}

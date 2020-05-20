@@ -462,11 +462,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 		sound_data = data;
 
 		if (sound_irq_enable) {
-			M6809Close();
-			M6809Open(1);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			M6809Close();
-			M6809Open(0);
+			M6809SetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		}
 		return;
 	}
@@ -523,11 +519,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xffe0) == 0x46e0) {
 		sync_soundcpu();
 		port_A &= 0x3f;
-		M6809Close();
-		M6809Open(1);
-		M6809Reset();
-		M6809Close();
-		M6809Open(0);
+		M6809Reset(1);
 		return;
 	}
 
@@ -1054,7 +1046,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
 		if (irqcnt >= (41 + irqflip)) { // 6.1something irq's per frame logic
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -1066,7 +1058,7 @@ static INT32 DrvFrame()
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6809);
 
 		if (timer_counter > 0 && timer_counter <= M6809TotalCycles()) {
 			irq_flag |= 0x80;

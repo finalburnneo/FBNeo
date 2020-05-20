@@ -4789,6 +4789,26 @@ struct BurnDriver BurnDrvpce_rtypep2 = {
 };
 
 
+// R-Type Part-2 v1.1
+
+static struct BurnRomInfo pce_rtypep2v11RomDesc[] = {
+	{ "r-type part-2 v1.1 (japan).pce", 0x040000, 0x417b961d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_rtypep2v11)
+STD_ROM_FN(pce_rtypep2v11)
+
+struct BurnDriver BurnDrvpce_rtypep2v11 = {
+	"pce_rtypep2v11", "pce_rtypep2", NULL, NULL, "1988",
+	"R-Type Part-2 (v1.1)\0", NULL, "Hudson", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_rtypep2v11RomInfo, pce_rtypep2v11RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+
 // Rabio Lepus Special
 
 static struct BurnRomInfo pce_rabiolepRomDesc[] = {

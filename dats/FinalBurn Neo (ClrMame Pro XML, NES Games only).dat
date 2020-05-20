@@ -2539,6 +2539,55 @@
 		<rom name="Family Pinball (Japan).nes" size="196624" crc="0da8a7b2"/>
 		<driver status="good"/>
 	</game>
+	<game name="famista89">
+		<description>Famista '89 (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '89 (Japan).nes" size="196624" crc="62b90039"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista90">
+		<description>Famista '90 (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '90 (Japan).nes" size="262160" crc="c942dfe9"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista91">
+		<description>Famista '91 (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '91 (Japan).nes" size="262160" crc="7195ca38"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista92">
+		<description>Famista '92 (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '92 (Japan).nes" size="262160" crc="fb6bdb9d"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista93">
+		<description>Famista '93 (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '93 (Japan).nes" size="262160" crc="38511037"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista94">
+		<description>Famista '94 (Japan)</description>
+		<year>1993</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Famista '94 (Japan).nes" size="262160" crc="d73fc5b1"/>
+		<driver status="good"/>
+	</game>
+	<game name="fantaadvdiz">
+		<description>Fantastic Adventures of Dizzy, The (USA)</description>
+		<year>1991</year>
+		<manufacturer>Camerica</manufacturer>
+		<rom name="Fantastic Adventures of Dizzy, The (USA).nes" size="262160" crc="59318584"/>
+		<driver status="good"/>
+	</game>
 	<game name="fantasyzone">
 		<description>Fantasy Zone (Japan)</description>
 		<year>1987</year>
@@ -3629,6 +3678,13 @@
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Insector X (Japan).nes" size="262160" crc="7dab812d"/>
+		<driver status="good"/>
+	</game>
+	<game name="intercri">
+		<description>International Cricket (Australia)</description>
+		<year>1992</year>
+		<manufacturer>Beam Software</manufacturer>
+		<rom name="International Cricket (Australia).nes" size="262160" crc="cbde707e"/>
 		<driver status="good"/>
 	</game>
 	<game name="irontan">
@@ -5448,7 +5504,7 @@
 		<description>NES Open Tournament Golf (USA)</description>
 		<year>1991</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
+		<rom name="NES Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
 		<driver status="good"/>
 	</game>
 	<game name="nescape">

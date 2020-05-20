@@ -706,6 +706,7 @@ DRV		BurnDrvMSX_athlanda;
 DRV		BurnDrvMSX_athlandp;
 DRV		BurnSpecaticatac;
 DRV		BurnDrvAtlantol;
+DRV		BurnDrvpce_atlantean;
 DRV		BurnDrvacitya;
 DRV		BurnDrvnes_atlantisnonazo;
 DRV		BurnDrvAtomboya;
@@ -2000,7 +2001,7 @@ DRV		BurnDrvmd_chinf3a;
 DRV		BurnDrvnes_chipndalresra;
 DRV		BurnDrvnes_chipndalresra2;
 DRV		BurnDrvcndi;
-DRV		BurnDrvmd_chipsch13;
+DRV		BurnDrvmd_chipsch;
 DRV		BurnDrvnes_chitesenvaz;
 DRV		BurnDrvfds_chitetaiord;
 DRV		BurnDrvnes_chiyonoooi;
@@ -2096,6 +2097,7 @@ DRV		BurnDrvMSX_citycona;
 DRV		BurnDrvCitycon;
 DRV		BurnDrvCitycona;
 DRV		BurnDrvnes_cityconnection;
+DRV		BurnDrvpce_cityhunte;
 DRV		BurnDrvpce_cityhunt;
 DRV		BurnDrvnes_citytrouble;
 DRV		BurnDrvgg_cj;
@@ -3704,6 +3706,12 @@ DRV		BurnDrvfds_famimdisvol3;
 DRV		BurnDrvfds_famimdisvol4;
 DRV		BurnDrvfds_famimdisvol5;
 DRV		BurnDrvfds_famimdisvol6;
+DRV		BurnDrvnes_famista89;
+DRV		BurnDrvnes_famista90;
+DRV		BurnDrvnes_famista91;
+DRV		BurnDrvnes_famista92;
+DRV		BurnDrvnes_famista93;
+DRV		BurnDrvnes_famista94;
 DRV		BurnDrvFancywld;
 DRV		BurnDrvFantasiaa;
 DRV		BurnDrvFantasia;
@@ -3715,6 +3723,7 @@ DRV		BurnDrvFantsia2n;
 DRV		BurnDrvFantsia2;
 DRV		BurnDrvFantsia2a;
 DRV		BurnDrvFantastc;
+DRV		BurnDrvnes_fantaadvdiz;
 DRV		BurnDrvsms_fantdizz;
 DRV		BurnDrvgg_fantdizz;
 DRV		BurnDrvmd_fantdizz;
@@ -4658,9 +4667,9 @@ DRV		BurnDrvMSX_gomokuna;
 DRV		BurnDrvMSX_gomokunaa;
 DRV		BurnDrvpce_gomola;
 DRV		BurnDrvImsorryj;
+DRV		BurnDrvGondou;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvGondou;			// Broken inputs [NOT WORKING]
-DRV		BurnDrvGondo;			// Broken inputs [NOT WORKING]
+DRV		BurnDrvGondo;			// please use 'gondou' instead! [NOT WORKING]
 #endif
 DRV		BurnDrvIronfortc;
 DRV		BurnDrvMSX_gonzzalezz;
@@ -5354,6 +5363,7 @@ DRV		BurnDrvmd_instchp4;
 DRV		BurnDrvmd_instchp3;
 DRV		BurnDrvmd_instchp2;
 DRV		BurnDrvmd_instch;
+DRV		BurnDrvnes_intercri;
 DRV		BurnDrvIntcup94;
 DRV		BurnDrvMSX_ik;
 DRV		BurnDrvmd_intrugby;
@@ -6589,6 +6599,7 @@ DRV		BurnDrvpce_mjwars;
 DRV		BurnDrvMahouDai;
 DRV		BurnDrvMainsnk;
 DRV		BurnDrvMstadium;
+DRV		BurnDrvpce_mikkokue;
 DRV		BurnDrvpce_mikkoku;
 DRV		BurnDrvMajest12j;
 DRV		BurnDrvMajest12u;
@@ -6620,9 +6631,7 @@ DRV		BurnDrvnes_makaimuraarcade;
 DRV		BurnDrvmaketrax;
 DRV		BurnDrvmaketrxb;
 DRV		BurnDrvpce_makyoden;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvMakyosen;		// Broken inputs [NOT WORKING]
-#endif
+DRV		BurnDrvMakyosen;
 DRV		BurnDrvMSX_malaika;
 DRV		BurnDrvMSX_malaikapq13;
 DRV		BurnDrvmd_mamono;
@@ -9081,6 +9090,7 @@ DRV		BurnDrvRtype2;
 DRV		BurnDrvRtypelej;
 DRV		BurnDrvRtypeleo;
 DRV		BurnDrvpce_rtypep1;
+DRV		BurnDrvpce_rtypep2v11;
 DRV		BurnDrvpce_rtypep2;
 DRV		BurnDrvtg_rtype;
 DRV		BurnDrvMSX_ram;
@@ -14840,6 +14850,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_athlandp,		// Athletic Land (Jpn, Prototype)
 	&BurnSpecaticatac,			// Atic Atac (48K)
 	&BurnDrvAtlantol,			// Atlant Olimpic [no comment, NOT WORKING]
+	&BurnDrvpce_atlantean,		// Atlantean
 	&BurnDrvacitya,				// Atlantic City Action
 	&BurnDrvnes_atlantisnonazo,	// Atlantis no Nazo (Japan)
 	&BurnDrvAtomboya,			// Atomic Boy (revision A)
@@ -16134,7 +16145,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_chipndalresra,	// Chip 'n Dale - Rescue Rangers (USA)
 	&BurnDrvnes_chipndalresra2,	// Chip 'n Dale - Rescue Rangers 2 (USA)
 	&BurnDrvcndi,				// Chip n Dale (Intro demo)
-	&BurnDrvmd_chipsch13,		// Chip's Challenge (HB, v1.3)
+	&BurnDrvmd_chipsch,			// Chip's Challenge (HB, v1.4)
 	&BurnDrvnes_chitesenvaz,	// Chitei Senkuu Vazolder (Japan)
 	&BurnDrvfds_chitetaiord,	// Chitei Tairiku Ordola (Japan)
 	&BurnDrvnes_chiyonoooi,		// Chiyonofuji no Ooichou (Japan)
@@ -16230,6 +16241,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCitycon,			// City Connection (set 1)
 	&BurnDrvCitycona,			// City Connection (set 2)
 	&BurnDrvnes_cityconnection,	// City Connection (USA)
+	&BurnDrvpce_cityhunte,		// City Hunter (Hack, English)
 	&BurnDrvpce_cityhunt,		// City Hunter
 	&BurnDrvnes_citytrouble,	// City Trouble (HB)
 	&BurnDrvgg_cj,				// CJ Elephant Fugitive (Euro)
@@ -17838,6 +17850,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_famimdisvol4,	// Famimaga Disk Vol. 4 - Clox (Japan)
 	&BurnDrvfds_famimdisvol5,	// Famimaga Disk Vol. 5 - Puyo Puyo (Japan)
 	&BurnDrvfds_famimdisvol6,	// Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)
+	&BurnDrvnes_famista89,		// Famista '89 (Japan)
+	&BurnDrvnes_famista90,		// Famista '90 (Japan)
+	&BurnDrvnes_famista91,		// Famista '91 (Japan)
+	&BurnDrvnes_famista92,		// Famista '92 (Japan)
+	&BurnDrvnes_famista93,		// Famista '93 (Japan)
+	&BurnDrvnes_famista94,		// Famista '94 (Japan)
 	&BurnDrvFancywld,			// Fancy World - Earth of Crisis
 	&BurnDrvFantasiaa,			// Fantasia (940307 PCB)
 	&BurnDrvFantasia,			// Fantasia (940429 PCB, set 1)
@@ -17849,6 +17867,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFantsia2,			// Fantasia II (Explicit)
 	&BurnDrvFantsia2a,			// Fantasia II (Less Explicit)
 	&BurnDrvFantastc,			// Fantastic (Galaga conversion on Galaxian hardware)
+	&BurnDrvnes_fantaadvdiz,	// Fantastic Adventures of Dizzy, The (USA)
 	&BurnDrvsms_fantdizz,		// Fantastic Dizzy (Euro)
 	&BurnDrvgg_fantdizz,		// Fantastic Dizzy (Euro, SMS Mode)
 	&BurnDrvmd_fantdizz,		// Fantastic Dizzy (Euro, USA)
@@ -18792,9 +18811,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_gomokunaa,		// Gomoku Narabe (Jpn, Alt)
 	&BurnDrvpce_gomola,			// Gomola Speed
 	&BurnDrvImsorryj,			// Gonbee no I'm Sorry (315-5110, Japan)
+	&BurnDrvGondou,				// Gondomania (US)
 #if defined FBNEO_DEBUG
-	&BurnDrvGondou,				// Gondomania (US) [Broken inputs, NOT WORKING]
-	&BurnDrvGondo,				// Gondomania (World) [Broken inputs, NOT WORKING]
+	&BurnDrvGondo,				// Gondomania (World) [please use 'gondou' instead!, NOT WORKING]
 #endif
 	&BurnDrvIronfortc,			// Gongtit Jiucoi Iron Fortress (Hong Kong)
 	&BurnDrvMSX_gonzzalezz,		// Gonzzalezz 
@@ -19488,6 +19507,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_instchp3,		// Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941228-A)
 	&BurnDrvmd_instchp2,		// Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941229)
 	&BurnDrvmd_instch,			// Instruments of Chaos Starring Young Indiana Jones (USA)
+	&BurnDrvnes_intercri,		// International Cricket (Australia)
 	&BurnDrvIntcup94,			// International Cup '94 (Ver 2.2O 1994/05/26)
 	&BurnDrvMSX_ik,				// International Karate (Euro)
 	&BurnDrvmd_intrugby,		// International Rugby (Euro)
@@ -20723,6 +20743,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMahouDai,			// Mahou Daisakusen (Japan)
 	&BurnDrvMainsnk,			// Main Event (1984)
 	&BurnDrvMstadium,			// Main Stadium (Japan ver. 4)
+	&BurnDrvpce_mikkokue,		// Maison Ikkoku (Hack, English)
 	&BurnDrvpce_mikkoku,		// Maison Ikkoku
 	&BurnDrvMajest12j,			// Majestic Twelve - The Space Invaders Part IV (Japan)
 	&BurnDrvMajest12u,			// Majestic Twelve - The Space Invaders Part IV (US)
@@ -20754,9 +20775,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmaketrax,			// Make Trax (set 1)
 	&BurnDrvmaketrxb,			// Make Trax (set 2)
 	&BurnDrvpce_makyoden,		// Makyou Densetsu
-#if defined FBNEO_DEBUG
-	&BurnDrvMakyosen,			// Makyou Senshi (Japan) [Broken inputs, NOT WORKING]
-#endif
+	&BurnDrvMakyosen,			// Makyou Senshi (Japan)
 	&BurnDrvMSX_malaika,		// Malaika (v1.2)
 	&BurnDrvMSX_malaikapq13,	// Malaika Prehistoric Quest (v1.3)
 	&BurnDrvmd_mamono,			// Mamono Hunter Youko - Dai 7 no Keishou (Jpn)
@@ -23215,6 +23234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRtypelej,			// R-Type Leo (Japan)
 	&BurnDrvRtypeleo,			// R-Type Leo (World)
 	&BurnDrvpce_rtypep1,		// R-Type Part-1
+	&BurnDrvpce_rtypep2v11,		// R-Type Part-2 (v1.1)
 	&BurnDrvpce_rtypep2,		// R-Type Part-2
 	&BurnDrvtg_rtype,			// R-Type
 	&BurnDrvMSX_ram,			// R.A.M. (Spa)

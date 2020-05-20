@@ -1959,11 +1959,11 @@
 		<rom name="chinese fighter iii (unl, alt).bin" size="2097152" crc="6f98247d"/>
 		<driver status="good"/>
 	</game>
-	<game name="chipsch13">
-		<description>Chip's Challenge (HB, v1.3) [Homebrew]</description>
+	<game name="chipsch">
+		<description>Chip's Challenge (HB, v1.4) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>PortableDev</manufacturer>
-		<rom name="chipschallenge_v13.bin" size="1310720" crc="a7783390"/>
+		<rom name="chipschallenge_v14.bin" size="1310720" crc="c57188bb"/>
 		<driver status="good"/>
 	</game>
 	<game name="miracle9">

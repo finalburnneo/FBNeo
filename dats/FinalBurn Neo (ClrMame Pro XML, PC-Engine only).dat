@@ -89,6 +89,13 @@
 		<rom name="artist tool (japan).pce" size="262144" crc="5e4fa713"/>
 		<driver status="good"/>
 	</game>
+	<game name="atlantean">
+		<description>Atlantean</description>
+		<year>2014</year>
+		<manufacturer>Aetherbyte</manufacturer>
+		<rom name="atlantean.pce" size="524800" crc="ef596649"/>
+		<driver status="good"/>
+	</game>
 	<game name="atomrobo">
 		<description>Atomic Robo-kid Special</description>
 		<year>1990</year>
@@ -297,6 +304,13 @@
 		<year>1991</year>
 		<manufacturer>Yuni Post</manufacturer>
 		<rom name="circus lido (japan).pce" size="262144" crc="c3212c24"/>
+		<driver status="good"/>
+	</game>
+	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt">
+		<description>City Hunter (Hack, English)</description>
+		<year>2019</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="city hunter (english translation).pce" size="393728" crc="db435a9d"/>
 		<driver status="good"/>
 	</game>
 	<game name="cityhunt">
@@ -1055,6 +1069,13 @@
 		<rom name="mahjong shikyaku retsuden - mahjong wars (japan).pce" size="262144" crc="6c34aaea"/>
 		<driver status="good"/>
 	</game>
+	<game name="mikkokue" cloneof="mikkoku" romof="mikkoku">
+		<description>Maison Ikkoku (Hack, English)</description>
+		<year>2008</year>
+		<manufacturer>Micro Cabin</manufacturer>
+		<rom name="maison ikkoku (english translation).pce" size="524800" crc="b5ed56d8"/>
+		<driver status="good"/>
+	</game>
 	<game name="mikkoku">
 		<description>Maison Ikkoku</description>
 		<year>1989</year>
@@ -1578,6 +1599,13 @@
 		<year>1988</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="r-type part-1 (japan).pce" size="262144" crc="cec3d28a"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtypep2v11" cloneof="rtypep2" romof="rtypep2">
+		<description>R-Type Part-2 (v1.1)</description>
+		<year>1988</year>
+		<manufacturer>Hudson</manufacturer>
+		<rom name="r-type part-2 v1.1 (japan).pce" size="262144" crc="417b961d"/>
 		<driver status="good"/>
 	</game>
 	<game name="rtypep2">

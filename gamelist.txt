@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13859 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13871 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -698,6 +698,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_athlandp	|  	| Athletic Land (Jpn, Prototype)			| msx_athland	| 1984	| Konami	| MSX		| 					|
 | spec_aticatac	|  	| Atic Atac (48K)					| 		| 1983	| Ultimate Play | ZX Spectrum	| 					|
 | atlantol	|   NW	| Atlant Olimpic					| trackfld	| 1996	| bootleg	| Miscellaneous	| 					|
+| pce_atlantean	|  	| Atlantean						| 		| 2014	| Aetherbyte	| PC Engine	| 					|
 | acitya	|  	| Atlantic City Action					| bwcasino	| 1983	| EPOS Corporati| Pac-man	| 					|
 | nes_atlantisnonazo|  	| Atlantis no Nazo (Japan)				| 		| 1986	| Sunsoft	| Miscellaneous	| 					|
 | atomboya	|  	| Atomic Boy (revision A)				| wilytowr	| 1985	| Irem (Memetron| Irem M63	| 					|
@@ -1723,8 +1724,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_captaplaandpla|  	| Captain Planet and the Planeteers (USA)		| 		| 1991	| Mindscape	| Miscellaneous	| 					|
 | nes_captainsaver|  	| Captain Saver (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_captsilv	|  	| Captain Silver (Euro, Jpn)				| 		| 1988	| Sega		| Sega Master Sy| 					|
-| csilverja	|  	| Captain Silver (Japan revision 1)			| csilver	| 1987	| Data East Corp| DEC8		| imperfect sound			|
-| csilverj	|  	| Captain Silver (Japan revision 3)			| csilver	| 1987	| Data East Corp| DEC8		| imperfect sound			|
+| csilverja	|  	| Captain Silver (Japan revision 1)			| csilver	| 1987	| Data East Corp| DEC8		| 					|
+| csilverj	|  	| Captain Silver (Japan revision 3)			| csilver	| 1987	| Data East Corp| DEC8		| 					|
 | nes_captainsilver|  	| Captain Silver (Japan)				| 		| 1988	| Tokuma Shoten	| Miscellaneous	| 					|
 | sms_captsilvu	|  	| Captain Silver (USA)					| sms_captsilv	| 1988	| Sega		| Sega Master Sy| 					|
 | csilver	|  	| Captain Silver (World)				| 		| 1987	| Data East Corp| DEC8		| 					|
@@ -1968,7 +1969,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_chipndalresra|  	| Chip 'n Dale - Rescue Rangers (USA)			| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | nes_chipndalresra2|  	| Chip 'n Dale - Rescue Rangers 2 (USA)			| 		| 1994	| Capcom	| Miscellaneous	| 					|
 | cndi		|  	| Chip n Dale (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
-| md_chipsch13	|  	| Chip's Challenge (HB, v1.3)				| 		| 2020	| PortableDev	| Sega Megadrive| 					|
+| md_chipsch	|  	| Chip's Challenge (HB, v1.4)				| 		| 2020	| PortableDev	| Sega Megadrive| 					|
 | nes_chitesenvaz|  	| Chitei Senkuu Vazolder (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_chitetaiord|  	| Chitei Tairiku Ordola (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_chiyonoooi|  	| Chiyonofuji no Ooichou (Japan)			| 		| 1990	| Face		| Miscellaneous	| 					|
@@ -2062,6 +2063,7 @@ This list contains all games supported by FinalBurn Neo.
 | citycon	|  	| City Connection (set 1)				| 		| 1985	| Jaleco	| Miscellaneous	| 					|
 | citycona	|  	| City Connection (set 2)				| citycon	| 1985	| Jaleco	| Miscellaneous	| 					|
 | nes_cityconnection|  	| City Connection (USA)					| 		| 1988	| Jaleco	| Miscellaneous	| 					|
+| pce_cityhunte	|  	| City Hunter (Hack, English)				| pce_cityhunt	| 2019	| Sunsoft	| PC Engine	| 					|
 | pce_cityhunt	|  	| City Hunter						| 		| 1990	| Sunsoft	| PC Engine	| 					|
 | nes_citytrouble|  	| City Trouble (HB)					| 		| 2016	| Den Kat Games	| Miscellaneous	| 					|
 | gg_cj		|  	| CJ Elephant Fugitive (Euro)				| 		| 1991	| Codemasters	| Sega Game Gear| 					|
@@ -3636,6 +3638,12 @@ This list contains all games supported by FinalBurn Neo.
 | fds_famimdisvol4|  	| Famimaga Disk Vol. 4 - Clox (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_famimdisvol5|  	| Famimaga Disk Vol. 5 - Puyo Puyo (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_famimdisvol6|  	| Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_famista89	|  	| Famista '89 (Japan)					| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_famista90	|  	| Famista '90 (Japan)					| 		| 1989	| Namco		| Miscellaneous	| 					|
+| nes_famista91	|  	| Famista '91 (Japan)					| 		| 1990	| Namco		| Miscellaneous	| 					|
+| nes_famista92	|  	| Famista '92 (Japan)					| 		| 1991	| Namco		| Miscellaneous	| 					|
+| nes_famista93	|  	| Famista '93 (Japan)					| 		| 1992	| Namco		| Miscellaneous	| 					|
+| nes_famista94	|  	| Famista '94 (Japan)					| 		| 1993	| Namco		| Miscellaneous	| 					|
 | fncywld	|  	| Fancy World - Earth of Crisis				| 		| 1996	| Unico		| Miscellaneous	| 					|
 | fantasiaa	|  	| Fantasia (940307 PCB)					| fantasia	| 1994	| Comad / New Ja| Miscellaneous	| 					|
 | fantasia	|  	| Fantasia (940429 PCB, set 1)				| 		| 1994	| Comad / New Ja| Miscellaneous	| 					|
@@ -3647,6 +3655,7 @@ This list contains all games supported by FinalBurn Neo.
 | fantsia2	|  	| Fantasia II (Explicit)				| 		| 1997	| Comad		| Miscellaneous	| 					|
 | fantsia2a	|  	| Fantasia II (Less Explicit)				| fantsia2	| 1997	| Comad		| Miscellaneous	| 					|
 | fantastc	|  	| Fantastic (Galaga conversion on Galaxian hardware)	| 		| 198?	| Taito do Brasi| Galaxian	| 					|
+| nes_fantaadvdiz|  	| Fantastic Adventures of Dizzy, The (USA)		| 		| 1991	| Camerica	| Miscellaneous	| 					|
 | sms_fantdizz	|  	| Fantastic Dizzy (Euro)				| 		| 1993	| Codemasters	| Sega Master Sy| 					|
 | gg_fantdizz	|  	| Fantastic Dizzy (Euro, SMS Mode)			| 		| 1993	| Codemasters	| Sega Game Gear| 					|
 | md_fantdizz	|  	| Fantastic Dizzy (Euro, USA)				| 		| 1991	| Codemasters	| Sega Megadrive| 					|
@@ -4576,8 +4585,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gomokunaa	|  	| Gomoku Narabe (Jpn, Alt)				| msx_gomokuna	| 1984	| Toshiba EMI	| MSX		| 					|
 | pce_gomola	|  	| Gomola Speed						| 		| 1990	| UPL		| PC Engine	| 					|
 | imsorryj	|  	| Gonbee no I'm Sorry (315-5110, Japan)			| imsorry	| 1985	| Coreland / Seg| System 1	| 					|
-| gondou	| D NW	| Gondomania (US)					| gondo		| 1987	| Data East USA	| DEC8		| Broken inputs				|
-| gondo		| D NW	| Gondomania (World)					| 		| 1987	| Data East USA	| DEC8		| Broken inputs				|
+| gondou	|  	| Gondomania (US)					| gondo		| 1987	| Data East USA	| DEC8		| 					|
+| gondo		| D NW	| Gondomania (World)					| 		| 1987	| Data East USA	| DEC8		| please use 'gondou' instead!		|
 | ironfortc	|  	| Gongtit Jiucoi Iron Fortress (Hong Kong)		| ironfort	| 1998	| Eolith (Excell| Miscellaneous	| 					|
 | msx_gonzzalezz|  	| Gonzzalezz 						| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_goody	|  	| Goody (Spa)						| 		| 1987	| Opera Soft	| MSX		| 					|
@@ -5260,6 +5269,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_instchp3	|  	| Instruments of Chaos Starring Young Indiana Jones (Pro| md_instch	| 1994	| Sega		| Sega Megadrive| 					|
 | md_instchp2	|  	| Instruments of Chaos Starring Young Indiana Jones (Pro| md_instch	| 1994	| Sega		| Sega Megadrive| 					|
 | md_instch	|  	| Instruments of Chaos Starring Young Indiana Jones (USA| 		| 1994	| Sega		| Sega Megadrive| 					|
+| nes_intercri	|  	| International Cricket (Australia)			| 		| 1992	| Beam Software	| Miscellaneous	| 					|
 | intcup94	|  	| International Cup '94 (Ver 2.2O 1994/05/26)		| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | msx_ik	|  	| International Karate (Euro)				| 		| 1986	| Endurance Game| MSX		| 					|
 | md_intrugby	|  	| International Rugby (Euro)				| 		| 1993	| Domark	| Sega Megadrive| 					|
@@ -6467,6 +6477,7 @@ This list contains all games supported by FinalBurn Neo.
 | mahoudai	|  	| Mahou Daisakusen (Japan)				| sstriker	| 1993	| Raizing	| Toaplan GP9001| 					|
 | mainsnk	|  	| Main Event (1984)					| 		| 1984	| SNK		| Miscellaneous	| 					|
 | mstadium	|  	| Main Stadium (Japan ver. 4)				| bottom9	| 1989	| Konami	| GX891		| 					|
+| pce_mikkokue	|  	| Maison Ikkoku (Hack, English)				| pce_mikkoku	| 2008	| Micro Cabin	| PC Engine	| 					|
 | pce_mikkoku	|  	| Maison Ikkoku						| 		| 1989	| Micro Cabin	| PC Engine	| 					|
 | majest12j	|  	| Majestic Twelve - The Space Invaders Part IV (Japan)	| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
 | majest12u	|  	| Majestic Twelve - The Space Invaders Part IV (US)	| ssi		| 1990	| Taito America | Taito F2	| 					|
@@ -6498,7 +6509,7 @@ This list contains all games supported by FinalBurn Neo.
 | maketrax	|  	| Make Trax (set 1)					| crush		| 1981	| [Kural] (Willi| Pac-man	| 					|
 | maketrxb	|  	| Make Trax (set 2)					| crush		| 1981	| [Kural] (Willi| Pac-man	| 					|
 | pce_makyoden	|  	| Makyou Densetsu					| 		| 1988	| Victor Interac| PC Engine	| 					|
-| makyosen	| D NW	| Makyou Senshi (Japan)					| gondo		| 1987	| Data East Corp| DEC8		| Broken inputs				|
+| makyosen	|  	| Makyou Senshi (Japan)					| gondo		| 1987	| Data East Corp| DEC8		| 					|
 | msx_malaika12	|  	| Malaika (v1.2)					| 		| 2013	| RELEVO	| MSX		| 					|
 | msx_malaikapq13|  	| Malaika Prehistoric Quest (v1.3)			| 		| 2006	| Karoshi Corpor| MSX		| 					|
 | md_mamono	|  	| Mamono Hunter Youko - Dai 7 no Keishou (Jpn)		| 		| 1991	| NCS		| Sega Megadrive| 					|
@@ -8911,6 +8922,7 @@ This list contains all games supported by FinalBurn Neo.
 | rtypeleoj	|  	| R-Type Leo (Japan)					| rtypeleo	| 1992	| Irem		| Irem M92	| 					|
 | rtypeleo	|  	| R-Type Leo (World)					| 		| 1992	| Irem		| Irem M92	| 					|
 | pce_rtypep1	|  	| R-Type Part-1						| 		| 1988	| Hudson	| PC Engine	| 					|
+| pce_rtypep2v11|  	| R-Type Part-2 (v1.1)					| pce_rtypep2	| 1988	| Hudson	| PC Engine	| 					|
 | pce_rtypep2	|  	| R-Type Part-2						| 		| 1988	| Hudson	| PC Engine	| 					|
 | tg_rtype	|  	| R-Type						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
 | msx_ram	|  	| R.A.M. (Spa)						| 		| 1990	| Topo Soft	| MSX		| 					|

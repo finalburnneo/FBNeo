@@ -1559,7 +1559,7 @@ static struct BurnRomInfo jmpbreakaRomDesc[] = {
 
 	{ "1.vrom1",				0x040000, 0x1b6e3671, 3 | BRF_SND },           //  6 Samples
 	
-	{ "palce22v10h.gal1"		0x00022d, 0x0ff86470, 0 | BRF_OPT },		   //  7 PLDs
+	{ "palce22v10h.gal1",		0x00022d, 0x0ff86470, 0 | BRF_OPT },		   //  7 PLDs
 };
 
 STD_ROM_PICK(jmpbreaka)

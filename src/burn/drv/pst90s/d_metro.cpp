@@ -4764,7 +4764,7 @@ struct BurnDriver BurnDrvPoitto = {
 // Poitto! (revision C)
 
 static struct BurnRomInfo poittocRomDesc[] = {
-	{ "pt-jc05.20e",		0x020000, 0x6b1be034, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pt-jc05.20e",		0x020000, 0x96681051, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "pt-jc06.20c",		0x020000, 0x00000000, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  1
 
 	{ "pt-jc08.3i",			0x020000, 0xf32d386a, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code

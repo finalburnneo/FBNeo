@@ -8702,27 +8702,30 @@ static struct BurnRomInfo dogosokbRomDesc[] = {
 	{ "c1.1k",			0x00400, 0x10a2ce2b, 14 | BRF_GRA },	      //  3 Color Data
 	{ "c2.2l",			0x00400, 0x99dc9792, 14 | BRF_GRA },	      //  4
 	{ "c3.1l",			0x00400, 0xe7213160, 14 | BRF_GRA },	      //  5
+	
+	{ "1.1d",			0x01000, 0x5ab67bfc, 0 | BRF_OPT },			  //  6 rjproms
+	{ "1.2d",			0x01000, 0x5ab67bfc, 0 | BRF_OPT },			  //  7
 
-	{ "p7.3b",			0x04000, 0x51a4ec83, 4 | BRF_GRA },	      	  //  6 Text Characters
+	{ "p7.3b",			0x04000, 0x51a4ec83, 4 | BRF_GRA },	      	  //  8 Text Characters
 
-	{ "p17.4c",			0x08000, 0x19d4518c, 6 | BRF_GRA },           //  7 Background Tiles
-	{ "p18.2c",			0x08000, 0xd818be43, 6 | BRF_GRA },           //  8
-	{ "p19.4b",			0x08000, 0xd64e0f89, 6 | BRF_GRA },           //  9
-	{ "p20.2b",			0x08000, 0xedba0f31, 6 | BRF_GRA },           // 10
+	{ "p17.4c",			0x08000, 0x19d4518c, 6 | BRF_GRA },           //  9 Background Tiles
+	{ "p18.2c",			0x08000, 0xd818be43, 6 | BRF_GRA },           // 10
+	{ "p19.4b",			0x08000, 0xd64e0f89, 6 | BRF_GRA },           // 11
+	{ "p20.2b",			0x08000, 0xedba0f31, 6 | BRF_GRA },           // 12
 
-	{ "p8.3d",			0x08000, 0xd43044f8, 9 | BRF_GRA },           // 11 16x16 Sprites
-	{ "p9.3f",			0x08000, 0x365ed2d8, 9 | BRF_GRA },           // 12
-	{ "p10.3h",			0x08000, 0x92579bf3, 9 | BRF_GRA },           // 13
+	{ "p8.3d",			0x08000, 0xd43044f8, 9 | BRF_GRA },           // 13 16x16 Sprites
+	{ "p9.3f",			0x08000, 0x365ed2d8, 9 | BRF_GRA },           // 14
+	{ "p10.3h",			0x08000, 0x92579bf3, 9 | BRF_GRA },           // 15
 
-	{ "p11.4m",			0x08000, 0x668b25a4, 10 | BRF_GRA },          // 14 32x32 Sprites
-	{ "p14.2m",			0x08000, 0xa7031d4a, 10 | BRF_GRA },          // 15
-	{ "p12.4p",			0x08000, 0xf44e95fa, 10 | BRF_GRA },          // 16
-	{ "p15.2p",			0x08000, 0x120d2450, 10 | BRF_GRA },          // 17
-	{ "p13.4r",			0x08000, 0x980ca3d8, 10 | BRF_GRA },          // 18
-	{ "p16.2r",			0x08000, 0x9f820e8a, 10 | BRF_GRA },          // 19
+	{ "p11.4m",			0x08000, 0x668b25a4, 10 | BRF_GRA },          // 16 32x32 Sprites
+	{ "p14.2m",			0x08000, 0xa7031d4a, 10 | BRF_GRA },          // 17
+	{ "p12.4p",			0x08000, 0xf44e95fa, 10 | BRF_GRA },          // 18
+	{ "p15.2p",			0x08000, 0x120d2450, 10 | BRF_GRA },          // 19
+	{ "p13.4r",			0x08000, 0x980ca3d8, 10 | BRF_GRA },          // 20
+	{ "p16.2r",			0x08000, 0x9f820e8a, 10 | BRF_GRA },          // 21
 
-	{ "p4.5e",			0x10000, 0x5b43fe9f, 15 | BRF_SND },          // 20 Samples
-	{ "p5.5g",			0x10000, 0xaae30cd6, 15 | BRF_SND },          // 21
+	{ "p4.5e",			0x10000, 0x5b43fe9f, 15 | BRF_SND },          // 22 Samples
+	{ "p5.5g",			0x10000, 0xaae30cd6, 15 | BRF_SND },          // 23
 };
 
 STD_ROM_PICK(dogosokb)

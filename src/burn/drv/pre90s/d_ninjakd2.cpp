@@ -2245,7 +2245,7 @@ static struct BurnRomInfo jt104RomDesc[] = {
 	{ "4.3p",			0x08000, 0xe7692a77, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "5.3m",			0x08000, 0x960725fb, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "6.3h",			0x10000, 0x7bfe6c9e, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "6.3h",			0x10000, 0xd3a18a79, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
 
 	{ "12.5n",			0x08000, 0xc038fadb, 3 | BRF_GRA },           //  6 Foreground Tiles
 

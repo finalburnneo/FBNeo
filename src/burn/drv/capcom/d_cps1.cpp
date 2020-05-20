@@ -7672,7 +7672,7 @@ static struct BurnRomInfo MercsRomDesc[] = {
 	
 	{ "o224b.1a",      0x000117, 0xc211c8cd, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "c628",          0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // c-board PLDs
+	{ "c628",          0x000117, 0x662e090f, BRF_OPT }, // c-board PLDs
 };
 
 STD_ROM_PICK(Mercs)
@@ -7707,7 +7707,7 @@ static struct BurnRomInfo MercsuRomDesc[] = {
 	
 	{ "o224b.1a",      0x000117, 0xc211c8cd, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "c628",          0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // c-board PLDs
+	{ "c628",          0x000117, 0x662e090f, BRF_OPT }, // c-board PLDs
 };
 
 STD_ROM_PICK(Mercsu)
@@ -7742,7 +7742,7 @@ static struct BurnRomInfo Mercsur1RomDesc[] = {
 	
 	{ "o224b.1a",      0x000117, 0xc211c8cd, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "c628",          0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // c-board PLDs
+	{ "c628",          0x000117, 0x662e090f, BRF_OPT }, // c-board PLDs
 };
 
 STD_ROM_PICK(Mercsur1)
@@ -7792,7 +7792,7 @@ static struct BurnRomInfo MercsjRomDesc[] = {
 	
 	{ "o222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
 	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },
-	{ "c628",          0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // c-board PLDs
+	{ "c628",          0x000117, 0x662e090f, BRF_OPT }, // c-board PLDs
 };
 
 STD_ROM_PICK(Mercsj)
@@ -8787,11 +8787,7 @@ static struct BurnRomInfo Sf2RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -8829,11 +8825,7 @@ static struct BurnRomInfo Sf2eaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -8871,11 +8863,7 @@ static struct BurnRomInfo Sf2ebRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -8913,11 +8901,7 @@ static struct BurnRomInfo Sf2edRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -8955,11 +8939,7 @@ static struct BurnRomInfo Sf2eeRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
 	{ "c632b.ic1",     0x000117, 0x5c3cbb67, BRF_OPT },	// c-board PLDs
 };
@@ -8997,12 +8977,8 @@ static struct BurnRomInfo Sf2efRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
@@ -9039,11 +9015,7 @@ static struct BurnRomInfo Sf2emRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9093,11 +9065,7 @@ static struct BurnRomInfo Sf2enRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
-	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
+	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9271,11 +9239,7 @@ static struct BurnRomInfo Sf2uaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9313,11 +9277,7 @@ static struct BurnRomInfo Sf2ubRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9355,11 +9315,7 @@ static struct BurnRomInfo Sf2ucRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9397,11 +9353,7 @@ static struct BurnRomInfo Sf2udRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9439,11 +9391,7 @@ static struct BurnRomInfo Sf2ueRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob2.11d",      0x000117, 0xd26f0a27, BRF_OPT },
 	{ "c632b.ic1",     0x000117, 0x5c3cbb67, BRF_OPT },	// c-board PLDs
 };
@@ -9481,11 +9429,7 @@ static struct BurnRomInfo Sf2ufRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9523,11 +9467,7 @@ static struct BurnRomInfo Sf2ugRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9565,11 +9505,7 @@ static struct BurnRomInfo Sf2uhRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9607,11 +9543,7 @@ static struct BurnRomInfo Sf2uiRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9649,11 +9581,7 @@ static struct BurnRomInfo Sf2ukRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9692,11 +9620,7 @@ static struct BurnRomInfo Sf2umRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9734,11 +9658,7 @@ static struct BurnRomInfo Sf2jRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9776,11 +9696,7 @@ static struct BurnRomInfo Sf2j17RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9818,11 +9734,7 @@ static struct BurnRomInfo Sf2jaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9860,11 +9772,7 @@ static struct BurnRomInfo Sf2jcRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9902,11 +9810,7 @@ static struct BurnRomInfo Sf2jfRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9944,11 +9848,7 @@ static struct BurnRomInfo Sf2jhRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -9986,11 +9886,7 @@ static struct BurnRomInfo Sf2jlRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
@@ -10029,13 +9925,9 @@ static struct BurnRomInfo Sf2jlaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-#if !defined (ROM_VERIFY)
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-#else
-	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
-#endif
-	{ "iob1.11d",      	0x000117, 0x3abc0700, BRF_OPT },
-	{ "c632.ic1",      	0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2jla)
@@ -13334,6 +13226,10 @@ static struct BurnRomInfo StriderucRomDesc[] = {
 
 	{ "18.11c",        0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "19.12c",        0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "unknown.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Strideruc)

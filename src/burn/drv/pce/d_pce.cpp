@@ -8703,3 +8703,62 @@ struct BurnDriverD BurnDrvpce_cputest = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// Atlantean
+
+static struct BurnRomInfo pce_atlanteanRomDesc[] = {
+	{ "atlantean.pce", 0x080200, 0xef596649, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_atlantean)
+STD_ROM_FN(pce_atlantean)
+
+struct BurnDriver BurnDrvpce_atlantean = {
+	"pce_atlantean", NULL, NULL, NULL, "2014",
+	"Atlantean\0", NULL, "Aetherbyte", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
+	PceGetZipName, pce_atlanteanRomInfo, pce_atlanteanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+
+// City Hunter (Hack, English)
+// https://www.romhacking.net/translations/4517/
+static struct BurnRomInfo pce_cityhunteRomDesc[] = {
+	{ "city hunter (english translation).pce", 0x060200, 0xdb435a9d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_cityhunte)
+STD_ROM_FN(pce_cityhunte)
+
+struct BurnDriver BurnDrvpce_cityhunte = {
+	"pce_cityhunte", "pce_cityhunt", NULL, NULL, "2019",
+	"City Hunter (Hack, English)\0", NULL, "Sunsoft", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	PceGetZipName, pce_cityhunteRomInfo, pce_cityhunteRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+
+// Maison Ikkoku (Hack, English)
+// https://www.romhacking.net/translations/724/
+static struct BurnRomInfo pce_mikkokueRomDesc[] = {
+	{ "maison ikkoku (english translation).pce", 0x080200, 0xb5ed56d8, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_mikkokue)
+STD_ROM_FN(pce_mikkokue)
+
+struct BurnDriver BurnDrvpce_mikkokue = {
+	"pce_mikkokue", "pce_mikkoku", NULL, NULL, "2008",
+	"Maison Ikkoku (Hack, English)\0", NULL, "Micro Cabin", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
+	PceGetZipName, pce_mikkokueRomInfo, pce_mikkokueRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+

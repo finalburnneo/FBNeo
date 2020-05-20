@@ -4067,7 +4067,7 @@ struct BurnDriver BurnDrvWcbowl140 = {
 
 static struct BurnRomInfo wcbowl130RomDesc[] = {
 	{ "wcb_prom0_v1.30t.prom0",				0x020000, 0xfbcde4e0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "wcb_prom1_v1.30t.prom1",				0x020000, 0xf4b87c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wcb_prom1_v1.30t.prom1",				0x020000, 0xf4b8e7c3, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "wcb_prom2_v1.30t.prom2",				0x020000, 0xf441afae, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "wcb_prom3_v1.30t.prom3",				0x020000, 0x47e26d4b, 1 | BRF_PRG | BRF_ESS }, //  3
 

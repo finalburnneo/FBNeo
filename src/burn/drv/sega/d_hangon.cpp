@@ -387,10 +387,10 @@ static struct BurnRomInfo EndurordRomDesc[] = {
 	
 	{ "epr-7633.ic1",     0x08000, 0x6f146210, SYS16_ROM_ROAD | BRF_GRA },
 
-	{ "epr-7682.rom",     0x08000, 0xc4efbf48, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7682.ic58",    0x08000, 0xc4efbf48, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-7681.rom",     0x08000, 0xbc0c4d12, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-7680.rom",     0x08000, 0x627b3c8c, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-7681.ic8",     0x08000, 0xbc0c4d12, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-7680.ic7",     0x08000, 0x627b3c8c, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 };
@@ -554,10 +554,10 @@ static struct BurnRomInfo EnduroraRomDesc[] = {
 		
 	{ "epr-7633.ic1",     0x08000, 0x6f146210, SYS16_ROM_ROAD | BRF_GRA },
 
-	{ "epr-7682.rom",     0x08000, 0xc4efbf48, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7682.ic58",    0x08000, 0xc4efbf48, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-7681.rom",     0x08000, 0xbc0c4d12, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-7680.rom",     0x08000, 0x627b3c8c, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-7681.ic8",     0x08000, 0xbc0c4d12, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-7680.ic7",     0x08000, 0x627b3c8c, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 	

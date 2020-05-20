@@ -1324,7 +1324,7 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 	{ "18.4b",			0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "21.14b",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "14.b15",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "22.15b",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
 	
 	{ "11.13d",			0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
 

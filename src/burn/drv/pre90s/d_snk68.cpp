@@ -2174,9 +2174,9 @@ static struct BurnRomInfo ikari3wRomDesc[] = {
 	
 	{ "ik3-6.18e",      	0x20000, 0x59d256a4, 5 | BRF_SND }, // 15 upd7759 samples
 	
-	{ "a_pal20110a.ic1",	0x000cc, 0x1cadf26d, 0 | BRF_OPT }, // 16 plds
-	{ "b_pal20110a.ic3",	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 17
-	{ "c_pal1618a.ic2",		0x00104, 0xe258b8d6, 0 | BRF_OPT }, // 18
+	{ "a_pal20l10a.ic1",	0x000cc, 0x1cadf26d, 0 | BRF_OPT }, // 16 plds
+	{ "b_pal20l10a.ic3",	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 17
+	{ "c_pal16l8a.ic2",		0x00104, 0xe258b8d6, 0 | BRF_OPT }, // 18
 };
 
 STD_ROM_PICK(ikari3w)

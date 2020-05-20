@@ -2086,8 +2086,8 @@ static struct BurnRomInfo ckongpt2b2RomDesc[] = {
 	{ "prom.t6",	0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
 	{ "prom.u6",	0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
 	
-	{ "14.5s",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
-	{ "13.5p",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+	{ "7.bin",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "6.bin",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
 };
 
 STD_ROM_PICK(ckongpt2b2)

@@ -4870,7 +4870,7 @@ static struct BurnRomInfo CaptcommjRomDesc[] = {
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
-	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Captcommj)
@@ -8230,8 +8230,8 @@ STD_ROM_FN(Pang3b2)
    Uses same encryption and mach215 security pld as official.
 */
 static struct BurnRomInfo Pang3b3RomDesc[] = {
-	{ "u1111_17.bin",  0x080000, 0xdd3b95c0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "u1011_16.bin",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "u11l1_17.bin",  0x080000, 0xdd3b95c0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "u10l1_16.bin",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "pa3-01m.2c",    0x200000, 0x068a152c, BRF_GRA | CPS1_TILES },
 	{ "pa3-07m.2f",    0x200000, 0x3a4a619d, BRF_GRA | CPS1_TILES },

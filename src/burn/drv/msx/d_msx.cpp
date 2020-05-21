@@ -24696,3 +24696,43 @@ struct BurnDriver BurnDrvMSX_xspelunk = {
 	272, 228, 4, 3
 };
 
+
+// Yazzie (HB)
+
+static struct BurnRomInfo MSX_yazzieRomDesc[] = {
+	{ "yazzie.rom",	0x08000, 0xd659d039, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_yazzie, MSX_yazzie, msx_msx)
+STD_ROM_FN(MSX_yazzie)
+
+struct BurnDriver BurnDrvMSX_yazzie = {
+	"msx_yazzie", NULL, "msx_msx", NULL, "2019",
+	"Yazzie (HB)\0", NULL, "RetroSouls", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_yazzieRomInfo, MSX_yazzieRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Twinlight (HB)
+
+static struct BurnRomInfo MSX_twinlightRomDesc[] = {
+	{ "twinlight.rom",	0x08000, 0x3b76ceef, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_twinlight, MSX_twinlight, msx_msx)
+STD_ROM_FN(MSX_twinlight)
+
+struct BurnDriver BurnDrvMSX_twinlight = {
+	"msx_twinlight", NULL, "msx_msx", NULL, "2019",
+	"Twinlight (HB)\0", NULL, "RetroSouls", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_twinlightRomInfo, MSX_twinlightRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

@@ -313,19 +313,19 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 
 INT32 deco16_layer_enabled(INT32 tmap)
 {
-	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap & 1) << 3) & 0xff;
+	UINT8 control0 = BURN_ENDIAN_SWAP_INT16(deco16_pf_control[tmap >> 1][5]) >> ((tmap & 1) << 3) & 0xff;
 	return (control0 & 0x80);
 }
 
 void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
-	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap & 1) << 3) & 0xff;
+	UINT8 control0 = BURN_ENDIAN_SWAP_INT16(deco16_pf_control[tmap >> 1][5]) >> ((tmap & 1) << 3) & 0xff;
 	if (~control0 & 0x80) return; // layer disabled
 
 	INT32 size	= deco16_layer_size_select[tmap];
 	if (size == -1) return; // layer disabled (from pf_update, only for tmap 0, 1?)
 
-	INT32 control	= deco16_pf_control[tmap / 2][6];
+	INT32 control	= BURN_ENDIAN_SWAP_INT16(deco16_pf_control[tmap / 2][6]);
 	if (tmap & 1) control >>= 8; 
 
 	INT32 select = (tmap & 2) + ((tmap < 2) ? size : 0);
@@ -732,7 +732,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		if (deco16_dragngun_kludge && tmap == 2 && rsize == 1) {
 			UINT16 *vram	= (UINT16 *)deco16_pf_ram[tmap];
 
-			if (vram[2] == 0x1076 && vram[3] == 0x1076) { // this is our scene!
+			if (BURN_ENDIAN_SWAP_INT16(vram[2]) == 0x1076 && BURN_ENDIAN_SWAP_INT16(vram[3]) == 0x1076) { // this is our scene!
 				roffset = 0x20;
 			}
 		}
@@ -804,28 +804,28 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 void deco16_pf12_update()
 {
-	if (deco16_bank_callback[0]) deco16_pf_bank[0] = deco16_bank_callback[0](deco16_pf_control[0][7] & 0xff);
-	if (deco16_bank_callback[1]) deco16_pf_bank[1] = deco16_bank_callback[1](deco16_pf_control[0][7] >> 8);
+	if (deco16_bank_callback[0]) deco16_pf_bank[0] = deco16_bank_callback[0](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][7]) & 0xff);
+	if (deco16_bank_callback[1]) deco16_pf_bank[1] = deco16_bank_callback[1](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][7]) >> 8);
 
-	pf_update(0, deco16_pf_control[0][1], deco16_pf_control[0][2], (UINT16 *)deco16_pf_rowscroll[0], deco16_pf_control[0][5] & 0xff, deco16_pf_control[0][6] & 0xff);
-	pf_update(1, deco16_pf_control[0][3], deco16_pf_control[0][4], (UINT16 *)deco16_pf_rowscroll[1], deco16_pf_control[0][5] >> 8  , deco16_pf_control[0][6] >> 8);
+	pf_update(0, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][1]), BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][2]), (UINT16 *)deco16_pf_rowscroll[0], BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][5]) & 0xff, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][6]) & 0xff);
+	pf_update(1, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][3]), BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][4]), (UINT16 *)deco16_pf_rowscroll[1], BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][5]) >> 8  , BURN_ENDIAN_SWAP_INT16(deco16_pf_control[0][6]) >> 8);
 }
 
 void deco16_pf34_update()
 {
-	if (deco16_bank_callback[2]) deco16_pf_bank[2] = deco16_bank_callback[2](deco16_pf_control[1][7] & 0xff);
-	if (deco16_bank_callback[3]) deco16_pf_bank[3] = deco16_bank_callback[3](deco16_pf_control[1][7] >> 8);
+	if (deco16_bank_callback[2]) deco16_pf_bank[2] = deco16_bank_callback[2](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][7]) & 0xff);
+	if (deco16_bank_callback[3]) deco16_pf_bank[3] = deco16_bank_callback[3](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][7]) >> 8);
 
-	pf_update(2, deco16_pf_control[1][1], deco16_pf_control[1][2], (UINT16 *)deco16_pf_rowscroll[2], deco16_pf_control[1][5] & 0xff, deco16_pf_control[1][6] & 0xff);
-	pf_update(3, deco16_pf_control[1][3], deco16_pf_control[1][4], (UINT16 *)deco16_pf_rowscroll[3], deco16_pf_control[1][5] >> 8  , deco16_pf_control[1][6] >> 8);
+	pf_update(2, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][1]), BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][2]), (UINT16 *)deco16_pf_rowscroll[2], BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][5]) & 0xff, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][6]) & 0xff);
+	pf_update(3, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][3]), BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][4]), (UINT16 *)deco16_pf_rowscroll[3], BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][5]) >> 8  , BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][6]) >> 8);
 }
 
 void deco16_pf3_update()
 {
-	if (deco16_bank_callback[2]) deco16_pf_bank[2] = deco16_bank_callback[2](deco16_pf_control[1][7] & 0xff);
-	if (deco16_bank_callback[3]) deco16_pf_bank[3] = deco16_bank_callback[3](deco16_pf_control[1][7] >> 8);
+	if (deco16_bank_callback[2]) deco16_pf_bank[2] = deco16_bank_callback[2](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][7]) & 0xff);
+	if (deco16_bank_callback[3]) deco16_pf_bank[3] = deco16_bank_callback[3](BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][7]) >> 8);
 
-	pf_update(2, deco16_pf_control[1][1], deco16_pf_control[1][2], (UINT16 *)deco16_pf_rowscroll[2], deco16_pf_control[1][5] & 0xff, deco16_pf_control[1][6] & 0xff);
+	pf_update(2, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][1]), BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][2]), (UINT16 *)deco16_pf_rowscroll[2], BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][5]) & 0xff, BURN_ENDIAN_SWAP_INT16(deco16_pf_control[1][6]) & 0xff);
 }
 
 void deco16Scan()

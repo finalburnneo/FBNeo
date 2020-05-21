@@ -37,29 +37,29 @@ static INT32 charlienmode = 0;
 static INT32 DrvOkiBank;
 
 static struct BurnInputInfo Simpl156InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Simpl156)
@@ -514,9 +514,7 @@ static INT32 DrvDraw()
 	deco16_pf12_update();
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x100;
-	}
+	BurnTransferClear(0x100);
 
 	deco16_draw_layer(1, pTransDraw, 2);
 	deco16_draw_layer(0, pTransDraw, 4);

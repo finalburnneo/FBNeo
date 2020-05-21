@@ -2001,7 +2001,7 @@ STD_ROM_FN(vamphalfk)
 
 static INT32 VamphalfkInit()
 {
-	speedhack_address = 0x4a468;
+	speedhack_address = 0x4a648;
 	speedhack_pc = 0x82ec;
 
 	return CommonInit(TYPE_E116T, vamphalf_io_write, vamphalf_io_read, sound_type_0_init, 0, 0);

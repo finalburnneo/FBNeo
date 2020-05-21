@@ -563,15 +563,15 @@ struct BurnDriver BurnDrvKicker = {
 // Shao-lin's Road (set 1)
 
 static struct BurnRomInfo shaolinsRomDesc[] = {
-	{ "477-l03.d9",		0x2000, 0x2598dfdd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "477-l04.d10",	0x4000, 0x0cf0351a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "477-l05.d11",	0x4000, 0x654037f8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "477l03.d9",		0x2000, 0x2598dfdd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "477l04.d10",		0x4000, 0x0cf0351a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "477l05.d11",		0x4000, 0x654037f8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "shaolins.a10",	0x2000, 0xff18a7ed, 2 | BRF_GRA | BRF_ESS }, //  3 Characters
-	{ "shaolins.a11",	0x2000, 0x5f53ae61, 2 | BRF_GRA | BRF_ESS }, //  4
+	{ "477j06.a10",		0x2000, 0xff18a7ed, 2 | BRF_GRA | BRF_ESS }, //  3 Characters
+	{ "477j07.a11",		0x2000, 0x5f53ae61, 2 | BRF_GRA | BRF_ESS }, //  4
 
-	{ "477-k02.h15",	0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
-	{ "477-k01.h14",	0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
+	{ "477-j02.h15",	0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
+	{ "477-j01.h14",	0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
 
 	{ "477j10.a12",		0x0100, 0xb09db4b4, 4 | BRF_GRA | BRF_ESS }, //  7 Color PROMs
 	{ "477j11.a13",		0x0100, 0x270a2bf3, 4 | BRF_GRA | BRF_ESS }, //  8

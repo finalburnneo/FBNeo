@@ -1572,7 +1572,7 @@ static struct BurnRomInfo atompunkRomDesc[] = {
 	{ "bbm-c2.ic68",	0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
 	{ "bbm-c3.ic69",	0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
 
-	{ "bbm-v0.ic20",	0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
+	{ "bbm-v0.20",		0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(atompunk)

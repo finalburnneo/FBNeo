@@ -2641,18 +2641,18 @@ STD_ROM_PICK(Seganinja)
 STD_ROM_FN(Seganinja)
 
 static struct BurnRomInfo NinjaRomDesc[] = {
-	{ "epr-6594.bin",      0x004000, 0x3ef0e5fc, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "epr-6595.bin",      0x004000, 0xb16f13cd, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-6594.116",      0x004000, 0x3ef0e5fc, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-6595.109",      0x004000, 0xb16f13cd, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "epr-6552.96",       0x004000, 0xf2eeb0d8, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
 	{ "epr-6559.120",      0x002000, 0x5a1570ee, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
 	{ "epr-6558.62",       0x002000, 0x2af9eaeb, BRF_GRA },		  //  4 Tiles
-	{ "epr6592.bin",       0x002000, 0x88d0c7a1, BRF_GRA },		  //  5 Tiles
+	{ "epr-6592.61",       0x002000, 0x88d0c7a1, BRF_GRA },		  //  5 Tiles
 	{ "epr-6556.64",       0x002000, 0x79fd26f7, BRF_GRA },		  //  6 Tiles
-	{ "epr-6590.bin",      0x002000, 0x956e3b61, BRF_GRA },		  //  7 Tiles
+	{ "epr-6590.63",       0x002000, 0x956e3b61, BRF_GRA },		  //  7 Tiles
 	{ "epr-6554.66",       0x002000, 0x5ac9d205, BRF_GRA },		  //  8 Tiles
-	{ "epr-6588.bin",      0x002000, 0x023a14a3, BRF_GRA },		  //  9 Tiles
+	{ "epr-6588.65",       0x002000, 0x023a14a3, BRF_GRA },		  //  9 Tiles
 
 	{ "epr-6546.117",      0x004000, 0xa4785692, BRF_GRA },		  //  10 Sprites
 	{ "epr-6548.04",       0x004000, 0xbdf278c1, BRF_GRA },		  //  11 Sprites
@@ -3251,8 +3251,8 @@ static struct BurnRomInfo Wboy4RomDesc[] = {
 	{ "epr-7609.ic64",     0x004000, 0x87ecba53, BRF_GRA },		  //  4 Tiles
 	{ "epr-7608.ic66",     0x004000, 0xe812b3ec, BRF_GRA },		  //  5 Tiles
 
-	{ "7578.87",           0x008000, 0x6ff1637f, BRF_GRA },		  //  6 Sprites
-	{ "7577.86",           0x008000, 0x58b3705e, BRF_GRA },		  //  7 Sprites
+	{ "epr-7578.87",       0x008000, 0x6ff1637f, BRF_GRA },		  //  6 Sprites
+	{ "epr-7577.86",       0x008000, 0x58b3705e, BRF_GRA },		  //  7 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  8 Timing PROM
 };

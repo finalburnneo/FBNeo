@@ -3064,7 +3064,7 @@ static struct BurnRomInfo cobracomjbRomDesc[] = {
 	{ "am27s21pc.2",		0x00100, 0xaf46d1ee, 7 }, // 19
 	{ "am27s21pc.3",		0x00100, 0x1e4189e8, 7 }, // 20
 
-	{ "pal1618a-2cn.bin",	0x00104, 0x3ef8cf68, 8 }, // 21 plds
+	{ "pal16l8a-2cn.bin",	0x00104, 0x3ef8cf68, 8 }, // 21 plds
 };
 
 STD_ROM_PICK(cobracomjb)

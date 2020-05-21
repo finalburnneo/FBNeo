@@ -1509,6 +1509,7 @@ struct BurnDriver BurnDrvCoolminii = {
 
 
 // Jumping Break (set 1)
+/* Released February 1999 */
 
 static struct BurnRomInfo jmpbreakRomDesc[] = {
 	{ "rom1.bin",				0x080000, 0x7e237f7d, 1 | BRF_PRG | BRF_ESS }, //  0 EX116T Code
@@ -1545,6 +1546,7 @@ struct BurnDriver BurnDrvJmpbreak = {
 
 
 // Jumping Break (set 2)
+// PCB has a New Impeuropex sticker, so sold in the Italian market. There also an hand-written IMP 28.04.99
 
 static struct BurnRomInfo jmpbreakaRomDesc[] = {
 	{ "2.rom1",					0x080000, 0x553af133, 1 | BRF_PRG | BRF_ESS }, //  0 EX116T Code
@@ -1555,7 +1557,9 @@ static struct BurnRomInfo jmpbreakaRomDesc[] = {
 	{ "roml01.bin",				0x200000, 0x6796a104, 2 | BRF_GRA },           //  4
 	{ "romu01.bin",				0x200000, 0x0cc907c8, 2 | BRF_GRA },           //  5
 
-	{ "vrom1.bin",				0x040000, 0x1b6e3671, 3 | BRF_SND },           //  6 Samples
+	{ "1.vrom1",				0x040000, 0x1b6e3671, 3 | BRF_SND },           //  6 Samples
+	
+	{ "palce22v10h.gal1",		0x0002dd, 0x0ff86470, 0 | BRF_OPT },		   //  7 PLDs
 };
 
 STD_ROM_PICK(jmpbreaka)
@@ -1997,7 +2001,7 @@ STD_ROM_FN(vamphalfk)
 
 static INT32 VamphalfkInit()
 {
-	speedhack_address = 0x4a468;
+	speedhack_address = 0x4a648;
 	speedhack_pc = 0x82ec;
 
 	return CommonInit(TYPE_E116T, vamphalf_io_write, vamphalf_io_read, sound_type_0_init, 0, 0);

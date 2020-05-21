@@ -626,25 +626,25 @@ struct BurnDriver BurnDrvWiping = {
 // Rug Rats
 
 static struct BurnRomInfo rugratsRomDesc[] = {
-	{ "rugr1d1",		0x2000, 0xe7e1bd6d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "rugr2d2",		0x2000, 0x5f47b9ad, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rugr3d3",		0x2000, 0x3d748d1a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.1d",			0x2000, 0xe7e1bd6d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.2d",			0x2000, 0x5f47b9ad, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.3d",			0x2000, 0x3d748d1a, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "rugr4c4",		0x2000, 0xd4a92c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "4.3b",			0x2000, 0xd4a92c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "rugr8d2",		0x1000, 0xa3dcaca5, 3 | BRF_GRA },           //  4 Characters
+	{ "8.2d",			0x1000, 0xa3dcaca5, 3 | BRF_GRA },           //  4 Characters
 
-	{ "rugr7c13",		0x2000, 0xfe1191dd, 4 | BRF_GRA },           //  5 Sprites
+	{ "7.13c",			0x2000, 0xfe1191dd, 4 | BRF_GRA },           //  5 Sprites
 
-	{ "prom.13g",		0x0020, 0xf21238f0, 5 | BRF_GRA },           //  6 Color data
-	{ "prom.4f",		0x0100, 0xcfc90f3d, 5 | BRF_GRA },           //  7
-	{ "prom.11e",		0x0100, 0xcfc90f3d, 5 | BRF_GRA },           //  8
+	{ "g13.13g",		0x0020, 0xf21238f0, 5 | BRF_GRA },           //  6 Color data
+	{ "eiif4.4f",		0x0100, 0xcfc90f3d, 5 | BRF_GRA },           //  7
+	{ "eiif4.11e",		0x0100, 0xcfc90f3d, 5 | BRF_GRA },           //  8
 
-	{ "rugr5c8",		0x2000, 0x67bafbbf, 6 | BRF_SND },           //  9 Samples
-	{ "rugr6c9",		0x2000, 0xcac84a87, 6 | BRF_SND },           // 10
+	{ "5.8c",			0x2000, 0x67bafbbf, 6 | BRF_SND },           //  9 Samples
+	{ "6.9c",			0x2000, 0xcac84a87, 6 | BRF_SND },           // 10
 
-	{ "wip-e8.bin",		0x0100, 0xbd2c080b, 7 | BRF_SND },           // 11 Sound Proms
-	{ "wip-e9.bin",		0x0100, 0x4017a2a6, 7 | BRF_SND },           // 12
+	{ "e8.8e",			0x0100, 0xbd2c080b, 7 | BRF_SND },           // 11 Sound Proms
+	{ "e9.9e",			0x0100, 0x4017a2a6, 7 | BRF_SND },           // 12
 };
 
 STD_ROM_PICK(rugrats)

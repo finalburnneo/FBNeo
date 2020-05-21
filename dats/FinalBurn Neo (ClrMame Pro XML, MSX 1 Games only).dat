@@ -10911,6 +10911,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="twinlight" romof="msx">
+		<description>Twinlight (HB)</description>
+		<year>2019</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="twinlight.rom" size="32768" crc="3b76ceef"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="txupi" romof="msx">
 		<description>Txupinazo! (HB)</description>
 		<year>2007</year>
@@ -11336,6 +11346,16 @@
 		<year>1986</year>
 		<manufacturer>Casio</manufacturer>
 		<rom name="hades no monsho (japan) (alt 1).rom" size="32768" crc="f42f4a15"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="yazzie" romof="msx">
+		<description>Yazzie (HB)</description>
+		<year>2019</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="yazzie.rom" size="32768" crc="d659d039"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

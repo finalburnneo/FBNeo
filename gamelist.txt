@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-13884 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+13886 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -12754,6 +12754,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_twinklete	|  	| Twinkle Tale (Hack, English)				| md_twinklet	| 2007	| Toyo Records	| Sega Megadrive| 					|
 | md_twinklet	|  	| Twinkle Tale (Jpn)					| 		| 1992	| Toyo Records	| Sega Megadrive| 					|
 | twinkle	|  	| Twinkle						| 		| 1997	| SemiCom	| Kaneko Pandora| 					|
+| msx_twinlight	|  	| Twinlight (HB)					| 		| 2019	| RetroSouls	| MSX		| 					|
 | mtwinsb	|  	| Twins (bootleg of Mega Twins)				| mtwins	| 1993	| David Inc. (bo| CPS1		| 					|
 | md_twistedf	|  	| Twisted Flipper (USA, Prototype)			| md_crueball	| 199?	| <unknown>	| Sega Megadrive| 					|
 | twocrude	|  	| Two Crude (US FT revision 1)				| cbuster	| 1990	| Data East USA	| DECO IC16	| 					|
@@ -13691,6 +13692,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_yangji	|  	| Yang Jia Jiang - Yang Warrior Family (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | yankeedo	|  	| Yankee DO!						| mrdo		| 1982	| hack		| Miscellaneous	| 					|
 | md_yazzie	|  	| Yazzie (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|
+| msx_yazzie	|  	| Yazzie (HB)						| 		| 2019	| RetroSouls	| MSX		| 					|
 | yellowcbb	|  	| Yellow Cab (bootleg)					| kamikcab	| 1984	| bootleg	| Miscellaneous	| 					|
 | yellowcbj	|  	| Yellow Cab (Japan)					| kamikcab	| 1984	| Data East Corp| Miscellaneous	| 					|
 | msx_yellowsb	|  	| Yellow Submarine (Jpn)				| 		| 1987	| Brother Kougyo| MSX		| 					|

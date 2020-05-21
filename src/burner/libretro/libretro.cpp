@@ -460,9 +460,11 @@ static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
 	unsigned i = 0;
 	for (i = 0; i < elems; i++)
 	{
-		if( strcmp(list[i].szName, name) == 0 )
-		{
-			return i;
+		if (list[i].szName) {
+			if( strcmp(list[i].szName, name) == 0 )
+			{
+				return i;
+			}
 		}
 	}
 
@@ -478,9 +480,11 @@ static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems)
 	unsigned i = 0;
 	for (i = 0; i < elems; i++)
 	{
-		if (list[i].nCrc == crc)
-		{
-			return i;
+		if (list[i].szName) {
+			if (list[i].nCrc == crc)
+			{
+				return i;
+			}
 		}
 	}
 

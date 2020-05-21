@@ -935,7 +935,7 @@ static struct BurnRomInfo gijoeuaRomDesc[] = {
 //	{ "069a04g.r2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 33
 //	{ "069a04h.s2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 34
 // 	overlay standard ROMs for now
-	{ "069a04.1e",		0x200000, 0x11d6dcd6, 5 | BRF_SND },           // 11 k054539
+	{ "069a04a.1e",		0x200000, 0x11d6dcd6, 5 | BRF_SND },           // 11 k054539
 
 	{ "er5911.7d",		0x000080, 0x33b07813, 6 | BRF_OPT },           // 12 eeprom data
 };

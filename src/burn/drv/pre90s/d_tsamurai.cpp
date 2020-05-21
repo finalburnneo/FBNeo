@@ -1958,7 +1958,7 @@ static struct BurnRomInfo ringfgtRomDesc[] = {
 	{ "rft_04-1.5a",	0x2000, 0x11030866, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "rft_03-1.5c",	0x2000, 0x357a2085, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rtf_01.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "rft_01.5n",		0x2000, 0x785b9000, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 	{ "rft_02.5l",		0x2000, 0x76dbfde9, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "rft_05.6f",		0x1000, 0xa7b732fd, 3 | BRF_GRA },           //  4 Background Tiles

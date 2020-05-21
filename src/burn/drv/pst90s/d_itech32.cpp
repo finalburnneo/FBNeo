@@ -4038,6 +4038,8 @@ static struct BurnRomInfo wcbowl140RomDesc[] = {
 
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 19 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 20
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
 };
 
 STD_ROM_PICK(wcbowl140)
@@ -4056,6 +4058,52 @@ struct BurnDriver BurnDrvWcbowl140 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, wcbowl140RomInfo, wcbowl140RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowldxDIPInfo,
+	Wcbowl140Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
+// World Class Bowling Tournament (v1.30)
+
+static struct BurnRomInfo wcbowl130RomDesc[] = {
+	{ "wcb_prom0_v1.30t.prom0",				0x020000, 0xfbcde4e0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "wcb_prom1_v1.30t.prom1",				0x020000, 0xf4b8e7c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wcb_prom2_v1.30t.prom2",				0x020000, 0xf441afae, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "wcb_prom3_v1.30t.prom3",				0x020000, 0x47e26d4b, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "wcbsnd_u88_4.01.u88",				0x020000, 0xe97a6d28, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "wcb_grom0_0_s.grm0_0",				0x080000, 0x6fcb4246, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "wcb_grom0_1_s.grm0_1",				0x080000, 0x2ae31f45, 3 | BRF_GRA },           //  6
+	{ "wcb_grom0_2_s.grm0_2",				0x080000, 0xbccc0f35, 3 | BRF_GRA },           //  7
+	{ "wcb_grom0_3_s.grm0_3",				0x080000, 0xab1da462, 3 | BRF_GRA },           //  8
+	{ "wcb_grom1_0_s.grm1_0",				0x080000, 0xbdfafd1f, 3 | BRF_GRA },           //  9
+	{ "wcb_grom1_1_s.grm1_1",				0x080000, 0x7d6baa2e, 3 | BRF_GRA },           // 10
+	{ "wcb_grom1_2_s.grm1_2",				0x080000, 0x7513d3de, 3 | BRF_GRA },           // 11
+	{ "wcb_grom1_3_s.grm1_3",				0x080000, 0xe46877e6, 3 | BRF_GRA },           // 12
+	{ "wcbf_grom2_0.grm2_0",				0x040000, 0x3b4c5a5c, 3 | BRF_GRA },           // 13
+	{ "wcbf_grom2_1.grm2_1",				0x040000, 0xed0b9b26, 3 | BRF_GRA },           // 14
+	{ "wcbf_grom2_2.grm2_2",				0x040000, 0x4b9e345e, 3 | BRF_GRA },           // 15
+	{ "wcbf_grom2_3.grm2_3",				0x040000, 0x4e13ee7a, 3 | BRF_GRA },           // 16
+
+	{ "wcb_srom0_s.srom0",					0x080000, 0xd42dd283, 4 | BRF_SND },           // 17 Ensoniq Bank 0
+	{ "wcb_srom1_s.srom1",					0x080000, 0x7a69ab54, 4 | BRF_SND },           // 18
+
+	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 19 Ensoniq Bank 1
+	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 20
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
+};
+
+STD_ROM_PICK(wcbowl130)
+STD_ROM_FN(wcbowl130)
+
+struct BurnDriver BurnDrvWcbowl130 = {
+	"wcbowl130", "wcbowldx", NULL, NULL, "1997",
+	"World Class Bowling Tournament (v1.30)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, wcbowl130RomInfo, wcbowl130RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,
 	Wcbowl140Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
 };
@@ -4085,6 +4133,8 @@ static struct BurnRomInfo wcbowlRomDesc[] = {
 
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 16
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl)
@@ -4132,6 +4182,8 @@ static struct BurnRomInfo wcbowl165RomDesc[] = {
 
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 16
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl165)
@@ -4172,6 +4224,8 @@ static struct BurnRomInfo wcbowl161RomDesc[] = {
 
 	{ "wcb_srom2.srom2",					0x080000, 0xf82c08fd, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3.srom3",					0x020000, 0x1c2efdee, 5 | BRF_SND },           // 16
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl161)
@@ -4212,6 +4266,8 @@ static struct BurnRomInfo wcbowl16RomDesc[] = {
 
 	{ "wcb_srom2.srom2",					0x080000, 0xf82c08fd, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3.srom3",					0x020000, 0x1c2efdee, 5 | BRF_SND },           // 16
+	
+	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl16)
@@ -4804,6 +4860,7 @@ struct BurnDriver BurnDrvSftmj112 = {
 
 
 // Shuffleshot (v1.40)
+/* Version 1.40 (PCB P/N 1083 Rev 2) */
 
 static struct BurnRomInfo shufshotRomDesc[] = {
 	{ "shot_prom0_v1.40.prom0",				0x020000, 0x33c0c98b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -4825,10 +4882,10 @@ static struct BurnRomInfo shufshotRomDesc[] = {
 	{ "shf_grom2_1.grm2_1",					0x080000, 0x4b52ab1a, 3 | BRF_GRA },           // 14
 	{ "shf_grom2_2.grm2_2",					0x080000, 0xf45fad03, 3 | BRF_GRA },           // 15
 	{ "shf_grom2_3.grm2_3",					0x080000, 0x1bcb26c8, 3 | BRF_GRA },           // 16
-	{ "shf_grom3_0.grm3_0",					0x080000, 0xa29763db, 3 | BRF_GRA },           // 17
-	{ "shf_grom3_1.grm3_1",					0x080000, 0xc757084c, 3 | BRF_GRA },           // 18
-	{ "shf_grom3_2.grm3_2",					0x080000, 0x2971cb25, 3 | BRF_GRA },           // 19
-	{ "shf_grom3_3.grm3_3",					0x080000, 0x4fcbee51, 3 | BRF_GRA },           // 20
+	{ "shfa_grom3_0.grm3_0",				0x080000, 0xc5afc9d1, 3 | BRF_GRA },           // 17
+	{ "shfa_grom3_1.grm3_1",				0x080000, 0x70dd7b68, 3 | BRF_GRA },           // 18
+	{ "shfa_grom3_2.grm3_2",				0x080000, 0xda56512d, 3 | BRF_GRA },           // 19
+	{ "shfa_grom3_3.grm3_3",				0x080000, 0x21727c50, 3 | BRF_GRA },           // 20
 
 	{ "shf_srom0.srom0",					0x080000, 0x9a3cb6c9, 4 | BRF_SND },           // 21 Ensoniq Bank 0
 	{ "shf_srom1.srom1",					0x080000, 0x8c89948a, 4 | BRF_SND },           // 22
@@ -4857,6 +4914,7 @@ struct BurnDriver BurnDrvShufshot = {
 
 
 // Shuffleshot (v1.39)
+/* Version 1.39 (PCB P/N 1083 Rev 2) */
 
 static struct BurnRomInfo shufshot139RomDesc[] = {
 	{ "shot_prom0_v1.39.prom0",				0x020000, 0xe811fc4a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -4878,10 +4936,10 @@ static struct BurnRomInfo shufshot139RomDesc[] = {
 	{ "shf_grom2_1.grm2_1",					0x080000, 0x4b52ab1a, 3 | BRF_GRA },           // 14
 	{ "shf_grom2_2.grm2_2",					0x080000, 0xf45fad03, 3 | BRF_GRA },           // 15
 	{ "shf_grom2_3.grm2_3",					0x080000, 0x1bcb26c8, 3 | BRF_GRA },           // 16
-	{ "shf_grom3_0.grm3_0",					0x080000, 0xa29763db, 3 | BRF_GRA },           // 17
-	{ "shf_grom3_1.grm3_1",					0x080000, 0xc757084c, 3 | BRF_GRA },           // 18
-	{ "shf_grom3_2.grm3_2",					0x080000, 0x2971cb25, 3 | BRF_GRA },           // 19
-	{ "shf_grom3_3.grm3_3",					0x080000, 0x4fcbee51, 3 | BRF_GRA },           // 20
+	{ "shfa_grom3_0.grm3_0",				0x080000, 0xc5afc9d1, 3 | BRF_GRA },           // 17
+	{ "shfa_grom3_1.grm3_1",				0x080000, 0x70dd7b68, 3 | BRF_GRA },           // 18
+	{ "shfa_grom3_2.grm3_2",				0x080000, 0xda56512d, 3 | BRF_GRA },           // 19
+	{ "shfa_grom3_3.grm3_3",				0x080000, 0x21727c50, 3 | BRF_GRA },           // 20
 
 	{ "shf_srom0.srom0",					0x080000, 0x9a3cb6c9, 4 | BRF_SND },           // 21 Ensoniq Bank 0
 	{ "shf_srom1.srom1",					0x080000, 0x8c89948a, 4 | BRF_SND },           // 22
@@ -4901,8 +4959,55 @@ struct BurnDriver BurnDrvShufshot139 = {
 };
 
 
-// Shuffleshot (v1.37)
+// Shuffleshot (v1.38)
+ /* Version 1.38 (PCB P/N 1083 Rev 2) - Not offically released? - found on dev CD */
+ 
+static struct BurnRomInfo shufshot138RomDesc[] = {
+	{ "shot_prom0_v1.38.prom0",				0x020000, 0x68f823ff, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "shot_prom1_v1.38.prom1",				0x020000, 0xbdd9a8e9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "shot_prom2_v1.38.prom2",				0x020000, 0x92008e13, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "shot_prom3_v1.38.prom3",				0x020000, 0x723cb9a5, 1 | BRF_PRG | BRF_ESS }, //  3
 
+	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
+	{ "shf_grom0_2.grm0_2",					0x080000, 0x9f2b470d, 3 | BRF_GRA },           //  7
+	{ "shf_grom0_3.grm0_3",					0x080000, 0x3855a16a, 3 | BRF_GRA },           //  8
+	{ "shf_grom1_0.grm1_0",					0x080000, 0xed140389, 3 | BRF_GRA },           //  9
+	{ "shf_grom1_1.grm1_1",					0x080000, 0xbd2ffbca, 3 | BRF_GRA },           // 10
+	{ "shf_grom1_2.grm1_2",					0x080000, 0xc6de4187, 3 | BRF_GRA },           // 11
+	{ "shf_grom1_3.grm1_3",					0x080000, 0x0c707aa2, 3 | BRF_GRA },           // 12
+	{ "shf_grom2_0.grm2_0",					0x080000, 0x529b4259, 3 | BRF_GRA },           // 13
+	{ "shf_grom2_1.grm2_1",					0x080000, 0x4b52ab1a, 3 | BRF_GRA },           // 14
+	{ "shf_grom2_2.grm2_2",					0x080000, 0xf45fad03, 3 | BRF_GRA },           // 15
+	{ "shf_grom2_3.grm2_3",					0x080000, 0x1bcb26c8, 3 | BRF_GRA },           // 16
+	{ "shfa_grom3_0.grm3_0",				0x080000, 0xc5afc9d1, 3 | BRF_GRA },           // 17
+	{ "shfa_grom3_1.grm3_1",				0x080000, 0x70dd7b68, 3 | BRF_GRA },           // 18
+	{ "shfa_grom3_2.grm3_2",				0x080000, 0xda56512d, 3 | BRF_GRA },           // 19
+	{ "shfa_grom3_3.grm3_3",				0x080000, 0x21727c50, 3 | BRF_GRA },           // 20
+
+	{ "shf_srom0.srom0",					0x080000, 0x9a3cb6c9, 4 | BRF_SND },           // 21 Ensoniq Bank 0
+	{ "shf_srom1.srom1",					0x080000, 0x8c89948a, 4 | BRF_SND },           // 22
+};
+
+STD_ROM_PICK(shufshot138)
+STD_ROM_FN(shufshot138)
+
+struct BurnDriver BurnDrvShufshot138 = {
+	"shufshot138", "shufshot", NULL, NULL, "1997",
+	"Shuffleshot (v1.38)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, shufshot138RomInfo, shufshot138RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
+	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
+// Shuffleshot (v1.37)
+ /* Version 1.37 (PCB P/N 1083 Rev 2) */
+ 
 static struct BurnRomInfo shufshot137RomDesc[] = {
 	{ "shot_prom0_v1.37.prom0",				0x020000, 0x6499c76f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "shot_prom1_v1.37.prom1",				0x020000, 0x64fb47a4, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -4945,6 +5050,51 @@ struct BurnDriver BurnDrvShufshot137 = {
 	384, 256, 4, 3
 };
 
+
+// Shuffleshot (v1.35)
+/* Version 1.35 (PCB P/N 1083 Rev 2) - Not offically released? - found on dev CD  */
+
+static struct BurnRomInfo shufshot135RomDesc[] = {
+	{ "shot_prom0_v1.35.prom0",				0x020000, 0x1a1d510c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "shot_prom1_v1.35.prom1",				0x020000, 0x5d7d5017, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "shot_prom2_v1.35.prom2",				0x020000, 0x6f27b111, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "shot_prom3_v1.35.prom3",				0x020000, 0xbf6fabbb, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
+	{ "shf_grom0_2.grm0_2",					0x080000, 0x9f2b470d, 3 | BRF_GRA },           //  7
+	{ "shf_grom0_3.grm0_3",					0x080000, 0x3855a16a, 3 | BRF_GRA },           //  8
+	{ "shf_grom1_0.grm1_0",					0x080000, 0xed140389, 3 | BRF_GRA },           //  9
+	{ "shf_grom1_1.grm1_1",					0x080000, 0xbd2ffbca, 3 | BRF_GRA },           // 10
+	{ "shf_grom1_2.grm1_2",					0x080000, 0xc6de4187, 3 | BRF_GRA },           // 11
+	{ "shf_grom1_3.grm1_3",					0x080000, 0x0c707aa2, 3 | BRF_GRA },           // 12
+	{ "shf_grom2_0.grm2_0",					0x080000, 0x529b4259, 3 | BRF_GRA },           // 13
+	{ "shf_grom2_1.grm2_1",					0x080000, 0x4b52ab1a, 3 | BRF_GRA },           // 14
+	{ "shf_grom2_2.grm2_2",					0x080000, 0xf45fad03, 3 | BRF_GRA },           // 15
+	{ "shf_grom2_3.grm2_3",					0x080000, 0x1bcb26c8, 3 | BRF_GRA },           // 16
+	{ "shf_grom3_0.grm3_0",					0x080000, 0xa29763db, 3 | BRF_GRA },           // 17
+	{ "shf_grom3_1.grm3_1",					0x080000, 0xc757084c, 3 | BRF_GRA },           // 18
+	{ "shf_grom3_2.grm3_2",					0x080000, 0x2971cb25, 3 | BRF_GRA },           // 19
+	{ "shf_grom3_3.grm3_3",					0x080000, 0x4fcbee51, 3 | BRF_GRA },           // 20	
+
+	{ "shf_srom0.srom0",					0x080000, 0x9a3cb6c9, 4 | BRF_SND },           // 21 Ensoniq Bank 0
+	{ "shf_srom1.srom1",					0x080000, 0x8c89948a, 4 | BRF_SND },           // 22
+};
+
+STD_ROM_PICK(shufshot135)
+STD_ROM_FN(shufshot135)
+
+struct BurnDriver BurnDrvShufshot135 = {
+	"shufshot135", "shufshot", NULL, NULL, "1997",
+	"Shuffleshot (v1.35)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, shufshot135RomInfo, shufshot135RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshtoDIPInfo,
+	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
 
 // Golden Tee 3D Golf (v1.93N)
 
@@ -5649,6 +5799,8 @@ static struct BurnRomInfo gt97s121RomDesc[] = {
 
 	{ "gtg3_srom1_nr++.srom1",				0x100000, 0x44983bd7, 6 | BRF_SND },           // 17 Ensoniq Bank 2
 	{ "gtg3_srom2_nr+.srom2",				0x080000, 0x1b3f18b6, 6 | BRF_SND },           // 18
+	
+	{ "itgfm-3 1997 it, inc",				0x001fff, 0x2527dffc, 0 | BRF_OPT },		   // 19 pic
 };
 
 STD_ROM_PICK(gt97s121)

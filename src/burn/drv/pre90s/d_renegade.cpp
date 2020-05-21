@@ -233,7 +233,7 @@ STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
 static struct BurnRomInfo DrvubRomDesc[] = {
-	{ "nb-5.ic51",     0x08000, 0xba683ddf, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
+	{ "na-5.ic52",     0x08000, 0xde7e7df4, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
 	{ "40.ic51",       0x08000, 0x3dbaac11, BRF_ESS | BRF_PRG }, //	 1  bootleg
 	
 	{ "n0-5.ic13",     0x08000, 0x3587de3b, BRF_ESS | BRF_PRG }, //  2	M6809 Program Code

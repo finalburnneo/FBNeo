@@ -343,7 +343,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alterego" romof="msx">
-		<description>Alter Ego</description>
+		<description>Alter Ego (HB)</description>
 		<year>2011</year>
 		<manufacturer>The New Image</manufacturer>
 		<rom name="alterego.rom" size="49152" crc="41b51564"/>
@@ -393,7 +393,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="amurisus" romof="msx">
-		<description>Amurisus (demo)</description>
+		<description>Amurisus (HB, Tech-demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="amurisus.rom" size="65536" crc="acf0cab8"/>
@@ -644,7 +644,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="atsarias" romof="msx">
-		<description>Atsarias (demo)</description>
+		<description>Atsarias (HB, Tech-demo)</description>
 		<year>2013</year>
 		<manufacturer>Lieves!Tuore</manufacturer>
 		<rom name="atsarias.rom" size="65536" crc="e7e245de"/>
@@ -1065,7 +1065,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="betiled" romof="msx">
-		<description>Betiled!</description>
+		<description>Betiled! (HB)</description>
 		<year>2007</year>
 		<manufacturer>CEZ GS</manufacturer>
 		<rom name="BeTiled!.rom" size="49152" crc="4f89a784"/>
@@ -1085,7 +1085,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bitlogic" romof="msx">
-		<description>BitLogic</description>
+		<description>BitLogic (HB)</description>
 		<year>2015</year>
 		<manufacturer>OxiAB Studio</manufacturer>
 		<rom name="BITLOGIC_v_100.ROM" size="49152" crc="fbcd1942"/>
@@ -1105,7 +1105,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blaggerenh" romof="msx">
-		<description>Blagger Enhanced</description>
+		<description>Blagger Enhanced (HB)</description>
 		<year>2013</year>
 		<manufacturer>MicroCabin / JLTURSAN</manufacturer>
 		<rom name="blaggere.rom" size="16384" crc="bdbdf44a"/>
@@ -1235,7 +1235,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bold" romof="msx">
-		<description>Bold (demo)</description>
+		<description>Bold (HB, Tech-demo)</description>
 		<year>2009</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="bold.rom" size="131072" crc="00d02aa4"/>
@@ -1475,7 +1475,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="britishbob" romof="msx">
-		<description>British Bob</description>
+		<description>British Bob (HB)</description>
 		<year>2009</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="rlv903_british_bob.rom" size="16384" crc="8ab004f9"/>
@@ -1745,7 +1745,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caos" romof="msx">
-		<description>Caos Begins</description>
+		<description>Caos Begins (HB)</description>
 		<year>2007</year>
 		<manufacturer>Hikaru Games</manufacturer>
 		<rom name="caos.rom" size="32768" crc="44421f97"/>
@@ -1885,7 +1885,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="caverns" romof="msx">
-		<description>Caverns of Titan</description>
+		<description>Caverns of Titan (HB)</description>
 		<year>2005</year>
 		<manufacturer>JLTURSAN</manufacturer>
 		<rom name="caverns.rom" size="16384" crc="9e02db6c"/>
@@ -2505,7 +2505,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cow" romof="msx">
-		<description>Cow Abductors</description>
+		<description>Cow Abductors (HB)</description>
 		<year>2009</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="cow.rom" size="16384" crc="790623de"/>
@@ -2525,7 +2525,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crazy" romof="msx">
-		<description>Crazy Buggy</description>
+		<description>Crazy Buggy (HB)</description>
 		<year>2005</year>
 		<manufacturer>Crappysoft</manufacturer>
 		<rom name="crazy.rom" size="16384" crc="fea00d3b"/>
@@ -2745,7 +2745,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dangertower" romof="msx">
-		<description>Danger Tower</description>
+		<description>Danger Tower (HB)</description>
 		<year>2009</year>
 		<manufacturer>Danger Team</manufacturer>
 		<rom name="dangertower.rom" size="32768" crc="02c3af4a"/>
@@ -2825,7 +2825,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepdun" romof="msx">
-		<description>Deep Dungeon Adventure</description>
+		<description>Deep Dungeon Adventure (HB)</description>
 		<year>2013</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="deepdung.rom" size="49152" crc="96bd10ee"/>
@@ -3009,6 +3009,16 @@
 		<year>1989</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="double dragon (korea) (unl).rom" size="32768" crc="c70e3a34"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="draconic" romof="msx">
+		<description>Draconic Throne (HB, v1.1.2)</description>
+		<year>2017</year>
+		<manufacturer>GW's Workshop</manufacturer>
+		<rom name="draconic throne v112.rom" size="32768" crc="1109499f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3225,7 +3235,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eatblue" romof="msx">
-		<description>Eat Blue!</description>
+		<description>Eat Blue! (HB)</description>
 		<year>2004</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="Eat Blue! 2004 v2 (2004)(Paxanga Soft).rom" size="8192" crc="1ac005a0"/>
@@ -3485,8 +3495,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="factory" romof="msx">
-		<description>Factory Infection</description>
-		<year>2005</year>
+		<description>Factory Infection (HB)</description>
+		<year>2004</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="factory.rom" size="8192" crc="43f31061"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -4017,7 +4027,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="genesis" romof="msx">
-		<description>Genesis: dawn of a new day</description>
+		<description>Genesis: dawn of a new day (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="genesis.rom" size="131072" crc="391e6f9a"/>
@@ -4157,7 +4167,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gommy" romof="msx">
-		<description>Gommy</description>
+		<description>Gommy (HB)</description>
 		<year>2013</year>
 		<manufacturer>Retroworks/Dimension Z/NENEFRANZ</manufacturer>
 		<rom name="DMZ-004_Gommy MD_msx.rom" size="16384" crc="66b27261"/>
@@ -4207,7 +4217,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggeftsdp" romof="msx">
-		<description>Gorgeous Gemma in Escape from the Space Disposal Planet</description>
+		<description>Gorgeous Gemma in Escape from the Space Disposal Planet (HB)</description>
 		<year>2013</year>
 		<manufacturer>Impulse9</manufacturer>
 		<rom name="ggeftsdp.rom" size="32768" crc="818ccade"/>
@@ -4267,7 +4277,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gridwars" romof="msx">
-		<description>Grid Wars</description>
+		<description>Grid Wars (HB)</description>
 		<year>2006</year>
 		<manufacturer>Emma Six</manufacturer>
 		<rom name="GRIDWARS.ROM" size="32768" crc="03b56d90"/>
@@ -4276,21 +4286,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="grielex" cloneof="griel" romof="griel">
-		<description>Griel's Quest for the Sangraal (Extended Version)</description>
+	<game name="griel" romof="msx">
+		<description>Griel's Quest for the Sangraal (HB)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
-		<rom name="grielex.rom" size="32768" crc="c9427fe2"/>
+		<rom name="griel.rom" size="32768" crc="6cebb29b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="griel" romof="msx">
-		<description>Griel's Quest for the Sangraal</description>
+	<game name="grielex" cloneof="griel" romof="griel">
+		<description>Griel's Quest for the Sangraal (HB, Extended Version)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
-		<rom name="griel.rom" size="32768" crc="6cebb29b"/>
+		<rom name="grielex.rom" size="32768" crc="c9427fe2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4588,7 +4598,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="heroesarena" romof="msx">
-		<description>Heroes Arena</description>
+		<description>Heroes Arena (HB)</description>
 		<year>2010</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="h-arena.rom" size="32768" crc="3c6c9c72"/>
@@ -5078,7 +5088,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="invasion" romof="msx">
-		<description>Invasion of the big pixels (demo)</description>
+		<description>Invasion of the big pixels (HB, Tech-demo)</description>
 		<year>2008</year>
 		<manufacturer>noice</manufacturer>
 		<rom name="invasion.rom" size="131072" crc="261c87aa"/>
@@ -5088,7 +5098,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="invazm" romof="msx">
-		<description>Invasion of the Zombie Monsters [RLV904]</description>
+		<description>Invasion of the Zombie Monsters (HB, RLV904)</description>
 		<year>2010</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV904_Invasion_of_the_Zombie_Monsters.rom" size="32768" crc="a232351f"/>
@@ -5128,7 +5138,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpac" romof="msx">
-		<description>J.E.T.P.A.C.</description>
+		<description>J.E.T.P.A.C. (HB)</description>
 		<year>2009</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="jetpac.rom" size="32768" crc="38ad7112"/>
@@ -5248,7 +5258,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jinj2" romof="msx">
-		<description>Jinj 2 - Belmonte's Revenge</description>
+		<description>Jinj 2 - Belmonte's Revenge (HB)</description>
 		<year>2010</year>
 		<manufacturer>Retroworks</manufacturer>
 		<rom name="jinj2-v2.rom" size="32768" crc="d43cf107"/>
@@ -5298,7 +5308,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jumping" romof="msx">
-		<description>JumpinG (eng)</description>
+		<description>JumpinG (HB)</description>
 		<year>2011</year>
 		<manufacturer>DimensionZ</manufacturer>
 		<rom name="DMZ001-JpinG_English.rom" size="32768" crc="7f492f09"/>
@@ -5418,7 +5428,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="killmice" romof="msx">
-		<description>Kill Mice</description>
+		<description>Kill Mice (HB)</description>
 		<year>2011</year>
 		<manufacturer>Gamecast Entertainment</manufacturer>
 		<rom name="killmice.rom" size="65536" crc="783afacb"/>
@@ -5688,7 +5698,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kobashi" romof="msx">
-		<description>Kobashi [Uses joyport #2]</description>
+		<description>Kobashi (HB) [Uses joyport #2]</description>
 		<year>2004</year>
 		<manufacturer>Desire in Envy</manufacturer>
 		<rom name="Kobashi (2004)(Desire in Envy)(NL).rom" size="8192" crc="d137c518"/>
@@ -6068,7 +6078,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lacorona" romof="msx">
-		<description>La Corona Encantada</description>
+		<description>La Corona Encantada (HB)</description>
 		<year>2009</year>
 		<manufacturer>Karoshi</manufacturer>
 		<rom name="RLV901_La_Corona_Encantada.rom" size="49152" crc="71e4252e"/>
@@ -6142,6 +6152,16 @@
 		<year>1987</year>
 		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="Life in the Fast Lane (1987)(Methodic Solutions)(NL).rom" size="131072" crc="37a8713d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="linez" romof="msx">
+		<description>Linez (HB)</description>
+		<year>2018</year>
+		<manufacturer>Wim DeWijngaert</manufacturer>
+		<rom name="linez (final version).rom" size="32768" crc="9df79847"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6228,7 +6248,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lotusf3" romof="msx">
-		<description>Lotus F3</description>
+		<description>Lotus F3 (HB)</description>
 		<year>2007</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="lotusf3.rom" size="131072" crc="565022a4"/>
@@ -6258,7 +6278,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtanks" romof="msx">
-		<description>M-Tanks</description>
+		<description>M-Tanks (HB)</description>
 		<year>2011</year>
 		<manufacturer>Assembler Games</manufacturer>
 		<rom name="mtanks.rom" size="131072" crc="c0efa4ff"/>
@@ -6308,7 +6328,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magical" romof="msx">
-		<description>Magical Stones</description>
+		<description>Magical Stones (HB)</description>
 		<year>2005</year>
 		<manufacturer>Dioniso (Alfonso D.C.)</manufacturer>
 		<rom name="ms16k.rom" size="16384" crc="0ec3f7a3"/>
@@ -6368,7 +6388,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="malaika12" romof="msx">
-		<description>Malaika (v1.2)</description>
+		<description>Malaika (HB, v1.2)</description>
 		<year>2013</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV914_MALAIKA.rom" size="16384" crc="37c13320"/>
@@ -6378,7 +6398,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="malaikapq13" romof="msx">
-		<description>Malaika Prehistoric Quest (v1.3)</description>
+		<description>Malaika Prehistoric Quest (HB, v1.3)</description>
 		<year>2006</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="rk711r3.rom" size="32768" crc="3ddf42ac"/>
@@ -6568,7 +6588,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mecha8" romof="msx">
-		<description>Mecha-8</description>
+		<description>Mecha-8 (HB)</description>
 		<year>2011</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="mecha8.rom" size="32768" crc="c60e346e"/>
@@ -6628,7 +6648,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="menace" romof="msx">
-		<description>Menace</description>
+		<description>Menace (HB)</description>
 		<year>2009</year>
 		<manufacturer>The New Image</manufacturer>
 		<rom name="menace.rom" size="32768" crc="500d37ec"/>
@@ -6848,7 +6868,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="monsterhunter" romof="msx">
-		<description>Monster Hunter</description>
+		<description>Monster Hunter (HB)</description>
 		<year>2006</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX001ES_MonsterHunter.rom" size="131072" crc="b876a92f"/>
@@ -6868,7 +6888,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="montanajohn" romof="msx">
-		<description>Montana John and the Templar's Treasure</description>
+		<description>Montana John and the Templar's Treasure (HB)</description>
 		<year>2008</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="MJTT.ROM" size="131072" crc="7b5e126f"/>
@@ -7038,7 +7058,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrcrack" romof="msx">
-		<description>Mr. Cracksman</description>
+		<description>Mr. Cracksman (HB)</description>
 		<year>2013</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV917_MR_CRACKSMAN.rom" size="8192" crc="e8ded848"/>
@@ -7098,7 +7118,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrmole" romof="msx">
-		<description>Mr. Mole</description>
+		<description>Mr. Mole (HB)</description>
 		<year>2007</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX003EN_MrMole_KONAMI5.rom" size="131072" crc="aa6f2968"/>
@@ -7238,7 +7258,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="unleashed" romof="msx">
-		<description>MSX Unleashed (demo)</description>
+		<description>MSX Unleashed (HB, Tech-demo)</description>
 		<year>2006</year>
 		<manufacturer>dvik &amp; joyrex</manufacturer>
 		<rom name="unleashed.rom" size="262144" crc="10f86aa9"/>
@@ -7288,7 +7308,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="namake" romof="msx">
-		<description>Namake's Bridgedrome [Uses joyport #2]</description>
+		<description>Namake's Bridgedrome (HB) [Uses joyport #2]</description>
 		<year>2005</year>
 		<manufacturer>Buresto Faiya</manufacturer>
 		<rom name="Namake's Bridgedrome (2005)(Buresto Faiya).rom" size="16384" crc="92aee975"/>
@@ -7319,7 +7339,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nayade" romof="msx">
-		<description>Nayade Resistance</description>
+		<description>Nayade Resistance (HB)</description>
 		<year>2013</year>
 		<manufacturer>Pentacour</manufacturer>
 		<rom name="nayade.rom" size="32768" crc="3587844a"/>
@@ -7429,7 +7449,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightcity" romof="msx">
-		<description>Night City</description>
+		<description>Night City (HB)</description>
 		<year>2006</year>
 		<manufacturer>German Gomez Herrera</manufacturer>
 		<rom name="EN-NIGHT.ROM" size="65536" crc="7990a7f8"/>
@@ -7439,7 +7459,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightknight" romof="msx">
-		<description>Night Knight (v1.0.3)</description>
+		<description>Night Knight (HB, v1.0.3)</description>
 		<year>2019</year>
 		<manufacturer>Juan J. Martinez/usebox.net</manufacturer>
 		<rom name="nightk.rom" size="32768" crc="3a7965de"/>
@@ -7509,7 +7529,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjasav" romof="msx">
-		<description>Ninja Savior</description>
+		<description>Ninja Savior (HB)</description>
 		<year>2015</year>
 		<manufacturer>RELEVO</manufacturer>
 		<rom name="RLV921_Ninja_Savior.rom" size="16384" crc="c059ffba"/>
@@ -7609,7 +7629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf" romof="msx">
-		<description>Operation Wolf</description>
+		<description>Operation Wolf (HB)</description>
 		<year>2009</year>
 		<manufacturer>TOYBOX</manufacturer>
 		<rom name="OWMSX1.ROM" size="32768" crc="e9492c87"/>
@@ -7759,7 +7779,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pjoe" romof="msx">
-		<description>Parachuteless Joe</description>
+		<description>Parachuteless Joe (HB)</description>
 		<year>2005</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="pjoe.rom" size="32768" crc="bff072fe"/>
@@ -7849,7 +7869,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="penguincafe" romof="msx">
-		<description>Penguin Cafe</description>
+		<description>Penguin Cafe (HB)</description>
 		<year>2006</year>
 		<manufacturer>MSX Cafe</manufacturer>
 		<rom name="penguincafe.rom" size="32768" crc="ba41efb1"/>
@@ -7859,7 +7879,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pengmind" romof="msx">
-		<description>Penguin Mind</description>
+		<description>Penguin Mind (HB)</description>
 		<year>2007</year>
 		<manufacturer>MSX Cafe</manufacturer>
 		<rom name="PENGMIND.ROM" size="65536" crc="d2de6ec4"/>
@@ -7899,7 +7919,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="perezthemouse" romof="msx">
-		<description>Perez the Mouse</description>
+		<description>Perez the Mouse (HB, V1.1)</description>
 		<year>2011</year>
 		<manufacturer>theNestruo Wonder</manufacturer>
 		<rom name="Perez the Mouse 1.1 (2011) (theNestruo Wonder).cas" size="22915" crc="cc8d9d62"/>
@@ -8159,7 +8179,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="prettykngdm" romof="msx">
-		<description>Pretty Kingdom</description>
+		<description>Pretty Kingdom (HB)</description>
 		<year>2014</year>
 		<manufacturer>Nerlaska Studio</manufacturer>
 		<rom name="NLKMSX006EN_PRETTYKINGDOM.rom" size="32768" crc="cb2d148c"/>
@@ -8169,7 +8189,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="princessquest" romof="msx">
-		<description>Princess Quest</description>
+		<description>Princess Quest (HB)</description>
 		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="princess_quest_msx.rom" size="65536" crc="aa31ac36"/>
@@ -8263,6 +8283,16 @@
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="q-bert (japan) (alt 1).rom" size="32768" crc="a112532b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="quartet" romof="msx">
+		<description>Quartet (HB, v1.2)</description>
+		<year>2019</year>
+		<manufacturer>Ilkke and bitsofbas</manufacturer>
+		<rom name="quartet v12.rom" size="32768" crc="eeb24910"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8539,7 +8569,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="riyadh" romof="msx">
-		<description>Riyadh (demo)</description>
+		<description>Riyadh (HB, Tech-demo)</description>
 		<year>2001</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="riyadh.rom" size="262144" crc="3e207332"/>
@@ -8730,7 +8760,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smzoom" romof="msx">
-		<description>Saimazoom</description>
+		<description>Saimazoom (HB)</description>
 		<year>2005</year>
 		<manufacturer>Karoshi Corporation</manufacturer>
 		<rom name="rk708en.rom" size="32768" crc="e76bc18e"/>
@@ -8881,7 +8911,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="seleniak" romof="msx">
-		<description>Seleniak</description>
+		<description>Seleniak (HB)</description>
 		<year>2005</year>
 		<manufacturer>Guzuta Raster Leisure</manufacturer>
 		<rom name="seleniak.rom" size="8192" crc="6e8bb5fa"/>
@@ -8941,7 +8971,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shmup11" romof="msx">
-		<description>Shmup! (v1.1)</description>
+		<description>Shmup! (HB, v1.1)</description>
 		<year>2013</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="shmup!.rom" size="16384" crc="99cca8a4"/>
@@ -8961,7 +8991,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shouganai11" romof="msx">
-		<description>Shouganai</description>
+		<description>Shouganai (HB)</description>
 		<year>2013</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="shoganai.rom" size="16384" crc="d27ea890"/>
@@ -9011,7 +9041,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinkking" romof="msx">
-		<description>Sink King</description>
+		<description>Sink King (HB)</description>
 		<year>2005</year>
 		<manufacturer>Guzuta Raster Leisure</manufacturer>
 		<rom name="sinkking.rom" size="8192" crc="dcd241fa"/>
@@ -9021,7 +9051,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skateair" romof="msx">
-		<description>Skate Air</description>
+		<description>Skate Air (HB)</description>
 		<year>2006</year>
 		<manufacturer>Yerami Soft</manufacturer>
 		<rom name="SKATE_AIR_en.rom" size="131072" crc="6398a569"/>
@@ -9241,7 +9271,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacemouse" romof="msx">
-		<description>Space Mouse</description>
+		<description>Space Mouse (HB)</description>
 		<year>201x</year>
 		<manufacturer>H. Kobo</manufacturer>
 		<rom name="Space Mouse (H. Kobo, 201x).rom" size="131072" crc="b55702f7"/>
@@ -9601,7 +9631,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stratos2" romof="msx">
-		<description>StratoS (v2)</description>
+		<description>StratoS (HB, v2)</description>
 		<year>2005</year>
 		<manufacturer>CEZ GS</manufacturer>
 		<rom name="stratos2.rom" size="16384" crc="e3093554"/>
@@ -9611,7 +9641,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="straycat" romof="msx">
-		<description>Stray Cat</description>
+		<description>Stray Cat (HB)</description>
 		<year>2009</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="straycat.rom" size="32768" crc="22a99a44"/>
@@ -9631,7 +9661,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="subacuatic" romof="msx">
-		<description>Subacuatic</description>
+		<description>Subacuatic (HB)</description>
 		<year>2012</year>
 		<manufacturer>RELEVO / The Mojon Twins</manufacturer>
 		<rom name="Subacuatic_(2012)_(rlv911).rom" size="32768" crc="91884cc0"/>
@@ -9931,8 +9961,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvirus" romof="msx">
-		<description>T-Virus</description>
-		<year>2005</year>
+		<description>T-Virus (HB)</description>
+		<year>2004</year>
 		<manufacturer>Dioniso (Alfonso D.C.)</manufacturer>
 		<rom name="tvirus.rom" size="8192" crc="72b26927"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -10091,7 +10121,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="teodoro" romof="msx">
-		<description>Teodoro No Sabe Volar</description>
+		<description>Teodoro No Sabe Volar (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retroworks/Dimension Z</manufacturer>
 		<rom name="DMZ002 - Teodoro no sabe volar (English).rom" size="32768" crc="d2d53275"/>
@@ -10241,7 +10271,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thecure" romof="msx">
-		<description>The Cure</description>
+		<description>The Cure (HB)</description>
 		<year>2005</year>
 		<manufacturer>XL2S Entertainment</manufacturer>
 		<rom name="thecure.rom" size="49152" crc="7f855276"/>
@@ -10652,7 +10682,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="togk" romof="msx">
-		<description>Tomb of Genghis Khan</description>
+		<description>Tomb of Genghis Khan (HB)</description>
 		<year>2008</year>
 		<manufacturer>impulse9</manufacturer>
 		<rom name="togk.rom" size="32768" crc="903d4e51"/>
@@ -10742,7 +10772,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="transball" romof="msx">
-		<description>Transball (v1.3.2)</description>
+		<description>Transball (HB, v1.3.2)</description>
 		<year>2005</year>
 		<manufacturer>Santiago Ontanon</manufacturer>
 		<rom name="transball-en.rom" size="32768" crc="cbcf03c5"/>
@@ -10882,7 +10912,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="txupi" romof="msx">
-		<description>Txupinazo!</description>
+		<description>Txupinazo! (HB)</description>
 		<year>2007</year>
 		<manufacturer>IMANOK</manufacturer>
 		<rom name="txupi.rom" size="32768" crc="e1b66d80"/>
@@ -10922,7 +10952,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="univunk" romof="msx">
-		<description>Universe Unknown</description>
+		<description>Universe Unknown (HB)</description>
 		<year>2005</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="UniverseUnknown.rom" size="49152" crc="a017f389"/>
@@ -10932,7 +10962,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="uridium" romof="msx">
-		<description>Uridium</description>
+		<description>Uridium (HB)</description>
 		<year>2014</year>
 		<manufacturer>Trilobyte</manufacturer>
 		<rom name="URDIUM48.rom" size="49152" crc="c62d92da"/>
@@ -10962,7 +10992,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vesikauhu" romof="msx">
-		<description>Vesikauhu (demo)</description>
+		<description>Vesikauhu (HB, Tech-demo)</description>
 		<year>2000</year>
 		<manufacturer>Bandwagon</manufacturer>
 		<rom name="Vesikauhu.rom" size="262144" crc="7392b7c7"/>
@@ -11152,8 +11182,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarr" romof="msx">
-		<description>Wing Warriors</description>
-		<year>2015</year>
+		<description>Wing Warriors (HB)</description>
+		<year>2016</year>
 		<manufacturer>Kitmaker</manufacturer>
 		<rom name="WingWarriors.rom" size="49152" crc="207d0e62"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -11236,6 +11266,26 @@
 		<year>1988</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="xenon (1988)(dro soft)(es)[run'cas-'].cas" size="74546" crc="4ad26b8f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="xracing" romof="msx">
+		<description>Xracing (HB, v1.0.4)</description>
+		<year>2019</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="xracing v104.rom" size="49152" crc="164feacb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="xspelunk" romof="msx">
+		<description>XSpelunker (HB)</description>
+		<year>2017</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="xspelunk-en.rom" size="32768" crc="0a7c288c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11392,7 +11442,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zambeze" romof="msx">
-		<description>Zambeze</description>
+		<description>Zambeze (HB)</description>
 		<year>2006</year>
 		<manufacturer>Degora</manufacturer>
 		<rom name="zambezefacil.rom" size="32768" crc="91d07554"/>
@@ -11522,7 +11572,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombieinc12" romof="msx">
-		<description>Zombie Incident (v1.2)</description>
+		<description>Zombie Incident (HB, v1.2)</description>
 		<year>2013</year>
 		<manufacturer>NENEFRANZ</manufacturer>
 		<rom name="ZombieIncident.rom" size="49152" crc="0d5c497a"/>
@@ -11532,7 +11582,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombienear11" romof="msx">
-		<description>Zombie Near</description>
+		<description>Zombie Near (HB)</description>
 		<year>2011</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="Zombie Near.rom" size="131072" crc="edea8c56"/>

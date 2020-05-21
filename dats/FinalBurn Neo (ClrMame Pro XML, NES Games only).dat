@@ -1349,6 +1349,13 @@
 		<rom name="Chaos World (T-eng).nes" size="393232" crc="fbd2a0e0"/>
 		<driver status="good"/>
 	</game>
+	<game name="cheman">
+		<description>Che-Man (HB)</description>
+		<year>2018</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Che-Man (HB).nes" size="40976" crc="9677c8a1"/>
+		<driver status="good"/>
+	</game>
 	<game name="mojontwichegod">
 		<description>Cheril The Goddess (HB)</description>
 		<year>2017</year>
@@ -2357,6 +2364,13 @@
 		<rom name="Earthbound (USA) (Prototype).nes" size="524304" crc="f5ef5002"/>
 		<driver status="good"/>
 	</game>
+	<game name="eeeaaaooo">
+		<description>EEEAAAOOO (HB)</description>
+		<year>2020</year>
+		<manufacturer>N.K</manufacturer>
+		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
+		<driver status="good"/>
+	</game>
 	<game name="egypt">
 		<description>Egypt (Japan)</description>
 		<year>1991</year>
@@ -2502,6 +2516,13 @@
 		<year>1992</year>
 		<manufacturer>Nichibutsu</manufacturer>
 		<rom name="F1 Circus (Japan).nes" size="393232" crc="1f19532d"/>
+		<driver status="good"/>
+	</game>
+	<game name="fallingtiles">
+		<description>Falling Tiles (HB, rev.B)</description>
+		<year>2020</year>
+		<manufacturer>Doug Fraker</manufacturer>
+		<rom name="Falling Tiles (HB, rev.B).nes" size="40976" crc="5b8fcd00"/>
 		<driver status="good"/>
 	</game>
 	<game name="famicjum">
@@ -4730,6 +4751,13 @@
 		<rom name="Mach Rider (USA).nes" size="40976" crc="bee56098"/>
 		<driver status="good"/>
 	</game>
+	<game name="machinecave">
+		<description>Machine Cave (HB, v1.9)</description>
+		<year>2018</year>
+		<manufacturer>Simo Sievanen</manufacturer>
+		<rom name="Machine Cave (HB, v1.9).nes" size="40976" crc="2d904baf"/>
+		<driver status="good"/>
+	</game>
 	<game name="madcity" cloneof="advenbaybil" romof="advenbaybil">
 		<description>Mad City (Japan)</description>
 		<year>1988</year>
@@ -5411,7 +5439,7 @@
 	</game>
 	<game name="mysticorigins">
 		<description>Mystic Origins (HB)</description>
-		<year>1989?</year>
+		<year>2019</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mystic Origins (HB).nes" size="524304" crc="249c666e"/>
 		<driver status="good"/>
@@ -8515,6 +8543,13 @@
 		<year>1992</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="Wizards &amp; Warriors III - Kuros - Visions of Power (USA).nes" size="262160" crc="4f505449"/>
+		<driver status="good"/>
+	</game>
+	<game name="wolfling">
+		<description>Wolfling (HB, v1.4)</description>
+		<year>2018</year>
+		<manufacturer>Lazy Cow</manufacturer>
+		<rom name="Wolfling (HB, v1.4).nes" size="65552" crc="f22ae9b8"/>
 		<driver status="good"/>
 	</game>
 	<game name="wolverine">

@@ -2610,6 +2610,7 @@ DRV		BurnDrvDngrtrck;
 DRV		BurnDrvMSX_dangerx4;
 DRV		BurnDrvMSX_dangerx4b;
 DRV		BurnDrvMSX_dangerx4a;
+DRV		BurnDrvgg_dangdem;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvDdungeon;		// no comment [NOT WORKING]
 #endif
@@ -4585,6 +4586,7 @@ DRV		BurnDrvmd_godsup;
 DRV		BurnDrvGodzilla;
 DRV		BurnDrvMSX_godzilla;
 DRV		BurnDrvMSX_godzillaa;
+DRV		BurnDrvgg_godzillae;
 DRV		BurnDrvgg_godzilla;
 DRV		BurnDrvMSX_godzikun;
 DRV		BurnDrvMSX_godzikuna;
@@ -6513,6 +6515,7 @@ DRV		BurnDrvmd_madoumon;
 DRV		BurnDrvgg_madoumone;
 DRV		BurnDrvgg_madoumon;
 DRV		BurnDrvgg_madoumn2;
+DRV		BurnDrvgg_madoumn3e;
 DRV		BurnDrvgg_madoumn3a;
 DRV		BurnDrvgg_madoumn3;
 DRV		BurnDrvsgx_granzort;
@@ -16769,6 +16772,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dangerx4,		// Danger X4 (Jpn)
 	&BurnDrvMSX_dangerx4b,		// Danger X4 (Jpn, Alt 2)
 	&BurnDrvMSX_dangerx4a,		// Danger X4 (Jpn, Alt)
+	&BurnDrvgg_dangdem,			// Dangerous Demolition (HB, v1.0)
 #if defined FBNEO_DEBUG
 	&BurnDrvDdungeon,			// Dangerous Dungeons [no comment, NOT WORKING]
 #endif
@@ -18744,6 +18748,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGodzilla,			// Godzilla (Japan)
 	&BurnDrvMSX_godzilla,		// Godzilla (Jpn)
 	&BurnDrvMSX_godzillaa,		// Godzilla (Jpn, Hacked?)
+	&BurnDrvgg_godzillae,		// Godzilla - Kaijuu Daishingeki (Hack, English)
 	&BurnDrvgg_godzilla,		// Godzilla - Kaijuu Daishingeki (Jpn)
 	&BurnDrvMSX_godzikun,		// Godzilla-kun (Jpn)
 	&BurnDrvMSX_godzikuna,		// Godzilla-kun (Jpn, Alt)
@@ -20331,7 +20336,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_lagrangepoint,	// Lagrange Point (T-eng)
 	&BurnDrvmd_lakers,			// Lakers versus Celtics and the NBA Playoffs (USA)
 	&BurnDrvnes_lalathemagical,	// Lala the Magical (HB)
-	&BurnDrvsms_lambo,			// Lambo (Demo)
+	&BurnDrvsms_lambo,			// Lambo (HB, Demo)
 	&BurnDrvLandbrkb,			// Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 1.0) (AT89c52 protected)
 	&BurnDrvLandbrk,			// Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 3.02)
 	&BurnDrvLandbrka,			// Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 3.03) (AT89c52 protected)
@@ -20672,8 +20677,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_madoumone,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)
 	&BurnDrvgg_madoumon,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)
 	&BurnDrvgg_madoumn2,		// Madou Monogatari II - Arle 16-Sai (Jpn)
-	&BurnDrvgg_madoumn3a,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v0)
-	&BurnDrvgg_madoumn3,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1)
+	&BurnDrvgg_madoumn3e,		// Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English)
+	&BurnDrvgg_madoumn3a,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.0)
+	&BurnDrvgg_madoumn3,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.1)
 	&BurnDrvsgx_granzort,		// Madou Ou Granzort
 	&BurnDrvfds_maerchenveil,	// Maerchen Veil (Japan)
 	&BurnDrvnes_mafatcon,		// Mafat Conspiracy - Golgo 13 (USA)
@@ -21901,7 +21907,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_newghoii,		// New Ghostbusters II (Japan)
 	&BurnDrvNhidctch,			// New Hidden Catch (World) / New Tul Lin Gu Lim Chat Ki '98 (Korea) (pcb ver 3.02)
 	&BurnDrvmd_newhoriz,		// New Horizons (USA)
-	&BurnDrvsms_novdmvdp,		// New Order vs Depeche Mode vs Daft Punk - (Sterbinszky and Coddie Mashup)
+	&BurnDrvsms_novdmvdp,		// New Order vs Depeche Mode vs Daft Punk - (HB, Demo)
 	&BurnDrvnewpuckx,			// New Puck-X
 	&BurnDrvNrallyx,			// New Rally X
 	&BurnDrvNewsin7,			// New Sinbad 7
@@ -22583,7 +22589,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_pstar1,			// Phantasy Star (Euro, USA, v2)
 	&BurnDrvsms_pstar,			// Phantasy Star (Euro, USA, v3)
 	&BurnDrvsms_pstarj,			// Phantasy Star (Jpn)
-	&BurnDrvsms_pstarjmd,		// Phantasy Star (Jpn, MD
+	&BurnDrvsms_pstarjmd,		// Phantasy Star (Jpn, MD)
 	&BurnDrvsms_pstark,			// Phantasy Star (Kor)
 	&BurnDrvmd_pstar4j,			// Phantasy Star - Sennenki no Owari ni (Jpn)
 	&BurnDrvmd_pstar4,			// Phantasy Star - The End of the Millennium (Euro)

@@ -224,7 +224,7 @@
 	</game>
 	<game name="altbeast">
 		<description>Altered Beast (Euro, USA, Bra)</description>
-		<year>1989</year>
+		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12534 t35.ic2" size="262144" crc="bba2fe98"/>
 		<driver status="good"/>
@@ -300,7 +300,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="assaultc">
-		<description>Assault City (Euro, Bra, Light Phaser version)</description>
+		<description>Assault City (Euro, Bra, Light Phaser version) [Light Phaser game]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="assault city (europe) (light phaser).bin" size="262144" crc="861b6e79"/>
@@ -357,7 +357,7 @@
 	</game>
 	<game name="astropit">
 		<description>Astro Warrior and Pit Pot (Euro)</description>
-		<year>1987</year>
+		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11070.ic1" size="131072" crc="69efd483"/>
 		<driver status="good"/>
@@ -616,7 +616,7 @@
 	</game>
 	<game name="champhck">
 		<description>Championship Hockey (Euro)</description>
-		<year>1994</year>
+		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="championship hockey (europe).bin" size="262144" crc="7e5839a0"/>
 		<driver status="good"/>
@@ -847,7 +847,7 @@
 	</game>
 	<game name="dinobash">
 		<description>Dinobasher Starring Bignose the Caveman (Euro, Prototype)</description>
-		<year>19??</year>
+		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="dinobasher starring bignose the caveman (europe) (proto).bin" size="262144" crc="ea5c3a6f"/>
 		<driver status="good"/>
@@ -973,7 +973,7 @@
 	</game>
 	<game name="dhead">
 		<description>Dynamite Headdy (Bra)</description>
-		<year>1994</year>
+		<year>1995</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="dynamite headdy (brazil).bin" size="524288" crc="7db5b0fa"/>
 		<driver status="good"/>
@@ -1008,7 +1008,7 @@
 	</game>
 	<game name="ejim">
 		<description>Earthworm Jim (Bra)</description>
-		<year>1996</year>
+		<year>1995</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="earthworm jim (brazil).bin" size="524288" crc="c4d5efc5"/>
 		<driver status="good"/>
@@ -1169,7 +1169,7 @@
 	</game>
 	<game name="felipe" cloneof="teddyboy" romof="teddyboy">
 		<description>Felipe em Acao (Bra)</description>
-		<year>19??</year>
+		<year>1999</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="felipe em acao (b).bin" size="32768" crc="ccb2cab4"/>
 		<driver status="good"/>
@@ -1253,8 +1253,8 @@
 	</game>
 	<game name="gaegujan">
 		<description>Gaegujangi Ggachi (Kor)</description>
-		<year>19??</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1993</year>
+		<manufacturer>HiCom</manufacturer>
 		<rom name="gaegujangi ggachi (korea) (unl).bin" size="524288" crc="8b40f6bf"/>
 		<driver status="good"/>
 	</game>
@@ -1309,7 +1309,7 @@
 	</game>
 	<game name="gamebox">
 		<description>Game Box Serie Esportes Radicais (Bra)</description>
-		<year>19??</year>
+		<year>1989</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="mpr-18796.ic1" size="262144" crc="1890f407"/>
 		<driver status="good"/>
@@ -1322,7 +1322,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gangster">
-		<description>Gangster Town (Euro, USA, Bra)</description>
+		<description>Gangster Town (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11049.ic1" size="131072" crc="5fc74d2a"/>
@@ -1651,14 +1651,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="hangonsh">
-		<description>Hang-On and Safari Hunt (USA)</description>
+		<description>Hang-On and Safari Hunt (USA) [Safari Hunt is a Light Phaser game]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10137 w02.ic1" size="131072" crc="e167a561"/>
 		<driver status="good"/>
 	</game>
 	<game name="hangonshp" cloneof="hangonsh" romof="hangonsh">
-		<description>Hang-On and Safari Hunt (USA, Prototype)</description>
+		<description>Hang-On and Safari Hunt (USA, Prototype) [Safari Hunt is a Light Phaser game]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="hang-on and safari hunt [proto].bin" size="131072" crc="a120b77f"/>
@@ -1896,7 +1896,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lambo">
-		<description>Lambo (Demo)</description>
+		<description>Lambo (HB, Demo)</description>
 		<year>2015</year>
 		<manufacturer>Genesis Project</manufacturer>
 		<rom name="GenesisProject-Lambo.sms" size="262144" crc="92fe2775"/>
@@ -1910,7 +1910,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lghost">
-		<description>Laser Ghost (Euro)</description>
+		<description>Laser Ghost (Euro) [Light Phaser game]</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="laser ghost (europe).bin" size="262144" crc="0ca95637"/>
@@ -1980,7 +1980,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostraider101">
-		<description>Lost Raider (HB, v1.01)</description>
+		<description>Lost Raider (HB, v1.01) [The game lacks sound]</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
@@ -2036,14 +2036,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="marksmanu" cloneof="marksman" romof="marksman">
-		<description>Marksman Shooting and Trap Shooting (USA)</description>
+		<description>Marksman Shooting and Trap Shooting (USA) [Light Phaser games]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="marksman shooting and trap shooting (usa).bin" size="131072" crc="e8ea842c"/>
 		<driver status="good"/>
 	</game>
 	<game name="marksman">
-		<description>Marksman Shooting and Trap Shooting and Safari Hunt (Euro, Bra)</description>
+		<description>Marksman Shooting and Trap Shooting and Safari Hunt (Euro, Bra) [Light Phaser games]</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10157f.ic2" size="131072" crc="e8215c2e"/>
@@ -2141,7 +2141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="missil3d">
-		<description>Missile Defense 3-D (Euro, USA, Bra)</description>
+		<description>Missile Defense 3-D (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10844 w29.ic1" size="131072" crc="fbe5cfbb"/>
@@ -2288,7 +2288,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="novdmvdp">
-		<description>New Order vs Depeche Mode vs Daft Punk - (Sterbinszky and Coddie Mashup)</description>
+		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo)</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
 		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
@@ -2330,7 +2330,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="opwolf">
-		<description>Operation Wolf (Euro, Bra)</description>
+		<description>Operation Wolf (Euro, Bra) [Light Phaser game]</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="operation wolf (europe).bin" size="262144" crc="205caae8"/>
@@ -2442,7 +2442,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstarjmd" cloneof="pstar" romof="pstar">
-		<description>Phantasy Star (Jpn, MD</description>
+		<description>Phantasy Star (Jpn, MD)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star (j) (from saturn collection cd) [!].bin" size="524288" crc="07301f83"/>
@@ -2638,7 +2638,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rambo3">
-		<description>Rambo III (Euro, USA, Bra)</description>
+		<description>Rambo III (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12036f.ic1" size="262144" crc="da5a7013"/>
@@ -2680,7 +2680,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rescuems">
-		<description>Rescue Mission (Euro, USA, Bra)</description>
+		<description>Rescue Mission (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11400.ic1" size="131072" crc="79ac8e7f"/>
@@ -2883,7 +2883,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shooting">
-		<description>Shooting Gallery (Euro, USA, Bra)</description>
+		<description>Shooting Gallery (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10515.ic1" size="131072" crc="4b051022"/>
@@ -2919,7 +2919,7 @@
 	</game>
 	<game name="slapshotp" cloneof="slapshot" romof="slapshot">
 		<description>Slap Shoot (Prototype)</description>
-		<year>1990</year>
+		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="slap shot (proto).bin" size="262144" crc="fbb0a92a"/>
 		<driver status="good"/>
@@ -3016,7 +3016,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacegun">
-		<description>Space Gun (Euro)</description>
+		<description>Space Gun (Euro) [Light Phaser game]</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15063.ic1" size="524288" crc="a908cff5"/>
@@ -3451,7 +3451,7 @@
 	</game>
 	<game name="tecmow92">
 		<description>Tecmo World Cup '92 (Euro, Prototype)</description>
-		<year>19??</year>
+		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tecmo world cup '92 (europe) (beta).bin" size="262144" crc="96e75f48"/>
 		<driver status="good"/>
@@ -3619,14 +3619,14 @@
 	</game>
 	<game name="dinodool">
 		<description>The Dinosaur Dooley (Kor)</description>
-		<year>19??</year>
-		<manufacturer>Unknown</manufacturer>
+		<year>1991</year>
+		<manufacturer>Daou Infosys</manufacturer>
 		<rom name="dinosaur dooley, the (korea) (unl).bin" size="131072" crc="32f4b791"/>
 		<driver status="good"/>
 	</game>
 	<game name="excdizzy" cloneof="xcdizzy" romof="xcdizzy">
 		<description>The Excellent Dizzy Collection (Euro, USA, Prototype) [unfinished proto, play 'gg_excdizzy' instead!]</description>
-		<year>19??</year>
+		<year>1994</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="excellent dizzy collection, the (usa, europe) (en,fr,de,es,it) (proto).bin" size="262144" crc="8813514b"/>
 		<driver status="good"/>
@@ -3640,7 +3640,7 @@
 	</game>
 	<game name="flint">
 		<description>The Flintstones (Euro, Bra)</description>
-		<year>1991</year>
+		<year>1990</year>
 		<manufacturer>Grandslam</manufacturer>
 		<rom name="mpr-13701-f.ic1" size="262144" crc="ca5c78a5"/>
 		<driver status="good"/>
@@ -3940,7 +3940,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wanted">
-		<description>Wanted (Euro, USA, Bra)</description>
+		<description>Wanted (Euro, USA, Bra) [Light Phaser game]</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12533f.ic1" size="131072" crc="5359762d"/>

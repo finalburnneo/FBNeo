@@ -467,7 +467,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if ((HWND)lParam == GetDlgItem(hDlg, IDC_INPS_CONTROL) ||
 			(HWND)lParam == GetDlgItem(hDlg, IDC_INPS_CONTROL_S2))
 		{
-			return (BOOL)hWhiteBGBrush;
+			return (INT_PTR)hWhiteBGBrush;
 		}
 	}
 	return 0;

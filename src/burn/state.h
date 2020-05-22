@@ -49,9 +49,10 @@ C_INLINE static void ScanVar(void* pv, INT32 nSize, char* szName)
 	BurnAcb(&ba);
 }
 
+// scan a variable, chunk of memory, pointerless struct, etc.
 #define SCAN_VAR(x) ScanVar(&x, sizeof(x), #x)
-
-#define SCAN_OFF(x, y, a) { INT32 n = x - y; ScanVar(&n, sizeof(n), #x); if (a & ACB_WRITE) {	x = y + n; } }
+// scan a memory offset - to safely state-ify pointers (see burn/drv/neogeo/neo_run.cpp or cpu/tlcs900/tlcs900.cpp)
+#define SCAN_OFF(x, y, a) { INT32 n = x - y; ScanVar(&n, sizeof(n), #x); if (a & ACB_WRITE) { x = y + n; } }
 
 #ifdef OSD_CPU_H
  /* wrappers for the MAME savestate functions (used by the FM sound cores) */

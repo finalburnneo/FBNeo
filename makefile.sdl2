@@ -277,6 +277,11 @@ else
 	LDFLAGS	 += -s
 endif
 
+ifdef BUILD_NATIVE
+	CFLAGS	 += -march=native -mtune=native
+	CXXFLAGS += -march=native -mtune=native
+endif
+
 # For zlib
 DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
 

@@ -928,7 +928,7 @@ struct BurnDriver BurnDrvngpc_ngp = {
 	"ngpc_ngp", NULL, NULL, NULL, "1998",
 	"NeoGeo Pocket (Bios)\0", "BIOS only", "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_BOARDROM, 0, HARDWARE_SNK_NGP | HARDWARE_SNK_NGPC, GBF_BIOS, 0,
+	BDF_BOARDROM, 0, HARDWARE_SNK_NGPC, GBF_BIOS, 0,
 	NULL, ngpc_ngpRomInfo, ngpc_ngpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3

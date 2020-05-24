@@ -4515,6 +4515,15 @@ static INT32 Tnk3Init()
 	return 0;
 }
 
+static INT32 Tnk3bInit()
+{
+	INT32 rc = Tnk3Init();
+
+    ikarijoy = 1;
+
+	return rc;
+}
+
 static INT32 AsoInit()
 {
 	AllMem = NULL;
@@ -6462,6 +6471,21 @@ static INT32 Tnk3Frame()
 		if (game_rotates) {
 			SuperJoy2Rotate();
 		}
+		
+		if (ikarijoy) {
+			DrvInputs[1] &= 0x0f;
+			DrvInputs[2] &= 0x0f;
+			if (DrvJoy2[0]) DrvInputs[1] |= 0x20;
+			if (DrvJoy2[1]) DrvInputs[1] |= 0x40;
+			if (DrvJoy2[2]) DrvInputs[1] |= 0x80;
+			if (DrvJoy2[3]) DrvInputs[1] |= 0x10;
+
+			if (DrvJoy3[0]) DrvInputs[2] |= 0x20;
+			if (DrvJoy3[1]) DrvInputs[2] |= 0x40;
+			if (DrvJoy3[2]) DrvInputs[2] |= 0x80;
+			if (DrvJoy3[3]) DrvInputs[2] |= 0x10;
+
+		}
 	}
 
 	INT32 nInterleave = 800;
@@ -7781,6 +7805,46 @@ struct BurnDriver BurnDrvTnk3j = {
 	224, 288, 3, 4
 };
 
+// T.A.N.K (Bootleg, 8-way Joystick)
+
+static struct BurnRomInfo tnk3bRomDesc[] = {
+	{ "p1a.4e",     0x04000, 0x26c45b82, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.4f",		0x04000, 0x0ae0a483, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p3.4h",		0x04000, 0xd16dd4db, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	{ "p4.2e",		0x04000, 0x01b45a90, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
+	{ "p5.2f",		0x04000, 0x60db6667, 2 | BRF_ESS | BRF_PRG }, //  4
+	{ "p6.2h",		0x04000, 0x4761fde7, 2 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "p10.6f",		0x04000, 0x7bf0a517, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
+	{ "p11.6d",		0x04000, 0x0569ce27, 3 | BRF_ESS | BRF_PRG }, //  7
+
+	{ "2.5f",		0x00400, 0x34c06bc6, 14 | BRF_GRA },	      //  8 Color Data
+	{ "1.5g",		0x00400, 0x6d0ac66a, 14 | BRF_GRA },	      //  9
+	{ "0.5h",		0x00400, 0x4662b4c8, 14 | BRF_GRA },	      // 10
+
+	{ "p14.1e",		0x02000, 0x6bd575ca, 4 | BRF_GRA },	          // 11 Text Characters
+
+	{ "p12.3d",		0x04000, 0xff495a16, 6 | BRF_GRA },	          // 12 Background Characters
+	{ "p13.3c",		0x04000, 0xf8344843, 6 | BRF_GRA },	          // 13
+
+	{ "p7.7h",		0x04000, 0x06b92c88, 9 | BRF_GRA },	          // 14 Sprites
+	{ "p8.7f",		0x04000, 0x63d0e2eb, 9 | BRF_GRA },	          // 15
+	{ "p9.7e",		0x04000, 0x872e3fac, 9 | BRF_GRA },	          // 16
+};
+
+STD_ROM_PICK(tnk3b)
+STD_ROM_FN(tnk3b)
+
+struct BurnDriver BurnDrvTnk3b = {
+	"tnk3b", "tnk3", NULL, NULL, "1985",
+	"T.A.N.K (Bootleg, 8-way Joystick)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, tnk3bRomInfo, tnk3bRomName, NULL, NULL, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
+	Tnk3bInit, DrvExit, Tnk3Frame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
+	224, 288, 3, 4
+};
 
 // Athena
 

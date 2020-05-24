@@ -139,6 +139,8 @@ void retro_set_environment(retro_environment_t cb)
 		{ "Sega Master System", "sms", subsystem_rom, 1, RETRO_GAME_TYPE_SMS },
 		{ "Sega Megadrive", "md", subsystem_rom, 1, RETRO_GAME_TYPE_MD },
 		{ "Sega SG-1000", "sg1k", subsystem_rom, 1, RETRO_GAME_TYPE_SG1K },
+		{ "SNK Neogeo Pocket", "ngp", subsystem_rom, 1, RETRO_GAME_TYPE_NGP },
+		{ "SNK Neogeo Pocket Color", "ngpc", subsystem_rom, 1, RETRO_GAME_TYPE_NGPC },
 		{ "ZX Spectrum", "spec", subsystem_rom, 1, RETRO_GAME_TYPE_SPEC },
 		{ "Neogeo CD", "neocd", subsystem_iso, 1, RETRO_GAME_TYPE_NEOCD },
 		{ NULL },
@@ -1335,6 +1337,14 @@ bool retro_load_game(const struct retro_game_info *info)
 			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem fds identified from parent folder\n");
 			prefix = "fds_";
 		}
+		if(strcmp(g_rom_parent_dir, "ngp")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem ngp identified from parent folder\n");
+			prefix = "ngp_";
+		}
+		if(strcmp(g_rom_parent_dir, "ngpc")==0) {
+			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem ngpc identified from parent folder\n");
+			prefix = "ngpc_";
+		}
 		if(strcmp(g_rom_parent_dir, "neocd")==0) {
 			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
 			prefix = "";
@@ -1395,6 +1405,12 @@ bool retro_load_game_special(unsigned game_type, const struct retro_game_info *i
 			break;
 		case RETRO_GAME_TYPE_FDS:
 			prefix = "fds_";
+			break;
+		case RETRO_GAME_TYPE_NGP:
+			prefix = "ngp_";
+			break;
+		case RETRO_GAME_TYPE_NGPC:
+			prefix = "ngpc_";
 			break;
 		case RETRO_GAME_TYPE_NEOCD:
 			prefix = "";

@@ -2701,6 +2701,13 @@
 		<rom name="curse (jpn).bin" size="524288" crc="a4fbf9a9"/>
 		<driver status="good"/>
 	</game>
+	<game name="custodian">
+		<description>Custodian MD (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Custodian (Japan, USA, Europe) (Unl).bin" size="1048576" crc="0712856b"/>
+		<driver status="good"/>
+	</game>
 	<game name="cutiesuz">
 		<description>Cutie Suzuki no Ringside Angel (Jpn)</description>
 		<year>1990</year>
@@ -4375,7 +4382,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fixitfelixjr">
-		<description>Fix It Felix Jr.</description>
+		<description>Fix It Felix Jr. (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>2014 TOBIKOMI / Airwalkstudios</manufacturer>
 		<rom name="FixItFelixJr_AirwalkStudios.bin" size="601870" crc="424ff451"/>
@@ -4962,6 +4969,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14993.bin" size="524288" crc="c4820a03"/>
+		<driver status="good"/>
+	</game>
+	<game name="grielqst">
+		<description>Griel's Quest for the Holy Porron (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Oook!Lab</manufacturer>
+		<rom name="Griel's Quest for the Holy Porron.bin" size="2359296" crc="e1c3e75c"/>
 		<driver status="good"/>
 	</game>
 	<game name="grindst">
@@ -6176,7 +6190,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="labbaye">
-		<description>L'Abbaye Des Morts</description>
+		<description>L'Abbaye Des Morts (HB) [Homebrew]</description>
 		<year>2010</year>
 		<manufacturer>2010 Locomalito and Gryzor</manufacturer>
 		<rom name="20170907 - AbbayeMD.bin" size="3932160" crc="8865ee24"/>
@@ -6897,7 +6911,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cperils">
-		<description>Mega Cheril Perils</description>
+		<description>Mega Cheril Perils (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>2016 The Mojon Twins</manufacturer>
 		<rom name="mojon-twins--mega-cheril-perils.bin" size="2088832" crc="77afa0b1"/>
@@ -6967,7 +6981,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="megaqbert11">
-		<description>Mega Q-Bert (v1.1)</description>
+		<description>Mega Q-Bert (HB, v1.1) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>2016 Jaklub</manufacturer>
 		<rom name="Mega Qbert.bin" size="524288" crc="692a9227"/>
@@ -7408,7 +7422,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="miniplanets">
-		<description>Mini Planets (REV02)</description>
+		<description>Mini Planets (HB, REV02) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>2016 Sik</manufacturer>
 		<rom name="Miniplanets-REV02.bin" size="262144" crc="48460e4a"/>
@@ -7422,16 +7436,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="misplaced">
-		<description>Misplaced (English)</description>
+		<description>Misplaced (English) [Homebrew]</description>
 		<year>2019</year>
-		<manufacturer>2019 RetroSouls</manufacturer>
+		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Misplaced-EN.bin" size="917504" crc="d79fd3ec"/>
 		<driver status="good"/>
 	</game>
 	<game name="misplacedr" cloneof="misplaced" romof="misplaced">
-		<description>Misplaced (Russian)</description>
+		<description>Misplaced (HB, Russian) [Homebrew]</description>
 		<year>2019</year>
-		<manufacturer>2019 RetroSouls</manufacturer>
+		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Misplaced-RU.bin" size="917504" crc="1997b949"/>
 		<driver status="good"/>
 	</game>
@@ -8636,16 +8650,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="ohmummy">
-		<description>Oh Mummy</description>
+		<description>Oh Mummy [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>1985 Alternativo</manufacturer>
 		<rom name="Oh Mummy Genesis.bin" size="1048576" crc="b7f68b29"/>
 		<driver status="good"/>
 	</game>
 	<game name="oldtowers">
-		<description>Old Towers (Rev 1.2)</description>
+		<description>Old Towers (HB, V1.2) [Homebrew]</description>
 		<year>2019</year>
-		<manufacturer>2019 RetroSouls</manufacturer>
+		<manufacturer>RetroSouls</manufacturer>
 		<rom name="ot12.bin" size="786432" crc="d875e97d"/>
 		<driver status="good"/>
 	</game>
@@ -10030,7 +10044,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rickdang">
-		<description>Rick Dangerous (Rus)</description>
+		<description>Rick Dangerous (HB, Rus) [Homebrew]</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="rick dangerous (unl).bin" size="4063232" crc="545cbbe4"/>
@@ -11983,7 +11997,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starchaser">
-		<description>Star Chaser</description>
+		<description>Star Chaser (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Sik</manufacturer>
 		<rom name="starchaser-20140705.bin" size="45632" crc="fadd25a3"/>
@@ -13138,14 +13152,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="tnglwdd" cloneof="tnglwd" romof="tnglwd">
-		<description>Tanglewood (Demo)</description>
+		<description>Tanglewood (HB, Demo) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Big Evil Corp.</manufacturer>
 		<rom name="twood_demo.md" size="2097152" crc="9cc94381"/>
 		<driver status="good"/>
 	</game>
 	<game name="tnglwd">
-		<description>Tanglewood (V1.0)</description>
+		<description>Tanglewood (HB, v1.0) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Big Evil Corp.</manufacturer>
 		<rom name="twood_v1.0.md" size="4194304" crc="1a91c419"/>
@@ -14952,7 +14966,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultracore">
-		<description>Ultracore (USA)</description>
+		<description>Ultracore (HB, USA) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Digital Illusions</manufacturer>
 		<rom name="Ultracore.bin" size="2097152" crc="97ed4b2a"/>
@@ -15400,7 +15414,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wmargin">
-		<description>Water Margin - A Tale of Clouds and Wind (USA)</description>
+		<description>Water Margin - A Tale of Clouds and Wind (HB, USA) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Water Margin - A Tale of Clouds and Wind (USA).bin" size="2097152" crc="7f93b916"/>
@@ -15614,6 +15628,13 @@
 		<year>1993</year>
 		<manufacturer>JVC Musical Industries</manufacturer>
 		<rom name="wolfchild (usa).bin" size="1048576" crc="eb5b1cbf"/>
+		<driver status="good"/>
+	</game>
+	<game name="wolfstn3d">
+		<description>Wolfenstein 3D (HB, fv11 fix) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>gasega68k</manufacturer>
+		<rom name="Wolfenstein 3D [fv11 fix].bin" size="1638590" crc="3bad2015"/>
 		<driver status="good"/>
 	</game>
 	<game name="wolverin">
@@ -16534,7 +16555,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xenocrisis">
-		<description>Xenocrisis (USA)</description>
+		<description>Xeno Crisis (HB, USA) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Bitmap Bureau</manufacturer>
 		<rom name="Xenocrises.bin" size="4194304" crc="ac5f4cca"/>
@@ -16749,6 +16770,13 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12807.ic1" size="262144" crc="724d6965"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoomsecr">
+		<description>Zooming Secretary (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>AfroMonkeys</manufacturer>
+		<rom name="zooming secretary MD.bin" size="655360" crc="8243dce5"/>
 		<driver status="good"/>
 	</game>
 	<game name="zoop">

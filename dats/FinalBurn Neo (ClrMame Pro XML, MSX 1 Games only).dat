@@ -183,7 +183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afteroids" romof="msx">
-		<description>Afteroids</description>
+		<description>Afteroids (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Afteroids (1988)(Zigurat Software)(ES).rom" size="131072" crc="8a599dad"/>
@@ -213,7 +213,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alehop" romof="msx">
-		<description>Ale Hop!</description>
+		<description>Ale Hop! (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Ale Hop! (1988)(Topo Soft)(ES).rom" size="131072" crc="c2694922"/>
@@ -1095,7 +1095,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackbeard" romof="msx">
-		<description>Blackbeard [Uses joyport #2]</description>
+		<description>Blackbeard (Spa) [Uses joyport #2]</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Blackbeard (1988)(Topo Soft)(ES).rom" size="131072" crc="6e566a11"/>
@@ -1544,6 +1544,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="bdg110" romof="msx">
+		<description>Buddhagillie (HB, v1.1)</description>
+		<year>2018</year>
+		<manufacturer>GW's Workshop</manufacturer>
+		<rom name="buddhagillie110.rom" size="32768" crc="906e2ce6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="bullmigt" romof="msx">
 		<description>Bull to Mighty Kiki Ippatsu (Jpn)</description>
 		<year>1986</year>
@@ -1675,7 +1685,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="camelotw" romof="msx">
-		<description>Camelot Warriors</description>
+		<description>Camelot Warriors (Spa)</description>
 		<year>1986</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Camelot Warriors (1986)(Dinamic Software)(ES).rom" size="131072" crc="89a53f23"/>
@@ -1755,7 +1765,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ctrueno" romof="msx">
-		<description>Capitan Trueno [Uses joyport #2]</description>
+		<description>Capitan Trueno (Spa) [Uses joyport #2]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Capitan Trueno (1989)(Dinamic Software)(ES).rom" size="131072" crc="b1b434be"/>
@@ -2295,7 +2305,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="colt36" romof="msx">
-		<description>Colt 36</description>
+		<description>Colt 36 (Spa)</description>
 		<year>1987</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Colt 36 (1987)(Topo Soft)(ES).rom" size="65536" crc="7ce25b7c"/>
@@ -2435,7 +2445,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="corsarios" romof="msx">
-		<description>Corsarios [Uses joyport #2]</description>
+		<description>Corsarios (Spa) [Uses joyport #2]</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Corsarios (1989)(Opera Soft)(ES).rom" size="131072" crc="64005d08"/>
@@ -2935,7 +2945,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dipdip" romof="msx">
-		<description>Dip Dip</description>
+		<description>Dip Dip (Spa)</description>
 		<year>1985</year>
 		<manufacturer>Indescomp</manufacturer>
 		<rom name="Dip Dip (1985)(Indescomp)(ES).rom" size="16384" crc="9a2cc849"/>
@@ -3974,22 +3984,22 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="gameover" romof="msx">
+		<description>Game Over (Spa)</description>
+		<year>1988</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Game Over (1988)(Dinamic Software)(ES).rom" size="131072" crc="dfbbdf10"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="gameovr2" romof="msx">
 		<description>Game Over II (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="game over ii (1988)(dinamic software)(es)(side a)[re-release of phantis][run'cas-'].cas" size="50115" crc="12de1170"/>
 		<rom name="game over ii (1988)(dinamic software)(es)(side b)[re-release of phantis][run'cas-'].cas" size="49149" crc="994cd2a2"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<driver status="good"/>
-	</game>
-	<game name="gameover" romof="msx">
-		<description>Game Over</description>
-		<year>1988</year>
-		<manufacturer>Dinamic Software</manufacturer>
-		<rom name="Game Over (1988)(Dinamic Software)(ES).rom" size="131072" crc="dfbbdf10"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6098,7 +6108,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastmission" romof="msx">
-		<description>Last Mission</description>
+		<description>Last Mission (Spa)</description>
 		<year>1987</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Last Mission, The (1987)(Opera Soft)(ES).rom" size="131072" crc="494b9bc0"/>
@@ -6167,21 +6177,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="livingstone2" romof="msx">
-		<description>Livingstone Supongo II</description>
-		<year>1989</year>
+	<game name="livingstone" romof="msx">
+		<description>Livingstone Supongo (Spa)</description>
+		<year>1986</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Livingstone Supongo II (1989)(Opera Soft)(ES).rom" size="131072" crc="5410c622"/>
+		<rom name="Livingstone Supongo (1986)(Opera Soft)(ES).rom" size="131072" crc="cea7e9bc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="livingstone" romof="msx">
-		<description>Livingstone Supongo</description>
-		<year>1986</year>
+	<game name="livingstone2" romof="msx">
+		<description>Livingstone Supongo II (Spa)</description>
+		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
-		<rom name="Livingstone Supongo (1986)(Opera Soft)(ES).rom" size="131072" crc="cea7e9bc"/>
+		<rom name="Livingstone Supongo II (1989)(Opera Soft)(ES).rom" size="131072" crc="5410c622"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7007,21 +7017,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="mortadelo2" romof="msx">
-		<description>Mortadelo y Filemon II - Safari Callejero</description>
-		<year>1990</year>
+	<game name="mortadelo" romof="msx">
+		<description>Mortadelo y Filemon (Spa)</description>
+		<year>1988</year>
 		<manufacturer>Dro Soft</manufacturer>
-		<rom name="Mortadelo y Filemon II - Safari Callejero (1990)(Dro Soft)(ES).rom" size="131072" crc="0c6a21b2"/>
+		<rom name="Mortadelo y Filemon (1988)(Dro Soft)(ES).rom" size="131072" crc="ff4852f4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="mortadelo" romof="msx">
-		<description>Mortadelo y Filemon</description>
-		<year>1988</year>
+	<game name="mortadelo2" romof="msx">
+		<description>Mortadelo y Filemon II - Safari Callejero (Spa)</description>
+		<year>1990</year>
 		<manufacturer>Dro Soft</manufacturer>
-		<rom name="Mortadelo y Filemon (1988)(Dro Soft)(ES).rom" size="131072" crc="ff4852f4"/>
+		<rom name="Mortadelo y Filemon II - Safari Callejero (1990)(Dro Soft)(ES).rom" size="131072" crc="0c6a21b2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7608,6 +7618,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="ohmummy" romof="msx">
+		<description>Oh Mummy!! (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Longman Software</manufacturer>
+		<rom name="oh mummy!! (1984)(longman software)[bload'cas-',r].cas" size="14102" crc="6c4668ca"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="oilswell" romof="msx">
 		<description>Oil's Well (Jpn)</description>
 		<year>1985</year>
@@ -7623,6 +7643,16 @@
 		<year>1985</year>
 		<manufacturer>Comptiq</manufacturer>
 		<rom name="oil's well (japan) (alt 1).rom" size="32768" crc="aa2154fb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="opwolfos" romof="msx">
+		<description>Operation Wolf (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Ocean Software</manufacturer>
+		<rom name="operation wolf (1988)(ocean software)(gb)[bload'cas-',r].cas" size="160240" crc="eb678bcb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8129,7 +8159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="podero" romof="msx">
-		<description>Poder Oscuro, El</description>
+		<description>Poder Oscuro, El (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Poder Oscuro, El (1988)(Zigurat Software)(ES).rom" size="131072" crc="dc6eef71"/>
@@ -9670,6 +9700,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="subcmdr" romof="msx">
+		<description>Subcommander (HB, v1.01)</description>
+		<year>2020</year>
+		<manufacturer>Zoran Majcenic</manufacturer>
+		<rom name="subcommander101.rom" size="32768" crc="ef16325c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="suparobo" romof="msx">
 		<description>Suparobo (Jpn)</description>
 		<year>1984</year>
@@ -9970,6 +10010,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="top" romof="msx">
+		<description>Tails of Popolon (HB)</description>
+		<year>2017</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="tails of popolon.rom" size="32768" crc="d9b6c432"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="takameija" cloneof="takameij" romof="takameij">
 		<description>Takahashi Meijin no Boukenjima (Jpn, Alt)</description>
 		<year>1986</year>
@@ -10111,7 +10161,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tension" romof="msx">
-		<description>Tension</description>
+		<description>Tension (Spa)</description>
 		<year>1988</year>
 		<manufacturer>System 4</manufacturer>
 		<rom name="Tension (1988)(System 4)(ES).rom" size="32768" crc="3d78462c"/>
@@ -10812,7 +10862,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tuma7" romof="msx">
-		<description>Tuma 7</description>
+		<description>Tuma 7 (Spa)</description>
 		<year>1990</year>
 		<manufacturer>Delta Software</manufacturer>
 		<rom name="Tuma 7 (1990)(Delta Software)(ES).rom" size="131072" crc="61cb184d"/>
@@ -10822,7 +10872,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="turbogirl" romof="msx">
-		<description>Turbo Girl</description>
+		<description>Turbo Girl (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Turbo Girl (1988)(Dinamic Software)(ES).rom" size="131072" crc="6fded825"/>
@@ -10936,6 +10986,16 @@
 		<year>1986</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="tzr - grand prix rider (japan).rom" size="32768" crc="d792c827"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="ugamma" romof="msx">
+		<description>Uchusen Gamma (HB)</description>
+		<year>2019</year>
+		<manufacturer>usebox.net</manufacturer>
+		<rom name="uchusen gamma.rom" size="49152" crc="06a85e42"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11351,11 +11411,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
-	<game name="yazzie" romof="msx">
+	<game name="yazzie" cloneof="yazzier" romof="yazzier">
 		<description>Yazzie (HB)</description>
 		<year>2019</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="yazzie.rom" size="32768" crc="d659d039"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="yazzier" romof="msx">
+		<description>Yazzie Remastered (HB)</description>
+		<year>2020</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="yazzie remastered.rom" size="32768" crc="dd488abc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

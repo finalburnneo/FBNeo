@@ -969,6 +969,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfongponly")) == 0) {
+			write_datfile(DAT_NGP_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;
@@ -1098,6 +1103,7 @@ static void CreateSupportFolders()
 		{_T("roms/nes/")},
 		{_T("roms/nes_fds/")},
 		{_T("roms/nes_hb/")},
+		{_T("roms/ngp/")},
 		{_T("\0")} // END of list
 	};
 

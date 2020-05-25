@@ -184,6 +184,7 @@ void ComputeGammaLUT();
 #define DAT_NEOGEO_ONLY		11
 #define DAT_NES_ONLY        12
 #define DAT_FDS_ONLY        13
+#define DAT_NGP_ONLY        14
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

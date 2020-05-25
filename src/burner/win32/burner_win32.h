@@ -301,7 +301,7 @@ bool MenuHandleKeyboard(MSG*);
 void MenuRemoveTheme();
 
 // sel.cpp
-extern int nLoadMenuShowX;
+extern UINT64 nLoadMenuShowX;
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;
 extern int nLoadMenuBoardTypeFilter;

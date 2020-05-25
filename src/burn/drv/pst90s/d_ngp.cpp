@@ -905,7 +905,8 @@ static INT32 NgpGetZipName(char** pszName, UINT32 i)
 		return 1;
 	}
 
-	if (!strncmp("ngpc_ngp", pszGameName, 8)) { strcpy(szFilename, "ngp"); } else { if (pszGameName[3] == '_') { strcpy(szFilename, pszGameName + 4); } else { strcpy(szFilename, pszGameName + 5); }}
+	szFilename[0] = '\0';
+	if (pszGameName[3] == '_') { strcpy(szFilename, pszGameName + 4); }
 
 	*pszName = szFilename;
 
@@ -925,7 +926,7 @@ STD_ROM_PICK(ngpc_ngp)
 STD_ROM_FN(ngpc_ngp)
 
 struct BurnDriver BurnDrvngpc_ngp = {
-	"ngpc_ngp", NULL, NULL, NULL, "1998",
+	"ngp_ngp", NULL, NULL, NULL, "1998",
 	"NeoGeo Pocket (Bios)\0", "BIOS only", "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_SNK_NGP | HARDWARE_SNK_NGPC, GBF_BIOS, 0,
@@ -944,7 +945,7 @@ STDROMPICKEXT(ngp_bstars, ngp_bstars, ngpc_ngp)
 STD_ROM_FN(ngp_bstars)
 
 struct BurnDriver BurnDrvngp_bstars = {
-	"ngp_bstars", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_bstars", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Baseball Stars (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -964,7 +965,7 @@ STDROMPICKEXT(ngp_kof_mlon, ngp_kof_mlon, ngpc_ngp)
 STD_ROM_FN(ngp_kof_mlon)
 
 struct BurnDriver BurnDrvngp_kof_mlon = {
-	"ngp_kof_mlon", NULL, "ngpc_ngp", NULL, "199?",
+	"ngp_kof_mlon", NULL, "ngp_ngp", NULL, "199?",
 	"King of Fighters R-1 & Melon-chan no Seichou Nikki (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -984,7 +985,7 @@ STDROMPICKEXT(ngp_kofr1, ngp_kofr1, ngpc_ngp)
 STD_ROM_FN(ngp_kofr1)
 
 struct BurnDriver BurnDrvngp_kofr1 = {
-	"ngp_kofr1", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_kofr1", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Fighting Series - King of Fighters R-1 (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1004,7 +1005,7 @@ STDROMPICKEXT(ngp_melonchn, ngp_melonchn, ngpc_ngp)
 STD_ROM_FN(ngp_melonchn)
 
 struct BurnDriver BurnDrvngp_melonchn = {
-	"ngp_melonchn", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_melonchn", NULL, "ngp_ngp", NULL, "1998",
 	"Melon-chan no Seichou Nikki (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1024,7 +1025,7 @@ STDROMPICKEXT(ngp_neocher, ngp_neocher, ngpc_ngp)
 STD_ROM_FN(ngp_neocher)
 
 struct BurnDriver BurnDrvngp_neocher = {
-	"ngp_neocher", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_neocher", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Casino Series - Neo Cherry Master (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1044,7 +1045,7 @@ STDROMPICKEXT(ngp_neocup98, ngp_neocup98, ngpc_ngp)
 STD_ROM_FN(ngp_neocup98)
 
 struct BurnDriver BurnDrvngp_neocup98 = {
-	"ngp_neocup98", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_neocup98", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Neo Geo Cup '98 (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1064,7 +1065,7 @@ STDROMPICKEXT(ngp_ptennis, ngp_ptennis, ngpc_ngp)
 STD_ROM_FN(ngp_ptennis)
 
 struct BurnDriver BurnDrvngp_ptennis = {
-	"ngp_ptennis", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_ptennis", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Pocket Tennis (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1084,7 +1085,7 @@ STDROMPICKEXT(ngp_samsho, ngp_samsho, ngpc_ngp)
 STD_ROM_FN(ngp_samsho)
 
 struct BurnDriver BurnDrvngp_samsho = {
-	"ngp_samsho", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_samsho", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Fighting Series - Samurai Spirit! (Jpn) ~ Samurai Shodown! (Euro)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1104,7 +1105,7 @@ STDROMPICKEXT(ngp_shougi, ngp_shougi, ngpc_ngp)
 STD_ROM_FN(ngp_shougi)
 
 struct BurnDriver BurnDrvngp_shougi = {
-	"ngp_shougi", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_shougi", NULL, "ngp_ngp", NULL, "1998",
 	"Shougi no Tatsujin (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1124,7 +1125,7 @@ STDROMPICKEXT(ngp_tsunapn, ngp_tsunapn, ngpc_ngp)
 STD_ROM_FN(ngp_tsunapn)
 
 struct BurnDriver BurnDrvngp_tsunapn = {
-	"ngp_tsunapn", NULL, "ngpc_ngp", NULL, "1998",
+	"ngp_tsunapn", NULL, "ngp_ngp", NULL, "1998",
 	"Renketsu Puzzle Tsunagete Pon! (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
@@ -1144,7 +1145,7 @@ STDROMPICKEXT(ngpc_bakumats, ngpc_bakumats, ngpc_ngp)
 STD_ROM_FN(ngpc_bakumats)
 
 struct BurnDriver BurnDrvngpc_bakumats = {
-	"ngpc_bakumats", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_bakumats", NULL, "ngp_ngp", NULL, "2000",
 	"Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1164,7 +1165,7 @@ STDROMPICKEXT(ngpc_bigbang, ngpc_bigbang, ngpc_ngp)
 STD_ROM_FN(ngpc_bigbang)
 
 struct BurnDriver BurnDrvngpc_bigbang = {
-	"ngpc_bigbang", "ngpc_wrestmad", "ngpc_ngp", NULL, "2000",
+	"ngp_bigbang", "ngp_wrestmad", "ngp_ngp", NULL, "2000",
 	"Big Bang Pro Wrestling (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1184,7 +1185,7 @@ STDROMPICKEXT(ngpc_bikkuri, ngpc_bikkuri, ngpc_ngp)
 STD_ROM_FN(ngpc_bikkuri)
 
 struct BurnDriver BurnDrvngpc_bikkuri = {
-	"ngpc_bikkuri", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_bikkuri", NULL, "ngp_ngp", NULL, "2000",
 	"Bikkuriman 2000 - Viva! Pocket Festiva! (Jpn)\0", NULL, "Sega Toys", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1204,7 +1205,7 @@ STDROMPICKEXT(ngpc_biomotor, ngpc_biomotor, ngpc_ngp)
 STD_ROM_FN(ngpc_biomotor)
 
 struct BurnDriver BurnDrvngpc_biomotor = {
-	"ngpc_biomotor", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_biomotor", NULL, "ngp_ngp", NULL, "1999",
 	"BioMotor Unitron (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1224,7 +1225,7 @@ STDROMPICKEXT(ngpc_biomotorj, ngpc_biomotorj, ngpc_ngp)
 STD_ROM_FN(ngpc_biomotorj)
 
 struct BurnDriver BurnDrvngpc_biomotorj = {
-	"ngpc_biomotorj", "ngpc_biomotor", "ngpc_ngp", NULL, "1999",
+	"ngp_biomotorj", "ngp_biomotor", "ngp_ngp", NULL, "1999",
 	"BioMotor Unitron (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1244,7 +1245,7 @@ STDROMPICKEXT(ngpc_bstarsc, ngpc_bstarsc, ngpc_ngp)
 STD_ROM_FN(ngpc_bstarsc)
 
 struct BurnDriver BurnDrvngpc_bstarsc = {
-	"ngpc_bstarsc", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_bstarsc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Baseball Stars Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1264,7 +1265,7 @@ STDROMPICKEXT(ngpc_bam, ngpc_bam, ngpc_ngp)
 STD_ROM_FN(ngpc_bam)
 
 struct BurnDriver BurnDrvngpc_bam = {
-	"ngpc_bam", "ngpc_pbobble", "ngpc_ngp", NULL, "1999",
+	"ngp_bam", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Bust-A-Move Pocket (USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1284,7 +1285,7 @@ STDROMPICKEXT(ngpc_bamp, ngpc_bamp, ngpc_ngp)
 STD_ROM_FN(ngpc_bamp)
 
 struct BurnDriver BurnDrvngpc_bamp = {
-	"ngpc_bamp", "ngpc_pbobble", "ngpc_ngp", NULL, "1999",
+	"ngp_bamp", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Bust-A-Move Pocket (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1304,7 +1305,7 @@ STDROMPICKEXT(ngpc_coolboar, ngpc_coolboar, ngpc_ngp)
 STD_ROM_FN(ngpc_coolboar)
 
 struct BurnDriver BurnDrvngpc_coolboar = {
-	"ngpc_coolboar", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_coolboar", NULL, "ngp_ngp", NULL, "2000",
 	"Cool Boarders Pocket (Euro, Jpn)\0", NULL, "UEP Systems", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1324,7 +1325,7 @@ STDROMPICKEXT(ngpc_coolcool, ngpc_coolcool, ngpc_ngp)
 STD_ROM_FN(ngpc_coolcool)
 
 struct BurnDriver BurnDrvngpc_coolcool = {
-	"ngpc_coolcool", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_coolcool", NULL, "ngp_ngp", NULL, "2000",
 	"Cool Cool Jam (Euro, USA, Sample)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1344,7 +1345,7 @@ STDROMPICKEXT(ngpc_coolcoolj, ngpc_coolcoolj, ngpc_ngp)
 STD_ROM_FN(ngpc_coolcoolj)
 
 struct BurnDriver BurnDrvngpc_coolcoolj = {
-	"ngpc_coolcoolj", "ngpc_coolcool", "ngpc_ngp", NULL, "2000",
+	"ngp_coolcoolj", "ngp_coolcool", "ngp_ngp", NULL, "2000",
 	"Cool Cool Jam (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1364,7 +1365,7 @@ STDROMPICKEXT(ngpc_cotton, ngpc_cotton, ngpc_ngp)
 STD_ROM_FN(ngpc_cotton)
 
 struct BurnDriver BurnDrvngpc_cotton = {
-	"ngpc_cotton", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_cotton", NULL, "ngp_ngp", NULL, "2000",
 	"Fantastic Night Dreams Cotton (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1384,7 +1385,7 @@ STDROMPICKEXT(ngpc_cottonj, ngpc_cottonj, ngpc_ngp)
 STD_ROM_FN(ngpc_cottonj)
 
 struct BurnDriver BurnDrvngpc_cottonj = {
-	"ngpc_cottonj", "ngpc_cotton", "ngpc_ngp", NULL, "2000",
+	"ngp_cottonj", "ngp_cotton", "ngp_ngp", NULL, "2000",
 	"Fantastic Night Dreams Cotton (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1404,7 +1405,7 @@ STDROMPICKEXT(ngpc_crushrol, ngpc_crushrol, ngpc_ngp)
 STD_ROM_FN(ngpc_crushrol)
 
 struct BurnDriver BurnDrvngpc_crushrol = {
-	"ngpc_crushrol", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_crushrol", NULL, "ngp_ngp", NULL, "1999",
 	"Crush Roller (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1424,7 +1425,7 @@ STDROMPICKEXT(ngpc_darkarms, ngpc_darkarms, ngpc_ngp)
 STD_ROM_FN(ngpc_darkarms)
 
 struct BurnDriver BurnDrvngpc_darkarms = {
-	"ngpc_darkarms", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_darkarms", NULL, "ngp_ngp", NULL, "1999",
 	"Dark Arms - Beast Buster 1999 (Euro, USA) ~ Beast Buster - Yami no Seitai Heiki (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1444,7 +1445,7 @@ STDROMPICKEXT(ngpc_darkarmsp, ngpc_darkarmsp, ngpc_ngp)
 STD_ROM_FN(ngpc_darkarmsp)
 
 struct BurnDriver BurnDrvngpc_darkarmsp = {
-	"ngpc_darkarmsp", "ngpc_darkarms", "ngpc_ngp", NULL, "1999",
+	"ngp_darkarmsp", "ngp_darkarms", "ngp_ngp", NULL, "1999",
 	"Dark Arms - Beast Buster 1999 (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1464,7 +1465,7 @@ STDROMPICKEXT(ngpc_deltawrp, ngpc_deltawrp, ngpc_ngp)
 STD_ROM_FN(ngpc_deltawrp)
 
 struct BurnDriver BurnDrvngpc_deltawrp = {
-	"ngpc_deltawrp", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_deltawrp", NULL, "ngp_ngp", NULL, "2000",
 	"Delta Warp (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1484,7 +1485,7 @@ STDROMPICKEXT(ngpc_dendego2, ngpc_dendego2, ngpc_ngp)
 STD_ROM_FN(ngpc_dendego2)
 
 struct BurnDriver BurnDrvngpc_dendego2 = {
-	"ngpc_dendego2", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_dendego2", NULL, "ngp_ngp", NULL, "1999",
 	"Densha de Go! 2 on Neo Geo Pocket (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1504,7 +1505,7 @@ STDROMPICKEXT(ngpc_dendego2p, ngpc_dendego2p, ngpc_ngp)
 STD_ROM_FN(ngpc_dendego2p)
 
 struct BurnDriver BurnDrvngpc_dendego2p = {
-	"ngpc_dendego2p", "ngpc_dendego2", "ngpc_ngp", NULL, "1999",
+	"ngp_dendego2p", "ngp_dendego2", "ngp_ngp", NULL, "1999",
 	"Densha de Go! 2 on Neo Geo Pocket (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1524,7 +1525,7 @@ STDROMPICKEXT(ngpc_divealrm, ngpc_divealrm, ngpc_ngp)
 STD_ROM_FN(ngpc_divealrm)
 
 struct BurnDriver BurnDrvngpc_divealrm = {
-	"ngpc_divealrm", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_divealrm", NULL, "ngp_ngp", NULL, "1999",
 	"Dive Alert - Matt's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1544,7 +1545,7 @@ STDROMPICKEXT(ngpc_divealrb, ngpc_divealrb, ngpc_ngp)
 STD_ROM_FN(ngpc_divealrb)
 
 struct BurnDriver BurnDrvngpc_divealrb = {
-	"ngpc_divealrb", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_divealrb", NULL, "ngp_ngp", NULL, "1999",
 	"Dive Alert - Becky's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1564,7 +1565,7 @@ STDROMPICKEXT(ngpc_divealrmj, ngpc_divealrmj, ngpc_ngp)
 STD_ROM_FN(ngpc_divealrmj)
 
 struct BurnDriver BurnDrvngpc_divealrmj = {
-	"ngpc_divealrmj", "ngpc_divealrm", "ngpc_ngp", NULL, "1999",
+	"ngp_divealrmj", "ngp_divealrm", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Barn Hen (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1584,7 +1585,7 @@ STDROMPICKEXT(ngpc_divealrmjp, ngpc_divealrmjp, ngpc_ngp)
 STD_ROM_FN(ngpc_divealrmjp)
 
 struct BurnDriver BurnDrvngpc_divealrmjp = {
-	"ngpc_divealrmjp", "ngpc_divealrm", "ngpc_ngp", NULL, "1999",
+	"ngp_divealrmjp", "ngp_divealrm", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Barn Hen (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1604,7 +1605,7 @@ STDROMPICKEXT(ngpc_divealrbj, ngpc_divealrbj, ngpc_ngp)
 STD_ROM_FN(ngpc_divealrbj)
 
 struct BurnDriver BurnDrvngpc_divealrbj = {
-	"ngpc_divealrbj", "ngpc_divealrb", "ngpc_ngp", NULL, "1999",
+	"ngp_divealrbj", "ngp_divealrb", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Rebecca Hen (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1624,7 +1625,7 @@ STDROMPICKEXT(ngpc_dokodemo, ngpc_dokodemo, ngpc_ngp)
 STD_ROM_FN(ngpc_dokodemo)
 
 struct BurnDriver BurnDrvngpc_dokodemo = {
-	"ngpc_dokodemo", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_dokodemo", NULL, "ngp_ngp", NULL, "1999",
 	"Dokodemo Mahjong (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1644,7 +1645,7 @@ STDROMPICKEXT(ngpc_dynaslug, ngpc_dynaslug, ngpc_ngp)
 STD_ROM_FN(ngpc_dynaslug)
 
 struct BurnDriver BurnDrvngpc_dynaslug = {
-	"ngpc_dynaslug", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_dynaslug", NULL, "ngp_ngp", NULL, "2000",
 	"Dynamite Slugger (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1664,7 +1665,7 @@ STDROMPICKEXT(ngpc_evolutn, ngpc_evolutn, ngpc_ngp)
 STD_ROM_FN(ngpc_evolutn)
 
 struct BurnDriver BurnDrvngpc_evolutn = {
-	"ngpc_evolutn", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_evolutn", NULL, "ngp_ngp", NULL, "2000",
 	"Evolution - Eternal Dungeons (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1684,7 +1685,7 @@ STDROMPICKEXT(ngpc_evolutnj, ngpc_evolutnj, ngpc_ngp)
 STD_ROM_FN(ngpc_evolutnj)
 
 struct BurnDriver BurnDrvngpc_evolutnj = {
-	"ngpc_evolutnj", "ngpc_evolutn", "ngpc_ngp", NULL, "2000",
+	"ngp_evolutnj", "ngp_evolutn", "ngp_ngp", NULL, "2000",
 	"Shinki Sekai Evolution - Hateshinai Dungeon (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1704,7 +1705,7 @@ STDROMPICKEXT(ngpc_faselei, ngpc_faselei, ngpc_ngp)
 STD_ROM_FN(ngpc_faselei)
 
 struct BurnDriver BurnDrvngpc_faselei = {
-	"ngpc_faselei", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_faselei", NULL, "ngp_ngp", NULL, "2000",
 	"Faselei! (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1724,7 +1725,7 @@ STDROMPICKEXT(ngpc_faseleij, ngpc_faseleij, ngpc_ngp)
 STD_ROM_FN(ngpc_faseleij)
 
 struct BurnDriver BurnDrvngpc_faseleij = {
-	"ngpc_faseleij", "ngpc_faselei", "ngpc_ngp", NULL, "1999",
+	"ngp_faseleij", "ngp_faselei", "ngp_ngp", NULL, "1999",
 	"Faselei! (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1744,7 +1745,7 @@ STDROMPICKEXT(ngpc_fatfury, ngpc_fatfury, ngpc_ngp)
 STD_ROM_FN(ngpc_fatfury)
 
 struct BurnDriver BurnDrvngpc_fatfury = {
-	"ngpc_fatfury", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_fatfury", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1764,7 +1765,7 @@ STDROMPICKEXT(ngpc_fatfuryd, ngpc_fatfuryd, ngpc_ngp)
 STD_ROM_FN(ngpc_fatfuryd)
 
 struct BurnDriver BurnDrvngpc_fatfuryd = {
-	"ngpc_fatfuryd", "ngpc_fatfury", "ngpc_ngp", NULL, "1999",
+	"ngp_fatfuryd", "ngp_fatfury", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1784,7 +1785,7 @@ STDROMPICKEXT(ngpc_ganbaren, ngpc_ganbaren, ngpc_ngp)
 STD_ROM_FN(ngpc_ganbaren)
 
 struct BurnDriver BurnDrvngpc_ganbaren = {
-	"ngpc_ganbaren", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_ganbaren", NULL, "ngp_ngp", NULL, "2000",
 	"Ganbare Neo Poke-kun (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1804,7 +1805,7 @@ STDROMPICKEXT(ngpc_infinity, ngpc_infinity, ngpc_ngp)
 STD_ROM_FN(ngpc_infinity)
 
 struct BurnDriver BurnDrvngpc_infinity = {
-	"ngpc_infinity", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_infinity", NULL, "ngp_ngp", NULL, "2000",
 	"Infinity Cure (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1824,7 +1825,7 @@ STDROMPICKEXT(ngpc_kikousei, ngpc_kikousei, ngpc_ngp)
 STD_ROM_FN(ngpc_kikousei)
 
 struct BurnDriver BurnDrvngpc_kikousei = {
-	"ngpc_kikousei", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_kikousei", NULL, "ngp_ngp", NULL, "2000",
 	"Kikou Seiki Unitron - Sono Tsuide. Hikari Umareru Chi Yori. (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1844,7 +1845,7 @@ STDROMPICKEXT(ngpc_kofpara, ngpc_kofpara, ngpc_ngp)
 STD_ROM_FN(ngpc_kofpara)
 
 struct BurnDriver BurnDrvngpc_kofpara = {
-	"ngpc_kofpara", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_kofpara", NULL, "ngp_ngp", NULL, "2000",
 	"The King of Fighters - Battle de Paradise (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1864,7 +1865,7 @@ STDROMPICKEXT(ngpc_kofr2, ngpc_kofr2, ngpc_ngp)
 STD_ROM_FN(ngpc_kofr2)
 
 struct BurnDriver BurnDrvngpc_kofr2 = {
-	"ngpc_kofr2", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_kofr2", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1884,7 +1885,7 @@ STDROMPICKEXT(ngpc_kofr2d, ngpc_kofr2d, ngpc_ngp)
 STD_ROM_FN(ngpc_kofr2d)
 
 struct BurnDriver BurnDrvngpc_kofr2d = {
-	"ngpc_kofr2d", "ngpc_kofr2", "ngpc_ngp", NULL, "1999",
+	"ngp_kofr2d", "ngp_kofr2", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1904,7 +1905,7 @@ STDROMPICKEXT(ngpc_kofr2d2, ngpc_kofr2d2, ngpc_ngp)
 STD_ROM_FN(ngpc_kofr2d2)
 
 struct BurnDriver BurnDrvngpc_kofr2d2 = {
-	"ngpc_kofr2d2", "ngpc_kofr2", "ngpc_ngp", NULL, "1999",
+	"ngp_kofr2d2", "ngp_kofr2", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World, Demo Version 2)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1924,7 +1925,7 @@ STDROMPICKEXT(ngpc_koikoi, ngpc_koikoi, ngpc_ngp)
 STD_ROM_FN(ngpc_koikoi)
 
 struct BurnDriver BurnDrvngpc_koikoi = {
-	"ngpc_koikoi", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_koikoi", NULL, "ngp_ngp", NULL, "2000",
 	"Koi Koi Mahjong (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1944,7 +1945,7 @@ STDROMPICKEXT(ngpc_lastblad, ngpc_lastblad, ngpc_ngp)
 STD_ROM_FN(ngpc_lastblad)
 
 struct BurnDriver BurnDrvngpc_lastblad = {
-	"ngpc_lastblad", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_lastblad", NULL, "ngp_ngp", NULL, "2000",
 	"The Last Blade - Beyond the Destiny (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1964,7 +1965,7 @@ STDROMPICKEXT(ngpc_magdrop, ngpc_magdrop, ngpc_ngp)
 STD_ROM_FN(ngpc_magdrop)
 
 struct BurnDriver BurnDrvngpc_magdrop = {
-	"ngpc_magdrop", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_magdrop", NULL, "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -1984,7 +1985,7 @@ STDROMPICKEXT(ngpc_magdropj, ngpc_magdropj, ngpc_ngp)
 STD_ROM_FN(ngpc_magdropj)
 
 struct BurnDriver BurnDrvngpc_magdropj = {
-	"ngpc_magdropj", "ngpc_magdrop", "ngpc_ngp", NULL, "1999",
+	"ngp_magdropj", "ngp_magdrop", "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Jpn)\0", NULL, "Data East", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2004,7 +2005,7 @@ STDROMPICKEXT(ngpc_magdropjd, ngpc_magdropjd, ngpc_ngp)
 STD_ROM_FN(ngpc_magdropjd)
 
 struct BurnDriver BurnDrvngpc_magdropjd = {
-	"ngpc_magdropjd", "ngpc_magdrop", "ngpc_ngp", NULL, "1999",
+	"ngp_magdropjd", "ngp_magdrop", "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Demo)\0", NULL, "Data East", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2024,7 +2025,7 @@ STDROMPICKEXT(ngpc_memories, ngpc_memories, ngpc_ngp)
 STD_ROM_FN(ngpc_memories)
 
 struct BurnDriver BurnDrvngpc_memories = {
-	"ngpc_memories", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_memories", NULL, "ngp_ngp", NULL, "2000",
 	"Memories Off - Pure (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2044,7 +2045,7 @@ STDROMPICKEXT(ngpc_mezase, ngpc_mezase, ngpc_ngp)
 STD_ROM_FN(ngpc_mezase)
 
 struct BurnDriver BurnDrvngpc_mezase = {
-	"ngpc_mezase", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_mezase", NULL, "ngp_ngp", NULL, "2000",
 	"Mezase! Kanji Ou (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2064,7 +2065,7 @@ STDROMPICKEXT(ngpc_mizuki, ngpc_mizuki, ngpc_ngp)
 STD_ROM_FN(ngpc_mizuki)
 
 struct BurnDriver BurnDrvngpc_mizuki = {
-	"ngpc_mizuki", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_mizuki", NULL, "ngp_ngp", NULL, "1999",
 	"Mizuki Shigeru no Youkai Shashinkan (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2084,7 +2085,7 @@ STDROMPICKEXT(ngpc_mslug1st, ngpc_mslug1st, ngpc_ngp)
 STD_ROM_FN(ngpc_mslug1st)
 
 struct BurnDriver BurnDrvngpc_mslug1st = {
-	"ngpc_mslug1st", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_mslug1st", NULL, "ngp_ngp", NULL, "1999",
 	"Metal Slug - 1st Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2104,7 +2105,7 @@ STDROMPICKEXT(ngpc_mslug2nd, ngpc_mslug2nd, ngpc_ngp)
 STD_ROM_FN(ngpc_mslug2nd)
 
 struct BurnDriver BurnDrvngpc_mslug2nd = {
-	"ngpc_mslug2nd", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_mslug2nd", NULL, "ngp_ngp", NULL, "2000",
 	"Metal Slug - 2nd Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2124,7 +2125,7 @@ STDROMPICKEXT(ngpc_mslug2ndd, ngpc_mslug2ndd, ngpc_ngp)
 STD_ROM_FN(ngpc_mslug2ndd)
 
 struct BurnDriver BurnDrvngpc_mslug2ndd = {
-	"ngpc_mslug2ndd", "ngpc_mslug2nd", "ngpc_ngp", NULL, "2000",
+	"ngp_mslug2ndd", "ngp_mslug2nd", "ngp_ngp", NULL, "2000",
 	"Metal Slug - 2nd Mission (Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2144,7 +2145,7 @@ STDROMPICKEXT(ngpc_neo21, ngpc_neo21, ngpc_ngp)
 STD_ROM_FN(ngpc_neo21)
 
 struct BurnDriver BurnDrvngpc_neo21 = {
-	"ngpc_neo21", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_neo21", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo 21 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2164,7 +2165,7 @@ STDROMPICKEXT(ngpc_neobacca, ngpc_neobacca, ngpc_ngp)
 STD_ROM_FN(ngpc_neobacca)
 
 struct BurnDriver BurnDrvngpc_neobacca = {
-	"ngpc_neobacca", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_neobacca", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo Baccarat (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2184,7 +2185,7 @@ STDROMPICKEXT(ngpc_neobaccap, ngpc_neobaccap, ngpc_ngp)
 STD_ROM_FN(ngpc_neobaccap)
 
 struct BurnDriver BurnDrvngpc_neobaccap = {
-	"ngpc_neobaccap", "ngpc_neobacca", "ngpc_ngp", NULL, "2000",
+	"ngp_neobaccap", "ngp_neobacca", "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo Baccarat (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2204,7 +2205,7 @@ STDROMPICKEXT(ngpc_neocherc, ngpc_neocherc, ngpc_ngp)
 STD_ROM_FN(ngpc_neocherc)
 
 struct BurnDriver BurnDrvngpc_neocherc = {
-	"ngpc_neocherc", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neocherc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Cherry Master Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2224,7 +2225,7 @@ STDROMPICKEXT(ngpc_neochercp, ngpc_neochercp, ngpc_ngp)
 STD_ROM_FN(ngpc_neochercp)
 
 struct BurnDriver BurnDrvngpc_neochercp = {
-	"ngpc_neochercp", "ngpc_neocherc", "ngpc_ngp", NULL, "1999",
+	"ngp_neochercp", "ngp_neocherc", "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Cherry Master Color (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2244,7 +2245,7 @@ STDROMPICKEXT(ngpc_neocuppl, ngpc_neocuppl, ngpc_ngp)
 STD_ROM_FN(ngpc_neocuppl)
 
 struct BurnDriver BurnDrvngpc_neocuppl = {
-	"ngpc_neocuppl", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neocuppl", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Neo Geo Cup '98 Plus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2264,7 +2265,7 @@ STDROMPICKEXT(ngpc_neoderby, ngpc_neoderby, ngpc_ngp)
 STD_ROM_FN(ngpc_neoderby)
 
 struct BurnDriver BurnDrvngpc_neoderby = {
-	"ngpc_neoderby", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neoderby", NULL, "ngp_ngp", NULL, "1999",
 	"Neo Derby Champ Daiyosou (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2284,7 +2285,7 @@ STDROMPICKEXT(ngpc_neodrag, ngpc_neodrag, ngpc_ngp)
 STD_ROM_FN(ngpc_neodrag)
 
 struct BurnDriver BurnDrvngpc_neodrag = {
-	"ngpc_neodrag", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neodrag", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Dragon's Wild (World, v13)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2304,7 +2305,7 @@ STDROMPICKEXT(ngpc_neodraga, ngpc_neodraga, ngpc_ngp)
 STD_ROM_FN(ngpc_neodraga)
 
 struct BurnDriver BurnDrvngpc_neodraga = {
-	"ngpc_neodraga", "ngpc_neodrag", "ngpc_ngp", NULL, "1999",
+	"ngp_neodraga", "ngp_neodrag", "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Dragon's Wild (World, v11)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2324,7 +2325,7 @@ STDROMPICKEXT(ngpc_neomystr, ngpc_neomystr, ngpc_ngp)
 STD_ROM_FN(ngpc_neomystr)
 
 struct BurnDriver BurnDrvngpc_neomystr = {
-	"ngpc_neomystr", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neomystr", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Mystery Bonus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2344,7 +2345,7 @@ STDROMPICKEXT(ngpc_neoproyk, ngpc_neoproyk, ngpc_ngp)
 STD_ROM_FN(ngpc_neoproyk)
 
 struct BurnDriver BurnDrvngpc_neoproyk = {
-	"ngpc_neoproyk", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neoproyk", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Neo Poke Pro Yakyuu (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2364,7 +2365,7 @@ STDROMPICKEXT(ngpc_neoturfm, ngpc_neoturfm, ngpc_ngp)
 STD_ROM_FN(ngpc_neoturfm)
 
 struct BurnDriver BurnDrvngpc_neoturfm = {
-	"ngpc_neoturfm", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_neoturfm", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Big Tournament Golf ~ Neo Turf Masters (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2384,7 +2385,7 @@ STDROMPICKEXT(ngpc_nigeronp, ngpc_nigeronp, ngpc_ngp)
 STD_ROM_FN(ngpc_nigeronp)
 
 struct BurnDriver BurnDrvngpc_nigeronp = {
-	"ngpc_nigeronp", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_nigeronp", NULL, "ngp_ngp", NULL, "2000",
 	"Nige-ron-pa (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2404,7 +2405,7 @@ STDROMPICKEXT(ngpc_oekakip, ngpc_oekakip, ngpc_ngp)
 STD_ROM_FN(ngpc_oekakip)
 
 struct BurnDriver BurnDrvngpc_oekakip = {
-	"ngpc_oekakip", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_oekakip", NULL, "ngp_ngp", NULL, "2000",
 	"Oekaki Puzzle (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2424,7 +2425,7 @@ STDROMPICKEXT(ngpc_ogrebatl, ngpc_ogrebatl, ngpc_ngp)
 STD_ROM_FN(ngpc_ogrebatl)
 
 struct BurnDriver BurnDrvngpc_ogrebatl = {
-	"ngpc_ogrebatl", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_ogrebatl", NULL, "ngp_ngp", NULL, "2000",
 	"Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2444,7 +2445,7 @@ STDROMPICKEXT(ngpc_pachinko, ngpc_pachinko, ngpc_ngp)
 STD_ROM_FN(ngpc_pachinko)
 
 struct BurnDriver BurnDrvngpc_pachinko = {
-	"ngpc_pachinko", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_pachinko", NULL, "ngp_ngp", NULL, "1999",
 	"Pachinko Hisshou Guide - Pocket Parlor (Jpn)\0", NULL, "Japan Vistec", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2464,7 +2465,7 @@ STDROMPICKEXT(ngpc_pacman, ngpc_pacman, ngpc_ngp)
 STD_ROM_FN(ngpc_pacman)
 
 struct BurnDriver BurnDrvngpc_pacman = {
-	"ngpc_pacman", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_pacman", NULL, "ngp_ngp", NULL, "1999",
 	"Pac-Man (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2484,7 +2485,7 @@ STDROMPICKEXT(ngpc_pbobble, ngpc_pbobble, ngpc_ngp)
 STD_ROM_FN(ngpc_pbobble)
 
 struct BurnDriver BurnDrvngpc_pbobble = {
-	"ngpc_pbobble", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_pbobble", NULL, "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v10)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2504,7 +2505,7 @@ STDROMPICKEXT(ngpc_pbobblea, ngpc_pbobblea, ngpc_ngp)
 STD_ROM_FN(ngpc_pbobblea)
 
 struct BurnDriver BurnDrvngpc_pbobblea = {
-	"ngpc_pbobblea", "ngpc_pbobble", "ngpc_ngp", NULL, "1999",
+	"ngp_pbobblea", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v09)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2524,7 +2525,7 @@ STDROMPICKEXT(ngpc_pbobbleb, ngpc_pbobbleb, ngpc_ngp)
 STD_ROM_FN(ngpc_pbobbleb)
 
 struct BurnDriver BurnDrvngpc_pbobbleb = {
-	"ngpc_pbobbleb", "ngpc_pbobble", "ngpc_ngp", NULL, "1999",
+	"ngp_pbobbleb", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v09 Prototype?)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2544,7 +2545,7 @@ STDROMPICKEXT(ngpc_picturep, ngpc_picturep, ngpc_ngp)
 STD_ROM_FN(ngpc_picturep)
 
 struct BurnDriver BurnDrvngpc_picturep = {
-	"ngpc_picturep", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_picturep", NULL, "ngp_ngp", NULL, "2000",
 	"Picture Puzzle (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2564,7 +2565,7 @@ STDROMPICKEXT(ngpc_poktlove, ngpc_poktlove, ngpc_ngp)
 STD_ROM_FN(ngpc_poktlove)
 
 struct BurnDriver BurnDrvngpc_poktlove = {
-	"ngpc_poktlove", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_poktlove", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Love if (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2584,7 +2585,7 @@ STDROMPICKEXT(ngpc_pockrev, ngpc_pockrev, ngpc_ngp)
 STD_ROM_FN(ngpc_pockrev)
 
 struct BurnDriver BurnDrvngpc_pockrev = {
-	"ngpc_pockrev", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pockrev", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2604,7 +2605,7 @@ STDROMPICKEXT(ngpc_pockrevj, ngpc_pockrevj, ngpc_ngp)
 STD_ROM_FN(ngpc_pockrevj)
 
 struct BurnDriver BurnDrvngpc_pockrevj = {
-	"ngpc_pockrevj", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pockrevj", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2624,7 +2625,7 @@ STDROMPICKEXT(ngpc_prtymail, ngpc_prtymail, ngpc_ngp)
 STD_ROM_FN(ngpc_prtymail)
 
 struct BurnDriver BurnDrvngpc_prtymail = {
-	"ngpc_prtymail", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_prtymail", NULL, "ngp_ngp", NULL, "1999",
 	"Party Mail (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2644,7 +2645,7 @@ STDROMPICKEXT(ngpc_prtymailp, ngpc_prtymailp, ngpc_ngp)
 STD_ROM_FN(ngpc_prtymailp)
 
 struct BurnDriver BurnDrvngpc_prtymailp = {
-	"ngpc_prtymailp", "ngpc_prtymail", "ngpc_ngp", NULL, "1999",
+	"ngp_prtymailp", "ngp_prtymail", "ngp_ngp", NULL, "1999",
 	"Party Mail (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2664,7 +2665,7 @@ STDROMPICKEXT(ngpc_pslotazt, ngpc_pslotazt, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotazt)
 
 struct BurnDriver BurnDrvngpc_pslotazt = {
-	"ngpc_pslotazt", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pslotazt", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Azteca (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2684,7 +2685,7 @@ STDROMPICKEXT(ngpc_pslotdk2, ngpc_pslotdk2, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotdk2)
 
 struct BurnDriver BurnDrvngpc_pslotdk2 = {
-	"ngpc_pslotdk2", NULL, "ngpc_ngp", NULL, "2001",
+	"ngp_pslotdk2", NULL, "ngp_ngp", NULL, "2001",
 	"Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2704,7 +2705,7 @@ STDROMPICKEXT(ngpc_pslotds2, ngpc_pslotds2, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotds2)
 
 struct BurnDriver BurnDrvngpc_pslotds2 = {
-	"ngpc_pslotds2", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pslotds2", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2724,7 +2725,7 @@ STDROMPICKEXT(ngpc_pslotecp, ngpc_pslotecp, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotecp)
 
 struct BurnDriver BurnDrvngpc_pslotecp = {
-	"ngpc_pslotecp", NULL, "ngpc_ngp", NULL, "2001",
+	"ngp_pslotecp", NULL, "ngp_ngp", NULL, "2001",
 	"Pachi-Slot Aruze Oukoku Pocket - e-Cup (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2744,7 +2745,7 @@ STDROMPICKEXT(ngpc_pslothan, ngpc_pslothan, ngpc_ngp)
 STD_ROM_FN(ngpc_pslothan)
 
 struct BurnDriver BurnDrvngpc_pslothan = {
-	"ngpc_pslothan", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_pslothan", NULL, "ngp_ngp", NULL, "1999",
 	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v5)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2764,7 +2765,7 @@ STDROMPICKEXT(ngpc_pslothana, ngpc_pslothana, ngpc_ngp)
 STD_ROM_FN(ngpc_pslothana)
 
 struct BurnDriver BurnDrvngpc_pslothana = {
-	"ngpc_pslothana", "ngpc_pslothan", "ngpc_ngp", NULL, "1999",
+	"ngp_pslothana", "ngp_pslothan", "ngp_ngp", NULL, "1999",
 	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v3)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2784,7 +2785,7 @@ STDROMPICKEXT(ngpc_pslotooh, ngpc_pslotooh, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotooh)
 
 struct BurnDriver BurnDrvngpc_pslotooh = {
-	"ngpc_pslotooh", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pslotooh", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2804,7 +2805,7 @@ STDROMPICKEXT(ngpc_pslotpc2, ngpc_pslotpc2, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotpc2)
 
 struct BurnDriver BurnDrvngpc_pslotpc2 = {
-	"ngpc_pslotpc2", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pslotpc2", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2824,7 +2825,7 @@ STDROMPICKEXT(ngpc_pslotwrd, ngpc_pslotwrd, ngpc_ngp)
 STD_ROM_FN(ngpc_pslotwrd)
 
 struct BurnDriver BurnDrvngpc_pslotwrd = {
-	"ngpc_pslotwrd", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_pslotwrd", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2844,7 +2845,7 @@ STDROMPICKEXT(ngpc_ptennisc, ngpc_ptennisc, ngpc_ngp)
 STD_ROM_FN(ngpc_ptennisc)
 
 struct BurnDriver BurnDrvngpc_ptennisc = {
-	"ngpc_ptennisc", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_ptennisc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Pocket Tennis Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2864,7 +2865,7 @@ STDROMPICKEXT(ngpc_puyopop, ngpc_puyopop, ngpc_ngp)
 STD_ROM_FN(ngpc_puyopop)
 
 struct BurnDriver BurnDrvngpc_puyopop = {
-	"ngpc_puyopop", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_puyopop", NULL, "ngp_ngp", NULL, "1999",
 	"Puyo Pop (World, v6) ~ Puyo Pyuo Tsuu (Jpn, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2884,7 +2885,7 @@ STDROMPICKEXT(ngpc_puyopopa, ngpc_puyopopa, ngpc_ngp)
 STD_ROM_FN(ngpc_puyopopa)
 
 struct BurnDriver BurnDrvngpc_puyopopa = {
-	"ngpc_puyopopa", "ngpc_puyopop", "ngpc_ngp", NULL, "1999",
+	"ngp_puyopopa", "ngp_puyopop", "ngp_ngp", NULL, "1999",
 	"Puyo Pop (World, v5) ~ Puyo Pyuo Tsuu (Jpn, v5)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2904,7 +2905,7 @@ STDROMPICKEXT(ngpc_puzzlink, ngpc_puzzlink, ngpc_ngp)
 STD_ROM_FN(ngpc_puzzlink)
 
 struct BurnDriver BurnDrvngpc_puzzlink = {
-	"ngpc_puzzlink", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_puzzlink", NULL, "ngp_ngp", NULL, "1999",
 	"Puzzle Link (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2924,7 +2925,7 @@ STDROMPICKEXT(ngpc_puzzlnk2, ngpc_puzzlnk2, ngpc_ngp)
 STD_ROM_FN(ngpc_puzzlnk2)
 
 struct BurnDriver BurnDrvngpc_puzzlnk2 = {
-	"ngpc_puzzlnk2", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_puzzlnk2", NULL, "ngp_ngp", NULL, "2000",
 	"Puzzle Link 2 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2944,7 +2945,7 @@ STDROMPICKEXT(ngpc_tsunapnc, ngpc_tsunapnc, ngpc_ngp)
 STD_ROM_FN(ngpc_tsunapnc)
 
 struct BurnDriver BurnDrvngpc_tsunapnc = {
-	"ngpc_tsunapnc", "ngpc_puzzlink", "ngpc_ngp", NULL, "1999",
+	"ngp_tsunapnc", "ngp_puzzlink", "ngp_ngp", NULL, "1999",
 	"Renketsu Puzzle Tsunagete Pon! Color (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2964,7 +2965,7 @@ STDROMPICKEXT(ngpc_rockmanb, ngpc_rockmanb, ngpc_ngp)
 STD_ROM_FN(ngpc_rockmanb)
 
 struct BurnDriver BurnDrvngpc_rockmanb = {
-	"ngpc_rockmanb", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_rockmanb", NULL, "ngp_ngp", NULL, "2000",
 	"Rockman - Battle & Fighters (Jpn)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -2984,7 +2985,7 @@ STDROMPICKEXT(ngpc_rockmanbd, ngpc_rockmanbd, ngpc_ngp)
 STD_ROM_FN(ngpc_rockmanbd)
 
 struct BurnDriver BurnDrvngpc_rockmanbd = {
-	"ngpc_rockmanbd", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_rockmanbd", NULL, "ngp_ngp", NULL, "2000",
 	"Rockman - Battle & Fighters (Jpn, Demo)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3004,7 +3005,7 @@ STDROMPICKEXT(ngpc_samsho2, ngpc_samsho2, ngpc_ngp)
 STD_ROM_FN(ngpc_samsho2)
 
 struct BurnDriver BurnDrvngpc_samsho2 = {
-	"ngpc_samsho2", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_samsho2", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Samurai Shodown! 2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3024,7 +3025,7 @@ STDROMPICKEXT(ngpc_shanghai, ngpc_shanghai, ngpc_ngp)
 STD_ROM_FN(ngpc_shanghai)
 
 struct BurnDriver BurnDrvngpc_shanghai = {
-	"ngpc_shanghai", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_shanghai", NULL, "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3044,7 +3045,7 @@ STDROMPICKEXT(ngpc_shanghaipu, ngpc_shanghaipu, ngpc_ngp)
 STD_ROM_FN(ngpc_shanghaipu)
 
 struct BurnDriver BurnDrvngpc_shanghaipu = {
-	"ngpc_shanghaipu", "ngpc_shanghai", "ngpc_ngp", NULL, "1999",
+	"ngp_shanghaipu", "ngp_shanghai", "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (USA, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3064,7 +3065,7 @@ STDROMPICKEXT(ngpc_shanghaipj, ngpc_shanghaipj, ngpc_ngp)
 STD_ROM_FN(ngpc_shanghaipj)
 
 struct BurnDriver BurnDrvngpc_shanghaipj = {
-	"ngpc_shanghaipj", "ngpc_shanghai", "ngpc_ngp", NULL, "1999",
+	"ngp_shanghaipj", "ngp_shanghai", "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3084,7 +3085,7 @@ STDROMPICKEXT(ngpc_shougic, ngpc_shougic, ngpc_ngp)
 STD_ROM_FN(ngpc_shougic)
 
 struct BurnDriver BurnDrvngpc_shougic = {
-	"ngpc_shougic", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_shougic", NULL, "ngp_ngp", NULL, "1999",
 	"Shougi no Tatsujin Color (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3104,7 +3105,7 @@ STDROMPICKEXT(ngpc_snkgals, ngpc_snkgals, ngpc_ngp)
 STD_ROM_FN(ngpc_snkgals)
 
 struct BurnDriver BurnDrvngpc_snkgals = {
-	"ngpc_snkgals", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_snkgals", NULL, "ngp_ngp", NULL, "2000",
 	"SNK Gals' Fighters (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3124,7 +3125,7 @@ STDROMPICKEXT(ngpc_snkgalsj, ngpc_snkgalsj, ngpc_ngp)
 STD_ROM_FN(ngpc_snkgalsj)
 
 struct BurnDriver BurnDrvngpc_snkgalsj = {
-	"ngpc_snkgalsj", "ngpc_snkgals", "ngpc_ngp", NULL, "2000",
+	"ngp_snkgalsj", "ngp_snkgals", "ngp_ngp", NULL, "2000",
 	"SNK Gals' Fighters (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3144,7 +3145,7 @@ STDROMPICKEXT(ngpc_sonic, ngpc_sonic, ngpc_ngp)
 STD_ROM_FN(ngpc_sonic)
 
 struct BurnDriver BurnDrvngpc_sonic = {
-	"ngpc_sonic", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_sonic", NULL, "ngp_ngp", NULL, "2000",
 	"Sonic the Hedgehog - Pocket Adventure (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3164,7 +3165,7 @@ STDROMPICKEXT(ngpc_sonicp, ngpc_sonicp, ngpc_ngp)
 STD_ROM_FN(ngpc_sonicp)
 
 struct BurnDriver BurnDrvngpc_sonicp = {
-	"ngpc_sonicp", "ngpc_sonic", "ngpc_ngp", NULL, "2000",
+	"ngp_sonicp", "ngp_sonic", "ngp_ngp", NULL, "2000",
 	"Sonic the Hedgehog - Pocket Adventure (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3184,7 +3185,7 @@ STDROMPICKEXT(ngpc_sonicp2, ngpc_sonicp2, ngpc_ngp)
 STD_ROM_FN(ngpc_sonicp2)
 
 struct BurnDriver BurnDrvngpc_sonicp2 = {
-	"ngpc_sonicp2", "ngpc_sonic", "ngpc_ngp", NULL, "1999",
+	"ngp_sonicp2", "ngp_sonic", "ngp_ngp", NULL, "1999",
 	"Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3204,7 +3205,7 @@ STDROMPICKEXT(ngpc_hanadojo, ngpc_hanadojo, ngpc_ngp)
 STD_ROM_FN(ngpc_hanadojo)
 
 struct BurnDriver BurnDrvngpc_hanadojo = {
-	"ngpc_hanadojo", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_hanadojo", NULL, "ngp_ngp", NULL, "1999",
 	"Soreike!! Hanafuda Doujou (Jpn)\0", NULL, "Dyna", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3224,7 +3225,7 @@ STDROMPICKEXT(ngpc_srmp, ngpc_srmp, ngpc_ngp)
 STD_ROM_FN(ngpc_srmp)
 
 struct BurnDriver BurnDrvngpc_srmp = {
-	"ngpc_srmp", NULL, "ngpc_ngp", NULL, "2001",
+	"ngp_srmp", NULL, "ngp_ngp", NULL, "2001",
 	"Super Real Mahjong - Premium Collection (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3244,7 +3245,7 @@ STDROMPICKEXT(ngpc_svc, ngpc_svc, ngpc_ngp)
 STD_ROM_FN(ngpc_svc)
 
 struct BurnDriver BurnDrvngpc_svc = {
-	"ngpc_svc", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_svc", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3264,7 +3265,7 @@ STDROMPICKEXT(ngpc_svccard2, ngpc_svccard2, ngpc_ngp)
 STD_ROM_FN(ngpc_svccard2)
 
 struct BurnDriver BurnDrvngpc_svccard2 = {
-	"ngpc_svccard2", NULL, "ngpc_ngp", NULL, "2001",
+	"ngp_svccard2", NULL, "ngp_ngp", NULL, "2001",
 	"SNK vs. Capcom - Card Fighters 2 - Expand Edition (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3284,7 +3285,7 @@ STDROMPICKEXT(ngpc_svccardc, ngpc_svccardc, ngpc_ngp)
 STD_ROM_FN(ngpc_svccardc)
 
 struct BurnDriver BurnDrvngpc_svccardc = {
-	"ngpc_svccardc", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_svccardc", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3304,7 +3305,7 @@ STDROMPICKEXT(ngpc_svccardcj, ngpc_svccardcj, ngpc_ngp)
 STD_ROM_FN(ngpc_svccardcj)
 
 struct BurnDriver BurnDrvngpc_svccardcj = {
-	"ngpc_svccardcj", "ngpc_svccardc", "ngpc_ngp", NULL, "1999",
+	"ngp_svccardcj", "ngp_svccardc", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Supporters Version (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3324,7 +3325,7 @@ STDROMPICKEXT(ngpc_svccardp, ngpc_svccardp, ngpc_ngp)
 STD_ROM_FN(ngpc_svccardp)
 
 struct BurnDriver BurnDrvngpc_svccardp = {
-	"ngpc_svccardp", "ngpc_svccards", "ngpc_ngp", NULL, "1999",
+	"ngp_svccardp", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters (Jpn, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3344,7 +3345,7 @@ STDROMPICKEXT(ngpc_svccards, ngpc_svccards, ngpc_ngp)
 STD_ROM_FN(ngpc_svccards)
 
 struct BurnDriver BurnDrvngpc_svccards = {
-	"ngpc_svccards", NULL, "ngpc_ngp", NULL, "1999",
+	"ngp_svccards", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3364,7 +3365,7 @@ STDROMPICKEXT(ngpc_svccardsj, ngpc_svccardsj, ngpc_ngp)
 STD_ROM_FN(ngpc_svccardsj)
 
 struct BurnDriver BurnDrvngpc_svccardsj = {
-	"ngpc_svccardsj", "ngpc_svccards", "ngpc_ngp", NULL, "1999",
+	"ngp_svccardsj", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v7)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3384,7 +3385,7 @@ STDROMPICKEXT(ngpc_svccardsja, ngpc_svccardsja, ngpc_ngp)
 STD_ROM_FN(ngpc_svccardsja)
 
 struct BurnDriver BurnDrvngpc_svccardsja = {
-	"ngpc_svccardsja", "ngpc_svccards", "ngpc_ngp", NULL, "1999",
+	"ngp_svccardsja", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3404,7 +3405,7 @@ STDROMPICKEXT(ngpc_tsunapn2, ngpc_tsunapn2, ngpc_ngp)
 STD_ROM_FN(ngpc_tsunapn2)
 
 struct BurnDriver BurnDrvngpc_tsunapn2 = {
-	"ngpc_tsunapn2", "ngpc_puzzlnk2", "ngpc_ngp", NULL, "1999",
+	"ngp_tsunapn2", "ngp_puzzlnk2", "ngp_ngp", NULL, "1999",
 	"Tsunagete Pon! 2 (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3424,7 +3425,7 @@ STDROMPICKEXT(ngpc_wrestmad, ngpc_wrestmad, ngpc_ngp)
 STD_ROM_FN(ngpc_wrestmad)
 
 struct BurnDriver BurnDrvngpc_wrestmad = {
-	"ngpc_wrestmad", NULL, "ngpc_ngp", NULL, "2000",
+	"ngp_wrestmad", NULL, "ngp_ngp", NULL, "2000",
 	"Wrestling Madness (Euro, USA, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
@@ -3444,7 +3445,7 @@ STDROMPICKEXT(ngpc_ppaa01, ngpc_ppaa01, ngpc_ngp)
 STD_ROM_FN(ngpc_ppaa01)
 
 struct BurnDriverX BurnDrvngpc_ppaa01 = {
-	"ngpc_ppaa01", NULL, "ngpc_ngp", NULL, "19??",
+	"ngp_ppaa01", NULL, "ngp_ngp", NULL, "19??",
 	"Prize Game - PP-AA01 Pusher Program (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,

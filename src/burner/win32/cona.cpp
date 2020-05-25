@@ -58,6 +58,10 @@ int ConfigAppLoad()
   if (szValue) x = _tcstol(szValue, NULL, 0); }
 #define VAR64(x) { TCHAR* szValue = LabelCheck(szLine,_T(#x));			\
   if (szValue) x = (long long)_tcstod(szValue, NULL); }
+
+//for INT64/UINT64 aka long long:
+#define VARI64(x) { TCHAR* szValue = LabelCheck(szLine,_T(#x));			\
+  if (szValue) x = (long long)wcstoll(szValue, NULL, 0); }
 #define FLT(x) { TCHAR* szValue = LabelCheck(szLine,_T(#x));			\
   if (szValue) x = _tcstod(szValue, NULL); }
 #define STR(x) { TCHAR* szValue = LabelCheck(szLine,_T(#x) _T(" "));	\
@@ -195,7 +199,7 @@ int ConfigAppLoad()
 
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
-		VAR(nLoadMenuShowX);
+		VARI64(nLoadMenuShowX);
 		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuExpand);
 		VAR(nLoadMenuBoardTypeFilter);
@@ -309,6 +313,7 @@ int ConfigAppLoad()
 #undef FLT
 #undef VAR
 #undef VAR64
+#undef VARI64
 	}
 
 	fclose(h);
@@ -342,6 +347,7 @@ int ConfigAppSave()
 
 #define VAR(x) _ftprintf(h, _T(#x) _T(" %d\n"),  x)
 #define VAR64(x) _ftprintf(h, _T(#x) _T(" %lf\n"),  (float)x)
+#define VARI64(x) _ftprintf(h, _T(#x) _T(" %I64u\n"),  x)
 #define FLT(x) _ftprintf(h, _T(#x) _T(" %lf\n"), x)
 #define STR(x) _ftprintf(h, _T(#x) _T(" %s\n"),  x)
 #define DRV(x) _ftprintf(h, _T(#x) _T(" %s\n"),  DriverToName(x))
@@ -575,7 +581,7 @@ int ConfigAppSave()
 	VAR(nSelDlgHeight);
 
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
-	VAR(nLoadMenuShowX);
+	VARI64(nLoadMenuShowX);
 	VAR(nLoadMenuShowY);
 	VAR(nLoadMenuExpand);
 
@@ -728,6 +734,7 @@ int ConfigAppSave()
 #undef FLT
 #undef VAR
 #undef VAR64
+#undef VARI64
 
 	fclose(h);
 	return 0;

@@ -27,8 +27,8 @@ enum e_operand
 	_M,			/* memory location (defined by extension) */
 	_M8,		/* (8) */
 	_M16,		/* (i16) */
-	_R,		/* register (defined by extension) */
-	_SR,		/* status register */
+	_R,			/* register (defined by extension) */
+	_SR			/* status register */
 };
 
 

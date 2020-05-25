@@ -1015,6 +1015,10 @@
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
 		FEE7CC43242285FC00B311BC /* d_kickgoal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */; };
 		FEE7CC44242285FC00B311BC /* d_inufuku.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC42242285FC00B311BC /* d_inufuku.cpp */; };
+		FEECE403247AC7BF007724A2 /* tlcs900.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEECE3FF247AC7BE007724A2 /* tlcs900.cpp */; };
+		FEECE407247AC84F007724A2 /* t6w28.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEECE405247AC84E007724A2 /* t6w28.cpp */; };
+		FEECE409247AC896007724A2 /* d_ngp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEECE408247AC896007724A2 /* d_ngp.cpp */; };
+		FEECE40C247AC8C5007724A2 /* k1ge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEECE40A247AC8C4007724A2 /* k1ge.cpp */; };
 		FEED9DCA2356EF5000B7AF83 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */; };
 		FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */; };
 		FEED9DFA23576B9F00B7AF83 /* support_paths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9DF923576B9F00B7AF83 /* support_paths.cpp */; };
@@ -2568,6 +2572,15 @@
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
 		FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_kickgoal.cpp; sourceTree = "<group>"; };
 		FEE7CC42242285FC00B311BC /* d_inufuku.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_inufuku.cpp; sourceTree = "<group>"; };
+		FEECE3FF247AC7BE007724A2 /* tlcs900.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlcs900.cpp; sourceTree = "<group>"; };
+		FEECE400247AC7BE007724A2 /* tlcs900.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlcs900.h; sourceTree = "<group>"; };
+		FEECE401247AC7BE007724A2 /* 900tbl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 900tbl.c; sourceTree = "<group>"; };
+		FEECE402247AC7BF007724A2 /* tlcs900_intf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlcs900_intf.h; sourceTree = "<group>"; };
+		FEECE405247AC84E007724A2 /* t6w28.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = t6w28.cpp; sourceTree = "<group>"; };
+		FEECE406247AC84E007724A2 /* t6w28.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t6w28.h; sourceTree = "<group>"; };
+		FEECE408247AC896007724A2 /* d_ngp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_ngp.cpp; sourceTree = "<group>"; };
+		FEECE40A247AC8C4007724A2 /* k1ge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = k1ge.cpp; sourceTree = "<group>"; };
+		FEECE40B247AC8C4007724A2 /* k1ge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = k1ge.h; sourceTree = "<group>"; };
 		FEED9DC22356DDA900B7AF83 /* gamelist.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = gamelist.pl; sourceTree = "<group>"; };
 		FEED9DC92356EF4F00B7AF83 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FEED9DDF2356F5DA00B7AF83 /* neocdlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neocdlist.cpp; sourceTree = "<group>"; };
@@ -2698,6 +2711,7 @@
 				FE1B1D7923561A630065200C /* s2650 */,
 				FE1B1CB523561A620065200C /* sh2 */,
 				FE1B1D8323561A630065200C /* tlcs90 */,
+				FEECE3FE247AC7BE007724A2 /* tlcs900 */,
 				FE1B1D4323561A630065200C /* tms32010 */,
 				FE1B1CDF23561A620065200C /* tms34010 */,
 				FE1B1D3023561A630065200C /* upd7725 */,
@@ -2740,6 +2754,7 @@
 				FE1B1CDD23561A620065200C /* sh2_intf.h */,
 				FE1B1D5523561A630065200C /* tlcs90_intf.cpp */,
 				FE1B1CC323561A620065200C /* tlcs90_intf.h */,
+				FEECE402247AC7BF007724A2 /* tlcs900_intf.h */,
 				FE1B1CB223561A620065200C /* tms34010_intf.cpp */,
 				FE1B1CC923561A620065200C /* tms34010_intf.h */,
 				FE1B1D4223561A630065200C /* upd7810_intf.h */,
@@ -3665,6 +3680,7 @@
 				FE1B1F3123561A680065200C /* d_mwarr.cpp */,
 				FE1B1F6523561A680065200C /* d_namcos2.cpp */,
 				FE1B1F7A23561A690065200C /* d_news.cpp */,
+				FEECE408247AC896007724A2 /* d_ngp.cpp */,
 				FE1B1F6423561A680065200C /* d_nmg5.cpp */,
 				FE1B1F5C23561A680065200C /* d_nmk16.cpp */,
 				FE1B1F2223561A670065200C /* d_ohmygod.cpp */,
@@ -4536,6 +4552,8 @@
 				FE1B224B23561A700065200C /* sp0250.h */,
 				FE1B225123561A700065200C /* sp0256.cpp */,
 				FE1B221623561A700065200C /* sp0256.h */,
+				FEECE405247AC84E007724A2 /* t6w28.cpp */,
+				FEECE406247AC84E007724A2 /* t6w28.h */,
 				FE1B225723561A700065200C /* tms36xx.cpp */,
 				FE1B220823561A700065200C /* tms36xx.h */,
 				FE1B21FE23561A700065200C /* tms5110_tables.h */,
@@ -4607,6 +4625,8 @@
 				FE1E0C7D245333E500C774C3 /* i4x00.h */,
 				FE1B22B423561A710065200C /* joyprocess.cpp */,
 				FE1B22D623561A720065200C /* joyprocess.h */,
+				FEECE40A247AC8C4007724A2 /* k1ge.cpp */,
+				FEECE40B247AC8C4007724A2 /* k1ge.h */,
 				FE1B22A923561A710065200C /* kaneko_tmap.cpp */,
 				FE1B228E23561A710065200C /* kaneko_tmap.h */,
 				FE1B22C923561A720065200C /* mathbox.cpp */,
@@ -4824,6 +4844,16 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
+		FEECE3FE247AC7BE007724A2 /* tlcs900 */ = {
+			isa = PBXGroup;
+			children = (
+				FEECE3FF247AC7BE007724A2 /* tlcs900.cpp */,
+				FEECE400247AC7BE007724A2 /* tlcs900.h */,
+				FEECE401247AC7BE007724A2 /* 900tbl.c */,
+			);
+			path = tlcs900;
+			sourceTree = "<group>";
+		};
 		FEED9DC82356EF4F00B7AF83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4901,7 +4931,7 @@
 		FE1B1085235615940065200C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Akop Karapetyan";
 				TargetAttributes = {
 					FE1B108C235615940065200C = {
@@ -5387,6 +5417,7 @@
 				FE1B26B823561A770065200C /* d_renegade.cpp in Sources */,
 				FE1B27DB23561A790065200C /* tms34061.cpp in Sources */,
 				FE1B279723561A790065200C /* wiping.cpp in Sources */,
+				FEECE409247AC896007724A2 /* d_ngp.cpp in Sources */,
 				FE1B26DA23561A780065200C /* d_wiz.cpp in Sources */,
 				FE1B261623561A770065200C /* d_fixeight.cpp in Sources */,
 				FE1B25B523561A760065200C /* d_bishi.cpp in Sources */,
@@ -5439,6 +5470,7 @@
 				FE1B278923561A790065200C /* nes_apu.cpp in Sources */,
 				FE1B255223561A760065200C /* d_welltris.cpp in Sources */,
 				FE1B253B23561A760065200C /* d_jchan.cpp in Sources */,
+				FEECE40C247AC8C5007724A2 /* k1ge.cpp in Sources */,
 				FE1B267B23561A770065200C /* tc0640fio.cpp in Sources */,
 				FE1B267E23561A770065200C /* d_arkanoid.cpp in Sources */,
 				FE1B24C423561A750065200C /* sms.cpp in Sources */,
@@ -5704,6 +5736,7 @@
 				FE1B24E623561A760065200C /* d_klax.cpp in Sources */,
 				FE1B26CC23561A780065200C /* d_bagman.cpp in Sources */,
 				FE1B240723561A750065200C /* s2650.cpp in Sources */,
+				FEECE407247AC84F007724A2 /* t6w28.cpp in Sources */,
 				FE1B245723561A750065200C /* zutil.c in Sources */,
 				FE1B25B123561A760065200C /* d_pooyan.cpp in Sources */,
 				FE1B27C323561A790065200C /* st0020.cpp in Sources */,
@@ -5904,6 +5937,7 @@
 				FE1B26E023561A780065200C /* d_dynduke.cpp in Sources */,
 				FE1B273023561A780065200C /* d_munchmo.cpp in Sources */,
 				FE1B265623561A770065200C /* d_othunder.cpp in Sources */,
+				FEECE403247AC7BF007724A2 /* tlcs900.cpp in Sources */,
 				FE1B258F23561A760065200C /* deco16ic.cpp in Sources */,
 				FE1B264B23561A770065200C /* d_flstory.cpp in Sources */,
 				FE1B261B23561A770065200C /* d_pipibibs.cpp in Sources */,

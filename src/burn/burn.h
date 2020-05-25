@@ -406,7 +406,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define BDF_HISCORE_SUPPORTED							(1 << 11)
 
 // Flags for the hardware member
-// Format: 0xDDEEFFFF, where EE: Manufacturer, DD: Hardware platform, FFFF: Flags (used by driver)
+// Format: 0xDDEEFFFF, where DD: Manufacturer, EE: Hardware platform, FFFF: Flags (used by driver)
 
 #define HARDWARE_PUBLIC_MASK							(0x7FFF0000)
 
@@ -444,6 +444,10 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_SPECTRUM                        (0x1D000000)
 #define HARDWARE_PREFIX_NES                             (0x1E000000)
 #define HARDWARE_PREFIX_FDS                             (0x1F000000)
+#define HARDWARE_PREFIX_NGP                             (0x20000000)
+
+#define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_NGP | 0x00000000)
+#define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_NGP | 0x00000001)
 
 #define HARDWARE_MISC_PRE90S							(HARDWARE_PREFIX_MISC_PRE90S)
 #define HARDWARE_MISC_POST90S							(HARDWARE_PREFIX_MISC_POST90S)
@@ -522,8 +526,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SNK_MVS								(HARDWARE_PREFIX_SNK | 0x00020000)
 #define HARDWARE_SNK_NEOCD								(HARDWARE_PREFIX_SNK | 0x00030000)
 #define HARDWARE_SNK_DEDICATED_PCB						(HARDWARE_PREFIX_SNK | 0x00040000)
-#define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_SNK | 0x00050000)
-#define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_SNK | 0x00060000)
 
 #define HARDWARE_CAVE_68K_ONLY							(HARDWARE_PREFIX_CAVE)
 #define HARDWARE_CAVE_68K_Z80							(HARDWARE_PREFIX_CAVE | 0x0001)

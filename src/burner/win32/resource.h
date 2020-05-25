@@ -683,6 +683,7 @@
 #define MENU_AUTOSCANGAMELIST               10734
 #define MENU_CLRMAME_PRO_XML_NES_ONLY       10735
 #define MENU_CLRMAME_PRO_XML_FDS_ONLY       10736
+#define MENU_CLRMAME_PRO_XML_NGP_ONLY		10737
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

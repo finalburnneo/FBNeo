@@ -23,7 +23,6 @@
 #define RETRO_GAME_TYPE_FDS		12
 #define RETRO_GAME_TYPE_NEOCD	13
 #define RETRO_GAME_TYPE_NGP		14
-#define RETRO_GAME_TYPE_NGPC	15
 
 #define PERCENT_VALUES \
       {"25%", NULL }, \

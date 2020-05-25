@@ -26681,7 +26681,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof96h,				// The King of Fighters '96 (NGH-214)
 	&BurnDrvKof96,				// The King of Fighters '96 (NGM-214)
 	&BurnDrvKof96a,				// The King of Fighters '96 (NGM-214, alternate board)
-	&BurnDrvkof96ae20,			// The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30)
+	&BurnDrvkof96ae20,			// The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)
 	&BurnDrvkof97cn,			// The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)

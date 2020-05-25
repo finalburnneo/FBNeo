@@ -15436,11 +15436,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof96ae20" cloneof="kof96" romof="kof96">
-		<description>The King of Fighters '96 (The Aniversary Edition 2.0 Final Version 2019-05-30) [Hack]</description>
+		<description>The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320) [Hack]</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="214ae-p1.p1" size="1048576" crc="0de08cc3"/>
-		<rom name="214ae-p2.p2" size="4194304" crc="221d1d54"/>
+		<rom name="214ae-p1.p1" size="1048576" crc="c718ea76"/>
+		<rom name="214ae-p2.p2" size="4194304" crc="2638be07"/>
 		<rom name="214ae-s1.s1" size="131072" crc="b9626494"/>
 		<rom name="214-c1ae2.c1" size="8388608" crc="a7466eea"/>
 		<rom name="214-c2ae2.c2" size="8388608" crc="6ff22256"/>
@@ -15451,7 +15451,7 @@
 		<rom name="214-m1ae2.m1" size="131072" crc="3a4a7c21"/>
 		<rom name="214-v1.bin" size="4194304" crc="63f7b045"/>
 		<rom name="214-v2.bin" size="4194304" crc="25929059"/>
-		<rom name="214ae-v3.v3" size="4194304" crc="3cfd1295"/>
+		<rom name="214ae-v3.v3" size="4194304" crc="f85673b0"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

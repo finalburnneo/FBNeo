@@ -10434,6 +10434,53 @@ static INT32 MetalbDraw()
 	return 0;
 }
 
+static void draw_layer(INT32 layer, INT32 pri)
+{
+	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
+
+	switch (layer) {
+		case 0:
+			if ((nBurnLayer & 2) && (~Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars, pri);
+			break;
+		case 1:
+			if ((nBurnLayer & 4) && (~Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars, pri);
+			break;
+		case 2:
+			if ((nBurnLayer & 8) && (~Disable & 0x04)) TC0100SCNRenderCharLayer(0, pri);
+			break;
+	}
+}
+
+static INT32 TaitoF2PriDraw()
+{
+	INT32 layer[3] = { TC0100SCNBottomLayer(0), TC0100SCNBottomLayer(0) ^ 1, 2 };
+
+	TaitoF2TilePriority[layer[0]] = TC0360PRIRegs[5] & 0x0f;
+	TaitoF2TilePriority[layer[1]] = TC0360PRIRegs[5] >> 4;
+	TaitoF2TilePriority[layer[2]] = TC0360PRIRegs[4] >> 4;
+
+	TaitoF2SpritePriority[0] = TC0360PRIRegs[6] & 0x0f;
+	TaitoF2SpritePriority[1] = TC0360PRIRegs[6] >> 4;
+	TaitoF2SpritePriority[2] = TC0360PRIRegs[7] & 0x0f;
+	TaitoF2SpritePriority[3] = TC0360PRIRegs[7] >> 4;
+	TaitoF2SpriteBlendMode = TC0360PRIRegs[0] & 0xc0;
+
+	BurnTransferClear();
+	DynCalcPalette();
+
+	TaitoF2MakeSpriteList();
+
+	draw_layer(layer[0], 1);
+	draw_layer(layer[1], 2);
+	draw_layer(layer[2], 4);
+
+	if (nSpriteEnable & 1) TaitoF2RenderSpriteListBackwardsForPriority();
+
+	BurnTransferCopy(TaitoPalette);
+
+	return 0;
+}
+
 static INT32 TaitoF2PriRozDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
@@ -11072,7 +11119,7 @@ struct BurnDriver BurnDrvGrowl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlRomInfo, GrowlRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, GrowlDIPInfo,
-	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
@@ -11082,7 +11129,7 @@ struct BurnDriver BurnDrvGrowla = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlaRomInfo, GrowlaRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
-	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
@@ -11092,7 +11139,7 @@ struct BurnDriver BurnDrvGrowlu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowluRomInfo, GrowluRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
-	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
@@ -11102,7 +11149,7 @@ struct BurnDriver BurnDrvRunark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, RunarkRomInfo, RunarkRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, RunarkDIPInfo,
-	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 

@@ -948,7 +948,7 @@ struct BurnDriver BurnDrvngp_bstars = {
 	"ngp_bstars", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Baseball Stars (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngp_bstarsRomInfo, ngp_bstarsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -965,10 +965,10 @@ STDROMPICKEXT(ngp_kof_mlon, ngp_kof_mlon, ngpc_ngp)
 STD_ROM_FN(ngp_kof_mlon)
 
 struct BurnDriver BurnDrvngp_kof_mlon = {
-	"ngp_kof_mlon", NULL, "ngp_ngp", NULL, "199?",
+	"ngp_kof_mlon", NULL, "ngp_ngp", NULL, "1998",
 	"King of Fighters R-1 & Melon-chan no Seichou Nikki (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT | GBF_RPG, 0,
 	NgpGetZipName, ngp_kof_mlonRomInfo, ngp_kof_mlonRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -988,7 +988,7 @@ struct BurnDriver BurnDrvngp_kofr1 = {
 	"ngp_kofr1", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Fighting Series - King of Fighters R-1 (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngp_kofr1RomInfo, ngp_kofr1RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1008,7 +1008,7 @@ struct BurnDriver BurnDrvngp_melonchn = {
 	"ngp_melonchn", NULL, "ngp_ngp", NULL, "1998",
 	"Melon-chan no Seichou Nikki (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_RPG, 0,
 	NgpGetZipName, ngp_melonchnRomInfo, ngp_melonchnRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1028,7 +1028,7 @@ struct BurnDriver BurnDrvngp_neocher = {
 	"ngp_neocher", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Casino Series - Neo Cherry Master (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_CASINO, 0,
 	NgpGetZipName, ngp_neocherRomInfo, ngp_neocherRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1048,7 +1048,7 @@ struct BurnDriver BurnDrvngp_neocup98 = {
 	"ngp_neocup98", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Neo Geo Cup '98 (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSFOOTBALL, 0,
 	NgpGetZipName, ngp_neocup98RomInfo, ngp_neocup98RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1068,7 +1068,7 @@ struct BurnDriver BurnDrvngp_ptennis = {
 	"ngp_ptennis", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Sports Series - Pocket Tennis (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngp_ptennisRomInfo, ngp_ptennisRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1088,7 +1088,7 @@ struct BurnDriver BurnDrvngp_samsho = {
 	"ngp_samsho", NULL, "ngp_ngp", NULL, "1998",
 	"Pocket Fighting Series - Samurai Spirit! (Jpn) ~ Samurai Shodown! (Euro)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngp_samshoRomInfo, ngp_samshoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1108,7 +1108,7 @@ struct BurnDriver BurnDrvngp_shougi = {
 	"ngp_shougi", NULL, "ngp_ngp", NULL, "1998",
 	"Shougi no Tatsujin (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_STRATEGY, 0,
 	NgpGetZipName, ngp_shougiRomInfo, ngp_shougiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1128,7 +1128,7 @@ struct BurnDriver BurnDrvngp_tsunapn = {
 	"ngp_tsunapn", NULL, "ngp_ngp", NULL, "1998",
 	"Renketsu Puzzle Tsunagete Pon! (Jpn)\0", NULL, "SNK", "NeoGeo Pocket",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_PUZZLE, 0,
 	NgpGetZipName, ngp_tsunapnRomInfo, ngp_tsunapnRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
@@ -1148,7 +1148,7 @@ struct BurnDriver BurnDrvngpc_bakumats = {
 	"ngp_bakumats", NULL, "ngp_ngp", NULL, "2000",
 	"Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_bakumatsRomInfo, ngpc_bakumatsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1168,7 +1168,7 @@ struct BurnDriver BurnDrvngpc_bigbang = {
 	"ngp_bigbang", "ngp_wrestmad", "ngp_ngp", NULL, "2000",
 	"Big Bang Pro Wrestling (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_bigbangRomInfo, ngpc_bigbangRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1188,7 +1188,7 @@ struct BurnDriver BurnDrvngpc_bikkuri = {
 	"ngp_bikkuri", NULL, "ngp_ngp", NULL, "2000",
 	"Bikkuriman 2000 - Viva! Pocket Festiva! (Jpn)\0", NULL, "Sega Toys", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_bikkuriRomInfo, ngpc_bikkuriRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1208,7 +1208,7 @@ struct BurnDriver BurnDrvngpc_biomotor = {
 	"ngp_biomotor", NULL, "ngp_ngp", NULL, "1999",
 	"BioMotor Unitron (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_biomotorRomInfo, ngpc_biomotorRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1228,7 +1228,7 @@ struct BurnDriver BurnDrvngpc_biomotorj = {
 	"ngp_biomotorj", "ngp_biomotor", "ngp_ngp", NULL, "1999",
 	"BioMotor Unitron (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_biomotorjRomInfo, ngpc_biomotorjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1248,7 +1248,7 @@ struct BurnDriver BurnDrvngpc_bstarsc = {
 	"ngp_bstarsc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Baseball Stars Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_bstarscRomInfo, ngpc_bstarscRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1268,7 +1268,7 @@ struct BurnDriver BurnDrvngpc_bam = {
 	"ngp_bam", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Bust-A-Move Pocket (USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_bamRomInfo, ngpc_bamRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1288,7 +1288,7 @@ struct BurnDriver BurnDrvngpc_bamp = {
 	"ngp_bamp", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Bust-A-Move Pocket (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_bampRomInfo, ngpc_bampRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1308,7 +1308,7 @@ struct BurnDriver BurnDrvngpc_coolboar = {
 	"ngp_coolboar", NULL, "ngp_ngp", NULL, "2000",
 	"Cool Boarders Pocket (Euro, Jpn)\0", NULL, "UEP Systems", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_coolboarRomInfo, ngpc_coolboarRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvngpc_coolcool = {
 	"ngp_coolcool", NULL, "ngp_ngp", NULL, "2000",
 	"Cool Cool Jam (Euro, USA, Sample)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_coolcoolRomInfo, ngpc_coolcoolRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvngpc_coolcoolj = {
 	"ngp_coolcoolj", "ngp_coolcool", "ngp_ngp", NULL, "2000",
 	"Cool Cool Jam (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_coolcooljRomInfo, ngpc_coolcooljRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1368,7 +1368,7 @@ struct BurnDriver BurnDrvngpc_cotton = {
 	"ngp_cotton", NULL, "ngp_ngp", NULL, "2000",
 	"Fantastic Night Dreams Cotton (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_HORSHOOT, 0,
 	NgpGetZipName, ngpc_cottonRomInfo, ngpc_cottonRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1388,7 +1388,7 @@ struct BurnDriver BurnDrvngpc_cottonj = {
 	"ngp_cottonj", "ngp_cotton", "ngp_ngp", NULL, "2000",
 	"Fantastic Night Dreams Cotton (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_HORSHOOT, 0,
 	NgpGetZipName, ngpc_cottonjRomInfo, ngpc_cottonjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1408,7 +1408,7 @@ struct BurnDriver BurnDrvngpc_crushrol = {
 	"ngp_crushrol", NULL, "ngp_ngp", NULL, "1999",
 	"Crush Roller (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAZE, 0,
 	NgpGetZipName, ngpc_crushrolRomInfo, ngpc_crushrolRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1428,7 +1428,7 @@ struct BurnDriver BurnDrvngpc_darkarms = {
 	"ngp_darkarms", NULL, "ngp_ngp", NULL, "1999",
 	"Dark Arms - Beast Buster 1999 (Euro, USA) ~ Beast Buster - Yami no Seitai Heiki (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_darkarmsRomInfo, ngpc_darkarmsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1448,7 +1448,7 @@ struct BurnDriver BurnDrvngpc_darkarmsp = {
 	"ngp_darkarmsp", "ngp_darkarms", "ngp_ngp", NULL, "1999",
 	"Dark Arms - Beast Buster 1999 (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_darkarmspRomInfo, ngpc_darkarmspRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1468,7 +1468,7 @@ struct BurnDriver BurnDrvngpc_deltawrp = {
 	"ngp_deltawrp", NULL, "ngp_ngp", NULL, "2000",
 	"Delta Warp (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_deltawrpRomInfo, ngpc_deltawrpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1488,7 +1488,7 @@ struct BurnDriver BurnDrvngpc_dendego2 = {
 	"ngp_dendego2", NULL, "ngp_ngp", NULL, "1999",
 	"Densha de Go! 2 on Neo Geo Pocket (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_SIM, 0,
 	NgpGetZipName, ngpc_dendego2RomInfo, ngpc_dendego2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1508,7 +1508,7 @@ struct BurnDriver BurnDrvngpc_dendego2p = {
 	"ngp_dendego2p", "ngp_dendego2", "ngp_ngp", NULL, "1999",
 	"Densha de Go! 2 on Neo Geo Pocket (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_SIM, 0,
 	NgpGetZipName, ngpc_dendego2pRomInfo, ngpc_dendego2pRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1528,7 +1528,7 @@ struct BurnDriver BurnDrvngpc_divealrm = {
 	"ngp_divealrm", NULL, "ngp_ngp", NULL, "1999",
 	"Dive Alert - Matt's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_divealrmRomInfo, ngpc_divealrmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1548,7 +1548,7 @@ struct BurnDriver BurnDrvngpc_divealrb = {
 	"ngp_divealrb", NULL, "ngp_ngp", NULL, "1999",
 	"Dive Alert - Becky's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_divealrbRomInfo, ngpc_divealrbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1568,7 +1568,7 @@ struct BurnDriver BurnDrvngpc_divealrmj = {
 	"ngp_divealrmj", "ngp_divealrm", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Barn Hen (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_divealrmjRomInfo, ngpc_divealrmjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1588,7 +1588,7 @@ struct BurnDriver BurnDrvngpc_divealrmjp = {
 	"ngp_divealrmjp", "ngp_divealrm", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Barn Hen (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_divealrmjpRomInfo, ngpc_divealrmjpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1608,7 +1608,7 @@ struct BurnDriver BurnDrvngpc_divealrbj = {
 	"ngp_divealrbj", "ngp_divealrb", "ngp_ngp", NULL, "1999",
 	"Dive Alert - Rebecca Hen (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_divealrbjRomInfo, ngpc_divealrbjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1628,7 +1628,7 @@ struct BurnDriver BurnDrvngpc_dokodemo = {
 	"ngp_dokodemo", NULL, "ngp_ngp", NULL, "1999",
 	"Dokodemo Mahjong (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_dokodemoRomInfo, ngpc_dokodemoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1648,7 +1648,7 @@ struct BurnDriver BurnDrvngpc_dynaslug = {
 	"ngp_dynaslug", NULL, "ngp_ngp", NULL, "2000",
 	"Dynamite Slugger (Euro, Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_dynaslugRomInfo, ngpc_dynaslugRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1668,7 +1668,7 @@ struct BurnDriver BurnDrvngpc_evolutn = {
 	"ngp_evolutn", NULL, "ngp_ngp", NULL, "2000",
 	"Evolution - Eternal Dungeons (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_evolutnRomInfo, ngpc_evolutnRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1688,7 +1688,7 @@ struct BurnDriver BurnDrvngpc_evolutnj = {
 	"ngp_evolutnj", "ngp_evolutn", "ngp_ngp", NULL, "2000",
 	"Shinki Sekai Evolution - Hateshinai Dungeon (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_evolutnjRomInfo, ngpc_evolutnjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1708,7 +1708,7 @@ struct BurnDriver BurnDrvngpc_faselei = {
 	"ngp_faselei", NULL, "ngp_ngp", NULL, "2000",
 	"Faselei! (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG | GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_faseleiRomInfo, ngpc_faseleiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1728,7 +1728,7 @@ struct BurnDriver BurnDrvngpc_faseleij = {
 	"ngp_faseleij", "ngp_faselei", "ngp_ngp", NULL, "1999",
 	"Faselei! (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG | GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_faseleijRomInfo, ngpc_faseleijRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1748,7 +1748,7 @@ struct BurnDriver BurnDrvngpc_fatfury = {
 	"ngp_fatfury", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_fatfuryRomInfo, ngpc_fatfuryRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1768,7 +1768,7 @@ struct BurnDriver BurnDrvngpc_fatfuryd = {
 	"ngp_fatfuryd", "ngp_fatfury", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Garou Densetsu First Contact ~ Fatal Fury F-Contact (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_fatfurydRomInfo, ngpc_fatfurydRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1788,7 +1788,7 @@ struct BurnDriver BurnDrvngpc_ganbaren = {
 	"ngp_ganbaren", NULL, "ngp_ngp", NULL, "2000",
 	"Ganbare Neo Poke-kun (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_ganbarenRomInfo, ngpc_ganbarenRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1808,7 +1808,7 @@ struct BurnDriver BurnDrvngpc_infinity = {
 	"ngp_infinity", NULL, "ngp_ngp", NULL, "2000",
 	"Infinity Cure (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_infinityRomInfo, ngpc_infinityRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1828,7 +1828,7 @@ struct BurnDriver BurnDrvngpc_kikousei = {
 	"ngp_kikousei", NULL, "ngp_ngp", NULL, "2000",
 	"Kikou Seiki Unitron - Sono Tsuide. Hikari Umareru Chi Yori. (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_kikouseiRomInfo, ngpc_kikouseiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1848,7 +1848,7 @@ struct BurnDriver BurnDrvngpc_kofpara = {
 	"ngp_kofpara", NULL, "ngp_ngp", NULL, "2000",
 	"The King of Fighters - Battle de Paradise (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofparaRomInfo, ngpc_kofparaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1868,7 +1868,7 @@ struct BurnDriver BurnDrvngpc_kofr2 = {
 	"ngp_kofr2", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2RomInfo, ngpc_kofr2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1888,7 +1888,7 @@ struct BurnDriver BurnDrvngpc_kofr2d = {
 	"ngp_kofr2d", "ngp_kofr2", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2dRomInfo, ngpc_kofr2dRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1908,7 +1908,7 @@ struct BurnDriver BurnDrvngpc_kofr2d2 = {
 	"ngp_kofr2d2", "ngp_kofr2", "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - King of Fighters R-2 (World, Demo Version 2)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2d2RomInfo, ngpc_kofr2d2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1928,7 +1928,7 @@ struct BurnDriver BurnDrvngpc_koikoi = {
 	"ngp_koikoi", NULL, "ngp_ngp", NULL, "2000",
 	"Koi Koi Mahjong (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_koikoiRomInfo, ngpc_koikoiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1948,7 +1948,7 @@ struct BurnDriver BurnDrvngpc_lastblad = {
 	"ngp_lastblad", NULL, "ngp_ngp", NULL, "2000",
 	"The Last Blade - Beyond the Destiny (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_lastbladRomInfo, ngpc_lastbladRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1968,7 +1968,7 @@ struct BurnDriver BurnDrvngpc_magdrop = {
 	"ngp_magdrop", NULL, "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_magdropRomInfo, ngpc_magdropRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -1988,7 +1988,7 @@ struct BurnDriver BurnDrvngpc_magdropj = {
 	"ngp_magdropj", "ngp_magdrop", "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Jpn)\0", NULL, "Data East", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_magdropjRomInfo, ngpc_magdropjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2008,7 +2008,7 @@ struct BurnDriver BurnDrvngpc_magdropjd = {
 	"ngp_magdropjd", "ngp_magdrop", "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Demo)\0", NULL, "Data East", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_magdropjdRomInfo, ngpc_magdropjdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2028,7 +2028,7 @@ struct BurnDriver BurnDrvngpc_memories = {
 	"ngp_memories", NULL, "ngp_ngp", NULL, "2000",
 	"Memories Off - Pure (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_memoriesRomInfo, ngpc_memoriesRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2048,7 +2048,7 @@ struct BurnDriver BurnDrvngpc_mezase = {
 	"ngp_mezase", NULL, "ngp_ngp", NULL, "2000",
 	"Mezase! Kanji Ou (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_mezaseRomInfo, ngpc_mezaseRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2068,7 +2068,7 @@ struct BurnDriver BurnDrvngpc_mizuki = {
 	"ngp_mizuki", NULL, "ngp_ngp", NULL, "1999",
 	"Mizuki Shigeru no Youkai Shashinkan (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_mizukiRomInfo, ngpc_mizukiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2088,7 +2088,7 @@ struct BurnDriver BurnDrvngpc_mslug1st = {
 	"ngp_mslug1st", NULL, "ngp_ngp", NULL, "1999",
 	"Metal Slug - 1st Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug1stRomInfo, ngpc_mslug1stRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2108,7 +2108,7 @@ struct BurnDriver BurnDrvngpc_mslug2nd = {
 	"ngp_mslug2nd", NULL, "ngp_ngp", NULL, "2000",
 	"Metal Slug - 2nd Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug2ndRomInfo, ngpc_mslug2ndRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2128,7 +2128,7 @@ struct BurnDriver BurnDrvngpc_mslug2ndd = {
 	"ngp_mslug2ndd", "ngp_mslug2nd", "ngp_ngp", NULL, "2000",
 	"Metal Slug - 2nd Mission (Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug2nddRomInfo, ngpc_mslug2nddRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2148,7 +2148,7 @@ struct BurnDriver BurnDrvngpc_neo21 = {
 	"ngp_neo21", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo 21 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neo21RomInfo, ngpc_neo21RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2168,7 +2168,7 @@ struct BurnDriver BurnDrvngpc_neobacca = {
 	"ngp_neobacca", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo Baccarat (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neobaccaRomInfo, ngpc_neobaccaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2188,7 +2188,7 @@ struct BurnDriver BurnDrvngpc_neobaccap = {
 	"ngp_neobaccap", "ngp_neobacca", "ngp_ngp", NULL, "2000",
 	"Pocket Casino Series - Neo Baccarat (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neobaccapRomInfo, ngpc_neobaccapRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2208,7 +2208,7 @@ struct BurnDriver BurnDrvngpc_neocherc = {
 	"ngp_neocherc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Cherry Master Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neochercRomInfo, ngpc_neochercRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2228,7 +2228,7 @@ struct BurnDriver BurnDrvngpc_neochercp = {
 	"ngp_neochercp", "ngp_neocherc", "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Cherry Master Color (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neochercpRomInfo, ngpc_neochercpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2248,7 +2248,7 @@ struct BurnDriver BurnDrvngpc_neocuppl = {
 	"ngp_neocuppl", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Neo Geo Cup '98 Plus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSFOOTBALL, 0,
 	NgpGetZipName, ngpc_neocupplRomInfo, ngpc_neocupplRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2268,7 +2268,7 @@ struct BurnDriver BurnDrvngpc_neoderby = {
 	"ngp_neoderby", NULL, "ngp_ngp", NULL, "1999",
 	"Neo Derby Champ Daiyosou (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoderbyRomInfo, ngpc_neoderbyRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2288,7 +2288,7 @@ struct BurnDriver BurnDrvngpc_neodrag = {
 	"ngp_neodrag", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Dragon's Wild (World, v13)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neodragRomInfo, ngpc_neodragRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2308,7 +2308,7 @@ struct BurnDriver BurnDrvngpc_neodraga = {
 	"ngp_neodraga", "ngp_neodrag", "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Dragon's Wild (World, v11)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neodragaRomInfo, ngpc_neodragaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2328,7 +2328,7 @@ struct BurnDriver BurnDrvngpc_neomystr = {
 	"ngp_neomystr", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Casino Series - Neo Mystery Bonus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neomystrRomInfo, ngpc_neomystrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2348,7 +2348,7 @@ struct BurnDriver BurnDrvngpc_neoproyk = {
 	"ngp_neoproyk", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Neo Poke Pro Yakyuu (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoproykRomInfo, ngpc_neoproykRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2368,7 +2368,7 @@ struct BurnDriver BurnDrvngpc_neoturfm = {
 	"ngp_neoturfm", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Big Tournament Golf ~ Neo Turf Masters (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoturfmRomInfo, ngpc_neoturfmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2388,8 +2388,28 @@ struct BurnDriver BurnDrvngpc_nigeronp = {
 	"ngp_nigeronp", NULL, "ngp_ngp", NULL, "2000",
 	"Nige-ron-pa (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_nigeronpRomInfo, ngpc_nigeronpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+
+// Nige-ron-pa (English Translation)
+// https://www.romhacking.net/translations/3804/
+static struct BurnRomInfo ngpc_nigeronpeRomDesc[] = {
+	{ "nigeronpa (english translation).bin", 0x200000, 0x6672d6e6, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_nigeronpe, ngpc_nigeronpe, ngpc_ngp)
+STD_ROM_FN(ngpc_nigeronpe)
+
+struct BurnDriver BurnDrvngpc_nigeronpe = {
+	"ngp_nigeronpe", "ngp_nigeronp", "ngp_ngp", NULL, "2018",
+	"Nige-ron-pa (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
+	NgpGetZipName, ngpc_nigeronpeRomInfo, ngpc_nigeronpeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
@@ -2408,7 +2428,7 @@ struct BurnDriver BurnDrvngpc_oekakip = {
 	"ngp_oekakip", NULL, "ngp_ngp", NULL, "2000",
 	"Oekaki Puzzle (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_oekakipRomInfo, ngpc_oekakipRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2428,8 +2448,28 @@ struct BurnDriver BurnDrvngpc_ogrebatl = {
 	"ngp_ogrebatl", NULL, "ngp_ngp", NULL, "2000",
 	"Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_ogrebatlRomInfo, ngpc_ogrebatlRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+
+// Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (English Translation)
+// https://www.romhacking.net/translations/4888/
+static struct BurnRomInfo ngpc_ogrebatleRomDesc[] = {
+	{ "densetsu no ogre battle gaiden - zenobia no ouji (english translation).bin", 0x200000, 0x165fe891, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_ogrebatle, ngpc_ogrebatle, ngpc_ngp)
+STD_ROM_FN(ngpc_ogrebatle)
+
+struct BurnDriver BurnDrvngpc_ogrebatle = {
+	"ngp_ogrebatle", "ngp_ogrebatl", "ngp_ngp", NULL, "2019",
+	"Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
+	NgpGetZipName, ngpc_ogrebatleRomInfo, ngpc_ogrebatleRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
@@ -2448,7 +2488,7 @@ struct BurnDriver BurnDrvngpc_pachinko = {
 	"ngp_pachinko", NULL, "ngp_ngp", NULL, "1999",
 	"Pachinko Hisshou Guide - Pocket Parlor (Jpn)\0", NULL, "Japan Vistec", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pachinkoRomInfo, ngpc_pachinkoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2468,7 +2508,7 @@ struct BurnDriver BurnDrvngpc_pacman = {
 	"ngp_pacman", NULL, "ngp_ngp", NULL, "1999",
 	"Pac-Man (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MAZE, 0,
 	NgpGetZipName, ngpc_pacmanRomInfo, ngpc_pacmanRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2488,7 +2528,7 @@ struct BurnDriver BurnDrvngpc_pbobble = {
 	"ngp_pbobble", NULL, "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v10)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobbleRomInfo, ngpc_pbobbleRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2508,7 +2548,7 @@ struct BurnDriver BurnDrvngpc_pbobblea = {
 	"ngp_pbobblea", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v09)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobbleaRomInfo, ngpc_pbobbleaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2528,7 +2568,7 @@ struct BurnDriver BurnDrvngpc_pbobbleb = {
 	"ngp_pbobbleb", "ngp_pbobble", "ngp_ngp", NULL, "1999",
 	"Puzzle Bobble Mini (Euro, Jpn, v09 Prototype?)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobblebRomInfo, ngpc_pbobblebRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2548,7 +2588,7 @@ struct BurnDriver BurnDrvngpc_picturep = {
 	"ngp_picturep", NULL, "ngp_ngp", NULL, "2000",
 	"Picture Puzzle (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_picturepRomInfo, ngpc_picturepRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2568,7 +2608,7 @@ struct BurnDriver BurnDrvngpc_poktlove = {
 	"ngp_poktlove", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Love if (Jpn)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_poktloveRomInfo, ngpc_poktloveRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2588,7 +2628,7 @@ struct BurnDriver BurnDrvngpc_pockrev = {
 	"ngp_pockrev", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pockrevRomInfo, ngpc_pockrevRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2608,7 +2648,7 @@ struct BurnDriver BurnDrvngpc_pockrevj = {
 	"ngp_pockrevj", NULL, "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pockrevjRomInfo, ngpc_pockrevjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2628,7 +2668,7 @@ struct BurnDriver BurnDrvngpc_prtymail = {
 	"ngp_prtymail", NULL, "ngp_ngp", NULL, "1999",
 	"Party Mail (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_prtymailRomInfo, ngpc_prtymailRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2648,7 +2688,7 @@ struct BurnDriver BurnDrvngpc_prtymailp = {
 	"ngp_prtymailp", "ngp_prtymail", "ngp_ngp", NULL, "1999",
 	"Party Mail (Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_prtymailpRomInfo, ngpc_prtymailpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2668,7 +2708,7 @@ struct BurnDriver BurnDrvngpc_pslotazt = {
 	"ngp_pslotazt", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Azteca (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotaztRomInfo, ngpc_pslotaztRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2688,7 +2728,7 @@ struct BurnDriver BurnDrvngpc_pslotdk2 = {
 	"ngp_pslotdk2", NULL, "ngp_ngp", NULL, "2001",
 	"Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotdk2RomInfo, ngpc_pslotdk2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2708,7 +2748,7 @@ struct BurnDriver BurnDrvngpc_pslotds2 = {
 	"ngp_pslotds2", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotds2RomInfo, ngpc_pslotds2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2728,7 +2768,7 @@ struct BurnDriver BurnDrvngpc_pslotecp = {
 	"ngp_pslotecp", NULL, "ngp_ngp", NULL, "2001",
 	"Pachi-Slot Aruze Oukoku Pocket - e-Cup (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotecpRomInfo, ngpc_pslotecpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2748,7 +2788,7 @@ struct BurnDriver BurnDrvngpc_pslothan = {
 	"ngp_pslothan", NULL, "ngp_ngp", NULL, "1999",
 	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v5)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslothanRomInfo, ngpc_pslothanRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2768,7 +2808,7 @@ struct BurnDriver BurnDrvngpc_pslothana = {
 	"ngp_pslothana", "ngp_pslothan", "ngp_ngp", NULL, "1999",
 	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Jpn, v3)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslothanaRomInfo, ngpc_pslothanaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2788,7 +2828,7 @@ struct BurnDriver BurnDrvngpc_pslotooh = {
 	"ngp_pslotooh", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotoohRomInfo, ngpc_pslotoohRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2808,7 +2848,7 @@ struct BurnDriver BurnDrvngpc_pslotpc2 = {
 	"ngp_pslotpc2", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotpc2RomInfo, ngpc_pslotpc2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2828,7 +2868,7 @@ struct BurnDriver BurnDrvngpc_pslotwrd = {
 	"ngp_pslotwrd", NULL, "ngp_ngp", NULL, "2000",
 	"Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotwrdRomInfo, ngpc_pslotwrdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2848,7 +2888,7 @@ struct BurnDriver BurnDrvngpc_ptennisc = {
 	"ngp_ptennisc", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Sport Series - Pocket Tennis Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_ptenniscRomInfo, ngpc_ptenniscRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2868,7 +2908,7 @@ struct BurnDriver BurnDrvngpc_puyopop = {
 	"ngp_puyopop", NULL, "ngp_ngp", NULL, "1999",
 	"Puyo Pop (World, v6) ~ Puyo Pyuo Tsuu (Jpn, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puyopopRomInfo, ngpc_puyopopRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2888,7 +2928,7 @@ struct BurnDriver BurnDrvngpc_puyopopa = {
 	"ngp_puyopopa", "ngp_puyopop", "ngp_ngp", NULL, "1999",
 	"Puyo Pop (World, v5) ~ Puyo Pyuo Tsuu (Jpn, v5)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puyopopaRomInfo, ngpc_puyopopaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2908,7 +2948,7 @@ struct BurnDriver BurnDrvngpc_puzzlink = {
 	"ngp_puzzlink", NULL, "ngp_ngp", NULL, "1999",
 	"Puzzle Link (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puzzlinkRomInfo, ngpc_puzzlinkRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2928,7 +2968,7 @@ struct BurnDriver BurnDrvngpc_puzzlnk2 = {
 	"ngp_puzzlnk2", NULL, "ngp_ngp", NULL, "2000",
 	"Puzzle Link 2 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puzzlnk2RomInfo, ngpc_puzzlnk2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2948,7 +2988,7 @@ struct BurnDriver BurnDrvngpc_tsunapnc = {
 	"ngp_tsunapnc", "ngp_puzzlink", "ngp_ngp", NULL, "1999",
 	"Renketsu Puzzle Tsunagete Pon! Color (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_tsunapncRomInfo, ngpc_tsunapncRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2968,7 +3008,7 @@ struct BurnDriver BurnDrvngpc_rockmanb = {
 	"ngp_rockmanb", NULL, "ngp_ngp", NULL, "2000",
 	"Rockman - Battle & Fighters (Jpn)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_rockmanbRomInfo, ngpc_rockmanbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2988,7 +3028,7 @@ struct BurnDriver BurnDrvngpc_rockmanbd = {
 	"ngp_rockmanbd", NULL, "ngp_ngp", NULL, "2000",
 	"Rockman - Battle & Fighters (Jpn, Demo)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_rockmanbdRomInfo, ngpc_rockmanbdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3008,7 +3048,7 @@ struct BurnDriver BurnDrvngpc_samsho2 = {
 	"ngp_samsho2", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Fighting Series - Samurai Shodown! 2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_samsho2RomInfo, ngpc_samsho2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3028,7 +3068,7 @@ struct BurnDriver BurnDrvngpc_shanghai = {
 	"ngp_shanghai", NULL, "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_shanghaiRomInfo, ngpc_shanghaiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3048,7 +3088,7 @@ struct BurnDriver BurnDrvngpc_shanghaipu = {
 	"ngp_shanghaipu", "ngp_shanghai", "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (USA, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_shanghaipuRomInfo, ngpc_shanghaipuRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3068,7 +3108,7 @@ struct BurnDriver BurnDrvngpc_shanghaipj = {
 	"ngp_shanghaipj", "ngp_shanghai", "ngp_ngp", NULL, "1999",
 	"Shanghai Mini (Jpn, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_shanghaipjRomInfo, ngpc_shanghaipjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3088,7 +3128,7 @@ struct BurnDriver BurnDrvngpc_shougic = {
 	"ngp_shougic", NULL, "ngp_ngp", NULL, "1999",
 	"Shougi no Tatsujin Color (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_shougicRomInfo, ngpc_shougicRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3108,7 +3148,7 @@ struct BurnDriver BurnDrvngpc_snkgals = {
 	"ngp_snkgals", NULL, "ngp_ngp", NULL, "2000",
 	"SNK Gals' Fighters (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_snkgalsRomInfo, ngpc_snkgalsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3128,7 +3168,7 @@ struct BurnDriver BurnDrvngpc_snkgalsj = {
 	"ngp_snkgalsj", "ngp_snkgals", "ngp_ngp", NULL, "2000",
 	"SNK Gals' Fighters (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_snkgalsjRomInfo, ngpc_snkgalsjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3148,7 +3188,7 @@ struct BurnDriver BurnDrvngpc_sonic = {
 	"ngp_sonic", NULL, "ngp_ngp", NULL, "2000",
 	"Sonic the Hedgehog - Pocket Adventure (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicRomInfo, ngpc_sonicRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3168,7 +3208,7 @@ struct BurnDriver BurnDrvngpc_sonicp = {
 	"ngp_sonicp", "ngp_sonic", "ngp_ngp", NULL, "2000",
 	"Sonic the Hedgehog - Pocket Adventure (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicpRomInfo, ngpc_sonicpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3188,7 +3228,7 @@ struct BurnDriver BurnDrvngpc_sonicp2 = {
 	"ngp_sonicp2", "ngp_sonic", "ngp_ngp", NULL, "1999",
 	"Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicp2RomInfo, ngpc_sonicp2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3208,7 +3248,7 @@ struct BurnDriver BurnDrvngpc_hanadojo = {
 	"ngp_hanadojo", NULL, "ngp_ngp", NULL, "1999",
 	"Soreike!! Hanafuda Doujou (Jpn)\0", NULL, "Dyna", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_hanadojoRomInfo, ngpc_hanadojoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3228,7 +3268,7 @@ struct BurnDriver BurnDrvngpc_srmp = {
 	"ngp_srmp", NULL, "ngp_ngp", NULL, "2001",
 	"Super Real Mahjong - Premium Collection (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_srmpRomInfo, ngpc_srmpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3248,7 +3288,7 @@ struct BurnDriver BurnDrvngpc_svc = {
 	"ngp_svc", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_svcRomInfo, ngpc_svcRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3268,8 +3308,28 @@ struct BurnDriver BurnDrvngpc_svccard2 = {
 	"ngp_svccard2", NULL, "ngp_ngp", NULL, "2001",
 	"SNK vs. Capcom - Card Fighters 2 - Expand Edition (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccard2RomInfo, ngpc_svccard2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+
+// SNK vs. Capcom - Card Fighters 2 - Expand Edition (English Translation)
+// https://www.romhacking.net/translations/82/
+static struct BurnRomInfo ngpc_svccard2eRomDesc[] = {
+	{ "snk vs. capcom - card fighters 2 - expand edition (english translation).bin", 0x200000, 0x0cc88d96, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_svccard2e, ngpc_svccard2e, ngpc_ngp)
+STD_ROM_FN(ngpc_svccard2e)
+
+struct BurnDriver BurnDrvngpc_svccard2e = {
+	"ngp_svccard2e", "ngp_svccard2", "ngp_ngp", NULL, "2017",
+	"SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
+	NgpGetZipName, ngpc_svccard2eRomInfo, ngpc_svccard2eRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
@@ -3288,7 +3348,7 @@ struct BurnDriver BurnDrvngpc_svccardc = {
 	"ngp_svccardc", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardcRomInfo, ngpc_svccardcRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3308,7 +3368,7 @@ struct BurnDriver BurnDrvngpc_svccardcj = {
 	"ngp_svccardcj", "ngp_svccardc", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Supporters Version (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardcjRomInfo, ngpc_svccardcjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3328,7 +3388,7 @@ struct BurnDriver BurnDrvngpc_svccardp = {
 	"ngp_svccardp", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters (Jpn, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardpRomInfo, ngpc_svccardpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3348,7 +3408,7 @@ struct BurnDriver BurnDrvngpc_svccards = {
 	"ngp_svccards", NULL, "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardsRomInfo, ngpc_svccardsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3368,7 +3428,7 @@ struct BurnDriver BurnDrvngpc_svccardsj = {
 	"ngp_svccardsj", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v7)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardsjRomInfo, ngpc_svccardsjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3388,7 +3448,7 @@ struct BurnDriver BurnDrvngpc_svccardsja = {
 	"ngp_svccardsja", "ngp_svccards", "ngp_ngp", NULL, "1999",
 	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Jpn, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_svccardsjaRomInfo, ngpc_svccardsjaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3408,7 +3468,7 @@ struct BurnDriver BurnDrvngpc_tsunapn2 = {
 	"ngp_tsunapn2", "ngp_puzzlnk2", "ngp_ngp", NULL, "1999",
 	"Tsunagete Pon! 2 (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_tsunapn2RomInfo, ngpc_tsunapn2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3428,7 +3488,7 @@ struct BurnDriver BurnDrvngpc_wrestmad = {
 	"ngp_wrestmad", NULL, "ngp_ngp", NULL, "2000",
 	"Wrestling Madness (Euro, USA, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_wrestmadRomInfo, ngpc_wrestmadRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3448,7 +3508,7 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 	"ngp_ppaa01", NULL, "ngp_ngp", NULL, "19??",
 	"Prize Game - PP-AA01 Pusher Program (Jpn)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_ppaa01RomInfo, ngpc_ppaa01RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3

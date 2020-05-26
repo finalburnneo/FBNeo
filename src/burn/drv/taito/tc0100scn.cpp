@@ -410,7 +410,7 @@ void TC0100SCNRenderCharLayer(INT32 Chip, INT32 Priority)
 
 			if (TC0100SCNFlipScreenX[Chip]) {
 				xFlip = !xFlip;
-				x = TC0100SCNClipWidth[Chip] - 8 - x;
+				x = TC0100SCNClipWidth[Chip] - x;
 			}
 
 			if (TC0100SCNFlip[Chip]) {

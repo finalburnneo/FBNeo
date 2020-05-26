@@ -335,7 +335,7 @@ static void starfield_init()
 			if (bit1 ^ bit2) generator |= 1;
 
 			if (((~generator >> 16) & 1) && (generator & 0xff) == 0xff) {
-				int color;
+				INT32 color;
 
 				color = (~(generator >> 8)) % 7 + 1;
 				/* A guess based on comparison with PCB video output */
@@ -659,8 +659,8 @@ static void starfield_render()
 		/* Some stars in the second tier will flash erratically while changing their movements. */
 		if (stars[i].set == 1 && starfield_control[2] != 0x85 && i % 2 == 0)
 		{
-			int bit = (starfield_framecount & 4) ? 1 : 2;
-			if (starfield_framecount & bit) { continue; }
+			INT32 bit = ((starfield_framecount + i) & 8) ? 2 : 4;
+			if ((starfield_framecount + i) & bit) { continue; }
 		}
 
 		if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)

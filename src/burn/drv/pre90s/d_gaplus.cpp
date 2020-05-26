@@ -7,6 +7,8 @@
 #include "namcoio.h"
 #include "samples.h"
 
+#define STARFIELD_CLIPPING_X 16
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -326,7 +328,7 @@ static void starfield_init()
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
-		for (INT32 x = nScreenWidth - 1; x >= 0; x--)
+		for (INT32 x = nScreenWidth - (STARFIELD_CLIPPING_X * 2) - 1; x >= 0; x--)
 		{
 			generator <<= 1;
 			INT32 bit1 = (~generator >> 17) & 1;
@@ -347,7 +349,7 @@ static void starfield_init()
 				}
 
 				if (color && total_stars < 120) {
-					stars[total_stars].x = x;
+					stars[total_stars].x = x + STARFIELD_CLIPPING_X;
 					stars[total_stars].y = y;
 					stars[total_stars].col = color;
 					stars[total_stars].set = set++;
@@ -712,8 +714,8 @@ static void vblank_update()
 			case 0xaf: stars[i].y -= 3.0f; break;
 		}
 
-		if (stars[i].x < 16) stars[i].x = (float)(nScreenWidth-32) + stars[i].x;
-		if (stars[i].x >= (float)(nScreenWidth-16)) stars[i].x -= (float)(nScreenWidth-32);
+		if (stars[i].x < STARFIELD_CLIPPING_X) stars[i].x = (float)(nScreenWidth-STARFIELD_CLIPPING_X*2) + stars[i].x;
+		if (stars[i].x >= (float)(nScreenWidth-STARFIELD_CLIPPING_X)) stars[i].x -= (float)(nScreenWidth-STARFIELD_CLIPPING_X*2);
 		if (stars[i].y < 0) stars[i].y = (float)(nScreenHeight) + stars[i].y;
 		if (stars[i].y >= (float)(nScreenHeight)) stars[i].y -= (float)(nScreenHeight);
 	}

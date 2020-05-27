@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14028 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14030 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -270,9 +270,9 @@ This list contains all games supported by FinalBurn Neo.
 | airbustr	|  	| Air Buster: Trouble Specialty Raid Unit (World)	| 		| 1990	| Kaneko (Namco | Miscellaneous	| 					|
 | md_airdiverj	|  	| Air Diver (Jpn)					| md_airdiver	| 1990	| Asmik Ace	| Sega Megadrive| 					|
 | md_airdiver	|  	| Air Diver (USA)					| 		| 1990	| Seismic	| Sega Megadrive| 					|
-| airduelm72	|  	| Air Duel (Japan, M72 PCB version)			| airduel	| 1990	| Irem		| Irem M72	| 					|
-| airduelu	|  	| Air Duel (US, location test)				| airduel	| 1990	| Irem		| Irem M82	| 					|
-| airduel	|  	| Air Duel (World, M82-A-A + M82-B-A)			| 		| 1990	| Irem		| Irem M82	| 					|
+| airduelm72	|  	| Air Duel (Japan, M72 hardware)			| airduel	| 1990	| Irem		| Irem M72	| 					|
+| airduelu	|  	| Air Duel (US location test, M82 hardware)		| airduel	| 1990	| Irem		| Irem M82	| 					|
+| airduel	|  	| Air Duel (World, M82 hardware)			| 		| 1990	| Irem		| Irem M82	| 					|
 | nes_airfortress|  	| Air Fortress (USA)					| 		| 1989	| HAL Laboratory| Miscellaneous	| 					|
 | agallet	|  	| Air Gallet (Europe)					| 		| 1996	| BanPresto / Ga| Cave		| 					|
 | agalleth	|  	| Air Gallet (Hong Kong)				| agallet	| 1996	| BanPresto / Ga| Cave		| 					|
@@ -2551,8 +2551,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_daikok2	|  	| Daikoukai Jidai II (Jpn)				| md_newhoriz	| 1994	| Koei		| Sega Megadrive| 					|
 | nes_daikunogensan|  	| Daiku no Gen-san (Japan)				| 		| 1991	| Irem		| Miscellaneous	| 					|
 | nes_daikunogensan2|  	| Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)| 		| 1993	| Irem		| Miscellaneous	| 					|
-| dkgensanm72	|  	| Daiku no Gensan (Japan, M72 PCB version)		| hharry	| 1990	| Irem		| Irem M72	| 					|
-| dkgensan	|  	| Daiku no Gensan (Japan, M84 PCB version)		| hharry	| 1990	| Irem		| Irem M82	| 					|
+| dkgensanm72	|  	| Daiku no Gensan (Japan, M72 hardware)			| hharry	| 1990	| Irem		| Irem M72	| 					|
+| dkgensan	|  	| Daiku no Gensan (Japan, M84 hardware)			| hharry	| 1990	| Irem		| Irem M82	| 					|
 | daiohc	|  	| Daioh (93111A PCB conversion)				| daioh		| 1993	| Athena	| Seta		| 					|
 | daioha	|  	| Daioh (earlier)					| daioh		| 1993	| Athena	| Seta		| 					|
 | daiohp	|  	| Daioh (prototype)					| daioh		| 1993	| Athena	| Seta		| 					|
@@ -3134,9 +3134,9 @@ This list contains all games supported by FinalBurn Neo.
 | drgnbowla	|  	| Dragon Bowl (set 2, unencrypted program)		| drgnbowl	| 1992	| Nics		| Miscellaneous	| 					|
 | drgnbowl	|  	| Dragon Bowl						| 		| 1992	| Nics		| Miscellaneous	| 					|
 | spec_drgbreed	|  	| Dragon Breed (48K)					| 		| 1989	| Activision	| ZX Spectrum	| 					|
-| dbreedm72j	|  	| Dragon Breed (Japan, M72 PCB version)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
-| dbreedm72	|  	| Dragon Breed (World, M72 PCB version)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
-| dbreed	|  	| Dragon Breed (World, M81 PCB version)			| 		| 1989	| Irem		| Irem M81	| 					|
+| dbreedm72j	|  	| Dragon Breed (Japan, M72 hardwaref)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
+| dbreedm72	|  	| Dragon Breed (World, M72 hardware)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
+| dbreed	|  	| Dragon Breed (World, M81 hardware)			| 		| 1989	| Irem		| Irem M81	| 					|
 | nes_dragonbuster|  	| Dragon Buster (Japan)					| 		| 1987	| Namco		| Miscellaneous	| 					|
 | drgnbstr	|  	| Dragon Buster						| 		| 1984	| Namco		| Miscellaneous	| Missing sounds			|
 | nes_dragobusiij|  	| Dragon Buster II - Yami no Fuuin (Japan)		| nes_dragobusii| 1989	| Namco		| Miscellaneous	| 					|
@@ -4261,7 +4261,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_galforcea	|  	| Gall Force - Defense of Chaos (Jpn, Alt)		| msx_galforce	| 1986	| Sony		| MSX		| 					|
 | fds_gallfor	|  	| Gall Force - Eternal Story (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gallag	|  	| Gallag						| galaga	| 1981	| bootleg	| Miscellaneous	| 					|
-| gallop	|  	| Gallop - Armed police Unit (Japan, M72 PCB version)	| cosmccop	| 1991	| Irem		| Irem M72	| 					|
+| gallop	|  	| Gallop - Armed police Unit (Japan, M72 hardware)	| cosmccop	| 1991	| Irem		| Irem M72	| 					|
 | galmedes	|  	| Galmedes (Japan)					| 		| 1992	| Visco		| Taito Misc	| 					|
 | galhustl	|  	| Gals Hustler						| pgalvip	| 1997	| ACE Internatio| Miscellaneous	| 					|
 | galpanic	|  	| Gals Panic (Unprotected)				| 		| 1990	| Kaneko	| Miscellaneous	| 					|
@@ -4887,8 +4887,8 @@ This list contains all games supported by FinalBurn Neo.
 | chamburger	|  	| Hamburger (DECO Cassette) (Japan)			| cbtime	| 1982	| Data East Corp| Cassette Syste| 					|
 | hamaway	|  	| Hammer Away (prototype)				| 		| 1992	| Sega / Santos	| System 18	| 					|
 | msx_hammboy	|  	| Hammer Boy (Spa)					| 		| 1991	| Dinamic Softwa| MSX		| Keyboard control only.		|
-| hharryu	|  	| Hammerin' Harry (US, M84 PCB version)			| hharry	| 1990	| Irem America	| Irem M82	| 					|
-| hharry	|  	| Hammerin' Harry (World, M81 PCB version))		| 		| 1990	| Irem		| Irem M82	| 					|
+| hharryu	|  	| Hammerin' Harry (US, M84 hardware)			| hharry	| 1990	| Irem America	| Irem M82	| 					|
+| hharry	|  	| Hammerin' Harry (World, M81 hardware))		| 		| 1990	| Irem		| Irem M82	| 					|
 | pce_hanataka	|  	| Hana Taaka Daka!?					| 		| 1991	| Taito		| PC Engine	| 					|
 | sms_hangon	|  	| Hang-On (Euro, Bra, Aus)				| 		| 1985	| Sega		| Sega Master Sy| 					|
 | sms_hangonc	|  	| Hang-On (Euro, Bra, Aus, Sega Card)			| sms_hangon	| 1985	| Sega		| Sega Master Sy| 					|
@@ -5804,7 +5804,7 @@ This list contains all games supported by FinalBurn Neo.
 | kingofb	|  	| King of Boxer (World)					| 		| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | pce_kingcasn	|  	| King of Casino					| 		| 1990	| Victor Interac| PC Engine	| 					|
 | tg_kingcasn	|  	| King of Casino					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
-| ngp_kof_mlon	|  	| King of Fighters R-1 & Melon-chan no Seichou Nikki (Jp| 		| 199?	| SNK		| NeoGeo Pocket	| 					|
+| ngp_kof_mlon	|  	| King of Fighters R-1 & Melon-chan no Seichou Nikki (Jp| 		| 1998	| SNK		| NeoGeo Pocket	| 					|
 | kog		|  	| King of Gladiator (The King of Fighters '97 bootleg)	| kof97		| 1997	| bootleg	| Neo Geo MVS	| 					|
 | kogplus	|  	| King of Gladiator Plus (The King of Fighters '97 bootl| kof97		| 1997	| bootleg	| Neo Geo MVS	| 					|
 | nes_kingofkings|  	| King of Kings (Japan)					| 		| 1988	| Namco		| Miscellaneous	| 					|
@@ -7768,6 +7768,7 @@ This list contains all games supported by FinalBurn Neo.
 | nibbler8	|  	| Nibbler (rev 8)					| nibbler	| 1982	| Rock-Ola	| Miscellaneous	| 					|
 | nibbler	|  	| Nibbler (rev 9)					| 		| 1982	| Rock-Ola	| Miscellaneous	| 					|
 | nibblera	|  	| Nibbler (rev 9, alternate set)			| nibbler	| 1982	| Rock-Ola	| Miscellaneous	| 					|
+| ngp_nigeronpe	|  	| Nige-ron-pa (Hack, English)				| ngp_nigeronp	| 2018	| SNK		| NeoGeo Pocket | 					|
 | ngp_nigeronp	|  	| Nige-ron-pa (Jpn)					| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | nes_nigelmansworchch|  	| Nigel Mansell's World Championship Challenge (USA)	| 		| 1993	| GameTek	| Miscellaneous	| 					|
 | md_mansell	|  	| Nigel Mansell's World Championship Racing (Euro)	| 		| 1993	| Konami	| Sega Megadrive| 					|
@@ -10196,6 +10197,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_snezkoro	|  	| Snezhnaya Koroleva (Rus)				| md_mickmack	| 199?	| <unknown>	| Sega Megadrive| 					|
 | ngp_snkgals	|  	| SNK Gals' Fighters (Euro, USA)			| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | ngp_snkgalsj	|  	| SNK Gals' Fighters (Jpn)				| ngp_snkgals	| 2000	| SNK		| NeoGeo Pocket | 					|
+| ngp_svccard2e	|  	| SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hac| ngp_svccard2	| 2017	| SNK		| NeoGeo Pocket | 					|
 | ngp_svccard2	|  	| SNK vs. Capcom - Card Fighters 2 - Expand Edition (Jpn| 		| 2001	| SNK		| NeoGeo Pocket | 					|
 | ngp_svccardc	|  	| SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfig| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_svccards	|  	| SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighte| 		| 1999	| SNK		| NeoGeo Pocket | 					|
@@ -13694,8 +13696,8 @@ This list contains all games supported by FinalBurn Neo.
 | wyvernf0a	|  	| Wyvern F-0						| wyvernf0	| 1985	| Taito Corporat| Miscellaneous	| 					|
 | wyvernwg	|  	| Wyvern Wings (set 1)					| wivernwg	| 2001	| SemiCom (Game | Miscellaneous	| 					|
 | wyvernwga	|  	| Wyvern Wings (set 2)					| wivernwg	| 2001	| SemiCom (Game | Miscellaneous	| 					|
-| xmultiplm72	|  	| X Multiply (Japan, M72 PCB version)			| xmultipl	| 1989	| Irem		| Irem M72	| 					|
-| xmultipl	|  	| X Multiply (World, M81 PCB version)			| 		| 1989	| Irem		| Irem M81	| 					|
+| xmultiplm72	|  	| X Multiply (Japan, M72 hardware)			| xmultipl	| 1989	| Irem		| Irem M72	| 					|
+| xmultipl	|  	| X Multiply (World, M81 hardware)			| 		| 1989	| Irem		| Irem M81	| 					|
 | xsedae	| D NW	| X Se Dae Quiz (Korea)					| 		| 1993	| Dream Island	| Miscellaneous	| 					|
 | xmen2pa	|  	| X-Men (2 Players ver AAA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmen2pe	|  	| X-Men (2 Players ver EAA)				| xmen		| 1992	| Konami	| GX065		| 					|

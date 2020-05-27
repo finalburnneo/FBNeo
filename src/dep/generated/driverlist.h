@@ -7912,6 +7912,7 @@ DRV		BurnDrvNibbler7;
 DRV		BurnDrvNibbler8;
 DRV		BurnDrvNibbler;
 DRV		BurnDrvNibblera;
+DRV		BurnDrvngpc_nigeronpe;
 DRV		BurnDrvngpc_nigeronp;
 DRV		BurnDrvnes_nigelmansworchch;
 DRV		BurnDrvmd_mansell;
@@ -10386,6 +10387,7 @@ DRV		BurnDrvSnapper;
 DRV		BurnDrvmd_snezkoro;
 DRV		BurnDrvngpc_snkgals;
 DRV		BurnDrvngpc_snkgalsj;
+DRV		BurnDrvngpc_svccard2e;
 DRV		BurnDrvngpc_svccard2;
 DRV		BurnDrvngpc_svccardc;
 DRV		BurnDrvngpc_svccards;
@@ -14573,9 +14575,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAirbustr,			// Air Buster: Trouble Specialty Raid Unit (World)
 	&BurnDrvmd_airdiverj,		// Air Diver (Jpn)
 	&BurnDrvmd_airdiver,		// Air Diver (USA)
-	&BurnDrvAirduelm72,			// Air Duel (Japan, M72 PCB version)
-	&BurnDrvAirduelu,			// Air Duel (US, location test)
-	&BurnDrvAirduel,			// Air Duel (World, M82-A-A + M82-B-A)
+	&BurnDrvAirduelm72,			// Air Duel (Japan, M72 hardware)
+	&BurnDrvAirduelu,			// Air Duel (US location test, M82 hardware)
+	&BurnDrvAirduel,			// Air Duel (World, M82 hardware)
 	&BurnDrvnes_airfortress,	// Air Fortress (USA)
 	&BurnDrvAirGallet,			// Air Gallet (Europe)
 	&BurnDrvAirGalleth,			// Air Gallet (Hong Kong)
@@ -16892,8 +16894,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_daikok2,			// Daikoukai Jidai II (Jpn)
 	&BurnDrvnes_daikunogensan,	// Daiku no Gen-san (Japan)
 	&BurnDrvnes_daikunogensan2,	// Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)
-	&BurnDrvDkgensanm72,		// Daiku no Gensan (Japan, M72 PCB version)
-	&BurnDrvDkgensan,			// Daiku no Gensan (Japan, M84 PCB version)
+	&BurnDrvDkgensanm72,		// Daiku no Gensan (Japan, M72 hardware)
+	&BurnDrvDkgensan,			// Daiku no Gensan (Japan, M84 hardware)
 	&BurnDrvDaiohc,				// Daioh (93111A PCB conversion)
 	&BurnDrvDaioha,				// Daioh (earlier)
 	&BurnDrvDaiohp,				// Daioh (prototype)
@@ -17493,9 +17495,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgnbowla,			// Dragon Bowl (set 2, unencrypted program)
 	&BurnDrvDrgnbowl,			// Dragon Bowl
 	&BurnSpecdrgbreed,			// Dragon Breed (48K)
-	&BurnDrvDbreedm72j,			// Dragon Breed (Japan, M72 PCB version)
-	&BurnDrvDbreedm72,			// Dragon Breed (World, M72 PCB version)
-	&BurnDrvDbreed,				// Dragon Breed (World, M81 PCB version)
+	&BurnDrvDbreedm72j,			// Dragon Breed (Japan, M72 hardwaref)
+	&BurnDrvDbreedm72,			// Dragon Breed (World, M72 hardware)
+	&BurnDrvDbreed,				// Dragon Breed (World, M81 hardware)
 	&BurnDrvnes_dragonbuster,	// Dragon Buster (Japan)
 	&BurnDrvDrgnbstr,			// Dragon Buster
 	&BurnDrvnes_dragobusiij,	// Dragon Buster II - Yami no Fuuin (Japan)
@@ -18640,7 +18642,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_galforceb,		// Gall Force - Defense of Chaos (Jpn, Alt)
 	&BurnDrvfds_gallfor,		// Gall Force - Eternal Story (Japan)
 	&BurnDrvGallag,				// Gallag
-	&BurnDrvGallop,				// Gallop - Armed police Unit (Japan, M72 PCB version)
+	&BurnDrvGallop,				// Gallop - Armed police Unit (Japan, M72 hardware)
 	&BurnDrvGalmedes,			// Galmedes (Japan)
 	&BurnDrvGalhustl,			// Gals Hustler
 	&BurnDrvGalpanic,			// Gals Panic (Unprotected)
@@ -19274,8 +19276,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvChamburger,			// Hamburger (DECO Cassette) (Japan)
 	&BurnDrvHamaway,			// Hammer Away (prototype)
 	&BurnDrvMSX_hammboy,		// Hammer Boy (Spa)
-	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 PCB version)
-	&BurnDrvHharry,				// Hammerin' Harry (World, M81 PCB version))
+	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 hardware)
+	&BurnDrvHharry,				// Hammerin' Harry (World, M81 hardware))
 	&BurnDrvpce_hanataka,		// Hana Taaka Daka!?
 	&BurnDrvsms_hangon,			// Hang-On (Euro, Bra, Aus)
 	&BurnDrvsms_hangonc,		// Hang-On (Euro, Bra, Aus, Sega Card)
@@ -22213,6 +22215,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNibbler8,			// Nibbler (rev 8)
 	&BurnDrvNibbler,			// Nibbler (rev 9)
 	&BurnDrvNibblera,			// Nibbler (rev 9, alternate set)
+	&BurnDrvngpc_nigeronpe,		// Nige-ron-pa (Hack, English)
 	&BurnDrvngpc_nigeronp,		// Nige-ron-pa (Jpn)
 	&BurnDrvnes_nigelmansworchch,// Nigel Mansell's World Championship Challenge (USA)
 	&BurnDrvmd_mansell,			// Nigel Mansell's World Championship Racing (Euro)
@@ -24687,6 +24690,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_snezkoro,		// Snezhnaya Koroleva (Rus)
 	&BurnDrvngpc_snkgals,		// SNK Gals' Fighters (Euro, USA)
 	&BurnDrvngpc_snkgalsj,		// SNK Gals' Fighters (Jpn)
+	&BurnDrvngpc_svccard2e,		// SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)
 	&BurnDrvngpc_svccard2,		// SNK vs. Capcom - Card Fighters 2 - Expand Edition (Jpn)
 	&BurnDrvngpc_svccardc,		// SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)
 	&BurnDrvngpc_svccards,		// SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)
@@ -28247,8 +28251,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWyvernf0a,			// Wyvern F-0
 	&BurnDrvWyvernwg,			// Wyvern Wings (set 1)
 	&BurnDrvWyvernwga,			// Wyvern Wings (set 2)
-	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72 PCB version)
-	&BurnDrvXmultipl,			// X Multiply (World, M81 PCB version)
+	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72 hardware)
+	&BurnDrvXmultipl,			// X Multiply (World, M81 hardware)
 #if defined FBNEO_DEBUG
 	&BurnDrvXsedae,				// X Se Dae Quiz (Korea) [no comment, NOT WORKING]
 #endif

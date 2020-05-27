@@ -302,7 +302,7 @@
 	</game>
 	<game name="kof_mlon" romof="ngp">
 		<description>King of Fighters R-1 &amp; Melon-chan no Seichou Nikki (Jpn, Prototype)</description>
-		<year>199?</year>
+		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="king of fighters r-1 &amp; melon-chan no seichou nikki (japan) (beta).bin" size="2097152" crc="2660bfc4"/>
 		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
@@ -413,6 +413,15 @@
 		<year>1999</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="neo derby champ daiyosou (japan).bin" size="2097152" crc="5a053559"/>
+		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
+		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
+		<driver status="good"/>
+	</game>
+	<game name="nigeronpe" cloneof="nigeronp" romof="nigeronp">
+		<description>Nige-ron-pa (Hack, English)</description>
+		<year>2018</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="nigeronpa (english translation).bin" size="2097152" crc="6672d6e6"/>
 		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>
@@ -980,6 +989,15 @@
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="snk gals' fighters (japan).bin" size="2097152" crc="6a9ffa47"/>
+		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
+		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
+		<driver status="good"/>
+	</game>
+	<game name="svccard2e" cloneof="svccard2" romof="svccard2">
+		<description>SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)</description>
+		<year>2017</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="snk vs. capcom - card fighters 2 - expand edition (english translation).bin" size="2097152" crc="0cc88d96"/>
 		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>

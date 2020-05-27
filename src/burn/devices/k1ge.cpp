@@ -768,6 +768,7 @@ INT32 k1ge_scanline_timer_callback(INT32 scanline)
 	if ( y == 0 )
 	{
 		wba_h = vram[0x002];
+		if (wba_h > 159) wba_h = 0;
 		wba_v = vram[0x003];
 		wsi_h = vram[0x004];
 		wsi_v = vram[0x005];
@@ -790,7 +791,7 @@ INT32 k1ge_scanline_timer_callback(INT32 scanline)
 	/* Draw a line when inside visible area */
 	if ( y && y < 153 )
 	{
-		draw(y - 1 );
+		draw(y - 1);
 	}
 	
 	return hblank_timer;

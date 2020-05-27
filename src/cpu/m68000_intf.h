@@ -11,7 +11,7 @@
 
 #define EMU_M68K								// Use Musashi 68000 emulator
 
-#define SEK_MAX	(4)								// Maximum number of CPUs supported
+#define SEK_MAX	(5)								// Maximum number of CPUs supported
 
 #if defined EMU_M68K
  #include "m68k/m68k.h"

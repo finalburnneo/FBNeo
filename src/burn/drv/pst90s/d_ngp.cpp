@@ -27,6 +27,7 @@ static INT32 timer_time;
 static INT32 previous_start;
 static INT32 color_mode;
 static INT32 blind_mode; // for power-down.
+static INT32 system_ok; // ok to power-down / write nvram?
 
 struct flash_struct {
 	INT32   present;
@@ -557,8 +558,6 @@ static void initialize_flash_config()
 
 static INT32 DrvDoReset()
 {
-	if (BurnLoadRom(DrvBiosROM,	color_mode ? 0x81 : 0x80, 1)) return 1;
-
 	tlcs900Open(0);
 	tlcs900Reset();
 	tlcs900Close();
@@ -631,12 +630,15 @@ static INT32 nvram_load_save(INT32 save)
 
 static INT32 DrvInit()
 {
+	system_ok = 0;
+
 	BurnAllocMemIndex();
 
 	color_mode = (BurnDrvGetHardwareCode() & HARDWARE_SNK_NGPC) == HARDWARE_SNK_NGPC;
 	memset (DrvCartROM, 0xff, 0x400000);
 
 	{
+		if (BurnLoadRom(DrvBiosROM,	color_mode ? 0x81 : 0x80, 1)) return 1;
 		if (BurnLoadRom(DrvCartROM,	0, 1)) return 1;
 		memcpy (DrvCartBak, DrvCartROM, 0x400000);
 	}
@@ -678,6 +680,7 @@ static INT32 DrvInit()
 	nvram_load_save(0 /* load */);
 
 	blind_mode = 0;
+	system_ok = 1;
 
 	return 0;
 }
@@ -709,8 +712,10 @@ static void power_down_system()
 
 static INT32 DrvExit()
 {
-	power_down_system();
-	nvram_load_save(1 /* save */);
+	if (system_ok) {
+		power_down_system();
+		nvram_load_save(1 /* save */);
+	}
 
 	GenericTilesExit();
 
@@ -721,6 +726,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnFreeMemIndex();
+
+	system_ok = 0;
 
 	return 0;
 }

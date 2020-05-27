@@ -7,6 +7,8 @@
 #include "namcoio.h"
 #include "samples.h"
 
+#define STARFIELD_CLIPPING_X 16
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -33,6 +35,7 @@ static UINT8 flipscreen;
 
 static UINT8 *custom_io;
 static UINT8 *starfield_control;
+static UINT8 starfield_framecount;
 
 struct star {
 	float x, y;
@@ -133,6 +136,10 @@ static struct BurnDIPInfo GaplusDIPList[]=
 	{0x13, 0x01, 0x07, 0x02, "5"				},
 	{0x13, 0x01, 0x07, 0x01, "6"				},
 	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode" 	},
+	{0x13, 0x01, 0x08, 0x08, "Off"				},
+	{0x13, 0x01, 0x08, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x14, 0x01, 0x04, 0x04, "Upright"			},
@@ -321,7 +328,7 @@ static void starfield_init()
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
-		for (INT32 x = nScreenWidth*2 - 1; x >= 0; x--)
+		for (INT32 x = nScreenWidth - (STARFIELD_CLIPPING_X * 2) - 1; x >= 0; x--)
 		{
 			generator <<= 1;
 			INT32 bit1 = (~generator >> 17) & 1;
@@ -330,18 +337,26 @@ static void starfield_init()
 			if (bit1 ^ bit2) generator |= 1;
 
 			if (((~generator >> 16) & 1) && (generator & 0xff) == 0xff) {
-				int color;
+				INT32 color;
 
-				color = (~(generator >> 8)) & 0x3f;
-				if (color && total_stars < 240) {
-					stars[total_stars].x = x;
+				color = (~(generator >> 8)) % 7 + 1;
+				/* A guess based on comparison with PCB video output */
+				switch (set)
+				{
+					case 0:	color += 0x250;	break;
+					case 1:	color += 0x230;	break;
+					case 2:	color += 0x210;	break;
+				}
+
+				if (color && total_stars < 120) {
+					stars[total_stars].x = x + STARFIELD_CLIPPING_X;
 					stars[total_stars].y = y;
 					stars[total_stars].col = color;
 					stars[total_stars].set = set++;
 
 					if (set == 3) set = 0;
 
-					if (total_stars+1 < 260)
+					if (total_stars+1 < 130)
 						total_stars++;
 				}
 			}
@@ -378,6 +393,7 @@ static INT32 DrvDoReset()
 	sub2_cpu_in_reset = 0;
 	watchdog = 0;
 	flipscreen = 0;
+	starfield_framecount = 0;
 
 	starfield_init();
 
@@ -409,7 +425,7 @@ static INT32 MemIndex()
 
 	custom_io       = Next; Next += 0x000010;
 	starfield_control = Next; Next += 0x000010;
-	stars           = (star*)Next; Next += 260 * sizeof(star);
+	stars           = (star*)Next; Next += 130 * sizeof(star);
 
 	RamEnd			= Next;
 
@@ -642,6 +658,13 @@ static void starfield_render()
 		INT32 x = (INT32)stars[i].x;
 		INT32 y = (INT32)stars[i].y;
 
+		/* Some stars in the second tier will flash erratically while changing their movements. */
+		if (stars[i].set == 1 && starfield_control[2] != 0x85 && i % 2 == 0)
+		{
+			INT32 bit = ((starfield_framecount + i) & 8) ? 2 : 4;
+			if ((starfield_framecount + i) & bit) { continue; }
+		}
+
 		if (x >= 0 && x < nScreenWidth && y >= 0 && y < nScreenHeight)
 		{
 			pTransDraw[(y * nScreenWidth) + x] = stars[i].col;
@@ -681,18 +704,18 @@ static void vblank_update()
 	{
 		switch (starfield_control[stars[i].set + 1])
 		{
-			case 0x86: stars[i].x += 0.5f; break;
 			case 0x85: stars[i].x += 1.0f; break;
+			case 0x86: stars[i].x += 1.0f; break;
 			case 0x06: stars[i].x += 2.0f; break;
-			case 0x80: stars[i].x -= 0.5f; break;
-			case 0x82: stars[i].x -= 1.0f; break;
-			case 0x81: stars[i].x -= 2.0f; break;
-			case 0x9f: stars[i].y += 1.0f; break;
-			case 0xaf: stars[i].y += 0.5f; break;
+			case 0x80: stars[i].x -= 1.0f; break;
+			case 0x82: stars[i].x -= 2.0f; break;
+			case 0x81: stars[i].x -= 3.0f; break;
+			case 0x9f: stars[i].y += 3.0f; break;
+			case 0xaf: stars[i].y -= 3.0f; break;
 		}
 
-		if (stars[i].x < 0) stars[i].x = (float)(nScreenWidth*2 ) + stars[i].x;
-		if (stars[i].x >= (float)(nScreenWidth*2)) stars[i].x -= (float)(nScreenWidth*2);
+		if (stars[i].x < STARFIELD_CLIPPING_X) stars[i].x = (float)(nScreenWidth-STARFIELD_CLIPPING_X*2) + stars[i].x;
+		if (stars[i].x >= (float)(nScreenWidth-STARFIELD_CLIPPING_X)) stars[i].x -= (float)(nScreenWidth-STARFIELD_CLIPPING_X*2);
 		if (stars[i].y < 0) stars[i].y = (float)(nScreenHeight) + stars[i].y;
 		if (stars[i].y >= (float)(nScreenHeight)) stars[i].y -= (float)(nScreenHeight);
 	}
@@ -703,6 +726,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	starfield_framecount++;
 
 	M6809NewFrame();
 
@@ -799,6 +824,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sub_irq_mask);
 		SCAN_VAR(sub2_irq_mask);
 		SCAN_VAR(flipscreen);
+		SCAN_VAR(starfield_framecount);
 	}
 
 	return 0;

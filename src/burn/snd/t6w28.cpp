@@ -82,8 +82,6 @@ static void UpdateStream(INT32 samples_len)
 
 	INT16 *mixl = soundbuf_l + 5 + nPosition;
 	INT16 *mixr = soundbuf_r + 5 + nPosition;
-	memset(mixl, 0, nSamplesNeeded * sizeof(INT16));
-	memset(mixr, 0, nSamplesNeeded * sizeof(INT16));
     t6w28_update(mixl, mixr, nSamplesNeeded);
     nPosition += nSamplesNeeded;
 }

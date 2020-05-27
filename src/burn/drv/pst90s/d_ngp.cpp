@@ -2455,26 +2455,6 @@ struct BurnDriver BurnDrvngpc_ogrebatl = {
 };
 
 
-// Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (English Translation)
-// https://www.romhacking.net/translations/4888/
-static struct BurnRomInfo ngpc_ogrebatleRomDesc[] = {
-	{ "densetsu no ogre battle gaiden - zenobia no ouji (english translation).bin", 0x200000, 0x165fe891, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngpc_ogrebatle, ngpc_ogrebatle, ngpc_ngp)
-STD_ROM_FN(ngpc_ogrebatle)
-
-struct BurnDriver BurnDrvngpc_ogrebatle = {
-	"ngp_ogrebatle", "ngp_ogrebatl", "ngp_ngp", NULL, "2019",
-	"Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
-	NgpGetZipName, ngpc_ogrebatleRomInfo, ngpc_ogrebatleRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
-	160, 152, 4, 3
-};
-
-
 // Pachinko Hisshou Guide - Pocket Parlor (Jpn)
 
 static struct BurnRomInfo ngpc_pachinkoRomDesc[] = {

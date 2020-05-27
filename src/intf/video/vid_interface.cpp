@@ -60,7 +60,7 @@ static InterfaceInfo VidInfo = { NULL, NULL, NULL };
 
 #if defined (BUILD_WIN32)
 #if defined BUILD_X64_EXE
-// set SoftFX DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
+// set DirectX 9 as default renderer for X64_win (Requires DirectX Redistributable installed)
 UINT32 nVidSelect = 3;					// Which video output is selected
 #else
 // sec D3D7 Enhanced blitter as default

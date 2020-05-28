@@ -1346,12 +1346,12 @@ static INT32 DrvDraw()
 		DrvScroll[3] = fg_scrolly;
 	}
 
-	if (*DrvVidRegs & 0x01 && (scroll_type != 3 || (*DrvMcuCmd & 0x30) == 0x30)) draw_txt_layer(txt_transp, 1);
+	if (*DrvVidRegs & 0x01 && (scroll_type != 3 || (*DrvVidRegs & 0x0f) == 0x0f)) draw_txt_layer(txt_transp, 1);
 	if (*DrvVidRegs & 0x08) draw_layer(DrvBgRAM, DrvGfxROM2, DrvScroll[0], DrvScroll[1], 0x600, 0x3ff);
 	if (*DrvVidRegs & 0x02) draw_sprites(2);
 	if (*DrvVidRegs & 0x04) draw_layer(DrvFgRAM, DrvGfxROM1, DrvScroll[2], DrvScroll[3], 0x400, 0x7ff);
 	if (*DrvVidRegs & 0x02) draw_sprites(1);
-	if (*DrvVidRegs & 0x01 && (scroll_type != 3 || (*DrvMcuCmd & 0x30) == 0x00)) draw_txt_layer(txt_transp, 0);
+	if (*DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 0);
 	if (*DrvVidRegs & 0x02) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);

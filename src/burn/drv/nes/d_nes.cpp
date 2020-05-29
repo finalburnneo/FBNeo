@@ -10666,6 +10666,24 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+// Project Blue ROM @ https://toggleswitch.itch.io/projectblue
+static struct BurnRomInfo nes_projectblueRomDesc[] = {
+	{ "Project Blue (HB).nes",          524304, 0x43b9e57e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_projectblue)
+STD_ROM_FN(nes_projectblue)
+
+struct BurnDriver BurnDrvnes_projectblue = {
+	"nes_projectblue", NULL, NULL, NULL, "2019",
+	"Project Blue (HB)\0", NULL, "toggle switch", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_projectblueRomInfo, nes_projectblueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_chemanRomDesc[] = {
 	{ "Che-Man (HB).nes",          40976, 0x9677c8a1, BRF_ESS | BRF_PRG },
 };

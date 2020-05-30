@@ -467,6 +467,13 @@
 		<rom name="Asmik-kun Land (Japan).nes" size="262160" crc="3f871c93"/>
 		<driver status="good"/>
 	</game>
+	<game name="aspectstarn">
+		<description>Aspect Star N (HB)</description>
+		<year>2019</year>
+		<manufacturer>Nicole Express</manufacturer>
+		<rom name="Aspect Star N (HB).nes" size="40976" crc="857dbdca"/>
+		<driver status="good"/>
+	</game>
 	<game name="assimilate">
 		<description>Assimilate (HB)</description>
 		<year>2012</year>
@@ -941,6 +948,13 @@
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
 		<rom name="Blodia Land - Puzzle Quest (Japan).nes" size="262160" crc="6d3d0c1e"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodfall">
+		<description>Bloodfall (HB)</description>
+		<year>2019</year>
+		<manufacturer>Dr. Ludos</manufacturer>
+		<rom name="Bloodfall (HB).nes" size="40976" crc="3c5548ef"/>
 		<driver status="good"/>
 	</game>
 	<game name="blowemout">
@@ -6123,6 +6137,13 @@
 		<rom name="Pro Wrestling (USA).nes" size="131088" crc="57bec3e6"/>
 		<driver status="good"/>
 	</game>
+	<game name="projectblue">
+		<description>Project Blue (HB)</description>
+		<year>2019</year>
+		<manufacturer>toggle switch</manufacturer>
+		<rom name="Project Blue (HB).nes" size="524304" crc="43b9e57e"/>
+		<driver status="good"/>
+	</game>
 	<game name="punchout">
 		<description>Punch-Out!! (USA)</description>
 		<year>1990</year>
@@ -7376,6 +7397,13 @@
 		<rom name="Super Gun (USA).nes" size="98320" crc="3555dc26"/>
 		<driver status="good"/>
 	</game>
+	<game name="superhomwar">
+		<description>Super Homebrew War (HB)</description>
+		<year>2019</year>
+		<manufacturer>gauauu</manufacturer>
+		<rom name="Super Homebrew War (HB).nes" size="65552" crc="16b8d50a"/>
+		<driver status="good"/>
+	</game>
 	<game name="smb">
 		<description>Super Mario Bros. (World)</description>
 		<year>1985</year>
@@ -8347,6 +8375,13 @@
 		<year>1986</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng).nes" size="65552" crc="e901fdd7"/>
+		<driver status="good"/>
+	</game>
+	<game name="veggieinvaders">
+		<description>Veggie Invaders (HB)</description>
+		<year>2019</year>
+		<manufacturer>dustmop</manufacturer>
+		<rom name="Veggie Invaders (HB).nes" size="65552" crc="6276c0a0"/>
 		<driver status="good"/>
 	</game>
 	<game name="vice">

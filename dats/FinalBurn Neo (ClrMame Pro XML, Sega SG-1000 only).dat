@@ -271,6 +271,13 @@
 		<rom name="bomb jack [chinese logo] (tw).bin" size="32768" crc="deb213fe"/>
 		<driver status="good"/>
 	</game>
+	<game name="cherilp">
+		<description>Cheril Perils Classic SG-1000 (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="cheril-perils-classic-ntsc.sg" size="49152" crc="60d5c65d"/>
+		<driver status="good"/>
+	</game>
 	<game name="choplift">
 		<description>Choplifter (Jpn)</description>
 		<year>1985</year>
@@ -647,6 +654,13 @@
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="soukoban [iq logo] (kr).bin" size="32768" crc="89bafec5"/>
+		<driver status="good"/>
+	</game>
+	<game name="jetpaco">
+		<description>Jet Paco and Jet Puri SG-1000 (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="jet-paco-and-jet-puri-ntsc." size="49152" crc="d31c6b3b"/>
 		<driver status="good"/>
 	</game>
 	<game name="champkent" cloneof="champken" romof="champken">
@@ -1266,7 +1280,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superuwol">
-		<description>Super UWOL! SG-1000</description>
+		<description>Super UWOL! SG-1000 (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="mojon-twins--super-uwol.sg" size="49152" crc="aa8ea6eb"/>

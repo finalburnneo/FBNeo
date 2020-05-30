@@ -2775,8 +2775,7 @@
 		<year>1986</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Yie Ar Kung-Fu II (1986)(Imagine Software).z80" size="36718" crc="ef420fe9"/>
-		<rom name="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
 	<game name="zaxxon" romof="spectrum">

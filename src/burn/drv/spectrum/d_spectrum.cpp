@@ -7350,7 +7350,7 @@ static struct BurnRomInfo Specyiarkuf2RomDesc[] = {
 	{ "Yie Ar Kung-Fu II (1986)(Imagine Software).z80", 0x08f6e, 0xef420fe9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specyiarkuf2, Specyiarkuf2, Spec128)
+STDROMPICKEXT(Specyiarkuf2, Specyiarkuf2, Spectrum)
 STD_ROM_FN(Specyiarkuf2)
 
 struct BurnDriver BurnSpecyiarkuf2 = {

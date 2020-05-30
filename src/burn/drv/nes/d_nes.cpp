@@ -10666,6 +10666,92 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 
 // Homebrew (hand-added)
+// Project Blue ROM @ https://toggleswitch.itch.io/projectblue
+static struct BurnRomInfo nes_aspectstarnRomDesc[] = {
+	{ "Aspect Star N (HB).nes",          40976, 0x857dbdca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aspectstarn)
+STD_ROM_FN(nes_aspectstarn)
+
+struct BurnDriver BurnDrvnes_aspectstarn = {
+	"nes_aspectstarn", NULL, NULL, NULL, "2019",
+	"Aspect Star N (HB)\0", NULL, "Nicole Express", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_aspectstarnRomInfo, nes_aspectstarnRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_bloodfallRomDesc[] = {
+	{ "Bloodfall (HB).nes",          40976, 0x3c5548ef, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bloodfall)
+STD_ROM_FN(nes_bloodfall)
+
+struct BurnDriver BurnDrvnes_bloodfall = {
+	"nes_bloodfall", NULL, NULL, NULL, "2019",
+	"Bloodfall (HB)\0", NULL, "Dr. Ludos", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bloodfallRomInfo, nes_bloodfallRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_superhomwarRomDesc[] = {
+	{ "Super Homebrew War (HB).nes",          65552, 0x16b8d50a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superhomwar)
+STD_ROM_FN(nes_superhomwar)
+
+struct BurnDriver BurnDrvnes_superhomwar = {
+	"nes_superhomwar", NULL, NULL, NULL, "2019",
+	"Super Homebrew War (HB)\0", NULL, "gauauu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_superhomwarRomInfo, nes_superhomwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_veggieinvadersRomDesc[] = {
+	{ "Veggie Invaders (HB).nes",          65552, 0x6276c0a0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_veggieinvaders)
+STD_ROM_FN(nes_veggieinvaders)
+
+struct BurnDriver BurnDrvnes_veggieinvaders = {
+	"nes_veggieinvaders", NULL, NULL, NULL, "2019",
+	"Veggie Invaders (HB)\0", NULL, "dustmop", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_veggieinvadersRomInfo, nes_veggieinvadersRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_projectblueRomDesc[] = {
+	{ "Project Blue (HB).nes",          524304, 0x43b9e57e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_projectblue)
+STD_ROM_FN(nes_projectblue)
+
+struct BurnDriver BurnDrvnes_projectblue = {
+	"nes_projectblue", NULL, NULL, NULL, "2019",
+	"Project Blue (HB)\0", NULL, "toggle switch", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_projectblueRomInfo, nes_projectblueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_chemanRomDesc[] = {
 	{ "Che-Man (HB).nes",          40976, 0x9677c8a1, BRF_ESS | BRF_PRG },
 };

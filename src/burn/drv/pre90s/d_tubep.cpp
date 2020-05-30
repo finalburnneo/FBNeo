@@ -166,10 +166,6 @@ static struct BurnDIPInfo TubepDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x11, 0x01, 0x01, 0x01, "Off"					},
 	{0x11, 0x01, 0x01, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "In Game Sounds"		},
-	{0x11, 0x01, 0x20, 0x00, "Off"					},
-	{0x11, 0x01, 0x20, 0x20, "On"					},
 };
 
 STDDIPINFO(Tubep)
@@ -219,10 +215,6 @@ static struct BurnDIPInfo TubepbDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x11, 0x01, 0x01, 0x01, "Off"					},
 	{0x11, 0x01, 0x01, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "In Game Sounds"		},
-	{0x11, 0x01, 0x20, 0x00, "Off"					},
-	{0x11, 0x01, 0x20, 0x20, "On"					},
 };
 
 STDDIPINFO(Tubepb)
@@ -324,7 +316,7 @@ static UINT8 __fastcall tubep_main_read_port(UINT16 port)
 			return DrvDips[1];
 
 		case 0xa0:
-			return DrvDips[2];
+			return (DrvDips[2] & ~0x20) | ((soundlatch & 0x80) ? 0x00 : 0x20);
 
 		case 0xb0:
 			return DrvInputs[2]; // sy
@@ -392,7 +384,8 @@ static void __fastcall tubep_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x07:
-		return; // nop?
+			soundlatch &= 0x7f;
+		return;
 	}
 }
 
@@ -402,9 +395,7 @@ static UINT8 __fastcall tubep_sound_read_port(UINT16 port)
 	{
 		case 0x06:
 		{
-			INT32 ret = soundlatch;
-			soundlatch &= 0x7f;
-			return ret;
+			return soundlatch;
 		}
 	}
 

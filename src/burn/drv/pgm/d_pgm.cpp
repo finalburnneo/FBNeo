@@ -6226,7 +6226,7 @@ struct BurnDriver BurnDrvEspgalbl = {
 	224, 448, 3, 4
 };
 
-// 西游释厄传-群魔乱舞(新版208版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
+// 西游释厄传 - 群魔乱舞 (版本 208, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
 // More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=695504&fromuid=150233
 
 static struct BurnRomInfo oldsplusnrRomDesc[] = {
@@ -6253,7 +6253,7 @@ STD_ROM_FN(oldsplusnr)
 struct BurnDriver BurnDrvoldsplusnr = {
 	"oldsplusnr", "oldsplus", "pgm", NULL, "2020",
 	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u6e38\u91ca\u5384\u4f20\u0020\u002d\u0020\u7fa4\u9b54\u4e71\u821e (\u7248\u672c\u0020 208, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6287,10 +6287,10 @@ static struct BurnRomInfo kovshpqszltwRomDesc[] = {
 STDROMPICKEXT(kovshpqszltw, kovshpqszltw, pgm)
 STD_ROM_FN(kovshpqszltw)
 
-struct BurnDriverD BurnDrvkovshpqszltw = {
+struct BurnDriver BurnDrvkovshpqszltw = {
 	"kovsho119", "kovshp", "pgm", NULL, "2020",
 	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 500, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
+	L"Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 500, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpqszltwRomInfo, kovshpqszltwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

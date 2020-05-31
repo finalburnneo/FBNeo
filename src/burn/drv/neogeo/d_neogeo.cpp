@@ -18631,7 +18631,7 @@ STD_ROM_FN(kf2k1pkz)
 struct BurnDriver BurnDrvkf2k1pkz = {
 	"kof2001s46", "kof2001", "neogeo", NULL, "2019",
 	"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
-	L"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0\u62F3\u7687 2001 (PS2 Krizalid \u7248\u672C, Eddids)\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k1pkzRomInfo, kf2k1pkzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	kf2k1plsInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -18713,7 +18713,7 @@ static INT32 K2k2ps2re1Exit()
 struct BurnDriver BurnDrvK2k2ps2re1 = {
 	"kf2k2ps2re1", "kof2002", "neogeo", NULL, "2018",
 	"The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG&GSC2007 hack)\0", "hack only enable in AES mode, imperfect sound", "Hack", "Neo Geo MVS",
-	L"\u62F3\u7687 2002 (PlayStation 2 \u4FEE\u6539\u7248\u672C 1.0 2018-12-17, EGCG&GSC2007)\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, K2k2ps2re1RomInfo, K2k2ps2re1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,  
 	K2k2ps2re1Init, K2k2ps2re1Exit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

@@ -256,14 +256,14 @@ static INT32 MemIndex()
 	SpecZ80Rom              = Next; Next += 0x08000;
 	SpecSnapshotData        = Next; Next += 0x20000;
 
-	RamStart               = Next;
+	RamStart                = Next;
 	SpecZ80Ram              = Next; Next += 0x20000;
-	RamEnd                 = Next;
+	RamEnd                  = Next;
 	
 	SpecPalette             = (UINT32*)Next; Next += 0x00010 * sizeof(UINT32);
 	dacbuf                  = (INT16*)Next; Next += 0x800 * 2 * sizeof(INT16);
 	
-	MemEnd                 = Next;
+	MemEnd                  = Next;
 
 	return 0;
 }
@@ -459,7 +459,7 @@ void spectrum_128_update_memory()
 static UINT8 __fastcall SpecSpec128Z80Read(UINT16 a)
 {
 	if (a < 0x4000) {
-		INT32 ROMSelection = BIT(nPort7FFDData, 4);		
+		INT32 ROMSelection = BIT(nPort7FFDData, 4);
 		return SpecZ80Rom[(ROMSelection << 14) + a];
 	}
 	
@@ -717,9 +717,9 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 	SpecFrameInvertCount = 16;
 	SpecFrameNumber = 0;
 	SpecFlashInvert = 0;
-	SpecNumScanlines = 312;
+	SpecNumScanlines = 311;
 	SpecNumCylesPerScanline = 224;
-	SpecVBlankScanline = 310;
+	SpecVBlankScanline = 296;
 	SpecIsSpec128 = 1;
 	nPort7FFDData = 0;
 	SpecVideoRam = SpecZ80Ram;
@@ -900,9 +900,9 @@ static void SpecMakeAYUpdateTable()
 	INT32 p = 0;
 	memset(&ay_table, 0, sizeof(ay_table));
 
-	for (INT32 i = 0; i < 312; i++) {
-		ay_table[i] = ((i * nBurnSoundLen) / 312) - p;
-		p = (i * nBurnSoundLen) / 312;
+	for (INT32 i = 0; i < SpecNumScanlines; i++) {
+		ay_table[i] = ((i * nBurnSoundLen) / SpecNumScanlines) - p;
+		p = (i * nBurnSoundLen) / SpecNumScanlines;
 	}
 
 	ay_table_initted = 1;
@@ -955,10 +955,10 @@ static INT32 SpecFrame()
 	
 	ZetNewFrame();
 	ZetOpen(0);
-	
+
 	for (nScanline = 0; nScanline < SpecNumScanlines; nScanline++) {
 		SpecHorStartCycles = nCyclesDone;
-		
+
 		if (nScanline == SpecVBlankScanline) {
 			// VBlank
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -1009,11 +1009,11 @@ static INT32 SpecFrame()
 	return 0;
 }
 
-static INT32 SpecScan(INT32 /*nAction*/, INT32* /*pnMin*/)
+static INT32 SpecScan(INT32 nAction, INT32* pnMin)
 {
-	//struct BurnArea ba;
+	struct BurnArea ba;
 	
-	/*if (pnMin != NULL) {			// Return minimum compatible version
+	if (pnMin != NULL) {			// Return minimum compatible version
 		*pnMin = 0x029672;
 	}
 
@@ -1027,8 +1027,24 @@ static INT32 SpecScan(INT32 /*nAction*/, INT32* /*pnMin*/)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
-	}*/
-	
+		DACScan(nAction, pnMin);
+
+		if (SpecIsSpec128) {
+			AY8910Scan(nAction, pnMin);
+		}
+
+		SCAN_VAR(nPortFEData);
+		SCAN_VAR(nPort7FFDData);
+	}
+
+	if (nAction & ACB_WRITE) {      // Updating banking (128k)
+		if (SpecIsSpec128) {
+			ZetOpen(0);
+			spectrum_128_update_memory();
+			ZetClose();
+		}
+	}
+
 	return 0;
 }
 

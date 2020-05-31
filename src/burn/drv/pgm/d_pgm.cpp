@@ -6260,8 +6260,44 @@ struct BurnDriver BurnDrvoldsplusnr = {
 	448, 224, 4, 3
 };
 
-// Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE)
-// 2020-01-03 Update
+// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)
+// 2018-02-23
+// This set is originally known as kovshpqszl; kovsho89 in HBMAME
+
+static struct BurnRomInfo kovshpqszlRomDesc[] = {
+	{ "p0600h_101_po89.rom",		0x400000, 0x086d100b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw10.rom",    			0x800000, 0xa919ec0f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600_po73.rom",	  	 		0x800000, 0x72643288, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601_po73.rom",	  	 		0x800000, 0x9c1d1bea, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po73.rom",	   			0x800000, 0x7b437e0f, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_po89.rom",	  	 		0x800000, 0xb038e568, 3 | BRF_GRA }, 	        //  5
+	{ "a0541_po73.rom",	   			0x800000, 0x1fa3c921, 3 | BRF_GRA }, 	        //  6
+
+	{ "b0600_po73.rom",	   			0x800000, 0x0646c5ef, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b0540_po89.rom",	   			0x800000, 0x03a1641e, 4 | BRF_GRA },			//  8
+	
+	{ "m0600_po69.rom",	 	  		0x400000, 0xec3f335d, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china_po89.asic", 0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshpqszl, kovshpqszl, pgm)
+STD_ROM_FN(kovshpqszl)
+
+struct BurnDriver BurnDrvkovshpqszl = {
+	"kovsho89", "kovshp", "pgm", NULL, "2018",
+	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshpqszlRomInfo, kovshpqszlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)
+// 2020-01-03
 // This set is originally known as kovshpqszltw; kovsho119 in HBMAME
 
 static struct BurnRomInfo kovshpqszltwRomDesc[] = {
@@ -6289,8 +6325,8 @@ STD_ROM_FN(kovshpqszltw)
 
 struct BurnDriver BurnDrvkovshpqszltw = {
 	"kovsho119", "kovshp", "pgm", NULL, "2020",
-	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 500, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
+	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 500, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpqszltwRomInfo, kovshpqszltwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

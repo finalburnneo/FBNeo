@@ -2432,8 +2432,8 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 		if (!m_alt_format)
 		{
-			sprite = spriteram[offs + 1];
-			y = spriteram[offs];
+			sprite = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]);
+			y = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
 
 			flash = y & 0x1000;
 
@@ -2441,7 +2441,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 			if (!(flash && (nCurrentFrame & 1)))
 			{
-				x = spriteram[offs + 2];
+				x = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 
 				if (bitmap_is_null)
 				{
@@ -2527,7 +2527,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
 						if (layerID && (sprite == 0x3cd || sprite == 0x3d0) && !(colour&0x80))
-							colour |= (ace_ram[0] == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
+							colour |= (BURN_ENDIAN_SWAP_INT32(ace_ram[0]) == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
 						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
 							colour |= 0xe0; // level 2 carriage buggy
 						if (layerID && (sprite == 0x7e0 || sprite == 0x7e4 || sprite == 0x7e8 || sprite == 0x7ec ||
@@ -2596,24 +2596,24 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 		else // m_alt_format
 		{
 			INT32 h=0;
-			y = spriteram[offs+0];
-			sprite = spriteram[offs+3] & 0xffff;
+			y = BURN_ENDIAN_SWAP_INT16(spriteram[offs+0]);
+			sprite = BURN_ENDIAN_SWAP_INT16(spriteram[offs+3]) & 0xffff;
 
 			if (m_pri_cb)
-				pri = m_pri_cb(spriteram[offs+2]&0x00ff, 0);
+				pri = m_pri_cb(BURN_ENDIAN_SWAP_INT16(spriteram[offs+2])&0x00ff, 0);
 			else
 				pri = 0;
 
-			x = spriteram[offs+1];
+			x = BURN_ENDIAN_SWAP_INT16(spriteram[offs+1]);
 
 			if (!((y&0x2000) && (nCurrentFrame & 1)))
 			{
-				colour = (spriteram[offs+2] >>0) & 0x1f;
+				colour = (BURN_ENDIAN_SWAP_INT16(spriteram[offs+2]) >>0) & 0x1f;
 
-				h = (spriteram[offs+2]&0xf000)>>12;
-				w = (spriteram[offs+2]&0x0f00)>> 8;
-				fx = !(spriteram[offs+0]&0x4000);
-				fy = !(spriteram[offs+0]&0x8000);
+				h = (BURN_ENDIAN_SWAP_INT16(spriteram[offs+2])&0xf000)>>12;
+				w = (BURN_ENDIAN_SWAP_INT16(spriteram[offs+2])&0x0f00)>> 8;
+				fx = !(BURN_ENDIAN_SWAP_INT16(spriteram[offs+0])&0x4000);
+				fy = !(BURN_ENDIAN_SWAP_INT16(spriteram[offs+0])&0x8000);
 
 				if (!flipscreen) {
 					x = x & 0x01ff;
@@ -3006,7 +3006,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 
 						if (game_select == 2 && (pri1 == 1 || pri1 == 3)) { // nslasher: carriage buggy wheels behind / in front of object
 							UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-							alpha = (mixAlphaTilemap) ? ((m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)]) * 8)-1 : 0x7f;
+							alpha = (mixAlphaTilemap) ? ((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)])) * 8)-1 : 0x7f;
 							if (alpha<0)
 								alpha=0;
 						}
@@ -3044,7 +3044,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 						&& ((priColAlphaPal1&0xff)==0 || (pri1&0x3)==2 || (pri1&0x3)==3 || alpha1))
 					{
 						/* Alpha values are tied to ACE ram */
-						INT32 alpha=((m_ace_ram[0x17 + (((p&0xf0)>>4)/2)]) * 8)-1;
+						INT32 alpha=((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((p&0xf0)>>4)/2)])) * 8)-1;
 						if (alpha<0)
 							alpha=0;
 
@@ -3556,8 +3556,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ArmRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Arm);
+		CPU_RUN(1, h6280);
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
@@ -3639,8 +3639,8 @@ static INT32 DrvZ80Frame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ArmRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Arm);
+		CPU_RUN(1, Zet);
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
@@ -3707,10 +3707,10 @@ static INT32 DrvBSMTFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ArmRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Arm);
 		if (bsmt_in_reset == 0) {
 			M6809Open(0);
-			nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
+			CPU_RUN(1, M6809);
 
 			if (nCurrentFrame&1) { // needs 8.43 firq's per frame, to simplify, we'll do an extra firq every other frame.
 				if ((i%34) == 33) decobsmt_firq_interrupt(); // 8 (per frame)
@@ -3718,7 +3718,7 @@ static INT32 DrvBSMTFrame()
 				if ((i%30) == 29) decobsmt_firq_interrupt(); // 9
 			}
 
-			nCyclesDone[2] += tms32010_execute(nCyclesTotal[2] / nInterleave);
+			CPU_RUN(2, tms32010);
 			M6809Close();
 		}
 

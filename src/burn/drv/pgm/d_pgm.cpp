@@ -6253,7 +6253,7 @@ STD_ROM_FN(oldsplusnr)
 struct BurnDriver BurnDrvoldsplusnr = {
 	"oldsplusnr", "oldsplus", "pgm", NULL, "2020-05-29",
 	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u6e38\u91ca\u5384\u4f20\u0020\u002d\u0020\u7fa4\u9b54\u4e71\u821e (\u7248\u672c\u0020 208, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897F\u6E38\u91CA\u5384\u4F20 - \u7FA4\u9B54\u4E71\u821E (\u7248\u672C 208, \u4FEE\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

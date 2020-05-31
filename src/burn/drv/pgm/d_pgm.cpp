@@ -6230,7 +6230,7 @@ struct BurnDriver BurnDrvEspgalbl = {
 // More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=695504&fromuid=150233
 
 static struct BurnRomInfo oldsplusnrRomDesc[] = {
-	{ "p05301n_v208.rom",	0x400000, 0x97a7cf98, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "p05301n_v208.rom",	0x400000, 0x15d112d2, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t05301.rom",			0x800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
 
@@ -6251,7 +6251,7 @@ STDROMPICKEXT(oldsplusnr, oldsplusnr, pgm)
 STD_ROM_FN(oldsplusnr)
 
 struct BurnDriver BurnDrvoldsplusnr = {
-	"oldsplusnr", "oldsplus", "pgm", NULL, "2020",
+	"oldsplusnr", "oldsplus", "pgm", NULL, "2020-05-29",
 	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
 	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u6e38\u91ca\u5384\u4f20\u0020\u002d\u0020\u7fa4\u9b54\u4e71\u821e (\u7248\u672c\u0020 208, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,

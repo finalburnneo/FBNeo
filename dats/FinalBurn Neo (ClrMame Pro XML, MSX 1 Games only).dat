@@ -2014,6 +2014,17 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="chasehq" romof="msx">
+		<description>Chase H.Q. (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Ocean Software</manufacturer>
+		<rom name="chase hq (1988)(ocean software)(gb)(side a)[run'cas-'].cas" size="88098" crc="d4bd4049"/>
+		<rom name="chase hq (1988)(ocean software)(gb)(side b)[run'cas-'].cas" size="41562" crc="73087fb1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="tantan" romof="msx">
 		<description>Checkers in Tan Tan Tanuki (Jpn)</description>
 		<year>1985</year>
@@ -7703,6 +7714,16 @@
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="othello (japan).rom" size="32768" crc="fd3921cd"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="outrun" romof="msx">
+		<description>Out Run (Euro)</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="out run (1988)(us gold)(gb)[run'cas-'].cas" size="53873" crc="ee942725"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

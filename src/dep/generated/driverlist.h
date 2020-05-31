@@ -1931,6 +1931,7 @@ DRV		BurnDrvCbombersj;
 DRV		BurnDrvCbombers;
 DRV		BurnSpecchasehq;
 DRV		BurnSpecchasehq_48;
+DRV		BurnDrvMSX_chasehq;
 DRV		BurnDrvChasehqju;
 DRV		BurnDrvChasehqj;
 DRV		BurnDrvChasehqu;
@@ -2402,6 +2403,7 @@ DRV		BurnDrvCrbaloon2;
 DRV		BurnDrvCrazyblk;
 DRV		BurnDrvMSX_crazy;
 DRV		BurnDrvMSX_crazybul;
+DRV		BurnDrvmd_crazybus;
 DRV		BurnDrvMSX_crazycar;
 DRV		BurnDrvCclimberj;
 DRV		BurnDrvnes_crazyclimber;
@@ -8180,6 +8182,7 @@ DRV		BurnDrvOutrundxa;
 DRV		BurnDrvOutrundxeh;
 DRV		BurnDrvOutrundx;
 DRV		BurnDrvgg_outrun;
+DRV		BurnDrvMSX_outrun;
 DRV		BurnDrvOutrundxj;
 DRV		BurnDrvgg_outrunj;
 DRV		BurnDrvOutrunra;
@@ -16261,6 +16264,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCbombers,			// Chase Bombers (World)
 	&BurnSpecchasehq,			// Chase H.Q. (128K)
 	&BurnSpecchasehq_48,		// Chase H.Q. (48K)
+	&BurnDrvMSX_chasehq,		// Chase H.Q. (Euro)
 	&BurnDrvChasehqju,			// Chase H.Q. (Japan UP)
 	&BurnDrvChasehqj,			// Chase H.Q. (Japan)
 	&BurnDrvChasehqu,			// Chase H.Q. (US)
@@ -16732,6 +16736,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCrazyblk,			// Crazy Blocks
 	&BurnDrvMSX_crazy,			// Crazy Buggy (HB)
 	&BurnDrvMSX_crazybul,		// Crazy Bullet (Jpn)
+	&BurnDrvmd_crazybus,		// Crazy Bus (HB, v2.00_r030)
 	&BurnDrvMSX_crazycar,		// Crazy Cars (Euro)
 	&BurnDrvCclimberj,			// Crazy Climber (Japan)
 	&BurnDrvnes_crazyclimber,	// Crazy Climber (Japan)
@@ -22510,6 +22515,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOutrundxeh,			// Out Run (deluxe sitdown) (Enhanced Edition v1.0.3)
 	&BurnDrvOutrundx,			// Out Run (deluxe sitdown)
 	&BurnDrvgg_outrun,			// Out Run (Euro)
+	&BurnDrvMSX_outrun,			// Out Run (Euro)
 	&BurnDrvOutrundxj,			// Out Run (Japan, deluxe sitdown, FD1089A 317-0019)
 	&BurnDrvgg_outrunj,			// Out Run (Jpn)
 	&BurnDrvOutrunra,			// Out Run (sitdown/upright, Rev A)

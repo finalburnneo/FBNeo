@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14055 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14058 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1899,6 +1899,7 @@ This list contains all games supported by FinalBurn Neo.
 | cbombers	|  	| Chase Bombers (World)					| 		| 1994	| Taito Corporat| K1100809A	| With graphics issues			|
 | spec_chasehq	|  	| Chase H.Q. (128K)					| 		| 1989	| Ocean		| ZX Spectrum	| 					|
 | spec_chasehq_48|  	| Chase H.Q. (48K)					| spec_chasehq	| 1989	| Ocean		| ZX Spectrum	| 					|
+| msx_chasehq	|  	| Chase H.Q. (Euro)					| 		| 1988	| Ocean Software| MSX		| 					|
 | chasehqju	|  	| Chase H.Q. (Japan UP)					| chasehq	| 1988	| Taito Corporat| Taito Z	| 					|
 | chasehqj	|  	| Chase H.Q. (Japan)					| chasehq	| 1988	| Taito Corporat| Taito Z	| 					|
 | chasehqu	|  	| Chase H.Q. (US)					| chasehq	| 1988	| Taito America | Taito Z	| 					|
@@ -2362,6 +2363,7 @@ This list contains all games supported by FinalBurn Neo.
 | crazyblk	|  	| Crazy Blocks						| mrjong	| 1983	| Kiwako (ECI li| Miscellaneous	| 					|
 | msx_crazy	|  	| Crazy Buggy (HB)					| 		| 2005	| Crappysoft	| MSX		| 					|
 | msx_crazybul	|  	| Crazy Bullet (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
+| md_crazybus	|  	| Crazy Bus (HB, v2.00_r030)				| 		| 2010	| Tom Scripts LT| Sega Megadrive| 					|
 | msx_crazycar	|  	| Crazy Cars (Euro)					| 		| 1988	| Titus		| MSX		| 					|
 | cclimberj	|  	| Crazy Climber (Japan)					| cclimber	| 1980	| Nichibutsu	| Miscellaneous	| 					|
 | nes_crazyclimber|  	| Crazy Climber (Japan)					| 		| 1986	| Nichibutsu	| Miscellaneous	| 					|
@@ -8030,6 +8032,7 @@ This list contains all games supported by FinalBurn Neo.
 | outrundxeh	|  	| Out Run (deluxe sitdown) (Enhanced Edition v1.0.3)	| outrun	| 2013	| hack (Chris Wh| Out Run	| 					|
 | outrundx	|  	| Out Run (deluxe sitdown)				| outrun	| 1986	| Sega		| Out Run	| 					|
 | gg_outrun	|  	| Out Run (Euro)					| 		| 1991	| Sega		| Sega Game Gear| 					|
+| msx_outrun	|  	| Out Run (Euro)					| 		| 1988	| U.S. Gold	| MSX		| 					|
 | outrundxj	|  	| Out Run (Japan, deluxe sitdown, FD1089A 317-0019)	| outrun	| 1986	| Sega		| Out Run	| 					|
 | gg_outrunj	|  	| Out Run (Jpn)						| gg_outrun	| 1991	| Sega		| Sega Game Gear| 					|
 | outrunra	|  	| Out Run (sitdown/upright, Rev A)			| outrun	| 1986	| Sega		| Out Run	| 					|

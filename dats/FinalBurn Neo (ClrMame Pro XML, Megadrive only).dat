@@ -2540,6 +2540,13 @@
 		<rom name="crayon shin-chan - arashi o yobu enji (jpn).bin" size="2097152" crc="97fc42d2"/>
 		<driver status="good"/>
 	</game>
+	<game name="crazybus">
+		<description>Crazy Bus (HB, v2.00_r030) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>Tom Scripts LTDA.</manufacturer>
+		<rom name="CB68K_BV200_r230.bin" size="1048576" crc="209406fa"/>
+		<driver status="good"/>
+	</game>
 	<game name="xfire">
 		<description>Cross Fire (USA)</description>
 		<year>1991</year>

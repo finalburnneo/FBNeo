@@ -43682,3 +43682,21 @@ struct BurnDriver BurnDrvmd_zoomsecr = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Crazy Bus (HB, v2.00_r030)
+static struct BurnRomInfo md_crazybusRomDesc[] = {
+	{ "CB68K_BV200_r230.bin", 1048576, 0x209406fa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_crazybus)
+STD_ROM_FN(md_crazybus)
+
+struct BurnDriver BurnDrvmd_crazybus = {
+	"md_crazybus", NULL, NULL, NULL, "2010",
+	"Crazy Bus (HB, v2.00_r030)\0", NULL, "Tom Scripts LTDA.", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_crazybusRomInfo, md_crazybusRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -2652,10 +2652,9 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (m68k_halt) {
-			SekIdle(nCyclesTotal[0] / nInterleave);
-			nCyclesDone[0] += nCyclesTotal[0] / nInterleave;
+			CPU_IDLE(0, Sek);
 		} else {
-			nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+			CPU_RUN(0, Sek);
 		}
 
 		if (i == nVBlankLine) {
@@ -2676,7 +2675,9 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
-		if (has_dsp && dsp_on) tms32010_execute(nCyclesTotal[2] / nInterleave);
+		if (has_dsp && dsp_on) {
+			CPU_RUN(2, tms32010);
+		}
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);

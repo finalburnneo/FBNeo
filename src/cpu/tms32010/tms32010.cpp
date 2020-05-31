@@ -865,7 +865,7 @@ static INT32 end_run = 0;
 /****************************************************************************
  *  Execute IPeriod. Return 0 if emulation should be stopped
  ****************************************************************************/
-int tms32010_execute(int cycles)
+int tms32010Run(int cycles)
 {
 	tms32010_icount = cycles;
 	tms32010_current_cycles = cycles;

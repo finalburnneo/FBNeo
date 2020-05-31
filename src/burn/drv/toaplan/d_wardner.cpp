@@ -1003,14 +1003,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		ZetOpen(0);
 		if (z80_halt) {
-			nCyclesDone[0] += nSegment;
-			ZetIdle(nSegment);
+			CPU_IDLE(0, Zet);
 		} else {
-			nCyclesDone[0] += ZetRun(nSegment);
+			CPU_RUN(0, Zet);
 
 			if (i == 240 && irq_enable) {
 				irq_enable = 0;
@@ -1018,8 +1015,9 @@ static INT32 DrvFrame()
 			}
 		}
 
-		nSegment = nCyclesTotal[2] / nInterleave;
-		if (dsp_on) tms32010_execute(nSegment);
+		if (dsp_on) {
+			CPU_RUN(2, tms32010);
+		}
 
 		ZetClose();
 

@@ -148,7 +148,7 @@ static struct BurnDIPInfo MSX50hzJoySwapDIPList[]=
 
 static struct BurnDIPInfo MSX50hzDIPList[]=
 {
-	{0x17, 0xff, 0xff, 0x20, NULL		},
+	{0x17, 0xff, 0xff, 0x00, NULL		},
 };
 
 static struct BurnDIPInfo MSXJoySwapDIPList[]=
@@ -24993,6 +24993,45 @@ struct BurnDriver BurnDrvMSX_xybots = {
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_xybotsRomInfo, MSX_xybotsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Out Run (Euro)
+
+static struct BurnRomInfo MSX_outrunRomDesc[] = {
+	{ "out run (1988)(us gold)(gb)[run'cas-'].cas",	0x0d271, 0xee942725, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_outrun, MSX_outrun, msx_msx)
+STD_ROM_FN(MSX_outrun)
+
+struct BurnDriver BurnDrvMSX_outrun = {
+	"msx_outrun", NULL, "msx_msx", NULL, "1988",
+	"Out Run (Euro)\0", NULL, "U.S. Gold", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RACING, 0,
+	MSXGetZipName, MSX_outrunRomInfo, MSX_outrunRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Chase H.Q. (Euro)
+
+static struct BurnRomInfo MSX_chasehqRomDesc[] = {
+	{ "chase hq (1988)(ocean software)(gb)(side a)[run'cas-'].cas",	0x15822, 0xd4bd4049, BRF_PRG | BRF_ESS },
+	{ "chase hq (1988)(ocean software)(gb)(side b)[run'cas-'].cas",	0x0a25a, 0x73087fb1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chasehq, MSX_chasehq, msx_msx)
+STD_ROM_FN(MSX_chasehq)
+
+struct BurnDriver BurnDrvMSX_chasehq = {
+	"msx_chasehq", NULL, "msx_msx", NULL, "1988",
+	"Chase H.Q. (Euro)\0", NULL, "Ocean Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RACING, 0,
+	MSXGetZipName, MSX_chasehqRomInfo, MSX_chasehqRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

@@ -25,7 +25,7 @@ void tms32010_set_read_port_handler(UINT16 (*pointer)(INT32));
 void tms32010_init (void);
 void tms32010_reset (void);
 void tms32010_exit (void);
-int tms32010_execute(int cycles);
+int tms32010Run(int cycles);
 int tms32010_Ext_IRQ(void);
 void tms32010_set_irq_line(int irqline, int state);
 void tms32010_scan(INT32 nAction);

@@ -1902,6 +1902,69 @@ static struct BurnDIPInfo CaptcommDIPList[]=
 
 STDDIPINFO(Captcomm)
 
+static struct BurnDIPInfo Captcomm4pDIPList[]=
+{
+	// Defaults
+	{0x23, 0xff, 0xff, 0x00, NULL                     },
+	{0x24, 0xff, 0xff, 0xcb, NULL                     },  // 4 Players
+	{0x25, 0xff, 0xff, 0x60, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_2(0x23)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x23, 0x01, 0x40, 0x00, "Off"                    },
+	{0x23, 0x01, 0x40, 0x40, "On"                     },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x24)
+
+	{0   , 0xfe, 0   , 4   , "Difficulty 2"           },
+	{0x24, 0x01, 0x18, 0x00, "Easy"                   },
+	{0x24, 0x01, 0x18, 0x08, "Normal"                 },
+	{0x24, 0x01, 0x18, 0x10, "Hard"                   },
+	{0x24, 0x01, 0x18, 0x18, "Hardest"                },
+
+	{0   , 0xfe, 0   , 4   , "Play Mode"              },
+	{0x24, 0x01, 0xc0, 0x80, "1 Player"               },
+	{0x24, 0x01, 0xc0, 0x00, "2 Player"               },
+	{0x24, 0x01, 0xc0, 0x40, "3 Player"               },
+	{0x24, 0x01, 0xc0, 0xc0, "4 Player"               },
+
+	// Dip C
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x25, 0x01, 0x03, 0x03, "1"                      },
+	{0x25, 0x01, 0x03, 0x00, "2"                      },
+	{0x25, 0x01, 0x03, 0x01, "3"                      },
+	{0x25, 0x01, 0x03, 0x02, "4"                      },
+
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x25, 0x01, 0x04, 0x00, "Off"                    },
+	{0x25, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x25, 0x01, 0x08, 0x00, "Off"                    },
+	{0x25, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0x25, 0x01, 0x10, 0x00, "Off"                    },
+	{0x25, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x25, 0x01, 0x20, 0x00, "Off"                    },
+	{0x25, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x25, 0x01, 0x40, 0x00, "Off"                    },
+	{0x25, 0x01, 0x40, 0x40, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x25, 0x01, 0x80, 0x00, "Game"                   },
+	{0x25, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Captcomm4p)
+
 static struct BurnDIPInfo CawingDIPList[]=
 {
 	// Defaults
@@ -14469,6 +14532,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "captcommjr1" , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommb"   , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommb2"  , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
+	{ "captcommp4"  , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
+	{ "captcomms87" , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "cawing"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingr1"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingu"     , CPS_B_05    , mapper_CA22B , 0, NULL                },
@@ -23019,8 +23084,9 @@ struct BurnDriver BurnDrvCpswofchp = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Hacked by Grego.
+// Final Fight 30th Anniversary Edition (Hacked by Grego)
 // Patch can be found at: https://github.com/originalgrego/FinalFightAE-Installer
+
 static struct BurnRomInfo FfightaeRomDesc[] = {
 	{ "ff-23m.8h",     0x080000, 0x86def74f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "ff-22m.7h",     0x080000, 0xcbdd8689, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -23051,6 +23117,92 @@ struct BurnDriver BurnDrvCpsFfightae = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightaeRomInfo, FfightaeRomName, NULL, NULL, NULL, NULL, FfightaeInputInfo, FfightaeDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Captain Commando (1 Versus 4 GOTVG)
+
+static struct BurnRomInfo Captcommp4RomDesc[] = {
+	{ "captcommp4_23d.8f",  0x080000, 0x40e8a541, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "captcommp4_22d.7f",  0x080000, 0xf1292a02, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cc_24d.9e",     		0x020000, 0x680e543f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cc_28d.9f",     		0x020000, 0x8820039f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "cc-5m.3a",      		0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
+	{ "cc-7m.5a",      		0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
+	{ "cc-1m.4a",      		0x080000, 0x00637302, BRF_GRA | CPS1_TILES },
+	{ "cc-3m.6a",      		0x080000, 0xcc87cf61, BRF_GRA | CPS1_TILES },
+	{ "cc-6m.7a",      		0x080000, 0x28718bed, BRF_GRA | CPS1_TILES },
+	{ "cc-8m.9a",      		0x080000, 0xd4acc53a, BRF_GRA | CPS1_TILES },
+	{ "cc-2m.8a",      		0x080000, 0x0c69f151, BRF_GRA | CPS1_TILES },
+	{ "cc-4m.10a",     		0x080000, 0x1f9ebb97, BRF_GRA | CPS1_TILES },
+
+	{ "cc_09.11a",     		0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cc_18.11c",     		0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_19.12c",     		0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "cc63b.1a",      		0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      		0x000117, 0x3abc0700, BRF_OPT },
+	{ "ccprg.11d",     		0x000117, 0xe1c225c4, BRF_OPT },
+	{ "ioc1.ic7",      		0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      		0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Captcommp4)
+STD_ROM_FN(Captcommp4)
+
+struct BurnDriver BurnDrvCpsCaptcommp4 = {
+	"captcommp4", "captcomm", NULL, NULL, "2020",
+	"Captain Commando (1 Versus 4 GOTVG)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Captcommp4RomInfo, Captcommp4RomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Captain Commando (Unlimited Bullet Update 2020-02-19)
+// this set is known as captcommr1pwx; captcomms87 in HBMAME
+
+static struct BurnRomInfo Captcommr1pwxRomDesc[] = {
+	{ "ccs87.10f",     0x302532, 0xc60301c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cc-5m.3a",      0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
+	{ "cc-7m.5a",      0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
+	{ "cc-1m.4a",      0x080000, 0x00637302, BRF_GRA | CPS1_TILES },
+	{ "cc-3m.6a",      0x080000, 0xcc87cf61, BRF_GRA | CPS1_TILES },
+	{ "cc-6m.7a",      0x080000, 0x28718bed, BRF_GRA | CPS1_TILES },
+	{ "cc-8m.9a",      0x080000, 0xd4acc53a, BRF_GRA | CPS1_TILES },
+	{ "cc-2m.8a",      0x080000, 0x0c69f151, BRF_GRA | CPS1_TILES },
+	{ "cc-4m.10a",     0x080000, 0x1f9ebb97, BRF_GRA | CPS1_TILES },
+
+	{ "cc_09.11a",     0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cc_18.11c",     0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_19.12c",     0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Captcommr1pwx)
+STD_ROM_FN(Captcommr1pwx)
+
+struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
+	"captcomms87", "captcomm", NULL, NULL, "2020",
+	"Captain Commando (Unlimited Bullet Update 2020-02-19)\0", NULL, "Hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

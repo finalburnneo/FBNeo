@@ -1221,8 +1221,17 @@ static void screen_update_tubep(UINT32 scanline)
 	{
 		UINT8 *active_fb = DrvFrameBuffers + v*256 + (DISP_*256*256);
 		UINT32 sp_data0=0,sp_data1=0,sp_data2=0;
+
+
+		// It appears there is a 1 pixel delay when renderer switches from background to sprite/text,
+		// this causes text and sprite layers to draw a drop shadow with 1 dot width to the left.
+		// See the gameplay video on the PCB. https://www.youtube.com/watch?v=xxONzbUOOsw
+		bool prev_text_or_sprite_pixel = true;
+
 		for (UINT32 h = 0*8; h < 32*8; h++)
 		{
+			bool draw_text_or_sprite_pixel = false;
+
 			sp_data2 = sp_data1;
 			sp_data1 = sp_data0;
 			sp_data0 = active_fb[h];
@@ -1231,8 +1240,10 @@ static void screen_update_tubep(UINT32 scanline)
 			UINT8 text_code = DrvTxtRAM[text_offs];
 			UINT8 text_gfx_data = text_gfx_base[(text_code << 3) | (v & 0x07)];
 
-			if (text_gfx_data & (0x80 >> (h & 0x07)))
+			if (text_gfx_data & (0x80 >> (h & 0x07))) {
 				dest[h] = (DrvTxtRAM[text_offs + 1] & 0x0f) | color_A4;
+				draw_text_or_sprite_pixel = true;
+			}
 			else
 			{
 				UINT32 bg_data;
@@ -1265,10 +1276,17 @@ static void screen_update_tubep(UINT32 scanline)
 				else
 					sp_data = sp_data1;
 
-				if (sp_data != 0x0f)
+				if (sp_data != 0x0f) {
 					bg_data = DrvColPROM[(0x20 + sp_data) | color_A4];
+					draw_text_or_sprite_pixel = true;
+				}
 				dest[h] = pen_base + bg_data*64 + romB_data_h;
 			}
+
+			// text and sprite drop shadow
+			if (draw_text_or_sprite_pixel && !prev_text_or_sprite_pixel && h > 0)
+				dest[h - 1] = 0x00;
+			prev_text_or_sprite_pixel = draw_text_or_sprite_pixel;
 		}
 	}
 }

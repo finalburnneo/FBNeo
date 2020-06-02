@@ -19086,8 +19086,25 @@ struct BurnDriver BurnDrvnes_ganbagoegai2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_ganbagoeRomDesc[] = {
+static struct BurnRomInfo nes_ganbagoejRomDesc[] = {
 	{ "Ganbare Goemon! - Karakuri Douchuu (Japan).nes",          262160, 0x50fdb91f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ganbagoej)
+STD_ROM_FN(nes_ganbagoej)
+
+struct BurnDriver BurnDrvnes_ganbagoej = {
+	"nes_ganbagoej", "nes_ganbagoe", NULL, NULL, "1986",
+	"Ganbare Goemon! - Karakuri Douchuu (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ganbagoejRomInfo, nes_ganbagoejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ganbagoeRomDesc[] = {
+	{ "Ganbare Goemon! - Karakuri Douchuu (T-Eng).nes",          262160, 0x83fab5ff, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbagoe)
@@ -19095,7 +19112,7 @@ STD_ROM_FN(nes_ganbagoe)
 
 struct BurnDriver BurnDrvnes_ganbagoe = {
 	"nes_ganbagoe", NULL, NULL, NULL, "1986",
-	"Ganbare Goemon! - Karakuri Douchuu (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Ganbare Goemon! - Karakuri Douchuu (T-Eng)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ganbagoeRomInfo, nes_ganbagoeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -21500,16 +21517,33 @@ struct BurnDriver BurnDrvnes_kaikeyanmar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_kaikeyanmar2RomDesc[] = {
+static struct BurnRomInfo nes_kaikeyanmar2jRomDesc[] = {
 	{ "Kaiketsu Yancha Maru 2 - Karakuri Land (Japan).nes",          262160, 0x459c9e31, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kaikeyanmar2j)
+STD_ROM_FN(nes_kaikeyanmar2j)
+
+struct BurnDriver BurnDrvnes_kaikeyanmar2j = {
+	"nes_kaikeyanmar2j", "nes_kaikeyanmar2", NULL, NULL, "1991",
+	"Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_kaikeyanmar2jRomInfo, nes_kaikeyanmar2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_kaikeyanmar2RomDesc[] = {
+	{ "Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng).nes",          262160, 0x0f038e8f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_kaikeyanmar2)
 STD_ROM_FN(nes_kaikeyanmar2)
 
 struct BurnDriver BurnDrvnes_kaikeyanmar2 = {
-	"nes_kaikeyanmar2", NULL, NULL, NULL, "1991",
-	"Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)\0", NULL, "Irem", "Miscellaneous",
+	"nes_kaikeyanmar2", NULL, NULL, NULL, "1989?",
+	"Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kaikeyanmar2RomInfo, nes_kaikeyanmar2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23931,6 +23965,23 @@ struct BurnDriver BurnDrvnes_metroid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_metroorienhRomDesc[] = {
+	{ "Metroid - Origin Enhanced (USA).nes",          393232, 0xa81055ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_metroorienh)
+STD_ROM_FN(nes_metroorienh)
+
+struct BurnDriver BurnDrvnes_metroorienh = {
+	"nes_metroorienh", NULL, NULL, NULL, "1989?",
+	"Metroid - Origin Enhanced (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_metroorienhRomInfo, nes_metroorienhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_metrorogdawRomDesc[] = {
 	{ "Metroid - Rogue Dawn (USA).nes",          786448, 0x2120dfea, BRF_ESS | BRF_PRG },
 };
@@ -25257,8 +25308,25 @@ struct BurnDriver BurnDrvnes_operationwolf = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_outlandersRomDesc[] = {
+static struct BurnRomInfo nes_outlandersjRomDesc[] = {
 	{ "Outlanders (Japan).nes",          131088, 0x49a9f043, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_outlandersj)
+STD_ROM_FN(nes_outlandersj)
+
+struct BurnDriver BurnDrvnes_outlandersj = {
+	"nes_outlandersj", "nes_outlanders", NULL, NULL, "1989?",
+	"Outlanders (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_outlandersjRomInfo, nes_outlandersjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_outlandersRomDesc[] = {
+	{ "Outlanders (T-Eng).nes",          262160, 0xf0b0c8fe, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_outlanders)
@@ -25266,7 +25334,7 @@ STD_ROM_FN(nes_outlanders)
 
 struct BurnDriver BurnDrvnes_outlanders = {
 	"nes_outlanders", NULL, NULL, NULL, "1989?",
-	"Outlanders (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Outlanders (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_outlandersRomInfo, nes_outlandersRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -711,9 +711,55 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Jackie Chan - The Kung-Fu Master
+// Jackie Chan - The Kung-Fu Master (rev 4?)
 
 static struct BurnRomInfo jchanRomDesc[] = {
+	{ "jm01x4.u67",		0x080000, 0xace80563, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "jm00x4.u68",		0x080000, 0x08172186, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jm11x3.u69",		0x080000, 0xd2e3f913, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jm10x3.u70",		0x080000, 0xee08fee1, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "jsp1x4.u86",		0x080000, 0x787939d0, 2 | BRF_PRG | BRF_ESS }, //  4 68K #1 Code
+	{ "jsp0x4.u87",		0x080000, 0x1b27383e, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "jcd0x2.u13",		0x020000, 0x011dae3e, 3 | BRF_PRG | BRF_ESS }, //  6 MCU Data
+
+	{ "jc-200.00",		0x100000, 0x1f30c24e, 4 | BRF_GRA },           //  7 Layer Tiles
+
+	{ "jc-100-00.179",	0x400000, 0x578d928c, 5 | BRF_GRA },           //  8 Sprite "A" Graphics
+	{ "jc-101-00.180",	0x400000, 0x7f5e1aca, 5 | BRF_GRA },           //  9
+	{ "jc-102-00.181",	0x400000, 0x72caaa68, 5 | BRF_GRA },           // 10
+	{ "jc-103-00.182",	0x400000, 0x4e9e9fc9, 5 | BRF_GRA },           // 11
+	{ "jc-104-00.183",	0x200000, 0x6b2a2e93, 5 | BRF_GRA },           // 12
+	{ "jc-105-00.184",	0x200000, 0x73cad1f0, 5 | BRF_GRA },           // 13
+	{ "jc-108-00.185",	0x200000, 0x67dd1131, 5 | BRF_GRA },           // 14
+	{ "jcs0x3.164",		0x040000, 0x9a012cbc, 5 | BRF_GRA },           // 15
+	{ "jcs1x3.165",		0x040000, 0x57ae7c8d, 5 | BRF_GRA },           // 16
+
+	{ "jc-106-00.171",	0x200000, 0xbc65661b, 6 | BRF_GRA },           // 17 Sprite "B" Graphics
+	{ "jc-107-00.172",	0x200000, 0x92a86e8b, 6 | BRF_GRA },           // 18
+
+	{ "jc-301-00.85",	0x100000, 0x9c5b3077, 7 | BRF_SND },           // 19 YMZ280b Samples
+	{ "jc-300-00.84",	0x200000, 0x13d5b1eb, 7 | BRF_SND },           // 20
+	{ "jcw0x0.u56",		0x040000, 0xbcf25c2a, 7 | BRF_SND },           // 21
+};
+
+STD_ROM_PICK(jchan)
+STD_ROM_FN(jchan)
+
+struct BurnDriver BurnDrvJchan = {
+	"jchan", NULL, NULL, NULL, "1995",
+	"Jackie Chan - The Kung-Fu Master (rev 4?)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_VSFIGHT, 0,
+	NULL, jchanRomInfo, jchanRomName, NULL, NULL, NULL, NULL, JchanInputInfo, JchanDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	320, 240, 4, 3
+};
+
+// Jackie Chan - The Kung-Fu Master (rev 3?)
+
+static struct BurnRomInfo jchanaRomDesc[] = {
 	{ "jm01x3.u67",		0x080000, 0xc0adb141, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
 	{ "jm00x3.u68",		0x080000, 0xb1aadc5a, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "jm11x3.u69",		0x080000, 0xd2e3f913, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -744,15 +790,15 @@ static struct BurnRomInfo jchanRomDesc[] = {
 	{ "jcw0x0.u56",		0x040000, 0xbcf25c2a, 7 | BRF_SND },           // 21
 };
 
-STD_ROM_PICK(jchan)
-STD_ROM_FN(jchan)
+STD_ROM_PICK(jchana)
+STD_ROM_FN(jchana)
 
-struct BurnDriver BurnDrvJchan = {
-	"jchan", NULL, NULL, NULL, "1995",
-	"Jackie Chan - The Kung-Fu Master\0", NULL, "Kaneko", "Miscellaneous",
+struct BurnDriver BurnDrvJchana = {
+	"jchana", "jchan", NULL, NULL, "1995",
+	"Jackie Chan - The Kung-Fu Master (rev 3?)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_VSFIGHT, 0,
-	NULL, jchanRomInfo, jchanRomName, NULL, NULL, NULL, NULL, JchanInputInfo, JchanDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VSFIGHT, 0,
+	NULL, jchanaRomInfo, jchanaRomName, NULL, NULL, NULL, NULL, JchanInputInfo, JchanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };

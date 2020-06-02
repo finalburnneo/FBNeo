@@ -2994,11 +2994,18 @@
 		<rom name="Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng).nes" size="524304" crc="3de94076"/>
 		<driver status="good"/>
 	</game>
-	<game name="ganbagoe">
+	<game name="ganbagoej" cloneof="ganbagoe" romof="ganbagoe">
 		<description>Ganbare Goemon! - Karakuri Douchuu (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Ganbare Goemon! - Karakuri Douchuu (Japan).nes" size="262160" crc="50fdb91f"/>
+		<driver status="good"/>
+	</game>
+	<game name="ganbagoe">
+		<description>Ganbare Goemon! - Karakuri Douchuu (T-Eng)</description>
+		<year>1986</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Ganbare Goemon! - Karakuri Douchuu (T-Eng).nes" size="262160" crc="83fab5ff"/>
 		<driver status="good"/>
 	</game>
 	<game name="ganbapenrac">
@@ -4065,11 +4072,18 @@
 		<rom name="Kaiketsu Yancha Maru (Japan).nes" size="262160" crc="6394bcd8"/>
 		<driver status="good"/>
 	</game>
-	<game name="kaikeyanmar2">
+	<game name="kaikeyanmar2j" cloneof="kaikeyanmar2" romof="kaikeyanmar2">
 		<description>Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Kaiketsu Yancha Maru 2 - Karakuri Land (Japan).nes" size="262160" crc="459c9e31"/>
+		<driver status="good"/>
+	</game>
+	<game name="kaikeyanmar2">
+		<description>Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng).nes" size="262160" crc="0f038e8f"/>
 		<driver status="good"/>
 	</game>
 	<game name="kaikeyanmar3">
@@ -5157,6 +5171,13 @@
 		<rom name="Metroid (USA).nes" size="131088" crc="a2c89cb9"/>
 		<driver status="good"/>
 	</game>
+	<game name="metroorienh">
+		<description>Metroid - Origin Enhanced (USA)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Metroid - Origin Enhanced (USA).nes" size="393232" crc="a81055ab"/>
+		<driver status="good"/>
+	</game>
 	<game name="metrorogdaw">
 		<description>Metroid - Rogue Dawn (USA)</description>
 		<year>1989?</year>
@@ -5780,11 +5801,18 @@
 		<rom name="Operation Wolf (USA).nes" size="262160" crc="80704705"/>
 		<driver status="good"/>
 	</game>
-	<game name="outlanders">
+	<game name="outlandersj" cloneof="outlanders" romof="outlanders">
 		<description>Outlanders (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Outlanders (Japan).nes" size="131088" crc="49a9f043"/>
+		<driver status="good"/>
+	</game>
+	<game name="outlanders">
+		<description>Outlanders (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Outlanders (T-Eng).nes" size="262160" crc="f0b0c8fe"/>
 		<driver status="good"/>
 	</game>
 	<game name="overhorizon">

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14058 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14069 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1645,6 +1645,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinoh		|  	| Cadillacs and Dinosaurs (bootleg set 3, 930223 Asia TW| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
+| dinos239	|  	| Cadillacs and Dinosaurs (God of War Edition Update 202| dino		| 2020	| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -1722,6 +1723,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_captavenup	|  	| Captain America and the Avengers (USA, Prototype)	| md_captaven	| 1992	| Data East	| Sega Megadrive| 					|
 | msx_captchef	|  	| Captain Chef (Jpn)					| 		| 1984	| Nihon Columbia| MSX		| 					|
 | nes_captacom	|  	| Captain Comic - The Adventure (USA)			| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
+| captcommp4	|  	| Captain Commando (1 Versus 4 GOTVG)			| captcomm	| 2020	| hack		| CPS1		| 					|
 | captcommjr1	|  	| Captain Commando (910928 Japan)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
 | captcommu	|  	| Captain Commando (910928 USA)				| captcomm	| 1991	| Capcom	| CPS1		| 					|
 | captcommr1	|  	| Captain Commando (911014 World)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
@@ -1729,6 +1731,7 @@ This list contains all games supported by FinalBurn Neo.
 | captcomm	|  	| Captain Commando (911202 World)			| 		| 1991	| Capcom	| CPS1		| 					|
 | captcommb	|  	| Captain Commando (bootleg set 1, 911014 other country)| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommb2	|  	| Captain Commando (bootleg set 2 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
+| captcomms87	|  	| Captain Commando (Unlimited Bullet Update 2020-02-19)	| captcomm	| 2020	| Hack		| CPS1		| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
 | md_captlang	|  	| Captain Lang (Jpn)					| md_havoc	| 1994	| Data East	| Sega Megadrive| 					|
 | md_captplan	|  	| Captain Planet and the Planeteers (Euro)		| 		| 1993	| Sega		| Sega Megadrive| 					|
@@ -4316,7 +4319,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ganbagoegai|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_ganbagoegai2j|  	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)	| nes_ganbagoegai2| 1992	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegai2|  	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)	| 		| 1992	| Konami	| Miscellaneous	| 					|
-| nes_ganbagoe	|  	| Ganbare Goemon! - Karakuri Douchuu (Japan)		| 		| 1986	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoej	|  	| Ganbare Goemon! - Karakuri Douchuu (Japan)		| nes_ganbagoe	| 1986	| Konami	| Miscellaneous	| 					|
+| nes_ganbagoe	|  	| Ganbare Goemon! - Karakuri Douchuu (T-Eng)		| 		| 1986	| Konami	| Miscellaneous	| 					|
 | gg_ggorby	|  	| Ganbare Gorby! (Jpn)					| gg_factoryp	| 1991	| Sega		| Sega Game Gear| 					|
 | ngp_ganbaren	|  	| Ganbare Neo Poke-kun (Jpn)				| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | nes_ganbapenrac|  	| Ganbare Pennant Race! (Japan)				| 		| 1989	| Konami	| Miscellaneous	| 					|
@@ -5666,7 +5670,8 @@ This list contains all games supported by FinalBurn Neo.
 | kageki	|  	| Kageki (World)					| 		| 1988	| Taito Corporat| Miscellaneous	| 					|
 | nes_kageroudensetsu|  	| Kagerou Densetsu (Japan)				| 		| 1990	| Pixel		| Miscellaneous	| 					|
 | nes_kaikeyanmar|  	| Kaiketsu Yancha Maru (Japan)				| 		| 1987	| Irem		| Miscellaneous	| 					|
-| nes_kaikeyanmar2|  	| Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)	| 		| 1991	| Irem		| Miscellaneous	| 					|
+| nes_kaikeyanmar2j|  	| Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)	| nes_kaikeyanmar2| 1991	| Irem		| Miscellaneous	| 					|
+| nes_kaikeyanmar2|  	| Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_kaikeyanmar3|  	| Kaiketsu Yancha Maru 3 - Taiketsu! Zouringen (Japan)	| 		| 1993	| Irem		| Miscellaneous	| 					|
 | yanchamr	|  	| Kaiketsu Yanchamaru (Japan)				| kidniki	| 1986	| Irem		| Irem M62	| 					|
 | kaiserknj	|  	| Kaiser Knuckle (Ver 2.1J 1994/07/29)			| kaiserkn	| 1994	| Taito Corporat| Taito F3 Syste| 					|
@@ -5926,7 +5931,8 @@ This list contains all games supported by FinalBurn Neo.
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119 alt)| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| 					|
-| kovsho119	| D	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovsho89	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovsho119	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpa	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| kovshp	| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshp	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| 		| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshb	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
@@ -5961,9 +5967,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_ktesonic	|  	| Knuckles the Echidna in Sonic the Hedgehog (Hack)	| md_sonic	| 2005	| 2005 Stealth	| Sega Megadrive| 					|
 | msx_kobashi	|  	| Kobashi (HB)						| 		| 2004	| Desire in Envy| MSX		| Uses joyport #2			|
 | msx_koedoli	|  	| Koedoli (Kor)						| 		| 1988	| Aproman	| MSX		| 					|
-| kof10thd	|  	| Kof 10th Anniversary (The King of Fighters 2002 bootle| kof2002	| 200?	| hack		| Miscellaneous	| 					|
-| kof98pfe	|  	| Kof'98 (Plus Final Edition)(2017-07-23)(Korean board)	| kof98		| 2017	| hack		| Miscellaneous	| 					|
-| kof98mix	|  	| Kof'98 Mix (2011-10-01)				| kof98		| 2011	| hack		| Miscellaneous	| 					|
 | kof2k2omg	|  	| Kof2002 (hack omg)					| kof2002	| 2002	| bootleg	| KOF-ON Team	| 					|
 | kof2k2omg8	|  	| Kof2002 (Omega v0.8)					| kof2002	| 2010	| bootleg	| KOF-ON Team	| 					|
 | kof2k2omg9b	|  	| Kof2002 (Omega v0.9 beta)				| kof2002	| 2011	| bootleg	| KOF-ON Team	| 					|
@@ -6480,7 +6483,7 @@ This list contains all games supported by FinalBurn Neo.
 | mgcrystlo	|  	| Magical Crystals (World, 91/12/10)			| mgcrystl	| 1991	| Kaneko	| Kaneko16	| 					|
 | mgcrystl	|  	| Magical Crystals (World, 92/01/10)			| 		| 1991	| Kaneko	| Kaneko16	| 					|
 | magdrop	|  	| Magical Drop (Japan, Version 1.1, 1995.06.21)		| chainrec	| 1995	| Data East	| Simple 156	| 					|
-| magdrop3bh	|  	| Magical Drop III (Secret Character Hack)		| magdrop3	| 1997	| Data East Corp| Neo Geo MVS	| 					|
+| magdrop3bh	|  	| Magical Drop III (Secret Character Hack)		| magdrop3	| 1997	| hack		| Neo Geo MVS	| 					|
 | magdrop3	|  	| Magical Drop III					| 		| 1997	| Data East Corp| Neo Geo MVS	| 					|
 | magdrop2	|  	| Magical Drop II					| 		| 1996	| Data East Corp| Neo Geo MVS	| 					|
 | magdropp	|  	| Magical Drop Plus 1 (Japan, Version 2.1, 1995.09.12)	| chainrec	| 1995	| Data East	| Simple 156	| 					|
@@ -6916,6 +6919,7 @@ This list contains all games supported by FinalBurn Neo.
 | metrocrsa	|  	| Metro-Cross (set 2)					| metrocrs	| 1985	| Namco		| Miscellaneous	| 					|
 | fds_metroid	|  	| Metroid (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_metroid	|  	| Metroid (USA)						| 		| 1987	| Nintendo	| Miscellaneous	| 					|
+| nes_metroorienh|  	| Metroid - Origin Enhanced (USA)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_metrorogdaw|  	| Metroid - Rogue Dawn (USA)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mexico86	|  	| Mexico 86 (bootleg of Kick and Run) (set 1)		| kicknrun	| 1986	| bootleg	| Miscellaneous	| 					|
 | mexico86a	| D NW	| Mexico 86 (bootleg of Kick and Run) (set 2)		| kicknrun	| 1986	| bootleg	| Miscellaneous	| 					|
@@ -8052,7 +8056,8 @@ This list contains all games supported by FinalBurn Neo.
 | outzone	|  	| Out Zone						| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | md_outlandr	|  	| Outlander (Euro)					| 		| 1992	| Mindscape	| Sega Megadrive| 					|
 | md_outlandru	|  	| Outlander (USA)					| md_outlandr	| 1992	| Mindscape	| Sega Megadrive| 					|
-| nes_outlanders|  	| Outlanders (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_outlandersj|  	| Outlanders (Japan)					| nes_outlanders| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_outlanders|  	| Outlanders (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_outroyd	|  	| Outroyd (Jpn)						| 		| 1985	| Magical Zoo	| MSX		| 					|
 | md_outrun	|  	| OutRun (Euro, USA)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_outrunj	|  	| OutRun (Jpn)						| md_outrun	| 1991	| Sega		| Sega Megadrive| 					|
@@ -9249,8 +9254,8 @@ This list contains all games supported by FinalBurn Neo.
 | rbff2k	|  	| Real Bout Fatal Fury 2 - The Newcomers (Korean release| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
 | rbff2h	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
 | rbff2		|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| 		| 1998	| SNK		| Neo Geo MVS	| 					|
-| rbff2bh	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
-| rbffspbh	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| SNK		| Neo Geo MVS	| 					|
+| rbff2bh	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| hack		| Neo Geo MVS	| 					|
+| rbffspbh	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| hack		| Neo Geo MVS	| 					|
 | rbffspeck	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| SNK		| Neo Geo MVS	| 					|
 | rbffspec	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| 		| 1996	| SNK		| Neo Geo MVS	| 					|
 | msx_realtenn	|  	| Real Tennis (Jpn)					| 		| 1983	| Takara	| MSX		| 					|
@@ -11306,7 +11311,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_suprdkjr	|  	| Super DK! Junior (Prototype)				| 		| 1983	| Nintendo	| ColecoVision	| 					|
 | spdodgeb	|  	| Super Dodge Ball (US)					| 		| 1987	| Technos Japan	| Miscellaneous	| 					|
 | nes_superdodgeball|  	| Super Dodge Ball (USA)				| 		| 1989	| Sony (CSG) Ima| Miscellaneous	| 					|
-| sdodgebh	|  	| Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu | sdodgeb	| 1996	| Technos	| Neo Geo MVS	| 					|
+| sdodgebh	|  	| Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu | sdodgeb	| 1996	| hack		| Neo Geo MVS	| 					|
 | sdodgeb	|  	| Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu	| 		| 1996	| Technos	| Neo Geo MVS	| 					|
 | md_sdkong99	|   NW	| Super Donkey Kong 99 (Protected)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_sdkong99a	|  	| Super Donkey Kong 99 (Unprotected)			| md_sdkong99	| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -11885,6 +11890,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
+| tk2h158	| D	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020	| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
@@ -12203,12 +12209,14 @@ This list contains all games supported by FinalBurn Neo.
 | kof98ae2016	|  	| The King of Fighters '98 (Anniversary Edition build 1.| kof98		| 2016	| hack		| Neo Geo MVS	| 					|
 | kof98ae	|  	| The King of Fighters '98 (Anniversary Edition, EGHT ha| kof98		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof98cb	|  	| The King of Fighters '98 (Combo, hack)		| kof98		| 2018	| hack		| Neo Geo MVS	| 					|
+| kof98pfe	|  	| The King of Fighters '98 (Plus Final Edition 2017-07-2| kof98		| 2017	| GSC2007	| Miscellaneous	| 					|
 | kof98k	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98ka	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98h	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98		|  	| The King of Fighters '98 - The Slugfest / King of Figh| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98a	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98eckvs	|  	| The King of Fighters '98 Easy Combo King 2014 (Versus | kof98		| 2019	| hack		| Neo Geo MVS	| 					|
+| kof98mix	|  	| The King of Fighters '98 Mix (2011-10-01)		| kof98		| 2011	| hack		| Miscellaneous	| 					|
 | md_kof99a	|  	| The King of Fighters '99 (Alt)			| md_kof99	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof99e	|  	| The King of Fighters '99 - Millennium Battle (earlier)| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99k	|  	| The King of Fighters '99 - Millennium Battle (Korean r| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
@@ -12223,6 +12231,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_kof99	|  	| The King of Fighters '99				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | ngp_kofpara	|  	| The King of Fighters - Battle de Paradise (Jpn)	| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
+| kof10thd	|  	| The King of Fighters 10th Anniversary (The King of Fig| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
 | kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized,| kof2002	| 2019	| hack		| Miscellaneous	| 					|
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
@@ -12231,10 +12240,12 @@ This list contains all games supported by FinalBurn Neo.
 | kof2000ps2	|  	| The King of Fighters 2000 (Playstation 2 ver. , EGHT h| kof2000	| 2000	| SNK		| Neo Geo MVS	| hack only enable in AES mode		|
 | kof2001h	|  	| The King of Fighters 2001 (NGH-2621)			| kof2001	| 2001	| SNK / Eolith	| Neo Geo AES	| 					|
 | kof2001	|  	| The King of Fighters 2001 (NGM-262?)			| 		| 2001	| SNK / Eolith	| Neo Geo MVS	| 					|
+| kof2001s46	|  	| The King of Fighters 2001 (PS2 Krizalid Edition 2019-1| kof2001	| 2019	| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
 | kf2k1pls	|  	| The King of Fighters 2001 Plus (set 1, bootleg / hack)| kof2001	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k1pa	|  	| The King of Fighters 2001 Plus (set 2, bootleg / hack)| kof2001	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof2002b	|  	| The King of Fighters 2002 (bootleg)			| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof2002	|  	| The King of Fighters 2002 (NGM-2650)(NGH-2650)	| 		| 2002	| Eolith / Playm| Neo Geo MVS	| 					|
+| kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
 | kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
@@ -13273,7 +13284,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_waiwaiwor2|  	| Wai Wai World 2 - SOS!! Paseri Jou (Japan)		| 		| 1991	| Konami	| Miscellaneous	| 					|
 | sms_WaimanuSMS|  	| Waimanu: Scary Monsters Saga (HB)			| 		| 2015	| Disjointed Stu| Sega Master Sy| 					|
 | mj4simai	|  	| Wakakusamonogatari Mahjong Yonshimai (Japan)		| 		| 1996	| Maboroshi Ware| Newer Seta	| 					|
-| wakuwak7bh	|  	| Waku Waku 7 (Boss Hack)				| wakuwak7	| 1996	| Sunsoft	| Neo Geo MVS	| 					|
+| wakuwak7bh	|  	| Waku Waku 7 (Boss Hack)				| wakuwak7	| 1996	| hack		| Neo Geo MVS	| 					|
 | wakuwak7	|  	| Waku Waku 7						| 		| 1996	| Sunsoft	| Neo Geo MVS	| 					|
 | ultracin	|  	| Waku Waku Ultraman Racing				| 		| 1996	| Sega		| System 16B	| Emulation not complete		|
 | fds_wakusatogai|  	| Wakusei Aton Gaiden (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -13829,7 +13840,7 @@ This list contains all games supported by FinalBurn Neo.
 | xexex		|  	| Xexex (ver EAA)					| 		| 1991	| Konami	| GX067		| 					|
 | xexexj	|  	| Xexex (ver JAA)					| xexex		| 1991	| Konami	| GX067		| 					|
 | nes_xexyz	|  	| Xexyz (USA)						| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
-| oldsplusnr	|  	| Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 | oldsplus	| 2020	| Hack		| PolyGameMaster| Incomplete Dump			|
+| oldsplusnr	|  	| Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 | oldsplus	| 2020-05-29| Hack		| PolyGameMaster| Incomplete Dump			|
 | nes_xiaohonmao|  	| Xiao Hong Mao - Little Red Hood (Ch)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_xiaomo	|  	| Xiao Monv - Magic Girl (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_xinqig	|  	| Xin Qi Gai Wang Zi (Chi)				| 		| 1996	| C&E		| Sega Megadrive| 					|

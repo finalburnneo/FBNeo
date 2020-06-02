@@ -1667,6 +1667,7 @@ DRV		BurnDrvCpsDinopic3;
 DRV		BurnDrvCpsDinoh;
 DRV		BurnDrvCpsDinopic4;
 DRV		BurnDrvCpsDinohc;
+DRV		BurnDrvCpsDinods;
 DRV		BurnDrvCpsDinoeh;
 DRV		BurnDrvCpsDinot;
 DRV		BurnDrvCpsDinotpic;
@@ -1744,6 +1745,7 @@ DRV		BurnDrvnes_captaameandave;
 DRV		BurnDrvmd_captavenup;
 DRV		BurnDrvMSX_captchef;
 DRV		BurnDrvnes_captacom;
+DRV		BurnDrvCpsCaptcommp4;
 DRV		BurnDrvCpsCaptcommjr1;
 DRV		BurnDrvCpsCaptcommu;
 DRV		BurnDrvCpsCaptcommr1;
@@ -1751,6 +1753,7 @@ DRV		BurnDrvCpsCaptcommj;
 DRV		BurnDrvCpsCaptcomm;
 DRV		BurnDrvCpsCaptcommb;
 DRV		BurnDrvCpsCaptcommb2;
+DRV		BurnDrvCpsCaptcommr1pwx;
 DRV		BurnDrvnes_captained;
 DRV		BurnDrvmd_captlang;
 DRV		BurnDrvmd_captplan;
@@ -4396,6 +4399,7 @@ DRV		BurnDrvnes_ganbagoegaij;
 DRV		BurnDrvnes_ganbagoegai;
 DRV		BurnDrvnes_ganbagoegai2j;
 DRV		BurnDrvnes_ganbagoegai2;
+DRV		BurnDrvnes_ganbagoej;
 DRV		BurnDrvnes_ganbagoe;
 DRV		BurnDrvgg_ggorby;
 DRV		BurnDrvngpc_ganbaren;
@@ -5772,6 +5776,7 @@ DRV		BurnDrvKagekiu;
 DRV		BurnDrvKageki;
 DRV		BurnDrvnes_kageroudensetsu;
 DRV		BurnDrvnes_kaikeyanmar;
+DRV		BurnDrvnes_kaikeyanmar2j;
 DRV		BurnDrvnes_kaikeyanmar2;
 DRV		BurnDrvnes_kaikeyanmar3;
 DRV		BurnDrvYanchamr;
@@ -6040,9 +6045,8 @@ DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvKovplusa;
 DRV		BurnDrvKovplus;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvkovshpqszltw;	// Imperfect Protection Emulation
-#endif
+DRV		BurnDrvkovshpqszl;
+DRV		BurnDrvkovshpqszltw;
 DRV		BurnDrvkovshpa;
 DRV		BurnDrvkovshp;
 DRV		BurnDrvKovshb;
@@ -6079,9 +6083,6 @@ DRV		BurnDrvmd_knucklp;
 DRV		BurnDrvmd_ktesonic;
 DRV		BurnDrvMSX_kobashi;
 DRV		BurnDrvMSX_koedoli;
-DRV		BurnDrvkof10thd;
-DRV		BurnDrvkof98pfe;
-DRV		BurnDrvKof98mix;
 DRV		BurnDrvkof2k2omg;
 DRV		BurnDrvkof2k2omg8;
 DRV		BurnDrvkof2k2omg9b;
@@ -7040,6 +7041,7 @@ DRV		BurnDrvMetrocrs;
 DRV		BurnDrvMetrocrsa;
 DRV		BurnDrvfds_metroid;
 DRV		BurnDrvnes_metroid;
+DRV		BurnDrvnes_metroorienh;
 DRV		BurnDrvnes_metrorogdaw;
 DRV		BurnDrvMexico86;
 #if defined FBNEO_DEBUG
@@ -8202,6 +8204,7 @@ DRV		BurnDrvOutzonecv;
 DRV		BurnDrvOutzone;
 DRV		BurnDrvmd_outlandr;
 DRV		BurnDrvmd_outlandru;
+DRV		BurnDrvnes_outlandersj;
 DRV		BurnDrvnes_outlanders;
 DRV		BurnDrvMSX_outroyd;
 DRV		BurnDrvmd_outrun;
@@ -12101,6 +12104,9 @@ DRV		BurnDrvCpsDynwarj;
 DRV		BurnDrvCpsWofj;
 DRV		BurnDrvCpsWofch;
 DRV		BurnDrvCpsWofjh;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvCpsWofjdr;		// no comment
+#endif
 DRV		BurnDrvCpswofchp;
 DRV		BurnDrvTengai;
 DRV		BurnDrvTengaij;
@@ -12421,12 +12427,14 @@ DRV		BurnDrvkof97pla;
 DRV		BurnDrvkof98ae2016;
 DRV		BurnDrvkof98ae;
 DRV		BurnDrvkof98cb;
+DRV		BurnDrvkof98pfe;
 DRV		BurnDrvKof98k;
 DRV		BurnDrvKof98ka;
 DRV		BurnDrvKof98h;
 DRV		BurnDrvKof98;
 DRV		BurnDrvKof98a;
 DRV		BurnDrvkof98eckvs;
+DRV		BurnDrvKof98mix;
 DRV		BurnDrvmd_kof99a;
 DRV		BurnDrvkof99e;
 DRV		BurnDrvkof99k;
@@ -12441,6 +12449,7 @@ DRV		BurnDrvkof99sr;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvngpc_kofpara;
 DRV		BurnDrvkof10th;
+DRV		BurnDrvkof10thd;
 DRV		BurnDrvkf2k5uni;
 DRV		BurnDrvkof10thuo;
 DRV		BurnDrvkf10thep;
@@ -12449,10 +12458,12 @@ DRV		BurnDrvkof2000n;
 DRV		BurnDrvkof2000ps2;
 DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
+DRV		BurnDrvkf2k1pkz;
 DRV		BurnDrvkf2k1pls;
 DRV		BurnDrvkf2k1pa;
 DRV		BurnDrvkof2002b;
 DRV		BurnDrvkof2002;
+DRV		BurnDrvK2k2ps2re1;
 DRV		BurnDrvkf2k2ps2;
 DRV		BurnDrvkf2k23rd;
 DRV		BurnDrvkf2k2mp;
@@ -16000,6 +16011,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDinoh,			// Cadillacs and Dinosaurs (bootleg set 3, 930223 Asia TW)
 	&BurnDrvCpsDinopic4,		// Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930223 Asia TW)
 	&BurnDrvCpsDinohc,			// Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia TW)
+	&BurnDrvCpsDinods,			// Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)
 	&BurnDrvCpsDinoeh,			// Cadillacs and Dinosaurs (hack, 930201 etc)
 	&BurnDrvCpsDinot,			// Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 Asia TW)
 	&BurnDrvCpsDinotpic,		// Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC16c57), 930201 etc)
@@ -16077,6 +16089,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_captavenup,		// Captain America and the Avengers (USA, Prototype)
 	&BurnDrvMSX_captchef,		// Captain Chef (Jpn)
 	&BurnDrvnes_captacom,		// Captain Comic - The Adventure (USA)
+	&BurnDrvCpsCaptcommp4,		// Captain Commando (1 Versus 4 GOTVG)
 	&BurnDrvCpsCaptcommjr1,		// Captain Commando (910928 Japan)
 	&BurnDrvCpsCaptcommu,		// Captain Commando (910928 USA)
 	&BurnDrvCpsCaptcommr1,		// Captain Commando (911014 World)
@@ -16084,6 +16097,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCaptcomm,		// Captain Commando (911202 World)
 	&BurnDrvCpsCaptcommb,		// Captain Commando (bootleg set 1, 911014 other country)
 	&BurnDrvCpsCaptcommb2,		// Captain Commando (bootleg set 2 (with YM2151 + 2xMSM5205), 911014 other country)
+	&BurnDrvCpsCaptcommr1pwx,	// Captain Commando (Unlimited Bullet Update 2020-02-19)
 	&BurnDrvnes_captained,		// Captain ED (Japan)
 	&BurnDrvmd_captlang,		// Captain Lang (Jpn)
 	&BurnDrvmd_captplan,		// Captain Planet and the Planeteers (Euro)
@@ -18729,7 +18743,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ganbagoegai,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)
 	&BurnDrvnes_ganbagoegai2j,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)
 	&BurnDrvnes_ganbagoegai2,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)
-	&BurnDrvnes_ganbagoe,		// Ganbare Goemon! - Karakuri Douchuu (Japan)
+	&BurnDrvnes_ganbagoej,		// Ganbare Goemon! - Karakuri Douchuu (Japan)
+	&BurnDrvnes_ganbagoe,		// Ganbare Goemon! - Karakuri Douchuu (T-Eng)
 	&BurnDrvgg_ggorby,			// Ganbare Gorby! (Jpn)
 	&BurnDrvngpc_ganbaren,		// Ganbare Neo Poke-kun (Jpn)
 	&BurnDrvnes_ganbapenrac,	// Ganbare Pennant Race! (Japan)
@@ -20105,7 +20120,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKageki,				// Kageki (World)
 	&BurnDrvnes_kageroudensetsu,// Kagerou Densetsu (Japan)
 	&BurnDrvnes_kaikeyanmar,	// Kaiketsu Yancha Maru (Japan)
-	&BurnDrvnes_kaikeyanmar2,	// Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)
+	&BurnDrvnes_kaikeyanmar2j,	// Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)
+	&BurnDrvnes_kaikeyanmar2,	// Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)
 	&BurnDrvnes_kaikeyanmar3,	// Kaiketsu Yancha Maru 3 - Taiketsu! Zouringen (Japan)
 	&BurnDrvYanchamr,			// Kaiketsu Yanchamaru (Japan)
 	&BurnDrvKaiserknj,			// Kaiser Knuckle (Ver 2.1J 1994/07/29)
@@ -20373,9 +20389,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119 alt)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
-#if defined FBNEO_DEBUG
-	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Version, FEITIANXUE) [Imperfect Protection Emulation]
-#endif
+	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)
+	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)
 	&BurnDrvkovshpa,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)
 	&BurnDrvkovshp,				// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101)
 	&BurnDrvKovshb,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
@@ -20412,9 +20427,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ktesonic,		// Knuckles the Echidna in Sonic the Hedgehog (Hack)
 	&BurnDrvMSX_kobashi,		// Kobashi (HB)
 	&BurnDrvMSX_koedoli,		// Koedoli (Kor)
-	&BurnDrvkof10thd,			// Kof 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)
-	&BurnDrvkof98pfe,			// Kof'98 (Plus Final Edition)(2017-07-23)(Korean board)
-	&BurnDrvKof98mix,			// Kof'98 Mix (2011-10-01)
 	&BurnDrvkof2k2omg,			// Kof2002 (hack omg)
 	&BurnDrvkof2k2omg8,			// Kof2002 (Omega v0.8)
 	&BurnDrvkof2k2omg9b,		// Kof2002 (Omega v0.9 beta)
@@ -21373,6 +21385,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetrocrsa,			// Metro-Cross (set 2)
 	&BurnDrvfds_metroid,		// Metroid (Japan)
 	&BurnDrvnes_metroid,		// Metroid (USA)
+	&BurnDrvnes_metroorienh,	// Metroid - Origin Enhanced (USA)
 	&BurnDrvnes_metrorogdaw,	// Metroid - Rogue Dawn (USA)
 	&BurnDrvMexico86,			// Mexico 86 (bootleg of Kick and Run) (set 1)
 #if defined FBNEO_DEBUG
@@ -22535,7 +22548,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOutzone,			// Out Zone
 	&BurnDrvmd_outlandr,		// Outlander (Euro)
 	&BurnDrvmd_outlandru,		// Outlander (USA)
-	&BurnDrvnes_outlanders,		// Outlanders (Japan)
+	&BurnDrvnes_outlandersj,	// Outlanders (Japan)
+	&BurnDrvnes_outlanders,		// Outlanders (T-Eng)
 	&BurnDrvMSX_outroyd,		// Outroyd (Jpn)
 	&BurnDrvmd_outrun,			// OutRun (Euro, USA)
 	&BurnDrvmd_outrunj,			// OutRun (Jpn)
@@ -23756,7 +23770,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvrbff2k,				// Real Bout Fatal Fury 2 - The Newcomers (Korean release)
 	&BurnDrvrbff2h,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)
 	&BurnDrvrbff2,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)
-	&BurnDrvrbff2bh,			// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) (NGM-2400)
+	&BurnDrvrbff2bh,			// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack)
 	&BurnDrvrbffspbh,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack)
 	&BurnDrvrbffspeck,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)
 	&BurnDrvrbffspec,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special
@@ -26434,6 +26448,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsWofj,			// Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)
 	&BurnDrvCpsWofch,			// Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)
 	&BurnDrvCpsWofjh,			// Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)
+#if defined FBNEO_DEBUG
+	&BurnDrvCpsWofjdr,			// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi) [no comment]
+#endif
 	&BurnDrvCpswofchp,			// Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)
 	&BurnDrvTengai,				// Tengai (world)
 	&BurnDrvTengaij,			// Tengai\0Sengoku Blade - sengoku Ace episode II
@@ -26754,12 +26771,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof98ae2016,		// The King of Fighters '98 (Anniversary Edition build 1.2.0827)
 	&BurnDrvkof98ae,			// The King of Fighters '98 (Anniversary Edition, EGHT hack)
 	&BurnDrvkof98cb,			// The King of Fighters '98 (Combo, hack)
+	&BurnDrvkof98pfe,			// The King of Fighters '98 (Plus Final Edition 2017-07-23)
 	&BurnDrvKof98k,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)
 	&BurnDrvKof98ka,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 2)
 	&BurnDrvKof98h,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)
 	&BurnDrvKof98,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)
 	&BurnDrvKof98a,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
 	&BurnDrvkof98eckvs,			// The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)
+	&BurnDrvKof98mix,			// The King of Fighters '98 Mix (2011-10-01)
 	&BurnDrvmd_kof99a,			// The King of Fighters '99 (Alt)
 	&BurnDrvkof99e,				// The King of Fighters '99 - Millennium Battle (earlier)
 	&BurnDrvkof99k,				// The King of Fighters '99 - Millennium Battle (Korean release)
@@ -26774,6 +26793,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_kof99,			// The King of Fighters '99
 	&BurnDrvngpc_kofpara,		// The King of Fighters - Battle de Paradise (Jpn)
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
+	&BurnDrvkof10thd,			// The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
 	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized, Hack)
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg)
@@ -26782,10 +26802,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2000ps2,			// The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
+	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
 	&BurnDrvkf2k1pa,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
 	&BurnDrvkof2002b,			// The King of Fighters 2002 (bootleg)
 	&BurnDrvkof2002,			// The King of Fighters 2002 (NGM-2650)(NGH-2650)
+	&BurnDrvK2k2ps2re1,			// The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG&GSC2007 hack)
 	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
 	&BurnDrvkf2k23rd,			// The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)
 	&BurnDrvkf2k2mp,			// The King of Fighters 2002 Magic Plus (bootleg)

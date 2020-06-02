@@ -18598,7 +18598,7 @@ struct BurnDriver BurnDrvrbffspbh = {
 };
 
 // The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)
-// This hack is known as kf2k1pkz; kof2001s46 in HBMAME
+// This hack is known as kof2001s46 in HBMAME
 
 static struct BurnRomInfo kf2k1pkzRomDesc[] = {
 	{ "kf2k1ps2-p1.bin",       0x100000, 0xc484272e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -18629,7 +18629,7 @@ STDROMPICKEXT(kf2k1pkz, kf2k1pkz, neogeo)
 STD_ROM_FN(kf2k1pkz)
 
 struct BurnDriver BurnDrvkf2k1pkz = {
-	"kof2001s46", "kof2001", "neogeo", NULL, "2019",
+	"kf2k1pkz", "kof2001", "neogeo", NULL, "2019",
 	"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
 	L"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0\u62F3\u7687 2001 (PS2 Krizalid \u7248\u672C 2019-12-12, Eddids)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,

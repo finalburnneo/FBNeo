@@ -6262,7 +6262,7 @@ struct BurnDriver BurnDrvoldsplusnr = {
 
 // Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)
 // 2018-02-23
-// This set is originally known as kovshpqszl; kovsho89 in HBMAME
+// This set is known as kovsho89 in HBMAME
 
 static struct BurnRomInfo kovshpqszlRomDesc[] = {
 	{ "p0600h_101_po89.rom",		0x400000, 0x086d100b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -6287,7 +6287,7 @@ STDROMPICKEXT(kovshpqszl, kovshpqszl, pgm)
 STD_ROM_FN(kovshpqszl)
 
 struct BurnDriver BurnDrvkovshpqszl = {
-	"kovsho89", "kovshp", "pgm", NULL, "2018",
+	"kovshpqszl", "kovshp", "pgm", NULL, "2018",
 	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
 	L"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 2018-02-23, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
@@ -6298,7 +6298,7 @@ struct BurnDriver BurnDrvkovshpqszl = {
 
 // Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)
 // 2020-01-03
-// This set is originally known as kovshpqszltw; kovsho119 in HBMAME
+// This set is originally known as kovsho119 in HBMAME
 
 static struct BurnRomInfo kovshpqszltwRomDesc[] = {
 	{ "p0600h_101_po119.rom",		0x4006F8, 0x4c2be2a2, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -6324,7 +6324,7 @@ STDROMPICKEXT(kovshpqszltw, kovshpqszltw, pgm)
 STD_ROM_FN(kovshpqszltw)
 
 struct BurnDriver BurnDrvkovshpqszltw = {
-	"kovsho119", "kovshp", "pgm", NULL, "2020",
+	"kovshpqszltw", "kovshp", "pgm", NULL, "2020",
 	"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
 	L"Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u7248\u672C 2020-01-03, \u98DE\u5929\u96EA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,

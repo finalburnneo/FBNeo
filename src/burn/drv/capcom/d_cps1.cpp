@@ -23122,7 +23122,7 @@ struct BurnDriver BurnDrvCpsFfightae = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Captain Commando (1 Versus 4 GOTVG)
+// Captain Commando (1 V 4 GOTVG)
 
 static struct BurnRomInfo Captcommp4RomDesc[] = {
 	{ "captcommp4_23d.8f",  0x080000, 0x40e8a541, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -23158,8 +23158,8 @@ STD_ROM_FN(Captcommp4)
 
 struct BurnDriver BurnDrvCpsCaptcommp4 = {
 	"captcommp4", "captcomm", NULL, NULL, "2020",
-	"Captain Commando (1 Versus 4 GOTVG)\0", NULL, "hack", "CPS1",
-	NULL, NULL, NULL, NULL,
+	"Captain Commando (1 V 4 GOTVG)\0", NULL, "hack", "CPS1",
+	L"Captain Commando (1 V 4 GOTVG)\0\u540D\u5C06 (1 v 4 \u6E38\u805A\u52A0\u5F3A\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommp4RomInfo, Captcommp4RomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,
 	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -23201,7 +23201,7 @@ STD_ROM_FN(Captcommr1pwx)
 struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 	"captcomms87", "captcomm", NULL, NULL, "2020",
 	"Captain Commando (Unlimited Bullet Update 2020-02-19)\0", NULL, "Hack", "CPS1",
-	NULL, NULL, NULL, NULL,
+	L"Captain Commando (Unlimited Bullet Update 2020-02-19)\0\u540D\u5C06 (\u65E0\u9650\u5B50\u5F39\u589E\u5f3A\u7248 2020-02-19)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  
 	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -23239,7 +23239,7 @@ STD_ROM_FN(Dinods)
 struct BurnDriver BurnDrvCpsDinods = {
 	"dinos239", "dino", NULL, NULL, "2020",
 	"Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)\0", NULL, "Hack", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
+	L"Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)\0\u6050\u9F99\u65B0\u4E16\u7EAA (\u6597\u795E 2020-03-05, Ngs)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinodsRomInfo, DinodsRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -23277,7 +23277,7 @@ STD_ROM_FN(Wofjdr)
 struct BurnDriverD BurnDrvCpsWofjdr = {
 	"tk2h158", "wof", NULL, NULL, "2020",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0", NULL, "Hack", "CPS1 / QSound",
-	NULL, NULL, NULL, NULL,
+	L"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0\u541E\u98DF\u5929\u5730 II - \u8D64\u58C1\u4E4B\u6218 (\u8FBE\u4eBA\u7248 2020-02-15, Bindi)\0 ", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjdrRomInfo, WofjdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

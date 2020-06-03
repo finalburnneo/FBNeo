@@ -57,7 +57,6 @@ bool is_neogeo_game = false;
 bool allow_neogeo_mode = true;
 bool neogeo_use_specific_default_bios = false;
 bool bAllowDepth32 = false;
-bool bLoadSubsystemByParent = true;
 UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
@@ -230,18 +229,6 @@ static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
 		{ NULL, NULL },
 	},
 	"DIPSWITCH"
-};
-
-static const struct retro_core_option_definition var_fbneo_load_subsystem_from_parent = {
-	"fbneo-load-subsystem-from-parent",
-	"Load Subsystem from Parent Folder",
-	"If enabled, supported subsystems will be loaded using the parent directory name",
-	{
-		{ "disabled", NULL },
-		{ "enabled", NULL },
-		{ NULL, NULL },
-	},
-	"enabled"
 };
 
 #ifdef FBNEO_DEBUG
@@ -514,7 +501,6 @@ void set_environment()
 	vars_systems.push_back(&var_fbneo_frameskip);
 	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 	vars_systems.push_back(&var_fbneo_hiscores);
-	vars_systems.push_back(&var_fbneo_load_subsystem_from_parent);
 	if (nGameType != RETRO_GAME_TYPE_NEOCD)
 		vars_systems.push_back(&var_fbneo_samplerate);
 	vars_systems.push_back(&var_fbneo_sample_interpolation);
@@ -816,15 +802,6 @@ void check_variables(void)
 			nVerticalMode = 2;
 		else
 			nVerticalMode = 0;
-	}
-
-	var.key = var_fbneo_load_subsystem_from_parent.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
-	{
-		if (strcmp(var.value, "enabled") == 0)
-			bLoadSubsystemByParent = true;
-		else
-			bLoadSubsystemByParent = false;
 	}
 
 	var.key = var_fbneo_frameskip.key;

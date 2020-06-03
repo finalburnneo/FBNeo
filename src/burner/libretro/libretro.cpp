@@ -1290,70 +1290,66 @@ bool retro_load_game(const struct retro_game_info *info)
 	extract_directory(g_rom_dir, info->path, sizeof(g_rom_dir));
 	extract_basename(g_rom_parent_dir, g_rom_dir, sizeof(g_rom_parent_dir),"");
 	char * prefix="";
-	if (bLoadSubsystemByParent == true) {
-		if(strcmp(g_rom_parent_dir, "coleco")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem cv identified from parent folder\n");
-			prefix = "cv_";
-		}
-		if(strcmp(g_rom_parent_dir, "gamegear")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem gg identified from parent folder\n");
-			prefix = "gg_";
-		}
-		if(strcmp(g_rom_parent_dir, "megadriv")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem md identified from parent folder\n");
-			prefix = "md_";
-		}
-		if(strcmp(g_rom_parent_dir, "msx")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem msx identified from parent folder\n");
-			prefix = "msx_";
-		}
-		if(strcmp(g_rom_parent_dir, "pce")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem pce identified from parent folder\n");
-			prefix = "pce_";
-		}
-		if(strcmp(g_rom_parent_dir, "sg1000")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sg1k identified from parent folder\n");
-			prefix = "sg1k_";
-		}
-		if(strcmp(g_rom_parent_dir, "sgx")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sgx identified from parent folder\n");
-			prefix = "sgx_";
-		}
-		if(strcmp(g_rom_parent_dir, "sms")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sms identified from parent folder\n");
-			prefix = "sms_";
-		}
-		if(strcmp(g_rom_parent_dir, "spectrum")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem spec identified from parent folder\n");
-			prefix = "spec_";
-		}
-		if(strcmp(g_rom_parent_dir, "tg16")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem tg identified from parent folder\n");
-			prefix = "tg_";
-		}
-		if(strcmp(g_rom_parent_dir, "nes")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem nes identified from parent folder\n");
-			prefix = "nes_";
-		}
-		if(strcmp(g_rom_parent_dir, "fds")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem fds identified from parent folder\n");
-			prefix = "fds_";
-		}
-		if(strcmp(g_rom_parent_dir, "ngp")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem ngp identified from parent folder\n");
-			prefix = "ngp_";
-		}
-		if(strcmp(g_rom_parent_dir, "neocd")==0) {
-			log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
-			prefix = "";
-			nGameType = RETRO_GAME_TYPE_NEOCD;
-			strcpy(CDEmuImage, info->path);
-			extract_basename(g_driver_name, "neocdz", sizeof(g_driver_name), prefix);
-		} else {
-			extract_basename(g_driver_name, info->path, sizeof(g_driver_name), prefix);
-		}
+	if(strcmp(g_rom_parent_dir, "coleco")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem cv identified from parent folder\n");
+		if (strncmp(g_driver_name, "cv_", 3) != 0) prefix = "cv_";
+	}
+	if(strcmp(g_rom_parent_dir, "gamegear")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem gg identified from parent folder\n");
+		if (strncmp(g_driver_name, "gg_", 3) != 0) prefix = "gg_";
+	}
+	if(strcmp(g_rom_parent_dir, "megadriv")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem md identified from parent folder\n");
+		if (strncmp(g_driver_name, "md_", 3) != 0) prefix = "md_";
+	}
+	if(strcmp(g_rom_parent_dir, "msx")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem msx identified from parent folder\n");
+		if (strncmp(g_driver_name, "msx_", 4) != 0) prefix = "msx_";
+	}
+	if(strcmp(g_rom_parent_dir, "pce")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem pce identified from parent folder\n");
+		if (strncmp(g_driver_name, "pce_", 4) != 0) prefix = "pce_";
+	}
+	if(strcmp(g_rom_parent_dir, "sg1000")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sg1k identified from parent folder\n");
+		if (strncmp(g_driver_name, "sg1k_", 5) != 0) prefix = "sg1k_";
+	}
+	if(strcmp(g_rom_parent_dir, "sgx")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sgx identified from parent folder\n");
+		if (strncmp(g_driver_name, "sgx_", 4) != 0) prefix = "sgx_";
+	}
+	if(strcmp(g_rom_parent_dir, "sms")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sms identified from parent folder\n");
+		if (strncmp(g_driver_name, "sms_", 4) != 0) prefix = "sms_";
+	}
+	if(strcmp(g_rom_parent_dir, "spectrum")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem spec identified from parent folder\n");
+		if (strncmp(g_driver_name, "spec_", 5) != 0) prefix = "spec_";
+	}
+	if(strcmp(g_rom_parent_dir, "tg16")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem tg identified from parent folder\n");
+		if (strncmp(g_driver_name, "tg_", 3) != 0) prefix = "tg_";
+	}
+	if(strcmp(g_rom_parent_dir, "nes")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem nes identified from parent folder\n");
+		if (strncmp(g_driver_name, "nes_", 4) != 0) prefix = "nes_";
+	}
+	if(strcmp(g_rom_parent_dir, "fds")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem fds identified from parent folder\n");
+		if (strncmp(g_driver_name, "fds_", 4) != 0) prefix = "fds_";
+	}
+	if(strcmp(g_rom_parent_dir, "ngp")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem ngp identified from parent folder\n");
+		if (strncmp(g_driver_name, "ngp_", 4) != 0) prefix = "ngp_";
+	}
+	if(strcmp(g_rom_parent_dir, "neocd")==0) {
+		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
+		prefix = "";
+		nGameType = RETRO_GAME_TYPE_NEOCD;
+		strcpy(CDEmuImage, info->path);
+		extract_basename(g_driver_name, "neocdz", sizeof(g_driver_name), prefix);
 	} else {
-		extract_basename(g_driver_name, info->path, sizeof(g_driver_name), "");
+		extract_basename(g_driver_name, info->path, sizeof(g_driver_name), prefix);
 	}
 
 	return retro_load_game_common();

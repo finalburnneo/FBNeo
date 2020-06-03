@@ -18,8 +18,6 @@ UINT8 SMSJoy2[12];
 UINT8 SMSDips[3];
 
 static struct BurnDIPInfo SMSDIPList[] = {
-	{0x0e, 0xff, 0xff, 0x00, NULL							},
-
 	{0   , 0xfe, 0   ,    2, "FM Unit Emulation"			},
 	{0x0e, 0x01, 0x04, 0x04, "On (Change needs restart!)"	},
 	{0x0e, 0x01, 0x04, 0x00, "Off"							},
@@ -29,7 +27,16 @@ static struct BurnDIPInfo SMSDIPList[] = {
 	{0x0e, 0x01, 0x01, 0x00, "Off"							},
 };
 
-STDDIPINFO(SMS)
+static struct BurnDIPInfo SMSDefaultDIPList[] = {
+	{0x0e, 0xff, 0xff, 0x00, NULL							},
+};
+
+static struct BurnDIPInfo SMSFMDIPList[] = {
+	{0x0e, 0xff, 0xff, 0x04, NULL							},
+};
+
+STDDIPINFOEXT(SMS, SMSDefault, SMS)
+STDDIPINFOEXT(SMSFM, SMSFM, SMS)
 
 static struct BurnDIPInfo GGDIPList[]=
 {
@@ -27891,7 +27898,7 @@ struct BurnDriver BurnDrvsms_pstarje = {
 	"Phantasy Star (Jpn, T-Eng v2.00)\0", "Turn ON 'FM Emulation' in Dips for use YM2413 emulation", "SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
-	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

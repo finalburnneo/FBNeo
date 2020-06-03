@@ -17770,7 +17770,7 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
-	<game name="kof2001s46" cloneof="kof2001" romof="kof2001">
+	<game name="kf2k1pkz" cloneof="kof2001" romof="kof2001">
 		<description>The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids) [Hack, hack only enable in AES mode]</description>
 		<year>2019</year>
 		<manufacturer>Hack</manufacturer>
@@ -18068,7 +18068,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kf2k2ps2re1" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG&amp;GSC2007 hack) [Hack, hack only enable in AES mode, imperfect sound]</description>
+		<description>The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG &amp; GSC2007) [Hack, hack only enable in AES mode, imperfect sound]</description>
 		<year>2018</year>
 		<manufacturer>Hack</manufacturer>
 		<rom name="K2k2ps2re-p1.p1" size="1048576" crc="77a0044c"/>

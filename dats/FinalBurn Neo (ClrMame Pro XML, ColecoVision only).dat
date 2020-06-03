@@ -558,6 +558,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="dangrtower" romof="coleco">
+		<description>Danger Tower (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="danger_tower_sgm.rom" size="32768" crc="0246bdb1"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="decathln" romof="coleco">
 		<description>Decathlon</description>
 		<year>1984</year>
@@ -569,6 +580,17 @@
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
+	</game>
+	<game name="deepdngadv" romof="coleco">
+		<description>Deep Dungeon Adventure (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="deep_dungeon_adventure_sgm.rom" size="131072" crc="77900970"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="preliminary"/>
 	</game>
 	<game name="defender" romof="coleco">
 		<description>Defender</description>
@@ -783,6 +805,17 @@
 		<manufacturer>Spectravideo</manufacturer>
 		<rom name="flipslip.1" size="8192" crc="e26569f3"/>
 		<rom name="flipslip.2" size="8192" crc="d4ab0e71"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="flora" romof="coleco">
+		<description>Flora and the Ghost Mirror (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>NewColeco</manufacturer>
+		<rom name="Flora and the Ghost Mirror (2013) (NewColeco).rom" size="32768" crc="fd69012b"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1050,6 +1083,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="jetpac" romof="coleco">
+		<description>J.E.T.P.A.C. (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="jetpac_sgm.rom" size="32768" crc="ae7614c3"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="jbond" romof="coleco">
 		<description>James Bond 007</description>
 		<year>1984</year>
@@ -1067,6 +1111,17 @@
 		<year>2007</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="jeepers-creepers-2012.rom" size="32768" crc="69e3c673"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="joustsgm" romof="coleco">
+		<description>Joust (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Joust (2014) (Team Pixelboy).rom" size="32768" crc="62f325b3"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1170,11 +1225,33 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="kingvalley" romof="coleco">
+		<description>King's Valley (SGM) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="kingvalley_sgm.rom" size="32768" crc="0a2ac883"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="ktetris" romof="coleco">
 		<description>Kralizec Tetris (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="kralizec-tetris-2016.rom" size="32768" crc="e8a91349"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="kungfumstr" romof="coleco">
+		<description>Kung-Fu Master (HB) [Homebrew, Beta version, no health meter]</description>
+		<year>2012</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="kungfumstr_sgm.rom" size="131072" crc="a078f273"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1247,6 +1324,17 @@
 		<manufacturer>Fox Video Games</manufacturer>
 		<rom name="mash.1" size="8192" crc="1bdfdaa5"/>
 		<rom name="mash.2" size="8192" crc="55af024c"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="mappy" romof="coleco">
+		<description>Mappy (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Mappy (2015) (Team Pixelboy) (SGM).rom" size="32768" crc="00d30431"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1509,6 +1597,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninjaprincess" romof="coleco">
+		<description>Ninja Princess (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Ninja Princess (2011) (Team PixelBoy).rom" size="32768" crc="5fb0ed62"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="novablst" romof="coleco">
 		<description>Nova Blast</description>
 		<year>1983</year>
@@ -1587,6 +1686,17 @@
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="orbit.bin" size="8192" crc="2cc6f4aa"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="ozmawars" romof="coleco">
+		<description>Ozma Wars (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Collectorvision Games</manufacturer>
+		<rom name="ozmawars.rom" size="21625" crc="4aafdc07"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2108,6 +2218,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="spaceinvcol" romof="coleco">
+		<description>Space Invaders Collection (HB) [Homebrew]</description>
+		<year>2003</year>
+		<manufacturer>Opcode Games</manufacturer>
+		<rom name="Space Invaders Collection (2003) (Opcode Games).rom" size="32768" crc="3098bd4b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="panic" romof="coleco">
 		<description>Space Panic</description>
 		<year>1983</year>
@@ -2251,6 +2372,17 @@
 		<manufacturer>Telegames</manufacturer>
 		<rom name="strikeit.1" size="8192" crc="7b26040d"/>
 		<rom name="strikeit.2" size="8192" crc="3a2d6226"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="subrocsgm" romof="coleco">
+		<description>Subroc (SGM) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="subroc_super_game_sgm.rom" size="131072" crc="eac71b43"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2411,6 +2543,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="superpac" romof="coleco">
+		<description>Super Pac-Man (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Super Pac-Man (2016) (Team Pixelboy) (SGM).rom" size="32768" crc="260cdf98"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="ssketch" romof="coleco">
 		<description>Super Sketch</description>
 		<year>1984</year>
@@ -2536,6 +2679,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="thexder" romof="coleco">
+		<description>Thexder (SGM) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="thexder_sgm.rom" size="131072" crc="09e3fdda"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="threshld" romof="coleco">
 		<description>Threshold</description>
 		<year>1983</year>
@@ -2641,6 +2795,17 @@
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="tutankhm.1" size="8192" crc="8186ee58"/>
 		<rom name="tutankhm.2" size="8192" crc="c84f9171"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="txupinazo" romof="coleco">
+		<description>Txupinazo! (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Txupinazo_sgm.rom" size="32768" crc="28bdf665"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2764,6 +2929,17 @@
 		<manufacturer>Sierra On-Line</manufacturer>
 		<rom name="wizmath.1" size="8192" crc="c0c6bda0"/>
 		<rom name="wizmath.2" size="8192" crc="4080c0a4"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="wonderboy" romof="coleco">
+		<description>Wonder Boy (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<rom name="Wonder Boy (2012) (Team PixelBoy).rom" size="32768" crc="43505be0"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

@@ -2448,6 +2448,13 @@
 		<rom name="phantasy star (j) (from saturn collection cd) [!].bin" size="524288" crc="07301f83"/>
 		<driver status="good"/>
 	</game>
+	<game name="pstarje" cloneof="pstar" romof="pstar">
+		<description>Phantasy Star (Jpn, T-Eng v2.00) [Turn ON 'FM Emulation' in Dips for use YM2413 emulation]</description>
+		<year>2020</year>
+		<manufacturer>SMS Power!</manufacturer>
+		<rom name="phantasy star (j) [t-eng2.00].sms" size="524288" crc="a04cf71a"/>
+		<driver status="good"/>
+	</game>
 	<game name="pstark" cloneof="pstar" romof="pstar">
 		<description>Phantasy Star (Kor)</description>
 		<year>1987</year>

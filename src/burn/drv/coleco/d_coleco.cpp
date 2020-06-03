@@ -3,7 +3,6 @@
 // SGM added April 2019 -dink
 
 // TOFIX:
-// Super Pac-Man (2016) (Team Pixelboy) (SGM) - won't boot past bios screen
 // Deep Dungeon Adventure (SGM) - input issues - NOTE: MSX version works fine
 
 #include "tiles_generic.h"
@@ -348,11 +347,16 @@ static UINT8 __fastcall coleco_read_port(UINT16 port)
 	return 0;
 }
 
+static INT32 scanline;
+static INT32 lets_nmi = -1;
+
 static void coleco_vdp_interrupt(INT32 state)
 {
 	if (state && !last_state)
-		ZetNmi();
-
+	{
+		// delay nmi by 1 scanline, prevents a race condition in Super Pac-Man which causes it to crash on boot.
+		lets_nmi = (scanline + 1) % 262;
+	}
 	last_state = state;
 }
 
@@ -388,6 +392,9 @@ static INT32 DrvDoReset()
     SGM_map_8k = 0;
 
 	dip_changed = DrvDips[1];
+
+	scanline = 0;
+	lets_nmi = -1;
 
 	return 0;
 }
@@ -590,9 +597,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
 		CPU_RUN(0, Zet);
 
 		TMS9928AScanline(i);
+
+		if (lets_nmi == i) {
+			ZetNmi();
+			lets_nmi = -1;
+		}
 
 		if ((i%5)==4) paddle_callback(); // 50x / frame (3000x / sec)
 	}
@@ -5789,7 +5802,7 @@ struct BurnDriver BurnDrvcv_superpac = {
     "cv_superpac", NULL, "cv_coleco", NULL, "2016",
     "Super Pac-Man (HB)\0", NULL, "(SGM) - Published by Team Pixelboy", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_NOT_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
     CVGetZipName, cv_superpacRomInfo, cv_superpacRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3

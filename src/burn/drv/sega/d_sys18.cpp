@@ -449,6 +449,47 @@ static struct BurnDIPInfo Astorm2pDIPList[]=
 
 STDDIPINFO(Astorm2p)
 
+static struct BurnDIPInfo BloxeedDIPList[]=
+{
+	// Default Values
+	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+	{0x17, 0xff, 0xff, 0xfd, NULL                                 },
+
+	// Dip 1
+	SYSTEM18_COINAGE(0x16)
+
+	// Dip 2
+	{0   , 0xfe, 0   ,    2, "Allow VS Mode"					  },
+	{0x17, 0x01, 0x01, 0x01, "Yes"								  },
+	{0x17, 0x01, 0x01, 0x00, "No"								  },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"						  },
+	{0x17, 0x01, 0x02, 0x02, "Off"								  },
+	{0x17, 0x01, 0x02, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    4, "Lines Per Level"					  },
+	{0x17, 0x01, 0x0c, 0x04, "2"								  },
+	{0x17, 0x01, 0x0c, 0x00, "2"								  },
+	{0x17, 0x01, 0x0c, 0x0c, "3"								  },
+	{0x17, 0x01, 0x0c, 0x08, "4"								  },
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"						  },
+	{0x17, 0x01, 0x30, 0x20, "Easy"								  },
+	{0x17, 0x01, 0x30, 0x30, "Normal"							  },
+	{0x17, 0x01, 0x30, 0x10, "Hard"								  },
+	{0x17, 0x01, 0x30, 0x00, "Hardest"							  },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"							  },
+	{0x17, 0x01, 0x40, 0x40, "Off"								  },
+	{0x17, 0x01, 0x40, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "High Speed Mode"					  },
+	{0x17, 0x01, 0x80, 0x00, "Off"								  },
+	{0x17, 0x01, 0x80, 0x80, "On"								  },
+};
+
+STDDIPINFO(Bloxeed)
+
 static struct BurnDIPInfo CltchitrDIPList[]=
 {
 	// Default Values
@@ -3449,7 +3490,7 @@ struct BurnDriver BurnDrvBloxeed = {
 	"Bloxeed (Japan, FD1094 317-0139)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
-	NULL, BloxeedRomInfo, BloxeedRomName, NULL, NULL, NULL, NULL, System18InputInfo, NULL,
+	NULL, BloxeedRomInfo, BloxeedRomName, NULL, NULL, NULL, NULL, System18InputInfo, BloxeedDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -3459,7 +3500,7 @@ struct BurnDriver BurnDrvBloxeedd = {
 	"Bloxeed (Japan, FD1094 317-0139 decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
-	NULL, BloxeeddRomInfo, BloxeeddRomName, NULL, NULL, NULL, NULL, System18InputInfo, NULL,
+	NULL, BloxeeddRomInfo, BloxeeddRomName, NULL, NULL, NULL, NULL, System18InputInfo, BloxeedDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

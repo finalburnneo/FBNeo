@@ -27876,3 +27876,23 @@ struct BurnDriver BurnDrvgg_madoumn3e = {
 	256, 192, 4, 3
 };
 
+
+// Phantasy Star (Jpn)
+// https://www.smspower.org/Translations/PhantasyStar-SMS-EN
+static struct BurnRomInfo sms_pstarjeRomDesc[] = {
+	{ "phantasy star (j) [t-eng2.00].sms",	524288, 0xa04cf71a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_pstarje)
+STD_ROM_FN(sms_pstarje)
+
+struct BurnDriver BurnDrvsms_pstarje = {
+	"sms_pstarje", "sms_pstar", NULL, NULL, "2020",
+	"Phantasy Star (Jpn, T-Eng v2.00)\0", "Turn ON 'FM Emulation' in Dips for use YM2413 emulation", "SMS Power!", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
+	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+

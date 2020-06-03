@@ -4358,7 +4358,7 @@ static struct BurnRomInfo gondoRomDesc[] = {
 STD_ROM_PICK(gondo)
 STD_ROM_FN(gondo)
 
-struct BurnDriverD BurnDrvGondo = {
+struct BurnDriver BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
 	"Gondomania (World)\0", "please use 'gondou' instead!", "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,

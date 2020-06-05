@@ -58,8 +58,8 @@ struct kdacPointers
 	INT32			output_dir[2];
 };
 
-static struct kdacApcm Chips[2];
-static struct kdacPointers Pointers[2];
+static struct kdacApcm Chips[3];
+static struct kdacPointers Pointers[3];
 static struct kdacApcm *Chip = NULL;
 static struct kdacPointers *Ptr = NULL;
 static INT32 *Left = NULL;

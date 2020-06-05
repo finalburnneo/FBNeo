@@ -14,19 +14,11 @@ static UINT8 *K051316GfxExp[3];
 static INT32 K051316Mask[3];
 static INT32 K051316Offs[3][2];
 
+static INT32 force_update[3];
+
 static UINT8 *K051316Ram[3];
 static UINT8 K051316Ctrl[3][16];
 static UINT8 K051316Wrap[3];
-
-// Decode 4bpp graphics
-static void K051316GfxExpand(UINT8 *src, UINT8 *dst, INT32 len)
-{
-	for (INT32 i = 0; i < len; i++) {
-		INT32 d = src[i];
-		dst[i * 2 + 0] = d >> 4;
-		dst[i * 2 + 1] = d & 0x0f;
-	}
-}
 
 void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *flags), INT32 bpp, INT32 transp)
 {
@@ -35,6 +27,8 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 
 	K051316Callback[chip] = callback;	
 
+	if (gfxexp == NULL) gfxexp = gfx;
+
 	K051316Depth[chip] = bpp;
 	K051316Gfx[chip] = gfx;
 	K051316GfxExp[chip] = gfxexp;
@@ -42,7 +36,7 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 	K051316Mask[chip] = mask;
 
 	if (bpp == 4) {
-		K051316GfxExpand(gfx, gfxexp, mask+1);
+		BurnNibbleExpand(gfx, gfxexp, mask+1, 0, 0);
 	}
 
 	KonamiAllocateBitmaps();
@@ -65,7 +59,8 @@ void K051316Reset()
 	for (INT32 i = 0; i < 3; i++)
 	{
 		if (K051316Ram[i]) {
-			memset (K051316Ram[i], 0, 0x800);
+			memset (K051316Ram[i], 0xff, 0x800);
+			force_update[i] = 1;
 		}
 
 		memset (K051316Ctrl[i], 0, 16);
@@ -165,8 +160,15 @@ static inline void K051316_write_tile(INT32 offset, INT32 chip)
 
 void K051316Write(INT32 chip, INT32 offset, INT32 data)
 {
-	K051316Ram[chip][offset] = data;
-	K051316_write_tile(offset & 0x3ff, chip);
+	if (K051316Ram[chip][offset] != data) {
+		K051316Ram[chip][offset] = data;
+		K051316_write_tile(offset & 0x3ff, chip);
+	}
+}
+
+UINT8 K051316ReadCtrl(INT32 chip, INT32 offset)
+{
+	return K051316Ctrl[chip][offset & 0x0f];
 }
 
 void K051316WriteCtrl(INT32 chip, INT32 offset, INT32 data)
@@ -319,10 +321,11 @@ void K051316_zoom_draw(INT32 chip, INT32 flags)
 
 void K051316RedrawTiles(INT32 chip)
 {
-	if (K051316Ram[chip]) {
+	if (K051316Ram[chip] && force_update[chip]) {
 		for (INT32 j = 0; j < 0x400; j++) {
 			K051316_write_tile(j, chip);
 		}
+		force_update[chip] = 0;
 	}
 }
 

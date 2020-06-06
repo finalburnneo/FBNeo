@@ -358,6 +358,9 @@ void K051316Scan(INT32 nAction)
 	}
 
 	if (nAction & ACB_WRITE) {
+		force_update[0] = 1;
+		force_update[1] = 1;
+		force_update[2] = 1;
 		K051316RedrawTiles(0);
 		K051316RedrawTiles(1);
 		K051316RedrawTiles(2);

@@ -354,8 +354,9 @@ static void coleco_vdp_interrupt(INT32 state)
 {
 	if (state && !last_state)
 	{
-		// delay nmi by 1 scanline, prevents a race condition in Super Pac-Man which causes it to crash on boot.
-		lets_nmi = (scanline + 1) % 262;
+		// delay nmi by 1 insn, prevents a race condition in Super Pac-Man which causes it to crash on boot.
+		ZetRunEnd();
+		lets_nmi = (scanline) % 262;
 	}
 	last_state = state;
 }

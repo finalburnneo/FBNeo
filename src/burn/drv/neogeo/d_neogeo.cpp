@@ -18597,6 +18597,43 @@ struct BurnDriver BurnDrvrbffspbh = {
 	0x1000, 320, 224, 4, 3
 };
 
+// The King of Fighters 2000 (OTC 2020-05-30, LOUSHI customized version)
+
+static struct BurnRomInfo kof2000otcRomDesc[] = {
+	{ "kof2000otc-p1.bin", 		0x100000, 0x39d70ffc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kof2000otc-p2.bin", 		0x400000, 0x1c6ee3e3, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "257-c1_decrypted.bin",   0x800000, 0xabcdd424, 3 | BRF_GRA }, 		   //  2 Sprite data
+	{ "257-c2_decrypted.bin",   0x800000, 0xcda33778, 3 | BRF_GRA }, 		   //  3 
+	{ "257-c3_decrypted.bin",   0x800000, 0x087fb15b, 3 | BRF_GRA }, 		   //  4 
+	{ "257-c4_decrypted.bin",   0x800000, 0xfe9dfde4, 3 | BRF_GRA }, 		   //  5 
+	{ "257-c5_decrypted.bin",   0x800000, 0x03ee4bf4, 3 | BRF_GRA }, 		   //  6 
+	{ "257-c6_decrypted.bin",   0x800000, 0x8599cc5b, 3 | BRF_GRA }, 		   //  7 
+	{ "kof2000otc-c7.bin",    	0x800000, 0xb2cd7102, 3 | BRF_GRA }, 		   //  8 
+	{ "kof2000otc-c8.bin",   	0x800000, 0xd11c3b66, 3 | BRF_GRA }, 		   //  9 
+
+	{ "257-m1.m1",    			0x040000, 0x80ebc3aa, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	
+	{ "257-v1.v1",    			0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
+	{ "257-v2.v2",    			0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12 
+	{ "257-v3.v3",    			0x400000, 0x4605036a, 5 | BRF_SND },           // 13 
+	{ "257-v4.v4",    			0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14
+	{ "kof2000otc-v5.bin",    	0x400000, 0x54df285f, 5 | BRF_SND },           // 15	
+};
+
+STDROMPICKEXT(kof2000otc, kof2000otc, neogeo)
+STD_ROM_FN(kof2000otc)
+
+struct BurnDriver BurnDrvkof2000otc = {
+	"kof2000otc", "kof2000", "neogeo", NULL, "2000",
+	"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cusotmized version)\0", "hack only enable in AES mode", "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)
 // This hack is known as kof2001s46 in HBMAME
 

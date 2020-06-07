@@ -42835,7 +42835,7 @@ STD_ROM_FN(md_psolar)
 
 struct BurnDriver BurnDrvmd_psolar = {
 	"md_psolar", NULL, NULL, NULL, "2010",
-	"Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (HB)\0", NULL, "WaterMelon", "Sega Megadrive",
+	"Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (HB)\0", "64 Mbit (8MB) cartridge", "WaterMelon", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_psolarRomInfo, md_psolarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43758,3 +43758,61 @@ struct BurnDriver BurnDrvmd_puzzli = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Bad Apple (HB, Tech-Demo)
+
+static struct BurnRomInfo md_badappleRomDesc[] = {
+	{ "bad apple (full).bin", 8202512, 0x37f676e2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_badapple)
+STD_ROM_FN(md_badapple)
+
+struct BurnDriver BurnDrvmd_badapple = {
+	"md_badapple", NULL, NULL, NULL, "2012",
+	"Bad Apple (HB, Tech-Demo)\0", "64 Mbit (8MB) cartridge", "Stef_D", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_badappleRomInfo, md_badappleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// FX Unit Yuki - the Henshin Engine (world) (unl)
+
+static struct BurnRomInfo md_fxunyukiRomDesc[] = {
+	{ "fx unit yuki - the henshin engine (world) (unl).bin", 6291456, 0x2906876b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fxunyuki)
+STD_ROM_FN(md_fxunyuki)
+
+struct BurnDriver BurnDrvmd_fxunyuki = {
+	"md_fxunyuki", NULL, NULL, NULL, "2018",
+	"FX Unit Yuki - the Henshin Engine (HB)\0", "48 Mbit (6MB) cartridge", "Sarupro", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_fxunyukiRomInfo, md_fxunyukiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Omega Blast (HB, v0.9)
+
+static struct BurnRomInfo md_omeblastRomDesc[] = {
+	{ "omega blast (v0.9).bin", 524288, 0x62cbb56c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_omeblast)
+STD_ROM_FN(md_omeblast)
+
+struct BurnDriver BurnDrvmd_omeblast = {
+	"md_omeblast", NULL, NULL, NULL, "2018",
+	"Omega Blast (HB, v0.9)\0", NULL, "Nendo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_omeblastRomInfo, md_omeblastRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

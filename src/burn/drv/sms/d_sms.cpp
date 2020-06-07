@@ -9101,8 +9101,8 @@ struct BurnDriver BurnDrvsms_sonic = {
 	256, 192, 4, 3
 };
 
-// Sonic The Hedgehog FM MOD 1.02 (Euro, USA, Bra)
-
+// Sonic The Hedgehog FM MOD v1.02 (Euro, USA, Bra)
+// http://www.romhacking.net/hacks/3663/
 static struct BurnRomInfo sms_sonicfm102RomDesc[] = {
 	{ "Sonic1SMS_FM_v102.sms",	0x40000, 0x7c077b38, BRF_PRG | BRF_ESS },
 };
@@ -9111,11 +9111,11 @@ STD_ROM_PICK(sms_sonicfm102)
 STD_ROM_FN(sms_sonicfm102)
 
 struct BurnDriver BurnDrvsms_sonicfm102 = {
-	"sms_sonicfm102", "sms_sonic", NULL, NULL, "1991",
-	"Sonic The Hedgehog (FM Mod 1.02)\0", NULL, "Sega", "Sega Master System",
+	"sms_sonicfm102", "sms_sonic", NULL, NULL, "2014",
+	"Sonic The Hedgehog (FM Mod, v1.02)\0", "YM2413 FM sound chip supported", "Sega - Valleybell", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
-	SMSGetZipName, sms_sonicfm102RomInfo, sms_sonicfm102RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_sonicfm102RomInfo, sms_sonicfm102RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -27884,7 +27884,7 @@ struct BurnDriver BurnDrvgg_madoumn3e = {
 };
 
 
-// Phantasy Star (Jpn)
+// Phantasy Star (Jpn, English re-translation)
 // https://www.smspower.org/Translations/PhantasyStar-SMS-EN
 static struct BurnRomInfo sms_pstarjeRomDesc[] = {
 	{ "phantasy star (j) [t-eng2.00].sms",	524288, 0xa04cf71a, BRF_PRG | BRF_ESS },
@@ -27895,10 +27895,70 @@ STD_ROM_FN(sms_pstarje)
 
 struct BurnDriver BurnDrvsms_pstarje = {
 	"sms_pstarje", "sms_pstar", NULL, NULL, "2020",
-	"Phantasy Star (Jpn, T-Eng v2.00)\0", "Turn ON 'FM Emulation' in Dips for use YM2413 emulation", "SMS Power!", "Sega Master System",
+	"Phantasy Star (Jpn, T-Eng v2.00)\0", "YM2413 FM sound chip supported", "Sega - SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Battle Out Run (Hack, FM Mod)
+// https://www.smspower.org/Hacks/BattleOutRun-SMS-FM-Mod
+static struct BurnRomInfo sms_battleorfmRomDesc[] = {
+	{ "battle out run (fm mod).sms",	0x40000, 0x7c849999, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_battleorfm)
+STD_ROM_FN(sms_battleorfm)
+
+struct BurnDriver BurnDrvsms_battleorfm = {
+	"sms_battleorfm", "sms_battleor", NULL, NULL, "2018",
+	"Battle Out Run (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - SMS Power!", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	SMSGetZipName, sms_battleorfmRomInfo, sms_battleorfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Wonder Boy III - The Dragon's Trap (Hack, FM Mod)
+// http://www.romhacking.net/hacks/3662/
+static struct BurnRomInfo sms_wboy3fmRomDesc[] = {
+	{ "wonder boy iii - the dragon's trap (fm mod).sms",	0x40000, 0x9442cfff, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_wboy3fm)
+STD_ROM_FN(sms_wboy3fm)
+
+struct BurnDriver BurnDrvsms_wboy3fm = {
+	"sms_wboy3fm", "sms_wboy3", NULL, NULL, "1999",
+	"Wonder Boy III - The Dragon's Trap (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - Bock", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RPG, 0,
+	SMSGetZipName, sms_wboy3fmRomInfo, sms_wboy3fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Ys - The Vanished Omens (Hack, FM Mod, v1.2)
+// http://www.romhacking.net/hacks/572/
+static struct BurnRomInfo sms_ysfmRomDesc[] = {
+	{ "ys - the vanished omens (fm patch).sms",	0x40000, 0x7ed5dca2, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_ysfm)
+STD_ROM_FN(sms_ysfm)
+
+struct BurnDriver BurnDrvsms_ysfm = {
+	"sms_ysfm", "sms_ys", NULL, NULL, "2009",
+	"Ys - The Vanished Omens (FM Mod, v1.2)\0", "YM2413 FM sound chip supported", "Sega - SSTranslations", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
+	SMSGetZipName, sms_ysfmRomInfo, sms_ysfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

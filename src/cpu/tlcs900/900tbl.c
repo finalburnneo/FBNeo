@@ -4,6 +4,9 @@ TLCS-900/H instruction set
 
 *******************************************************************/
 
+#if defined(__CELLOS_LV2__)
+#undef _D0
+#endif
 
 enum e_operand
 {

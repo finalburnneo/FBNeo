@@ -825,6 +825,13 @@
 		<rom name="back to the future part iii (usa).bin" size="524288" crc="66a388c3"/>
 		<driver status="good"/>
 	</game>
+	<game name="badapple">
+		<description>Bad Apple (HB, Tech-Demo) [Homebrew, 64 Mbit (8MB) cartridge]</description>
+		<year>2012</year>
+		<manufacturer>Stef_D</manufacturer>
+		<rom name="bad apple (full).bin" size="8202512" crc="37f676e2"/>
+		<driver status="good"/>
+	</game>
 	<game name="badomen" cloneof="devilish" romof="devilish">
 		<description>Bad Omen (Jpn, Kor)</description>
 		<year>1992</year>
@@ -1078,9 +1085,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bcdverifier">
-		<description>BCD Verifier (Test)</description>
+		<description>BCD Verifier (HB, Test) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>2016 Flamewing</manufacturer>
+		<manufacturer>Flamewing</manufacturer>
 		<rom name="bcd-verifier-u1.bin" size="1055690" crc="0f9bbe9d"/>
 		<driver status="good"/>
 	</game>
@@ -1125,6 +1132,13 @@
 		<manufacturer>Viacom New Media</manufacturer>
 		<rom name="beavis and butt-head (usa) (beta).bin" size="2097152" crc="81ed5335"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="begprince">
+		<description>Beggar Prince - English Version (HB, rev1) [Homebrew]</description>
+		<year>2005</year>
+		<manufacturer>Super Fighter Team</manufacturer>
+		<rom name="beggar prince (world) (rev 1) (unl).md" size="4194304" crc="6332edcc"/>
+		<driver status="good"/>
 	</game>
 	<game name="ben10">
 		<description>Ben 10 (Rus)</description>
@@ -1176,9 +1190,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bigfd">
-		<description>Big's Fishing Derby</description>
+		<description>Big's Fishing Derby (HB) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>2014 flamewing</manufacturer>
+		<manufacturer>Flamewing</manufacturer>
 		<rom name="bigfd.bin" size="1048576" crc="e1448457"/>
 		<driver status="good"/>
 	</game>
@@ -1330,9 +1344,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="bobc206">
-		<description>Bomb on Basic City 2.06</description>
+		<description>Bomb on Basic City (HB, v2.06) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>2016 Vetea</manufacturer>
+		<manufacturer>Vetea</manufacturer>
 		<rom name="BasicCity206.bin" size="1138854" crc="8f4ac700"/>
 		<driver status="good"/>
 	</game>
@@ -1742,6 +1756,13 @@
 		<rom name="captain planet and the planeteers (usa).bin" size="524288" crc="bf2cbd3a"/>
 		<driver status="good"/>
 	</game>
+	<game name="cascade">
+		<description>Cascade (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Super Fighter Team</manufacturer>
+		<rom name="cascade (world) (unl).md" size="524288" crc="e7b287fe"/>
+		<driver status="good"/>
+	</game>
 	<game name="castlillj" cloneof="castlill" romof="castlill">
 		<description>Castle of Illusion - Fushigi no Oshiro Daibouken (Jpn)</description>
 		<year>1990</year>
@@ -1840,18 +1861,18 @@
 		<rom name="chao ji da fu weng (chi) (unl).bin" size="1048576" crc="2e2ea687"/>
 		<driver status="good"/>
 	</game>
+	<game name="chase">
+		<description>Chase (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Jack Nolddor &amp; Davidian</manufacturer>
+		<rom name="Chase (v2.00).bin" size="393216" crc="0b3426ed"/>
+		<driver status="good"/>
+	</game>
 	<game name="chasehq2">
 		<description>Chase H.Q. II (USA)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="chase h.q. ii (usa).bin" size="524288" crc="f39e4bf2"/>
-		<driver status="good"/>
-	</game>
-	<game name="chase">
-		<description>Chase</description>
-		<year>2014</year>
-		<manufacturer>2014 Jack Nolddor &amp; Davidian</manufacturer>
-		<rom name="Chase (v2.00).bin" size="393216" crc="0b3426ed"/>
 		<driver status="good"/>
 	</game>
 	<game name="chavez2" cloneof="boxinglg" romof="boxinglg">
@@ -2538,13 +2559,6 @@
 		<year>1994</year>
 		<manufacturer>Ma-Ba</manufacturer>
 		<rom name="crayon shin-chan - arashi o yobu enji (jpn).bin" size="2097152" crc="97fc42d2"/>
-		<driver status="good"/>
-	</game>
-	<game name="crazybus">
-		<description>Crazy Bus (HB, v2.00_r030) [Homebrew]</description>
-		<year>2010</year>
-		<manufacturer>Tom Scripts LTDA.</manufacturer>
-		<rom name="CB68K_BV200_r230.bin" size="1048576" crc="209406fa"/>
 		<driver status="good"/>
 	</game>
 	<game name="xfire">
@@ -4172,9 +4186,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatalsmarties">
-		<description>Fatal Smarties</description>
+		<description>Fatal Smarties (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>2016 Global Game Jam</manufacturer>
+		<manufacturer>Global Game Jam</manufacturer>
 		<rom name="fatalsmarties.bin" size="352256" crc="79d461b6"/>
 		<driver status="good"/>
 	</game>
@@ -4391,7 +4405,7 @@
 	<game name="fixitfelixjr">
 		<description>Fix It Felix Jr. (HB) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>2014 TOBIKOMI / Airwalkstudios</manufacturer>
+		<manufacturer>TOBIKOMI / Airwalkstudios</manufacturer>
 		<rom name="FixItFelixJr_AirwalkStudios.bin" size="601870" crc="424ff451"/>
 		<driver status="good"/>
 	</game>
@@ -4554,6 +4568,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="futbol argentino 98 - pasion de multitudes (unl).bin" size="2097152" crc="5c015888"/>
+		<driver status="good"/>
+	</game>
+	<game name="fxunyuki">
+		<description>FX Unit Yuki - the Henshin Engine (HB) [Homebrew, 48 Mbit (6MB) cartridge]</description>
+		<year>2018</year>
+		<manufacturer>Sarupro</manufacturer>
+		<rom name="fx unit yuki - the henshin engine (world) (unl).bin" size="6291456" crc="2906876b"/>
 		<driver status="good"/>
 	</game>
 	<game name="gloc">
@@ -4890,7 +4911,7 @@
 	<game name="goldnax3nc" cloneof="goldnax3" romof="goldnax3">
 		<description>Golden Axe III - New Character (Ver. 8) (Hack)</description>
 		<year>2013</year>
-		<manufacturer>2013 Ti</manufacturer>
+		<manufacturer>Ti</manufacturer>
 		<rom name="GoldenAxeIII_New Character_Hack.bin" size="2097152" crc="b157f06c"/>
 		<driver status="good"/>
 	</game>
@@ -5471,7 +5492,7 @@
 	<game name="issdxrne" cloneof="issdx" romof="issdx">
 		<description>International Superstar Soccer Deluxe - Real Names+Extras (Hack)</description>
 		<year>2016</year>
-		<manufacturer>2016 Sprill</manufacturer>
+		<manufacturer>Sprill</manufacturer>
 		<rom name="issdx_real_hack.bin" size="2097152" crc="ad08d78e"/>
 		<driver status="good"/>
 	</game>
@@ -6115,7 +6136,7 @@
 	<game name="ktesonic" cloneof="sonic" romof="sonic">
 		<description>Knuckles the Echidna in Sonic the Hedgehog (Hack)</description>
 		<year>2005</year>
-		<manufacturer>2005 Stealth</manufacturer>
+		<manufacturer>Stealth</manufacturer>
 		<rom name="ktesonic.bin" size="655232" crc="57a6ddb3"/>
 		<driver status="good"/>
 	</game>
@@ -6309,9 +6330,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="legobatman">
-		<description>Lego Batman</description>
+		<description>Lego Batman (HB, Rus) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>Russia</manufacturer>
+		<manufacturer>BMB</manufacturer>
 		<rom name="Lego Batman (Unl).bin" size="524288" crc="00da53a9"/>
 		<driver status="good"/>
 	</game>
@@ -6644,6 +6665,13 @@
 		<rom name="magic_bubble.bin" size="524288" crc="ce4a0c46"/>
 		<driver status="preliminary"/>
 	</game>
+	<game name="magicgirl" cloneof="xiaomo" romof="xiaomo">
+		<description>Magic Girl featuring Ling Ling the little Witch (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Super Fighter Team</manufacturer>
+		<rom name="magic girl featuring ling ling the little witch (world) (unl).md" size="2097152" crc="e9dc9d93"/>
+		<driver status="good"/>
+	</game>
 	<game name="magicpockets">
 		<description>Magic Pockets (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -6785,9 +6813,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="masiaka">
-		<description>Masiaka (Demo)</description>
+		<description>Masiaka (HB, Tech-Demo) [Homebrew]</description>
 		<year>2017</year>
-		<manufacturer>2017 Resistance</manufacturer>
+		<manufacturer>Resistance</manufacturer>
 		<rom name="Masiaka-by-Resistance-2017.bin" size="3145728" crc="d237b970"/>
 		<driver status="good"/>
 	</game>
@@ -6990,7 +7018,7 @@
 	<game name="megaqbert11">
 		<description>Mega Q-Bert (HB, v1.1) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>2016 Jaklub</manufacturer>
+		<manufacturer>Jaklub</manufacturer>
 		<rom name="Mega Qbert.bin" size="524288" crc="692a9227"/>
 		<driver status="good"/>
 	</game>
@@ -7116,7 +7144,7 @@
 	<game name="msonichd" cloneof="sonic" romof="sonic">
 		<description>Metal Sonic Hyperdrive (Hack V4.2)</description>
 		<year>2014</year>
-		<manufacturer>2014 Darkon</manufacturer>
+		<manufacturer>Darkon</manufacturer>
 		<rom name="Metal Sonic Hyperdrive (V4.2) (Hack By Darkon).bin" size="1048576" crc="195219e0"/>
 		<driver status="good"/>
 	</game>
@@ -7429,9 +7457,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="miniplanets">
-		<description>Mini Planets (HB, REV02) [Homebrew]</description>
+		<description>Mini Planets (HB, Rev2) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>2016 Sik</manufacturer>
+		<manufacturer>Sik</manufacturer>
 		<rom name="Miniplanets-REV02.bin" size="262144" crc="48460e4a"/>
 		<driver status="good"/>
 	</game>
@@ -7443,7 +7471,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="misplaced">
-		<description>Misplaced (English) [Homebrew]</description>
+		<description>Misplaced (HB, English) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Misplaced-EN.bin" size="917504" crc="d79fd3ec"/>
@@ -7480,7 +7508,7 @@
 	<game name="mevo" cloneof="sonic" romof="sonic">
 		<description>Mobius Evolution (Hack V3.6)</description>
 		<year>2015</year>
-		<manufacturer>2015 Abyssal Leopard</manufacturer>
+		<manufacturer>Abyssal Leopard</manufacturer>
 		<rom name="Mobius Evolution V3.6 (Hack By Abyssal Leopard).bin" size="1804544" crc="f2a974f4"/>
 		<driver status="good"/>
 	</game>
@@ -7557,7 +7585,7 @@
 	<game name="mk3m" cloneof="mk3" romof="mk3">
 		<description>Mortal Kombat 3 Mini (Hack)</description>
 		<year>2011</year>
-		<manufacturer>2011 Nemesis_c, r57shell</manufacturer>
+		<manufacturer>Nemesis_c, r57shell</manufacturer>
 		<rom name="Mortal Kombat 3 Mini-Hack.bin" size="4194304" crc="d925aa80"/>
 		<driver status="good"/>
 	</game>
@@ -7578,7 +7606,7 @@
 	<game name="mkr" cloneof="umk3t" romof="umk3t">
 		<description>Mortal Kombat Revelations (Hack, Version 1.0)</description>
 		<year>2012</year>
-		<manufacturer>2012 SMOKE</manufacturer>
+		<manufacturer>SMOKE</manufacturer>
 		<rom name="Mortal Kombat Revelations (Hack Ver. 1.0 By Smoke).bin" size="9992816" crc="318b81f2"/>
 		<driver status="good"/>
 	</game>
@@ -8657,7 +8685,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ohmummy">
-		<description>Oh Mummy [Homebrew]</description>
+		<description>Oh Mummy (HB) [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>1985 Alternativo</manufacturer>
 		<rom name="Oh Mummy Genesis.bin" size="1048576" crc="b7f68b29"/>
@@ -8703,6 +8731,13 @@
 		<year>1996</year>
 		<manufacturer>Black Pearl</manufacturer>
 		<rom name="olympic summer games (euro, usa).bin" size="2097152" crc="9e470fb9"/>
+		<driver status="good"/>
+	</game>
+	<game name="omeblast">
+		<description>Omega Blast (HB, v0.9) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Nendo</manufacturer>
+		<rom name="omega blast (v0.9).bin" size="524288" crc="62cbb56c"/>
 		<driver status="good"/>
 	</game>
 	<game name="ondal" cloneof="mystdef" romof="mystdef">
@@ -8902,9 +8937,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="papicommandomd">
-		<description>Papi Commando MD</description>
+		<description>Papi Commando MD (HB) [Homebrew]</description>
 		<year>2015</year>
-		<manufacturer>2015 Vetea</manufacturer>
+		<manufacturer>Vetea</manufacturer>
 		<rom name="PapiCommandoMD.bin" size="3466596" crc="ec16d540"/>
 		<driver status="good"/>
 	</game>
@@ -9295,7 +9330,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psolar">
-		<description>Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl)</description>
+		<description>Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (HB) [Homebrew, 64 Mbit (8MB) cartridge]</description>
 		<year>2010</year>
 		<manufacturer>WaterMelon</manufacturer>
 		<rom name="Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl).md" size="8388608" crc="dfb94f1b"/>
@@ -9726,6 +9761,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="puzzle &amp; action - tanto-r (jpn).bin" size="2097152" crc="d2d2d437"/>
+		<driver status="good"/>
+	</game>
+	<game name="puzzli">
+		<description>Puzzli (HB, v1.1) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>PortableDev</manufacturer>
+		<rom name="puzzli (v1.1).bin" size="1179648" crc="53eca258"/>
 		<driver status="good"/>
 	</game>
 	<game name="pyramidgnk" cloneof="pyramid" romof="pyramid">
@@ -10633,9 +10675,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smsbrawl">
-		<description>Sega Master System Brawl</description>
+		<description>Sega Master System Brawl (HB) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>2014 Bonaf</manufacturer>
+		<manufacturer>Bonaf</manufacturer>
 		<rom name="SMSBrawl.bin" size="1543722" crc="7e4a52f3"/>
 		<driver status="good"/>
 	</game>
@@ -11216,7 +11258,7 @@
 	<game name="somarita" cloneof="sonic" romof="sonic">
 		<description>Somari The Adventurer (Hack V1.1)</description>
 		<year>2015</year>
-		<manufacturer>2015 Darkon360, Lone Devil</manufacturer>
+		<manufacturer>Darkon360, Lone Devil</manufacturer>
 		<rom name="Somari The Adventurer (Hack).bin" size="1048576" crc="6ab80fca"/>
 		<driver status="good"/>
 	</game>
@@ -11305,35 +11347,35 @@
 	<game name="sonic2brc" cloneof="sonic2" romof="sonic2">
 		<description>Sonic 2 Battle Race (Hack)</description>
 		<year>2012</year>
-		<manufacturer>2012 ColinC10</manufacturer>
+		<manufacturer>ColinC10</manufacturer>
 		<rom name="Sonic2BattleRace.bin" size="2097152" crc="be6d9178"/>
 		<driver status="good"/>
 	</game>
 	<game name="s2delta" cloneof="sonic2" romof="sonic2">
 		<description>Sonic 2 Delta (Hack, v0.25a)</description>
 		<year>2015</year>
-		<manufacturer>2015 Esrael</manufacturer>
+		<manufacturer>Esrael</manufacturer>
 		<rom name="Sonic2Cl.bin" size="2097152" crc="74abb0af"/>
 		<driver status="good"/>
 	</game>
 	<game name="s2rpt1" cloneof="sonic2" romof="sonic2">
 		<description>Sonic 2 Recreation - Part One (Hack, Contest Build)</description>
 		<year>2013</year>
-		<manufacturer>2013 redhotsonic</manufacturer>
+		<manufacturer>redhotsonic</manufacturer>
 		<rom name="Sonic 2 Recreation - Part One.bin" size="2237992" crc="771fd4ea"/>
 		<driver status="good"/>
 	</game>
 	<game name="s2smtp" cloneof="sonic2" romof="sonic2">
 		<description>Sonic 2 SMTP (Hack, v0.5)</description>
 		<year>2007</year>
-		<manufacturer>2007 SMTP</manufacturer>
+		<manufacturer>SMTP</manufacturer>
 		<rom name="s2smtp_v0.5.bin" size="2073642" crc="d116fef0"/>
 		<driver status="good"/>
 	</game>
 	<game name="s3ktc" cloneof="sks3" romof="sks3">
 		<description>Sonic 3 &amp; Knuckles - The Challenges (Hack) [Lock-On Technology]</description>
 		<year>2009</year>
-		<manufacturer>2009 ColinC10</manufacturer>
+		<manufacturer>ColinC10</manufacturer>
 		<rom name="S3K_TheChallenges.bin" size="4194304" crc="04179928"/>
 		<driver status="good"/>
 	</game>
@@ -11424,21 +11466,21 @@
 	<game name="sbash" cloneof="sonic2" romof="sonic2">
 		<description>Sonic Bash (Hack V2)</description>
 		<year>2016</year>
-		<manufacturer>2016 redhotsonic</manufacturer>
+		<manufacturer>redhotsonic</manufacturer>
 		<rom name="Sonic Bash V2.bin" size="524288" crc="627d1ca8"/>
 		<driver status="good"/>
 	</game>
 	<game name="sboom" cloneof="sonic2" romof="sonic2">
 		<description>Sonic Boom (Hack)</description>
 		<year>2009</year>
-		<manufacturer>2009 snkenjoi, iojnekns</manufacturer>
+		<manufacturer>snkenjoi, iojnekns</manufacturer>
 		<rom name="Sonic Boom (Hack).bin" size="1506720" crc="aa903c50"/>
 		<driver status="good"/>
 	</game>
 	<game name="scheroes" cloneof="sonic2" romof="sonic2">
 		<description>Sonic Classic Heroes (Hack)</description>
 		<year>2013</year>
-		<manufacturer>2013 flamewing, ColinC10</manufacturer>
+		<manufacturer>Flamewing, ColinC10</manufacturer>
 		<rom name="Sonic Classic Heroes.bin" size="4194304" crc="c27093da"/>
 		<driver status="good"/>
 	</game>
@@ -11502,14 +11544,14 @@
 	<game name="sonicmmix" cloneof="sonic" romof="sonic">
 		<description>Sonic Megamix (Hack By Team Megamix V3.0)</description>
 		<year>2007</year>
-		<manufacturer>2007 Team Megamix</manufacturer>
+		<manufacturer>Team Megamix</manufacturer>
 		<rom name="Sonic Megamix V3.0 (Hack By Team Megamix).bin" size="1283224" crc="66ecb4f4"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonicppu" cloneof="sonic" romof="sonic">
 		<description>Sonic Pixel Perfect (Hack, Ultimate Version)</description>
 		<year>2013</year>
-		<manufacturer>2008 JcFerggy, NovaWizard/2013 Jk.Fox</manufacturer>
+		<manufacturer>JcFerggy, NovaWizard / Jk.Fox</manufacturer>
 		<rom name="Sonic Pixel Perfect (Ultimate Version).bin" size="796372" crc="6d776301"/>
 		<driver status="good"/>
 	</game>
@@ -11572,7 +11614,7 @@
 	<game name="sonictlw" cloneof="sonic" romof="sonic">
 		<description>Sonic the Hedgehog - The Lost Worlds (Hack)</description>
 		<year>2009</year>
-		<manufacturer>2009 ExecByte</manufacturer>
+		<manufacturer>ExecByte</manufacturer>
 		<rom name="Sonic the Hedgehog - The Lost Worlds.bin" size="1048576" crc="47004e22"/>
 		<driver status="good"/>
 	</game>
@@ -11698,21 +11740,21 @@
 	<game name="s3comp" cloneof="sks3" romof="sks3">
 		<description>Sonic the Hedgehog 3 Complete (World, Hack)</description>
 		<year>2013</year>
-		<manufacturer>2013 Tiddles</manufacturer>
+		<manufacturer>Tiddles</manufacturer>
 		<rom name="S3Complete.bin" size="3932160" crc="2bd564b1"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonic31">
 		<description>Sonic the Hedgehog 3 in 1 (World, Hack)</description>
 		<year>2011</year>
-		<manufacturer>2011 vladikcomper</manufacturer>
+		<manufacturer>vladikcomper</manufacturer>
 		<rom name="Sonic the Hedgehog 3 in 1.bin" size="3771778" crc="2d169e08"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonicwa" cloneof="sonic" romof="sonic">
 		<description>Sonic Winter Adventures (Hack)</description>
 		<year>2013</year>
-		<manufacturer>2013 vladikcomper</manufacturer>
+		<manufacturer>vladikcomper</manufacturer>
 		<rom name="Sonic Winter Adventures (Hack).bin" size="950272" crc="795d6603"/>
 		<driver status="good"/>
 	</game>
@@ -11782,7 +11824,7 @@
 	<game name="southia" cloneof="sonic" romof="sonic">
 		<description>South Island Adventure (Hack, V0.3)</description>
 		<year>2004</year>
-		<manufacturer>2004 Hivebrain</manufacturer>
+		<manufacturer>Hivebrain</manufacturer>
 		<rom name="South Island Adventure V0.3.bin" size="577232" crc="ced56180"/>
 		<driver status="good"/>
 	</game>
@@ -12223,7 +12265,7 @@
 	<game name="sf2ics" cloneof="sf2" romof="sf2">
 		<description>Street Fighter II' - Special Champion Edition (Hack, Color and Sound)</description>
 		<year>2014</year>
-		<manufacturer>2014 Pyron &amp; Stephane.D</manufacturer>
+		<manufacturer>Pyron &amp; Stephane.D</manufacturer>
 		<rom name="Street Fighter II' - SCE Improvement.bin" size="3145728" crc="293d2cb1"/>
 		<driver status="good"/>
 	</game>
@@ -12293,7 +12335,7 @@
 	<game name="sor2bk3b" cloneof="sor2" romof="sor2">
 		<description>Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack)</description>
 		<year>2017</year>
-		<manufacturer>2017 Kratus</manufacturer>
+		<manufacturer>Kratus</manufacturer>
 		<rom name="SoR2_BK3Boss_Hack.bin" size="3500098" crc="5c152787"/>
 		<driver status="good"/>
 	</game>
@@ -12328,7 +12370,7 @@
 	<game name="sor2tmnt" cloneof="sor2" romof="sor2">
 		<description>Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)</description>
 		<year>2017</year>
-		<manufacturer>2017, Hack By Carzj, Fix By M3tro</manufacturer>
+		<manufacturer>Hack By Carzj, Fix By M3tro</manufacturer>
 		<rom name="SoR2_TMNT_Hack.bin" size="2903472" crc="50e3c7c3"/>
 		<driver status="good"/>
 	</game>
@@ -12468,7 +12510,7 @@
 	<game name="sor3ex" cloneof="sor3" romof="sor3">
 		<description>Streets of Rage 3 - Extreme Edition (V0.42) (Hack)</description>
 		<year>2012</year>
-		<manufacturer>2012 Gsaurus</manufacturer>
+		<manufacturer>Gsaurus</manufacturer>
 		<rom name="SoR3_Extreme_v042_Hack.bin" size="3145728" crc="d2135a13"/>
 		<driver status="good"/>
 	</game>
@@ -13075,9 +13117,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tgunii">
-		<description>T*GUN II</description>
+		<description>T*GUN II (HB) [Homebrew]</description>
 		<year>2015</year>
-		<manufacturer>2015 TooManyGames </manufacturer>
+		<manufacturer>TooManyGames </manufacturer>
 		<rom name="TGUNII05302015_FINALDRAFT002.bin" size="786432" crc="c842b4d4"/>
 		<driver status="good"/>
 	</game>
@@ -13364,7 +13406,7 @@
 	<game name="tmnttficb" cloneof="tmhttf" romof="tmhttf">
 		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)</description>
 		<year>2014</year>
-		<manufacturer>2014, Color By fusaru, Boss by Nemesis_c</manufacturer>
+		<manufacturer>Color By fusaru, Boss by Nemesis_c</manufacturer>
 		<rom name="TMNT Tournament Fighters (Hack).bin" size="2128916" crc="8dc38dc4"/>
 		<driver status="good"/>
 	</game>
@@ -14169,7 +14211,7 @@
 	<game name="tsfss" cloneof="sonic" romof="sonic">
 		<description>The S Factor - Sonia And Silver (Hack)</description>
 		<year>2013</year>
-		<manufacturer>2013 Aquaslash &amp; Pals</manufacturer>
+		<manufacturer>Aquaslash &amp; Pals</manufacturer>
 		<rom name="The S Factor - Sonia And Silver (Hack By Aquaslash &amp; Pals).bin" size="1300053" crc="366e8cd4"/>
 		<driver status="good"/>
 	</game>
@@ -14415,7 +14457,7 @@
 	<game name="tbolt2a">
 		<description>Thunderbolt II (Unprotected, Prototype)</description>
 		<year>1995</year>
-		<manufacturer>1995 SUN GREEN</manufacturer>
+		<manufacturer>SUN GREEN</manufacturer>
 		<rom name="Thunderbolt II (Unl) [f1].bin" size="524288" crc="a2ef16de"/>
 		<driver status="good"/>
 	</game>
@@ -14912,7 +14954,7 @@
 	<game name="Euro2004" cloneof="issdx" romof="issdx">
 		<description>UEFA Euro 2004 Portugal (ISSDX, Hack)</description>
 		<year>2004</year>
-		<manufacturer>2004 Glorysun</manufacturer>
+		<manufacturer>Glorysun</manufacturer>
 		<rom name="UEFA_Euro_2004_Portugal.bin" size="2097152" crc="bea68ada"/>
 		<driver status="good"/>
 	</game>
@@ -14926,7 +14968,7 @@
 	<game name="umk3h" cloneof="umk3" romof="umk3">
 		<description>Ultimate Mortal Kombat 3 (Hack, V0.6)</description>
 		<year>2012</year>
-		<manufacturer>2012 Nemesis_c</manufacturer>
+		<manufacturer>Nemesis_c</manufacturer>
 		<rom name="Ultimate Mortal Kombat 3 Hack Ver. 0.6 (By Nemesis_c).bin" size="6248922" crc="d8c152ff"/>
 		<driver status="good"/>
 	</game>
@@ -14940,14 +14982,14 @@
 	<game name="umk3mh" cloneof="umk3" romof="umk3">
 		<description>Ultimate Mortal Kombat 3 Mini V13 (Hack)</description>
 		<year>2011</year>
-		<manufacturer>2011 Nemesis_c, r57shell</manufacturer>
+		<manufacturer>Nemesis_c, r57shell</manufacturer>
 		<rom name="Ultimate Mortal Kombat 3 Mini-V13.bin" size="4194304" crc="4f2a5b98"/>
 		<driver status="good"/>
 	</game>
 	<game name="umk3t">
 		<description>Ultimate Mortal Kombat Trilogy Hack rev.5149</description>
 		<year>2017</year>
-		<manufacturer>2017 KABAL_MK</manufacturer>
+		<manufacturer>KABAL_MK</manufacturer>
 		<rom name="UMKT_5149.bin" size="10485760" crc="1d9d2eba"/>
 		<driver status="good"/>
 	</game>
@@ -15050,8 +15092,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="uwol">
-		<description>UWOL Quest for Money</description>
-		<year>2006</year>
+		<description>UWOL Quest for Money (HB) [Homebrew]</description>
+		<year>2010</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="uwol.bin" size="65536" crc="6fa88172"/>
 		<driver status="good"/>
@@ -16577,8 +16619,8 @@
 	</game>
 	<game name="xiaomo">
 		<description>Xiao Monv - Magic Girl (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<year>1993</year>
+		<manufacturer>&lt;unlicensed&gt; Gamtec</manufacturer>
 		<rom name="xiao monv - magic girl (chi) (unl).bin" size="524288" crc="8e49a92e"/>
 		<driver status="good"/>
 	</game>
@@ -16627,7 +16669,7 @@
 	<game name="ysonic2" cloneof="sonic2" romof="sonic2">
 		<description>Yoshi in Sonic the Hedgehog 2 (Hack, Beta)</description>
 		<year>2017</year>
-		<manufacturer>2017 Xenowhirl</manufacturer>
+		<manufacturer>Xenowhirl</manufacturer>
 		<rom name="Yoshi_Sonic2beta.bin" size="1048576" crc="5f19712a"/>
 		<driver status="good"/>
 	</game>

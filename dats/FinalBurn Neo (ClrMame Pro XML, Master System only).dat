@@ -439,6 +439,13 @@
 		<rom name="battle out run (europe).bin" size="262144" crc="c19430ce"/>
 		<driver status="good"/>
 	</game>
+	<game name="battleorfm" cloneof="battleor" romof="battleor">
+		<description>Battle Out Run (FM Mod) [YM2413 FM sound chip supported]</description>
+		<year>2018</year>
+		<manufacturer>Sega - SMS Power!</manufacturer>
+		<rom name="battle out run (fm mod).sms" size="262144" crc="7c849999"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmaniacs">
 		<description>Battlemaniacs (Bra)</description>
 		<year>1994</year>
@@ -2449,9 +2456,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstarje" cloneof="pstar" romof="pstar">
-		<description>Phantasy Star (Jpn, T-Eng v2.00) [Turn ON 'FM Emulation' in Dips for use YM2413 emulation]</description>
+		<description>Phantasy Star (Jpn, T-Eng v2.00) [YM2413 FM sound chip supported]</description>
 		<year>2020</year>
-		<manufacturer>SMS Power!</manufacturer>
+		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="phantasy star (j) [t-eng2.00].sms" size="524288" crc="a04cf71a"/>
 		<driver status="good"/>
 	</game>
@@ -2981,9 +2988,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicfm102" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog (FM Mod 1.02)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
+		<description>Sonic The Hedgehog (FM Mod, v1.02) [YM2413 FM sound chip supported]</description>
+		<year>2014</year>
+		<manufacturer>Sega - Valleybell</manufacturer>
 		<rom name="Sonic1SMS_FM_v102.sms" size="262144" crc="7c077b38"/>
 		<driver status="good"/>
 	</game>
@@ -4037,6 +4044,13 @@
 		<rom name="mpr-12570.ic1" size="262144" crc="679e1676"/>
 		<driver status="good"/>
 	</game>
+	<game name="wboy3fm" cloneof="wboy3" romof="wboy3">
+		<description>Wonder Boy III - The Dragon's Trap (FM Mod) [YM2413 FM sound chip supported]</description>
+		<year>1999</year>
+		<manufacturer>Sega - Bock</manufacturer>
+		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
+		<driver status="good"/>
+	</game>
 	<game name="wboymlnd">
 		<description>Wonder Boy in Monster Land (Euro, USA)</description>
 		<year>1988</year>
@@ -4210,6 +4224,13 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12044f.ic1" size="262144" crc="b33e2827"/>
+		<driver status="good"/>
+	</game>
+	<game name="ysfm" cloneof="ys" romof="ys">
+		<description>Ys - The Vanished Omens (FM Mod, v1.2) [YM2413 FM sound chip supported]</description>
+		<year>2009</year>
+		<manufacturer>Sega - SSTranslations</manufacturer>
+		<rom name="ys - the vanished omens (fm patch).sms" size="262144" crc="7ed5dca2"/>
 		<driver status="good"/>
 	</game>
 	<game name="zaxxon3d">

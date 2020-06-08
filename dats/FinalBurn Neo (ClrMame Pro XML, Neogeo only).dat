@@ -17593,6 +17593,66 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
+	<game name="kof2000otc" cloneof="kof2000" romof="kof2000">
+		<description>The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cusotmized version) [hack only enable in AES mode]</description>
+		<year>2000</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="kof2000otc-p1.bin" size="1048576" crc="39d70ffc"/>
+		<rom name="kof2000otc-p2.bin" size="4194304" crc="1c6ee3e3"/>
+		<rom name="257-c1_decrypted.bin" size="8388608" crc="abcdd424"/>
+		<rom name="257-c2_decrypted.bin" size="8388608" crc="cda33778"/>
+		<rom name="257-c3_decrypted.bin" size="8388608" crc="087fb15b"/>
+		<rom name="257-c4_decrypted.bin" size="8388608" crc="fe9dfde4"/>
+		<rom name="257-c5_decrypted.bin" size="8388608" crc="03ee4bf4"/>
+		<rom name="257-c6_decrypted.bin" size="8388608" crc="8599cc5b"/>
+		<rom name="kof2000otc-c7.bin" size="8388608" crc="b2cd7102"/>
+		<rom name="kof2000otc-c8.bin" size="8388608" crc="d11c3b66"/>
+		<rom name="257-m1.m1" size="262144" crc="80ebc3aa"/>
+		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
+		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
+		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
+		<rom name="257-v4.v4" merge="257-v4.v4" size="4194304" crc="764bbd6b"/>
+		<rom name="kof2000otc-v5.bin" size="4194304" crc="54df285f"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
+	</game>
 	<game name="kof2000ps2" cloneof="kof2000" romof="kof2000">
 		<description>The King of Fighters 2000 (Playstation 2 ver. , EGHT hack) [hack only enable in AES mode]</description>
 		<year>2000</year>

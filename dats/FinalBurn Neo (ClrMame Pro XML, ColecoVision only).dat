@@ -559,9 +559,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="dangrtower" romof="coleco">
-		<description>Danger Tower (HB) [Homebrew]</description>
+		<description>Danger Tower (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Danger Team</manufacturer>
 		<rom name="danger_tower_sgm.rom" size="32768" crc="0246bdb1"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -582,9 +582,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepdngadv" romof="coleco">
-		<description>Deep Dungeon Adventure (HB) [Homebrew]</description>
+		<description>Deep Dungeon Adventure (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Trilobyte</manufacturer>
 		<rom name="deep_dungeon_adventure_sgm.rom" size="131072" crc="77900970"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1084,9 +1084,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpac" romof="coleco">
-		<description>J.E.T.P.A.C. (HB) [Homebrew]</description>
+		<description>J.E.T.P.A.C. (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Imanok</manufacturer>
 		<rom name="jetpac_sgm.rom" size="32768" crc="ae7614c3"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1118,9 +1118,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="joustsgm" romof="coleco">
-		<description>Joust (HB) [Homebrew]</description>
+		<description>Joust (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2014</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Joust (2014) (Team Pixelboy).rom" size="32768" crc="62f325b3"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1226,9 +1226,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingvalley" romof="coleco">
-		<description>King's Valley (SGM) [Homebrew]</description>
+		<description>King's Valley (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2012</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Konami</manufacturer>
 		<rom name="kingvalley_sgm.rom" size="32768" crc="0a2ac883"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1248,9 +1248,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="kungfumstr" romof="coleco">
-		<description>Kung-Fu Master (HB) [Homebrew, Beta version, no health meter]</description>
-		<year>2012</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<description>Kung-Fu Master (HB) [Homebrew, (SGM) - Beta version, no health meter]</description>
+		<year>2016</year>
+		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="kungfumstr_sgm.rom" size="131072" crc="a078f273"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1331,9 +1331,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mappy" romof="coleco">
-		<description>Mappy (HB) [Homebrew]</description>
+		<description>Mappy (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2015</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Namco</manufacturer>
 		<rom name="Mappy (2015) (Team Pixelboy) (SGM).rom" size="32768" crc="00d30431"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -1598,9 +1598,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjaprincess" romof="coleco">
-		<description>Ninja Princess (HB) [Homebrew]</description>
-		<year>2012</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<description>Ninja Princess (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2011</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="Ninja Princess (2011) (Team PixelBoy).rom" size="32768" crc="5fb0ed62"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2379,9 +2379,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="subrocsgm" romof="coleco">
-		<description>Subroc (SGM) [Homebrew]</description>
+		<description>Subroc (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2014</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Coleco</manufacturer>
 		<rom name="subroc_super_game_sgm.rom" size="131072" crc="eac71b43"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2544,9 +2544,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpac" romof="coleco">
-		<description>Super Pac-Man (HB) [Homebrew]</description>
+		<description>Super Pac-Man (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2016</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Coleco</manufacturer>
 		<rom name="Super Pac-Man (2016) (Team Pixelboy) (SGM).rom" size="32768" crc="260cdf98"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2680,9 +2680,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="thexder" romof="coleco">
-		<description>Thexder (SGM) [Homebrew]</description>
+		<description>Thexder (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2012</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Game Arts</manufacturer>
 		<rom name="thexder_sgm.rom" size="131072" crc="09e3fdda"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2802,9 +2802,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="txupinazo" romof="coleco">
-		<description>Txupinazo! (HB) [Homebrew]</description>
+		<description>Txupinazo! (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Imanok</manufacturer>
 		<rom name="Txupinazo_sgm.rom" size="32768" crc="28bdf665"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2936,9 +2936,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="wonderboy" romof="coleco">
-		<description>Wonder Boy (HB) [Homebrew]</description>
+		<description>Wonder Boy (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2012</year>
-		<manufacturer>(SGM) - Published by Team Pixelboy</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="Wonder Boy (2012) (Team PixelBoy).rom" size="32768" crc="43505be0"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>

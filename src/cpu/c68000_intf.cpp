@@ -1015,7 +1015,7 @@ void SekClose()
 	nSekCyclesToDoCache[nSekActive] = nSekCyclesToDo;
 #ifdef EMU_C68K
 	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-		nSekm68k_ICount[nSekActive] = c68k[nSekActive].cycles
+		nSekm68k_ICount[nSekActive] = c68k[nSekActive].cycles;
 	} else {
 #endif
 		nSekm68k_ICount[nSekActive] = m68k_ICount;

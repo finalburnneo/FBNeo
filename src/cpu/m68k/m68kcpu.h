@@ -561,7 +561,7 @@
 			if(CPU_STOPPED) \
 			{ \
 				SET_CYCLES(0); \
-				return m68ki_initial_cycles; \
+				return m68ki_cpu.initial_cycles; \
 			} \
 		}
 
@@ -893,6 +893,9 @@ struct _m68ki_cpu_core
 	uint cyc_movem_l;
 	uint cyc_shift;
 	uint cyc_reset;
+
+	sint initial_cycles;
+	sint end_run;
 
 	/* Virtual IRQ lines state */
 	uint virq_state;

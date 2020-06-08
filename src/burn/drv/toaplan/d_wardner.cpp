@@ -284,7 +284,7 @@ static void wardner_dsp(INT32 enable)
 	{
 		tms32010_set_irq_line(0, CPU_IRQSTATUS_ACK); /* TMS32010 INT */
 		z80_halt = 1;
-		z80_ICount = 0;
+		ZetRunEnd();
 	}
 	else
 	{

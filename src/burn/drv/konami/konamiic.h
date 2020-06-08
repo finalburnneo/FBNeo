@@ -219,6 +219,7 @@ UINT8 K051316Read(INT32 chip, INT32 offset);
 void K051316Write(INT32 chip, INT32 offset, INT32 data);
 
 void K051316WriteCtrl(INT32 chip, INT32 offset, INT32 data);
+UINT8 K051316ReadCtrl(INT32 chip, INT32 offset);
 void K051316WrapEnable(INT32 chip, INT32 status);
 void K051316SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
 void K051316_zoom_draw(INT32 chip, INT32 flags);

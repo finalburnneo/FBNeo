@@ -3266,7 +3266,7 @@ static void namco163_process_channel(INT16 address, UINT8 data) {
 			break;
 		case 0x4:
 			c->freq = (c->freq & ~0xff0000) | ((data & 3) << 16);
-			c->len = (64 - ((data >> 2) & 0x3f)) * 4;
+			c->len = 0x100 - (data & 0xfc);
 			c->enabled = data >> 5;
 #if 0
 			bprintf(0, _T("ch %d enabled%X?\n"), (address / 8) & 7, c->enabled);

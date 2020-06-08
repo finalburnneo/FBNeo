@@ -18,6 +18,7 @@ INT32 nSekActive = -1;								// The cpu which is currently being emulated
 INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nSekCyclesToDo;
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
+INT32 nSekCyclesToDoCache[SEK_MAX], nSekm68k_ICount[SEK_MAX];
 
 static UINT32 nSekAddressMask[SEK_MAX], nSekAddressMaskActive;
 
@@ -1157,6 +1158,9 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekAddressMask[nCount] = 0xffffff;
 
 	nSekCycles[nCount] = 0;
+	nSekCyclesToDoCache[nCount] = 0;
+	nSekm68k_ICount[nCount] = 0;
+
 	nSekIRQPending[nCount] = 0;
 	nSekRESETLine[nCount] = 0;
 	nSekHALT[nCount] = 0;
@@ -1300,6 +1304,10 @@ void SekOpen(const INT32 i)
 #endif
 
 		nSekCyclesTotal = nSekCycles[nSekActive];
+
+		// Allow for SekRun() reentrance:
+		nSekCyclesToDo = nSekCyclesToDoCache[nSekActive];
+		m68k_ICount = nSekm68k_ICount[nSekActive];
 	}
 }
 
@@ -1326,6 +1334,10 @@ void SekClose()
 #endif
 
 	nSekCycles[nSekActive] = nSekCyclesTotal;
+
+	// Allow for SekRun() reentrance:
+	nSekCyclesToDoCache[nSekActive] = nSekCyclesToDo;
+	nSekm68k_ICount[nSekActive] = m68k_ICount;
 	
 	nSekActive = -1;
 }

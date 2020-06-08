@@ -17,13 +17,9 @@ struct M6809Ext {
 	pReadOpArgHandler ReadOpArg;
 	
 	INT32 nCyclesTotal;
-	INT32 nCyclesSegment;
-	INT32 nCyclesLeft;
 };
 
 extern INT32 nM6809Count;
-
-extern INT32 nM6809CyclesTotal;
 
 void M6809Reset();
 void M6809Reset(INT32 nCPU);

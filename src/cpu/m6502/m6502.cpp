@@ -65,10 +65,8 @@ extern INT32 M6502GetActive();
  * The 6502 registers.
  ****************************************************************************/
 
-static int m6502_IntOccured = 0;
-static int m6502_ICount = 0;
-
 static m6502_Regs m6502;
+#define m6502_ICount m6502.ICount
 
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8))
 {
@@ -227,7 +225,7 @@ M6502_INLINE void m6502_take_irq(void)
 		m6502.nmi_req = 0;
 		//LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 		EAD = M6502_NMI_VEC;
-		m6502_ICount -= 2;
+		m6502.ICount -= 2;
 		PUSH(PCH);
 		PUSH(PCL);
 		PUSH(P & ~F_B);
@@ -240,7 +238,7 @@ M6502_INLINE void m6502_take_irq(void)
 		if( !(P & F_I) )
 		{
 			EAD = M6502_IRQ_VEC;
-			m6502_ICount -= 2;
+			m6502.ICount -= 2;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -266,34 +264,29 @@ M6502_INLINE void m6502_take_irq(void)
 
 int m6502_releaseslice()
 {
-	m6502_ICount = 0;
+	m6502.ICount = 0;
 
 	return 0;
 }
 
 int m6502_dec_icount(int todec)
 {
-	m6502_ICount -= todec;
+	m6502.ICount -= todec;
 
 	return 0;
 }
 
-static int segmentcycles = 0;
-static int end_run = 0;
-static int in_run = 0;
-
 int m6502_get_segmentcycles()
 {
-	return segmentcycles - m6502_ICount;
+	return m6502.segmentcycles - m6502.ICount;
 }
 
 int m6502_execute(int cycles)
 {
-	segmentcycles = cycles;
-	m6502_ICount = cycles;
+	m6502.segmentcycles = cycles;
+	m6502.ICount = cycles;
 
-	end_run = 0;
-	in_run = 1;
+	m6502.end_run = 0;
 
 	change_pc(PCD);
 
@@ -333,7 +326,7 @@ int m6502_execute(int cycles)
 		}
 		else {
 			if ( m6502.pending_irq == 2 ) {
-				if ( m6502_IntOccured - m6502_ICount > 1 ) {
+				if ( m6502.IntOccured - m6502.ICount > 1 ) {
 					m6502.pending_irq = 1;
 				}
 			}
@@ -343,23 +336,21 @@ int m6502_execute(int cycles)
 				m6502.pending_irq = 1;
 			}
 		}
-	} while (m6502_ICount > 0 && !end_run);
+	} while (m6502.ICount > 0 && !m6502.end_run);
 
-	cycles = cycles - m6502_ICount;
+	cycles = cycles - m6502.ICount;
 
-	segmentcycles = m6502_ICount = 0;
-	in_run = 0;
+	m6502.segmentcycles = m6502.ICount = 0;
 
 	return cycles;
 }
 
 int decocpu7_execute(int cycles)
 {
-	segmentcycles = cycles;
-	m6502_ICount = cycles;
+	m6502.segmentcycles = cycles;
+	m6502.ICount = cycles;
 
-	end_run = 0;
-	in_run = 1;
+	m6502.end_run = 0;
 
 	change_pc(PCD);
 
@@ -406,7 +397,7 @@ int decocpu7_execute(int cycles)
 		}
 		else {
 			if ( m6502.pending_irq == 2 ) {
-				if ( m6502_IntOccured - m6502_ICount > 1 ) {
+				if ( m6502.IntOccured - m6502.ICount > 1 ) {
 					m6502.pending_irq = 1;
 				}
 			}
@@ -417,12 +408,11 @@ int decocpu7_execute(int cycles)
 			}
 		}
 
-	} while (m6502_ICount > 0 && !end_run);
+	} while (m6502.ICount > 0 && !m6502.end_run);
 
-	cycles = cycles - m6502_ICount;
+	cycles = cycles - m6502.ICount;
 
-	segmentcycles = m6502_ICount = 0;
-	in_run = 0;
+	m6502.segmentcycles = m6502.ICount = 0;
 
 	return cycles;
 }
@@ -439,7 +429,7 @@ void m6502_set_irq_line(int irqline, int state)
 		{
 //			LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 			EAD = M6502_NMI_VEC;
-			m6502_ICount -= 2;
+			m6502.ICount -= 2;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -448,7 +438,6 @@ void m6502_set_irq_line(int irqline, int state)
 			PCH = RDMEM(EAD+1);
 //			LOG(("M6502#%d takes NMI ($%04x)\n", cpu_getactivecpu(), PCD));
 			change_pc(PCD);
-			if (in_run == 0) m6502_ICount = 0; // otherwise get_segmentcycles() returns -7 here, messing up totalcycles...
 		}
 #endif
 	}
@@ -470,7 +459,7 @@ void m6502_set_irq_line(int irqline, int state)
 //			LOG(( "M6502#%d set_irq_line(ASSERT)\n", cpu_getactivecpu()));
 			m6502.pending_irq = 1;
 //          m6502.pending_irq = 2;
-			m6502_IntOccured = m6502_ICount;
+			m6502.IntOccured = m6502.ICount;
 		}
 	}
 }
@@ -596,7 +585,7 @@ M6502_INLINE void m65c02_take_irq(void)
 		m6502.nmi_req = 0;
 		//	LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 		EAD = M6502_NMI_VEC;
-		m6502_ICount -= 2;
+		m6502.ICount -= 2;
 		PUSH(PCH);
 		PUSH(PCL);
 		PUSH(P & ~F_B);
@@ -609,7 +598,7 @@ M6502_INLINE void m65c02_take_irq(void)
 		if( !(P & F_I) )
 		{
 			EAD = M6502_IRQ_VEC;
-			m6502_ICount -= 2;
+			m6502.ICount -= 2;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -633,10 +622,10 @@ M6502_INLINE void m65c02_take_irq(void)
 
 int m65c02_execute(int cycles)
 {
-	segmentcycles = cycles;
-	m6502_ICount = cycles;
+	m6502.segmentcycles = cycles;
+	m6502.ICount = cycles;
 
-	end_run = 0;
+	m6502.end_run = 0;
 
 	change_pc(PCD);
 
@@ -675,11 +664,11 @@ int m65c02_execute(int cycles)
 		if( m6502.pending_irq || m6502.nmi_req == 1 )
 			m65c02_take_irq();
 
-	} while (m6502_ICount > 0 && !end_run);
+	} while (m6502.ICount > 0 && !m6502.end_run);
 
-	cycles = cycles - m6502_ICount;
+	cycles = cycles - m6502.ICount;
 
-	segmentcycles = m6502_ICount = 0;
+	m6502.segmentcycles = m6502.ICount = 0;
 
 	return cycles;
 }
@@ -697,7 +686,7 @@ void m65c02_set_irq_line(int irqline, int state)
 		{
 		//	LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 			EAD = M6502_NMI_VEC;
-			m6502_ICount -= 2;
+			m6502.ICount -= 2;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -763,7 +752,7 @@ M6502_INLINE void deco16_take_irq(void)
 		m6502.nmi_req = 0;
 		//LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 		EAD = DECO16_NMI_VEC;
-		m6502_ICount -= 7;
+		m6502.ICount -= 7;
 		PUSH(PCH);
 		PUSH(PCL);
 		PUSH(P & ~F_B);
@@ -776,7 +765,7 @@ M6502_INLINE void deco16_take_irq(void)
 		if( !(P & F_I) )
 		{
 			EAD = DECO16_IRQ_VEC;
-			m6502_ICount -= 2;
+			m6502.ICount -= 2;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -810,7 +799,7 @@ void deco16_set_irq_line(int irqline, int state)
 		{
 			//LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
 			EAD = DECO16_NMI_VEC;
-			m6502_ICount -= 7;
+			m6502.ICount -= 7;
 			PUSH(PCH);
 			PUSH(PCL);
 			PUSH(P & ~F_B);
@@ -845,10 +834,10 @@ void deco16_set_irq_line(int irqline, int state)
 
 int deco16_execute(int cycles)
 {
-	segmentcycles = cycles;
-	m6502_ICount = cycles;
+	m6502.segmentcycles = cycles;
+	m6502.ICount = cycles;
 
-	end_run = 0;
+	m6502.end_run = 0;
 
 	change_pc(PCD);
 
@@ -886,11 +875,11 @@ int deco16_execute(int cycles)
 		if( m6502.pending_irq || m6502.nmi_req == 1 )
 			deco16_take_irq();
 
-	} while (m6502_ICount > 0 && !end_run);
+	} while (m6502.ICount > 0 && !m6502.end_run);
 
-	cycles = cycles - m6502_ICount;
+	cycles = cycles - m6502.ICount;
 
-	segmentcycles = m6502_ICount = 0;
+	m6502.segmentcycles = m6502.ICount = 0;
 
 	return cycles;
 }
@@ -903,7 +892,7 @@ void M6502RunEnd()
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502RunEnd called without init\n"));
 #endif
 
-	end_run = 1;
+	m6502.end_run = 1;
 }
 
 #if 0
@@ -998,7 +987,7 @@ void m6502_get_info(UINT32 state, cpuinfo *info)
 		case CPUINFO_PTR_EXECUTE:						info->execute = m6502_execute;			break;
 		case CPUINFO_PTR_BURN:							info->burn = NULL;						break;
 		case CPUINFO_PTR_DISASSEMBLE:					info->disassemble = m6502_dasm;			break;
-		case CPUINFO_PTR_INSTRUCTION_COUNTER:			info->icount = &m6502_ICount;			break;
+		case CPUINFO_PTR_INSTRUCTION_COUNTER:			info->icount = &m6502.ICount;			break;
 		case CPUINFO_PTR_M6502_READINDEXED_CALLBACK:	info->f = (genf *) m6502.rdmem_id;		break;
 		case CPUINFO_PTR_M6502_WRITEINDEXED_CALLBACK:	info->f = (genf *) m6502.wrmem_id;		break;
 

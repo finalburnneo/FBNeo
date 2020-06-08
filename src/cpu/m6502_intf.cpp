@@ -9,9 +9,6 @@ static INT32 nActiveCPU = 0;
 
 static M6502Ext *m6502CPUContext[MAX_CPU] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 static M6502Ext *pCurrentCPU;
-static INT32 nM6502CyclesDone[MAX_CPU];
-static INT32 nM6502CyclesStall[MAX_CPU];
-INT32 nM6502CyclesTotal;
 
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
@@ -85,7 +82,7 @@ void M6502Reset()
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Reset called with no CPU open\n"));
 #endif
 
-	memset(&nM6502CyclesStall, 0, sizeof(nM6502CyclesStall));
+	pCurrentCPU->nCyclesStall = 0;
 
 	pCurrentCPU->reset();
 }
@@ -97,9 +94,8 @@ void M6502NewFrame()
 #endif
 
 	for (INT32 i = 0; i < nM6502Count; i++) {
-		nM6502CyclesDone[i] = 0;
+		m6502CPUContext[i]->nCyclesTotal = 0;
 	}
-	nM6502CyclesTotal = 0;
 }
 
 INT32 M6502Idle(INT32 nCycles)
@@ -108,7 +104,7 @@ INT32 M6502Idle(INT32 nCycles)
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Idle called without init\n"));
 #endif
 
-	nM6502CyclesTotal += nCycles;
+	pCurrentCPU->nCyclesTotal += nCycles;
 
 	return nCycles;
 }
@@ -119,7 +115,7 @@ INT32 M6502Stall(INT32 nCycles)
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Stall called without init\n"));
 #endif
 
-	nM6502CyclesStall[nActiveCPU] += nCycles;
+	pCurrentCPU->nCyclesStall += nCycles;
 
 	return nCycles;
 }
@@ -228,16 +224,14 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	pCurrentCPU->ReadOp = M6502ReadOpDummyHandler;
 	pCurrentCPU->ReadOpArg = M6502ReadOpArgDummyHandler;
 	
-	nM6502CyclesDone[cpu] = 0;
-	nM6502CyclesStall[cpu] = 0;
-
 	pCurrentCPU->AddressMask = (1 << 16) - 1; // cpu range
 	
 	for (INT32 j = 0; j < (0x0100 * 3); j++) {
 		pCurrentCPU->pMemMap[j] = NULL;
 	}
 	
-	nM6502CyclesTotal = 0;
+	pCurrentCPU->nCyclesTotal = 0;
+	pCurrentCPU->nCyclesStall = 0;
 
 	M6502Open(cpu);
 	pCurrentCPU->init();
@@ -298,8 +292,6 @@ void M6502Open(INT32 num)
 	pCurrentCPU = m6502CPUContext[num];
 
 	m6502_set_context(&pCurrentCPU->reg);
-	
-	nM6502CyclesTotal = nM6502CyclesDone[nActiveCPU];
 }
 
 void M6502Close()
@@ -310,8 +302,6 @@ void M6502Close()
 #endif
 
 	m6502_get_context(&pCurrentCPU->reg);
-
-	nM6502CyclesDone[nActiveCPU] = nM6502CyclesTotal;
 
 	pCurrentCPU = NULL; // cause problems! 
 	
@@ -388,19 +378,30 @@ INT32 M6502Run(INT32 cycles)
 
 	INT32 nDelayed = 0;  // handle delayed cycle counts (from M6502Stall())
 
-	while (nM6502CyclesStall[nActiveCPU] && cycles) {
-		nM6502CyclesStall[nActiveCPU]--;
+	while (pCurrentCPU->nCyclesStall && cycles) {
+		pCurrentCPU->nCyclesStall--;
 		cycles--;
 		nDelayed++;
-		nM6502CyclesTotal++;
+		pCurrentCPU->nCyclesTotal++;
 	}
 
 	if (cycles)
 		cycles = pCurrentCPU->execute(cycles);
 
-	nM6502CyclesTotal += cycles;
+	pCurrentCPU->nCyclesTotal += cycles;
 
 	return cycles + nDelayed;
+}
+
+INT32 M6502TotalCycles()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
+#endif
+
+	if (pCurrentCPU == NULL) return 0; // let's not crash here..
+
+	return pCurrentCPU->nCyclesTotal + m6502_get_segmentcycles();
 }
 
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
@@ -667,11 +668,8 @@ INT32 M6502Scan(INT32 nAction)
 		ba.szName = szName;
 		BurnAcb(&ba);
 
-		// necessary?
 		SCAN_VAR(ptr->nCyclesTotal);
-		SCAN_VAR(ptr->nCyclesSegment);
-		SCAN_VAR(ptr->nCyclesLeft);
-		SCAN_VAR(nM6502CyclesDone);
+		SCAN_VAR(ptr->nCyclesStall);
 	}
 	
 	return 0;

@@ -6332,3 +6332,40 @@ struct BurnDriver BurnDrvkovshpqszltw = {
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
+// 2020-02-06
+// This set is known as kovsho175 in HBMAME
+
+static struct BurnRomInfo kovshpzqhlRomDesc[] = {
+	{ "p0600h_101_po175.rom",		 0x200000,  0x396b0f14, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "p0600h_101_po123.rom",		 0x200000,  0xb9ad393f, 1 | BRF_PRG | BRF_ESS },  //  1
+
+	{ "t0600_pw111.rom",    		 0x800000,  0xde7fdc0c, 2 | BRF_GRA },			 //  2 Tile data
+
+	{ "a0600_po123.rom",	  	 	 0x2000000, 0x8cee9b01, 3 | BRF_GRA },			 //  3 Sprite Color Data
+	
+	{ "b0600_po123.rom",	   		 0x1000000, 0x82a43111, 4 | BRF_GRA },			 //  7 Sprite Masks & Color Indexes
+		
+	{ "m0600.u5",	   				 0x400000,  0x3ada4fd6, 5 | BRF_SND },			 //  8 Samples
+ 
+ #if !defined (ROM_VERIFY)
+	{ "kovsh_v100_china_po89.asic",  0x004000,  0x4627f36f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+#else	
+	{ "kovsh_v100_china_po123.asic", 0x004000,  0x39abc15f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+#endif
+};
+
+STDROMPICKEXT(kovshpzqhl, kovshpzqhl, pgm)
+STD_ROM_FN(kovshpzqhl)
+
+struct BurnDriver BurnDrvkovshpzqhl = {
+	"kovshpzqhl", "kovshp", "pgm", NULL, "2020",
+	"Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshpzqhlRomInfo, kovshpzqhlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+

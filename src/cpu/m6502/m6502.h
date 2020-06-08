@@ -61,6 +61,11 @@ typedef struct
 	UINT8   hold_nmi;
 	UINT8   cpu7written;
 
+	INT32   IntOccured;
+	INT32   ICount;
+	INT32   segmentcycles;
+	INT32   end_run;
+
 	UINT8   ddr; // 6501/8502/7501 stuff
 	UINT8   port;
 

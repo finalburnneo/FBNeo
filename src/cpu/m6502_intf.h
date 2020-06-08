@@ -28,13 +28,10 @@ struct M6502Ext {
 	pReadOpArgHandler ReadOpArg;
 	
 	INT32 nCyclesTotal;
-	INT32 nCyclesSegment;
-	INT32 nCyclesLeft;
+	INT32 nCyclesStall;
 };
 
 extern INT32 nM6502Count;
-
-extern INT32 nM6502CyclesTotal;
 
 void M6502Reset();
 void M6502NewFrame();
@@ -81,14 +78,7 @@ void M6502SetAddressMask(UINT16 RangeMask);
 UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);
 
-inline static INT32 M6502TotalCycles()
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
-#endif
-
-	return nM6502CyclesTotal + m6502_get_segmentcycles();
-}
+INT32 M6502TotalCycles();
 
 // m6502.cpp used for Data East encrypted CPUs.
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8));

@@ -47,7 +47,6 @@ extern void m68040_fpu_op1(void);
 /* ======================================================================== */
 int m68k_ICount = 0;
 
-int  m68ki_initial_cycles = 0;
 uint m68ki_tracing = 0;
 uint m68ki_address_space;
 
@@ -793,13 +792,14 @@ int m68k_check_shouldinterrupt(void)
 /* ASG: removed per-instruction interrupt checks */
 int m68k_execute(int num_cycles)
 {
+	m68ki_cpu.end_run = 0;
 	if (m68ki_cpu.sleepuntilint) {
 		return num_cycles;
 	}
 
 	/* Set our pool of clock cycles available */
 	SET_CYCLES(num_cycles);
-	m68ki_initial_cycles = num_cycles;
+	m68ki_cpu.initial_cycles = num_cycles;
 
 	/* See if interrupts came in */
 	m68ki_check_interrupts();
@@ -832,7 +832,7 @@ int m68k_execute(int num_cycles)
 
 			/* Trace m68k_exception, if necessary */
 			m68ki_exception_if_trace(); /* auto-disable (see m68kcpu.h) */
-		} while(GET_CYCLES() > 0);
+		} while(GET_CYCLES() > 0 && !m68ki_cpu.end_run);
 
 		/* set previous PC to current PC for the next entry into the loop */
 		REG_PPC = REG_PC;
@@ -841,7 +841,7 @@ int m68k_execute(int num_cycles)
 		SET_CYCLES(0);
 
 	/* return how many clocks we used */
-	return m68ki_initial_cycles - GET_CYCLES();
+	return m68ki_cpu.initial_cycles - GET_CYCLES();
 }
 
 void m68k_megadrive_sr_checkint_mode(int onoff)
@@ -857,7 +857,7 @@ int m68k_executeMD(int num_cycles)
 
 	/* Set our pool of clock cycles available */
 	SET_CYCLES(num_cycles);
-	m68ki_initial_cycles = num_cycles;
+	m68ki_cpu.initial_cycles = num_cycles;
 
 	/* See if interrupts came in */
 	m68ki_check_interrupts();
@@ -902,13 +902,13 @@ int m68k_executeMD(int num_cycles)
 		SET_CYCLES(0);
 
 	/* return how many clocks we used */
-	return m68ki_initial_cycles - GET_CYCLES();
+	return m68ki_cpu.initial_cycles - GET_CYCLES();
 }
 
 
 int m68k_cycles_run(void)
 {
-	return m68ki_initial_cycles - GET_CYCLES();
+	return m68ki_cpu.initial_cycles - GET_CYCLES();
 }
 
 int m68k_cycles_remaining(void)
@@ -924,15 +924,14 @@ void m68k_cycles_remaining_set(int cycles)
 /* Change the timeslice */
 void m68k_modify_timeslice(int cycles)
 {
-	m68ki_initial_cycles += cycles;
+	m68ki_cpu.initial_cycles += cycles;
 	ADD_CYCLES(cycles);
 }
 
 
 void m68k_end_timeslice(void)
 {
-	m68ki_initial_cycles = GET_CYCLES();
-	SET_CYCLES(0);
+	m68ki_cpu.end_run = 1;
 }
 
 void m68k_burn_until_irq(int enabled)

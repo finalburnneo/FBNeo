@@ -31,6 +31,9 @@ typedef struct
 	UINT8   vector;             /* vector */
 	UINT8	after_ei;			/* are we in the EI shadow? */
 	INT32   cycles_left;
+	INT32   ICount;
+	INT32   end_run;
+	UINT32  EA;
 	INT32   hold_irq;
 
 	const struct z80_irq_daisy_chain *daisy;

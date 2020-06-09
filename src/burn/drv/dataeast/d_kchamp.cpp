@@ -967,36 +967,36 @@ struct BurnDriver BurnDrvKaratedo = {
 // Karate Dou (Arfyc bootleg)
 
 static struct BurnRomInfo karatedaRomDesc[] = {
-	{ "k14_2764.d1",		0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "k15_2764.d2",		0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "k16_2764.d4",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "k17_2764.d5",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "k18_2764.d6",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "k19_2764.d9",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "k-14_2764.d1",		0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
+	{ "k-15_2764.d2",		0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "k-16_2764.d4",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "k-17_2764.d5",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "k-18_2764.d6",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "k-19_2764.d9",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "k26_2764.e10",		0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "k25_2764.e9",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "k24_2764.e8",		0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "k23_2764.e6",		0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "k22_2764.e5",		0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "k21_2764.e4",		0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "k20_2764.e2",		0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "k-26_2764.e10",		0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
+	{ "k-25_2764.e9",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "k-24_2764.e8",		0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "k-23_2764.e6",		0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "k-22_2764.e5",		0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "k-21_2764.e4",		0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "k-20_2764.e2",		0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "k0_2764.h3",			0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
-	{ "k1_2764.h6",			0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
+	{ "k-0_2764.h3",		0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
+	{ "k-1_2764.h6",		0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
 
-	{ "k13_2764.k15",		0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
-	{ "k4_2764.j15",		0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
-	{ "k12_2764.k13",		0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
-	{ "k3_2764.j13",		0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
-	{ "k11_2764.k12",		0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
-	{ "k2_2764.j12",		0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "k7_2764.k4",			0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
-	{ "k10_2764.k9",		0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
-	{ "k6_2764.k2",			0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
-	{ "k9_2764.k8",			0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
-	{ "k5_2764.k1",			0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
-	{ "k8_2764.k7",			0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+	{ "k-13_2764.k15",		0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
+	{ "k-4_2764.j15",		0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
+	{ "k-12_2764.k13",		0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
+	{ "k-3_2764.j13",		0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
+	{ "k-11_2764.k12",		0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
+	{ "k-2_2764.j12",		0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
+	{ "k-7_2764.k4",		0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
+	{ "k-10_2764.k9",		0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
+	{ "k-6_2764.k2",		0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
+	{ "k-9_2764.k8",		0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
+	{ "k-5_2764.k1",		0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
+	{ "k-8_2764.k7",		0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
 
 	{ "1_dm74s287_82s129.f11",	0x0100, 0xf05bda76, 5 | BRF_GRA },       // 27 Color data
 	{ "2_dm74s287_82s129.f12",	0x0100, 0xd26d6fa9, 5 | BRF_GRA },       // 28

@@ -118,180 +118,180 @@ STDINPUTINFO(Asurabusa)
 
 static struct BurnDIPInfo AsurabldDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0x3f, NULL			},
-	{0x15, 0xff, 0xff, 0x7f, NULL			},
-	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0x3f, NULL					},
+	{0x15, 0xff, 0xff, 0xff, NULL					},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x01, 0x01, "Off"			},
-	{0x14, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x14, 0x01, 0x01, 0x01, "Off"					},
+	{0x14, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Blood Colour"		},
-	{0x14, 0x01, 0x02, 0x02, "Red"			},
-	{0x14, 0x01, 0x02, 0x00, "Green"		},
+	{0   , 0xfe, 0   ,    2, "Blood Colour"			},
+	{0x14, 0x01, 0x02, 0x02, "Red"					},
+	{0x14, 0x01, 0x02, 0x00, "Green"				},
 
 	{0   , 0xfe, 0   ,    4, "Demo Sounds & Music"	},
-	{0x14, 0x01, 0x0c, 0x0c, "Both On"		},
-	{0x14, 0x01, 0x0c, 0x08, "Music Off"	},
-	{0x14, 0x01, 0x0c, 0x04, "Both Off"		},
-	{0x14, 0x01, 0x0c, 0x00, "Both Off"		},  /* Duplicate setting */
+	{0x14, 0x01, 0x0c, 0x0c, "Both On"				},
+	{0x14, 0x01, 0x0c, 0x08, "Music Off"			},
+	{0x14, 0x01, 0x0c, 0x04, "Both Off"				},
+	{0x14, 0x01, 0x0c, 0x00, "Both Off"				},  /* Duplicate setting */
 
-	{0   , 0xfe, 0   ,    4, "Timer"		},
-	{0x14, 0x01, 0x30, 0x00, "Slow"			},
-	{0x14, 0x01, 0x30, 0x30, "Medium"		},
-	{0x14, 0x01, 0x30, 0x10, "Fast"			},
-	{0x14, 0x01, 0x30, 0x20, "Very Fast"		},
+	{0   , 0xfe, 0   ,    4, "Timer"				},
+	{0x14, 0x01, 0x30, 0x00, "Slow"					},
+	{0x14, 0x01, 0x30, 0x30, "Medium"				},
+	{0x14, 0x01, 0x30, 0x10, "Fast"					},
+	{0x14, 0x01, 0x30, 0x20, "Very Fast"			},
 
-	{0   , 0xfe, 0   ,    2, "Coinage Mode"		},
-	{0x14, 0x01, 0xc0, 0xc0, "Split"		},
-	{0x14, 0x01, 0xc0, 0x00, "Joint"		},
+	{0   , 0xfe, 0   ,    2, "Coinage Mode"			},
+	{0x14, 0x01, 0xc0, 0xc0, "Split"				},
+	{0x14, 0x01, 0xc0, 0x00, "Joint"				},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x15, 0x01, 0x01, 0x01, "Off"			},
-//	{0x15, 0x01, 0x01, 0x00, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x15, 0x01, 0x01, 0x01, "Off"					},
+//	{0x15, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    8, "Difficulty"	},
-	{0x15, 0x01, 0x0e, 0x00, "Easiest"		},  // Level 1
-	{0x15, 0x01, 0x0e, 0x08, "Very_Easy"	},  // Level 2
-	{0x15, 0x01, 0x0e, 0x04, "Easier"		},  // Level 3
-	{0x15, 0x01, 0x0e, 0x0c, "Easy"			},  // Level 4
-	{0x15, 0x01, 0x0e, 0x0e, "Normal"		},  // Level 5
-	{0x15, 0x01, 0x0e, 0x02, "Hard"			},  // Level 6
-	{0x15, 0x01, 0x0e, 0x0a, "Very_Hard"	},  // Level 7
-	{0x15, 0x01, 0x0e, 0x06, "Hardest"		},  // Level 8
+	{0   , 0xfe, 0   ,    8, "Difficulty"			},
+	{0x15, 0x01, 0x0e, 0x00, "Easiest"				},  // Level 1
+	{0x15, 0x01, 0x0e, 0x08, "Very_Easy"			},  // Level 2
+	{0x15, 0x01, 0x0e, 0x04, "Easier"				},  // Level 3
+	{0x15, 0x01, 0x0e, 0x0c, "Easy"					},  // Level 4
+	{0x15, 0x01, 0x0e, 0x0e, "Normal"				},  // Level 5
+	{0x15, 0x01, 0x0e, 0x02, "Hard"					},  // Level 6
+	{0x15, 0x01, 0x0e, 0x0a, "Very_Hard"			},  // Level 7
+	{0x15, 0x01, 0x0e, 0x06, "Hardest"				},  // Level 8
 
-	{0   , 0xfe, 0   ,    4, "Damage"		},
-	{0x15, 0x01, 0x30, 0x20, "75%"			},
-	{0x15, 0x01, 0x30, 0x30, "100%"			},
-	{0x15, 0x01, 0x30, 0x10, "125%"		},
-	{0x15, 0x01, 0x30, 0x00, "150%"			},
+	{0   , 0xfe, 0   ,    4, "Damage"				},
+	{0x15, 0x01, 0x30, 0x20, "75%"					},
+	{0x15, 0x01, 0x30, 0x30, "100%"					},
+	{0x15, 0x01, 0x30, 0x10, "125%"					},
+	{0x15, 0x01, 0x30, 0x00, "150%"					},
 
-	{0   , 0xfe, 0   ,    3, "Max Rounds"		},
-	{0x15, 0x01, 0xc0, 0x00, "1"			},
-	{0x15, 0x01, 0xc0, 0x40, "3"			},
-	{0x15, 0x01, 0xc0, 0x80, "5"			},
+	{0   , 0xfe, 0   ,    3, "Max Rounds"			},
+	{0x15, 0x01, 0xc0, 0x00, "1"					},
+	{0x15, 0x01, 0xc0, 0xc0, "3"					},
+	{0x15, 0x01, 0xc0, 0x80, "5"					},
 
-	{0   , 0xfe, 0   ,   14, "Coin B"		},
-	{0x16, 0x01, 0x0f, 0x08, "8 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x09, "7 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0a, "6 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0b, "5 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0c, "4 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0d, "3 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0e, "2 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits "	},
+	{0   , 0xfe, 0   ,   14, "Coin B"				},
+	{0x16, 0x01, 0x0f, 0x08, "8 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x09, "7 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0a, "6 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0b, "5 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0c, "4 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0d, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0e, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"		},
 	{0x16, 0x01, 0x0f, 0x06, "1 Coin  2 Credits"	},
 	{0x16, 0x01, 0x0f, 0x05, "1 Coin  3 Credits"	},
 	{0x16, 0x01, 0x0f, 0x04, "1 Coin  4 Credits"	},
 	{0x16, 0x01, 0x0f, 0x03, "1 Coin  5 Credits"	},
-	{0x16, 0x01, 0x0f, 0x02, "2 Coin Start / 1 Credit Continue"	},
-	{0x16, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x16, 0x01, 0x0f, 0x02, "2 Coins Start / 1 Credit Continue"},
+	{0x16, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,   14, "Coin A"		},
+	{0   , 0xfe, 0   ,   14, "Coin A"				},
 	{0x16, 0x01, 0xf0, 0x80, "8 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0x90, "7 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x16, 0x01, 0xf0, 0x90, "7 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
 	{0x16, 0x01, 0xf0, 0x60, "1 Coin  2 Credits"	},
 	{0x16, 0x01, 0xf0, 0x50, "1 Coin  3 Credits"	},
 	{0x16, 0x01, 0xf0, 0x40, "1 Coin  4 Credits"	},
 	{0x16, 0x01, 0xf0, 0x30, "1 Coin  5 Credits"	},
-	{0x16, 0x01, 0xf0, 0x20, "2 Coin Start / 1 Credit Continue"	},
-	{0x16, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0x16, 0x01, 0xf0, 0x20, "2 Coins Start / 1 Credit Continue"},
+	{0x16, 0x01, 0xf0, 0x00, "Free Play"			},
 };
 
 STDDIPINFO(Asurabld)
 
 static struct BurnDIPInfo AsurabusDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0x3f, NULL			},
-	{0x15, 0xff, 0xff, 0x7f, NULL			},
-	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0x3f, NULL					},
+	{0x15, 0xff, 0xff, 0xff, NULL					},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x01, 0x01, "Off"			},
-	{0x14, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x14, 0x01, 0x01, 0x01, "Off"					},
+	{0x14, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Blood Colour"		},
-	{0x14, 0x01, 0x02, 0x02, "Red"			},
-	{0x14, 0x01, 0x02, 0x00, "Green"		},
+	{0   , 0xfe, 0   ,    2, "Blood Colour"			},
+	{0x14, 0x01, 0x02, 0x02, "Red"					},
+	{0x14, 0x01, 0x02, 0x00, "Green"				},
 
 	{0   , 0xfe, 0   ,    4, "Demo Sounds & Music"	},
-	{0x14, 0x01, 0x0c, 0x0c, "Both On"		},
-	{0x14, 0x01, 0x0c, 0x08, "Sounds Off"	},
-	{0x14, 0x01, 0x0c, 0x04, "Music Off"	},
-	{0x14, 0x01, 0x0c, 0x00, "Both Off"		},
+	{0x14, 0x01, 0x0c, 0x0c, "Both On"				},
+	{0x14, 0x01, 0x0c, 0x08, "Sounds Off"			},
+	{0x14, 0x01, 0x0c, 0x04, "Music Off"			},
+	{0x14, 0x01, 0x0c, 0x00, "Both Off"				},
 
-	{0   , 0xfe, 0   ,    4, "Timer"		},
-	{0x14, 0x01, 0x30, 0x00, "Slow"			},
-	{0x14, 0x01, 0x30, 0x30, "Medium"		},
-	{0x14, 0x01, 0x30, 0x10, "Fast"			},
-	{0x14, 0x01, 0x30, 0x20, "Very Fast"		},
+	{0   , 0xfe, 0   ,    4, "Timer"				},
+	{0x14, 0x01, 0x30, 0x00, "Slow"					},
+	{0x14, 0x01, 0x30, 0x30, "Medium"				},
+	{0x14, 0x01, 0x30, 0x10, "Fast"					},
+	{0x14, 0x01, 0x30, 0x20, "Very Fast"			},
 
-	{0   , 0xfe, 0   ,    2, "Coinage Mode"		},
-	{0x14, 0x01, 0xc0, 0xc0, "Split"		},
-	{0x14, 0x01, 0xc0, 0x00, "Joint"		},
+	{0   , 0xfe, 0   ,    2, "Coinage Mode"			},
+	{0x14, 0x01, 0xc0, 0xc0, "Split"				},
+	{0x14, 0x01, 0xc0, 0x00, "Joint"				},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x15, 0x01, 0x01, 0x01, "Off"			},
-//	{0x15, 0x01, 0x01, 0x00, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x15, 0x01, 0x01, 0x01, "Off"					},
+//	{0x15, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    8, "Difficulty"	},
-	{0x15, 0x01, 0x0e, 0x00, "Easiest"		},  // Level 1
-	{0x15, 0x01, 0x0e, 0x08, "Very_Easy"	},  // Level 2
-	{0x15, 0x01, 0x0e, 0x04, "Easier"		},  // Level 3
-	{0x15, 0x01, 0x0e, 0x0c, "Easy"			},  // Level 4
-	{0x15, 0x01, 0x0e, 0x0e, "Normal"		},  // Level 5
-	{0x15, 0x01, 0x0e, 0x02, "Hard"			},  // Level 6
-	{0x15, 0x01, 0x0e, 0x0a, "Very_Hard"	},  // Level 7
-	{0x15, 0x01, 0x0e, 0x06, "Hardest"		},  // Level 8
+	{0   , 0xfe, 0   ,    8, "Difficulty"			},
+	{0x15, 0x01, 0x0e, 0x00, "Easiest"				},  // Level 1
+	{0x15, 0x01, 0x0e, 0x08, "Very_Easy"			},  // Level 2
+	{0x15, 0x01, 0x0e, 0x04, "Easier"				},  // Level 3
+	{0x15, 0x01, 0x0e, 0x0c, "Easy"					},  // Level 4
+	{0x15, 0x01, 0x0e, 0x0e, "Normal"				},  // Level 5
+	{0x15, 0x01, 0x0e, 0x02, "Hard"					},  // Level 6
+	{0x15, 0x01, 0x0e, 0x0a, "Very_Hard"			},  // Level 7
+	{0x15, 0x01, 0x0e, 0x06, "Hardest"				},  // Level 8
 
-	{0   , 0xfe, 0   ,    4, "Damage"		},
-	{0x15, 0x01, 0x30, 0x20, "75%"			},
-	{0x15, 0x01, 0x30, 0x30, "100%"			},
-	{0x15, 0x01, 0x30, 0x10, "125%"		},
-	{0x15, 0x01, 0x30, 0x00, "150%"			},
+	{0   , 0xfe, 0   ,    4, "Damage"				},
+	{0x15, 0x01, 0x30, 0x20, "75%"					},
+	{0x15, 0x01, 0x30, 0x30, "100%"					},
+	{0x15, 0x01, 0x30, 0x10, "125%"					},
+	{0x15, 0x01, 0x30, 0x00, "150%"					},
 
-	{0   , 0xfe, 0   ,    3, "Max Rounds"		},
-	{0x15, 0x01, 0xc0, 0x00, "1"			},
-	{0x15, 0x01, 0xc0, 0x40, "3"			},
-	{0x15, 0x01, 0xc0, 0x80, "5"			},
+	{0   , 0xfe, 0   ,    3, "Max Rounds"			},
+	{0x15, 0x01, 0xc0, 0x00, "1"					},
+	{0x15, 0x01, 0xc0, 0xc0, "3"					},
+	{0x15, 0x01, 0xc0, 0x80, "5"					},
 
-	{0   , 0xfe, 0   ,   14, "Coin B"		},
-	{0x16, 0x01, 0x0f, 0x08, "8 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x09, "7 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0a, "6 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0b, "5 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0c, "4 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0d, "3 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0e, "2 Coins 1 Credits "	},
-	{0x16, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits "	},
+	{0   , 0xfe, 0   ,   14, "Coin B"				},
+	{0x16, 0x01, 0x0f, 0x08, "8 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x09, "7 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0a, "6 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0b, "5 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0c, "4 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0d, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0e, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"		},
 	{0x16, 0x01, 0x0f, 0x06, "1 Coin  2 Credits"	},
 	{0x16, 0x01, 0x0f, 0x05, "1 Coin  3 Credits"	},
 	{0x16, 0x01, 0x0f, 0x04, "1 Coin  4 Credits"	},
 	{0x16, 0x01, 0x0f, 0x03, "1 Coin  5 Credits"	},
-	{0x16, 0x01, 0x0f, 0x02, "2 Coin Start / 1 Credit Continue"	},
-	{0x16, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x16, 0x01, 0x0f, 0x02, "2 Coins Start / 1 Credit Continue"},
+	{0x16, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,   14, "Coin A"		},
+	{0   , 0xfe, 0   ,   14, "Coin A"				},
 	{0x16, 0x01, 0xf0, 0x80, "8 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0x90, "7 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"	},
-	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x16, 0x01, 0xf0, 0x90, "7 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
 	{0x16, 0x01, 0xf0, 0x60, "1 Coin  2 Credits"	},
 	{0x16, 0x01, 0xf0, 0x50, "1 Coin  3 Credits"	},
 	{0x16, 0x01, 0xf0, 0x40, "1 Coin  4 Credits"	},
 	{0x16, 0x01, 0xf0, 0x30, "1 Coin  5 Credits"	},
-	{0x16, 0x01, 0xf0, 0x20, "2 Coin Start / 1 Credit Continue"	},
-	{0x16, 0x01, 0xf0, 0x00, "Free Play"		},
+	{0x16, 0x01, 0xf0, 0x20, "2 Coins Start / 1 Credit Continue"},
+	{0x16, 0x01, 0xf0, 0x00, "Free Play"			},
 };
 
 STDDIPINFO(Asurabus)
@@ -366,7 +366,7 @@ static UINT16 __fastcall fuuki32_read_word(UINT32 address)
 		case 0x8c001e:
 			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 0x1e)));
 	}
-
+	bprintf(0, _T("rw %x\n"), address);
 	return 0;
 }
 
@@ -376,6 +376,7 @@ static UINT8 __fastcall fuuki32_read_byte(UINT32 address)
 		cpu_sync();
 		return DrvShareRAM[(address & 0x1f) >> 1];
 	}
+	bprintf(0, _T("rb %x\n"), address);
 
 	return 0;
 }
@@ -386,8 +387,7 @@ static void bankswitch(INT32 data)
 
 	INT32 nBank = (data & 0x0f) * 0x8000;
 
-	ZetMapArea(0x8000, 0xffff, 0, DrvZ80ROM + nBank);
-	ZetMapArea(0x8000, 0xffff, 2, DrvZ80ROM + nBank);
+	ZetMapMemory(DrvZ80ROM + nBank, 0x8000, 0xffff, MAP_ROM);
 }
 
 static void __fastcall fuuki32_sound_write(UINT16 address, UINT8 data)
@@ -419,7 +419,7 @@ static void __fastcall fuuki32_sound_out(UINT16 port, UINT8 data)
 		case 0x41:
 		case 0x42:
 		case 0x43:
-			BurnYMF262Write(port&3, data);
+			BurnYMF262Write(port & 3, data);
 		return;
 
 		case 0x44:
@@ -660,13 +660,9 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80ROM);
-	ZetMapArea(0x6000, 0x6fff, 0, DrvZ80RAM);
-	ZetMapArea(0x6000, 0x6fff, 1, DrvZ80RAM);
-	ZetMapArea(0x6000, 0x6fff, 2, DrvZ80RAM);
-	ZetMapArea(0x8000, 0xffff, 0, DrvZ80ROM + 0x8000);
-	ZetMapArea(0x8000, 0xffff, 2, DrvZ80ROM + 0x8000);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x6000, 0x6fff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	ZetSetWriteHandler(fuuki32_sound_write);
 	ZetSetReadHandler(fuuki32_sound_read);
 	ZetSetOutHandler(fuuki32_sound_out);
@@ -705,83 +701,72 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_sprites(INT32 prio)
+static void draw_sprites()
 {
-	UINT16 *src = (UINT16*)DrvSprBuf1;
+	UINT16 *spriteram16 = (UINT16*)DrvSprBuf1;
 
-	for (INT32 offs = 0; offs < 0x2000 / 2; offs += 4)
+	for (INT32 offs = (0x2000 - 8) / 2; offs >=0; offs -= 8 / 2)
 	{
-		INT32 sx	= BURN_ENDIAN_SWAP_INT16(src[offs + 0]);
-		INT32 sy	= BURN_ENDIAN_SWAP_INT16(src[offs + 1]);
-		INT32 attr	= BURN_ENDIAN_SWAP_INT16(src[offs + 2]);
-		INT32 code	= BURN_ENDIAN_SWAP_INT16(src[offs + 3]);
+		INT32 x, y, xstart, ystart, xend, yend, xinc, yinc;
+		INT32 xnum, ynum, xzoom, yzoom, flipx, flipy;
+		INT32 pri_mask;
 
-		if (prio != ((attr >> 6) & 0x0003) || sx & 0x0400) continue;
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 0]);
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 1]);
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 2]);
+		INT32 code = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 3]);
+
+		if (sx & 0x400)
+			continue;
 
 		INT32 bank = (tilebank_buf[1] >> ((code >> 12) & 0x0c)) & 0xf;
 
 		code = (code & 0x3fff) | (bank << 14);
+		INT32 color = ((attr & 0x3f) << 4) + 0x800; // 4bpp, color offset 0x800
 
-		INT32 flipx	= sx & 0x0800;
-		INT32 flipy	= sy & 0x0800;
-		INT32 xnum	= ((sx >> 12) & 0xf) + 1;
-		INT32 ynum	= ((sy >> 12) & 0xf) + 1;
-		INT32 xzoom	= 128 - ((attr >> 10) & 0x3c);
-		INT32 yzoom	= 128 - ((attr >>  6) & 0x3c);
+		flipx = sx & 0x0800;
+		flipy = sy & 0x0800;
+
+		xnum = ((sx >> 12) & 0xf) + 1;
+		ynum = ((sy >> 12) & 0xf) + 1;
+
+		xzoom = 16 * 8 - (8 * ((attr >> 12) & 0xf)) / 2;
+		yzoom = 16 * 8 - (8 * ((attr >>  8) & 0xf)) / 2;
+
+		switch ((attr >> 6) & 3)
+		{
+			case 3: pri_mask = 0xf0 | 0xcc | 0xaa;  break;  // behind all layers
+			case 2: pri_mask = 0xf0 | 0xcc;         break;  // behind fg + middle layer
+			case 1: pri_mask = 0xf0;                break;  // behind fg layer
+			case 0:
+			default:pri_mask = 0;                           // above all
+		}
 
 		sx = (sx & 0x1ff) - (sx & 0x200);
 		sy = (sy & 0x1ff) - (sy & 0x200);
 
-		INT32 xstart, ystart, xend, yend, xinc, yinc;
-		if (flipx)	{ xstart = (xnum-1) * 16;  xend = -16;        xinc = -16; }
-		else		{ xstart = 0;              xend = xnum * 16;  xinc = +16; }
+		if (flipx)  { xstart = xnum-1;  xend = -1;    xinc = -1; }
+		else        { xstart = 0;       xend = xnum;  xinc = +1; }
 
-		if (flipy)	{ ystart = (ynum-1) * 16;  yend = -16;        yinc = -16; }
-		else		{ ystart = 0;              yend = ynum * 16;  yinc = +16; }
+		if (flipy)  { ystart = ynum-1;  yend = -1;    yinc = -1; }
+		else        { ystart = 0;       yend = ynum;  yinc = +1; }
 
-		for (INT32 y = ystart; y != yend; y += yinc)
+		for (y = ystart; y != yend; y += yinc)
 		{
-			for (INT32 x = xstart; x != xend; x += xinc)
+			for (x = xstart; x != xend; x += xinc)
 			{
-				if (xzoom == 128 && yzoom == 128) {
-					if (sx + x >= 0 && sx + x < nScreenWidth - 15 && sy + y >= 0 && sy + y < nScreenHeight - 15) {
-						if (flipy) {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipXY(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							} else {
-								Render16x16Tile_Mask_FlipY(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							}
-						} else {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipX(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							} else {
-								Render16x16Tile_Mask(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							}
-						}
-					} else {
-						if (flipy) {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							} else {
-								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							}
-						} else {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							} else {
-								Render16x16Tile_Mask_Clip(pTransDraw, code++, sx + x, sy + y, attr & 0x3f, 4, 0x0f, 0x800, DrvGfxROM0);
-							}
-						}
-					}
+				if (xzoom == (16*8) && yzoom == (16*8)) {
+					RenderPrioSprite(pTransDraw, DrvGfxROM0, code++, color, 0xf, sx + x * 16, sy + y * 16, flipx, flipy, 16, 16, pri_mask);
 				} else {
-					RenderZoomedTile(pTransDraw, DrvGfxROM0, code++, ((attr & 0x3f) << 4) | 0x800, 15, sx + (x * xzoom) / 128, sy + (y * yzoom) / 128, flipx, flipy, 16, 16, (xzoom + 8) << 9, (yzoom + 8) << 9);
+					RenderZoomedPrioSprite(pTransDraw, DrvGfxROM0, code++, color, 0xf, sx + (x * xzoom) / 8, sy + (y * yzoom) / 8, flipx, flipy, 16, 16, (0x10000/0x10/8) * (xzoom + 8),(0x10000/0x10/8) * (yzoom + 8), pri_mask);
 				}
 			}
 		}
 	}
 }
 
-static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 coloff, INT32 soff)
+
+static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 coloff, INT32 soff, INT32 prio)
 {
 	INT32 yoff    = (DrvScrollBuf[0x300] & 0xffff) - 0x1f3;
 	INT32 xoff    = (DrvScrollBuf[0x300] >> 16) - 0x3f6;
@@ -808,76 +793,19 @@ static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 colo
 		INT32 flipx = (attr >> 6) & 1;
 		INT32 flipy = (attr >> 7) & 1;
 
-		if (sx >= 0 && sx < nScreenWidth - 15 && sy >= 0 && sy < nScreenHeight - 15) {
-			if (tab[code]) {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_FlipXY(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					} else {
-						Render16x16Tile_FlipY(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_FlipX(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					} else {
-						Render16x16Tile(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					}
-				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					} else {
-						Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					} else {
-						Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					}
-				}
-			}
+		if (tab[code]) {
+			Draw16x16PrioTile(pTransDraw, code, sx, sy, flipx, flipy, color, 8, coloff, prio, gfx);
 		} else {
-			if (sx >= nScreenWidth || sy >= nScreenWidth) continue;
-
-			if (tab[code]) {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					} else {
-						Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					} else {
-						Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 8, coloff, gfx);
-					}
-				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 8, 0xff, coloff, gfx);
-					}
-				}
-			}
+			Draw16x16PrioMaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 8, 0xff, coloff, prio, gfx);
 		}
 	}
 }
 
-static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 coloff, INT32 soff)
+static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 coloff, INT32 soff, INT32 prio)
 {
 	UINT16 *vram = (UINT16*)ram;
 	UINT16 *dst = pTransDraw;
+	UINT8  *pri = pPrioDraw;
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
@@ -912,27 +840,44 @@ static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT
 
 			if (tab[code]) {
 				if (xxx >= 0 && xxx < (nScreenWidth - 15)) {
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 0 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 1 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 2 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 3 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 4 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 5 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 6 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 7 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 8 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[ 9 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[10 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[11 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[12 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[13 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[14 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx  ] = src[15 ^ flipx] | color;
 				} else {
 					for (INT32 sx = 0; sx < 16; sx++, xxx++)
 					{
 						if (xxx >= 0 && xxx < nScreenWidth) {
 							dst[xxx] = src[sx ^ flipx] | color;
+							pri[xxx] |= prio;
 						}
 					}
 				}
@@ -943,6 +888,7 @@ static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT
 
 						if (pxl != 0xff) {
 							dst[xxx] = pxl | color;
+							pri[xxx] |= prio;
 						}
 					}
 				} else {
@@ -951,6 +897,7 @@ static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT
 
 						if (xxx >= 0 && xxx < nScreenWidth && pxl != 0xff) {
 							dst[xxx] = pxl | color;
+							pri[xxx] |= prio;
 						}
 					}
 				}
@@ -958,10 +905,11 @@ static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT
 		}
 
 		dst += nScreenWidth;
+		pri += nScreenWidth;
 	}
 }
 
-static void draw_foreground_layer(UINT8 *ram)
+static void draw_foreground_layer(UINT8 *ram, INT32 prio)
 {
 	UINT16 *vram = (UINT16*)ram;
 
@@ -988,74 +936,19 @@ static void draw_foreground_layer(UINT8 *ram)
 		INT32 flipx = (attr >> 6) & 1;
 		INT32 flipy = (attr >> 7) & 1;
 
-		if (sx >= 0 && sx < nScreenWidth - 15 && sy >= 0 && sy < nScreenHeight - 15) {
-			if (DrvTransTab3[code]) {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_FlipY(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_FlipX(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					}
-				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					}
-				}
-			}
+		if (DrvTransTab3[code]) {
+			Draw8x8PrioTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0xc00, prio, DrvGfxROM3);
 		} else {
-			if (DrvTransTab3[code]) {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0xc00, DrvGfxROM3);
-					}
-				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0x0f, 0xc00, DrvGfxROM3);
-					}
-				}
-			}
+			Draw8x8PrioMaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0x0f, 0xc00, prio, DrvGfxROM3);
 		}
 	}
 }
 
-static void draw_foreground_layer_byline(UINT8 *ram)
+static void draw_foreground_layer_byline(UINT8 *ram, INT32 prio)
 {
 	UINT16 *vram = (UINT16*)ram;
 	UINT16 *dst = pTransDraw;
+	UINT8  *pri = pPrioDraw;
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
@@ -1089,19 +982,28 @@ static void draw_foreground_layer_byline(UINT8 *ram)
 
 			if (DrvTransTab3[code]) {
 				if (xxx >= 0 && xxx < (nScreenWidth - 7)) {
+					pri[xxx] |= prio;
 					dst[xxx++] = src[0 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[1 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[2 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[3 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[4 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[5 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[6 ^ flipx] | color;
+					pri[xxx] |= prio;
 					dst[xxx++] = src[7 ^ flipx] | color;
 				} else {
 					for (INT32 sx = 0; sx < 8; sx++, xxx++)
 					{
 						if (xxx >= 0 && xxx < nScreenWidth) {
 							dst[xxx] = src[sx ^ flipx] | color;
+							pri[xxx] |= prio;
 						}
 					}
 				}
@@ -1111,6 +1013,7 @@ static void draw_foreground_layer_byline(UINT8 *ram)
 						INT32 pxl = src[sx ^ flipx];
 						if (pxl != 0x0f) {
 							dst[xxx] = pxl | color;
+							pri[xxx] |= prio;
 						}
 					}
 				} else {
@@ -1118,6 +1021,7 @@ static void draw_foreground_layer_byline(UINT8 *ram)
 						INT32 pxl = src[sx ^ flipx];
 						if (xxx >= 0 && xxx < nScreenWidth && pxl != 0x0f) {
 							dst[xxx] = pxl | color;
+							pri[xxx] |= prio;
 						}
 					}
 				}
@@ -1125,41 +1029,42 @@ static void draw_foreground_layer_byline(UINT8 *ram)
 		}
 
 		dst += nScreenWidth;
+		pri += nScreenWidth;
 	}
 }
 
-static void fuuki32_draw_layer(INT32 layer, INT32 buffer)
+static void fuuki32_draw_layer(INT32 layer, INT32 buffer, INT32 prio)
 {
 	switch (layer)
 	{
 		case 0:
 			if (nEnableRaster[0]) {
-				draw_background_layer_byline(DrvBgRAM1, DrvGfxROM1, DrvTransTab1, 0x000, 0);
+				draw_background_layer_byline(DrvBgRAM1, DrvGfxROM1, DrvTransTab1, 0x000, 0, prio);
 			} else {
-				draw_background_layer(DrvBgRAM1, DrvGfxROM1, DrvTransTab1, 0x000, 0);
+				draw_background_layer(DrvBgRAM1, DrvGfxROM1, DrvTransTab1, 0x000, 0, prio);
 			}
 		return;
 
 		case 1:
 			if (nEnableRaster[1]) {
-				draw_background_layer_byline(DrvBgRAM2, DrvGfxROM2, DrvTransTab2, 0x400, 1);
+				draw_background_layer_byline(DrvBgRAM2, DrvGfxROM2, DrvTransTab2, 0x400, 1, prio);
 			} else {
-				draw_background_layer(DrvBgRAM2, DrvGfxROM2, DrvTransTab2, 0x400, 1);
+				draw_background_layer(DrvBgRAM2, DrvGfxROM2, DrvTransTab2, 0x400, 1, prio);
 			}
 		return;
 
 		case 2:
 			if (buffer) {
 				if (nEnableRaster[2]) {
-					draw_foreground_layer_byline(DrvFgRAM2);
+					draw_foreground_layer_byline(DrvFgRAM2, prio);
 				} else {
-					draw_foreground_layer(DrvFgRAM2);
+					draw_foreground_layer(DrvFgRAM2, prio);
 				}
 			} else {
 				if (nEnableRaster[2]) {
-					draw_foreground_layer_byline(DrvFgRAM1);
+					draw_foreground_layer_byline(DrvFgRAM1, prio);
 				} else {
-					draw_foreground_layer(DrvFgRAM1);
+					draw_foreground_layer(DrvFgRAM1, prio);
 				}
 			}
 		return;
@@ -1228,19 +1133,11 @@ static INT32 DrvDraw()
 
 	enable_rasters();
 
-	if (nSpriteEnable & 1) draw_sprites(3);
+	fuuki32_draw_layer(tm_back,   buffer, 1);
+	fuuki32_draw_layer(tm_middle, buffer, 2);
+	fuuki32_draw_layer(tm_front,  buffer, 4);
 
-	fuuki32_draw_layer(tm_back,   buffer);
-
-	if (nSpriteEnable & 2) draw_sprites(2);
-
-	fuuki32_draw_layer(tm_middle, buffer);
-
-	if (nSpriteEnable & 4) draw_sprites(1);
-
-	fuuki32_draw_layer(tm_front,  buffer);
-
-	if (nSpriteEnable & 8) draw_sprites(0);
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1277,7 +1174,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((nCyclesTotal[0] / nInterleave) * (i + 1)) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (i == DrvRasterPos[0]) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
@@ -1297,7 +1194,7 @@ static INT32 DrvFrame()
 		DrvScrollBuf[i + 0x200] = BURN_ENDIAN_SWAP_INT32(vregs[2]);
 		DrvScrollBuf[i + 0x300] = BURN_ENDIAN_SWAP_INT32(vregs[3]);
 
-		if (i == 240) { // eliminate glitches in sprites, backgrounds
+		if (i == 240) { // Draw @ VBlank
 			if (pBurnDraw) DrvDraw();
 
 			memcpy (DrvSprBuf1, DrvSprBuf0, 0x2000);

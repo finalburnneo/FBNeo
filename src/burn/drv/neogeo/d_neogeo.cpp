@@ -18626,9 +18626,9 @@ STD_ROM_FN(kof2000otc)
 
 struct BurnDriver BurnDrvkof2000otc = {
 	"kof2000otc", "kof2000", "neogeo", NULL, "2000",
-	"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cusotmized version)\0", "hack only enable in AES mode", "SNK", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
+	"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version)\0", "ZERO only enable in AES mode", "hack", "Neo Geo MVS",
+	L"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version)\0\u62F3\u7687 2000 (OTC 2020-05-30, LOUSHI \u5B9A\u5236\u7248)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

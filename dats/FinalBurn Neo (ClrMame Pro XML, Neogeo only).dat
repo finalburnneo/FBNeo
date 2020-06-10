@@ -17594,9 +17594,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2000otc" cloneof="kof2000" romof="kof2000">
-		<description>The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cusotmized version) [hack only enable in AES mode]</description>
+		<description>The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version) [Hack, ZERO only enable in AES mode]</description>
 		<year>2000</year>
-		<manufacturer>SNK</manufacturer>
+		<manufacturer>hack</manufacturer>
 		<rom name="kof2000otc-p1.bin" size="1048576" crc="39d70ffc"/>
 		<rom name="kof2000otc-p2.bin" size="4194304" crc="1c6ee3e3"/>
 		<rom name="257-c1_decrypted.bin" size="8388608" crc="abcdd424"/>

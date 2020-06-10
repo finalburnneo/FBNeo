@@ -146,9 +146,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd2">
-		<description>Alex Kidd in Miracle World 2 (Hack)</description>
+		<description>Alex Kidd in Miracle World 2 (Hack) [Homebrew]</description>
 		<year>2017</year>
-		<manufacturer>2017 Ian Wall</manufacturer>
+		<manufacturer>Ian Wall</manufacturer>
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
 		<driver status="good"/>
 	</game>
@@ -348,6 +348,13 @@
 		<rom name="astro flash [hack].bin" size="32768" crc="0e21e6cf"/>
 		<driver status="good"/>
 	</game>
+	<game name="astforce">
+		<description>Astro Force (HB, v1.03) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>MikGames</manufacturer>
+		<rom name="astroforce_v103.sms" size="262144" crc="1bad75c5"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrow">
 		<description>Astro Warrior (Jpn, USA, Bra)</description>
 		<year>1986</year>
@@ -390,11 +397,25 @@
 		<rom name="back to the future part iii (europe).bin" size="262144" crc="2d48c1d3"/>
 		<driver status="good"/>
 	</game>
+	<game name="badapple">
+		<description>Bad Apple (HB, Tech-Demo) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>SMS Power!</manufacturer>
+		<rom name="bad apple v100.sms" size="4194304" crc="38434560"/>
+		<driver status="good"/>
+	</game>
 	<game name="bakubaku">
 		<description>Baku Baku Animal (Bra)</description>
 		<year>1996</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="baku baku animal (brazil).bin" size="262144" crc="35d84dc2"/>
+		<driver status="good"/>
+	</game>
+	<game name="balbalok">
+		<description>Baluba Balok (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>MikGames</manufacturer>
+		<rom name="baluba_balok.sms" size="32768" crc="4f8e512c"/>
 		<driver status="good"/>
 	</game>
 	<game name="bankp">
@@ -412,7 +433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="baraburu10">
-		<description>Bara Buruu (HB, v1.0)</description>
+		<description>Bara Buruu (HB, v1.0) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BaraBuruu-SMS-1.00.sms" size="131072" crc="43e39aa4"/>
@@ -503,7 +524,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="brucelee10">
-		<description>Bruce Lee (HB, v1.0)</description>
+		<description>Bruce Lee (HB, v1.0) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="BruceLee-SMS-1.00.sms" size="131072" crc="37e27a38"/>
@@ -804,14 +825,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="darc10">
-		<description>DARC (HB, v1.0) [Turn ON 'FM Emulation' in Dips for music/sfx!]</description>
+		<description>DARC (HB, v1.0) [Homebrew, Turn ON 'FM Emulation' in Dips for music/sfx!]</description>
 		<year>2015</year>
 		<manufacturer>Zipper</manufacturer>
 		<rom name="DARC.sms" size="524288" crc="61b3c657"/>
 		<driver status="good"/>
 	</game>
 	<game name="datastorm10">
-		<description>Data Storm (HB, v1.0)</description>
+		<description>Data Storm (HB, v1.0) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="datastorm.sms" size="32768" crc="37b775d6"/>
@@ -1224,7 +1245,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fpigarus">
-		<description>Flight of Pigarus (HB, v1.0)</description>
+		<description>Flight of Pigarus (HB, v1.0) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Kagesan</manufacturer>
 		<rom name="FlightOfPigarus-SMS-1.00.sms" size="262144" crc="838574d1"/>
@@ -1280,7 +1301,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gboogers">
-		<description>Galactic Boogers (HB)</description>
+		<description>Galactic Boogers (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>YETI</manufacturer>
 		<rom name="Galactic Boogers.sms" size="1048576" crc="b5dac318"/>
@@ -1343,7 +1364,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="punpun">
-		<description>Geki Oko PunPun Maru ((HB, v20151031b)</description>
+		<description>Geki Oko PunPun Maru ((HB, v20151031b) [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>Future Driver</manufacturer>
 		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
@@ -1679,7 +1700,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="had">
-		<description>Heroes Against Demons (HB, v1.03)</description>
+		<description>Heroes Against Demons (HB, v1.03) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Ichigo</manufacturer>
 		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
@@ -1690,6 +1711,13 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="high school! kimengumi (japan).bin" size="131072" crc="9eb1aa4f"/>
+		<driver status="good"/>
+	</game>
+	<game name="highsce" cloneof="highsc" romof="highsc">
+		<description>High School! Kimengumi (T-eng)</description>
+		<year>2005</year>
+		<manufacturer>Sega - SMS Power!</manufacturer>
+		<rom name="high school! kimengumi (t-eng1.00).sms" size="131072" crc="8a296a3e"/>
 		<driver status="good"/>
 	</game>
 	<game name="hokuto" cloneof="blackblt" romof="blackblt">
@@ -1903,7 +1931,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lambo">
-		<description>Lambo (HB, Demo)</description>
+		<description>Lambo (HB, Demo) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Genesis Project</manufacturer>
 		<rom name="GenesisProject-Lambo.sms" size="262144" crc="92fe2775"/>
@@ -1987,14 +2015,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="lostraider101">
-		<description>Lost Raider (HB, v1.01) [The game lacks sound]</description>
+		<description>Lost Raider (HB, v1.01) [Homebrew, The game lacks sound]</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigobankai</manufacturer>
 		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
 		<driver status="good"/>
 	</game>
 	<game name="luckypeng">
-		<description>Lucky Penguin (HB, v1.1)</description>
+		<description>Lucky Penguin (HB, v1.1) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Denine</manufacturer>
 		<rom name="LuckyPenguin-SMS-1.1.sms" size="49152" crc="69699887"/>
@@ -2155,7 +2183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moggym100">
-		<description>Moggy Master (HB, v1.00)</description>
+		<description>Moggy Master (HB, v1.00) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="mojon-twins--moggy-master.sms" size="65536" crc="039539df"/>
@@ -2190,7 +2218,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="moncrunch">
-		<description>Monster Crunch (HB, v1.00)</description>
+		<description>Monster Crunch (HB, v1.00) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Ichigo</manufacturer>
 		<rom name="MonsterCrunch-SMS-1.00.sms" size="32768" crc="7eacf20c"/>
@@ -2295,7 +2323,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="novdmvdp">
-		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo)</description>
+		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
 		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
@@ -2911,7 +2939,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="silvervalley">
-		<description>Silver Valley (HB)</description>
+		<description>Silver Valley (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>MIKGAMES / Enrique Ruiz</manufacturer>
 		<rom name="silvervalley-final.sms" size="262144" crc="2774b5cc"/>
@@ -3422,7 +3450,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sydhunt">
-		<description>Sydney Hunter and the Sacred Tribe (HB)</description>
+		<description>Sydney Hunter and the Sacred Tribe (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="Sydney Hunter.sms" size="131072" crc="e3060500"/>
@@ -3835,7 +3863,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tos">
-		<description>Tower of Sorrow (HB, rev3)</description>
+		<description>Tower of Sorrow (HB, rev3) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Steiger</manufacturer>
 		<rom name="Tower_of_Sorrow_REV3.sms" size="524288" crc="d0e103d9"/>
@@ -3933,14 +3961,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="voyage">
-		<description>Voyage - A Sorceress Vacation (HB, v1.03)</description>
+		<description>Voyage - A Sorceress Vacation (HB, v1.03) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>SNAGS</manufacturer>
 		<rom name="Voyage - A Sorceress Vacation v1.03.sms" size="524288" crc="7aff90b0"/>
 		<driver status="good"/>
 	</game>
 	<game name="WaimanuSMS">
-		<description>Waimanu: Scary Monsters Saga (HB)</description>
+		<description>Waimanu: Scary Monsters Saga (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WaimanuSMS.sms" size="131072" crc="195c3f78"/>
@@ -3961,7 +3989,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wekainvaders10">
-		<description>Weka Invaders (HB, v1.0)</description>
+		<description>Weka Invaders (HB, v1.0) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Disjointed Studio</manufacturer>
 		<rom name="WekaInvaders.sms" size="294912" crc="54b2fcf8"/>
@@ -3996,7 +4024,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wingwarriors">
-		<description>Wing Warriors (HB, April 18, 2019 Test)</description>
+		<description>Wing Warriors (HB, April 18, 2019 Test) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Kitmaker</manufacturer>
 		<rom name="WingWarriors.sms" size="131072" crc="14e13a82"/>

@@ -776,7 +776,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dangdem">
-		<description>Dangerous Demolition (HB, v1.0)</description>
+		<description>Dangerous Demolition (HB, v1.0) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>DrLudos</manufacturer>
 		<rom name="dangerousdemolition.gg" size="32768" crc="638c4252"/>
@@ -4318,7 +4318,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sylvane" cloneof="sylvan" romof="sylvan">
-		<description>Sylvan Tale (Hack, English)</description>
+		<description>Sylvan Tale (Hack, T-Eng)</description>
 		<year>2001</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sylvan tale (english translation).gg" size="524288" crc="5d803486"/>

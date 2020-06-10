@@ -824,6 +824,13 @@
 		<rom name="Battletoads-Double Dragon (USA).nes" size="262160" crc="53b02f3d"/>
 		<driver status="good"/>
 	</game>
+	<game name="beautandbea">
+		<description>Beauty and the Beast (Europe)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Beauty and the Beast (Europe).nes" size="393232" crc="e08a5881"/>
+		<driver status="good"/>
+	</game>
 	<game name="bee52">
 		<description>Bee 52 (USA) (Unl)</description>
 		<year>1992</year>
@@ -4632,6 +4639,13 @@
 		<rom name="Life Force (USA).nes" size="131088" crc="f7b55696"/>
 		<driver status="good"/>
 	</game>
+	<game name="linusspascoscr">
+		<description>Linus Spacehead's Cosmic Crusade (USA)</description>
+		<year>1992</year>
+		<manufacturer>Camerica</manufacturer>
+		<rom name="Linus Spacehead's Cosmic Crusade (USA).nes" size="262160" crc="fffddf99"/>
+		<driver status="good"/>
+	</game>
 	<game name="littlemedusa">
 		<description>Little Medusa (HB)</description>
 		<year>2018</year>
@@ -7605,6 +7619,13 @@
 		<year>1992</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Sword Master (USA).nes" size="262160" crc="6ccd5c11"/>
+		<driver status="good"/>
+	</game>
+	<game name="swordandser">
+		<description>Swords and Serpents (USA)</description>
+		<year>1990</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="Swords and Serpents (USA).nes" size="131088" crc="071e3f72"/>
 		<driver status="good"/>
 	</game>
 	<game name="tc2">

@@ -686,6 +686,7 @@ DRV		BurnDrvCastfant;
 DRV		BurnDrvAstrofl;
 DRV		BurnDrvsms_astrofl;
 DRV		BurnDrvsms_astrofl1;
+DRV		BurnDrvsms_astforce;
 DRV		BurnDrvMSX_amc;
 DRV		BurnDrvMSX_astroplm;
 DRV		BurnDrvnes_astrorobosasa;
@@ -820,6 +821,7 @@ DRV		BurnDrvBackfire;
 DRV		BurnDrvBackfirea;		// Set inputs to \"Joystick\" in test mode [NOT WORKING]
 #endif
 DRV		BurnDrvmd_badapple;
+DRV		BurnDrvsms_badapple;
 DRV		BurnDrvbadapple;
 DRV		BurnDrvnes_baddudes;
 DRV		BurnDrvBaddudes;
@@ -861,6 +863,7 @@ DRV		BurnDrvnes_balloonfight;
 DRV		BurnDrvMSX_balloonpunch;
 DRV		BurnDrvmd_ballz3d;
 DRV		BurnDrvnes_baltron;
+DRV		BurnDrvsms_balbalok;
 DRV		BurnDrvBaluba;
 DRV		BurnDrvnes_banana;
 DRV		BurnDrvMSX_banana;
@@ -1059,6 +1062,7 @@ DRV		BurnDrvmd_beastwj;
 DRV		BurnDrvmd_beastw;
 DRV		BurnDrvmd_beastbal;
 DRV		BurnDrvbeastfp;
+DRV		BurnDrvnes_beautandbea;
 DRV		BurnDrvmd_beavis;
 DRV		BurnDrvgg_beavis;
 DRV		BurnDrvgg_beavisp;
@@ -5163,6 +5167,7 @@ DRV		BurnDrvHidnc2k;
 DRV		BurnDrvHidctch3;
 DRV		BurnDrvnes_higem;
 DRV		BurnDrvsms_highsc;
+DRV		BurnDrvsms_highsce;
 DRV		BurnDrvmd_havocu;
 DRV		BurnDrvnes_highspeed;
 DRV		BurnDrvHwrace;
@@ -5827,6 +5832,7 @@ DRV		BurnDrvKchampvs3;
 DRV		BurnDrvKchampvs4;
 DRV		BurnDrvKchamp;
 DRV		BurnDrvnes_karatechamp;
+DRV		BurnDrvKarateda;
 DRV		BurnDrvKaratedo;
 DRV		BurnDrvnes_karatekidthe;
 DRV		BurnDrvnes_karateka;
@@ -6060,6 +6066,7 @@ DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvKovplusa;
 DRV		BurnDrvKovplus;
+DRV		BurnDrvkovshpzqhl;
 DRV		BurnDrvkovshpqszl;
 DRV		BurnDrvkovshpqszltw;
 DRV		BurnDrvkovshpa;
@@ -6433,6 +6440,7 @@ DRV		BurnDrvmd_supmagic;
 DRV		BurnDrvfds_linknobou;
 DRV		BurnDrvcv_linklogc;
 DRV		BurnDrvLinkypip;
+DRV		BurnDrvnes_linusspascoscr;
 DRV		BurnDrvmd_lionkin3b;
 DRV		BurnDrvmd_lionkin3a;
 DRV		BurnDrvmd_lionkin3;
@@ -11774,6 +11782,7 @@ DRV		BurnDrvCpsSsf2t;
 DRV		BurnDrvCpsSsf2th;
 DRV		BurnDrvCpsSsf2tur1;
 DRV		BurnDrvCpsSsf2tu;
+DRV		BurnDrvCpsSsf2tnl;
 DRV		BurnDrvCpsSsf2xjr1d;
 DRV		BurnDrvCpsSsf2xjr1r;
 DRV		BurnDrvCpsSsf2xjr1;
@@ -11868,6 +11877,7 @@ DRV		BurnDrvnes_swordmaster;
 DRV		BurnDrvmd_swordsod;
 DRV		BurnDrvmd_swordsodj;
 DRV		BurnDrvmd_vermil;
+DRV		BurnDrvnes_swordandser;
 DRV		BurnDrvmd_sydvalis;
 DRV		BurnDrvsms_sydhunt;
 DRV		BurnDrvgg_sylvane;
@@ -15067,6 +15077,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAstrofl,			// Astro Flash (Japan)
 	&BurnDrvsms_astrofl,		// Astro Flash (Jpn, MyCard)
 	&BurnDrvsms_astrofl1,		// Astro Flash (Jpn, Pirate)
+	&BurnDrvsms_astforce,		// Astro Force (HB, v1.03)
 	&BurnDrvMSX_amc,			// Astro Marine Corps (Spa)
 	&BurnDrvMSX_astroplm,		// Astro Plumber (Euro)
 	&BurnDrvnes_astrorobosasa,	// Astro Robo Sasa (Japan)
@@ -15201,6 +15212,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBackfirea,			// Backfire! (set 2) [Set inputs to \"Joystick\" in test mode, NOT WORKING]
 #endif
 	&BurnDrvmd_badapple,		// Bad Apple (HB, Tech-Demo)
+	&BurnDrvsms_badapple,		// Bad Apple (HB, Tech-Demo)
 	&BurnDrvbadapple,			// Bad Apple Demo
 	&BurnDrvnes_baddudes,		// Bad Dudes (USA)
 	&BurnDrvBaddudes,			// Bad Dudes vs. Dragonninja (US)
@@ -15242,6 +15254,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_balloonpunch,	// Balloon Punch
 	&BurnDrvmd_ballz3d,			// Ballz 3D (Euro, USA)
 	&BurnDrvnes_baltron,		// Baltron (Japan)
+	&BurnDrvsms_balbalok,		// Baluba Balok (HB)
 	&BurnDrvBaluba,				// Baluba-louk no Densetsu (Japan)
 	&BurnDrvnes_banana,			// Banana (Japan)
 	&BurnDrvMSX_banana,			// Banana (Jpn)
@@ -15440,6 +15453,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_beastw,			// Beast Wrestler (USA)
 	&BurnDrvmd_beastbal,		// Beastball (Prototype)
 	&BurnDrvbeastfp,			// Beastie Feastie (Pac-Man conversion)
+	&BurnDrvnes_beautandbea,	// Beauty and the Beast (Europe)
 	&BurnDrvmd_beavis,			// Beavis and Butt-Head (Euro)
 	&BurnDrvgg_beavis,			// Beavis and Butt-head (Euro, USA)
 	&BurnDrvgg_beavisp,			// Beavis and Butt-head (Prototype?)
@@ -19544,6 +19558,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHidctch3,			// Hidden Catch 3 (ver 1.00 / pcb ver 3.05)
 	&BurnDrvnes_higem,			// Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan)
 	&BurnDrvsms_highsc,			// High School! Kimengumi (Jpn)
+	&BurnDrvsms_highsce,		// High School! Kimengumi (T-eng)
 	&BurnDrvmd_havocu,			// High Seas Havoc (USA)
 	&BurnDrvnes_highspeed,		// High Speed (USA)
 	&BurnDrvHwrace,				// High Way Race
@@ -20208,6 +20223,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKchampvs4,			// Karate Champ (US VS version, set 4)
 	&BurnDrvKchamp,				// Karate Champ (US)
 	&BurnDrvnes_karatechamp,	// Karate Champ (USA) (Rev A)
+	&BurnDrvKarateda,			// Karate Dou (Arfyc bootleg)
 	&BurnDrvKaratedo,			// Karate Dou (Japan)
 	&BurnDrvnes_karatekidthe,	// Karate Kid, The (USA)
 	&BurnDrvnes_karateka,		// Karateka (Japan)
@@ -20441,6 +20457,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119 alt)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
+	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
 	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)
 	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)
 	&BurnDrvkovshpa,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)
@@ -20814,6 +20831,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_linknobou,		// Link no Bouken - The Legend of Zelda 2 (Japan)
 	&BurnDrvcv_linklogc,		// Linking Logic
 	&BurnDrvLinkypip,			// Linky Pipe
+	&BurnDrvnes_linusspascoscr,	// Linus Spacehead's Cosmic Crusade (USA)
 	&BurnDrvmd_lionkin3b,		// Lion King 3 (Alt 2?)
 	&BurnDrvmd_lionkin3a,		// Lion King 3 (Alt?)
 	&BurnDrvmd_lionkin3,		// Lion King 3
@@ -26155,6 +26173,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSsf2th,			// Super Street Fighter II Turbo (super street fighter 2 X 940223 Hispanic)
 	&BurnDrvCpsSsf2tur1,		// Super Street Fighter II Turbo (super street fighter 2 X 940223 USA)
 	&BurnDrvCpsSsf2tu,			// Super Street Fighter II Turbo (super street fighter 2 X 940323 USA)
+	&BurnDrvCpsSsf2tnl,			// Super Street Fighter II Turbo New Legacy v0.3 Beta (Hack by Born2SPD)
 	&BurnDrvCpsSsf2xjr1d,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan Phoenix Edition)
 	&BurnDrvCpsSsf2xjr1r,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan rent version)
 	&BurnDrvCpsSsf2xjr1,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan)
@@ -26249,9 +26268,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_swordsod,		// Sword of Sodan (Euro, USA)
 	&BurnDrvmd_swordsodj,		// Sword of Sodan (Jpn)
 	&BurnDrvmd_vermil,			// Sword of Vermilion (Euro, USA)
+	&BurnDrvnes_swordandser,	// Swords and Serpents (USA)
 	&BurnDrvmd_sydvalis,		// Syd of Valis (USA)
 	&BurnDrvsms_sydhunt,		// Sydney Hunter and the Sacred Tribe (HB)
-	&BurnDrvgg_sylvane,			// Sylvan Tale (Hack, English)
+	&BurnDrvgg_sylvane,			// Sylvan Tale (Hack, T-Eng)
 	&BurnDrvgg_sylvan,			// Sylvan Tale (Jpn)
 	&BurnDrvmd_sylvestr,		// Sylvester & Tweety in Cagey Capers (Euro)
 	&BurnDrvmd_sylvestru,		// Sylvester and Tweety in Cagey Capers (USA)
@@ -26865,7 +26885,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg)
 	&BurnDrvkof2000,			// The King of Fighters 2000 (NGM-2570) (NGH-2570)
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
-	&BurnDrvkof2000otc,			// The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cusotmized version)
+	&BurnDrvkof2000otc,			// The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version)
 	&BurnDrvkof2000ps2,			// The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)

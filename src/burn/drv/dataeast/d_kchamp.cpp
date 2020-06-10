@@ -883,9 +883,9 @@ static struct BurnRomInfo kchampRomDesc[] = {
 	{ "b005.bin",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
 	{ "b008.bin",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
 
-	{ "br27",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
-	{ "br26",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
-	{ "br25",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
+	{ "br27",		0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
+	{ "br26",		0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
+	{ "br25",		0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
 };
 
 STD_ROM_PICK(kchamp)
@@ -905,40 +905,40 @@ struct BurnDriver BurnDrvKchamp = {
 // Karate Dou (Japan)
 
 static struct BurnRomInfo karatedoRomDesc[] = {
-	{ "be14",	0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "be15",	0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "be16",	0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "be17",	0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "be18",	0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "be19",	0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "be14",		0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
+	{ "be15",		0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "be16",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "be17",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "be18",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "be19",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "be26",	0x2000, 0x999ab0a3, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "be25",	0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "be24",	0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "be23",	0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "be22",	0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "be21",	0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "be20",	0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "be26",		0x2000, 0x999ab0a3, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
+	{ "be25",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "be24",		0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "be23",		0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "be22",		0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "be21",		0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "be20",		0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "be00",	0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
-	{ "be01",	0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
+	{ "be00",		0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
+	{ "be01",		0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
 
-	{ "be13",	0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
-	{ "be04",	0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
+	{ "be13",		0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
+	{ "be04",		0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
 	{ "b012.bin",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
 	{ "b003.bin",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
 	{ "b011.bin",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
 	{ "b002.bin",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "be07",	0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
-	{ "be10",	0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
+	{ "be07",		0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
+	{ "be10",		0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
 	{ "b006.bin",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
 	{ "b009.bin",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
 	{ "b005.bin",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
 	{ "b008.bin",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
 
-	{ "br27",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
-	{ "br26",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
-	{ "br25",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
+	{ "br27",		0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
+	{ "br26",		0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
+	{ "br25",		0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
 };
 
 STD_ROM_PICK(karatedo)
@@ -950,6 +950,68 @@ struct BurnDriver BurnDrvKaratedo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatedoRomInfo, karatedoRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+/* Bootleg from the Spanish company "Automaticos Arfyc"
+   Just different color PROMs and a few bytes on the K26/BE26 sound ROM
+   Frequencies measured on the PCB:
+    Program Z80: 2.99684 MHz (12.000 MHz xtal / 4)
+    Sound Z80:   4.43141 MHz (8.867238 MHz xtal / 2)
+    SN74LS04N:   8.86277 MHz (8.867238 MHz xtal)
+    2xAY-3-8910: 1.10785 MHz (8.867238 MHz xtal / 8)
+*/
+
+// Karate Dou (Arfyc bootleg)
+
+static struct BurnRomInfo karatedaRomDesc[] = {
+	{ "k-14_2764.d1",		0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
+	{ "k-15_2764.d2",		0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "k-16_2764.d4",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "k-17_2764.d5",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "k-18_2764.d6",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "k-19_2764.d9",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "k-26_2764.e10",		0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
+	{ "k-25_2764.e9",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "k-24_2764.e8",		0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "k-23_2764.e6",		0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "k-22_2764.e5",		0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "k-21_2764.e4",		0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "k-20_2764.e2",		0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "k-0_2764.h3",		0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
+	{ "k-1_2764.h6",		0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
+
+	{ "k-13_2764.k15",		0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
+	{ "k-4_2764.j15",		0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
+	{ "k-12_2764.k13",		0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
+	{ "k-3_2764.j13",		0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
+	{ "k-11_2764.k12",		0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
+	{ "k-2_2764.j12",		0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
+	{ "k-7_2764.k4",		0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
+	{ "k-10_2764.k9",		0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
+	{ "k-6_2764.k2",		0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
+	{ "k-9_2764.k8",		0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
+	{ "k-5_2764.k1",		0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
+	{ "k-8_2764.k7",		0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+
+	{ "1_dm74s287_82s129.f11",	0x0100, 0xf05bda76, 5 | BRF_GRA },       // 27 Color data
+	{ "2_dm74s287_82s129.f12",	0x0100, 0xd26d6fa9, 5 | BRF_GRA },       // 28
+	{ "3_dm74s287_82s129.f13",	0x0100, 0x111ccb15, 5 | BRF_GRA },       // 29
+};
+
+STD_ROM_PICK(karateda)
+STD_ROM_FN(karateda)
+
+struct BurnDriver BurnDrvKarateda = {
+	"karateda", "kchamp", NULL, NULL, "1984",
+	"Karate Dou (Arfyc bootleg)\0", NULL, "bootleg (Arfyc)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, karatedaRomInfo, karatedaRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

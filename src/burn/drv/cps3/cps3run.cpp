@@ -61,6 +61,7 @@ UINT32 cps3_key1, cps3_key2, cps3_isSpecial;
 UINT32 cps3_bios_test_hack, cps3_game_test_hack;
 UINT32 cps3_speedup_ram_address, cps3_speedup_code_address;
 UINT8 cps3_dip;
+UINT8 cps3_fake_dip;
 UINT32 cps3_region_address, cps3_ncd_address;
 
 static UINT32 cps3_data_rom_size;
@@ -1816,27 +1817,29 @@ INT32 DrvCps3Draw()
 			RamScreen[i] = 0x20000;
 		}
 	}
-	
+
+	UINT32 *SprSrc = (cps3_fake_dip & 1 ? RamSpr : SprList);
+
 	// Draw Sprites
 	{
 		for (INT32 i=0x00000/4;i<0x2000/4;i+=4) {
 
-			if (SprList[i+0]&0x80000000) break;
+			if (SprSrc[i+0]&0x80000000) break;
 
-			INT32 gscroll		= (SprList[i+0]&0x70000000)>>28;
-			INT32 length		= (SprList[i+0]&0x01ff0000)>>14; // how many entries in the sprite table
-			UINT32 start		= (SprList[i+0]&0x00007ff0)>>4;
+			INT32 gscroll		= (SprSrc[i+0]&0x70000000)>>28;
+			INT32 length		= (SprSrc[i+0]&0x01ff0000)>>14; // how many entries in the sprite table
+			UINT32 start		= (SprSrc[i+0]&0x00007ff0)>>4;
 
-			INT32 xpos			= (SprList[i+1]&0x03ff0000)>>16;
-			INT32 ypos			= (SprList[i+1]&0x000003ff)>>0;
+			INT32 xpos			= (SprSrc[i+1]&0x03ff0000)>>16;
+			INT32 ypos			= (SprSrc[i+1]&0x000003ff)>>0;
 
-			INT32 whichbpp		= (SprList[i+2]&0x40000000)>>30; // not 100% sure if this is right, jojo title / characters
-			INT32 whichpal		= (SprList[i+2]&0x20000000)>>29;
-			INT32 global_xflip	= (SprList[i+2]&0x10000000)>>28;
-			INT32 global_yflip	= (SprList[i+2]&0x08000000)>>27;
-			INT32 global_alpha	= (SprList[i+2]&0x04000000)>>26; // alpha / shadow? set on sfiii2 shadows, and big black image in jojo intro
-			INT32 global_bpp	= (SprList[i+2]&0x02000000)>>25;
-			INT32 global_pal	= (SprList[i+2]&0x01ff0000)>>16;
+			INT32 whichbpp		= (SprSrc[i+2]&0x40000000)>>30; // not 100% sure if this is right, jojo title / characters
+			INT32 whichpal		= (SprSrc[i+2]&0x20000000)>>29;
+			INT32 global_xflip	= (SprSrc[i+2]&0x10000000)>>28;
+			INT32 global_yflip	= (SprSrc[i+2]&0x08000000)>>27;
+			INT32 global_alpha	= (SprSrc[i+2]&0x04000000)>>26; // alpha / shadow? set on sfiii2 shadows, and big black image in jojo intro
+			INT32 global_bpp	= (SprSrc[i+2]&0x02000000)>>25;
+			INT32 global_pal	= (SprSrc[i+2]&0x01ff0000)>>16;
 
 			INT32 gscrollx		= (RamVReg[gscroll]&0x03ff0000)>>16;
 			INT32 gscrolly		= (RamVReg[gscroll]&0x000003ff)>>0;
@@ -1845,9 +1848,9 @@ INT32 DrvCps3Draw()
 		
 			for (INT32 j=0; j<length; j+=4) {
 				
-				UINT32 value1 = (SprList[start+j+0]);
-				UINT32 value2 = (SprList[start+j+1]);
-				UINT32 value3 = (SprList[start+j+2]);
+				UINT32 value1 = (SprSrc[start+j+0]);
+				UINT32 value2 = (SprSrc[start+j+1]);
+				UINT32 value3 = (SprSrc[start+j+2]);
 
 				INT32 tilestable[4] = { 8,1,2,4 };
 

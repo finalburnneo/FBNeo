@@ -20,7 +20,7 @@ INT32 sound_init(void)
 	snd.enabled = 0;
 
 	// Init sound emulation
-	SN76489Init(0, snd.psg_clock, 1);
+	SN76489AInit(0, snd.psg_clock, 1);
 	SN76496SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 	SN76496SetBuffered(ZetTotalCycles, (sms.display == DISPLAY_PAL) ? (228*313*50) : (228*262*60)); // avg cyc/frame. 228*262*60 (ntsc) 228*313*50 (pal)
 

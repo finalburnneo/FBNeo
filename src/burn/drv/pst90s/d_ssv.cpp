@@ -2970,6 +2970,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	draw_next_line = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4630,7 +4632,7 @@ struct BurnDriver BurnDrvCairblad = {
 	"cairblad", NULL, NULL, NULL, "1999",
 	"Change Air Blade (Japan)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, cairbladRomInfo, cairbladRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CairbladDIPInfo,
 	CairbladInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	240, 338, 3, 4

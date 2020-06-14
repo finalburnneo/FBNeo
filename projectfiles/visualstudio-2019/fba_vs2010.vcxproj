@@ -516,6 +516,7 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_sshangha.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\konami\d_wecleman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />

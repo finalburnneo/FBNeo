@@ -62,6 +62,7 @@ static struct BurnInputInfo cps3InputList[] = {
 	{"Diagnostic",		BIT_DIGITAL,	Cps3But2 +  1,	"diag"		},
 	{"Service",			BIT_DIGITAL,	Cps3But2 +  0,	"service"	},
 	{"Region",			BIT_DIPSWITCH,	&cps3_dip,		"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&cps3_fake_dip,	"dip"		},
 };
 
 STDINPUTINFO(cps3)
@@ -99,6 +100,7 @@ static struct BurnInputInfo jojoInputList[] = {
 	{"Diagnostic",		BIT_DIGITAL,	Cps3But2 +  1,	"diag"		},
 	{"Service",			BIT_DIGITAL,	Cps3But2 +  0,	"service"	},
 	{"Region",			BIT_DIPSWITCH,	&cps3_dip,		"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&cps3_fake_dip,	"dip"		},
 };
 
 STDINPUTINFO(jojo)
@@ -119,6 +121,10 @@ static struct BurnDIPInfo regionDIPList[] = {
 	{0x1B,	0x01, 0xFF,	0x08, "Asia"},
 	{0x1B,	0x01, 0xFF,	0x00, "XXXXXX"},
 
+	{0,		0xFE, 0,	2,	  "Less sprite lag"},
+	{0x1C,	0x01, 0x01,	0x00, "No"},
+	{0x1C,	0x01, 0x01,	0x01, "Yes"},
+
 //	{0,		0xFE, 0,	2,		"NO CD"},
 //	{0x1B,	0x01, 0x10, 0x00,	"No"},
 //	{0x1B,	0x01, 0x10, 0x10,	"Yes"},
@@ -137,6 +143,10 @@ static struct BurnDIPInfo jojobaRegionDIPList[] = {
 	{0x1B,	0x01, 0xFF,	0x07, "Oceania"},
 	{0x1B,	0x01, 0xFF,	0x08, "Korea"}, // fake region?
 	{0x1B,	0x01, 0xFF,	0x00, "XXXXXX"},
+
+	{0,		0xFE, 0,	2,	  "Less sprite lag"},
+	{0x1C,	0x01, 0x01,	0x00, "No"},
+	{0x1C,	0x01, 0x01,	0x01, "Yes"},
 };
 
 static struct BurnDIPInfo redeartnRegionDIPList[] = {
@@ -152,6 +162,10 @@ static struct BurnDIPInfo redeartnRegionDIPList[] = {
 	{0x1B,	0x01, 0xFF,	0x57, "Oceania"},
 	{0x1B,	0x01, 0xFF,	0x58, "Asia"},
 	{0x1B,	0x01, 0xFF,	0x50, "Japan"},
+
+	{0,		0xFE, 0,	2,	  "Less sprite lag"},
+	{0x1C,	0x01, 0x01,	0x00, "No"},
+	{0x1C,	0x01, 0x01,	0x01, "Yes"},
 };
 
 static struct BurnDIPInfo sfiiiDIPList[] = {
@@ -171,6 +185,10 @@ static struct BurnDIPInfo sfiiiDIPList[] = {
 	{0,		0xFD, 0,	2,	  "Fake Widescreen DIP"},
 	{0x1B,	0x01, 0x80,	0x80, "Widescreen"},
 	{0x1B,	0x01, 0x80,	0x00, "Normal"},
+
+	{0,		0xFE, 0,	2,	  "Less sprite lag"},
+	{0x1C,	0x01, 0x01,	0x00, "No"},
+	{0x1C,	0x01, 0x01,	0x01, "Yes"},
 
 //	{0,		0xFE, 0,	2,		"NO CD"},
 //	{0x1B,	0x01, 0x10, 0x00,	"No"},

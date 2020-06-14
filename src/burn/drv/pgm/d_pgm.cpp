@@ -6280,7 +6280,7 @@ static struct BurnRomInfo kovshpqszlRomDesc[] = {
 	
 	{ "m0600_po69.rom",	 	  		0x400000, 0xec3f335d, 5 | BRF_SND },			//  9 Samples
 
-	{ "kovsh_v100_china_po89.asic", 0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+	{ "kovsh_v100_china_po89.asic", 0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovshpqszl, kovshpqszl, pgm)
@@ -6315,9 +6315,9 @@ static struct BurnRomInfo kovshpqszltwRomDesc[] = {
 	{ "b0540_po89.rom",	   			0x800000, 0x03a1641e, 4 | BRF_GRA },			//  8
 	{ "b0601_po77.rom",	  	 		0x800000, 0x5a9defbb, 4 | BRF_GRA },			//  9
 
-	{ "m0600_po69.rom",	 	  		0x400000, 0xec3f335d, 5 | BRF_SND },			//  10 Samples
+	{ "m0600_po69.rom",	 	  		0x400000, 0xec3f335d, 5 | BRF_SND },			// 10 Samples
 
-	{ "kovsh_v100_china_po89.asic", 0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+	{ "kovsh_v100_china_po89.asic", 0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovshpqszltw, kovshpqszltw, pgm)
@@ -6341,18 +6341,18 @@ static struct BurnRomInfo kovshpzqhlRomDesc[] = {
 	{ "p0600h_101_po175.rom",		 0x200000,  0x396b0f14, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 	{ "p0600h_101_po123.rom",		 0x200000,  0xb9ad393f, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0600_pw111.rom",    		 0x800000,  0xde7fdc0c, 2 | BRF_GRA },			 //  2 Tile data
+	{ "t0600_pw111.rom",    		 0x800000,  0xde7fdc0c, 2 | BRF_GRA },			  //  2 Tile data
 
-	{ "a0600_po123.rom",	  	 	 0x2000000, 0x8cee9b01, 3 | BRF_GRA },			 //  3 Sprite Color Data
+	{ "a0600_po123.rom",	  	 	 0x2000000, 0x8cee9b01, 3 | BRF_GRA },			  //  3 Sprite Color Data
 	
-	{ "b0600_po123.rom",	   		 0x1000000, 0x82a43111, 4 | BRF_GRA },			 //  7 Sprite Masks & Color Indexes
+	{ "b0600_po123.rom",	   		 0x1000000, 0x82a43111, 4 | BRF_GRA },			  //  7 Sprite Masks & Color Indexes
 		
-	{ "m0600.u5",	   				 0x400000,  0x3ada4fd6, 5 | BRF_SND },			 //  8 Samples
+	{ "m0600.u5",	   				 0x400000,  0x3ada4fd6, 5 | BRF_SND },			  //  8 Samples
  
  #if !defined (ROM_VERIFY)
-	{ "kovsh_v100_china_po89.asic",  0x004000,  0x4627f36f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+	{ "kovsh_v100_china_po89.asic",  0x004000,  0x4627f36f, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
 #else	
-	{ "kovsh_v100_china_po123.asic", 0x004000,  0x39abc15f, 7 | BRF_PRG | BRF_ESS/* | BRF_NODUMP*/ },  //  11 Internal ARM7 Rom
+	{ "kovsh_v100_china_po123.asic", 0x004000,  0x39abc15f, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
 #endif
 };
 
@@ -6366,5 +6366,145 @@ struct BurnDriver BurnDrvkovshpzqhl = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpzqhlRomInfo, kovshpzqhlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)
+// This set is known as kovsho182 in HBMAME
+
+static struct BurnRomInfo kovlsyxRomDesc[] = {
+	{ "p0600h_101_po182.rom",		 	0x400000, 0x4809af14, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw10.rom",    			 	0x800000, 0xa919ec0f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600_po182.rom",	  	 	 	0x800000, 0x47794602, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601_po01.rom",	  	 		 	0x800000, 0xd94abe4b, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.u6",	   			 	 	0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_po182.rom",	  	 		0x800000, 0x6afd8e35, 3 | BRF_GRA }, 	        //  5
+	{ "a0541_po182.rom",	   			0x800000, 0x164de1a8, 3 | BRF_GRA }, 	        //  6
+
+	{ "b0600_po11.rom",	   			 	0x800000, 0xf48a3b3d, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b0540_po11.rom",	   			 	0x800000, 0xc3eefa33, 4 | BRF_GRA },			//  8
+	
+	{ "m0600_po11.rom",	 	  		 	0x400000, 0x459ad15f, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china_po182.asic", 	0x004000, 0x8598d603, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsyx, kovlsyx, pgm)
+STD_ROM_FN(kovlsyx)
+
+struct BurnDriver BurnDrvkovlsyx = {
+	"kovlsyx", "kovshp", "pgm", NULL, "2014",
+	"Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsyxRomInfo, kovlsyxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
+// This set is known as kovsho100 in HBMAME
+
+static struct BurnRomInfo kovlsyxqszlRomDesc[] = {
+	{ "p0600h_101_po100.rom",		 	0x400000, 0xe1bf582e, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw10.rom",    			 	0x800000, 0xa919ec0f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600_po73.rom",	  	 	 		0x800000, 0x72643288, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601_po73.rom",	  	 		 	0x800000, 0x9c1d1bea, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po73.rom",	   			 	0x800000, 0x7b437e0f, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_po89.rom",	  	 			0x800000, 0xb038e568, 3 | BRF_GRA }, 	        //  5
+	{ "a0541_po73.rom",	   				0x800000, 0x1fa3c921, 3 | BRF_GRA }, 	        //  6
+
+	{ "b0600_po73.rom",	   			 	0x800000, 0x0646c5ef, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b0540_po89.rom",	   			 	0x800000, 0x03a1641e, 4 | BRF_GRA },			//  8
+	
+	{ "m0600_po69.rom",	 	  		 	0x400000, 0xec3f335d, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china_po89.asic", 	0x004000, 0x4627f36f, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsyxqszl, kovlsyxqszl, pgm)
+STD_ROM_FN(kovlsyxqszl)
+
+struct BurnDriver BurnDrvkovlsyxqszl = {
+	"kovlsyxqszl", "kovshp", "pgm", NULL, "2018",
+	"Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsyxqszlRomInfo, kovlsyxqszlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
+// This set is known as kovsho101 in HBMAME
+
+static struct BurnRomInfo kovlsyxqxzlRomDesc[] = {
+	{ "p0600h_101_po101.rom",		 	0x400000, 0x4c434662, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw10.rom",    			 	0x800000, 0xa919ec0f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600_po73.rom",	  	 	 		0x800000, 0x72643288, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601_po73.rom",	  	 		 	0x800000, 0x9c1d1bea, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po73.rom",	   			 	0x800000, 0x7b437e0f, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_po75.rom",	  	 			0x800000, 0x612306ed, 3 | BRF_GRA }, 	        //  5
+	{ "a0541_po113.rom",	   			0x800000, 0xfac5160e, 3 | BRF_GRA }, 	        //  6
+
+	{ "b0600_po73.rom",	   			 	0x800000, 0x0646c5ef, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b0540_po113.rom",	   			0x800000, 0xb7032905, 4 | BRF_GRA },			//  8
+	
+	{ "m0600_po69.rom",	 	  		 	0x400000, 0xec3f335d, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china_pw113.asic", 	0x004000, 0xd9a43086, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsyxqxzl, kovlsyxqxzl, pgm)
+STD_ROM_FN(kovlsyxqxzl)
+
+struct BurnDriver BurnDrvkovlsyxqxzl = {
+	"kovlsyxqxzl", "kovshp", "pgm", NULL, "2018",
+	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsyxqxzlRomInfo, kovlsyxqxzlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)
+// This set is known as kovsho102 in HBMAME
+
+static struct BurnRomInfo kovlsyxqxzlpRomDesc[] = {
+	{ "p0600h_101_po102.rom",		 	0x400000, 0x9f1274ff, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw10.rom",    			 	0x800000, 0xa919ec0f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600_po73.rom",	  	 	 		0x800000, 0x72643288, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601_po73.rom",	  	 		 	0x800000, 0x9c1d1bea, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po73.rom",	   			 	0x800000, 0x7b437e0f, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_po75.rom",	  	 			0x800000, 0x612306ed, 3 | BRF_GRA }, 	        //  5
+	{ "a0541_po113.rom",	   			0x800000, 0xfac5160e, 3 | BRF_GRA }, 	        //  6
+
+	{ "b0600_po73.rom",	   			 	0x800000, 0x0646c5ef, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b0540_po113.rom",	   			0x800000, 0xb7032905, 4 | BRF_GRA },			//  8
+	
+	{ "m0600_po69.rom",	 	  		 	0x400000, 0xec3f335d, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china_pw113.asic", 	0x004000, 0xd9a43086, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsyxqxzlp, kovlsyxqxzlp, pgm)
+STD_ROM_FN(kovlsyxqxzlp)
+
+struct BurnDriver BurnDrvkovlsyxqxzlp = {
+	"kovlsyxqxzlp", "kovshp", "pgm", NULL, "2018",
+	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F Plus (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsyxqxzlpRomInfo, kovlsyxqxzlpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

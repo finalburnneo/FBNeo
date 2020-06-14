@@ -4451,7 +4451,7 @@ INT32 killbldpInit()
 struct BurnDriver BurnDrvKillbldp = {
 	"killbldp", NULL, "pgm", NULL, "2005",
 	"The Killing Blade Plus (V300)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200\u00A0\u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
+	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200 \u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, killbldpRomInfo, killbldpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	killbldpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6397,7 +6397,7 @@ STD_ROM_FN(kovlsyx)
 struct BurnDriver BurnDrvkovlsyx = {
 	"kovlsyx", "kovshp", "pgm", NULL, "2014",
 	"Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	L"Luan Shi Ying Xiong (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4 \u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxRomInfo, kovlsyxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6432,7 +6432,7 @@ STD_ROM_FN(kovlsyxqszl)
 struct BurnDriver BurnDrvkovlsyxqszl = {
 	"kovlsyxqszl", "kovshp", "pgm", NULL, "2018",
 	"Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u6C42\u751F\u4E4B\u8DEF (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4 \u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxqszlRomInfo, kovlsyxqszlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6467,7 +6467,7 @@ STD_ROM_FN(kovlsyxqxzl)
 struct BurnDriver BurnDrvkovlsyxqxzl = {
 	"kovlsyxqxzl", "kovshp", "pgm", NULL, "2018",
 	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4 \u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxqxzlRomInfo, kovlsyxqxzlRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6502,7 +6502,7 @@ STD_ROM_FN(kovlsyxqxzlp)
 struct BurnDriver BurnDrvkovlsyxqxzlp = {
 	"kovlsyxqxzlp", "kovshp", "pgm", NULL, "2018",
 	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
-	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F Plus (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4\u0020\u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
+	L"Luan Shi Ying Xiong - Qiu Sheng Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)\0\u4E71\u4E16\u82F1\u96C4 - \u7FA4\u96C4\u9010\u9E7F Plus (\u4E09\u56FD\u6218\u7EAA - \u4E71\u4E16\u67AD\u96C4 \u4FEE\u6539\u7248, \u7248\u672C 500)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxqxzlpRomInfo, kovlsyxqxzlpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

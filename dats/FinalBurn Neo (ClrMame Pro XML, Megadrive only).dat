@@ -573,6 +573,13 @@
 		<rom name="arttool.bin" size="262144" crc="5353f532"/>
 		<driver status="good"/>
 	</game>
+	<game name="asapplz">
+		<description>ASAP Plz (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>YRS Truly</manufacturer>
+		<rom name="asap plz (yrs truly)(2020).bin" size="524288" crc="6f65bbf5"/>
+		<driver status="good"/>
+	</game>
 	<game name="asscreed" cloneof="dlair" romof="dlair">
 		<description>Assassins Creed (Rus)</description>
 		<year>199?</year>
@@ -844,6 +851,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13677.bin" size="524288" crc="b1e268da"/>
+		<driver status="good"/>
+	</game>
+	<game name="bahamutse" cloneof="bahamuts" romof="bahamuts">
+		<description>Bahamut Senki (T-Eng)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="bahamut senki (j)(t-eng).bin" size="1048576" crc="89383a55"/>
 		<driver status="good"/>
 	</game>
 	<game name="balljack">
@@ -1705,6 +1719,13 @@
 		<year>2015</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Canon - Legend of the New Gods (HB).bin" size="2097152" crc="f85dd66d"/>
+		<driver status="good"/>
+	</game>
+	<game name="capoeira">
+		<description>Capoeira Boy (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Manganga Team</manufacturer>
+		<rom name="capoeira boy (manganga team)(2020).bin" size="655360" crc="2ac1f6ba"/>
 		<driver status="good"/>
 	</game>
 	<game name="havoc">
@@ -5389,6 +5410,13 @@
 		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="indiana jones and the last crusade (usa).bin" size="1048576" crc="3599a3fd"/>
+		<driver status="good"/>
+	</game>
+	<game name="inktober">
+		<description>INKtober (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Brunni</manufacturer>
+		<rom name="inktober (brunni)(2019).bin" size="917504" crc="09c7bb37"/>
 		<driver status="good"/>
 	</game>
 	<game name="insectxj" cloneof="insectx" romof="insectx">
@@ -9595,10 +9623,17 @@
 		<rom name="prince of persia (usa).bin" size="1048576" crc="13c181a4"/>
 		<driver status="good"/>
 	</game>
+	<game name="ppersia2r" cloneof="ppersia2" romof="ppersia2">
+		<description>Prince of Persia 2 - Remastered Edition (Hack, v1.5) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Linkuei</manufacturer>
+		<rom name="prince of persia 2 - remastered edition (v1.5).bin" size="2133984" crc="677ab959"/>
+		<driver status="good"/>
+	</game>
 	<game name="ppersia2">
 		<description>Prince of Persia 2 - The Shadow and the Flame (Euro, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1995</year>
+		<manufacturer>Psygnosis</manufacturer>
 		<rom name="prince of persia 2 - the shadow and the flame (euro) (prototype).bin" size="2097152" crc="3ab44d46"/>
 		<driver status="good"/>
 	</game>
@@ -16636,6 +16671,13 @@
 		<year>1996</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="xin qi gai wang zi (chi) (alt) (unl).bin" size="4194304" crc="da5a4bfe"/>
+		<driver status="good"/>
+	</game>
+	<game name="xump2">
+		<description>Xump2 (HB, rev2017) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Retroguru</manufacturer>
+		<rom name="xump2 (retroguru)(rev2017).bin" size="655360" crc="f61d26e1"/>
 		<driver status="good"/>
 	</game>
 	<game name="yasech">

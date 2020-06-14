@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14118 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14134 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -623,6 +623,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_artduel	|  	| Artillery Duel					| 		| 1983	| Xonox		| ColecoVision	| 					|
 | pce_arttool	|  	| Artist Tool						| 		| 1990	| NEC Home Elect| PC Engine	| 					|
 | sms_tvcolos	|  	| As Aventuras da TV Colosso (Bra)			| sms_asterix	| 1996	| Tec Toy	| Sega Master Sy| 					|
+| md_asapplz	|  	| ASAP Plz (HB)						| 		| 2020	| YRS Truly	| Sega Megadrive| 					|
 | ashnojoe	|  	| Ashita no Joe (Japan)					| scessjoe	| 1990	| Taito Corporat| Miscellaneous	| Incomplete sound			|
 | sms_ashura	|  	| Ashura (Jpn)						| sms_secret	| 1986	| Sega		| Sega Master Sy| 					|
 | ashuraj	|  	| Ashura Blaster (Japan)				| ashura	| 1990	| Taito Corporat| Taito B System| 					|
@@ -828,6 +829,7 @@ This list contains all games supported by FinalBurn Neo.
 | bagmanj	|  	| Bagman (Taito)					| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | bagman	|  	| Bagman						| 		| 1982	| Valadon Automa| Miscellaneous	| 					|
 | md_bahamuts	|  	| Bahamut Senki (Jpn)					| 		| 1991	| Sega		| Sega Megadrive| 					|
+| md_bahamutse	|  	| Bahamut Senki (T-Eng)					| md_bahamuts	| 2020	| Sega - Supper	| Sega Megadrive| 					|
 | bakatono	|  	| Bakatonosama Mahjong Manyuuki (MOM-002)(MOH-002)	| 		| 1991	| Monolith Corp.| Neo Geo MVS	| 					|
 | sms_bakubaku	|  	| Baku Baku Animal (Bra)				| 		| 1996	| Tec Toy	| Sega Master Sy| 					|
 | gg_bakubaku	|  	| Baku Baku Animal (Euro)				| 		| 1996	| Sega		| Sega Game Gear| 					|
@@ -1718,6 +1720,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_capcosgolmedch92|  	| Capcom's Gold Medal Challenge '92 (USA)		| 		| 1992	| Capcom	| Miscellaneous	| 					|
 | msx_ctrueno	|  	| Capitan Trueno (Spa)					| 		| 1989	| Dinamic Softwa| MSX		| Uses joyport #2			|
 | capitol	|  	| Capitol						| pleiads	| 1981	| bootleg? (Univ| Miscellaneous	| 					|
+| md_capoeira	|  	| Capoeira Boy (HB)					| 		| 2020	| Manganga Team	| Sega Megadrive| 					|
 | md_havoc	|  	| Capt'n Havoc (Euro)					| 		| 1994	| Codemasters	| Sega Megadrive| 					|
 | captavena	|  	| Captain America and The Avengers (Asia Rev 1.0)	| captaven	| 1991	| Data East Corp| DECO 32	| 					|
 | captaven	|  	| Captain America and The Avengers (Asia Rev 1.4)	| 		| 1991	| Data East Corp| DECO 32	| 					|
@@ -5159,6 +5162,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hostages	|  	| Hostages (Spa, Hacked by Martos)			| 		| 1990	| Erbe Software	| MSX		| 					|
 | hotbubla	|  	| Hot Bubble (Korea)					| bubl2000	| 1998	| Afega (Pandora| NMK16		| 					|
 | hotbubl	|  	| Hot Bubble (Korea, with adult pictures)		| bubl2000	| 1998	| Afega (Pandora| NMK16		| 					|
+| hotchase	|  	| Hot Chase (set 1)					| 		| 1988	| Konami	| Miscellaneous	| 					|
+| hotchasea	|  	| Hot Chase (set 2)					| hotchase	| 1988	| Konami	| Miscellaneous	| 					|
 | hotmemry11	|  	| Hot Memory (V1.1, Germany, 11/30/94)			| pairs		| 1994	| Incredible Tec| Miscellaneous	| 					|
 | hotmemry	|  	| Hot Memory (V1.2, Germany, 12/28/94)			| pairs		| 1994	| Incredible Tec| Miscellaneous	| 					|
 | hotmind	|  	| Hot Mind (Hard Times hardware)			| 		| 1996	| Playmark	| Misc		| 					|
@@ -5327,6 +5332,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_infernalminer|  	| Infernal Miner					| 		| 1985	| Sprites	| MSX		| 					|
 | nes_infiltrator|  	| Infiltrator (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
 | ngp_infinity	|  	| Infinity Cure (Jpn)					| 		| 2000	| KID		| NeoGeo Pocket | 					|
+| md_inktober	|  	| INKtober (HB)						| 		| 2019	| Brunni	| Sega Megadrive| 					|
 | insectxj	|  	| Insector X (Japan)					| insectx	| 1989	| Taito Corporat| Miscellaneous	| 					|
 | nes_insectorx	|  	| Insector X (Japan)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | md_insectxj	|  	| Insector X (Jpn, Kor)					| md_insectx	| 1990	| Hot-B		| Sega Megadrive| 					|
@@ -6406,6 +6412,10 @@ This list contains all games supported by FinalBurn Neo.
 | janjans2	|  	| Lovely Pop Mahjong JangJang Shimasho 2 (Japan)	| 		| 2000	| Visco		| SSV		| 					|
 | loverboy	|  	| Lover Boy						| 		| 1983	| G.T Enterprise| Jack the Giant| 					|
 | nes_lowgman	|  	| Low G Man - The Low Gravity Man (USA)			| 		| 1990	| Taxan		| Miscellaneous	| 					|
+| kovlsyx	|  	| Luan Shi Ying Xiong (hack of Knights of Valour Super H| kovshp	| 2014	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovlsyxqszl	|  	| Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knight| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovlsyxqxzl	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knight| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovlsyxqxzlp	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of K| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | luckywldj	|  	| Lucky & Wild (Japan)					| luckywld	| 1992	| Namco		| System 2	| 					|
 | luckywld	|  	| Lucky & Wild						| 		| 1992	| Namco		| System 2	| 					|
 | sms_luckypeng	|  	| Lucky Penguin (HB, v1.1)				| 		| 2020	| Denine	| Sega Master Sy| 					|
@@ -8798,7 +8808,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_ppersiau	|  	| Prince of Persia (USA)				| md_ppersia	| 1993	| Tengen	| Sega Megadrive| 					|
 | nes_princeofpersia|  	| Prince of Persia (USA)				| 		| 1992	| Virgin Games	| Miscellaneous	| 					|
 | gg_ppersiau	|  	| Prince of Persia (USA, SMS Mode)			| gg_ppersia	| 1992	| Domark	| Sega Game Gear| 					|
-| md_ppersia2	|  	| Prince of Persia 2 - The Shadow and the Flame (Euro, P| 		| 199?	| <unknown>	| Sega Megadrive| 					|
+| md_ppersia2r	|  	| Prince of Persia 2 - Remastered Edition (Hack, v1.5)	| md_ppersia2	| 2019	| Linkuei	| Sega Megadrive| 					|
+| md_ppersia2	|  	| Prince of Persia 2 - The Shadow and the Flame (Euro, P| 		| 1995	| Psygnosis	| Sega Megadrive| 					|
 | cv_pquest	|  	| Princess Quest (HB)					| 		| 2012	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | msx_princessquest|  	| Princess Quest (HB)					| 		| 2012	| Oscar Toledo G| MSX		| 					|
 | nes_princtominsalki|  	| Princess Tomato in Salad Kingdom (USA)		| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
@@ -13401,6 +13412,10 @@ This list contains all games supported by FinalBurn Neo.
 | spec_wecleman	|  	| WEC Le Mans (128K)					| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | spec_wecleman_48|  	| WEC Le Mans (48K)					| spec_wecleman	| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | msx_wecleman	|  	| WEC Le Mans (Euro)					| 		| 1988	| Imagine Softwa| MSX		| 					|
+| weclemanc	|  	| WEC Le Mans 24 (v1.26)				| wecleman	| 1986	| Konami	| Miscellaneous	| 					|
+| weclemana	|  	| WEC Le Mans 24 (v2.00)				| wecleman	| 1986	| Konami	| Miscellaneous	| 					|
+| weclemanb	|  	| WEC Le Mans 24 (v2.00, hack)				| wecleman	| 1988	| hack		| Miscellaneous	| 					|
+| wecleman	|  	| WEC Le Mans 24 (v2.01)				| 		| 1986	| Konami	| Miscellaneous	| 					|
 | msx_wbells	|  	| Wedding Bells (Jpn)					| 		| 1984	| Nihon Columbia| MSX		| 					|
 | msx_wbellsa	|  	| Wedding Bells (Jpn, Alt)				| msx_wbells	| 1984	| Nihon Columbia| MSX		| 					|
 | sms_wekainvaders10|  	| Weka Invaders (HB, v1.0)				| 		| 2017	| Disjointed Stu| Sega Master Sy| 					|
@@ -13895,6 +13910,7 @@ This list contains all games supported by FinalBurn Neo.
 | xorworld	|  	| Xor World (prototype)					| 		| 1990	| Gaelco	| Miscellaneous	| 					|
 | msx_xracing	|  	| Xracing (HB, v1.0.4)					| 		| 2019	| Brain Games	| MSX		| 					|
 | msx_xspelunk	|  	| XSpelunker (HB)					| 		| 2017	| Brain Games	| MSX		| 					|
+| md_xump2	|  	| Xump2 (HB, rev2017)					| 		| 2017	| Retroguru	| Sega Megadrive| 					|
 | sg1k_cloderunt|  	| Xun Bao Er Dai (Tw)					| sg1k_cloderun	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | xxmissio	|  	| XX Mission						| 		| 1986	| UPL		| Miscellaneous	| 					|
 | msx_xybots	|  	| Xybots (Euro)						| 		| 1989	| Domark	| MSX		| 					|

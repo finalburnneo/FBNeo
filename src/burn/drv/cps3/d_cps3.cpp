@@ -29,6 +29,8 @@
 
 #include "cps3.h"
 
+#define LESS_ACCURATE 0
+
 static struct BurnInputInfo cps3InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	Cps3But2 +  8,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	Cps3But2 + 12,	"p1 start"	},
@@ -199,42 +201,77 @@ static struct BurnDIPInfo japanRegionDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x01, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo asiaRegionDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x02, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo euroRegionDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x03, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo usaRegionDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x04, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo hispanicRegionDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x05, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo euroRedeartnDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x53, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 static struct BurnDIPInfo japanwarzardDIPList[] = {
 
 	// Defaults
 	{0x1B,	0xFF, 0xFF,	0x51, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
 };
 
 STDDIPINFOEXT(japan, region, japanRegion)

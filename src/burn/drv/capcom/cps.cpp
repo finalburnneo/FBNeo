@@ -1421,7 +1421,7 @@ INT32 CpsLoadTilesDinopic(INT32 nStart)
 	return 0;
 }
 
-INT32 CpsLoadTilesDinopic4(INT32 nStart)
+INT32 CpsLoadTilesDinopic5(INT32 nStart)
 {
 	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000000, nStart +  0, 0, 0);
 	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000004, nStart +  1, 0, 0);

@@ -5539,6 +5539,26 @@ STD_ROM_PICK(Dinopic2)
 STD_ROM_FN(Dinopic2)
 
 static struct BurnRomInfo Dinopic3RomDesc[] = {
+	{ "tk1-305_27c800.bin",     0x100000, 0xaa468337, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk1-204_27c800.bin",     0x100000, 0x0efd1ddb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "tb416-02_27c160.bin",    0x200000, 0xbfd01d21, BRF_GRA | CPS1_TILES },
+	{ "tb415-01_27c160.bin",    0x200000, 0xef508ec5, BRF_GRA | CPS1_TILES },
+	
+	{ "ti-i_27c040.bin",    	0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "1_palce20v8.bin",        0x000157, 0xcd99ca47, BRF_OPT },
+	{ "2_palce20v8.bin",        0x000157, 0x60d016b9, BRF_OPT },
+	{ "3_palce20v8.bin",        0x000157, 0x049b7f4f, BRF_OPT },
+	{ "4_palce16v8.bin",      	0x000117, 0x97a67c6d, BRF_OPT },
+	{ "5_palce16v8.bin",      	0x000117, 0x48253c66, BRF_OPT },
+	{ "6_palce16v8.bin",      	0x000117, 0x9ae375ba, BRF_OPT },
+};
+
+STD_ROM_PICK(Dinopic3)
+STD_ROM_FN(Dinopic3)
+
+static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "27c4000-m15377-a-5.bin",    	0x080000, 0x96dfcbf1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "27c4000-m15262-a-3.bin", 	0x080000, 0x13dfeb08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "27c4000-m15295-a-4.bin", 	0x080000, 0x6133f349, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -5565,10 +5585,10 @@ static struct BurnRomInfo Dinopic3RomDesc[] = {
 	{ "palce16v8h-2.bin",      		0x000117, 0x9ae375ba, BRF_OPT },
 };
 
-STD_ROM_PICK(Dinopic3)
-STD_ROM_FN(Dinopic3)
+STD_ROM_PICK(Dinopic4)
+STD_ROM_FN(Dinopic4)
 
-static struct BurnRomInfo Dinopic4RomDesc[] = {
+static struct BurnRomInfo Dinopic5RomDesc[] = {
 	{ "cad_28.bin",    0x040000, 0x97dc3d86, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_32.bin",    0x040000, 0x200a594f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_29.bin",    0x040000, 0x302303c4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -5603,8 +5623,21 @@ static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "pic16c57-rp",   0x000000, 0x00000000, BRF_PRG | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Dinopic4)
-STD_ROM_FN(Dinopic4)
+STD_ROM_PICK(Dinopic5)
+STD_ROM_FN(Dinopic5)
+
+static struct BurnRomInfo Jurassic99RomDesc[] = {
+	{ "210204_rom2.bin",      0x100000, 0x3f713043, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "210105a_rom1.bin",     0x100000, 0xe6294edf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "210101a_cda2.bin",     0x200000, 0x3f167412, BRF_GRA | CPS1_TILES },
+	{ "210102_cdb2.bin",      0x200000, 0x8a6920d8, BRF_GRA | CPS1_TILES },
+	
+	{ "21003_u27.bin",    	  0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Jurassic99)
+STD_ROM_FN(Jurassic99)
 
 static struct BurnRomInfo DinohRomDesc[] = {
 	{ "cda_23h.rom",   0x080000, 0x8e2a9cf0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -14550,8 +14583,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinoj"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
-	{ "dinopic3"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
+	{ "dinopic3"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
+	{ "dinopic5"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
+	{ "jurassic99"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoeh"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoh"         , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
 	{ "dinohc"        , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' Champion Edition C-Board
@@ -15560,13 +15595,39 @@ static INT32 DinohInit()
 	return nRet;
 }
 
-static UINT16 Dinopic4ProtValue = 0;
+static INT32 Dinopic3Init()
+{
+	INT32 nRet = 0;
+	
+	Cps1DisablePSnd = 1;
+	CpsBootlegEEPROM = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	
+	nRet = TwelveMhzInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+	SekSetWriteWordHandler(1, DinopicScrollWrite);
+	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
+	SekClose();
+	
+	return nRet;
+}
 
-UINT16 __fastcall Dinopic4ProtReadWord(UINT32 a)
+static UINT16 Dinopic5ProtValue = 0;
+
+UINT16 __fastcall Dinopic5ProtReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x57a2b0: {
-			if (Dinopic4ProtValue == 0x04) return 0x0404;
+			if (Dinopic5ProtValue == 0x04) return 0x0404;
 			return 0xffff;
 		}
 	}
@@ -15574,22 +15635,22 @@ UINT16 __fastcall Dinopic4ProtReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Dinopic4ProtWriteWord(UINT32 a, UINT16 d)
+void __fastcall Dinopic5ProtWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x5762b0: {
-			Dinopic4ProtValue = d;
+			Dinopic5ProtValue = d;
 			return;
 		}
 	}
 }
 
-static INT32 Dinopic4Init()
+static INT32 Dinopic5Init()
 {
 	INT32 nRet = 0;
 	
 	CpsBootlegEEPROM = 1;
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic4;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic5;
 	
 	nRet = TwelveMhzInit();
 	
@@ -15597,8 +15658,8 @@ static INT32 Dinopic4Init()
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
 	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
 	SekMapHandler(2, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
-	SekSetReadWordHandler(2, Dinopic4ProtReadWord);
-	SekSetWriteWordHandler(2, Dinopic4ProtWriteWord);
+	SekSetReadWordHandler(2, Dinopic5ProtReadWord);
+	SekSetWriteWordHandler(2, Dinopic5ProtWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -19580,17 +19641,37 @@ struct BurnDriver BurnDrvCpsDinopic3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Dinopic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvCpsDinopic4 = {
 	"dinopic4", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930223 Asia TW)\0", NULL, "Capcom", "CPS1",
+	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinohInputInfo, DinohDIPInfo,
-	Dinopic4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinopic5 = {
+	"dinopic5", "dino", NULL, NULL, "1993",
+	"Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57), 930223 Asia TW)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Dinopic5RomInfo, Dinopic5RomName, NULL, NULL, NULL, NULL, DinohInputInfo, DinohDIPInfo,
+	Dinopic5Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsJurassic99 = {
+	"jurassic99", "dino", NULL, NULL, "1993",
+	"Jurassic 99 (Cadillacs and Dinosaurs bootleg with EM78P447AP, 930201 ?)\0", "No sound", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	DinotpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

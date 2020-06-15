@@ -706,17 +706,17 @@ static INT32 DrvInit()
 
 // Rom information
 static struct BurnRomInfo donpachiRomDesc[] = {
-	{ "prgu.u29",     0x080000, 0x89C36802, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "prgu.u29",     0x080000, 0x89c36802, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "atdp.u44",     0x200000, 0x7189E953, BRF_GRA },			 //  1 Sprite data
-	{ "atdp.u45",     0x200000, 0x6984173F, BRF_GRA },			 //  2
+	{ "atdp.u44",     0x200000, 0x7189e953, BRF_GRA },			 //  1 Sprite data
+	{ "atdp.u45",     0x200000, 0x6984173f, BRF_GRA },			 //  2
 
-	{ "atdp.u54",     0x100000, 0x6BDA6B66, BRF_GRA },			 //  3 Layer 0 Tile data
-	{ "atdp.u57",     0x100000, 0x0A0E72B9, BRF_GRA },			 //  4 Layer 1 Tile data
-	{ "text.u58",     0x040000, 0x5DBA06E7, BRF_GRA },			 //  5 Layer 2 Tile data
+	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
+	{ "text.u58",     0x040000, 0x5dba06e7, BRF_GRA },			 //  5 Layer 2 Tile data
 
-	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
-	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
+	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
+	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
 	{ "eeprom-donpachi.u10", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
@@ -728,17 +728,17 @@ STD_ROM_PICK(donpachi)
 STD_ROM_FN(donpachi)
 
 static struct BurnRomInfo donpachijRomDesc[] = {
-	{ "prg.u29",      0x080000, 0x6BE14AF6, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "prg.u29",      0x080000, 0x6be14af6, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "atdp.u44",     0x200000, 0x7189E953, BRF_GRA },			 //  1 Sprite data
-	{ "atdp.u45",     0x200000, 0x6984173F, BRF_GRA },			 //  2
+	{ "atdp.u44",     0x200000, 0x7189e953, BRF_GRA },			 //  1 Sprite data
+	{ "atdp.u45",     0x200000, 0x6984173f, BRF_GRA },			 //  2
 
-	{ "atdp.u54",     0x100000, 0x6BDA6B66, BRF_GRA },			 //  3 Layer 0 Tile data
-	{ "atdp.u57",     0x100000, 0x0A0E72B9, BRF_GRA },			 //  4 Layer 1 Tile data
-	{ "u58.bin",      0x040000, 0x285379FF, BRF_GRA },			 //  5 Layer 2 Tile data
+	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
+	{ "u58.bin",      0x040000, 0x285379ff, BRF_GRA },			 //  5 Layer 2 Tile data
 
-	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
-	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
+	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
+	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
 	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
@@ -749,18 +749,46 @@ static struct BurnRomInfo donpachijRomDesc[] = {
 STD_ROM_PICK(donpachij)
 STD_ROM_FN(donpachij)
 
+/* When pressing the 2p start button, it pauses the game (music still plays). 
+Pressing the 1p start button unpauses the game. If you press both 1p start and 2p start at the same time, 
+the game lets you play in "edusword mode", aka slow motion (music still plays normally).*/
+
+static struct BurnRomInfo donpachijsRomDesc[] = {
+	{ "prg.u29",      0x080000, 0x810dbd42, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	// This was on the label of the ROM chip: 国内撮影用 
+	// kokunai satsueiyou (for domestic screenshot only)
+
+	{ "atdp.u44",     0x200000, 0x7189e953, BRF_GRA },			 //  1 Sprite data
+	{ "atdp.u45",     0x200000, 0x6984173f, BRF_GRA },			 //  2
+
+	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
+	{ "u58.bin",      0x040000, 0x285379ff, BRF_GRA },			 //  5 Layer 2 Tile data
+
+	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
+	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
+	
+	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
+	
+	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
+};
+
+
+STD_ROM_PICK(donpachijs)
+STD_ROM_FN(donpachijs)
+
 static struct BurnRomInfo donpachikrRomDesc[] = {
-	{ "prgk.u26",     0x080000, 0xBBAF4C8B, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "prgk.u26",     0x080000, 0xbbaf4c8b, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "atdp.u44",     0x200000, 0x7189E953, BRF_GRA },			 //  1 Sprite data
-	{ "atdp.u45",     0x200000, 0x6984173F, BRF_GRA },			 //  2
+	{ "atdp.u44",     0x200000, 0x7189e953, BRF_GRA },			 //  1 Sprite data
+	{ "atdp.u45",     0x200000, 0x6984173f, BRF_GRA },			 //  2
 
-	{ "atdp.u54",     0x100000, 0x6BDA6B66, BRF_GRA },			 //  3 Layer 0 Tile data
-	{ "atdp.u57",     0x100000, 0x0A0E72B9, BRF_GRA },			 //  4 Layer 1 Tile data
-	{ "u58.bin",      0x040000, 0x285379FF, BRF_GRA },			 //  5 Layer 2 Tile data
+	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
+	{ "u58.bin",      0x040000, 0x285379ff, BRF_GRA },			 //  5 Layer 2 Tile data
 
-	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
-	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
+	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
+	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
 	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
@@ -774,15 +802,15 @@ STD_ROM_FN(donpachikr)
 static struct BurnRomInfo donpachihkRomDesc[] = {
 	{ "37.u29",       0x080000, 0x71f39f30, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "atdp.u44",     0x200000, 0x7189E953, BRF_GRA },			 //  1 Sprite data
-	{ "atdp.u45",     0x200000, 0x6984173F, BRF_GRA },			 //  2
+	{ "atdp.u44",     0x200000, 0x7189e953, BRF_GRA },			 //  1 Sprite data
+	{ "atdp.u45",     0x200000, 0x6984173f, BRF_GRA },			 //  2
 
-	{ "atdp.u54",     0x100000, 0x6BDA6B66, BRF_GRA },			 //  3 Layer 0 Tile data
-	{ "atdp.u57",     0x100000, 0x0A0E72B9, BRF_GRA },			 //  4 Layer 1 Tile data
+	{ "atdp.u54",     0x100000, 0x6bda6b66, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "atdp.u57",     0x100000, 0x0a0e72b9, BRF_GRA },			 //  4 Layer 1 Tile data
 	{ "u58.bin",      0x040000, 0x285379ff, BRF_GRA },			 //  5 Layer 2 Tile data
 
-	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
-	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
+	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
+	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
 	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
@@ -833,6 +861,16 @@ struct BurnDriver BurnDrvDonpachij = {
 	L"\u9996\u9818\u8702 DonPachi (Japan, ver. 1.01, 95/05/11)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachijRomInfo, donpachijRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvDonpachijs = {
+	"donpachijs", "donpachi", NULL, "donpachi", "1995",
+	"DonPachi (Japan, ver. 1.01, 95/05/11 satsuei)\0", NULL, "Atlus / Cave", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (Japan, ver. 1.01, 95/05/11 satsuei)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
+	NULL, donpachijsRomInfo, donpachijsRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };

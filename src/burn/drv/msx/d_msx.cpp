@@ -25258,3 +25258,124 @@ struct BurnDriver BurnDrvMSX_zmazingo = {
 	272, 228, 4, 3
 };
 
+
+// After Burner (Euro)
+
+static struct BurnRomInfo MSX_aburnerRomDesc[] = {
+	{ "afterburner (1988)(activision)(side a)[bload'cas-',r].cas",	0x0fa82, 0x8affa468, BRF_PRG | BRF_ESS },
+	{ "afterburner (1988)(activision)(side b)[bload'cas-',r].cas",	0x0d57a, 0x5bdf052f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_aburner, MSX_aburner, msx_msx)
+STD_ROM_FN(MSX_aburner)
+
+struct BurnDriver BurnDrvMSX_aburner = {
+	"msx_aburner", NULL, "msx_msx", NULL, "1988",
+	"After Burner (Euro)\0", NULL, "Activision", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_aburnerRomInfo, MSX_aburnerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Dr. Pill (HB)
+
+static struct BurnRomInfo MSX_drpillRomDesc[] = {
+	{ "dr pill (2009)(infinite).rom",	0x20000, 0x27ff4efd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_drpill, MSX_drpill, msx_msx)
+STD_ROM_FN(MSX_drpill)
+
+struct BurnDriver BurnDrvMSX_drpill = {
+	"msx_drpill", NULL, "msx_msx", NULL, "2009",
+	"Dr. Pill (HB)\0", NULL, "Infinite", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_drpillRomInfo, MSX_drpillRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Ghosts'n Goblins (HB, v1.1)
+
+static struct BurnRomInfo MSX_gngRomDesc[] = {
+	{ "gng (2008)(amusement factory).rom",	0xb8000, 0x50fb9db4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gng, MSX_gng, msx_msx)
+STD_ROM_FN(MSX_gng)
+
+struct BurnDriver BurnDrvMSX_gng = {
+	"msx_gng", NULL, "msx_msx", NULL, "2008",
+	"Ghosts'n Goblins (HB, v1.1)\0", "No music, music only available on MSX2 system", "Amusement Factory", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
+	MSXGetZipName, MSX_gngRomInfo, MSX_gngRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Hans' Adventure (HB)
+
+static struct BurnRomInfo MSX_hansadvRomDesc[] = {
+	{ "hans' adventure (2010)(the pets mode).rom",	0x0c000, 0xc7452eca, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_hansadv, MSX_hansadv, msx_msx)
+STD_ROM_FN(MSX_hansadv)
+
+struct BurnDriver BurnDrvMSX_hansadv = {
+	"msx_hansadv", NULL, "msx_msx", NULL, "2010",
+	"Hans' Adventure (HB)\0", NULL, "The Pets Mode", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_hansadvRomInfo, MSX_hansadvRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Jet Bomber (Euro)
+
+static struct BurnRomInfo MSX_jetbombRomDesc[] = {
+	{ "jet bomber (1985)(aackosoft).rom",	0x08000, 0x41d93536, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jetbomb, MSX_jetbomb, msx_msx)
+STD_ROM_FN(MSX_jetbomb)
+
+struct BurnDriver BurnDrvMSX_jetbomb = {
+	"msx_jetbomb", NULL, "msx_msx", NULL, "1985",
+	"Jet Bomber (Euro)\0", NULL, "Aackosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_jetbombRomInfo, MSX_jetbombRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// QBIQS (HB)
+
+static struct BurnRomInfo MSX_qbiqsRomDesc[] = {
+	{ "qbiqs (2010)(z80st-software).rom",	0x0c000, 0xc1b8c64f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_qbiqs, MSX_qbiqs, msx_msx)
+STD_ROM_FN(MSX_qbiqs)
+
+struct BurnDriver BurnDrvMSX_qbiqs = {
+	"msx_qbiqs", NULL, "msx_msx", NULL, "2010",
+	"QBIQS (HB)\0", NULL, "Z80st-Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_qbiqsRomInfo, MSX_qbiqsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

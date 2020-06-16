@@ -15723,6 +15723,49 @@ static INT32 DinotpicInit()
 	return nRet;
 }
 
+static void Jurassic99PatchCallback()
+{
+	// patch from HBMAME
+	UINT8 *mem8 = (UINT8*)CpsRom;
+
+	// Fix screen transitions 
+	mem8[0x00b28] = 0x00; 
+	mem8[0x00b29] = 0x70;
+	mem8[0x00b2a] = 0x00;
+	mem8[0x00b2b] = 0x72;
+	mem8[0x00b2c] = 0x3c;
+	mem8[0x00b2d] = 0x34;
+	mem8[0x00b32] = 0xc1;
+	mem8[0x00b33] = 0x20;
+}
+
+static INT32 Jurassic99Init()
+{
+	INT32 nRet = 0;
+	
+	Cps1DisablePSnd = 1;
+	CpsBootlegEEPROM = 1;
+	AmendProgRomCallback = Jurassic99PatchCallback;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	
+	nRet = TwelveMhzInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
+	SekSetWriteWordHandler(1, DinopicScrollWrite);
+	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
+	SekClose();
+	
+	return nRet;
+}
+
 static INT32 DinohuntInit()
 {
 	INT32 nRet = 0;
@@ -19670,8 +19713,8 @@ struct BurnDriver BurnDrvCpsJurassic99 = {
 	"Jurassic 99 (Cadillacs and Dinosaurs bootleg with EM78P447AP, 930201 ?)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
-	DinotpicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Jurassic99RomInfo, Jurassic99RomName, NULL, NULL, NULL, NULL, DinohInputInfo, DinoDIPInfo,
+	Jurassic99Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

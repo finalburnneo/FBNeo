@@ -1320,10 +1320,13 @@ static bool retro_load_game_common()
 	}
 
 	// Initialize EEPROM path
-	snprintf (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo", g_save_dir, path_default_slash_c());
+	snprintf (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo%c", g_save_dir, path_default_slash_c(), path_default_slash_c());
 
 	// Create EEPROM path if it does not exist
-	path_mkdir(szAppEEPROMPath);
+	// because of some bug on gekko based devices (see https://github.com/libretro/libretro-common/issues/161), we can't use the szAppEEPROMPath variable which requires the trailing slash
+	char EEPROMPathToCreate[MAX_PATH];
+	snprintf (EEPROMPathToCreate, sizeof(EEPROMPathToCreate), "%s%cfbneo", g_save_dir, path_default_slash_c());
+	path_mkdir(EEPROMPathToCreate);
 
 	// Initialize Hiscore path
 	snprintf (szAppHiscorePath, sizeof(szAppHiscorePath), "%s%cfbneo%c", g_system_dir, path_default_slash_c(), path_default_slash_c());

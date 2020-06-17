@@ -1320,7 +1320,7 @@ static bool retro_load_game_common()
 	}
 
 	// Initialize EEPROM path
-	snprintf (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo%c", g_save_dir, path_default_slash_c(), path_default_slash_c());
+	snprintf (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo", g_save_dir, path_default_slash_c());
 
 	// Create EEPROM path if it does not exist
 	path_mkdir(szAppEEPROMPath);

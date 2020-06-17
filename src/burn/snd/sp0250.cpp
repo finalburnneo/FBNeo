@@ -32,6 +32,7 @@ static struct sp0250 *sp = NULL;
 static void (*drq)(INT32 state) = NULL;
 static INT32 sp0250_clock; // sp0250 clockrate
 static INT32 sp0250_frame; // frame sample-size
+static double sp0250_vol;
 
 static void sp0250_update_int(INT16 *buffer, INT32 length); // forward
 
@@ -133,7 +134,7 @@ static void sp0250_load_values()
 	sp->filter[5].B = sp0250_gc(sp->fifo[13]);
 	sp->filter[5].F = sp0250_gc(sp->fifo[14]);
 	sp->fifo_pos = 0;
-	drq(ASSERT_LINE);
+	if (drq) drq(ASSERT_LINE);
 
 	sp->pcount = 0;
 	sp->rcount = 0;
@@ -224,7 +225,7 @@ void sp0250_update(INT16 *inputs, INT32 sample_len)
 	{
 		INT32 k = (samples_from * j) / nBurnSoundLen;
 
-		INT32 rlmono = mixer_buffer[k];
+		INT32 rlmono = (INT32)(mixer_buffer[k] * sp0250_vol);
 
 		inputs[0] = BURN_SND_CLIP(inputs[0] + BURN_SND_CLIP(rlmono));
 		inputs[1] = BURN_SND_CLIP(inputs[1] + BURN_SND_CLIP(rlmono));
@@ -244,18 +245,26 @@ void sp0250_init(INT32 clock, void (*drqCB)(INT32), INT32 (*pCPUCyclesCB)(), INT
 	sp0250_clock = clock;
 	sp0250_frame = (clock / CLOCK_DIVIDER) * 100 / nBurnFPS; // this can change.
 
+	sp0250_vol = 1.00;
+
 	mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * nBurnSoundRate);
 	memset(mixer_buffer, 0, 2 * sizeof(INT16) * nBurnSoundRate);
 
 	pCPUTotalCycles = pCPUCyclesCB;
 	nDACCPUMHZ = nCpuMHZ;
+}
 
+void sp0250_volume(double vol)
+{
+	sp0250_vol = vol;
 }
 
 void sp0250_exit()
 {
 	BurnFree(sp);
 	BurnFree(mixer_buffer);
+
+	drq = NULL;
 }
 
 void sp0250_scan(INT32 nAction, INT32 *)
@@ -273,7 +282,13 @@ void sp0250_reset()
 	sp->RNG = 1;
 
 	nCurrentPosition = 0;
-	drq(ASSERT_LINE);
+	if (drq) drq(ASSERT_LINE);
+}
+
+INT32 sp0250_drq_read()
+{
+	UpdateStream(SyncInternal());
+	return (sp->fifo_pos == 15) ? 0 : 1;
 }
 
 // sp0250_tick() needs to be called "sp0250_frame" times per frame!
@@ -289,7 +304,7 @@ void sp0250_write(UINT8 data)
 	if (sp->fifo_pos != 15)
 	{
 		sp->fifo[sp->fifo_pos++] = data;
-		if (sp->fifo_pos == 15)
+		if (sp->fifo_pos == 15 && drq)
 			drq(CLEAR_LINE);
 	}
 }

@@ -202,6 +202,17 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="aburner" romof="msx">
+		<description>After Burner (Euro)</description>
+		<year>1988</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="afterburner (1988)(activision)(side a)[bload'cas-',r].cas" size="64130" crc="8affa468"/>
+		<rom name="afterburner (1988)(activision)(side b)[bload'cas-',r].cas" size="54650" crc="5bdf052f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="afteroids" romof="msx">
 		<description>Afteroids (Spa)</description>
 		<year>1988</year>
@@ -3095,6 +3106,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="drpill" romof="msx">
+		<description>Dr. Pill (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Infinite</manufacturer>
+		<rom name="dr pill (2009)(infinite).rom" size="131072" crc="27ff4efd"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="draconic" romof="msx">
 		<description>Draconic Throne (HB, v1.1.2) [Homebrew]</description>
 		<year>2017</year>
@@ -4157,6 +4178,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="gng" romof="msx">
+		<description>Ghosts'n Goblins (HB, v1.1) [Homebrew, No music, music only available on MSX2 system]</description>
+		<year>2008</year>
+		<manufacturer>Amusement Factory</manufacturer>
+		<rom name="gng (2008)(amusement factory).rom" size="753664" crc="50fb9db4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="glass" romof="msx">
 		<description>Glass (Spa)</description>
 		<year>1985</year>
@@ -4593,6 +4624,16 @@
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="hang-on (japan) (alt 1).rom" size="32768" crc="1f9bbd9a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="hansadv" romof="msx">
+		<description>Hans' Adventure (HB) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>The Pets Mode</manufacturer>
+		<rom name="hans' adventure (2010)(the pets mode).rom" size="49152" crc="c7452eca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5323,6 +5364,16 @@
 		<year>1989</year>
 		<manufacturer>A.M.H.</manufacturer>
 		<rom name="jaws (1989)(screen 7)[run'cas-'].cas" size="49114" crc="908478e6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="jetbomb" romof="msx">
+		<description>Jet Bomber (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Aackosoft</manufacturer>
+		<rom name="jet bomber (1985)(aackosoft).rom" size="32768" crc="41d93536"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8444,6 +8495,16 @@
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="q-bert (japan) (alt 1).rom" size="32768" crc="a112532b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbiqs" romof="msx">
+		<description>QBIQS (HB) [Homebrew]</description>
+		<year>2010</year>
+		<manufacturer>Z80st-Software</manufacturer>
+		<rom name="qbiqs (2010)(z80st-software).rom" size="49152" crc="c1b8c64f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

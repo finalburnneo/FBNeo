@@ -825,6 +825,13 @@
 		<rom name="mpr-14328.bin" size="524288" crc="2737f92e"/>
 		<driver status="good"/>
 	</game>
+	<game name="backtof3cf" cloneof="backtof3" romof="backtof3">
+		<description>Back to the Future Part III (Hack, Color Fix)</description>
+		<year>2019</year>
+		<manufacturer>Arena Entertainment - Greg Kennedy</manufacturer>
+		<rom name="back to the future part iii (color fix).md" size="524288" crc="51f67e2f"/>
+		<driver status="good"/>
+	</game>
 	<game name="backtof3u" cloneof="backtof3" romof="backtof3">
 		<description>Back to the Future Part III (USA)</description>
 		<year>1991</year>
@@ -872,6 +879,41 @@
 		<year>1994</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="ballz 3d - fighting at its ballziest (euro, usa).bin" size="2097152" crc="b362b705"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianami">
+		<description>Barbarian - Amiga (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2017</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="barbarianAMIGA.bin" size="1031574" crc="4fc515f5"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbariancpc" cloneof="barbarianami" romof="barbarianami">
+		<description>Barbarian - Amstrad CPC (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2014</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="barbarianCPC.bin" size="2296122" crc="d63f8446"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianst" cloneof="barbarianami" romof="barbarianami">
+		<description>Barbarian - Atari ST (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2014</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="barbarianATARIST.bin" size="2487416" crc="fec97705"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianc64" cloneof="barbarianami" romof="barbarianami">
+		<description>Barbarian - C64 (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2014</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="barbarianC64.bin" size="3028428" crc="d37f9af0"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianzxs" cloneof="barbarianami" romof="barbarianami">
+		<description>Barbarian - ZX Spectrum (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2015</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="barbarianSPECTRUM.bin" size="1432448" crc="5360129d"/>
 		<driver status="good"/>
 	</game>
 	<game name="barbiesm">
@@ -1798,6 +1840,13 @@
 		<rom name="castle of illusion starring mickey mouse (euro, usa).bin" size="524288" crc="ba4e9fd0"/>
 		<driver status="good"/>
 	</game>
+	<game name="cvaniaec" cloneof="cvania" romof="cvania">
+		<description>Castlevania - Bloodlines (Hack, Enhanced Colors)</description>
+		<year>2014</year>
+		<manufacturer>Konami - Pyron</manufacturer>
+		<rom name="castlevania - bloodlines (hack - enhanced colors).md" size="1048576" crc="5ffdffa7"/>
+		<driver status="good"/>
+	</game>
 	<game name="cvaniau" cloneof="cvania" romof="cvania">
 		<description>Castlevania - Bloodlines (USA)</description>
 		<year>1994</year>
@@ -1971,6 +2020,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chiki chiki boys (euro, usa).bin" size="1048576" crc="813a7d62"/>
+		<driver status="good"/>
+	</game>
+	<game name="chikiec" cloneof="chiki" romof="chiki">
+		<description>Chiki Chiki Boys (Hack, Enhanced Colors)</description>
+		<year>2016</year>
+		<manufacturer>Sega - Pyron</manufacturer>
+		<rom name="chiki chiki boys (hack - enhanced colors).bin" size="1048576" crc="f63e7e92"/>
 		<driver status="good"/>
 	</game>
 	<game name="chikij" cloneof="chiki" romof="chiki">
@@ -2869,6 +2925,13 @@
 		<rom name="dangerous seed (jpn).bin" size="524288" crc="a2990031"/>
 		<driver status="good"/>
 	</game>
+	<game name="darius2ec" cloneof="sagaia" romof="sagaia">
+		<description>Darius II (Hack, Enhanced Colors)</description>
+		<year>2016</year>
+		<manufacturer>Taito - Pyron</manufacturer>
+		<rom name="darius ii (enhanced colors).md" size="1048576" crc="021faa21"/>
+		<driver status="good"/>
+	</game>
 	<game name="darius2" cloneof="sagaia" romof="sagaia">
 		<description>Darius II (Jpn)</description>
 		<year>1990</year>
@@ -2993,6 +3056,20 @@
 		<year>1992</year>
 		<manufacturer>Razorsoft</manufacturer>
 		<rom name="death duel (usa).bin" size="1048576" crc="a9804dcc"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianap2" cloneof="barbarianami" romof="barbarianami">
+		<description>Death Sword - Apple II (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2014</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="deathswordAPPLEII.bin" size="425616" crc="12a01f70"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbarianpc" cloneof="barbarianami" romof="barbarianami">
+		<description>Death Sword - PC CGA (HB) [Homebrew, raw conversion - no improvements]</description>
+		<year>2014</year>
+		<manufacturer>F.L</manufacturer>
+		<rom name="deathswordPC.bin" size="446380" crc="aaeaeb87"/>
 		<driver status="good"/>
 	</game>
 	<game name="decapatt">
@@ -3336,6 +3413,13 @@
 		<year>1993</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="double dragon (euro, usa).bin" size="524288" crc="054f5d53"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddragonec" cloneof="ddragon" romof="ddragon">
+		<description>Double Dragon (Hack, Enhanced Colors)</description>
+		<year>2015</year>
+		<manufacturer>Ballistic - Pyron</manufacturer>
+		<rom name="double dragon (hack - enhanced colors).md" size="524288" crc="db8416cb"/>
 		<driver status="good"/>
 	</game>
 	<game name="ddragon3">
@@ -4906,6 +4990,13 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golden axe (world) (v1.1).bin" size="524288" crc="665d7df9"/>
+		<driver status="good"/>
+	</game>
+	<game name="goldnax2ec" cloneof="goldnax2" romof="goldnax2">
+		<description>Golden Axe II (Hack, Enhanced Colors)</description>
+		<year>2014</year>
+		<manufacturer>Sega - Pyron</manufacturer>
+		<rom name="golden axe ii (enhanced colors).md" size="524288" crc="696caae2"/>
 		<driver status="good"/>
 	</game>
 	<game name="goldnax2">
@@ -7064,6 +7155,13 @@
 		<rom name="mega swiv (euro) (pirate).bin" size="1048576" crc="1ec66bf7"/>
 		<driver status="good"/>
 	</game>
+	<game name="megaswivci" cloneof="megaswiv" romof="megaswiv">
+		<description>Mega SWIV (Hack, Color Improvement v1.05)</description>
+		<year>2016</year>
+		<manufacturer>Time Warner Interactive - fusaru</manufacturer>
+		<rom name="mega swiv (euro - color improvement v1.05).md" size="1048576" crc="e8d76ad1"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaturr">
 		<description>Mega Turrican (Euro)</description>
 		<year>1994</year>
@@ -8831,6 +8929,13 @@
 		<rom name="outrun (euro, usa).bin" size="1048576" crc="fdd9a8d2"/>
 		<driver status="good"/>
 	</game>
+	<game name="outrunac" cloneof="outrun" romof="outrun">
+		<description>OutRun (Hack, Arcade Colors v2.1)</description>
+		<year>2018</year>
+		<manufacturer>Sega - Tor Landeel</manufacturer>
+		<rom name="outrun (arcade colors)(v2.1).bin" size="1048576" crc="921e6107"/>
+		<driver status="good"/>
+	</game>
 	<game name="outrunj" cloneof="outrun" romof="outrun">
 		<description>OutRun (Jpn)</description>
 		<year>1991</year>
@@ -10534,6 +10639,13 @@
 		<rom name="samurai shodown (euro).bin" size="3145728" crc="c972014f"/>
 		<driver status="good"/>
 	</game>
+	<game name="samshoec" cloneof="samsho" romof="samsho">
+		<description>Samurai Shodown (Hack, Enhanced Colors v2.0)</description>
+		<year>2015</year>
+		<manufacturer>Takara - Pyron</manufacturer>
+		<rom name="samurai shodown (enhanced colors)(v2.0).md" size="3145728" crc="12cf057a"/>
+		<driver status="good"/>
+	</game>
 	<game name="samshou" cloneof="samsho" romof="samsho">
 		<description>Samurai Shodown (USA)</description>
 		<year>1994</year>
@@ -10798,6 +10910,13 @@
 		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="sha01.bin" size="1048576" crc="bd385c27"/>
+		<driver status="good"/>
+	</game>
+	<game name="beastec" cloneof="beast" romof="beast">
+		<description>Shadow of the Beast (Hack, Enhanced Colors)</description>
+		<year>2014</year>
+		<manufacturer>Victor Interactive Software - Pyron</manufacturer>
+		<rom name="shadow of the beast (enhanced colors).md" size="1048576" crc="7eaa73de"/>
 		<driver status="good"/>
 	</game>
 	<game name="beastj" cloneof="beast" romof="beast">
@@ -12773,6 +12892,13 @@
 		<rom name="mpr-12640a.bin" size="524288" crc="3877d107"/>
 		<driver status="good"/>
 	</game>
+	<game name="shangone" cloneof="shangon" romof="shangon">
+		<description>Super Hang-On Enhanced (Hack)</description>
+		<year>2018</year>
+		<manufacturer>Sega - Pyron</manufacturer>
+		<rom name="super hang-on enhanced.bin" size="524288" crc="ff381fed"/>
+		<driver status="good"/>
+	</game>
 	<game name="shimpact">
 		<description>Super High Impact (USA)</description>
 		<year>1992</year>
@@ -13431,6 +13557,13 @@
 		<rom name="teenage mutant ninja turtles - return of the shredder (jpn).bin" size="1048576" crc="1b003498"/>
 		<driver status="good"/>
 	</game>
+	<game name="tmnthhec" cloneof="tmhthh" romof="tmhthh">
+		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)</description>
+		<year>2015</year>
+		<manufacturer>Konami - Pyron</manufacturer>
+		<rom name="teenage mutant ninja turtles - the hyperstone heist (enhanced colors v2.0).md" size="1048576" crc="3dd042f9"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmnthh" cloneof="tmhthh" romof="tmhthh">
 		<description>Teenage Mutant Ninja Turtles - The Hyperstone Heist (USA)</description>
 		<year>1992</year>
@@ -13830,6 +13963,13 @@
 		<rom name="chaos engine, the (euro).bin" size="1572864" crc="bd9eecf4"/>
 		<driver status="good"/>
 	</game>
+	<game name="chaosengcs" cloneof="chaoseng" romof="chaoseng">
+		<description>The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)</description>
+		<year>2016</year>
+		<manufacturer>Microprose - fusaru</manufacturer>
+		<rom name="chaos engine, the (amiga colors - music speed fix v1.01).md" size="1572864" crc="65887f32"/>
+		<driver status="good"/>
+	</game>
 	<game name="chaosen2">
 		<description>The Chaos Engine 2 (Euro, Prototype)</description>
 		<year>199?</year>
@@ -14087,6 +14227,13 @@
 		<year>1992</year>
 		<manufacturer>Software Toolworks</manufacturer>
 		<rom name="miracle piano teaching system, the (usa).bin" size="524288" crc="a719542e"/>
+		<driver status="good"/>
+	</game>
+	<game name="tnzsac" cloneof="tnzs" romof="tnzs">
+		<description>The New Zealand Story (Hack, Arcade Colors)</description>
+		<year>2020</year>
+		<manufacturer>Taito - fabio</manufacturer>
+		<rom name="new zealand story, The (hack - arcade colors).bin" size="524288" crc="0a35d853"/>
 		<driver status="good"/>
 	</game>
 	<game name="tnzs">
@@ -14895,6 +15042,13 @@
 		<rom name="turbo outrun (euro, jpn).bin" size="524288" crc="0c661369"/>
 		<driver status="good"/>
 	</game>
+	<game name="toutrunch" cloneof="toutrun" romof="toutrun">
+		<description>Turbo OutRun (Hack, Color Improvement)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Dolsilwa</manufacturer>
+		<rom name="turbo outrun (color hack).md" size="524288" crc="8884c73a"/>
+		<driver status="good"/>
+	</game>
 	<game name="turmamon" cloneof="wboymw" romof="wboymw">
 		<description>Turma da Monica na Terra dos Monstros (Bra)</description>
 		<year>1996</year>
@@ -14902,18 +15056,18 @@
 		<rom name="turma da monica na terra dos monstros (bra).bin" size="1048576" crc="f8288de1"/>
 		<driver status="good"/>
 	</game>
-	<game name="turricanf" cloneof="turrican" romof="turrican">
-		<description>Turrican (Color, Lifebar Fix-Hack by Linkuei &amp; Helder)</description>
-		<year>1991</year>
-		<manufacturer>Ballistic</manufacturer>
-		<rom name="Turrican (USA, fixed Linkuei and Helder).bin" size="524288" crc="60f8bbdd"/>
-		<driver status="good"/>
-	</game>
 	<game name="turrican">
 		<description>Turrican (Euro, USA)</description>
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="turrican (euro, usa).bin" size="524288" crc="634d67a6"/>
+		<driver status="good"/>
+	</game>
+	<game name="turricanf" cloneof="turrican" romof="turrican">
+		<description>Turrican (Hack, Colors and Lifebar Fix)</description>
+		<year>2015</year>
+		<manufacturer>Ballistic - Linkuei &amp; Helder</manufacturer>
+		<rom name="Turrican (USA, fixed Linkuei and Helder).bin" size="524288" crc="60f8bbdd"/>
 		<driver status="good"/>
 	</game>
 	<game name="twincobr">
@@ -15173,6 +15327,13 @@
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="vapor trail (usa).bin" size="1048576" crc="c49e3a0a"/>
+		<driver status="good"/>
+	</game>
+	<game name="vaportrec" cloneof="vaportr" romof="vaportr">
+		<description>Vapor Trail (USA)</description>
+		<year>2015</year>
+		<manufacturer>Renovation - Pyron</manufacturer>
+		<rom name="vapor trail (enhanced colors)(v2.0).md" size="1048576" crc="8ed751a7"/>
 		<driver status="good"/>
 	</game>
 	<game name="vecman">
@@ -15733,6 +15894,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13619.bin" size="524288" crc="c24bc5e4"/>
+		<driver status="good"/>
+	</game>
+	<game name="wboy3ac" cloneof="wboy3" romof="wboy3">
+		<description>Wonder Boy III - Monster Lair (Hack, Arcade Colors)</description>
+		<year>2020</year>
+		<manufacturer>Sega -fabio</manufacturer>
+		<rom name="wonder boy iii - monster lair (arcade colors).md" size="524288" crc="60b87e9c"/>
 		<driver status="good"/>
 	</game>
 	<game name="wboymw">
@@ -16650,6 +16818,13 @@
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="mpr-15064.bin" size="524288" crc="59abe7f9"/>
+		<driver status="good"/>
+	</game>
+	<game name="xenon2ac" cloneof="xenon2" romof="xenon2">
+		<description>Xenon 2 - Megablast (Hack, Amiga Colors)</description>
+		<year>2016</year>
+		<manufacturer>Virgin Games - fusaru</manufacturer>
+		<rom name="xenon 2 megablast (amiga colors).md" size="524288" crc="39f41e6c"/>
 		<driver status="good"/>
 	</game>
 	<game name="xiaomo">

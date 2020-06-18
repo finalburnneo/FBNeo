@@ -14617,6 +14617,40 @@ struct BurnDriver BurnDrvnes_bioniccommando = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_hitlenofukcRomDesc[] = {
+	{ "Hitler no Fukkatsu - Top Secret (China).nes",          294928, 0x1dd2194c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hitlenofukc)
+STD_ROM_FN(nes_hitlenofukc)
+
+struct BurnDriver BurnDrvnes_hitlenofukc = {
+	"nes_hitlenofukc", "nes_bioniccommando", NULL, NULL, "1988",
+	"Hitler no Fukkatsu - Top Secret (China)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hitlenofukcRomInfo, nes_hitlenofukcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hitlenofukRomDesc[] = {
+	{ "Hitler no Fukkatsu - Top Secret (Japan).nes",          262160, 0x4749e48f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hitlenofuk)
+STD_ROM_FN(nes_hitlenofuk)
+
+struct BurnDriver BurnDrvnes_hitlenofuk = {
+	"nes_hitlenofuk", "nes_bioniccommando", NULL, NULL, "1988",
+	"Hitler no Fukkatsu - Top Secret (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hitlenofukRomInfo, nes_hitlenofukRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_birdweekRomDesc[] = {
 	{ "Bird Week (Japan).nes",          24592, 0xd9b9b3ab, BRF_ESS | BRF_PRG },
 };
@@ -20376,23 +20410,6 @@ struct BurnDriver BurnDrvnes_hinothouhen = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_hinothouhenRomInfo, nes_hinothouhenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_hitlenofukRomDesc[] = {
-	{ "Hitler no Fukkatsu - Top Secret (Japan).nes",          262160, 0x4749e48f, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_hitlenofuk)
-STD_ROM_FN(nes_hitlenofuk)
-
-struct BurnDriver BurnDrvnes_hitlenofuk = {
-	"nes_hitlenofuk", "nes_bioniccommando", NULL, NULL, "1988",
-	"Hitler no Fukkatsu - Top Secret (Japan)\0", NULL, "Capcom", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_hitlenofukRomInfo, nes_hitlenofukRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

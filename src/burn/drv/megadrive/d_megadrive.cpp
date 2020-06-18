@@ -44406,3 +44406,21 @@ struct BurnDriver BurnDrvmd_xenon2ac = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Tro-Now (HB)
+static struct BurnRomInfo md_tronowRomDesc[] = {
+	{ "tronow.bin", 0x50000, 0xf484fa21, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tronow)
+STD_ROM_FN(md_tronow)
+
+struct BurnDriver BurnDrvmd_tronow = {
+	"md_tronow", NULL, NULL, NULL, "2015",
+	"Tro-Now (HB)\0", NULL, "bitbitJAM", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE, 0,
+	MegadriveGetZipName, md_tronowRomInfo, md_tronowRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

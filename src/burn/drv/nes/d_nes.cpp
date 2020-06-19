@@ -1778,9 +1778,9 @@ static void mapper01_write(UINT16 address, UINT8 data)
 			return;
 		}
         if (data & 0x80) { // bit 7, mapper reset
-            mapper01_bitcount = 0;
-            mapper01_serialbyte = 0;
-            mapper_regs[0] |= 0x0c;
+			mapper01_bitcount = 0;
+			mapper01_serialbyte = 0;
+			mapper_regs[0] |= 0x0c;
 			if (mapper_map) mapper_map();
 		} else {
 			mapper01_serialbyte |= (data & 1) << mapper01_bitcount;
@@ -1832,15 +1832,22 @@ static void mapper01_map()
 		mapper_map_exp_prg(page);
 	}
 
-	if (Cart.PRGRomSize == 0x80000) {
-		// SUROM (512k rom), use extra mapping bit
+	INT32 bigcart = 0;
+
+	if (Cart.PRGRomSize >= 0x80000) {
+		bigcart = 1;
+		// SUROM (512K/1M rom), use extra mapping bit
 		mapper01_prg2x = mapper01_exbits & 0x10;
 	}
 
 	if (mapper_regs[0] & 0x8) {
 		if (mapper_regs[0] & 0x4) {
             mapper_map_prg(16, 0, (mapper_regs[3] & 0xf) | mapper01_prg2x);
-            mapper_map_prg(16, 1, 0xf | mapper01_prg2x);
+			if (bigcart) {
+				mapper_map_prg(16, 1, 0xf | mapper01_prg2x);
+			} else {
+				mapper_map_prg(16, 1, -1);
+			}
         } else {
             mapper_map_prg(16, 0, 0 | mapper01_prg2x);
             mapper_map_prg(16, 1, (mapper_regs[3] & 0xf) | mapper01_prg2x);
@@ -7801,6 +7808,7 @@ static INT32 DrvDoReset()
 	nesapuReset();
 	//	if (RESETMode == RESET_POWER) {
 	// Nebs 'n Debs thinks we're in 50hz/PAL mode on reset if we don't reset PPU here..
+	// note: This is actually due to a bug in the game
 		ppu_reset();
 	//	}
 	mapper_reset();
@@ -14613,6 +14621,23 @@ struct BurnDriver BurnDrvnes_bioniccommando = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_bioniccommandoRomInfo, nes_bioniccommandoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_bionicomRomDesc[] = {
+	{ "Bionic Commando - Return of Hitler (Hack).nes",          262160, 0x519a3005, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bionicom)
+STD_ROM_FN(nes_bionicom)
+
+struct BurnDriver BurnDrvnes_bionicom = {
+	"nes_bionicom", "nes_bioniccommando", NULL, NULL, "1989?",
+	"Bionic Commando - Return of Hitler (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bionicomRomInfo, nes_bionicomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

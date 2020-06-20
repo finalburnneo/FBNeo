@@ -152,11 +152,7 @@ static void jedi_main_write(UINT16 address, UINT8 data)
 		case 0x1e86:
 			audio_in_reset = ~data & 0x80;
 			if (audio_in_reset) {
-				M6502Close();
-				M6502Open(1);
-				M6502Reset();
-				M6502Close();
-				M6502Open(0);
+				M6502Reset(1);
 			}
 		return;
 

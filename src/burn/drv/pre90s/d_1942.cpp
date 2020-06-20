@@ -394,7 +394,7 @@ static struct BurnRomInfo Drvc64RomDesc[] = {
 	{ "srb-06.m6",	0x2000, 0x466f8248, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "srb-07.m7",	0x4000, 0x0d31038c, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "sr-01.c11",	0x4000, 0x4ee7ab6b, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
+	{ "1942c64.c11",0x4000, 0x4ee7ab6b, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
 
 	{ "sr-02.f2",	0x2000, 0x6ebca191, 3 | BRF_GRA },           //  6 gfx1
 

@@ -170,11 +170,7 @@ static void tagteam_main_write(UINT16 address, UINT8 data)
 
 		case 0x2002:
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0x2003:
@@ -529,9 +525,7 @@ static INT32 DrvFrame()
 		}
 
 		if (previous_coin != (DrvInputs[0] & 0xc0)) {
-			M6502Open(0);
-			M6502SetIRQLine(0x20, ((DrvInputs[0] & 0xc0) == 0xc0) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
-			M6502Close();
+			M6502SetIRQLine(0, 0x20, ((DrvInputs[0] & 0xc0) == 0xc0) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 		}
 	}
 
@@ -546,14 +540,14 @@ static INT32 DrvFrame()
 		if (i == 240) vblank = 1;
 
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6502);
 		if ((i%16) == 15) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if (sound_nmi_mask && (i%16) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 	}

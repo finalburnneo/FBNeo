@@ -2110,15 +2110,11 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 			if (data & 1)
 			{
-				M6502Close();
-				M6502Open(1);
-				M6502Reset();
-				M6502Close();
-				M6502Open(0);
+				M6502Reset(1);
 
 				audio_nmi_enabled = 0;
 
-				M6502SetIRQLine(0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+				M6502SetIRQLine(0, 0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			}
 
 			if ((data & 8) ^ 8)
@@ -2174,11 +2170,7 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 			soundlatch = data;
 			sound_ack |= 0x80;
 			sound_ack &= ~0x40;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		}
 		return;
 
@@ -3158,13 +3150,8 @@ static INT32 DrvFrame()
 
 	watchdog++;
 	if (watchdog > 180) {
-		M6502Open(0);
-		M6502Reset();
-		M6502Close();
-
-		M6502Open(1);
-		M6502Reset();
-		M6502Close();
+		M6502Reset(0);
+		M6502Reset(1);
 
 		watchdog = 0;
 	}
@@ -3207,23 +3194,21 @@ static INT32 DrvFrame()
 		}
 
 		if (prev != (DrvInputs[2] & 0xc0) && (DrvInputs[2] & 0xc0) == 0xc0) {
-			M6502Open(0);
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-			M6502Close();
+			M6502SetIRQLine(0, 0x20, CPU_IRQSTATUS_ACK);
 		}
 	}
 
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)500000 / 57.444853), (INT32)((double)500000 / 57.444853) }; //1.5mhz -> .75mhz?
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
+	INT32 nSegment = 0;
 
 	vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		INT32 nSegment = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += M6502Run(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, M6502);
 		M6502Close();
 
 		if (i == 248) vblank = 1;
@@ -3239,13 +3224,11 @@ static INT32 DrvFrame()
 		M6502Open(1);
 		if (decocass_reset & 1)
 		{
-			nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
-			nCyclesDone[1] += nSegment - nCyclesDone[1];
+			CPU_IDLE(1, M6502);
 		}
 		else
-		{	
-			nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
-			nCyclesDone[1] += M6502Run(nSegment - nCyclesDone[1]);
+		{
+			CPU_RUN(1, M6502);
 
 			if ((i+1)%8 == 7)
 			{

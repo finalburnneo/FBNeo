@@ -33,6 +33,8 @@ static UINT8 *DrvNVRAM;
 static UINT8 *DrvDummyROM;
 static UINT8 *DrvCharExp;
 
+static UINT8 DummyRegion[2];
+
 static UINT8 *riot_regs;
 static UINT8 *riot_ram;
 
@@ -42,7 +44,7 @@ static UINT8 *soundlatch;
 static UINT8 *soundcpu_do_nmi;
 
 static UINT8  *vtqueue;
-static UINT8 *vtqueuepos;
+static UINT8  *vtqueuepos;
 static UINT32 *vtqueuetime;
 static UINT8  *knocker_prev;
 
@@ -1514,7 +1516,7 @@ static INT32 MemIndex()
 	DrvCharExp		= Next; Next += 0x02000;
 
 	DrvNVRAM        = Next; Next += 0x01000; // Keep in ROM section.
-	DrvDummyROM     = Next; Next += 0x02000; // it's RAM, too.
+	DrvDummyROM     = Next; Next += 0x02000; // RAM or ROM depending on conf.
 
 	AllRam			= Next;
 
@@ -1647,6 +1649,10 @@ static INT32 RomLoad()
 		if ((ri.nType & 0xf) == 9) { // extra i8088 roms
 			if (BurnLoadRom(dLoad, i, 1)) return 1;
 			dLoad += ri.nLen;
+			switch (dLoad - DrvDummyROM) {
+				case 0x1000: DummyRegion[1] = MAP_ROM; break;
+				case 0x2000: DummyRegion[0] = MAP_ROM; break;
+			}
 			continue;
 		}
 	}
@@ -1655,6 +1661,17 @@ static INT32 RomLoad()
 	if (tilelen == 0) memset (tilemap_bank, 1, 4);
 
 	bprintf (0, _T("tiles: %x, sprite: %x\n"), tilelen, rLoad - DrvSpriteGFX);
+
+	bprintf(0, _T("DummyRegion[0] = "));
+	switch (DummyRegion[0]) {
+		case MAP_ROM: bprintf(0, _T("MAP_ROM\n")); break;
+		case MAP_RAM: bprintf(0, _T("MAP_RAM\n")); break;
+	}
+	bprintf(0, _T("DummyRegion[1] = "));
+	switch (DummyRegion[1]) {
+		case MAP_ROM: bprintf(0, _T("MAP_ROM\n")); break;
+		case MAP_RAM: bprintf(0, _T("MAP_RAM\n")); break;
+	}
 
 	DrvGfxDecode(tilelen, rLoad - DrvSpriteGFX);
 
@@ -1725,7 +1742,7 @@ static void type2_sound_init()
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	sp0250_init(3120000, NULL, M6502TotalCycles, 1000000);
-	sp0250_volume(0.55);
+	sp0250_volume(1.00);
 }
 
 static void type1_sound_init()
@@ -1757,6 +1774,8 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{   // Load ROMS parse GFX
+		DummyRegion[0] = DummyRegion[1] = MAP_RAM; // start out as RAM. change to ROM if they load in region(s)
+
 		if (RomLoad()) return 1;
 	}
 
@@ -1764,7 +1783,7 @@ static INT32 DrvInit()
 	{
 		VezInit(0, V20_TYPE); // really i8088, but v20 is compatible
 		VezOpen(0);
-		VezMapMemory(DrvDummyROM,		0x0000, 0x1fff, MAP_RAM);
+		VezMapMemory(DrvDummyROM,		0x0000, 0x1fff, MAP_RAM); // RAM (reactor)
 		VezMapMemory(DrvVideoRAM,		0x3000, 0x33ff, MAP_RAM);
 		VezMapMemory(DrvVideoRAM,		0x3400, 0x37ff, MAP_RAM); // mirror
 		VezMapMemory(DrvVideoRAM,		0x3800, 0x3bff, MAP_RAM); // mirror
@@ -1780,7 +1799,8 @@ static INT32 DrvInit()
 		VezInit(0, V20_TYPE); // really i8088, but v20 is compatible
 		VezOpen(0);
 		VezMapMemory(DrvNVRAM,			0x0000, 0x0fff, MAP_RAM);
-		VezMapMemory(DrvDummyROM,		0x1000, 0x2fff, MAP_RAM); // ROM for reactor & 3stooges, RAM for all others
+		VezMapMemory(DrvDummyROM + 0x0000,		0x1000, 0x1fff, DummyRegion[0]); // ROM for argus, krull, vidvince & 3stooges, RAM for all others
+		VezMapMemory(DrvDummyROM + 0x1000,		0x2000, 0x2fff, DummyRegion[1]);
 		VezMapMemory(DrvVideoRAM,		0x3800, 0x3bff, MAP_RAM);
 		VezMapMemory(DrvVideoRAM,		0x3c00, 0x3fff, MAP_RAM); // mirror
 		VezMapMemory(DrvCharRAM,		0x4000, 0x4fff, MAP_ROM); // write through handler
@@ -2055,7 +2075,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "SSNVRAM";        // note: this is separate from "All Ram" so it doesn't get trashed in DrvDoReset();
 		BurnAcb(&ba);
 
-		ScanVar(DrvDummyROM, 0x2000, "DummyRAMROM");
+		if (DummyRegion[0] == MAP_RAM) {
+			ScanVar(DrvDummyROM + 0x0000, 0x1000, "DummyRAM0");
+		}
+		if (DummyRegion[1] == MAP_RAM) {
+			ScanVar(DrvDummyROM + 0x1000, 0x1000, "DummyRAM1");
+		}
 
 		VezScan(nAction);
 		M6502Scan(nAction);

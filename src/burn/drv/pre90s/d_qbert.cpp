@@ -2789,22 +2789,22 @@ struct BurnDriver BurnDrvKngtmare = {
 // Reactor
 
 static struct BurnRomInfo reactorRomDesc[] = {
-	{ "rom7",		0x1000, 0xa62d86fd, 1 | BRF_PRG | BRF_ESS }, //  0 i8080 Code
-	{ "rom6",		0x1000, 0x6ed841f3, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rom5",		0x1000, 0xd90576a3, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rom4",		0x1000, 0x0155daae, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "rom3",		0x1000, 0xf8881385, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rom2",		0x1000, 0x3caba35b, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "rom1",		0x1000, 0x944e1ddf, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "rom0",		0x1000, 0x55930aed, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "gv_100_rom7.rom7.c9-10",		0x1000, 0xa62d86fd, 1 | BRF_PRG | BRF_ESS }, //  0 i8080 Code
+	{ "gv_100_rom6.rom6.c10-11",	0x1000, 0x6ed841f3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gv_100_rom5.rom5.c11-12",	0x1000, 0xd90576a3, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gv_100_rom4.rom4.c12-13",	0x1000, 0x0155daae, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "gv_100_rom3.rom3.c13-14",	0x1000, 0xf8881385, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "gv_100_rom2.rom2.c14-15",	0x1000, 0x3caba35b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "gv_100_rom1.rom1.c16",		0x1000, 0x944e1ddf, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "gv_100_rom0.rom0.c17",		0x1000, 0x55930aed, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "snd1",		0x0800, 0xd958a0fd, 2 | BRF_PRG | BRF_ESS }, //  8 m6502 Code
-	{ "snd2",		0x0800, 0x5dc86942, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "snd1",						0x0800, 0xd958a0fd, 2 | BRF_PRG | BRF_ESS }, //  8 m6502 Code
+	{ "snd2",						0x0800, 0x5dc86942, 2 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "fg3",		0x1000, 0x8416ad53, 4 | BRF_GRA },           // 10 Sprites
-	{ "fg2",		0x1000, 0x5489605a, 4 | BRF_GRA },           // 11
-	{ "fg1",		0x1000, 0x18396c57, 4 | BRF_GRA },           // 12
-	{ "fg0",		0x1000, 0xd1f20e15, 4 | BRF_GRA },           // 13
+	{ "gv_100_fg_3.fg3.k7-8",		0x1000, 0x8416ad53, 4 | BRF_GRA },           // 10 Sprites
+	{ "gv_100_fg_2.fg2.k6-7",		0x1000, 0x5489605a, 4 | BRF_GRA },           // 11
+	{ "gv_100_fg_1.fg1.k5-6",		0x1000, 0x18396c57, 4 | BRF_GRA },           // 12
+	{ "gv_100_fg_0.fg0.k4-5",		0x1000, 0xd1f20e15, 4 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(reactor)

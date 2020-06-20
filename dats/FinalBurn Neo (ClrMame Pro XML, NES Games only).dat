@@ -62,7 +62,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="8bitrhylan">
-		<description>8-Bit Rhythm Land (HB)</description>
+		<description>8-Bit Rhythm Land (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Columbus Circle</manufacturer>
 		<rom name="8-Bit Rhythm Land (HB).nes" size="786448" crc="48859a73"/>
@@ -83,23 +83,23 @@
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol1stbu">
-		<description>Action 53 vol 1 Streemerz Bundle (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Action 53 vol 1 Streemerz Bundle (HB) [Homebrew]</description>
+		<year>20XX?</year>
+		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 1 Streemerz Bundle (HB).nes" size="524304" crc="54fc4fae"/>
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol2doac">
-		<description>Action 53 vol 2 Double Action (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Action 53 vol 2 Double Action (HB) [Homebrew]</description>
+		<year>20XX?</year>
+		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 2 Double Action (HB).nes" size="524304" crc="4e9c9174"/>
 		<driver status="good"/>
 	</game>
 	<game name="actio53vol3retw">
-		<description>Action 53 vol 3 Revenge of the Twins (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Action 53 vol 3 Revenge of the Twins (HB) [Homebrew]</description>
+		<year>20XX?</year>
+		<manufacturer>Nintendo?</manufacturer>
 		<rom name="Action 53 vol 3 Revenge of the Twins (HB).nes" size="1048592" crc="0dc9110b"/>
 		<driver status="good"/>
 	</game>
@@ -314,7 +314,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alfonsarcadv">
-		<description>Alfonzo's Arctic Adventure (HB)</description>
+		<description>Alfonzo's Arctic Adventure (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Spoony Bard Productions</manufacturer>
 		<rom name="Alfonzo's Arctic Adventure (HB).nes" size="262160" crc="cd2ada76"/>
@@ -342,7 +342,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="almosthero">
-		<description>Almost Hero (HB)</description>
+		<description>Almost Hero (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Almost Hero (HB).nes" size="262160" crc="2419f370"/>
@@ -356,9 +356,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="alterego">
-		<description>Alter Ego (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Alter Ego (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Shiru</manufacturer>
 		<rom name="Alter Ego (HB).nes" size="40976" crc="5f322f79"/>
 		<driver status="good"/>
 	</game>
@@ -370,16 +370,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="amazorundiej" cloneof="amazorundie" romof="amazorundie">
-		<description>Amazons Running Diet (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Amazons Running Diet (HB, Japan) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Ancient</manufacturer>
 		<rom name="Amazons Running Diet (Japan).nes" size="524304" crc="1eced454"/>
 		<driver status="good"/>
 	</game>
 	<game name="amazorundie">
-		<description>Amazons Running Diet (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Amazons Running Diet (HB, USA) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Ancient</manufacturer>
 		<rom name="Amazons Running Diet (USA).nes" size="524304" crc="4db6acdd"/>
 		<driver status="good"/>
 	</game>
@@ -468,14 +468,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="aspectstarn">
-		<description>Aspect Star N (HB)</description>
+		<description>Aspect Star N (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Nicole Express</manufacturer>
 		<rom name="Aspect Star N (HB).nes" size="40976" crc="857dbdca"/>
 		<driver status="good"/>
 	</game>
 	<game name="assimilate">
-		<description>Assimilate (HB)</description>
+		<description>Assimilate (HB) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer>Nessylum</manufacturer>
 		<rom name="Assimilate (HB).nes" size="262160" crc="a2d504a8"/>
@@ -584,6 +584,13 @@
 		<year>1990</year>
 		<manufacturer>LJN</manufacturer>
 		<rom name="Back to the Future Part II &amp; III (USA).nes" size="262160" crc="5a09134f"/>
+		<driver status="good"/>
+	</game>
+	<game name="badapple">
+		<description>Bad Apple (HB, Tech-Demo) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Little Limit</manufacturer>
+		<rom name="bad_apple (2015 v2.5)(Little Limit).nes" size="786448" crc="f96a5a8b"/>
 		<driver status="good"/>
 	</game>
 	<game name="baddudes">
@@ -713,7 +720,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bassedefadv">
-		<description>Basse Def Adventures (HB)</description>
+		<description>Basse Def Adventures (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Basse Def Adventures (HB).nes" size="524304" crc="bb87065d"/>
@@ -769,14 +776,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlkid">
-		<description>Battle Kid - Fortress of Peril (Japan)</description>
+		<description>Battle Kid - Fortress of Peril (HB, Japan) [Homebrew]</description>
 		<year>2010</year>
 		<manufacturer>Sivak</manufacturer>
 		<rom name="Battle Kid - Fortress of Peril (Japan).nes" size="524304" crc="c7f3a581"/>
 		<driver status="good"/>
 	</game>
 	<game name="battlkid2">
-		<description>Battle Kid 2 - Mountain of Torment (USA)</description>
+		<description>Battle Kid 2 - Mountain of Torment (HB, USA) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer>Sivak</manufacturer>
 		<rom name="Battle Kid 2 - Mountain of Torment (USA).nes" size="524304" crc="4916dc6d"/>
@@ -839,8 +846,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="beerslinger">
-		<description>BeerSlinger (HB)</description>
-		<year>1989?</year>
+		<description>BeerSlinger (HB) [Homebrew]</description>
+		<year>2018</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="BeerSlinger (HB).nes" size="40976" crc="ae0ebf22"/>
 		<driver status="good"/>
@@ -915,6 +922,13 @@
 		<rom name="Bionic Commando (USA).nes" size="262160" crc="83be000c"/>
 		<driver status="good"/>
 	</game>
+	<game name="bionicom" cloneof="bioniccommando" romof="bioniccommando">
+		<description>Bionic Commando - Return of Hitler (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Bionic Commando - Return of Hitler (Hack).nes" size="262160" crc="519a3005"/>
+		<driver status="good"/>
+	</game>
 	<game name="birdweek">
 		<description>Bird Week (Japan)</description>
 		<year>1986</year>
@@ -923,14 +937,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="blackboxcha">
-		<description>Black Box Challenge (HB)</description>
+		<description>Black Box Challenge (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Sly Dog Studios</manufacturer>
 		<rom name="Black Box Challenge (HB).nes" size="524304" crc="6b30c83b"/>
 		<driver status="good"/>
 	</game>
 	<game name="bladebuster">
-		<description>Blade Buster (HB)</description>
+		<description>Blade Buster (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>HLC! Project (tm)</manufacturer>
 		<rom name="Blade Buster (HB).nes" size="393232" crc="3aba6565"/>
@@ -958,15 +972,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="bloodfall">
-		<description>Bloodfall (HB)</description>
+		<description>Bloodfall (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Dr. Ludos</manufacturer>
 		<rom name="Bloodfall (HB).nes" size="40976" crc="3c5548ef"/>
 		<driver status="good"/>
 	</game>
 	<game name="blowemout">
-		<description>Blow'Em Out! (HB)</description>
-		<year>1989?</year>
+		<description>Blow'Em Out! (HB) [Homebrew]</description>
+		<year>2018</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Blow'Em Out! (HB).nes" size="40976" crc="dc1468fc"/>
 		<driver status="good"/>
@@ -986,7 +1000,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bobl">
-		<description>bobl (HB)</description>
+		<description>BoBL (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="bobl (HB).nes" size="65552" crc="b5340d71"/>
@@ -1000,7 +1014,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombsweeper">
-		<description>Bomb Sweeper (HB)</description>
+		<description>Bomb Sweeper (HB) [Homebrew]</description>
 		<year>2002</year>
 		<manufacturer>SNOWBRO</manufacturer>
 		<rom name="Bomb Sweeper (HB).nes" size="24592" crc="e667858d"/>
@@ -1042,7 +1056,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwiboo">
-		<description>Bootee (HB)</description>
+		<description>Bootee (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Bootee (HB).nes" size="40976" crc="c71f42bc"/>
@@ -1144,6 +1158,13 @@
 		<year>1990</year>
 		<manufacturer>Milton Bradley</manufacturer>
 		<rom name="Cabal (USA).nes" size="131088" crc="4d5f2eb0"/>
+		<driver status="good"/>
+	</game>
+	<game name="cadaverion">
+		<description>Cadaverion (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="Cadaverion (2018)(Mojon Twins).nes" size="40976" crc="6a45c96a"/>
 		<driver status="good"/>
 	</game>
 	<game name="californiagames">
@@ -1370,22 +1391,36 @@
 		<rom name="Chaos World (T-eng).nes" size="393232" crc="fbd2a0e0"/>
 		<driver status="good"/>
 	</game>
+	<game name="chase">
+		<description>Chase (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>Shiru</manufacturer>
+		<rom name="Chase (2012)(shiru).nes" size="24592" crc="b887529d"/>
+		<driver status="good"/>
+	</game>
 	<game name="cheman">
-		<description>Che-Man (HB)</description>
+		<description>Che-Man (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Che-Man (HB).nes" size="40976" crc="9677c8a1"/>
 		<driver status="good"/>
 	</game>
+	<game name="cherilpc">
+		<description>Cheril Perils Classic (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="Cheril Perils Classic (2018)(Mojon Twins).nes" size="40976" crc="8132afd5"/>
+		<driver status="good"/>
+	</game>
 	<game name="mojontwichegod">
-		<description>Cheril The Goddess (HB)</description>
+		<description>Cheril The Goddess (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Goddess (HB).nes" size="65552" crc="e7c81856"/>
 		<driver status="good"/>
 	</game>
 	<game name="mojontwichewri">
-		<description>Cheril The Writer (HB)</description>
+		<description>Cheril The Writer (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Mojon Twins - Cheril The Writer (HB).nes" size="131088" crc="2405a68f"/>
@@ -1511,7 +1546,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="citytrouble">
-		<description>City Trouble (HB)</description>
+		<description>City Trouble (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Den Kat Games</manufacturer>
 		<rom name="City Trouble (HB).nes" size="40976" crc="2481be7e"/>
@@ -1539,7 +1574,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cmc80sdemo">
-		<description>CMC 80's Demo (HB)</description>
+		<description>CMC 80's Demo (HB) [Homebrew]</description>
 		<year>2000</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="CMC 80's Demo (HB).nes" size="49168" crc="0135b0e8"/>
@@ -1693,14 +1728,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="cowligam2ndadv">
-		<description>Cowlitz Gamers 2nd Adventure (HB)</description>
+		<description>Cowlitz Gamers 2nd Adventure (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers 2nd Adventure (HB).nes" size="131088" crc="0db2dd59"/>
 		<driver status="good"/>
 	</game>
 	<game name="cowligamadv">
-		<description>Cowlitz Gamers Adventure (HB)</description>
+		<description>Cowlitz Gamers Adventure (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Cowlitz</manufacturer>
 		<rom name="Cowlitz Gamers Adventure (HB).nes" size="32784" crc="0ae2354b"/>
@@ -1728,8 +1763,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="creepybrawlers">
-		<description>Creepy Brawlers (HB)</description>
-		<year>1989?</year>
+		<description>Creepy Brawlers (HB) [Homebrew]</description>
+		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Creepy Brawlers (HB).nes" size="524304" crc="c8f05be4"/>
 		<driver status="good"/>
@@ -1756,7 +1791,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crypto">
-		<description>Crypto (HB)</description>
+		<description>Crypto (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>EEMU</manufacturer>
 		<rom name="Crypto (HB).nes" size="49168" crc="45aaa381"/>
@@ -2316,10 +2351,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="draiocht">
-		<description>Draiocht (HB)</description>
+		<description>Draiocht (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Draiocht (HB).nes" size="40976" crc="3e7aa82d"/>
+		<driver status="good"/>
+	</game>
+	<game name="driar">
+		<description>Driar (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="Driar (2012)(Eriksson &amp; Adolfsson).nes" size="131088" crc="2c31ce23"/>
 		<driver status="good"/>
 	</game>
 	<game name="dropzone">
@@ -2357,6 +2399,13 @@
 		<rom name="DuckTales 2 (USA).nes" size="131088" crc="40ce2fc0"/>
 		<driver status="good"/>
 	</game>
+	<game name="dushlan">
+		<description>Dushlan (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Peter McQuillan</manufacturer>
+		<rom name="Dushlan (2016)(Peter McQuillan).nes" size="40976" crc="07614f71"/>
+		<driver status="good"/>
+	</game>
 	<game name="dynamitebatman">
 		<description>Dynamite Batman (Japan)</description>
 		<year>1991</year>
@@ -2372,7 +2421,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="et">
-		<description>E.T. - The Extra Terrestrial (HB)</description>
+		<description>E.T. - The Extra Terrestrial (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="E.T. - The Extra Terrestrial (HB).nes" size="131088" crc="ad871918"/>
@@ -2386,7 +2435,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eeeaaaooo">
-		<description>EEEAAAOOO (HB)</description>
+		<description>EEEAAAOOO (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>N.K</manufacturer>
 		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
@@ -2428,7 +2477,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eskimbobdeledi">
-		<description>Eskimo Bob Deluxe Edition (HB)</description>
+		<description>Eskimo Bob Deluxe Edition (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Spoony Bard Productions</manufacturer>
 		<rom name="Eskimo Bob Deluxe Edition (HB).nes" size="65552" crc="a3b7848f"/>
@@ -2449,9 +2498,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="espitundherpim">
-		<description>Espitenen und herr pimponen (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Espitenen und herr pimponen (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Espitenen und herr pimponen (HB).nes" size="65552" crc="ea5fa8a8"/>
 		<driver status="good"/>
 	</game>
@@ -2491,7 +2540,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="expedition">
-		<description>Expedition (HB)</description>
+		<description>Expedition (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Expedition (HB).nes" size="393232" crc="1b83916d"/>
@@ -2540,7 +2589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fallingtiles">
-		<description>Falling Tiles (HB, rev.B)</description>
+		<description>Falling Tiles (HB, rev.B) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Doug Fraker</manufacturer>
 		<rom name="Falling Tiles (HB, rev.B).nes" size="40976" crc="5b8fcd00"/>
@@ -2568,7 +2617,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="familypicross">
-		<description>Family Picross! (HB)</description>
+		<description>Family Picross! (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Family Picross! (HB).nes" size="40976" crc="bd459402"/>
@@ -2799,14 +2848,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="flappybird">
-		<description>Flappy Bird (HB)</description>
+		<description>Flappy Bird (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Nioreh</manufacturer>
 		<rom name="Flappy Bird (HB).nes" size="24592" crc="3653c07d"/>
 		<driver status="good"/>
 	</game>
 	<game name="fleademo">
-		<description>flea! demo (HB)</description>
+		<description>FLEA! demo (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Lowtek</manufacturer>
 		<rom name="flea! demo (HB).nes" size="524304" crc="6d18f7c4"/>
@@ -3093,7 +3142,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="getemgary">
-		<description>Get'Em Gary (HB)</description>
+		<description>Get'Em Gary (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Get'Em Gary (HB).nes" size="40976" crc="b559ce3e"/>
@@ -3268,14 +3317,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="gruni2">
-		<description>Gruniozerca 2 - The Great Cavy Rescue! (HB)</description>
+		<description>Gruniozerca 2 - The Great Cavy Rescue! (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Lukasz Kur &amp; M-Tee</manufacturer>
 		<rom name="Gruniozerca 2 - The Great Cavy Rescue! (HB).nes" size="65552" crc="911a2917"/>
 		<driver status="good"/>
 	</game>
 	<game name="gruni3">
-		<description>Gruniozerca 3 - The Great Cavy Clean-Up! (HB)</description>
+		<description>Gruniozerca 3 - The Great Cavy Clean-Up! (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Lukasz Kur &amp; M-Tee</manufacturer>
 		<rom name="Gruniozerca 3 - The Great Cavy Clean-Up! (HB).nes" size="65552" crc="a92f5930"/>
@@ -3380,14 +3429,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="halloween86">
-		<description>Halloween'86 (HB)</description>
+		<description>Halloween'86 (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'86 (HB).nes" size="524304" crc="454252a4"/>
 		<driver status="good"/>
 	</game>
 	<game name="halloween86a" cloneof="halloween86" romof="halloween86">
-		<description>Halloween'86 (HB, alt)</description>
+		<description>Halloween'86 (HB, alt) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'86 (HB, alt).nes" size="524304" crc="d008091a"/>
@@ -3401,9 +3450,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="haradiuszero">
-		<description>Haradius Zero (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Haradius Zero (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Impact Soft</manufacturer>
 		<rom name="Haradius Zero (HB).nes" size="786448" crc="d2f19ba1"/>
 		<driver status="good"/>
 	</game>
@@ -3422,7 +3471,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="halloween85">
-		<description>Haunted Halloween'85 (HB)</description>
+		<description>Haunted Halloween'85 (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Halloween'85 (HB).nes" size="524304" crc="4bcf7ae5"/>
@@ -3517,6 +3566,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hinotori Houou Hen - Gaou no Bouken (T-Eng).nes" size="262160" crc="5f228691"/>
+		<driver status="good"/>
+	</game>
+	<game name="hitlenofukc" cloneof="bioniccommando" romof="bioniccommando">
+		<description>Hitler no Fukkatsu - Top Secret (China)</description>
+		<year>1988</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Hitler no Fukkatsu - Top Secret (China).nes" size="294928" crc="1dd2194c"/>
 		<driver status="good"/>
 	</game>
 	<game name="hitlenofuk" cloneof="bioniccommando" romof="bioniccommando">
@@ -3709,7 +3765,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="indivisible">
-		<description>Indivisible (HB)</description>
+		<description>Indivisible (HB) [Homebrew]</description>
 		<year>201x</year>
 		<manufacturer>Lab Zero Games</manufacturer>
 		<rom name="Indivisible (HB).nes" size="262160" crc="9f304e88"/>
@@ -3821,9 +3877,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="jamg">
-		<description>JAMG - The Lost Coins (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>JAMG - The Lost Coins (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>OCDreproductions</manufacturer>
 		<rom name="JAMG - The Lost Coins (HB).nes" size="262160" crc="7a8877aa"/>
 		<driver status="good"/>
 	</game>
@@ -3849,7 +3905,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jetpaco">
-		<description>Jet-Paco (HB)</description>
+		<description>Jet-Paco (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Jet-Paco (HB).nes" size="40976" crc="b5f18574"/>
@@ -4017,7 +4073,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="justiceduel">
-		<description>Justice Duel (HB)</description>
+		<description>Justice Duel (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Justice Duel (HB).nes" size="196624" crc="ada8853b"/>
@@ -4339,21 +4395,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstanigac">
-		<description>Kira Kira Star Night AC (HB)</description>
+		<description>Kira Kira Star Night AC (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night AC (HB).nes" size="524304" crc="9e650f69"/>
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstanigdx">
-		<description>Kira Kira Star Night DX (HB)</description>
+		<description>Kira Kira Star Night DX (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night DX (HB).nes" size="524304" crc="66a30110"/>
 		<driver status="good"/>
 	</game>
 	<game name="kirakirstaniggo">
-		<description>Kira Kira Star Night GOLD (HB)</description>
+		<description>Kira Kira Star Night GOLD (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>RIKI</manufacturer>
 		<rom name="Kira Kira Star Night GOLD (HB).nes" size="524304" crc="d2526d60"/>
@@ -4500,21 +4556,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="lalathemagical">
-		<description>Lala the Magical (HB)</description>
+		<description>Lala the Magical (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Lala the Magical (HB).nes" size="81936" crc="496c2e59"/>
 		<driver status="good"/>
 	</game>
 	<game name="larry">
-		<description>Larry (HB)</description>
+		<description>Larry (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Larry (HB).nes" size="524304" crc="96f31fb9"/>
 		<driver status="good"/>
 	</game>
 	<game name="larrya" cloneof="larry" romof="larry">
-		<description>Larry (HB, alt)</description>
+		<description>Larry (HB, alt) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Larry (HB, alt).nes" size="524304" crc="2c8d188e"/>
@@ -4556,7 +4612,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lawnmower">
-		<description>Lawn Mower (HB)</description>
+		<description>Lawn Mower (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>Shiru</manufacturer>
 		<rom name="Lawn Mower (HB).nes" size="24592" crc="2e03cb7f"/>
@@ -4612,9 +4668,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="legendsofowlia">
-		<description>Legends of Owlia (HB)</description>
+		<description>Legends of Owlia (HB) [Homebrew]</description>
 		<year>2014</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>Gradual Games</manufacturer>
 		<rom name="Legends of Owlia (HB).nes" size="524304" crc="26858010"/>
 		<driver status="good"/>
 	</game>
@@ -4647,7 +4703,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="littlemedusa">
-		<description>Little Medusa (HB)</description>
+		<description>Little Medusa (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Little Medusa (HB).nes" size="524304" crc="126b5927"/>
@@ -4689,7 +4745,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lizard">
-		<description>Lizard (HB)</description>
+		<description>Lizard (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Brad Smith</manufacturer>
 		<rom name="Lizard (HB).nes" size="524304" crc="27a5348f"/>
@@ -4703,7 +4759,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="logjammers">
-		<description>Log Jammers (HB)</description>
+		<description>Log Jammers (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Log Jammers (HB).nes" size="393232" crc="451dd988"/>
@@ -4738,7 +4794,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lunarlimit">
-		<description>Lunar Limit (HB)</description>
+		<description>Lunar Limit (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>pubby</manufacturer>
 		<rom name="Lunar Limit (HB).nes" size="40976" crc="eb26681e"/>
@@ -4794,7 +4850,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="machinecave">
-		<description>Machine Cave (HB, v1.9)</description>
+		<description>Machine Cave (HB, v1.9) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Simo Sievanen</manufacturer>
 		<rom name="Machine Cave (HB, v1.9).nes" size="40976" crc="2d904baf"/>
@@ -5221,14 +5277,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="micromages">
-		<description>Micro Mages</description>
+		<description>Micro Mages (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Micro Mages.nes" size="40976" crc="b0b6b5e4"/>
 		<driver status="good"/>
 	</game>
 	<game name="miedow">
-		<description>Miedow (HB)</description>
+		<description>Miedow (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Miedow (HB).nes" size="65552" crc="6389b721"/>
@@ -5333,7 +5389,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mojontwimul">
-		<description>Mojon Twins Multicart (HB)</description>
+		<description>Mojon Twins Multicart (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Mojon Twins Multicart (HB).nes" size="393232" crc="eec1e108"/>
@@ -5445,7 +5501,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mrsplash">
-		<description>Mr. Splash (HB)</description>
+		<description>Mr. Splash (HB) [Homebrew]</description>
 		<year>2008</year>
 		<manufacturer>Project F</manufacturer>
 		<rom name="Mr. Splash (HB).nes" size="750052" crc="8b86978b"/>
@@ -5487,14 +5543,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="mysticorigins">
-		<description>Mystic Origins (HB)</description>
+		<description>Mystic Origins (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mystic Origins (HB).nes" size="524304" crc="249c666e"/>
 		<driver status="good"/>
 	</game>
 	<game name="nalleland">
-		<description>Nalle Land (HB, v034)</description>
+		<description>Nalle Land (HB, v034) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Benjamin Larsson</manufacturer>
 		<rom name="Nalle Land (HB, v034).nes" size="32784" crc="f4a24d8b"/>
@@ -5536,7 +5592,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nebsanddebs">
-		<description>Nebs and Debs (HB)</description>
+		<description>Nebs and Debs (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Dullahan</manufacturer>
 		<rom name="Nebs and Debs (HB).nes" size="40976" crc="570383a9"/>
@@ -5571,7 +5627,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neoheiali">
-		<description>NEO Heiankyo Alien (HB)</description>
+		<description>NEO Heiankyo Alien (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Hyperware Co.</manufacturer>
 		<rom name="NEO Heiankyo Alien (HB).nes" size="655376" crc="f9450fc9"/>
@@ -5585,7 +5641,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nescape">
-		<description>NEScape (HB)</description>
+		<description>NEScape (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="NEScape (HB).nes" size="524304" crc="60b6ad99"/>
@@ -5767,7 +5823,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nomolos">
-		<description>Nomolos (HB)</description>
+		<description>Nomolos (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Gradual Games</manufacturer>
 		<rom name="Nomolos (HB).nes" size="524304" crc="917154ac"/>
@@ -5781,7 +5837,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="novasqu">
-		<description>Nova the Squirrel (HB)</description>
+		<description>Nova the Squirrel (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>NovaSquirrel</manufacturer>
 		<rom name="Nova the Squirrel (HB).nes" size="262160" crc="0b752bee"/>
@@ -5893,8 +5949,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="panicdizzy">
-		<description>Panic Dizzy (HB)</description>
-		<year>1989?</year>
+		<description>Panic Dizzy (HB) [Homebrew]</description>
+		<year>2019</year>
 		<manufacturer>Oliver Twins</manufacturer>
 		<rom name="Panic Dizzy (HB).nes" size="65552" crc="c5b23abd"/>
 		<driver status="good"/>
@@ -5977,8 +6033,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="perfectpair">
-		<description>Perfect Pair (HB)</description>
-		<year>1989?</year>
+		<description>Perfect Pair (HB) [Homebrew]</description>
+		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="Perfect Pair (HB).nes" size="40976" crc="efef8b35"/>
 		<driver status="good"/>
@@ -6096,7 +6152,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pogocats">
-		<description>Pogo Cats (HB)</description>
+		<description>Pogo Cats (HB) [Homebrew]</description>
 		<year>2012</year>
 		<manufacturer>YGGI</manufacturer>
 		<rom name="Pogo Cats (HB).nes" size="24592" crc="57fc5391"/>
@@ -6180,7 +6236,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="projectblue">
-		<description>Project Blue (HB)</description>
+		<description>Project Blue (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>toggle switch</manufacturer>
 		<rom name="Project Blue (HB).nes" size="524304" crc="43b9e57e"/>
@@ -6201,7 +6257,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="purplecapeman">
-		<description>Purple Cape Man (HB)</description>
+		<description>Purple Cape Man (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Vigilante Ninja</manufacturer>
 		<rom name="Purple Cape Man (HB).nes" size="24592" crc="d8a7825b"/>
@@ -6278,8 +6334,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="questforge">
-		<description>Quest Forge (HB)</description>
-		<year>1989?</year>
+		<description>Quest Forge (HB) [Homebrew]</description>
+		<year>2016</year>
 		<manufacturer>Ludosity</manufacturer>
 		<rom name="Quest Forge (HB).nes" size="40976" crc="e81cba21"/>
 		<driver status="good"/>
@@ -6733,14 +6789,14 @@
 		<driver status="good"/>
 	</game>
 	<game name="saturnsmash">
-		<description>Saturn Smash (HB)</description>
+		<description>Saturn Smash (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Saturn Smash (HB).nes" size="65552" crc="abc36edb"/>
 		<driver status="good"/>
 	</game>
 	<game name="scramble">
-		<description>Scramble (HB)</description>
+		<description>Scramble (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Scramble (HB).nes" size="131088" crc="ca6130a6"/>
@@ -6775,7 +6831,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sgthel">
-		<description>Sgt. Helmet - Training Day (HB)</description>
+		<description>Sgt. Helmet - Training Day (HB) [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Sgt. Helmet - Training Day (HB).nes" size="40976" crc="44c6ca4d"/>
@@ -6915,17 +6971,24 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinkingfeeling">
-		<description>Sinking Feeling (HB)</description>
+		<description>Sinking Feeling (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Sinking Feeling (HB).nes" size="49168" crc="b2f79ee2"/>
 		<driver status="good"/>
 	</game>
 	<game name="sirababol">
-		<description>Sir Ababol (HB)</description>
+		<description>Sir Ababol (HB) [Homebrew]</description>
 		<year>2013</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Sir Ababol (HB).nes" size="40976" crc="5e7e4c60"/>
+		<driver status="good"/>
+	</game>
+	<game name="sirababolr" cloneof="sirababol" romof="sirababol">
+		<description>Sir Ababol Remastered Edition (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="Sir Ababol Remastered Edition (2016)(Mojon Twins).nes" size="40976" crc="36d8ca2b"/>
 		<driver status="good"/>
 	</game>
 	<game name="skateboy">
@@ -7181,9 +7244,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="starevil">
-		<description>Star Evil (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Star Evil (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>PDRoms</manufacturer>
 		<rom name="Star Evil (HB).nes" size="40976" crc="fbd4ce1c"/>
 		<driver status="good"/>
 	</game>
@@ -7307,7 +7370,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="steinsgate">
-		<description>Steins Gate (HB)</description>
+		<description>Steins Gate (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Chiyomaru</manufacturer>
 		<rom name="Steins Gate (HB).nes" size="786448" crc="547c4f1d"/>
@@ -7405,7 +7468,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superbatpun">
-		<description>Super Bat Puncher (Demo)</description>
+		<description>Super Bat Puncher (HB, Demo) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Super Bat Puncher (Demo).nes" size="131088" crc="d04302fa"/>
@@ -7440,7 +7503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superhomwar">
-		<description>Super Homebrew War (HB)</description>
+		<description>Super Homebrew War (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>gauauu</manufacturer>
 		<rom name="Super Homebrew War (HB).nes" size="65552" crc="16b8d50a"/>
@@ -7475,7 +7538,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpainter">
-		<description>Super Painter (HB)</description>
+		<description>Super Painter (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Retro Souls</manufacturer>
 		<rom name="Super Painter (HB).nes" size="40976" crc="5d483272"/>
@@ -7510,9 +7573,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="superpit30t">
-		<description>Super Pitfall 30th (HB)</description>
+		<description>Super Pitfall 30th Anniversary Ed.(HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>NESRocks</manufacturer>
 		<rom name="Super Pitfall 30th (HB).nes" size="131088" crc="e55ba70d"/>
 		<driver status="good"/>
 	</game>
@@ -7559,7 +7622,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supertiltbro">
-		<description>Super Tilt Bro (HB)</description>
+		<description>Super Tilt Bro (HB) [Homebrew]</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Tilt Bro (HB).nes" size="524304" crc="58829008"/>
@@ -7573,7 +7636,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superuwol">
-		<description>Super UWOL (HB)</description>
+		<description>Super UWOL (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Super UWOL (HB).nes" size="40976" crc="9fbb9e1d"/>
@@ -7895,21 +7958,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="madwiz">
-		<description>The Mad Wizard - A Candelabra Chronicle (HB)</description>
+		<description>The Mad Wizard - A Candelabra Chronicle (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Robert L. Bryant</manufacturer>
 		<rom name="The Mad Wizard - A Candelabra Chronicle (HB).nes" size="131088" crc="7750dac6"/>
 		<driver status="good"/>
 	</game>
 	<game name="meating">
-		<description>The Meating - Cafeparty Demo (HB)</description>
+		<description>The Meating - Cafeparty Demo (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="The Meating - Cafeparty Demo (HB).nes" size="262160" crc="e704ef0a"/>
 		<driver status="good"/>
 	</game>
 	<game name="riseamo">
-		<description>The Rise of Amondus (HB)</description>
+		<description>The Rise of Amondus (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Robert L. Bryant</manufacturer>
 		<rom name="The Rise of Amondus (HB).nes" size="131088" crc="b15ac0fe"/>
@@ -8140,9 +8203,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="touhourououmu">
-		<description>TouhouRououmu (HB)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>TouhouRououmu (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>takahirox</manufacturer>
 		<rom name="TouhouRououmu (HB).nes" size="524304" crc="4cf11179"/>
 		<driver status="good"/>
 	</game>
@@ -8161,7 +8224,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="towerofturmoil">
-		<description>Tower of Turmoil (HB, v1.03)</description>
+		<description>Tower of Turmoil (HB, v1.03) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>CutterCross</manufacturer>
 		<rom name="Tower of Turmoil (HB, v1.03).nes" size="524304" crc="89cbd840"/>
@@ -8224,16 +8287,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="twindragons">
-		<description>Twin Dragons (HB)</description>
-		<year>2017</year>
-		<manufacturer>BROKE STUDIO</manufacturer>
+		<description>Twin Dragons (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Twin Dragons (HB).nes" size="524304" crc="0d29351e"/>
 		<driver status="good"/>
 	</game>
 	<game name="twindracomedi" cloneof="twindragons" romof="twindragons">
-		<description>Twin Dragons Compo Edition (HB)</description>
+		<description>Twin Dragons Compo Edition (HB) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Nintendo</manufacturer>
+		<manufacturer>Broke Studio</manufacturer>
 		<rom name="Twin Dragons Compo Edition (HB).nes" size="65552" crc="311cb660"/>
 		<driver status="good"/>
 	</game>
@@ -8308,7 +8371,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultimfrocha">
-		<description>Ultimate Frogger Champion (HB)</description>
+		<description>Ultimate Frogger Champion (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Khan Games</manufacturer>
 		<rom name="Ultimate Frogger Champion (HB).nes" size="49168" crc="ab862073"/>
@@ -8361,6 +8424,13 @@
 		<year>1991</year>
 		<manufacturer>Koei</manufacturer>
 		<rom name="Uncharted Waters (USA).nes" size="655376" crc="d6a0ce38"/>
+		<driver status="good"/>
+	</game>
+	<game name="underadv">
+		<description>Underground Adventure (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Dale Coop</manufacturer>
+		<rom name="Underground Adventure (2019)(Dale Coop).nes" size="524304" crc="eaf67029"/>
 		<driver status="good"/>
 	</game>
 	<game name="uninvited">
@@ -8427,7 +8497,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="veggieinvaders">
-		<description>Veggie Invaders (HB)</description>
+		<description>Veggie Invaders (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>dustmop</manufacturer>
 		<rom name="Veggie Invaders (HB).nes" size="65552" crc="6276c0a0"/>
@@ -8441,7 +8511,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nesvircle">
-		<description>Virus Cleaner (HB)</description>
+		<description>Virus Cleaner (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Second Dimension</manufacturer>
 		<rom name="NES Virus Cleaner (HB).nes" size="40976" crc="5f17cb98"/>
@@ -8504,7 +8574,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wall">
-		<description>wall (Demo)</description>
+		<description>Wall (HB, Demo) [Homebrew]</description>
 		<year>1999</year>
 		<manufacturer>Chris Covell</manufacturer>
 		<rom name="wall (Demo).nes" size="24592" crc="5da28b4f"/>
@@ -8629,8 +8699,15 @@
 		<rom name="Wizards &amp; Warriors III - Kuros - Visions of Power (USA).nes" size="262160" crc="4f505449"/>
 		<driver status="good"/>
 	</game>
+	<game name="wxniao">
+		<description>Wo Xiang Niao Niao (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Xin Xin</manufacturer>
+		<rom name="Wo Xiang Niao Niao (2016)(Xin Xin).nes" size="40976" crc="7063779c"/>
+		<driver status="good"/>
+	</game>
 	<game name="wolfling">
-		<description>Wolfling (HB, v1.4)</description>
+		<description>Wolfling (HB, v1.4) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Lazy Cow</manufacturer>
 		<rom name="Wolfling (HB, v1.4).nes" size="65552" crc="f22ae9b8"/>
@@ -8644,8 +8721,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="wonderlanddizzy">
-		<description>Wonderland Dizzy (HB)</description>
-		<year>1989?</year>
+		<description>Wonderland Dizzy (HB) [Homebrew]</description>
+		<year>2015</year>
 		<manufacturer>Oliver Twins</manufacturer>
 		<rom name="Wonderland Dizzy (HB).nes" size="262160" crc="62c97c6c"/>
 		<driver status="good"/>
@@ -8854,7 +8931,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombiecalavera">
-		<description>Zombie Calavera (HB)</description>
+		<description>Zombie Calavera (HB) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Zombie Calavera (HB).nes" size="40976" crc="23ec3047"/>
@@ -8875,7 +8952,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zoomisec">
-		<description>Zooming Secretary (HB)</description>
+		<description>Zooming Secretary (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>Pinwizz &amp; Shiru</manufacturer>
 		<rom name="Zooming Secretary (HB).nes" size="40976" crc="947972d0"/>

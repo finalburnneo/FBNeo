@@ -552,6 +552,13 @@
 		<rom name="art of fighting (euro).bin" size="2097152" crc="9970c422"/>
 		<driver status="good"/>
 	</game>
+	<game name="aofec" cloneof="aof" romof="aof">
+		<description>Art of Fighting (Hack, Enhanced Colors)</description>
+		<year>2015</year>
+		<manufacturer>Sega - Pyron</manufacturer>
+		<rom name="art of fighting (enhanced colors).md" size="2097152" crc="f28b2502"/>
+		<driver status="good"/>
+	</game>
 	<game name="aofp" cloneof="aof" romof="aof">
 		<description>Art of Fighting (Prototype, 19940711)</description>
 		<year>1994</year>
@@ -1700,6 +1707,13 @@
 		<rom name="burning force (usa).bin" size="524288" crc="bdc8f02c"/>
 		<driver status="good"/>
 	</game>
+	<game name="cadashac" cloneof="cadash" romof="cadash">
+		<description>Cadash (Hack, Arcade Colors)</description>
+		<year>2018</year>
+		<manufacturer>Taito - Tor Landeel</manufacturer>
+		<rom name="cadash (arcade colors).md" size="524288" crc="84480043"/>
+		<driver status="good"/>
+	</game>
 	<game name="cadash">
 		<description>Cadash (USA, Asia, Kor)</description>
 		<year>1992</year>
@@ -1782,6 +1796,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15499.bin" size="1048576" crc="43225612"/>
+		<driver status="good"/>
+	</game>
+	<game name="captavenec" cloneof="captaven" romof="captaven">
+		<description>Captain America and the Avengers (Hack, Enhnanced Colors)</description>
+		<year>2015</year>
+		<manufacturer>Data East - Pyron</manufacturer>
+		<rom name="captain america and the avengers (enhanced colors).md" size="1048576" crc="23109899"/>
 		<driver status="good"/>
 	</game>
 	<game name="captavenu" cloneof="captaven" romof="captaven">
@@ -4267,6 +4288,13 @@
 		<year>1993</year>
 		<manufacturer>Takara</manufacturer>
 		<rom name="fatal fury (usa).bin" size="1572864" crc="98d49170"/>
+		<driver status="good"/>
+	</game>
+	<game name="fatfury2ec" cloneof="fatfury2" romof="fatfury2">
+		<description>Fatal Fury 2 (Hack, Enhanced Colors v4.0)</description>
+		<year>2015</year>
+		<manufacturer>Takara - Pyron</manufacturer>
+		<rom name="fatal fury 2 (enhanced colors v4.0).md" size="3145728" crc="eb433a36"/>
 		<driver status="good"/>
 	</game>
 	<game name="fatfury2">
@@ -14986,6 +15014,13 @@
 		<rom name="triple play gold (usa) (alt).bin" size="4194304" crc="a89638a0"/>
 		<driver status="good"/>
 	</game>
+	<game name="tronow">
+		<description>Tro-Now (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>1985 - bitbitJAM</manufacturer>
+		<rom name="tronow.bin" size="327680" crc="f484fa21"/>
+		<driver status="good"/>
+	</game>
 	<game name="troubsht">
 		<description>Trouble Shooter (USA)</description>
 		<year>1991</year>
@@ -15070,11 +15105,25 @@
 		<rom name="Turrican (USA, fixed Linkuei and Helder).bin" size="524288" crc="60f8bbdd"/>
 		<driver status="good"/>
 	</game>
+	<game name="twincobrgfx" cloneof="twincobr" romof="twincobr">
+		<description>Twin Cobra (Hack, Arcade GFX v2.0)</description>
+		<year>2016</year>
+		<manufacturer>Sega - fusaru</manufacturer>
+		<rom name="twin cobra (arcade gfx v2.0).md" size="704120" crc="88ea1e4e"/>
+		<driver status="good"/>
+	</game>
 	<game name="twincobr">
 		<description>Twin Cobra (USA)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="twin cobra (usa).bin" size="655360" crc="2c708248"/>
+		<driver status="good"/>
+	</game>
+	<game name="twinhawkgfx" cloneof="twinhawk" romof="twinhawk">
+		<description>Twin Hawk (Arcade GFX)</description>
+		<year>2017</year>
+		<manufacturer>Sega - fusaru</manufacturer>
+		<rom name="twin hawk (arcade gfx).md" size="524288" crc="abd8ce33"/>
 		<driver status="good"/>
 	</game>
 	<game name="twinhawk">

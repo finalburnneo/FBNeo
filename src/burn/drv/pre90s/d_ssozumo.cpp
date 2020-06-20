@@ -125,11 +125,7 @@ static void ssozumo_main_write(UINT16 address, UINT8 data)
 
 		case 0x4010: {
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		}
 		return;
 
@@ -596,9 +592,7 @@ static INT32 DrvFrame()
 		}
 
 		if ((((DrvInputs[0] & 0x40) == 0x00) || ((DrvInputs[0] & 0x80) == 0x00)) && previous_coin == 0xc0) {
-			M6502Open(0);
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
-			M6502Close();
+			M6502SetIRQLine(0, 0x20, CPU_IRQSTATUS_AUTO); // nmi
 		}
 
 		previous_coin = DrvInputs[0] & 0xc0;
@@ -607,7 +601,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1200000 / 60, 975000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSegment = 0;
 
 	vblank = 0;
 
@@ -618,12 +611,11 @@ static INT32 DrvFrame()
 			vblank = 1;
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += M6502Run(nSegment);
+		CPU_RUN(0, M6502);
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if (nmi_mask && (i & 0xf) == 0xf) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi (16.15 times per frame)
 		M6502Close();
 	}

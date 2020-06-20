@@ -143,11 +143,7 @@ static void dogfgt_main_write(UINT16 address, UINT8 data)
 
 		case 0x1810:
 			if (data & 0x04) {
-				M6502Close();
-				M6502Open(1);
-				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Close();
-				M6502Open(0);
+				M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -537,14 +533,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += M6502Run(nSegment);
+		CPU_RUN(0, M6502);
 		if ((i & 7) == 7) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO); // 16x per frame
-		nSegment = M6502TotalCycles();
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[1] += M6502Run(nSegment - M6502TotalCycles());
+		CPU_RUN(1, M6502);
 		M6502Close();
 
 		if (i == 119) vblank = 1; // (240 / 256) * 128

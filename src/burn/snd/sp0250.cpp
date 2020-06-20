@@ -186,7 +186,7 @@ static void sp0250_update_int(INT16 *buffer, INT32 length)
 			// Physical resolution is only 7 bits, but heh
 
 			// max amplitude is 0x0f80 so we have margin to push up the output
-			buffer[i] = z0 << 3;
+			buffer[i] = BURN_SND_CLIP(z0 << 3);
 
 			sp->pcount++;
 			if (sp->pcount >= sp->pitch)

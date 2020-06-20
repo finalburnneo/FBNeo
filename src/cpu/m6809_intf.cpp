@@ -9,25 +9,6 @@ static INT32 nActiveCPU = 0;
 
 static M6809Ext *m6809CPUContext = NULL;
 
-static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		if (active != -1) M6809Close();
-		M6809Open(cpu);
-	}
-
-	M6809SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		M6809Close();
-		if (active != -1) M6809Open(active);
-	}
-}
-
 cpu_core_config M6809Config =
 {
 	"M6809",
@@ -39,7 +20,7 @@ cpu_core_config M6809Config =
 	M6809TotalCycles,
 	M6809NewFrame,
 	M6809Idle,
-	core_set_irq,
+	M6809SetIRQLine,
 	M6809Run,
 	M6809RunEnd,
 	M6809Reset,

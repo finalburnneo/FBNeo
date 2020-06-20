@@ -253,11 +253,7 @@ static void mhavoc_main_write(UINT16 address, UINT8 data)
 
 			if (gamma_halt)
 			{
-				M6502Close();
-				M6502Open(1);
-				M6502Reset();
-				M6502Close();
-				M6502Open(0);
+				M6502Reset(1);
 
 				alpha_rcvd = 0;
 				alpha_xmtd = 0;
@@ -301,11 +297,7 @@ static void mhavoc_main_write(UINT16 address, UINT8 data)
 			alpha_xmtd = 1;
 			alpha_data = data;
 
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0x20, CPU_IRQSTATUS_AUTO);
 		}
 		return;
 	}
@@ -800,7 +792,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6502);
 
 		if (alpha_irq_clock_enable && ((i%3)==2))
 		{
@@ -819,10 +811,9 @@ static INT32 DrvFrame()
 			M6502Open(1);
 		
 			if (gamma_halt) {
-				nCyclesDone[1] += (nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1];
-				M6502Idle((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+				CPU_IDLE(1, M6502);
 			} else {
-				nCyclesDone[1] += M6502Run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+				CPU_RUN(1, M6502);
 			}
 
 			if ((i%3)==2) {

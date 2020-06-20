@@ -309,11 +309,7 @@ static void lasso_main_write(UINT16 address, UINT8 data)
 			if (game_select == 3) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
-				M6502Close();
-				M6502Open(1);
-				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				M6502Close();
-				M6502Open(0);
+				M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 		}
 		return;
@@ -1249,9 +1245,7 @@ static INT32 LassoFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 		if ((DrvInputs[2] & 0x30) != previous_coin) {
-			M6502Open(0);
-			M6502SetIRQLine(0x20, (DrvInputs[2] & 0x30) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-			M6502Close();
+			M6502SetIRQLine(0, 0x20, (DrvInputs[2] & 0x30) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			previous_coin = DrvInputs[2] & 0x30;
 		}
 	}
@@ -1310,9 +1304,7 @@ static INT32 PinboFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 		if ((DrvInputs[2] & 0x30) != previous_coin) {
-			M6502Open(0);
-			M6502SetIRQLine(0x20, (DrvInputs[2] & 0x30) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-			M6502Close();
+			M6502SetIRQLine(0, 0x20, (DrvInputs[2] & 0x30) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			previous_coin = DrvInputs[2] & 0x30;
 		}
 	}

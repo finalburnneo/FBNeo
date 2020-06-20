@@ -34,6 +34,7 @@ struct M6502Ext {
 extern INT32 nM6502Count;
 
 void M6502Reset();
+void M6502Reset(INT32 nCPU);
 void M6502NewFrame();
 
 void n2a03_irq(void); // USED FOR PSG!!
@@ -57,10 +58,14 @@ void M6502Open(INT32 num);
 void M6502Close();
 INT32 M6502GetActive();
 INT32 M6502Idle(INT32 nCycles);
+INT32 M6502Idle(INT32 nCPU, INT32 nCycles);
 INT32 M6502Stall(INT32 nCycles);
+INT32 M6502Stall(INT32 nCPU, INT32 nCycles);
 void M6502ReleaseSlice();
 void M6502SetIRQLine(INT32 vector, INT32 status);
+void M6502SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 INT32 M6502Run(INT32 cycles);
+INT32 M6502Run(INT32 nCPU, INT32 nCycles);
 void M6502RunEnd();
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 void M6502SetReadPortHandler(UINT8 (*pHandler)(UINT16));
@@ -79,6 +84,7 @@ UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);
 
 INT32 M6502TotalCycles();
+INT32 M6502TotalCycles(INT32 nCPU);
 
 // m6502.cpp used for Data East encrypted CPUs.
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8));

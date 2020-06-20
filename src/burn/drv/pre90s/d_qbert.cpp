@@ -971,7 +971,7 @@ static void qbert_knocker(UINT8 knock)
 	*knocker_prev = knock;
 }
 
-static void sound_r1_write(UINT16 /*offset*/, UINT8 data)
+static void soundlatch_r1(UINT16 /*offset*/, UINT8 data)
 {
 	data &= 0x3f;
 
@@ -1036,7 +1036,7 @@ static void sound_r1_write(UINT16 /*offset*/, UINT8 data)
 	}
 }
 
-static void sound_r2_write(UINT8 data)
+static void soundlatch_r2(UINT8 data)
 {
 	if (data != 0xff)
 	{
@@ -1045,13 +1045,8 @@ static void sound_r2_write(UINT8 data)
 
 		if (last_command == 0xff)
 		{
-			M6502Open(0);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
+			M6502SetIRQLine(0, 0, CPU_IRQSTATUS_ACK);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		}
 	}
 
@@ -1106,9 +1101,9 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 
 		case 0x5802:
 			if (type2_sound) {
-				sound_r2_write(data);
+				soundlatch_r2(data);
 			} else {
-				sound_r1_write(address, data);
+				soundlatch_r1(address, data);
 			}
 		return;
 
@@ -1190,7 +1185,7 @@ static void __fastcall reactor_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0x7002:
-			sound_r1_write(address, data);
+			soundlatch_r1(address, data);
 		return;
 
 		case 0x7003: {
@@ -1412,11 +1407,7 @@ static void sound_r2_speech_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xb000:
-			M6502Close();
-			M6502Open(0);
-			M6502SetIRQLine(0x20/*nmi*/, CPU_IRQSTATUS_AUTO);
-			M6502Close();
-			M6502Open(1);
+			M6502SetIRQLine(0, 0x20/*nmi*/, CPU_IRQSTATUS_AUTO);
 		return;
 	}
 }

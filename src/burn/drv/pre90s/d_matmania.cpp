@@ -177,15 +177,9 @@ static void matmania_main_write(UINT16 address, UINT8 data)
 		case 0x3010:
 			soundlatch = data;
 			if (maniach) {
-				M6809Open(0);
-				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-				M6809Close();
+				M6809SetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
 			} else {
-				M6502Close();
-				M6502Open(1);
-				M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-				M6502Close();
-				M6502Open(0);
+				M6502SetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 			}
 		return;
 
@@ -767,7 +761,7 @@ static INT32 DrvFrame()
 	{
 		if (i == 7) vblank = 0;
 		M6502Open(0);
-		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, M6502);
 		if (i == nInterleave-1) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
@@ -782,13 +776,13 @@ static INT32 DrvFrame()
 			M6809Close();
 
 			m6805Open(0);
-			nCyclesDone[2] += m6805Run(nCyclesTotal[2] / nInterleave);
+			CPU_RUN(2, m6805);
 			m6805Close();
 		}
 		else
 		{
 			M6502Open(1);
-			nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+			CPU_RUN(1, M6502);
 			if ((i % 17) == 0) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
 

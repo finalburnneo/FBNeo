@@ -10,24 +10,6 @@ static INT32 nActiveCPU = 0;
 static M6502Ext *m6502CPUContext[MAX_CPU] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 static M6502Ext *pCurrentCPU;
 
-static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-	if (cpu != active)
-	{
-		if (active != -1) M6502Close();
-		M6502Open(cpu);
-	}
-
-	M6502SetIRQLine(line, state);
-
-	if (cpu != active)
-	{
-		M6502Close();
-		if (active != -1) M6502Open(active);
-	}
-}
-
 cpu_core_config M6502Config =
 {
 	"M6502",
@@ -39,7 +21,7 @@ cpu_core_config M6502Config =
 	M6502TotalCycles,
 	M6502NewFrame,
 	M6502Idle,
-	core_set_irq,
+	M6502SetIRQLine,
 	M6502Run,
 	M6502RunEnd,
 	M6502Reset,
@@ -75,6 +57,44 @@ static UINT8 M6502ReadOpArgDummyHandler(UINT16)
 	return 0;
 }
 
+// ## M6502CPUPush() / M6502CPUPop() ## internal helpers for sending signals to other m6809's
+struct m6809pstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
+
+static m6809pstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
+
+static void M6502CPUPush(INT32 nCPU)
+{
+	m6809pstack *p = &pstack[pstacknum++];
+
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("M6502CPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
+
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = M6502GetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) M6502Close();
+		M6502Open(p->nPushedCPU);
+	}
+}
+
+static void M6502CPUPop()
+{
+	m6809pstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		M6502Close();
+		if (p->nHostCPU != -1) M6502Open(p->nHostCPU);
+	}
+}
+
 void M6502Reset()
 {
 #if defined FBNEO_DEBUG
@@ -85,6 +105,19 @@ void M6502Reset()
 	pCurrentCPU->nCyclesStall = 0;
 
 	pCurrentCPU->reset();
+}
+
+void M6502Reset(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Reset called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	M6502Reset();
+
+	M6502CPUPop();
 }
 
 void M6502NewFrame()
@@ -109,6 +142,21 @@ INT32 M6502Idle(INT32 nCycles)
 	return nCycles;
 }
 
+INT32 M6502Idle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Idle called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	INT32 nRet = M6502Idle(nCycles);
+
+	M6502CPUPop();
+
+	return nRet;
+}
+
 INT32 M6502Stall(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG
@@ -118,6 +166,21 @@ INT32 M6502Stall(INT32 nCycles)
 	pCurrentCPU->nCyclesStall += nCycles;
 
 	return nCycles;
+}
+
+INT32 M6502Stall(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Stall called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	INT32 nRet = M6502Stall(nCycles);
+
+	M6502CPUPop();
+
+	return nRet;
 }
 
 UINT8 M6502CheatRead(UINT32 a)
@@ -369,6 +432,19 @@ void M6502SetIRQLine(INT32 vector, INT32 status)
 	}
 }
 
+void M6502SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetIRQLine called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	M6502SetIRQLine(line, status);
+
+	M6502CPUPop();
+}
+
 INT32 M6502Run(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
@@ -393,6 +469,21 @@ INT32 M6502Run(INT32 cycles)
 	return cycles + nDelayed;
 }
 
+INT32 M6502Run(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Run called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	INT32 nRet = M6502Run(nCycles);
+
+	M6502CPUPop();
+
+	return nRet;
+}
+
 INT32 M6502TotalCycles()
 {
 #if defined FBNEO_DEBUG
@@ -402,6 +493,21 @@ INT32 M6502TotalCycles()
 	if (pCurrentCPU == NULL) return 0; // let's not crash here..
 
 	return pCurrentCPU->nCyclesTotal + m6502_get_segmentcycles();
+}
+
+INT32 M6502TotalCycles(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
+#endif
+
+	M6502CPUPush(nCPU);
+
+	INT32 nRet = M6502TotalCycles();
+
+	M6502CPUPop();
+
+	return nRet;
 }
 
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)

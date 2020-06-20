@@ -951,11 +951,7 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 
 		case 0x9002:
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -996,11 +992,7 @@ static void btime_main_write(UINT16 addr, UINT8 data)
 
 		case 0x4003:
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x4004:
@@ -1045,14 +1037,10 @@ static void zoar_main_write(UINT16 addr, UINT8 data)
 
 		case 0x9806:
 			soundlatch = data;
-			UINT32 main_tot = M6502TotalCycles();
-			M6502Close();
-			M6502Open(1);
-			INT32 cyc = (main_tot / 3) - M6502TotalCycles();
-			if (cyc > 0) M6502Run(cyc);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			UINT32 main_tot = M6502TotalCycles(0);
+			INT32 cyc = (main_tot / 3) - M6502TotalCycles(1);
+			if (cyc > 0) M6502Run(1, cyc);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -1074,11 +1062,7 @@ static void disco_main_write(UINT16 addr, UINT8 data)
 
 		case 0x9a00:
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -1121,11 +1105,7 @@ static void bnj_main_write(UINT16 addr, UINT8 data)
 
 		case 0x1002:
 			soundlatch = data;
-			M6502Close();
-			M6502Open(1);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Close();
-			M6502Open(0);
+			M6502SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -2336,12 +2316,10 @@ static INT32 BtimeFrame()
 		UINT8 thiscoin = (DrvJoy3[6] << 6) | (DrvJoy3[7] << 7);
 
 		if (thiscoin && (prevcoin != thiscoin)) {
-			M6502Open(0);
 			if (discomode || zoarmode || btime3mode)
-				M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				M6502SetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
 			else
-				M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-			M6502Close();
+				M6502SetIRQLine(0, 0x20, CPU_IRQSTATUS_AUTO);
 		}
 		prevcoin = thiscoin;
 	}

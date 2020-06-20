@@ -34977,7 +34977,7 @@ struct BurnDriver BurnDrvmd_valis3j = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Vapor Trail (USA)
+// Vapor Trail (US)
 static struct BurnRomInfo md_vaportrRomDesc[] = {
 	{ "vapor trail (usa).bin", 0x100000, 0xc49e3a0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -34987,7 +34987,7 @@ STD_ROM_FN(md_vaportr)
 
 struct BurnDriver BurnDrvmd_vaportr = {
 	"md_vaportr", NULL, NULL, NULL, "1991",
-	"Vapor Trail (USA)\0", NULL, "Renovation", "Sega Megadrive",
+	"Vapor Trail (US)\0", NULL, "Renovation", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_vaportrRomInfo, md_vaportrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

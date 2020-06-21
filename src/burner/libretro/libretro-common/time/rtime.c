@@ -1,7 +1,7 @@
 /* Copyright  (C) 2010-2020 The RetroArch team
  *
  * ---------------------------------------------------------------------------------------
- * The following license statement only applies to this file (strcasestr.h).
+ * The following license statement only applies to this file (rtime.c).
  * ---------------------------------------------------------------------------------------
  *
  * Permission is hereby granted, free of charge,
@@ -20,29 +20,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __LIBRETRO_SDK_COMPAT_STRCASESTR_H
-#define __LIBRETRO_SDK_COMPAT_STRCASESTR_H
+#ifdef HAVE_THREADS
+#include <rthreads/rthreads.h>
+#include <retro_assert.h>
+#include <stdlib.h>
+#endif
 
 #include <string.h>
+#include <time/rtime.h>
 
-#if defined(RARCH_INTERNAL) && defined(HAVE_CONFIG_H)
-#include "../../../config.h"
+#ifdef HAVE_THREADS
+slock_t *rtime_localtime_lock = NULL;
 #endif
 
-#ifndef HAVE_STRCASESTR
+/* Must be called before using rtime_localtime() */
+void rtime_init(void)
+{
+   rtime_deinit();
+#ifdef HAVE_THREADS
+   if (!rtime_localtime_lock)
+      rtime_localtime_lock = slock_new();
 
-#include <retro_common_api.h>
+   retro_assert(rtime_localtime_lock);
+#endif
+}
 
-RETRO_BEGIN_DECLS
+/* Must be called upon program termination */
+void rtime_deinit(void)
+{
+#ifdef HAVE_THREADS
+   if (rtime_localtime_lock)
+   {
+      slock_free(rtime_localtime_lock);
+      rtime_localtime_lock = NULL;
+   }
+#endif
+}
 
-/* Avoid possible naming collisions during link
- * since we prefer to use the actual name. */
-#define strcasestr(haystack, needle) strcasestr_retro__(haystack, needle)
+/* Thread-safe wrapper for localtime() */
+struct tm *rtime_localtime(const time_t *timep, struct tm *result)
+{
+   struct tm *time_info = NULL;
 
-char *strcasestr(const char *haystack, const char *needle);
-
-RETRO_END_DECLS
-
+   /* Lock mutex */
+#ifdef HAVE_THREADS
+   slock_lock(rtime_localtime_lock);
 #endif
 
+   time_info = localtime(timep);
+   if (time_info)
+      memcpy(result, time_info, sizeof(struct tm));
+
+   /* Unlock mutex */
+#ifdef HAVE_THREADS
+   slock_unlock(rtime_localtime_lock);
 #endif
+
+   return result;
+}

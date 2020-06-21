@@ -70,9 +70,7 @@
 #endif
 
 #if defined(PS2)
-#include <kernel.h>
-#include <timer.h>
-#include <time.h>
+#include <ps2sdkapi.h>
 #endif
 
 #if defined(__PSL1GHT__)
@@ -192,7 +190,7 @@ retro_perf_tick_t cpu_features_get_perf_counter(void)
 #elif defined(PSP) || defined(VITA)
    time_ticks = sceKernelGetSystemTimeWide();
 #elif defined(PS2)
-   time_ticks = clock()*294912; // 294,912MHZ / 1000 msecs
+   time_ticks = ps2_clock();
 #elif defined(_3DS)
    time_ticks = svcGetSystemTick();
 #elif defined(WIIU)
@@ -244,7 +242,7 @@ retro_time_t cpu_features_get_time_usec(void)
 #elif defined(EMSCRIPTEN)
    return emscripten_get_now() * 1000;
 #elif defined(PS2)
-      return clock()*1000;
+   return ps2_clock() / PS2_CLOCKS_PER_MSEC * 1000;
 #elif defined(VITA) || defined(PSP)
    return sceKernelGetSystemTimeWide();
 #elif defined(_3DS)
@@ -287,7 +285,9 @@ void x86_cpuid(int func, int flags[4])
 #elif defined(_MSC_VER)
    __cpuid(flags, func);
 #else
+#ifndef NDEBUG
    printf("Unknown compiler. Cannot check CPUID with inline assembly.\n");
+#endif
    memset(flags, 0, 4 * sizeof(int));
 #endif
 }
@@ -309,7 +309,9 @@ static uint64_t xgetbv_x86(uint32_t idx)
    /* Intrinsic only works on 2010 SP1 and above. */
    return _xgetbv(idx);
 #else
+#ifndef NDEBUG
    printf("Unknown compiler. Cannot check xgetbv bits.\n");
+#endif
    return 0;
 #endif
 }

@@ -38,13 +38,56 @@ retro_environment_t environ_cb;
 static retro_video_refresh_t video_cb;
 static retro_audio_sample_batch_t audio_batch_cb;
 
-#define BPRINTF_BUFFER_SIZE 512
-char bprintf_buf[BPRINTF_BUFFER_SIZE];
-static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
+static unsigned libretro_msg_interface_version = 0;
+#define PRINTF_BUFFER_SIZE 512
+
+static INT32 HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
 {
+	char buf[PRINTF_BUFFER_SIZE];
 	va_list vp;
 	va_start(vp, szFormat);
-	int rc = vsnprintf(bprintf_buf, BPRINTF_BUFFER_SIZE, szFormat, vp);
+	int rc = vsnprintf(buf, PRINTF_BUFFER_SIZE, szFormat, vp);
+	va_end(vp);
+	if (rc >= 0)
+	{
+		// Errors are blocking, so let's display them for 10s in frontend
+		if (level == RETRO_LOG_ERROR)
+		{
+			if (libretro_msg_interface_version >= 1)
+			{
+				struct retro_message_ext msg = {
+					buf,
+					10000,
+					3,
+					level,
+					RETRO_MESSAGE_TARGET_OSD,
+					RETRO_MESSAGE_TYPE_NOTIFICATION,
+					-1
+				};
+				environ_cb(RETRO_ENVIRONMENT_SET_MESSAGE_EXT, &msg);
+			}
+			else
+			{
+				struct retro_message msg =
+				{
+					buf,
+					600
+				};
+				environ_cb(RETRO_ENVIRONMENT_SET_MESSAGE, &msg);
+			}
+		}
+		log_cb(level, buf);
+	}
+
+	return rc;
+}
+
+static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
+{
+	char buf[PRINTF_BUFFER_SIZE];
+	va_list vp;
+	va_start(vp, szFormat);
+	int rc = vsnprintf(buf, PRINTF_BUFFER_SIZE, szFormat, vp);
 	va_end(vp);
 
 	if (rc >= 0)
@@ -61,7 +104,7 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 		else if (nStatus == PRINT_ERROR)
 			retro_log = RETRO_LOG_ERROR;
 
-		log_cb(retro_log, bprintf_buf);
+		HandleMessage(retro_log, buf);
 	}
 
 	return rc;
@@ -205,7 +248,7 @@ static void InpDIPSWGetOffset (void)
 		if (bdi.nFlags == 0xF0)
 		{
 			nDIPOffset = bdi.nInput;
-			log_cb(RETRO_LOG_INFO, "DIP switches offset: %d.\n", bdi.nInput);
+			HandleMessage(RETRO_LOG_INFO, "DIP switches offset: %d.\n", bdi.nInput);
 			break;
 		}
 	}
@@ -233,7 +276,7 @@ void InpDIPSWResetDIPs (void)
 
 static int InpDIPSWInit()
 {
-	log_cb(RETRO_LOG_INFO, "Initialize DIP switches.\n");
+	HandleMessage(RETRO_LOG_INFO, "Initialize DIP switches.\n");
 
 	dipswitch_core_options.clear(); 
 
@@ -265,7 +308,7 @@ static int InpDIPSWInit()
 			else // ... so, to not hang, we will generate a name based on the position of the dip (DIPSWITCH 1, DIPSWITCH 2...)
 			{
 				option_name = SSTR( "DIPSWITCH " << dipswitch_core_options.size() );
-				log_cb(RETRO_LOG_WARN, "Error in %sDIPList : The DIPSWITCH '%d' has no name. '%s' name has been generated\n", drvname, dipswitch_core_options.size(), option_name.c_str());
+				HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList : The DIPSWITCH '%d' has no name. '%s' name has been generated\n", drvname, dipswitch_core_options.size(), option_name.c_str());
 			}
 
 			dip_option->friendly_name = option_name;
@@ -295,13 +338,13 @@ static int InpDIPSWInit()
 				BurnDIPInfo bdi_value;
 				if (BurnDrvGetDIPInfo(&bdi_value, k + i + 1) != 0)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': End of the struct was reached too early\n", drvname, dip_option->friendly_name.c_str());
+					HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': End of the struct was reached too early\n", drvname, dip_option->friendly_name.c_str());
 					break;
 				}
 
 				if (bdi_value.nFlags == 0xFE || bdi_value.nFlags == 0xFD)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': Start of next DIPSWITCH is too early\n", drvname, dip_option->friendly_name.c_str());
+					HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': Start of next DIPSWITCH is too early\n", drvname, dip_option->friendly_name.c_str());
 					break;
 				}
 
@@ -317,7 +360,7 @@ static int InpDIPSWInit()
 				// Filter away NULL entries
 				if (bdi_value.nFlags == 0)
 				{
-					log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
+					HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': the line '%d' is useless\n", drvname, dip_option->friendly_name.c_str(), k + 1);
 					continue;
 				}
 
@@ -341,7 +384,7 @@ static int InpDIPSWInit()
 			{
 				// Truncate the list at the values_count found to not have empty values
 				dip_option->values.resize(values_count); // +1 for default value
-				log_cb(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': '%d' values were intended and only '%d' were found\n", drvname, dip_option->friendly_name.c_str(), bdi.nSetting, values_count);
+				HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList for DIPSWITCH '%s': '%d' values were intended and only '%d' were found\n", drvname, dip_option->friendly_name.c_str(), bdi.nSetting, values_count);
 			}
 
 			// Skip the unusable option by removing it from the list
@@ -367,7 +410,7 @@ static bool apply_dipswitch_from_variables()
 {
 	bool dip_changed = false;
 #if 0
-	log_cb(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
+	HandleMessage(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
 #endif
 	struct retro_variable var = {0};
 
@@ -396,7 +439,7 @@ static bool apply_dipswitch_from_variables()
 			if (dip_value->pgi->Input.Constant.nConst == old_nConst)
 			{
 #if 0
-				log_cb(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
 				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
 #endif
 			}
@@ -404,7 +447,7 @@ static bool apply_dipswitch_from_variables()
 			{
 				dip_changed = true;
 #if 0
-				log_cb(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
 				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
 #endif
 			}
@@ -476,7 +519,7 @@ static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
 	}
 
 #if 0
-	log_cb(RETRO_LOG_ERROR, "Not found: %s (name = %s)\n", list[i].szName, name);
+	HandleMessage(RETRO_LOG_ERROR, "Not found: %s (name = %s)\n", list[i].szName, name);
 #endif
 
 	return -1;
@@ -496,7 +539,7 @@ static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems)
 	}
 
 #if 0
-	log_cb(RETRO_LOG_ERROR, "Not found: 0x%X (crc: 0x%X)\n", list[i].nCrc, crc);
+	HandleMessage(RETRO_LOG_ERROR, "Not found: 0x%X (crc: 0x%X)\n", list[i].nCrc, crc);
 #endif
 
 	return -1;
@@ -513,7 +556,7 @@ static RomBiosInfo* find_bios_info(char *szName, uint32_t crc, struct RomBiosInf
 	}
 
 #if 0
-	log_cb(RETRO_LOG_ERROR, "Bios not found: %s (crc: 0x%08x)\n", szName, crc);
+	HandleMessage(RETRO_LOG_ERROR, "Bios not found: %s (crc: 0x%08x)\n", szName, crc);
 #endif
 
 	return NULL;
@@ -578,7 +621,7 @@ static void locate_archive(std::vector<std::string>& pathList, const char* const
 		return;
 	}
 
-	log_cb(RETRO_LOG_ERROR, "[FBNEO] Couldn't locate the %s archive anywhere, this game probably won't boot.\n", romName);
+	HandleMessage(RETRO_LOG_WARN, "[FBNeo] Couldn't locate the %s archive anywhere, this game probably won't boot.\n", romName);
 }
 
 // This code is very confusing. The original code is even more confusing :(
@@ -586,7 +629,7 @@ static bool open_archive()
 {
 	memset(g_find_list, 0, sizeof(g_find_list));
 
-	// FBNEO wants some roms ... Figure out how many.
+	// FBNeo wants some roms ... Figure out how many.
 	g_rom_count = 0;
 	while (!BurnDrvGetRomInfo(&g_find_list[g_rom_count].ri, g_rom_count))
 		g_rom_count++;
@@ -601,7 +644,7 @@ static bool open_archive()
 		if (BurnDrvGetZipName(&rom_name, index))
 			continue;
 
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Archive: %s\n", rom_name);
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Archive: %s\n", rom_name);
 
 		locate_archive(g_find_list_path, rom_name);
 
@@ -616,7 +659,7 @@ static bool open_archive()
 	{
 		if (ZipOpen((char*)g_find_list_path[z].c_str()) != 0)
 		{
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Failed to open archive %s\n", g_find_list_path[z].c_str());
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed to open archive %s\n", g_find_list_path[z].c_str());
 			return false;
 		}
 
@@ -624,7 +667,7 @@ static bool open_archive()
 		int count;
 		ZipGetList(&list, &count);
 
-		// Try to map the ROMs FBNEO wants to ROMs we find inside our pretty archives ...
+		// Try to map the ROMs FBNeo wants to ROMs we find inside our pretty archives ...
 		for (unsigned i = 0; i < g_rom_count; i++)
 		{
 			if (g_find_list[i].nState == STAT_OK)
@@ -652,9 +695,9 @@ static bool open_archive()
 			if (index >= 0)
 			{
 				if (bad_crc)
-					log_cb(RETRO_LOG_WARN, "[FBNEO] Using ROM with bad CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
+					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with bad CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
 				else
-					log_cb(RETRO_LOG_INFO, "[FBNEO] Using ROM with good CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
+					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with good CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
 			}
 			else
 			{
@@ -710,7 +753,7 @@ static bool open_archive()
 	if (is_neogeo_game)
 	{
 		if (!available_mvs_bios && !available_aes_bios && !available_uni_bios)
-			log_cb(RETRO_LOG_WARN, "[FBNEO] NeoGeo BIOS missing ...\n");
+			HandleMessage(RETRO_LOG_WARN, "[FBNeo] NeoGeo BIOS missing ...\n");
 
 		set_neo_system_bios();
 
@@ -730,7 +773,7 @@ static bool open_archive()
 				if (is_neogeo_game && g_find_list[i].ri.nCrc == mvs_bioses[0].crc && is_neogeo_bios_available)
 					continue;
 
-				log_cb(RETRO_LOG_ERROR, "[FBNEO] ROM at index %d with CRC 0x%08x is required ...\n", i, g_find_list[i].ri.nCrc);
+				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with CRC 0x%08x is required ...\n", i, g_find_list[i].ri.nCrc);
 				return false;
 			}
 		}
@@ -827,6 +870,9 @@ void retro_init()
 
 	if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
 		bLibretroSupportsBitmasks = true;
+
+	libretro_msg_interface_version = 0;
+	environ_cb(RETRO_ENVIRONMENT_GET_MESSAGE_INTERFACE_VERSION, &libretro_msg_interface_version);
 
 	snprintf(szAppBurnVer, sizeof(szAppBurnVer), "%x.%x.%x.%02x", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
 	BurnLibInit();
@@ -932,7 +978,7 @@ static int burn_read_state_cb(BurnArea *pba)
 static int burn_dummy_state_cb(BurnArea *pba)
 {
 #ifdef FBNEO_DEBUG
-	log_cb(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
+	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
 #endif
 	state_sizes[kNetGame] += pba->nLen;
 	return 0;
@@ -1302,21 +1348,21 @@ static bool retro_load_game_common()
 	// If save directory is defined use it, ...
 	if (environ_cb(RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY, &dir) && dir) {
 		strncpy(g_save_dir, dir, sizeof(g_save_dir));
-		log_cb(RETRO_LOG_INFO, "Setting save dir to %s\n", g_save_dir);
+		HandleMessage(RETRO_LOG_INFO, "Setting save dir to %s\n", g_save_dir);
 	} else {
 		// ... otherwise use rom directory
 		strncpy(g_save_dir, g_rom_dir, sizeof(g_save_dir));
-		log_cb(RETRO_LOG_ERROR, "Save dir not defined => use roms dir %s\n", g_save_dir);
+		HandleMessage(RETRO_LOG_WARN, "Save dir not defined => use roms dir %s\n", g_save_dir);
 	}
 
 	// If system directory is defined use it, ...
 	if (environ_cb(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY, &dir) && dir) {
 		strncpy(g_system_dir, dir, sizeof(g_system_dir));
-		log_cb(RETRO_LOG_INFO, "Setting system dir to %s\n", g_system_dir);
+		HandleMessage(RETRO_LOG_INFO, "Setting system dir to %s\n", g_system_dir);
 	} else {
 		// ... otherwise use rom directory
 		strncpy(g_system_dir, g_rom_dir, sizeof(g_system_dir));
-		log_cb(RETRO_LOG_ERROR, "System dir not defined => use roms dir %s\n", g_system_dir);
+		HandleMessage(RETRO_LOG_WARN, "System dir not defined => use roms dir %s\n", g_system_dir);
 	}
 
 	// Initialize EEPROM path
@@ -1348,13 +1394,13 @@ static bool retro_load_game_common()
 	if (nBurnDrvActive < nBurnDrvCount) {
 		// If the game is marked as not working, let's stop here
 		if (!(BurnDrvIsWorking())) {
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch this game, it is marked as not working\n");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] This romset is known but marked as not working, aborting\n");
 			return false;
 		}
 
 		// If the game is a bios, let's stop here
 		if ((BurnDrvGetFlags() & BDF_BOARDROM)) {
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Can't launch a bios this way\n");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Bioses aren't meant to be launched this way, aborting\n");
 			return false;
 		}
 
@@ -1389,51 +1435,51 @@ static bool retro_load_game_common()
 #endif
 
 		if (!open_archive()) {
-			log_cb(RETRO_LOG_ERROR, "[FBNEO] Missing files, aborting.\n");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Missing files for this romset, please check it against the dat file, aborting.\n");
 			return false;
 		}
-		log_cb(RETRO_LOG_INFO, "[FBNEO] No missing files, proceeding\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] No missing files, proceeding\n");
 
 		// Announcing to fbneo which samplerate we want
 		// Some game drivers won't initialize with an undefined nBurnSoundLen
 		nBurnSoundRate = g_audio_samplerate;
 		init_audio_buffer(nBurnSoundRate, 6000);
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Samplerate set to %d\n", nBurnSoundRate);
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Samplerate set to %d\n", nBurnSoundRate);
 
 		// Start CD reader emulation if needed
 		if (nGameType == RETRO_GAME_TYPE_NEOCD) {
 			if (CDEmuInit()) {
-				log_cb(RETRO_LOG_INFO, "[FBNEO] Starting neogeo CD\n");
+				HandleMessage(RETRO_LOG_INFO, "[FBNeo] Starting neogeo CD\n");
 			}
 		}
 
 		// Apply dipswitches
 		apply_dipswitch_from_variables();
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Applied dipswitches from core options\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
 
 		// Initialize game driver
 		BurnDrvInit();
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Initializing driver for %s\n", g_driver_name);
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initializing driver for %s\n", g_driver_name);
 
 		// Now we know real game fps, let's initialize sound buffer again
 		init_audio_buffer(nBurnSoundRate, nBurnFPS);
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Adjusted audio buffer to match driver's refresh rate (%f Hz)\n", (nBurnFPS/100.0f));
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Adjusted audio buffer to match driver's refresh rate (%f Hz)\n", (nBurnFPS/100.0f));
 
 		// Get MainRam for RetroAchievements support
 		INT32 nMin = 0;
 		BurnAcb = StateGetMainRamAcb;
 		BurnAreaScan(ACB_FULLSCAN, &nMin);
 		if (bMainRamFound) {
-			log_cb(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", MainRamData, MainRamSize);
+			HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", MainRamData, MainRamSize);
 		}
 
 		// Loading minimal savestate (not exactly sure why it is needed)
 		snprintf (g_autofs_path, sizeof(g_autofs_path), "%s%cfbneo%c%s.fs", g_save_dir, path_default_slash_c(), path_default_slash_c(), BurnDrvGetTextA(DRV_NAME));
 		if (BurnStateLoad(g_autofs_path, 0, NULL) == 0)
-			log_cb(RETRO_LOG_INFO, "[FBNEO] EEPROM succesfully loaded from %s\n", g_autofs_path);
+			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
 
 		if (BurnDrvGetTextA(DRV_COMMENT) && strlen(BurnDrvGetTextA(DRV_COMMENT)) > 0) {
-			log_cb(RETRO_LOG_WARN, "[FBNEO] %s\n", BurnDrvGetTextA(DRV_COMMENT));
+			HandleMessage(RETRO_LOG_WARN, "[FBNeo] %s\n", BurnDrvGetTextA(DRV_COMMENT));
 		}
 
 		// Initializing display, autorotate if needed
@@ -1447,12 +1493,16 @@ static bool retro_load_game_common()
 			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
 
 		// Initialization done
-		log_cb(RETRO_LOG_INFO, "[FBNEO] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
 		driver_inited = true;
 
 		return true;
 	}
-	return false;
+	else
+	{
+		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Romset %s is unknown, aborting\n", g_driver_name);
+		return false;
+	}
 }
 
 bool retro_load_game(const struct retro_game_info *info)
@@ -1465,59 +1515,59 @@ bool retro_load_game(const struct retro_game_info *info)
 	extract_basename(g_rom_parent_dir, g_rom_dir, sizeof(g_rom_parent_dir),"");
 	char * prefix="";
 	if(strcmp(g_rom_parent_dir, "coleco")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem cv identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem cv identified from parent folder\n");
 		if (strncmp(g_driver_name, "cv_", 3) != 0) prefix = "cv_";
 	}
 	if(strcmp(g_rom_parent_dir, "gamegear")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem gg identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem gg identified from parent folder\n");
 		if (strncmp(g_driver_name, "gg_", 3) != 0) prefix = "gg_";
 	}
 	if(strcmp(g_rom_parent_dir, "megadriv")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem md identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem md identified from parent folder\n");
 		if (strncmp(g_driver_name, "md_", 3) != 0) prefix = "md_";
 	}
 	if(strcmp(g_rom_parent_dir, "msx")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem msx identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem msx identified from parent folder\n");
 		if (strncmp(g_driver_name, "msx_", 4) != 0) prefix = "msx_";
 	}
 	if(strcmp(g_rom_parent_dir, "pce")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem pce identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem pce identified from parent folder\n");
 		if (strncmp(g_driver_name, "pce_", 4) != 0) prefix = "pce_";
 	}
 	if(strcmp(g_rom_parent_dir, "sg1000")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sg1k identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sg1k identified from parent folder\n");
 		if (strncmp(g_driver_name, "sg1k_", 5) != 0) prefix = "sg1k_";
 	}
 	if(strcmp(g_rom_parent_dir, "sgx")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sgx identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sgx identified from parent folder\n");
 		if (strncmp(g_driver_name, "sgx_", 4) != 0) prefix = "sgx_";
 	}
 	if(strcmp(g_rom_parent_dir, "sms")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem sms identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sms identified from parent folder\n");
 		if (strncmp(g_driver_name, "sms_", 4) != 0) prefix = "sms_";
 	}
 	if(strcmp(g_rom_parent_dir, "spectrum")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem spec identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem spec identified from parent folder\n");
 		if (strncmp(g_driver_name, "spec_", 5) != 0) prefix = "spec_";
 	}
 	if(strcmp(g_rom_parent_dir, "tg16")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem tg identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem tg identified from parent folder\n");
 		if (strncmp(g_driver_name, "tg_", 3) != 0) prefix = "tg_";
 	}
 	if(strcmp(g_rom_parent_dir, "nes")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem nes identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem nes identified from parent folder\n");
 		if (strncmp(g_driver_name, "nes_", 4) != 0) prefix = "nes_";
 	}
 	if(strcmp(g_rom_parent_dir, "fds")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem fds identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem fds identified from parent folder\n");
 		if (strncmp(g_driver_name, "fds_", 4) != 0) prefix = "fds_";
 	}
 	if(strcmp(g_rom_parent_dir, "ngp")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem ngp identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem ngp identified from parent folder\n");
 		if (strncmp(g_driver_name, "ngp_", 4) != 0) prefix = "ngp_";
 	}
 	if(strcmp(g_rom_parent_dir, "neocd")==0) {
-		log_cb(RETRO_LOG_INFO, "[FBNEO] subsystem neocd identified from parent folder\n");
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem neocd identified from parent folder\n");
 		prefix = "";
 		nGameType = RETRO_GAME_TYPE_NEOCD;
 		strcpy(CDEmuImage, info->path);
@@ -1602,7 +1652,7 @@ void retro_unload_game(void)
 		if (is_neogeo_game)
 			MemCardEject();
 		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
-			log_cb(RETRO_LOG_INFO, "[FBNEO] EEPROM succesfully saved to %s\n", g_autofs_path);
+			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 		if (pVidImage) {
 			free(pVidImage);
 			pVidImage = NULL;

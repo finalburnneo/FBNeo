@@ -1406,13 +1406,6 @@ static bool retro_load_game_common()
 
 		is_neogeo_game = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
 
-		if (is_neogeo_game)
-		{
-			// Initialize MemCard path
-			snprintf (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), g_driver_name);
-			MemCardInsert();
-		}
-
 		// Define nMaxPlayers early;
 		nMaxPlayers = BurnDrvGetMaxPlayers();
 		SetControllerInfo();
@@ -1460,6 +1453,14 @@ static bool retro_load_game_common()
 		// Initialize game driver
 		BurnDrvInit();
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initializing driver for %s\n", g_driver_name);
+
+		// MemCard has to be inserted after emulation is started
+		if (is_neogeo_game)
+		{
+			// Initialize MemCard path
+			snprintf (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), g_driver_name);
+			MemCardInsert();
+		}
 
 		// Now we know real game fps, let's initialize sound buffer again
 		init_audio_buffer(nBurnSoundRate, nBurnFPS);
@@ -1649,8 +1650,12 @@ void retro_unload_game(void)
 {
 	if (driver_inited)
 	{
-		if (is_neogeo_game)
+		if (is_neogeo_game) {
+			// Force newer format if the file doesn't exist yet
+			if(!filestream_exists(szMemoryCardFile))
+				bMemCardFC1Format = true;
 			MemCardEject();
+		}
 		if (BurnStateSave(g_autofs_path, 0) == 0 && path_is_valid(g_autofs_path))
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
 		if (pVidImage) {

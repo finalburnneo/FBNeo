@@ -60,6 +60,7 @@ bool bAllowDepth32 = false;
 UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
+UINT32 nMemcardMode = 0;
 UINT8 *diag_input;
 neo_geo_modes g_opt_neo_geo_mode = NEO_GEO_MODE_MVS;
 
@@ -229,6 +230,18 @@ static const struct retro_core_option_definition var_fbneo_neogeo_mode = {
 		{ NULL, NULL },
 	},
 	"DIPSWITCH"
+};
+static const struct retro_core_option_definition var_fbneo_memcard_mode = {
+	"fbneo-memcard-mode",
+	"Memory card mode",
+	"Change the behavior for the memory card",
+	{
+		{ "disabled", NULL },
+		{ "shared", NULL },
+		{ "per-game", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
 };
 
 #ifdef FBNEO_DEBUG
@@ -535,6 +548,7 @@ void set_environment()
 		// Add the Neo Geo core options
 		if (allow_neogeo_mode)
 			vars_systems.push_back(&var_fbneo_neogeo_mode);
+		vars_systems.push_back(&var_fbneo_memcard_mode);
 	}
 
 	int nbr_vars = vars_systems.size();
@@ -897,6 +911,16 @@ void check_variables(void)
 				else if (strcmp(var.value, "DIPSWITCH") == 0)
 					g_opt_neo_geo_mode = NEO_GEO_MODE_DIPSWITCH;
 			}
+		}
+		var.key = var_fbneo_memcard_mode.key;
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		{
+			if (strcmp(var.value, "disabled") == 0)
+				nMemcardMode = 0;
+			else if (strcmp(var.value, "shared") == 0)
+				nMemcardMode = 1;
+			else if (strcmp(var.value, "per-game") == 0)
+				nMemcardMode = 2;
 		}
 	}
 

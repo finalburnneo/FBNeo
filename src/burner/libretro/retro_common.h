@@ -112,6 +112,7 @@ extern bool core_aspect_par;
 extern bool bAllowDepth32;
 extern UINT32 nVerticalMode;
 extern UINT32 nFrameskip;
+extern UINT32 nMemcardMode;
 extern UINT8 NeoSystem;
 extern INT32 g_audio_samplerate;
 extern UINT8 *diag_input;

@@ -1455,10 +1455,10 @@ static bool retro_load_game_common()
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initializing driver for %s\n", g_driver_name);
 
 		// MemCard has to be inserted after emulation is started
-		if (is_neogeo_game)
+		if (is_neogeo_game && nMemcardMode != 0)
 		{
 			// Initialize MemCard path
-			snprintf (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), g_driver_name);
+			snprintf (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), (nMemcardMode == 2 ? g_driver_name : "shared"));
 			MemCardInsert();
 		}
 
@@ -1650,7 +1650,7 @@ void retro_unload_game(void)
 {
 	if (driver_inited)
 	{
-		if (is_neogeo_game) {
+		if (is_neogeo_game && nMemcardMode != 0) {
 			// Force newer format if the file doesn't exist yet
 			if(!filestream_exists(szMemoryCardFile))
 				bMemCardFC1Format = true;

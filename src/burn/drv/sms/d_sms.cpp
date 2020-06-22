@@ -18414,7 +18414,7 @@ STD_ROM_FN(gg_madoumone)
 
 struct BurnDriver BurnDrvgg_madoumone = {
 	"gg_madoumone", "gg_madoumon", NULL, NULL, "2010",
-	"Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	"Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)\0", NULL, "Sega - SSTranslations", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumoneRomInfo, gg_madoumoneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -28139,6 +28139,25 @@ struct BurnDriver BurnDrvgg_ggtrcn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN, 0,
 	GGGetZipName, gg_ggtrcnRomInfo, gg_ggtrcnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Madou Monogatari II - Arle 16-Sai (Jpn)
+// http://www.romhacking.net/translations/4523/
+static struct BurnRomInfo gg_madoumn2eRomDesc[] = {
+	{ "madou monogatari ii - arle 16-sai (T+Eng1.2).gg",	1048576, 0xef7d7c02, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_madoumn2e)
+STD_ROM_FN(gg_madoumn2e)
+
+struct BurnDriver BurnDrvgg_madoumn2e = {
+	"gg_madoumn2e", "gg_madoumn2", NULL, NULL, "2020",
+	"Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)\0", NULL, "Sega - Supper", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_madoumn2eRomInfo, gg_madoumn2eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

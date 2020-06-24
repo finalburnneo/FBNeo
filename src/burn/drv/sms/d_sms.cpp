@@ -18414,7 +18414,7 @@ STD_ROM_FN(gg_madoumone)
 
 struct BurnDriver BurnDrvgg_madoumone = {
 	"gg_madoumone", "gg_madoumon", NULL, NULL, "2010",
-	"Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	"Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)\0", NULL, "Sega - SSTranslations", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumoneRomInfo, gg_madoumoneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -27844,7 +27844,7 @@ struct BurnDriver BurnDrvgg_dangdem = {
 };
 
 
-// Godzilla - Kaijuu Daishingeki (Hack, English)
+// Godzilla - Kaijuu Daishingeki (English Translation)
 // https://www.romhacking.net/translations/4140/
 static struct BurnRomInfo gg_godzillaeRomDesc[] = {
 	{ "godzilla - kaijuu daishingeki (english translation).gg",	1048576, 0xfc0ac103, BRF_PRG | BRF_ESS },
@@ -27855,7 +27855,7 @@ STD_ROM_FN(gg_godzillae)
 
 struct BurnDriver BurnDrvgg_godzillae = {
 	"gg_godzillae", "gg_godzilla", NULL, NULL, "2019",
-	"Godzilla - Kaijuu Daishingeki (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	"Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_STRATEGY, 0,
 	GGGetZipName, gg_godzillaeRomInfo, gg_godzillaeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -27864,7 +27864,7 @@ struct BurnDriver BurnDrvgg_godzillae = {
 };
 
 
-// Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English)
+// Madou Monogatari III - Kyuukyoku Joou-sama (English Translation)
 // https://www.romhacking.net/translations/5327/
 static struct BurnRomInfo gg_madoumn3eRomDesc[] = {
 	{ "madou monogatari iii - kyuukyoku joou-sama (english translation).gg",	1048576, 0xe90126c0, BRF_PRG | BRF_ESS },
@@ -27875,7 +27875,7 @@ STD_ROM_FN(gg_madoumn3e)
 
 struct BurnDriver BurnDrvgg_madoumn3e = {
 	"gg_madoumn3e", "gg_madoumn3", NULL, NULL, "2020",
-	"Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	"Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)\0", NULL, "Sega - Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_madoumn3eRomInfo, gg_madoumn3eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -28039,6 +28039,125 @@ struct BurnDriver BurnDrvsms_highsce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_highsceRomInfo, sms_highsceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Bishoujo Senshi Sailor Moon S (T-Eng v 1.1)
+// https://www.romhacking.net/translations/4175/
+static struct BurnRomInfo gg_sailormseRomDesc[] = {
+	{ "bishoujo senshi sailor moon s (t-eng1.1).gg",	1048576, 0xa9a6f271, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_sailormse)
+STD_ROM_FN(gg_sailormse)
+
+struct BurnDriver BurnDrvgg_sailormse = {
+	"gg_sailormse", "gg_sailorms", NULL, NULL, "2019",
+	"Bishoujo Senshi Sailor Moon S (T-Eng v1.1)\0", NULL, "Bandai - Supper", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SCRFIGHT, 0,
+	GGGetZipName, gg_sailormseRomInfo, gg_sailormseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)
+// https://www.romhacking.net/translations/4101/
+static struct BurnRomInfo gg_crayoneRomDesc[] = {
+	{ "Crayon Shin-Chan - Taiketsu! Tankam Panic!! (T-Eng).gg",	524288, 0x48c18828, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_crayone)
+STD_ROM_FN(gg_crayone)
+
+struct BurnDriver BurnDrvgg_crayone = {
+	"gg_crayone", "gg_crayon", NULL, NULL, "2018",
+	"Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)\0", NULL, "Bandai - Psyklax", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES, 0,
+	GGGetZipName, gg_crayoneRomInfo, gg_crayoneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Eternal Legend - Eien no Densetsu (T-Eng)
+// https://www.romhacking.net/translations/5553/
+static struct BurnRomInfo gg_eternlegeRomDesc[] = {
+	{ "eternal legend (t-eng).gg",	1048576, 0xab7ab2e3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_eternlege)
+STD_ROM_FN(gg_eternlege)
+
+struct BurnDriver BurnDrvgg_eternlege = {
+	"gg_eternlege", "gg_eternleg", NULL, NULL, "2020",
+	"Eternal Legend - Eien no Densetsu (T-Eng)\0", NULL, "Sega - Supper", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_eternlegeRomInfo, gg_eternlegeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)
+// https://www.romhacking.net/translations/4084/
+static struct BurnRomInfo gg_moldoraneRomDesc[] = {
+	{ "moldorian - hikari to yami no shisutaa (t-eng1.1).gg",	1048576, 0x7ab0081f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_moldorane)
+STD_ROM_FN(gg_moldorane)
+
+struct BurnDriver BurnDrvgg_moldorane = {
+	"gg_moldorane", "gg_moldoran", NULL, NULL, "2019",
+	"Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)\0", NULL, "Sega - Supper", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_moldoraneRomInfo, gg_moldoraneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// GG Turrican (HB, Demo v1.0)
+
+static struct BurnRomInfo gg_ggtrcnRomDesc[] = {
+	{ "gg turrican (demo1.0).gg",	524288, 0x971ca630, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_ggtrcn)
+STD_ROM_FN(gg_ggtrcn)
+
+struct BurnDriver BurnDrvgg_ggtrcn = {
+	"gg_ggtrcn", NULL, NULL, NULL, "2005",
+	"GG Turrican (HB, Demo v1.0)\0", NULL, "Martin Konrad", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN, 0,
+	GGGetZipName, gg_ggtrcnRomInfo, gg_ggtrcnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Madou Monogatari II - Arle 16-Sai (Jpn)
+// http://www.romhacking.net/translations/4523/
+static struct BurnRomInfo gg_madoumn2eRomDesc[] = {
+	{ "madou monogatari ii - arle 16-sai (T+Eng1.2).gg",	1048576, 0xef7d7c02, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_madoumn2e)
+STD_ROM_FN(gg_madoumn2e)
+
+struct BurnDriver BurnDrvgg_madoumn2e = {
+	"gg_madoumn2e", "gg_madoumn2", NULL, NULL, "2020",
+	"Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)\0", NULL, "Sega - Supper", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_madoumn2eRomInfo, gg_madoumn2eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

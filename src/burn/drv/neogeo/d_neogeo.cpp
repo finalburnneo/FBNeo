@@ -18530,14 +18530,14 @@ static struct BurnRomInfo rbff2bhRomDesc[] = {
 	{ "240-p1fc.p1",  0x100000, 0xd01854fa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "240-p2fc.sp2", 0x400000, 0xc063193d, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "240-s1bh.s1",  0x020000, 0x141a8492, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "240-s1.s1",    0x020000, 0xda3b40de, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "240-c1.c1",    0x800000, 0xeffac504, 3 | BRF_GRA },           //  3 Sprite data
 	{ "240-c2.c2",    0x800000, 0xed182d44, 3 | BRF_GRA },           //  4 
 	{ "240-c3.c3",    0x800000, 0x22e0330a, 3 | BRF_GRA },           //  5 
 	{ "240-c4.c4",    0x800000, 0xc19a07eb, 3 | BRF_GRA },           //  6 
-	{ "240-c5.c5",    0x800000, 0x244dff5a, 3 | BRF_GRA },           //  7 
-	{ "240-c6.c6",    0x800000, 0x4609e507, 3 | BRF_GRA },           //  8 
+	{ "240-c5fc.c5",  0x800000, 0x21831787, 3 | BRF_GRA },           //  7 
+	{ "240-c6fc.c6",  0x800000, 0x06b2d1da, 3 | BRF_GRA },           //  8 
 
 	{ "240-m1.m1",    0x040000, 0xed482791, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -18786,7 +18786,7 @@ STD_ROM_FN(samsh5fe)
 struct BurnDriver BurnDrvsamsh5fe = {
 	"samsh5fe", "samsh5sp", "neogeo", NULL, "2004",
 	"Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
-	L"Samurai Shodown V Special\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Special (NGM-272) (NGH-272)(Final Edition, location test version)\0", NULL, NULL, NULL,
+	L"Samurai Shodown V Special\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Special (NGM-272) (NGH-272) (Final Edition, location test version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsh5feRomInfo, samsh5feRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

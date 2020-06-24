@@ -6508,3 +6508,71 @@ struct BurnDriver BurnDrvkovlsyxqxzlp = {
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)
+// This set is known as kovsho183 in HBMAME
+
+static struct BurnRomInfo kovytzyceRomDesc[] = {
+	{ "p0600h_101_po183.rom",		 	0x400000, 0x763bc95e, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.u2",    					0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600.u3",	   					0x800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601.u4",	   					0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po112.rom",	   			0x800000, 0xf25b6930, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_pw148.rom",	   			0x800000, 0xb78d6fbe, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.u9",	   					0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b0540_pw148.rom",	   			0x800000, 0x92e07517, 4 | BRF_GRA },			//  7
+
+	{ "m0600_po92.rom",	   				0x400000, 0x1f981f2c, 5 | BRF_SND },			//  8 Samples
+
+	{ "kovsh_v100_china_pw148.asic", 	0x004000, 0x36a4ecc8, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovytzyce, kovytzyce, pgm)
+STD_ROM_FN(kovytzyce)
+
+struct BurnDriver BurnDrvkovytzyce = {
+	"kovytzyce", "kovshp", "pgm", NULL, "2019",
+	"Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)\0\u4E09\u56FD\u6218\u7EAA - \u4E00\u7EDF\u4E2D\u539F\u0020\u9752\u7248 (2019-5, \u4FEE\u6539\u7248)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovytzyceRomInfo, kovytzyceRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
+// This set is known as kovsho184 in HBMAME
+
+static struct BurnRomInfo kovytzywsRomDesc[] = {
+	{ "p0600h_101_po184.rom",		 	0x400000, 0x4f01a87d, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600_pw111.rom",    			0x800000, 0xde7fdc0c, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600.u3",	   					0x800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601.u4",	   					0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602_po112.rom",	   			0x800000, 0xf25b6930, 3 | BRF_GRA }, 	        //  4
+	{ "a0540_pw184.rom",	   			0x800000, 0xdf811b9c, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.u9",	   					0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b0540_pw184.rom",	   			0x800000, 0xaa821799, 4 | BRF_GRA },			//  7
+
+	{ "m0600_po112.rom",	   			0x400000, 0x53532587, 5 | BRF_SND },			//  8 Samples
+
+	{ "kovsh_v100_china_pw111.asic", 	0x004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovytzyws, kovytzyws, pgm)
+STD_ROM_FN(kovytzyws)
+
+struct BurnDriver BurnDrvkovytzyws = {
+	"kovytzyws", "kovshp", "pgm", NULL, "2018",
+	"Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	L"Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)\0\u4E09\u56FD\u6218\u7EAA - \u4E00\u7EDF\u4E2D\u539F\u0020\u65E0\u53CC\u7248 (2019-0, \u4FEE\u6539\u7248)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovytzywsRomInfo, kovytzywsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

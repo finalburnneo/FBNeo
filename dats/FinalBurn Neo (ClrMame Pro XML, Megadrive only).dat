@@ -15372,7 +15372,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vaportr">
-		<description>Vapor Trail (USA)</description>
+		<description>Vapor Trail (US)</description>
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="vapor trail (usa).bin" size="1048576" crc="c49e3a0a"/>

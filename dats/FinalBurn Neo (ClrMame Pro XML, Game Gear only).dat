@@ -306,6 +306,13 @@
 		<rom name="mpr-17715.ic1" size="524288" crc="fe7374d2"/>
 		<driver status="good"/>
 	</game>
+	<game name="sailormse" cloneof="sailorms" romof="sailorms">
+		<description>Bishoujo Senshi Sailor Moon S (T-Eng v1.1)</description>
+		<year>2019</year>
+		<manufacturer>Bandai - Supper</manufacturer>
+		<rom name="bishoujo senshi sailor moon s (t-eng1.1).gg" size="1048576" crc="a9a6f271"/>
+		<driver status="good"/>
+	</game>
 	<game name="bonkersp13" cloneof="bonkers" romof="bonkers">
 		<description>Bonkers Wax Up! (Prototype, 19941031)</description>
 		<year>1994</year>
@@ -738,6 +745,13 @@
 		<year>1995</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="mpr-17805.ic1" size="524288" crc="03d28eab"/>
+		<driver status="good"/>
+	</game>
+	<game name="crayone" cloneof="crayon" romof="crayon">
+		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)</description>
+		<year>2018</year>
+		<manufacturer>Bandai - Psyklax</manufacturer>
+		<rom name="Crayon Shin-Chan - Taiketsu! Tankam Panic!! (T-Eng).gg" size="524288" crc="48c18828"/>
 		<driver status="good"/>
 	</game>
 	<game name="crazyfac">
@@ -1181,6 +1195,13 @@
 		<rom name="eternal legend - eien no densetsu (japan).bin" size="262144" crc="04302bbd"/>
 		<driver status="good"/>
 	</game>
+	<game name="eternlege" cloneof="eternleg" romof="eternleg">
+		<description>Eternal Legend - Eien no Densetsu (T-Eng)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="eternal legend (t-eng).gg" size="1048576" crc="ab7ab2e3"/>
+		<driver status="good"/>
+	</game>
 	<game name="evander">
 		<description>Evander Holyfield Boxing (Euro, USA)</description>
 		<year>1992</year>
@@ -1454,11 +1475,11 @@
 		<rom name="gg portrait - yuuki akira (japan).bin" size="524288" crc="51159f8f"/>
 		<driver status="good"/>
 	</game>
-	<game name="godzillae" cloneof="godzilla" romof="godzilla">
-		<description>Godzilla - Kaijuu Daishingeki (Hack, English)</description>
-		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="godzilla - kaijuu daishingeki (english translation).gg" size="1048576" crc="fc0ac103"/>
+	<game name="ggtrcn">
+		<description>GG Turrican (HB, Demo v1.0) [Homebrew]</description>
+		<year>2005</year>
+		<manufacturer>Martin Konrad</manufacturer>
+		<rom name="gg turrican (demo1.0).gg" size="524288" crc="971ca630"/>
 		<driver status="good"/>
 	</game>
 	<game name="godzilla">
@@ -1466,6 +1487,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="godzilla - kaijuu daishingeki (japan).bin" size="524288" crc="4cf97801"/>
+		<driver status="good"/>
+	</game>
+	<game name="godzillae" cloneof="godzilla" romof="godzilla">
+		<description>Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)</description>
+		<year>2019</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="godzilla - kaijuu daishingeki (english translation).gg" size="1048576" crc="fc0ac103"/>
 		<driver status="good"/>
 	</game>
 	<game name="gprider">
@@ -1930,18 +1958,18 @@
 		<rom name="madou monogatari a - dokidoki vacation (japan).bin" size="524288" crc="7ec95282"/>
 		<driver status="good"/>
 	</game>
-	<game name="madoumone" cloneof="madoumon" romof="madoumon">
-		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)</description>
-		<year>2010</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="madou monogatari i - 3-tsu no madoukyuu (english translation).gg" size="524288" crc="b289011d"/>
-		<driver status="good"/>
-	</game>
 	<game name="madoumon">
 		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="madou monogatari i - 3-tsu no madoukyuu (japan).bin" size="524288" crc="00c34d94"/>
+		<driver status="good"/>
+	</game>
+	<game name="madoumone" cloneof="madoumon" romof="madoumon">
+		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)</description>
+		<year>2010</year>
+		<manufacturer>Sega - SSTranslations</manufacturer>
+		<rom name="madou monogatari i - 3-tsu no madoukyuu (english translation).gg" size="524288" crc="b289011d"/>
 		<driver status="good"/>
 	</game>
 	<game name="madoumn2">
@@ -1951,11 +1979,11 @@
 		<rom name="mpr-16616.ic1" size="524288" crc="12eb2287"/>
 		<driver status="good"/>
 	</game>
-	<game name="madoumn3e" cloneof="madoumn3" romof="madoumn3">
-		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English)</description>
+	<game name="madoumn2e" cloneof="madoumn2" romof="madoumn2">
+		<description>Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="madou monogatari ii - arle 16-sai (T+Eng1.2).gg" size="1048576" crc="ef7d7c02"/>
 		<driver status="good"/>
 	</game>
 	<game name="madoumn3a" cloneof="madoumn3" romof="madoumn3">
@@ -1970,6 +1998,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="madou monogatari iii - kyuukyoku joou-sama (japan) (v1.1).bin" size="524288" crc="568f4825"/>
+		<driver status="good"/>
+	</game>
+	<game name="madoumn3e" cloneof="madoumn3" romof="madoumn3">
+		<description>Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
 		<driver status="good"/>
 	</game>
 	<game name="rayearth">
@@ -2145,6 +2180,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="moldorian - hikari to yami no sister (japan).bin" size="524288" crc="4d5d15fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="moldorane" cloneof="moldoran" romof="moldoran">
+		<description>Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)</description>
+		<year>2019</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="moldorian - hikari to yami no shisutaa (t-eng1.1).gg" size="1048576" crc="7ab0081f"/>
 		<driver status="good"/>
 	</game>
 	<game name="monstwar">

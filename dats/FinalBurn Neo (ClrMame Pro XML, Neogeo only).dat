@@ -11148,13 +11148,13 @@
 		<manufacturer>hack</manufacturer>
 		<rom name="240-p1fc.p1" size="1048576" crc="d01854fa"/>
 		<rom name="240-p2fc.sp2" size="4194304" crc="c063193d"/>
-		<rom name="240-s1bh.s1" size="131072" crc="141a8492"/>
+		<rom name="240-s1.s1" merge="240-s1.s1" size="131072" crc="da3b40de"/>
 		<rom name="240-c1.c1" merge="240-c1.c1" size="8388608" crc="effac504"/>
 		<rom name="240-c2.c2" merge="240-c2.c2" size="8388608" crc="ed182d44"/>
 		<rom name="240-c3.c3" merge="240-c3.c3" size="8388608" crc="22e0330a"/>
 		<rom name="240-c4.c4" merge="240-c4.c4" size="8388608" crc="c19a07eb"/>
-		<rom name="240-c5.c5" merge="240-c5.c5" size="8388608" crc="244dff5a"/>
-		<rom name="240-c6.c6" merge="240-c6.c6" size="8388608" crc="4609e507"/>
+		<rom name="240-c5fc.c5" size="8388608" crc="21831787"/>
+		<rom name="240-c6fc.c6" size="8388608" crc="06b2d1da"/>
 		<rom name="240-m1.m1" merge="240-m1.m1" size="262144" crc="ed482791"/>
 		<rom name="240-v1.v1" merge="240-v1.v1" size="4194304" crc="f796265a"/>
 		<rom name="240-v2.v2" merge="240-v2.v2" size="4194304" crc="2cb3f3bb"/>

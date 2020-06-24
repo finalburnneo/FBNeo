@@ -1201,6 +1201,7 @@ DRV		BurnDrvBishi;
 DRV		BurnDrvmd_sailormne;
 DRV		BurnDrvmd_sailormn;
 DRV		BurnDrvgg_sailorms;
+DRV		BurnDrvgg_sailormse;
 DRV		BurnDrvMSX_bitlogic;
 DRV		BurnDrvsms_blackblt;
 DRV		BurnDrvnes_blackboxcha;
@@ -2433,6 +2434,7 @@ DRV		BurnDrvtg_cratermz;
 DRV		BurnDrvmd_crayon;
 DRV		BurnDrvnes_crayoshicha;
 DRV		BurnDrvgg_crayon;
+DRV		BurnDrvgg_crayone;
 DRV		BurnDrvQcrayon2;
 DRV		BurnDrvMSX_craze;
 DRV		BurnDrvCrbaloon;
@@ -3640,6 +3642,7 @@ DRV		BurnDrvmd_eternalcj;
 DRV		BurnDrvmd_eternalcjp;
 DRV		BurnDrvmd_eternalcu;
 DRV		BurnDrvgg_eternleg;
+DRV		BurnDrvgg_eternlege;
 DRV		BurnDrvEuroch92;
 DRV		BurnDrvWc90ba;
 DRV		BurnDrvWc90b1;
@@ -4581,6 +4584,7 @@ DRV		BurnDrvgg_ggaleste;
 DRV		BurnDrvgg_ggdora;
 DRV		BurnDrvgg_ggport;
 DRV		BurnDrvgg_ggport1;
+DRV		BurnDrvgg_ggtrcn;
 DRV		BurnDrvMSX_ghost;
 DRV		BurnDrvghostbi;
 DRV		BurnDrvsms_ghosth;
@@ -4681,8 +4685,8 @@ DRV		BurnDrvmd_godsup;
 DRV		BurnDrvGodzilla;
 DRV		BurnDrvMSX_godzilla;
 DRV		BurnDrvMSX_godzillaa;
-DRV		BurnDrvgg_godzillae;
 DRV		BurnDrvgg_godzilla;
+DRV		BurnDrvgg_godzillae;
 DRV		BurnDrvMSX_godzikun;
 DRV		BurnDrvMSX_godzikuna;
 DRV		BurnDrvGoindolj;
@@ -6109,6 +6113,8 @@ DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvKovplusa;
 DRV		BurnDrvKovplus;
+DRV		BurnDrvkovytzyce;
+DRV		BurnDrvkovytzyws;
 DRV		BurnDrvkovshpzqhl;
 DRV		BurnDrvkovshpqszl;
 DRV		BurnDrvkovshpqszltw;
@@ -6641,12 +6647,13 @@ DRV		BurnDrvmd_madden98;
 DRV		BurnDrvgg_madoumna;
 DRV		BurnDrvmd_madoumone;
 DRV		BurnDrvmd_madoumon;
-DRV		BurnDrvgg_madoumone;
 DRV		BurnDrvgg_madoumon;
+DRV		BurnDrvgg_madoumone;
 DRV		BurnDrvgg_madoumn2;
-DRV		BurnDrvgg_madoumn3e;
+DRV		BurnDrvgg_madoumn2e;
 DRV		BurnDrvgg_madoumn3a;
 DRV		BurnDrvgg_madoumn3;
+DRV		BurnDrvgg_madoumn3e;
 DRV		BurnDrvsgx_granzort;
 DRV		BurnDrvfds_maerchenveil;
 DRV		BurnDrvnes_mafatcon;
@@ -7315,6 +7322,7 @@ DRV		BurnDrvMogura;
 DRV		BurnDrvnes_mojontwimul;
 DRV		BurnDrvMSX_mokarima;
 DRV		BurnDrvgg_moldoran;
+DRV		BurnDrvgg_moldorane;
 DRV		BurnDrvMole;
 DRV		BurnDrvMSX_molemol;
 DRV		BurnDrvMSX_molemol2;
@@ -15679,6 +15687,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sailormne,		// Bishoujo Senshi Sailor Moon (Hack, English)
 	&BurnDrvmd_sailormn,		// Bishoujo Senshi Sailor Moon (Jpn)
 	&BurnDrvgg_sailorms,		// Bishoujo Senshi Sailor Moon S (Jpn)
+	&BurnDrvgg_sailormse,		// Bishoujo Senshi Sailor Moon S (T-Eng v1.1)
 	&BurnDrvMSX_bitlogic,		// BitLogic (HB)
 	&BurnDrvsms_blackblt,		// Black Belt (Euro, USA)
 	&BurnDrvnes_blackboxcha,	// Black Box Challenge (HB)
@@ -16911,6 +16920,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_crayon,			// Crayon Shin-chan - Arashi o Yobu Enji (Jpn)
 	&BurnDrvnes_crayoshicha,	// Crayon Shin-chan - Ora to Poi Poi (Japan)
 	&BurnDrvgg_crayon,			// Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Jpn)
+	&BurnDrvgg_crayone,			// Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)
 	&BurnDrvQcrayon2,			// Crayon Shinchan Orato Asobo (Japan)
 	&BurnDrvMSX_craze,			// Craze (Jpn)
 	&BurnDrvCrbaloon,			// Crazy Balloon (set 1)
@@ -18118,6 +18128,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_eternalcjp,		// Eternal Champions (Jpn, Prototype, 19931117)
 	&BurnDrvmd_eternalcu,		// Eternal Champions (USA)
 	&BurnDrvgg_eternleg,		// Eternal Legend - Eien no Densetsu (Jpn)
+	&BurnDrvgg_eternlege,		// Eternal Legend - Eien no Densetsu (T-Eng)
 	&BurnDrvEuroch92,			// Euro Champ '92 (World)
 	&BurnDrvWc90ba,				// Euro League (Italian hack of Tecmo World Cup '90 - alt version)
 	&BurnDrvWc90b1,				// Euro League (Italian hack of Tecmo World Cup '90)
@@ -19059,6 +19070,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ggdora,			// GG Doraemon - Noranosuke no Yabou (Jpn)
 	&BurnDrvgg_ggport,			// GG Portrait - Pai Chen (Jpn)
 	&BurnDrvgg_ggport1,			// GG Portrait - Yuuki Akira (Jpn)
+	&BurnDrvgg_ggtrcn,			// GG Turrican (HB, Demo v1.0)
 	&BurnDrvMSX_ghost,			// Ghost (Spa)
 	&BurnDrvghostbi,			// Ghost Busters (Intro demo)
 	&BurnDrvsms_ghosth,			// Ghost House (Euro, USA, Bra)
@@ -19159,8 +19171,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGodzilla,			// Godzilla (Japan)
 	&BurnDrvMSX_godzilla,		// Godzilla (Jpn)
 	&BurnDrvMSX_godzillaa,		// Godzilla (Jpn, Hacked?)
-	&BurnDrvgg_godzillae,		// Godzilla - Kaijuu Daishingeki (Hack, English)
 	&BurnDrvgg_godzilla,		// Godzilla - Kaijuu Daishingeki (Jpn)
+	&BurnDrvgg_godzillae,		// Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)
 	&BurnDrvMSX_godzikun,		// Godzilla-kun (Jpn)
 	&BurnDrvMSX_godzikuna,		// Godzilla-kun (Jpn, Alt)
 	&BurnDrvGoindolj,			// Goindol (Japan)
@@ -20452,15 +20464,15 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvKinstp47,			// Killer Instinct (ROM proto ver. 4.7) [Works best in 64-bit build, NOT WORKING]
 #endif
-	&BurnDrvKinst13,			// Killer Instinct (ROM ver. 1.3)
-	&BurnDrvKinst14,			// Killer Instinct (ROM ver. 1.4)
-	&BurnDrvKinst15ai,			// Killer Instinct (ROM ver. 1.5 AnyIDE)
-	&BurnDrvKinst,				// Killer Instinct (ROM ver. 1.5d)
-	&BurnDrvKinst210,			// Killer Instinct II (ROM ver. 1.0)
-	&BurnDrvKinst211,			// Killer Instinct II (ROM ver. 1.1)
-	&BurnDrvKinst213,			// Killer Instinct II (ROM ver. 1.3)
-	&BurnDrvKinst214ai,			// Killer Instinct II (ROM ver. 1.4 AnyIDE)
-	&BurnDrvKinst2,				// Killer Instinct II (ROM ver. 1.4)
+	&BurnDrvKinst13,			// Killer Instinct (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst14,			// Killer Instinct (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst15ai,			// Killer Instinct (ROM ver. 1.5 AnyIDE) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst,				// Killer Instinct (ROM ver. 1.5d) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst210,			// Killer Instinct II (ROM ver. 1.0) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst211,			// Killer Instinct II (ROM ver. 1.1) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst213,			// Killer Instinct II (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst214ai,			// Killer Instinct II (ROM ver. 1.4 AnyIDE) [Works best in 64-bit build, NOT WORKING]
+	&BurnDrvKinst2,				// Killer Instinct II (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
 	&BurnDrvgg_kineticc,		// Kinetic Connection (Jpn)
 	&BurnDrvKingballj,			// King & Balloon (Japan)
 	&BurnDrvMSX_kingball,		// King & Balloon (Jpn)
@@ -20587,6 +20599,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119 alt)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
+	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)
+	&BurnDrvkovytzyws,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
 	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE)
 	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE)
@@ -21119,12 +21133,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_madoumna,		// Madou Monogatari A - Dokidoki Vacation (Jpn)
 	&BurnDrvmd_madoumone,		// Madou Monogatari I (Hack, English)
 	&BurnDrvmd_madoumon,		// Madou Monogatari I (Jpn)
-	&BurnDrvgg_madoumone,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)
 	&BurnDrvgg_madoumon,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)
+	&BurnDrvgg_madoumone,		// Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)
 	&BurnDrvgg_madoumn2,		// Madou Monogatari II - Arle 16-Sai (Jpn)
-	&BurnDrvgg_madoumn3e,		// Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English)
+	&BurnDrvgg_madoumn2e,		// Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)
 	&BurnDrvgg_madoumn3a,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.0)
 	&BurnDrvgg_madoumn3,		// Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.1)
+	&BurnDrvgg_madoumn3e,		// Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)
 	&BurnDrvsgx_granzort,		// Madou Ou Granzort
 	&BurnDrvfds_maerchenveil,	// Maerchen Veil (Japan)
 	&BurnDrvnes_mafatcon,		// Mafat Conspiracy - Golgo 13 (USA)
@@ -21793,6 +21808,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mojontwimul,	// Mojon Twins Multicart (HB)
 	&BurnDrvMSX_mokarima,		// Mokari Makka? Bochibochi Denna! (Jpn)
 	&BurnDrvgg_moldoran,		// Moldorian - Hikari to Yami no Sister (Jpn)
+	&BurnDrvgg_moldorane,		// Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)
 	&BurnDrvMole,				// Mole Attack
 	&BurnDrvMSX_molemol,		// Mole Mole (Bra)
 	&BurnDrvMSX_molemol2,		// Mole Mole 2 (Jpn)
@@ -27931,7 +27947,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVanguardj,			// Vanguard (Japan)
 	&BurnDrvVanguard,			// Vanguard (SNK)
 	&BurnDrvVangrd2,			// Vanguard II
-	&BurnDrvmd_vaportr,			// Vapor Trail (USA)
+	&BurnDrvmd_vaportr,			// Vapor Trail (US)
 	&BurnDrvmd_vaportrec,		// Vapor Trail (USA)
 	&BurnDrvVaportrau,			// Vapor Trail - Hyper Offence Formation (US)
 	&BurnDrvVaportra,			// Vapor Trail - Hyper Offence Formation (World revision 1)

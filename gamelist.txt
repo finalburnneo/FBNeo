@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14203 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14211 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1185,6 +1185,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sailormne	|  	| Bishoujo Senshi Sailor Moon (Hack, English)		| md_sailormn	| 2018	| Ma-Ba		| Sega Megadrive| 					|
 | md_sailormn	|  	| Bishoujo Senshi Sailor Moon (Jpn)			| 		| 1994	| Ma-Ba		| Sega Megadrive| 					|
 | gg_sailorms	|  	| Bishoujo Senshi Sailor Moon S (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
+| gg_sailormse	|  	| Bishoujo Senshi Sailor Moon S (T-Eng v1.1)		| gg_sailorms	| 2019	| Bandai - Suppe| Sega Game Gear| 					|
 | msx_bitlogic	|  	| BitLogic (HB)						| 		| 2015	| OxiAB Studio	| MSX		| 					|
 | sms_blackblt	|  	| Black Belt (Euro, USA)				| 		| 1986	| Sega		| Sega Master Sy| 					|
 | nes_blackboxcha|  	| Black Box Challenge (HB)				| 		| 2017	| Sly Dog Studio| Miscellaneous	| 					|
@@ -2393,6 +2394,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_crayon	|  	| Crayon Shin-chan - Arashi o Yobu Enji (Jpn)		| 		| 1994	| Ma-Ba		| Sega Megadrive| 					|
 | nes_crayoshicha|  	| Crayon Shin-chan - Ora to Poi Poi (Japan)		| 		| 1993	| Bandai	| Miscellaneous	| 					|
 | gg_crayon	|  	| Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Jpn)	| 		| 1995	| Bandai	| Sega Game Gear| 					|
+| gg_crayone	|  	| Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)	| gg_crayon	| 2018	| Bandai - Psykl| Sega Game Gear| 					|
 | qcrayon2	|  	| Crayon Shinchan Orato Asobo (Japan)			| 		| 1993	| Taito Corporat| Taito F2	| 					|
 | msx_craze	|  	| Craze (Jpn)						| 		| 1988	| Heart Soft	| MSX		| 					|
 | crbaloon	|  	| Crazy Balloon (set 1)					| 		| 1980	| Taito Corporat| Miscellaneous	| 					|
@@ -3574,6 +3576,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_eternalcjp	|  	| Eternal Champions (Jpn, Prototype, 19931117)		| md_eternalc	| 1994	| Sega		| Sega Megadrive| 					|
 | md_eternalcu	|  	| Eternal Champions (USA)				| md_eternalc	| 1994	| Sega		| Sega Megadrive| 					|
 | gg_eternleg	|  	| Eternal Legend - Eien no Densetsu (Jpn)		| 		| 1991	| Sega		| Sega Game Gear| 					|
+| gg_eternlege	|  	| Eternal Legend - Eien no Densetsu (T-Eng)		| gg_eternleg	| 2020	| Sega - Supper	| Sega Game Gear| 					|
 | euroch92	|  	| Euro Champ '92 (World)				| 		| 1992	| Taito Corporat| Taito F2	| 					|
 | twcup90ba	|  	| Euro League (Italian hack of Tecmo World Cup '90 - alt| twcup90	| 1989	| bootleg	| Miscellaneous	| 					|
 | twcup90b1	|  	| Euro League (Italian hack of Tecmo World Cup '90)	| twcup90	| 1989	| bootleg	| Miscellaneous	| 					|
@@ -4499,6 +4502,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ggdora	|  	| GG Doraemon - Noranosuke no Yabou (Jpn)		| 		| 1993	| Sega		| Sega Game Gear| 					|
 | gg_ggport	|  	| GG Portrait - Pai Chen (Jpn)				| 		| 1996	| Sega		| Sega Game Gear| 					|
 | gg_ggport1	|  	| GG Portrait - Yuuki Akira (Jpn)			| 		| 1996	| Sega		| Sega Game Gear| 					|
+| gg_ggtrcn	|  	| GG Turrican (HB, Demo v1.0)				| 		| 2005	| Martin Konrad	| Sega Game Gear| 					|
 | msx_ghost	|  	| Ghost (Spa)						| 		| 1989	| Mind Games Esp| MSX		| 					|
 | ghostbi	|  	| Ghost Busters (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | sms_ghosth	|  	| Ghost House (Euro, USA, Bra)				| 		| 1986	| Sega		| Sega Master Sy| 					|
@@ -4599,8 +4603,8 @@ This list contains all games supported by FinalBurn Neo.
 | godzilla	|  	| Godzilla (Japan)					| 		| 1993	| Banpresto	| Miscellaneous	| 					|
 | msx_godzilla	|  	| Godzilla (Jpn)					| 		| 1984	| Bandai	| MSX		| 					|
 | msx_godzillaa	|  	| Godzilla (Jpn, Hacked?)				| msx_godzilla	| 1984	| Bandai	| MSX		| 					|
-| gg_godzillae	|  	| Godzilla - Kaijuu Daishingeki (Hack, English)		| gg_godzilla	| 2019	| Sega		| Sega Game Gear| 					|
 | gg_godzilla	|  	| Godzilla - Kaijuu Daishingeki (Jpn)			| 		| 1995	| Sega		| Sega Game Gear| 					|
+| gg_godzillae	|  	| Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)		| gg_godzilla	| 2019	| Sega - Supper	| Sega Game Gear| 					|
 | msx_godzikun	|  	| Godzilla-kun (Jpn)					| 		| 1985	| Toho		| MSX		| 					|
 | msx_godzikuna	|  	| Godzilla-kun (Jpn, Alt)				| msx_godzikun	| 1985	| Toho		| MSX		| 					|
 | goindolj	|  	| Goindol (Japan)					| goindol	| 1987	| SunA		| Miscellaneous	| 					|
@@ -5864,15 +5868,15 @@ This list contains all games supported by FinalBurn Neo.
 | spec_kikstrt2	|  	| Kikstart 2 (48K)					| 		| 1988	| Mastertronic	| ZX Spectrum	| 					|
 | msx_killmice	|  	| Kill Mice (HB)					| 		| 2011	| Gamecast Enter| MSX		| 					|
 | kinstp47	| D NW	| Killer Instinct (ROM proto ver. 4.7)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst13	|  	| Killer Instinct (ROM ver. 1.3)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst14	|  	| Killer Instinct (ROM ver. 1.4)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst15ai	|  	| Killer Instinct (ROM ver. 1.5 AnyIDE)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst		|  	| Killer Instinct (ROM ver. 1.5d)			| 		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst210	|  	| Killer Instinct II (ROM ver. 1.0)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst211	|  	| Killer Instinct II (ROM ver. 1.1)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst213	|  	| Killer Instinct II (ROM ver. 1.3)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst214ai	|  	| Killer Instinct II (ROM ver. 1.4 AnyIDE)		| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst2	|  	| Killer Instinct II (ROM ver. 1.4)			| 		| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst13	|   NW	| Killer Instinct (ROM ver. 1.3)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst14	|   NW	| Killer Instinct (ROM ver. 1.4)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst15ai	|   NW	| Killer Instinct (ROM ver. 1.5 AnyIDE)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst		|   NW	| Killer Instinct (ROM ver. 1.5d)			| 		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst210	|   NW	| Killer Instinct II (ROM ver. 1.0)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst211	|   NW	| Killer Instinct II (ROM ver. 1.1)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst213	|   NW	| Killer Instinct II (ROM ver. 1.3)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst214ai	|   NW	| Killer Instinct II (ROM ver. 1.4 AnyIDE)		| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst2	|   NW	| Killer Instinct II (ROM ver. 1.4)			| 		| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
 | gg_kineticc	|  	| Kinetic Connection (Jpn)				| 		| 1991	| Sega		| Sega Game Gear| 					|
 | kingballj	|  	| King & Balloon (Japan)				| kingball	| 1980	| Namco		| Galaxian	| 					|
 | msx_kingball	|  	| King & Balloon (Jpn)					| 		| 1984	| Namcot	| MSX		| 					|
@@ -5997,6 +6001,8 @@ This list contains all games supported by FinalBurn Neo.
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119 alt)| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| 					|
+| kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2019	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovytzyws	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpzqhl	|  	| Knights of Valour Super Heroes Plus (The Best Firepowe| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpqszl	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpqszltw	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -6521,12 +6527,13 @@ This list contains all games supported by FinalBurn Neo.
 | gg_madoumna	|  	| Madou Monogatari A - Dokidoki Vacation (Jpn)		| 		| 1995	| Compile	| Sega Game Gear| 					|
 | md_madoumone	|  	| Madou Monogatari I (Hack, English)			| md_madoumon	| 2020	| Compile	| Sega Megadrive| 					|
 | md_madoumon	|  	| Madou Monogatari I (Jpn)				| 		| 1996	| Compile	| Sega Megadrive| 					|
-| gg_madoumone	|  	| Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English| gg_madoumon	| 2010	| Sega		| Sega Game Gear| 					|
 | gg_madoumon	|  	| Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)		| 		| 1993	| Sega		| Sega Game Gear| 					|
+| gg_madoumone	|  	| Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)	| gg_madoumon	| 2010	| Sega - SSTrans| Sega Game Gear| 					|
 | gg_madoumn2	|  	| Madou Monogatari II - Arle 16-Sai (Jpn)		| 		| 1994	| Sega		| Sega Game Gear| 					|
-| gg_madoumn3e	|  	| Madou Monogatari III - Kyuukyoku Joou-sama (Hack, Engl| gg_madoumn3	| 2020	| Sega		| Sega Game Gear| 					|
+| gg_madoumn2e	|  	| Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)	| gg_madoumn2	| 2020	| Sega - Supper	| Sega Game Gear| 					|
 | gg_madoumn3a	|  	| Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.0)| gg_madoumn3	| 1994	| Sega		| Sega Game Gear| 					|
 | gg_madoumn3	|  	| Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.1)| 		| 1994	| Sega		| Sega Game Gear| 					|
+| gg_madoumn3e	|  	| Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.| gg_madoumn3	| 2020	| Sega - Supper	| Sega Game Gear| 					|
 | sgx_granzort	|  	| Madou Ou Granzort					| 		| 1990	| Hudson	| SuperGrafx	| 					|
 | fds_maerchenveil|  	| Maerchen Veil (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_mafatcon	|  	| Mafat Conspiracy - Golgo 13 (USA)			| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
@@ -7193,6 +7200,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_mojontwimul|  	| Mojon Twins Multicart (HB)				| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
 | msx_mokarima	|  	| Mokari Makka? Bochibochi Denna! (Jpn)			| 		| 1986	| Leben Pro	| MSX		| 					|
 | gg_moldoran	|  	| Moldorian - Hikari to Yami no Sister (Jpn)		| 		| 1994	| Sega		| Sega Game Gear| 					|
+| gg_moldorane	|  	| Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)	| gg_moldoran	| 2019	| Sega - Supper	| Sega Game Gear| 					|
 | mole		|  	| Mole Attack						| 		| 1982	| Yachiyo Electr| Miscellaneous	| 					|
 | msx_molemol	|  	| Mole Mole (Bra)					| 		| 198?	| Unknown	| MSX		| 					|
 | msx_molemol2	|  	| Mole Mole 2 (Jpn)					| 		| 1987	| Victor	| MSX		| 					|
@@ -13219,7 +13227,7 @@ This list contains all games supported by FinalBurn Neo.
 | vanguardj	|  	| Vanguard (Japan)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguard	|  	| Vanguard (SNK)					| 		| 1981	| SNK		| Miscellaneous	| 					|
 | vangrd2	|  	| Vanguard II						| 		| 1984	| SNK		| Miscellaneous	| 					|
-| md_vaportr	|  	| Vapor Trail (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
+| md_vaportr	|  	| Vapor Trail (US)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | md_vaportrec	|  	| Vapor Trail (USA)					| md_vaportr	| 2015	| Renovation - P| Sega Megadrive| 					|
 | vaportrau	|  	| Vapor Trail - Hyper Offence Formation (US)		| vaportra	| 1989	| Data East USA	| DECO IC16	| 					|
 | vaportra	|  	| Vapor Trail - Hyper Offence Formation (World revision | 		| 1989	| Data East Corp| DECO IC16	| 					|

@@ -1,6 +1,8 @@
 // Based on MAME driver by Aaron Giles
 
 // coin up doesn't work - forcing freeplay dip for now
+// the hdd image get corrupted over time
+// the games are also known for crashing, freezing, and having visual glitchs
 
 #include "tiles_generic.h"
 #include "mips3_intf.h"
@@ -722,7 +724,7 @@ struct BurnDriver BurnDrvKinst = {
     "kinst", NULL, NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.5d)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinstRomInfo, kinstRomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -748,7 +750,7 @@ struct BurnDriver BurnDrvKinst14 = {
     "kinst14", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst14RomInfo, kinst14RomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -774,7 +776,7 @@ struct BurnDriver BurnDrvKinst13 = {
     "kinst13", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst13RomInfo, kinst13RomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -826,7 +828,7 @@ struct BurnDriver BurnDrvKinst15ai = {
     "kinst15ai", "kinst", NULL, NULL, "1994",
     "Killer Instinct (ROM ver. 1.5 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst15aiRomInfo, kinst15aiRomName, kinstHDDInfo, kinstHDDName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -866,7 +868,7 @@ struct BurnDriver BurnDrvKinst2 = {
     "kinst2", NULL, NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.4)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst2RomInfo, kinst2RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -892,7 +894,7 @@ struct BurnDriver BurnDrvKinst213 = {
     "kinst213", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.3)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst213RomInfo, kinst213RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -918,7 +920,7 @@ struct BurnDriver BurnDrvKinst211 = {
     "kinst211", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.1)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst211RomInfo, kinst211RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -944,7 +946,7 @@ struct BurnDriver BurnDrvKinst210 = {
     "kinst210", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.0)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst210RomInfo, kinst210RomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -970,7 +972,7 @@ struct BurnDriver BurnDrvKinst214ai = {
     "kinst214ai", "kinst2", NULL, NULL, "1995",
     "Killer Instinct II (ROM ver. 1.4 AnyIDE)\0", "Works best in 64-bit build", "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_KINST, GBF_VSFIGHT, 0,
     NULL, kinst214aiRomInfo, kinst214aiRomName, kinst2HDDInfo, kinst2HDDName, NULL, NULL, kinstInputInfo, kinst2DIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3

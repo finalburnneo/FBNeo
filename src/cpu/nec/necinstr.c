@@ -612,13 +612,27 @@ OP( 0xf3, i_repe     ) { UINT32 next = fetchop(nec_state); UINT16 c = Wreg(CW);
 }
 OP( 0xf4, i_hlt ) { nec_state->halted=1; nec_state->icount=0; }
 OP( 0xf5, i_cmc ) { nec_state->CarryVal = !CF; CLK(2); }
-OP( 0xf6, i_f6pre ) { UINT32 tmp; UINT32 uresult,uresult2; INT32 result,result2;
-	GetModRM; tmp = GetRMByte(ModRM);
+OP( 0xf6, i_f6pre ) { UINT32 tmp; UINT32 uresult,uresult2,dst,src; INT32 result,result2;
+	GetModRM; tmp = src = GetRMByte(ModRM);
 	switch (ModRM & 0x38) {
 		case 0x00: tmp &= FETCH(); nec_state->CarryVal = nec_state->OverVal = 0; SetSZPF_Byte(tmp); nec_state->icount-=(ModRM >=0xc0 )?4:11; break; /* TEST */
 //		case 0x08: logerror("%06x: Undefined opcode 0xf6 0x08\n",PC(nec_state)); break;
 		case 0x10: PutbackRMByte(ModRM,~tmp); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NOT */
-		case 0x18: nec_state->CarryVal=(tmp!=0); tmp=(~tmp)+1; SetSZPF_Byte(tmp); PutbackRMByte(ModRM,tmp&0xff); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NEG */
+		case 0x18:
+			if (nec_state->i86_neg == 0)
+			{
+				nec_state->CarryVal=(tmp!=0);
+				tmp=(~tmp)+1;
+				SetSZPF_Byte(tmp);
+				PutbackRMByte(ModRM,tmp&0xff);
+				nec_state->icount-=(ModRM >=0xc0 )?2:16;
+			} else {
+				dst = 0;
+				SUBB
+				PutbackRMByte(ModRM,dst&0xff);
+				nec_state->icount-=(ModRM >=0xc0 )?2:16;
+			}
+			break; /* NEG */
 		case 0x20: uresult = Breg(AL)*tmp; Wreg(AW)=(WORD)uresult; nec_state->CarryVal=nec_state->OverVal=(Breg(AH)!=0); nec_state->icount-=(ModRM >=0xc0 )?30:36; break; /* MULU */
 		case 0x28: result = (INT16)((INT8)Breg(AL))*(INT16)((INT8)tmp); Wreg(AW)=(WORD)result; nec_state->CarryVal=nec_state->OverVal=(Breg(AH)!=0); nec_state->icount-=(ModRM >=0xc0 )?30:36; break; /* MUL */
 		case 0x30: if (tmp) { DIVUB; } else nec_interrupt(nec_state, NEC_DIVIDE_VECTOR, BRK); nec_state->icount-=(ModRM >=0xc0 )?43:53; break;
@@ -626,13 +640,28 @@ OP( 0xf6, i_f6pre ) { UINT32 tmp; UINT32 uresult,uresult2; INT32 result,result2;
 	}
 }
 
-OP( 0xf7, i_f7pre   ) { UINT32 tmp,tmp2; UINT32 uresult,uresult2; INT32 result,result2;
-	GetModRM; tmp = GetRMWord(ModRM);
+OP( 0xf7, i_f7pre   ) { UINT32 tmp,tmp2; UINT32 uresult,uresult2,dst,src; INT32 result,result2;
+	GetModRM; tmp = src = GetRMWord(ModRM);
 	switch (ModRM & 0x38) {
 		case 0x00: tmp2 = FETCHWORD(); tmp &= tmp2; nec_state->CarryVal = nec_state->OverVal = 0; SetSZPF_Word(tmp); nec_state->icount-=(ModRM >=0xc0 )?4:11; break; /* TEST */
 //		case 0x08: logerror("%06x: Undefined opcode 0xf7 0x08\n",PC(nec_state)); break;
 		case 0x10: PutbackRMWord(ModRM,~tmp); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NOT */
-		case 0x18: nec_state->CarryVal=(tmp!=0); tmp=(~tmp)+1; SetSZPF_Word(tmp); PutbackRMWord(ModRM,tmp&0xffff); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NEG */
+		case 0x18:
+			if (nec_state->i86_neg == 0)
+			{
+				nec_state->CarryVal=(tmp!=0);
+				tmp=(~tmp)+1;
+				SetSZPF_Word(tmp);
+				PutbackRMWord(ModRM,tmp&0xffff);
+				nec_state->icount-=(ModRM >=0xc0 )?2:16;
+			} else {
+				dst = 0;
+				SUBW
+				PutbackRMWord(ModRM,dst&0xffff);
+				nec_state->icount-=(ModRM >=0xc0 )?2:16;
+			}
+			break; /* NEG */
+
 		case 0x20: uresult = Wreg(AW)*tmp; Wreg(AW)=uresult&0xffff; Wreg(DW)=((UINT32)uresult)>>16; nec_state->CarryVal=nec_state->OverVal=(Wreg(DW)!=0); nec_state->icount-=(ModRM >=0xc0 )?30:36; break; /* MULU */
 		case 0x28: result = (INT32)((INT16)Wreg(AW))*(INT32)((INT16)tmp); Wreg(AW)=result&0xffff; Wreg(DW)=result>>16; nec_state->CarryVal=nec_state->OverVal=(Wreg(DW)!=0); nec_state->icount-=(ModRM >=0xc0 )?30:36; break; /* MUL */
 		case 0x30: if (tmp) { DIVUW; } else nec_interrupt(nec_state, NEC_DIVIDE_VECTOR, BRK); nec_state->icount-=(ModRM >=0xc0 )?43:53; break;

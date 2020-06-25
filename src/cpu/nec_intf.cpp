@@ -348,6 +348,7 @@ INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 
 	switch (type)
 	{
+		case i86_TYPE:
 		case V20_TYPE:
 		case V30_TYPE:
 		case V33_TYPE:

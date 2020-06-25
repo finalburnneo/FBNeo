@@ -454,6 +454,12 @@ void necInit(int cpu, int type)
 
 	switch (type)
 	{
+		case i86_TYPE:
+		{
+			bprintf(0, _T("*** NEC v20 w/i86 NEG opcodes (f6 18, f7 18)\n"));
+			nec_state->i86_neg = 1;
+			// fallthrough to V20_TYPE
+		}
 		case V20_TYPE:
 		{
 			nec_state->fetch_xor = 0;

@@ -2,6 +2,7 @@
 #define V33_TYPE 0
 #define V30_TYPE 8
 #define V20_TYPE 16
+#define i86_TYPE 32
 
 #ifndef FALSE
 #define FALSE 0
@@ -117,6 +118,7 @@ struct _v25_state_t
 	INT8	prefetch_count;
 	UINT8	prefetch_reset;
 	UINT32	chip_type;
+	UINT32  i86_neg;		// use x86-style NEG opcode (f6 18 & f7 18)
 
 	UINT32	prefix_base;	/* base address of the latest prefix segment */
 	UINT8	seg_prefix;		/* prefix segment indicator */

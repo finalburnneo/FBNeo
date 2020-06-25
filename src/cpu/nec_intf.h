@@ -8,6 +8,7 @@
 #define V33_TYPE 0
 #define V30_TYPE 8
 #define V20_TYPE 16
+#define i86_TYPE 32
 #define V25_TYPE (V20_TYPE|(1<<16))
 #define V35_TYPE (V30_TYPE|(1<<16))
 

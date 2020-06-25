@@ -922,18 +922,18 @@ struct BurnDriver BurnDrvsms_alexkiddj = {
 };
 
 
-// Alex Kidd in Radaxian Rumble 1.02e
+// Alex Kidd in Radaxian Rumble 1.5
 
 static struct BurnRomInfo sms_alexkiddrrRomDesc[] = {
-	{ "akrr102e.sms",	0x80000, 0x368b64b0, BRF_PRG | BRF_ESS },
+	{ "Alex Kidd in Radaxian Rumble 1.5.sms",	0x80000, 0x02760e17, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_alexkiddrr)
 STD_ROM_FN(sms_alexkiddrr)
 
 struct BurnDriver BurnDrvsms_alexkiddrr = {
-	"sms_akrr102e", "sms_alexkidd", NULL, NULL, "2015",
-	"Alex Kidd in Radaxian Rumble (ver. 1.02e)\0", NULL, "Sega", "Sega Master System",
+	"sms_alexkiddrr", "sms_alexkidd", NULL, NULL, "2015",
+	"Alex Kidd in Radaxian Rumble (ver. 1.5)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkiddrrRomInfo, sms_alexkiddrrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

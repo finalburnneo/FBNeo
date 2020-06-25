@@ -10676,6 +10676,23 @@ struct BurnDriver BurnDrvnes_ruder = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_pacmanceRomDesc[] = {
+	{ "pacman-ce (2020).nes",          262160, 0xb86c09af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pacmance)
+STD_ROM_FN(nes_pacmance)
+
+struct BurnDriver BurnDrvnes_pacmance = {
+	"nes_pacmance", NULL, NULL, NULL, "2020",
+	"Pac-Man Championship Edition (HB)\0", NULL, "BNEI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE, 0,
+	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_badappleRomDesc[] = {
 	{ "bad_apple (2015 v2.5)(Little Limit).nes",          786448, 0xf96a5a8b, BRF_ESS | BRF_PRG },
 };

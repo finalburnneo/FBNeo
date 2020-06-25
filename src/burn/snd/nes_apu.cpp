@@ -1035,7 +1035,7 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 
 	info->samples_per_frame = ((info->real_rate * 100) / nBurnFPS) + 1;
 
-	info->nSampleSize = (UINT64)info->real_rate * (1 << 16) / nBurnSoundRate;
+	info->nSampleSize = (UINT64)info->real_rate * (1 << 16) / ((nBurnSoundRate == 0) ? 44100 : nBurnSoundRate);
 
 	info->nFractionalPosition = 0;
 

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14211 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14226 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -332,7 +332,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_alexkidd	|  	| Alex Kidd in Miracle World (Euro, USA, v1)		| 		| 1986	| Sega		| Sega Master Sy| 					|
 | gg_alexkidd	|  	| Alex Kidd in Miracle World (Tw, SMS Mode)		| 		| 198?	| Unknown	| Sega Game Gear| 					|
 | sms_alexkidd2	|  	| Alex Kidd in Miracle World 2 (Hack)			| 		| 2017	| Ian Wall	| Sega Master Sy| 					|
-| sms_akrr102e	|  	| Alex Kidd in Radaxian Rumble (ver. 1.02e)		| sms_alexkidd	| 2015	| Sega		| Sega Master Sy| 					|
+| sms_alexkiddrr|  	| Alex Kidd in Radaxian Rumble (ver. 1.5)		| sms_alexkidd	| 2015	| Sega		| Sega Master Sy| 					|
 | sms_alexshin	|  	| Alex Kidd in Shinobi World (Euro, USA, Bra)		| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_alexkidd1	|  	| Alex Kidd in the Enchanted Castle (Euro)		| md_alexkidd	| 1990	| Sega		| Sega Megadrive| 					|
 | md_alexkidd	|  	| Alex Kidd in the Enchanted Castle (Euro, Rev. A)	| 		| 1990	| Sega		| Sega Megadrive| 					|
@@ -751,6 +751,7 @@ This list contains all games supported by FinalBurn Neo.
 | avefenix	|  	| Ave Fenix (Electrogame, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg (Video| Miscellaneous	| 					|
 | avefenixl	|  	| Ave Fenix (Laguna, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg	| Miscellaneous	| 					|
 | avefenixrf	|  	| Ave Fenix (Recreativos Franco, Spanish bootleg of Phoe| phoenix	| 1981	| bootleg (Recre| Miscellaneous	| 					|
+| msx_avenger	|  	| Avenger (Euro)					| 		| 1986	| Gremlin Graphi| MSX		| 					|
 | avengers	|  	| Avengers (US set 1)					| 		| 1987	| Capcom	| Miscellaneous	| 					|
 | avengers2	|  	| Avengers (US set 2)					| avengers	| 1987	| Capcom	| Miscellaneous	| 					|
 | avengrgsj	|  	| Avengers In Galactic Storm (Japan)			| avengrgs	| 1995	| Data East Corp| DECO MLC	| 					|
@@ -2822,6 +2823,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dstrikej	|  	| Desert Strike (Jpn, Kor)				| md_dstrike	| 1993	| Electronic Art| Sega Megadrive| 					|
 | gg_dstrikeu	|  	| Desert Strike - Return to the Gulf (USA)		| gg_dstrike	| 1992	| Domark	| Sega Game Gear| 					|
 | msx_desolatr	|  	| Desolator (Euro)					| 		| 1986	| Gremlin Graphi| MSX		| 					|
+| msx_desperado	|  	| Desperado (Spa)					| 		| 1987	| Topo Soft	| MSX		| 					|
 | nes_destiear	|  	| Destination Earthstar (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | msx_destroyr	|  	| Destroyer (Spa)					| 		| 1986	| Mind Games Esp| MSX		| 					|
 | nes_destructorel|  	| Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
@@ -2982,6 +2984,7 @@ This list contains all games supported by FinalBurn Neo.
 | dorunrun	|  	| Do! Run Run (set 1)					| 		| 1984	| Universal	| Miscellaneous	| 					|
 | dockman	|  	| Dock Man						| 		| 1982	| Taito Corporat| Miscellaneous	| 					|
 | dodgeman	|  	| Dodge Man						| 		| 1983	| Omori Electric| Miscellaneous	| 					|
+| msx_dgnraven	|  	| Dodgin Raven (HB)					| 		| 2009	| Karoshi Corp.	| MSX		| 					|
 | ddonpacha	|  	| DoDonPachi (Arrange Mode version 1.1, hack by Trap15)	| ddonpach	| 2012	| hack / Trap15	| Cave		| 					|
 | ddonpach	|  	| DoDonPachi (International, master ver. 97/02/05)	| 		| 1997	| Atlus / Cave	| Cave		| 					|
 | ddonpachj	|  	| DoDonPachi (Japan, master ver. 97/02/05)		| ddonpach	| 1997	| Atlus / Cave	| Cave		| 					|
@@ -3284,6 +3287,7 @@ This list contains all games supported by FinalBurn Neo.
 | driftout	|  	| Drift Out (Europe)					| 		| 1991	| Visco (Europe)| Taito F2	| 					|
 | driftoutj	|  	| Drift Out (Japan)					| driftout	| 1991	| Visco (Japan)	| Taito F2	| 					|
 | msx_drillertnk|  	| Driller Tanks						| 		| 1984	| Hudson Soft	| MSX		| 					|
+| msx_drinkit	|  	| Drink It (HB)						| 		| 2006	| CrappySoft	| MSX		| 					|
 | driveout	|  	| Drive Out						| driftout	| 1991	| bootleg	| Taito F2	| 					|
 | drivedge	| X	| Driver's Edge (v1.6)					| 		| 1994	| Strata/Incredi| Miscellaneous	| 					|
 | drivfrcb	|  	| Driving Force (Galaxian conversion bootleg)		| drivfrcp	| 1985	| bootleg (Elsys| Galaxian	| 					|
@@ -3499,6 +3503,7 @@ This list contains all games supported by FinalBurn Neo.
 | elvact2u	|  	| Elevator Action II (Ver 2.2A 1995/02/20)		| elvactr	| 1994	| Taito America | Taito F3 Syste| 					|
 | elvactrj	|  	| Elevator Action Returns (Ver 2.2J 1995/02/20)		| elvactr	| 1994	| Taito Corporat| Taito F3 Syste| 					|
 | elvactr	|  	| Elevator Action Returns (Ver 2.2O 1995/02/20)		| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
+| msx_elidon	|  	| Elidon (Euro)						| 		| 1986	| Aacksoft	| MSX		| 					|
 | md_elimdown	|  	| Eliminate Down (Jpn)					| 		| 1993	| Soft Vision	| Sega Megadrive| 					|
 | elim2c	|  	| Eliminator (2 Players, cocktail)			| elim2		| 1981	| Gremlin	| G80 Vector	| 					|
 | elim2		|  	| Eliminator (2 Players, set 1)				| 		| 1981	| Gremlin	| G80 Vector	| 					|
@@ -4152,6 +4157,7 @@ This list contains all games supported by FinalBurn Neo.
 | fspiderb	|  	| Frog & Spiders (bootleg?)				| 		| 1981	| Taito Corporat| Miscellaneous	| 					|
 | frogf		|  	| Frog (Falcon bootleg)					| frogger	| 1981	| bootleg	| Galaxian	| 					|
 | frogg		|  	| Frog (Galaxian hardware)				| frogger	| 1981	| bootleg	| Galaxian	| 					|
+| msx_frog	|  	| Frog (Spa)						| 		| 1985	| Advance	| MSX		| 					|
 | froggers	|  	| Frog							| frogger	| 1981	| bootleg	| Galaxian	| 					|
 | cps1frog	|  	| Frog Feast (CPS-1)					| 		| 2006	| Rastersoft (Ho| CPS1		| 					|
 | ngfrog	|  	| Frog Feast (Neo Geo)					| 		| 2006	| Rastersoft	| Neo Geo MVS	| 					|
@@ -5416,6 +5422,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_irons	|  	| Ironsword - Wizards & Warriors II (USA)		| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | isgsm		|  	| ISG Selection Master Type 2006 System BIOS		| 		| 2006	| ISG		| ISG Selection | BIOS only				|
 | md_ishido	|  	| Ishido - The Way of Stones (USA)			| 		| 1990	| Accolade	| Sega Megadrive| 					|
+| msx_isitar7	|  	| Isitar 7 (HB)						| 		| 2019	| N.I		| MSX		| 					|
 | nes_isolatedwarrior|  	| Isolated Warrior (USA)				| 		| 1991	| NTVIC		| Miscellaneous	| 					|
 | msx_issun	|  	| Issunboushi no Donnamondai (Jpn)			| 		| 1987	| Casio		| MSX		| 					|
 | msx_issuna	|  	| Issunboushi no Donnamondai (Jpn, Alt)			| msx_issun	| 1987	| Casio		| MSX		| 					|
@@ -6729,6 +6736,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_marksmanu	|  	| Marksman Shooting and Trap Shooting (USA)		| sms_marksman	| 1986	| Sega		| Sega Master Sy| Light Phaser games			|
 | sms_marksman	|  	| Marksman Shooting and Trap Shooting and Safari Hunt (E| 		| 1986	| Sega		| Sega Master Sy| Light Phaser games			|
 | msx_mars2	|  	| Mars II (Jpn)						| 		| 1990	| Nagi-P Soft	| MSX		| 					|
+| msx_marsland	|  	| Mars Lander (HB)					| 		| 2006	| CrappySoft	| MSX		| 					|
 | mmatrixj	|  	| Mars Matrix (000412 Japan)				| mmatrix	| 2000	| Capcom / Takum| CPS2		| 					|
 | mmatrixd	|  	| Mars Matrix (000412 USA Phoenix Edition)		| mmatrix	| 2000	| bootleg	| CPS2		| 					|
 | mmatrix	|  	| Mars Matrix (000412 USA)				| 		| 2000	| Capcom / Takum| CPS2		| 					|
@@ -6746,7 +6754,7 @@ This list contains all games supported by FinalBurn Neo.
 | martmastc103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmastc	|  	| Martial Masters (V104, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
-| msx_martianoids|  	| Martianoids						| 		| 1987	| Ultimate Play | MSX		| 					|
+| msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
 | marvlandj	|  	| Marvel Land (Japan)					| marvland	| 1989	| Namco		| System 2	| 					|
 | md_marvlandj	|  	| Marvel Land (Jpn)					| md_talmit	| 1991	| Namcot	| Sega Megadrive| 					|
 | marvland	|  	| Marvel Land (US)					| 		| 1989	| Namco		| System 2	| Bad music - use the Japan version	|
@@ -6942,6 +6950,7 @@ This list contains all games supported by FinalBurn Neo.
 | mercsu	|  	| Mercs (900608 USA)					| mercs		| 1990	| Capcom	| CPS1		| 					|
 | sms_mercs	|  	| Mercs (Euro, Bra)					| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_mercs	|  	| Mercs (Euro, USA) ~ Senjou no Ookami II (Jpn)		| 		| 1991	| Sega		| Sega Megadrive| 					|
+| msx_merlin	|  	| Merlin (Spa)						| 		| 1987	| Mind Games Esp| MSX		| 					|
 | merlinmm	|  	| Merlins Money Maze					| 		| 1986	| Zilec-Zenitone| Miscellaneous	| 					|
 | pce_mesopot	|  	| Mesopotamia						| 		| 1991	| Atlus		| PC Engine	| 					|
 | metafox	|  	| Meta Fox						| 		| 1989	| Seta		| Seta		| 					|
@@ -7985,6 +7994,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nobuhao	|  	| Nobunaga no Yabou - Haouden (Jpn)			| 		| 1994	| Koei		| Sega Megadrive| 					|
 | md_nobuzenk	|  	| Nobunaga no Yabou - Zenkokuban (Jpn)			| md_nobuamb	| 1993	| Koei		| Sega Megadrive| 					|
 | md_nobuamb	|  	| Nobunaga's Ambition (USA)				| 		| 1993	| Koei		| Sega Megadrive| 					|
+| msx_nogalsdemo|  	| Nogalious Demo (HB)					| 		| 2018	| LuegoLu3go	| MSX		| 					|
 | gg_nomowsb	|  	| Nomo's World Series Baseball (Jpn)			| 		| 1995	| Sega		| Sega Game Gear| 					|
 | nes_nomolos	|  	| Nomolos (HB)						| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
 | md_normy	|  	| Normy's Beach Babe-O-Rama (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -8216,6 +8226,7 @@ This list contains all games supported by FinalBurn Neo.
 | 25pacmano	|  	| Pac-Man - 25th Anniversary Edition (Rev 2.00)		| 25pacman	| 2005	| Namco / Cosmod| Miscellaneous	| 					|
 | 25pacman	|   NW	| Pac-Man - 25th Anniversary Edition (Rev 3.00)		| 		| 2006	| Namco / Cosmod| Miscellaneous	| 					|
 | md_pacman2	|  	| Pac-Man 2 - The New Adventures (USA)			| 		| 1994	| Namco		| Sega Megadrive| 					|
+| nes_pacmance	|  	| Pac-Man Championship Edition (HB)			| 		| 2020	| BNEI		| Miscellaneous	| 					|
 | pacplus	|  	| Pac-Man Plus						| 		| 1982	| [Namco] (Midwa| Pac-man	| 					|
 | pacmaniao	|  	| Pac-Mania (111187 sound program)			| pacmania	| 1987	| Namco		| System 1	| 					|
 | spec_pacmania	|  	| Pac-Mania (128K)					| 		| 1988	| Grandslam Ente| ZX Spectrum	| 					|
@@ -10548,6 +10559,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_sokobank	|  	| Soukoban (Kor)					| msx_sokoban	| 1984?	| Qnix		| MSX		| 					|
 | sg1k_sokobank	|  	| Soukoban (Kor)					| sg1k_sokoban	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | sg1k_sokobant	|  	| Soukoban (Tw)						| sg1k_sokoban	| 1985?	| Unknown	| Sega SG-1000	| 					|
+| msx_sokobanpe	|  	| Soukoban Pocket Edition (HB)				| 		| 2004	| Karoshi Corp.	| MSX		| 					|
 | md_soulblada	|  	| Soul Blade (Alt)					| md_soulblad	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_soulblad	|  	| Soul Blade						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_souledge	|   NW	| Soul Edge vs Samurai Spirits (Pirate)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -10684,6 +10696,7 @@ This list contains all games supported by FinalBurn Neo.
 | speedbala	|  	| Speed Ball (set 2)					| speedbal	| 1987	| Tecfri / Desys| Miscellaneous	| 					|
 | spdball	|  	| Speed Ball - Contest at Neonworld (prototype)		| 		| 1985	| Williams	| 6809 System	| 					|
 | spdcoin	|  	| Speed Coin (prototype)				| 		| 1984	| Stern		| Galaxian	| 					|
+| msx_speedking	|  	| Speed King (Euro)					| 		| 1986	| Mastertronic	| MSX		| 					|
 | speedspn	|  	| Speed Spin						| 		| 1994	| TCH		| Miscellaneous	| 					|
 | sms_speedbl	|  	| Speedball (Image Works) (Euro)			| 		| 1990	| Image Works	| Sega Master Sy| 					|
 | sms_speedblv	|  	| Speedball (Virgin) (Euro, USA)			| 		| 1992	| Virgin Interac| Sega Master Sy| 					|
@@ -12585,6 +12598,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_thexdera	|  	| Thexder (Jpn, Alt)					| msx_thexder	| 1986	| Game Arts?	| MSX		| 					|
 | cv_thexder	|  	| Thexder (SGM)						| 		| 2012	| Game Arts	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | thief		|  	| Thief							| 		| 1981	| Pacific Novelt| Miscellaneous	| 					|
+| msx_tbback	|  	| Thing Bounces Back (Euro)				| 		| 1987	| Gremlin Graphi| MSX		| 					|
 | md_thomas	|  	| Thomas the Tank Engine & Friends (USA)		| 		| 1993	| THQ		| Sega Megadrive| 					|
 | trally	|  	| Thrash Rally (ALM-003)(ALH-003)			| 		| 1991	| Alpha Denshi C| Neo Geo MVS	| 					|
 | nes_threestooges|  	| Three Stooges (USA)					| 		| 1989	| Activision	| Miscellaneous	| 					|
@@ -13358,6 +13372,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_vbart	|  	| Virtual Bart (World)					| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | md_vpinball	|  	| Virtual Pinball (Euro, USA)				| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | nes_nesvircle	|  	| Virus Cleaner (HB)					| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
+| msx_viruslqp	|  	| Virus LQP-79 (HB, v1.1)				| 		| 2018	| Pentacour	| MSX		| 					|
 | setaroul	| D NW	| Visco Roulette					| 		| 198?	| Seta / Visco	| Seta		| 					|
 | md_vixen357e	|  	| Vixen 357 (Hack, English)				| md_vixen357	| 2016	| NCS		| Sega Megadrive| 					|
 | md_vixen357	|  	| Vixen 357 (Jpn)					| 		| 1992	| NCS		| Sega Megadrive| 					|

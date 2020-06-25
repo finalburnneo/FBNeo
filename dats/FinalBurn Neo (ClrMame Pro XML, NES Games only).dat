@@ -5920,6 +5920,13 @@
 		<rom name="Pac-Man (USA) (Namco).nes" size="24592" crc="15d202d8"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacmance">
+		<description>Pac-Man Championship Edition (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>BNEI</manufacturer>
+		<rom name="pacman-ce (2020).nes" size="262160" crc="b86c09af"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacmania">
 		<description>Pac-Mania (USA) (Unl)</description>
 		<year>1990</year>

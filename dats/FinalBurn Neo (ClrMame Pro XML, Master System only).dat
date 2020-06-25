@@ -152,11 +152,11 @@
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
 		<driver status="good"/>
 	</game>
-	<game name="akrr102e" cloneof="alexkidd" romof="alexkidd">
-		<description>Alex Kidd in Radaxian Rumble (ver. 1.02e)</description>
+	<game name="alexkiddrr" cloneof="alexkidd" romof="alexkidd">
+		<description>Alex Kidd in Radaxian Rumble (ver. 1.5)</description>
 		<year>2015</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="akrr102e.sms" size="524288" crc="368b64b0"/>
+		<rom name="Alex Kidd in Radaxian Rumble 1.5.sms" size="524288" crc="02760e17"/>
 		<driver status="good"/>
 	</game>
 	<game name="alexshin">

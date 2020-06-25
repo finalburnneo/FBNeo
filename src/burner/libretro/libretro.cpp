@@ -138,7 +138,13 @@ struct ROMFIND
 	BurnRomInfo ri;
 };
 
-static std::vector<std::string> g_find_list_path;
+struct located_archive
+{
+	std::string path;
+	bool ignoreCrc;
+};
+static std::vector<located_archive> g_find_list_path;
+
 static ROMFIND g_find_list[1024];
 static unsigned g_rom_count;
 
@@ -579,7 +585,7 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 
 	int archive = g_find_list[i].nArchive;
 
-	if (ZipOpen((char*)g_find_list_path[archive].c_str()) != 0)
+	if (ZipOpen((char*)g_find_list_path[archive].path.c_str()) != 0)
 		return 1;
 
 	BurnRomInfo ri = {0};
@@ -595,33 +601,50 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 	return 0;
 }
 
-static void locate_archive(std::vector<std::string>& pathList, const char* const romName)
+static void locate_archive(std::vector<located_archive>& pathList, const char* const romName)
 {
 	static char path[MAX_PATH];
 
+	// Search system fbneo "patched" subdirectory
+	snprintf(path, sizeof(path), "%s%cfbneo%cpatched%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c(), romName);
+	if (ZipOpen(path) == 0)
+	{
+		g_find_list_path.push_back(located_archive());
+		located_archive *located = &g_find_list_path.back();
+		located->path = path;
+		located->ignoreCrc = true;
+		ZipClose();
+	}
 	// Search rom dir
 	snprintf(path, sizeof(path), "%s%c%s", g_rom_dir, path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
-		g_find_list_path.push_back(path);
-		return;
+		g_find_list_path.push_back(located_archive());
+		located_archive *located = &g_find_list_path.back();
+		located->path = path;
+		located->ignoreCrc = false;
+		ZipClose();
 	}
 	// Search system fbneo subdirectory (where samples/hiscore are stored)
 	snprintf(path, sizeof(path), "%s%cfbneo%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
-		g_find_list_path.push_back(path);
-		return;
+		g_find_list_path.push_back(located_archive());
+		located_archive *located = &g_find_list_path.back();
+		located->path = path;
+		located->ignoreCrc = false;
+		ZipClose();
 	}
 	// Search system directory
 	snprintf(path, sizeof(path), "%s%c%s", g_system_dir, path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
-		g_find_list_path.push_back(path);
-		return;
+		g_find_list_path.push_back(located_archive());
+		located_archive *located = &g_find_list_path.back();
+		located->path = path;
+		located->ignoreCrc = false;
+		ZipClose();
 	}
-
-	HandleMessage(RETRO_LOG_WARN, "[FBNeo] Couldn't locate the %s archive anywhere, this game probably won't boot.\n", romName);
 }
 
 // This code is very confusing. The original code is even more confusing :(
@@ -647,19 +670,13 @@ static bool open_archive()
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Archive: %s\n", rom_name);
 
 		locate_archive(g_find_list_path, rom_name);
-
-		// Handle bios for pgm single pcb board (special case)
-		if (strcmp(rom_name, "thegladpcb") == 0 || strcmp(rom_name, "dmnfrntpcb") == 0 || strcmp(rom_name, "svgpcb") == 0)
-			locate_archive(g_find_list_path, "pgm");
-
-		ZipClose();
 	}
 
 	for (unsigned z = 0; z < g_find_list_path.size(); z++)
 	{
-		if (ZipOpen((char*)g_find_list_path[z].c_str()) != 0)
+		if (ZipOpen((char*)g_find_list_path[z].path.c_str()) != 0)
 		{
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed to open archive %s\n", g_find_list_path[z].c_str());
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed to open archive %s\n", g_find_list_path[z].path.c_str());
 			return false;
 		}
 
@@ -684,6 +701,7 @@ static bool open_archive()
 			BurnDrvGetRomName(&rom_name, i, 0);
 
 			bool bad_crc = false;
+			bool use_patched = false;
 
 			if (index < 0 && strncmp("uni-bios_", rom_name, 9) == 0)
 			{
@@ -692,12 +710,22 @@ static bool open_archive()
 					bad_crc = true;
 			}
 
+			// Load patched romset if it exists
+			if (index < 0 && g_find_list_path[z].ignoreCrc)
+			{
+				index = find_rom_by_name(rom_name, list, count);
+				if (index >= 0)
+					use_patched = true;
+			}
+
 			if (index >= 0)
 			{
-				if (bad_crc)
-					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with bad CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
+				if (use_patched)
+					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using patched ROM with name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
+				else if (bad_crc)
+					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with bad CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
 				else
-					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with good CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].c_str());
+					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with good CRC and name %s from archive %s\n", rom_name, g_find_list_path[z].path.c_str());
 			}
 			else
 			{
@@ -773,7 +801,8 @@ static bool open_archive()
 				if (is_neogeo_game && g_find_list[i].ri.nCrc == mvs_bioses[0].crc && is_neogeo_bios_available)
 					continue;
 
-				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with CRC 0x%08x is required ...\n", i, g_find_list[i].ri.nCrc);
+				BurnDrvGetRomName(&rom_name, i, 0);
+				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required ...\n", i, rom_name, g_find_list[i].ri.nCrc);
 				return false;
 			}
 		}

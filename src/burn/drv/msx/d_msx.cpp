@@ -25641,10 +25641,10 @@ struct BurnDriver BurnDrvMSX_tbback = {
 };
 
 
-// Virus LQP-79 (HB, v1.1)
+// Virus LQP-79 (HB, v1.2)
 
 static struct BurnRomInfo MSX_viruslqpRomDesc[] = {
-	{ "virus lqp-79 (2018)(pentacour)(v1.10).rom",	49152, 0x60f82bf6, BRF_PRG | BRF_ESS },
+	{ "virus lqp-79 (2018)(pentacour)(v1.2).rom",	49152, 0x6514414e, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_viruslqp, MSX_viruslqp, msx_msx)
@@ -25652,7 +25652,7 @@ STD_ROM_FN(MSX_viruslqp)
 
 struct BurnDriver BurnDrvMSX_viruslqp = {
 	"msx_viruslqp", NULL, "msx_msx", NULL, "2018",
-	"Virus LQP-79 (HB, v1.1)\0", NULL, "Pentacour", "MSX",
+	"Virus LQP-79 (HB, v1.2)\0", NULL, "Pentacour", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_viruslqpRomInfo, MSX_viruslqpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

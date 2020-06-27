@@ -1008,6 +1008,7 @@
 		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
 		FEC0A0E0249677750015AABF /* d_wecleman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0DF249677750015AABF /* d_wecleman.cpp */; };
+		FEC0A0E224A6F99A0015AABF /* d_magmax.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */; };
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
@@ -2560,6 +2561,7 @@
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
 		FEC0A0DF249677750015AABF /* d_wecleman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_wecleman.cpp; sourceTree = "<group>"; };
+		FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_magmax.cpp; sourceTree = "<group>"; };
 		FEC5D3D4235C136E00ABA9FB /* FBVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBVideo.h; sourceTree = "<group>"; };
 		FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBVideo.mm; sourceTree = "<group>"; };
 		FEC5D3D7235C160600ABA9FB /* FBScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScreenView.h; sourceTree = "<group>"; };
@@ -4319,6 +4321,7 @@
 				FE1B213123561A6D0065200C /* d_lastduel.cpp */,
 				FE1B212123561A6D0065200C /* d_lwings.cpp */,
 				FE1B216723561A6D0065200C /* d_madmotor.cpp */,
+				FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */,
 				FE1B211823561A6D0065200C /* d_mainsnk.cpp */,
 				FE1B219B23561A6E0065200C /* d_mappy.cpp */,
 				FE1B21C823561A6F0065200C /* d_marineb.cpp */,
@@ -6030,6 +6033,7 @@
 				FE1B265F23561A770065200C /* d_qix.cpp in Sources */,
 				FE1B256E23561A760065200C /* d_zaxxon.cpp in Sources */,
 				FE1B278523561A790065200C /* samples.cpp in Sources */,
+				FEC0A0E224A6F99A0015AABF /* d_magmax.cpp in Sources */,
 				FE1B24FF23561A760065200C /* d_playmark.cpp in Sources */,
 				FEED9E132358412E00B7AF83 /* bzip.cpp in Sources */,
 				FE1B26E323561A780065200C /* d_stfight.cpp in Sources */,

@@ -5921,7 +5921,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmance">
-		<description>Pac-Man Championship Edition (HB) [Homebrew]</description>
+		<description>Pac-Man Championship Edition</description>
 		<year>2020</year>
 		<manufacturer>BNEI</manufacturer>
 		<rom name="pacman-ce (2020).nes" size="262160" crc="b86c09af"/>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14226 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14227 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6545,6 +6545,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_maerchenveil|  	| Maerchen Veil (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_mafatcon	|  	| Mafat Conspiracy - Golgo 13 (USA)			| 		| 1990	| Vic Tokai	| Miscellaneous	| 					|
 | md_mafia	|  	| Mafia (Rus)						| md_dicktr	| 199?	| <unknown>	| Sega Megadrive| 					|
+| magmax	|  	| Mag Max						| 		| 1985	| Nichibutsu	| Miscellaneous	| 					|
 | nes_magicblock|  	| Magic Block (Mega Soft)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mbrush	|  	| Magic Brush						| crush		| 1981	| bootleg	| Pac-man	| 					|
 | magicbubc	|  	| Magic Bubble (Adult version, YS-0211 PCB)		| magicbub	| 199?	| Yun Sung	| Yun Sung 16 Bi| 					|
@@ -8226,7 +8227,7 @@ This list contains all games supported by FinalBurn Neo.
 | 25pacmano	|  	| Pac-Man - 25th Anniversary Edition (Rev 2.00)		| 25pacman	| 2005	| Namco / Cosmod| Miscellaneous	| 					|
 | 25pacman	|   NW	| Pac-Man - 25th Anniversary Edition (Rev 3.00)		| 		| 2006	| Namco / Cosmod| Miscellaneous	| 					|
 | md_pacman2	|  	| Pac-Man 2 - The New Adventures (USA)			| 		| 1994	| Namco		| Sega Megadrive| 					|
-| nes_pacmance	|  	| Pac-Man Championship Edition (HB)			| 		| 2020	| BNEI		| Miscellaneous	| 					|
+| nes_pacmance	|  	| Pac-Man Championship Edition				| 		| 2020	| BNEI		| Miscellaneous	| 					|
 | pacplus	|  	| Pac-Man Plus						| 		| 1982	| [Namco] (Midwa| Pac-man	| 					|
 | pacmaniao	|  	| Pac-Mania (111187 sound program)			| pacmania	| 1987	| Namco		| System 1	| 					|
 | spec_pacmania	|  	| Pac-Mania (128K)					| 		| 1988	| Grandslam Ente| ZX Spectrum	| 					|
@@ -13372,7 +13373,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_vbart	|  	| Virtual Bart (World)					| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | md_vpinball	|  	| Virtual Pinball (Euro, USA)				| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | nes_nesvircle	|  	| Virus Cleaner (HB)					| 		| 2016	| Second Dimensi| Miscellaneous	| 					|
-| msx_viruslqp	|  	| Virus LQP-79 (HB, v1.1)				| 		| 2018	| Pentacour	| MSX		| 					|
+| msx_viruslqp	|  	| Virus LQP-79 (HB, v1.2)				| 		| 2018	| Pentacour	| MSX		| 					|
 | setaroul	| D NW	| Visco Roulette					| 		| 198?	| Seta / Visco	| Seta		| 					|
 | md_vixen357e	|  	| Vixen 357 (Hack, English)				| md_vixen357	| 2016	| NCS		| Sega Megadrive| 					|
 | md_vixen357	|  	| Vixen 357 (Jpn)					| 		| 1992	| NCS		| Sega Megadrive| 					|

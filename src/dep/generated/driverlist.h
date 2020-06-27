@@ -6665,6 +6665,7 @@ DRV		BurnDrvsgx_granzort;
 DRV		BurnDrvfds_maerchenveil;
 DRV		BurnDrvnes_mafatcon;
 DRV		BurnDrvmd_mafia;
+DRV		BurnDrvMagmax;
 DRV		BurnDrvnes_magicblock;
 DRV		BurnDrvmbrush;
 DRV		BurnDrvMagicbubc;
@@ -21166,6 +21167,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_maerchenveil,	// Maerchen Veil (Japan)
 	&BurnDrvnes_mafatcon,		// Mafat Conspiracy - Golgo 13 (USA)
 	&BurnDrvmd_mafia,			// Mafia (Rus)
+	&BurnDrvMagmax,				// Mag Max
 	&BurnDrvnes_magicblock,		// Magic Block (Mega Soft)
 	&BurnDrvmbrush,				// Magic Brush
 	&BurnDrvMagicbubc,			// Magic Bubble (Adult version, YS-0211 PCB)
@@ -22873,7 +22875,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacman25o,			// Pac-Man - 25th Anniversary Edition (Rev 2.00)
 	&BurnDrvPacman25,			// Pac-Man - 25th Anniversary Edition (Rev 3.00) [no comment, NOT WORKING]
 	&BurnDrvmd_pacman2,			// Pac-Man 2 - The New Adventures (USA)
-	&BurnDrvnes_pacmance,		// Pac-Man Championship Edition (HB)
+	&BurnDrvnes_pacmance,		// Pac-Man Championship Edition
 	&BurnDrvpacplus,			// Pac-Man Plus
 	&BurnDrvPacmaniao,			// Pac-Mania (111187 sound program)
 	&BurnSpecpacmania,			// Pac-Mania (128K)
@@ -28111,7 +28113,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_vbart,			// Virtual Bart (World)
 	&BurnDrvmd_vpinball,		// Virtual Pinball (Euro, USA)
 	&BurnDrvnes_nesvircle,		// Virus Cleaner (HB)
-	&BurnDrvMSX_viruslqp,		// Virus LQP-79 (HB, v1.1)
+	&BurnDrvMSX_viruslqp,		// Virus LQP-79 (HB, v1.2)
 #if defined FBNEO_DEBUG
 	&BurnDrvSetaroul,			// Visco Roulette [no comment, NOT WORKING]
 #endif

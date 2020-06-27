@@ -11466,10 +11466,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="viruslqp" romof="msx">
-		<description>Virus LQP-79 (HB, v1.1) [Homebrew]</description>
+		<description>Virus LQP-79 (HB, v1.2) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Pentacour</manufacturer>
-		<rom name="virus lqp-79 (2018)(pentacour)(v1.10).rom" size="49152" crc="60f82bf6"/>
+		<rom name="virus lqp-79 (2018)(pentacour)(v1.2).rom" size="49152" crc="6514414e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

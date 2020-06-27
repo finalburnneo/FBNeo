@@ -10676,6 +10676,7 @@ struct BurnDriver BurnDrvnes_ruder = {
 
 // Homebrew (hand-added)
 
+// Pacman CE: Keep under hand-added (HB) section, even though not marked HB
 static struct BurnRomInfo nes_pacmanceRomDesc[] = {
 	{ "pacman-ce (2020).nes",          262160, 0xb86c09af, BRF_ESS | BRF_PRG },
 };
@@ -10685,9 +10686,9 @@ STD_ROM_FN(nes_pacmance)
 
 struct BurnDriver BurnDrvnes_pacmance = {
 	"nes_pacmance", NULL, NULL, NULL, "2020",
-	"Pac-Man Championship Edition (HB)\0", NULL, "BNEI", "Miscellaneous",
+	"Pac-Man Championship Edition\0", NULL, "BNEI", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE, 0,
 	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

@@ -23398,7 +23398,7 @@ static struct BurnRomInfo WofjdrRomDesc[] = {
 STD_ROM_PICK(Wofjdr)
 STD_ROM_FN(Wofjdr)
 
-struct BurnDriverD BurnDrvCpsWofjdr = {
+struct BurnDriver BurnDrvCpsWofjdr = {
 	"wofjdr", "wof", NULL, NULL, "2020",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0", NULL, "Hack", "CPS1 / QSound",
 	L"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0\u541E\u98DF\u5929\u5730 II - \u8D64\u58C1\u4E4B\u6218 (\u8FBE\u4eBA\u7248 2020-02-15, Bindi)\0 ", NULL, NULL, NULL,

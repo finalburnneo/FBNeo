@@ -27547,8 +27547,8 @@ STD_ROM_PICK(sms_alexkidd2)
 STD_ROM_FN(sms_alexkidd2)
 
 struct BurnDriver BurnDrvsms_alexkidd2 = {
-	"sms_alexkidd2", NULL, NULL, NULL, "2017",
-	"Alex Kidd in Miracle World 2 (Hack)\0", NULL, "Ian Wall", "Sega Master System",
+	"sms_alexkidd2", NULL, NULL, NULL, "2016",
+	"Alex Kidd in Miracle World 2 (HB, Hack)\0", NULL, "Ian Wall", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd2RomInfo, sms_alexkidd2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -28162,3 +28162,116 @@ struct BurnDriver BurnDrvgg_madoumn2e = {
 	256, 192, 4, 3
 };
 
+// Alex Kidd 3 - Curse in Miracle World (Hack)
+
+static struct BurnRomInfo sms_alexkidd3RomDesc[] = {
+	{ "alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms",	1048576, 0x35b498a4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexkidd3)
+STD_ROM_FN(sms_alexkidd3)
+
+struct BurnDriver BurnDrvsms_alexkidd3 = {
+	"sms_alexkidd3", NULL, NULL, NULL, "2016",
+	"Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4)\0", NULL, "Yeti", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexkidd3RomInfo, sms_alexkidd3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Duke Nukem (Hack)
+
+static struct BurnRomInfo sms_dnukemRomDesc[] = {
+	{ "duke nukem (2017)(revo-tibone-calindro).sms",	524288, 0xa16dba3b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_dnukem)
+STD_ROM_FN(sms_dnukem)
+
+struct BurnDriver BurnDrvsms_dnukem = {
+	"sms_dnukem", NULL, NULL, NULL, "2017",
+	"Duke Nukem (HB, Hack v0.93)\0", NULL, "revo-tibone-calindro", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_dnukemRomInfo, sms_dnukemRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Dynamite Dux (Euro, Bra)
+
+static struct BurnRomInfo sms_dduxfmRomDesc[] = {
+	{ "dynamite dux (fm-mod).sms",	262144, 0x26dfc995, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_dduxfm)
+STD_ROM_FN(sms_dduxfm)
+
+struct BurnDriver BurnDrvsms_dduxfm = {
+	"sms_dduxfm", "sms_ddux", NULL, NULL, "2018",
+	"Dynamite Dux (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - fatnick", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_dduxfmRomInfo, sms_dduxfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Papi Commando in CPP Land (Hack)
+
+static struct BurnRomInfo sms_papicomRomDesc[] = {
+	{ "papi commando in cpp land v1.01 (2019)(studio vetea).sms",	1048576, 0xbd531375, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_papicom)
+STD_ROM_FN(sms_papicom)
+
+struct BurnDriver BurnDrvsms_papicom = {
+	"sms_papicom", NULL, NULL, NULL, "2019",
+	"Papi Commando in CPP Land (HB, Hack v1.01)\0", NULL, "Vetea", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_papicomRomInfo, sms_papicomRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Rambo III (FM Mod)
+
+static struct BurnRomInfo sms_rambo3fmRomDesc[] = {
+	{ "rambo iii (fm-mod).sms",	262144, 0xc2073674, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_rambo3fm)
+STD_ROM_FN(sms_rambo3fm)
+
+struct BurnDriver BurnDrvsms_rambo3fm = {
+	"sms_rambo3fm", "sms_rambo3", NULL, NULL, "2018",
+	"Rambo III (FM Mod)\0", "Light Phaser game - YM2413 FM support", "Sega - fatnick", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	SMSGetZipName, sms_rambo3fmRomInfo, sms_rambo3fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Summer Games (FM Mod)
+
+static struct BurnRomInfo sms_sumgamesfmRomDesc[] = {
+	{ "summer games (fm-mod).sms",	131072, 0xbbae488d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sumgamesfm)
+STD_ROM_FN(sms_sumgamesfm)
+
+struct BurnDriver BurnDrvsms_sumgamesfm = {
+	"sms_sumgamesfm", "sms_sumgames", NULL, NULL, "2018",
+	"Summer Games (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - fatnick", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
+	SMSGetZipName, sms_sumgamesfmRomInfo, sms_sumgamesfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

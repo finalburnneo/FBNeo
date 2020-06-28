@@ -2583,16 +2583,15 @@ static INT32 py2k2Init()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_py2k2;
-//	pPgmProtCallback = install_protection_asic27a_kovsh;
 
 	return pgmInit();
 }
 
-struct BurnDriverD BurnDrvPy2k2 = {
+struct BurnDriver BurnDrvPy2k2 = {
 	"py2k2", NULL, "pgm", NULL, "2001",
 	"Photo Y2K 2 (VM101XX, Taiwan)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, py2k2RomInfo, py2k2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k2DIPInfo,
 	py2k2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -2620,11 +2619,11 @@ static struct BurnRomInfo py2k2100RomDesc[] = {
 STDROMPICKEXT(py2k2100, py2k2100, pgm)
 STD_ROM_FN(py2k2100)
 
-struct BurnDriverD BurnDrvPy2k2100 = {
+struct BurnDriver BurnDrvPy2k2100 = {
 	"py2k2100", "py2k2", "pgm", NULL, "2001",
 	"Photo Y2K 2 (V100, japan)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, py2k2100RomInfo, py2k2100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k2DIPInfo,
 	py2k2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -6574,5 +6573,42 @@ struct BurnDriver BurnDrvkovytzyws = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovytzywsRomInfo, kovytzywsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,  
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
+// 2020-06-23
+
+static struct BurnRomInfo kov2pfwllRomDesc[] = {
+	{ "kov2pfwll_32m.u8",				0x600000, 0x6f6e550c, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "kov2pfwll_t1200.u21",			0x800000, 0x279a2f9e, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a1200.u1",						0x800000, 0xceeb81d8, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a1201.u4",						0x800000, 0x21063ca7, 3 | BRF_GRA },			//  3
+	{ "a1202.u6",						0x800000, 0x4bb92fae, 3 | BRF_GRA },			//  4
+	{ "a1203.u8",						0x800000, 0xe73cb627, 3 | BRF_GRA },			//  5
+	{ "a1204.u10",						0x200000, 0x14b4b5bb, 3 | BRF_GRA },			//  6
+
+	{ "b1200.u5",						0x800000, 0xbed7d994, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b1201.u7",						0x800000, 0xf251eb57, 4 | BRF_GRA },			//  8
+
+	{ "m1200.u3",						0x800000, 0xb0d88720, 5 | BRF_SND },			//  9 Samples
+
+	{ "kov2pfwll_igs027a_china.bin",	0x004000, 0x06214503, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+
+	{ "kov2pfwll_16m.u23",				0x200000, 0x2626cde0, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov2pfwll, kov2pfwll, pgm)
+STD_ROM_FN(kov2pfwll)
+
+struct BurnDriver BurnDrvkov2pfwll = {
+	"kov2pfwll", "kov2p", "pgm", NULL, "2020",
+	"Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)\0", NULL, "Hack", "PolyGameMaster",
+	L"Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)\0\u4e09\u56fd\u6218\u7eaa 2 - \u51e4\u821e\u9f99\u541f (\u4fee\u6539\u7248, \u7248\u672c 2055)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2pfwllRomInfo, kov2pfwllRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

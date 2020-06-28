@@ -1,4 +1,5 @@
 #include "pgm.h"
+#include "bitswap.h"
 
 /*
 	IGS Asic27a (type 1) proper emulation
@@ -22,7 +23,7 @@
 		-----------------------------------------------------------
 		Puzzli 2
 		-----------------------------------------------------------
-		Photo Y2K2 - NOT WORKING!
+		Photo Y2K2
 		-----------------------------------------------------------
 		Puzzle Star - NOT WORKING!
 */
@@ -1162,37 +1163,75 @@ void install_protection_asic27a_puzzli2()
 
 
 //-------------------------------------------------------------------------------------------
-// Simulation used by Photo Y2k2 (not working!)
+// Simulation used by Photo Y2k2
 
+static UINT16 py2k2_sprite_pos = 0;
+static UINT16 py2k2_sprite_base = 0;
+
+static UINT32 py2k2_sprite_offset(UINT16 base, UINT16 pos)
+{
+	UINT16 ret = 0;
+	UINT16 offset = (base * 16) + (pos & 0xf);
+
+	switch (base & ~0x3f)
+	{
+		case 0x000: ret = BITSWAP16(offset ^ 0x0030, 15, 14, 13, 12, 11, 10, 0, 2, 3, 9, 5, 4, 8, 7, 6, 1); break;
+		case 0x040: ret = BITSWAP16(offset ^ 0x03c0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 1, 2, 0, 5, 3, 4); break;
+		case 0x080: ret = BITSWAP16(offset ^ 0x0000, 15, 14, 13, 12, 11, 10, 0, 3, 4, 6, 8, 7, 5, 9, 2, 1); break;
+		case 0x0c0: ret = BITSWAP16(offset ^ 0x0001, 15, 14, 13, 12, 11, 10, 6, 5, 4, 3, 2, 1, 9, 8, 7, 0); break;
+		case 0x100: ret = BITSWAP16(offset ^ 0x0030, 15, 14, 13, 12, 11, 10, 0, 2, 3, 9, 5, 4, 8, 7, 6, 1); break;
+		case 0x140: ret = BITSWAP16(offset ^ 0x01c0, 15, 14, 13, 12, 11, 10, 2, 8, 7, 6, 4, 3, 5, 9, 0, 1); break;
+		case 0x180: ret = BITSWAP16(offset ^ 0x0141, 15, 14, 13, 12, 11, 10, 4, 8, 2, 6, 1, 7, 9, 5, 3, 0); break;
+		case 0x1c0: ret = BITSWAP16(offset ^ 0x0090, 15, 14, 13, 12, 11, 10, 5, 3, 7, 2, 1, 4, 0, 9, 8, 6); break;
+		case 0x200: ret = BITSWAP16(offset ^ 0x02a1, 15, 14, 13, 12, 11, 10, 9, 1, 7, 8, 5, 6, 2, 4, 3, 0); break;
+		case 0x240: ret = BITSWAP16(offset ^ 0x0000, 15, 14, 13, 12, 11, 10, 3, 2, 1, 0, 9, 8, 7, 6, 5, 4); break;
+		case 0x280: ret = BITSWAP16(offset ^ 0x02a1, 15, 14, 13, 12, 11, 10, 9, 1, 7, 8, 5, 6, 2, 4, 3, 0); break;
+		case 0x2c0: ret = BITSWAP16(offset ^ 0x0000, 15, 14, 13, 12, 11, 10, 0, 3, 4, 6, 8, 7, 5, 9, 2, 1); break;
+		case 0x300: ret = BITSWAP16(offset ^ 0x03c0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 1, 2, 0, 5, 3, 4); break;
+		case 0x340: ret = BITSWAP16(offset ^ 0x0030, 15, 14, 13, 12, 11, 10, 0, 2, 3, 9, 5, 4, 8, 7, 6, 1); break;
+		case 0x380: ret = BITSWAP16(offset ^ 0x0001, 15, 14, 13, 12, 11, 10, 6, 5, 4, 3, 2, 1, 9, 8, 7, 0); break;
+		case 0x3c0: ret = BITSWAP16(offset ^ 0x0090, 15, 14, 13, 12, 11, 10, 5, 3, 7, 2, 1, 4, 0, 9, 8, 6); break;
+		case 0x400: ret = BITSWAP16(offset ^ 0x02a1, 15, 14, 13, 12, 11, 10, 9, 1, 7, 8, 5, 6, 2, 4, 3, 0); break;
+		case 0x440: ret = BITSWAP16(offset ^ 0x03c0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 1, 2, 0, 5, 3, 4); break;
+		case 0x480: ret = BITSWAP16(offset ^ 0x0141, 15, 14, 13, 12, 11, 10, 4, 8, 2, 6, 1, 7, 9, 5, 3, 0); break;
+		case 0x4c0: ret = BITSWAP16(offset ^ 0x01c0, 15, 14, 13, 12, 11, 10, 2, 8, 7, 6, 4, 3, 5, 9, 0, 1); break;
+		case 0x500: ret = BITSWAP16(offset ^ 0x0141, 15, 14, 13, 12, 11, 10, 4, 8, 2, 6, 1, 7, 9, 5, 3, 0); break;
+		case 0x540: ret = BITSWAP16(offset ^ 0x0030, 15, 14, 13, 12, 11, 10, 0, 2, 3, 9, 5, 4, 8, 7, 6, 1); break;
+		case 0x580: ret = BITSWAP16(offset ^ 0x03c0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 1, 2, 0, 5, 3, 4); break;
+		case 0x5c0: ret = BITSWAP16(offset ^ 0x0090, 15, 14, 13, 12, 11, 10, 5, 3, 7, 2, 1, 4, 0, 9, 8, 6); break;
+		case 0x600: ret = BITSWAP16(offset ^ 0x0000, 15, 14, 13, 12, 11, 10, 0, 3, 4, 6, 8, 7, 5, 9, 2, 1); break;
+		case 0x640: ret = BITSWAP16(offset ^ 0x0000, 15, 14, 13, 12, 11, 10, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5); break;
+	}
+
+	if (offset >= 0xce80/2 && offset <= 0xceff/2) ret -= 0x0100;
+	if (offset >= 0xcf00/2 && offset <= 0xcf7f/2) ret += 0x0100;
+
+	return ret;
+}
 
 static void py2k2_asic27a_sim_command(UINT8 command)
 {
 	switch (command)
 	{
-		case 0x30: // Sprite sequence, advance to next sprite
+		case 0x30:
+			asic27a_sim_response = py2k2_sprite_offset(py2k2_sprite_base, py2k2_sprite_pos++);
 		break;
 
-		case 0x32: // Sprite sequence, decode offset
+		case 0x32:
+			py2k2_sprite_base = asic27a_sim_value;
+			py2k2_sprite_pos = 0;
+			asic27a_sim_response = py2k2_sprite_offset(py2k2_sprite_base, py2k2_sprite_pos++);
 		break;
 
-	//	case 0x33:
-	//	case 0x34:
-	//	case 0x35: // table?
-	//	case 0x38: // ?
-	//	break;
-
-		// "CCHANGE.C 285 ( TIME >= VALUE1 ) && TIME <= ALL_LEV_TIME )
-		case 0xba: // ??
+		case 0xba:
 			asic27a_sim_response = asic27a_sim_value + 1; // gets us in-game
 		break;
 
 		case 0x99: // Reset?
 			asic27a_sim_key = 0x100;
+			py2k2_sprite_pos = 0;
+			py2k2_sprite_base = 0;
 			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
-		break;
-
-		case 0xc0:
-			asic27a_sim_response = 0x880000;
 		break;
 
 		case 0xc3:
@@ -1211,10 +1250,6 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 			asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
 		break;
 
-		case 0xcb: // Background layer 'x' select (pgm3in1, same as kov)
-			asic27a_sim_response = 0x880000;
-		break;
-
 		case 0xcc: // Background layer offset (pgm3in1, same as kov)
 		{
 			INT32 y = asic27a_sim_value;
@@ -1223,29 +1258,45 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 		}
 		break;
 
+		case 0x33:
+		case 0x34:
+		case 0x35:
+		case 0x37:
+		case 0x38:
+		case 0xc0:
+		case 0xcb:
 		default:
 			asic27a_sim_response = 0x880000;
-			bprintf (0, _T("Unknown ASIC Command %2.2x Value: %4.4x\n"), command, asic27a_sim_value);
 		break;
 	}
 }
 
+static INT32 py2k2_sim_scan(INT32 nAction, INT32 *pnMin)
+{
+	asic27a_sim_scan(nAction, pnMin);
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(py2k2_sprite_pos);
+		SCAN_VAR(py2k2_sprite_base);
+	}
+
+	return 0;
+}
+
 void install_protection_asic27a_py2k2()
 {
-	pPgmResetCallback = asic27a_sim_reset;
-	pPgmScanCallback = asic27a_sim_scan;
-	asic27a_sim_command = py2k2_asic27a_sim_command;
+	pPgmResetCallback = 	asic27a_sim_reset;
+	pPgmScanCallback = 		py2k2_sim_scan;
+	asic27a_sim_command =	py2k2_asic27a_sim_command;
 
 	SekOpen(0);
 	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ);
 
-	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,			0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
 }
-
-
 
 //-------------------------------------------------------------------------
 // Simulation used by Puzzle Star

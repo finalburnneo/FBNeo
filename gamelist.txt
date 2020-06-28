@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14227 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14238 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -326,12 +326,13 @@ This list contains all games supported by FinalBurn Neo.
 | md_alexkiddk	|  	| Alex Kidd - Cheongong Maseong (Kor)			| md_alexkidd	| 1990	| Samsung	| Sega Megadrive| 					|
 | sms_alexhitw	|  	| Alex Kidd - High-Tech World (Euro, USA)		| 		| 1989	| Sega		| Sega Master Sy| 					|
 | sms_alexlost	|  	| Alex Kidd - The Lost Stars (World)			| 		| 1988	| Sega		| Sega Master Sy| 					|
+| sms_alexkidd3	|  	| Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4)	| 		| 2016	| Yeti		| Sega Master Sy| 					|
 | sms_alexbmx	|  	| Alex Kidd BMX Trial (Jpn)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_alexkiddb	|  	| Alex Kidd in Miracle World (Bra, v1, Pirate)		| sms_alexkidd	| 1986	| pirate	| Sega Master Sy| 					|
 | sms_alexkidd1	|  	| Alex Kidd in Miracle World (Euro, USA, v0)		| sms_alexkidd	| 1986	| Sega		| Sega Master Sy| 					|
 | sms_alexkidd	|  	| Alex Kidd in Miracle World (Euro, USA, v1)		| 		| 1986	| Sega		| Sega Master Sy| 					|
 | gg_alexkidd	|  	| Alex Kidd in Miracle World (Tw, SMS Mode)		| 		| 198?	| Unknown	| Sega Game Gear| 					|
-| sms_alexkidd2	|  	| Alex Kidd in Miracle World 2 (Hack)			| 		| 2017	| Ian Wall	| Sega Master Sy| 					|
+| sms_alexkidd2	|  	| Alex Kidd in Miracle World 2 (HB, Hack)		| 		| 2016	| Ian Wall	| Sega Master Sy| 					|
 | sms_alexkiddrr|  	| Alex Kidd in Radaxian Rumble (ver. 1.5)		| sms_alexkidd	| 2015	| Sega		| Sega Master Sy| 					|
 | sms_alexshin	|  	| Alex Kidd in Shinobi World (Euro, USA, Bra)		| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_alexkidd1	|  	| Alex Kidd in the Enchanted Castle (Euro)		| md_alexkidd	| 1990	| Sega		| Sega Megadrive| 					|
@@ -3310,6 +3311,7 @@ This list contains all games supported by FinalBurn Neo.
 | ducki		|  	| Duck Tales (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | nes_ducktales	|  	| DuckTales (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
 | nes_ducktales2|  	| DuckTales 2 (USA)					| 		| 1993	| Capcom	| Miscellaneous	| 					|
+| sms_dnukem	|  	| Duke Nukem (HB, Hack v0.93)				| 		| 2017	| revo-tibone-ca| Sega Master Sy| 					|
 | md_dukenk3d	|  	| Duke Nukem 3D (Bra)					| 		| 1998	| Tec Toy	| Sega Megadrive| 					|
 | md_dukenk3da	| D NW	| Duke Nukem 3D (Pirate)				| md_dukenk3d	| 199?	| <unknown>	| Sega Megadrive| 					|
 | dumpmtmt	|  	| Dump Matsumoto (Japan, 8751 317-unknown)		| bodyslam	| 1986	| Sega		| System 16A	| 					|
@@ -3381,6 +3383,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dynduke	|  	| Dynamite Duke (World, Rev. A)				| 		| 1990	| Sega		| Sega Megadrive| 					|
 | dduxbl	|   NW	| Dynamite Dux (bootleg)				| ddux		| 1989	| bootleg	| System 16B	| 					|
 | sms_ddux	|  	| Dynamite Dux (Euro, Bra)				| 		| 1989	| Sega		| Sega Master Sy| 					|
+| sms_dduxfm	|  	| Dynamite Dux (FM Mod)					| sms_ddux	| 2018	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
 | ddux1		|  	| Dynamite Dux (set 1, World, 8751 317-0095)		| ddux		| 1989	| Sega		| System 16B	| 					|
 | dduxd		|  	| Dynamite Dux (set 2, FD1094 317-0096 decrypted)	| ddux		| 1989	| Sega		| System 16B	| 					|
 | ddux		|  	| Dynamite Dux (set 2, FD1094 317-0096)			| 		| 1989	| Sega		| System 16B	| 					|
@@ -6002,6 +6005,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2104	|  	| Knights of Valour 2 (V104, 102, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2106	|  	| Knights of Valour 2 (V106, 102, 100 Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2		|  	| Knights of Valour 2 (V107, 102, 100, Hong Kong)	| 		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020	| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
@@ -8329,6 +8333,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_paperbo2	|  	| Paperboy 2 (Euro, USA)				| 		| 1992	| Tengen	| Sega Megadrive| 					|
 | nes_paperboy2	|  	| Paperboy 2 (USA)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
 | gg_paperbo2	|  	| Paperboy II (Euro, USA)				| 		| 1992	| Tengen	| Sega Game Gear| 					|
+| sms_papicom	|  	| Papi Commando in CPP Land (HB, Hack v1.01)		| 		| 2019	| Vetea		| Sega Master Sy| 					|
 | md_papicommandomd|  	| Papi Commando MD (HB)					| 		| 2015	| Vetea		| Sega Megadrive| 					|
 | nes_papillongals|  	| Papillon Gals (Japan) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_pjoe	|  	| Parachuteless Joe (HB)				| 		| 2005	| Paxanga Soft	| MSX		| 					|
@@ -8535,8 +8540,8 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1	| D NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
-| py2k2100	| D NW	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
-| py2k2		| D NW	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
+| py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
+| py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
 | phozons	|  	| Phozon (Sidam)					| phozon	| 1983	| Namco (Sidam l| Miscellaneous	| 					|
 | pickin	|  	| Pickin'						| 		| 1983	| Valadon Automa| Miscellaneous	| 					|
@@ -9313,6 +9318,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_rambo3	|  	| Rambo III (Euro, USA, Bra)				| 		| 1988	| Sega		| Sega Master Sy| Light Phaser game			|
 | rambo3	|  	| Rambo III (Europe)					| 		| 1989	| Taito Europe C| Taito B System| 					|
 | rambo3p	|  	| Rambo III (Europe, Proto?)				| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
+| sms_rambo3fm	|  	| Rambo III (FM Mod)					| sms_rambo3	| 2018	| Sega - fatnick| Sega Master Sy| Light Phaser game - YM2413 FM support	|
 | rambo3u	|  	| Rambo III (US)					| rambo3	| 1989	| Taito Europe C| Taito B System| 					|
 | md_rambo3a	|  	| Rambo III (World)					| md_rambo3	| 1989	| Sega		| Sega Megadrive| 					|
 | md_rambo3	|  	| Rambo III (World, v1.1)				| 		| 1989	| Sega		| Sega Megadrive| 					|
@@ -11308,6 +11314,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_summer	|  	| Summer Challenge (Euro, USA)				| 		| 1993	| Accolade	| Sega Megadrive| 					|
 | sms_sumgames	|  	| Summer Games (Euro)					| 		| 1991	| Sega		| Sega Master Sy| 					|
 | sms_sumgamesp	|  	| Summer Games (Euro, Prototype)			| sms_sumgames	| 1991	| Sega		| Sega Master Sy| 					|
+| sms_sumgamesfm|  	| Summer Games (FM Mod)					| sms_sumgames	| 2018	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
 | sunaq		|  	| SunA Quiz 6000 Academy (940620-6)			| 		| 1994	| SunA		| Miscellaneous	| 					|
 | nes_sunman	|  	| Sunman (Europe) (Prototype)				| 		| 0000	| Sunsoft	| Miscellaneous	| 					|
 | ssridersabd	|  	| Sunset Riders (2 Players ver. ABD)			| ssriders	| 1991	| Konami	| GX064		| 					|
@@ -12016,7 +12023,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	| D	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020	| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020	| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
@@ -12324,9 +12331,13 @@ This list contains all games supported by FinalBurn Neo.
 | kof96a	|  	| The King of Fighters '96 (NGM-214, alternate board)	| kof96		| 1996	| SNK		| Neo Geo MVS	| 					|
 | kof96ae20	|  	| The King of Fighters '96 (The Anniversary Edition 2.0,| kof96		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97cn	|  	| The King of Fighters '97 (10th Anniversary Chinese Edi| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
+| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition)	| kof97		| 2018	| Hack		| Neo Geo MVS	| 					|
+| kof97inv	|  	| The King of Fighters '97 (Invincible Plus)		| kof97		| 2019	| Hack		| Neo Geo MVS	| 					|
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97		|  	| The King of Fighters '97 (NGM-2320)			| 		| 1997	| SNK		| Neo Geo MVS	| 					|
+| kof97t2020	|  	| The King of Fighters '97 (Optimised Edition 2020)	| kof97		| 2020	| Hack		| Neo Geo MVS	| 					|
+| kof97t	|  	| The King of Fighters '97 (Optimized Edition)		| kof97		| 2014	| Hack		| Neo Geo MVS	| Don't use AES mode			|
 | kof97cbt	|  	| The King of Fighters '97 - Combo Training (Hack, Ver. | kof97		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97xt	|  	| The King of Fighters '97 - Final Battle (hack)	| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97rc	|  	| The King of Fighters '97 - Random Combo (Hack, Ver. 20| kof97		| 2019	| hack		| Neo Geo MVS	| 					|

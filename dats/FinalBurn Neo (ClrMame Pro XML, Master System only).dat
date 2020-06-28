@@ -117,6 +117,13 @@
 		<rom name="mpr-11402 w09.ic1" size="262144" crc="c13896d5"/>
 		<driver status="good"/>
 	</game>
+	<game name="alexkidd3">
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Yeti</manufacturer>
+		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
+		<driver status="good"/>
+	</game>
 	<game name="alexbmx">
 		<description>Alex Kidd BMX Trial (Jpn)</description>
 		<year>1987</year>
@@ -146,8 +153,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd2">
-		<description>Alex Kidd in Miracle World 2 (Hack) [Homebrew]</description>
-		<year>2017</year>
+		<description>Alex Kidd in Miracle World 2 (HB, Hack) [Homebrew]</description>
+		<year>2016</year>
 		<manufacturer>Ian Wall</manufacturer>
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
 		<driver status="good"/>
@@ -985,6 +992,13 @@
 		<rom name="dragon crystal (europe).bin" size="131072" crc="9549fce4"/>
 		<driver status="good"/>
 	</game>
+	<game name="dnukem">
+		<description>Duke Nukem (HB, Hack v0.93) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>revo-tibone-calindro</manufacturer>
+		<rom name="duke nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
+		<driver status="good"/>
+	</game>
 	<game name="dynduke">
 		<description>Dynamite Duke (Euro, Bra)</description>
 		<year>1991</year>
@@ -997,6 +1011,13 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite dux (europe).bin" size="262144" crc="0e1cc1e0"/>
+		<driver status="good"/>
+	</game>
+	<game name="dduxfm" cloneof="ddux" romof="ddux">
+		<description>Dynamite Dux (FM Mod) [YM2413 FM sound chip supported]</description>
+		<year>2018</year>
+		<manufacturer>Sega - fatnick</manufacturer>
+		<rom name="dynamite dux (fm-mod).sms" size="262144" crc="26dfc995"/>
 		<driver status="good"/>
 	</game>
 	<game name="dhead">
@@ -2413,6 +2434,13 @@
 		<rom name="mpr-13306a-m.ic1" size="131072" crc="327a0b4c"/>
 		<driver status="good"/>
 	</game>
+	<game name="papicom">
+		<description>Papi Commando in CPP Land (HB, Hack v1.01) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Vetea</manufacturer>
+		<rom name="papi commando in cpp land v1.01 (2019)(studio vetea).sms" size="1048576" crc="bd531375"/>
+		<driver status="good"/>
+	</game>
 	<game name="parlour">
 		<description>Parlour Games (Euro, USA)</description>
 		<year>1987</year>
@@ -2684,6 +2712,13 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12036f.ic1" size="262144" crc="da5a7013"/>
+		<driver status="good"/>
+	</game>
+	<game name="rambo3fm" cloneof="rambo3" romof="rambo3">
+		<description>Rambo III (FM Mod) [Light Phaser game - YM2413 FM support]</description>
+		<year>2018</year>
+		<manufacturer>Sega - fatnick</manufacturer>
+		<rom name="rambo iii (fm-mod).sms" size="262144" crc="c2073674"/>
 		<driver status="good"/>
 	</game>
 	<game name="rampage">
@@ -3300,6 +3335,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="summer games (europe) (beta).bin" size="131072" crc="80eb1fff"/>
+		<driver status="good"/>
+	</game>
+	<game name="sumgamesfm" cloneof="sumgames" romof="sumgames">
+		<description>Summer Games (FM Mod) [YM2413 FM sound chip supported]</description>
+		<year>2018</year>
+		<manufacturer>Sega - fatnick</manufacturer>
+		<rom name="summer games (fm-mod).sms" size="131072" crc="bbae488d"/>
 		<driver status="good"/>
 	</game>
 	<game name="superark" cloneof="woodypop" romof="woodypop">

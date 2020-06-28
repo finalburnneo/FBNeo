@@ -4223,6 +4223,9 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_wecleman.cpp">
       <Filter>Burn\drv\konami</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_magmax.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

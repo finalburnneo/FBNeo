@@ -640,11 +640,11 @@ struct BurnDriver BurnDrvCapbowl = {
 
 static struct BurnRomInfo capbowl2RomDesc[] = {
 	{ "program_rev_3_u6.u6",	0x8000, 0x9162934a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
-	{ "gr0",			0x8000, 0xef53ca7a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gr1",			0x8000, 0x27ede6ce, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "gr2",			0x8000, 0xe49238f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "grom0-gr0",				0x8000, 0xef53ca7a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "grom1-gr1",				0x8000, 0x27ede6ce, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "grom2-gr2",				0x8000, 0xe49238f4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "sound.u30",			0x8000, 0x8c9c3b8a, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+	{ "sound_v2.1_u30.u30",		0x8000, 0x8c9c3b8a, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
 };
 
 STD_ROM_PICK(capbowl2)
@@ -669,7 +669,7 @@ static struct BurnRomInfo capbowl3RomDesc[] = {
 	{ "grom1-gr1.gr1",		0x8000, 0x880e4e1c, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "grom2-gr2.gr2",		0x8000, 0xf3d2468d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "sound_r2_u30.u30",		0x8000, 0x43ac1658, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+	{ "sound_r-2_u30.u30",	0x8000, 0x43ac1658, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
 };
 
 STD_ROM_PICK(capbowl3)
@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvCapbowl4 = {
 // Coors Light Bowling
 
 static struct BurnRomInfo clbowlRomDesc[] = {
-	{ "cb8_prg.u6",			0x8000, 0x91e06bc4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "coors_bowling_program.u6",	0x8000, 0x91e06bc4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
 	{ "coors_bowling_grom0.gr0",	0x8000, 0x899c8f15, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "coors_bowling_grom1.gr1",	0x8000, 0x0ac0dc4c, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "coors_bowling_grom2.gr2",	0x8000, 0x251f5da5, 1 | BRF_PRG | BRF_ESS }, //  3

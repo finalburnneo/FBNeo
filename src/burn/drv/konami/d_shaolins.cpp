@@ -570,8 +570,8 @@ static struct BurnRomInfo shaolinsRomDesc[] = {
 	{ "477j06.a10",		0x2000, 0xff18a7ed, 2 | BRF_GRA | BRF_ESS }, //  3 Characters
 	{ "477j07.a11",		0x2000, 0x5f53ae61, 2 | BRF_GRA | BRF_ESS }, //  4
 
-	{ "477-j02.h15",	0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
-	{ "477-j01.h14",	0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
+	{ "477j02.h15",		0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
+	{ "477j01.h14",		0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
 
 	{ "477j10.a12",		0x0100, 0xb09db4b4, 4 | BRF_GRA | BRF_ESS }, //  7 Color PROMs
 	{ "477j11.a13",		0x0100, 0x270a2bf3, 4 | BRF_GRA | BRF_ESS }, //  8

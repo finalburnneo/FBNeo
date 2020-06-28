@@ -972,7 +972,7 @@ static struct BurnRomInfo karatedaRomDesc[] = {
 	{ "k-16_2764.d4",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "k-17_2764.d5",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "k-18_2764.d6",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "k-19_2764.d9",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "k-19_2764.d7",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "k-26_2764.e10",		0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
 	{ "k-25_2764.e9",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7

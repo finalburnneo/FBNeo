@@ -768,7 +768,7 @@ static struct BurnRomInfo donpachijsRomDesc[] = {
 	{ "atdp.u32",     0x100000, 0x0d89fcca, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xd749de00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
-	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
+	{ "eeprom-donpachi.u10", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
 	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
 };

@@ -3358,9 +3358,52 @@ struct BurnDriver BurnDrvElevatorb = {
 };
 
 
-// The Tin Star (set 1)
+// The Tin Star (A10, 4 PCB version)
+// later 4 PCB stack
 
 static struct BurnRomInfo tinstarRomDesc[] = {
+	{ "a10-01.bin",			0x2000, 0x19faf0b3, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "a10-02.bin",			0x2000, 0x99bb26ff, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a10-03.bin",			0x2000, 0x3169e175, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a10-04.bin",			0x2000, 0x6641233c, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "a10-29.bin",			0x2000, 0x771f1a6a, 2 | BRF_PRG | BRF_ESS }, //  4 Sound Z80 Code
+	{ "a10-10.bin",			0x1000, 0xbeeed8f3, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "a10-05.bin",			0x2000, 0x6bb1bba9, 3 | BRF_GRA },           //  6 Graphics data
+	{ "a10-06.bin",			0x2000, 0x0abff1a1, 3 | BRF_GRA },           //  7
+	{ "a10-07.bin",			0x2000, 0xd1bec7a8, 3 | BRF_GRA },           //  8
+	{ "a10-08.bin",			0x2000, 0x15c6eb41, 3 | BRF_GRA },           //  9
+
+	{ "eb16.22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 10 Layer Priority
+
+	{ "a10-12",				0x0800, 0x889eefc9, 5 | BRF_PRG | BRF_ESS }, // 11 M68705 MCU Code
+};
+
+STD_ROM_PICK(tinstar)
+STD_ROM_FN(tinstar)
+
+static INT32 TinstarInit()
+{
+	input2_xor = 0x02;
+	return CommonInit(1, 0, 0);
+}
+
+struct BurnDriver BurnDrvTinstar = {
+	"tinstar", NULL, NULL, NULL, "1983",
+	"The Tin Star (A10, 4 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, tinstarRomInfo, tinstarRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
+	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	256, 224, 4, 3
+};
+
+
+// The Tin Star (TS, 5 PCB version)
+// 5 PCB stack - same data as above in 2732 EPROM format
+
+static struct BurnRomInfo tinstaraRomDesc[] = {
 	{ "ts.69",				0x1000, 0xa930af60, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
 	{ "ts.68",				0x1000, 0x7f2714ca, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ts.67",				0x1000, 0x49170786, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -3388,56 +3431,15 @@ static struct BurnRomInfo tinstarRomDesc[] = {
 	{ "a10-12",				0x0800, 0x889eefc9, 5 | BRF_PRG | BRF_ESS }, // 20 M68705 MCU Code
 };
 
-STD_ROM_PICK(tinstar)
-STD_ROM_FN(tinstar)
+STD_ROM_PICK(tinstara)
+STD_ROM_FN(tinstara)
 
-static INT32 TinstarInit()
-{
-	input2_xor = 0x02;
-	return CommonInit(1, 0, 0);
-}
-
-struct BurnDriver BurnDrvTinstar = {
-	"tinstar", NULL, NULL, NULL, "1983",
-	"The Tin Star (set 1)\0", NULL, "Taito Corporation", "Taito SJ System",
+struct BurnDriver BurnDrvTinstara = {
+	"tinstara", "tinstar", NULL, NULL, "1983",
+	"The Tin Star (TS, 5 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, tinstarRomInfo, tinstarRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
-	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
-	256, 224, 4, 3
-};
-
-
-// The Tin Star (set 2)
-
-static struct BurnRomInfo tinstar2RomDesc[] = {
-	{ "a10-01.bin",			0x2000, 0x19faf0b3, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "a10-02.bin",			0x2000, 0x99bb26ff, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a10-03.bin",			0x2000, 0x3169e175, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a10-04.bin",			0x2000, 0x6641233c, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "a10-29.bin",			0x2000, 0x771f1a6a, 2 | BRF_PRG | BRF_ESS }, //  4 Sound Z80 Code
-	{ "a10-10.bin",			0x1000, 0xbeeed8f3, 2 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "a10-05.bin",			0x2000, 0x6bb1bba9, 3 | BRF_GRA },           //  6 Graphics data
-	{ "a10-06.bin",			0x2000, 0x0abff1a1, 3 | BRF_GRA },           //  7
-	{ "a10-07.bin",			0x2000, 0xd1bec7a8, 3 | BRF_GRA },           //  8
-	{ "a10-08.bin",			0x2000, 0x15c6eb41, 3 | BRF_GRA },           //  9
-
-	{ "eb16.22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 10 Layer Priority
-
-	{ "a10-12",				0x0800, 0x889eefc9, 5 | BRF_PRG | BRF_ESS }, // 11 M68705 MCU Code
-};
-
-STD_ROM_PICK(tinstar2)
-STD_ROM_FN(tinstar2)
-
-struct BurnDriver BurnDrvTinstar2 = {
-	"tinstar2", "tinstar", NULL, NULL, "1983",
-	"The Tin Star (set 2)\0", NULL, "Taito Corporation", "Taito SJ System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, tinstar2RomInfo, tinstar2RomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
+	NULL, tinstaraRomInfo, tinstaraRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
 	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };

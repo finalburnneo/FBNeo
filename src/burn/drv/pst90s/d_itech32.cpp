@@ -4039,7 +4039,7 @@ static struct BurnRomInfo wcbowl140RomDesc[] = {
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 19 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 20
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
 };
 
 STD_ROM_PICK(wcbowl140)
@@ -4092,7 +4092,7 @@ static struct BurnRomInfo wcbowl130RomDesc[] = {
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 19 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 20
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 21 pic
 };
 
 STD_ROM_PICK(wcbowl130)
@@ -4134,7 +4134,7 @@ static struct BurnRomInfo wcbowlRomDesc[] = {
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 16
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl)
@@ -4183,7 +4183,7 @@ static struct BurnRomInfo wcbowl165RomDesc[] = {
 	{ "wcb_srom2_s.srom2",					0x080000, 0x346530a2, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3_s.srom3",					0x040000, 0x1dfe3a31, 5 | BRF_SND },           // 16
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl165)
@@ -4225,7 +4225,7 @@ static struct BurnRomInfo wcbowl161RomDesc[] = {
 	{ "wcb_srom2.srom2",					0x080000, 0xf82c08fd, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3.srom3",					0x020000, 0x1c2efdee, 5 | BRF_SND },           // 16
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl161)
@@ -4267,7 +4267,7 @@ static struct BurnRomInfo wcbowl16RomDesc[] = {
 	{ "wcb_srom2.srom2",					0x080000, 0xf82c08fd, 5 | BRF_SND },           // 15 Ensoniq Bank 1
 	{ "wcb_srom3.srom3",					0x020000, 0x1c2efdee, 5 | BRF_SND },           // 16
 	
-	{ "itbwl-3 1997 it, inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
+	{ "itbwl-3 1997 it,inc.1996",			0x001fff, 0x1461cbe0, 0 | BRF_OPT },		   // 17 pic
 };
 
 STD_ROM_PICK(wcbowl16)

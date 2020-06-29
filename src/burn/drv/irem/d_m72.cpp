@@ -3100,10 +3100,10 @@ static struct BurnRomInfo airdueluRomDesc[] = {
 	{ "r10-chr2.ic57",		0x20000, 0x6a94c1b9, 0x03 | BRF_GRA },           // 11
 	{ "r10-chr3.ic56",		0x20000, 0x6637c349, 0x03 | BRF_GRA },           // 12
 
-	{ "mt_f0.bin",			0x20000, 0x2d5e05d5, 0x0e | BRF_GRA },           // 17 Sprites 2
-	{ "mt_f1.bin",			0x20000, 0xc68cd65f, 0x0e | BRF_GRA },           // 18
-	{ "mt_f2.bin",			0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 19
-	{ "mt_f3.bin",			0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 20
+	{ "mt_f0.ic38",			0x20000, 0x2d5e05d5, 0x0e | BRF_GRA },           // 17 Sprites 2
+	{ "mt_f1.ic39",			0x20000, 0xc68cd65f, 0x0e | BRF_GRA },           // 18
+	{ "mt_f2.ic40",			0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 19
+	{ "mt_f3.ic41",			0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 20
 
 	{ "r10-voice.ic12",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 21 DAC Samples
 };

@@ -302,7 +302,7 @@ void __fastcall asic27a_sim_write(UINT32 offset, UINT16 data)
 
 			asic27a_sim_regs[command] = asic27a_sim_value;
 
-		//	bprintf (0, _T("Command: %2.2x, Data: %2.2x\n"), command, asic27a_sim_value);
+			//bprintf (0, _T("Command: %2.2x, Data: %2.2x\n"), command, asic27a_sim_value);
 
 			asic27a_sim_command(command);
 
@@ -1167,6 +1167,7 @@ void install_protection_asic27a_puzzli2()
 
 static UINT16 py2k2_sprite_pos = 0;
 static UINT16 py2k2_sprite_base = 0;
+static UINT16 py2k2_prev_ba = 0;
 
 static UINT32 py2k2_sprite_offset(UINT16 base, UINT16 pos)
 {
@@ -1209,11 +1210,13 @@ static UINT32 py2k2_sprite_offset(UINT16 base, UINT16 pos)
 	return ret;
 }
 
+static const UINT16 py2k2_40_table[8] = { 0x00e0, 0x00a8, 0x0080, 0x0080, 0x0100, 0x0080, 0x0180, 0x0080 };
+
 static void py2k2_asic27a_sim_command(UINT8 command)
 {
 	switch (command)
 	{
-		case 0x30:
+		case 0x30: // pgm3in1
 			asic27a_sim_response = py2k2_sprite_offset(py2k2_sprite_base, py2k2_sprite_pos++);
 		break;
 
@@ -1223,15 +1226,21 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 			asic27a_sim_response = py2k2_sprite_offset(py2k2_sprite_base, py2k2_sprite_pos++);
 		break;
 
-		case 0xba:
-			asic27a_sim_response = asic27a_sim_value + 1; // gets us in-game
+		case 0x40:
+			asic27a_sim_response = py2k2_40_table[asic27a_sim_value & 7];
 		break;
 
 		case 0x99: // Reset?
+			py2k2_prev_ba = asic27a_sim_value;
 			asic27a_sim_key = 0x100;
 			py2k2_sprite_pos = 0;
 			py2k2_sprite_base = 0;
 			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
+		break;
+
+		case 0xba:
+			asic27a_sim_response = py2k2_prev_ba;
+			py2k2_prev_ba = asic27a_sim_value;
 		break;
 
 		case 0xc3:
@@ -1278,6 +1287,7 @@ static INT32 py2k2_sim_scan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(py2k2_sprite_pos);
 		SCAN_VAR(py2k2_sprite_base);
+		SCAN_VAR(py2k2_prev_ba);
 	}
 
 	return 0;

@@ -1546,7 +1546,7 @@ static struct BurnRomInfo sfuaRomDesc[] = {
 	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
 	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "sf_s.id8751h-8.14f",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
+	{ "sf_s.id8751h-8.14f",  	0x01000, 0x6588891f, 0 | BRF_OPT },	  // i8751 MCU
 };
 
 STD_ROM_PICK(sfua)
@@ -1624,7 +1624,7 @@ static struct BurnRomInfo sfjRomDesc[] = {
 	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
 	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "sf_s.id8751h-8.14f",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
+	{ "sf_s.id8751h-8.14f",  	0x01000, 0x6588891f, 0 | BRF_OPT },	  // i8751 MCU
 };
 
 STD_ROM_PICK(sfj)
@@ -1847,7 +1847,7 @@ static struct BurnRomInfo sfwRomDesc[] = {
 	{ "sfb04.mb7114h.12j", 		0x0100, 0x4c734b64, 0 | BRF_OPT },    // 42
 	{ "sfb00.mb7051.13h",		0x0020, 0x06bcda53, 0 | BRF_OPT },    // 43
 	
-	{ "sf.14e",  		0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
+	{ "sf.14e",  				0x01000, 0x6588891f, 0 | BRF_OPT },	  // i8751 MCU
 };
 
 STD_ROM_PICK(sfw)

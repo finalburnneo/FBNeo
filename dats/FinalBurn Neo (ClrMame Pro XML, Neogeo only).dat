@@ -15768,10 +15768,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97t" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Optimized Edition) [Hack, Don't use AES mode]</description>
+		<description>The King of Fighters '97 (Optimized Edition) [Hack]</description>
 		<year>2014</year>
 		<manufacturer>Hack</manufacturer>
-		<rom name="232t.p1" size="1048576" crc="c69e5169"/>
+		<rom name="232t.p1" size="1048576" crc="45834e9b"/>
 		<rom name="232t.p2" size="4194304" crc="d9e51750"/>
 		<rom name="232-s1.s1" merge="232-s1.s1" size="131072" crc="8514ecf5"/>
 		<rom name="232t.c1" size="8388608" crc="b7f5a3b9"/>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14238 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14240 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1761,7 +1761,8 @@ This list contains all games supported by FinalBurn Neo.
 | captcommj	|  	| Captain Commando (911202 Japan)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
 | captcomm	|  	| Captain Commando (911202 World)			| 		| 1991	| Capcom	| CPS1		| 					|
 | captcommb	|  	| Captain Commando (bootleg set 1, 911014 other country)| captcomm	| 1991	| bootleg	| CPS1		| 					|
-| captcommb2	|  	| Captain Commando (bootleg set 2 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
+| captcommb2	|   NW	| Captain Commando (bootleg set 2 (with 2xMSM5205), 9110| captcomm	| 1991	| bootleg	| CPS1		| unemulated graphics			|
+| captcommb3	|  	| Captain Commando (bootleg set 3 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommr1pwx	|  	| Captain Commando (Unlimited Bullet Update 2020-02-19)	| captcomm	| 2020	| Hack		| CPS1		| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
 | md_captlang	|  	| Captain Lang (Jpn)					| md_havoc	| 1994	| Data East	| Sega Megadrive| 					|
@@ -5990,8 +5991,9 @@ This list contains all games supported by FinalBurn Neo.
 | knightsu	|  	| Knights of the Round (911127 USA)			| knights	| 1991	| Capcom	| CPS1		| 					|
 | knightsb	|  	| Knights of the Round (bootleg set 1 (with YM2151 + 2xM| knights	| 1991	| bootleg	| CPS1		| 					|
 | knightsb2	|  	| Knights of the Round (bootleg set 2, 911127 etc)	| knights	| 1991	| bootleg	| CPS1		| 					|
-| knightsb3	|  	| Knights of the Round (bootleg set 3, 911127 Japan)	| knights	| 1991	| bootleg	| CPS1		| 					|
+| knightsb3	|   NW	| Knights of the Round (bootleg set 3 (with 2xMSM5205), | knights	| 1991	| bootleg	| CPS1		| unemulated graphics			|
 | knightsb4	|  	| Knights of the Round (bootleg set 4 (with YM2151 + 2xM| knights	| 1991	| bootleg	| CPS1		| 					|
+| knightsb5	|  	| Knights of the Round (bootleg set 5, 911127 Japan)	| knights	| 1991	| bootleg	| CPS1		| 					|
 | knightsh	|  	| Knights of the Round (hack set 1)			| knights	| 1991	| hack		| CPS1		| 					|
 | knightsh2	|  	| Knights of the Round (hack set 2, 911127 etc)		| knights	| 1991	| hack		| CPS1		| 					|
 | kov111	|  	| Knights of Valour - Sangoku Senki (V111, Japan)	| kov		| 1999	| IGS (Alta Co.,| PolyGameMaster| 					|
@@ -8539,7 +8541,7 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
-| pgm3in1	| D NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
+| pgm3in1	|  	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
@@ -12337,7 +12339,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97		|  	| The King of Fighters '97 (NGM-2320)			| 		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97t2020	|  	| The King of Fighters '97 (Optimised Edition 2020)	| kof97		| 2020	| Hack		| Neo Geo MVS	| 					|
-| kof97t	|  	| The King of Fighters '97 (Optimized Edition)		| kof97		| 2014	| Hack		| Neo Geo MVS	| Don't use AES mode			|
+| kof97t	|  	| The King of Fighters '97 (Optimized Edition)		| kof97		| 2014	| Hack		| Neo Geo MVS	| 					|
 | kof97cbt	|  	| The King of Fighters '97 - Combo Training (Hack, Ver. | kof97		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97xt	|  	| The King of Fighters '97 - Final Battle (hack)	| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97rc	|  	| The King of Fighters '97 - Random Combo (Hack, Ver. 20| kof97		| 2019	| hack		| Neo Geo MVS	| 					|
@@ -12587,8 +12589,8 @@ This list contains all games supported by FinalBurn Neo.
 | 3stooges	|  	| The Three Stooges In Brides Is Brides (set 1)		| 		| 1984	| Mylstar	| Miscellaneous	| 					|
 | 3stoogesa	|  	| The Three Stooges In Brides Is Brides (set 2)		| 3stooges	| 1984	| Mylstar	| Miscellaneous	| 					|
 | md_tick	|  	| The Tick (USA)					| 		| 1994	| Fox Interactiv| Sega Megadrive| 					|
-| tinstar	|  	| The Tin Star (set 1)					| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
-| tinstar2	|  	| The Tin Star (set 2)					| tinstar	| 1983	| Taito Corporat| Taito SJ Syste| 					|
+| tinstar	|  	| The Tin Star (A10, 4 PCB version)			| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
+| tinstara	|  	| The Tin Star (TS, 5 PCB version)			| tinstar	| 1983	| Taito Corporat| Taito SJ Syste| 					|
 | thetogyu	|  	| The Togyu (315-5065, Japan)				| bullfgt	| 1984	| Coreland / Seg| System 1	| 					|
 | msx_druaga	|  	| The Tower of Druaga (Jpn)				| 		| 1986	| Namcot	| MSX		| 					|
 | todruaga	|  	| The Tower of Druaga (New Ver.)			| 		| 1984	| Namco		| Miscellaneous	| 					|

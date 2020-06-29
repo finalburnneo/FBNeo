@@ -1784,6 +1784,7 @@ DRV		BurnDrvCpsCaptcommj;
 DRV		BurnDrvCpsCaptcomm;
 DRV		BurnDrvCpsCaptcommb;
 DRV		BurnDrvCpsCaptcommb2;
+DRV		BurnDrvCpsCaptcommb3;
 DRV		BurnDrvCpsCaptcommr1pwx;
 DRV		BurnDrvnes_captained;
 DRV		BurnDrvmd_captlang;
@@ -6104,6 +6105,7 @@ DRV		BurnDrvCpsKnightsb;
 DRV		BurnDrvCpsKnightsb2;
 DRV		BurnDrvCpsKnightsb3;
 DRV		BurnDrvCpsKnightsb4;
+DRV		BurnDrvCpsKnightsb5;
 DRV		BurnDrvCpsKnightsh;
 DRV		BurnDrvCpsKnightsh2;
 DRV		BurnDrvKov111;
@@ -8693,9 +8695,7 @@ DRV		BurnDrvphotoy2k102;
 DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvPgm3in1;			// Incomplete dump [NOT WORKING]
-#endif
+DRV		BurnDrvPgm3in1;
 DRV		BurnDrvPy2k2100;
 DRV		BurnDrvPy2k2;
 DRV		BurnDrvPhozon;
@@ -12806,7 +12806,7 @@ DRV		BurnDrvStooges3;
 DRV		BurnDrvStooges3a;
 DRV		BurnDrvmd_tick;
 DRV		BurnDrvTinstar;
-DRV		BurnDrvTinstar2;
+DRV		BurnDrvTinstara;
 DRV		BurnDrvThetogyu;
 DRV		BurnDrvMSX_druaga;
 DRV		BurnDrvTodruaga;
@@ -16294,7 +16294,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCaptcommj,		// Captain Commando (911202 Japan)
 	&BurnDrvCpsCaptcomm,		// Captain Commando (911202 World)
 	&BurnDrvCpsCaptcommb,		// Captain Commando (bootleg set 1, 911014 other country)
-	&BurnDrvCpsCaptcommb2,		// Captain Commando (bootleg set 2 (with YM2151 + 2xMSM5205), 911014 other country)
+	&BurnDrvCpsCaptcommb2,		// Captain Commando (bootleg set 2 (with 2xMSM5205), 911014 other country) [unemulated graphics, NOT WORKING]
+	&BurnDrvCpsCaptcommb3,		// Captain Commando (bootleg set 3 (with YM2151 + 2xMSM5205), 911014 other country)
 	&BurnDrvCpsCaptcommr1pwx,	// Captain Commando (Unlimited Bullet Update 2020-02-19)
 	&BurnDrvnes_captained,		// Captain ED (Japan)
 	&BurnDrvmd_captlang,		// Captain Lang (Jpn)
@@ -20613,8 +20614,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsKnightsu,		// Knights of the Round (911127 USA)
 	&BurnDrvCpsKnightsb,		// Knights of the Round (bootleg set 1 (with YM2151 + 2xMSM5205), 911127 etc)
 	&BurnDrvCpsKnightsb2,		// Knights of the Round (bootleg set 2, 911127 etc)
-	&BurnDrvCpsKnightsb3,		// Knights of the Round (bootleg set 3, 911127 Japan)
+	&BurnDrvCpsKnightsb3,		// Knights of the Round (bootleg set 3 (with 2xMSM5205), 911127 etc) [unemulated graphics, NOT WORKING]
 	&BurnDrvCpsKnightsb4,		// Knights of the Round (bootleg set 4 (with YM2151 + 2xMSM5205), 911127 etc)
+	&BurnDrvCpsKnightsb5,		// Knights of the Round (bootleg set 5, 911127 Japan)
 	&BurnDrvCpsKnightsh,		// Knights of the Round (hack set 1)
 	&BurnDrvCpsKnightsh2,		// Knights of the Round (hack set 2, 911127 etc)
 	&BurnDrvKov111,				// Knights of Valour - Sangoku Senki (V111, Japan)
@@ -23204,9 +23206,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105)
-#if defined FBNEO_DEBUG
-	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1) [Incomplete dump, NOT WORKING]
-#endif
+	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1)
 	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan)
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan)
 	&BurnDrvPhozon,				// Phozon (Japan)
@@ -27316,8 +27316,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStooges3,			// The Three Stooges In Brides Is Brides (set 1)
 	&BurnDrvStooges3a,			// The Three Stooges In Brides Is Brides (set 2)
 	&BurnDrvmd_tick,			// The Tick (USA)
-	&BurnDrvTinstar,			// The Tin Star (set 1)
-	&BurnDrvTinstar2,			// The Tin Star (set 2)
+	&BurnDrvTinstar,			// The Tin Star (A10, 4 PCB version)
+	&BurnDrvTinstara,			// The Tin Star (TS, 5 PCB version)
 	&BurnDrvThetogyu,			// The Togyu (315-5065, Japan)
 	&BurnDrvMSX_druaga,			// The Tower of Druaga (Jpn)
 	&BurnDrvTodruaga,			// The Tower of Druaga (New Ver.)

@@ -4073,6 +4073,7 @@ STD_ROM_FN(pgm3in1)
 
 static INT32 pgm3in1Init()
 {
+	nPGMDisableIRQ4 = 1;
 	pPgmInitCallback = pgm_decrypt_pgm3in1;
 	pPgmProtCallback = install_protection_asic27a_py2k2;
 //	pPgmProtCallback = install_protection_asic27a_kovsh;
@@ -4080,11 +4081,11 @@ static INT32 pgm3in1Init()
 	return pgmInit();
 }
 
-struct BurnDriverD BurnDrvPgm3in1 = {
+struct BurnDriver BurnDrvPgm3in1 = {
 	"pgm3in1", NULL, "pgm", NULL, "2001",
 	"Photo Y2K 2 (3-in-1)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

@@ -10673,8 +10673,7 @@ struct BurnDriver BurnDrvnes_ruder = {
 
 #endif
 */
-
-// Homebrew (hand-added)
+// Non Homebrew (hand-added!)
 
 // Pacman CE: Keep under hand-added (HB) section, even though not marked HB
 static struct BurnRomInfo nes_pacmanceRomDesc[] = {
@@ -10690,6 +10689,25 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE, 0,
 	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Homebrew (hand-added)
+
+static struct BurnRomInfo nes_demondistrictRomDesc[] = {
+	{ "Demon District (HB).nes",          319504, 0x33e22dcb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_demondistrict)
+STD_ROM_FN(nes_demondistrict)
+
+struct BurnDriver BurnDrvnes_demondistrict = {
+	"nes_demondistrict", NULL, NULL, NULL, "2019",
+	"Demon District (HB)\0", NULL, "Klonoa", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_demondistrictRomInfo, nes_demondistrictRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

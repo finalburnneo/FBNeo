@@ -2821,6 +2821,7 @@ DRV		BurnDrvDemoderb;
 DRV		BurnDrvmd_demoman;
 DRV		BurnDrvmd_demomanp;
 DRV		BurnDrvMSX_demoncrystl;
+DRV		BurnDrvnes_demondistrict;
 DRV		BurnDrvdmnfrnta;
 DRV		BurnDrvdmnfrntb;
 DRV		BurnDrvDmnfrnt;
@@ -17332,6 +17333,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_demoman,			// Demolition Man (Euro, USA)
 	&BurnDrvmd_demomanp,		// Demolition Man (USA, Prototype) [no comment, NOT WORKING]
 	&BurnDrvMSX_demoncrystl,	// Demon Crystal, The
+	&BurnDrvnes_demondistrict,	// Demon District (HB)
 	&BurnDrvdmnfrnta,			// Demon Front (V102, China)
 	&BurnDrvdmnfrntb,			// Demon Front (V103)
 	&BurnDrvDmnfrnt,			// Demon Front (V105)

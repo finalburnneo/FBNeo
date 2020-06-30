@@ -1972,6 +1972,13 @@
 		<rom name="Deja Vu (USA).nes" size="393232" crc="67b25db5"/>
 		<driver status="good"/>
 	</game>
+	<game name="demondistrict">
+		<description>Demon District (HB)</description>
+		<year>2019</year>
+		<manufacturer>Klonoa</manufacturer>
+		<rom name="Demon District (HB).nes" size="319504" crc="33e22dcb"/>
+		<driver status="good"/>
+	</game>
 	<game name="demonsword">
 		<description>Demon Sword (USA)</description>
 		<year>1990</year>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14240 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2777,6 +2777,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_demoman	|  	| Demolition Man (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_demomanp	|   NW	| Demolition Man (USA, Prototype)			| md_demoman	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | msx_demoncrystl|  	| Demon Crystal, The					| 		| 1986	| Radio Wave New| MSX		| 					|
+| nes_demondistrict|  	| Demon District (HB)					| 		| 2019	| Klonoa	| Miscellaneous	| 					|
 | dmnfrnta	|  	| Demon Front (V102, China)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntb	|  	| Demon Front (V103)					| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrnt	|  	| Demon Front (V105)					| 		| 2002	| IGS		| PolyGameMaster| 					|
@@ -8541,9 +8542,9 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
-| pgm3in1	|  	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
-| py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
-| py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
+| pgm3in1	|  	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
+| py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| 					|
+| py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
 | phozons	|  	| Phozon (Sidam)					| phozon	| 1983	| Namco (Sidam l| Miscellaneous	| 					|
 | pickin	|  	| Pickin'						| 		| 1983	| Valadon Automa| Miscellaneous	| 					|

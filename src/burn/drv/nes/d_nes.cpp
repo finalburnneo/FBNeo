@@ -10685,7 +10685,7 @@ STD_ROM_FN(nes_pacmance)
 
 struct BurnDriver BurnDrvnes_pacmance = {
 	"nes_pacmance", NULL, NULL, NULL, "2020",
-	"Pac-Man Championship Edition\0", NULL, "BNEI", "Miscellaneous",
+	"Pac-Man Championship Edition\0", NULL, "Namco - BNEI", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE, 0,
 	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -10693,7 +10693,110 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Gaplus: Keep under hand-added (HB) section, even though not marked HB
+static struct BurnRomInfo nes_gaplusRomDesc[] = {
+	{ "gaplus (bnei).nes",          262160, 0x60811720, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gaplus)
+STD_ROM_FN(nes_gaplus)
+
+struct BurnDriver BurnDrvnes_gaplus = {
+	"nes_gaplus", NULL, NULL, NULL, "2020",
+	"Gaplus\0", NULL, "Namco - BNEI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_gaplusRomInfo, nes_gaplusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_legenzeldxRomDesc[] = {
+	{ "legend of zelda dx (2014)(pacnsacdave).nes",          131088, 0x0698579d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenzeldx)
+STD_ROM_FN(nes_legenzeldx)
+
+struct BurnDriver BurnDrvnes_legenzeldx = {
+	"nes_legenzeldx", NULL, NULL, NULL, "2014",
+	"Legend of Zelda DX, The (HB)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_legenzeldxRomInfo, nes_legenzeldxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_multidudeRomDesc[] = {
+	{ "multidude (2014)(retrosouls).nes",          40976, 0x154af940, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_multidude)
+STD_ROM_FN(nes_multidude)
+
+struct BurnDriver BurnDrvnes_multidude = {
+	"nes_multidude", NULL, NULL, NULL, "2014",
+	"Multidude (HB)\0", NULL, "RetroSouls", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_multidudeRomInfo, nes_multidudeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nimnomRomDesc[] = {
+	{ "nim and nom (2018)(metakrill) v1.2.nes",          40976, 0xe0096736, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nimnom)
+STD_ROM_FN(nes_nimnom)
+
+struct BurnDriver BurnDrvnes_nimnom = {
+	"nes_nimnom", NULL, NULL, NULL, "2018",
+	"Nim & Nom (HB, v1.2)\0", NULL, "Metakrill", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_nimnomRomInfo, nes_nimnomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smbdxRomDesc[] = {
+	{ "super mario bros dx (2018)(flamephanter) v3.4.nes",          40978, 0x004768e4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbdx)
+STD_ROM_FN(nes_smbdx)
+
+struct BurnDriver BurnDrvnes_smbdx = {
+	"nes_smbdx", NULL, NULL, NULL, "2018",
+	"Super Mario Bros DX (HB, v3.4)\0", NULL, "Flamephanter", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbdxRomInfo, nes_smbdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_yunr5RomDesc[] = {
+	{ "yun r5 (2018)(mojon twins).nes",          65552, 0x04940713, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_yunr5)
+STD_ROM_FN(nes_yunr5)
+
+struct BurnDriver BurnDrvnes_yunr5 = {
+	"nes_yunr5", NULL, NULL, NULL, "2018",
+	"Yun R5 (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_yunr5RomInfo, nes_yunr5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_demondistrictRomDesc[] = {
 	{ "Demon District (HB).nes",          319504, 0x33e22dcb, BRF_ESS | BRF_PRG },
@@ -10706,7 +10809,7 @@ struct BurnDriver BurnDrvnes_demondistrict = {
 	"nes_demondistrict", NULL, NULL, NULL, "2019",
 	"Demon District (HB)\0", NULL, "Klonoa", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_demondistrictRomInfo, nes_demondistrictRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

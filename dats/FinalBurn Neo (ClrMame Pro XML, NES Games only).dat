@@ -1973,7 +1973,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="demondistrict">
-		<description>Demon District (HB)</description>
+		<description>Demon District (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Klonoa</manufacturer>
 		<rom name="Demon District (HB).nes" size="319504" crc="33e22dcb"/>
@@ -3076,6 +3076,13 @@
 		<year>1989</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Ganbare Pennant Race! (Japan).nes" size="262160" crc="d15edc9a"/>
+		<driver status="good"/>
+	</game>
+	<game name="gaplus">
+		<description>Gaplus</description>
+		<year>2020</year>
+		<manufacturer>Namco - BNEI</manufacturer>
+		<rom name="gaplus (bnei).nes" size="262160" crc="60811720"/>
 		<driver status="good"/>
 	</game>
 	<game name="garfi">
@@ -4660,6 +4667,13 @@
 		<rom name="Legend of Kage, The (USA).nes" size="49168" crc="6785c961"/>
 		<driver status="good"/>
 	</game>
+	<game name="legenzeldx">
+		<description>Legend of Zelda DX, The (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="legend of zelda dx (2014)(pacnsacdave).nes" size="131088" crc="0698579d"/>
+		<driver status="good"/>
+	</game>
 	<game name="legenzel">
 		<description>Legend of Zelda, The (USA) (Rev A)</description>
 		<year>1987</year>
@@ -5521,6 +5535,13 @@
 		<rom name="Ms. Pac-Man (USA).nes" size="40976" crc="480ff69c"/>
 		<driver status="good"/>
 	</game>
+	<game name="multidude">
+		<description>Multidude (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="multidude (2014)(retrosouls).nes" size="40976" crc="154af940"/>
+		<driver status="good"/>
+	</game>
 	<game name="muppeadv">
 		<description>Muppet Adventure - Chaos at the Carnival (USA)</description>
 		<year>1990</year>
@@ -5694,6 +5715,13 @@
 		<year>1992</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Nightshade (USA).nes" size="524304" crc="c6d266af"/>
+		<driver status="good"/>
+	</game>
+	<game name="nimnom">
+		<description>Nim &amp; Nom (HB, v1.2) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Metakrill</manufacturer>
+		<rom name="nim and nom (2018)(metakrill) v1.2.nes" size="40976" crc="e0096736"/>
 		<driver status="good"/>
 	</game>
 	<game name="ninjacopsaizou">
@@ -5930,7 +5958,7 @@
 	<game name="pacmance">
 		<description>Pac-Man Championship Edition</description>
 		<year>2020</year>
-		<manufacturer>BNEI</manufacturer>
+		<manufacturer>Namco - BNEI</manufacturer>
 		<rom name="pacman-ce (2020).nes" size="262160" crc="b86c09af"/>
 		<driver status="good"/>
 	</game>
@@ -7523,6 +7551,13 @@
 		<rom name="Super Homebrew War (HB).nes" size="65552" crc="16b8d50a"/>
 		<driver status="good"/>
 	</game>
+	<game name="smbdx">
+		<description>Super Mario Bros DX (HB, v3.4) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Flamephanter</manufacturer>
+		<rom name="super mario bros dx (2018)(flamephanter) v3.4.nes" size="40978" crc="004768e4"/>
+		<driver status="good"/>
+	</game>
 	<game name="smb">
 		<description>Super Mario Bros. (World)</description>
 		<year>1985</year>
@@ -8907,6 +8942,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Yume Penguin Monogatari (T-eng).nes" size="262160" crc="df92c173"/>
+		<driver status="good"/>
+	</game>
+	<game name="yunr5">
+		<description>Yun R5 (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="yun r5 (2018)(mojon twins).nes" size="65552" crc="04940713"/>
 		<driver status="good"/>
 	</game>
 	<game name="yuuyuuhakfin">

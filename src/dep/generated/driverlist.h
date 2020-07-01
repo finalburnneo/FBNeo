@@ -593,6 +593,8 @@ DRV		BurnDrvArkretrnj;
 DRV		BurnDrvArkretrn;
 DRV		BurnDrvnes_arkistasring;
 DRV		BurnDrvgg_arliel;
+DRV		BurnDrvArmchmp2o;
+DRV		BurnDrvArmchmp2;
 DRV		BurnDrvArmwrest;
 DRV		BurnDrvnes_armadilloj;
 DRV		BurnDrvnes_armadillo;
@@ -1155,6 +1157,7 @@ DRV		BurnDrvfds_bigchajuusen;
 DRV		BurnDrvBigkarnk;
 DRV		BurnDrvnes_bignosfreout;
 DRV		BurnDrvnes_bignoscav;
+DRV		BurnDrvBigrun;
 DRV		BurnDrvBigstrkba;
 DRV		BurnDrvBigstrkb;
 DRV		BurnDrvBigstrik;
@@ -2147,6 +2150,7 @@ DRV		BurnDrvCircusc2;
 DRV		BurnDrvCircusc3;
 DRV		BurnDrvCircusc4;
 DRV		BurnDrvpce_circusld;
+DRV		BurnDrvCischeat;
 DRV		BurnDrvCitybombj;
 DRV		BurnDrvCitybomb;
 DRV		BurnDrvMSX_citycon;
@@ -3732,6 +3736,7 @@ DRV		BurnDrvpce_f1dream;
 DRV		BurnDrvF1gpb;			// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvF1gp2;
+DRV		BurnDrvF1gpstr2;
 DRV		BurnDrvF1gp;
 DRV		BurnDrvpce_f1pilot;
 DRV		BurnDrvnes_f1race;
@@ -4487,6 +4492,7 @@ DRV		BurnDrvGaplusd;
 DRV		BurnDrvGaplus;
 DRV		BurnDrvGaplusa;
 DRV		BurnDrvGaplust;
+DRV		BurnDrvnes_gaplus;
 DRV		BurnDrvGardia;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvGardiab;			// no comment [NOT WORKING]
@@ -4837,6 +4843,9 @@ DRV		BurnDrvnes_granavesubla;
 DRV		BurnDrvmd_gt5;
 DRV		BurnDrvmd_granada1;
 DRV		BurnDrvmd_granada;
+DRV		BurnDrvF1gpstar2;
+DRV		BurnDrvF1gpstar3;
+DRV		BurnDrvF1gpstar;
 DRV		BurnDrvGstrik2;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvGstrik2j;		// ROZ layer broken
@@ -6417,6 +6426,7 @@ DRV		BurnDrvgg_legndillp1;
 DRV		BurnDrvnes_legenkag;
 DRV		BurnDrvLomakai;
 DRV		BurnDrvLegendos;
+DRV		BurnDrvnes_legenzeldx;
 DRV		BurnDrvnes_legenzel;
 DRV		BurnDrvLwingsb;
 DRV		BurnDrvLwings;
@@ -7618,6 +7628,7 @@ DRV		BurnDrvMchampdx;
 DRV		BurnDrvMchampda;
 DRV		BurnDrvMulti96;
 DRV		BurnDrvMltiwars;
+DRV		BurnDrvnes_multidude;
 DRV		BurnDrvMnchmobl;
 DRV		BurnDrvnes_muppeadv;
 DRV		BurnDrvnes_musasnoken;
@@ -8072,6 +8083,7 @@ DRV		BurnDrvmd_nikkan;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvpce_nikopun;		// Locks up in-game? [NOT WORKING]
 #endif
+DRV		BurnDrvnes_nimnom;
 DRV		BurnDrvNinja;
 DRV		BurnDrvNbbatmanu;
 DRV		BurnDrvNbbatman;
@@ -10095,6 +10107,7 @@ DRV		BurnDrvgg_scratchg;
 DRV		BurnDrvScrewloo;
 DRV		BurnDrvCscrtry;
 DRV		BurnDrvCscrtry2;
+DRV		BurnDrvScudhamm;
 DRV		BurnDrvSdfight;
 DRV		BurnDrvgg_sdgundam;
 DRV		BurnDrvNeobattl;
@@ -11717,6 +11730,7 @@ DRV		BurnDrvfds_superlodrunii;
 DRV		BurnDrvSuplup;
 DRV		BurnDrvmd_smario2a;
 DRV		BurnDrvmd_smario2;
+DRV		BurnDrvnes_smbdx;
 DRV		BurnDrvnes_smb;
 DRV		BurnDrvmd_smbbc;
 DRV		BurnDrvnes_smb2;
@@ -13795,6 +13809,7 @@ DRV		BurnDrvnes_widget;
 DRV		BurnDrvWiggie;
 DRV		BurnDrvWildfang;
 DRV		BurnDrvnes_wildgunman;
+DRV		BurnDrvWildplt;
 DRV		BurnDrvmd_wildsnak;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvMoomesabl;		// no comment [NOT WORKING]
@@ -14371,6 +14386,7 @@ DRV		BurnDrvnes_yumepenmonj;
 DRV		BurnDrvnes_yumepenmon;
 DRV		BurnDrvMSX_pengadvk2;
 DRV		BurnDrvMSX_pengadvk1;
+DRV		BurnDrvnes_yunr5;
 DRV		BurnDrvfds_yuumaze;
 DRV		BurnDrvnes_yuuyuuhakfin;
 DRV		BurnDrvpce_yuyu;
@@ -15105,6 +15121,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArkretrn,			// Arkanoid Returns (Ver 2.02O 1997/02/10)
 	&BurnDrvnes_arkistasring,	// Arkista's Ring (USA)
 	&BurnDrvgg_arliel,			// Arliel - Crystal Densetsu (Jpn)
+	&BurnDrvArmchmp2o,			// Arm Champs II v1.7 [no comment, NOT WORKING]
+	&BurnDrvArmchmp2,			// Arm Champs II v2.6 [no comment, NOT WORKING]
 	&BurnDrvArmwrest,			// Arm Wrestling
 	&BurnDrvnes_armadilloj,		// Armadillo (Japan)
 	&BurnDrvnes_armadillo,		// Armadillo (T-eng)
@@ -15667,6 +15685,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBigkarnk,			// Big Karnak
 	&BurnDrvnes_bignosfreout,	// Big Nose Freaks Out (USA)
 	&BurnDrvnes_bignoscav,		// Big Nose the Caveman (USA)
+	&BurnDrvBigrun,				// Big Run (11th Rallye version)
 	&BurnDrvBigstrkba,			// Big Striker (bootleg w/Italian teams)
 	&BurnDrvBigstrkb,			// Big Striker (bootleg)
 	&BurnDrvBigstrik,			// Big Striker
@@ -16659,6 +16678,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCircusc3,			// Circus Charlie (level select, set 3)
 	&BurnDrvCircusc4,			// Circus Charlie (no level select)
 	&BurnDrvpce_circusld,		// Circus Lido
+	&BurnDrvCischeat,			// Cisco Heat
 	&BurnDrvCitybombj,			// City Bomber (Japan)
 	&BurnDrvCitybomb,			// City Bomber (World)
 	&BurnDrvMSX_citycon,		// City Connection (Jpn)
@@ -18244,6 +18264,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvF1gpb,				// F-1 Grand Prix (Playmark bootleg) [no comment, NOT WORKING]
 #endif
 	&BurnDrvF1gp2,				// F-1 Grand Prix Part II
+	&BurnDrvF1gpstr2,			// F-1 Grand Prix Star II
 	&BurnDrvF1gp,				// F-1 Grand Prix
 	&BurnDrvpce_f1pilot,		// F-1 Pilot - You're King of Kings
 	&BurnDrvnes_f1race,			// F-1 Race (Japan)
@@ -18999,6 +19020,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGaplus,				// Gaplus (GP2 rev. B)
 	&BurnDrvGaplusa,			// Gaplus (GP2)
 	&BurnDrvGaplust,			// Gaplus (Tecfri PCB)
+	&BurnDrvnes_gaplus,			// Gaplus
 	&BurnDrvGardia,				// Gardia (317-0006)
 #if defined FBNEO_DEBUG
 	&BurnDrvGardiab,			// Gardia (317-0007?, bootleg) [no comment, NOT WORKING]
@@ -19349,6 +19371,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_gt5,				// Gran Turismo 5 (Rus)
 	&BurnDrvmd_granada1,		// Granada (Jpn, USA)
 	&BurnDrvmd_granada,			// Granada (Jpn, USA, v1.1)
+	&BurnDrvF1gpstar2,			// Grand Prix Star (ver 2.0)
+	&BurnDrvF1gpstar3,			// Grand Prix Star (ver 3.0)
+	&BurnDrvF1gpstar,			// Grand Prix Star (ver 4.0)
 	&BurnDrvGstrik2,			// Grand Striker 2 (Europe and Oceania)
 #if defined FBNEO_DEBUG
 	&BurnDrvGstrik2j,			// Grand Striker 2 (Japan) [ROZ layer broken]
@@ -20929,6 +20954,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_legenkag,		// Legend of Kage, The (USA)
 	&BurnDrvLomakai,			// Legend of Makai (World)
 	&BurnDrvLegendos,			// Legend of Success Joe / Ashitano Joe Densetsu
+	&BurnDrvnes_legenzeldx,		// Legend of Zelda DX, The (HB)
 	&BurnDrvnes_legenzel,		// Legend of Zelda, The (USA) (Rev A)
 	&BurnDrvLwingsb,			// Legendary Wings (bootleg)
 	&BurnDrvLwings,				// Legendary Wings (US set 1)
@@ -22130,6 +22156,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMchampda,			// Multi Champ Deluxe (ver. 1126, 26/11/1999)
 	&BurnDrvMulti96,			// Multi Game '96 (Italy)
 	&BurnDrvMltiwars,			// Multi Wars (bootleg of UniWar S)
+	&BurnDrvnes_multidude,		// Multidude (HB)
 	&BurnDrvMnchmobl,			// Munch Mobile (US)
 	&BurnDrvnes_muppeadv,		// Muppet Adventure - Chaos at the Carnival (USA)
 	&BurnDrvnes_musasnoken,		// Musashi no Ken - Tadaima Shugyou Chuu (Japan)
@@ -22584,6 +22611,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvpce_nikopun,		// Niko Niko, Pun [Locks up in-game?, NOT WORKING]
 #endif
+	&BurnDrvnes_nimnom,			// Nim & Nom (HB, v1.2)
 	&BurnDrvNinja,				// Ninja (315-5102)
 	&BurnDrvNbbatmanu,			// Ninja Baseball Batman (US)
 	&BurnDrvNbbatman,			// Ninja Baseball Batman (World)
@@ -24607,6 +24635,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvScrewloo,			// Screw Loose (prototype)
 	&BurnDrvCscrtry,			// Scrum Try (DECO Cassette) (US) (set 1)
 	&BurnDrvCscrtry2,			// Scrum Try (DECO Cassette) (US) (set 2)
+	&BurnDrvScudhamm,			// Scud Hammer
 	&BurnDrvSdfight,			// SD Fighters (Korea)
 	&BurnDrvgg_sdgundam,		// SD Gundam - Winner's History (Jpn)
 	&BurnDrvNeobattl,			// SD Gundam Neo Battling (Japan)
@@ -26229,6 +26258,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSuplup,				// Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0 / 990518)
 	&BurnDrvmd_smario2a,		// Super Mario 2 (Alt?) [no comment, NOT WORKING]
 	&BurnDrvmd_smario2,			// Super Mario 2 1998
+	&BurnDrvnes_smbdx,			// Super Mario Bros DX (HB, v3.4)
 	&BurnDrvnes_smb,			// Super Mario Bros. (World)
 	&BurnDrvmd_smbbc,			// Super Mario Bros. + Battle City (Rus)
 	&BurnDrvnes_smb2,			// Super Mario Bros. 2 (USA) (Rev A)
@@ -28307,6 +28337,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWiggie,				// Wiggie Waggie
 	&BurnDrvWildfang,			// Wild Fang / Tecmo Knight
 	&BurnDrvnes_wildgunman,		// Wild Gunman (World) (Rev A)
+	&BurnDrvWildplt,			// Wild Pilot
 	&BurnDrvmd_wildsnak,		// Wild Snake (USA, Prototype)
 #if defined FBNEO_DEBUG
 	&BurnDrvMoomesabl,			// Wild West C.O.W.-Boys of Moo Mesa (bootleg) [no comment, NOT WORKING]
@@ -28883,6 +28914,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_yumepenmon,		// Yume Penguin Monogatari (T-eng)
 	&BurnDrvMSX_pengadvk2,		// Yume Tairiku Adventure (Kor, Screen Software)
 	&BurnDrvMSX_pengadvk1,		// Yume Tairiku Adventure (Kor, Zemina)
+	&BurnDrvnes_yunr5,			// Yun R5 (HB)
 	&BurnDrvfds_yuumaze,		// Yuu Maze (Japan)
 	&BurnDrvnes_yuuyuuhakfin,	// Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
 	&BurnDrvpce_yuyu,			// Yuu Yuu Jinsei - Victory Life

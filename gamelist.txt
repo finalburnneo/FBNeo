@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14241 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14257 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -585,6 +585,8 @@ This list contains all games supported by FinalBurn Neo.
 | arkretrn	|  	| Arkanoid Returns (Ver 2.02O 1997/02/10)		| 		| 1997	| Taito Corporat| Taito F3 Syste| 					|
 | nes_arkistasring|  	| Arkista's Ring (USA)					| 		| 1990	| Sammy		| Miscellaneous	| 					|
 | gg_arliel	|  	| Arliel - Crystal Densetsu (Jpn)			| gg_crystalw	| 1991	| Sega		| Sega Game Gear| 					|
+| armchmp2o	|   NW	| Arm Champs II v1.7					| armchmp2	| 1992	| Jaleco	| Miscellaneous	| 					|
+| armchmp2	|   NW	| Arm Champs II v2.6					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | armwrest	|  	| Arm Wrestling						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | nes_armadilloj|  	| Armadillo (Japan)					| nes_armadillo	| 1991	| IGS		| Miscellaneous	| 					|
 | nes_armadillo	|  	| Armadillo (T-eng)					| 		| 1991	| IGS		| Miscellaneous	| 					|
@@ -1139,6 +1141,7 @@ This list contains all games supported by FinalBurn Neo.
 | bigkarnk	|  	| Big Karnak						| 		| 1991	| Gaelco	| Miscellaneous	| 					|
 | nes_bignosfreout|  	| Big Nose Freaks Out (USA)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
 | nes_bignoscav	|  	| Big Nose the Caveman (USA)				| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| bigrun	|  	| Big Run (11th Rallye version)				| 		| 1989	| Jaleco	| Miscellaneous	| 					|
 | bigstrkba	|  	| Big Striker (bootleg w/Italian teams)			| bigstrik	| 1992	| bootleg	| Miscellaneous	| 					|
 | bigstrkb	|  	| Big Striker (bootleg)					| bigstrik	| 1992	| bootleg	| Miscellaneous	| 					|
 | bigstrik	|  	| Big Striker						| 		| 1992	| Jaleco	| Mega System 1	| 					|
@@ -2113,6 +2116,7 @@ This list contains all games supported by FinalBurn Neo.
 | circusc3	|  	| Circus Charlie (level select, set 3)			| circusc	| 1984	| Konami	| GX380		| 					|
 | circusc4	|  	| Circus Charlie (no level select)			| circusc	| 1984	| Konami	| GX380		| 					|
 | pce_circusld	|  	| Circus Lido						| 		| 1991	| Yuni Post	| PC Engine	| 					|
+| cischeat	|  	| Cisco Heat						| 		| 1990	| Jaleco	| Miscellaneous	| Imperfect graphics			|
 | citybombj	|  	| City Bomber (Japan)					| citybomb	| 1987	| Konami	| GX787		| 					|
 | citybomb	|  	| City Bomber (World)					| 		| 1987	| Konami	| GX787		| 					|
 | msx_citycon	|  	| City Connection (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
@@ -3664,6 +3668,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_f1dream	|  	| F-1 Dream						| 		| 1989	| NEC		| PC Engine	| 					|
 | f1gpb		| D NW	| F-1 Grand Prix (Playmark bootleg)			| f1gp		| 1991	| [Video System | Miscellaneous	| 					|
 | f1gp2		|  	| F-1 Grand Prix Part II				| 		| 1992	| Video System C| Miscellaneous	| 					|
+| f1gpstr2	|  	| F-1 Grand Prix Star II				| 		| 1993	| Jaleco	| Miscellaneous	| 					|
 | f1gp		|  	| F-1 Grand Prix					| 		| 1991	| Video System C| Miscellaneous	| 					|
 | pce_f1pilot	|  	| F-1 Pilot - You're King of Kings			| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
 | nes_f1race	|  	| F-1 Race (Japan)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
@@ -4407,6 +4412,7 @@ This list contains all games supported by FinalBurn Neo.
 | gaplus	|  	| Gaplus (GP2 rev. B)					| 		| 1984	| Namco		| Miscellaneous	| 					|
 | gaplusa	|  	| Gaplus (GP2)						| gaplus	| 1984	| Namco		| Miscellaneous	| 					|
 | gaplust	|  	| Gaplus (Tecfri PCB)					| gaplus	| 1992	| bootleg (Tecfr| Miscellaneous	| 					|
+| nes_gaplus	|  	| Gaplus						| 		| 2020	| Namco - BNEI	| Miscellaneous	| 					|
 | gardia	|  	| Gardia (317-0006)					| 		| 1986	| Coreland / Seg| System 1	| 					|
 | gardiab	| D NW	| Gardia (317-0007?, bootleg)				| gardia	| 1986	| Sega / Corelan| System 1	| 					|
 | gardiaj	| D NW	| Gardia (Japan, 317-0006)				| gardia	| 1986	| Sega / Corelan| System 2	| 					|
@@ -4755,6 +4761,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_gt5	|  	| Gran Turismo 5 (Rus)					| md_funcar	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_granada1	|  	| Granada (Jpn, USA)					| md_granada	| 1990	| Renovation ~ W| Sega Megadrive| 					|
 | md_granada	|  	| Granada (Jpn, USA, v1.1)				| 		| 1990	| Renovation ~ W| Sega Megadrive| 					|
+| f1gpstar2	|  	| Grand Prix Star (ver 2.0)				| f1gpstar	| 1991	| Jaleco	| Miscellaneous	| 					|
+| f1gpstar3	|  	| Grand Prix Star (ver 3.0)				| f1gpstar	| 1991	| Jaleco	| Miscellaneous	| 					|
+| f1gpstar	|  	| Grand Prix Star (ver 4.0)				| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | gstrik2	|  	| Grand Striker 2 (Europe and Oceania)			| 		| 1996	| Human Amusemen| Miscellaneous	| ROZ layer broken			|
 | gstrik2j	| D	| Grand Striker 2 (Japan)				| gstrik2	| 1996	| Human Amusemen| Miscellaneous	| ROZ layer broken			|
 | grndtour	|  	| Grand Tour						| 		| 1993	| IGS		| Miscellaneous	| 					|
@@ -6303,6 +6312,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_legenkag	|  	| Legend of Kage, The (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
 | lomakai	|  	| Legend of Makai (World)				| 		| 1988	| Jaleco	| Mega System 1	| 					|
 | legendos	|  	| Legend of Success Joe / Ashitano Joe Densetsu		| 		| 1991	| SNK / WAVE	| Neo Geo MVS	| 					|
+| nes_legenzeldx|  	| Legend of Zelda DX, The (HB)				| 		| 2014	| pacnsacdave	| Miscellaneous	| 					|
 | nes_legenzel	|  	| Legend of Zelda, The (USA) (Rev A)			| 		| 1987	| Nintendo	| Miscellaneous	| 					|
 | lwingsb	|  	| Legendary Wings (bootleg)				| lwings	| 1986	| bootleg	| Miscellaneous	| 					|
 | lwings	|  	| Legendary Wings (US set 1)				| 		| 1986	| Capcom	| Miscellaneous	| 					|
@@ -7492,6 +7502,7 @@ This list contains all games supported by FinalBurn Neo.
 | mchampdxa	|  	| Multi Champ Deluxe (ver. 1126, 26/11/1999)		| mchampdx	| 1999	| ESD		| Miscellaneous	| 					|
 | multi96	|  	| Multi Game '96 (Italy)				| twinadv	| 1996	| Barko Corp	| Kaneko Pandora| 					|
 | mltiwars	|  	| Multi Wars (bootleg of UniWar S)			| uniwars	| 1980	| bootleg (Gayto| Galaxian	| 					|
+| nes_multidude	|  	| Multidude (HB)					| 		| 2014	| RetroSouls	| Miscellaneous	| 					|
 | mnchmobl	|  	| Munch Mobile (US)					| joyfulr	| 1983	| SNK (Centuri l| Miscellaneous	| 					|
 | nes_muppeadv	|  	| Muppet Adventure - Chaos at the Carnival (USA)	| 		| 1990	| Hi Tech Expres| Miscellaneous	| 					|
 | nes_musasnoken|  	| Musashi no Ken - Tadaima Shugyou Chuu (Japan)		| 		| 1986	| Taito		| Miscellaneous	| 					|
@@ -7928,6 +7939,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nightshade|  	| Nightshade (USA)					| 		| 1992	| Ultra Games	| Miscellaneous	| 					|
 | md_nikkan	|  	| Nikkan Sports Pro Yakyuu Van (Jpn)			| 		| 1991	| Sega		| Sega Megadrive| 					|
 | pce_nikopun	| D NW	| Niko Niko, Pun					| 		| 1991	| NHK Enterprise| PC Engine	| Locks up in-game?			|
+| nes_nimnom	|  	| Nim & Nom (HB, v1.2)					| 		| 2018	| Metakrill	| Miscellaneous	| 					|
 | ninja		|  	| Ninja (315-5102)					| seganinj	| 1985	| Sega		| System 1	| 					|
 | nbbatmanu	|  	| Ninja Baseball Batman (US)				| nbbatman	| 1993	| Irem America	| Irem M92	| 					|
 | nbbatman	|  	| Ninja Baseball Batman (World)				| 		| 1993	| Irem		| Irem M92	| 					|
@@ -8234,7 +8246,7 @@ This list contains all games supported by FinalBurn Neo.
 | 25pacmano	|  	| Pac-Man - 25th Anniversary Edition (Rev 2.00)		| 25pacman	| 2005	| Namco / Cosmod| Miscellaneous	| 					|
 | 25pacman	|   NW	| Pac-Man - 25th Anniversary Edition (Rev 3.00)		| 		| 2006	| Namco / Cosmod| Miscellaneous	| 					|
 | md_pacman2	|  	| Pac-Man 2 - The New Adventures (USA)			| 		| 1994	| Namco		| Sega Megadrive| 					|
-| nes_pacmance	|  	| Pac-Man Championship Edition				| 		| 2020	| BNEI		| Miscellaneous	| 					|
+| nes_pacmance	|  	| Pac-Man Championship Edition				| 		| 2020	| Namco - BNEI	| Miscellaneous	| 					|
 | pacplus	|  	| Pac-Man Plus						| 		| 1982	| [Namco] (Midwa| Pac-man	| 					|
 | pacmaniao	|  	| Pac-Mania (111187 sound program)			| pacmania	| 1987	| Namco		| System 1	| 					|
 | spec_pacmania	|  	| Pac-Mania (128K)					| 		| 1988	| Grandslam Ente| ZX Spectrum	| 					|
@@ -9915,6 +9927,7 @@ This list contains all games supported by FinalBurn Neo.
 | screwloo	|  	| Screw Loose (prototype)				| 		| 1983	| Mylstar	| Miscellaneous	| 					|
 | cscrtry	|  	| Scrum Try (DECO Cassette) (US) (set 1)		| 		| 1984	| Data East Corp| Cassette Syste| 					|
 | cscrtry2	|  	| Scrum Try (DECO Cassette) (US) (set 2)		| cscrtry	| 1984	| Data East Corp| Cassette Syste| 					|
+| scudhamm	|  	| Scud Hammer						| 		| 1994	| Jaleco	| Miscellaneous	| 					|
 | sdfight	|  	| SD Fighters (Korea)					| 		| 1996	| SemiCom	| Miscellaneous	| 					|
 | gg_sdgundam	|  	| SD Gundam - Winner's History (Jpn)			| 		| 1995	| Bandai	| Sega Game Gear| 					|
 | neobattl	|  	| SD Gundam Neo Battling (Japan)			| 		| 1992	| Banpresto / So| Seta		| 					|
@@ -11509,6 +11522,7 @@ This list contains all games supported by FinalBurn Neo.
 | suplup	|  	| Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0| 		| 1999	| Omega System	| Miscellaneous	| 					|
 | md_smario2a	|   NW	| Super Mario 2 (Alt?)					| md_smario2	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smario2	|  	| Super Mario 2 1998					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| nes_smbdx	|  	| Super Mario Bros DX (HB, v3.4)			| 		| 2018	| Flamephanter	| Miscellaneous	| 					|
 | nes_smb	|  	| Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | md_smbbc	|  	| Super Mario Bros. + Battle City (Rus)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | nes_smb2	|  	| Super Mario Bros. 2 (USA) (Rev A)			| 		| 1988	| Nintendo	| Miscellaneous	| 					|
@@ -13553,6 +13567,7 @@ This list contains all games supported by FinalBurn Neo.
 | wiggie	|  	| Wiggie Waggie						| 		| 1994	| Promat	| Seta		| 					|
 | wildfang	|  	| Wild Fang / Tecmo Knight				| 		| 1989	| Tecmo		| Miscellaneous	| 					|
 | nes_wildgunman|  	| Wild Gunman (World) (Rev A)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
+| wildplt	|  	| Wild Pilot						| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | md_wildsnak	|  	| Wild Snake (USA, Prototype)				| 		| 1994	| Bullet-Proof S| Sega Megadrive| 					|
 | moomesabl	| D NW	| Wild West C.O.W.-Boys of Moo Mesa (bootleg)		| moomesa	| 1992	| bootleg	| GX151		| 					|
 | moomesaaab	|  	| Wild West C.O.W.-Boys of Moo Mesa (ver AAB)		| moomesa	| 1992	| Konami	| GX151		| 					|
@@ -14111,6 +14126,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_yumepenmon|  	| Yume Penguin Monogatari (T-eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_pengadvk2	|  	| Yume Tairiku Adventure (Kor, Screen Software)		| msx_pengadv	| 1988	| Screen Softwar| MSX		| 					|
 | msx_pengadvk1	|  	| Yume Tairiku Adventure (Kor, Zemina)			| msx_pengadv	| 1987	| Zemina	| MSX		| 					|
+| nes_yunr5	|  	| Yun R5 (HB)						| 		| 2018	| Mojon Twins	| Miscellaneous	| 					|
 | fds_yuumaze	|  	| Yuu Maze (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_yuuyuuhakfin|  	| Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_yuyu	|  	| Yuu Yuu Jinsei - Victory Life				| 		| 1988	| Hudson	| PC Engine	| 					|

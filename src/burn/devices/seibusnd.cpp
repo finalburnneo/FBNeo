@@ -126,7 +126,11 @@ UINT8 seibu_main_word_read(INT32 offset)
 		case 3:
 			return sub2main[offset-2];
 		case 5:
-			return main2sub_pending ? 1 : 0;
+			if (is_sdgndmps) {
+				return 1;
+			} else {
+				return main2sub_pending ? 1 : 0;
+			}
 		default:
 			return 0xff;
 	}
@@ -148,7 +152,7 @@ void seibu_main_word_write(INT32 offset, UINT8 data)
 			break;
 
 		case 4:
-			//if (is_sdgndmps) update_irq_lines(RST10_ASSERT);
+			//if (is_sdgndmps) (offset >> 1) & 7update_irq_lines(RST10_ASSERT);
 			update_irq_lines(RST18_ASSERT);
 			break;
 

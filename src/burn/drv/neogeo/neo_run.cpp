@@ -4857,7 +4857,7 @@ INT32 NeoFrame()
 			case 0x0061: bRenderMode = 1; break; // ssideki2 (cd)
 			case 0x0200: bRenderMode = 1; break; // turfmasters (cd)
 		}
-		bRenderLineByLine = (!bNeoCDIRQEnabled) && bRenderMode;
+		bRenderLineByLine = /*(!bNeoCDIRQEnabled) &&*/ bRenderMode;
 	}
 
 	bRenderImage = pBurnDraw != NULL && bNeoEnableGraphics;

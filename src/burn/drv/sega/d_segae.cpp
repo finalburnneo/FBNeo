@@ -1520,7 +1520,7 @@ static struct BurnRomInfo opaopaRomDesc[] = {
 STD_ROM_PICK(opaopa)
 STD_ROM_FN(opaopa)
 
-struct BurnDriver BurnDrvOpaopan = {
+struct BurnDriver BurnDrvOpaopa = {
 	"opaopa", NULL, NULL, NULL, "1987",
 	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
@@ -1544,7 +1544,7 @@ static struct BurnRomInfo opaopanRomDesc[] = {
 STD_ROM_PICK(opaopan)
 STD_ROM_FN(opaopan)
 
-struct BurnDriver BurnDrvOpaopa = {
+struct BurnDriver BurnDrvOpaopn = {
 	"opaopan", "opaopa", NULL, NULL, "1987",
 	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,

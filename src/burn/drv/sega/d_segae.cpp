@@ -1544,7 +1544,7 @@ static struct BurnRomInfo opaopanRomDesc[] = {
 STD_ROM_PICK(opaopan)
 STD_ROM_FN(opaopan)
 
-struct BurnDriver BurnDrvOpaopn = {
+struct BurnDriver BurnDrvOpaopan = {
 	"opaopan", "opaopa", NULL, NULL, "1987",
 	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,

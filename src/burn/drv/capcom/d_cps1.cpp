@@ -9353,6 +9353,46 @@ static struct BurnRomInfo Sf2sttRomDesc[] = {
 STD_ROM_PICK(Sf2stt)
 STD_ROM_FN(Sf2stt)
 
+static struct BurnRomInfo Sf2jbhRomDesc[] = {
+	/* Street Fighter II - The World Warrior with bosses availables like in Champion Edition
+	
+	Dumped from an official Capcom board. Only eproms on the PCB.
+	
+	A-board 89626A-4 DASH
+	B-board 91634B-2
+	C-board PPU B-11*/
+	
+	{ "23",  		   0x080000, 0xca331c3c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22",  		   0x080000, 0xe446d96a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+		
+	{ "1",     		   0x080000, 0x22c9cc8e, BRF_GRA | CPS1_TILES },
+	{ "2",     		   0x080000, 0x57213be8, BRF_GRA | CPS1_TILES },
+	{ "3",     		   0x080000, 0xba529b4f, BRF_GRA | CPS1_TILES },
+	{ "4",     		   0x080000, 0x4b1b33a8, BRF_GRA | CPS1_TILES },
+	{ "5",     		   0x080000, 0x2c7e2229, BRF_GRA | CPS1_TILES },
+	{ "6",     		   0x080000, 0xb5548f17, BRF_GRA | CPS1_TILES },
+	{ "7",     		   0x080000, 0x14b84312, BRF_GRA | CPS1_TILES },
+	{ "8",     		   0x080000, 0x5e9cd89a, BRF_GRA | CPS1_TILES },
+	{ "10",    		   0x080000, 0x4267b696, BRF_GRA | CPS1_TILES },
+	{ "11",    		   0x080000, 0xdf9b9146, BRF_GRA | CPS1_TILES },
+	{ "12",     	   0x080000, 0xa08a9786, BRF_GRA | CPS1_TILES },
+	{ "13",    		   0x080000, 0x80feac31, BRF_GRA | CPS1_TILES },
+
+	{ "9",     		   0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18",    		   0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19",    		   0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Sf2jbh)
+STD_ROM_FN(Sf2jbh)
+
 static struct BurnRomInfo Sf2uaRomDesc[] = {
 	{ "sf2u_30a.11e",  0x020000, 0x08beb861, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2u_37a.11f",  0x020000, 0xb7638d69, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14759,6 +14799,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ebbl2"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl3"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2stt"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2jbh"        , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2ua"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ub"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2uc"         , CPS_B_12    , mapper_STF29 , 0, NULL                },
@@ -20931,6 +20972,16 @@ struct BurnDriver BurnDrvCpsSf2stt = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2sttRomInfo, Sf2sttRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2sttInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2jbh = {
+	"sf2jbh", "sf2", NULL, NULL, "1991",
+	"Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2jbhRomInfo, Sf2jbhRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

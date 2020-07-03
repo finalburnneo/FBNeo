@@ -10693,7 +10693,7 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Gaplus: Keep under hand-added (HB) section, even though not marked HB
+// Gaplus
 static struct BurnRomInfo nes_gaplusRomDesc[] = {
 	{ "gaplus (bnei).nes",          262160, 0x60811720, BRF_ESS | BRF_PRG },
 };
@@ -10710,8 +10710,25 @@ struct BurnDriver BurnDrvnes_gaplus = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+// END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_frombelowRomDesc[] = {
+	{ "From Below (HB, v6.26.2020).nes",          40976, 0x26ac4912, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_frombelow)
+STD_ROM_FN(nes_frombelow)
+
+struct BurnDriver BurnDrvnes_frombelow = {
+	"nes_frombelow", NULL, NULL, NULL, "2020",
+	"From Below (HB, v6.26.2020)\0", NULL, "Goose2k", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_frombelowRomInfo, nes_frombelowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_legenzeldxRomDesc[] = {
 	{ "legend of zelda dx (2014)(pacnsacdave).nes",          131088, 0x0698579d, BRF_ESS | BRF_PRG },

@@ -531,6 +531,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_cischeat.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_f-32.cpp" />

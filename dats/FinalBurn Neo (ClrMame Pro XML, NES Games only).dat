@@ -2952,6 +2952,13 @@
 		<rom name="Friday the 13th (USA).nes" size="65552" crc="f19a4249"/>
 		<driver status="good"/>
 	</game>
+	<game name="frombelow">
+		<description>From Below (HB, v6.26.2020)</description>
+		<year>2020</year>
+		<manufacturer>Goose2k</manufacturer>
+		<rom name="From Below (HB, v6.26.2020).nes" size="40976" crc="26ac4912"/>
+		<driver status="good"/>
+	</game>
 	<game name="frontline">
 		<description>Front Line (Japan)</description>
 		<year>1985</year>

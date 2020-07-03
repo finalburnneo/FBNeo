@@ -409,6 +409,7 @@ DRV		BurnDrvAliensa;
 DRV		BurnDrvAliensj;
 DRV		BurnDrvAliensj2;
 DRV		BurnDrvAliensu;
+DRV		BurnDrvAliensu2;
 DRV		BurnDrvAliens;
 DRV		BurnDrvAliens2;
 DRV		BurnDrvAliens3;
@@ -4262,6 +4263,7 @@ DRV		BurnDrvFrogger;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvFrogs;			// No sound
 #endif
+DRV		BurnDrvnes_frombelow;
 DRV		BurnDrvgg_slamdunk;
 DRV		BurnDrvmd_slamdunk;
 DRV		BurnDrvcv_frontlina;
@@ -8235,8 +8237,8 @@ DRV		BurnDrvmd_onslau;
 DRV		BurnDrvnes_onyankotown;
 DRV		BurnDrvCoozumou;
 DRV		BurnDrvsms_opaopa;
-DRV		BurnDrvOpaopan;
 DRV		BurnDrvOpaopa;
+DRV		BurnDrvOpaopan;
 DRV		BurnDrvOpwolfb;
 DRV		BurnDrvmd_opeurope;
 DRV		BurnSpecothunder;
@@ -14936,7 +14938,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAliensa,			// Aliens (Asia)
 	&BurnDrvAliensj,			// Aliens (Japan set 1)
 	&BurnDrvAliensj2,			// Aliens (Japan set 2)
-	&BurnDrvAliensu,			// Aliens (US)
+	&BurnDrvAliensu,			// Aliens (US set 1)
+	&BurnDrvAliensu2,			// Aliens (US set 2)
 	&BurnDrvAliens,				// Aliens (World set 1)
 	&BurnDrvAliens2,			// Aliens (World set 2)
 	&BurnDrvAliens3,			// Aliens (World set 3)
@@ -18790,6 +18793,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvFrogs,				// Frogs [No sound]
 #endif
+	&BurnDrvnes_frombelow,		// From Below (HB, v6.26.2020)
 	&BurnDrvgg_slamdunk,		// From TV Animation - Slam Dunk - Shouri e no Starting 5 (Jpn)
 	&BurnDrvmd_slamdunk,		// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Jpn)
 	&BurnDrvcv_frontlina,		// Front Line (Alt)
@@ -22763,8 +22767,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_onyankotown,	// Onyanko Town (Japan)
 	&BurnDrvCoozumou,			// Oozumou - The Grand Sumo (DECO Cassette) (Japan)
 	&BurnDrvsms_opaopa,			// Opa Opa (Jpn)
-	&BurnDrvOpaopan,			// Opa Opa (MC-8123, 317-0042) [no comment, NOT WORKING]
-	&BurnDrvOpaopa,				// Opa Opa (Rev A, unprotected) [no comment, NOT WORKING]
+	&BurnDrvOpaopa,				// Opa Opa (MC-8123, 317-0042)
+	&BurnDrvOpaopan,			// Opa Opa (Rev A, unprotected)
 	&BurnDrvOpwolfb,			// Operation Bear
 	&BurnDrvmd_opeurope,		// Operation Europe - Path to Victory 1939-45 (USA)
 	&BurnSpecothunder,			// Operation Thunderbolt (128K)

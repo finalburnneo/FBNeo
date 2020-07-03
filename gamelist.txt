@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14257 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14259 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -404,7 +404,8 @@ This list contains all games supported by FinalBurn Neo.
 | aliensa	|  	| Aliens (Asia)						| aliens	| 1990	| Konami	| GX875		| 					|
 | aliensj	|  	| Aliens (Japan set 1)					| aliens	| 1990	| Konami	| GX875		| 					|
 | aliensj2	|  	| Aliens (Japan set 2)					| aliens	| 1990	| Konami	| GX875		| 					|
-| aliensu	|  	| Aliens (US)						| aliens	| 1990	| Konami	| GX875		| 					|
+| aliensu	|  	| Aliens (US set 1)					| aliens	| 1990	| Konami	| GX875		| 					|
+| aliensu2	|  	| Aliens (US set 2)					| aliens	| 1990	| Konami	| GX875		| 					|
 | aliens	|  	| Aliens (World set 1)					| 		| 1990	| Konami	| GX875		| 					|
 | aliens2	|  	| Aliens (World set 2)					| aliens	| 1990	| Konami	| GX875		| 					|
 | aliens3	|  	| Aliens (World set 3)					| aliens	| 1990	| Konami	| GX875		| 					|
@@ -4186,6 +4187,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_frogger	|  	| Frogger						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | frogger	|  	| Frogger						| 		| 1981	| Konami	| Galaxian	| 					|
 | frogs		| D	| Frogs							| 		| 1978	| Gremlin	| Vic Dual	| No sound				|
+| nes_frombelow	|  	| From Below (HB, v6.26.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
 | gg_slamdunk	|  	| From TV Animation - Slam Dunk - Shouri e no Starting 5| 		| 1994	| Bandai	| Sega Game Gear| 					|
 | md_slamdunk	|  	| From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!| 		| 1995	| Bandai	| Sega Megadrive| 					|
 | cv_frontlina	|  	| Front Line (Alt)					| cv_frontlin	| 1983	| Coleco	| ColecoVision	| 					|
@@ -8089,8 +8091,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_onyankotown|  	| Onyanko Town (Japan)					| 		| 1985	| Pony Canyon	| Miscellaneous	| 					|
 | coozumou	|  	| Oozumou - The Grand Sumo (DECO Cassette) (Japan)	| 		| 1984	| Data East Corp| Cassette Syste| 					|
 | sms_opaopa	|  	| Opa Opa (Jpn)						| sms_fantzonm	| 1987	| Sega		| Sega Master Sy| 					|
-| opaopan	|   NW	| Opa Opa (MC-8123, 317-0042)				| opaopa	| 1987	| Sega		| System E	| 					|
-| opaopa	|   NW	| Opa Opa (Rev A, unprotected)				| 		| 1987	| Sega		| System E	| 					|
+| opaopa	|  	| Opa Opa (MC-8123, 317-0042)				| 		| 1987	| Sega		| System E	| 					|
+| opaopan	|  	| Opa Opa (Rev A, unprotected)				| opaopa	| 1987	| Sega		| System E	| 					|
 | opwolfb	|  	| Operation Bear					| opwolf	| 1987	| bootleg	| Taito Misc	| 					|
 | md_opeurope	|  	| Operation Europe - Path to Victory 1939-45 (USA)	| 		| 1994	| Koei		| Sega Megadrive| 					|
 | spec_othunder	|  	| Operation Thunderbolt (128K)				| 		| 1989	| Ocean		| ZX Spectrum	| 					|

@@ -48,7 +48,6 @@ static struct BurnInputInfo MagmaxInputList[] = {
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
@@ -58,6 +57,7 @@ static struct BurnInputInfo MagmaxInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
+	{"Speed Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"speedup"	},
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -266,23 +266,19 @@ static void ay8910_write_A(UINT32, UINT32 data)
 	ay_gain = data;
 
 	float gain = (data & 1) ? 0.50 : 0.25;
-	bprintf(0, _T("amp change: A: %f"), gain);
 	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_1, gain, BURN_SND_ROUTE_BOTH);
 
 	gain = (data & 2) ? 0.22 : 0.11;
-	bprintf(0, _T("  B: %f"), gain);
 	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_2, gain, BURN_SND_ROUTE_BOTH);
 	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_3, gain, BURN_SND_ROUTE_BOTH);
 	AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_1, gain, BURN_SND_ROUTE_BOTH);
 	AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_2, gain, BURN_SND_ROUTE_BOTH);
 
 	gain = (data & 4) ? 0.22 : 0.11;
-	bprintf(0, _T("  C: %f"), gain);
 	AY8910SetRoute(1, BURN_SND_AY8910_ROUTE_3, gain, BURN_SND_ROUTE_BOTH);
 	AY8910SetRoute(2, BURN_SND_AY8910_ROUTE_1, gain, BURN_SND_ROUTE_BOTH);
 
 	gain = (data & 8) ? 0.22 : 0.11;
-	bprintf(0, _T("  D: %f\n"), gain);
 	AY8910SetRoute(2, BURN_SND_AY8910_ROUTE_2, gain, BURN_SND_ROUTE_BOTH);
 	AY8910SetRoute(2, BURN_SND_AY8910_ROUTE_3, gain, BURN_SND_ROUTE_BOTH);
 }

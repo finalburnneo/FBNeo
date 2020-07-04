@@ -199,7 +199,7 @@ static void gaplus_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0x9000) {
-		INT32 bit = !(address >> 11) & 1;
+		INT32 bit = (address >> 11) & 1;
 		namcoio_set_reset_line(0, bit);
 		namcoio_set_reset_line(1, bit);
 		return;
@@ -280,7 +280,7 @@ static UINT8 gaplus_sub2_read(UINT16 address)
 		return namco_15xx_sharedram_read(address);
 	}
 
-	if ((address & 0xe000) == 0x6800) {
+	if ((address & 0xf800) == 0x6800) {
 		watchdog = 0;
 		return 0;
 	}
@@ -702,7 +702,7 @@ static void vblank_update()
 
 	for (INT32 i = 0; i < total_stars; i++)
 	{
-		switch (starfield_control[stars[i].set + 1])
+		switch (starfield_control[(stars[i].set + 1) & 3])
 		{
 			case 0x85: stars[i].x += 1.0f; break;
 			case 0x86: stars[i].x += 1.0f; break;
@@ -765,23 +765,23 @@ static INT32 DrvFrame()
 		}
 		M6809Close();
 
+		M6809Open(1);
 		if (sub_cpu_in_reset) {
 			CPU_IDLE(1, M6809);
 		} else {
-			M6809Open(1);
 			CPU_RUN(1, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
 		}
+		M6809Close();
 
+		M6809Open(2);
 		if (sub2_cpu_in_reset) {
 			CPU_IDLE(2, M6809);
 		} else {
-			M6809Open(2);
 			CPU_RUN(2, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
 		}
+		M6809Close();
 	}
 
 	if (pBurnSoundOut) {

@@ -1954,6 +1954,63 @@ static void mapper389_map()
 #undef mapper389_reg9
 #undef mapper389_rega
 
+// ---[ mapper 216 (??) Magic Jewelry 2
+#define mapper216_prg   (mapper_regs[0])
+#define mapper216_chr   (mapper_regs[1])
+static void mapper216_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x8000) {
+		mapper216_prg = address & 1;
+		mapper216_chr = (address & 0x000e) >> 1;
+		mapper_map();
+	}
+}
+
+static UINT8 mapper216_read(UINT16 address)
+{
+	return 0; // must be 0 @ 0x5000
+}
+
+static void mapper216_map()
+{
+    mapper_map_prg(32, 0, mapper216_prg);
+	mapper_map_chr( 8, 0, mapper216_chr);
+}
+#undef mapper216_prg
+#undef mapper216_chr
+
+// ---[ mapper 132 (TXC Micro Genius) Qi Wang
+#define mapper132_reg(x)   (mapper_regs[0 + (x)])
+#define mapper132_reghi    (mapper_regs[8])
+static void mapper132_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x4100 && address <= 0x4103) {
+		mapper132_reg(address & 3) = data;
+		//mapper_map(); // only 8000+!
+	}
+
+	if (address >= 0x8000) {
+		mapper132_reghi = data;
+		mapper_map();
+	}
+}
+
+static UINT8 mapper132_read(UINT16 address)
+{
+	if (address == 0x4100) {
+		return (mapper132_reg(1) ^ mapper132_reg(2)) | 0x40;
+	}
+	return cpu_open_bus;
+}
+
+static void mapper132_map()
+{
+    mapper_map_prg(32, 0, (mapper132_reg(2) >> 2) & 1);
+	mapper_map_chr( 8, 0, mapper132_reg(2) & 3);
+}
+#undef mapper132_reg
+#undef mapper132_reghi
+
 // ---[ mapper 30 (UNROM-512)
 #define mapper30_mirroring_en   (mapper_regs[1])
 static void mapper30_write(UINT16 address, UINT8 data)
@@ -5922,6 +5979,25 @@ static INT32 mapper_init(INT32 mappernum)
 		case 389: { // Caltron 9-in-1
 			mapper_write = mapper389_write;
 			mapper_map   = mapper389_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 216: { // Magic Jewelry 2
+			mapper_write = mapper216_write;
+			mapper_map   = mapper216_map;
+			psg_area_read = mapper216_read;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 132: { // Qi Wang
+			mapper_write = mapper132_write;
+			mapper_map   = mapper132_map;
+			psg_area_read = mapper132_read;
+			psg_area_write = mapper132_write;
 			mapper_map();
 			retval = 0;
 			break;
@@ -10713,6 +10789,23 @@ struct BurnDriver BurnDrvnes_gaplus = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+static struct BurnRomInfo nes_blockageRomDesc[] = {
+	{ "Blockage (HB, v0.3.2).nes",          40976, 0x1c5f7bcf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blockage)
+STD_ROM_FN(nes_blockage)
+
+struct BurnDriver BurnDrvnes_blockage = {
+	"nes_blockage", NULL, NULL, NULL, "2019",
+	"Blockage (HB, v0.3.2)\0", NULL, "Scott Lowe", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_blockageRomInfo, nes_blockageRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_frombelowRomDesc[] = {
 	{ "From Below (HB, v6.26.2020).nes",          40976, 0x26ac4912, BRF_ESS | BRF_PRG },
 };
@@ -32577,6 +32670,74 @@ struct BurnDriver BurnDrvnes_swordandser = {
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_swordandserRomInfo, nes_swordandserRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_magicjewelryRomDesc[] = {
+	{ "Magic Jewelry (Unl).nes",          40976, 0x26ad6047, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magicjewelry)
+STD_ROM_FN(nes_magicjewelry)
+
+struct BurnDriver BurnDrvnes_magicjewelry = {
+	"nes_magicjewelry", NULL, NULL, NULL, "1989?",
+	"Magic Jewelry (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_magicjewelryRomInfo, nes_magicjewelryRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_magicjewelry2RomDesc[] = {
+	{ "Magic Jewelry 2 (Unl).nes",          65552, 0x9d4b8891, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magicjewelry2)
+STD_ROM_FN(nes_magicjewelry2)
+
+struct BurnDriver BurnDrvnes_magicjewelry2 = {
+	"nes_magicjewelry2", NULL, NULL, NULL, "1989?",
+	"Magic Jewelry 2 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_magicjewelry2RomInfo, nes_magicjewelry2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_qiwanRomDesc[] = {
+	{ "Qi Wang - Chinese Chess (China, MGC-001).nes",          98320, 0x5eef4729, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_qiwan)
+STD_ROM_FN(nes_qiwan)
+
+struct BurnDriver BurnDrvnes_qiwan = {
+	"nes_qiwan", NULL, NULL, NULL, "1989?",
+	"Qi Wang - Chinese Chess (China, MGC-001)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_qiwanRomInfo, nes_qiwanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_zippyraceRomDesc[] = {
+	{ "Zippy Race (Japan).nes",          24592, 0x6f0e4a40, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zippyrace)
+STD_ROM_FN(nes_zippyrace)
+
+struct BurnDriver BurnDrvnes_zippyrace = {
+	"nes_zippyrace", NULL, NULL, NULL, "1985",
+	"Zippy Race (Japan)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_zippyraceRomInfo, nes_zippyraceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

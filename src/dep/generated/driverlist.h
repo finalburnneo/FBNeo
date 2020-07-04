@@ -10890,6 +10890,7 @@ DRV		BurnDrvSpctbird;
 DRV		BurnDrvSpacetrkc;		// No sound
 DRV		BurnDrvSpacetrk;		// No sound
 #endif
+DRV		BurnDrvSpctrek;
 DRV		BurnDrvMSX_spacetrb;
 DRV		BurnDrvMSX_spacewlk;
 DRV		BurnDrvSparkman;
@@ -14190,6 +14191,7 @@ DRV		BurnDrvXmen;
 DRV		BurnDrvXmenj;
 DRV		BurnDrvXmenja;
 DRV		BurnDrvXmenu;
+DRV		BurnDrvXmenua;
 DRV		BurnDrvXmen6p;
 DRV		BurnDrvXmen6pu;
 DRV		BurnDrvmd_xmen;
@@ -25424,6 +25426,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpacetrkc,			// Space Trek (cocktail) [No sound]
 	&BurnDrvSpacetrk,			// Space Trek (upright) [No sound]
 #endif
+	&BurnDrvSpctrek,			// Space Trek (Video Game S.A., Spanish bootleg of Scramble)
 	&BurnDrvMSX_spacetrb,		// Space Trouble (Jpn)
 	&BurnDrvMSX_spacewlk,		// Space Walk (Euro)
 	&BurnDrvSparkman,			// Spark Man (v2.0, set 1)
@@ -28724,6 +28727,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXmenj,				// X-Men (4 Players ver JBA)
 	&BurnDrvXmenja,				// X-Men (4 Players ver JEA)
 	&BurnDrvXmenu,				// X-Men (4 Players ver UBB)
+	&BurnDrvXmenua,				// X-Men (4 Players ver UEB)
 	&BurnDrvXmen6p,				// X-Men (6 Players ver ECB)
 	&BurnDrvXmen6pu,			// X-Men (6 Players ver UCB)
 	&BurnDrvmd_xmen,			// X-Men (Euro)

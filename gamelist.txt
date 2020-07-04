@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14265 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14267 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10698,6 +10698,7 @@ This list contains all games supported by FinalBurn Neo.
 | spctbird	|  	| Space Thunderbird					| mooncrst	| 1981?	| bootleg (Fortr| Galaxian	| 					|
 | spacetrkc	| D	| Space Trek (cocktail)					| spacetrk	| 1980	| Sega		| Vic Dual	| No sound				|
 | spacetrk	| D	| Space Trek (upright)					| 		| 1980	| Sega		| Vic Dual	| No sound				|
+| spctrek	|  	| Space Trek (Video Game S.A., Spanish bootleg of Scramb| scramble	| 1981	| bootleg (Video| Galaxian	| 					|
 | msx_spacetrb	|  	| Space Trouble (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_spacewlk	|  	| Space Walk (Euro)					| 		| 1985	| Mastertronic	| MSX		| 					|
 | sparkman	|  	| Spark Man (v2.0, set 1)				| 		| 1989	| SunA		| Miscellaneous	| 					|
@@ -13938,6 +13939,7 @@ This list contains all games supported by FinalBurn Neo.
 | xmenj		|  	| X-Men (4 Players ver JBA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenja	|  	| X-Men (4 Players ver JEA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenu		|  	| X-Men (4 Players ver UBB)				| xmen		| 1992	| Konami	| GX065		| 					|
+| xmenua	|  	| X-Men (4 Players ver UEB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmen6p	|  	| X-Men (6 Players ver ECB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmen6pu	|  	| X-Men (6 Players ver UCB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | md_xmen	|  	| X-Men (Euro)						| 		| 1993	| Sega		| Sega Megadrive| 					|

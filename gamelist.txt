@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14259 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14265 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1262,6 +1262,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
+| nes_blockage	|  	| Blockage (HB, v0.3.2)					| 		| 2019	| Scott Lowe	| Miscellaneous	| 					|
 | md_blockb	|  	| Blockbuster World Video Game Championship II (USA)	| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | blkbustr	|  	| BlockBuster						| mrjong	| 1983	| Kiwako (ECI li| Miscellaneous	| 					|
 | blocken	|  	| Blocken (Japan)					| 		| 1994	| Visco / KID	| Miscellaneous	| 					|
@@ -2875,6 +2876,7 @@ This list contains all games supported by FinalBurn Neo.
 | dietgo	|  	| Diet Go Go (Euro v1.1 1992.09.26)			| 		| 1992	| Data East Corp| DECO IC16	| 					|
 | dietgoj	|  	| Diet Go Go (Japan v1.1 1992.09.26)			| dietgo	| 1992	| Data East Corp| DECO IC16	| 					|
 | dietgou	|  	| Diet Go Go (USA v1.1 1992.09.26)			| dietgo	| 1992	| Data East Corp| DECO IC16	| 					|
+| digdugat	|  	| Dig Dug (Atari, rev 2)				| digdug	| 1982	| Namco (Atari l| Miscellaneous	| 					|
 | fds_digdug	|  	| Dig Dug (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_digdug	|  	| Dig Dug (Japan)					| 		| 1985	| Namco		| Miscellaneous	| 					|
 | msx_digdug	|  	| Dig Dug (Jpn)						| 		| 1984	| Namcot	| MSX		| 					|
@@ -6575,6 +6577,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_magicdarts|  	| Magic Darts (USA)					| 		| 1991	| Romstar	| Miscellaneous	| 					|
 | nes_magicdragon|  	| Magic Dragon (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_magicgirl	|  	| Magic Girl featuring Ling Ling the little Witch (HB)	| md_xiaomo	| 2015	| Super Fighter | Sega Megadrive| 					|
+| nes_magicjewelry|  	| Magic Jewelry (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_magicjewelry2|  	| Magic Jewelry 2 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_magicjohn	|  	| Magic John (Japan)					| nes_totallyrad| 1990	| Jaleco	| Miscellaneous	| 					|
 | nes_magicjohsfasbr|  	| Magic Johnson's Fast Break (USA)			| 		| 1990	| Tradewest	| Miscellaneous	| 					|
 | gg_rayearth	|  	| Magic Knight Rayearth (Jpn)				| 		| 1994	| Sega		| Sega Game Gear| 					|
@@ -9097,6 +9101,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_qbert	|  	| Q-bert (USA)						| 		| 1989	| Ultra Games	| Miscellaneous	| 					|
 | msx_qbiqs	|  	| QBIQS (HB)						| 		| 2010	| Z80st-Software| MSX		| 					|
 | sg1k_qie	|  	| Qi E (Tw)						| sg1k_dokidoki	| 1985?	| Aaronix	| Sega SG-1000	| 					|
+| nes_qiwan	|  	| Qi Wang - Chinese Chess (China, MGC-001)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sg1k_herot	|  	| Qing Feng Xia (Tw)					| sg1k_hero	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | qix		|  	| Qix (Rev 2)						| 		| 1981	| Taito America | Miscellaneous	| 					|
 | qixb		|  	| Qix (set 2, larger roms)				| qix		| 1981	| Taito America | Miscellaneous	| 					|
@@ -11075,6 +11080,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2ebbl	|  	| Street Fighter II - The World Warrior (TAB Austria boo| sf2		| 1992	| bootleg	| CPS1		| 					|
 | sf2thndr	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
+| sf2jbh	|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -13932,9 +13938,8 @@ This list contains all games supported by FinalBurn Neo.
 | xmenj		|  	| X-Men (4 Players ver JBA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenja	|  	| X-Men (4 Players ver JEA)				| xmen		| 1992	| Konami	| GX065		| 					|
 | xmenu		|  	| X-Men (4 Players ver UBB)				| xmen		| 1992	| Konami	| GX065		| 					|
-| xmenua	|  	| X-Men (4 Players ver UEB)				| xmen		| 1992	| Konami	| GX065		| 					|
-| xmen6p	| D NW	| X-Men (6 Players ver ECB)				| xmen		| 1992	| Konami	| GX065		| 					|
-| xmen6pu	| D NW	| X-Men (6 Players ver UCB)				| xmen		| 1992	| Konami	| GX065		| 					|
+| xmen6p	|  	| X-Men (6 Players ver ECB)				| xmen		| 1992	| Konami	| GX065		| 					|
+| xmen6pu	|  	| X-Men (6 Players ver UCB)				| xmen		| 1992	| Konami	| GX065		| 					|
 | md_xmen	|  	| X-Men (Euro)						| 		| 1993	| Sega		| Sega Megadrive| 					|
 | gg_xmen	|  	| X-Men (USA)						| 		| 1994	| Sega		| Sega Game Gear| 					|
 | md_xmenu	|  	| X-Men (USA)						| md_xmen	| 1993	| Sega		| Sega Megadrive| 					|
@@ -14218,6 +14223,7 @@ This list contains all games supported by FinalBurn Neo.
 | zintrkcd	|  	| Zintrick / Oshidashi Zentrix (Neo CD conversion)	| zintrckb	| 1996	| hack		| Neo Geo MVS	| 					|
 | zipzap	|  	| Zip & Zap						| 		| 1995	| Barko Corp	| Miscellaneous	| Imperfect GFXs, No Sound		|
 | pce_zipang	|  	| Zipang						| 		| 1990	| Pack-In-Video	| PC Engine	| 					|
+| nes_zippyrace	|  	| Zippy Race (Japan)					| 		| 1985	| Irem		| Miscellaneous	| 					|
 | sg1k_zippyrac	|  	| Zippy Race (Jpn)					| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_zippyract|  	| Zippy Race (Tw)					| sg1k_zippyrac	| 1983?	| Aaronix	| Sega SG-1000	| 					|
 | zoar		|  	| Zoar							| 		| 1982	| Data East USA	| Miscellaneous	| 					|

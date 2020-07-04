@@ -964,6 +964,13 @@
 		<rom name="Blaster Master (USA).nes" size="262160" crc="52bcf64a"/>
 		<driver status="good"/>
 	</game>
+	<game name="blockage">
+		<description>Blockage (HB, v0.3.2)</description>
+		<year>2019</year>
+		<manufacturer>Scott Lowe</manufacturer>
+		<rom name="Blockage (HB, v0.3.2).nes" size="40976" crc="1c5f7bcf"/>
+		<driver status="good"/>
+	</game>
 	<game name="blodilan">
 		<description>Blodia Land - Puzzle Quest (Japan)</description>
 		<year>1990</year>
@@ -4926,6 +4933,20 @@
 		<rom name="Magic Dragon (J).nes" size="196624" crc="1ad30965"/>
 		<driver status="good"/>
 	</game>
+	<game name="magicjewelry">
+		<description>Magic Jewelry (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Magic Jewelry (Unl).nes" size="40976" crc="26ad6047"/>
+		<driver status="good"/>
+	</game>
+	<game name="magicjewelry2">
+		<description>Magic Jewelry 2 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Magic Jewelry 2 (Unl).nes" size="65552" crc="9d4b8891"/>
+		<driver status="good"/>
+	</game>
 	<game name="magicjohn" cloneof="totallyrad" romof="totallyrad">
 		<description>Magic John (Japan)</description>
 		<year>1990</year>
@@ -6352,6 +6373,13 @@
 		<year>1989</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Q-bert (USA).nes" size="65552" crc="8f992f3c"/>
+		<driver status="good"/>
+	</game>
+	<game name="qiwan">
+		<description>Qi Wang - Chinese Chess (China, MGC-001)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Qi Wang - Chinese Chess (China, MGC-001).nes" size="98320" crc="5eef4729"/>
 		<driver status="good"/>
 	</game>
 	<game name="qix">
@@ -8991,6 +9019,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Zhen Ben Xi You Ji (Asia) (Unl).nes" size="393232" crc="301ce43a"/>
+		<driver status="good"/>
+	</game>
+	<game name="zippyrace">
+		<description>Zippy Race (Japan)</description>
+		<year>1985</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Zippy Race (Japan).nes" size="24592" crc="6f0e4a40"/>
 		<driver status="good"/>
 	</game>
 	<game name="zombiecalavera">

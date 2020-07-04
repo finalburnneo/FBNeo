@@ -1280,6 +1280,7 @@ DRV		BurnDrvBlckout2;
 DRV		BurnDrvMSX_blockrun;
 DRV		BurnDrvcv_blockrun;
 DRV		BurnDrvBlockade;
+DRV		BurnDrvnes_blockage;
 DRV		BurnDrvmd_blockb;
 DRV		BurnDrvBlkbustr;
 DRV		BurnDrvBlocken;
@@ -2921,6 +2922,7 @@ DRV		BurnDrvDietgoe;
 DRV		BurnDrvDietgo;
 DRV		BurnDrvDietgoj;
 DRV		BurnDrvDietgou;
+DRV		BurnDrvDigdugat;
 DRV		BurnDrvfds_digdug;
 DRV		BurnDrvnes_digdug;
 DRV		BurnDrvMSX_digdug;
@@ -6695,6 +6697,8 @@ DRV		BurnDrvMagicbub;
 DRV		BurnDrvnes_magicdarts;
 DRV		BurnDrvnes_magicdragon;
 DRV		BurnDrvmd_magicgirl;
+DRV		BurnDrvnes_magicjewelry;
+DRV		BurnDrvnes_magicjewelry2;
 DRV		BurnDrvnes_magicjohn;
 DRV		BurnDrvnes_magicjohsfasbr;
 DRV		BurnDrvgg_rayearth;
@@ -9261,6 +9265,7 @@ DRV		BurnDrvcv_qbert;
 DRV		BurnDrvnes_qbert;
 DRV		BurnDrvMSX_qbiqs;
 DRV		BurnDrvsg1k_qie;
+DRV		BurnDrvnes_qiwan;
 DRV		BurnDrvsg1k_herot;
 DRV		BurnDrvQix;
 DRV		BurnDrvQixb;
@@ -11269,6 +11274,7 @@ DRV		BurnDrvCpsSf2ebbl3;
 DRV		BurnDrvCpsSf2ebbl;
 DRV		BurnDrvCpsSf2thndr;
 DRV		BurnDrvCpsSf2thndr2;
+DRV		BurnDrvCpsSf2jbh;
 DRV		BurnDrvCpsSf2cebltw;
 DRV		BurnDrvCpsSf2ceeabl;
 DRV		BurnDrvCpsSf2ceeab2;
@@ -14184,11 +14190,8 @@ DRV		BurnDrvXmen;
 DRV		BurnDrvXmenj;
 DRV		BurnDrvXmenja;
 DRV		BurnDrvXmenu;
-DRV		BurnDrvXmenua;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvXmen6p;			// no comment [NOT WORKING]
-DRV		BurnDrvXmen6pu;			// no comment [NOT WORKING]
-#endif
+DRV		BurnDrvXmen6p;
+DRV		BurnDrvXmen6pu;
 DRV		BurnDrvmd_xmen;
 DRV		BurnDrvgg_xmen;
 DRV		BurnDrvmd_xmenu;
@@ -14482,6 +14485,7 @@ DRV		BurnDrvzintrckb;
 DRV		BurnDrvzintrkcd;
 DRV		BurnDrvZipzap;
 DRV		BurnDrvpce_zipang;
+DRV		BurnDrvnes_zippyrace;
 DRV		BurnDrvsg1k_zippyrac;
 DRV		BurnDrvsg1k_zippyract;
 DRV		BurnDrvZoar;
@@ -15810,6 +15814,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_blockrun,		// Blockade Runner (Jpn)
 	&BurnDrvcv_blockrun,		// Blockade Runner
 	&BurnDrvBlockade,			// Blockade
+	&BurnDrvnes_blockage,		// Blockage (HB, v0.3.2)
 	&BurnDrvmd_blockb,			// Blockbuster World Video Game Championship II (USA)
 	&BurnDrvBlkbustr,			// BlockBuster
 	&BurnDrvBlocken,			// Blocken (Japan)
@@ -17451,6 +17456,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDietgo,				// Diet Go Go (Euro v1.1 1992.09.26)
 	&BurnDrvDietgoj,			// Diet Go Go (Japan v1.1 1992.09.26)
 	&BurnDrvDietgou,			// Diet Go Go (USA v1.1 1992.09.26)
+	&BurnDrvDigdugat,			// Dig Dug (Atari, rev 2)
 	&BurnDrvfds_digdug,			// Dig Dug (Japan)
 	&BurnDrvnes_digdug,			// Dig Dug (Japan)
 	&BurnDrvMSX_digdug,			// Dig Dug (Jpn)
@@ -21225,6 +21231,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_magicdarts,		// Magic Darts (USA)
 	&BurnDrvnes_magicdragon,	// Magic Dragon (Japan)
 	&BurnDrvmd_magicgirl,		// Magic Girl featuring Ling Ling the little Witch (HB)
+	&BurnDrvnes_magicjewelry,	// Magic Jewelry (Unl)
+	&BurnDrvnes_magicjewelry2,	// Magic Jewelry 2 (Unl)
 	&BurnDrvnes_magicjohn,		// Magic John (Japan)
 	&BurnDrvnes_magicjohsfasbr,	// Magic Johnson's Fast Break (USA)
 	&BurnDrvgg_rayearth,		// Magic Knight Rayearth (Jpn)
@@ -23791,6 +23799,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_qbert,			// Q-bert (USA)
 	&BurnDrvMSX_qbiqs,			// QBIQS (HB)
 	&BurnDrvsg1k_qie,			// Qi E (Tw)
+	&BurnDrvnes_qiwan,			// Qi Wang - Chinese Chess (China, MGC-001)
 	&BurnDrvsg1k_herot,			// Qing Feng Xia (Tw)
 	&BurnDrvQix,				// Qix (Rev 2)
 	&BurnDrvQixb,				// Qix (set 2, larger roms)
@@ -25799,6 +25808,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ebbl,			// Street Fighter II - The World Warrior (TAB Austria bootleg, 910214 etc)
 	&BurnDrvCpsSf2thndr,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 1)
 	&BurnDrvCpsSf2thndr2,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 2)
+	&BurnDrvCpsSf2jbh,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
 	&BurnDrvCpsSf2ceeab2,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 2)
@@ -28714,11 +28724,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXmenj,				// X-Men (4 Players ver JBA)
 	&BurnDrvXmenja,				// X-Men (4 Players ver JEA)
 	&BurnDrvXmenu,				// X-Men (4 Players ver UBB)
-	&BurnDrvXmenua,				// X-Men (4 Players ver UEB)
-#if defined FBNEO_DEBUG
-	&BurnDrvXmen6p,				// X-Men (6 Players ver ECB) [no comment, NOT WORKING]
-	&BurnDrvXmen6pu,			// X-Men (6 Players ver UCB) [no comment, NOT WORKING]
-#endif
+	&BurnDrvXmen6p,				// X-Men (6 Players ver ECB)
+	&BurnDrvXmen6pu,			// X-Men (6 Players ver UCB)
 	&BurnDrvmd_xmen,			// X-Men (Euro)
 	&BurnDrvgg_xmen,			// X-Men (USA)
 	&BurnDrvmd_xmenu,			// X-Men (USA)
@@ -29012,6 +29019,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvzintrkcd,			// Zintrick / Oshidashi Zentrix (Neo CD conversion)
 	&BurnDrvZipzap,				// Zip & Zap
 	&BurnDrvpce_zipang,			// Zipang
+	&BurnDrvnes_zippyrace,		// Zippy Race (Japan)
 	&BurnDrvsg1k_zippyrac,		// Zippy Race (Jpn)
 	&BurnDrvsg1k_zippyract,		// Zippy Race (Tw)
 	&BurnDrvZoar,				// Zoar

@@ -11,12 +11,13 @@ static retro_input_poll_t poll_cb;
 static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
-static int nDeviceType[5] = { -1, -1, -1, -1, -1 };
-static int nLibretroInputBitmask[5] = { -1, -1, -1, -1, -1};
+static int nDeviceType[MAX_PLAYERS] = { -1,  };
+static int nLibretroInputBitmask[MAX_PLAYERS] = { -1, };
 static std::vector<retro_input_descriptor> normal_input_descriptors;
 static struct KeyBind sKeyBinds[255];
-static struct AxiBind sAxiBinds[5][8]; // 5 players with up to 8 axis
-static bool bAnalogRightMappingDone[5][2][2];
+static struct AxiBind sAxiBinds[MAX_PLAYERS][8]; // MAX_PLAYERS players with up to 8 axis
+static INT32 pointerValues[MAX_PLAYERS][2];
+static bool bAnalogRightMappingDone[MAX_PLAYERS][2][2];
 static bool bButtonMapped = false;
 static bool bOneDiagInputPressed = false;
 static bool bAllDiagInputPressed = true;
@@ -211,8 +212,6 @@ static inline int CinpJoyAxis(int port, int axis)
 	return 0;
 #endif
 }
-
-static INT32 pointerValues[5][2];
 
 static inline void CinpDirectCoord(int port, int axis)
 {
@@ -1591,8 +1590,8 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 // Use GameInp2RetroInp for the actual mapping
 INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 {
-	bool bPlayerInInfo = (toupper(szi[0]) == 'P' && szi[1] >= '1' && szi[1] <= '5'); // Because some of the older drivers don't use the standard input naming.
-	bool bPlayerInName = (szn[0] == 'P' && szn[1] >= '1' && szn[1] <= '5');
+	bool bPlayerInInfo = (toupper(szi[0]) == 'P' && szi[1] >= '1' && szi[1] <= (MAX_PLAYERS+'0')); // Because some of the older drivers don't use the standard input naming.
+	bool bPlayerInName = (szn[0] == 'P' && szn[1] >= '1' && szn[1] <= (MAX_PLAYERS+'0'));
 
 	bButtonMapped = false;
 
@@ -2120,7 +2119,7 @@ static void BurnerHandlerKeyCallback()
 
 void InputMake(void)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 		nLibretroInputBitmask[i] = -1;
 
 	poll_cb();

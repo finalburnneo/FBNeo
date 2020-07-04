@@ -1474,6 +1474,7 @@ static UINT8 ghostb_sound_read(UINT16 address)
 
 inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 {
+	if (M6809GetActive() == -1) return 0;
 	return (INT64)((double)M6809TotalCycles() * nSoundRate / (1500000));
 }
 
@@ -5106,6 +5107,7 @@ static INT32 LastmissDoReset()
 
 	M6809Open(0);
 	M6809Reset();
+	BurnYM2203Reset();
 	M6809Close();
 
 	M6809Open(1);
@@ -5116,10 +5118,8 @@ static INT32 LastmissDoReset()
 
 	M6502Open(0);
 	M6502Reset();
-	M6502Close();
-
-	BurnYM2203Reset();
 	BurnYM3526Reset();
+	M6502Close();
 
 	stopsubcpu = 0;
 
@@ -5457,6 +5457,7 @@ static INT32 LastmissFrame()
 
 		M6809Open(0);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to 6809
 		M6809Close();
 
 		M6809Open(1);
@@ -5465,13 +5466,10 @@ static INT32 LastmissFrame()
 		} else {
 			CPU_RUN(1, M6809);
 		}
-		M6809Close();
-
 		if (realMCU) {
 			DrvMCUSync();
 		}
-
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
+		M6809Close();
 	}
 
 	M6809Open(0);
@@ -5841,12 +5839,10 @@ static UINT8 csilver_main_read(UINT16 address)
 			return DrvDips[0];
 
 		case 0x1c00:
-			DrvMCUSync();
-			return (i8751_return >> 8) & 0xff;
+			return i8751_hi();
 
 		case 0x1e00:
-			DrvMCUSync();
-			return i8751_return & 0xff;
+			return i8751_lo();
 	}
 
 	return 0x00;
@@ -6056,6 +6052,7 @@ static INT32 CsilverFrame()
 
 		M6809Open(0);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to M6809
 		M6809Close();
 
 		M6809Open(1);
@@ -6065,13 +6062,10 @@ static INT32 CsilverFrame()
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 		MSM5205UpdateScanline(i);
-		M6809Close();
-
 		if (realMCU) {
 			DrvMCUSync();
 		}
-
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
+		M6809Close();
 	}
 
 	M6809Open(0);

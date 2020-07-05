@@ -1124,12 +1124,12 @@ STDINPUTINFO(Losttomb)
 static struct BurnInputInfo LuctodayInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
+	{"Bill 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 bill"   },
 	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
 
 	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
 	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 fire 2" },
 	
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
@@ -8224,7 +8224,9 @@ static INT32 TdpgalInit()
 	GalPostLoadCallbackFunction = TdpgalPostLoad;
 	
 	nRet = GalInit();
-	
+
+	GalScreenUnflipper = 0;
+
 	return nRet;
 }	
 
@@ -8282,6 +8284,14 @@ void __fastcall VictorycZ80Write(UINT16 a, UINT8 d)
 {
 	if (a == 0x7004) return; // ignore stars
 
+	if ( (a >= 0x4000 && a <= 0x47ff) || // ram and sprite mirrors (needed for titlescreen ships)
+		(a >= 0x5000 && a <= 0x57ff) )
+	{
+		a &= ~0x400;
+		ZetWriteByte(a, d);
+		return;
+	}
+
 	GalaxianZ80Write(a, d);
 }
 
@@ -8312,7 +8322,9 @@ static INT32 VictorycInit()
 {
 	GalPostLoadCallbackFunction = VictorycPostLoad;
 
-	return GalInit();
+	INT32 rc = GalInit();
+
+	return rc;
 }
 
 // Victory (Comsoft)
@@ -8336,7 +8348,7 @@ struct BurnDriver BurnDrvVictoryc = {
 	"victoryc", NULL, NULL, NULL, "1982",
 	"Victory (Comsoft)\0", NULL, "Comsoft", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, victorycRomInfo, victorycRomName, NULL, NULL, NULL, NULL, VictorycInputInfo, VictorycDIPInfo,
 	VictorycInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -8365,7 +8377,7 @@ struct BurnDriver BurnDrvVictorycb = {
 	"victorycb", "victoryc", NULL, NULL, "1982",
 	"Victory (Comsoft) (bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, victorycbRomInfo, victorycbRomName, NULL, NULL, NULL, NULL, VictorycInputInfo, VictorycDIPInfo,
 	VictorycInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -8499,7 +8511,7 @@ struct BurnDriver BurnDrvLuctoday = {
 	"luctoday", NULL, NULL, NULL, "1980",
 	"Lucky Today\0", "Bad colours", "Sigma", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_GALAXIAN, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_CASINO, 0,
 	NULL, LuctodayRomInfo, LuctodayRomName, NULL, NULL, NULL, NULL, LuctodayInputInfo, LuctodayDIPInfo,
 	LuctodayInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4

@@ -1,11 +1,11 @@
 version: 1.0.{build}
-image: Previous Visual Studio 2015
+image: Visual Studio 2015
 
 environment:
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2019
       build_type: fbn-win32-gcc
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    - APPVEYOR_BUILD_WORKER_IMAGE: Previous Visual Studio 2019
       build_type: fbn-win32-debug-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       build_type: fbn-source

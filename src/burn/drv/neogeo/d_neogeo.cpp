@@ -16985,7 +16985,7 @@ static INT32 kof98cpsExit()
 
 struct BurnDriver BurnDrvkof98cps = {
 	"kof98cps", "kof98", "neogeo", NULL, "2020",
-	"The King of Fighters '98 (Combo Plus, GSC2007 & DREAM)\0", NULL, "Hack", "Neo Geo MVS",
+	"The King of Fighters '98 (Combo Plus)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98cpsRomInfo, kof98cpsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,  
@@ -17195,11 +17195,12 @@ struct BurnDriver BurnDrvkof2000ps2 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2000 (OTC 2020-05-30, LOUSHI customized version, YZKOF)
+// The King of Fighters 2000 (OTC, hack)
+// YZKOF Last Update: 2020-06-15 (kof2000otc-p1.bin & kof2000otc-p2.bin)
 
 static struct BurnRomInfo kof2000otcRomDesc[] = {
-	{ "kof2000otc-p1.bin", 		0x100000, 0x39d70ffc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof2000otc-p2.bin", 		0x400000, 0x1c6ee3e3, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kof2000otc-p1.bin", 		0x100000, 0x11dbf4dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kof2000otc-p2.bin", 		0x400000, 0xe1095f50, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "257-c1_decrypted.bin",   0x800000, 0xabcdd424, 3 | BRF_GRA }, 		   //  2 Sprite data
 	{ "257-c2_decrypted.bin",   0x800000, 0xcda33778, 3 | BRF_GRA }, 		   //  3 
@@ -17223,9 +17224,9 @@ STDROMPICKEXT(kof2000otc, kof2000otc, neogeo)
 STD_ROM_FN(kof2000otc)
 
 struct BurnDriver BurnDrvkof2000otc = {
-	"kof2000otc", "kof2000", "neogeo", NULL, "2000",
-	"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version, YZKOF)\0", "ZERO only enable in AES mode", "hack", "Neo Geo MVS",
-	L"The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version, YZKOF)\0\u62F3\u7687 2000 (OTC 2020-05-30, LOUSHI \u5B9A\u5236\u7248, \u7EA6\u6218)\0", NULL, NULL, NULL,
+	"kof2000otc", "kof2000", "neogeo", NULL, "2020-06-15",
+	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enable in AES mode", "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -17362,9 +17363,9 @@ STDROMPICKEXT(kf2k1pkz, kf2k1pkz, neogeo)
 STD_ROM_FN(kf2k1pkz)
 
 struct BurnDriver BurnDrvkf2k1pkz = {
-	"kf2k1pkz", "kof2001", "neogeo", NULL, "2019",
-	"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
-	L"The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)\0\u62F3\u7687 2001 (PS2 Krizalid \u7248\u672C 2019-12-12, Eddids)\0", NULL, NULL, NULL,
+	"kf2k1pkz", "kof2001", "neogeo", NULL, "2019-12-12",
+	"The King of Fighters 2001 (PS2 Krizalid Edition)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k1pkzRomInfo, kf2k1pkzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	kf2k1plsInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -17828,12 +17829,82 @@ static INT32 K2k2ps2re1Exit()
 }
 
 struct BurnDriver BurnDrvK2k2ps2re1 = {
-	"kf2k2ps2re1", "kof2002", "neogeo", NULL, "2018",
-	"The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG & GSC2007)\0", "hack only enable in AES mode, imperfect sound", "Hack", "Neo Geo MVS",
-	L"The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG & GSC2007)\0\u62F3\u7687 2002 (PlayStation 2 \u4FEE\u6539\u7248\u672C 1.0 2018-12-17, EGCG & GSC2007)\0", NULL, NULL, NULL,
+	"kf2k2ps2re1", "kof2002", "neogeo", NULL, "2018-12-17",
+	"The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)\0", "hack only enable in AES mode, imperfect sound", "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, K2k2ps2re1RomInfo, K2k2ps2re1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,  
 	K2k2ps2re1Init, K2k2ps2re1Exit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters 2002 (Plus 2007, Hack)
+// Hacked by GSC2007
+// 2020-02-22
+
+static struct BurnRomInfo kof2k2plusRomDesc[] = {
+	{ "kof2k2plus-p1.p1",	0x100000, 0xbce20a36, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kof2k2plus-p2.p2",	0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kof2k2plus-p3.p3",	0x020000, 0x2bbed8ec, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+
+	{ "kof2k2plus-s1.s1",	0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
+
+	{ "kof2k2plus-c1.c1",	0x800000, 0x93cf6345, 3 | BRF_GRA },           //  4 Sprite data
+	{ "kof2k2plus-c2.c2",	0x800000, 0xd7373d66, 3 | BRF_GRA },           //  5
+	{ "kof2k2plus-c3.c3",	0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
+	{ "kof2k2plus-c4.c4", 	0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
+	{ "kof2k2plus-c5.c5", 	0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "kof2k2plus-c6.c6", 	0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "kof2k2plus-c7.c7",   0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
+	{ "kof2k2plus-c8.c8",   0x800000, 0xbef667a3, 3 | BRF_GRA },           // 10
+
+	/* Encrypted */
+	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	/* Encrypted */
+	{ "265-v1.v1",			0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2.v2",			0x800000, 0xda41d6f9, 5 | BRF_SND },           // 13 
+};
+
+STDROMPICKEXT(kof2k2plus, kof2k2plus, neogeo)
+STD_ROM_FN(kof2k2plus)
+
+static UINT8 *kof2k2plusExtraROM;
+
+static INT32 kof2k2plusInit()
+{
+	INT32 nRet = NeoInit();
+
+	if (nRet == 0) {kof2k2plusExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+		if (BurnLoadRom(kof2k2plusExtraROM, 2, 1)) return 1;
+		
+		SekOpen(0);
+		SekMapMemory(kof2k2plusExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+		SekClose();
+
+		const PCM2DecryptV2Info Info = { 0xa5000, 0x000000, { 0xf9, 0xe0, 0x5d, 0xf3, 0xea, 0x92, 0xbe, 0xef } };
+
+		PCM2DecryptV2(&Info);
+	}
+	
+	return nRet;
+}
+
+static INT32 kof2k2plusExit()
+{
+	BurnFree (kof2k2plusExtraROM);
+
+	return NeoExit();
+}
+
+struct BurnDriver BurnDrvkof2k2plus = {
+	"kof2k2plus", "kof2002", "neogeo", NULL, "2020-02-22",
+	"The King of Fighters 2002 (Plus 2017, Hack)\0", NULL, "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,  
+	kof2k2plusInit, kof2k2plusExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -19352,43 +19423,69 @@ struct BurnDriver BurnDrvbadapple = {
 };
 
 
-// Project Neon - Caravan Demo (0.4.19)
+// Project Neon (Caravan Edition, prealpha 0.4.19)
 
-static struct BurnRomInfo neonRomDesc[] = {
-	{ "dev_p1.rom",    0x002f6e5, 0x06a0946f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+static struct BurnRomInfo proneonRomDesc[] = {
+	{ "neon-p1.bin",    0x0080000, 0xf45cac3a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "fix.bin",       0x0020000, 0xf32de862, 2 | BRF_GRA },           //  1 Text data
+	{ "neon-s1.bin",    0x0020000, 0xf32de862, 2 | BRF_GRA },           //  1 Text data
 
-	{ "char.bin",      0x007a380, 0x8e0e0e70, 3 | BRF_GRA },           //  2 Sprite data
+	{ "neon-c1.bin",    0x0080000, 0x87df580b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "neon-c2.bin",    0x0080000, 0x7b854cc1, 3 | BRF_GRA },           //  3 
 
-	{ "sound.M1",      0x0010000, 0x6d24cf93, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
+	{ "neon-m1.bin",    0x0010000, 0x6d24cf93, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "sound.V1",      0x0100000, 0x2823ca49, 5 | BRF_SND },           //  4 Sound data
+	{ "neon-v1.bin",    0x0100000, 0x2823ca49, 5 | BRF_SND },           //  5 Sound data
 };
 
-STDROMPICKEXT(neon, neon, neogeo)
-STD_ROM_FN(neon)
+STDROMPICKEXT(proneon, proneon, neogeo)
+STD_ROM_FN(proneon)
 
-static void neonCallback()
-{
-	BurnByteswap(Neo68KROMActive, 0x80000); // byteswap 68k
-
-	BurnLoadRom(NeoSpriteROM[nNeoActiveSlot], 2, 1);
-}
-
-static INT32 neonInit()
-{
-	NeoCallbackActive->pInitialise = neonCallback;
-	
-	return NeoInit();
-}
-
-struct BurnDriver BurnDrvneon = {
-	"neon", NULL, "neogeo", NULL, "2019",
-	"Project Neon - Caravan Demo (0.4.19)\0", NULL, "FULLSET", "Neo Geo MVS",
+struct BurnDriver BurnDrvproneon = {
+	"proneon", NULL, "neogeo", NULL, "2019",
+	"Project Neon (Caravan Edition, prealpha 0.4.19)\0", NULL, "FULLSET", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
-	NULL, neonRomInfo, neonRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	neonInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, proneonRomInfo, proneonRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 224, 304, 3, 4
+};
+
+
+// NeoTRIS (Free beta Ver. 202005) 
+// https://www.chipsonsteroids.com/
+// https://www.youtube.com/watch?v=0P7Y5cEtUDs
+// 3 & 4 players not working (needs Multitap) 
+
+static struct BurnRomInfo neotrisRomDesc[] = {
+	{ "neotris-p1.bin",    0x080000, 0x33a71f8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "neotris-s1.bin",    0x020000, 0x6809043a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "neotris-c1.bin",    0x400000, 0x7f9c1a22, 3 | BRF_GRA },           //  2 Sprite data
+	{ "neotris-c2.bin",    0x400000, 0x4896e921, 3 | BRF_GRA },           //  3 
+	{ "neotris-c3.bin",    0x400000, 0xe8e2fcc3, 3 | BRF_GRA },           //  4 
+	{ "neotris-c4.bin",    0x400000, 0xec219a96, 3 | BRF_GRA },           //  5 
+	{ "neotris-c5.bin",    0x400000, 0xb8873b09, 3 | BRF_GRA },           //  6 
+	{ "neotris-c6.bin",    0x400000, 0xfb994623, 3 | BRF_GRA },           //  7 
+
+	{ "neotris-m1.bin",    0x010000, 0x2f9f8265, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "neotris-v1.bin",    0x400000, 0x9855b179, 5 | BRF_SND },           //  9 Sound data
+	{ "neotris-v2.bin",    0x400000, 0xb187368b, 5 | BRF_SND },           // 10 
+	{ "neotris-v3.bin",    0x400000, 0x5506b016, 5 | BRF_SND },           // 11
+	{ "neotris-v4.bin",    0x400000, 0x6bb8a938, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(neotris, neotris, neogeo)
+STD_ROM_FN(neotris)
+
+struct BurnDriver BurnDrvneotris = {
+	"neotris", NULL, "neogeo", NULL, "2020",
+	"NeoTRIS (Free Beta Ver. 202005)\0", NULL, "Chipsonsteroids", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, neotrisRomInfo, neotrisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };

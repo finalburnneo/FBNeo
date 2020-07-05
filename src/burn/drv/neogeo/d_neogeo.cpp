@@ -16497,7 +16497,7 @@ struct BurnDriver BurnDrvkof97t = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '97 (Anniversary Edition)
+// The King of Fighters '97 (Anniversary Edition Build 2.1.0212, EGHT hack)
 // Hacked by AndyChan
 
 static struct BurnRomInfo kof97aeRomDesc[] = {
@@ -16528,7 +16528,7 @@ STD_ROM_FN(kof97ae)
 
 struct BurnDriver BurnDrvkof97ae = {
 	"kof97ae", "kof97", "neogeo", NULL, "2018",
-	"The King of Fighters '97 (Anniversary Edition)\0", NULL, "Hack", "Neo Geo MVS",
+	"The King of Fighters '97 (Anniversary Edition build 2.1.0212)\0", NULL, "EGHT", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof97aeRomInfo, kof97aeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

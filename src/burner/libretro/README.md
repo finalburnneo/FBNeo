@@ -72,6 +72,9 @@ We don't provide links for roms. Google is your friend.
 It is either not supported or you have a bad rom, your logs will give you more details. Build a valid romset with clrmamepro as said above.
 There is also a few games marked as not working, try one of their clones.
 
+### I patched game XXX and can't run it, why ?
+Because it's considered a bad rom since the crcs won't match, however there is a method to use a patched romset, if you put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` it will work (NB: you can strip it of any file that don't differ from non-patched romset if you want)
+
 ### Game XXX has graphical glitches, why ?
 Write a report with details on the issue and your platform.
 

@@ -2164,7 +2164,7 @@ struct BurnDriver BurnDrvGhostb2a = {
 	"The Real Ghostbusters (US 2 Players)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ghostb2aRomInfo, ghostb2aRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, Ghostb3DIPInfo,
+	NULL, ghostb2aRomInfo, ghostb2aRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

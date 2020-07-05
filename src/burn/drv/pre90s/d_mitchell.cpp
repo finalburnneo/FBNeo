@@ -1802,7 +1802,8 @@ static INT32 MgakuenInit()
 	DrvTileMask = 0xffff;
 	DrvNumColours = 0x400;
 	DrvHasEEPROM = 0;
-	
+	DrvPort5Kludge = 1;
+
 	DrvInputType = DRV_INPUT_TYPE_MAHJONG;
 	
 	DrvDoReset();

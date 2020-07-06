@@ -805,14 +805,14 @@ static INT32 DrvFrame()
 			if (i == 223 && slave_irq_enable) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
+		M6809Open(1);
 		if (sound_in_reset) {
 			CPU_IDLE(2, M6809);
 		} else {
-			M6809Open(1);
 			CPU_RUN(2, M6809);
 			if (i == 223) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			M6809Close();
 		}
+		M6809Close();
 	}
 
 	SekClose();

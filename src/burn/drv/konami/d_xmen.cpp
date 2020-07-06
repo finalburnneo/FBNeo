@@ -623,7 +623,7 @@ static INT32 DrvDraw()
 
 	if (width != 288)
 	{
-		K053247SetSpriteOffset((GetCurrentFrame() & 1) ? 228 : 514, -158);
+		K053247SetSpriteOffset((GetCurrentFrame() & 1) ? 228 : 511, -158);
 		K052109AdjustScroll((GetCurrentFrame() & 1) ? 24 : -8, 0);
 
 		nScreenWidth = 512;

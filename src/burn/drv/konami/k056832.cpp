@@ -539,6 +539,33 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 		if (tilemap_flip & 1) sx = (512 - 8) - sx;
 		if (sx < (minx-7) || sx > maxx) continue;
 
+		{ // speed-up
+			// y is calculated in the tile blitter (see "// blitter" below)
+			// but we need to check clipping here in order to not need 8ghz to
+			// do linescrolling. (see: martial masters, 2nd attract game)
+			// in order to clip, we need to pre-calculate y+top and bottom of
+			// the tile here.
+			//
+			// TOCHECK:  (if anything here is changed!)
+			//   Xexex level 4, watch the top and bottom of the screen while
+			// scrolling up and down in the level.
+			//   Martial Masters, 2nd attract-mode game - watch cpu usage.
+			INT32 syyh;
+			INT32 syyl;
+			if (tilemap_flip & 2) {
+				syyh= (256 - 8) - (sy - 7);
+				syyh= (syyh + scrolly) & 0xff;
+
+				syyl= (256 - 8) - (sy - 0);
+				syyl= (syyl + scrolly) & 0xff;
+			} else {
+				syyh = ((sy + 7) - scrolly) & 0xff;
+				syyl = ((sy + 0) - scrolly) & 0xff;
+			}
+
+			if ( (syyh < (miny-7) || syyh > (maxy+7)) && (syyl < (miny-7) || syyl > (maxy+7)) ) continue;
+		}
+
 		UINT16 *pMem = &K056832VideoRAM[(pageIndex << 12) + (offs << 1)];
 
 		INT32 attr  = pMem[0];

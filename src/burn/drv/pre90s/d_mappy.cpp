@@ -1990,23 +1990,23 @@ static INT32 DrvFrame()
 		}
 		M6809Close();
 
+		M6809Open(1);
 		if (sub_cpu_in_reset) {
 			CPU_IDLE(1, M6809);
 		} else {
-			M6809Open(1);
 			CPU_RUN(1, M6809);
 			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
 		}
+		M6809Close();
 
+		M6809Open(2);
 		if (sub2_cpu_in_reset) {
 			CPU_IDLE(2, M6809);
 		} else {
-			M6809Open(2);
 			CPU_RUN(2, M6809);
 			if (i == nInterleave-1 && sub2_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
 		}
+		M6809Close();
 	}
 
 	if (pBurnSoundOut) {

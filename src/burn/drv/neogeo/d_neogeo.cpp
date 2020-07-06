@@ -15095,7 +15095,7 @@ static void mslug5b_cx_decode()
 	for (INT32 i = 0; i < 0x4000000; i += 0x200000) {
 		memcpy (tmp + 0x000000, NeoSpriteROM[nNeoActiveSlot] + i + 0x100000, 0x080000);
 		memcpy (tmp + 0x080000, NeoSpriteROM[nNeoActiveSlot] + i + 0x080000, 0x080000);
-		memcpy (NeoSpriteROM[nNeoActiveSlot] + i + 0x80000, tmp, 0x100000);
+		memmove (NeoSpriteROM[nNeoActiveSlot] + i + 0x80000, tmp, 0x100000);
 	}
 }
 

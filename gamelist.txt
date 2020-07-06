@@ -1454,7 +1454,7 @@ This list contains all games supported by FinalBurn Neo.
 | boxyboy	|  	| Boxy Boy (World, SB2)					| 		| 1990	| Namco		| System 1	| 					|
 | tg_boxyboy	|  	| Boxyboy						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_bsteam3	|  	| Boy Soccer Team III (Jpn, Pirate)			| md_tecmocup	| 199?	| <pirate>	| Sega Megadrive| 					|
-| bradley	|  	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
+| bradley	|   NW	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
 | cv_brainstr	|  	| Brain Strainers					| 		| 1984	| Coleco	| ColecoVision	| 					|
 | brain		|  	| Brain							| 		| 1986	| Coreland / Seg| System 1	| 					|
 | gg_dracula	|  	| Bram Stoker's Dracula (Euro)				| 		| 1994	| Sony Imagesoft| Sega Game Gear| 					|

@@ -16012,7 +16012,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBoxyboy,			// Boxy Boy (World, SB2)
 	&BurnDrvtg_boxyboy,			// Boxyboy
 	&BurnDrvmd_bsteam3,			// Boy Soccer Team III (Jpn, Pirate)
-	&BurnDrvBradley,			// Bradley Trainer
+	&BurnDrvBradley,			// Bradley Trainer [GFX/Sound Issues, NOT WORKING]
 	&BurnDrvcv_brainstr,		// Brain Strainers
 	&BurnDrvBrain,				// Brain
 	&BurnDrvgg_dracula,			// Bram Stoker's Dracula (Euro)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14267 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14269 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6067,10 +6067,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_ktesonic	|  	| Knuckles the Echidna in Sonic the Hedgehog (Hack)	| md_sonic	| 2005	| Stealth	| Sega Megadrive| 					|
 | msx_kobashi	|  	| Kobashi (HB)						| 		| 2004	| Desire in Envy| MSX		| Uses joyport #2			|
 | msx_koedoli	|  	| Koedoli (Kor)						| 		| 1988	| Aproman	| MSX		| 					|
-| kof2k2omg	|  	| Kof2002 (hack omg)					| kof2002	| 2002	| bootleg	| KOF-ON Team	| 					|
-| kof2k2omg8	|  	| Kof2002 (Omega v0.8)					| kof2002	| 2010	| bootleg	| KOF-ON Team	| 					|
-| kof2k2omg9b	|  	| Kof2002 (Omega v0.9 beta)				| kof2002	| 2011	| bootleg	| KOF-ON Team	| 					|
-| kof2k2omg9	|  	| Kof2002 (Omega v0.9)					| kof2002	| 2012	| bootleg	| KOF-ON Team	| 					|
 | ngp_koikoi	|  	| Koi Koi Mahjong (Jpn)					| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | koikois2	|  	| Koi Koi Shimasho 2 - Super Real Hanafuda (Japan)	| 		| 1997	| Visco		| SSV		| 					|
 | rockragej	|  	| Koi no Hotrock (Japan)				| rockrage	| 1986	| Konami	| GX620		| 					|
@@ -6264,7 +6260,7 @@ This list contains all games supported by FinalBurn Neo.
 | lastfort	|  	| Last Fortress - Toride (Japan, VG420 PCB)		| 		| 1994	| Metro		| Miscellaneous	| 					|
 | lastfortj	|  	| Last Fortress - Toride (Japan, VG460 PCB)		| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
 | lastfortk	|  	| Last Fortress - Toride (Korea)			| lastfort	| 1994	| Metro		| Miscellaneous	| 					|
-| lasthope	|  	| Last Hope (bootleg AES to MVS conversion, no coin supp| 		| 2005	| NG:Dev.Team	| Neo Geo MVS	| 					|
+| lasthope	|  	| Last Hope (bootleg AES to MVS conversion, no coin supp| 		| 2005	| bootleg	| Neo Geo MVS	| 					|
 | lhcdb		|  	| Last Hope CD Beta (Neo CD conversion)			| 		| 2007	| NG:Dev.Team	| Neo Geo MVS	| Imperfect graphics			|
 | lastkm	|  	| Last KM (Ver 1.0.0275)				| 		| 1995	| Gaelco	| Miscellaneous	| 					|
 | lastmisnj	|  	| Last Mission (Japan)					| lastmisn	| 1986	| Data East Corp| DEC8		| 					|
@@ -6992,7 +6988,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_metalmax	|  	| Metal Max (Japan)					| 		| 1991	| Data East	| Miscellaneous	| 					|
 | nes_metalmec	|  	| Metal Mech - Man & Machine (USA)			| 		| 1991	| Jaleco	| Miscellaneous	| 					|
 | metlsavr	|  	| Metal Saver						| 		| 1994	| First Amusemen| Miscellaneous	| 					|
-| mslugdg	|  	| Metal Slug (Multifunction Hack)			| mslug		| 2018	| hack		| Neo Geo MVS	| 					|
+| mslugdg	|  	| Metal Slug (Multifunction Hack, 20180430)		| mslug		| 2018	| hack		| Neo Geo MVS	| 					|
 | ngp_mslug1st	|  	| Metal Slug - 1st Mission (World)			| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_mslug2ndd	|  	| Metal Slug - 2nd Mission (Demo)			| ngp_mslug2nd	| 2000	| SNK		| NeoGeo Pocket | 					|
 | ngp_mslug2nd	|  	| Metal Slug - 2nd Mission (World)			| 		| 2000	| SNK		| NeoGeo Pocket | 					|
@@ -7000,22 +6996,22 @@ This list contains all games supported by FinalBurn Neo.
 | mslug2dg	|  	| Metal Slug 2 - Super Vehicle-001/II (Multifunction Hac| mslug2	| 2017	| hack		| Neo Geo MVS	| 					|
 | mslug2	|  	| Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-24| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | mslug2t	|  	| Metal Slug 2 Turbo (NGM-9410)				| mslug2	| 2015	| Hack		| Neo Geo MVS	| 					|
-| mslug3g	|  	| Metal Slug 3 (Multifunction Hack)			| mslug3	| 2019	| hack		| Neo Geo MVS	| 					|
-| mslug3v	|  	| Metal Slug 3 (NGH-2560) (Enhanced Violence Version hac| mslug3	| 2012	| SNK		| Neo Geo MVS	| 					|
+| mslug3g	|  	| Metal Slug 3 (Multifunction Hack, 20190119)		| mslug3	| 2019	| hack		| Neo Geo MVS	| 					|
+| mslug3v	|  	| Metal Slug 3 (NGH-2560) (Enhanced Violence Version, ha| mslug3	| 2012	| hack		| Neo Geo MVS	| 					|
 | mslug3h	|  	| Metal Slug 3 (NGH-2560)				| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3	|  	| Metal Slug 3 (NGM-2560)				| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | mslug3a	|  	| Metal Slug 3 (NGM-2560, earlier)			| mslug3	| 2000	| SNK		| Neo Geo MVS	| 					|
-| mslug4dg	|  	| Metal Slug 4 (Multifunction Hack)			| mslug4	| 2017	| hack		| Neo Geo	| 					|
+| mslug4dg	|  	| Metal Slug 4 (Multifunction Hack, 20171225)		| mslug4	| 2017	| hack		| Neo Geo	| 					|
 | mslug4h	|  	| Metal Slug 4 (NGH-2630)				| mslug4	| 2002	| Mega		| Neo Geo MVS	| 					|
 | mslug4	|  	| Metal Slug 4 (NGM-2630)				| 		| 2002	| Mega		| Neo Geo MVS	| 					|
 | ms4plus	|  	| Metal Slug 4 Plus (bootleg)				| mslug4	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b	|  	| Metal Slug 5 (bootleg, set 1)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | mslug5b2	|  	| Metal Slug 5 (bootleg, set 2)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | ms5pcb	|  	| Metal Slug 5 (JAMMA PCB)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
-| mslug5g	|  	| Metal Slug 5 (Multifunction Hack)			| mslug5	| 2017	| hack		| Neo Geo MVS	| 					|
+| mslug5g	|  	| Metal Slug 5 (Multifunction Hack, 20170523)		| mslug5	| 2017	| hack		| Neo Geo MVS	| 					|
+| mslug5w	|  	| Metal Slug 5 (New Campaign, 2016-03-10)		| mslug5	| 2003	| hack, C.B	| Miscellaneous	| 					|
 | mslug5h	|  	| Metal Slug 5 (NGH-2680)				| mslug5	| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
 | mslug5	|  	| Metal Slug 5 (NGM-2680)				| 		| 2003	| SNK Playmore	| Neo Geo MVS	| 					|
-| mslug5w	|  	| Metal Slug 5 (W)					| mslug5	| 2003	| C.B		| Miscellaneous	| 					|
 | ms5plus	|  	| Metal Slug 5 Plus (bootleg)				| mslug5	| 2003	| bootleg	| Neo Geo MVS	| 					|
 | mslug3b6	|  	| Metal Slug 6 (Metal Slug 3 bootleg)			| mslug3	| 2000	| bootleg	| Neo Geo MVS	| 					|
 | mslugx	|  	| Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)	| 		| 1999	| SNK		| Neo Geo MVS	| 					|
@@ -7772,6 +7768,7 @@ This list contains all games supported by FinalBurn Neo.
 | neotet	|  	| NeoGeo 2-Player Tetris				| 		| 2013	| Crim/Stephen	| Neo Geo	| 					|
 | neo3ddmo	|  	| NeoGeo 3D! Demo					| 		| 2012	| Oxygene	| Neo Geo	| 					|
 | ngp_ngp	|   NW	| NeoGeo Pocket (Bios)					| 		| 1998	| SNK		| NeoGeo Pocket	| BIOS only				|
+| neotris	|  	| NeoTRIS (Free Beta Ver. 202005)			| 		| 2020	| Chipsonsteroid| Neo Geo MVS	| 					|
 | nes_nesopetougol|  	| NES Open Tournament Golf (USA)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
 | nes_nescape	|  	| NEScape (HB)						| 		| 2019	| Khan Games	| Miscellaneous	| 					|
 | msx_nkoshien	|  	| Nessen Koushien (Jpn)					| 		| 1984	| Casio		| MSX		| 					|
@@ -8934,7 +8931,7 @@ This list contains all games supported by FinalBurn Neo.
 | promutrvc	|  	| Progressive Music Trivia (Question set 4)		| promutrv	| 1985	| Enerdyne Techn| Miscellaneous	| 					|
 | progress	|  	| Progress						| 		| 1984	| Chuo Co. Ltd	| Miscellaneous	| 					|
 | nes_projectblue|  	| Project Blue (HB)					| 		| 2019	| toggle switch	| Miscellaneous	| 					|
-| neon		|  	| Project Neon - Caravan Demo (0.4.19)			| 		| 2019	| FULLSET	| Neo Geo MVS	| 					|
+| proneon	|  	| Project Neon (Caravan Edition, prealpha 0.4.19)	| 		| 2019	| FULLSET	| Neo Geo MVS	| 					|
 | sms_sms3samp	|  	| Promocao Especial M. System III Compact (Bra, Sample)	| 		| 19??	| Tec Toy	| Sega Master Sy| 					|
 | md_psyoblade	|  	| Psy-O-Blade (Hack, English)				| md_psyoblad	| 2015	| Sigma		| Sega Megadrive| 					|
 | md_psyoblad	|  	| Psy-O-Blade (Jpn)					| 		| 1990	| Sigma		| Sega Megadrive| 					|
@@ -9394,7 +9391,7 @@ This list contains all games supported by FinalBurn Neo.
 | rbff2h	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| SNK		| Neo Geo MVS	| 					|
 | rbff2		|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | rbff2bh	|  	| Real Bout Fatal Fury 2 - The Newcomers / Real Bout Gar| rbff2		| 1998	| hack		| Neo Geo MVS	| 					|
-| rbffspbh	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| hack		| Neo Geo MVS	| 					|
+| rbffspbh	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| hack		| Neo Geo MVS	| Select Geese Howard with portrait, pre|
 | rbffspeck	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| rbffspec	| 1996	| SNK		| Neo Geo MVS	| 					|
 | rbffspec	|  	| Real Bout Fatal Fury Special / Real Bout Garou Densets| 		| 1996	| SNK		| Neo Geo MVS	| 					|
 | msx_realtenn	|  	| Real Tennis (Jpn)					| 		| 1983	| Takara	| MSX		| 					|
@@ -10008,7 +10005,7 @@ This list contains all games supported by FinalBurn Neo.
 | sengokuh	|  	| Sengoku / Sengoku Denshou (NGH-017)(US)		| sengoku	| 1991	| SNK		| Neo Geo MVS	| 					|
 | sengoku	|  	| Sengoku / Sengoku Denshou (NGM-017)(NGH-017)		| 		| 1991	| SNK		| Neo Geo MVS	| 					|
 | sengoku2	|  	| Sengoku 2 / Sengoku Denshou 2				| 		| 1993	| SNK		| Neo Geo MVS	| 					|
-| sengoku3s	|  	| Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT h| sengoku3	| 2001	| SNK / Noise Fa| Neo Geo MVS	| 					|
+| sengoku3s	|  	| Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT h| sengoku3	| 2001	| hack		| Neo Geo MVS	| 					|
 | sengoku3	|  	| Sengoku 3 / Sengoku Densho 2001 (set 1)		| 		| 2001	| SNK / Noise Fa| Neo Geo MVS	| 					|
 | sengoku3a	|  	| Sengoku 3 / Sengoku Densho 2001 (Set 2)		| sengoku3	| 2001	| SNK / Noise Fa| Neo Geo MVS	| 					|
 | sngkace	|  	| Sengoku Ace (Japan, set 1)				| samuraia	| 1993	| Psikyo / Banpr| Psikyo 68EC020| 					|
@@ -12357,7 +12354,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof96a	|  	| The King of Fighters '96 (NGM-214, alternate board)	| kof96		| 1996	| SNK		| Neo Geo MVS	| 					|
 | kof96ae20	|  	| The King of Fighters '96 (The Anniversary Edition 2.0,| kof96		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97cn	|  	| The King of Fighters '97 (10th Anniversary Chinese Edi| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
-| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition)	| kof97		| 2018	| Hack		| Neo Geo MVS	| 					|
+| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition build 2.| kof97		| 2018	| EGHT		| Neo Geo MVS	| 					|
 | kof97inv	|  	| The King of Fighters '97 (Invincible Plus)		| kof97		| 2019	| Hack		| Neo Geo MVS	| 					|
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
@@ -12372,7 +12369,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof97pla	|  	| The King of Fighters '97 Plus 2003 (bootleg / hack)	| kof97		| 2003	| bootleg	| Neo Geo MVS	| 					|
 | kof98ae2016	|  	| The King of Fighters '98 (Anniversary Edition build 1.| kof98		| 2016	| hack		| Neo Geo MVS	| 					|
 | kof98ae	|  	| The King of Fighters '98 (Anniversary Edition, EGHT ha| kof98		| 2007	| hack		| Neo Geo MVS	| 					|
-| kof98cps	|  	| The King of Fighters '98 (Combo Plus, GSC2007 & DREAM)| kof98		| 2020	| Hack		| Neo Geo MVS	| 					|
+| kof98cps	|  	| The King of Fighters '98 (Combo Plus)			| kof98		| 2020	| Hack		| Neo Geo MVS	| 					|
 | kof98cb	|  	| The King of Fighters '98 (Combo, hack)		| kof98		| 2018	| hack		| Neo Geo MVS	| 					|
 | kof98pfe	|  	| The King of Fighters '98 (Plus Final Edition 2017-07-2| kof98		| 2017	| GSC2007	| Miscellaneous	| 					|
 | kof98k	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
@@ -12389,7 +12386,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof99h	|  	| The King of Fighters '99 - Millennium Battle (NGH-2510| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99		|  	| The King of Fighters '99 - Millennium Battle (NGM-2510| 		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99p	|  	| The King of Fighters '99 - Millennium Battle (prototyp| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
-| kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2017	| hack		| Neo Geo MVS	| 					|
+| kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2017	| Yashional	| Neo Geo MVS	| 					|
 | kof99eur	|  	| The King of Fighters '99 Evolution Ultra Remix (Hack B| kof99		| 201?	| hack		| Neo Geo MVS	| 					|
 | kof99rp2f	|  	| The King of Fighters '99 Remix Pro V2.0 Final (Hack By| kof99		| 2006	| hack		| Neo Geo MVS	| 					|
 | kof99sr	|  	| The King of Fighters '99 Summer Revolution (Hack By FC| kof99		| 200?	| hack		| Neo Geo MVS	| 					|
@@ -12398,21 +12395,26 @@ This list contains all games supported by FinalBurn Neo.
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof10thd	|  	| The King of Fighters 10th Anniversary (The King of Fig| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
-| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized,| kof2002	| 2019	| hack		| Miscellaneous	| 					|
+| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized | kof2002	| 2019	| hack		| Miscellaneous	| 					|
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
 | kof2000	|  	| The King of Fighters 2000 (NGM-2570) (NGH-2570)	| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|
-| kof2000otc	|  	| The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI cus| kof2000	| 2000	| hack		| Neo Geo MVS	| ZERO only enable in AES mode		|
-| kof2000ps2	|  	| The King of Fighters 2000 (Playstation 2 ver. , EGHT h| kof2000	| 2000	| SNK		| Neo Geo MVS	| hack only enable in AES mode		|
+| kof2000otc	|  	| The King of Fighters 2000 (OTC, hack)			| kof2000	| 2020-06-15| hack		| Neo Geo MVS	| ZERO only enable in AES mode		|
+| kof2000ps2	|  	| The King of Fighters 2000 (Playstation 2 ver. , EGHT h| kof2000	| 2000	| hack		| Neo Geo MVS	| hack only enable in AES mode		|
 | kof2001h	|  	| The King of Fighters 2001 (NGH-2621)			| kof2001	| 2001	| SNK / Eolith	| Neo Geo AES	| 					|
 | kof2001	|  	| The King of Fighters 2001 (NGM-262?)			| 		| 2001	| SNK / Eolith	| Neo Geo MVS	| 					|
-| kf2k1pkz	|  	| The King of Fighters 2001 (PS2 Krizalid Edition 2019-1| kof2001	| 2019	| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
+| kf2k1pkz	|  	| The King of Fighters 2001 (PS2 Krizalid Edition)	| kof2001	| 2019-12-12| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
 | kf2k1pls	|  	| The King of Fighters 2001 Plus (set 1, bootleg / hack)| kof2001	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k1pa	|  	| The King of Fighters 2001 Plus (set 2, bootleg / hack)| kof2001	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof2002b	|  	| The King of Fighters 2002 (bootleg)			| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof2002	|  	| The King of Fighters 2002 (NGM-2650)(NGH-2650)	| 		| 2002	| Eolith / Playm| Neo Geo MVS	| 					|
-| kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
+| kof2k2omg	|  	| The King of Fighters 2002 (Omega v.0?)		| kof2002	| 2002	| hack		| KOF-ON Team	| 					|
+| kof2k2omg8	|  	| The King of Fighters 2002 (Omega v0.8)		| kof2002	| 2010	| hack		| KOF-ON Team	| 					|
+| kof2k2omg9b	|  	| The King of Fighters 2002 (Omega v0.9 beta)		| kof2002	| 2011	| hack		| KOF-ON Team	| 					|
+| kof2k2omg9	|  	| The King of Fighters 2002 (Omega v0.9)		| kof2002	| 2012	| hack		| KOF-ON Team	| 					|
+| kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 Public B| kof2002	| 2018-12-17| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
+| kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-02-22| Hack		| Neo Geo MVS	| 					|
 | kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2mp2	|  	| The King of Fighters 2002 Magic Plus II (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
@@ -12436,10 +12438,10 @@ This list contains all games supported by FinalBurn Neo.
 | lastbladh	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NG| lastblad	| 1997	| SNK		| Neo Geo AES	| 					|
 | lastblad	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NG| 		| 1997	| SNK		| Neo Geo MVS	| 					|
 | lastblada	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NG| lastblad	| 1997	| SNK		| Neo Geo MVS	| 					|
-| lastbladsp	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Sp| lastblad	| 2017	| SNK		| Neo Geo MVS	| 					|
-| lastbld2eh	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| SNK		| Neo Geo MVS	| 					|
+| lastbladsp	|  	| The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Sp| lastblad	| 2017	| hack		| Neo Geo MVS	| 					|
+| lastbld2eh	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| hack		| Neo Geo MVS	| 					|
 | lastbld2	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| 		| 1998	| SNK		| Neo Geo MVS	| 					|
-| lastbld2te	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| SNK		| Neo Geo MVS	| 					|
+| lastbld2te	|  	| The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka| lastbld2	| 1998	| hack		| Neo Geo MVS	| 					|
 | lastday	|  	| The Last Day (set 1)					| 		| 1990	| Dooyong	| Miscellaneous	| 					|
 | lastdaya	|  	| The Last Day (set 2)					| lastday	| 1990	| Dooyong	| Miscellaneous	| 					|
 | lastsold	|  	| The Last Soldier (Korean release of The Last Blade)	| lastblad	| 1997	| SNK		| Neo Geo MVS	| 					|

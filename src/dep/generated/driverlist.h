@@ -6181,10 +6181,6 @@ DRV		BurnDrvmd_knucklp;
 DRV		BurnDrvmd_ktesonic;
 DRV		BurnDrvMSX_kobashi;
 DRV		BurnDrvMSX_koedoli;
-DRV		BurnDrvkof2k2omg;
-DRV		BurnDrvkof2k2omg8;
-DRV		BurnDrvkof2k2omg9b;
-DRV		BurnDrvkof2k2omg9;
 DRV		BurnDrvngpc_koikoi;
 DRV		BurnDrvKoikois2;
 DRV		BurnDrvRockragej;
@@ -7133,9 +7129,9 @@ DRV		BurnDrvmslug5b;
 DRV		BurnDrvmslug5b2;
 DRV		BurnDrvms5pcb;
 DRV		BurnDrvmslug5g;
+DRV		BurnDrvMslug5w;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
-DRV		BurnDrvMslug5w;
 DRV		BurnDrvms5plus;
 DRV		BurnDrvmslug3b6;
 DRV		BurnDrvMSlugX;
@@ -7912,6 +7908,7 @@ DRV		BurnDrvNeocup98;
 DRV		BurnDrvneotet;
 DRV		BurnDrvneo3ddmo;
 DRV		BurnDrvngpc_ngp;
+DRV		BurnDrvneotris;
 DRV		BurnDrvnes_nesopetougol;
 DRV		BurnDrvnes_nescape;
 DRV		BurnDrvMSX_nkoshien;
@@ -9094,7 +9091,7 @@ DRV		BurnDrvPromutrvb;
 DRV		BurnDrvPromutrvc;
 DRV		BurnDrvProgress;
 DRV		BurnDrvnes_projectblue;
-DRV		BurnDrvneon;
+DRV		BurnDrvproneon;
 DRV		BurnDrvsms_sms3samp;
 DRV		BurnDrvmd_psyoblade;
 DRV		BurnDrvmd_psyoblad;
@@ -12625,8 +12622,13 @@ DRV		BurnDrvkf2k1pls;
 DRV		BurnDrvkf2k1pa;
 DRV		BurnDrvkof2002b;
 DRV		BurnDrvkof2002;
+DRV		BurnDrvkof2k2omg;
+DRV		BurnDrvkof2k2omg8;
+DRV		BurnDrvkof2k2omg9b;
+DRV		BurnDrvkof2k2omg9;
 DRV		BurnDrvK2k2ps2re1;
 DRV		BurnDrvkf2k2ps2;
+DRV		BurnDrvkof2k2plus;
 DRV		BurnDrvkf2k23rd;
 DRV		BurnDrvkf2k2mp;
 DRV		BurnDrvkf2k2mp2;
@@ -20717,10 +20719,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ktesonic,		// Knuckles the Echidna in Sonic the Hedgehog (Hack)
 	&BurnDrvMSX_kobashi,		// Kobashi (HB)
 	&BurnDrvMSX_koedoli,		// Koedoli (Kor)
-	&BurnDrvkof2k2omg,			// Kof2002 (hack omg)
-	&BurnDrvkof2k2omg8,			// Kof2002 (Omega v0.8)
-	&BurnDrvkof2k2omg9b,		// Kof2002 (Omega v0.9 beta)
-	&BurnDrvkof2k2omg9,			// Kof2002 (Omega v0.9)
 	&BurnDrvngpc_koikoi,		// Koi Koi Mahjong (Jpn)
 	&BurnDrvKoikois2,			// Koi Koi Shimasho 2 - Super Real Hanafuda (Japan)
 	&BurnDrvRockragej,			// Koi no Hotrock (Japan)
@@ -21648,30 +21646,30 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_metalmax,		// Metal Max (Japan)
 	&BurnDrvnes_metalmec,		// Metal Mech - Man & Machine (USA)
 	&BurnDrvMetlsavr,			// Metal Saver
-	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack)
+	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack, 20180430)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
-	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack)
+	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
 	&BurnDrvMSlug2t,			// Metal Slug 2 Turbo (NGM-9410)
-	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack)
-	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version hack by EEZEZY)
+	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack, 20190119)
+	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
-	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack)
+	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack, 20171225)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvms4plus,			// Metal Slug 4 Plus (bootleg)
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
-	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack)
+	&BurnDrvmslug5g,			// Metal Slug 5 (Multifunction Hack, 20170523)
+	&BurnDrvMslug5w,			// Metal Slug 5 (New Campaign, 2016-03-10)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
-	&BurnDrvMslug5w,			// Metal Slug 5 (W)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
 	&BurnDrvmslug3b6,			// Metal Slug 6 (Metal Slug 3 bootleg)
 	&BurnDrvMSlugX,				// Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
@@ -22448,6 +22446,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvneotet,				// NeoGeo 2-Player Tetris
 	&BurnDrvneo3ddmo,			// NeoGeo 3D! Demo
 	&BurnDrvngpc_ngp,			// NeoGeo Pocket (Bios) [BIOS only, NOT WORKING]
+	&BurnDrvneotris,			// NeoTRIS (Free Beta Ver. 202005)
 	&BurnDrvnes_nesopetougol,	// NES Open Tournament Golf (USA)
 	&BurnDrvnes_nescape,		// NEScape (HB)
 	&BurnDrvMSX_nkoshien,		// Nessen Koushien (Jpn)
@@ -23630,7 +23629,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPromutrvc,			// Progressive Music Trivia (Question set 4)
 	&BurnDrvProgress,			// Progress
 	&BurnDrvnes_projectblue,	// Project Blue (HB)
-	&BurnDrvneon,				// Project Neon - Caravan Demo (0.4.19)
+	&BurnDrvproneon,			// Project Neon (Caravan Edition, prealpha 0.4.19)
 	&BurnDrvsms_sms3samp,		// Promocao Especial M. System III Compact (Bra, Sample)
 	&BurnDrvmd_psyoblade,		// Psy-O-Blade (Hack, English)
 	&BurnDrvmd_psyoblad,		// Psy-O-Blade (Jpn)
@@ -27107,7 +27106,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof96a,				// The King of Fighters '96 (NGM-214, alternate board)
 	&BurnDrvkof96ae20,			// The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)
 	&BurnDrvkof97cn,			// The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)
-	&BurnDrvkof97ae,			// The King of Fighters '97 (Anniversary Edition)
+	&BurnDrvkof97ae,			// The King of Fighters '97 (Anniversary Edition build 2.1.0212)
 	&BurnDrvkof97invplus,		// The King of Fighters '97 (Invincible Plus)
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)
@@ -27122,7 +27121,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof97pla,			// The King of Fighters '97 Plus 2003 (bootleg / hack)
 	&BurnDrvkof98ae2016,		// The King of Fighters '98 (Anniversary Edition build 1.2.0827)
 	&BurnDrvkof98ae,			// The King of Fighters '98 (Anniversary Edition, EGHT hack)
-	&BurnDrvkof98cps,			// The King of Fighters '98 (Combo Plus, GSC2007 & DREAM)
+	&BurnDrvkof98cps,			// The King of Fighters '98 (Combo Plus)
 	&BurnDrvkof98cb,			// The King of Fighters '98 (Combo, hack)
 	&BurnDrvkof98pfe,			// The King of Fighters '98 (Plus Final Edition 2017-07-23)
 	&BurnDrvKof98k,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)
@@ -27148,21 +27147,26 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
 	&BurnDrvkof10thd,			// The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
-	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized, Hack)
+	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized version 2019, 20190605)
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg)
 	&BurnDrvkof2000,			// The King of Fighters 2000 (NGM-2570) (NGH-2570)
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
-	&BurnDrvkof2000otc,			// The King of Fighters 2000 (OTC 2020-05-30 , LOUSHI customized version, YZKOF)
+	&BurnDrvkof2000otc,			// The King of Fighters 2000 (OTC, hack)
 	&BurnDrvkof2000ps2,			// The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
-	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition 2019-12-12, Eddids)
+	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
 	&BurnDrvkf2k1pa,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
 	&BurnDrvkof2002b,			// The King of Fighters 2002 (bootleg)
 	&BurnDrvkof2002,			// The King of Fighters 2002 (NGM-2650)(NGH-2650)
-	&BurnDrvK2k2ps2re1,			// The King of Fighters 2002 (PlayStation 2 v1.0 2018-12-17, EGCG & GSC2007)
+	&BurnDrvkof2k2omg,			// The King of Fighters 2002 (Omega v.0?)
+	&BurnDrvkof2k2omg8,			// The King of Fighters 2002 (Omega v0.8)
+	&BurnDrvkof2k2omg9b,		// The King of Fighters 2002 (Omega v0.9 beta)
+	&BurnDrvkof2k2omg9,			// The King of Fighters 2002 (Omega v0.9)
+	&BurnDrvK2k2ps2re1,			// The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)
 	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
+	&BurnDrvkof2k2plus,			// The King of Fighters 2002 (Plus 2017, Hack)
 	&BurnDrvkf2k23rd,			// The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)
 	&BurnDrvkf2k2mp,			// The King of Fighters 2002 Magic Plus (bootleg)
 	&BurnDrvkf2k2mp2,			// The King of Fighters 2002 Magic Plus II (bootleg)

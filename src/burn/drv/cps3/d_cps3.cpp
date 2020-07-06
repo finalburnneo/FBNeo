@@ -81,7 +81,7 @@ static struct BurnInputInfo jojoInputList[] = {
 	{"P1 Medium Attack",BIT_DIGITAL,	Cps3But1 +  5,	"p1 fire 2"	},
 	{"P1 Strong Attack",BIT_DIGITAL,	Cps3But1 +  6,	"p1 fire 3"	},
 	{"P1 Stand",		BIT_DIGITAL,	Cps3But3 +  3,	"p1 fire 4"	},
-	{"P1 Not in use 1",	BIT_DIGITAL,	Cps3But3 +  2,	"p1 fire 5"	},
+	{"P1 All Attacks (Fake)",	BIT_DIGITAL,	Cps3But3 +  2,	"p1 fire 5"	},
 	{"P1 Not in use 2",	BIT_DIGITAL,	Cps3But3 +  1,	"p1 fire 6"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	Cps3But2 +  9,	"p2 coin"	},
@@ -95,7 +95,7 @@ static struct BurnInputInfo jojoInputList[] = {
 	{"P2 Medium Attack",BIT_DIGITAL,	Cps3But1 + 13,	"p2 fire 2"	},
 	{"P2 Strong Attack",BIT_DIGITAL,	Cps3But1 + 14,	"p2 fire 3"	},
 	{"P2 Stand",		BIT_DIGITAL,	Cps3But3 +  4,	"p2 fire 4"	},
-	{"P2 Not in use 1",	BIT_DIGITAL,	Cps3But3 +  5,	"p2 fire 5"	},
+	{"P2 All Attacks (Fake)",	BIT_DIGITAL,	Cps3But3 +  5,	"p2 fire 5"	},
 	{"P2 Not in use 2",	BIT_DIGITAL,	Cps3But2 + 10,	"p2 fire 6"	},
 
 	{"Reset",			BIT_DIGITAL,	&cps3_reset,	"reset"		},

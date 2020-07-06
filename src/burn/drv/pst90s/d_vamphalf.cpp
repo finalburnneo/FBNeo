@@ -991,7 +991,7 @@ static INT32 DrvLoadRoms(bool bLoad)
 
 		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 1) {
 			if (bLoad) {
-				memcpy (DrvMainROM, DrvMainROM + ri.nLen, 0x400000 - ri.nLen);
+				memmove (DrvMainROM, DrvMainROM + ri.nLen, 0x400000 - ri.nLen);
 				if (BurnLoadRom(DrvMainROM + 0x400000 - ri.nLen, i, 1)) return 1;
 			}
 			continue;

@@ -4753,10 +4753,12 @@ STD_ROM_PICK(Wonder3h)
 STD_ROM_FN(Wonder3h)
 
 static struct BurnRomInfo Wonder3haRomDesc[] = {
-	{ "22.bin",        0x040000, 0x8eb6b675, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "26.bin",        0x040000, 0xab2d0699, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "23.bin",        0x040000, 0x74db820f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "27.bin",        0x040000, 0xc75e807b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	// same as 3wondersh except for program roms
+	// 3wondersb01 in HBMAME
+	{ "b01.22",        0x040000, 0x8eb6b675, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "b01.26",        0x040000, 0xab2d0699, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "b01.23",        0x040000, 0x74db820f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "b01.27",        0x040000, 0xc75e807b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "16.bin",        0x040000, 0xc997bca2, BRF_GRA | CPS1_TILES },
 	{ "6.bin",         0x040000, 0x3eea321a, BRF_GRA | CPS1_TILES },

@@ -968,16 +968,16 @@ struct BurnDriver BurnDrvTheglob3 = {
 // IGMO
 
 static struct BurnRomInfo igmoRomDesc[] = {
-	{ "igmo-u10.732",	0x1000, 0xa9f691a4, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
-	{ "igmo-u9.732",	0x1000, 0x3c133c97, BRF_ESS | BRF_PRG }, 	//  1
-	{ "igmo-u8.732",	0x1000, 0x5692f8d8, BRF_ESS | BRF_PRG }, 	//  2
-	{ "igmo-u7.732",	0x1000, 0x630ae2ed, BRF_ESS | BRF_PRG }, 	//  3
-	{ "igmo-u6.732",	0x1000, 0xd3f20e1d, BRF_ESS | BRF_PRG }, 	//  4
-	{ "igmo-u5.732",	0x1000, 0xe26bb391, BRF_ESS | BRF_PRG }, 	//  5
-	{ "igmo-u4.732",	0x1000, 0x762a4417, BRF_ESS | BRF_PRG }, 	//  6
-	{ "igmo-u11.716",	0x0800, 0x8c675837, BRF_ESS | BRF_PRG }, 	//  7
+	{ "u10_igmo_i05134.u10",	0x1000, 0xa9f691a4, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
+	{ "u9_igmo_i05134.u9",	    0x1000, 0x3c133c97, BRF_ESS | BRF_PRG }, 	//  1
+	{ "u8_igmo_i05134.u8",	    0x1000, 0x5692f8d8, BRF_ESS | BRF_PRG }, 	//  2
+	{ "u7_igmo_i05134.u7",	    0x1000, 0x630ae2ed, BRF_ESS | BRF_PRG }, 	//  3
+	{ "u6_igmo_i05134.u6",	    0x1000, 0xd3f20e1d, BRF_ESS | BRF_PRG }, 	//  4
+	{ "u5_igmo_i05134.u5",	    0x1000, 0xe26bb391, BRF_ESS | BRF_PRG }, 	//  5
+	{ "u4_igmo_i05134.u4",	    0x1000, 0x762a4417, BRF_ESS | BRF_PRG }, 	//  6
+	{ "u11_igmo_i05134.u11",	0x0800, 0x8c675837, BRF_ESS | BRF_PRG }, 	//  7
 
-	{ "82s123.u66",		0x0020, 0x00000000, BRF_GRA | BRF_NODUMP },	//  8 Color Prom (missing)
+	{ "82s123.u66",		        0x0020, 0x1ba03ffe, BRF_GRA },	//  8 Color Prom
 };
 
 STD_ROM_PICK(igmo)
@@ -985,7 +985,7 @@ STD_ROM_FN(igmo)
 
 struct BurnDriver BurnDrvIgmo = {
 	"igmo", NULL, NULL, NULL, "1984",
-	"IGMO\0", "Incorrect Colors", "Epos Corporation", "EPOS Tristar",
+	"IGMO\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, igmoRomInfo, igmoRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,

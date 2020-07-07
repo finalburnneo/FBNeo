@@ -4786,7 +4786,7 @@ static struct BurnRomInfo Wonder3haRomDesc[] = {
 	
 	{ "rt24b.1a",      0x000117, 0x54b85159, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Wonder3ha)

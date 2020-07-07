@@ -1781,7 +1781,6 @@ DRV		BurnDrvnes_captaameandave;
 DRV		BurnDrvmd_captavenup;
 DRV		BurnDrvMSX_captchef;
 DRV		BurnDrvnes_captacom;
-DRV		BurnDrvCpsCaptcommp4;
 DRV		BurnDrvCpsCaptcommjr1;
 DRV		BurnDrvCpsCaptcommu;
 DRV		BurnDrvCpsCaptcommr1;
@@ -1790,6 +1789,7 @@ DRV		BurnDrvCpsCaptcomm;
 DRV		BurnDrvCpsCaptcommb;
 DRV		BurnDrvCpsCaptcommb2;
 DRV		BurnDrvCpsCaptcommb3;
+DRV		BurnDrvCpsCaptcommp4;
 DRV		BurnDrvCpsCaptcommr1pwx;
 DRV		BurnDrvnes_captained;
 DRV		BurnDrvmd_captlang;
@@ -11275,7 +11275,7 @@ DRV		BurnDrvCpsSf2ebbl3;
 DRV		BurnDrvCpsSf2ebbl;
 DRV		BurnDrvCpsSf2thndr;
 DRV		BurnDrvCpsSf2thndr2;
-DRV		BurnDrvCpsSf2jbh;
+DRV		BurnDrvCpsSf2ly;
 DRV		BurnDrvCpsSf2cebltw;
 DRV		BurnDrvCpsSf2ceeabl;
 DRV		BurnDrvCpsSf2ceeab2;
@@ -16242,7 +16242,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDinopic4,		// Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic5,		// Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57), 930223 Asia TW)
 	&BurnDrvCpsDinohc,			// Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia TW)
-	&BurnDrvCpsDinods,			// Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)
+	&BurnDrvCpsDinods,			// Cadillacs and Dinosaurs (God of War Edition, Hack)
 	&BurnDrvCpsDinoeh,			// Cadillacs and Dinosaurs (hack, 930201 etc)
 	&BurnDrvCpsDinot,			// Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 Asia TW)
 	&BurnDrvCpsDinotpic,		// Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC16c57), 930201 etc)
@@ -16322,7 +16322,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_captavenup,		// Captain America and the Avengers (USA, Prototype)
 	&BurnDrvMSX_captchef,		// Captain Chef (Jpn)
 	&BurnDrvnes_captacom,		// Captain Comic - The Adventure (USA)
-	&BurnDrvCpsCaptcommp4,		// Captain Commando (1 V 4 GOTVG)
 	&BurnDrvCpsCaptcommjr1,		// Captain Commando (910928 Japan)
 	&BurnDrvCpsCaptcommu,		// Captain Commando (910928 USA)
 	&BurnDrvCpsCaptcommr1,		// Captain Commando (911014 World)
@@ -16331,6 +16330,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCaptcommb,		// Captain Commando (bootleg set 1, 911014 other country)
 	&BurnDrvCpsCaptcommb2,		// Captain Commando (bootleg set 2 (with 2xMSM5205), 911014 other country) [unemulated graphics, NOT WORKING]
 	&BurnDrvCpsCaptcommb3,		// Captain Commando (bootleg set 3 (with YM2151 + 2xMSM5205), 911014 other country)
+	&BurnDrvCpsCaptcommp4,		// Captain Commando (Enhanced edition 1 V 4, Hack)
 	&BurnDrvCpsCaptcommr1pwx,	// Captain Commando (Unlimited Bullet Update 2020-02-19)
 	&BurnDrvnes_captained,		// Captain ED (Japan)
 	&BurnDrvmd_captlang,		// Captain Lang (Jpn)
@@ -18806,7 +18806,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvFrogs,				// Frogs [No sound]
 #endif
-	&BurnDrvnes_frombelow,		// From Below (HB, v6.26.2020)
+	&BurnDrvnes_frombelow,		// From Below (HB, v7.03.2020)
 	&BurnDrvgg_slamdunk,		// From TV Animation - Slam Dunk - Shouri e no Starting 5 (Jpn)
 	&BurnDrvmd_slamdunk,		// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Jpn)
 	&BurnDrvcv_frontlina,		// Front Line (Alt)
@@ -25816,7 +25816,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ebbl,			// Street Fighter II - The World Warrior (TAB Austria bootleg, 910214 etc)
 	&BurnDrvCpsSf2thndr,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 1)
 	&BurnDrvCpsSf2thndr2,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 2)
-	&BurnDrvCpsSf2jbh,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
+	&BurnDrvCpsSf2ly,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
 	&BurnDrvCpsSf2ceeab2,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 2)
@@ -26802,7 +26802,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsWofj,			// Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)
 	&BurnDrvCpsWofch,			// Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)
 	&BurnDrvCpsWofjh,			// Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)
-	&BurnDrvCpsWofjdr,			// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)
+	&BurnDrvCpsWofjdr,			// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
 	&BurnDrvCpswofchp,			// Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)
 	&BurnDrvTengai,				// Tengai (world)
 	&BurnDrvTengaij,			// Tengai\0Sengoku Blade - sengoku Ace episode II

@@ -1679,7 +1679,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition Update 202| dino		| 2020	| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-04-19| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -1759,7 +1759,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_captavenup	|  	| Captain America and the Avengers (USA, Prototype)	| md_captaven	| 1992	| Data East	| Sega Megadrive| 					|
 | msx_captchef	|  	| Captain Chef (Jpn)					| 		| 1984	| Nihon Columbia| MSX		| 					|
 | nes_captacom	|  	| Captain Comic - The Adventure (USA)			| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
-| captcommp4	|  	| Captain Commando (1 V 4 GOTVG)			| captcomm	| 2020	| hack		| CPS1		| 					|
 | captcommjr1	|  	| Captain Commando (910928 Japan)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
 | captcommu	|  	| Captain Commando (910928 USA)				| captcomm	| 1991	| Capcom	| CPS1		| 					|
 | captcommr1	|  	| Captain Commando (911014 World)			| captcomm	| 1991	| Capcom	| CPS1		| 					|
@@ -1768,6 +1767,7 @@ This list contains all games supported by FinalBurn Neo.
 | captcommb	|  	| Captain Commando (bootleg set 1, 911014 other country)| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommb2	|   NW	| Captain Commando (bootleg set 2 (with 2xMSM5205), 9110| captcomm	| 1991	| bootleg	| CPS1		| unemulated graphics			|
 | captcommb3	|  	| Captain Commando (bootleg set 3 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
+| captcommp4	|  	| Captain Commando (Enhanced edition 1 V 4, Hack)	| captcomm	| 2015-12-05| hack		| CPS1		| 					|
 | captcommr1pwx	|  	| Captain Commando (Unlimited Bullet Update 2020-02-19)	| captcomm	| 2020	| Hack		| CPS1		| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
 | md_captlang	|  	| Captain Lang (Jpn)					| md_havoc	| 1994	| Data East	| Sega Megadrive| 					|
@@ -4189,7 +4189,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_frogger	|  	| Frogger						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | frogger	|  	| Frogger						| 		| 1981	| Konami	| Galaxian	| 					|
 | frogs		| D	| Frogs							| 		| 1978	| Gremlin	| Vic Dual	| No sound				|
-| nes_frombelow	|  	| From Below (HB, v6.26.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
+| nes_frombelow	|  	| From Below (HB, v7.03.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
 | gg_slamdunk	|  	| From TV Animation - Slam Dunk - Shouri e no Starting 5| 		| 1994	| Bandai	| Sega Game Gear| 					|
 | md_slamdunk	|  	| From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!| 		| 1995	| Bandai	| Sega Megadrive| 					|
 | cv_frontlina	|  	| Front Line (Alt)					| cv_frontlin	| 1983	| Coleco	| ColecoVision	| 					|
@@ -11081,7 +11081,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2ebbl	|  	| Street Fighter II - The World Warrior (TAB Austria boo| sf2		| 1992	| bootleg	| CPS1		| 					|
 | sf2thndr	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
-| sf2jbh	|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
+| sf2ly		|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -12049,7 +12049,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020	| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-03-26| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|

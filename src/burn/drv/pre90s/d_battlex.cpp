@@ -19,7 +19,7 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvPalRAM;
 
-static UINT16 *tmpbitmap;
+static UINT8 *tmpbitmap;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -338,7 +338,7 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	tmpbitmap		= (UINT16*)Next; Next += 256 * 224 * sizeof(UINT16);
+	tmpbitmap		= Next; Next += 256 * 224;
 
 	MemEnd			= Next;
 
@@ -348,9 +348,9 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode(INT32 select)
 {
 	INT32 size = (select) ? 0x6000 : 0x3000;
-	INT32 Plane0[4] = { 0, 1, 2, 3 };
-	INT32 XOffs0[8] = { 0, 4, 8, 12, 16, 20, 24, 28 };
-	INT32 YOffs0[8] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 };
+	INT32 Plane0[4] = { STEP4(0, 1) };
+	INT32 XOffs0[8] = { STEP8(0, 4) };
+	INT32 YOffs0[8] = { STEP8(0, 32) };
 
 	INT32 Plane1[3] = { RGN_FRAC(size, 0, 3), RGN_FRAC(size, 1, 3), RGN_FRAC(size, 2, 3) };
 	INT32 XOffs1[16] = { STEP8(7,-1), STEP8(15,-1) };
@@ -416,7 +416,7 @@ static void DrvGfxExpand(INT32 len, INT32 game_select)
 
 static void init_stars() // hack
 {
-	UINT16 *dst = tmpbitmap;
+	UINT8 *dst = tmpbitmap;
 
 	for (INT32 y = 0; y < 224; y++)
 	{
@@ -543,7 +543,7 @@ static void draw_sprites()
 
 static void draw_stars()
 {
-	UINT16 *src = tmpbitmap;
+	UINT8 *src = tmpbitmap;
 	UINT16 *dst = pTransDraw;
 
 	for (INT32 y = 0; y < 224; y++)

@@ -1861,11 +1861,11 @@ static void draw_layer()
 		x++;
 
 		if (x == 0) {
+			y++;
+
 			if (y >= nScreenHeight) {
 				break;
 			}
-
-			y++;
 		}
 	}
 }

@@ -122,7 +122,7 @@ static struct BurnInputInfo BradleyInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 #undef A
@@ -134,6 +134,7 @@ static struct BurnDIPInfo BzoneDIPList[]=
 	{0x0a, 0xff, 0xff, 0x15, NULL					},
 	{0x0b, 0xff, 0xff, 0x03, NULL					},
 	{0x0c, 0xff, 0xff, 0x10, NULL					},
+	{0x0d, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x0a, 0x01, 0x03, 0x00, "2"					},
@@ -198,6 +199,7 @@ static struct BurnDIPInfo RedbaronDIPList[]=
 	{0x0b, 0xff, 0xff, 0xfd, NULL					},
 	{0x0c, 0xff, 0xff, 0xe7, NULL					},
 	{0x0d, 0xff, 0xff, 0x10, NULL					},
+	{0x0e, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    1, "Coinage"				},
 	{0x0b, 0x01, 0xff, 0xfd, "Normal"				},
@@ -242,8 +244,9 @@ STDDIPINFO(Redbaron)
 static struct BurnDIPInfo BradleyDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0x15, NULL					},
-	{0x13, 0xff, 0xff, 0x03, NULL					},
+	{0x13, 0xff, 0xff, 0x02, NULL					},
 	{0x14, 0xff, 0xff, 0x10, NULL					},
+	{0x15, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x12, 0x01, 0x03, 0x00, "2"					},
@@ -882,6 +885,11 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0, 5);
 		if (redbaron) DrvInputs[2] = 0x40; // active low
+		if (bradley) {
+			DrvInputs[2] = 0xff; // active low
+			DrvInputs[3] = 0x04 + 0x08 + 0x10; // ""
+		}
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1150,7 +1158,7 @@ struct BurnDriver BurnDrvBradley = {
 	"bradley", NULL, NULL, NULL, "1980",
 	"Bradley Trainer\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
 	BradleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	580, 400, 4, 3

@@ -9353,7 +9353,7 @@ static struct BurnRomInfo Sf2sttRomDesc[] = {
 STD_ROM_PICK(Sf2stt)
 STD_ROM_FN(Sf2stt)
 
-static struct BurnRomInfo Sf2jbhRomDesc[] = {
+static struct BurnRomInfo Sf2lyRomDesc[] = {
 	/* Street Fighter II - The World Warrior with bosses availables like in Champion Edition
 	
 	Dumped from an official Capcom board. Only eproms on the PCB.
@@ -9390,8 +9390,8 @@ static struct BurnRomInfo Sf2jbhRomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
-STD_ROM_PICK(Sf2jbh)
-STD_ROM_FN(Sf2jbh)
+STD_ROM_PICK(Sf2ly)
+STD_ROM_FN(Sf2ly)
 
 static struct BurnRomInfo Sf2uaRomDesc[] = {
 	{ "sf2u_30a.11e",  0x020000, 0x08beb861, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14799,7 +14799,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ebbl2"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl3"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2stt"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
-	{ "sf2jbh"        , CPS_B_11    , mapper_STF29 , 0, NULL                },
+	{ "sf2ly"         , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2ua"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ub"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2uc"         , CPS_B_12    , mapper_STF29 , 0, NULL                },
@@ -20975,12 +20975,12 @@ struct BurnDriver BurnDrvCpsSf2stt = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2jbh = {
-	"sf2jbh", "sf2", NULL, NULL, "1991",
+struct BurnDriver BurnDrvCpsSf2ly = {
+	"sf2ly", "sf2", NULL, NULL, "1991",
 	"Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2jbhRomInfo, Sf2jbhRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	NULL, Sf2lyRomInfo, Sf2lyRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23373,7 +23373,9 @@ struct BurnDriver BurnDrvCpsFfightae = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Captain Commando (1 V 4 GOTVG)
+// Captain Commando (Enhanced edition 1 V 4, Hack)
+// Hacked by unknown
+// GOTVG 2015-12-05
 
 static struct BurnRomInfo Captcommp4RomDesc[] = {
 	{ "captcommp4_23d.8f",  0x080000, 0x40e8a541, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -23408,9 +23410,9 @@ STD_ROM_PICK(Captcommp4)
 STD_ROM_FN(Captcommp4)
 
 struct BurnDriver BurnDrvCpsCaptcommp4 = {
-	"captcommp4", "captcomm", NULL, NULL, "2020",
-	"Captain Commando (1 V 4 GOTVG)\0", NULL, "hack", "CPS1",
-	L"Captain Commando (1 V 4 GOTVG)\0\u540D\u5C06 (1 v 4 \u6E38\u805A\u52A0\u5F3A\u7248)\0", NULL, NULL, NULL,
+	"captcommp4", "captcomm", NULL, NULL, "2015-12-05",
+	"Captain Commando (Enhanced edition 1 V 4, Hack)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommp4RomInfo, Captcommp4RomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,
 	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -23452,24 +23454,25 @@ STD_ROM_FN(Captcommr1pwx)
 struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 	"captcommr1pwx", "captcomm", NULL, NULL, "2020",
 	"Captain Commando (Unlimited Bullet Update 2020-02-19)\0", NULL, "Hack", "CPS1",
-	L"Captain Commando (Unlimited Bullet Update 2020-02-19)\0\u540D\u5C06 (\u65E0\u9650\u5B50\u5F39\u589E\u5f3A\u7248 2020-02-19)\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  
 	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)
-// This set is known as dinos239 in HBMAME
+// Cadillacs and Dinosaurs (God of War Edition, Hack)
+// Hacked by Ngs
+// GOTVG Last update: 2020-04-19
 
 static struct BurnRomInfo DinodsRomDesc[] = {
-	{ "cdes239.10f",    0x200000, 0x8998c062, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinods.bin",		0x200000, 0xf1f661c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "cd-1m.3a",       0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
-	{ "cd-3m.5a",       0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
-	{ "cd-2m.4a",       0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
-	{ "cd-4m.6a",       0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
-	{ "cd-5m.7a",       0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-1m.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",		0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",		0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",		0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
 	{ "cd-7m.9a",       0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
 	{ "cd-6m.8a",       0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
 	{ "cd-8m.10a",      0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
@@ -23488,47 +23491,48 @@ STD_ROM_PICK(Dinods)
 STD_ROM_FN(Dinods)
 
 struct BurnDriver BurnDrvCpsDinods = {
-	"dinods", "dino", NULL, NULL, "2020",
-	"Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)\0", NULL, "Hack", "CPS1 / QSound",
-	L"Cadillacs and Dinosaurs (God of War Edition Update 2020-03-25, Ngs)\0\u6050\u9F99\u65B0\u4E16\u7EAA (\u6597\u795E 2020-03-05, Ngs)\0", NULL, NULL, NULL,
+	"dinods", "dino", NULL, NULL, "2020-04-19",
+	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinodsRomInfo, DinodsRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)
-// This set is known as tk2h158 in HBMAME
+// 天地を喰らう II - 赤壁の戦い (達人 バージョン, ハック) / Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
+// Hacked by Bindi
+// GOTVG Last update 2020-03-26
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "tk2h158.10f",   0x200000, 0x4296c806, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "wofjdr.bin",		0x200000, 0x3fc42adb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "tk2-1m.3a",     0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
-	{ "tk2-3m.5a",     0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
-	{ "tk2-2m.4a",     0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
-	{ "tk2-4m.6a",     0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
-	{ "tk2h140.7a",    0x080000, 0xe3c8c198, BRF_GRA | CPS1_TILES },
-	{ "tk2h140.8a",    0x080000, 0x5e3c0642, BRF_GRA | CPS1_TILES },
-	{ "tk2h140.9a",    0x080000, 0xd65a91d9, BRF_GRA | CPS1_TILES },
-	{ "tk2h140.10a",   0x080000, 0x675d490e, BRF_GRA | CPS1_TILES },
+	{ "tk2-1m.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "tk2-3m.5a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "tk2-2m.4a",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "tk2-4m.6a",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "wofjdr-5m.7a",	0x080000, 0xe3c8c198, BRF_GRA | CPS1_TILES },
+	{ "wofjdr-6m.8a",	0x080000, 0x5e3c0642, BRF_GRA | CPS1_TILES },
+	{ "wofjdr-7m.9a",	0x080000, 0xd65a91d9, BRF_GRA | CPS1_TILES },
+	{ "wofjdr-8m.10a",	0x080000, 0x675d490e, BRF_GRA | CPS1_TILES },
 
-	{ "tk2_qa.5k",     0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "tk2_qa.5k",		0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "tk2-q1.1k",     0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2-q2.2k",     0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2-q3.3k",     0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2-q4.4k",     0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q1.1k",		0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q2.2k",		0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q3.3k",		0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q4.4k",		0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
 	
-	{ "wof.key",       0x000080, 0xef8848dd, BRF_OPT },
+	{ "wof.key",		0x000080, 0xef8848dd, BRF_OPT },
 };
 
 STD_ROM_PICK(Wofjdr)
 STD_ROM_FN(Wofjdr)
 
 struct BurnDriver BurnDrvCpsWofjdr = {
-	"wofjdr", "wof", NULL, NULL, "2020",
-	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0", NULL, "Hack", "CPS1 / QSound",
-	L"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition Update 2020-02-15, Bindi)\0\u541E\u98DF\u5929\u5730 II - \u8D64\u58C1\u4E4B\u6218 (\u8FBE\u4eBA\u7248 2020-02-15, Bindi)\0 ", NULL, NULL, NULL,
+	"wofjdr", "wof", NULL, NULL, "2020-03-26",
+	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	L"\u5929\u5730\u3092\u55b0\u3089\u3046 II - \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba \u30d0\u30fc\u30b8\u30e7\u30f3, \u30cf\u30c3\u30af)\0Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjdrRomInfo, WofjdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

@@ -1454,7 +1454,7 @@ This list contains all games supported by FinalBurn Neo.
 | boxyboy	|  	| Boxy Boy (World, SB2)					| 		| 1990	| Namco		| System 1	| 					|
 | tg_boxyboy	|  	| Boxyboy						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_bsteam3	|  	| Boy Soccer Team III (Jpn, Pirate)			| md_tecmocup	| 199?	| <pirate>	| Sega Megadrive| 					|
-| bradley	|   NW	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
+| bradley	|  	| Bradley Trainer					| 		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
 | cv_brainstr	|  	| Brain Strainers					| 		| 1984	| Coleco	| ColecoVision	| 					|
 | brain		|  	| Brain							| 		| 1986	| Coreland / Seg| System 1	| 					|
 | gg_dracula	|  	| Bram Stoker's Dracula (Euro)				| 		| 1994	| Sony Imagesoft| Sega Game Gear| 					|
@@ -13166,7 +13166,7 @@ This list contains all games supported by FinalBurn Neo.
 | umk3		|  	| Ultimate Mortal Kombat 3 (rev 1.2)			| 		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | nes_ultimmorkom3|  	| Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
-| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-| umk3		| 2018	| hack		| MIDWAY Wolf-Un| 					|
+| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-| umk3		| 2020	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|

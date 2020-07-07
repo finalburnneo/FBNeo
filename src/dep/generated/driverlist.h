@@ -16015,7 +16015,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBoxyboy,			// Boxy Boy (World, SB2)
 	&BurnDrvtg_boxyboy,			// Boxyboy
 	&BurnDrvmd_bsteam3,			// Boy Soccer Team III (Jpn, Pirate)
-	&BurnDrvBradley,			// Bradley Trainer [GFX/Sound Issues, NOT WORKING]
+	&BurnDrvBradley,			// Bradley Trainer
 	&BurnDrvcv_brainstr,		// Brain Strainers
 	&BurnDrvBrain,				// Brain
 	&BurnDrvgg_dracula,			// Bram Stoker's Dracula (Euro)
@@ -27937,7 +27937,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)
 	&BurnDrvnes_ultimmorkom3,	// Ultimate Mortal Kombat 3 (Unl)
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
-	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-05-06)
+	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-07-03)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini V13 (Hack)
 	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)

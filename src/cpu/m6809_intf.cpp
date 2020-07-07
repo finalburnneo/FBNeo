@@ -143,6 +143,7 @@ INT32 M6809TotalCycles()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809TotalCycles called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809TotalCycles called when no CPU open\n"));
 #endif
 
 	if (nActiveCPU == -1) return 0; // prevent crash
@@ -169,6 +170,7 @@ INT32 M6809Idle(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Idle called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Idle called when no CPU open\n"));
 #endif
 
 	m6809CPUContext[nActiveCPU].nCyclesTotal += cycles;

@@ -1361,8 +1361,17 @@ static INT32 DrvFantzn2Init()
 static INT32 DrvOpaopapInit()
 {
 	leftcolumnblank = 1;
+	leftcolumnblank_special = 1;
 
 	return DrvInit(4);
+}
+
+static INT32 DrvOpaopaInit()
+{
+	leftcolumnblank = 1;
+	leftcolumnblank_special = 1;
+
+	return DrvInit(2);
 }
 
 static INT32 DrvTransfrmInit()
@@ -1527,7 +1536,7 @@ struct BurnDriver BurnDrvOpaopa = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvOpaopapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
-	256, 192, 4, 3
+	248, 192, 4, 3
 };
 
 
@@ -1550,8 +1559,8 @@ struct BurnDriver BurnDrvOpaopan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, opaopanRomInfo, opaopanRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
-	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
-	256, 192, 4, 3
+	DrvOpaopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	248, 192, 4, 3
 };
 
 

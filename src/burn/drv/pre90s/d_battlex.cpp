@@ -1,13 +1,9 @@
 // FB Alpha Battle Cross / Dodge Man driver module
 // Based on MAME driver by David Haywood
 
-// Notes:
-// Dodge Man tiles and colors are really like that (bad rom data?)
-//
-// Todo:
-// Palette in handler, update as data comes in instead of every frame.
-
 #include "tiles_generic.h"
+#include "burn_pal.h"
+#include "bitswap.h"
 #include "z80_intf.h"
 #include "ay8910.h"
 
@@ -23,7 +19,7 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvPalRAM;
 
-static UINT8 *tmpbitmap;
+static UINT16 *tmpbitmap;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -31,6 +27,9 @@ static UINT8 DrvRecalc;
 static UINT8 flipscreen;
 static UINT8 scroll[2];
 static UINT8 previous_irq_flip;
+static INT32 timer = 0;
+
+static INT32 nExtraCycles;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -39,51 +38,51 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BattlexInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Battlex)
 
 static struct BurnInputInfo DodgemanInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Dodgeman)
@@ -200,6 +199,34 @@ static struct BurnDIPInfo DodgemanDIPList[]=
 
 STDDIPINFO(Dodgeman)
 
+static void do_pal(INT32 offset, UINT8 data)
+{
+	INT32 pal = offset / 8;
+	INT32 color = offset & 7;
+
+	DrvPalette[offset] = BurnHighCol(pal1bit(data >> 0), pal1bit(data >> 2), pal1bit(data >> 1), 0);
+
+	DrvPalette[0x40 + pal * 0x10 + color] = BurnHighCol(pal1bit(data >> 0), pal1bit(data >> 2), pal1bit(data >> 1), 0);
+	DrvPalette[0x40 + pal * 0x10 + color + 8] = BurnHighCol(pal2bit((data >> 0) & 1), pal2bit((data >> 2) & 1), pal2bit((data >> 1) & 1), 0);
+}
+
+static UINT8 __fastcall main_read(UINT16 address)
+{
+	if (address >= 0xe000 && address <= 0xe03f) {
+		return DrvPalRAM[address & 0x3f];
+	}
+
+	return 0x00;
+}
+
+static void __fastcall main_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0xe000 && address <= 0xe03f) {
+		DrvPalRAM[address & 0x3f] = data;
+		do_pal(address & 0x3f, data);
+	}
+}
+
 static void __fastcall battlex_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
@@ -239,7 +266,7 @@ static UINT8 __fastcall battlex_read_port(UINT16 port)
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 				previous_irq_flip = 0;
 			}
-			return (DrvDips[0] & ~0x10) | (ret ? 0x10 : 0);
+			return (DrvDips[0] & ~0x10) | (ret << 4);
 		}
 
 		case 0x01:
@@ -285,6 +312,8 @@ static INT32 DrvDoReset()
 	scroll[0] = scroll[1] = 0;
 	flipscreen = 0;
 	previous_irq_flip = 0;
+	timer = 0;
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -298,7 +327,7 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x010000;
 	DrvGfxROM1		= Next; Next += 0x010000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0042 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x00c2 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -309,7 +338,7 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	tmpbitmap		= Next; Next += 256 * 224;
+	tmpbitmap		= (UINT16*)Next; Next += 256 * 224 * sizeof(UINT16);
 
 	MemEnd			= Next;
 
@@ -319,24 +348,26 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode(INT32 select)
 {
 	INT32 size = (select) ? 0x6000 : 0x3000;
-	INT32 Plane0[3] = { RGN_FRAC(size, 0, 3), RGN_FRAC(size, 1, 3), RGN_FRAC(size, 2, 3) };
+	INT32 Plane0[4] = { 0, 1, 2, 3 };
+	INT32 XOffs0[8] = { 0, 4, 8, 12, 16, 20, 24, 28 };
+	INT32 YOffs0[8] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 };
+
 	INT32 Plane1[3] = { RGN_FRAC(size, 0, 3), RGN_FRAC(size, 1, 3), RGN_FRAC(size, 2, 3) };
-	INT32 XOffs[16] = { STEP8(7,-1), STEP8(15,-1) };
-	INT32 YOffs0[8] = { STEP8(0,8) };
+	INT32 XOffs1[16] = { STEP8(7,-1), STEP8(15,-1) };
 	INT32 YOffs1[16] = { STEP16(0,16) };
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x6000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x8000);
 	if (tmp == NULL) {
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM0, 0x6000);
+	memcpy (tmp, DrvGfxROM0, 0x8000);
 
-	GfxDecode(0x0400, 3,  8,  8, Plane0, XOffs, YOffs0, 0x040, tmp, DrvGfxROM0);
+	GfxDecode(0x0400, 4,  8,  8, Plane0, XOffs0, YOffs0, 0x100, tmp, DrvGfxROM0);
 
 	memcpy (tmp, DrvGfxROM1, 0x6000);
 
-	GfxDecode(0x0080, 3, 16, 16, Plane1, XOffs, YOffs1, 0x100, tmp, DrvGfxROM1);
+	GfxDecode(0x0100, 3, 16, 16, Plane1, XOffs1, YOffs1, 0x100, tmp, DrvGfxROM1);
 
 	BurnFree(tmp);
 
@@ -351,26 +382,31 @@ static void DrvGfxExpand(INT32 len, INT32 game_select)
 	memset (DrvGfxROM0, 0, 0x10000);
 
 	UINT8 *colormask = tmp;
-	UINT8 *gfxdata = tmp + ((game_select) ? 0x2000 : 0x1000);
+	UINT8 *gfxdata = tmp + 0x2000;
 	UINT8 *dest = DrvGfxROM0;
-	INT32 tile_size = len / 24;
-	INT32 tile_shift = (tile_size / 512) + 11;
+	INT32 tile_size = len / 32;
+	INT32 offset = 0;
 
 	for (INT32 tile = 0; tile < tile_size; tile++)
 	{
 		for (INT32 line = 0; line < 8; line ++)
 		{
-			for (INT32 bit = 0; bit < 8 ; bit ++)
+			for (INT32 bit = 0; bit < 8; bit ++)
 			{
-				INT32 color = colormask[tile << 3 | line];
-				INT32 data = gfxdata[tile << 3 | line] >> bit & 1;
-				if (!data) color >>= 4;
+				INT32 color = colormask[(tile << 3) | ((line & 0x6) + (bit > 3 ? 1 : 0))];
+				INT32 data = BIT(gfxdata[(tile << 3) | line], bit);
 
-				for (INT32 plane = 2; plane >= 0; plane--)
-				{
-					dest[tile << 3 | line | (plane << tile_shift)] |= (color & 1) << bit;
-					color >>= 1;
-				}
+				if (!data)
+					color >>= 4;
+
+				color &= 0x0f;
+
+				if (offset&1)
+					dest[offset >> 1] |= color;
+				else
+					dest[offset >> 1] = color<<4;
+
+				offset++;
 			}
 		}
 	}
@@ -380,7 +416,7 @@ static void DrvGfxExpand(INT32 len, INT32 game_select)
 
 static void init_stars() // hack
 {
-	UINT8 *dst = tmpbitmap;
+	UINT16 *dst = tmpbitmap;
 
 	for (INT32 y = 0; y < 224; y++)
 	{
@@ -388,7 +424,7 @@ static void init_stars() // hack
 		{
 			UINT16 z = rand() & 0x1ff;
 
-			if (z==0xf6) dst[x] = 0x41;
+			if (z==0xf6) dst[x] = 0xc1;
 		}
 
 		dst += 256;
@@ -423,9 +459,9 @@ static INT32 DrvInit(INT32 select)
 		}
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + ((select) ? 0x2000 : 0x1000), 10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x2000, 10, 1)) return 1;
 
-		DrvGfxExpand(((select) ? 0x6000 : 0x3000), select);
+		DrvGfxExpand(((select) ? 0x8000 : 0x4000), select);
 		DrvGfxDecode(select);
 		if (select == 0) init_stars();
 	}
@@ -436,7 +472,9 @@ static INT32 DrvInit(INT32 select)
 	ZetMapMemory(DrvVidRAM,		0x8000, 0x8fff, MAP_RAM);
 	ZetMapMemory(DrvSprRAM,		0x9000, 0x91ff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAM,		0xa000, 0xa3ff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,		0xe000, 0xe0ff, MAP_RAM);
+	//ZetMapMemory(DrvPalRAM,		0xe000, 0xe0ff, MAP_RAM); // in handler
+	ZetSetReadHandler(main_read);
+	ZetSetWriteHandler(main_write);
 	ZetSetOutHandler(battlex_write_port);
 	ZetSetInHandler(battlex_read_port);
 	ZetClose();
@@ -445,10 +483,11 @@ static INT32 DrvInit(INT32 select)
 	AY8910Init(1, 1250000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 2500000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, select ? dodgeman_map_callback : battlex_map_callback, 8, 8, 64, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 7);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 8, 8, 0x10000, 64, 7);
 	GenericTilemapSetTransparent(0,0);
 	GenericTilemapSetOffsets(0, 0, -16);
 
@@ -472,15 +511,11 @@ static INT32 DrvExit()
 static void DrvPaletteUpdate()
 {
 	for (INT32 i = 0; i < 0x40; i++) {
-		INT32 r = (DrvPalRAM[i] & 1) ? 0xff : 0;
-		INT32 g = (DrvPalRAM[i] & 4) ? 0xff : 0;
-		INT32 b = (DrvPalRAM[i] & 2) ? 0xff : 0;
-
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		do_pal(i, DrvPalRAM[i]);
 	}
 
-	DrvPalette[0x40] = BurnHighCol(0xff, 0xff, 0xff, 0);
-	DrvPalette[0x41] = BurnHighCol(0x2c, 0x2c, 0x2c, 0); // stars!
+	DrvPalette[0xc0] = BurnHighCol(0xff, 0xff, 0xff, 0);
+	DrvPalette[0xc1] = BurnHighCol(0x2c, 0x2c, 0x2c, 0); // stars!
 }
 
 static void draw_sprites()
@@ -489,7 +524,7 @@ static void draw_sprites()
 	{
 		INT32 sx    =(DrvSprRAM[i] & 0x7f) * 2 - (DrvSprRAM[i] & 0x80) * 2;
 		INT32 sy    = DrvSprRAM[i+3];
-		INT32 code  = DrvSprRAM[i+2] & 0x7f;
+		INT32 code  = DrvSprRAM[i+2] & 0xff;
 		INT32 color = DrvSprRAM[i+1] & 0x07;
 		INT32 flipy = DrvSprRAM[i+1] & 0x80;
 		INT32 flipx = DrvSprRAM[i+1] & 0x40;
@@ -502,25 +537,13 @@ static void draw_sprites()
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy-16, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy-16, color, 3, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy-16, color, 3, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy-16, color, 3, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy-16, flipx, flipy, color, 3, 0, 0, DrvGfxROM1);
 	}
 }
 
 static void draw_stars()
 {
-	UINT8 *src = tmpbitmap;
+	UINT16 *src = tmpbitmap;
 	UINT16 *dst = pTransDraw;
 
 	for (INT32 y = 0; y < 224; y++)
@@ -566,6 +589,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0, 2);
 
@@ -575,23 +600,29 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 6;
-	INT32 nCyclesTotal = 2500000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { 2500000 / 60 };
+	INT32 nCyclesDone[1]  = { nExtraCycles };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
+		CPU_RUN(0, Zet);
 
-		nCyclesDone += ZetRun(nSegment);
+		timer +=       26042; // 6.666667/256 = 0.026042
 
-		previous_irq_flip = 1;
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (timer >= 1000000)
+		{
+			timer -= 1000000;
+			previous_irq_flip = 1;
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
 	}
 
 	ZetClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -626,6 +657,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scroll);
 		SCAN_VAR(previous_irq_flip);
+		SCAN_VAR(timer);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

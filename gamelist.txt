@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14275 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14276 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -11093,6 +11093,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2ceeab5	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuabl	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab10	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceuab11	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| Some graphic issues due to roms	|
 | sf2ceuab2	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab3	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceuab4	|  	| Street Fighter II' - Champion Edition (920313 USA boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|

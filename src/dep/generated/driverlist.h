@@ -11287,6 +11287,7 @@ DRV		BurnDrvCpsSf2ceeab4;
 DRV		BurnDrvCpsSf2ceeab5;
 DRV		BurnDrvCpsSf2ceuabl;
 DRV		BurnDrvCpsSf2ceuab10;
+DRV		BurnDrvCpsSf2ceuab11;
 DRV		BurnDrvCpsSf2ceuab2;
 DRV		BurnDrvCpsSf2ceuab3;
 DRV		BurnDrvCpsSf2ceuab4;
@@ -25831,6 +25832,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ceeab5,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 5)
 	&BurnDrvCpsSf2ceuabl,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 1)
 	&BurnDrvCpsSf2ceuab10,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 10)
+	&BurnDrvCpsSf2ceuab11,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 11)
 	&BurnDrvCpsSf2ceuab2,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 2)
 	&BurnDrvCpsSf2ceuab3,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 3)
 	&BurnDrvCpsSf2ceuab4,		// Street Fighter II' - Champion Edition (920313 USA bootleg set 4)

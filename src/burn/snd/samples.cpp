@@ -165,7 +165,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 	{ // sample cleanup
 		if (bBurnSampleTrimSampleEnd) { // trim silence off the end of the sample, bBurnSampleTrimSampleEnd must be set before init!
-			while (data[converted_len * bytes] == 0) converted_len -= bytes;
+			while (data[(converted_len - 1) * bytes] == 0 && converted_len > 0) converted_len -= bytes;
 		}
 	}
 

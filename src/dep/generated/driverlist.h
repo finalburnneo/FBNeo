@@ -1172,6 +1172,7 @@ DRV		BurnDrvpce_bikkuri;
 DRV		BurnDrvnes_billtedsexcvigaad;
 DRV		BurnDrvmd_billwlsh;
 DRV		BurnDrvmd_billwl95;
+DRV		BurnDrvmd_btomatog;
 DRV		BurnDrvmd_bimini;
 DRV		BurnDrvnes_binaryland;
 DRV		BurnDrvMSX_binarylnd;
@@ -7038,6 +7039,7 @@ DRV		BurnDrvnes_megaman4;
 DRV		BurnDrvnes_megaman5;
 DRV		BurnDrvnes_megaman6;
 DRV		BurnDrvnes_megamancx;
+DRV		BurnDrvmd_mindtris;
 DRV		BurnDrvmd_megaqbert11;
 DRV		BurnDrvmd_megaswiv;
 DRV		BurnDrvmd_megaswivb;
@@ -8504,6 +8506,7 @@ DRV		BurnDrvnes_paperboy2;
 DRV		BurnDrvgg_paperbo2;
 DRV		BurnDrvsms_papicom;
 DRV		BurnDrvmd_papi;
+DRV		BurnDrvmd_papirmx;
 DRV		BurnDrvnes_papillongals;
 DRV		BurnDrvMSX_pjoe;
 DRV		BurnDrvPturn;
@@ -15713,6 +15716,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_billtedsexcvigaad,// Bill & Ted's Excellent Video Game Adventure (USA)
 	&BurnDrvmd_billwlsh,		// Bill Walsh College Football (Euro, USA)
 	&BurnDrvmd_billwl95,		// Bill Walsh College Football 95 (USA)
+	&BurnDrvmd_btomatog,		// Bill's Tomato Game (Unl, Prototype)
 	&BurnDrvmd_bimini,			// Bimini Run (USA)
 	&BurnDrvnes_binaryland,		// Binary Land (Japan)
 	&BurnDrvMSX_binarylnd,		// Binary Land
@@ -21579,6 +21583,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_megaman5,		// Mega Man 5 (USA)
 	&BurnDrvnes_megaman6,		// Mega Man 6 (USA)
 	&BurnDrvnes_megamancx,		// Mega Man CX (USA)
+	&BurnDrvmd_mindtris,		// Mega Mindtris (HB, v1.2)
 	&BurnDrvmd_megaqbert11,		// Mega Q-Bert (HB, v1.1)
 	&BurnDrvmd_megaswiv,		// Mega SWIV (Euro)
 	&BurnDrvmd_megaswivb,		// Mega SWIV (Euro, Pirate)
@@ -23045,6 +23050,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_paperbo2,		// Paperboy II (Euro, USA)
 	&BurnDrvsms_papicom,		// Papi Commando in CPP Land (HB, Hack v1.01)
 	&BurnDrvmd_papi,			// Papi Commando MD (HB)
+	&BurnDrvmd_papirmx,			// Papi Commando Remix MD (HB)
 	&BurnDrvnes_papillongals,	// Papillon Gals (Japan) (Unl)
 	&BurnDrvMSX_pjoe,			// Parachuteless Joe (HB)
 	&BurnDrvPturn,				// Parallel Turn

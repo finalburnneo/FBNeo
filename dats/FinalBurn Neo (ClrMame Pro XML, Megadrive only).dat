@@ -1273,6 +1273,13 @@
 		<rom name="bill walsh college football 95 (usa).bin" size="2097152" crc="a582f45a"/>
 		<driver status="good"/>
 	</game>
+	<game name="btomatog">
+		<description>Bill's Tomato Game (Unl, Prototype) [originally planned for 1994]</description>
+		<year>2017</year>
+		<manufacturer>Psygnosis</manufacturer>
+		<rom name="bill's tomato game (unl)(2017)(psygnosis).bin" size="1048576" crc="0e1f263f"/>
+		<driver status="good"/>
+	</game>
 	<game name="bimini">
 		<description>Bimini Run (USA)</description>
 		<year>1990</year>
@@ -7162,6 +7169,13 @@
 		<rom name="mega man - the wily wars (usa).bin" size="2097152" crc="0cd405db"/>
 		<driver status="good"/>
 	</game>
+	<game name="mindtris">
+		<description>Mega Mindtris (HB, v1.2) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>1985 Alternativo</manufacturer>
+		<rom name="megamindtris (2018)(1985 alternativo)(v1.2).bin" size="1114112" crc="bef5482f"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaqbert11">
 		<description>Mega Q-Bert (HB, v1.1) [Homebrew]</description>
 		<year>2016</year>
@@ -9097,11 +9111,18 @@
 		<rom name="mpr-15320.ic1" size="1048576" crc="1de28bb1"/>
 		<driver status="good"/>
 	</game>
-	<game name="papicommandomd">
+	<game name="papi">
 		<description>Papi Commando MD (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Vetea</manufacturer>
 		<rom name="PapiCommandoMD.bin" size="3466596" crc="ec16d540"/>
+		<driver status="good"/>
+	</game>
+	<game name="papirmx" cloneof="papi" romof="papi">
+		<description>Papi Commando Remix MD (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Vetea</manufacturer>
+		<rom name="papi commando remix md (2018)(studio vetea).bin" size="3698576" crc="d15c6391"/>
 		<driver status="good"/>
 	</game>
 	<game name="partyq">

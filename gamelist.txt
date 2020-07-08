@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14272 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14275 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1156,6 +1156,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_billtedsexcvigaad|  	| Bill & Ted's Excellent Video Game Adventure (USA)	| 		| 1991	| LJN		| Miscellaneous	| 					|
 | md_billwlsh	|  	| Bill Walsh College Football (Euro, USA)		| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_billwl95	|  	| Bill Walsh College Football 95 (USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
+| md_btomatog	|  	| Bill's Tomato Game (Unl, Prototype)			| 		| 2017	| Psygnosis	| Sega Megadrive| originally planned for 1994		|
 | md_bimini	|  	| Bimini Run (USA)					| 		| 1990	| Nuvision Enter| Sega Megadrive| 					|
 | nes_binaryland|  	| Binary Land (Japan)					| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
 | msx_binarylnd	|  	| Binary Land						| 		| 1984	| Kuma Computers| MSX		| 					|
@@ -5335,7 +5336,7 @@ This list contains all games supported by FinalBurn Neo.
 | iganinju	|  	| Iga Ninjyutsuden (Japan)				| kazan		| 1988	| Jaleco	| Mega System 1	| 					|
 | msx_iganinpo	|  	| Iga Ninpouchou (Jpn)					| 		| 1985	| Casio		| MSX		| 					|
 | msx_iganinp2	|  	| Iga Ninpouchou - Mangetsujou no Tatakai (Jpn)		| 		| 1986	| Casio		| MSX		| 					|
-| igmo		|  	| IGMO							| 		| 1984	| Epos Corporati| EPOS Tristar	| Incorrect Colors			|
+| igmo		|  	| IGMO							| 		| 1984	| Epos Corporati| EPOS Tristar	| 					|
 | ikarijp	|  	| Ikari (Japan No Continues)				| ikari		| 1986	| SNK		| Miscellaneous	| 					|
 | ikarijpb	|  	| Ikari (Joystick hack bootleg)				| ikari		| 1986	| bootleg	| Miscellaneous	| 					|
 | ikari3	|  	| Ikari III - The Rescue (8-Way Joystick)		| 		| 1989	| SNK		| Miscellaneous	| 					|
@@ -6918,6 +6919,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_megaman5	|  	| Mega Man 5 (USA)					| 		| 1992	| Capcom	| Miscellaneous	| 					|
 | nes_megaman6	|  	| Mega Man 6 (USA)					| 		| 1994	| Nintendo	| Miscellaneous	| 					|
 | nes_megamancx	|  	| Mega Man CX (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| md_mindtris	|  	| Mega Mindtris (HB, v1.2)				| 		| 2018	| 1985 Alternati| Sega Megadrive| 					|
 | md_megaqbert11|  	| Mega Q-Bert (HB, v1.1)				| 		| 2016	| Jaklub	| Sega Megadrive| 					|
 | md_megaswiv	|  	| Mega SWIV (Euro)					| 		| 1994	| Time Warner In| Sega Megadrive| 					|
 | md_megaswivb	|  	| Mega SWIV (Euro, Pirate)				| md_megaswiv	| 1994	| Time Warner In| Sega Megadrive| 					|
@@ -8355,7 +8357,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_paperboy2	|  	| Paperboy 2 (USA)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
 | gg_paperbo2	|  	| Paperboy II (Euro, USA)				| 		| 1992	| Tengen	| Sega Game Gear| 					|
 | sms_papicom	|  	| Papi Commando in CPP Land (HB, Hack v1.01)		| 		| 2019	| Vetea		| Sega Master Sy| 					|
-| md_papicommandomd|  	| Papi Commando MD (HB)					| 		| 2015	| Vetea		| Sega Megadrive| 					|
+| md_papi	|  	| Papi Commando MD (HB)					| 		| 2015	| Vetea		| Sega Megadrive| 					|
+| md_papirmx	|  	| Papi Commando Remix MD (HB)				| md_papi	| 2018	| Vetea		| Sega Megadrive| 					|
 | nes_papillongals|  	| Papillon Gals (Japan) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_pjoe	|  	| Parachuteless Joe (HB)				| 		| 2005	| Paxanga Soft	| MSX		| 					|
 | pturn		|  	| Parallel Turn						| 		| 1984	| Jaleco	| Miscellaneous	| 					|

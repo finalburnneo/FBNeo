@@ -6,7 +6,8 @@
 
 double dTime;									// Time elapsed since the emulated machine was started
 
-static INT32 nTimerCount[2], nTimerStart[2];
+#define TIMER_MAX 8
+static INT32 nTimerCount[TIMER_MAX], nTimerStart[TIMER_MAX];
 
 // Callbacks
 static INT32 (*pTimerOverCallback)(INT32, INT32);
@@ -45,14 +46,18 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 //	bprintf(PRINT_NORMAL, _T(" -- Ticks: %08X, cycles %i\n"), nTicksTotal, nCycles);
 
 	while (nTicksDone < nTicksTotal) {
-		INT32 nTimer, nCyclesSegment, nTicksSegment;
+		INT32 nTimer, nFirstTimer, nCyclesSegment, nTicksSegment;
 
 		// Determine which timer fires first
-		if (nTimerCount[0] <= nTimerCount[1]) {
-			nTicksSegment = nTimerCount[0];
-		} else {
-			nTicksSegment = nTimerCount[1];
+		nFirstTimer = 0;
+		for (INT32 i = 0; i < TIMER_MAX; i++) {
+			if (nTimerCount[i] < nTimerCount[nFirstTimer]) {
+				nFirstTimer = i;
+			}
 		}
+
+		nTicksSegment = nTimerCount[nFirstTimer];
+
 		if (nTicksSegment > nTicksTotal) {
 			nTicksSegment = nTicksTotal;
 		}
@@ -66,29 +71,18 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 //		bprintf(PRINT_NORMAL, _T("  - ticks done -> %08X cycles -> %i\n"), nTicksDone, BurnTimerCPUTotalCycles());
 
 		nTimer = 0;
-		if (nTicksDone >= nTimerCount[0]) {
-			if (nTimerStart[0] == MAX_TIMER_VALUE) {
-				nTimerCount[0] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[0] += nTimerStart[0];
+
+		for (INT32 i = 0; i < TIMER_MAX; i++) {
+			if (nTicksDone >= nTimerCount[i]) {
+				if (nTimerStart[i] == MAX_TIMER_VALUE) {
+					nTimerCount[i] = MAX_TIMER_VALUE;
+				} else {
+					nTimerCount[i] += nTimerStart[i];
+				}
+				//bprintf(PRINT_NORMAL, _T("  - timer %d fired\n"), i);
+
+				nIRQStatus |= pTimerOverCallback(i>>1, i&1);
 			}
-//			bprintf(PRINT_NORMAL, _T("  - timer 0 fired\n"));
-			nTimer |= 1;
-		}
-		if (nTicksDone >= nTimerCount[1]) {
-			if (nTimerStart[1] == MAX_TIMER_VALUE) {
-				nTimerCount[1] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[1] += nTimerStart[1];
-			}
-//			bprintf(PRINT_NORMAL, _T("  - timer 1 fired\n"));
-			nTimer |= 2;
-		}
-		if (nTimer & 1) {
-			nIRQStatus |= pTimerOverCallback(0, 0);
-		}
-		if (nTimer & 2) {
-			nIRQStatus |= pTimerOverCallback(0, 1);
 		}
 	}
 
@@ -101,11 +95,10 @@ void BurnTimerEndFrame(INT32 nCycles)
 
 	BurnTimerUpdate(nCycles);
 
-	if (nTimerCount[0] < MAX_TIMER_VALUE) {
-		nTimerCount[0] -= nTicks;
-	}
-	if (nTimerCount[1] < MAX_TIMER_VALUE) {
-		nTimerCount[1] -= nTicks;
+	for (INT32 i = 0; i < TIMER_MAX; i++) {
+		if (nTimerCount[i] < MAX_TIMER_VALUE) {
+			nTimerCount[i] -= nTicks;
+		}
 	}
 
 	nTicksDone -= nTicks;
@@ -162,21 +155,21 @@ void BurnOPMTimerCallback(INT32 c, double period)
 	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 }
 
-void BurnOPNTimerCallback(INT32  /*n */, INT32 c, INT32 cnt, double stepTime)
+void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime) // ym2203
 {
 	pCPURunEnd();
 	
 	if (cnt == 0) {
-		nTimerCount[c] = MAX_TIMER_VALUE;
+		nTimerCount[(n << 1) + c] = MAX_TIMER_VALUE;
 
 //		bprintf(PRINT_NORMAL, _T("  - timer %i stopped\n"), c);
 
 		return;
 	}
 
-	nTimerCount[c]  = (INT32)(stepTime * cnt * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
-//	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], stepTime * cnt);
+	nTimerCount[(n << 1) + c]  = (INT32)(stepTime * cnt * (double)TIMER_TICKS_PER_SECOND);
+	nTimerCount[(n << 1) + c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+	//bprintf(PRINT_NORMAL, _T("  - chip %i timer %i started, %08X ticks (fires in %lf seconds)\n"), n, c, nTimerCount[(n << 1) + c], stepTime * cnt);
 }
 
 void BurnYMFTimerCallback(INT32 /* n */, INT32 c, double period)
@@ -314,8 +307,9 @@ void BurnTimerExit()
 
 void BurnTimerReset()
 {
-	nTimerCount[0] = nTimerCount[1] = MAX_TIMER_VALUE;
-	nTimerStart[0] = nTimerStart[1] = MAX_TIMER_VALUE;
+	for (INT32 i = 0; i < TIMER_MAX; i++) {
+		nTimerCount[i] = nTimerStart[i] = MAX_TIMER_VALUE;
+	}
 
 	dTime = 0.0;
 

@@ -1,4 +1,4 @@
-#	Main Makefile for FB Neo, execute an appropriate system-specific makefile
+#	Main Makefile for FBNeo, execute an appropriate system-specific makefile
 
 export
 

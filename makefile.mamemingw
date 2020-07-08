@@ -51,7 +51,7 @@ ifndef BUILD_X86_ASM
 	COMPILENAME := $(COMPILENAME)x
 endif
 ifdef BUILD_X64_EXE
-	NAME = fba64
+	NAME = fbneo64
 	COMPILENAME = 6
 endif
 ifdef	DEBUG

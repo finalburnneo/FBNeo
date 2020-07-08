@@ -1,4 +1,4 @@
-# Makefile for FBA, for use with GNU make & Microsoft Visual C++ 2012
+# Makefile for FBNeo, for use with GNU make & Microsoft Visual C++ 2012
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules
@@ -47,7 +47,7 @@ ifndef BUILD_X86_ASM
 	COMPILENAME := $(COMPILENAME)x
 endif
 ifdef BUILD_X64_EXE
-	NAME = fba64
+	NAME = fbneo64
 	COMPILENAME = 6
 endif
 ifdef	DEBUG

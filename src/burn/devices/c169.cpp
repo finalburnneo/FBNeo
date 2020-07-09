@@ -85,7 +85,7 @@ static void c169_roz_draw_helper()
 	UINT32 hstarty = starty + clip_min_x * incxy + clip_min_y * incyy;
 	INT32 sx = clip_min_x;
 	INT32 sy = clip_min_y;
-	while (sy <= clip_max_y)
+	while (sy < clip_max_y) // clip_max_y could be 1 greater than nScreenHeight on the last visible line
 	{
 		INT32 x = sx;
 		UINT32 cx = hstartx;

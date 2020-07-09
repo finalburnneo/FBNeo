@@ -466,6 +466,10 @@ static UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 			return retVal;
 		}
 
+		case 0xa11101: { // lsb of busreq status is literally random
+			return BurnRandom() & 0xff;
+		}
+
 		case 0xa12000: return 0; // NOP (cd-stuff, called repeatedly by rnrracin)
 
 		default: {

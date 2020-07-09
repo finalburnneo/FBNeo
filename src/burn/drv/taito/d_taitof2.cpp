@@ -10870,7 +10870,12 @@ static INT32 TaitoF2Scan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		BurnYM2610Scan(nAction, pnMin);
+		if (TaitoNumYM2203) { // cameltrya..
+			BurnYM2203Scan(nAction, pnMin);
+			MSM6295Scan(nAction, pnMin);
+		} else {
+			BurnYM2610Scan(nAction, pnMin);
+		}
 		
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);

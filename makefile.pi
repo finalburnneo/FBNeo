@@ -1,4 +1,4 @@
-# Makefile for FBA, for use on Raspberry Pi
+# Makefile for FBNeo, for use on Raspberry Pi
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules

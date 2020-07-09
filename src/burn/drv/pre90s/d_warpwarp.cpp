@@ -1065,8 +1065,8 @@ static INT32 DrvExit()
 
 static void plot_pixel(INT32 x, INT32 y, INT32 pen)
 {
-	if (x < 0 || x > nScreenWidth) return;
-	if (y < 0 || y > nScreenHeight) return;
+	if (x < 0 || x >= nScreenWidth) return;
+	if (y < 0 || y >= nScreenHeight) return;
 
 	UINT16 *pPixel = pTransDraw + (y * nScreenWidth) + x;
 	*pPixel = pen;

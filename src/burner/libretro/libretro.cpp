@@ -17,6 +17,14 @@
 #include <streams/file_stream.h>
 
 #define FBNEO_VERSION "v0.2.97.44"
+#define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
+#define PRINTF_BUFFER_SIZE 512
+
+#define STAT_NOFIND  0
+#define STAT_OK      1
+#define STAT_CRC     2
+#define STAT_SMALL   3
+#define STAT_LARGE   4
 
 int counter;           // General purpose variable used when debugging
 struct MovieExtInfo
@@ -39,7 +47,87 @@ static retro_video_refresh_t video_cb;
 static retro_audio_sample_batch_t audio_batch_cb;
 
 static unsigned libretro_msg_interface_version = 0;
-#define PRINTF_BUFFER_SIZE 512
+
+int kNetGame = 0;
+INT32 nReplayStatus = 0;
+INT32 nIpsMaxFileLen = 0;
+unsigned nGameType = 0;
+static INT32 nGameWidth, nGameHeight;
+static INT32 bDisableSerialize = 0;
+
+static unsigned int BurnDrvGetIndexByName(const char* name);
+char* DecorateGameName(UINT32 nBurnDrv);
+
+extern INT32 EnableHiscores;
+
+struct ROMFIND
+{
+	unsigned int nState;
+	int nArchive;
+	int nPos;
+	BurnRomInfo ri;
+};
+
+struct located_archive
+{
+	std::string path;
+	bool ignoreCrc;
+};
+static std::vector<located_archive> g_find_list_path;
+
+static ROMFIND g_find_list[1024];
+static unsigned g_rom_count;
+
+INT32 nAudSegLen = 0;
+
+static UINT8* pVidImage = NULL;
+static bool bVidImageNeedRealloc = false;
+static int16_t *g_audio_buf = NULL;
+
+// Mapping of PC inputs to game inputs
+struct GameInp* GameInp = NULL;
+UINT32 nGameInpCount = 0;
+INT32 nAnalogSpeed = 0x0100;
+INT32 nFireButtons = 0;
+
+char g_driver_name[128];
+char g_rom_dir[MAX_PATH];
+char g_rom_parent_dir[MAX_PATH];
+char g_save_dir[MAX_PATH];
+char g_system_dir[MAX_PATH];
+char g_autofs_path[MAX_PATH];
+
+// MemCard support
+static TCHAR szMemoryCardFile[MAX_PATH];
+static int nMinVersion;
+static bool bMemCardFC1Format;
+
+static bool driver_inited;
+
+// FBNEO stubs
+unsigned ArcadeJoystick;
+
+int bDrvOkay;
+int bRunPause;
+bool bAlwaysProcessKeyboardInput;
+
+bool bDoIpsPatch;
+void IpsApplyPatches(UINT8 *, char *) {}
+
+TCHAR szAppEEPROMPath[MAX_PATH];
+TCHAR szAppHiscorePath[MAX_PATH];
+TCHAR szAppSamplesPath[MAX_PATH];
+TCHAR szAppBlendPath[MAX_PATH];
+TCHAR szAppHDDPath[MAX_PATH];
+TCHAR szAppBurnVer[16];
+
+static int nDIPOffset;
+
+const int nConfigMinVersion = 0x020921;
+
+static uint8_t *write_state_ptr;
+static const uint8_t *read_state_ptr;
+static unsigned state_sizes[2];
 
 static INT32 HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
 {
@@ -105,60 +193,29 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 			retro_log = RETRO_LOG_ERROR;
 
 		HandleMessage(retro_log, buf);
+
+#ifdef FBNEO_DEBUG
+		// Let's send errors to a file
+		if (nStatus == PRINT_ERROR)
+		{
+			FILE * error_file;
+			char error_path[MAX_PATH];
+			char error_path_to_create[MAX_PATH];
+			snprintf_nowarn (error_path_to_create, sizeof(error_path_to_create), "%s%cfbneo%cerrors", g_save_dir, path_default_slash_c(), path_default_slash_c());
+			path_mkdir(error_path_to_create);
+			snprintf_nowarn (error_path, sizeof(error_path), "%s%cfbneo%cerrors%c%s.txt", g_save_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c(), BurnDrvGetTextA(DRV_NAME));
+			error_file = fopen(error_path, filestream_exists(error_path) ? "a" : "w");
+			fwrite(buf , strlen(buf), 1, error_file);
+			fclose(error_file);
+		}
+#endif
+
 	}
 
 	return rc;
 }
 
 INT32 (__cdecl *bprintf) (INT32 nStatus, TCHAR* szFormat, ...) = libretro_bprintf;
-
-int kNetGame = 0;
-INT32 nReplayStatus = 0;
-INT32 nIpsMaxFileLen = 0;
-unsigned nGameType = 0;
-static INT32 nGameWidth, nGameHeight;
-static INT32 bDisableSerialize = 0;
-
-static unsigned int BurnDrvGetIndexByName(const char* name);
-char* DecorateGameName(UINT32 nBurnDrv);
-
-extern INT32 EnableHiscores;
-
-#define STAT_NOFIND  0
-#define STAT_OK      1
-#define STAT_CRC     2
-#define STAT_SMALL   3
-#define STAT_LARGE   4
-
-struct ROMFIND
-{
-	unsigned int nState;
-	int nArchive;
-	int nPos;
-	BurnRomInfo ri;
-};
-
-struct located_archive
-{
-	std::string path;
-	bool ignoreCrc;
-};
-static std::vector<located_archive> g_find_list_path;
-
-static ROMFIND g_find_list[1024];
-static unsigned g_rom_count;
-
-INT32 nAudSegLen = 0;
-
-static UINT8* pVidImage = NULL;
-static bool bVidImageNeedRealloc = false;
-static int16_t *g_audio_buf = NULL;
-
-// Mapping of PC inputs to game inputs
-struct GameInp* GameInp = NULL;
-UINT32 nGameInpCount = 0;
-INT32 nAnalogSpeed = 0x0100;
-INT32 nFireButtons = 0;
 
 // libretro globals
 void retro_set_video_refresh(retro_video_refresh_t cb) { video_cb = cb; }
@@ -197,21 +254,7 @@ void retro_set_environment(retro_environment_t cb)
 	environ_cb(RETRO_ENVIRONMENT_SET_SUBSYSTEM_INFO, (void*)subsystems);
 }
 
-char g_driver_name[128];
-char g_rom_dir[MAX_PATH];
-char g_rom_parent_dir[MAX_PATH];
-char g_save_dir[MAX_PATH];
-char g_system_dir[MAX_PATH];
-char g_autofs_path[MAX_PATH];
-
-// MemCard support
-static TCHAR szMemoryCardFile[MAX_PATH];
-static int nMinVersion;
-static bool bMemCardFC1Format;
-
 extern unsigned int (__cdecl *BurnHighCol) (signed int r, signed int g, signed int b, signed int i);
-
-static bool driver_inited;
 
 void retro_get_system_info(struct retro_system_info *info)
 {
@@ -224,25 +267,6 @@ void retro_get_system_info(struct retro_system_info *info)
 	info->block_extract = true;
 	info->valid_extensions = "zip|7z";
 }
-
-// FBNEO stubs
-unsigned ArcadeJoystick;
-
-int bDrvOkay;
-int bRunPause;
-bool bAlwaysProcessKeyboardInput;
-
-bool bDoIpsPatch;
-void IpsApplyPatches(UINT8 *, char *) {}
-
-TCHAR szAppEEPROMPath[MAX_PATH];
-TCHAR szAppHiscorePath[MAX_PATH];
-TCHAR szAppSamplesPath[MAX_PATH];
-TCHAR szAppBlendPath[MAX_PATH];
-TCHAR szAppHDDPath[MAX_PATH];
-TCHAR szAppBurnVer[16];
-
-static int nDIPOffset;
 
 static void InpDIPSWGetOffset (void)
 {
@@ -508,8 +532,6 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int /*nOutSize*/
 	return (char*)pszInString;
 }
 
-const int nConfigMinVersion = 0x020921;
-
 // addition to support loading of roms without crc check
 static int find_rom_by_name(char *name, const ZipEntry *list, unsigned elems)
 {
@@ -606,7 +628,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 	static char path[MAX_PATH];
 
 	// Search system fbneo "patched" subdirectory
-	snprintf(path, sizeof(path), "%s%cfbneo%cpatched%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c(), romName);
+	snprintf_nowarn(path, sizeof(path), "%s%cfbneo%cpatched%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
 		g_find_list_path.push_back(located_archive());
@@ -616,7 +638,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 		ZipClose();
 	}
 	// Search rom dir
-	snprintf(path, sizeof(path), "%s%c%s", g_rom_dir, path_default_slash_c(), romName);
+	snprintf_nowarn(path, sizeof(path), "%s%c%s", g_rom_dir, path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
 		g_find_list_path.push_back(located_archive());
@@ -626,7 +648,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 		ZipClose();
 	}
 	// Search system fbneo subdirectory (where samples/hiscore are stored)
-	snprintf(path, sizeof(path), "%s%cfbneo%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), romName);
+	snprintf_nowarn(path, sizeof(path), "%s%cfbneo%c%s", g_system_dir, path_default_slash_c(), path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
 		g_find_list_path.push_back(located_archive());
@@ -636,7 +658,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 		ZipClose();
 	}
 	// Search system directory
-	snprintf(path, sizeof(path), "%s%c%s", g_system_dir, path_default_slash_c(), romName);
+	snprintf_nowarn(path, sizeof(path), "%s%c%s", g_system_dir, path_default_slash_c(), romName);
 	if (ZipOpen(path) == 0)
 	{
 		g_find_list_path.push_back(located_archive());
@@ -839,49 +861,49 @@ int CreateAllDatfiles()
 	INT32 nRet = 0;
 	TCHAR szFilename[MAX_PATH];
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Arcade only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Arcade only");
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Megadrive only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Megadrive only");
 	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, PC-Engine only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, PC-Engine only");
 	create_datfile(szFilename, DAT_PCENGINE_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, TurboGrafx16 only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, TurboGrafx16 only");
 	create_datfile(szFilename, DAT_TG16_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, SuprGrafx only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, SuprGrafx only");
 	create_datfile(szFilename, DAT_SGX_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Sega SG-1000 only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Sega SG-1000 only");
 	create_datfile(szFilename, DAT_SG1000_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, ColecoVision only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, ColecoVision only");
 	create_datfile(szFilename, DAT_COLECO_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Master System only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Master System only");
 	create_datfile(szFilename, DAT_MASTERSYSTEM_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Game Gear only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Game Gear only");
 	create_datfile(szFilename, DAT_GAMEGEAR_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, MSX 1 Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, MSX 1 Games only");
 	create_datfile(szFilename, DAT_MSX_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, ZX Spectrum Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, ZX Spectrum Games only");
 	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, NES Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, NES Games only");
 	create_datfile(szFilename, DAT_NES_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, FDS Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, FDS Games only");
 	create_datfile(szFilename, DAT_FDS_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Neogeo only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, Neogeo only");
 	create_datfile(szFilename, DAT_NEOGEO_ONLY);
 
-	snprintf(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, NeoGeo Pocket Games only");
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", path_default_slash_c(), APP_TITLE, "ClrMame Pro XML, NeoGeo Pocket Games only");
 	create_datfile(szFilename, DAT_NGP_ONLY);
 
 	return nRet;
@@ -903,7 +925,7 @@ void retro_init()
 	libretro_msg_interface_version = 0;
 	environ_cb(RETRO_ENVIRONMENT_GET_MESSAGE_INTERFACE_VERSION, &libretro_msg_interface_version);
 
-	snprintf(szAppBurnVer, sizeof(szAppBurnVer), "%x.%x.%x.%02x", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
+	snprintf_nowarn(szAppBurnVer, sizeof(szAppBurnVer), "%x.%x.%x.%02x", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF);
 	BurnLibInit();
 #ifdef AUTOGEN_DATS
 	CreateAllDatfiles();
@@ -985,10 +1007,6 @@ void retro_run()
 		}
 	}
 }
-
-static uint8_t *write_state_ptr;
-static const uint8_t *read_state_ptr;
-static unsigned state_sizes[2];
 
 static int burn_write_state_cb(BurnArea *pba)
 {
@@ -1395,25 +1413,25 @@ static bool retro_load_game_common()
 	}
 
 	// Initialize EEPROM path
-	snprintf (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo%c", g_save_dir, path_default_slash_c(), path_default_slash_c());
+	snprintf_nowarn (szAppEEPROMPath, sizeof(szAppEEPROMPath), "%s%cfbneo%c", g_save_dir, path_default_slash_c(), path_default_slash_c());
 
 	// Create EEPROM path if it does not exist
 	// because of some bug on gekko based devices (see https://github.com/libretro/libretro-common/issues/161), we can't use the szAppEEPROMPath variable which requires the trailing slash
 	char EEPROMPathToCreate[MAX_PATH];
-	snprintf (EEPROMPathToCreate, sizeof(EEPROMPathToCreate), "%s%cfbneo", g_save_dir, path_default_slash_c());
+	snprintf_nowarn (EEPROMPathToCreate, sizeof(EEPROMPathToCreate), "%s%cfbneo", g_save_dir, path_default_slash_c());
 	path_mkdir(EEPROMPathToCreate);
 
 	// Initialize Hiscore path
-	snprintf (szAppHiscorePath, sizeof(szAppHiscorePath), "%s%cfbneo%c", g_system_dir, path_default_slash_c(), path_default_slash_c());
+	snprintf_nowarn (szAppHiscorePath, sizeof(szAppHiscorePath), "%s%cfbneo%c", g_system_dir, path_default_slash_c(), path_default_slash_c());
 
 	// Initialize Samples path
-	snprintf (szAppSamplesPath, sizeof(szAppSamplesPath), "%s%cfbneo%csamples%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
+	snprintf_nowarn (szAppSamplesPath, sizeof(szAppSamplesPath), "%s%cfbneo%csamples%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
 
 	// Initialize Blend path
-	snprintf (szAppBlendPath, sizeof(szAppBlendPath), "%s%cfbneo%cblend%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
+	snprintf_nowarn (szAppBlendPath, sizeof(szAppBlendPath), "%s%cfbneo%cblend%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
 
 	// Initialize HDD path
-	snprintf (szAppHDDPath, sizeof(szAppHDDPath), "%s%c", g_rom_dir, path_default_slash_c());
+	snprintf_nowarn (szAppHDDPath, sizeof(szAppHDDPath), "%s%c", g_rom_dir, path_default_slash_c());
 
 	// Intialize state_sizes (for serialization)
 	state_sizes[0] = 0;
@@ -1487,7 +1505,7 @@ static bool retro_load_game_common()
 		if (is_neogeo_game && nMemcardMode != 0)
 		{
 			// Initialize MemCard path
-			snprintf (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), (nMemcardMode == 2 ? g_driver_name : "shared"));
+			snprintf_nowarn (szMemoryCardFile, sizeof(szMemoryCardFile), "%s%cfbneo%c%s.memcard", g_save_dir, path_default_slash_c(), path_default_slash_c(), (nMemcardMode == 2 ? g_driver_name : "shared"));
 			MemCardInsert();
 		}
 
@@ -1503,8 +1521,8 @@ static bool retro_load_game_common()
 			HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", MainRamData, MainRamSize);
 		}
 
-		// Loading minimal savestate (not exactly sure why it is needed)
-		snprintf (g_autofs_path, sizeof(g_autofs_path), "%s%cfbneo%c%s.fs", g_save_dir, path_default_slash_c(), path_default_slash_c(), BurnDrvGetTextA(DRV_NAME));
+		// Loading minimal savestate (handle some machine settings)
+		snprintf_nowarn (g_autofs_path, sizeof(g_autofs_path), "%s%cfbneo%c%s.fs", g_save_dir, path_default_slash_c(), path_default_slash_c(), BurnDrvGetTextA(DRV_NAME));
 		if (BurnStateLoad(g_autofs_path, 0, NULL) == 0)
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully loaded from %s\n", g_autofs_path);
 

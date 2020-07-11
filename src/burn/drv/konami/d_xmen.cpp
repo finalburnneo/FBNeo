@@ -43,6 +43,7 @@ static INT32 sprite_colorbase;
 static INT32 bg_colorbase;
 static INT32 layerpri[3];
 static INT32 layer_colorbase[3];
+static INT32 tilemap_select;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -204,6 +205,7 @@ static void __fastcall xmen_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x108001:
+			tilemap_select = (data & 0x80) >> 6; // bit7 hi = tilemap 2,3 select, bit7 lo = tilemap 0,1 -dink July 2020
 			EEPROMWrite(data & 0x08, data & 0x10, data & 0x04);
 		return;
 
@@ -311,8 +313,6 @@ static UINT16 __fastcall xmen_main_read_word(UINT32 address)
 			return K053246Read(1) | (K053246Read(0) << 8);
 	}
 
-	bprintf (0, _T("RW: %5.5x\n"), address);
-
 	return 0;
 }
 
@@ -417,6 +417,7 @@ static INT32 DrvDoReset()
 	}
 
 	interrupt_enable = 0;
+	tilemap_select = 0;
 
 	return 0;
 }
@@ -613,27 +614,35 @@ static inline void DrvRecalcPalette()
 	}
 }
 
-static INT32 DrvDraw()
+static INT32 draw_side(INT32 side)
 {
-	if (DrvRecalc) {
-		DrvRecalcPalette();
-	}
-
 	INT32 width = nScreenWidth;
+	UINT8 temp_reg = 0;
 
 	if (width != 288)
 	{
-		K053247SetSpriteOffset((GetCurrentFrame() & 1) ? 228 : 511, -158);
-		K052109AdjustScroll((GetCurrentFrame() & 1) ? 24 : -8, 0);
+		// Every other frame xmen6p sets the lsb of the sprite xoffset to 3,
+		// this causes the sprites to jiggle when we update both screens per frame.
+		// this is a hack so we can update both screens per frame.
+		temp_reg = K053246ReadRegs(1);
+		K053246Write(1, 0);
+
+		K053247SetSpriteOffset((side) ? (228-5) : 511, -158);
+		K052109AdjustScroll((side) ? 24 : -8, 0);
 
 		nScreenWidth = 512;
-		konami_bitmap32 = DrvBitmaps[GetCurrentFrame() & 1];
+		konami_bitmap32 = DrvBitmaps[side];
 
-		memcpy (K053247Ram, DrvSprRAM[GetCurrentFrame() & 1], 0x1000);
+		memcpy (K053247Ram, DrvSprRAM[side], 0x1000);
 
 		for (INT32 i = 0; i < 0xc000/2; i++)
 		{
-			K052109Write(i, *((UINT16*)(DrvTMapRAM[GetCurrentFrame() & 1] + i * 2)) & 0xff);
+			// tilemap 0 (@ 0x18c000) is master, only it can control certain registers. -dink july 2020
+			if ((side == 1 || tilemap_select) && (i != 0x1c80 && i != 0x1e80)) {
+				K052109Write(i, *((UINT16*)(DrvTMapRAM[side+tilemap_select] + i * 2)) & 0xff);
+			} else if (side == 0) {
+				K052109Write(i, *((UINT16*)(DrvTMapRAM[side] + i * 2)) & 0xff);
+			}
 		}
 	}
 
@@ -670,8 +679,8 @@ static INT32 DrvDraw()
 		konami_bitmap32 = DrvBitmaps[2];
 
 		{
-			INT32 woffs = (GetCurrentFrame() & 1) * 288;
-			UINT32 *src = DrvBitmaps[GetCurrentFrame() & 1];
+			INT32 woffs = (side & 1) * 288;
+			UINT32 *src = DrvBitmaps[side & 1];
 			UINT32 *dst = konami_bitmap32 + woffs;
 
 			for (INT32 y = 0; y < nScreenHeight; y++)
@@ -684,7 +693,22 @@ static INT32 DrvDraw()
 				src += 512;
 			}
 		}
+		K053246Write(1, temp_reg);
 	}
+
+	return 0;
+}
+
+static INT32 DrvDraw()
+{
+	if (DrvRecalc) {
+		DrvRecalcPalette();
+	}
+
+	if (nScreenWidth != 288) {
+		draw_side(1);
+	}
+	draw_side(0);
 
 	KonamiBlendCopy(DrvPalette);
 
@@ -702,8 +726,16 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			//DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;   // handled below..
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+		}
+
+		{ // start button frame-round-robin - prevent more than 1 start
+			// from falling on any given frame (causes crash in-game)
+
+			INT32 button = (nCurrentFrame % 12) / 2;
+			DrvInputs[2] ^= (DrvJoy3[8+button] & 1) << (8+button);
+			DrvInputs[2] ^= (DrvJoy3[14] & 1) << 14; // f2/service mode
 		}
 
 	 	// Clear Opposites

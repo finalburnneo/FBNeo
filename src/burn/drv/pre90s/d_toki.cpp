@@ -50,56 +50,56 @@ static UINT8 TokibMSM5205Next = 0;
 static UINT8 TokibMSM5205Toggle = 0;
 
 static struct BurnInputInfo TokiInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Toki)
 
 static struct BurnInputInfo TokibInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tokib)
@@ -289,7 +289,7 @@ static void __fastcall toki_write_byte(UINT32 address, UINT8 data)
 		case 0x8000a:
 		case 0x8000b:
 		case 0x8000c:
-		case 0x8000d:
+		case 0x8000d: if (!is_bootleg)
 			seibu_main_word_write(address & 0xf, data);
 		return;
 	}
@@ -325,7 +325,7 @@ static void __fastcall toki_write_word(UINT32 address, UINT16 data)
 		case 0x8000a:
 		case 0x8000b:
 		case 0x8000c:
-		case 0x8000d:
+		case 0x8000d: if (!is_bootleg)
 			seibu_main_word_write(address & 0xf, data);
 		return;
 	}
@@ -349,7 +349,7 @@ static UINT8 __fastcall toki_read_byte(UINT32 address)
 		case 0x8000b:
 		case 0x8000c:
 		case 0x8000d:
-			return seibu_main_word_read(address & 0x0f);
+			return (is_bootleg) ? 0 : seibu_main_word_read(address & 0x0f);
 
 		case 0xc0000:
 		case 0xc0001:
@@ -389,7 +389,7 @@ static UINT16 __fastcall toki_read_word(UINT32 address)
 		case 0x8000b:
 		case 0x8000c:
 		case 0x8000d:
-			return seibu_main_word_read(address & 0x0f);
+			return (is_bootleg) ? 0 : seibu_main_word_read(address & 0x0f);
 
 		case 0xc0000:
 			return (DrvDips[1] << 8) | (DrvDips[0]);
@@ -623,42 +623,42 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	Drv68KROM	= Next; Next += 0x060000;
+	Drv68KROM		= Next; Next += 0x060000;
 
-	SeibuZ80ROM	= Next;
-	DrvZ80ROM	= Next; Next += 0x020000;
+	SeibuZ80ROM		= Next;
+	DrvZ80ROM		= Next; Next += 0x020000;
 	SeibuZ80DecROM	= Next;
 	DrvZ80DecROM	= Next; Next += 0x010000;
 
-	DrvGfxROM0	= Next; Next += 0x040000;
-	DrvGfxROM1	= Next; Next += 0x200000;
-	DrvGfxROM2	= Next; Next += 0x100000;
-	DrvGfxROM3	= Next; Next += 0x100000;
+	DrvGfxROM0		= Next; Next += 0x040000;
+	DrvGfxROM1		= Next; Next += 0x200000;
+	DrvGfxROM2		= Next; Next += 0x100000;
+	DrvGfxROM3		= Next; Next += 0x100000;
 	
-	MSM6295ROM	= Next;
+	MSM6295ROM		= Next;
 	DrvSndROM       = Next; Next += 0x040000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
-	AllRam		= Next;
+	AllRam			= Next;
 
-	DrvBg1RAM	= Next; Next += 0x000800;
-	DrvBg2RAM	= Next; Next += 0x000800;
-	DrvFgRAM	= Next; Next += 0x000800;
-	Drv68KRAM	= Next; Next += 0x00e000;
-	SeibuZ80RAM	= Next;
-	DrvZ80RAM	= Next; Next += 0x000800;
-	DrvPalRAM	= Next; Next += 0x000800;
-	DrvSprRAM	= Next; Next += 0x000800;
-	DrvSprBuf	= Next; Next += 0x000800;
+	DrvBg1RAM		= Next; Next += 0x000800;
+	DrvBg2RAM		= Next; Next += 0x000800;
+	DrvFgRAM		= Next; Next += 0x000800;
+	Drv68KRAM		= Next; Next += 0x00e000;
+	SeibuZ80RAM		= Next;
+	DrvZ80RAM		= Next; Next += 0x000800;
+	DrvPalRAM		= Next; Next += 0x000800;
+	DrvSprRAM		= Next; Next += 0x000800;
+	DrvSprBuf		= Next; Next += 0x000800;
 
 	DrvScrollRAM	= Next; Next += 0x000400;
 
-	soundlatch	= Next; Next += 0x000001;
+	soundlatch		= Next; Next += 0x000001;
 
-	RamEnd		= Next;
+	RamEnd			= Next;
 
-	MemEnd		= Next;
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -1325,10 +1325,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 segment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		if (SekTotalCycles() < segment) {
-			nCyclesDone[0] += SekRun(segment - SekTotalCycles());
-		}
+		CPU_RUN(0, Sek);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
@@ -1373,28 +1370,23 @@ static INT32 TokibFrame()
 
 	assemble_inputs(0x3f3f, 0xff1f);
 	
-	INT32 nCyclesToDo[2] = { 10000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 10000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
-
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesToDo[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 		MSM5205Update();
 		ZetClose();
 	}
 	
 	ZetOpen(0);
-	BurnTimerEndFrameYM3812(nCyclesToDo[1]);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);

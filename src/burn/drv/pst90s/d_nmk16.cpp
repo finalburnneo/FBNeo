@@ -4164,7 +4164,7 @@ static INT32 SeibuSoundDoReset()
 	SekClose();
 
 	seibu_sound_reset();
-	MSM6295SetInitialBanks(2);
+	MSM6295SetInitialBanks(1);
 
 	return 0;
 }

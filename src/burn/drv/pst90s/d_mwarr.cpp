@@ -1,9 +1,5 @@
 // Fb Alpha Mighty Warrior / Steel Force / Twin Brats driver module
 // Based on MAME drivers by Pierpaolo Prazzoli, David Haywood, and stephh
-//
-// for later: figure out why the 3rd tile layer needs prio-hack, otherwise
-// mwarr title goes under the sprites in the attract mode.
-//
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -60,58 +56,58 @@ static UINT16 DrvInps[2];
 static UINT8 DrvSrv[1] = { 0 }; // stlforce, twinbrat
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo StlforceInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"  },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"  	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Stlforce)
@@ -630,10 +626,10 @@ static INT32 MwarrInit()
 	GenericTilemapInit(1, TILEMAP_SCAN_COLS, low_map_callback, 16, 16, 64, 16);
 	GenericTilemapInit(2, TILEMAP_SCAN_COLS, mid_map_callback, 16, 16, 64, 16);
 	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, txt_map_callback,  8,  8, 64, 32);
-	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x200000, 0x180, 0x07);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4,  8,  8, 0x200000, 0x180, 0x07);
 	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x200000, 0x100, 0x07);
 	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 16, 16, 0x200000, 0x080, 0x07);
-	GenericTilemapSetGfx(4, DrvGfxROM4, 4,  8,  8, 0x100000, 0x000, 0x07);
+	GenericTilemapSetGfx(4, DrvGfxROM4, 4, 16, 16, 0x200000, 0x000, 0x07);
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
 	GenericTilemapSetTransparent(3, 0);
@@ -718,10 +714,10 @@ static INT32 CommonInit(INT32 select, INT32 xoffset)
 	GenericTilemapInit(1, TILEMAP_SCAN_COLS, low_map_callback, 16, 16, 64, 16);
 	GenericTilemapInit(2, TILEMAP_SCAN_COLS, mid_map_callback, 16, 16, 64, 16);
 	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, txt_map_callback,  8,  8, 64, 32);
-	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x200000, 0x180, 0x07);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4,  8,  8, 0x200000, 0x180, 0x07);
 	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x200000, 0x100, 0x07);
 	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 16, 16, 0x200000, 0x080, 0x07);
-	GenericTilemapSetGfx(4, DrvGfxROM4, 4,  8,  8, 0x100000, 0x000, 0x07);
+	GenericTilemapSetGfx(4, DrvGfxROM4, 4, 16, 16, 0x200000, 0x000, 0x07);
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
 	GenericTilemapSetTransparent(3, 0);
@@ -782,7 +778,7 @@ static void draw_sprites(INT32 use_priority)
 	INT32 x_offset = global_x_offset;
 
 	if (game_select == 2) x_offset -= 9;
-	if (game_select == 1) x_offset += 0;
+	if (game_select == 1) x_offset += 9;
 	if (game_select == 0) x_offset += 9;
 
 	while (source >= finish)

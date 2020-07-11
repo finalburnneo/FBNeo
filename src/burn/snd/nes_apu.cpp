@@ -1042,10 +1042,13 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	info->pSyncCallback = pSyncCallback;
 
 	info->bAdd = bAdd;
-	// cycles per frame: 29781 ntsc, 33248 pal
-	dmc_buffer = (UINT8*)BurnMalloc((cycles_per_frame + 5) * 2);
-	nes_ext_buffer = (INT16*)BurnMalloc((cycles_per_frame + 5) * 2 * 2);
-	nes_ext_sound_cb = NULL;
+
+	if (chip == 0) {
+		// cycles per frame: 29781 ntsc, 33248 pal
+		dmc_buffer = (UINT8*)BurnMalloc((cycles_per_frame + 5) * 2);
+		nes_ext_buffer = (INT16*)BurnMalloc((cycles_per_frame + 5) * 2 * 2);
+		nes_ext_sound_cb = NULL;
+	}
 	nesapu_mixermode = 0xff; // enable all
 
 	info->stream = NULL;

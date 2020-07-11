@@ -1768,7 +1768,7 @@ struct BurnDriver BurnDrvKov114 = {
 };
 
 
-// Knights of Valour Plus / Sangoku Senki (V111, Japan)
+// Knights of Valour / Sangoku Senki (V111, Japan)
 
 static struct BurnRomInfo kov111RomDesc[] = {
 	{ "sav111_u4.u4",     	0x080000, 0xae2f1b4e, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1921,7 +1921,7 @@ static INT32 kovplusInit()
 
 struct BurnDriver BurnDrvKovplus = {
 	"kovplus", NULL, "pgm", NULL, "1999",
-	"Knights of Valour Plus - Sangoku Senki Plus (V119)\0", NULL, "IGS", "PolyGameMaster",
+	"Knights of Valour Plus - Sangoku Senki Plus (V119)\0", "no PLUS on screen when set to KOREA", "IGS", "PolyGameMaster",
 	L"Knights of Valour Plus\0\u4E09\u56FD\u6226\u7D00 Plus\0\u4E09\u56FD\u6218\u7EAA Plus (V119)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovplusRomInfo, kovplusRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
@@ -1930,14 +1930,21 @@ struct BurnDriver BurnDrvKovplus = {
 };
 
 
-// Knights of Valour Plus / Sangoku Senki Plus (V119 alt)
+// Knights of Valour Plus / Sangoku Senki Plus (V119, Korea)
+
+/* There were no stickers on any of the eproms.
+   screen ver pic: V119 KOREA
+   rom types: U4 U5 U7 U8 AMD AM27C040
+   rom types: U10 HIT HN27C4096HG
+   credits to: "GC8TECH.COM" 
+*/
 
 static struct BurnRomInfo kovplusaRomDesc[] = {
-	{ "v119.u3",       	0x080000, 0x6750388f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "v119.u5",       	0x080000, 0xd4101ffd, 1 | BRF_PRG | BRF_ESS },  //  1
-	{ "v119.u4",       	0x080000, 0x8200ece6, 1 | BRF_PRG | BRF_ESS },  //  2
-	{ "v119.u6",       	0x080000, 0x71e28f27, 1 | BRF_PRG | BRF_ESS },  //  3
-	{ "v119.u2",	   	0x080000, 0x29588ef2, 1 | BRF_PRG | BRF_ESS },  //  4
+	{ "v119.u4",       	0x080000, 0x6750388f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "v119.u7",       	0x080000, 0xd4101ffd, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "v119.u5",       	0x080000, 0x8200ece6, 1 | BRF_PRG | BRF_ESS },  //  2
+	{ "v119.u8",       	0x080000, 0x71e28f27, 1 | BRF_PRG | BRF_ESS },  //  3
+	{ "v119.u10",	   	0x080000, 0x29588ef2, 1 | BRF_PRG | BRF_ESS },  //  4
 
 	{ "t0600.u11",     	0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  5 Tile data
 	
@@ -1959,8 +1966,8 @@ STD_ROM_FN(kovplusa)
 
 struct BurnDriver BurnDrvKovplusa = {
 	"kovplusa", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour Plus - Sangoku Senki Plus (V119 alt)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour Plus\0\u4E09\u56FD\u6226\u7D00 Plus\0\u4E09\u56FD\u6218\u7EAA Plus (V119 alt)\0", NULL, NULL, NULL,
+	"Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)\0", "no PLUS on screen when set to KOREA", "IGS", "PolyGameMaster",
+	L"Knights of Valour Plus\0\u4E09\u56FD\u6226\u7D00 Plus\0\u4E09\u56FD\u6218\u7EAA Plus (V119, Korea)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovplusaRomInfo, kovplusaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

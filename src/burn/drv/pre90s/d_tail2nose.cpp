@@ -480,7 +480,7 @@ static INT32 DrvExit()
 	BurnYM2608Exit();
 	ZetClose();
 
-	K051316Exit();
+	KonamiICExit(); // K051316
 
 	SekExit();
 	ZetExit();

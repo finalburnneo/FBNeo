@@ -4168,7 +4168,7 @@ struct BurnDriver BurnDrvmsheartb = {
 };
 
 
-// MS Pacman (bootleg, set 1)
+// Ms. Pac-Man (bootleg, set 1)
 
 static struct BurnRomInfo mspacmabRomDesc[] = {
 	{ "boot1",        0x1000, 0xd16b31b7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4198,7 +4198,7 @@ static INT32 mspacmanbInit()
 
 struct BurnDriver BurnDrvmspacmab = {
 	"mspacmab", "mspacman", NULL, NULL, "1981",
-	"MS Pacman (bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
+	"Ms. Pac-Man (bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmabRomInfo, mspacmabRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
@@ -4207,7 +4207,7 @@ struct BurnDriver BurnDrvmspacmab = {
 };
 
 
-// MS Pacman (bootleg, set 2)
+// Ms. Pac-Man (bootleg, set 2)
 
 static struct BurnRomInfo mspacmab2RomDesc[] = {
 	{ "2764_a.a",     		0x2000, 0x39ae7b16, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4231,7 +4231,7 @@ STD_ROM_FN(mspacmab2)
 
 struct BurnDriver BurnDrvmspacmab2 = {
 	"mspacmab2", "mspacman", NULL, NULL, "1981",
-	"MS Pacman (bootleg, set 2)\0", NULL, "bootleg", "Pac-man",
+	"Ms. Pac-Man (bootleg, set 2)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmab2RomInfo, mspacmab2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,

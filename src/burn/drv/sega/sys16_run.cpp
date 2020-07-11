@@ -776,9 +776,11 @@ void __fastcall System18Z80PortWrite(UINT16 a, UINT8 d)
 		
 		case 0xc0: {
 			System16MCUData = d;
-			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
-			nSystem16CyclesDone[2] += mcs51Run(2000);
-			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+			if (System16I8751RomNum) {
+				mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+				nSystem16CyclesDone[2] += mcs51Run(2000);
+				mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+			}
 			return;
 		}
 	}

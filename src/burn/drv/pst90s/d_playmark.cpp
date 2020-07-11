@@ -1281,7 +1281,7 @@ static INT32 DrvExit()
 	SekExit();
 	pic16c5xExit();
 	MSM6295Exit(0);
-	
+	if (DrvEEPROMInUse) EEPROMExit();
 	GenericTilesExit();
 	
 	BurnFree(Mem);

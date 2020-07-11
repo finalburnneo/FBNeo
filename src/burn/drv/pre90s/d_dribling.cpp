@@ -277,6 +277,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
+	ppi8255_exit();
 
 	BurnFree(AllMem);
 
@@ -347,16 +348,14 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 32;
-	INT32 nCyclesTotal = 5000000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 5000000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (i == (240 / 8) && irq_mask)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);

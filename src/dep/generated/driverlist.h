@@ -4384,6 +4384,7 @@ DRV		BurnDrvGalaxbsf;
 DRV		BurnDrvGalaxianbl;
 DRV		BurnDrvGalaxbsf2;
 DRV		BurnDrvGalaxianbl2;
+DRV		BurnDrvGalaxcirsa;
 DRV		BurnDrvGalaxiani;
 DRV		BurnDrvfds_galaxian;
 DRV		BurnDrvnes_galaxian;
@@ -6140,8 +6141,8 @@ DRV		BurnDrvKov2p202;
 DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvkov2pshpd;
-DRV		BurnDrvKovplusa;
 DRV		BurnDrvKovplus;
+DRV		BurnDrvKovplusa;
 DRV		BurnDrvkovytzyce;
 DRV		BurnDrvkovytzyws;
 DRV		BurnDrvkovshpzqhl;
@@ -7575,14 +7576,14 @@ DRV		BurnDrvnes_mrsplash;
 DRV		BurnDrvmrtnt;
 DRV		BurnDrvMSX_mrwong;
 DRV		BurnDrvDonight;
-DRV		BurnDrvmspacmab;
-DRV		BurnDrvmspacmab2;
 DRV		BurnDrvmspacman;
 DRV		BurnDrvmspacmat;
 DRV		BurnDrvmspacmanbg;
 DRV		BurnDrvmspacmanbg2;
 DRV		BurnSpecmspacman;
 DRV		BurnDrvmspacmbe;
+DRV		BurnDrvmspacmab;
+DRV		BurnDrvmspacmab2;
 DRV		BurnDrvsms_mspacman;
 DRV		BurnDrvmd_mspacman;
 DRV		BurnDrvmspacmbmc;
@@ -18929,6 +18930,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalaxianbl,			// Galaxian (bootleg, set 2)
 	&BurnDrvGalaxbsf2,			// Galaxian (bootleg, set 3)
 	&BurnDrvGalaxianbl2,		// Galaxian (bootleg, set 4)
+	&BurnDrvGalaxcirsa,			// Galaxian (Cirsa Spanish bootleg)
 	&BurnDrvGalaxiani,			// Galaxian (Irem)
 	&BurnDrvfds_galaxian,		// Galaxian (Japan)
 	&BurnDrvnes_galaxian,		// Galaxian (Japan)
@@ -20685,8 +20687,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvkov2pshpd,			// Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)
-	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119 alt)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
+	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)
 	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)
 	&BurnDrvkovytzyws,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
@@ -22120,14 +22122,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmrtnt,				// Mr. TNT
 	&BurnDrvMSX_mrwong,			// Mr. Wong's Loopy Laundry (Euro)
 	&BurnDrvDonight,			// Mr.Do's Nightmare (hack by Krazy Ivan)
-	&BurnDrvmspacmab,			// MS Pacman (bootleg, set 1)
-	&BurnDrvmspacmab2,			// MS Pacman (bootleg, set 2)
 	&BurnDrvmspacman,			// MS Pacman
 	&BurnDrvmspacmat,			// Ms. Pac Attack
 	&BurnDrvmspacmanbg,			// Ms. Pac-Man ('Made in Greece' bootleg, set 1)
 	&BurnDrvmspacmanbg2,		// Ms. Pac-Man ('Made in Greece' bootleg, set 2)
 	&BurnSpecmspacman,			// Ms. Pac-Man (48K)
 	&BurnDrvmspacmbe,			// Ms. Pac-Man (bootleg, encrypted)
+	&BurnDrvmspacmab,			// Ms. Pac-Man (bootleg, set 1)
+	&BurnDrvmspacmab2,			// Ms. Pac-Man (bootleg, set 2)
 	&BurnDrvsms_mspacman,		// Ms. Pac-Man (Euro, Bra)
 	&BurnDrvmd_mspacman,		// Ms. Pac-Man (Euro, USA)
 	&BurnDrvmspacmbmc,			// Ms. Pac-Man (Marti Colls bootleg)

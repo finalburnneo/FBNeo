@@ -93,9 +93,8 @@ We won't accept requests for "making the core faster", as far as we are concerne
 Most likely for the same reason as above.
 
 ### Game XXX runs faster in MAME2003/MAME2010, why ?
-This is not MAME, we are generally using a more "up-to-date" code. 
-Overall, FB Alpha is slower than old MAME version but more accurate and less buggy.
-This libretro port also support various features which are usually buggy or absent in MAME cores (netplay, rewind, retroachievements, ...). It might use additional resources.
+Overall, FBNeo is slower than old MAME version because it's more accurate (meaning less bugs).
+This libretro port also support various features which are usually buggy or absent in MAME cores (readahead, netplay, rewind, retroachievements, ...). It might use additional resources.
 
 ### Cheat code doesn't work, why ?
 There should be partial support through the new API relying on main ram exposition.

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14276 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14277 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4306,6 +4306,7 @@ This list contains all games supported by FinalBurn Neo.
 | galaxianbl	|  	| Galaxian (bootleg, set 2)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | galaxbsf2	|  	| Galaxian (bootleg, set 3)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | galaxianbl2	|  	| Galaxian (bootleg, set 4)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
+| galaxcirsa	|  	| Galaxian (Cirsa Spanish bootleg)			| galaxian	| 1979	| bootleg (Cirsa| Galaxian	| 					|
 | galaxiani	|  	| Galaxian (Irem)					| galaxian	| 1979	| bootleg? (Irem| Galaxian	| 					|
 | fds_galaxian	|  	| Galaxian (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_galaxian	|  	| Galaxian (Japan)					| 		| 1984	| Namco		| Miscellaneous	| 					|
@@ -6028,8 +6029,8 @@ This list contains all games supported by FinalBurn Neo.
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
-| kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119 alt)| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
-| kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| 					|
+| kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
+| kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119, Kor| kovplus	| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2019	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovytzyws	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpzqhl	|  	| Knights of Valour Super Heroes Plus (The Best Firepowe| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -7449,14 +7450,14 @@ This list contains all games supported by FinalBurn Neo.
 | mrtnt		|  	| Mr. TNT						| 		| 1982	| Telko		| Pac-man	| 					|
 | msx_mrwong	|  	| Mr. Wong's Loopy Laundry (Euro)			| 		| 1984	| Artic Computin| MSX		| 					|
 | donight	|  	| Mr.Do's Nightmare (hack by Krazy Ivan)		| 		| 2013	| Krazy Ivan	| Galaxian	| 					|
-| mspacmab	|  	| MS Pacman (bootleg, set 1)				| mspacman	| 1981	| bootleg	| Pac-man	| 					|
-| mspacmab2	|  	| MS Pacman (bootleg, set 2)				| mspacman	| 1981	| bootleg	| Pac-man	| 					|
 | mspacman	|  	| MS Pacman						| 		| 1980	| Namco		| Pac-man	| 					|
 | mspacmat	|  	| Ms. Pac Attack					| mspacman	| 1980	| hack		| Pac-man	| 					|
 | mspacmanbg	|  	| Ms. Pac-Man ('Made in Greece' bootleg, set 1)		| mspacman	| 198?	| bootleg	| Pac-man	| 					|
 | mspacmanbg2	|  	| Ms. Pac-Man ('Made in Greece' bootleg, set 2)		| mspacman	| 198?	| bootleg	| Pac-man	| 					|
 | spec_mspacman	|  	| Ms. Pac-Man (48K)					| 		| 1984	| Atarisoft	| ZX Spectrum	| 					|
 | mspacmbe	|  	| Ms. Pac-Man (bootleg, encrypted)			| mspacman	| 1981	| bootleg	| Pac-man	| 					|
+| mspacmab	|  	| Ms. Pac-Man (bootleg, set 1)				| mspacman	| 1981	| bootleg	| Pac-man	| 					|
+| mspacmab2	|  	| Ms. Pac-Man (bootleg, set 2)				| mspacman	| 1981	| bootleg	| Pac-man	| 					|
 | sms_mspacman	|  	| Ms. Pac-Man (Euro, Bra)				| 		| 1991	| Tengen	| Sega Master Sy| 					|
 | md_mspacman	|  	| Ms. Pac-Man (Euro, USA)				| 		| 1991	| Tengen ~ Time | Sega Megadrive| 					|
 | mspacmbmc	|  	| Ms. Pac-Man (Marti Colls bootleg)			| mspacman	| 1981	| bootleg (Marti| Pac-man	| 					|

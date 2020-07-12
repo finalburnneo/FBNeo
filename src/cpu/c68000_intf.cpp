@@ -144,8 +144,7 @@ DEFLONGHANDLERS(0)
 #define FIND_F(x) pSekExt->MemMap[(x >> SEK_SHIFT) + SEK_WADD * 2]
 
 // Normal memory access functions
-extern "C" {
-unsigned int m68k_read8(unsigned int a)
+inline static UINT8 ReadByte(UINT32 a)
 {
 	UINT8* pr;
 
@@ -161,7 +160,7 @@ unsigned int m68k_read8(unsigned int a)
 	return pSekExt->ReadByte[(uintptr_t)pr](a);
 }
 
-unsigned int m68k_fetch8(unsigned int a)
+inline static UINT8 FetchByte(UINT32 a)
 {
 	UINT8* pr;
 
@@ -177,7 +176,7 @@ unsigned int m68k_fetch8(unsigned int a)
 	return pSekExt->ReadByte[(uintptr_t)pr](a);
 }
 
-void m68k_write8(unsigned int a, unsigned char d)
+inline static void WriteByte(UINT32 a, UINT8 d)
 {
 	UINT8* pr;
 
@@ -209,7 +208,7 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 	pSekExt->WriteByte[(uintptr_t)pr](a, d);
 }
 
-unsigned int m68k_read16(unsigned int a)
+inline static UINT16 ReadWord(UINT32 a)
 {
 	UINT8* pr;
 
@@ -222,17 +221,18 @@ unsigned int m68k_read16(unsigned int a)
 	{
 		if (a & 1)
 		{
-			return BURN_ENDIAN_SWAP_INT16((m68k_read8(a + 0) * 256) + m68k_read8(a + 1));
+			return BURN_ENDIAN_SWAP_INT16((ReadByte(a + 0) * 256) + ReadByte(a + 1));
 		}
 		else
 		{
 			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
 		}
 	}
+
 	return pSekExt->ReadWord[(uintptr_t)pr](a);
 }
 
-unsigned int m68k_fetch16(unsigned int a)
+inline static UINT16 FetchWord(UINT32 a)
 {
 	UINT8* pr;
 
@@ -244,10 +244,11 @@ unsigned int m68k_fetch16(unsigned int a)
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
 		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
 	}
+
 	return pSekExt->ReadWord[(uintptr_t)pr](a);
 }
 
-void m68k_write16(unsigned int a, unsigned short d)
+inline static void WriteWord(UINT32 a, UINT16 d)
 {
 	UINT8* pr;
 
@@ -264,8 +265,8 @@ void m68k_write16(unsigned int a, unsigned short d)
 
 			d = BURN_ENDIAN_SWAP_INT16(d);
 
-			m68k_write8(a + 0, d / 0x100);
-			m68k_write8(a + 1, d);
+			WriteByte(a + 0, d / 0x100);
+			WriteByte(a + 1, d);
 
 			return;
 		}
@@ -293,7 +294,10 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
 }
 
-unsigned int m68k_read32(unsigned int a)
+// be [3210] -> (r >> 16) | (r << 16) -> [1032] -> UINT32(le) = -> [0123]
+// le [0123]
+
+inline static UINT32 ReadLong(UINT32 a)
 {
 	UINT8* pr;
 
@@ -308,10 +312,10 @@ unsigned int m68k_read32(unsigned int a)
 
 		if (a & 1)
 		{
-			r  = m68k_read8((a + 0)) * 0x1000000;
-			r += m68k_read8((a + 1)) * 0x10000;
-			r += m68k_read8((a + 2)) * 0x100;
-			r += m68k_read8((a + 3));
+			r  = ReadByte((a + 0)) * 0x1000000;
+			r += ReadByte((a + 1)) * 0x10000;
+			r += ReadByte((a + 2)) * 0x100;
+			r += ReadByte((a + 3));
 
 			return BURN_ENDIAN_SWAP_INT32(r);
 		}
@@ -327,7 +331,7 @@ unsigned int m68k_read32(unsigned int a)
 	return pSekExt->ReadLong[(uintptr_t)pr](a);
 }
 
-unsigned int m68k_fetch32(unsigned int a)
+inline static UINT32 FetchLong(UINT32 a)
 {
 	UINT8* pr;
 
@@ -344,7 +348,7 @@ unsigned int m68k_fetch32(unsigned int a)
 	return pSekExt->ReadLong[(uintptr_t)pr](a);
 }
 
-void m68k_write32(unsigned int a, unsigned int d)
+inline static void WriteLong(UINT32 a, UINT32 d)
 {
 	UINT8* pr;
 
@@ -361,10 +365,10 @@ void m68k_write32(unsigned int a, unsigned int d)
 
 			d = BURN_ENDIAN_SWAP_INT32(d);
 
-			m68k_write8((a + 0), d / 0x1000000);
-			m68k_write8((a + 1), d / 0x10000);
-			m68k_write8((a + 2), d / 0x100);
-			m68k_write8((a + 3), d);
+			WriteByte((a + 0), d / 0x1000000);
+			WriteByte((a + 1), d / 0x10000);
+			WriteByte((a + 2), d / 0x100);
+			WriteByte((a + 3), d);
 
 			return;
 		}
@@ -393,38 +397,54 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 	}
 	pSekExt->WriteLong[(uintptr_t)pr](a, d);
 }
+
+// Normal memory access functions
+#ifdef EMU_C68K
+extern "C" {
+UINT32 __fastcall m68k_read8(UINT32 a) { return (UINT32)ReadByte(a); }
+UINT32 __fastcall m68k_read16(UINT32 a) { return (UINT32)ReadWord(a); }
+UINT32 __fastcall m68k_read32(UINT32 a) { return               ReadLong(a); }
+
+UINT32 __fastcall m68k_fetch8(UINT32 a) { return (UINT32)FetchByte(a); }
+UINT32 __fastcall m68k_fetch16(UINT32 a) { return (UINT32)FetchWord(a); }
+UINT32 __fastcall m68k_fetch32(UINT32 a) { return               FetchLong(a); }
+
+void __fastcall m68k_write8(UINT32 a, UINT32 d) { WriteByte(a, d); }
+void __fastcall m68k_write16(UINT32 a, UINT32 d) { WriteWord(a, d); }
+void __fastcall m68k_write32(UINT32 a, UINT32 d) { WriteLong(a, d); }
 }
+#endif
 
 #ifdef EMU_M68K
 extern "C" {
-UINT32 __fastcall M68KReadByte(UINT32 a) { return (UINT32)m68k_read8(a); }
-UINT32 __fastcall M68KReadWord(UINT32 a) { return (UINT32)m68k_read16(a); }
-UINT32 __fastcall M68KReadLong(UINT32 a) { return m68k_read32(a); }
+UINT32 __fastcall M68KReadByte(UINT32 a) { return (UINT32)ReadByte(a); }
+UINT32 __fastcall M68KReadWord(UINT32 a) { return (UINT32)ReadWord(a); }
+UINT32 __fastcall M68KReadLong(UINT32 a) { return               ReadLong(a); }
 
-UINT32 __fastcall M68KFetchByte(UINT32 a) { return (UINT32)m68k_fetch8(a); }
-UINT32 __fastcall M68KFetchWord(UINT32 a) { return (UINT32)m68k_fetch16(a); }
-UINT32 __fastcall M68KFetchLong(UINT32 a) { return m68k_fetch32(a); }
+UINT32 __fastcall M68KFetchByte(UINT32 a) { return (UINT32)FetchByte(a); }
+UINT32 __fastcall M68KFetchWord(UINT32 a) { return (UINT32)FetchWord(a); }
+UINT32 __fastcall M68KFetchLong(UINT32 a) { return               FetchLong(a); }
 
-void __fastcall M68KWriteByte(UINT32 a, UINT32 d) { m68k_write8(a, d); }
-void __fastcall M68KWriteWord(UINT32 a, UINT32 d) { m68k_write16(a, d); }
-void __fastcall M68KWriteLong(UINT32 a, UINT32 d) { m68k_write32(a, d); }
+void __fastcall M68KWriteByte(UINT32 a, UINT32 d) { WriteByte(a, d); }
+void __fastcall M68KWriteWord(UINT32 a, UINT32 d) { WriteWord(a, d); }
+void __fastcall M68KWriteLong(UINT32 a, UINT32 d) { WriteLong(a, d); }
 }
 #endif
 
 // ----------------------------------------------------------------------------
 // Memory accesses (non-emu specific)
 
-UINT32 SekReadByte(UINT32 a) { return (UINT32)m68k_read8(a); }
-UINT32 SekReadWord(UINT32 a) { return (UINT32)m68k_read16(a); }
-UINT32 SekReadLong(UINT32 a) { return m68k_read32(a); }
+UINT32 SekReadByte(UINT32 a) { return (UINT32)ReadByte(a); }
+UINT32 SekReadWord(UINT32 a) { return (UINT32)ReadWord(a); }
+UINT32 SekReadLong(UINT32 a) { return ReadLong(a); }
 
-UINT32 SekFetchByte(UINT32 a) { return (UINT32)m68k_fetch8(a); }
-UINT32 SekFetchWord(UINT32 a) { return (UINT32)m68k_fetch16(a); }
-UINT32 SekFetchLong(UINT32 a) { return m68k_fetch32(a); }
+UINT32 SekFetchByte(UINT32 a) { return (UINT32)FetchByte(a); }
+UINT32 SekFetchWord(UINT32 a) { return (UINT32)FetchWord(a); }
+UINT32 SekFetchLong(UINT32 a) { return FetchLong(a); }
 
-void SekWriteByte(UINT32 a, UINT8 d) { m68k_write8(a, d); }
-void SekWriteWord(UINT32 a, UINT16 d) { m68k_write16(a, d); }
-void SekWriteLong(UINT32 a, UINT32 d) { m68k_write32(a, d); }
+void SekWriteByte(UINT32 a, UINT8 d) { WriteByte(a, d); }
+void SekWriteWord(UINT32 a, UINT16 d) { WriteWord(a, d); }
+void SekWriteLong(UINT32 a, UINT32 d) { WriteLong(a, d); }
 
 void SekWriteByteROM(UINT32 a, UINT8 d) { WriteByteROM(a, d); }
 void SekWriteWordROM(UINT32 a, UINT16 d) { WriteWordROM(a, d); }
@@ -1655,8 +1675,10 @@ UINT32 SekGetPC(INT32)
 #endif
 {
 #ifdef EMU_C68K
-	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000 && n < 0) {
 		return c68k[nSekActive].pc-c68k[nSekActive].membase;
+	} else if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[n] == 0x68000 && n >= 0) {
+		return c68k[n].pc-c68k[n].membase;
 	} else {
 #endif
 
@@ -1708,7 +1730,86 @@ INT32 SekDbgGetPendingIRQ()
 
 UINT32 SekDbgGetRegister(SekRegister nRegister)
 {
-	return 0;
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekDbgGetRegister called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekDbgGetRegister called when no CPU open\n"));
+#endif
+
+#if defined EMU_C68K
+	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+		// TODO
+		return 0;
+	}
+#endif
+
+	switch (nRegister) {
+		case SEK_REG_D0:
+			return m68k_get_reg(NULL, M68K_REG_D0);
+		case SEK_REG_D1:
+			return m68k_get_reg(NULL, M68K_REG_D1);
+		case SEK_REG_D2:
+			return m68k_get_reg(NULL, M68K_REG_D2);
+		case SEK_REG_D3:
+			return m68k_get_reg(NULL, M68K_REG_D3);
+		case SEK_REG_D4:
+			return m68k_get_reg(NULL, M68K_REG_D4);
+		case SEK_REG_D5:
+			return m68k_get_reg(NULL, M68K_REG_D5);
+		case SEK_REG_D6:
+			return m68k_get_reg(NULL, M68K_REG_D6);
+		case SEK_REG_D7:
+			return m68k_get_reg(NULL, M68K_REG_D7);
+
+		case SEK_REG_A0:
+			return m68k_get_reg(NULL, M68K_REG_A0);
+		case SEK_REG_A1:
+			return m68k_get_reg(NULL, M68K_REG_A1);
+		case SEK_REG_A2:
+			return m68k_get_reg(NULL, M68K_REG_A2);
+		case SEK_REG_A3:
+			return m68k_get_reg(NULL, M68K_REG_A3);
+		case SEK_REG_A4:
+			return m68k_get_reg(NULL, M68K_REG_A4);
+		case SEK_REG_A5:
+			return m68k_get_reg(NULL, M68K_REG_A5);
+		case SEK_REG_A6:
+			return m68k_get_reg(NULL, M68K_REG_A6);
+		case SEK_REG_A7:
+			return m68k_get_reg(NULL, M68K_REG_A7);
+
+		case SEK_REG_PC:
+			return m68k_get_reg(NULL, M68K_REG_PC);
+		case SEK_REG_PPC:
+			return m68k_get_reg(NULL, M68K_REG_PPC);
+
+		case SEK_REG_SR:
+			return m68k_get_reg(NULL, M68K_REG_SR);
+
+		case SEK_REG_SP:
+			return m68k_get_reg(NULL, M68K_REG_SP);
+		case SEK_REG_USP:
+			return m68k_get_reg(NULL, M68K_REG_USP);
+		case SEK_REG_ISP:
+			return m68k_get_reg(NULL, M68K_REG_ISP);
+		case SEK_REG_MSP:
+			return m68k_get_reg(NULL, M68K_REG_MSP);
+
+		case SEK_REG_VBR:
+			return m68k_get_reg(NULL, M68K_REG_VBR);
+
+		case SEK_REG_SFC:
+			return m68k_get_reg(NULL, M68K_REG_SFC);
+		case SEK_REG_DFC:
+			return m68k_get_reg(NULL, M68K_REG_DFC);
+
+		case SEK_REG_CACR:
+			return m68k_get_reg(NULL, M68K_REG_CACR);
+		case SEK_REG_CAAR:
+			return m68k_get_reg(NULL, M68K_REG_CAAR);
+
+		default:
+			return 0;
+	}
 }
 
 bool SekDbgSetRegister(SekRegister nRegister, UINT32 nValue)

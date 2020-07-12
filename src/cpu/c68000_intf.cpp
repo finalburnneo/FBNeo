@@ -923,11 +923,13 @@ INT32 SekExit()
 
 void SekReset()
 {
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekReset called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekReset called when no CPU open\n"));
+#endif
+
 #ifdef EMU_C68K
 	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-#if defined (FBNEO_DEBUG)
-		bprintf(PRINT_NORMAL, _T("EMU_C68K: SekReset\n"));
-#endif
 		memset(&c68k[nSekActive], 0, 22 * 4); // clear all regs
 		c68k[nSekActive].state_flags	= 0;
 		c68k[nSekActive].srh			= 0x27; // Supervisor mode
@@ -938,9 +940,6 @@ void SekReset()
 #endif
 
 #ifdef EMU_M68K
-#if defined (FBNEO_DEBUG)
-		bprintf(PRINT_NORMAL, _T("EMU_M68K: SekReset\n"));
-#endif
 		m68k_pulse_reset();
 #endif
 
@@ -1476,23 +1475,6 @@ INT32 SekRun(INT32 nCPU, INT32 nCycles)
 
 void SekDbgDisableBreakpoints()
 {
-#if defined FBNEO_DEBUG && defined EMU_M68K
-		m68k_set_instr_hook_callback(NULL);
-
-		M68KReadByteDebug = M68KReadByte;
-		M68KReadWordDebug = M68KReadWord;
-		M68KReadLongDebug = M68KReadLong;
-
-		M68KWriteByteDebug = M68KWriteByte;
-		M68KWriteWordDebug = M68KWriteWord;
-		M68KWriteLongDebug = M68KWriteLong;
-#endif
-
-#ifdef EMU_A68K
-	a68k_memory_intf = a68k_inter_normal;
-#endif
-
-	//mame_debug = 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -1674,11 +1656,18 @@ UINT32 SekGetPC(INT32 n)
 UINT32 SekGetPC(INT32)
 #endif
 {
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetPC called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetPC called when no CPU open\n"));
+#endif
+
 #ifdef EMU_C68K
-	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000 && n < 0) {
-		return c68k[nSekActive].pc-c68k[nSekActive].membase;
-	} else if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[n] == 0x68000 && n >= 0) {
-		return c68k[n].pc-c68k[n].membase;
+	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+		if (n < 0) {								// Currently active CPU
+		  return c68k[nSekActive].pc-c68k[nSekActive].membase;
+		} else {
+			return c68k[n].pc-c68k[n].membase;					// Any CPU
+		}
 	} else {
 #endif
 
@@ -1701,10 +1690,20 @@ UINT32 SekGetPPC(INT32)
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetPC called when no CPU open\n"));
 #endif
 
+#ifdef EMU_C68K
+	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+		return c68k[nSekActive].prev_pc;
+	} else {
+#endif
+
 #ifdef EMU_M68K
 		return m68k_get_reg(NULL, M68K_REG_PPC);
 #else
 		return 0;
+#endif
+
+#ifdef EMU_C68K
+	}
 #endif
 }
 
@@ -1737,8 +1736,31 @@ UINT32 SekDbgGetRegister(SekRegister nRegister)
 
 #if defined EMU_C68K
 	if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
-		// TODO
-		return 0;
+
+	switch (nRegister) {
+		case SEK_REG_A0:
+			return c68k[nSekActive].a[0];
+		case SEK_REG_A1:
+			return c68k[nSekActive].a[1];
+		case SEK_REG_A2:
+			return c68k[nSekActive].a[2];
+		case SEK_REG_A3:
+			return c68k[nSekActive].a[3];
+		case SEK_REG_A4:
+			return c68k[nSekActive].a[4];
+		case SEK_REG_A5:
+			return c68k[nSekActive].a[5];
+		case SEK_REG_A6:
+			return c68k[nSekActive].a[6];
+		case SEK_REG_A7:
+			return c68k[nSekActive].a[7];
+
+		case SEK_REG_PPC:
+			return c68k[nSekActive].prev_pc;
+
+		default:
+			return 0;
+	}
 	}
 #endif
 

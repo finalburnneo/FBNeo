@@ -315,6 +315,18 @@ static struct BurnDIPInfo kov114DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
+static struct BurnDIPInfo kovshp100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
+};
+
 static struct BurnDIPInfo kov2DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
 
@@ -499,6 +511,7 @@ STDDIPINFOEXT(orld112c, 	pgm,	orld112c		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
 STDDIPINFOEXT(kov111,       pgm,	kov111			)
 STDDIPINFOEXT(kov114,     	pgm,	kov114			)
+STDDIPINFOEXT(kovshp100,    pgm,	kovshp100		)
 STDDIPINFOEXT(kov2,       	pgm,	kov2			)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
@@ -513,7 +526,7 @@ STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(olds100,     	pgm,	olds100			)
 STDDIPINFOEXT(oldschs,     	pgm,	oldschs			)  
 STDDIPINFOEXT(olds103t,     pgm,	olds103t		)
-STDDIPINFOEXT(oldsplusnr,  	pgm,	oldsplusnr		)  
+STDDIPINFOEXT(oldsplusnr,   pgm,	oldsplusnr		)  
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
 STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k			)
@@ -1147,15 +1160,21 @@ struct BurnDriver BurnDrvKillbld = {
 	448, 224, 4, 3
 };
 
+ 
+// The Killing Blade (V109 alt, China)
 
-/* 
-// The Killing Blade (V109)
+/* IGS PCB NO-0179-2 MADE IN TAIWAN
+   Screen ver pic: game does not show version on screen.
+   Rom types: U2  ST M27C512
+   Rom types: U3 U4 U5 U6  MX MX27C4000
+   Credits to: "GC8TECH.COM"
+*/
 
 static struct BurnRomInfo killbld109RomDesc[] = {
-	{ "kb_u3_v-109.u3",		0x080000, 0x00000000, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-	{ "kb_u6_v-109.u6",		0x080000, 0x00000000, 1 | BRF_PRG | BRF_ESS },	//  1
-	{ "kb_u4_v-109.u4",		0x080000, 0x00000000, 1 | BRF_PRG | BRF_ESS },	//  2
-	{ "kb_u5_v-109.u5",		0x080000, 0x00000000, 1 | BRF_PRG | BRF_ESS },	//  3
+	{ "kb_u3_v109.u3",		0x080000, 0xfe028dd5, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "kb_u6_v109.u6",		0x080000, 0xe50dba01, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "kb_u4_v109.u4",		0x080000, 0x6ac58bb3, 1 | BRF_PRG | BRF_ESS },	//  2
+	{ "kb_u5_v109.u5",		0x080000, 0x7dabf576, 1 | BRF_PRG | BRF_ESS },	//  3
 
 	{ "t0300.u14",			0x400000, 0x0922f7d9, 2 | BRF_GRA },			//  4 Tile data
 
@@ -1171,7 +1190,7 @@ static struct BurnRomInfo killbld109RomDesc[] = {
 
 	{ "m0300.u1",			0x400000, 0x93159695, 5 | BRF_SND },			// 13 Samples
 
-	{ "kb_u2_v-109.u2",		0x010000, 0x00000000, 9 | BRF_PRG | BRF_ESS },	// 14 Protection Data
+	{ "kb_u2_v109.u2",		0x010000, 0xde3eae63, 9 | BRF_PRG | BRF_ESS },	// 14 Protection Data
 };
 
 STDROMPICKEXT(killbld109, killbld109, pgm)
@@ -1179,14 +1198,14 @@ STD_ROM_FN(killbld109)
 
 struct BurnDriver BurnDrvKillbld109 = {
 	"killbld109", "killbld", "pgm", NULL, "1998",
-	"The Killing Blade (V109)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V109)\0", NULL, NULL, NULL,
+	"The Killing Blade (V109 alt, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V109 alt, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
-	NULL, killbld109RomInfo, killbld109RomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbld104DIPInfo,
+	NULL, killbld109RomInfo, killbld109RomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbldDIPInfo,
 	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
-*/
+
 
 // The Killing Blade (V106)
 
@@ -1525,6 +1544,14 @@ struct BurnDriver BurnDrvOlds = {
 
 // Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100)
 
+/* IGS PCB NO-' 0191 MADE IN TAIWAN
+   Screen ver pic: the rom does not display its version on screen.
+   Rom types: U2 U3 U4 U5 MX 27C4000
+   Rom types: U6 ST M27C512
+   Rom types: U1 MX 27C4096
+   CreditS to: "GC8TECH.COM"
+*/
+
 static struct BurnRomInfo olds100RomDesc[] = {
 	{ "sp_v100_u2.u2",  0x080000, 0x517c2a06, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 	{ "sp_v100_u3.u3",  0x080000, 0xd0e2b741, 1 | BRF_PRG | BRF_ESS },  //  1
@@ -1770,6 +1797,13 @@ struct BurnDriver BurnDrvKov114 = {
 
 // Knights of Valour / Sangoku Senki (V111, Japan)
 
+/* IGS PCB NO-0212-1 MADE IN TAIWAN
+   Screen ver pic: the rom does not display its version on screen.
+   Rom types: U4 U5 U7 U8 ALL TI TMS27C040
+   Rom types: U10 TI TMS27C240
+   Credits to: "GC8TECH.COM"
+*/
+
 static struct BurnRomInfo kov111RomDesc[] = {
 	{ "sav111_u4.u4",     	0x080000, 0xae2f1b4e, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 	{ "sav111_u7.u7",     	0x080000, 0x95eedf0e, 1 | BRF_PRG | BRF_ESS },  //  1
@@ -1932,11 +1966,12 @@ struct BurnDriver BurnDrvKovplus = {
 
 // Knights of Valour Plus / Sangoku Senki Plus (V119, Korea)
 
-/* There were no stickers on any of the eproms.
-   screen ver pic: V119 KOREA
-   rom types: U4 U5 U7 U8 AMD AM27C040
-   rom types: U10 HIT HN27C4096HG
-   credits to: "GC8TECH.COM" 
+/* IGS PCB NO-0212-1 MADE IN TAIWAN
+   There were no stickers on any of the eproms. 
+   Screen ver pic: V119 KOREA
+   Rom types: U4 U5 U7 U8 AMD AM27C040
+   Rom types: U10 HIT HN27C4096HG
+   Credits to: "GC8TECH.COM" 
 */
 
 static struct BurnRomInfo kovplusaRomDesc[] = {
@@ -2348,19 +2383,25 @@ struct BurnDriver BurnDrvphotoy2k102 = {
 };
 
 
-// Puzzle Star (V100MG)
+// Puzzle Star (V100MG, China)
+
+/* IGS PCB NO- T0236 MADE IN TAIWAN
+   Screen ver pic: V100MG CHINA
+   Rom types: U2 U1  MX 27C4000DC-90
+   Credits to: "GC8TECH.COM"
+*/
 
 static struct BurnRomInfo puzlstarRomDesc[] = {
-	{ "PuzzleStar_u2_v100mg.u2",	0x080000, 0x4c79d979, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "PuzzleStar_u1_v100mg.u1",	0x080000, 0x5788b77d, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "PuzzleStar_u2_v100mg.u2",	0x080000, 0x42aa03ce, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "PuzzleStar_u1_v100mg.u1",	0x080000, 0xc6ee43d7, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0800.u5",	   	0x200000, 0xf9d84e59, 2 | BRF_GRA }, 	        //  2 Tile data
+	{ "t0800.u5",	   				0x200000, 0xf9d84e59, 2 | BRF_GRA }, 	        //  2 Tile data
 
-	{ "a0800.u1",	   	0x400000, 0xe1e6ec40, 3 | BRF_GRA },			//  3 Sprite Color Data
+	{ "a0800.u1",	   				0x400000, 0xe1e6ec40, 3 | BRF_GRA },			//  3 Sprite Color Data
 
-	{ "b0800.u3",	   	0x200000, 0x52e7bef5, 4 | BRF_GRA }, 	  		//  4 Sprite Masks & Color Indexes
+	{ "b0800.u3",	   				0x200000, 0x52e7bef5, 4 | BRF_GRA }, 	  		//  4 Sprite Masks & Color Indexes
 
-	{ "m0800.u2",	   	0x400000, 0xe1a46541, 5 | BRF_SND },			//  5 Samples
+	{ "m0800.u2",	   				0x400000, 0xe1a46541, 5 | BRF_SND },			//  5 Samples
 
 	{ "puzlstar_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 };
@@ -2379,8 +2420,8 @@ static INT32 puzlstarInit()
 
 struct BurnDriver BurnDrvPuzlstar = {
 	"puzlstar", NULL, "pgm", NULL, "1999",
-	"Puzzle Star (V100MG)\0", "Incomplete dump", "IGS", "PolyGameMaster",
-	L"Puzzle Star\0\u30D1\u30BA\u30EB\u30B9\u30BF\u30FC\0\u9B54\u5E7B\u661F\u5EA7 (V100MG)\0", NULL, NULL, NULL,
+	"Puzzle Star (V100MG, China)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	L"Puzzle Star\0\u30D1\u30BA\u30EB\u30B9\u30BF\u30FC\0\u9B54\u5E7B\u661F\u5EA7 (V100MG, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, puzlstarRomInfo, puzlstarRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	puzlstarInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4419,12 +4460,16 @@ struct BurnDriver BurnDrvkovshp = {
 };
 
 
-// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)
+// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)
 
-static struct BurnRomInfo kovshpaRomDesc[] = {
-	{ "p0600h.rom",			0x400000, 0xe251e8e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-/* 	Found a KOVSHP cart with P's on eprom on board IGS PCB-0490-00-GZ; chip label is S S M-100CN
-	{ "s__s_m-100cn.u10",	0x400000, 0x00000000, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code */
+/* IGS PCB-0490-00-GZ 
+   Screen ver pic: V100 CHINA
+   Rom types: U10 ST M27C322
+   Credits to: "GC8TECH.COM"
+*/
+
+static struct BurnRomInfo kovshp100RomDesc[] = {
+	{ "s__s_m-100cn.u10",	0x400000, 0xe251e8e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code */
 	
 	{ "t0600.u2",    		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4441,15 +4486,15 @@ static struct BurnRomInfo kovshpaRomDesc[] = {
 	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kovshpa, kovshpa, pgm)
-STD_ROM_FN(kovshpa)
+STDROMPICKEXT(kovshp100, kovshp100, pgm)
+STD_ROM_FN(kovshp100)
 
-struct BurnDriver BurnDrvkovshpa = {
-	"kovshpa", "kovshp", "pgm", NULL, "2004",
-	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (ver. 100)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvkovshp100 = {
+	"kovshp100", "kovshp", "pgm", NULL, "2004",
+	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (ver. 100, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovshpaRomInfo, kovshpaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovshp100RomInfo, kovshp100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshp100DIPInfo,
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4559,28 +4604,75 @@ struct BurnDriver BurnDrvoldsplus = {
 };
 
 
-// The Killing Blade Plus (V300)
+// Oriental Legend 2 (Korea) / (World, China, Japan, Hong Kong, Taiwan) (ver. 203) 
+
+/* IGS PCB -0490-00-G7 MADE IN TAIWAN
+   Screen ver pic: V203 CHINA
+   Rom types: U10  ST  M27C322
+   Credits to: "GC8TECH.COM"
+*/
+
+static struct BurnRomInfo oldsplus203RomDesc[] = {
+	{ "v-203cn.u10",	0x400000, 0xc728cadc, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t05301w064.u2",	0x800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a05301w064.u3",	0x800000, 0x57946fd2, 3 | BRF_GRA },	 		//  2 Sprite Color Data
+	{ "a05302w064.u4",	0x800000, 0x3459a0b8, 3 | BRF_GRA },			//  3
+	{ "a05303w064.u6",	0x800000, 0x13475d85, 3 | BRF_GRA },			//  4
+	{ "a05304w064.u8",	0x800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
+
+	{ "b05301w064.u9",	0x800000, 0xfd98f503, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b05302w064.u11",	0x800000, 0x9f6094a8, 4 | BRF_GRA },			//  7
+
+	{ "w05301b032.u5",	0x400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
+
+	{ "oldsplus_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(oldsplus203, oldsplus203, pgm)
+STD_ROM_FN(oldsplus203)
+
+struct BurnDriver BurnDrvoldsplus203 = {
+	"oldsplus203", "oldsplus", "pgm", NULL, "2004",
+	"Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 203)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"Oriental Legend 2 (Korea)\0\u897F\u6E38\u91CA\u5384\u4F20\0\u7FA4\u9B54\u4E71\u821E (World, China, Japan, Hong Kong, Taiwan) (ver. 203)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	NULL, oldsplus203RomInfo, oldsplus203RomName, NULL, NULL, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
+	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// The Killing Blade Plus (V300, China)
+
+/* IGS PCB-0361-02-F0
+   Screen ver pic: V300 CHINA
+   Rom types: U26 ST M27C160
+   Rom types: U6 ST M27C4002
+   Credits to: "GC8TECH.COM"
+*/
 
 static struct BurnRomInfo killbldpRomDesc[] = {
-	{ "v300xx_u6.u6",   0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v300xx_u6.u6",   0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	 //  0 68K Code
 	
-	{ "t05701w032.u33", 0x400000, 0x567c714f, 2 | BRF_GRA },			//  1 Tile data
+	{ "t05701w032.u33", 0x400000, 0x567c714f, 2 | BRF_GRA },			 //  1 Tile data
 
-	{ "a05701w064.u3",	0x800000, 0x8c0c992c, 3 | BRF_GRA },			//  3 Sprite Color Data
-	{ "a05702w064.u4",	0x800000, 0x7e5b0f27, 3 | BRF_GRA },			//  4
-	{ "a05703w064.u6",	0x800000, 0xaccbdb44, 3 | BRF_GRA },			//  5
+	{ "a05701w064.u3",	0x800000, 0x8c0c992c, 3 | BRF_GRA },			 //  3 Sprite Color Data
+	{ "a05702w064.u4",	0x800000, 0x7e5b0f27, 3 | BRF_GRA },			 //  4
+	{ "a05703w064.u6",	0x800000, 0xaccbdb44, 3 | BRF_GRA },			 //  5
 	
-	{ "b05701w064.u9",	0x800000, 0xa20cdcef, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b05702w016.u11", 0x200000, 0xfe7457df, 4 | BRF_GRA },			//  7
+	{ "b05701w064.u9",	0x800000, 0xa20cdcef, 4 | BRF_GRA },			 //  6 Sprite Masks & Color Indexes
+	{ "b05702w016.u11", 0x200000, 0xfe7457df, 4 | BRF_GRA },			 //  7
 	
-	{ "w05701b032.u5",	0x400000, 0x2d3ae593, 5 | BRF_SND },			//  8 Samples
+	{ "w05701b032.u5",	0x400000, 0x2d3ae593, 5 | BRF_SND },			 //  8 Samples
 
 // this is the original rom with the first 0x268 bytes from the bootleg - but it doesn't work?
-//	{ "killbldp_igs027a.bin",	0x004000, 0xc7868d90, 7 | BRF_PRG }, 		//  9 Internal ARM7 Rom
+//	{ "killbldp_igs027a.bin",	    0x004000, 0xc7868d90, 7 | BRF_PRG }, //  9 Internal ARM7 Rom
 // from a bootleg
-	{ "killbldp_igs027a_alt.bin",	0x004000, 0x98316b06, 7 | BRF_PRG }, 	//  9 Internal ARM7 Rom
+	{ "killbldp_igs027a_alt.bin",	0x004000, 0x98316b06, 7 | BRF_PRG }, //  9 Internal ARM7 Rom
 	
-	{ "v300xx_u26.u26",	0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "v300xx_u26.u26",	0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	 // 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(killbldp, killbldp, pgm)
@@ -4600,8 +4692,8 @@ INT32 killbldpInit()
 
 struct BurnDriver BurnDrvKillbldp = {
 	"killbldp", NULL, "pgm", NULL, "2005",
-	"The Killing Blade Plus (V300)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200 \u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
+	"The Killing Blade Plus (V300, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200 \u52A0\u5F3A\u7248 (V300, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, killbldpRomInfo, killbldpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	killbldpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

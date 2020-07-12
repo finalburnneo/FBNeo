@@ -54,6 +54,7 @@ static INT32 sound_nmi_enable = 0;
 static INT32 irq5_timer = 0;
 static UINT16 control_data = 0;
 static INT32 fogcnt = 0;
+static INT32 alpha = 0;
 static UINT8 z80_bank;
 
 static UINT16 zmask; // 0xffff moomesa, 0x00ff bucky
@@ -1174,7 +1175,7 @@ static INT32 DrvDraw()
 
 	static const INT32 K053251_CI[4] = { 1, 2, 3, 4 };
 	INT32 layers[3];
-	INT32 plane, alpha = 0;
+	INT32 plane;
 	INT32 enable_alpha = 0;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
@@ -1199,7 +1200,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & (1<<layers[1])) K056832Draw(layers[1], 0, 2);
 
-	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
+	// alpha is set in DrvFrame before DrvDraw, moomesa needs edge detection (frameskipping/ffwd can mess this up)
 	enable_alpha = K054338_read_register(K338_REG_CONTROL) & K338_CTL_MIXPRI;
 
 	if (zmask == 0xffff) { // moo mesa
@@ -1245,6 +1246,16 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
+		// Clear Opposites
+		if ((DrvInputs[2] & 0x000c) == 0) DrvInputs[2] |= 0x000c;
+		if ((DrvInputs[2] & 0x0003) == 0) DrvInputs[2] |= 0x0003;
+		if ((DrvInputs[2] & 0x0c00) == 0) DrvInputs[2] |= 0x0c00;
+		if ((DrvInputs[2] & 0x0300) == 0) DrvInputs[2] |= 0x0300;
+		if ((DrvInputs[3] & 0x000c) == 0) DrvInputs[3] |= 0x000c;
+		if ((DrvInputs[3] & 0x0003) == 0) DrvInputs[3] |= 0x0003;
+		if ((DrvInputs[3] & 0x0c00) == 0) DrvInputs[3] |= 0x0c00;
+		if ((DrvInputs[3] & 0x0300) == 0) DrvInputs[3] |= 0x0300;
+
 		DrvInputs[1] = (DrvDips[0] & 0xf0) | ((DrvJoy5[3]) ? 0x00 : 0x08);
 	}
 
@@ -1261,11 +1272,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
-
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 
 		if (i == (nInterleave - 1)) {
 			if (moomesabl) {
@@ -1294,7 +1301,7 @@ static INT32 DrvFrame()
 		}
 
 		if (!moomesabl) {
-			nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
+			INT32 nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
 			if (nCyclesSegment > 0) nCyclesDone[1] += ZetRun(nCyclesSegment); // sync sound cpu to main cpu
 
 			if (pBurnSoundOut) {
@@ -1322,6 +1329,9 @@ static INT32 DrvFrame()
 	ZetClose();
 	SekClose();
 
+	// K054338_alpha_level_moo() needs to do an edge detection. frameskipping/ffwd can mess this up.
+	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -1329,7 +1339,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1364,6 +1374,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SCAN_VAR(control_data);
 		SCAN_VAR(fogcnt);
+		SCAN_VAR(alpha);
 	}
 
 	if (nAction & ACB_WRITE) {

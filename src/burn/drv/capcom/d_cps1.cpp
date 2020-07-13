@@ -524,6 +524,7 @@ static struct BurnInputInfo KodInputList[] =
 
 STDINPUTINFO(Kod)
 
+// Kodh - only players 1 & 2 have special!
 static struct BurnInputInfo KodhInputList[] =
 {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
@@ -534,6 +535,7 @@ static struct BurnInputInfo KodhInputList[] =
 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Special"       , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
@@ -543,6 +545,7 @@ static struct BurnInputInfo KodhInputList[] =
 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Special"       , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
 
 	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc000+6, "p3 coin"   },
 	{"P3 Start"         , BIT_DIGITAL  , CpsInpc000+7, "p3 start"  },
@@ -2652,72 +2655,145 @@ STDDIPINFO(Knights)
 
 static struct BurnDIPInfo KodDIPList[]=
 {
+	DIP_OFFSET(0x1b)
+
 	// Defaults
-	{0x1b, 0xff, 0xff, 0x00, NULL                     },
-	{0x1c, 0xff, 0xff, 0x03, NULL                     },
-	{0x1d, 0xff, 0xff, 0x60, NULL                     },
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x03, NULL                     },
+	{0x02, 0xff, 0xff, 0x60, NULL                     },
 	
 	// Dip A
-	CPS1_COINAGE_2(0x1b)
+	CPS1_COINAGE_2(0x00)
 
 	{0   , 0xfe, 0   , 2   , "Coin Slots"             },
-	{0x1b, 0x01, 0x08, 0x08, "1"                      },
-	{0x1b, 0x01, 0x08, 0x00, "3"                      },
+	{0x00, 0x01, 0x08, 0x08, "1"                      },
+	{0x00, 0x01, 0x08, 0x00, "3"                      },
 
 	{0   , 0xfe, 0   , 2   , "Play Mode"              },
-	{0x1b, 0x01, 0x10, 0x10, "2 Players"              },
-	{0x1b, 0x01, 0x10, 0x00, "3 Players"              },
+	{0x00, 0x01, 0x10, 0x10, "2 Players"              },
+	{0x00, 0x01, 0x10, 0x00, "3 Players"              },
 
 	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
-	{0x1b, 0x01, 0x40, 0x00, "Off"                    },
-	{0x1b, 0x01, 0x40, 0x40, "On"                     },
+	{0x00, 0x01, 0x40, 0x00, "Off"                    },
+	{0x00, 0x01, 0x40, 0x40, "On"                     },
 
 	// Dip B
-	CPS1_DIFFICULTY_1(0x1c)
+	CPS1_DIFFICULTY_1(0x01)
 
 	{0   , 0xfe, 0   , 8   , "Lives"                  },
-	{0x1c, 0x01, 0x38, 0x08, "1"                      },
-	{0x1c, 0x01, 0x38, 0x00, "2"                      },
-	{0x1c, 0x01, 0x38, 0x10, "3"                      },
-	{0x1c, 0x01, 0x38, 0x18, "4"                      },
-	{0x1c, 0x01, 0x38, 0x20, "5"                      },
-	{0x1c, 0x01, 0x38, 0x28, "6"                      },
-	{0x1c, 0x01, 0x38, 0x30, "7"                      },
-	{0x1c, 0x01, 0x38, 0x38, "8"                      },
+	{0x01, 0x01, 0x38, 0x08, "1"                      },
+	{0x01, 0x01, 0x38, 0x00, "2"                      },
+	{0x01, 0x01, 0x38, 0x10, "3"                      },
+	{0x01, 0x01, 0x38, 0x18, "4"                      },
+	{0x01, 0x01, 0x38, 0x20, "5"                      },
+	{0x01, 0x01, 0x38, 0x28, "6"                      },
+	{0x01, 0x01, 0x38, 0x30, "7"                      },
+	{0x01, 0x01, 0x38, 0x38, "8"                      },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
-	{0x1c, 0x01, 0xc0, 0x40, "80k and every 400k"     },
-	{0x1c, 0x01, 0xc0, 0x80, "160k and every 450k"    },
-	{0x1c, 0x01, 0xc0, 0x00, "200k and every 450k"    },
-	{0x1c, 0x01, 0xc0, 0xc0, "None"                   },
+	{0x01, 0x01, 0xc0, 0x40, "80k and every 400k"     },
+	{0x01, 0x01, 0xc0, 0x80, "160k and every 450k"    },
+	{0x01, 0x01, 0xc0, 0x00, "200k and every 450k"    },
+	{0x01, 0x01, 0xc0, 0xc0, "None"                   },
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
-	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x04, 0x04, "On"                     },
+	{0x02, 0x01, 0x04, 0x00, "Off"                    },
+	{0x02, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x08, 0x08, "On"                     },
+	{0x02, 0x01, 0x08, 0x00, "Off"                    },
+	{0x02, 0x01, 0x08, 0x08, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x10, 0x10, "On"                     },
+	{0x02, 0x01, 0x10, 0x00, "Off"                    },
+	{0x02, 0x01, 0x10, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x02, 0x01, 0x20, 0x00, "Off"                    },
+	{0x02, 0x01, 0x20, 0x20, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x40, 0x40, "On"                     },
+	{0x02, 0x01, 0x40, 0x00, "Off"                    },
+	{0x02, 0x01, 0x40, 0x40, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
-	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
-	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
+	{0x02, 0x01, 0x80, 0x00, "Game"                   },
+	{0x02, 0x01, 0x80, 0x80, "Test"                   },
 };
 
 STDDIPINFO(Kod)
+
+static struct BurnDIPInfo KodhDIPList[]=
+{
+	DIP_OFFSET(0x1d)
+
+	// Defaults
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x03, NULL                     },
+	{0x02, 0xff, 0xff, 0x60, NULL                     },
+
+	// Dip A
+	CPS1_COINAGE_2(0x00)
+
+	{0   , 0xfe, 0   , 2   , "Coin Slots"             },
+	{0x00, 0x01, 0x08, 0x08, "1"                      },
+	{0x00, 0x01, 0x08, 0x00, "3"                      },
+
+	{0   , 0xfe, 0   , 2   , "Play Mode"              },
+	{0x00, 0x01, 0x10, 0x10, "2 Players"              },
+	{0x00, 0x01, 0x10, 0x00, "3 Players"              },
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x00, 0x01, 0x40, 0x00, "Off"                    },
+	{0x00, 0x01, 0x40, 0x40, "On"                     },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x01)
+
+	{0   , 0xfe, 0   , 8   , "Lives"                  },
+	{0x01, 0x01, 0x38, 0x08, "1"                      },
+	{0x01, 0x01, 0x38, 0x00, "2"                      },
+	{0x01, 0x01, 0x38, 0x10, "3"                      },
+	{0x01, 0x01, 0x38, 0x18, "4"                      },
+	{0x01, 0x01, 0x38, 0x20, "5"                      },
+	{0x01, 0x01, 0x38, 0x28, "6"                      },
+	{0x01, 0x01, 0x38, 0x30, "7"                      },
+	{0x01, 0x01, 0x38, 0x38, "8"                      },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x01, 0x01, 0xc0, 0x40, "80k and every 400k"     },
+	{0x01, 0x01, 0xc0, 0x80, "160k and every 450k"    },
+	{0x01, 0x01, 0xc0, 0x00, "200k and every 450k"    },
+	{0x01, 0x01, 0xc0, 0xc0, "None"                   },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x02, 0x01, 0x04, 0x00, "Off"                    },
+	{0x02, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x02, 0x01, 0x08, 0x00, "Off"                    },
+	{0x02, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x02, 0x01, 0x10, 0x00, "Off"                    },
+	{0x02, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x02, 0x01, 0x20, 0x00, "Off"                    },
+	{0x02, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x02, 0x01, 0x40, 0x00, "Off"                    },
+	{0x02, 0x01, 0x40, 0x40, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x02, 0x01, 0x80, 0x00, "Game"                   },
+	{0x02, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Kodh)
 
 static struct BurnDIPInfo Kodr1DIPList[]=
 {
@@ -20475,7 +20551,7 @@ struct BurnDriver BurnDrvCpsKodh = {
 	"The King of Dragons (hack)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, KodhRomInfo, KodhRomName, NULL, NULL, NULL, NULL, KodhInputInfo, KodDIPInfo,
+	NULL, KodhRomInfo, KodhRomName, NULL, NULL, NULL, NULL, KodhInputInfo, KodhDIPInfo,
 	KodhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

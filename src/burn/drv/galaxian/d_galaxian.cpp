@@ -6742,6 +6742,23 @@ static struct BurnRomInfo ZerotimemcRomDesc[] = {
 STD_ROM_PICK(Zerotimemc)
 STD_ROM_FN(Zerotimemc)
 
+static struct BurnRomInfo ZerotimeuRomDesc[] = {
+	// Unknown manufacturer / bootleger
+	{ "1.bin",         0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2.bin",         0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.bin",         0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4.bin",         0x00800, 0x786d690a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.bin",         0x00800, 0xaf9260d7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "hj.bin",        0x00800, 0x84decf98, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "kl.bin",        0x00800, 0x18df5c90, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "82s123.bin",    0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Zerotimeu)
+STD_ROM_FN(Zerotimeu)
+
 static struct BurnRomInfo GalaxcirsaRomDesc[] = {
 	{ "cirsagal.1",    0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "cirsagal.2",    0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7142,6 +7159,16 @@ struct BurnDriver BurnDrvZerotimemc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimemcRomInfo, ZerotimemcRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvZerotimeu = {
+	"zerotimeu", "galaxian", NULL, NULL, "1979",
+	"Zero Time (Spanish bootleg)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, ZerotimeuRomInfo, ZerotimeuRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

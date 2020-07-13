@@ -3393,6 +3393,48 @@ struct BurnDriver BurnDrvHharryu = {
 };
 
 
+// Hammerin' Harry (World, M84 hardware bootleg)
+
+static struct BurnRomInfo hharrybRomDesc[] = {
+	{ "4-a-27c010a.bin",	0x20000, 0x755c0874, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "6-a-27c010a.bin",	0x20000, 0xf10fb55c, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "3-a-27c512.bin",		0x10000, 0x31b741c5, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "5-a-27c512.bin",		0x10000, 0xb23e966c, 0x01 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "2-a-27c512.bin",		0x10000, 0x80e210e7, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "17-c-27c010a.bin",	0x20000, 0xec5127ef, 0x02 | BRF_GRA },           //  5 Sprites
+	{ "16-c-27c010a.bin",	0x20000, 0xdef65294, 0x02 | BRF_GRA },           //  6
+	{ "14-c-27c010a.bin",	0x20000, 0xbb0d6ad4, 0x02 | BRF_GRA },           //  7
+	{ "15-c-27c010a.bin",	0x20000, 0x4351044e, 0x02 | BRF_GRA },           //  8
+
+	{ "13-b-27c010a.bin",	0x20000, 0xc577ba5f, 0x03 | BRF_GRA },           //  9 Foreground & Background Tiles
+	{ "11-b-27c010a.bin",	0x20000, 0x429d12ab, 0x03 | BRF_GRA },           // 10
+	{ "9-b-27c010a.bin",	0x20000, 0xb5b163b0, 0x03 | BRF_GRA },           // 11
+	{ "7-b-27c010a.bin",	0x20000, 0x8ef566a1, 0x03 | BRF_GRA },           // 12
+
+	{ "1-a-27c010a.bin",	0x20000, 0xfaaacaff, 0x05 | BRF_SND },           // 13 DAC Samples
+	
+	{ "19-c-82s129.bin",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 14 Proms
+	{ "18-c-82s129.bin",	0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 15
+
+	{ "a-pal16l8.bin",		0x00104, 0x1358c513, 0x00 | BRF_OPT },           // 16
+};
+
+STD_ROM_PICK(hharryb)
+STD_ROM_FN(hharryb)
+
+struct BurnDriver BurnDrvHharryb = {
+	"hharryb", "hharry", NULL, NULL, "1990",
+	"Hammerin' Harry (World, M84 hardware bootleg)\0", NULL, "bootleg", "Irem M82",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NULL, hharrybRomInfo, hharrybRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
+	hharryuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	384, 256, 4, 3
+};
+
+
 // Daiku no Gensan (Japan, M84 hardware)
 
 static struct BurnRomInfo dkgensanRomDesc[] = {

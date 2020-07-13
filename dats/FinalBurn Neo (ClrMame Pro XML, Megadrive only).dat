@@ -197,8 +197,8 @@
 	</game>
 	<game name="adveboy">
 		<description>Adventurous Boy - Mao Xian Xiao Zi (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<year>1998</year>
+		<manufacturer>&lt;unlicensed&gt; Gamtec</manufacturer>
 		<rom name="adventurous boy - mao xian xiao zi (chi) (unl).bin" size="524288" crc="d4403913"/>
 		<driver status="good"/>
 	</game>
@@ -1663,6 +1663,13 @@
 		<year>1990</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="budokan - the martial spirit (usa).bin" size="524288" crc="acd9f5fc"/>
+		<driver status="good"/>
+	</game>
+	<game name="bughunt">
+		<description>Bug Hunt (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>The Afromonkeys</manufacturer>
+		<rom name="bug hunt (2015)(afromonkeys, the).bin" size="393216" crc="20175de8"/>
 		<driver status="good"/>
 	</game>
 	<game name="bugsbun">
@@ -3427,6 +3434,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="doraemon - yume dorobou to 7-nin no gozans (jpn).bin" size="524288" crc="eeed1130"/>
+		<driver status="good"/>
+	</game>
+	<game name="doroppu">
+		<description>Doroppu (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Repixel8</manufacturer>
+		<rom name="doroppu (2015)(repixel8).bin" size="127420" crc="bb1eaeda"/>
 		<driver status="good"/>
 	</game>
 	<game name="doublecl">
@@ -13648,6 +13662,13 @@
 		<rom name="tmnt (unl).bin" size="1048576" crc="7fb1356e"/>
 		<driver status="good"/>
 	</game>
+	<game name="teenqueen">
+		<description>Teenage Queen The Demo (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Spoutnick Team</manufacturer>
+		<rom name="teenage queen demo (2006)(spoutnick team).bin" size="393216" crc="f0971d8a"/>
+		<driver status="good"/>
+	</game>
 	<game name="teiketsu" cloneof="pto" romof="pto">
 		<description>Teitoku no Ketsudan (Jpn)</description>
 		<year>1992</year>
@@ -14858,6 +14879,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry - frantic antics (usa) (1994).bin" size="1048576" crc="3044460c"/>
+		<driver status="good"/>
+	</game>
+	<game name="tomclown">
+		<description>Tom Clown (Tw)</description>
+		<year>1993</year>
+		<manufacturer>&lt;unlicensed&gt; Realtec</manufacturer>
+		<rom name="tom clown (unl) [f1].bin" size="524288" crc="bd741108"/>
 		<driver status="good"/>
 	</game>
 	<game name="dinohirep3" cloneof="dinohire" romof="dinohire">

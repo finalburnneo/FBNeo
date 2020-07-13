@@ -1585,6 +1585,7 @@ DRV		BurnDrvBuckyuab;
 DRV		BurnDrvMSX_bdg110;
 DRV		BurnDrvmd_budokan;
 DRV		BurnDrvmd_budokanu;
+DRV		BurnDrvmd_bughunt;
 DRV		BurnDrvBuggychlt;
 DRV		BurnDrvBuggychl;
 DRV		BurnDrvsms_buggyrun;
@@ -3159,6 +3160,7 @@ DRV		BurnDrvmd_doraemon;
 DRV		BurnDrvMSX_dorodon;
 DRV		BurnDrvDorodon;
 DRV		BurnDrvDorodon2;
+DRV		BurnDrvmd_doroppu;
 DRV		BurnDrvMSX_dotattack;
 DRV		BurnDrvdotrikun;
 DRV		BurnDrvdotriku2;
@@ -5068,6 +5070,7 @@ DRV		BurnDrvHamaway;
 DRV		BurnDrvMSX_hammboy;
 DRV		BurnDrvHharryu;
 DRV		BurnDrvHharry;
+DRV		BurnDrvHharryb;
 DRV		BurnDrvpce_hanataka;
 DRV		BurnDrvsms_hangon;
 DRV		BurnDrvsms_hangonc;
@@ -6148,7 +6151,7 @@ DRV		BurnDrvkovytzyws;
 DRV		BurnDrvkovshpzqhl;
 DRV		BurnDrvkovshpqszltw;
 DRV		BurnDrvkovshpqszl;
-DRV		BurnDrvkovshpa;
+DRV		BurnDrvkovshp100;
 DRV		BurnDrvkovshp;
 DRV		BurnDrvKovshb;
 DRV		BurnDrvKovsh100;
@@ -8287,6 +8290,7 @@ DRV		BurnDrvOrlegend112ca;
 DRV		BurnDrvOrlegend112e;
 DRV		BurnDrvOrlegend112c;
 DRV		BurnDrvOrlegend;
+DRV		BurnDrvoldsplus203;
 DRV		BurnDrvoldsplus;
 DRV		BurnDrvzerofxzdsgl;
 DRV		BurnDrvoldsmx;
@@ -12233,6 +12237,7 @@ DRV		BurnDrvmd_tmntru;
 DRV		BurnDrvnes_tmntii;
 DRV		BurnDrvnes_tmntiii;
 DRV		BurnDrvnes_tmnttoufig;
+DRV		BurnDrvmd_teenqueen;
 DRV		BurnDrvmd_teiketsu;
 DRV		BurnDrvTekiPakit;
 DRV		BurnDrvTekiPaki;
@@ -12551,6 +12556,7 @@ DRV		BurnDrvKaratour;
 DRV		BurnDrvmd_kickbox;
 DRV		BurnDrvKillbld104;
 DRV		BurnDrvKillbld106;
+DRV		BurnDrvKillbld109;
 DRV		BurnDrvKillbld;
 DRV		BurnDrvKillbldp;
 DRV		BurnDrvmd_killshow;
@@ -13052,6 +13058,7 @@ DRV		BurnDrvmd_tomjerry1;
 DRV		BurnDrvsms_tomjermv;
 DRV		BurnDrvgg_tomjermvj;
 DRV		BurnDrvgg_tomjermv;
+DRV		BurnDrvmd_tomclown;
 DRV		BurnDrvmd_dinohirep3;
 DRV		BurnDrvmd_dinohirep2;
 DRV		BurnDrvmd_dinohirep1;
@@ -14469,6 +14476,7 @@ DRV		BurnDrvmd_zerou;
 DRV		BurnDrvZerotimed;
 DRV		BurnDrvZerotimemc;
 DRV		BurnDrvZerotime;
+DRV		BurnDrvZerotimeu;
 DRV		BurnDrvmd_zerotol;
 DRV		BurnDrvZerowing1;
 DRV		BurnDrvZerowing;
@@ -16131,6 +16139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_bdg110,			// Buddhagillie (HB, v1.1)
 	&BurnDrvmd_budokan,			// Budokan - The Martial Spirit (Euro)
 	&BurnDrvmd_budokanu,		// Budokan - The Martial Spirit (USA)
+	&BurnDrvmd_bughunt,			// Bug Hunt (HB)
 	&BurnDrvBuggychlt,			// Buggy Challenge (Tecfri)
 	&BurnDrvBuggychl,			// Buggy Challenge
 	&BurnDrvsms_buggyrun,		// Buggy Run (Euro, Bra)
@@ -17705,6 +17714,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dorodon,		// Dorodon (Jpn)
 	&BurnDrvDorodon,			// Dorodon (set 1)
 	&BurnDrvDorodon2,			// Dorodon (set 2)
+	&BurnDrvmd_doroppu,			// Doroppu (HB)
 	&BurnDrvMSX_dotattack,		// Dot Attack (HB)
 	&BurnDrvdotrikun,			// Dottori Kun (new version)
 	&BurnDrvdotriku2,			// Dottori Kun (old version)
@@ -19614,6 +19624,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hammboy,		// Hammer Boy (Spa)
 	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 hardware)
 	&BurnDrvHharry,				// Hammerin' Harry (World, M81 hardware))
+	&BurnDrvHharryb,			// Hammerin' Harry (World, M84 hardware bootleg)
 	&BurnDrvpce_hanataka,		// Hana Taaka Daka!?
 	&BurnDrvsms_hangon,			// Hang-On (Euro, Bra, Aus)
 	&BurnDrvsms_hangonc,		// Hang-On (Euro, Bra, Aus, Sega Card)
@@ -20694,7 +20705,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
 	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Tian Wang, ver. 500)
 	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King, ver. 500)
-	&BurnDrvkovshpa,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)
+	&BurnDrvkovshp100,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)
 	&BurnDrvkovshp,				// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101)
 	&BurnDrvKovshb,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
 	&BurnDrvKovsh100,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V100)
@@ -22833,6 +22844,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrlegend112e,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V112)
 	&BurnDrvOrlegend112c,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, China)
 	&BurnDrvOrlegend,			// Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)
+	&BurnDrvoldsplus203,		// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 203)
 	&BurnDrvoldsplus,			// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 205)
 	&BurnDrvzerofxzdsgl,		// Oriental Legend Special - Da Sheng Gui Lai (Hack)
 	&BurnDrvoldsmx,				// Oriental Legend Special - Meng Xun Ling Shan (Hack)
@@ -23767,7 +23779,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_puzzlink,		// Puzzle Link (Euro)
 	&BurnDrvngpc_puzzlnk2,		// Puzzle Link 2 (Euro, USA)
 	&BurnDrvMSX_puzpanic,		// Puzzle Panic (Jpn)
-	&BurnDrvPuzlstar,			// Puzzle Star (V100MG)
+	&BurnDrvPuzlstar,			// Puzzle Star (V100MG, China)
 	&BurnDrvUoPoko,				// Puzzle Uo Poko (International, ver. 98/02/06)
 	&BurnDrvUoPokoj,			// Puzzle Uo Poko (Japan, ver. 98/02/06)
 	&BurnDrvJoyjoy,				// Puzzled / Joy Joy Kid (NGM-021)(NGH-021)
@@ -26779,6 +26791,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tmntii,			// Teenage Mutant Ninja Turtles II - The Arcade Game (USA)
 	&BurnDrvnes_tmntiii,		// Teenage Mutant Ninja Turtles III - The Manhattan Project (USA)
 	&BurnDrvnes_tmnttoufig,		// Teenage Mutant Ninja Turtles Tournament Fighters (USA)
+	&BurnDrvmd_teenqueen,		// Teenage Queen The Demo (HB)
 	&BurnDrvmd_teiketsu,		// Teitoku no Ketsudan (Jpn)
 	&BurnDrvTekiPakit,			// Teki Paki (location test)
 	&BurnDrvTekiPaki,			// Teki Paki
@@ -27097,8 +27110,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_kickbox,			// The Kick Boxing (Jpn, Kor)
 	&BurnDrvKillbld104,			// The Killing Blade (V104)
 	&BurnDrvKillbld106,			// The Killing Blade (V106)
+	&BurnDrvKillbld109,			// The Killing Blade (V109 alt, China)
 	&BurnDrvKillbld,			// The Killing Blade (V109, China)
-	&BurnDrvKillbldp,			// The Killing Blade Plus (V300)
+	&BurnDrvKillbldp,			// The Killing Blade Plus (V300, China)
 	&BurnDrvmd_killshow,		// The Killing Game Show (Jpn)
 	&BurnDrvCpsKodr2,			// The King of Dragons (910731 etc)
 	&BurnDrvCpsKodb,			// The King of Dragons (bootleg, 910731 etc)
@@ -27598,6 +27612,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_tomjermv,		// Tom and Jerry - The Movie (Euro, Bra)
 	&BurnDrvgg_tomjermvj,		// Tom and Jerry - The Movie (Jpn)
 	&BurnDrvgg_tomjermv,		// Tom and Jerry - The Movie (USA)
+	&BurnDrvmd_tomclown,		// Tom Clown (Tw)
 	&BurnDrvmd_dinohirep3,		// Tom Mason's Dinosaurs for Hire (Prototype, 19930426)
 	&BurnDrvmd_dinohirep2,		// Tom Mason's Dinosaurs for Hire (Prototype, 19930427)
 	&BurnDrvmd_dinohirep1,		// Tom Mason's Dinosaurs for Hire (Prototype, 19930502)
@@ -29015,6 +29030,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZerotimed,			// Zero Time (Datamat)
 	&BurnDrvZerotimemc,			// Zero Time (Marti Colls)
 	&BurnDrvZerotime,			// Zero Time (Petaco S.A.)
+	&BurnDrvZerotimeu,			// Zero Time (Spanish bootleg)
 	&BurnDrvmd_zerotol,			// Zero Tolerance (Euro, USA)
 	&BurnDrvZerowing1,			// Zero Wing (1P set)
 	&BurnDrvZerowing,			// Zero Wing (2P set)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14277 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14285 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -218,7 +218,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_advenradgra|  	| Adventures of Rad Gravity, The (USA)			| 		| 1990	| Activision	| Miscellaneous	| 					|
 | nes_advenrocandbulandfr|  	| Adventures of Rocky and Bullwinkle and Friends, The (U| 	| 1992	| THQ		| Miscellaneous	| 					|
 | nes_adventomsaw|  	| Adventures of Tom Sawyer (USA)			| 		| 1989	| Seta		| Miscellaneous	| 					|
-| md_adveboy	|  	| Adventurous Boy - Mao Xian Xiao Zi (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| md_adveboy	|  	| Adventurous Boy - Mao Xian Xiao Zi (Chi)		| 		| 1998	| <unlicensed> G| Sega Megadrive| 					|
 | sms_aerialas	|  	| Aerial Assault (Euro, Bra)				| 		| 1990	| Sega		| Sega Master Sy| 					|
 | gg_aerialasj	|  	| Aerial Assault (Jpn, v1)				| gg_aerialas	| 1992	| Sega		| Sega Game Gear| 					|
 | sms_aerialasu	|  	| Aerial Assault (USA)					| sms_aerialas	| 1990	| Sega		| Sega Master Sy| 					|
@@ -1563,6 +1563,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_bdg110	|  	| Buddhagillie (HB, v1.1)				| 		| 2018	| GW's Workshop	| MSX		| 					|
 | md_budokan	|  	| Budokan - The Martial Spirit (Euro)			| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_budokanu	|  	| Budokan - The Martial Spirit (USA)			| md_budokan	| 1990	| Electronic Art| Sega Megadrive| 					|
+| md_bughunt	|  	| Bug Hunt (HB)						| 		| 2015	| The Afromonkey| Sega Megadrive| 					|
 | buggychlt	|  	| Buggy Challenge (Tecfri)				| buggychl	| 1984	| Taito Corporat| Miscellaneous	| 					|
 | buggychl	|  	| Buggy Challenge					| 		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | sms_buggyrun	|  	| Buggy Run (Euro, Bra)					| 		| 1993	| Sega		| Sega Master Sy| 					|
@@ -3105,6 +3106,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_dorodon	|  	| Dorodon (Jpn)						| 		| 1984	| Sony		| MSX		| 					|
 | dorodon	|  	| Dorodon (set 1)					| 		| 1982	| Falcon	| Miscellaneous	| 					|
 | dorodon2	|  	| Dorodon (set 2)					| dorodon	| 1982	| Falcon	| Miscellaneous	| 					|
+| md_doroppu	|  	| Doroppu (HB)						| 		| 2015	| Repixel8	| Sega Megadrive| 					|
 | msx_dotattack	|  	| Dot Attack (HB)					| 		| 2020	| N.C.P.	| MSX		| 					|
 | dotrikun	|  	| Dottori Kun (new version)				| 		| 1990	| Sega		| Test Hardware	| 					|
 | dotrikun2	|  	| Dottori Kun (old version)				| dotrikun	| 1990	| Sega		| Test Hardware	| 					|
@@ -4984,6 +4986,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hammboy	|  	| Hammer Boy (Spa)					| 		| 1991	| Dinamic Softwa| MSX		| Keyboard control only.		|
 | hharryu	|  	| Hammerin' Harry (US, M84 hardware)			| hharry	| 1990	| Irem America	| Irem M82	| 					|
 | hharry	|  	| Hammerin' Harry (World, M81 hardware))		| 		| 1990	| Irem		| Irem M82	| 					|
+| hharryb	|  	| Hammerin' Harry (World, M84 hardware bootleg)		| hharry	| 1990	| bootleg	| Irem M82	| 					|
 | pce_hanataka	|  	| Hana Taaka Daka!?					| 		| 1991	| Taito		| PC Engine	| 					|
 | sms_hangon	|  	| Hang-On (Euro, Bra, Aus)				| 		| 1985	| Sega		| Sega Master Sy| 					|
 | sms_hangonc	|  	| Hang-On (Euro, Bra, Aus, Sega Card)			| sms_hangon	| 1985	| Sega		| Sega Master Sy| 					|
@@ -6036,7 +6039,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovshpzqhl	|  	| Knights of Valour Super Heroes Plus (The Best Firepowe| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpqszltw	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2020-01-03| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpqszl	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
-| kovshpa	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| kovshp	| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovshp100	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| kovshp	| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshp	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| 		| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshb	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsh100	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
@@ -8141,6 +8144,7 @@ This list contains all games supported by FinalBurn Neo.
 | orlegende	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V112)	| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegendc	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, China)	| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)	| 		| 1997	| IGS		| PolyGameMaster| 					|
+| oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | zerofxzdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-07-02| Hack		| PolyGameMaster| 					|
 | oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-07-02| Hack		| PolyGameMaster| 					|
@@ -9059,7 +9063,7 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_puzzlink	|  	| Puzzle Link (Euro)					| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_puzzlnk2	|  	| Puzzle Link 2 (Euro, USA)				| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | msx_puzpanic	|  	| Puzzle Panic (Jpn)					| 		| 1986	| System Soft	| MSX		| 					|
-| puzlstar	|  	| Puzzle Star (V100MG)					| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
+| puzlstar	|  	| Puzzle Star (V100MG, China)				| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
 | uopoko	|  	| Puzzle Uo Poko (International, ver. 98/02/06)		| 		| 1999	| Cave / Jaleco	| Cave		| 					|
 | uopokoj	|  	| Puzzle Uo Poko (Japan, ver. 98/02/06)			| uopoko	| 1999	| Cave / Jaleco	| Cave		| 					|
 | joyjoy	|  	| Puzzled / Joy Joy Kid (NGM-021)(NGH-021)		| 		| 1990	| SNK		| Neo Geo MVS	| 					|
@@ -12021,6 +12025,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tmntii	|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (USA| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
 | nes_tmntiii	|  	| Teenage Mutant Ninja Turtles III - The Manhattan Proje| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_tmnttoufig|  	| Teenage Mutant Ninja Turtles Tournament Fighters (USA)| 		| 1994	| Konami	| Miscellaneous	| 					|
+| md_teenqueen	|  	| Teenage Queen The Demo (HB)				| 		| 2006	| Spoutnick Team| Sega Megadrive| 					|
 | md_teiketsu	|  	| Teitoku no Ketsudan (Jpn)				| md_pto	| 1992	| Koei		| Sega Megadrive| 					|
 | tekipakit	|  	| Teki Paki (location test)				| tekipaki	| 1991	| Toaplan	| Toaplan GP9001| 					|
 | tekipaki	|  	| Teki Paki						| 		| 1991	| Toaplan	| Toaplan GP9001| 					|
@@ -12337,8 +12342,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_kickbox	|  	| The Kick Boxing (Jpn, Kor)				| md_bestof	| 1993	| Micro World	| Sega Megadrive| 					|
 | killbld104	|  	| The Killing Blade (V104)				| killbld	| 1998	| IGS		| PolyGameMaster| 					|
 | killbld106	|  	| The Killing Blade (V106)				| killbld	| 1998	| IGS		| PolyGameMaster| 					|
+| killbld109	|  	| The Killing Blade (V109 alt, China)			| killbld	| 1998	| IGS		| PolyGameMaster| 					|
 | killbld	|  	| The Killing Blade (V109, China)			| 		| 1998	| IGS		| PolyGameMaster| 					|
-| killbldp	|  	| The Killing Blade Plus (V300)				| 		| 2005	| IGS		| PolyGameMaster| 					|
+| killbldp	|  	| The Killing Blade Plus (V300, China)			| 		| 2005	| IGS		| PolyGameMaster| 					|
 | md_killshow	|  	| The Killing Game Show (Jpn)				| md_fatalrew	| 1993	| Electronic Art| Sega Megadrive| 					|
 | kodr2		|  	| The King of Dragons (910731 etc)			| kod		| 1991	| Capcom	| CPS1		| 					|
 | kodb		|  	| The King of Dragons (bootleg, 910731 etc)		| kod		| 1991	| Capcom	| CPS1		| 					|
@@ -12832,6 +12838,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_tomjermv	|  	| Tom and Jerry - The Movie (Euro, Bra)			| 		| 1992	| Sega		| Sega Master Sy| 					|
 | gg_tomjermvj	|  	| Tom and Jerry - The Movie (Jpn)			| gg_tomjermv	| 1993	| Sega		| Sega Game Gear| 					|
 | gg_tomjermv	|  	| Tom and Jerry - The Movie (USA)			| 		| 1993	| Sega		| Sega Game Gear| 					|
+| md_tomclown	|  	| Tom Clown (Tw)					| 		| 1993	| <unlicensed> R| Sega Megadrive| 					|
 | md_dinohirep3	|  	| Tom Mason's Dinosaurs for Hire (Prototype, 19930426)	| md_dinohire	| 1993	| Sega		| Sega Megadrive| 					|
 | md_dinohirep2	|  	| Tom Mason's Dinosaurs for Hire (Prototype, 19930427)	| md_dinohire	| 1993	| Sega		| Sega Megadrive| 					|
 | md_dinohirep1	|  	| Tom Mason's Dinosaurs for Hire (Prototype, 19930502)	| md_dinohire	| 1993	| Sega		| Sega Megadrive| 					|
@@ -14209,6 +14216,7 @@ This list contains all games supported by FinalBurn Neo.
 | zerotimed	|  	| Zero Time (Datamat)					| galaxian	| 1979	| bootleg (Datam| Galaxian	| 					|
 | zerotimemc	|  	| Zero Time (Marti Colls)				| galaxian	| 1979	| bootleg (Marti| Galaxian	| 					|
 | zerotime	|  	| Zero Time (Petaco S.A.)				| galaxian	| 1979	| bootleg? (Peta| Galaxian	| 					|
+| zerotimeu	|  	| Zero Time (Spanish bootleg)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | md_zerotol	|  	| Zero Tolerance (Euro, USA)				| 		| 1994	| Accolade	| Sega Megadrive| 					|
 | zerowing1	|  	| Zero Wing (1P set)					| zerowing	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | zerowing	|  	| Zero Wing (2P set)					| 		| 1989	| Toaplan	| Toaplan BCU-2 | 					|

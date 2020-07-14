@@ -1394,7 +1394,7 @@ static bool retro_load_game_common()
 	const char *dir = NULL;
 	// If save directory is defined use it, ...
 	if (environ_cb(RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY, &dir) && dir) {
-		strncpy(g_save_dir, dir, sizeof(g_save_dir));
+		memcpy(g_save_dir, dir, sizeof(g_save_dir));
 		HandleMessage(RETRO_LOG_INFO, "Setting save dir to %s\n", g_save_dir);
 	} else {
 		// ... otherwise use rom directory
@@ -1404,7 +1404,7 @@ static bool retro_load_game_common()
 
 	// If system directory is defined use it, ...
 	if (environ_cb(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY, &dir) && dir) {
-		strncpy(g_system_dir, dir, sizeof(g_system_dir));
+		memcpy(g_system_dir, dir, sizeof(g_system_dir));
 		HandleMessage(RETRO_LOG_INFO, "Setting system dir to %s\n", g_system_dir);
 	} else {
 		// ... otherwise use rom directory

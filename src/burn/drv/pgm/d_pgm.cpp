@@ -315,7 +315,7 @@ static struct BurnDIPInfo kov114DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
-static struct BurnDIPInfo kovshp100DIPList[] = {
+static struct BurnDIPInfo kovshp101DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
@@ -511,7 +511,7 @@ STDDIPINFOEXT(orld112c, 	pgm,	orld112c		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
 STDDIPINFOEXT(kov111,       pgm,	kov111			)
 STDDIPINFOEXT(kov114,     	pgm,	kov114			)
-STDDIPINFOEXT(kovshp100,    pgm,	kovshp100		)
+STDDIPINFOEXT(kovshp101,    pgm,	kovshp101		)
 STDDIPINFOEXT(kov2,       	pgm,	kov2			)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
@@ -1164,6 +1164,7 @@ struct BurnDriver BurnDrvKillbld = {
 // The Killing Blade (V109 alt, China)
 
 /* IGS PCB NO-0179-2 MADE IN TAIWAN
+   IGS PCB NO-0178 MADE IN TAIWAN
    Screen ver pic: game does not show version on screen.
    Rom types: U2  ST M27C512
    Rom types: U3 U4 U5 U6  MX MX27C4000
@@ -1545,6 +1546,7 @@ struct BurnDriver BurnDrvOlds = {
 // Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100)
 
 /* IGS PCB NO-' 0191 MADE IN TAIWAN
+   IGS PCB NO- 0135 MADE IN TAIWAN
    Screen ver pic: the rom does not display its version on screen.
    Rom types: U2 U3 U4 U5 MX 27C4000
    Rom types: U6 ST M27C512
@@ -1622,9 +1624,10 @@ static struct BurnRomInfo olds100aRomDesc[] = {
 	{ "m0500.u1",	   	0x200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
 #if !defined (ROM_VERIFY)
-	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
+	// ROM label SP 西遊記 DATA on sticker
+	{ "sp_data.u6",	   	0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
 #else
-	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
+	{ "ram_dump",	   	0x040000, 0x280cfb4e, 0 | BRF_OPT },
 #endif
 };
 
@@ -1798,6 +1801,7 @@ struct BurnDriver BurnDrvKov114 = {
 // Knights of Valour / Sangoku Senki (V111, Japan)
 
 /* IGS PCB NO-0212-1 MADE IN TAIWAN
+   IGS PCB NO-0213T MADE IN TAIWAN
    Screen ver pic: the rom does not display its version on screen.
    Rom types: U4 U5 U7 U8 ALL TI TMS27C040
    Rom types: U10 TI TMS27C240
@@ -2386,6 +2390,7 @@ struct BurnDriver BurnDrvphotoy2k102 = {
 // Puzzle Star (V100MG, China)
 
 /* IGS PCB NO- T0236 MADE IN TAIWAN
+   IGS PCB NO- T0237 MADE IN TAIWAN
    Screen ver pic: V100MG CHINA
    Rom types: U2 U1  MX 27C4000DC-90
    Credits to: "GC8TECH.COM"
@@ -3155,11 +3160,17 @@ struct BurnDriver BurnDrvKov2p204 = {
 };
 
 
-/*
 // Knights of Valour 2 Plus - Nine Dragons (VM203XX)
 
+/* IGS PCB-0333-02-FI MADE IN TAIWAN
+   IGS PCB-0334-00 MADE IN TAIWAN
+   Screen ver pic: M203XX
+   Rom types: U8  ST M27C322
+   Rom types: U23  ST M27C160
+   Credits to: "GC8TECH.COM"
+*/
 static struct BurnRomInfo kov2p203RomDesc[] = {
-	{ "v203_32m.u8",  	0x400000, 0x00000000, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "v203_32m.u8",  	0x400000, 0x11416886, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t1200.u21",	   	0x800000, 0xd7e26609, 2 | BRF_GRA },			//  1 Tile data
 
@@ -3184,14 +3195,13 @@ STD_ROM_FN(kov2p203)
 
 struct BurnDriver BurnDrvKov2p203 = {
 	"kov2p203", "kov2p", "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM204XX)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM204XX)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 Plus - Nine Dragons (VM203XX)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM203XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2p203RomInfo, kov2p203RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
-*/
 
 
 // Knights of Valour 2 Plus - Nine Dragons (VM202XX)
@@ -4460,9 +4470,52 @@ struct BurnDriver BurnDrvkovshp = {
 };
 
 
+// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101, China)
+
+/* IGS PCB-0490-00-GZ
+   IGS PCB-0491-00-GZ-A 
+   Screen ver pic: V101 CHINA
+   Rom types: U10 ST M27C322
+   Credits to: "GC8TECH.COM"
+*/
+
+static struct BurnRomInfo kovshp101RomDesc[] = {
+	{ "v-101cn.u10",	    0x400000, 0xe1d89a19, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code */
+	
+	{ "s&k_fntcg_u3.u3",    0x400000, 0x164b3c94, 2 | BRF_GRA },			//  1 Tile data
+	{ "s&k_fntcg_u7.u7",    0x400000, 0xb1fae5e8, 2 | BRF_GRA },			//  2
+
+	{ "s&k_b-cg_u22.u22",	0x800000, 0xd8167834, 3 | BRF_GRA },			//  3 Sprite Color Data
+	{ "s&k_b-cg_u23.u23",	0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  4 
+	{ "s&k_b-cg_u24.u24",	0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  5
+	{ "s&k_b-cg_u25.u25",	0x800000, 0x4fd3413e, 3 | BRF_GRA }, 	        //  6
+
+	{ "s&k_b-map_u15.u15",	0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "s&k_b-map_u16.u16",	0x800000, 0x60999757, 4 | BRF_GRA },			//  8
+
+	{ "s&k_wave_u1.u1",	   	0x400000, 0x3ada4fd6, 5 | BRF_SND },			//  9 Samples
+
+	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshp101, kovshp101, pgm)
+STD_ROM_FN(kovshp101)
+
+struct BurnDriver BurnDrvkovshp101 = {
+	"kovshp101", "kovshp", "pgm", NULL, "2004",
+	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (ver. 101, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshp101RomInfo, kovshp101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshp101DIPInfo,
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)
 
-/* IGS PCB-0490-00-GZ 
+/* IGS PCB-0490-00-GZ
+   IGS PCB-0491-00-GZ-A 
    Screen ver pic: V100 CHINA
    Rom types: U10 ST M27C322
    Credits to: "GC8TECH.COM"
@@ -4494,7 +4547,7 @@ struct BurnDriver BurnDrvkovshp100 = {
 	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
 	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (ver. 100, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovshp100RomInfo, kovshp100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshp100DIPInfo,
+	NULL, kovshp100RomInfo, kovshp100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshp101DIPInfo,
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4606,7 +4659,8 @@ struct BurnDriver BurnDrvoldsplus = {
 
 // Oriental Legend 2 (Korea) / (World, China, Japan, Hong Kong, Taiwan) (ver. 203) 
 
-/* IGS PCB -0490-00-G7 MADE IN TAIWAN
+/* IGS PCB-0490-00-G7 MADE IN TAIWAN
+   IGS PCB-0491-00-GZ-A MADE IN TAIWAN
    Screen ver pic: V203 CHINA
    Rom types: U10  ST  M27C322
    Credits to: "GC8TECH.COM"
@@ -4646,7 +4700,8 @@ struct BurnDriver BurnDrvoldsplus203 = {
 
 // The Killing Blade Plus (V300, China)
 
-/* IGS PCB-0361-02-F0
+/* IGS PCB-0361-02-F0 MADE IN TAIWAN
+   IGS PCB-0491-00-GZ-A
    Screen ver pic: V300 CHINA
    Rom types: U26 ST M27C160
    Rom types: U6 ST M27C4002

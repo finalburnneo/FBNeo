@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14285 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14287 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6029,6 +6029,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-03| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
+| kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
@@ -6041,6 +6042,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovshpqszl	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshp100	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| kovshp	| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshp	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| 		| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovshp101	|  	| Knights of Valour Super Heroes Plus / Sangoku Senki Su| kovshp	| 2004	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshb	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsh100	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsh101	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|

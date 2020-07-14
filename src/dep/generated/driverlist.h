@@ -6141,6 +6141,7 @@ DRV		BurnDrvKov2;
 DRV		BurnDrvkov2pfwll;
 DRV		BurnDrvKov2p200;
 DRV		BurnDrvKov2p202;
+DRV		BurnDrvKov2p203;
 DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvkov2pshpd;
@@ -6153,6 +6154,7 @@ DRV		BurnDrvkovshpqszltw;
 DRV		BurnDrvkovshpqszl;
 DRV		BurnDrvkovshp100;
 DRV		BurnDrvkovshp;
+DRV		BurnDrvkovshp101;
 DRV		BurnDrvKovshb;
 DRV		BurnDrvKovsh100;
 DRV		BurnDrvKovsh101;
@@ -20695,6 +20697,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
 	&BurnDrvKov2p200,			// Knights of Valour 2 Plus - Nine Dragons (VM200XX)
 	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX)
+	&BurnDrvKov2p203,			// Knights of Valour 2 Plus - Nine Dragons (VM203XX)
 	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvkov2pshpd,			// Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)
@@ -20707,6 +20710,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King, ver. 500)
 	&BurnDrvkovshp100,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)
 	&BurnDrvkovshp,				// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101)
+	&BurnDrvkovshp101,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101, China)
 	&BurnDrvKovshb,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
 	&BurnDrvKovsh100,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V100)
 	&BurnDrvKovsh101,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V101)

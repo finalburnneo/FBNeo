@@ -505,13 +505,13 @@ static void DrvPivotExpand(UINT16 offset)
 static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT32*)(TaitoVideoRam + (a & 0x1ffc))) = (d << 16) | (d >> 16);
+		*((UINT32*)(TaitoVideoRam + (a & 0x1fff))) = (d << 16) | (d >> 16);
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT32*)(DrvVRAMRAM + (a & 0x1ffc))) = (d << 16) | (d >> 16);
+		*((UINT32*)(DrvVRAMRAM + (a & 0x1fff))) = (d << 16) | (d >> 16);
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -520,13 +520,13 @@ static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT16*)(TaitoVideoRam + (a & 0x1ffe))) = d;
+		*((UINT16*)(TaitoVideoRam + (a & 0x1fff))) = d;
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT16*)(DrvVRAMRAM + (a & 0x1ffe))) = d;
+		*((UINT16*)(DrvVRAMRAM + (a & 0x1fff))) = d;
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -550,7 +550,7 @@ static void __fastcall f3_VRAM_write_byte(UINT32 a, UINT8 d)
 static void __fastcall f3_pivot_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xff0000) == 0x630000) {
-		*((UINT32*)(DrvPivotRAM + (a & 0xfffc))) = (d << 16) | (d >> 16);
+		*((UINT32*)(DrvPivotRAM + (a & 0xffff))) = (d << 16) | (d >> 16);
 		DrvPivotExpand(a);
 		dirty_tile_count[9] = 1;
 		return;
@@ -560,7 +560,7 @@ static void __fastcall f3_pivot_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_pivot_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xff0000) == 0x630000) {
-		*((UINT16*)(DrvPivotRAM + (a & 0xfffe))) = d;
+		*((UINT16*)(DrvPivotRAM + (a & 0xffff))) = d;
 		DrvPivotExpand(a);
 		dirty_tile_count[9] = 1;
 		return;
@@ -580,7 +580,7 @@ static void __fastcall f3_pivot_write_byte(UINT32 a, UINT8 d)
 static void __fastcall f3_playfield_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xff8000) == 0x610000) {
-		UINT32 *ram = (UINT32*)(TaitoF3PfRAM + (a & 0x7ffc));
+		UINT32 *ram = (UINT32*)(TaitoF3PfRAM + (a & 0x7fff));
 
 		if (ram[0] != ((d << 16) | (d >> 16))) {
 			ram[0] = (d << 16) | (d >> 16);
@@ -594,7 +594,7 @@ static void __fastcall f3_playfield_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_playfield_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xff8000) == 0x610000) {
-		UINT16 *ram = (UINT16*)(TaitoF3PfRAM + (a & 0x7ffe));
+		UINT16 *ram = (UINT16*)(TaitoF3PfRAM + (a & 0x7fff));
 
 		if (ram[0] != d) {
 			ram[0] = d;

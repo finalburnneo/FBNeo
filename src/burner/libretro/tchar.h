@@ -58,6 +58,7 @@ extern int bRunPause;
 
 #define _T(x) x
 #define _tfopen fopen
+#define _fgetts fgets
 #define _stprintf sprintf
 #define _tcslen strlen
 #define _tcscpy strcpy

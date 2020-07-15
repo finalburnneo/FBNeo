@@ -553,12 +553,13 @@ void set_environment()
 
 	int nbr_vars = vars_systems.size();
 	int nbr_dips = dipswitch_core_options.size();
+	int nbr_cheats = cheat_core_options.size();
 
 #if 0
 	log_cb(RETRO_LOG_INFO, "set_environment: SYSTEM: %d, DIPSWITCH: %d\n", nbr_vars, nbr_dips);
 #endif
 
-	vars = (struct retro_core_option_definition*)calloc(nbr_vars + nbr_dips + 1, sizeof(struct retro_core_option_definition));
+	vars = (struct retro_core_option_definition*)calloc(nbr_vars + nbr_dips + nbr_cheats + 1, sizeof(struct retro_core_option_definition));
 
 	int idx_var = 0;
 
@@ -584,6 +585,21 @@ void set_environment()
 		}
 		vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
 		vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
+		idx_var++;
+	}
+
+	// Add the DIP switches core options
+	for (int cheat_idx = 0; cheat_idx < nbr_cheats; cheat_idx++)
+	{
+		vars[idx_var].key = cheat_core_options[cheat_idx].option_name.c_str();
+		vars[idx_var].desc = cheat_core_options[cheat_idx].friendly_name.c_str();
+		vars[idx_var].info = "Specific to the running romset and your cheat database";
+		for (int cheat_value_idx = 0; cheat_value_idx < cheat_core_options[cheat_idx].values.size(); cheat_value_idx++)
+		{
+			vars[idx_var].values[cheat_value_idx].value = cheat_core_options[cheat_idx].values[cheat_value_idx].friendly_name.c_str();
+		}
+		vars[idx_var].values[cheat_core_options[cheat_idx].values.size()].value = NULL;
+		vars[idx_var].default_value = cheat_core_options[cheat_idx].default_value.c_str();
 		idx_var++;
 	}
 

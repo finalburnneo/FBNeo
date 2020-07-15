@@ -37,10 +37,6 @@ struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };
 
 static void log_dummy(enum retro_log_level level, const char *fmt, ...) { }
 
-static bool apply_dipswitch_from_variables();
-
-static void init_audio_buffer(INT32 sample_rate, INT32 fps);
-
 retro_log_printf_t log_cb = log_dummy;
 retro_environment_t environ_cb;
 static retro_video_refresh_t video_cb;
@@ -54,9 +50,6 @@ INT32 nIpsMaxFileLen = 0;
 unsigned nGameType = 0;
 static INT32 nGameWidth, nGameHeight;
 static INT32 bDisableSerialize = 0;
-
-static unsigned int BurnDrvGetIndexByName(const char* name);
-char* DecorateGameName(UINT32 nBurnDrv);
 
 extern INT32 EnableHiscores;
 
@@ -74,6 +67,8 @@ struct located_archive
 	bool ignoreCrc;
 };
 static std::vector<located_archive> g_find_list_path;
+
+std::vector<cheat_core_option> cheat_core_options;
 
 static ROMFIND g_find_list[1024];
 static unsigned g_rom_count;
@@ -119,6 +114,7 @@ TCHAR szAppHiscorePath[MAX_PATH];
 TCHAR szAppSamplesPath[MAX_PATH];
 TCHAR szAppBlendPath[MAX_PATH];
 TCHAR szAppHDDPath[MAX_PATH];
+TCHAR szAppCheatsPath[MAX_PATH];
 TCHAR szAppBurnVer[16];
 
 static int nDIPOffset;
@@ -308,7 +304,7 @@ static int InpDIPSWInit()
 {
 	HandleMessage(RETRO_LOG_INFO, "Initialize DIP switches.\n");
 
-	dipswitch_core_options.clear(); 
+	dipswitch_core_options.clear();
 
 	BurnDIPInfo bdi;
 	struct GameInp *pgi;
@@ -489,6 +485,71 @@ static bool apply_dipswitch_from_variables()
 		set_neo_system_bios();
 
 	return dip_changed;
+}
+
+static int create_variables_from_cheats()
+{
+	// Load cheats so that we can turn them into core options, it needs to
+	// be done early because libretro won't accept a variable number of core
+	// options, and some core options need to be known before BurnDrvInit is called...
+	ConfigCheatLoad();
+
+	cheat_core_options.clear();
+	const char * drvname = BurnDrvGetTextA(DRV_NAME);
+
+	CheatInfo* pCurrentCheat = pCheatInfo;
+
+	while (pCurrentCheat) {
+		cheat_core_options.push_back(cheat_core_option());
+		cheat_core_option *cheat_option = &cheat_core_options.back();
+		std::string option_name = pCurrentCheat->szCheatName;
+		cheat_option->friendly_name = option_name.c_str();
+		std::replace( option_name.begin(), option_name.end(), ' ', '_');
+		std::replace( option_name.begin(), option_name.end(), '=', '_');
+		cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
+		int count = 0;
+		for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
+			if(pCurrentCheat->pOption[i]->szOptionName != NULL) count++;
+		}
+		cheat_option->values.reserve(count);
+		cheat_option->values.assign(count, cheat_core_option_value());
+		for (int i = 0; i < count; i++) {
+			cheat_core_option_value *cheat_value = &cheat_option->values[i];
+			cheat_value->nValue = i;
+			cheat_value->friendly_name = pCurrentCheat->pOption[i]->szOptionName;
+			if (pCurrentCheat->nDefault == i) cheat_option->default_value = pCurrentCheat->pOption[i]->szOptionName;
+		}
+		pCurrentCheat = pCurrentCheat->pNext;
+	}
+	return 0;
+}
+
+static int apply_cheats_from_variables()
+{
+	// It is also required to load cheats this after BurnDrvInit is called,
+	// so there might be no way to avoid having 2 calls to this function...
+	ConfigCheatLoad();
+	bCheatsAllowed = true;
+
+	struct retro_variable var = {0};
+
+	for (int cheat_idx = 0; cheat_idx < cheat_core_options.size(); cheat_idx++)
+	{
+		cheat_core_option *cheat_option = &cheat_core_options[cheat_idx];
+
+		var.key = cheat_option->option_name.c_str();
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false)
+			continue;
+
+		for (int cheat_value_idx = 0; cheat_value_idx < cheat_option->values.size(); cheat_value_idx++)
+		{
+			cheat_core_option_value *cheat_value = &(cheat_option->values[cheat_value_idx]);
+			if (cheat_value->friendly_name.compare(var.value) != 0)
+				continue;
+			CheatEnable(cheat_idx, cheat_value->nValue);
+		}
+	}
+	return 0;
 }
 
 int InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround) { return 0; }
@@ -991,6 +1052,7 @@ void retro_run()
 		check_variables();
 
 		apply_dipswitch_from_variables();
+		apply_cheats_from_variables();
 
 		// change orientation/geometry if vertical mode was toggled on/off
 		if (old_nVerticalMode != nVerticalMode)
@@ -1392,6 +1454,19 @@ static int MemCardEject()
 	return 0;
 }
 
+static unsigned int BurnDrvGetIndexByName(const char* name)
+{
+	unsigned int ret = ~0U;
+	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
+		nBurnDrvActive = i;
+		if (strcmp(BurnDrvGetText(DRV_NAME), name) == 0) {
+			ret = i;
+			break;
+		}
+	}
+	return ret;
+}
+
 static bool retro_load_game_common()
 {
 	const char *dir = NULL;
@@ -1429,6 +1504,9 @@ static bool retro_load_game_common()
 
 	// Initialize Samples path
 	snprintf_nowarn (szAppSamplesPath, sizeof(szAppSamplesPath), "%s%cfbneo%csamples%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
+
+	// Initialize Cheats path
+	snprintf_nowarn (szAppCheatsPath, sizeof(szAppCheatsPath), "%s%cfbneo%ccheats%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
 
 	// Initialize Blend path
 	snprintf_nowarn (szAppBlendPath, sizeof(szAppBlendPath), "%s%cfbneo%cblend%c", g_system_dir, path_default_slash_c(), path_default_slash_c(), path_default_slash_c());
@@ -1469,6 +1547,9 @@ static bool retro_load_game_common()
 		// Initialize debug variables
 		nBurnLayer = 0xff;
 		nSpriteEnable = 0xff;
+
+		// Create cheats core options
+		create_variables_from_cheats();
 
 		set_environment();
 		check_variables();
@@ -1542,6 +1623,8 @@ static bool retro_load_game_common()
 			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
 		else
 			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+
+		apply_cheats_from_variables();
 
 		// Initialization done
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
@@ -1727,19 +1810,6 @@ void retro_unload_game(void)
 unsigned retro_get_region() { return RETRO_REGION_NTSC; }
 
 unsigned retro_api_version() { return RETRO_API_VERSION; }
-
-static unsigned int BurnDrvGetIndexByName(const char* name)
-{
-	unsigned int ret = ~0U;
-	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-		nBurnDrvActive = i;
-		if (strcmp(BurnDrvGetText(DRV_NAME), name) == 0) {
-			ret = i;
-			break;
-		}
-	}
-	return ret;
-}
 
 #ifdef ANDROID
 #include <wchar.h>

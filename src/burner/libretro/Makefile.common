@@ -47,7 +47,6 @@ BURN_BLACKLIST := $(FBNEO_CPU_DIR)/arm7/arm7exec.c \
 	$(FBNEO_LIBRETRO_DIR)/menu.cpp \
 	$(FBNEO_CPU_DIR)/sh2/mksh2.cpp \
 	$(FBNEO_BURNER_DIR)/sshot.cpp \
-	$(FBNEO_BURNER_DIR)/conc.cpp \
 	$(FBNEO_BURNER_DIR)/cong.cpp \
 	$(FBNEO_BURNER_DIR)/image.cpp \
 	$(FBNEO_BURNER_DIR)/misc.cpp \

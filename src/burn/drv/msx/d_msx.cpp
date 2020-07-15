@@ -25664,7 +25664,7 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 // Menace from Triton (HB)
 
 static struct BurnRomInfo MSX_mtritonRomDesc[] = {
-	{ " menace from triton (2020)(brain games).rom",	49152, 0x0c4d364b, BRF_PRG | BRF_ESS },
+	{ "menace from triton (2020)(brain games).rom",	49152, 0x1be020e6, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
@@ -25672,7 +25672,7 @@ STD_ROM_FN(MSX_mtriton)
 
 struct BurnDriver BurnDrvMSX_mtriton = {
 	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
-	"Menace from Triton (HB)\0", NULL, "Brain Games", "MSX",
+	"Menace from Triton (HB, v1.0.1)\0", NULL, "Brain Games", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

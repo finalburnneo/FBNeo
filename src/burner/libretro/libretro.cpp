@@ -502,8 +502,13 @@ static int create_variables_from_cheats()
 	int num = 0;
 
 	while (pCurrentCheat) {
-		// Ignore "blank" cheats, they seem common in cheat bundles, not sure what they are meant for
-		if (pCurrentCheat->szCheatName[0] != ' ')
+		// Ignore "empty" cheats, they seem common in cheat bundles (as separators and/or hints ?)
+		int count = 0;
+		for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
+			if(pCurrentCheat->pOption[i]->szOptionName == NULL) break;
+			count++;
+		}
+		if (count > 0)
 		{
 			cheat_core_options.push_back(cheat_core_option());
 			cheat_core_option *cheat_option = &cheat_core_options.back();
@@ -513,11 +518,6 @@ static int create_variables_from_cheats()
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
 			cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
 			cheat_option->num = num;
-			int count = 0;
-			for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-				if(pCurrentCheat->pOption[i]->szOptionName == NULL) break;
-				count++;
-			}
 			cheat_option->values.reserve(count);
 			cheat_option->values.assign(count, cheat_core_option_value());
 			for (int i = 0; i < count; i++) {

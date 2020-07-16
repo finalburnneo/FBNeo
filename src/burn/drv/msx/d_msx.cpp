@@ -24880,7 +24880,7 @@ struct BurnDriver BurnDrvMSX_yazzier = {
 // Dot Attack (HB)
 
 static struct BurnRomInfo MSX_dotattackRomDesc[] = {
-	{ "dot attack (2020)(ncp).rom",	0x08000, 0xfec9ddd4, BRF_PRG | BRF_ESS },
+	{ "dot attack v2 (2020)(ncp).rom",	0x08000, 0x0dd83b99, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_dotattack, MSX_dotattack, msx_msx)
@@ -25656,6 +25656,26 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_viruslqpRomInfo, MSX_viruslqpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Menace from Triton (HB)
+
+static struct BurnRomInfo MSX_mtritonRomDesc[] = {
+	{ "menace from triton (2020)(brain games).rom",	49152, 0x1be020e6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
+STD_ROM_FN(MSX_mtriton)
+
+struct BurnDriver BurnDrvMSX_mtriton = {
+	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
+	"Menace from Triton (HB, v1.0.1)\0", NULL, "Brain Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

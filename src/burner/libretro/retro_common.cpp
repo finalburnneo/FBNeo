@@ -467,7 +467,7 @@ void evaluate_neogeo_bios_mode(const char* drvname)
 	// search the BIOS dipswitch
 	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
 	{
-		if (dipswitch_core_options[dip_idx].friendly_name.compare("BIOS") == 0)
+		if (dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
 		{
 			is_bios_dipswitch_found = true;
 			if (dipswitch_core_options[dip_idx].values.size() > 0)
@@ -575,7 +575,7 @@ void set_environment()
 		vars[idx_var].key = dipswitch_core_options[dip_idx].option_name.c_str();
 		vars[idx_var].desc = dipswitch_core_options[dip_idx].friendly_name.c_str();
 		// Instead of filtering out the dips, make the description a warning if it's a neogeo game using a different default bios
-		if (neogeo_use_specific_default_bios && is_neogeo_game && dipswitch_core_options[dip_idx].friendly_name.compare("BIOS") == 0)
+		if (neogeo_use_specific_default_bios && is_neogeo_game && dipswitch_core_options[dip_idx].friendly_name.compare("[Dipswitch] BIOS") == 0)
 			vars[idx_var].info = "THIS NEOGEO GAME USES A DIFFERENT DEFAULT BIOS, CHANGE IT AT YOUR OWN RISK";
 		else
 			vars[idx_var].info = "Dipswitch setting, setting is specific to the running romset";

@@ -294,13 +294,13 @@ void InpDIPSWResetDIPs (void)
 		{
 			pgi = GameInp + bdi.nInput + nDIPOffset;
 			if (pgi)
-			pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
+				pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);
 		}
 		i++;
 	}
 }
 
-static int InpDIPSWInit()
+static int create_variables_from_dipswitches()
 {
 	HandleMessage(RETRO_LOG_INFO, "Initialize DIP switches.\n");
 
@@ -337,7 +337,7 @@ static int InpDIPSWInit()
 				HandleMessage(RETRO_LOG_WARN, "Error in %sDIPList : The DIPSWITCH '%d' has no name. '%s' name has been generated\n", drvname, dipswitch_core_options.size(), option_name.c_str());
 			}
 
-			dip_option->friendly_name = option_name;
+			dip_option->friendly_name = SSTR( "[Dipswitch] " << option_name.c_str() );
 
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
@@ -432,7 +432,7 @@ static int InpDIPSWInit()
 }
 
 // Update DIP switches value  depending of the choice the user made in core options
-static bool apply_dipswitch_from_variables()
+static bool apply_dipswitches_from_variables()
 {
 	bool dip_changed = false;
 #if 0
@@ -503,7 +503,7 @@ static int create_variables_from_cheats()
 		cheat_core_options.push_back(cheat_core_option());
 		cheat_core_option *cheat_option = &cheat_core_options.back();
 		std::string option_name = pCurrentCheat->szCheatName;
-		cheat_option->friendly_name = option_name.c_str();
+		cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
 		std::replace( option_name.begin(), option_name.end(), ' ', '_');
 		std::replace( option_name.begin(), option_name.end(), '=', '_');
 		cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
@@ -1016,7 +1016,8 @@ void retro_reset()
 
 	check_variables();
 
-	apply_dipswitch_from_variables();
+	apply_dipswitches_from_variables();
+	apply_cheats_from_variables();
 
 	ForceFrameStep(1);
 }
@@ -1051,7 +1052,7 @@ void retro_run()
 
 		check_variables();
 
-		apply_dipswitch_from_variables();
+		apply_dipswitches_from_variables();
 		apply_cheats_from_variables();
 
 		// change orientation/geometry if vertical mode was toggled on/off
@@ -1542,7 +1543,7 @@ static bool retro_load_game_common()
 		InputInit();
 
 		// Initialize dipswitches
-		InpDIPSWInit();
+		create_variables_from_dipswitches();
 
 		// Initialize debug variables
 		nBurnLayer = 0xff;
@@ -1578,7 +1579,7 @@ static bool retro_load_game_common()
 		}
 
 		// Apply dipswitches
-		apply_dipswitch_from_variables();
+		apply_dipswitches_from_variables();
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
 
 		// Initialize game driver

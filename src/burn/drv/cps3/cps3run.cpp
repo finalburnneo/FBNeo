@@ -45,6 +45,7 @@ static UINT32 *RamCRam;
 static UINT32 *RamSS;
 
 static UINT32 *RamVReg;
+static UINT32 *RamVRegBuf;
 
 static UINT8 *RamC000;
 static UINT8 *RamC000_D;
@@ -87,8 +88,11 @@ static UINT32 paldma_length = 0;
 static UINT32 chardma_source = 0;
 static UINT32 chardma_table_address = 0;
 
+static INT32 dma_timer = 0;
+static UINT16 dma_status = 0;
+
 static UINT16 spritelist_dma = 0;
-static UINT16 prev;
+static UINT16 spritelist_dma_prev = 0;
 
 static INT32 cps3_gfx_width, cps3_gfx_height;
 static INT32 cps3_gfx_max_x, cps3_gfx_max_y;
@@ -510,6 +514,7 @@ static INT32 MemIndex()
 	RamSS		= (UINT32 *) Next; Next += 0x0004000 * sizeof(UINT32);
 	
 	RamVReg		= (UINT32 *) Next; Next += 0x0000040 * sizeof(UINT32);
+	RamVRegBuf  = (UINT32 *) Next; Next += 0x0000040 * sizeof(UINT32);
 	
 	EEPROM		= (UINT16 *) Next; Next += 0x0000100 * sizeof(UINT16);
 	
@@ -557,9 +562,11 @@ UINT16 __fastcall cps3ReadWord(UINT32 addr)
 	case 0x040c0006:
 		return 0;
 #endif
-	// cps3_vbl_r
+
 	case 0x040c000c:
-	case 0x040c000e:
+		return dma_status;
+
+	case 0x040c000e: // ??
 		return 0;
 
 	case 0x05000000: return ~Cps3Input[1];
@@ -657,9 +664,9 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 
 	case 0x040c0080: break;
 	case 0x040c0082:
-		prev = spritelist_dma;
+		spritelist_dma_prev = spritelist_dma;
 		spritelist_dma = data;
-		if ((spritelist_dma & 8) && !(prev & 8)) // 0->1
+		if ((spritelist_dma & 9) == 8 && (spritelist_dma_prev & 9) == 9) // 0->1
 		{
 			for (int i = 0; i < 0x2000/4; i += 4)
 			{
@@ -671,6 +678,7 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 				UINT32 length = (dat & 0x01ff0000) >> 16;
 				memcpy(SprList + offs, RamSpr + offs, length*4*sizeof(UINT32)); // copy sublist
 			}
+			memcpy(RamVRegBuf, RamVReg, 0x40 * sizeof(UINT32));
 		}
 		break;
 
@@ -740,7 +748,10 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 #endif
 				Cps3CurPal[(paldma_dest + i) ] = BurnHighCol(r, g, b, 0);
 			}
-			Sh2SetIRQLine(10, CPU_IRQSTATUS_ACK);
+
+			dma_status |= 4;
+			dma_timer = ((25000000 / 1000000) * 100);
+			Sh2StopRun();
 		}
 		break;
 	
@@ -1096,7 +1107,7 @@ static INT32 Cps3Reset()
 			Sh2SetVBR(0x06000000);
 		}
 	}
-	
+
 	if (cps3_dip & 0x80) {
 		EEPROM[0x11] = 0x100 + (EEPROM[0x11] & 0xff);
 		EEPROM[0x29] = 0x100 + (EEPROM[0x29] & 0xff);
@@ -1106,9 +1117,14 @@ static INT32 Cps3Reset()
 	}
 
 	cps3_current_eeprom_read = 0;
-	spritelist_dma = 0;
 	cps3SndReset();
 	cps3_reset = 0;
+
+	dma_status = 0;
+	spritelist_dma = 0;
+	spritelist_dma_prev = 0;
+
+	dma_timer = -1;
 
 	HiscoreReset();
 
@@ -1841,8 +1857,8 @@ INT32 DrvCps3Draw()
 			INT32 global_bpp	= (SprSrc[i+2]&0x02000000)>>25;
 			INT32 global_pal	= (SprSrc[i+2]&0x01ff0000)>>16;
 
-			INT32 gscrollx		= (RamVReg[gscroll]&0x03ff0000)>>16;
-			INT32 gscrolly		= (RamVReg[gscroll]&0x000003ff)>>0;
+			INT32 gscrollx		= (RamVRegBuf[gscroll]&0x03ff0000)>>16;
+			INT32 gscrolly		= (RamVRegBuf[gscroll]&0x000003ff)>>0;
 			
 			start = (start * 0x100) >> 2;
 		
@@ -2079,15 +2095,29 @@ INT32 cps3Frame()
 	// Clear Opposites
 	Cps3ClearOpposites(&Cps3Input[0]);
 
-	for (INT32 i=0; i<4; i++) {
+	Sh2NewFrame();
 
-		Sh2Run(6250000 * 4 / 60 / 4);
-		
+	INT32 nInterleave = 4;
+	INT32 nCyclesTotal[1] = { 25000000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		CPU_RUN_SYNCINT(0, Sh2);
+
 		if (cps_int10_cnt >= 2) {
 			cps_int10_cnt = 0;
 			Sh2SetIRQLine(10, CPU_IRQSTATUS_ACK);
 		} else cps_int10_cnt++;
 
+		if (dma_timer > 0)
+		{
+			nCyclesDone[0] += Sh2Run(dma_timer);
+			dma_timer = -1;
+			dma_status &= ~6;
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_ACK);
+			CPU_RUN_SYNCINT(0, Sh2); // finish line
+		}
 	}
 	Sh2SetIRQLine(12, CPU_IRQSTATUS_ACK);
 
@@ -2208,7 +2238,11 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(chardma_table_address);
 
 		SCAN_VAR(spritelist_dma);
-		
+		SCAN_VAR(spritelist_dma_prev);
+
+		SCAN_VAR(dma_status);
+		SCAN_VAR(dma_timer);
+
 		//SCAN_VAR(main_flash);
 		
 		//SCAN_VAR(last_normal_byte);

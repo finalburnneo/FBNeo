@@ -51,42 +51,42 @@ static INT32 color_mask[3];
 static INT32 volume_mute = 0;
 
 static struct BurnInputInfo MacrosspInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 17,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 18,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 23,	"p1 fire 4"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 24,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 25,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 26,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy1 + 31,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Macrossp)
 
 static struct BurnDIPInfo MacrosspDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL			},
-	{0x17, 0xff, 0xff, 0xbf, NULL			},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
+	{0x17, 0xff, 0xff, 0xbf, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
 	{0x16, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -102,9 +102,9 @@ static struct BurnDIPInfo MacrosspDIPList[]=
 	{0x16, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
 	{0x16, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
 	{0x16, 0x01, 0x0f, 0x09, "1 Coins/7 Credits"	},
-	{0x16, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x16, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
 	{0x16, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -122,54 +122,39 @@ static struct BurnDIPInfo MacrosspDIPList[]=
 	{0x16, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x16, 0x01, 0xf0, 0x90, "1 Coins/7 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x17, 0x01, 0x03, 0x02, "Easy"			},
-	{0x17, 0x01, 0x03, 0x03, "Normal"		},
-	{0x17, 0x01, 0x03, 0x01, "Hard"			},
-	{0x17, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x17, 0x01, 0x03, 0x02, "Easy"					},
+	{0x17, 0x01, 0x03, 0x03, "Normal"				},
+	{0x17, 0x01, 0x03, 0x01, "Hard"					},
+	{0x17, 0x01, 0x03, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x17, 0x01, 0x0c, 0x00, "2"			},
-	{0x17, 0x01, 0x0c, 0x0c, "3"			},
-	{0x17, 0x01, 0x0c, 0x08, "4"			},
-	{0x17, 0x01, 0x0c, 0x04, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x17, 0x01, 0x0c, 0x00, "2"					},
+	{0x17, 0x01, 0x0c, 0x0c, "3"					},
+	{0x17, 0x01, 0x0c, 0x08, "4"					},
+	{0x17, 0x01, 0x0c, 0x04, "5"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x17, 0x01, 0x10, 0x00, "Off"			},
-	{0x17, 0x01, 0x10, 0x10, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x17, 0x01, 0x10, 0x00, "Off"					},
+	{0x17, 0x01, 0x10, 0x10, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x17, 0x01, 0x20, 0x20, "Off"			},
-	{0x17, 0x01, 0x20, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x17, 0x01, 0x20, 0x20, "Off"					},
+	{0x17, 0x01, 0x20, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Language"		},
-	{0x17, 0x01, 0x40, 0x40, "Japanese"		},
-	{0x17, 0x01, 0x40, 0x00, "English"		},
+	{0   , 0xfe, 0   ,    2, "Language"				},
+	{0x17, 0x01, 0x40, 0x40, "Japanese"				},
+	{0x17, 0x01, 0x40, 0x00, "English"				},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x17, 0x01, 0x80, 0x80, "Off"			},
-	{0x17, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x17, 0x01, 0x80, 0x80, "Off"					},
+	{0x17, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Macrossp)
 
-static void __fastcall macrossp_main_write_long(UINT32 /*address*/, UINT32 /*data*/)
-{
-//	if (address != 0xfe0000 && (address < 0x900000 || address >= 0x920000))
-//		bprintf (0, _T("MWL: %6.6x, %8.8x\n"), address,data);
-}
-
-static void __fastcall macrossp_main_write_byte(UINT32 /*address*/, UINT8/* data*/)
-{
-//	if (address != 0x90000b)
-//		bprintf (0, _T("MWB: %6.6x, %2.2x\n"), address,data);
-}
-
 static UINT32 __fastcall macrossp_main_read_long(UINT32 address)
 {
-//	if (address != 0xfe0000 && address != 0xb00000)
-//		bprintf (0, _T("MRL: %6.6x\n"), address);
-
 	switch (address)
 	{
 		case 0xb00000:
@@ -181,12 +166,9 @@ static UINT32 __fastcall macrossp_main_read_long(UINT32 address)
 
 static void __fastcall macrossp_main_write_word(UINT32 address, UINT16 data)
 {
-//	bprintf (0, _T("MWW: %6.6x, %4.4x\n"), address, data);
-
 	switch (address)
 	{
 		case 0xb00010:
-	//	case 0xb00012:
 		{
 			data &= 0xff;
 			if (data != 0xff) {
@@ -199,19 +181,13 @@ static void __fastcall macrossp_main_write_word(UINT32 address, UINT16 data)
 		case 0xc00000:
 			soundlatch = data;
 			sound_pending = 1;
-			SekClose();
-			SekOpen(1);
-			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-			SekClose();
-			SekOpen(0);
+			SekSetIRQLine(1, 2, CPU_IRQSTATUS_AUTO);
 		return;
 	}
 }
 
 static UINT16 __fastcall macrossp_main_read_word(UINT32 address)
 {
-//	bprintf (0, _T("MRW: %6.6x\n"), address);
-
 	switch (address)
 	{
 		case 0xb00000:
@@ -233,8 +209,6 @@ static UINT16 __fastcall macrossp_main_read_word(UINT32 address)
 
 static UINT8 __fastcall macrossp_main_read_byte(UINT32 address)
 {
-//	bprintf (0, _T("MRB: %6.6x\n"), address);
-
 	switch (address)
 	{
 		case 0xb00007:
@@ -325,18 +299,6 @@ static void __fastcall macrossp_palette_write_byte(UINT32 address, UINT8 data)
 	palette_write(address & 0x3ffc);
 }
 
-static UINT8 __fastcall macrossp_sound_read_byte(UINT32 /*address*/)
-{
-//	bprintf (0, _T("SRB: %6.6x\n"), address);
-
-	return 0;
-}
-
-static void __fastcall macrossp_sound_write_byte(UINT32 /*ddress*/, UINT8 /*data*/)
-{
-//	bprintf (0, _T("SWB: %6.6x, %2.2x\n"), address, data);
-}
-
 static void __fastcall macrossp_sound_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff80) == 0x400000) {
@@ -407,7 +369,7 @@ static tilemap_callback( scrb )
 
 	flags |= DrvTransTab[2][code] ? TILE_SKIP : 0;
 
-	TILE_SET_INFO(2, code, color, flags);	
+	TILE_SET_INFO(2, code, color, flags);
 }
 
 static tilemap_callback( scrc )
@@ -427,7 +389,7 @@ static tilemap_callback( scrc )
 
 	flags |= DrvTransTab[3][code] ? TILE_SKIP : 0;
 
-	TILE_SET_INFO(3, code, color, flags);	
+	TILE_SET_INFO(3, code, color, flags);
 }
 
 static INT32 DrvDoReset()
@@ -452,7 +414,7 @@ static INT32 DrvDoReset()
 	volume_mute = 60;
 	ES5506SetRoute(0, 0.00, BURN_SND_ES5506_ROUTE_BOTH);
 
-	palette_fade = 0xff; // quizmoon doesn't initialize!
+	palette_fade = 0xff; // quizmoon doesn't initialize this!
 	soundlatch = 0;
 	sound_pending = 0;
 	sound_toggle = 0;
@@ -464,14 +426,14 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	Drv68KROM0		= Next; Next += 0x400000;
-	Drv68KROM1		= Next; Next += 0x100000;
+	Drv68KROM0			= Next; Next += 0x400000;
+	Drv68KROM1			= Next; Next += 0x100000;
 
-	DrvGfxROM0		= Next; Next += 0x1000000;
-	DrvGfxROM1		= Next; Next += 0x800000;
-	DrvGfxROM2		= Next; Next += 0x800000;
-	DrvGfxROM3		= Next; Next += 0x800000;
-	DrvGfxROM4		= Next; Next += 0x100000;
+	DrvGfxROM0			= Next; Next += 0x1000000;
+	DrvGfxROM1			= Next; Next += 0x800000;
+	DrvGfxROM2			= Next; Next += 0x800000;
+	DrvGfxROM3			= Next; Next += 0x800000;
+	DrvGfxROM4			= Next; Next += 0x100000;
 
 	DrvTransTab[0]		= Next; Next += 0x1000000 / 0x100;
 	DrvTransTab[1]		= Next; Next += 0x0800000 / 0x100;
@@ -479,15 +441,15 @@ static INT32 MemIndex()
 	DrvTransTab[3]		= Next; Next += 0x0800000 / 0x100;
 	DrvTransTab[4]		= Next; Next += 0x0100000 / 0x100;
 
-	DrvSndROM0		= Next; Next += 0x800000; // ES5506 Banks 0 & 1
-	DrvSndROM2		= Next; Next += 0x800000; // 2 & 3
+	DrvSndROM0			= Next; Next += 0x800000; // ES5506 Banks 0 & 1
+	DrvSndROM2			= Next; Next += 0x800000; // 2 & 3
 
-	Palette			= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
-	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
+	Palette				= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam				= Next;
 
-	DrvSprRAM		= Next; Next += 0x003000;
+	DrvSprRAM			= Next; Next += 0x003000;
 	DrvSprBuf[0]		= Next; Next += 0x003000;
 	DrvSprBuf[1]		= Next; Next += 0x003000;
 	DrvVidRAM[0]		= Next; Next += 0x004000;
@@ -502,21 +464,21 @@ static INT32 MemIndex()
 	DrvVidRAM[3]		= Next; Next += 0x004000;
 	DrvZoomRAM[3]		= Next; Next += 0x000400;
 	DrvVidReg[3]		= Next; Next += 0x000400;
-	DrvPalRAM		= Next; Next += 0x004000;
-	Drv68KRAM0		= Next; Next += 0x020000;
-	Drv68KRAM1		= Next; Next += 0x008000;
+	DrvPalRAM			= Next; Next += 0x004000;
+	Drv68KRAM0			= Next; Next += 0x020000;
+	Drv68KRAM1			= Next; Next += 0x008000;
 
-	RamEnd			= Next;
+	RamEnd				= Next;
 
-	tilemaps[0]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
-	tilemaps[1]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
-	tilemaps[2]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+	tilemaps[0]			= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+	tilemaps[1]			= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+	tilemaps[2]			= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
 
 	dirty_tiles[0]		= Next; Next += 64 * 64;
 	dirty_tiles[1]		= Next; Next += 64 * 64;
 	dirty_tiles[2]		= Next; Next += 64 * 64;
 
-	MemEnd			= Next;
+	MemEnd				= Next;
 
 	return 0;
 }
@@ -645,9 +607,7 @@ static INT32 DrvInit(INT32 select)
 	SekMapMemory(DrvVidReg[3],		0x91d000, 0x91d3ff, MAP_RAM); // 0-b
 	SekMapMemory(DrvPalRAM,			0xa00000, 0xa03fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM0,		0xf00000, 0xf1ffff, MAP_RAM);
-	SekSetWriteLongHandler(0,		macrossp_main_write_long);
 	SekSetWriteWordHandler(0,		macrossp_main_write_word);
-	SekSetWriteByteHandler(0,		macrossp_main_write_byte);
 	SekSetReadLongHandler(0,		macrossp_main_read_long);
 	SekSetReadWordHandler(0,		macrossp_main_read_word);
 	SekSetReadByteHandler(0,		macrossp_main_read_byte);
@@ -678,9 +638,7 @@ static INT32 DrvInit(INT32 select)
 	SekMapMemory(Drv68KROM1,		0x000000, 0x0fffff, MAP_ROM);
 	SekMapMemory(Drv68KRAM1,		0x200000, 0x207fff, MAP_RAM);
 	SekSetWriteWordHandler(0,		macrossp_sound_write_word);
-	SekSetWriteByteHandler(0,		macrossp_sound_write_byte);
 	SekSetReadWordHandler(0,		macrossp_sound_read_word);
-	SekSetReadByteHandler(0,		macrossp_sound_read_byte);
 	SekClose();
 
 	ES5506Init(16000000, DrvSndROM0, DrvSndROM0 + 0x400000, DrvSndROM2, DrvSndROM2 + 0x400000, NULL);
@@ -710,7 +668,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	SekExit();
-	
+
 	ES5506Exit();
 
 	BurnFree(AllMem);
@@ -837,7 +795,7 @@ static void draw_layer(INT32 layer, INT32 pri)
 				incx = (lz[line/2] & 0xffff0000)>>6;
 			else
 				incx = (lz[line/2] & 0x0000ffff)<<10;
-	
+
 			INT32 sx = startx - (368/2) * (incx - 0x10000);
 
 			draw_roz(map, line, sx, sy, incx, incy, 1 << pri);
@@ -899,7 +857,7 @@ static void render_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx,
 			UINT16 *bgs = bg + y * nScreenWidth;
 			UINT8 *pri = pPrioDraw + y * nScreenWidth;
 
-			if (y >= 0 && y < nScreenHeight) 
+			if (y >= 0 && y < nScreenHeight)
 			{
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
@@ -921,7 +879,7 @@ static void render_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx,
 							}
 						}
 					}
-	
+
 					x_index += dx;
 				}
 			}
@@ -1030,7 +988,7 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		palette_update();
-		DrvRecalc = 0;	
+		DrvRecalc = 0;
 	}
 
 	UINT32 reg[3] = { *((UINT32*)DrvVidReg[0]), *((UINT32*)DrvVidReg[1]), *((UINT32*)DrvVidReg[2]) };
@@ -1056,7 +1014,7 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	for (INT32 pri = 0;  pri <= 3;  pri++)
+	for (INT32 pri = 0; pri <= 3; pri++)
 	{
 		for (INT32 layer = 2; layer >= 0; layer--)
 		{
@@ -1099,12 +1057,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == 240) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		SekOpen(1);
-		nCyclesDone[1] += SekRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Sek);
 		SekClose();
 	}
 
@@ -1115,7 +1073,7 @@ static INT32 DrvFrame()
 		}
 		ES5506Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -1129,7 +1087,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029682;
 	}
@@ -1151,6 +1109,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(sound_pending);
 		SCAN_VAR(sound_toggle);
+		SCAN_VAR(volume_mute);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1159,7 +1118,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		dirty_layer[2] = 1;
 		memset (dirty_tiles[0], 1, 64*64);
 		memset (dirty_tiles[1], 1, 64*64);
-		memset (dirty_tiles[1], 1, 64*64);
+		memset (dirty_tiles[2], 1, 64*64);
 		DrvRecalc = 1;
 	}
 
@@ -1264,7 +1223,7 @@ static INT32 quizmoonInit()
 	return DrvInit(1);
 }
 
-struct BurnDriverD BurnDrvQuizmoon = {
+struct BurnDriver BurnDrvQuizmoon = {
 	"quizmoon", NULL, NULL, NULL, "1997",
 	"Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

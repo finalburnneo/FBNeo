@@ -15240,25 +15240,25 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ae" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Anniversary Edition build 2.1.0212) [Hack]</description>
-		<year>2018</year>
+		<description>The King of Fighters '97 (Anniversary Edition build 2.1.1711) [Hack]</description>
+		<year>2020</year>
 		<manufacturer>EGHT</manufacturer>
-		<rom name="kof97ae_p1.bin" size="1048576" crc="cecc4f64"/>
-		<rom name="kof97ae_p2.bin" size="4194304" crc="228aa8d1"/>
-		<rom name="kof97ae_s1.bin" size="131072" crc="30a6b3b8"/>
-		<rom name="kof97ae_c1.bin" size="8388608" crc="5f0133eb"/>
-		<rom name="kof97ae_c2.bin" size="8388608" crc="136b8449"/>
+		<rom name="kof97ae-p1.p1" size="1048576" crc="5759ea82"/>
+		<rom name="kof97ae-p2.sp2" size="4194304" crc="f00ba90d"/>
+		<rom name="kof97ae-s1.s1" size="131072" crc="30a6b3b8"/>
+		<rom name="kof97ae-c1.c1" size="8388608" crc="5f0133eb"/>
+		<rom name="kof97ae-c2.c2" size="8388608" crc="136b8449"/>
 		<rom name="232-c3.c3" merge="232-c3.c3" size="8388608" crc="581d6618"/>
 		<rom name="232-c4.c4" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
-		<rom name="kof97ae_c5.bin" size="8388608" crc="8167b444"/>
-		<rom name="kof97ae_c6.bin" size="8388608" crc="a410f3ca"/>
-		<rom name="kof97ae_c7.bin" size="8388608" crc="50a48a56"/>
-		<rom name="kof97ae_c8.bin" size="8388608" crc="80d7ec00"/>
-		<rom name="232-m1.m1" size="131072" crc="f7b7ee13"/>
+		<rom name="kof97ae-c5.c5" size="8388608" crc="8167b444"/>
+		<rom name="kof97ae-c6.c6" size="8388608" crc="a410f3ca"/>
+		<rom name="kof97ae-c7.c7" size="8388608" crc="50a48a56"/>
+		<rom name="kof97ae-c8.c8" size="8388608" crc="80d7ec00"/>
+		<rom name="kof97ae-m1.m1" size="131072" crc="f7b7ee13"/>
 		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
 		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
 		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
-		<rom name="kof97ae_v4.bin" size="2097152" crc="7d37caa0"/>
+		<rom name="kof97ae-v4.v4" size="2097152" crc="7d37caa0"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

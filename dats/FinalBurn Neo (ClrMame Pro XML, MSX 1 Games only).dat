@@ -3121,7 +3121,7 @@
 		<description>Dot Attack (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>N.C.P.</manufacturer>
-		<rom name="dot attack (2020)(ncp).rom" size="32768" crc="fec9ddd4"/>
+		<rom name="dot attack v2 (2020)(ncp).rom" size="32768" crc="0dd83b99"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6915,6 +6915,16 @@
 		<year>2009</year>
 		<manufacturer>The New Image</manufacturer>
 		<rom name="menace.rom" size="32768" crc="500d37ec"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="mtriton" romof="msx">
+		<description>Menace from Triton (HB, v1.0.1) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="menace from triton (2020)(brain games).rom" size="49152" crc="1be020e6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14287 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14290 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3256,8 +3256,8 @@ This list contains all games supported by FinalBurn Neo.
 | dw2001	|  	| Dragon World 2001 (V100, Japan)			| 		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
 | drgw3		| D NW	| Dragon World 3 (V106, Korea)				| 		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw3105	| D NW	| Dragon World 3 (ver. 105)				| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
-| dwex		| D NW	| Dragon World 3 EX (ver. 100)				| 		| 1998	| IGS		| PolyGameMaster| 					|
-| dwex101cn	| D NW	| Dragon World 3 EX (ver. 101, China)			| dwex		| 1998	| IGS		| PolyGameMaster| 					|
+| dwex		| D NW	| Dragon World 3 EX (V100, World)			| 		| 1998	| IGS		| PolyGameMaster| 					|
+| dwex101cn	| D NW	| Dragon World 3 EX (V101, China)			| dwex		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw2hk	|  	| Dragon World II (V100H, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | dw2v100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2		|  	| Dragon World II (V110X, World)			| 		| 1997	| IGS		| PolyGameMaster| 					|
@@ -6026,13 +6026,14 @@ This list contains all games supported by FinalBurn Neo.
 | kov2104	|  	| Knights of Valour 2 (V104, 102, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2106	|  	| Knights of Valour 2 (V106, 102, 100 Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2		|  	| Knights of Valour 2 (V107, 102, 100, Hong Kong)	| 		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-03| Hack		| PolyGameMaster| 					|
+| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-07| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
+| kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-07-08| Hack		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119, Kor| kovplus	| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2019	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -6969,6 +6970,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_memmanor	|  	| Memory Manor						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | msx_menace	|  	| Menace (HB)						| 		| 2009	| The New Image	| MSX		| 					|
 | nes_menacebeach|  	| Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
+| msx_mtriton	|  	| Menace from Triton (HB, v1.0.1)			| 		| 2020	| Brain Games	| MSX		| 					|
 | md_menacer	|  	| Menacer 6-Game Cartridge (Euro, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_mendelpalace|  	| Mendel Palace (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | md_menghu	|  	| Meng Huan Shui Guo Pan - 777 Casino (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -8139,6 +8141,7 @@ This list contains all games supported by FinalBurn Neo.
 | tg_ordyne	|  	| Ordyne						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
 | sg1k_orguss	|  	| Orguss (Euro, Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | orlegend105k	|  	| Oriental Legend (V105, Korea)				| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
+| orlegend105t	|  	| Oriental Legend (V105, Taiwan)			| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend111c	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, China)	| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend111k	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Korea)	| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend111t	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Taiwan)| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
@@ -9072,7 +9075,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_puzzli	|  	| Puzzli (HB, v1.1)					| 		| 2020	| PortableDev	| Sega Megadrive| 					|
 | puzzlia	|  	| Puzzli (revision A)					| puzzli	| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | puzzli	|  	| Puzzli (revision B)					| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
-| puzzli2	|  	| Puzzli 2 (V100)					| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
+| puzzli2	|  	| Puzzli 2 (V100, China)				| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
 | puzzli2s	|  	| Puzzli 2 Super (V200)					| puzzli2	| 2001	| IGS		| PolyGameMaster| Incomplete dump			|
 | gg_ichirgg	|  	| Puzzlle and Action Ichidant~R GG (Jpn)		| 		| 1994	| Sega		| Sega Game Gear| 					|
 | puzzlovek	|  	| PuzzLove (Korea)					| puzzlove	| 1994	| Para		| Miscellaneous	| 					|
@@ -9157,7 +9160,7 @@ This list contains all games supported by FinalBurn Neo.
 | qadjr		|  	| Quiz & Dragons (940921 Japan Resale Ver.)		| qad		| 1992	| Capcom	| CPS1		| 					|
 | qad		|  	| Quiz & Dragons (capcom quiz game 920701 USA)		| 		| 1992	| Capcom	| CPS1		| 					|
 | inufuku	|  	| Quiz & Variety Sukusuku Inufuku (Japan)		| 		| 1998	| Video System C| Miscellaneous	| 					|
-| quizmoon	| D	| Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku T| 		| 1997	| Banpresto	| Miscellaneous	| 					|
+| quizmoon	|  	| Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku T| 		| 1997	| Banpresto	| Miscellaneous	| 					|
 | qzchikyu	|  	| Quiz Chikyu Bouei Gun (Japan)				| 		| 1991	| Taito Corporat| Taito F2	| 					|
 | qcrayon	|  	| Quiz Crayon Shinchan (Japan)				| 		| 1993	| Taito Corporat| Taito F2	| 					|
 | quizdaisk	|  	| Quiz Daisousa Sen - The Last Count Down (Korean releas| quizdais	| 1991	| SNK		| Neo Geo MVS	| 					|
@@ -12300,7 +12303,7 @@ This list contains all games supported by FinalBurn Neo.
 | theglad101	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100)	| theglad	| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
 | thegladpcb	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100, J| theglad	| 2003	| IGS		| PolyGameMaster| 					|
 | theglad100	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100, T| theglad	| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
-| theglad	|  	| The Gladiator - Road Of The Sword / Shen Jian (V101)	| 		| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
+| theglad	|  	| The Gladiator - Road Of The Sword / Shen Jian (V101, C| 		| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
 | theglob2	|  	| The Glob (earlier)					| suprglob	| 1983	| Epos Corporati| EPOS Tristar	| 					|
 | theglobp	|  	| The Glob (Pac-Man hardware)				| suprglob	| 1983	| Epos Corporati| Pac-man	| 					|
 | theglob3	|  	| The Glob (set 3)					| suprglob	| 1983	| Epos Corporati| EPOS Tristar	| 					|
@@ -12370,7 +12373,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof96a	|  	| The King of Fighters '96 (NGM-214, alternate board)	| kof96		| 1996	| SNK		| Neo Geo MVS	| 					|
 | kof96ae20	|  	| The King of Fighters '96 (The Anniversary Edition 2.0,| kof96		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97cn	|  	| The King of Fighters '97 (10th Anniversary Chinese Edi| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
-| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition build 2.| kof97		| 2018	| EGHT		| Neo Geo MVS	| 					|
+| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition build 2.| kof97		| 2020	| EGHT		| Neo Geo MVS	| 					|
 | kof97inv	|  	| The King of Fighters '97 (Invincible Plus)		| kof97		| 2019	| Hack		| Neo Geo MVS	| 					|
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|

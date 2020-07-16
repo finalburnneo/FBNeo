@@ -6145,6 +6145,7 @@ DRV		BurnDrvKov2p203;
 DRV		BurnDrvKov2p204;
 DRV		BurnDrvKov2p;
 DRV		BurnDrvkov2pshpd;
+DRV		BurnDrvkovplus2020tx;
 DRV		BurnDrvKovplus;
 DRV		BurnDrvKovplusa;
 DRV		BurnDrvkovytzyce;
@@ -7089,6 +7090,7 @@ DRV		BurnDrvngpc_memories;
 DRV		BurnDrvcv_memmanor;
 DRV		BurnDrvMSX_menace;
 DRV		BurnDrvnes_menacebeach;
+DRV		BurnDrvMSX_mtriton;
 DRV		BurnDrvmd_menacer;
 DRV		BurnDrvnes_mendelpalace;
 DRV		BurnDrvmd_menghu;
@@ -8285,6 +8287,7 @@ DRV		BurnDrvpce_ordyne;
 DRV		BurnDrvtg_ordyne;
 DRV		BurnDrvsg1k_orguss;
 DRV		BurnDrvOrlegend105k;
+DRV		BurnDrvOrlegend105t;
 DRV		BurnDrvOrlegend111c;
 DRV		BurnDrvOrlegend111k;
 DRV		BurnDrvOrlegend111t;
@@ -9321,9 +9324,7 @@ DRV		BurnDrvnes_quinty;
 DRV		BurnDrvCpsQadjr;
 DRV		BurnDrvCpsQad;
 DRV		BurnDrvInufuku;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvQuizmoon;		// no comment
-#endif
+DRV		BurnDrvQuizmoon;
 DRV		BurnDrvQzchikyu;
 DRV		BurnDrvQcrayon;
 DRV		BurnDrvQuizdaisk;
@@ -17873,8 +17874,8 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvDrgw3,				// Dragon World 3 (V106, Korea) [no comment, NOT WORKING]
 	&BurnDrvDrgw3105,			// Dragon World 3 (ver. 105) [no comment, NOT WORKING]
-	&BurnDrvDwex,				// Dragon World 3 EX (ver. 100) [no comment, NOT WORKING]
-	&BurnDrvDwex101cn,			// Dragon World 3 EX (ver. 101, China) [no comment, NOT WORKING]
+	&BurnDrvDwex,				// Dragon World 3 EX (V100, World) [no comment, NOT WORKING]
+	&BurnDrvDwex101cn,			// Dragon World 3 EX (V101, China) [no comment, NOT WORKING]
 #endif
 	&BurnDrvDrgw2hk,			// Dragon World II (V100H, Hong Kong)
 	&BurnDrvDrgw2x,				// Dragon World II (V100X, World)
@@ -20701,6 +20702,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvkov2pshpd,			// Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)
+	&BurnDrvkovplus2020tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)
 	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)
@@ -21645,6 +21647,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_memmanor,		// Memory Manor
 	&BurnDrvMSX_menace,			// Menace (HB)
 	&BurnDrvnes_menacebeach,	// Menace Beach (USA) (Unl)
+	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.0.1)
 	&BurnDrvmd_menacer,			// Menacer 6-Game Cartridge (Euro, USA)
 	&BurnDrvnes_mendelpalace,	// Mendel Palace (USA)
 	&BurnDrvmd_menghu,			// Meng Huan Shui Guo Pan - 777 Casino (Chi)
@@ -22841,6 +22844,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_ordyne,			// Ordyne
 	&BurnDrvsg1k_orguss,		// Orguss (Euro, Jpn)
 	&BurnDrvOrlegend105k,		// Oriental Legend (V105, Korea)
+	&BurnDrvOrlegend105t,		// Oriental Legend (V105, Taiwan)
 	&BurnDrvOrlegend111c,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, China)
 	&BurnDrvOrlegend111k,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Korea)
 	&BurnDrvOrlegend111t,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Taiwan)
@@ -23790,7 +23794,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_puzzli,			// Puzzli (HB, v1.1)
 	&BurnDrvPuzzlia,			// Puzzli (revision A)
 	&BurnDrvPuzzli,				// Puzzli (revision B)
-	&BurnDrvPuzzli2,			// Puzzli 2 (V100)
+	&BurnDrvPuzzli2,			// Puzzli 2 (V100, China)
 	&BurnDrvPuzzli2s,			// Puzzli 2 Super (V200)
 	&BurnDrvgg_ichirgg,			// Puzzlle and Action Ichidant~R GG (Jpn)
 	&BurnDrvPuzzlovek,			// PuzzLove (Korea)
@@ -23877,9 +23881,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsQadjr,			// Quiz & Dragons (940921 Japan Resale Ver.)
 	&BurnDrvCpsQad,				// Quiz & Dragons (capcom quiz game 920701 USA)
 	&BurnDrvInufuku,			// Quiz & Variety Sukusuku Inufuku (Japan)
-#if defined FBNEO_DEBUG
-	&BurnDrvQuizmoon,			// Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un [no comment]
-#endif
+	&BurnDrvQuizmoon,			// Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un
 	&BurnDrvQzchikyu,			// Quiz Chikyu Bouei Gun (Japan)
 	&BurnDrvQcrayon,			// Quiz Crayon Shinchan (Japan)
 	&BurnDrvQuizdaisk,			// Quiz Daisousa Sen - The Last Count Down (Korean release)
@@ -27070,7 +27072,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheglad101,			// The Gladiator - Road Of The Sword / Shen Jian (V100)
 	&BurnDrvThegladpcb,			// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)
 	&BurnDrvtheglada,			// The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)
-	&BurnDrvTheglad,			// The Gladiator - Road Of The Sword / Shen Jian (V101)
+	&BurnDrvTheglad,			// The Gladiator - Road Of The Sword / Shen Jian (V101, China)
 	&BurnDrvTheglob2,			// The Glob (earlier)
 	&BurnDrvtheglobp,			// The Glob (Pac-Man hardware)
 	&BurnDrvTheglob3,			// The Glob (set 3)
@@ -27140,7 +27142,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof96a,				// The King of Fighters '96 (NGM-214, alternate board)
 	&BurnDrvkof96ae20,			// The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)
 	&BurnDrvkof97cn,			// The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)
-	&BurnDrvkof97ae,			// The King of Fighters '97 (Anniversary Edition build 2.1.0212)
+	&BurnDrvkof97ae,			// The King of Fighters '97 (Anniversary Edition build 2.1.1711)
 	&BurnDrvkof97invplus,		// The King of Fighters '97 (Invincible Plus)
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)

@@ -499,26 +499,35 @@ static int create_variables_from_cheats()
 
 	CheatInfo* pCurrentCheat = pCheatInfo;
 
+	int num = 0;
+
 	while (pCurrentCheat) {
-		cheat_core_options.push_back(cheat_core_option());
-		cheat_core_option *cheat_option = &cheat_core_options.back();
-		std::string option_name = pCurrentCheat->szCheatName;
-		cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
-		std::replace( option_name.begin(), option_name.end(), ' ', '_');
-		std::replace( option_name.begin(), option_name.end(), '=', '_');
-		cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
-		int count = 0;
-		for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-			if(pCurrentCheat->pOption[i]->szOptionName != NULL) count++;
+		// Ignore "blank" cheats, they seem common in cheat bundles, not sure what they are meant for
+		if (pCurrentCheat->szCheatName[0] != ' ')
+		{
+			cheat_core_options.push_back(cheat_core_option());
+			cheat_core_option *cheat_option = &cheat_core_options.back();
+			std::string option_name = pCurrentCheat->szCheatName;
+			cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
+			std::replace( option_name.begin(), option_name.end(), ' ', '_');
+			std::replace( option_name.begin(), option_name.end(), '=', '_');
+			cheat_option->option_name = SSTR( "fbneo-cheat-" << drvname << "-" << option_name.c_str() );
+			cheat_option->num = num;
+			int count = 0;
+			for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
+				if(pCurrentCheat->pOption[i]->szOptionName == NULL) break;
+				count++;
+			}
+			cheat_option->values.reserve(count);
+			cheat_option->values.assign(count, cheat_core_option_value());
+			for (int i = 0; i < count; i++) {
+				cheat_core_option_value *cheat_value = &cheat_option->values[i];
+				cheat_value->nValue = i;
+				cheat_value->friendly_name = pCurrentCheat->pOption[i]->szOptionName;
+				if (pCurrentCheat->nDefault == i) cheat_option->default_value = pCurrentCheat->pOption[i]->szOptionName;
+			}
 		}
-		cheat_option->values.reserve(count);
-		cheat_option->values.assign(count, cheat_core_option_value());
-		for (int i = 0; i < count; i++) {
-			cheat_core_option_value *cheat_value = &cheat_option->values[i];
-			cheat_value->nValue = i;
-			cheat_value->friendly_name = pCurrentCheat->pOption[i]->szOptionName;
-			if (pCurrentCheat->nDefault == i) cheat_option->default_value = pCurrentCheat->pOption[i]->szOptionName;
-		}
+		num++;
 		pCurrentCheat = pCurrentCheat->pNext;
 	}
 	return 0;
@@ -546,7 +555,7 @@ static int apply_cheats_from_variables()
 			cheat_core_option_value *cheat_value = &(cheat_option->values[cheat_value_idx]);
 			if (cheat_value->friendly_name.compare(var.value) != 0)
 				continue;
-			CheatEnable(cheat_idx, cheat_value->nValue);
+			CheatEnable(cheat_option->num, cheat_value->nValue);
 		}
 	}
 	return 0;

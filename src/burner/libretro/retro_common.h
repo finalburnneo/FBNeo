@@ -86,6 +86,7 @@ struct cheat_core_option_value
 
 struct cheat_core_option
 {
+	int num;
 	std::string default_value;
 	std::string option_name;
 	std::string friendly_name;

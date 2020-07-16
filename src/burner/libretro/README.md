@@ -96,8 +96,9 @@ Most likely for the same reason as above.
 Overall, FBNeo is slower than old MAME version because it's more accurate (meaning less bugs).
 This libretro port also support various features which are usually buggy or absent in MAME cores (readahead, netplay, rewind, retroachievements, ...). It might use additional resources.
 
-### Cheat code doesn't work, why ?
-There should be partial support through the new API relying on main ram exposition.
+### How do i use cheat code ?
+From a libretro point of view, there should be partial support through the API relying on main ram exposition. 
+Otherwise if you put native FBNeo cheat .ini files into `SYSTEM_DIRECTORY/fbneo/cheats`, they will be translated to core options (NB : MAME/Nebula formats don't work yet).
 
 ### Neogeo CD doesn't work, why ?
 There are several things to know :

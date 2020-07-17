@@ -733,7 +733,7 @@ static INT32 DrvFrame()
 		{ // start button frame-round-robin - prevent more than 1 start
 			// from falling on any given frame (causes crash in-game)
 
-			INT32 button = (nCurrentFrame % 12) / 2;
+			INT32 button = (nCurrentFrame % 24) / 4;
 			DrvInputs[2] ^= (DrvJoy3[8+button] & 1) << (8+button);
 			DrvInputs[2] ^= (DrvJoy3[14] & 1) << 14; // f2/service mode
 		}

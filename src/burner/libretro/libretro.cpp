@@ -683,7 +683,7 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 	BurnRomInfo ri = {0};
 	BurnDrvGetRomInfo(&ri, i);
 
-	if (!(ri.nType & BRF_OPT) && !(ri.nType & BRF_NODUMP))
+	if (!(ri.nType & BRF_NODUMP))
 	{
 		if (ZipLoadFile(dest, ri.nLen, wrote, g_find_list[i].nPos) != 0)
 		{

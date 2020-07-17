@@ -10757,6 +10757,8 @@ static INT32 RapheroDoReset()
 
 	NMK112Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -10925,7 +10927,7 @@ struct BurnDriver BurnDrvRaphero = {
 	"raphero", "arcadian", NULL, NULL, "1994",
 	"Rapid Hero (NMK)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -10935,7 +10937,7 @@ struct BurnDriver BurnDrvRapheroa = {
 	"rapheroa", "arcadian", NULL, NULL, "1994",
 	"Rapid Hero (Media Trading)\0", NULL, "Media Trading Corp", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroaRomInfo, rapheroaRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -10974,7 +10976,7 @@ struct BurnDriver BurnDrvArcadian = {
 	"arcadian", NULL, NULL, NULL, "1994",
 	"Arcadia (NMK)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, arcadianRomInfo, arcadianRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4

@@ -51,6 +51,7 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
+static INT32 sbtn[6] = { 0, 0, 0, 0, 0, 0 }; // start button timer
 
 static struct BurnInputInfo XmenInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
@@ -419,6 +420,8 @@ static INT32 DrvDoReset()
 	interrupt_enable = 0;
 	tilemap_select = 0;
 
+	memset(sbtn, 0, sizeof(sbtn));
+
 	return 0;
 }
 
@@ -730,15 +733,33 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		{ // start button frame-round-robin - prevent more than 1 start
-			// from falling on any given frame (causes crash in-game)
+		{ // Process DrvJoy3 (start button serializer)
+			// xmen (4p) will crash if all 4 starts are mapped to 1 button
+			// and you continue - this will serialize the start buttons presses
+			// to attempt to mitigate the issue.  6p version isn't affected
+			const INT32 sb_times[6] = { 0+4, 10+4, 20+4, 30+4, 40+4, 50+4 };
 
-			INT32 button = (nCurrentFrame % 12) / 2;
-			DrvInputs[2] ^= (DrvJoy3[8+button] & 1) << (8+button);
+			for (INT32 i = 0; i < 6; i++)
+			{
+				if (DrvJoy3[8+i] & 1) // button pressed, load timer
+				{
+					sbtn[i] = sb_times[i];
+				}
+				else
+				{ // not pressed, do the countdown
+					if (sbtn[i] > 0) {
+						sbtn[i]--;
+						// press button when timer is 0..3
+						if (sbtn[i] < 4) {
+							DrvInputs[2] ^= 1 << (8 + i);
+						}
+					}
+				}
+			}
 			DrvInputs[2] ^= (DrvJoy3[14] & 1) << 14; // f2/service mode
 		}
 
-	 	// Clear Opposites
+		// Clear Opposites
 		if ((DrvInputs[0] & 0x000c) == 0) DrvInputs[0] |= 0x000c;
 		if ((DrvInputs[0] & 0x0003) == 0) DrvInputs[0] |= 0x0003;
 		if ((DrvInputs[0] & 0x0c00) == 0) DrvInputs[0] |= 0x0c00;
@@ -821,6 +842,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		EEPROMScan(nAction, pnMin);
 
 		SCAN_VAR(interrupt_enable);
+
+		SCAN_VAR(sbtn);
 	}
 
 	if (nAction & ACB_WRITE) {

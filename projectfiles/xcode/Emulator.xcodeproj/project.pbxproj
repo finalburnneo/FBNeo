@@ -1014,6 +1014,7 @@
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
+		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
 		FEE7CC3E242285DC00B311BC /* d_sshangha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */; };
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
 		FEE7CC43242285FC00B311BC /* d_kickgoal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */; };
@@ -2574,6 +2575,8 @@
 		FEDA8F88235D226E007A4D26 /* FBInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBInput.h; sourceTree = "<group>"; };
 		FEDA8F8C235EB561007A4D26 /* README-macOS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "README-macOS.md"; path = "../../README-macOS.md"; sourceTree = "<group>"; };
 		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
+		FEDA9E2024C203950060BF0B /* poly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poly.cpp; sourceTree = "<group>"; };
+		FEDA9E2124C203950060BF0B /* poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly.h; sourceTree = "<group>"; };
 		FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_sshangha.cpp; sourceTree = "<group>"; };
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
 		FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_kickgoal.cpp; sourceTree = "<group>"; };
@@ -4668,6 +4671,8 @@
 				FE1B22B623561A710065200C /* nmk112.h */,
 				FE1B229B23561A710065200C /* pandora.cpp */,
 				FE1B22B123561A710065200C /* pandora.h */,
+				FEDA9E2024C203950060BF0B /* poly.cpp */,
+				FEDA9E2124C203950060BF0B /* poly.h */,
 				FE83291B2439A41200059993 /* qs1000.cpp */,
 				FE83291A2439A41200059993 /* qs1000.h */,
 				FE1B228523561A710065200C /* resnet.cpp */,
@@ -5702,6 +5707,7 @@
 				FE1B243223561A750065200C /* Bra86.c in Sources */,
 				FE1B27A923561A790065200C /* ymdeltat.c in Sources */,
 				FE1B25D023561A760065200C /* d_sbasketb.cpp in Sources */,
+				FEDA9E2224C203960060BF0B /* poly.cpp in Sources */,
 				FE1B273C23561A780065200C /* d_docastle.cpp in Sources */,
 				FE1B266523561A770065200C /* d_wyvernf0.cpp in Sources */,
 				FE1B26AF23561A770065200C /* d_clshroad.cpp in Sources */,

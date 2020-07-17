@@ -1027,6 +1027,9 @@
     <ClInclude Include="..\..\src\cpu\tlcs900\tlcs900.h">
       <Filter>cpus\tlcs900</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\poly.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4228,6 +4231,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_cischeat.cpp">
       <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\poly.cpp">
+      <Filter>Burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -201,5 +201,12 @@ INT32 PsndZScan(INT32 nAction, INT32 *pnMin)
 	ba.nLen = 0x800;
 	BurnAcb(&ba);
 
+	if (nAction & ACB_WRITE) {
+		// restore bank -dink
+		ZetOpen(0);
+		PsndZBankMap();
+		ZetClose();
+	}
+
 	return 0;
 }

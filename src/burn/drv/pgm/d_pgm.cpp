@@ -219,6 +219,19 @@ static struct BurnDIPInfo py2k2DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"		},
 };
 
+static struct BurnDIPInfo py2k2100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
+
+	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x01, "China"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "World"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"		},
+};
+
 static struct BurnDIPInfo oldsDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
 
@@ -232,7 +245,7 @@ static struct BurnDIPInfo oldsDIPList[] = {
 };
 
 static struct BurnDIPInfo olds100DIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x06, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
@@ -331,8 +344,32 @@ static struct BurnDIPInfo kovshp101DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
+static struct BurnDIPInfo kovshxasDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
+};
+
 static struct BurnDIPInfo kov2DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan (Alta license)"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
+};
+
+static struct BurnDIPInfo kov2p203DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x03, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x00, "China"				},
@@ -457,20 +494,19 @@ static struct BurnDIPInfo ddp2cDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 };
 
-static struct BurnDIPInfo kovshxasDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
-
-	{0,	0xFE, 0,	6,    "Region (Fake)"			},
-	{0x2E,	0x01, 0x0F,	0x00, "China"				},
-	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
-	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
-	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
-	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x0F,	0x05, "World"				},
-};
-
 static struct BurnDIPInfo happy6DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
+
+	{0,	0xFE, 0,	5,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x03, "Singapore"			},
+	{0x2E,	0x01, 0x0F,	0x04, "World"				},
+};
+
+static struct BurnDIPInfo happy6hkDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
 
 	{0,	0xFE, 0,	5,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x00, "China"				},
@@ -544,11 +580,13 @@ STDDIPINFOEXT(kov111,       pgm,	kov111			)
 STDDIPINFOEXT(kov114,     	pgm,	kov114			)
 STDDIPINFOEXT(kovshp101,    pgm,	kovshp101		)
 STDDIPINFOEXT(kov2,       	pgm,	kov2			)
+STDDIPINFOEXT(kov2p203,     pgm,	kov2p203		)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(killbld104,	pgm,	killbld104		)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(py2k2, 		pgm,	py2k2			)
+STDDIPINFOEXT(py2k2100, 	pgm,	py2k2100		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
 STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
@@ -567,6 +605,7 @@ STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
+STDDIPINFOEXT(happy6hk,		pgm,	happy6hk	 	)
 STDDIPINFOEXT(dwex,		    pgm,	dwex	 		)
 STDDIPINFOEXT(dwex101cn,	pgm,	dwex101cn	 	)
 STDDIPINFOEXT(svg,			pgm,	svg	 			)
@@ -887,9 +926,9 @@ struct BurnDriver BurnDrvOrlegend111t = {
 // Oriental Legend / Xi Yo Gi Shi Re Zuang (V111, Korea)
 
 /* IGS PCB NO-0134-2 MADE IN TAIWAN
-   Screen ver pic: there is no version number on boot screen.
-   Rom types: U6 U7 U9 U11  MX  MX27C4000DC
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: THERE IS NO VERSION NUMBER ON BOOT SCREEN.
+   ROM TYPES: U6 U7 U9 U11  MX  MX27C4000DC
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo orlegend111kRomDesc[] = {
 	{ "olv_111_korea_u6.u6",	0x080000, 0x1ff35baa, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -969,9 +1008,9 @@ struct BurnDriver BurnDrvOrlegend105k = {
 
 /* IGS PCB NO-0134-2 MADE IN TAIWAN
    IGS PCB NO-0135 MADE IN TAIWAN
-   Screen ver pic: There is no verson number on boot screen.
-   Rom types: U6 U7 U9 U11  MX  MX27C4000DC
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: THERE IS NO VERSON NUMBER ON BOOT SCREEN.
+   ROM TYPES: U6 U7 U9 U11  MX  MX27C4000DC
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo orlegend105tRomDesc[] = {
 	{ "olv_105_taiwan_u6.u6",		0x080000, 0x2b14331f, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1011,14 +1050,19 @@ struct BurnDriver BurnDrvOrlegend105t = {
 
 // Dragon World II (V110X, World)
 
+/* IGS PCB NO- 0162 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION.
+   ROM TYPES: U2 AMD AM27C4096
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo drgw2RomDesc[] = {
 	{ "dragon_ii_v-110x.u2",	0x080000, 0x1978106b, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t0200.u7",		0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0200.u7",				0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0200.u5",		0x400000, 0x13b95069, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0200.u5",				0x400000, 0x13b95069, 3 | BRF_GRA },			//  2 Sprite Color Data
 
-	{ "b0200.u9",		0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
+	{ "b0200.u9",				0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
 };
 
 STDROMPICKEXT(drgw2, drgw2, pgm)
@@ -1057,9 +1101,79 @@ struct BurnDriver BurnDrvDrgw2 = {
 };
 
 
-// Zhong Guo Long II (V100C, China)
+// Zhong Guo Long II (V101, China)
 
-static struct BurnRomInfo drgw2cRomDesc[] = {
+/* IGS PCB  NO- 0162 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION.
+   ROM TYPES: U2 AMD AM27C4096
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo drgw2101cRomDesc[] = {
+	{ "v-101c.u2",		0x080000, 0xb0c592fa, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t0200.u7",		0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0200.u5",		0x400000, 0x13b95069, 3 | BRF_GRA },			//  2 Sprite Color Data
+
+	{ "b0200.u9",		0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
+};
+
+STDROMPICKEXT(drgw2101c, drgw2101c, pgm)
+STD_ROM_FN(drgw2101c)
+
+struct BurnDriver BurnDrvDrgw2101c = {
+	"drgw2101c", "drgw2", "pgm", NULL, "1997",
+	"Zhong Guo Long II (V101, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"\u4E2D\u570B\u9F8D II (V101, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw2101cRomInfo, drgw2101cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Chuugokuryuu II (V101, Japan)
+
+/* IGS PCB NO -0162 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION.
+   ROM TYPES: U2 AMD AM27C4096
+   ROM TYPES:
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo drgw2101jRomDesc[] = {
+	{ "dragon_ii_v101j.u2",	0x080000, 0xf8f8393e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	// Dumped from a Japanese cart. ROM label on sticker is DRAGON II V101J; same data as v100J. 
+	// Is this correct or wrong sticker applied? Needs dump from another V101 Japanese cart to confirm.
+	
+	{ "t0200.u7",			0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0200.u5",			0x400000, 0x13b95069, 3 | BRF_GRA },			//  2 Sprite Color Data
+
+	{ "b0200.u9",			0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
+};
+
+STDROMPICKEXT(drgw2101j, drgw2101j, pgm)
+STD_ROM_FN(drgw2101j)
+
+struct BurnDriver BurnDrvDrgw2101j = {
+	"drgw2101j", "drgw2", "pgm", NULL, "1997",
+	"Chuugokuryuu II (V101, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	L"\u4E2D\u570B\u9F8D II (V101, Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw2101jRomInfo, drgw2101jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Zhong Guo Long II (V100, China)
+
+/* IGS PCB NO- 0162 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION.
+   ROM TYPES: U2 AMD AM27C4096
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo drgw2100cRomDesc[] = {
 	{ "v-100c.u2",		0x080000, 0x67467981, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t0200.u7",		0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
@@ -1069,23 +1183,28 @@ static struct BurnRomInfo drgw2cRomDesc[] = {
 	{ "b0200.u9",		0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
 };
 
-STDROMPICKEXT(drgw2c, drgw2c, pgm)
-STD_ROM_FN(drgw2c)
+STDROMPICKEXT(drgw2100c, drgw2100c, pgm)
+STD_ROM_FN(drgw2100c)
 
-struct BurnDriver BurnDrvDrgw2c = {
-	"drgw2c", "drgw2", "pgm", NULL, "1997",
-	"Zhong Guo Long II (V100C, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"\u4E2D\u570B\u9F8D II (V100C, China)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvDrgw2100c = {
+	"drgw2100c", "drgw2", "pgm", NULL, "1997",
+	"Zhong Guo Long II (V100, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"\u4E2D\u570B\u9F8D II (V100, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw2cRomInfo, drgw2cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, drgw2100cRomInfo, drgw2100cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
 
-// Chuugokuryuu II (V100J, Japan)
+// Chuugokuryuu II (V100, Japan)
 
-static struct BurnRomInfo drgw2jRomDesc[] = {
+/* IGS PCB NO- 0162 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION.
+   ROM TYPES: U2 AMD AM27C4096
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo drgw2100jRomDesc[] = {
 	{ "dragon_ii_v100j.u2",	0x080000, 0xf8f8393e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t0200.u7",			0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
@@ -1095,15 +1214,15 @@ static struct BurnRomInfo drgw2jRomDesc[] = {
 	{ "b0200.u9",			0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
 };
 
-STDROMPICKEXT(drgw2j, drgw2j, pgm)
-STD_ROM_FN(drgw2j)
+STDROMPICKEXT(drgw2100j, drgw2100j, pgm)
+STD_ROM_FN(drgw2100j)
 
-struct BurnDriver BurnDrvDrgw2j = {
-	"drgw2j", "drgw2", "pgm", NULL, "1997",
-	"Chuugokuryuu II (V100J, Japan)\0", NULL, "IGS", "PolyGameMaster",
-	L"\u4E2D\u570B\u9F8D II (V100J, Japan)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvDrgw2100j = {
+	"drgw2100j", "drgw2", "pgm", NULL, "1997",
+	"Chuugokuryuu II (V100, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	L"\u4E2D\u570B\u9F8D II (V100, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw2jRomInfo, drgw2jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, drgw2100jRomInfo, drgw2100jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1125,7 +1244,7 @@ STDROMPICKEXT(drgw2x, drgw2x, pgm)
 STD_ROM_FN(drgw2x)
 
 struct BurnDriver BurnDrvDrgw2x = {
-	"dw2v100x", "drgw2", "pgm", NULL, "1997",
+	"drgw2100x", "drgw2", "pgm", NULL, "1997",
 	"Dragon World II (V100X, World)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
@@ -1135,9 +1254,9 @@ struct BurnDriver BurnDrvDrgw2x = {
 };
 
 
-// Dragon World II (V100H, Hong Kong)
+// Dragon World II (V100, Hong Kong)
 
-static struct BurnRomInfo drgw2hkRomDesc[] = {
+static struct BurnRomInfo drgw2100hkRomDesc[] = {
 	{ "dragon_ii_v-100-h.u2",	0x080000, 0xc6e2e6ec, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t0200.u7",		0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
@@ -1147,15 +1266,15 @@ static struct BurnRomInfo drgw2hkRomDesc[] = {
 	{ "b0200.u9",		0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
 };
 
-STDROMPICKEXT(drgw2hk, drgw2hk, pgm)
-STD_ROM_FN(drgw2hk)
+STDROMPICKEXT(drgw2100hk, drgw2100hk, pgm)
+STD_ROM_FN(drgw2100hk)
 
-struct BurnDriver BurnDrvDrgw2hk = {
-	"drgw2hk", "drgw2", "pgm", NULL, "1997",
-	"Dragon World II (V100H, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+struct BurnDriver BurnDrvDrgw2100hk = {
+	"drgw2100hk", "drgw2", "pgm", NULL, "1997",
+	"Dragon World II (V100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw2hkRomInfo, drgw2hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, drgw2100hkRomInfo, drgw2100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1209,10 +1328,10 @@ struct BurnDriver BurnDrvKillbld = {
 
 /* IGS PCB NO-0179-2 MADE IN TAIWAN
    IGS PCB NO-0178 MADE IN TAIWAN
-   Screen ver pic: game does not show version on screen.
-   Rom types: U2  ST M27C512
-   Rom types: U3 U4 U5 U6  MX MX27C4000
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: GAME DOES NOT SHOW VERSION ON SCREEN.
+   ROM TYPES: U2  ST M27C512
+   ROM TYPES: U3 U4 U5 U6  MX MX27C4000
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo killbld109RomDesc[] = {
 	{ "kb_u3_v109.u3",		0x080000, 0xfe028dd5, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1329,11 +1448,17 @@ struct BurnDriver BurnDrvKillbld104 = {
 };
 
 
-// Dragon World 3 (V106, Korea)
+// Dragon World 3 (V106, China)
 
+/* IGS PCB NO-0189-1 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION
+   ROM TYPES: U12 U13 TI TMS27C040
+   ROM TYPES: U15 ST M27C512 (SP DATA)
+   CREDITS TO: "GC8TECH.COM" */
+   
 static struct BurnRomInfo drgw3RomDesc[] = {
-	{ "dw3_v106.u12",  		0x080000, 0xc3f6838b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "dw3_v106.u13",  		0x080000, 0x28284e22, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "dw3_v106_u12.u12",  	0x080000, 0xc3f6838b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "dw3_v106_u13.u13",   0x080000, 0x28284e22, 1 | BRF_PRG | BRF_ESS },  //  1
 
 	{ "t0400.u18",  		0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
 
@@ -1344,7 +1469,7 @@ static struct BurnRomInfo drgw3RomDesc[] = {
 
 	{ "m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
-	{ "dw3_v100_u15.u15",  	0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "dw3_text_u15.u15",  	0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(drgw3, drgw3, pgm)
@@ -1360,7 +1485,7 @@ static INT32 drgw3Init()
 
 struct BurnDriverD BurnDrvDrgw3 = {
 	"drgw3", NULL, "pgm", NULL, "1998",
-	"Dragon World 3 (V106, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 (V106, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3RomInfo, drgw3RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1369,20 +1494,20 @@ struct BurnDriverD BurnDrvDrgw3 = {
 };
 
 
-// Dragon World 3 (ver. 105)
+// Dragon World 3 (V105)
 
 static struct BurnRomInfo drgw3105RomDesc[] = {
-	{ "dw3_v105.u12",  	0x080000, 0xc5e24318, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "dw3_v105.u13",  	0x080000, 0x8d6c9d39, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "dw3_v105_u12.u12",  	0x080000, 0xc5e24318, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "dw3_v105_u13.u13",  	0x080000, 0x8d6c9d39, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0400.u18",  	0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
+	{ "t0400.u18",  		0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
 
-	{ "a0400.u9",   	0x400000, 0xdd7bfd40, 3 | BRF_GRA },	        //  3 Sprite Color Data
-	{ "a0401.u10",  	0x400000, 0xcab6557f, 3 | BRF_GRA },	        //  4
+	{ "a0400.u9",   		0x400000, 0xdd7bfd40, 3 | BRF_GRA },	        //  3 Sprite Color Data
+	{ "a0401.u10",  		0x400000, 0xcab6557f, 3 | BRF_GRA },	        //  4
 
-	{ "b0400.u13",  	0x400000, 0x4bb87cc0, 4 | BRF_GRA },	        //  5 Sprite Masks & Color Indexes
+	{ "b0400.u13",  		0x400000, 0x4bb87cc0, 4 | BRF_GRA },	        //  5 Sprite Masks & Color Indexes
 
-	{ "m0400.u1",   	0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
+	{ "m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
 	{ "dw3_v100_u15.u15",  	0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
@@ -1392,7 +1517,7 @@ STD_ROM_FN(drgw3105)
 
 struct BurnDriverD BurnDrvDrgw3105 = {
 	"drgw3105", "drgw3", "pgm", NULL, "1998",
-	"Dragon World 3 (ver. 105)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 (V105)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3105RomInfo, drgw3105RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1437,20 +1562,26 @@ struct BurnDriverD BurnDrvDrgw3103 = {
 // Chuugokuryuu 3 Special (ver. 100, Japan)
 // Japan only, has an extra game mode option!
 
+/* IGS PCB NO-0189 MADE IN TAIWAN
+   SCREEN VER PIC: BOOT SCREEN DOES NOT SHOW VERSION
+   ROM TYPES: U12 U13 TI TMS27C040
+   ROM TYPES: U15 ST M27C512 (SP DATA)
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo drgw3100RomDesc[] = {
-	{ "dw3_v100.u12",  		0x080000, 0x47243906, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "dw3_v100.u13",  		0x080000, 0xb7cded21, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "dw3_v100_u12.u12",  		0x080000, 0x47243906, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "dw3_v100_u13.u13",  		0x080000, 0xb7cded21, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0400.u18",  		0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
+	{ "t0400.u18",  			0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
 
-	{ "a0400.u9",   		0x400000, 0xdd7bfd40, 3 | BRF_GRA },	        //  3 Sprite Color Data
-	{ "a0401.u10",  		0x400000, 0xcab6557f, 3 | BRF_GRA },	        //  4
+	{ "a0400.u9",   			0x400000, 0xdd7bfd40, 3 | BRF_GRA },	        //  3 Sprite Color Data
+	{ "a0401.u10",  			0x400000, 0xcab6557f, 3 | BRF_GRA },	        //  4
 
-	{ "b0400.u13",  		0x400000, 0x4bb87cc0, 4 | BRF_GRA },	        //  5 Sprite Masks & Color Indexes
+	{ "b0400.u13",  			0x400000, 0x4bb87cc0, 4 | BRF_GRA },	        //  5 Sprite Masks & Color Indexes
 
-	{ "m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
+	{ "m0400.u1",   			0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
-	{ "dw3_v100_u15.u15",  	0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "dw3_v100_u15.u15",  		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(drgw3100, drgw3100, pgm)
@@ -1471,11 +1602,11 @@ struct BurnDriverD BurnDrvDrgw3100 = {
 
 /* IGS PCB NO-0189-1 MADE IN TAIWAN
    IGS PCB NO-0178 MADE IN TAIWAN
-   Label: DRAGON WORLD EX
-   Screen ver pic: boot screen is world with out a version number
-   Rom types: U12 U13 TI TMS27C040
-   Rom types: U15 ST M27C512 (SP DATA)
-   Credits to: "GC8TECH.COM" */
+   LABEL: DRAGON WORLD EX
+   SCREEN VER PIC: BOOT SCREEN IS WORLD WITH OUT A VERSION NUMBER
+   ROM TYPES: U12 U13 TI TMS27C040
+   ROM TYPES: U15 ST M27C512 (SP DATA)
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo dwexRomDesc[] = {
 	{ "dwex_v100.u12",   	0x080000, 0xbc171799, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1511,11 +1642,11 @@ struct BurnDriverD BurnDrvDwex = {
 
 /* IGS PCB NO-0189-1 MADE IN TAIWAN
    IGS PCB NO-0178 MADE IN TAIWAN
-   Label: DRAGON WORLD EX
-   Screen ver pic: boot screen is world with out a version number
-   Rom types: U12 U13 TI TMS27C040
-   Rom types: U15 ST M27C512 (SP DATA)
-   Credits to: "GC8TECH.COM" */
+   LABEL: DRAGON WORLD EX
+   SCREEN VER PIC: BOOT SCREEN IS WORLD WITH OUT A VERSION NUMBER
+   ROM TYPES: U12 U13 TI TMS27C040
+   ROM TYPES: U15 ST M27C512 (SP DATA)
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo dwex101cnRomDesc[] = {
 	{ "dwex_v101cn.u12",   		0x080000, 0x4f951f42, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1602,15 +1733,15 @@ struct BurnDriver BurnDrvOlds = {
 };
 
 
-// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100)
+// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100, China)
 
 /* IGS PCB NO-' 0191 MADE IN TAIWAN
    IGS PCB NO- 0135 MADE IN TAIWAN
-   Screen ver pic: the rom does not display its version on screen.
-   Rom types: U2 U3 U4 U5 MX 27C4000
-   Rom types: U6 ST M27C512
-   Rom types: U1 MX 27C4096
-   CreditS to: "GC8TECH.COM" */
+   SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
+   ROM TYPES: U2 U3 U4 U5 MX 27C4000
+   ROM TYPES: U6 ST M27C512
+   ROM TYPES: U1 MX 27C4096
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo olds100RomDesc[] = {
 	{ "sp_v100_u2.u2",  0x080000, 0x517c2a06, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1640,7 +1771,7 @@ static struct BurnRomInfo olds100RomDesc[] = {
 	{ "sp_v100_u6.u6",	0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 	
 #if defined (ROM_VERIFY)
-	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
+	{ "ram_dump",	   	0x040000, 0x280cfb4e, 0 | BRF_OPT },
 #endif
 };
 
@@ -1649,8 +1780,8 @@ STD_ROM_FN(olds100)
 
 struct BurnDriver BurnDrvOlds100 = {
 	"olds100", "olds", "pgm", NULL, "1998",
-	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100)\0", NULL, NULL, NULL,
+	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, olds100RomInfo, olds100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, olds100DIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -1658,7 +1789,7 @@ struct BurnDriver BurnDrvOlds100 = {
 };
 
 
-// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100 alt)
+// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V100 alt, China)
 
 static struct BurnRomInfo olds100aRomDesc[] = {
 	{ "p0500_v100.u24",	0x400000, 0x8981fc87, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1694,8 +1825,8 @@ STD_ROM_FN(olds100a)
 
 struct BurnDriver BurnDrvOlds100a = {
 	"olds100a", "olds", "pgm", NULL, "1998",
-	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100 alt)\0", NULL, NULL, NULL,
+	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100 alt, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, olds100aRomInfo, olds100aRomName, NULL, NULL, NULL, NULL, pgmInputInfo, olds100DIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -1860,10 +1991,10 @@ struct BurnDriver BurnDrvKov114 = {
 
 /* IGS PCB NO-0212-1 MADE IN TAIWAN
    IGS PCB NO-0213T MADE IN TAIWAN
-   Screen ver pic: the rom does not display its version on screen.
-   Rom types: U4 U5 U7 U8 ALL TI TMS27C040
-   Rom types: U10 TI TMS27C240
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
+   ROM TYPES: U4 U5 U7 U8 ALL TI TMS27C040
+   ROM TYPES: U10 TI TMS27C240
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo kov111RomDesc[] = {
 	{ "sav111_u4.u4",     	0x080000, 0xae2f1b4e, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -2028,11 +2159,11 @@ struct BurnDriver BurnDrvKovplus = {
 // Knights of Valour Plus / Sangoku Senki Plus (V119, Korea)
 
 /* IGS PCB NO-0212-1 MADE IN TAIWAN
-   There were no stickers on any of the eproms. 
-   Screen ver pic: V119 KOREA
-   Rom types: U4 U5 U7 U8 AMD AM27C040
-   Rom types: U10 HIT HN27C4096HG
-   Credits to: "GC8TECH.COM" */
+   THERE WERE NO STICKERS ON ANY OF THE EPROMS. 
+   SCREEN VER PIC: V119 KOREA
+   ROM TYPES: U4 U5 U7 U8 AMD AM27C040
+   ROM TYPES: U10 HIT HN27C4096HG
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo kovplusaRomDesc[] = {
 	{ "v119.u4",       	0x080000, 0x6750388f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -2447,9 +2578,9 @@ struct BurnDriver BurnDrvphotoy2k102 = {
 
 /* IGS PCB NO- T0236 MADE IN TAIWAN
    IGS PCB NO- T0237 MADE IN TAIWAN
-   Screen ver pic: V100MG CHINA
-   Rom types: U2 U1  MX 27C4000DC-90
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: V100MG CHINA
+   ROM TYPES: U2 U1  MX 27C4000DC-90
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo puzlstarRomDesc[] = {
 	{ "PuzzleStar_u2_v100mg.u2",	0x080000, 0x42aa03ce, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -2493,9 +2624,9 @@ struct BurnDriver BurnDrvPuzlstar = {
 
 /* IGS PCB NO- 0259 MADE IN TAIWAN
    IGS PCB NO- 0258 MADE IN TAIWAN
-   Screen ver pic: boot screen says china with no version number.
-   Rom types: U5 (MASK) OKI M27C3202CZTK
-   Credits to: "GC8TECH.COM"*/
+   SCREEN VER PIC: BOOT SCREEN SAYS CHINA WITH NO VERSION NUMBER.
+   ROM TYPES: U5 (MASK) OKI M27C3202CZTK
+   CREDITS TO: "GC8TECH.COM"*/
 
 static struct BurnRomInfo puzzli2RomDesc[] = {
 	{ "v100_u5.u5",   	0x200000, 0x1abb4595, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -2830,6 +2961,11 @@ struct BurnDriver BurnDrvPy2k2 = {
 
 // Photo Y2K 2 (V100, Japan)
 
+/* IGS PCB-0313-00 MADE IN TAIWAN
+   SCREEN VER PIC: JAPAN V100
+   ROM TYPES: U1 ST M27C800
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo py2k2100RomDesc[] = {
 	{ "y2kii_v100.u1",	0x100000, 0x7a1e36ac, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
@@ -2851,10 +2987,10 @@ STD_ROM_FN(py2k2100)
 
 struct BurnDriver BurnDrvPy2k2100 = {
 	"py2k2100", "py2k2", "pgm", NULL, "2001",
-	"Photo Y2K 2 (V100, japan)\0", NULL, "IGS", "PolyGameMaster",
+	"Photo Y2K 2 (V100, japan)\0", NULL, "IGS Alta Co., Ltd.", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
-	NULL, py2k2100RomInfo, py2k2100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k2DIPInfo,
+	NULL, py2k2100RomInfo, py2k2100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k2100DIPInfo,
 	py2k2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3135,6 +3271,12 @@ struct BurnDriver BurnDrvKov2100 = {
 
 // Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 
+/* IGS PCB-0333-03-FI MADE IN TAIWAN
+   SCREEN VER PIC: M205XX 04/25/02 17:48:27
+   ROM TYPES: U8  ST M27C322
+   ROM TYPES: U23  ST M27C160
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo kov2pRomDesc[] = {
 	{ "v205_32m.u8",  	0x400000, 0x3a2cc0de, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
@@ -3184,7 +3326,13 @@ struct BurnDriver BurnDrvKov2p = {
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
+// Knights of Valour 2 Plus - Nine Dragons (VM204XX, China)
+
+/* IGS PCB-0333-03-FI MADE IN TAIWAN
+   SCREEN VER PIC: M204XX 08/28/01 09:11:49
+   ROM TYPES: U8  ST M27C322
+   ROM TYPES: U23  ST M27C160
+   CREDITS TO: "GC8TECH.COM"*/
 
 static struct BurnRomInfo kov2p204RomDesc[] = {
 	{ "v204_32m.u8",  	0x400000, 0x583e0650, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -3212,23 +3360,23 @@ STD_ROM_FN(kov2p204)
 
 struct BurnDriver BurnDrvKov2p204 = {
 	"kov2p204", "kov2p", "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM204XX)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM204XX)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 Plus - Nine Dragons (VM204XX, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM204XX, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2p204RomInfo, kov2p204RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2p204RomInfo, kov2p204RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM203XX)
+// Knights of Valour 2 Plus - Nine Dragons (VM203XX, Korea)
 
 /* IGS PCB-0333-02-FI MADE IN TAIWAN
    IGS PCB-0334-00 MADE IN TAIWAN
-   Screen ver pic: M203XX
-   Rom types: U8  ST M27C322
-   Rom types: U23  ST M27C160
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: M203XX KOREA 08/13/01 16:57:32
+   ROM TYPES: U8  ST M27C322
+   ROM TYPES: U23  ST M27C160
+   CREDITS TO: "GC8TECH.COM" */
    
 static struct BurnRomInfo kov2p203RomDesc[] = {
 	{ "v203_32m.u8",  	0x400000, 0x11416886, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -3256,16 +3404,22 @@ STD_ROM_FN(kov2p203)
 
 struct BurnDriver BurnDrvKov2p203 = {
 	"kov2p203", "kov2p", "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM203XX)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM203XX)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 Plus - Nine Dragons (VM203XX, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM203XX, Korea)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2p203RomInfo, kov2p203RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2p203RomInfo, kov2p203RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2p203DIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM202XX)
+// Knights of Valour 2 Plus - Nine Dragons (VM202XX, China)
+
+/* IGS PCB-0333-02-FI MADE IN TAIWAN
+   SCREEN VER PIC: M202XX 07/09/01 11:03:50
+   ROM TYPES: U8  ST M27C322
+   ROM TYPES: U23  ST M27C160
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo kov2p202RomDesc[] = {
 	{ "v202_32m.u8",  	0x400000, 0xe9b5aa0c, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -3293,10 +3447,10 @@ STD_ROM_FN(kov2p202)
 
 struct BurnDriver BurnDrvKov2p202 = {
 	"kov2p202", "kov2p", "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM202XX)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM202XX)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 Plus - Nine Dragons (VM202XX, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM202XX, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2p202RomInfo, kov2p202RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2p202RomInfo, kov2p202RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3845,50 +3999,14 @@ struct BurnDriver BurnDrvDw2001 = {
 };
 
 
-
-/* Dragon World Pretty Chance (V110, China)
-/  IGS PCB-0349-01-FL MADE IN TAIWAN
-   IGS PCB-0350-00T-FL-A MADE IN TAIWAN
-
-static struct BurnRomInfo dwpcRomDesc[] = {
-	{ "dwpc_v110cn_u22.u22",		0x080000, 0x64f22362, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-
-	{ "dwpc_v110cn_u11.u11",		0x400000, 0xdb219cb8, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "dwpc_v101xx_u2.u2",			0x200000, 0x00000000, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "dwpc_v101xx_u3.u3",			0x200000, 0x00000000, 3 | BRF_GRA },			//  4
-
-	{ "dwpc_v101xx_u9.u9",			0x200000, 0x00000000, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
-
-	{ "dwpc_v101xx_u7.u7",			0x200000, 0x00000000, 5 | BRF_SND },			//  6 Samples
-
-	{ "dw2001_igs027a_japan.bin",	0x004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
-
-	{ "dwpc_v110cn_u12.u12",		0x080000, 0x5bb1ee6a, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 rom
-};
-
-STDROMPICKEXT(dwpc, dwpc, pgm)
-STD_ROM_FN(dwpc)
-
-struct BurnDriver BurnDrvdwpc = {
-	"dwpc", NULL, "pgm", NULL, "2001",
-	"Dragon World Pretty Chance (V110, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
-	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-*/
-
 // Dragon World Pretty Chance (V101, Japan)
 
 /* IGS PCB-0349-01-FL MADE IN TAIWAN
    IGS PCB-0350-00T-FL-A MADE IN TAIWAN
-   Screen ver pic: does not show version number on boot screen.
-   Rom types: U22(PROG) U12(ARM) MX MX27C4096DC
-   Rom types: U11 (MASK) OKI M27C3202CZTK (BACKGROUND DATA).
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: DOES NOT SHOW VERSION NUMBER ON BOOT SCREEN.
+   ROM TYPES: U22(PROG) U12(ARM) MX MX27C4096DC
+   ROM TYPES: U11 (MASK) OKI M27C3202CZTK (BACKGROUND DATA).
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo dwpcRomDesc[] = {
 	{ "dwpc_v101jp_u22.u22",		0x080000, 0xb93027c0, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -3916,6 +4034,47 @@ struct BurnDriver BurnDrvdwpc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Dragon World Pretty Chance (V110, China)
+
+/* IGS PCB-0349-01-FL MADE IN TAIWAN
+   IGS PCB-0350-00T-FL-A MADE IN TAIWAN 
+   SCREEN VER PIC: V110 CN
+   ROM TYPES: U22(PROG) U12(ARM) MX MX27C4096DC.
+   ROM TYPES: U11 ST M27C322    BACKGROUND DATA.
+   ROM TYPES: U9 U7 U3 U2 ST M27C160   GFX DATA.
+   CREDITS TO: "GC8TECH.COM"*/
+
+static struct BurnRomInfo dwpc110cnRomDesc[] = {
+	{ "dwpc_v110cn_u22.u22",		0x080000, 0x64f22362, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "dwpc_v110cn_u11.u11",		0x400000, 0xdb219cb8, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "dwpc_v101xx_u2.u2",			0x200000, 0x48b2f407, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "dwpc_v101xx_u3.u3",			0x200000, 0x3bb45a97, 3 | BRF_GRA },			//  4
+
+	{ "dwpc_v101xx_u9.u9",			0x200000, 0x481b89b1, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "dwpc_v101xx_u7.u7",			0x200000, 0x5cf9bada, 5 | BRF_SND },			//  6 Samples
+
+	{ "dw2001_igs027a_japan.bin",	0x004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
+
+	{ "dwpc_v110cn_u12.u12",		0x080000, 0x5bb1ee6a, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 rom
+};
+
+STDROMPICKEXT(dwpc110cn, dwpc110cn, pgm)
+STD_ROM_FN(dwpc110cn)
+
+struct BurnDriver BurnDrvdwpc110cn = {
+	"dwpc110cn", "dwpc", "pgm", NULL, "2001",
+	"Dragon World Pretty Chance (V110, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
+	NULL, dwpc110cnRomInfo, dwpc110cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4076,10 +4235,10 @@ struct BurnDriver BurnDrvdmnfrnta = {
 
 /* IGS PCB-0361-02-F0 MADE IN TAIWAN
    IGS PCB-0421-00-F0-A MADE IN TAIWAN
-   Screen ver pic: M68K VERSION 101 06/06/03 16:17:27 107
-   Rom types: U6 V101 MX MX27C4096DC
-   Rom types: U26 V107 ST M27C160
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: M68K VERSION 101 06/06/03 16:17:27 107
+   ROM TYPES: U6 V101 MX MX27C4096DC
+   ROM TYPES: U26 V107 ST M27C160
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo thegladRomDesc[] = {
 	{ "v101_u6.u6",		0x080000, 0xf799e866, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -4345,9 +4504,14 @@ struct BurnDriver BurnDrvPgm3in1 = {
 // Happy 6-in-1 (V102 - V101MK, China)
 // All ROMs labels are on stickers
 
-static struct BurnRomInfo happy6RomDesc[] = {
-	{ "v101cn_u5.u5",		0x080000, 0xaa4646e3, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+/* SCREEN VER PIC: CHINA - M68K VERSION 101 03/16/04 14:29:17 V102
+   ROM TYPES: U5 ST M27C4002
+   ROM TYPES: U26 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
 
+static struct BurnRomInfo happy6RomDesc[] = {
+	{ "S101xx_u5.u5",		0x080000, 0xaa4646e3, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	
 	{ "t01w64m_u29.u29",   	0x800000, 0x2d3feb8b, 2 | BRF_GRA },			//  1 Tile data
 
 	{ "a01w64m_u5.u5",	  	0x800000, 0xbbaa3df3, 3 | BRF_GRA },			//  2 Sprite Color Data
@@ -4357,11 +4521,11 @@ static struct BurnRomInfo happy6RomDesc[] = {
 
 	{ "w01w64m_u17.u17",	0x800000, 0x7e23e2be, 5 | BRF_SND },			//  5 Samples
 
-//	{ "happy6_igs027a.bin",			0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+//	{ "happy6_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
 	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
-	{ "v102cn_u26.u26",		0x400000, 0x310510fb, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
+	{ "v-102cn_u26.u26",   	0x400000, 0x310510fb, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
 };
 
 STDROMPICKEXT(happy6, happy6, pgm)
@@ -4436,11 +4600,17 @@ struct BurnDriver BurnDrvhappy6101 = {
 };
 
 
-// Happy 6-in-1 (V100HK - V100HK, Hong Kong)
+// Happy 6-in-1 (V100 - V100MK, Hong Kong)
 // All ROMs labels are on stickers
 
+/* IGS PCB-0464-01-GT MADE IN TAIWAN
+   SCREEN VER PIC: HONGKONG - M68K VERSION V100 12/22/03 11:28:36 V100
+   ROM TYPES: U5 MX MX27C4096DC
+   ROM TYPES: U26 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo happy6100hkRomDesc[] = {
-	{ "v100hk_u5.u5",		0x080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v100hk_u5.u5",		0x080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	    //  0 68K Code
 
 	{ "t01w64m_u29.u29",   	0x800000, 0x2d3feb8b, 2 | BRF_GRA },				//  1 Tile data
 
@@ -4463,10 +4633,52 @@ STD_ROM_FN(happy6100hk)
 
 struct BurnDriver BurnDrvhappy6100hk = {
 	"happy6100hk", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 (V100HK - V100MK, Hong Kong)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100HK - V100MK, Hong Kong)\0", NULL, NULL, NULL,
+	"Happy 6-in-1 (V100 - V100MK, Hong Kong)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100 - V100MK, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
-	NULL, happy6100hkRomInfo, happy6100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
+	NULL, happy6100hkRomInfo, happy6100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6hkDIPInfo,
+	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Happy 6-in-1 (V100 - V100MK, China)
+// All ROMs labels are on stickers
+
+/* IGS PCB-0464-01-GT MADE IN TAIWAN
+   SCREEN VER PIC: CHINA - M68K VERSION V100 12/22/03 11:28:36 V100
+   ROM TYPES: U5 MX MX27C4096DC
+   ROM TYPES: U26 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo happy6100cnRomDesc[] = {
+	{ "v100cn_u5.u5",		0x080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	    //  0 68K Code
+
+	{ "t01w64m_u29.u29",   	0x800000, 0x2d3feb8b, 2 | BRF_GRA },				//  1 Tile data
+
+	{ "a01w64m_u5.u5",	  	0x800000, 0xbbaa3df3, 3 | BRF_GRA },				//  2 Sprite Color Data
+	{ "a02w64m_u6.u6",	  	0x800000, 0xf8c9cd36, 3 | BRF_GRA },				//  3
+
+	{ "b01w64m_u19.u19", 	0x800000, 0x73f5f225, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+
+	{ "w01w64m_u17.u17",	0x800000, 0x7e23e2be, 5 | BRF_SND },				//  5 Samples
+
+//	{ "happy6_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
+	{ "happy6_igs027a_v100_china.bin",	0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
+
+	{ "v100cn_u26.u26",		0x400000, 0x9c29e482, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
+};
+
+STDROMPICKEXT(happy6100cn, happy6100cn, pgm)
+STD_ROM_FN(happy6100cn)
+
+struct BurnDriver BurnDrvhappy6100cn = {
+	"happy6100cn", "happy6", "pgm", NULL, "2004",
+	"Happy 6-in-1 (V100 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100 - V100MK, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
+	NULL, happy6100cnRomInfo, happy6100cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4550,9 +4762,9 @@ struct BurnDriver BurnDrvkovshp = {
 
 /* IGS PCB-0490-00-GZ
    IGS PCB-0491-00-GZ-A 
-   Screen ver pic: V101 CHINA
-   Rom types: U10 ST M27C322
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: V101 CHINA
+   ROM TYPES: U10 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo kovshp101RomDesc[] = {
 	{ "v-101cn.u10",	    	0x400000, 0xe1d89a19, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code */
@@ -4591,9 +4803,9 @@ struct BurnDriver BurnDrvkovshp101 = {
 
 /* IGS PCB-0490-00-GZ
    IGS PCB-0491-00-GZ-A 
-   Screen ver pic: V100 CHINA
-   Rom types: U10 ST M27C322
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: V100 CHINA
+   ROM TYPES: U10 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo kovshp100RomDesc[] = {
 	{ "s__s_m-100cn.u10",		0x400000, 0xe251e8e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code */
@@ -4735,9 +4947,9 @@ struct BurnDriver BurnDrvoldsplus = {
 
 /* IGS PCB-0490-00-G7 MADE IN TAIWAN
    IGS PCB-0491-00-GZ-A MADE IN TAIWAN
-   Screen ver pic: V203 CHINA
-   Rom types: U10  ST  M27C322
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: V203 CHINA
+   ROM TYPES: U10  ST  M27C322
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo oldsplus203RomDesc[] = {
 	{ "v-203cn.u10",	0x400000, 0xc728cadc, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -4775,10 +4987,10 @@ struct BurnDriver BurnDrvoldsplus203 = {
 
 /* IGS PCB-0361-02-F0 MADE IN TAIWAN
    IGS PCB-0491-00-GZ-A
-   Screen ver pic: V300 CHINA
-   Rom types: U26 ST M27C160
-   Rom types: U6 ST M27C4002
-   Credits to: "GC8TECH.COM" */
+   SCREEN VER PIC: V300 CHINA
+   ROM TYPES: U26 ST M27C160
+   ROM TYPES: U6 ST M27C4002
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo killbldpRomDesc[] = {
 	{ "v300xx_u6.u6",   0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	 //  0 68K Code
@@ -4846,7 +5058,7 @@ static struct BurnRomInfo svgRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
-//	{ "svg_igs027a.bin",			0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+//	{ "svg_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_v200_china.bin", 	0x003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
@@ -4945,7 +5157,7 @@ static struct BurnRomInfo svgtwRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
-//	{ "svg_igs027a.bin",			0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+//	{ "svg_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svgpcb_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svgcpb_igs027a_v100_japan.bin", 	0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 

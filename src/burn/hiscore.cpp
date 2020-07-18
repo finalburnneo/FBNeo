@@ -431,9 +431,17 @@ void HiscoreApply()
 #endif
 			}
 		}
-		
+
+#if 0
+		// Save for debugging hiscore.dat / driver problems.
+		cpu_open(HiscoreMemRange[i].nCpu);
+		bprintf(0, _T("start: addr %x   %x  %x\n"), HiscoreMemRange[i].Address, cheat_subptr->read(HiscoreMemRange[i].Address), HiscoreMemRange[i].StartValue);
+		bprintf(0, _T(" end : addr %x   %x  %x\n"), HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, cheat_subptr->read(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1), HiscoreMemRange[i].EndValue);
+		cheat_subptr->close();
+#endif
 		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_NONE) {
 			cpu_open(HiscoreMemRange[i].nCpu);
+
 			if (cheat_subptr->read(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cheat_subptr->read(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
 				HiscoreMemRange[i].ApplyNextFrame = 1;
 			}
@@ -448,6 +456,11 @@ void HiscoreApply()
 			cheat_subptr->close();
 		}
 	}
+
+#if 0
+	// Save for debugging hiscore.dat / driver problems.
+	bprintf(0, _T("WriteCheckOK %d  nHiscoreNumRanges %d\n"), WriteCheckOk, nHiscoreNumRanges);
+#endif
 
 	if (WriteCheckOk == nHiscoreNumRanges) {
 #if 1 && defined FBNEO_DEBUG

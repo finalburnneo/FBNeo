@@ -1485,6 +1485,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nNeoWatchdog);
 #endif
 
+		SCAN_VAR(bZ80BoardROMBankedIn);
 		SCAN_VAR(b68KBoardROMBankedIn);
 		if (nNeoSystemType & NEO_SYS_CART) {
 			SCAN_VAR(bBIOSTextROMEnabled);

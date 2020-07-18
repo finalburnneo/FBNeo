@@ -25661,10 +25661,10 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 };
 
 
-// Menace from Triton (HB)
+// Menace from Triton (HB, v1.0.2)
 
 static struct BurnRomInfo MSX_mtritonRomDesc[] = {
-	{ "menace from triton (2020)(brain games).rom",	49152, 0x1be020e6, BRF_PRG | BRF_ESS },
+	{ "menace from triton v1.0.2 (2020)(brain games).rom",	49152, 0x77b00046, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
@@ -25672,10 +25672,110 @@ STD_ROM_FN(MSX_mtriton)
 
 struct BurnDriver BurnDrvMSX_mtriton = {
 	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
-	"Menace from Triton (HB, v1.0.1)\0", NULL, "Brain Games", "MSX",
+	"Menace from Triton (HB, v1.0.2)\0", NULL, "Brain Games", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Booga-Boo (Euro)
+
+static struct BurnRomInfo MSX_boogabooRomDesc[] = {
+	{ "boogaboo - indescomp (1986).rom",	16384, 0x8cb9d82a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_boogaboo, MSX_boogaboo, msx_msx)
+STD_ROM_FN(MSX_boogaboo)
+
+struct BurnDriver BurnDrvMSX_boogaboo = {
+	"msx_boogaboo", NULL, "msx_msx", NULL, "1986",
+	"Booga-Boo (Euro)\0", NULL, "QuickSilva", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_boogabooRomInfo, MSX_boogabooRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Eddie Kidd Jump Challenge (Euro)
+
+static struct BurnRomInfo MSX_ekjumpchRomDesc[] = {
+	{ "eddie kidd jump challenge (1985)(martech games)[run'cas-'].cas",	25475, 0x3d86412f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ekjumpch, MSX_ekjumpch, msx_msx)
+STD_ROM_FN(MSX_ekjumpch)
+
+struct BurnDriver BurnDrvMSX_ekjumpch = {
+	"msx_ekjumpch", NULL, "msx_msx", NULL, "1985",
+	"Eddie Kidd Jump Challenge (Euro)\0", NULL, "Martech Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RACING, 0,
+	MSXGetZipName, MSX_ekjumpchRomInfo, MSX_ekjumpchRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Heavy Boxing (Jpn)
+
+static struct BurnRomInfo MSX_heavyboxRomDesc[] = {
+	{ "heavy boxing - takara (1983).rom",	8192, 0x11e46700, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_heavybox, MSX_heavybox, msx_msx)
+STD_ROM_FN(MSX_heavybox)
+
+struct BurnDriver BurnDrvMSX_heavybox = {
+	"msx_heavybox", NULL, "msx_msx", NULL, "1983",
+	"Heavy Boxing (Jpn)\0", NULL, "Takara", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_heavyboxRomInfo, MSX_heavyboxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Slapshot (Euro)
+
+static struct BurnRomInfo MSX_slapshotRomDesc[] = {
+	{ "slapshot - indescomp (1985).rom",	16384, 0x7e558b9e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_slapshot, MSX_slapshot, msx_msx)
+STD_ROM_FN(MSX_slapshot)
+
+struct BurnDriver BurnDrvMSX_slapshot = {
+	"msx_slapshot", NULL, "msx_msx", NULL, "1985",
+	"Slapshot (Euro)\0", NULL, "Indescomp", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_slapshotRomInfo, MSX_slapshotRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Stupid Martians (HB)
+
+static struct BurnRomInfo MSX_stupmartRomDesc[] = {
+	{ "stupid martians (2020)(visualedu).rom",	65536, 0xb32f9cc7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_stupmart, MSX_stupmart, msx_msx)
+STD_ROM_FN(MSX_stupmart)
+
+struct BurnDriver BurnDrvMSX_stupmart = {
+	"msx_stupmart", NULL, "msx_msx", NULL, "2020",
+	"Stupid Martians (HB)\0", NULL, "Visualedu", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_stupmartRomInfo, MSX_stupmartRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

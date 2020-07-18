@@ -3,9 +3,6 @@
 
 /*
 	known bugs:
-		violent storm:
-			background layer #2 on intro (bad guy on motorcycle), bottom clipped??
-
 		mystwarr:
 			missing some sounds due to sound irq timing too slow. (wip)
 
@@ -19,13 +16,6 @@
 		2: missing some sounds. (watch the first attract mode)
 		3: end of fight "fade-outs" are flickery _sometimes_ (panda scene, whitehouse scene)
 		   only thing that seems to fix this is upping the cycles by 6mhz.
-	unkown bugs.
-		probably a lot! go ahead and fix it!
-
-	to do:
-		fix bugs
-		clean up
-		optimize
 */
 
 #include "tiles_generic.h"
@@ -822,7 +812,7 @@ static void __fastcall metamrph_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xffc000) == 0x300000) {
+	if (address >= 0x300000 && address <= 0x305fff) {
 		K056832RamWriteWord(address & 0x1fff, data);
 		return;
 	}
@@ -904,7 +894,7 @@ static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xffc000) == 0x300000) {
+	if (address >= 0x300000 && address <= 0x305fff) {
 		K056832RamWriteByte(address & 0x1fff, data);
 		return;
 	}
@@ -954,7 +944,7 @@ static UINT16 __fastcall metamrph_main_read_word(UINT32 address)
 		return 0;
 	}
 
-	if ((address & 0xffc000) == 0x300000) {
+	if (address >= 0x300000 && address <= 0x305fff) {
 		return K056832RamReadWord(address & 0x1fff);
 	}
 
@@ -1003,7 +993,7 @@ static UINT8 __fastcall metamrph_main_read_byte(UINT32 address)
 		return 0;
 	}
 
-	if ((address & 0xffc000) == 0x300000) {
+	if (address >= 0x300000 && address <= 0x305fff) {
 		return K056832RamReadByte(address & 0x1fff);
 	}
 
@@ -2902,7 +2892,7 @@ static INT32 DrvFrame()
 				if (K053246_is_IRQ_enabled())
 					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
-				if (pBurnDraw) {
+				if (pBurnDraw && nGame == 2) { // metamrph only
 					// draw here to fix flickery and missing text in service mode
 					DrvDraw();
 					drawn = 1;
@@ -2941,8 +2931,8 @@ static INT32 DrvFrame()
 			}
 		}
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, Zet);
 
 		if (((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) || (nCurrentFrame&1 && i==0)) {// && sound_nmi_enable && sound_control) { // iq_132
 			ZetNmi();

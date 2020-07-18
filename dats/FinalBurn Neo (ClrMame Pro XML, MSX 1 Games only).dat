@@ -1345,6 +1345,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="boogaboo" romof="msx">
+		<description>Booga-Boo (Euro)</description>
+		<year>1986</year>
+		<manufacturer>QuickSilva</manufacturer>
+		<rom name="boogaboo - indescomp (1986).rom" size="16384" crc="8cb9d82a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="boogie" romof="msx">
 		<description>Boogie Woogi Jungle (Jpn)</description>
 		<year>1983</year>
@@ -3397,6 +3407,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="ekjumpch" romof="msx">
+		<description>Eddie Kidd Jump Challenge (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="eddie kidd jump challenge (1985)(martech games)[run'cas-'].cas" size="25475" crc="3d86412f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="eggerlnd" romof="msx">
 		<description>Eggerland Mystery (Jpn)</description>
 		<year>1985</year>
@@ -4775,6 +4795,16 @@
 		<year>1986</year>
 		<manufacturer>Mind Games Espa??a</manufacturer>
 		<rom name="heat seeker - missil (1986)(mind games espana)(es)[run'cas-'][martos].cas" size="34905" crc="7515587f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="heavybox" romof="msx">
+		<description>Heavy Boxing (Jpn)</description>
+		<year>1983</year>
+		<manufacturer>Takara</manufacturer>
+		<rom name="heavy boxing - takara (1983).rom" size="8192" crc="11e46700"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6921,10 +6951,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtriton" romof="msx">
-		<description>Menace from Triton (HB, v1.0.1) [Homebrew]</description>
+		<description>Menace from Triton (HB, v1.0.2) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Brain Games</manufacturer>
-		<rom name="menace from triton (2020)(brain games).rom" size="49152" crc="1be020e6"/>
+		<rom name="menace from triton v1.0.2 (2020)(brain games).rom" size="49152" crc="77b00046"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9493,6 +9523,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="slapshot" romof="msx">
+		<description>Slapshot (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Indescomp</manufacturer>
+		<rom name="slapshot - indescomp (1985).rom" size="16384" crc="7e558b9e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="smackwac" romof="msx">
 		<description>Smack Wacker (Euro)</description>
 		<year>1986</year>
@@ -10019,6 +10059,16 @@
 		<year>1992</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="street master.rom" size="131072" crc="7269c520"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="stupmart" romof="msx">
+		<description>Stupid Martians (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Visualedu</manufacturer>
+		<rom name="stupid martians (2020)(visualedu).rom" size="65536" crc="b32f9cc7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

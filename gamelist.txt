@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14290 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14295 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1400,6 +1400,7 @@ This list contains all games supported by FinalBurn Neo.
 | bonzeadvp	|  	| Bonze Adventure (World, prototype)			| bonzeadv	| 1988	| Taito Corporat| Taito Misc	| 					|
 | boobhack	|  	| Booby Kids (Italian manufactured graphic hack / bootle| horekid	| 1987	| bootleg	| Miscellaneous	| 					|
 | nes_boobykids	|  	| Booby Kids (Japan)					| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
+| msx_boogaboo	|  	| Booga-Boo (Euro)					| 		| 1986	| QuickSilva	| MSX		| 					|
 | nes_boogerman	|  	| Boogerman (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_booger	|  	| Boogerman - A Pick and Flick Adventure (Euro)		| 		| 1994	| Interplay	| Sega Megadrive| 					|
 | md_boogeru	|  	| Boogerman - A Pick and Flick Adventure (USA)		| md_booger	| 1994	| Interplay	| Sega Megadrive| 					|
@@ -3486,6 +3487,7 @@ This list contains all games supported by FinalBurn Neo.
 | ecofghtru1	|  	| Eco Fighters (931203 USA)				| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
 | ecofghtrd	|  	| Eco Fighters (931203 World Phoenix Edition)		| ecofghtr	| 1993	| bootleg	| CPS2		| 					|
 | ecofghtru	|  	| Eco Fighters (940215 USA)				| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
+| msx_ekjumpch	|  	| Eddie Kidd Jump Challenge (Euro)			| 		| 1985	| Martech Games	| MSX		| 					|
 | nes_eeeaaaooo	|  	| EEEAAAOOO (HB)					| 		| 2020	| N.K		| Miscellaneous	| 					|
 | eeekkp	|  	| Eeekk! (Pac-man conversion)				| 		| 1984	| Epos Corporati| Pac-man	| 					|
 | eeekk		|  	| Eeekk!						| 		| 1983	| Epos Corporati| EPOS Tristar	| 					|
@@ -5084,6 +5086,7 @@ This list contains all games supported by FinalBurn Neo.
 | hbarrelu	|  	| Heavy Barrel (US)					| hbarrel	| 1987	| Data East USA	| DEC0		| 					|
 | nes_heavybarrel|  	| Heavy Barrel (USA)					| 		| 1990	| Data East	| Miscellaneous	| 					|
 | hbarrel	|  	| Heavy Barrel (World)					| 		| 1987	| Data East Corp| DEC0		| 					|
+| msx_heavybox	|  	| Heavy Boxing (Jpn)					| 		| 1983	| Takara	| MSX		| 					|
 | hvymetal	|  	| Heavy Metal (315-5135)				| 		| 1985	| Sega		| System 1	| 					|
 | md_heavynov	|  	| Heavy Nova (USA)					| 		| 1992	| Micronet	| Sega Megadrive| 					|
 | nes_heavyshreddin|  	| Heavy Shreddin' (USA)					| 		| 1990	| Parker Brother| Miscellaneous	| 					|
@@ -6970,7 +6973,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_memmanor	|  	| Memory Manor						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | msx_menace	|  	| Menace (HB)						| 		| 2009	| The New Image	| MSX		| 					|
 | nes_menacebeach|  	| Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
-| msx_mtriton	|  	| Menace from Triton (HB, v1.0.1)			| 		| 2020	| Brain Games	| MSX		| 					|
+| msx_mtriton	|  	| Menace from Triton (HB, v1.0.2)			| 		| 2020	| Brain Games	| MSX		| 					|
 | md_menacer	|  	| Menacer 6-Game Cartridge (Euro, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_mendelpalace|  	| Mendel Palace (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | md_menghu	|  	| Meng Huan Shui Guo Pan - 777 Casino (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -10347,6 +10350,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_slapshota	|  	| Slap Shot (Euro, v1)					| sms_slapshot	| 1990	| Sega		| Sega Master Sy| 					|
 | slapshot	|  	| Slap Shot (Japan)					| 		| 1994	| Taito Corporat| Taito Misc	| 					|
 | sms_slapshot	|  	| Slap Shot (USA, v2)					| 		| 1990	| Sega		| Sega Master Sy| 					|
+| msx_slapshot	|  	| Slapshot (Euro)					| 		| 1985	| Indescomp	| MSX		| 					|
 | md_slaughtr	|  	| Slaughter Sport (USA)					| 		| 1991	| Razorsoft	| Sega Megadrive| 					|
 | gg_slider	|  	| Slider (Euro, USA)					| 		| 1991	| Sega		| Sega Game Gear| 					|
 | spec_slightmg	|  	| Slightly Magic (128K)					| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
@@ -11325,6 +11329,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_stuntcar	|  	| Stunt Car Racer (128K)				| 		| 1989	| Micro Style	| ZX Spectrum	| 					|
 | spec_stuntcar_48|  	| Stunt Car Racer (48K)					| spec_stuntcar	| 1989	| Micro Style	| ZX Spectrum	| 					|
 | nes_stuntkids	|  	| Stunt Kids (USA) (Unl)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
+| msx_stupmart	|  	| Stupid Martians (HB)					| 		| 2020	| Visualedu	| MSX		| 					|
 | subhunt	| D	| Sub Hunter (Gremlin / Taito)				| depthch	| 1977	| Gremlin (Taito| Vic Dual	| No sound				|
 | msx_subacuatic|  	| Subacuatic (HB)					| 		| 2012	| RELEVO / The M| MSX		| 					|
 | spec_subbueto	|  	| Subbuteo - The Computer Game (128K)			| 		| 1990	| Electronic Zoo| ZX Spectrum	| 					|

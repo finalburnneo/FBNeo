@@ -1418,6 +1418,7 @@ DRV		BurnDrvBonzeadvo;
 DRV		BurnDrvBonzeadvp;
 DRV		BurnDrvBoobhack;
 DRV		BurnDrvnes_boobykids;
+DRV		BurnDrvMSX_boogaboo;
 DRV		BurnDrvnes_boogerman;
 DRV		BurnDrvmd_booger;
 DRV		BurnDrvmd_boogeru;
@@ -3552,6 +3553,7 @@ DRV		BurnDrvCpsEcofghtrh;
 DRV		BurnDrvCpsEcofghtru1;
 DRV		BurnDrvCpsEcofghtrd;
 DRV		BurnDrvCpsEcofghtru;
+DRV		BurnDrvMSX_ekjumpch;
 DRV		BurnDrvnes_eeeaaaooo;
 DRV		BurnDrvEeekkp;
 DRV		BurnDrvEeekk;
@@ -5170,6 +5172,7 @@ DRV		BurnDrvHeatbrl3;
 DRV		BurnDrvHbarrelu;
 DRV		BurnDrvnes_heavybarrel;
 DRV		BurnDrvHbarrel;
+DRV		BurnDrvMSX_heavybox;
 DRV		BurnDrvHvymetal;
 DRV		BurnDrvmd_heavynov;
 DRV		BurnDrvnes_heavyshreddin;
@@ -10531,6 +10534,7 @@ DRV		BurnDrvsms_slapshotb;
 DRV		BurnDrvsms_slapshota;
 DRV		BurnDrvSlapshot;
 DRV		BurnDrvsms_slapshot;
+DRV		BurnDrvMSX_slapshot;
 DRV		BurnDrvmd_slaughtr;
 DRV		BurnDrvgg_slider;
 DRV		BurnSpecslightmg;
@@ -11519,6 +11523,7 @@ DRV		BurnDrvStuntair;
 DRV		BurnSpecstuntcar;
 DRV		BurnSpecstuntcar_48;
 DRV		BurnDrvnes_stuntkids;
+DRV		BurnDrvMSX_stupmart;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvSubhunt;			// No sound
 #endif
@@ -15975,6 +15980,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBonzeadvp,			// Bonze Adventure (World, prototype)
 	&BurnDrvBoobhack,			// Booby Kids (Italian manufactured graphic hack / bootleg of Kid no Hore Hore Daisakusen (bootleg))
 	&BurnDrvnes_boobykids,		// Booby Kids (Japan)
+	&BurnDrvMSX_boogaboo,		// Booga-Boo (Euro)
 	&BurnDrvnes_boogerman,		// Boogerman (Unl)
 	&BurnDrvmd_booger,			// Boogerman - A Pick and Flick Adventure (Euro)
 	&BurnDrvmd_boogeru,			// Boogerman - A Pick and Flick Adventure (USA)
@@ -18109,6 +18115,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsEcofghtru1,		// Eco Fighters (931203 USA)
 	&BurnDrvCpsEcofghtrd,		// Eco Fighters (931203 World Phoenix Edition)
 	&BurnDrvCpsEcofghtru,		// Eco Fighters (940215 USA)
+	&BurnDrvMSX_ekjumpch,		// Eddie Kidd Jump Challenge (Euro)
 	&BurnDrvnes_eeeaaaooo,		// EEEAAAOOO (HB)
 	&BurnDrvEeekkp,				// Eeekk! (Pac-man conversion)
 	&BurnDrvEeekk,				// Eeekk!
@@ -19727,6 +19734,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHbarrelu,			// Heavy Barrel (US)
 	&BurnDrvnes_heavybarrel,	// Heavy Barrel (USA)
 	&BurnDrvHbarrel,			// Heavy Barrel (World)
+	&BurnDrvMSX_heavybox,		// Heavy Boxing (Jpn)
 	&BurnDrvHvymetal,			// Heavy Metal (315-5135)
 	&BurnDrvmd_heavynov,		// Heavy Nova (USA)
 	&BurnDrvnes_heavyshreddin,	// Heavy Shreddin' (USA)
@@ -21647,7 +21655,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_memmanor,		// Memory Manor
 	&BurnDrvMSX_menace,			// Menace (HB)
 	&BurnDrvnes_menacebeach,	// Menace Beach (USA) (Unl)
-	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.0.1)
+	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.0.2)
 	&BurnDrvmd_menacer,			// Menacer 6-Game Cartridge (Euro, USA)
 	&BurnDrvnes_mendelpalace,	// Mendel Palace (USA)
 	&BurnDrvmd_menghu,			// Meng Huan Shui Guo Pan - 777 Casino (Chi)
@@ -25088,6 +25096,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_slapshota,		// Slap Shot (Euro, v1)
 	&BurnDrvSlapshot,			// Slap Shot (Japan)
 	&BurnDrvsms_slapshot,		// Slap Shot (USA, v2)
+	&BurnDrvMSX_slapshot,		// Slapshot (Euro)
 	&BurnDrvmd_slaughtr,		// Slaughter Sport (USA)
 	&BurnDrvgg_slider,			// Slider (Euro, USA)
 	&BurnSpecslightmg,			// Slightly Magic (128K)
@@ -26076,6 +26085,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecstuntcar,			// Stunt Car Racer (128K)
 	&BurnSpecstuntcar_48,		// Stunt Car Racer (48K)
 	&BurnDrvnes_stuntkids,		// Stunt Kids (USA) (Unl)
+	&BurnDrvMSX_stupmart,		// Stupid Martians (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvSubhunt,			// Sub Hunter (Gremlin / Taito) [No sound]
 #endif

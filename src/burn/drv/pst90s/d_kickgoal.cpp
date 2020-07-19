@@ -275,24 +275,24 @@ static tilemap_scan( _32x32 )
 
 static tilemap_callback( fg )
 {
-	INT32 code  = *((UINT16*)(DrvVidRAM[0] + offs * 4 + 0));
-	INT32 color = *((UINT16*)(DrvVidRAM[0] + offs * 4 + 2));
+	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 2)));
 
 	TILE_SET_INFO((offs & 0x20) ? 4 : 0, code, color, 0);
 }
 
 static tilemap_callback ( bg0 )
 {
-	INT32 code  = *((UINT16*)(DrvVidRAM[1] + offs * 4 + 0));
-	INT32 color = *((UINT16*)(DrvVidRAM[1] + offs * 4 + 2));
+	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 2)));
 
 	TILE_SET_INFO(1, code, color, TILE_FLIPYX(color >> 5));
 }
 
 static tilemap_callback ( bg1 )
 {
-	INT32 code  = *((UINT16*)(DrvVidRAM[2] + offs * 4 + 0));
-	INT32 color = *((UINT16*)(DrvVidRAM[2] + offs * 4 + 2));
+	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 2)));
 
 	TILE_SET_INFO(2, code, color, TILE_FLIPYX(color >> 5));
 }
@@ -578,13 +578,13 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x800 / 2; offs += 4)
 	{
-		if (ram[offs + 0] & 0x100) break; // end of list marker
-	
-		INT32 sy    = ram[offs + 0] & 0x00ff;
-		INT32 color = ram[offs + 1] & 0x000f;
-		INT32 flipx = ram[offs + 1] & 0x0020;
-		INT32 code  = ram[offs + 2] & 0x3fff;
-		INT32 sx    = ram[offs + 3];
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x100) break; // end of list marker
+
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x00ff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x000f;
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x0020;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) & 0x3fff;
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 3]);
 
 		DrawGfxMaskTile(0, 3, code, (sx - 16 + 4) - global_x_adjust, (272 - sy) - 32 - global_y_adjust, flipx, 0, color, 0xf);
 	}

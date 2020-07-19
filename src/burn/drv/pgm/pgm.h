@@ -98,6 +98,7 @@ void pgm_decrypt_killbld();
 void pgm_decrypt_dfront();
 void pgm_decrypt_ddp2();
 void pgm_decrypt_martmast();
+void pgm_decrypt_dwpc110cn();
 void pgm_decrypt_kov2();
 void pgm_decrypt_kov2p();
 void pgm_decrypt_theglad();

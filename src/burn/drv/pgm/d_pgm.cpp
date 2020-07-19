@@ -3962,7 +3962,7 @@ static struct BurnRomInfo dw2001RomDesc[] = {
 
 	{ "dw2001_igs027a_japan.bin",	0x004000, 0x3a79159b, 7 | BRF_PRG },	//  7 Internal ARM7 rom
 
-	{ "dw2001_u12.u12",	   	0x080000, 0x973db1ab, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 rom
+	{ "dw2001_u12.u12",	   	0x080000, 0x973db1ab, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
 };
 
 STDROMPICKEXT(dw2001, dw2001, pgm)
@@ -4022,7 +4022,7 @@ static struct BurnRomInfo dwpcRomDesc[] = {
 
 	{ "dw2001_igs027a_japan.bin",	0x004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
 
-	{ "dwpc_v100jp_u12.u12",		0x080000, 0x0d112126, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 rom
+	{ "dwpc_v100jp_u12.u12",		0x080000, 0x0d112126, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
 };
 
 STDROMPICKEXT(dwpc, dwpc, pgm)
@@ -4063,19 +4063,41 @@ static struct BurnRomInfo dwpc110cnRomDesc[] = {
 
 	{ "dw2001_igs027a_japan.bin",	0x004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
 
-	{ "dwpc_v110cn_u12.u12",		0x080000, 0x5bb1ee6a, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 rom
+	{ "dwpc_v110cn_u12.u12",		0x080000, 0x5bb1ee6a, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
 };
 
 STDROMPICKEXT(dwpc110cn, dwpc110cn, pgm)
 STD_ROM_FN(dwpc110cn)
 
+static void dwpc110cnCallback()
+{
+	pgm_decrypt_dwpc110cn();
+
+	// add proper fix to rom loading routines at a later date
+	memcpy (ICSSNDROM + 0x200000, ICSSNDROM + 0x400000, 0x200000);
+
+	PGMARMROM[0x3c8] = 1; // Patch internal ASIC ROM region to China
+}
+
+static INT32 dwpc110cnInit()
+{
+	pPgmInitCallback = dwpc110cnCallback;
+	pPgmProtCallback = install_protection_asic27a_martmast;
+
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x8000228);
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvdwpc110cn = {
 	"dwpc110cn", "dwpc", "pgm", NULL, "2001",
 	"Dragon World Pretty Chance (V110, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, dwpc110cnRomInfo, dwpc110cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	dwpc110cnInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

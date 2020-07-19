@@ -4612,12 +4612,10 @@ static INT32 NeoCDResCheck()
 	{
 		BurnDrvSetVisibleSize(nNeoScreenWidth, 224);
 		Reinitialise();
-		NeoExitPalette();
 		NeoExitSprites(0);
 		NeoExitText(0);
 		NeoInitText(0);
 		NeoInitSprites(0);
-		NeoInitPalette();
 		pBurnDraw = NULL;
 	}
 	return 0;

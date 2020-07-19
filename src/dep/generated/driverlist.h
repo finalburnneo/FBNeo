@@ -2142,7 +2142,8 @@ DRV		BurnDrvMSX_chuheib1;
 DRV		BurnDrvDrgw3100;		// no comment [NOT WORKING]
 DRV		BurnDrvDrgw3103;		// no comment [NOT WORKING]
 #endif
-DRV		BurnDrvDrgw2j;
+DRV		BurnDrvDrgw2100j;
+DRV		BurnDrvDrgw2101j;
 DRV		BurnDrvnes_chuukataisen;
 DRV		BurnDrvnes_circuscaper;
 DRV		BurnDrvCircuscc;
@@ -3316,15 +3317,16 @@ DRV		BurnDrvnes_dragowariii;
 DRV		BurnDrvnes_dragowariv;
 DRV		BurnDrvDw2001;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvDrgw3;			// no comment [NOT WORKING]
 DRV		BurnDrvDrgw3105;		// no comment [NOT WORKING]
+DRV		BurnDrvDrgw3;			// no comment [NOT WORKING]
 DRV		BurnDrvDwex;			// no comment [NOT WORKING]
 DRV		BurnDrvDwex101cn;		// no comment [NOT WORKING]
 #endif
-DRV		BurnDrvDrgw2hk;
+DRV		BurnDrvDrgw2100hk;
 DRV		BurnDrvDrgw2x;
 DRV		BurnDrvDrgw2;
 DRV		BurnDrvdwpc;
+DRV		BurnDrvdwpc110cn;
 DRV		BurnDrvtg_dragcrse;
 DRV		BurnDrvmd_shangh3;
 DRV		BurnDrvmd_dfury;
@@ -5097,6 +5099,7 @@ DRV		BurnDrvpce_haniisky;
 DRV		BurnDrvpce_haniirod;
 DRV		BurnDrvMSX_hansadv;
 DRV		BurnDrvfds_haokunnofusnata;
+DRV		BurnDrvhappy6100cn;
 DRV		BurnDrvhappy6100hk;
 DRV		BurnDrvhappy6101;
 DRV		BurnDrvhappy6;
@@ -12613,6 +12616,7 @@ DRV		BurnDrvKof98ka;
 DRV		BurnDrvKof98h;
 DRV		BurnDrvKof98;
 DRV		BurnDrvKof98a;
+DRV		BurnDrvkof98eck20;
 DRV		BurnDrvkof98eckvs;
 DRV		BurnDrvKof98mix;
 DRV		BurnDrvmd_kof99a;
@@ -14500,7 +14504,8 @@ DRV		BurnDrvMSX_zexasltd;
 DRV		BurnDrvMSX_zexasltdb;
 DRV		BurnDrvMSX_zexasltda;
 DRV		BurnDrvnes_zhenbenxiyouji;
-DRV		BurnDrvDrgw2c;
+DRV		BurnDrvDrgw2100c;
+DRV		BurnDrvDrgw2101c;
 DRV		BurnDrvmd_zhuogu;
 DRV		BurnDrvZigzagb;
 DRV		BurnDrvZigzagb2;
@@ -16704,7 +16709,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgw3100,			// Chuugokuryuu 3 Special (ver. 100, Japan) [no comment, NOT WORKING]
 	&BurnDrvDrgw3103,			// Chuugokuryuu 3 Special (ver. 103, japan) [no comment, NOT WORKING]
 #endif
-	&BurnDrvDrgw2j,				// Chuugokuryuu II (V100J, Japan)
+	&BurnDrvDrgw2100j,			// Chuugokuryuu II (V100, Japan)
+	&BurnDrvDrgw2101j,			// Chuugokuryuu II (V101, Japan)
 	&BurnDrvnes_chuukataisen,	// Chuuka Taisen (Japan)
 	&BurnDrvnes_circuscaper,	// Circus Caper (USA)
 	&BurnDrvCircuscc,			// Circus Charlie (Centuri)
@@ -17878,15 +17884,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dragowariv,		// Dragon Warrior IV (USA)
 	&BurnDrvDw2001,				// Dragon World 2001 (V100, Japan)
 #if defined FBNEO_DEBUG
-	&BurnDrvDrgw3,				// Dragon World 3 (V106, Korea) [no comment, NOT WORKING]
-	&BurnDrvDrgw3105,			// Dragon World 3 (ver. 105) [no comment, NOT WORKING]
+	&BurnDrvDrgw3105,			// Dragon World 3 (V105) [no comment, NOT WORKING]
+	&BurnDrvDrgw3,				// Dragon World 3 (V106, China) [no comment, NOT WORKING]
 	&BurnDrvDwex,				// Dragon World 3 EX (V100, World) [no comment, NOT WORKING]
 	&BurnDrvDwex101cn,			// Dragon World 3 EX (V101, China) [no comment, NOT WORKING]
 #endif
-	&BurnDrvDrgw2hk,			// Dragon World II (V100H, Hong Kong)
+	&BurnDrvDrgw2100hk,			// Dragon World II (V100, Hong Kong)
 	&BurnDrvDrgw2x,				// Dragon World II (V100X, World)
 	&BurnDrvDrgw2,				// Dragon World II (V110X, World)
 	&BurnDrvdwpc,				// Dragon World Pretty Chance (V101, Japan)
+	&BurnDrvdwpc110cn,			// Dragon World Pretty Chance (V110, China)
 	&BurnDrvtg_dragcrse,		// Dragon's Curse
 	&BurnDrvmd_shangh3,			// Dragon's Eye Plus - Shanghai III (Jpn)
 	&BurnDrvmd_dfury,			// Dragon's Fury (Euro, USA)
@@ -19659,7 +19666,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_haniirod,		// Hanii on the Road
 	&BurnDrvMSX_hansadv,		// Hans' Adventure (HB)
 	&BurnDrvfds_haokunnofusnata,// Hao-kun no Fushigi na Tabi (Japan)
-	&BurnDrvhappy6100hk,		// Happy 6-in-1 (V100HK - V100MK, Hong Kong)
+	&BurnDrvhappy6100cn,		// Happy 6-in-1 (V100 - V100MK, China)
+	&BurnDrvhappy6100hk,		// Happy 6-in-1 (V100 - V100MK, Hong Kong)
 	&BurnDrvhappy6101,			// Happy 6-in-1 (V101 - V100MK, China)
 	&BurnDrvhappy6,				// Happy 6-in-1 (V102 - V101MK, China)
 	&BurnDrvnes_happycamper,	// Happy Camper (USA) (Proto)
@@ -20705,9 +20713,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2,				// Knights of Valour 2 (V107, 102, 100, Hong Kong)
 	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
 	&BurnDrvKov2p200,			// Knights of Valour 2 Plus - Nine Dragons (VM200XX)
-	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX)
-	&BurnDrvKov2p203,			// Knights of Valour 2 Plus - Nine Dragons (VM203XX)
-	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
+	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX, China)
+	&BurnDrvKov2p203,			// Knights of Valour 2 Plus - Nine Dragons (VM203XX, Korea)
+	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX, China)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 	&BurnDrvkov2pshpd,			// Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)
 	&BurnDrvkovplus2020tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
@@ -22864,8 +22872,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvoldsplus,			// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 205)
 	&BurnDrvzerofxzdsgl,		// Oriental Legend Special - Da Sheng Gui Lai (Hack)
 	&BurnDrvoldsmx,				// Oriental Legend Special - Meng Xun Ling Shan (Hack)
-	&BurnDrvOlds100a,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt)
-	&BurnDrvOlds100,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100)
+	&BurnDrvOlds100a,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt, China)
+	&BurnDrvOlds100,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100, China)
 	&BurnDrvOlds103t,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent) (unprotected)
 	&BurnDrvOlds,				// Oriental Legend Super (V101, Korea)
 	&BurnDrvOrius,				// Orius (ver UAA)
@@ -27175,8 +27183,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof98h,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)
 	&BurnDrvKof98,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)
 	&BurnDrvKof98a,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
+	&BurnDrvkof98eck20,			// The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)
 	&BurnDrvkof98eckvs,			// The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack)
-	&BurnDrvKof98mix,			// The King of Fighters '98 Mix (2011-10-01)
+	&BurnDrvKof98mix,			// The King of Fighters '98 Mix (2015-12-29)
 	&BurnDrvmd_kof99a,			// The King of Fighters '99 (Alt)
 	&BurnDrvkof99e,				// The King of Fighters '99 - Millennium Battle (earlier)
 	&BurnDrvkof99k,				// The King of Fighters '99 - Millennium Battle (Korean release)
@@ -27193,7 +27202,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg)
 	&BurnDrvkof10thd,			// The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg)
-	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized version 2019, 20190605)
+	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg)
 	&BurnDrvkof2000,			// The King of Fighters 2000 (NGM-2570) (NGH-2570)
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
@@ -29062,7 +29071,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_zexasltdb,		// Zexas Limited (Jpn, Alt 2)
 	&BurnDrvMSX_zexasltda,		// Zexas Limited (Jpn, Alt)
 	&BurnDrvnes_zhenbenxiyouji,	// Zhen Ben Xi You Ji (Asia) (Unl)
-	&BurnDrvDrgw2c,				// Zhong Guo Long II (V100C, China)
+	&BurnDrvDrgw2100c,			// Zhong Guo Long II (V100, China)
+	&BurnDrvDrgw2101c,			// Zhong Guo Long II (V101, China)
 	&BurnDrvmd_zhuogu,			// Zhuo Gui Da Shi - Ghost Hunter (Chi)
 	&BurnDrvZigzagb,			// Zig Zag (Galaxian hardware, set 1)
 	&BurnDrvZigzagb2,			// Zig Zag (Galaxian hardware, set 2)

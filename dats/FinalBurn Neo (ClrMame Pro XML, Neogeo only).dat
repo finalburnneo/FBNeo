@@ -16606,9 +16606,69 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
+	<game name="kof98eck20" cloneof="kof98" romof="kof98">
+		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack) [Hack]</description>
+		<year>2020-04-09</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="98eck20-p1.bin" size="1048576" crc="0ced4a93"/>
+		<rom name="98eck20-p2.bin" size="4194304" crc="ef36876a"/>
+		<rom name="98eck20-s1.bin" size="131072" crc="5a498ed2"/>
+		<rom name="98eck20-c1.bin" size="8388608" crc="d528dab9"/>
+		<rom name="98eck20-c2.bin" size="8388608" crc="73556130"/>
+		<rom name="98eck20-c3.bin" size="8388608" crc="4091bca0"/>
+		<rom name="98eck20-c4.bin" size="8388608" crc="56918bab"/>
+		<rom name="98eck20-c5.bin" size="8388608" crc="76252bdc"/>
+		<rom name="98eck20-c6.bin" size="8388608" crc="13d5b9b7"/>
+		<rom name="98eck20-c7.bin" size="8388608" crc="1b3a6aa9"/>
+		<rom name="98eck20-c8.bin" size="8388608" crc="ef3390ca"/>
+		<rom name="98eck20-mg1.bin" size="262144" crc="4e7a6b1b"/>
+		<rom name="98eck20-v1.bin" size="4194304" crc="b5650f76"/>
+		<rom name="98eck20-v2.bin" size="4194304" crc="b43b83ee"/>
+		<rom name="98eck20-v3.bin" size="4194304" crc="59c53922"/>
+		<rom name="98eck20-v4.bin" size="4194304" crc="46ca6f5e"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
+	</game>
 	<game name="kof98eckvs" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 Easy Combo King 2014 (Versus Version, Hack) [Hack]</description>
-		<year>2019</year>
+		<year>2019-02-17</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="98eckvs-p1.bin" size="1048576" crc="b3afd80f"/>
 		<rom name="98eckvs-p2.bin" size="4194304" crc="5d59e3ae"/>
@@ -16667,12 +16727,12 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof98mix" cloneof="kof98" romof="kof98">
-		<description>The King of Fighters '98 Mix (2011-10-01) [Hack]</description>
-		<year>2011</year>
+		<description>The King of Fighters '98 Mix (2015-12-29) [Hack]</description>
+		<year>2015</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="242mix.p1" size="1048576" crc="4a0525b1"/>
-		<rom name="242mix.p2" size="4194304" crc="75aeef82"/>
-		<rom name="242mix.s1" size="131072" crc="07999beb"/>
+		<rom name="242mix.p1" size="1048576" crc="8f3da74e"/>
+		<rom name="242mix.p2" size="4194304" crc="73d3505d"/>
+		<rom name="242mix.s1" size="131072" crc="9acd571d"/>
 		<rom name="242-c1.c1" merge="242-c1.c1" size="8388608" crc="e564ecd6"/>
 		<rom name="242-c2.c2" merge="242-c2.c2" size="8388608" crc="bd959b60"/>
 		<rom name="242-c3.c3" merge="242-c3.c3" size="8388608" crc="22127b4f"/>
@@ -16681,8 +16741,8 @@
 		<rom name="242-c6.c6" merge="242-c6.c6" size="8388608" crc="da07b6a2"/>
 		<rom name="242mix.c7" size="8388608" crc="374eb904"/>
 		<rom name="242mix.c8" size="8388608" crc="eddd2789"/>
-		<rom name="242mix.c9" size="8388608" crc="83ef6611"/>
-		<rom name="242mix.c10" size="8388608" crc="c22c67f8"/>
+		<rom name="242mix.c9" size="8388608" crc="1823dfa3"/>
+		<rom name="242mix.c10" size="8388608" crc="6a04ab8c"/>
 		<rom name="242-mg1.m1" size="262144" crc="4e7a6b1b"/>
 		<rom name="242-v1.v1" merge="242-v1.v1" size="4194304" crc="b9ea8051"/>
 		<rom name="242-v2.v2" merge="242-v2.v2" size="4194304" crc="cc11106e"/>
@@ -17530,10 +17590,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof10thuo" cloneof="kof2002" romof="kof2002">
-		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, 20190605) [Hack]</description>
-		<year>2019</year>
+		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack) [Hack]</description>
+		<year>2020-01-03</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="kf10udo-p1.p1" size="8388608" crc="956ac7f9"/>
+		<rom name="kf10udo-p1.p1" size="8388608" crc="a92246ab"/>
 		<rom name="kf10udo-s1.s1" size="131072" crc="0ebe5645"/>
 		<rom name="kf10udo-c1.c1" size="8388608" crc="2491af91"/>
 		<rom name="kf10udo-c2.c2" size="8388608" crc="47ff1d91"/>

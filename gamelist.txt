@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14295 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14300 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2108,7 +2108,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_chuheib1	|  	| Chuugaku Hisshuu Eibunpou 1 (Jpn)			| 		| 1984	| Stratford Comp| MSX		| 					|
 | drgw3100	| D NW	| Chuugokuryuu 3 Special (ver. 100, Japan)		| drgw3		| 1998	| IGS (Alta Co.,| PolyGameMaster| 					|
 | drgw3103	| D NW	| Chuugokuryuu 3 Special (ver. 103, japan)		| drgw3		| 1998	| IGS (Alta Co.,| PolyGameMaster| 					|
-| drgw2j	|  	| Chuugokuryuu II (V100J, Japan)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2100j	|  	| Chuugokuryuu II (V100, Japan)				| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2101j	|  	| Chuugokuryuu II (V101, Japan)				| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | nes_chuukataisen|  	| Chuuka Taisen (Japan)					| 		| 1989	| Taito		| Miscellaneous	| 					|
 | nes_circuscaper|  	| Circus Caper (USA)					| 		| 1990	| Toho		| Miscellaneous	| 					|
 | circuscc	|  	| Circus Charlie (Centuri)				| circusc	| 1984	| Konami (Centur| GX380		| 					|
@@ -3255,14 +3256,15 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dragowariii|  	| Dragon Warrior III (USA)				| 		| 1992	| Enix		| Miscellaneous	| 					|
 | nes_dragowariv|  	| Dragon Warrior IV (USA)				| 		| 1992	| Enix		| Miscellaneous	| 					|
 | dw2001	|  	| Dragon World 2001 (V100, Japan)			| 		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
-| drgw3		| D NW	| Dragon World 3 (V106, Korea)				| 		| 1998	| IGS		| PolyGameMaster| 					|
-| drgw3105	| D NW	| Dragon World 3 (ver. 105)				| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
+| drgw3105	| D NW	| Dragon World 3 (V105)					| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
+| drgw3		| D NW	| Dragon World 3 (V106, China)				| 		| 1998	| IGS		| PolyGameMaster| 					|
 | dwex		| D NW	| Dragon World 3 EX (V100, World)			| 		| 1998	| IGS		| PolyGameMaster| 					|
 | dwex101cn	| D NW	| Dragon World 3 EX (V101, China)			| dwex		| 1998	| IGS		| PolyGameMaster| 					|
-| drgw2hk	|  	| Dragon World II (V100H, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
-| dw2v100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2100hk	|  	| Dragon World II (V100, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2		|  	| Dragon World II (V110X, World)			| 		| 1997	| IGS		| PolyGameMaster| 					|
 | dwpc		|  	| Dragon World Pretty Chance (V101, Japan)		| 		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
+| dwpc110cn	|  	| Dragon World Pretty Chance (V110, China)		| dwpc		| 2001	| IGS		| PolyGameMaster| Bad sound?				|
 | tg_dragcrse	|  	| Dragon's Curse					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_shangh3	|  	| Dragon's Eye Plus - Shanghai III (Jpn)		| 		| 1991	| Home Data	| Sega Megadrive| 					|
 | md_dfury	|  	| Dragon's Fury (Euro, USA)				| 		| 1992	| Tengen	| Sega Megadrive| 					|
@@ -5013,7 +5015,8 @@ This list contains all games supported by FinalBurn Neo.
 | pce_haniirod	|  	| Hanii on the Road					| 		| 1990	| Face		| PC Engine	| 					|
 | msx_hansadv	|  	| Hans' Adventure (HB)					| 		| 2010	| The Pets Mode	| MSX		| 					|
 | fds_haokunnofusnata|  	| Hao-kun no Fushigi na Tabi (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| happy6100hk	|  	| Happy 6-in-1 (V100HK - V100MK, Hong Kong)		| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
+| happy6100cn	|  	| Happy 6-in-1 (V100 - V100MK, China)			| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
+| happy6100hk	|  	| Happy 6-in-1 (V100 - V100MK, Hong Kong)		| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | happy6101	|  	| Happy 6-in-1 (V101 - V100MK, China)			| happy6	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | happy6	|  	| Happy 6-in-1 (V102 - V101MK, China)			| 		| 2004	| IGS		| PolyGameMaster| 					|
 | nes_happycamper|  	| Happy Camper (USA) (Proto)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -6031,9 +6034,9 @@ This list contains all games supported by FinalBurn Neo.
 | kov2		|  	| Knights of Valour 2 (V107, 102, 100, Hong Kong)	| 		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-07| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
-| kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
-| kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
-| kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
+| kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
+| kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX, Kore| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
+| kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
 | kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-07-08| Hack		| PolyGameMaster| 					|
@@ -8577,7 +8580,7 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1	|  	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
-| py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS		| PolyGameMaster| 					|
+| py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
 | phozons	|  	| Phozon (Sidam)					| phozon	| 1983	| Namco (Sidam l| Miscellaneous	| 					|
@@ -12401,8 +12404,9 @@ This list contains all games supported by FinalBurn Neo.
 | kof98h	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98		|  	| The King of Fighters '98 - The Slugfest / King of Figh| 		| 1998	| SNK		| Neo Geo MVS	| 					|
 | kof98a	|  	| The King of Fighters '98 - The Slugfest / King of Figh| kof98		| 1998	| SNK		| Neo Geo MVS	| 					|
-| kof98eckvs	|  	| The King of Fighters '98 Easy Combo King 2014 (Versus | kof98		| 2019	| hack		| Neo Geo MVS	| 					|
-| kof98mix	|  	| The King of Fighters '98 Mix (2011-10-01)		| kof98		| 2011	| hack		| Miscellaneous	| 					|
+| kof98eck20	|  	| The King of Fighters '98 Easy Combo King (YZKOF Versio| kof98		| 2020-04-09| hack		| Neo Geo MVS	| 					|
+| kof98eckvs	|  	| The King of Fighters '98 Easy Combo King 2014 (Versus | kof98		| 2019-02-17| hack		| Neo Geo MVS	| 					|
+| kof98mix	|  	| The King of Fighters '98 Mix (2015-12-29)		| kof98		| 2015	| hack		| Miscellaneous	| 					|
 | md_kof99a	|  	| The King of Fighters '99 (Alt)			| md_kof99	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | kof99e	|  	| The King of Fighters '99 - Millennium Battle (earlier)| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99k	|  	| The King of Fighters '99 - Millennium Battle (Korean r| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
@@ -12419,7 +12423,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof10thd	|  	| The King of Fighters 10th Anniversary (The King of Fig| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
-| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized | kof2002	| 2019	| hack		| Miscellaneous	| 					|
+| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized | kof2002	| 2020-01-03| hack		| Miscellaneous	| 					|
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
 | kof2000	|  	| The King of Fighters 2000 (NGM-2570) (NGH-2570)	| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|
@@ -14240,7 +14244,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_zexasltdb	|  	| Zexas Limited (Jpn, Alt 2)				| msx_zexasltd	| 1985	| dB-Soft	| MSX		| 					|
 | msx_zexasltda	|  	| Zexas Limited (Jpn, Alt)				| msx_zexasltd	| 1985	| dB-Soft	| MSX		| 					|
 | nes_zhenbenxiyouji|  	| Zhen Ben Xi You Ji (Asia) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| drgw2c	|  	| Zhong Guo Long II (V100C, China)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2100c	|  	| Zhong Guo Long II (V100, China)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
+| drgw2101c	|  	| Zhong Guo Long II (V101, China)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | md_zhuogu	|  	| Zhuo Gui Da Shi - Ghost Hunter (Chi)			| 		| 1994	| Shenchi Techno| Sega Megadrive| 					|
 | zigzagb	|  	| Zig Zag (Galaxian hardware, set 1)			| 		| 1982	| LAX		| Galaxian	| 					|
 | zigzagb2	|  	| Zig Zag (Galaxian hardware, set 2)			| zigzagb	| 1982	| LAX		| Galaxian	| 					|

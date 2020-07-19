@@ -1050,9 +1050,11 @@ void retro_run()
 			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
 		else
 			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+		// current frame will be corrupted, let's dupe instead
+		video_cb(NULL, nGameWidth, nGameHeight, nBurnPitch);
 	}
-
-	video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
+	else
+		video_cb(pVidImage, nGameWidth, nGameHeight, nBurnPitch);
 
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE, &updated) && updated)
 	{
@@ -1144,7 +1146,7 @@ bool retro_serialize(void *data, size_t size)
 
 	BurnAcb = burn_write_state_cb;
 	write_state_ptr = (uint8_t*)data;
-	BurnAreaScan(ACB_FULLSCAN | ACB_READ, 0);   
+	BurnAreaScan(ACB_FULLSCAN | ACB_READ, 0);
 	return true;
 }
 

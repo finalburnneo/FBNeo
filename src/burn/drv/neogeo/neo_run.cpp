@@ -4600,8 +4600,35 @@ static INT32 NeoSekRun(const INT32 nCycles)
 	return nCyclesExecutedTotal;
 }
 
+static INT32 NeoCDResCheck()
+{
+	INT32 nGameID = SekReadWord(0x108);
+	bool bResChanged = false;
+
+	switch (nGameID) {
+		case 0x0200: if (nNeoScreenWidth != 304) { nNeoScreenWidth = 304; bResChanged = true; } break; // turfmasters (cd)
+	}
+	if (bResChanged)
+	{
+		BurnDrvSetVisibleSize(nNeoScreenWidth, 224);
+		Reinitialise();
+		NeoExitPalette();
+		NeoExitSprites(0);
+		NeoExitText(0);
+		NeoInitText(0);
+		NeoInitSprites(0);
+		NeoInitPalette();
+		pBurnDraw = NULL;
+	}
+	return 0;
+}
+
 INT32 NeoFrame()
 {
+	if (IsNeoGeoCD()) {
+		NeoCDResCheck();
+	}
+
 	//bprintf(0, _T("%X,"), SekReadWord(0x108)); // show game-id
 
 	if (NeoReset) {							   						// Reset machine

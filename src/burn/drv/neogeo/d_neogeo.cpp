@@ -16529,8 +16529,9 @@ STD_ROM_FN(kof97ae)
 static INT32 kof97aeInit()
 {
 	INT32 nRet = NeoInit();
-
-	if (nRet == 0) *((UINT16*)(Neo68KROMActive + 0x9b12a)) = BURN_ENDIAN_SWAP_INT16(0x6038);
+	
+	/* Make sure that the data is not modified again after the ips is loaded. */
+	if ((nRet == 0) && (*((UINT16*)(Neo68KROMActive + 0x9b12a)) == 0x48e7)) *((UINT16*)(Neo68KROMActive + 0x9b12a)) = BURN_ENDIAN_SWAP_INT16(0x6038);
 
 	return nRet;
 }
@@ -16760,6 +16761,8 @@ struct BurnDriver BurnDrvkof98cb = {
 };
 
 // The King of Fighters '98 Mix (2015-12-29)
+// Uploaded to GOTVG by GSC2007
+// Last update to ver. 20151229 from GOTVG (p1/p2/s1/c9/c10)
 
 static struct BurnRomInfo kof98mixRomDesc[] = {
 	{ "242mix.p1",	0x100000, 0x8f3da74e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -17042,12 +17045,13 @@ struct BurnDriver BurnDrvkof98cps = {
 };
 
 // The King of Fighters '99 Anniversary Edition
-/* hack by Yashional - 2017/11/12 Final Version*/
+// hack by Yashional
+// Last update to ver. 20200407
 
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "kof99ae_p1.bin",   	   0x100000, 0x3dad12db, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof99ae_p2.bin",        0x400000, 0x23193920, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "kof99ae_p3.bin",        0x400000, 0xe3847545, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "kof99ae_p1.bin",   	   0x100000, 0x4c63e81c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kof99ae_p2.bin",        0x400000, 0xf3f47f41, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "kof99ae_p3.bin",        0x400000, 0xbc85cf02, 1 | BRF_ESS | BRF_PRG }, //  2
 	
 	{ "kof99ae_s1.bin",        0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  3 Text layer tiles
 
@@ -17060,9 +17064,9 @@ static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "kof99ae_c7.bin",   	   0x800000, 0x963c28ab, 3 | BRF_GRA },           // 10 
 	{ "kof99ae_c8.bin",   	   0x800000, 0x43f1e92e, 3 | BRF_GRA },           // 11 
 	{ "kof99ae_c9.bin",   	   0x800000, 0x86a3550d, 3 | BRF_GRA },           // 12 
-	{ "kof99ae_c91.bin",       0x800000, 0x986bb897, 3 | BRF_GRA },           // 13 
-	{ "kof99ae_c92.bin",       0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 14 
-	{ "kof99ae_c93.bin",       0x800000, 0xa7541483, 3 | BRF_GRA },           // 15 
+	{ "kof99ae_c10.bin",       0x800000, 0x986bb897, 3 | BRF_GRA },           // 13 
+	{ "kof99ae_c11.bin",       0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 14 
+	{ "kof99ae_c12.bin",       0x800000, 0xa7541483, 3 | BRF_GRA },           // 15 
 
 	{ "kof99ae_m1.bin",        0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 16 Z80 code
 
@@ -17076,7 +17080,7 @@ STDROMPICKEXT(kof99ae, kof99ae, neogeo)
 STD_ROM_FN(kof99ae)
 
 struct BurnDriver BurnDrvkof99ae = {
-	"kof99ae", "kof99", "neogeo", NULL, "2017",
+	"kof99ae", "kof99", "neogeo", NULL, "2020-04-07",
 	"The King of Fighters '99 Anniversary Edition (hack)\0", NULL, "Yashional", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -18000,8 +18004,8 @@ struct BurnDriver BurnDrvkof10thd = {
 };
 
 // The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)
-// hack by ????
-// 2020-01-03
+// hack by GeZiFeiLa
+// GOTVG last update 20200103 (kf10udo-p1.p1)
 
 static struct BurnRomInfo kof10thuoRomDesc[] = {
 	{ "kf10udo-p1.p1",   0x800000, 0xa92246ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -18021,7 +18025,6 @@ static struct BurnRomInfo kof10thuoRomDesc[] = {
 
 	{ "kf10udo-v1.v1",   0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 10 Sound data
 	{ "kf10udo-v2.v2",   0x800000, 0xb8c475a4, 5 | BRF_SND },           // 11
-
 };
 
 STDROMPICKEXT(kof10thuo, kof10thuo, neogeo)

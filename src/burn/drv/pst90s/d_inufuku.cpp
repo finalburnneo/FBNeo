@@ -446,9 +446,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2000/2; i++)
 	{
-		UINT8 r = (p[i] >>  0) & 0x1f;
-		UINT8 b = (p[i] >>  5) & 0x1f;
-		UINT8 g = (p[i] >> 10) & 0x1f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (b >> 2);
@@ -513,7 +513,7 @@ static void draw_sprites()
 				INT32 xcnt = xstart;
 				while (xcnt != xend)
 				{
-					INT32 startno = (((BURN_ENDIAN_SWAP_INT16(spritetable[map*2]) & 0x0007) << 16) + spritetable[(map*2)+ 1]) % gfx->code_mask;
+					INT32 startno = (((BURN_ENDIAN_SWAP_INT16(spritetable[map*2]) & 0x0007) << 16) + BURN_ENDIAN_SWAP_INT16(spritetable[(map*2)+ 1])) % gfx->code_mask;
 
 					RenderZoomedPrioSprite(pTransDraw, gfx->gfxbase, startno, color, 0xf, ox + xcnt * zoomx/2,        oy + ycnt * zoomy/2, 	 flipx, flipy, 16, 16, zoomx << 11, zoomy << 11, priority_mask);
 					RenderZoomedPrioSprite(pTransDraw, gfx->gfxbase, startno, color, 0xf, -0x200+ox + xcnt * zoomx/2, oy + ycnt * zoomy/2, 	 flipx, flipy, 16, 16, zoomx << 11, zoomy << 11, priority_mask);
@@ -545,7 +545,7 @@ static INT32 DrvDraw()
 
 		GenericTilemapSetScrollRows(0, 512);
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (bg_scrolly + i) & 0x1ff, bg_scrollx + scroll[i]);
+			GenericTilemapSetScrollRow(0, (bg_scrolly + i) & 0x1ff, bg_scrollx + BURN_ENDIAN_SWAP_INT16(scroll[i]));
 		}
 	} else {
 		GenericTilemapSetScrollRows(0, 1);

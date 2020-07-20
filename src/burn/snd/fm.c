@@ -1863,6 +1863,20 @@ static void FMsave_state_channel(const char *name,int num,FM_CH *CH,int num_ch)
 			state_save_register_UINT32(state_name, num, "phasecount" , &SLOT->phase, 1);
 			state_save_register_UINT8 (state_name, num, "state"      , &SLOT->state, 1);
 			state_save_register_INT32 (state_name, num, "volume"     , &SLOT->volume, 1);
+
+			// must scan all dynamic registers of the channel - dink (July 20, 2020)
+			state_save_register_UINT32(state_name, num, "vol_out"    , &SLOT->vol_out, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sh_ar"   , &SLOT->eg_sh_ar, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sel_ar"  , &SLOT->eg_sel_ar, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sh_d1r"  , &SLOT->eg_sh_d1r, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sel_d1r" , &SLOT->eg_sel_d1r, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sh_d2r"  , &SLOT->eg_sh_d2r, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sel_d2r" , &SLOT->eg_sel_d2r, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sh_rr"   , &SLOT->eg_sh_rr, 1);
+			state_save_register_UINT8 (state_name, num, "eg_sel_rr"  , &SLOT->eg_sel_rr, 1);
+			state_save_register_UINT8 (state_name, num, "ssg"        , &SLOT->ssg, 1); // note: also set in postload
+			state_save_register_UINT8 (state_name, num, "ssgn"       , &SLOT->ssgn, 1);
+			state_save_register_UINT32(state_name, num, "key"        , &SLOT->key, 1);
 		}
 	}
 }

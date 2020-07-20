@@ -12414,7 +12414,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof99h	|  	| The King of Fighters '99 - Millennium Battle (NGH-2510| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99		|  	| The King of Fighters '99 - Millennium Battle (NGM-2510| 		| 1999	| SNK		| Neo Geo MVS	| 					|
 | kof99p	|  	| The King of Fighters '99 - Millennium Battle (prototyp| kof99		| 1999	| SNK		| Neo Geo MVS	| 					|
-| kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2017	| Yashional	| Neo Geo MVS	| 					|
+| kof99ae	|  	| The King of Fighters '99 Anniversary Edition (hack)	| kof99		| 2020-04-07| Yashional	| Neo Geo MVS	| 					|
 | kof99eur	|  	| The King of Fighters '99 Evolution Ultra Remix (Hack B| kof99		| 201?	| hack		| Neo Geo MVS	| 					|
 | kof99rp2f	|  	| The King of Fighters '99 Remix Pro V2.0 Final (Hack By| kof99		| 2006	| hack		| Neo Geo MVS	| 					|
 | kof99sr	|  	| The King of Fighters '99 Summer Revolution (Hack By FC| kof99		| 200?	| hack		| Neo Geo MVS	| 					|

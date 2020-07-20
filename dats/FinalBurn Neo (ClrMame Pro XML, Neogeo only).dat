@@ -17151,11 +17151,11 @@
 	</game>
 	<game name="kof99ae" cloneof="kof99" romof="kof99">
 		<description>The King of Fighters '99 Anniversary Edition (hack) [Hack]</description>
-		<year>2017</year>
+		<year>2020-04-07</year>
 		<manufacturer>Yashional</manufacturer>
-		<rom name="kof99ae_p1.bin" size="1048576" crc="3dad12db"/>
-		<rom name="kof99ae_p2.bin" size="4194304" crc="23193920"/>
-		<rom name="kof99ae_p3.bin" size="4194304" crc="e3847545"/>
+		<rom name="kof99ae_p1.bin" size="1048576" crc="4c63e81c"/>
+		<rom name="kof99ae_p2.bin" size="4194304" crc="f3f47f41"/>
+		<rom name="kof99ae_p3.bin" size="4194304" crc="bc85cf02"/>
 		<rom name="kof99ae_s1.bin" size="131072" crc="3c31ee43"/>
 		<rom name="kof99ae_c1.bin" size="8388608" crc="7eabea6c"/>
 		<rom name="kof99ae_c2.bin" size="8388608" crc="e5a5bc5c"/>
@@ -17166,9 +17166,9 @@
 		<rom name="kof99ae_c7.bin" size="8388608" crc="963c28ab"/>
 		<rom name="kof99ae_c8.bin" size="8388608" crc="43f1e92e"/>
 		<rom name="kof99ae_c9.bin" size="8388608" crc="86a3550d"/>
-		<rom name="kof99ae_c91.bin" size="8388608" crc="986bb897"/>
-		<rom name="kof99ae_c92.bin" size="8388608" crc="7fe785c2"/>
-		<rom name="kof99ae_c93.bin" size="8388608" crc="a7541483"/>
+		<rom name="kof99ae_c10.bin" size="8388608" crc="986bb897"/>
+		<rom name="kof99ae_c11.bin" size="8388608" crc="7fe785c2"/>
+		<rom name="kof99ae_c12.bin" size="8388608" crc="a7541483"/>
 		<rom name="kof99ae_m1.bin" size="131072" crc="f847e188"/>
 		<rom name="kof99ae_v1.bin" size="4194304" crc="ceaa3bae"/>
 		<rom name="kof99ae_v2.bin" size="4194304" crc="07d70650"/>

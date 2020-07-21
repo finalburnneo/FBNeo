@@ -2851,7 +2851,7 @@ struct BurnDriver BurnDrvMSX_aliensb = {
 };
 
 
-// Alfa Roid (Jpn)
+// Alpha Roid (Jpn)
 
 static struct BurnRomInfo MSX_aroidRomDesc[] = {
 	{ "alpha roid (japan).rom",	0x08000, 0x4ef7c4e7, BRF_PRG | BRF_ESS },
@@ -2862,16 +2862,16 @@ STD_ROM_FN(MSX_aroid)
 
 struct BurnDriver BurnDrvMSX_aroid = {
 	"msx_aroid", NULL, "msx_msx", NULL, "1986",
-	"Alfa Roid (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	"Alpha Roid (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_HORSHOOT | GBF_VSFIGHT, 0,
 	MSXGetZipName, MSX_aroidRomInfo, MSX_aroidRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// Alfa Roid (Jpn, Alt)
+// Alpha Roid (Jpn, Alt)
 
 static struct BurnRomInfo MSX_aroidaRomDesc[] = {
 	{ "alpha roid (japan) (alt 1).rom",	0x08000, 0x716dc9af, BRF_PRG | BRF_ESS },
@@ -2882,9 +2882,9 @@ STD_ROM_FN(MSX_aroida)
 
 struct BurnDriver BurnDrvMSX_aroida = {
 	"msx_aroida", "msx_aroid", "msx_msx", NULL, "1986",
-	"Alfa Roid (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
+	"Alpha Roid (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_HORSHOOT | GBF_VSFIGHT, 0,
 	MSXGetZipName, MSX_aroidaRomInfo, MSX_aroidaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -25796,26 +25796,6 @@ struct BurnDriver BurnDrvMSX_alcazar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_alcazarRomInfo, MSX_alcazarRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// AlphaRoid (Jpn)
-
-static struct BurnRomInfo MSX_alpharoidRomDesc[] = {
-	{ "alpharoid (1986)(pony canyon).rom",	32768, 0x4ef7c4e7, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_alpharoid, MSX_alpharoid, msx_msx)
-STD_ROM_FN(MSX_alpharoid)
-
-struct BurnDriver BurnDrvMSX_alpharoid = {
-	"msx_alpharoid", NULL, "msx_msx", NULL, "1986",
-	"AlphaRoid (Jpn)\0", NULL, "Pony Canyon", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_HORSHOOT | GBF_VSFIGHT, 0,
-	MSXGetZipName, MSX_alpharoidRomInfo, MSX_alpharoidRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

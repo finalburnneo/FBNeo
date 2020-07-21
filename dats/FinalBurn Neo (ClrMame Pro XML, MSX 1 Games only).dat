@@ -202,6 +202,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="advenkid" romof="msx">
+		<description>Adventure Kid</description>
+		<year>1993</year>
+		<manufacturer>Open</manufacturer>
+		<rom name="Adventure_Kid (ASCII 16).rom" size="131072" crc="cd8b5dd6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="aburner" romof="msx">
 		<description>After Burner (Euro)</description>
 		<year>1988</year>
@@ -243,31 +253,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="alcazar" romof="msx">
+		<description>Alcazar</description>
+		<year>1985</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="alcazar - the Forgotten fortress (1985)(activision).rom" size="16384" crc="3ee454b0"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="alehop" romof="msx">
 		<description>Ale Hop! (Spa)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Ale Hop! (1988)(Topo Soft)(ES).rom" size="131072" crc="c2694922"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<driver status="good"/>
-	</game>
-	<game name="aroid" romof="msx">
-		<description>Alfa Roid (Jpn)</description>
-		<year>1986</year>
-		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="alpha roid (japan).rom" size="32768" crc="4ef7c4e7"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<driver status="good"/>
-	</game>
-	<game name="aroida" cloneof="aroid" romof="aroid">
-		<description>Alfa Roid (Jpn, Alt)</description>
-		<year>1986</year>
-		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="alpha roid (japan) (alt 1).rom" size="32768" crc="716dc9af"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -358,6 +358,26 @@
 		<year>1984</year>
 		<manufacturer>Aackosoft</manufacturer>
 		<rom name="Alpha Blaster (1984)(Aackosoft)(NL).rom" size="65536" crc="f59ce3f6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="aroid" romof="msx">
+		<description>Alpha Roid (Jpn)</description>
+		<year>1986</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="alpha roid (japan).rom" size="32768" crc="4ef7c4e7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="aroida" cloneof="aroid" romof="aroid">
+		<description>Alpha Roid (Jpn, Alt)</description>
+		<year>1986</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="alpha roid (japan) (alt 1).rom" size="32768" crc="716dc9af"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2711,6 +2731,16 @@
 		<year>198?</year>
 		<manufacturer>Clover</manufacturer>
 		<rom name="crusader.rom" size="32768" crc="73f3c7e2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="cuncuna" romof="msx">
+		<description>Cuncuna (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Christian Cordova</manufacturer>
+		<rom name="cuncuna (2020)(christian cordova).rom" size="16384" crc="de336286"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -5405,6 +5435,16 @@
 		<year>198?</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="jpwinkle.rom" size="32768" crc="1bc4132b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="jaasta" romof="msx">
+		<description>Jaasta (HB, v1.2) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Uninteresting</manufacturer>
+		<rom name="jaasta (2020)(uninteresting).rom" size="32768" crc="bfd87e37"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9553,6 +9593,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="snowboard" romof="msx">
+		<description>Snowboarding (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Revelo</manufacturer>
+		<rom name="snowboarding (2020)(revelo).rom" size="49152" crc="30ceba26"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="sofia" romof="msx">
 		<description>Sofia (Jpn)</description>
 		<year>1988</year>
@@ -11720,16 +11770,6 @@
 		<year>1986</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="wonder boy (japan).rom" size="32768" crc="892266ca"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<driver status="good"/>
-	</game>
-	<game name="wondkid" romof="msx">
-		<description>Wonder Kid. Adventure Kid.</description>
-		<year>1993</year>
-		<manufacturer>Open</manufacturer>
-		<rom name="Adventure_Kid (ASCII 16).rom" size="131072" crc="cd8b5dd6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

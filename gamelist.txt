@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14300 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14304 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -204,6 +204,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_advenislivj|  	| Adventure Island IV (Japan)				| nes_advenisliv| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_advenisliv|  	| Adventure Island IV (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_advislnd	|  	| Adventure Island					| 		| 1991	| Hudson	| PC Engine	| 					|
+| msx_advenkid	|  	| Adventure Kid						| 		| 1993	| Open		| MSX		| 					|
 | hatena	|  	| Adventure Quiz 2 - Hatena? no Daibouken (Japan 900228)| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | cworld2j	|  	| Adventure Quiz Capcom World 2 (920611 Japan)		| 		| 1992	| Capcom	| CPS1		| 					|
 | cworld2ja	|  	| Adventure Quiz Capcom World 2 (Japan 920611, B-Board 9| cworld2j	| 1992	| Capcom	| CPS1		| 					|
@@ -318,6 +319,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_albatros	|  	| Albatross (Jpn)					| 		| 1986	| Nihon Telenet	| MSX		| 					|
 | msx_albatrosa	|  	| Albatross (Jpn, Alt)					| msx_albatros	| 1986	| Nihon Telenet	| MSX		| 					|
 | cv_alcazar	|  	| Alcazar: The Forgotten Fortress			| 		| 1985	| Telegames	| ColecoVision	| 					|
+| msx_alcazar	|  	| Alcazar						| 		| 1985	| Activision	| MSX		| 					|
 | alcon		|  	| Alcon (US)						| 		| 1986	| Toaplan / Tait| Miscellaneous	| 					|
 | sgx_aldynes	|  	| Aldynes						| 		| 1991	| Hudson	| SuperGrafx	| 					|
 | msx_alehop	|  	| Ale Hop! (Spa)					| 		| 1988	| Topo Soft	| MSX		| 					|
@@ -343,8 +345,6 @@ This list contains all games supported by FinalBurn Neo.
 | alexkidd1	|  	| Alex Kidd: The Lost Stars (set 1, FD1089A 317-unknown)| alexkidd	| 1986	| Sega		| System 16A	| 					|
 | alexkidd	|  	| Alex Kidd: The Lost Stars (set 2, unprotected)	| 		| 1986	| Sega		| System 16A	| 					|
 | sms_alf	|  	| Alf (USA, Bra)					| 		| 1989	| Sega		| Sega Master Sy| 					|
-| msx_aroid	|  	| Alfa Roid (Jpn)					| 		| 1986	| Pony Canyon	| MSX		| 					|
-| msx_aroida	|  	| Alfa Roid (Jpn, Alt)					| msx_aroid	| 1986	| Pony Canyon	| MSX		| 					|
 | nes_alfommagla|  	| Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_alfonsarcadv|  	| Alfonzo's Arctic Adventure (HB)			| 		| 2018	| Spoony Bard Pr| Miscellaneous	| 					|
 | nes_alfredchicken|  	| Alfred Chicken (USA)					| 		| 1994	| Mindscape	| Miscellaneous	| 					|
@@ -429,6 +429,8 @@ This list contains all games supported by FinalBurn Neo.
 | alphamis	|  	| Alpha Mission						| aso		| 1985	| SNK		| Miscellaneous	| 					|
 | alphaone	|  	| Alpha One (prototype, 3 lives)			| mhavoc	| 1983	| Atari		| Miscellaneous	| 					|
 | alphaonea	|  	| Alpha One (prototype, 5 lives)			| mhavoc	| 1983	| Atari		| Miscellaneous	| 					|
+| msx_aroid	|  	| Alpha Roid (Jpn)					| 		| 1986	| Pony Canyon	| MSX		| 					|
+| msx_aroida	|  	| Alpha Roid (Jpn, Alt)					| msx_aroid	| 1986	| Pony Canyon	| MSX		| 					|
 | cv_alphazoo	|  	| Alphabet Zoo						| 		| 1984	| Spinnaker Soft| ColecoVision	| 					|
 | alpine	|  	| Alpine Ski (set 1)					| 		| 1982	| Taito Corporat| Taito SJ Syste| 					|
 | alpinea	|  	| Alpine Ski (set 2)					| alpine	| 1982	| Taito Corporat| Taito SJ Syste| 					|
@@ -2524,6 +2526,7 @@ This list contains all games supported by FinalBurn Neo.
 | cubybop	|  	| Cuby Bop (location test)				| 		| 199?	| Hot-B Co., Ltd| Taito L System| 					|
 | cuebrickj	|  	| Cue Brick (Japan)					| cuebrick	| 1989	| Konami	| GX903		| 					|
 | cuebrick	|  	| Cue Brick (World, version D)				| 		| 1989	| Konami	| GX903		| 					|
+| msx_cuncuna	|  	| Cuncuna (HB)						| 		| 2020	| Christian Cord| MSX		| 					|
 | md_curse	|  	| Curse (Jpn)						| 		| 1989	| Micronet	| Sega Megadrive| 					|
 | curvebal	|  	| Curve Ball						| 		| 1984	| Mylstar	| Miscellaneous	| 					|
 | md_custodian	|  	| Custodian MD (HB)					| 		| 2018	| Piko Interacti| Sega Megadrive| 					|
@@ -5483,6 +5486,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_jleawingoa|  	| J.League Winning Goal (Japan)				| 		| 1994	| Electronic Art| Miscellaneous	| 					|
 | msx_jpwinkle	|  	| J.P. Winkle (Jpn)					| 		| 1986	| ASCII ~ MSX Ma| MSX		| 					|
 | msx_jpwinklek	|  	| J.P. Winkle (Kor)					| msx_jpwinkle	| 198?	| Zemina	| MSX		| 					|
+| msx_jaasta	|  	| Jaasta (HB, v1.2)					| 		| 2020	| Uninteresting	| MSX		| 					|
 | nes_jacknicgre18homachg|  	| Jack Nicklaus' Greatest 18 Holes of Major Championship| 	| 1990	| Konami	| Miscellaneous	| 					|
 | pce_nicklaus	|  	| Jack Nicklaus' Greatest 18 Holes of Major Championship| 		| 1989	| Victor Interac| PC Engine	| 					|
 | md_nicklaus	|  	| Jack Nicklaus' Power Challenge Golf (Euro, USA)	| 		| 1993	| Accolade	| Sega Megadrive| 					|
@@ -10419,6 +10423,7 @@ This list contains all games supported by FinalBurn Neo.
 | snowbro2ny	|  	| Snow Bros. 2 - with new elves (Nyanko)		| snowbro2	| 1994	| [Toaplan] Nyan| Toaplan GP9001| 					|
 | nes_snowbrothers|  	| Snow Brothers (USA)					| 		| 1991	| Capcom	| Miscellaneous	| 					|
 | snowbro3	|  	| Snow Brothers 3 - Magical Adventure			| 		| 2002	| bootleg	| Kaneko Pandora| 					|
+| msx_snowboard	|  	| Snowboarding (HB)					| 		| 2020	| Revelo	| MSX		| 					|
 | nes_soccer	|  	| Soccer (USA)						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | socbrawlh	|  	| Soccer Brawl (NGH-031)				| socbrawl	| 1991	| SNK		| Neo Geo MVS	| 					|
 | socbrawl	|  	| Soccer Brawl (NGM-031)				| 		| 1991	| SNK		| Neo Geo MVS	| 					|
@@ -13734,7 +13739,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_wboymw	|  	| Wonder Boy in Monster World (Euro, USA)		| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_wboy5	|  	| Wonder Boy V - Monster World III (Jpn, Kor)		| md_wboymw	| 1991	| Sega		| Sega Megadrive| 					|
 | msx_takameij	|  	| Wonder Boy. Takahashi Meijin no Boukenjima (Jpn)	| 		| 1986	| Hudson Soft	| MSX		| 					|
-| msx_wondkid	|  	| Wonder Kid. Adventure Kid.				| 		| 1993	| Open		| MSX		| 					|
 | wondl96	|  	| Wonder League '96 (Korea)				| 		| 1995	| SemiCom	| Miscellaneous	| 					|
 | wlstar	|  	| Wonder League Star - Sok-Magicball Fighting (Korea)	| 		| 1995	| Mijin		| Miscellaneous	| 					|
 | md_wondlib	|   NW	| Wonder Library (Jpn)					| 		| 199?	| Victor	| Sega Megadrive| 					|

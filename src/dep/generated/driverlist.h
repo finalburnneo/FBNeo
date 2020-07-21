@@ -206,6 +206,7 @@ DRV		BurnDrvnes_advenislii;
 DRV		BurnDrvnes_advenislivj;
 DRV		BurnDrvnes_advenisliv;
 DRV		BurnDrvpce_advislnd;
+DRV		BurnDrvMSX_advenkid;
 DRV		BurnDrvHatena;
 DRV		BurnDrvCpsCworld2j;
 DRV		BurnDrvCpsCworld2ja;
@@ -322,6 +323,7 @@ DRV		BurnDrvmd_aladdin2;
 DRV		BurnDrvMSX_albatros;
 DRV		BurnDrvMSX_albatrosa;
 DRV		BurnDrvcv_alcazar;
+DRV		BurnDrvMSX_alcazar;
 DRV		BurnDrvAlcon;
 DRV		BurnDrvsgx_aldynes;
 DRV		BurnDrvMSX_alehop;
@@ -347,8 +349,6 @@ DRV		BurnDrvsms_alexkiddj;
 DRV		BurnDrvAlexkidd1;
 DRV		BurnDrvAlexkidd;
 DRV		BurnDrvsms_alf;
-DRV		BurnDrvMSX_aroid;
-DRV		BurnDrvMSX_aroida;
 DRV		BurnDrvnes_alfommagla;
 DRV		BurnDrvnes_alfonsarcadv;
 DRV		BurnDrvnes_alfredchicken;
@@ -435,6 +435,8 @@ DRV		BurnDrvAlpham2p;
 DRV		BurnDrvAlphamis;
 DRV		BurnDrvAlphaone;
 DRV		BurnDrvAlphaonea;
+DRV		BurnDrvMSX_aroid;
+DRV		BurnDrvMSX_aroida;
 DRV		BurnDrvcv_alphazoo;
 DRV		BurnDrvAlpine;
 DRV		BurnDrvAlpinea;
@@ -2564,6 +2566,7 @@ DRV		BurnDrvnes_crystalis;
 DRV		BurnDrvCubybop;
 DRV		BurnDrvCuebrckj;
 DRV		BurnDrvCuebrick;
+DRV		BurnDrvMSX_cuncuna;
 DRV		BurnDrvmd_curse;
 DRV		BurnDrvCurvebal;
 DRV		BurnDrvmd_custodian;
@@ -5579,6 +5582,7 @@ DRV		BurnDrvgg_jleague;
 DRV		BurnDrvnes_jleawingoa;
 DRV		BurnDrvMSX_jpwinkle;
 DRV		BurnDrvMSX_jpwinklek;
+DRV		BurnDrvMSX_jaasta;
 DRV		BurnDrvnes_jacknicgre18homachg;
 DRV		BurnDrvpce_nicklaus;
 DRV		BurnDrvmd_nicklaus;
@@ -10605,6 +10609,7 @@ DRV		BurnDrvSnowbro2;
 DRV		BurnDrvSnowbro2ny;
 DRV		BurnDrvnes_snowbrothers;
 DRV		BurnDrvSnowbro3;
+DRV		BurnDrvMSX_snowboard;
 DRV		BurnDrvnes_soccer;
 DRV		BurnDrvSocbrawlh;
 DRV		BurnDrvSocbrawl;
@@ -13978,7 +13983,6 @@ DRV		BurnDrvsms_wboymwldp;
 DRV		BurnDrvmd_wboymw;
 DRV		BurnDrvmd_wboy5;
 DRV		BurnDrvMSX_takameij;
-DRV		BurnDrvMSX_wondkid;
 DRV		BurnDrvWondl96;
 DRV		BurnDrvWlstar;
 DRV		BurnDrvmd_wondlib;
@@ -14773,6 +14777,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_advenislivj,	// Adventure Island IV (Japan)
 	&BurnDrvnes_advenisliv,		// Adventure Island IV (T-Eng)
 	&BurnDrvpce_advislnd,		// Adventure Island
+	&BurnDrvMSX_advenkid,		// Adventure Kid
 	&BurnDrvHatena,				// Adventure Quiz 2 - Hatena? no Daibouken (Japan 900228)
 	&BurnDrvCpsCworld2j,		// Adventure Quiz Capcom World 2 (920611 Japan)
 	&BurnDrvCpsCworld2ja,		// Adventure Quiz Capcom World 2 (Japan 920611, B-Board 90629B-3, no battery)
@@ -14889,6 +14894,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_albatros,		// Albatross (Jpn)
 	&BurnDrvMSX_albatrosa,		// Albatross (Jpn, Alt)
 	&BurnDrvcv_alcazar,			// Alcazar: The Forgotten Fortress
+	&BurnDrvMSX_alcazar,		// Alcazar
 	&BurnDrvAlcon,				// Alcon (US)
 	&BurnDrvsgx_aldynes,		// Aldynes
 	&BurnDrvMSX_alehop,			// Ale Hop! (Spa)
@@ -14914,8 +14920,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAlexkidd1,			// Alex Kidd: The Lost Stars (set 1, FD1089A 317-unknown)
 	&BurnDrvAlexkidd,			// Alex Kidd: The Lost Stars (set 2, unprotected)
 	&BurnDrvsms_alf,			// Alf (USA, Bra)
-	&BurnDrvMSX_aroid,			// Alfa Roid (Jpn)
-	&BurnDrvMSX_aroida,			// Alfa Roid (Jpn, Alt)
 	&BurnDrvnes_alfommagla,		// Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)
 	&BurnDrvnes_alfonsarcadv,	// Alfonzo's Arctic Adventure (HB)
 	&BurnDrvnes_alfredchicken,	// Alfred Chicken (USA)
@@ -15002,6 +15006,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAlphamis,			// Alpha Mission
 	&BurnDrvAlphaone,			// Alpha One (prototype, 3 lives)
 	&BurnDrvAlphaonea,			// Alpha One (prototype, 5 lives)
+	&BurnDrvMSX_aroid,			// Alpha Roid (Jpn)
+	&BurnDrvMSX_aroida,			// Alpha Roid (Jpn, Alt)
 	&BurnDrvcv_alphazoo,		// Alphabet Zoo
 	&BurnDrvAlpine,				// Alpine Ski (set 1)
 	&BurnDrvAlpinea,			// Alpine Ski (set 2)
@@ -17131,6 +17137,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCubybop,			// Cuby Bop (location test)
 	&BurnDrvCuebrckj,			// Cue Brick (Japan)
 	&BurnDrvCuebrick,			// Cue Brick (World, version D)
+	&BurnDrvMSX_cuncuna,		// Cuncuna (HB)
 	&BurnDrvmd_curse,			// Curse (Jpn)
 	&BurnDrvCurvebal,			// Curve Ball
 	&BurnDrvmd_custodian,		// Custodian MD (HB)
@@ -20146,6 +20153,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_jleawingoa,		// J.League Winning Goal (Japan)
 	&BurnDrvMSX_jpwinkle,		// J.P. Winkle (Jpn)
 	&BurnDrvMSX_jpwinklek,		// J.P. Winkle (Kor)
+	&BurnDrvMSX_jaasta,			// Jaasta (HB, v1.2)
 	&BurnDrvnes_jacknicgre18homachg,// Jack Nicklaus' Greatest 18 Holes of Major Championship Golf (USA)
 	&BurnDrvpce_nicklaus,		// Jack Nicklaus' Greatest 18 Holes of Major Championship Golf
 	&BurnDrvmd_nicklaus,		// Jack Nicklaus' Power Challenge Golf (Euro, USA)
@@ -25172,6 +25180,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnowbro2ny,			// Snow Bros. 2 - with new elves (Nyanko)
 	&BurnDrvnes_snowbrothers,	// Snow Brothers (USA)
 	&BurnDrvSnowbro3,			// Snow Brothers 3 - Magical Adventure
+	&BurnDrvMSX_snowboard,		// Snowboarding (HB)
 	&BurnDrvnes_soccer,			// Soccer (USA)
 	&BurnDrvSocbrawlh,			// Soccer Brawl (NGH-031)
 	&BurnDrvSocbrawl,			// Soccer Brawl (NGM-031)
@@ -28545,7 +28554,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wboymw,			// Wonder Boy in Monster World (Euro, USA)
 	&BurnDrvmd_wboy5,			// Wonder Boy V - Monster World III (Jpn, Kor)
 	&BurnDrvMSX_takameij,		// Wonder Boy. Takahashi Meijin no Boukenjima (Jpn)
-	&BurnDrvMSX_wondkid,		// Wonder Kid. Adventure Kid.
 	&BurnDrvWondl96,			// Wonder League '96 (Korea)
 	&BurnDrvWlstar,				// Wonder League Star - Sok-Magicball Fighting (Korea)
 	&BurnDrvmd_wondlib,			// Wonder Library (Jpn) [no comment, NOT WORKING]

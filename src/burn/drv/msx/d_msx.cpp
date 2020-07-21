@@ -2851,7 +2851,7 @@ struct BurnDriver BurnDrvMSX_aliensb = {
 };
 
 
-// Alfa Roid (Jpn)
+// Alpha Roid (Jpn)
 
 static struct BurnRomInfo MSX_aroidRomDesc[] = {
 	{ "alpha roid (japan).rom",	0x08000, 0x4ef7c4e7, BRF_PRG | BRF_ESS },
@@ -2862,16 +2862,16 @@ STD_ROM_FN(MSX_aroid)
 
 struct BurnDriver BurnDrvMSX_aroid = {
 	"msx_aroid", NULL, "msx_msx", NULL, "1986",
-	"Alfa Roid (Jpn)\0", NULL, "Pony Canyon", "MSX",
+	"Alpha Roid (Jpn)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_HORSHOOT | GBF_VSFIGHT, 0,
 	MSXGetZipName, MSX_aroidRomInfo, MSX_aroidRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
 
-// Alfa Roid (Jpn, Alt)
+// Alpha Roid (Jpn, Alt)
 
 static struct BurnRomInfo MSX_aroidaRomDesc[] = {
 	{ "alpha roid (japan) (alt 1).rom",	0x08000, 0x716dc9af, BRF_PRG | BRF_ESS },
@@ -2882,9 +2882,9 @@ STD_ROM_FN(MSX_aroida)
 
 struct BurnDriver BurnDrvMSX_aroida = {
 	"msx_aroida", "msx_aroid", "msx_msx", NULL, "1986",
-	"Alfa Roid (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
+	"Alpha Roid (Jpn, Alt)\0", NULL, "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_HORSHOOT | GBF_VSFIGHT, 0,
 	MSXGetZipName, MSX_aroidaRomInfo, MSX_aroidaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -18578,21 +18578,21 @@ struct BurnDriver BurnDrvMSX_univunk = {
 	272, 228, 4, 3
 };
 
-// Wonder Kid. Adventure Kid.
+// Adventure Kid (1993 Open)
 
-static struct BurnRomInfo MSX_wondkidRomDesc[] = {
+static struct BurnRomInfo MSX_advenkidRomDesc[] = {
 	{ "Adventure_Kid (ASCII 16).rom",	0x20000, 0xcd8b5dd6, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_wondkid, MSX_wondkid, msx_msx)
-STD_ROM_FN(MSX_wondkid)
+STDROMPICKEXT(MSX_advenkid, MSX_advenkid, msx_msx)
+STD_ROM_FN(MSX_advenkid)
 
-struct BurnDriver BurnDrvMSX_wondkid = {
-	"msx_wondkid", NULL, "msx_msx", NULL, "1993",
-	"Wonder Kid. Adventure Kid.\0", NULL, "Open", "MSX",
+struct BurnDriver BurnDrvMSX_advenkid = {
+	"msx_advenkid", NULL, "msx_msx", NULL, "1993",
+	"Adventure Kid\0", NULL, "Open", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
-	MSXGetZipName, MSX_wondkidRomInfo, MSX_wondkidRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_advenkidRomInfo, MSX_advenkidRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -25780,3 +25780,82 @@ struct BurnDriver BurnDrvMSX_stupmart = {
 	272, 228, 4, 3
 };
 
+
+// Alcazar
+
+static struct BurnRomInfo MSX_alcazarRomDesc[] = {
+	{ "alcazar - the Forgotten fortress (1985)(activision).rom",	16384, 0x3ee454b0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_alcazar, MSX_alcazar, msx_msx)
+STD_ROM_FN(MSX_alcazar)
+
+struct BurnDriver BurnDrvMSX_alcazar = {
+	"msx_alcazar", NULL, "msx_msx", NULL, "1985",
+	"Alcazar\0", NULL, "Activision", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_alcazarRomInfo, MSX_alcazarRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Cuncuna (HB)
+
+static struct BurnRomInfo MSX_cuncunaRomDesc[] = {
+	{ "cuncuna (2020)(christian cordova).rom",	16384, 0xde336286, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_cuncuna, MSX_cuncuna, msx_msx)
+STD_ROM_FN(MSX_cuncuna)
+
+struct BurnDriver BurnDrvMSX_cuncuna = {
+	"msx_cuncuna", NULL, "msx_msx", NULL, "2020",
+	"Cuncuna (HB)\0", NULL, "Christian Cordova", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	MSXGetZipName, MSX_cuncunaRomInfo, MSX_cuncunaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Jaasta (HB, v1.2)
+
+static struct BurnRomInfo MSX_jaastaRomDesc[] = {
+	{ "jaasta (2020)(uninteresting).rom",	32768, 0xbfd87e37, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jaasta, MSX_jaasta, msx_msx)
+STD_ROM_FN(MSX_jaasta)
+
+struct BurnDriver BurnDrvMSX_jaasta = {
+	"msx_jaasta", NULL, "msx_msx", NULL, "2020",
+	"Jaasta (HB, v1.2)\0", NULL, "Uninteresting", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_jaastaRomInfo, MSX_jaastaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Snowboarding (HB)
+
+static struct BurnRomInfo MSX_snowboardRomDesc[] = {
+	{ "snowboarding (2020)(revelo).rom",	49152, 0x30ceba26, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_snowboard, MSX_snowboard, msx_msx)
+STD_ROM_FN(MSX_snowboard)
+
+struct BurnDriver BurnDrvMSX_snowboard = {
+	"msx_snowboard", NULL, "msx_msx", NULL, "2020",
+	"Snowboarding (HB)\0", NULL, "Revelo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_snowboardRomInfo, MSX_snowboardRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

@@ -275,24 +275,24 @@ static tilemap_scan( _32x32 )
 
 static tilemap_callback( fg )
 {
-	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 0)));
-	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 2)));
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[0] + offs * 4 + 2)));
 
 	TILE_SET_INFO((offs & 0x20) ? 4 : 0, code, color, 0);
 }
 
 static tilemap_callback ( bg0 )
 {
-	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 0)));
-	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 2)));
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[1] + offs * 4 + 2)));
 
 	TILE_SET_INFO(1, code, color, TILE_FLIPYX(color >> 5));
 }
 
 static tilemap_callback ( bg1 )
 {
-	INT32 code  = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 0)));
-	INT32 color = BURN_ENDIAN_SWAP_INT32(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 2)));
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 0)));
+	INT32 color = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[2] + offs * 4 + 2)));
 
 	TILE_SET_INFO(2, code, color, TILE_FLIPYX(color >> 5));
 }

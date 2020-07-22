@@ -4869,6 +4869,8 @@ static INT32 RbislandInit()
 	TaitoResetFunction = RbislandDoReset;
 	TaitoResetFunction();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -6306,7 +6308,7 @@ struct BurnDriver BurnDrvRbisland = {
 	"rbisland", NULL, "cchip", NULL, "1987",
 	"Rainbow Islands (new version)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandRomInfo, RbislandRomName, NULL, NULL, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
 	RbislandInit, TaitoMiscExit, TaitoMiscFrame, RbislandDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
@@ -6316,7 +6318,7 @@ struct BurnDriver BurnDrvRbislando = {
 	"rbislando", "rbisland", "cchip", NULL, "1987",
 	"Rainbow Islands (old version)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandoRomInfo, RbislandoRomName, NULL, NULL, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
 	RbislandInit, TaitoMiscExit, TaitoMiscFrame, RbislandDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
@@ -6326,7 +6328,7 @@ struct BurnDriver BurnDrvRbislande = {
 	"rbislande", NULL, "cchip", NULL, "1988",
 	"Rainbow Islands (Extra)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandeRomInfo, RbislandeRomName, NULL, NULL, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
 	RbislandInit, TaitoMiscExit, TaitoMiscFrame, RbislandDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3

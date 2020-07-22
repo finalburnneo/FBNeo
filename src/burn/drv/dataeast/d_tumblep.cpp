@@ -193,6 +193,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -540,7 +542,7 @@ struct BurnDriver BurnDrvTumblep = {
 	"tumblep", NULL, NULL, NULL, "1991",
 	"Tumble Pop (World)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepRomInfo, tumblepRomName, NULL, NULL, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -570,7 +572,7 @@ struct BurnDriver BurnDrvTumblepj = {
 	"tumblepj", "tumblep", NULL, NULL, "1991",
 	"Tumble Pop (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepjRomInfo, tumblepjRomName, NULL, NULL, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

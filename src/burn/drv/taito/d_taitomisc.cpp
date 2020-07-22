@@ -2483,6 +2483,8 @@ static INT32 OpwolfDoReset()
 	MSM5205ResetWrite(0, 1);
 	MSM5205ResetWrite(1, 1);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4868,8 +4870,6 @@ static INT32 RbislandInit()
 	// Reset the driver
 	TaitoResetFunction = RbislandDoReset;
 	TaitoResetFunction();
-
-	HiscoreReset();
 
 	return 0;
 }

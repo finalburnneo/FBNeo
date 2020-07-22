@@ -2467,6 +2467,8 @@ static INT32 RbislandDoReset()
 {
 	TaitoDoReset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2482,8 +2484,6 @@ static INT32 OpwolfDoReset()
 
 	MSM5205ResetWrite(0, 1);
 	MSM5205ResetWrite(1, 1);
-
-	HiscoreReset();
 
 	return 0;
 }

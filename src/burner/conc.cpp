@@ -65,8 +65,9 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 		nLine++;
 
 		nLen = _tcslen(szLine);
+
 		// Get rid of the linefeed at the end
-		while (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D) {
+		while ((nLen > 0) && (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D)) {
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}

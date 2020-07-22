@@ -7183,11 +7183,10 @@ struct BurnDriver BurnDrvkovytzyws = {
 
 // Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
 // Hacked by XIAOFAN
-// Last update 2020-07-07 (kov2pfwll_32m.u83)
-// GOTVG
+// Upgrade/GOTVG 20200720
 
 static struct BurnRomInfo kov2pfwllRomDesc[] = {
-	{ "kov2pfwll_32m.u8",				0x600000, 0x20bf5949, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "kov2pfwll_32m.u8",				0x600000, 0x46baca52, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "kov2pfwll_t1200.u21",			0x800000, 0x279a2f9e, 2 | BRF_GRA },			//  1 Tile data
 
@@ -7204,7 +7203,7 @@ static struct BurnRomInfo kov2pfwllRomDesc[] = {
 
 	{ "kov2pfwll_igs027a_china.bin",	0x004000, 0x06214503, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
-	{ "kov2pfwll_16m.u23",				0x200000, 0x444f1e66, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
+	{ "kov2pfwll_16m.u23",				0x200000, 0xa147c7f1, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
 
 STDROMPICKEXT(kov2pfwll, kov2pfwll, pgm)

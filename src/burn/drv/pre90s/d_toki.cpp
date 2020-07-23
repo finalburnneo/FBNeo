@@ -492,6 +492,8 @@ static INT32 DrvDoReset()
 		seibu_sound_reset();
 	}
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1475,7 +1477,7 @@ struct BurnDriver BurnDrvToki = {
 	"toki", NULL, NULL, NULL, "1989",
 	"Toki (World, set 1)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokiRomInfo, tokiRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1516,7 +1518,7 @@ struct BurnDriver BurnDrvTokia = {
 	"tokia", "toki", NULL, NULL, "1989",
 	"Toki (World, set 2)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokiaRomInfo, tokiaRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1557,7 +1559,7 @@ struct BurnDriver BurnDrvTokiu = {
 	"tokiu", "toki", NULL, NULL, "1989",
 	"Toki (US, set 1)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokiuRomInfo, tokiuRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1598,7 +1600,7 @@ struct BurnDriver BurnDrvTokiua = {
 	"tokiua", "toki", NULL, NULL, "1989",
 	"Toki (US, set 2)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokiuaRomInfo, tokiuaRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1651,7 +1653,7 @@ struct BurnDriver BurnDrvTokip = {
 	"tokip", "toki", NULL, NULL, "1989",
 	"Toki (US, prototype?)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokipRomInfo, tokipRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	TokipInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1692,7 +1694,7 @@ struct BurnDriver BurnDrvJuju = {
 	"juju", "toki", NULL, NULL, "1989",
 	"JuJu Densetsu (Japan)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujuRomInfo, jujuRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1749,7 +1751,7 @@ struct BurnDriver BurnDrvJujub = {
 	"jujub", "toki", NULL, NULL, "1989",
 	"JuJu Densetsu (Playmark bootleg)\0", NULL, "bootleg (Playmark)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujubRomInfo, jujubRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1866,7 +1868,7 @@ struct BurnDriver BurnDrvTokib = {
 	"tokib", "toki", NULL, NULL, "1989",
 	"Toki (bootleg)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokibRomInfo, tokibRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

@@ -6425,6 +6425,10 @@ static INT32 System1Scan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
 
+		if (IsSystem2 || Sys1UsePPI) {
+			ppi8255_scan();
+		}
+
 		SCAN_VAR(System1ScrollX);
 		SCAN_VAR(System1ScrollY);
 		SCAN_VAR(System1BgScrollX);

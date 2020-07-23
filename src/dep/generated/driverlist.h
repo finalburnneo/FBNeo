@@ -11369,6 +11369,7 @@ DRV		BurnDrvCpsSf2mdt;
 DRV		BurnDrvCpsSf2mdta;
 DRV		BurnDrvCpsSf2mdtb;
 DRV		BurnDrvCpsSf2mdtc;
+DRV		BurnDrvmd_sf2re;
 DRV		BurnDrvmd_sf2;
 DRV		BurnDrvmd_sf2ics;
 DRV		BurnDrvmd_sf2u;
@@ -25940,6 +25941,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2mdta,			// Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)
 	&BurnDrvCpsSf2mdtb,			// Street Fighter II' - Magic Delta Turbo (bootleg set 3 (with YM2151 + 2xMSM5205), 920313 etc)
 	&BurnDrvCpsSf2mdtc,			// Street Fighter II' - Magic Delta Turbo (bootleg set 4 (with YM2151 + 2xMSM5205), 920313 etc)
+	&BurnDrvmd_sf2re,			// Street Fighter II' - Remastered Edition (Hack)
 	&BurnDrvmd_sf2,				// Street Fighter II' - Special Champion Edition (Euro)
 	&BurnDrvmd_sf2ics,			// Street Fighter II' - Special Champion Edition (Hack, Color and Sound)
 	&BurnDrvmd_sf2u,			// Street Fighter II' - Special Champion Edition (USA)

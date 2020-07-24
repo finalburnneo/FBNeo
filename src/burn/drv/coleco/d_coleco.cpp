@@ -528,8 +528,8 @@ static INT32 DrvInit()
 	SN76489AInit(0, 3579545, 0);
     SN76496SetBuffered(ZetTotalCycles, 3579545);
 
-    AY8910Init(0, 3579545, 1); // SGM
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+    AY8910Init(0, 3579545 / 2, 1); // SGM
+	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
     AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	DrvDoReset();
@@ -5900,6 +5900,44 @@ struct BurnDriver BurnDrvcv_wonderboy = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_wonderboyRomInfo, cv_wonderboyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Donkey Kong SGM
+
+static struct BurnRomInfo cv_dkongsgmRomDesc[] = {
+    { "Donkey_Kong_SGM.rom",	0x20000, 0xb3e62471, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_dkongsgm, cv_dkongsgm, cv_coleco)
+STD_ROM_FN(cv_dkongsgm)
+
+struct BurnDriver BurnDrvcv_dkongsgm = {
+    "cv_dkongsgm", NULL, "cv_coleco", NULL, "2020",
+    "Donkey Kong (SGM)\0", "(SGM) - Published by Team Pixelboy", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_dkongsgmRomInfo, cv_dkongsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Donkey Kong Jr. SGM
+
+static struct BurnRomInfo cv_dkongjrsgmRomDesc[] = {
+    { "Donkey_Kong_Jr_SGM.rom",	0x20000, 0x644124f6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_dkongjrsgm, cv_dkongjrsgm, cv_coleco)
+STD_ROM_FN(cv_dkongjrsgm)
+
+struct BurnDriver BurnDrvcv_dkongjrsgm = {
+    "cv_dkongjrsgm", NULL, "cv_coleco", NULL, "2020",
+    "Donkey Kong Jr. (SGM)\0", "(SGM) - Published by Team Pixelboy", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_dkongjrsgmRomInfo, cv_dkongjrsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

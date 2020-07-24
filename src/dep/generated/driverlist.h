@@ -10544,8 +10544,9 @@ DRV		BurnDrvsms_slapshotp;
 DRV		BurnDrvSlapshtr;
 DRV		BurnDrvsms_slapshotb;
 DRV		BurnDrvsms_slapshota;
-DRV		BurnDrvSlapshot;
 DRV		BurnDrvsms_slapshot;
+DRV		BurnDrvSlapshotj;
+DRV		BurnDrvSlapshot;
 DRV		BurnDrvMSX_slapshot;
 DRV		BurnDrvmd_slaughtr;
 DRV		BurnDrvgg_slider;
@@ -25124,8 +25125,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSlapshtr,			// Slap Shooter
 	&BurnDrvsms_slapshotb,		// Slap Shot (Euro, v0)
 	&BurnDrvsms_slapshota,		// Slap Shot (Euro, v1)
-	&BurnDrvSlapshot,			// Slap Shot (Japan)
 	&BurnDrvsms_slapshot,		// Slap Shot (USA, v2)
+	&BurnDrvSlapshotj,			// Slap Shot (Ver 2.2 J)
+	&BurnDrvSlapshot,			// Slap Shot (Ver 3.0 O)
 	&BurnDrvMSX_slapshot,		// Slapshot (Euro)
 	&BurnDrvmd_slaughtr,		// Slaughter Sport (USA)
 	&BurnDrvgg_slider,			// Slider (Euro, USA)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14313 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14314 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10360,8 +10360,9 @@ This list contains all games supported by FinalBurn Neo.
 | slapshtr	|  	| Slap Shooter						| 		| 1986	| Sega		| System E	| 					|
 | sms_slapshotb	|  	| Slap Shot (Euro, v0)					| sms_slapshot	| 1989	| Sega		| Sega Master Sy| 					|
 | sms_slapshota	|  	| Slap Shot (Euro, v1)					| sms_slapshot	| 1990	| Sega		| Sega Master Sy| 					|
-| slapshot	|  	| Slap Shot (Japan)					| 		| 1994	| Taito Corporat| Taito Misc	| 					|
 | sms_slapshot	|  	| Slap Shot (USA, v2)					| 		| 1990	| Sega		| Sega Master Sy| 					|
+| slapshotj	|  	| Slap Shot (Ver 2.2 J)					| slapshot	| 1994	| Taito Corporat| Taito Misc	| 					|
+| slapshot	|  	| Slap Shot (Ver 3.0 O)					| 		| 1994	| Taito Corporat| Taito Misc	| 					|
 | msx_slapshot	|  	| Slapshot (Euro)					| 		| 1985	| Indescomp	| MSX		| 					|
 | md_slaughtr	|  	| Slaughter Sport (USA)					| 		| 1991	| Razorsoft	| Sega Megadrive| 					|
 | gg_slider	|  	| Slider (Euro, USA)					| 		| 1991	| Sega		| Sega Game Gear| 					|

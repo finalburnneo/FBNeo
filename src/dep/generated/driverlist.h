@@ -1487,6 +1487,7 @@ DRV		BurnDrvsms_dracula;
 DRV		BurnDrvgg_draculau;
 DRV		BurnDrvmd_draculau;
 DRV		BurnDrvnes_bramstosdra;
+DRV		BurnDrvmd_bravebtl;
 DRV		BurnDrvtg_bravoman;
 DRV		BurnDrvMSX_breakinj;
 DRV		BurnDrvpce_breakin;
@@ -3108,6 +3109,7 @@ DRV		BurnDrvDkongjo1;
 DRV		BurnDrvfds_donkeykong;
 DRV		BurnDrvDkongpac;
 DRV		BurnDrvDkongp;
+DRV		BurnDrvcv_dkongsgm;
 DRV		BurnDrvDkonghrd;
 DRV		BurnDrvDkong;
 DRV		BurnDrvDkongo;
@@ -3127,6 +3129,7 @@ DRV		BurnDrvDkongjrb;
 DRV		BurnDrvDkongjrj;
 DRV		BurnDrvfds_donkeykongjr;
 DRV		BurnDrvDkongjrm;
+DRV		BurnDrvcv_dkongjrsgm;
 DRV		BurnDrvnes_donkeykongjr;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvDkongjre;		// no comment [NOT WORKING]
@@ -7117,6 +7120,7 @@ DRV		BurnDrvpce_mesopot;
 DRV		BurnDrvMetafox;
 DRV		BurnDrvMetalbj;
 DRV		BurnDrvMetalb;
+DRV		BurnDrvmd_mb2277;
 DRV		BurnDrvMetlclsh;
 DRV		BurnDrvmd_metalfng;
 DRV		BurnDrvnes_metalfighter;
@@ -9080,6 +9084,7 @@ DRV		BurnDrvmd_ppersia2;
 DRV		BurnDrvcv_princessquest;
 DRV		BurnDrvMSX_princessquest;
 DRV		BurnDrvnes_princtominsalki;
+DRV		BurnDrvmd_pringles;
 //		BurnDrvngpc_ppaa01;		// no comment
 DRV		BurnDrvmd_par;
 DRV		BurnDrvmd_par2;
@@ -14297,6 +14302,8 @@ DRV		BurnDrvCpsXmvsfj;
 DRV		BurnDrvCpsXmvsfu;
 DRV		BurnDrvmd_xpertsp;
 DRV		BurnDrvmd_xperts;
+DRV		BurnDrvX2222o;
+DRV		BurnDrvX2222;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvXsleenab;		// no comment [NOT WORKING]
 DRV		BurnDrvXsleenaba;		// no comment
@@ -14364,6 +14371,7 @@ DRV		BurnDrvYesnoj;
 DRV		BurnSpecyiarkufu;
 DRV		BurnSpecyiarkufu_48;
 DRV		BurnDrvYieartf;
+DRV		BurnDrvmd_yiearkf;
 DRV		BurnDrvnes_yiearkungfu;
 DRV		BurnDrvMSX_yiear;
 DRV		BurnDrvMSX_yieara;
@@ -16059,6 +16067,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_draculau,		// Bram Stoker's Dracula (USA)
 	&BurnDrvmd_draculau,		// Bram Stoker's Dracula (USA)
 	&BurnDrvnes_bramstosdra,	// Bram Stoker's Dracula (USA)
+	&BurnDrvmd_bravebtl,		// Brave Battle Saga - Legend of the Magic Warrior (Ch)
 	&BurnDrvtg_bravoman,		// Bravoman
 	&BurnDrvMSX_breakinj,		// Break In (Jpn)
 	&BurnDrvpce_breakin,		// Break In
@@ -17680,6 +17689,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_donkeykong,		// Donkey Kong (Japan)
 	&BurnDrvDkongpac,			// Donkey Kong (Pacman Graphics)
 	&BurnDrvDkongp,				// Donkey Kong (Patched)
+	&BurnDrvcv_dkongsgm,		// Donkey Kong (SGM)
 	&BurnDrvDkonghrd,			// Donkey Kong (US set 1) with Hard kit
 	&BurnDrvDkong,				// Donkey Kong (US set 1)
 	&BurnDrvDkongo,				// Donkey Kong (US set 2)
@@ -17699,6 +17709,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongjrj,			// Donkey Kong Jr. (Japan)
 	&BurnDrvfds_donkeykongjr,	// Donkey Kong Jr. (Japan)
 	&BurnDrvDkongjrm,			// Donkey Kong Jr. (Moon Cresta hardware)
+	&BurnDrvcv_dkongjrsgm,		// Donkey Kong Jr. (SGM)
 	&BurnDrvnes_donkeykongjr,	// Donkey Kong Jr. (World) (Rev A)
 #if defined FBNEO_DEBUG
 	&BurnDrvDkongjre,			// Donkey Kong Junior (E Kit) [no comment, NOT WORKING]
@@ -21481,7 +21492,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMtlchampu1,			// Martial Champion (ver UAD)
 	&BurnDrvMtlchampu,			// Martial Champion (ver UAE)
 	&BurnDrvmartmastc102,		// Martial Masters (V102, 101, 101, China)
-	&BurnDrvmartmasttw,			// Martial Masters (V102, 101, 101, Taiwan) [no comment, NOT WORKING]
+	&BurnDrvmartmasttw,			// Martial Masters (V102, 101, 101, Taiwan)
 	&BurnDrvmartmastc103,		// Martial Masters (V103, 102, 101, China)
 	&BurnDrvmartmastc,			// Martial Masters (V104, 102, 101, China)
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
@@ -21689,6 +21700,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetafox,			// Meta Fox
 	&BurnDrvMetalbj,			// Metal Black (Japan)
 	&BurnDrvMetalb,				// Metal Black (World)
+	&BurnDrvmd_mb2277,			// Metal Blast 2277 (HB)
 	&BurnDrvMetlclsh,			// Metal Clash (Japan)
 	&BurnDrvmd_metalfng,		// Metal Fangs (Jpn)
 	&BurnDrvnes_metalfighter,	// Metal Fighter (Asia) (Sachen) (Unl)
@@ -23309,7 +23321,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105)
-	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1)
+	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1) [Sound issues, video issues, NOT WORKING]
 	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan)
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan)
 	&BurnDrvPhozon,				// Phozon (Japan)
@@ -23652,6 +23664,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_princessquest,	// Princess Quest (HB)
 	&BurnDrvMSX_princessquest,	// Princess Quest (HB)
 	&BurnDrvnes_princtominsalki,// Princess Tomato in Salad Kingdom (USA)
+	&BurnDrvmd_pringles,		// Pringles the Game (HB)
 //	&BurnDrvngpc_ppaa01,		// Prize Game - PP-AA01 Pusher Program (Jpn) [no comment]
 	&BurnDrvmd_par,				// Pro Action Replay (Euro)
 	&BurnDrvmd_par2,			// Pro Action Replay 2 (Euro)
@@ -28869,6 +28882,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsXmvsfu,			// X-Men vs Street Fighter (961023 USA)
 	&BurnDrvmd_xpertsp,			// X-perts (Prototype)
 	&BurnDrvmd_xperts,			// X-perts (USA)
+	&BurnDrvX2222o,				// X2222 (5-level prototype)
+	&BurnDrvX2222,				// X2222 (final debug?)
 #if defined FBNEO_DEBUG
 	&BurnDrvXsleenab,			// Xain'd Sleena (bootleg) [no comment, NOT WORKING]
 	&BurnDrvXsleenaba,			// Xain'd Sleena (bootleg, bugfixed) [no comment]
@@ -28936,6 +28951,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecyiarkufu,			// Yie Ar Kung-Fu (128K)
 	&BurnSpecyiarkufu_48,		// Yie Ar Kung-Fu (48K)
 	&BurnDrvYieartf,			// Yie Ar Kung-Fu (GX361 conversion)
+	&BurnDrvmd_yiearkf,			// Yie Ar Kung-Fu (HB)
 	&BurnDrvnes_yiearkungfu,	// Yie Ar Kung-Fu (Japan) (Rev 1.4)
 	&BurnDrvMSX_yiear,			// Yie Ar Kung-Fu (Jpn)
 	&BurnDrvMSX_yieara,			// Yie Ar Kung-Fu (Jpn, Alt)

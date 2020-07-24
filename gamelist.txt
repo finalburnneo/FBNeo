@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14305 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14313 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1467,6 +1467,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_draculau	|  	| Bram Stoker's Dracula (USA)				| gg_dracula	| 1992	| Sony Imagesoft| Sega Game Gear| 					|
 | md_draculau	|  	| Bram Stoker's Dracula (USA)				| md_dracula	| 1993	| Sony Imagesoft| Sega Megadrive| 					|
 | nes_bramstosdra|  	| Bram Stoker's Dracula (USA)				| 		| 1993	| Sony (CSG) Ima| Miscellaneous	| 					|
+| md_bravebtl	|  	| Brave Battle Saga - Legend of the Magic Warrior (Ch)	| 		| 1996	| <unlicensed> C| Sega Megadrive| Piko Int. English Translation 2017	|
 | tg_bravoman	|  	| Bravoman						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | msx_breakinj	|  	| Break In (Jpn)					| 		| 1987	| Jaleco	| MSX		| 					|
 | pce_breakin	|  	| Break In						| 		| 1989	| Naxat		| PC Engine	| 					|
@@ -3058,6 +3059,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_donkeykong|  	| Donkey Kong (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | dkongpac	|  	| Donkey Kong (Pacman Graphics)				| dkong		| 2001	| Hack (Tim Appl| Miscellaneous	| 					|
 | dkongp	|  	| Donkey Kong (Patched)					| dkong		| 2007	| Hack (Don Hodg| Miscellaneous	| 					|
+| cv_dkongsgm	|  	| Donkey Kong (SGM)					| 		| 2020	| Nintendo	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | dkonghrd	|  	| Donkey Kong (US set 1) with Hard kit			| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
 | dkong		|  	| Donkey Kong (US set 1)				| 		| 1981	| Nintendo of Am| Miscellaneous	| 					|
 | dkongo	|  	| Donkey Kong (US set 2)				| dkong		| 1981	| Nintendo	| Miscellaneous	| 					|
@@ -3077,6 +3079,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkongjrj	|  	| Donkey Kong Jr. (Japan)				| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
 | fds_donkeykongjr|  	| Donkey Kong Jr. (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | dkongjrm	|  	| Donkey Kong Jr. (Moon Cresta hardware)		| dkongjr	| 1982	| bootleg	| Galaxian	| Bad Colours				|
+| cv_dkongjrsgm	|  	| Donkey Kong Jr. (SGM)					| 		| 2020	| Nintendo	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | nes_donkeykongjr|  	| Donkey Kong Jr. (World) (Rev A)			| 		| 1983	| Nintendo	| Miscellaneous	| 					|
 | dkongjre	| D NW	| Donkey Kong Junior (E Kit)				| dkongjr	| 1982	| Nintendo of Am| Miscellaneous	| 					|
 | dkongjnrj	|  	| Donkey Kong Junior (Japan?)				| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
@@ -6789,7 +6792,7 @@ This list contains all games supported by FinalBurn Neo.
 | mtlchampu1	|  	| Martial Champion (ver UAD)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu	|  	| Martial Champion (ver UAE)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | martmastc102	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
-| martmasttw	|   NW	| Martial Masters (V102, 101, 101, Taiwan)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmasttw	|  	| Martial Masters (V102, 101, 101, Taiwan)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmastc103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmastc	|  	| Martial Masters (V104, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
@@ -6997,6 +7000,7 @@ This list contains all games supported by FinalBurn Neo.
 | metafox	|  	| Meta Fox						| 		| 1989	| Seta		| Seta		| 					|
 | metalbj	|  	| Metal Black (Japan)					| metalb	| 1991	| Taito Corporat| Taito F2	| 					|
 | metalb	|  	| Metal Black (World)					| 		| 1991	| Taito Corporat| Taito F2	| 					|
+| md_mb2277	|  	| Metal Blast 2277 (HB)					| 		| 2019	| T-Arts Studio	| Sega Megadrive| 					|
 | metlclsh	|  	| Metal Clash (Japan)					| 		| 1985	| Data East	| Miscellaneous	| 					|
 | md_metalfng	|  	| Metal Fangs (Jpn)					| 		| 1993	| Victor Interac| Sega Megadrive| 					|
 | nes_metalfighter|  	| Metal Fighter (Asia) (Sachen) (Unl)			| 		| 1989	| Color Dreams	| Miscellaneous	| 					|
@@ -8583,7 +8587,7 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
-| pgm3in1	|  	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
+| pgm3in1	|   NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
@@ -8922,6 +8926,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_pquest	|  	| Princess Quest (HB)					| 		| 2012	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | msx_princessquest|  	| Princess Quest (HB)					| 		| 2012	| Oscar Toledo G| MSX		| 					|
 | nes_princtominsalki|  	| Princess Tomato in Salad Kingdom (USA)		| 		| 1991	| Hudson Soft	| Miscellaneous	| 					|
+| md_pringles	|  	| Pringles the Game (HB)				| 		| 2009	| Future Drive	| Sega Megadrive| 					|
 | ngp_ppaa01	| X	| Prize Game - PP-AA01 Pusher Program (Jpn)		| 		| 19??	| Aruze		| NeoGeo Pocket | 					|
 | md_par	|  	| Pro Action Replay (Euro)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_par2	|  	| Pro Action Replay 2 (Euro)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -14047,6 +14052,8 @@ This list contains all games supported by FinalBurn Neo.
 | xmvsfu	|  	| X-Men vs Street Fighter (961023 USA)			| xmvsf		| 1996	| Capcom	| CPS2		| 					|
 | md_xpertsp	|  	| X-perts (Prototype)					| md_xperts	| 1996	| Sega		| Sega Megadrive| 					|
 | md_xperts	|  	| X-perts (USA)						| 		| 1996	| Sega		| Sega Megadrive| 					|
+| x2222o	|  	| X2222 (5-level prototype)				| x2222		| 2000	| Oriental Soft | Miscellaneous	| Prototype - No Sound, Incomplete game	|
+| x2222		|  	| X2222 (final debug?)					| 		| 2000	| Oriental Soft | Miscellaneous	| Prototype - No Sound, Incomplete game	|
 | xsleenab	| D NW	| Xain'd Sleena (bootleg)				| xsleena	| 1986	| bootleg	| Miscellaneous	| 					|
 | xsleenaba	| D	| Xain'd Sleena (bootleg, bugfixed)			| xsleena	| 1987	| bootleg	| Miscellaneous	| 					|
 | xsleenaj	|  	| Xain'd Sleena (Japan)					| xsleena	| 1986	| Technos Japan	| Miscellaneous	| 					|
@@ -14112,6 +14119,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_yiarkufu	|  	| Yie Ar Kung-Fu (128K)					| 		| 1985	| Imagine Softwa| ZX Spectrum	| 					|
 | spec_yiarkufu_48|  	| Yie Ar Kung-Fu (48K)					| spec_yiarkufu	| 1985	| Imagine Softwa| ZX Spectrum	| 					|
 | yieartf	|  	| Yie Ar Kung-Fu (GX361 conversion)			| yiear		| 1985	| Konami	| Miscellaneous	| 					|
+| md_yiearkf	|  	| Yie Ar Kung-Fu (HB)					| 		| 2007	| <unlicensed> E| Sega Megadrive| 					|
 | nes_yiearkungfu|  	| Yie Ar Kung-Fu (Japan) (Rev 1.4)			| 		| 1985	| Konami	| Miscellaneous	| 					|
 | msx_yiear	|  	| Yie Ar Kung-Fu (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_yieara	|  	| Yie Ar Kung-Fu (Jpn, Alt)				| msx_yiear	| 1985	| Konami	| MSX		| 					|

@@ -1546,6 +1546,13 @@
 		<rom name="bram stoker's dracula (usa).bin" size="1048576" crc="077084a6"/>
 		<driver status="good"/>
 	</game>
+	<game name="bravebtl">
+		<description>Brave Battle Saga - Legend of the Magic Warrior (Ch) [Piko Int. English Translation 2017]</description>
+		<year>1996</year>
+		<manufacturer>&lt;unlicensed&gt; Chuanpu</manufacturer>
+		<rom name="brave battle saga - legend of the magic warrior.md" size="2097152" crc="f4554624"/>
+		<driver status="good"/>
+	</game>
 	<game name="bretth">
 		<description>Brett Hull Hockey '95 (USA)</description>
 		<year>1994</year>
@@ -7309,6 +7316,13 @@
 		<rom name="mpr-14242.bin" size="1048576" crc="16113a72"/>
 		<driver status="good"/>
 	</game>
+	<game name="mb2277">
+		<description>Metal Blast 2277 (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>T-Arts Studio</manufacturer>
+		<rom name="metal blast 2277 (rev01-2019)(t-arts studio).bin" size="2647322" crc="dfd4fe49"/>
+		<driver status="good"/>
+	</game>
 	<game name="metalfng">
 		<description>Metal Fangs (Jpn)</description>
 		<year>1993</year>
@@ -9803,6 +9817,13 @@
 		<year>1995</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="prince of persia 2 - the shadow and the flame (euro) (prototype).bin" size="2097152" crc="3ab44d46"/>
+		<driver status="good"/>
+	</game>
+	<game name="pringles">
+		<description>Pringles the Game (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Future Drive</manufacturer>
+		<rom name="pringles the game (2009)(future drive).bin" size="457064" crc="a397bc66"/>
 		<driver status="good"/>
 	</game>
 	<game name="par">
@@ -12470,6 +12491,13 @@
 		<year>1990</year>
 		<manufacturer>RazorSoft</manufacturer>
 		<rom name="stormlord (usa).bin" size="524288" crc="39ab50a5"/>
+		<driver status="good"/>
+	</game>
+	<game name="sf2re" cloneof="sf2" romof="sf2">
+		<description>Street Fighter II' - Remastered Edition (Hack) [Hack]</description>
+		<year>2020</year>
+		<manufacturer>Pyron</manufacturer>
+		<rom name="street fighter ii' - remastered edition (hack).bin" size="3182560" crc="fae82b59"/>
 		<driver status="good"/>
 	</game>
 	<game name="sf2">
@@ -16972,6 +17000,13 @@
 		<year>2020</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="Yazzie.bin" size="655360" crc="93d5ad8a"/>
+		<driver status="good"/>
+	</game>
+	<game name="yiearkf">
+		<description>Yie Ar Kung-Fu (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>&lt;unlicensed&gt; Evgeny and Shiru</manufacturer>
+		<rom name="yie ar kung-fu smdport (2007)(evgeny, shiru).bin" size="206368" crc="f4ec4cc3"/>
 		<driver status="good"/>
 	</game>
 	<game name="yogibear">

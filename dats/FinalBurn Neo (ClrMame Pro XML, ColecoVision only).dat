@@ -656,6 +656,28 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="dkongsgm" romof="coleco">
+		<description>Donkey Kong (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<year>2020</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Donkey_Kong_SGM.rom" size="131072" crc="b3e62471"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="dkongjrsgm" romof="coleco">
+		<description>Donkey Kong Jr. (SGM) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
+		<year>2020</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Donkey_Kong_Jr_SGM.rom" size="131072" crc="644124f6"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="dkongjr" romof="coleco">
 		<description>Donkey Kong Junior</description>
 		<year>1983</year>

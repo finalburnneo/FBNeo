@@ -1015,7 +1015,7 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 
 		v3021Scan();
 
-		SCAN_VAR(PgmInput);
+		SCAN_VAR(hold_coin);
 
 		SCAN_VAR(nPgmCurrentBios);
 

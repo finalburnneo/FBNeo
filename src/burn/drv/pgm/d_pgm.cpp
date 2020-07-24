@@ -2360,7 +2360,7 @@ static struct BurnRomInfo photoy2kRomDesc[] = {
 
 	{ "t0700.u11",     				0x0080000, 0x93943b4d, 2 | BRF_GRA },			//  1 Tile data
 /*	PGM A700, PGM A701 and PGM B0700 ROMs needs to be redump. After checking PCB scans, it appears they are 8MB size.
-	Maybe actual dumps are good and ROMs .l and .h have be joined and/or reordered.
+	Maybe actual dumps are good and ROMs .l and .h have to be joined and/or reordered.
 	{ "a0700.u2",       			0x0800000, 0x00000000, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "a0701.u4",       			0x0800000, 0x00000000, 3 | BRF_GRA },			//  3
 	{ "a0702.u3", 					0x0080000, 0x42239e1b, 3 | BRF_GRA },			//  4
@@ -7164,10 +7164,10 @@ struct BurnDriver BurnDrvkovytzyws = {
 
 // Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
 // Hacked by XIAOFAN
-// Upgrade/GOTVG 20200720
+// GOTVG 2020-07-22
 
 static struct BurnRomInfo kov2pfwllRomDesc[] = {
-	{ "kov2pfwll_32m.u8",			0x0600000, 0x46baca52, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "kov2pfwll_32m.u8",			0x0600000, 0xe9089fe3, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "kov2pfwll_t1200.u21",		0x0800000, 0x279a2f9e, 2 | BRF_GRA },			//  1 Tile data
 
@@ -7191,7 +7191,7 @@ STDROMPICKEXT(kov2pfwll, kov2pfwll, pgm)
 STD_ROM_FN(kov2pfwll)
 
 struct BurnDriver BurnDrvkov2pfwll = {
-	"kov2pfwll", "kov2p", "pgm", NULL, "2020-07-07",
+	"kov2pfwll", "kov2p", "pgm", NULL, "2020-07-22",
 	"Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)\0", NULL, "Hack", "PolyGameMaster",
 	L"Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)\0\u4e09\u570b\u6230\u7d00 2 - \u9cf3\u821e\u9f8d\u541f (\u4fee\u6539\u7248, \u7248\u672c 2055)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
@@ -7242,10 +7242,10 @@ struct BurnDriver BurnDrvkov2pshpd = {
 
 // Oriental Legend Special / Da Sheng Gui Lai (Hack)
 // Hacked by XIAOYUER
-// GOTVG 2020-07-02
+// GOTVG 2020-07-21
 
 static struct BurnRomInfo zerofxzdsglRomDesc[] = {
-	{ "zerofxzdsgl_p0500.u24",		0x0400000, 0x399822b4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "zerofxzdsgl_p0500.u24",		0x0400000, 0x309da19e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "zerofxzdsgl_t0500.u18",		0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "t0501.u19",					0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -7276,7 +7276,7 @@ STDROMPICKEXT(zerofxzdsgl, zerofxzdsgl, pgm)
 STD_ROM_FN(zerofxzdsgl)
 
 struct BurnDriver BurnDrvzerofxzdsgl = {
-	"zerofxzdsgl", "olds", "pgm", NULL, "2020-07-02",
+	"zerofxzdsgl", "olds", "pgm", NULL, "2020-07-21",
 	"Oriental Legend Special - Da Sheng Gui Lai (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Da Sheng Gui Lai (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5927\u8056\u6b78\u4f86 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
@@ -7288,10 +7288,10 @@ struct BurnDriver BurnDrvzerofxzdsgl = {
 
 // Oriental Legend Special / Meng Xun Ling Shan (Hack)
 // Hacked by XIAOYUER
-// GOTVG 2020-07-02
+// GOTVG 2020-07-21
 
 static struct BurnRomInfo oldsmxRomDesc[] = {
-	{ "oldsmx_p0500.u24",			0x0400000, 0x88e2865b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "oldsmx_p0500.u24",			0x0400000, 0x81e70571, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "oldsmx_t0500.u18",			0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "t0501.u19",					0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -7322,7 +7322,7 @@ STDROMPICKEXT(oldsmx, oldsmx, pgm)
 STD_ROM_FN(oldsmx)
 
 struct BurnDriver BurnDrvoldsmx = {
-	"oldsmx", "olds", "pgm", NULL, "2020-07-02",
+	"oldsmx", "olds", "pgm", NULL, "2020-07-21",
 	"Oriental Legend Special - Meng Xun Ling Shan (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Meng Xun Ling Shan (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5922\u5c0b\u9748\u5c71 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

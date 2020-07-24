@@ -6521,7 +6521,7 @@ static INT32 kovsgqyzInit()
 
 struct BurnDriver BurnDrvKovsgqyz = {
 	"kovsgqyz", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 1)\0", NULL, "ANX®", "PolyGameMaster",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 1)\0", NULL, "ANX", "PolyGameMaster",
 	L"Knights of Valour: SanGuo QunYingZhuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E09\u56FD\u7FA4\u82F1\u4F20 (V119, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovsgqyzRomInfo, kovsgqyzRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,
@@ -6555,7 +6555,7 @@ STD_ROM_FN(kovsgqyza)
 
 struct BurnDriver BurnDrvKovsgqyza = {
 	"kovsgqyza", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 2)\0", NULL, "ANX®", "PolyGameMaster",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 2)\0", NULL, "ANX", "PolyGameMaster",
 	L"Knights of Valour: SanGuo QunYingZhuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E09\u56FD\u7FA4\u82F1\u4F20 (V119, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovsgqyzaRomInfo, kovsgqyzaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,
@@ -6589,7 +6589,7 @@ STD_ROM_FN(kovsgqyzb)
 
 struct BurnDriver BurnDrvKovsgqyzb = {
 	"kovsgqyzb", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 3)\0", NULL, "ANX®", "PolyGameMaster",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 3)\0", NULL, "ANX", "PolyGameMaster",
 	L"Knights of Valour: SanGuo QunYingZhuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E09\u56FD\u7FA4\u82F1\u4F20 (V119, set 3)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovsgqyzbRomInfo, kovsgqyzbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,
@@ -6623,7 +6623,7 @@ STD_ROM_FN(kovsgqyzc)
 
 struct BurnDriver BurnDrvKovsgqyzc = {
 	"kovsgqyzc", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 4)\0", NULL, "ANX®", "PolyGameMaster",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 4)\0", NULL, "ANX", "PolyGameMaster",
 	L"Knights of Valour: SanGuo QunYingZhuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E09\u56FD\u7FA4\u82F1\u4F20 (V119, set 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovsgqyzcRomInfo, kovsgqyzcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,
@@ -6659,7 +6659,7 @@ STD_ROM_FN(kovsgqyzd)
 
 struct BurnDriver BurnDrvKovsgqyzd = {
 	"kovsgqyzd", "kovplus", "pgm", NULL, "1999",
-	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 5)\0", NULL, "ANX®", "PolyGameMaster",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 5)\0", NULL, "ANX", "PolyGameMaster",
 	L"Knights of Valour: SanGuo QunYingZhuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E09\u56FD\u7FA4\u82F1\u4F20 (V119, set 5)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovsgqyzdRomInfo, kovsgqyzdRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,

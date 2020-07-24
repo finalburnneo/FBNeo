@@ -44682,3 +44682,75 @@ struct BurnDriver BurnDrvmd_tomclown = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Brave Battle Saga - Legend of the Magic Warrior (Unl)(Ch)
+static struct BurnRomInfo md_bravebtlRomDesc[] = {
+	{ "brave battle saga - legend of the magic warrior.md", 2097152, 0xf4554624, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bravebtl)
+STD_ROM_FN(md_bravebtl)
+
+struct BurnDriver BurnDrvmd_bravebtl = {
+	"md_bravebtl", NULL, NULL, NULL, "1996",
+	"Brave Battle Saga - Legend of the Magic Warrior (Ch)\0", "Piko Int. English Translation 2017", "<unlicensed> Chuanpu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_bravebtlRomInfo, md_bravebtlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Metal Blast 2277 (HB)
+static struct BurnRomInfo md_mb2277RomDesc[] = {
+	{ "metal blast 2277 (rev01-2019)(t-arts studio).bin", 2647322, 0xdfd4fe49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mb2277)
+STD_ROM_FN(md_mb2277)
+
+struct BurnDriver BurnDrvmd_mb2277 = {
+	"md_mb2277", NULL, NULL, NULL, "2019",
+	"Metal Blast 2277 (HB)\0", NULL, "T-Arts Studio", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_mb2277RomInfo, md_mb2277RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Pringles the Game (HB)
+static struct BurnRomInfo md_pringlesRomDesc[] = {
+	{ "pringles the game (2009)(future drive).bin", 457064, 0xa397bc66, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pringles)
+STD_ROM_FN(md_pringles)
+
+struct BurnDriver BurnDrvmd_pringles = {
+	"md_pringles", NULL, NULL, NULL, "2009",
+	"Pringles the Game (HB)\0", NULL, "Future Drive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_pringlesRomInfo, md_pringlesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Yie Ar Kung-Fu (HB)
+static struct BurnRomInfo md_yiearkfRomDesc[] = {
+	{ "yie ar kung-fu smdport (2007)(evgeny, shiru).bin", 206368, 0xf4ec4cc3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_yiearkf)
+STD_ROM_FN(md_yiearkf)
+
+struct BurnDriver BurnDrvmd_yiearkf = {
+	"md_yiearkf", NULL, NULL, NULL, "2007",
+	"Yie Ar Kung-Fu (HB)\0", NULL, "<unlicensed> Evgeny and Shiru", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_yiearkfRomInfo, md_yiearkfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

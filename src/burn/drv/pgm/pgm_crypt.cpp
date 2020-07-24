@@ -10,7 +10,7 @@ void pgm_decrypt_dw2()
 	for (INT32 i = 0; i<nPGM68KROMLen/2; i++) {
 		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
-		if ((i & 0x020890) == 0x000000)				      x ^= 0x0002;
+		if ((i & 0x020890) == 0x000000)				      			  x ^= 0x0002;
 		if ((i & 0x020000) == 0x020000 && (i & 0x001500) != 0x001400) x ^= 0x0002;
 		if ((i & 0x020400) == 0x000000 && (i & 0x002010) != 0x002010) x ^= 0x0400;
 		if ((i & 0x020000) == 0x020000 && (i & 0x000148) != 0x000140) x ^= 0x0400;
@@ -51,6 +51,12 @@ void pgm_decrypt_killbld()
 	}
 }
 
+// ASIC27A Asic decrypt functions
+// Note:
+//	tables are uploaded to RAM by the ARM7 and the ROM is decrypted using that table in RAM
+//  encryption is always connected to ARM7 external ROM if present, otherwise is connected to 68K ROM
+//	conditional xors appear to be controlled by a data uploaded to specific addresses by the
+//  ARM7, however this has not been confirmed.
 
 static const UINT8 kov_tab[256] = {
 	0x17, 0x1c, 0xe3, 0x02, 0x62, 0x59, 0x97, 0x4a, 0x67, 0x4d, 0x1f, 0x11, 0x76, 0x64, 0xc1, 0xe1,
@@ -282,16 +288,16 @@ void pgm_decrypt_puzzli2()
 	for (INT32 i = 0; i < nPGM68KROMLen/2; i++) {
 		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
-	    	if ((i & 0x040080) != 0x000080) x ^= 0x0001;
-	    	if ((i & 0x004008) == 0x004008) x ^= 0x0002;
-	    	if ((i & 0x000030) == 0x000010) x ^= 0x0004;
-	    	if ((i & 0x000242) != 0x000042) x ^= 0x0008;
-	    	if ((i & 0x008100) == 0x008000) x ^= 0x0010;
-	    	if ((i & 0x022004) != 0x000004) x ^= 0x0020;
-	    	if ((i & 0x011800) != 0x010000) x ^= 0x0040;
-	    	if ((i & 0x004820) == 0x004820) x ^= 0x0080;
+	    if ((i & 0x040080) != 0x000080) x ^= 0x0001;
+	    if ((i & 0x004008) == 0x004008) x ^= 0x0002;
+	    if ((i & 0x000030) == 0x000010) x ^= 0x0004;
+	    if ((i & 0x000242) != 0x000042) x ^= 0x0008;
+	    if ((i & 0x008100) == 0x008000) x ^= 0x0010;
+	    if ((i & 0x022004) != 0x000004) x ^= 0x0020;
+	    if ((i & 0x011800) != 0x010000) x ^= 0x0040;
+	    if ((i & 0x004820) == 0x004820) x ^= 0x0080;
 
-	    	x ^= puzzli2_tab[i & 0xff] << 8;
+    	x ^= puzzli2_tab[i & 0xff] << 8;
 
 		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
@@ -477,6 +483,8 @@ void pgm_decrypt_svg()
 		if ((i & 0x011800) != 0x010000) x ^= 0x0040;
 		if ((i & 0x000820) == 0x000820) x ^= 0x0080;
 
+	//	no xor table!
+
 		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
@@ -546,7 +554,7 @@ void pgm_decrypt_dfront()
 	UINT16 *src = (UINT16 *)PGMUSER0;
 
 	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
-	    	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
+	    UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x040080) != 0x000080) x ^= 0x0001;
 		if ((i & 0x104008) == 0x104008) x ^= 0x0002;
@@ -587,7 +595,7 @@ void pgm_decrypt_ddp2()
 	UINT16 *src = (UINT16 *)PGMUSER0;
 
 	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
-    		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
+    	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x0480) != 0x0080) x ^= 0x0001;
 		if ((i & 0x0042) != 0x0042) x ^= 0x0008;
@@ -626,7 +634,7 @@ void pgm_decrypt_martmast() // and dw2001
 	UINT16 *src = (UINT16 *)PGMUSER0;
 
 	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
-    		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
+    	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x040480) != 0x000080) x ^= 0x0001;
 		if ((i & 0x004008) == 0x004008) x ^= 0x0002;
@@ -646,10 +654,9 @@ void pgm_decrypt_martmast() // and dw2001
 // conditional xors are all 'flipped' version of martmast/dw2001 conditionals
 void pgm_decrypt_dwpc110cn()
 {
-	int i;
 	UINT16 *src = (UINT16 *)PGMUSER0;
 
-	for (i = 0; i < nPGMExternalARMLen/2; i++) {
+	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
     	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x040080) != 0x000080) x ^= 0x0001;
@@ -691,19 +698,19 @@ void pgm_decrypt_kov2()
 	UINT16 *src = (UINT16 *)PGMUSER0;
 
 	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
-	    	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
+    	UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
-	    	if ((i & 0x40080) != 0x00080) x ^= 0x0001;
-	    	if ((i & 0x80030) == 0x80010) x ^= 0x0004;
-	    	if ((i & 0x00042) != 0x00042) x ^= 0x0008;
-	    	if ((i & 0x48100) == 0x48000) x ^= 0x0010;
-	    	if ((i & 0x22004) != 0x00004) x ^= 0x0020;
-	    	if ((i & 0x01800) != 0x00000) x ^= 0x0040;
-	    	if ((i & 0x00820) == 0x00820) x ^= 0x0080;
+	    if ((i & 0x40080) != 0x00080) x ^= 0x0001;
+	    if ((i & 0x80030) == 0x80010) x ^= 0x0004;
+	    if ((i & 0x00042) != 0x00042) x ^= 0x0008;
+	    if ((i & 0x48100) == 0x48000) x ^= 0x0010;
+	    if ((i & 0x22004) != 0x00004) x ^= 0x0020;
+	    if ((i & 0x01800) != 0x00000) x ^= 0x0040;
+	    if ((i & 0x00820) == 0x00820) x ^= 0x0080;
 
-	    	x ^= kov2_tab[(i >> 1) & 0xff] << 8;
+	    x ^= kov2_tab[(i >> 1) & 0xff] << 8;
 
-	    	src[i] = BURN_ENDIAN_SWAP_INT16(x);
+	    src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -733,12 +740,12 @@ void pgm_decrypt_kov2p()
 	for (INT32 i = 0; i < nPGMExternalARMLen/2; i++) {
 		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
-    		if ((i & 0x040080) != 0x000080) x ^= 0x0001;
+    	if ((i & 0x040080) != 0x000080) x ^= 0x0001;
 		if ((i & 0x004008) == 0x004008) x ^= 0x0002;
 		if ((i & 0x080030) == 0x080010) x ^= 0x0004;
 		if ((i & 0x000242) != 0x000042) x ^= 0x0008;
 		if ((i & 0x008100) == 0x008000) x ^= 0x0010;
-    		if ((i & 0x002004) != 0x000004) x ^= 0x0020;
+    	if ((i & 0x002004) != 0x000004) x ^= 0x0020;
 		if ((i & 0x011800) != 0x010000) x ^= 0x0040;
 		if ((i & 0x000820) == 0x000820) x ^= 0x0080;
 
@@ -915,14 +922,13 @@ void pgm_decrypt_pgm3in1()
 // ------------------------------------------------------------------------------------------------------------
 // Bootleg decryption routines
 
-void pgm_decode_kovqhsgs_gfx_block(UINT8 *src)
+static void decode_kovqhsgs_gfx_block(UINT8 *src)
 {
-	INT32 i, j;
 	UINT8 *dec = (UINT8*)BurnMalloc(0x800000);
 
-	for (i = 0; i < 0x800000; i++)
+	for (INT32 i = 0; i < 0x800000; i++)
 	{
-		j = BITSWAP24(i, 23, 10, 9, 22, 19, 18, 20, 21, 17, 16, 15, 14, 13, 12, 11, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+		INT32 j = BITSWAP24(i, 23, 10, 9, 22, 19, 18, 20, 21, 17, 16, 15, 14, 13, 12, 11, 8, 7, 6, 5, 4, 3, 2, 1, 0);
 
 		dec[j] = src[i];
 	}
@@ -932,41 +938,46 @@ void pgm_decode_kovqhsgs_gfx_block(UINT8 *src)
 	BurnFree (dec);
 }
 
-void pgm_decode_kovqhsgs_tile_data(UINT8 *source)
+void pgm_decode_kovqhsgs_gfx(UINT8 *gfx, INT32 len)
 {
-	INT32 i, j;
-	UINT16 *src = (UINT16*)source;
-	UINT16 *dst = (UINT16*)BurnMalloc(0x800000);
-
-	for (i = 0; i < 0x800000 / 2; i++)
+	for (INT32 i = 0; i < len; i += 0x800000)
 	{
-		j = BITSWAP24(i, 23, 22, 9, 8, 21, 18, 0, 1, 2, 3, 16, 15, 14, 13, 12, 11, 10, 19, 20, 17, 7, 6, 5, 4);
+		decode_kovqhsgs_gfx_block(gfx + i);
+	}
+}
+
+void pgm_decode_kovqhsgs_tile_data(UINT8 *source, INT32 len)
+{
+	UINT16 *src = (UINT16*)source;
+	UINT16 *dst = (UINT16*)BurnMalloc(len);
+
+	for (INT32 i = 0; i < len / 2; i++)
+	{
+		INT32 j = BITSWAP24(i, 23, 22, 9, 8, 21, 18, 0, 1, 2, 3, 16, 15, 14, 13, 12, 11, 10, 19, 20, 17, 7, 6, 5, 4);
 
 		dst[j] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[i]), 1, 14, 8, 7, 0, 15, 6, 9, 13, 2, 5, 10, 12, 3, 4, 11));
 	}
 
-	memcpy (src, dst, 0x800000);
+	memcpy (src, dst, len);
 
 	BurnFree (dst);
 }
 
 static void pgm_decode_kovqhsgs_samples()
 {
-	INT32 i;
-	for (i = 0; i < 0x400000; i+=2) {
+	for (INT32 i = 0; i < 0x400000; i+=2) {
 		ICSSNDROM[i + 0x400001] = ICSSNDROM[i + 0xc00001];
 	}
 }
 
 static void pgm_decode_kovqhsgs_program()
 {
-	INT32 i, j;
 	UINT16 *src = (UINT16*)PGM68KROM;
 	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
 
-	for (i = 0; i < 0x400000 / 2; i++)
+	for (INT32 i = 0; i < 0x400000 / 2; i++)
 	{
-		j = BITSWAP24(i, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 5, 4, 3, 2, 1, 0);
+		INT32 j = BITSWAP24(i, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 5, 4, 3, 2, 1, 0);
 
 		dst[j] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[i]), 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 4, 5, 3, 2, 1, 0));
 	}
@@ -980,8 +991,8 @@ void pgm_decrypt_kovqhsgs()
 {
 	pgm_decode_kovqhsgs_program();
 
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
 
 	// sprite colors are decoded in pgm_run
 
@@ -990,13 +1001,12 @@ void pgm_decrypt_kovqhsgs()
 
 static void pgm_decode_kovlsqh2_program()
 {
-	INT32 i, j;
 	UINT16 *src = (UINT16*)PGM68KROM;
 	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
 
-	for (i = 0; i < 0x400000 / 2; i++)
+	for (INT32 i = 0; i < 0x400000 / 2; i++)
 	{
-		j = BITSWAP24(i, 23, 22, 21, 20, 19, 16, 15, 14, 13, 12, 11, 10, 9, 8, 0, 1, 2, 3, 4, 5, 6, 18, 17, 7);
+		INT32 j = BITSWAP24(i, 23, 22, 21, 20, 19, 16, 15, 14, 13, 12, 11, 10, 9, 8, 0, 1, 2, 3, 4, 5, 6, 18, 17, 7);
 
 		dst[j] = BURN_ENDIAN_SWAP_INT16(src[i]);
 	}
@@ -1010,8 +1020,8 @@ void pgm_decrypt_kovlsqh2()
 {
 	pgm_decode_kovlsqh2_program();
 
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
 
 	// sprite colors are decoded in pgm_run.cpp
 
@@ -1020,15 +1030,14 @@ void pgm_decrypt_kovlsqh2()
 
 static void pgm_decode_kovassg_program()
 {
-	INT32 i, j;
 	UINT16 *src = (UINT16 *)PGM68KROM;
 	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
 
-	for (i = 0; i < 0x400000/2; i++)
+	for (INT32 i = 0; i < 0x400000/2; i++)
 	{
-		j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12,  11, 10, 7, 3,  1, 9, 4, 8,  6, 0, 2, 5) ^ 0x019c);
+		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12,  11, 10, 7, 3,  1, 9, 4, 8,  6, 0, 2, 5) ^ 0x019c);
 
-		dst[i] = BITSWAP16(src[j], 13, 9, 10, 11, 2, 0, 12 ,5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05;
+		dst[i] = BITSWAP16(src[j], 13, 9, 10, 11, 2, 0, 12, 5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05;
 	}
 
 	memcpy (src, dst, 0x400000);
@@ -1040,8 +1049,8 @@ void pgm_decrypt_kovassg()
 {
 	pgm_decode_kovassg_program();
 
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
-	pgm_decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
 
 	// sprite colors are decoded in pgm_run.cpp
 
@@ -1050,14 +1059,13 @@ void pgm_decrypt_kovassg()
 
 void pgm_descramble_happy6_data(UINT8 *src, INT32 len)
 {
-	INT32 x, i, j;
 	UINT8 *buffer = (UINT8*)BurnMalloc(0x800000);
 
-	for (x = 0; x < len; x += 0x800000)
+	for (INT32 x = 0; x < len; x += 0x800000)
 	{
-		for (i = 0; i < 0x800000; i++) //=0x200)
+		for (INT32 i = 0; i < 0x800000; i++) //=0x200)
 		{
-			j = (i & 0xf8c01ff) | ((i >> 12) & 0x600) | ((i << 2) & 0x43f800) | ((i << 4) & 0x300000);
+			INT32 j = (i & 0xf8c01ff) | ((i >> 12) & 0x600) | ((i << 2) & 0x43f800) | ((i << 4) & 0x300000);
 
 			buffer[i] = src[j + x];
 		}

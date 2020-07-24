@@ -6039,7 +6039,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2104	|  	| Knights of Valour 2 (V104, 102, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2106	|  	| Knights of Valour 2 (V106, 102, 100 Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2		|  	| Knights of Valour 2 (V107, 102, 100, Hong Kong)	| 		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-07| Hack		| PolyGameMaster| 					|
+| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-22| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX, Kore| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
@@ -8165,8 +8165,8 @@ This list contains all games supported by FinalBurn Neo.
 | orlegend	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)	| 		| 1997	| IGS		| PolyGameMaster| 					|
 | oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
-| zerofxzdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-07-02| Hack		| PolyGameMaster| 					|
-| oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-07-02| Hack		| PolyGameMaster| 					|
+| zerofxzdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-07-21| Hack		| PolyGameMaster| 					|
+| oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-07-21| Hack		| PolyGameMaster| 					|
 | olds100a	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds103t	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 2003	| IGS		| PolyGameMaster| 					|

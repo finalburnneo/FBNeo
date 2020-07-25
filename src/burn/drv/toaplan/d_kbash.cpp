@@ -11,8 +11,6 @@ static UINT8 DrvJoy2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
-static bool bVBlank;
 
 // Rom information
 static struct BurnRomInfo drvRomDesc[] = {
@@ -286,7 +284,7 @@ static INT32 LoadRoms()
 	return 0;
 }
 
-UINT8 __fastcall kbashReadByte(UINT32 sekAddress)
+static UINT8 __fastcall kbashReadByte(UINT32 sekAddress)
 {
 	if ((sekAddress & 0xfff000) == 0x200000) {
 		return ShareRAM[(sekAddress / 2) & 0x07ff];
@@ -310,7 +308,7 @@ UINT8 __fastcall kbashReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall kbashReadWord(UINT32 sekAddress)
+static UINT16 __fastcall kbashReadWord(UINT32 sekAddress)
 {
 	if ((sekAddress & 0xfff000) == 0x200000) {
 		return ShareRAM[(sekAddress / 2) & 0x07ff];
@@ -343,7 +341,7 @@ UINT16 __fastcall kbashReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall kbashWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall kbashWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if ((sekAddress & 0xfff000) == 0x200000) {
 		ShareRAM[(sekAddress / 2) & 0x07ff] = byteValue;
@@ -361,7 +359,7 @@ void __fastcall kbashWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall kbashWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall kbashWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	if ((sekAddress & 0xfff000) == 0x200000) {
 		ShareRAM[(sekAddress / 2) & 0x07ff] = wordValue;
@@ -394,7 +392,7 @@ void __fastcall kbashWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall kbash_v25_write(UINT32 address, UINT8 data)
+static void __fastcall kbash_v25_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -412,7 +410,7 @@ void __fastcall kbash_v25_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall kbash_v25_read(UINT32 address)
+static UINT8 __fastcall kbash_v25_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -426,7 +424,7 @@ UINT8 __fastcall kbash_v25_read(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall kbash_v25_read_port(UINT32 port)
+static UINT8 __fastcall kbash_v25_read_port(UINT32 port)
 {
 	switch (port)
 	{
@@ -549,8 +547,6 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 
-	bDrawScreen = true;
-
 	DrvDoReset();			// Reset machine
 	return 0;
 }
@@ -577,18 +573,11 @@ static INT32 DrvDraw()
 {
 	ToaClearScreen(0x120);
 
-	if (bDrawScreen) {
-		ToaGetBitmap();
-		ToaRenderGP9001();					// Render GP9001 graphics
-	}
+	ToaGetBitmap();
+	ToaRenderGP9001();						// Render GP9001 graphics
 
 	ToaPalUpdate();							// Update the palette
 
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -626,7 +615,7 @@ static INT32 DrvFrame()
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
-	bVBlank = false;
+	bool bVBlank = false;
 
 	VezOpen(0);
 
@@ -637,7 +626,6 @@ static INT32 DrvFrame()
 		// Run 68000
 		nCurrentCPU = 0;
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-
 
 		// Trigger VBlank interrupt
 		if (!bVBlank && nNext > nToaCyclesVBlankStart) {
@@ -655,11 +643,7 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (bVBlank || (!CheckSleep(nCurrentCPU))) {					// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
 		nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
 		

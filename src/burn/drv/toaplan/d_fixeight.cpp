@@ -19,43 +19,41 @@ static UINT8 *ShareRAM, *EEPROM;
 static const INT32 nColCount = 0x0800;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
-static bool bVBlank;
 
 static INT32 v25_reset = 0;
 static INT32 set_region = 0;
 
 static struct BurnInputInfo FixeightInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvButton + 5,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 4,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvButton + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvButton + 0,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvButton + 0,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Tilt",		BIT_DIGITAL,	DrvButton + 1,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 4,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",			BIT_DIGITAL,	DrvButton + 1,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 4,	"dip"		},
 };
 
 STDINPUTINFO(Fixeight)
@@ -71,7 +69,7 @@ static struct BurnDIPInfo FixeightDIPList[]=
 
 STDDIPINFO(Fixeight)
 
-UINT8 __fastcall fixeightReadByte(UINT32 sekAddress)
+static UINT8 __fastcall fixeightReadByte(UINT32 sekAddress)
 {
 	if ((sekAddress & 0xff0000) == 0x280000) {
 		return ShareRAM[(sekAddress >> 1) & 0x7fff];
@@ -101,7 +99,7 @@ UINT8 __fastcall fixeightReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall fixeightReadWord(UINT32 sekAddress)
+static UINT16 __fastcall fixeightReadWord(UINT32 sekAddress)
 {
 	if ((sekAddress & 0xff0000) == 0x280000) {
 		return ShareRAM[(sekAddress >> 1) & 0x7fff];
@@ -139,7 +137,7 @@ UINT16 __fastcall fixeightReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall fixeightWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall fixeightWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if ((sekAddress & 0xff0000) == 0x280000) {
 		ShareRAM[(sekAddress >> 1) & 0x7fff] = byteValue;
@@ -169,7 +167,7 @@ void __fastcall fixeightWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall fixeightWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall fixeightWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	if ((sekAddress & 0xff0000) == 0x280000) {
 		ShareRAM[(sekAddress >> 1) & 0x7fff] = wordValue;
@@ -210,7 +208,7 @@ void __fastcall fixeightWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
+static void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -228,7 +226,7 @@ void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall fixeight_v25_read(UINT32 address)
+static UINT8 __fastcall fixeight_v25_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -245,7 +243,7 @@ UINT8 __fastcall fixeight_v25_read(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall fixeight_v25_read_port(UINT32 port)
+static UINT8 __fastcall fixeight_v25_read_port(UINT32 port)
 {
 	switch (port)
 	{
@@ -256,7 +254,7 @@ UINT8 __fastcall fixeight_v25_read_port(UINT32 port)
 	return 0;
 }
 
-void __fastcall fixeight_v25_write_port(UINT32 port, UINT8 data)
+static void __fastcall fixeight_v25_write_port(UINT32 port, UINT8 data)
 {
 	switch (port)
 	{
@@ -314,19 +312,12 @@ static INT32 DrvDraw()
 {
 	ToaClearScreen(0);
 
-	if (bDrawScreen) {
-		ToaGetBitmap();
-		ToaRenderGP9001();					// Render GP9001 graphics
-		ToaExtraTextLayer();				// Render extra text layer
-	}
+	ToaGetBitmap();
+	ToaRenderGP9001();						// Render GP9001 graphics
+	ToaExtraTextLayer();					// Render extra text layer
 
 	ToaPalUpdate();							// Update the palette
 
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -366,7 +357,7 @@ static INT32 DrvFrame()
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
-	bVBlank = false;
+	bool bVBlank = false;
 	
 	VezOpen(0);
 
@@ -382,11 +373,7 @@ static INT32 DrvFrame()
 		if (!bVBlank && nNext > nToaCyclesVBlankStart) {
 			if (nCyclesDone[nCurrentCPU] < nToaCyclesVBlankStart) {
 				nCyclesSegment = nToaCyclesVBlankStart - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
@@ -397,13 +384,9 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (bVBlank || (!CheckSleep(nCurrentCPU))) {					// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
-		// sound! (increase interleave?)
+		// sound!
 		if (v25_reset) {
 			nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
 		} else {
@@ -443,23 +426,23 @@ static INT32 DrvFrame()
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
-	Rom01		= Next; Next += 0x080000;		//
+	Rom01			= Next; Next += 0x080000;		//
 	GP9001ROM[0]	= Next; Next += nGP9001ROMSize[0];	// GP9001 tile data
-	MSM6295ROM	= Next; Next += 0x040000;
-	EEPROM		= Next; Next += 0x000080;
-	RamStart	= Next;
-	Ram01		= Next; Next += 0x004000;		// CPU #0 work RAM
-	ExtraTROM	= Next; Next += 0x010000;		// Extra tile layer
-	ExtraTRAM	= Next; Next += 0x002000;		// Extra tile layer
-	ShareRAM	= Next; Next += 0x010000;
+	MSM6295ROM		= Next; Next += 0x040000;
+	EEPROM			= Next; Next += 0x000080;
+	RamStart		= Next;
+	Ram01			= Next; Next += 0x004000;		// CPU #0 work RAM
+	ExtraTROM		= Next; Next += 0x010000;		// Extra tile layer
+	ExtraTRAM		= Next; Next += 0x002000;		// Extra tile layer
+	ShareRAM		= Next; Next += 0x010000;
 	ExtraTScroll	= Next; Next += 0x001000;		//
 	ExtraTSelect	= Next; Next += 0x001000;		//
-	RamPal		= Next; Next += 0x001000;		// palette
+	RamPal			= Next; Next += 0x001000;		// palette
 	GP9001RAM[0]	= Next; Next += 0x004000;
 	GP9001Reg[0]	= (UINT16*)Next; Next += 0x0100 * sizeof(UINT16);
-	RamEnd		= Next;
-	ToaPalette	= (UINT32 *)Next; Next += nColCount * sizeof(UINT32);
-	MemEnd		= Next;
+	RamEnd			= Next;
+	ToaPalette		= (UINT32 *)Next; Next += nColCount * sizeof(UINT32);
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -492,12 +475,12 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		struct BurnArea ba;
 
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
 
-    		ba.Data		= ShareRAM;
+		ba.Data		= ShareRAM;
 		ba.nLen		= 0x8000;
 		ba.szName	= "Shared RAM";
 		BurnAcb(&ba);
@@ -510,12 +493,9 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		MSM6295Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
-                ToaScanGP9001(nAction, pnMin);
+		ToaScanGP9001(nAction, pnMin);
 
-                SCAN_VAR(v25_reset); // level 2.5 savestate hung on load,
-                SCAN_VAR(set_region); // hoping this might fix it.. -dink
-
-                bDrawScreen = true;
+		SCAN_VAR(v25_reset); // level 2.5 savestate hung on load, hoping this might fix it.. -dink
 	}
 
 	return 0;
@@ -616,8 +596,6 @@ static INT32 DrvInit(INT32 region)
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-
-	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine
 

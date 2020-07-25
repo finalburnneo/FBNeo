@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14314 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14313 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2792,10 +2792,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_demomanp	|   NW	| Demolition Man (USA, Prototype)			| md_demoman	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | msx_demoncrystl|  	| Demon Crystal, The					| 		| 1986	| Radio Wave New| MSX		| 					|
 | nes_demondistrict|  	| Demon District (HB)					| 		| 2019	| Klonoa	| Miscellaneous	| 					|
-| dmnfrnta	|  	| Demon Front (V102, China)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrntb	|  	| Demon Front (V103)					| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrnt	|  	| Demon Front (V105)					| 		| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcb	|  	| Demon Front (V107, Korea, Single PCB Version)		| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
+| dmnfrnta	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrntb	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
 | nes_demonsword|  	| Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | demonwld	|  	| Demon's World / Horror Story (set 1)			| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld1	|  	| Demon's World / Horror Story (set 2)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
@@ -3006,13 +3006,13 @@ This list contains all games supported by FinalBurn Neo.
 | ddonpacha	|  	| DoDonPachi (Arrange Mode version 1.1, hack by Trap15)	| ddonpach	| 2012	| hack / Trap15	| Cave		| 					|
 | ddonpach	|  	| DoDonPachi (International, master ver. 97/02/05)	| 		| 1997	| Atlus / Cave	| Cave		| 					|
 | ddonpachj	|  	| DoDonPachi (Japan, master ver. 97/02/05)		| ddonpach	| 1997	| Atlus / Cave	| Cave		| 					|
+| ddpdojb	|  	| DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver)	| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddpdojp	|  	| DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, l| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
-| ddpdojb	|  	| DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)	| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
-| ddpdoja	|  	| DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)	| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
-| ddpdoj	|  	| DoDonPachi Dai-Ou-Jou (V101, Japan)			| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
+| ddpdoja	|  	| DoDonPachi Dai-Ou-Jou (V100, Japan, 2002.04.05.Master | ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
+| ddpdoj	|  	| DoDonPachi Dai-Ou-Jou (V101, Japan, 2002.04.05.Master | ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddpdojblkbl	|  	| DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ve| ddp3		| 2002	| bootleg	| PolyGameMaster| 					|
-| ddpdojblka	|  	| DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Bl| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
-| ddpdojblk	|  	| DoDonPachi Dai-Ou-Jou Black Label (V100, (2002.10.07.B| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
+| ddpdojblka	|  	| DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 B| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
+| ddpdojblk	|  	| DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.B| ddp3		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | ddp3		|  	| DoDonPachi III (World, 2002.05.15 Master Ver)		| 		| 2002	| Cave (AMI lice| PolyGameMaster| 					|
 | dogfight	|  	| Dog Fight (Thunderbolt)				| 		| 1983	| Orca / Thunder| Miscellaneous	| 					|
 | msx_dogfight	|  	| Dog Fighter (Euro)					| 		| 1986	| Kuma Computers| MSX		| 					|
@@ -3588,7 +3588,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_esperboukentai|  	| Esper Bouken Tai (Japan)				| 		| 1987	| Jaleco	| Miscellaneous	| 					|
 | nes_esperdre2	|  	| Esper Dream 2 - Aratanaru Tatakai (Japan)		| 		| 1992	| Konami	| Miscellaneous	| 					|
 | espgalbl	|  	| Espgaluda (2003/10/15 Master Ver, bootleg cartridge co| espgal	| 2003	| bootleg	| PolyGameMaster| 					|
-| espgal	|  	| Espgaluda (V100, Japan)				| 		| 2003	| CAVE / AMI	| PolyGameMaster| 					|
+| espgal	|  	| Espgaluda (Japan, 2003/10/15 Master Ver)		| 		| 2003	| CAVE / AMI	| PolyGameMaster| 					|
 | espial	|  	| Espial (Europe)					| 		| 1983	| Orca / Thunder| Miscellaneous	| 					|
 | espialu	|  	| Espial (US?)						| espial	| 1983	| Orca / Thunder| Miscellaneous	| 					|
 | nes_espitundherpim|  	| Espitenen und herr pimponen (HB)			| 		| 2019	| Mojon Twins	| Miscellaneous	| 					|
@@ -5848,18 +5848,18 @@ This list contains all games supported by FinalBurn Neo.
 | keroppij	|  	| Kero Kero Keroppi no Issyoni Asobou (Japan)		| keroppi	| 1993	| Sammy Industri| Seta		| 					|
 | keroppi	|  	| Kero Kero Keroppi's Let's Play Together (USA, Version | 		| 1995	| American Sammy| Seta		| 					|
 | nes_keropkernosplbo|  	| Keroppi to Keroriinu no Splash Bomb! (Japan)		| 		| 1993	| Character Soft| Miscellaneous	| 					|
+| ket1		|  	| Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver.) (| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
 | ketbl		|  	| Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver., b| ket		| 2003	| CAVE / AMI	| PolyGameMaster| 					|
 | ketarr10	|  	| Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, | ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
 | ketarr15	|  	| Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.5, | ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
 | ketarr151	|  	| Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.51,| ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
 | ketarr	|  	| Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, | ket		| 2014	| hack / Trap15	| PolyGameMaster| 					|
 | ketarrf	|  	| Ketsui Kizuna Jigoku Tachi (Fast version, hack by Trap| ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
+| ketb		|  	| Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01 Master V| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
+| keta		|  	| Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01 Master V| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
+| ket		|  	| Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01. Master | 		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
 | ketarrs15	|  	| Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.5, hac| ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
 | ketarrs151	|  	| Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.51, ha| ket		| 2012	| hack / Trap15	| PolyGameMaster| 					|
-| ketb		|  	| Ketsui Kizuna Jigoku Tachi (Original?, Japan)		| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
-| keta		|  	| Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)	| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
-| ket1		|  	| Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)	| ket		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
-| ket		|  	| Ketsui Kizuna Jigoku Tachi (Revision 2?, Japan)	| 		| 2002	| CAVE / AMI	| PolyGameMaster| 					|
 | msx_keykaper	|  	| Keystone Kapers (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| 					|
 | cv_keykaper	|  	| Keystone Kapers					| 		| 1984	| Activision	| ColecoVision	| 					|
 | msx_khazzad	|  	| Khazzad-Dum (Spa)					| 		| 1989	| System 4	| MSX		| 					|
@@ -6063,7 +6063,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovsh102	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsh103	|  	| Knights of Valour Superheroes / Sangoku Senki Superher| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsh		|  	| Knights of Valour Superheroes / Sangoku Senki Superher| 		| 1999	| IGS		| PolyGameMaster| 					|
-| kovshxas	|  	| Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao | kovshp	| 2008	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovassga	|  	| Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao | kovshp	| 2008	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovassg	| D NW	| Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao | kovshp	| 2008	| IGS		| PolyGameMaster| Incomplete dump			|
 | kovlsjba	| D NW	| Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Lu| kovshp	| 2009	| IGS		| PolyGameMaster| Incomplete dump			|
 | kovlsjb	| D NW	| Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Lu| kovshp	| 2009	| IGS		| PolyGameMaster| 					|
@@ -6071,11 +6071,11 @@ This list contains all games supported by FinalBurn Neo.
 | kovlsqh2	| D NW	| Knights of Valour: Luan Shi Quan Huang II / Sangoku Se| kovshp	| 2009	| IGS		| PolyGameMaster| Incomplete dump			|
 | kovqhsgsa	|  	| Knights of Valour: Quan Huang San Guo Special / Sangok| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovqhsgs	|  	| Knights of Valour: Quan Huang San Guo Special / Sangok| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
-| kovsgqyz	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
-| kovsgqyza	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
-| kovsgqyzb	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
-| kovsgqyzc	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
-| kovsgqyzd	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| IGS		| PolyGameMaster| 					|
+| kovsgqyz	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
+| kovsgqyza	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
+| kovsgqyzb	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
+| kovsgqyzc	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
+| kovsgqyzd	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
 | kovytzy	|  	| Knights of Valour: Yi Tong Zhong Yuan / Sangoku Senki:| 		| 1999	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | msx_knithers	|  	| Knither Special (Jpn)					| 		| 1987	| Dempa		| MSX		| 					|
 | knockout	|  	| Knock Out!!						| triplep	| 1982	| KKK		| Galaxian	| 					|
@@ -8586,7 +8586,7 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k102	|  	| Photo Y2K / Real and Fake (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
-| photoy2k	|  	| Photo Y2K / Real and Fake (V105)			| 		| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k	|  	| Photo Y2K / Real and Fake (V105, China)		| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1	|   NW	| Photo Y2K 2 (3-in-1)					| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| 					|
@@ -10284,8 +10284,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_sirababol	|  	| Sir Ababol (HB, v1.1)					| 		| 2020	| Alekmaul	| ColecoVision	| 					|
 | nes_sirababolr|  	| Sir Ababol Remastered Edition (HB)			| nes_sirababol	| 2016	| Mojon Twins	| Miscellaneous	| 					|
 | cv_lancelot	|  	| Sir Lancelot						| 		| 1983	| Xonox		| ColecoVision	| 					|
-| sirio2	|  	| Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, se| mooncrst	| 1980?	| bootleg (Calfe| Galaxian	| 					|
-| sirio2a	|  	| Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, se| mooncrst	| 1980?	| bootleg (Calfe| Galaxian	| 					|
+| sirio2	|  	| Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)	| mooncrst	| 1980?	| bootleg (Calfe| Galaxian	| 					|
 | sms_sitio	|  	| Sitio do Picapau Amarelo (Bra)			| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | msx_skateair	|  	| Skate Air (HB)					| 		| 2006	| Yerami Soft	| MSX		| 					|
 | nes_skateboy	|  	| Skate Boy (Spain) (Gluk Video) (Unl)			| 		| 1992	| Gluk Video	| Miscellaneous	| 					|

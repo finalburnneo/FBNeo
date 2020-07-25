@@ -2836,10 +2836,10 @@ DRV		BurnDrvmd_demoman;
 DRV		BurnDrvmd_demomanp;
 DRV		BurnDrvMSX_demoncrystl;
 DRV		BurnDrvnes_demondistrict;
+DRV		BurnDrvDmnfrntpcb;
 DRV		BurnDrvdmnfrnta;
 DRV		BurnDrvdmnfrntb;
 DRV		BurnDrvDmnfrnt;
-DRV		BurnDrvDmnfrntpcb;
 DRV		BurnDrvnes_demonsword;
 DRV		BurnDrvDemonwld;
 DRV		BurnDrvDemonwld1;
@@ -3056,8 +3056,8 @@ DRV		BurnDrvMSX_dgnraven;
 DRV		BurnDrvDoDonpachia;
 DRV		BurnDrvDoDonpachi;
 DRV		BurnDrvDoDonpachiJ;
-DRV		BurnDrvDdpdojp;
 DRV		BurnDrvDdp3c;
+DRV		BurnDrvDdpdojp;
 DRV		BurnDrvDdp3b;
 DRV		BurnDrvDdp3a;
 DRV		BurnDrvDdpdojblkbl;
@@ -5954,18 +5954,18 @@ DRV		BurnDrvnes_kerokerkernoda2;
 DRV		BurnDrvKeroppij;
 DRV		BurnDrvKeroppi;
 DRV		BurnDrvnes_keropkernosplbo;
+DRV		BurnDrvKet1;
 DRV		BurnDrvKetbl;
 DRV		BurnDrvketarr10;
 DRV		BurnDrvketarr15;
 DRV		BurnDrvketarr151;
 DRV		BurnDrvketarr;
 DRV		BurnDrvketarrf;
-DRV		BurnDrvketarrs15;
-DRV		BurnDrvketarrs151;
 DRV		BurnDrvKetb;
 DRV		BurnDrvKeta;
-DRV		BurnDrvKet1;
 DRV		BurnDrvKet;
+DRV		BurnDrvketarrs15;
+DRV		BurnDrvketarrs151;
 DRV		BurnDrvMSX_keykaper;
 DRV		BurnDrvcv_keykaper;
 DRV		BurnDrvMSX_khazzad;
@@ -6175,7 +6175,7 @@ DRV		BurnDrvKovsh101;
 DRV		BurnDrvKovsh102;
 DRV		BurnDrvKovsh103;
 DRV		BurnDrvKovsh;
-DRV		BurnDrvkovshxas;
+DRV		BurnDrvkovassga;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvkovassg;			// Incomplete dump [NOT WORKING]
 DRV		BurnDrvkovlsjba;		// Incomplete dump [NOT WORKING]
@@ -10467,7 +10467,6 @@ DRV		BurnDrvcv_sirababol;
 DRV		BurnDrvnes_sirababolr;
 DRV		BurnDrvcv_lancelot;
 DRV		BurnDrvSirio2;
-DRV		BurnDrvSirio2a;
 DRV		BurnDrvsms_sitio;
 DRV		BurnDrvMSX_skateair;
 DRV		BurnDrvnes_skateboy;
@@ -17417,10 +17416,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_demomanp,		// Demolition Man (USA, Prototype) [no comment, NOT WORKING]
 	&BurnDrvMSX_demoncrystl,	// Demon Crystal, The
 	&BurnDrvnes_demondistrict,	// Demon District (HB)
-	&BurnDrvdmnfrnta,			// Demon Front (V102, China)
-	&BurnDrvdmnfrntb,			// Demon Front (V103)
-	&BurnDrvDmnfrnt,			// Demon Front (V105)
 	&BurnDrvDmnfrntpcb,			// Demon Front (V107, Korea, Single PCB Version)
+	&BurnDrvdmnfrnta,			// Demon Front (VM102XX, S101XX)
+	&BurnDrvdmnfrntb,			// Demon Front (VM103XX, S103XX)
+	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
 	&BurnDrvnes_demonsword,		// Demon Sword (USA)
 	&BurnDrvDemonwld,			// Demon's World / Horror Story (set 1)
 	&BurnDrvDemonwld1,			// Demon's World / Horror Story (set 2)
@@ -17637,13 +17636,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDoDonpachia,		// DoDonPachi (Arrange Mode version 1.1, hack by Trap15)
 	&BurnDrvDoDonpachi,			// DoDonPachi (International, master ver. 97/02/05)
 	&BurnDrvDoDonpachiJ,		// DoDonPachi (Japan, master ver. 97/02/05)
+	&BurnDrvDdp3c,				// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver)
 	&BurnDrvDdpdojp,			// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, location test)
-	&BurnDrvDdp3c,				// DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)
-	&BurnDrvDdp3b,				// DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)
-	&BurnDrvDdp3a,				// DoDonPachi Dai-Ou-Jou (V101, Japan)
+	&BurnDrvDdp3b,				// DoDonPachi Dai-Ou-Jou (V100, Japan, 2002.04.05.Master Ver)
+	&BurnDrvDdp3a,				// DoDonPachi Dai-Ou-Jou (V101, Japan, 2002.04.05.Master Ver)
 	&BurnDrvDdpdojblkbl,		// DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
-	&BurnDrvDdp3blka,			// DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)
-	&BurnDrvDdp3blk,			// DoDonPachi Dai-Ou-Jou Black Label (V100, (2002.10.07.Black Ver), Japan)
+	&BurnDrvDdp3blka,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver)
+	&BurnDrvDdp3blk,			// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07.Black Ver)
 	&BurnDrvDdp3,				// DoDonPachi III (World, 2002.05.15 Master Ver)
 	&BurnDrvDogfight,			// Dog Fight (Thunderbolt)
 	&BurnDrvMSX_dogfight,		// Dog Fighter (Euro)
@@ -18235,7 +18234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_esperboukentai,	// Esper Bouken Tai (Japan)
 	&BurnDrvnes_esperdre2,		// Esper Dream 2 - Aratanaru Tatakai (Japan)
 	&BurnDrvEspgalbl,			// Espgaluda (2003/10/15 Master Ver, bootleg cartridge conversion)
-	&BurnDrvEspgal,				// Espgaluda (V100, Japan)
+	&BurnDrvEspgal,				// Espgaluda (Japan, 2003/10/15 Master Ver)
 	&BurnDrvEspial,				// Espial (Europe)
 	&BurnDrvEspialu,			// Espial (US?)
 	&BurnDrvnes_espitundherpim,	// Espitenen und herr pimponen (HB)
@@ -20535,18 +20534,18 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKeroppij,			// Kero Kero Keroppi no Issyoni Asobou (Japan)
 	&BurnDrvKeroppi,			// Kero Kero Keroppi's Let's Play Together (USA, Version 2.0)
 	&BurnDrvnes_keropkernosplbo,// Keroppi to Keroriinu no Splash Bomb! (Japan)
+	&BurnDrvKet1,				// Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver.) (alt rom fill)
 	&BurnDrvKetbl,				// Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver., bootleg cartridge conversion)
 	&BurnDrvketarr10,			// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
 	&BurnDrvketarr15,			// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.5, hack by Trap15)
 	&BurnDrvketarr151,			// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.51, hack by Trap15)
 	&BurnDrvketarr,				// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, hack by Trap15)
 	&BurnDrvketarrf,			// Ketsui Kizuna Jigoku Tachi (Fast version, hack by Trap15)
+	&BurnDrvKetb,				// Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01 Master Ver)
+	&BurnDrvKeta,				// Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01 Master Ver.)
+	&BurnDrvKet,				// Ketsui Kizuna Jigoku Tachi (Japan, 2003/01/01. Master Ver.)
 	&BurnDrvketarrs15,			// Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.5, hack by Trap15)
 	&BurnDrvketarrs151,			// Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.51, hack by Trap15)
-	&BurnDrvKetb,				// Ketsui Kizuna Jigoku Tachi (Original?, Japan)
-	&BurnDrvKeta,				// Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)
-	&BurnDrvKet1,				// Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)
-	&BurnDrvKet,				// Ketsui Kizuna Jigoku Tachi (Revision 2?, Japan)
 	&BurnDrvMSX_keykaper,		// Keystone Kapers (Jpn)
 	&BurnDrvcv_keykaper,		// Keystone Kapers
 	&BurnDrvMSX_khazzad,		// Khazzad-Dum (Spa)
@@ -20747,31 +20746,31 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
 	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Tian Wang, ver. 500)
 	&BurnDrvkovshpqszl,			// Knights of Valour Super Heroes Plus (The Road to Survival True King, ver. 500)
-	&BurnDrvkovshp100,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100, China)
-	&BurnDrvkovshp,				// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101)
-	&BurnDrvkovshp101,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 101, China)
+	&BurnDrvkovshp100,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V100, China)
+	&BurnDrvkovshp,				// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V101)
+	&BurnDrvkovshp101,			// Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (V101, China)
 	&BurnDrvKovshb,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
 	&BurnDrvKovsh100,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V100)
 	&BurnDrvKovsh101,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V101)
 	&BurnDrvKovsh102,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V102)
 	&BurnDrvKovsh103,			// Knights of Valour Superheroes / Sangoku Senki Superheroes (V103)
 	&BurnDrvKovsh,				// Knights of Valour Superheroes / Sangoku Senki Superheroes (V104, China)
-	&BurnDrvkovshxas,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (ver. 202CN)
+	&BurnDrvkovassga,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (V202CN, China)
 #if defined FBNEO_DEBUG
-	&BurnDrvkovassg,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (ver. 315CN) [Incomplete dump, NOT WORKING]
-	&BurnDrvkovlsjba,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (alt ver. 200CN) [Incomplete dump, NOT WORKING]
-	&BurnDrvkovlsjb,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (ver. 200CN) [no comment, NOT WORKING]
-	&BurnDrvkovlsqh,			// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 200CN) [Incomplete dump, NOT WORKING]
-	&BurnDrvkovlsqh2,			// Knights of Valour: Luan Shi Quan Huang II / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN) [Incomplete dump, NOT WORKING]
+	&BurnDrvkovassg,			// Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (V315CN, China) [Incomplete dump, NOT WORKING]
+	&BurnDrvkovlsjba,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (V200CN alt, China) [Incomplete dump, NOT WORKING]
+	&BurnDrvkovlsjb,			// Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (V200CN, China) [no comment, NOT WORKING]
+	&BurnDrvkovlsqh,			// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (V200CN, China) [Incomplete dump, NOT WORKING]
+	&BurnDrvkovlsqh2,			// Knights of Valour: Luan Shi Quan Huang II / Sangoku Senki: Luan Shi Quan Huang II (V200CN, China) [Incomplete dump, NOT WORKING]
 #endif
-	&BurnDrvkovqhsgsa,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (alt ver. 303CN)
-	&BurnDrvkovqhsgs,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (ver. 303CN)
-	&BurnDrvKovsgqyz,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 1)
-	&BurnDrvKovsgqyza,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 2)
-	&BurnDrvKovsgqyzb,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 3)
-	&BurnDrvKovsgqyzc,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 4)
-	&BurnDrvKovsgqyzd,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 5)
-	&BurnDrvkovytzy,			// Knights of Valour: Yi Tong Zhong Yuan / Sangoku Senki: Yi Tong Zhong Yuan (ver. 201, China)
+	&BurnDrvkovqhsgsa,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (V303CN alt, China)
+	&BurnDrvkovqhsgs,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (V303CN, China)
+	&BurnDrvKovsgqyz,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 1)
+	&BurnDrvKovsgqyza,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 2)
+	&BurnDrvKovsgqyzb,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 3)
+	&BurnDrvKovsgqyzc,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 4)
+	&BurnDrvKovsgqyzd,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 5)
+	&BurnDrvkovytzy,			// Knights of Valour: Yi Tong Zhong Yuan / Sangoku Senki: Yi Tong Zhong Yuan (V201, China)
 	&BurnDrvMSX_knithers,		// Knither Special (Jpn)
 	&BurnDrvKnockout,			// Knock Out!!
 	&BurnDrvKBashk,				// Knuckle Bash (Korean PCB)
@@ -22890,8 +22889,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrlegend112e,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V112)
 	&BurnDrvOrlegend112c,		// Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, China)
 	&BurnDrvOrlegend,			// Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)
-	&BurnDrvoldsplus203,		// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 203)
-	&BurnDrvoldsplus,			// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (ver. 205)
+	&BurnDrvoldsplus203,		// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (V203)
+	&BurnDrvoldsplus,			// Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super Plus (World, China, Japan, Hong Kong, Taiwan) (V205)
 	&BurnDrvzerofxzdsgl,		// Oriental Legend Special - Da Sheng Gui Lai (Hack)
 	&BurnDrvoldsmx,				// Oriental Legend Special - Meng Xun Ling Shan (Hack)
 	&BurnDrvOlds100a,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt, China)
@@ -23321,7 +23320,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvphotoy2k102,		// Photo Y2K / Real and Fake (V102, Japan)
 	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
-	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105)
+	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105, China)
 	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1) [Sound issues, video issues, NOT WORKING]
 	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan)
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan)
@@ -25047,8 +25046,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_sirababol,		// Sir Ababol (HB, v1.1)
 	&BurnDrvnes_sirababolr,		// Sir Ababol Remastered Edition (HB)
 	&BurnDrvcv_lancelot,		// Sir Lancelot
-	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 1)
-	&BurnDrvSirio2a,			// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 2)
+	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)
 	&BurnDrvsms_sitio,			// Sitio do Picapau Amarelo (Bra)
 	&BurnDrvMSX_skateair,		// Skate Air (HB)
 	&BurnDrvnes_skateboy,		// Skate Boy (Spain) (Gluk Video) (Unl)

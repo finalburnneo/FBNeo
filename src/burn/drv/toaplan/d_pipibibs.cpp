@@ -11,34 +11,32 @@ static UINT8 DrvJoy2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
-static bool bVBlank;
 
 static struct BurnInputInfo PipibibsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvButton + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvButton + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 4,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvButton + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvButton + 6,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvButton + 0,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvButton + 1,	"tilt"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 3,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 4,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvButton + 0,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvButton + 1,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 3,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 4,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
 };
 
 STDINPUTINFO(Pipibibs)
@@ -197,7 +195,7 @@ static INT32 LoadRoms()
 	return 0;
 }
 
-UINT8 __fastcall pipibibsReadByte(UINT32 sekAddress)
+static UINT8 __fastcall pipibibsReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x19c031:								// Player 1 inputs
@@ -224,7 +222,7 @@ UINT8 __fastcall pipibibsReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall pipibibsReadWord(UINT32 sekAddress)
+static UINT16 __fastcall pipibibsReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x19c030:								// Player 1 inputs
@@ -256,7 +254,7 @@ UINT16 __fastcall pipibibsReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall pipibibsWriteByte(UINT32 /*sekAddress*/, UINT8 /*byteValue*/)
+static void __fastcall pipibibsWriteByte(UINT32 /*sekAddress*/, UINT8 /*byteValue*/)
 {
 //	switch (sekAddress) {
 //		default:
@@ -264,7 +262,7 @@ void __fastcall pipibibsWriteByte(UINT32 /*sekAddress*/, UINT8 /*byteValue*/)
 //	}
 }
 
-void __fastcall pipibibsWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall pipibibsWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 
@@ -292,7 +290,7 @@ void __fastcall pipibibsWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall pipibibs_sound_write(UINT16 address, UINT8 data)
+static void __fastcall pipibibs_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -306,7 +304,7 @@ void __fastcall pipibibs_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall pipibibs_sound_read(UINT16 address)
+static UINT8 __fastcall pipibibs_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -331,9 +329,8 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-	ZetClose();
-
 	BurnYM3812Reset();
+	ZetClose();
 
 	return 0;
 }
@@ -412,8 +409,6 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 
-	bDrawScreen = true;
-
 	DrvDoReset();			// Reset machine
 	return 0;
 }
@@ -436,18 +431,11 @@ static INT32 DrvDraw()
 {
 	ToaClearScreen(0);
 
-	if (bDrawScreen) {
-		ToaGetBitmap();
-		ToaRenderGP9001();					// Render GP9001 graphics
-	}
+	ToaGetBitmap();
+	ToaRenderGP9001();						// Render GP9001 graphics
 
 	ToaPalUpdate();							// Update the palette
 
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
@@ -483,7 +471,7 @@ static INT32 DrvFrame()
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
-	bVBlank = false;
+	bool bVBlank = false;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nNext;
@@ -509,12 +497,8 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - SekTotalCycles();
-		if (bVBlank || (!CheckSleep(0))) {
-			SekRun(nCyclesSegment);
-		} else {
-			SekIdle(nCyclesSegment);
-		}
-		
+		SekRun(nCyclesSegment);
+
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}
 

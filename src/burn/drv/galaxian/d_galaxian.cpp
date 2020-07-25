@@ -11074,14 +11074,14 @@ static struct BurnRomInfo Sirio2RomDesc[] = {
 	{ "sirio2_1.bin",  0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_2.bin",  0x00800, 0x0b316f33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_3.bin",  0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_4.bin",  0x00800, 0x092ab94b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_4.bin",  0x00800, 0x73d0b1f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_5.bin",  0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_6.bin",  0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_7.bin",  0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_8.bin",  0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "sirio2_f2.bin", 0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "sirio2_f4.bin", 0x00800, 0x8acfabb9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f4.bin", 0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "sirio2_f1.bin", 0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "sirio2_f3.bin", 0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
@@ -11090,27 +11090,6 @@ static struct BurnRomInfo Sirio2RomDesc[] = {
 
 STD_ROM_PICK(Sirio2)
 STD_ROM_FN(Sirio2)
-
-static struct BurnRomInfo Sirio2aRomDesc[] = {
-	{ "sirio2_1.bin",  	0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_2.bin",  	0x00800, 0x0b316f33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_3.bin",  	0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2b_4.bin", 	0x00800, 0x73d0b1f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_5.bin",  	0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_6.bin",  	0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_7.bin",  	0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "sirio2_8.bin",  	0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	
-	{ "sirio2_f2.bin", 	0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "sirio2_f4b.bin",	0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "sirio2_f1b.bin",	0x00800, 0xb3a10228, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "sirio2_f3.bin", 	0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
-	
-	{ "sirio2_im5610.bin",     0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
-};
-
-STD_ROM_PICK(Sirio2a)
-STD_ROM_FN(Sirio2a)
 
 static struct BurnRomInfo AtaqandrRomDesc[] = {
 	{ "ataque_androide_1.bin",  	0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11965,20 +11944,10 @@ struct BurnDriver BurnDrvMooncptc = {
 
 struct BurnDriver BurnDrvSirio2 = {
 	"sirio2", "mooncrst", NULL, NULL, "1980?",
-	"Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 1)\0", NULL, "bootleg (Calfesa S.L.)", "Galaxian",
+	"Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)\0", NULL, "bootleg (Calfesa S.L.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Sirio2RomInfo, Sirio2RomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
-	NULL, 392, 224, 256, 3, 4
-};
-
-struct BurnDriver BurnDrvSirio2a = {
-	"sirio2a", "mooncrst", NULL, NULL, "1980?",
-	"Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 2)\0", NULL, "bootleg (Calfesa S.L.)", "Galaxian",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, Sirio2aRomInfo, Sirio2aRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

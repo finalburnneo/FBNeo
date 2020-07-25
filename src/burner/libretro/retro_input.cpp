@@ -24,6 +24,7 @@ static bool bAllDiagInputPressed = true;
 static bool bDiagComboActivated = false;
 static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
+static char* pDirections[MAX_PLAYERS][6];
 
 void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
@@ -174,7 +175,28 @@ static inline int CinpState(int nCode)
 	int index = sKeyBinds[nCode].index;
 	if (index == -1)
 	{
-		return input_cb_wrapper(port, sKeyBinds[nCode].device, 0, id);
+		int ret;
+		ret = input_cb_wrapper(port, sKeyBinds[nCode].device, 0, id);
+
+		// Handle fake analog inputs
+		if (pDirections[port][PGI_ANALOG_X] == NULL && pDirections[port][PGI_LEFT] != NULL && pDirections[port][PGI_RIGHT] != NULL)
+		{
+			int s = input_cb_wrapper(port, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_X);
+			if (s < -10000 && id == RETRO_DEVICE_ID_JOYPAD_LEFT)
+				ret = 1;
+			if (s > 10000 && id == RETRO_DEVICE_ID_JOYPAD_RIGHT)
+				ret = 1;
+		}
+		if (pDirections[port][PGI_ANALOG_Y] == NULL && pDirections[port][PGI_UP] != NULL && pDirections[port][PGI_DOWN] != NULL)
+		{
+			int s = input_cb_wrapper(port, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT, RETRO_DEVICE_ID_ANALOG_Y);
+			if (s < -10000 && id == RETRO_DEVICE_ID_JOYPAD_UP)
+				ret = 1;
+			if (s > 10000 && id == RETRO_DEVICE_ID_JOYPAD_DOWN)
+				ret = 1;
+		}
+
+		return ret;
 	}
 	else
 	{
@@ -202,6 +224,23 @@ static inline int CinpJoyAxis(int port, int axis)
 		// Fallback if analog trigger requested but not supported
 		if (ret == 0 && index == RETRO_DEVICE_INDEX_ANALOG_BUTTON)
 			ret = input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, sAxiBinds[port][axis].id) ? 0x7FFF : 0;
+
+		// Handle fake digital inputs
+		if (axis == RETRO_DEVICE_ID_ANALOG_X && pDirections[port][PGI_ANALOG_X] != NULL && pDirections[port][PGI_LEFT] == NULL && pDirections[port][PGI_RIGHT] == NULL)
+		{
+			if (input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT))
+				ret = -0x7FFF;
+			if (input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT))
+				ret = 0x7FFF;
+		}
+		if (axis == RETRO_DEVICE_ID_ANALOG_Y && pDirections[port][PGI_ANALOG_Y] != NULL && pDirections[port][PGI_UP] == NULL && pDirections[port][PGI_DOWN] == NULL)
+		{
+			if (input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP))
+				ret = -0x7FFF;
+			if (input_cb_wrapper(port, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN))
+				ret = 0x7FFF;
+		}
+
 		return ret;
 #ifdef RETRO_INPUT_DEPRECATED
 	}
@@ -306,6 +345,20 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
+			if (index == RETRO_DEVICE_INDEX_ANALOG_LEFT)
+			{
+				switch (id)
+				{
+					case RETRO_DEVICE_ID_ANALOG_X:
+						pDirections[port][PGI_ANALOG_X] = szn;
+						break;
+					case RETRO_DEVICE_ID_ANALOG_Y:
+						pDirections[port][PGI_ANALOG_Y] = szn;
+						break;
+					default:
+						break;
+				}
+			}
 			break;
 		}
 #ifdef RETRO_INPUT_DEPRECATED
@@ -385,6 +438,26 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	descriptor.description = szn;
 	normal_input_descriptors.push_back(descriptor);
 	bButtonMapped = true;
+	if (device == RETRO_DEVICE_JOYPAD)
+	{
+		switch (id)
+		{
+			case RETRO_DEVICE_ID_JOYPAD_UP:
+				pDirections[port][PGI_UP] = szn;
+				break;
+			case RETRO_DEVICE_ID_JOYPAD_DOWN:
+				pDirections[port][PGI_DOWN] = szn;
+				break;
+			case RETRO_DEVICE_ID_JOYPAD_LEFT:
+				pDirections[port][PGI_LEFT] = szn;
+				break;
+			case RETRO_DEVICE_ID_JOYPAD_RIGHT:
+				pDirections[port][PGI_RIGHT] = szn;
+				break;
+			default:
+				break;
+		}
+	}
 	return 0;
 }
 
@@ -2060,9 +2133,82 @@ void SetControllerInfo()
 	free(controller_infos);
 }
 
+static void SetFakeInputDescriptors()
+{
+	// WIP : if left analog mapped but not dpad, or reverse, do something to dual map
+	for (int i = 0; i < MAX_PLAYERS; i++) {
+		if (pDirections[i][PGI_ANALOG_X] != NULL && pDirections[i][PGI_LEFT] == NULL && pDirections[i][PGI_RIGHT] == NULL)
+		{
+			retro_input_descriptor descriptor;
+			std::string description;
+
+			descriptor.id = RETRO_DEVICE_ID_JOYPAD_LEFT;
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_JOYPAD;
+			descriptor.index = 0;
+			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (fake digital left)" );
+			descriptor.description = strdup(description.c_str());
+			normal_input_descriptors.push_back(descriptor);
+
+			descriptor.id = RETRO_DEVICE_ID_JOYPAD_RIGHT;
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_JOYPAD;
+			descriptor.index = 0;
+			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (fake digital right)" );
+			descriptor.description = strdup(description.c_str());
+			normal_input_descriptors.push_back(descriptor);
+		}
+		if (pDirections[i][PGI_ANALOG_Y] != NULL && pDirections[i][PGI_UP] == NULL && pDirections[i][PGI_DOWN] == NULL)
+		{
+			retro_input_descriptor descriptor;
+			std::string description;
+
+			descriptor.id = RETRO_DEVICE_ID_JOYPAD_UP;
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_JOYPAD;
+			descriptor.index = 0;
+			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (fake digital up)" );
+			descriptor.description = strdup(description.c_str());
+			normal_input_descriptors.push_back(descriptor);
+
+			descriptor.id = RETRO_DEVICE_ID_JOYPAD_DOWN;
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_JOYPAD;
+			descriptor.index = 0;
+			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (fake digital down)" );
+			descriptor.description = strdup(description.c_str());
+			normal_input_descriptors.push_back(descriptor);
+		}
+		if (pDirections[i][PGI_ANALOG_X] == NULL && pDirections[i][PGI_LEFT] != NULL && pDirections[i][PGI_RIGHT] != NULL)
+		{
+			retro_input_descriptor descriptor;
+
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_ANALOG;
+			descriptor.index = RETRO_DEVICE_INDEX_ANALOG_LEFT;
+			descriptor.id = RETRO_DEVICE_ID_ANALOG_X;
+			descriptor.description = "Left/Right (fake analog)";
+			normal_input_descriptors.push_back(descriptor);
+		}
+		if (pDirections[i][PGI_ANALOG_Y] == NULL && pDirections[i][PGI_UP] != NULL && pDirections[i][PGI_DOWN] != NULL)
+		{
+			retro_input_descriptor descriptor;
+
+			descriptor.port = i;
+			descriptor.device = RETRO_DEVICE_ANALOG;
+			descriptor.index = RETRO_DEVICE_INDEX_ANALOG_LEFT;
+			descriptor.id = RETRO_DEVICE_ID_ANALOG_Y;
+			descriptor.description = "Up/Down (fake analog)";
+			normal_input_descriptors.push_back(descriptor);
+		}
+	}
+}
+
 // Set the input descriptors
 static void SetInputDescriptors()
 {
+	SetFakeInputDescriptors();
+
 	struct retro_input_descriptor *input_descriptors = (struct retro_input_descriptor*)calloc(normal_input_descriptors.size() + 1, sizeof(struct retro_input_descriptor));
 
 	unsigned input_descriptor_idx = 0;

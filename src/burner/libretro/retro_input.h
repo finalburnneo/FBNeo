@@ -37,7 +37,15 @@ struct AxiBind
 
 #define JOY_NEG 0
 #define JOY_POS 1
+
 #define RETRO_DEVICE_ID_JOYPAD_EMPTY 255
+
+#define PGI_UP       0
+#define PGI_DOWN     1
+#define PGI_LEFT     2
+#define PGI_RIGHT    3
+#define PGI_ANALOG_X 4
+#define PGI_ANALOG_Y 5
 
 void SetDiagInpHoldFrameDelay(unsigned val);
 void InputMake(void);

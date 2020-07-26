@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14313 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14315 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3169,8 +3169,9 @@ This list contains all games supported by FinalBurn Neo.
 | dblpoint	|  	| Double Point						| 		| 1995	| Min Corp.	| Miscellaneous	| 					|
 | nes_doublestrike|  	| Double Strike (USA)					| 		| 1990	| AVE		| Miscellaneous	| 					|
 | sms_doubltgt	|  	| Double Target - Cynthia no Nemuri (Jpn)		| sms_quartet	| 1987	| Sega		| Sega Master Sy| 					|
-| dblewinga	|  	| Double Wings (Asia)					| dblewing	| 1994	| Mitchell	| DECO IC16	| 					|
-| dblewing	|  	| Double Wings						| 		| 1993	| Mitchell	| DECO IC16	| 					|
+| dblewingb	|  	| Double Wings (Asia)					| dblewing	| 1994	| Mitchell	| DECO IC16	| 					|
+| dblewing	|  	| Double Wings (set 1)					| 		| 1993	| Mitchell	| DECO IC16	| 					|
+| dblewinga	|  	| Double Wings (set 2)					| dblewing	| 1993	| Mitchell	| DECO IC16	| 					|
 | nes_doughboy	|  	| Dough Boy (Japan)					| 		| 1985	| Kemco		| Miscellaneous	| 					|
 | pce_download1	|  	| Download (Alt)					| pce_download	| 1990	| NEC Avenue	| PC Engine	| 					|
 | pce_download	|  	| Download						| 		| 1990	| NEC Avenue	| PC Engine	| 					|
@@ -4285,6 +4286,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_gboogers	|  	| Galactic Boogers (HB)					| 		| 2020	| YETI		| Sega Master Sy| 					|
 | nes_galaccru	|  	| Galactic Crusader (USA) (Unl)				| 		| 1990	| Sachen / Joy V| Miscellaneous	| 					|
 | sms_galactpr	|  	| Galactic Protector (Jpn)				| 		| 1988	| Sega		| Sega Master Sy| 					|
+| galastrm	|  	| Galactic Storm (Japan)				| 		| 1992	| Taito Corporat| Miscellaneous	| 					|
 | gwarrior	|  	| Galactic Warriors					| 		| 1985	| Konami	| GX578		| 					|
 | galaga88a	|  	| Galaga '88 (02-03-88)					| galaga88	| 1987	| Namco		| System 1	| 					|
 | galaga88j	|  	| Galaga '88 (Japan)					| galaga88	| 1987	| Namco		| System 1	| 					|

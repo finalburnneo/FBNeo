@@ -3227,8 +3227,9 @@ DRV		BurnDrvDblpoind;
 DRV		BurnDrvDblpoint;
 DRV		BurnDrvnes_doublestrike;
 DRV		BurnDrvsms_doubltgt;
-DRV		BurnDrvDblewinga;
+DRV		BurnDrvDblewingb;
 DRV		BurnDrvDblewing;
+DRV		BurnDrvDblewinga;
 DRV		BurnDrvnes_doughboy;
 DRV		BurnDrvpce_download1;
 DRV		BurnDrvpce_download;
@@ -4363,6 +4364,7 @@ DRV		BurnDrvGground;
 DRV		BurnDrvsms_gboogers;
 DRV		BurnDrvnes_galaccru;
 DRV		BurnDrvsms_galactpr;
+DRV		BurnDrvGalastrm;
 DRV		BurnDrvGwarrior;
 DRV		BurnDrvGalaga88a;
 DRV		BurnDrvGalaga88j;
@@ -17807,8 +17809,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDblpoint,			// Double Point
 	&BurnDrvnes_doublestrike,	// Double Strike (USA)
 	&BurnDrvsms_doubltgt,		// Double Target - Cynthia no Nemuri (Jpn)
-	&BurnDrvDblewinga,			// Double Wings (Asia)
-	&BurnDrvDblewing,			// Double Wings
+	&BurnDrvDblewingb,			// Double Wings (Asia)
+	&BurnDrvDblewing,			// Double Wings (set 1)
+	&BurnDrvDblewinga,			// Double Wings (set 2)
 	&BurnDrvnes_doughboy,		// Dough Boy (Japan)
 	&BurnDrvpce_download1,		// Download (Alt)
 	&BurnDrvpce_download,		// Download
@@ -18943,6 +18946,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_gboogers,		// Galactic Boogers (HB)
 	&BurnDrvnes_galaccru,		// Galactic Crusader (USA) (Unl)
 	&BurnDrvsms_galactpr,		// Galactic Protector (Jpn)
+	&BurnDrvGalastrm,			// Galactic Storm (Japan)
 	&BurnDrvGwarrior,			// Galactic Warriors
 	&BurnDrvGalaga88a,			// Galaga '88 (02-03-88)
 	&BurnDrvGalaga88j,			// Galaga '88 (Japan)

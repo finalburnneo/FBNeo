@@ -654,7 +654,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Double Wings
+// Double Wings (set 1)
 
 static struct BurnRomInfo dblewingRomDesc[] = {
 	{ "kp_00-.3d",	0x040000, 0x547dc83e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -672,16 +672,12 @@ static struct BurnRomInfo dblewingRomDesc[] = {
 
 STD_ROM_PICK(dblewing)
 STD_ROM_FN(dblewing)
-	
-// Double Wings (Asia)
 
-/*
-The most noticeable difference with the set below is that it doesn't use checkpoints, but respawns you when you die.
-Checkpoints were more common in Japan, so this is likely to be an export version.
-*/
+// Double Wings (set 2)
+
 static struct BurnRomInfo dblewingaRomDesc[] = {
-	{ "17.3d",	    0x040000, 0x3a7ba822, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "18.5d",	    0x040000, 0xe5f5f004, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.3d",		0x040000, 0x1e6b0653, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1.5d",		0x040000, 0x4d537dc9, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "kp_02-.10h",	0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -695,10 +691,33 @@ static struct BurnRomInfo dblewingaRomDesc[] = {
 
 STD_ROM_PICK(dblewinga)
 STD_ROM_FN(dblewinga)
+	
+// Double Wings (Asia)
+
+/*
+The most noticeable difference with the set below is that it doesn't use checkpoints, but respawns you when you die.
+Checkpoints were more common in Japan, so this is likely to be an export version.
+*/
+static struct BurnRomInfo dblewingbRomDesc[] = {
+	{ "17.3d",	    0x040000, 0x3a7ba822, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "18.5d",	    0x040000, 0xe5f5f004, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "kp_02-.10h",	0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "mbe-02.8h",	0x100000, 0x5a6d3ac5, 3 | BRF_GRA },           //  3 Character and Background Tiles
+
+	{ "mbe-00.14a",	0x100000, 0xe33f5c93, 4 | BRF_GRA },           //  4 Sprites
+	{ "mbe-01.16a",	0x100000, 0xef452ad7, 4 | BRF_GRA },           //  5
+
+	{ "kp_03-.16h",	0x020000, 0x5d7f930d, 5 | BRF_SND },           //  6 OKI M6295 Samples
+};
+
+STD_ROM_PICK(dblewingb)
+STD_ROM_FN(dblewingb)
 
 struct BurnDriver BurnDrvDblewing = {
 	"dblewing", NULL, NULL, NULL, "1993",
-	"Double Wings\0", NULL, "Mitchell", "DECO IC16",
+	"Double Wings (set 1)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, dblewingRomInfo, dblewingRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
@@ -707,11 +726,21 @@ struct BurnDriver BurnDrvDblewing = {
 };
 
 struct BurnDriver BurnDrvDblewinga = {
-	"dblewinga", "dblewing", NULL, NULL, "1994",
-	"Double Wings (Asia)\0", NULL, "Mitchell", "DECO IC16",
+	"dblewinga", "dblewing", NULL, NULL, "1993",
+	"Double Wings (set 2)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, dblewingaRomInfo, dblewingaRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvDblewingb = {
+	"dblewingb", "dblewing", NULL, NULL, "1994",
+	"Double Wings (Asia)\0", NULL, "Mitchell", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	NULL, dblewingbRomInfo, dblewingbRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
 };

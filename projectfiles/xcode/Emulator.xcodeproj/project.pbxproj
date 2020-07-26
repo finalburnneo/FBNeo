@@ -1015,6 +1015,7 @@
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
+		FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */; };
 		FEE7CC3E242285DC00B311BC /* d_sshangha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */; };
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
 		FEE7CC43242285FC00B311BC /* d_kickgoal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */; };
@@ -2577,6 +2578,7 @@
 		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
 		FEDA9E2024C203950060BF0B /* poly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poly.cpp; sourceTree = "<group>"; };
 		FEDA9E2124C203950060BF0B /* poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly.h; sourceTree = "<group>"; };
+		FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_x2222.cpp; sourceTree = "<group>"; };
 		FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_sshangha.cpp; sourceTree = "<group>"; };
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
 		FEE7CC41242285FC00B311BC /* d_kickgoal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_kickgoal.cpp; sourceTree = "<group>"; };
@@ -3735,6 +3737,7 @@
 				FE1B1F8023561A690065200C /* d_welltris.cpp */,
 				FE1B1F7D23561A690065200C /* d_wrally.cpp */,
 				FE1B1F4A23561A680065200C /* d_wwfwfest.cpp */,
+				FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */,
 				FE1B1F4823561A680065200C /* d_xorworld.cpp */,
 				FE1B1F3623561A680065200C /* d_yunsun16.cpp */,
 				FE1B1F7F23561A690065200C /* d_yunsung8.cpp */,
@@ -6000,6 +6003,7 @@
 				FE1B251723561A760065200C /* d_midas.cpp in Sources */,
 				FE1B269723561A770065200C /* d_williams.cpp in Sources */,
 				FE1B262C23561A770065200C /* cpsrd.cpp in Sources */,
+				FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */,
 				FE1B25CD23561A760065200C /* d_parodius.cpp in Sources */,
 				FE1B253523561A760065200C /* d_legionna.cpp in Sources */,
 				FE1B25F123561A760065200C /* ide.cpp in Sources */,

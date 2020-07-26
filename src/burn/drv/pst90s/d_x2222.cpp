@@ -565,12 +565,23 @@ static struct BurnRomInfo x2222oRomDesc[] = {
 STD_ROM_PICK(x2222o)
 STD_ROM_FN(x2222o)
 
+static INT32 x2222oInit()
+{
+	INT32 nRet = DrvInit();
+
+	if (nRet == 0) {
+		memcpy (DrvBootROM + 0x80000, DrvBootROM, 0x80000);
+	}
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvX2222o = {
 	"x2222o", "x2222", NULL, NULL, "2000",
 	"X2222 (5-level prototype)\0", "Prototype - No Sound, Incomplete game", "Oriental Soft / Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, x2222oRomInfo, x2222oRomName, NULL, NULL, NULL, NULL, X2222InputInfo, X2222DIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x10000,
+	x2222oInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x10000,
 	240, 320, 3, 4
 };

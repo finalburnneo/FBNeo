@@ -25661,10 +25661,10 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 };
 
 
-// Menace from Triton (HB, v1.0.2)
+// Menace from Triton (HB, v1.1)
 
 static struct BurnRomInfo MSX_mtritonRomDesc[] = {
-	{ "menace from triton v1.0.2 (2020)(brain games).rom",	49152, 0x77b00046, BRF_PRG | BRF_ESS },
+	{ "menace from triton v1.1 (2020)(brain games).rom",	49152, 0x02b38a95, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
@@ -25672,7 +25672,7 @@ STD_ROM_FN(MSX_mtriton)
 
 struct BurnDriver BurnDrvMSX_mtriton = {
 	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
-	"Menace from Triton (HB, v1.0.2)\0", NULL, "Brain Games", "MSX",
+	"Menace from Triton (HB, v1.1)\0", NULL, "Brain Games", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -25859,3 +25859,26 @@ struct BurnDriver BurnDrvMSX_snowboard = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+
+// Block Puzzle (HB)
+
+static struct BurnRomInfo MSX_blpuzzleRomDesc[] = {
+	{ "blockpuzzle (2020)(david heremans).rom",	32768, 0x13b4d6af, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_blpuzzle, MSX_blpuzzle, msx_msx)
+STD_ROM_FN(MSX_blpuzzle)
+
+struct BurnDriver BurnDrvMSX_blpuzzle = {
+	"msx_blpuzzle", NULL, "msx_msx", NULL, "2020",
+	"Block Puzzle (HB)\0", NULL, "David Heremans", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_blpuzzleRomInfo, MSX_blpuzzleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+

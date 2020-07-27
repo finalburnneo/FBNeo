@@ -10789,6 +10789,24 @@ struct BurnDriver BurnDrvnes_gaplus = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_journeyalRomDesc[] = {
+	{ "journey to the center of the alien (2019)(mojon twins).nes",          73744, 0xd4b8eaa5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_journeyal)
+STD_ROM_FN(nes_journeyal)
+
+struct BurnDriver BurnDrvnes_journeyal = {
+	"nes_journeyal", NULL, NULL, NULL, "2019",
+	"Journey to the Center of the Alien (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_journeyalRomInfo, nes_journeyalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_blockageRomDesc[] = {
 	{ "Blockage (HB, v0.3.2).nes",          40976, 0x1c5f7bcf, BRF_ESS | BRF_PRG },
 };

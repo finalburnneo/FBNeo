@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14315 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14318 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -615,6 +615,7 @@ This list contains all games supported by FinalBurn Neo.
 | armwar	|  	| Armored Warriors (941024 Europe)			| 		| 1994	| Capcom	| CPS2		| 					|
 | armwaru	|  	| Armored Warriors (941024 USA)				| armwar	| 1994	| Capcom	| CPS2		| 					|
 | msx_armymove	|  	| Army Moves (Euro)					| 		| 1987	| Dinamic Softwa| MSX		| Select Keyboard mode, and use Joystick|
+| sg1k_arnodash	|  	| Arno Dash (HB)					| 		| 2020	| Under4MHz	| Sega SG-1000	| 					|
 | md_arnoldp	|  	| Arnold Palmer Tournament Golf (Euro, USA)		| 		| 1989	| Sega		| Sega Megadrive| 					|
 | md_arrowp	|  	| Arrow Flash (USA, Prototype)				| md_arrow	| 1990	| Renovation	| Sega Megadrive| 					|
 | md_arrow	|  	| Arrow Flash (World)					| 		| 1990	| Sega		| Sega Megadrive| 					|
@@ -1262,6 +1263,7 @@ This list contains all games supported by FinalBurn Neo.
 | blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
+| msx_blpuzzle	|  	| Block Puzzle (HB)					| 		| 2020	| David Heremans| MSX		| 					|
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
@@ -5647,6 +5649,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_joshubatjer|  	| Joshua & the Battle of Jericho (USA)			| 		| 1992	| Wisdom Tree	| Miscellaneous	| 					|
 | gg_striderr	|  	| Journey from Darkness - Strider Returns (Euro, USA)	| 		| 1992	| U.S. Gold	| Sega Game Gear| 					|
 | nes_journsil	|  	| Journey to Silius (USA)				| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
+| nes_journeyal	|  	| Journey to the Center of the Alien (HB)		| 		| 2019	| Mojon Twins	| Miscellaneous	| 					|
 | journey	|  	| Journey						| 		| 1983	| Bally Midway	| Miscellaneous	| 					|
 | cv_joustsgm	|  	| Joust (HB)						| 		| 2014	| Atarisoft	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | cv_joust	|  	| Joust (Prototype)					| 		| 1983	| Atarisoft	| ColecoVision	| 					|
@@ -6985,7 +6988,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_memmanor	|  	| Memory Manor						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | msx_menace	|  	| Menace (HB)						| 		| 2009	| The New Image	| MSX		| 					|
 | nes_menacebeach|  	| Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
-| msx_mtriton	|  	| Menace from Triton (HB, v1.0.2)			| 		| 2020	| Brain Games	| MSX		| 					|
+| msx_mtriton	|  	| Menace from Triton (HB, v1.1)				| 		| 2020	| Brain Games	| MSX		| 					|
 | md_menacer	|  	| Menacer 6-Game Cartridge (Euro, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_mendelpalace|  	| Mendel Palace (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | md_menghu	|  	| Meng Huan Shui Guo Pan - 777 Casino (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -10461,9 +10464,9 @@ This list contains all games supported by FinalBurn Neo.
 | gg_solitarp	|  	| Solitaire Poker (Euro, USA)				| 		| 1991	| Sega		| Sega Game Gear| 					|
 | solfigtr	|  	| Solitary Fighter (World)				| 		| 1991	| Taito Corporat| Taito F2	| 					|
 | slspirit	|  	| Solite Spirits					| 		| 1999	| Promat	| Miscellaneous	| 					|
+| solomonj	|  	| Solomon no Kagi (Japan)				| solomon	| 1986	| Tecmo		| Miscellaneous	| 					|
 | sms_solomon	|  	| Solomon no Kagi - Oujo Rihita no Namida (Jpn)		| 		| 1988	| Salio		| Sega Master Sy| 					|
 | spec_solomon	|  	| Solomon's Key (48K)					| 		| 1987	| U.S. Gold	| ZX Spectrum	| 					|
-| solomonj	|  	| Solomon's Key (Japan)					| solomon	| 1986	| Tecmo		| Miscellaneous	| 					|
 | solomon	|  	| Solomon's Key (US)					| 		| 1986	| Tecmo		| Miscellaneous	| 					|
 | nes_solomonskey|  	| Solomon's Key (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | nes_solstice	|  	| Solstice (Japan)					| 		| 1990	| Epic / Sony Re| Miscellaneous	| 					|

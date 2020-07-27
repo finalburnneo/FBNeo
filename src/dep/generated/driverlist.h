@@ -623,6 +623,7 @@ DRV		BurnDrvCpsArmwara;
 DRV		BurnDrvCpsArmwar;
 DRV		BurnDrvCpsArmwaru;
 DRV		BurnDrvMSX_armymove;
+DRV		BurnDrvsg1k_arnodash;
 DRV		BurnDrvmd_arnoldp;
 DRV		BurnDrvmd_arrowp;
 DRV		BurnDrvmd_arrow;
@@ -1280,6 +1281,7 @@ DRV		BurnDrvBlckout3;
 DRV		BurnDrvBlckoutj;
 DRV		BurnDrvBlockout;
 DRV		BurnDrvBlckout2;
+DRV		BurnDrvMSX_blpuzzle;
 DRV		BurnDrvMSX_blockrun;
 DRV		BurnDrvcv_blockrun;
 DRV		BurnDrvBlockade;
@@ -3330,7 +3332,7 @@ DRV		BurnDrvDwex;			// no comment [NOT WORKING]
 DRV		BurnDrvDwex101cn;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvDrgw2100hk;
-DRV		BurnDrvDrgw2x;
+DRV		BurnDrvDrgw2100x;
 DRV		BurnDrvDrgw2;
 DRV		BurnDrvdwpc;
 DRV		BurnDrvdwpc110cn;
@@ -5747,6 +5749,7 @@ DRV		BurnDrvmd_joshua;
 DRV		BurnDrvnes_joshubatjer;
 DRV		BurnDrvgg_striderr;
 DRV		BurnDrvnes_journsil;
+DRV		BurnDrvnes_journeyal;
 DRV		BurnDrvJourney;
 DRV		BurnDrvcv_joustsgm;
 DRV		BurnDrvcv_joust;
@@ -10647,9 +10650,9 @@ DRV		BurnDrvgg_solitair;
 DRV		BurnDrvgg_solitarp;
 DRV		BurnDrvSolfigtr;
 DRV		BurnDrvSlspirit;
+DRV		BurnDrvSolomonj;
 DRV		BurnDrvsms_solomon;
 DRV		BurnSpecsolomon;
-DRV		BurnDrvSolomonj;
 DRV		BurnDrvSolomon;
 DRV		BurnDrvnes_solomonskey;
 DRV		BurnDrvnes_solstice;
@@ -15205,6 +15208,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsArmwar,			// Armored Warriors (941024 Europe)
 	&BurnDrvCpsArmwaru,			// Armored Warriors (941024 USA)
 	&BurnDrvMSX_armymove,		// Army Moves (Euro)
+	&BurnDrvsg1k_arnodash,		// Arno Dash (HB)
 	&BurnDrvmd_arnoldp,			// Arnold Palmer Tournament Golf (Euro, USA)
 	&BurnDrvmd_arrowp,			// Arrow Flash (USA, Prototype)
 	&BurnDrvmd_arrow,			// Arrow Flash (World)
@@ -15862,6 +15866,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlckoutj,			// Block Out (Japan)
 	&BurnDrvBlockout,			// Block Out (set 1)
 	&BurnDrvBlckout2,			// Block Out (set 2)
+	&BurnDrvMSX_blpuzzle,		// Block Puzzle (HB)
 	&BurnDrvMSX_blockrun,		// Blockade Runner (Jpn)
 	&BurnDrvcv_blockrun,		// Blockade Runner
 	&BurnDrvBlockade,			// Blockade
@@ -17912,7 +17917,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDwex101cn,			// Dragon World 3 EX (V101, China) [no comment, NOT WORKING]
 #endif
 	&BurnDrvDrgw2100hk,			// Dragon World II (V100, Hong Kong)
-	&BurnDrvDrgw2x,				// Dragon World II (V100X, World)
+	&BurnDrvDrgw2100x,			// Dragon World II (V100X, World)
 	&BurnDrvDrgw2,				// Dragon World II (V110X, World)
 	&BurnDrvdwpc,				// Dragon World Pretty Chance (V101, Japan)
 	&BurnDrvdwpc110cn,			// Dragon World Pretty Chance (V110, China)
@@ -20329,6 +20334,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_joshubatjer,	// Joshua & the Battle of Jericho (USA)
 	&BurnDrvgg_striderr,		// Journey from Darkness - Strider Returns (Euro, USA)
 	&BurnDrvnes_journsil,		// Journey to Silius (USA)
+	&BurnDrvnes_journeyal,		// Journey to the Center of the Alien (HB)
 	&BurnDrvJourney,			// Journey
 	&BurnDrvcv_joustsgm,		// Joust (HB)
 	&BurnDrvcv_joust,			// Joust (Prototype)
@@ -21687,7 +21693,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_memmanor,		// Memory Manor
 	&BurnDrvMSX_menace,			// Menace (HB)
 	&BurnDrvnes_menacebeach,	// Menace Beach (USA) (Unl)
-	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.0.2)
+	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.1)
 	&BurnDrvmd_menacer,			// Menacer 6-Game Cartridge (Euro, USA)
 	&BurnDrvnes_mendelpalace,	// Mendel Palace (USA)
 	&BurnDrvmd_menghu,			// Meng Huan Shui Guo Pan - 777 Casino (Chi)
@@ -25229,9 +25235,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_solitarp,		// Solitaire Poker (Euro, USA)
 	&BurnDrvSolfigtr,			// Solitary Fighter (World)
 	&BurnDrvSlspirit,			// Solite Spirits
+	&BurnDrvSolomonj,			// Solomon no Kagi (Japan)
 	&BurnDrvsms_solomon,		// Solomon no Kagi - Oujo Rihita no Namida (Jpn)
 	&BurnSpecsolomon,			// Solomon's Key (48K)
-	&BurnDrvSolomonj,			// Solomon's Key (Japan)
 	&BurnDrvSolomon,			// Solomon's Key (US)
 	&BurnDrvnes_solomonskey,	// Solomon's Key (USA)
 	&BurnDrvnes_solstice,		// Solstice (Japan)

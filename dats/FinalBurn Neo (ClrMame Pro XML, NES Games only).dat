@@ -4016,6 +4016,13 @@
 		<rom name="Journey to Silius (USA).nes" size="262160" crc="8f77cce0"/>
 		<driver status="good"/>
 	</game>
+	<game name="journeyal">
+		<description>Journey to the Center of the Alien (HB)</description>
+		<year>2019</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="journey to the center of the alien (2019)(mojon twins).nes" size="73744" crc="d4b8eaa5"/>
+		<driver status="good"/>
+	</game>
 	<game name="joust">
 		<description>Joust (USA)</description>
 		<year>1988</year>

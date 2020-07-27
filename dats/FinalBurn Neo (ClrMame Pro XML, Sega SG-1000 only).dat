@@ -33,6 +33,13 @@
 		<rom name="james bond 007 (tw).bin" size="16384" crc="76d6c64d"/>
 		<driver status="good"/>
 	</game>
+	<game name="arnodash">
+		<description>Arno Dash (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4MHz</manufacturer>
+		<rom name="arno dash (2020)(under4mhz).sg" size="32768" crc="ea921f7c"/>
+		<driver status="good"/>
+	</game>
 	<game name="bankp">
 		<description>Bank Panic (Jpn)</description>
 		<year>1985</year>
@@ -660,7 +667,7 @@
 		<description>Jet Paco and Jet Puri SG-1000 (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Mojon Twins</manufacturer>
-		<rom name="jet-paco-and-jet-puri-ntsc." size="49152" crc="d31c6b3b"/>
+		<rom name="jet-paco-and-jet-puri-ntsc.sg" size="49152" crc="d31c6b3b"/>
 		<driver status="good"/>
 	</game>
 	<game name="champkent" cloneof="champken" romof="champken">

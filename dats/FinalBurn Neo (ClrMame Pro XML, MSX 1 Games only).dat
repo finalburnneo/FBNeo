@@ -1205,6 +1205,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="blpuzzle" romof="msx">
+		<description>Block Puzzle (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>David Heremans</manufacturer>
+		<rom name="blockpuzzle (2020)(david heremans).rom" size="32768" crc="13b4d6af"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="blockrun" romof="msx">
 		<description>Blockade Runner (Jpn)</description>
 		<year>1985</year>
@@ -6991,10 +7001,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtriton" romof="msx">
-		<description>Menace from Triton (HB, v1.0.2) [Homebrew]</description>
+		<description>Menace from Triton (HB, v1.1) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Brain Games</manufacturer>
-		<rom name="menace from triton v1.0.2 (2020)(brain games).rom" size="49152" crc="77b00046"/>
+		<rom name="menace from triton v1.1 (2020)(brain games).rom" size="49152" crc="02b38a95"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

@@ -4397,7 +4397,7 @@ struct BurnDriver BurnDrvsg1k_cherilp = {
 // Jet Paco and Jet Puri SG-1000 (HB)
 
 static struct BurnRomInfo sg1k_jetpacoRomDesc[] = {
-	{ "jet-paco-and-jet-puri-ntsc.",	0x0c000, 0xd31c6b3b, BRF_PRG | BRF_ESS },
+	{ "jet-paco-and-jet-puri-ntsc.sg",	0x0c000, 0xd31c6b3b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_jetpaco)
@@ -4409,6 +4409,26 @@ struct BurnDriver BurnDrvsg1k_jetpaco = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_jetpacoRomInfo, sg1k_jetpacoRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+
+// Arno Dash (HB)
+
+static struct BurnRomInfo sg1k_arnodashRomDesc[] = {
+	{ "arno dash (2020)(under4mhz).sg",	0x08000, 0xea921f7c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_arnodash)
+STD_ROM_FN(sg1k_arnodash)
+
+struct BurnDriver BurnDrvsg1k_arnodash = {
+	"sg1k_arnodash", NULL, NULL, NULL, "2020",
+	"Arno Dash (HB)\0", NULL, "Under4MHz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_arnodashRomInfo, sg1k_arnodashRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

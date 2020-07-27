@@ -1107,11 +1107,11 @@ static struct BurnInputInfo LosttombInputList[] =
 	{"left Left"         , BIT_DIGITAL   , GalInputPort0 + 5, "p1 left"   },
 	{"Left Right"        , BIT_DIGITAL   , GalInputPort0 + 4, "p1 right"  },
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort1 + 6, "p1 fire 1" },
-	
-	{"Right Up"          , BIT_DIGITAL   , GalInputPort1 + 2, "p2 up"     },
-	{"Right Down"        , BIT_DIGITAL   , GalInputPort1 + 3, "p2 down"   },
-	{"Right Left"        , BIT_DIGITAL   , GalInputPort1 + 5, "p2 left"   },
-	{"Right Right"       , BIT_DIGITAL   , GalInputPort1 + 4, "p2 right"  },
+
+	{"Right Up"          , BIT_DIGITAL   , GalInputPort1 + 2, "p1 up 2"   },
+	{"Right Down"        , BIT_DIGITAL   , GalInputPort1 + 3, "p1 down 2" },
+	{"Right Left"        , BIT_DIGITAL   , GalInputPort1 + 5, "p1 left 2" },
+	{"Right Right"       , BIT_DIGITAL   , GalInputPort1 + 4, "p1 right 2"},
 
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },

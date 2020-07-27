@@ -1712,18 +1712,17 @@ static struct BurnRomInfo shadowwRomDesc[] = {
 	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
 	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11 
 
+	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
 	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
 	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
 	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "shadoww_12a.xx", 0x10000, 0x9bb07731, 6 | BRF_GRA },           // 15
-	{ "shadoww_12b.xx", 0x10000, 0xa4a950a2, 6 | BRF_GRA },           // 16
-	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 17
-	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 18
-	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 19
-	{ "shadoww_13a.xx", 0x10000, 0x996d2fa5, 6 | BRF_GRA },           // 20
-	{ "shadoww_13b.xx", 0x10000, 0xb8df8a34, 6 | BRF_GRA },           // 21
-
-	{ "4.4a",     		  0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 22 MSM6295 Samples
+	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           // 15
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
+	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 19
+	
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
 };
 
 STD_ROM_PICK(shadoww)
@@ -1760,18 +1759,17 @@ static struct BurnRomInfo shadowwaRomDesc[] = {
 	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
 	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11 
 
-	{ "6.3m",           0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
+	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
+	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
 	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
 	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "shadoww_12a.xx", 0x10000, 0x9bb07731, 6 | BRF_GRA },           // 15
-	{ "shadoww_12b.xx", 0x10000, 0xa4a950a2, 6 | BRF_GRA },           // 16
-	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 17
-	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 18
-	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 19
-	{ "shadoww_13a.xx", 0x10000, 0x996d2fa5, 6 | BRF_GRA },           // 20
-	{ "shadoww_13b.xx", 0x10000, 0xb8df8a34, 6 | BRF_GRA },           // 21
-
-	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 22 MSM6295 Samples
+	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           // 15
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
+	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 19
+	
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
 };
 
 STD_ROM_PICK(shadowwa)
@@ -1808,16 +1806,17 @@ static struct BurnRomInfo gaidenRomDesc[] = {
 	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
 	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11 
 
+	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
 	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
 	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
 	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "gaiden_12.3s", 	0x20000, 0x90f1e13a, 6 | BRF_GRA },           // 15
+	{ "12.3s", 		    0x20000, 0x90f1e13a, 6 | BRF_GRA },           // 15
 	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
 	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
 	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
-	{ "gaiden_13.1s", 	0x20000, 0x7d9f5c5e, 6 | BRF_GRA },           // 19
+	{ "13.1s", 			0x20000, 0x7d9f5c5e, 6 | BRF_GRA },           // 19
 
-	{ "4.4a",     		  0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
 };
 
 STD_ROM_PICK(gaiden)
@@ -1857,15 +1856,13 @@ static struct BurnRomInfo ryukendnRomDesc[] = {
 	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
 	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
 	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "shadoww_12a.xx", 0x10000, 0x9bb07731, 6 | BRF_GRA },           // 15
-	{ "ryukendn_12b.xx",0x10000, 0x1773628a, 6 | BRF_GRA },           // 16
-	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 17
-	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 18
-	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 19
-	{ "shadoww_13a.xx", 0x10000, 0x996d2fa5, 6 | BRF_GRA },           // 20
-	{ "ryukendn_13b.xx",0x10000, 0x1f43c507, 6 | BRF_GRA },           // 21
+	{ "12.3s", 			0x20000, 0x277204f0, 6 | BRF_GRA },           // 15
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
+	{ "13.1s", 			0x20000, 0x4e56a508, 6 | BRF_GRA },           // 19
 
-	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 22 MSM6295 Samples
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
 };
 
 STD_ROM_PICK(ryukendn)
@@ -1905,11 +1902,11 @@ static struct BurnRomInfo ryukendnaRomDesc[] = {
 	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
 	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
 	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "12.3s",    		0x20000, 0x277204f0, 6 | BRF_GRA },           // 15
+	{ "12.3s", 			0x20000, 0x277204f0, 6 | BRF_GRA },           // 15
 	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
 	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
 	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
-	{ "13.1s",    		0x20000, 0x4e56a508, 6 | BRF_GRA },           // 19
+	{ "13.1s", 			0x20000, 0x4e56a508, 6 | BRF_GRA },           // 19
 
 	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
 };

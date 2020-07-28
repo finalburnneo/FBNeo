@@ -25761,10 +25761,10 @@ struct BurnDriver BurnDrvMSX_slapshot = {
 };
 
 
-// Stupid Martians (HB)
+// Stupid Martians (HB, v1.1)
 
 static struct BurnRomInfo MSX_stupmartRomDesc[] = {
-	{ "stupid martians (2020)(visualedu).rom",	65536, 0xb32f9cc7, BRF_PRG | BRF_ESS },
+	{ "stupid martians v1.1 (2020)(visualedu).rom",	65536, 0x31e3f039, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_stupmart, MSX_stupmart, msx_msx)
@@ -25772,7 +25772,7 @@ STD_ROM_FN(MSX_stupmart)
 
 struct BurnDriver BurnDrvMSX_stupmart = {
 	"msx_stupmart", NULL, "msx_msx", NULL, "2020",
-	"Stupid Martians (HB)\0", NULL, "Visualedu", "MSX",
+	"Stupid Martians (HB, v1.1)\0", NULL, "Visualedu", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_stupmartRomInfo, MSX_stupmartRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -25841,10 +25841,10 @@ struct BurnDriver BurnDrvMSX_jaasta = {
 };
 
 
-// Snowboarding (HB)
+// Snowboarding (HB, v1.01)
 
 static struct BurnRomInfo MSX_snowboardRomDesc[] = {
-	{ "snowboarding (2020)(revelo).rom",	49152, 0x30ceba26, BRF_PRG | BRF_ESS },
+	{ "snowboarding v1.01 (2020)(revelo).rom",	49152, 0x8efaf6b4, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_snowboard, MSX_snowboard, msx_msx)
@@ -25852,7 +25852,7 @@ STD_ROM_FN(MSX_snowboard)
 
 struct BurnDriver BurnDrvMSX_snowboard = {
 	"msx_snowboard", NULL, "msx_msx", NULL, "2020",
-	"Snowboarding (HB)\0", NULL, "Revelo", "MSX",
+	"Snowboarding (HB, v1.01)\0", NULL, "Revelo", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_snowboardRomInfo, MSX_snowboardRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -25861,10 +25861,10 @@ struct BurnDriver BurnDrvMSX_snowboard = {
 };
 
 
-// Block Puzzle (HB)
+// Block Puzzle (HB, v1.1)
 
 static struct BurnRomInfo MSX_blpuzzleRomDesc[] = {
-	{ "blockpuzzle (2020)(david heremans).rom",	32768, 0x13b4d6af, BRF_PRG | BRF_ESS },
+	{ "blockpuzzle v1.1 (2020)(david heremans).rom",	32768, 0xe89b0da3, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_blpuzzle, MSX_blpuzzle, msx_msx)
@@ -25872,7 +25872,7 @@ STD_ROM_FN(MSX_blpuzzle)
 
 struct BurnDriver BurnDrvMSX_blpuzzle = {
 	"msx_blpuzzle", NULL, "msx_msx", NULL, "2020",
-	"Block Puzzle (HB)\0", NULL, "David Heremans", "MSX",
+	"Block Puzzle (HB, v1.1)\0", NULL, "David Heremans", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_blpuzzleRomInfo, MSX_blpuzzleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
@@ -25881,4 +25881,62 @@ struct BurnDriver BurnDrvMSX_blpuzzle = {
 };
 
 
+// L'Abbaye des Morts (HB, v1.1)
+
+static struct BurnRomInfo MSX_labbayeRomDesc[] = {
+	{ "abbaye des morts v1.1 (2020)(retrodeluxe).rom",	262144, 0x38e9bdb2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_labbaye, MSX_labbaye, msx_msx)
+STD_ROM_FN(MSX_labbaye)
+
+struct BurnDriver BurnDrvMSX_labbaye = {
+	"msx_labbaye", NULL, "msx_msx", NULL, "2020",
+	"L'Abbaye des Morts (HB, v1.1)\0", NULL, "Retro Deluxe", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_labbayeRomInfo, MSX_labbayeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Molecule Man
+
+static struct BurnRomInfo MSX_molecmanRomDesc[] = {
+	{ "molecule man (1986)(mastertronic)[run'cas-'].cas",	43687, 0x4c3ebaee, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_molecman, MSX_molecman, msx_msx)
+STD_ROM_FN(MSX_molecman)
+
+struct BurnDriver BurnDrvMSX_molecman = {
+	"msx_molecman", NULL, "msx_msx", NULL, "1986",
+	"Molecule Man\0", NULL, "Mastertronic", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_molecmanRomInfo, MSX_molecmanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Pac-Land (Euro)
+
+static struct BurnRomInfo MSX_paclandRomDesc[] = {
+	{ "pac-land (1988)(grandslam entertainments)[bload'cas-',r].cas",	47329, 0x45490b62, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pacland, MSX_pacland, msx_msx)
+STD_ROM_FN(MSX_pacland)
+
+struct BurnDriver BurnDrvMSX_pacland = {
+	"msx_pacland", NULL, "msx_msx", NULL, "1988",
+	"Pac-Land (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_paclandRomInfo, MSX_paclandRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
 

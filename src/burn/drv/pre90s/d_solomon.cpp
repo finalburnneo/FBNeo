@@ -58,7 +58,7 @@ STDINPUTINFO(Solomon)
 
 static struct BurnDIPInfo SolomonDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x02, NULL					},
+	{0x11, 0xff, 0xff, 0x00, NULL					},
 	{0x12, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
@@ -125,7 +125,7 @@ static void __fastcall solomon_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe604:
-			flipscreen = data & 1;
+			flipscreen = 0; //data & 1; (commented for 2p/2joy game)
 		return;
 
 		case 0xe800:
@@ -369,6 +369,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.12, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -397,6 +398,18 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	return 0;
+}
+
+static void DrvPaletteUpdate()
+{
+	for (INT32 i = 0; i < 0x200; i+=2)
+	{
+		UINT8 r = BurnPalRAM[i+0] & 0xf;
+		UINT8 g = BurnPalRAM[i+0] >> 4;
+		UINT8 b = BurnPalRAM[i+1] & 0xf;
+		
+		BurnPalette[i/2] = BurnHighCol(pal4bit(r), pal4bit(g), pal4bit(b), 0);
+	}
 }
 
 static void draw_sprites()
@@ -428,7 +441,7 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (BurnRecalc) {
-		BurnPaletteUpdate_xxxxBBBBGGGGRRRR();
+		DrvPaletteUpdate();
 		BurnRecalc = 1;
 	}
 
@@ -449,6 +462,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
+
+	ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0, sizeof(DrvInputs));

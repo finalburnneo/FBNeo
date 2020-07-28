@@ -2,9 +2,6 @@
 // Code by iq_132, fixups & bring up-to-date by dink Aug 19, 2014
 // SGM added April 2019 -dink
 
-// TOFIX:
-// Deep Dungeon Adventure (SGM) - input issues - NOTE: MSX version works fine
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"
@@ -99,19 +96,6 @@ static struct BurnDIPInfo ColecoDIPList[]=
 	{0x25, 0xff, 0xff, 0x00, NULL				},
 	{0x26, 0xff, 0xff, 0x00, NULL				},
 
-	{0   , 0xfe, 0   ,    3, "Port 1 Controller"		},
-	{0x25, 0x01, 0x07, 0x00, "ColecoVision Controller"	},
-	{0x25, 0x01, 0x07, 0x01, "Super Action Controller"	},
-	{0x25, 0x01, 0x07, 0x02, "Driving Controller"		},
-
-	{0   , 0xfe, 0   ,    2, "Port 2 Controller"		},
-	{0x25, 0x01, 0x70, 0x00, "ColecoVision Controller"	},
-	{0x25, 0x01, 0x70, 0x10, "Super Action Controller"	},
-
-	{0   , 0xfe, 0   ,    2, "Extra Controller"		},
-	{0x25, 0x01, 0x80, 0x00, "None"				},
-	{0x25, 0x01, 0x80, 0x80, "Roller Controller"		},
-
 	{0   , 0xfe, 0   ,    4, "Bios Select"			},
 	{0x26, 0x01, 0x03, 0x00, "Standard"			},
 	{0x26, 0x01, 0x03, 0x01, "Thick Characters"		},
@@ -128,113 +112,6 @@ static struct BurnDIPInfo ColecoDIPList[]=
 };
 
 STDDIPINFO(Coleco)
-
-static UINT8 paddle_r(INT32 paddle)
-{
-	INT32 ctrl_select = (DrvDips[0] >> (paddle ? 4 : 0)) & 0x07;
-
-	UINT8 data = 0x0f;
-
-	if (ctrl_select != 0x01)
-	{
-		if (joy_mode == 0)
-		{
-			UINT16 input = 0x0000;
-
-			if (ctrl_select == 0x00) // colecovision controller
-			{
-				input = DrvInputs[(2 * paddle) + 0]; // keypad
-			}
-			else if (ctrl_select == 0x02)		// super action controller controller
-			{
-				input = 0xffff; //input_port_read(space->machine, "SAC_KPD2");
-			}
-
-			if (ctrl_select != 0x03)
-			{
-				if (!(input & 0x0001)) data &= 0x0a; /* 0 */
-				if (!(input & 0x0002)) data &= 0x0d; /* 1 */
-				if (!(input & 0x0004)) data &= 0x07; /* 2 */
-				if (!(input & 0x0008)) data &= 0x0c; /* 3 */
-				if (!(input & 0x0010)) data &= 0x02; /* 4 */
-				if (!(input & 0x0020)) data &= 0x03; /* 5 */
-				if (!(input & 0x0040)) data &= 0x0e; /* 6 */
-				if (!(input & 0x0080)) data &= 0x05; /* 7 */
-				if (!(input & 0x0100)) data &= 0x01; /* 8 */
-				if (!(input & 0x0200)) data &= 0x0b; /* 9 */
-				if (!(input & 0x0400)) data &= 0x06; /* # */
-				if (!(input & 0x0800)) data &= 0x09; /* . */
-				if (!(input & 0x1000)) data &= 0x04; /* Blue Action Button */
-				if (!(input & 0x2000)) data &= 0x08; /* Purple Action Button */
-			}
-
-			return ((input & 0x4000) >> 8) | 0x30 | (data);
-		}
-		else
-		{
-			if (ctrl_select == 0x00)			// colecovision controller
-			{
-				data = DrvInputs[(2 * paddle) + 1] & 0xcf; // Joy
-			}
-			else if (ctrl_select == 0x02)		// super action controller controller
-			{
-				data = 0xff & 0xcf; //input_port_read(space->machine, "SAC_JOY2") & 0xcf;
-			}
-
-			if ((DrvDips[0] & 0x80) || (ctrl_select == 0x02) || (ctrl_select == 0x03))
-			{
-				if (joy_status[paddle] == 0) data |= 0x30;
-				else if (joy_status[paddle] == 1) data |= 0x20;
-			}
-
-			return data | 0x80;
-		}
-	}
-
-	return data;
-}
-
-static void paddle_callback()
-{
-	UINT8 analog1 = 0x00;
-	UINT8 analog2 = 0x00;
-	UINT8 ctrl_sel = DrvDips[0];
-
-	if ((ctrl_sel & 0x07) == 0x03)	// Driving controller
-		analog1 = 0xff; //input_port_read_safe(machine, "DRIV", 0);
-	else
-	{
-		if ((ctrl_sel & 0x07) == 0x02)	// Super Action Controller P1
-			analog1 = 0xff; //input_port_read_safe(machine, "SAC_SLIDE1", 0);
-
-		if ((ctrl_sel & 0x70) == 0x20)	// Super Action Controller P2
-			analog2 = 0xff; //input_port_read_safe(machine, "SAC_SLIDE2", 0);
-
-		if (ctrl_sel & 0x80)				// Roller controller
-		{
-			analog1 = 0xff; //input_port_read_safe(machine, "ROLLER_X", 0);
-			analog2 = 0xff; // input_port_read_safe(machine, "ROLLER_Y", 0);
-		}
-	}
-
-	if (analog1 == 0)
-		joy_status[0] = 0;
-	else if (analog1 & 0x08)
-		joy_status[0] = -1;
-	else
-		joy_status[0] = 1;
-
-	if (analog2 == 0)
-		joy_status[1] = 0;
-	else if (analog2 & 0x08)
-		joy_status[1] = -1;
-	else
-		joy_status[1] = 1;
-
-    if (joy_status[0] || joy_status[1]) {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // ACK? -- lower when input read?
-	}
-}
 
 void update_map()
 {
@@ -256,7 +133,31 @@ void update_map()
         ZetUnmapMemory(0x0000, 0x1fff, MAP_RAM);
         ZetMapMemory(DrvZ80BIOS, 0x0000, 0x1fff, MAP_ROM);
     }
+}
 
+static UINT8 controller_read(INT32 port)
+{
+	//                        0     1     2     3     4     5     6     7     8     9     *     #   PUR   BLU  BUTR
+	const UINT8 keys[] = { 0x05, 0x02, 0x08, 0x03, 0x0d, 0x0c, 0x01, 0x0a, 0x0e, 0x04, 0x06, 0x09, 0x07, 0x0b, 0x40 };
+	UINT8 data = 0;
+
+	if (joy_mode == 0)
+	{ // keypad mode
+		UINT16 input = DrvInputs[(2 * port) + 0];
+
+		for (INT32 i = 0; i < 0x0f; i++) {
+			if (~input & (1 << i))
+				data |= keys[i];
+		}
+
+		data = ~data;
+	}
+	else
+	{ // joypad mode
+		data = (DrvInputs[(2 * port) + 1] & 0x7f) | 0x80;
+	}
+
+	return data;
 }
 
 static void __fastcall coleco_write_port(UINT16 port, UINT8 data)
@@ -337,11 +238,11 @@ static UINT8 __fastcall coleco_read_port(UINT16 port)
 	{
 		case 0xe0:
 		case 0xe1:
-			return paddle_r(0);
+			return controller_read(0);
 
 		case 0xe2:
 		case 0xe3:
-			return paddle_r(1);
+			return controller_read(1);
 	}
 	bprintf(0, _T("unmapped port read: %x\n"), port);
 	return 0;
@@ -607,8 +508,6 @@ static INT32 DrvFrame()
 			ZetNmi();
 			lets_nmi = -1;
 		}
-
-		if ((i%5)==4) paddle_callback(); // 50x / frame (3000x / sec)
 	}
 
 	ZetClose();
@@ -5632,7 +5531,7 @@ struct BurnDriver BurnDrvcv_deepdngadv = {
     "cv_deepdngadv", NULL, "cv_coleco", NULL, "2017",
     "Deep Dungeon Adventure (HB)\0", "(SGM) - Published by Team Pixelboy", "Trilobyte", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_NOT_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
     CVGetZipName, cv_deepdngadvRomInfo, cv_deepdngadvRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3

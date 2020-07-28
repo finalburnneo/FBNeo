@@ -2752,7 +2752,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_deepduck	|  	| Deep Duck Trouble Starring Donald Duck (Euro, Bra)	| 		| 1993	| Sega		| Sega Master Sy| 					|
 | gg_deepduck	|  	| Deep Duck Trouble Starring Donald Duck (Euro, USA)	| 		| 1994	| Sega		| Sega Game Gear| 					|
 | msx_deepdng	|  	| Deep Dungeon (Jpn)					| 		| 1988	| ScapTrust	| MSX		| 					|
-| cv_deepdngadv	|   NW	| Deep Dungeon Adventure (HB)				| 		| 2017	| Trilobyte	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
+| cv_deepdngadv	|  	| Deep Dungeon Adventure (HB)				| 		| 2017	| Trilobyte	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | msx_deepdun	|  	| Deep Dungeon Adventure (HB)				| 		| 2013	| Trilobyte	| MSX		| 					|
 | msx_deepdng2	|  	| Deep Dungeon II - Yuushi no Monshou (Jpn)		| 		| 1988	| ScapTrust	| MSX		| 					|
 | md_deerhunt	|  	| Deer Hunter (Rus)					| 		| 199?	| Tomsoft	| Sega Megadrive| 					|

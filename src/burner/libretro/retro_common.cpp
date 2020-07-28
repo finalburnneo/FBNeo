@@ -585,10 +585,11 @@ void set_environment()
 		}
 		vars[idx_var].values[dipswitch_core_options[dip_idx].values.size()].value = NULL;
 		vars[idx_var].default_value = dipswitch_core_options[dip_idx].default_bdi.szText;
+		if (vars[idx_var].default_value == NULL) HandleMessage(RETRO_LOG_ERROR, "Default value for '%s' not found, it's a bug, please report it\n", vars[idx_var].desc);
 		idx_var++;
 	}
 
-	// Add the DIP switches core options
+	// Add the cheats core options
 	for (int cheat_idx = 0; cheat_idx < nbr_cheats; cheat_idx++)
 	{
 		vars[idx_var].key = cheat_core_options[cheat_idx].option_name.c_str();

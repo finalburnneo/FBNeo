@@ -590,7 +590,7 @@
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="defender" romof="coleco">
 		<description>Defender</description>

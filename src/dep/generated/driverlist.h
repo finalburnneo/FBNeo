@@ -17379,7 +17379,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_deepduck,		// Deep Duck Trouble Starring Donald Duck (Euro, Bra)
 	&BurnDrvgg_deepduck,		// Deep Duck Trouble Starring Donald Duck (Euro, USA)
 	&BurnDrvMSX_deepdng,		// Deep Dungeon (Jpn)
-	&BurnDrvcv_deepdngadv,		// Deep Dungeon Adventure (HB) [(SGM) - Published by Team Pixelboy, NOT WORKING]
+	&BurnDrvcv_deepdngadv,		// Deep Dungeon Adventure (HB)
 	&BurnDrvMSX_deepdun,		// Deep Dungeon Adventure (HB)
 	&BurnDrvMSX_deepdng2,		// Deep Dungeon II - Yuushi no Monshou (Jpn)
 	&BurnDrvmd_deerhunt,		// Deer Hunter (Rus)

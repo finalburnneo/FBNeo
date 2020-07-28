@@ -125,7 +125,7 @@ static uint8_t *write_state_ptr;
 static const uint8_t *read_state_ptr;
 static unsigned state_sizes[2];
 
-static INT32 HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
+int HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
 {
 	char buf[PRINTF_BUFFER_SIZE];
 	va_list vp;

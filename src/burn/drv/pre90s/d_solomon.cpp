@@ -399,6 +399,18 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static void DrvPaletteUpdate()
+{
+	for (INT32 i = 0; i < 0x200; i+=2)
+	{
+		UINT8 r = BurnPalRAM[i+0] & 0xf;
+		UINT8 g = BurnPalRAM[i+0] >> 4;
+		UINT8 b = BurnPalRAM[i+1] & 0xf;
+		
+		BurnPalette[i/2] = BurnHighCol(pal4bit(r), pal4bit(g), pal4bit(b), 0);
+	}
+}
+
 static void draw_sprites()
 {
 	for (INT32 offs = 0x80 - 4; offs >= 0; offs -= 4)
@@ -428,7 +440,7 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (BurnRecalc) {
-		BurnPaletteUpdate_xxxxBBBBGGGGRRRR();
+		DrvPaletteUpdate();
 		BurnRecalc = 1;
 	}
 

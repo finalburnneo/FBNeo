@@ -839,7 +839,7 @@ static UINT32 common_read_long(UINT32 address)
 	if (address < 0x400000) {
 		speedhack_callback(address);
 		UINT32 ret = *((UINT32*)(DrvMainRAM + address));
-		return (ret << 16) | (ret >> 16);
+		return BURN_ENDIAN_SWAP_INT32((ret << 16) | (ret >> 16));
 	}
 
 	switch (address)	// aoh
@@ -862,7 +862,7 @@ static UINT16 common_read_word(UINT32 address)
 {
 	if (address < 0x400000) {
 		speedhack_callback(address);
-		return *((UINT16*)(DrvMainRAM + address));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainRAM + address)));
 	}
 
 	switch (address & ~3)	// aoh
@@ -1188,14 +1188,14 @@ static void draw_sprites()
 		{
 			INT32 offs = (block + cnt) / 2;
 
-			if (ram[offs] & 0x0100) continue;
+			if (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0100) continue;
 
-			INT32 code  = ram[offs+1] | ((ram[offs+2] & 0x100) << 8);
-			INT32 color = ram[offs+2] >> palette_bit;
-			INT32 sx    = ram[offs+3] & 0x01ff;
-			INT32 sy 	= 256 - (ram[offs] & 0x00ff);
-			INT32 flipx = ram[offs] & 0x8000;
-			INT32 flipy = ram[offs] & 0x4000;
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) | ((BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x100) << 8);
+			INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> palette_bit;
+			INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x01ff;
+			INT32 sy 	= 256 - (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x00ff);
+			INT32 flipx = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x8000;
+			INT32 flipy = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x4000;
 
 			if (flipscreen)
 			{
@@ -1224,11 +1224,11 @@ static void aoh_draw_sprites()
 		{
 			INT32 offs = (block + cnt) / 2;
 
-			INT32 code  = ram[offs+1] | ((ram[offs] & 0x300) << 8);
-			INT32 color = ram[offs+2] >> palette_bit;
-			INT32 sx    = ram[offs+3] & 0x01ff;
-			INT32 sy 	= 256 - (ram[offs] & 0x00ff);
-			INT32 flipx = ram[offs] & 0x0400;
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) | ((BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x300) << 8);
+			INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> palette_bit;
+			INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x01ff;
+			INT32 sy 	= 256 - (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x00ff);
+			INT32 flipx = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0400;
 			INT32 flipy = 0;
 
 			if (flipscreen)

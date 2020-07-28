@@ -303,7 +303,7 @@ static UINT16 program_read_word_16be(UINT32 address)
 	UINT8 *ptr = mem[0][address >> 12];
 
 	if (ptr) {
-		return *((UINT16*)(ptr + (address & 0xffe)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(ptr + (address & 0xffe))));
 	}
 
 	if (read_word_handler) {
@@ -321,7 +321,7 @@ static UINT32 program_read_dword_32be(UINT32 address)
 
 	if (ptr) {
 		UINT32 ret = *((UINT32*)(ptr + (address & 0xffe))); // word aligned
-		return (ret << 16) | (ret >> 16);
+		return BURN_ENDIAN_SWAP_INT32((ret << 16) | (ret >> 16));
 	}
 
 	if (read_dword_handler) {
@@ -338,7 +338,7 @@ static UINT16 cpu_readop16(UINT32 address)
 	UINT8 *ptr = mem[0][address >> 12];
 
 	if (ptr) {
-		return *((UINT16*)(ptr + (address & 0xffe)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(ptr + (address & 0xffe))));
 	}
 
 	if (read_word_handler) {
@@ -371,7 +371,7 @@ static void program_write_word_16be(UINT32 address, UINT16 data)
 	UINT8 *ptr = mem[1][address >> 12];
 
 	if (ptr) {
-		*((UINT16*)(ptr + (address & 0xffe))) = data;
+		*((UINT16*)(ptr + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -388,7 +388,7 @@ static void program_write_dword_32be(UINT32 address, UINT32 data)
 
 	if (ptr) {
 		data = (data << 16) | (data >> 16);
-		*((UINT32*)(ptr + (address & 0xffe))) = data; // word aligned!
+		*((UINT32*)(ptr + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT32(data); // word aligned!
 		return;
 	}
 

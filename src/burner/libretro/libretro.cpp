@@ -1122,6 +1122,9 @@ size_t retro_serialize_size()
 		return state_sizes[kNetGame];
 
 	BurnAcb = burn_dummy_state_cb;
+	// The following value is required in savestates for some games (xmen6p, ...)
+	// On standalone, this value is stored in savestate files headers
+	SCAN_VAR(nCurrentFrame);
 	BurnAreaScan(ACB_FULLSCAN, 0);
 	return state_sizes[kNetGame];
 }
@@ -1146,6 +1149,9 @@ bool retro_serialize(void *data, size_t size)
 
 	BurnAcb = burn_write_state_cb;
 	write_state_ptr = (uint8_t*)data;
+	// The following value is required in savestates for some games (xmen6p, ...)
+	// On standalone, this value is stored in savestate files headers
+	SCAN_VAR(nCurrentFrame);
 	BurnAreaScan(ACB_FULLSCAN | ACB_READ, 0);
 	return true;
 }
@@ -1170,6 +1176,9 @@ bool retro_unserialize(const void *data, size_t size)
 
 	BurnAcb = burn_read_state_cb;
 	read_state_ptr = (const uint8_t*)data;
+	// The following value is required in savestates for some games (xmen6p, ...)
+	// On standalone, this value is stored in savestate files headers
+	SCAN_VAR(nCurrentFrame);
 	BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, 0);
 	BurnRecalcPal();
 	return true;

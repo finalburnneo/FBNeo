@@ -826,7 +826,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -839,9 +838,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K054539Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
-		EEPROMScan(nAction, pnMin);
 
 		SCAN_VAR(interrupt_enable);
+		SCAN_VAR(tilemap_select);
 
 		SCAN_VAR(sbtn);
 	}

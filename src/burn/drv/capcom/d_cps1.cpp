@@ -331,6 +331,7 @@ static struct BurnInputInfo FfightaeInputList[] =
 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right" },
 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1"},
 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2"},
+	{"P1 Special"       , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3"},
 
 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"  },
 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start" },
@@ -340,6 +341,7 @@ static struct BurnInputInfo FfightaeInputList[] =
 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right" },
 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1"},
 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2"},
+	{"P2 Special"       , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3"},
 
 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   },
 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
@@ -351,6 +353,7 @@ static struct BurnInputInfo FfightaeInputList[] =
 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
 
 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"   },
 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
@@ -2270,63 +2273,65 @@ STDDIPINFO(Ffight)
 
 static struct BurnDIPInfo FfightaeDIPList[]=
 {
+	DIP_OFFSET(0x1d)
+
 	// Defaults
-	{0x1a, 0xff, 0xff, 0x00, NULL                     },
-	{0x1b, 0xff, 0xff, 0x0b, NULL                     },
-	{0x1c, 0xff, 0xff, 0x60, NULL                     },
-		
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x0b, NULL                     },
+	{0x02, 0xff, 0xff, 0x60, NULL                     },
+
 	// Dip A
-	CPS1_COINAGE_1(0x1a)
+	CPS1_COINAGE_1(0x00)
 
 	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
-	{0x1a, 0x01, 0x40, 0x00, "Off"                    },
-	{0x1a, 0x01, 0x40, 0x40, "On"                     },
-		
+	{0x00, 0x01, 0x40, 0x00, "Off"                    },
+	{0x00, 0x01, 0x40, 0x40, "On"                     },
+
 	// Dip B
-	CPS1_DIFFICULTY_1(0x1b)
+	CPS1_DIFFICULTY_1(0x01)
 
 	{0   , 0xfe, 0   , 4   , "Difficulty 2"           },
-	{0x1b, 0x01, 0x18, 0x00, "Easy"                   },
-	{0x1b, 0x01, 0x18, 0x08, "Normal"                 },
-	{0x1b, 0x01, 0x18, 0x10, "Hard"                   },
-	{0x1b, 0x01, 0x18, 0x18, "Hardest"                },
+	{0x01, 0x01, 0x18, 0x00, "Easy"                   },
+	{0x01, 0x01, 0x18, 0x08, "Normal"                 },
+	{0x01, 0x01, 0x18, 0x10, "Hard"                   },
+	{0x01, 0x01, 0x18, 0x18, "Hardest"                },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
-	{0x1b, 0x01, 0x60, 0x00, "100k"                   },
-	{0x1b, 0x01, 0x60, 0x20, "200k"                   },
-	{0x1b, 0x01, 0x60, 0x40, "100k and every 200k"    },
-	{0x1b, 0x01, 0x60, 0x60, "None"                   },
-	
+	{0x01, 0x01, 0x60, 0x00, "100k"                   },
+	{0x01, 0x01, 0x60, 0x20, "200k"                   },
+	{0x01, 0x01, 0x60, 0x40, "100k and every 200k"    },
+	{0x01, 0x01, 0x60, 0x60, "None"                   },
+
 	// Dip C
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x1c, 0x01, 0x03, 0x03, "1"                      },
-	{0x1c, 0x01, 0x03, 0x00, "2"                      },
-	{0x1c, 0x01, 0x03, 0x01, "3"                      },
-	{0x1c, 0x01, 0x03, 0x02, "4"                      },
+	{0x02, 0x01, 0x03, 0x03, "1"                      },
+	{0x02, 0x01, 0x03, 0x00, "2"                      },
+	{0x02, 0x01, 0x03, 0x01, "3"                      },
+	{0x02, 0x01, 0x03, 0x02, "4"                      },
 
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
-	{0x1c, 0x01, 0x04, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x04, 0x04, "On"                     },
+	{0x02, 0x01, 0x04, 0x00, "Off"                    },
+	{0x02, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x1c, 0x01, 0x08, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x08, 0x08, "On"                     },
+	{0x02, 0x01, 0x08, 0x00, "Off"                    },
+	{0x02, 0x01, 0x08, 0x08, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip"                   },
-	{0x1c, 0x01, 0x10, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x10, 0x10, "On"                     },
+	{0x02, 0x01, 0x10, 0x00, "Off"                    },
+	{0x02, 0x01, 0x10, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-	{0x1c, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x20, 0x20, "On"                     },
+	{0x02, 0x01, 0x20, 0x00, "Off"                    },
+	{0x02, 0x01, 0x20, 0x20, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x1c, 0x01, 0x40, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x40, 0x40, "On"                     },
-	
+	{0x02, 0x01, 0x40, 0x00, "Off"                    },
+	{0x02, 0x01, 0x40, 0x40, "On"                     },
+
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
-	{0x1c, 0x01, 0x80, 0x00, "Game"                   },
-	{0x1c, 0x01, 0x80, 0x80, "Test"                   },
+	{0x02, 0x01, 0x80, 0x00, "Game"                   },
+	{0x02, 0x01, 0x80, 0x80, "Test"                   },
 };
 
 STDDIPINFO(Ffightae)

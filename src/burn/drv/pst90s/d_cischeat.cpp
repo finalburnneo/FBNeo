@@ -2128,9 +2128,9 @@ static void DrvPaletteUpdate() // not sure if this is correct + needs shadows - 
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++)
 	{
-		UINT8 r = ((p[i] >> 11) & 0x1e) | ((p[i] >> 3) & 1);
-		UINT8 g = ((p[i] >>  7) & 0x1e) | ((p[i] >> 2) & 1);
-		UINT8 b = ((p[i] >>  3) & 0x1e) | ((p[i] >> 1) & 1);
+		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 11) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 3) & 1);
+		UINT8 g = ((BURN_ENDIAN_SWAP_INT16(p[i]) >>  7) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 2) & 1);
+		UINT8 b = ((BURN_ENDIAN_SWAP_INT16(p[i]) >>  3) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 1) & 1);
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -2235,15 +2235,15 @@ static void draw_layer(INT32 tmap, INT32 flags, INT32 priority)
 
 			if (size) {
 				ofst = (col * 32) + (row / 32) * 1024 * columns + (row & 0x1f);
-				code = (vidram[ofst] & 0x0fff) * scroll_factor_8x8[tmap];
+				code = (BURN_ENDIAN_SWAP_INT16(vidram[ofst]) & 0x0fff) * scroll_factor_8x8[tmap];
 			} else {
 				ofst = (((col / 2) * 16) + (row / 32) * 256 * columns + ((row / 2) & 0x0f));
-				code = (vidram[ofst] & 0xfff) * 4 + ((row & 1) + (col & 1) * 2);
+				code = (BURN_ENDIAN_SWAP_INT16(vidram[ofst]) & 0xfff) * 4 + ((row & 1) + (col & 1) * 2);
 			}
 
 			code %= gfx->code_mask;
 
-			INT32 color = ((vidram[ofst] >> (16 - bits_per_color)) << gfx->depth) + gfx->color_offset;
+			INT32 color = ((BURN_ENDIAN_SWAP_INT16(vidram[ofst]) >> (16 - bits_per_color)) << gfx->depth) + gfx->color_offset;
 
 			{
 				UINT8 *gfxdata = gfx->gfxbase + code * 0x40;
@@ -2289,9 +2289,9 @@ static void cischeat_draw_road(INT32 road_num, INT32 priority1, INT32 priority2,
 
 	for (INT32 sy = screen_adjust_y; sy < nScreenHeight + screen_adjust_y; sy++)
 	{
-		int code    = roadram[ sy * 4 + 0 ];
-		int xscroll = roadram[ sy * 4 + 1 ];
-		int attr    = roadram[ sy * 4 + 2 ];
+		int code    = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 0 ]);
+		int xscroll = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 1 ]);
+		int attr    = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 2 ]);
 
 		/* high byte is a priority information */
 		if ( ((attr & 0x700) < min_priority) || ((attr & 0x700) > max_priority) )
@@ -2407,17 +2407,17 @@ static void bigrun_draw_sprites(int priority1, int priority2)
 
 	for (; source < finish; source += 0x10/2 )
 	{
-		size    =   source[ 0 ];
+		size    =   BURN_ENDIAN_SWAP_INT16(source[ 0 ]);
 		if (size & 0x1000)  continue;
 
 		xnum    =   ( (size & 0x0f) >> 0 ) + 1;
 		ynum    =   ( (size & 0xf0) >> 4 ) + 1;
 
-		yzoom   =   (source[ 1 ] >> 8) & 0xff;
-		xzoom   =   (source[ 1 ] >> 0) & 0xff;
+		yzoom   =   (BURN_ENDIAN_SWAP_INT16(source[ 1 ]) >> 8) & 0xff;
+		xzoom   =   (BURN_ENDIAN_SWAP_INT16(source[ 1 ]) >> 0) & 0xff;
 
-		sx      =   source[ 2 ];
-		sy      =   source[ 3 ];
+		sx      =   BURN_ENDIAN_SWAP_INT16(source[ 2 ]);
+		sy      =   BURN_ENDIAN_SWAP_INT16(source[ 3 ]);
 		flipx   =   sx & 0x1000;
 		flipy   =   sy & 0x1000;
 		sx      =   (sx & 0x0ff) - (sx & 0x100);
@@ -2431,8 +2431,8 @@ static void bigrun_draw_sprites(int priority1, int priority2)
 
 		if ( ( (xdim / 0x10000) == 0 ) || ( (ydim / 0x10000) == 0) )    continue;
 
-		code    =   source[ 6 ];
-		attr    =   source[ 7 ];
+		code    =   BURN_ENDIAN_SWAP_INT16(source[ 6 ]);
+		attr    =   BURN_ENDIAN_SWAP_INT16(source[ 7 ]);
 		color   =   attr & 0x7f;
 		shadow  =   attr & 0x1000;
 

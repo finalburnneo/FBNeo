@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14318 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14321 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1263,7 +1263,7 @@ This list contains all games supported by FinalBurn Neo.
 | blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
-| msx_blpuzzle	|  	| Block Puzzle (HB)					| 		| 2020	| David Heremans| MSX		| 					|
+| msx_blpuzzle	|  	| Block Puzzle (HB, v1.1)				| 		| 2020	| David Heremans| MSX		| 					|
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
@@ -6220,6 +6220,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_ktiger	|  	| Kyuukyoku Tiger (Jpn)					| md_twincobr	| 1991	| Treco		| Sega Megadrive| 					|
 | pce_ktiger	|  	| Kyuukyoku Tiger					| 		| 1989	| Taito		| PC Engine	| 					|
 | md_labbaye	|  	| L'Abbaye Des Morts (HB)				| 		| 2010	| 2010 Locomalit| Sega Megadrive| 					|
+| msx_labbaye	|  	| L'Abbaye des Morts (HB, v1.1)				| 		| 2020	| Retro Deluxe	| MSX		| 					|
 | msx_abadcrim	|  	| La Abadia del Crimen (Spa)				| 		| 1988	| Opera Soft	| MSX		| 					|
 | msx_lacorona	|  	| La Corona Encantada (HB)				| 		| 2009	| Karoshi	| MSX		| 					|
 | lagirl	|  	| LA Girl						| plgirls	| 1992	| bootleg	| Taito L System| 					|
@@ -7263,6 +7264,7 @@ This list contains all games supported by FinalBurn Neo.
 | mole		|  	| Mole Attack						| 		| 1982	| Yachiyo Electr| Miscellaneous	| 					|
 | msx_molemol	|  	| Mole Mole (Bra)					| 		| 198?	| Unknown	| MSX		| 					|
 | msx_molemol2	|  	| Mole Mole 2 (Jpn)					| 		| 1987	| Victor	| MSX		| 					|
+| msx_molecman	|  	| Molecule Man						| 		| 1986	| Mastertronic	| MSX		| 					|
 | momokob	|  	| Momoko 120% (bootleg)					| momoko	| 1986	| bootleg	| Miscellaneous	| 					|
 | momokoe	|  	| Momoko 120% (English text)				| momoko	| 1986	| Jaleco	| Miscellaneous	| 					|
 | momoko	|  	| Momoko 120% (Japanese text)				| 		| 1986	| Jaleco	| Miscellaneous	| 					|
@@ -8253,6 +8255,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_pacland	|  	| Pac-Land (128K)					| 		| 1989	| Grandslam Ente| ZX Spectrum	| 					|
 | spec_pacland_48|  	| Pac-Land (48K)					| spec_pacland	| 1989	| Grandslam Ente| ZX Spectrum	| 					|
 | paclandm2	|  	| Pac-Land (Bally-Midway)				| pacland	| 1984	| Namco (Bally M| Miscellaneous	| 					|
+| msx_pacland	|  	| Pac-Land (Euro)					| 		| 1988	| Grandslam Ente| MSX		| 					|
 | paclandj	|  	| Pac-Land (Japan new)					| pacland	| 1984	| Namco		| Miscellaneous	| 					|
 | paclandjo	|  	| Pac-Land (Japan old)					| pacland	| 1984	| Namco		| Miscellaneous	| 					|
 | paclandjo2	|  	| Pac-Land (Japan older)				| pacland	| 1984	| Namco		| Miscellaneous	| 					|
@@ -10433,7 +10436,7 @@ This list contains all games supported by FinalBurn Neo.
 | snowbro2ny	|  	| Snow Bros. 2 - with new elves (Nyanko)		| snowbro2	| 1994	| [Toaplan] Nyan| Toaplan GP9001| 					|
 | nes_snowbrothers|  	| Snow Brothers (USA)					| 		| 1991	| Capcom	| Miscellaneous	| 					|
 | snowbro3	|  	| Snow Brothers 3 - Magical Adventure			| 		| 2002	| bootleg	| Kaneko Pandora| 					|
-| msx_snowboard	|  	| Snowboarding (HB)					| 		| 2020	| Revelo	| MSX		| 					|
+| msx_snowboard	|  	| Snowboarding (HB, v1.01)				| 		| 2020	| Revelo	| MSX		| 					|
 | nes_soccer	|  	| Soccer (USA)						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | socbrawlh	|  	| Soccer Brawl (NGH-031)				| socbrawl	| 1991	| SNK		| Neo Geo MVS	| 					|
 | socbrawl	|  	| Soccer Brawl (NGM-031)				| 		| 1991	| SNK		| Neo Geo MVS	| 					|
@@ -11348,7 +11351,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_stuntcar	|  	| Stunt Car Racer (128K)				| 		| 1989	| Micro Style	| ZX Spectrum	| 					|
 | spec_stuntcar_48|  	| Stunt Car Racer (48K)					| spec_stuntcar	| 1989	| Micro Style	| ZX Spectrum	| 					|
 | nes_stuntkids	|  	| Stunt Kids (USA) (Unl)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
-| msx_stupmart	|  	| Stupid Martians (HB)					| 		| 2020	| Visualedu	| MSX		| 					|
+| msx_stupmart	|  	| Stupid Martians (HB, v1.1)				| 		| 2020	| Visualedu	| MSX		| 					|
 | subhunt	| D	| Sub Hunter (Gremlin / Taito)				| depthch	| 1977	| Gremlin (Taito| Vic Dual	| No sound				|
 | msx_subacuatic|  	| Subacuatic (HB)					| 		| 2012	| RELEVO / The M| MSX		| 					|
 | spec_subbueto	|  	| Subbuteo - The Computer Game (128K)			| 		| 1990	| Electronic Zoo| ZX Spectrum	| 					|

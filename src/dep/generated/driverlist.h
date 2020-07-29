@@ -6334,6 +6334,7 @@ DRV		BurnDrvnes_kyuukyokutiger;
 DRV		BurnDrvmd_ktiger;
 DRV		BurnDrvpce_ktiger;
 DRV		BurnDrvmd_labbaye;
+DRV		BurnDrvMSX_labbaye;
 DRV		BurnDrvMSX_abadcrim;
 DRV		BurnDrvMSX_lacorona;
 DRV		BurnDrvLagirl;
@@ -7385,6 +7386,7 @@ DRV		BurnDrvgg_moldorane;
 DRV		BurnDrvMole;
 DRV		BurnDrvMSX_molemol;
 DRV		BurnDrvMSX_molemol2;
+DRV		BurnDrvMSX_molecman;
 DRV		BurnDrvMomokob;
 DRV		BurnDrvMomokoe;
 DRV		BurnDrvMomoko;
@@ -8399,6 +8401,7 @@ DRV		BurnDrvgg_pacintim;
 DRV		BurnSpecpacland;
 DRV		BurnSpecpacland_48;
 DRV		BurnDrvPaclandm2;
+DRV		BurnDrvMSX_pacland;
 DRV		BurnDrvPaclandj;
 DRV		BurnDrvPaclandjo;
 DRV		BurnDrvPaclandjo2;
@@ -15866,7 +15869,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlckoutj,			// Block Out (Japan)
 	&BurnDrvBlockout,			// Block Out (set 1)
 	&BurnDrvBlckout2,			// Block Out (set 2)
-	&BurnDrvMSX_blpuzzle,		// Block Puzzle (HB)
+	&BurnDrvMSX_blpuzzle,		// Block Puzzle (HB, v1.1)
 	&BurnDrvMSX_blockrun,		// Blockade Runner (Jpn)
 	&BurnDrvcv_blockrun,		// Blockade Runner
 	&BurnDrvBlockade,			// Blockade
@@ -20919,6 +20922,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ktiger,			// Kyuukyoku Tiger (Jpn)
 	&BurnDrvpce_ktiger,			// Kyuukyoku Tiger
 	&BurnDrvmd_labbaye,			// L'Abbaye Des Morts (HB)
+	&BurnDrvMSX_labbaye,		// L'Abbaye des Morts (HB, v1.1)
 	&BurnDrvMSX_abadcrim,		// La Abadia del Crimen (Spa)
 	&BurnDrvMSX_lacorona,		// La Corona Encantada (HB)
 	&BurnDrvLagirl,				// LA Girl
@@ -21970,6 +21974,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMole,				// Mole Attack
 	&BurnDrvMSX_molemol,		// Mole Mole (Bra)
 	&BurnDrvMSX_molemol2,		// Mole Mole 2 (Jpn)
+	&BurnDrvMSX_molecman,		// Molecule Man
 	&BurnDrvMomokob,			// Momoko 120% (bootleg)
 	&BurnDrvMomokoe,			// Momoko 120% (English text)
 	&BurnDrvMomoko,				// Momoko 120% (Japanese text)
@@ -22984,6 +22989,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecpacland,			// Pac-Land (128K)
 	&BurnSpecpacland_48,		// Pac-Land (48K)
 	&BurnDrvPaclandm2,			// Pac-Land (Bally-Midway)
+	&BurnDrvMSX_pacland,		// Pac-Land (Euro)
 	&BurnDrvPaclandj,			// Pac-Land (Japan new)
 	&BurnDrvPaclandjo,			// Pac-Land (Japan old)
 	&BurnDrvPaclandjo2,			// Pac-Land (Japan older)
@@ -25204,7 +25210,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnowbro2ny,			// Snow Bros. 2 - with new elves (Nyanko)
 	&BurnDrvnes_snowbrothers,	// Snow Brothers (USA)
 	&BurnDrvSnowbro3,			// Snow Brothers 3 - Magical Adventure
-	&BurnDrvMSX_snowboard,		// Snowboarding (HB)
+	&BurnDrvMSX_snowboard,		// Snowboarding (HB, v1.01)
 	&BurnDrvnes_soccer,			// Soccer (USA)
 	&BurnDrvSocbrawlh,			// Soccer Brawl (NGH-031)
 	&BurnDrvSocbrawl,			// Soccer Brawl (NGM-031)
@@ -26127,7 +26133,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecstuntcar,			// Stunt Car Racer (128K)
 	&BurnSpecstuntcar_48,		// Stunt Car Racer (48K)
 	&BurnDrvnes_stuntkids,		// Stunt Kids (USA) (Unl)
-	&BurnDrvMSX_stupmart,		// Stupid Martians (HB)
+	&BurnDrvMSX_stupmart,		// Stupid Martians (HB, v1.1)
 #if defined FBNEO_DEBUG
 	&BurnDrvSubhunt,			// Sub Hunter (Gremlin / Taito) [No sound]
 #endif

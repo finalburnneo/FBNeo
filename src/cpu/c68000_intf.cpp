@@ -687,6 +687,8 @@ void SekNewFrame()
 
 	for (INT32 i = 0; i <= nSekCount; i++) {
 		nSekCycles[i] = 0;
+		nSekCyclesToDoCache[i] = 0;
+		nSekm68k_ICount[i] = 0;
 	}
 
 #ifdef EMU_C68K

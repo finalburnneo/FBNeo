@@ -10825,7 +10825,7 @@ struct BurnDriver BurnDrvnes_blockage = {
 };
 
 static struct BurnRomInfo nes_frombelowRomDesc[] = {
-	{ "From Below (HB, v7.03.2020).nes",          40976, 0x4d3b1c43, BRF_ESS | BRF_PRG },
+	{ "From Below (HB, v7.24.2020).nes",          40976, 0xe948b976, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_frombelow)
@@ -10833,7 +10833,7 @@ STD_ROM_FN(nes_frombelow)
 
 struct BurnDriver BurnDrvnes_frombelow = {
 	"nes_frombelow", NULL, NULL, NULL, "2020",
-	"From Below (HB, v7.03.2020)\0", NULL, "Goose2k", "Miscellaneous",
+	"From Below (HB, v7.24.2020)\0", NULL, "Goose2k", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_frombelowRomInfo, nes_frombelowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -10849,10 +10849,10 @@ STD_ROM_PICK(nes_legenzeldx)
 STD_ROM_FN(nes_legenzeldx)
 
 struct BurnDriver BurnDrvnes_legenzeldx = {
-	"nes_legenzeldx", NULL, NULL, NULL, "2014",
+	"nes_legenzeldx", "nes_legenzel", NULL, NULL, "2014",
 	"Legend of Zelda DX, The (HB)\0", NULL, "pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 2, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_legenzeldxRomInfo, nes_legenzeldxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -10900,10 +10900,10 @@ STD_ROM_PICK(nes_smbdx)
 STD_ROM_FN(nes_smbdx)
 
 struct BurnDriver BurnDrvnes_smbdx = {
-	"nes_smbdx", NULL, NULL, NULL, "2018",
+	"nes_smbdx", "nes_smb", NULL, NULL, "2018",
 	"Super Mario Bros DX (HB, v3.4)\0", NULL, "Flamephanter", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbdxRomInfo, nes_smbdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

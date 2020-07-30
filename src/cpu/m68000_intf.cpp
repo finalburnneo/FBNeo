@@ -1747,6 +1747,21 @@ INT32 SekRun(INT32 nCPU, INT32 nCycles)
 	return nRet;
 }
 
+INT32 SekIdle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekIdle called without init\n"));
+#endif
+
+	SekCPUPush(nCPU);
+
+	INT32 nRet = SekIdle(nCycles);
+
+	SekCPUPop();
+
+	return nRet;
+}
+
 
 // ----------------------------------------------------------------------------
 // Breakpoint support

@@ -67,9 +67,9 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
-static INT32 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TceptorInputList[] = {

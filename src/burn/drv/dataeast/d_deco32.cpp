@@ -63,10 +63,10 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
 static INT32 uses_gun = 0;
-static INT32 DrvGun0 = 0;
-static INT32 DrvGun1 = 0;
-static INT32 DrvGun2 = 0;
-static INT32 DrvGun3 = 0;
+static INT16 DrvGun0 = 0;
+static INT16 DrvGun1 = 0;
+static INT16 DrvGun2 = 0;
+static INT16 DrvGun3 = 0;
 
 static INT32 game_select = 0; // 0 capt, 1 fhist, 2 nslasher, 3 tattass, 4 dragngun
 static INT32 has_ace = 0;
@@ -3535,8 +3535,8 @@ static INT32 DrvFrame()
 		}
 
 		if (uses_gun) {
-			BurnGunMakeInputs(0, (INT16)DrvGun0, (INT16)DrvGun1);
-			BurnGunMakeInputs(1, (INT16)DrvGun2, (INT16)DrvGun3);
+			BurnGunMakeInputs(0, DrvGun0, DrvGun1);
+			BurnGunMakeInputs(1, DrvGun2, DrvGun3);
 		}
 	}
 

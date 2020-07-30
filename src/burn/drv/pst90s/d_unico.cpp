@@ -15,10 +15,10 @@ static UINT8 DrvInputPort2[8]     = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvDip[2]            = {0, 0};
 static UINT8 DrvInput[3]          = {0x00, 0x00, 0x00};
 static UINT8 DrvReset             = 0;
-static INT32 DrvAnalogPort0       = 0;
-static INT32 DrvAnalogPort1       = 0;
-static INT32 DrvAnalogPort2       = 0;
-static INT32 DrvAnalogPort3       = 0;
+static INT16 DrvAnalogPort0       = 0;
+static INT16 DrvAnalogPort1       = 0;
+static INT16 DrvAnalogPort2       = 0;
+static INT16 DrvAnalogPort3       = 0;
 
 static UINT8 *Mem                 = NULL;
 static UINT8 *MemEnd              = NULL;

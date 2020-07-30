@@ -48,7 +48,7 @@ static INT32 eeprom_old;
 
 static UINT16 lordgun_protection_data;
 
-static INT32 DrvAxis[4];
+static INT16 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
 static UINT16 DrvInputs[5];
 static UINT8 DrvJoy1[16];

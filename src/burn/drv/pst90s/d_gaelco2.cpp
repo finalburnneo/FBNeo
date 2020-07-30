@@ -54,10 +54,10 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
 
 // Lightgun stuff
-static INT32 LethalGun0 = 0;
-static INT32 LethalGun1 = 0;
-static INT32 LethalGun2 = 0;
-static INT32 LethalGun3 = 0;
+static INT16 LethalGun0 = 0;
+static INT16 LethalGun1 = 0;
+static INT16 LethalGun2 = 0;
+static INT16 LethalGun3 = 0;
 
 static INT32 has_mcu = 0;
 

@@ -17,8 +17,8 @@ static UINT8 DrvDip[2];
 static UINT8 DrvReset;
 static UINT8 DrvRecalc;
 
-static INT32 DrvWheel = 0;
-static INT32 DrvAccel = 0;
+static INT16 DrvWheel = 0;
+static INT16 DrvAccel = 0;
 static INT32 Paddle = 0;
 
 static INT32 nCyclesDone, nCyclesTotal;

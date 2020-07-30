@@ -2492,20 +2492,20 @@ static void cischeat_draw_sprites(int priority1, int priority2)
 
 	for (; source < finish; source += 0x10/2 )
 	{
-		size    =   source[ 0 ];
+		size    =   BURN_ENDIAN_SWAP_INT16(source[ 0 ]);
 		if (size & 0x1000)  continue;
 
 		/* number of tiles */
 		xnum    =   ( (size & 0x0f) >> 0 ) + 1;
 		ynum    =   ( (size & 0xf0) >> 4 ) + 1;
 
-		xzoom   =   source[ 1 ];
-		yzoom   =   source[ 2 ];
+		xzoom   =   BURN_ENDIAN_SWAP_INT16(source[ 1 ]);
+		yzoom   =   BURN_ENDIAN_SWAP_INT16(source[ 2 ]);
 		flipx   =   xzoom & 0x1000;
 		flipy   =   yzoom & 0x1000;
 
-		sx      =   source[ 3 ];
-		sy      =   source[ 4 ];
+		sx      =   BURN_ENDIAN_SWAP_INT16(source[ 3 ]);
+		sy      =   BURN_ENDIAN_SWAP_INT16(source[ 4 ]);
 		// TODO: was & 0x1ff with 0x200 as sprite wrap sign, looks incorrect with Grand Prix Star
 		//       during big car on side view in attract mode (a tyre gets stuck on the right of the screen)
 		//       this arrangement works with both games (otherwise Part 2 gets misaligned bleachers sprites)
@@ -2532,8 +2532,8 @@ static void cischeat_draw_sprites(int priority1, int priority2)
 		   we need the y pos of the first line  */
 		sy -= (ydim * ynum);
 
-		code    =   source[ 6 ];
-		attr    =   source[ 7 ];
+		code    =   BURN_ENDIAN_SWAP_INT16(source[ 6 ]);
+		attr    =   BURN_ENDIAN_SWAP_INT16(source[ 7 ]);
 		color   =   attr & 0x007f;
 		shadow  =   attr & 0x1000;
 

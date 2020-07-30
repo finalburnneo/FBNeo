@@ -1893,8 +1893,8 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x100 - 8; offs += 4)
 	{
-		INT32 sx = ((DrvSpriteRAM[offs + 1]) - 4) + ((game_type == 4) ? 7 : 0); // mplanets has weird sx/sy offsets
-		INT32 sy = ((DrvSpriteRAM[offs]) - 13) - ((game_type == 4) ? 4 : 0);    // apparent in the hiscore table.
+		INT32 sx = ((DrvSpriteRAM[offs + 1]) - 4) + ((game_type == 4) ? 16 : 0); // mplanets has weird sx/sy offsets
+		INT32 sy = ((DrvSpriteRAM[offs]) - 13) - ((game_type == 4) ? -4 : 0);    // apparent in the hiscore table.
 		INT32 code = (255 ^ DrvSpriteRAM[offs + 2]) + (256 * *spritebank);
 
 		INT32 flipy = 0;

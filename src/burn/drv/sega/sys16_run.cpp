@@ -2960,7 +2960,7 @@ INT32 System16BFrame()
 
 INT32 System18Frame()
 {
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 800; // mwalk needs huge interleave
 
 	if (HammerAway) nInterleave = 100;
 

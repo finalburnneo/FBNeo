@@ -2306,11 +2306,7 @@ void InputMake(void)
 					} else {
 						pgi->Input.nVal = 0x0001;
 					}
-#ifdef LSB_FIRST
 					*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-					*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 				} else {
 					// Binary controls
 					if (s) {
@@ -2333,21 +2329,13 @@ void InputMake(void)
 				}
 
 				pgi->Input.nVal = (UINT16)nSlider;
-#ifdef LSB_FIRST
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-				*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 				break;
 			}
 #endif
 			case GIT_MOUSEAXIS:						// Mouse axis
 				pgi->Input.nVal = (UINT16)(CinpMouseAxis(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis) * nAnalogSpeed);
-#ifdef LSB_FIRST
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-				*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 				break;
 			case GIT_DIRECT_COORD:
 				CinpDirectCoord(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis);
@@ -2380,11 +2368,7 @@ void InputMake(void)
 				}
 
 				pgi->Input.nVal = (UINT16)nJoy;
-#ifdef LSB_FIRST
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-				*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 
 				break;
 			}
@@ -2406,11 +2390,7 @@ void InputMake(void)
 					pgi->Input.nVal = 0;
 				}
 
-#ifdef LSB_FIRST
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-				*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 				break;
 			}
 			case GIT_JOYAXIS_POS:	{				// Joystick axis Hi
@@ -2429,11 +2409,7 @@ void InputMake(void)
 					pgi->Input.nVal = 0;
 				}
 
-#ifdef LSB_FIRST
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-				*((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
 				break;
 			}
 #endif

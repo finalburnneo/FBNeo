@@ -396,10 +396,10 @@ INT32 __fastcall OutrunResetCallback()
 	INT32 nLastCPU = nSekActive;
 	SekClose();
 	
-	SekOpen(1);
-	SekReset();
-	SekClose();
-	
+	SekReset(1);
+
+	SekNewFrame(); // zero out cycle counters, loffire needs both cpu's sync'd at this point
+
 	SekOpen(nLastCPU);
 
 	return 0;

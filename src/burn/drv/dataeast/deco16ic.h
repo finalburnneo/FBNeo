@@ -64,7 +64,7 @@ void deco16_palette_recalculate(UINT32 *palette, UINT8 *pal);
 
 #define deco16_write_control_word(num, addr, a, d)		\
 	if ((addr & 0xfffffff0) == a) {				\
-		deco16_pf_control[num][(addr & 0x0f)/2] = d;	\
+		deco16_pf_control[num][(addr & 0x0f)/2] = BURN_ENDIAN_SWAP_INT16(d);	\
 		return;						\
 	}
 

@@ -4205,7 +4205,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_frogger	|  	| Frogger						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | frogger	|  	| Frogger						| 		| 1981	| Konami	| Galaxian	| 					|
 | frogs		| D	| Frogs							| 		| 1978	| Gremlin	| Vic Dual	| No sound				|
-| nes_frombelow	|  	| From Below (HB, v7.03.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
+| nes_frombelow	|  	| From Below (HB, v7.24.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
 | gg_slamdunk	|  	| From TV Animation - Slam Dunk - Shouri e no Starting 5| 		| 1994	| Bandai	| Sega Game Gear| 					|
 | md_slamdunk	|  	| From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!| 		| 1995	| Bandai	| Sega Megadrive| 					|
 | cv_frontlina	|  	| Front Line (Alt)					| cv_frontlin	| 1983	| Coleco	| ColecoVision	| 					|
@@ -6340,7 +6340,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_legenkag	|  	| Legend of Kage, The (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
 | lomakai	|  	| Legend of Makai (World)				| 		| 1988	| Jaleco	| Mega System 1	| 					|
 | legendos	|  	| Legend of Success Joe / Ashitano Joe Densetsu		| 		| 1991	| SNK / WAVE	| Neo Geo MVS	| 					|
-| nes_legenzeldx|  	| Legend of Zelda DX, The (HB)				| 		| 2014	| pacnsacdave	| Miscellaneous	| 					|
+| nes_legenzeldx|  	| Legend of Zelda DX, The (HB)				| nes_legenzel	| 2014	| pacnsacdave	| Miscellaneous	| 					|
 | nes_legenzel	|  	| Legend of Zelda, The (USA) (Rev A)			| 		| 1987	| Nintendo	| Miscellaneous	| 					|
 | lwingsb	|  	| Legendary Wings (bootleg)				| lwings	| 1986	| bootleg	| Miscellaneous	| 					|
 | lwings	|  	| Legendary Wings (US set 1)				| 		| 1986	| Capcom	| Miscellaneous	| 					|
@@ -11572,7 +11572,7 @@ This list contains all games supported by FinalBurn Neo.
 | suplup	|  	| Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0| 		| 1999	| Omega System	| Miscellaneous	| 					|
 | md_smario2a	|   NW	| Super Mario 2 (Alt?)					| md_smario2	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smario2	|  	| Super Mario 2 1998					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| nes_smbdx	|  	| Super Mario Bros DX (HB, v3.4)			| 		| 2018	| Flamephanter	| Miscellaneous	| 					|
+| nes_smbdx	|  	| Super Mario Bros DX (HB, v3.4)			| nes_smb	| 2018	| Flamephanter	| Miscellaneous	| 					|
 | nes_smb	|  	| Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | md_smbbc	|  	| Super Mario Bros. + Battle City (Rus)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | nes_smb2	|  	| Super Mario Bros. 2 (USA) (Rev A)			| 		| 1988	| Nintendo	| Miscellaneous	| 					|

@@ -46,10 +46,10 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[1];
 static UINT8 DrvDips[1];
 
-static INT32 LethalGun0 = 0;
-static INT32 LethalGun1 = 0;
-static INT32 LethalGun2 = 0;
-static INT32 LethalGun3 = 0;
+static INT16 LethalGun0 = 0;
+static INT16 LethalGun1 = 0;
+static INT16 LethalGun2 = 0;
+static INT16 LethalGun3 = 0;
 static UINT8 ReloadGun0 = 0;
 static UINT8 ReloadGun1 = 0;
 

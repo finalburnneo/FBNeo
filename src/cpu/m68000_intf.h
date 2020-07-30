@@ -164,6 +164,8 @@ void SekSetHALT(INT32 nCPU, INT32 nStatus);
 INT32 SekGetHALT();
 INT32 SekGetHALT(INT32 nCPU);
 
+INT32 SekIdle(INT32 nCPU, INT32 nCycles);
+
 inline static INT32 SekIdle(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG

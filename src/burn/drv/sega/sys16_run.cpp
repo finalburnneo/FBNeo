@@ -393,14 +393,9 @@ static INT32 System16DoReset()
 
 INT32 __fastcall OutrunResetCallback()
 {
-	INT32 nLastCPU = nSekActive;
-	SekClose();
-	
 	SekReset(1);
 
-	SekNewFrame(); // zero out cycle counters, loffire needs both cpu's sync'd at this point
-
-	SekOpen(nLastCPU);
+	SekRunEnd();
 
 	return 0;
 }
@@ -3288,7 +3283,7 @@ INT32 OutrunFrame()
 
 INT32 XBoardFrame()
 {
-	INT32 nInterleave = 100, i;
+	INT32 nInterleave = 262, i;
 
 	if (System16Reset) System16DoReset();
 
@@ -3316,8 +3311,13 @@ INT32 XBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		if ((i % 2) != 0) {
+			if (segaic16_compare_timer_clock(0)) {
+				SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+			}
+		}
+		if (i == nInterleave-1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3327,7 +3327,7 @@ INT32 XBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave-1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		// Run Z80

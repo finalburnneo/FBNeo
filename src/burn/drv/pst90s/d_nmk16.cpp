@@ -4519,13 +4519,14 @@ static INT32 Macross2Init()
 		BurnYM2203SetAllRoutes(0, 3.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetPSGVolume(0, 0.50);
 	} else {
-		BurnYM2203SetAllRoutes(0, 0.90, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(0, 1.20, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetPSGVolume(0, 0.50);
 	}
 
 	MSM6295Init(0, 4000000 / 165, 1);
 	MSM6295Init(1, 4000000 / 165, 1);
-	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, (Tdragon2mode) ? 0.20 : 0.10, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, (Tdragon2mode) ? 0.20 : 0.10, BURN_SND_ROUTE_BOTH);
 
 	if (Tdragon2mode) {
 		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x200000, 0x200000);

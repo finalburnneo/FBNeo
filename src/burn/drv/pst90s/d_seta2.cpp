@@ -1541,7 +1541,7 @@ void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress &= 0x3f;
 	// for some reason, in samshoot, only the 0 values must be overwritten ?? -barbudreadmon
-	if ((RamVReg[sekAddress >> 1] == 0 && is_samshoot) || !is_samshoot) RamVReg[sekAddress >> 1] = wordValue;
+	if ((BURN_ENDIAN_SWAP_INT16(RamVReg[sekAddress >> 1]) == 0 && is_samshoot) || !is_samshoot) RamVReg[sekAddress >> 1] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	switch (sekAddress)
 	{
 		case 0x1c:  // FLIP SCREEN (myangel)    <- this is actually zoom
@@ -1565,12 +1565,13 @@ void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 				for (INT32 i = 0; i < 0x1000 / 2; i += 4)
 				{
-					UINT16 num = RamSprPriv[i + 0] = RamSpr[(0x3000 / 2) + i + 0];
+					UINT16 num = BURN_ENDIAN_SWAP_INT16(RamSpr[(0x3000 / 2) + i + 0]);
+					RamSprPriv[i + 0] = RamSpr[(0x3000 / 2) + i + 0];
 					RamSprPriv[i + 1] = RamSpr[(0x3000 / 2) + i + 1];
 					RamSprPriv[i + 2] = RamSpr[(0x3000 / 2) + i + 2];
 
-					INT32 sprite = RamSpr[(0x3000 / 2) + i + 3];
-					RamSprPriv[i + 3] = ((current_sprite_entry / 4) & 0x7fff) | (sprite & 0x8000);
+					INT32 sprite = BURN_ENDIAN_SWAP_INT16(RamSpr[(0x3000 / 2) + i + 3]);
+					RamSprPriv[i + 3] = BURN_ENDIAN_SWAP_INT16(((current_sprite_entry / 4) & 0x7fff) | (sprite & 0x8000));
 
 					INT32 list2addr = (sprite & 0x7fff) * 4;
 
@@ -1588,13 +1589,13 @@ void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 						}
 					}
 
-					if (RamSprPriv[i + 0] & 0x8000) // end of list marker, mj4simai must draw the sprite this covers for the company logo, title screen etc.
+					if (BURN_ENDIAN_SWAP_INT16(RamSprPriv[i + 0]) & 0x8000) // end of list marker, mj4simai must draw the sprite this covers for the company logo, title screen etc.
 					{
 						// HACK: however penbros has a dummy sprite entry there which points to 0x0000 as the tile source, and causes garbage with the rearranged format,
 						// so change it to something that's invalid where we can filter it later.  This strongly indicates that the current approach is incorrect however.
 						if (sprite == 0x00)
 						{
-							RamSprPriv[i + 3] |= 0x4000;
+							RamSprPriv[i + 3] |= BURN_ENDIAN_SWAP_INT16(0x4000);
 						}
 
 						break;

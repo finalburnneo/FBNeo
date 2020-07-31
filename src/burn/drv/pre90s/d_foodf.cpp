@@ -176,20 +176,14 @@ static INT32 dip_read(INT32 offset)
 static UINT16 analog_read()
 {
 	INT16 analog[4] = { DrvAnalogPort0, DrvAnalogPort2, DrvAnalogPort1, DrvAnalogPort3 };
-#if 0
-	switch (analog_select) {
-		case 0: bprintf(0, _T("p1 X: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
-		//case 1: bprintf(0, _T("p2 X: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
-		case 2: bprintf(0, _T("p1 Y: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
-		//case 3: bprintf(0, _T("p2 Y: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
-	}
-#endif
+
 	return ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff);
 }
 
 static UINT8 __fastcall foodf_read_byte(UINT32 address)
 {
-	bprintf(0, _T("read byte %X\n"), address);
+	bprintf(0, _T("rb %X\n"), address);
+
 	return 0;
 }
 
@@ -407,7 +401,7 @@ static void DrvPaletteUpdate()
 {
 	for (INT32 i = 0; i < 0x100; i++)
 	{
-		UINT16 p = *((UINT16*)(DrvPalRAM + i * 2));
+		UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + i * 2)));
 
 		INT32 bit0 = (p >> 0) & 1;
 		INT32 bit1 = (p >> 1) & 1;
@@ -433,8 +427,8 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x80-2; offs >= 0x20; offs -= 2)
 	{
-		UINT16 data1 = ram[offs];
-		UINT16 data2 = ram[offs+1];
+		UINT16 data1 = BURN_ENDIAN_SWAP_INT16(ram[offs]);
+		UINT16 data2 = BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
 
 		INT32 code	= (data1 & 0xff);
 		INT32 color	= (data1 >> 8) & 0x1f;
@@ -500,7 +494,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if ((i & 0x3f) == 0 && i <= 192) {
 			irq_vector |= 1;

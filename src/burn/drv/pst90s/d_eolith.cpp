@@ -581,14 +581,14 @@ void Drvqs1000_serial_in(UINT8 data)
 static void eolith_write_long(UINT32 address, UINT32 data)
 {
 	if ((address & 0xfffc0000) == 0x90000000) {
-		UINT32 x = *((UINT32*)(DrvVidRAM + (address & 0x3fffc) + (vidrambank * 0x40000)));
+		UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvVidRAM + (address & 0x3fffc) + (vidrambank * 0x40000))));
 
 		data = (data << 16) | (data >> 16);
 
 		UINT32 xmask = ((data & 0x8000) ? 0xffff : 0) | ((data & 0x80000000) ? 0xffff0000 : 0);
 		UINT32 dmask = xmask ^ 0xffffffff;
 
-		*((UINT32*)(DrvVidRAM + (address & 0x3fffc) + (vidrambank * 0x40000))) = (x & xmask) | (data & dmask);
+		*((UINT32*)(DrvVidRAM + (address & 0x3fffc) + (vidrambank * 0x40000))) = BURN_ENDIAN_SWAP_INT32((x & xmask) | (data & dmask));
 		return;
 	}
 
@@ -612,12 +612,12 @@ static void eolith_write_long(UINT32 address, UINT32 data)
 static void eolith_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffc0000) == 0x90000000) {
-		UINT16 x = *((UINT16*)(DrvVidRAM + (address & 0x3fffe) + (vidrambank * 0x40000)));
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM + (address & 0x3fffe) + (vidrambank * 0x40000))));
 
 		UINT16 xmask = ((data & 0x8000) ? 0xffff : 0);
 		UINT16 dmask = xmask ^ 0xffff;
 
-		*((UINT16*)(DrvVidRAM + (address & 0x3fffe) + (vidrambank * 0x40000))) = (x & xmask) | (data & dmask);
+		*((UINT16*)(DrvVidRAM + (address & 0x3fffe) + (vidrambank * 0x40000))) = BURN_ENDIAN_SWAP_INT16((x & xmask) | (data & dmask));
 		return;
 	}
 
@@ -981,7 +981,7 @@ static void draw_bitmap()
 	{
 		for (INT32 x = 0; x < 320; x++)
 		{
-			dst[x] = ram[x] & 0x7fff;
+			dst[x] = BURN_ENDIAN_SWAP_INT16(ram[x]) & 0x7fff;
 		}
 
 		ram += 336;
@@ -1118,7 +1118,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static void patch_mcu_protection(UINT32 address)
 {
 	UINT32 *rombase = (UINT32*)DrvBootROM;
-	rombase[address/4] = (rombase[address/4] & 0xffff0000) | 0x0300; // Change BR to NOP
+	UINT32 Temp = BURN_ENDIAN_SWAP_INT32(rombase[address/4]);
+	rombase[address/4] = BURN_ENDIAN_SWAP_INT32((Temp & 0xffff0000) | 0x0300); // Change BR to NOP
 }
 
 

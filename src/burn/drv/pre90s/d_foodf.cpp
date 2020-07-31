@@ -32,10 +32,10 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvInputs[1];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
-static INT32 DrvAnalogPort2 = 0;
-static INT32 DrvAnalogPort3 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo FoodfInputList[] = {
@@ -175,7 +175,7 @@ static INT32 dip_read(INT32 offset)
 
 static UINT16 analog_read()
 {
-	INT32 analog[4] = { DrvAnalogPort0, DrvAnalogPort2, DrvAnalogPort1, DrvAnalogPort3 };
+	INT16 analog[4] = { DrvAnalogPort0, DrvAnalogPort2, DrvAnalogPort1, DrvAnalogPort3 };
 #if 0
 	switch (analog_select) {
 		case 0: bprintf(0, _T("p1 X: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;

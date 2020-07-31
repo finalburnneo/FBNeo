@@ -40,12 +40,12 @@ static UINT8 DrvRecalc;
 static UINT8 sound_status;
 static UINT8 soundlatch;
 static UINT8 gun_select;
-static INT32 LethalGun0 = 0;
-static INT32 LethalGun1 = 0;
-static INT32 LethalGun2 = 0;
-static INT32 LethalGun3 = 0;
-static INT32 LethalGun4 = 0;
-static INT32 LethalGun5 = 0;
+static INT16 LethalGun0 = 0;
+static INT16 LethalGun1 = 0;
+static INT16 LethalGun2 = 0;
+static INT16 LethalGun3 = 0;
+static INT16 LethalGun4 = 0;
+static INT16 LethalGun5 = 0;
 
 static INT32 game_select = 0; // bbuster = 0, mechatt = 1
 
@@ -1282,9 +1282,9 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
-		BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
-		BurnGunMakeInputs(2, (INT16)LethalGun4, (INT16)LethalGun5);
+		BurnGunMakeInputs(0, LethalGun0, LethalGun1);
+		BurnGunMakeInputs(1, LethalGun2, LethalGun3);
+		BurnGunMakeInputs(2, LethalGun4, LethalGun5);
 
 	}
 

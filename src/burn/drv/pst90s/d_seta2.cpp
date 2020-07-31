@@ -35,7 +35,7 @@ static UINT8 DrvJoy3[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy4[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy5[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static INT32 DrvAxis[4];
+static INT16 DrvAxis[4];
 static UINT8 DrvAnalogInput[4];
 
 static UINT8 DrvReset = 0;

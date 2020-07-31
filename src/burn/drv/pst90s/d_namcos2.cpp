@@ -142,15 +142,15 @@ static UINT8 DrvInputs[4];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
-static INT32 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
 
 static INT32 uses_gun = 0;
-static INT32 DrvGun0 = 0;
-static INT32 DrvGun1 = 0;
-static INT32 DrvGun2 = 0;
-static INT32 DrvGun3 = 0;
+static INT16 DrvGun0 = 0;
+static INT16 DrvGun1 = 0;
+static INT16 DrvGun2 = 0;
+static INT16 DrvGun3 = 0;
 
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;

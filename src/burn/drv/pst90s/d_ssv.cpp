@@ -3045,14 +3045,14 @@ static void st010Expand(INT32 rom_offset)
 	// copy DSP program
 	for (INT32 i = 0; i < 0x10000; i+= 4)
 	{
-		*dspprg = dspsrc[0+i]<<24 | dspsrc[1+i]<<16 | dspsrc[2+i]<<8;
+		*dspprg = BURN_ENDIAN_SWAP_INT32(dspsrc[0+i]<<24 | dspsrc[1+i]<<16 | dspsrc[2+i]<<8);
 		dspprg++;
 	}
 
 	// copy DSP data
 	for (INT32 i = 0; i < 0x1000; i+= 2)
 	{
-		*dspdata++ = dspsrc[0x10000+i]<<8 | dspsrc[0x10001+i];
+		*dspdata++ = BURN_ENDIAN_SWAP_INT16(dspsrc[0x10000+i]<<8 | dspsrc[0x10001+i]);
 	}
 
 	BurnFree(dspsrc);

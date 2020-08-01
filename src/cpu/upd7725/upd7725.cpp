@@ -26,24 +26,24 @@ static inline UINT32 read_op(UINT16 a)
 {
 	UINT32 *opcode = (UINT32*)upd96050Opcodes;
 
-	return opcode[a & program_address_mask];
+	return BURN_ENDIAN_SWAP_INT32(opcode[a & program_address_mask]);
 }
 
 static inline UINT16 data_read_word(UINT16 a)
 {
 	UINT16 *data = (UINT16*)upd96050Data;
 
-	return data[a & data_address_mask];
+	return BURN_ENDIAN_SWAP_INT16(data[a & data_address_mask]);
 }
 
 static inline void dataRAMWrite(INT32 offset, UINT16 data)
 {
-	dataRAM[offset & 0x7ff] = data;
+	dataRAM[offset & 0x7ff] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static inline UINT16 dataRAMRead(INT32 offset)
 {
-	return dataRAM[offset & 0x7ff];
+	return BURN_ENDIAN_SWAP_INT16(dataRAM[offset & 0x7ff]);
 }
 
 struct Flag

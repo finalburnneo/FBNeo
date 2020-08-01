@@ -136,7 +136,7 @@ static UINT16 cpu_readop16(UINT32 a)
 #ifdef LOG_MEM
 //		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, *z);
 #endif
-		return *z;
+		return BURN_ENDIAN_SWAP_INT16(*z);
 	}
 
 	if (v60_read16) {
@@ -163,7 +163,7 @@ static UINT32 cpu_readop32(UINT32 a)
 //		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, *z);
 #endif
 
-		return *z;
+		return BURN_ENDIAN_SWAP_INT32(*z);
 	}
 
 	if (v60_read32) {
@@ -189,7 +189,7 @@ static UINT16 program_read_word_16le(UINT32 a)
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, *z);
 #endif
 
-		return *z;
+		return BURN_ENDIAN_SWAP_INT16(*z);
 	}
 
 	if (v60_read16) {
@@ -232,7 +232,7 @@ static void program_write_word_16le(UINT32 a, UINT16 d)
 
 	if (p) {
 		UINT16 *z = (UINT16*)(p + (a & page_mask));
-		*z = d;
+		*z = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 
@@ -344,7 +344,7 @@ static UINT32 program_read_dword_32le(UINT32 a)
 	UINT32 *p = (UINT32*)mem[0][a / page_size];
 
 	if (p) {
-		return p[(a & page_mask)/4];
+		return BURN_ENDIAN_SWAP_INT32(p[(a & page_mask)/4]);
 	}
 
 	if (v60_read32) {
@@ -359,7 +359,7 @@ static UINT16 program_read_word_32le(UINT32 a)
 	UINT16 *p = (UINT16*)mem[0][a / page_size];
 
 	if (p) {
-		return p[(a & page_mask)/2];
+		return BURN_ENDIAN_SWAP_INT16(p[(a & page_mask)/2]);
 	}
 
 	if (v60_read16) {
@@ -387,7 +387,7 @@ static void program_write_dword_32le(UINT32 a, UINT32 d)
 	UINT32 *p = (UINT32*)mem[1][a / page_size];
 
 	if (p) {
-		p[(a & page_mask)/4] = d;
+		p[(a & page_mask)/4] = BURN_ENDIAN_SWAP_INT32(d);
 		return;
 	}
 
@@ -402,7 +402,7 @@ static void program_write_word_32le(UINT32 a, UINT16 d)
 	UINT16 *p = (UINT16*)mem[1][a / page_size];
 
 	if (p) {
-		p[(a & page_mask)/2] = d;
+		p[(a & page_mask)/2] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 

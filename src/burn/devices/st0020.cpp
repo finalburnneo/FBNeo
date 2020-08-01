@@ -20,7 +20,7 @@ UINT16 st0020GfxramReadWord(UINT32 offset)
 
 	UINT16 *ram = (UINT16*)(st0020GfxRAM + (offset & 0xfffff) + bank);
 
-	return (ram[0] << 8) | (ram[0] >> 8);
+	return (BURN_ENDIAN_SWAP_INT16(ram[0]) << 8) | (BURN_ENDIAN_SWAP_INT16(ram[0]) >> 8);
 }
 
 UINT8 st0020GfxramReadByte(UINT32 offset)
@@ -45,7 +45,7 @@ void st0020GfxramWriteWord(UINT32 offset, UINT16 data)
 
 	data = (data << 8) | (data >> 8);
 
-	ram[0] = data;
+	ram[0] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static void st0020_blitter_write()
@@ -53,9 +53,9 @@ static void st0020_blitter_write()
 	UINT16 *st0020_blitram = (UINT16*)st0020BlitRAM;
 	UINT16 *st0020_gfxram = (UINT16*)st0020GfxRAM;
 
-	UINT32 src  = (st0020_blitram[0xc0/2] + (st0020_blitram[0xc2/2] << 16)) << 1;
-	UINT32 dst  = (st0020_blitram[0xc4/2] + (st0020_blitram[0xc6/2] << 16)) << 4;
-	UINT32 len  = (st0020_blitram[0xc8/2]) << 4;
+	UINT32 src  = (BURN_ENDIAN_SWAP_INT16(st0020_blitram[0xc0/2]) + (BURN_ENDIAN_SWAP_INT16(st0020_blitram[0xc2/2]) << 16)) << 1;
+	UINT32 dst  = (BURN_ENDIAN_SWAP_INT16(st0020_blitram[0xc4/2]) + (BURN_ENDIAN_SWAP_INT16(st0020_blitram[0xc6/2]) << 16)) << 4;
+	UINT32 len  = BURN_ENDIAN_SWAP_INT16(st0020_blitram[0xc8/2]) << 4;
 	UINT32 size = st0020GfxROMLen;
 
 	dst &= 0x3fffff;
@@ -71,7 +71,7 @@ void st0020_blitram_write_word(UINT32 offset, UINT16 data)
 {
 	UINT16 *st0020_blitram = (UINT16*)st0020BlitRAM;
 
-	st0020_blitram[(offset/2)&0x7f] = data;
+	st0020_blitram[(offset/2)&0x7f] = BURN_ENDIAN_SWAP_INT16(data);
 
 	if ((offset & 0xfe) == 0xca) st0020_blitter_write();
 }
@@ -80,7 +80,7 @@ UINT16 st0020_blitram_read_word(UINT32 offset)
 {
 	UINT16 *st0020_blitram = (UINT16*)st0020BlitRAM;
 
-	return st0020_blitram[(offset/2)&0x7f];
+	return BURN_ENDIAN_SWAP_INT16(st0020_blitram[(offset/2)&0x7f]);
 }
 
 void st0020_blitram_write_byte(UINT32 offset, UINT8 data)
@@ -105,10 +105,10 @@ static void st0020_draw_zooming_sprites(INT32 priority)
 		int sx, x, xoffs, flipx, xnum, xstart, xend, xinc, xdim, xscale;
 		int sy, y, yoffs, flipy, ynum, ystart, yend, yinc, ydim, yscale;
 
-		xoffs   =       s1[ ramoffs[is_st0032][0] ];
-		yoffs   =       s1[ ramoffs[is_st0032][1] ];
-		sprite  =       s1[ ramoffs[is_st0032][2] ];
-		num     =       s1[ ramoffs[is_st0032][3] ] % 0x101; // how many?
+		xoffs   =       BURN_ENDIAN_SWAP_INT16(s1[ ramoffs[is_st0032][0] ]);
+		yoffs   =       BURN_ENDIAN_SWAP_INT16(s1[ ramoffs[is_st0032][1] ]);
+		sprite  =       BURN_ENDIAN_SWAP_INT16(s1[ ramoffs[is_st0032][2] ]);
+		num     =       BURN_ENDIAN_SWAP_INT16(s1[ ramoffs[is_st0032][3] ]) % 0x101; // how many?
 
 		if (sprite & 0x8000) break;
 
@@ -117,12 +117,12 @@ static void st0020_draw_zooming_sprites(INT32 priority)
 
 		for( ; num > 0; num--,s2+=16/2 )
 		{
-			code    =   spriteram16_2[(spritebase + s2 + 0 )&0x3ffff];
-			attr    =   spriteram16_2[(spritebase + s2 + 1 )&0x3ffff];
-			sx      =   spriteram16_2[(spritebase + s2 + 2 )&0x3ffff];
-			sy      =   spriteram16_2[(spritebase + s2 + 3 )&0x3ffff];
-			zoom    =   spriteram16_2[(spritebase + s2 + 4 )&0x3ffff];
-			size    =   spriteram16_2[(spritebase + s2 + 5 )&0x3ffff];
+			code    =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 0 )&0x3ffff]);
+			attr    =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 1 )&0x3ffff]);
+			sx      =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 2 )&0x3ffff]);
+			sy      =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 3 )&0x3ffff]);
+			zoom    =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 4 )&0x3ffff]);
+			size    =   BURN_ENDIAN_SWAP_INT16(spriteram16_2[(spritebase + s2 + 5 )&0x3ffff]);
 
 			if (priority != (size & 0xf0))
 				break;

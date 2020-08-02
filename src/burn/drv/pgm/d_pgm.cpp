@@ -203,7 +203,7 @@ static struct BurnDIPInfo photoy2kDIPList[] = {
 };
 
 static struct BurnDIPInfo py2k2DIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
+	{0x2E,	0xFF, 0xFF,	0x03, NULL								},
 
 	{0,		0xFE, 0,	7,    "Region (Fake)"					},
 	{0x2E,	0x01, 0x0F,	0x00, "Taiwan"							},
@@ -2161,8 +2161,13 @@ struct BurnDriver BurnDrvKovplusa = {
 
 // Knights of Valour Superheroes / Sangoku Senki Superheroes (V104, China)
 
+/* IGS PCB NO-0222-1 MADE IN TAIWAN
+   SCREEN VER PIC: V104 CHINA
+   ROM TYPES: U1 ST M27C322
+   CREDITS TO: "GC8TECH.COM"*/
+
 static struct BurnRomInfo kovshRomDesc[] = {
-	{ "p0605_v104.u1",				0x0400000, 0x7c78e5f3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "pgm_p0605_v104.u1",			0x0400000, 0x7c78e5f3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 //	This is the same as above, but with the last 1mb 0-filled. 
 //	{ "p0600.322",					0x0400000, 0x4e2ba39b, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
 
@@ -2493,6 +2498,11 @@ struct BurnDriver BurnDrvphotoy2k103j = {
 
 // Real and Fake / Photo Y2K (V102, Japan)
 
+/* IGS PCB NO-0220 MADE IN TAIWAN
+   SCREEN VER PIC: V102 JAPAN
+   ROM TYPES: U4 U5 U6 U8 TI TMS27C040
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo photoy2k102RomDesc[] = {
 	{ "photo_y2k_v102_u4.u4",		0x0080000, 0xa65eda9f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "photo_y2k_v102_u6.u6",   	0x0080000, 0xb9ca5504, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -2503,10 +2513,10 @@ static struct BurnRomInfo photoy2k102RomDesc[] = {
 /*	PGM A700, PGM A701 and PGM B0700 ROMs needs to be redump. After checking PCB scans, it appears they are 8MB size.
 	Maybe actual dumps are good and ROMs .l and .h have to be joined and/or reordered.
 	{ "pgm_a0700.u2",       		0x0800000, 0x00000000, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0701.u4",       		 	0x0800000, 0x00000000, 3 | BRF_GRA },			//  3
+	{ "pgm_a0701.u4",       		0x0800000, 0x00000000, 3 | BRF_GRA },			//  3
 	{ "photo_yk2_cg_v101_u3.u3", 	0x0080000, 0x42239e1b, 3 | BRF_GRA },			//  4
 	
-	{ "b0700.u7",       			0x0800000, 0x00000000, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes */
+	{ "pgm_b0700.u7",       		0x0800000, 0x00000000, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes */
 
 	{ "a0700.l",       				0x0400000, 0x26a9ae9c, 3 | BRF_GRA },			//  5 Sprite Color Data
 	{ "a0700.h",       				0x0400000, 0x79bc1fc1, 3 | BRF_GRA },			//  6
@@ -2924,8 +2934,13 @@ struct BurnDriver BurnDrvmartmasttw = {
 };
 
 
-// Photo Y2K 2 (VM101XX, Taiwan)
+// Photo Y2K 2 (VM101XX, China)
 
+/* IGS PCB-0313-00 MADE IN TAIWAN
+   SCREEN VER PIC: M101XX CHINA
+   ROM TYPES: U1 ST M27C160
+   CREDITS TO: "GC8TECH.COM"*/
+   
 static struct BurnRomInfo py2k2RomDesc[] = {
 	{ "m-101xx.u1",					0x0200000, 0xc47795f1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
@@ -4467,10 +4482,15 @@ struct BurnDriver BurnDrvtheglada = {
 };
 
 
-// Photo Y2K 2 (3-in-1)
+// Photo Y2K 2 (3-in-1, V102, China)
+
+/* IGS PCB 0487-00 GX-1 MADE IN TAIWAN
+   SCREEN VER PIC: CHINA VERSION V102 08/23/04 13:03:26
+   ROM TYPES: U3 AND U5 ST M27C160
+   CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo pgm3in1RomDesc[] = {
-	{ "v-100cn.u3",					0x0200000, 0xa39f59b4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "v-102cn.u3",					0x0200000, 0x72e06b2b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	
 	{ "u5.u5",	 	   				0x0200000, 0xda375a50, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4505,10 +4525,47 @@ static INT32 pgm3in1Init()
 
 struct BurnDriver BurnDrvPgm3in1 = {
 	"pgm3in1", NULL, "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
+	"Photo Y2K 2 (3-in-1, V102, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Photo Y2K 2 (3-in-1, V100, China)
+
+static struct BurnRomInfo pgm3in1c100RomDesc[] = {
+	{ "v-100cn.u3",					0x0200000, 0xa39f59b4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	
+	{ "u5.u5",	 	   				0x0200000, 0xda375a50, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a1100.u4", 				0x0800000, 0xe32ce499, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a1101.u5", 				0x0800000, 0x4e7568bc, 3 | BRF_GRA },			//  3
+	{ "pgm_a1102.u6", 				0x0800000, 0x6da7c143, 3 | BRF_GRA },			//  4
+	{ "pgm_a1103.u7", 				0x0800000, 0x0ebebfdc, 3 | BRF_GRA },			//  4
+	{ "u20.u20", 					0x0400000, 0xfe314754, 3 | BRF_GRA },			//  6
+
+	{ "pgm_b1100.u8", 				0x0800000, 0xfa53d6f6, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "pgm_b1101.u9", 				0x0800000, 0x001e4c81, 4 | BRF_GRA },			//  8
+	{ "u21.u21", 					0x0200000, 0xfe31dca6, 4 | BRF_GRA },			//  9
+
+	{ "pgm_m1100.u17", 				0x0200000, 0xfb1515f8, 5 | BRF_SND },			// 10 Samples
+	{ "u16.u16", 					0x0800000, 0x714c33e5, 5 | BRF_SND },			// 11 
+
+	{ "igs027a_pgm3in1.asic",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 12 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(pgm3in1c100, pgm3in1c100, pgm)
+STD_ROM_FN(pgm3in1c100)
+
+struct BurnDriver BurnDrvPgm3in1c100 = {
+	"pgm3in1c100", "pgm3in1", "pgm", NULL, "2001",
+	"Photo Y2K 2 (3-in-1, V100, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

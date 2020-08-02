@@ -909,12 +909,38 @@ static struct BurnRomInfo grdiansRomDesc[] = {
 	{ "u17.bin",	  0x400000, 0x0fad0629,	BRF_GRA },
 	{ "u21.bin",	  0x400000, 0x6f95e466,	BRF_GRA },
 
-	{ "u32.bin",    0x100000, 0xcf0f3017, BRF_SND },				// PCM
+	{ "u32.bin",      0x100000, 0xcf0f3017, BRF_SND },				// PCM
 
 };
 
 STD_ROM_PICK(grdians)
 STD_ROM_FN(grdians)
+
+// Guardians\0Denjin Makai II (Shen Yue Edition, Hack)
+// Hacked by Gu Shen Gan Yue
+// GOTVG 20200628
+
+static struct BurnRomInfo grdianssyRomDesc[] = {
+	{ "grdianssy_u2.bin",	0x080000, 0xb40bd1b2, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianssy_u3.bin",	0x080000, 0xb91195ab, BRF_ESS | BRF_PRG },
+	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
+
+	{ "u16.bin",			0x400000, 0x6a65f265,	BRF_GRA },			// GFX
+	{ "u20.bin",			0x400000, 0xa7226ab7,	BRF_GRA },
+	{ "u15.bin",			0x400000, 0x01672dcd,	BRF_GRA },
+	{ "u19.bin",			0x400000, 0xc0c998a0,	BRF_GRA },
+	{ "u18.bin",			0x400000, 0x967babf4,	BRF_GRA },
+	{ "u22.bin",			0x400000, 0x6239997a,	BRF_GRA },
+	{ "u17.bin",			0x400000, 0x0fad0629,	BRF_GRA },
+	{ "u21.bin",			0x400000, 0x6f95e466,	BRF_GRA },
+
+	{ "u32.bin",			0x100000, 0xcf0f3017, BRF_SND },			// PCM
+
+};
+
+STD_ROM_PICK(grdianssy)
+STD_ROM_FN(grdianssy)
 
 static struct BurnRomInfo mj4simaiRomDesc[] = {
 	{ "ll.u2",		  0x080000, 0x7be9c781, BRF_ESS | BRF_PRG },	// 68000 code
@@ -3505,6 +3531,16 @@ struct BurnDriver BurnDrvGrdians = {
 	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiansRomInfo, grdiansRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
+	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	304, 232, 4, 3
+};
+
+struct BurnDriver BurnDrvGrdianssy = {
+	"grdianssy", "grdians", NULL, NULL, "2020-06-28",
+	"Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)\0", "Imperfect graphics @ game start cutscene", "Hack", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
+	NULL, grdianssyRomInfo, grdianssyRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	304, 232, 4, 3
 };

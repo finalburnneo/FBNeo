@@ -615,8 +615,8 @@ reverse:
 			while (samples--)
 			{
 				/* fetch two samples */
-				INT32 val1 = base[accum >> 11];
-				INT32 val2 = base[((accum + (1 << 11)) & voice->accum_mask) >> 11];
+				INT32 val1 = BURN_ENDIAN_SWAP_INT16(base[accum >> 11]);
+				INT32 val2 = BURN_ENDIAN_SWAP_INT16(base[((accum + (1 << 11)) & voice->accum_mask) >> 11]);
 
 				/* decompress u-law */
 				val1 = chip->ulaw_lookup[val1 >> (16 - ULAW_MAXBITS)];
@@ -653,8 +653,8 @@ reverse:
 			while (samples--)
 			{
 				/* fetch two samples */
-				INT32 val1 = base[accum >> 11];
-				INT32 val2 = base[((accum + (1 << 11)) & voice->accum_mask) >> 11];
+				INT32 val1 = BURN_ENDIAN_SWAP_INT16(base[accum >> 11]);
+				INT32 val2 = BURN_ENDIAN_SWAP_INT16(base[((accum + (1 << 11)) & voice->accum_mask) >> 11]);
 
 				/* decompress u-law */
 				val1 = chip->ulaw_lookup[val1 >> (16 - ULAW_MAXBITS)];
@@ -730,8 +730,8 @@ reverse:
 			while (samples--)
 			{
 				/* fetch two samples */
-				INT32 val1 = (INT16)base[accum >> 11];
-				INT32 val2 = (INT16)base[((accum + (1 << 11)) & voice->accum_mask) >> 11];
+				INT32 val1 = (INT16)BURN_ENDIAN_SWAP_INT16(base[accum >> 11]);
+				INT32 val2 = (INT16)BURN_ENDIAN_SWAP_INT16(base[((accum + (1 << 11)) & voice->accum_mask) >> 11]);
 				
 				/* interpolate */
 				val1 = interpolate(val1, val2, accum);
@@ -765,8 +765,8 @@ reverse:
 			while (samples--)
 			{
 				/* fetch two samples */
-				INT32 val1 = (INT16)base[accum >> 11];
-				INT32 val2 = (INT16)base[((accum + (1 << 11)) & voice->accum_mask) >> 11];
+				INT32 val1 = (INT16)BURN_ENDIAN_SWAP_INT16(base[accum >> 11]);
+				INT32 val2 = (INT16)BURN_ENDIAN_SWAP_INT16(base[((accum + (1 << 11)) & voice->accum_mask) >> 11]);
 				
 				/* interpolate */
 				val1 = interpolate(val1, val2, accum);
@@ -2110,7 +2110,7 @@ ES5506_INLINE UINT16 es5505_reg_read_high(es5506_voice *voice, UINT32 offset)
 			/* this register on a stopped voice, and return the raw sample data at the */
 			/* accumulator */
 			if ((voice->control & CONTROL_STOPMASK) && chip->region_base[voice->control >> 14]) {
-				voice->o1n1 = chip->region_base[voice->control >> 14][voice->exbank + (voice->accum >> 11)];
+				voice->o1n1 = BURN_ENDIAN_SWAP_INT16(chip->region_base[voice->control >> 14][voice->exbank + (voice->accum >> 11)]);
 //				logerror("%02x %08x ==> %08x\n",voice->o1n1,voice->control >> 14,voice->exbank + (voice->accum >> 11));
 			}
 				result = voice->o1n1;

@@ -3139,8 +3139,8 @@ STD_ROM_FN(kov2106)
 
 struct BurnDriver BurnDrvKov2106 = {
 	"kov2106", "kov2", "pgm", NULL, "2000",
-	"Knights of Valour 2 (V106, 102, 100 Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V106, 102, 100 Hong Kong)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 (V106, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V106, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2106RomInfo, kov2106RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

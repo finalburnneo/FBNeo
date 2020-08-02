@@ -2842,6 +2842,7 @@ DRV		BurnDrvDmnfrntpcb;
 DRV		BurnDrvdmnfrnta;
 DRV		BurnDrvdmnfrntb;
 DRV		BurnDrvDmnfrnt;
+DRV		BurnDrvDmnfrntpcba;
 DRV		BurnDrvnes_demonsword;
 DRV		BurnDrvDemonwld;
 DRV		BurnDrvDemonwld1;
@@ -6190,6 +6191,7 @@ DRV		BurnDrvkovlsqh2;		// Incomplete dump [NOT WORKING]
 #endif
 DRV		BurnDrvkovqhsgsa;
 DRV		BurnDrvkovqhsgs;
+DRV		BurnDrvkovqhsgsd;
 DRV		BurnDrvKovsgqyz;
 DRV		BurnDrvKovsgqyza;
 DRV		BurnDrvKovsgqyzb;
@@ -8324,6 +8326,7 @@ DRV		BurnDrvOlds100a;
 DRV		BurnDrvOlds100;
 DRV		BurnDrvOlds103t;
 DRV		BurnDrvOlds;
+DRV		BurnDrvzerofxz;
 DRV		BurnDrvOrius;
 DRV		BurnDrvOsman;
 DRV		BurnDrvmd_osomatsu;
@@ -10224,6 +10227,7 @@ DRV		BurnDrvSengokuh;
 DRV		BurnDrvSengoku;
 DRV		BurnDrvSengoku2;
 DRV		BurnDrvSengoku3s;
+DRV		BurnDrvsengoku3fs;
 DRV		BurnDrvSengoku3;
 DRV		BurnDrvSengoku3a;
 DRV		BurnDrvSngkAce;
@@ -17431,6 +17435,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvdmnfrnta,			// Demon Front (VM102XX, S101XX)
 	&BurnDrvdmnfrntb,			// Demon Front (VM103XX, S103XX)
 	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
+	&BurnDrvDmnfrntpcba,		// Demon Front (VM105XX, S105XX, China, Single PCB Version)
 	&BurnDrvnes_demonsword,		// Demon Sword (USA)
 	&BurnDrvDemonwld,			// Demon's World / Horror Story (set 1)
 	&BurnDrvDemonwld1,			// Demon's World / Horror Story (set 2)
@@ -20738,16 +20743,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov114,				// Knights of Valour - Sangoku Senki (V114, Hong Kong)
 	&BurnDrvKov115,				// Knights of Valour - Sangoku Senki (V115)
 	&BurnDrvKov,				// Knights of Valour - Sangoku Senki (V117)
-	&BurnDrvKov2100,			// Knights of Valour 2 (V100, 100, 100, Hong Kong)
-	&BurnDrvKov2101,			// Knights of Valour 2 (V101, 101, 100, Hong Kong)
-	&BurnDrvKov2102,			// Knights of Valour 2 (V102, 101, 100, Hong Kong)
-	&BurnDrvKov2103,			// Knights of Valour 2 (V103, 101, 100, Hong Kong)
-	&BurnDrvKov2104,			// Knights of Valour 2 (V104, 102, 100, Hong Kong)
-	&BurnDrvKov2106,			// Knights of Valour 2 (V106, 102, 100 Hong Kong)
-	&BurnDrvKov2,				// Knights of Valour 2 (V107, 102, 100, Hong Kong)
+	&BurnDrvKov2100,			// Knights of Valour 2 (V100, Hong Kong)
+	&BurnDrvKov2101,			// Knights of Valour 2 (V101, Hong Kong)
+	&BurnDrvKov2102,			// Knights of Valour 2 (V102, Hong Kong)
+	&BurnDrvKov2103,			// Knights of Valour 2 (V103, Hong Kong)
+	&BurnDrvKov2104,			// Knights of Valour 2 (V104, China)
+	&BurnDrvKov2106,			// Knights of Valour 2 (V106, Hong Kong)
+	&BurnDrvKov2,				// Knights of Valour 2 (V107, Hong Kong)
 	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
 	&BurnDrvKov2p200,			// Knights of Valour 2 Plus - Nine Dragons (VM200XX)
-	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX, China)
+	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japan)
 	&BurnDrvKov2p203,			// Knights of Valour 2 Plus - Nine Dragons (VM203XX, Korea)
 	&BurnDrvKov2p204,			// Knights of Valour 2 Plus - Nine Dragons (VM204XX, China)
 	&BurnDrvKov2p,				// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
@@ -20755,7 +20760,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovplus2020tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)
-	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2019-5, hack)
+	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2020-A, hack)
 	&BurnDrvkovytzyws,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
 	&BurnDrvkovshpqszltw,		// Knights of Valour Super Heroes Plus (The Road to Survival True King Tian Wang, ver. 500)
@@ -20779,6 +20784,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvkovqhsgsa,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (V303CN alt, China)
 	&BurnDrvkovqhsgs,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (V303CN, China)
+	&BurnDrvkovqhsgsd,			// Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (V303CN, China, decrypted version)
 	&BurnDrvKovsgqyz,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 1)
 	&BurnDrvKovsgqyza,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 2)
 	&BurnDrvKovsgqyzb,			// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (V119, set 3)
@@ -22913,6 +22919,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOlds100,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100, China)
 	&BurnDrvOlds103t,			// Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent) (unprotected)
 	&BurnDrvOlds,				// Oriental Legend Super (V101, Korea)
+	&BurnDrvzerofxz,			// Oriental Legend ZERO (Hack)
 	&BurnDrvOrius,				// Orius (ver UAA)
 	&BurnDrvOsman,				// Osman (World)
 	&BurnDrvmd_osomatsu,		// Osomatsu-kun Hachamecha Gekijou (Jpn)
@@ -23341,7 +23348,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPgm3in1c100,		// Photo Y2K 2 (3-in-1, V100, China) [Sound issues, video issues, NOT WORKING]
 	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1, V102, China) [Sound issues, video issues, NOT WORKING]
 	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan)
-	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan)
+	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, China)
 	&BurnDrvPhozon,				// Phozon (Japan)
 	&BurnDrvPhozons,			// Phozon (Sidam)
 	&BurnDrvPickin,				// Pickin'
@@ -24813,6 +24820,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSengoku,			// Sengoku / Sengoku Denshou (NGM-017)(NGH-017)
 	&BurnDrvSengoku2,			// Sengoku 2 / Sengoku Denshou 2
 	&BurnDrvSengoku3s,			// Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)
+	&BurnDrvsengoku3fs,			// Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Hack)
 	&BurnDrvSengoku3,			// Sengoku 3 / Sengoku Densho 2001 (set 1)
 	&BurnDrvSengoku3a,			// Sengoku 3 / Sengoku Densho 2001 (Set 2)
 	&BurnDrvSngkAce,			// Sengoku Ace (Japan, set 1)

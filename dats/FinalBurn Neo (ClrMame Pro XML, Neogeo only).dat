@@ -12908,6 +12908,61 @@
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<driver status="good"/>
 	</game>
+	<game name="sengoku3fs" cloneof="sengoku3" romof="sengoku3">
+		<description>Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Hack) [Hack]</description>
+		<year>2020-04-10</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="261-p1fs.bin" size="2097152" crc="76b2a57a"/>
+		<rom name="261-s1.bin" size="131072" crc="c1e27cc7"/>
+		<rom name="261-c1_decrypted.bin" size="8388608" crc="9af7cbca"/>
+		<rom name="261-c2_decrypted.bin" size="8388608" crc="2a1f874d"/>
+		<rom name="261-c3_decrypted.bin" size="8388608" crc="5403adb5"/>
+		<rom name="261-c4_decrypted.bin" size="8388608" crc="18926df6"/>
+		<rom name="261-m1.m1" merge="261-m1.m1" size="524288" crc="7d501c39"/>
+		<rom name="261-v1.v1" merge="261-v1.v1" size="4194304" crc="64c30081"/>
+		<rom name="261-v2.v2" merge="261-v2.v2" size="4194304" crc="392a9c47"/>
+		<rom name="261-v3.v3" merge="261-v3.v3" size="4194304" crc="c1a7ebe3"/>
+		<rom name="261-v4.v4" merge="261-v4.v4" size="2097152" crc="9000d085"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<driver status="good"/>
+	</game>
 	<game name="sengoku3" romof="neogeo">
 		<description>Sengoku 3 / Sengoku Densho 2001 (set 1)</description>
 		<year>2001</year>
@@ -18737,11 +18792,11 @@
 	</game>
 	<game name="kof2k2plus" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 (Plus 2017, Hack) [Hack]</description>
-		<year>2020-02-22</year>
+		<year>2020-07-17</year>
 		<manufacturer>Hack</manufacturer>
-		<rom name="kof2k2plus-p1.p1" size="1048576" crc="bce20a36"/>
+		<rom name="kof2k2plus-p1.p1" size="1048576" crc="dc6da89f"/>
 		<rom name="kof2k2plus-p2.p2" size="5242880" crc="7ad26451"/>
-		<rom name="kof2k2plus-p3.p3" size="131072" crc="2bbed8ec"/>
+		<rom name="kof2k2plus-p3.p3" size="131072" crc="f9dacaae"/>
 		<rom name="kof2k2plus-s1.s1" size="131072" crc="96bdd036"/>
 		<rom name="kof2k2plus-c1.c1" size="8388608" crc="93cf6345"/>
 		<rom name="kof2k2plus-c2.c2" size="8388608" crc="d7373d66"/>
@@ -18796,9 +18851,9 @@
 	</game>
 	<game name="kf2k23rd" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT) [Hack]</description>
-		<year>200?</year>
+		<year>2020-06-14</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="kf2k23rd-p1.rom" size="1048576" crc="eb84d68f"/>
+		<rom name="kf2k23rd-p1.rom" size="1048576" crc="de02918d"/>
 		<rom name="kf2k23rd-p2.rom" size="4194304" crc="293bbf78"/>
 		<rom name="kf2k23rd-s1.rom" size="131072" crc="67e7cbe1"/>
 		<rom name="kf2k23rd-c1.rom" size="8388608" crc="7efa6ef7"/>

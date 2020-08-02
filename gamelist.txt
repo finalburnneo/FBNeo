@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14322 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14326 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2798,6 +2798,7 @@ This list contains all games supported by FinalBurn Neo.
 | dmnfrnta	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntb	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
 | nes_demonsword|  	| Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | demonwld	|  	| Demon's World / Horror Story (set 1)			| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld1	|  	| Demon's World / Horror Story (set 2)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
@@ -6037,16 +6038,16 @@ This list contains all games supported by FinalBurn Neo.
 | kov114	|  	| Knights of Valour - Sangoku Senki (V114, Hong Kong)	| kov		| 1999	| IGS		| PolyGameMaster| 					|
 | kov115	|  	| Knights of Valour - Sangoku Senki (V115)		| kov		| 1999	| IGS		| PolyGameMaster| 					|
 | kov		|  	| Knights of Valour - Sangoku Senki (V117)		| 		| 1999	| IGS		| PolyGameMaster| 					|
-| kov2100	|  	| Knights of Valour 2 (V100, 100, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2101	|  	| Knights of Valour 2 (V101, 101, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2102	|  	| Knights of Valour 2 (V102, 101, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2103	|  	| Knights of Valour 2 (V103, 101, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2104	|  	| Knights of Valour 2 (V104, 102, 100, Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2106	|  	| Knights of Valour 2 (V106, 102, 100 Hong Kong)	| kov2		| 2000	| IGS		| PolyGameMaster| 					|
-| kov2		|  	| Knights of Valour 2 (V107, 102, 100, Hong Kong)	| 		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2100	|  	| Knights of Valour 2 (V100, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2101	|  	| Knights of Valour 2 (V101, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2102	|  	| Knights of Valour 2 (V102, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2103	|  	| Knights of Valour 2 (V103, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2104	|  	| Knights of Valour 2 (V104, China)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2106	|  	| Knights of Valour 2 (V106, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2		|  	| Knights of Valour 2 (V107, Hong Kong)			| 		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver| kov2p		| 2020-07-22| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
-| kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
+| kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japa| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX, Kore| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
@@ -6054,7 +6055,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-07-08| Hack		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119, Kor| kovplus	| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
-| kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2019	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2020-07-21| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovytzyws	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpzqhl	|  	| Knights of Valour Super Heroes Plus (The Best Firepowe| kovshp	| 2020	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovshpqszltw	|  	| Knights of Valour Super Heroes Plus (The Road to Survi| kovshp	| 2020-01-03| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -6076,6 +6077,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovlsqh2	| D NW	| Knights of Valour: Luan Shi Quan Huang II / Sangoku Se| kovshp	| 2009	| IGS		| PolyGameMaster| Incomplete dump			|
 | kovqhsgsa	|  	| Knights of Valour: Quan Huang San Guo Special / Sangok| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovqhsgs	|  	| Knights of Valour: Quan Huang San Guo Special / Sangok| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
+| kovqhsgsd	|  	| Knights of Valour: Quan Huang San Guo Special / Sangok| kovsh		| 1999	| IGS		| PolyGameMaster| 					|
 | kovsgqyz	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
 | kovsgqyza	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
 | kovsgqyzb	|  	| Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki| kovplus	| 1999	| ANX		| PolyGameMaster| 					|
@@ -8178,6 +8180,7 @@ This list contains all games supported by FinalBurn Neo.
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds103t	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 2003	| IGS		| PolyGameMaster| 					|
 | olds		|  	| Oriental Legend Super (V101, Korea)			| 		| 1999	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
+| zerofxz	|  	| Oriental Legend ZERO (Hack)				| olds		| 2019-06-06| Hack		| PolyGameMaster| 					|
 | orius		|  	| Orius (ver UAA)					| xexex		| 1991	| Konami	| GX067		| 					|
 | osman		|  	| Osman (World)						| 		| 1996	| Mitchell	| Simple 156	| 					|
 | md_osomatsu	|  	| Osomatsu-kun Hachamecha Gekijou (Jpn)			| 		| 1988	| Sega		| Sega Megadrive| 					|
@@ -8598,7 +8601,7 @@ This list contains all games supported by FinalBurn Neo.
 | pgm3in1c100	|   NW	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
 | pgm3in1	|   NW	| Photo Y2K 2 (3-in-1, V102, China)			| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
-| py2k2		|  	| Photo Y2K 2 (VM101XX, Taiwan)				| 		| 2001	| IGS		| PolyGameMaster| 					|
+| py2k2		|  	| Photo Y2K 2 (VM101XX, China)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|
 | phozons	|  	| Phozon (Sidam)					| phozon	| 1983	| Namco (Sidam l| Miscellaneous	| 					|
 | pickin	|  	| Pickin'						| 		| 1983	| Valadon Automa| Miscellaneous	| 					|
@@ -10046,6 +10049,7 @@ This list contains all games supported by FinalBurn Neo.
 | sengoku	|  	| Sengoku / Sengoku Denshou (NGM-017)(NGH-017)		| 		| 1991	| SNK		| Neo Geo MVS	| 					|
 | sengoku2	|  	| Sengoku 2 / Sengoku Denshou 2				| 		| 1993	| SNK		| Neo Geo MVS	| 					|
 | sengoku3s	|  	| Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT h| sengoku3	| 2001	| hack		| Neo Geo MVS	| 					|
+| sengoku3fs	|  	| Sengoku 3 / Sengoku Densho 2001 (Feng Shen Edition, Ha| sengoku3	| 2020-04-10| Hack		| Neo Geo MVS	| 					|
 | sengoku3	|  	| Sengoku 3 / Sengoku Densho 2001 (set 1)		| 		| 2001	| SNK / Noise Fa| Neo Geo MVS	| 					|
 | sengoku3a	|  	| Sengoku 3 / Sengoku Densho 2001 (Set 2)		| sengoku3	| 2001	| SNK / Noise Fa| Neo Geo MVS	| 					|
 | sngkace	|  	| Sengoku Ace (Japan, set 1)				| samuraia	| 1993	| Psikyo / Banpr| Psikyo 68EC020| 					|
@@ -12462,8 +12466,8 @@ This list contains all games supported by FinalBurn Neo.
 | kof2k2omg9	|  	| The King of Fighters 2002 (Omega v0.9)		| kof2002	| 2012	| hack		| KOF-ON Team	| 					|
 | kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 Public B| kof2002	| 2018-12-17| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
-| kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-02-22| Hack		| Neo Geo MVS	| 					|
-| kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 200?	| hack		| Miscellaneous	| 					|
+| kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-07-17| Hack		| Neo Geo MVS	| 					|
+| kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 2020-06-14| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2mp2	|  	| The King of Fighters 2002 Magic Plus II (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2pls	|  	| The King of Fighters 2002 Plus (bootleg set 1)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|

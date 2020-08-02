@@ -3588,7 +3588,7 @@ static UINT16 __fastcall neogeoReadWordTransfer(UINT32 sekAddress)
 
 	switch (nActiveTransferArea) {
 		case 0:							// Sprites
-			return *((UINT16*)(NeoSpriteRAM + nSpriteTransferBank + (sekAddress & 0xFFFFF)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(NeoSpriteRAM + nSpriteTransferBank + (sekAddress & 0xFFFFF))));
 			break;
 		case 1:							// ADPCM
 			return 0xFF00 | YM2610ADPCMAROM[nNeoActiveSlot][nADPCMTransferBank + ((sekAddress & 0x0FFFFF) >> 1)];
@@ -3646,7 +3646,7 @@ static void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordVal
 
 	switch (nActiveTransferArea) {
 		case 0:							// Sprites
-			*((UINT16*)(NeoSpriteRAM + nSpriteTransferBank + (sekAddress & 0xFFFFF))) = wordValue;
+			*((UINT16*)(NeoSpriteRAM + nSpriteTransferBank + (sekAddress & 0xFFFFF))) = BURN_ENDIAN_SWAP_INT16(wordValue);
 			NeoCDOBJBankUpdate[nSpriteTransferBank >> 20] = true;
 			break;
 		case 1:							// ADPCM

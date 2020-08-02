@@ -150,7 +150,7 @@ static UINT8 controller_read(INT32 port)
 				data |= keys[i];
 		}
 
-		data = ~data;
+		data = ~(data | 0x80);
 	}
 	else
 	{ // joypad mode
@@ -207,6 +207,13 @@ static void __fastcall coleco_write_port(UINT16 port, UINT8 data)
 
 		case 0xe0:
 		case 0xe1:
+			// SN76496 takes 32 cycles to become ready after CS
+			// SN76496's READY line connected to z80's WAIT line on CV
+			// Needs +22 to get it to sound exactly like recorded CV @
+			// https://www.youtube.com/watch?v=Dg65_jCThKs
+			// so, where's the other 22 come from?  other wait-states
+			// or propogation delays?
+			ZetIdle(32+22);
 			SN76496Write(0, data);
 		return;
 	}
@@ -244,7 +251,9 @@ static UINT8 __fastcall coleco_read_port(UINT16 port)
 		case 0xe3:
 			return controller_read(1);
 	}
+
 	bprintf(0, _T("unmapped port read: %x\n"), port);
+
 	return 0;
 }
 
@@ -500,7 +509,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		scanline = i;
-		CPU_RUN(0, Zet);
+		CPU_RUN_SYNCINT(0, Zet);
 
 		TMS9928AScanline(i);
 
@@ -543,8 +552,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
 
-        if (use_SGM)
-            AY8910Scan(nAction, pnMin);
+		if (use_SGM) {
+			AY8910Scan(nAction, pnMin);
+		}
 
 		TMS9928AScan(nAction, pnMin);
 
@@ -554,6 +564,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
         SCAN_VAR(MegaCartBank);
         SCAN_VAR(SGM_map_24k);
         SCAN_VAR(SGM_map_8k);
+	}
+
+	if (nAction & ACB_WRITE) {
+		if (use_SGM) {
+			ZetOpen(0);
+			update_map();
+			ZetClose();
+		}
 	}
 
 	return 0;

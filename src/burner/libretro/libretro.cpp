@@ -261,7 +261,7 @@ void retro_get_system_info(struct retro_system_info *info)
 	info->library_version = FBNEO_VERSION GIT_VERSION;
 	info->need_fullpath = true;
 	info->block_extract = true;
-	info->valid_extensions = "zip|7z";
+	info->valid_extensions = "zip|7z|cue|ccd";
 }
 
 static void InpDIPSWGetOffset (void)
@@ -1142,6 +1142,7 @@ bool retro_serialize(void *data, size_t size)
 	if (!state_sizes[kNetGame])
 	{
 		BurnAcb = burn_dummy_state_cb;
+		SCAN_VAR(nCurrentFrame);
 		BurnAreaScan(ACB_FULLSCAN, 0);
 	}
 	if (size != state_sizes[kNetGame])
@@ -1169,6 +1170,7 @@ bool retro_unserialize(const void *data, size_t size)
 	if (!state_sizes[kNetGame])
 	{
 		BurnAcb = burn_dummy_state_cb;
+		SCAN_VAR(nCurrentFrame);
 		BurnAreaScan(ACB_FULLSCAN, 0);
 	}
 	if (size != state_sizes[kNetGame])

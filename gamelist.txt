@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14326 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14328 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1854,7 +1854,7 @@ This list contains all games supported by FinalBurn Neo.
 | catapult	| D NW	| Catapult						| 		| 1982	| Epos Corporati| EPOS Tristar	| Bad dump				|
 | ctrpllrp	|  	| Caterpillar Pacman Hack				| puckman	| 1982	| hack		| Pac-man	| 					|
 | catt		|  	| Catt (Japan)						| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
-| md_cavestory	|  	| Cave Story Doukutsu (HB, v0.5.2)			| 		| 2004	| Studio Pixel	| Sega Megadrive| 					|
+| md_cavestory	|  	| Cave Story Doukutsu (HB, v0.6.0)			| 		| 2020-07-29| Studio Pixel	| Sega Megadrive| 					|
 | cavelon	|  	| Cavelon						| 		| 1983	| Jetsoft	| Galaxian	| 					|
 | cninjabl	|  	| Caveman Ninja (bootleg)				| cninja	| 1991	| bootleg	| DECO IC16	| 					|
 | cninjau	|  	| Caveman Ninja (US ver 4)				| cninja	| 1991	| Data East Corp| DECO IC16	| 					|
@@ -4870,6 +4870,7 @@ This list contains all games supported by FinalBurn Neo.
 | grdnstrmau	|  	| Guardian Storm (horizontal, Australia)		| grdnstrm	| 1998	| Afega		| NMK16		| 					|
 | grdnstrm	|  	| Guardian Storm (horizontal, not encrypted)		| 		| 1998	| Afega (Apples | NMK16		| 					|
 | grdnstrmv	|  	| Guardian Storm (vertical)				| grdnstrm	| 1998	| Afega (Apples | NMK16		| 					|
+| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-06-28| Hack		| Newer Seta	| Imperfect graphics @ game start cutsce|
 | grdians	|  	| Guardians\0Denjin Makai II				| 		| 1995	| Banpresto	| Newer Seta	| Imperfect graphics @ game start cutsce|
 | msx_guardic	|  	| Guardic (Jpn)						| 		| 1986	| Compile	| MSX		| 					|
 | msx_guardica	|  	| Guardic (Jpn, Alt)					| msx_guardic	| 1986	| Compile	| MSX		| 					|
@@ -8900,6 +8901,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_premierm	|  	| Premier Manager (Euro)				| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_premrm97	|  	| Premier Manager 97 (Euro)				| 		| 1996	| Sega		| Sega Megadrive| 					|
 | msx_prettykngdm|  	| Pretty Kingdom (HB)					| 		| 2014	| Nerlaska Studi| MSX		| 					|
+| sailormnjee	|  	| Pretty Soldier Sailor Moon (Enhanced Edition v5 Final,| sailormn	| 2019-12-29| Hack		| Cave		| Hack only enable in Extra Hard	|
 | sailormno	|  	| Pretty Soldier Sailor Moon (ver. 95/03/21, Europe)	| sailormn	| 1995	| BanPresto / Ga| Cave		| 					|
 | sailormnoh	|  	| Pretty Soldier Sailor Moon (ver. 95/03/21, Hong Kong)	| sailormn	| 1995	| BanPresto / Ga| Cave		| 					|
 | sailormnoj	|  	| Pretty Soldier Sailor Moon (ver. 95/03/21, Japan)	| sailormn	| 1995	| BanPresto / Ga| Cave		| 					|

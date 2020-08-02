@@ -2342,10 +2342,10 @@ static void f1gpstar_draw_road(int road_num, int priority1, int priority2, int t
 	{
 		int xscale, xdim;
 
-		int xscroll = roadram[ sy * 4 + 0 ];
-		int xzoom   = roadram[ sy * 4 + 1 ];
-		int attr    = roadram[ sy * 4 + 2 ];
-		int code    = roadram[ sy * 4 + 3 ];
+		int xscroll = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 0 ]);
+		int xzoom   = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 1 ]);
+		int attr    = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 2 ]);
+		int code    = BURN_ENDIAN_SWAP_INT16(roadram[ sy * 4 + 3 ]);
 
 		/* highest nibble is a priority information */
 		if ( ((xscroll & 0x7000) < min_priority) || ((xscroll & 0x7000) > max_priority) )

@@ -1562,6 +1562,41 @@ static struct BurnRomInfo sailormnohRomDesc[] = {
 STD_ROM_PICK(sailormnoh)
 STD_ROM_FN(sailormnoh)
 
+// Pretty Soldier Sailor Moon (Enhanced Edition v5 Final, Hack)
+// Hacked by Yun Yan
+// 2019-12-29
+
+static struct BurnRomInfo sailormnjeeRomDesc[] = {
+	{ "sailormnjee.u45",	0x080000, 0xe77a6fbe, BRF_ESS | BRF_PRG },	//  0 CPU #0 code
+	{ "bpsm.u46",			0x200000, 0x32084e80, BRF_ESS | BRF_PRG },	//  1
+
+	{ "bpsm945a.u9",		0x080000, 0x438de548, BRF_ESS | BRF_PRG },	//  2 Z80 code
+
+	{ "bpsm.u76",			0x200000, 0xa243a5ba, BRF_GRA },			//  3 Sprite data
+	{ "bpsm.u77",			0x200000, 0x5179a4ac, BRF_GRA },			//  4
+
+	{ "bpsm.u53",			0x200000, 0xb9b15f83, BRF_GRA },			//  5 Layer 0 Tile data
+	{ "bpsm.u54",			0x200000, 0x8f00679d, BRF_GRA },			//  6 Layer 1 Tile data
+
+	{ "bpsm.u57",			0x200000, 0x86be7b63, BRF_GRA },			//  7 Layer 2 Tile data
+	{ "bpsm.u58",			0x200000, 0xe0bba83b, BRF_GRA },			//  8
+	{ "bpsm.u62",			0x200000, 0xa1e3bfac, BRF_GRA },			//  9
+	{ "bpsm.u61",			0x200000, 0x6a014b52, BRF_GRA },			// 10
+	{ "bpsm.u60",			0x200000, 0x992468c0, BRF_GRA },			// 11
+
+	{ "bpsm.u65",			0x200000, 0xf60fb7b5, BRF_GRA },			// 12
+	{ "bpsm.u64",			0x200000, 0x6559d31c, BRF_GRA },			// 13
+	{ "bpsm.u63",			0x200000, 0xd57a56b4, BRF_GRA },			// 14
+
+	{ "bpsm.u48",			0x200000, 0x498e4ed1, BRF_SND },			// 15 MSM6295 #0 ADPCM data
+	{ "bpsm.u47",			0x080000, 0x0f2901b9, BRF_SND },			// 16 MSM6295 #1 ADPCM data
+	
+	{ "sailormn_japan.nv",	0x0080, 0xea03c30a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(sailormnjee)
+STD_ROM_FN(sailormnjee)
+
 static struct BurnRomInfo agalletRomDesc[] = {
 	// these roms were dumped from a board set to Taiwanese region.
 	{ "bp962a.u45",   0x080000, 0x24815046, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -2004,6 +2039,16 @@ struct BurnDriver BurnDrvSailorMoonOh = {
 	L"Pretty Soldier Sailor Moon\0\u7F8E\u5C11\u5973\u6226\u58EB \u30BB\u30FC\u30E9\u30FC\u30E0\u30FC\u30F3 (ver. 95/03/21, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailormnohRomInfo, sailormnohRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvSailorMoonjee = {
+	"sailormnjee", "sailormn", NULL, NULL, "2019-12-29",
+	"Pretty Soldier Sailor Moon (Enhanced Edition v5 Final, Hack)\0", "Hack only enable in Extra Hard", "Hack", "Cave",
+	L"Pretty Soldier Sailor Moon (Enhanced Edition v5 Final, Hack)\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (\u62e1\u5f35\u7248 v5, \u30cf\u30c3\u30af)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, sailormnjeeRomInfo, sailormnjeeRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

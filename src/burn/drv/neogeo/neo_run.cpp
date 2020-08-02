@@ -3666,10 +3666,10 @@ static void __fastcall neogeoWriteWordTransfer(UINT32 sekAddress, UINT16 wordVal
 static UINT16 __fastcall neogeoCDReadWord68KProgram(UINT32 sekAddress)
 {
 	if (sekAddress < 0x80 && NeoCDVectorSwitch == 0) {
-		return *((UINT16*)(NeoVectorActive + sekAddress));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(NeoVectorActive + sekAddress)));
 	}
 
-	return *((UINT16*)(Neo68KROMActive + sekAddress));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + sekAddress)));
 }
 
 static UINT8 __fastcall neogeoCDReadByte68KProgram(UINT32 sekAddress)

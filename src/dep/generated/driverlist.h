@@ -8749,6 +8749,7 @@ DRV		BurnDrvphotoy2k102;
 DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
+DRV		BurnDrvPgm3in1c100;
 DRV		BurnDrvPgm3in1;
 DRV		BurnDrvPy2k2100;
 DRV		BurnDrvPy2k2;
@@ -23337,7 +23338,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105, China)
-	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1) [Sound issues, video issues, NOT WORKING]
+	&BurnDrvPgm3in1c100,		// Photo Y2K 2 (3-in-1, V100, China) [Sound issues, video issues, NOT WORKING]
+	&BurnDrvPgm3in1,			// Photo Y2K 2 (3-in-1, V102, China) [Sound issues, video issues, NOT WORKING]
 	&BurnDrvPy2k2100,			// Photo Y2K 2 (V100, japan)
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, Taiwan)
 	&BurnDrvPhozon,				// Phozon (Japan)

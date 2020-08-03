@@ -855,8 +855,9 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 
 		for (int i = (cdimgOutputbufferSize - cdimgOutputPosition) * 2 - 1; i > 0; )
 		{
-			dst[i] = BURN_ENDIAN_SWAP_INT16(CLIP((src[i]) + BURN_ENDIAN_SWAP_INT16(dst[i]))); i--;
-			dst[i] = BURN_ENDIAN_SWAP_INT16(CLIP((src[i]) + BURN_ENDIAN_SWAP_INT16(dst[i]))); i--;
+			short tmpsrc = BURN_ENDIAN_SWAP_INT16(src[i]);
+			dst[i] = CLIP(tmpsrc + dst[i]); i--;
+			dst[i] = CLIP(tmpsrc + dst[i]); i--;
 		}
 
 		buffer += (cdimgOutputbufferSize - cdimgOutputPosition) * 2;
@@ -874,8 +875,9 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 
 		for (int i = samples * 2 - 1; i > 0; )
 		{
-			dst[i] = BURN_ENDIAN_SWAP_INT16(CLIP((src[i]) + BURN_ENDIAN_SWAP_INT16(dst[i]))); i--;
-			dst[i] = BURN_ENDIAN_SWAP_INT16(CLIP((src[i]) + BURN_ENDIAN_SWAP_INT16(dst[i]))); i--;
+			short tmpsrc = BURN_ENDIAN_SWAP_INT16(src[i]);
+			dst[i] = CLIP(tmpsrc + dst[i]); i--;
+			dst[i] = CLIP(tmpsrc + dst[i]); i--;
 		}
 
 		cdimgOutputPosition += samples;

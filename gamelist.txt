@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14328 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14331 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2794,11 +2794,11 @@ This list contains all games supported by FinalBurn Neo.
 | md_demomanp	|   NW	| Demolition Man (USA, Prototype)			| md_demoman	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | msx_demoncrystl|  	| Demon Crystal, The					| 		| 1986	| Radio Wave New| MSX		| 					|
 | nes_demondistrict|  	| Demon District (HB)					| 		| 2019	| Klonoa	| Miscellaneous	| 					|
-| dmnfrntpcb	|  	| Demon Front (V107, Korea, Single PCB Version)		| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
 | dmnfrnta	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntb	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
+| dmnfrntpcb	|  	| Demon Front (VM107KR, S106KR, Korea, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
 | nes_demonsword|  	| Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | demonwld	|  	| Demon's World / Horror Story (set 1)			| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld1	|  	| Demon's World / Horror Story (set 2)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
@@ -2846,8 +2846,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_desperado	|  	| Desperado (Spa)					| 		| 1987	| Topo Soft	| MSX		| 					|
 | nes_destiear	|  	| Destination Earthstar (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | msx_destroyr	|  	| Destroyer (Spa)					| 		| 1986	| Mind Games Esp| MSX		| 					|
+| cv_destruct	|  	| Destructor						| 		| 1984	| Coleco	| ColecoVision	| Select w/ Controller #2		|
 | nes_destructorel|  	| Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
-| cv_destruct	|  	| Destructor						| 		| 1984	| Coleco	| ColecoVision	| 					|
 | detatwin	|  	| Detana!! Twin Bee (Japan ver. J)			| blswhstl	| 1991	| Konami	| GX060		| 					|
 | pce_twinbee	|  	| Detana!! Twinbee					| 		| 1992	| Konami	| PC Engine	| 					|
 | devstors2	|  	| Devastators (ver. 2)					| devstors	| 1988	| Konami	| GX890		| Minor Video glitches in level 2.	|
@@ -3888,6 +3888,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_fifa	|  	| FIFA International Soccer (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | gg_fifaj	|  	| FIFA International Soccer (Jpn)			| gg_fifa	| 1995	| Electronic Art| Sega Game Gear| 					|
 | md_fifa2k	|  	| FIFA Soccer 2000 Gold Edition (Pirate)		| md_fifa97	| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| md_fifa2020	|  	| FIFA Soccer 2020 (Hack, v2.3)				| md_fifa95	| 2020	| TA Marcos	| Sega Megadrive| 					|
 | md_fifa95	|  	| FIFA Soccer 95 (Euro, USA)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | md_fifa95k	|  	| FIFA Soccer 95 (Kor)					| md_fifa95	| 1994	| Electronic Art| Sega Megadrive| 					|
 | gg_fifa96	|  	| FIFA Soccer 96 (Euro, USA)				| 		| 1995	| Black Pearl	| Sega Game Gear| 					|
@@ -12335,9 +12336,10 @@ This list contains all games supported by FinalBurn Neo.
 | gg_shinobi2	|  	| The GG Shinobi II (World)				| 		| 1992	| Sega		| Sega Game Gear| 					|
 | msx_theghost	|  	| The Ghost						| 		| 1987	| Teruhiko Matsu| MSX		| 					|
 | theglad101	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100)	| theglad	| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
-| thegladpcb	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100, J| theglad	| 2003	| IGS		| PolyGameMaster| 					|
+| thegladpcba	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100, J| theglad	| 2003	| IGS		| PolyGameMaster| 					|
 | theglad100	|  	| The Gladiator - Road Of The Sword / Shen Jian (V100, T| theglad	| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
 | theglad	|  	| The Gladiator - Road Of The Sword / Shen Jian (V101, C| 		| 2003	| IGS		| PolyGameMaster| Incomplete Dump			|
+| thegladpcb	|  	| The Gladiator - Road Of The Sword / Shen Jian (V101, J| theglad	| 2003	| IGS		| PolyGameMaster| 					|
 | theglob2	|  	| The Glob (earlier)					| suprglob	| 1983	| Epos Corporati| EPOS Tristar	| 					|
 | theglobp	|  	| The Glob (Pac-Man hardware)				| suprglob	| 1983	| Epos Corporati| Pac-man	| 					|
 | theglob3	|  	| The Glob (set 3)					| suprglob	| 1983	| Epos Corporati| EPOS Tristar	| 					|
@@ -12873,6 +12875,7 @@ This list contains all games supported by FinalBurn Neo.
 | tndrcadej	|  	| Tokusyu Butai U.A.G. (Japan)				| tndrcade	| 1987	| Seta (Taito li| Seta		| 					|
 | nes_tomjerultgamcatandm|  	| Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA| 	| 1991	| Hi Tech Expres| Miscellaneous	| 					|
 | sms_tomjerry	|  	| Tom and Jerry (Prototype)				| sms_tomjermv	| 1992	| Sega		| Sega Master Sy| 					|
+| md_tomjerryim	|  	| Tom and Jerry - Frantic Antics (Hack, Improvement v2)	| md_tomjerry	| 2020	| Sega - Ti	| Sega Megadrive| 					|
 | md_tomjerry	|  	| Tom and Jerry - Frantic Antics (USA, 1993)		| 		| 1993	| Sega		| Sega Megadrive| 					|
 | md_tomjerry1	|  	| Tom and Jerry - Frantic Antics (USA, 1994)		| md_tomjerry	| 1994	| Sega		| Sega Megadrive| 					|
 | sms_tomjermv	|  	| Tom and Jerry - The Movie (Euro, Bra)			| 		| 1992	| Sega		| Sega Master Sy| 					|

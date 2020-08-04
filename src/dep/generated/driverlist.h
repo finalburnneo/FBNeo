@@ -2838,11 +2838,11 @@ DRV		BurnDrvmd_demoman;
 DRV		BurnDrvmd_demomanp;
 DRV		BurnDrvMSX_demoncrystl;
 DRV		BurnDrvnes_demondistrict;
-DRV		BurnDrvDmnfrntpcb;
 DRV		BurnDrvdmnfrnta;
 DRV		BurnDrvdmnfrntb;
 DRV		BurnDrvDmnfrnt;
 DRV		BurnDrvDmnfrntpcba;
+DRV		BurnDrvDmnfrntpcb;
 DRV		BurnDrvnes_demonsword;
 DRV		BurnDrvDemonwld;
 DRV		BurnDrvDemonwld1;
@@ -2892,8 +2892,8 @@ DRV		BurnDrvMSX_desolatr;
 DRV		BurnDrvMSX_desperado;
 DRV		BurnDrvnes_destiear;
 DRV		BurnDrvMSX_destroyr;
-DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvcv_destruct;
+DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvDetatwin;
 DRV		BurnDrvpce_twinbee;
 DRV		BurnDrvDevstors2;
@@ -3958,6 +3958,7 @@ DRV		BurnDrvgg_fifa;
 DRV		BurnDrvmd_fifa;
 DRV		BurnDrvgg_fifaj;
 DRV		BurnDrvmd_fifa2k;
+DRV		BurnDrvmd_fifa2020;
 DRV		BurnDrvmd_fifa95;
 DRV		BurnDrvmd_fifa95k;
 DRV		BurnDrvgg_fifa96;
@@ -12547,9 +12548,10 @@ DRV		BurnDrvgg_shinobij;
 DRV		BurnDrvgg_shinobi2;
 DRV		BurnDrvMSX_theghost;
 DRV		BurnDrvTheglad101;
-DRV		BurnDrvThegladpcb;
+DRV		BurnDrvThegladpcba;
 DRV		BurnDrvtheglada;
 DRV		BurnDrvTheglad;
+DRV		BurnDrvThegladpcb;
 DRV		BurnDrvTheglob2;
 DRV		BurnDrvtheglobp;
 DRV		BurnDrvTheglob3;
@@ -13091,6 +13093,7 @@ DRV		BurnDrvJackalj;
 DRV		BurnDrvTndrcadej;
 DRV		BurnDrvnes_tomjerultgamcatandm;
 DRV		BurnDrvsms_tomjerry;
+DRV		BurnDrvmd_tomjerryim;
 DRV		BurnDrvmd_tomjerry;
 DRV		BurnDrvmd_tomjerry1;
 DRV		BurnDrvsms_tomjermv;
@@ -17433,11 +17436,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_demomanp,		// Demolition Man (USA, Prototype) [no comment, NOT WORKING]
 	&BurnDrvMSX_demoncrystl,	// Demon Crystal, The
 	&BurnDrvnes_demondistrict,	// Demon District (HB)
-	&BurnDrvDmnfrntpcb,			// Demon Front (V107, Korea, Single PCB Version)
 	&BurnDrvdmnfrnta,			// Demon Front (VM102XX, S101XX)
 	&BurnDrvdmnfrntb,			// Demon Front (VM103XX, S103XX)
 	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
 	&BurnDrvDmnfrntpcba,		// Demon Front (VM105XX, S105XX, China, Single PCB Version)
+	&BurnDrvDmnfrntpcb,			// Demon Front (VM107KR, S106KR, Korea, Single PCB Version)
 	&BurnDrvnes_demonsword,		// Demon Sword (USA)
 	&BurnDrvDemonwld,			// Demon's World / Horror Story (set 1)
 	&BurnDrvDemonwld1,			// Demon's World / Horror Story (set 2)
@@ -17487,8 +17490,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_desperado,		// Desperado (Spa)
 	&BurnDrvnes_destiear,		// Destination Earthstar (USA)
 	&BurnDrvMSX_destroyr,		// Destroyer (Spa)
-	&BurnDrvnes_destructorel,	// Destructor, El (Spain) (Gluk Video) (Unl)
 	&BurnDrvcv_destruct,		// Destructor
+	&BurnDrvnes_destructorel,	// Destructor, El (Spain) (Gluk Video) (Unl)
 	&BurnDrvDetatwin,			// Detana!! Twin Bee (Japan ver. J)
 	&BurnDrvpce_twinbee,		// Detana!! Twinbee
 	&BurnDrvDevstors2,			// Devastators (ver. 2)
@@ -18553,6 +18556,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_fifa,			// FIFA International Soccer (Euro, USA)
 	&BurnDrvgg_fifaj,			// FIFA International Soccer (Jpn)
 	&BurnDrvmd_fifa2k,			// FIFA Soccer 2000 Gold Edition (Pirate)
+	&BurnDrvmd_fifa2020,		// FIFA Soccer 2020 (Hack, v2.3)
 	&BurnDrvmd_fifa95,			// FIFA Soccer 95 (Euro, USA)
 	&BurnDrvmd_fifa95k,			// FIFA Soccer 95 (Kor)
 	&BurnDrvgg_fifa96,			// FIFA Soccer 96 (Euro, USA)
@@ -27142,9 +27146,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_shinobi2,		// The GG Shinobi II (World)
 	&BurnDrvMSX_theghost,		// The Ghost
 	&BurnDrvTheglad101,			// The Gladiator - Road Of The Sword / Shen Jian (V100)
-	&BurnDrvThegladpcb,			// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)
+	&BurnDrvThegladpcba,		// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)
 	&BurnDrvtheglada,			// The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)
 	&BurnDrvTheglad,			// The Gladiator - Road Of The Sword / Shen Jian (V101, China)
+	&BurnDrvThegladpcb,			// The Gladiator - Road Of The Sword / Shen Jian (V101, Japan, Single PCB Version)
 	&BurnDrvTheglob2,			// The Glob (earlier)
 	&BurnDrvtheglobp,			// The Glob (Pac-Man hardware)
 	&BurnDrvTheglob3,			// The Glob (set 3)
@@ -27686,6 +27691,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTndrcadej,			// Tokusyu Butai U.A.G. (Japan)
 	&BurnDrvnes_tomjerultgamcatandm,// Tom & Jerry - The Ultimate Game of Cat and Mouse! (USA)
 	&BurnDrvsms_tomjerry,		// Tom and Jerry (Prototype)
+	&BurnDrvmd_tomjerryim,		// Tom and Jerry - Frantic Antics (Hack, Improvement v2)
 	&BurnDrvmd_tomjerry,		// Tom and Jerry - Frantic Antics (USA, 1993)
 	&BurnDrvmd_tomjerry1,		// Tom and Jerry - Frantic Antics (USA, 1994)
 	&BurnDrvsms_tomjermv,		// Tom and Jerry - The Movie (Euro, Bra)

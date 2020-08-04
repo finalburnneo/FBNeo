@@ -4458,6 +4458,13 @@
 		<rom name="fifa soccer 2000 gold edition (pirate) (unl).bin" size="2097152" crc="647df504"/>
 		<driver status="good"/>
 	</game>
+	<game name="fifa2020" cloneof="fifa95" romof="fifa95">
+		<description>FIFA Soccer 2020 (Hack, v2.3)</description>
+		<year>2020</year>
+		<manufacturer>TA Marcos</manufacturer>
+		<rom name="FIFA Soccer 2020 v2.3.bin" size="2173824" crc="2ee94b2e"/>
+		<driver status="good"/>
+	</game>
 	<game name="fifa95">
 		<description>FIFA Soccer 95 (Euro, USA)</description>
 		<year>1994</year>
@@ -14893,6 +14900,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14464a.bin" size="524288" crc="7362c3f4"/>
+		<driver status="good"/>
+	</game>
+	<game name="tomjerryim" cloneof="tomjerry" romof="tomjerry">
+		<description>Tom and Jerry - Frantic Antics (Hack, Improvement v2)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Ti</manufacturer>
+		<rom name="Tom and Jerry - Frantic Antics (U) (Improvement).bin" size="2097152" crc="13bcf0a2"/>
 		<driver status="good"/>
 	</game>
 	<game name="tomjerry">

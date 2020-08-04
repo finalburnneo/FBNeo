@@ -25861,10 +25861,10 @@ struct BurnDriver BurnDrvMSX_snowboard = {
 };
 
 
-// Block Puzzle (HB, v1.1)
+// Block Puzzle (HB, v1.2)
 
 static struct BurnRomInfo MSX_blpuzzleRomDesc[] = {
-	{ "blockpuzzle v1.1 (2020)(david heremans).rom",	32768, 0xe89b0da3, BRF_PRG | BRF_ESS },
+	{ "blockpuzzle v1.2 (2020)(david heremans).rom",	32768, 0x0798e2b0, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_blpuzzle, MSX_blpuzzle, msx_msx)
@@ -25872,7 +25872,7 @@ STD_ROM_FN(MSX_blpuzzle)
 
 struct BurnDriver BurnDrvMSX_blpuzzle = {
 	"msx_blpuzzle", NULL, "msx_msx", NULL, "2020",
-	"Block Puzzle (HB, v1.1)\0", NULL, "David Heremans", "MSX",
+	"Block Puzzle (HB, v1.2)\0", NULL, "David Heremans", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_blpuzzleRomInfo, MSX_blpuzzleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
@@ -25937,6 +25937,87 @@ struct BurnDriver BurnDrvMSX_pacland = {
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_paclandRomInfo, MSX_paclandRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Anchors Aweigh (HB, v1.1)
+
+static struct BurnRomInfo MSX_anchorsRomDesc[] = {
+	{ "anchors aweigh v1.1 (2020)(manuel martinez).rom",	172032, 0x88aa7b0f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_anchors, MSX_anchors, msx_msx)
+STD_ROM_FN(MSX_anchors)
+
+struct BurnDriver BurnDrvMSX_anchors = {
+	"msx_anchors", NULL, "msx_msx", NULL, "2020",
+	"Anchors Aweigh (HB, v1.1)\0", NULL, "Manuel Martinez", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_anchorsRomInfo, MSX_anchorsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Chambers of Thyrea (HB)
+
+static struct BurnRomInfo MSX_chthyreaRomDesc[] = {
+	{ "chambers of thyrea (2020)(spacesugar).rom",	32768, 0x2da2f419, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chthyrea, MSX_chthyrea, msx_msx)
+STD_ROM_FN(MSX_chthyrea)
+
+struct BurnDriver BurnDrvMSX_chthyrea = {
+	"msx_chthyrea", NULL, "msx_msx", NULL, "2019-20",
+	"Chambers of Thyrea (HB)\0", NULL, "Spacesugar", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_chthyreaRomInfo, MSX_chthyreaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Freddy Hardest (Spa)
+
+static struct BurnRomInfo MSX_fredhardRomDesc[] = {
+	{ "freddy hardest (1987)(dinamic software)(es)(side a)[run'cas-'].cas",	53007, 0x9e24261a, BRF_PRG | BRF_ESS },
+	{ "freddy hardest (1987)(dinamic software)(es)(side b)[run'cas-'].cas",	52687, 0xe4dee6a9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_fredhard, MSX_fredhard, msx_msx)
+STD_ROM_FN(MSX_fredhard)
+
+struct BurnDriver BurnDrvMSX_fredhard = {
+	"msx_fredhard", NULL, "msx_msx", NULL, "1987",
+	"Freddy Hardest (Spa)\0", NULL, "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
+	MSXGetZipName, MSX_fredhardRomInfo, MSX_fredhardRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Freedom Fighter (HB)
+
+static struct BurnRomInfo MSX_freefightRomDesc[] = {
+	{ "freedom fighter (2020)(geppo).rom",	131072, 0x15e0b97e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_freefight, MSX_freefight, msx_msx)
+STD_ROM_FN(MSX_freefight)
+
+struct BurnDriver BurnDrvMSX_freefight = {
+	"msx_freefight", NULL, "msx_msx", NULL, "2020",
+	"Freedom Fighter (HB)\0", NULL, "Geppo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_freefightRomInfo, MSX_freefightRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

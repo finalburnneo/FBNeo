@@ -6015,9 +6015,60 @@ struct BurnDriver BurnDrvEspgal = {
 };
 
 
-// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, PCB Version)
+// The Gladiator - Road Of The Sword / Shen Jian (V101, Japan, Single PCB Version)
+
+/* SCREEN VER PIC: 03/13/03 14:06:44 V101 JAPAN 
+   ROM TYPES: U29,U62 ST M27C160
+   ROM TYPES: U43 MX27C4096
+   ROM TYPES: U42 TI TMS27C210A
+   CREDITS TO: "GC8TECH.COM"*/
 
 static struct BurnRomInfo thegladpcbRomDesc[] = {
+	{ "v100_u43.u43",				0x0080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t04601w64m.u71",			0x0800000, 0xe5dab371, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a04601w64m.u30",			0x0800000, 0xd9b2e004, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "igs_a04602w64m.u31",			0x0800000, 0x14f22308, 3 | BRF_GRA },			//  3
+	{ "igs_a04603w64m.u32",			0x0800000, 0x8f621e17, 3 | BRF_GRA },			//  4
+
+	{ "igs_b04601w64m.u40",			0x0800000, 0xee72bccf, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+	{ "igs_b04602w32m.u41",			0x0400000, 0x7dba9c38, 4 | BRF_GRA },			//  6
+
+	{ "igs_w04601b64m.u8",			0x0800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
+	// these contain samples for the japan region
+	{ "wave_u29.u29",     			0x0200000, 0x51acb395, 5 | BRF_SND },			//  8
+
+//	{ "thegladpcb_igs027a.bin",		 0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a_execute_only_area",   0x0000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a_v100_japan.bin",      0x0003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+
+	{ "v101_u62.u62",	   			0x0200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+};
+
+STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
+STD_ROM_FN(thegladpcb)
+
+struct BurnDriver BurnDrvThegladpcb = {
+	"thegladpcb", "theglad", "pgm", NULL, "2003",
+	"The Gladiator - Road Of The Sword / Shen Jian (V101, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
+	L"The Gladiator - Road Of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V101, Japan, Single PCB Version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, thegladpcbRomInfo, thegladpcbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
+	theglad100Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)
+
+/* SCREEN VER PIC: 02/25/03 16:32:21 V100 JAPAN
+   ROM TYPES: U29,U62 ST M27C160
+   ROM TYPES: U43 MX27C4096
+   ROM TYPES: U42 TI TMS27C210A
+   CREDITS TO: "GC8TECH.COM"*/
+
+static struct BurnRomInfo thegladpcbaRomDesc[] = {
 	{ "v100_u43.u43",				0x0080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "igs_t04601w64m.u71",			0x0800000, 0xe5dab371, 2 | BRF_GRA },			//  1 Tile data
@@ -6040,21 +6091,21 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 	{ "v100_u62.u62",	   			0x0200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
-STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
-STD_ROM_FN(thegladpcb)
+STDROMPICKEXT(thegladpcba, thegladpcba, thegladBIOS) // custom bios
+STD_ROM_FN(thegladpcba)
 
-struct BurnDriver BurnDrvThegladpcb = {
-	"thegladpcb", "theglad", "pgm", NULL, "2003",
+struct BurnDriver BurnDrvThegladpcba = {
+	"thegladpcba", "theglad", "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Gladiator - Road Of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V100, Japan, PCB Version)\0", NULL, NULL, NULL,
+	L"The Gladiator - Road Of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V100, Japan, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, thegladpcbRomInfo, thegladpcbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
+	NULL, thegladpcbaRomInfo, thegladpcbaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
 	theglad100Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
 
-// Demon Front (V107, Korea, PCB Version)
+// Demon Front (VM107KR, S106KR, Korea, Single PCB Version)
 
 static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 	{ "v107kr_u43.u43",				0x0200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -6080,8 +6131,8 @@ STD_ROM_FN(dmnfrntpcb)
 
 struct BurnDriver BurnDrvDmnfrntpcb = {
 	"dmnfrntpcb", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (V107, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
-	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V107, Korea, Single PCB Version)\0", NULL, NULL, NULL,
+	"Demon Front (VM107KR, S106KR, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
+	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM107KR, S106KR, Korea, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dmnfrntpcbDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6132,6 +6183,12 @@ struct BurnDriver BurnDrvDmnfrntpcba = {
 
 
 // S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)
+
+/*SCREEN VER PIC: M68K VERSION V100 05/12/05 15:31/35 V100 JAPAN
+  ROM TYPES: U49 TI TMS27C210A
+  ROM TYPES: U50 MX MX27C4096
+  ROM TYPES: U64,U65 ST M27C322
+  CREDITS TO: "GC8TECH.COM"*/
 
 static struct BurnRomInfo svgpcbRomDesc[] = {
 	{ "svg_v100jp_u50.u50",			0x0080000, 0x8d0405e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code

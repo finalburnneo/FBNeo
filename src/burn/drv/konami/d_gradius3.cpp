@@ -182,7 +182,7 @@ static void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfe0000) == 0x180000) {
-		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = data;
+		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		expand_graphics_single(address);
 		return;
 	}
@@ -306,7 +306,7 @@ static void __fastcall gradius3_sub_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfe0000) == 0x280000) {
-		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = data;
+		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		expand_graphics_single(address);
 		return;
 	}

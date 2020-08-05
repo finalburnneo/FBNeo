@@ -61,6 +61,7 @@ struct ics2115_voice {
 	} vol;
 
 	union {
+#ifdef LSB_FIRST
 		struct {
 			UINT8 ulaw       : 1;
 			UINT8 stop       : 1;   // stops wave + vol envelope
@@ -72,9 +73,23 @@ struct ics2115_voice {
 			UINT8 irq_pending: 1;   // writable on ultrasound/interwave; writing 1 triggers IRQ, 0 clears
 		} bitflags;
 		UINT8 value;
+#else
+		UINT8 value;
+		struct {
+			UINT8 irq_pending: 1;   // writable on ultrasound/interwave; writing 1 triggers IRQ, 0 clears
+			UINT8 invert     : 1;
+			UINT8 irq        : 1;   // enable IRQ generation
+			UINT8 loop_bidir : 1;
+			UINT8 loop       : 1;
+			UINT8 eightbit   : 1;
+			UINT8 stop       : 1;   // stops wave + vol envelope
+			UINT8 ulaw       : 1;
+		} bitflags;
+#endif
 	} osc_conf;
 
 	union {
+#ifdef LSB_FIRST
 		struct {
 			UINT8 done       : 1;   // indicates envelope status (hardware modifies this)
 			UINT8 stop       : 1;   // stops the envelope
@@ -86,6 +101,19 @@ struct ics2115_voice {
 			UINT8 irq_pending: 1;   // writable on ultrasound/interwave; writing 1 triggers IRQ, 0 clears
 		} bitflags;
 		UINT8 value;
+#else
+		UINT8 value;
+		struct {
+			UINT8 irq_pending: 1;   // writable on ultrasound/interwave; writing 1 triggers IRQ, 0 clears
+			UINT8 invert     : 1;
+			UINT8 irq        : 1;   // enable IRQ generation
+			UINT8 loop_bidir : 1;
+			UINT8 loop       : 1;
+			UINT8 rollover   : 1;
+			UINT8 stop       : 1;   // stops wave + vol envelope
+			UINT8 done       : 1;
+		} bitflags;
+#endif
 	} vol_ctrl;
 
 	// variables used by the interpolator

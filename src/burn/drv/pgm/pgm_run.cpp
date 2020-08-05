@@ -408,7 +408,7 @@ static UINT16 __fastcall PgmZ80ReadWord(UINT32 sekAddress)
 	pgmSynchroniseZ80(0);
 
 	sekAddress &= 0xffff;
-	return BURN_ENDIAN_SWAP_INT16((RamZ80[sekAddress] << 8) | RamZ80[sekAddress + 1]);
+	return (RamZ80[sekAddress] << 8) | RamZ80[sekAddress + 1];
 }
 
 static void __fastcall PgmZ80WriteByte(UINT32 sekAddress, UINT8 byteValue)
@@ -425,8 +425,8 @@ static void __fastcall PgmZ80WriteWord(UINT32 sekAddress, UINT16 wordValue)
 	pgmSynchroniseZ80(0);
 
 	sekAddress &= 0xffff;
-	RamZ80[sekAddress    ] = BURN_ENDIAN_SWAP_INT16(wordValue) >> 8;
-	RamZ80[sekAddress + 1] = BURN_ENDIAN_SWAP_INT16(wordValue) & 0xFF;
+	RamZ80[sekAddress    ] = wordValue >> 8;
+	RamZ80[sekAddress + 1] = wordValue & 0xFF;
 }
 
 inline static UINT32 CalcCol(UINT16 nColour)

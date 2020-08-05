@@ -158,8 +158,10 @@ static void make_raw(UINT8 *src, UINT32 len)
 				}
 			}
 
-			data[i * 2 + 0] = BURN_SND_CLIP(INTERPOLATE4PS_16BIT(pos & 0x0FFF, buffer_l[0], buffer_l[1], buffer_l[2], buffer_l[3]));
-			data[i * 2 + 1] = BURN_SND_CLIP(INTERPOLATE4PS_16BIT(pos & 0x0FFF, buffer_r[0], buffer_r[1], buffer_r[2], buffer_r[3]));
+			short temp_l = INTERPOLATE4PS_16BIT(pos & 0x0FFF, buffer_l[0], buffer_l[1], buffer_l[2], buffer_l[3]);
+			short temp_r = INTERPOLATE4PS_16BIT(pos & 0x0FFF, buffer_r[0], buffer_r[1], buffer_r[2], buffer_r[3]);
+			data[i * 2 + 0] = BURN_SND_CLIP(temp_l);
+			data[i * 2 + 1] = BURN_SND_CLIP(temp_r);
 		}
 	}
 

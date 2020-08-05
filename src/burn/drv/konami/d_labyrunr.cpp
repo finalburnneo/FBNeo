@@ -656,7 +656,7 @@ static void DrvPaletteInit()
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x100/2; i++) {
-		UINT16 p = (pal[i] << 8) | (pal[i] >> 8);
+		UINT16 p = (BURN_ENDIAN_SWAP_INT16(pal[i]) << 8) | (BURN_ENDIAN_SWAP_INT16(pal[i]) >> 8);
 
 		INT32 b = (p >> 10) & 0x1f;
 		INT32 g = (p >> 5) & 0x1f;

@@ -7538,10 +7538,10 @@ struct BurnDriver BurnDrvkov2pshpd = {
 
 // Oriental Legend Special / Da Sheng Gui Lai (Hack)
 // Hacked by XIAOYUER
-// GOTVG 2020-07-21
+// GOTVG 2020-08-03
 
 static struct BurnRomInfo zerofxzdsglRomDesc[] = {
-	{ "zerofxzdsgl_p0500.u24",		0x0400000, 0x309da19e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "zerofxzdsgl_p0500.u24",		0x0400000, 0x8aee6443, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "zerofxzdsgl_t0500.u18",		0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "pgm_t0501.u19",				0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -7572,7 +7572,7 @@ STDROMPICKEXT(zerofxzdsgl, zerofxzdsgl, pgm)
 STD_ROM_FN(zerofxzdsgl)
 
 struct BurnDriver BurnDrvzerofxzdsgl = {
-	"zerofxzdsgl", "olds", "pgm", NULL, "2020-07-21",
+	"zerofxzdsgl", "olds", "pgm", NULL, "2020-08-03",
 	"Oriental Legend Special - Da Sheng Gui Lai (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Da Sheng Gui Lai (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5927\u8056\u6b78\u4f86 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
@@ -7630,10 +7630,10 @@ struct BurnDriver BurnDrvzerofxz = {
 
 // Oriental Legend Special / Meng Xun Ling Shan (Hack)
 // Hacked by XIAOYUER
-// GOTVG 2020-07-21
+// GOTVG 2020-08-03
 
 static struct BurnRomInfo oldsmxRomDesc[] = {
-	{ "oldsmx_p0500.u24",			0x0400000, 0x81e70571, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "oldsmx_p0500.u24",			0x0400000, 0x3b94c0ac, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "oldsmx_t0500.u18",			0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "pgm_t0501.u19",				0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -7664,7 +7664,7 @@ STDROMPICKEXT(oldsmx, oldsmx, pgm)
 STD_ROM_FN(oldsmx)
 
 struct BurnDriver BurnDrvoldsmx = {
-	"oldsmx", "olds", "pgm", NULL, "2020-07-21",
+	"oldsmx", "olds", "pgm", NULL, "2020-08-03",
 	"Oriental Legend Special - Meng Xun Ling Shan (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Meng Xun Ling Shan (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5922\u5c0b\u9748\u5c71 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

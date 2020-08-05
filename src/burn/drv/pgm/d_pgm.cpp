@@ -507,13 +507,8 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 static struct BurnDIPInfo dmnfrntpcbDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x03, NULL								},
 
-	{0,		0xFE, 0,	6,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x0F,	0x00, "China"							},
-	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"							},
-	{0x2E,	0x01, 0x0F,	0x02, "Japan"							},
+	{0,		0xFE, 0,	1,    "Region (Cannot Change)"			},
 	{0x2E,	0x01, 0x0F,	0x03, "Korea"							},
-	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"						},
-	{0x2E,	0x01, 0x0F,	0x05, "World"							},
 };
 
 static struct BurnDIPInfo dmnfrntpcbaDIPList[] = {
@@ -6105,7 +6100,7 @@ struct BurnDriver BurnDrvThegladpcba = {
 };
 
 
-// Demon Front (VM107KR, S106KR, Korea, Single PCB Version)
+// Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)
 
 static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 	{ "v107kr_u43.u43",				0x0200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -6131,7 +6126,7 @@ STD_ROM_FN(dmnfrntpcb)
 
 struct BurnDriver BurnDrvDmnfrntpcb = {
 	"dmnfrntpcb", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (VM107KR, S106KR, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
+	"Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM107KR, S106KR, Korea, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dmnfrntpcbDIPInfo,
@@ -6173,7 +6168,7 @@ STD_ROM_FN(dmnfrntpcba)
 
 struct BurnDriver BurnDrvDmnfrntpcba = {
 	"dmnfrntpcba", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (VM105XX, S105XX, China, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
+	"Demon Front (VM105XX, S105XX, China, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM105XX, S105XX, China, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrntpcbaRomInfo, dmnfrntpcbaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dmnfrntpcbaDIPInfo,

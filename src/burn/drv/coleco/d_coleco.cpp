@@ -455,6 +455,15 @@ static INT32 DrvDoReset()
 	TMS9928AReset();
 
 	memset (DrvZ80RAM, 0xff, 0x400); // ram initialized to 0xff
+	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "cv_heist", 8)) {
+		bprintf(0, _T("*** The Heist kludge..\n"));
+		// The Heist has a bug which expects certain memory location(s) to
+		// be zero'd on boot - if not - the game crashes and returns to the
+		// title screen (or just crashes).  This will often happen on CV consoles
+		// with a certain manufacturer of ram chips.  Or on most consoles if
+		// another game had been on shortly before changing the cart.
+		memset (DrvZ80RAM, 0x00, 0x400);
+	}
 
 	last_state = 0; // irq state...
 	MegaCartBank = 0;
@@ -2868,8 +2877,7 @@ struct BurnDriver BurnDrvcv_slither = {
 // Slurpy
 
 static struct BurnRomInfo cv_slurpyRomDesc[] = {
-	{ "slurpy.1",	0x02000, 0xcb23c846, BRF_PRG | BRF_ESS },
-	{ "slurpy.2",	0x02000, 0xadcda8e3, BRF_PRG | BRF_ESS },
+	{ "Slurpy (1984) (Xonox).rom",	0x06000, 0x27f5c0ad, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_slurpy, cv_slurpy, cv_coleco)
@@ -3637,42 +3645,18 @@ struct BurnDriver BurnDrvcv_frontlina = {
 // The Heist
 
 static struct BurnRomInfo cv_heistRomDesc[] = {
-	{ "heist.1",	0x02000, 0x34080665, BRF_PRG | BRF_ESS },
-	{ "heist.2",	0x02000, 0xd5c02ce0, BRF_PRG | BRF_ESS },
-	{ "heist.3",	0x02000, 0x177a899f, BRF_PRG | BRF_ESS },
+	{ "Heist, The (1983) (Micro Fun).rom",	0x06000, 0x6f2e2d84, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_heist, cv_heist, cv_coleco)
 STD_ROM_FN(cv_heist)
 
-struct BurnDriverX BurnDrvcv_heist = {
+struct BurnDriver BurnDrvcv_heist = {
 	"cv_heist", NULL, "cv_coleco", NULL, "1983",
 	"The Heist\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_heistRomInfo, cv_heistRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
-
-// The Heist (Alt)
-
-static struct BurnRomInfo cv_heistaRomDesc[] = {
-	{ "heist.1",	0x02000, 0x34080665, BRF_PRG | BRF_ESS },
-	{ "heist.2",	0x02000, 0xd5c02ce0, BRF_PRG | BRF_ESS },
-	{ "heista.3",	0x02000, 0xb196db89, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_heista, cv_heista, cv_coleco)
-STD_ROM_FN(cv_heista)
-
-struct BurnDriverX BurnDrvcv_heista = {
-	"cv_heista", "cv_heist", "cv_coleco", NULL, "1983",
-	"The Heist (Alt)\0", NULL, "Micro Fun", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
-	CVGetZipName, cv_heistaRomInfo, cv_heistaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -6088,5 +6072,24 @@ struct BurnDriver BurnDrvcv_dkongjrsgm = {
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_dkongjrsgmRomInfo, cv_dkongjrsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Peek-A-Boo Elmo
+
+static struct BurnRomInfo cv_peekabooRomDesc[] = {
+    { "peekaboo_cv.rom",	0x8000, 0x32c52187, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_peekaboo, cv_peekaboo, cv_coleco)
+STD_ROM_FN(cv_peekaboo)
+
+struct BurnDriver BurnDrvcv_peekaboo = {
+    "cv_peekaboo", NULL, "cv_coleco", NULL, "2008",
+    "Peek-A-Boo (HB)\0", "Published by Team Pixelboy", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_peekabooRomInfo, cv_peekabooRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

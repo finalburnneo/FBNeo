@@ -6090,3 +6090,22 @@ struct BurnDriver BurnDrvcv_dkongjrsgm = {
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Peek-A-Boo Elmo
+
+static struct BurnRomInfo cv_peekabooRomDesc[] = {
+    { "peekaboo_cv.rom",	0x8000, 0x32c52187, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_peekaboo, cv_peekaboo, cv_coleco)
+STD_ROM_FN(cv_peekaboo)
+
+struct BurnDriver BurnDrvcv_peekaboo = {
+    "cv_peekaboo", NULL, "cv_coleco", NULL, "2008",
+    "Peek-A-Boo (HB)\0", "Published by Team Pixelboy", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_peekabooRomInfo, cv_peekabooRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

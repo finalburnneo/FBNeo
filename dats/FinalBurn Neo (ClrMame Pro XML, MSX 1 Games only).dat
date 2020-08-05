@@ -453,6 +453,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="anchors" romof="msx">
+		<description>Anchors Aweigh (HB, v1.1) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Manuel Martinez</manufacturer>
+		<rom name="anchors aweigh v1.1 (2020)(manuel martinez).rom" size="172032" crc="88aa7b0f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="angelo" romof="msx">
 		<description>Angelo (Jpn)</description>
 		<year>1984</year>
@@ -1206,10 +1216,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="blpuzzle" romof="msx">
-		<description>Block Puzzle (HB, v1.1) [Homebrew]</description>
+		<description>Block Puzzle (HB, v1.2) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>David Heremans</manufacturer>
-		<rom name="blockpuzzle v1.1 (2020)(david heremans).rom" size="32768" crc="e89b0da3"/>
+		<rom name="blockpuzzle v1.2 (2020)(david heremans).rom" size="32768" crc="0798e2b0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2020,6 +2030,16 @@
 		<year>1984</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="chack'n pop (japan) (alt 1).rom" size="16384" crc="0fff4d26"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="chthyrea" romof="msx">
+		<description>Chambers of Thyrea (HB) [Homebrew]</description>
+		<year>2019-20</year>
+		<manufacturer>Spacesugar</manufacturer>
+		<rom name="chambers of thyrea (2020)(spacesugar).rom" size="32768" crc="2da2f419"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4022,6 +4042,27 @@
 		<year>1985</year>
 		<manufacturer>Nihon Dexter</manufacturer>
 		<rom name="formation z (japan) (alt 1).rom" size="32768" crc="74560bbd"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="fredhard" romof="msx">
+		<description>Freddy Hardest (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="freddy hardest (1987)(dinamic software)(es)(side a)[run'cas-'].cas" size="53007" crc="9e24261a"/>
+		<rom name="freddy hardest (1987)(dinamic software)(es)(side b)[run'cas-'].cas" size="52687" crc="e4dee6a9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
+	<game name="freefight" romof="msx">
+		<description>Freedom Fighter (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Geppo</manufacturer>
+		<rom name="freedom fighter (2020)(geppo).rom" size="131072" crc="15e0b97e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

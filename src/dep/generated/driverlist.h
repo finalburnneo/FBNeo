@@ -483,6 +483,7 @@ DRV		BurnDrvAmigo;
 DRV		BurnDrvMSX_amomundo;
 DRV		BurnDrvMSX_amotopuf;
 DRV		BurnDrvMSX_amurisus;
+DRV		BurnDrvMSX_anchors;
 DRV		BurnDrvmd_agassi;
 DRV		BurnDrvsms_agassi;
 DRV		BurnDrvgg_agassi;
@@ -1916,6 +1917,7 @@ DRV		BurnDrvsg1k_chaldrbya;
 DRV		BurnDrvsg1k_chaldrbyb;
 DRV		BurnDrvnes_challdra;
 DRV		BurnDrvnes_challenger;
+DRV		BurnDrvMSX_chthyrea;
 DRV		BurnDrvmd_kidchamj;
 DRV		BurnDrvChameleo;
 DRV		BurnDrvsg1k_champbas;
@@ -4244,11 +4246,13 @@ DRV		BurnDrvcv_ffreddy;
 DRV		BurnDrvgg_fray;
 DRV		BurnDrvgg_fredcoupj;
 DRV		BurnDrvgg_fredcoup;
+DRV		BurnDrvMSX_fredhard;
 DRV		BurnDrvnes_freefall;
 DRV		BurnDrvFreekickb1;
 DRV		BurnDrvFreekickb3;
 DRV		BurnDrvFreekick;
 DRV		BurnDrvFreekicka;
+DRV		BurnDrvMSX_freefight;
 DRV		BurnDrvnes_freedomforce;
 DRV		BurnDrvFreeze;
 DRV		BurnDrvcv_frenzya;
@@ -8604,6 +8608,7 @@ DRV		BurnDrvpce_cputest;		// no comment
 #endif
 DRV		BurnDrvmd_pebble;
 DRV		BurnDrvmd_pebbleu;
+DRV		BurnDrvcv_peekaboo;
 DRV		BurnDrvPeekaboou;
 DRV		BurnDrvPeekaboo;
 DRV		BurnDrvnes_peepartime;
@@ -12564,9 +12569,8 @@ DRV		BurnDrvRagtimea;
 DRV		BurnDrvRagtime;
 DRV		BurnDrvmd_waldo;
 DRV		BurnDrvGuiness;
-//		BurnDrvcv_heista;		// no comment [NOT WORKING]
 DRV		BurnDrvMSX_heist;
-//		BurnDrvcv_heist;		// no comment [NOT WORKING]
+DRV		BurnDrvcv_heist;
 DRV		BurnDrvmd_humans;
 DRV		BurnDrvThehustlj;
 DRV		BurnDrvThehustl;
@@ -15081,6 +15085,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_amomundo,		// Amo del Mundo (Spa)
 	&BurnDrvMSX_amotopuf,		// Amoto's Puf (Spa)
 	&BurnDrvMSX_amurisus,		// Amurisus (HB, Tech-demo)
+	&BurnDrvMSX_anchors,		// Anchors Aweigh (HB, v1.1)
 	&BurnDrvmd_agassi,			// Andre Agassi Tennis (Euro)
 	&BurnDrvsms_agassi,			// Andre Agassi Tennis (Euro, Bra)
 	&BurnDrvgg_agassi,			// Andre Agassi Tennis (USA)
@@ -15879,7 +15884,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBlckoutj,			// Block Out (Japan)
 	&BurnDrvBlockout,			// Block Out (set 1)
 	&BurnDrvBlckout2,			// Block Out (set 2)
-	&BurnDrvMSX_blpuzzle,		// Block Puzzle (HB, v1.1)
+	&BurnDrvMSX_blpuzzle,		// Block Puzzle (HB, v1.2)
 	&BurnDrvMSX_blockrun,		// Blockade Runner (Jpn)
 	&BurnDrvcv_blockrun,		// Blockade Runner
 	&BurnDrvBlockade,			// Blockade
@@ -16514,6 +16519,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_chaldrbyb,		// Challenge Derby (Jpn, OMV, Hacked)
 	&BurnDrvnes_challdra,		// Challenge of the Dragon (USA)
 	&BurnDrvnes_challenger,		// Challenger (Japan)
+	&BurnDrvMSX_chthyrea,		// Chambers of Thyrea (HB)
 	&BurnDrvmd_kidchamj,		// Chameleon Kid (Jpn)
 	&BurnDrvChameleo,			// Chameleon
 	&BurnDrvsg1k_champbas,		// Champion Baseball (Jpn)
@@ -17440,7 +17446,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvdmnfrntb,			// Demon Front (VM103XX, S103XX)
 	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
 	&BurnDrvDmnfrntpcba,		// Demon Front (VM105XX, S105XX, China, Single PCB Version)
-	&BurnDrvDmnfrntpcb,			// Demon Front (VM107KR, S106KR, Korea, Single PCB Version)
+	&BurnDrvDmnfrntpcb,			// Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)
 	&BurnDrvnes_demonsword,		// Demon Sword (USA)
 	&BurnDrvDemonwld,			// Demon's World / Horror Story (set 1)
 	&BurnDrvDemonwld1,			// Demon's World / Horror Story (set 2)
@@ -18842,11 +18848,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_fray,			// Fray - Shugyou Hen (Jpn)
 	&BurnDrvgg_fredcoupj,		// Fred Couples' Golf (Jpn)
 	&BurnDrvgg_fredcoup,		// Fred Couples' Golf (USA)
+	&BurnDrvMSX_fredhard,		// Freddy Hardest (Spa)
 	&BurnDrvnes_freefall,		// Free Fall (USA) (Proto)
 	&BurnDrvFreekickb1,			// Free Kick (bootleg set 1)
 	&BurnDrvFreekickb3,			// Free Kick (bootleg set 3)
 	&BurnDrvFreekick,			// Free Kick (NS6201-A 1987.10)
 	&BurnDrvFreekicka,			// Free Kick (NS6201-A 1987.9)
+	&BurnDrvMSX_freefight,		// Freedom Fighter (HB)
 	&BurnDrvnes_freedomforce,	// Freedom Force (USA)
 	&BurnDrvFreeze,				// Freeze
 	&BurnDrvcv_frenzya,			// Frenzy (Alt 1)
@@ -23202,6 +23210,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvmd_pebble,			// Pebble Beach Golf Links (Euro)
 	&BurnDrvmd_pebbleu,			// Pebble Beach Golf Links (USA)
+	&BurnDrvcv_peekaboo,		// Peek-A-Boo (HB)
 	&BurnDrvPeekaboou,			// Peek-a-Boo! (North America, ver 1.0)
 	&BurnDrvPeekaboo,			// Peek-a-Boo!
 	&BurnDrvnes_peepartime,		// Peepar Time (Japan)
@@ -27162,9 +27171,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRagtime,			// The Great Ragtime Show (Japan v1.5, 92.12.07)
 	&BurnDrvmd_waldo,			// The Great Waldo Search (USA)
 	&BurnDrvGuiness,			// The Guiness (Japan)
-//	&BurnDrvcv_heista,			// The Heist (Alt) [no comment, NOT WORKING]
 	&BurnDrvMSX_heist,			// The Heist (Jpn)
-//	&BurnDrvcv_heist,			// The Heist [no comment, NOT WORKING]
+	&BurnDrvcv_heist,			// The Heist
 	&BurnDrvmd_humans,			// The Humans (USA)
 	&BurnDrvThehustlj,			// The Hustler (Japan, program code J)
 	&BurnDrvThehustl,			// The Hustler (Japan, program code M)

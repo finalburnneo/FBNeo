@@ -1748,6 +1748,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="peekaboo" romof="coleco">
+		<description>Peek-A-Boo (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2008</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="peekaboo_cv.rom" size="32768" crc="32c52187"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="pepper2" romof="coleco">
 		<description>Pepper II</description>
 		<year>1983</year>
@@ -2170,8 +2181,7 @@
 		<description>Slurpy</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
-		<rom name="slurpy.1" size="8192" crc="cb23c846"/>
-		<rom name="slurpy.2" size="8192" crc="adcda8e3"/>
+		<rom name="Slurpy (1984) (Xonox).rom" size="24576" crc="27f5c0ad"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2683,6 +2693,17 @@
 		<rom name="hazzard.2" size="8192" crc="9821ea4a"/>
 		<rom name="hazzard.3" size="8192" crc="c3970e2e"/>
 		<rom name="hazzard.4" size="8192" crc="3433251a"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="heist" romof="coleco">
+		<description>The Heist</description>
+		<year>1983</year>
+		<manufacturer>Micro Fun</manufacturer>
+		<rom name="Heist, The (1983) (Micro Fun).rom" size="24576" crc="6f2e2d84"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

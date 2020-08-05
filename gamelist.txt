@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14331 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14335 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -475,6 +475,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_amomundo	|  	| Amo del Mundo (Spa)					| 		| 1990	| Positive	| MSX		| 					|
 | msx_amotopuf	|  	| Amoto's Puf (Spa)					| 		| 1988	| SPE		| MSX		| 					|
 | msx_amurisus	|  	| Amurisus (HB, Tech-demo)				| 		| 2013	| Lieves!Tuore	| MSX		| 					|
+| msx_anchors	|  	| Anchors Aweigh (HB, v1.1)				| 		| 2020	| Manuel Martine| MSX		| 					|
 | md_agassi	|  	| Andre Agassi Tennis (Euro)				| 		| 1992	| TecMagik	| Sega Megadrive| 					|
 | sms_agassi	|  	| Andre Agassi Tennis (Euro, Bra)			| 		| 1993	| TecMagik	| Sega Master Sy| 					|
 | gg_agassi	|  	| Andre Agassi Tennis (USA)				| 		| 1993	| TecMagik	| Sega Game Gear| 					|
@@ -1263,7 +1264,7 @@ This list contains all games supported by FinalBurn Neo.
 | blockoutj	|  	| Block Out (Japan)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout	|  	| Block Out (set 1)					| 		| 1989	| Technos Japan | Miscellaneous	| 					|
 | blockout2	|  	| Block Out (set 2)					| blockout	| 1989	| Technos Japan | Miscellaneous	| 					|
-| msx_blpuzzle	|  	| Block Puzzle (HB, v1.1)				| 		| 2020	| David Heremans| MSX		| 					|
+| msx_blpuzzle	|  	| Block Puzzle (HB, v1.2)				| 		| 2020	| David Heremans| MSX		| 					|
 | msx_blockrun	|  	| Blockade Runner (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
 | cv_blockrun	|  	| Blockade Runner					| 		| 1984	| Interphase	| ColecoVision	| 					|
 | blockade	|  	| Blockade						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
@@ -1884,6 +1885,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_chaldrbyb|  	| Challenge Derby (Jpn, OMV, Hacked)			| sg1k_chaldrby	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | nes_challdra	|  	| Challenge of the Dragon (USA)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
 | nes_challenger|  	| Challenger (Japan)					| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
+| msx_chthyrea	|  	| Chambers of Thyrea (HB)				| 		| 2019-20| Spacesugar	| MSX		| 					|
 | md_kidchamj	|  	| Chameleon Kid (Jpn)					| md_kidcham	| 1992	| Sega		| Sega Megadrive| 					|
 | chameleo	|  	| Chameleon						| 		| 1983	| Jaleco	| Miscellaneous	| 					|
 | sg1k_champbas	|  	| Champion Baseball (Jpn)				| 		| 1983	| Sega		| Sega SG-1000	| 					|
@@ -2797,8 +2799,8 @@ This list contains all games supported by FinalBurn Neo.
 | dmnfrnta	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntb	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
-| dmnfrntpcb	|  	| Demon Front (VM107KR, S106KR, Korea, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| Insert coin to get past ERROR		|
+| dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrntpcb	|  	| Demon Front (VM107KR, S106KR, S101KR, Korea, Single PC| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | nes_demonsword|  	| Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | demonwld	|  	| Demon's World / Horror Story (set 1)			| 		| 1990	| Toaplan	| Toaplan BCU-2 | 					|
 | demonwld1	|  	| Demon's World / Horror Story (set 2)			| demonwld	| 1989	| Toaplan	| Toaplan BCU-2 | 					|
@@ -4170,11 +4172,13 @@ This list contains all games supported by FinalBurn Neo.
 | gg_fray	|  	| Fray - Shugyou Hen (Jpn)				| 		| 1991	| Micro Cabin	| Sega Game Gear| 					|
 | gg_fredcoupj	|  	| Fred Couples' Golf (Jpn)				| gg_fredcoup	| 1994	| Sega		| Sega Game Gear| 					|
 | gg_fredcoup	|  	| Fred Couples' Golf (USA)				| 		| 1994	| Sega		| Sega Game Gear| 					|
+| msx_fredhard	|  	| Freddy Hardest (Spa)					| 		| 1987	| Dinamic Softwa| MSX		| 					|
 | nes_freefall	|  	| Free Fall (USA) (Proto)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | freekickb1	|  	| Free Kick (bootleg set 1)				| freekick	| 1987	| bootleg	| Miscellaneous	| 					|
 | freekickb3	|  	| Free Kick (bootleg set 3)				| freekick	| 1987	| bootleg	| Miscellaneous	| 					|
 | freekick	|  	| Free Kick (NS6201-A 1987.10)				| 		| 1987	| Nihon System (| Miscellaneous	| 					|
 | freekicka	|  	| Free Kick (NS6201-A 1987.9)				| freekick	| 1987	| Nihon System	| Miscellaneous	| 					|
+| msx_freefight	|  	| Freedom Fighter (HB)					| 		| 2020	| Geppo		| MSX		| 					|
 | nes_freedomforce|  	| Freedom Force (USA)					| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
 | freeze	|  	| Freeze						| 		| 1984	| Cinematronics	| Jack the Giant| 					|
 | cv_frenzya	|  	| Frenzy (Alt 1)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
@@ -8176,8 +8180,8 @@ This list contains all games supported by FinalBurn Neo.
 | orlegend	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)	| 		| 1997	| IGS		| PolyGameMaster| 					|
 | oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
-| zerofxzdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-07-21| Hack		| PolyGameMaster| 					|
-| oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-07-21| Hack		| PolyGameMaster| 					|
+| zerofxzdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-08-03| Hack		| PolyGameMaster| 					|
+| oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-08-03| Hack		| PolyGameMaster| 					|
 | olds100a	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds103t	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 2003	| IGS		| PolyGameMaster| 					|
@@ -8450,6 +8454,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_cputest	| D	| PC-Engine CPU Timing Test by Chris Covell		| 		| 2019	| Homebrew	| PC Engine	| 					|
 | md_pebble	|  	| Pebble Beach Golf Links (Euro)			| 		| 1993	| Sega		| Sega Megadrive| 					|
 | md_pebbleu	|  	| Pebble Beach Golf Links (USA)				| md_pebble	| 1993	| Sega		| Sega Megadrive| 					|
+| cv_peekaboo	|  	| Peek-A-Boo (HB)					| 		| 2008	| Nintendo	| ColecoVision	| Published by Team Pixelboy		|
 | peekaboou	|  	| Peek-a-Boo! (North America, ver 1.0)			| peekaboo	| 1993	| Jaleco	| Mega System 1	| 					|
 | peekaboo	|  	| Peek-a-Boo!						| 		| 1993	| Jaleco	| Mega System 1	| 					|
 | nes_peepartime|  	| Peepar Time (Japan)					| 		| 1990	| Sanritsu	| Miscellaneous	| 					|
@@ -12352,9 +12357,8 @@ This list contains all games supported by FinalBurn Neo.
 | ragtime	|  	| The Great Ragtime Show (Japan v1.5, 92.12.07)		| boogwing	| 1992	| Data East Corp| DECO IC16	| 					|
 | md_waldo	|  	| The Great Waldo Search (USA)				| 		| 1992	| THQ		| Sega Megadrive| 					|
 | guiness	|  	| The Guiness (Japan)					| strnskil	| 1984	| Sun Electronic| Miscellaneous	| 					|
-| cv_heista	| X NW	| The Heist (Alt)					| cv_heist	| 1983	| Micro Fun	| ColecoVision	| 					|
 | msx_heist	|  	| The Heist (Jpn)					| 		| 1985	| Comptiq	| MSX		| 					|
-| cv_heist	| X NW	| The Heist						| 		| 1983	| Micro Fun	| ColecoVision	| 					|
+| cv_heist	|  	| The Heist						| 		| 1983	| Micro Fun	| ColecoVision	| 					|
 | md_humans	|  	| The Humans (USA)					| 		| 1992	| GameTek	| Sega Megadrive| 					|
 | thehustlj	|  	| The Hustler (Japan, program code J)			| rackemup	| 1987	| Konami	| GX765		| 					|
 | thehustl	|  	| The Hustler (Japan, program code M)			| rackemup	| 1987	| Konami	| GX765		| 					|

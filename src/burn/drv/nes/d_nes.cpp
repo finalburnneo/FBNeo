@@ -10751,7 +10751,25 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 // Non Homebrew (hand-added!)
 
-// Pacman CE: Keep under hand-added (HB) section, even though not marked HB
+static struct BurnRomInfo nes_rockm4miRomDesc[] = {
+	{ "Rockman 4 - Minus Infinity (Hack).nes",          1048592, 0xe9887ba6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm4mi)
+STD_ROM_FN(nes_rockm4mi)
+
+struct BurnDriver BurnDrvnes_rockm4mi = {
+	"nes_rockm4mi", "nes_megaman4", NULL, NULL, "2015",
+	"Rockman 4 - Minus Infinity (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_rockm4miRomInfo, nes_rockm4miRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+
+// Pacman CE: Keep under hand-added section
 static struct BurnRomInfo nes_pacmanceRomDesc[] = {
 	{ "pacman-ce (2020).nes",          262160, 0xb86c09af, BRF_ESS | BRF_PRG },
 };

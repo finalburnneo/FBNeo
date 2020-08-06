@@ -10790,6 +10790,23 @@ struct BurnDriver BurnDrvnes_gaplus = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_jaysilentRomDesc[] = {
+	{ "Jay and Silent Bob Mall Brawl.nes",          393232, 0xf167590d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jaysilent)
+STD_ROM_FN(nes_jaysilent)
+
+struct BurnDriver BurnDrvnes_jaysilent = {
+	"nes_jaysilent", NULL, NULL, NULL, "2020",
+	"Jay and Silent Bob Mall Brawl (HB)\0", NULL, "Interabang Entertainment", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_jaysilentRomInfo, nes_jaysilentRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_journeyalRomDesc[] = {
 	{ "journey to the center of the alien (2019)(mojon twins).nes",          73744, 0xd4b8eaa5, BRF_ESS | BRF_PRG },
 };

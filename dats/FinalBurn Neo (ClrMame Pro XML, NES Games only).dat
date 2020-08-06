@@ -3918,6 +3918,13 @@
 		<rom name="Jaws (USA).nes" size="65552" crc="fece3f05"/>
 		<driver status="good"/>
 	</game>
+	<game name="jaysilent">
+		<description>Jay and Silent Bob Mall Brawl (HB)</description>
+		<year>2020</year>
+		<manufacturer>Interabang Entertainment</manufacturer>
+		<rom name="Jay and Silent Bob Mall Brawl.nes" size="393232" crc="f167590d"/>
+		<driver status="good"/>
+	</game>
 	<game name="jesusj" cloneof="jesus" romof="jesus">
 		<description>Jesus - Kyoufu no Bio Monster (Japan)</description>
 		<year>1989</year>
@@ -6751,6 +6758,13 @@
 		<year>1991</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Rockman 4 - Aratanaru Yabou!! (Japan).nes" size="524304" crc="771a9138"/>
+		<driver status="good"/>
+	</game>
+	<game name="rockm4mi" cloneof="megaman4" romof="megaman4">
+		<description>Rockman 4 - Minus Infinity (Hack)</description>
+		<year>2015</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Rockman 4 - Minus Infinity (Hack).nes" size="1048592" crc="e9887ba6"/>
 		<driver status="good"/>
 	</game>
 	<game name="rockm5" cloneof="megaman5" romof="megaman5">

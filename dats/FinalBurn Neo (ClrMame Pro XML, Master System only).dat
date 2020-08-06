@@ -2609,6 +2609,13 @@
 		<rom name="promocao especial m. system iii compact (brazil) (sample).bin" size="32768" crc="30af0233"/>
 		<driver status="good"/>
 	</game>
+	<game name="psychicwen" cloneof="psychicw" romof="psychicw">
+		<description>Psychic World (Enhanced Hack v1.2)</description>
+		<year>2020</year>
+		<manufacturer>BcnAbel76</manufacturer>
+		<rom name="psychic world (enhanced v1.2).bin" size="262144" crc="f0ec4500"/>
+		<driver status="good"/>
+	</game>
 	<game name="psychicw">
 		<description>Psychic World (Euro, Bra)</description>
 		<year>1991</year>

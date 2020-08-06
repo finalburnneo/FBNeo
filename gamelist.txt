@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14335 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14338 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5559,6 +5559,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_draxos	|  	| Jashin Draxos (Jpn, Kor)				| md_riskyw	| 1993	| Electronic Art| Sega Megadrive| 					|
 | msx_jaws	|  	| Jaws (Spa?)						| 		| 1989	| A.M.H.	| MSX		| 					|
 | nes_jaws	|  	| Jaws (USA)						| 		| 1987	| LJN		| Miscellaneous	| 					|
+| nes_jaysilent	|  	| Jay and Silent Bob Mall Brawl (HB)			| 		| 2020	| Interabang Ent| Miscellaneous	| 					|
 | cv_jeepcrep	|  	| Jeepers Creepers (HB)					| 		| 2007	| Daniel Bienven| ColecoVision	| 					|
 | md_jellyboy	|  	| Jelly Boy (Euro, Prototype)				| 		| 199?	| Electronic Art| Sega Megadrive| 					|
 | md_jennifct	|  	| Jennifer Capriati Tennis (USA)			| md_grandsl	| 1992	| Renovation	| Sega Megadrive| 					|
@@ -8989,6 +8990,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_psyched	|  	| Psychedelia (Euro)					| 		| 1984	| Aackosoft	| MSX		| 					|
 | psychic5j	|  	| Psychic 5 (Japan)					| psychic5	| 1987	| Jaleco	| Miscellaneous	| 					|
 | psychic5	|  	| Psychic 5 (World)					| 		| 1987	| Jaleco	| Miscellaneous	| 					|
+| sms_psychicwen|  	| Psychic World (Enhanced Hack v1.2)			| sms_psychicw	| 2020	| BcnAbel76	| Sega Master Sy| 					|
 | sms_psychicw	|  	| Psychic World (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
 | gg_psychicw	|  	| Psychic World (Euro, USA, Bra)			| 		| 1991	| Sega		| Sega Game Gear| 					|
 | gg_psychicwj	|  	| Psychic World (Jpn)					| gg_psychicw	| 1991	| Sega		| Sega Game Gear| 					|
@@ -9683,6 +9685,7 @@ This list contains all games supported by FinalBurn Neo.
 | rockman2j	|  	| Rockman 2 - the power fighters (960708 Japan)		| megaman2	| 1996	| Capcom	| CPS2		| 					|
 | nes_rockm3	|  	| Rockman 3 - Dr. Wily no Saigo! (Japan)		| nes_megaman3	| 1990	| Capcom	| Miscellaneous	| 					|
 | nes_rockm4	|  	| Rockman 4 - Aratanaru Yabou!! (Japan)			| nes_megaman4	| 1991	| Capcom	| Miscellaneous	| 					|
+| nes_rockm4mi	|  	| Rockman 4 - Minus Infinity (Hack)			| nes_megaman4	| 2015	| Nintendo	| Miscellaneous	| 					|
 | nes_rockm5	|  	| Rockman 5 - Blues no Wana! (Japan)			| nes_megaman5	| 1992	| Capcom	| Miscellaneous	| 					|
 | nes_rockm6	|  	| Rockman 6 - Shijou Saidai no Tatakai!! (Japan)	| nes_megaman6	| 1993	| Capcom	| Miscellaneous	| 					|
 | md_rockman	|  	| Rockman Mega World (Jpn)				| md_megaman	| 1994	| Capcom	| Sega Megadrive| 					|

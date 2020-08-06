@@ -5655,6 +5655,7 @@ DRV		BurnDrvmd_jantei;
 DRV		BurnDrvmd_draxos;
 DRV		BurnDrvMSX_jaws;
 DRV		BurnDrvnes_jaws;
+DRV		BurnDrvnes_jaysilent;
 DRV		BurnDrvcv_jeepcrep;
 DRV		BurnDrvmd_jellyboy;
 DRV		BurnDrvmd_jennifct;
@@ -9149,6 +9150,7 @@ DRV		BurnDrvmd_psyoblad;
 DRV		BurnDrvMSX_psyched;
 DRV		BurnDrvPsychic5j;
 DRV		BurnDrvPsychic5;
+DRV		BurnDrvsms_psychicwen;
 DRV		BurnDrvsms_psychicw;
 DRV		BurnDrvgg_psychicw;
 DRV		BurnDrvgg_psychicwj;
@@ -9851,6 +9853,7 @@ DRV		BurnDrvnes_rockm2;
 DRV		BurnDrvCpsRockman2j;
 DRV		BurnDrvnes_rockm3;
 DRV		BurnDrvnes_rockm4;
+DRV		BurnDrvnes_rockm4mi;
 DRV		BurnDrvnes_rockm5;
 DRV		BurnDrvnes_rockm6;
 DRV		BurnDrvmd_rockman;
@@ -20257,6 +20260,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_draxos,			// Jashin Draxos (Jpn, Kor)
 	&BurnDrvMSX_jaws,			// Jaws (Spa?)
 	&BurnDrvnes_jaws,			// Jaws (USA)
+	&BurnDrvnes_jaysilent,		// Jay and Silent Bob Mall Brawl (HB)
 	&BurnDrvcv_jeepcrep,		// Jeepers Creepers (HB)
 	&BurnDrvmd_jellyboy,		// Jelly Boy (Euro, Prototype)
 	&BurnDrvmd_jennifct,		// Jennifer Capriati Tennis (USA)
@@ -23751,6 +23755,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_psyched,		// Psychedelia (Euro)
 	&BurnDrvPsychic5j,			// Psychic 5 (Japan)
 	&BurnDrvPsychic5,			// Psychic 5 (World)
+	&BurnDrvsms_psychicwen,		// Psychic World (Enhanced Hack v1.2)
 	&BurnDrvsms_psychicw,		// Psychic World (Euro, Bra)
 	&BurnDrvgg_psychicw,		// Psychic World (Euro, USA, Bra)
 	&BurnDrvgg_psychicwj,		// Psychic World (Jpn)
@@ -24453,6 +24458,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsRockman2j,		// Rockman 2 - the power fighters (960708 Japan)
 	&BurnDrvnes_rockm3,			// Rockman 3 - Dr. Wily no Saigo! (Japan)
 	&BurnDrvnes_rockm4,			// Rockman 4 - Aratanaru Yabou!! (Japan)
+	&BurnDrvnes_rockm4mi,		// Rockman 4 - Minus Infinity (Hack)
 	&BurnDrvnes_rockm5,			// Rockman 5 - Blues no Wana! (Japan)
 	&BurnDrvnes_rockm6,			// Rockman 6 - Shijou Saidai no Tatakai!! (Japan)
 	&BurnDrvmd_rockman,			// Rockman Mega World (Jpn)

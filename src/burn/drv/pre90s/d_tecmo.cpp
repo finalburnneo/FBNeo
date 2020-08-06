@@ -393,7 +393,7 @@ static struct BurnDIPInfo BackfirtDIPList[]=
 
 STDDIPINFO(Backfirt)
 
-UINT8 __fastcall rygar_main_read(UINT16 address)
+static UINT8 __fastcall rygar_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -416,12 +416,13 @@ UINT8 __fastcall rygar_main_read(UINT16 address)
 	return 0;
 }
 
-static void bankswitch_w(INT32 data)
+static void bank_switch(INT32 data)
 {
-	DrvZ80Bank = 0x10000 + ((data & 0xf8) << 8);
+	DrvZ80Bank = data;
 
-	ZetMapArea(0xf000, 0xf7ff, 0, DrvZ80ROM0 + DrvZ80Bank);
-	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80ROM0 + DrvZ80Bank);
+	INT32 bank = 0x10000 + ((data & 0xf8) << 8);
+
+	ZetMapMemory(DrvZ80ROM0 + bank, 0xf000, 0xf7ff, MAP_ROM);
 }
 
 static inline void palette_write(INT32 offset)
@@ -490,7 +491,7 @@ static void __fastcall rygar_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf808:
-			bankswitch_w(data);
+			bank_switch(data);
 		return;
 
 		case 0xf80b:
@@ -515,6 +516,7 @@ static UINT8 __fastcall rygar_sound_read(UINT16 address)
 static void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff80) == 0x2000) {
+		// 2000 - 207f ram / self-modifying code area
 		DrvZ80ROM1[address] = data;
 		return;
 	}
@@ -643,15 +645,14 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-	bankswitch_w(0);
+	bank_switch(0);
 	ZetClose();
 
 	ZetOpen(1);
 	ZetReset();
-	ZetClose();
-
 	if (DrvHasADPCM) MSM5205Reset();
 	BurnYM3812Reset();
+	ZetClose();
 
 	if (tecmo_video_type) {
 		memset (DrvZ80ROM1 + 0x2000, 0, 0x80);
@@ -671,11 +672,7 @@ static INT32 DrvDoReset()
 
 static void TecmoFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 TecmoSynchroniseStream(INT32 nSoundRate)
@@ -834,6 +831,11 @@ static INT32 SilkwormInit()
 			if (BurnLoadRom(DrvGfxROM1 + i * 0x10000, i +  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + i * 0x10000, i +  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM3 + i * 0x10000, i + 12, 1)) return 1;
+		}
+
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "silkwormb")) {
+			bprintf(0, _T("silkwormb fix\n"));
+			if (BurnLoadRom(DrvGfxROM3 + 0x38000, 15, 1)) return 1;
 		}
 
 		if (BurnLoadRom(DrvSndROM,	16, 1)) return 1;
@@ -999,7 +1001,7 @@ static void draw_sprites(INT32 priority)
 				{
 					INT32 sx = xpos + ((flipx ? (size - 1 - x) : x) << 3);
 					INT32 sy = ypos + ((flipy ? (size - 1 - y) : y) << 3);
-					    sy -= 16;
+					sy -= 16;
 
 					if (sy < -7 || sx < -7 || sx > 255 || sy > 223) continue;
 
@@ -1144,18 +1146,15 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
-	INT32 nSegment;
 	INT32 nInterleave = 10;
 	if (DrvHasADPCM) nInterleave = MSM5205CalcInterleave(0, 4000000);
-	INT32 nTotalCycles[2] = { 6000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 6000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
@@ -1164,13 +1163,13 @@ static INT32 DrvFrame()
 			ZetNmi();
 			DrvEnableNmi = 0;
 		}
-		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 		if (DrvHasADPCM)  MSM5205Update();
 		ZetClose();
 	}
 
 	ZetOpen(1);
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		if (DrvHasADPCM) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -1209,18 +1208,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3812Scan(nAction, pnMin);
 		if (DrvHasADPCM) MSM5205Scan(nAction, pnMin);
 
+		SCAN_VAR(DrvEnableNmi);
+
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(DrvZ80Bank);
 
 		SCAN_VAR(adpcm_pos);
 		SCAN_VAR(adpcm_end);
+		SCAN_VAR(adpcm_data);
 	}
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0xf000, 0xf7ff, 0, DrvZ80ROM0 + DrvZ80Bank);
-		ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80ROM0 + DrvZ80Bank);
+		bank_switch(DrvZ80Bank);
 		ZetClose();
 	}
 

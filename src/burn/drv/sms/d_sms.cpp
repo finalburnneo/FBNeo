@@ -7702,6 +7702,26 @@ struct BurnDriver BurnDrvsms_psychicw = {
 };
 
 
+// Psychic World (Euro, Bra) Enhanced v1.2
+
+static struct BurnRomInfo sms_psychicwenRomDesc[] = {
+	{ "psychic world (enhanced v1.2).bin",	0x40000, 0xf0ec4500, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_psychicwen)
+STD_ROM_FN(sms_psychicwen)
+
+struct BurnDriver BurnDrvsms_psychicwen = {
+	"sms_psychicwen", "sms_psychicw", NULL, NULL, "2020",
+	"Psychic World (Enhanced Hack v1.2)\0", NULL, "BcnAbel76", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_psychicwenRomInfo, sms_psychicwenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
 // Psycho Fox (Euro, USA, Bra)
 
 static struct BurnRomInfo sms_psychofRomDesc[] = {

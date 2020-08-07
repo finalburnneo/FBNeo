@@ -3416,7 +3416,7 @@ static struct BurnRomInfo hharrybRomDesc[] = {
 	{ "1-a-27c010a.bin",	0x20000, 0xfaaacaff, 0x05 | BRF_SND },           // 13 DAC Samples
 	
 	{ "19-c-82s129.bin",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 14 Proms
-	{ "18-c-82s129.bin",	0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 15
+	{ "18-c-82s129.bin",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 15
 
 	{ "a-pal16l8.bin",		0x00104, 0x1358c513, 0x00 | BRF_OPT },           // 16
 };

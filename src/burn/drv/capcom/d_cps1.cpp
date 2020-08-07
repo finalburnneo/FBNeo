@@ -8562,7 +8562,7 @@ static struct BurnRomInfo Pang3b2RomDesc[] = {
 	
 	{ "buf1",          0x000117, 0xeb122de7, BRF_OPT }, // a-board PLDs
 	{ "ioa1",          0x000117, 0x59c7ee3b, BRF_OPT },
-	{ "prg2",          0x000117, 0x4386879a, BRF_OPT },
+	{ "prg1",          0x000117, 0xf1129744, BRF_OPT },
 	{ "rom1",          0x000117, 0x41dc73b9, BRF_OPT },
 	{ "sou1",          0x000117, 0x84f4b2fe, BRF_OPT },
 };
@@ -13650,7 +13650,7 @@ static struct BurnRomInfo StriderucRomDesc[] = {
 	
 	{ "buf1",          0x000117, 0xeb122de7, BRF_OPT }, // a-board PLDs
 	{ "ioa1",          0x000117, 0x59c7ee3b, BRF_OPT },
-	{ "prg2",          0x000117, 0x4386879a, BRF_OPT },
+	{ "prg1",          0x000117, 0xf1129744, BRF_OPT },
 	{ "rom1",          0x000117, 0x41dc73b9, BRF_OPT },
 	{ "sou1",          0x000117, 0x84f4b2fe, BRF_OPT },
 	

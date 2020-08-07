@@ -148,8 +148,8 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 				if (bytes == 2)										// signed 16 bit, stereo & mono
 				{
-					buffer_l[3] = (INT32)(BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + 0             ]));
-					buffer_r[3] = (INT32)(BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + (channels / 2)]));
+					buffer_l[3] = (INT16)BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + 0             ]);
+					buffer_r[3] = (INT16)BURN_ENDIAN_SWAP_INT16(poin[prev_offs * channels + (channels / 2)]);
 				}
 				else if (bytes == 1)									// unsigned 8 bit, stereo & mono
 				{

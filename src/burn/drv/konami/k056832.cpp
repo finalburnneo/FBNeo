@@ -372,7 +372,7 @@ UINT16 K056832RomWordRead(UINT16 offset)
 
 void K056832HalfRamWriteWord(UINT32 offset, UINT16 data)
 {
-	K056832VideoRAM[m_selected_page_x4096 + (offset & 0xffe) + 1] = data;
+	K056832VideoRAM[m_selected_page_x4096 + (offset & 0xffe) + 1] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 void K056832HalfRamWriteByte(UINT32 offset, UINT8 data)
@@ -384,7 +384,7 @@ void K056832HalfRamWriteByte(UINT32 offset, UINT8 data)
 
 UINT16 K056832HalfRamReadWord(UINT32 offset)
 {
-	return K056832VideoRAM[m_selected_page_x4096 + (offset & 0xffe) + (((offset >> 12) ^ 1) & 1)];
+	return BURN_ENDIAN_SWAP_INT16(K056832VideoRAM[m_selected_page_x4096 + (offset & 0xffe) + (((offset >> 12) ^ 1) & 1)]);
 }
 
 UINT8 K056832HalfRamReadByte(UINT32 offset)
@@ -397,7 +397,7 @@ void K056832RamWriteWord(UINT32 offset, UINT16 data)
 {
 	offset = (offset & 0x1fff) / 2;
 
-	K056832VideoRAM[m_selected_page_x4096 + (offset)] = data;
+	K056832VideoRAM[m_selected_page_x4096 + (offset)] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 void K056832RamWriteByte(UINT32 offset, UINT8 data)
@@ -409,7 +409,7 @@ void K056832RamWriteByte(UINT32 offset, UINT8 data)
 
 UINT16 K056832RamReadWord(UINT32 offset)
 {
-	return K056832VideoRAM[m_selected_page_x4096 + ((offset & 0x1fff) / 2)];
+	return BURN_ENDIAN_SWAP_INT16(K056832VideoRAM[m_selected_page_x4096 + ((offset & 0x1fff) / 2)]);
 }
 
 UINT8 K056832RamReadByte(UINT32 offset)
@@ -568,8 +568,8 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 
 		UINT16 *pMem = &K056832VideoRAM[(pageIndex << 12) + (offs << 1)];
 
-		INT32 attr  = pMem[0];
-		INT32 code  = pMem[1];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(pMem[0]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(pMem[1]);
 
 		if (m_layer_association)
 		{
@@ -680,8 +680,8 @@ static int update_linemap(INT32 layer, INT32 pageIndex, INT32 flags, INT32 prior
 	{
 		UINT16 *pMem = &K056832VideoRAM[(pageIndex << 12) + (line << 1)];
 
-		INT32 attr  = pMem[0];
-		INT32 code  = pMem[1];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(pMem[0]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(pMem[1]);
 
 		if (m_layer_association)
 		{
@@ -823,7 +823,7 @@ void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority)
 			sdat_wrapmask = 0;
 			sdat_adv = 0;
 			ram16[0] = 0;
-			ram16[1] = dx;
+			ram16[1] = BURN_ENDIAN_SWAP_INT16(dx);
 	}
 	if (flipy)
 		sdat_adv = -sdat_adv;
@@ -972,9 +972,9 @@ void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority)
 				clip_data[3] = (dmaxy > cmaxy ) ? cmaxy : dmaxy;
 
 				if ((scrollmode == 2) && (flags & K056832_DRAW_FLAG_MIRROR) && (flipy))
-					dx = ((INT32)p_scroll_data[sdat_offs + 0x1e0 + 14]<<16 | (INT32)p_scroll_data[sdat_offs + 0x1e0 + 15]) + corr;
+					dx = ((INT32)BURN_ENDIAN_SWAP_INT16(p_scroll_data[sdat_offs + 0x1e0 + 14])<<16 | (INT32)BURN_ENDIAN_SWAP_INT16(p_scroll_data[sdat_offs + 0x1e0 + 15])) + corr;
 				else
-					dx = ((INT32)p_scroll_data[sdat_offs]<<16 | (INT32)p_scroll_data[sdat_offs + 1]) + corr;
+					dx = ((INT32)BURN_ENDIAN_SWAP_INT16(p_scroll_data[sdat_offs])<<16 | (INT32)BURN_ENDIAN_SWAP_INT16(p_scroll_data[sdat_offs + 1])) + corr;
 
 				if ((INT32)last_dx == dx) { if (last_visible) draw_layer_internal(layer, tmap, clip_data, tmap_scrollx, tmap_scrolly, flags, priority, is_linemap); continue; }
 				last_dx = dx;

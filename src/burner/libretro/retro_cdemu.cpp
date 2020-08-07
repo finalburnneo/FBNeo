@@ -875,8 +875,10 @@ static int cdimgGetSoundBuffer(short* buffer, int samples)
 
 		for (int i = samples * 2 - 1; i > 0; )
 		{
-			short tmpsrc = BURN_ENDIAN_SWAP_INT16(src[i]);
+			short tmpsrc;
+			tmpsrc = BURN_ENDIAN_SWAP_INT16(src[i]);
 			dst[i] = CLIP(tmpsrc + dst[i]); i--;
+			tmpsrc = BURN_ENDIAN_SWAP_INT16(src[i]);
 			dst[i] = CLIP(tmpsrc + dst[i]); i--;
 		}
 

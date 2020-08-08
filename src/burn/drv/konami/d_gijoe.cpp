@@ -138,7 +138,7 @@ static void gijoe_objdma()
 
 	for (; src_head <= src_tail; src_head += 8)
 	{
-		if (*src_head & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(*src_head) & 0x8000)
 		{
 			memcpy(dst_head, src_head, 0x10);
 			dst_head += 8;

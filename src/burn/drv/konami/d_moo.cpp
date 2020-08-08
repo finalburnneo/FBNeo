@@ -213,7 +213,7 @@ static void moo_objdma()
 
 	do
 	{
-		if ((*src & 0x8000) && (*src & zmask))
+		if ((BURN_ENDIAN_SWAP_INT16(*src) & 0x8000) && (BURN_ENDIAN_SWAP_INT16(*src) & zmask))
 		{
 			memcpy(dst, src, 0x10);
 			dst += 8;

@@ -2853,7 +2853,7 @@ void HamawayGfxBankWrite(UINT32 offset, UINT16 d)
 static UINT16 __fastcall System18ReadWord(UINT32 a)
 {
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		return GenesisVDPRead((a - 0xc00000) >> 1);
+		return GenesisVDPRead((a & 0xf) >> 1);
 	}
 	
 #if 0 && defined FBNEO_DEBUG
@@ -2866,11 +2866,11 @@ static UINT16 __fastcall System18ReadWord(UINT32 a)
 static UINT8 __fastcall System18ReadByte(UINT32 a)
 {
 	if (a >= 0xa40000 && a <= 0xa4001f) {
-		return system18_io_chip_r((a - 0xa40000) >> 1);
+		return system18_io_chip_r((a & 0x1f) >> 1);
 	}
 	
 	if (a >= 0xe40000 && a <= 0xe4001f) {
-		return system18_io_chip_r((a - 0xe40000) >> 1);
+		return system18_io_chip_r((a & 0x1f) >> 1);
 	}
 	
 #if 0 && defined FBNEO_DEBUG
@@ -2883,12 +2883,12 @@ static UINT8 __fastcall System18ReadByte(UINT32 a)
 static void __fastcall System18WriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileWordWrite(a - 0x400000, d);
+		System16BTileWordWrite(a & 0xffff, d);
 		return;
 	}
 	
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		GenesisVDPWrite((a - 0xc00000) >> 1, d);
+		GenesisVDPWrite((a & 0xf) >> 1, d);
 		return;
 	}
 	
@@ -2907,27 +2907,27 @@ static void __fastcall System18WriteWord(UINT32 a, UINT16 d)
 static void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileByteWrite((a - 0x400000) ^ 1, d);
+		System16BTileByteWrite((a & 0xffff) ^ 1, d);
 		return;
 	}
 	
 	if (a >= 0x3e0000 && a <= 0x3e001f) {
-		System18GfxBankWrite((a - 0x3e0000) >> 1, d);
+		System18GfxBankWrite((a & 0x1f) >> 1, d);
 		return;
 	}
 	
 	if (a >= 0xa40000 && a <= 0xa41fff) {
-		system18_io_chip_w((a - 0xa40000) >> 1, d);
+		system18_io_chip_w((a & 0x1fff) >> 1, d);
 		return;
 	}
 	
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		GenesisVDPWrite((a - 0xc00000) >> 1, d);
+		GenesisVDPWrite((a & 0xf) >> 1, d);
 		return;
 	}
 	
 	if (a >= 0xe40000 && a <= 0xe41fff) {
-		system18_io_chip_w((a - 0xe40000) >> 1, d);
+		system18_io_chip_w((a & 0x1fff) >> 1, d);
 		return;
 	}
 
@@ -3353,7 +3353,6 @@ static INT32 System18Scan(INT32 nAction,INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(misc_io_data);
-		
 		GenesisVDPScan();
 	}
 	

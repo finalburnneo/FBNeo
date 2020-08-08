@@ -316,18 +316,27 @@ static INT32 System16DoReset()
 	if (System16MSM6295RomSize) {
 		MSM6295Reset(0);
 	}
-	
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
+		GenesisVDPReset();
+		ZetOpen(0);
 		BurnYM3438Reset();
 		RF5C68PCMReset();
+		ZetClose();
 	} else {
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
+			ZetOpen(0);
 			BurnYM2203Reset();
+			ZetClose();
 		} else {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
+				ZetOpen(0);
 				BurnYM2413Reset();
+				ZetClose();
 			} else {
+				ZetOpen(0);
 				BurnYM2151Reset();
+				ZetClose();
 			}
 		}
 	}

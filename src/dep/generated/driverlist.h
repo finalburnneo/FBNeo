@@ -9707,6 +9707,7 @@ DRV		BurnDrvRingkingw;
 DRV		BurnDrvnes_ringking;
 DRV		BurnDrvRingohja;
 DRV		BurnDrvCpsRingdesta;
+DRV		BurnDrvCpsRingdestb;
 DRV		BurnDrvCpsRingdstd;
 DRV		BurnDrvCpsRingdest;
 DRV		BurnDrvCpsRingdesth;
@@ -20769,7 +20770,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2104,			// Knights of Valour 2 (V104, China)
 	&BurnDrvKov2106,			// Knights of Valour 2 (V106, Hong Kong)
 	&BurnDrvKov2,				// Knights of Valour 2 (V107, Hong Kong)
-	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Hack, Ver. 2055)
+	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)
 	&BurnDrvKov2p200,			// Knights of Valour 2 Plus - Nine Dragons (VM200XX)
 	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japan)
 	&BurnDrvKov2p203,			// Knights of Valour 2 Plus - Nine Dragons (VM203XX, Korea)
@@ -24312,6 +24313,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ringking,		// Ring King (USA)
 	&BurnDrvRingohja,			// Ring no Ohja (Japan 2 Players ver. N)
 	&BurnDrvCpsRingdesta,		// Ring of Destruction - slammasters II (940831 Asia)
+	&BurnDrvCpsRingdestb,		// Ring of Destruction - slammasters II (940902 Brazil)
 	&BurnDrvCpsRingdstd,		// Ring of Destruction - slammasters II (940902 Euro Phoenix Edition)
 	&BurnDrvCpsRingdest,		// Ring of Destruction - slammasters II (940902 Euro)
 	&BurnDrvCpsRingdesth,		// Ring of Destruction - slammasters II (940902 Hispanic)

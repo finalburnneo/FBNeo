@@ -318,7 +318,7 @@ static int create_variables_from_dipswitches()
 	{
 		/* 0xFE is the beginning label for a DIP switch entry */
 		/* 0xFD are region DIP switches */
-		if ((bdi.nFlags == 0xFE || bdi.nFlags == 0xFD) && bdi.nSetting > 0)
+		if ((bdi.nFlags == 0xFE || bdi.nFlags == 0xFD) && bdi.nSetting > 1)
 		{
 			dipswitch_core_options.push_back(dipswitch_core_option());
 			dipswitch_core_option *dip_option = &dipswitch_core_options.back();

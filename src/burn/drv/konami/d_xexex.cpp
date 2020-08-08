@@ -103,7 +103,7 @@ static void xexex_objdma()
 
 	do
 	{
-		if (*src & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(*src) & 0x8000)
 		{
 			dst[0] = src[0x0];  dst[1] = src[0x2];
 			dst[2] = src[0x4];  dst[3] = src[0x6];

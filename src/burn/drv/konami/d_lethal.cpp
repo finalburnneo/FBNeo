@@ -582,7 +582,7 @@ static void DrvPaletteRecalc()
 
 	for (INT32 i = 0; i < 0x3802/2; i++)
 	{
-		UINT16 p = (pal[i] >> 8) | (pal[i] << 8);
+		UINT16 p = (BURN_ENDIAN_SWAP_INT16(pal[i]) >> 8) | (BURN_ENDIAN_SWAP_INT16(pal[i]) << 8);
 
 		INT32 r = (p & 0x1f);
 		INT32 g = (p >> 5) & 0x1f;

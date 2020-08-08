@@ -520,7 +520,7 @@ static void DrvPaletteRecalc()
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x4000/2; i+=2) {
-		UINT32 p = (pal[i] << 16) | (pal[i+1]);
+		UINT32 p = (BURN_ENDIAN_SWAP_INT16(pal[i]) << 16) | (BURN_ENDIAN_SWAP_INT16(pal[i+1]));
 
 		UINT8 r = p & 0xff;
 		UINT8 g = p >> 8;

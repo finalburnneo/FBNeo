@@ -1322,6 +1322,60 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// The Tin Star (inverse sticks)
+	if ((parentrom && strcmp(parentrom, "tinstar") == 0) ||
+		(drvname && strcmp(drvname, "tinstar") == 0)
+	) {
+		if (strcmp("Rightstick Up", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_UP, "Up");
+		}
+		if (strcmp("Rightstick Down", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_DOWN, "Down");
+		}
+		if (strcmp("Rightstick Left", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_LEFT, "Left");
+		}
+		if (strcmp("Rightstick Right", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_RIGHT, "Right");
+		}
+		if (strcmp("Leftstick Up", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Aim Up / Down");
+		}
+		if (strcmp("Leftstick Down", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Aim Up / Down");
+		}
+		if (strcmp("Leftstick Left", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Aim Left / Right");
+		}
+		if (strcmp("Leftstick Right", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Aim Left / Right");
+		}
+		if (strcmp("Button 1", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
+		}
+		if (strcmp("Button 2", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+		}
+	}
+
+	// Wacko (map aim to right stick)
+	if ((parentrom && strcmp(parentrom, "wacko") == 0) ||
+		(drvname && strcmp(drvname, "wacko") == 0)
+	) {
+		if (strcmp("Up", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Aim Up / Down");
+		}
+		if (strcmp("Down", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Aim Up / Down");
+		}
+		if (strcmp("Left", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Aim Left / Right");
+		}
+		if (strcmp("Right", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Aim Left / Right");
+		}
+	}
+
 	// Angel Kids, Splat!
 	if ((parentrom && strcmp(parentrom, "angelkds") == 0) ||
 		(drvname && strcmp(drvname, "angelkds") == 0) ||

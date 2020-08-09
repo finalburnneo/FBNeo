@@ -452,19 +452,6 @@ static struct BurnDIPInfo martmast102DIPList[] = {
 //	{0x2E,  0x01, 0x07, 0x06, "USA"								},
 };
 
-static struct BurnDIPInfo martmasttwDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x01, NULL								},
-
-	{0,		0xFE, 0,	6,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x07,	0x00, "China"							},
-	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
-	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
-	{0x2E,	0x01, 0x07,	0x03, "Korea"							},
-	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"						},
-	{0x2E,	0x01, 0x07,	0x05, "World"							},
-//	{0x2E,  0x01, 0x07, 0x06, "USA"								},
-};
-
 static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
 
@@ -647,7 +634,6 @@ STDDIPINFOEXT(py2k2100, 	pgm,	py2k2100		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
 STDDIPINFOEXT(martmast102,  pgm,	martmast102		)
-STDDIPINFOEXT(martmasttw, 	pgm,	martmasttw		)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(olds100,     	pgm,	olds100			)
 STDDIPINFOEXT(oldschs,     	pgm,	oldschs			)  
@@ -2851,86 +2837,6 @@ struct BurnDriver BurnDrvmartmast102 = {
 };
 
 
-// Martial Masters / Xing Yi (V102, 101, 101, Taiwan)
-// Only the ROMs at U9 and U10 were dumped and are probably bad. 
-// Internal ROM martial_masters_v101_tw.asic was not dumped
-
-static struct BurnRomInfo martmasttwRomDesc[] = {
-	{ "mm_v102_u9.u9",  			0x0400000, 0x7eb41ed4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-//	{ "mm_v102_u9.u9",			    0x0400000, 0xbb24b92a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-
-	{ "pgm_t1000.u3",	 			0x0800000, 0xbbf879b5, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "pgm_a1000.u3",    			0x0800000, 0x43577ac8, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a1001.u4",    			0x0800000, 0xfe7a476f, 3 | BRF_GRA },			//  3
-	{ "pgm_a1002.u6",    			0x0800000, 0x62e33d38, 3 | BRF_GRA },			//  4
-	{ "pgm_a1003.u8",    			0x0800000, 0xb2c4945a, 3 | BRF_GRA },			//  5
-	{ "pgm_a1004.u10",   			0x0400000, 0x9fd3f5fd, 3 | BRF_GRA },			//  6
-
-	{ "pgm_b1000.u9",	  			0x0800000, 0xc5961f6f, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
-	{ "pgm_b1001.u11",	  			0x0800000, 0x0b7e1c06, 4 | BRF_GRA },			//  8
-
-	{ "pgm_m1000.u5",     			0x0800000, 0xed407ae8, 5 | BRF_SND },			//  9 Samples
-	{ "pgm_m1001.u7",      			0x0400000, 0x662d2d48, 5 | BRF_SND },			// 10
-
-	{ "martial_masters_v101_cn.asic",	0x0004000, 0xb3e25b7d, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
-//	{ "martial_masters_v101_tw.asic",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  // 11 Internal ARM7 Rom
-
-	{ "mm_v101_u10.u10",			0x0400000, 0x917beb91, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
-//	{ "mm_v101_u10.u10",		    0x0400000, 0x41b9497c, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
-};
-
-STDROMPICKEXT(martmasttw, martmasttw, pgm)
-STD_ROM_FN(martmasttw)
-
-static void martmasttw_patch()
-{
-	static UINT32 patch_table[66 * 2] = { // patch values different from martmastc102's 68K ROM, I suspect mm_v102_u9.u9 is bad
-		0x0062b0, 0x000c, 0x00e0f0, 0x48e7, 0x01adb4, 0x202a, 0x01def0, 0x6738, 0x01f070, 0x6000, 0x0206f0, 0x0011, 
-		0x020770, 0x0002, 0x021d90, 0x0018, 0x0228f0, 0x0060, 0x0229f0, 0x0404, 0x025170, 0xb081, 0x0252b0, 0x0004, 
-		0x025f70, 0x0011, 0x028970, 0x040c, 0x0289f0, 0x7000, 0x03dd70, 0x0010, 0x059e70, 0xff6b, 0x0802b0, 0xffcc, 
-		0x084e70, 0xfffa, 0x08bc70, 0x5b00, 0x08bcf0, 0x2800, 0x0961f0, 0xcdcd, 0x0b9670, 0x8200, 0x0b9ff0, 0x0049, 
-		0x0bc1f0, 0x001b, 0x0f9670, 0x0002, 0x0feaf0, 0xfdd0, 0x1021f0, 0x000d, 0x1070b0, 0x3223, 0x112170, 0x001e, 
-		0x1287b0, 0x001a, 0x15adf0, 0xfed5, 0x1ca070, 0x002c, 0x1cbc70, 0x002c, 0x1e4470, 0xc001, 0x206b70, 0x01c0, 
-		0x20ab30, 0x0018, 0x20beb0, 0x05c0, 0x20bf70, 0x05c0, 0x20c2b0, 0x0018, 0x2117f0, 0xfc00, 0x212df0, 0xc100, 
-		0x218670, 0x0000, 0x2187f0, 0xeed0, 0x21cd30, 0x8000, 0x223870, 0x0048, 0x2280b0, 0x002d, 0x22dd70, 0x1100, 
-		0x2323f0, 0x0000, 0x2434f0, 0x0034, 0x255af0, 0x0035, 0x26daf0, 0x0000, 0x2893b0, 0x004a, 0x2a4970, 0x003a, 
-		0x2a69f0, 0x003a, 0x2a86b0, 0x0022, 0x2b4570, 0x0023, 0x2d2a30, 0x3402, 0x2e48f0, 0x0000, 0x2f48f0, 0xffe0, 
-		0x30b570, 0x8100, 0x31b8f0, 0x0027, 0x34b5f0, 0xffe6, 0x35b9f0, 0xff6e, 0x382370, 0x0000, 0x38cfb0, 0x1270
-	};
-	
-	for (UINT32 i = 0; i < sizeof(patch_table) / 4; i+=2) {
-		*((UINT16*)(PGM68KROM + patch_table[i])) = patch_table[i+1];
-	}
-}
-
-static INT32 martmasttwInit()
-{
-	pPgmInitCallback = pgm_decrypt_martmast;
-	pPgmProtCallback = install_protection_asic27a_martmast;
-
-	nPgmAsicRegionHackAddress = 0x2cb5;
-	
-	INT32 nRet = pgmInit();
-	
-	martmasttw_patch();
-	
-	Arm7SetIdleLoopAddress(0x800039e);
-
-	return nRet;
-}
-
-struct BurnDriver BurnDrvmartmasttw = {
-	"martmasttw", "martmast", "pgm", NULL, "2001",
-	"Martial Masters (V102, 101, 101, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
-	L"Martial Masters\0\u5f62\u610f\u62f3 (V102, 101, 101, Taiwan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
-	NULL, martmasttwRomInfo, martmasttwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmasttwDIPInfo,
-	martmasttwInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
 // Photo Y2K 2 (VM101XX, China)
 
 /* IGS PCB-0313-00 MADE IN TAIWAN
@@ -5116,28 +5022,36 @@ struct BurnDriver BurnDrvKillbldp = {
 
 // S.V.G. - Spectral vs Generation (V200, China)
 
+/* IGS PCB-0529-02-HH
+   SCREEN VER PIC: M68K VERSION V200 10/11/05 10:07:20 V201 CHINA 
+   ROM TYPES: U30 MX MX27C4096DC
+   ROM TYPES: U26 ST M27C322
+   ROM TYPES: U36 ST M27C322
+   CREDITS TO: "GC8TECH.COM" */
+
 static struct BurnRomInfo svgRomDesc[] = {
-	{ "u30.bin",					0x0080000, 0x34c18f3f, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "svg_v200_u30.u30",			0x0080000, 0x34c18f3f, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "igs_t05601w016.bin",			0x0200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
+	{ "igs_t05601w016.u29",			0x0200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "igs_a05601w064.bin",			0x0800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "igs_a05602w064.bin",			0x0800000, 0x6d00621b, 3 | BRF_GRA },			//  3
-	{ "igs_a05603w064.bin",			0x0800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
-	{ "igs_a05604w032.bin",			0x0400000, 0x9452a567, 3 | BRF_GRA },			//  5
+	{ "igs_a05601w064.u3",			0x0800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "igs_a05602w064.u4",			0x0800000, 0x6d00621b, 3 | BRF_GRA },			//  3
+	{ "igs_a05603w064.u6",			0x0800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
+	{ "igs_a05604w032.u8",			0x0400000, 0x9452a567, 3 | BRF_GRA },			//  5
 
-	{ "igs_b05601w064.bin",			0x0800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05602w064.bin",			0x0800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
+	{ "igs_b05601w064.u9",			0x0800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05602w064.u11",			0x0800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
 
-	{ "igs_w05601b064.bin",			0x0800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
-	{ "igs_w05602b032.bin",			0x0400000, 0x0685166d, 5 | BRF_SND },			//  9
+	{ "igs_w05601b064.u5",			0x0800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05602b032.u7",			0x0400000, 0x0685166d, 5 | BRF_SND },			//  9
 
 //	{ "svg_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_execute_only_area", 	0x0000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_v200_china.bin", 	0x0003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
-	{ "u26.bin",					0x0400000, 0x46826ec8, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
-	{ "u29.bin",					0x0400000, 0xfa5f3901, 8 | BRF_PRG | BRF_ESS },	// 13
+    // eproms with no labels stickers
+	{ "epr.u26",					0x0400000, 0x46826ec8, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
+	{ "epr.u36",					0x0400000, 0xfa5f3901, 8 | BRF_PRG | BRF_ESS },	// 13
 };
 
 STDROMPICKEXT(svg, svg, pgm)
@@ -5218,18 +5132,18 @@ struct BurnDriver BurnDrvSvg = {
 static struct BurnRomInfo svgtwRomDesc[] = {
 	{ "v101tw_u30.u30",				0x0080000, 0x8d0405e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "igs_t05601w016.bin",			0x0200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
+	{ "igs_t05601w016.u29",			0x0200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "igs_a05601w064.bin",			0x0800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "igs_a05602w064.bin",			0x0800000, 0x6d00621b, 3 | BRF_GRA },			//  3
-	{ "igs_a05603w064.bin",			0x0800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
-	{ "igs_a05604w032.bin",			0x0400000, 0x9452a567, 3 | BRF_GRA },			//  5
+	{ "igs_a05601w064.u3",			0x0800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "igs_a05602w064.u4",			0x0800000, 0x6d00621b, 3 | BRF_GRA },			//  3
+	{ "igs_a05603w064.u6",			0x0800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
+	{ "igs_a05604w032.u8",			0x0400000, 0x9452a567, 3 | BRF_GRA },			//  5
 
-	{ "igs_b05601w064.bin",			0x0800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05602w064.bin",			0x0800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
+	{ "igs_b05601w064.u9",			0x0800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05602w064.u11",			0x0800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
 
-	{ "igs_w05601b064.bin",			0x0800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
-	{ "igs_w05602b032.bin",			0x0400000, 0x0685166d, 5 | BRF_SND },			//  9
+	{ "igs_w05601b064.u5",			0x0800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05602b032.u7",			0x0400000, 0x0685166d, 5 | BRF_SND },			//  9
 
 //	{ "svg_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svgpcb_igs027a_execute_only_area", 	0x0000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom

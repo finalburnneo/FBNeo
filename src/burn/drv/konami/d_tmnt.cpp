@@ -4998,6 +4998,8 @@ static INT32 BlswhstlInit()
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.50, BURN_SND_ROUTE_LEFT);
 
 	EEPROMInit(&BlswhstlEEPROMInterface);
+
+	NoDim = 1;
 	
 	// Reset the driver
 	BlswhstlDoReset();

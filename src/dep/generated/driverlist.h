@@ -699,6 +699,7 @@ DRV		BurnDrvAstrofl;
 DRV		BurnDrvsms_astrofl;
 DRV		BurnDrvsms_astrofl1;
 DRV		BurnDrvsms_astforce;
+DRV		BurnDrvcv_astroinv;
 DRV		BurnDrvMSX_amc;
 DRV		BurnDrvMSX_astroplm;
 DRV		BurnDrvnes_astrorobosasa;
@@ -2061,6 +2062,7 @@ DRV		BurnDrvmd_chikij;
 DRV		BurnDrvnes_chikichimacmoura;
 DRV		BurnDrvpce_chikuden1;
 DRV		BurnDrvpce_chikuden;
+DRV		BurnDrvcv_cotn;
 DRV		BurnDrvMSX_chiller;
 DRV		BurnDrvnes_chiller;
 DRV		BurnDrvChimerab;
@@ -2841,7 +2843,7 @@ DRV		BurnDrvmd_demomanp;
 DRV		BurnDrvMSX_demoncrystl;
 DRV		BurnDrvnes_demondistrict;
 DRV		BurnDrvdmnfrnta;
-DRV		BurnDrvdmnfrntb;
+DRV		BurnDrvdmnfrnt103;
 DRV		BurnDrvDmnfrnt;
 DRV		BurnDrvDmnfrntpcba;
 DRV		BurnDrvDmnfrntpcb;
@@ -3337,8 +3339,8 @@ DRV		BurnDrvDwex101cn;		// no comment [NOT WORKING]
 DRV		BurnDrvDrgw2100hk;
 DRV		BurnDrvDrgw2100x;
 DRV		BurnDrvDrgw2;
+DRV		BurnDrvdwpc101;
 DRV		BurnDrvdwpc;
-DRV		BurnDrvdwpc110cn;
 DRV		BurnDrvtg_dragcrse;
 DRV		BurnDrvmd_shangh3;
 DRV		BurnDrvmd_dfury;
@@ -6898,6 +6900,7 @@ DRV		BurnDrvmd_mario3;
 DRV		BurnDrvmd_mario4;
 DRV		BurnDrvmd_andretti;
 DRV		BurnSpecmaribros;
+DRV		BurnDrvcv_mario;
 DRV		BurnDrvMarioj;
 DRV		BurnDrvMarioe;
 DRV		BurnDrvMariof;
@@ -6926,10 +6929,9 @@ DRV		BurnDrvMtlchamp;
 DRV		BurnDrvMtlchampj;
 DRV		BurnDrvMtlchampu1;
 DRV		BurnDrvMtlchampu;
-DRV		BurnDrvmartmastc102;
+DRV		BurnDrvmartmast102;
 DRV		BurnDrvmartmasttw;
-DRV		BurnDrvmartmastc103;
-DRV		BurnDrvmartmastc;
+DRV		BurnDrvmartmast103;
 DRV		BurnDrvMartmast;
 DRV		BurnDrvMSX_martianoids;
 DRV		BurnDrvMarvlandj;
@@ -8757,7 +8759,7 @@ DRV		BurnDrvPhoenixt;
 DRV		BurnDrvPhoenxp2;
 DRV		BurnDrvPhotof;
 DRV		BurnDrvphotoy2k102;
-DRV		BurnDrvphotoy2k103j;
+DRV		BurnDrvphotoy2k103;
 DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
 DRV		BurnDrvPgm3in1c100;
@@ -10194,6 +10196,7 @@ DRV		BurnDrvMSX_searchformum;
 DRV		BurnDrvSecretagj;
 DRV		BurnDrvSecretag;
 DRV		BurnDrvsms_secret;
+DRV		BurnDrvcv_moai;
 DRV		BurnDrvnes_secretties;
 DRV		BurnDrvSectionz;
 DRV		BurnDrvSctionza;
@@ -11133,6 +11136,7 @@ DRV		BurnDrvStarforca;
 DRV		BurnDrvMSX_starfrce;
 DRV		BurnDrvsg1k_starfrce;
 DRV		BurnDrvMSX_starfrcea;
+DRV		BurnDrvcv_starforce;
 DRV		BurnDrvsg1k_starfrcet;
 DRV		BurnDrvsg1k_starfrceta;
 DRV		BurnDrvnes_starforce;
@@ -11226,6 +11230,7 @@ DRV		BurnDrvmd_renstimup;
 DRV		BurnDrvStinger2;
 DRV		BurnDrvnes_stinger;
 DRV		BurnDrvStinger;
+DRV		BurnDrvcv_stonew;
 DRV		BurnDrvmd_stonprot;
 DRV		BurnDrvStoneage;
 DRV		BurnDrvMSX_bousousos;
@@ -13948,6 +13953,7 @@ DRV		BurnDrvWizdfire;
 DRV		BurnDrvWizdfireu;
 DRV		BurnDrvcv_wizmath;
 DRV		BurnDrvmd_immortalj;
+DRV		BurnDrvcv_wow;
 DRV		BurnDrvgg_wizard;
 DRV		BurnDrvMSX_wizlair;
 DRV		BurnDrvnes_wizarwar;
@@ -15305,6 +15311,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_astrofl,		// Astro Flash (Jpn, MyCard)
 	&BurnDrvsms_astrofl1,		// Astro Flash (Jpn, Pirate)
 	&BurnDrvsms_astforce,		// Astro Force (HB, v1.03)
+	&BurnDrvcv_astroinv,		// Astro Invader (HB)
 	&BurnDrvMSX_amc,			// Astro Marine Corps (Spa)
 	&BurnDrvMSX_astroplm,		// Astro Plumber (Euro)
 	&BurnDrvnes_astrorobosasa,	// Astro Robo Sasa (Japan)
@@ -16667,6 +16674,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_chikichimacmoura,// Chiki Chiki Machine Mou Race (Japan)
 	&BurnDrvpce_chikuden1,		// Chikudenya Toubei - Kubikiri Yakata Yori (Alt)
 	&BurnDrvpce_chikuden,		// Chikudenya Toubei - Kubikiri Yakata Yori
+	&BurnDrvcv_cotn,			// Children of the Night (HB)
 	&BurnDrvMSX_chiller,		// Chiller (Euro)
 	&BurnDrvnes_chiller,		// Chiller (USA)
 	&BurnDrvChimerab,			// Chimera Beast (prototype)
@@ -17447,7 +17455,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_demoncrystl,	// Demon Crystal, The
 	&BurnDrvnes_demondistrict,	// Demon District (HB)
 	&BurnDrvdmnfrnta,			// Demon Front (VM102XX, S101XX)
-	&BurnDrvdmnfrntb,			// Demon Front (VM103XX, S103XX)
+	&BurnDrvdmnfrnt103,			// Demon Front (VM103XX, S103XX)
 	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
 	&BurnDrvDmnfrntpcba,		// Demon Front (VM105XX, S105XX, China, Single PCB Version)
 	&BurnDrvDmnfrntpcb,			// Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)
@@ -17943,8 +17951,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgw2100hk,			// Dragon World II (V100, Hong Kong)
 	&BurnDrvDrgw2100x,			// Dragon World II (V100X, World)
 	&BurnDrvDrgw2,				// Dragon World II (V110X, World)
-	&BurnDrvdwpc,				// Dragon World Pretty Chance (V101, Japan)
-	&BurnDrvdwpc110cn,			// Dragon World Pretty Chance (V110, China)
+	&BurnDrvdwpc101,			// Dragon World Pretty Chance (V101, Japan)
+	&BurnDrvdwpc,				// Dragon World Pretty Chance (V110, China)
 	&BurnDrvtg_dragcrse,		// Dragon's Curse
 	&BurnDrvmd_shangh3,			// Dragon's Eye Plus - Shanghai III (Jpn)
 	&BurnDrvmd_dfury,			// Dragon's Fury (Euro, USA)
@@ -21504,6 +21512,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mario4,			// Mario 4 - Kosmicheskaya Odissyeya (Rus)
 	&BurnDrvmd_andretti,		// Mario Andretti Racing (Euro, USA)
 	&BurnSpecmaribros,			// Mario Bros (48K)
+	&BurnDrvcv_mario,			// Mario Bros. (HB)
 	&BurnDrvMarioj,				// Mario Bros. (Japan)
 	&BurnDrvMarioe,				// Mario Bros. (US, Revision E)
 	&BurnDrvMariof,				// Mario Bros. (US, Revision F)
@@ -21532,10 +21541,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMtlchampj,			// Martial Champion (ver JAA)
 	&BurnDrvMtlchampu1,			// Martial Champion (ver UAD)
 	&BurnDrvMtlchampu,			// Martial Champion (ver UAE)
-	&BurnDrvmartmastc102,		// Martial Masters (V102, 101, 101, China)
+	&BurnDrvmartmast102,		// Martial Masters (V102, 101, 101, China)
 	&BurnDrvmartmasttw,			// Martial Masters (V102, 101, 101, Taiwan)
-	&BurnDrvmartmastc103,		// Martial Masters (V103, 102, 101, China)
-	&BurnDrvmartmastc,			// Martial Masters (V104, 102, 101, China)
+	&BurnDrvmartmast103,		// Martial Masters (V103, 102, 101, China)
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
 	&BurnDrvMarvlandj,			// Marvel Land (Japan)
@@ -23363,7 +23371,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPhoenxp2,			// Phoenix Part 2
 	&BurnDrvPhotof,				// Photo Finish (bootleg?)
 	&BurnDrvphotoy2k102,		// Photo Y2K / Real and Fake (V102, Japan)
-	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
+	&BurnDrvphotoy2k103,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105, China)
 	&BurnDrvPgm3in1c100,		// Photo Y2K 2 (3-in-1, V100, China) [Sound issues, video issues, NOT WORKING]
@@ -24800,6 +24808,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSecretagj,			// Secret Agent (Japan revision 2)
 	&BurnDrvSecretag,			// Secret Agent (World revision 3)
 	&BurnDrvsms_secret,			// Secret Command (Euro)
+	&BurnDrvcv_moai,			// Secret of Moai (HB)
 	&BurnDrvnes_secretties,		// Secret Ties (USA) (Proto)
 	&BurnDrvSectionz,			// Section Z (set 1)
 	&BurnDrvSctionza,			// Section Z (set 2)
@@ -25739,6 +25748,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_starfrce,		// Star Force (Jpn)
 	&BurnDrvsg1k_starfrce,		// Star Force (Jpn)
 	&BurnDrvMSX_starfrcea,		// Star Force (Jpn, Alt)
+	&BurnDrvcv_starforce,		// Star Force (SGM)
 	&BurnDrvsg1k_starfrcet,		// Star Force (Tw)
 	&BurnDrvsg1k_starfrceta,	// Star Force (Tw, Alt)
 	&BurnDrvnes_starforce,		// Star Force (USA)
@@ -25832,6 +25842,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStinger2,			// Stinger (prototype?)
 	&BurnDrvnes_stinger,		// Stinger (USA)
 	&BurnDrvStinger,			// Stinger
+	&BurnDrvcv_stonew,			// Stone of Wisdom (HB)
 	&BurnDrvmd_stonprot,		// Stone Protectors (USA, Prototype)
 	&BurnDrvStoneage,			// Stoneage (bootleg of Caveman Ninja)
 	&BurnDrvMSX_bousousos,		// Stop the Express. Bousou Tokkyuu SOS (Jpn)
@@ -28554,6 +28565,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWizdfireu,			// Wizard Fire (US v1.1)
 	&BurnDrvcv_wizmath,			// Wizard of Id's Wizmath
 	&BurnDrvmd_immortalj,		// Wizard of the Immortal (Jpn)
+	&BurnDrvcv_wow,				// Wizard of Wor (HB)
 	&BurnDrvgg_wizard,			// Wizard Pinball (Euro)
 	&BurnDrvMSX_wizlair,		// Wizard's Lair (Euro)
 	&BurnDrvnes_wizarwar,		// Wizards & Warriors (USA)

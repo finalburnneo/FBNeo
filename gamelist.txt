@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14339 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14345 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -691,6 +691,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_astrofl	|  	| Astro Flash (Jpn, MyCard)				| sms_transbot	| 1985	| Sega		| Sega Master Sy| 					|
 | sms_astrofl1	|  	| Astro Flash (Jpn, Pirate)				| sms_transbot	| 1985	| pirate	| Sega Master Sy| 					|
 | sms_astforce	|  	| Astro Force (HB, v1.03)				| 		| 2017	| MikGames	| Sega Master Sy| 					|
+| cv_astroinv	|  	| Astro Invader (HB)					| 		| 2005	| Scott Huggins | ColecoVision	| 					|
 | msx_amc	|  	| Astro Marine Corps (Spa)				| 		| 1989	| Dinamic Softwa| MSX		| Uses joyport #2. Press 'M' for Grenade|
 | msx_astroplm	|  	| Astro Plumber (Euro)					| 		| 1986	| Blue Ribbon So| MSX		| 					|
 | nes_astrorobosasa|  	| Astro Robo Sasa (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
@@ -2029,6 +2030,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_chikichimacmoura|  	| Chiki Chiki Machine Mou Race (Japan)			| nes_wackyraces| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_chikuden1	|  	| Chikudenya Toubei - Kubikiri Yakata Yori (Alt)	| pce_chikuden	| 1990	| Naxat		| PC Engine	| 					|
 | pce_chikuden	|  	| Chikudenya Toubei - Kubikiri Yakata Yori		| 		| 1990	| Naxat		| PC Engine	| 					|
+| cv_cotn	|  	| Children of the Night (HB)				| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
 | msx_chiller	|  	| Chiller (Euro)					| 		| 1985	| Mastertronic	| MSX		| 					|
 | nes_chiller	|  	| Chiller (USA)						| 		| 1990	| AGCI		| Miscellaneous	| 					|
 | chimerab	|  	| Chimera Beast (prototype)				| 		| 1993	| Jaleco	| Mega System 1	| 					|
@@ -2796,8 +2798,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_demomanp	|   NW	| Demolition Man (USA, Prototype)			| md_demoman	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | msx_demoncrystl|  	| Demon Crystal, The					| 		| 1986	| Radio Wave New| MSX		| 					|
 | nes_demondistrict|  	| Demon District (HB)					| 		| 2019	| Klonoa	| Miscellaneous	| 					|
-| dmnfrnta	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrntb	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt102	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt103	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcb	|  	| Demon Front (VM107KR, S106KR, S101KR, Korea, Single PC| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
@@ -3275,8 +3277,8 @@ This list contains all games supported by FinalBurn Neo.
 | drgw2100hk	|  	| Dragon World II (V100, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2		|  	| Dragon World II (V110X, World)			| 		| 1997	| IGS		| PolyGameMaster| 					|
-| dwpc		|  	| Dragon World Pretty Chance (V101, Japan)		| 		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
-| dwpc110cn	|  	| Dragon World Pretty Chance (V110, China)		| dwpc		| 2001	| IGS		| PolyGameMaster| Bad sound?				|
+| dwpc101	|  	| Dragon World Pretty Chance (V101, Japan)		| dwpc		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
+| dwpc		|  	| Dragon World Pretty Chance (V110, China)		| 		| 2001	| IGS		| PolyGameMaster| Bad sound?				|
 | tg_dragcrse	|  	| Dragon's Curse					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_shangh3	|  	| Dragon's Eye Plus - Shanghai III (Jpn)		| 		| 1991	| Home Data	| Sega Megadrive| 					|
 | md_dfury	|  	| Dragon's Fury (Euro, USA)				| 		| 1992	| Tengen	| Sega Megadrive| 					|
@@ -6778,6 +6780,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mario4	|  	| Mario 4 - Kosmicheskaya Odissyeya (Rus)		| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_andretti	|  	| Mario Andretti Racing (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | spec_maribros	|  	| Mario Bros (48K)					| 		| 1987	| Ocean		| ZX Spectrum	| 					|
+| cv_mario	|  	| Mario Bros. (HB)					| 		| 2008	| CollectorVisio| ColecoVision	| 					|
 | marioj	|  	| Mario Bros. (Japan)					| mario		| 1983	| Nintendo	| Miscellaneous	| 					|
 | marioe	|  	| Mario Bros. (US, Revision E)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | mariof	|  	| Mario Bros. (US, Revision F)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
@@ -6806,10 +6809,9 @@ This list contains all games supported by FinalBurn Neo.
 | mtlchampj	|  	| Martial Champion (ver JAA)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu1	|  	| Martial Champion (ver UAD)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu	|  	| Martial Champion (ver UAE)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
-| martmastc102	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmast102	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmasttw	|  	| Martial Masters (V102, 101, 101, Taiwan)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
-| martmastc103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
-| martmastc	|  	| Martial Masters (V104, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmast103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
 | msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
 | marvlandj	|  	| Marvel Land (Japan)					| marvland	| 1989	| Namco		| System 2	| 					|
@@ -8603,7 +8605,7 @@ This list contains all games supported by FinalBurn Neo.
 | phoenxp2	|  	| Phoenix Part 2					| phoenix	| 1981	| bootleg	| Galaxian	| 					|
 | photof	|  	| Photo Finish (bootleg?)				| wwjgtin	| 1991	| Jaleco / Casio| Miscellaneous	| 					|
 | photoy2k102	|  	| Photo Y2K / Real and Fake (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
-| photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k103	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105, China)		| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1c100	|   NW	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
@@ -10016,6 +10018,7 @@ This list contains all games supported by FinalBurn Neo.
 | secretagj	|  	| Secret Agent (Japan revision 2)			| secretag	| 1989	| Data East Corp| DEC0		| 					|
 | secretag	|  	| Secret Agent (World revision 3)			| 		| 1989	| Data East Corp| DEC0		| 					|
 | sms_secret	|  	| Secret Command (Euro)					| 		| 1986	| Sega		| Sega Master Sy| 					|
+| cv_moai	|  	| Secret of Moai (HB)					| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
 | nes_secretties|  	| Secret Ties (USA) (Proto)				| 		| 0000	| Vic Tokai	| Miscellaneous	| 					|
 | sectionz	|  	| Section Z (set 1)					| 		| 1985	| Capcom	| Miscellaneous	| 					|
 | sectionza	|  	| Section Z (set 2)					| sectionz	| 1985	| Capcom	| Miscellaneous	| 					|
@@ -10943,6 +10946,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_starfrce	|  	| Star Force (Jpn)					| 		| 1985	| Hudson Soft	| MSX		| 					|
 | sg1k_starfrce	|  	| Star Force (Jpn)					| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_starfrcea	|  	| Star Force (Jpn, Alt)					| msx_starfrce	| 1985	| Hudson Soft	| MSX		| 					|
+| cv_starforce	|  	| Star Force (SGM)					| 		| 2011	| Team Pixelboy	| ColecoVision	| 					|
 | sg1k_starfrcet|  	| Star Force (Tw)					| sg1k_starfrce	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | sg1k_starfrceta|  	| Star Force (Tw, Alt)					| sg1k_starfrce	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | nes_starforce	|  	| Star Force (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
@@ -11034,6 +11038,7 @@ This list contains all games supported by FinalBurn Neo.
 | stinger2	|  	| Stinger (prototype?)					| stinger	| 1983	| Seibu Denshi	| Miscellaneous	| 					|
 | nes_stinger	|  	| Stinger (USA)						| nes_moerotwi	| 1987	| Konami	| Miscellaneous	| 					|
 | stinger	|  	| Stinger						| 		| 1983	| Seibu Denshi	| Miscellaneous	| 					|
+| cv_stonew	|  	| Stone of Wisdom (HB)					| 		| 2015	| Team Pixelboy	| ColecoVision	| 					|
 | md_stonprot	|  	| Stone Protectors (USA, Prototype)			| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
 | stoneage	|  	| Stoneage (bootleg of Caveman Ninja)			| cninja	| 1991	| bootleg	| DECO IC16	| 					|
 | msx_bousousos	|  	| Stop the Express. Bousou Tokkyuu SOS (Jpn)		| 		| 1985	| Hudson Soft	| MSX		| 					|
@@ -13706,6 +13711,7 @@ This list contains all games supported by FinalBurn Neo.
 | wizdfireu	|  	| Wizard Fire (US v1.1)					| wizdfire	| 1992	| Data East Corp| DECO IC16	| 					|
 | cv_wizmath	|  	| Wizard of Id's Wizmath				| 		| 1984	| Sierra On-Line| ColecoVision	| 					|
 | md_immortalj	|  	| Wizard of the Immortal (Jpn)				| md_immortal	| 1993	| Electronic Art| Sega Megadrive| 					|
+| cv_wow	|  	| Wizard of Wor (HB)					| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
 | gg_wizard	|  	| Wizard Pinball (Euro)					| 		| 1995	| Domark	| Sega Game Gear| 					|
 | msx_wizlair	|  	| Wizard's Lair (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
 | nes_wizarwar	|  	| Wizards & Warriors (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|

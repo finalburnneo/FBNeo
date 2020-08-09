@@ -443,14 +443,14 @@ static void f3_palette_landmakr_onreset()
 		UINT8 g = ((i & 2) ? 0xff : 0);
 		UINT8 b = ((i & 4) ? 0xff : 0);
 
-		*((UINT32*)(TaitoPaletteRam + (i * 4))) =  r | (g << 24) | (b << 16);
+		*((UINT32*)(TaitoPaletteRam + (i * 4))) =  BURN_ENDIAN_SWAP_INT32(r | (g << 24) | (b << 16));
 	}
 }
 
 static void __fastcall f3_palette_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xff8000) == 0x440000) {
-		*((UINT32*)(TaitoPaletteRam + (a & 0x7ffc))) = (d << 16) | (d >> 16);
+		*((UINT32*)(TaitoPaletteRam + (a & 0x7ffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		pPaletteUpdateCallback(a);
 		return;
 	}
@@ -459,7 +459,7 @@ static void __fastcall f3_palette_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_palette_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xff8000) == 0x440000) {
-		*((UINT16*)(TaitoPaletteRam + (a & 0x7ffe))) = d;
+		*((UINT16*)(TaitoPaletteRam + (a & 0x7ffe))) = BURN_ENDIAN_SWAP_INT16(d);
 		pPaletteUpdateCallback(a);
 		return;
 	}
@@ -505,13 +505,13 @@ static void DrvPivotExpand(UINT16 offset)
 static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT32*)(TaitoVideoRam + (a & 0x1fff))) = (d << 16) | (d >> 16);
+		*((UINT32*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT32*)(DrvVRAMRAM + (a & 0x1fff))) = (d << 16) | (d >> 16);
+		*((UINT32*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -520,13 +520,13 @@ static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT16*)(TaitoVideoRam + (a & 0x1fff))) = d;
+		*((UINT16*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT16*)(DrvVRAMRAM + (a & 0x1fff))) = d;
+		*((UINT16*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -550,7 +550,7 @@ static void __fastcall f3_VRAM_write_byte(UINT32 a, UINT8 d)
 static void __fastcall f3_pivot_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xff0000) == 0x630000) {
-		*((UINT32*)(DrvPivotRAM + (a & 0xffff))) = (d << 16) | (d >> 16);
+		*((UINT32*)(DrvPivotRAM + (a & 0xffff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		DrvPivotExpand(a);
 		dirty_tile_count[9] = 1;
 		return;
@@ -560,7 +560,7 @@ static void __fastcall f3_pivot_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_pivot_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xff0000) == 0x630000) {
-		*((UINT16*)(DrvPivotRAM + (a & 0xffff))) = d;
+		*((UINT16*)(DrvPivotRAM + (a & 0xffff))) = BURN_ENDIAN_SWAP_INT16(d);
 		DrvPivotExpand(a);
 		dirty_tile_count[9] = 1;
 		return;
@@ -582,8 +582,8 @@ static void __fastcall f3_playfield_write_long(UINT32 a, UINT32 d)
 	if ((a & 0xff8000) == 0x610000) {
 		UINT32 *ram = (UINT32*)(TaitoF3PfRAM + (a & 0x7fff));
 
-		if (ram[0] != ((d << 16) | (d >> 16))) {
-			ram[0] = (d << 16) | (d >> 16);
+		if (BURN_ENDIAN_SWAP_INT32(ram[0]) != ((d << 16) | (d >> 16))) {
+			ram[0] = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 			dirty_tiles[(a & 0x7ffc)/4] = 1;
 			dirty_tile_count[((a & 0x7000)/0x1000)] = 1;
 		}
@@ -596,8 +596,8 @@ static void __fastcall f3_playfield_write_word(UINT32 a, UINT16 d)
 	if ((a & 0xff8000) == 0x610000) {
 		UINT16 *ram = (UINT16*)(TaitoF3PfRAM + (a & 0x7fff));
 
-		if (ram[0] != d) {
-			ram[0] = d;
+		if (BURN_ENDIAN_SWAP_INT16(ram[0]) != d) {
+			ram[0] = BURN_ENDIAN_SWAP_INT16(d);
 			dirty_tiles[(a & 0x7ffc)/4] = 1;
 			dirty_tile_count[((a & 0x7000)/0x1000)] = 1;
 		}
@@ -622,7 +622,7 @@ static UINT32 speedhack_address;
 static void __fastcall f3_speedhack_write_long(UINT32 a, UINT32 d)
 {
 	a &= 0x1fffe;
-	*((UINT32*)(Taito68KRam1 + a)) = (d << 16) | (d >> 16);
+	*((UINT32*)(Taito68KRam1 + a)) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 	if (a == (speedhack_address & ~3)) {
 	//	SekIdle(100);
 		SekRunEnd(); // kill until next loop
@@ -632,7 +632,7 @@ static void __fastcall f3_speedhack_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_speedhack_write_word(UINT32 a, UINT16 d)
 {
 	a &= 0x1fffe;
-	*((UINT16*)(Taito68KRam1 + (a & 0x1fffe))) = d;
+	*((UINT16*)(Taito68KRam1 + (a & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(d);
 	if (a == speedhack_address) {
 	//	SekIdle(100);
 		SekRunEnd(); // kill until next loop
@@ -1375,18 +1375,18 @@ static INT32 DrvExit()
 
 static void f3_12bit_palette_update(UINT16 offset)
 {
-	UINT32 x = *((UINT32*)(TaitoPaletteRam + (offset & ~3)));
+	UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(TaitoPaletteRam + (offset & ~3))));
 
 	UINT8 r = ((x >> 28) & 0x0f) * 0x0f;
 	UINT8 g = ((x >> 24) & 0x0f) * 0x0f;
 	UINT8 b = ((x >> 20) & 0x0f) * 0x0f;
 
-	TaitoPalette[offset/4] = r*0x10000+g*0x100+b; //BurnHighCol(r,g,b, 0);
+	TaitoPalette[offset/4] = BURN_ENDIAN_SWAP_INT32(r*0x10000+g*0x100+b); //BurnHighCol(r,g,b, 0);
 }
 
 static void f3_21bit_typeA_palette_update(UINT16 offset)
 {
-	UINT32 x = *((UINT32*)(TaitoPaletteRam + (offset & ~3)));
+	UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(TaitoPaletteRam + (offset & ~3))));
 
 	UINT8 r = x;
 	UINT8 g = x >> 24;
@@ -1398,12 +1398,12 @@ static void f3_21bit_typeA_palette_update(UINT16 offset)
 		b <<= 1;
 	}
 
-	TaitoPalette[offset/4] = r*0x10000+g*0x100+b;
+	TaitoPalette[offset/4] = BURN_ENDIAN_SWAP_INT32(r*0x10000+g*0x100+b);
 }
 
 static void f3_21bit_typeB_palette_update(UINT16 offset)
 {
-	UINT32 x = *((UINT32*)(TaitoPaletteRam + (offset & ~3)));
+	UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(TaitoPaletteRam + (offset & ~3))));
 
 	UINT8 r = x;
 	UINT8 g = x >> 24;
@@ -1415,18 +1415,18 @@ static void f3_21bit_typeB_palette_update(UINT16 offset)
 		b <<= 1;
 	}
 
-	TaitoPalette[offset/4] = r*0x10000+g*0x100+b; //BurnHighCol(r,g,b, 0);
+	TaitoPalette[offset/4] = BURN_ENDIAN_SWAP_INT32(r*0x10000+g*0x100+b); //BurnHighCol(r,g,b, 0);
 }
 
 static void f3_24bit_palette_update(UINT16 offset)
 {
-	UINT32 x = *((UINT32*)(TaitoPaletteRam + (offset & ~3)));
+	UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(TaitoPaletteRam + (offset & ~3))));
 
 	UINT8 r = x;
 	UINT8 g = x >> 24;
 	UINT8 b = x >> 16;
 
-	TaitoPalette[offset/4] = r*0x10000+g*0x100+b; //BurnHighCol(r,g,b, 0);
+	TaitoPalette[offset/4] = BURN_ENDIAN_SWAP_INT32(r*0x10000+g*0x100+b); //BurnHighCol(r,g,b, 0);
 }
 
 static INT32 DrvDraw224A_Flipped() // 224A, w/ flipscreen
@@ -2750,8 +2750,8 @@ static INT32 scfinalsCallback()
 {
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	ROM[0x5af0/4] = 0x4e754e71;
-	ROM[0xdd0/4] = 0x4e714e75;
+	ROM[0x5af0/4] = BURN_ENDIAN_SWAP_INT32(0x4e754e71);
+	ROM[0xdd0/4] = BURN_ENDIAN_SWAP_INT32(0x4e714e75);
 
 	supercupkludge = 1;
 
@@ -4642,8 +4642,8 @@ static INT32 pbobble23OCallback()
 {
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	ROM[0x40090/4] = 0x4e71815c;
-	ROM[0x40094/4] = 0x4e714e71;
+	ROM[0x40090/4] = BURN_ENDIAN_SWAP_INT32(0x4e71815c);
+	ROM[0x40094/4] = BURN_ENDIAN_SWAP_INT32(0x4e714e71);
 
 	return 0;
 }
@@ -6020,8 +6020,8 @@ static INT32 landmakrpRomCallback()
 {
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	ROM[0x1ffff8 / 4] = 0xffffffff;
-	ROM[0x1ffffc / 4] = 0x0003ffff;
+	ROM[0x1ffff8 / 4] = BURN_ENDIAN_SWAP_INT32(0xffffffff);
+	ROM[0x1ffffc / 4] = BURN_ENDIAN_SWAP_INT32(0x0003ffff);
 
 	return 0;
 }

@@ -392,10 +392,10 @@ void K053250Draw(INT32 , int colorbase, int /*flags*/, int priority)
 	{
 		linedata_offs &= 0x7ff;                     // line info data wraps at the four-kilobyte boundary
 
-		color  = line_ram[linedata_offs];           // get scanline color code
+		color  = BURN_ENDIAN_SWAP_INT16(line_ram[linedata_offs]);           // get scanline color code
 		if (color == 0xffff) continue;              // reject scanline if color code equals minus one
 
-		offset   = line_ram[linedata_offs + 1];     // get first pixel offset in ROM
+		offset   = BURN_ENDIAN_SWAP_INT16(line_ram[linedata_offs + 1]);     // get first pixel offset in ROM
 		if (!(color & 0xff) && !offset) continue;   // reject scanline if both color and pixel offset are 0
 
 		// calculate physical palette location
@@ -410,9 +410,9 @@ void K053250Draw(INT32 , int colorbase, int /*flags*/, int priority)
 		// For example, 0x20 doubles the length, 0x40 maintains a one-to-one length,
 		// and 0x80 halves the length. The zoom center is at the beginning of the
 		// scanline therefore it is not necessary to adjust render start position
-		zoom    = line_ram[linedata_offs + 2];
+		zoom    = BURN_ENDIAN_SWAP_INT16(line_ram[linedata_offs + 2]);
 
-		scroll  = (short)line_ram[linedata_offs + 3];   // get signed local scroll value for the current scanline
+		scroll  = (short)BURN_ENDIAN_SWAP_INT16(line_ram[linedata_offs + 3]);   // get signed local scroll value for the current scanline
 
 		// scavenged from old code; improves Xexex' first level sky
 		if (wrap500 && scroll >= 0x500) scroll -= 0x800;

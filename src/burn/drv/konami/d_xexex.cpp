@@ -103,7 +103,7 @@ static void xexex_objdma()
 
 	do
 	{
-		if (*src & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(*src) & 0x8000)
 		{
 			dst[0] = src[0x0];  dst[1] = src[0x2];
 			dst[2] = src[0x4];  dst[3] = src[0x6];
@@ -638,7 +638,7 @@ static void DrvPaletteRecalc()
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x2000/2; i+=2) {
-		DrvPalette[i/2] = ((pal[i+0] & 0xff) << 16) + pal[i+1];
+		DrvPalette[i/2] = ((BURN_ENDIAN_SWAP_INT16(pal[i+0]) & 0xff) << 16) + BURN_ENDIAN_SWAP_INT16(pal[i+1]);
 	}
 }
 

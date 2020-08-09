@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14345 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14344 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6810,7 +6810,6 @@ This list contains all games supported by FinalBurn Neo.
 | mtlchampu1	|  	| Martial Champion (ver UAD)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu	|  	| Martial Champion (ver UAE)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | martmast102	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
-| martmasttw	|  	| Martial Masters (V102, 101, 101, Taiwan)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
 | msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
@@ -9900,7 +9899,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofsjb	|  	| Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set | wof		| 1992	| bootleg	| CPS1		| No sound				|
 | wofsjc	|  	| Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set | wof		| 1992	| bootleg	| CPS1		| Imperfect graphics			|
 | md_sangoku3	|  	| Sangokushi III (Jpn)					| md_roman3k3	| 1992	| Koei		| Sega Megadrive| 					|
-| wofchdx	|  	| Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)	| wofch		| 2010	| Capcom	| CPS Changer	| 					|
+| wofchdx	|  	| Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)	| wofch		| 2018	| Hack		| CPS Changer	| 					|
 | md_sangoret	|  	| Sangokushi Retsuden - Ransei no Eiyuutachi (Jpn)	| 		| 1991	| Sega		| Sega Megadrive| 					|
 | 3kokushi	|  	| Sankokushi (Japan)					| 		| 1996	| Mitchell	| Miscellaneous	| Graphics corruption on score/bonus scr|
 | ssanchan	|  	| Sanrin San Chan (Japan)				| spatter	| 1984	| Sega		| System 1	| 					|

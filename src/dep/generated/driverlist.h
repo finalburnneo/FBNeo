@@ -6930,7 +6930,6 @@ DRV		BurnDrvMtlchampj;
 DRV		BurnDrvMtlchampu1;
 DRV		BurnDrvMtlchampu;
 DRV		BurnDrvmartmast102;
-DRV		BurnDrvmartmasttw;
 DRV		BurnDrvmartmast103;
 DRV		BurnDrvMartmast;
 DRV		BurnDrvMSX_martianoids;
@@ -21542,7 +21541,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMtlchampu1,			// Martial Champion (ver UAD)
 	&BurnDrvMtlchampu,			// Martial Champion (ver UAE)
 	&BurnDrvmartmast102,		// Martial Masters (V102, 101, 101, China)
-	&BurnDrvmartmasttw,			// Martial Masters (V102, 101, 101, Taiwan)
 	&BurnDrvmartmast103,		// Martial Masters (V103, 102, 101, China)
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)

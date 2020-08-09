@@ -1527,21 +1527,51 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P2 Fire 5"        , BIT_DIGITAL  , CpsInp018+1, "p2 fire 5" },
  	{"P2 Fire 6"        , BIT_DIGITAL  , CpsInp018+7, "p2 fire 6" },
 
-#if 0
-	// wofch only 2p?
- 	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+};
+
+STDINPUTINFO(Wofch)
+
+static struct BurnInputInfo WofchpInputList[] =
+{
+	{"P1 Pause"         , BIT_DIGITAL  , CpsInp018+2, "p1 coin"   },  // Pressing with the Start key will enter config
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },  // Adjustable in config (6 keys)
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+ 	{"P1 Fire 4"        , BIT_DIGITAL  , CpsInp001+7, "p1 fire 4" },
+ 	{"P1 Fire 5"        , BIT_DIGITAL  , CpsInp018+0, "p1 fire 5" },
+ 	{"P1 Fire 6"        , BIT_DIGITAL  , CpsInp018+6, "p1 fire 6" },
+
+	{"P2 Pause"         , BIT_DIGITAL  , CpsInp018+3, "p2 coin"   },
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },  // Adjustable in config (6 keys)
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+ 	{"P2 Fire 4"        , BIT_DIGITAL  , CpsInp000+7, "p2 fire 4" },
+ 	{"P2 Fire 5"        , BIT_DIGITAL  , CpsInp018+1, "p2 fire 5" },
+ 	{"P2 Fire 6"        , BIT_DIGITAL  , CpsInp018+7, "p2 fire 6" },
+
+ 	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },  // There are no options for P3
  	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
  	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+2, "p3 down"  },
  	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+1, "p3 left"  },
  	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" },
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
- 	{"P3 Fire"          , BIT_DIGITAL  , CpsInpc001+6, "p3 fire 3"},
-#endif
+
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
 };
 
-STDINPUTINFO(Wofch)
+STDINPUTINFO(Wofchp)
 
 static struct BurnInputInfo WofhfhInputList[] =
 {
@@ -22683,11 +22713,11 @@ struct BurnDriver BurnDrvCpsWofch = {
 };
 
 struct BurnDriver BurnDrvCpsWofchdx = {
-	"wofchdx", "wofch", NULL, NULL, "2010",
-	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "Capcom", "CPS Changer",
+	"wofchdx", "wofch", NULL, NULL, "2018",
+	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "Hack", "CPS Changer",
 	L"\u4E09\u56FD\u5FD7 III \u5916\u4F20: \u590F\u4FAF\u6069\u7684\u590D\u4EC7\0Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
-	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, NULL, NULL, WofchInputInfo, NULL,
+	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, NULL, NULL, WofchpInputInfo, NULL,
 	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23619,7 +23649,7 @@ struct BurnDriver BurnDrvCpswofchp = {
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)\0", NULL, "hack", "CPS Changer",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
-	NULL, wofchpRomInfo, wofchpRomName, NULL, NULL, NULL, NULL, WofchInputInfo, NULL,
+	NULL, wofchpRomInfo, wofchpRomName, NULL, NULL, NULL, NULL, WofchpInputInfo, NULL,
 	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

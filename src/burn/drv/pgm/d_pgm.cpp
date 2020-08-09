@@ -439,7 +439,7 @@ static struct BurnDIPInfo martmastDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x06, "USA (Andamiro USA  license)"		},
 };
 
-static struct BurnDIPInfo martmastc102DIPList[] = {
+static struct BurnDIPInfo martmast102DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
 
 	{0,		0xFE, 0,	6,    "Region (Fake)"					},
@@ -646,7 +646,7 @@ STDDIPINFOEXT(py2k2, 		pgm,	py2k2			)
 STDDIPINFOEXT(py2k2100, 	pgm,	py2k2100		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
-STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
+STDDIPINFOEXT(martmast102,  pgm,	martmast102		)
 STDDIPINFOEXT(martmasttw, 	pgm,	martmasttw		)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(olds100,     	pgm,	olds100			)
@@ -2509,7 +2509,7 @@ struct BurnDriver BurnDrvPhotoy2k104 = {
 
 // Real and Fake / Photo Y2K (V103, Japan)
 
-static struct BurnRomInfo photoy2k103jRomDesc[] = {
+static struct BurnRomInfo photoy2k103RomDesc[] = {
 	{ "photo_y2k_v103_u4.u4",		0x0080000, 0xc16dc699, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "photo_y2k_v103_u6.u6",   	0x0080000, 0x2e2671a4, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "photo_y2k_v103_u5.u5",   	0x0080000, 0x97839a61, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2529,15 +2529,15 @@ static struct BurnRomInfo photoy2k103jRomDesc[] = {
 	{ "igs027a_photoy2k_v100_china.asic",	0x0004000, 0x1a0b68f6, 7 | BRF_PRG | BRF_ESS }, //  8 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(photoy2k103j, photoy2k103j, pgm)
-STD_ROM_FN(photoy2k103j)
+STDROMPICKEXT(photoy2k103, photoy2k103, pgm)
+STD_ROM_FN(photoy2k103)
 
-struct BurnDriver BurnDrvphotoy2k103j = {
-	"photoy2k103j", "photoy2k", "pgm", NULL, "1999",
+struct BurnDriver BurnDrvphotoy2k103 = {
+	"photoy2k103", "photoy2k", "pgm", NULL, "1999",
 	"Photo Y2K / Real and Fake (V103, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u30EA\u30A2\u30EB\u30A2\u30F3\u30C9 \u30D5\u30A7\u30A4\u30AF\0Photo Y2K\0\u5927\u5BB6\u6765 \u627E\u78B4\0\u8D85\u7EA7 \u6BD4\u4E00\u6BD4 (V103, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING  | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
-	NULL, photoy2k103jRomInfo, photoy2k103jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k103DIPInfo,
+	NULL, photoy2k103RomInfo, photoy2k103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k103DIPInfo,
 	photoy2kInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2759,64 +2759,10 @@ struct BurnDriver BurnDrvMartmast = {
 };
 
 
-// Martial Masters / Xing Yi (V104, 102, 101, China)
-// Needs proper martial_masters_v102_cn.asic to be dumped
-
-static struct BurnRomInfo martmastcRomDesc[] = {
-	{ "v104_32m.u9",   				0x0400000, 0xcfd9dff4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-
-	{ "pgm_t1000.u3",	 			0x0800000, 0xbbf879b5, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "pgm_a1000.u3",    			0x0800000, 0x43577ac8, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a1001.u4",    			0x0800000, 0xfe7a476f, 3 | BRF_GRA },			//  3
-	{ "pgm_a1002.u6",    			0x0800000, 0x62e33d38, 3 | BRF_GRA },			//  4
-	{ "pgm_a1003.u8",    			0x0800000, 0xb2c4945a, 3 | BRF_GRA },			//  5
-	{ "pgm_a1004.u10",   			0x0400000, 0x9fd3f5fd, 3 | BRF_GRA },			//  6
-
-	{ "pgm_b1000.u9",	  			0x0800000, 0xc5961f6f, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
-	{ "pgm_b1001.u11",	  			0x0800000, 0x0b7e1c06, 4 | BRF_GRA },			//  8
-
-	{ "pgm_m1000.u5",     			0x0800000, 0xed407ae8, 5 | BRF_SND },			//  9 Samples
-	{ "pgm_m1001.u7",      			0x0400000, 0x662d2d48, 5 | BRF_SND },			// 10
-
-//	{ "martial_masters_v102_cn.asic",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  // 11 Internal ARM7 Rom
-	{ "martial_masters_v101_cn.asic",	0x0004000, 0xb3e25b7d, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
-
-	{ "v102_16m.u10",  				0x0200000, 0x18b745e6, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
-};
-
-STDROMPICKEXT(martmastc, martmastc, pgm)
-STD_ROM_FN(martmastc)
-
-static INT32 martmastcInit()
-{
-	pPgmInitCallback = pgm_decrypt_martmast;
-	pPgmProtCallback = install_protection_asic27a_martmast;
-
-	nPgmAsicRegionHackAddress = 0x2cb5;
-
-	INT32 nRet = pgmInit();
-
-	Arm7SetIdleLoopAddress(0x800039e);
-
-	return nRet;
-}
-
-struct BurnDriver BurnDrvmartmastc = {
-	"martmastc", "martmast", "pgm", NULL, "2001",
-	"Martial Masters (V104, 102, 101, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Martial Masters\0\u5f62\u610f\u62f3 (V104, 102, 101, China)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
-	NULL, martmastcRomInfo, martmastcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmastDIPInfo,
-	martmastcInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
 // Martial Masters / Xing Yi (V103, 102, 101, China)
 // Needs proper martial_masters_v102_cn.asic to be dumped
 
-static struct BurnRomInfo martmastc103RomDesc[] = {
+static struct BurnRomInfo martmast103RomDesc[] = {
 	{ "v103_32m.u9",   				0x0400000, 0xdf5ffbe9, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t1000.u3",	 			0x0800000, 0xbbf879b5, 2 | BRF_GRA },			//  1 Tile data
@@ -2839,15 +2785,15 @@ static struct BurnRomInfo martmastc103RomDesc[] = {
 	{ "v102_16m.u10",  				0x0200000, 0x18b745e6, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
 };
 
-STDROMPICKEXT(martmastc103, martmastc103, pgm)
-STD_ROM_FN(martmastc103)
+STDROMPICKEXT(martmast103, martmast103, pgm)
+STD_ROM_FN(martmast103)
 
-struct BurnDriver BurnDrvmartmastc103 = {
-	"martmastc103", "martmast", "pgm", NULL, "2001",
+struct BurnDriver BurnDrvmartmast103 = {
+	"martmast103", "martmast", "pgm", NULL, "2001",
 	"Martial Masters (V103, 102, 101, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Martial Masters\0\u5f62\u610f\u62f3 (V103, 102, 101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
-	NULL, martmastc103RomInfo, martmastc103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmastc102DIPInfo,
+	NULL, martmast103RomInfo, martmast103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmast102DIPInfo,
 	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2855,7 +2801,7 @@ struct BurnDriver BurnDrvmartmastc103 = {
 
 // Martial Masters / Xing Yi (V102, 101, 101, China)
 
-static struct BurnRomInfo martmastc102RomDesc[] = {
+static struct BurnRomInfo martmast102RomDesc[] = {
 	{ "mm_v102_u9.u9",			    0x0400000, 0xbb24b92a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t1000.u3",	 			0x0800000, 0xbbf879b5, 2 | BRF_GRA },			//  1 Tile data
@@ -2877,15 +2823,29 @@ static struct BurnRomInfo martmastc102RomDesc[] = {
 	{ "mm_v101_u10.u10",		    0x0400000, 0x41b9497c, 8 | BRF_PRG | BRF_ESS }, // 12 External ARM7 Rom
 };
 
-STDROMPICKEXT(martmastc102, martmastc102, pgm)
-STD_ROM_FN(martmastc102)
+STDROMPICKEXT(martmast102, martmast102, pgm)
+STD_ROM_FN(martmast102)
 
-struct BurnDriver BurnDrvmartmastc102 = {
-	"martmastc102", "martmast", "pgm", NULL, "2001",
+static INT32 martmastcInit()
+{
+	pPgmInitCallback = pgm_decrypt_martmast;
+	pPgmProtCallback = install_protection_asic27a_martmast;
+
+	nPgmAsicRegionHackAddress = 0x2cb5;
+
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x800039e);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvmartmast102 = {
+	"martmast102", "martmast", "pgm", NULL, "2001",
 	"Martial Masters (V102, 101, 101, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Martial Masters\0\u5f62\u610f\u62f3 (V102, 101, 101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
-	NULL, martmastc102RomInfo, martmastc102RomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmastc102DIPInfo,
+	NULL, martmast102RomInfo, martmast102RomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmast102DIPInfo,
 	martmastcInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4046,47 +4006,6 @@ struct BurnDriver BurnDrvDw2001 = {
 };
 
 
-// Dragon World Pretty Chance (V101, Japan)
-// All ROMs labels are on stickers
-
-/* IGS PCB-0349-01-FL MADE IN TAIWAN
-   IGS PCB-0350-00T-FL-A MADE IN TAIWAN
-   SCREEN VER PIC: DOES NOT SHOW VERSION NUMBER ON BOOT SCREEN.
-   ROM TYPES: U22(PROG) U12(ARM) MX MX27C4096DC
-   ROM TYPES: U11 (MASK) OKI M27C3202CZTK (BACKGROUND DATA).
-   CREDITS TO: "GC8TECH.COM" */
-
-static struct BurnRomInfo dwpcRomDesc[] = {
-	{ "dwpc_v101jp_u22.u22",		0x0080000, 0xb93027c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-
-	{ "dwpc_v100jp_u11.u11",		0x0400000, 0xc29d8831, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "dwpc_v100jp_u2.u2",			0x0200000, 0xe7115763, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "dwpc_v100jp_u3.u3",			0x0200000, 0x49c184a4, 3 | BRF_GRA },			//  4
-
-	{ "dwpc_v100jp_u9.u9",			0x0200000, 0x412b9913, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
-
-	{ "dwpc_v100jp_u7.u7",			0x0200000, 0x5cf9bada, 5 | BRF_SND },			//  6 Samples
-
-	{ "dw2001_igs027a_japan.bin",	0x0004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
-
-	{ "dwpc_v100jp_u12.u12",		0x0080000, 0x0d112126, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
-};
-
-STDROMPICKEXT(dwpc, dwpc, pgm)
-STD_ROM_FN(dwpc)
-
-struct BurnDriver BurnDrvdwpc = {
-	"dwpc", NULL, "pgm", NULL, "2001",
-	"Dragon World Pretty Chance (V101, Japan)\0", "Bad sound?", "IGS (Alta Co., LTD License)", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
-	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
 // Dragon World Pretty Chance (V110, China)
 // All ROMs labels are on stickers
 
@@ -4098,7 +4017,7 @@ struct BurnDriver BurnDrvdwpc = {
    ROM TYPES: U9 U7 U3 U2 ST M27C160   GFX DATA.
    CREDITS TO: "GC8TECH.COM"*/
 
-static struct BurnRomInfo dwpc110cnRomDesc[] = {
+static struct BurnRomInfo dwpcRomDesc[] = {
 	{ "dwpc_v110cn_u22.u22",		0x0080000, 0x64f22362, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "dwpc_v110cn_u11.u11",		0x0400000, 0xdb219cb8, 2 | BRF_GRA },			//  1 Tile data
@@ -4115,12 +4034,12 @@ static struct BurnRomInfo dwpc110cnRomDesc[] = {
 	{ "dwpc_v110cn_u12.u12",		0x0080000, 0x5bb1ee6a, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
 };
 
-STDROMPICKEXT(dwpc110cn, dwpc110cn, pgm)
-STD_ROM_FN(dwpc110cn)
+STDROMPICKEXT(dwpc, dwpc, pgm)
+STD_ROM_FN(dwpc)
 
-static INT32 dwpc110cnInit()
+static INT32 dwpcInit()
 {
-	pPgmInitCallback = pgm_decrypt_dwpc110cn;
+	pPgmInitCallback = pgm_decrypt_dwpc;
 	pPgmProtCallback = install_protection_asic27a_martmast;
 
 	INT32 nRet = pgmInit();
@@ -4132,13 +4051,54 @@ static INT32 dwpc110cnInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvdwpc110cn = {
-	"dwpc110cn", "dwpc", "pgm", NULL, "2001",
+struct BurnDriver BurnDrvdwpc = {
+	"dwpc", NULL, "pgm", NULL, "2001",
 	"Dragon World Pretty Chance (V110, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
+	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	dwpcInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Dragon World Pretty Chance (V101, Japan)
+// All ROMs labels are on stickers
+
+/* IGS PCB-0349-01-FL MADE IN TAIWAN
+   IGS PCB-0350-00T-FL-A MADE IN TAIWAN
+   SCREEN VER PIC: DOES NOT SHOW VERSION NUMBER ON BOOT SCREEN.
+   ROM TYPES: U22(PROG) U12(ARM) MX MX27C4096DC
+   ROM TYPES: U11 (MASK) OKI M27C3202CZTK (BACKGROUND DATA).
+   CREDITS TO: "GC8TECH.COM" */
+
+static struct BurnRomInfo dwpc101RomDesc[] = {
+	{ "dwpc_v101jp_u22.u22",		0x0080000, 0xb93027c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "dwpc_v100jp_u11.u11",		0x0400000, 0xc29d8831, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "dwpc_v100jp_u2.u2",			0x0200000, 0xe7115763, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "dwpc_v100jp_u3.u3",			0x0200000, 0x49c184a4, 3 | BRF_GRA },			//  4
+
+	{ "dwpc_v100jp_u9.u9",			0x0200000, 0x412b9913, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "dwpc_v100jp_u7.u7",			0x0200000, 0x5cf9bada, 5 | BRF_SND },			//  6 Samples
+
+	{ "dw2001_igs027a_japan.bin",	0x0004000, 0x3a79159b, 7 | BRF_PRG },  		    //  7 Internal ARM7 rom
+
+	{ "dwpc_v100jp_u12.u12",		0x0080000, 0x0d112126, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
+};
+
+STDROMPICKEXT(dwpc101, dwpc101, pgm)
+STD_ROM_FN(dwpc101)
+
+struct BurnDriver BurnDrvdwpc101 = {
+	"dwpc101", "dwpc", "pgm", NULL, "2001",
+	"Dragon World Pretty Chance (V101, Japan)\0", "Bad sound?", "IGS (Alta Co., LTD License)", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
-	NULL, dwpc110cnRomInfo, dwpc110cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	dwpc110cnInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	NULL, dwpc101RomInfo, dwpc101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -4226,7 +4186,7 @@ struct BurnDriver BurnDrvDmnfrnt = {
 
 // Demon Front (VM103XX, S103XX)
 
-static struct BurnRomInfo dmnfrntbRomDesc[] = {
+static struct BurnRomInfo dmnfrnt103RomDesc[] = {
 	{ "v103_16m.u5",   				0x0200000, 0x2ddafb3d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "igs_t04501w064.u29",			0x0800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data
@@ -4245,15 +4205,15 @@ static struct BurnRomInfo dmnfrntbRomDesc[] = {
 	{ "v103_32m.u26",  				0x0400000, 0xe78383a3, 8 | BRF_PRG | BRF_ESS }, //  9 External ARM7 Rom
 };
 
-STDROMPICKEXT(dmnfrntb, dmnfrntb, pgm)
-STD_ROM_FN(dmnfrntb)
+STDROMPICKEXT(dmnfrnt103, dmnfrnt103, pgm)
+STD_ROM_FN(dmnfrnt103)
 
-struct BurnDriver BurnDrvdmnfrntb = {
-	"dmnfrntb", "dmnfrnt", "pgm", NULL, "2002",
+struct BurnDriver BurnDrvdmnfrnt103 = {
+	"dmnfrnt103", "dmnfrnt", "pgm", NULL, "2002",
 	"Demon Front (VM103XX, S103XX)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM103XX, S103XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
-	NULL, dmnfrntbRomInfo, dmnfrntbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, dmnfrnt103RomInfo, dmnfrnt103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4268,7 +4228,7 @@ struct BurnDriver BurnDrvdmnfrntb = {
    ROM TYPES: U26 ST M27C322
    CREDITS TO: "GC8TECH.COM" */
 
-static struct BurnRomInfo dmnfrntaRomDesc[] = {
+static struct BurnRomInfo dmnfrnt102RomDesc[] = {
 	{ "v102_16m.u5",   				0x0200000, 0x3d4d481a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "igs_t04501w064.u29",			0x0800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data
@@ -4287,15 +4247,15 @@ static struct BurnRomInfo dmnfrntaRomDesc[] = {
 	{ "v101_32m.u26",  				0x0400000, 0x93965281, 8 | BRF_PRG | BRF_ESS }, //  9 External ARM7 Rom
 };
 
-STDROMPICKEXT(dmnfrnta, dmnfrnta, pgm)
-STD_ROM_FN(dmnfrnta)
+STDROMPICKEXT(dmnfrnt102, dmnfrnt102, pgm)
+STD_ROM_FN(dmnfrnt102)
 
 struct BurnDriver BurnDrvdmnfrnta = {
-	"dmnfrnta", "dmnfrnt", "pgm", NULL, "2002",
+	"dmnfrnt102", "dmnfrnt", "pgm", NULL, "2002",
 	"Demon Front (VM102XX, S101XX)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM102XX, S101XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
-	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, dmnfrnt102RomInfo, dmnfrnt102RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

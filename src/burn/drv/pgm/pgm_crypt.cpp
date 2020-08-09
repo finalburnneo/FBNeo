@@ -652,7 +652,7 @@ void pgm_decrypt_martmast() // and dw2001
 }
 
 // conditional xors are all 'flipped' version of martmast/dw2001 conditionals
-void pgm_decrypt_dwpc110cn()
+void pgm_decrypt_dwpc()
 {
 	UINT16 *src = (UINT16 *)PGMUSER0;
 

@@ -554,16 +554,16 @@ void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 
 	{
 		INT32 pri = 0;
 
-		if (!(gx_spriteram[offs] & 0x8000)) continue;
+		if (!(BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs]) & 0x8000)) continue;
 
-		INT32 zcode = gx_spriteram[offs] & 0xff;
+		INT32 zcode = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs]) & 0xff;
 
 		// invert z-order when opset_pri is set (see p.51 OPSET PRI)
 		if (k053247_opset & 0x10) zcode = 0xff - zcode;
 
-		INT32 code  = gx_spriteram[offs+1];
-		INT32 color = k = gx_spriteram[offs+6];
-		l     = gx_spriteram[offs+7];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+1]);
+		INT32 color = k = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+6]);
+		l     = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+7]);
 
 		K053247Callback(&code, &color, &pri);
 

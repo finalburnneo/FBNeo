@@ -1215,6 +1215,24 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// Top Speed
+	if ((parentrom && strcmp(parentrom, "topspeed") == 0) ||
+		(drvname && strcmp(drvname, "topspeed") == 0)
+	) {
+		if (strcmp("Fire 1 (Accelerator)", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Fire 2 (Brake)", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Fire 3 (Nitro)", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Fire 4 (Gear)", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+	}
+
 	// Lucky & Wild
 	// Dirt Fox
 	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||

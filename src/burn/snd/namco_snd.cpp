@@ -841,4 +841,6 @@ void NamcoSoundScan(INT32 nAction, INT32 *pnMin)
 	ba.nAddress = 0;
 	ba.szName	= szName;
 	BurnAcb(&ba);
+
+	SCAN_VAR(chip->sound_enable);
 }

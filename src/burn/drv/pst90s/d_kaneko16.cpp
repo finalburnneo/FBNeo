@@ -2809,7 +2809,7 @@ static void shogwarr_calc3_mcu_run()
 						SekWriteByte((write+0x200000), calc3.data_header[0]);
 						SekWriteByte((write+0x200001), calc3.data_header[1]);
 
-						write=commandaddr+(char)commandunk;
+						write=commandaddr+(INT8)commandunk;
 
 						SekWriteWord(write+0x200000, (calc3.writeaddress_current>>16)&0xffff);
 						SekWriteWord(write+0x200002, (calc3.writeaddress_current&0xffff));

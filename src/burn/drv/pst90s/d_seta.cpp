@@ -7044,14 +7044,14 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		if (DrvLoadRoms(1)) return 1;
 	}
 
-	if (p68kInit) {
-		p68kInit();
-	}
-
 	// make sure these are initialized so that we can use common routines
 	ZetInit(0);
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+
+	if (p68kInit) {
+		p68kInit();
+	}
 
 	DrvGfxDecode(gfxtype0, DrvGfxROM0, 0);
 	DrvGfxDecode(gfxtype1, DrvGfxROM1, 1);

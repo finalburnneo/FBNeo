@@ -229,8 +229,8 @@ static struct BurnInputInfo SargeInputList[] = {
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
 	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 2,	"p3 up"		},
-	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 3,	"p3 down"	},
+	{"P1 Right Stick Up",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up 2"	},
+	{"P1 Right Stick Down",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down 2"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
 
@@ -238,8 +238,8 @@ static struct BurnInputInfo SargeInputList[] = {
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
 	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
-	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 2,	"p4 up"		},
-	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 3,	"p4 down"	},
+	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up 2"	},
+	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down 2"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 2"	},
 
@@ -337,7 +337,7 @@ STDINPUTINFO(Crater)
 
 static struct BurnInputInfo StargrdsInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
+	{"P1 Start / Weapon",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
     {"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
 	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
     {"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 left"	},
@@ -348,7 +348,7 @@ static struct BurnInputInfo StargrdsInputList[] = {
 	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right 2"},
 
 	{"P2 Coin",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Start / Weapon",	BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
     {"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 up"		},
 	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 down"	},
     {"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 left"	},
@@ -359,7 +359,7 @@ static struct BurnInputInfo StargrdsInputList[] = {
 	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right 2"},
 
 	{"P3 Coin",				BIT_DIGITAL,	DrvJoy6 + 1,	"p3 coin"	},
-	{"P3 Start",			BIT_DIGITAL,	DrvJoy6 + 3,	"p3 start"	},
+	{"P3 Start / Weapon",	BIT_DIGITAL,	DrvJoy6 + 3,	"p3 start"	},
     {"P3 Left Stick Up",	BIT_DIGITAL,	DrvJoy5 + 4,	"p3 up"		},
 	{"P3 Left Stick Down",	BIT_DIGITAL,	DrvJoy5 + 5,	"p3 down"	},
     {"P3 Left Stick Left",	BIT_DIGITAL,	DrvJoy5 + 6,	"p3 left"	},

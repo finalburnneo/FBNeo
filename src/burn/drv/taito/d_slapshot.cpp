@@ -389,25 +389,25 @@ UINT8 __fastcall Opwolf3Gun68KReadByte(UINT32 a)
 		case 0xe00000: {
 			float Temp = (float)~BurnGunReturnX(0) / 256.0;
 			Temp *= 160.0;
-			return ((UINT8)Temp - 0x5b) & 0xff;
+			return ((INT8)Temp - 0x5b) & 0xff;
 		}
 		
 		case 0xe00002: {
 			float Temp = (float)BurnGunReturnY(0) / 256.0;
 			Temp *= 112;
-			return ((UINT8)Temp + 0x08) & 0xff;
+			return ((INT8)Temp + 0x08) & 0xff;
 		}
 		
 		case 0xe00004: {
 			float Temp = (float)~BurnGunReturnX(1) / 256.0;
 			Temp *= 160.0;
-			return ((UINT8)Temp - 0x5b) & 0xff;
+			return ((INT8)Temp - 0x5b) & 0xff;
 		}
 		
 		case 0xe00006: {
 			float Temp = (float)BurnGunReturnY(1) / 256.0;
 			Temp *= 112;
-			return ((UINT8)Temp + 0x08) & 0xff;
+			return ((INT8)Temp + 0x08) & 0xff;
 		}
 		
 		default: {

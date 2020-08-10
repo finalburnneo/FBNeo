@@ -164,6 +164,7 @@ void K051316Write(INT32 chip, INT32 offset, INT32 data)
 		K051316Ram[chip][offset] = data;
 		K051316_write_tile(offset & 0x3ff, chip);
 	}
+	force_update[chip] = 1;
 }
 
 UINT8 K051316ReadCtrl(INT32 chip, INT32 offset)
@@ -174,11 +175,13 @@ UINT8 K051316ReadCtrl(INT32 chip, INT32 offset)
 void K051316WriteCtrl(INT32 chip, INT32 offset, INT32 data)
 {
 	K051316Ctrl[chip][offset & 0x0f] = data;
+	force_update[chip] = 1;
 }
 
 void K051316WrapEnable(INT32 chip, INT32 status)
 {
 	K051316Wrap[chip] = status;
+	force_update[chip] = 1;
 }
 
 static inline void copy_roz(INT32 chip, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 wrap, INT32 transp, INT32 flags)

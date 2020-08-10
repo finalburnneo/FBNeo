@@ -70,6 +70,8 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT32 is_turbo = 0;
+
 static struct BurnInputInfo TurboInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -468,10 +470,10 @@ static UINT8 __fastcall subroc3d_read(UINT16 address)
 			return DrvInputs[1];
 
 		case 0xa802:
-			return DrvDips[1];
+			return DrvDips[0];
 
 		case 0xa803:
-			return DrvDips[2];
+			return DrvDips[1];
 
 		case 0xe800:
 		case 0xe801:
@@ -486,7 +488,7 @@ static UINT8 __fastcall subroc3d_read(UINT16 address)
 			return ppi8255_r(1, address & 3);
 
 		case 0xf800: // should use i8279 device
-			return DrvDips[0];
+			return 0x00; //DrvDips[0];
 
 		case 0xf801:// i8279 read
 			return 0x10;
@@ -1190,6 +1192,8 @@ static INT32 TurboInit(INT32 encrypted)
 
 	DrvDoReset();
 
+	is_turbo = 1;
+
 	return 0;
 }
 
@@ -1448,6 +1452,8 @@ static INT32 DrvExit()
 	BurnShiftExit();
 
 	BurnFree(AllMem);
+
+	is_turbo = 0;
 
 	return 0;
 }
@@ -2301,7 +2307,7 @@ static INT32 TurboFrame()
 		if (DrvDial > 0xff) DrvDial = 0;
 		if (DrvDial < 0x00) DrvDial = 0xff;
 
-		{ // gear shifter stuff
+		if (is_turbo) { // gear shifter stuff
 			BurnShiftInputCheckToggle(DrvJoy1[2]);
 
 			DrvInputs[0] &= ~4;

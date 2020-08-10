@@ -231,7 +231,7 @@ static struct BurnDIPInfo Dbz2DIPList[]=
 
 STDDIPINFO(Dbz2)
 
-static void dbz_objdma() // modified from moo mesa
+static void dbz_objdma() // modified from moo mesa -dink jan 2019
 {
 	UINT16 *dst = (UINT16*)K053247Ram;   // 0x800 words
 	UINT16 *src = (UINT16*)DrvObjDMARam; // 0x2000 words
@@ -938,24 +938,18 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
+		CPU_RUN(0, Sek);
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nCyclesSegment);
-
-		if (i == ((nInterleave/2)-1) && K053246_is_IRQ_enabled()) {
-			dbz_objdma();
+		if (i == 0 && K053246_is_IRQ_enabled()) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == (nInterleave - 1)) {
+			dbz_objdma();
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesDone[1] += ZetRun(nCyclesSegment);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);

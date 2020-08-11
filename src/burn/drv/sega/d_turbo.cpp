@@ -3,11 +3,8 @@
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
 // to do:
-//	add 9-seg support (i8279)
-//	bug testing
-//	fixing sounds (subroc3d is bad)
-//	sound disabling
-//	clean up
+//	add 9-seg support (i8279) (not really needed)
+//  buck rogers sound fixups
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -99,8 +96,8 @@ STDINPUTINFO(Turbo)
 static struct BurnInputInfo Subroc3dInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
@@ -775,8 +772,8 @@ static void subroc3d_vol(INT32 samplenum, INT32 fromcache)
 		lvol = rvol = 0;
 
 	/* if the sample is playing, adjust it */
-	BurnSampleSetRoute(samplenum, BURN_SND_SAMPLE_ROUTE_1, lvol, BURN_SND_ROUTE_LEFT);	\
-	BurnSampleSetRoute(samplenum, BURN_SND_SAMPLE_ROUTE_2, rvol, BURN_SND_ROUTE_RIGHT);	\
+	BurnSampleSetRouteFade(samplenum, BURN_SND_SAMPLE_ROUTE_1, lvol, BURN_SND_ROUTE_LEFT);	\
+	BurnSampleSetRouteFade(samplenum, BURN_SND_SAMPLE_ROUTE_2, rvol, BURN_SND_ROUTE_RIGHT);	\
 }
 
 static void subroc3d_ppi1a_write(UINT8 data)
@@ -2365,6 +2362,7 @@ static INT32 TurboFrame()
 		}
 
 		if (sound_mute) BurnSoundClear();
+		BurnSoundDCFilter();
 	}
 
 	if (pBurnDraw) {

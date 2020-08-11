@@ -748,6 +748,11 @@ void FroggerSoundInit()
 // Konami Sound CPU Memory Map
 UINT8 __fastcall KonamiSoundZ80Read(UINT16 a)
 {
+	if (a < 0x8000) {
+		// unmapped read, returning 0xff here causes calipso soundcpu to hang @ end of level.
+		return 0x00;
+	}
+
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #2 Read => %04X\n"), a);

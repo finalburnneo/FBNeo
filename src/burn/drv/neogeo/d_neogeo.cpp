@@ -15237,7 +15237,7 @@ struct BurnDriver BurnDrvmslug5g = {
 	"mslug5g", "mslug5", "neogeo", NULL, "2017",
 	"Metal Slug 5 (Multifunction Hack, 20170523)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5gRomInfo, mslug5gRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -16532,11 +16532,11 @@ struct BurnDriver BurnDrvkof97t = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '97 (Anniversary Edition Build 2.1.1711, EGHT hack)
+// The King of Fighters '97 (Anniversary Edition Build 2.1.1811, EGHT hack)
 // Hacked by AndyChan
 
 static struct BurnRomInfo kof97aeRomDesc[] = {
-	{ "kof97ae-p1.p1",		0x100000, 0x5759ea82, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
+	{ "kof97ae-p1.p1",		0x100000, 0xe453b221, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
 	{ "kof97ae-p2.sp2",		0x400000, 0xf00ba90d, 1 | BRF_ESS | BRF_PRG },	//  1 
 
 	{ "kof97ae-s1.s1",		0x020000, 0x30a6b3b8, 2 | BRF_GRA },			//  2 Text layer tiles
@@ -16572,8 +16572,8 @@ static INT32 kof97aeInit()
 }
 
 struct BurnDriver BurnDrvkof97ae = {
-	"kof97ae", "kof97", "neogeo", NULL, "2020",
-	"The King of Fighters '97 (Anniversary Edition build 2.1.1711)\0", NULL, "EGHT", "Neo Geo MVS",
+	"kof97ae", "kof97", "neogeo", NULL, "2020-08-10",
+	"The King of Fighters '97 (Anniversary Edition build 2.1.1811)\0", NULL, "EGHT", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof97aeRomInfo, kof97aeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,

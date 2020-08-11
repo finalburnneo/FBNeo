@@ -14,6 +14,7 @@ static inline UINT16 get_shorti(const UINT8* const p)
 	return (p[1] << 8) | p[0];
 }
 
+static INT32 bNiceFadeVolume = 0;
 static INT32 bAddToStream = 0;
 static INT32 nTotalSamples = 0;
 INT32 bBurnSampleTrimSampleEnd = 0;
@@ -26,8 +27,9 @@ struct sample_format
 	UINT8 playing;
 	UINT8 loop;
 	UINT8 flags;
-	INT32 playback_rate; // 100 = 100%, 200 = 200%, 
+	INT32 playback_rate; // 100 = 100%, 200 = 200%,
 	double gain[2];
+	double gain_target[2]; // ramp gain up or down to gain_target (see BurnSampleSetRouteFade())
 	INT32 output_dir[2];
 };
 
@@ -407,6 +409,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 {
 	bAddToStream = bAdd;
 	nTotalSamples = 0;
+	bNiceFadeVolume = 0;
 
 	DebugSnd_SamplesInitted = 1;
 
@@ -500,7 +503,11 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		}
 		
 		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
+		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
+
 		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
+		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
+
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
@@ -577,6 +584,31 @@ void BurnSampleInitOne(INT32 sample)
 	free(destination); // ZipLoadOneFile uses malloc()
 }
 
+// round ##.###### to ##.##
+static double round2dec(double d)
+{
+	d = (INT32)(d * 100 + 0.5);
+	return (double)d / 100;
+}
+
+// BurnSampleSetRouteFade() fades up/down to volume to eliminate clicks/pops
+// when a game changes volume often.
+void BurnSampleSetRouteFade(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteFade called without init\n"));
+	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteFade called with invalid index %i\n"), nIndex);
+#endif
+
+	if (sample >= nTotalSamples) return;
+
+	sample_ptr = &samples[sample];
+	sample_ptr->gain_target[nIndex] = round2dec(nVolume);
+	sample_ptr->output_dir[nIndex] = nRouteDir;
+
+	bNiceFadeVolume = 1;
+}
+
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBNEO_DEBUG
@@ -587,7 +619,8 @@ void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRoute
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
-	sample_ptr->gain[nIndex] = nVolume;
+	sample_ptr->gain_target[nIndex] = round2dec(nVolume);
+	sample_ptr->gain[nIndex] = round2dec(nVolume);
 	sample_ptr->output_dir[nIndex] = nRouteDir;
 }
 
@@ -602,7 +635,8 @@ void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
-		sample_ptr->gain[nIndex] = nVolume;
+		sample_ptr->gain[nIndex] = round2dec(nVolume);
+		sample_ptr->gain_target[nIndex] = round2dec(nVolume);
 		sample_ptr->output_dir[nIndex] = nRouteDir;
 	}	
 }
@@ -707,9 +741,26 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 
 			dst[0] = BURN_SND_CLIP(nLeftSample + dst[0]);
 			dst[1] = BURN_SND_CLIP(nRightSample + dst[1]);
+
+			if (bNiceFadeVolume) {
+				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
+					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] += 0.01;
+					}
+				}
+				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
+					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] += 0.01;
+					}
+				}
+			}
 		}
 
-		sample_ptr->position = pos; // store the updated position 
+		sample_ptr->position = pos; // store the updated position
 	}
 }
 

@@ -34,6 +34,10 @@ void BurnSampleReset();
 
 void BurnSampleInit(INT32 bAdd);
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir);
+
+// BurnSampleSetRouteFade() fades up/down to volume to eliminate clicks/pops
+// when a game changes volume often.
+void BurnSampleSetRouteFade(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir);
 
 void BurnSampleScan(INT32 nAction, INT32 *pnMin);

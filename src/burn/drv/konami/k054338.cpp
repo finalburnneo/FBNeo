@@ -60,7 +60,7 @@ void K054338Init()
 
 void K054338WriteWord(INT32 offset, UINT16 data)
 {
-	k54338_regs[(offset & 0x1e)/2] = data;
+	k54338_regs[(offset & 0x1e)/2] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 void K054338WriteByte(INT32 offset, UINT8 data)
@@ -73,7 +73,7 @@ void K054338WriteByte(INT32 offset, UINT8 data)
 // returns a 16-bit '338 register
 INT32 K054338_read_register(INT32 reg)
 {
-	return k54338_regs[reg];
+	return BURN_ENDIAN_SWAP_INT16(k54338_regs[reg]);
 }
 
 void K054338_update_all_shadows(INT32 rushingheroes_hack)
@@ -82,7 +82,7 @@ void K054338_update_all_shadows(INT32 rushingheroes_hack)
 
 	for (i = 0; i < 9; i++)
 	{
-		d = k54338_regs[K338_REG_SHAD1R + i] & 0x1ff;
+		d = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_SHAD1R + i]) & 0x1ff;
 		if (d >= 0x100)
 			d -= 0x200;
 		m_shd_rgb[i] = d;
@@ -141,7 +141,7 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 	if (!mode)
 	{
 		// single color output from CLTC
-		bgcolor = (int)(k54338_regs[K338_REG_BGC_R]&0xff)<<16 | (int)k54338_regs[K338_REG_BGC_GB];
+		bgcolor = (int)(BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_R])&0xff)<<16 | (int)BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_GB]);
 	}
 	else
 	{
@@ -212,9 +212,9 @@ INT32 K054338_set_alpha_level(INT32 pblend)
 	}
 
 	regs   = k54338_regs;
-	ctrl   = k54338_regs[K338_REG_CONTROL];
+	ctrl   = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
 	mixpri = ctrl & K338_CTL_MIXPRI;
-	mixset = regs[K338_REG_PBLEND + (pblend>>1 & 1)] >> (~pblend<<3 & 8);
+	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend<<3 & 8);
 	mixlv  = mixset & 0x1f;
 
 	if (k054338_alphainverted) mixlv = 0x1f - mixlv;
@@ -258,9 +258,9 @@ INT32 K054338_alpha_level_moo(INT32 pblend)
 	}
 
 	regs   = k54338_regs;
-	ctrl   = k54338_regs[K338_REG_CONTROL];
+	ctrl   = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
 	mixpri = ctrl & K338_CTL_MIXPRI;
-	mixset = regs[K338_REG_PBLEND + (pblend>>1 & 1)] >> (~pblend<<3 & 8);
+	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend<<3 & 8);
 	mixlv  = mixset & 0x1f;
 
 #ifdef DEBUGMOO

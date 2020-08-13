@@ -645,6 +645,13 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
     width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
     height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
 
+	if (width == 1536 && height == 864) {
+		// Workaround: (1/2)
+		// Win8-10 sets Desktop Zoom to 125% by default, creating this bad/weird resolution.
+		width = 1920;
+		height = 1080;
+	}
+
 	if ((HorScreen[0] && !_wcsicmp(HorScreen, iMonitor.szDevice)) ||
 		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
 
@@ -691,6 +698,13 @@ void MonitorAutoCheck()
 
 		x = GetSystemMetrics(SM_CXSCREEN);
 		y = GetSystemMetrics(SM_CYSCREEN);
+
+		if (x == 1536 && y == 864) {
+			// Workaround: (2/2)
+			// Win8-10 sets Desktop Zoom to 125% by default, creating this bad/weird resolution.
+			x = 1920;
+			y = 1080;
+		}
 
 		// default full-screen resolution to this size
 		nVidHorWidth = x;

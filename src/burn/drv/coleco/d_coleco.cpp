@@ -5858,7 +5858,7 @@ STD_ROM_FN(cv_kungfumstr)
 
 struct BurnDriver BurnDrvcv_kungfumstr = {
     "cv_kungfumstr", NULL, "cv_coleco", NULL, "2016",
-    "Kung-Fu Master (HB)\0", "(SGM) - Beta version, no health meter", "CollectorVision Games", "ColecoVision",
+    "Kung-Fu Master (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SCRFIGHT, 0,
     CVGetZipName, cv_kungfumstrRomInfo, cv_kungfumstrRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -6223,6 +6223,25 @@ struct BurnDriver BurnDrvcv_wow = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
     CVGetZipName, cv_wowRomInfo, cv_wowRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Astro Dodge
+
+static struct BurnRomInfo cv_astrododgeRomDesc[] = {
+    { "Astrododge (2012) (Revival Studios).rom",	0x8000, 0x1a29dfd1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_astrododge, cv_astrododge, cv_coleco)
+STD_ROM_FN(cv_astrododge)
+
+struct BurnDriver BurnDrvcv_astrododge = {
+    "cv_astrododge", NULL, "cv_coleco", NULL, "2012",
+    "Astro Dodge (HB)\0", NULL, "Revival Studios", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_astrododgeRomInfo, cv_astrododgeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

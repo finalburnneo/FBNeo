@@ -279,6 +279,7 @@ void K053247SpritesRender()
 	count--;
 	h = count;
 
+	
 	if (!(K053247Regs[0xc/2] & 0x10))
 	{
 		// sort objects in decending order(smaller z closer) when OPSET PRI is clear
@@ -1149,18 +1150,18 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT
 		if (code & 0x20) ya += 4;
 		code &= ~0x3f;
 
-		temp4 = gx_spriteram[offs];
+		temp4 = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs]);
 
 		// mask off the upper 6 bits of coordinate and zoom registers
-		oy = gx_spriteram[offs+2] & 0x3ff;
-		ox = gx_spriteram[offs+3] & 0x3ff;
+		oy = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+2]) & 0x3ff;
+		ox = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+3]) & 0x3ff;
 
-		scaley = zoomy = gx_spriteram[offs+4] & 0x3ff;
+		scaley = zoomy = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+4]) & 0x3ff;
 		if (zoomy) zoomy = (0x400000+(zoomy>>1)) / zoomy;
 		else zoomy = 0x800000;
 		if (!(temp4 & 0x4000))
 		{
-			scalex = zoomx = gx_spriteram[offs+5] & 0x3ff;
+			scalex = zoomx = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+5]) & 0x3ff;
 			if (zoomx) zoomx = (0x400000+(zoomx>>1)) / zoomx;
 			else zoomx = 0x800000;
 		}
@@ -1171,7 +1172,7 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT
 		flipx = temp4 & 0x1000;
 		flipy = temp4 & 0x2000;
 
-		temp = gx_spriteram[offs+6];
+		temp = BURN_ENDIAN_SWAP_INT16(gx_spriteram[offs+6]);
 		mirrorx = temp & 0x4000;
 		if (mirrorx) flipx = 0; // only applies to x mirror, proven
 		mirrory = temp & 0x8000;

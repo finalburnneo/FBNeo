@@ -5447,7 +5447,9 @@ static INT32 LastmissFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (i == 8 * 10) vblank = 0x00;
-		if (i == 248 * 10) {
+		if ((nLastMiss && i == 248 * 10) ||
+			(!nLastMiss && i == 200 * 10)) {
+			// shackled(us) needs a longer vbl time for continue to work. -dink
 			vblank = 0x80;
 
 			if (pBurnDraw) {

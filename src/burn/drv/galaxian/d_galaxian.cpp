@@ -22450,7 +22450,7 @@ struct BurnDriver BurnDrvDarkplnt = {
 	"darkplnt", NULL, NULL, NULL, "1982",
 	"Dark Planet\0", "Dial doesn't work very well", "Stern", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SHOOT, 0,
 	NULL, DarkplntRomInfo, DarkplntRomName, NULL, NULL, NULL, NULL, DarkplntInputInfo, DarkplntDIPInfo,
 	DarkplntInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3

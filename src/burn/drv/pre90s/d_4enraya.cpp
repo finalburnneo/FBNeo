@@ -30,40 +30,40 @@ static UINT8 DrvReset;
 static UINT8 sound_bit;
 
 static struct BurnInputInfo Enraya4InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 left"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Enraya4)
 
 static struct BurnInputInfo UnkpacgInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"Coin 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"Coin 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
+	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"Coin 2",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"Coin 3",			BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 1,	"dips"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 0,	"dips"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 1,	"dips"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 0,	"dips"		},
 };
 
 STDINPUTINFO(Unkpacg)
@@ -106,42 +106,42 @@ STDDIPINFO(Enraya4)
 
 static struct BurnDIPInfo UnkpacgDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xff, NULL			},
+	{0x09, 0xff, 0xff, 0x00, NULL			},
 	{0x0a, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "DIP8"			},
+	{0   , 0xfe, 0   ,    2, "0-8"			},
 	{0x09, 0x01, 0x80, 0x00, "Off"			},
 	{0x09, 0x01, 0x80, 0x80, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-0"			},
+	{0   , 0xfe, 0   ,    2, "1-0"			},
 	{0x0a, 0x01, 0x01, 0x00, "Off"			},
 	{0x0a, 0x01, 0x01, 0x01, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-1"			},
-	{0x0a, 0x01, 0x02, 0x00, "Off"			},
-	{0x0a, 0x01, 0x02, 0x02, "On"			},
+	{0   , 0xfe, 0   ,    2, "Gambling Game"},
+	{0x0a, 0x01, 0x02, 0x00, "Yes"			},
+	{0x0a, 0x01, 0x02, 0x02, "No"			},
 
-	{0   , 0xfe, 0   ,    2, "0-2"			},
+	{0   , 0xfe, 0   ,    2, "1-2"			},
 	{0x0a, 0x01, 0x04, 0x00, "Off"			},
 	{0x0a, 0x01, 0x04, 0x04, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-3"			},
+	{0   , 0xfe, 0   ,    2, "1-3"			},
 	{0x0a, 0x01, 0x08, 0x00, "Off"			},
 	{0x0a, 0x01, 0x08, 0x08, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-4"			},
+	{0   , 0xfe, 0   ,    2, "1-4"			},
 	{0x0a, 0x01, 0x10, 0x00, "Off"			},
 	{0x0a, 0x01, 0x10, 0x10, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-5"			},
+	{0   , 0xfe, 0   ,    2, "1-5"			},
 	{0x0a, 0x01, 0x20, 0x00, "Off"			},
 	{0x0a, 0x01, 0x20, 0x20, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-6"			},
-	{0x0a, 0x01, 0x40, 0x00, "Off"			},
-	{0x0a, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    2, "Gambling Game Credits Value"			},
+	{0x0a, 0x01, 0x40, 0x40, "1 Credit/Point = 100"			},
+	{0x0a, 0x01, 0x40, 0x00, "1 Credit/Point = 500"			},
 
-	{0   , 0xfe, 0   ,    2, "0-7"			},
+	{0   , 0xfe, 0   ,    2, "Clear NVRAM (On, reset, Off, reset)" },
 	{0x0a, 0x01, 0x80, 0x00, "Off"			},
 	{0x0a, 0x01, 0x80, 0x80, "On"			},
 };
@@ -170,6 +170,14 @@ static void __fastcall enraya4_out_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
+		case 0x17:
+			AY8910Write(0, 1, data);
+		break;
+
+		case 0x37:
+			AY8910Write(0, 0, data);
+		break;
+
 		case 0x20:
 		case 0x23:
 			soundlatch = data;
@@ -194,6 +202,9 @@ static UINT8 __fastcall enraya4_in_port(UINT16 port)
 	
 		case 0x02:
 			return DrvInputs[1];
+
+		case 0x27:
+			return AY8910Read(0);
 	}
 
 	return 0;
@@ -273,6 +284,11 @@ static void DrvPrgDecode()
 	}
 }
 
+static UINT8 ay_read_A(UINT32)
+{
+	return DrvDips[1];
+}
+
 static INT32 DrvInit(INT32 game, INT32 sbit)
 {
 	AllMem = NULL;
@@ -286,9 +302,18 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x08000, 1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM + 0x00000, 2, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0x02000, 3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0x04000, 4, 1)) return 1;
+		if (game == 0)	// 4enraya
+		{
+			if (BurnLoadRom(DrvGfxROM + 0x00000, 2, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x02000, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x04000, 4, 1)) return 1;
+		}
+		else
+		{
+			if (BurnLoadRom(DrvGfxROM + 0x02000, 2, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x04000, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x00000, 4, 1)) return 1;
+		}
 
 		if (game) DrvPrgDecode(); // unkpacg
 		DrvGfxDecode();
@@ -318,6 +343,10 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 
 	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+
+	if (game) { // unkpacg
+		AY8910SetPorts(0, &ay_read_A, NULL, NULL, NULL);
+	}
 
 	sound_bit = sbit;
 
@@ -370,25 +399,27 @@ static INT32 DrvFrame()
 	}
 
 	{
-		DrvInputs[0] = DrvDips[1];
+		DrvInputs[0] = 0xff;
 		DrvInputs[1] = 0xff;
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		if (sound_bit == 2) {
+			DrvInputs[0] &= ~0x80; // sound hw bit for unkpacg
+		}
 	}
 
 	INT32 nInterleave = 4;
-	INT32 nCyclesTotal = 4000000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 4000000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}

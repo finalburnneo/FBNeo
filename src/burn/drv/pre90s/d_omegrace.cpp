@@ -143,11 +143,7 @@ static void __fastcall omegrace_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x14:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 	}
 }
@@ -198,7 +194,8 @@ static UINT8 __fastcall omegrace_main_read_port(UINT16 port)
 		case 0x15:
 			return spinner1_read();
 
-		case 0x16: DrvPaddle[1];
+		case 0x16:
+			return DrvPaddle[1] & 0x3f;
 	}
 
 	return 0;
@@ -451,6 +448,8 @@ static INT32 DrvFrame()
 		if (DrvPaddle[0] < 0x00) DrvPaddle[0] = 0x3f;
 		if (DrvPaddle[1] > 0x3f) DrvPaddle[1] = 0x00;
 		if (DrvPaddle[1] < 0x00) DrvPaddle[1] = 0x3f;
+
+		//bprintf(0, _T("paddles  %02x\t%02x\n"), DrvPaddle[0], DrvPaddle[1]);
 	}
 
 	INT32 nInterleave = 60;

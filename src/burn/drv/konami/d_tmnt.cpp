@@ -71,6 +71,8 @@ static INT32 InitEEPROMCount;
 
 static INT32 uses_k007232 = 0;
 
+static INT32 is_tmnt2 = 0;
+
 static const eeprom_interface BlswhstlEEPROMInterface =
 {
 	7,
@@ -3612,12 +3614,14 @@ void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 			EEPROMWrite(d & 0x04, d & 0x02, d & 0x01);
 			K053244BankSelect(0, ((d & 0x20) >> 5) << 2);
 			dim_c = d & 0x18;
+			//bprintf(0, _T("dim_c  %x\n"), d);
 			return;
 		}
 		
 		case 0x1c0301: {
 			K052109RMRDLine = d & 0x08;
 			dim_v = (d & 0x70) >> 4;
+			//bprintf(0, _T("dim_v  %x\n"), d);
 			return;
 		}
 		
@@ -5355,6 +5359,8 @@ static INT32 Tmnt2Init()
 	// Reset the driver
 	SsridersDoReset();
 
+	is_tmnt2 = 1;
+
 	return 0;
 }
 
@@ -5557,6 +5563,7 @@ static INT32 CommonExit()
 	DrvVBlank = 0;
 	InitEEPROMCount = 0;
 	uses_k007232 = 0;
+	is_tmnt2 = 0;
 
 	return 0;
 }
@@ -5674,15 +5681,24 @@ static void PaletteDim(INT32 dimslayer)
 	if (brt < 100 && !NoDim) {
 		cb = LayerColourBase[dimslayer] << 4;
 		ce = cb + 128;
+		//bprintf(0, _T("dimming layer %x:  %x - %x\n"), dimslayer, cb, ce);
+		if (is_tmnt2) {
+			for (i = 0; i < 2048; i++)
+				BlswhstlCalcPaletteWithContrast(i, 100);
 
-		for (i =  0; i < cb; i++)
-			BlswhstlCalcPaletteWithContrast(i, brt);
+			for (i = cb; i < ce; i++) // selected layer
+				BlswhstlCalcPaletteWithContrast(i, brt);
 
-		for (i = cb; i < ce; i++) // text
-			BlswhstlCalcPaletteWithContrast(i, 100);
+		} else {
+			for (i =  0; i < cb; i++)
+				BlswhstlCalcPaletteWithContrast(i, brt);
 
-		for (i = ce; i < 2048; i++)
-			BlswhstlCalcPaletteWithContrast(i, brt);
+			for (i = cb; i < ce; i++) // text
+				BlswhstlCalcPaletteWithContrast(i, 100);
+
+			for (i = ce; i < 2048; i++)
+				BlswhstlCalcPaletteWithContrast(i, brt);
+		}
 
 		if (~dim_c & 0x10) {
 			konami_set_highlight_over_sprites_mode(1);
@@ -5716,7 +5732,7 @@ static INT32 TmntDraw()
 static INT32 BlswhstlDraw()
 {
 	INT32 Layer[3];
-	
+
 	K052109UpdateScroll();
 	
 	INT32 BGColourBase   = K053251GetPaletteIndex(0);
@@ -5724,7 +5740,9 @@ static INT32 BlswhstlDraw()
 	LayerColourBase[0] = K053251GetPaletteIndex(2);
 	LayerColourBase[1] = K053251GetPaletteIndex(4);
 	LayerColourBase[2] = K053251GetPaletteIndex(3);
-	
+
+	//bprintf(0, _T("colorbase: sp %x   bg %x   layer   %x  %x  %x\n"), SpriteColourBase, BGColourBase, LayerColourBase[0], LayerColourBase[1], LayerColourBase[2]);
+
 	LayerPri[0] = K053251GetPriority(2);
 	LayerPri[1] = K053251GetPriority(4);
 	LayerPri[2] = K053251GetPriority(3);
@@ -5735,9 +5753,9 @@ static INT32 BlswhstlDraw()
 	KonamiClearBitmaps(DrvPalette[16 * BGColourBase]);
 
 	sortlayers(Layer, LayerPri);
-
-	PaletteDim(Layer[2]);
-
+	//extern int counter;
+	PaletteDim((is_tmnt2) ? Layer[0] : Layer[2]);
+	//bprintf(0, _T("layer order: %x   %x   %x\n"), Layer[0], Layer[1], Layer[2]);
 	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, 1);
 	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, 2);
 	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, 4);
@@ -6286,43 +6304,38 @@ static INT32 LgtnfghtFrame()
 
 static INT32 Tmnt2Frame()
 {
-	INT32 nInterleave = 262;
-	INT32 nSoundBufferPos = 0;
-
 	if (DrvReset) SsridersDoReset();
 
 	SsridersMakeInputs();
 
+	INT32 nInterleave = 262;
+	INT32 nSoundBufferPos = 0;
 	nCyclesTotal[0] = 16000000 / 60;
 	nCyclesTotal[1] = 8000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 drawn = 0;
 
 	SekNewFrame();
 	ZetNewFrame();
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
 
-		// Run 68000
-		nCurrentCPU = 0;
+	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 19) DrvVBlank = 0;
-		if (i == 243) DrvVBlank = 1;
-		if (i == 243 && K052109_irq_enabled) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 243) {
+			DrvVBlank = 1;
+			if (K052109_irq_enabled) {
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+				if (pBurnDraw) BlswhstlDraw();
+				drawn = 1;
+			}
+		}
 		SekClose();
-		
-		// Run Z80
-		nCurrentCPU = 1;
+
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		CPU_RUN(1, Zet);
 		ZetClose();
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -6342,8 +6355,8 @@ static INT32 Tmnt2Frame()
 			K053260Update(0, pSoundBuf, nSegmentLength);
 		}
 	}
-	
-	if (pBurnDraw) BlswhstlDraw();
+
+	if (pBurnDraw && !drawn) BlswhstlDraw();
 
 	return 0;
 }

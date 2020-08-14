@@ -692,6 +692,7 @@ DRV		BurnDrvAstdelux2;
 DRV		BurnDrvAstdelux;
 DRV		BurnDrvAstrians;
 DRV		BurnDrvMSX_astrobls;
+DRV		BurnDrvcv_astrododge;
 DRV		BurnDrvnes_astrofanj;
 DRV		BurnDrvnes_astrofan;
 DRV		BurnDrvCastfant;
@@ -15303,6 +15304,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAstdelux,			// Asteroids Deluxe (rev 3)
 	&BurnDrvAstrians,			// Astrians (clone of Swarm)
 	&BurnDrvMSX_astrobls,		// Astro Blaster (Euro)
+	&BurnDrvcv_astrododge,		// Astro Dodge (HB)
 	&BurnDrvnes_astrofanj,		// Astro Fang - Super Machine (Japan)
 	&BurnDrvnes_astrofan,		// Astro Fang - Super Machine (T-eng)
 	&BurnDrvCastfant,			// Astro Fantasia (DECO Cassette) (US)

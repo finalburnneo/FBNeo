@@ -32794,3 +32794,44 @@ struct BurnDriver BurnDrvnes_zippyrace = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Jungle Book, The (Brightness fix)
+// Hacked by Ilya Indigo
+// https://www.romhacking.net/hacks/5323/
+
+static struct BurnRomInfo nes_junglebookthebRomDesc[] = {
+	{ "jungle book, the (2020)(brightness fix).nes",          262160, 0x1c9a2869, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_junglebooktheb)
+STD_ROM_FN(nes_junglebooktheb)
+
+struct BurnDriver BurnDrvnes_junglebooktheb = {
+	"nes_junglebooktheb", "nes_junglebookthe", NULL, NULL, "2020-08-09",
+	"Jungle Book, The (Brightness fix)\0", NULL, "Ilya Indigo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_junglebookthebRomInfo, nes_junglebookthebRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Royal Pals (Hack)
+// Hacked by QUXNLADY
+// https://www.romhacking.net/hacks/5320/
+
+static struct BurnRomInfo nes_srpRomDesc[] = {
+	{ "super royal pals (2020)(QUXNLADY).nes",          40976, 0x62797e6e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_srp)
+STD_ROM_FN(nes_srp)
+
+struct BurnDriver BurnDrvnes_srp = {
+	"nes_srp", "nes_smb", NULL, NULL, "2020-08-06",
+	"Super Royal Pals (Hack)\0", NULL, "QUXNLADY", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_srpRomInfo, nes_srpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};

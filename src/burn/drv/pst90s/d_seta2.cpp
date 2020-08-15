@@ -918,11 +918,11 @@ STD_ROM_FN(grdians)
 
 // Guardians\0Denjin Makai II (Shen Yue Edition, Hack)
 // Hacked by Gu Shen Gan Yue
-// GOTVG 20200628
+// GOTVG 20200806
 
 static struct BurnRomInfo grdianssyRomDesc[] = {
-	{ "grdianssy_u2.bin",	0x080000, 0xb40bd1b2, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianssy_u3.bin",	0x080000, 0xb91195ab, BRF_ESS | BRF_PRG },
+	{ "grdianssy_u2.bin",	0x080000, 0xcfc27499, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianssy_u3.bin",	0x080000, 0xced3d156, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -1352,10 +1352,9 @@ static void tmp68301_update_timer( INT32 i )
 			tmp68301_timer[i] = (INT32) (M68K_CYCS / duration);
 			//tmp68301_timer_counter[i] = 0;
 			//bprintf(PRINT_NORMAL, _T("Tmp68301: update timer #%d duration to %d (%8.3f)\n"), i, tmp68301_timer[i], duration);
-		} else {
+		} else
 			//logerror("CPU #0 PC %06X: TMP68301 error, timer %d duration is 0\n",activecpu_get_pc(),i);
-			//bprintf(PRINT_ERROR, _T("Tmp68301: error timer %d duration is 0\n"), i, TCR, MAX1, MAX2);
-		}
+			bprintf(PRINT_ERROR, _T("Tmp68301: error timer %d duration is 0\n"), i, TCR, MAX1, MAX2);
 	}
 }
 
@@ -2799,12 +2798,12 @@ UINT16 __fastcall samshootReadWord(UINT32 address)
 	return 0;
 }
 
-static INT32 samshootInit(INT32 game_id)
+static INT32 samshootInit()
 {
 	INT32 nRet;
 	
 	HasNVRam = 1;
-	is_samshoot = game_id;
+	is_samshoot = 1;
 
 	Mem = NULL;
 	MemIndex(0x0200000, 0x2000000, 0x0500000, 0x010000);
@@ -2884,28 +2883,6 @@ static INT32 samshootInit(INT32 game_id)
 	DrvDoReset();
 
 	return 0;
-}
-
-// is_samshoot = [1 deerhunt, 2 turkhunt, 3 trophyh, 4 wschamp]
-
-static INT32 deerhuntInit()
-{
-	return samshootInit(1);
-}
-
-static INT32 turkhuntInit()
-{
-	return samshootInit(2);
-}
-
-static INT32 trophyhInit()
-{
-	return samshootInit(3);
-}
-
-static INT32 wschampInit()
-{
-	return samshootInit(4);
 }
 
 
@@ -3440,13 +3417,10 @@ static INT32 samshootFrame()
 		float y0 = (240 - ((float)((BurnGunY[0] >> 8) + 8))) / 240 * 240;
 		float x1 = (320 - ((float)((BurnGunX[1] >> 8) + 8))) / 320 * 160;
 		float y1 = (240 - ((float)((BurnGunY[1] >> 8) + 8))) / 240 * 240;
-
-		const INT32 gun_offs[5][2] = { {0, 0}, {-2, -2}, {2, 11}, {-8, -3}, {-1, -3} };
-
-		DrvAnalogInput[0] = (UINT8)x0 + 36 + gun_offs[is_samshoot][0];
-		DrvAnalogInput[1] = (UINT8)y0 + 22 + gun_offs[is_samshoot][1];
-		DrvAnalogInput[2] = (UINT8)x1 + 36 + gun_offs[is_samshoot][0];
-		DrvAnalogInput[3] = (UINT8)y1 + 22 + gun_offs[is_samshoot][1];
+		DrvAnalogInput[0] = (UINT8)x0 + 36;
+		DrvAnalogInput[1] = (UINT8)y0 + 22;
+		DrvAnalogInput[2] = (UINT8)x1 + 36;
+		DrvAnalogInput[3] = (UINT8)y1 + 22;
 	}
 
 	INT32 nInterleave = 256;
@@ -3562,7 +3536,7 @@ struct BurnDriver BurnDrvGrdians = {
 };
 
 struct BurnDriver BurnDrvGrdianssy = {
-	"grdianssy", "grdians", NULL, NULL, "2020-06-28",
+	"grdianssy", "grdians", NULL, NULL, "2020-08-06",
 	"Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)\0", "Imperfect graphics @ game start cutscene", "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3647,7 +3621,7 @@ struct BurnDriver BurnDrvDeerhunt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuntRomInfo, deerhuntRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3657,7 +3631,7 @@ struct BurnDriver BurnDrvDeerhuna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhunaRomInfo, deerhunaRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3667,7 +3641,7 @@ struct BurnDriver BurnDrvDeerhunb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhunbRomInfo, deerhunbRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3677,7 +3651,7 @@ struct BurnDriver BurnDrvDeerhunc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuncRomInfo, deerhuncRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3687,7 +3661,7 @@ struct BurnDriver BurnDrvDeerhund = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhundRomInfo, deerhundRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3697,7 +3671,7 @@ struct BurnDriver BurnDrvDeerhune = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuneRomInfo, deerhuneRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3707,7 +3681,7 @@ struct BurnDriver BurnDrvDeerhunj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhunjRomInfo, deerhunjRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	deerhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3717,7 +3691,7 @@ struct BurnDriver BurnDrvTurkhunt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, turkhuntRomInfo, turkhuntRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, TurkhuntDIPInfo,
-	turkhuntInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3727,7 +3701,7 @@ struct BurnDriver BurnDrvWschamp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampRomInfo, wschampRomName, NULL, NULL, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	wschampInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3737,7 +3711,7 @@ struct BurnDriver BurnDrvWschampa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampaRomInfo, wschampaRomName, NULL, NULL, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	wschampInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3747,7 +3721,7 @@ struct BurnDriver BurnDrvWschampb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampbRomInfo, wschampbRomName, NULL, NULL, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	wschampInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3757,7 +3731,7 @@ struct BurnDriver BurnDrvTrophyh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, trophyhRomInfo, trophyhRomName, NULL, NULL, NULL, NULL, WschampInputInfo, TrophyhDIPInfo,
-	trophyhInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 

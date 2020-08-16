@@ -10850,6 +10850,23 @@ struct BurnDriver BurnDrvnes_gaplus = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_kosatakRomDesc[] = {
+	{ "Kosmity Atakujo (HB, v10.07.2020).nes",          131088, 0x0570865c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kosatak)
+STD_ROM_FN(nes_kosatak)
+
+struct BurnDriver BurnDrvnes_kosatak = {
+	"nes_kosatak", NULL, NULL, NULL, "2020",
+	"Kosmity Atakujo (HB, v10.07.2020)\0", NULL, "sdm2", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_jaysilentRomDesc[] = {
 	{ "Jay and Silent Bob Mall Brawl.nes",          393232, 0xf167590d, BRF_ESS | BRF_PRG },
 };

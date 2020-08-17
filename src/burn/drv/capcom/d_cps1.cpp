@@ -23817,21 +23817,21 @@ struct BurnDriver BurnDrvCpsDinods = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// 天地を喰らう II - 赤壁の戦い (達人 バージョン, ハック) / Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
+// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
 // Hacked by Bindi
-// GOTVG Last update 2020-03-26
+// GOTVG 20200811
 
 static struct BurnRomInfo WofjdrRomDesc[] = {
-	{ "wofjdr.bin",		0x200000, 0x3fc42adb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "wofjdr.bin",		0x200000, 0x88c9dbb8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "tk2-1m.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
-	{ "tk2-3m.5a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
-	{ "tk2-2m.4a",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
-	{ "tk2-4m.6a",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
-	{ "wofjdr-5m.7a",	0x080000, 0xe3c8c198, BRF_GRA | CPS1_TILES },
-	{ "wofjdr-6m.8a",	0x080000, 0x5e3c0642, BRF_GRA | CPS1_TILES },
-	{ "wofjdr-7m.9a",	0x080000, 0xd65a91d9, BRF_GRA | CPS1_TILES },
-	{ "wofjdr-8m.10a",	0x080000, 0x675d490e, BRF_GRA | CPS1_TILES },
+	{ "tk2_01.3a",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "tk2_02.4a",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "tk2_03.5a",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "tk2_04.6a",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "wofjdr_05.7a",	0x080000, 0xe3c8c198, BRF_GRA | CPS1_TILES },
+	{ "wofjdr_06.8a",	0x080000, 0x5e3c0642, BRF_GRA | CPS1_TILES },
+	{ "wofjdr_07.9a",	0x080000, 0xd65a91d9, BRF_GRA | CPS1_TILES },
+	{ "wofjdr_08.10a",	0x080000, 0x675d490e, BRF_GRA | CPS1_TILES },
 
 	{ "tk2_qa.5k",		0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -23847,9 +23847,9 @@ STD_ROM_PICK(Wofjdr)
 STD_ROM_FN(Wofjdr)
 
 struct BurnDriver BurnDrvCpsWofjdr = {
-	"wofjdr", "wof", NULL, NULL, "2020-03-26",
+	"wofjdr", "wof", NULL, NULL, "2020-08-11",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
-	L"\u5929\u5730\u3092\u55b0\u3089\u3046 II - \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba \u30d0\u30fc\u30b8\u30e7\u30f3, \u30cf\u30c3\u30af)\0Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55b0\u3089\u3046 II - \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba \u30d0\u30fc\u30b8\u30e7\u30f3, \u30cf\u30c3\u30af)\0Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0 ", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjdrRomInfo, WofjdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

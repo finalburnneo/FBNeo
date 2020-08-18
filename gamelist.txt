@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14344 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14373 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -143,6 +143,7 @@ This list contains all games supported by FinalBurn Neo.
 | abcop		|  	| A.B. Cop (World, FD1094 317-0169b)			| 		| 1990	| Sega		| X-Board	| 					|
 | ad2083	|  	| A.D. 2083						| 		| 1983	| Midcoin	| Galaxian	| Incomplete Sound			|
 | msx_ae	|  	| A.E. (Jpn)						| 		| 1982	| Toshiba EMI	| MSX		| 					|
+| cv_ae		|  	| A.E.:Anti-Environment Encounter (HB)			| 		| 2012	| Broderbund Sof| ColecoVision	| Published by CollectorVision Games	|
 | msx_a1spirit	|  	| A1 Spirit - The Way to Formula-1 (Jpn)		| msx_f1spirit	| 1987	| Panasoft	| MSX		| Set BIOS to Japanese mode.		|
 | gg_aaharima	|  	| Aa Harimanada (Jpn)					| 		| 1993	| Sega		| Sega Game Gear| 					|
 | md_aaharima	|  	| Aa Harimanada (Jpn)					| 		| 1993	| Sega		| Sega Megadrive| 					|
@@ -684,6 +685,7 @@ This list contains all games supported by FinalBurn Neo.
 | astdelux	|  	| Asteroids Deluxe (rev 3)				| 		| 1980	| Atari		| Miscellaneous	| 					|
 | astrians	|  	| Astrians (clone of Swarm)				| galaxian	| 1979	| BGV Ltd	| Galaxian	| 					|
 | msx_astrobls	|  	| Astro Blaster (Euro)					| 		| 1988	| Eurosoft	| MSX		| 					|
+| cv_astrododge	|  	| Astro Dodge (HB)					| 		| 2012	| Revival Studio| ColecoVision	| 					|
 | nes_astrofanj	|  	| Astro Fang - Super Machine (Japan)			| nes_astrofan	| 1990	| A Wave	| Miscellaneous	| 					|
 | nes_astrofan	|  	| Astro Fang - Super Machine (T-eng)			| 		| 1990	| A Wave	| Miscellaneous	| 					|
 | castfant	|  	| Astro Fantasia (DECO Cassette) (US)			| 		| 1981	| Data East Corp| Cassette Syste| 					|
@@ -884,11 +886,13 @@ This list contains all games supported by FinalBurn Neo.
 | bang		|  	| Bang!							| 		| 1998	| Gaelco	| Miscellaneous	| 					|
 | sms_bankp	|  	| Bank Panic (Euro)					| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_bankpc	|  	| Bank Panic (Euro, Sega Card)				| sms_bankp	| 1987	| Sega		| Sega Master Sy| 					|
+| cv_bankpanic	|  	| Bank Panic (HB)					| 		| 2011	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_bankp	|  	| Bank Panic (Jpn)					| 		| 1986	| Pony Canyon	| MSX		| 					|
 | sg1k_bankp	|  	| Bank Panic (Jpn)					| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_bankpa	|  	| Bank Panic (Jpn, Alt)					| msx_bankp	| 1986	| Pony Canyon	| MSX		| 					|
 | msx_bankpk	|  	| Bank Panic (Kor)					| msx_bankp	| 19??	| Prosoft	| MSX		| 					|
 | bankp		|  	| Bank Panic						| 		| 1984	| [Sanritsu] Seg| Miscellaneous	| 					|
+| cv_bankbuild	|  	| Bankruptcy Builder (HB)				| 		| 2013	| Good Deal Game| ColecoVision	| 					|
 | sms_baraburu10|  	| Bara Buruu (HB, v1.0)					| 		| 2016	| Kagesan	| Sega Master Sy| 					|
 | baraduke	|  	| Baraduke						| aliensec	| 1985	| Namco		| Miscellaneous	| 					|
 | spec_barbarn	|  	| Barbarian (128K)					| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
@@ -1018,6 +1022,7 @@ This list contains all games supported by FinalBurn Neo.
 | atlantisb	|  	| Battle of Atlantis (bootleg)				| atlantis	| 1981	| bootleg	| Galaxian	| 					|
 | atlantis	|  	| Battle of Atlantis (set 1)				| 		| 1981	| Comsoft	| Galaxian	| 					|
 | atlantis2	|  	| Battle of Atlantis (set 2)				| atlantis	| 1981	| Comsoft	| Galaxian	| 					|
+| cv_bofhoth	|  	| Battle of Hoth (HB)					| 		| 2013	| Team Pixelboy	| ColecoVision	| 					|
 | nes_battloly	|  	| Battle of Olympus, The (USA)				| 		| 1989	| Broderbund	| Miscellaneous	| 					|
 | sms_battleor	|  	| Battle Out Run (Euro, Bra)				| 		| 1989	| Sega		| Sega Master Sy| 					|
 | sms_battleorfm|  	| Battle Out Run (FM Mod)				| sms_battleor	| 2018	| Sega - SMS Pow| Sega Master Sy| YM2413 FM sound chip supported	|
@@ -1642,6 +1647,7 @@ This list contains all games supported by FinalBurn Neo.
 | buzzard	|  	| Buzzard						| gyrodine	| 1984	| Crux		| Kyugo		| 					|
 | bygone	|  	| Bygone						| 		| 1985	| Taito Corporat| Miscellaneous	| Imperfect sound			|
 | cchip		|  	| C-Chip Internal ROM					| 		| 1989	| Taito Corporat| C-Chip Interna| Internal ROM only			|
+| cv_cso	|  	| C-So! (HB)						| 		| 2018	| Pony - Sega	| ColecoVision	| Published by Team Pixelboy		|
 | msx_cso	|  	| C_So! (Jpn)						| 		| 1985	| Pony Canyon	| MSX		| 					|
 | sg1k_cso	|  	| C_So! (Jpn)						| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_csok	|  	| C_So! (Kor)						| msx_cso	| 198?	| Zemina	| MSX		| 					|
@@ -1855,6 +1861,7 @@ This list contains all games supported by FinalBurn Neo.
 | catacomb	|  	| Catacomb						| 		| 1982	| MTM Games	| Galaxian	| Bad Colours				|
 | catapult	| D NW	| Catapult						| 		| 1982	| Epos Corporati| EPOS Tristar	| Bad dump				|
 | ctrpllrp	|  	| Caterpillar Pacman Hack				| puckman	| 1982	| hack		| Pac-man	| 					|
+| cv_catsos	|  	| Caterpillar S.O.S. (HB)				| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | catt		|  	| Catt (Japan)						| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
 | md_cavestory	|  	| Cave Story Doukutsu (HB, v0.6.0)			| 		| 2020-07-29| Studio Pixel	| Sega Megadrive| 					|
 | cavelon	|  	| Cavelon						| 		| 1983	| Jetsoft	| Galaxian	| 					|
@@ -2123,6 +2130,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_circuscaper|  	| Circus Caper (USA)					| 		| 1990	| Toho		| Miscellaneous	| 					|
 | circuscc	|  	| Circus Charlie (Centuri)				| circusc	| 1984	| Konami (Centur| GX380		| 					|
 | circusce	|  	| Circus Charlie (Centuri, earlier)			| circusc	| 1984	| Konami (Centur| GX380		| 					|
+| cv_ccharlie	|  	| Circus Charlie (HB)					| 		| 2011	| Konami	| ColecoVision	| Published by Team Pixelboy		|
 | nes_circuscharlie|  	| Circus Charlie (Japan)				| 		| 1986	| Soft Pro	| Miscellaneous	| 					|
 | msx_circusc	|  	| Circus Charlie (Jpn)					| 		| 1984	| Konami	| MSX		| 					|
 | sg1k_circusck	|  	| Circus Charlie (Kor)					| sg1k_circusc	| 198?	| Unknown	| Sega SG-1000	| 					|
@@ -4551,6 +4559,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ggport1	|  	| GG Portrait - Yuuki Akira (Jpn)			| 		| 1996	| Sega		| Sega Game Gear| 					|
 | gg_ggtrcn	|  	| GG Turrican (HB, Demo v1.0)				| 		| 2005	| Martin Konrad	| Sega Game Gear| 					|
 | msx_ghost	|  	| Ghost (Spa)						| 		| 1989	| Mind Games Esp| MSX		| 					|
+| cv_gblaster	|  	| Ghost Blaster (HB)					| 		| 2006	| Daniel Bienven| ColecoVision	| 					|
 | ghostbi	|  	| Ghost Busters (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | sms_ghosth	|  	| Ghost House (Euro, USA, Bra)				| 		| 1986	| Sega		| Sega Master Sy| 					|
 | sms_ghosthc	|  	| Ghost House (Euro, USA, Bra, Sega Card)		| sms_ghosth	| 1986	| Sega		| Sega Master Sy| 					|
@@ -4619,6 +4628,7 @@ This list contains all games supported by FinalBurn Neo.
 | gteikokub	|  	| Gingateikoku No Gyakushu (bootleg set 1)		| uniwars	| 1980	| bootleg	| Galaxian	| 					|
 | gteikokub2	|  	| Gingateikoku No Gyakushu (bootleg set 2)		| uniwars	| 1980	| bootleg	| Galaxian	| 					|
 | gteikoku	|  	| Gingateikoku No Gyakushu				| uniwars	| 1980	| Irem		| Galaxian	| 					|
+| cv_ggarden	|  	| Girl's Garden (HB)					| 		| 2010	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_girlgard	|  	| Girl's Garden (Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | sg1k_girlgardt|  	| Girl's Garden (Tw)					| sg1k_girlgard	| 1984?	| Aaronix	| Sega SG-1000	| 					|
 | sgladiat	|  	| Gladiator 1984					| 		| 1984	| SNK		| Miscellaneous	| 					|
@@ -4728,6 +4738,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_golfgame	|  	| Golf Game (Jpn)					| 		| 1983	| ASCII		| MSX		| 					|
 | sms_golfaman	|  	| Golfamania (Euro, Bra)				| 		| 1990	| Sega		| Sega Master Sy| 					|
 | sms_golfamanp	|  	| Golfamania (Prototype)				| sms_golfaman	| 1990	| Sega		| Sega Master Sy| 					|
+| cv_golgo13	|  	| Golgo 13 (HB)						| 		| 2011	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_golgo13	|  	| Golgo 13 (Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | nes_golgo13	|  	| Golgo 13 - Top Secret Episode (USA)			| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
 | gollygho	|   NW	| Golly! Ghost!						| 		| 1990	| Namco		| System 2	| 					|
@@ -4744,6 +4755,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_gonzzalezz|  	| Gonzzalezz 						| 		| 1989	| Opera Soft	| MSX		| 					|
 | msx_goody	|  	| Goody (Spa)						| 		| 1987	| Opera Soft	| MSX		| 					|
 | md_goofy	|  	| Goofy's Hysterical History Tour (USA)			| 		| 1993	| Absolute Enter| Sega Megadrive| 					|
+| cv_goonies	|  	| Goonies (HB)						| 		| 2012	| Konami	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | fds_goonies	|  	| Goonies (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_goonies	|  	| Goonies (Japan)					| 		| 1986	| Konami	| Miscellaneous	| 					|
 | nes_gooniesiithe|  	| Goonies II, The (USA)					| 		| 1987	| Konami	| Miscellaneous	| 					|
@@ -4877,7 +4889,7 @@ This list contains all games supported by FinalBurn Neo.
 | grdnstrmau	|  	| Guardian Storm (horizontal, Australia)		| grdnstrm	| 1998	| Afega		| NMK16		| 					|
 | grdnstrm	|  	| Guardian Storm (horizontal, not encrypted)		| 		| 1998	| Afega (Apples | NMK16		| 					|
 | grdnstrmv	|  	| Guardian Storm (vertical)				| grdnstrm	| 1998	| Afega (Apples | NMK16		| 					|
-| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-06-28| Hack		| Newer Seta	| Imperfect graphics @ game start cutsce|
+| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-08-06| Hack		| Newer Seta	| Imperfect graphics @ game start cutsce|
 | grdians	|  	| Guardians\0Denjin Makai II				| 		| 1995	| Banpresto	| Newer Seta	| Imperfect graphics @ game start cutsce|
 | msx_guardic	|  	| Guardic (Jpn)						| 		| 1986	| Compile	| MSX		| 					|
 | msx_guardica	|  	| Guardic (Jpn, Alt)					| msx_guardic	| 1986	| Compile	| MSX		| 					|
@@ -4896,6 +4908,7 @@ This list contains all games supported by FinalBurn Neo.
 | gulfstrmb	|  	| Gulf Storm (set 3)					| gulfstrm	| 1991	| Dooyong	| Miscellaneous	| 					|
 | gulfwar2	|  	| Gulf War II (set 1)					| 		| 1991	| Comad		| Miscellaneous	| 					|
 | gulfwar2a	|  	| Gulf War II (set 2)					| gulfwar2	| 1991	| Comad		| Miscellaneous	| 					|
+| cv_gulkave	|  	| Gulkave (HB)						| 		| 2012	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_gulkave	|  	| Gulkave (Jpn)						| 		| 1986	| Pony Canyon	| MSX		| 					|
 | sg1k_gulkave	|  	| Gulkave (Jpn)						| 		| 1986	| Sega		| Sega SG-1000	| 					|
 | msx_gulkavea	|  	| Gulkave (Jpn, Alt)					| msx_gulkave	| 1986	| Pony Canyon	| MSX		| 					|
@@ -5324,6 +5337,7 @@ This list contains all games supported by FinalBurn Neo.
 | hyperpacb	|  	| Hyper Pacman (bootleg)				| hyperpac	| 1995	| SemiCom	| Kaneko Pandora| 					|
 | hyperpac	|  	| Hyper Pacman						| 		| 1995	| SemiCom	| Kaneko Pandora| 					|
 | gg_hypyak92	|  	| Hyper Pro Yakyuu '92 (Jpn)				| 		| 1992	| Sega		| Sega Game Gear| 					|
+| cv_hrally	|  	| Hyper Rally (HB)					| 		| 2011	| Konami	| ColecoVision	| Published by Team Pixelboy		|
 | msx_hyprally	|  	| Hyper Rally (Jpn)					| 		| 1985	| Konami	| MSX		| 					|
 | msx_hyprallyb	|  	| Hyper Rally (Jpn, Alt 2)				| msx_hyprally	| 1985	| Konami	| MSX		| 					|
 | msx_hyprallyc	|  	| Hyper Rally (Jpn, Alt 3)				| msx_hyprally	| 1985	| Konami	| MSX		| 					|
@@ -5720,6 +5734,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_junctionj	|  	| Junction (Jpn)					| gg_junction	| 1991	| Micronet	| Sega Game Gear| 					|
 | md_junction	|  	| Junction (Jpn, USA)					| 		| 1990	| Micronet	| Sega Megadrive| 					|
 | gg_junction	|  	| Junction (USA)					| 		| 1991	| Micronet	| Sega Game Gear| 					|
+| nes_junglebooktheb|  	| Jungle Book, The (Brightness fix)			| nes_junglebookthe| 2020-08-09| Ilya Indigo	| Miscellaneous	| 					|
 | nes_junglebookthe|  	| Jungle Book, The (USA)				| 		| 1994	| Virgin Games	| Miscellaneous	| 					|
 | jungleby	|  	| Jungle Boy (bootleg)					| junglek	| 1982	| bootleg	| Taito SJ Syste| 					|
 | junglehbr	|  	| Jungle Hunt (Brazil)					| junglek	| 1983	| Taito do Brasi| Taito SJ Syste| 					|
@@ -5936,6 +5951,7 @@ This list contains all games supported by FinalBurn Neo.
 | kinst214ai	|   NW	| Killer Instinct II (ROM ver. 1.4 AnyIDE)		| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
 | kinst2	|   NW	| Killer Instinct II (ROM ver. 1.4)			| 		| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
 | gg_kineticc	|  	| Kinetic Connection (Jpn)				| 		| 1991	| Sega		| Sega Game Gear| 					|
+| cv_kingball	|  	| King & Balloon (HB)					| 		| 2018	| Namco		| ColecoVision	| SGM - Published by Team Pixelboy	|
 | kingballj	|  	| King & Balloon (Japan)				| kingball	| 1980	| Namco		| Galaxian	| 					|
 | msx_kingball	|  	| King & Balloon (Jpn)					| 		| 1984	| Namcot	| MSX		| 					|
 | msx_kingballa	|  	| King & Balloon (Jpn, Alt)				| msx_kingball	| 1984	| Namcot	| MSX		| 					|
@@ -5977,6 +5993,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_kingvalc	|  	| King's Valley (Euro, Jpn, Alt 3)			| msx_kingval	| 1985	| Konami	| MSX		| 					|
 | msx_kingvald	|  	| King's Valley (Euro, Jpn, Alt 4)			| msx_kingval	| 1985	| Konami	| MSX		| 					|
 | msx_kingvala	|  	| King's Valley (Euro, Jpn, Alt)			| msx_kingval	| 1985	| Konami	| MSX		| 					|
+| cv_kvalley	|  	| King's Valley (HB)					| 		| 2018	| Konami	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | cv_kingvalley	|  	| King's Valley (SGM)					| 		| 2012	| Konami	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | msx_kingval2	|  	| King's Valley II (Euro) ~ Ouke no Tani - El Giza no Fu| 		| 1988	| Konami	| MSX		| 					|
 | sg1k_jinzita	|  	| King's Valley, Jinzita (Tw)				| 		| 198?	| Aaronix	| Sega SG-1000	| 					|
@@ -6018,10 +6035,12 @@ This list contains all games supported by FinalBurn Neo.
 | klondkp	|  	| KlonDike+						| 		| 1999	| Eolith	| Miscellaneous	| 					|
 | knightb	|  	| Knight Boy						| kikikai	| 1986	| bootleg	| Miscellaneous	| 					|
 | spec_kniglore	|  	| Knight Lore (48K)					| 		| 1984	| Ultimate Play | ZX Spectrum	| 					|
+| cv_kngtlore	|  	| Knight Lore (HB)					| 		| 2018	| Ultimate	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | msx_knightlr	|  	| Knight Lore (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
 | fds_knighlor	|  	| Knight Lore - Majou no Ookami Otoko (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_knightrider|  	| Knight Rider (USA)					| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | pce_knightrs	|  	| Knight Rider Special					| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
+| cv_kngtmare	|  	| Knightmare (HB)					| 		| 2015	| Konami	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | kngtmare	|  	| Knightmare (prototype)				| 		| 1983	| Gottlieb	| Miscellaneous	| 					|
 | msx_knightmr	|  	| Knightmare - Majou Densetsu (Jpn)			| 		| 1986	| Konami	| MSX		| 					|
 | msx_knightmrb	|  	| Knightmare - Majou Densetsu (Jpn, Alt 2)		| msx_knightmr	| 1986	| Konami	| MSX		| 					|
@@ -6151,6 +6170,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_proyak90	|  	| Kore Ga Pro Yakyuu '90				| 		| 1990	| Intec		| PC Engine	| 					|
 | korokoro	|  	| Koro Koro Quest (Japan)				| 		| 1999	| Takumi	| Cave		| 					|
 | korosuke	|  	| Korosuke Roller					| crush		| 1981	| Kural Electric| Pac-man	| 					|
+| nes_kosatak	|  	| Kosmity Atakujo (HB, v10.07.2020)			| 		| 2020	| sdm2		| Miscellaneous	| 					|
 | myangel	|  	| Kosodate Quiz My Angel (Japan)			| 		| 1996	| Namco		| Newer Seta	| 					|
 | myangel2	|  	| Kosodate Quiz My Angel 2 (Japan)			| 		| 1996	| Namco		| Newer Seta	| 					|
 | legofair	|  	| Koukuu Kihei Monogatari - The Legend of Air Cavalry (J| chopper	| 1988	| SNK		| Miscellaneous	| 					|
@@ -6161,6 +6181,7 @@ This list contains all games supported by FinalBurn Neo.
 | kroozr	|  	| Kozmik Kroozr						| 		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | kozure	|  	| Kozure Ookami (Japan)					| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
 | msx_krakout	|  	| Krakout (Euro)					| 		| 1987	| Gremlin Graphi| MSX		| 					|
+| cv_krtetris	|  	| Kralizec Tetris (HB)					| 		| 2017	| Kralizec	| ColecoVision	| Published by Team Pixelboy		|
 | cv_ktetris	|  	| Kralizec Tetris (HB)					| 		| 2016	| Team Pixelboy	| ColecoVision	| 					|
 | msx_ktetrisv2	|  	| Kralizec Tetris v2 (HB)				| 		| 2005	| Kralizec	| MSX		| 					|
 | kram3		| X NW	| Kram (encrypted)					| kram		| 1982	| Taito America | Miscellaneous	| 					|
@@ -6193,7 +6214,7 @@ This list contains all games supported by FinalBurn Neo.
 | kungfub2	|  	| Kung-Fu Master (bootleg set 2)			| kungfum	| 1984	| bootleg	| Irem M62	| 					|
 | kungfub3	|  	| Kung-Fu Master (bootleg set 3)			| kungfum	| 1984	| bootleg	| Irem M62	| 					|
 | kungfumd	|  	| Kung-Fu Master (Data East)				| kungfum	| 1984	| Irem (Data Eas| Irem M62	| 					|
-| cv_kungfumstr	|  	| Kung-Fu Master (HB)					| 		| 2016	| CollectorVisio| ColecoVision	| (SGM) - Beta version, no health meter	|
+| cv_kungfumstr	|  	| Kung-Fu Master (HB)					| 		| 2016	| CollectorVisio| ColecoVision	| 					|
 | kungfum	|  	| Kung-Fu Master					| 		| 1984	| Irem		| Irem M62	| 					|
 | kungfuta	|  	| Kung-Fu Taikun (alt)					| kungfut	| 1984	| Seibu Kaihatsu| Miscellaneous	| 					|
 | msx_kungfut	|  	| Kung-Fu Taikun (Jpn)					| 		| 1985	| Toshiba EMI	| MSX		| 					|
@@ -6698,6 +6719,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_mikkoku	|  	| Maison Ikkoku						| 		| 1989	| Micro Cabin	| PC Engine	| 					|
 | majest12j	|  	| Majestic Twelve - The Space Invaders Part IV (Japan)	| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
 | majest12u	|  	| Majestic Twelve - The Space Invaders Part IV (US)	| ssi		| 1990	| Taito America | Taito F2	| 					|
+| cv_majikazo	|  	| Majikazo (HB)						| 		| 2016	| Team Pixelboy | ColecoVision	| SGM - Super Game Module		|
 | msx_majikazo	|  	| Majikazo (HB)						| 		| 2006	| Lemonize	| MSX		| 					|
 | pce_wataru	|  	| Majin Eiyuu Den Wataru				| 		| 1988	| Hudson	| PC Engine	| 					|
 | mhavocp	|  	| Major Havoc (prototype)				| mhavoc	| 1983	| Atari		| Miscellaneous	| 					|
@@ -8150,6 +8172,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_opwolf_48|  	| Operation Wolf (48K)					| spec_opwolf	| 1988	| Ocean		| ZX Spectrum	| 					|
 | msx_opwolfos	|  	| Operation Wolf (Euro)					| 		| 1988	| Ocean Software| MSX		| 					|
 | sms_opwolf	|  	| Operation Wolf (Euro, Bra)				| 		| 1990	| Sega		| Sega Master Sy| Light Phaser game			|
+| cv_opwolf	|  	| Operation Wolf (HB)					| 		| 2016	| Team Pixelboy | ColecoVision	| SGM - Super Game Module		|
 | msx_opwolf	|  	| Operation Wolf (HB)					| 		| 2009	| TOYBOX	| MSX		| 					|
 | opwolfj	|  	| Operation Wolf (Japan)				| opwolf	| 1987	| Taito Corporat| Taito Misc	| 					|
 | opwolfjsc	|  	| Operation Wolf (Japan, SC)				| opwolf	| 1987	| Taito Corporat| Taito Misc	| 					|
@@ -8686,6 +8709,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_pitfall2a	|  	| Pitfall II - Lost Caverns (Jpn, Alt)			| msx_pitfall2	| 1984	| Pony Canyon	| MSX		| 					|
 | sg1k_pitfall2a|  	| Pitfall II - The Lost Caverns (Jpn, v0)		| sg1k_pitfall2	| 1985	| Sega		| Sega SG-1000	| 					|
 | sg1k_pitfall2	|  	| Pitfall II - The Lost Caverns (Jpn, v1)		| 		| 1985	| Sega		| Sega SG-1000	| 					|
+| cv_pitfall2a	|  	| Pitfall II Arcade (HB)				| 		| 2010	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | cv_pitfall2	|  	| Pitfall II: Lost Caverns				| 		| 1984	| Activision	| ColecoVision	| 					|
 | msx_pitfall	|  	| Pitfall! (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| 					|
 | msx_pitfallb	|  	| Pitfall! (Jpn, Alt 2)					| msx_pitfall	| 1984	| Pony Canyon	| MSX		| 					|
@@ -9106,7 +9130,8 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_puzzlink	|  	| Puzzle Link (Euro)					| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_puzzlnk2	|  	| Puzzle Link 2 (Euro, USA)				| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | msx_puzpanic	|  	| Puzzle Panic (Jpn)					| 		| 1986	| System Soft	| MSX		| 					|
-| puzlstar	|  	| Puzzle Star (V100MG, China)				| 		| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
+| puzlstara	|  	| Puzzle Star / Mohuan Xingzuo (ver. 100MG, 09/20/99 bui| puzlstar	| 1999	| IGS		| PolyGameMaster| Incomplete dump			|
+| puzlstar	|  	| Puzzle Star / Mohuan Xingzuo (ver. 100MG, 09/30/99 bui| 		| 1999	| IGS (Metro lic| PolyGameMaster| Incomplete dump			|
 | uopoko	|  	| Puzzle Uo Poko (International, ver. 98/02/06)		| 		| 1999	| Cave / Jaleco	| Cave		| 					|
 | uopokoj	|  	| Puzzle Uo Poko (Japan, ver. 98/02/06)			| uopoko	| 1999	| Cave / Jaleco	| Cave		| 					|
 | joyjoy	|  	| Puzzled / Joy Joy Kid (NGM-021)(NGH-021)		| 		| 1990	| SNK		| Neo Geo MVS	| 					|
@@ -10024,7 +10049,9 @@ This list contains all games supported by FinalBurn Neo.
 | fds_sectionz	|  	| Section-Z (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_sectionz	|  	| Section-Z (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cv_secalpha	|  	| Sector Alpha						| 		| 1983	| Spectravideo	| ColecoVision	| 					|
-| sectrzon	|  	| Sector Zone						| seicross	| 1984	| Nichibutsu / A| Miscellaneous	| 					|
+| sectrzon	|  	| Sector Zone (set 1)					| seicross	| 1984	| Nichibutsu / A| Miscellaneous	| 					|
+| sectrzont	|   NW	| Sector Zone (set 2, Tecfri hardware)			| seicross	| 1984	| Nichibutsu / A| Miscellaneous	| 					|
+| sectrzona	|  	| Sector Zone (set 3)					| seicross	| 1984	| Nichibutsu / A| Miscellaneous	| 					|
 | md_segachnla	|   NW	| Sega Channel (General Instrument) (USA)		| md_segachnl	| 199?	| Scientific Atl| Sega Megadrive| 					|
 | md_segachnl	|  	| Sega Channel (Scientific Atlanta) (USA)		| 		| 199?	| Scientific Atl| Sega Megadrive| 					|
 | md_segachd	|  	| Sega Channel Demo (USA)				| 		| 199?	| Scientific Atl| Sega Megadrive| 					|
@@ -11689,6 +11716,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_suprjedi	|  	| Super Return of the Jedi (Euro, USA)			| 		| 1995	| Black Pearl	| Sega Game Gear| 					|
 | suprridr	|  	| Super Rider						| 		| 1983	| Taito Corporat| Miscellaneous	| 					|
 | md_srobowrs	|  	| Super Robot Wars (Rus)				| md_trgearth	| 199?	| Glorysun	| Sega Megadrive| 					|
+| nes_srp	|  	| Super Royal Pals (Hack)				| nes_smb	| 2020-08-06| QUXNLADY	| Miscellaneous	| 					|
 | nes_superrugby|  	| Super Rugby (Japan)					| 		| 1989	| TSS		| Miscellaneous	| 					|
 | sshanghaj	|  	| Super Shanghai Dragon's Eye (Japan)			| sshangha	| 1992	| Hot-B Co., Ltd| Miscellaneous	| 					|
 | sshanghak	|  	| Super Shanghai Dragon's Eye (Korea)			| sshangha	| 1992	| Hot-B Co., Ltd| Miscellaneous	| 					|
@@ -12112,7 +12140,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-03-26| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-08-11| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
@@ -12283,6 +12311,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_hicom3c	|  	| The Best Game Collection - Teddy Boy Blues + Pit-Pot +| sms_hicom3a	| 1990	| Hi-Com	| Sega Master Sy| 					|
 | bigprowr	|  	| The Big Pro Wrestling!				| 		| 1983	| Technos Japan	| Miscellaneous	| 					|
 | billiard	|  	| The Billiards						| hustler	| 1981	| bootleg	| Galaxian	| 					|
+| cv_blackonyx	|  	| The Black Onyx (HB)					| 		| 2013	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_blckonyx	|  	| The Black Onyx (Jpn)					| 		| 1985	| ASCII		| MSX		| 					|
 | sg1k_blckonyx	|  	| The Black Onyx (Jpn)					| 		| 1987	| Sega		| Sega SG-1000	| 					|
 | msx_blckony2	|  	| The Black Onyx II - Search For The Fire Crystal (Jpn)	| 		| 1986	| ASCII		| MSX		| 					|
@@ -12421,7 +12450,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof96a	|  	| The King of Fighters '96 (NGM-214, alternate board)	| kof96		| 1996	| SNK		| Neo Geo MVS	| 					|
 | kof96ae20	|  	| The King of Fighters '96 (The Anniversary Edition 2.0,| kof96		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97cn	|  	| The King of Fighters '97 (10th Anniversary Chinese Edi| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
-| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition build 2.| kof97		| 2020	| EGHT		| Neo Geo MVS	| 					|
+| kof97ae	|  	| The King of Fighters '97 (Anniversary Edition build 2.| kof97		| 2020-08-10| EGHT		| Neo Geo MVS	| 					|
 | kof97inv	|  	| The King of Fighters '97 (Invincible Plus)		| kof97		| 2019	| Hack		| Neo Geo MVS	| 					|
 | kof97k	|  	| The King of Fighters '97 (Korean release)		| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97h	|  	| The King of Fighters '97 (NGH-2320)			| kof97		| 1997	| SNK		| Neo Geo MVS	| 					|

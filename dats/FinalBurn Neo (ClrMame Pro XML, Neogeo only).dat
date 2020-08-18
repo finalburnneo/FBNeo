@@ -15295,10 +15295,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97ae" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Anniversary Edition build 2.1.1711) [Hack]</description>
-		<year>2020</year>
+		<description>The King of Fighters '97 (Anniversary Edition build 2.1.1811) [Hack]</description>
+		<year>2020-08-10</year>
 		<manufacturer>EGHT</manufacturer>
-		<rom name="kof97ae-p1.p1" size="1048576" crc="5759ea82"/>
+		<rom name="kof97ae-p1.p1" size="1048576" crc="e453b221"/>
 		<rom name="kof97ae-p2.sp2" size="4194304" crc="f00ba90d"/>
 		<rom name="kof97ae-s1.s1" size="131072" crc="30a6b3b8"/>
 		<rom name="kof97ae-c1.c1" size="8388608" crc="5f0133eb"/>

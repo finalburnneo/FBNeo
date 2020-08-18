@@ -918,11 +918,11 @@ STD_ROM_FN(grdians)
 
 // Guardians\0Denjin Makai II (Shen Yue Edition, Hack)
 // Hacked by Gu Shen Gan Yue
-// GOTVG 20200628
+// GOTVG 20200806
 
 static struct BurnRomInfo grdianssyRomDesc[] = {
-	{ "grdianssy_u2.bin",	0x080000, 0xb40bd1b2, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianssy_u3.bin",	0x080000, 0xb91195ab, BRF_ESS | BRF_PRG },
+	{ "grdianssy_u2.bin",	0x080000, 0xcfc27499, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianssy_u3.bin",	0x080000, 0xced3d156, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -3562,7 +3562,7 @@ struct BurnDriver BurnDrvGrdians = {
 };
 
 struct BurnDriver BurnDrvGrdianssy = {
-	"grdianssy", "grdians", NULL, NULL, "2020-06-28",
+	"grdianssy", "grdians", NULL, NULL, "2020-08-06",
 	"Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)\0", "Imperfect graphics @ game start cutscene", "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,

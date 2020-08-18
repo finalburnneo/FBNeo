@@ -1068,7 +1068,7 @@ struct BurnDriver BurnDrvSeicrossa = {
 };
 
 
-// Sector Zone
+// Sector Zone (set 1)
 
 static struct BurnRomInfo sectrzonRomDesc[] = {
 	{ "sz1.3a",		0x1000, 0xf0a45cb4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
@@ -1096,10 +1096,87 @@ STD_ROM_FN(sectrzon)
 
 struct BurnDriver BurnDrvSectrzon = {
 	"sectrzon", "seicross", NULL, NULL, "1984",
-	"Sector Zone\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
+	"Sector Zone (set 1)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzonRomInfo, sectrzonRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
+	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Sector Zone (set 2, Tecfri hardware)
+
+static struct BurnRomInfo sectrzontRomDesc[] = {
+	{ "czt_1.bin",	0x1000, 0xf0a45cb4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
+	{ "czt_2.bin",	0x1000, 0xfea68ddb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "czt_3.bin",	0x1000, 0xbaad4294, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "czt_4.bin",	0x1000, 0x75f2ca75, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "czt_5.bin",	0x1000, 0xdc14f2c8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "czt_6.bin",	0x1000, 0x397a38c5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "czt_7.bin",	0x1000, 0x7b34dc1c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "czt_8.bin",	0x1000, 0x673a20e7, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "czt_11.bin",	0x1000, 0xfbd9b91d, 2 | BRF_GRA },           //  8 Graphics
+	{ "czt_12.bin",	0x1000, 0x2bdef9ad, 2 | BRF_GRA },           //  9
+	{ "czt_9.bin",	0x1000, 0x4819f0cd, 2 | BRF_GRA },           // 10
+	{ "czt_10.bin",	0x1000, 0x4c268778, 2 | BRF_GRA },           // 11
+
+	{ "czt_2_82s123.bin",	0x0020, 0x4d218a3c, 3 | BRF_GRA },   // 12 Color Data
+	{ "czt_1_82s123.bin",	0x0020, 0xc550531c, 3 | BRF_GRA },   // 13
+
+	{ "czt_pal16h2cn.bin",	0x0044, 0x7edec1ed, 0 | BRF_OPT },   // 14 PLDs
+};
+
+STD_ROM_PICK(sectrzont)
+STD_ROM_FN(sectrzont)
+
+struct BurnDriver BurnDrvSectrzont = {
+	"sectrzont", "seicross", NULL, NULL, "1984",
+	"Sector Zone (set 2, Tecfri hardware)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, sectrzontRomInfo, sectrzontRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
+	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Sector Zone (set 3)
+// This and set seicross seem bug-fixed versions, where the attract mode works. In the other sets during attract the player only goes straight until he crashes
+
+static struct BurnRomInfo sectrzonaRomDesc[] = {
+	{ "sz1.3a",		0x1000, 0xf6c3aeca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
+	{ "sz2.3c",		0x1000, 0xf167f10e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sz3.3d",		0x1000, 0xceb3c8f4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sz4.3e",		0x1000, 0x3112af59, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sz5.3fg",	0x1000, 0xb494a993, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sz6.3h",		0x1000, 0x09d5b9da, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sz7.3i",		0x1000, 0x13052b03, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sz8.3j",		0x0800, 0x019f9651, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "sz11.7k",	0x1000, 0xfbd9b91d, 2 | BRF_GRA },           //  8 Graphics
+	{ "sz12.7m",	0x1000, 0x2bdef9ad, 2 | BRF_GRA },           //  9
+	{ "sz9.7j",		0x1000, 0x4819f0cd, 2 | BRF_GRA },           // 10
+	{ "sz10.7h",	0x1000, 0x4c268778, 2 | BRF_GRA },           // 11
+
+	// not dumped for this set
+	{ "sz73.10c",	0x0020, 0x4d218a3c, 3 | BRF_GRA },           // 12 Color Data
+	{ "sz74.10b",	0x0020, 0xc550531c, 3 | BRF_GRA },           // 13
+
+	// not dumped for this set
+	{ "pal16h2.3b",	0x0044, 0xe1a6a86d, 0 | BRF_OPT },           // 14 PLDs
+};
+
+STD_ROM_PICK(sectrzona)
+STD_ROM_FN(sectrzona)
+
+struct BurnDriver BurnDrvSectrzona = {
+	"sectrzona", "seicross", NULL, NULL, "1984",
+	"Sector Zone (set 3)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, sectrzonaRomInfo, sectrzonaRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

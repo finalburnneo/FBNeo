@@ -10751,6 +10751,48 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 // Non Homebrew (hand-added!)
 
+// Jungle Book, The (Brightness fix)
+// Hacked by Ilya Indigo
+// https://www.romhacking.net/hacks/5323/
+
+static struct BurnRomInfo nes_junglebookthebRomDesc[] = {
+	{ "jungle book, the (2020)(brightness fix).nes",          262160, 0x1c9a2869, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_junglebooktheb)
+STD_ROM_FN(nes_junglebooktheb)
+
+struct BurnDriver BurnDrvnes_junglebooktheb = {
+	"nes_junglebooktheb", "nes_junglebookthe", NULL, NULL, "2020-08-09",
+	"Jungle Book, The (Brightness fix)\0", NULL, "Ilya Indigo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_junglebookthebRomInfo, nes_junglebookthebRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Royal Pals (Hack)
+// Hacked by QUXNLADY
+// https://www.romhacking.net/hacks/5320/
+
+static struct BurnRomInfo nes_srpRomDesc[] = {
+	{ "super royal pals (2020)(QUXNLADY).nes",          40976, 0x62797e6e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_srp)
+STD_ROM_FN(nes_srp)
+
+struct BurnDriver BurnDrvnes_srp = {
+	"nes_srp", "nes_smb", NULL, NULL, "2020-08-06",
+	"Super Royal Pals (Hack)\0", NULL, "QUXNLADY", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_srpRomInfo, nes_srpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_rockm4miRomDesc[] = {
 	{ "Rockman 4 - Minus Infinity (Hack).nes",          1048592, 0xe9887ba6, BRF_ESS | BRF_PRG },
 };
@@ -10807,6 +10849,23 @@ struct BurnDriver BurnDrvnes_gaplus = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_kosatakRomDesc[] = {
+	{ "Kosmity Atakujo (HB, v10.07.2020).nes",          131088, 0x0570865c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kosatak)
+STD_ROM_FN(nes_kosatak)
+
+struct BurnDriver BurnDrvnes_kosatak = {
+	"nes_kosatak", NULL, NULL, NULL, "2020",
+	"Kosmity Atakujo (HB, v10.07.2020)\0", NULL, "sdm2", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_jaysilentRomDesc[] = {
 	{ "Jay and Silent Bob Mall Brawl.nes",          393232, 0xf167590d, BRF_ESS | BRF_PRG },
@@ -32793,4 +32852,3 @@ struct BurnDriver BurnDrvnes_zippyrace = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
-

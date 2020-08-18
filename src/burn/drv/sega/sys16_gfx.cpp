@@ -2984,7 +2984,7 @@ static void System18DrawVDP(INT32 prio)
 
 	for (y = 0; y < 224; y++)
 	{
-		UINT16 *src = pTempDraw + (y * 320);
+		UINT16 *src = pTempDraw + (y * 512);
 		UINT16 *dst = pTransDraw + (y * 320);
 		UINT8  *pri = pPrioDraw + (y * 320);
 
@@ -3003,7 +3003,7 @@ static void System18DrawVDP(INT32 prio)
 void UpdateSystem18VDP()
 {
 	for (INT32 y = 0; y < 224; y++) {
-		UINT16* pPixel = pTempDraw + (y * 320);
+		UINT16* pPixel = pTempDraw + (y * 512);
 		vdp_drawline(pPixel, y, 0xffff);
 	}
 }

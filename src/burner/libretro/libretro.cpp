@@ -1605,8 +1605,13 @@ static bool retro_load_game_common()
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
 
 		// Initialize game driver
-		BurnDrvInit();
-		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initializing driver for %s\n", g_driver_name);
+		if(BurnDrvInit() == 0)
+			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initialized driver for %s\n", g_driver_name);
+		else
+		{
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed initializing driver for %s\n", g_driver_name);
+			return false;
+		}
 
 		// MemCard has to be inserted after emulation is started
 		if (is_neogeo_game && nMemcardMode != 0)
@@ -1646,6 +1651,11 @@ static bool retro_load_game_common()
 			pVidImage = (UINT8*)realloc(pVidImage, nGameWidth * nGameHeight * nBurnBpp);
 		else
 			pVidImage = (UINT8*)malloc(nGameWidth * nGameHeight * nBurnBpp);
+
+		if (pVidImage == NULL) {
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed allocating framebuffer memory\n", g_driver_name);
+			return false;
+		}
 
 		apply_cheats_from_variables();
 

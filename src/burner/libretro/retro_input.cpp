@@ -1274,6 +1274,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// Buggy Challenge
+	if ((parentrom && strcmp(parentrom, "buggychl") == 0) ||
+		(drvname && strcmp(drvname, "buggychl") == 0)
+	) {
+		if (strcmp("Throttle", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+	}
+
 	// Spy Hunter
 	if ((parentrom && strcmp(parentrom, "spyhunt") == 0) ||
 		(drvname && strcmp(drvname, "spyhunt") == 0)
@@ -1337,42 +1346,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 		if (strcmp("Right Stick Right", description) == 0) {
 			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
-		}
-	}
-
-	// The Tin Star (inverse sticks)
-	if ((parentrom && strcmp(parentrom, "tinstar") == 0) ||
-		(drvname && strcmp(drvname, "tinstar") == 0)
-	) {
-		if (strcmp("Rightstick Up", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_UP, "Up");
-		}
-		if (strcmp("Rightstick Down", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_DOWN, "Down");
-		}
-		if (strcmp("Rightstick Left", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_LEFT, "Left");
-		}
-		if (strcmp("Rightstick Right", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_RIGHT, "Right");
-		}
-		if (strcmp("Leftstick Up", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Aim Up / Down");
-		}
-		if (strcmp("Leftstick Down", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Aim Up / Down");
-		}
-		if (strcmp("Leftstick Left", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Aim Left / Right");
-		}
-		if (strcmp("Leftstick Right", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Aim Left / Right");
-		}
-		if (strcmp("Button 1", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
-		}
-		if (strcmp("Button 2", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
 	}
 
@@ -1653,6 +1626,39 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 		if (strcmp("Button 3", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+		}
+		if (strcmp("Button 4", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+	}
+
+	// Avengers In Galactic Storm
+	// Blood Warrior
+	// Daraku Tenshi - The Fallen Angels
+	// Dragon Master
+	// Shogun Warriors
+	// Toukidenshou - Angel Eyes
+	if ((parentrom && strcmp(parentrom, "avengrgs") == 0) ||
+		(drvname && strcmp(drvname, "avengrgs") == 0) ||
+		(parentrom && strcmp(parentrom, "bloodwar") == 0) ||
+		(drvname && strcmp(drvname, "bloodwar") == 0) ||
+		(parentrom && strcmp(parentrom, "daraku") == 0) ||
+		(drvname && strcmp(drvname, "daraku") == 0) ||
+		(parentrom && strcmp(parentrom, "drgnmst") == 0) ||
+		(drvname && strcmp(drvname, "drgnmst") == 0) ||
+		(parentrom && strcmp(parentrom, "shogwarr") == 0) ||
+		(drvname && strcmp(drvname, "shogwarr") == 0) ||
+		(parentrom && strcmp(parentrom, "tkdensho") == 0) ||
+		(drvname && strcmp(drvname, "tkdensho") == 0)
+	) {
+		if (strcmp("Button 1", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+		}
+		if (strcmp("Button 2", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+		}
+		if (strcmp("Button 3", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
 		}
 		if (strcmp("Button 4", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);

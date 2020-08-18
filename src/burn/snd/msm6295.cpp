@@ -166,7 +166,7 @@ static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf,
 						pChannelInfo = &MSM6295[nChip].ChannelInfo[nChannel];
 
 						// Check for end of sample
-						if (pChannelInfo->nSampleCount-- == 0) {
+						if (pChannelInfo->nSampleCount-- <= 0) {
 							nMSM6295Status[nChip] &= ~(1 << nChannel);
 							MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
 							continue;

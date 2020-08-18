@@ -1,13 +1,11 @@
 // FB Alpha Omega Race driver moulde
 // Based on MAME driver by Bernd Wiebelt
 
-// Todo/tofix:
-// Player 2's spinner input is encrypted. :( (no known decryption table)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
 #include "watchdog.h"
+#include "burn_gun.h"
 #include "avgdvg.h"
 #include "vector.h"
 #include "bitswap.h"
@@ -38,8 +36,10 @@ static UINT8 DrvDips[4];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
-static INT32 DrvPaddle[2];
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo OmegraceInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
@@ -47,6 +47,7 @@ static struct BurnInputInfo OmegraceInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	A("P1 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 start"	},
@@ -54,6 +55,7 @@ static struct BurnInputInfo OmegraceInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 2"	},
+	A("P2 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort1,"p2 x-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
@@ -63,68 +65,70 @@ static struct BurnInputInfo OmegraceInputList[] = {
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Omegrace)
 
 static struct BurnDIPInfo OmegraceDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0xff, NULL						},
-	{0x10, 0xff, 0xff, 0x3f, NULL						},
-	{0x11, 0xff, 0xff, 0x80, NULL						},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+	{0x01, 0xff, 0xff, 0xbf, NULL						},
+	{0x02, 0xff, 0xff, 0x80, NULL						},
+	{0x03, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    4, "1st Bonus Life"			},
-	{0x0f, 0x01, 0x03, 0x00, "40k"						},
-	{0x0f, 0x01, 0x03, 0x01, "50k"						},
-	{0x0f, 0x01, 0x03, 0x02, "70k"						},
-	{0x0f, 0x01, 0x03, 0x03, "100k"						},
+	{0x00, 0x01, 0x03, 0x00, "40k"						},
+	{0x00, 0x01, 0x03, 0x01, "50k"						},
+	{0x00, 0x01, 0x03, 0x02, "70k"						},
+	{0x00, 0x01, 0x03, 0x03, "100k"						},
 
 	{0   , 0xfe, 0   ,    4, "2nd & 3rd Bonus Life"		},
-	{0x0f, 0x01, 0x0c, 0x00, "150k 250k"				},
-	{0x0f, 0x01, 0x0c, 0x04, "250k 500k"				},
-	{0x0f, 0x01, 0x0c, 0x08, "500k 750k"				},
-	{0x0f, 0x01, 0x0c, 0x0c, "750k 1500k"				},
+	{0x00, 0x01, 0x0c, 0x00, "150k 250k"				},
+	{0x00, 0x01, 0x0c, 0x04, "250k 500k"				},
+	{0x00, 0x01, 0x0c, 0x08, "500k 750k"				},
+	{0x00, 0x01, 0x0c, 0x0c, "750k 1500k"				},
 
 	{0   , 0xfe, 0   ,    4, "Credit(s)/Ships"			},
-	{0x0f, 0x01, 0x30, 0x00, "1C/2S 2C/4S"				},
-	{0x0f, 0x01, 0x30, 0x10, "1C/2S 2C/5S"				},
-	{0x0f, 0x01, 0x30, 0x20, "1C/3S 2C/6S"				},
-	{0x0f, 0x01, 0x30, 0x30, "1C/3S 2C/7S"				},
+	{0x00, 0x01, 0x30, 0x00, "1C/2S 2C/4S"				},
+	{0x00, 0x01, 0x30, 0x10, "1C/2S 2C/5S"				},
+	{0x00, 0x01, 0x30, 0x20, "1C/3S 2C/6S"				},
+	{0x00, 0x01, 0x30, 0x30, "1C/3S 2C/7S"				},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"					},
-	{0x10, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x07, 0x03, "4 Coins 5 Credits"		},
-	{0x10, 0x01, 0x07, 0x04, "3 Coins 4 Credits"		},
-	{0x10, 0x01, 0x07, 0x05, "2 Coins 3 Credits"		},
-	{0x10, 0x01, 0x07, 0x00, "1 Coin  2 Credits"		},
-	{0x10, 0x01, 0x07, 0x01, "1 Coin  3 Credits"		},
-	{0x10, 0x01, 0x07, 0x02, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x07, 0x03, "4 Coins 5 Credits"		},
+	{0x01, 0x01, 0x07, 0x04, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0x07, 0x05, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x07, 0x00, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x07, 0x01, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  5 Credits"		},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"					},
-	{0x10, 0x01, 0x38, 0x30, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x38, 0x18, "4 Coins 5 Credits"		},
-	{0x10, 0x01, 0x38, 0x20, "3 Coins 4 Credits"		},
-	{0x10, 0x01, 0x38, 0x28, "2 Coins 3 Credits"		},
-	{0x10, 0x01, 0x38, 0x00, "1 Coin  2 Credits"		},
-	{0x10, 0x01, 0x38, 0x08, "1 Coin  3 Credits"		},
-	{0x10, 0x01, 0x38, 0x10, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0x38, 0x30, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x38, 0x18, "4 Coins 5 Credits"		},
+	{0x01, 0x01, 0x38, 0x20, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0x38, 0x28, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x38, 0x00, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x38, 0x08, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x38, 0x10, "1 Coin  5 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"				},
-	{0x10, 0x01, 0x40, 0x00, "Off"						},
-	{0x10, 0x01, 0x40, 0x40, "On"						},
+	{0x01, 0x01, 0x40, 0x00, "Off"						},
+	{0x01, 0x01, 0x40, 0x40, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"					},
-	{0x10, 0x01, 0x80, 0x00, "Upright"					},
-	{0x10, 0x01, 0x80, 0x80, "Cocktail"					},
+	{0x01, 0x01, 0x80, 0x00, "Upright"					},
+	{0x01, 0x01, 0x80, 0x80, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x80, 0x80, "Off"				},
-	{0x11, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x02, 0x01, 0x80, 0x80, "Off"						},
+	{0x02, 0x01, 0x80, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{0x12, 0x01, 0x01, 0x00, "No"					},
-	{0x12, 0x01, 0x01, 0x01, "Yes"					},
+	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
+	{0x03, 0x01, 0x01, 0x00, "No"						},
+	{0x03, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Omegrace)
@@ -143,18 +147,14 @@ static void __fastcall omegrace_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x14:
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 	}
 }
 
-static inline UINT8 spinner1_read()
+static inline UINT8 spinner_read(INT32 player)
 {
-	const UINT8 spinnerTable[0x40] = {
+	const UINT8 spinnerTable[2][0x40] = { {
 		0x00, 0x04, 0x14, 0x10, 0x18, 0x1c, 0x5c, 0x58,
 		0x50, 0x54, 0x44, 0x40, 0x48, 0x4c, 0x6c, 0x68,
 		0x60, 0x64, 0x74, 0x70, 0x78, 0x7c, 0xfc, 0xf8,
@@ -163,9 +163,18 @@ static inline UINT8 spinner1_read()
 		0x90, 0x94, 0x84, 0x80, 0x88, 0x8c, 0xac, 0xa8,
 		0xa0, 0xa4, 0xb4, 0xb0, 0xb8, 0xbc, 0x3c, 0x38,
 		0x30, 0x34, 0x24, 0x20, 0x28, 0x2c, 0x0c, 0x08
-	};
+	}, {
+		0x00, 0x01, 0x05, 0x04, 0x06, 0x07, 0x17, 0x16,
+		0x14, 0x15, 0x11, 0x10, 0x12, 0x13, 0x1b, 0x1a,
+		0x18, 0x19, 0x1d, 0x1c, 0x1e, 0x1f, 0x3f, 0x3e,
+		0x3c, 0x3d, 0x39, 0x38, 0x3a, 0x3b, 0x33, 0x32,
+		0x30, 0x31, 0x35, 0x34, 0x36, 0x37, 0x27, 0x26,
+		0x24, 0x25, 0x21, 0x20, 0x22, 0x23, 0x2b, 0x2a,
+		0x28, 0x29, 0x2d, 0x2c, 0x2e, 0x2f, 0x0f, 0x0e,
+		0x0c, 0x0d, 0x09, 0x08, 0x0a, 0x0b, 0x03, 0x02   // p2 table decoded by dink aug.2020
+	} };
 
-	return spinnerTable[DrvPaddle[0] & 0x3f];
+	return spinnerTable[player][BurnTrackballRead(0, player) & 0x3f];
 }
 
 static UINT8 __fastcall omegrace_main_read_port(UINT16 port)
@@ -196,9 +205,10 @@ static UINT8 __fastcall omegrace_main_read_port(UINT16 port)
 			return DrvInputs[1] ^ 0xcc;
 
 		case 0x15:
-			return spinner1_read();
+			return spinner_read(0);
 
-		case 0x16: DrvPaddle[1];
+		case 0x16:
+			return spinner_read(1);
 	}
 
 	return 0;
@@ -273,7 +283,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	soundlatch = 0;
 	avgletsgo = 0;
-	DrvPaddle[0] = DrvPaddle[1] = 0;
 
 	res_check();
 
@@ -318,7 +327,7 @@ static void DrvPROMDescramble()
 
 static INT32 DrvInit()
 {
-	BurnSetRefreshRate(40.00);
+	BurnSetRefreshRate(42.00);
 
 	AllMem = NULL;
 	MemIndex();
@@ -373,6 +382,8 @@ static INT32 DrvInit()
 	avgdvg_init(USE_DVG, DrvVectorRAM, 0x2000, ZetTotalCycles, 1044, 1044);
 	vector_set_offsets(11, 0);
 
+	BurnTrackballInit(2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -384,6 +395,8 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	avgdvg_exit();
+
+	BurnTrackballExit();
 
 	BurnFree(AllMem);
 
@@ -441,16 +454,10 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 
-		if (DrvJoy3[0]) DrvPaddle[0] -= 1;
-		if (DrvJoy3[1]) DrvPaddle[0] += 1;
-
-		if (DrvJoy3[2]) DrvPaddle[1] -= 1;
-		if (DrvJoy3[3]) DrvPaddle[1] += 1;
-
-		if (DrvPaddle[0] > 0x3f) DrvPaddle[0] = 0x00;
-		if (DrvPaddle[0] < 0x00) DrvPaddle[0] = 0x3f;
-		if (DrvPaddle[1] > 0x3f) DrvPaddle[1] = 0x00;
-		if (DrvPaddle[1] < 0x00) DrvPaddle[1] = 0x3f;
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x01, 0x07);
+		BurnTrackballUDLR(0, DrvJoy3[2], DrvJoy3[3], DrvJoy3[0], DrvJoy3[1]);
+		BurnTrackballUpdate(0);
 	}
 
 	INT32 nInterleave = 60;
@@ -460,12 +467,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if ((i % 10) == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 6x (really 6.25 per frame
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if ((i % 10) == 9) ZetNmi(); // 6x (really 6.25 per frame
 		ZetClose();
 	}
@@ -502,8 +509,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		avgdvg_scan(nAction, pnMin);
 		AY8910Scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
+		BurnTrackballScan();
 
-		SCAN_VAR(DrvPaddle);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(avgletsgo);
 	}

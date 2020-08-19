@@ -48,7 +48,8 @@ int kNetGame = 0;
 INT32 nReplayStatus = 0;
 INT32 nIpsMaxFileLen = 0;
 unsigned nGameType = 0;
-static INT32 nGameWidth, nGameHeight;
+static INT32 nGameWidth, nGameHeight, nGameMaximumGeometry;
+static INT32 nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 static INT32 bDisableSerialize = 0;
 
 extern INT32 EnableHiscores;
@@ -570,7 +571,8 @@ void Reinitialise(void)
 	nBurnPitch = nGameWidth * nBurnBpp;
 	struct retro_system_av_info av_info;
 	retro_get_system_av_info(&av_info);
-	environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &av_info);
+	environ_cb(nNextGeometryCall, &av_info);
+	nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 }
 
 static void ForceFrameStep(int bDraw)
@@ -1195,8 +1197,12 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	bVidImageNeedRealloc = true;
 	BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
 
-	int maximum = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;
-	struct retro_game_geometry geom = { (unsigned)nGameWidth, (unsigned)nGameHeight, (unsigned)maximum, (unsigned)maximum };
+	INT32 oldMax = nGameMaximumGeometry;
+	nGameMaximumGeometry = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;
+	nGameMaximumGeometry = oldMax > nGameMaximumGeometry ? oldMax : nGameMaximumGeometry;
+	struct retro_game_geometry geom = { (unsigned)nGameWidth, (unsigned)nGameHeight, (unsigned)nGameMaximumGeometry, (unsigned)nGameMaximumGeometry };
+	if (oldMax != 0 && oldMax < nGameMaximumGeometry)
+		nNextGeometryCall = RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO;
 
 	geom.aspect_ratio = (nVerticalMode != 0 ? ((float)game_aspect_y / (float)game_aspect_x) : ((float)game_aspect_x / (float)game_aspect_y));
 

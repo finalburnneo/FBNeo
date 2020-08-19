@@ -9121,6 +9121,7 @@ struct BurnDriver BurnDrvsms_sonic = {
 	256, 192, 4, 3
 };
 
+
 // Sonic The Hedgehog FM MOD v1.02 (Euro, USA, Bra)
 // http://www.romhacking.net/hacks/3663/
 static struct BurnRomInfo sms_sonicfm102RomDesc[] = {
@@ -9136,6 +9137,27 @@ struct BurnDriver BurnDrvsms_sonicfm102 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_sonicfm102RomInfo, sms_sonicfm102RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Sonic The Hedgehog Improvement v1.31 + FM MOD v1.02 (Euro, USA, Bra)
+// https://www.romhacking.net/hacks/983/
+// http://www.romhacking.net/hacks/3663/
+static struct BurnRomInfo sms_sonici131fmRomDesc[] = {
+	{ "Sonic_The_Hedgehog_Enhanced1.31_FM1.02.sms",	0x40000, 0x850b9554, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sonici131fm)
+STD_ROM_FN(sms_sonici131fm)
+
+struct BurnDriver BurnDrvsms_sonici131fm = {
+	"sms_sonici131fm", "sms_sonic", NULL, NULL, "2020",
+	"Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02)\0", "YM2413 FM sound chip supported", "Penta Penguin - Valleybell", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_sonici131fmRomInfo, sms_sonici131fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

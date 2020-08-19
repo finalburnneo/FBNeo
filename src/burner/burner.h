@@ -113,6 +113,14 @@ INT32 GameInpRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 
+struct tIniStruct {
+	TCHAR system[80];
+	TCHAR ini[MAX_PATH];
+	INT32 hw[8];
+};
+
+extern tIniStruct gamehw_cfg[];
+
 // inp_interface.cpp
 extern INT32 nAutoFireRate;
 

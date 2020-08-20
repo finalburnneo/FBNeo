@@ -592,39 +592,21 @@ static int InitAnalogOptions(int nGi, int nPci)
 
 static void SaveHardwarePreset()
 {
-	TCHAR *szDefaultCpsFile = _T("config\\presets\\cps.ini");
-	TCHAR *szDefaultNeogeoFile = _T("config\\presets\\neogeo.ini");
-	TCHAR *szDefaultNESFile = _T("config\\presets\\nes.ini");
-	TCHAR *szDefaultFDSFile = _T("config\\presets\\fds.ini");
-	TCHAR *szDefaultPgmFile = _T("config\\presets\\pgm.ini");
 	TCHAR *szFileName = _T("config\\presets\\preset.ini");
 	TCHAR *szHardwareString = _T("Generic hardware");
 
 	int nHardwareFlag = (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
 
-	if (nHardwareFlag == HARDWARE_CAPCOM_CPS1 || nHardwareFlag == HARDWARE_CAPCOM_CPS1_QSOUND || nHardwareFlag == HARDWARE_CAPCOM_CPS1_GENERIC || nHardwareFlag == HARDWARE_CAPCOM_CPSCHANGER || nHardwareFlag == HARDWARE_CAPCOM_CPS2 || nHardwareFlag == HARDWARE_CAPCOM_CPS3) {
-		szFileName = szDefaultCpsFile;
-		szHardwareString = _T("CPS-1/CPS-2/CPS-3 hardware");
-	}
-
-	if (nHardwareFlag == HARDWARE_SNK_NEOGEO) {
-		szFileName = szDefaultNeogeoFile;
-		szHardwareString = _T("Neo-Geo hardware");
-	}
-
-	if (nHardwareFlag == HARDWARE_NES) {
-		szFileName = szDefaultNESFile;
-		szHardwareString = _T("NES hardware");
-	}
-
-	if (nHardwareFlag == HARDWARE_FDS) {
-		szFileName = szDefaultFDSFile;
-		szHardwareString = _T("FDS hardware");
-	}
-
-	if (nHardwareFlag == HARDWARE_IGS_PGM) {
-		szFileName = szDefaultPgmFile;
-		szHardwareString = _T("PGM hardware");
+	// See if nHardwareFlag belongs to any systems (nes.ini, neogeo.ini, etc) in gamehw_config (see: burner/gami.cpp)
+	for (INT32 i = 0; gamehw_cfg[i].ini[0] != '\0'; i++) {
+		for (INT32 hw = 0; gamehw_cfg[i].hw[hw] != 0; hw++) {
+			if (gamehw_cfg[i].hw[hw] == nHardwareFlag)
+			{
+				szFileName = gamehw_cfg[i].ini;
+				szHardwareString = gamehw_cfg[i].system;
+				break;
+			}
+		}
 	}
 
 	FILE *fp = _tfopen(szFileName, _T("wt"));

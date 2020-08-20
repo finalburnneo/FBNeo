@@ -3767,7 +3767,7 @@ static struct BurnRomInfo lohtRomDesc[] = {
 
 	{ "tom_m44.ic44",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "tom_c-pr-b.ic1",	0x01000, 0x9c9545f1, 0x00 | BRF_OPT },           // 17 i8751 Code
+	{ "tom_c-pr-b.ic1",	0x01000, 0x9c9545f1, 0x00 | BRF_OPT },           // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(loht)

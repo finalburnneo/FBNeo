@@ -390,13 +390,17 @@ int CreateAllDatfilesWindows()
 		return nRet;
 	}
 
-	if (SHGetPathFromIDList(pItemIDList, buffer)) {
-		int strLen = _tcslen(buffer);
-		if (strLen) {
-			if (buffer[strLen - 1] != _T('\\')) {
-				buffer[strLen]		= _T('\\');
-				buffer[strLen + 1]	= _T('\0');
-			}
+	if (!SHGetPathFromIDList(pItemIDList, buffer)) {	// Browse dialog returned non-filesystem path
+		pMalloc->Free(pItemIDList);
+		pMalloc->Release();
+		return nRet;
+	}
+
+	int strLen = _tcslen(buffer);
+	if (strLen) {
+		if (buffer[strLen - 1] != _T('\\')) {
+			buffer[strLen]		= _T('\\');
+			buffer[strLen + 1]	= _T('\0');
 		}
 	}
 

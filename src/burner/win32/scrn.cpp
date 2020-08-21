@@ -385,18 +385,22 @@ int CreateAllDatfilesWindows()
 
 	pItemIDList = SHBrowseForFolder(&bInfo);
 
-	if (pItemIDList) {
-		if (SHGetPathFromIDList(pItemIDList, buffer)) {
-			int strLen = _tcslen(buffer);
-			if (strLen) {
-				if (buffer[strLen - 1] != _T('\\')) {
-					buffer[strLen]		= _T('\\');
-					buffer[strLen + 1]	= _T('\0');
-				}
+	if (!pItemIDList) {	// User clicked 'Cancel'
+		pMalloc->Release();
+		return nRet;
+	}
+
+	if (SHGetPathFromIDList(pItemIDList, buffer)) {
+		int strLen = _tcslen(buffer);
+		if (strLen) {
+			if (buffer[strLen - 1] != _T('\\')) {
+				buffer[strLen]		= _T('\\');
+				buffer[strLen + 1]	= _T('\0');
 			}
 		}
-		pMalloc->Free(pItemIDList);
 	}
+
+	pMalloc->Free(pItemIDList);
 	pMalloc->Release();
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));

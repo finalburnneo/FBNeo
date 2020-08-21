@@ -22972,7 +22972,7 @@ struct BurnDriver BurnDrvnes_kuniokunnoneksole = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kuniokunnoneksoleRomInfo, nes_kuniokunnoneksoleRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
-	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

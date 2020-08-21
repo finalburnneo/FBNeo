@@ -867,7 +867,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
                 }
 
                 // clean-up IPS name beginning (could be quoted or not)
-                while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
+                while (ips_name && (ips_name[0] == '\t' || ips_name[0] == ' ' || ips_name[0] == '\"'))
                     ips_name++;
 
                 char *has_ext = stristr_int(ips_name, ".ips");

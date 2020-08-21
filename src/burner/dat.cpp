@@ -683,7 +683,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					memset(szPossibleNameBuffer, 0, 255);
 					ReplaceGreaterThan(szPossibleNameBuffer, szPossibleNameBuffer2);
 
-					fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, ri.nLen, ri.nCrc);
+					if (ri.nType & BRF_NODUMP) {
+						fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, ri.nLen);
+					} else {
+						fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, ri.nLen, ri.nCrc);
+					}
 				}
 			}
 		}

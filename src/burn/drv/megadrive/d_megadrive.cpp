@@ -42951,17 +42951,19 @@ struct BurnDriver BurnDrvmd_sor3ex = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Golden Axe III - New Character (Ver. 8) (Hack By Ti)
+// Golden Axe III - New Character (Ver. 9) (Hack By Ti)
+// Gryphon Hack
+// http://www.romhacking.net/hacks/5202/
 static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
-	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0xB157F06C, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0x29a27509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goldnax3nc)
 STD_ROM_FN(md_goldnax3nc)
 
 struct BurnDriver BurnDrvmd_goldnax3nc = {
-	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2013",
-	"Golden Axe III - New Character (Ver. 8) (Hack)\0", NULL, "Ti", "Sega Megadrive",
+	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2020-06-08",
+	"Golden Axe III - New Character (Ver. 9) (Hack)\0", NULL, "Ti", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

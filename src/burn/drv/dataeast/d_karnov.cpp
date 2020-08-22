@@ -1224,7 +1224,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Karnov (US, rev 6)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-3 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn08-6.j15",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1244,13 +1244,13 @@ static struct BurnRomInfo karnovRomDesc[] = {
 	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA},            // 11
 
 	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA},            // 12 Sprites
-	{ "dn14-5.f9",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
-	{ "dn13-.f13",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
-	{ "dn15-5.f15",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
-	{ "dn16-",			0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
-	{ "dn17-5",			0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
-	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
-	{ "dn19-5",			0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
+	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
+	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
+	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
+	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
+	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
+	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
+	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
 
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
@@ -1281,7 +1281,7 @@ struct BurnDriver BurnDrvKarnov = {
 
 
 // Karnov (US, rev 5)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-3 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn08-5.j15",		0x10000, 0xdb92c264, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1300,14 +1300,14 @@ static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn03-.d15",		0x10000, 0x90d9dd9c, 4 | BRF_GRA },           // 10
 	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA },           // 11
 
-	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA },           // 12 Sprites
-	{ "dn14-5.f9",		0x08000, 0xac9e6732, 5 | BRF_GRA },           // 13
-	{ "dn13-.f13",		0x10000, 0xa03308f9, 5 | BRF_GRA },           // 14
-	{ "dn15-5.f15",		0x08000, 0x8933fcb8, 5 | BRF_GRA },           // 15
-	{ "dn16-",			0x10000, 0x55e63a11, 5 | BRF_GRA },           // 16
-	{ "dn17-5",			0x08000, 0xb70ae950, 5 | BRF_GRA },           // 17
-	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA },           // 18
-	{ "dn19-5",			0x08000, 0x8fd4fa40, 5 | BRF_GRA },           // 19
+	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA},            // 12 Sprites
+	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
+	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
+	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
+	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
+	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
+	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
+	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
 
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
@@ -1330,7 +1330,7 @@ struct BurnDriver BurnDrvKarnova = {
 
 
 // Karnov (Japan)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-3 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "kar8.j15",		0x10000, 0x3e17e268, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1350,13 +1350,13 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA },           // 11
 
 	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA },           // 12 Sprites
-	{ "kar14.f9",		0x08000, 0xc6b39595, 5 | BRF_GRA },           // 13
-	{ "dn13-.f13",		0x10000, 0xa03308f9, 5 | BRF_GRA },           // 14
-	{ "kar15.f15",		0x08000, 0x2f72cac0, 5 | BRF_GRA },           // 15
-	{ "dn16-",			0x10000, 0x55e63a11, 5 | BRF_GRA },           // 16
-	{ "kar17",			0x08000, 0x7851c70f, 5 | BRF_GRA },           // 17
-	{ "dn18-",			0x10000, 0x2ad53213, 5 | BRF_GRA },           // 18
-	{ "kar19",			0x08000, 0x7bc174bb, 5 | BRF_GRA },           // 19
+	{ "kar14.f11",		0x08000, 0xc6b39595, 5 | BRF_GRA },           // 13
+	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA },           // 14
+	{ "kar15.f12",		0x08000, 0x2f72cac0, 5 | BRF_GRA },           // 15
+	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA },           // 16
+	{ "kar17.f15",		0x08000, 0x7851c70f, 5 | BRF_GRA },           // 17
+	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA },           // 18
+	{ "kar19.f18",		0x08000, 0x7bc174bb, 5 | BRF_GRA },           // 19
 
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
@@ -1443,7 +1443,7 @@ struct BurnDriver BurnDrvWndrplnt = {
 
 
 // Chelnov - Atomic Runner (World)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovRomDesc[] = {
 	{ "ee08-e.j16",		0x10000, 0x8275cc3a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1496,7 +1496,7 @@ struct BurnDriver BurnDrvChelnov = {
 
 
 // Chelnov - Atomic Runner (US)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovuRomDesc[] = {
 	{ "ee08-a.j15",		0x10000, 0x2f2fb37b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1549,7 +1549,7 @@ struct BurnDriver BurnDrvChelnovu = {
 
 
 // Chelnov - Atomic Runner (Japan)
-/* DE-0248-1 main board + unknown video board */
+/* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovjRomDesc[] = {
 	{ "ee08-1.j15",		0x10000, 0x1978cb52, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code

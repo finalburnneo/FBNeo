@@ -19338,6 +19338,23 @@ struct BurnDriver BurnDrvnes_formationz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_formuoneRomDesc[] = {
+	{ "Formula One - Built To Win (USA).nes",          262160, 0x037eed7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_formuone)
+STD_ROM_FN(nes_formuone)
+
+struct BurnDriver BurnDrvnes_formuone = {
+	"nes_formuone", NULL, NULL, NULL, "1990",
+	"Formula One - Built To Win (USA)\0", NULL, "Seta", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_formuoneRomInfo, nes_formuoneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_frankRomDesc[] = {
 	{ "Frankenstein - The Monster Returns (USA).nes",          262160, 0x84f0cd63, BRF_ESS | BRF_PRG },
 };

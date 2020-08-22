@@ -226,7 +226,7 @@ static void __fastcall macrossp_vidram_write_long(UINT32 address, UINT32 data)
 
 	UINT32 *ram = (UINT32*)DrvVidRAM[select];
 
-	data = (data << 16) | (data >> 16);
+	data = BURN_ENDIAN_SWAP_INT32((data << 16) | (data >> 16));
 
 	if (ram[address] != data) {
 		ram[address] = data;
@@ -243,8 +243,8 @@ static void __fastcall macrossp_vidram_write_word(UINT32 address, UINT16 data)
 
 	UINT16 *ram = (UINT16*)DrvVidRAM[select];
 
-	if (ram[address] != data) {
-		ram[address] = data;
+	if (ram[address] != BURN_ENDIAN_SWAP_INT16(data)) {
+		ram[address] = BURN_ENDIAN_SWAP_INT16(data);
 		dirty_tiles[select][address/2] = 1;
 		dirty_layer[select] = 1;
 	}
@@ -266,7 +266,7 @@ static void __fastcall macrossp_vidram_write_byte(UINT32 address, UINT8 data)
 
 static inline void palette_write(INT32 offset)
 {
-	UINT32 p = *((UINT32*)(DrvPalRAM + offset));
+	UINT32 p = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvPalRAM + offset)));
 
 	UINT8 r = p >>  8;
 	UINT8 g = p >>  0;
@@ -276,20 +276,20 @@ static inline void palette_write(INT32 offset)
 	g = (g * palette_fade) / 255;
 	b = (b * palette_fade) / 255;
 
-	Palette[offset/4] = (r * 0x10000) + (g * 0x100) + b;
+	Palette[offset/4] = BURN_ENDIAN_SWAP_INT32((r * 0x10000) + (g * 0x100) + b);
 	DrvPalette[offset/4] = BurnHighCol(r,g,b,0);
 }
 
 static void __fastcall macrossp_palette_write_long(UINT32 address, UINT32 data)
 {
-	*((UINT32*)(DrvPalRAM + (address & 0x3ffc))) = (data << 16) | (data >> 16);
+	*((UINT32*)(DrvPalRAM + (address & 0x3ffc))) = BURN_ENDIAN_SWAP_INT32((data << 16) | (data >> 16));
 	palette_write(address & 0x3ffc);
 
 }
 
 static void __fastcall macrossp_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	palette_write(address & 0x3ffc);
 }
 
@@ -326,8 +326,8 @@ static tilemap_callback( text )
 {
 	UINT32 *ram = (UINT32*)(DrvVidRAM[3]);
 
-	UINT16 code = ram[offs] >> 16;
-	INT32 color = (ram[offs] >> 1) & 0x7f;
+	UINT16 code = BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16;
+	INT32 color = (BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 1) & 0x7f;
 
 	TILE_SET_INFO(4, code, color, DrvTransTab[4][code] ? TILE_SKIP : 0);
 }
@@ -336,8 +336,8 @@ static tilemap_callback( scra )
 {
 	UINT32 *ram = (UINT32*)(DrvVidRAM[0]);
 
-	UINT16 attr = ram[offs];
-	UINT16 code = ram[offs] >> 16;
+	UINT16 attr = BURN_ENDIAN_SWAP_INT32(ram[offs]);
+	UINT16 code = BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16;
 
 	INT32 color;
 	if (color_mask[0] == 7)
@@ -356,8 +356,8 @@ static tilemap_callback( scrb )
 {
 	UINT32 *ram = (UINT32*)(DrvVidRAM[1]);
 
-	UINT16 attr = ram[offs];
-	UINT16 code = ram[offs] >> 16;
+	UINT16 attr = BURN_ENDIAN_SWAP_INT32(ram[offs]);
+	UINT16 code = BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16;
 
 	INT32 color;
 	if (color_mask[1] == 7)
@@ -376,8 +376,8 @@ static tilemap_callback( scrc )
 {
 	UINT32 *ram = (UINT32*)(DrvVidRAM[2]);
 
-	UINT16 attr = ram[offs];
-	UINT16 code = ram[offs] >> 16;
+	UINT16 attr = BURN_ENDIAN_SWAP_INT32(ram[offs]);
+	UINT16 code = BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16;
 
 	INT32 color;
 	if (color_mask[2] == 7)
@@ -682,15 +682,15 @@ static void palette_update()
 
 	for (INT32 i = 0; i < 0x4000/4; i++)
 	{
-		UINT8 r = p[i] >>  8;
-		UINT8 g = p[i] >>  0;
-		UINT8 b = p[i] >> 24;
+		UINT8 r = BURN_ENDIAN_SWAP_INT32(p[i]) >>  8;
+		UINT8 g = BURN_ENDIAN_SWAP_INT32(p[i]) >>  0;
+		UINT8 b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 24;
 
 		r = (r * palette_fade) / 255;
 		g = (g * palette_fade) / 255;
 		b = (b * palette_fade) / 255;
 
-		Palette[i] = (r * 0x10000) + (g * 0x100) + b;
+		Palette[i] = BURN_ENDIAN_SWAP_INT32((r * 0x10000) + (g * 0x100) + b);
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
@@ -715,8 +715,8 @@ static void tilemap_update(INT32 map)
 		INT32 sx = (offs & 0x3f) * 16;
 		INT32 sy = (offs / 0x40) * 16;
 
-		UINT16 attr = ram[offs];
-		UINT16 code = (ram[offs] >> 16) & 0x7fff;
+		UINT16 attr = BURN_ENDIAN_SWAP_INT32(ram[offs]);
+		UINT16 code = (BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16) & 0x7fff;
 
 		INT32 color;
 		if (color_mask[map] == 7)
@@ -775,16 +775,16 @@ static void draw_layer(INT32 layer, INT32 pri)
 {
 	UINT32 *reg = (UINT32*)DrvVidReg[layer];
 
-	if ((reg[2] & 0xf000) == 0xe000)
+	if ((BURN_ENDIAN_SWAP_INT32(reg[2]) & 0xf000) == 0xe000)
 	{
 		UINT16 *map = (UINT16*)tilemaps[layer];
 		UINT32 *lz = (UINT32*)(DrvZoomRAM[layer] + 0x200);
 
 		tilemap_update(layer);
 
-		INT32 startx = (reg[0] & 0x3ff0000);
-		INT32 starty = (reg[0] & 0x00003ff) << 16;
-		INT32 incy   = (reg[2] & 0x00001ff) << 10;
+		INT32 startx = (BURN_ENDIAN_SWAP_INT32(reg[0]) & 0x3ff0000);
+		INT32 starty = (BURN_ENDIAN_SWAP_INT32(reg[0]) & 0x00003ff) << 16;
+		INT32 incy   = (BURN_ENDIAN_SWAP_INT32(reg[2]) & 0x00001ff) << 10;
 		INT32 sy     = starty - (240/2) * (incy - 0x10000);
 
 		for (INT32 line = 0; line < 240; line++)
@@ -792,9 +792,9 @@ static void draw_layer(INT32 layer, INT32 pri)
 			UINT32 incx;
 
 			if (line & 1)
-				incx = (lz[line/2] & 0xffff0000)>>6;
+				incx = (BURN_ENDIAN_SWAP_INT32(lz[line/2]) & 0xffff0000)>>6;
 			else
-				incx = (lz[line/2] & 0x0000ffff)<<10;
+				incx = (BURN_ENDIAN_SWAP_INT32(lz[line/2]) & 0x0000ffff)<<10;
 
 			INT32 sx = startx - (368/2) * (incx - 0x10000);
 
@@ -803,8 +803,8 @@ static void draw_layer(INT32 layer, INT32 pri)
 	}
 	else
 	{
-		GenericTilemapSetScrollX(layer+1, reg[0] >> 16);
-		GenericTilemapSetScrollY(layer+1, reg[0] & 0xffff);
+		GenericTilemapSetScrollX(layer+1, BURN_ENDIAN_SWAP_INT32(reg[0]) >> 16);
+		GenericTilemapSetScrollY(layer+1, BURN_ENDIAN_SWAP_INT32(reg[0]) & 0xffff);
 
 		if (nBurnLayer & (1 << (layer+1))) GenericTilemapDraw(layer+1, pTransDraw, 1 << pri);
 	}
@@ -897,36 +897,36 @@ static void draw_sprites()
 
 	while (source >= finish)
 	{
-		INT32 wide = (source[0] >> 26) & 0xf;
-		INT32 high = (source[0] >> 10) & 0xf;
-		INT32 xpos = (source[0] >> 16) & 0x3ff;
-		INT32 ypos = (source[0] >>  0) & 0x3ff;
-		INT32 xzoom = (source[1] >> 16) & 0x3ff;
-		INT32 yzoom = (source[1] >>  0) & 0x3ff;
+		INT32 wide = (BURN_ENDIAN_SWAP_INT32(source[0]) >> 26) & 0xf;
+		INT32 high = (BURN_ENDIAN_SWAP_INT32(source[0]) >> 10) & 0xf;
+		INT32 xpos = (BURN_ENDIAN_SWAP_INT32(source[0]) >> 16) & 0x3ff;
+		INT32 ypos = (BURN_ENDIAN_SWAP_INT32(source[0]) >>  0) & 0x3ff;
+		INT32 xzoom = (BURN_ENDIAN_SWAP_INT32(source[1]) >> 16) & 0x3ff;
+		INT32 yzoom = (BURN_ENDIAN_SWAP_INT32(source[1]) >>  0) & 0x3ff;
 
 		int col;
-		INT32 tileno = (source[2] >> 16);
-		INT32 flipx = (source[2] >> 14) & 1;
-		INT32 flipy = (source[2] >> 15) & 1;
-		INT32 alpha = (source[2] & 0x2000) ? 0x80 : 0xff;
+		INT32 tileno = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 16);
+		INT32 flipx = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 14) & 1;
+		INT32 flipy = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 15) & 1;
+		INT32 alpha = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x2000) ? 0x80 : 0xff;
 		int loopno = 0;
 		int xcnt, ycnt;
 		int xoffset, yoffset;
-		INT32 pri = (source[2] >> 10) & 3;
+		INT32 pri = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 10) & 3;
 		int primask = 0;
 		if(pri <= 0) primask |= 0xaaaa;
 		if(pri <= 1) primask |= 0xcccc;
 		if(pri <= 2) primask |= 0xf0f0;
 		if(pri <= 3) primask |= 0xff00;
 
-		switch (source[0] & 0xc0000000)
+		switch (BURN_ENDIAN_SWAP_INT32(source[0]) & 0xc0000000)
 		{
 			case 0x80000000:
-				col = (source[2] & 0x38) >> 1;
+				col = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x38) >> 1;
 				break;
 
 			case 0x40000000:
-				col = (source[2] & 0xf8) >> 3;
+				col = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0xf8) >> 3;
 				break;
 
 			default:
@@ -991,7 +991,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	UINT32 reg[3] = { *((UINT32*)DrvVidReg[0]), *((UINT32*)DrvVidReg[1]), *((UINT32*)DrvVidReg[2]) };
+	UINT32 reg[3] = { BURN_ENDIAN_SWAP_INT32(*((UINT32*)DrvVidReg[0])), BURN_ENDIAN_SWAP_INT32(*((UINT32*)DrvVidReg[1])), BURN_ENDIAN_SWAP_INT32(*((UINT32*)DrvVidReg[2])) };
 
 	UINT32 layerpri[3] = { (reg[0] >> 30) & 3, (reg[1] >> 30) & 3, (reg[2] >> 30) & 3 };
 

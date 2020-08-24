@@ -1104,6 +1104,7 @@ static void CreateSupportFolders()
 		{_T("support/history/")},
 		{_T("neocdiso/")},
 		// rom directories
+		{_T("roms/arcade/")},
 		{_T("roms/megadrive/")},
 		{_T("roms/pce/")},
 		{_T("roms/sgx/")},
@@ -1115,8 +1116,7 @@ static void CreateSupportFolders()
 		{_T("roms/msx/")},
 		{_T("roms/spectrum/")},
 		{_T("roms/nes/")},
-		{_T("roms/nes_fds/")},
-		{_T("roms/nes_hb/")},
+		{_T("roms/fds/")},
 		{_T("roms/ngp/")},
 		{_T("\0")} // END of list
 	};

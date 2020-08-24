@@ -10751,6 +10751,44 @@ struct BurnDriver BurnDrvnes_ruder = {
 */
 // Non Homebrew (hand-added!)
 
+// Aliens - Alien 2 (Fix Hack)
+// Hack by lancuster
+// https://www.romhacking.net/hacks/3790/
+static struct BurnRomInfo fds_aliensfixRomDesc[] = {
+	{ "Aliens - Alien 2 (Prototype)(Fix Hack).fds",          131016, 0x0d487b19, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_aliensfix, fds_aliensfix, fds_fdsbios)
+STD_ROM_FN(fds_aliensfix)
+
+struct BurnDriver BurnDrvfds_aliensfix = {
+	"fds_aliensfix", NULL, "fds_fdsbios", NULL, "2017-12-30",
+	"Aliens - Alien 2 (Fix Hack)\0", NULL, "lancuster", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_aliensfixRomInfo, fds_aliensfixRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Bubble Bath Babes (USA) (Unl)
+static struct BurnRomInfo nes_bbbabesRomDesc[] = {
+	{ "Bubble Bath Babes (USA) (Unl).nes",          98320, 0xf36edcc5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bbbabes)
+STD_ROM_FN(nes_bbbabes)
+
+struct BurnDriver BurnDrvnes_bbbabes = {
+	"nes_bbbabes", NULL, NULL, NULL, "1991",
+	"Bubble Bath Babes (USA) (Unl)\0", NULL, "Panesian", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bbbabesRomInfo, nes_bbbabesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Jungle Book, The (Brightness fix)
 // Hacked by Ilya Indigo
 // https://www.romhacking.net/hacks/5323/
@@ -10844,6 +10882,83 @@ struct BurnDriver BurnDrvnes_gaplus = {
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gaplusRomInfo, nes_gaplusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
+// Translation by Han Hua Ni Mei Team
+static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiyaodc)
+STD_ROM_FN(nes_saintseiyaodc)
+
+struct BurnDriver BurnDrvnes_saintseiyaodc = {
+	"nes_saintseiyaodc", NULL, NULL, NULL, "2018-08-11",
+	"Saint Seiya - Ougon Densetsu (T-Chi, v2.0)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiyaodcRomInfo, nes_saintseiyaodcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
+// Translation by Han Hua Ni Mei Team
+static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiyaodkhc)
+STD_ROM_FN(nes_saintseiyaodkhc)
+
+struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
+	"nes_saintseiyaodkhc", NULL, NULL, NULL, "2017-01-26",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)\0", NULL, "SHINSEI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiyaodkhcRomInfo, nes_saintseiyaodkhcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// AV Mahjong Club (T-Chi) (Unl)
+// Translation by Han Hua Ni Mei Team
+static struct BurnRomInfo nes_avmahjongclubcRomDesc[] = {
+	{ "AV Mahjong Club (T-Chi) (Unl).nes",          262160, 0x663870dd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_avmahjongclubc)
+STD_ROM_FN(nes_avmahjongclubc)
+
+struct BurnDriver BurnDrvnes_avmahjongclubc = {
+	"nes_avmahjongclubc", NULL, NULL, NULL, "2018-08-17",
+	"AV Mahjong Club (T-Chi) (Unl)\0", NULL, "Hack International", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_avmahjongclubcRomInfo, nes_avmahjongclubcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Jackal (T-Chi, v1.1)
+// Translation & Support 4 Players by Lei Jing Ling
+// mapper 19
+static struct BurnRomInfo nes_jackalcRomDesc[] = {
+	{ "Jackal (T-Chi, v1.1).nes",          262160, 0x0eca3358, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jackalc)
+STD_ROM_FN(nes_jackalc)
+
+struct BurnDriver BurnDrvnes_jackalc = {
+	"nes_jackalc", "nes_jackal", NULL, NULL, "2020-02-12",
+	"Jackal (T-Chi, v1.1)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_jackalcRomInfo, nes_jackalcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 // END of "Non Homebrew (hand-added!)"

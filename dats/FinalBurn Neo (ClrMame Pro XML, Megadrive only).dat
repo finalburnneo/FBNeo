@@ -5084,10 +5084,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="goldnax3nc" cloneof="goldnax3" romof="goldnax3">
-		<description>Golden Axe III - New Character (Ver. 8) (Hack)</description>
-		<year>2013</year>
+		<description>Golden Axe III - New Character (Ver. 9) (Hack)</description>
+		<year>2020-06-08</year>
 		<manufacturer>Ti</manufacturer>
-		<rom name="GoldenAxeIII_New Character_Hack.bin" size="2097152" crc="b157f06c"/>
+		<rom name="GoldenAxeIII_New Character_Hack.bin" size="2097152" crc="29a27509"/>
 		<driver status="good"/>
 	</game>
 	<game name="goofy">

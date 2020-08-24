@@ -60,6 +60,14 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensfix" romof="fdsbios">
+		<description>Aliens - Alien 2 (Fix Hack)</description>
+		<year>2017-12-30</year>
+		<manufacturer>lancuster</manufacturer>
+		<rom name="Aliens - Alien 2 (Prototype)(Fix Hack).fds" size="131016" crc="0d487b19"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
 	<game name="allnignipsupmabr" romof="fdsbios">
 		<description>All Night Nippon Super Mario Brothers (Japan)</description>
 		<year>1989?</year>

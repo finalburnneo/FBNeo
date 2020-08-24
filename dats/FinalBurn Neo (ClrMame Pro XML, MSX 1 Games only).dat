@@ -9634,6 +9634,16 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="skyfox" romof="msx">
+		<description>SkyFox - Paina (HB) [Homebrew]</description>
+		<year>1989</year>
+		<manufacturer>Pasi Kettunen</manufacturer>
+		<rom name="SkyFox - Paina (Pasi Kettunen) (1989).rom" size="8192" crc="efb971a4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="skygaldo" romof="msx">
 		<description>Skygaldo (Jpn)</description>
 		<year>1986</year>

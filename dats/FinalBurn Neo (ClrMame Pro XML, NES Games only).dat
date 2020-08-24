@@ -551,6 +551,13 @@
 		<rom name="Attack of the Killer Tomatoes (USA).nes" size="262160" crc="11dc4071"/>
 		<driver status="good"/>
 	</game>
+	<game name="avmahjongclubc">
+		<description>AV Mahjong Club (T-Chi) (Unl)</description>
+		<year>2018-08-17</year>
+		<manufacturer>Hack International</manufacturer>
+		<rom name="AV Mahjong Club (T-Chi) (Unl).nes" size="262160" crc="663870dd"/>
+		<driver status="good"/>
+	</game>
 	<game name="bwings">
 		<description>B-Wings (Japan)</description>
 		<year>1986</year>
@@ -1088,6 +1095,13 @@
 		<year>1987</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="BreakThru (USA).nes" size="262160" crc="c85bf3e3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bbbabes">
+		<description>Bubble Bath Babes (USA) (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Panesian</manufacturer>
+		<rom name="Bubble Bath Babes (USA) (Unl).nes" size="98320" crc="f36edcc5"/>
 		<driver status="good"/>
 	</game>
 	<game name="bubblebobble">
@@ -2931,6 +2945,13 @@
 		<rom name="Formation Z (Japan) (Rev A).nes" size="24592" crc="629eae68"/>
 		<driver status="good"/>
 	</game>
+	<game name="formuone">
+		<description>Formula One - Built To Win (USA)</description>
+		<year>1990</year>
+		<manufacturer>Seta</manufacturer>
+		<rom name="Formula One - Built To Win (USA).nes" size="262160" crc="037eed7d"/>
+		<driver status="good"/>
+	</game>
 	<game name="frank">
 		<description>Frankenstein - The Monster Returns (USA)</description>
 		<year>1991</year>
@@ -3867,6 +3888,13 @@
 		<year>1990</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Jack Nicklaus' Greatest 18 Holes of Major Championship Golf (USA).nes" size="131088" crc="f01a3c60"/>
+		<driver status="good"/>
+	</game>
+	<game name="jackalc" cloneof="jackal" romof="jackal">
+		<description>Jackal (T-Chi, v1.1)</description>
+		<year>2020-02-12</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Jackal (T-Chi, v1.1).nes" size="262160" crc="0eca3358"/>
 		<driver status="good"/>
 	</game>
 	<game name="jackal">
@@ -6863,6 +6891,20 @@
 		<year>1991</year>
 		<manufacturer>Natsume</manufacturer>
 		<rom name="S.C.A.T. - Special Cybernetic Attack Team (USA).nes" size="262160" crc="d3bf87d1"/>
+		<driver status="good"/>
+	</game>
+	<game name="saintseiyaodc">
+		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0)</description>
+		<year>2018-08-11</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes" size="1310736" crc="f7df4b56"/>
+		<driver status="good"/>
+	</game>
+	<game name="saintseiyaodkhc">
+		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)</description>
+		<year>2017-01-26</year>
+		<manufacturer>SHINSEI</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes" size="524304" crc="b1651b70"/>
 		<driver status="good"/>
 	</game>
 	<game name="saiyuukiworld">

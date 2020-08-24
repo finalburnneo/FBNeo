@@ -2224,6 +2224,28 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="rallyx" romof="coleco">
+		<description>Rally-X (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>2016</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Rally-X (2016)(Team Pixelboy).rom" size="32768" crc="fb5dd80d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtheflag" romof="coleco">
+		<description>Remember the Flag (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Remember The Flag (2017)(Team Pixelboy).rom" size="32768" crc="7e090dfb"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="riveraid" romof="coleco">
 		<description>River Raid</description>
 		<year>1984</year>
@@ -2742,6 +2764,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="sudoku" romof="coleco">
+		<description>Sudoku (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Sudoku (2017)(Team Pixelboy).rom" size="32768" crc="85237b85"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="sabaseb" romof="coleco">
 		<description>Super Action Baseball</description>
 		<year>1983</year>
@@ -3096,6 +3129,17 @@
 		<rom name="ttennis.2" size="8192" crc="b72f9ff8"/>
 		<rom name="ttennis.3" size="8192" crc="b4293435"/>
 		<rom name="ttennis.4" size="8192" crc="b4293435"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="trackfld" romof="coleco">
+		<description>Track &amp; Field (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2010</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Track and Field (2010)(Team Pixelboy).rom" size="32768" crc="96dd114a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

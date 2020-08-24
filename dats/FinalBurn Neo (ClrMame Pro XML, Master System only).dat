@@ -3085,6 +3085,13 @@
 		<rom name="mpr-15926-f.ic1" size="524288" crc="aedf3bdf"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonici131fm" cloneof="sonic" romof="sonic">
+		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02) [YM2413 FM sound chip supported]</description>
+		<year>2020</year>
+		<manufacturer>Penta Penguin - Valleybell</manufacturer>
+		<rom name="Sonic_The_Hedgehog_Enhanced1.31_FM1.02.sms" size="262144" crc="850b9554"/>
+		<driver status="good"/>
+	</game>
 	<game name="sspin">
 		<description>Sonic The Hedgehog Spinball (Euro, Bra)</description>
 		<year>1994</year>

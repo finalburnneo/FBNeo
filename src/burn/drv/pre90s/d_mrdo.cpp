@@ -798,6 +798,45 @@ struct BurnDriver BurnDrvmrdofabr = {
 };
 
 
+// Mr. Do! (bootleg)
+
+static struct BurnRomInfo mrdoblRomDesc[] = {
+	{ "d1.a4",        0x2000, 0x03dcfba2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "d2.c4",        0x2000, 0x0ecdd39c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "d3.e4",        0x2000, 0xafc518e3, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "d4.f4",        0x2000, 0xf4190cfc, 1 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "d9.s8",        0x1000, 0xaa80c5b6, 2 | BRF_GRA },	       //  4 FG Tiles
+	{ "d10.u8",       0x1000, 0xd20ec85b, 2 | BRF_GRA },	       //  5
+
+	{ "d8.r8",        0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
+	{ "d7.n8",        0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
+
+	{ "d5.h5",        0x1000, 0xe1218cc5, 4 | BRF_GRA },	       //  8 Sprite Tiles
+	{ "d6.k5",        0x1000, 0xb1f68b04, 4 | BRF_GRA },	       //  9
+
+	{ "2_18s030.u2",  0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
+	{ "1_18s030.t2",  0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
+	{ "7603-5.e10",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
+	{ "82s123.j10",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "u001_pal16r6cn.j2.bin",  0x0104, 0x84dbe498, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(mrdobl)
+STD_ROM_FN(mrdobl)
+
+struct BurnDriver BurnDrvmrdobl = {
+	"mrdobl", "mrdo", NULL, NULL, "1982",
+	"Mr. Do! (bootleg)\0", NULL, "Bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mrdoblRomInfo, mrdoblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
+	192, 240, 3, 4
+};
+
+
 // Yankee DO!
 
 static struct BurnRomInfo yankeedoRomDesc[] = {

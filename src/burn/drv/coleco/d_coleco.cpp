@@ -6663,3 +6663,80 @@ struct BurnDriver BurnDrvcv_pitfall2a = {
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Rally-X (HB)
+
+static struct BurnRomInfo cv_rallyxRomDesc[] = {
+    { "Rally-X (2016)(Team Pixelboy).rom",	0x8000, 0xfb5dd80d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_rallyx, cv_rallyx, cv_coleco)
+STD_ROM_FN(cv_rallyx)
+
+struct BurnDriver BurnDrvcv_rallyx = {
+    "cv_rallyx", NULL, "cv_coleco", NULL, "2016",
+    "Rally-X (HB)\0", "SGM - Published by Team Pixelboy", "Namco", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_rallyxRomInfo, cv_rallyxRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Remember the Flag (HB)
+
+static struct BurnRomInfo cv_rtheflagRomDesc[] = {
+    { "Remember The Flag (2017)(Team Pixelboy).rom",	0x8000, 0x7e090dfb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_rtheflag, cv_rtheflag, cv_coleco)
+STD_ROM_FN(cv_rtheflag)
+
+struct BurnDriver BurnDrvcv_rtheflag = {
+    "cv_rtheflag", NULL, "cv_coleco", NULL, "2017",
+    "Remember the Flag (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_rtheflagRomInfo, cv_rtheflagRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Sudoku (HB)
+
+static struct BurnRomInfo cv_sudokuRomDesc[] = {
+    { "Sudoku (2017)(Team Pixelboy).rom",	0x8000, 0x85237b85, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sudoku, cv_sudoku, cv_coleco)
+STD_ROM_FN(cv_sudoku)
+
+struct BurnDriver BurnDrvcv_sudoku = {
+    "cv_sudoku", NULL, "cv_coleco", NULL, "2017",
+    "Sudoku (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_sudokuRomInfo, cv_sudokuRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Track & Field (HB)
+
+static struct BurnRomInfo cv_trackfldRomDesc[] = {
+    { "Track and Field (2010)(Team Pixelboy).rom",	0x8000, 0x96dd114a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_trackfld, cv_trackfld, cv_coleco)
+STD_ROM_FN(cv_trackfld)
+
+struct BurnDriver BurnDrvcv_trackfld = {
+    "cv_trackfld", NULL, "cv_coleco", NULL, "2010",
+    "Track & Field (HB)\0", "Published by Team Pixelboy", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_trackfldRomInfo, cv_trackfldRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+

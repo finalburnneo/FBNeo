@@ -26021,3 +26021,21 @@ struct BurnDriver BurnDrvMSX_freefight = {
 	272, 228, 4, 3
 };
 
+// SkyFox - Paina
+
+static struct BurnRomInfo MSX_skyfoxRomDesc[] = {
+	{ "SkyFox - Paina (Pasi Kettunen) (1989).rom",	0x2000, 0xefb971a4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_skyfox, MSX_skyfox, msx_msx)
+STD_ROM_FN(MSX_skyfox)
+
+struct BurnDriver BurnDrvMSX_skyfox = {
+	"msx_skyfox", NULL, "msx_msx", NULL, "1989",
+	"SkyFox - Paina (HB)\0", NULL, "Pasi Kettunen", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	MSXGetZipName, MSX_skyfoxRomInfo, MSX_skyfoxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

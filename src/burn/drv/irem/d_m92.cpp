@@ -3047,13 +3047,13 @@ struct BurnDriver BurnDrvGunforceu = {
 // Undercover Cops (World)
 
 static struct BurnRomInfo uccopsRomDesc[] = {
-	{ "uc_h0.ic28",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "uc_l0.ic39",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "uc_h1.ic27",		0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "uc_l1.ic38",		0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ucc_e-h0.ic28",	0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "ucc_e-l0.ic39",	0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ucc_h1.ic27",	0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ucc_l1.ic38",	0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "uc_sh0.rom",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "uc_sl0.rom",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.rom",	0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.rom",	0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7
@@ -3095,13 +3095,13 @@ struct BurnDriver BurnDrvUccops = {
 // Undercover Cops (US)
 
 static struct BurnRomInfo uccopsuRomDesc[] = {
-	{ "uc_h0.ic28",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "uc_l0.ic39",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "uc_h1-g.ic27",	0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "uc_l1-g.ic38",	0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ucc_e-h0.ic28",	0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "ucc_e-l0.ic39",	0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ucc_h1-g.ic27",	0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ucc_l1-g.ic38",	0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "uc_sh0.rom",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "uc_sl0.rom",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.rom",	0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.rom",	0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7

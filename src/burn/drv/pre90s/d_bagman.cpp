@@ -1245,6 +1245,46 @@ struct BurnDriver BurnDrvBagnarda = {
 // Le Bagnard (Itisa, Spain)
 
 static struct BurnRomInfo bagnardiRomDesc[] = {
+	{ "lebag_itisa_5.e9",		0x1000, 0xe0156191, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "lebag_itisa_6.f9",		0x1000, 0xedf765e4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "lebag_itisa_7.j9",		0x1000, 0xca2e2845, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "lebag_itisa_8.k9",		0x1000, 0xf212e287, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "lebag_itisa_9.m9",		0x1000, 0x5daf3426, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "lebag_itisa_10.n9",		0x1000, 0x423c54be, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "lebag_itisa_2.e1",		0x1000, 0x4a0a6b55, 2 | BRF_GRA },           //  6 Graphics
+	{ "lebag_itisa_4.j1",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
+	{ "lebag_itisa_1.c1",		0x1000, 0x14ac1735, 2 | BRF_GRA },           //  8
+	{ "lebag_itisa_3.f1",		0x1000, 0x8043bc1a, 2 | BRF_GRA },           //  9
+
+	{ "lebag_itisa_82s123.p3",	0x0020, 0x2a855523, 3 | BRF_GRA },           // 10 Color Data
+	{ "lebag_itisa_82s123.r3",	0x0020, 0xae6f1019, 3 | BRF_GRA },           // 11
+
+	{ "lebag_itisa_82s123.r6",	0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 12 TMS5110 State Machine
+
+	{ "lebag_itisa_11.r9",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
+	{ "lebag_itisa_12.t9",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	
+	{ "lebag_itisa_pal16r6cn.p6", 0x0104, 0x13f14bbf, 0 | BRF_OPT },		 // 15 Plds
+};
+
+STD_ROM_PICK(bagnardi)
+STD_ROM_FN(bagnardi)
+
+struct BurnDriver BurnDrvBagnardi = {
+	"bagnardi", "bagman", NULL, NULL, "1982",
+	"Le Bagnard (Itisa, Spain)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, bagnardiRomInfo, bagnardiRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
+	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Le Bagnard (Itisa, Spain, older)
+
+static struct BurnRomInfo bagnardioRomDesc[] = {
 	{ "bagnardi_05.e9",	0x1000, 0xe0156191, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "bagnardi_06.f9",	0x1000, 0x2e98c072, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bagnardi_07.j9",	0x1000, 0x698f17b3, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1266,15 +1306,15 @@ static struct BurnRomInfo bagnardiRomDesc[] = {
 	{ "bagnardi_12.t9",	0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
-STD_ROM_PICK(bagnardi)
-STD_ROM_FN(bagnardi)
+STD_ROM_PICK(bagnardio)
+STD_ROM_FN(bagnardio)
 
-struct BurnDriver BurnDrvBagnardi = {
-	"bagnardi", "bagman", NULL, NULL, "1982",
-	"Le Bagnard (Itisa, Spain)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
+struct BurnDriver BurnDrvBagnardio = {
+	"bagnardio", "bagman", NULL, NULL, "1982",
+	"Le Bagnard (Itisa, Spain, older)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bagnardiRomInfo, bagnardiRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
+	NULL, bagnardioRomInfo, bagnardioRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14391 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14395 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -6347,6 +6347,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_layla	|  	| Layla (Japan)						| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_lazyjones	|  	| Lazy Jones						| 		| 1985	| Terminal Softw| MSX		| Crashes... check later		|
 | bagnardi	|  	| Le Bagnard (Itisa, Spain)				| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
+| bagnardio	|  	| Le Bagnard (Itisa, Spain, older)			| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | bagnard	|  	| Le Bagnard (set 1)					| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | bagnarda	|  	| Le Bagnard (set 2)					| bagman	| 1982	| Valadon Automa| Miscellaneous	| 					|
 | leadang	|  	| Lead Angle (Japan)					| deadang	| 1988	| Seibu Kaihatsu| Miscellaneous	| 					|
@@ -8310,6 +8311,7 @@ This list contains all games supported by FinalBurn Neo.
 | pacnchmp	|  	| Pac-Man & Chomp Chomp					| pacnpal	| 1983	| Namco		| Miscellaneous	| 					|
 | spec_pacman	|  	| Pac-Man (Atarisoft) (48K)				| 		| 1983	| Atarisoft	| ZX Spectrum	| 					|
 | pacmanvg	|  	| Pac-Man (bootleg, Video Game SA)			| puckman	| 1980	| bootleg (Video| Pac-man	| 					|
+| pacmanblc	|  	| Pac-Man (Calfesa, Spanish bootleg on Galaxian hardware| puckman	| 1981	| bootleg (Calfe| Galaxian	| 					|
 | pacmanbl	|  	| Pac-Man (Galaxian hardware, set 1)			| puckman	| 1981	| bootleg	| Galaxian	| 					|
 | pacmanbla	|  	| Pac-Man (Galaxian hardware, set 2)			| puckman	| 1981	| bootleg	| Galaxian	| 					|
 | pacheart	|  	| Pac-Man (Hearts)					| puckman	| 1981	| hack		| Pac-man	| 					|
@@ -9793,7 +9795,8 @@ This list contains all games supported by FinalBurn Neo.
 | route16b	|  	| Route 16 (Centuri license, set 2)			| route16	| 1981	| Tehkan / Sun E| Route 16	| 					|
 | route16c	|  	| Route 16 (Centuri license, set 3, bootleg?)		| route16	| 1981	| Tehkan / Sun E| Route 16	| 					|
 | route16	|  	| Route 16 (Sun Electronics)				| 		| 1981	| Sun Electronic| Route 16	| 					|
-| routex	|  	| Route X (bootleg)					| route16	| 1981	| bootleg	| Route 16	| 					|
+| routex	|  	| Route X (bootleg, set 1)				| route16	| 1981	| bootleg	| Route 16	| 					|
+| routexa	|  	| Route X (bootleg, set 2)				| route16	| 1981	| bootleg	| Route 16	| 					|
 | rascot	| D	| Royal Ascot						| 		| 19??	| ????		| X-Board	| 					|
 | md_royalbld	|  	| Royal Blood (Jpn)					| md_gemfire	| 1992	| Koei		| Sega Megadrive| 					|
 | gg_royalstne	|  	| Royal Stone - Hirakareshi Toki no Tobira (Hack, Englis| gg_royalstn	| 2013	| Sega		| Sega Game Gear| 					|
@@ -12473,6 +12476,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof97		|  	| The King of Fighters '97 (NGM-2320)			| 		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97t2020	|  	| The King of Fighters '97 (Optimised Edition 2020)	| kof97		| 2020	| Hack		| Neo Geo MVS	| 					|
 | kof97t	|  	| The King of Fighters '97 (Optimized Edition)		| kof97		| 2014	| Hack		| Neo Geo MVS	| 					|
+| kof97pm	|  	| The King of Fighters '97 (Practice Mode)		| kof97		| 1997	| hack		| Neo Geo MVS	| 					|
 | kof97cbt	|  	| The King of Fighters '97 - Combo Training (Hack, Ver. | kof97		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97xt	|  	| The King of Fighters '97 - Final Battle (hack)	| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97rc	|  	| The King of Fighters '97 - Random Combo (Hack, Ver. 20| kof97		| 2019	| hack		| Neo Geo MVS	| 					|

@@ -6461,6 +6461,7 @@ DRV		BurnDrvnes_lawnmower;
 DRV		BurnDrvnes_layla;
 DRV		BurnDrvMSX_lazyjones;
 DRV		BurnDrvBagnardi;
+DRV		BurnDrvBagnardio;
 DRV		BurnDrvBagnard;
 DRV		BurnDrvBagnarda;
 DRV		BurnDrvLeadang;
@@ -8456,6 +8457,7 @@ DRV		BurnDrvtg_pacland;
 DRV		BurnDrvPacnchmp;
 DRV		BurnSpecpacman;
 DRV		BurnDrvpacmanvg;
+DRV		BurnDrvPacmanblc;
 DRV		BurnDrvPacmanbl;
 DRV		BurnDrvPacmanbla;
 DRV		BurnDrvpacheart;
@@ -9964,6 +9966,7 @@ DRV		BurnDrvroute16b;
 DRV		BurnDrvroute16c;
 DRV		BurnDrvroute16;
 DRV		BurnDrvroutex;
+DRV		BurnDrvroutexa;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvRascot;			// no comment
 #endif
@@ -12685,6 +12688,7 @@ DRV		BurnDrvKof97h;
 DRV		BurnDrvKof97;
 DRV		BurnDrvkof97t2020;
 DRV		BurnDrvkof97t;
+DRV		BurnDrvKof97pm;
 DRV		BurnDrvkof97cbt;
 DRV		BurnDrvkof97xt;
 DRV		BurnDrvkof97rc;
@@ -21119,6 +21123,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_layla,			// Layla (Japan)
 	&BurnDrvMSX_lazyjones,		// Lazy Jones
 	&BurnDrvBagnardi,			// Le Bagnard (Itisa, Spain)
+	&BurnDrvBagnardio,			// Le Bagnard (Itisa, Spain, older)
 	&BurnDrvBagnard,			// Le Bagnard (set 1)
 	&BurnDrvBagnarda,			// Le Bagnard (set 2)
 	&BurnDrvLeadang,			// Lead Angle (Japan)
@@ -23114,6 +23119,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacnchmp,			// Pac-Man & Chomp Chomp
 	&BurnSpecpacman,			// Pac-Man (Atarisoft) (48K)
 	&BurnDrvpacmanvg,			// Pac-Man (bootleg, Video Game SA)
+	&BurnDrvPacmanblc,			// Pac-Man (Calfesa, Spanish bootleg on Galaxian hardware)
 	&BurnDrvPacmanbl,			// Pac-Man (Galaxian hardware, set 1)
 	&BurnDrvPacmanbla,			// Pac-Man (Galaxian hardware, set 2)
 	&BurnDrvpacheart,			// Pac-Man (Hearts)
@@ -24621,7 +24627,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvroute16b,			// Route 16 (Centuri license, set 2)
 	&BurnDrvroute16c,			// Route 16 (Centuri license, set 3, bootleg?)
 	&BurnDrvroute16,			// Route 16 (Sun Electronics)
-	&BurnDrvroutex,				// Route X (bootleg)
+	&BurnDrvroutex,				// Route X (bootleg, set 1)
+	&BurnDrvroutexa,			// Route X (bootleg, set 2)
 #if defined FBNEO_DEBUG
 	&BurnDrvRascot,				// Royal Ascot [no comment]
 #endif
@@ -27343,6 +27350,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKof97,				// The King of Fighters '97 (NGM-2320)
 	&BurnDrvkof97t2020,			// The King of Fighters '97 (Optimised Edition 2020)
 	&BurnDrvkof97t,				// The King of Fighters '97 (Optimized Edition)
+	&BurnDrvKof97pm,			// The King of Fighters '97 (Practice Mode)
 	&BurnDrvkof97cbt,			// The King of Fighters '97 - Combo Training (Hack, Ver. 2018)
 	&BurnDrvkof97xt,			// The King of Fighters '97 - Final Battle (hack)
 	&BurnDrvkof97rc,			// The King of Fighters '97 - Random Combo (Hack, Ver. 2010)

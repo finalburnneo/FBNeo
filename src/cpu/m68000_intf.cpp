@@ -330,7 +330,7 @@ inline static UINT16 ReadWord(UINT32 a)
 	{
 		if (a & 1)
 		{
-			return BURN_ENDIAN_SWAP_INT16((ReadByte(a + 0) * 256) + ReadByte(a + 1));
+			return (ReadByte(a + 0) * 256) + ReadByte(a + 1);
 		}
 		else
 		{
@@ -371,8 +371,6 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 		if (a & 1)
 		{
 		//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
-
-			d = BURN_ENDIAN_SWAP_INT16(d);
 
 			WriteByte(a + 0, d / 0x100);
 			WriteByte(a + 1, d);
@@ -426,7 +424,7 @@ inline static UINT32 ReadLong(UINT32 a)
 			r += ReadByte((a + 2)) * 0x100;
 			r += ReadByte((a + 3));
 
-			return BURN_ENDIAN_SWAP_INT32(r);
+			return r;
 		}
 		else
 		{
@@ -471,8 +469,6 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 		if (a & 1)
 		{
 		//	bprintf(PRINT_NORMAL, _T("write32 0x%08X 0x%8.8x\n"), a,d);
-
-			d = BURN_ENDIAN_SWAP_INT32(d);
 
 			WriteByte((a + 0), d / 0x1000000);
 			WriteByte((a + 1), d / 0x10000);

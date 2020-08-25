@@ -1,6 +1,21 @@
 // OKI MSM6295 module
 // Emulation by Jan Klaassen
 
+// Aug 24, 2020: Cubic interpolation disabled.
+// reasoning:
+// 1: clicks in a lot of games, such as:
+//   sf2ce (titlescreen percussion)
+//   boogwing (start game, when your plane takes off and bombs are exploding)
+//   .. others I forget ..
+// 2: too much top-end (treble) loss
+// conclusion: if at least #1 can be fixed, it will be re-instated.
+
+// Options will now be:
+//  1: No interpolation (recording sounds like PCB re: sf2)
+//  2: Linear Interpolation (nInterpolation >= 3)
+
+#define CUBIC_ENABLED   0
+
 #include <math.h>
 #include "burnint.h"
 #include "msm6295.h"
@@ -214,9 +229,16 @@ static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf,
 			} while (nFractionalPosition >= 0x1000);
 		}
 
+#if CUBIC_ENABLED == 0
 		// Compute linearly interpolated sample
+		if (nInterpolation >= 3) {
+			nSample = nPreviousSample[nChip] + (((nCurrentSample[nChip] - nPreviousSample[nChip]) * nFractionalPosition) >> 12);
+		} else {
+			nSample = nCurrentSample[nChip];
+		}
+#else
 		nSample = nPreviousSample[nChip] + (((nCurrentSample[nChip] - nPreviousSample[nChip]) * nFractionalPosition) >> 12);
-
+#endif
 		// Scale all 4 channels
 		nSample *= nVolume;
 
@@ -233,6 +255,7 @@ static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf,
 	MSM6295[nChip].nFractionalPosition = nFractionalPosition;
 }
 
+#if CUBIC_ENABLED
 static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, INT32 nSegmentLength)
 {
 	INT32 nVolume = MSM6295[nChip].nVolume;
@@ -352,6 +375,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 		MSM6295[nChip].nFractionalPosition = (MSM6295[nChip].nFractionalPosition & 0x0FFF) + MSM6295[nChip].nSampleSize;
 	}
 }
+#endif
 
 INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength) // render per-chip
 {
@@ -365,11 +389,15 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength) // rend
 		memset(pRightBuffer, 0, nSegmentLength * sizeof(INT32));
 	}
 
+#if CUBIC_ENABLED
 	if (nInterpolation >= 3) {
 		MSM6295Render_Cubic(nChip, pLeftBuffer, pRightBuffer, nSegmentLength);
 	} else {
 		MSM6295Render_Linear(nChip, pLeftBuffer, pRightBuffer, nSegmentLength);
 	}
+#else
+	MSM6295Render_Linear(nChip, pLeftBuffer, pRightBuffer, nSegmentLength);
+#endif
 
 	if (nChip == nLastMSM6295Chip)	{
 		for (INT32 i = 0; i < nSegmentLength; i++) {
@@ -444,6 +472,7 @@ void MSM6295Write(INT32 nChip, UINT8 nCommand)
 
 						nMSM6295Status[nChip] |= nCommand;
 
+#if CUBIC_ENABLED
 						if (nInterpolation >= 3) {
 							MSM6295ChannelData[nChip][nChannel][0] = 0;
 							MSM6295ChannelData[nChip][nChannel][1] = 0;
@@ -451,6 +480,7 @@ void MSM6295Write(INT32 nChip, UINT8 nCommand)
 							MSM6295ChannelData[nChip][nChannel][3] = 0;
 							MSM6295[nChip].ChannelInfo[nChannel].nBufPos = 4;
 						}
+#endif
 					}
 				}
 			}

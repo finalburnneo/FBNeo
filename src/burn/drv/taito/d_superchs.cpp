@@ -387,7 +387,7 @@ static void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
 		INT32 Offset = (a & 0x1fff) >> 1;
 
-		Ram[Offset] = d;
+		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 
@@ -427,8 +427,8 @@ static void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
 		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
 		INT32 Offset = (a & 0x1fff) >> 1;
 
-		Ram[Offset + 0] = BURN_ENDIAN_SWAP_INT32(d) & 0xffff;
-		Ram[Offset + 1] = BURN_ENDIAN_SWAP_INT32(d) >> 16;
+		Ram[Offset + 0] = BURN_ENDIAN_SWAP_INT16(d & 0xffff);
+		Ram[Offset + 1] = BURN_ENDIAN_SWAP_INT16(d >> 16);
 		return;
 	}
 
@@ -444,8 +444,8 @@ static UINT8 __fastcall Superchs68K2ReadByte(UINT32 a)
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
 		UINT32 *Ram = (UINT32*)TaitoSharedRam;
-		if ((Offset&1)==0) return (Ram[(Offset>>1)^1]&0xffff0000)>>16;
-		return (Ram[(Offset/2)^1]&0x0000ffff);
+		if ((Offset&1)==0) return (BURN_ENDIAN_SWAP_INT32(Ram[(Offset>>1)^1])&0xffff0000)>>16;
+		return (BURN_ENDIAN_SWAP_INT32(Ram[(Offset/2)^1])&0x0000ffff);
 	}
 
 	switch (a) {
@@ -471,8 +471,8 @@ static UINT16 __fastcall Superchs68K2ReadWord(UINT32 a)
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
 		UINT32 *Ram = (UINT32*)TaitoSharedRam;
-		if ((Offset&1)==0) return (Ram[Offset/2]&0xffff0000)>>16;
-		return (Ram[Offset/2]&0x0000ffff);
+		if ((Offset&1)==0) return (BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0xffff0000)>>16;
+		return (BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0x0000ffff);
 	}
 
 	switch (a) {
@@ -490,11 +490,11 @@ static void __fastcall Superchs68K2WriteWord(UINT32 a, UINT16 d)
 		INT32 Offset = (a & 0xffff);
 		UINT32 *Ram = (UINT32*)TaitoSharedRam;
 		if ((Offset&1)==0) {
-			Ram[Offset/2]=(Ram[Offset/2]&0x00ffffff)|((d&0xff00)<<16);
-			Ram[Offset/2]=(Ram[Offset/2]&0xff00ffff)|((d&0x00ff)<<16);
+			Ram[Offset/2]=BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0x00ffffff)|((d&0xff00)<<16));
+			Ram[Offset/2]=BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0xff00ffff)|((d&0x00ff)<<16));
 		} else {
-			Ram[Offset/2]=(Ram[Offset/2]&0xffff00ff)|((d&0xff00)<< 0);
-			Ram[Offset/2]=(Ram[Offset/2]&0xffffff00)|((d&0x00ff)<< 0);
+			Ram[Offset/2]=BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0xffff00ff)|((d&0xff00)<< 0));
+			Ram[Offset/2]=BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(Ram[Offset/2])&0xffffff00)|((d&0x00ff)<< 0));
 		}
 		return;
 	}

@@ -16,6 +16,10 @@
 
 #define DELAY_DEBUG 0 // debug the digital delay stuff.
 
+#if defined (_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif
+
 #include "burnint.h"
 #include "math.h"
 #include "k054539.h"

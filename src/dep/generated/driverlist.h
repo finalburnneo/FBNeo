@@ -600,6 +600,7 @@ DRV		BurnDrvArkretrn;
 DRV		BurnDrvnes_arkistasring;
 DRV		BurnDrvgg_arliel;
 DRV		BurnDrvArmchmp2o;
+DRV		BurnDrvArmchmp2o2;
 DRV		BurnDrvArmchmp2;
 DRV		BurnDrvArmwrest;
 DRV		BurnDrvnes_armadilloj;
@@ -15262,7 +15263,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_arkistasring,	// Arkista's Ring (USA)
 	&BurnDrvgg_arliel,			// Arliel - Crystal Densetsu (Jpn)
 	&BurnDrvArmchmp2o,			// Arm Champs II v1.7 [no comment, NOT WORKING]
-	&BurnDrvArmchmp2,			// Arm Champs II v2.6 [no comment, NOT WORKING]
+	&BurnDrvArmchmp2o2,			// Arm Champs II v2.6 [no comment, NOT WORKING]
+	&BurnDrvArmchmp2,			// Arm Champs II v2.7 [no comment, NOT WORKING]
 	&BurnDrvArmwrest,			// Arm Wrestling
 	&BurnDrvnes_armadilloj,		// Armadillo (Japan)
 	&BurnDrvnes_armadillo,		// Armadillo (T-eng)

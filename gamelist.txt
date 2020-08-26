@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14395 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14396 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -592,7 +592,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_arkistasring|  	| Arkista's Ring (USA)					| 		| 1990	| Sammy		| Miscellaneous	| 					|
 | gg_arliel	|  	| Arliel - Crystal Densetsu (Jpn)			| gg_crystalw	| 1991	| Sega		| Sega Game Gear| 					|
 | armchmp2o	|   NW	| Arm Champs II v1.7					| armchmp2	| 1992	| Jaleco	| Miscellaneous	| 					|
-| armchmp2	|   NW	| Arm Champs II v2.6					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
+| armchmp2o2	|   NW	| Arm Champs II v2.6					| armchmp2	| 1992	| Jaleco	| Miscellaneous	| 					|
+| armchmp2	|   NW	| Arm Champs II v2.7					| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | armwrest	|  	| Arm Wrestling						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | nes_armadilloj|  	| Armadillo (Japan)					| nes_armadillo	| 1991	| IGS		| Miscellaneous	| 					|
 | nes_armadillo	|  	| Armadillo (T-eng)					| 		| 1991	| IGS		| Miscellaneous	| 					|

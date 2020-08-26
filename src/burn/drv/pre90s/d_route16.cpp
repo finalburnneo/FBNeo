@@ -1055,7 +1055,7 @@ struct BurnDriver BurnDrvroute16bl = {
 };
 
 
-// Route X (bootleg)
+// Route X (bootleg, set 1)
 
 static struct BurnRomInfo routexRomDesc[] = {
 	{ "routex01.a0",  	0x0800, 0x99b500e7, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -1080,10 +1080,44 @@ STD_ROM_FN(routex)
 
 struct BurnDriver BurnDrvroutex = {
 	"routex", "route16", NULL, NULL, "1981",
-	"Route X (bootleg)\0", NULL, "bootleg", "Route 16",
+	"Route X (bootleg, set 1)\0", NULL, "bootleg", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, routexRomInfo, routexRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	256, 256, 3, 4
+};
+
+
+// Route X (bootleg, set 2)
+
+static struct BurnRomInfo routexaRomDesc[] = {
+	{ "r1.bin",  		0x0800, 0x78c819c8, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "r2.bin",       	0x0800, 0x3ec52fe5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "r3.bin",       	0x0800, 0xa8e92871, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "r4.bin",       	0x0800, 0xa0fc9fc5, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "r5.bin",  		0x0800, 0x2fef7653, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "r6.bin", 	    0x0800, 0xa39ef648, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "r7.bin",  		0x0800, 0x2aeb3102, 1 | BRF_ESS | BRF_PRG }, //  6
+
+	{ "r8.bin",  		0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, //  7 Z80 #1 Code
+	{ "r9.bin",       	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, //  8
+	{ "r10.bin",      	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, //  9
+	{ "r11.bin",       	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, // 10
+
+	{ "im5623.f10",		0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11 Graphics
+	{ "im5623.f12",		0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 12
+};
+
+STD_ROM_PICK(routexa)
+STD_ROM_FN(routexa)
+
+struct BurnDriver BurnDrvroutexa = {
+	"routexa", "route16", NULL, NULL, "1981",
+	"Route X (bootleg, set 2)\0", NULL, "bootleg", "Route 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, routexaRomInfo, routexaRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
 	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };

@@ -3433,11 +3433,11 @@ struct BurnDriver BurnDrvScudhamm = {
 };
 
 
-// Arm Champs II v2.6
+// Arm Champs II v2.7
 
 static struct BurnRomInfo armchmp2RomDesc[] = {
-	{ "ac-91106v2.6_4.ic63",	0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
-	{ "ac-91106v2.6_3.ic62",	0x20000, 0x5de6da19, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4_ver_2.7.ic63",			0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "3_ver_2.7.ic62",			0x20000, 0x44186a37, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mr91042-07-r66_6.ic95",	0x80000, 0xd1be8699, 1 | BRF_GRA },           //  2 Background Layer 0 Tiles
 
@@ -3470,10 +3470,56 @@ STD_ROM_FN(armchmp2)
 
 struct BurnDriver BurnDrvArmchmp2 = {
 	"armchmp2", NULL, NULL, NULL, "1992",
-	"Arm Champs II v2.6\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II v2.7\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2RomInfo, armchmp2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
+	Armchmp2Init, DrvExit, Single68KFrame, ScudhammDraw, DrvScan, &DrvRecalc, 0x4000,
+	224, 256, 3, 4
+};
+
+
+// Arm Champs II v2.6
+
+static struct BurnRomInfo armchmp2o2RomDesc[] = {
+	{ "ac-91106v2.6_4.ic63",	0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "ac-91106v2.6_3.ic62",	0x20000, 0x5de6da19, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mr91042-07-r66_6.ic95",	0x80000, 0xd1be8699, 1 | BRF_GRA },           //  2 Background Layer 0 Tiles
+
+	{ "ac91106_ver1.2_7.ic99",	0x20000, 0x09755aef, 3 | BRF_GRA },           //  3 Background Layer 2 Tiles
+
+	{ "mr91042-01-r60_1.ic1",	0x80000, 0xfdfe6951, 4 | BRF_GRA },           //  4 Sprites
+	{ "mr91042-02-r61_2.ic2",	0x80000, 0x2e6c8b30, 4 | BRF_GRA },           //  5
+	{ "mr91042-03-r62_3.ic5",	0x80000, 0x07ba6d3a, 4 | BRF_GRA },           //  6
+	{ "mr91042-04-r63_4.ic6",	0x80000, 0xf37cb12c, 4 | BRF_GRA },           //  7
+	{ "mr91042-05-r64_5.ic11",	0x80000, 0x7a3bb52d, 4 | BRF_GRA },           //  8
+	{ "mr91042-06-r65_6.ic12",	0x80000, 0x5312a4f2, 4 | BRF_GRA },           //  9
+
+	{ "mr91042-08_2.ic57",		0x80000, 0xdc015f6c, 1 | BRF_SND },           // 10 MSM #0 Samples
+
+	{ "ac-91106v2.0_1.ic56",	0x80000, 0x0ff5cbcf, 2 | BRF_SND },           // 11 MSM #1 Samples
+
+	{ "ch9072-4_13.ic39",		0x02000, 0xb45b4dc0, 0 | BRF_OPT },           // 12 Unused ROMs
+	{ "ch9072-5_11.ic33",		0x02000, 0xe122916b, 0 | BRF_OPT },           // 13
+	{ "ch9072-6_12.ic35",		0x02000, 0x05d95bf7, 0 | BRF_OPT },           // 14
+	{ "ch9072-8_15.ic59",		0x02000, 0x6bf52596, 0 | BRF_OPT },           // 15
+	{ "mr90015-35-w33_17.ic67",	0x80000, 0x9d428fb7, 0 | BRF_OPT },           // 16
+	{ "mr90015-35-w33_14.ic54",	0x80000, 0x9d428fb7, 0 | BRF_OPT },           // 17
+	{ "pr88004q_8.ic102",		0x00200, 0x9327dc37, 0 | BRF_OPT },           // 18
+	{ "pr88004w_16.ic66",		0x00100, 0x3d648467, 0 | BRF_OPT },           // 19
+	{ "pr91042_5.ic91",			0x00100, 0xe71de4aa, 0 | BRF_OPT },           // 20
+};
+
+STD_ROM_PICK(armchmp2o2)
+STD_ROM_FN(armchmp2o2)
+
+struct BurnDriver BurnDrvArmchmp2o2 = {
+	"armchmp2o2", "armchmp2", NULL, NULL, "1992",
+	"Arm Champs II v2.6\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, armchmp2o2RomInfo, armchmp2o2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
 	Armchmp2Init, DrvExit, Single68KFrame, ScudhammDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 256, 3, 4
 };

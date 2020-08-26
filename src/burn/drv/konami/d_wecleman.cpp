@@ -354,7 +354,12 @@ static void __fastcall wecleman_main_write_byte(UINT32 address, UINT8 data)
 		bprintf(0, _T("blitter_w.b %x      %x            \tframe %d  cyc %d   scanline %d\n"), address, data, nCurrentFrame, SekTotalCycles(), scanline/8);
 #endif
 		UINT8 *bregs = (UINT8*)blitter_regs;
+
+#ifdef LSB_FIRST
 		bregs[(address & 0x1f) ^ 1] = data;
+#else
+		bregs[(address & 0x1f)] = data;
+#endif			
 		if (address == 0x080010) blitter_write();
 		return;
 	}
@@ -646,15 +651,15 @@ static UINT8 hotchase_sound_read(UINT16 address)
 static tilemap_callback( bg )
 {
 	INT32 page = pages[0][((offs & 0x40) >> 6) | ((offs & 0x1000) >> 11)];
-	INT32 code = *((UINT16*)(DrvPageRAM + ((offs & 0x3f) + ((offs & 0xf80) >> 1) + (page << 11)) * 2));
-
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPageRAM + ((offs & 0x3f) + ((offs & 0xf80) >> 1) + (page << 11)) * 2)));
+	
 	TILE_SET_INFO(1, code, ((code & 0xf00) >> 5) + (code >> 12), 0);
 }
 
 static tilemap_callback( fg )
 {
 	INT32 page = pages[1][((offs & 0x40) >> 6) | ((offs & 0x1000) >> 11)];
-	INT32 code = *((UINT16*)(DrvPageRAM + ((offs & 0x3f) + ((offs & 0xf80) >> 1) + (page << 11)) * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPageRAM + ((offs & 0x3f) + ((offs & 0xf80) >> 1) + (page << 11)) * 2)));
 
 	if (!code || code == 0xffff) code = 0x20; // blank space!!
 
@@ -663,7 +668,7 @@ static tilemap_callback( fg )
 
 static tilemap_callback( tx )
 {
-	INT32 code = *((UINT16*)(DrvTxtRAM + offs * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTxtRAM + offs * 2)));
 
 	TILE_SET_INFO(1, code, ((code & 0xf00) >> 5) + (code >> 12), 0);
 }
@@ -1246,9 +1251,9 @@ static void WeclemanPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x800; i++)
 	{
-		UINT8 r = pal4bit(p[i] >> 0);
-		UINT8 g = pal4bit(p[i] >> 4);
-		UINT8 b = pal4bit(p[i] >> 8);
+		UINT8 r = pal4bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 0);
+		UINT8 g = pal4bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 4);
+		UINT8 b = pal4bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 8);
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		DrvPalette[i + 0x800] = BurnHighCol(r >> 1, g >> 1, b >> 1, 0);
@@ -1290,12 +1295,12 @@ static void wecleman_draw_road(INT32 priority)
 	{
 		for (sy=0; sy<nScreenHeight; sy++)
 		{
-			UINT16 road = roadram[sy];
+			UINT16 road = BURN_ENDIAN_SWAP_INT16(roadram[sy]);
 			if ((road>>8) != 0x02) continue;
 			UINT16 *dst = pTransDraw + sy * nScreenWidth;
 
 			for (sx = 0; sx < 512; sx++)
-				if (sx < nScreenWidth) dst[sx] = (roadram[sy+(YSIZE*2)] & 0xf) + 0x7f0;
+				if (sx < nScreenWidth) dst[sx] = (BURN_ENDIAN_SWAP_INT16(roadram[sy+(YSIZE*2)]) & 0xf) + 0x7f0;
 		}
 	}
 	else if (priority == 0x04)
@@ -1304,7 +1309,7 @@ static void wecleman_draw_road(INT32 priority)
 		{
 			UINT16 *dst = pTransDraw + sy * nScreenWidth;
 
-			UINT16 road = roadram[sy];
+			UINT16 road = BURN_ENDIAN_SWAP_INT16(roadram[sy]);
 			if ((road>>8) != 0x04) continue;
 			road &= YMASK;
 
@@ -1312,9 +1317,9 @@ static void wecleman_draw_road(INT32 priority)
 			INT32 mdy = ((road * MIDCURB_DY) >> 8) * nScreenWidth;
 			INT32 tdy = ((road * TOPCURB_DY) >> 8) * nScreenWidth;
 
-			scrollx = roadram[sy+YSIZE] + (0x18 - 0xe00);
+			scrollx = BURN_ENDIAN_SWAP_INT16(roadram[sy+YSIZE]) + (0x18 - 0xe00);
 
-			UINT32 *pal_ptr = road_color + ((roadram[sy+(YSIZE*2)]<<3) & 8);
+			UINT32 *pal_ptr = road_color + ((BURN_ENDIAN_SWAP_INT16(roadram[sy+(YSIZE*2)])<<3) & 8);
 
 			for (sx = 0; sx < DST_WIDTH; sx++, scrollx++)
 			{
@@ -1368,31 +1373,31 @@ static void get_sprite_info(INT32 spr_offsx, INT32 spr_offsy)
 
 	for (spr_count = 0; sprite < finish; source += 0x10/2, sprite++)
 	{
-		if (source[0x00/2] == 0xffff) break;
+		if (BURN_ENDIAN_SWAP_INT16(source[0x00/2]) == 0xffff) break;
 
-		sprite->y = source[0x00/2] & 0xff;
-		sprite->total_height = (source[0x00/2] >> 8) - sprite->y;
+		sprite->y = BURN_ENDIAN_SWAP_INT16(source[0x00/2]) & 0xff;
+		sprite->total_height = (BURN_ENDIAN_SWAP_INT16(source[0x00/2]) >> 8) - sprite->y;
 		if (sprite->total_height < 1) continue;
 
-		sprite->x = source[0x02/2] & 0x1ff;
-		bank = source[0x02/2] >> 10;
+		sprite->x = BURN_ENDIAN_SWAP_INT16(source[0x02/2]) & 0x1ff;
+		bank = BURN_ENDIAN_SWAP_INT16(source[0x02/2]) >> 10;
 		if (bank == 0x3f) continue;
 
-		sprite->tile_width = source[0x04/2] & 0xff;
+		sprite->tile_width = BURN_ENDIAN_SWAP_INT16(source[0x04/2]) & 0xff;
 		if (sprite->tile_width < 1) continue;
 
-		sprite->shadow_mode = source[0x04/2] & 0x4000;
+		sprite->shadow_mode = BURN_ENDIAN_SWAP_INT16(source[0x04/2]) & 0x4000;
 
-		code = source[0x06/2];
-		zoom = source[0x08/2];
+		code = BURN_ENDIAN_SWAP_INT16(source[0x06/2]);
+		zoom = BURN_ENDIAN_SWAP_INT16(source[0x08/2]);
 
-		sprite->pal_base = (source[0x0e/2] & 0xff) << 4;
+		sprite->pal_base = (BURN_ENDIAN_SWAP_INT16(source[0x0e/2]) & 0xff) << 4;
 
 		gfx = ((banks[game_select][bank & 0x3f]) << 15) + (code & 0x7fff);
 
 		sprite->flags = 0;
 		if (code & 0x8000) { sprite->flags |= SPRITE_FLIPX; gfx += 1-sprite->tile_width; }
-		if (source[0x02/2] & 0x0200) sprite->flags |= SPRITE_FLIPY;
+		if (BURN_ENDIAN_SWAP_INT16(source[0x02/2]) & 0x0200) sprite->flags |= SPRITE_FLIPY;
 
 		gfx <<= 3;
 		sprite->tile_width <<= 3;
@@ -1410,7 +1415,7 @@ static void get_sprite_info(INT32 spr_offsx, INT32 spr_offsy)
 		if (game_select == 0) // wecleman
 		{
 			spr_idx_list[spr_count] = spr_count;
-			spr_pri_list[spr_count] = source[0x0e/2] >> 8;
+			spr_pri_list[spr_count] = BURN_ENDIAN_SWAP_INT16(source[0x0e/2]) >> 8;
 		}
 
 		spr_ptr_list[spr_count] = sprite;
@@ -1593,9 +1598,9 @@ static void HotchasePaletteUpdate()
 
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		UINT8 r = ((pal[i] << 1) & 0x1e) | ((pal[i] >> 12) & 0x01);
-		UINT8 g = ((pal[i] >> 3) & 0x1e) | ((pal[i] >> 13) & 0x01);
-		UINT8 b = ((pal[i] >> 7) & 0x1e) | ((pal[i] >> 14) & 0x01);
+		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(pal[i]) << 1) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(pal[i]) >> 12) & 0x01);
+		UINT8 g = ((BURN_ENDIAN_SWAP_INT16(pal[i]) >> 3) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(pal[i]) >> 13) & 0x01);
+		UINT8 b = ((BURN_ENDIAN_SWAP_INT16(pal[i]) >> 7) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(pal[i]) >> 14) & 0x01);
 
 		DrvPalette[i + 0x000] = BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b), 0);
 		DrvPalette[i + 0x800] = BurnHighCol(pal5bit(r >> 1), pal5bit(g >> 1), pal5bit(b >> 1), 0);
@@ -1611,7 +1616,7 @@ static void hotchase_draw_road()
 
 	for (INT32 sy = 0; sy < nScreenHeight; sy++)
 	{
-		INT32 code    = roadram[sy*2+1] + (roadram[sy*2+0] << 16);
+		INT32 code    = BURN_ENDIAN_SWAP_INT16(roadram[sy*2+1]) + (BURN_ENDIAN_SWAP_INT16(roadram[sy*2+0]) << 16);
 		INT32 color   = ((code & 0x00f00000) >> 20) + 0x70;
 		INT32 scrollx = ((code & 0x0007fc00) >> 10) * 2;
 
@@ -1634,8 +1639,8 @@ static INT32 WeclemanDraw()
 	UINT16 *regs = (UINT16*)DrvTxtRAM;
 
 	INT32 video_on = irq_control & 0x40;
-	UINT16 fgvalue = regs[0xefc/2];
-	UINT16 bgvalue = regs[0xefe/2];
+	UINT16 fgvalue = BURN_ENDIAN_SWAP_INT16(regs[0xefc/2]);
+	UINT16 bgvalue = BURN_ENDIAN_SWAP_INT16(regs[0xefe/2]);
 
 	pages[0][0] = (bgvalue >>  4) & 3;
 	pages[0][1] = (bgvalue >>  0) & 3;
@@ -1648,8 +1653,8 @@ static INT32 WeclemanDraw()
 
 	BurnLEDSetStatus(0, (selected_ip & 0x04)); // Start lamp
 
-	INT32 fg_y = regs[0x0f24/2] & 0x1ff;
-	INT32 bg_y = regs[0x0f26/2] & 0x1ff;
+	INT32 fg_y = BURN_ENDIAN_SWAP_INT16(regs[0x0f24/2]) & 0x1ff;
+	INT32 bg_y = BURN_ENDIAN_SWAP_INT16(regs[0x0f26/2]) & 0x1ff;
 
 	GenericTilemapSetScrollY(0, bg_y - 0);
 	GenericTilemapSetScrollY(1, fg_y - 0);
@@ -1659,8 +1664,8 @@ static INT32 WeclemanDraw()
 
 	for (INT32 i = 0; i < (28 << 2); i += 4)
 	{
-		INT32 fg_x = regs[(i + 0xf80) / 2] + (0xb0 - 8);
-		INT32 bg_x = regs[(i + 0xf82) / 2] + (0xb0 - 8);
+		INT32 fg_x = BURN_ENDIAN_SWAP_INT16(regs[(i + 0xf80) / 2]) + (0xb0 - 8);
+		INT32 bg_x = BURN_ENDIAN_SWAP_INT16(regs[(i + 0xf82) / 2]) + (0xb0 - 8);
 
 		INT32 k = i << 1;
 

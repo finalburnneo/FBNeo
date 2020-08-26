@@ -683,18 +683,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Jackal
-	if ((parentrom && strcmp(parentrom, "jackal") == 0) ||
-		(drvname && strcmp(drvname, "jackal") == 0)
-	) {
-		if (strcmp("Rotate Left", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
-		}
-		if (strcmp("Rotate Right", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
-		}
-	}
-
 	// Last Survivor
 	if ((parentrom && strcmp(parentrom, "lastsurv") == 0) ||
 		(drvname && strcmp(drvname, "lastsurv") == 0)
@@ -1083,18 +1071,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 		if (strcmp("Button 6", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R : RETRO_DEVICE_ID_JOYPAD_L), description);
-		}
-	}
-
-	// Mad Planets
-	if ((parentrom && strcmp(parentrom, "mplanets") == 0) ||
-		(drvname && strcmp(drvname, "mplanets") == 0)
-	) {
-		if (strcmp("Rotate Left", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
-		}
-		if (strcmp("Rotate Right", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
 	}
 
@@ -1802,18 +1778,24 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	if ((strcmp("Left 2", description) == 0) ||
 		(strcmp("Left (right)", description) == 0) ||
 		(strcmp("Right Left", description) == 0) ||
-		(strcmp("left 2", szi + 3) == 0) ||
-		(strcmp("rotate left", szi + 3) == 0)
+		(strcmp("left 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Left / Right (Right Stick)");
 	}
 	if ((strcmp("Right 2", description) == 0) ||
 		(strcmp("Right (right)", description) == 0) ||
 		(strcmp("Right Right", description) == 0) ||
-		(strcmp("right 2", szi + 3) == 0) ||
-		(strcmp("rotate right", szi + 3) == 0)
+		(strcmp("right 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left / Right (Right Stick)");
+	}
+
+	// map rotate left/right to L/R
+	if (strcmp("rotate left", szi + 3) == 0) {
+		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
+	}
+	if (strcmp("rotate right", szi + 3) == 0) {
+		GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 	}
 
 	return 0;

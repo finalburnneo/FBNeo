@@ -1224,6 +1224,12 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		if (strcmp("Break", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 3, RETRO_DEVICE_ID_JOYPAD_L2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
 		}
+		if (strcmp("Gun X", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 4, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+		}
+		if (strcmp("Gun Y", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 5, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+		}
 		if (strcmp("Gear Up", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}

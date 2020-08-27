@@ -124,7 +124,7 @@ static void toybox_mcu_run()
 		break;
 
 		case 0x03:  // DSW
-			kaneko16_mcu_ram[mcu_offset] = (DrvDips[0] << 8) | 0;
+			kaneko16_mcu_ram[mcu_offset] = BURN_ENDIAN_SWAP_INT16((DrvDips[0] << 8) | 0);
 		break;
 
 		case 0x04:  // Protection
@@ -176,7 +176,7 @@ static void do_rle(INT32 which)
 		else if (rle_count)
 		{
 			thebyte = DrvGfxROM[address & 0xffffff];
-			framebuffer[dstaddress] = thebyte;
+			framebuffer[dstaddress] = BURN_ENDIAN_SWAP_INT16(thebyte);
 			dstaddress++;
 			rle_count--;
 
@@ -188,7 +188,7 @@ static void do_rle(INT32 which)
 		else if (normal_count)
 		{
 			thebyte = DrvGfxROM[address & 0xffffff];
-			framebuffer[dstaddress] = thebyte;
+			framebuffer[dstaddress] = BURN_ENDIAN_SWAP_INT16(thebyte);
 			dstaddress++;
 			normal_count--;
 			address++;
@@ -237,7 +237,7 @@ static void __fastcall galpani3_write_word(UINT32 address, UINT16 data)
 		case 0x800c06:
 		case 0xa00c06:
 		case 0xc00c06:
-			*((UINT16*)(DrvPalRAM + 0x8600 + ((address / 0x200000) & 3) * 2)) = data;
+			*((UINT16*)(DrvPalRAM + 0x8600 + ((address / 0x200000) & 3) * 2)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x800c10:
@@ -536,9 +536,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x8608/2; i++)
 	{
-		UINT8 g = pal5bit(p[i] >> 10);
-		UINT8 r = pal5bit(p[i] >> 5);
-		UINT8 b = pal5bit(p[i] >> 0);
+		UINT8 g = pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 10);
+		UINT8 r = pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 5);
+		UINT8 b = pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 0);
 
 		DrvPalette[i] = (r << 16) | (g << 8) | b; // 32-bit!!
 	}
@@ -562,7 +562,7 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
 	UINT16 pen = dat;								\
 	UINT32 pal = DrvPalette[pen];					\
 	INT32 alpha = 0xff;								\
-	if (*((UINT16*)(DrvPalRAM + pen * 2)) >> 15) {	\
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + pen * 2))) >> 15) {	\
 		alpha = fbbright2[fb] & 0xff;				\
 	} else {										\
 		alpha = fbbright1[fb] & 0xff;				\
@@ -587,7 +587,7 @@ static INT32 DrvDraw()
 
 	// Clear sknsspr bitmap register (assumed only used by galpani3)
 	UINT32 *sprite_regs = (UINT32*)DrvSprRegs;
-	if (~sprite_regs[0x04/4] & 0x04) {
+	if (~BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x04) {
 		BurnBitmapFill(1, 0);
 	}
 	skns_draw_sprites(BurnBitmapGetBitmap(1), (UINT32*)DrvSprRAM, 0x4000, DrvSprROM, 0x200000, (UINT32*)DrvSprRegs, 0);
@@ -607,10 +607,10 @@ static INT32 DrvDraw()
 		{
 			INT32 prioffs = (drawx+prio_scrollx+66) & 0x1ff;
 
-			UINT8 dat1 = srcline1[(scrollx[0]+drawx+67)&0x1ff];
-			UINT8 dat2 = srcline2[(scrollx[1]+drawx+67)&0x1ff];
-			UINT8 dat3 = srcline3[(scrollx[2]+drawx+67)&0x1ff];
-			UINT8 pridat = priline[prioffs];
+			UINT8 dat1 = BURN_ENDIAN_SWAP_INT16(srcline1[(scrollx[0]+drawx+67)&0x1ff]);
+			UINT8 dat2 = BURN_ENDIAN_SWAP_INT16(srcline2[(scrollx[1]+drawx+67)&0x1ff]);
+			UINT8 dat3 = BURN_ENDIAN_SWAP_INT16(srcline3[(scrollx[2]+drawx+67)&0x1ff]);
+			UINT8 pridat = BURN_ENDIAN_SWAP_INT16(priline[prioffs]);
 			INT32 sprdat = sprline[drawx] & 0xff;
 			INT32 sprpri = sprline[drawx] & 0xc000;
 			UINT32 dst = 0;

@@ -13420,6 +13420,7 @@ DRV		BurnDrvtg_tvhockey;
 DRV		BurnDrvTwinactn;
 DRV		BurnDrvTwinadvk;
 DRV		BurnDrvTwinadv;
+DRV		BurnDrvcv_twinbee;
 DRV		BurnDrvMSX_twinbee;
 DRV		BurnDrvMSX_twinbeeb;
 DRV		BurnDrvMSX_twinbeec;
@@ -14622,6 +14623,7 @@ DRV		BurnDrvZodiack;
 DRV		BurnDrvnes_zombiecalavera;
 DRV		BurnDrvmd_zombhigh;
 DRV		BurnDrvnes_zombiehunter;
+DRV		BurnDrvcv_zombieinc;
 DRV		BurnDrvMSX_zombieinc;
 DRV		BurnDrvnes_zombienation;
 DRV		BurnDrvMSX_zombienear;
@@ -27035,7 +27037,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsWofjh,			// Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)
 	&BurnDrvCpsWofjdr,			// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)
 	&BurnDrvCpswofchp,			// Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)
-	&BurnDrvTengai,				// Tengai (world)
+	&BurnDrvTengai,				// Tengai (World)
 	&BurnDrvTengaij,			// Tengai\0Sengoku Blade - sengoku Ace episode II
 	&BurnDrvgg_tengenwc,		// Tengen World Cup Soccer (Euro, USA)
 	&BurnDrvnes_tenkanogoi,		// Tenka no Goikenban - Mito Koumon (Japan)
@@ -28083,6 +28085,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTwinactn,			// Twin Action
 	&BurnDrvTwinadvk,			// Twin Adventure (Korea)
 	&BurnDrvTwinadv,			// Twin Adventure (World)
+	&BurnDrvcv_twinbee,			// Twin Bee (HB)
 	&BurnDrvMSX_twinbee,		// Twin Bee (Jpn)
 	&BurnDrvMSX_twinbeeb,		// Twin Bee (Jpn, Alt 2)
 	&BurnDrvMSX_twinbeec,		// Twin Bee (Jpn, Alt 3)
@@ -29285,6 +29288,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_zombiecalavera,	// Zombie Calavera (HB)
 	&BurnDrvmd_zombhigh,		// Zombie High (USA, Prototype)
 	&BurnDrvnes_zombiehunter,	// Zombie Hunter (Japan)
+	&BurnDrvcv_zombieinc,		// Zombie Incident (HB)
 	&BurnDrvMSX_zombieinc,		// Zombie Incident (HB, v1.2)
 	&BurnDrvnes_zombienation,	// Zombie Nation (USA)
 	&BurnDrvMSX_zombienear,		// Zombie Near (HB)

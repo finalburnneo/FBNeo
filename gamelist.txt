@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14396 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14398 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4896,8 +4896,8 @@ This list contains all games supported by FinalBurn Neo.
 | grdnstrmau	|  	| Guardian Storm (horizontal, Australia)		| grdnstrm	| 1998	| Afega		| NMK16		| 					|
 | grdnstrm	|  	| Guardian Storm (horizontal, not encrypted)		| 		| 1998	| Afega (Apples | NMK16		| 					|
 | grdnstrmv	|  	| Guardian Storm (vertical)				| grdnstrm	| 1998	| Afega (Apples | NMK16		| 					|
-| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-08-20| Hack		| Newer Seta	| Imperfect graphics @ game start cutsce|
-| grdians	|  	| Guardians\0Denjin Makai II				| 		| 1995	| Banpresto	| Newer Seta	| Imperfect graphics @ game start cutsce|
+| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-08-20| Hack		| Newer Seta	| 					|
+| grdians	|  	| Guardians\0Denjin Makai II				| 		| 1995	| Banpresto	| Newer Seta	| 					|
 | msx_guardic	|  	| Guardic (Jpn)						| 		| 1986	| Compile	| MSX		| 					|
 | msx_guardica	|  	| Guardic (Jpn, Alt)					| msx_guardic	| 1986	| Compile	| MSX		| 					|
 | nes_guardicgaiden|  	| Guardic Gaiden (Japan)				| nes_guardleg	| 1987	| Irem		| Miscellaneous	| 					|
@@ -12162,7 +12162,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
 | wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-08-11| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
-| tengai	|  	| Tengai (world)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
+| tengai	|  	| Tengai (World)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | gg_tengenwc	|  	| Tengen World Cup Soccer (Euro, USA)			| 		| 1993	| Tengen	| Sega Game Gear| 					|
 | nes_tenkanogoi|  	| Tenka no Goikenban - Mito Koumon (Japan)		| 		| 1987	| Sunsoft	| Miscellaneous	| 					|
@@ -13194,6 +13194,7 @@ This list contains all games supported by FinalBurn Neo.
 | twinactn	|  	| Twin Action						| 		| 1995	| Afega		| NMK16		| 					|
 | twinadvk	|  	| Twin Adventure (Korea)				| twinadv	| 1995	| Barko Corp	| Kaneko Pandora| 					|
 | twinadv	|  	| Twin Adventure (World)				| 		| 1995	| Barko Corp	| Kaneko Pandora| 					|
+| cv_twinbee	|  	| Twin Bee (HB)						| 		| 2014	| Konami	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | msx_twinbee	|  	| Twin Bee (Jpn)					| 		| 1986	| Konami	| MSX		| 					|
 | msx_twinbeeb	|  	| Twin Bee (Jpn, Alt 2)					| msx_twinbee	| 1986	| Konami	| MSX		| 					|
 | msx_twinbeec	|  	| Twin Bee (Jpn, Alt 3)					| msx_twinbee	| 1986	| Konami	| MSX		| 					|
@@ -14362,6 +14363,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_zombiecalavera|  	| Zombie Calavera (HB)					| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
 | md_zombhigh	|  	| Zombie High (USA, Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_zombiehunter|  	| Zombie Hunter (Japan)					| 		| 1987	| Hi-Score Softw| Miscellaneous	| 					|
+| cv_zombieinc	|  	| Zombie Incident (HB)					| 		| 2018	| Team Pixelboy | ColecoVision	| SGM - Super Game Module		|
 | msx_zombieinc12|  	| Zombie Incident (HB, v1.2)				| 		| 2013	| NENEFRANZ	| MSX		| 					|
 | nes_zombienation|  	| Zombie Nation (USA)					| 		| 1991	| Meldac	| Miscellaneous	| 					|
 | msx_zombienear11|  	| Zombie Near (HB)					| 		| 2011	| Oscar Toledo G| MSX		| 					|

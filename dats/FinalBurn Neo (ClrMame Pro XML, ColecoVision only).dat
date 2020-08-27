@@ -3207,6 +3207,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="twinbee" romof="coleco">
+		<description>Twin Bee (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>2014</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Twin Bee_SGM (2014)(Team Pixelboy).rom" size="131072" crc="e7e07a70"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="txupinazo" romof="coleco">
 		<description>Txupinazo! (HB) [Homebrew, (SGM) - Published by Team Pixelboy]</description>
 		<year>2017</year>
@@ -3405,6 +3416,17 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="zenji.1" size="8192" crc="c3bde56a"/>
 		<rom name="zenji.2" size="8192" crc="d2a19d28"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombieinc" romof="coleco">
+		<description>Zombie Incident (HB) [Homebrew, SGM - Super Game Module]</description>
+		<year>2018</year>
+		<manufacturer>Team Pixelboy - NeneFranz</manufacturer>
+		<rom name="Zombie Incident (2018)(Team Pixelboy).rom" size="131072" crc="8027dad7"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

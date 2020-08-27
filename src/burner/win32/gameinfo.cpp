@@ -360,7 +360,7 @@ static int GameInfoInit()
 		nRet += BurnDrvGetRomName(&szRomName, i, 0);
 
 		if (ri.nLen == 0) continue;
-		if (ri.nType & BRF_BIOS) continue;
+		if (ri.nType & BRF_BIOS && i >= 0x80) continue;
 
 		LvItem.iItem = RomPos;
 		LvItem.iSubItem = 0;

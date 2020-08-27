@@ -51,6 +51,7 @@ void c45RoadExit()
 static inline void update_tile_pixel(INT32 offset)
 {
 	UINT16 s = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(c45RoadRAM + (offset * 2))));
+	
 	UINT8 *pxl = c45RoadTiles + ((offset * 8) & 0x3fff8);
 
 	for (INT32 x = 7; x >= 0; x--) {
@@ -63,7 +64,7 @@ static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 	UINT16 *ram = (UINT16*)c45RoadRAM;
 
 	INT32 offset = (address & 0x1ffff) / 2;
-	
+
 	if (offset < (0x1fa00 / 2)) // tiles
 	{
 		if (data != BURN_ENDIAN_SWAP_INT16(ram[offset])) {
@@ -80,6 +81,7 @@ static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 static void __fastcall c45_road_write_byte(UINT32 address, UINT8 data)
 {
 	UINT16 *ram = (UINT16*)c45RoadRAM;
+	
 	INT32 offset = (address & 0x1ffff) ^ 1;
 
 	if (offset < 0x1fa00)	// tiles
@@ -114,7 +116,7 @@ static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixel
 	INT32 offs = ((line / 16) * 64) + startx_shift;
 
 	INT32 code_offset = (line & 0xf) * 16;
-	
+
 	for (INT32 sx = startx_shift; sx < endx_shift; sx++, offs++)
 	{
 		INT32 color = ((BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 10) << 2);

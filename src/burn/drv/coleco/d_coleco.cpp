@@ -6740,3 +6740,40 @@ struct BurnDriver BurnDrvcv_trackfld = {
     272, 228, 4, 3
 };
 
+// Twin Bee (HB)
+
+static struct BurnRomInfo cv_twinbeeRomDesc[] = {
+    { "Twin Bee_SGM (2014)(Team Pixelboy).rom",	0x20000, 0xe7e07a70, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_twinbee, cv_twinbee, cv_coleco)
+STD_ROM_FN(cv_twinbee)
+
+struct BurnDriver BurnDrvcv_twinbee = {
+    "cv_twinbee", NULL, "cv_coleco", NULL, "2014",
+    "Twin Bee (HB)\0", "SGM - Published by Team Pixelboy", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_twinbeeRomInfo, cv_twinbeeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Zombie Incident (HB)
+
+static struct BurnRomInfo cv_zombieincRomDesc[] = {
+    { "Zombie Incident (2018)(Team Pixelboy).rom",	0x20000, 0x8027dad7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_zombieinc, cv_zombieinc, cv_coleco)
+STD_ROM_FN(cv_zombieinc)
+
+struct BurnDriver BurnDrvcv_zombieinc = {
+    "cv_zombieinc", NULL, "cv_coleco", NULL, "2018",
+    "Zombie Incident (HB)\0", "SGM - Super Game Module", "Team Pixelboy - NeneFranz", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_zombieincRomInfo, cv_zombieincRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

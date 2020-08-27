@@ -879,32 +879,32 @@ static void draw_sprites(INT32 sprite_priority)
 
 	for (INT32 i = 0x100-2; i >= 0; i -= 2)
 	{
-		INT32 scalex = (mem1[1 + i] & 0xfc00) << 1;
-		INT32 scaley = (mem1[0 + i] & 0xfc00) << 1;
-		INT32 pri = 7 - ((mem1[1 + i] & 0x3c0) >> 6);
+		INT32 scalex = (BURN_ENDIAN_SWAP_INT16(mem1[1 + i]) & 0xfc00) << 1;
+		INT32 scaley = (BURN_ENDIAN_SWAP_INT16(mem1[0 + i]) & 0xfc00) << 1;
+		INT32 pri = 7 - ((BURN_ENDIAN_SWAP_INT16(mem1[1 + i]) & 0x3c0) >> 6);
 
 		if (pri == sprite_priority && scalex && scaley)
 		{
-			INT32 x = mem2[1 + i] & 0x3ff;
-			INT32 y = 512 - (mem2[0 + i] & 0x3ff);
-			INT32 flipx = mem2[0 + i] & 0x4000;
-			INT32 flipy = mem2[0 + i] & 0x8000;
-			INT32 color = mem1[1 + i] & 0x3f;
+			INT32 x = BURN_ENDIAN_SWAP_INT16(mem2[1 + i]) & 0x3ff;
+			INT32 y = 512 - (BURN_ENDIAN_SWAP_INT16(mem2[0 + i]) & 0x3ff);
+			INT32 flipx = BURN_ENDIAN_SWAP_INT16(mem2[0 + i]) & 0x4000;
+			INT32 flipy = BURN_ENDIAN_SWAP_INT16(mem2[0 + i]) & 0x8000;
+			INT32 color = BURN_ENDIAN_SWAP_INT16(mem1[1 + i]) & 0x3f;
 			UINT8 *gfx;
 			INT32 tsize;
 			INT32 code;
 
-			if (mem2[0 + i] & 0x2000)
+			if (BURN_ENDIAN_SWAP_INT16(mem2[0 + i]) & 0x2000)
 			{
 				gfx = DrvGfxROM3;
 				tsize = 32;
-				code = mem1[0 + i] & 0x3ff;
+				code = BURN_ENDIAN_SWAP_INT16(mem1[0 + i]) & 0x3ff;
 			}
 			else
 			{
 				gfx = DrvGfxROM2;
 				tsize = 16;
-				code = mem1[0 + i] & 0x1ff;
+				code = BURN_ENDIAN_SWAP_INT16(mem1[0 + i]) & 0x1ff;
 				scaley *= 2;
 			}
 

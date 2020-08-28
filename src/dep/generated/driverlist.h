@@ -1016,6 +1016,7 @@ DRV		BurnDrvflipshot;
 DRV		BurnDrvnes_battleformula;
 DRV		BurnDrvBgareghk;
 DRV		BurnDrvBgaregga;
+DRV		BurnDrvBgareggat;
 DRV		BurnDrvBgaregtw;
 DRV		BurnDrvBgaregnv;
 DRV		BurnDrvBgaregcn;
@@ -11717,6 +11718,7 @@ DRV		BurnDrvMSX_sboy2a;
 DRV		BurnDrvSb2003a;
 DRV		BurnDrvSb2003;
 DRV		BurnDrvsms_suprbubl;
+DRV		BurnDrvSbubsm;
 DRV		BurnDrvmd_suprbubl;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvsbp;				// no comment [NOT WORKING]
@@ -13199,6 +13201,7 @@ DRV		BurnDrvTrstaro;
 DRV		BurnDrvMSX_toprollr;
 DRV		BurnDrvtopsecrt;
 DRV		BurnDrvtopsecrt2;
+DRV		BurnDrvTopshoot;
 DRV		BurnDrvTopspeedu;
 DRV		BurnDrvTopspeed;
 DRV		BurnDrvnes_topstriker;
@@ -15681,6 +15684,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_battleformula,	// Battle Formula (Japan)
 	&BurnDrvBgareghk,			// Battle Garegga (Austria / Hong Kong) (Sat Feb 3 1996)
 	&BurnDrvBgaregga,			// Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)
+	&BurnDrvBgareggat,			// Battle Garegga (location test) (Wed Jan 17 1996)
 	&BurnDrvBgaregtw,			// Battle Garegga (Taiwan / Germany) (Thu Feb 1 1996)
 	&BurnDrvBgaregnv,			// Battle Garegga - New Version (Austria / Hong Kong) (Sat Mar 2 1996)
 	&BurnDrvBgaregcn,			// Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1996)
@@ -26382,6 +26386,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSb2003a,			// Super Bubble 2003 (Asia, Ver 1.0)
 	&BurnDrvSb2003,				// Super Bubble 2003 (World, Ver 1.0)
 	&BurnDrvsms_suprbubl,		// Super Bubble Bobble (Kor)
+	&BurnDrvSbubsm,				// Super Bubble Bobble (Sun Mixing, Megadrive clone hardware)
 	&BurnDrvmd_suprbubl,		// Super Bubble Bobble MD (Chi)
 #if defined FBNEO_DEBUG
 	&BurnDrvsbp,				// Super Bubble Pop [no comment, NOT WORKING]
@@ -27864,6 +27869,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_toprollr,		// Top Roller! (Jpn)
 	&BurnDrvtopsecrt,			// Top Secret (Japan, old revision)
 	&BurnDrvtopsecrt2,			// Top Secret (Japan, revision B)
+	&BurnDrvTopshoot,			// Top Shooter
 	&BurnDrvTopspeedu,			// Top Speed (US)
 	&BurnDrvTopspeed,			// Top Speed (World)
 	&BurnDrvnes_topstriker,		// Top Striker (Japan)

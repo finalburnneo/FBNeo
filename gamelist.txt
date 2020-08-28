@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14398 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14401 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1004,6 +1004,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_battleformula|  	| Battle Formula (Japan)				| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
 | bgareggahk	|  	| Battle Garegga (Austria / Hong Kong) (Sat Feb 3 1996)	| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
 | bgaregga	|  	| Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb | 		| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
+| bgareggat	|  	| Battle Garegga (location test) (Wed Jan 17 1996)	| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
 | bgareggatw	|  	| Battle Garegga (Taiwan / Germany) (Thu Feb 1 1996)	| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
 | bgaregganv	|  	| Battle Garegga - New Version (Austria / Hong Kong) (Sa| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
 | bgareggacn	|  	| Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1| bgaregga	| 1996	| Raizing / 8ing| Toaplan GP9001| 					|
@@ -11519,6 +11520,7 @@ This list contains all games supported by FinalBurn Neo.
 | sb2003a	|  	| Super Bubble 2003 (Asia, Ver 1.0)			| sb2003	| 2003	| Limenko	| Miscellaneous	| 					|
 | sb2003	|  	| Super Bubble 2003 (World, Ver 1.0)			| 		| 2003	| Limenko	| Miscellaneous	| 					|
 | sms_suprbubl	|  	| Super Bubble Bobble (Kor)				| sms_bublbobl	| 1989	| Zemina	| Sega Master Sy| 					|
+| sbubsm	|  	| Super Bubble Bobble (Sun Mixing, Megadrive clone hardw| 		| 199?	| Sun Mixing	| Sega Megadrive| 					|
 | md_suprbubl	|  	| Super Bubble Bobble MD (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | sbp		| D NW	| Super Bubble Pop					| 		| 2004	| Vektorlogic	| Neo Geo MVS	| 					|
 | supbtimej	|  	| Super Burger Time (Japan)				| supbtime	| 1990	| Data East Corp| DECO IC16	| 					|
@@ -12981,6 +12983,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_toprollr	|  	| Top Roller! (Jpn)					| 		| 1984	| Jaleco	| MSX		| 					|
 | topsecrt	|  	| Top Secret (Japan, old revision)			| bionicc	| 1987	| Capcom	| Miscellaneous	| 					|
 | topsecrt2	|  	| Top Secret (Japan, revision B)			| bionicc	| 1987	| Capcom	| Miscellaneous	| 					|
+| topshoot	|  	| Top Shooter						| 		| 1993	| Sun Mixing	| Sega Megadrive| 					|
 | topspeedu	|  	| Top Speed (US)					| topspeed	| 1987	| Taito America | Taito Misc	| 					|
 | topspeed	|  	| Top Speed (World)					| 		| 1987	| Taito Corporat| Taito Misc	| 					|
 | nes_topstriker|  	| Top Striker (Japan)					| 		| 1992	| Namco		| Miscellaneous	| 					|

@@ -44,6 +44,26 @@ static struct BurnRomInfo bgareggaRomDesc[] = {
 STD_ROM_PICK(bgaregga)
 STD_ROM_FN(bgaregga)
 
+// Battle Garegga (location test) (Wed Jan 17 1996)
+static struct BurnRomInfo bgareggatRomDesc[] = {
+	{ "battlegaregga-prg0-8-1-17.bin",	0x080000, 0xc032176f, BRF_PRG | BRF_ESS }, //  0 CPU #0 code (even)
+	{ "battlegaregga-prg1-8-1-17.bin",	0x080000, 0x3822f375, BRF_PRG | BRF_ESS }, //  1			 (odd)
+
+	{ "rom4.bin",		0x200000, 0xb333d81f, BRF_GRA },		   //  2 GP9001 Tile data
+	{ "rom3.bin",		0x200000, 0x51b9ebfb, BRF_GRA },           //  3
+	{ "rom2.bin",		0x200000, 0xb330e5e2, BRF_GRA },           //  4
+	{ "rom1.bin",		0x200000, 0x7eafdd70, BRF_GRA },           //  5
+
+	{ "text.u81",		0x008000, 0xe67fd534, BRF_GRA },           //  6 Extra text layer tile data
+
+	{ "battlegaregga-snd-8-1-18-loke-ver.bin",	0x020000, 0xf5ea56f7, BRF_ESS | BRF_PRG }, //  7 Z80 program
+
+	{ "rom5.bin",		0x100000, 0xf6d49863, BRF_SND },           //  8 MSM6295 ADPCM data
+};
+
+STD_ROM_PICK(bgareggat)
+STD_ROM_FN(bgareggat)
+
 static struct BurnRomInfo bgareggazRomDesc[] = {
 	{ "garegga-prg0.bin",     0x080000, 0x6F4AF466, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
 	{ "garegga-prg1.bin",     0x080000, 0xB4DC9A48, BRF_ESS | BRF_PRG }, //  1				(odd)
@@ -923,8 +943,9 @@ static INT32 DrvFrame()
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	SekOpen(0);
-	
+
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
+
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262); // 0
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
 	bool bVBlank = false;
@@ -1001,6 +1022,16 @@ struct BurnDriver BurnDrvBgaregga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggaRomInfo, bgareggaRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
+	battlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBgareggat = {
+	"bgareggat", "bgaregga", NULL, NULL, "1996",
+	"Battle Garegga (location test) (Wed Jan 17 1996)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, bgareggatRomInfo, bgareggatRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	battlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

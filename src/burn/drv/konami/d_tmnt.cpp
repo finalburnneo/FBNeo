@@ -3614,14 +3614,12 @@ void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 			EEPROMWrite(d & 0x04, d & 0x02, d & 0x01);
 			K053244BankSelect(0, ((d & 0x20) >> 5) << 2);
 			dim_c = d & 0x18;
-			//bprintf(0, _T("dim_c  %x\n"), d);
 			return;
 		}
 		
 		case 0x1c0301: {
 			K052109RMRDLine = d & 0x08;
 			dim_v = (d & 0x70) >> 4;
-			//bprintf(0, _T("dim_v  %x\n"), d);
 			return;
 		}
 		
@@ -5668,7 +5666,7 @@ static inline void BlswhstlCalcPaletteWithContrast(INT32 i, INT32 brt)
 	DrvPalette[i] = (r<<16) | (g<<8) | b;
 }
 
-static void PaletteDim(INT32 dimslayer)
+static void PaletteDim(INT32 layer2, INT32 layer0)
 {
 	INT32 i, dim, en, cb, ce, brt;
 
@@ -5679,16 +5677,20 @@ static void PaletteDim(INT32 dimslayer)
 	if (en) brt -= 40*dim/8;
 
 	if (brt < 100 && !NoDim) {
-		cb = LayerColourBase[dimslayer] << 4;
+		cb = LayerColourBase[layer2] << 4;
 		ce = cb + 128;
-		//bprintf(0, _T("dimming layer %x:  %x - %x\n"), dimslayer, cb, ce);
-		if (is_tmnt2) {
-			for (i = 0; i < 2048; i++)
+
+		//bprintf(0, _T("--pri(5) = %02x    pri(6) = %02x\n"), K053251GetPriority(5), K053251GetPriority(6));
+		//bprintf(0, _T("dimming layer %x:  %x - %x\n"), layer2, cb, ce);
+		if (is_tmnt2 && K053251GetPriority(5) == 0x30) {
+			// dim just the first layer (Mars through the windows)
+			cb = LayerColourBase[layer0] << 4;
+			ce = cb + 128;
+			for (i = 0; i < 0x800; i++)
 				BlswhstlCalcPaletteWithContrast(i, 100);
 
 			for (i = cb; i < ce; i++) // selected layer
 				BlswhstlCalcPaletteWithContrast(i, brt);
-
 		} else {
 			for (i =  0; i < cb; i++)
 				BlswhstlCalcPaletteWithContrast(i, brt);
@@ -5696,7 +5698,7 @@ static void PaletteDim(INT32 dimslayer)
 			for (i = cb; i < ce; i++) // text
 				BlswhstlCalcPaletteWithContrast(i, 100);
 
-			for (i = ce; i < 2048; i++)
+			for (i = ce; i < 0x800; i++)
 				BlswhstlCalcPaletteWithContrast(i, brt);
 		}
 
@@ -5735,13 +5737,11 @@ static INT32 BlswhstlDraw()
 
 	K052109UpdateScroll();
 	
-	INT32 BGColourBase   = K053251GetPaletteIndex(0);
+	INT32 BGColourBase = K053251GetPaletteIndex(0);
 	SpriteColourBase   = K053251GetPaletteIndex(1);
 	LayerColourBase[0] = K053251GetPaletteIndex(2);
 	LayerColourBase[1] = K053251GetPaletteIndex(4);
 	LayerColourBase[2] = K053251GetPaletteIndex(3);
-
-	//bprintf(0, _T("colorbase: sp %x   bg %x   layer   %x  %x  %x\n"), SpriteColourBase, BGColourBase, LayerColourBase[0], LayerColourBase[1], LayerColourBase[2]);
 
 	LayerPri[0] = K053251GetPriority(2);
 	LayerPri[1] = K053251GetPriority(4);
@@ -5753,9 +5753,10 @@ static INT32 BlswhstlDraw()
 	KonamiClearBitmaps(DrvPalette[16 * BGColourBase]);
 
 	sortlayers(Layer, LayerPri);
-	//extern int counter;
-	PaletteDim((is_tmnt2) ? Layer[0] : Layer[2]);
+	PaletteDim(Layer[2], Layer[0]);
+	// save for later (dink)
 	//bprintf(0, _T("layer order: %x   %x   %x\n"), Layer[0], Layer[1], Layer[2]);
+	//bprintf(0, _T("pri   order: %x   %x   %x\n"), LayerPri[0], LayerPri[1], LayerPri[2]);
 	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, 1);
 	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, 2);
 	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, 4);
@@ -5774,7 +5775,7 @@ static INT32 Thndrx2Draw()
 	BlswhstlCalcPalette();
 	K052109UpdateScroll();
 	
-	INT32 BGColourBase   = K053251GetPaletteIndex(0);
+	INT32 BGColourBase = K053251GetPaletteIndex(0);
 	SpriteColourBase   = K053251GetPaletteIndex(1);
 	LayerColourBase[0] = K053251GetPaletteIndex(2);
 	LayerColourBase[1] = K053251GetPaletteIndex(4);
@@ -6460,6 +6461,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(PlayTitleSample);
 		SCAN_VAR(TitleSamplePos);
 		SCAN_VAR(PriorityFlag);
+		//SCAN_VAR(dim_c);
+		//SCAN_VAR(dim_v);
 
 		BurnRandomScan(nAction);
 	}

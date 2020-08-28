@@ -4576,6 +4576,16 @@ INT32 OPTIMIZE_ATTR MegadriveFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
+	if (BurnDrvGetHardwareCode() & SEGA_MD_ARCADE_SUNMIXING)
+	{
+		SekWriteWordROM(0x200050, -0x5b); // -5b
+		SekWriteWordROM(0x200042, JoyPad->pad[0] ^ 0xff);
+		SekWriteWordROM(0x200044, JoyPad->pad[1] ^ 0xff);
+		SekWriteWordROM(0x200046, JoyPad->pad[2] ^ 0xff);
+		SekWriteWordROM(0x200048, JoyPad->pad[3] ^ 0xff);
+		SekWriteWordROM(0x20007e, JoyPad->pad[4] ^ 0xff);
+	}
+
 	PicoFrameStart();
 
 	INT32 lines, lines_vis = 224, line_sample;

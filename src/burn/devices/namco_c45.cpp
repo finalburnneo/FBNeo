@@ -50,8 +50,8 @@ void c45RoadExit()
 
 static inline void update_tile_pixel(INT32 offset)
 {
-	UINT16 s = *((UINT16*)(c45RoadRAM + (offset * 2)));
-
+	UINT16 s = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(c45RoadRAM + (offset * 2))));
+	
 	UINT8 *pxl = c45RoadTiles + ((offset * 8) & 0x3fff8);
 
 	for (INT32 x = 7; x >= 0; x--) {
@@ -67,21 +67,21 @@ static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 
 	if (offset < (0x1fa00 / 2)) // tiles
 	{
-		if (data != ram[offset]) {
-			ram[offset] = data;
+		if (data != BURN_ENDIAN_SWAP_INT16(ram[offset])) {
+			ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 			update_tile_pixel(offset);
 		}
 	}
 	else	// scroll regs
 	{
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 	}
 }
 
 static void __fastcall c45_road_write_byte(UINT32 address, UINT8 data)
 {
 	UINT16 *ram = (UINT16*)c45RoadRAM;
-
+	
 	INT32 offset = (address & 0x1ffff) ^ 1;
 
 	if (offset < 0x1fa00)	// tiles
@@ -119,13 +119,13 @@ static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixel
 
 	for (INT32 sx = startx_shift; sx < endx_shift; sx++, offs++)
 	{
-		INT32 color = ((ram[offs] >> 10) << 2);
-		UINT8 *gfx = c45RoadTiles + ((ram[offs] & 0x3ff) * 256 + code_offset);
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 10) << 2);
+		UINT8 *gfx = c45RoadTiles + ((BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x3ff) * 256 + code_offset);
 		UINT8 *clut = c45RoadClut + color;
 
 		for (INT32 x = 0; x < 16; x++)
 		{
-			c45RoadBitmap[((sx * 16) + x) & 0x3ff] = clut[gfx[x]] + 0xf00;
+			c45RoadBitmap[((sx * 16) + x) & 0x3ff] = BURN_ENDIAN_SWAP_INT16(clut[gfx[x]] + 0xf00);
 		}
 	}
 }
@@ -138,7 +138,7 @@ void c45RoadDraw()
 
 	UINT16 *m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
 
-	UINT32 yscroll = m_lineram[0x3fe/2];
+	UINT32 yscroll = BURN_ENDIAN_SWAP_INT16(m_lineram[0x3fe/2]);
 
 	static INT32 ROAD_COLS = 64;
 	static INT32 ROAD_ROWS = 512;
@@ -150,17 +150,17 @@ void c45RoadDraw()
 	for (INT32 y = min_y; y < max_y; y++)
 	{
 		// skip if we are not the right priority
-		INT32 screenx = m_lineram[y + 15];
+		INT32 screenx = BURN_ENDIAN_SWAP_INT16(m_lineram[y + 15]);
 
 		INT32 pri = (screenx & 0xf000) >> 12;
 
 		// skip if we don't have a valid zoom factor
-		UINT32 zoomx = m_lineram[0x400/2 + y + 15] & 0x3ff;
+		UINT32 zoomx = BURN_ENDIAN_SWAP_INT16(m_lineram[0x400/2 + y + 15]) & 0x3ff;
 		if (zoomx == 0)
 			continue;
 
 		// skip if we don't have a valid source increment
-		UINT32 sourcey = m_lineram[0x200/2 + y + 15] + yscroll;
+		UINT32 sourcey = BURN_ENDIAN_SWAP_INT16(m_lineram[0x200/2 + y + 15]) + yscroll;
 		const UINT16 *source_gfx = c45RoadBitmap;
 		UINT32 dsourcex = (ROAD_TILEMAP_WIDTH << 16) / zoomx;
 		if (dsourcex == 0)
@@ -203,7 +203,7 @@ void c45RoadDraw()
 
 			if (destpri <= pri ) {
 				if (pixel != c45_transparent_color) {
-					dest[screenx] = pixel;
+					dest[screenx] = BURN_ENDIAN_SWAP_INT16(pixel);
 				}
 				pdest[screenx] = pri;
 			}

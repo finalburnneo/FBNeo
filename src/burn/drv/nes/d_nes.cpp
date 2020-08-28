@@ -10965,6 +10965,23 @@ struct BurnDriver BurnDrvnes_jackalc = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_rollieRomDesc[] = {
+	{ "Rollie (HB).nes",          40976, 0x8165c356, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rollie)
+STD_ROM_FN(nes_rollie)
+
+struct BurnDriver BurnDrvnes_rollie = {
+	"nes_rollie", NULL, NULL, NULL, "2019",
+	"Rollie (HB)\0", NULL, "Optovania", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_rollieRomInfo, nes_rollieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_kosatakRomDesc[] = {
 	{ "Kosmity Atakujo (HB, v10.07.2020).nes",          131088, 0x0570865c, BRF_ESS | BRF_PRG },
 };

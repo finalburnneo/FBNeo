@@ -687,7 +687,9 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
-	DrvOkiBank = -1;
+	DrvOkiBank = 0xff;
+	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
+	DrvOkiBank = 0;
 	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
 
 	return 0;

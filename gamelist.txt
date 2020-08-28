@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14401 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14402 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9760,6 +9760,7 @@ This list contains all games supported by FinalBurn Neo.
 | rollergj	|  	| Rollergames (Japan)					| rollerg	| 1991	| Konami	| GX999		| 					|
 | rollerg	|  	| Rollergames (US)					| 		| 1991	| Konami	| GX999		| 					|
 | nes_rollergames|  	| Rollergames (USA)					| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_rollie	|  	| Rollie (HB)						| 		| 2019	| Optovania	| Miscellaneous	| 					|
 | rolcrusha	|  	| Rolling Crush (version 1.03.E - 1999/01/29)		| rolcrush	| 1999	| SemiCom / Exit| Miscellaneous	| 					|
 | rolcrush	|  	| Rolling Crush (version 1.07.E - 1999/02/11, Trust lice| 		| 1999	| SemiCom / Exit| Miscellaneous	| 					|
 | spec_rollthun	|  	| Rolling Thunder (48K)					| 		| 1988	| U.S. Gold	| ZX Spectrum	| 					|
@@ -12479,7 +12480,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof97		|  	| The King of Fighters '97 (NGM-2320)			| 		| 1997	| SNK		| Neo Geo MVS	| 					|
 | kof97t2020	|  	| The King of Fighters '97 (Optimised Edition 2020)	| kof97		| 2020	| Hack		| Neo Geo MVS	| 					|
 | kof97t	|  	| The King of Fighters '97 (Optimized Edition)		| kof97		| 2014	| Hack		| Neo Geo MVS	| 					|
-| kof97pm	|  	| The King of Fighters '97 (Practice Mode)		| kof97		| 1997	| hack		| Neo Geo MVS	| 					|
+| kof97pm	|  	| The King of Fighters '97 (Practice Mode)		| kof97		| 1997	| hack		| Neo Geo MVS	| need AES for practice mode		|
 | kof97cbt	|  	| The King of Fighters '97 - Combo Training (Hack, Ver. | kof97		| 2019	| hack		| Neo Geo MVS	| 					|
 | kof97xt	|  	| The King of Fighters '97 - Final Battle (hack)	| kof97		| 2007	| hack		| Neo Geo MVS	| 					|
 | kof97rc	|  	| The King of Fighters '97 - Random Combo (Hack, Ver. 20| kof97		| 2019	| hack		| Neo Geo MVS	| 					|

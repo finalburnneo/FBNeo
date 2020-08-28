@@ -6851,6 +6851,13 @@
 		<rom name="Rollergames (USA).nes" size="262160" crc="80da9f53"/>
 		<driver status="good"/>
 	</game>
+	<game name="rollie">
+		<description>Rollie (HB)</description>
+		<year>2019</year>
+		<manufacturer>Optovania</manufacturer>
+		<rom name="Rollie (HB).nes" size="40976" crc="8165c356"/>
+		<driver status="good"/>
+	</game>
 	<game name="rollingthunderj" cloneof="rollingthunder" romof="rollingthunder">
 		<description>Rolling Thunder (Japan)</description>
 		<year>1989</year>

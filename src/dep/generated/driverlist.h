@@ -9928,6 +9928,7 @@ DRV		BurnDrvnes_rollerac;
 DRV		BurnDrvRollergj;
 DRV		BurnDrvRollerg;
 DRV		BurnDrvnes_rollergames;
+DRV		BurnDrvnes_rollie;
 DRV		BurnDrvRolcrusha;
 DRV		BurnDrvRolcrush;
 DRV		BurnSpecrollthun;
@@ -24596,6 +24597,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRollergj,			// Rollergames (Japan)
 	&BurnDrvRollerg,			// Rollergames (US)
 	&BurnDrvnes_rollergames,	// Rollergames (USA)
+	&BurnDrvnes_rollie,			// Rollie (HB)
 	&BurnDrvRolcrusha,			// Rolling Crush (version 1.03.E - 1999/01/29)
 	&BurnDrvRolcrush,			// Rolling Crush (version 1.07.E - 1999/02/11, Trust license)
 	&BurnSpecrollthun,			// Rolling Thunder (48K)

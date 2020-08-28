@@ -15700,7 +15700,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof97pm" cloneof="kof97" romof="kof97">
-		<description>The King of Fighters '97 (Practice Mode) [Bootleg]</description>
+		<description>The King of Fighters '97 (Practice Mode) [Hack, need AES for practice mode]</description>
 		<year>1997</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232pm-p1.p1" size="1048576" crc="34ccabae"/>

@@ -70,12 +70,12 @@ static void vega_write_long(UINT32 address, UINT32 data)
 	}
 
 	if ((address & 0xfffffc00) == 0xfc200000) {
-		*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))) = data & 0xffff;
+		*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))) = BURN_ENDIAN_SWAP_INT16(data & 0xffff);
 		return;
 	}
 
 	if (address >= 0x80000000 && address <= 0x80013fff) {
-		UINT32 x = *((UINT32*)(DrvVidRAM + vidrambank + (address & 0x1fffc)));
+		UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvVidRAM + vidrambank + (address & 0x1fffc))));
 		UINT32 xm = 0;
 
 		data = (data << 16) | (data >> 16);
@@ -85,7 +85,7 @@ static void vega_write_long(UINT32 address, UINT32 data)
 		if ((data & 0x0000ff00) == 0x0000ff00) xm |= 0x0000ff00;
 		if ((data & 0x000000ff) == 0x000000ff) xm |= 0x000000ff;
 		UINT32 dm = xm ^ 0xffffffff;
-		*((UINT32*)(DrvVidRAM + vidrambank + (address & 0x1fffc))) = (x & xm) | (data & dm);
+		*((UINT32*)(DrvVidRAM + vidrambank + (address & 0x1fffc))) = BURN_ENDIAN_SWAP_INT32((x & xm) | (data & dm));
 		return;
 	}
 
@@ -111,12 +111,12 @@ static void vega_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfffffc00) == 0xfc200000) {
-		*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))) = data & 0xffff;
+		*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))) = BURN_ENDIAN_SWAP_INT16(data & 0xffff);
 		return;
 	}
 
 	if (address >= 0x80000000 && address <= 0x80013fff) {
-		UINT16 x = *((UINT16*)(DrvVidRAM + vidrambank + (address & 0x1fffe)));
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM + vidrambank + (address & 0x1fffe))));
 		UINT16 xm = 0;
 		if ((data & 0x0000ff00) == 0x0000ff00) xm |= 0x0000ff00;
 		if ((data & 0x000000ff) == 0x000000ff) xm |= 0x000000ff;
@@ -177,7 +177,7 @@ static UINT32 vega_read_long(UINT32 address)
 	}
 
 	if ((address & 0xfffffc00) == 0xfc200000) {
-		return *((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))));
 	}
 
 	if (address >= 0x80000000 && address <= 0x80013fff) {
@@ -206,7 +206,7 @@ static UINT16 vega_read_word(UINT32 address)
 	}
 
 	if ((address & 0xfffffc00) == 0xfc200000) {
-		return *((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(BurnPalRAM + ((address & 0x3fc) / 2))));
 	}
 
 	if (address >= 0x80000000 && address <= 0x80013fff) {

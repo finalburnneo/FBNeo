@@ -1612,11 +1612,7 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnRomInfo SsiopromRomDesc[] = {
-#if !defined (ROM_VERIFY)
-	{ "82s123.12d",						0x0020, 0xe1281ee9, 0 | BRF_SND },
-#else
-	{ "",  0x000000, 0x00000000, BRF_ESS | BRF_PRG | BRF_BIOS },
-#endif
+	{ "82s123.12d",						0x0020, 0xe1281ee9, BRF_SND | BRF_BIOS },
 };
 
 STD_ROM_PICK(Ssioprom)

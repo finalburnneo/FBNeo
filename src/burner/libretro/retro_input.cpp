@@ -1313,24 +1313,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
-	// Assault
-	if ((parentrom && strcmp(parentrom, "assault") == 0) ||
-		(drvname && strcmp(drvname, "assault") == 0)
-	) {
-		if (strcmp("Right Stick Up", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Right Stick Up / Down");
-		}
-		if (strcmp("Right Stick Down", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Right Stick Up / Down");
-		}
-		if (strcmp("Right Stick Left", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Right Stick Left / Right");
-		}
-		if (strcmp("Right Stick Right", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
-		}
-	}
-
 	// Wacko (map aim to right stick)
 	if ((parentrom && strcmp(parentrom, "wacko") == 0) ||
 		(drvname && strcmp(drvname, "wacko") == 0)
@@ -1346,56 +1328,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 		if (strcmp("Right", description) == 0) {
 			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Aim Left / Right");
-		}
-	}
-
-	// Angel Kids, Splat!
-	if ((parentrom && strcmp(parentrom, "angelkds") == 0) ||
-		(drvname && strcmp(drvname, "angelkds") == 0) ||
-		(parentrom && strcmp(parentrom, "splat") == 0) ||
-		(drvname && strcmp(drvname, "splat") == 0)
-	) {
-		if (strcmp("Left Stick Up", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_UP, description);
-		}
-		if (strcmp("Left Stick Down", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_DOWN, description);
-		}
-		if (strcmp("Left Stick Left", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_LEFT, description);
-		}
-		if (strcmp("Left Stick Right", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_RIGHT, description);
-		}
-		if (strcmp("Right Stick Up", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Right Stick Up / Down");
-		}
-		if (strcmp("Right Stick Down", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Right Stick Up / Down");
-		}
-		if (strcmp("Right Stick Left", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Right Stick Left / Right");
-		}
-		if (strcmp("Right Stick Right", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
-		}
-	}
-
-	// Rock Climber
-	if ((parentrom && strcmp(parentrom, "rockclim") == 0) ||
-		(drvname && strcmp(drvname, "rockclim") == 0)
-	) {
-		if (strcmp("Rght Stick Up", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Right Stick Up / Down");
-		}
-		if (strcmp("Rght Stick Down", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Right Stick Up / Down");
-		}
-		if (strcmp("Rght Stick Left", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Right Stick Left / Right");
-		}
-		if (strcmp("Rght Stick Right", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
 		}
 	}
 
@@ -1509,18 +1441,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	) {
 		if (strcmp("Up/Down Axis", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
-		}
-	}
-
-	// Tutankham
-	if ((parentrom && strcmp(parentrom, "tutankhm") == 0) ||
-		(drvname && strcmp(drvname, "tutankhm") == 0)
-	) {
-		if (strcmp("Right Stick Left", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Right Stick Left / Right");
-		}
-		if (strcmp("Right Stick Right", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Right Stick Left / Right");
 		}
 	}
 
@@ -1770,30 +1690,38 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	if ((strcmp("Up 2", description) == 0) ||
 		(strcmp("Up (right)", description) == 0) ||
 		(strcmp("Right Up", description) == 0) ||
+		(strcmp("Right Stick Up", description) == 0) ||
+		(strcmp("Rght Stick Up", description) == 0) ||
 		(strcmp("up 2", szi + 3) == 0)
 	) {
-		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Up / Down (Right Stick)");
+		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Up/Down (Right Stick)");
 	}
 	if ((strcmp("Down 2", description) == 0) ||
 		(strcmp("Down (right)", description) == 0) ||
 		(strcmp("Right Down", description) == 0) ||
+		(strcmp("Right Stick Down", description) == 0) ||
+		(strcmp("Rght Stick Down", description) == 0) ||
 		(strcmp("down 2", szi + 3) == 0)
 	) {
-		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Up / Down (Right Stick)");
+		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Up/Down (Right Stick)");
 	}
 	if ((strcmp("Left 2", description) == 0) ||
 		(strcmp("Left (right)", description) == 0) ||
 		(strcmp("Right Left", description) == 0) ||
+		(strcmp("Right Stick Left", description) == 0) ||
+		(strcmp("Rght Stick Left", description) == 0) ||
 		(strcmp("left 2", szi + 3) == 0)
 	) {
-		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Left / Right (Right Stick)");
+		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Left/Right (Right Stick)");
 	}
 	if ((strcmp("Right 2", description) == 0) ||
 		(strcmp("Right (right)", description) == 0) ||
 		(strcmp("Right Right", description) == 0) ||
+		(strcmp("Right Stick Right", description) == 0) ||
+		(strcmp("Rght Stick Right", description) == 0) ||
 		(strcmp("right 2", szi + 3) == 0)
 	) {
-		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left / Right (Right Stick)");
+		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left/Right (Right Stick)");
 	}
 
 	// map rotate left/right to L/R
@@ -2295,7 +2223,7 @@ static void SetFakeInputDescriptors()
 			descriptor.port = i;
 			descriptor.device = RETRO_DEVICE_JOYPAD;
 			descriptor.index = 0;
-			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (fake digital left)" );
+			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (Fake Digital Left)" );
 			descriptor.description = strdup(description.c_str());
 			normal_input_descriptors.push_back(descriptor);
 
@@ -2303,7 +2231,7 @@ static void SetFakeInputDescriptors()
 			descriptor.port = i;
 			descriptor.device = RETRO_DEVICE_JOYPAD;
 			descriptor.index = 0;
-			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (fake digital right)" );
+			description = SSTR( pDirections[i][PGI_ANALOG_X] << " (Fake Digital Right)" );
 			descriptor.description = strdup(description.c_str());
 			normal_input_descriptors.push_back(descriptor);
 		}
@@ -2316,7 +2244,7 @@ static void SetFakeInputDescriptors()
 			descriptor.port = i;
 			descriptor.device = RETRO_DEVICE_JOYPAD;
 			descriptor.index = 0;
-			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (fake digital up)" );
+			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (Fake Digital Up)" );
 			descriptor.description = strdup(description.c_str());
 			normal_input_descriptors.push_back(descriptor);
 
@@ -2324,7 +2252,7 @@ static void SetFakeInputDescriptors()
 			descriptor.port = i;
 			descriptor.device = RETRO_DEVICE_JOYPAD;
 			descriptor.index = 0;
-			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (fake digital down)" );
+			description = SSTR( pDirections[i][PGI_ANALOG_Y] << " (Fake Digital Down)" );
 			descriptor.description = strdup(description.c_str());
 			normal_input_descriptors.push_back(descriptor);
 		}
@@ -2336,7 +2264,7 @@ static void SetFakeInputDescriptors()
 			descriptor.device = RETRO_DEVICE_ANALOG;
 			descriptor.index = RETRO_DEVICE_INDEX_ANALOG_LEFT;
 			descriptor.id = RETRO_DEVICE_ID_ANALOG_X;
-			descriptor.description = "Left/Right (fake analog)";
+			descriptor.description = "Left/Right (Fake Left Stick)";
 			normal_input_descriptors.push_back(descriptor);
 		}
 		if (pDirections[i][PGI_ANALOG_Y] == NULL && pDirections[i][PGI_UP] != NULL && pDirections[i][PGI_DOWN] != NULL)
@@ -2347,7 +2275,7 @@ static void SetFakeInputDescriptors()
 			descriptor.device = RETRO_DEVICE_ANALOG;
 			descriptor.index = RETRO_DEVICE_INDEX_ANALOG_LEFT;
 			descriptor.id = RETRO_DEVICE_ID_ANALOG_Y;
-			descriptor.description = "Up/Down (fake analog)";
+			descriptor.description = "Up/Down (Fake Left Stick)";
 			normal_input_descriptors.push_back(descriptor);
 		}
 	}

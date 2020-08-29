@@ -978,6 +978,7 @@
 		FE1E0C802453340600C774C3 /* d_hyprduel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */; };
 		FE1E0C822454F7D600C774C3 /* d_tubep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C812454F7D600C774C3 /* d_tubep.cpp */; };
 		FE1E0C842456832100C774C3 /* d_eolith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C832456832100C774C3 /* d_eolith.cpp */; };
+		FE232A8324FA215200D3B388 /* d_mdarcbl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE232A8224FA215200D3B388 /* d_mdarcbl.cpp */; };
 		FE2BC6AB23615B3400B9D150 /* LogViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE2BC6A923615B3400B9D150 /* LogViewer.xib */; };
 		FE2BC6B523615C3400B9D150 /* FBLogViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */; };
 		FE2BC6B7236265C000B9D150 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE2BC6B6236265BF00B9D150 /* Sparkle.framework */; };
@@ -2521,6 +2522,7 @@
 		FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_hyprduel.cpp; sourceTree = "<group>"; };
 		FE1E0C812454F7D600C774C3 /* d_tubep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_tubep.cpp; sourceTree = "<group>"; };
 		FE1E0C832456832100C774C3 /* d_eolith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_eolith.cpp; sourceTree = "<group>"; };
+		FE232A8224FA215200D3B388 /* d_mdarcbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mdarcbl.cpp; sourceTree = "<group>"; };
 		FE2BC6AA23615B3400B9D150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LogViewer.xib; sourceTree = "<group>"; };
 		FE2BC6B323615C3300B9D150 /* FBLogViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLogViewerController.h; sourceTree = "<group>"; };
 		FE2BC6B423615C3300B9D150 /* FBLogViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLogViewerController.m; sourceTree = "<group>"; };
@@ -3514,6 +3516,7 @@
 		FE1B1EC023561A670065200C /* megadrive */ = {
 			isa = PBXGroup;
 			children = (
+				FE232A8224FA215200D3B388 /* d_mdarcbl.cpp */,
 				FE1B1EC223561A670065200C /* d_megadrive.cpp */,
 				FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */,
 				FED03ADC23FAF8E900E99A10 /* mdeeprom.h */,
@@ -5961,6 +5964,7 @@
 				FE1B26E023561A780065200C /* d_dynduke.cpp in Sources */,
 				FE1B273023561A780065200C /* d_munchmo.cpp in Sources */,
 				FE1B265623561A770065200C /* d_othunder.cpp in Sources */,
+				FE232A8324FA215200D3B388 /* d_mdarcbl.cpp in Sources */,
 				FEECE403247AC7BF007724A2 /* tlcs900.cpp in Sources */,
 				FE1B258F23561A760065200C /* deco16ic.cpp in Sources */,
 				FE1B264B23561A770065200C /* d_flstory.cpp in Sources */,

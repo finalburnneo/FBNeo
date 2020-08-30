@@ -10991,6 +10991,23 @@ struct BurnDriver BurnDrvnes_jackalc = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_nixrelicRomDesc[] = {
+	{ "Nix Paradox Relic v1.8(2020)(Dustin Huddleston).nes",          524304, 0xe4428754, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nixrelic)
+STD_ROM_FN(nes_nixrelic)
+
+struct BurnDriver BurnDrvnes_nixrelic = {
+	"nes_nixrelic", NULL, NULL, NULL, "2020",
+	"Nix: the Paradox Relic (HB, v1.8)\0", NULL, "Dustin Huddleston", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_nixrelicRomInfo, nes_nixrelicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_rollieRomDesc[] = {
 	{ "Rollie (HB).nes",          40976, 0x8165c356, BRF_ESS | BRF_PRG },
 };
@@ -11002,7 +11019,7 @@ struct BurnDriver BurnDrvnes_rollie = {
 	"nes_rollie", NULL, NULL, NULL, "2019",
 	"Rollie (HB)\0", NULL, "Optovania", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_rollieRomInfo, nes_rollieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -11019,7 +11036,7 @@ struct BurnDriver BurnDrvnes_kosatak = {
 	"nes_kosatak", NULL, NULL, NULL, "2020",
 	"Kosmity Atakujo (HB, v10.07.2020)\0", NULL, "sdm2", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -11036,7 +11053,7 @@ struct BurnDriver BurnDrvnes_jaysilent = {
 	"nes_jaysilent", NULL, NULL, NULL, "2020",
 	"Jay and Silent Bob Mall Brawl (HB)\0", NULL, "Interabang Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_jaysilentRomInfo, nes_jaysilentRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -11053,7 +11070,7 @@ struct BurnDriver BurnDrvnes_journeyal = {
 	"nes_journeyal", NULL, NULL, NULL, "2019",
 	"Journey to the Center of the Alien (HB)\0", NULL, "Mojon Twins", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_journeyalRomInfo, nes_journeyalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -11070,7 +11087,7 @@ struct BurnDriver BurnDrvnes_blockage = {
 	"nes_blockage", NULL, NULL, NULL, "2019",
 	"Blockage (HB, v0.3.2)\0", NULL, "Scott Lowe", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_blockageRomInfo, nes_blockageRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -11087,7 +11104,7 @@ struct BurnDriver BurnDrvnes_frombelow = {
 	"nes_frombelow", NULL, NULL, NULL, "2020",
 	"From Below (HB, v7.24.2020)\0", NULL, "Goose2k", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_frombelowRomInfo, nes_frombelowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -25964,7 +25981,7 @@ STD_ROM_PICK(nes_noahsark)
 STD_ROM_FN(nes_noahsark)
 
 struct BurnDriver BurnDrvnes_noahsark = {
-	"nes_noahsark", NULL, NULL, NULL, "0000",
+	"nes_noahsark", NULL, NULL, NULL, "1992",
 	"Noah's Ark (Europe)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,

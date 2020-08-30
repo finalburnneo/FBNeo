@@ -38,31 +38,31 @@ static void c169_roz_unpack_params(const UINT16 *source)
 {
 	const INT32 xoffset = 36, yoffset = 3;
 
-	UINT16 temp = source[1];
+	UINT16 temp = BURN_ENDIAN_SWAP_INT16(source[1]);
 	size = 512 << ((temp & 0x0300) >> 8);
 	color = (temp & 0x000f) * 256;
 	priority = (temp & 0x00f0) >> 4;
 
-	temp = source[2];
+	temp = BURN_ENDIAN_SWAP_INT16(source[2]);
 	left = (temp & 0x7000) >> 3;
 	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
 	incxx = (INT16)temp;
 
-	temp = source[3];
+	temp = BURN_ENDIAN_SWAP_INT16(source[3]);
 	top = (temp&0x7000)>>3;
 	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
 	incxy = (INT16)temp;
 
-	temp = source[4];
+	temp = BURN_ENDIAN_SWAP_INT16(source[4]);
 	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
 	incyx = (INT16)temp;
 
-	temp = source[5];
+	temp = BURN_ENDIAN_SWAP_INT16(source[5]);
 	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
 	incyy = (INT16)temp;
 
-	startx = (INT16)source[6];
-	starty = (INT16)source[7];
+	startx = (INT16)BURN_ENDIAN_SWAP_INT16(source[6]);
+	starty = (INT16)BURN_ENDIAN_SWAP_INT16(source[7]);
 	startx <<= 4;
 	starty <<= 4;
 
@@ -96,9 +96,9 @@ static void c169_roz_draw_helper()
 		{
 			UINT32 xpos = (((cx >> 16) & size_mask) + left) & 0xfff;
 			UINT32 ypos = (((cy >> 16) & size_mask) + top) & 0xfff;
-			INT32 pxl = srcbitmap[(ypos * 0x1000) + xpos];
+			INT32 pxl = BURN_ENDIAN_SWAP_INT16(srcbitmap[(ypos * 0x1000) + xpos]);
 			if ((pxl & 0x8000) == 0) {
-				*dest = srcbitmap[(ypos * 0x1000) + xpos] + color;
+				*dest = BURN_ENDIAN_SWAP_INT16(srcbitmap[(ypos * 0x1000) + xpos]) + color;
 				*prio = global_priority;
 			}
 			cx += incxx;
@@ -121,7 +121,7 @@ static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 		INT32 offs = row * 0x100 + (line & 7) * 0x10 + 0xe080;
 		UINT16 *source = (UINT16*)(roz_ram + offs);
 
-		if ((source[1] & 0x8000) == 0)
+		if ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x8000) == 0)
 		{
 			if (pri == priority)
 			{
@@ -157,13 +157,13 @@ void c169_roz_draw(INT32 pri, INT32 line)
 
 	const UINT16 *source = (UINT16*)roz_ctrl;
 
-	INT32 mode = source[0]; // 0x8000 or 0x1000
-
+	INT32 mode = BURN_ENDIAN_SWAP_INT16(source[0]); // 0x8000 or 0x1000
+	
 	global_priority = pri;
 
 	for (INT32 which = 1; which >= 0; which--)
 	{
-		UINT16 attrs = source[1 + (which*8)];
+		UINT16 attrs = BURN_ENDIAN_SWAP_INT16(source[1 + (which*8)]);
 		if ((attrs & 0x8000) == 0)
 		{
 			if (which == 1 && mode == 0x8000)

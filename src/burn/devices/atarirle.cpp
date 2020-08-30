@@ -328,7 +328,7 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 		const UINT16 *csbase = &mo->rombase[0x10000 * i];
 		int cursum = 0, j;
 		for (j = 0; j < 0x10000; j++) {
-			cursum += (*csbase << 8) | (*csbase >> 8);
+			cursum += ((*csbase) & 0xff00) | ((*csbase) & 0x00ff);
 			csbase++;
 		}
 		mo->checksums[i] = cursum;

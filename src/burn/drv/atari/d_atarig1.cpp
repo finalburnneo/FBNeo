@@ -679,7 +679,7 @@ static void draw_background()
 
 static void copy_sprites()
 {
-	UINT16 *b1 = BurnBitmapGetBitmap(1);
+	UINT16 *b1 = atarirle_get_vram(0, 0);
 
 	for (INT32 z = 0; z < nScreenWidth * nScreenHeight; z++)
 	{

@@ -888,7 +888,7 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 }
 
 /* READ VALUES FROM REGISTERS */
-UINT8 nesapuRead(INT32 chip, INT32 address)
+UINT8 nesapuRead(INT32 chip, INT32 address, UINT8 open_bus)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
@@ -910,7 +910,7 @@ UINT8 nesapuRead(INT32 chip, INT32 address)
 
 	if (address == 0x15)
 	{
-		INT32 readval = 0x20; // 0x20 open_bus bit.. not important for now. -dink
+		INT32 readval = open_bus & 0x20; // 0x20 open_bus -dink
 		if (info->APU.squ[0].vbl_length > 0)
 			readval |= 0x01;
 

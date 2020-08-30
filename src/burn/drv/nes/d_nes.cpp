@@ -49,7 +49,7 @@ static UINT32 NESMode = 0;
 #define NO_WORKRAM		0x0001 // 6000-7fff reads data openbus
 #define BUS_CONFLICTS	0x0002 // rom conflicts with writes, needs special handling
 #define USE_4SCORE      0x0100 // 4-Player device (NES)
-#define USE_HORI4P      0x0200 // 4-Player device (Famicom)
+#define USE_HORI4P      0x0200 // 4-Player device Mode 2 (Famicom)
 #define USE_ZAPPER      0x0400 // Zapper Gun device
 #define MAPPER_NOCLEAR  0x0800 // preserve mapper regs on soft-reset
 #define IS_PAL          0x1000 // PAL-mode (not fully supported)
@@ -7689,13 +7689,21 @@ static UINT8 nes_read_joy(INT32 port)
 		}
 
 	} else {
-		ret = JoyShifter[port&1]&1;
-		JoyShifter[port&1] >>= 1;   // shift next
-		JoyShifter[port&1] |= 0x80000000; // feed high bit so reads past our data return high
-		// note, some games (f.ex: paperboy) relies on the open bus bits in the high nibble
-
 		if (NESMode & USE_HORI4P) {
-			ret <<= 1; // hori is read on d1
+			UINT8 a = (JoyShifter[port&1] >> 0) & 0xff; // joy 1,3
+			UINT8 b = (JoyShifter[port&1] >> 8) & 0xff; // joy 2,4
+			ret  = (a & 1);			// joy 1,2 d0 (FC hardwired controllers)
+			ret |= (b & 1) << 1;	// joy 3,4 d1 (controllers connected to HORI4P)
+			a >>= 1;                // shift next bit
+			b >>= 1;                // "
+			a |= 0x80;              // feed empty high bit (active low)
+			b |= 0x80;              // "
+
+			JoyShifter[port&1] = (a & 0xff) | ((b << 8) & 0xff00);
+		} else {
+			ret = JoyShifter[port&1]&1;
+			JoyShifter[port&1] >>= 1;   // shift next
+			JoyShifter[port&1] |= 0x80000000; // feed high bit so reads past our data return high
 		}
 
 		// MIC "blow" hack (read on 1p controller address, yet, mic is on 2p controller!)
@@ -7705,6 +7713,7 @@ static UINT8 nes_read_joy(INT32 port)
 			}
 		}
 
+		// note, some games (f.ex: paperboy) relies on the open bus bits in the high nibble
 		ret |= cpu_open_bus & 0xf0;
 	}
 
@@ -7718,9 +7727,9 @@ static UINT8 psg_io_read(UINT16 address)
 		return nes_read_joy(address & 1);
 	}
 
-	if (address >= 0x4000 && address <= 0x4017)
+	if (address == 0x4015)
 	{
-		return nesapuRead(0, address & 0x1f);
+		return nesapuRead(0, address & 0x1f, cpu_open_bus);
 	}
 
 	if (address >= 0x4020 && psg_area_read) {
@@ -7743,10 +7752,10 @@ static void psg_io_write(UINT16 address, UINT8 data)
 					JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8) | (bitrev_table[0x10] << 16);
 					JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8) | (bitrev_table[0x20] << 16);
 					break;
-				case USE_HORI4P:
-					// "Hori" 4-player adapter (Japanese / Famicom)
-					JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8) | (bitrev_table[0x20] << 16);
-					JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8) | (bitrev_table[0x10] << 16);
+				case USE_HORI4P: // mode 2
+					// "Hori" 4-player adapter Mode 4 (Japanese / Famicom)
+					JoyShifter[0] = DrvInputs[0] | (DrvInputs[2] << 8);
+					JoyShifter[1] = DrvInputs[1] | (DrvInputs[3] << 8);
 					break;
 				default:
 					// standard nes controllers
@@ -7983,7 +7992,7 @@ static INT32 NESHori4pInit()
 
 	NESMode |= USE_HORI4P;
 
-	bprintf(0, _T("*  Hori 4 Player device.\n"));
+	bprintf(0, _T("*  Hori 4 Player device (Mode 2).\n"));
 
 	return rc;
 }
@@ -10743,6 +10752,23 @@ struct BurnDriver BurnDrvnes_ruder = {
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_ruderRomInfo, nes_ruderRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_allpadsRomDesc[] = {
+	{ "allpads.nes",          32784, 0x9180a163, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_allpads)
+STD_ROM_FN(nes_allpads)
+
+struct BurnDriver BurnDrvnes_allpads = {
+	"nes_allpads", NULL, NULL, NULL, "2016",
+	"allpads\0", NULL, "tepples", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_allpadsRomInfo, nes_allpadsRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -17668,6 +17694,23 @@ struct BurnDriver BurnDrvnes_digitdevmonmegteii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_dizzyadvRomDesc[] = {
+	{ "Dizzy The Adventurer (USA).nes",          131088, 0x92847456, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dizzyadv)
+STD_ROM_FN(nes_dizzyadv)
+
+struct BurnDriver BurnDrvnes_dizzyadv = {
+	"nes_dizzyadv", NULL, NULL, NULL, "1992",
+	"Dizzy The Adventurer (USA)\0", NULL, "Camerica", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dizzyadvRomInfo, nes_dizzyadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dokidokyuuRomDesc[] = {
 	{ "Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan).nes",          262160, 0x6058397f, BRF_ESS | BRF_PRG },
 };
@@ -23121,7 +23164,7 @@ struct BurnDriver BurnDrvnes_kuniokunnoneksole = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kuniokunnoneksoleRomInfo, nes_kuniokunnoneksoleRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
-	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

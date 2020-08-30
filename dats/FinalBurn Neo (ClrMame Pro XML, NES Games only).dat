@@ -972,7 +972,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blockage">
-		<description>Blockage (HB, v0.3.2)</description>
+		<description>Blockage (HB, v0.3.2) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Scott Lowe</manufacturer>
 		<rom name="Blockage (HB, v0.3.2).nes" size="40976" crc="1c5f7bcf"/>
@@ -2119,6 +2119,13 @@
 		<rom name="Digital Devil Monogatari - Megami Tensei II (T-eng).nes" size="524304" crc="31d915cd"/>
 		<driver status="good"/>
 	</game>
+	<game name="dizzyadv">
+		<description>Dizzy The Adventurer (USA)</description>
+		<year>1992</year>
+		<manufacturer>Camerica</manufacturer>
+		<rom name="Dizzy The Adventurer (USA).nes" size="131088" crc="92847456"/>
+		<driver status="good"/>
+	</game>
 	<game name="dokidokyuu">
 		<description>Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan)</description>
 		<year>1991</year>
@@ -2981,7 +2988,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="frombelow">
-		<description>From Below (HB, v7.24.2020)</description>
+		<description>From Below (HB, v7.24.2020) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Goose2k</manufacturer>
 		<rom name="From Below (HB, v7.24.2020).nes" size="40976" crc="e948b976"/>
@@ -3947,7 +3954,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jaysilent">
-		<description>Jay and Silent Bob Mall Brawl (HB)</description>
+		<description>Jay and Silent Bob Mall Brawl (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Interabang Entertainment</manufacturer>
 		<rom name="Jay and Silent Bob Mall Brawl.nes" size="393232" crc="f167590d"/>
@@ -4052,7 +4059,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="journeyal">
-		<description>Journey to the Center of the Alien (HB)</description>
+		<description>Journey to the Center of the Alien (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="journey to the center of the alien (2019)(mojon twins).nes" size="73744" crc="d4b8eaa5"/>
@@ -4563,7 +4570,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kosatak">
-		<description>Kosmity Atakujo (HB, v10.07.2020)</description>
+		<description>Kosmity Atakujo (HB, v10.07.2020) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>sdm2</manufacturer>
 		<rom name="Kosmity Atakujo (HB, v10.07.2020).nes" size="131088" crc="0570865c"/>
@@ -5934,9 +5941,16 @@
 		<rom name="Nintendo World Cup (USA).nes" size="262160" crc="88b55f68"/>
 		<driver status="good"/>
 	</game>
+	<game name="nixrelic">
+		<description>Nix: the Paradox Relic (HB, v1.8) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Dustin Huddleston</manufacturer>
+		<rom name="Nix Paradox Relic v1.8(2020)(Dustin Huddleston).nes" size="524304" crc="e4428754"/>
+		<driver status="good"/>
+	</game>
 	<game name="noahsark">
 		<description>Noah's Ark (Europe)</description>
-		<year>0000</year>
+		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Noah's Ark (Europe).nes" size="262160" crc="ab21ab5f"/>
 		<driver status="good"/>
@@ -6852,7 +6866,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rollie">
-		<description>Rollie (HB)</description>
+		<description>Rollie (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Optovania</manufacturer>
 		<rom name="Rollie (HB).nes" size="40976" crc="8165c356"/>

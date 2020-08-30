@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14402 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14404 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2700,7 +2700,7 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_darkarms	|  	| Dark Arms - Beast Buster 1999 (Euro, USA) ~ Beast Bust| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_darkarmsp	|  	| Dark Arms - Beast Buster 1999 (Prototype)		| ngp_darkarms	| 1999	| SNK		| NeoGeo Pocket | 					|
 | md_darkcast	|  	| Dark Castle (Euro, USA)				| 		| 1991	| Electronic Art| Sega Megadrive| 					|
-| darkplnt	|  	| Dark Planet						| 		| 1982	| Stern		| Galaxian	| Dial doesn't work very well		|
+| darkplnt	|  	| Dark Planet						| 		| 1982	| Stern		| Galaxian	| 					|
 | darksealj	|  	| Dark Seal (Japan)					| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal1	|  	| Dark Seal (World revision 1)				| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal	|  	| Dark Seal (World revision 3)				| 		| 1990	| Data East Corp| DECO IC16	| 					|
@@ -3005,6 +3005,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_dizzy3r	|  	| Dizzy III - Fantasy World Dizzy (Russian) (128K)	| spec_dizzy3	| 1989	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy4	|  	| Dizzy IV - Magicland Dizzy (128K)			| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy4_48|  	| Dizzy IV - Magicland Dizzy (48K)			| spec_dizzy4	| 1989	| Codemasters	| ZX Spectrum	| 					|
+| nes_dizzyadv	|  	| Dizzy The Adventurer (USA)				| 		| 1992	| Camerica	| Miscellaneous	| 					|
 | spec_dizzy5	|  	| Dizzy V - Spellbound Dizzy (128K)			| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy5_48|  	| Dizzy V - Spellbound Dizzy (48K)			| spec_dizzy5	| 1991	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy6	|  	| Dizzy VI - Prince of the Yolkfolk (128K)		| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
@@ -8084,9 +8085,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ninteworcup|  	| Nintendo World Cup (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | nitrobal	|  	| Nitro Ball (World, set 1)				| 		| 1992	| Data East Corp| DECO IC16	| 					|
 | nitrobala	|  	| Nitro Ball (World, set 2)				| nitrobal	| 1992	| Data East Corp| DECO IC16	| 					|
+| nes_nixrelic	|  	| Nix: the Paradox Relic (HB, v1.8)			| 		| 2020	| Dustin Huddles| Miscellaneous	| 					|
 | nmk004	|   NW	| NMK004 Internal ROM					| 		| 1990	| N M K Corporat| NMK16		| internal rom				|
 | md_noescape	|  	| No Escape (USA)					| 		| 1994	| Psygnosis	| Sega Megadrive| 					|
-| nes_noahsark	|  	| Noah's Ark (Europe)					| 		| 0000	| Konami	| Miscellaneous	| 					|
+| nes_noahsark	|  	| Noah's Ark (Europe)					| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nob		|   NW	| Noboranka (Japan)					| 		| 1986	| Data East Corp| System 1	| 					|
 | nobb		|  	| Noboranka (Japan, bootleg)				| nob		| 1986	| bootleg	| System 1	| 					|
 | md_nobubufu	|  	| Nobunaga no Yabou - Bushou Fuuunroku (Jpn)		| 		| 1991	| Koei		| Sega Megadrive| 					|

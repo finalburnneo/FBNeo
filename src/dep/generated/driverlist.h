@@ -3055,6 +3055,7 @@ DRV		BurnSpecdizzy3_48;
 DRV		BurnSpecdizzy3r;
 DRV		BurnSpecdizzy4;
 DRV		BurnSpecdizzy4_48;
+DRV		BurnDrvnes_dizzyadv;
 DRV		BurnSpecdizzy5;
 DRV		BurnSpecdizzy5_48;
 DRV		BurnSpecdizzy6;
@@ -8228,6 +8229,7 @@ DRV		BurnDrvgg_ninkug;
 DRV		BurnDrvnes_ninteworcup;
 DRV		BurnDrvNitrobal;
 DRV		BurnDrvNitrobala;
+DRV		BurnDrvnes_nixrelic;
 DRV		BurnDrvnmk004;
 DRV		BurnDrvmd_noescape;
 DRV		BurnDrvnes_noahsark;
@@ -17724,6 +17726,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecdizzy3r,			// Dizzy III - Fantasy World Dizzy (Russian) (128K)
 	&BurnSpecdizzy4,			// Dizzy IV - Magicland Dizzy (128K)
 	&BurnSpecdizzy4_48,			// Dizzy IV - Magicland Dizzy (48K)
+	&BurnDrvnes_dizzyadv,		// Dizzy The Adventurer (USA)
 	&BurnSpecdizzy5,			// Dizzy V - Spellbound Dizzy (128K)
 	&BurnSpecdizzy5_48,			// Dizzy V - Spellbound Dizzy (48K)
 	&BurnSpecdizzy6,			// Dizzy VI - Prince of the Yolkfolk (128K)
@@ -22897,6 +22900,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ninteworcup,	// Nintendo World Cup (USA)
 	&BurnDrvNitrobal,			// Nitro Ball (World, set 1)
 	&BurnDrvNitrobala,			// Nitro Ball (World, set 2)
+	&BurnDrvnes_nixrelic,		// Nix: the Paradox Relic (HB, v1.8)
 	&BurnDrvnmk004,				// NMK004 Internal ROM [internal rom, NOT WORKING]
 	&BurnDrvmd_noescape,		// No Escape (USA)
 	&BurnDrvnes_noahsark,		// Noah's Ark (Europe)

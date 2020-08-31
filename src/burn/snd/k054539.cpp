@@ -315,17 +315,17 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 		case FILT_LOWSHELF:
 			{
 				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2) * k + k * k);
+					norm = 1 / (1 + sqrt(2.0) * k + k * k);
 					f->a0 = (1 + sqrt(2*v) * k + v * k * k) * norm;
 					f->a1 = 2 * (v * k * k - 1) * norm;
 					f->a2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
 					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
 				} else {
 					norm = 1 / (1 + sqrt(2*v) * k + v * k * k);
-					f->a0 = (1 + sqrt(2) * k + k * k) * norm;
+					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
 					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
 					f->b1 = 2 * (v * k * k - 1) * norm;
 					f->b2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
 				}
@@ -334,17 +334,17 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 		case FILT_HIGHSHELF:
 			{
 				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2) * k + k * k);
+					norm = 1 / (1 + sqrt(2.0) * k + k * k);
 					f->a0 = (v + sqrt(2*v) * k + k * k) * norm;
 					f->a1 = 2 * (k * k - v) * norm;
 					f->a2 = (v - sqrt(2*v) * k + k * k) * norm;
 					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
 				} else {
 					norm = 1 / (v + sqrt(2*v) * k + k * k);
-					f->a0 = (1 + sqrt(2) * k + k * k) * norm;
+					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
 					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
 					f->b1 = 2 * (k * k - v) * norm;
 					f->b2 = (v - sqrt(2*v) * k + k * k) * norm;
 				}

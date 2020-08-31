@@ -291,7 +291,7 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 
 	double k = tan(M_PI * f->frequency / f->samplerate);
 	double norm = 1 / (1 + k / f->q + k * k);
-	double v = pow(10, abs(gain) / 20);
+	double v = pow(10, fabs(gain) / 20);
 
 	switch (type) {
 		case FILT_HIGHPASS:

@@ -1363,6 +1363,13 @@
 		<rom name="Cat Ninden Teyandee (T-eng).nes" size="393232" crc="60f29773"/>
 		<driver status="good"/>
 	</game>
+	<game name="cave">
+		<description>Cave (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="cave (2017)(mojon twins).nes" size="49168" crc="b86ce86b"/>
+		<driver status="good"/>
+	</game>
 	<game name="chacknpop">
 		<description>Chack'n Pop (Japan)</description>
 		<year>1985</year>

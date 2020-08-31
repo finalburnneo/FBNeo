@@ -1899,6 +1899,7 @@ DRV		BurnDrvCatapult;		// Bad dump [NOT WORKING]
 DRV		BurnDrvctrpllrp;
 DRV		BurnDrvcv_catsos;
 DRV		BurnDrvCatt;
+DRV		BurnDrvnes_cave;
 DRV		BurnDrvmd_cavestory;
 DRV		BurnDrvCavelon;
 DRV		BurnDrvCninjabl;
@@ -16570,6 +16571,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvctrpllrp,			// Caterpillar Pacman Hack
 	&BurnDrvcv_catsos,			// Caterpillar S.O.S. (HB)
 	&BurnDrvCatt,				// Catt (Japan)
+	&BurnDrvnes_cave,			// Cave (HB)
 	&BurnDrvmd_cavestory,		// Cave Story Doukutsu (HB, v0.6.0)
 	&BurnDrvCavelon,			// Cavelon
 	&BurnDrvCninjabl,			// Caveman Ninja (bootleg)

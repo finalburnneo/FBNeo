@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14404 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14405 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -303,7 +303,7 @@ This list contains all games supported by FinalBurn Neo.
 | ajaxj		|  	| Ajax (Japan)						| ajax		| 1987	| Konami	| GX770		| 					|
 | ajax		|  	| Ajax							| 		| 1987	| Konami	| GX770		| 					|
 | fds_akitsunofusnoka|  	| Aki to Tsukasa no Fushigi no Kabe (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| akkaarrh	|  	| Akka Arrh (prototype)					| 		| 1982	| Atari		| Miscellaneous	| 					|
+| akkaarrh	|  	| Akka Arrh (prototype)					| 		| 1982	| Atari		| Miscellaneous	| Video issue when zooming		|
 | akkanvdr	|  	| Akkanbeder (Ver 2.5J 1995/06/14)			| spcinv95	| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | akumajoun	|  	| Akuma-Jou Dracula (Japan ver. N)			| hcastle	| 1988	| Konami	| GX768		| 					|
 | akumajou	|  	| Akuma-Jou Dracula (Japan ver. P)			| hcastle	| 1988	| Konami	| GX768		| 					|
@@ -1869,6 +1869,7 @@ This list contains all games supported by FinalBurn Neo.
 | ctrpllrp	|  	| Caterpillar Pacman Hack				| puckman	| 1982	| hack		| Pac-man	| 					|
 | cv_catsos	|  	| Caterpillar S.O.S. (HB)				| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | catt		|  	| Catt (Japan)						| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
+| nes_cave	|  	| Cave (HB)						| 		| 2017	| The Mojon Twin| Miscellaneous	| 					|
 | md_cavestory	|  	| Cave Story Doukutsu (HB, v0.6.0)			| 		| 2020-07-29| Studio Pixel	| Sega Megadrive| 					|
 | cavelon	|  	| Cavelon						| 		| 1983	| Jetsoft	| Galaxian	| 					|
 | cninjabl	|  	| Caveman Ninja (bootleg)				| cninja	| 1991	| bootleg	| DECO IC16	| 					|

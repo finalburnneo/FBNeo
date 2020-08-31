@@ -13,6 +13,7 @@
 #define SEGA_MD_ROM_OFFS_300000										0x08
 #define SEGA_MD_ROM_RELOAD_200000_200000							0x09
 #define SEGA_MD_ROM_RELOAD_100000_300000							0x0a
+#define SEGA_MD_ARCADE_SUNMIXING									(0x4000)
 
 extern UINT8 MegadriveReset;
 extern UINT8 bMegadriveRecalcPalette;

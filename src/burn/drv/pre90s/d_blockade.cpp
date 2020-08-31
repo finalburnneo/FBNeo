@@ -34,7 +34,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[1];
 static UINT8 DrvInputs[3];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BlockadeInputList[] = {
@@ -51,8 +51,9 @@ static struct BurnInputInfo BlockadeInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip b",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-};	
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
 
 STDINPUTINFO(Blockade)
 
@@ -82,6 +83,7 @@ static struct BurnInputInfo ComotionInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Comotion)
@@ -105,6 +107,7 @@ static struct BurnInputInfo BlastoInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Blasto)
@@ -126,6 +129,7 @@ static struct BurnInputInfo HustleInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Hustle)
@@ -145,6 +149,7 @@ static struct BurnInputInfo MineswprInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Mineswpr)
@@ -174,6 +179,7 @@ static struct BurnInputInfo Mineswpr4InputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Mineswpr4)
@@ -182,6 +188,7 @@ static struct BurnDIPInfo BlockadeDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0xff, NULL					},
 	{0x0b, 0xff, 0xff, 0xff, NULL					},
+	{0x0c, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
 	{0x0a, 0x01, 0x04, 0x00, "Off"					},
@@ -192,6 +199,11 @@ static struct BurnDIPInfo BlockadeDIPList[]=
 	{0x0a, 0x01, 0x70, 0x50, "4"					},
 	{0x0a, 0x01, 0x70, 0x30, "5"					},
 	{0x0a, 0x01, 0x70, 0x70, "6"					},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x0c, 0x01, 0x03, 0x00, "Green"				},
+	{0x0c, 0x01, 0x03, 0x01, "Amber"				},
+	{0x0c, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Blockade)
@@ -200,6 +212,7 @@ static struct BurnDIPInfo ComotionDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xf7, NULL					},
 	{0x14, 0xff, 0xff, 0xff, NULL					},
+	{0x15, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
 	{0x13, 0x01, 0x04, 0x00, "Off"					},
@@ -208,6 +221,11 @@ static struct BurnDIPInfo ComotionDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Lives"				},
 	{0x13, 0x01, 0x08, 0x00, "3"					},
 	{0x13, 0x01, 0x08, 0x08, "4"					},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x15, 0x01, 0x03, 0x00, "Green"				},
+	{0x15, 0x01, 0x03, 0x01, "Amber"				},
+	{0x15, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Comotion)
@@ -216,6 +234,7 @@ static struct BurnDIPInfo BlastoDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0xff, NULL					},
 	{0x0f, 0xff, 0xff, 0xff, NULL					},
+	{0x10, 0xff, 0xff, 0x00, NULL                   },
 	
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
 	{0x0e, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
@@ -230,6 +249,11 @@ static struct BurnDIPInfo BlastoDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Game Time"			},
 	{0x0e, 0x01, 0x08, 0x00, "70 Secs"				},
 	{0x0e, 0x01, 0x08, 0x08, "90 Secs"				},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x10, 0x01, 0x03, 0x00, "Green"				},
+	{0x10, 0x01, 0x03, 0x01, "Amber"				},
+	{0x10, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Blasto)
@@ -238,6 +262,7 @@ static struct BurnDIPInfo HustleDIPList[]=
 {
 	{0x0c, 0xff, 0xff, 0xff, NULL					},
 	{0x0d, 0xff, 0xff, 0xfe, NULL					},
+	{0x0e, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
 	{0x0c, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
@@ -255,6 +280,11 @@ static struct BurnDIPInfo HustleDIPList[]=
 	{0x0d, 0x01, 0xf1, 0xd1, "15000"				},
 	{0x0d, 0x01, 0xf1, 0xe1, "17000"				},
 	{0x0d, 0x01, 0xf1, 0xf0, "Disabled"				},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x0e, 0x01, 0x03, 0x00, "Green"				},
+	{0x0e, 0x01, 0x03, 0x01, "Amber"				},
+	{0x0e, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Hustle)
@@ -263,6 +293,7 @@ static struct BurnDIPInfo MineswprDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0xff, NULL					},
 	{0x0b, 0xff, 0xff, 0xff, NULL					},
+	{0x0c, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
 	{0x0a, 0x01, 0x04, 0x00, "Off"					},
@@ -273,6 +304,11 @@ static struct BurnDIPInfo MineswprDIPList[]=
 	{0x0a, 0x01, 0x70, 0x50, "4"					},
 	{0x0a, 0x01, 0x70, 0x30, "5"					},
 	{0x0a, 0x01, 0x70, 0x70, "6"					},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x0c, 0x01, 0x03, 0x00, "Green"				},
+	{0x0c, 0x01, 0x03, 0x01, "Amber"				},
+	{0x0c, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Mineswpr)
@@ -281,6 +317,7 @@ static struct BurnDIPInfo Mineswpr4DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xfd, NULL					},
 	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
 	{0x12, 0x01, 0x04, 0x00, "Off"					},
@@ -291,6 +328,11 @@ static struct BurnDIPInfo Mineswpr4DIPList[]=
 	{0x12, 0x01, 0x70, 0x50, "4"					},
 	{0x12, 0x01, 0x70, 0x30, "5"					},
 	{0x12, 0x01, 0x70, 0x70, "6"					},
+
+	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
+	{0x14, 0x01, 0x03, 0x00, "Green"				},
+	{0x14, 0x01, 0x03, 0x01, "Amber"				},
+	{0x14, 0x01, 0x03, 0x02, "White"				},
 };
 
 STDDIPINFO(Mineswpr4)
@@ -306,7 +348,7 @@ static void sound_tone_render(INT16 *buffer, INT32 len)
 			square = crbaloon_tone_pos & 0x80000000 ? 32767 : -32768;
 			square = (INT16)((double)square * 0.05);        // volume
 			square = (INT16)(square * exp(-envelope_ctr));  // envelope volume
-			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0008 : 0.0005; // step envelope, treat the higher pitched sounds w/ a faster envelope
+			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0005 : 0.0003; // step envelope, treat the higher pitched sounds w/ a faster envelope
 			*buffer++ = square;
 			*buffer++ = square;
 
@@ -320,8 +362,8 @@ static void sound_tone_write(UINT8 data)
 	crbaloon_tone_step = 0;
 	envelope_ctr = 0.0;
 
-	if (data && data != 0xff) {
-		double freq = (13630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
+	if (data != 0xff) {
+		double freq = (93630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
 
 		crbaloon_tone_freq = freq;
 		crbaloon_tone_step = (UINT32)(freq * 65536.0 * 65536.0 / (double)nBurnSoundRate);
@@ -335,8 +377,8 @@ static void __fastcall blockade_write(UINT16 address, UINT8 data)
 
 		if (vblank == 0)
 		{
-			ZetRunEnd();
-		}			
+			ZetSetHALT(1);
+		}
 	}
 }
 
@@ -362,7 +404,7 @@ static void __fastcall blockade_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x08:
-			// env_off (not emulated)
+			// env?
 		return;
 	}
 }
@@ -571,8 +613,19 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		DrvPalette[0] = 0;
-		DrvPalette[1] = BurnHighCol(0xff,0xff,0xff, 0);
-		DrvRecalc = 0;
+
+		switch (DrvDips[2]) {
+			case 0:
+				DrvPalette[1] = BurnHighCol(0x00,0xff,0x00, 0); // green
+				break;
+			case 1:
+				DrvPalette[1] = BurnHighCol(0xff,0xc3,0x00, 0); // amber
+				break;
+			case 2:
+				DrvPalette[1] = BurnHighCol(0xff,0xff,0xff, 0); // b & w
+				break;
+		}
+		DrvRecalc = 1;
 	}
 
 	GenericTilemapDraw(0, pTransDraw, 0);
@@ -609,11 +662,20 @@ static INT32 DrvFrame()
 		}
 	}
 
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[1] = { 2007900 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
 	ZetOpen(0);
-	vblank = 0;
-	ZetRun(((2007900 / 60) * 224) / 262);
-	vblank = 1;
-	ZetRun(((2007900 / 60) *  38) / 262);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		if (i == 0) vblank = 0;
+		if (i == 224) {
+			ZetSetHALT(0);
+			vblank = 1;
+		}
+		CPU_RUN(0, Zet);
+	}
 	ZetClose();
 
 	if (pBurnSoundOut) {

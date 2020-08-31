@@ -529,7 +529,7 @@ static struct BurnDIPInfo tengaiDIPList[] = {
 	{0x15,	0x82, 0x80,	0x80, "Continue mode"},
 	{0x15,	0x00, 0xFF, 0xFF, NULL},
 	// DIP 2
-	{0,		0xFE, 0,	2,	  NULL},
+	{0,		0xFE, 0,	2, 	  "Screen"},
 	{0x16,	0x01, 0x01,	0x00, "Normal screen"},
 	{0x16,	0x01, 0x01,	0x01, "Invert screen"},
 	{0,		0xFE, 0,	2,	  "Demo sounds"},
@@ -2593,7 +2593,7 @@ STD_ROM_FN(tengai)
 
 struct BurnDriver BurnDrvTengai = {
 	"tengai", NULL, NULL, NULL, "1996",
-	"Tengai (world)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	"Tengai (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaiRomInfo, tengaiRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, tengaiDIPInfo,

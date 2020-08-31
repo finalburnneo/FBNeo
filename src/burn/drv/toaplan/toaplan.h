@@ -168,7 +168,8 @@ inline static UINT16 ToaScanlineRegister()
 {
 	static INT32 nPreviousScanline;
 	UINT16 nFlags = 0xFE00;
-	INT32 nCurrentScanline = SekCurrentScanline();
+	INT32 nCurrentScanline = (SekCurrentScanline() + 15) % 262;
+	if (nCurrentScanline > 0xff) nCurrentScanline = 0xff;
 
 #if 0
 	// None of the games actually use this

@@ -228,7 +228,7 @@ static void __fastcall hyperduel_main_sync_write_byte(UINT32 address, UINT8 data
 
 		if (address >= 0x040e && address <= 0x0411)
 		{
-			if (ram[0x40e/2] + ram[0x410/2])
+			if (BURN_ENDIAN_SWAP_INT16(ram[0x40e/2]) + BURN_ENDIAN_SWAP_INT16(ram[0x410/2]))
 			{
 				if (cpu_trigger == 0 && SekGetRESETLine(1) == 0)
 				{

@@ -584,9 +584,10 @@ static INT32 DrvFrame()
 
 		hblank = 0;
 		INT32 sek_line = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
+		// run to hblank
 		nCyclesDone[0] += SekRun((INT32)((double)sek_line * 0.9));
 		hblank = 1;
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek); // finish line
 
 		if ((i % 64) == 0) draw_scanline(i);
 

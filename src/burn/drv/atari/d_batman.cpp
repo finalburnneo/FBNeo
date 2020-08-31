@@ -666,12 +666,12 @@ static INT32 DrvFrame()
 			}
 		}
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (sound_cpu_halt == 0) {
-			nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, M6502);
 		} else {
-			nCyclesDone[1] += M6502Idle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_IDLE(1, M6502);
 		}
 
 		if (i <= 240) {

@@ -542,7 +542,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if ((i & 0x1f) == 0x00 && (i & 0x20) == 0) {
 			scanline_int_state = 1;

@@ -260,8 +260,8 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 	return info->regs[offset];
 }
 
-// direct form II biquadradic filter, needed for delay(echo) effect's filter taps -dink
-enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1 };
+// direct form II(transposted) biquadradic filter, needed for delay(echo) effect's filter taps -dink
+enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
 
 struct BIQ {
 	double a0;
@@ -279,7 +279,7 @@ struct BIQ {
 
 static BIQ filters[8];
 
-static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q)
+static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q, double gain)
 {
 	BIQ *f = &filters[num];
 
@@ -291,6 +291,7 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 
 	double k = tan(M_PI * f->frequency / f->samplerate);
 	double norm = 1 / (1 + k / f->q + k * k);
+	double v = pow(10, abs(gain) / 20);
 
 	switch (type) {
 		case FILT_HIGHPASS:
@@ -309,6 +310,44 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 				f->a2 = f->a0;
 				f->b1 = 2 * (k * k - 1) * norm;
 				f->b2 = (1 - k / f->q + k * k) * norm;
+			}
+			break;
+		case FILT_LOWSHELF:
+			{
+				if (gain >= 0) {
+					norm = 1 / (1 + sqrt(2) * k + k * k);
+					f->a0 = (1 + sqrt(2*v) * k + v * k * k) * norm;
+					f->a1 = 2 * (v * k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
+					f->b1 = 2 * (k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2) * k + k * k) * norm;
+				} else {
+					norm = 1 / (1 + sqrt(2*v) * k + v * k * k);
+					f->a0 = (1 + sqrt(2) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->b1 = 2 * (v * k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
+				}
+			}
+			break;
+		case FILT_HIGHSHELF:
+			{
+				if (gain >= 0) {
+					norm = 1 / (1 + sqrt(2) * k + k * k);
+					f->a0 = (v + sqrt(2*v) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - v) * norm;
+					f->a2 = (v - sqrt(2*v) * k + k * k) * norm;
+					f->b1 = 2 * (k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2) * k + k * k) * norm;
+				} else {
+					norm = 1 / (v + sqrt(2*v) * k + k * k);
+					f->a0 = (1 + sqrt(2) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2) * k + k * k) * norm;
+					f->b1 = 2 * (k * k - v) * norm;
+					f->b2 = (v - sqrt(2*v) * k + k * k) * norm;
+				}
 			}
 			break;
 	}
@@ -349,8 +388,8 @@ void K054539Reset(INT32 chip)
 	memset(info->delay_ram, 0, DELAYRAM_SIZE);
 
 	bprintf(0, _T("*   K054539: init biquad filter for delay taps.\n"));
-	init_biquad(FILT_HIGHPASS, 2*chip + 0, 48000, 500, 1.0);
-	init_biquad(FILT_LOWPASS, 2*chip + 1, 48000, 12000, 1.0);
+	init_biquad(FILT_HIGHPASS, 2*chip + 0, 48000, 500, 1.0, 0.0);
+	init_biquad(FILT_LOWPASS, 2*chip + 1, 48000, 12000, 1.0, 0.0);
 
 	info->cur_ptr = 0;
 	info->cur_zone = info->rom;

@@ -525,7 +525,7 @@ static INT32 DrvFrame()
 
 		linecycles = SekTotalCycles(); // for hblank
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		AtariVADTimerUpdate();
 

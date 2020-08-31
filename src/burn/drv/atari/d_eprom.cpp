@@ -784,15 +784,15 @@ static INT32 DrvFrame()
 		}
 
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[2] += M6502Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(0, Sek);
+		CPU_RUN(2, M6502);
 		SekClose();
 
 		SekOpen(1);
 		if (subcpu_halted == 0) {
-			nCyclesDone[1] += SekRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, Sek);
 		} else {
-			nCyclesDone[1] += SekIdle(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_IDLE(1, Sek);
 		}
 		SekClose();
 

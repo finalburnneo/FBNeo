@@ -735,8 +735,8 @@ static INT32 DrvFrame()
 	{
 		scanline = i;
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6502);
 
 		if ((i & 0x3f) == 0x3f) partial_update_sprite(i); // sprite update every 64 lines
 		if ((i % 8) == 0) scanline_update(); // every 8th line

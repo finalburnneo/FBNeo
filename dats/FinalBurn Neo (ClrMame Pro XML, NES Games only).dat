@@ -7040,6 +7040,13 @@
 		<rom name="Shanghai (Japan).nes" size="131088" crc="8ff2acfe"/>
 		<driver status="good"/>
 	</game>
+	<game name="sharkshark">
+		<description>Shark! Shark! (HB)</description>
+		<year>1982</year>
+		<manufacturer>Mattel Electronics</manufacturer>
+		<rom name="Shark! Shark! (HB).nes" size="24592" crc="5f33e5b4"/>
+		<driver status="good"/>
+	</game>
 	<game name="shatterhand">
 		<description>Shatterhand (USA)</description>
 		<year>1991</year>

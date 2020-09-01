@@ -109,7 +109,7 @@ static void __fastcall toobin_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xff8100:
-			M6502Run(((double)SekTotalCycles()/4.47) - M6502TotalCycles());
+			M6502Run(((double)SekTotalCycles()/4.46984) - M6502TotalCycles());
 			AtariJSAWrite(data);
 		return;
 
@@ -145,13 +145,11 @@ static void __fastcall toobin_main_write_word(UINT32 address, UINT16 data)
 
 		case 0xff8600:
 			partial_update();
-			// iq_132 - partial update!!
 			playfield_scrollx = (data >> 6) & 0x3ff;
 		return;
 
 		case 0xff8700:
 			partial_update();
-			// iq_132 - partial update!!
 			playfield_scrolly = (data >> 6) & 0x1ff;
 		return;
 	}
@@ -607,8 +605,8 @@ static INT32 DrvFrame()
 
 		linecycles = SekTotalCycles();
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6502);
 
 		if (i == 384) {
 			vblank = 1;

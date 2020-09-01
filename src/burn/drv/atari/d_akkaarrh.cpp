@@ -521,7 +521,7 @@ STD_ROM_FN(akkaarrh)
 
 struct BurnDriver BurnDrvAkkaarrh = {
 	"akkaarrh", NULL, NULL, NULL, "1982",
-	"Akka Arrh (prototype)\0", NULL, "Atari", "Miscellaneous",
+	"Akka Arrh (prototype)\0", "Video issue when zooming", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, akkaarrhRomInfo, akkaarrhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,

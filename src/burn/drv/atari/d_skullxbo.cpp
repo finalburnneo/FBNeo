@@ -817,7 +817,7 @@ static INT32 DrvFrame()
 		else
 			nCyclesDone[0] += SekRun((INT32)((double)sek_line * 0.9));//0.7368));
 
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6502);
 
 		hblank = 1;
 		cpu_halted = 0;
@@ -832,7 +832,7 @@ static INT32 DrvFrame()
 			do_scanline_irq = -1;
 		}
 		// finish line
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (i == 240) {
 			vblank = 1;

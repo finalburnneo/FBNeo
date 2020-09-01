@@ -10991,6 +10991,23 @@ struct BurnDriver BurnDrvnes_jackalc = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_caveRomDesc[] = {
+	{ "cave (2017)(mojon twins).nes",          49168, 0xb86ce86b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cave)
+STD_ROM_FN(nes_cave)
+
+struct BurnDriver BurnDrvnes_cave = {
+	"nes_cave", NULL, NULL, NULL, "2017",
+	"Cave (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_caveRomInfo, nes_caveRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_nixrelicRomDesc[] = {
 	{ "Nix Paradox Relic v1.8(2020)(Dustin Huddleston).nes",          524304, 0xe4428754, BRF_ESS | BRF_PRG },
 };

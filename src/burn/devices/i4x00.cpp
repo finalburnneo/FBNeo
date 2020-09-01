@@ -47,13 +47,13 @@ static void palette_update()
 
 	for (INT32 i = 0; i < 0x2000 / 2; i++)
 	{
-		BurnPalette[i] = BurnHighCol(pal5bit(p[i] >> 6), pal5bit(p[i] >> 11), pal5bit(p[i] >> 1), 0);
+		BurnPalette[i] = BurnHighCol(pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 6), pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 11), pal5bit(BURN_ENDIAN_SWAP_INT16(p[i]) >> 1), 0);
 	}
 }
 
 static inline void palette_write(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(BurnPalRAM + (offset & 0x3ffe)));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(BurnPalRAM + (offset & 0x3ffe))));
 
 	BurnPalette[(offset / 2) & 0xfff] = BurnHighCol(pal5bit(p >> 6), pal5bit(p >> 11), pal5bit(p >> 1), 0);
 }
@@ -64,18 +64,18 @@ static void draw_sprites()
 	UINT16 *m_videoregs = (UINT16*)VideoRegs;
 	UINT16 *m_spriteregs = (UINT16*)SpriteRegs;
 
-	int max_x = (m_spriteregs[1]+1) * 2;
-	int max_y = (m_spriteregs[0]+1) * 2;
+	int max_x = (BURN_ENDIAN_SWAP_INT16(m_spriteregs[1])+1) * 2;
+	int max_y = (BURN_ENDIAN_SWAP_INT16(m_spriteregs[0])+1) * 2;
 
-	INT32 m_sprite_xoffs = m_videoregs[0x06 / 2] - (m_spriteregs[1]+1);
-	INT32 m_sprite_yoffs = m_videoregs[0x04 / 2] - (m_spriteregs[0]+1);
+	INT32 m_sprite_xoffs = BURN_ENDIAN_SWAP_INT16(m_videoregs[0x06 / 2]) - (BURN_ENDIAN_SWAP_INT16(m_spriteregs[1])+1);
+	INT32 m_sprite_yoffs = BURN_ENDIAN_SWAP_INT16(m_videoregs[0x04 / 2]) - (BURN_ENDIAN_SWAP_INT16(m_spriteregs[0])+1);
 
 	UINT32 gfx_size = graphics_length;
 
 	INT32 max_sprites = 0x1000 / 8;
-	INT32 sprites     = m_videoregs[0x00/2] % max_sprites;
+	INT32 sprites     = BURN_ENDIAN_SWAP_INT16(m_videoregs[0x00/2]) % max_sprites;
 
-	INT32 color_start = (m_videoregs[0x08/2] & 0x0f) << 4;
+	INT32 color_start = (BURN_ENDIAN_SWAP_INT16(m_videoregs[0x08/2]) & 0x0f) << 4;
 
 	INT32 i, j, pri;
 	static const INT32 primask[4] = { 0x0000, 0xff00, 0xff00 | 0xf0f0, 0xff00 | 0xf0f0 | 0xcccc };
@@ -88,7 +88,7 @@ static void draw_sprites()
 
 	for (i = 0; i < 0x20; i++)
 	{
-		if (!(m_videoregs[0x02/2] & 0x8000))
+		if (!(BURN_ENDIAN_SWAP_INT16(m_videoregs[0x02/2]) & 0x8000))
 		{
 			src = m_spriteram + (sprites - 1) * (8 / 2);
 			inc = -(8 / 2);
@@ -108,7 +108,7 @@ static void draw_sprites()
 				0x0A0,0x09C,0x098,0x094,0x090,0x08C,0x088,0x080,0x078,0x070,0x068,0x060,0x058,0x050,0x048,0x040
 			};
 
-			x = src[0];
+			x = BURN_ENDIAN_SWAP_INT16(src[0]);
 			curr_pri = (x & 0xf800) >> 11;
 
 			if ((curr_pri == 0x1f) || (curr_pri != i))
@@ -117,17 +117,17 @@ static void draw_sprites()
 				continue;
 			}
 
-			pri = (m_videoregs[0x02/2] & 0x0300) >> 8;
+			pri = (BURN_ENDIAN_SWAP_INT16(m_videoregs[0x02/2]) & 0x0300) >> 8;
 
-			if (!(m_videoregs[0x02/2] & 0x8000))
+			if (!(BURN_ENDIAN_SWAP_INT16(m_videoregs[0x02/2]) & 0x8000))
 			{
-				if (curr_pri > (m_videoregs[0x02/2] & 0x1f))
-					pri = (m_videoregs[0x02/2] & 0x0c00) >> 10;
+				if (curr_pri > (BURN_ENDIAN_SWAP_INT16(m_videoregs[0x02/2]) & 0x1f))
+					pri = (BURN_ENDIAN_SWAP_INT16(m_videoregs[0x02/2]) & 0x0c00) >> 10;
 			}
 
-			y     = src[1];
-			attr  = src[2];
-			code  = src[3];
+			y     = BURN_ENDIAN_SWAP_INT16(src[1]);
+			attr  = BURN_ENDIAN_SWAP_INT16(src[2]);
+			code  = BURN_ENDIAN_SWAP_INT16(src[3]);
 
 			flipx =  attr & 0x8000;
 			flipy =  attr & 0x4000;
@@ -175,13 +175,13 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 	UINT16 *tiletable = (UINT16*)TileRAM;
 
 	INT32 table_index = (code & 0x1ff0) >> 3;
-	UINT32 tile = (tiletable[table_index + 0] << 16) + tiletable[table_index + 1];
+	UINT32 tile = (BURN_ENDIAN_SWAP_INT16(tiletable[table_index + 0]) << 16) + BURN_ENDIAN_SWAP_INT16(tiletable[table_index + 1]);
 
 	if (code & 0x8000)
 	{
-		*pix = code & 0x0fff;
+		*pix = BURN_ENDIAN_SWAP_INT16(code & 0x0fff);
 
-		if ((*pix & 0xf) != 0xf)
+		if ((BURN_ENDIAN_SWAP_INT16(*pix) & 0xf) != 0xf)
 			return 1;
 		else
 			return 0;
@@ -200,17 +200,17 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 
 		switch (code & 0x6000)
 		{
-			case 0x0000: *pix = data[(y              * (big?16:8)) + x];              break;
-			case 0x2000: *pix = data[(((big?15:7)-y) * (big?16:8)) + x];              break;
-			case 0x4000: *pix = data[(y              * (big?16:8)) + ((big?15:7)-x)]; break;
-			case 0x6000: *pix = data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]; break;
+			case 0x0000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + x]);              break;
+			case 0x2000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + x]);              break;
+			case 0x4000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + ((big?15:7)-x)]); break;
+			case 0x6000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]); break;
 		}
 
-		if (*pix == 0xff) {
+		if (BURN_ENDIAN_SWAP_INT16(*pix) == 0xff) {
 			return 0;
 		}
 
-		*pix |= (tile & 0x0f000000) >> 16;
+		*pix |= BURN_ENDIAN_SWAP_INT16((tile & 0x0f000000) >> 16);
 
 		return 1;
 	}
@@ -226,17 +226,17 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 
 		switch (code & 0x6000)
 		{
-			case 0x0000: *pix = data[(y              * (big?16:8)) + x];              break;
-			case 0x2000: *pix = data[(((big?15:7)-y) * (big?16:8)) + x];              break;
-			case 0x4000: *pix = data[(y              * (big?16:8)) + ((big?15:7)-x)]; break;
-			case 0x6000: *pix = data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]; break;
+			case 0x0000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + x]);              break;
+			case 0x2000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + x]);              break;
+			case 0x4000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + ((big?15:7)-x)]); break;
+			case 0x6000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]); break;
 		}
 
-		if (*pix == 0xf) {
+		if (BURN_ENDIAN_SWAP_INT16(*pix) == 0xf) {
 			return 0;
 		}
 
-		*pix |= (tile & 0x0ff00000) >> 16;
+		*pix |= BURN_ENDIAN_SWAP_INT16((tile & 0x0ff00000) >> 16);
 
 		return 1;
 	}
@@ -280,12 +280,12 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 				UINT16 dat = 0;
 
-				UINT16 tile = tilemapram[tileoffs];
+				UINT16 tile = BURN_ENDIAN_SWAP_INT16(tilemapram[tileoffs]);
 				UINT8 draw = get_tile_pix(tile, big ? (srccol&0xf) : (srccol&0x7), big ? (srcline&0xf) : (srcline&0x7), big, &dat);
 
 				if (draw)
 				{
-					dst[x] = dat;
+					dst[x] = BURN_ENDIAN_SWAP_INT16(dat);
 					priority_baseaddr[x] = (priority_baseaddr[x] & (pcode >> 8)) | pcode;
 				}
 			}
@@ -304,12 +304,12 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 				UINT16 dat = 0;
 
-				UINT16 tile = tilemapram[tileoffs];
+				UINT16 tile = BURN_ENDIAN_SWAP_INT16(tilemapram[tileoffs]);
 				UINT8 draw = get_tile_pix(tile, big ? (srccol&0xf) : (srccol&0x7), big ? (srcline&0xf) : (srcline&0x7), big, &dat);
 
 				if (draw)
 				{
-					dst[x] = dat;
+					dst[x] = BURN_ENDIAN_SWAP_INT16(dat);
 					priority_baseaddr[scrwidth-x-1] = (priority_baseaddr[scrwidth-x-1] & (pcode >> 8)) | pcode;
 				}
 			}
@@ -322,17 +322,17 @@ static void draw_layers(int pri)
 	UINT16 *m_videoregs = (UINT16*)VideoRegs;
 	UINT16 *m_scroll = (UINT16*)ScrollRegs;
 	UINT16 *m_window = (UINT16*)WindowRegs;
-	UINT16 layers_pri = m_videoregs[0x10 / 2];
+	UINT16 layers_pri = BURN_ENDIAN_SWAP_INT16(m_videoregs[0x10 / 2]);
 	int layer;
 
 	for (layer = 2; layer >= 0; layer--)
 	{
 		if (pri == ((layers_pri >> (layer * 2)) & 3))
 		{
-			UINT16 sy = m_scroll[layer * 2 + 0];
-			UINT16 sx = m_scroll[layer * 2 + 1];
-			UINT16 wy = m_window[layer * 2 + 0];
-			UINT16 wx = m_window[layer * 2 + 1];
+			UINT16 sy = BURN_ENDIAN_SWAP_INT16(m_scroll[layer * 2 + 0]);
+			UINT16 sx = BURN_ENDIAN_SWAP_INT16(m_scroll[layer * 2 + 1]);
+			UINT16 wy = BURN_ENDIAN_SWAP_INT16(m_window[layer * 2 + 0]);
+			UINT16 wx = BURN_ENDIAN_SWAP_INT16(m_window[layer * 2 + 1]);
 
 			UINT16 *tilemapram = (UINT16*)(VideoRAM[layer]);
 
@@ -358,7 +358,7 @@ void i4x00_draw_begin()
 
 	UINT16 *m_videoregs = (UINT16*)VideoRegs;
 
-	BurnTransferClear((m_videoregs[0x12 / 2] & 0x0fff));
+	BurnTransferClear((BURN_ENDIAN_SWAP_INT16(m_videoregs[0x12 / 2]) & 0x0fff));
 }
 
 void i4x00_draw_scanline(INT32 drawto)
@@ -418,9 +418,9 @@ static void blitter_write()
 		UINT8 *src     = gfx8x8x8;
 		UINT32 src_len = graphics_length;
 
-		UINT32 tmap     = (m_blitter_regs[0x00 / 2] << 16) + m_blitter_regs[0x02 / 2];
-		UINT32 src_offs = (m_blitter_regs[0x04 / 2] << 16) + m_blitter_regs[0x06 / 2];
-		UINT32 dst_offs = (m_blitter_regs[0x08 / 2] << 16) + m_blitter_regs[0x0a / 2];
+		UINT32 tmap     = (BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x00 / 2]) << 16) + BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x02 / 2]);
+		UINT32 src_offs = (BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x04 / 2]) << 16) + BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x06 / 2]);
+		UINT32 dst_offs = (BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x08 / 2]) << 16) + BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x0a / 2]);
 
 		UINT8 *dst = ramdst[tmap];
 
@@ -519,7 +519,7 @@ static void __fastcall i4x00_write_word(UINT32 address, UINT16 data)
 	}
 	
 	if ((address & 0xfffe000) == 0x72000) {
-		*((UINT16*)(BurnPalRAM + (address & 0x3ffe))) = data;
+		*((UINT16*)(BurnPalRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address);
 		return;
 	}
@@ -543,30 +543,30 @@ static void __fastcall i4x00_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0x78840 && address <= 0x7884d) {
-		*((UINT16*)(BlitRegs + (address & 0xf))) = data;
+		*((UINT16*)(BlitRegs + (address & 0xf))) = BURN_ENDIAN_SWAP_INT16(data);
 		if (address == 0x7884c) blitter_write();
 		return;
 	}
 	
 	if (address >= 0x78850 && address <= 0x78853) {
-		*((UINT16*)(SpriteRegs + (address & 0x03))) = data;
+		*((UINT16*)(SpriteRegs + (address & 0x03))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if (address >= 0x78860 && address <= 0x7886b) {
-		*((UINT16*)(WindowRegs + (address & 0xf))) = data;
+		*((UINT16*)(WindowRegs + (address & 0xf))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if (address >= 0x78870 && address <= 0x7887b) {
-		*((UINT16*)(ScrollRegs + (address & 0xf))) = data;
+		*((UINT16*)(ScrollRegs + (address & 0xf))) = BURN_ENDIAN_SWAP_INT16(data);
 		i4x00_raster_update = 1;
 		return;
 	}
 
 	if ((address >= 0x78800 && address <= 0x78813) || (address >= 0x079700 && address <= 0x79713)) {
 		if (address != 0x78802) // breaks blazing tornado
-			*((UINT16*)(VideoRegs + (address & 0x1f))) = data;
+			*((UINT16*)(VideoRegs + (address & 0x1f))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 

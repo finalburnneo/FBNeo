@@ -600,8 +600,8 @@ static INT32 DrvFrame()
 	{
 		linecycles = SekTotalCycles();
 
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6502);
 
 		if (i == 247) {
 			vblank = 1;

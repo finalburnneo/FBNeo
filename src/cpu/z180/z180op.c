@@ -370,6 +370,9 @@ static void take_interrupt(int irq)
 		z180_icount -= cc[Z180_TABLE_op][0xcd];
 	}
 	
-
+	if (Z180.irq_hold[irq]) {
+		Z180.irq_hold[irq] = 0;
+		z180_set_irq_line(irq, CPU_IRQSTATUS_NONE);
+	}
 }
 

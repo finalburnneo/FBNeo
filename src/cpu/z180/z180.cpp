@@ -127,7 +127,9 @@ typedef struct {
 	UINT8	tif[2];				/* TIF0 and TIF1 values */
 	UINT8	nmi_state;			/* nmi line state */
 	UINT8	nmi_pending;		/* nmi pending */
+	UINT8   nmi_hold;           /* nmi hold logic */
 	UINT8	irq_state[3];		/* irq line states (INT0,INT1,INT2) */
+	UINT8	irq_hold[3];        // irq hold logic */
 	UINT8	after_EI;			/* are we in the EI shadow? */
 
 	const struct z80_irq_daisy_chain *daisy;
@@ -1901,9 +1903,13 @@ void z180_reset(void)
 	_F = ZF;			/* Zero flag is set */
 	Z180.nmi_state = Z180_CLEAR_LINE;
 	Z180.nmi_pending = 0;
+	Z180.nmi_hold = 0;
 	Z180.irq_state[0] = Z180_CLEAR_LINE;
 	Z180.irq_state[1] = Z180_CLEAR_LINE;
 	Z180.irq_state[2] = Z180_CLEAR_LINE;
+	Z180.irq_hold[0] = 0;
+	Z180.irq_hold[1] = 0;
+	Z180.irq_hold[2] = 0;
 	Z180.after_EI = 0;
 	Z180.tif[0] = 0;
 	Z180.tif[1] = 0;
@@ -2094,6 +2100,10 @@ int z180_execute(int cycles)
 		_PCD = 0x0066;
 		z180_icount -= 11;
 		Z180.nmi_pending = 0;
+		if (Z180.nmi_hold) {
+			Z180.nmi_hold = 0;
+			Z180.nmi_state = CPU_IRQSTATUS_NONE;
+		}
 	}
 
 again:
@@ -2203,6 +2213,16 @@ void z180_burn(int cycles)
  ****************************************************************************/
 void z180_set_irq_line(int irqline, int state)
 {
+	if (state == CPU_IRQSTATUS_HOLD || state == CPU_IRQSTATUS_AUTO) {
+		// irq hold logic -dink
+		state = CPU_IRQSTATUS_ACK;
+		if (irqline == Z180_INPUT_LINE_NMI) {
+			Z180.nmi_hold = 1;
+		} else {
+			Z180.irq_hold[irqline] = 1;
+		}
+	}
+
 	if (irqline == Z180_INPUT_LINE_NMI)
 	{
 		/* mark an NMI pending on the rising edge */

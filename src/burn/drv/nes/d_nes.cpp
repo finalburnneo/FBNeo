@@ -10991,6 +10991,23 @@ struct BurnDriver BurnDrvnes_jackalc = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_sharksharkRomDesc[] = {
+	{ "Shark! Shark! (HB).nes",          24592, 0x5f33e5b4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sharkshark)
+STD_ROM_FN(nes_sharkshark)
+
+struct BurnDriver BurnDrvnes_sharkshark = {
+	"nes_sharkshark", NULL, NULL, NULL, "1982",
+	"Shark! Shark! (HB)\0", NULL, "Mattel Electronics", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_sharksharkRomInfo, nes_sharksharkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_caveRomDesc[] = {
 	{ "cave (2017)(mojon twins).nes",          49168, 0xb86ce86b, BRF_ESS | BRF_PRG },
 };

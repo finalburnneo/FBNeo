@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14405 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14406 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10192,6 +10192,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_shaqfu	|  	| Shaq Fu (Euro, USA)					| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | sharkatt	|  	| Shark Attack						| 		| 1980	| Pacific Novelt| Miscellaneous	| 					|
 | msx_sharkh	|  	| Shark Hunter (Euro)					| 		| 1984	| Electric Softw| MSX		| 					|
+| nes_sharkshark|  	| Shark! Shark! (HB)					| 		| 1982	| Mattel Electro| Miscellaneous	| 					|
 | nes_shatterhand|  	| Shatterhand (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|
 | md_shijie	|  	| Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94| 		| 1994	| C&E		| Sega Megadrive| 					|
 | md_labdeathgnk|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kand| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|

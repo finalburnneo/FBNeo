@@ -10372,6 +10372,7 @@ DRV		BurnDrvgg_shaqfu;
 DRV		BurnDrvmd_shaqfu;
 DRV		BurnDrvSharkatt;
 DRV		BurnDrvMSX_sharkh;
+DRV		BurnDrvnes_sharkshark;
 DRV		BurnDrvnes_shatterhand;
 DRV		BurnDrvmd_shijie;
 DRV		BurnDrvmd_labdeathgnk;
@@ -25044,6 +25045,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shaqfu,			// Shaq Fu (Euro, USA)
 	&BurnDrvSharkatt,			// Shark Attack
 	&BurnDrvMSX_sharkh,			// Shark Hunter (Euro)
+	&BurnDrvnes_sharkshark,		// Shark! Shark! (HB)
 	&BurnDrvnes_shatterhand,	// Shatterhand (USA)
 	&BurnDrvmd_shijie,			// Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94 (Chi)
 	&BurnDrvmd_labdeathgnk,		// Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kandume MegaCD Rip)

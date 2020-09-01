@@ -248,11 +248,16 @@ void Z180SetIRQLine(INT32 irqline, INT32 state)
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called when no CPU open\n"));
 	if (irqline != 0 && irqline != Z180_INPUT_LINE_NMI) bprintf(PRINT_ERROR, _T("Z180SetIRQLine called with invalid line %d\n"), irqline);
-	if (state != CPU_IRQSTATUS_NONE && state != CPU_IRQSTATUS_ACK && state != CPU_IRQSTATUS_AUTO)
+	if (state != CPU_IRQSTATUS_NONE && state != CPU_IRQSTATUS_ACK && state != CPU_IRQSTATUS_AUTO && state != CPU_IRQSTATUS_HOLD)
 		bprintf(PRINT_ERROR, _T("Z180SetIRQLine called with invalid state %d\n"), state);
 #endif
 
 	z180_set_irq_line(irqline, state); 
+}
+
+void Z180Nmi()
+{
+	Z180SetIRQLine(0x20, CPU_IRQSTATUS_HOLD);
 }
 
 void Z180Scan(INT32 nAction)

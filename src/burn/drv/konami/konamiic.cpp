@@ -631,8 +631,8 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 										} else {
 											dst[x] = pal[pxl];
 										}
-										pri[x] = (pri[x]&0x80)|0x1f;
 									}
+									pri[x] = (pri[x]&0x80)|0x1f;
 								}
 							}
 						}

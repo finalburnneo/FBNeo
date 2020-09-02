@@ -20,8 +20,9 @@ static INT32 nSoundCommand;
 // Z80 ROM bank
 static INT32 nCurrentBank;
 
-INT32 Bgareggabl = 0;
+INT32 Bgareggabl = 0; // used by toa_extratext.cpp
 static INT32 Bgareggabla = 0;
+static INT32 location_test = 0;
 
 // Rom information
 static struct BurnRomInfo bgareggaRomDesc[] = {
@@ -691,7 +692,7 @@ static UINT16 __fastcall battlegReadWord(UINT32 sekAddress)
 	switch (sekAddress) {
 
 		case 0x21C03C:
-			return ToaScanlineRegister();
+			return (location_test) ? ToaScanlineRegisterLoctest() : ToaScanlineRegister();
 
 		case 0x300004:
 			return ToaGP9001ReadRAM_Hi(0);
@@ -869,6 +870,13 @@ static INT32 battlegInit()
 	return 0;
 }
 
+static INT32 BgareggatInit()
+{
+	location_test = 1;
+
+	return battlegInit();
+}
+
 static INT32 BgareggablInit()
 {
 	Bgareggabl = 1;
@@ -899,6 +907,7 @@ static INT32 DrvExit()
 	
 	Bgareggabl = 0;
 	Bgareggabla = 0;
+	location_test = 0;
 
 	return 0;
 }
@@ -1032,7 +1041,7 @@ struct BurnDriver BurnDrvBgareggat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggatRomInfo, bgareggatRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
-	battlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	BgareggatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
 

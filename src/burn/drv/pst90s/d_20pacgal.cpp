@@ -41,25 +41,25 @@ static UINT8 DrvReset;
 static UINT32 sprite_pal_base = 0;
 
 static struct BurnInputInfo Pacgal20InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"P1 Start (right)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start (right)",BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
 	{"P1 Start (left)",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-	{"P2 Start (right)",	BIT_DIGITAL,	DrvJoy2 + 6,	"p4 start"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+	{"P2 Start (right)",BIT_DIGITAL,	DrvJoy2 + 6,	"p4 start"	},
 	{"P2 Start (left)",	BIT_DIGITAL,	DrvJoy2 + 7,	"p3 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,    "diag"		},
 };
 
@@ -142,7 +142,7 @@ static void __fastcall pacgal20_write_port(UINT32 address, UINT8 data)
 
 		case 0x87:
 			EEPROMWriteBit((data & 0x80) ? 1 : 0);
-			EEPROMSetCSLine((data & 0x20) ? 0  : 1);
+			EEPROMSetCSLine((~data & 0x20) ? 1 : 0);
 			EEPROMSetClockLine((data & 0x40) ? 1 : 0);
 		return;
 
@@ -187,11 +187,6 @@ static UINT8 __fastcall pacgal20_read_port(UINT32 address)
 	}
 
 	return 0;
-}
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (Z180TotalCycles() / (18432000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -248,16 +243,16 @@ static INT32 MemIndex()
 	return 0;
 }
 
-const eeprom_interface eeprom_interface_20pacgal =
+static const eeprom_interface eeprom_interface_20pacgal =
 {
-	7,                // address bits
-	8,                // data bits
-	"*110",           // read command
-	"*101",           // write command
-	0,                // erase command
-	"*10000xxxxx",    // lock command
-	"*10011xxxxx",    // unlock command
-	1, // 1?
+	7,				// address bits 7
+	8,				// data bits    8
+	"*110",			// read         1 10 aaaaaaa
+	"*101",			// write        1 01 aaaaaaa dddddddd
+	"*111",			// erase        1 11 aaaaaaa
+	"*10000xxxx",	// lock         1 00 00xxxx
+	"*10011xxxx",	// unlock       1 00 11xxxx
+	0,
 	0
 };
 
@@ -297,7 +292,7 @@ static INT32 DrvInit()
 	NamcoSoundInit(73728000 / 4 / 6 / 32, 3, 0);
 	NamcoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, Z180TotalCycles, 18432000);
 	DACSetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
 
 	BurnWatchdogInit(DrvDoReset, 180);
@@ -603,9 +598,9 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += Z180Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Z180);
 
-		if (i == (nInterleave - 1) && irq_mask) Z180SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && irq_mask) Z180SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
 	if (pBurnSoundOut) {
@@ -642,6 +637,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		Z180Scan(nAction);
 
 		NamcoSoundScan(nAction, pnMin);
+		DACScan(nAction, pnMin);
 
 		EEPROMScan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
@@ -652,6 +648,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(global_flip);
 		SCAN_VAR(irq_mask);
 		SCAN_VAR(_47100_val);
+	}
+
+	if (nAction & ACB_WRITE) {
+		Z180Open(0);
+		set_bank(game_selected);
+		Z180Close();
 	}
 
 	return 0;

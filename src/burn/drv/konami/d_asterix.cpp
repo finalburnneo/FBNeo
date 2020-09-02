@@ -136,7 +136,7 @@ static void __fastcall asterix_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xffffe0) == 0x300000) {
-		K053244Write(0, (address & 0xe) / 2, data & 0xff);
+		K053244Write(0, (address & 0x1f) / 2, data & 0xff);
 		return;
 	}
 
@@ -185,7 +185,7 @@ static void __fastcall asterix_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffe1) == 0x300001) {
-		K053244Write(0, (address & 0xe) / 2, data);
+		K053244Write(0, (address & 0x1f) / 2, data);
 		return;
 	}
 
@@ -231,7 +231,7 @@ static UINT16 __fastcall asterix_main_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffffe0) == 0x300000) {
-		return K053244Read(0, (address & 0xe)/2);
+		return K053244Read(0, (address & 0x1f)/2);
 	}
 
 	if ((address & 0xfff000) == 0x400000) {
@@ -261,7 +261,7 @@ static UINT8 __fastcall asterix_main_read_byte(UINT32 address)
 	}
 
 	if ((address & 0xffffe0) == 0x300000) {
-		return K053244Read(0, (address & 0xe)/2);
+		return K053244Read(0, (address & 0x1f)/2);
 	}
 
 	if ((address & 0xfff000) == 0x400000) {

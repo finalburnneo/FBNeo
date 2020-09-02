@@ -168,6 +168,31 @@ inline static UINT16 ToaScanlineRegister()
 {
 	static INT32 nPreviousScanline;
 	UINT16 nFlags = 0xFE00;
+	INT32 nCurrentScanline = SekCurrentScanline();
+
+#if 0
+	// None of the games actually use this
+	INT32 nCurrentBeamPosition = SekTotalCycles() % nToaCyclesScanline;
+	if (nCurrentBeamPosition < 64) {
+		nFlags &= ~0x4000;
+	}
+#endif
+
+	if (nCurrentScanline != nPreviousScanline) {
+		nPreviousScanline = nCurrentScanline;
+		nFlags &= ~0x8000;
+
+//		bprintf(PRINT_NORMAL, _T("  - line %3i, PC 0x%08X\n"), nCurrentScanline, SekGetPC(-1));
+
+	}
+
+	return nFlags | nCurrentScanline;
+}
+
+inline static UINT16 ToaScanlineRegisterLoctest() // bgaregga location test
+{
+	static INT32 nPreviousScanline;
+	UINT16 nFlags = 0xFE00;
 	INT32 nCurrentScanline = (SekCurrentScanline() + 15) % 262;
 	if (nCurrentScanline > 0xff) nCurrentScanline = 0xff;
 

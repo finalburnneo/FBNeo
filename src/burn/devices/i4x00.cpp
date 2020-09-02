@@ -173,7 +173,7 @@ static void draw_sprites()
 static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT16 *pix)
 {
 	UINT16 *tiletable = (UINT16*)TileRAM;
-	
+
 	INT32 table_index = (code & 0x1ff0) >> 3;
 	UINT32 tile = (BURN_ENDIAN_SWAP_INT16(tiletable[table_index + 0]) << 16) + BURN_ENDIAN_SWAP_INT16(tiletable[table_index + 1]);
 

@@ -3193,7 +3193,7 @@ static void metro_common_map_ram(UINT32 chip_address, INT32 main_ram_address, IN
 
 static void __fastcall blzntrnd_roz_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvK053936RAM + (address & 0x3fffe))) = data;
+	*((UINT16*)(DrvK053936RAM + (address & 0x3fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	GenericTilemapSetTileDirty(0, (address & 0x3fffe) / 2);
 }
 
@@ -3205,7 +3205,7 @@ static void __fastcall blzntrnd_roz_write_byte(UINT32 address, UINT8 data)
 
 static tilemap_callback( blzntrnd )
 {
-	INT32 code = *((UINT16*)(DrvK053936RAM + offs * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvK053936RAM + offs * 2)));
 	
 	TILE_SET_INFO(0, code, 0, 0);
 }
@@ -3322,7 +3322,7 @@ static tilemap_scan( gstrik2 )
 
 static tilemap_callback( gstrik2 )
 {
-	INT32 code = *((UINT16*)(DrvK053936RAM + offs * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvK053936RAM + offs * 2)));
 	
 	TILE_SET_INFO(0, code >> 2, 0, 0);
 }

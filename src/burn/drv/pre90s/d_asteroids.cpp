@@ -5,6 +5,7 @@
 // 	asterock
 // 	asterockv
 // 	meteorite
+//  meteorbl
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -1475,7 +1476,7 @@ struct BurnDriver BurnDrvMeteorts = {
 };
 
 
-// Meteor (bootleg of Asteroids)
+// Meteor (Hoei bootleg of Asteroids)
 
 static struct BurnRomInfo meteorhoRomDesc[] = {
 	{ "g.bin",				0x0400, 0x7420421b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1496,11 +1497,40 @@ STD_ROM_FN(meteorho)
 
 struct BurnDriver BurnDrvMeteorho = {
 	"meteorho", "asteroid", NULL, NULL, "1979",
-	"Meteor (bootleg of Asteroids)\0", NULL, "bootleg (Hoei)", "Miscellaneous",
+	"Meteor (Hoei bootleg of Asteroids)\0", NULL, "bootleg (Hoei)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, meteorhoRomInfo, meteorhoRomName, NULL, NULL, NULL, NULL, AsteroidInputInfo, AsteroidDIPInfo,
 	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	600, 500, 4, 3
+};
+
+// Meteor (bootleg of Asteroids)
+
+static struct BurnRomInfo meteorblRomDesc[] = {
+	{ "2as.12",				0x0400, 0xcdf720c6, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "3as.13",				0x0400, 0xee58bdf0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4as.14",				0x0400, 0x8d3e421e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "5as.15",				0x0400, 0xd2ce7672, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6as.16",				0x0400, 0x74103c87, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "7as.17",				0x0400, 0x75a39768, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "0as.10",				0x0400, 0xdc10767a, 2 | BRF_PRG | BRF_ESS }, //  6 Vector ROM
+	{ "1as.11",				0x0400, 0x231ce201, 2 | BRF_PRG | BRF_ESS }, //  7 Vector ROM 2/2
+
+	{ "034602-01.c8",		0x0100, 0x97953db8, 3 | BRF_GRA },           //  8 DVG PROM
+};
+
+STD_ROM_PICK(meteorbl)
+STD_ROM_FN(meteorbl)
+
+struct BurnDriver BurnDrvMeteorbl = {
+	"meteorbl", "asteroid", NULL, NULL, "1979",
+	"Meteor (bootleg of Asteroids)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, meteorblRomInfo, meteorblRomName, NULL, NULL, NULL, NULL, AsterockInputInfo, AsterockDIPInfo,
+	AsterockInt, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	600, 500, 4, 3
 };
 

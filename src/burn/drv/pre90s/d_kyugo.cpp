@@ -695,7 +695,7 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-static INT32 CommonInit(void (*romdecodecb)(), UINT16 sub_rom_offset, UINT16 share_ram_offset, UINT8 extra_ram, UINT8 __fastcall (*sub_read_cb)(UINT16), void __fastcall (*sub_writeport_cb)(UINT16,UINT8))
+static INT32 CommonInit(void (*romdecodecb)(), UINT16 sub_rom_offset, UINT16 share_ram_offset, UINT8 extra_ram, UINT8 (__fastcall *sub_read_cb)(UINT16), void (__fastcall *sub_writeport_cb)(UINT16,UINT8))
 {
 	BurnAllocMemIndex();
 

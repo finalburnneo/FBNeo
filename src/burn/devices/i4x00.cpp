@@ -179,9 +179,9 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 
 	if (code & 0x8000)
 	{
-		*pix = BURN_ENDIAN_SWAP_INT16(code & 0x0fff);
+		*pix = code & 0x0fff;
 
-		if ((BURN_ENDIAN_SWAP_INT16(*pix) & 0xf) != 0xf)
+		if ((*pix & 0xf) != 0xf)
 			return 1;
 		else
 			return 0;
@@ -200,17 +200,17 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 
 		switch (code & 0x6000)
 		{
-			case 0x0000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + x]);              break;
-			case 0x2000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + x]);              break;
-			case 0x4000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + ((big?15:7)-x)]); break;
-			case 0x6000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]); break;
+			case 0x0000: *pix = data[(y              * (big?16:8)) + x];              break;
+			case 0x2000: *pix = data[(((big?15:7)-y) * (big?16:8)) + x];              break;
+			case 0x4000: *pix = data[(y              * (big?16:8)) + ((big?15:7)-x)]; break;
+			case 0x6000: *pix = data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]; break;
 		}
 
-		if (BURN_ENDIAN_SWAP_INT16(*pix) == 0xff) {
+		if (*pix == 0xff) {
 			return 0;
 		}
 
-		*pix |= BURN_ENDIAN_SWAP_INT16((tile & 0x0f000000) >> 16);
+		*pix |= (tile & 0x0f000000) >> 16;
 
 		return 1;
 	}
@@ -226,17 +226,17 @@ static inline UINT8 get_tile_pix(UINT16 code, UINT8 x, UINT8 y, INT32 big, UINT1
 
 		switch (code & 0x6000)
 		{
-			case 0x0000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + x]);              break;
-			case 0x2000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + x]);              break;
-			case 0x4000: *pix = BURN_ENDIAN_SWAP_INT16(data[(y              * (big?16:8)) + ((big?15:7)-x)]); break;
-			case 0x6000: *pix = BURN_ENDIAN_SWAP_INT16(data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]); break;
+			case 0x0000: *pix = data[(y              * (big?16:8)) + x];              break;
+			case 0x2000: *pix = data[(((big?15:7)-y) * (big?16:8)) + x];              break;
+			case 0x4000: *pix = data[(y              * (big?16:8)) + ((big?15:7)-x)]; break;
+			case 0x6000: *pix = data[(((big?15:7)-y) * (big?16:8)) + ((big?15:7)-x)]; break;
 		}
 
-		if (BURN_ENDIAN_SWAP_INT16(*pix) == 0xf) {
+		if (*pix == 0xf) {
 			return 0;
 		}
 
-		*pix |= BURN_ENDIAN_SWAP_INT16((tile & 0x0ff00000) >> 16);
+		*pix |= (tile & 0x0ff00000) >> 16;
 
 		return 1;
 	}
@@ -285,7 +285,7 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 				if (draw)
 				{
-					dst[x] = BURN_ENDIAN_SWAP_INT16(dat);
+					dst[x] = dat;
 					priority_baseaddr[x] = (priority_baseaddr[x] & (pcode >> 8)) | pcode;
 				}
 			}
@@ -309,7 +309,7 @@ static void draw_tilemap(UINT32 ,UINT32 pcode,int sx, int sy, int wx, int wy, in
 
 				if (draw)
 				{
-					dst[x] = BURN_ENDIAN_SWAP_INT16(dat);
+					dst[x] = dat;
 					priority_baseaddr[scrwidth-x-1] = (priority_baseaddr[scrwidth-x-1] & (pcode >> 8)) | pcode;
 				}
 			}
@@ -497,7 +497,7 @@ static void blitter_write()
 					{
 						dst_offs +=   0x100;
 						dst_offs &= ~(0x100 - 1);
-						dst_offs |=  (0x100 - 1) & (m_blitter_regs[0x0a / 2] >> (7 + 1));
+						dst_offs |=  (0x100 - 1) & (BURN_ENDIAN_SWAP_INT16(m_blitter_regs[0x0a / 2]) >> (7 + 1));
 					}
 					else
 					{
@@ -526,19 +526,19 @@ static void __fastcall i4x00_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xffff000) == 0x75000) {
 		UINT16 *dst = (UINT16*)VideoRAM[0];
-		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & 0xffff000) == 0x76000) {
 		UINT16 *dst = (UINT16*)VideoRAM[1];
-		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & 0xffff000) == 0x77000) {
 		UINT16 *dst = (UINT16*)VideoRAM[2];
-		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 

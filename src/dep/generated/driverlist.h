@@ -4,10 +4,10 @@
 #define DRV extern struct BurnDriver
 DRV		BurnDrvgames88;
 DRV		BurnDrvFlagrall;
-DRV		BurnDrv99lstwarb;
+DRV		BurnDrvlstwar99b;
 DRV		BurnDrv99lstwark;
-DRV		BurnDrv99lstwar;
-DRV		BurnDrv99lstwara;
+DRV		BurnDrvlstwar99;
+DRV		BurnDrvlstwar99a;
 DRV		BurnDrvMSX_007tld;
 DRV		BurnDrvsg1k_jb007a;
 DRV		BurnDrvsg1k_jb007;
@@ -277,8 +277,9 @@ DRV		BurnDrvmd_airbustr;
 DRV		BurnDrvAirbustr;
 DRV		BurnDrvmd_airdiverj;
 DRV		BurnDrvmd_airdiver;
-DRV		BurnDrvAirduelm72;
+DRV		BurnDrvAirdueljm72;
 DRV		BurnDrvAirduelu;
+DRV		BurnDrvAirduelm72;
 DRV		BurnDrvAirduel;
 DRV		BurnDrvnes_airfortress;
 DRV		BurnDrvAirGallet;
@@ -3297,7 +3298,7 @@ DRV		BurnDrvDragnblz;
 DRV		BurnDrvDrgnbowla;
 DRV		BurnDrvDrgnbowl;
 DRV		BurnSpecdrgbreed;
-DRV		BurnDrvDbreedm72j;
+DRV		BurnDrvDbreedjm72;
 DRV		BurnDrvDbreedm72;
 DRV		BurnDrvDbreed;
 DRV		BurnDrvnes_dragonbuster;
@@ -3804,7 +3805,6 @@ DRV		BurnDrvmd_f22a;
 DRV		BurnDrvmd_f22;
 DRV		BurnDrvmd_f22p;
 DRV		BurnDrvmd_f22j;
-DRV		BurnDrvFxa;
 DRV		BurnDrvFx;
 DRV		BurnDrvmd_f1;
 DRV		BurnDrvsms_f1;
@@ -6508,6 +6508,7 @@ DRV		BurnDrvLegend;
 DRV		BurnDrvMSX_legendk;
 DRV		BurnDrvMSX_legendka;
 DRV		BurnDrvnes_legendsofowlia;
+DRV		BurnDrvLegendb;
 DRV		BurnDrvLegion;
 DRV		BurnDrvLegionnaj;
 DRV		BurnDrvLegionnau;
@@ -7220,6 +7221,7 @@ DRV		BurnDrvMetamrphe;
 DRV		BurnDrvMetamrph;
 DRV		BurnDrvMetamrphj;
 DRV		BurnDrvMetamrphu;
+DRV		BurnDrvMeteorbl;
 DRV		BurnDrvMeteorho;
 DRV		BurnDrvcv_meteosho;
 DRV		BurnDrvMeteorite;
@@ -14677,10 +14679,10 @@ DRV		BurnDrvZzyzzyxx2;
 static struct BurnDriver* pDriver[] = {
 	&BurnDrvgames88,			// '88 Games
 	&BurnDrvFlagrall,			// '96 Flag Rally
-	&BurnDrv99lstwarb,			// '99: The Last War (bootleg)
+	&BurnDrvlstwar99b,			// '99: The Last War (bootleg)
 	&BurnDrv99lstwark,			// '99: The Last War (Kyugo)
-	&BurnDrv99lstwar,			// '99: The Last War (set 1)
-	&BurnDrv99lstwara,			// '99: The Last War (set 2)
+	&BurnDrvlstwar99,			// '99: The Last War (set 1)
+	&BurnDrvlstwar99a,			// '99: The Last War (set 2)
 	&BurnDrvMSX_007tld,			// 007 - The Living Daylights (Euro)
 	&BurnDrvsg1k_jb007a,		// 007 James Bond (Jpn, v2.6, OMV)
 	&BurnDrvsg1k_jb007,			// 007 James Bond (Jpn, v2.7, OMV)
@@ -14950,8 +14952,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAirbustr,			// Air Buster: Trouble Specialty Raid Unit (World)
 	&BurnDrvmd_airdiverj,		// Air Diver (Jpn)
 	&BurnDrvmd_airdiver,		// Air Diver (USA)
-	&BurnDrvAirduelm72,			// Air Duel (Japan, M72 hardware)
+	&BurnDrvAirdueljm72,		// Air Duel (Japan, M72 hardware)
 	&BurnDrvAirduelu,			// Air Duel (US location test, M82 hardware)
+	&BurnDrvAirduelm72,			// Air Duel (World, M72 hardware)
 	&BurnDrvAirduel,			// Air Duel (World, M82 hardware)
 	&BurnDrvnes_airfortress,	// Air Fortress (USA)
 	&BurnDrvAirGallet,			// Air Gallet (Europe)
@@ -17970,7 +17973,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgnbowla,			// Dragon Bowl (set 2, unencrypted program)
 	&BurnDrvDrgnbowl,			// Dragon Bowl
 	&BurnSpecdrgbreed,			// Dragon Breed (48K)
-	&BurnDrvDbreedm72j,			// Dragon Breed (Japan, M72 hardwaref)
+	&BurnDrvDbreedjm72,			// Dragon Breed (Japan, M72 hardware)
 	&BurnDrvDbreedm72,			// Dragon Breed (World, M72 hardware)
 	&BurnDrvDbreed,				// Dragon Breed (World, M81 hardware)
 	&BurnDrvnes_dragonbuster,	// Dragon Buster (Japan)
@@ -18477,8 +18480,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_f22,				// F-22 Interceptor (Euro, USA, 199206)
 	&BurnDrvmd_f22p,			// F-22 Interceptor (Euro, USA, Prototype)
 	&BurnDrvmd_f22j,			// F-22 Interceptor (Jpn)
-	&BurnDrvFxa,				// F-X (alternate set)
-	&BurnDrvFx,					// F-X
+	&BurnDrvFx,					// F-X (bootleg of S.R.D. Mission)
 	&BurnDrvmd_f1,				// F1 (Euro)
 	&BurnDrvsms_f1,				// F1 (Euro, Bra)
 	&BurnDrvgg_f1,				// F1 (Euro, USA)
@@ -21181,6 +21183,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_legendk,		// Legendly Knight - Daemaseong (Kor)
 	&BurnDrvMSX_legendka,		// Legendly Knight - Daemaseong (Kor, Alt)
 	&BurnDrvnes_legendsofowlia,	// Legends of Owlia (HB)
+	&BurnDrvLegendb,			// Legion (bootleg of Legend)
 	&BurnDrvLegion,				// Legion - Spinner-87 (World ver 2.03)
 	&BurnDrvLegionnaj,			// Legionnaire (Japan)
 	&BurnDrvLegionnau,			// Legionnaire (US)
@@ -21893,7 +21896,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetamrph,			// Metamorphic Force (ver EAA)
 	&BurnDrvMetamrphj,			// Metamorphic Force (ver JAA)
 	&BurnDrvMetamrphu,			// Metamorphic Force (ver UAA)
-	&BurnDrvMeteorho,			// Meteor (bootleg of Asteroids)
+	&BurnDrvMeteorbl,			// Meteor (bootleg of Asteroids)
+	&BurnDrvMeteorho,			// Meteor (Hoei bootleg of Asteroids)
 	&BurnDrvcv_meteosho,		// Meteoric Shower
 	&BurnDrvMeteorite,			// Meteorite (Proel bootleg of Asteroids)
 	&BurnDrvMeteorts,			// Meteorites (VGG bootleg of Asteroids)
@@ -25405,7 +25409,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_solst,			// Solstice - The Quest for the Staff of Demnos (USA)
 	&BurnDrvmd_somarita,		// Somari The Adventurer (Hack V1.1)
 	&BurnDrvtg_somerass,		// Somer Assault
-	&BurnDrvSonofphx,			// Son of Phoenix
+	&BurnDrvSonofphx,			// Son of Phoenix (bootleg of Repulse)
 	&BurnDrvnes_sonson,			// Son Son (Japan)
 	&BurnDrvSonsonj,			// Son Son (Japan)
 	&BurnDrvpce_sonson2,		// Son Son II

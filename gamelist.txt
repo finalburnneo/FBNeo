@@ -1,15 +1,15 @@
 This list contains all games supported by FinalBurn Neo.
 
-14406 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14408 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
 | 88games	|  	| '88 Games						| 		| 1988	| Konami	| GX861		| 					|
 | flagrall	|  	| '96 Flag Rally					| 		| 1996	| unknown	| Miscellaneous	| 					|
-| 99lstwarb	|  	| '99: The Last War (bootleg)				| repulse	| 1985	| bootleg	| Kyugo		| Bad colors in some scenes		|
-| 99lstwark	|  	| '99: The Last War (Kyugo)				| repulse	| 1985	| Crux / Kyugo	| Kyugo		| 					|
-| 99lstwar	|  	| '99: The Last War (set 1)				| repulse	| 1985	| Crux / Proma	| Kyugo		| 					|
-| 99lstwara	|  	| '99: The Last War (set 2)				| repulse	| 1985	| Crux / Proma	| Kyugo		| 					|
+| 99lstwarb	|  	| '99: The Last War (bootleg)				| repulse	| 1985	| bootleg	| Miscellaneous	| 					|
+| 99lstwark	|  	| '99: The Last War (Kyugo)				| repulse	| 1985	| Crux / Kyugo	| Miscellaneous	| 					|
+| 99lstwar	|  	| '99: The Last War (set 1)				| repulse	| 1985	| Crux / Proma	| Miscellaneous	| 					|
+| 99lstwara	|  	| '99: The Last War (set 2)				| repulse	| 1985	| Crux / Proma	| Miscellaneous	| 					|
 | msx_007tld	|  	| 007 - The Living Daylights (Euro)			| 		| 1987	| Domark	| MSX		| 					|
 | sg1k_jb007a	|  	| 007 James Bond (Jpn, v2.6, OMV)			| sg1k_jb007	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_jb007	|  	| 007 James Bond (Jpn, v2.7, OMV)			| 		| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
@@ -275,8 +275,9 @@ This list contains all games supported by FinalBurn Neo.
 | airbustr	|  	| Air Buster: Trouble Specialty Raid Unit (World)	| 		| 1990	| Kaneko (Namco | Miscellaneous	| 					|
 | md_airdiverj	|  	| Air Diver (Jpn)					| md_airdiver	| 1990	| Asmik Ace	| Sega Megadrive| 					|
 | md_airdiver	|  	| Air Diver (USA)					| 		| 1990	| Seismic	| Sega Megadrive| 					|
-| airduelm72	|  	| Air Duel (Japan, M72 hardware)			| airduel	| 1990	| Irem		| Irem M72	| 					|
+| airdueljm72	|  	| Air Duel (Japan, M72 hardware)			| airduel	| 1990	| Irem		| Irem M72	| 					|
 | airduelu	|  	| Air Duel (US location test, M82 hardware)		| airduel	| 1990	| Irem		| Irem M82	| 					|
+| airduelm72	|  	| Air Duel (World, M72 hardware)			| airduel	| 1990	| Irem		| Irem M72	| 					|
 | airduel	|  	| Air Duel (World, M82 hardware)			| 		| 1990	| Irem		| Irem M82	| 					|
 | nes_airfortress|  	| Air Fortress (USA)					| 		| 1989	| HAL Laboratory| Miscellaneous	| 					|
 | agallet	|  	| Air Gallet (Europe)					| 		| 1996	| BanPresto / Ga| Cave		| 					|
@@ -296,10 +297,10 @@ This list contains all games supported by FinalBurn Neo.
 | spec_airwolf	|  	| Airwolf (48K)						| 		| 1984	| Elite Systems	| ZX Spectrum	| 					|
 | nes_airwolfj	|  	| Airwolf (Japan)					| nes_airwolf	| 1988	| Kyugo Boueki	| Miscellaneous	| 					|
 | nes_airwolft	|  	| Airwolf (T-eng)					| nes_airwolf	| 1988	| Kyugo Boueki	| Miscellaneous	| 					|
-| airwolfa	|  	| Airwolf (US)						| airwolf	| 1987	| Kyugo (United | Kyugo		| 					|
+| airwolfa	|  	| Airwolf (US)						| airwolf	| 1987	| Kyugo (United | Miscellaneous	| 					|
 | nes_airwolf	|  	| Airwolf (USA)						| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | spec_airwolf2	|  	| Airwolf II (48K)					| 		| 1987	| Encore	| ZX Spectrum	| 					|
-| airwolf	|  	| Airwolf						| 		| 1987	| Kyugo		| Kyugo		| 					|
+| airwolf	|  	| Airwolf						| 		| 1987	| Kyugo		| Miscellaneous	| 					|
 | ajaxj		|  	| Ajax (Japan)						| ajax		| 1987	| Konami	| GX770		| 					|
 | ajax		|  	| Ajax							| 		| 1987	| Konami	| GX770		| 					|
 | fds_akitsunofusnoka|  	| Aki to Tsukasa no Fushigi no Kabe (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -1650,7 +1651,7 @@ This list contains all games supported by FinalBurn Neo.
 | butasan	|  	| Butasan - Pig's & Bomber's (Japan, English)		| 		| 1987	| NMK (Jaleco li| Miscellaneous	| 					|
 | nes_buzzwaldog|  	| Buzz & Waldog (USA) (Proto) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_buzzoff	|  	| Buzz Off! (Euro)					| 		| 1984	| Electric Softw| MSX		| 					|
-| buzzard	|  	| Buzzard						| gyrodine	| 1984	| Crux		| Kyugo		| 					|
+| buzzard	|  	| Buzzard						| gyrodine	| 1984	| Crux		| Miscellaneous	| 					|
 | bygone	|  	| Bygone						| 		| 1985	| Taito Corporat| Miscellaneous	| Imperfect sound			|
 | cchip		|  	| C-Chip Internal ROM					| 		| 1989	| Taito Corporat| C-Chip Interna| Internal ROM only			|
 | cv_cso	|  	| C-So! (HB)						| 		| 2018	| Pony - Sega	| ColecoVision	| Published by Team Pixelboy		|
@@ -3239,7 +3240,7 @@ This list contains all games supported by FinalBurn Neo.
 | drgnbowla	|  	| Dragon Bowl (set 2, unencrypted program)		| drgnbowl	| 1992	| Nics		| Miscellaneous	| 					|
 | drgnbowl	|  	| Dragon Bowl						| 		| 1992	| Nics		| Miscellaneous	| 					|
 | spec_drgbreed	|  	| Dragon Breed (48K)					| 		| 1989	| Activision	| ZX Spectrum	| 					|
-| dbreedm72j	|  	| Dragon Breed (Japan, M72 hardwaref)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
+| dbreedjm72	|  	| Dragon Breed (Japan, M72 hardware)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
 | dbreedm72	|  	| Dragon Breed (World, M72 hardware)			| dbreed	| 1989	| Irem		| Irem M72	| 					|
 | dbreed	|  	| Dragon Breed (World, M81 hardware)			| 		| 1989	| Irem		| Irem M81	| 					|
 | nes_dragonbuster|  	| Dragon Buster (Japan)					| 		| 1987	| Namco		| Miscellaneous	| 					|
@@ -3736,8 +3737,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_f22	|  	| F-22 Interceptor (Euro, USA, 199206)			| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | md_f22p	|  	| F-22 Interceptor (Euro, USA, Prototype)		| md_f22	| 1991	| Electronic Art| Sega Megadrive| 					|
 | md_f22j	|  	| F-22 Interceptor (Jpn)				| md_f22	| 1993	| Electronic Art| Sega Megadrive| 					|
-| fxa		|  	| F-X (alternate set)					| srdmissn	| 1986	| bootleg	| Kyugo		| 					|
-| fx		|  	| F-X							| srdmissn	| 1986	| bootleg	| Kyugo		| 					|
+| fx		|  	| F-X (bootleg of S.R.D. Mission)			| srdmissn	| 1986	| bootleg	| Miscellaneous	| 					|
 | md_f1		|  	| F1 (Euro)						| 		| 1993	| Tengen	| Sega Megadrive| 					|
 | sms_f1	|  	| F1 (Euro, Bra)					| 		| 1993	| Domark	| Sega Master Sy| 					|
 | gg_f1		|  	| F1 (Euro, USA)					| 		| 1993	| Domark	| Sega Game Gear| 					|
@@ -4086,9 +4086,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_flashbj	|  	| Flashback (Jpn)					| md_flashb	| 1993	| Sunsoft	| Sega Megadrive| 					|
 | md_flashbu	|  	| Flashback - The Quest for Identity (USA)		| md_flashb	| 1993	| U.S. Gold	| Sega Megadrive| 					|
 | md_flashbu1	|  	| Flashback - The Quest for Identity (USA, Alt)		| md_flashb	| 1993	| U.S. Gold	| Sega Megadrive| 					|
-| flashgal	|  	| Flashgal (set 1)					| 		| 1985	| Sega		| Kyugo		| 					|
-| flashgalk	|  	| Flashgal (set 1, Kyugo logo)				| flashgal	| 1985	| Sega		| Kyugo		| 					|
-| flashgala	|  	| Flashgal (set 2)					| flashgal	| 1985	| Sega		| Kyugo		| 					|
+| flashgal	|  	| Flashgal (set 1)					| 		| 1985	| Kyugo / Sega	| Miscellaneous	| 					|
+| flashgalk	|  	| Flashgal (set 1, Kyugo logo)				| flashgal	| 1985	| Kyugo / Sega	| Miscellaneous	| 					|
+| flashgala	|  	| Flashgal (set 2)					| flashgal	| 1985	| Kyugo / Sega	| Miscellaneous	| 					|
 | msx_fpoint	|  	| Flashpoint (Kor)					| 		| 1991	| Zemina	| MSX		| 					|
 | sms_fpoint	|  	| Flashpoint (Kor)					| 		| 199?	| Zemina	| Sega Master Sy| 					|
 | msx_fpointa	|  	| Flashpoint (Kor, Alt)					| msx_fpoint	| 1991	| Zemina	| MSX		| 					|
@@ -4998,8 +4998,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gyrodine	|  	| Gyrodine (Japan)					| 		| 1986	| Taito		| Miscellaneous	| 					|
 | msx_gyrodine	|  	| Gyrodine (Jpn)					| 		| 1986	| Nidecom	| MSX		| 					|
 | msx_gyrodinek	|  	| Gyrodine (Kor)					| msx_gyrodine	| 198?	| Zemina	| MSX		| 					|
-| gyrodinet	|  	| Gyrodine (Taito Corporation license)			| gyrodine	| 1984	| Crux (Taito Co| Kyugo		| 					|
-| gyrodine	|  	| Gyrodine						| 		| 1984	| Crux		| Kyugo		| 					|
+| gyrodinet	|  	| Gyrodine (Taito Corporation license)			| gyrodine	| 1984	| Crux (Taito Co| Miscellaneous	| 					|
+| gyrodine	|  	| Gyrodine						| 		| 1984	| Crux		| Miscellaneous	| 					|
 | nes_gyromite	|  	| Gyromite (USA)					| 		| 1987	| Nintendo	| Miscellaneous	| 					|
 | gyrussb	|  	| Gyruss (bootleg)					| gyruss	| 1983	| bootleg	| GX347		| 					|
 | gyrussce	|  	| Gyruss (Centuri)					| gyruss	| 1983	| Konami (Centur| GX347		| 					|
@@ -6390,10 +6390,11 @@ This list contains all games supported by FinalBurn Neo.
 | lwings	|  	| Legendary Wings (US set 1)				| 		| 1986	| Capcom	| Miscellaneous	| 					|
 | lwings2	|  	| Legendary Wings (US set 2)				| lwings	| 1986	| Capcom	| Miscellaneous	| 					|
 | nes_legendarywings|  	| Legendary Wings (USA)					| 		| 1988	| Capcom	| Miscellaneous	| 					|
-| legend	|  	| Legend						| 		| 1986	| Sega / Corelan| Kyugo		| 					|
+| legend	|  	| Legend						| 		| 1986	| Kyugo / Sega	| Miscellaneous	| 					|
 | msx_legendk	|  	| Legendly Knight - Daemaseong (Kor)			| 		| 1988	| Topia		| MSX		| 					|
 | msx_legendka	|  	| Legendly Knight - Daemaseong (Kor, Alt)		| msx_legendk	| 1988	| Topia		| MSX		| 					|
 | nes_legendsofowlia|  	| Legends of Owlia (HB)					| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
+| legendb	|  	| Legion (bootleg of Legend)				| legend	| 1986	| bootleg	| Miscellaneous	| 					|
 | legion	|  	| Legion - Spinner-87 (World ver 2.03)			| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
 | legionnaj	|  	| Legionnaire (Japan)					| legionna	| 1992	| TAD Corporatio| Miscellaneous	| 					|
 | legionnau	|  	| Legionnaire (US)					| legionna	| 1992	| TAD Corporatio| Miscellaneous	| 					|
@@ -7100,7 +7101,8 @@ This list contains all games supported by FinalBurn Neo.
 | metamrph	|  	| Metamorphic Force (ver EAA)				| 		| 1993	| Konami	| GX224		| 					|
 | metamrphj	|  	| Metamorphic Force (ver JAA)				| metamrph	| 1993	| Konami	| GX224		| 					|
 | metamrphu	|  	| Metamorphic Force (ver UAA)				| metamrph	| 1993	| Konami	| GX224		| 					|
-| meteorho	|  	| Meteor (bootleg of Asteroids)				| asteroid	| 1979	| bootleg (Hoei)| Miscellaneous	| 					|
+| meteorbl	|  	| Meteor (bootleg of Asteroids)				| asteroid	| 1979	| bootleg	| Miscellaneous	| 					|
+| meteorho	|  	| Meteor (Hoei bootleg of Asteroids)			| asteroid	| 1979	| bootleg (Hoei)| Miscellaneous	| 					|
 | cv_meteosho	|  	| Meteoric Shower					| 		| 1983	| Coleco	| ColecoVision	| 					|
 | meteorite	|  	| Meteorite (Proel bootleg of Asteroids)		| asteroid	| 1979	| bootleg (Proel| Miscellaneous	| 					|
 | meteorts	|  	| Meteorites (VGG bootleg of Asteroids)			| asteroid	| 1979	| bootleg (VGG)	| Miscellaneous	| 					|
@@ -9536,7 +9538,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_renthero	|  	| Rent a Hero (Jpn)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | sg1k_ninjaprit|  	| Renzhe Gongzhu (Tw)					| sg1k_ninjapri	| 1986?	| Unknown	| Sega SG-1000	| 					|
 | fds_replicart	|  	| Replicart (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| repulse	|  	| Repulse						| 		| 1985	| Sega		| Kyugo		| 					|
+| repulse	|  	| Repulse						| 		| 1985	| Crux / Sega	| Miscellaneous	| 					|
 | msx_rescatl	|  	| Rescate Atlantida (Spa)				| 		| 1989	| Dinamic Softwa| MSX		| 					|
 | sms_rescuems	|  	| Rescue Mission (Euro, USA, Bra)			| 		| 1988	| Sega		| Sega Master Sy| Light Phaser game			|
 | rescue	|  	| Rescue						| 		| 1982	| Stern		| Galaxian	| 					|
@@ -9838,7 +9840,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_saposos	|  	| S.O.S Lagoa Poluida (Bra)				| sms_astrow	| 1995	| Tec Toy	| Sega Master Sy| 					|
 | spyu		|  	| S.P.Y. - Special Project Y (US ver. M)		| spy		| 1989	| Konami	| GX857		| 					|
 | spy		|  	| S.P.Y. - Special Project Y (World ver. N)		| 		| 1989	| Konami	| GX857		| 					|
-| srdmissn	|  	| S.R.D. Mission					| 		| 1986	| Taito Corporat| Kyugo		| 					|
+| srdmissn	|  	| S.R.D. Mission					| 		| 1986	| Kyugo / Taito | Miscellaneous	| 					|
 | gg_sslucifr	|  	| S.S. Lucifer - Man Overboard! (Euro)			| 		| 1994	| Codemasters	| Sega Game Gear| 					|
 | md_manover	|  	| S.S. Lucifer - Man Overboard! (Euro)			| 		| 1994	| Codemasters	| Sega Megadrive| 					|
 | ssmissin	|  	| S.S. Mission						| 		| 1992	| Comad		| NMK16		| 					|
@@ -10418,9 +10420,9 @@ This list contains all games supported by FinalBurn Neo.
 | skysmash	|  	| Sky Smasher						| 		| 1990	| Nihon System	| Miscellaneous	| 					|
 | skysoldrbl	|  	| Sky Soldiers (bootleg)				| skysoldr	| 1988	| bootleg	| Alpha 68k	| 					|
 | skysoldr	|  	| Sky Soldiers (US)					| 		| 1988	| Alpha Denshi C| Alpha 68k	| 					|
-| skywolf	|  	| Sky Wolf (set 1)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
-| skywolf2	|  	| Sky Wolf (set 2)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
-| skywolf3	|  	| Sky Wolf (set 3)					| airwolf	| 1987	| bootleg	| Kyugo		| 					|
+| skywolf	|  	| Sky Wolf (set 1)					| airwolf	| 1987	| bootleg	| Miscellaneous	| 					|
+| skywolf2	|  	| Sky Wolf (set 2)					| airwolf	| 1987	| bootleg	| Miscellaneous	| 					|
+| skywolf3	|  	| Sky Wolf (set 3)					| airwolf	| 1987	| bootleg	| Miscellaneous	| 					|
 | msx_skyfox	|  	| SkyFox - Paina (HB)					| 		| 1989	| Pasi Kettunen	| MSX		| 					|
 | msx_skygaldo	|  	| Skygaldo (Jpn)					| 		| 1986	| Magical Zoo	| MSX		| 					|
 | nes_slalom	|  	| Slalom (USA)						| 		| 1987	| Nintendo	| Miscellaneous	| 					|
@@ -10546,7 +10548,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_solst	|  	| Solstice - The Quest for the Staff of Demnos (USA)	| 		| 1990	| Sony (CSG) Ima| Miscellaneous	| 					|
 | md_somarita	|  	| Somari The Adventurer (Hack V1.1)			| md_sonic	| 2015	| Darkon360, Lon| Sega Megadrive| 					|
 | tg_somerass	|  	| Somer Assault						| 		| 1992	| Atlus		| TurboGrafx 16	| 					|
-| sonofphx	|  	| Son of Phoenix					| repulse	| 1985	| Associated Ove| Kyugo		| 					|
+| sonofphx	|  	| Son of Phoenix (bootleg of Repulse)			| repulse	| 1985	| bootleg (Assoc| Miscellaneous	| 					|
 | nes_sonson	|  	| Son Son (Japan)					| 		| 1986	| Capcom	| Miscellaneous	| 					|
 | sonsonj	|  	| Son Son (Japan)					| sonson	| 1984	| Capcom	| Miscellaneous	| 					|
 | pce_sonson2	|  	| Son Son II						| 		| 1989	| NEC		| PC Engine	| 					|

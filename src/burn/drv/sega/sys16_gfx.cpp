@@ -2378,7 +2378,7 @@ static void YBoardSystem16BRenderSpriteLayer()
 		INT32 x, y, pix, xdelta = 1;
 		
 		/* initialize the end address to the start address */
-		data[7] = addr;
+		data[7] = BURN_ENDIAN_SWAP_INT16(addr);
 
 		/* if hidden, or top greater than/equal to bottom, or invalid bank, punt */
 		if (hide || (top >= bottom) || bank == 255)

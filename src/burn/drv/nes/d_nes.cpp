@@ -552,6 +552,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
+	NESMode |= (ROMCRC == 0xdcd55bec) ? IS_PAL : 0; // Aladdin
 	NESMode |= (ROMCRC == 0xe08a5881) ? IS_PAL : 0; // Beauty and the Beast
 	NESMode |= (ROMCRC == 0xcbde707e) ? IS_PAL : 0; // International Cricket
 	NESMode |= (ROMCRC == 0xe2685bbf) ? IS_PAL : 0; // Kick Off
@@ -33095,3 +33096,55 @@ struct BurnDriver BurnDrvnes_zippyrace = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+static struct BurnRomInfo nes_aladdinRomDesc[] = {
+	{ "Aladdin (Europe).nes",          262160, 0xdcd55bec, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aladdin)
+STD_ROM_FN(nes_aladdin)
+
+struct BurnDriver BurnDrvnes_aladdin = {
+	"nes_aladdin", NULL, NULL, NULL, "1994",
+	"Aladdin (Europe)\0", NULL, "Virgin Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_aladdinRomInfo, nes_aladdinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_aladdin4RomDesc[] = {
+	{ "Aladdin 4 (Unl).nes",          524304, 0xdda79434, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aladdin4)
+STD_ROM_FN(nes_aladdin4)
+
+struct BurnDriver BurnDrvnes_aladdin4 = {
+	"nes_aladdin4", NULL, NULL, NULL, "1989?",
+	"Aladdin 4 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_aladdin4RomInfo, nes_aladdin4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_streefigiiRomDesc[] = {
+	{ "Street Fighter II - The World Warrior (Unl).nes",          262160, 0xdedfa5bb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefigii)
+STD_ROM_FN(nes_streefigii)
+
+struct BurnDriver BurnDrvnes_streefigii = {
+	"nes_streefigii", NULL, NULL, NULL, "1989?",
+	"Street Fighter II - The World Warrior (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_streefigiiRomInfo, nes_streefigiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

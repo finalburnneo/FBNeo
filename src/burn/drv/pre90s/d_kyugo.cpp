@@ -1242,7 +1242,7 @@ static struct BurnRomInfo lstwar99kRomDesc[] = {
 	{ "86.j2",			0x2000, 0x197e314c, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "87.k2",			0x2000, 0x86b267f3, 2 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "97.4a",			0x1000, 0x15ad6867, 3 | BRF_GRA },           //  7 Foreground Tiles
+	{ "97.4a",			0x2000, 0x15ad6867, 3 | BRF_GRA },           //  7 Foreground Tiles
 
 	{ "98.9h",			0x2000, 0xc9213469, 4 | BRF_GRA },           //  8 Background Tiles
 	{ "99.10h",			0x2000, 0x7de5d39e, 4 | BRF_GRA },           //  9

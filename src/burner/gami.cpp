@@ -228,6 +228,14 @@ static void GameInpInitMacros()
 				nKickx3[nPlayer] |= 4;
 				nKickInputs[nPlayer][2] = i;
 			}
+			if (_stricmp(" Attack", bii.szName + 2) == 0) {
+				nPunchx3[nPlayer] |= 1;
+				nPunchInputs[nPlayer][0] = i;
+			}
+			if (_stricmp(" Jump", bii.szName + 2) == 0) {
+				nPunchx3[nPlayer] |= 2;
+				nPunchInputs[nPlayer][1] = i;
+			}
 
 			if (HW_NEOGEO) {
 				if (_stricmp(" Button A", bii.szName + 2) == 0) {
@@ -378,6 +386,90 @@ static void GameInpInitMacros()
 				pgi->Macro.pVal[j] = bii.pVal;
 				pgi->Macro.nVal[j] = 1;
 			}
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nPunchx3[nPlayer] == 3) {		// Create a Special (Attack + Jump) macro, dion / punisher / wof ...
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i Special Button", nPlayer + 1);
+			for (int j = 0; j < 2; j++) {
+				BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][j]);
+				pgi->Macro.pVal[j] = bii.pVal;
+				pgi->Macro.nVal[j] = 1;
+			}
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nPunchx3[nPlayer] == 7 && nKickx3[nPlayer] == 7) {		// Create a Weak Punch + Weak Kick macro, Combination keys in the sfa3 series
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons Weak PK", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][0]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][0]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nPunchx3[nPlayer] == 7 && nKickx3[nPlayer] == 7) {		// Create a Medium Punch + Medium Kick macro, Combination keys in the sfa3 series
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons Medium PK", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][1]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][1]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nPunchx3[nPlayer] == 7 && nKickx3[nPlayer] == 7) {		// Create a Strong Punch + Strong Kick macro, Combination keys in the sfa3 series
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons Strong PK", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][2]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][2]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nPunchx3[nPlayer] == 7 && nKickx3[nPlayer] == 7) {		// Create a Strong Punch + Weak Kick macro, Quick cancel technique in sf2ce series
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons SP+WK", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][2]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][0]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
 
 			nMacroCount++;
 			pgi++;

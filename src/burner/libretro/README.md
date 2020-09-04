@@ -107,7 +107,7 @@ There are several things to know :
 * Supported format are ccd/sub/img (trurip), and single file MODE1/2352 cue/bin (use utilities like "CDmage" to convert your iso if needed), **they must not be compressed**
 
 You can convert your unsupported isos by following this tutorial :
-* Get [CDMage 1.02.1](https://www.videohelp.com/software/CDMage) (freeware & no ads)
+* Get [CDMage 1.02.1 (beta)](https://www.videohelp.com/software/CDMage) (freeware & no ads). **Don't get CDMage 1.01.5, it doesn't have the "Save As" function**
 * File > Open > select your iso (NB : for multi-track, select the .cue file, not the .iso file)
 * File > Save As > write the name of your new file
 * Make sure you select MODE1/2352 in the second drop-down

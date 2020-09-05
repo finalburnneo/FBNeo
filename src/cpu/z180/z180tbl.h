@@ -153,7 +153,7 @@ static const UINT8 *cc[6] = { cc_op, cc_cb, cc_ed, cc_xy, cc_xycb, cc_ex };
 #define Z180_TABLE_dd	 Z180_TABLE_xy
 #define Z180_TABLE_fd	 Z180_TABLE_xy
 
-static void take_interrupt(int irqline);
+static int take_interrupt(int irqline);
 
 #define PROTOTYPES(tablename,prefix) \
 	Z180_INLINE void prefix##_00(void); Z180_INLINE void prefix##_01(void); Z180_INLINE void prefix##_02(void); Z180_INLINE void prefix##_03(void); \
@@ -270,7 +270,9 @@ PROTOTYPES(Z180xycb,xycb);
 /***************************************************************
  * adjust cycle count by n T-states
  ***************************************************************/
-#define CC(prefix,opcode) z180_icount -= cc[Z180_TABLE_##prefix][opcode]
+#define CC(prefix,opcode) { \
+	Z180.extra_cycles += cc[Z180_TABLE_##prefix][opcode];  \
+}
 
 /***************************************************************
  * execute an opcode

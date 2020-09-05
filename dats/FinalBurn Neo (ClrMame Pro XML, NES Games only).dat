@@ -306,6 +306,20 @@
 		<rom name="Al Unser Jr. Turbo Racing (USA).nes" size="262160" crc="023c7774"/>
 		<driver status="good"/>
 	</game>
+	<game name="aladdin">
+		<description>Aladdin (Europe)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Aladdin (Europe).nes" size="262160" crc="dcd55bec"/>
+		<driver status="good"/>
+	</game>
+	<game name="aladdin4">
+		<description>Aladdin 4 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Aladdin 4 (Unl).nes" size="524304" crc="dda79434"/>
+		<driver status="good"/>
+	</game>
 	<game name="alfommagla">
 		<description>Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl)</description>
 		<year>1989?</year>
@@ -2299,6 +2313,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Drac's Night Out (USA) (Prototype).nes" size="262160" crc="2f81e727"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobal" cloneof="dragonpower" romof="dragonpower">
+		<description>Dragon Ball - Shen Long no Nazo (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball - Shen Long no Nazo (Japan).nes" size="163856" crc="815a4bad"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragonbuster">
@@ -7584,6 +7605,13 @@
 		<year>1990</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Street Fighter 2010 - The Final Fight (USA).nes" size="262160" crc="a7355946"/>
+		<driver status="good"/>
+	</game>
+	<game name="streefigii">
+		<description>Street Fighter II - The World Warrior (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Street Fighter II - The World Warrior (Unl).nes" size="262160" crc="dedfa5bb"/>
 		<driver status="good"/>
 	</game>
 	<game name="streetheroes">

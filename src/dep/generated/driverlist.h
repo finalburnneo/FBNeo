@@ -321,6 +321,8 @@ DRV		BurnDrvAirGalletj;
 DRV		BurnDrvAirGalletaj;
 DRV		BurnDrvfds_akuusenrai;
 DRV		BurnDrvnes_alunsjrturra;
+DRV		BurnDrvnes_aladdin;
+DRV		BurnDrvnes_aladdin4;
 DRV		BurnDrvmd_aladdin2;
 DRV		BurnDrvMSX_albatros;
 DRV		BurnDrvMSX_albatrosa;
@@ -3292,6 +3294,7 @@ DRV		BurnDrvgg_dragonu;
 DRV		BurnDrvmd_dragonu;
 DRV		BurnDrvMSX_drgnatck;
 DRV		BurnDrvMSX_drgnatcka;
+DRV		BurnDrvnes_dragobal;
 DRV		BurnDrvmd_dbz;
 DRV		BurnDrvmd_dbzf;
 DRV		BurnDrvDragnblz;
@@ -6964,8 +6967,9 @@ DRV		BurnDrvMtlchamp;
 DRV		BurnDrvMtlchampj;
 DRV		BurnDrvMtlchampu1;
 DRV		BurnDrvMtlchampu;
-DRV		BurnDrvmartmast102;
-DRV		BurnDrvmartmast103;
+DRV		BurnDrvmartmast102c;
+DRV		BurnDrvmartmast103c;
+DRV		BurnDrvmartmast104c;
 DRV		BurnDrvMartmast;
 DRV		BurnDrvMSX_martianoids;
 DRV		BurnDrvMarvlandj;
@@ -8798,8 +8802,8 @@ DRV		BurnDrvPhoenixj;
 DRV		BurnDrvPhoenixt;
 DRV		BurnDrvPhoenxp2;
 DRV		BurnDrvPhotof;
-DRV		BurnDrvphotoy2k102;
-DRV		BurnDrvphotoy2k103;
+DRV		BurnDrvphotoy2k102j;
+DRV		BurnDrvphotoy2k103j;
 DRV		BurnDrvPhotoy2k104;
 DRV		BurnDrvPhotoy2k;
 DRV		BurnDrvPgm3in1c100;
@@ -11386,6 +11390,7 @@ DRV		BurnDrvCpsSf2ebbl3;
 DRV		BurnDrvCpsSf2ebbl;
 DRV		BurnDrvCpsSf2thndr;
 DRV		BurnDrvCpsSf2thndr2;
+DRV		BurnDrvnes_streefigii;
 DRV		BurnDrvCpsSf2ly;
 DRV		BurnDrvCpsSf2cebltw;
 DRV		BurnDrvCpsSf2ceeabl;
@@ -12753,6 +12758,7 @@ DRV		BurnDrvkof2k2omg9b;
 DRV		BurnDrvkof2k2omg9;
 DRV		BurnDrvK2k2ps2re1;
 DRV		BurnDrvkf2k2ps2;
+DRV		BurnDrvkf2k2ps2b;
 DRV		BurnDrvkof2k2plus;
 DRV		BurnDrvkf2k23rd;
 DRV		BurnDrvkf2k2mp;
@@ -14996,6 +15002,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAirGalletaj,		// Akuu Gallet (older, Japan)
 	&BurnDrvfds_akuusenrai,		// Akuu Senki Raijin (Japan)
 	&BurnDrvnes_alunsjrturra,	// Al Unser Jr. Turbo Racing (USA)
+	&BurnDrvnes_aladdin,		// Aladdin (Europe)
+	&BurnDrvnes_aladdin4,		// Aladdin 4 (Unl)
 	&BurnDrvmd_aladdin2,		// Aladdin II
 	&BurnDrvMSX_albatros,		// Albatross (Jpn)
 	&BurnDrvMSX_albatrosa,		// Albatross (Jpn, Alt)
@@ -17967,6 +17975,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dragonu,			// Dragon - The Bruce Lee Story (USA)
 	&BurnDrvMSX_drgnatck,		// Dragon Attack (Jpn)
 	&BurnDrvMSX_drgnatcka,		// Dragon Attack (Jpn, Alt)
+	&BurnDrvnes_dragobal,		// Dragon Ball - Shen Long no Nazo (Japan)
 	&BurnDrvmd_dbz,				// Dragon Ball Z - Buyuu Retsuden (Jpn)
 	&BurnDrvmd_dbzf,			// Dragon Ball Z - L'Appel du Destin (Fra)
 	&BurnDrvDragnblz,			// Dragon Blaze
@@ -21639,8 +21648,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMtlchampj,			// Martial Champion (ver JAA)
 	&BurnDrvMtlchampu1,			// Martial Champion (ver UAD)
 	&BurnDrvMtlchampu,			// Martial Champion (ver UAE)
-	&BurnDrvmartmast102,		// Martial Masters (V102, 101, 101, China)
-	&BurnDrvmartmast103,		// Martial Masters (V103, 102, 101, China)
+	&BurnDrvmartmast102c,		// Martial Masters (V102, 101, 101, China)
+	&BurnDrvmartmast103c,		// Martial Masters (V103, 102, 101, China)
+	&BurnDrvmartmast104c,		// Martial Masters (V104, 102, 101, China)
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
 	&BurnDrvMarvlandj,			// Marvel Land (Japan)
@@ -23473,8 +23483,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPhoenixt,			// Phoenix (Taito)
 	&BurnDrvPhoenxp2,			// Phoenix Part 2
 	&BurnDrvPhotof,				// Photo Finish (bootleg?)
-	&BurnDrvphotoy2k102,		// Photo Y2K / Real and Fake (V102, Japan)
-	&BurnDrvphotoy2k103,		// Photo Y2K / Real and Fake (V103, Japan)
+	&BurnDrvphotoy2k102j,		// Photo Y2K / Real and Fake (V102, Japan)
+	&BurnDrvphotoy2k103j,		// Photo Y2K / Real and Fake (V103, Japan)
 	&BurnDrvPhotoy2k104,		// Photo Y2K / Real and Fake (V104)
 	&BurnDrvPhotoy2k,			// Photo Y2K / Real and Fake (V105, China)
 	&BurnDrvPgm3in1c100,		// Photo Y2K 2 (3-in-1, V100, China) [Sound issues, video issues, NOT WORKING]
@@ -26061,6 +26071,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ebbl,			// Street Fighter II - The World Warrior (TAB Austria bootleg, 910214 etc)
 	&BurnDrvCpsSf2thndr,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 1)
 	&BurnDrvCpsSf2thndr2,		// Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc, set 2)
+	&BurnDrvnes_streefigii,		// Street Fighter II - The World Warrior (Unl)
 	&BurnDrvCpsSf2ly,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
@@ -27428,6 +27439,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2k2omg9,			// The King of Fighters 2002 (Omega v0.9)
 	&BurnDrvK2k2ps2re1,			// The King of Fighters 2002 (PlayStation 2 v1.0 Public Beta)
 	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
+	&BurnDrvkf2k2ps2b,			// The King of Fighters 2002 (PlayStation 2, Hack)
 	&BurnDrvkof2k2plus,			// The King of Fighters 2002 (Plus 2017, Hack)
 	&BurnDrvkf2k23rd,			// The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)
 	&BurnDrvkf2k2mp,			// The King of Fighters 2002 Magic Plus (bootleg)

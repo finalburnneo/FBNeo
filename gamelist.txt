@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14408 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14414 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -317,6 +317,8 @@ This list contains all games supported by FinalBurn Neo.
 | agalletaj	|  	| Akuu Gallet (older, Japan)				| agallet	| 1996	| BanPresto / Ga| Cave		| 					|
 | fds_akuusenrai|  	| Akuu Senki Raijin (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_alunsjrturra|  	| Al Unser Jr. Turbo Racing (USA)			| 		| 1990	| Data East	| Miscellaneous	| 					|
+| nes_aladdin	|  	| Aladdin (Europe)					| 		| 1994	| Virgin Games	| Miscellaneous	| 					|
+| nes_aladdin4	|  	| Aladdin 4 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_aladdin2	|  	| Aladdin II						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | msx_albatros	|  	| Albatross (Jpn)					| 		| 1986	| Nihon Telenet	| MSX		| 					|
 | msx_albatrosa	|  	| Albatross (Jpn, Alt)					| msx_albatros	| 1986	| Nihon Telenet	| MSX		| 					|
@@ -3234,6 +3236,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dragonu	|  	| Dragon - The Bruce Lee Story (USA)			| md_dragon	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | msx_drgnatck	|  	| Dragon Attack (Jpn)					| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_drgnatcka	|  	| Dragon Attack (Jpn, Alt)				| msx_drgnatck	| 1983	| HAL Kenkyuujo	| MSX		| 					|
+| nes_dragobal	|  	| Dragon Ball - Shen Long no Nazo (Japan)		| nes_dragonpower| 1986	| Bandai	| Miscellaneous	| 					|
 | md_dbz	|  	| Dragon Ball Z - Buyuu Retsuden (Jpn)			| 		| 1994	| Bandai	| Sega Megadrive| 					|
 | md_dbzf	|  	| Dragon Ball Z - L'Appel du Destin (Fra)		| md_dbz	| 1994	| Bandai	| Sega Megadrive| 					|
 | dragnblz	|  	| Dragon Blaze						| 		| 2000	| Psikyo	| PS5V2		| 					|
@@ -6844,8 +6847,9 @@ This list contains all games supported by FinalBurn Neo.
 | mtlchampj	|  	| Martial Champion (ver JAA)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu1	|  	| Martial Champion (ver UAD)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
 | mtlchampu	|  	| Martial Champion (ver UAE)				| mtlchamp	| 1993	| Konami	| GX234		| 					|
-| martmast102	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
-| martmast103	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmast102c	|  	| Martial Masters (V102, 101, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmast103c	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
+| martmast104c	|  	| Martial Masters (V104, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
 | msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
 | marvlandj	|  	| Marvel Land (Japan)					| marvland	| 1989	| Namco		| System 2	| 					|
@@ -8644,8 +8648,8 @@ This list contains all games supported by FinalBurn Neo.
 | phoenixt	|  	| Phoenix (Taito)					| phoenix	| 1980	| Amstar (Taito | Miscellaneous	| 					|
 | phoenxp2	|  	| Phoenix Part 2					| phoenix	| 1981	| bootleg	| Galaxian	| 					|
 | photof	|  	| Photo Finish (bootleg?)				| wwjgtin	| 1991	| Jaleco / Casio| Miscellaneous	| 					|
-| photoy2k102	|  	| Photo Y2K / Real and Fake (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
-| photoy2k103	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k102j	|  	| Photo Y2K / Real and Fake (V102, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
+| photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105, China)		| 		| 1999	| IGS		| PolyGameMaster| 					|
 | pgm3in1c100	|   NW	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
@@ -11194,6 +11198,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2ebbl	|  	| Street Fighter II - The World Warrior (TAB Austria boo| sf2		| 1992	| bootleg	| CPS1		| 					|
 | sf2thndr	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
 | sf2thndr2	|  	| Street Fighter II - The World Warrior (Thunder Edition| sf2		| 1991	| bootleg	| CPS1		| 					|
+| nes_streefigii|  	| Street Fighter II - The World Warrior (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sf2ly		|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -12541,6 +12546,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof2k2omg9	|  	| The King of Fighters 2002 (Omega v0.9)		| kof2002	| 2012	| hack		| KOF-ON Team	| 					|
 | kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 Public B| kof2002	| 2018-12-17| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
+| kf2k2ps2b	|  	| The King of Fighters 2002 (PlayStation 2, Hack)	| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
 | kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-07-17| Hack		| Neo Geo MVS	| 					|
 | kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 2020-06-14| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|

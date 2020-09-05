@@ -358,11 +358,13 @@ static int XAudio2SetVolume()
 		nXAudio2Vol = 0.0f;
 	}
 
-	if (!pSourceVoice || FAILED(pSourceVoice->SetVolume(nXAudio2Vol))) {
-		return 1;
+	if (!pSourceVoice) {
+		return 0;
 	}
 
-	return 0;
+	pSourceVoice->SetVolume(nXAudio2Vol);
+
+	return 1; // 1 succeeds here.
 }
 
 static int XAudio2GetSettings(InterfaceInfo* pInfo)

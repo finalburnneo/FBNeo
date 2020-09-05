@@ -7579,7 +7579,7 @@ static void ppu_scan(INT32 nAction)
 static void ppu_reset()
 {
 	mmc5_nt_ram = &nt_ram[0];
-	scanline = 0;
+	scanline = 240;
 	pixel = 0;
 	ppu_frame = 0;
 

@@ -4,8 +4,6 @@
 #define ENTER_HALT {											\
 	_PC--;														\
 	_HALT = 1;													\
-	if( !Z180.after_EI ) 										\
-		z180_burn( z180_icount );								\
 }
 
 /***************************************************************
@@ -22,17 +20,27 @@
 /***************************************************************
  * Input a byte from given I/O port
  ***************************************************************/
-#define IN(port)												\
-	(((port ^ IO_IOCR) & 0xffc0) == 0) ?						\
-		z180_readcontrol(port) : io_read_byte_8le(port)
+Z180_INLINE UINT8 IN(UINT16 port)
+{
+	if(((port ^ IO_IOCR) & 0xffc0) == 0)
+		return z180_readcontrol(port);
+	Z180.extra_cycles += ((IO_DCNTL & (Z180_DCNTL_IWI1 | Z180_DCNTL_IWI0)) >> 4) + 1; // external I/O wait states
+	return io_read_byte_8le(port);
+}
 
 /***************************************************************
  * Output a byte to given I/O port
  ***************************************************************/
-#define OUT(port,value) 										\
-	if (((port ^ IO_IOCR) & 0xffc0) == 0)						\
-		z180_writecontrol(port,value);							\
-	else io_write_byte_8le(port,value)
+Z180_INLINE void OUT(UINT16 port, UINT8 value)
+{
+	if (((port ^ IO_IOCR) & 0xffc0) == 0) {
+		z180_writecontrol(port,value);
+	} else
+	{
+		Z180.extra_cycles += ((IO_DCNTL & (Z180_DCNTL_IWI1 | Z180_DCNTL_IWI0)) >> 4) + 1; // external I/O wait states
+		io_write_byte_8le(port, value);
+	}
+}
 
 /***************************************************************
  * MMU calculate the memory managemant lookup table
@@ -58,7 +66,7 @@ Z180_INLINE void z180_mmu( void )
 			else
 				addr += IO_BBR << 12;
 		}
-		Z180.mmu[page] = addr;
+		Z180.mmu[page] = (addr & 0xfffff);
 	}
 }
 
@@ -68,7 +76,12 @@ Z180_INLINE void z180_mmu( void )
 /***************************************************************
  * Read a byte from given memory location
  ***************************************************************/
-#define RM(addr)	program_read_byte_8le(MMU_REMAP_ADDR(addr))
+Z180_INLINE UINT8 RM(UINT32 addr)
+{
+	Z180.extra_cycles += IO_DCNTL >> 6; // memory wait states
+	return program_read_byte_8le(MMU_REMAP_ADDR(addr));
+}
+
 UINT8 z180_readmem(UINT32 offset)
 {
 	return RM(offset);
@@ -77,7 +90,8 @@ UINT8 z180_readmem(UINT32 offset)
 /***************************************************************
  * Write a byte to given memory location
  ***************************************************************/
-#define WM(addr,value) program_write_byte_8le(MMU_REMAP_ADDR(addr),value)
+#define WM(addr,value) Z180.extra_cycles += IO_DCNTL >> 6; program_write_byte_8le(MMU_REMAP_ADDR(addr),value)
+
 void z180_writemem(UINT32 offset, UINT8 data)
 {
 	WM(offset, data);
@@ -111,6 +125,7 @@ Z180_INLINE UINT8 ROP(void)
 {
 	UINT32 addr = _PCD;
 	_PC++;
+	Z180.extra_cycles += IO_DCNTL >> 6; // memory wait states
 	return cpu_readop(MMU_REMAP_ADDR(addr));
 }
 
@@ -124,6 +139,7 @@ Z180_INLINE UINT8 ARG(void)
 {
 	UINT32 addr = _PCD;
 	_PC++;
+	Z180.extra_cycles += IO_DCNTL >> 6; // memory wait states
 	return cpu_readop_arg(MMU_REMAP_ADDR(addr));
 }
 
@@ -131,6 +147,7 @@ Z180_INLINE UINT32 ARG16(void)
 {
 	UINT32 addr = _PCD;
 	_PC += 2;
+	Z180.extra_cycles += (IO_DCNTL >> 6) * 2; // memory wait states
 	return cpu_readop_arg(MMU_REMAP_ADDR(addr)) | (cpu_readop_arg(MMU_REMAP_ADDR(addr+1)) << 8);
 }
 
@@ -185,37 +202,8 @@ void z180_setOPbase(int pc)
  ***************************************************************/
 #define JR()													\
 {																\
-	unsigned oldpc = _PCD-1;									\
 	INT8 arg = (INT8)ARG(); /* ARG() also increments _PC */ 	\
 	_PC += arg; 			/* so don't do _PC += ARG() */      \
-	/* speed up busy loop */									\
-	if( _PCD == oldpc ) 										\
-	{															\
-		if( !Z180.after_EI ) 									\
-			BURNODD( z180_icount, 1, cc[Z180_TABLE_op][0x18] ); \
-	}															\
-	else														\
-	{															\
-		UINT8 op = cpu_readop(_PCD);							\
-		if( _PCD == oldpc-1 )									\
-		{														\
-			/* NOP - JR $-1 or EI - JR $-1 */					\
-			if ( op == 0x00 || op == 0xfb ) 					\
-			{													\
-				if( !Z180.after_EI ) 							\
-				   BURNODD( z180_icount-cc[Z180_TABLE_op][0x00],\
-					   2, cc[Z180_TABLE_op][0x00]+cc[Z180_TABLE_op][0x18]); \
-			}													\
-		}														\
-		else													\
-		/* LD SP,#xxxx - JR $-3 */								\
-		if( _PCD == oldpc-3 && op == 0x31 ) 					\
-		{														\
-			if( !Z180.after_EI ) 								\
-			   BURNODD( z180_icount-cc[Z180_TABLE_op][0x31],	\
-				   2, cc[Z180_TABLE_op][0x31]+cc[Z180_TABLE_op][0x18]); \
-		}														\
-	}															\
 }
 
 /***************************************************************
@@ -499,12 +487,18 @@ Z180_INLINE UINT8 DEC(UINT8 value)
 /***************************************************************
  * DAA
  ***************************************************************/
-#define DAA {													\
-	int idx = _A;												\
-	if( _F & CF ) idx |= 0x100; 								\
-	if( _F & HF ) idx |= 0x200; 								\
-	if( _F & NF ) idx |= 0x400; 								\
-	_AF = DAATable[idx];										\
+#define DAA {                                                   \
+	UINT8 r = _A;                                         \
+	if (_F&NF) {                                          \
+		if ((_F&HF)|((_A&0xf)>9)) r-=6;                     \
+		if ((_F&CF)|(_A>0x99)) r-=0x60;                     \
+	}                                                   \
+	else {                                                  \
+		if ((_F&HF)|((_A&0xf)>9)) r+=6;                     \
+		if ((_F&CF)|(_A>0x99)) r+=0x60;                     \
+	}                                                   \
+	_F=(_F&3)|(_A>0x99)|((_A^r)&HF)|SZP[r];             \
+	_A=r;                                             \
 }
 
 /***************************************************************
@@ -1035,7 +1029,7 @@ Z180_INLINE UINT8 SET(UINT8 bit, UINT8 value)
  * OTDMR
  ***************************************************************/
 #define SLP {													\
-	z180_icount = 0;											\
+	Z180.icount = 0;											\
 	_HALT = 2;													\
 }
 

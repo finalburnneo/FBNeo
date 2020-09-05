@@ -292,12 +292,10 @@ OP(op,fe) { CP(ARG());												} /* CP   n           */
 OP(op,ff) { RST(0x38);												} /* RST  7           */
 
 
-static void take_interrupt(int irq)
+static int take_interrupt(int irq)
 {
 	int irq_vector;
-
-	/* there isn't a valid previous program counter */
-	_PPC = -1;
+	int cycles = 0;
 
 	/* Check if processor was halted */
 	LEAVE_HALT;
@@ -305,7 +303,7 @@ static void take_interrupt(int irq)
 	/* Clear both interrupt flip flops */
 	_IFF1 = _IFF2 = 0;
 
-	if( irq == Z180_INT0 )
+	if( irq == Z180_INT_IRQ0 )
 	{
 		/* Daisy chain mode? If so, call the requesting device */
 		if (Z180.daisy)
@@ -322,7 +320,7 @@ static void take_interrupt(int irq)
 			PUSH( PC );
 			RM16( irq_vector, &Z180.PC );
 			/* CALL opcode timing */
-			z180_icount -= cc[Z180_TABLE_op][0xcd];
+			cycles += cc[Z180_TABLE_op][0xcd];
 		}
 		else
 		/* Interrupt mode 1. RST 38h */
@@ -331,7 +329,7 @@ static void take_interrupt(int irq)
 			PUSH( PC );
 			_PCD = 0x0038;
 			/* RST $38 + 'interrupt latency' cycles */
-			z180_icount -= cc[Z180_TABLE_op][0xff] - cc[Z180_TABLE_ex][0xff];
+			cycles += cc[Z180_TABLE_op][0xff] - cc[Z180_TABLE_ex][0xff];
 		}
 		else
 		{
@@ -344,35 +342,38 @@ static void take_interrupt(int irq)
 					PUSH( PC );
 					_PCD = irq_vector & 0xffff;
 						/* CALL $xxxx + 'interrupt latency' cycles */
-					z180_icount -= cc[Z180_TABLE_op][0xcd] - cc[Z180_TABLE_ex][0xff];
+					cycles += cc[Z180_TABLE_op][0xcd] - cc[Z180_TABLE_ex][0xff];
 					break;
 				case 0xc30000:	/* jump */
 					_PCD = irq_vector & 0xffff;
 					/* JP $xxxx + 2 cycles */
-					z180_icount -= cc[Z180_TABLE_op][0xc3] - cc[Z180_TABLE_ex][0xff];
+					cycles += cc[Z180_TABLE_op][0xc3] - cc[Z180_TABLE_ex][0xff];
 					break;
 				default:		/* rst (or other opcodes?) */
 					PUSH( PC );
 					_PCD = irq_vector & 0x0038;
 					/* RST $xx + 2 cycles */
-					z180_icount -= cc[Z180_TABLE_op][_PCD] - cc[Z180_TABLE_ex][_PCD];
+					cycles += cc[Z180_TABLE_op][_PCD] - cc[Z180_TABLE_ex][_PCD];
 					break;
 			}
 		}
 	}
 	else
 	{
-		irq_vector = (IO(Z180_IL) & Z180_IL_IL) + (irq - Z180_INT1) * 2;
+		irq_vector = (IO(Z180_IL) & Z180_IL_IL) + (irq - Z180_INT_IRQ1) * 2;
 		irq_vector = (_I << 8) + (irq_vector & 0xff);
 		PUSH( PC );
 		RM16( irq_vector, &Z180.PC );
+
 		/* CALL opcode timing */
-		z180_icount -= cc[Z180_TABLE_op][0xcd];
+		cycles += cc[Z180_TABLE_op][0xcd];
 	}
-	
-	if (Z180.irq_hold[irq]) {
-		Z180.irq_hold[irq] = 0;
-		z180_set_irq_line(irq, CPU_IRQSTATUS_NONE);
+
+	if ((irq >= Z180_INT_IRQ0 && irq <= Z180_INT_IRQ2) && Z180.irq_hold[irq-Z180_INT_IRQ0]) {
+		Z180.irq_hold[irq-Z180_INT_IRQ0] = 0;
+		z180_set_irq_line(irq-Z180_INT_IRQ0, CPU_IRQSTATUS_NONE);
 	}
+
+	return cycles;
 }
 

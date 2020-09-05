@@ -97,7 +97,7 @@ extern bool bDisableDebugConsole;                   // Disable debug console?
 extern HINSTANCE hAppInst;							// Application Instance
 extern HANDLE hMainThread;							// Handle to the main thread
 extern long int nMainThreadID;						// ID of the main thread
-extern int nAppThreadPriority;
+extern int nAppProcessPriority;
 extern int nAppShowCmd;
 
 extern HACCEL hAccel;

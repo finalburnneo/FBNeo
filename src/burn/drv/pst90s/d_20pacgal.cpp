@@ -285,12 +285,13 @@ static INT32 DrvInit()
 	Z180MapMemory(DrvSprLut,		0x4ff00, 0x4ffff, MAP_WRITE);
 	Z180SetReadHandler(pacgal20_read);
 	Z180SetWriteHandler(pacgal20_write);
-	Z180SetReadPortHandler(pacgal20_read_port); 
-	Z180SetWritePortHandler(pacgal20_write_port); 
+	Z180SetReadPortHandler(pacgal20_read_port);
+	Z180SetWritePortHandler(pacgal20_write_port);
 	Z180Close();
 
 	NamcoSoundInit(73728000 / 4 / 6 / 32, 3, 0);
 	NamcoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	NamcoSoundSetBuffered(Z180TotalCycles, 18432000);
 
 	DACInit(0, 0, 1, Z180TotalCycles, 18432000);
 	DACSetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
@@ -562,6 +563,7 @@ static INT32 DrvDraw()
 	draw_chars();
 	draw_sprites();
 
+	BurnTransferFlip(global_flip, global_flip); // unflip coctail for netplay etc.
 	BurnTransferCopy(DrvPalette + (game_selected * 0x1000));
 
 	return 0;
@@ -586,7 +588,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if (sprite_pal_base) 	// 25pacmano
+		if (sprite_pal_base) 	// 25pacmano board-check
 			DrvInputs[2] ^= 0x7e;
 	}
 

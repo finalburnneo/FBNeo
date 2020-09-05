@@ -1036,27 +1036,27 @@ void MenuUpdate()
 	CheckMenuRadioItem(hMenu, MENU_AVI1X, MENU_AVI3X, var, MF_BYCOMMAND);
 #endif
 
-	if (nAppThreadPriority == THREAD_PRIORITY_TIME_CRITICAL) {
-		var = MENU_PRIORITY_REALTIME;
-	} else {
-		if (nAppThreadPriority == THREAD_PRIORITY_HIGHEST) {
+	switch (nAppProcessPriority) {
+		case HIGH_PRIORITY_CLASS:
 			var = MENU_PRIORITY_HIGH;
-		} else {
-			if (nAppThreadPriority == THREAD_PRIORITY_ABOVE_NORMAL) {
-				var = MENU_PRIORITY_ABOVE_NORMAL;
-			} else {
-				if (nAppThreadPriority == THREAD_PRIORITY_BELOW_NORMAL) {
-					var = MENU_PRIORITY_BELOW_NORMAL;
-				} else {
-					if (nAppThreadPriority == THREAD_PRIORITY_LOWEST) {
-						var = MENU_PRIORITY_LOW;
-					} else {
-						var = MENU_PRIORITY_NORMAL;
-					}
-				}
-			}
-		}
+			break;
+		case ABOVE_NORMAL_PRIORITY_CLASS:
+			var = MENU_PRIORITY_ABOVE_NORMAL;
+			break;
+		case NORMAL_PRIORITY_CLASS:
+			var = MENU_PRIORITY_NORMAL;
+			break;
+		case BELOW_NORMAL_PRIORITY_CLASS:
+			var = MENU_PRIORITY_BELOW_NORMAL;
+			break;
+		case IDLE_PRIORITY_CLASS:
+			var = MENU_PRIORITY_LOW;
+			break;
+		default:
+			var = MENU_PRIORITY_NORMAL;
+			break;
 	}
+
 	CheckMenuRadioItem(hMenu, MENU_PRIORITY_REALTIME, MENU_PRIORITY_LOW, var, MF_BYCOMMAND);
 	CheckMenuItem(hMenu, MENU_SAVEGAMEINPUT, bSaveInputs ? MF_CHECKED : MF_UNCHECKED);
 

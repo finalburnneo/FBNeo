@@ -1,12 +1,6 @@
 // FB Alpha 1942 driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
-// not working (all use same read handler/inputs)
-// 	asterock
-// 	asterockv
-// 	meteorite
-//  meteorbl
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "watchdog.h"
@@ -285,7 +279,7 @@ STDDIPINFO(Asteroidb)
 
 static struct BurnDIPInfo AsterockDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x84, NULL					},
+	{0x0a, 0xff, 0xff, 0x87, NULL					},
 	{0x0b, 0xff, 0xff, 0x00, NULL					},
 	{0x0c, 0xff, 0xff, 0x00, NULL					},
 
@@ -673,7 +667,7 @@ static UINT8 asterock_read(UINT16 address)
 		case 0x2000:
 		{
 			UINT8 ret = ((DrvInputs[0] ^ 0x78) & ~0x87);
-			ret |= (DrvDips[2] & 0x80);
+			ret |= ((DrvDips[2] & 0x80) ^ 0x80);
 			ret |= ((M6502TotalCycles() & 0x100) ? 0x04 : 0);
 			ret |= (avgdvg_done() ? 0x00 : 0x01);
 			ret = (ret & (1 << (address & 7))) ? 0x7f : 0x80;
@@ -1079,7 +1073,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[1] = { (1512000 * 100) / 6152 }; // 61.5234375 hz
 	INT32 nCyclesDone[1]  = { 0 };
 	INT32 nSoundBufferPos = 0;
-	INT32 interrupts_enabled = (llander) ? (DrvDips[1] & 0x02) : (DrvInputs[0] & 0x80) == 0;
+	INT32 interrupts_enabled = (llander) ? (DrvDips[1] & 0x02) : (DrvDips[2] & 0x80) == 0;
 
 	M6502Open(0);
 

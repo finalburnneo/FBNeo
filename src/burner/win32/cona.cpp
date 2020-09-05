@@ -189,7 +189,7 @@ int ConfigAppLoad()
 #endif
 
 		VAR(bDrvSaveAll);
-		VAR(nAppThreadPriority);
+		VAR(nAppProcessPriority);
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
@@ -558,8 +558,8 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, load and save all ram (the state)\n"));
 	VAR(bDrvSaveAll);
-	_ftprintf(h, _T("\n// The thread priority for the application. Do *NOT* edit this manually\n"));
-	VAR(nAppThreadPriority);
+	_ftprintf(h, _T("\n// The process priority for the application. Do *NOT* edit this manually\n"));
+	VAR(nAppProcessPriority);
 	_ftprintf(h, _T("\n// If non-zero, process keyboard input even when the application loses focus\n"));
 	VAR(bAlwaysProcessKeyboardInput);
 	_ftprintf(h, _T("\n// If non-zero, pause when the application loses focus\n"));

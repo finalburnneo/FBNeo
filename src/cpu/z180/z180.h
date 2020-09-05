@@ -5,7 +5,6 @@
 
 #define Z180_CLEAR_LINE			0
 #define Z180_ASSERT_LINE		1
-#define Z180_INPUT_LINE_NMI		32
 
 #if 0
 
@@ -139,17 +138,6 @@ enum
 	CPUINFO_PTR_Z180_CYCLE_TABLE_LAST = CPUINFO_PTR_Z180_CYCLE_TABLE + Z180_TABLE_ex
 };*/
 
-
-#define Z180_INT0		0			/* Execute INT1 */
-#define Z180_INT1		1			/* Execute INT1 */
-#define Z180_INT2		2			/* Execute INT2 */
-#define Z180_INT_PRT0	3			/* Internal PRT channel 0 */
-#define Z180_INT_PRT1	4			/* Internal PRT channel 1 */
-#define Z180_INT_DMA0	5			/* Internal DMA channel 0 */
-#define Z180_INT_DMA1	6			/* Internal DMA channel 1 */
-#define Z180_INT_CSIO	7			/* Internal CSI/O */
-#define Z180_INT_ASCI0	8			/* Internal ASCI channel 0 */
-#define Z180_INT_ASCI1	9			/* Internal ASCI channel 1 */
 
 /* MMU mapped memory lookup */
 extern UINT8 z180_readmem(UINT32 offset);

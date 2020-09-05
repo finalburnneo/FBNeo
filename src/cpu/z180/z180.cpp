@@ -1554,7 +1554,7 @@ static int z180_dma0(int max_cycles)
 				cycles += IO_DCNTL >> 6; // memory wait states
 				bcr0--;
 				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
+				if (IO_DCNTL & Z180_DCNTL_DMS0)
 				{
 					Z180.iol &= ~Z180_DREQ0;
 					count = 0;
@@ -1583,7 +1583,7 @@ static int z180_dma0(int max_cycles)
 				cycles += IO_DCNTL >> 6; // memory wait states
 				bcr0--;
 				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
+				if (IO_DCNTL & Z180_DCNTL_DMS0)
 				{
 					Z180.iol &= ~Z180_DREQ0;
 					count = 0;
@@ -1611,7 +1611,7 @@ static int z180_dma0(int max_cycles)
 				cycles += IO_DCNTL >> 6; // memory wait states
 				bcr0--;
 				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
+				if (IO_DCNTL & Z180_DCNTL_DMS0)
 				{
 					Z180.iol &= ~Z180_DREQ0;
 					count = 0;
@@ -1625,7 +1625,7 @@ static int z180_dma0(int max_cycles)
 				cycles += IO_DCNTL >> 6; // memory wait states
 				bcr0--;
 				/* edge sensitive DREQ0 ? */
-				if (IO_DCNTL & Z180_DCNTL_DIM0)
+				if (IO_DCNTL & Z180_DCNTL_DMS0)
 				{
 					Z180.iol &= ~Z180_DREQ0;
 					count = 0;

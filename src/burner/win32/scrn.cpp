@@ -2228,29 +2228,27 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_INPUT_AUTOFIRE_RATE_3: nAutoFireRate =  8; break;
 		case MENU_INPUT_AUTOFIRE_RATE_4: nAutoFireRate =  4; break;
 
-		case MENU_PRIORITY_REALTIME:
-			nAppThreadPriority = THREAD_PRIORITY_TIME_CRITICAL;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;
 		case MENU_PRIORITY_HIGH:
-			nAppThreadPriority = THREAD_PRIORITY_HIGHEST;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+			nAppProcessPriority = HIGH_PRIORITY_CLASS;
+			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 		case MENU_PRIORITY_ABOVE_NORMAL:
-			nAppThreadPriority = THREAD_PRIORITY_ABOVE_NORMAL;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+			nAppProcessPriority = ABOVE_NORMAL_PRIORITY_CLASS;
+			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 		case MENU_PRIORITY_NORMAL:
-			nAppThreadPriority = THREAD_PRIORITY_NORMAL;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+			nAppProcessPriority = NORMAL_PRIORITY_CLASS;
+			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 		case MENU_PRIORITY_BELOW_NORMAL:
-			nAppThreadPriority = THREAD_PRIORITY_BELOW_NORMAL;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+			nAppProcessPriority = BELOW_NORMAL_PRIORITY_CLASS;
+			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 		case MENU_PRIORITY_LOW:
-			nAppThreadPriority = THREAD_PRIORITY_LOWEST;
-			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+			nAppProcessPriority = IDLE_PRIORITY_CLASS;
+			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 
 		case MENU_CLRMAME_PRO_XML:

@@ -29,7 +29,7 @@ bool bDisableDebugConsole = true;
 HINSTANCE hAppInst = NULL;			// Application Instance
 HANDLE hMainThread;
 long int nMainThreadID;
-int nAppThreadPriority = THREAD_PRIORITY_NORMAL;
+int nAppProcessPriority = NORMAL_PRIORITY_CLASS;
 int nAppShowCmd;
 
 static TCHAR szCmdLine[1024] = _T("");
@@ -781,8 +781,22 @@ static int AppInit()
 	}
 #endif
 
-	// Set the thread priority for the main thread
-	SetThreadPriority(GetCurrentThread(), nAppThreadPriority);
+	switch (nAppProcessPriority) {
+		case HIGH_PRIORITY_CLASS:
+		case ABOVE_NORMAL_PRIORITY_CLASS:
+		case NORMAL_PRIORITY_CLASS:
+		case BELOW_NORMAL_PRIORITY_CLASS:
+		case IDLE_PRIORITY_CLASS:
+			// nothing to change, we're good.
+			break;
+		default:
+			// invalid priority class, set to normal.
+			nAppProcessPriority = NORMAL_PRIORITY_CLASS;
+			break;
+	}
+
+	// Set the process priority
+	SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 
 	bCheatsAllowed = true;
 

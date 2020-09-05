@@ -5808,11 +5808,7 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 	{ "27c4000-m12374r-1.bin", 0x080000, 0x0e4058ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
 	{ "27c4000-m12481-4.bin",  0x080000, 0xf3c2c98d, BRF_GRA | CPS1_TILES },
-#if !defined ROM_VERIFY
-	{ "27c4000-m12481-3.bin",  0x080000, 0xd574befc, BRF_GRA | CPS1_TILES },
-#else
-	{ "27c4000-m12481-3.bin",  0x080000, 0x417a4816, BRF_GRA | CPS1_TILES },
-#endif
+	{ "27c4000-m12481-3.bin",  0x080000, 0xa0e1f6e0, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m12481-2.bin",  0x080000, 0x55ef0adc, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m12481-1.bin",  0x080000, 0xcc0805fc, BRF_GRA | CPS1_TILES },
 	{ "27c4000-m12481-8.bin",  0x080000, 0x1371f714, BRF_GRA | CPS1_TILES },
@@ -5824,12 +5820,12 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 
 	{ "27c4000-m12623.bin",    0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "cat93c46p.bin",         0x000080, 0xd49fa351, BRF_OPT },
 	{ "gal20v8a-1.bin",        0x000157, 0xcd99ca47, BRF_OPT },
 	{ "gal20v8a-2.bin",        0x000157, 0x60d016b9, BRF_OPT },
 	{ "gal20v8a-3.bin",        0x000157, 0x049b7f4f, BRF_OPT },
 	{ "palce16v8h-1.bin",      0x000117, 0x48253c66, BRF_OPT },
 	{ "palce16v8h-2.bin",      0x000117, 0x9ae375ba, BRF_OPT },
+	{ "palce16v8h-3.bin",      0x000117, 0xb0f10adf, BRF_OPT },
 };
 
 STD_ROM_PICK(Dinopic2)
@@ -13634,6 +13630,13 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 #endif
 
 	{ "18.bin",        0x080000, 0x73a0c11c, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "1_palce16v8.bin",       0x000117, 0xbac89609, BRF_OPT },
+	{ "2_palce16v8.bin",       0x000117, 0x680edfd5, BRF_OPT },
+	{ "3_palce20v8.bin",       0x000157, 0xf1fe9368, BRF_OPT },
+	{ "4_palce20v8.bin",       0x000157, 0x20946530, BRF_OPT },
+	{ "5_palce20v8.bin",       0x000157, 0x44df0cc6, BRF_OPT },
+	{ "6_palce16v8.bin",       0x000117, 0x12516583, BRF_OPT },
 };
 
 STD_ROM_PICK(Slampic)

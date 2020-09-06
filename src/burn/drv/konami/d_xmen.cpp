@@ -642,9 +642,9 @@ static INT32 draw_side(INT32 side)
 		{
 			// tilemap 0 (@ 0x18c000) is master, only it can control certain registers. -dink july 2020
 			if ((side == 1 || tilemap_select) && (i != 0x1c80 && i != 0x1e80)) {
-				K052109Write(i, *((UINT16*)(DrvTMapRAM[side+tilemap_select] + i * 2)) & 0xff);
+				K052109Write(i, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTMapRAM[side+tilemap_select] + i * 2))) & 0xff);
 			} else if (side == 0) {
-				K052109Write(i, *((UINT16*)(DrvTMapRAM[side] + i * 2)) & 0xff);
+				K052109Write(i, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTMapRAM[side] + i * 2))) & 0xff);
 			}
 		}
 	}
@@ -782,7 +782,7 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 
 		if (i == 239) {
-			if (nScreenWidth != 288) interrupt_enable = *((UINT16*)(DrvTMapRAM[0] + 0x3a00)) & 0x0004;
+			if (nScreenWidth != 288) interrupt_enable = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTMapRAM[0] + 0x3a00))) & 0x0004;
 			if (interrupt_enable) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 255) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);

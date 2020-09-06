@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14414 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14430 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3236,9 +3236,23 @@ This list contains all games supported by FinalBurn Neo.
 | md_dragonu	|  	| Dragon - The Bruce Lee Story (USA)			| md_dragon	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | msx_drgnatck	|  	| Dragon Attack (Jpn)					| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_drgnatcka	|  	| Dragon Attack (Jpn, Alt)				| msx_drgnatck	| 1983	| HAL Kenkyuujo	| MSX		| 					|
-| nes_dragobal	|  	| Dragon Ball - Shen Long no Nazo (Japan)		| nes_dragonpower| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_dragobaldaimaofuj|  	| Dragon Ball - Dai Maou Fukkatsu (Japan)		| nes_dragobaldaimaofu| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_dragobaldaimaofu|  	| Dragon Ball - Dai Maou Fukkatsu (T-Eng)		| 		| 1988	| Bandai	| Miscellaneous	| 					|
+| nes_dragobalshelonnona|  	| Dragon Ball - Shen Long no Nazo (Japan)	| nes_dragonpower| 1986	| Bandai	| Miscellaneous	| 					|
+| nes_dragobal3gokden|  	| Dragon Ball 3 - Gokuu Den (Japan)			| 		| 1989	| Bandai	| Miscellaneous	| 					|
 | md_dbz	|  	| Dragon Ball Z - Buyuu Retsuden (Jpn)			| 		| 1994	| Bandai	| Sega Megadrive| 					|
+| nes_dragobalzkyosajinj|  	| Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)	| nes_dragobalzkyosajin| 1990	| Bandai	| Miscellaneous	| 					|
+| nes_dragobalzkyosajin|  	| Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_dbzf	|  	| Dragon Ball Z - L'Appel du Destin (Fra)		| md_dbz	| 1994	| Bandai	| Sega Megadrive| 					|
+| nes_dragobalzsupbu2j|  	| Dragon Ball Z - Super Butouden 2 (Japan)		| nes_dragobalzsupbu2| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragobalzsupbu2|  	| Dragon Ball Z - Super Butouden 2 (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragonballz5|  	| Dragon Ball Z 5 (China)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragobalzgaisajinzeje|  	| Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (J| nes_dragobalzgaisajinze| 1993| Bandai| Miscellaneous	| 					|
+| nes_dragobalzgaisajinze|  	| Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T| 	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragobalziigefrj|  	| Dragon Ball Z II - Gekishin Freeza!! (Japan)		| nes_dragobalziigefr| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_dragobalziigefr|  	| Dragon Ball Z II - Gekishin Freeza!! (T-Eng)		| 		| 1991	| Bandai	| Miscellaneous	| 					|
+| nes_dragobalziiirejinij|  	| Dragon Ball Z III - Ressen Jinzou Ningen (Japan)| nes_dragobalziiirejini| 1992| Bandai	| Miscellaneous	| 					|
+| nes_dragobalziiirejini|  	| Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)| 		| 1992	| Bandai	| Miscellaneous	| 					|
 | dragnblz	|  	| Dragon Blaze						| 		| 2000	| Psikyo	| PS5V2		| 					|
 | drgnbowla	|  	| Dragon Bowl (set 2, unencrypted program)		| drgnbowl	| 1992	| Nics		| Miscellaneous	| 					|
 | drgnbowl	|  	| Dragon Bowl						| 		| 1992	| Nics		| Miscellaneous	| 					|
@@ -3257,6 +3271,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dragonfighter|  	| Dragon Fighter (USA)					| 		| 1992	| Sofel		| Miscellaneous	| 					|
 | dragngunj	|  	| Dragon Gun (Japan)					| dragngun	| 1993	| Data East Corp| DECO 32	| 					|
 | dragngun	|  	| Dragon Gun (US)					| 		| 1993	| Data East Corp| DECO 32	| 					|
+| nes_dragonknifec|  	| Dragon Knife (Chinese)				| nes_dragonknife| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_dragonknife|  	| Dragon Knife (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | drgnmst	|  	| Dragon Master (set 1)					| 		| 1994	| Unico		| Misc		| 					|
 | drgnmst2	|  	| Dragon Master (set 2)					| drgnmst	| 1994	| Unico		| Misc		| 					|
 | spec_dninja	|  	| Dragon Ninja (128K)					| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|

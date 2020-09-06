@@ -3294,9 +3294,23 @@ DRV		BurnDrvgg_dragonu;
 DRV		BurnDrvmd_dragonu;
 DRV		BurnDrvMSX_drgnatck;
 DRV		BurnDrvMSX_drgnatcka;
-DRV		BurnDrvnes_dragobal;
+DRV		BurnDrvnes_dragobaldaimaofuj;
+DRV		BurnDrvnes_dragobaldaimaofu;
+DRV		BurnDrvnes_dragobalshelonnona;
+DRV		BurnDrvnes_dragobal3gokden;
 DRV		BurnDrvmd_dbz;
+DRV		BurnDrvnes_dragobalzkyosajinj;
+DRV		BurnDrvnes_dragobalzkyosajin;
 DRV		BurnDrvmd_dbzf;
+DRV		BurnDrvnes_dragobalzsupbu2j;
+DRV		BurnDrvnes_dragobalzsupbu2;
+DRV		BurnDrvnes_dragonballz5;
+DRV		BurnDrvnes_dragobalzgaisajinzeje;
+DRV		BurnDrvnes_dragobalzgaisajinze;
+DRV		BurnDrvnes_dragobalziigefrj;
+DRV		BurnDrvnes_dragobalziigefr;
+DRV		BurnDrvnes_dragobalziiirejinij;
+DRV		BurnDrvnes_dragobalziiirejini;
 DRV		BurnDrvDragnblz;
 DRV		BurnDrvDrgnbowla;
 DRV		BurnDrvDrgnbowl;
@@ -3315,6 +3329,8 @@ DRV		BurnDrvpce_dragnegg;
 DRV		BurnDrvnes_dragonfighter;
 DRV		BurnDrvDragngunj;
 DRV		BurnDrvDragngun;
+DRV		BurnDrvnes_dragonknifec;
+DRV		BurnDrvnes_dragonknife;
 DRV		BurnDrvDrgnmst;
 DRV		BurnDrvDrgnmst2;
 DRV		BurnSpecdninja;
@@ -17975,9 +17991,23 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dragonu,			// Dragon - The Bruce Lee Story (USA)
 	&BurnDrvMSX_drgnatck,		// Dragon Attack (Jpn)
 	&BurnDrvMSX_drgnatcka,		// Dragon Attack (Jpn, Alt)
-	&BurnDrvnes_dragobal,		// Dragon Ball - Shen Long no Nazo (Japan)
+	&BurnDrvnes_dragobaldaimaofuj,// Dragon Ball - Dai Maou Fukkatsu (Japan)
+	&BurnDrvnes_dragobaldaimaofu,// Dragon Ball - Dai Maou Fukkatsu (T-Eng)
+	&BurnDrvnes_dragobalshelonnona,// Dragon Ball - Shen Long no Nazo (Japan)
+	&BurnDrvnes_dragobal3gokden,// Dragon Ball 3 - Gokuu Den (Japan)
 	&BurnDrvmd_dbz,				// Dragon Ball Z - Buyuu Retsuden (Jpn)
+	&BurnDrvnes_dragobalzkyosajinj,// Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)
+	&BurnDrvnes_dragobalzkyosajin,// Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)
 	&BurnDrvmd_dbzf,			// Dragon Ball Z - L'Appel du Destin (Fra)
+	&BurnDrvnes_dragobalzsupbu2j,// Dragon Ball Z - Super Butouden 2 (Japan)
+	&BurnDrvnes_dragobalzsupbu2,// Dragon Ball Z - Super Butouden 2 (T-Eng)
+	&BurnDrvnes_dragonballz5,	// Dragon Ball Z 5 (China)
+	&BurnDrvnes_dragobalzgaisajinzeje,// Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan)
+	&BurnDrvnes_dragobalzgaisajinze,// Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng)
+	&BurnDrvnes_dragobalziigefrj,// Dragon Ball Z II - Gekishin Freeza!! (Japan)
+	&BurnDrvnes_dragobalziigefr,// Dragon Ball Z II - Gekishin Freeza!! (T-Eng)
+	&BurnDrvnes_dragobalziiirejinij,// Dragon Ball Z III - Ressen Jinzou Ningen (Japan)
+	&BurnDrvnes_dragobalziiirejini,// Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)
 	&BurnDrvDragnblz,			// Dragon Blaze
 	&BurnDrvDrgnbowla,			// Dragon Bowl (set 2, unencrypted program)
 	&BurnDrvDrgnbowl,			// Dragon Bowl
@@ -17996,6 +18026,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dragonfighter,	// Dragon Fighter (USA)
 	&BurnDrvDragngunj,			// Dragon Gun (Japan)
 	&BurnDrvDragngun,			// Dragon Gun (US)
+	&BurnDrvnes_dragonknifec,	// Dragon Knife (Chinese)
+	&BurnDrvnes_dragonknife,	// Dragon Knife (T-Eng)
 	&BurnDrvDrgnmst,			// Dragon Master (set 1)
 	&BurnDrvDrgnmst2,			// Dragon Master (set 2)
 	&BurnSpecdninja,			// Dragon Ninja (128K)

@@ -2315,11 +2315,109 @@
 		<rom name="Drac's Night Out (USA) (Prototype).nes" size="262160" crc="2f81e727"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragobal" cloneof="dragonpower" romof="dragonpower">
+	<game name="dragobaldaimaofuj" cloneof="dragobaldaimaofu" romof="dragobaldaimaofu">
+		<description>Dragon Ball - Dai Maou Fukkatsu (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball - Dai Maou Fukkatsu (Japan).nes" size="262160" crc="beff8c77"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobaldaimaofu">
+		<description>Dragon Ball - Dai Maou Fukkatsu (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball - Dai Maou Fukkatsu (T-Eng).nes" size="393232" crc="69beb7a5"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalshelonnona" cloneof="dragonpower" romof="dragonpower">
 		<description>Dragon Ball - Shen Long no Nazo (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Dragon Ball - Shen Long no Nazo (Japan).nes" size="163856" crc="815a4bad"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobal3gokden">
+		<description>Dragon Ball 3 - Gokuu Den (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball 3 - Gokuu Den (Japan).nes" size="393232" crc="0544b2a4"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzkyosajinj" cloneof="dragobalzkyosajin" romof="dragobalzkyosajin">
+		<description>Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z - Kyoushuu! Saiya Jin (Japan).nes" size="524304" crc="d78484b7"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzkyosajin">
+		<description>Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng).nes" size="524304" crc="31d0d50a"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzsupbu2j" cloneof="dragobalzsupbu2" romof="dragobalzsupbu2">
+		<description>Dragon Ball Z - Super Butouden 2 (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Ball Z - Super Butouden 2 (Japan).nes" size="393232" crc="bc79b5f2"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzsupbu2">
+		<description>Dragon Ball Z - Super Butouden 2 (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Ball Z - Super Butouden 2 (T-Eng).nes" size="393232" crc="bb90b2b7"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragonballz5">
+		<description>Dragon Ball Z 5 (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Ball Z 5 (China).nes" size="786448" crc="1f2b86ea"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzgaisajinzeje" cloneof="dragobalzgaisajinze" romof="dragobalzgaisajinze">
+		<description>Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan)</description>
+		<year>1993</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan).nes" size="524304" crc="69ae6291"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalzgaisajinze">
+		<description>Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng).nes" size="524304" crc="e7a5a03d"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalziigefrj" cloneof="dragobalziigefr" romof="dragobalziigefr">
+		<description>Dragon Ball Z II - Gekishin Freeza!! (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z II - Gekishin Freeza!! (Japan).nes" size="524304" crc="d396d28a"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalziigefr">
+		<description>Dragon Ball Z II - Gekishin Freeza!! (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z II - Gekishin Freeza!! (T-Eng).nes" size="524304" crc="ffa1e20e"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalziiirejinij" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
+		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z III - Ressen Jinzou Ningen (Japan).nes" size="524304" crc="a69079d4"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalziiirejini">
+		<description>Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng).nes" size="524304" crc="209955ea"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragonbuster">
@@ -2348,6 +2446,20 @@
 		<year>1992</year>
 		<manufacturer>Sofel</manufacturer>
 		<rom name="Dragon Fighter (USA).nes" size="262160" crc="ccd575a1"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragonknifec" cloneof="dragonknife" romof="dragonknife">
+		<description>Dragon Knife (Chinese)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Knife (Chinese).nes" size="524304" crc="eb5dbb86"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragonknife">
+		<description>Dragon Knife (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dragon Knife (T-Eng).nes" size="524304" crc="142f21a6"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragonpower">

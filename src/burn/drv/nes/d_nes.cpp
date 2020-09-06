@@ -18122,6 +18122,40 @@ struct BurnDriver BurnDrvnes_downtspekunkunnojid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_dragonknifecRomDesc[] = {
+	{ "Dragon Knife (Chinese).nes",          524304, 0xeb5dbb86, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragonknifec)
+STD_ROM_FN(nes_dragonknifec)
+
+struct BurnDriver BurnDrvnes_dragonknifec = {
+	"nes_dragonknifec", "nes_dragonknife", NULL, NULL, "1989?",
+	"Dragon Knife (Chinese)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragonknifecRomInfo, nes_dragonknifecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragonknifeRomDesc[] = {
+	{ "Dragon Knife (T-Eng).nes",          524304, 0x142f21a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragonknife)
+STD_ROM_FN(nes_dragonknife)
+
+struct BurnDriver BurnDrvnes_dragonknife = {
+	"nes_dragonknife", NULL, NULL, NULL, "1989?",
+	"Dragon Knife (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragonknifeRomInfo, nes_dragonknifeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_drchaosRomDesc[] = {
 	{ "Dr. Chaos (USA).nes",          131088, 0x406bda35, BRF_ESS | BRF_PRG },
 };

@@ -18190,8 +18190,25 @@ struct BurnDriver BurnDrvnes_dracsnightout = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragobaldaimaofuRomDesc[] = {
+static struct BurnRomInfo nes_dragobaldaimaofujRomDesc[] = {
 	{ "Dragon Ball - Dai Maou Fukkatsu (Japan).nes",          262160, 0xbeff8c77, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobaldaimaofuj)
+STD_ROM_FN(nes_dragobaldaimaofuj)
+
+struct BurnDriver BurnDrvnes_dragobaldaimaofuj = {
+	"nes_dragobaldaimaofuj", "nes_dragobaldaimaofu", NULL, NULL, "1988",
+	"Dragon Ball - Dai Maou Fukkatsu (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobaldaimaofujRomInfo, nes_dragobaldaimaofujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobaldaimaofuRomDesc[] = {
+	{ "Dragon Ball - Dai Maou Fukkatsu (T-Eng).nes",          393232, 0x69beb7a5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobaldaimaofu)
@@ -18199,7 +18216,7 @@ STD_ROM_FN(nes_dragobaldaimaofu)
 
 struct BurnDriver BurnDrvnes_dragobaldaimaofu = {
 	"nes_dragobaldaimaofu", NULL, NULL, NULL, "1988",
-	"Dragon Ball - Dai Maou Fukkatsu (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	"Dragon Ball - Dai Maou Fukkatsu (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragobaldaimaofuRomInfo, nes_dragobaldaimaofuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18241,19 +18258,70 @@ struct BurnDriver BurnDrvnes_dragobal3gokden = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragobalzkyosajinRomDesc[] = {
+static struct BurnRomInfo nes_dragobalzkyosajinjRomDesc[] = {
 	{ "Dragon Ball Z - Kyoushuu! Saiya Jin (Japan).nes",          524304, 0xd78484b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalzkyosajinj)
+STD_ROM_FN(nes_dragobalzkyosajinj)
+
+struct BurnDriver BurnDrvnes_dragobalzkyosajinj = {
+	"nes_dragobalzkyosajinj", "nes_dragobalzkyosajin", NULL, NULL, "1990",
+	"Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalzkyosajinjRomInfo, nes_dragobalzkyosajinjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalzkyosajinRomDesc[] = {
+	{ "Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng).nes",          524304, 0x31d0d50a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalzkyosajin)
 STD_ROM_FN(nes_dragobalzkyosajin)
 
 struct BurnDriver BurnDrvnes_dragobalzkyosajin = {
-	"nes_dragobalzkyosajin", NULL, NULL, NULL, "1990",
-	"Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	"nes_dragobalzkyosajin", NULL, NULL, NULL, "1989?",
+	"Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragobalzkyosajinRomInfo, nes_dragobalzkyosajinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalzsupbu2jRomDesc[] = {
+	{ "Dragon Ball Z - Super Butouden 2 (Japan).nes",          393232, 0xbc79b5f2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalzsupbu2j)
+STD_ROM_FN(nes_dragobalzsupbu2j)
+
+struct BurnDriver BurnDrvnes_dragobalzsupbu2j = {
+	"nes_dragobalzsupbu2j", "nes_dragobalzsupbu2", NULL, NULL, "1989?",
+	"Dragon Ball Z - Super Butouden 2 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalzsupbu2jRomInfo, nes_dragobalzsupbu2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalzsupbu2RomDesc[] = {
+	{ "Dragon Ball Z - Super Butouden 2 (T-Eng).nes",          393232, 0xbb90b2b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalzsupbu2)
+STD_ROM_FN(nes_dragobalzsupbu2)
+
+struct BurnDriver BurnDrvnes_dragobalzsupbu2 = {
+	"nes_dragobalzsupbu2", NULL, NULL, NULL, "1989?",
+	"Dragon Ball Z - Super Butouden 2 (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalzsupbu2RomInfo, nes_dragobalzsupbu2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -18275,16 +18343,33 @@ struct BurnDriver BurnDrvnes_dragonballz5 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragobalzgaisajinzeRomDesc[] = {
+static struct BurnRomInfo nes_dragobalzgaisajinzejeRomDesc[] = {
 	{ "Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan).nes",          524304, 0x69ae6291, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalzgaisajinzeje)
+STD_ROM_FN(nes_dragobalzgaisajinzeje)
+
+struct BurnDriver BurnDrvnes_dragobalzgaisajinzeje = {
+	"nes_dragobalzgaisajinzeje", "nes_dragobalzgaisajinze", NULL, NULL, "1993",
+	"Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalzgaisajinzejeRomInfo, nes_dragobalzgaisajinzejeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalzgaisajinzeRomDesc[] = {
+	{ "Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng).nes",          524304, 0xe7a5a03d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalzgaisajinze)
 STD_ROM_FN(nes_dragobalzgaisajinze)
 
 struct BurnDriver BurnDrvnes_dragobalzgaisajinze = {
-	"nes_dragobalzgaisajinze", NULL, NULL, NULL, "1993",
-	"Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	"nes_dragobalzgaisajinze", NULL, NULL, NULL, "1989?",
+	"Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragobalzgaisajinzeRomInfo, nes_dragobalzgaisajinzeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18292,8 +18377,25 @@ struct BurnDriver BurnDrvnes_dragobalzgaisajinze = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragobalziigefrRomDesc[] = {
+static struct BurnRomInfo nes_dragobalziigefrjRomDesc[] = {
 	{ "Dragon Ball Z II - Gekishin Freeza!! (Japan).nes",          524304, 0xd396d28a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalziigefrj)
+STD_ROM_FN(nes_dragobalziigefrj)
+
+struct BurnDriver BurnDrvnes_dragobalziigefrj = {
+	"nes_dragobalziigefrj", "nes_dragobalziigefr", NULL, NULL, "1991",
+	"Dragon Ball Z II - Gekishin Freeza!! (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalziigefrjRomInfo, nes_dragobalziigefrjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalziigefrRomDesc[] = {
+	{ "Dragon Ball Z II - Gekishin Freeza!! (T-Eng).nes",          524304, 0xffa1e20e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalziigefr)
@@ -18301,7 +18403,7 @@ STD_ROM_FN(nes_dragobalziigefr)
 
 struct BurnDriver BurnDrvnes_dragobalziigefr = {
 	"nes_dragobalziigefr", NULL, NULL, NULL, "1991",
-	"Dragon Ball Z II - Gekishin Freeza!! (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	"Dragon Ball Z II - Gekishin Freeza!! (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragobalziigefrRomInfo, nes_dragobalziigefrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18309,8 +18411,25 @@ struct BurnDriver BurnDrvnes_dragobalziigefr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dragobalziiirejiniRomDesc[] = {
+static struct BurnRomInfo nes_dragobalziiirejinijRomDesc[] = {
 	{ "Dragon Ball Z III - Ressen Jinzou Ningen (Japan).nes",          524304, 0xa69079d4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragobalziiirejinij)
+STD_ROM_FN(nes_dragobalziiirejinij)
+
+struct BurnDriver BurnDrvnes_dragobalziiirejinij = {
+	"nes_dragobalziiirejinij", "nes_dragobalziiirejini", NULL, NULL, "1992",
+	"Dragon Ball Z III - Ressen Jinzou Ningen (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dragobalziiirejinijRomInfo, nes_dragobalziiirejinijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_dragobalziiirejiniRomDesc[] = {
+	{ "Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng).nes",          524304, 0x209955ea, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalziiirejini)
@@ -18318,7 +18437,7 @@ STD_ROM_FN(nes_dragobalziiirejini)
 
 struct BurnDriver BurnDrvnes_dragobalziiirejini = {
 	"nes_dragobalziiirejini", NULL, NULL, NULL, "1992",
-	"Dragon Ball Z III - Ressen Jinzou Ningen (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	"Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dragobalziiirejiniRomInfo, nes_dragobalziiirejiniRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18342,7 +18461,6 @@ struct BurnDriver BurnDrvnes_dragonpower = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
-
 
 static struct BurnRomInfo nes_dragonbusterRomDesc[] = {
 	{ "Dragon Buster (Japan).nes",          163856, 0xabb83b0f, BRF_ESS | BRF_PRG },

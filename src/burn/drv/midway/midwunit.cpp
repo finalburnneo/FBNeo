@@ -316,12 +316,14 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	if (!pBurnDraw)
 		return 0;
 
-	if (info->rowaddr >= nScreenHeight)
+	line -= 0x14; // offset
+
+	if (line < 0 || line >= nScreenHeight)
 		return 0;
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
 	INT32 col = info->coladdr << 1;
-	UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
+	UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
 
 	const INT32 heblnk = info->heblnk;
 	const INT32 hsblnk = info->hsblnk;

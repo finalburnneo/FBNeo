@@ -495,14 +495,17 @@ static void TUnitPalRecalc()
 
 static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
-    if (!pBurnDraw) return 0;
+	if (!pBurnDraw)
+		return 0;
+
+	line -= 0x14; // offset
+
+	if (line < 0 || line >= nScreenHeight)
+		return 0;
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
-
-    if (info->rowaddr >= nScreenHeight) return 0;
-
     INT32 col = info->coladdr << 1;
-    UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
+    UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
 
     const INT32 heblnk = info->heblnk;
     const INT32 hsblnk = info->hsblnk * 2; // T-Unit is 2 pixels per clock

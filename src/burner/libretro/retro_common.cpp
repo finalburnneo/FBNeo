@@ -504,8 +504,14 @@ void set_environment()
 	struct retro_core_option_definition *vars;
 #ifdef _MSC_VER
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-	struct retro_vfs_interface_info vfs_iface_info;
+	#ifndef FORCE_USE_VFS
+	#define FORCE_USE_VFS
+    #endif
 #endif
+#endif
+
+#ifdef FORCE_USE_VFS
+	struct retro_vfs_interface_info vfs_iface_info;
 #endif
 
 	// Add the Global core options
@@ -736,13 +742,11 @@ error:
 
 	// Initialize VFS
 	// Only on UWP for now, since EEPROM saving is not VFS aware
-#ifdef _MSC_VER
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+#ifdef FORCE_USE_VFS
 	vfs_iface_info.required_interface_version = FILESTREAM_REQUIRED_VFS_VERSION;
 	vfs_iface_info.iface                      = NULL;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VFS_INTERFACE, &vfs_iface_info))
 		filestream_vfs_init(&vfs_iface_info);
-#endif
 #endif
 }
 

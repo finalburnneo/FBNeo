@@ -5933,6 +5933,18 @@ static struct BurnRomInfo Jurassic99RomDesc[] = {
 	{ "210102_cdb2.bin",      0x200000, 0x8a6920d8, BRF_GRA | CPS1_TILES },
 	
 	{ "21003_u27.bin",    	  0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "1_atf20v8.u25",        0x000157, 0xcd99ca47, BRF_OPT },
+	{ "2_atf16v8.u66",        0x000117, 0x48253c66, BRF_OPT },
+	{ "3_atf16v8.u100",       0x000117, 0x9ae375ba, BRF_OPT },
+	{ "4_atf20v8.u118",       0x000157, 0x60d016b9, BRF_OPT },
+	{ "5_atf20v8.u146",       0x000157, 0x049b7f4f, BRF_OPT },
+	{ "6_atf16v8.u160",       0x000117, 0xb0f10adf, BRF_OPT },
+	{ "8_atf16v8.u96g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u97g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u98g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u99g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u134g",      0x000117, 0x11f38ab7, BRF_OPT },
 };
 
 STD_ROM_PICK(Jurassic99)

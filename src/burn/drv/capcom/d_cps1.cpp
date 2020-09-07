@@ -5281,7 +5281,13 @@ static struct BurnRomInfo Captcommb2RomDesc[] = {
 				
 	{ "1.bin",         0x040000, 0xaed2f4bd, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "2_gal16v8.ic7", 0x000117, 0xbad3316b, BRF_OPT },
+	{ "1_gal20v8.ic169", 0x000157, 0xe5cf9f53, BRF_OPT },
+	{ "2_gal16v8.ic7", 	 0x000117, 0x0ebc7cd7, BRF_OPT },
+	{ "3_gal20v8.ic72",  0x000117, 0xebf1f643, BRF_OPT },
+	{ "4_gal20v8.ic80",  0x000117, 0x2c43c330, BRF_OPT },
+	{ "5_gal20v8.ic121", 0x000157, 0x76fa8969, BRF_OPT },
+	{ "6_gal20v8.ic120", 0x000157, 0x6a55a974, BRF_OPT },
+	// ic116  tpc1020afn-084c  no dump
 };
 
 STD_ROM_PICK(Captcommb2)
@@ -7535,6 +7541,9 @@ static struct BurnRomInfo Knightsb3RomDesc[] = {
 	{ "svr-08.bin",    0x080000, 0xaa9d82fb, BRF_GRA | CPS1_TILES },
 
 	{ "1.ic26",        0x040000, 0xbd6f9cc1, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "1_palce20v8.bin", 0x000157, 0xa5078c38, BRF_OPT },
+	{ "2_palce16v8.bin", 0x000117, 0xbad3316b, BRF_OPT },
 };
 
 STD_ROM_PICK(Knightsb3)

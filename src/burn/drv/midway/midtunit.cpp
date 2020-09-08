@@ -446,40 +446,40 @@ static void TUnitDoReset()
 
 static UINT16 TUnitVramRead(UINT32 address)
 {
-    UINT32 offset = TOBYTE(address & 0x3fffff);
-    if (nVideoBank)
-        return (DrvVRAM16[offset] & 0x00ff) | (DrvVRAM16[offset + 1] << 8);
-    else
-        return (DrvVRAM16[offset] >> 8) | (DrvVRAM16[offset + 1] & 0xff00);
+	UINT32 offset = TOBYTE(address & 0x3fffff);
+	if (nVideoBank)
+		return (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) & 0x00ff) | (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) << 8);
+	else
+		return (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) >> 8) | (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) & 0xff00);
 }
 
 static void TUnitVramWrite(UINT32 address, UINT16 data)
 {
-    UINT32 offset = TOBYTE(address & 0x3fffff);
+	UINT32 offset = TOBYTE(address & 0x3fffff);
     if (nVideoBank)
     {
-        DrvVRAM16[offset] = (data & 0xff) | ((nDMA[DMA_PALETTE] & 0xff) << 8);
-        DrvVRAM16[offset + 1] = ((data >> 8) & 0xff) | (nDMA[DMA_PALETTE] & 0xff00);
+        DrvVRAM16[offset] = BURN_ENDIAN_SWAP_INT16((data & 0xff) | ((nDMA[DMA_PALETTE] & 0xff) << 8));
+        DrvVRAM16[offset + 1] = BURN_ENDIAN_SWAP_INT16(((data >> 8) & 0xff) | (nDMA[DMA_PALETTE] & 0xff00));
     }
     else
     {
-        DrvVRAM16[offset] = (DrvVRAM16[offset] & 0xff) | ((data & 0xff) << 8);
-        DrvVRAM16[offset + 1] = (DrvVRAM16[offset + 1] & 0xff) | (data & 0xff00);
-    }
+        DrvVRAM16[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) & 0xff) | ((data & 0xff) << 8));
+        DrvVRAM16[offset + 1] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) & 0xff) | (data & 0xff00));	
+	}
 }
 
 static UINT16 TUnitPalRead(UINT32 address)
 {
     address &= 0x7FFFF;
-    return *(UINT16*)(&DrvPalette[TOBYTE(address)]);
+    return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(&DrvPalette[TOBYTE(address)]));
 }
 
 static void TUnitPalWrite(UINT32 address, UINT16 value)
 {
     address &= 0x7FFFF;
-    *(UINT16*)(&DrvPalette[TOBYTE(address)]) = value;
+    *(UINT16*)(&DrvPalette[TOBYTE(address)]) = BURN_ENDIAN_SWAP_INT16(value);
 
-    UINT32 col = RGB555_2_888(BURN_ENDIAN_SWAP_INT16(value));
+    UINT32 col = RGB555_2_888(value);
     DrvPaletteB[address>>4] = BurnHighCol(RGB888_r(col),RGB888_g(col),RGB888_b(col),0);
 }
 
@@ -495,7 +495,7 @@ static void TUnitPalRecalc()
 
 static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
-	if (!pBurnDraw)
+    if (!pBurnDraw) 
 		return 0;
 
 	line -= 0x14; // offset
@@ -506,12 +506,12 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
     INT32 col = info->coladdr << 1;
     UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
-
+	
     const INT32 heblnk = info->heblnk;
     const INT32 hsblnk = info->hsblnk * 2; // T-Unit is 2 pixels per clock
 	for (INT32 x = heblnk; x < hsblnk; x++) {
 		if ((x - heblnk) >= nScreenWidth) break;
-        dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
+        dest[x - heblnk] = BURN_ENDIAN_SWAP_INT16(src[col++ & 0x1FF] & BURN_ENDIAN_SWAP_INT16(0x7FFF));
     }
 
     return 0;

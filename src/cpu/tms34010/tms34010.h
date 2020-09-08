@@ -172,8 +172,13 @@ typedef enum {
 
 typedef union {
    struct datavalue {
-        sword x;
-        sword y;
+#ifdef LSB_FIRST
+		sword x;
+		sword y;
+#else
+	   sword y;
+	   sword x;
+#endif
     } datavalue;
     dword value;
 } cpu_register;

@@ -323,7 +323,7 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];
 	INT32 col = info->coladdr << 1;
-	UINT16 *dest = (UINT16*) pTransDraw + (info->rowaddr * nScreenWidth);
+	UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
 
 	const INT32 heblnk = info->heblnk;
 	const INT32 hsblnk = info->hsblnk;

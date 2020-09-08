@@ -231,15 +231,15 @@ void WolfUnitCMOSWriteEnable(UINT32 address, UINT16 value)
 UINT16 WolfUnitPalRead(UINT32 address)
 {
     address &= 0x7FFFF;
-    return *(UINT16*)(&DrvPalette[TOBYTE(address)]);
+    return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(&DrvPalette[TOBYTE(address)]));
 }
 
 void WolfUnitPalWrite(UINT32 address, UINT16 value)
 {
     address &= 0x7FFFF;
-    *(UINT16*)(&DrvPalette[TOBYTE(address)]) = value;
+    *(UINT16*)(&DrvPalette[TOBYTE(address)]) = BURN_ENDIAN_SWAP_INT16(value);
 
-    UINT32 col = RGB555_2_888(BURN_ENDIAN_SWAP_INT16(value));
+    UINT32 col = RGB555_2_888(value);
     DrvPaletteB[address>>4] = BurnHighCol(RGB888_r(col),RGB888_g(col),RGB888_b(col),0);
 }
 
@@ -257,9 +257,9 @@ UINT16 WolfUnitVramRead(UINT32 address)
 {
     UINT32 offset = TOBYTE(address & 0x3fffff);
     if (nVideoBank)
-        return (DrvVRAM16[offset] & 0x00ff) | (DrvVRAM16[offset + 1] << 8);
+        return (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) & 0x00ff) | (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) << 8);
     else
-        return (DrvVRAM16[offset] >> 8) | (DrvVRAM16[offset + 1] & 0xff00);
+        return (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) >> 8) | (BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) & 0xff00);
 }
 
 void WolfUnitVramWrite(UINT32 address, UINT16 data)
@@ -267,13 +267,13 @@ void WolfUnitVramWrite(UINT32 address, UINT16 data)
     UINT32 offset = TOBYTE(address & 0x3fffff);
     if (nVideoBank)
     {
-        DrvVRAM16[offset] = (data & 0xff) | ((nDMA[DMA_PALETTE] & 0xff) << 8);
-        DrvVRAM16[offset + 1] = ((data >> 8) & 0xff) | (nDMA[DMA_PALETTE] & 0xff00);
+        DrvVRAM16[offset] = BURN_ENDIAN_SWAP_INT16((data & 0xff) | ((nDMA[DMA_PALETTE] & 0xff) << 8));
+        DrvVRAM16[offset + 1] = BURN_ENDIAN_SWAP_INT16(((data >> 8) & 0xff) | (nDMA[DMA_PALETTE] & 0xff00));
     }
     else
     {
-        DrvVRAM16[offset] = (DrvVRAM16[offset] & 0xff) | ((data & 0xff) << 8);
-        DrvVRAM16[offset + 1] = (DrvVRAM16[offset + 1] & 0xff) | (data & 0xff00);
+        DrvVRAM16[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset]) & 0xff) | ((data & 0xff) << 8));
+        DrvVRAM16[offset + 1] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(DrvVRAM16[offset + 1]) & 0xff) | (data & 0xff00));
     }
 }
 
@@ -329,7 +329,7 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	const INT32 hsblnk = info->hsblnk;
 	for (INT32 x = heblnk; x < hsblnk; x++) {
 		if ((x - heblnk) >= nScreenWidth) break;
-		dest[x - heblnk] = src[col++ & 0x1FF] & 0x7FFF;
+		dest[x - heblnk] = BURN_ENDIAN_SWAP_INT16(src[col++ & 0x1FF] & BURN_ENDIAN_SWAP_INT16(0x7FFF));
 	}
 
 	return 0;

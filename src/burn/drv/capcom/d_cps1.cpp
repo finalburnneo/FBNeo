@@ -5281,7 +5281,13 @@ static struct BurnRomInfo Captcommb2RomDesc[] = {
 				
 	{ "1.bin",         0x040000, 0xaed2f4bd, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "2_gal16v8.ic7", 0x000117, 0xbad3316b, BRF_OPT },
+	{ "1_gal20v8.ic169", 0x000157, 0xe5cf9f53, BRF_OPT },
+	{ "2_gal16v8.ic7", 	 0x000117, 0x0ebc7cd7, BRF_OPT },
+	{ "3_gal20v8.ic72",  0x000117, 0xebf1f643, BRF_OPT },
+	{ "4_gal20v8.ic80",  0x000117, 0x2c43c330, BRF_OPT },
+	{ "5_gal20v8.ic121", 0x000157, 0x76fa8969, BRF_OPT },
+	{ "6_gal20v8.ic120", 0x000157, 0x6a55a974, BRF_OPT },
+	// ic116  tpc1020afn-084c  no dump
 };
 
 STD_ROM_PICK(Captcommb2)
@@ -5927,6 +5933,18 @@ static struct BurnRomInfo Jurassic99RomDesc[] = {
 	{ "210102_cdb2.bin",      0x200000, 0x8a6920d8, BRF_GRA | CPS1_TILES },
 	
 	{ "21003_u27.bin",    	  0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "1_atf20v8.u25",        0x000157, 0xcd99ca47, BRF_OPT },
+	{ "2_atf16v8.u66",        0x000117, 0x48253c66, BRF_OPT },
+	{ "3_atf16v8.u100",       0x000117, 0x9ae375ba, BRF_OPT },
+	{ "4_atf20v8.u118",       0x000157, 0x60d016b9, BRF_OPT },
+	{ "5_atf20v8.u146",       0x000157, 0x049b7f4f, BRF_OPT },
+	{ "6_atf16v8.u160",       0x000117, 0xb0f10adf, BRF_OPT },
+	{ "8_atf16v8.u96g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u97g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u98g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u99g",       0x000117, 0x11f38ab7, BRF_OPT },
+	{ "8_atf16v8.u134g",      0x000117, 0x11f38ab7, BRF_OPT },
 };
 
 STD_ROM_PICK(Jurassic99)
@@ -7535,6 +7553,9 @@ static struct BurnRomInfo Knightsb3RomDesc[] = {
 	{ "svr-08.bin",    0x080000, 0xaa9d82fb, BRF_GRA | CPS1_TILES },
 
 	{ "1.ic26",        0x040000, 0xbd6f9cc1, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "1_palce20v8.bin", 0x000157, 0xa5078c38, BRF_OPT },
+	{ "2_palce16v8.bin", 0x000117, 0xbad3316b, BRF_OPT },
 };
 
 STD_ROM_PICK(Knightsb3)

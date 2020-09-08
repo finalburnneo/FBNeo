@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14430 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14432 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -11784,7 +11784,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_supsnakeb	|  	| Super Snake (Jpn, Alt 2)				| msx_supsnake	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_supsnakea	|  	| Super Snake (Jpn, Alt)				| msx_supsnake	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_supsoccr	|  	| Super Soccer (Jpn)					| 		| 1985	| Sony		| MSX		| 					|
-| ssi		|  	| Super Space Invaders '91 (World)			| 		| 1990	| Taito Corporat| Taito F2	| 					|
+| ssia		|  	| Super Space Invaders '91 (World)			| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
+| ssib		|  	| Super Space Invaders '91 (World, earlier?)		| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
+| ssi		|  	| Super Space Invaders '91 (World, Rev 1)		| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | sms_ssinv	|  	| Super Space Invaders (Euro)				| 		| 1991	| Domark	| Sega Master Sy| 					|
 | gg_ssinv	|  	| Super Space Invaders (Euro, USA)			| 		| 1992	| Domark	| Sega Game Gear| 					|
 | macross	|  	| Super Spacefortress Macross / Chou-Jikuu Yousai Macros| 		| 1992	| Banpresto	| NMK16		| 					|

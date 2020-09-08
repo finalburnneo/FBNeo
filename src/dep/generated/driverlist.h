@@ -11990,6 +11990,8 @@ DRV		BurnDrvMSX_supsnake;
 DRV		BurnDrvMSX_supsnakeb;
 DRV		BurnDrvMSX_supsnakea;
 DRV		BurnDrvMSX_supsoccr;
+DRV		BurnDrvSsia;
+DRV		BurnDrvSsib;
 DRV		BurnDrvSsi;
 DRV		BurnDrvsms_ssinv;
 DRV		BurnDrvgg_ssinv;
@@ -26687,7 +26689,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_supsnakeb,		// Super Snake (Jpn, Alt 2)
 	&BurnDrvMSX_supsnakea,		// Super Snake (Jpn, Alt)
 	&BurnDrvMSX_supsoccr,		// Super Soccer (Jpn)
-	&BurnDrvSsi,				// Super Space Invaders '91 (World)
+	&BurnDrvSsia,				// Super Space Invaders '91 (World)
+	&BurnDrvSsib,				// Super Space Invaders '91 (World, earlier?)
+	&BurnDrvSsi,				// Super Space Invaders '91 (World, Rev 1)
 	&BurnDrvsms_ssinv,			// Super Space Invaders (Euro)
 	&BurnDrvgg_ssinv,			// Super Space Invaders (Euro, USA)
 	&BurnDrvMacross,			// Super Spacefortress Macross / Chou-Jikuu Yousai Macross

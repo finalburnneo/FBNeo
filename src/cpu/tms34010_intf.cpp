@@ -139,7 +139,7 @@ UINT16 TMS34010ReadWord(UINT32 address)
     UINT8 *pr = g_mmap.map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return tms_fast_read<UINT16>(pr,address);
+        return BURN_ENDIAN_SWAP_INT16(tms_fast_read<UINT16>(pr,address));
     } else {
         return g_mmap.read[(uintptr_t)pr](address);
     }
@@ -150,7 +150,7 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
     UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return tms_fast_write<UINT16>(pr,address,value);
+        return tms_fast_write<UINT16>(pr,address, BURN_ENDIAN_SWAP_INT16(value));
     } else {
         return g_mmap.write[(uintptr_t)pr](address, value);
     }

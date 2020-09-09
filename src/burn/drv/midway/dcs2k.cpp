@@ -408,7 +408,7 @@ void Dcs2kBoot()
     base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
     for (i = 0; i < 0x1000; i++)
-        buffer[i] = base[i];
+        buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
     Adsp2100LoadBootROM(buffer, pIntRAM);
 }
 
@@ -457,7 +457,7 @@ static UINT16 ReadRAMBank(UINT32 address)
 #if LOG_MEMACC
     dcs_log(_T("bank_r[%x] %x - %x\n"), nCurrentBank, address & 0xFFF, p[offset]);
 #endif
-    return p[offset];
+    return BURN_ENDIAN_SWAP_INT16(p[offset]);
 }
 
 static UINT16 ReadRAM(UINT32 address)
@@ -466,7 +466,7 @@ static UINT16 ReadRAM(UINT32 address)
     dcs_log(_T("ram_r %x\n"), address);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM;
-    return p[address & 0x1FF];
+    return BURN_ENDIAN_SWAP_INT16(p[address & 0x1FF]);
 }
 
 static void WriteRAM(UINT32 address, UINT16 value)
@@ -475,7 +475,7 @@ static void WriteRAM(UINT32 address, UINT16 value)
     dcs_log(_T("ram_w %x, %x\n"), address, value);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM;
-    p[address & 0x1FF] = value;
+    p[address & 0x1FF] = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 static UINT16 ReadRAM0(UINT32 address)
@@ -484,7 +484,7 @@ static UINT16 ReadRAM0(UINT32 address)
     dcs_log(_T("ram0_r %x\n"), address);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM0;
-    return p[address & 0x7FF];
+    return BURN_ENDIAN_SWAP_INT16(p[address & 0x7FF]);
 }
 
 static void WriteRAM0(UINT32 address, UINT16 value)
@@ -493,7 +493,7 @@ static void WriteRAM0(UINT32 address, UINT16 value)
     dcs_log(_T("ram0_w %x, %x\n"), address, value);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM0;
-    p[address & 0x7FF] = value;
+    p[address & 0x7FF] = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 static UINT16 ReadData(UINT32 address)

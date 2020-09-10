@@ -849,7 +849,7 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 	INT32 nAdd = info->bAdd;
 
 	INT32 nSamplesNeeded = info->samples_per_frame;
-	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 10; // so we don't end up with negative nPosition below
 
 	INT16 *pBufL = info->stream + 5;
 

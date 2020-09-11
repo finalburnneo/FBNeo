@@ -849,7 +849,7 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 	INT32 nAdd = info->bAdd;
 
 	INT32 nSamplesNeeded = info->samples_per_frame;
-	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 6; // add a few samples to make up for division/precision loss when dealing with 22 & 11khz
 
 	INT16 *pBufL = info->stream + 5;
 
@@ -884,6 +884,7 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 		info->nFractionalPosition &= 0xFFFF;
 
 		info->current_position = nExtraSamples;
+		if (info->current_position < -3) info->current_position = -3; // guard sanity
 	}
 }
 
@@ -1052,7 +1053,7 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	nesapu_mixermode = 0xff; // enable all
 
 	info->stream = NULL;
-	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16) + 0x10);
+	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16) + (0x10 * 2));
 	info->gain[BURN_SND_NESAPU_ROUTE_1] = 1.00;
 	info->gain[BURN_SND_NESAPU_ROUTE_2] = 1.00;
 	info->output_dir[BURN_SND_NESAPU_ROUTE_1] = BURN_SND_ROUTE_BOTH;

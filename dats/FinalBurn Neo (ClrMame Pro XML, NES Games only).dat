@@ -1489,6 +1489,13 @@
 		<rom name="Chiller (USA).nes" size="65552" crc="e4e7539a"/>
 		<driver status="good"/>
 	</game>
+	<game name="chinarabbab">
+		<description>China Rabbit Baby (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="China Rabbit Baby (Unl).nes" size="524304" crc="6ab0db42"/>
+		<driver status="good"/>
+	</game>
 	<game name="chipndalresra">
 		<description>Chip 'n Dale - Rescue Rangers (USA)</description>
 		<year>1990</year>
@@ -1718,6 +1725,13 @@
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Contra Force (USA).nes" size="262160" crc="83d69922"/>
+		<driver status="good"/>
+	</game>
+	<game name="contraspirits">
+		<description>Contra Spirits (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Contra Spirits (Unl).nes" size="524304" crc="cea432be"/>
 		<driver status="good"/>
 	</game>
 	<game name="coolworld">
@@ -2361,14 +2375,14 @@
 		<description>Dragon Ball Z - Super Butouden 2 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dragon Ball Z - Super Butouden 2 (Japan).nes" size="393232" crc="bc79b5f2"/>
+		<rom name="Dragon Ball Z - Super Butouden 2 (Japan).nes" size="393232" crc="2490d360"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragobalzsupbu2">
 		<description>Dragon Ball Z - Super Butouden 2 (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Dragon Ball Z - Super Butouden 2 (T-Eng).nes" size="393232" crc="bb90b2b7"/>
+		<rom name="Dragon Ball Z - Super Butouden 2 (T-Eng).nes" size="393232" crc="df87586f"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragonballz5">
@@ -2964,6 +2978,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Final Fantasy VII - Advent Children v1.1 (Ch).nes" size="2097168" crc="8de6d62f"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalfight3">
+		<description>Final Fight 3 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Final Fight 3 (Unl).nes" size="786448" crc="97f05116"/>
 		<driver status="good"/>
 	</game>
 	<game name="finallap">
@@ -5507,6 +5528,13 @@
 		<rom name="Metroid - Rogue Dawn (USA).nes" size="786448" crc="2120dfea"/>
 		<driver status="good"/>
 	</game>
+	<game name="mickeymania7" cloneof="chinarabbab" romof="chinarabbab">
+		<description>Mickey Mania 7 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mickey Mania 7 (Unl).nes" size="524304" crc="a1460ad3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mickemouiii">
 		<description>Mickey Mouse III - Yume Fuusen (Japan)</description>
 		<year>1992</year>
@@ -5696,11 +5724,32 @@
 		<rom name="Moon Ranger (USA) (Unl).nes" size="131088" crc="22172117"/>
 		<driver status="good"/>
 	</game>
+	<game name="mortakom3">
+		<description>Mortal Kombat 3 - Special 56 Peoples (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mortal Kombat 3 - Special 56 Peoples (Unl).nes" size="655376" crc="0ba8e82e"/>
+		<driver status="good"/>
+	</game>
 	<game name="mortalkombat4">
 		<description>Mortal Kombat 4 (Unl)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mortal Kombat 4 (Unl).nes" size="262160" crc="89001958"/>
+		<driver status="good"/>
+	</game>
+	<game name="mortakomiispe">
+		<description>Mortal Kombat II Special (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mortal Kombat II Special (Unl).nes" size="655376" crc="99d81100"/>
+		<driver status="good"/>
+	</game>
+	<game name="mortakomiiispe">
+		<description>Mortal Kombat III Special (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mortal Kombat III Special (Unl).nes" size="655376" crc="17937518"/>
 		<driver status="good"/>
 	</game>
 	<game name="mother" cloneof="earthbound" romof="earthbound">
@@ -7054,6 +7103,20 @@
 		<rom name="S.C.A.T. - Special Cybernetic Attack Team (USA).nes" size="262160" crc="d3bf87d1"/>
 		<driver status="good"/>
 	</game>
+	<game name="saintsaitiamahuxi">
+		<description>Saint Saiya - Tian Ma Huan Xiang (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Saint Saiya - Tian Ma Huan Xiang (China).nes" size="2097168" crc="31f810f2"/>
+		<driver status="good"/>
+	</game>
+	<game name="saintseiougdenj" cloneof="saintseiougden" romof="saintseiougden">
+		<description>Saint Seiya - Ougon Densetsu (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu (Japan).nes" size="262160" crc="e54ef7f0"/>
+		<driver status="good"/>
+	</game>
 	<game name="saintseiyaodc">
 		<description>Saint Seiya - Ougon Densetsu (T-Chi, v2.0)</description>
 		<year>2018-08-11</year>
@@ -7061,11 +7124,32 @@
 		<rom name="Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes" size="1310736" crc="f7df4b56"/>
 		<driver status="good"/>
 	</game>
+	<game name="saintseiougden">
+		<description>Saint Seiya - Ougon Densetsu (T-Eng)</description>
+		<year>1987</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu (T-Eng).nes" size="262160" crc="0914dd20"/>
+		<driver status="good"/>
+	</game>
+	<game name="saintseiougdenkahenj" cloneof="saintseiougdenkahen" romof="saintseiougdenkahen">
+		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Shinsei</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan).nes" size="262160" crc="f8d258a3"/>
+		<driver status="good"/>
+	</game>
 	<game name="saintseiyaodkhc">
 		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)</description>
 		<year>2017-01-26</year>
 		<manufacturer>SHINSEI</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes" size="524304" crc="b1651b70"/>
+		<driver status="good"/>
+	</game>
+	<game name="saintseiougdenkahen">
+		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng).nes" size="262160" crc="912be32d"/>
 		<driver status="good"/>
 	</game>
 	<game name="saiyuukiworld">
@@ -7192,6 +7276,13 @@
 		<year>1991</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Shin 4 Nin Uchi Mahjong (Japan).nes" size="393232" crc="44df4a58"/>
+		<driver status="good"/>
+	</game>
+	<game name="shinsamspi2">
+		<description>Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China).nes" size="655376" crc="3398afe5"/>
 		<driver status="good"/>
 	</game>
 	<game name="shinobi">
@@ -7871,6 +7962,13 @@
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. 3 (USA) (Rev A).nes" size="393232" crc="0b742b33"/>
+		<driver status="good"/>
+	</game>
+	<game name="supermarwor">
+		<description>Super Mario World (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario World (Unl).nes" size="786448" crc="6d5953a8"/>
 		<driver status="good"/>
 	</game>
 	<game name="superpainter">

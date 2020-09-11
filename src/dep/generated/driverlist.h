@@ -2084,6 +2084,7 @@ DRV		BurnDrvMSX_chiller;
 DRV		BurnDrvnes_chiller;
 DRV		BurnDrvChimerab;
 DRV		BurnDrvChinagat;
+DRV		BurnDrvnes_chinarabbab;
 DRV		BurnDrvChinatwn;
 DRV		BurnDrvtg_chinawar;
 DRV		BurnDrvmd_chinesec;
@@ -2390,6 +2391,7 @@ DRV		BurnDrvnes_contrredfalwar;
 DRV		BurnDrvnes_contrrevredfal;
 DRV		BurnDrvmd_contraj;
 DRV		BurnDrvnes_contraforce;
+DRV		BurnDrvnes_contraspirits;
 DRV		BurnDrvCookbib;
 DRV		BurnDrvCookbiba;
 DRV		BurnDrvCookbib2;
@@ -4066,6 +4068,7 @@ DRV		BurnDrvCpsFfightu1;
 DRV		BurnDrvCpsFfightu2;
 DRV		BurnDrvCpsFfight;
 DRV		BurnDrvCpsFfighta;
+DRV		BurnDrvnes_finalfight3;
 DRV		BurnDrvCpsFfightae;
 DRV		BurnDrvFinalgdr;
 DRV		BurnDrvMSX_fjustice;
@@ -7278,6 +7281,7 @@ DRV		BurnDrvmd_mmania;
 DRV		BurnDrvmd_mmaniaj;
 DRV		BurnDrvmd_mmaniau;
 DRV		BurnDrvmd_mmaniaup;
+DRV		BurnDrvnes_mickeymania7;
 DRV		BurnDrvgg_legndillj;
 DRV		BurnDrvnes_mickemouiii;
 DRV		BurnDrvgg_castlillj;
@@ -7581,6 +7585,7 @@ DRV		BurnDrvMk3r10;
 DRV		BurnDrvMk3r20;
 DRV		BurnDrvMk3;
 DRV		BurnDrvmd_mk3u;
+DRV		BurnDrvnes_mortakom3;
 DRV		BurnDrvmd_mk3m;
 DRV		BurnDrvnes_mortalkombat4;
 DRV		BurnDrvsms_mk2;
@@ -7599,7 +7604,9 @@ DRV		BurnDrvgg_mk2;
 DRV		BurnDrvmd_mk2;
 DRV		BurnDrvMk2chal;
 DRV		BurnDrvmk2p;
+DRV		BurnDrvnes_mortakomiispe;
 DRV		BurnDrvMk2ute;
+DRV		BurnDrvnes_mortakomiiispe;
 DRV		BurnDrvmd_mkr;
 DRV		BurnDrvMosaicf2;
 DRV		BurnDrvMosaica;
@@ -10067,8 +10074,13 @@ DRV		BurnDrvMSX_smzoom;
 DRV		BurnDrvStdragonb;
 DRV		BurnDrvStdragon;
 DRV		BurnDrvStdragona;
+DRV		BurnDrvnes_saintsaitiamahuxi;
+DRV		BurnDrvnes_saintseiougdenj;
 DRV		BurnDrvnes_saintseiyaodc;
+DRV		BurnDrvnes_saintseiougden;
+DRV		BurnDrvnes_saintseiougdenkahenj;
 DRV		BurnDrvnes_saintseiyaodkhc;
+DRV		BurnDrvnes_saintseiougdenkahen;
 DRV		BurnDrvmd_sswordj;
 DRV		BurnDrvmd_ssword;
 DRV		BurnDrvnes_saiyuukiworld;
@@ -10405,6 +10417,7 @@ DRV		BurnDrvmd_sokoban;
 DRV		BurnDrvmd_shikinjo;
 DRV		BurnDrvgg_shikinjo;
 DRV		BurnDrvnes_shin4ninuchma;
+DRV		BurnDrvnes_shinsamspi2;
 DRV		BurnDrvmd_ragnacen;
 DRV		BurnDrvmd_ragnacenp;
 DRV		BurnDrvTshingen;
@@ -11885,6 +11898,7 @@ DRV		BurnDrvnes_smb3;
 DRV		BurnDrvmd_smb4md;
 DRV		BurnDrvfds_supermarbro;
 DRV		BurnDrvfds_supermarbro2;
+DRV		BurnDrvnes_supermarwor;
 DRV		BurnDrvmd_smario64h;
 DRV		BurnDrvmd_smario64;
 DRV		BurnDrvmd_smb;
@@ -16783,6 +16797,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_chiller,		// Chiller (USA)
 	&BurnDrvChimerab,			// Chimera Beast (prototype)
 	&BurnDrvChinagat,			// China Gate (US)
+	&BurnDrvnes_chinarabbab,	// China Rabbit Baby (Unl)
 	&BurnDrvChinatwn,			// China Town (Japan)
 	&BurnDrvtg_chinawar,		// China Warrior
 	&BurnDrvmd_chinesec,		// Chinese Chess
@@ -17089,6 +17104,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_contrrevredfal,	// Contra - Revenge of the Red Falcon (USA)
 	&BurnDrvmd_contraj,			// Contra - The Hard Corps (Jpn)
 	&BurnDrvnes_contraforce,	// Contra Force (USA)
+	&BurnDrvnes_contraspirits,	// Contra Spirits (Unl)
 	&BurnDrvCookbib,			// Cookie & Bibi (set 1)
 	&BurnDrvCookbiba,			// Cookie & Bibi (set 2)
 	&BurnDrvCookbib2,			// Cookie & Bibi 2 (set 1)
@@ -18765,6 +18781,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsFfightu2,		// Final Fight (USA, set 3)
 	&BurnDrvCpsFfight,			// Final Fight (World, set 1)
 	&BurnDrvCpsFfighta,			// Final Fight (World, set 2)
+	&BurnDrvnes_finalfight3,	// Final Fight 3 (Unl)
 	&BurnDrvCpsFfightae,		// Final Fight 30th Anniversary Edition
 	&BurnDrvFinalgdr,			// Final Godori (Korea, version 2.20.5915)
 	&BurnDrvMSX_fjustice,		// Final Justice (Jpn)
@@ -21977,6 +21994,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mmaniaj,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Jpn)
 	&BurnDrvmd_mmaniau,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA)
 	&BurnDrvmd_mmaniaup,		// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA, Prototype)
+	&BurnDrvnes_mickeymania7,	// Mickey Mania 7 (Unl)
 	&BurnDrvgg_legndillj,		// Mickey Mouse Densetsu no Oukoku - Legend of Illusion (Jpn)
 	&BurnDrvnes_mickemouiii,	// Mickey Mouse III - Yume Fuusen (Japan)
 	&BurnDrvgg_castlillj,		// Mickey Mouse no Castle Illusion (Jpn, SMS Mode)
@@ -22280,6 +22298,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMk3r20,				// Mortal Kombat 3 (rev 2.0)
 	&BurnDrvMk3,				// Mortal Kombat 3 (rev 2.1)
 	&BurnDrvmd_mk3u,			// Mortal Kombat 3 (USA)
+	&BurnDrvnes_mortakom3,		// Mortal Kombat 3 - Special 56 Peoples (Unl)
 	&BurnDrvmd_mk3m,			// Mortal Kombat 3 Mini (Hack)
 	&BurnDrvnes_mortalkombat4,	// Mortal Kombat 4 (Unl)
 	&BurnDrvsms_mk2,			// Mortal Kombat II (Euro, Bra)
@@ -22298,7 +22317,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mk2,				// Mortal Kombat II (World)
 	&BurnDrvMk2chal,			// Mortal Kombat II Challenger (hack)
 	&BurnDrvmk2p,				// Mortal Kombat II Plus (Beta 2, Hack)
+	&BurnDrvnes_mortakomiispe,	// Mortal Kombat II Special (Unl)
 	&BurnDrvMk2ute,				// Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.053)
+	&BurnDrvnes_mortakomiiispe,	// Mortal Kombat III Special (Unl)
 	&BurnDrvmd_mkr,				// Mortal Kombat Revelations (Hack, Version 1.0)
 	&BurnDrvMosaicf2,			// Mosaic (F2 System)
 	&BurnDrvMosaica,			// Mosaic (Fuuki)
@@ -24766,8 +24787,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStdragonb,			// Saint Dragon (bootleg)
 	&BurnDrvStdragon,			// Saint Dragon (set 1)
 	&BurnDrvStdragona,			// Saint Dragon (set 2)
+	&BurnDrvnes_saintsaitiamahuxi,// Saint Saiya - Tian Ma Huan Xiang (China)
+	&BurnDrvnes_saintseiougdenj,// Saint Seiya - Ougon Densetsu (Japan)
 	&BurnDrvnes_saintseiyaodc,	// Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
+	&BurnDrvnes_saintseiougden,	// Saint Seiya - Ougon Densetsu (T-Eng)
+	&BurnDrvnes_saintseiougdenkahenj,// Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan)
 	&BurnDrvnes_saintseiyaodkhc,// Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
+	&BurnDrvnes_saintseiougdenkahen,// Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)
 	&BurnDrvmd_sswordj,			// Saint Sword (Jpn)
 	&BurnDrvmd_ssword,			// Saint Sword (USA)
 	&BurnDrvnes_saiyuukiworld,	// Saiyuuki World (Japan)
@@ -25104,6 +25130,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shikinjo,		// Shikinjoh (Jpn)
 	&BurnDrvgg_shikinjo,		// Shikinjou (Jpn)
 	&BurnDrvnes_shin4ninuchma,	// Shin 4 Nin Uchi Mahjong (Japan)
+	&BurnDrvnes_shinsamspi2,	// Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)
 	&BurnDrvmd_ragnacen,		// Shin Souseiki Ragnacenty (Jpn)
 	&BurnDrvmd_ragnacenp,		// Shin Souseiki Ragnacenty (Jpn, Prototype)
 	&BurnDrvTshingen,			// Shingen Samurai-Fighter (Japan, English) [Game crashes in level 2, play tshingena instead!, NOT WORKING]
@@ -26584,6 +26611,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
 	&BurnDrvfds_supermarbro,	// Super Mario Brothers (Japan)
 	&BurnDrvfds_supermarbro2,	// Super Mario Brothers 2 (Japan)
+	&BurnDrvnes_supermarwor,	// Super Mario World (Unl)
 	&BurnDrvmd_smario64h,		// Super Mario World 64 (Hacked Protection)
 	&BurnDrvmd_smario64,		// Super Mario World 64 [no comment, NOT WORKING]
 	&BurnDrvmd_smb,				// Super Mario World ~ Super Mario Bros. (Pirate)

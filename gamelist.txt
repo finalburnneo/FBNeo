@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14432 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14446 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2052,6 +2052,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_chiller	|  	| Chiller (USA)						| 		| 1990	| AGCI		| Miscellaneous	| 					|
 | chimerab	|  	| Chimera Beast (prototype)				| 		| 1993	| Jaleco	| Mega System 1	| 					|
 | chinagat	|  	| China Gate (US)					| 		| 1988	| Technos Japan | Miscellaneous	| 					|
+| nes_chinarabbab|  	| China Rabbit Baby (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | chinatwn	|  	| China Town (Japan)					| 		| 1991	| Data East Corp| DECO IC16	| 					|
 | tg_chinawar	|  	| China Warrior						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
 | md_chinesec	|  	| Chinese Chess						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -2354,6 +2355,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_contrrevredfal|  	| Contra - Revenge of the Red Falcon (USA)		| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_contraj	|  	| Contra - The Hard Corps (Jpn)				| md_contra	| 1994	| Konami	| Sega Megadrive| 					|
 | nes_contraforce|  	| Contra Force (USA)					| 		| 1992	| Konami	| Miscellaneous	| 					|
+| nes_contraspirits|  	| Contra Spirits (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cookbib	|  	| Cookie & Bibi (set 1)					| 		| 1995	| SemiCom	| Miscellaneous	| 					|
 | cookbiba	|  	| Cookie & Bibi (set 2)					| cookbib	| 1995	| SemiCom	| Miscellaneous	| 					|
 | cookbib2	|  	| Cookie & Bibi 2 (set 1)				| 		| 1996	| SemiCom	| Kaneko Pandora| 					|
@@ -3996,6 +3998,7 @@ This list contains all games supported by FinalBurn Neo.
 | ffightu2	|  	| Final Fight (USA, set 3)				| ffight	| 1989	| Capcom	| CPS1		| 					|
 | ffight	|  	| Final Fight (World, set 1)				| 		| 1989	| Capcom	| CPS1		| 					|
 | ffighta	|  	| Final Fight (World, set 2)				| ffight	| 1989	| Capcom	| CPS1		| 					|
+| nes_finalfight3|  	| Final Fight 3 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | ffightae	|  	| Final Fight 30th Anniversary Edition			| ffight	| 2019	| hack		| CPS1		| 					|
 | finalgdr	|  	| Final Godori (Korea, version 2.20.5915)		| 		| 2001	| SemiCom	| Miscellaneous	| 					|
 | msx_fjustice	|  	| Final Justice (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| 					|
@@ -7156,6 +7159,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mmaniaj	|  	| Mickey Mania - The Timeless Adventures of Mickey Mouse| md_mmania	| 1995	| Sega		| Sega Megadrive| 					|
 | md_mmaniau	|  	| Mickey Mania - The Timeless Adventures of Mickey Mouse| md_mmania	| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | md_mmaniaup	|  	| Mickey Mania - The Timeless Adventures of Mickey Mouse| md_mmania	| 1994	| Sony Imagesoft| Sega Megadrive| 					|
+| nes_mickeymania7|  	| Mickey Mania 7 (Unl)					| nes_chinarabbab| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gg_legndillj	|  	| Mickey Mouse Densetsu no Oukoku - Legend of Illusion (| gg_legndill	| 1995	| Sega		| Sega Game Gear| 					|
 | nes_mickemouiii|  	| Mickey Mouse III - Yume Fuusen (Japan)		| 		| 1992	| Kemco		| Miscellaneous	| 					|
 | gg_castlillj	|  	| Mickey Mouse no Castle Illusion (Jpn, SMS Mode)	| gg_castlill	| 1991	| Sega		| Sega Game Gear| 					|
@@ -7457,6 +7461,7 @@ This list contains all games supported by FinalBurn Neo.
 | mk3r20	|  	| Mortal Kombat 3 (rev 2.0)				| mk3		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | mk3		|  	| Mortal Kombat 3 (rev 2.1)				| 		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | md_mk3u	|  	| Mortal Kombat 3 (USA)					| md_mk3	| 1995	| Williams	| Sega Megadrive| Press A+C+Start for 4P mode.		|
+| nes_mortakom3	|  	| Mortal Kombat 3 - Special 56 Peoples (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_mk3m	|  	| Mortal Kombat 3 Mini (Hack)				| md_mk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | nes_mortalkombat4|  	| Mortal Kombat 4 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_mk2	|  	| Mortal Kombat II (Euro, Bra)				| 		| 1994	| Acclaim Entert| Sega Master Sy| 					|
@@ -7475,7 +7480,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_mk2	|  	| Mortal Kombat II (World)				| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | mk2chal	|  	| Mortal Kombat II Challenger (hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
 | mk2p		|  	| Mortal Kombat II Plus (Beta 2, Hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
+| nes_mortakomiispe|  	| Mortal Kombat II Special (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mk2ute	|  	| Mortal Kombat II Ultimate Tournament Edition (hack, V5| mk2		| 2014	| hack		| Midway T-Unit	| 					|
+| nes_mortakomiiispe|  	| Mortal Kombat III Special (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_mkr	|  	| Mortal Kombat Revelations (Hack, Version 1.0)		| md_umk3t	| 2012	| SMOKE		| Sega Megadrive| 					|
 | mosaicf2	|  	| Mosaic (F2 System)					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | mosaica	|  	| Mosaic (Fuuki)					| mosaic	| 1990	| Space (Fuuki l| Miscellaneous	| 					|
@@ -9891,8 +9898,13 @@ This list contains all games supported by FinalBurn Neo.
 | stdragonb	|  	| Saint Dragon (bootleg)				| stdragon	| 1989	| Jaleco	| Mega System 1	| 					|
 | stdragon	|  	| Saint Dragon (set 1)					| 		| 1989	| Jaleco	| Mega System 1	| 					|
 | stdragona	|  	| Saint Dragon (set 2)					| stdragon	| 1989	| Jaleco	| Mega System 1	| 					|
+| nes_saintsaitiamahuxi|  	| Saint Saiya - Tian Ma Huan Xiang (China)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_saintseiougdenj|  	| Saint Seiya - Ougon Densetsu (Japan)			| nes_saintseiougden| 1987	| Bandai	| Miscellaneous	| 					|
 | nes_saintseiyaodc|  	| Saint Seiya - Ougon Densetsu (T-Chi, v2.0)		| 		| 2018-08-11| Bandai	| Miscellaneous	| 					|
+| nes_saintseiougden|  	| Saint Seiya - Ougon Densetsu (T-Eng)			| 		| 1987	| Bandai	| Miscellaneous	| 					|
+| nes_saintseiougdenkahenj|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan)| nes_saintseiougdenkahen| 1988| Shinsei	| Miscellaneous	| 					|
 | nes_saintseiyaodkhc|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)	| 		| 2017-01-26| SHINSEI	| Miscellaneous	| 					|
+| nes_saintseiougdenkahen|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_sswordj	|  	| Saint Sword (Jpn)					| md_ssword	| 1991	| Taito		| Sega Megadrive| 					|
 | md_ssword	|  	| Saint Sword (USA)					| 		| 1991	| Taito		| Sega Megadrive| 					|
 | nes_saiyuukiworld|  	| Saiyuuki World (Japan)				| 		| 1988	| Jaleco	| Miscellaneous	| 					|
@@ -10225,6 +10237,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_shikinjo	|  	| Shikinjoh (Jpn)					| 		| 1991	| Sunsoft	| Sega Megadrive| 					|
 | gg_shikinjo	|  	| Shikinjou (Jpn)					| 		| 1991	| Sunsoft	| Sega Game Gear| 					|
 | nes_shin4ninuchma|  	| Shin 4 Nin Uchi Mahjong (Japan)			| 		| 1991	| Nintendo	| Miscellaneous	| 					|
+| nes_shinsamspi2|  	| Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_ragnacen	|  	| Shin Souseiki Ragnacenty (Jpn)			| md_soleil	| 1994	| Sega		| Sega Megadrive| 					|
 | md_ragnacenp	|  	| Shin Souseiki Ragnacenty (Jpn, Prototype)		| md_soleil	| 1994	| Sega		| Sega Megadrive| 					|
 | tshingen	|   NW	| Shingen Samurai-Fighter (Japan, English)		| 		| 1988	| Jaleco	| Mega System 1	| Game crashes in level 2, play tshingen|
@@ -11679,6 +11692,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_smb4md	|  	| Super Mario Bros. 4 MD				| 		| 2010	| Mairtrus	| Sega Megadrive| 					|
 | fds_supermarbro|  	| Super Mario Brothers (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_supermarbro2|  	| Super Mario Brothers 2 (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_supermarwor|  	| Super Mario World (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_smario64h	|  	| Super Mario World 64 (Hacked Protection)		| md_smario64	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_smario64	|   NW	| Super Mario World 64					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_smb	|  	| Super Mario World ~ Super Mario Bros. (Pirate)	| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|

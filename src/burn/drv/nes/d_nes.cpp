@@ -5557,9 +5557,9 @@ static void mapper232_write(UINT16 address, UINT8 data)
 
 static void mapper232_map()
 {
-	UINT32 bank = ((mapper_regs[0] & 0x10) >> 2) | (mapper_regs[0] & 0x8);
-	mapper_map_prg(16, 0, bank | (mapper_regs[1] & 3));
-	mapper_map_prg(16, 1, bank | 3);
+	UINT32 block = (mapper_regs[0] & 0x18) >> 1;
+	mapper_map_prg(16, 0, block | (mapper_regs[1] & 3));
+	mapper_map_prg(16, 1, block | 3);
 	mapper_map_chr( 8, 0, 0);
 }
 

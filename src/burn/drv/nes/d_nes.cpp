@@ -34028,3 +34028,88 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_saintsaitiamahuxiRomDesc[] = {
+	{ "Saint Saiya - Tian Ma Huan Xiang (China).nes",          2097168, 0x31f810f2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintsaitiamahuxi)
+STD_ROM_FN(nes_saintsaitiamahuxi)
+
+struct BurnDriver BurnDrvnes_saintsaitiamahuxi = {
+	"nes_saintsaitiamahuxi", NULL, NULL, NULL, "1989?",
+	"Saint Saiya - Tian Ma Huan Xiang (China)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintsaitiamahuxiRomInfo, nes_saintsaitiamahuxiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_saintseiougdenjRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu (Japan).nes",          262160, 0xe54ef7f0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiougdenj)
+STD_ROM_FN(nes_saintseiougdenj)
+
+struct BurnDriver BurnDrvnes_saintseiougdenj = {
+	"nes_saintseiougdenj", "nes_saintseiougden", NULL, NULL, "1987",
+	"Saint Seiya - Ougon Densetsu (Japan)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiougdenjRomInfo, nes_saintseiougdenjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_saintseiougdenRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu (T-Eng).nes",          262160, 0x0914dd20, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiougden)
+STD_ROM_FN(nes_saintseiougden)
+
+struct BurnDriver BurnDrvnes_saintseiougden = {
+	"nes_saintseiougden", NULL, NULL, NULL, "1987",
+	"Saint Seiya - Ougon Densetsu (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiougdenRomInfo, nes_saintseiougdenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_saintseiougdenkahenjRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan).nes",          262160, 0xf8d258a3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiougdenkahenj)
+STD_ROM_FN(nes_saintseiougdenkahenj)
+
+struct BurnDriver BurnDrvnes_saintseiougdenkahenj = {
+	"nes_saintseiougdenkahenj", "nes_saintseiougdenkahen", NULL, NULL, "1988",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan)\0", NULL, "Shinsei", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiougdenkahenjRomInfo, nes_saintseiougdenkahenjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_saintseiougdenkahenRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng).nes",          262160, 0x912be32d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiougdenkahen)
+STD_ROM_FN(nes_saintseiougdenkahen)
+
+struct BurnDriver BurnDrvnes_saintseiougdenkahen = {
+	"nes_saintseiougdenkahen", NULL, NULL, NULL, "1989?",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saintseiougdenkahenRomInfo, nes_saintseiougdenkahenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

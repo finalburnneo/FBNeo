@@ -174,8 +174,8 @@ static int InpdListBegin()
 		return 1;
 	}
 
-	// Full row select style:
-	SendMessage(hInpdList, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_FULLROWSELECT);
+	// Full row select style: Add checkbox for marco Autofire.
+	SendMessage(hInpdList, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT);
 
 	// Make column headers
 	memset(&LvCol, 0, sizeof(LvCol));
@@ -252,10 +252,15 @@ int InpdListMake(int bBuild)
 			LvItem.lParam = (LPARAM)j;
 
 			SendMessage(hInpdList, bBuild ? LVM_INSERTITEM : LVM_SETITEM, 0, (LPARAM)&LvItem);
+
+			// When Marco is auto-fire, the checkbox is checked.
+			if (pgi->Macro.nSysMacro == 15 && pgi->Input.pVal) ListView_SetCheckState(hInpdList, j, TRUE);
 		}
 
 		j++;
 	}
+
+	pgi = NULL;
 
 	InpdUseUpdate();
 
@@ -802,7 +807,14 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			ListItemActivate();
 			return 0;
 		}
-		if (Id == IDCANCEL && Notify == BN_CLICKED) {
+		if (Id == IDCANCEL && Notify == BN_CLICKED) {  // Save the state of auto-fire before sending WM_CLOSE messages
+			struct GameInp* pgi = GameInp;
+			int nCount = SendMessage(hInpdList, LVM_GETITEMCOUNT, 0, 0);
+
+			if (nCount > 0)
+				for (int i = 0; i < nCount; i++, pgi++)
+					pgi->Macro.nSysMacro = ListView_GetCheckState(hInpdList, i) ? 15 : 0;  // Setting Auto-Fire
+
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}
@@ -946,6 +958,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		int Id = LOWORD(wParam);
 		NMHDR* pnm = (NMHDR*)lParam;
 
+		LPNMLISTVIEW pnmlv = (LPNMLISTVIEW)lParam;
+		int nCheckbox = pnmlv->iItem;  // Returns the line number of the mouse click
+
+		struct GameInp* pgi = NULL;
+		struct BurnInputInfo bii;
+
 		if (Id == IDC_INPD_LIST && pnm->code == LVN_ITEMACTIVATE) {
 			ListItemActivate();
 		}
@@ -955,13 +973,27 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				ListItemDelete();
 			}
 		}
+		if (Id == IDC_INPD_LIST && pnm->code == LVN_ITEMCHANGED && ListView_GetCheckState(hInpdList, nCheckbox)) {  // Only check the trigger status of the checkbox.
+			pgi = GameInp + nCheckbox;
+			memset(&bii, 0, sizeof(bii));
+			BurnDrvGetInputInfo(&bii, nCheckbox); 
+
+			INT32 nResult = (pgi->Input.pVal ? 0 : 1) + ((pgi->Macro.nSysMacro == 1 || bii.szName) ? 2 : 0);  // Is input specified + Is it a target macro
+			LPCWSTR psResult = (nResult > 1) ? L"This is a general input, not a macro." : L"You must first specify an input for the macro.";
+
+			// Only macrcos with assigned input keys are allowed.
+			if (nResult > 0) {
+				MessageBox(hInpdDlg, psResult, NULL, MB_ICONWARNING);
+				ListView_SetCheckState(hInpdList, nCheckbox, 0);
+			}
+		}
 
 		if (Id == IDC_INPD_LIST && pnm->code == NM_CUSTOMDRAW) {
 			NMLVCUSTOMDRAW* plvcd = (NMLVCUSTOMDRAW*)lParam;
 
 			switch (plvcd->nmcd.dwDrawStage) {
 				case CDDS_PREPAINT:
-                    SetWindowLongPtr(hInpdDlg, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+					SetWindowLongPtr(hInpdDlg, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
 					return 1;
 				case CDDS_ITEMPREPAINT:
 					if (plvcd->nmcd.dwItemSpec < nGameInpCount) {
@@ -996,6 +1028,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					return 1;
 			}
 		}
+
 		return 0;
 	}
 

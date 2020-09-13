@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14446 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14468 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -308,7 +308,8 @@ This list contains all games supported by FinalBurn Neo.
 | akkanvdr	|  	| Akkanbeder (Ver 2.5J 1995/06/14)			| spcinv95	| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | akumajoun	|  	| Akuma-Jou Dracula (Japan ver. N)			| hcastle	| 1988	| Konami	| GX768		| 					|
 | akumajou	|  	| Akuma-Jou Dracula (Japan ver. P)			| hcastle	| 1988	| Konami	| GX768		| 					|
-| nes_akumaden	|  	| Akumajou Densetsu (Japan)				| nes_castliii	| 1989	| Konami	| Miscellaneous	| 					|
+| nes_akumadenj	|  	| Akumajou Densetsu (Japan)				| nes_castliii	| 1989	| Konami	| Miscellaneous	| 					|
+| nes_akumaden	|  	| Akumajou Densetsu (T-Eng)				| nes_castliii	| 1989	| Konami	| Miscellaneous	| 					|
 | fds_akumajoudracula|  	| Akumajou Dracula (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_akumajoudracula|  	| Akumajou Dracula (Japan)				| nes_castlevania| 1993	| Konami	| Miscellaneous	| 					|
 | md_akumajo	|  	| Akumajou Dracula - Vampire Killer (Jpn)		| md_cvania	| 1994	| Konami	| Sega Megadrive| 					|
@@ -1316,6 +1317,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_bluemarlinthe|  	| Blue Marlin, The (USA)				| 		| 1992	| HOT・B	| Miscellaneous	| 					|
 | blueprntj	|  	| Blue Print (Jaleco)					| blueprnt	| 1982	| [Zilec Electro| Miscellaneous	| 					|
 | blueprnt	|  	| Blue Print (Midway)					| 		| 1982	| [Zilec Electro| Miscellaneous	| 					|
+| nes_blueshadow|  	| Blue Shadow (Europe)					| nes_kage	| 1991	| Taito		| Miscellaneous	| 					|
 | bjourneyh	|  	| Blue's Journey / Raguy (ALH-001)			| bjourney	| 1990	| Alpha Denshi C| Neo Geo MVS	| 					|
 | bjourney	|  	| Blue's Journey / Raguy (ALM-001)(ALH-001)		| 		| 1990	| Alpha Denshi C| Neo Geo MVS	| 					|
 | nes_bluesbro	|  	| Blues Brothers, The (USA)				| 		| 1992	| Titus		| Miscellaneous	| 					|
@@ -2354,6 +2356,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_contrredfalwar|  	| Contra - Red Falcon War (USA)				| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_contrrevredfal|  	| Contra - Revenge of the Red Falcon (USA)		| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_contraj	|  	| Contra - The Hard Corps (Jpn)				| md_contra	| 1994	| Konami	| Sega Megadrive| 					|
+| nes_contra168in1|  	| Contra 168-in-1 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_contraforce|  	| Contra Force (USA)					| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_contraspirits|  	| Contra Spirits (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cookbib	|  	| Cookie & Bibi (set 1)					| 		| 1995	| SemiCom	| Miscellaneous	| 					|
@@ -2733,6 +2736,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_datastorm10|  	| Data Storm (HB, v1.0)					| 		| 2016	| haroldoop	| Sega Master Sy| 					|
 | dquizgo	|  	| Date Quiz Go Go (Korea)				| 		| 1998	| SemiCom	| Miscellaneous	| 					|
 | dquizgo2	|  	| Date Quiz Go Go Episode 2				| 		| 2000	| SemiCom	| Miscellaneous	| 					|
+| nes_datsugoku	|  	| Datsugoku (Japan)					| nes_pow	| 1989	| KAC		| Miscellaneous	| 					|
 | powj		|  	| Datsugoku - Prisoners of War (Japan)			| pow		| 1988	| SNK		| Miscellaneous	| 					|
 | nes_davidcrasaboyandhis|  	| David Crane's A Boy and His Blob - Trouble on Blobolon| 	| 1990	| Absolute	| Miscellaneous	| 					|
 | md_amaznten	|  	| David Crane's Amazing Tennis (USA)			| 		| 1992	| Absolute Enter| Sega Megadrive| 					|
@@ -3098,6 +3102,7 @@ This list contains all games supported by FinalBurn Neo.
 | dkong3j	|  	| Donkey Kong 3 (Japan)					| dkong3	| 1983	| Nintendo	| Miscellaneous	| 					|
 | dkong3	|  	| Donkey Kong 3 (US)					| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | dkchrmx	|  	| Donkey Kong Christmas Remix (Hack)			| dkong		| 2017	| Sock Master	| Miscellaneous	| 					|
+| nes_donkekoncou4|  	| Donkey Kong Country 4 (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | dkcbarrel	|  	| Donkey Kong Crazy Barrels Edition			| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkongf	|  	| Donkey Kong Foundry (hack)				| dkong		| 2004	| hack (Jeff Kul| Miscellaneous	| 					|
 | dkongx11	|  	| Donkey Kong II - Jumpman Returns (hack, V1.1)		| dkong		| 2006	| hack (Braze Te| Miscellaneous	| 					|
@@ -4550,6 +4555,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gegegnokit|  	| Gegege no Kitarou - Youkai Daimakyou (Japan)		| 		| 1986	| Bandai	| Miscellaneous	| 					|
 | nes_geimos	|  	| Geimos (Japan)					| 		| 1985	| ASCII		| Miscellaneous	| 					|
 | sms_punpun	|  	| Geki Oko PunPun Maru ((HB, v20151031b)		| 		| 2013	| Future Driver	| Sega Master Sy| 					|
+| nes_gekikninden|  	| Gekikame Ninja Den (Japan)				| nes_tmnt	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gekiridnj	|  	| Gekirindan (Ver 2.3J 1995/09/21)			| gekiridn	| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | gekiridn	|  	| Gekirindan (Ver 2.3O 1995/09/21)			| 		| 1995	| Taito Corporat| Taito F3 Syste| 					|
 | pce_gekisboy	|  	| Gekisha Boy						| 		| 1992	| Irem		| PC Engine	| 					|
@@ -5225,6 +5231,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_highwayk	|  	| High Way Star (Kor)					| msx_highway	| 1983	| Qnix		| MSX		| 					|
 | chwy		|  	| Highway Chase (DECO Cassette) (US)			| 		| 1980	| Data East Corp| Cassette Syste| 					|
 | msx_highwayen	|  	| Highway Encounter (Spa)				| 		| 1985	| Dinamic Softwa| MSX		| 					|
+| nes_highwaystar|  	| Highway Star (Japan)					| nes_radracer	| 1987	| Square	| Miscellaneous	| 					|
 | fds_hikarshi	|  	| Hikari Shinwa - Palthena no Kagami (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | himesiki	|  	| Himeshikibu (Japan)					| 		| 1989	| Hi-Soft	| Miscellaneous	| 					|
 | nes_hinothouhenj|  	| Hinotori Houou Hen - Gaou no Bouken (Japan)		| nes_hinothouhen| 1987	| Konami	| Miscellaneous	| 					|
@@ -5678,11 +5685,13 @@ This list contains all games supported by FinalBurn Neo.
 | md_madden	|  	| John Madden Football (Euro, USA)			| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_maddenj	|  	| John Madden Football - Pro Football (Jpn)		| md_madden	| 1992	| Electronic Art| Sega Megadrive| 					|
 | joinem	|  	| Joinem						| 		| 1983	| Global Corpora| Jack the Giant| 					|
-| jojobaner1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
-| jojobane	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
 | jojobar1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
-| jojobanr1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
+| jojobaner1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
 | jojoba	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| 		| 1999	| Capcom	| CPS-3		| 					|
+| jojobane	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
+| jojobajr1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
+| jojobanr1	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
+| jojobaj	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
 | jojoban	|  	| JoJo's Bizarre Adventure: Heritage for the Future / Jo| jojoba	| 1999	| Capcom	| CPS-3		| 					|
 | jojonr2	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Asia 981202| jojo		| 1998	| Capcom	| CPS-3		| 					|
 | jojonr1	|  	| JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990108| jojo		| 1998	| Capcom	| CPS-3		| 					|
@@ -5713,7 +5722,7 @@ This list contains all games supported by FinalBurn Neo.
 | joustr	|  	| Joust (Solid Red label)				| joust		| 1982	| Williams	| 6809 System	| 					|
 | nes_joust	|  	| Joust (USA)						| 		| 1988	| HAL Laboratory| Miscellaneous	| 					|
 | joust		|  	| Joust (White/Green label)				| 		| 1982	| Williams	| 6809 System	| 					|
-| joustwr	|  	| Joust (White/Red label)				| joust		| 1982	| Williams	| 6809 System	| 					|
+| jousty	|  	| Joust (Yellow label)					| joust		| 1982	| Williams	| 6809 System	| 					|
 | nes_jovialrace|  	| Jovial Race (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_joymechfightj|  	| Joy Mech Fight (Japan)				| nes_joymechfight| 1993	| Nintendo	| Miscellaneous	| 					|
 | nes_joymechfight|  	| Joy Mech Fight (T-eng)				| 		| 1993	| Nintendo	| Miscellaneous	| 					|
@@ -5822,6 +5831,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_juuouki	|  	| Juuouki (T-eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_juuouki	|  	| Juuouki						| 		| 1989	| NEC		| PC Engine	| 					|
 | nes_juurysoumetsto|  	| Juuryoku Soukou Metal Storm (Japan)			| 		| 1992	| Irem		| Miscellaneous	| 					|
+| nes_jy45in1	|  	| JY 45-in-1 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | jyangoku	|  	| Jyangokushi  -Haoh no Saihai- (990527 Japan)		| 		| 1999	| Mitchell	| CPS2		| 					|
 | janshin	|  	| Jyanshin Densetsu - Quest of Jongmaster		| 		| 1994	| Aicom		| Neo Geo MVS	| 					|
 | md_kof2k	|  	| K.O.F 2000						| md_kof98	| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -7298,7 +7308,8 @@ This list contains all games supported by FinalBurn Neo.
 | mrviking	|  	| Mister Viking (315-5041)				| 		| 1984	| Sega		| System 1	| 					|
 | mrvikingj	|  	| Mister Viking (315-5041, Japan)			| mrviking	| 1984	| Sega		| System 1	| 					|
 | nes_mitokou	|  	| Mito Koumon - Sekai Manyuu Ki (Japan)			| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
-| nes_mitsumegatooru|  	| Mitsume ga Tooru (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mitsumegatooruj|  	| Mitsume ga Tooru (Japan)				| nes_mitsumegatooru| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mitsumegatooru|  	| Mitsume ga Tooru (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_mitsumgt	|  	| Mitsume Ga Tooru - The Three-Eyed One Comes Here (Jpn)| 		| 1989	| Natsume	| MSX		| 					|
 | quiz18k	|  	| Miyasu Nonki no Quiz 18-Kin				| 		| 1992	| EIM		| Miscellaneous	| 					|
 | pce_mizubaku	|  	| Mizubaku Dai Bouken					| 		| 1992	| Namcot	| PC Engine	| 					|
@@ -8950,6 +8961,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_pmonger	|  	| Power Monger (Euro, USA)				| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_pmongerj	|  	| Power Monger (Jpn, Kor)				| md_pmonger	| 1993	| Electronic Art| Sega Megadrive| 					|
 | nes_powerpunchii|  	| Power Punch II (USA)					| 		| 1992	| American Softw| Miscellaneous	| 					|
+| nes_powerraniii|  	| Power Rangers III (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_powerrangersiv|  	| Power Rangers IV (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_powersoccer|  	| Power Soccer (Japan)					| 		| 1990	| Tokuma Shoten	| Miscellaneous	| 					|
 | pspikesk	|  	| Power Spikes (Korea)					| pspikes	| 1991	| Video System C| V-System	| 					|
 | pspikesu	|  	| Power Spikes (US)					| pspikes	| 1991	| Video System C| V-System	| 					|
@@ -9040,6 +9053,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_proyak91	|  	| Pro Yakyuu World Stadium '91				| 		| 1991	| Namcot	| PC Engine	| 					|
 | pce_proyak	|  	| Pro Yakyuu World Stadium				| 		| 1988	| Namcot	| PC Engine	| 					|
 | md_probot	|  	| Probotector (Euro)					| md_contra	| 1994	| Konami	| Sega Megadrive| 					|
+| nes_probotector|  	| Probotector (Europe)					| nes_contra	| 1990	| Konami	| Miscellaneous	| 					|
 | msx_profbb	|  	| Professional Baseball (Jpn)				| 		| 1986	| Technopolis So| MSX		| 					|
 | progeara	|  	| Progear (010117 Asia)					| progear	| 2001	| Capcom / Cave	| CPS2		| 					|
 | progear	|  	| Progear (010117 USA)					| 		| 2001	| Capcom / Cave	| CPS2		| 					|
@@ -9128,6 +9142,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_puyopuy2	|  	| Puyo Puyo 2 (Jpn, v1.1)				| 		| 1994	| Compile	| Sega Megadrive| 					|
 | sms_puznic	|  	| Puznic (Kor)						| 		| 1990	| Zemina	| Sega Master Sy| 					|
 | msx_puznic	|  	| Puznic						| 		| 1990	| Zemina	| MSX		| 					|
+| nes_puzslot	|  	| Puzslot (Japan)					| 		| 1992	| Sammy		| Miscellaneous	| 					|
 | puzzloopa	|  	| Puzz Loop (Asia)					| puzzloop	| 1998	| Mitchell	| Super Kaneko N| 					|
 | puzzloope	|  	| Puzz Loop (Europe, v0.93)				| puzzloop	| 1998	| Mitchell	| Super Kaneko N| 					|
 | puzzloop	|  	| Puzz Loop (Europe, v0.94)				| 		| 1998	| Mitchell	| Super Kaneko N| 					|
@@ -9718,6 +9733,7 @@ This list contains all games supported by FinalBurn Neo.
 | robotron12	|  	| Robotron: 2084 (2012 'wave 201 start' hack)		| robotron	| 2012	| hack		| 6809 System	| 					|
 | robotrontd	|  	| Robotron: 2084 (2015 'tie-die V2' hack)		| robotron	| 2015	| hack		| 6809 System	| 					|
 | robotron	|  	| Robotron: 2084 (Solid Blue label)			| 		| 1982	| Williams / Vid| 6809 System	| 					|
+| robotronun	|  	| Robotron: 2084 (Unidesa license)			| robotron	| 1987	| Williams / Vid| 6809 System	| 					|
 | robotronyo	|  	| Robotron: 2084 (Yellow/Orange label)			| robotron	| 1982	| Williams / Vid| 6809 System	| 					|
 | msx_roboy	|  	| Roboy (Euro)						| 		| 1987	| Methodic Solut| MSX		| 					|
 | cv_rocnrope	|  	| Roc 'n Rope						| 		| 1984	| Coleco	| ColecoVision	| 					|
@@ -9900,10 +9916,10 @@ This list contains all games supported by FinalBurn Neo.
 | stdragona	|  	| Saint Dragon (set 2)					| stdragon	| 1989	| Jaleco	| Mega System 1	| 					|
 | nes_saintsaitiamahuxi|  	| Saint Saiya - Tian Ma Huan Xiang (China)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_saintseiougdenj|  	| Saint Seiya - Ougon Densetsu (Japan)			| nes_saintseiougden| 1987	| Bandai	| Miscellaneous	| 					|
-| nes_saintseiyaodc|  	| Saint Seiya - Ougon Densetsu (T-Chi, v2.0)		| 		| 2018-08-11| Bandai	| Miscellaneous	| 					|
+| nes_saintseiyaodc|  	| Saint Seiya - Ougon Densetsu (T-Chi, v2.0)		| nes_saintseiougden| 2018-08-11| Bandai	| Miscellaneous	| 					|
 | nes_saintseiougden|  	| Saint Seiya - Ougon Densetsu (T-Eng)			| 		| 1987	| Bandai	| Miscellaneous	| 					|
 | nes_saintseiougdenkahenj|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (Japan)| nes_saintseiougdenkahen| 1988| Shinsei	| Miscellaneous	| 					|
-| nes_saintseiyaodkhc|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)	| 		| 2017-01-26| SHINSEI	| Miscellaneous	| 					|
+| nes_saintseiyaodkhc|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)	| nes_saintseiougdenkahen| 2017-01-26| Shinsei| Miscellaneous	| 					|
 | nes_saintseiougdenkahen|  	| Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_sswordj	|  	| Saint Sword (Jpn)					| md_ssword	| 1991	| Taito		| Sega Megadrive| 					|
 | md_ssword	|  	| Saint Sword (USA)					| 		| 1991	| Taito		| Sega Megadrive| 					|
@@ -10386,7 +10402,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_sindbadm	|  	| Sindbad Mystery (Euro, Jpn)				| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_sindbadmt|  	| Sindbad Mystery (Tw)					| sg1k_sindbadm	| 1983?	| Aaronix	| Sega SG-1000	| 					|
 | pce_sindibad	|  	| Sindibad Chitei no Dai Makyuu				| 		| 1990	| IGS		| PC Engine	| 					|
-| sinistar1	|  	| Sinistar (prototype version)				| sinistar	| 1982	| Williams	| 6809 System	| 					|
+| sinistarp	|  	| Sinistar (AMOA-82 prototype)				| sinistar	| 1982	| Williams	| 6809 System	| 					|
 | sinistar2	|  	| Sinistar (revision 2)					| sinistar	| 1982	| Williams	| 6809 System	| 					|
 | sinistar	|  	| Sinistar (revision 3)					| 		| 1982	| Williams	| 6809 System	| 					|
 | tg_sinistrn	|  	| Sinistron						| 		| 1991	| NEC		| TurboGrafx 16	| 					|
@@ -12169,6 +12185,7 @@ This list contains all games supported by FinalBurn Neo.
 | tmnt2		|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| 		| 1991	| Konami	| GX063		| 					|
 | tmnt24pu	|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| tmnt2		| 1991	| Konami	| GX063		| 					|
 | md_tmntru	|  	| Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy | 		| 199?	| <unknown>	| Sega Megadrive| 					|
+| nes_tmntiij	|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (Jap| nes_tmntii	| 1990	| Konami	| Miscellaneous	| 					|
 | nes_tmntii	|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (USA| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
 | nes_tmntiii	|  	| Teenage Mutant Ninja Turtles III - The Manhattan Proje| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_tmnttoufig|  	| Teenage Mutant Ninja Turtles Tournament Fighters (USA)| 		| 1994	| Konami	| Miscellaneous	| 					|
@@ -12176,6 +12193,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_teiketsu	|  	| Teitoku no Ketsudan (Jpn)				| md_pto	| 1992	| Koei		| Sega Megadrive| 					|
 | tekipakit	|  	| Teki Paki (location test)				| tekipaki	| 1991	| Toaplan	| Toaplan GP9001| 					|
 | tekipaki	|  	| Teki Paki						| 		| 1991	| Toaplan	| Toaplan GP9001| 					|
+| nes_tekken2	|  	| Tekken 2 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tekken3	|  	| Tekken 3 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_tekkn3sp	|  	| Tekken 3 Special					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | teljan	|  	| Tel Jan						| 		| 1999	| Electro Design| Super Kaneko N| 					|
 | md_telmah	|  	| Tel-Tel Mahjong (Jpn)					| 		| 1990	| Sunsoft	| Sega Megadrive| 					|
@@ -12614,6 +12633,7 @@ This list contains all games supported by FinalBurn Neo.
 | lkageb	|  	| The Legend of Kage (bootleg set 1)			| lkage		| 1984	| bootleg	| Miscellaneous	| 					|
 | lkageb2	|  	| The Legend of Kage (bootleg set 2)			| lkage		| 1984	| bootleg	| Miscellaneous	| 					|
 | lkageb3	|  	| The Legend of Kage (bootleg set 3)			| lkage		| 1984	| bootleg	| hardware	| 					|
+| lkageb4	|  	| The Legend of Kage (bootleg set 4)			| lkage		| 1984	| bootleg	| hardware	| 					|
 | lkageo	|  	| The Legend of Kage (older)				| lkage		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | lkageoo	|  	| The Legend of Kage (oldest)				| lkage		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | lkage		|  	| The Legend of Kage					| 		| 1984	| Taito Corporat| Miscellaneous	| 					|
@@ -12942,6 +12962,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tinytooadv2molaheyo|  	| Tiny Toon Adventures 2 - Montana Land he Youkoso (Japa| nes_tinytooadv2trinwa| 1992| Konami	| Miscellaneous	| 					|
 | nes_tinytooadv2trinwa|  	| Tiny Toon Adventures 2 - Trouble in Wackyland (USA)	| 		| 1993	| Konami	| Miscellaneous	| 					|
 | md_ttoon3	|  	| Tiny Toon Adventures 3 (Tw, Cracked)			| 		| 199?	| Gamtec?	| Sega Megadrive| 					|
+| nes_tinytooadv6|  	| Tiny Toon Adventures 6 (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | tiptop	|  	| Tip Top						| congo		| 1983	| Sega		| Zaxxon	| 					|
 | nes_titan	|  	| Titan (Japan)						| 		| 1990	| Sofel		| Miscellaneous	| 					|
 | titanpac	|  	| Titan (Pac-Man hack)					| puckman	| 1981	| hack		| Pac-man	| 					|
@@ -12976,7 +12997,8 @@ This list contains all games supported by FinalBurn Neo.
 | tokio		|  	| Tokio / Scramble Formation (newer)			| 		| 1986	| Taito Corporat| Taito Misc	| 					|
 | tokioo	|  	| Tokio / Scramble Formation (older)			| tokio		| 1986	| Taito Corporat| Taito Misc	| 					|
 | tokiou	|  	| Tokio / Scramble Formation (US)			| tokio		| 1986	| Taito America | Taito Misc	| 					|
-| nes_tokkyshisol|  	| Tokkyuu Shirei Solbrain (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tokkyshisolj|  	| Tokkyuu Shirei Solbrain (Japan)			| nes_shatterhand| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tokkyshisol|  	| Tokkyuu Shirei Solbrain (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mahmajn	| D NW	| Tokoro San no MahMahjan (Japan, ROM Based)		| 		| 1992	| Sega		| System 24	| 					|
 | mahmajn2	| D NW	| Tokoro San no MahMahjan 2 (Japan, ROM Based)		| 		| 1994	| Sega		| System 24	| 					|
 | nes_tokorsannomammosemo|  	| Tokoro-san no Mamoru mo Semeru mo (Japan)	| 		| 1987	| Epic / Sony Re| Miscellaneous	| 					|

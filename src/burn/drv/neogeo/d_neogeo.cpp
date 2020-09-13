@@ -15281,6 +15281,42 @@ struct BurnDriver BurnDrvMslug5w = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Metal Slug 5 (Decrypted)
+
+static struct BurnRomInfo mslug5ndRomDesc[] = {
+	{ "268nd.p1",		0x100000, 0xca50afdf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268nd.p2",		0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "268d.c1",		0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 Sprite data
+	{ "268d.c2",		0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
+	{ "268d.c3",		0x800000, 0xd7beaeaf, 3 | BRF_GRA },           //  4
+	{ "268nd.c4",		0x800000, 0xe1b1131b, 3 | BRF_GRA },           //  5
+	{ "268d.c5",		0x800000, 0x2fa1a5ad, 3 | BRF_GRA },           //  6
+	{ "268d.c6",		0x800000, 0x6de89589, 3 | BRF_GRA },           //  7
+	{ "268d.c7",		0x800000, 0x97bd0c0a, 3 | BRF_GRA },           //  8
+	{ "268d.c8",		0x800000, 0xc0d5bc20, 3 | BRF_GRA },           //  9
+
+	{ "268nd.m1",		0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "268nd.v1",		0x400000, 0xdc7f03f0, 5 | BRF_SND },           // 11 Sound data
+	{ "268nd.v2",		0x400000, 0xeeb7c926, 5 | BRF_SND },           // 12
+	{ "268nd.v3",		0x400000, 0x02fd519e, 5 | BRF_SND },           // 13
+	{ "268nd.v4",		0x400000, 0xd7c67794, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(mslug5nd, mslug5nd, neogeo)
+STD_ROM_FN(mslug5nd)
+
+struct BurnDriver BurnDrvmslug5nd = {
+	"mslug5nd", "mslug5", "neogeo", NULL, "2017",
+	"Metal Slug 5 (Decrypted)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5ndRomInfo, mslug5ndRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) 
 // Enable Alfred v3 and Fix Alfred's player 2 color - hack by Eddids[FCHT]
 

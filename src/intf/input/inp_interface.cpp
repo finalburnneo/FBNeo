@@ -10,7 +10,7 @@ static bool bCinpOkay;
 #if defined (BUILD_WIN32)
 	extern struct InputInOut InputInOutDInput;
 #elif defined (BUILD_MACOS)
-    extern struct InputInOut InputInOutMacOS;
+	extern struct InputInOut InputInOutMacOS;
 #elif defined (BUILD_SDL)
 	extern struct InputInOut InputInOutSDL;
 #elif defined (BUILD_SDL2)
@@ -18,7 +18,7 @@ static bool bCinpOkay;
 #elif defined (_XBOX)
 	extern struct InputInOut InputInOutXInput2;
 #elif defined (BUILD_QT)
-    extern struct InputInOut InputInOutQt;
+	extern struct InputInOut InputInOutQt;
 #endif
 
 static struct InputInOut *pInputInOut[]=
@@ -26,7 +26,7 @@ static struct InputInOut *pInputInOut[]=
 #if defined (BUILD_WIN32)
 	&InputInOutDInput,
 #elif defined (BUILD_MACOS)
-    &InputInOutMacOS,
+	&InputInOutMacOS,
 #elif defined (BUILD_SDL2)
 		&InputInOutSDL2,
 #elif defined (BUILD_SDL)
@@ -34,7 +34,7 @@ static struct InputInOut *pInputInOut[]=
 #elif defined (_XBOX)
 	&InputInOutXInput2,
 #elif defined (BUILD_QT)
-    &InputInOutQt,
+	&InputInOutQt,
 #endif
 };
 
@@ -42,10 +42,10 @@ static struct InputInOut *pInputInOut[]=
 
 std::vector<const InputInOut *> InputGetInterfaces()
 {
-    std::vector<const InputInOut *> list;
-    for (unsigned int i = 0; i < INPUT_LEN; i++)
-        list.push_back(pInputInOut[i]);
-    return list;
+	std::vector<const InputInOut *> list;
+	for (unsigned int i = 0; i < INPUT_LEN; i++)
+		list.push_back(pInputInOut[i]);
+	return list;
 }
 
 static InterfaceInfo InpInfo = { NULL, NULL, NULL };
@@ -390,18 +390,24 @@ INT32 InputMake(bool bCopy)
 			if (CinpState(pgi->Macro.Switch.nCode)) {
 				if (pgi->Macro.pVal[0]) {
 					*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
-					if (pgi->Macro.nSysMacro==15) { //Auto-Fire mode!
-						if (AutofirePick() || bLastAF[i]==0)
-							*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
+					if (pgi->Macro.nSysMacro == 15) { //Auto-Fire mode!
+						if (AutofirePick() || bLastAF[i] == 0)
+							for (INT32 j = 0; j < 4; j++) {
+								if (pgi->Macro.pVal[j]) {
+									*(pgi->Macro.pVal[j]) = pgi->Macro.nVal[j];
+								}
+							}
 						else
 							*(pgi->Macro.pVal[0]) = 0;
 						bLastAF[i] = 1;
 					}
 				}
-			} else { // Disable System-Macro when key up
+			}
+			else { // Disable System-Macro when key up
 				if (pgi->Macro.pVal[0] && pgi->Macro.nSysMacro == 1) {
 					*(pgi->Macro.pVal[0]) = 0;
-				} else {
+				}
+				else {
 					if (pgi->Macro.nSysMacro == 15)
 						bLastAF[i] = 0;
 				}
@@ -527,7 +533,7 @@ InterfaceInfo* InputGetInfo()
 	if (bInputOkay) {
 		InpInfo.pszModuleName = pInputInOut[nInputSelect]->szModuleName;
 
-	 	if (pInputInOut[nInputSelect]->GetPluginSettings) {
+		if (pInputInOut[nInputSelect]->GetPluginSettings) {
 			pInputInOut[nInputSelect]->GetPluginSettings(&InpInfo);
 		}
 

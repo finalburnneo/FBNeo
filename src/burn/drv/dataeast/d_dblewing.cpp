@@ -634,17 +634,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Double Wings (set 1)
 
 static struct BurnRomInfo dblewingRomDesc[] = {
-	{ "kp_00-.3d",	0x040000, 0x547dc83e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "kp_01-.5d",	0x040000, 0x7a210c33, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kp_00-.3d",			0x040000, 0x547dc83e, 1 | BRF_PRG | BRF_ESS },   //  0 68k Code
+	{ "kp_01-.5d",			0x040000, 0x7a210c33, 1 | BRF_PRG | BRF_ESS },   //  1
 
-	{ "kp_02-.10h",	0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "kp_02-.10h",			0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS },   //  2 Z80 Code
+ 
+	{ "mbe-02.8h",			0x100000, 0x5a6d3ac5, 3 | BRF_GRA },             //  3 Character and Background Tiles
 
-	{ "mbe-02.8h",	0x100000, 0x5a6d3ac5, 3 | BRF_GRA },           //  3 Character and Background Tiles
+	{ "mbe-00.14a",			0x100000, 0xe33f5c93, 4 | BRF_GRA },             //  4 Sprites
+	{ "mbe-01.16a",			0x100000, 0xef452ad7, 4 | BRF_GRA },             //  5
 
-	{ "mbe-00.14a",	0x100000, 0xe33f5c93, 4 | BRF_GRA },           //  4 Sprites
-	{ "mbe-01.16a",	0x100000, 0xef452ad7, 4 | BRF_GRA },           //  5
-
-	{ "kp_03-.16h",	0x020000, 0x5d7f930d, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "kp_03-.16h",			0x020000, 0x5d7f930d, 5 | BRF_SND },             //  6 OKI M6295 Samples
+	
+	{ "pal1618-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
+	{ "pal1618-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
+	{ "pal16r8-vg-02.11b", 	0x00117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, //  9
 };
 
 STD_ROM_PICK(dblewing)
@@ -653,17 +657,21 @@ STD_ROM_FN(dblewing)
 // Double Wings (set 2)
 
 static struct BurnRomInfo dblewingaRomDesc[] = {
-	{ "2.3d",		0x040000, 0x1e6b0653, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "1.5d",		0x040000, 0x4d537dc9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.3d",				0x040000, 0x1e6b0653, 1 | BRF_PRG | BRF_ESS },   //  0 68k Code
+	{ "1.5d",				0x040000, 0x4d537dc9, 1 | BRF_PRG | BRF_ESS },   //  1
 
-	{ "kp_02-.10h",	0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "kp_02-.10h",			0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS },   //  2 Z80 Code
 
-	{ "mbe-02.8h",	0x100000, 0x5a6d3ac5, 3 | BRF_GRA },           //  3 Character and Background Tiles
+	{ "mbe-02.8h",			0x100000, 0x5a6d3ac5, 3 | BRF_GRA },             //  3 Character and Background Tiles
 
-	{ "mbe-00.14a",	0x100000, 0xe33f5c93, 4 | BRF_GRA },           //  4 Sprites
-	{ "mbe-01.16a",	0x100000, 0xef452ad7, 4 | BRF_GRA },           //  5
+	{ "mbe-00.14a",			0x100000, 0xe33f5c93, 4 | BRF_GRA },             //  4 Sprites
+	{ "mbe-01.16a",			0x100000, 0xef452ad7, 4 | BRF_GRA },             //  5
 
-	{ "kp_03-.16h",	0x020000, 0x5d7f930d, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "kp_03-.16h",			0x020000, 0x5d7f930d, 5 | BRF_SND },           	 //  6 OKI M6295 Samples
+	
+	{ "pal1618-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
+	{ "pal1618-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
+	{ "pal16r8-vg-02.11b", 	0x00117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, //  9
 };
 
 STD_ROM_PICK(dblewinga)
@@ -676,17 +684,21 @@ The most noticeable difference with the set below is that it doesn't use checkpo
 Checkpoints were more common in Japan, so this is likely to be an export version.
 */
 static struct BurnRomInfo dblewingbRomDesc[] = {
-	{ "17.3d",	    0x040000, 0x3a7ba822, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "18.5d",	    0x040000, 0xe5f5f004, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "17.3d",	    		0x040000, 0x3a7ba822, 1 | BRF_PRG | BRF_ESS },   //  0 68k Code
+	{ "18.5d",	    		0x040000, 0xe5f5f004, 1 | BRF_PRG | BRF_ESS },   //  1
 
-	{ "kp_02-.10h",	0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "kp_02-.10h",			0x010000, 0xdef035fa, 2 | BRF_PRG | BRF_ESS },   //  2 Z80 Code
 
-	{ "mbe-02.8h",	0x100000, 0x5a6d3ac5, 3 | BRF_GRA },           //  3 Character and Background Tiles
+	{ "mbe-02.8h",			0x100000, 0x5a6d3ac5, 3 | BRF_GRA },             //  3 Character and Background Tiles
 
-	{ "mbe-00.14a",	0x100000, 0xe33f5c93, 4 | BRF_GRA },           //  4 Sprites
-	{ "mbe-01.16a",	0x100000, 0xef452ad7, 4 | BRF_GRA },           //  5
+	{ "mbe-00.14a",			0x100000, 0xe33f5c93, 4 | BRF_GRA },             //  4 Sprites
+	{ "mbe-01.16a",			0x100000, 0xef452ad7, 4 | BRF_GRA },             //  5
 
-	{ "kp_03-.16h",	0x020000, 0x5d7f930d, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "kp_03-.16h",			0x020000, 0x5d7f930d, 5 | BRF_SND },             //  6 OKI M6295 Samples
+	
+	{ "pal1618-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
+	{ "pal1618-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
+	{ "pal16r8-vg-02.11b", 	0x00117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, //  9
 };
 
 STD_ROM_PICK(dblewingb)

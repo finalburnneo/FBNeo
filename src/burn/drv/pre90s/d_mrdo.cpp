@@ -820,7 +820,7 @@ static struct BurnRomInfo mrdoblRomDesc[] = {
 	{ "7603-5.e10",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "82s123.j10",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
 	
-	{ "u001_pal16r6cn.j2.bin",  0x0104, 0x84dbe498, 0 | BRF_OPT },
+	{ "u001_pal16r6cn.j2",  0x0104, 0x84dbe498, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdobl)

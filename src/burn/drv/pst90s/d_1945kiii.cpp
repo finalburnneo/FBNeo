@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvFlagrall = {
 	"flagrall", NULL, NULL, NULL, "1996",
 	"'96 Flag Rally\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, flagrallRomInfo, flagrallRomName, NULL, NULL, NULL, NULL, FlagrallInputInfo, FlagrallDIPInfo,
 	flagrallInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3

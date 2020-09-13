@@ -876,26 +876,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // The Legend of Kage
 
 static struct BurnRomInfo lkageRomDesc[] = {
-	{ "a54-01-2.37",	0x8000, 0x60fd9734, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "a54-02-2.38",	0x8000, 0x878a25ce, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a54-01-2.37",		0x8000, 0x60fd9734, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a54-02-2.38",		0x8000, 0x878a25ce, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "a54-04.54",		0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "a54-04.54",			0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a54-03.51",		0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
+	{ "a54-03.51",			0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "a54-05-1.84",	0x4000, 0x0033c06a, 4 | BRF_GRA },           //  4 Graphics
-	{ "a54-06-1.85",	0x4000, 0x9f04d9ad, 4 | BRF_GRA },           //  5
-	{ "a54-07-1.86",	0x4000, 0xb20561a4, 4 | BRF_GRA },           //  6
-	{ "a54-08-1.87",	0x4000, 0x3ff3b230, 4 | BRF_GRA },           //  7
+	{ "a54-05-1.84",		0x4000, 0x0033c06a, 4 | BRF_GRA },           //  4 Graphics
+	{ "a54-06-1.85",		0x4000, 0x9f04d9ad, 4 | BRF_GRA },           //  5
+	{ "a54-07-1.86",		0x4000, 0xb20561a4, 4 | BRF_GRA },           //  6
+	{ "a54-08-1.87",		0x4000, 0x3ff3b230, 4 | BRF_GRA },           //  7
 
-	{ "a54-10.2",		0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
+	{ "a54-10.2",			0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
+	{ "a54-09.53",			0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
-	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       // 10 Plds (unused)
-	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       // 11
-	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       // 12
-	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       // 13
+	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       	 // 10 Plds (unused)
+	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       	 // 11
+	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       	 // 12
+	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       	 // 13
 };
 
 STD_ROM_PICK(lkage)
@@ -915,26 +915,26 @@ struct BurnDriver BurnDrvLkage = {
 // The Legend of Kage (older)
 
 static struct BurnRomInfo lkageoRomDesc[] = {
-	{ "a54-01-1.37",	0x8000, 0x973da9c5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "a54-02-1.38",	0x8000, 0x27b509da, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a54-01-1.37",		0x8000, 0x973da9c5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a54-02-1.38",		0x8000, 0x27b509da, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "a54-04.54",		0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "a54-04.54",			0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a54-03.51",		0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
+	{ "a54-03.51",			0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "a54-05-1.84",	0x4000, 0x0033c06a, 4 | BRF_GRA },           //  4 Graphics
-	{ "a54-06-1.85",	0x4000, 0x9f04d9ad, 4 | BRF_GRA },           //  5
-	{ "a54-07-1.86",	0x4000, 0xb20561a4, 4 | BRF_GRA },           //  6
-	{ "a54-08-1.87",	0x4000, 0x3ff3b230, 4 | BRF_GRA },           //  7
+	{ "a54-05-1.84",		0x4000, 0x0033c06a, 4 | BRF_GRA },           //  4 Graphics
+	{ "a54-06-1.85",		0x4000, 0x9f04d9ad, 4 | BRF_GRA },           //  5
+	{ "a54-07-1.86",		0x4000, 0xb20561a4, 4 | BRF_GRA },           //  6
+	{ "a54-08-1.87",		0x4000, 0x3ff3b230, 4 | BRF_GRA },           //  7
 
-	{ "a54-10.2",		0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
+	{ "a54-10.2",			0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
+	{ "a54-09.53",			0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
-	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       // 10 Plds (unused)
-	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       // 11
-	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       // 12
-	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       // 13
+	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       	 // 10 Plds (unused)
+	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       	 // 11
+	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       	 // 12
+	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       	 // 13
 };
 
 STD_ROM_PICK(lkageo)
@@ -954,26 +954,26 @@ struct BurnDriver BurnDrvLkageo = {
 // The Legend of Kage (oldest)
 
 static struct BurnRomInfo lkageooRomDesc[] = {
-	{ "a54-01.37",	0x8000, 0x34eab2c5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "a54-02.38",	0x8000, 0xea471d8a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a54-01.37",			0x8000, 0x34eab2c5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a54-02.38",			0x8000, 0xea471d8a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "a54-04.54",			0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
+	{ "a54-03.51",			0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "a54-05.84",	0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
-	{ "a54-06.85",	0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
-	{ "a54-07.86",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
-	{ "a54-08.87",	0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
+	{ "a54-05.84",			0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
+	{ "a54-06.85",			0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
+	{ "a54-07.86",			0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
+	{ "a54-08.87",			0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
 
-	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
+	{ "a54-10.2",			0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",	0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
+	{ "a54-09.53",			0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
-	{ "pal16l8-a54-11.34",   0x0104, 0x56232113, 7 | BRF_OPT },  // 10 Plds (unused)
-	{ "pal16l8-a54-12.76",   0x0104, 0xe57c3c89, 7 | BRF_OPT },  // 11
-	{ "pal16l8a-a54-13.27",  0x0104, 0xc9b1938e, 7 | BRF_OPT },  // 12
-	{ "pal16l8a-a54-14.35",  0x0104, 0xa89c644e, 7 | BRF_OPT },  // 13
+	{ "pal16l8-a54-11.34",  0x0104, 0x56232113, 7 | BRF_OPT },  		 // 10 Plds (unused)
+	{ "pal16l8-a54-12.76",  0x0104, 0xe57c3c89, 7 | BRF_OPT },  		 // 11
+	{ "pal16l8a-a54-13.27", 0x0104, 0xc9b1938e, 7 | BRF_OPT },  		 // 12
+	{ "pal16l8a-a54-14.35", 0x0104, 0xa89c644e, 7 | BRF_OPT },  		 // 13
 };
 
 STD_ROM_PICK(lkageoo)
@@ -993,17 +993,17 @@ struct BurnDriver BurnDrvLkageoo = {
 // The Legend of Kage (bootleg set 1)
 
 static struct BurnRomInfo lkagebRomDesc[] = {
-	{ "ic37_1",	0x8000, 0x05694f7b, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
-	{ "ic38_2",	0x8000, 0x22efe29e, 1 | BRF_PRG | BRF_ESS },     //  1
+	{ "ic37_1",		0x8000, 0x05694f7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "ic38_2",		0x8000, 0x22efe29e, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
+	{ "ic93_5",		0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
+	{ "ic94_6",		0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
+	{ "ic95_7",		0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
+	{ "ic96_8",		0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1032,17 +1032,17 @@ struct BurnDriver BurnDrvLkageb = {
 // The Legend of Kage (bootleg set 2)
 
 static struct BurnRomInfo lkageb2RomDesc[] = {
-	{ "lok.a",	0x8000, 0x866df793, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
-	{ "lok.b",	0x8000, 0xfba9400f, 1 | BRF_PRG | BRF_ESS },     //  1
+	{ "lok.a",		0x8000, 0x866df793, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "lok.b",		0x8000, 0xfba9400f, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
+	{ "ic93_5",		0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
+	{ "ic94_6",		0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
+	{ "ic95_7",		0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
+	{ "ic96_8",		0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1064,17 +1064,17 @@ struct BurnDriver BurnDrvLkageb2 = {
 // The Legend of Kage (bootleg set 3)
 
 static struct BurnRomInfo lkageb3RomDesc[] = {
-	{ "z1.bin",	0x8000, 0x60cac488, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
-	{ "z2.bin",	0x8000, 0x22c95f17, 1 | BRF_PRG | BRF_ESS },     //  1
+	{ "z1.bin",		0x8000, 0x60cac488, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "z2.bin",		0x8000, 0x22c95f17, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
+	{ "ic93_5",		0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
+	{ "ic94_6",		0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
+	{ "ic95_7",		0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
+	{ "ic96_8",		0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1088,6 +1088,38 @@ struct BurnDriver BurnDrvLkageb3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, lkageb3RomInfo, lkageb3RomName, NULL, NULL, NULL, NULL, LkageInputInfo, LkageDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 224, 4, 3
+};
+
+
+// The Legend of Kage (bootleg set 4)
+
+static struct BurnRomInfo lkageb4RomDesc[] = {
+	{ "1.ic37",		0x8000, 0xfa20e863, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.ic38",		0x8000, 0xa5bdd3b4, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "4.ic54",		0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
+
+	{ "5.ic84",		0x4000, 0x0033c06a, 4 | BRF_GRA },           //  4 Graphics
+	{ "6.ic85",		0x4000, 0x9f04d9ad, 4 | BRF_GRA },           //  5
+	{ "7.ic86",		0x4000, 0xb20561a4, 4 | BRF_GRA },           //  6
+	{ "8.ic87",		0x4000, 0x3ff3b230, 4 | BRF_GRA },           //  7
+
+	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
+};
+
+STD_ROM_PICK(lkageb4)
+STD_ROM_FN(lkageb4)
+
+struct BurnDriver BurnDrvLkageb4 = {
+	"lkageb4", "lkage", NULL, NULL, "1984",
+	"The Legend of Kage (bootleg set 4)\0", NULL, "bootleg", "hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	NULL, lkageb4RomInfo, lkageb4RomName, NULL, NULL, NULL, NULL, LkageInputInfo, LkageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

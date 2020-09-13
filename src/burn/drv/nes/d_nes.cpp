@@ -12957,7 +12957,7 @@ struct BurnDriver BurnDrvnes_superpit30t = {
 };
 
 static struct BurnRomInfo nes_touhourououmuRomDesc[] = {
-	{ "TouhouRououmu (HB).nes",          524304, 0x4cf11179, BRF_ESS | BRF_PRG },
+	{ "TouhouRououmu (HB).nes",          524304, 0x0f240b9c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_touhourououmu)
@@ -12965,7 +12965,7 @@ STD_ROM_FN(nes_touhourououmu)
 
 struct BurnDriver BurnDrvnes_touhourououmu = {
 	"nes_touhourououmu", NULL, NULL, NULL, "2019",
-	"TouhouRououmu (HB)\0", NULL, "takahirox", "Miscellaneous",
+	"Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)\0", NULL, "takahirox", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_touhourououmuRomInfo, nes_touhourououmuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15352,6 +15352,23 @@ struct BurnDriver BurnDrvnes_batmaretjok = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_batmaretjokRomInfo, nes_batmaretjokRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_batmavidgamjRomDesc[] = {
+	{ "Batman - The Video Game (Japan).nes",          262160, 0x15f9a645, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batmavidgamj)
+STD_ROM_FN(nes_batmavidgamj)
+
+struct BurnDriver BurnDrvnes_batmavidgamj = {
+	"nes_batmavidgamj", "nes_batmavidgam", NULL, NULL, "1989",
+	"Batman - The Video Game (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_batmavidgamjRomInfo, nes_batmavidgamjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19410,10 +19427,10 @@ STD_ROM_PICK(nes_dynamitebatman)
 STD_ROM_FN(nes_dynamitebatman)
 
 struct BurnDriver BurnDrvnes_dynamitebatman = {
-	"nes_dynamitebatman", NULL, NULL, NULL, "1991",
+	"nes_dynamitebatman", "nes_batmaretjok", NULL, NULL, "1991",
 	"Dynamite Batman (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dynamitebatmanRomInfo, nes_dynamitebatmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30945,6 +30962,23 @@ struct BurnDriver BurnDrvnes_streefigii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_streefigiiiRomDesc[] = {
+	{ "Street Fighter III (Unl).nes",          655376, 0xa21b5886, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefigiii)
+STD_ROM_FN(nes_streefigiii)
+
+struct BurnDriver BurnDrvnes_streefigiii = {
+	"nes_streefigiii", NULL, NULL, NULL, "1989?",
+	"Street Fighter III (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_streefigiiiRomInfo, nes_streefigiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_streetheroesRomDesc[] = {
 	{ "Street Heroes (Taiwan).nes",          1048592, 0xdd65a6cc, BRF_ESS | BRF_PRG },
 };
@@ -31948,36 +31982,53 @@ struct BurnDriver BurnDrvnes_tmnt = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmntiijRomDesc[] = {
+static struct BurnRomInfo nes_tmntiiarcgamjRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (Japan).nes",          524304, 0x7a476257, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmntiij)
-STD_ROM_FN(nes_tmntiij)
+STD_ROM_PICK(nes_tmntiiarcgamj)
+STD_ROM_FN(nes_tmntiiarcgamj)
 
-struct BurnDriver BurnDrvnes_tmntiij = {
-	"nes_tmntiij", "nes_tmntii", NULL, NULL, "1990",
+struct BurnDriver BurnDrvnes_tmntiiarcgamj = {
+	"nes_tmntiiarcgamj", "nes_tmntiiarcgam", NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmntiijRomInfo, nes_tmntiijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmntiiarcgamjRomInfo, nes_tmntiiarcgamjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmntiiRomDesc[] = {
+static struct BurnRomInfo nes_tmntiiarcgamRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (USA).nes",          524304, 0xc9ffbbdb, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmntii)
-STD_ROM_FN(nes_tmntii)
+STD_ROM_PICK(nes_tmntiiarcgam)
+STD_ROM_FN(nes_tmntiiarcgam)
 
-struct BurnDriver BurnDrvnes_tmntii = {
-	"nes_tmntii", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvnes_tmntiiarcgam = {
+	"nes_tmntiiarcgam", NULL, NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles II - The Arcade Game (USA)\0", NULL, "Ultra Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmntiiRomInfo, nes_tmntiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmntiiarcgamRomInfo, nes_tmntiiarcgamRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tmntiimanproRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan).nes",          524304, 0x7929f237, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmntiimanpro)
+STD_ROM_FN(nes_tmntiimanpro)
+
+struct BurnDriver BurnDrvnes_tmntiimanpro = {
+	"nes_tmntiimanpro", "nes_tmntiii", NULL, NULL, "1991",
+	"Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tmntiimanproRomInfo, nes_tmntiimanproRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

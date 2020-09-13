@@ -404,6 +404,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	Cart.PRGRomSize = ROMData[4] * 0x4000;
 	Cart.CHRRomSize = ROMData[5] * 0x2000;
 
+	if (Cart.Crc == 0x2a798367) {
+		// JY 45-in-1 can't be represented by regular nes header.
+		Cart.CHRRomSize = 128 * 0x4000;
+	}
+
 	bprintf(0, _T("PRG Size: %d\n"), Cart.PRGRomSize);
 	bprintf(0, _T("CHR Size: %d\n"), Cart.CHRRomSize);
 
@@ -552,6 +557,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
+	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
 	NESMode |= (ROMCRC == 0xdcd55bec) ? IS_PAL : 0; // Aladdin
 	NESMode |= (ROMCRC == 0xe08a5881) ? IS_PAL : 0; // Beauty and the Beast
 	NESMode |= (ROMCRC == 0xcbde707e) ? IS_PAL : 0; // International Cricket
@@ -979,6 +985,7 @@ static INT32 cart_exp_write_abort; // abort fallthrough - see mapper68
 // mapping 4020 - 5fff, use these callbacks. refer to Sachen 8259
 static void  (*psg_area_write)(UINT16 address, UINT8 data) = NULL;
 static UINT8 (*psg_area_read)(UINT16 address) = NULL;
+static UINT8 read_nt_int(UINT16 address);
 
 static void mapper_map_prg(INT32 pagesz, INT32 slot, INT32 bank, INT32 type = MEM_ROM) // 8000 - ffff
 {
@@ -3982,27 +3989,28 @@ static void mapper228_map()
 
 // --[ mapper 90: jy company
 #define mapper90_209                (mapper_regs[0x1f - 0x0])
+#define mapper90_211                (mapper_regs[0x1f - 0x1])
 
-// 580x: multiplier / accumulator
-#define mapper90_mul0   			(mapper_regs[0x1f - 0x1])
-#define mapper90_mul1   			(mapper_regs[0x1f - 0x2])
-#define mapper90_accu   			(mapper_regs[0x1f - 0x3])
-#define mapper90_testreg			(mapper_regs[0x1f - 0x4])
+// 5800&3: multiplier / accumulator
+#define mapper90_mul0   			(mapper_regs[0x1f - 0x2])
+#define mapper90_mul1   			(mapper_regs[0x1f - 0x3])
+#define mapper90_accu   			(mapper_regs[0x1f - 0x4])
+#define mapper90_testreg			(mapper_regs[0x1f - 0x5])
 
 // c000 - cfff&7: IRQ
-#define mapper90_irqenable			(mapper_regs[0x1f - 0x5])
-#define mapper90_irqmode			(mapper_regs[0x1f - 0x6])
-#define mapper90_irqcounter  		(mapper_regs[0x1f - 0x7])
-#define mapper90_irqprescaler	  	(mapper_regs[0x1f - 0x8])
-#define mapper90_irqxor  			(mapper_regs[0x1f - 0x9])
-#define mapper90_irqprescalermask	(mapper_regs[0x1f - 0xa])
-#define mapper90_irqunknown  		(mapper_regs[0x1f - 0xb])
+#define mapper90_irqenable			(mapper_regs[0x1f - 0x6])
+#define mapper90_irqmode			(mapper_regs[0x1f - 0x7])
+#define mapper90_irqcounter  		(mapper_regs[0x1f - 0x8])
+#define mapper90_irqprescaler	  	(mapper_regs[0x1f - 0x9])
+#define mapper90_irqxor  			(mapper_regs[0x1f - 0xa])
+#define mapper90_irqprescalermask	(mapper_regs[0x1f - 0xb])
+#define mapper90_irqunknown  		(mapper_regs[0x1f - 0xc])
 
 // d000 - d7ff&3: mode
-#define mapper90_mode				(mapper_regs[0x1f - 0xc])
-#define mapper90_mirror				(mapper_regs[0x1f - 0xd])
-#define mapper90_ppu				(mapper_regs[0x1f - 0xe])
-#define mapper90_obank				(mapper_regs[0x1f - 0xf])
+#define mapper90_mode				(mapper_regs[0x1f - 0xd])
+#define mapper90_mirror				(mapper_regs[0x1f - 0xe])
+#define mapper90_ppu				(mapper_regs[0x1f - 0xf])
+#define mapper90_obank				(mapper_regs[0x1f - 0x10])
 
 // 8000 - 87ff&3: PRG
 #define mapper90_prg(x)				(mapper_regs[0x00 + (x)])
@@ -4013,13 +4021,19 @@ static void mapper228_map()
 // a000 - a7ff&7: CHRhi (actually 8bit, ran out of 8bit regs)
 #define mapper90_chrhi(x)			(mapper_regs16[0x00 + (x)])
 
+// mmc4-like 4k chr banking latch
+#define mapper90_chrlatch(x)        (mapper_regs16[0x08 + (x)])
+
 // b000 - b7ff&3: nametable config (&4 = MSB)
-#define mapper90_nt(x)              (mapper_regs16[0x08 + (x)])
+#define mapper90_nt(x)              (mapper_regs16[0x0a + (x)])
+
+// forward --
+static void mapper90_ppu_clockmmc4(UINT16 address);
 
 static void mapper90_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x8000 && address <= 0x87ff) {
-		mapper90_prg(address & 3) = data;
+		mapper90_prg(address & 3) = data & 0x3f;
 	}
 
 	if (address >= 0x9000 && address <= 0x97ff) {
@@ -4032,9 +4046,9 @@ static void mapper90_write(UINT16 address, UINT8 data)
 
 	if (address >= 0xb000 && address <= 0xb7ff) {
 		if (~address & 4) { // LSB
-			mapper90_nt(address&3) = (mapper90_nt(address&3) & 0xff00) | (data << 0);
+			mapper90_nt(address & 3) = (mapper90_nt(address & 3) & 0xff00) | (data << 0);
 		} else { // MSB
-			mapper90_nt(address&3) = (mapper90_nt(address&3) & 0x00ff) | (data << 8);
+			mapper90_nt(address & 3) = (mapper90_nt(address & 3) & 0x00ff) | (data << 8);
 		}
 	}
 
@@ -4049,7 +4063,6 @@ static void mapper90_write(UINT16 address, UINT8 data)
 			case 1:
 				mapper90_irqmode = data;
 				mapper90_irqprescalermask = (data & 4) ? 0x7 : 0xff;
-				//bprintf(0, _T("irq mode: %x\tSL %d\n"), data & 3, scanline);
 				break;
 			case 2:
 				mapper90_irqenable = 0;
@@ -4076,10 +4089,20 @@ static void mapper90_write(UINT16 address, UINT8 data)
 
 	if (address >= 0xd000 && address <= 0xd7ff) {
 		switch (address & 0x0003) {
-			case 0: mapper90_mode = data; break;
+			case 0:
+				mapper90_mode = data | ((mapper90_211) ? 0x20 : 0x00);
+				break;
 			case 1: mapper90_mirror = data; break;
 			case 2: mapper90_ppu = data; break;
-			case 3: mapper90_obank = data; break;
+			case 3:
+				mapper90_obank = data;
+
+				if (mapper90_209 && mapper90_obank & 0x80) {
+					mapper_ppu_clock = mapper90_ppu_clockmmc4; // chr latching. enabled dynamically
+				} else {
+					mapper_ppu_clock = NULL;
+				}
+				break;
 		}
 	}
 
@@ -4092,7 +4115,7 @@ static void mapper90_psg_write(UINT16 address, UINT8 data)
 		case 0x5800: mapper90_mul0 = data; break;
 		case 0x5801: mapper90_mul1 = data; break;
 		case 0x5802: mapper90_accu += data; break;
-		case 0x5803: mapper90_testreg = data; break;
+		case 0x5803: mapper90_testreg = data; mapper90_accu = 0; break;
 	}
 }
 
@@ -4106,7 +4129,7 @@ static UINT8 mapper90_psg_read(UINT16 address)
 	}
 
 	switch (address & 0xffff) {
-		case 0x5000: // jumper register
+		case 0x5000: // jumper/DIP register
 		case 0x5400:
 		case 0x5c00:
 			return 0x00;
@@ -4121,14 +4144,14 @@ static void mapper90_clockirq()
 		case 0x40:
 			mapper90_irqcounter++;
 			if ((mapper90_irqcounter == 0) && mapper90_irqenable) {
-				//bprintf(0, _T("irq+ @ SL %d\n"), scanline);
+				//bprintf(0, _T("irq+ (mode %x) @ SL %d\n"), mapper90_irqmode, scanline);
 				mapper_irq(2);
 			}
 			break;
 		case 0x80:
 			mapper90_irqcounter--;
 			if ((mapper90_irqcounter == 0xff) && mapper90_irqenable) {
-				//bprintf(0, _T("irq- @ SL %d\n"), scanline);
+				//bprintf(0, _T("irq- (mode %x) @ SL %d\n"), mapper90_irqmode, scanline);
 				mapper_irq(2); // 2 - "super mario world (unl)" HUD shaking
 			}
 			break;
@@ -4162,6 +4185,28 @@ static void mapper90_ppu_clock(UINT16 address)
 	}
 }
 
+static void mapper90_ppu_clockmmc4(UINT16 address)
+{
+	switch (address & 0x3ff8) {
+		case 0x0fd8:
+			mapper90_chrlatch(0) = 0;
+			mapper_map();
+			break;
+		case 0x0fe8:
+			mapper90_chrlatch(0) = 2;
+			mapper_map();
+			break;
+		case 0x1fd8:
+			mapper90_chrlatch(1) = 4;
+			mapper_map();
+			break;
+		case 0x1fe8:
+			mapper90_chrlatch(1) = 6;
+			mapper_map();
+			break;
+	}
+}
+
 static void mapper90_scanline()
 {
 	if ((mapper90_irqmode & 3) == 1 && (mmc5_mask[0] & 0x18) /* rendering? */) {
@@ -4174,6 +4219,31 @@ static void mapper90_cycle()
 {
 	if ((mapper90_irqmode & 3) == 0)
 		mapper90_clockpre();
+}
+
+static UINT8 mapper90_exp_read(UINT16 address)
+{
+	return (mapper90_mode & 0x80) ? Cart.PRGRom[PRGExpMap + (address & 0x1fff)] : Cart.WorkRAM[address & 0x1fff];
+}
+
+static void mapper90_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
+{
+	if (mapper90_mode & 0x80) {
+		// prg-rom mode, abort write to wram
+		cart_exp_write_abort = 1; // don't fall-through after callback!
+	}
+}
+
+static UINT8 mapper90_ntread(UINT16 address) // this only gets mapped for 209, 211!
+{
+	if (mapper90_mode & 0x20) {
+		INT32 nt = (address & 0xfff) / 0x400;
+		if (mapper90_mode & 0x40 || ((mapper90_ppu & 0x80) ^ (mapper90_nt(nt) & 0x80))) {
+			return Cart.CHRRom[(mapper90_nt(nt)) * 0x400 + (address & 0x3ff)];
+		}
+	}
+
+	return read_nt_int(address); // fall back to internal
 }
 
 static UINT16 mapper90_getchr(INT32 num)
@@ -4195,60 +4265,66 @@ static UINT16 mapper90_getchr(INT32 num)
 	return ((mapper90_chrlo(num) | (mapper90_chrhi(num) << 8)) & mask) | bank;
 }
 
-static UINT8 mapper90_exp_read(UINT16 address)
+static UINT8 mapper90_bitswap06(UINT8 data)
 {
-	return (mapper90_mode & 0x80) ? Cart.PRGRom[PRGExpMap + (address & 0x1fff)] : Cart.WorkRAM[address & 0x1fff];
-}
-
-static void mapper90_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
-{
-	if (mapper90_mode & 0x80) {
-		// prg-rom mode, abort write to wram
-		cart_exp_write_abort = 1; // don't fall-through after callback!
-	}
+	return (data & 0x40) >> 6 | (data & 0x20) >> 4 | (data & 0x10) >> 2 | (data & 0x08) | (data & 0x04) << 2 | (data & 0x02) << 4 | (data & 0x01) << 6;
 }
 
 static void mapper90_map()
 {
 	// prg
-
+	INT32 prg8_obank  = (mapper90_obank & 6) << 5;
+	INT32 prg16_obank = (mapper90_obank & 6) << 4;
+	INT32 prg32_obank = (mapper90_obank & 6) << 3;
 	switch (mapper90_mode & 3) {
 		case 0x00:
-			mapper_map_prg(32, 0, (mapper90_mode & 0x04) ? mapper90_prg(3) : -1);
+			mapper_map_prg(32, 0, prg32_obank | ((mapper90_mode & 0x04) ? (mapper90_prg(3) & 0xf) : 0xf));
 			if (mapper90_mode & 0x80) {
-				mapper_map_exp_prg(mapper90_prg(3) * 4 + 3);
+				mapper_map_exp_prg(prg8_obank | (((mapper90_prg(3) << 2) + 3) & 0x3f));
 			}
 			break;
 		case 0x01:
-			mapper_map_prg(16, 0, mapper90_prg(1) * 2);
-			mapper_map_prg(16, 1, (mapper90_mode & 0x04) ? mapper90_prg(3) : -1);
+			//bprintf(0, _T("Mapper: JyCompany - 16k prg mode. *untested*\n"));
+			mapper_map_prg(16, 0, prg16_obank | (mapper90_prg(1) & 0x1f));
+			mapper_map_prg(16, 1, prg16_obank | ((mapper90_mode & 0x04) ? (mapper90_prg(3) & 0x1f) : 0x1f));
 			if (mapper90_mode & 0x80) {
-				mapper_map_exp_prg(mapper90_prg(3) * 2 + 3);
+				mapper_map_exp_prg(prg8_obank | (((mapper90_prg(3) << 1) + 1) & 0x3f));
 			}
 			break;
 		case 0x02:
-			mapper_map_prg(8, 0, mapper90_prg(0));
-			mapper_map_prg(8, 1, mapper90_prg(1));
-			mapper_map_prg(8, 2, mapper90_prg(2));
-			mapper_map_prg(8, 3, (mapper90_mode & 0x04) ? mapper90_prg(3) : -1);
+			mapper_map_prg(8, 0, prg8_obank | (mapper90_prg(0) & 0x3f));
+			mapper_map_prg(8, 1, prg8_obank | (mapper90_prg(1) & 0x3f));
+			mapper_map_prg(8, 2, prg8_obank | (mapper90_prg(2) & 0x3f));
+			mapper_map_prg(8, 3, prg8_obank | ((mapper90_mode & 0x04) ? (mapper90_prg(3) & 0x3f) : 0x3f));
 			if (mapper90_mode & 0x80) {
-				mapper_map_exp_prg(mapper90_prg(3));
+				mapper_map_exp_prg(prg8_obank | (mapper90_prg(3) & 0x3f));
 			}
 			break;
-		case 0x03:
-			bprintf(0, _T("Mapper: JyCompany - inverted bits. fail.\n"));
+		case 0x03: // same as 0x02, but with inverted bits
+			//bprintf(0, _T("Mapper: JyCompany - inverted bits. *untested*\n"));
+			mapper_map_prg(8, 0, prg8_obank | (mapper90_bitswap06(mapper90_prg(0)) & 0x3f));
+			mapper_map_prg(8, 1, prg8_obank | (mapper90_bitswap06(mapper90_prg(1)) & 0x3f));
+			mapper_map_prg(8, 2, prg8_obank | (mapper90_bitswap06(mapper90_prg(2)) & 0x3f));
+			mapper_map_prg(8, 3, prg8_obank | ((mapper90_mode & 0x04) ? (mapper90_bitswap06(mapper90_prg(3)) & 0x3f) : 0x3f));
+			if (mapper90_mode & 0x80) {
+				mapper_map_exp_prg(prg8_obank | (mapper90_bitswap06(mapper90_prg(3)) & 0x3f));
+			}
 			break;
 	}
 
 	// chr
-
 	switch (mapper90_mode & 0x18) {
 		case 0x00:
 			mapper_map_chr( 8, 0, mapper90_getchr(0));
 			break;
 		case 0x08:
-			mapper_map_chr( 4, 0, mapper90_getchr(0));
-			mapper_map_chr( 4, 1, mapper90_getchr(4));
+			if (~mapper90_obank & 0x80) { // normal 4k banking
+				mapper_map_chr( 4, 0, mapper90_getchr(0));
+				mapper_map_chr( 4, 1, mapper90_getchr(4));
+			} else {                      // mmc4-like latch 4k banking
+				mapper_map_chr( 4, 0, mapper90_getchr(mapper90_chrlatch(0)));
+				mapper_map_chr( 4, 1, mapper90_getchr(mapper90_chrlatch(1)));
+			}
 			break;
 		case 0x10:
 			mapper_map_chr( 2, 0, mapper90_getchr(0));
@@ -4268,22 +4344,13 @@ static void mapper90_map()
 			break;
 	}
 
-	// nametable config
-	if (mapper90_209 && mapper90_mode & 0x20) { // rom or ram NT's selected
-		if (mapper90_mode & 0x40) { // all rom
-			nametable_mapraw(0, Cart.CHRRom + (mapper90_nt(0) << 10), MEM_ROM);
-			nametable_mapraw(1, Cart.CHRRom + (mapper90_nt(1) << 10), MEM_ROM);
-			nametable_mapraw(2, Cart.CHRRom + (mapper90_nt(2) << 10), MEM_ROM);
-			nametable_mapraw(3, Cart.CHRRom + (mapper90_nt(3) << 10), MEM_ROM);
-		} else { // ram/rom select
-			for (INT32 i = 0; i < 4; i++) {
-				if ((mapper90_ppu & 0x80) ^ (mapper90_nt(i) & 0x80)) { // ROM
-					nametable_mapraw(i, Cart.CHRRom + (mapper90_nt(i) << 10), MEM_ROM);
-				} else { // RAM
-					nametable_map(i, mapper90_nt(i) & 1);
-				}
-			}
-		}
+	// nametable config - if rom nt's are selected, they will be fed via mapper90_ntread()
+	// a RAM nt is always selected for writing, though. (re: Tiny Toon Adv. 6 intro)
+	if (mapper90_209 && mapper90_mode & 0x20) {
+		nametable_map(0, mapper90_nt(0) & 1);
+		nametable_map(1, mapper90_nt(1) & 1);
+		nametable_map(2, mapper90_nt(2) & 1);
+		nametable_map(3, mapper90_nt(3) & 1);
 	} else {
 		//standard nt config
 		switch (mapper90_mirror & 0x3) {
@@ -4293,9 +4360,22 @@ static void mapper90_map()
 			case 3: set_mirroring(SINGLE_HIGH); break;
 		}
 	}
-
 }
+#undef mapper90_irqenable
+#undef mapper90_irqmode
+#undef mapper90_irqcounter
+#undef mapper90_irqprescaler
+#undef mapper90_irqxor
+#undef mapper90_irqprescalermask
+#undef mapper90_irqunknown
+#undef mapper90_mode
 #undef mapper90_mirror
+#undef mapper90_ppu
+#undef mapper90_obank
+#undef mapper90_prg
+#undef mapper90_chrlo
+#undef mapper90_chrhi
+#undef mapper90_nt
 
 // --[ mapper 91: older JyCompany/Hummer
 #define mapper91_prg(x)		(mapper_regs[0x00 + (x)])
@@ -6594,6 +6674,7 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 211: mapper90_211 = 1;
 		case 209: mapper90_209 = 1;
 		case 90: { // JY Company
 			mapper_write = mapper90_write;       // 8000 - ffff
@@ -6604,39 +6685,20 @@ static INT32 mapper_init(INT32 mappernum)
 
 			mapper_scanline = mapper90_scanline;
 			mapper_cycle = mapper90_cycle;
-			mapper_ppu_clockall = mapper90_ppu_clock;
+			mapper_ppu_clockall = mapper90_ppu_clock; // irq
+			if (mapper90_209) {
+				read_nt = &mapper90_ntread;
+			}
 
 			mapper_map   = mapper90_map;
 
+			// mapper defaults
 			mapper90_mul0 = 0xff;
 			mapper90_mul1 = 0xff;
 			mapper90_accu = 0xff;
 			mapper90_testreg = 0xff;
-
-#if 0
-			mapper90_prg(0) = 0xff;
-			mapper90_prg(1) = 0xff;
-			mapper90_prg(2) = 0xff;
-			mapper90_prg(3) = 0xff;
-
-			mapper90_chrlo(0) = 0xff;
-			mapper90_chrlo(1) = 0xff;
-			mapper90_chrlo(2) = 0xff;
-			mapper90_chrlo(3) = 0xff;
-			mapper90_chrlo(4) = 0xff;
-			mapper90_chrlo(5) = 0xff;
-			mapper90_chrlo(6) = 0xff;
-			mapper90_chrlo(7) = 0xff;
-
-			mapper90_chrhi(0) = 0xff;
-			mapper90_chrhi(1) = 0xff;
-			mapper90_chrhi(2) = 0xff;
-			mapper90_chrhi(3) = 0xff;
-			mapper90_chrhi(4) = 0xff;
-			mapper90_chrhi(5) = 0xff;
-			mapper90_chrhi(6) = 0xff;
-			mapper90_chrhi(7) = 0xff;
-#endif
+			mapper90_chrlatch(0) = 0;
+			mapper90_chrlatch(1) = 4;
 
 			mapper_map();
 			retval = 0;
@@ -34109,6 +34171,108 @@ struct BurnDriver BurnDrvnes_saintseiougdenkahen = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_saintseiougdenkahenRomInfo, nes_saintseiougdenkahenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_donkekoncou4RomDesc[] = {
+	{ "Donkey Kong Country 4 (Unl).nes",          524304, 0x5ae55685, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_donkekoncou4)
+STD_ROM_FN(nes_donkekoncou4)
+
+struct BurnDriver BurnDrvnes_donkekoncou4 = {
+	"nes_donkekoncou4", NULL, NULL, NULL, "1989?",
+	"Donkey Kong Country 4 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_donkekoncou4RomInfo, nes_donkekoncou4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_powerrangersiiiRomDesc[] = {
+	{ "Power Rangers III (Unl).nes",          393232, 0x94192c10, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_powerrangersiii)
+STD_ROM_FN(nes_powerrangersiii)
+
+struct BurnDriver BurnDrvnes_powerrangersiii = {
+	"nes_powerrangersiii", NULL, NULL, NULL, "1989?",
+	"Power Rangers III (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_powerrangersiiiRomInfo, nes_powerrangersiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_powerrangersivRomDesc[] = {
+	{ "Power Rangers IV (Unl).nes",          393232, 0x4faed070, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_powerrangersiv)
+STD_ROM_FN(nes_powerrangersiv)
+
+struct BurnDriver BurnDrvnes_powerrangersiv = {
+	"nes_powerrangersiv", NULL, NULL, NULL, "1989?",
+	"Power Rangers IV (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_powerrangersivRomInfo, nes_powerrangersivRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tekken2RomDesc[] = {
+	{ "Tekken 2 (Unl).nes",          655376, 0x9a51e26c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tekken2)
+STD_ROM_FN(nes_tekken2)
+
+struct BurnDriver BurnDrvnes_tekken2 = {
+	"nes_tekken2", NULL, NULL, NULL, "1989?",
+	"Tekken 2 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tekken2RomInfo, nes_tekken2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tekken3RomDesc[] = {
+	{ "Tekken 3 (Unl).nes",          393232, 0xc61358ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tekken3)
+STD_ROM_FN(nes_tekken3)
+
+struct BurnDriver BurnDrvnes_tekken3 = {
+	"nes_tekken3", NULL, NULL, NULL, "1989?",
+	"Tekken 3 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tekken3RomInfo, nes_tekken3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tinytooadv6RomDesc[] = {
+	{ "Tiny Toon Adventures 6 (Unl).nes",          524304, 0x476cb108, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinytooadv6)
+STD_ROM_FN(nes_tinytooadv6)
+
+struct BurnDriver BurnDrvnes_tinytooadv6 = {
+	"nes_tinytooadv6", NULL, NULL, NULL, "1989?",
+	"Tiny Toon Adventures 6 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tinytooadv6RomInfo, nes_tinytooadv6RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

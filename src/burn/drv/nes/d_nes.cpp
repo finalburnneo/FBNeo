@@ -550,7 +550,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
-	NESMode |= (ROMCRC == 0xc6fd114e) ? ALT_TIMING : 0; // contra 168-in-1
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
 	NESMode |= (ROMCRC == 0xa2d504a8) ? ALT_TIMING : 0; // assimilate

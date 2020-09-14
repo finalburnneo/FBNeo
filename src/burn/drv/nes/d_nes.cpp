@@ -369,7 +369,7 @@ static void nametable_map(INT32 nt, INT32 ntbank);
 static void nametable_mapraw(INT32 nt, UINT8 *ntraw, UINT8 type);
 static void nametable_mapall(INT32 ntbank0, INT32 ntbank1, INT32 ntbank2, INT32 ntbank3);
 
-enum { MEM_RAM = 0, MEM_ROM = 1 };
+enum { MEM_RAM = 0, MEM_RAM_RO = 1, MEM_ROM = 2 };
 static void mapper_set_chrtype(INT32 type);
 
 static INT32 mapper_init(INT32 mappernum);
@@ -971,7 +971,7 @@ static INT32 fds_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 static UINT32 PRGMap[4];
 static UINT8  PRGType[4];
 static UINT32 CHRMap[8];
-static UINT8  CHRType[8]; // enum { MEM_RAM = 0, MEM_ROM };
+static UINT8  CHRType[8]; // enum { MEM_RAM = 0, MEM_RAM_RO = 1, MEM_ROM = 2};
 static UINT8  mapper_regs[0x20]; // General-purpose mapper registers (8bit)
 static UINT16 mapper_regs16[0x20]; // General-purpose mapper registers (16bit)
 static INT32 mapper_irq_exec; // cycle-delayed irq for mapper_irq();
@@ -1027,6 +1027,7 @@ static void mapper_map_chr(INT32 pagesz, INT32 slot, INT32 bank)
 				break;
 
 			case MEM_RAM:
+			case MEM_RAM_RO:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
 				break;
 		}
@@ -1043,6 +1044,7 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 				break;
 
 			case MEM_RAM:
+			case MEM_RAM_RO:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
 				CHRType[pagesz * slot + i] = MEM_RAM;
 				break;
@@ -1078,6 +1080,7 @@ static UINT8 mapper_chr_read(UINT16 address)
 			return Cart.CHRRom[CHRMap[address / 1024] + (address & (1024 - 1))];
 
 		case MEM_RAM:
+		case MEM_RAM_RO:
 			return Cart.CHRRam[CHRMap[address / 1024] + (address & (1024 - 1))];
 	}
 
@@ -1928,6 +1931,61 @@ static void mapper41_map()
 #undef mapper41_prg
 #undef mapper41_chr
 #undef mapper41_mirror
+
+// ---[ mapper 15 Contra 168-in-1 Multicart
+#define mapper15_prg		(mapper_regs[0])
+#define mapper15_prgbit		(mapper_regs[1])
+#define mapper15_prgmode	(mapper_regs[2])
+#define mapper15_mirror		(mapper_regs[3])
+
+static void mapper15_write(UINT16 address, UINT8 data)
+{
+	mapper15_mirror = data & 0x40;
+	mapper15_prg = (data & 0x7f) << 1;
+	mapper15_prgbit = (data & 0x80) >> 7;
+	mapper15_prgmode = address & 0xff; // must ignore weird writes.
+
+	mapper_map();
+}
+
+static void mapper15_map()
+{
+	switch (mapper15_prgmode) {
+		case 0x00:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 2) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 3) ^ mapper15_prgbit);
+			break;
+		case 0x01:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | 0x0e | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 1) | 0x0e | mapper15_prgbit);
+			break;
+		case 0x02:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 0) | mapper15_prgbit);
+			break;
+		case 0x03:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 1) | mapper15_prgbit);
+			break;
+	}
+
+	mapper_map_chr_ramrom( 8, 0, 0, (mapper15_prgmode == 3) ? MEM_RAM_RO : MEM_RAM);
+
+	set_mirroring((mapper15_mirror & 0x40) ? HORIZONTAL : VERTICAL);
+}
+
+#undef mapper15_prg
+#undef mapper15_prgbit
+#undef mapper15_prgmode
+#undef mapper15_mirror
 
 // ---[ mapper 389 Caltron 9-in-1
 #define mapper389_reg8  (mapper_regs[0])
@@ -6421,6 +6479,14 @@ static INT32 mapper_init(INT32 mappernum)
 		case 2: { // UxROM
 			mapper_write = mapper02_write;
 			mapper_map   = mapper02_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 15: { // Contra 168-in-1 Multicart
+			mapper_write = mapper15_write;
+			mapper_map   = mapper15_map;
 			mapper_map();
 			retval = 0;
 			break;
@@ -12957,7 +13023,7 @@ struct BurnDriver BurnDrvnes_superpit30t = {
 };
 
 static struct BurnRomInfo nes_touhourououmuRomDesc[] = {
-	{ "TouhouRououmu (HB).nes",          524304, 0x4cf11179, BRF_ESS | BRF_PRG },
+	{ "TouhouRououmu (HB).nes",          524304, 0x0f240b9c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_touhourououmu)
@@ -12965,7 +13031,7 @@ STD_ROM_FN(nes_touhourououmu)
 
 struct BurnDriver BurnDrvnes_touhourououmu = {
 	"nes_touhourououmu", NULL, NULL, NULL, "2019",
-	"TouhouRououmu (HB)\0", NULL, "takahirox", "Miscellaneous",
+	"Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)\0", NULL, "takahirox", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_touhourououmuRomInfo, nes_touhourououmuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15352,6 +15418,23 @@ struct BurnDriver BurnDrvnes_batmaretjok = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_batmaretjokRomInfo, nes_batmaretjokRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_batmavidgamjRomDesc[] = {
+	{ "Batman - The Video Game (Japan).nes",          262160, 0x15f9a645, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batmavidgamj)
+STD_ROM_FN(nes_batmavidgamj)
+
+struct BurnDriver BurnDrvnes_batmavidgamj = {
+	"nes_batmavidgamj", "nes_batmavidgam", NULL, NULL, "1989",
+	"Batman - The Video Game (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_batmavidgamjRomInfo, nes_batmavidgamjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19410,10 +19493,10 @@ STD_ROM_PICK(nes_dynamitebatman)
 STD_ROM_FN(nes_dynamitebatman)
 
 struct BurnDriver BurnDrvnes_dynamitebatman = {
-	"nes_dynamitebatman", NULL, NULL, NULL, "1991",
+	"nes_dynamitebatman", "nes_batmaretjok", NULL, NULL, "1991",
 	"Dynamite Batman (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_dynamitebatmanRomInfo, nes_dynamitebatmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30945,6 +31028,23 @@ struct BurnDriver BurnDrvnes_streefigii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_streefigiiiRomDesc[] = {
+	{ "Street Fighter III (Unl).nes",          655376, 0xa21b5886, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefigiii)
+STD_ROM_FN(nes_streefigiii)
+
+struct BurnDriver BurnDrvnes_streefigiii = {
+	"nes_streefigiii", NULL, NULL, NULL, "1989?",
+	"Street Fighter III (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_streefigiiiRomInfo, nes_streefigiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_streetheroesRomDesc[] = {
 	{ "Street Heroes (Taiwan).nes",          1048592, 0xdd65a6cc, BRF_ESS | BRF_PRG },
 };
@@ -31948,36 +32048,53 @@ struct BurnDriver BurnDrvnes_tmnt = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmntiijRomDesc[] = {
+static struct BurnRomInfo nes_tmntiiarcgamjRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (Japan).nes",          524304, 0x7a476257, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmntiij)
-STD_ROM_FN(nes_tmntiij)
+STD_ROM_PICK(nes_tmntiiarcgamj)
+STD_ROM_FN(nes_tmntiiarcgamj)
 
-struct BurnDriver BurnDrvnes_tmntiij = {
-	"nes_tmntiij", "nes_tmntii", NULL, NULL, "1990",
+struct BurnDriver BurnDrvnes_tmntiiarcgamj = {
+	"nes_tmntiiarcgamj", "nes_tmntiiarcgam", NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmntiijRomInfo, nes_tmntiijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmntiiarcgamjRomInfo, nes_tmntiiarcgamjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmntiiRomDesc[] = {
+static struct BurnRomInfo nes_tmntiiarcgamRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (USA).nes",          524304, 0xc9ffbbdb, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmntii)
-STD_ROM_FN(nes_tmntii)
+STD_ROM_PICK(nes_tmntiiarcgam)
+STD_ROM_FN(nes_tmntiiarcgam)
 
-struct BurnDriver BurnDrvnes_tmntii = {
-	"nes_tmntii", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvnes_tmntiiarcgam = {
+	"nes_tmntiiarcgam", NULL, NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles II - The Arcade Game (USA)\0", NULL, "Ultra Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmntiiRomInfo, nes_tmntiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmntiiarcgamRomInfo, nes_tmntiiarcgamRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tmntiimanproRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan).nes",          524304, 0x7929f237, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmntiimanpro)
+STD_ROM_FN(nes_tmntiimanpro)
+
+struct BurnDriver BurnDrvnes_tmntiimanpro = {
+	"nes_tmntiimanpro", "nes_tmntiii", NULL, NULL, "1991",
+	"Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tmntiimanproRomInfo, nes_tmntiimanproRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

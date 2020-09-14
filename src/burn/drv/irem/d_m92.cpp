@@ -3437,6 +3437,45 @@ struct BurnDriver BurnDrvNbbatmanu = {
 };
 
 
+// Ninja Baseball Batman (One Key Edition, Hack)
+// Hack by 哆啦A梦
+
+static struct BurnRomInfo nbbatmanoRomDesc[] = {
+	{ "6_h0o.34",		0x040000, 0xad7e9c69, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "3_l0o.31",		0x040000, 0x17da7b70, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a1-h1-.33",		0x040000, 0x3ce2aab5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a1-l1-.32",		0x040000, 0x116d9bcc, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "a1-sh0-.14",		0x010000, 0xb7fae3e6, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "a1-sl0-.17",		0x010000, 0xb26d54fc, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "lh534k0c.9",		0x080000, 0x314a0c6d, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "lh534k0e.10",	0x080000, 0xdc31675b, 3 | BRF_GRA },           //  7
+	{ "lh534k0f.11",	0x080000, 0xe15d8bfb, 3 | BRF_GRA },           //  8
+	{ "lh534k0g.12",	0x080000, 0x888d71a3, 3 | BRF_GRA },           //  9
+
+	{ "lh538393.42",	0x100000, 0x26cdd224, 4 | BRF_GRA },           // 10 Sprites
+	{ "lh538394.43",	0x100000, 0x4bbe94fa, 4 | BRF_GRA },           // 11
+	{ "lh538395.44",	0x100000, 0x2a533b5e, 4 | BRF_GRA },           // 12
+	{ "lh538396.45",	0x100000, 0x863a66fa, 4 | BRF_GRA },           // 13
+
+	{ "lh534k0k.8",		0x080000, 0x735e6380, 5 | BRF_SND },           // 14 Irem GA20 Samples
+};
+
+STD_ROM_PICK(nbbatmano)
+STD_ROM_FN(nbbatmano)
+
+struct BurnDriver BurnDrvNbbatmano = {
+	"nbbatmano", "nbbatman", NULL, NULL, "2020-09-06",
+	"Ninja Baseball Batman (One Key Edition, Hack)\0", NULL, "Hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbatmanoRomInfo, nbbatmanoRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Yakyuu Kakutou League-Man (Japan)
 
 static struct BurnRomInfo leaguemnRomDesc[] = {

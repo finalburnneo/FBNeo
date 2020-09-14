@@ -90,6 +90,12 @@ INT32 ConfigGameLoad(bool bOverWrite)
 				continue;
 			}
 
+			szValue = LabelCheck(szLine, _T("afire"));
+			if (szValue) {
+				GameMacroAutofireRead(szValue, bOverWrite);
+				continue;
+			}
+
 			szValue = LabelCheck(szLine, _T("custom"));
 			if (szValue) {
 				GameInpCustomRead(szValue, bOverWrite);

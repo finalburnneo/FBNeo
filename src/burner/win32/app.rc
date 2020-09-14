@@ -66,7 +66,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDCANCEL,228,225,50,14
     GROUPBOX        "", IDC_STATIC, 3, 0, 277, 220
-    CTEXT           "Double-click an input to change its mapping",IDC_STATIC,7,7,265,15,SS_CENTERIMAGE
+    CTEXT           "Double-click an input to change its mapping, Check the macro to auto-fire",IDC_STATIC,7,7,265,15,SS_CENTERIMAGE
     CONTROL         "List1",IDC_INPD_LIST,"SysListView32",LVS_REPORT | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP, 9, 24, 265, 128
 
     CONTROL         "", IDC_STATIC, "Static", SS_SUNKEN, 9, 156, 265, 58

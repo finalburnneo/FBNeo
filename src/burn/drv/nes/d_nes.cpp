@@ -369,7 +369,7 @@ static void nametable_map(INT32 nt, INT32 ntbank);
 static void nametable_mapraw(INT32 nt, UINT8 *ntraw, UINT8 type);
 static void nametable_mapall(INT32 ntbank0, INT32 ntbank1, INT32 ntbank2, INT32 ntbank3);
 
-enum { MEM_RAM = 0, MEM_ROM = 1 };
+enum { MEM_RAM = 0, MEM_RAM_RO = 1, MEM_ROM = 2 };
 static void mapper_set_chrtype(INT32 type);
 
 static INT32 mapper_init(INT32 mappernum);
@@ -550,6 +550,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
+	NESMode |= (ROMCRC == 0xc6fd114e) ? ALT_TIMING : 0; // contra 168-in-1
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
 	NESMode |= (ROMCRC == 0xa2d504a8) ? ALT_TIMING : 0; // assimilate
@@ -971,7 +972,7 @@ static INT32 fds_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 static UINT32 PRGMap[4];
 static UINT8  PRGType[4];
 static UINT32 CHRMap[8];
-static UINT8  CHRType[8]; // enum { MEM_RAM = 0, MEM_ROM };
+static UINT8  CHRType[8]; // enum { MEM_RAM = 0, MEM_RAM_RO = 1, MEM_ROM = 2};
 static UINT8  mapper_regs[0x20]; // General-purpose mapper registers (8bit)
 static UINT16 mapper_regs16[0x20]; // General-purpose mapper registers (16bit)
 static INT32 mapper_irq_exec; // cycle-delayed irq for mapper_irq();
@@ -1027,6 +1028,7 @@ static void mapper_map_chr(INT32 pagesz, INT32 slot, INT32 bank)
 				break;
 
 			case MEM_RAM:
+			case MEM_RAM_RO:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
 				break;
 		}
@@ -1043,6 +1045,7 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 				break;
 
 			case MEM_RAM:
+			case MEM_RAM_RO:
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
 				CHRType[pagesz * slot + i] = MEM_RAM;
 				break;
@@ -1078,6 +1081,7 @@ static UINT8 mapper_chr_read(UINT16 address)
 			return Cart.CHRRom[CHRMap[address / 1024] + (address & (1024 - 1))];
 
 		case MEM_RAM:
+		case MEM_RAM_RO:
 			return Cart.CHRRam[CHRMap[address / 1024] + (address & (1024 - 1))];
 	}
 
@@ -1928,6 +1932,61 @@ static void mapper41_map()
 #undef mapper41_prg
 #undef mapper41_chr
 #undef mapper41_mirror
+
+// ---[ mapper 15 Contra 168-in-1 Multicart
+#define mapper15_prg		(mapper_regs[0])
+#define mapper15_prgbit		(mapper_regs[1])
+#define mapper15_prgmode	(mapper_regs[2])
+#define mapper15_mirror		(mapper_regs[3])
+
+static void mapper15_write(UINT16 address, UINT8 data)
+{
+	mapper15_mirror = data & 0x40;
+	mapper15_prg = (data & 0x7f) << 1;
+	mapper15_prgbit = (data & 0x80) >> 7;
+	mapper15_prgmode = address & 0xff; // must ignore weird writes.
+
+	mapper_map();
+}
+
+static void mapper15_map()
+{
+	switch (mapper15_prgmode) {
+		case 0x00:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 2) ^ mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 3) ^ mapper15_prgbit);
+			break;
+		case 0x01:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | 0x0e | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 1) | 0x0e | mapper15_prgbit);
+			break;
+		case 0x02:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 0) | mapper15_prgbit);
+			break;
+		case 0x03:
+			mapper_map_prg( 8, 0, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 1, (mapper15_prg + 1) | mapper15_prgbit);
+			mapper_map_prg( 8, 2, (mapper15_prg + 0) | mapper15_prgbit);
+			mapper_map_prg( 8, 3, (mapper15_prg + 1) | mapper15_prgbit);
+			break;
+	}
+
+	mapper_map_chr_ramrom( 8, 0, 0, (mapper15_prgmode == 3) ? MEM_RAM_RO : MEM_RAM);
+
+	set_mirroring((mapper15_mirror & 0x40) ? HORIZONTAL : VERTICAL);
+}
+
+#undef mapper15_prg
+#undef mapper15_prgbit
+#undef mapper15_prgmode
+#undef mapper15_mirror
 
 // ---[ mapper 389 Caltron 9-in-1
 #define mapper389_reg8  (mapper_regs[0])
@@ -6421,6 +6480,14 @@ static INT32 mapper_init(INT32 mappernum)
 		case 2: { // UxROM
 			mapper_write = mapper02_write;
 			mapper_map   = mapper02_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 15: { // Contra 168-in-1 Multicart
+			mapper_write = mapper15_write;
+			mapper_map   = mapper15_map;
 			mapper_map();
 			retval = 0;
 			break;

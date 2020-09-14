@@ -761,6 +761,13 @@
 		<rom name="Batman - Return of the Joker (USA).nes" size="393232" crc="e14a7971"/>
 		<driver status="good"/>
 	</game>
+	<game name="batmavidgamj" cloneof="batmavidgam" romof="batmavidgam">
+		<description>Batman - The Video Game (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Batman - The Video Game (Japan).nes" size="262160" crc="15f9a645"/>
+		<driver status="good"/>
+	</game>
 	<game name="batmavidgam">
 		<description>Batman - The Video Game (USA)</description>
 		<year>1990</year>
@@ -2630,7 +2637,7 @@
 		<rom name="Dushlan (2016)(Peter McQuillan).nes" size="40976" crc="07614f71"/>
 		<driver status="good"/>
 	</game>
-	<game name="dynamitebatman">
+	<game name="dynamitebatman" cloneof="batmaretjok" romof="batmaretjok">
 		<description>Dynamite Batman (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -7908,6 +7915,13 @@
 		<rom name="Street Fighter II - The World Warrior (Unl).nes" size="262160" crc="dedfa5bb"/>
 		<driver status="good"/>
 	</game>
+	<game name="streefigiii">
+		<description>Street Fighter III (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Street Fighter III (Unl).nes" size="655376" crc="a21b5886"/>
+		<driver status="good"/>
+	</game>
 	<game name="streetheroes">
 		<description>Street Heroes (Taiwan)</description>
 		<year>1989?</year>
@@ -8377,18 +8391,25 @@
 		<rom name="Teenage Mutant Ninja Turtles (USA).nes" size="262160" crc="83213ca0"/>
 		<driver status="good"/>
 	</game>
-	<game name="tmntiij" cloneof="tmntii" romof="tmntii">
+	<game name="tmntiiarcgamj" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
 		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles II - The Arcade Game (Japan).nes" size="524304" crc="7a476257"/>
 		<driver status="good"/>
 	</game>
-	<game name="tmntii">
+	<game name="tmntiiarcgam">
 		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (USA)</description>
 		<year>1990</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles II - The Arcade Game (USA).nes" size="524304" crc="c9ffbbdb"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmntiimanpro" cloneof="tmntiii" romof="tmntiii">
+		<description>Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan).nes" size="524304" crc="7929f237"/>
 		<driver status="good"/>
 	</game>
 	<game name="tmntiii">
@@ -8770,10 +8791,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="touhourououmu">
-		<description>TouhouRououmu (HB) [Homebrew]</description>
+		<description>Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>takahirox</manufacturer>
-		<rom name="TouhouRououmu (HB).nes" size="524304" crc="4cf11179"/>
+		<rom name="TouhouRououmu (HB).nes" size="524304" crc="0f240b9c"/>
 		<driver status="good"/>
 	</game>
 	<game name="toukonclub">

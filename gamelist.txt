@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14468 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14473 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -964,6 +964,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_batmanmv	|  	| Batman - The Movie (128K)				| 		| 1989	| Ocean		| ZX Spectrum	| 					|
 | msx_batmanmv	|  	| Batman - The Movie (Euro)				| 		| 1989	| Ocean Software| MSX		| 					|
 | spec_batmanpe	|  	| Batman - The Puaj Edition (48K)			| 		| 1989	| Micro House	| ZX Spectrum	| 					|
+| nes_batmavidgamj|  	| Batman - The Video Game (Japan)			| nes_batmavidgam| 1989	| Sunsoft	| Miscellaneous	| 					|
 | nes_batmavidgam|  	| Batman - The Video Game (USA)				| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
 | gg_batmanf	|  	| Batman Forever (World)				| 		| 1995	| Acclaim Entert| Sega Game Gear| 					|
 | md_batmanf	|  	| Batman Forever (World)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
@@ -3441,7 +3442,7 @@ This list contains all games supported by FinalBurn Neo.
 | dcclubj	|  	| Dynamic Country Club (Japan, ROM Based)		| dcclub	| 1991	| Sega		| System 24	| 					|
 | dcclubfd	|  	| Dynamic Country Club (US, Floppy Based, FD1094 317-005| dcclub	| 1991	| Sega		| System 24	| 					|
 | dcclub	|  	| Dynamic Country Club (World, ROM Based)		| 		| 1991	| Sega		| System 24	| 					|
-| nes_dynamitebatman|  	| Dynamite Batman (Japan)				| 		| 1991	| Sunsoft	| Miscellaneous	| 					|
+| nes_dynamitebatman|  	| Dynamite Batman (Japan)				| nes_batmaretjok| 1991	| Sunsoft	| Miscellaneous	| 					|
 | dynabomb	|  	| Dynamite Bomber (Korea, Rev 1.5)			| 		| 2000	| Limenko	| Miscellaneous	| 					|
 | msx_dynabowl	|  	| Dynamite Bowl (Jpn)					| 		| 1988	| Toshiba EMI	| MSX		| 					|
 | msx_dynadan	|  	| Dynamite Dan (Euro)					| 		| 1986	| Mirrorsoft	| MSX		| 					|
@@ -6116,6 +6117,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2104	|  	| Knights of Valour 2 (V104, China)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2106	|  	| Knights of Valour 2 (V106, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2		|  	| Knights of Valour 2 (V107, Hong Kong)			| 		| 2000	| IGS		| PolyGameMaster| 					|
+| kov2pemp	|  	| Knights of Valour 2 Plus - Extend Magic Plus (Hack)	| kov2p		| 2020-09-07| Hack		| PolyGameMaster| 					|
 | kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S| kov2p		| 2020-07-22| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japa| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
@@ -6123,7 +6125,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
-| kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-07-08| Hack		| PolyGameMaster| 					|
+| kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-09-10| Hack		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119, Kor| kovplus	| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2020-07-21| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -8062,6 +8064,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_nikopun	| D NW	| Niko Niko, Pun					| 		| 1991	| NHK Enterprise| PC Engine	| Locks up in-game?			|
 | nes_nimnom	|  	| Nim & Nom (HB, v1.2)					| 		| 2018	| Metakrill	| Miscellaneous	| 					|
 | ninja		|  	| Ninja (315-5102)					| seganinj	| 1985	| Sega		| System 1	| 					|
+| nbbatmano	|  	| Ninja Baseball Batman (One Key Edition, Hack)		| nbbatman	| 2020-09-06| Hack		| Irem M92	| 					|
 | nbbatmanu	|  	| Ninja Baseball Batman (US)				| nbbatman	| 1993	| Irem America	| Irem M92	| 					|
 | nbbatman	|  	| Ninja Baseball Batman (World)				| 		| 1993	| Irem		| Irem M92	| 					|
 | md_ninjab	|  	| Ninja Burai Densetsu (Jpn)				| 		| 1991	| Sega		| Sega Megadrive| 					|
@@ -11328,6 +11331,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2dongb	|  	| Street Fighter II': Champion Edition (Dongfang Bubai p| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceb	|  	| Street Fighter II': Champion Edition (Playmark bootleg| sf2ce		| 1992	| bootleg (Playm| CPS1		| 					|
 | sf2ceba	|  	| Street Fighter II': Champion Edition (Playmark bootleg| sf2ce		| 1992	| bootleg (Playm| CPS1		| 					|
+| nes_streefigiii|  	| Street Fighter III (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sfiii2n	|  	| Street Fighter III 2nd Impact: Giant Attack (Asia 9709| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
 | sfiii2j	|  	| Street Fighter III 2nd Impact: Giant Attack (Japan 970| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
 | sfiii2	|  	| Street Fighter III 2nd Impact: Giant Attack (USA 97093| 		| 1997	| Capcom	| CPS-3		| 					|
@@ -12185,8 +12189,9 @@ This list contains all games supported by FinalBurn Neo.
 | tmnt2		|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| 		| 1991	| Konami	| GX063		| 					|
 | tmnt24pu	|  	| Teenage Mutant Ninja Turtles - Turtles in Time (4 Play| tmnt2		| 1991	| Konami	| GX063		| 					|
 | md_tmntru	|  	| Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy | 		| 199?	| <unknown>	| Sega Megadrive| 					|
-| nes_tmntiij	|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (Jap| nes_tmntii	| 1990	| Konami	| Miscellaneous	| 					|
-| nes_tmntii	|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (USA| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_tmntiiarcgamj|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (Jap| nes_tmntiiarcgam| 1990	| Konami	| Miscellaneous	| 					|
+| nes_tmntiiarcgam|  	| Teenage Mutant Ninja Turtles II - The Arcade Game (USA| 		| 1990	| Ultra Games	| Miscellaneous	| 					|
+| nes_tmntiimanpro|  	| Teenage Mutant Ninja Turtles II - The Manhattan Projec| nes_tmntiii	| 1991	| Konami	| Miscellaneous	| 					|
 | nes_tmntiii	|  	| Teenage Mutant Ninja Turtles III - The Manhattan Proje| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_tmnttoufig|  	| Teenage Mutant Ninja Turtles Tournament Fighters (USA)| 		| 1994	| Konami	| Miscellaneous	| 					|
 | md_teenqueen	|  	| Teenage Queen The Demo (HB)				| 		| 2006	| Spoutnick Team| Sega Megadrive| 					|
@@ -12225,7 +12230,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-08-11| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-09-06| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | tengai	|  	| Tengai (World)					| 		| 1996	| Psikyo	| Psikyo 68EC020| 					|
 | tengaij	|  	| Tengai\0Sengoku Blade - sengoku Ace episode II	| tengai	| 1996	| Psikyo	| Psikyo 68EC020| 					|
@@ -13088,7 +13093,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_toughman	|  	| Toughman Contest (Euro, USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_kingcole	|  	| Tougiou King Colossus (Hack, English)			| md_kingcol	| 2006	| Sega		| Sega Megadrive| 					|
 | md_kingcol	|  	| Tougiou King Colossus (Jpn)				| 		| 1992	| Sega		| Sega Megadrive| 					|
-| nes_touhourououmu|  	| TouhouRououmu (HB)					| 		| 2019	| takahirox	| Miscellaneous	| 					|
+| nes_touhourououmu|  	| Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)	| 		| 2019	| takahirox	| Miscellaneous	| 					|
 | tkdenshoa	|  	| Toukidenshou - Angel Eyes (VER. 960427)		| tkdensho	| 1996	| Tecmo		| Miscellaneous	| 					|
 | tkdensho	|  	| Toukidenshou - Angel Eyes (VER. 960614)		| 		| 1996	| Tecmo		| Miscellaneous	| 					|
 | nes_toukonclub|  	| Toukon Club (Japan)					| 		| 1992	| Jaleco	| Miscellaneous	| 					|

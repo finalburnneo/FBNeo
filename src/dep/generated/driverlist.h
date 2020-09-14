@@ -976,6 +976,7 @@ DRV		BurnSpecbatmancc2;
 DRV		BurnSpecbatmanmv;
 DRV		BurnDrvMSX_batmanmv;
 DRV		BurnSpecbatmanpe;
+DRV		BurnDrvnes_batmavidgamj;
 DRV		BurnDrvnes_batmavidgam;
 DRV		BurnDrvgg_batmanf;
 DRV		BurnDrvmd_batmanf;
@@ -6228,6 +6229,7 @@ DRV		BurnDrvKov2103;
 DRV		BurnDrvKov2104;
 DRV		BurnDrvKov2106;
 DRV		BurnDrvKov2;
+DRV		BurnDrvKov2pemp;
 DRV		BurnDrvkov2pfwll;
 DRV		BurnDrvKov2p200;
 DRV		BurnDrvKov2p202;
@@ -8206,6 +8208,7 @@ DRV		BurnDrvpce_nikopun;		// Locks up in-game? [NOT WORKING]
 #endif
 DRV		BurnDrvnes_nimnom;
 DRV		BurnDrvNinja;
+DRV		BurnDrvNbbatmano;
 DRV		BurnDrvNbbatmanu;
 DRV		BurnDrvNbbatman;
 DRV		BurnDrvmd_ninjab;
@@ -11522,6 +11525,7 @@ DRV		BurnDrvCpsSf2hfj;
 DRV		BurnDrvCpsSf2dongb;
 DRV		BurnDrvCpsSf2ceb;
 DRV		BurnDrvCpsSf2ceba;
+DRV		BurnDrvnes_streefigiii;
 DRV		BurnDrvSfiii2n;
 DRV		BurnDrvSfiii2j;
 DRV		BurnDrvSfiii2;
@@ -12395,8 +12399,9 @@ DRV		BurnDrvTmnt2a;
 DRV		BurnDrvTmnt2;
 DRV		BurnDrvTmnt24pu;
 DRV		BurnDrvmd_tmntru;
-DRV		BurnDrvnes_tmntiij;
-DRV		BurnDrvnes_tmntii;
+DRV		BurnDrvnes_tmntiiarcgamj;
+DRV		BurnDrvnes_tmntiiarcgam;
+DRV		BurnDrvnes_tmntiimanpro;
 DRV		BurnDrvnes_tmntiii;
 DRV		BurnDrvnes_tmnttoufig;
 DRV		BurnDrvmd_teenqueen;
@@ -15711,6 +15716,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecbatmanmv,			// Batman - The Movie (128K)
 	&BurnDrvMSX_batmanmv,		// Batman - The Movie (Euro)
 	&BurnSpecbatmanpe,			// Batman - The Puaj Edition (48K)
+	&BurnDrvnes_batmavidgamj,	// Batman - The Video Game (Japan)
 	&BurnDrvnes_batmavidgam,	// Batman - The Video Game (USA)
 	&BurnDrvgg_batmanf,			// Batman Forever (World)
 	&BurnDrvmd_batmanf,			// Batman Forever (World)
@@ -20963,6 +20969,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov2104,			// Knights of Valour 2 (V104, China)
 	&BurnDrvKov2106,			// Knights of Valour 2 (V106, Hong Kong)
 	&BurnDrvKov2,				// Knights of Valour 2 (V107, Hong Kong)
+	&BurnDrvKov2pemp,			// Knights of Valour 2 Plus - Extend Magic Plus (Hack)
 	&BurnDrvkov2pfwll,			// Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)
 	&BurnDrvKov2p200,			// Knights of Valour 2 Plus - Nine Dragons (VM200XX)
 	&BurnDrvKov2p202,			// Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japan)
@@ -22941,6 +22948,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvnes_nimnom,			// Nim & Nom (HB, v1.2)
 	&BurnDrvNinja,				// Ninja (315-5102)
+	&BurnDrvNbbatmano,			// Ninja Baseball Batman (One Key Edition, Hack)
 	&BurnDrvNbbatmanu,			// Ninja Baseball Batman (US)
 	&BurnDrvNbbatman,			// Ninja Baseball Batman (World)
 	&BurnDrvmd_ninjab,			// Ninja Burai Densetsu (Jpn)
@@ -26257,6 +26265,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2dongb,		// Street Fighter II': Champion Edition (Dongfang Bubai protection bootleg, etc 920313)
 	&BurnDrvCpsSf2ceb,			// Street Fighter II': Champion Edition (Playmark bootleg, set 1)
 	&BurnDrvCpsSf2ceba,			// Street Fighter II': Champion Edition (Playmark bootleg, set 2)
+	&BurnDrvnes_streefigiii,	// Street Fighter III (Unl)
 	&BurnDrvSfiii2n,			// Street Fighter III 2nd Impact: Giant Attack (Asia 970930, NO CD)
 	&BurnDrvSfiii2j,			// Street Fighter III 2nd Impact: Giant Attack (Japan 970930)
 	&BurnDrvSfiii2,				// Street Fighter III 2nd Impact: Giant Attack (USA 970930)
@@ -27130,8 +27139,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTmnt2,				// Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UAA)
 	&BurnDrvTmnt24pu,			// Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UEA)
 	&BurnDrvmd_tmntru,			// Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy (Rus)
-	&BurnDrvnes_tmntiij,		// Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)
-	&BurnDrvnes_tmntii,			// Teenage Mutant Ninja Turtles II - The Arcade Game (USA)
+	&BurnDrvnes_tmntiiarcgamj,	// Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)
+	&BurnDrvnes_tmntiiarcgam,	// Teenage Mutant Ninja Turtles II - The Arcade Game (USA)
+	&BurnDrvnes_tmntiimanpro,	// Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan)
 	&BurnDrvnes_tmntiii,		// Teenage Mutant Ninja Turtles III - The Manhattan Project (USA)
 	&BurnDrvnes_tmnttoufig,		// Teenage Mutant Ninja Turtles Tournament Fighters (USA)
 	&BurnDrvmd_teenqueen,		// Teenage Queen The Demo (HB)
@@ -28043,7 +28053,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_toughman,		// Toughman Contest (Euro, USA)
 	&BurnDrvmd_kingcole,		// Tougiou King Colossus (Hack, English)
 	&BurnDrvmd_kingcol,			// Tougiou King Colossus (Jpn)
-	&BurnDrvnes_touhourououmu,	// TouhouRououmu (HB)
+	&BurnDrvnes_touhourououmu,	// Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)
 	&BurnDrvTkdenshoa,			// Toukidenshou - Angel Eyes (VER. 960427)
 	&BurnDrvTkdensho,			// Toukidenshou - Angel Eyes (VER. 960614)
 	&BurnDrvnes_toukonclub,		// Toukon Club (Japan)

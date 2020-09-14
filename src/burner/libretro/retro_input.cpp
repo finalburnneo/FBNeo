@@ -1814,10 +1814,8 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		if (strncmp("fire ", szb, 5) == 0) {
 			char *szf = szb + 5;
 			INT32 nButton = strtol(szf, NULL, 0);
-			// The "Modern" mapping on neogeo (which mimic mapping from remakes and further opus of the series)
-			// doesn't make sense and is kinda harmful on games other than kof, fatal fury and samourai showdown
-			// So we restrain it to those 3 series.
-			if ((BurnDrvGetGenreFlags() & GBF_VSFIGHT) && is_neogeo_game && nDeviceType[nPlayer] == RETROPAD_MODERN) {
+			// "Modern" neogeo stick and gamepad are actually like this, see pictures of arcade stick pro and neogeo mini gamepad
+			if (is_neogeo_game && nDeviceType[nPlayer] == RETROPAD_MODERN) {
 				switch (nButton) {
 					case 1:
 						GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);

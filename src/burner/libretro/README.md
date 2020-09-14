@@ -54,8 +54,8 @@ Copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/`
 
 We don't have a convenient tool like the MAME OSD, instead we use the retroarch api to customize mappings, you can do that by going into `Quick menu > Controls`.
 For those who don't want to fully customize their mapping, there are 2 convenient presets you can apply by changing the "device type" for a player in this menu :
-* **Classic** : it will apply the original neogeo cd "square" mapping in neogeo games, and use L/R as 5th and 6th button for 6 buttons games like Street Fighter II.
-* **Modern** : it will apply the modern neogeo layout (see pictures of arcade stick pro and neogeo mini gamepad), and it will use R1/R2 as 5th and 6th button for 6 buttons games like Street Fighter II (for the same reason as the neogeo games), this is really convenient for most arcade sticks.
+* **Classic** : it will apply the original neogeo layout from neogeo cd gamepads for neogeo games, and use L/R as 5th and 6th button for 6 buttons games like Street Fighter II.
+* **Modern** : it will apply the modern neogeo layout from neogeo arcade stick pro and neogeo mini gamepad for neogeo games, and use R1/R2 as 5th and 6th button for 6 buttons games like Street Fighter II (because it's also their modern layout), this is really convenient with most arcade sticks.
 
 The following "device type" also exist, but they won't be compatible with every games :
 * **Mouse (ball only)** : it will use mouse/trackball for analog movements, buttons will stay on retropad

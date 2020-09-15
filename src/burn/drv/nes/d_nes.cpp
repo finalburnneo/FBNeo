@@ -1932,6 +1932,48 @@ static void mapper41_map()
 #undef mapper41_chr
 #undef mapper41_mirror
 
+// ---[ mapper 193 NTDEC TC-112 (War in the Gulf, Fighting Hero, ...)
+#define mapper193_prg		(mapper_regs[0])
+#define mapper193_chr(x)	(mapper_regs[1 + (x)])
+#define mapper193_mirror	(mapper_regs[4])
+
+static void mapper193_write(UINT16 address, UINT8 data)
+{
+	switch (address & 0xe007) {
+		case 0x6000:
+		case 0x6001:
+		case 0x6002:
+			mapper193_chr(address & 3) = data;
+			break;
+		case 0x6003:
+			mapper193_prg = data;
+			break;
+		case 0x6004:
+			mapper193_mirror = data;
+			break;
+	}
+
+	mapper_map();
+}
+
+static void mapper193_map()
+{
+	mapper_map_prg( 8, 0, mapper193_prg);
+	mapper_map_prg( 8, 1, -3);
+	mapper_map_prg( 8, 2, -2);
+	mapper_map_prg( 8, 3, -1);
+
+	mapper_map_chr( 4, 0, mapper193_chr(0) >> 2);
+
+	mapper_map_chr( 2, 2, mapper193_chr(1) >> 1);
+	mapper_map_chr( 2, 3, mapper193_chr(2) >> 1);
+
+	set_mirroring((mapper193_mirror & 0x01) ? HORIZONTAL : VERTICAL);
+}
+#undef mapper193_prg
+#undef mapper193_chr
+#undef mapper193_mirror
+
 // ---[ mapper 15 Contra 168-in-1 Multicart
 #define mapper15_prg		(mapper_regs[0])
 #define mapper15_prgbit		(mapper_regs[1])
@@ -6487,6 +6529,14 @@ static INT32 mapper_init(INT32 mappernum)
 		case 15: { // Contra 168-in-1 Multicart
 			mapper_write = mapper15_write;
 			mapper_map   = mapper15_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 193: { // NTDEC TC-112 (War in the Gulf, Fighting Hero, ..)
+			cart_exp_write = mapper193_write;
+			mapper_map   = mapper193_map;
 			mapper_map();
 			retval = 0;
 			break;
@@ -20369,6 +20419,57 @@ struct BurnDriver BurnDrvnes_fightinggolf = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_fightingheroRomDesc[] = {
+	{ "Fighting Hero (Unl).nes",          393232, 0x2093f0e1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fightinghero)
+STD_ROM_FN(nes_fightinghero)
+
+struct BurnDriver BurnDrvnes_fightinghero = {
+	"nes_fightinghero", NULL, NULL, NULL, "1989?",
+	"Fighting Hero (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_fightingheroRomInfo, nes_fightingheroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_fightheriiiRomDesc[] = {
+	{ "Fighting Hero III (Unl).nes",          786448, 0x52b2045f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fightheriii)
+STD_ROM_FN(nes_fightheriii)
+
+struct BurnDriver BurnDrvnes_fightheriii = {
+	"nes_fightheriii", NULL, NULL, NULL, "1989?",
+	"Fighting Hero III (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_fightheriiiRomInfo, nes_fightheriiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_fightingroadRomDesc[] = {
+	{ "Fighting Road (Japan).nes",          262160, 0xbdde0fd7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fightingroad)
+STD_ROM_FN(nes_fightingroad)
+
+struct BurnDriver BurnDrvnes_fightingroad = {
+	"nes_fightingroad", NULL, NULL, NULL, "1988",
+	"Fighting Road (Japan)\0", NULL, "Toei Animation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_fightingroadRomInfo, nes_fightingroadRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_finalcombatRomDesc[] = {
 	{ "Final Combat (Asia) (NTSC) (Unl).nes",          81936, 0xa7afcc45, BRF_ESS | BRF_PRG },
 };
@@ -25227,6 +25328,23 @@ struct BurnDriver BurnDrvnes_magicblock = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_magicblockRomInfo, nes_magicblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_magiccar100RomDesc[] = {
+	{ "Magic Carpet 1001 (Unl).nes",          65552, 0x1ab5b8c5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magiccar100)
+STD_ROM_FN(nes_magiccar100)
+
+struct BurnDriver BurnDrvnes_magiccar100 = {
+	"nes_magiccar100", NULL, NULL, NULL, "1989?",
+	"Magic Carpet 1001 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_magiccar100RomInfo, nes_magiccar100RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30195,6 +30313,23 @@ struct BurnDriver BurnDrvnes_silversurfer = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_simcityRomDesc[] = {
+	{ "Sim City (Prototype).nes",          262160, 0x6dcc8626, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_simcity)
+STD_ROM_FN(nes_simcity)
+
+struct BurnDriver BurnDrvnes_simcity = {
+	"nes_simcity", NULL, NULL, NULL, "1989?",
+	"Sim City (Prototype)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_simcityRomInfo, nes_simcityRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_simpsbarvsspamuRomDesc[] = {
 	{ "Simpsons, The - Bart vs. the Space Mutants (USA) (Rev A).nes",          262160, 0xc8602800, BRF_ESS | BRF_PRG },
 };
@@ -33948,6 +34083,23 @@ struct BurnDriver BurnDrvnes_wanpakoknogouwo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_wanpakoknogouwoRomInfo, nes_wanpakoknogouwoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_warinthegulfRomDesc[] = {
+	{ "War in the Gulf (Unl).nes",          262160, 0xe45d5d88, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_warinthegulf)
+STD_ROM_FN(nes_warinthegulf)
+
+struct BurnDriver BurnDrvnes_warinthegulf = {
+	"nes_warinthegulf", NULL, NULL, NULL, "1991",
+	"War in the Gulf (Unl)\0", NULL, "Gluk Video", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_warinthegulfRomInfo, nes_warinthegulfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

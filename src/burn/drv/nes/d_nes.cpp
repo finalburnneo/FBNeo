@@ -1932,6 +1932,41 @@ static void mapper41_map()
 #undef mapper41_chr
 #undef mapper41_mirror
 
+// ---[ mapper 190 Magic Kid Googoo
+#define mapper190_prg		(mapper_regs[0])
+#define mapper190_chr(x)	(mapper_regs[1 + (x)])
+static void mapper190_write(UINT16 address, UINT8 data)
+{
+	switch (address & ~0x1fff) {
+		case 0x8000:
+			mapper190_prg = data & 0x07;
+			break;
+		case 0xa000:
+			mapper190_chr(address & 0x03) = data & 0x3f;
+			break;
+		case 0xc000:
+			mapper190_prg = (data & 0x07) | 0x08;
+			break;
+	}
+
+	mapper_map();
+}
+
+static void mapper190_map()
+{
+    mapper_map_prg(16, 0, mapper190_prg);
+    mapper_map_prg(16, 1, 0); // second 16k bank mapped to first prg bank
+
+	mapper_map_chr( 2, 0, mapper190_chr(0));
+	mapper_map_chr( 2, 1, mapper190_chr(1));
+	mapper_map_chr( 2, 2, mapper190_chr(2));
+	mapper_map_chr( 2, 3, mapper190_chr(3));
+
+	set_mirroring(VERTICAL);
+}
+#undef mapper190_prg
+#undef mapper190_chr
+
 // ---[ mapper 193 NTDEC TC-112 (War in the Gulf, Fighting Hero, ...)
 #define mapper193_prg		(mapper_regs[0])
 #define mapper193_chr(x)	(mapper_regs[1 + (x)])
@@ -6529,6 +6564,14 @@ static INT32 mapper_init(INT32 mappernum)
 		case 15: { // Contra 168-in-1 Multicart
 			mapper_write = mapper15_write;
 			mapper_map   = mapper15_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 190: { // Magic Kid Googoo
+			mapper_write = mapper190_write;
+			mapper_map   = mapper190_map;
 			mapper_map();
 			retval = 0;
 			break;
@@ -25448,6 +25491,23 @@ struct BurnDriver BurnDrvnes_magicjohsfasbr = {
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_magicjohsfasbrRomInfo, nes_magicjohsfasbrRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_magickidgoogooRomDesc[] = {
+	{ "Magic Kid GooGoo (Unl).nes",          393232, 0x12332a62, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magickidgoogoo)
+STD_ROM_FN(nes_magickidgoogoo)
+
+struct BurnDriver BurnDrvnes_magickidgoogoo = {
+	"nes_magickidgoogoo", NULL, NULL, NULL, "1989?",
+	"Magic Kid GooGoo (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_magickidgoogooRomInfo, nes_magickidgoogooRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

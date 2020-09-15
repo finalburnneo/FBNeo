@@ -328,7 +328,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 
 		for (INT32 x = 0; x < size; x++)
 		{
-			UINT16 dat2 = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
+			UINT16 dat2 = PROTROM[src + x];
 
 			sharedprotram[dst + x] = dat2;
 		}
@@ -338,14 +338,14 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 		UINT16 *PROTROM = (UINT16*)PGMProtROM;
 		for (INT32 x = 0; x < size; x++)
 		{
-			UINT16 dat2 = PROTROM[src + x];
+			UINT16 dat2 = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
 
 			dat2 = ((dat2 & 0xf000) >> 12)|
 					((dat2 & 0x0f00) >> 4)|
 					((dat2 & 0x00f0) << 4)|
 					((dat2 & 0x000f) << 12);
 
-			sharedprotram[dst + x] = dat2;
+			sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat2);
 		}
 	}
 }
@@ -384,12 +384,12 @@ static void IGS022_reset()
 
 static void IGS022_handle_command()
 {
-	UINT16 cmd = sharedprotram[0x200/2];
+	UINT16 cmd = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x200/2]);
 
 	if (cmd == 0x6d)    // Store values to asic ram
 	{
-		UINT32 p1 = (sharedprotram[0x298/2] << 16) | sharedprotram[0x29a/2];
-		UINT32 p2 = (sharedprotram[0x29c/2] << 16) | sharedprotram[0x29e/2];
+		UINT32 p1 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x298/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29a/2]);
+		UINT32 p2 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29c/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29e/2]);
 
 		if ((p2 & 0xffff) == 0x9)   // Set value
 		{
@@ -421,11 +421,11 @@ static void IGS022_handle_command()
 		{
 			INT32 reg = (p1 >> 16) & 0xFF;
 
-			sharedprotram[0x29c/2] = (kb_regs[reg] >> 16) & 0xffff;
-			sharedprotram[0x29e/2] = kb_regs[reg] & 0xffff;
+			sharedprotram[0x29c/2] = BURN_ENDIAN_SWAP_INT16((kb_regs[reg] >> 16) & 0xffff);
+			sharedprotram[0x29e/2] = BURN_ENDIAN_SWAP_INT16(kb_regs[reg] & 0xffff);
 		}
 
-		sharedprotram[0x202 / 2] = 0x7c;  // this mode complete?
+		sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x7c);  // this mode complete?
 	}
 
 	// Is this actually what this is suppose to do? Complete guess.
@@ -434,24 +434,24 @@ static void IGS022_handle_command()
 		sharedprotram[0x28c / 2] = sharedprotram[0x288 / 2];
 		sharedprotram[0x28e / 2] = sharedprotram[0x28a / 2];
 
-		sharedprotram[0x202 / 2] = 0x23;  // this mode complete?
+		sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x23);  // this mode complete?
 	}
 
 	// what do these do? write the completion byte for now...
-	if (cmd == 0x45) sharedprotram[0x202 / 2] = 0x56;
-	if (cmd == 0x5a) sharedprotram[0x202 / 2] = 0x4b;
-	if (cmd == 0x2d) sharedprotram[0x202 / 2] = 0x3c;
+	if (cmd == 0x45) sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x56);
+	if (cmd == 0x5a) sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x4b);
+	if (cmd == 0x2d) sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x3c);
 
 	if (cmd == 0x4f) // memcpy with encryption / scrambling
 	{
-		UINT16 src  = sharedprotram[0x290 / 2] >> 1;
-		UINT32 dst  = sharedprotram[0x292 / 2];
-		UINT16 size = sharedprotram[0x294 / 2];
-		UINT16 mode = sharedprotram[0x296 / 2];
+		UINT16 src  = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x290 / 2]) >> 1;
+		UINT32 dst  = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x292 / 2]);
+		UINT16 size = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x294 / 2]);
+		UINT16 mode = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x296 / 2]);
 
 		IGS022_do_dma(src,dst,size,mode);
 
-		sharedprotram[0x202 / 2] = 0x5e;  // this mode complete?
+		sharedprotram[0x202 / 2] = BURN_ENDIAN_SWAP_INT16(0x5e);  // this mode complete?
 	}
 }
 
@@ -1000,13 +1000,13 @@ static UINT32 olds_prot_addr(UINT16 addr)
 static UINT32 olds_read_reg(UINT16 addr)
 {
 	UINT32 protaddr = (olds_prot_addr(addr) - 0x400000) / 2;
-	return sharedprotram[protaddr] << 16 | sharedprotram[protaddr + 1];
+	return BURN_ENDIAN_SWAP_INT16(sharedprotram[protaddr]) << 16 | BURN_ENDIAN_SWAP_INT16(sharedprotram[protaddr + 1]);
 }
 
 static void olds_write_reg( UINT16 addr, UINT32 val )
 {
-	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2]     = val >> 16;
-	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2 + 1] = val & 0xffff;
+	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2]     = BURN_ENDIAN_SWAP_INT16(val >> 16);
+	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2 + 1] = BURN_ENDIAN_SWAP_INT16(val & 0xffff);
 }
 
 static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
@@ -1034,7 +1034,7 @@ static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 
 			for (INT32 x = 0; x < size; x++)
 			{
-				UINT16 dat2 = PROTROM[src + x];
+				UINT16 dat2 = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
 
 				int taboff = ((x*2)+extraoffset) & 0xff; // must allow for overflow in instances of odd offsets
 				unsigned short extraxor = ((dectable[taboff + 0]) << 0) | (dectable[taboff + 1] << 8);
@@ -1059,7 +1059,7 @@ static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 					dat2 = 0x4e75; // hack
 				}
 
-				sharedprotram[dst + x] = dat2;
+				sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat2);
 			}
 		}
 		break;
@@ -1124,16 +1124,16 @@ static void __fastcall olds_protection_w(UINT32 offset, UINT16 data)
 
 			case 0x03:
 			{
-				UINT16 cmd = sharedprotram[0x3026 / 2];
+				UINT16 cmd = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3026 / 2]);
 
 				switch (cmd)
 				{
 					case 0x12:
 					{
-						UINT16 mode = sharedprotram[0x303e / 2];  // ?
-						UINT16 src  = sharedprotram[0x306a / 2] >> 1; // ?
-						UINT16 dst  = sharedprotram[0x3084 / 2] & 0x1fff;
-						UINT16 size = sharedprotram[0x30a2 / 2] & 0x1fff;
+						UINT16 mode = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x303e / 2]);  // ?
+						UINT16 src  = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x306a / 2]) >> 1; // ?
+						UINT16 dst  = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3084 / 2]) & 0x1fff;
+						UINT16 size = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x30a2 / 2]) & 0x1fff;
 
 						IGS028_do_dma(src, dst, size, mode);
 					}
@@ -1141,10 +1141,10 @@ static void __fastcall olds_protection_w(UINT32 offset, UINT16 data)
 
 					case 0x64: // incomplete...
 					{
-					        UINT16 p1 = sharedprotram[0x3050 / 2];
-					        UINT16 p2 = sharedprotram[0x3082 / 2];
-					        UINT16 p3 = sharedprotram[0x3054 / 2];
-					        UINT16 p4 = sharedprotram[0x3088 / 2];
+					        UINT16 p1 = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3050 / 2]);
+					        UINT16 p2 = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3082 / 2]);
+					        UINT16 p3 = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3054 / 2]);
+					        UINT16 p4 = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x3088 / 2]);
 
 					        if (p2  == 0x02)
 					                olds_write_reg(p1, olds_read_reg(p1) + 0x10000);
@@ -1252,24 +1252,24 @@ static void reset_olds()
 {
 //	written by protection device
 //	there seems to be an auto-dma that writes from $401000-402573?
-	sharedprotram[0x1000/2] = 0x4749; // 'IGS.28'
-	sharedprotram[0x1002/2] = 0x2E53;
-	sharedprotram[0x1004/2] = 0x3832;
-	sharedprotram[0x3064/2] = 0xB315; // crc or status check?
+	sharedprotram[0x1000/2] = BURN_ENDIAN_SWAP_INT16(0x4749); // 'IGS.28'
+	sharedprotram[0x1002/2] = BURN_ENDIAN_SWAP_INT16(0x2E53);
+	sharedprotram[0x1004/2] = BURN_ENDIAN_SWAP_INT16(0x3832);
+	sharedprotram[0x3064/2] = BURN_ENDIAN_SWAP_INT16(0xB315); // crc or status check?
 
 //	Should these be written by command 64??
 //	sharedprotram[0x2a00/2] = 0x0000; // ?
 //	sharedprotram[0x2a02/2] = 0x0000; // ?
-	sharedprotram[0x2a04/2] = 0x0002; // ?
+	sharedprotram[0x2a04/2] = BURN_ENDIAN_SWAP_INT16(0x0002); // ?
 //	sharedprotram[0x2a06/2] = 0x0000; // ?
 //	sharedprotram[0x2ac0/2] = 0x0000; // ?
-	sharedprotram[0x2ac2/2] = 0x0001; // ?
+	sharedprotram[0x2ac2/2] = BURN_ENDIAN_SWAP_INT16(0x0001); // ?
 //	sharedprotram[0x2e00/2] = 0x0000; // ?
 //	sharedprotram[0x2e02/2] = 0x0000; // ?
 //	sharedprotram[0x2e04/2] = 0x0000; // ?
-	sharedprotram[0x2e06/2] = 0x0009; // seconds on char. select timer
+	sharedprotram[0x2e06/2] = BURN_ENDIAN_SWAP_INT16(0x0009); // seconds on char. select timer
 //	sharedprotram[0x2e08/2] = 0x0000; // ?
-	sharedprotram[0x2e0a/2] = 0x0006; // ?
+	sharedprotram[0x2e0a/2] = BURN_ENDIAN_SWAP_INT16(0x0006); // ?
 
 	m_olds_prot_hold = 0;
 	m_olds_prot_hilo = 0;

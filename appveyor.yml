@@ -46,7 +46,7 @@ deploy:
   description: github-commit-%APPVEYOR_REPO_COMMIT%
   force_update: true
   on:
-    branch: master                 # release from master branch only 
+    branch: master                 # release from master branch  
   auth_token:
     secure: cC6FjF22axzOF1Y1+B2DfieS+B3KAHeUTefa7k/iq7MJjqaj/OjQ01EWN+Ga5r6v
   repository: finalburnneo/FBNeo-WIP-Storage-Facility

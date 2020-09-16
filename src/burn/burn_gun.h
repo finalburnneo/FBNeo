@@ -10,6 +10,7 @@ struct BurnDialINF {
 };
 
 extern INT32 nBurnGunNumPlayers;
+extern bool bBurnGunHide;
 extern bool bBurnGunAutoHide;
 
 extern INT32 BurnGunX[MAX_GUNS];

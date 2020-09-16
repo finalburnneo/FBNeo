@@ -2507,6 +2507,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 		if (bAllDevicesReady) {
 			GameInpReassign();
 			SetInputDescriptors();
+			RefreshLightgunCrosshair();
 		}
 	}
 }

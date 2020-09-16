@@ -7,6 +7,7 @@
 // Trackball/Paddle/Dial emulation by dink
 
 INT32 nBurnGunNumPlayers = 0;
+bool bBurnGunHide[MAX_GUNS] = { 0, };
 bool bBurnGunAutoHide = 1;
 static bool bBurnGunDrawTargets = true;
 
@@ -550,7 +551,7 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 	
 	if (num > MAX_GUNS - 1) return;
 
-	if (bBurnGunAutoHide && !GunTargetShouldDraw(num)) return;
+	if (bBurnGunHide[num] || (bBurnGunAutoHide && !GunTargetShouldDraw(num))) return;
 
 	UINT8* pTile = pBurnDraw + nBurnGunMaxX * nBurnBpp * (y - 1) + nBurnBpp * x;
 	

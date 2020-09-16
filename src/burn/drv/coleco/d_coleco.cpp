@@ -6777,3 +6777,41 @@ struct BurnDriver BurnDrvcv_zombieinc = {
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Moon Patrol Prototype
+
+static struct BurnRomInfo cv_mpatrolpRomDesc[] = {
+    { "Moon Patrol (1984) (Atarisoft) (Prototype).rom",	0x08000, 0xfbe12de7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mpatrolp, cv_mpatrolp, cv_coleco)
+STD_ROM_FN(cv_mpatrolp)
+
+struct BurnDriver BurnDrvcv_mpatrolp = {
+    "cv_mpatrolp", "cv_mpatrol", "cv_coleco", NULL, "1984",
+    "Moon Patrol (Prototype)\0", NULL, "Atarisoft", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_mpatrolpRomInfo, cv_mpatrolpRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Moon Patrol
+
+static struct BurnRomInfo cv_mpatrolRomDesc[] = {
+    { "Moon Patrol.rom",	0x08000, 0x6a672443, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mpatrol, cv_mpatrol, cv_coleco)
+STD_ROM_FN(cv_mpatrol)
+
+struct BurnDriver BurnDrvcv_mpatrol = {
+    "cv_mpatrol", NULL, "cv_coleco", NULL, "1984",
+    "Moon Patrol\0", NULL, "Atarisoft", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_mpatrolRomInfo, cv_mpatrolRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

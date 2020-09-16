@@ -4,11 +4,11 @@ image: Visual Studio 2015
 environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      build_type: fbn-source
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       build_type: fbn-win32-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       build_type: fbn-win32-debug-gcc
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      build_type: fbn-source
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       build_type: fbn-xp-gcc
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015

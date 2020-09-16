@@ -2966,6 +2966,27 @@
 		<rom name="Fighting Golf (Japan).nes" size="262160" crc="eebbdff9"/>
 		<driver status="good"/>
 	</game>
+	<game name="fightinghero">
+		<description>Fighting Hero (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fighting Hero (Unl).nes" size="393232" crc="2093f0e1"/>
+		<driver status="good"/>
+	</game>
+	<game name="fightheriii">
+		<description>Fighting Hero III (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fighting Hero III (Unl).nes" size="786448" crc="52b2045f"/>
+		<driver status="good"/>
+	</game>
+	<game name="fightingroad">
+		<description>Fighting Road (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Toei Animation</manufacturer>
+		<rom name="Fighting Road (Japan).nes" size="262160" crc="bdde0fd7"/>
+		<driver status="good"/>
+	</game>
 	<game name="finalcombat">
 		<description>Final Combat (Asia) (NTSC) (Unl)</description>
 		<year>1989?</year>
@@ -5206,6 +5227,13 @@
 		<rom name="Magic Block (Mega Soft).nes" size="131088" crc="2eba03bd"/>
 		<driver status="good"/>
 	</game>
+	<game name="magiccar100">
+		<description>Magic Carpet 1001 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Magic Carpet 1001 (Unl).nes" size="65552" crc="1ab5b8c5"/>
+		<driver status="good"/>
+	</game>
 	<game name="magicdarts">
 		<description>Magic Darts (USA)</description>
 		<year>1991</year>
@@ -5246,6 +5274,13 @@
 		<year>1990</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Magic Johnson's Fast Break (USA).nes" size="196624" crc="4d42a98c"/>
+		<driver status="good"/>
+	</game>
+	<game name="magickidgoogoo">
+		<description>Magic Kid GooGoo (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Magic Kid GooGoo (Unl).nes" size="393232" crc="12332a62"/>
 		<driver status="good"/>
 	</game>
 	<game name="magicsch">
@@ -5491,13 +5526,6 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mega Man CX (USA).nes" size="524304" crc="454a1ed4"/>
-		<driver status="good"/>
-	</game>
-	<game name="meikyjiidab">
-		<description>Meikyuu Jiin Dababa (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="Meikyuu Jiin Dababa (Japan).nes" size="131088" crc="dc1818ae"/>
 		<driver status="good"/>
 	</game>
 	<game name="meikyuujima">
@@ -7460,6 +7488,13 @@
 		<rom name="Silver Surfer (USA).nes" size="393232" crc="9a83817c"/>
 		<driver status="good"/>
 	</game>
+	<game name="simcity">
+		<description>Sim City (Prototype)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Sim City (Prototype).nes" size="262160" crc="6dcc8626"/>
+		<driver status="good"/>
+	</game>
 	<game name="simpsbarvsspamu">
 		<description>Simpsons, The - Bart vs. the Space Mutants (USA) (Rev A)</description>
 		<year>1991</year>
@@ -9180,6 +9215,13 @@
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Wanpaku Kokkun no Gourmet World (Japan).nes" size="262160" crc="fffb5ead"/>
+		<driver status="good"/>
+	</game>
+	<game name="warinthegulf">
+		<description>War in the Gulf (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Gluk Video</manufacturer>
+		<rom name="War in the Gulf (Unl).nes" size="262160" crc="e45d5d88"/>
 		<driver status="good"/>
 	</game>
 	<game name="warioswoods">

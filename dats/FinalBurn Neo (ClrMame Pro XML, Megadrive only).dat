@@ -1911,10 +1911,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="cavestory">
-		<description>Cave Story Doukutsu (HB, v0.6.0) [Homebrew]</description>
-		<year>2020-07-29</year>
+		<description>Cave Story Doukutsu (HB, v0.7.0) [Homebrew]</description>
+		<year>2020-09-15</year>
 		<manufacturer>Studio Pixel</manufacturer>
-		<rom name="Cave Story Doukutsu (v0.6.0).bin" size="4194304" crc="1bb47dd2"/>
+		<rom name="Cave Story Doukutsu (v0.7.0).bin" size="4194304" crc="ea2967be"/>
 		<driver status="good"/>
 	</game>
 	<game name="centur">

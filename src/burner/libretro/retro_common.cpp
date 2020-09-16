@@ -57,6 +57,7 @@ bool is_neogeo_game = false;
 bool allow_neogeo_mode = true;
 bool neogeo_use_specific_default_bios = false;
 bool bAllowDepth32 = false;
+bool bLightgunHideCrosshairEnabled = true;
 UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
@@ -202,6 +203,17 @@ static const struct retro_core_option_definition var_fbneo_analog_speed = {
 		PERCENT_VALUES
 	},
 	"100%"
+};
+static const struct retro_core_option_definition var_fbneo_lightgun_hide_crosshair = {
+	"fbneo-lightgun-hide-crosshair",
+	"No crosshair with lightgun device",
+	"Hide crosshair if you play with a lightgun device",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"enabled"
 };
 #ifdef USE_CYCLONE
 static const struct retro_core_option_definition var_fbneo_cyclone = {
@@ -525,6 +537,7 @@ void set_environment()
 	vars_systems.push_back(&var_fbneo_sample_interpolation);
 	vars_systems.push_back(&var_fbneo_fm_interpolation);
 	vars_systems.push_back(&var_fbneo_analog_speed);
+	vars_systems.push_back(&var_fbneo_lightgun_hide_crosshair);
 #ifdef USE_CYCLONE
 	vars_systems.push_back(&var_fbneo_cyclone);
 #endif
@@ -1005,6 +1018,16 @@ void check_variables(void)
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
 	{
 		nAnalogSpeed = percent_parser(var.value);
+	}
+
+	var.key = var_fbneo_lightgun_hide_crosshair.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			bLightgunHideCrosshairEnabled = true;
+		else if (strcmp(var.value, "disabled") == 0)
+			bLightgunHideCrosshairEnabled = false;
+		RefreshLightgunCrosshair();
 	}
 
 #ifdef USE_CYCLONE

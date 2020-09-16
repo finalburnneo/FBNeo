@@ -48,6 +48,7 @@ struct AxiBind
 #define PGI_ANALOG_Y 5
 
 void SetDiagInpHoldFrameDelay(unsigned val);
+void RefreshLightgunCrosshair();
 void InputMake(void);
 void InputInit();
 void InputDeInit();

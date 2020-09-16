@@ -86,7 +86,6 @@ src/
 
 In the main source tree, you will see in the intf directory various implementations for different platforms. You should look in here when porting to new platforms. We also encourage new ports, and are happy to have them merged in to the main sourcetree. There is probably a project there for someone to re-implement some of the older ports using the intf standard, should they want to.
 
-
 For portability we define the following types
 ```
 unsigned char   UINT8;

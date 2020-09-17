@@ -2040,6 +2040,15 @@ static INT32 cps_int10_cnt = 0;
 
 INT32 cps3Frame()
 {
+	if ((cps3_dip&0x80) == 0x80 && (RomBios[cps3_region_address]&0x90) != 0x90) {
+		cps3_reset = 1;
+		RomBios[cps3_region_address] |= 0x90;
+	}
+	else if ((cps3_dip&0x80) != 0x80 && (RomBios[cps3_region_address]&0x90) == 0x90) {
+		cps3_reset = 1;
+		RomBios[cps3_region_address] &= ~0x90;
+	}
+
 	if (cps3_reset)
 		Cps3Reset();
 		

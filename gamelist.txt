@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14494 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14513 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -601,6 +601,7 @@ This list contains all games supported by FinalBurn Neo.
 | armwrest	|  	| Arm Wrestling						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | nes_armadilloj|  	| Armadillo (Japan)					| nes_armadillo	| 1991	| IGS		| Miscellaneous	| 					|
 | nes_armadillo	|  	| Armadillo (T-eng)					| 		| 1991	| IGS		| Miscellaneous	| 					|
+| cv_armagedn	|  	| Armageddon (HB)					| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | fds_armananokiseki|  	| Armana no Kiseki (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | armedff	|  	| Armed Formation (Fillmore license)			| armedf	| 1988	| Nichibutsu (Fi| Miscellaneous	| 					|
 | pce_armedf	|  	| Armed Formation F					| 		| 1990	| Pack-In-Video	| PC Engine	| 					|
@@ -1352,6 +1353,7 @@ This list contains all games supported by FinalBurn Neo.
 | bombbee	|  	| Bomb Bee						| 		| 1979	| Namco		| Miscellaneous	| 					|
 | spec_bombjack	|  	| Bomb Jack (128K)					| 		| 1986	| Elite Systems	| ZX Spectrum	| 					|
 | spec_bombjack_48|  	| Bomb Jack (48K)					| spec_bombjack	| 1986	| Elite Systems	| ZX Spectrum	| 					|
+| cv_bombjack	|  	| Bomb Jack (HB)					| 		| 2015	| CollectorVisio| ColecoVision	| 					|
 | sg1k_bombjack	|  	| Bomb Jack (Jpn)					| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | sg1k_bombjackk1|  	| Bomb Jack (Kor)					| sg1k_bombjack	| 1985?	| Unknown	| Sega SG-1000	| 					|
 | bombjack	|  	| Bomb Jack (set 1)					| 		| 1984	| Tehkan	| Miscellaneous	| 					|
@@ -1363,6 +1365,7 @@ This list contains all games supported by FinalBurn Neo.
 | bombkicka	|  	| Bomb Kick (set 2)					| bombkick	| 1998	| Yun Sung	| Yun Sung 16 Bi| 					|
 | md_bobc206	|  	| Bomb on Basic City (HB, v2.06)			| 		| 2016	| Vetea		| Sega Megadrive| 					|
 | nes_bombsweeper|  	| Bomb Sweeper (HB)					| 		| 2002	| SNOWBRO	| Miscellaneous	| 					|
+| cv_bomblast	|  	| Bomb'n Blast (HB)					| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | bomber	|  	| Bomber (bootleg of Scramble)				| scramble	| 1981	| bootleg	| Galaxian	| 					|
 | msx_bombking	|  	| Bomber King (Jpn)					| 		| 1988	| Hudson Soft	| MSX		| 					|
 | bombrman	|  	| Bomber Man (Japan)					| dynablst	| 1991	| Irem (licensed| Irem M90	| 					|
@@ -4078,6 +4081,7 @@ This list contains all games supported by FinalBurn Neo.
 | firetrap	|  	| Fire Trap (US, rev A)					| 		| 1986	| Wood Place Inc| Miscellaneous	| 					|
 | firebeas	|  	| Firebeast (prototype)					| 		| 1983	| Atari		| Miscellaneous	| 					|
 | msx_firehawk	|  	| Firehawk (Euro)					| 		| 1987	| Players Softwa| MSX		| 					|
+| cv_fireman	|  	| Fireman						| 		| 2009	| Coleco	| ColecoVision	| Published by CollectorVision		|
 | cfishing	|  	| Fishing (DECO Cassette) (Japan)			| cadanglr	| 1982	| Data East Corp| Cassette Syste| 					|
 | nes_fistnorsta|  	| Fist of the North Star (USA)				| 		| 1989	| Taxan		| Miscellaneous	| 					|
 | fitterbl	|  	| Fitter (bootleg of Round-Up)				| roundup	| 1981	| bootleg	| Miscellaneous	| 					|
@@ -5191,6 +5195,7 @@ This list contains all games supported by FinalBurn Neo.
 | heiankyo	| D	| Heiankyo Alien					| 		| 1979	| Denki Onkyo	| Vic Dual	| No sound				|
 | nes_heisetenbakj|  	| Heisei Tensai Bakabon (Japan)				| nes_heisetenbak| 1991	| Namco		| Miscellaneous	| 					|
 | nes_heisetenbak|  	| Heisei Tensai Bakabon (T-Eng)				| 		| 1991	| Namco		| Miscellaneous	| 					|
+| cv_helifire	|  	| HeliFire						| 		| 2013	| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | msx_helitank	|  	| Helitank (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
 | nes_hellfighter|  	| Hell Fighter (Asia) (PAL) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | hellfire1	|  	| Hellfire (1P set)					| hellfire	| 1989	| Toaplan (Taito| Toaplan BCU-2 | 					|
@@ -5798,6 +5803,7 @@ This list contains all games supported by FinalBurn Neo.
 | jungler	|  	| Jungler						| 		| 1981	| Konami	| Miscellaneous	| 					|
 | jrking	|  	| Junior King (bootleg of Donkey Kong Jr.)		| dkongjr	| 1982	| bootleg	| Miscellaneous	| 					|
 | md_junker	|  	| Junker's High (Jpn, Prototype)			| md_outr2019	| 199?	| <unknown>	| Sega Megadrive| 					|
+| cv_junkwall	|  	| Junkwall (HB)						| 		| 2016	| Silicon Sex	| ColecoVision	| 					|
 | junofrstg	|  	| Juno First (Gottlieb)					| junofrst	| 1983	| Konami (Gottli| GX310		| 					|
 | msx_junofrst	|  	| Juno First (Jpn)					| 		| 1983	| Sony		| MSX		| 					|
 | junofrst	|  	| Juno First						| 		| 1983	| Konami	| GX310		| 					|
@@ -6174,6 +6180,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_knucklp	|  	| Knuckles in Sonic 2 (Prototype 0524, 19940527, 10.46)	| md_sks2	| 199?	| <unknown>	| Sega Megadrive| Lock-On Technology			|
 | md_ktesonic	|  	| Knuckles the Echidna in Sonic the Hedgehog (Hack)	| md_sonic	| 2005	| Stealth	| Sega Megadrive| 					|
 | msx_kobashi	|  	| Kobashi (HB)						| 		| 2004	| Desire in Envy| MSX		| Uses joyport #2			|
+| cv_kobashi	|  	| Kobashi (HB)						| 		| 2010	| CollectorVisio| ColecoVision	| 					|
 | msx_koedoli	|  	| Koedoli (Kor)						| 		| 1988	| Aproman	| MSX		| 					|
 | ngp_koikoi	|  	| Koi Koi Mahjong (Jpn)					| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | koikois2	|  	| Koi Koi Shimasho 2 - Super Real Hanafuda (Japan)	| 		| 1997	| Visco		| SSV		| 					|
@@ -7603,6 +7610,7 @@ This list contains all games supported by FinalBurn Neo.
 | 20pacgal	|  	| Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Re| 		| 2000	| Namco / Cosmod| Miscellaneous	| 					|
 | mschamps	|  	| Ms. Pacman Champion Edition / Super Zola Pac Gal	| mspacman	| 1995	| hack		| Pac-man	| 					|
 | mschamp	|  	| Ms. Pacman Champion Edition / Zola-Puc Gal		| mspacman	| 1995	| hack		| Pac-man	| 					|
+| cv_msspacefury|  	| Ms. Space Fury (HB)					| 		| 2001	| Daniel Bienven| ColecoVision	| 					|
 | msx_msxbball	|  	| MSX Baseball (Jpn)					| 		| 1984	| Panasoft	| MSX		| 					|
 | msx_msxbballa	|  	| MSX Baseball (Jpn, Alt)				| msx_msxbball	| 1984	| Panasoft	| MSX		| 					|
 | msx_msxbbal2	|  	| MSX Baseball II National (Jpn)			| 		| 1986	| Panasoft	| MSX		| 					|
@@ -8039,6 +8047,7 @@ This list contains all games supported by FinalBurn Neo.
 | nibbler8	|  	| Nibbler (rev 8)					| nibbler	| 1982	| Rock-Ola	| Miscellaneous	| 					|
 | nibbler	|  	| Nibbler (rev 9)					| 		| 1982	| Rock-Ola	| Miscellaneous	| 					|
 | nibblera	|  	| Nibbler (rev 9, alternate set)			| nibbler	| 1982	| Rock-Ola	| Miscellaneous	| 					|
+| cv_nibbli	|  	| Nibbli: Son of Nibbler (HB)				| 		| 2014	| CollectorVisio| ColecoVision	| 					|
 | ngp_nigeronpe	|  	| Nige-ron-pa (Hack, English)				| ngp_nigeronp	| 2018	| SNK		| NeoGeo Pocket | 					|
 | ngp_nigeronp	|  	| Nige-ron-pa (Jpn)					| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | nes_nigelmansworchch|  	| Nigel Mansell's World Championship Challenge (USA)	| 		| 1993	| GameTek	| Miscellaneous	| 					|
@@ -8894,6 +8903,7 @@ This list contains all games supported by FinalBurn Neo.
 | ponpoko	|  	| Ponpoko						| 		| 1982	| Sigma Enterpri| Pac-man	| 					|
 | poosho	|  	| Poosho Poosho						| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | pootan	|  	| Pootan						| pooyan	| 1982	| bootleg	| GX320		| 					|
+| cv_pooyan	|  	| Pooyan (HB)						| 		| 2009	| Dwik & JoyRex	| ColecoVision	| Published by CollectorVision		|
 | nes_pooyan	|  	| Pooyan (Japan)					| 		| 1985	| Hudson Soft	| Miscellaneous	| 					|
 | msx_pooyan	|  	| Pooyan (Jpn)						| 		| 1985	| Hudson Soft	| MSX		| 					|
 | sms_pooyan	|  	| Pooyan (Kor)						| 		| 19??	| HiCom		| Sega Master Sy| 					|
@@ -9211,6 +9221,7 @@ This list contains all games supported by FinalBurn Neo.
 | uopoko	|  	| Puzzle Uo Poko (International, ver. 98/02/06)		| 		| 1999	| Cave / Jaleco	| Cave		| 					|
 | uopokoj	|  	| Puzzle Uo Poko (Japan, ver. 98/02/06)			| uopoko	| 1999	| Cave / Jaleco	| Cave		| 					|
 | joyjoy	|  	| Puzzled / Joy Joy Kid (NGM-021)(NGH-021)		| 		| 1990	| SNK		| Neo Geo MVS	| 					|
+| cv_puzzli	|  	| Puzzli (HB)						| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | md_puzzli	|  	| Puzzli (HB, v1.1)					| 		| 2020	| PortableDev	| Sega Megadrive| 					|
 | puzzlia	|  	| Puzzli (revision A)					| puzzli	| 1995	| Metro / Banpre| Miscellaneous	| 					|
 | puzzli	|  	| Puzzli (revision B)					| 		| 1995	| Metro / Banpre| Miscellaneous	| 					|
@@ -9653,6 +9664,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_ringspow	|  	| Rings of Power (Euro, USA)				| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | riotcity	|  	| Riot City (Japan)					| 		| 1991	| Sega / Westone| System 16B	| 					|
 | riot		|  	| Riot							| 		| 1992	| NMK		| Miscellaneous	| 					|
+| cv_ripcord	|  	| Rip Cord (HB)						| 		| 2017	| CollectorVisio| ColecoVision	| 					|
 | md_riserobo	|  	| Rise of the Robots (Euro)				| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | gg_riserobo	|  	| Rise of the Robots (Euro, USA)			| 		| 1994	| Time Warner In| Sega Game Gear| 					|
 | msx_risedung	|  	| Rise Out from Dungeons (Jpn)				| 		| 1983	| ASCII		| MSX		| 					|
@@ -10391,6 +10403,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sidepocku	|  	| Side Pocket (USA)					| md_sidepock	| 1992	| Data East	| Sega Megadrive| 					|
 | nes_sidepocket|  	| Side Pocket (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
 | sidepckt	|  	| Side Pocket (World)					| 		| 1986	| Data East Corp| Miscellaneous	| 					|
+| cv_sidetrak	|  	| Side Trak (HB)					| 		| 2012	| CollectorVisio| ColecoVision	| 					|
 | pce_sidearms	|  	| Sidearms - Hyper Dyne					| 		| 1989	| NEC		| PC Engine	| 					|
 | tg_sidearms	|  	| Sidearms - Hyper Dyne					| 		| 1989	| Radiance Softw| TurboGrafx 16	| 					|
 | nes_sidewinder|  	| Sidewinder (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -10578,6 +10591,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_snowbrothers|  	| Snow Brothers (USA)					| 		| 1991	| Capcom	| Miscellaneous	| 					|
 | snowbro3	|  	| Snow Brothers 3 - Magical Adventure			| 		| 2002	| bootleg	| Kaneko Pandora| 					|
 | msx_snowboard	|  	| Snowboarding (HB, v1.01)				| 		| 2020	| Revelo	| MSX		| 					|
+| cv_soknight	|  	| So You Want To Be A Knight (HB)			| 		| 2015	| CollectorVisio| ColecoVision	| 					|
 | nes_soccer	|  	| Soccer (USA)						| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | socbrawlh	|  	| Soccer Brawl (NGH-031)				| socbrawl	| 1991	| SNK		| Neo Geo MVS	| 					|
 | socbrawl	|  	| Soccer Brawl (NGM-031)				| 		| 1991	| SNK		| Neo Geo MVS	| 					|
@@ -10901,6 +10915,7 @@ This list contains all games supported by FinalBurn Neo.
 | sci		|  	| Special Criminal Investigation (World set 1)		| 		| 1989	| Taito Corporat| Taito Z	| 					|
 | scia		|  	| Special Criminal Investigation (World set 2)		| sci		| 1989	| Taito Corporat| Taito Z	| 					|
 | pce_sci	|  	| Special Criminal Investigation			| 		| 1991	| Taito		| PC Engine	| 					|
+| cv_spectar	|  	| Spectar (HB)						| 		| 2002	| AtariAge	| ColecoVision	| 					|
 | cv_spectron	|  	| Spectron						| 		| 1983	| Spectravideo	| ColecoVision	| 					|
 | spec2kh	|  	| Spectrum 2000 (horizontal, buggy) (Europe)		| spec2k	| 2000	| Yona Tech	| NMK16		| 					|
 | spec2k	|  	| Spectrum 2000 (vertical, Korea)			| 		| 2000	| Yona Tech	| NMK16		| 					|
@@ -11130,6 +11145,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_stargate	|  	| Stargate (World)					| 		| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | stargate	|  	| Stargate						| 		| 1981	| Williams / Vid| 6809 System	| 					|
 | msx_starquak	|  	| Starquake (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
+| cv_starshipdf	|  	| Starship Defence Force (HB)				| 		| 2015	| CollectorVisio| ColecoVision	| 					|
 | nes_starshiphector|  	| Starship Hector (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | msx_starship	|  	| Starship Simulator (Jpn)				| 		| 1984	| ASCII		| MSX		| 					|
 | msx_starshipa	|  	| Starship Simulator (Jpn, Alt)				| msx_starship	| 1984	| ASCII		| MSX		| 					|
@@ -12064,6 +12080,7 @@ This list contains all games supported by FinalBurn Neo.
 | tankfrcej	|  	| Tank Force (Japan)					| tankfrce	| 1991	| Namco		| System 1	| 					|
 | tankfrce	|  	| Tank Force (US, 2 Players)				| 		| 1991	| Namco		| System 1	| 					|
 | tankfrce4	|  	| Tank Force (US, 4 Players)				| tankfrce	| 1991	| Namco		| System 1	| 					|
+| cv_tankmission|  	| Tank Mission (HB)					| 		| 2017	| CollectorVisio| ColecoVision	| 					|
 | cv_tankwars	|  	| Tank Wars						| 		| 1983	| Telegames	| ColecoVision	| 					|
 | md_tank2011	|  	| Tanki 2011 (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_tanzer	|  	| Tanzer (HB)						| 		| 2019	| Mega Cat Studi| Sega Megadrive| 					|
@@ -12225,6 +12242,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_telebrad	|  	| Telebradesco Residencia (Bra)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | msx_telebunn	|  	| Telebunnie (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
 | msx_telebunna	|  	| Telebunnie (Jpn, Alt)					| msx_telebunn	| 1984	| ASCII		| MSX		| 					|
+| cv_telebunny	|  	| Telebunny (HB)					| 		| 2014	| CollectorVisio| ColecoVision	| 					|
 | cv_telly	|  	| Telly Turtle						| 		| 1984	| Coleco	| ColecoVision	| 					|
 | tempest1	|  	| Tempest (rev 1)					| tempest	| 1980	| Atari		| Miscellaneous	| 					|
 | tempest1r	|  	| Tempest (rev 1, Revised Hardware)			| tempest	| 1980	| Atari		| Miscellaneous	| 					|
@@ -13751,6 +13769,7 @@ This list contains all games supported by FinalBurn Neo.
 | waterski	|  	| Water Ski						| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
 | md_waterwld	|  	| WaterWorld (Euro, Prototype)				| 		| 1995?	| Ocean		| Sega Megadrive| 					|
 | spec_wayexplf	|  	| Way of the Exploding Fist, The (48K)			| 		| 1985	| Melbourne Hous| ZX Spectrum	| 					|
+| cv_explodingfoot|  	| Way of the Exploding Foot (HB)			| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | md_wayneg	|  	| Wayne Gretzky and the NHLPA All-Stars (Euro, USA)	| 		| 1995	| Time Warner In| Sega Megadrive| 					|
 | md_waynewld	|  	| Wayne's World (USA)					| 		| 1993	| THQ		| Sega Megadrive| 					|
 | nes_waynesworld|  	| Wayne's World (USA)					| 		| 1993	| THQ		| Miscellaneous	| 					|

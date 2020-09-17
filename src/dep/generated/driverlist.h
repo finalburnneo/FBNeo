@@ -10109,6 +10109,7 @@ DRV		BurnDrvSafarirj;
 DRV		BurnDrvSafarir;
 DRV		BurnDrvsms_sagaia;
 DRV		BurnDrvmd_sagaia;
+DRV		BurnDrvcv_saguaro;
 DRV		BurnDrvSaiyugoub1;
 DRV		BurnDrvSaiyugoub2;
 DRV		BurnDrvSaiyugou;
@@ -12113,6 +12114,7 @@ DRV		BurnDrvCpsSsf2xjr1r;
 DRV		BurnDrvCpsSsf2xjr1;
 DRV		BurnDrvCpsSsf2xj;
 DRV		BurnDrvMSX_suwanggi;
+DRV		BurnDrvcv_suprtank;
 DRV		BurnDrvsg1k_supertnk;
 DRV		BurnDrvsg1k_supertnkk;
 DRV		BurnDrvUsg82;
@@ -24889,6 +24891,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSafarir,			// Safari Rally (World)
 	&BurnDrvsms_sagaia,			// Sagaia (Euro, Bra)
 	&BurnDrvmd_sagaia,			// Sagaia (USA)
+	&BurnDrvcv_saguaro,			// Saguaro City (HB)
 	&BurnDrvSaiyugoub1,			// Sai Yu Gou Ma Roku (Japan bootleg 1)
 	&BurnDrvSaiyugoub2,			// Sai Yu Gou Ma Roku (Japan bootleg 2)
 	&BurnDrvSaiyugou,			// Sai Yu Gou Ma Roku (Japan)
@@ -26893,6 +26896,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSsf2xjr1,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan)
 	&BurnDrvCpsSsf2xj,			// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940311 Japan)
 	&BurnDrvMSX_suwanggi,		// Super Suwanggi - Super Altered Beast
+	&BurnDrvcv_suprtank,		// Super Tank (HB)
 	&BurnDrvsg1k_supertnk,		// Super Tank (Jpn)
 	&BurnDrvsg1k_supertnkk,		// Super Tank (Kor)
 	&BurnDrvUsg82,				// Super Ten V8.2

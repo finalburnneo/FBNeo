@@ -2498,6 +2498,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="saguaro" romof="coleco">
+		<description>Saguaro City (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Saguaro City (CollectorVision)(2019).rom" size="32768" crc="c6cead71"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="sammylfa" cloneof="sammylf" romof="sammylf">
 		<description>Sammy Lightfoot (Alt)</description>
 		<year>1983</year>
@@ -3136,6 +3147,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="suprtank" romof="coleco">
+		<description>Super Tank (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2011</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Super Tank (PixelBoy)(2011).rom" size="32768" crc="e9b7ff6c"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="sword" romof="coleco">
 		<description>Sword and Sorcerer (Prototype)</description>
 		<year>1983</year>
@@ -3149,7 +3171,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tankmission" romof="coleco">
-		<description>Tank Mission (HB) [Homebrew]</description>
+		<description>Tank Mission (HB) [Homebrew, Use option 1 - Normal]</description>
 		<year>2017</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Tank Mission (CollectorVision)(2017).rom" size="262144" crc="d0f37969"/>

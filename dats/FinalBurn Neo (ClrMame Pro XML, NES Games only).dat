@@ -8755,7 +8755,7 @@
 		<rom name="Tokkyuu Shirei Solbrain (Japan).nes" size="262160" crc="6a09e2bb"/>
 		<driver status="good"/>
 	</game>
-	<game name="tokkyshisol">
+	<game name="tokkyshisol" cloneof="shatterhand" romof="shatterhand">
 		<description>Tokkyuu Shirei Solbrain (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>

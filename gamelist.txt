@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14513 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14515 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -9933,6 +9933,7 @@ This list contains all games supported by FinalBurn Neo.
 | safarir	|  	| Safari Rally (World)					| 		| 1979	| SNK (Taito lic| Miscellaneous	| 					|
 | sms_sagaia	|  	| Sagaia (Euro, Bra)					| 		| 1992	| Sega		| Sega Master Sy| 					|
 | md_sagaia	|  	| Sagaia (USA)						| 		| 1991	| Taito		| Sega Megadrive| 					|
+| cv_saguaro	|  	| Saguaro City (HB)					| 		| 2019	| CollectorVisio| ColecoVision	| 					|
 | saiyugoub1	|  	| Sai Yu Gou Ma Roku (Japan bootleg 1)			| chinagat	| 1988	| bootleg	| Miscellaneous	| missing some sounds			|
 | saiyugoub2	|  	| Sai Yu Gou Ma Roku (Japan bootleg 2)			| chinagat	| 1988	| bootleg	| Miscellaneous	| 					|
 | saiyugou	|  	| Sai Yu Gou Ma Roku (Japan)				| chinagat	| 1988	| Technos Japan	| Miscellaneous	| 					|
@@ -11907,6 +11908,7 @@ This list contains all games supported by FinalBurn Neo.
 | ssf2xjr1	|  	| Super Street Fighter II X - grand master challenge (su| ssf2t		| 1994	| Capcom	| CPS2		| 					|
 | ssf2xj	|  	| Super Street Fighter II X - grand master challenge (su| ssf2t		| 1994	| Capcom	| CPS2		| 					|
 | msx_suwanggi	|  	| Super Suwanggi - Super Altered Beast			| 		| 1990	| Clover	| MSX		| 					|
+| cv_suprtank	|  	| Super Tank (HB)					| 		| 2011	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_supertnk	|  	| Super Tank (Jpn)					| 		| 1986	| Sega		| Sega SG-1000	| 					|
 | sg1k_supertnkk|  	| Super Tank (Kor)					| sg1k_supertnk	| 1986?	| Unknown	| Sega SG-1000	| 					|
 | usg82		|  	| Super Ten V8.2					| superten	| 1988	| U.S. Games	| Miscellaneous	| 					|
@@ -12080,7 +12082,7 @@ This list contains all games supported by FinalBurn Neo.
 | tankfrcej	|  	| Tank Force (Japan)					| tankfrce	| 1991	| Namco		| System 1	| 					|
 | tankfrce	|  	| Tank Force (US, 2 Players)				| 		| 1991	| Namco		| System 1	| 					|
 | tankfrce4	|  	| Tank Force (US, 4 Players)				| tankfrce	| 1991	| Namco		| System 1	| 					|
-| cv_tankmission|  	| Tank Mission (HB)					| 		| 2017	| CollectorVisio| ColecoVision	| 					|
+| cv_tankmission|  	| Tank Mission (HB)					| 		| 2017	| CollectorVisio| ColecoVision	| Use option 1 - Normal			|
 | cv_tankwars	|  	| Tank Wars						| 		| 1983	| Telegames	| ColecoVision	| 					|
 | md_tank2011	|  	| Tanki 2011 (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_tanzer	|  	| Tanzer (HB)						| 		| 2019	| Mega Cat Studi| Sega Megadrive| 					|
@@ -13039,7 +13041,7 @@ This list contains all games supported by FinalBurn Neo.
 | tokioo	|  	| Tokio / Scramble Formation (older)			| tokio		| 1986	| Taito Corporat| Taito Misc	| 					|
 | tokiou	|  	| Tokio / Scramble Formation (US)			| tokio		| 1986	| Taito America | Taito Misc	| 					|
 | nes_tokkyshisolj|  	| Tokkyuu Shirei Solbrain (Japan)			| nes_shatterhand| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_tokkyshisol|  	| Tokkyuu Shirei Solbrain (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_tokkyshisol|  	| Tokkyuu Shirei Solbrain (T-Eng)			| nes_shatterhand| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mahmajn	| D NW	| Tokoro San no MahMahjan (Japan, ROM Based)		| 		| 1992	| Sega		| System 24	| 					|
 | mahmajn2	| D NW	| Tokoro San no MahMahjan 2 (Japan, ROM Based)		| 		| 1994	| Sega		| System 24	| 					|
 | nes_tokorsannomammosemo|  	| Tokoro-san no Mamoru mo Semeru mo (Japan)	| 		| 1987	| Epic / Sony Re| Miscellaneous	| 					|

@@ -233,8 +233,8 @@ static void draw_bitmap()
 
 		if ((sx < 0xa0) && (sy < 0xe0))
 		{
-			pTransDraw[(sy * nScreenWidth) + sx * 2 + 1] = (ram[offs] >> 16) & 0x7fff;
-			pTransDraw[(sy * nScreenWidth) + sx * 2 + 0] = (ram[offs] >>  0) & 0x7fff;
+			pTransDraw[(sy * nScreenWidth) + sx * 2 + 1] = (BURN_ENDIAN_SWAP_INT32(ram[offs]) >> 16) & 0x7fff;
+			pTransDraw[(sy * nScreenWidth) + sx * 2 + 0] = (BURN_ENDIAN_SWAP_INT32(ram[offs]) >>  0) & 0x7fff;
 		}
 	}
 }

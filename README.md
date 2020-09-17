@@ -10,7 +10,7 @@ Use of this program and its source code is subject to the license conditions pro
 # Work in Progress builds
 If the below build status badge is green, you can download the latest builds from [this repository](https://github.com/finalburnneo/FBNeo-WIP-Storage-Facility/releases/tag/appveyor-build). Please note that if the below build status badge is not green then the build will be out of date. As this build is of the last commit occasionally you might run into incomplete code, crashes or other issues that [official releases](https://github.com/finalburnneo/FBNeo/releases) will not have. Also note that the dates might be wrong against the downloads, but if the badge is green the downloads *will* be of the latest commit. 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8rkefxtvxd3cllag/branch/master?svg=true)](https://ci.appveyor.com/project/tmaul/fbneo-kbhgd/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/u5q9nte6o9igs90i?svg=true)](https://ci.appveyor.com/project/tmaul/fbneo-kbhgd/branch/master)
 
 Here is the build status of the other versions for which we don't supply a binary directly. A red badge against a platform will indicate that something is wrong with that build. Currenty Raspberry Pi builds are missing from CI, but will one day be added:
 
@@ -85,7 +85,6 @@ src/
 ## Porting FBNeo to different systems
 
 In the main source tree, you will see in the intf directory various implementations for different platforms. You should look in here when porting to new platforms. We also encourage new ports, and are happy to have them merged in to the main sourcetree. There is probably a project there for someone to re-implement some of the older ports using the intf standard, should they want to.
-
 
 For portability we define the following types
 ```

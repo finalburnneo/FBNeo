@@ -54,6 +54,8 @@ static UINT8 *i8039_p;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static UINT8 *soundlatch;
 static UINT8 *gfx_bank;
 static UINT8 *sprite_bank;
@@ -597,6 +599,9 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 
 		case 0x7d84:
 			*nmi_mask = data & 0x01;
+			if (~data & 0x01) {
+				ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+			}
 		return;
 
 		case 0x7d85:
@@ -836,11 +841,7 @@ static void braze_bankswitch(INT32 data)
 
 	ZetMapMemory(DrvZ80ROM + bank, 0x0000, 0x5fff, MAP_ROM);
 
-	// work-around for eeprom reading
-	ZetMapArea(0x8000, 0xc7ff, 0, DrvZ80ROM + bank);
-	ZetMapArea(0xc900, 0xffff, 0, DrvZ80ROM + 0x4900 + bank);
-
-	ZetMapArea(0x8000, 0xffff, 2, DrvZ80ROM + bank);
+	// second bank dished out in braze_main_read() below..
 }
 
 static void __fastcall braze_main_write(UINT16 address, UINT8 data)
@@ -862,9 +863,11 @@ static void __fastcall braze_main_write(UINT16 address, UINT8 data)
 static UINT8 __fastcall braze_main_read(UINT16 address)
 {
 	// work-around for eeprom reading
-	if ((address & 0xff00) == 0xc800)
+	if (address & 0x8000) // 8000-ffff
 	{
-		if (address == 0xc800) return (EEPROMRead() & 1);
+		if (address == 0xc800) {
+			return (EEPROMRead() & 1);
+		}
 
 		return DrvZ80ROM[(braze_bank & 0x01) * 0x8000 + (address & 0x7fff)];
 	}
@@ -1100,11 +1103,6 @@ static UINT8 __fastcall i8039_sound_read_port(UINT32 port)
 	return 0;
 }
 
-static INT32 DkongDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / ((6000000.000 / 15) / (nBurnFPS / 100.000))));
-}
-
 static void dkong_sh_p1_write(UINT8 data)
 {
 	DACWrite(0, (INT32)(data * exp(-envelope_ctr)));
@@ -1220,6 +1218,8 @@ static INT32 DrvDoReset()
 	EEPROMReset();
 
 	HiscoreReset();
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -1427,7 +1427,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT
 	I8039SetCPUOpReadArgHandler(i8039_sound_read);
 	I8039Close();
 
-	DACInit(0, 0, 0, DkongDACSync);
+	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	BurnSampleInit(1);
@@ -1698,7 +1698,7 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 	I8039SetCPUOpReadArgHandler(i8039_sound_read);
 	I8039Close();
 
-	DACInit(0, 0, 0, DkongDACSync);
+	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	BurnSampleInit(1);
@@ -1864,7 +1864,7 @@ static INT32 DrvFrame()
 	}
 
 	I8039NewFrame();
-
+	ZetNewFrame();
 	{
 		memset (DrvInputs, 0, 3);
 
@@ -1875,25 +1875,29 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { 3072000 / 60, 6000000 / 15 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nInterleave = 264;
+	INT32 nCyclesTotal[2] = { (INT32)((double)3072000 / 60.606061), (INT32)((double)6000000 / 15 / 60.606061) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	I8039Open(0);
 
-	for (INT32 i = 0; i < 10; i++) {
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-	}
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN_SYNCINT(0, Zet);
+		CPU_RUN(1, I8039);
 
-	if (*nmi_mask) ZetNmi();
+		if (i == 239 && *nmi_mask) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		if (i == 240) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+	}
 
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles[0] = ZetTotalCycles() - nCyclesTotal[0]; // ZetTotalCycles() because _SYNCINT and calling ZetIdle() by the dma engine.
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	I8039Close();
 	ZetClose();
@@ -1930,16 +1934,16 @@ static INT32 Dkong3Frame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && *nmi_mask) ZetNmi();
 
 		M6502Open(0);
-		nCyclesDone[1] += M6502Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6502);
 		if (i == (nInterleave - 1)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 
 		M6502Open(1);
-		nCyclesDone[2] += M6502Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(2, M6502);
 		if (i == (nInterleave - 1)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 	}
@@ -1986,10 +1990,10 @@ static INT32 s2650DkongFrame()
 
 	vblank = 0;
 
-	for (INT32 i = 0; i < 32; i++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += s2650Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(0, s2650);
+		CPU_RUN(1, I8039);
 
 		if (i == 30) {
 			vblank = 0x80;
@@ -2134,6 +2138,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hunch_prot_ctr); // hunchback (s2650)
 		SCAN_VAR(hunchloopback);
 		SCAN_VAR(main_fo);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
 			if (draktonmode) {

@@ -1071,11 +1071,8 @@ static void Cps3PatchRegion()
 
 		bprintf(0, _T("Region: %02x -> %02x\n"), RomBios[cps3_region_address], (RomBios[cps3_region_address] & 0xf0) | (cps3_dip & 0x0f));				
 
-#ifdef LSB_FIRST
 		RomBios[cps3_region_address] = (RomBios[cps3_region_address] & 0xf0) | (cps3_dip & 0x7f);
-#else
-		RomBios[cps3_region_address ^ 0x03] = (RomBios[cps3_region_address ^ 0x03] & 0xf0) | (cps3_dip & 0x7f);
-#endif
+
 		if ( cps3_ncd_address ) {
 			if (cps3_dip & 0x10)
 				RomBios[cps3_ncd_address] |= 0x01;
@@ -1179,6 +1176,8 @@ INT32 cps3Init()
 
 #ifdef LSB_FIRST
 	be_to_le( RomBios, 0x080000 );
+#else
+	cps3_region_address ^= 0x03;
 #endif
 	cps3_decrypt_bios();
 
@@ -2040,6 +2039,20 @@ static INT32 cps_int10_cnt = 0;
 
 INT32 cps3Frame()
 {
+	// feels a bit hacky, and sfiii2 can change mode without resetting through its service menu,
+	// so maybe there is a better way to do this ?
+	// sfiii3 got that mode too, but it's heavily glitched so let's keep it hidden -barbudreadmon
+	if ( cps3_region_address ) {
+		if ((cps3_dip&0x80) == 0x80 && (RomBios[cps3_region_address]&0x80) != 0x80) {
+			cps3_reset = 1;
+			RomBios[cps3_region_address] |= 0x80;
+		}
+		else if ((cps3_dip&0x80) != 0x80 && (RomBios[cps3_region_address]&0x80) == 0x80) {
+			cps3_reset = 1;
+			RomBios[cps3_region_address] &= ~0x80;
+		}
+	}
+
 	if (cps3_reset)
 		Cps3Reset();
 		

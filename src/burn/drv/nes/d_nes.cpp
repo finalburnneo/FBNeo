@@ -9636,7 +9636,7 @@ struct BurnDriver BurnDrvfds_eggerland = {
 };
 
 static struct BurnRomInfo fds_eggerlansouenotaRomDesc[] = {
-	{ "Egger Land - Souzou e no Tabidachi (Japan).fds",          131016, 0x2441b3b9, BRF_ESS | BRF_PRG },
+	{ "Egger Land - Souzouhe no Tabidachi (Japan).fds",          131016, 0x2441b3b9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_eggerlansouenota, fds_eggerlansouenota, fds_fdsbios)
@@ -9644,7 +9644,7 @@ STD_ROM_FN(fds_eggerlansouenota)
 
 struct BurnDriver BurnDrvfds_eggerlansouenota = {
 	"fds_eggerlansouenota", NULL, "fds_fdsbios", NULL, "1989?",
-	"Egger Land - Souzou e no Tabidachi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Egger Land - Souzouhe no Tabidachi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
 	NESGetZipName, fds_eggerlansouenotaRomInfo, fds_eggerlansouenotaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -33186,10 +33186,10 @@ STD_ROM_PICK(nes_tokkyshisol)
 STD_ROM_FN(nes_tokkyshisol)
 
 struct BurnDriver BurnDrvnes_tokkyshisol = {
-	"nes_tokkyshisol", NULL, NULL, NULL, "1989?",
+	"nes_tokkyshisol", "nes_shatterhand", NULL, NULL, "1989?",
 	"Tokkyuu Shirei Solbrain (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_tokkyshisolRomInfo, nes_tokkyshisolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

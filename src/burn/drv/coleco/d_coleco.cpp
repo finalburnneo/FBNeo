@@ -7044,6 +7044,25 @@ struct BurnDriver BurnDrvcv_ripcord = {
     272, 228, 4, 3
 };
 
+// Saguaro City
+
+static struct BurnRomInfo cv_saguaroRomDesc[] = {
+    { "Saguaro City (CollectorVision)(2019).rom",	0x08000, 0xc6cead71, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_saguaro, cv_saguaro, cv_coleco)
+STD_ROM_FN(cv_saguaro)
+
+struct BurnDriver BurnDrvcv_saguaro = {
+    "cv_saguaro", NULL, "cv_coleco", NULL, "2019",
+    "Saguaro City (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_saguaroRomInfo, cv_saguaroRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Side Trak
 
 static struct BurnRomInfo cv_sidetrakRomDesc[] = {
@@ -7120,6 +7139,25 @@ struct BurnDriver BurnDrvcv_starshipdf = {
     272, 228, 4, 3
 };
 
+// Super Tank
+
+static struct BurnRomInfo cv_suprtankRomDesc[] = {
+    { "Super Tank (PixelBoy)(2011).rom",	0x08000, 0xe9b7ff6c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_suprtank, cv_suprtank, cv_coleco)
+STD_ROM_FN(cv_suprtank)
+
+struct BurnDriver BurnDrvcv_suprtank = {
+    "cv_suprtank", NULL, "cv_coleco", NULL, "2011",
+    "Super Tank (HB)\0", "Published by Team Pixelboy", "Sega", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_suprtankRomInfo, cv_suprtankRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Tank Mission
 
 static struct BurnRomInfo cv_tankmissionRomDesc[] = {
@@ -7131,7 +7169,7 @@ STD_ROM_FN(cv_tankmission)
 
 struct BurnDriver BurnDrvcv_tankmission = {
     "cv_tankmission", NULL, "cv_coleco", NULL, "2017",
-    "Tank Mission (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+    "Tank Mission (HB)\0", "Use option 1 - Normal", "CollectorVision Games", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
     CVGetZipName, cv_tankmissionRomInfo, cv_tankmissionRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

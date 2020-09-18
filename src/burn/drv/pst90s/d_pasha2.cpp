@@ -109,7 +109,7 @@ static void set_okibank(INT32 select, INT32 data)
 static void pasha2_write_long(UINT32 address, UINT32 data)
 {
 	if ((address & 0xfffe0000) == 0x40020000) {
-		UINT32 x = *((UINT32*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffc)));
+		UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffc))));
 		UINT32 xm = 0;
 	
 		data = (data << 16) | (data >> 16);
@@ -119,7 +119,7 @@ static void pasha2_write_long(UINT32 address, UINT32 data)
 		if ((data & 0x0000ff00) == 0x0000ff00) xm |= 0x0000ff00;
 		if ((data & 0x000000ff) == 0x000000ff) xm |= 0x000000ff;
 		UINT32 dm = xm ^ 0xffffffff;
-		*((UINT32*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffc))) = (x & xm) | (data & dm);
+		*((UINT32*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffc))) = BURN_ENDIAN_SWAP_INT32((x & xm) | (data & dm));
 		return;
 	}
 
@@ -135,12 +135,12 @@ static void pasha2_write_long(UINT32 address, UINT32 data)
 static void pasha2_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffe0000) == 0x40020000) {
-		UINT16 x = *((UINT16*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffe)));
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffe))));
 		UINT16 xm = 0;
 		if ((data & 0x0000ff00) == 0x0000ff00) xm |= 0x0000ff00;
 		if ((data & 0x000000ff) == 0x000000ff) xm |= 0x000000ff;
 		UINT32 dm = xm ^ 0xffff;
-		*((UINT16*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffe))) = (x & xm) | (data & dm);
+		*((UINT16*)(DrvVidRAM[1][vidrambank] + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16((x & xm) | (data & dm));
 		return;
 	}
 
@@ -236,7 +236,7 @@ static UINT32 pasha2_read_long(UINT32 address)
 {
 	if (address < 0x200000) {
 		do_speedhack(address);
-		UINT32 ret = *((UINT32*)(DrvMainRAM + address));
+		UINT32 ret = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvMainRAM + address)));
 		return (ret << 16) | (ret >> 16);
 	}
 
@@ -247,7 +247,7 @@ static UINT16 pasha2_read_word(UINT32 address)
 {
 	if (address < 0x200000) {
 		do_speedhack(address);
-		return *((UINT16*)(DrvMainRAM + address));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainRAM + address)));
 	}
 
 	return 0;
@@ -388,11 +388,11 @@ static void DrvPaletteUpdate()
 	
 	for (INT32 i = 0; i < 0x100; i++)
 	{
-		UINT16 color = (p[i] >> 8) | (p[i + 0x100] & 0xff00);
+		UINT16 color = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) | (BURN_ENDIAN_SWAP_INT16(p[i + 0x100]) & 0xff00);
 	
 		BurnPalette[i * 2 + 0] = BurnHighCol(pal5bit(color), pal5bit(color >> 5), pal5bit(color >> 10), 0);
 
-		color = (p[i] & 0xff) | (p[i + 0x100] << 8);
+		color = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0xff) | (BURN_ENDIAN_SWAP_INT16(p[i + 0x100]) << 8);
 	
 		BurnPalette[i * 2 + 1] = BurnHighCol(pal5bit(color), pal5bit(color >> 5), pal5bit(color >> 10), 0);
 	}

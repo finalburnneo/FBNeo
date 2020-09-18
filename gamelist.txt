@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14515 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14517 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3124,7 +3124,9 @@ This list contains all games supported by FinalBurn Neo.
 | dkongjr	|  	| Donkey Kong Junior (US set F-2)			| 		| 1982	| Nintendo of Am| Miscellaneous	| 					|
 | dkongjr2	|  	| Donkey Kong Junior (US, bootleg?)			| dkongjr	| 1982	| Nintendo	| Miscellaneous	| 					|
 | cv_dkongjr	|  	| Donkey Kong Junior					| 		| 1983	| Coleco	| ColecoVision	| 					|
+| dkongotr	|  	| Donkey Kong On the Run v1.02				| dkong		| 2020	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkpace	|  	| Donkey Kong Pace					| dkong		| 2016	| Hack (Sock Mas| Miscellaneous	| 					|
+| dkongran1	|  	| Donkey Kong Randomized Edition v1.01			| dkong		| 2020	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkrdemo	|  	| Donkey Kong Remix (Demo)				| dkong		| 2015	| Hack (Sockmast| Miscellaneous	| 					|
 | dkongrev	|  	| Donkey Kong Reverse (Hack)				| dkong		| 2019	| Hack (Paul Goe| Miscellaneous	| 					|
 | dkspkyrmx	|  	| Donkey Kong Spooky Remix (Hack)			| dkong		| 2018	| Sock Master	| Miscellaneous	| 					|
@@ -3557,7 +3559,7 @@ This list contains all games supported by FinalBurn Neo.
 | eeekk		|  	| Eeekk!						| 		| 1983	| Epos Corporati| EPOS Tristar	| 					|
 | egghunt	|  	| Egg Hunt						| 		| 1995	| Invi Image	| Miscellaneous	| 					|
 | fds_eggerland	|  	| Egger Land (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| fds_eggerlansouenota|  	| Egger Land - Souzou e no Tabidachi (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_eggerlansouenota|  	| Egger Land - Souzouhe no Tabidachi (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_eggerlnd	|  	| Eggerland Mystery (Jpn)				| 		| 1985	| HAL Kenkyuujo	| MSX		| 					|
 | eggor		|  	| Eggor							| 		| 1982	| Telko		| Pac-man	| 					|
 | eggs		|  	| Eggs							| scregg	| 1983	| [Technos] Univ| Miscellaneous	| 					|

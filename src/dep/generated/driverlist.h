@@ -3178,7 +3178,9 @@ DRV		BurnDrvDkongjrpb;		// no comment [NOT WORKING]
 DRV		BurnDrvDkongjr;
 DRV		BurnDrvDkongjr2;
 DRV		BurnDrvcv_dkongjr;
+DRV		BurnDrvDkongotr;
 DRV		BurnDrvDkpace;
+DRV		BurnDrvDkongran1;
 DRV		BurnDrvDkrdemo;
 DRV		BurnDrvDkongrev;
 DRV		BurnDrvDkspkyrmx;
@@ -17960,7 +17962,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDkongjr,			// Donkey Kong Junior (US set F-2)
 	&BurnDrvDkongjr2,			// Donkey Kong Junior (US, bootleg?)
 	&BurnDrvcv_dkongjr,			// Donkey Kong Junior
+	&BurnDrvDkongotr,			// Donkey Kong On the Run v1.02
 	&BurnDrvDkpace,				// Donkey Kong Pace
+	&BurnDrvDkongran1,			// Donkey Kong Randomized Edition v1.01
 	&BurnDrvDkrdemo,			// Donkey Kong Remix (Demo)
 	&BurnDrvDkongrev,			// Donkey Kong Reverse (Hack)
 	&BurnDrvDkspkyrmx,			// Donkey Kong Spooky Remix (Hack)
@@ -18405,7 +18409,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvEeekk,				// Eeekk!
 	&BurnDrvEgghunt,			// Egg Hunt
 	&BurnDrvfds_eggerland,		// Egger Land (Japan)
-	&BurnDrvfds_eggerlansouenota,// Egger Land - Souzou e no Tabidachi (Japan)
+	&BurnDrvfds_eggerlansouenota,// Egger Land - Souzouhe no Tabidachi (Japan)
 	&BurnDrvMSX_eggerlnd,		// Eggerland Mystery (Jpn)
 	&BurnDrveggor,				// Eggor
 	&BurnDrveggs,				// Eggs

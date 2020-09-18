@@ -277,10 +277,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="eggerlansouenota" romof="fdsbios">
-		<description>Egger Land - Souzou e no Tabidachi (Japan)</description>
+		<description>Egger Land - Souzouhe no Tabidachi (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Egger Land - Souzou e no Tabidachi (Japan).fds" size="131016" crc="2441b3b9"/>
+		<rom name="Egger Land - Souzouhe no Tabidachi (Japan).fds" size="131016" crc="2441b3b9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

@@ -81,7 +81,7 @@ static void blitter_write()
 	UINT32 reg0 = (blitterregs[0]<<16)|(blitterregs[0]>>16);
 	UINT32 reg1 = (blitterregs[1]<<16)|(blitterregs[1]>>16);
 	UINT32 reg2 = (blitterregs[2]<<16)|(blitterregs[2]>>16);
-		
+
 	INT32 blt_source = (reg0&0x000fffff) >>  0;
 	INT32 blt_column = (reg1&0x00ff0000) >> 16; // should this be 0x7f?
 	INT32 blt_line  =  (reg1&0x000000ff) >>  0;
@@ -544,7 +544,7 @@ static void clearspritebitmap()
 	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs[0])&0x0fff0000)>>16) - 200;
 	INT32 amountx = 650;
 	INT32 amounty = 600;
-	
+
 	if (startx < 0) { amountx += startx; startx = 0; }
 	if ((startx+amountx)>=0x1000) amountx-=(0x1000-(startx+amountx));
 
@@ -567,7 +567,7 @@ static void draw_sprites()
 		INT32 flipy = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x4000;
 		INT32 color =(BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) >> 4) & 0xff;
 		INT32 code  =(BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) | (BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) << 16)) & 0x1ffff;
-		
+
 		if (sx & 0x800) sx-=0x1000;
 
 		DrawGfxMaskTile(5, 4, code, sx+0x20-8, sy-24, flipx, flipy, color, 0xf);
@@ -582,7 +582,7 @@ static void draw_sprite_bitmap()
 	UINT32 ysize = ((BURN_ENDIAN_SWAP_INT32(spriteregs[3])>>16)) + 0x80;
 	UINT32 xstep = ((320*128)<<16) / xsize;
 	UINT32 ystep = ((224*128)<<16) / ysize;
-	
+
 	for (UINT32 y=0;y<ysize;y+=0x80)
 	{
 		UINT32 ydrawpos = ((y>>7)*ystep) >> 16;
@@ -624,7 +624,7 @@ static void drawtilemap(INT32 whichtilemap) // line zoom
 	INT32 startx=((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][1])&0xffff0000)>>16) << 12;
 	INT32 incyy= ((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][4])&0x00000fff)) << 5;
 	INT32 incxx= ((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][3])&0x0fff0000)>>16) << 5;
-	
+
 	if (update_tilemap[whichtilemap])
 	{
 		GenericTilemapDraw(whichtilemap, 1 + whichtilemap, 0);
@@ -657,7 +657,7 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear(0x4000);
-	
+
 	for (UINT32 prilevel = 0xf00; prilevel > 0; prilevel-=0x100)
 	{
 		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[3][0]) & 0x0f00)) drawtilemap(3);

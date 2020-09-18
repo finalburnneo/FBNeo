@@ -9636,7 +9636,7 @@ struct BurnDriver BurnDrvfds_eggerland = {
 };
 
 static struct BurnRomInfo fds_eggerlansouenotaRomDesc[] = {
-	{ "Egger Land - Souzou e no Tabidachi (Japan).fds",          131016, 0x2441b3b9, BRF_ESS | BRF_PRG },
+	{ "Egger Land - Souzouhe no Tabidachi (Japan).fds",          131016, 0x2441b3b9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_eggerlansouenota, fds_eggerlansouenota, fds_fdsbios)
@@ -9644,7 +9644,7 @@ STD_ROM_FN(fds_eggerlansouenota)
 
 struct BurnDriver BurnDrvfds_eggerlansouenota = {
 	"fds_eggerlansouenota", NULL, "fds_fdsbios", NULL, "1989?",
-	"Egger Land - Souzou e no Tabidachi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Egger Land - Souzouhe no Tabidachi (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
 	NESGetZipName, fds_eggerlansouenotaRomInfo, fds_eggerlansouenotaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,

@@ -419,6 +419,13 @@
 		<rom name="mpr-12538.bin" size="524288" crc="154d59bb"/>
 		<driver status="good"/>
 	</game>
+	<game name="alterego">
+		<description>AlterEgo Remastered (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="AlterEgo Remastered (HB, 2020).bin" size="786432" crc="3be95745"/>
+		<driver status="good"/>
+	</game>
 	<game name="amerglad">
 		<description>American Gladiators (USA)</description>
 		<year>1992</year>

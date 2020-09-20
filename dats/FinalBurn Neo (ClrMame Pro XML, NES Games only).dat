@@ -1034,7 +1034,7 @@
 		<rom name="Blue Marlin, The (USA).nes" size="262160" crc="d9e8e747"/>
 		<driver status="good"/>
 	</game>
-	<game name="blueshadow" cloneof="kage" romof="kage">
+	<game name="blueshadow" cloneof="shadonin" romof="shadonin">
 		<description>Blue Shadow (Europe)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -4436,7 +4436,7 @@
 		<rom name="Kabuki - Quantum Fighter (USA).nes" size="262160" crc="5ee7a400"/>
 		<driver status="good"/>
 	</game>
-	<game name="kage">
+	<game name="kage" cloneof="shadonin" romof="shadonin">
 		<description>Kage (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>

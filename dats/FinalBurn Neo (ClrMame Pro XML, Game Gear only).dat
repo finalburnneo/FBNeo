@@ -2079,9 +2079,9 @@
 	</game>
 	<game name="lastbibse" cloneof="lastbibs" romof="lastbibs">
 		<description>Megami Tensei Gaiden - Last Bible S (Hack, English)</description>
-		<year>2017</year>
+		<year>2018</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="megami tensei gaiden - last bible s (english translation).gg" size="524288" crc="8a44108b"/>
+		<rom name="megami tensei gaiden - last bible s (english translation).gg" size="524288" crc="1a1cb7f8"/>
 		<driver status="good"/>
 	</game>
 	<game name="lastbibs">

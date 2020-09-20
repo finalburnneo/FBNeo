@@ -196,6 +196,14 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
+	<game name="deadzone" romof="fdsbios">
+		<description>Dead Zone (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dead Zone (Japan).fds" size="131000" crc="de673254"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
 	<game name="digdug" romof="fdsbios">
 		<description>Dig Dug (Japan)</description>
 		<year>1989?</year>
@@ -297,6 +305,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Electrician (T-eng).fds" size="131016" crc="4aa51f48"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="esperdream" romof="fdsbios">
+		<description>Esper Dream (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Esper Dream (Japan).fds" size="131000" crc="1d40f83f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

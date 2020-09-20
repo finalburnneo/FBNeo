@@ -351,7 +351,22 @@ INT32 SMSInit()
 
     system_init();
 
+	memset(cart.sram,    0, sizeof(cart.sram));
+
 	return 0;
+}
+
+static INT32 sramInit()
+{
+	bprintf(0, _T("**  SMS/GG with SRAM.\n"));
+
+	INT32 rc = SMSInit();
+
+	if (!rc) {
+		cart.use_sram = 1;
+	}
+
+	return rc;
 }
 
 static INT32 rbislandInit()
@@ -359,7 +374,7 @@ static INT32 rbislandInit()
 	INT32 rc = SMSInit();
 
 	if (rc == 0 && cart.rom[0x7334] == 0xe5) {
-		bprintf(0, _T("SMS HOTFIX: Applying Rainbow Islands \"ending-crash\" fix.\n"));
+		bprintf(0, _T("**  SMS HOTFIX: Applying Rainbow Islands \"ending-crash\" fix.\n"));
 		cart.rom[0x7334] = 0xe1;
 	}
 
@@ -415,6 +430,15 @@ INT32 SMSScan(INT32 nAction, INT32 *pnMin)
 			system_load_state();
 			ZetClose();
 		}
+	}
+
+	if (nAction & ACB_NVRAM && cart.use_sram) {
+		if (nAction & ACB_WRITE) {
+			bprintf(0, _T("SRAM LOAD.\n"));
+		} else {
+			bprintf(0, _T("SRAM SAVE.\n"));
+		}
+		ScanVar(cart.sram, 0x8000, "SRAM");
 	}
 
 	return 0;
@@ -18740,7 +18764,7 @@ struct BurnDriver BurnDrvgg_lastbibl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_lastbiblRomInfo, gg_lastbiblRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	sramInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
@@ -18760,28 +18784,28 @@ struct BurnDriver BurnDrvgg_lastbibs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_lastbibsRomInfo, gg_lastbibsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	sramInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
 
-// Megami Tensei Gaiden - Last Bible S (Hack, English)
+// Megami Tensei Gaiden - Last Bible S (Hack, English) v1.02
 // Source : https://www.romhacking.net/translations/3160/
 
 static struct BurnRomInfo gg_lastbibseRomDesc[] = {
-	{ "megami tensei gaiden - last bible s (english translation).gg",	0x80000, 0x8a44108b, BRF_PRG | BRF_ESS },
+	{ "megami tensei gaiden - last bible s (english translation).gg",	0x80000, 0x1a1cb7f8, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_lastbibse)
 STD_ROM_FN(gg_lastbibse)
 
 struct BurnDriver BurnDrvgg_lastbibse = {
-	"gg_lastbibse", "gg_lastbibs", NULL, NULL, "2017",
+	"gg_lastbibse", "gg_lastbibs", NULL, NULL, "2018",
 	"Megami Tensei Gaiden - Last Bible S (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_lastbibseRomInfo, gg_lastbibseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	sramInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 

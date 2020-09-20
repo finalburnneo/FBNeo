@@ -39,7 +39,7 @@
 
 
 static UINT8* m_rom = NULL;			// ics2115 rom
-static INT32 m_rom_len;
+static INT32 m_rom_mask;
 static void (*m_irq_cb)(INT32) = NULL;// cpu irq callback
 
 struct ics2115_voice {
@@ -205,7 +205,7 @@ void ics2115_init(void (*cpu_irq_cb)(INT32), UINT8 *sample_rom, INT32 sample_rom
 
 	m_irq_cb = cpu_irq_cb;
 	m_rom = sample_rom;
-	m_rom_len = sample_rom_size;
+	m_rom_mask = sample_rom_size - 1;
 
 	// compute volume table
 	for (INT32 i = 0; i < 4096; i++)
@@ -267,7 +267,7 @@ void ics2115_exit()
 	if (!DebugSnd_ICS2115Initted) return;
 
 	m_rom = NULL;
-	m_rom_len = 0;
+	m_rom_mask = 0;
 	m_irq_cb = NULL;
 
 	BurnFree(buffer);
@@ -443,12 +443,12 @@ static inline INT32 read_wavetable(ics2115_voice& voice, const UINT32 curr_addr)
 	if (voice.osc_conf.bitflags.ulaw || voice.osc_conf.bitflags.eightbit)
 	{
 		if (voice.osc_conf.bitflags.ulaw)
-			return m_ulaw[m_rom[curr_addr]];
+			return m_ulaw[m_rom[curr_addr & m_rom_mask]];
 
-		return ((INT8)(m_rom[curr_addr]) << 8) | ((m_rom[curr_addr] & 0x7F) << 1);
+		return ((INT8)(m_rom[curr_addr & m_rom_mask]) << 8) | ((m_rom[curr_addr & m_rom_mask] & 0x7F) << 1);
 	}
 
-	return ((INT8)(m_rom[curr_addr + 1]) << 8) | m_rom[curr_addr + 0];
+	return ((INT8)(m_rom[(curr_addr + 1) & m_rom_mask]) << 8) | m_rom[(curr_addr + 0) & m_rom_mask];
 }
 
 #if defined INTERPOLATE_AS_HARDWARE

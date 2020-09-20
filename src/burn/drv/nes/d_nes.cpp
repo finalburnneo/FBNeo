@@ -30092,10 +30092,10 @@ STD_ROM_PICK(nes_shadonin)
 STD_ROM_FN(nes_shadonin)
 
 struct BurnDriver BurnDrvnes_shadonin = {
-	"nes_shadonin", NULL, NULL, NULL, "1990",
+	"nes_shadonin", "nes_kage", NULL, NULL, "1990",
 	"Shadow of the Ninja (USA)\0", NULL, "Natsume", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_shadoninRomInfo, nes_shadoninRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

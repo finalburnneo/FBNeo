@@ -546,6 +546,50 @@ static struct BurnInputInfo vlinerInputList[] = {
 
 STDINPUTINFO(vliner)
 
+// The input actually uses P2!
+// Exchange inputs for P1 & P2
+static struct BurnInputInfo nsmbInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	NeoButton2 + 0,	"p1 coin"},			//  0
+	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"},		//	1
+	{"P1 Select",	BIT_DIGITAL,	NeoButton1 + 1,	"p1 select"},		//  2
+
+	{"P1 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p1 up"},			//  3
+	{"P1 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p1 down"},			//  4
+	{"P1 Left",		BIT_DIGITAL,	NeoJoy2 + 2,	"p1 left"},			//	5
+	{"P1 Right",	BIT_DIGITAL,	NeoJoy2 + 3,	"p1 right"},		//	6
+	{"P1 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p1 fire 1"},		//	7
+	{"P1 Button B",	BIT_DIGITAL,	NeoJoy2 + 5,	"p1 fire 2"},		//	8
+	{"P1 Button C",	BIT_DIGITAL,	NeoJoy2 + 6,	"p1 fire 3"},		//	9
+	{"P1 Button D",	BIT_DIGITAL,	NeoJoy2 + 7,	"p1 fire 4"},		//	A
+
+	{"P2 Coin",		BIT_DIGITAL,	NeoButton2 + 1,	"p2 coin"},			//	B
+	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"},		//	C
+	{"P2 Select",	BIT_DIGITAL,	NeoButton1 + 3,	"p2 select"},		//	D
+
+	{"P2 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p2 up"},			//	E
+	{"P2 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p2 down"},			//  F
+	{"P2 Left",		BIT_DIGITAL,	NeoJoy1 + 2,	"p2 left"},			// 10
+	{"P2 Right",	BIT_DIGITAL,	NeoJoy1 + 3,	"p2 right"},		// 11
+	{"P2 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p2 fire 1"},		// 12
+	{"P2 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p2 fire 2"},		// 13
+	{"P2 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p2 fire 3"},		// 14
+	{"P2 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p2 fire 4"},		// 15
+
+	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"},			// 16
+	{"Test",		BIT_DIGITAL,	NeoDiag + 0,	"diag"},			// 17
+	{"Service",		BIT_DIGITAL,	NeoButton2 + 2,	"service"},			// 18
+	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"},				// 19
+	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"},				// 1A
+
+	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"},				// 1B
+	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"},				// 1C
+
+	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"},				// 1D
+	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},				// 1E
+};
+
+STDINPUTINFO(nsmb)
+
 static struct BurnDIPInfo neodefaultDIPList[] = {
 	// Offset
 	{0x19,	0xF0, 0x00,	0x00, NULL},
@@ -15281,43 +15325,7 @@ struct BurnDriver BurnDrvMslug5w = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Decrypted)
-
-static struct BurnRomInfo mslug5ndRomDesc[] = {
-	{ "268nd.p1",		0x100000, 0xca50afdf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268nd.p2",		0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG }, //  1
-
-	{ "268d.c1",		0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 Sprite data
-	{ "268d.c2",		0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
-	{ "268d.c3",		0x800000, 0xd7beaeaf, 3 | BRF_GRA },           //  4
-	{ "268nd.c4",		0x800000, 0xe1b1131b, 3 | BRF_GRA },           //  5
-	{ "268d.c5",		0x800000, 0x2fa1a5ad, 3 | BRF_GRA },           //  6
-	{ "268d.c6",		0x800000, 0x6de89589, 3 | BRF_GRA },           //  7
-	{ "268d.c7",		0x800000, 0x97bd0c0a, 3 | BRF_GRA },           //  8
-	{ "268d.c8",		0x800000, 0xc0d5bc20, 3 | BRF_GRA },           //  9
-
-	{ "268nd.m1",		0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
-
-	{ "268nd.v1",		0x400000, 0xdc7f03f0, 5 | BRF_SND },           // 11 Sound data
-	{ "268nd.v2",		0x400000, 0xeeb7c926, 5 | BRF_SND },           // 12
-	{ "268nd.v3",		0x400000, 0x02fd519e, 5 | BRF_SND },           // 13
-	{ "268nd.v4",		0x400000, 0xd7c67794, 5 | BRF_SND },           // 14
-};
-
-STDROMPICKEXT(mslug5nd, mslug5nd, neogeo)
-STD_ROM_FN(mslug5nd)
-
-struct BurnDriver BurnDrvmslug5nd = {
-	"mslug5nd", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 (Decrypted)\0", NULL, "hack", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug5ndRomInfo, mslug5ndRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
-// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack) 
+// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack)
 // Enable Alfred v3 and Fix Alfred's player 2 color - hack by Eddids[FCHT]
 
 static struct BurnRomInfo rbff2bhRomDesc[] = {
@@ -19687,4 +19695,50 @@ struct BurnDriver BurnDrvneotris = {
 	NULL, neotrisRomInfo, neotrisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+
+// Neo Super Mario Bros Demo!
+// https://ozzyouzo.itch.io/neosmb
+
+static struct BurnRomInfo nsmbRomDesc[] = {
+	{ "nsmb-p1.bin",    0x100000, 0x6abacc0f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "nsmb-s1.bin",    0x020000, 0xa545b593, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "nsmb-c1.bin",    0x800000, 0x81ac72e5, 3 | BRF_GRA },           //  2 Sprite data
+	{ "nsmb-c2.bin",    0x800000, 0xa94a817b, 3 | BRF_GRA },           //  3 
+#if 0
+	{ "nsmb-c3.bin",    0x800000, 0x81ac72e5, 3 | BRF_GRA },           //  Duplicate Sprite data files
+	{ "nsmb-c4.bin",    0x800000, 0xa94a817b, 3 | BRF_GRA },           //  
+	{ "nsmb-c5.bin",    0x800000, 0x81ac72e5, 3 | BRF_GRA },           //  
+	{ "nsmb-c6.bin",    0x800000, 0xa94a817b, 3 | BRF_GRA },           //  
+	{ "nsmb-c7.bin",    0x800000, 0x81ac72e5, 3 | BRF_GRA },           //  
+	{ "nsmb-c8.bin",    0x800000, 0xa94a817b, 3 | BRF_GRA },           //  
+#endif
+
+	{ "nsmb-m1.bin",    0x010000, 0x40d6f48d, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "nsmb-v1.bin",    0x100000, 0xd94bea55, 5 | BRF_SND },           //  5 Sound data
+	{ "nsmb-v2.bin",    0x100000, 0xb110df8b, 5 | BRF_SND },           //  6 
+	{ "nsmb-v3.bin",    0x100000, 0x3c623679, 5 | BRF_SND },           //  7 
+	{ "nsmb-v4.bin",    0x100000, 0xfbf00c96, 5 | BRF_SND },           //  8
+	{ "nsmb-v5.bin",    0x100000, 0x9b2031d4, 5 | BRF_SND },           //  9 
+	{ "nsmb-v6.bin",    0x100000, 0x107cfc89, 5 | BRF_SND },           // 10 
+	{ "nsmb-v7.bin",    0x100000, 0x0703b761, 5 | BRF_SND },           // 11
+	{ "nsmb-v8.bin",    0x100000, 0x8d525588, 5 | BRF_SND },           // 12 
+	{ "nsmb-v9.bin",    0x100000, 0x97f073b6, 5 | BRF_SND },           // 13 
+};
+
+STDROMPICKEXT(nsmb, nsmb, neogeo)
+STD_ROM_FN(nsmb)
+
+struct BurnDriver BurnDrvNsmb = {
+	"nsmb", NULL, "neogeo", NULL, "2020",
+	"Neo Super Mario Bros Demo!\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, nsmbRomInfo, nsmbRomName, NULL, NULL, NULL, NULL, nsmbInputInfo, neoaesjapanDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };

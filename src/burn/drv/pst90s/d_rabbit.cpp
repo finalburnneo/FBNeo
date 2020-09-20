@@ -81,7 +81,7 @@ static void blitter_write()
 	UINT32 reg0 = (blitterregs[0]<<16)|(blitterregs[0]>>16);
 	UINT32 reg1 = (blitterregs[1]<<16)|(blitterregs[1]>>16);
 	UINT32 reg2 = (blitterregs[2]<<16)|(blitterregs[2]>>16);
-	
+
 	INT32 blt_source = (reg0&0x000fffff) >>  0;
 	INT32 blt_column = (reg1&0x00ff0000) >> 16; // should this be 0x7f?
 	INT32 blt_line  =  (reg1&0x000000ff) >>  0;
@@ -124,7 +124,7 @@ static void blitter_write()
 					INT32 blt_value = ((DrvGfxROM[0][blt_source^1]<<8)|(DrvGfxROM[0][blt_source^0]));
 					blt_source+=2;
 					INT32 writeoffs=blt_oddflg+blt_column;
-					tilemap_ram[blt_tilemp][writeoffs]=(tilemap_ram[blt_tilemp][writeoffs]&mask)|(blt_value<<shift);
+					tilemap_ram[blt_tilemp][writeoffs]= BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(tilemap_ram[blt_tilemp][writeoffs])&mask)|(blt_value<<shift));
 					GenericTilemapSetTileDirty(blt_tilemp, writeoffs);
 					update_tilemap[blt_tilemp] = 1;
 					blt_column++;
@@ -142,7 +142,7 @@ static void blitter_write()
 				{
 					INT32 writeoffs=blt_oddflg+blt_column;
 
-					tilemap_ram[blt_tilemp][writeoffs]=(tilemap_ram[blt_tilemp][writeoffs]&mask)|(blt_value<<shift);
+					tilemap_ram[blt_tilemp][writeoffs]= BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(tilemap_ram[blt_tilemp][writeoffs])&mask)|(blt_value<<shift));
 					GenericTilemapSetTileDirty(blt_tilemp, writeoffs);
 					update_tilemap[blt_tilemp] = 1;
 					blt_column++;
@@ -167,7 +167,7 @@ static void __fastcall rabbit_write_long(UINT32 address, UINT32 data)
 	data = (data << 16) | (data >> 16);
 
 	if ((address & 0xffffe0) == 0x400200) {
-		spriteregs[(address / 4) & 7] = data;
+		spriteregs[(address / 4) & 7] = BURN_ENDIAN_SWAP_INT32(data);
 		return;
 	}
 
@@ -183,13 +183,13 @@ static void __fastcall rabbit_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff80) == 0x400100) {
 		UINT16 *regs = (UINT16*)tilemapregs[(address / 0x20) & 3];
-		regs[(address / 2) & 0xf] = data;
+		regs[(address / 2) & 0xf] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & 0xffffe0) == 0x400200) {
 		UINT16 *regs = (UINT16*)spriteregs;
-		regs[(address / 2) & 0xf] = data;
+		regs[(address / 2) & 0xf] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -259,10 +259,10 @@ static void __fastcall rabbit_videoram_write_long(UINT32 address, UINT32 data)
 	INT32 offset = (address & 0x3ffc) / 4;
 	INT32 select = (address / 0x4000) & 3;
 	UINT32 *ram = (UINT32*)(DrvVidRAM[select]);
-	if (ram[offset] != data) {
+	if (BURN_ENDIAN_SWAP_INT32(ram[offset]) != data) {
 		GenericTilemapSetTileDirty(select, offset);
 		update_tilemap[select] = 1;
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT32(data);
 	}
 }
 
@@ -271,10 +271,10 @@ static void __fastcall rabbit_videoram_write_word(UINT32 address, UINT16 data)
 	INT32 offset = (address & 0x3ffe) / 2;
 	INT32 select = (address / 0x4000) & 3;
 	UINT16 *ram = (UINT16*)(DrvVidRAM[select]);
-	if (ram[offset] != data) {
+	if (BURN_ENDIAN_SWAP_INT16(ram[offset]) != data) {
 		GenericTilemapSetTileDirty(select, offset/2);
 		update_tilemap[select] = 1;
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 	}
 }
 
@@ -298,14 +298,14 @@ static inline void palette_write(UINT16 i)
 static void __fastcall rabbit_paletteram_write_long(UINT32 address, UINT32 data)
 {
 	UINT32 *ram = (UINT32*)DrvPalRAM;
-	ram[(address & 0xfffc)/4] = (data << 16) | (data >> 16);
+	ram[(address & 0xfffc)/4] = BURN_ENDIAN_SWAP_INT32((data << 16) | (data >> 16));
 	palette_write(address & 0xfffc);
 }
 
 static void __fastcall rabbit_paletteram_write_word(UINT32 address, UINT16 data)
 {
 	UINT16 *ram = (UINT16*)DrvPalRAM;
-	ram[(address & 0xfffe)/2] = data;
+	ram[(address & 0xfffe)/2] = BURN_ENDIAN_SWAP_INT16(data);
 	palette_write(address & 0xfffc);
 }
 
@@ -317,7 +317,7 @@ static void __fastcall rabbit_paletteram_write_byte(UINT32 address, UINT8 data)
 }
 
 #define	get_tilemap_info(which, size)									\
-	UINT32 attr = *((UINT32*)(DrvVidRAM[which] + (offs * 4)));			\
+	UINT32 attr = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvVidRAM[which] + (offs * 4))));			\
 	INT32 depth = (attr & 0x00001000) >> 12;							\
 	INT32 code  = (attr & 0xffff0000) >> 16;							\
 	INT32 bank  = (attr & 0x0000000f) >>  0;							\
@@ -424,7 +424,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	BurnAllocMemIndex();	
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -540,8 +540,8 @@ static void DrvPaletteUpdate()
 
 static void clearspritebitmap()
 {
-	INT32 starty = (spriteregs[1]&0x00000fff) - 200;
-	INT32 startx =((spriteregs[0]&0x0fff0000)>>16) - 200;
+	INT32 starty = (BURN_ENDIAN_SWAP_INT32(spriteregs[1])&0x00000fff) - 200;
+	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs[0])&0x0fff0000)>>16) - 200;
 	INT32 amountx = 650;
 	INT32 amounty = 600;
 
@@ -559,14 +559,14 @@ static void draw_sprites()
 {
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 	
-	for (INT32 offs = (((spriteregs[5] & 0x0fff) - 1) * 4); offs >= 0; offs -= 4)
+	for (INT32 offs = (((BURN_ENDIAN_SWAP_INT32(spriteregs[5]) & 0x0fff) - 1) * 4); offs >= 0; offs -= 4)
 	{
-		INT32 sy    = ram[offs + 0] & 0x0fff;
-		INT32 sx    = ram[offs + 1] & 0x0fff;
-		INT32 flipx = ram[offs + 1] & 0x8000;
-		INT32 flipy = ram[offs + 1] & 0x4000;
-		INT32 color =(ram[offs + 2] >> 4) & 0xff;
-		INT32 code  =(ram[offs + 3] | (ram[offs + 2] << 16)) & 0x1ffff;
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x0fff;
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x0fff;
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x8000;
+		INT32 flipy = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x4000;
+		INT32 color =(BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) >> 4) & 0xff;
+		INT32 code  =(BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) | (BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) << 16)) & 0x1ffff;
 
 		if (sx & 0x800) sx-=0x1000;
 
@@ -576,10 +576,10 @@ static void draw_sprites()
 
 static void draw_sprite_bitmap()
 {
-	INT32 startx = ((spriteregs[0]>>16)&0x00000fff) - (((spriteregs[1]>>16)&0x000001ff)>>1);
-	INT32 starty = ((spriteregs[1]&0x0fff)) - (((spriteregs[1]>>16)&0x000001ff)>>1);
-	UINT32 xsize = ((spriteregs[2]>>16)) + 0x80;
-	UINT32 ysize = ((spriteregs[3]>>16)) + 0x80;
+	INT32 startx = ((BURN_ENDIAN_SWAP_INT32(spriteregs[0])>>16)&0x00000fff) - (((BURN_ENDIAN_SWAP_INT32(spriteregs[1])>>16)&0x000001ff)>>1);
+	INT32 starty = ((BURN_ENDIAN_SWAP_INT32(spriteregs[1])&0x0fff)) - (((BURN_ENDIAN_SWAP_INT32(spriteregs[1])>>16)&0x000001ff)>>1);
+	UINT32 xsize = ((BURN_ENDIAN_SWAP_INT32(spriteregs[2])>>16)) + 0x80;
+	UINT32 ysize = ((BURN_ENDIAN_SWAP_INT32(spriteregs[3])>>16)) + 0x80;
 	UINT32 xstep = ((320*128)<<16) / xsize;
 	UINT32 ystep = ((224*128)<<16) / ysize;
 
@@ -596,7 +596,7 @@ static void draw_sprite_bitmap()
 			{
 				UINT32 xdrawpos = ((x>>7)*xstep) >> 16;
 				UINT16 pixdata = srcline[(startx+(x>>7))&0xfff];
-
+				//if (pixdata) { fprintf(fp, "pixdata: 0x%x \n", pixdata); fflush(fp); }
 				if (pixdata)
 					if (xdrawpos < (UINT32)nScreenWidth)
 						dstline[xdrawpos] = pixdata;
@@ -620,10 +620,10 @@ static void drawtilemap(INT32 whichtilemap) // line zoom
 	INT32 wmask = width - 1;
 	INT32 hmask = height - 1;
 
-	INT32 starty=((tilemapregs[whichtilemap][1]&0x0000ffff)) << 12;
-	INT32 startx=((tilemapregs[whichtilemap][1]&0xffff0000)>>16) << 12;
-	INT32 incyy= ((tilemapregs[whichtilemap][4]&0x00000fff)) << 5;
-	INT32 incxx= ((tilemapregs[whichtilemap][3]&0x0fff0000)>>16) << 5;
+	INT32 starty=((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][1])&0x0000ffff)) << 12;
+	INT32 startx=((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][1])&0xffff0000)>>16) << 12;
+	INT32 incyy= ((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][4])&0x00000fff)) << 5;
+	INT32 incxx= ((BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][3])&0x0fff0000)>>16) << 5;
 
 	if (update_tilemap[whichtilemap])
 	{
@@ -660,10 +660,10 @@ static INT32 DrvDraw()
 
 	for (UINT32 prilevel = 0xf00; prilevel > 0; prilevel-=0x100)
 	{
-		if (prilevel == (tilemapregs[3][0] & 0x0f00)) drawtilemap(3);
-		if (prilevel == (tilemapregs[2][0] & 0x0f00)) drawtilemap(2);
-		if (prilevel == (tilemapregs[1][0] & 0x0f00)) drawtilemap(1);
-		if (prilevel == (tilemapregs[0][0] & 0x0f00)) drawtilemap(0);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[3][0]) & 0x0f00)) drawtilemap(3);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[2][0]) & 0x0f00)) drawtilemap(2);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[1][0]) & 0x0f00)) drawtilemap(1);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[0][0]) & 0x0f00)) drawtilemap(0);
 
 		if ((prilevel == 0x0900) && (nSpriteEnable & 1))
 		{

@@ -324,32 +324,42 @@ static void GameInpInitMacros()
 			pgi++;
 	}
 
-	// Some games may require these buttons to have autofire as well
-	for (UINT32 i = 0; i < nGameInpCount; i++) {
-		bii.szName = NULL;
-		BurnDrvGetInputInfo(&bii, i);
-
-		if (bii.szName == NULL) {
-			bii.szName = "";
-		}
-		if (_stricmp(" Up", bii.szName + 2) == 0 || _stricmp(" Down", bii.szName + 2) == 0 || _stricmp(" Left", bii.szName + 2) == 0 || _stricmp(" Right", bii.szName + 2) == 0) {
-			sprintf(pgi->Macro.szName, "%s", bii.szName);
-
-			pgi->nInput = GIT_MACRO_AUTO;
-			pgi->nType = BIT_DIGITAL;
-			pgi->Macro.nMode = 0;
-			pgi->Macro.pVal[0] = bii.pVal;
-			pgi->Macro.nVal[0] = 1;
-
-			nMacroCount++;
-			pgi++;
-		}
-	}
-	
 	// Remove two keys for volume adjustment of cps2
 	INT32 nRealButtons = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) ? nFireButtons - 2 : nFireButtons;
+	INT32 nIndex = 0;
 
-	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
+	for (UINT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
+		// Some games may require these buttons to have autofire as well
+		for (INT32 i = nIndex; i < nGameInpCount; i++, nIndex++)
+		{
+			bii.szName = NULL;
+			BurnDrvGetInputInfo(&bii, i);
+
+			if (bii.szName == NULL) {
+				bii.szName = "";
+			}
+			if (_stricmp(" Up", bii.szName + 2) == 0 ||
+				_stricmp(" Down", bii.szName + 2) == 0 ||
+				_stricmp(" Left", bii.szName + 2) == 0 ||
+				_stricmp(" Right", bii.szName + 2) == 0)
+			{
+				sprintf(pgi->Macro.szName, "%s", bii.szName);
+
+				pgi->nInput = GIT_MACRO_AUTO;
+				pgi->nType = BIT_DIGITAL;
+				pgi->Macro.nMode = 0;
+				pgi->Macro.pVal[0] = bii.pVal;
+				pgi->Macro.nVal[0] = 1;
+
+				nMacroCount++;
+				pgi++;
+
+				if (_stricmp(" Right", bii.szName + 2) == 0) {  // The last key value is ...
+					nIndex++;
+					break;
+				}
+			}
+		}
 		for (INT32 i = 0; i < nRealButtons; i++) {
 			BurnDrvGetInputInfo(&bii, (HW_NEOGEO) ? nNeogeoButtons[nPlayer][i] : nPgmButtons[nPlayer][i]);
 
@@ -366,8 +376,6 @@ static void GameInpInitMacros()
 				pgi++;
 			}
 		}
-	}
-	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
 		if (nPunchx3[nPlayer] == 7) {		// Create a 3x punch macro
 			pgi->nInput = GIT_MACRO_AUTO;
 			pgi->nType = BIT_DIGITAL;
@@ -451,7 +459,7 @@ static void GameInpInitMacros()
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
 
-			sprintf(pgi->Macro.szName, "P%i Buttons SP+WK", nPlayer + 1);
+			sprintf(pgi->Macro.szName, "P%i Buttons SP + WK", nPlayer + 1);
 			BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][2]);
 			pgi->Macro.pVal[0] = bii.pVal;
 			pgi->Macro.nVal[0] = 1;

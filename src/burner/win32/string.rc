@@ -379,6 +379,8 @@ BEGIN
 	IDS_ERR_NO_DRIVER_SEL_SLOT1	"No driver has been selected for slot 1."
 	IDS_ERR_NON_WORKING			"This game isn't working. Load it anyway?"
 	IDS_ERR_CDEMU_INI_FAIL		"Couldn't initialise CD emulation."
+	
+	IDS_ERR_MARCO_NOT_MAPPING	"Double-click the marco to change its mapping first"
 
 	IDS_ERR_LOCAL_FAIL_CONNECT	"Failed to connect to Internet"
 	IDS_ERR_LOCAL_FAIL_OPEN_URL	"Failed to access FB Neo website"

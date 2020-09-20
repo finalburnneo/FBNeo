@@ -290,7 +290,7 @@ void sms_reset(void)
 
 	/* Clear SMS context */
 	memset(&sms.wram,    0, sizeof(sms.wram));
-	memset(cart.sram,    0, sizeof(cart.sram));
+	//memset(cart.sram,    0, sizeof(cart.sram)); clear in init!
 
 	sms.paused      = 0x00;
 	sms.save        = 0x00;

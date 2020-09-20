@@ -563,7 +563,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 {
-	if (a == 0x7ffd) {
+	if (!(a & 0x8002)) {
 		if (nPort7FFDData & 0x20) return;
 			
 		if ((nPort7FFDData ^ d) & 0x08) spectrum_UpdateScreenBitmap(false);
@@ -574,7 +574,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 		return;
 	}
 	
-	if ((a & 0xff) == 0xfe) {
+	if (~a & 0x0001) {
 		UINT8 Changed = nPortFEData ^ d;
 			
 		if ((Changed & 0x07) != 0) {
@@ -594,24 +594,13 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 		nPortFEData = d;
 		return;
 	}
-	
-	switch (a) {
-		case 0xbefd:
-		case 0xbffd: {
-			AY8910Write(0, 1, d);
-			break;
-		}
-		
-		case 0xfefd:
-		case 0xfffd: {
-			AY8910Write(0, 0, d);
-			break;
-		}
-	
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Port Write => %02X, %04X\n"), a, d);
-		}
+
+	switch (a & 0xc002) {
+		case 0x8000: AY8910Write(0, 1, d); return;
+		case 0xc000: AY8910Write(0, 0, d); return;
 	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 Port Write => %02X, %04X\n"), a, d);
 }
 
 static INT32 SpectrumInit(INT32 nSnapshotType)
@@ -1261,22 +1250,22 @@ struct BurnDriver BurnSpecadvlawn2 = {
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
-// Adventures of Buratino, The (48K).z80
+// Adventures of Buratino, The (128K)
 
 static struct BurnRomInfo SpecburatinoRomDesc[] = {
-	{ "Adventures of Buratino, The (1993)(Copper Feet)(48k).z80", 0x096ec, 0x3a0cb189, BRF_ESS | BRF_PRG },
+	{ "Adventures of Buratino, The (1993)(Copper Feet)(128k).z80", 0x096ec, 0x3a0cb189, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specburatino, Specburatino, Spectrum)
+STDROMPICKEXT(Specburatino, Specburatino, Spec128)
 STD_ROM_FN(Specburatino)
 
 struct BurnDriver BurnSpecburatino = {
-	"spec_buratino", NULL, "spec_spectrum", NULL, "1993",
-	"Adventures of Buratino, The (48K)\0", NULL, "Copper Feet", "ZX Spectrum",
+	"spec_buratino", NULL, "spec_spec128", NULL, "1993",
+	"Adventures of Buratino, The (128K)\0", NULL, "Copper Feet", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecburatinoRomInfo, SpecburatinoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
@@ -1397,7 +1386,7 @@ struct BurnDriver BurnSpecandycapp = {
 // APB - All Points Bulletin (128K)
 
 static struct BurnRomInfo SpecapbRomDesc[] = {
-	{ "APB - All Points Bulletin (1989)(Domark)[128K].z80", 0x12d7d, 0x6fb0235f, BRF_ESS | BRF_PRG },
+	{ "APB - All Points Bulletin (1989)(Domark)[128K].z80", 0x13c67, 0x81a2cb39, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specapb, Specapb, Spec128)
@@ -8335,7 +8324,7 @@ static struct BurnRomInfo SpecwackraceRomDesc[] = {
 	{ "Wacky Races (1992)(Hi-Tec Software)(128k).z80", 0x16523, 0xee205ebd, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specwackrace, Specwackrace, Spectrum)
+STDROMPICKEXT(Specwackrace, Specwackrace, Spec128)
 STD_ROM_FN(Specwackrace)
 
 struct BurnDriver BurnSpecwackrace = {
@@ -8449,7 +8438,7 @@ static struct BurnRomInfo SpecwwseymrRomDesc[] = {
 	{ "Wild West Seymour (1992)(Codemasters)(128k).z80", 0x141c6, 0x01dc3cee, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specwwseymr, Specwwseymr, Spectrum)
+STDROMPICKEXT(Specwwseymr, Specwwseymr, Spec128)
 STD_ROM_FN(Specwwseymr)
 
 struct BurnDriver BurnSpecwwseymr = {

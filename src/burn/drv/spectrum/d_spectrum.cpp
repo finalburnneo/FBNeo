@@ -844,18 +844,19 @@ void spectrum_UpdateBorderBitmap()
 {
 	UINT32 x = ((ZetTotalCycles() - SpecHorStartCycles) * 2) + 88;
 	UINT32 y = nScanline;
-	
-	if (x > SPEC_BITMAP_WIDTH) {
+
+	if (x >= SPEC_BITMAP_WIDTH) {
 		x -= SPEC_BITMAP_WIDTH;
 		y++;
 	}
-	if (x > SPEC_BITMAP_WIDTH) return;
+	if (x >= SPEC_BITMAP_WIDTH || y >= SPEC_BITMAP_HEIGHT) return;
 	
 	INT32 width = SPEC_BITMAP_WIDTH;
 	INT32 height = SPEC_BITMAP_HEIGHT;
 	
 	UINT16 border = nPortFEData & 0x07;
-	
+	INT32 safety_breakout = 0;
+
 	do {
 		if ((nPreviousBorderX < SPEC_BORDER_LEFT) || (nPreviousBorderX >= (SPEC_BORDER_LEFT + SPEC_SCREEN_XSIZE)) || (nPreviousBorderY < SPEC_BORDER_TOP) || (nPreviousBorderY >= (SPEC_BORDER_TOP + SPEC_SCREEN_YSIZE))) {
 			if (nPreviousBorderX > 0 && nPreviousBorderX < nScreenWidth && nPreviousBorderY > 0 && nPreviousBorderY < nScreenHeight) {
@@ -874,7 +875,7 @@ void spectrum_UpdateBorderBitmap()
 			}
 		}
 	}
-	while (!((nPreviousBorderX == x) && (nPreviousBorderY == y)));
+	while (!((nPreviousBorderX == x) && (nPreviousBorderY == y)) && (++safety_breakout < 0x20000));
 }
 
 static void SpecMakeAYUpdateTable()

@@ -172,13 +172,19 @@ static void z80_decompress_block(UINT8 *source, UINT32 dest, UINT16 size)
 
 				count = source[2];
 
-				if (count == 0)	return;
+				if (count == 0)	{
+					bprintf(0, _T(".z80_decompress_block: zero length block? eek.\n"));
+					return;
+				}
 
 				data = source[3];
 
 				source += 4;
 
-				if (count > size) count = size;
+				if (count > size) {
+					bprintf(0, _T(".z80_decompress_block: count > size, eek.\n"));
+					count = size;
+				}
 
 				size -= count;
 
@@ -383,11 +389,11 @@ void SpecLoadZ80Snapshot()
 				}
 			}
 
-			if (Dest != 0) {
-				if (length == 0x0ffff) {
-					bprintf(PRINT_NORMAL, _T("Not compressed\n"));
-
-					//for (i = 0; i < 16384; i++) space.write_byte(i + Dest, pSource[i]);
+			{
+				if (length == 0xffff) {
+					length = 0x4000;
+					for (INT32 i = 0; i < length; i++)
+						SpecWriteByte(i + Dest, pSource[3 + i]);
 				} else {
 					z80_decompress_block(&pSource[3], Dest, 16384);
 				}

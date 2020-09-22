@@ -25,6 +25,7 @@ bool bAlwaysProcessKeyboardInput = 0;
 int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
 bool bSaveconfig = 1;
 bool bIntegerScale = false;
+bool bAlwaysMenu = false;
 
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
@@ -318,7 +319,7 @@ int main(int argc, char* argv[])
 		printf("%s neocdz -cd path/to/ccd/filename.cue (or .ccd)\n", argv[0]);
 		printf("Usage is restricted by the license at https://raw.githubusercontent.com/finalburnneo/FBNeo/master/src/license.txt\n");
 
-		if (!usemenu && !dat)
+		if (!usemenu && !bAlwaysMenu && !dat)
 		{
 			return 0;
 		}
@@ -407,7 +408,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if (usemenu)
+	if (usemenu || bAlwaysMenu)
 	{
 #ifdef BUILD_SDL2
 		bool quit = 0;

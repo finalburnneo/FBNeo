@@ -43,6 +43,7 @@ extern bool  bAlwaysProcessKeyboardInput;
 extern TCHAR szAppBurnVer[16];
 extern bool  bAppFullscreen;
 extern bool bIntegerScale;
+extern bool bAlwaysMenu;
 
 extern TCHAR* GetIsoPath();
 

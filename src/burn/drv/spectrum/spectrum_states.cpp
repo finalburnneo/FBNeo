@@ -117,7 +117,7 @@ static INT32 spectrum_identify_z80(UINT32 SnapshotSize)
 		switch (data) {
 			case 0:
 			case 1: return SPEC_Z80_SNAPSHOT_48K;
-			case 2: return SPEC_Z80_SNAPSHOT_SAMRAM;
+			case 2: return SPEC_Z80_SNAPSHOT_128K;//SAMRAM;
 			case 3:
 			case 4: return SPEC_Z80_SNAPSHOT_128K;
 			case 128: return SPEC_Z80_SNAPSHOT_TS2068;
@@ -129,7 +129,7 @@ static INT32 spectrum_identify_z80(UINT32 SnapshotSize)
 			case 0:
 			case 1:
 			case 3: return SPEC_Z80_SNAPSHOT_48K;
-			case 2: return SPEC_Z80_SNAPSHOT_SAMRAM;
+			case 2: return SPEC_Z80_SNAPSHOT_128K;//SAMRAM;
 			case 4:
 			case 5:
 			case 6: return SPEC_Z80_SNAPSHOT_128K;
@@ -253,7 +253,7 @@ void SpecLoadZ80Snapshot()
 			break;
 		}
 		case SPEC_Z80_SNAPSHOT_SAMRAM: {
-			return;
+			break;
 		}
 	}
 	
@@ -334,8 +334,7 @@ void SpecLoadZ80Snapshot()
 		//page_basicrom();
 
 		if ((SpecSnapshotData[12] & 0x020) == 0)	{
-			bprintf(PRINT_NORMAL, _T("Not compressed\n"));
-			//for (i = 0; i < 49152; i++)	space.write_byte(i + 16384, SpecSnapshotData[30 + i]);
+			for (INT32 i = 0; i < 49152; i++)	SpecWriteByte(i + 16384, SpecSnapshotData[30 + i]);
 		} else {
 			z80_decompress_block(SpecSnapshotData + 30, 16384, 49152);
 		}
@@ -392,9 +391,11 @@ void SpecLoadZ80Snapshot()
 			{
 				if (length == 0xffff) {
 					length = 0x4000;
+					bprintf(0, _T("copying uncompressed to %x\n"), Dest);
 					for (INT32 i = 0; i < length; i++)
 						SpecWriteByte(i + Dest, pSource[3 + i]);
 				} else {
+					bprintf(0, _T("decompressing to %x  (len %x)\n"), Dest, length);
 					z80_decompress_block(&pSource[3], Dest, 16384);
 				}
 			}

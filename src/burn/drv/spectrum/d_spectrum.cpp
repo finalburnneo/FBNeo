@@ -844,18 +844,19 @@ void spectrum_UpdateBorderBitmap()
 {
 	UINT32 x = ((ZetTotalCycles() - SpecHorStartCycles) * 2) + 88;
 	UINT32 y = nScanline;
-	
-	if (x > SPEC_BITMAP_WIDTH) {
+
+	if (x >= SPEC_BITMAP_WIDTH) {
 		x -= SPEC_BITMAP_WIDTH;
 		y++;
 	}
-	if (x > SPEC_BITMAP_WIDTH) return;
+	if (x >= SPEC_BITMAP_WIDTH || y >= SPEC_BITMAP_HEIGHT) return;
 	
 	INT32 width = SPEC_BITMAP_WIDTH;
 	INT32 height = SPEC_BITMAP_HEIGHT;
 	
 	UINT16 border = nPortFEData & 0x07;
-	
+	INT32 safety_breakout = 0;
+
 	do {
 		if ((nPreviousBorderX < SPEC_BORDER_LEFT) || (nPreviousBorderX >= (SPEC_BORDER_LEFT + SPEC_SCREEN_XSIZE)) || (nPreviousBorderY < SPEC_BORDER_TOP) || (nPreviousBorderY >= (SPEC_BORDER_TOP + SPEC_SCREEN_YSIZE))) {
 			if (nPreviousBorderX > 0 && nPreviousBorderX < nScreenWidth && nPreviousBorderY > 0 && nPreviousBorderY < nScreenHeight) {
@@ -874,7 +875,7 @@ void spectrum_UpdateBorderBitmap()
 			}
 		}
 	}
-	while (!((nPreviousBorderX == x) && (nPreviousBorderY == y)));
+	while (!((nPreviousBorderX == x) && (nPreviousBorderY == y)) && (++safety_breakout < 0x20000));
 }
 
 static void SpecMakeAYUpdateTable()
@@ -1541,7 +1542,7 @@ static struct BurnRomInfo SpecaufwiemoRomDesc[] = {
 	{ "Auf Wiedersehen Monty (1987)(Gremlin Graphics)(128k).z80", 0x10eff, 0x49580b2d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specaufwiemo, Specaufwiemo, Spectrum)
+STDROMPICKEXT(Specaufwiemo, Specaufwiemo, Spec128)
 STD_ROM_FN(Specaufwiemo)
 
 struct BurnDriver BurnSpecaufwiemo = {
@@ -1902,7 +1903,7 @@ static struct BurnRomInfo SpecbeyicepaRomDesc[] = {
 	{ "Beyond the Ice Palace (1988)(Elite Systems)(128k).z80", 0x0bc09, 0x3bb06772, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbeyicepa, Specbeyicepa, Spectrum)
+STDROMPICKEXT(Specbeyicepa, Specbeyicepa, Spec128)
 STD_ROM_FN(Specbeyicepa)
 
 struct BurnDriver BurnSpecbeyicepa = {
@@ -2681,7 +2682,7 @@ static struct BurnRomInfo SpeccjiiiusaRomDesc[] = {
 	{ "CJ In the USA (1991)(Codemasters)(128k).z80", 0x0d966, 0xc8e7d99e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccjiiiusa, Speccjiiiusa, Spectrum)
+STDROMPICKEXT(Speccjiiiusa, Speccjiiiusa, Spec128)
 STD_ROM_FN(Speccjiiiusa)
 
 struct BurnDriver BurnSpeccjiiiusa = {
@@ -2871,7 +2872,7 @@ static struct BurnRomInfo SpeccythfimaRomDesc[] = {
 	{ "Cybernoid (1988)(Hewson Consultants)(128k).z80", 0x0aac0, 0x4e00cf3d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccythfima, Speccythfima, Spectrum)
+STDROMPICKEXT(Speccythfima, Speccythfima, Spec128)
 STD_ROM_FN(Speccythfima)
 
 struct BurnDriver BurnSpeccythfima = {
@@ -2909,7 +2910,7 @@ static struct BurnRomInfo Speccybrnd2RomDesc[] = {
 	{ "Cybernoid II (1988)(Hewson Consultants)(128k).z80", 0x0bb35, 0x773b8e31, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccybrnd2, Speccybrnd2, Spectrum)
+STDROMPICKEXT(Speccybrnd2, Speccybrnd2, Spec128)
 STD_ROM_FN(Speccybrnd2)
 
 struct BurnDriver BurnSpeccybrnd2 = {
@@ -3745,7 +3746,7 @@ static struct BurnRomInfo SpecexolonRomDesc[] = {
 	{ "Exolon (1987)(Hewson Consultants)(128k).z80", 0x0cd94, 0xab5a464b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specexolon, Specexolon, Spectrum)
+STDROMPICKEXT(Specexolon, Specexolon, Spec128)
 STD_ROM_FN(Specexolon)
 
 struct BurnDriver BurnSpecexolon = {
@@ -4144,7 +4145,7 @@ static struct BurnRomInfo SpecgameoverRomDesc[] = {
 	{ "Game Over (1987)(Dinamic Software - Imagine Software)(128k).z80", 0x13750, 0x3dcd6f8e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specgameover, Specgameover, Spectrum)
+STDROMPICKEXT(Specgameover, Specgameover, Spec128)
 STD_ROM_FN(Specgameover)
 
 struct BurnDriver BurnSpecgameover = {
@@ -4752,7 +4753,7 @@ static struct BurnRomInfo SpecinteagnRomDesc[] = {
 	{ "Into the Eagle's Nest (1987)(Pandora)(128k).z80", 0x097cf, 0xbc1ea176, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specinteagn, Specinteagn, Spectrum)
+STDROMPICKEXT(Specinteagn, Specinteagn, Spec128)
 STD_ROM_FN(Specinteagn)
 
 struct BurnDriver BurnSpecinteagn = {
@@ -4942,7 +4943,7 @@ static struct BurnRomInfo Specjoebld2RomDesc[] = {
 	{ "Joe Blade 2 (1988)(Players Premier)(128k).z80", 0x0bb13, 0x20a19599, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specjoebld2, Specjoebld2, Spectrum)
+STDROMPICKEXT(Specjoebld2, Specjoebld2, Spec128)
 STD_ROM_FN(Specjoebld2)
 
 struct BurnDriver BurnSpecjoebld2 = {
@@ -6766,7 +6767,7 @@ static struct BurnRomInfo SpecrexRomDesc[] = {
 	{ "Rex (1988)(Martech Games)(128k).z80", 0x0d833, 0xf5fc8541, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrex, Specrex, Spectrum)
+STDROMPICKEXT(Specrex, Specrex, Spec128)
 STD_ROM_FN(Specrex)
 
 struct BurnDriver BurnSpecrex = {
@@ -7007,25 +7008,6 @@ struct BurnDriver BurnSpecsabot_48 = {
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
-// Saboteur (Durell Software) (128K)
-
-static struct BurnRomInfo SpecsaboteurRomDesc[] = {
-	{ "Saboteur (1986)(Durell)(128k).z80", 0x0a8e5, 0x2908e774, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specsaboteur, Specsaboteur, Spectrum)
-STD_ROM_FN(Specsaboteur)
-
-struct BurnDriver BurnSpecsaboteur = {
-	"spec_saboteur", NULL, "spec_spec128", NULL, "1987",
-	"Saboteur (Durell Software) (128K)\0", NULL, "Durell Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecsaboteurRomInfo, SpecsaboteurRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 352, 296, 4, 3
-};
-
 // Saboteur II - Avenging Angel (48K)
 
 static struct BurnRomInfo Specsabotur2_48RomDesc[] = {
@@ -7051,7 +7033,7 @@ static struct BurnRomInfo Specsabotur2RomDesc[] = {
 	{ "Saboteur II - Avenging Angel (1987)(Durell)(128k).z80", 0x0b790, 0x7aad77db, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsabotur2, Specsabotur2, Spectrum)
+STDROMPICKEXT(Specsabotur2, Specsabotur2, Spec128)
 STD_ROM_FN(Specsabotur2)
 
 struct BurnDriver BurnSpecsabotur2 = {
@@ -7146,7 +7128,7 @@ static struct BurnRomInfo SpecsavageRomDesc[] = {
 	{ "Savage (1988)(Firebird)(128k).z80", 0x091a9, 0x09aef12f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsavage, Specsavage, Spectrum)
+STDROMPICKEXT(Specsavage, Specsavage, Spec128)
 STD_ROM_FN(Specsavage)
 
 struct BurnDriver BurnSpecsavage = {
@@ -8039,7 +8021,7 @@ static struct BurnRomInfo SpectetrisRomDesc[] = {
 	{ "Tetris (1988)(Mirrorsoft)(128k).z80", 0x075b1, 0xca758c04, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spectetris, Spectetris, Spectrum)
+STDROMPICKEXT(Spectetris, Spectetris, Spec128)
 STD_ROM_FN(Spectetris)
 
 struct BurnDriver BurnSpectetris = {
@@ -8077,7 +8059,7 @@ static struct BurnRomInfo Spec3weeksprRomDesc[] = {
 	{ "Three Weeks In Paradise (1986)(Mikro-Gen)(128k).z80", 0x0e06c, 0xf21d8b5d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec3weekspr, Spec3weekspr, Spectrum)
+STDROMPICKEXT(Spec3weekspr, Spec3weekspr, Spec128)
 STD_ROM_FN(Spec3weekspr)
 
 struct BurnDriver BurnSpec3weekspr = {

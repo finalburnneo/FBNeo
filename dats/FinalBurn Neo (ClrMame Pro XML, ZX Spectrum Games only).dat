@@ -212,7 +212,8 @@
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics Software</manufacturer>
 		<rom name="Auf Wiedersehen Monty (1987)(Gremlin Graphics)(128k).z80" size="69375" crc="49580b2d"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="aufwiemo_48" cloneof="aufwiemo" romof="aufwiemo">
@@ -368,7 +369,8 @@
 		<year>1988</year>
 		<manufacturer>Elite Systems</manufacturer>
 		<rom name="Beyond the Ice Palace (1988)(Elite Systems)(128k).z80" size="48137" crc="3bb06772"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="beyicepa_48" cloneof="beyicepa" romof="beyicepa">
@@ -706,7 +708,8 @@
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="CJ In the USA (1991)(Codemasters)(128k).z80" size="55654" crc="c8e7d99e"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="cjseleph" romof="spectrum">
@@ -789,7 +792,8 @@
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Cybernoid (1988)(Hewson Consultants)(128k).z80" size="43712" crc="4e00cf3d"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="cythfima_48" cloneof="cythfima" romof="cythfima">
@@ -805,7 +809,8 @@
 		<year>1988</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Cybernoid II (1988)(Hewson Consultants)(128k).z80" size="47925" crc="773b8e31"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="cybrnd2_48" cloneof="cybrnd2" romof="cybrnd2">
@@ -1175,7 +1180,8 @@
 		<year>1987</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Exolon (1987)(Hewson Consultants)(128k).z80" size="52628" crc="ab5a464b"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="exolon_48" cloneof="exolon" romof="exolon">
@@ -1364,7 +1370,8 @@
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Game Over (1987)(Dinamic Software - Imagine Software)(128k).z80" size="79696" crc="3dcd6f8e"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="glinht" romof="spectrum">
@@ -1612,7 +1619,8 @@
 		<year>1987</year>
 		<manufacturer>Pandora</manufacturer>
 		<rom name="Into the Eagle's Nest (1987)(Pandora)(128k).z80" size="38863" crc="bc1ea176"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="inteagn_48" cloneof="inteagn" romof="inteagn">
@@ -1693,7 +1701,8 @@
 		<year>1988</year>
 		<manufacturer>Players Software</manufacturer>
 		<rom name="Joe Blade 2 (1988)(Players Premier)(128k).z80" size="47891" crc="20a19599"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="joebld2_48" cloneof="joebld2" romof="joebld2">
@@ -2491,7 +2500,8 @@
 		<year>1988</year>
 		<manufacturer>Martech Games</manufacturer>
 		<rom name="Rex (1988)(Martech Games)(128k).z80" size="55347" crc="f5fc8541"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="rex_48" cloneof="rex" romof="rex">
@@ -2596,14 +2606,6 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="saboteur" romof="spec128">
-		<description>Saboteur (Durell Software) (128K)</description>
-		<year>1987</year>
-		<manufacturer>Durell Software</manufacturer>
-		<rom name="Saboteur (1986)(Durell)(128k).z80" size="43237" crc="2908e774"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
-		<driver status="good"/>
-	</game>
 	<game name="sabot_48" romof="spectrum">
 		<description>Saboteur (Durell Software) (48K)</description>
 		<year>1986</year>
@@ -2617,7 +2619,8 @@
 		<year>1987</year>
 		<manufacturer>Durell Software</manufacturer>
 		<rom name="Saboteur II - Avenging Angel (1987)(Durell)(128k).z80" size="46992" crc="7aad77db"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="sabotur2_48" cloneof="sabotur2" romof="sabotur2">
@@ -2641,7 +2644,8 @@
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Savage (1988)(Firebird)(128k).z80" size="37289" crc="09aef12f"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="savage1" cloneof="savage" romof="savage">
@@ -3048,7 +3052,8 @@
 		<year>1988</year>
 		<manufacturer>Mirrorsoft</manufacturer>
 		<rom name="Tetris (1988)(Mirrorsoft)(128k).z80" size="30129" crc="ca758c04"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="tetris_48" cloneof="tetris" romof="tetris">
@@ -3064,7 +3069,8 @@
 		<year>1985</year>
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Three Weeks In Paradise (1986)(Mikro-Gen)(128k).z80" size="57452" crc="f21d8b5d"/>
-		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="3weekspr_48" cloneof="3weekspr" romof="3weekspr">

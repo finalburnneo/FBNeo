@@ -404,6 +404,20 @@
 		<rom name="Amazons Running Diet (USA).nes" size="524304" crc="4db6acdd"/>
 		<driver status="good"/>
 	</game>
+	<game name="americandreamj" cloneof="americandream" romof="americandream">
+		<description>American Dream (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Coconuts</manufacturer>
+		<rom name="American Dream (Japan).nes" size="262160" crc="5249764c"/>
+		<driver status="good"/>
+	</game>
+	<game name="americandream">
+		<description>American Dream (T-Eng)</description>
+		<year>1989</year>
+		<manufacturer>Coconuts</manufacturer>
+		<rom name="American Dream (T-Eng).nes" size="262160" crc="d2275854"/>
+		<driver status="good"/>
+	</game>
 	<game name="amerigla">
 		<description>American Gladiators (USA)</description>
 		<year>1991</year>
@@ -544,11 +558,18 @@
 		<rom name="Athena (USA).nes" size="131088" crc="14d42113"/>
 		<driver status="good"/>
 	</game>
-	<game name="atlantisnonazo">
+	<game name="atlantisnonazoj" cloneof="atlantisnonazo" romof="atlantisnonazo">
 		<description>Atlantis no Nazo (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Atlantis no Nazo (Japan).nes" size="49168" crc="dccbe3ae"/>
+		<driver status="good"/>
+	</game>
+	<game name="atlantisnonazo">
+		<description>Atlantis no Nazo (T-Eng)</description>
+		<year>1986</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Atlantis no Nazo (T-Eng).nes" size="49168" crc="6a5ee2fc"/>
 		<driver status="good"/>
 	</game>
 	<game name="attacanigakj" cloneof="attacanigak" romof="attacanigak">
@@ -1116,6 +1137,13 @@
 		<year>1990</year>
 		<manufacturer>JVC</manufacturer>
 		<rom name="Boulder Dash (USA).nes" size="65552" crc="008f1536"/>
+		<driver status="good"/>
+	</game>
+	<game name="bowsette2" cloneof="smb2" romof="smb2">
+		<description>Bowsette 2 (Hack, Red version) [Hack]</description>
+		<year>2019</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="Bowsette 2 (Hack).nes" size="262160" crc="94390680"/>
 		<driver status="good"/>
 	</game>
 	<game name="bramstosdra">
@@ -1860,11 +1888,18 @@
 		<rom name="Crime Busters (USA).nes" size="163856" crc="86c7d81e"/>
 		<driver status="good"/>
 	</game>
-	<game name="crisisforce">
+	<game name="crisisforcej" cloneof="crisisforce" romof="crisisforce">
 		<description>Crisis Force (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Crisis Force (Japan).nes" size="262160" crc="c4520781"/>
+		<driver status="good"/>
+	</game>
+	<game name="crisisforce">
+		<description>Crisis Force (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Crisis Force (T-Eng).nes" size="262160" crc="8a053054"/>
 		<driver status="good"/>
 	</game>
 	<game name="crossfire">
@@ -2385,11 +2420,18 @@
 		<rom name="Dragon Ball - Dai Maou Fukkatsu (T-Eng).nes" size="393232" crc="69beb7a5"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragobalshelonnona" cloneof="dragonpower" romof="dragonpower">
+	<game name="dragobalshelonnonaj" cloneof="dragonpower" romof="dragonpower">
 		<description>Dragon Ball - Shen Long no Nazo (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Dragon Ball - Shen Long no Nazo (Japan).nes" size="163856" crc="815a4bad"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragobalshelonnona" cloneof="dragonpower" romof="dragonpower">
+		<description>Dragon Ball - Shen Long no Nazo (T-Eng)</description>
+		<year>1986</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="Dragon Ball - Shen Long no Nazo (T-Eng).nes" size="163856" crc="b4e31bf4"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragobal3gokden">
@@ -2530,6 +2572,13 @@
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Dragon Scroll - Yomigaerishi Maryuu (Japan).nes" size="262160" crc="9475bafc"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragosla4">
+		<description>Dragon Slayer 4 - Drasle Family (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Dragon Slayer 4 - Drasle Family (Japan).nes" size="196624" crc="9aab61a8"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragospiaraden">
@@ -2812,11 +2861,18 @@
 		<rom name="F-15 Strike Eagle (USA).nes" size="524304" crc="6b1461ae"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1circus">
+	<game name="f1circusj" cloneof="f1circus" romof="f1circus">
 		<description>F1 Circus (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Nichibutsu</manufacturer>
 		<rom name="F1 Circus (Japan).nes" size="393232" crc="1f19532d"/>
+		<driver status="good"/>
+	</game>
+	<game name="f1circus">
+		<description>F1 Circus (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Nichibutsu</manufacturer>
+		<rom name="F1 Circus (T-Eng).nes" size="393232" crc="67c75e53"/>
 		<driver status="good"/>
 	</game>
 	<game name="fallingtiles">
@@ -3071,18 +3127,32 @@
 		<rom name="Fire Dragon (Asia).nes" size="40976" crc="8ac54f30"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireemb">
+	<game name="fireembj" cloneof="fireemb" romof="fireemb">
 		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan).nes" size="393232" crc="ab8057b9"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireembgai">
+	<game name="fireemb">
+		<description>Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng).nes" size="393232" crc="dc848ddd"/>
+		<driver status="good"/>
+	</game>
+	<game name="fireembgaij" cloneof="fireembgai" romof="fireembgai">
 		<description>Fire Emblem Gaiden (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Fire Emblem Gaiden (Japan).nes" size="393232" crc="0a187cb4"/>
+		<driver status="good"/>
+	</game>
+	<game name="fireembgai">
+		<description>Fire Emblem Gaiden (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Fire Emblem Gaiden (T-Eng).nes" size="393232" crc="ed74e1fa"/>
 		<driver status="good"/>
 	</game>
 	<game name="firehawk">
@@ -3582,6 +3652,20 @@
 		<rom name="Gran Aventura Submarina, La (Spain).nes" size="65552" crc="6483756a"/>
 		<driver status="good"/>
 	</game>
+	<game name="grandmasterj" cloneof="grandmaster" romof="grandmaster">
+		<description>Grand Master (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Grand Master (Japan).nes" size="393232" crc="eff4603a"/>
+		<driver status="good"/>
+	</game>
+	<game name="grandmaster">
+		<description>Grand Master (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Grand Master (T-Eng).nes" size="393232" crc="51cd513e"/>
+		<driver status="good"/>
+	</game>
 	<game name="greatbatcyb">
 		<description>Great Battle Cyber (Japan)</description>
 		<year>1992</year>
@@ -3657,6 +3741,13 @@
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
 		<rom name="Gun Nac (Japan).nes" size="262160" crc="04008279"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunnact" cloneof="gunnac" romof="gunnac">
+		<description>Gun Nac (T-Eng)</description>
+		<year>1990</year>
+		<manufacturer>Tonkin House</manufacturer>
+		<rom name="Gun Nac (T-Eng).nes" size="262160" crc="c5fc33f0"/>
 		<driver status="good"/>
 	</game>
 	<game name="gunnac">
@@ -4975,11 +5066,18 @@
 		<rom name="Legacy of the Wizard (USA).nes" size="196624" crc="b534eb48"/>
 		<driver status="good"/>
 	</game>
-	<game name="legenbal">
+	<game name="legenbalj" cloneof="legenbal" romof="legenbal">
 		<description>Legend of Balubalouk (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Legend of Balubalouk (Japan).nes" size="131088" crc="04fc4764"/>
+		<driver status="good"/>
+	</game>
+	<game name="legenbal">
+		<description>Legend of Balubalouk (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Legend of Balubalouk (T-Eng).nes" size="131088" crc="661c0a1b"/>
 		<driver status="good"/>
 	</game>
 	<game name="legenkag">
@@ -5078,6 +5176,13 @@
 		<year>1990</year>
 		<manufacturer>Culture Brain</manufacturer>
 		<rom name="Little Ninja Brothers (USA).nes" size="262160" crc="96ece52b"/>
+		<driver status="good"/>
+	</game>
+	<game name="littlesamsonh" cloneof="littlesamson" romof="littlesamson">
+		<description>Little Samson (Restoration &amp; Sound Hack)</description>
+		<year>1992</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Little Samson (Hack).nes" size="393232" crc="2178190e"/>
 		<driver status="good"/>
 	</game>
 	<game name="littlesamson">
@@ -5617,6 +5722,20 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid - Rogue Dawn (USA).nes" size="786448" crc="2120dfea"/>
+		<driver status="good"/>
+	</game>
+	<game name="micemission">
+		<description>Mice Mission (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mice Mission (Unl).nes" size="40976" crc="78820fd8"/>
+		<driver status="good"/>
+	</game>
+	<game name="michaandsworgrpr">
+		<description>Michael Andretti's World Grand Prix (USA)</description>
+		<year>1990</year>
+		<manufacturer>Sammy</manufacturer>
+		<rom name="Michael Andretti's World Grand Prix (USA).nes" size="262160" crc="beb81a82"/>
 		<driver status="good"/>
 	</game>
 	<game name="mickeymania7" cloneof="chinarabbab" romof="chinarabbab">
@@ -6431,11 +6550,39 @@
 		<rom name="Parasol Stars - Rainbow Islands II (Europe).nes" size="262160" crc="dc7a16e6"/>
 		<driver status="good"/>
 	</game>
-	<game name="parodiusda">
+	<game name="parisdakralspej" cloneof="parisdakralspe" romof="parisdakralspe">
+		<description>Paris-Dakar Rally Special (Japan)</description>
+		<year>1988</year>
+		<manufacturer>CBS / Sony Group</manufacturer>
+		<rom name="Paris-Dakar Rally Special (Japan).nes" size="163856" crc="4b662975"/>
+		<driver status="good"/>
+	</game>
+	<game name="parisdakralspe">
+		<description>Paris-Dakar Rally Special (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>CBS / Sony Group</manufacturer>
+		<rom name="Paris-Dakar Rally Special (T-Eng).nes" size="163856" crc="e2b9be12"/>
+		<driver status="good"/>
+	</game>
+	<game name="parodius" cloneof="parodiusda" romof="parodiusda">
+		<description>Parodius (Europe)</description>
+		<year>1992</year>
+		<manufacturer>Palcom</manufacturer>
+		<rom name="Parodius (Europe).nes" size="262160" crc="22ad4753"/>
+		<driver status="good"/>
+	</game>
+	<game name="parodiusdaj" cloneof="parodiusda" romof="parodiusda">
 		<description>Parodius Da! (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Parodius Da! (Japan).nes" size="262160" crc="ec8aeffc"/>
+		<driver status="good"/>
+	</game>
+	<game name="parodiusda">
+		<description>Parodius Da! (T-Eng)</description>
+		<year>1990</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Parodius Da! (T-Eng).nes" size="393232" crc="7012e75a"/>
 		<driver status="good"/>
 	</game>
 	<game name="peepartime">
@@ -6536,11 +6683,18 @@
 		<rom name="Pinball Quest (USA).nes" size="262160" crc="488bf94e"/>
 		<driver status="good"/>
 	</game>
-	<game name="pizzapop">
+	<game name="pizzapopj" cloneof="pizzapop" romof="pizzapop">
 		<description>Pizza Pop! (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Pizza Pop! (Japan).nes" size="262160" crc="361729fa"/>
+		<driver status="good"/>
+	</game>
+	<game name="pizzapop">
+		<description>Pizza Pop! (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Pizza Pop! (T-Eng).nes" size="262160" crc="bcde6e2c"/>
 		<driver status="good"/>
 	</game>
 	<game name="plasmaballj" cloneof="plasmaball" romof="plasmaball">
@@ -7348,6 +7502,13 @@
 		<rom name="Seicross (USA).nes" size="40976" crc="c0d823ed"/>
 		<driver status="good"/>
 	</game>
+	<game name="seiredenlic" cloneof="littlesamson" romof="littlesamson">
+		<description>Seirei Densetsu Lickle (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Seirei Densetsu Lickle (Japan).nes" size="393232" crc="2823a809"/>
+		<driver status="good"/>
+	</game>
 	<game name="senjounoookami">
 		<description>Senjou no Ookami (Japan)</description>
 		<year>1986</year>
@@ -7367,6 +7528,20 @@
 		<year>1990</year>
 		<manufacturer>Natsume</manufacturer>
 		<rom name="Shadow of the Ninja (USA).nes" size="262160" crc="f74a04ab"/>
+		<driver status="good"/>
+	</game>
+	<game name="shadowwarriors" cloneof="ninjagaiden" romof="ninjagaiden">
+		<description>Shadow Warriors (Europe)</description>
+		<year>1991</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Shadow Warriors (Europe).nes" size="262160" crc="1d2fb2b7"/>
+		<driver status="good"/>
+	</game>
+	<game name="shadowarepiii" cloneof="ninjagaiii" romof="ninjagaiii">
+		<description>Shadow Warriors Episode II - The Dark Sword of Chaos (Europe)</description>
+		<year>1991</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Shadow Warriors Episode II - The Dark Sword of Chaos (Europe).nes" size="262160" crc="96b6a919"/>
 		<driver status="good"/>
 	</game>
 	<game name="shadowgate">
@@ -8013,6 +8188,13 @@
 		<rom name="Summer Carnival '92 - Recca (Japan).nes" size="262160" crc="2e15075a"/>
 		<driver status="good"/>
 	</game>
+	<game name="sundafun" cloneof="menacebeach" romof="menacebeach">
+		<description>Sunday Funday - The Ride (USA) (Unl)</description>
+		<year>1995</year>
+		<manufacturer>Wisdom Tree</manufacturer>
+		<rom name="Sunday Funday - The Ride (USA) (Unl).nes" size="262160" crc="4f7e1243"/>
+		<driver status="good"/>
+	</game>
 	<game name="sunman">
 		<description>Sunman (Europe) (Prototype)</description>
 		<year>0000</year>
@@ -8286,6 +8468,13 @@
 		<rom name="T&amp;C Surf Design (USA).nes" size="65552" crc="9c94ed32"/>
 		<driver status="good"/>
 	</game>
+	<game name="taboo">
+		<description>Taboo - The Sixth Sense (USA)</description>
+		<year>1989</year>
+		<manufacturer>Tradewest</manufacturer>
+		<rom name="Taboo - The Sixth Sense (USA).nes" size="65552" crc="e057b507"/>
+		<driver status="good"/>
+	</game>
 	<game name="tagteawre">
 		<description>Tag Team Wrestling (USA)</description>
 		<year>1986</year>
@@ -8298,6 +8487,20 @@
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Taito Chase H.Q. (Japan).nes" size="262160" crc="b3408ee4"/>
+		<driver status="good"/>
+	</game>
+	<game name="taitograprij" cloneof="taitograpri" romof="taitograpri">
+		<description>Taito Grand Prix - Eikou e no License (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Taito Grand Prix - Eikou e no License (Japan).nes" size="262160" crc="613bd034"/>
+		<driver status="good"/>
+	</game>
+	<game name="taitograpri">
+		<description>Taito Grand Prix - Eikou e no License (T-Eng)</description>
+		<year>1987</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Taito Grand Prix - Eikou e no License (T-Eng).nes" size="262160" crc="b58f4f5a"/>
 		<driver status="good"/>
 	</game>
 	<game name="taiyonoyuufirj" cloneof="taiyonoyuufir" romof="taiyonoyuufir">
@@ -8319,6 +8522,27 @@
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Takahashi Meijin no Bugutte Honey (Japan).nes" size="163856" crc="312e6a31"/>
+		<driver status="good"/>
+	</game>
+	<game name="takesnosenfuu">
+		<description>Takeshi no Sengoku Fuuunji (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Takeshi no Sengoku Fuuunji (Japan).nes" size="262160" crc="5c80a4a2"/>
+		<driver status="good"/>
+	</game>
+	<game name="takesschaj" cloneof="takesscha" romof="takesscha">
+		<description>Takeshi's Challenge (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Takeshi's Challenge (Japan).nes" size="131088" crc="e810b35c"/>
+		<driver status="good"/>
+	</game>
+	<game name="takesscha">
+		<description>Takeshi's Challenge (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Takeshi's Challenge (T-Eng).nes" size="262160" crc="18c9b8ad"/>
 		<driver status="good"/>
 	</game>
 	<game name="talespin">

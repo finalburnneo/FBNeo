@@ -44,11 +44,19 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
-	<game name="akumajoudracula" romof="fdsbios">
+	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula">
 		<description>Akumajou Dracula (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Akumajou Dracula (Japan).fds" size="131016" crc="ffed3158"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="akumajoudracula" romof="fdsbios">
+		<description>Akumajou Dracula (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Akumajou Dracula (T-Eng).fds" size="131016" crc="f72f22af"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
@@ -721,6 +729,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid (Japan).fds" size="131016" crc="1b3ee73d"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="michaengdai" romof="fdsbios">
+		<description>Michael English Daibouken (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Michael English Daibouken (Japan).fds" size="131000" crc="e5ab0e6c"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

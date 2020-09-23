@@ -8386,7 +8386,7 @@ STDROMPICKEXT(Specswiv, Specswiv, Spec128)
 STD_ROM_FN(Specswiv)
 
 struct BurnDriver BurnSpecswiv = {
-	"spec_swiv", spec_swivblk1", "spec_spec128", NULL, "1991",
+	"spec_swiv", "spec_swivblk1", "spec_spec128", NULL, "1991",
 	"SWIV (Block1)(Alternative)(128K)\0", NULL, "Storm Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,

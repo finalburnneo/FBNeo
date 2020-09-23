@@ -2496,10 +2496,10 @@ STDROMPICKEXT(Speccastlevanrus, Speccastlevanrus, Spec128)
 STD_ROM_FN(Speccastlevanrus)
 
 struct BurnDriver BurnSpeccastlevanrus = {
-	"spec_castlevanrus", NULL, "spec_spec128", NULL, "2015",
+	"spec_castlevanrus", "spec_castlevania", "spec_spec128", NULL, "2015",
 	"Castlevania - Spectral Interlude (Russian)(128K)\0", NULL, "Rewind Team", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpeccastlevanrusRomInfo, SpeccastlevanrusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -2762,10 +2762,10 @@ STDROMPICKEXT(Speccjseleph, Speccjseleph, Spectrum)
 STD_ROM_FN(Speccjseleph)
 
 struct BurnDriver BurnSpeccjseleph = {
-	"spec_cjseleph", NULL, "spec_spectrum", NULL, "1991",
+	"spec_cjseleph", "spec_cjseleph128", "spec_spectrum", NULL, "1991",
 	"CJ's Elephant Antics (Trainer)(48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpeccjselephRomInfo, SpeccjselephRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -3294,7 +3294,7 @@ STDROMPICKEXT(Specdizzyr, Specdizzyr, Spec128)
 STD_ROM_FN(Specdizzyr)
 
 struct BurnDriver BurnSpecdizzyr = {
-	"spec_dizzyr", "spec_dizzy", "spec_spec128", NULL, "1987",
+	"spec_dizzyr", "spec_dizzy_48", "spec_spec128", NULL, "1987",
 	"Dizzy - The Ultimate Cartoon Adventure (Trainer)(Russian)(128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -3313,7 +3313,7 @@ STDROMPICKEXT(Specdizzyrstd, Specdizzyrstd, Spec128)
 STD_ROM_FN(Specdizzyrstd)
 
 struct BurnDriver BurnSpecdizzyrstd = {
-	"spec_dizzyrstd", "spec_dizzy", "spec_spec128", NULL, "1987",
+	"spec_dizzyrstd", "spec_dizzy_48", "spec_spec128", NULL, "1987",
 	"Dizzy - The Ultimate Cartoon Adventure (Russian)(128k)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -3332,10 +3332,10 @@ STDROMPICKEXT(Specdizzy_48, Specdizzy_48, Spectrum)
 STD_ROM_FN(Specdizzy_48)
 
 struct BurnDriver BurnSpecdizzy_48 = {
-	"spec_dizzy_48", "spec_dizzy", "spec_spectrum", NULL, "1987",
+	"spec_dizzy_48", NULL, "spec_spectrum", NULL, "1987",
 	"Dizzy - The Ultimate Cartoon Adventure (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specdizzy_48RomInfo, Specdizzy_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -3351,10 +3351,10 @@ STDROMPICKEXT(Specdizzy, Specdizzy, Spec128)
 STD_ROM_FN(Specdizzy)
 
 struct BurnDriver BurnSpecdizzy = {
-	"spec_dizzy", NULL, "spec_spec128", NULL, "1987",
+	"spec_dizzy", "spec_dizzy_48", "spec_spec128", NULL, "1987",
 	"Dizzy - The Ultimate Cartoon Adventure (Trainer)(128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecdizzyRomInfo, SpecdizzyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -3750,10 +3750,10 @@ STDROMPICKEXT(Specdninja, Specdninja, Spec128)
 STD_ROM_FN(Specdninja)
 
 struct BurnDriver BurnSpecdninja = {
-	"spec_dninja", NULL, "spec_spec128", NULL, "1988",
+	"spec_dninja", "spec_dninjastd", "spec_spec128", NULL, "1988",
 	"Dragon Ninja (Trainer)(128K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecdninjaRomInfo, SpecdninjaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -5251,10 +5251,10 @@ STDROMPICKEXT(Specjoebld3, Specjoebld3, Spectrum)
 STD_ROM_FN(Specjoebld3)
 
 struct BurnDriver BurnSpecjoebld3 = {
-	"spec_joebld3", NULL, "spec_spectrum", NULL, "1989",
+	"spec_joebld3", "spec_joebld3_128", "spec_spectrum", NULL, "1989",
 	"Joe Blade III (Trainer)(48K)\0", NULL, "Players Premier Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specjoebld3RomInfo, Specjoebld3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -5802,10 +5802,10 @@ STDROMPICKEXT(Specmerlin, Specmerlin, Spectrum)
 STD_ROM_FN(Specmerlin)
 
 struct BurnDriver BurnSpecmerlin = {
-	"spec_merlin", NULL, "spec_spectrum", NULL, "1987",
+	"spec_merlin", "spec_merlin_128", "spec_spectrum", NULL, "1987",
 	"Merlin (Alternative)(48K)\0", NULL, "Firebird Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecmerlinRomInfo, SpecmerlinRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -7037,7 +7037,7 @@ STDROMPICKEXT(Specrenegade_48, Specrenegade_48, Spectrum)
 STD_ROM_FN(Specrenegade_48)
 
 struct BurnDriver BurnSpecrenegade_48 = {
-	"spec_renegade_48", "spec_renegade", "spec_spectrum", NULL, "1987",
+	"spec_renegade_48", "spec_renegadestd", "spec_spectrum", NULL, "1987",
 	"Renegade (48K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -7056,10 +7056,10 @@ STDROMPICKEXT(Specrenegade, Specrenegade, Spec128)
 STD_ROM_FN(Specrenegade)
 
 struct BurnDriver BurnSpecrenegade = {
-	"spec_renegade", NULL, "spec_spec128", NULL, "1987",
+	"spec_renegade", "spec_renegadestd", "spec_spec128", NULL, "1987",
 	"Renegade (Trainer)(128K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecrenegadeRomInfo, SpecrenegadeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -7151,7 +7151,7 @@ STDROMPICKEXT(Specrex2_48, Specrex2_48, Spectrum)
 STD_ROM_FN(Specrex2_48)
 
 struct BurnDriver BurnSpecrex2_48 = {
-	"spec_rex2_48", "spec_rex", "spec_spectrum", NULL, "1988",
+	"spec_rex2_48", "spec_rex2", "spec_spectrum", NULL, "1988",
 	"Rex (Part 2 of 2) (48K)\0", NULL, "Martech Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -8082,10 +8082,10 @@ STDROMPICKEXT(Specstormlor, Specstormlor, Spectrum)
 STD_ROM_FN(Specstormlor)
 
 struct BurnDriver BurnSpecstormlor = {
-	"spec_stormlor", NULL, "spec_spectrum", NULL, "1989",
+	"spec_stormlor", "spec_stormlor128", "spec_spectrum", NULL, "1989",
 	"Stormlord (Trainer)(48K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecstormlorRomInfo, SpecstormlorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -8386,10 +8386,10 @@ STDROMPICKEXT(Specswiv, Specswiv, Spec128)
 STD_ROM_FN(Specswiv)
 
 struct BurnDriver BurnSpecswiv = {
-	"spec_swiv", NULL, "spec_spec128", NULL, "1991",
+	"spec_swiv", spec_swivblk1", "spec_spec128", NULL, "1991",
 	"SWIV (Block1)(Alternative)(128K)\0", NULL, "Storm Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecswivRomInfo, SpecswivRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -8424,10 +8424,10 @@ STDROMPICKEXT(Spectechted_48, Spectechted_48, Spectrum)
 STD_ROM_FN(Spectechted_48)
 
 struct BurnDriver BurnSpectechted_48 = {
-	"spec_techted_48", "spec_techted", "spec_spectrum", NULL, "1984",
+	"spec_techted_48", NULL, "spec_spectrum", NULL, "1984",
 	"Technician Ted (48K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spectechted_48RomInfo, Spectechted_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -8880,10 +8880,10 @@ STDROMPICKEXT(Specwackrace, Specwackrace, Spec128)
 STD_ROM_FN(Specwackrace)
 
 struct BurnDriver BurnSpecwackrace = {
-	"spec_wackrace", NULL, "spec_spec128", NULL, "1992",
+	"spec_wackrace", "spec_wackracestd", "spec_spec128", NULL, "1992",
 	"Wacky Races (Trainer)(128K)\0", NULL, "Hi-Tec Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecwackraceRomInfo, SpecwackraceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3

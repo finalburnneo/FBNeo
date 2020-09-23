@@ -2363,9 +2363,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2000/4; i++)
 	{
-		UINT8 r = p[i] >> 0;
-		UINT8 g = p[i] >> 8;
-		UINT8 b = p[i] >> 16;
+		UINT8 r = BURN_ENDIAN_SWAP_INT32(p[i]) >> 0;
+		UINT8 g = BURN_ENDIAN_SWAP_INT32(p[i]) >> 8;
+		UINT8 b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 16;
 
 		if (i > 255 && has_ace == 1)
 		{

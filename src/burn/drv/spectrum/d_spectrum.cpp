@@ -428,7 +428,7 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 			if ((Changed & (1 << 3)) != 0) {
 				// write cassette data
 				//m_cassette->output((data & (1<<3)) ? -1.0 : +1.0);
-				bprintf(PRINT_IMPORTANT, _T("Write Cassette Data %x\n"), d);
+				//bprintf(PRINT_IMPORTANT, _T("Write Cassette Data %x\n"), d);
 			}
 
 			nPortFEData = d;
@@ -588,7 +588,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 		if ((Changed & (1 << 3)) != 0) {
 			// write cassette data
 			//m_cassette->output((data & (1<<3)) ? -1.0 : +1.0);
-			bprintf(PRINT_IMPORTANT, _T("Write Cassette Data %x\n"), d);
+			//bprintf(PRINT_IMPORTANT, _T("Write Cassette Data %x\n"), d);
 		}
 
 		nPortFEData = d;

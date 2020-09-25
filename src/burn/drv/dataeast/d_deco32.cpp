@@ -2363,9 +2363,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2000/4; i++)
 	{
-		UINT8 r = p[i] >> 0;
-		UINT8 g = p[i] >> 8;
-		UINT8 b = p[i] >> 16;
+		UINT8 r = BURN_ENDIAN_SWAP_INT32(p[i]) >> 0;
+		UINT8 g = BURN_ENDIAN_SWAP_INT32(p[i]) >> 8;
+		UINT8 b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 16;
 
 		if (i > 255 && has_ace == 1)
 		{
@@ -3335,46 +3335,46 @@ static void dragngun_draw_sprites()
 	{
 		INT32 xpos,ypos;
 
-		INT32 scalex = spritedata[offs+4] & 0x3ff;
-		INT32 scaley = spritedata[offs+5] & 0x3ff;
+		INT32 scalex = BURN_ENDIAN_SWAP_INT32(spritedata[offs+4]) & 0x3ff;
+		INT32 scaley = BURN_ENDIAN_SWAP_INT32(spritedata[offs+5]) & 0x3ff;
 		if (!scalex || !scaley)
 			continue;
 
-		INT32 layoutram_offset = (spritedata[offs + 0] & 0x1ff) * 4;
+		INT32 layoutram_offset = (BURN_ENDIAN_SWAP_INT32(spritedata[offs + 0]) & 0x1ff) * 4;
 
-		if (spritedata[offs + 0] & 0x400)
+		if (BURN_ENDIAN_SWAP_INT32(spritedata[offs + 0]) & 0x400)
 			layout_ram = dragngun_sprite_layout_1_ram;
 		else
 			layout_ram = dragngun_sprite_layout_0_ram;
-		INT32 h = (layout_ram[layoutram_offset + 1]>>0)&0xf;
-		INT32 w = (layout_ram[layoutram_offset + 1]>>4)&0xf;
+		INT32 h = (BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 1])>>0)&0xf;
+		INT32 w = (BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 1])>>4)&0xf;
 		if (!h || !w)
 			continue;
 
-		INT32 sx = spritedata[offs+2] & 0x3ff;
-		INT32 sy = spritedata[offs+3] & 0x3ff;
-		INT32 bx = layout_ram[layoutram_offset + 2] & 0x1ff;
-		INT32 by = layout_ram[layoutram_offset + 3] & 0x1ff;
+		INT32 sx = BURN_ENDIAN_SWAP_INT32(spritedata[offs+2]) & 0x3ff;
+		INT32 sy = BURN_ENDIAN_SWAP_INT32(spritedata[offs+3]) & 0x3ff;
+		INT32 bx = BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 2]) & 0x1ff;
+		INT32 by = BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 3]) & 0x1ff;
 		if (bx&0x100) bx=1-(bx&0xff);
 		if (by&0x100) by=1-(by&0xff);
 		if (sx >= 512) sx -= 1024;
 		if (sy >= 512) sy -= 1024;
 
-		INT32 color = spritedata[offs+6]&0x1f;
+		INT32 color = BURN_ENDIAN_SWAP_INT32(spritedata[offs+6])&0x1f;
 
-		INT32 priority = (spritedata[offs + 6] & 0x60) >> 5;
+		INT32 priority = (BURN_ENDIAN_SWAP_INT32(spritedata[offs + 6]) & 0x60) >> 5;
 		INT32 priority_orig = priority;
 		// pri hacking: follow priority_orig
 		priority = 7;
 
-		INT32 alpha = (spritedata[offs+6] & 0x80) ? 0x80 : 0xff;
+		INT32 alpha = (BURN_ENDIAN_SWAP_INT32(spritedata[offs+6]) & 0x80) ? 0x80 : 0xff;
 
-		INT32 fx = spritedata[offs+4] & 0x8000;
-		INT32 fy = spritedata[offs+5] & 0x8000;
+		INT32 fx = BURN_ENDIAN_SWAP_INT32(spritedata[offs+4]) & 0x8000;
+		INT32 fy = BURN_ENDIAN_SWAP_INT32(spritedata[offs+5]) & 0x8000;
 
-		INT32 lookupram_offset = layout_ram[layoutram_offset + 0] & 0x1fff;
+		INT32 lookupram_offset = BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 0]) & 0x1fff;
 
-		if (layout_ram[layoutram_offset + 0] & 0x2000)
+		if (BURN_ENDIAN_SWAP_INT32(layout_ram[layoutram_offset + 0]) & 0x2000)
 			lookup_ram = dragngun_sprite_lookup_1_ram;
 		else
 			lookup_ram = dragngun_sprite_lookup_0_ram;
@@ -3394,7 +3394,7 @@ static void dragngun_draw_sprites()
 				xpos=(sx<<16) + (bx*zoomx) - (16*zoomx);
 
 			for (INT32 x=0; x<w; x++) {
-				INT32 sprite = lookup_ram[lookupram_offset] & 0x3fff;
+				INT32 sprite = BURN_ENDIAN_SWAP_INT32(lookup_ram[lookupram_offset]) & 0x3fff;
 
 				lookupram_offset++;
 

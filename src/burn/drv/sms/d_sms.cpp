@@ -3626,6 +3626,26 @@ struct BurnDriver BurnDrvsms_enduro = {
 };
 
 
+// Enduro Racer - Improved version 1.0 by BcnAbel76
+
+static struct BurnRomInfo sms_enduroiRomDesc[] = {
+	{ "Enduro Racer (Improvement v1.0, by BcnAbel76)",	0x40000, 0xd7685c77, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_enduroi)
+STD_ROM_FN(sms_enduroi)
+
+struct BurnDriver BurnDrvsms_enduroi = {
+	"sms_enduroi", "sms_enduro", NULL, NULL, "2020",
+	"Enduro Racer (Improvement v1.0)\0", NULL, "BcnAbel76", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	SMSGetZipName, sms_enduroiRomInfo, sms_enduroiRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
 // Enduro Racer (Jpn)
 
 static struct BurnRomInfo sms_endurojRomDesc[] = {

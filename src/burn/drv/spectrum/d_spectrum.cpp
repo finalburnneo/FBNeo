@@ -7512,10 +7512,10 @@ STDROMPICKEXT(Specsavage1, Specsavage1, Spectrum)
 STD_ROM_FN(Specsavage1)
 
 struct BurnDriver BurnSpecsavage1 = {
-	"spec_savage1", "spec_savage", "spec_spectrum", NULL, "1988",
+	"spec_savage1", NULL, "spec_spectrum", NULL, "1988",
 	"Savage (Part 1 of 3) (48K)\0", NULL, "Firebird Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specsavage1RomInfo, Specsavage1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -7531,10 +7531,10 @@ STDROMPICKEXT(Specsavage2, Specsavage2, Spectrum)
 STD_ROM_FN(Specsavage2)
 
 struct BurnDriver BurnSpecsavage2 = {
-	"spec_savage2", "spec_savage", "spec_spectrum", NULL, "1988",
+	"spec_savage2", NULL, "spec_spectrum", NULL, "1988",
 	"Savage (Part 2 of 3) (48K)\0", NULL, "Firebird Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specsavage2RomInfo, Specsavage2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
@@ -7550,31 +7550,12 @@ STDROMPICKEXT(Specsavage3, Specsavage3, Spectrum)
 STD_ROM_FN(Specsavage3)
 
 struct BurnDriver BurnSpecsavage3 = {
-	"spec_savage3", "spec_savage", "spec_spectrum", NULL, "1988",
+	"spec_savage3", NULL, "spec_spectrum", NULL, "1988",
 	"Savage (Part 3 of 3) (48K)\0", NULL, "Firebird Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specsavage3RomInfo, Specsavage3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 352, 296, 4, 3
-};
-
-// Savage (128K)
-
-static struct BurnRomInfo SpecsavageRomDesc[] = {
-	{ "Savage (1988)(Firebird)(128k).z80", 0x091a9, 0x09aef12f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specsavage, Specsavage, Spec128)
-STD_ROM_FN(Specsavage)
-
-struct BurnDriver BurnSpecsavage = {
-	"spec_savage", NULL, "spec_spec128", NULL, "1988",
-	"Savage (128K)\0", NULL, "Firebird Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecsavageRomInfo, SpecsavageRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 

@@ -1083,6 +1083,13 @@
 		<rom name="mpr-10843 w28.ic1" size="131072" crc="00e73541"/>
 		<driver status="good"/>
 	</game>
+	<game name="enduroi" cloneof="enduro" romof="enduro">
+		<description>Enduro Racer (Improvement v1.0)</description>
+		<year>2020</year>
+		<manufacturer>BcnAbel76</manufacturer>
+		<rom name="Enduro Racer (Improvement v1.0, by BcnAbel76)" size="262144" crc="d7685c77"/>
+		<driver status="good"/>
+	</game>
 	<game name="enduroj" cloneof="enduro" romof="enduro">
 		<description>Enduro Racer (Jpn)</description>
 		<year>1987</year>

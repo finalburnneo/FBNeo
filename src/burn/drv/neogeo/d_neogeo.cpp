@@ -18561,7 +18561,7 @@ struct BurnDriver BurnDrvzintrkcd = {
 // Breakers Revenge - Extra Mode (Hack)
 
 static struct BurnRomInfo brkrevextRomDesc[] = {
-	{ "245-p1.p1",    0x200000, 0x603b47a4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "245-p1ext.p1", 0x200000, 0x603b47a4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
 

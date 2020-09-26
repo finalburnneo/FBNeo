@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14709 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14710 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3121,7 +3121,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dondokodon|  	| Don Doko Don (Japan)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | dondokodu	|  	| Don Doko Don (US)					| dondokod	| 1989	| Taito Corporat| Taito F2	| 					|
 | dondokod	|  	| Don Doko Don (World)					| 		| 1989	| Taito Corporat| Taito F2	| 					|
-| nes_dondokodon2|  	| Don Doko Don 2 (Japan)				| 		| 1992	| Taito		| Miscellaneous	| 					|
+| nes_dondokodon2j|  	| Don Doko Don 2 (Japan)				| nes_dondokodon2| 1992	| Taito		| Miscellaneous	| 					|
+| nes_dondokodon2|  	| Don Doko Don 2 (T-Eng)				| 		| 1992	| Taito		| Miscellaneous	| 					|
 | pce_dondoko	|  	| Don Doko Don!						| 		| 1990	| Taito		| PC Engine	| 					|
 | nes_donaldduck|  	| Donald Duck (Japan)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
 | gg_donald42	|  	| Donald Duck no 4-Tsu no Hihou (Jpn)			| gg_deepduck	| 1993	| Sega		| Sega Game Gear| 					|

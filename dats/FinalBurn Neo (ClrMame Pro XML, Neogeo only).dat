@@ -1589,7 +1589,7 @@
 		<description>Breakers Revenge - Extra Mode (Hack) [Hack]</description>
 		<year>2018</year>
 		<manufacturer>Visco</manufacturer>
-		<rom name="245-p1.p1" size="2097152" crc="603b47a4"/>
+		<rom name="245-p1ext.p1" size="2097152" crc="603b47a4"/>
 		<rom name="245-s1.s1" merge="245-s1.s1" size="131072" crc="e7660a5d"/>
 		<rom name="245-c1.c1" merge="245-c1.c1" size="4194304" crc="68d4ae76"/>
 		<rom name="245-c2.c2" merge="245-c2.c2" size="4194304" crc="fdee05cd"/>

@@ -2350,11 +2350,18 @@
 		<rom name="Don Doko Don (Japan).nes" size="393232" crc="6db7e711"/>
 		<driver status="good"/>
 	</game>
-	<game name="dondokodon2">
+	<game name="dondokodon2j" cloneof="dondokodon2" romof="dondokodon2">
 		<description>Don Doko Don 2 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Don Doko Don 2 (Japan).nes" size="393232" crc="f583796b"/>
+		<driver status="good"/>
+	</game>
+	<game name="dondokodon2">
+		<description>Don Doko Don 2 (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Don Doko Don 2 (T-Eng).nes" size="393232" crc="560142bc"/>
 		<driver status="good"/>
 	</game>
 	<game name="donaldduck">

@@ -3171,6 +3171,7 @@ DRV		BurnDrvDondokodj;
 DRV		BurnDrvnes_dondokodon;
 DRV		BurnDrvDondokodu;
 DRV		BurnDrvDondokod;
+DRV		BurnDrvnes_dondokodon2j;
 DRV		BurnDrvnes_dondokodon2;
 DRV		BurnDrvpce_dondoko;
 DRV		BurnDrvnes_donaldduck;
@@ -18147,7 +18148,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dondokodon,		// Don Doko Don (Japan)
 	&BurnDrvDondokodu,			// Don Doko Don (US)
 	&BurnDrvDondokod,			// Don Doko Don (World)
-	&BurnDrvnes_dondokodon2,	// Don Doko Don 2 (Japan)
+	&BurnDrvnes_dondokodon2j,	// Don Doko Don 2 (Japan)
+	&BurnDrvnes_dondokodon2,	// Don Doko Don 2 (T-Eng)
 	&BurnDrvpce_dondoko,		// Don Doko Don!
 	&BurnDrvnes_donaldduck,		// Donald Duck (Japan)
 	&BurnDrvgg_donald42,		// Donald Duck no 4-Tsu no Hihou (Jpn)

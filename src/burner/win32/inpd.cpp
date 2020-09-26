@@ -619,7 +619,7 @@ static void SaveHardwarePreset()
 		_ftprintf(fp, _T(APP_TITLE) _T(" - Hardware Default Preset\n\n"));
 		_ftprintf(fp, _T("%s\n\n"), szHardwareString);
 		_ftprintf(fp, _T("version 0x%06X\n\n"), nBurnVer);
-		GameInpWrite(fp);
+		HardwarePresetWrite(fp, hInpdList);
 		fclose(fp);
 	}
 
@@ -816,13 +816,15 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					// Setting Auto-Fire
 					pgi->Macro.nSysMacro = ListView_GetCheckState(hInpdList, i) ? 15 : 0;
 					// Exclude system macros
-					if (_stricmp("System Pause", pgi->Macro.szName) == 0 ||
+					if ((_stricmp("System Pause", pgi->Macro.szName) == 0 ||
 						_stricmp("System FFWD", pgi->Macro.szName) == 0 ||
 						_stricmp("System Load State", pgi->Macro.szName) == 0 ||
 						_stricmp("System Save State", pgi->Macro.szName) == 0 ||
-						_stricmp("System UNDO State", pgi->Macro.szName) == 0)
+						_stricmp("System UNDO State", pgi->Macro.szName) == 0) &&
+						pgi->Macro.nSysMacro > 1)
 						pgi->Macro.nSysMacro = 1;
 				}
+
 
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;

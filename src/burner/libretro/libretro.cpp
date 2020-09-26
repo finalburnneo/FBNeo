@@ -524,8 +524,10 @@ static int create_variables_from_cheats()
 			for (int i = 0; i < count; i++) {
 				cheat_core_option_value *cheat_value = &cheat_option->values[i];
 				cheat_value->nValue = i;
-				cheat_value->friendly_name = pCurrentCheat->pOption[i]->szOptionName;
-				if (pCurrentCheat->nDefault == i) cheat_option->default_value = pCurrentCheat->pOption[i]->szOptionName;
+				// prepending name with value, some cheats from official pack have 2 values matching default's name,
+				// and picking the wrong one prevents some games to boot
+				cheat_value->friendly_name = SSTR( i << " - " << pCurrentCheat->pOption[i]->szOptionName);
+				if (pCurrentCheat->nDefault == i) cheat_option->default_value = SSTR( i << " - " << pCurrentCheat->pOption[i]->szOptionName);
 			}
 		}
 		num++;

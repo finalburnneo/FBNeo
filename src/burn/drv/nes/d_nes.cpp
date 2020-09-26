@@ -9728,8 +9728,25 @@ struct BurnDriver BurnDrvfds_electrician = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo fds_esperdreamRomDesc[] = {
+static struct BurnRomInfo fds_esperdreamjRomDesc[] = {
 	{ "Esper Dream (Japan).fds",          131000, 0x1d40f83f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_esperdreamj, fds_esperdreamj, fds_fdsbios)
+STD_ROM_FN(fds_esperdreamj)
+
+struct BurnDriver BurnDrvfds_esperdreamj = {
+	"fds_esperdreamj", "fds_esperdream", "fds_fdsbios", NULL, "1989?",
+	"Esper Dream (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_esperdreamjRomInfo, fds_esperdreamjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo fds_esperdreamRomDesc[] = {
+	{ "Esper Dream (T-Eng).fds",          131000, 0x51d8c9f1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_esperdream, fds_esperdream, fds_fdsbios)
@@ -9737,7 +9754,7 @@ STD_ROM_FN(fds_esperdream)
 
 struct BurnDriver BurnDrvfds_esperdream = {
 	"fds_esperdream", NULL, "fds_fdsbios", NULL, "1989?",
-	"Esper Dream (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Esper Dream (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
 	NESGetZipName, fds_esperdreamRomInfo, fds_esperdreamRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,

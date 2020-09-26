@@ -1539,6 +1539,7 @@ DRV		BurnDrvMSX_breakout;
 DRV		BurnDrvMSX_breakoutt;
 DRV		BurnDrvBrkthru;
 DRV		BurnDrvMSX_breaker;
+DRV		BurnDrvbrkrevext;
 DRV		BurnDrvbreakrev;
 DRV		BurnDrvbreakers;
 DRV		BurnDrvnes_breakthru;
@@ -3771,6 +3772,7 @@ DRV		BurnDrvEspradejo;
 DRV		BurnDrvEspradej;
 DRV		BurnDrvEsprade;
 DRV		BurnDrvnes_esperboukentai;
+DRV		BurnDrvfds_esperdreamj;
 DRV		BurnDrvfds_esperdream;
 DRV		BurnDrvnes_esperdre2;
 DRV		BurnDrvEspgalbl;
@@ -14103,6 +14105,7 @@ DRV		BurnDrvVulcanb;
 DRV		BurnDrvvulgusj;
 DRV		BurnDrvvulgus;
 DRV		BurnDrvvulgusa;
+DRV		BurnSpecWHB;
 DRV		BurnDrvpce_wring;
 DRV		BurnDrvWacko;
 DRV		BurnSpecwackdart;
@@ -16512,6 +16515,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_breakoutt,		// Break Out!
 	&BurnDrvBrkthru,			// Break Thru (US)
 	&BurnDrvMSX_breaker,		// Breaker Breaker (Euro)
+	&BurnDrvbrkrevext,			// Breakers Revenge - Extra Mode (Hack)
 	&BurnDrvbreakrev,			// Breakers Revenge
 	&BurnDrvbreakers,			// Breakers
 	&BurnDrvnes_breakthru,		// BreakThru (USA)
@@ -18744,7 +18748,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvEspradej,			// ESP Ra.De. (Japan, ver. 98/04/21)
 	&BurnDrvEsprade,			// ESP Ra.De. - A.D.2018 Tokyo (International, ver. 98/04/22)
 	&BurnDrvnes_esperboukentai,	// Esper Bouken Tai (Japan)
-	&BurnDrvfds_esperdream,		// Esper Dream (Japan)
+	&BurnDrvfds_esperdreamj,	// Esper Dream (Japan)
+	&BurnDrvfds_esperdream,		// Esper Dream (T-Eng)
 	&BurnDrvnes_esperdre2,		// Esper Dream 2 - Aratanaru Tatakai (Japan)
 	&BurnDrvEspgalbl,			// Espgaluda (2003/10/15 Master Ver, bootleg cartridge conversion)
 	&BurnDrvEspgal,				// Espgaluda (Japan, 2003/10/15 Master Ver)
@@ -29076,6 +29081,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvvulgusj,			// Vulgus (Japan?)
 	&BurnDrvvulgus,				// Vulgus (set 1)
 	&BurnDrvvulgusa,			// Vulgus (set 2)
+	&BurnSpecWHB,				// W*H*B (HB, 48K)
 	&BurnDrvpce_wring,			// W-ring - The Double Rings
 	&BurnDrvWacko,				// Wacko
 	&BurnSpecwackdart,			// Wacky Darts (48K)

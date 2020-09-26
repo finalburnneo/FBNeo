@@ -316,11 +316,19 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
-	<game name="esperdream" romof="fdsbios">
+	<game name="esperdreamj" cloneof="esperdream" romof="esperdream">
 		<description>Esper Dream (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Esper Dream (Japan).fds" size="131000" crc="1d40f83f"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="esperdream" romof="fdsbios">
+		<description>Esper Dream (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Esper Dream (T-Eng).fds" size="131000" crc="51d8c9f1"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

@@ -2826,7 +2826,7 @@
 		<description>Saboteur II - Avenging Angel (48K)</description>
 		<year>1987</year>
 		<manufacturer>Durell Software</manufacturer>
-		<rom name="Saboteur II - Avenging Angel (1987)(Durell)(Standard).z80" size="694965" crc="8904b9ba"/>
+		<rom name="Saboteur II - Avenging Angel (1987)(Durell)(Standard).z80" size="39605" crc="8904b9ba"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
@@ -3430,6 +3430,14 @@
 		<rom name="Vindicators (1989)(Domark)[128K].z80" size="43616" crc="6c4dbbe3"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="whb" romof="spectrum">
+		<description>W*H*B (HB, 48K) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="whb.z80" size="39295" crc="98d261cb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
 	<game name="wackdart" romof="spectrum">

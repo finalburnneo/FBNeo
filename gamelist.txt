@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14706 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14709 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1519,6 +1519,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_breakoutt	|  	| Break Out!						| 		| 1985	| Toshiba-EMI	| MSX		| 					|
 | brkthru	|  	| Break Thru (US)					| 		| 1986	| Data East USA	| Miscellaneous	| 					|
 | msx_breaker	|  	| Breaker Breaker (Euro)				| 		| 1988	| Eurosoft	| MSX		| 					|
+| brkrevext	|  	| Breakers Revenge - Extra Mode (Hack)			| breakrev	| 2018	| Visco		| Neo Geo MVS	| 					|
 | breakrev	|  	| Breakers Revenge					| 		| 1998	| Visco		| Neo Geo MVS	| 					|
 | breakers	|  	| Breakers						| 		| 1996	| Visco		| Neo Geo MVS	| 					|
 | nes_breakthru	|  	| BreakThru (USA)					| 		| 1987	| Data East	| Miscellaneous	| 					|
@@ -3705,7 +3706,8 @@ This list contains all games supported by FinalBurn Neo.
 | espradej	|  	| ESP Ra.De. (Japan, ver. 98/04/21)			| esprade	| 1998	| Atlus / Cave	| Cave		| 					|
 | esprade	|  	| ESP Ra.De. - A.D.2018 Tokyo (International, ver. 98/04| 		| 1998	| Atlus / Cave	| Cave		| 					|
 | nes_esperboukentai|  	| Esper Bouken Tai (Japan)				| 		| 1987	| Jaleco	| Miscellaneous	| 					|
-| fds_esperdream|  	| Esper Dream (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_esperdreamj|  	| Esper Dream (Japan)					| fds_esperdream| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_esperdream|  	| Esper Dream (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_esperdre2	|  	| Esper Dream 2 - Aratanaru Tatakai (Japan)		| 		| 1992	| Konami	| Miscellaneous	| 					|
 | espgalbl	|  	| Espgaluda (2003/10/15 Master Ver, bootleg cartridge co| espgal	| 2003	| bootleg	| PolyGameMaster| 					|
 | espgal	|  	| Espgaluda (Japan, 2003/10/15 Master Ver)		| 		| 2003	| CAVE / AMI	| PolyGameMaster| 					|
@@ -13869,6 +13871,7 @@ This list contains all games supported by FinalBurn Neo.
 | vulgusj	|  	| Vulgus (Japan?)					| vulgus	| 1984	| Capcom	| Miscellaneous	| 					|
 | vulgus	|  	| Vulgus (set 1)					| 		| 1984	| Capcom	| Miscellaneous	| 					|
 | vulgusa	|  	| Vulgus (set 2)					| vulgus	| 1984	| Capcom	| Miscellaneous	| 					|
+| spec_whb	|  	| W*H*B (HB, 48K)					| 		| 2009	| Bob Smith	| ZX Spectrum	| 					|
 | pce_wring	|  	| W-ring - The Double Rings				| 		| 1990	| Naxat		| PC Engine	| 					|
 | wacko		|  	| Wacko							| 		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | spec_wackdart	|  	| Wacky Darts (48K)					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|

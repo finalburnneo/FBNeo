@@ -619,7 +619,7 @@ static void SaveHardwarePreset()
 		_ftprintf(fp, _T(APP_TITLE) _T(" - Hardware Default Preset\n\n"));
 		_ftprintf(fp, _T("%s\n\n"), szHardwareString);
 		_ftprintf(fp, _T("version 0x%06X\n\n"), nBurnVer);
-		HardwarePresetWrite(fp, hInpdList);
+		HardwarePresetWrite(fp);
 		fclose(fp);
 	}
 

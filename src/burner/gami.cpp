@@ -2049,7 +2049,7 @@ INT32 GameInpWrite(FILE* h)
 	return 0;
 }
 
-INT32 HardwarePresetWrite(FILE* h, HWND Lv)
+INT32 HardwarePresetWrite(FILE* h)
 {
 	// Write input types
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
@@ -2073,7 +2073,7 @@ INT32 HardwarePresetWrite(FILE* h, HWND Lv)
 		if (pgi->nInput & GIT_GROUP_MACRO) {
 			switch (pgi->nInput) {
 			case GIT_MACRO_AUTO:									// Auto-assigned macros
-				if (ListView_GetCheckState(Lv, i) &&
+				if (ListView_GetCheckState(GetDlgItem(hInpdDlg, IDC_INPD_LIST), i) &&
 					_stricmp("System Pause", pgi->Macro.szName) != 0 &&
 					_stricmp("System FFWD", pgi->Macro.szName) != 0 &&
 					_stricmp("System Load State", pgi->Macro.szName) != 0 &&

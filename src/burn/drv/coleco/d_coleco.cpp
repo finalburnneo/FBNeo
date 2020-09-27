@@ -312,7 +312,7 @@ static UINT8 controller_read(INT32 port)
 	}
 	else
 	{ // joypad mode
-		data = (DrvInputs[(2 * port) + 1] & 0x7f) | 0x80;
+		data = (DrvInputs[(2 * port) + 1] & 0x7f) /*| 0x80*/; // Telebunny gets hung after bios if bit7 high.
 		data = (data & ~0x30) | (~spinner[port] & 0x30);
 	}
 

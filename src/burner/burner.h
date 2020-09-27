@@ -100,6 +100,9 @@ INT32 GameInpExit();
 TCHAR* InputCodeDesc(INT32 c);
 TCHAR* InpToDesc(struct GameInp* pgi);
 TCHAR* InpMacroToDesc(struct GameInp* pgi);
+TCHAR* InputNumToName(UINT32 i);
+TCHAR* InpToString(struct GameInp* pgi);
+TCHAR* InpMacroToString(struct GameInp* pgi);
 #ifndef __LIBRETRO__
 void GameInpCheckLeftAlt();
 void GameInpCheckMouse();

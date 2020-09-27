@@ -18558,6 +18558,40 @@ struct BurnDriver BurnDrvzintrkcd = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Breakers Revenge - Extra Mode (Hack)
+
+static struct BurnRomInfo brkrevextRomDesc[] = {
+	{ "245-p1ext.p1", 0x200000, 0x603b47a4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	/* The chip labels and sizes are correct */
+	{ "245-c1.c1",    0x400000, 0x68d4ae76, 3 | BRF_GRA },           //  2 Sprite data
+	{ "245-c2.c2",    0x400000, 0xfdee05cd, 3 | BRF_GRA },           //  3 
+	{ "245-c3.c3",    0x400000, 0x645077f3, 3 | BRF_GRA },           //  4 
+	{ "245-c4.c4",    0x400000, 0x63aeb74c, 3 | BRF_GRA },           //  5 
+	{ "245-c5.c5",    0x400000, 0xb5f40e7f, 3 | BRF_GRA },           //  6 
+	{ "245-c6.c6",    0x400000, 0xd0337328, 3 | BRF_GRA },           //  7 
+
+	{ "245-m1.m1",    0x020000, 0x00f31c66, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "245-v1.v1",    0x400000, 0xe255446c, 5 | BRF_SND },           //  9 Sound data
+	{ "245-v2.v2",    0x400000, 0x9068198a, 5 | BRF_SND },           // 10 
+};
+
+STDROMPICKEXT(brkrevext, brkrevext, neogeo)
+STD_ROM_FN(brkrevext)
+
+struct BurnDriver BurnDrvbrkrevext = {
+	"brkrevext", "breakrev", "neogeo", NULL, "2018",
+	"Breakers Revenge - Extra Mode (Hack)\0", NULL, "Visco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, brkrevextRomInfo, brkrevextRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 // -----------------------------------------------------------------------------
 // Diagnostic Cartridges
 

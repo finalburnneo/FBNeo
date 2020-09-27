@@ -7448,7 +7448,7 @@ struct BurnDriver BurnSpecsabotur2_48 = {
 // Saboteur II - Avenging Angel (48K)
 
 static struct BurnRomInfo Specsabotur2std_48RomDesc[] = {
-	{ "Saboteur II - Avenging Angel (1987)(Durell)(Standard).z80", 0xa9ab5, 0x8904b9ba, BRF_ESS | BRF_PRG },
+	{ "Saboteur II - Avenging Angel (1987)(Durell)(Standard).z80", 0x09ab5, 0x8904b9ba, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specsabotur2std_48, Specsabotur2std_48, Spectrum)
@@ -9132,6 +9132,25 @@ struct BurnDriver BurnSpeczaxxon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpeczaxxonRomInfo, SpeczaxxonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
+// WHB / W*H*B by Bob Smith
+
+static struct BurnRomInfo SpecWHBRomDesc[] = {
+	{ "whb.z80", 0x0997f, 0x98d261cb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWHB, SpecWHB, Spectrum)
+STD_ROM_FN(SpecWHB)
+
+struct BurnDriver BurnSpecWHB = {
+	"spec_whb", NULL, "spec_spectrum", NULL, "2009",
+	"W*H*B (HB, 48K)\0", NULL, "Bob Smith", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecWHBRomInfo, SpecWHBRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };

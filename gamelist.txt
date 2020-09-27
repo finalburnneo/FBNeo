@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-14710 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+14712 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7016,6 +7016,8 @@ This list contains all games supported by FinalBurn Neo.
 | martmast103c	|  	| Martial Masters (V103, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast104c	|  	| Martial Masters (V104, 102, 101, China)		| martmast	| 2001	| IGS		| PolyGameMaster| 					|
 | martmast	|  	| Martial Masters (V104, 102, 102, USA)			| 		| 2001	| IGS		| PolyGameMaster| 					|
+| marmatcp	|  	| Martial Masters - Community Patch (Hack)		| martmast	| 20??	| Hack		| PolyGameMaster| 					|
+| marmatsc	|  	| Martial Masters - Secret Characters (Hack)		| martmast	| 2017	| Hack		| PolyGameMaster| 					|
 | msx_martianoids|  	| Martianoids (Euro)					| 		| 1987	| Ultimate Play | MSX		| 					|
 | marvlandj	|  	| Marvel Land (Japan)					| marvland	| 1989	| Namco		| System 2	| 					|
 | md_marvlandj	|  	| Marvel Land (Jpn)					| md_talmit	| 1991	| Namcot	| Sega Megadrive| 					|

@@ -7136,6 +7136,8 @@ DRV		BurnDrvmartmast102c;
 DRV		BurnDrvmartmast103c;
 DRV		BurnDrvmartmast104c;
 DRV		BurnDrvMartmast;
+DRV		BurnDrvMarmatcp;
+DRV		BurnDrvMarmatsc;
 DRV		BurnDrvMSX_martianoids;
 DRV		BurnDrvMarvlandj;
 DRV		BurnDrvmd_marvlandj;
@@ -22113,6 +22115,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmartmast103c,		// Martial Masters (V103, 102, 101, China)
 	&BurnDrvmartmast104c,		// Martial Masters (V104, 102, 101, China)
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
+	&BurnDrvMarmatcp,			// Martial Masters - Community Patch (Hack)
+	&BurnDrvMarmatsc,			// Martial Masters - Secret Characters (Hack)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
 	&BurnDrvMarvlandj,			// Marvel Land (Japan)
 	&BurnDrvmd_marvlandj,		// Marvel Land (Jpn)

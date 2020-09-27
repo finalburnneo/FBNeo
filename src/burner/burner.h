@@ -100,6 +100,9 @@ INT32 GameInpExit();
 TCHAR* InputCodeDesc(INT32 c);
 TCHAR* InpToDesc(struct GameInp* pgi);
 TCHAR* InpMacroToDesc(struct GameInp* pgi);
+TCHAR* InputNumToName(UINT32 i);
+TCHAR* InpToString(struct GameInp* pgi);
+TCHAR* InpMacroToString(struct GameInp* pgi);
 #ifndef __LIBRETRO__
 void GameInpCheckLeftAlt();
 void GameInpCheckMouse();
@@ -109,7 +112,6 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite);
 INT32 ConfigGameLoadHardwareDefaults();
 INT32 GameInpDefault();
 INT32 GameInpWrite(FILE* h);
-INT32 HardwarePresetWrite(FILE* h, HWND Lv);
 INT32 GameInpRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameMacroAutofireRead(TCHAR* szVal, bool bOverWrite);

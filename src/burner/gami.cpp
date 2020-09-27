@@ -1207,7 +1207,7 @@ static INT32 StringToInp(struct GameInp* pgi, TCHAR* s)
 // ---------------------------------------------------------------------------
 // Convert an input to a string for config files
 
-static TCHAR* InpToString(struct GameInp* pgi)
+TCHAR* InpToString(struct GameInp* pgi)
 {
 	static TCHAR szString[80];
 
@@ -1250,7 +1250,7 @@ static TCHAR* InpToString(struct GameInp* pgi)
 	return _T("unknown");
 }
 
-static TCHAR* InpMacroToString(struct GameInp* pgi)
+TCHAR* InpMacroToString(struct GameInp* pgi)
 {
 	static TCHAR szString[256];
 
@@ -1618,7 +1618,7 @@ static UINT32 InputNameToNum(TCHAR* szName)
 	return ~0U;
 }
 
-static TCHAR* InputNumToName(UINT32 i)
+TCHAR* InputNumToName(UINT32 i)
 {
 	struct BurnInputInfo bii;
 	bii.szName = NULL;
@@ -2036,58 +2036,6 @@ INT32 GameInpWrite(FILE* h)
 					break;
 				default:												// Unknown -- ignore
 					continue;
-			}
-
-			nPad = 16 - strlen(pgi->Macro.szName);
-			for (INT32 j = 0; j < nPad; j++) {
-				_ftprintf(h, _T(" "));
-			}
-			_ftprintf(h, _T("%s\n"), InpMacroToString(pgi));
-		}
-	}
-
-	return 0;
-}
-
-INT32 HardwarePresetWrite(FILE* h, HWND Lv)
-{
-	// Write input types
-	for (UINT32 i = 0; i < nGameInpCount; i++) {
-		TCHAR* szName = NULL;
-		INT32 nPad = 0;
-		szName = InputNumToName(i);
-		_ftprintf(h, _T("input  \"%s\" "), szName);
-		nPad = 16 - _tcslen(szName);
-		for (INT32 j = 0; j < nPad; j++) {
-			_ftprintf(h, _T(" "));
-		}
-		_ftprintf(h, _T("%s\n"), InpToString(GameInp + i));
-	}
-
-	_ftprintf(h, _T("\n"));
-
-	struct GameInp* pgi = GameInp + nGameInpCount;
-	for (UINT32 i = nGameInpCount; i < nGameInpCount + nMacroCount; i++, pgi++) {
-		INT32 nPad = 0;
-
-		if (pgi->nInput & GIT_GROUP_MACRO) {
-			switch (pgi->nInput) {
-			case GIT_MACRO_AUTO:									// Auto-assigned macros
-				if (ListView_GetCheckState(Lv, i) &&
-					_stricmp("System Pause", pgi->Macro.szName) != 0 &&
-					_stricmp("System FFWD", pgi->Macro.szName) != 0 &&
-					_stricmp("System Load State", pgi->Macro.szName) != 0 &&
-					_stricmp("System Save State", pgi->Macro.szName) != 0 &&
-					_stricmp("System UNDO State", pgi->Macro.szName) != 0
-					)
-					_ftprintf(h, _T("afire  \"%hs\"\n"), pgi->Macro.szName);  // Create autofire (afire) tag
-				_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
-				break;
-			case GIT_MACRO_CUSTOM:									// Custom macros
-				_ftprintf(h, _T("custom \"%hs\" "), pgi->Macro.szName);
-				break;
-			default:												// Unknown -- ignore
-				continue;
 			}
 
 			nPad = 16 - strlen(pgi->Macro.szName);

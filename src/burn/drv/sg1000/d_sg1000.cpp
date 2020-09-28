@@ -4433,3 +4433,23 @@ struct BurnDriver BurnDrvsg1k_arnodash = {
 	272, 228, 4, 3
 };
 
+
+// Palikat (blocks) (HB)
+// https://www.smspower.org/forums/18128-PalikatForSegaSC3000
+
+static struct BurnRomInfo sg1k_palikatRomDesc[] = {
+	{ "PALIKAT_NTSC_SG1000.sg",	0x08000, 0xec169914, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_palikat)
+STD_ROM_FN(sg1k_palikat)
+
+struct BurnDriver BurnDrvsg1k_palikat = {
+	"sg1k_palikat", NULL, NULL, NULL, "2020",
+	"Palikat (HB)\0", NULL, "helmha", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_palikatRomInfo, sg1k_palikatRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

@@ -57,6 +57,7 @@ static UINT32 NESMode = 0;
 #define SHOW_OVERSCAN   0x4000 // - for debugging -
 #define ALT_TIMING      0x8000 // for games that use "BIT PPUSTATUS; BIT PPUSTATUS; BPL -"
 							   // Assimilate, Star Wars, full_palette.nes, etc.
+#define ALT_TIMING2     0x0080 // Don Doko Don 2 doesn't like the nmi delay that gunnac, b-wings, etc needs.
 
 // Usually for Multi-Cart mappers
 static UINT32 RESETMode = 0;
@@ -550,6 +551,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
+	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
 	NESMode |= (ROMCRC == 0xa2d504a8) ? ALT_TIMING : 0; // assimilate
@@ -591,6 +593,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 				case ALT_TIMING:
 					bprintf(0, _T("*  Enabling ALT-TIMING.\n"));
+					break;
+
+				case ALT_TIMING2:
+					bprintf(0, _T("*  Enabling ALT-TIMING2.\n"));
 					break;
 
 				case IS_PAL:
@@ -4650,6 +4656,8 @@ static void mapper28_map()
 #define mapper48            (mapper_regs[0x1f - 2])
 #define mapper33_irqcount	(mapper_regs16[0x1f - 0])
 #define mapper33_irqlatch	(mapper_regs16[0x1f - 1])
+#define mapper33_irqreload  (mapper_regs16[0x1f - 2])
+#define mapper48_flintstones (mapper_regs16[0x1f - 3])
 
 static void mapper33_write(UINT16 address, UINT8 data)
 {
@@ -4670,13 +4678,14 @@ static void mapper33_write(UINT16 address, UINT8 data)
 
 	if (mapper48) {
 		switch (address & 0xf003) {
-			case 0xc000: mapper33_irqlatch = data; break;
-			case 0xc001: mapper33_irqcount = mapper33_irqlatch; break;
+			case 0xc000: mapper33_irqlatch = (data ^ 0xff) + ((mapper48_flintstones) ? 0 : 1); M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+			case 0xc001: mapper33_irqreload = 1; mapper33_irqcount = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
 			case 0xc002: mapper33_irqenable = 1; break;
 			case 0xc003: mapper33_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
 			case 0xe000: if (mapper48) mapper33_mirror = data & 0x40; break;
 		}
 	}
+
 	mapper_map();
 }
 
@@ -4700,13 +4709,16 @@ static void mapper33_map()
 
 static void mapper33_scanline()
 {
-	if (mapper33_irqenable) {
-		mapper33_irqcount++;
+	INT32 cnt = mapper33_irqenable;
+	if (mapper33_irqcount == 0 || mapper33_irqreload) {
+		mapper33_irqreload = 0;
+		mapper33_irqcount = mapper33_irqlatch;
+	} else {
+		mapper33_irqcount--;
+	}
 
-		if (mapper33_irqcount == 0x100) {
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			mapper33_irqenable = 0;
-		}
+	if (cnt && mapper33_irqenable && mapper33_irqcount == 0) {
+		mapper_irq((mapper48_flintstones) ? 0x13 : 0x06);
 	}
 }
 #undef mapper33_mirror
@@ -4715,6 +4727,7 @@ static void mapper33_scanline()
 #undef mapper33_chr
 #undef mapper33_irqcount
 #undef mapper33_irqlatch
+#undef mapper33_irqreload
 
 // --[ mapper 36 - TXC (Policeman, Strike Wolf)
 #define mapper36_prg		(mapper_regs[0x1f - 0])
@@ -6959,6 +6972,8 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper33_map;
 			mapper_scanline = mapper33_scanline;
 			mapper48 = 1;
+			mapper48_flintstones = (Cart.Crc == 0x12f38740);
+			bprintf(0, _T("mapper48 - flintstones? %x\n"), mapper48_flintstones);
 			mapper_map();
 			retval = 0;
 			break;
@@ -7997,22 +8012,32 @@ static void draw_and_shift()
 static void scanlinestate(INT32 state)
 {
 	if (state == VBLANK) {
+
 		switch (pixel) {
 			case 1: // enter VBlank
 				ppu_bus_address = vAddr & 0x3fff;
 				status.bit.VBlank = 1;
 				ppu_startup = 0;
+
+				if (NESMode & ALT_TIMING2) {
+					if (ctrl.bit.nmi && ppu_no_nmi_this_frame == 0) {
+						//bprintf(0, _T("nmi @ frame %d  scanline %d  pixel %d  PPUCTRL %x\n"), nCurrentFrame, scanline, pixel, ctrl.reg);
+						M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
+					}
+					ppu_no_nmi_this_frame = 0;
+				}
 				break;
 
+			case (6 * 3):
 				// 6 CPU-cycles later, do nmi.  fixes boot w/b-wings, bad dudes, gunnac
 				// crap on screen with marble madness. (Also passes blargg timing tests)
-			case (6 * 3):
-				if (ctrl.bit.nmi && ppu_no_nmi_this_frame == 0) {
-					//bprintf(0, _T("nmi @ frame %d  scanline %d  pixel %d  PPUCTRL %x\n"), nCurrentFrame, scanline, pixel, ctrl.reg);
-					M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
-					//M6502Stall(7); // nmi takes 7 cycles (old m6502 needs this)
+				if (~NESMode & ALT_TIMING2) {
+					if (ctrl.bit.nmi && ppu_no_nmi_this_frame == 0) {
+						//bprintf(0, _T("nmi @ frame %d  scanline %d  pixel %d  PPUCTRL %x\n"), nCurrentFrame, scanline, pixel, ctrl.reg);
+						M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
+					}
+					ppu_no_nmi_this_frame = 0;
 				}
-				ppu_no_nmi_this_frame = 0;
 				break;
 		}
 	}
@@ -21650,6 +21675,23 @@ struct BurnDriver BurnDrvnes_flighint = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_flintresdinhopjRomDesc[] = {
+	{ "Flintstones, The - The Rescue of Dino & Hoppy (Japan).nes",          393232, 0x12f38740, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_flintresdinhopj)
+STD_ROM_FN(nes_flintresdinhopj)
+
+struct BurnDriver BurnDrvnes_flintresdinhopj = {
+	"nes_flintresdinhopj", "nes_flintresdinhop", NULL, NULL, "1991",
+	"Flintstones, The - The Rescue of Dino & Hoppy (Japan)\0", NULL, "Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_flintresdinhopjRomInfo, nes_flintresdinhopjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_flintresdinhopRomDesc[] = {
 	{ "Flintstones, The - The Rescue of Dino & Hoppy (USA).nes",          393232, 0x0b804cdc, BRF_ESS | BRF_PRG },
 };
@@ -24370,8 +24412,25 @@ struct BurnDriver BurnDrvnes_jesus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_jetsonsjRomDesc[] = {
+	{ "Jetsons, The - Cogswell's Caper! (Japan).nes",          393232, 0x4733c232, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jetsonsj)
+STD_ROM_FN(nes_jetsonsj)
+
+struct BurnDriver BurnDrvnes_jetsonsj = {
+	"nes_jetsonsj", "nes_jetsons", NULL, NULL, "1989?",
+	"Jetsons, The - Cogswell's Caper! (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_jetsonsjRomInfo, nes_jetsonsjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_jetsonsRomDesc[] = {
-	{ "Jetsons, The - Cogswell's Caper (USA).nes",          393232, 0x0f945df6, BRF_ESS | BRF_PRG },
+	{ "Jetsons, The - Cogswell's Caper! (USA).nes",          393232, 0x0f945df6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_jetsons)
@@ -24379,7 +24438,7 @@ STD_ROM_FN(nes_jetsons)
 
 struct BurnDriver BurnDrvnes_jetsons = {
 	"nes_jetsons", NULL, NULL, NULL, "1992",
-	"Jetsons, The - Cogswell's Caper (USA)\0", NULL, "Taito", "Miscellaneous",
+	"Jetsons, The - Cogswell's Caper! (USA)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_jetsonsRomInfo, nes_jetsonsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -2616,6 +2616,44 @@ struct BurnDriver BurnSpeccabal = {
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
+// Capitan Trueno (Spanish) (Part 1 of 2) (128K)
+
+static struct BurnRomInfo Speccaptrueno1RomDesc[] = {
+	{ "Capitan Trueno (1989)(Dinamic Software)(es)(Part 1 of 2)(128k).z80", 0x09e33, 0x5cb7a3b1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speccaptrueno1, Speccaptrueno1, Spec128)
+STD_ROM_FN(Speccaptrueno1)
+
+struct BurnDriver BurnSpeccaptrueno1 = {
+	"spec_captrueno1", NULL, "spec_spec128", NULL, "1989",
+	"Capitan Trueno (Spanish) (Part 1 of 2) (128K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Speccaptrueno1RomInfo, Speccaptrueno1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
+// Capitan Trueno (Spanish) (Part 2 of 2) (128K)
+
+static struct BurnRomInfo Speccaptrueno2RomDesc[] = {
+	{ "Capitan Trueno (1989)(Dinamic Software)(es)(Part 2 of 2)(128k).z80", 0x096f6, 0x0b381b12, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speccaptrueno2, Speccaptrueno2, Spec128)
+STD_ROM_FN(Speccaptrueno2)
+
+struct BurnDriver BurnSpeccaptrueno2 = {
+	"spec_captrueno2", NULL, "spec_spec128", NULL, "1989",
+	"Capitan Trueno (Spanish) (Part 2 of 2) (128K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Speccaptrueno2RomInfo, Speccaptrueno2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
 // Carlos Sainz (128K)
 
 static struct BurnRomInfo SpeccarlossainzRomDesc[] = {
@@ -6587,6 +6625,63 @@ struct BurnDriver BurnSpecmoonwalk3 = {
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
+// Mot (Part 1 of 3) (128K)
+
+static struct BurnRomInfo Specmotopera1RomDesc[] = {
+	{ "Mot (1989)(Opera Soft)(Part 1 of 3)(128k).z80", 0x09dc2, 0xb7787839, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmotopera1, Specmotopera1, Spec128)
+STD_ROM_FN(Specmotopera1)
+
+struct BurnDriver BurnSpecmotopera1 = {
+	"spec_motopera1", NULL, "spec_spec128", NULL, "1989",
+	"Mot (Part 1 of 3) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specmotopera1RomInfo, Specmotopera1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
+// Mot (Part 2 of 3) (128K)
+
+static struct BurnRomInfo Specmotopera2RomDesc[] = {
+	{ "Mot (1989)(Opera Soft)(Part 2 of 3)(128k).z80", 0x09a24, 0xd1c50f2c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmotopera2, Specmotopera2, Spec128)
+STD_ROM_FN(Specmotopera2)
+
+struct BurnDriver BurnSpecmotopera2 = {
+	"spec_motopera2", NULL, "spec_spec128", NULL, "1989",
+	"Mot (Part 2 of 3) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specmotopera2RomInfo, Specmotopera2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
+// Mot (Part 3 of 3) (128K)
+
+static struct BurnRomInfo Specmotopera3RomDesc[] = {
+	{ "Mot (1989)(Opera Soft)(Part 3 of 3)(128k).z80", 0x09657, 0xdcf09507, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmotopera3, Specmotopera3, Spec128)
+STD_ROM_FN(Specmotopera3)
+
+struct BurnDriver BurnSpecmotopera3 = {
+	"spec_motopera3", NULL, "spec_spec128", NULL, "1989",
+	"Mot (Part 3 of 3) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specmotopera3RomInfo, Specmotopera3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
 // Ms. Pac-Man (48K)
 
 static struct BurnRomInfo SpecmspacmanRomDesc[] = {
@@ -6602,6 +6697,25 @@ struct BurnDriver BurnSpecmspacman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecmspacmanRomInfo, SpecmspacmanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 352, 296, 4, 3
+};
+
+// Mundial de Futbol (Spanish) (48K)
+
+static struct BurnRomInfo SpecmundialfutbolRomDesc[] = {
+	{ "Mundial de Futbol (1990)(Opera Soft)(es).z80", 0x0910a, 0x493c7bf9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmundialfutbol, Specmundialfutbol, Spectrum)
+STD_ROM_FN(Specmundialfutbol)
+
+struct BurnDriver BurnSpecmundialfutbol = {
+	"spec_mundialfutbol", NULL, "spec_spectrum", NULL, "1990",
+	"Mundial de Futbol (Spanish) (48K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecmundialfutbolRomInfo, SpecmundialfutbolRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };

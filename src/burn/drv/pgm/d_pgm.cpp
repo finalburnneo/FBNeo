@@ -7703,7 +7703,8 @@ struct BurnDriver BurnDrvKov2pemp = {
 
 
 // Martial Masters - Community Patch (Hack)
-// Hack by unknown, enhance game balance
+// Hack by GwyrgynBlood
+// Enhance game balance
 
 static struct BurnRomInfo marmatcpRomDesc[] = {
 	{ "v104_32m_cp.u9",   			0x0400000, 0x29d89916, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code

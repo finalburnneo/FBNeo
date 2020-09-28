@@ -1886,7 +1886,7 @@ STD_ROM_FN(Specbarbarn_48)
 
 struct BurnDriver BurnSpecbarbarn_48 = {
 	"spec_barbarn_48", "spec_barbarn", "spec_spectrum", NULL, "1988",
-	"Barbarian (48K)\0", NULL, "Melbourne House", "ZX Spectrum",
+	"Barbarian (Psygnosis) (48K)\0", NULL, "Melbourne House", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specbarbarn_48RomInfo, Specbarbarn_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1905,7 +1905,7 @@ STD_ROM_FN(Specbarbarn)
 
 struct BurnDriver BurnSpecbarbarn = {
 	"spec_barbarn", NULL, "spec_spec128", NULL, "1988",
-	"Barbarian (128K)\0", NULL, "Melbourne House", "ZX Spectrum",
+	"Barbarian (Psygnosis) (128K)\0", NULL, "Melbourne House", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecbarbarnRomInfo, SpecbarbarnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

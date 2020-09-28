@@ -1055,18 +1055,19 @@ int gui_process()
 			titleTexture = LoadTitleImage(sdlRenderer, titleTexture);
 			if (titleTexture==NULL)
 			{
-				int w, h;
-				titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
-				SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
-				title_texture_rect.x = 0; //the x coordinate
-				title_texture_rect.y = 0; // the y coordinate
-				title_texture_rect.w = w; //the width of the texture
-				title_texture_rect.h = h; //the height of the texture
+				// Commented out for now :)
+				// int w, h;
+				// titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
+				// SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
+				// title_texture_rect.x = 0; //the x coordinate
+				// title_texture_rect.y = 0; // the y coordinate
+				// title_texture_rect.w = w; //the width of the texture
+				// title_texture_rect.h = h; //the height of the texture
 
-				dest_title_texture_rect.x = 0; //the x coordinate
-				dest_title_texture_rect.y = 0; // the y coordinate
-				dest_title_texture_rect.w = nVidGuiWidth;
-				dest_title_texture_rect.h = nVidGuiHeight;
+				// dest_title_texture_rect.x = 0; //the x coordinate
+				// dest_title_texture_rect.y = 0; // the y coordinate
+				// dest_title_texture_rect.w = nVidGuiWidth;
+				// dest_title_texture_rect.h = nVidGuiHeight;
 			}
 		}
 

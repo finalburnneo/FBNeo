@@ -189,15 +189,31 @@ static inline void SpecMakeInputs()
 
 static struct BurnDIPInfo SpecDIPList[]=
 {
-	// Default Values
-	{72, 0xff, 0xff, 0x80, NULL                     }, // Blinky's Scary School requires issue 3
-	
-	{0 , 0xfe, 0   , 2   , "Hardware Version"       },
-	{72, 0x01, 0x80, 0x00, "Issue 2"                },
-	{72, 0x01, 0x80, 0x80, "Issue 3"                },
+	// Default Values (Issue 3 HW)
+	DIP_OFFSET(72)
+
+	{0, 0xff, 0xff, 0x80, NULL                     }, // Blinky's Scary School requires issue 3
+
+	{0, 0xfe, 0   , 2   , "Hardware Version"       },
+	{0, 0x01, 0x80, 0x00, "Issue 2"                },
+	{0, 0x01, 0x80, 0x80, "Issue 3"                },
 };
 
 STDDIPINFO(Spec)
+
+static struct BurnDIPInfo SpecIssue2DIPList[]=
+{
+	// Default Values (Issue 2 HW)
+	DIP_OFFSET(72)
+
+	{0, 0xff, 0xff, 0x00, NULL                     }, // Abu Simbel requires issue 2
+
+	{0, 0xfe, 0   , 2   , "Hardware Version"       },
+	{0, 0x01, 0x80, 0x00, "Issue 2"                },
+	{0, 0x01, 0x80, 0x80, "Issue 3"                },
+};
+
+STDDIPINFO(SpecIssue2)
 
 INT32 SpectrumGetZipName(char** pszName, UINT32 i)
 {
@@ -1208,7 +1224,7 @@ struct BurnDriver BurnSpecabusimpr = {
 	"Abu Simbel Profanation (48K)\0", NULL, "Gremlin Graphics Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecabusimprRomInfo, SpecabusimprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIssue2DIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };

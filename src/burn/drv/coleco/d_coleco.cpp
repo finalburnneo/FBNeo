@@ -413,7 +413,7 @@ static UINT8 __fastcall coleco_read_port(UINT16 port)
 
 	bprintf(0, _T("unmapped port read: %x\n"), port);
 
-	return 0;
+	return 0xff;
 }
 
 static INT32 scanline;

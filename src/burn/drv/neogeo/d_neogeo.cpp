@@ -17690,6 +17690,7 @@ struct BurnDriver BurnDrvkf2k2ps2 = {
 };
 
 // The King of Fighters 2002 (PlayStation 2, Hack)
+// Hack by Dream
 
 static struct BurnRomInfo kf2k2ps2bRomDesc[] = {
 	{ "265-p1ps2.p1",		0x100000, 0x9da95b36, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19693,29 +19694,28 @@ struct BurnDriver BurnDrvproneon = {
 };
 
 
-// NeoTRIS (Free beta Ver. 202005) 
+// NeoTRIS (Free beta 2 Ver. 202009) 
 // https://www.chipsonsteroids.com/
-// https://www.youtube.com/watch?v=0P7Y5cEtUDs
 // 3 & 4 players not working (needs Multitap) 
 
 static struct BurnRomInfo neotrisRomDesc[] = {
-	{ "neotris-p1.bin",    0x080000, 0x33a71f8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "neotris-p1.bin",    0x080000, 0x4cd619cf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "neotris-s1.bin",    0x020000, 0x6809043a, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "neotris-c1.bin",    0x400000, 0x7f9c1a22, 3 | BRF_GRA },           //  2 Sprite data
-	{ "neotris-c2.bin",    0x400000, 0x4896e921, 3 | BRF_GRA },           //  3 
-	{ "neotris-c3.bin",    0x400000, 0xe8e2fcc3, 3 | BRF_GRA },           //  4 
-	{ "neotris-c4.bin",    0x400000, 0xec219a96, 3 | BRF_GRA },           //  5 
-	{ "neotris-c5.bin",    0x400000, 0xb8873b09, 3 | BRF_GRA },           //  6 
-	{ "neotris-c6.bin",    0x400000, 0xfb994623, 3 | BRF_GRA },           //  7 
+	{ "neotris-c1.bin",    0x400000, 0xe1c8eca9, 3 | BRF_GRA },           //  2 Sprite data
+	{ "neotris-c2.bin",    0x400000, 0x11ca6e64, 3 | BRF_GRA },           //  3 
+	{ "neotris-c3.bin",    0x400000, 0x1d9e2046, 3 | BRF_GRA },           //  4 
+	{ "neotris-c4.bin",    0x400000, 0x9091e795, 3 | BRF_GRA },           //  5 
+	{ "neotris-c5.bin",    0x400000, 0xbf278afe, 3 | BRF_GRA },           //  6 
+	{ "neotris-c6.bin",    0x400000, 0x8eb17e24, 3 | BRF_GRA },           //  7 
 
-	{ "neotris-m1.bin",    0x010000, 0x2f9f8265, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "neotris-m1.bin",    0x010000, 0x5a63bb9d, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "neotris-v1.bin",    0x400000, 0x9855b179, 5 | BRF_SND },           //  9 Sound data
-	{ "neotris-v2.bin",    0x400000, 0xb187368b, 5 | BRF_SND },           // 10 
-	{ "neotris-v3.bin",    0x400000, 0x5506b016, 5 | BRF_SND },           // 11
-	{ "neotris-v4.bin",    0x400000, 0x6bb8a938, 5 | BRF_SND },           // 12
+	{ "neotris-v1.bin",    0x400000, 0xfef16eb4, 5 | BRF_SND },           //  9 Sound data
+	{ "neotris-v2.bin",    0x400000, 0xf0d28e19, 5 | BRF_SND },           // 10 
+	{ "neotris-v3.bin",    0x400000, 0xfc652c8b, 5 | BRF_SND },           // 11
+	{ "neotris-v4.bin",    0x400000, 0xc25764ca, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(neotris, neotris, neogeo)
@@ -19723,9 +19723,9 @@ STD_ROM_FN(neotris)
 
 struct BurnDriver BurnDrvneotris = {
 	"neotris", NULL, "neogeo", NULL, "2020",
-	"NeoTRIS (Free Beta Ver. 202005)\0", NULL, "Chipsonsteroids", "Neo Geo MVS",
+	"NeoTRIS (Free Beta 2 Ver. 202009)\0", NULL, "Chipsonsteroids", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, neotrisRomInfo, neotrisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

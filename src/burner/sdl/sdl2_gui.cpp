@@ -22,6 +22,8 @@ static unsigned int halfscreenheight = 0;
 static unsigned int halfscreenwidth = 0;
 static unsigned int thirdscreenheight =0;
 static unsigned int thirdscreenwidth =0;
+static unsigned int listoffsetY =0;
+static unsigned int listwidthY =0;
 
 
 const int JOYSTICK_DEAD_ZONE = 8000;
@@ -63,18 +65,10 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	title_texture_rect.w = w; //the width of the texture
 	title_texture_rect.h = h; //the height of the texture
 
-	dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-	dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
-	dest_title_texture_rect.w = w;
-	dest_title_texture_rect.h = h;
-	if (!(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL))
-	{
-		int GameAspectX = 4, GameAspectY = 3;
-		BurnDrvGetAspect(&GameAspectX, &GameAspectY);
-
-		dest_title_texture_rect.w = w;
-		dest_title_texture_rect.h = w * GameAspectY / GameAspectX;
-	}
+	dest_title_texture_rect.x = 0; //the x coordinate
+	dest_title_texture_rect.y = 0; // the y coordinate
+	dest_title_texture_rect.w = nVidGuiWidth;
+	dest_title_texture_rect.h = nVidGuiHeight;
 
 	nBurnDrvActive = currentSelected;
 	return loadedTexture;
@@ -804,10 +798,13 @@ void gui_init()
 	halfscreenheight = nVidGuiHeight / 2;
 	halfscreenwidth = nVidGuiWidth / 2;
 	thirdscreenheight =nVidGuiHeight/ 3;
-	thirdscreenwidth = nVidGuiWidth / 2;
+	thirdscreenwidth = nVidGuiWidth / 3;
 
 	gamesperscreen = (thirdscreenheight * 2) / 11;
 	gamesperscreen_halfway = gamesperscreen / 2;
+	
+	listoffsetY = thirdscreenwidth / 2;
+	listwidthY = thirdscreenwidth * 2;
 
 	// assume if the filter list exists we are returning from a launched game.
 	if (filterGamesCount > 0)
@@ -827,15 +824,21 @@ void gui_render()
 
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
-
-	// Selected game background
-	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
-	// game info
-	renderPanel(sdlRenderer,  0, thirdscreenheight*2, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 	if (titleTexture != NULL) // JUST FOR TESTING!!
 	{
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
 	}
+	
+		// Game List
+	renderPanel(sdlRenderer, 0,  0, nVidGuiWidth, 28,  0x00, 0x00, 0x00);
+
+	// Game List
+	renderPanel(sdlRenderer, listoffsetY,  28, listwidthY, (thirdscreenheight*2)-28,  0x40, 0x20, 0x0b);
+
+	// Selected game background
+	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
+	// game info
+	renderPanel(sdlRenderer,  0, nVidGuiHeight - 60, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FinalBurn Neo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 10);
@@ -850,7 +853,7 @@ void gui_render()
 			{
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (gamesperscreen_halfway * 10));
+				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = filterGames[i];
 				gameSelectedFromFilter = i;
 
@@ -860,10 +863,10 @@ void gui_render()
 				char romLine[512];
 				snprintf(romLine, 512, "Romset: %s - Parent: %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
 
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, nVidGuiHeight - 60);
-				inprint_shadowed(sdlRenderer, infoLine, 10, nVidGuiHeight - 50);
-				inprint_shadowed(sdlRenderer, romLine, 10, nVidGuiHeight - 40);
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_COMMENT), 10, nVidGuiHeight - 30);
+				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, nVidGuiHeight - 60);
+				inprint_shadowed(sdlRenderer, infoLine, listoffsetY, nVidGuiHeight - 50);
+				inprint_shadowed(sdlRenderer, romLine, listoffsetY, nVidGuiHeight - 40);
+				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_COMMENT), listoffsetY, nVidGuiHeight - 30);
 			}
 			else
 			{
@@ -879,7 +882,7 @@ void gui_render()
 				{
 					incolor(normal_color, /* unused */ 0);
 				}
-				inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 30 + (game_counter * 10));
+				inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, 30 + (game_counter * 10));
 			}
 		}
 	}
@@ -1052,18 +1055,19 @@ int gui_process()
 			titleTexture = LoadTitleImage(sdlRenderer, titleTexture);
 			if (titleTexture==NULL)
 			{
-				int w, h;
-				titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
-				SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
-				title_texture_rect.x = 0; //the x coordinate
-				title_texture_rect.y = 0; // the y coordinate
-				title_texture_rect.w = w; //the width of the texture
-				title_texture_rect.h = h; //the height of the texture
+				// Commented out for now :)
+				// int w, h;
+				// titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
+				// SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
+				// title_texture_rect.x = 0; //the x coordinate
+				// title_texture_rect.y = 0; // the y coordinate
+				// title_texture_rect.w = w; //the width of the texture
+				// title_texture_rect.h = h; //the height of the texture
 
-				dest_title_texture_rect.x = nVidGuiWidth - w; //the x coordinate
-				dest_title_texture_rect.y = (thirdscreenheight * 2); // the y coordinate
-				dest_title_texture_rect.w = w;
-				dest_title_texture_rect.h = h;
+				// dest_title_texture_rect.x = 0; //the x coordinate
+				// dest_title_texture_rect.y = 0; // the y coordinate
+				// dest_title_texture_rect.w = nVidGuiWidth;
+				// dest_title_texture_rect.h = nVidGuiHeight;
 			}
 		}
 

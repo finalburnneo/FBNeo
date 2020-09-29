@@ -936,6 +936,13 @@
 		<rom name="pachinko ii (tw).bin" size="16384" crc="6ebe81bf"/>
 		<driver status="good"/>
 	</game>
+	<game name="palikat">
+		<description>Palikat (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>helmha</manufacturer>
+		<rom name="PALIKAT_NTSC_SG1000.sg" size="32768" crc="ec169914"/>
+		<driver status="good"/>
+	</game>
 	<game name="pingpong">
 		<description>Ping Pong (Tw)</description>
 		<year>1985?</year>

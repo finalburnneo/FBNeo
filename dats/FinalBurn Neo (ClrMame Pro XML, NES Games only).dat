@@ -3421,6 +3421,13 @@
 		<rom name="Flight of the Intruder (USA).nes" size="131088" crc="ca2234c6"/>
 		<driver status="good"/>
 	</game>
+	<game name="flintresdinhopj" cloneof="flintresdinhop" romof="flintresdinhop">
+		<description>Flintstones, The - The Rescue of Dino &amp; Hoppy (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Flintstones, The - The Rescue of Dino &amp; Hoppy (Japan).nes" size="393232" crc="12f38740"/>
+		<driver status="good"/>
+	</game>
 	<game name="flintresdinhop">
 		<description>Flintstones, The - The Rescue of Dino &amp; Hoppy (USA)</description>
 		<year>1991</year>
@@ -4639,11 +4646,18 @@
 		<rom name="Jet-Paco (HB).nes" size="40976" crc="b5f18574"/>
 		<driver status="good"/>
 	</game>
+	<game name="jetsonsj" cloneof="jetsons" romof="jetsons">
+		<description>Jetsons, The - Cogswell's Caper! (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Jetsons, The - Cogswell's Caper! (Japan).nes" size="393232" crc="4733c232"/>
+		<driver status="good"/>
+	</game>
 	<game name="jetsons">
-		<description>Jetsons, The - Cogswell's Caper (USA)</description>
+		<description>Jetsons, The - Cogswell's Caper! (USA)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="Jetsons, The - Cogswell's Caper (USA).nes" size="393232" crc="0f945df6"/>
+		<rom name="Jetsons, The - Cogswell's Caper! (USA).nes" size="393232" crc="0f945df6"/>
 		<driver status="good"/>
 	</game>
 	<game name="jigokgokmar" cloneof="kabuki" romof="kabuki">

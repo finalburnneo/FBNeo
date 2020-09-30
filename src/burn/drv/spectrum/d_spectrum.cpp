@@ -689,6 +689,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 }
 
 // Spectrum TAP loader (c) 2020 dink
+#define DEBUG_TAP 0
 #define BLKNUM 0x100
 static UINT8 *SpecTAPBlock[BLKNUM];
 static INT32 SpecTAPBlockLen[BLKNUM];
@@ -709,19 +710,23 @@ static void SpecTAPInit()
 	}
 	SpecTAPBlocks = 0;
 	SpecTAPBlocknum = 0;
-	bprintf(0, _T("**  - Spectrum TAP Loader -\n"));
-	bprintf(0, _T("Block#\tLength\tOffset\n"));
+	if (DEBUG_TAP) {
+		bprintf(0, _T("**  - Spectrum TAP Loader -\n"));
+		bprintf(0, _T("Block#\tLength\tOffset\n"));
+	}
 	for (INT32 i = 0; i < SpecTAPLen;) {
 		INT32 block_size = SpecTAP[i+0] | (SpecTAP[i+1] << 8);
 
 		if (block_size) {
-			bprintf(0, _T("%x\t%d\t%x\n"), SpecTAPBlocks, block_size, i+2);
+			if (DEBUG_TAP) {
+				bprintf(0, _T("%x\t%d\t%x\n"), SpecTAPBlocks, block_size, i+2);
+			}
 
 			SpecTAPBlock[SpecTAPBlocks] = &SpecTAP[i+2];
 			SpecTAPBlockLen[SpecTAPBlocks] = block_size-2;
 			SpecTAPBlocks++;
 			if (SpecTAPBlocks >= BLKNUM) {
-				bprintf(0, _T(".TAP Loader: Tape blocks exceeded.\n"));
+				bprintf(PRINT_ERROR, _T(".TAP Loader: Tape blocks exceeded.\n"));
 				break;
 			}
 		}
@@ -743,22 +748,26 @@ static INT32 SpecTAPCallback()
 	INT32 address = ActiveZ80GetIX();
 	INT32 length = ActiveZ80GetDE();
 
-	bprintf(0, _T("TAP blocknum %d\n"), SpecTAPBlocknum);
-	bprintf(0, _T("TAP blocklen %d\n"), SpecTAPBlockLen[SpecTAPBlocknum]);
-	bprintf(0, _T("TAP blocktype %x\n"), tap_block);
-	bprintf(0, _T("CPU blocktype %x\n"), cpu_block);
-	bprintf(0, _T("CPU address %x\n"), address);
-	bprintf(0, _T("CPU length %x\n"), length);
+	if (DEBUG_TAP) {
+		bprintf(0, _T("TAP blocknum %d\n"), SpecTAPBlocknum);
+		bprintf(0, _T("TAP blocklen %d\n"), SpecTAPBlockLen[SpecTAPBlocknum]);
+		bprintf(0, _T("TAP blocktype %x\n"), tap_block);
+		bprintf(0, _T("CPU blocktype %x\n"), cpu_block);
+		bprintf(0, _T("CPU address %x\n"), address);
+		bprintf(0, _T("CPU length %x\n"), length);
+	}
 
 	if (cpu_block == tap_block) { // we found our block! :)
 		if (ActiveZ80GetCarry2()) {
-			bprintf(0, _T("loading data\n"));
+				if (DEBUG_TAP) {
+					bprintf(0, _T("loading data\n"));
+				}
 			// load
 			INT32 offset = 0;
 			INT32 checksum = tap_block;
 			while (offset < length) {
 				if (offset+1 > SpecTAPBlockLen[SpecTAPBlocknum]) {
-					bprintf(0, _T("trying to read past block.  offset %x  blocklen %x\n"), offset, SpecTAPBlockLen[SpecTAPBlocknum]);
+					bprintf(0, _T(".TAP Loader: trying to read past block.  offset %x  blocklen %x\n"), offset, SpecTAPBlockLen[SpecTAPBlocknum]);
 					carry_val = 0;
 					break;
 				}
@@ -766,7 +775,9 @@ static INT32 SpecTAPCallback()
 				checksum ^= data[offset+1];
 				offset++;
 			}
-			bprintf(0, _T("end dma, checksum %x  tap checksum %x\n"), checksum, data[offset+1]);
+			if (DEBUG_TAP) {
+				bprintf(0, _T("end dma, checksum %x  tap checksum %x\n"), checksum, data[offset+1]);
+			}
 			carry_val = (checksum == data[offset+1]);
 		}
 	}
@@ -1075,7 +1086,7 @@ void spectrum_UpdateBorderBitmap()
 
 	do {
 		if ((nPreviousBorderX < SPEC_BORDER_LEFT) || (nPreviousBorderX >= (SPEC_BORDER_LEFT + SPEC_SCREEN_XSIZE)) || (nPreviousBorderY < SPEC_BORDER_TOP) || (nPreviousBorderY >= (SPEC_BORDER_TOP + SPEC_SCREEN_YSIZE))) {
-			if (nPreviousBorderX > 0 && nPreviousBorderX < nScreenWidth && nPreviousBorderY > 0 && nPreviousBorderY < nScreenHeight) {
+			if (nPreviousBorderX >= 0 && nPreviousBorderX < nScreenWidth && nPreviousBorderY >= 0 && nPreviousBorderY < nScreenHeight) {
 				pTransDraw[(nPreviousBorderY * nScreenWidth) + nPreviousBorderX] = border;
 			}
 		}

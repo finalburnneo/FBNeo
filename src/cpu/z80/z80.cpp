@@ -126,7 +126,6 @@ static Z80ReadOpArgHandler Z80CPUReadOpArg;
 /* on JP and JR opcodes check for tight loops */
 #define BUSY_LOOP_HACKS		1
 
-
 /****************************************************************************/
 /* The Z80 registers. HALT is set to 1 when the CPU is halted, the refresh  */
 /* register is calculated as follows: refresh=(Z80.r&127)|(Z80.r2&128)      */
@@ -814,6 +813,23 @@ Z80_INLINE UINT32 ARG16(void)
 		change_pc(PCD);											\
 		CC(ex,opcode);											\
 	}
+
+// zx spectrum tapeload bios callback for opcode 0xc0 (ret nz) -dink sept.29 2020
+static inline void RET_COND_SPECTRUM(int cond, UINT8 opcode)
+{
+	if (Z80.spectrum_mode && (PRVPC == 0x056b || PRVPC == 0x0111))
+	{
+		cond = Z80.spectrum_tape_cb();
+	}
+
+	if( cond )
+	{
+		POP( pc );
+		WZ = PC;
+		change_pc(PCD);
+		CC(ex,opcode);
+	}
+}
 
 /***************************************************************
  * RETN
@@ -3254,7 +3270,7 @@ OP(op,bd) { CP(L);												} /* CP   L           */
 OP(op,be) { CP(RM(HL));											} /* CP   (HL)        */
 OP(op,bf) { CP(A);												} /* CP   A           */
 
-OP(op,c0) { RET_COND( !(F & ZF), 0xc0 );						} /* RET  NZ          */
+OP(op,c0) { RET_COND_SPECTRUM( !(F & ZF), 0xc0 );				} /* RET  NZ          */
 OP(op,c1) { POP( bc );											} /* POP  BC          */
 OP(op,c2) { JP_COND( !(F & ZF) );								} /* JP   NZ,a        */
 OP(op,c3) { JP;													} /* JP   a           */
@@ -3520,6 +3536,12 @@ void Z80Init()
 	F = ZF;			/* Zero flag is set */
 }
 
+void z80_set_spectrum_tape_callback(int (*tape_cb)())
+{
+	Z80.spectrum_mode = 1;
+	Z80.spectrum_tape_cb = tape_cb;
+}
+
 void Z80SetDaisy(void *dptr)
 {
 	Z80.daisy = (z80_irq_daisy_chain *)dptr;
@@ -3553,6 +3575,9 @@ void Z80Reset()
 
 void Z80Exit()
 {
+	Z80.spectrum_tape_cb = NULL;
+	Z80.spectrum_mode = 0;
+
     if (Z80.daisy) {
         z80daisy_exit();
     }
@@ -3710,6 +3735,40 @@ int ActiveZ80GetPC()
 	return Z80.pc.w.l;
 }
 
+void ActiveZ80SetPC(int pc)
+{
+	Z80.pc.w.l = pc;
+}
+
+void ActiveZ80SetCarry(int carry)
+{
+	if (carry) {
+		F |= CF;
+	} else {
+		F &= ~CF;
+	}
+}
+
+int ActiveZ80GetCarry()
+{
+	return F & CF;
+}
+
+int ActiveZ80GetCarry2()
+{
+	return Z80.af2.b.l & CF;
+}
+
+int ActiveZ80GetAF()
+{
+	return Z80.af.w.l;
+}
+
+int ActiveZ80GetAF2()
+{
+	return Z80.af2.w.l;
+}
+
 int ActiveZ80GetBC()
 {
 	return Z80.bc.w.l;
@@ -3728,6 +3787,11 @@ int ActiveZ80GetHL()
 int ActiveZ80GetI()
 {
 	return Z80.i;
+}
+
+int ActiveZ80GetIX()
+{
+	return IX;
 }
 
 int ActiveZ80GetIM()

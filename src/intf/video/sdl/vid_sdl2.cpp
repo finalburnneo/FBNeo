@@ -3,6 +3,10 @@
 #include "vid_support.h"
 #include "vid_softfx.h"
 
+#ifdef INCLUDE_SWITCHRES
+#include "vid_switchres.h"
+#endif
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -42,6 +46,7 @@ void RenderMessage()
 
 static int Exit()
 {
+	switchres_exit();
 	kill_inline_font(); //TODO: This is not supposed to be here
 	SDL_DestroyTexture(sdlTexture);
 	SDL_DestroyRenderer(sdlRenderer);
@@ -74,16 +79,21 @@ static int Init()
 		BurnDrvGetAspect(&GameAspectX, &GameAspectY);
 
 		display_w = nVidImageWidth;
+#ifdef INCLUDE_SWITCHRES
+		// Don't force 4:3 aspect-ratio, until there is a command-line switch
+		display_h = nVidImageHeight;
+#else
 		display_h = nVidImageWidth * GameAspectY / GameAspectX;
+#endif
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
 			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
-			//BurnDrvGetAspect(&GameAspectX, &GameAspectY);
 			printf("Vertical\n");
 			nRotateGame = 1;
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
+			display_w = nVidImageWidth;
 			display_h = nVidImageHeight;
 		}
 
@@ -110,6 +120,16 @@ static int Init()
 	dstrect.h = display_h;
 	dstrect.w = display_w;
 
+	//Test refresh rate availability
+	printf("Game resolution: %dx%d@%f\n", nVidImageWidth, nVidImageHeight, nBurnFPS/100.0);
+
+#ifdef INCLUDE_SWITCHRES
+	unsigned char interlace = 0; // FBN doesn't handle interlace yet, force it to disabled
+	double rr = nBurnFPS / 100.0;
+	switchres_init();
+	switchres_switch_resolution(display_w, display_h, rr, interlace);
+#endif
+
 	if (nRotateGame)
 	{
 		sdlWindow = SDL_CreateWindow(
@@ -132,11 +152,12 @@ static int Init()
 			title,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			display_w,
 			display_h,
+			display_w,
 			screenFlags
 		);
 	}
+
 
 
 

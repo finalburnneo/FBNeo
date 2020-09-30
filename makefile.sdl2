@@ -86,6 +86,12 @@ depobj	+=	un7z.o \
 			Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
 endif
 
+ifdef INCLUDE_SWITCHRES
+$(info Switchres will be enabled)
+alldir	+=	dep/libs/switchres intf/video/switchres
+depobj	+=	vid_switchres.o
+endif
+
 autobj += $(depobj)
 
 ifdef	BUILD_X86_ASM
@@ -110,6 +116,10 @@ endif
 
 ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
+endif
+
+ifdef INCLUDE_SWITCHRES
+lib += -ldl
 endif
 
 autdep	= $(depobj:.o=.d)
@@ -254,6 +264,10 @@ endif
 
 ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
+endif
+
+ifdef INCLUDE_SWITCHRES
+	DEF := $(DEF) -DINCLUDE_SWITCHRES
 endif
 
 ifdef	SYMBOL

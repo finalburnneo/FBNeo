@@ -7,6 +7,7 @@
 #define SPEC_NO_SNAPSHOT			0
 #define SPEC_SNAPSHOT_SNA			1
 #define SPEC_SNAPSHOT_Z80			2
+#define SPEC_TAPE_TAP               3
 
 #define SPEC_Z80_SNAPSHOT_INVALID	0
 #define SPEC_Z80_SNAPSHOT_48K_OLD	1

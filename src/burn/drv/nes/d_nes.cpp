@@ -11935,7 +11935,7 @@ struct BurnDriver BurnDrvnes_gaplus = {
 };
 
 // Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
 static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
 };
@@ -11954,7 +11954,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodc = {
 };
 
 // Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Xiao Ben Ben
 static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
 };
@@ -11973,7 +11973,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 };
 
 // AV Mahjong Club (T-Chi) (Unl)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_avmahjongclubcRomDesc[] = {
 	{ "AV Mahjong Club (T-Chi) (Unl).nes",          262160, 0x663870dd, BRF_ESS | BRF_PRG },
 };
@@ -12008,6 +12008,44 @@ struct BurnDriver BurnDrvnes_jackalc = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_jackalcRomInfo, nes_jackalcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Darkwing Duck (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+static struct BurnRomInfo nes_darkwingduckcRomDesc[] = {
+	{ "Darkwing Duck (T-Chi).nes",          393232, 0x585f3500, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_darkwingduckc)
+STD_ROM_FN(nes_darkwingduckc)
+
+struct BurnDriver BurnDrvnes_darkwingduckc = {
+	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020-10-01",
+	"Darkwing Duck (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_darkwingduckcRomInfo, nes_darkwingduckcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Guardic Gaiden (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
+static struct BurnRomInfo nes_guardicgaidencRomDesc[] = {
+	{ "Guardic Gaiden (T-Chi, v1.1).nes",          262160, 0x77df8d83, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_guardicgaidenc)
+STD_ROM_FN(nes_guardicgaidenc)
+
+struct BurnDriver BurnDrvnes_guardicgaidenc = {
+	"nes_guardicgaidenc", "nes_guardleg", NULL, NULL, "2017-07-07",
+	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_guardicgaidencRomInfo, nes_guardicgaidencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 // END of "Non Homebrew (hand-added!)"

@@ -369,6 +369,7 @@ static void __fastcall wardner_main_write(UINT16 address, UINT8 data)
 static void __fastcall wardner_main_write_port(UINT16 port, UINT8 data)
 {
 	INT32 offs = ((port/0x10)-1)&3;
+
 	switch (port & 0xff)
 	{
 		case 0x00:
@@ -533,7 +534,6 @@ static void wardner_dsp_addrsel_w(UINT16 data)
 	dsp_addr_w   = ((data & 0x07ff) << 1);
 
 	if (main_ram_seg == 0x6000) main_ram_seg = 0x7000;
-	//printf("main_ram_seg = 0x%x - dsp_addr_w: 0x%x\n", main_ram_seg, dsp_addr_w);
 }
 
 static UINT16 wardner_dsp_r()

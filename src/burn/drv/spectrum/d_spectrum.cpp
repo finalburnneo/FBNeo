@@ -11275,3 +11275,41 @@ struct BurnDriver BurnSpecMikie = {
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Desperado (Topo Soft)
+
+static struct BurnRomInfo SpecdesperadotopoRomDesc[] = {
+	{ "Desperado (1987)(Topo Soft).tap", 0x2acc0, 0x38afdd75, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specdesperadotopo, Specdesperadotopo, Spec128)
+STD_ROM_FN(Specdesperadotopo)
+
+struct BurnDriver BurnSpecdesperadotopo = {
+	"spec_desperadotopo", NULL, "spec_spec128", NULL, "1987",
+	"Desperado (Topo Soft)\0", NULL, "Topo Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecdesperadotopoRomInfo, SpecdesperadotopoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// 	Super Trux
+
+static struct BurnRomInfo SpecsupertruxRomDesc[] = {
+	{ "Super Trux (1988)(Elite Systems).tap", 0x11e5b, 0x3f703225, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specsupertrux, Specsupertrux, Spec128)
+STD_ROM_FN(Specsupertrux)
+
+struct BurnDriver BurnSpecsupertrux = {
+	"spec_supertrux", NULL, "spec_spec128", NULL, "1988",
+	"	Super Trux\0", NULL, "Elite Systems", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecsupertruxRomInfo, SpecsupertruxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

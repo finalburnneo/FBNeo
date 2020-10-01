@@ -8754,22 +8754,22 @@
 		<driver status="good"/>
 	</game>
 	<game name="neotris" romof="neogeo">
-		<description>NeoTRIS (Free Beta Ver. 202005)</description>
+		<description>NeoTRIS (Free Beta 2 Ver. 202009) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Chipsonsteroids</manufacturer>
-		<rom name="neotris-p1.bin" size="524288" crc="33a71f8d"/>
+		<rom name="neotris-p1.bin" size="524288" crc="4cd619cf"/>
 		<rom name="neotris-s1.bin" size="131072" crc="6809043a"/>
-		<rom name="neotris-c1.bin" size="4194304" crc="7f9c1a22"/>
-		<rom name="neotris-c2.bin" size="4194304" crc="4896e921"/>
-		<rom name="neotris-c3.bin" size="4194304" crc="e8e2fcc3"/>
-		<rom name="neotris-c4.bin" size="4194304" crc="ec219a96"/>
-		<rom name="neotris-c5.bin" size="4194304" crc="b8873b09"/>
-		<rom name="neotris-c6.bin" size="4194304" crc="fb994623"/>
-		<rom name="neotris-m1.bin" size="65536" crc="2f9f8265"/>
-		<rom name="neotris-v1.bin" size="4194304" crc="9855b179"/>
-		<rom name="neotris-v2.bin" size="4194304" crc="b187368b"/>
-		<rom name="neotris-v3.bin" size="4194304" crc="5506b016"/>
-		<rom name="neotris-v4.bin" size="4194304" crc="6bb8a938"/>
+		<rom name="neotris-c1.bin" size="4194304" crc="e1c8eca9"/>
+		<rom name="neotris-c2.bin" size="4194304" crc="11ca6e64"/>
+		<rom name="neotris-c3.bin" size="4194304" crc="1d9e2046"/>
+		<rom name="neotris-c4.bin" size="4194304" crc="9091e795"/>
+		<rom name="neotris-c5.bin" size="4194304" crc="bf278afe"/>
+		<rom name="neotris-c6.bin" size="4194304" crc="8eb17e24"/>
+		<rom name="neotris-m1.bin" size="65536" crc="5a63bb9d"/>
+		<rom name="neotris-v1.bin" size="4194304" crc="fef16eb4"/>
+		<rom name="neotris-v2.bin" size="4194304" crc="f0d28e19"/>
+		<rom name="neotris-v3.bin" size="4194304" crc="fc652c8b"/>
+		<rom name="neotris-v4.bin" size="4194304" crc="c25764ca"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

@@ -252,6 +252,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="astmarcs" romof="spec128">
+		<description>Astro Marine Corps (Spanish) (Part 1 of 2)</description>
+		<year>1989</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Astro Marine Corps (1989)(Dinamic Software)(es)(Part 1 of 2).tap" size="62983" crc="85167f12"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="astmarcs2" romof="spec128">
+		<description>Astro Marine Corps (Spanish) (Part 2 of 2)</description>
+		<year>1989</year>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Astro Marine Corps (1989)(Dinamic Software)(es)(Part 2 of 2).tap" size="66054" crc="357dde1e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="aticatac" romof="spectrum">
 		<description>Atic Atac (48K)</description>
 		<year>1983</year>
@@ -318,12 +336,22 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="backfut3" romof="spectrum">
-		<description>Back to the Future III (48K)</description>
+	<game name="backfut3" romof="spec128">
+		<description>Back to the Future III</description>
 		<year>1991</year>
 		<manufacturer>Image Works</manufacturer>
-		<rom name="Back to the Future III (1991)(Image Works)[incomplete].z80" size="39634" crc="ad5a7442"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Back to the Future III (1991)(Image Works).tap" size="222746" crc="5de2c954"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="backfut2" romof="spec128">
+		<description>Back to the Future II</description>
+		<year>1990</year>
+		<manufacturer>Image Works</manufacturer>
+		<rom name="Back to the Future II (1990)(Image Works).tap" size="236949" crc="464a3359"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="badlands" romof="spectrum">
@@ -731,7 +759,7 @@
 		<description>Castlevania - Spectral Interlude (128K)</description>
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
-		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team)(128k).z80" size="109437" crc="f8caa35a"/>
+		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team).tap" size="126394" crc="c100bb38"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -740,7 +768,7 @@
 		<description>Castlevania - Spectral Interlude (Russian)(128K)</description>
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
-		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team)(Rus)(128k).z80" size="110028" crc="8b2258ff"/>
+		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team)(Rus).tap" size="127054" crc="45561b70"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -824,6 +852,15 @@
 		<year>1988</year>
 		<manufacturer>US Gold</manufacturer>
 		<rom name="Chicago 30's (1988)(US Gold)(128k).z80" size="34750" crc="16ef7dd5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="clfkfw" romof="spec128">
+		<description>Choy-Lee-Fut Kung-Fu Warrior (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Positive</manufacturer>
+		<rom name="Choy-Lee-Fut Kung-Fu Warrior (1990)(Positive)(es).tap" size="48967" crc="4af1bacf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -956,6 +993,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="crosswize" romof="spec128">
+		<description>Crosswize</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Crosswize (1988)(Firebird Software).tap" size="58667" crc="8d300497"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="cryscast" romof="spec128">
 		<description>Crystal Castles (128K)</description>
 		<year>1986</year>
@@ -1081,12 +1127,13 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="darius" romof="spectrum">
-		<description>Darius (48K)</description>
+	<game name="darius" romof="spec128">
+		<description>Darius+</description>
 		<year>1990</year>
 		<manufacturer>The Edge Software</manufacturer>
-		<rom name="Darius (1990)(The Edge Software)[t].z80" size="30589" crc="9f6c19d6"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Darius+ (1990)(The Edge Software).tap" size="219017" crc="e47f46f1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="darkman" romof="spec128">
@@ -1104,6 +1151,24 @@
 		<manufacturer>Micromega</manufacturer>
 		<rom name="Deathchase (1983)(Micromega).z80" size="11245" crc="040769a4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="desperd2" romof="spec128">
+		<description>Desperado 2 (Spanish)</description>
+		<year>1991</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Desperado 2 (1991)(Topo Soft)(es).tap" size="101318" crc="f1aca40a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="desperado" romof="spec128">
+		<description>Desperado</description>
+		<year>1986</year>
+		<manufacturer>Central Solutions</manufacturer>
+		<rom name="Desperado (1986)(Central Solutions).tap" size="39434" crc="488f2cd5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="dizdowra" romof="spec128">
@@ -1312,11 +1377,29 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddragon2" romof="spec128">
+		<description>Double Dragon II: The Revenge</description>
+		<year>1989</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Double Dragon II - The Revenge (1989)(Virgin Games).tap" size="185935" crc="af872e35"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="ddragon3" romof="spec128">
 		<description>Double Dragon III - The Rosetta Stone (128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
 		<rom name="Double Dragon III - The Rosetta Stone (1991)(Storm Software)[128K].z80" size="79466" crc="63257333"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddragon1" romof="spec128">
+		<description>Double Dragon</description>
+		<year>1989</year>
+		<manufacturer>Melbourne House</manufacturer>
+		<rom name="Double Dragon (1989)(Melbourne House).tap" size="172027" crc="a38e0c54"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1735,6 +1818,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="goodyes" romof="spec128">
+		<description>Goody (Spanish)</description>
+		<year>1987</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Goody (1987)(Opera Soft)(es).tap" size="48558" crc="2fd4f11b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="greatesc" romof="spectrum">
 		<description>Great Escape, The (48K)</description>
 		<year>1986</year>
@@ -1758,6 +1850,15 @@
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Green Beret (1986)(Imagine Software).z80" size="44371" crc="55f36544"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="gremlins2" romof="spec128">
+		<description>Gremlins 2 - The New Batch (128K)</description>
+		<year>1990</year>
+		<manufacturer>Topo Soft - Elite Systems</manufacturer>
+		<rom name="Gremlins 2 - The New Batch (1990)(Topo Soft - Elite Systems).tap" size="160108" crc="b1402dfe"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="gryzor" romof="spec128">
@@ -1928,6 +2029,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="icebreaker" romof="spec128">
+		<description>Ice Breaker (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Ice Breaker (1990)(Topo Soft)(es).tap" size="75733" crc="62ce5b80"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="impossamole" romof="spec128">
+		<description>Impossamole</description>
+		<year>1990</year>
+		<manufacturer>The Edge Software</manufacturer>
+		<rom name="Impossamole (1990)(Gremlin Graphics Software).tap" size="152632" crc="f1c505c7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="incshrf" romof="spectrum">
 		<description>Incredible Shrinking Fireman, The (48K)</description>
 		<year>1986</year>
@@ -1942,6 +2061,15 @@
 		<manufacturer>Magnificent 7 Software</manufacturer>
 		<rom name="Indoor Soccer (1986)(Magnificent 7 Software).z80" size="28909" crc="85a1a21f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="intkarateplus" romof="spec128">
+		<description>International Karate+</description>
+		<year>1987</year>
+		<manufacturer>System 3 Software</manufacturer>
+		<rom name="International Karate+ (1987)(System 3 Software).tap" size="53619" crc="097593e6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="inteagn" romof="spec128">
@@ -2238,6 +2366,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="lorna" romof="spec128">
+		<description>Lorna (128K)</description>
+		<year>1990</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Lorna (1990)(Topo Soft)(Sp).tap" size="118666" crc="a09afe9a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="lotustc" romof="spec128">
 		<description>Lotus Esprit Turbo Challenge (128K)</description>
 		<year>1990</year>
@@ -2261,6 +2398,15 @@
 		<manufacturer>Lyversoft</manufacturer>
 		<rom name="Lunar Rescue (1984)(Lyversoft).z80" size="18114" crc="6aac917a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="mamienca" romof="spec128">
+		<description>Mad Mix 2 - En el Castillo de los Fantasmas (Spanish) (128K)</description>
+		<year>1990</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Mad Mix 2 - En el Castillo de los Fantasmas (1990)(Topo Soft)(es).tap" size="80610" crc="2e343a0c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="madmixgame" romof="spec128">
@@ -2405,6 +2551,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="mikie" romof="spec128">
+		<description>Mikie</description>
+		<year>1985</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Mikie (1985)(Imagine Software).tap" size="48249" crc="45203b87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="montrun" romof="spec128">
 		<description>Monty on the Run (128K)</description>
 		<year>1985</year>
@@ -2460,6 +2615,24 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Moonwalker (1989)(U.S. Gold)[level 3 of 3].z80" size="40191" crc="a3a6d994"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="mortfilemon21" romof="spec128">
+		<description>Mortadelo y Filemon II (Part 1 of 2) (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Mortadelo y Filemon II (1990)(Dro Soft)(Part 1 of 2)(es).tap" size="55134" crc="418869bb"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="mortfilemon22" romof="spec128">
+		<description>Mortadelo y Filemon II (Part 2 of 2) (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Mortadelo y Filemon II (1990)(Dro Soft)(Part 2 of 2)(es).tap" size="53848" crc="99dc06a6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="motopera1" romof="spec128">
@@ -2532,6 +2705,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="myth" romof="spec128">
+		<description>Myth - History In The Making (128K)</description>
+		<year>1989</year>
+		<manufacturer>System 3 Software</manufacturer>
+		<rom name="Myth - History In The Making (1989)(System 3 Software).tap" size="194414" crc="bc8f2fe4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="narcopol" romof="spec128">
+		<description>Narco Police (128K)</description>
+		<year>1991</year>
+		<manufacturer>Rajsoft</manufacturer>
+		<rom name="Narco Police (1991)(Rajsoft).tap" size="118617" crc="d47256a3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="navymoves1" romof="spec128">
 		<description>Navy Moves (Part 1 of 2) (128K)</description>
 		<year>1988</year>
@@ -2592,21 +2783,22 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="nbreed" romof="spec128">
-		<description>Night Breed (128K)</description>
-		<year>1990</year>
-		<manufacturer>Ocean</manufacturer>
-		<rom name="Night Breed (1990)(Ocean)[128K].z80" size="24434" crc="95a8d043"/>
+	<game name="tnzs" romof="spec128">
+		<description>New Zealand Story, The (128K)</description>
+		<year>1989</year>
+		<manufacturer>Ocean Software</manufacturer>
+		<rom name="New Zealand Story, The (1989)(Ocean Software).tap" size="178176" crc="e6f32d53"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
-	<game name="nbreed_48" cloneof="nbreed" romof="nbreed">
-		<description>Night Breed (48K)</description>
+	<game name="nbreed" romof="spec128">
+		<description>Night Breed</description>
 		<year>1990</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Night Breed (1990)(Ocean).z80" size="38560" crc="521f143e"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Night Breed (1990)(Ocean).tap" size="188397" crc="d85291d2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="nixyseedsofd" romof="spec128">
@@ -2686,10 +2878,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="outrun" romof="spec128">
-		<description>Out Run (128K)</description>
-		<year>1988</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Out Run (1988)(U.S. Gold)[128K].z80" size="31692" crc="7cc211cf"/>
+		<description>Outrun (128K)</description>
+		<year>1987</year>
+		<manufacturer>US Gold</manufacturer>
+		<rom name="Outrun (1987)(US Gold).tap" size="128458" crc="1c4dde6b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="outruneu" romof="spec128">
+		<description>Outrun Europa (128K)</description>
+		<year>1991</year>
+		<manufacturer>US Gold</manufacturer>
+		<rom name="Outrun Europa (1991)(US Gold).tap" size="300496" crc="3240887e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2778,6 +2979,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="parisdakares" romof="spec128">
+		<description>Paris-Dakar (Spanish)</description>
+		<year>1988</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Paris-Dakar (1988)(Zigurat Software)(es).tap" size="63840" crc="15728fdf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="passshot" romof="spec128">
 		<description>Passing Shot (128K)</description>
 		<year>1989</year>
@@ -2793,6 +3003,15 @@
 		<manufacturer>Image Works</manufacturer>
 		<rom name="Passing Shot (1989)(Image Works).z80" size="31503" crc="183331fc"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="pericodelgado" romof="spec128">
+		<description>Perico Delgado Maillot Amarillo (Spanish)</description>
+		<year>1989</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Perico Delgado Maillot Amarillo (1989)(Topo Soft)(es).tap" size="149887" crc="284b616d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="pshandm" romof="spectrum">
@@ -2861,6 +3080,15 @@
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Platoon (1988)(Ocean).z80" size="39651" crc="06b39aa4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="plotthe" romof="spec128">
+		<description>Plot, The</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Plot, The (1988)(Firebird Software).tap" size="44904" crc="1adf1093"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="plotting" romof="spec128">
@@ -2951,7 +3179,7 @@
 		<description>R-Type (128K)</description>
 		<year>1988</year>
 		<manufacturer>Electric Dreams Software</manufacturer>
-		<rom name="R-Type (1988)(Electric Dreams Software)(128k).z80" size="105801" crc="a3cef37e"/>
+		<rom name="R-Type (1988)(Electric Dreams Software).tap" size="132823" crc="a03330a0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3060,6 +3288,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="rescategolfo1" romof="spec128">
+		<description>Rescate en el Golfo (Part 1 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 1 of 2).tap" size="89743" crc="66890d7e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="rescategolfo2" romof="spec128">
+		<description>Rescate en el Golfo (Part 2 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 2 of 2).tap" size="96659" crc="1de00748"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="rex" romof="spec128">
 		<description>Rex (Part 1 of 2) (128K)</description>
 		<year>1988</year>
@@ -3100,6 +3346,24 @@
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Rick Dangerous (1989)(Firebird Software).z80" size="40115" crc="556a8928"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="rickdang2" romof="spec128">
+		<description>Rick Dangerous 2</description>
+		<year>1990</year>
+		<manufacturer>Micro Style</manufacturer>
+		<rom name="Rick Dangerous 2 (1990)(Micro Style).tap" size="157081" crc="5cf79480"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="robinofwood" romof="spec128">
+		<description>Robin of the Wood (128k)</description>
+		<year>1985</year>
+		<manufacturer>Odin Computer Graphics</manufacturer>
+		<rom name="Robin of the Wood (1985)(Odin Computer Graphics)(128k).tap" size="62334" crc="ce069366"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="robocop" romof="spec128">
@@ -3156,10 +3420,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rungaunt" romof="spec128">
-		<description>Run the Gauntlet (128K)</description>
+		<description>Run the Gauntlet</description>
 		<year>1989</year>
 		<manufacturer>Ocean</manufacturer>
-		<rom name="Run the Gauntlet (1989)(Ocean)[128K].z80" size="98833" crc="c3aef7d9"/>
+		<rom name="Run the Gauntlet (1989)(Ocean).tap" size="125277" crc="4b24c62b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3332,6 +3596,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="sidewize" romof="spec128">
+		<description>Sidewize</description>
+		<year>1987</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Sidewize (1987)(Firebird Software).tap" size="41672" crc="db066855"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="silentshadow" romof="spec128">
+		<description>Silent Shadow</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Silent Shadow (1988)(Kixx re-release).tap" size="138528" crc="76e0c5b8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="silkworm" romof="spec128">
 		<description>Silkworm (128K)</description>
 		<year>1989</year>
@@ -3488,6 +3770,24 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="sovietpart1" romof="spec128">
+		<description>Soviet (Part 1 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Soviet (1990)(Opera Soft)(Part 1 of 2).tap" size="89792" crc="407510c3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="sovietpart2" romof="spec128">
+		<description>Soviet (Part 2 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Soviet (1990)(Opera Soft)(Part 2 of 2).tap" size="100036" crc="7db72ee5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="sharrier" romof="spectrum">
 		<description>Space Harrier (48K)</description>
 		<year>1986</year>
@@ -3536,6 +3836,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="stdragon" romof="spec128">
+		<description>St. Dragon</description>
+		<year>1990</year>
+		<manufacturer>Storm Software</manufacturer>
+		<rom name="St. Dragon (1990)(Storm Software).tap" size="188760" crc="6bb077c8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="starfarc" romof="spectrum">
 		<description>Star Farce (48K)</description>
 		<year>1988</year>
@@ -3577,6 +3886,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="stormlord2dlv" romof="spec128">
+		<description>Stormlord II: Deliverance</description>
+		<year>1990</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Stormlord II Deliverance (1990)(Hewson Consultants).tap" size="135597" crc="46a876a9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="sfight" romof="spectrum">
 		<description>Street Fighter (48K)</description>
 		<year>1983</year>
@@ -3594,12 +3912,13 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
-	<game name="strider2" romof="spectrum">
-		<description>Strider II (48K)</description>
+	<game name="strider2" romof="spec128">
+		<description>Strider II</description>
 		<year>1990</year>
 		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="Strider II (1990)(U.S. Gold)[needs tape load].z80" size="28999" crc="63f5426d"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Strider II (1990)(U.S. Gold).tap" size="138788" crc="d1b065fc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="striker" romof="spec128">
@@ -3694,7 +4013,7 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="swivblk1" romof="spec128">
+	<game name="swivblk1" cloneof="swiv" romof="swiv">
 		<description>SWIV (Block1)(128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
@@ -3703,11 +4022,11 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
-	<game name="swiv" cloneof="swivblk1" romof="swivblk1">
+	<game name="swiv" romof="spec128">
 		<description>SWIV (Block1)(Alternative)(128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
-		<rom name="SWIV (1991)(Storm Software)[128K].z80" size="103579" crc="edc341d5"/>
+		<rom name="SWIV (1991)(Storm Software).tap" size="145294" crc="baf9be65"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3760,6 +4079,15 @@
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Terra Cresta (1986)(Imagine Software).z80" size="36850" crc="a28b1755"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="testdrv2" romof="spec128">
+		<description>Test Drive II - The Duel</description>
+		<year>1989</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="Test Drive II - The Duel (1989)(Accolade).tap" size="26244" crc="92a930b3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="tetris" romof="spec128">
@@ -3830,6 +4158,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="tintmoon" romof="spec128">
+		<description>Tintin on the Moon</description>
+		<year>1989</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="Tintin on the Moon (1989)(Infogrames).tap" size="40102" crc="1959b7a0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="titanictopo1" romof="spec128">
 		<description>Titanic (Topo Soft) (Part 1 of 2) (128K)</description>
 		<year>1988</year>
@@ -3853,6 +4190,15 @@
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Total Recall (1991)(Ocean)[128K].z80" size="94615" crc="ab3503be"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="tour91" romof="spec128">
+		<description>Tour 91 (Spanish)</description>
+		<year>1991</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Tour 91 (1991)(Topo Soft)(es).tap" size="159603" crc="a27369fc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3881,6 +4227,24 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="turbocupch" romof="spec128">
+		<description>Turbo Cup Challenge</description>
+		<year>1989</year>
+		<manufacturer>Loriciels</manufacturer>
+		<rom name="Turbo Cup Challenge (1989)(Loriciels).tap" size="45468" crc="b81e5707"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="toutrun" romof="spec128">
+		<description>Turbo Outrun (128K)</description>
+		<year>1990</year>
+		<manufacturer>US Gold</manufacturer>
+		<rom name="Turbo Outrun (1990)(US Gold).tap" size="370522" crc="80a6916d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="underwur" romof="spectrum">
 		<description>Underwurlde (48K)</description>
 		<year>1984</year>
@@ -3906,6 +4270,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="viajecentterra" romof="spec128">
+		<description>Viaje al Centro de la Tierra</description>
+		<year>1989</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Viaje al Centro de la Tierra (1989)(Topo Soft).tap" size="125681" crc="dbc5e51b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="vigilante" romof="spec128">
+		<description>Vigilante</description>
+		<year>1989</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Vigilante (1989)(U.S. Gold).tap" size="110650" crc="372bf21f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="vindthe" romof="spec128">
 		<description>Vindicator, The (128K)</description>
 		<year>1988</year>
@@ -3919,7 +4301,7 @@
 		<description>Vindicators (128K)</description>
 		<year>1989</year>
 		<manufacturer>Domark</manufacturer>
-		<rom name="Vindicators (1989)(Domark)[128K].z80" size="43616" crc="6c4dbbe3"/>
+		<rom name="Vindicators (1989)(Domark).tap" size="65476" crc="c4b6502e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4018,6 +4400,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="wwfwresmania" romof="spec128">
+		<description>WWF WrestleMania</description>
+		<year>1991</year>
+		<manufacturer>Ocean Software</manufacturer>
+		<rom name="WWF WrestleMania (1991)(Ocean Software).tap" size="209329" crc="b377350f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="xenon" romof="spectrum">
 		<description>Xenon (48K)</description>
 		<year>1988</year>
@@ -4065,6 +4456,15 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Zaxxon (1985)(U.S. Gold).z80" size="37606" crc="e89d7896"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="zona0" romof="spec128">
+		<description>Zona 0 (Spanish)</description>
+		<year>1991</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Zona 0 (1991)(Topo Soft)(es).tap" size="76676" crc="df7e9568"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="spec128k">

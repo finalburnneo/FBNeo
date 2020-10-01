@@ -11237,3 +11237,41 @@ struct BurnDriver BurnSpecmortfilemon22 = {
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Desperado
+
+static struct BurnRomInfo SpecDesperadoRomDesc[] = {
+	{ "Desperado (1986)(Central Solutions).tap", 0x9a0a, 0x488f2cd5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDesperado, SpecDesperado, Spec128)
+STD_ROM_FN(SpecDesperado)
+
+struct BurnDriver BurnSpecDesperado = {
+	"spec_desperado", NULL, "spec_spec128", NULL, "1986",
+	"Desperado\0", NULL, "Central Solutions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDesperadoRomInfo, SpecDesperadoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mikie
+
+static struct BurnRomInfo SpecMikieRomDesc[] = {
+	{ "Mikie (1985)(Imagine Software).tap", 0xbc79, 0x45203b87, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMikie, SpecMikie, Spec128)
+STD_ROM_FN(SpecMikie)
+
+struct BurnDriver BurnSpecMikie = {
+	"spec_mikie", NULL, "spec_spec128", NULL, "1985",
+	"Mikie\0", NULL, "Imagine Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecMikieRomInfo, SpecMikieRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

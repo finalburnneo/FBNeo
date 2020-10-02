@@ -438,7 +438,7 @@ static UINT8 SpecIntf2PortFERead(UINT16 offset)
 static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 {
 	if ((a & 0xff) != 0xfe) {
-		if ((a & 0xff) == 0x1f) {
+		if ((a & 0x1f) == 0x1f) {
 			// kempston
 			return SpecInput[8] & 0x1f;
 		}
@@ -576,7 +576,7 @@ static void __fastcall SpecSpec128Z80Write(UINT16 a, UINT8 d)
 static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 {
 	if ((a & 0xff) != 0xfe) {
-		if ((a & 0xff) == 0x1f) {
+		if ((a & 0x1f) == 0x1f) {
 			// kempston
 			return SpecInput[8] & 0x1f;
 		}
@@ -11306,7 +11306,7 @@ STD_ROM_FN(Specsupertrux)
 
 struct BurnDriver BurnSpecsupertrux = {
 	"spec_supertrux", NULL, "spec_spec128", NULL, "1988",
-	"	Super Trux\0", NULL, "Elite Systems", "ZX Spectrum",
+	"Super Trux\0", NULL, "Elite Systems", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecsupertruxRomInfo, SpecsupertruxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

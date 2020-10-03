@@ -1153,6 +1153,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="desperadotopo" romof="spec128">
+		<description>Desperado (Topo Soft)</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Desperado (1987)(Topo Soft).tap" size="175296" crc="38afdd75"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="desperd2" romof="spec128">
 		<description>Desperado 2 (Spanish)</description>
 		<year>1991</year>
@@ -1814,6 +1823,15 @@
 		<year>1989</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Ghouls 'n' Ghosts (1989)(U.S. Gold)[128K].z80" size="108754" crc="1b626fe8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="gliderr" romof="spec128">
+		<description>Glider Rider</description>
+		<year>1987</year>
+		<manufacturer>Quicksilva</manufacturer>
+		<rom name="Glider Rider (1987)(Quicksilva).tap" size="65105" crc="2789b5bb"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4011,6 +4029,15 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="Super Sprint (1987)(Activision).z80" size="31358" crc="52ee2754"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="supertrux" romof="spec128">
+		<description>Super Trux</description>
+		<year>1988</year>
+		<manufacturer>Elite Systems</manufacturer>
+		<rom name="Super Trux (1988)(Elite Systems).tap" size="56629" crc="65fcf302"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="swivblk1" cloneof="swiv" romof="swiv">

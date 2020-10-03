@@ -285,6 +285,13 @@
 		<rom name="Akumajou Densetsu (Japan).nes" size="393232" crc="2e93ce72"/>
 		<driver status="good"/>
 	</game>
+	<game name="akumadenc" cloneof="castliii" romof="castliii">
+		<description>Akumajou Densetsu (T-Chi, v2.3)</description>
+		<year>2018-10-15</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Akumajou Densetsu (T-Chi, v2.3).nes" size="524304" crc="b810b79c"/>
+		<driver status="good"/>
+	</game>
 	<game name="akumaden" cloneof="castliii" romof="castliii">
 		<description>Akumajou Densetsu (T-Eng)</description>
 		<year>1989</year>
@@ -297,6 +304,13 @@
 		<year>1993</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Akumajou Dracula (Japan).nes" size="131088" crc="93f0488c"/>
+		<driver status="good"/>
+	</game>
+	<game name="akumajoudraculac" cloneof="castlevania" romof="castlevania">
+		<description>Akumajou Dracula (T-Chi)</description>
+		<year>1993</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Akumajou Dracula (T-Chi).nes" size="131088" crc="dc749e67"/>
 		<driver status="good"/>
 	</game>
 	<game name="akumaspe" cloneof="kiddracula" romof="kiddracula">
@@ -451,6 +465,13 @@
 		<year>1989</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Archon (USA).nes" size="131088" crc="c00d228d"/>
+		<driver status="good"/>
+	</game>
+	<game name="argosnosenshic" cloneof="rygar" romof="rygar">
+		<description>Argos no Senshi (T-Chi, v1.11)</description>
+		<year>2016-01-27</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Argos no Senshi (T-Chi, v1.11).nes" size="262160" crc="a1a22c10"/>
 		<driver status="good"/>
 	</game>
 	<game name="argus">
@@ -808,6 +829,13 @@
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Batman - The Video Game (Japan).nes" size="262160" crc="15f9a645"/>
+		<driver status="good"/>
+	</game>
+	<game name="batmavidgamc" cloneof="batmavidgam" romof="batmavidgam">
+		<description>Batman - The Video Game (T-Chi)</description>
+		<year>2020-01-25</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Batman - The Video Game (T-Chi).nes" size="393232" crc="4b2de665"/>
 		<driver status="good"/>
 	</game>
 	<game name="batmavidgam">
@@ -1832,6 +1860,13 @@
 		<rom name="Contra (Japan).nes" size="262160" crc="8a96a3c4"/>
 		<driver status="good"/>
 	</game>
+	<game name="contrac" cloneof="contra" romof="contra">
+		<description>Contra (T-Chi)</description>
+		<year>2017-07-29</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Contra (T-Chi).nes" size="393232" crc="2a39628d"/>
+		<driver status="good"/>
+	</game>
 	<game name="contra">
 		<description>Contra (USA)</description>
 		<year>1988</year>
@@ -1858,6 +1893,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Contra 168-in-1 (Unl).nes" size="1048592" crc="c6fd114e"/>
+		<driver status="good"/>
+	</game>
+	<game name="contraforcec" cloneof="contraforce" romof="contraforce">
+		<description>Contra Force (2nd option, T-Chi)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Contra Force (T-Chi).nes" size="524304" crc="cf2a15fb"/>
 		<driver status="good"/>
 	</game>
 	<game name="contraforce">
@@ -2049,11 +2091,25 @@
 		<rom name="Daiku no Gen-san (Japan).nes" size="262160" crc="a529d5f0"/>
 		<driver status="good"/>
 	</game>
+	<game name="daikunogensanc" cloneof="daikunogensan" romof="daikunogensan">
+		<description>Daiku no Gen-san (T-Chi)</description>
+		<year>2019-03-05</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Daiku no Gen-san (T-Chi).nes" size="393232" crc="f0543c45"/>
+		<driver status="good"/>
+	</game>
 	<game name="daikunogensan2">
 		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan).nes" size="524304" crc="3774121e"/>
+		<driver status="good"/>
+	</game>
+	<game name="daikunogensan2c" cloneof="daikunogensan2" romof="daikunogensan2">
+		<description>Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)</description>
+		<year>2019-07-28</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi).nes" size="524304" crc="66c08cd8"/>
 		<driver status="good"/>
 	</game>
 	<game name="dannysulsindhe">
@@ -2075,6 +2131,13 @@
 		<year>1991</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Darkman (USA).nes" size="262160" crc="5438a0ac"/>
+		<driver status="good"/>
+	</game>
+	<game name="darkwingduckc" cloneof="darkwingduck" romof="darkwingduck">
+		<description>Darkwing Duck (T-Chi)</description>
+		<year>2020-10-01</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Darkwing Duck (T-Chi).nes" size="393232" crc="585f3500"/>
 		<driver status="good"/>
 	</game>
 	<game name="darkwingduck">
@@ -2817,6 +2880,13 @@
 		<year>1989</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="DuckTales (USA).nes" size="131088" crc="06b994b2"/>
+		<driver status="good"/>
+	</game>
+	<game name="ducktales2c" cloneof="ducktales2" romof="ducktales2">
+		<description>DuckTales 2 (T-Chi, v1.1)</description>
+		<year>2019-06-01</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="DuckTales 2 (T-Chi, v1.1).nes" size="262160" crc="794dbb67"/>
 		<driver status="good"/>
 	</game>
 	<game name="ducktales2">
@@ -4009,6 +4079,13 @@
 		<rom name="Guardic Gaiden (Japan).nes" size="131088" crc="e9d15ff1"/>
 		<driver status="good"/>
 	</game>
+	<game name="guardicgaidenc" cloneof="guardleg" romof="guardleg">
+		<description>Guardic Gaiden (T-Chi, v1.1)</description>
+		<year>2017-07-07</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Guardic Gaiden (T-Chi, v1.1).nes" size="262160" crc="77df8d83"/>
+		<driver status="good"/>
+	</game>
 	<game name="guerrillawar">
 		<description>Guerrilla War (USA)</description>
 		<year>1989</year>
@@ -4037,6 +4114,13 @@
 		<rom name="Gun Nac (Japan).nes" size="262160" crc="04008279"/>
 		<driver status="good"/>
 	</game>
+	<game name="gunnacc" cloneof="gunnac" romof="gunnac">
+		<description>Gun Nac (T-Chi)</description>
+		<year>2013-10-31</year>
+		<manufacturer>Tonkin House</manufacturer>
+		<rom name="Gun Nac (T-Chi).nes" size="393232" crc="3c63f85a"/>
+		<driver status="good"/>
+	</game>
 	<game name="gunnact" cloneof="gunnac" romof="gunnac">
 		<description>Gun Nac (T-Eng)</description>
 		<year>1990</year>
@@ -4063,6 +4147,20 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Gun-Dec (Japan).nes" size="262160" crc="4b08e280"/>
+		<driver status="good"/>
+	</game>
+	<game name="gundecc" cloneof="vice" romof="vice">
+		<description>Gun-Dec (T-Chi)</description>
+		<year>2019-08-01</year>
+		<manufacturer>Sammy</manufacturer>
+		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunsmokec" cloneof="gunsmoke" romof="gunsmoke">
+		<description>Gun.Smoke (T-Chi)</description>
+		<year>2019-11-17</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Gun.Smoke (T-Chi).nes" size="163856" crc="4e0b7a7d"/>
 		<driver status="good"/>
 	</game>
 	<game name="gunsmoke">
@@ -4168,6 +4266,13 @@
 		<year>1991</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Hebereke (Japan).nes" size="262160" crc="2a137974"/>
+		<driver status="good"/>
+	</game>
+	<game name="heberekec" cloneof="ufouria" romof="ufouria">
+		<description>Hebereke (T-Chi, v1.2)</description>
+		<year>2019-07-23</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
 		<driver status="good"/>
 	</game>
 	<game name="hector87">
@@ -4667,6 +4772,13 @@
 		<rom name="Jigoku Gokuraku Maru (Japan).nes" size="262160" crc="d9564797"/>
 		<driver status="good"/>
 	</game>
+	<game name="jigokgokmarc" cloneof="kabuki" romof="kabuki">
+		<description>Jigoku Gokuraku Maru (T-Chi)</description>
+		<year>2019-11-08</year>
+		<manufacturer>Pack-In-Video</manufacturer>
+		<rom name="Jigoku Gokuraku Maru (T-Chi).nes" size="393232" crc="375bf357"/>
+		<driver status="good"/>
+	</game>
 	<game name="jikuuyuu">
 		<description>Jikuu Yuuden - Debias (Japan)</description>
 		<year>1987</year>
@@ -4875,6 +4987,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Kage (Japan).nes" size="262160" crc="459fbede"/>
+		<driver status="good"/>
+	</game>
+	<game name="kagec" cloneof="shadonin" romof="shadonin">
+		<description>Kage (T-Chi, v2.0)</description>
+		<year>2010</year>
+		<manufacturer>NATSUME</manufacturer>
+		<rom name="Kage (T-Chi, v2.0).nes" size="270352" crc="a481e2bd"/>
 		<driver status="good"/>
 	</game>
 	<game name="kagenodensetsu" cloneof="legenkag" romof="legenkag">
@@ -5661,6 +5780,13 @@
 		<rom name="Mad City (Japan).nes" size="262160" crc="b28d64fc"/>
 		<driver status="good"/>
 	</game>
+	<game name="madcityc" cloneof="advenbaybil" romof="advenbaybil">
+		<description>Mad City (T-Chi, v2)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Mad City (T-Chi, v2).nes" size="393232" crc="3b2ad28b"/>
+		<driver status="good"/>
+	</game>
 	<game name="madmax">
 		<description>Mad Max (USA)</description>
 		<year>1990</year>
@@ -5815,6 +5941,13 @@
 		<rom name="Majou Densetsu II - Daimashikyou Galious (Japan).nes" size="131088" crc="763f2d28"/>
 		<driver status="good"/>
 	</game>
+	<game name="majoudeniic" cloneof="majoudenii" romof="majoudenii">
+		<description>Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)</description>
+		<year>2018-06-10</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes" size="262160" crc="a032170a"/>
+		<driver status="good"/>
+	</game>
 	<game name="makaimura" cloneof="ghostsngoblins" romof="ghostsngoblins">
 		<description>Makaimura (Japan)</description>
 		<year>1986</year>
@@ -5848,6 +5981,13 @@
 		<year>1989</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Mappy Kids (Japan).nes" size="262160" crc="3350c674"/>
+		<driver status="good"/>
+	</game>
+	<game name="mappykidsc" cloneof="mappykids" romof="mappykids">
+		<description>Mappy Kids (T-Chi, v1.1)</description>
+		<year>2019-10-25</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Mappy Kids (T-Chi, v1.1).nes" size="524304" crc="159bc653"/>
 		<driver status="good"/>
 	</game>
 	<game name="mappyland">
@@ -6214,6 +6354,13 @@
 		<rom name="Mitsume ga Tooru (Japan).nes" size="262160" crc="e27ec1ec"/>
 		<driver status="good"/>
 	</game>
+	<game name="mitsumegatooruc" cloneof="mitsumegatooru" romof="mitsumegatooru">
+		<description>Mitsume ga Tooru (T-Chi)</description>
+		<year>2010-10-10</year>
+		<manufacturer>tomy</manufacturer>
+		<rom name="Mitsume ga Tooru (T-Chi).nes" size="278544" crc="296c2307"/>
+		<driver status="good"/>
+	</game>
 	<game name="mitsumegatooru">
 		<description>Mitsume ga Tooru (T-Eng)</description>
 		<year>1989?</year>
@@ -6578,6 +6725,13 @@
 		<rom name="nim and nom (2018)(metakrill) v1.2.nes" size="40976" crc="e0096736"/>
 		<driver status="good"/>
 	</game>
+	<game name="deadfoxc" cloneof="codenam" romof="codenam">
+		<description>Ningen Heiki - Dead Fox (T-Chi, v2.0)</description>
+		<year>2010</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="Ningen Heiki - Dead Fox (T-Chi, v2.0).nes" size="303120" crc="3cf5df56"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjacopsaizou">
 		<description>Ninja Cop Saizou (Japan)</description>
 		<year>1989</year>
@@ -6655,6 +6809,13 @@
 		<rom name="Ninja Ryuuken Den (Japan).nes" size="262160" crc="ba7818a1"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninjaryudenc" cloneof="ninjagaiden" romof="ninjagaiden">
+		<description>Ninja Ryuuken Den (T-Chi)</description>
+		<year>2017-06-13</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Ninja Ryuuken Den (T-Chi).nes" size="524304" crc="7724d3d0"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjaryudenii" cloneof="ninjagaiii" romof="ninjagaiii">
 		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (Japan)</description>
 		<year>1990</year>
@@ -6662,11 +6823,25 @@
 		<rom name="Ninja Ryuuken Den II - Ankoku no Jashin Ken (Japan).nes" size="262160" crc="92b6e224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninjaryudeniic" cloneof="ninjagaiii" romof="ninjagaiii">
+		<description>Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi)</description>
+		<year>200?</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi).nes" size="335888" crc="f7d5d63b"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjaryudeniii" cloneof="ninjagaiiii" romof="ninjagaiiii">
 		<description>Ninja Ryuuken Den III - Yomi no Hakobune (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Ninja Ryuuken Den III - Yomi no Hakobune (Japan).nes" size="262160" crc="05bd3865"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjaryudeniiic" cloneof="ninjagaiiii" romof="ninjagaiiii">
+		<description>Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi)</description>
+		<year>2002</year>
+		<manufacturer>Tecmo</manufacturer>
+		<rom name="Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi).nes" size="344080" crc="ba865119"/>
 		<driver status="good"/>
 	</game>
 	<game name="ninjakunashnosh">
@@ -7845,6 +8020,13 @@
 		<rom name="Saiyuuki World (Japan).nes" size="131088" crc="5ad9aeef"/>
 		<driver status="good"/>
 	</game>
+	<game name="saiyuukiworldc" cloneof="saiyuukiworld" romof="saiyuukiworld">
+		<description>Saiyuuki World (T-Chi, v1.04)</description>
+		<year>2016-02-07</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Saiyuuki World (T-Chi, v1.04).nes" size="262160" crc="6e66cf6f"/>
+		<driver status="good"/>
+	</game>
 	<game name="saiyuwor2" cloneof="whompem" romof="whompem">
 		<description>Saiyuuki World 2 - Tenjoukai no Majin (Japan)</description>
 		<year>1990</year>
@@ -7852,11 +8034,25 @@
 		<rom name="Saiyuuki World 2 - Tenjoukai no Majin (Japan).nes" size="262160" crc="0a7eedbb"/>
 		<driver status="good"/>
 	</game>
+	<game name="saiyuwor2c" cloneof="whompem" romof="whompem">
+		<description>Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)</description>
+		<year>2019-10-26</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Saiyuuki World 2 - Tenjoukai no Majin (T-Chi).nes" size="262160" crc="784fc411"/>
+		<driver status="good"/>
+	</game>
 	<game name="salamander">
 		<description>Salamander (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Salamander (Japan).nes" size="131088" crc="bf822264"/>
+		<driver status="good"/>
+	</game>
+	<game name="salamanderc" cloneof="salamander" romof="salamander">
+		<description>Salamander (T-Chi, v1.2)</description>
+		<year>2020-04-30</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Salamander (T-Chi, v1.2).nes" size="393232" crc="fbe84b97"/>
 		<driver status="good"/>
 	</game>
 	<game name="sansaranagaj" cloneof="sansaranaga" romof="sansaranaga">
@@ -8046,6 +8242,13 @@
 		<year>1989</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Silent Service (USA).nes" size="131088" crc="8b4a38b0"/>
+		<driver status="good"/>
+	</game>
+	<game name="silkwormc" cloneof="silkworm" romof="silkworm">
+		<description>Silk Worm (T-Chi, v1.1)</description>
+		<year>2020-01-07</year>
+		<manufacturer>Sammy</manufacturer>
+		<rom name="Silk Worm (T-Chi, v1.1).nes" size="393232" crc="3d53c8ad"/>
 		<driver status="good"/>
 	</game>
 	<game name="silkworm">
@@ -8643,6 +8846,20 @@
 		<rom name="Super Cars (USA).nes" size="131088" crc="729db2e4"/>
 		<driver status="good"/>
 	</game>
+	<game name="superchii" cloneof="littlninbro" romof="littlninbro">
+		<description>Super Chinese II - Dragon Kid (T-Chi, v1.4)</description>
+		<year>2019-01-01</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Super Chinese II - Dragon Kid (T-Chi, v1.4).nes" size="524304" crc="a9e92ef3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supercontrac" cloneof="superc" romof="superc">
+		<description>Super Contra (T-Chi)</description>
+		<year>2017-08-01</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Super Contra (T-Chi).nes" size="393232" crc="048f7dd8"/>
+		<driver status="good"/>
+	</game>
 	<game name="superdodgeball">
 		<description>Super Dodge Ball (USA)</description>
 		<year>1989</year>
@@ -8690,6 +8907,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. 2 J (Japan, MMC3 Conversion).nes" size="81936" crc="0133ebf9"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb3c" cloneof="smb3" romof="smb3">
+		<description>Super Mario Bros. 3 (T-Chi)</description>
+		<year>2016-06-03</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. 3 (T-Chi).nes" size="458768" crc="e39b725d"/>
 		<driver status="good"/>
 	</game>
 	<game name="smb3">
@@ -9061,6 +9285,13 @@
 		<year>1990</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Tecmo World Wrestling (USA).nes" size="262160" crc="12444337"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmntc" cloneof="tmnt" romof="tmnt">
+		<description>Teenage Mutant Ninja Turtles (T-Chi, v1.0)</description>
+		<year>2020-06-09</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes" size="393232" crc="43ae114f"/>
 		<driver status="good"/>
 	</game>
 	<game name="tmnt">
@@ -9831,6 +10062,13 @@
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Wai Wai World (Japan).nes" size="262160" crc="b27bcf3d"/>
+		<driver status="good"/>
+	</game>
+	<game name="waiwaiworldc" cloneof="waiwaiworld" romof="waiwaiworld">
+		<description>Wai Wai World (T-Chi)</description>
+		<year>2012-09-04</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
 		<driver status="good"/>
 	</game>
 	<game name="waiwaiwor2">

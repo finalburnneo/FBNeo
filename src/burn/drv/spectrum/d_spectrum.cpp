@@ -11298,7 +11298,7 @@ struct BurnDriver BurnSpecdesperadotopo = {
 // 	Super Trux
 
 static struct BurnRomInfo SpecsupertruxRomDesc[] = {
-	{ "Super Trux (1988)(Elite Systems).tap", 0x11e5b, 0x3f703225, BRF_ESS | BRF_PRG },
+	{ "Super Trux (1988)(Elite Systems).tap", 0xdd35, 0x65fcf302, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specsupertrux, Specsupertrux, Spec128)
@@ -11310,6 +11310,25 @@ struct BurnDriver BurnSpecsupertrux = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecsupertruxRomInfo, SpecsupertruxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Glider Rider
+
+static struct BurnRomInfo SpecGliderrRomDesc[] = {
+	{ "Glider Rider (1987)(Quicksilva).tap", 0xfe51, 0x2789b5bb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGliderr, SpecGliderr, Spec128)
+STD_ROM_FN(SpecGliderr)
+
+struct BurnDriver BurnSpecGliderr = {
+	"spec_gliderr", NULL, "spec_spec128", NULL, "1987",
+	"Glider Rider\0", NULL, "Quicksilva", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecGliderrRomInfo, SpecGliderrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

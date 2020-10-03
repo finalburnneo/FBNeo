@@ -11935,7 +11935,7 @@ struct BurnDriver BurnDrvnes_gaplus = {
 };
 
 // Saint Seiya - Ougon Densetsu (T-Chi, v2.0)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Fen Mo & Zeng Ge
 static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
 };
@@ -11954,7 +11954,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodc = {
 };
 
 // Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Jiang Wei Di Er & Xiao Ben Ben
 static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
 };
@@ -11973,7 +11973,7 @@ struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
 };
 
 // AV Mahjong Club (T-Chi) (Unl)
-// Translation by Han Hua Ni Mei Team
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
 static struct BurnRomInfo nes_avmahjongclubcRomDesc[] = {
 	{ "AV Mahjong Club (T-Chi) (Unl).nes",          262160, 0x663870dd, BRF_ESS | BRF_PRG },
 };
@@ -12008,6 +12008,660 @@ struct BurnDriver BurnDrvnes_jackalc = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_jackalcRomInfo, nes_jackalcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Darkwing Duck (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+static struct BurnRomInfo nes_darkwingduckcRomDesc[] = {
+	{ "Darkwing Duck (T-Chi).nes",          393232, 0x585f3500, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_darkwingduckc)
+STD_ROM_FN(nes_darkwingduckc)
+
+struct BurnDriver BurnDrvnes_darkwingduckc = {
+	"nes_darkwingduckc", "nes_darkwingduck", NULL, NULL, "2020-10-01",
+	"Darkwing Duck (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_darkwingduckcRomInfo, nes_darkwingduckcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Guardic Gaiden (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Thirteen & Xing Ye Zhi Huan
+static struct BurnRomInfo nes_guardicgaidencRomDesc[] = {
+	{ "Guardic Gaiden (T-Chi, v1.1).nes",          262160, 0x77df8d83, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_guardicgaidenc)
+STD_ROM_FN(nes_guardicgaidenc)
+
+struct BurnDriver BurnDrvnes_guardicgaidenc = {
+	"nes_guardicgaidenc", "nes_guardleg", NULL, NULL, "2017-07-07",
+	"Guardic Gaiden (T-Chi, v1.1)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_guardicgaidencRomInfo, nes_guardicgaidencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi)
+// Translation by TPU
+static struct BurnRomInfo nes_ninjaryudeniiicRomDesc[] = {
+	{ "Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi).nes",          344080, 0xba865119, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjaryudeniiic)
+STD_ROM_FN(nes_ninjaryudeniiic)
+
+struct BurnDriver BurnDrvnes_ninjaryudeniiic = {
+	"nes_ninjaryudeniiic", "nes_ninjagaiiii", NULL, NULL, "2002",
+	"Ninja Ryuuken Den III - Yomi no Hakobune (T-Chi)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ninjaryudeniiicRomInfo, nes_ninjaryudeniiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi)
+// Translation by TPU
+static struct BurnRomInfo nes_ninjaryudeniicRomDesc[] = {
+	{ "Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi).nes",          335888, 0xf7d5d63b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjaryudeniic)
+STD_ROM_FN(nes_ninjaryudeniic)
+
+struct BurnDriver BurnDrvnes_ninjaryudeniic = {
+	"nes_ninjaryudeniic", "nes_ninjagaiii", NULL, NULL, "200?",
+	"Ninja Ryuuken Den II - Ankoku no Jashin Ken (T-Chi)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ninjaryudeniicRomInfo, nes_ninjaryudeniicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ninja Ryuuken Den (T-Chi)
+// Translation by FlameCyclone
+static struct BurnRomInfo nes_ninjaryudencRomDesc[] = {
+	{ "Ninja Ryuuken Den (T-Chi).nes",          524304, 0x7724d3d0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjaryudenc)
+STD_ROM_FN(nes_ninjaryudenc)
+
+struct BurnDriver BurnDrvnes_ninjaryudenc = {
+	"nes_ninjaryudenc", "nes_ninjagaiden", NULL, NULL, "2017-06-13",
+	"Ninja Ryuuken Den (T-Chi)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ninjaryudencRomInfo, nes_ninjaryudencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ningen Heiki - Dead Fox (T-Chi, v2.0)
+// Translation by Xing Kong
+static struct BurnRomInfo nes_deadfoxcRomDesc[] = {
+	{ "Ningen Heiki - Dead Fox (T-Chi, v2.0).nes",          303120, 0x3cf5df56, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_deadfoxc)
+STD_ROM_FN(nes_deadfoxc)
+
+struct BurnDriver BurnDrvnes_deadfoxc = {
+	"nes_deadfoxc", "nes_codenam", NULL, NULL, "2010",
+	"Ningen Heiki - Dead Fox (T-Chi, v2.0)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_deadfoxcRomInfo, nes_deadfoxcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Kage (T-Chi, v2.0)
+// Translation by Xing Kong
+static struct BurnRomInfo nes_kagecRomDesc[] = {
+	{ "Kage (T-Chi, v2.0).nes",          270352, 0xa481e2bd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kagec)
+STD_ROM_FN(nes_kagec)
+
+struct BurnDriver BurnDrvnes_kagec = {
+	"nes_kagec", "nes_kage", NULL, NULL, "2010",
+	"Kage (T-Chi, v2.0)\0", NULL, "NATSUME", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_kagecRomInfo, nes_kagecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Mario Bros. 3 (T-Chi)
+// Translation by NOKOH
+static struct BurnRomInfo nes_smb3cRomDesc[] = {
+	{ "Super Mario Bros. 3 (T-Chi).nes",          458768, 0xe39b725d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb3c)
+STD_ROM_FN(nes_smb3c)
+
+struct BurnDriver BurnDrvnes_smb3c = {
+	"nes_smb3c", "nes_smb3", NULL, NULL, "2016-06-03",
+	"Super Mario Bros. 3 (T-Chi)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smb3cRomInfo, nes_smb3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Akumajou Dracula (T-Chi)
+// Translation by Fo Yi Team - Xi Xue Nan Jue
+static struct BurnRomInfo nes_akumajoudraculacRomDesc[] = {
+	{ "Akumajou Dracula (T-Chi).nes",          131088, 0xdc749e67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_akumajoudraculac)
+STD_ROM_FN(nes_akumajoudraculac)
+
+struct BurnDriver BurnDrvnes_akumajoudraculac = {
+	"nes_akumajoudraculac", "nes_castlevania", NULL, NULL, "1993",
+	"Akumajou Dracula (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_akumajoudraculacRomInfo, nes_akumajoudraculacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Contra (T-Chi)
+// Translation by FlameCyclone
+static struct BurnRomInfo nes_contracRomDesc[] = {
+	{ "Contra (T-Chi).nes",          393232, 0x2a39628d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contrac)
+STD_ROM_FN(nes_contrac)
+
+struct BurnDriver BurnDrvnes_contrac = {
+	"nes_contrac", "nes_contra", NULL, NULL, "2017-07-29",
+	"Contra (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_contracRomInfo, nes_contracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Wai Wai World (T-Chi)
+// Translation by NOKOH
+static struct BurnRomInfo nes_waiwaiworldcRomDesc[] = {
+	{ "Wai Wai World (T-Chi).nes",          524304, 0xae26fdde, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_waiwaiworldc)
+STD_ROM_FN(nes_waiwaiworldc)
+
+struct BurnDriver BurnDrvnes_waiwaiworldc = {
+	"nes_waiwaiworldc", "nes_waiwaiworld", NULL, NULL, "2012-09-04",
+	"Wai Wai World (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_waiwaiworldcRomInfo, nes_waiwaiworldcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saiyuuki World (T-Chi, v1.04)
+// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & Zeng Ge & Xing Ye Zhi Huan & N0PFUUN
+static struct BurnRomInfo nes_saiyuukiworldcRomDesc[] = {
+	{ "Saiyuuki World (T-Chi, v1.04).nes",          262160, 0x6e66cf6f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saiyuukiworldc)
+STD_ROM_FN(nes_saiyuukiworldc)
+
+struct BurnDriver BurnDrvnes_saiyuukiworldc = {
+	"nes_saiyuukiworldc", "nes_saiyuukiworld", NULL, NULL, "2016-02-07",
+	"Saiyuuki World (T-Chi, v1.04)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saiyuukiworldcRomInfo, nes_saiyuukiworldcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mad City (T-Chi, v2)
+// Translation by Tan Xiao Feng Sheng
+static struct BurnRomInfo nes_madcitycRomDesc[] = {
+	{ "Mad City (T-Chi, v2).nes",          393232, 0x3b2ad28b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_madcityc)
+STD_ROM_FN(nes_madcityc)
+
+struct BurnDriver BurnDrvnes_madcityc = {
+	"nes_madcityc", "nes_advenbaybil", NULL, NULL, "2018",
+	"Mad City (T-Chi, v2)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_madcitycRomInfo, nes_madcitycRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Contra Force (2nd option, T-Chi)
+// Translation by Tan Xiao Feng Sheng
+static struct BurnRomInfo nes_contraforcecRomDesc[] = {
+	{ "Contra Force (T-Chi).nes",          524304, 0xcf2a15fb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contraforcec)
+STD_ROM_FN(nes_contraforcec)
+
+struct BurnDriver BurnDrvnes_contraforcec = {
+	"nes_contraforcec", "nes_contraforce", NULL, NULL, "2018",
+	"Contra Force (2nd option, T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_contraforcecRomInfo, nes_contraforcecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Gun Nac (T-Chi)
+// Translation by Jiu Ban & KASURA·J
+static struct BurnRomInfo nes_gunnaccRomDesc[] = {
+	{ "Gun Nac (T-Chi).nes",          393232, 0x3c63f85a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gunnacc)
+STD_ROM_FN(nes_gunnacc)
+
+struct BurnDriver BurnDrvnes_gunnacc = {
+	"nes_gunnacc", "nes_gunnac", NULL, NULL, "2013-10-31",
+	"Gun Nac (T-Chi)\0", NULL, "Tonkin House", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_gunnaccRomInfo, nes_gunnaccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mitsume ga Tooru (T-Chi)
+// Translation by Xing Kong
+static struct BurnRomInfo nes_mitsumegatoorucRomDesc[] = {
+	{ "Mitsume ga Tooru (T-Chi).nes",          278544, 0x296c2307, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mitsumegatooruc)
+STD_ROM_FN(nes_mitsumegatooruc)
+
+struct BurnDriver BurnDrvnes_mitsumegatooruc = {
+	"nes_mitsumegatooruc", "nes_mitsumegatooru", NULL, NULL, "2010-10-10",
+	"Mitsume ga Tooru (T-Chi)\0", NULL, "tomy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mitsumegatoorucRomInfo, nes_mitsumegatoorucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Akumajou Densetsu (T-Chi, v2.3)
+// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Xing Ye Zhi Huan
+static struct BurnRomInfo nes_akumadencRomDesc[] = {
+	{ "Akumajou Densetsu (T-Chi, v2.3).nes",          524304, 0xb810b79c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_akumadenc)
+STD_ROM_FN(nes_akumadenc)
+
+struct BurnDriver BurnDrvnes_akumadenc = {
+	"nes_akumadenc", "nes_castliii", NULL, NULL, "2018-10-15",
+	"Akumajou Densetsu (T-Chi, v2.3)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_akumadencRomInfo, nes_akumadencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Batman - The Video Game (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Luo Yun
+static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
+	{ "Batman - The Video Game (T-Chi).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batmavidgamc)
+STD_ROM_FN(nes_batmavidgamc)
+
+struct BurnDriver BurnDrvnes_batmavidgamc = {
+	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020-01-25",
+	"Batman - The Video Game (T-Chi)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Salamander (T-Chi, v1.2)
+// Translation by Lei Jing Ling
+// mapper 19
+static struct BurnRomInfo nes_salamandercRomDesc[] = {
+	{ "Salamander (T-Chi, v1.2).nes",          393232, 0xfbe84b97, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_salamanderc)
+STD_ROM_FN(nes_salamanderc)
+
+struct BurnDriver BurnDrvnes_salamanderc = {
+	"nes_salamanderc", "nes_salamander", NULL, NULL, "2020-04-30",
+	"Salamander (T-Chi, v1.2)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_salamandercRomInfo, nes_salamandercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Gun-Dec (T-Chi)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou & Jiang Wei Di Er & Luo Yun
+static struct BurnRomInfo nes_gundeccRomDesc[] = {
+	{ "Gun-Dec (T-Chi).nes",          393232, 0x647eccfa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gundecc)
+STD_ROM_FN(nes_gundecc)
+
+struct BurnDriver BurnDrvnes_gundecc = {
+	"nes_gundecc", "nes_vice", NULL, NULL, "2019-08-01",
+	"Gun-Dec (T-Chi)\0", NULL, "Sammy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_gundeccRomInfo, nes_gundeccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Teenage Mutant Ninja Turtles (T-Chi, v1.0)
+// Translation by MEZARANSU & Jiang Wei Di Er & Luo Yun
+// mapper 05 (MMC5)
+static struct BurnRomInfo nes_tmntcRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles (T-Chi, v1.0).nes",          393232, 0x43ae114f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmntc)
+STD_ROM_FN(nes_tmntc)
+
+struct BurnDriver BurnDrvnes_tmntc = {
+	"nes_tmntc", "nes_tmnt", NULL, NULL, "2020-06-09",
+	"Teenage Mutant Ninja Turtles (T-Chi, v1.0)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tmntcRomInfo, nes_tmntcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Chinese II - Dragon Kid (T-Chi, v1.4)
+// Translation by Han Hua Ni Mei Team - Thirteen & Jiang Wei Di Er & Xing Ye Zhi Huan
+static struct BurnRomInfo nes_superchiiRomDesc[] = {
+	{ "Super Chinese II - Dragon Kid (T-Chi, v1.4).nes",          524304, 0xa9e92ef3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superchii)
+STD_ROM_FN(nes_superchii)
+
+struct BurnDriver BurnDrvnes_superchii = {
+	"nes_superchii", "nes_littlninbro", NULL, NULL, "2019-01-01",
+	"Super Chinese II - Dragon Kid (T-Chi, v1.4)\0", NULL, "Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_superchiiRomInfo, nes_superchiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)
+// Translation by Han Hua Ni Mei Team - Zeng Ge & Jiang Wei Di Er & Luo Yun & Xia Tian & Xing Ye Zhi Huan
+static struct BurnRomInfo nes_majoudeniicRomDesc[] = {
+	{ "Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2).nes",          262160, 0xa032170a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_majoudeniic)
+STD_ROM_FN(nes_majoudeniic)
+
+struct BurnDriver BurnDrvnes_majoudeniic = {
+	"nes_majoudeniic", "nes_majoudenii", NULL, NULL, "2018-06-10",
+	"Majou Densetsu II - Daimashikyou Galious (T-Chi, v2.2)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_majoudeniicRomInfo, nes_majoudeniicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Silk Worm (T-Chi, v1.1)
+// Translation by Han Hua Ni Mei Team - Shao Nian Bu Zhi Chou
+static struct BurnRomInfo nes_silkwormcRomDesc[] = {
+	{ "Silk Worm (T-Chi, v1.1).nes",          393232, 0x3d53c8ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_silkwormc)
+STD_ROM_FN(nes_silkwormc)
+
+struct BurnDriver BurnDrvnes_silkwormc = {
+	"nes_silkwormc", "nes_silkworm", NULL, NULL, "2020-01-07",
+	"Silk Worm (T-Chi, v1.1)\0", NULL, "Sammy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_silkwormcRomInfo, nes_silkwormcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Argos no Senshi (T-Chi, v1.11)
+// Translation by Han Hua Ni Mei Team - Thirteen & Fen Mo & Jiang Wei Di Er & MM Zhi Shen & Xing Ye Zhi Huan & N0PFUUN & Zeng Ge
+static struct BurnRomInfo nes_argosnosenshicRomDesc[] = {
+	{ "Argos no Senshi (T-Chi, v1.11).nes",          262160, 0xa1a22c10, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_argosnosenshic)
+STD_ROM_FN(nes_argosnosenshic)
+
+struct BurnDriver BurnDrvnes_argosnosenshic = {
+	"nes_argosnosenshic", "nes_rygar", NULL, NULL, "2016-01-27",
+	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_argosnosenshicRomInfo, nes_argosnosenshicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Contra (T-Chi)
+// Translation by FlameCyclone
+static struct BurnRomInfo nes_supercontracRomDesc[] = {
+	{ "Super Contra (T-Chi).nes",          393232, 0x048f7dd8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supercontrac)
+STD_ROM_FN(nes_supercontrac)
+
+struct BurnDriver BurnDrvnes_supercontrac = {
+	"nes_supercontrac", "nes_superc", NULL, NULL, "2017-08-01",
+	"Super Contra (T-Chi)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_supercontracRomInfo, nes_supercontracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hebereke (T-Chi, v1.2)
+// Translation by Lei Jing Ling
+// mapper 69
+static struct BurnRomInfo nes_heberekecRomDesc[] = {
+	{ "Hebereke (T-Chi, v1.2).nes",          393232, 0x48e8bcee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_heberekec)
+STD_ROM_FN(nes_heberekec)
+
+struct BurnDriver BurnDrvnes_heberekecc= {
+	"nes_heberekec", "nes_ufouria", NULL, NULL, "2019-07-23",
+	"Hebereke (T-Chi, v1.2)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_heberekecRomInfo, nes_heberekecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Gun.Smoke (T-Chi)
+// Translation by MEZARANSU & gonerFC
+static struct BurnRomInfo nes_gunsmokecRomDesc[] = {
+	{ "Gun.Smoke (T-Chi).nes",          163856, 0x4e0b7a7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gunsmokec)
+STD_ROM_FN(nes_gunsmokec)
+
+struct BurnDriver BurnDrvnes_gunsmokec = {
+	"nes_gunsmokec", "nes_gunsmoke", NULL, NULL, "2019-11-17",
+	"Gun.Smoke (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_gunsmokecRomInfo, nes_gunsmokecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mappy Kids (T-Chi, v1.1)
+// Translation by Lei Jing Ling & Jiang Wei Di Er
+// mapper 19
+static struct BurnRomInfo nes_mappykidscRomDesc[] = {
+	{ "Mappy Kids (T-Chi, v1.1).nes",          524304, 0x159bc653, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mappykidsc)
+STD_ROM_FN(nes_mappykidsc)
+
+struct BurnDriver BurnDrvnes_mappykidsc = {
+	"nes_mappykidsc", "nes_mappykids", NULL, NULL, "2019-10-25",
+	"Mappy Kids (T-Chi, v1.1)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mappykidscRomInfo, nes_mappykidscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)
+// Translation by Advance Team & DMG Team - MEZARANSU & Ju Jue Rong Hua
+// mapper 065
+static struct BurnRomInfo nes_daikunogensan2cRomDesc[] = {
+	{ "Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi).nes",          524304, 0x66c08cd8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_daikunogensan2c)
+STD_ROM_FN(nes_daikunogensan2c)
+
+struct BurnDriver BurnDrvnes_daikunogensan2c = {
+	"nes_daikunogensan2c", "nes_daikunogensan2", NULL, NULL, "2019-07-28",
+	"Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (T-Chi)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_daikunogensan2cRomInfo, nes_daikunogensan2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)
+// Translation by Du Gu Jiu Jian
+static struct BurnRomInfo nes_saiyuwor2cRomDesc[] = {
+	{ "Saiyuuki World 2 - Tenjoukai no Majin (T-Chi).nes",          262160, 0x784fc411, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saiyuwor2c)
+STD_ROM_FN(nes_saiyuwor2c)
+
+struct BurnDriver BurnDrvnes_saiyuwor2c = {
+	"nes_saiyuwor2c", "nes_whompem", NULL, NULL, "2019-10-26",
+	"Saiyuuki World 2 - Tenjoukai no Majin (T-Chi)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_saiyuwor2cRomInfo, nes_saiyuwor2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// DuckTales 2 (T-Chi, v1.1)
+// Translation by DMG Team - MEZARANSU & Nai Niu
+// mapper 04 (MMC3)
+static struct BurnRomInfo nes_ducktales2cRomDesc[] = {
+	{ "DuckTales 2 (T-Chi, v1.1).nes",          262160, 0x794dbb67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ducktales2c)
+STD_ROM_FN(nes_ducktales2c)
+
+struct BurnDriver BurnDrvnes_ducktales2c = {
+	"nes_ducktales2c", "nes_ducktales2", NULL, NULL, "2019-06-01",
+	"DuckTales 2 (T-Chi, v1.1)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ducktales2cRomInfo, nes_ducktales2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Daiku no Gen-san (T-Chi)
+// Translation by MEZARANSU & Nai Niu & Di Tan CEO
+// mapper 04 (MMC3)
+static struct BurnRomInfo nes_daikunogensancRomDesc[] = {
+	{ "Daiku no Gen-san (T-Chi).nes",          393232, 0xf0543c45, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_daikunogensanc)
+STD_ROM_FN(nes_daikunogensanc)
+
+struct BurnDriver BurnDrvnes_daikunogensanc = {
+	"nes_daikunogensanc", "nes_daikunogensan", NULL, NULL, "2019-03-05",
+	"Daiku no Gen-san (T-Chi)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_daikunogensancRomInfo, nes_daikunogensancRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Jigoku Gokuraku Maru (T-Chi)
+// Translation by MEZARANSU & Jin Di
+// mapper 04
+static struct BurnRomInfo nes_jigokgokmarcRomDesc[] = {
+	{ "Jigoku Gokuraku Maru (T-Chi).nes",          393232, 0x375bf357, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jigokgokmarc)
+STD_ROM_FN(nes_jigokgokmarc)
+
+struct BurnDriver BurnDrvnes_jigokgokmarc = {
+	"nes_jigokgokmarc", "nes_kabuki", NULL, NULL, "2019-11-08",
+	"Jigoku Gokuraku Maru (T-Chi)\0", NULL, "Pack-In-Video", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_jigokgokmarcRomInfo, nes_jigokgokmarcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 // END of "Non Homebrew (hand-added!)"

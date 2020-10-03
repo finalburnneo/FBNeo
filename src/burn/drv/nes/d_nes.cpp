@@ -12482,7 +12482,7 @@ struct BurnDriver BurnDrvnes_argosnosenshic = {
 	"nes_argosnosenshic", "nes_rygar", NULL, NULL, "2016-01-27",
 	"Argos no Senshi (T-Chi, v1.11)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_argosnosenshicRomInfo, nes_argosnosenshicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

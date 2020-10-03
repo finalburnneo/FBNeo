@@ -10649,6 +10649,25 @@ struct BurnDriver BurnSpecgoodyes = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Goody (Recoloured)(Spanish)
+
+static struct BurnRomInfo SpecgoodyrecolourRomDesc[] = {
+	{ "Goody (1987)(Opera Soft)(Recoloured)(es).tap", 0x0dbb2, 0x8b02e960, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specgoodyrecolour, Specgoodyrecolour, Spec128)
+STD_ROM_FN(Specgoodyrecolour)
+
+struct BurnDriver BurnSpecgoodyrecolour = {
+	"spec_goodyrecolour", NULL, "spec_spec128", NULL, "1987",
+	"Goody (Recoloured)(Spanish)\0", NULL, "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecgoodyrecolourRomInfo, SpecgoodyrecolourRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Ice Breaker (Spanish)
 
 static struct BurnRomInfo SpecicebreakerRomDesc[] = {

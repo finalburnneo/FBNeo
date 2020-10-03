@@ -82,7 +82,7 @@ static UINT16 (*tms32010_read_port)(INT32);
 
 static UINT16 program_read_word_16be(UINT16 address)
 {
-	UINT16 r = tms32010_rom[address & 0xfff];
+	UINT16 r = BURN_ENDIAN_SWAP_INT16(tms32010_rom[address & 0xfff]);
 	r = (r << 8) | (r >> 8);
 	return r;
 }
@@ -91,12 +91,12 @@ static void program_write_word_16be(UINT16 address, UINT16 data)
 {
 	data = (data << 8) | (data >> 8);
 
-	tms32010_rom[address & 0xfff] = data;
+	tms32010_rom[address & 0xfff] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static UINT16 data_read_word_16be(UINT16 address)
 {
-	UINT16 r = tms32010_ram[address & 0xff];
+	UINT16 r = BURN_ENDIAN_SWAP_INT16(tms32010_ram[address & 0xff]);
 
 	r = (r << 8) | (r >> 8);
 
@@ -107,7 +107,7 @@ static void data_write_word_16be(UINT16 address, UINT16 data)
 {
 	data = (data << 8) | (data >> 8);
 
-	tms32010_ram[address & 0xff] = data;
+	tms32010_ram[address & 0xff] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 UINT16 io_read_word(INT32 offset)

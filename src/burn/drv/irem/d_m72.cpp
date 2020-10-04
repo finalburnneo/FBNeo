@@ -2695,7 +2695,7 @@ static struct BurnRomInfo dbreedjm72RomDesc[] = {
 
 	{ "db_c-v0.ic44",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "db_c-pr-.mcu",	0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
+	{ "db_c-pr-.ic1",	0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedjm72)

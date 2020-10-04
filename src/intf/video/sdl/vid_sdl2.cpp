@@ -4,7 +4,7 @@
 #include "vid_softfx.h"
 
 #ifdef INCLUDE_SWITCHRES
-#include "vid_switchres.h"
+#include <switchres_wrapper.h>
 #endif
 
 #include <SDL.h>
@@ -46,7 +46,9 @@ void RenderMessage()
 
 static int Exit()
 {
-	switchres_exit();
+#ifdef INCLUDE_SWITCHRES
+	sr_deinit();
+#endif
 	kill_inline_font(); //TODO: This is not supposed to be here
 	SDL_DestroyTexture(sdlTexture);
 	SDL_DestroyRenderer(sdlRenderer);
@@ -63,6 +65,9 @@ static int Init()
 	int nMemLen = 0;
 	int GameAspectX = 4, GameAspectY = 3;
 
+#ifdef INCLUDE_SWITCHRES
+	sr_mode srm;
+#endif
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("vid init error\n");
@@ -80,11 +85,21 @@ static int Init()
 
 		display_w = nVidImageWidth;
 #ifdef INCLUDE_SWITCHRES
+		sr_init();
 		// Don't force 4:3 aspect-ratio, until there is a command-line switch
 		display_h = nVidImageHeight;
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+		{
+			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
+			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
+			printf("Vertical\n");
+			nRotateGame = 1;
+			sr_set_rotation(1);
+			display_w = nVidImageWidth;
+			display_h = nVidImageHeight;
+		}
 #else
 		display_h = nVidImageWidth * GameAspectY / GameAspectX;
-#endif
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
@@ -93,9 +108,9 @@ static int Init()
 			printf("Vertical\n");
 			nRotateGame = 1;
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
-			display_w = nVidImageWidth;
 			display_h = nVidImageHeight;
 		}
+#endif
 
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED)
 		{
@@ -126,8 +141,9 @@ static int Init()
 #ifdef INCLUDE_SWITCHRES
 	unsigned char interlace = 0; // FBN doesn't handle interlace yet, force it to disabled
 	double rr = nBurnFPS / 100.0;
-	switchres_init();
-	switchres_switch_resolution(display_w, display_h, rr, interlace);
+	sr_init_disp();
+	sr_add_mode(display_w, display_h, rr, interlace, &srm);
+	sr_switch_to_mode(display_w, display_h, rr, interlace, &srm);
 #endif
 
 	if (nRotateGame)

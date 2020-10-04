@@ -86,12 +86,6 @@ depobj	+=	un7z.o \
 			Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
 endif
 
-ifdef INCLUDE_SWITCHRES
-$(info Switchres will be enabled)
-alldir	+=	dep/libs/switchres intf/video/switchres
-depobj	+=	vid_switchres.o
-endif
-
 autobj += $(depobj)
 
 ifdef	BUILD_X86_ASM
@@ -119,7 +113,8 @@ lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
 endif
 
 ifdef INCLUDE_SWITCHRES
-lib += -ldl
+incdir += `pkg-config --cflags switchres`
+lib += `pkg-config --libs switchres`
 endif
 
 autdep	= $(depobj:.o=.d)

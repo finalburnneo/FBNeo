@@ -2504,25 +2504,25 @@ struct BurnDriver BurnDrvPpan = {
 // In The Hunt (World)
 
 static struct BurnRomInfo inthuntRomDesc[] = {
-	{ "ith-h0-d.bin",	0x040000, 0x52f8e7a6, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "ith-l0-d.bin",	0x040000, 0x5db79eb7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ith-h1-b.bin",	0x020000, 0xfc2899df, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ith-l1-b.bin",	0x020000, 0x955a605a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ith-h0-d.ic28",	0x040000, 0x52f8e7a6, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "ith-l0-d.ic39",	0x040000, 0x5db79eb7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ith-h1-b.ic38",	0x020000, 0xfc2899df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ith-l1-b.ic27",	0x020000, 0x955a605a, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ith-sh0.rom",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ith-sl0.rom",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ith-sh0.ic30",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ith-sl0.ic31",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ith_ic26.rom",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "ith_ic25.rom",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
-	{ "ith_ic24.rom",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
-	{ "ith_ic23.rom",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
+	{ "ith_c0.ic26",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ith_c1.ic25",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
+	{ "ith_c2.ic24",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
+	{ "ith_c3.ic23",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
 
-	{ "ith_ic34.rom",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
-	{ "ith_ic35.rom",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
-	{ "ith_ic36.rom",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
-	{ "ith_ic37.rom",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
+	{ "ith_000.ic34",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
+	{ "ith_010.ic35",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
+	{ "ith_020.ic36",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
+	{ "ith_030.ic37",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
 
-	{ "ith_ic9.rom",	0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
+	{ "ith_da.ic9",		0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
 };
 
 STD_ROM_PICK(inthunt)
@@ -2552,25 +2552,25 @@ struct BurnDriver BurnDrvInthunt = {
 // In The Hunt (US)
 
 static struct BurnRomInfo inthuntuRomDesc[] = {
-	{ "ith-h0-c.bin",	0x040000, 0x563dcec0, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "ith-l0-c.bin",	0x040000, 0x1638c705, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ith-h1-a.bin",	0x020000, 0x0253065f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ith-l1-a.bin",	0x020000, 0xa57d688d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ith-h0-c.ic28",	0x040000, 0x563dcec0, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "ith-l0-c.ic39",	0x040000, 0x1638c705, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ith-h1-a.ic38",	0x020000, 0x0253065f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ith-l1-a.ic27",	0x020000, 0xa57d688d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ith-sh0.rom",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ith-sl0.rom",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ith-sh0.ic30",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ith-sl0.ic31",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ith_ic26.rom",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "ith_ic25.rom",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
-	{ "ith_ic24.rom",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
-	{ "ith_ic23.rom",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
+	{ "ith_c0.ic26",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ith_c1.ic25",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
+	{ "ith_c2.ic24",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
+	{ "ith_c3.ic23",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
 
-	{ "ith_ic34.rom",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
-	{ "ith_ic35.rom",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
-	{ "ith_ic36.rom",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
-	{ "ith_ic37.rom",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
+	{ "ith_000.ic34",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
+	{ "ith_010.ic35",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
+	{ "ith_020.ic36",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
+	{ "ith_030.ic37",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
 
-	{ "ith_ic9.rom",	0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
+	{ "ith_da.ic9",		0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
 };
 
 STD_ROM_PICK(inthuntu)
@@ -2590,25 +2590,25 @@ struct BurnDriver BurnDrvInthuntu = {
 // Kaitei Daisensou (Japan)
 
 static struct BurnRomInfo kaiteidsRomDesc[] = {
-	{ "ith-h0j.bin",	0x040000, 0xdc1dec36, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "ith-l0j.bin",	0x040000, 0x8835d704, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ith-h1j.bin",	0x020000, 0x5a7b212d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ith-l1j.bin",	0x020000, 0x4c084494, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ith-h0j.ic28",	0x040000, 0xdc1dec36, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "ith-l0j.ic39",	0x040000, 0x8835d704, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ith-h1j.ic38",	0x020000, 0x5a7b212d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ith-l1j.ic27",	0x020000, 0x4c084494, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ith-sh0.rom",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ith-sl0.rom",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ith-sh0.ic30",	0x010000, 0x209c8b7f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ith-sl0.ic31",	0x010000, 0x18472d65, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ith_ic26.rom",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "ith_ic25.rom",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
-	{ "ith_ic24.rom",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
-	{ "ith_ic23.rom",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
+	{ "ith_c0.ic26",	0x080000, 0x4c1818cf, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ith_c1.ic25",	0x080000, 0x91145bae, 3 | BRF_GRA },           //  7
+	{ "ith_c2.ic24",	0x080000, 0xfc03fe3b, 3 | BRF_GRA },           //  8
+	{ "ith_c3.ic23",	0x080000, 0xee156a0a, 3 | BRF_GRA },           //  9
 
-	{ "ith_ic34.rom",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
-	{ "ith_ic35.rom",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
-	{ "ith_ic36.rom",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
-	{ "ith_ic37.rom",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
+	{ "ith_000.ic34",	0x100000, 0xa019766e, 4 | BRF_GRA },           // 10 Sprites
+	{ "ith_010.ic35",	0x100000, 0x3fca3073, 4 | BRF_GRA },           // 11
+	{ "ith_020.ic36",	0x100000, 0x20d1b28b, 4 | BRF_GRA },           // 12
+	{ "ith_030.ic37",	0x100000, 0x90b6fd4b, 4 | BRF_GRA },           // 13
 
-	{ "ith_ic9.rom",	0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
+	{ "ith_da.ic9",		0x080000, 0x318ee71a, 5 | BRF_SND },           // 14 Irem GA20 Samples
 };
 
 STD_ROM_PICK(kaiteids)

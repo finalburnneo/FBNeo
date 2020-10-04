@@ -1236,26 +1236,26 @@ static struct BurnRomInfo karnovRomDesc[] = {
 
 	{ "dn05-5.f3",		0x08000, 0xfa1a31a8, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
 
-	{ "dn00-.c5",		0x08000, 0x0ed77c6d, 3 | BRF_GRA},            //  7 Characters
+	{ "dn00-.c5",		0x08000, 0x0ed77c6d, 3 | BRF_GRA },           //  7 Characters
 
-	{ "dn04-.d18",		0x10000, 0xa9121653, 4 | BRF_GRA},            //  8 Tiles
-	{ "dn01-.c15",		0x10000, 0x18697c9e, 4 | BRF_GRA},            //  9
-	{ "dn03-.d15",		0x10000, 0x90d9dd9c, 4 | BRF_GRA},            // 10
-	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA},            // 11
+	{ "dn04-.d18",		0x10000, 0xa9121653, 4 | BRF_GRA },           //  8 Tiles
+	{ "dn01-.c15",		0x10000, 0x18697c9e, 4 | BRF_GRA },           //  9
+	{ "dn03-.d15",		0x10000, 0x90d9dd9c, 4 | BRF_GRA },           // 10
+	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA },           // 11
 
-	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA},            // 12 Sprites
-	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
-	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
-	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
-	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
-	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
-	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
-	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
+	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA },           // 12 Sprites
+	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA },           // 13
+	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA },           // 14
+	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA },           // 15
+	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA },           // 16
+	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA },           // 17
+	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA },           // 18
+	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA },           // 19
 
-	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
-	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
+	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Color Proms
+	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 	
-	{ "dn-e.k14",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
+	{ "dn-5.k14",  		0x01000, 0xd056de4e, 0 | BRF_OPT }, 		  // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnov)
@@ -1300,19 +1300,19 @@ static struct BurnRomInfo karnovaRomDesc[] = {
 	{ "dn03-.d15",		0x10000, 0x90d9dd9c, 4 | BRF_GRA },           // 10
 	{ "dn02-.c18",		0x10000, 0x1e04d7b9, 4 | BRF_GRA },           // 11
 
-	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA},            // 12 Sprites
-	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
-	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
-	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
-	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
-	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
-	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
-	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
+	{ "dn12-.f8",		0x10000, 0x9806772c, 5 | BRF_GRA },           // 12 Sprites
+	{ "dn14-5.f11",		0x08000, 0xac9e6732, 5 | BRF_GRA },           // 13
+	{ "dn13-.f9",		0x10000, 0xa03308f9, 5 | BRF_GRA },           // 14
+	{ "dn15-5.f12",		0x08000, 0x8933fcb8, 5 | BRF_GRA },           // 15
+	{ "dn16-.f13",		0x10000, 0x55e63a11, 5 | BRF_GRA },           // 16
+	{ "dn17-5.f15",		0x08000, 0xb70ae950, 5 | BRF_GRA },           // 17
+	{ "dn18-.f16",		0x10000, 0x2ad53213, 5 | BRF_GRA },           // 18
+	{ "dn19-5.f18",		0x08000, 0x8fd4fa40, 5 | BRF_GRA },           // 19
 
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 	
-	{ "dn-5.k14",  		0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 22 i8751 microcontroller
+	{ "dn-5.k14",  		0x01000, 0xd056de4e, 0 | BRF_OPT }, 		  // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnova)
@@ -1361,7 +1361,7 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 	
-	{ "karnovj_i8751.k14",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP}, // 22 i8751 microcontroller
+	{ "karnovj_i8751.k14",  0x01000, 0x5a8c4d28,  0 | BRF_OPT }, 	  // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnovj)

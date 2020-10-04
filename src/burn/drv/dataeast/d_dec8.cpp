@@ -4326,12 +4326,12 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt00-e.f3",		0x08000, 0x912a7eee, 1 }, //  0 maincpu
 	{ "dt01.f5",		0x10000, 0xc39bb877, 1 }, //  1
-	{ "dt02.f6",		0x10000, 0xbb5e674b, 1 }, //  2
+	{ "dt02.f6",		0x10000, 0x925307a4, 1 }, //  2
 	{ "dt03-e.f7",		0x10000, 0xee7475eb, 1 }, //  3
 
 	{ "dt05-e.h5",		0x08000, 0xec08aa29, 2 }, //  4 audiocpu
 
-	{ "dt14.b18",		0x08000, 0x4bef16e1, 3 }, //  5 gfx1
+	{ "dt14-e.b18",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
 
 	{ "dt19.f13",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
 	{ "dt20-e.f15",		0x08000, 0x0eef7f56, 4 }, //  7
@@ -4351,7 +4351,7 @@ static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt10.h13",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt11.h15",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "dt-e.b1",     	0x01000, 0x00000000, 6 | BRF_NODUMP }, // 22 i8751 microcontroller
+	{ "dt-e.b1",     	0x01000, 0x0d0532ec, 6 }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 };
@@ -4361,9 +4361,9 @@ STD_ROM_FN(gondo)
 
 struct BurnDriver BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (World)\0", "please use 'gondou' instead!", "Data East USA", "DEC8",
+	"Gondomania (World)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4

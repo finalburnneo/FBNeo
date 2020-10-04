@@ -11393,7 +11393,7 @@ struct BurnDriver BurnSpecprojstealthfighter = {
 // Golden Axe
 
 static struct BurnRomInfo Specgoldenaxe1RomDesc[] = {
-	{ "Golden Axe (1990)(Virgin Games).tap", 0x2cbdb, 0xc73ef59f, BRF_ESS | BRF_PRG },
+	{ "Golden Axe (1990)(Virgin Games).z80", 0x1b859, 0x3f32f82f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specgoldenaxe1, Specgoldenaxe1, Spec128)
@@ -11405,7 +11405,7 @@ struct BurnDriver BurnSpecgoldenaxe1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specgoldenaxe1RomInfo, Specgoldenaxe1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

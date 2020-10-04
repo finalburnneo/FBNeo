@@ -11352,6 +11352,82 @@ struct BurnDriver BurnSpecshaddancer = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Airborne Ranger
+
+static struct BurnRomInfo SpecairbornerangerRomDesc[] = {
+	{ "Airborne Ranger (1988)(MicroProse Software).tap", 0x40e88, 0xa82ed5c5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specairborneranger, Specairborneranger, Spec128)
+STD_ROM_FN(Specairborneranger)
+
+struct BurnDriver BurnSpecairborneranger = {
+	"spec_airborneranger", NULL, "spec_spec128", NULL, "1988",
+	"Airborne Ranger\0", NULL, "MicroProse Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecairbornerangerRomInfo, SpecairbornerangerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Project Stealth Fighter
+
+static struct BurnRomInfo SpecprojstealthfighterRomDesc[] = {
+	{ "Project Stealth Fighter (1990)(MicroProse Software).tap", 0x2bde9, 0xf0b7dc66, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specprojstealthfighter, Specprojstealthfighter, Spec128)
+STD_ROM_FN(Specprojstealthfighter)
+
+struct BurnDriver BurnSpecprojstealthfighter = {
+	"spec_projstealthfighter", NULL, "spec_spec128", NULL, "1990",
+	"Project Stealth Fighter\0", NULL, "MicroProse Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecprojstealthfighterRomInfo, SpecprojstealthfighterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Golden Axe
+
+static struct BurnRomInfo Specgoldenaxe1RomDesc[] = {
+	{ "Golden Axe (1990)(Virgin Games).z80", 0x1b859, 0x3f32f82f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specgoldenaxe1, Specgoldenaxe1, Spec128)
+STD_ROM_FN(Specgoldenaxe1)
+
+struct BurnDriver BurnSpecgoldenaxe1 = {
+	"spec_goldenaxe1", NULL, "spec_spec128", NULL, "1990",
+	"Golden Axe\0", NULL, "Virgin Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specgoldenaxe1RomInfo, Specgoldenaxe1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Gunship
+
+static struct BurnRomInfo SpecgunshipRomDesc[] = {
+	{ "Gunship (1987)(MicroProse Software).tap", 0x193ca, 0x01e4ed88, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specgunship, Specgunship, Spec128)
+STD_ROM_FN(Specgunship)
+
+struct BurnDriver BurnSpecgunship = {
+	"spec_gunship", NULL, "spec_spec128", NULL, "1987",
+	"Gunship\0", NULL, "MicroProse Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecgunshipRomInfo, SpecgunshipRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

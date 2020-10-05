@@ -11409,6 +11409,25 @@ struct BurnDriver BurnSpecgunship = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Desperado (Gunsmoke) (Trainer)
+
+static struct BurnRomInfo Specdesperado1trnRomDesc[] = {
+	{ "Desperado (1987)(Topo Soft)(Trainer).tap", 149093, 0xff12d868, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specdesperado1trn, Specdesperado1trn, Spec128)
+STD_ROM_FN(Specdesperado1trn)
+
+struct BurnDriver BurnSpecdesperado1trn = {
+	"spec_desperado1trn", NULL, "spec_spec128", NULL, "1987",
+	"Desperado (Gunsmoke) (Trainer)\0", NULL, "Topo Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specdesperado1trnRomInfo, Specdesperado1trnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
@@ -11668,7 +11687,7 @@ static struct BurnRomInfo SpecyazzieRomDesc[] = {
 STDROMPICKEXT(Specyazzie, Specyazzie, Spec128)
 STD_ROM_FN(Specyazzie)
 
-struct BurnDriver BurnSpectourmaline = {
+struct BurnDriver BurnSpecyazzie = {
 	"spec_yazzie", NULL, "spec_spec128", NULL, "2019",
 	"Yazzie (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,

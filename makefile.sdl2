@@ -112,6 +112,11 @@ ifdef DARWIN
 lib += -L/System/Library/Frameworks/OpenGL.framework/Libraries/
 endif
 
+ifdef INCLUDE_SWITCHRES
+incdir += `pkg-config --cflags switchres`
+lib += `pkg-config --libs switchres`
+endif
+
 autdep	= $(depobj:.o=.d)
 drvdep	= $(drvsrc:.o=.d)
 
@@ -254,6 +259,10 @@ endif
 
 ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
+endif
+
+ifdef INCLUDE_SWITCHRES
+	DEF := $(DEF) -DINCLUDE_SWITCHRES
 endif
 
 ifdef	SYMBOL

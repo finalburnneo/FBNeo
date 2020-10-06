@@ -669,8 +669,8 @@ static struct BurnRomInfo dblewingaRomDesc[] = {
 
 	{ "kp_03-.16h",			0x020000, 0x5d7f930d, 5 | BRF_SND },           	 //  6 OKI M6295 Samples
 	
-	{ "pal1618-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
-	{ "pal1618-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
+	{ "pal16l8-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
+	{ "pal16l8-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
 	{ "pal16r8-vg-02.11b", 	0x00117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, //  9
 };
 
@@ -696,8 +696,8 @@ static struct BurnRomInfo dblewingbRomDesc[] = {
 
 	{ "kp_03-.16h",			0x020000, 0x5d7f930d, 5 | BRF_SND },             //  6 OKI M6295 Samples
 	
-	{ "pal1618-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
-	{ "pal1618-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
+	{ "pal16l8-vg-00.1f",  	0x00117, 0x8c2849e5, 0 | BRF_OPT }, 			 //  7 Plds
+	{ "pal16l8-vg-01.1h",  	0x00117, 0x04b0bab6, 0 | BRF_OPT }, 			 //  8
 	{ "pal16r8-vg-02.11b", 	0x00117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, //  9
 };
 

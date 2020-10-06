@@ -1038,6 +1038,8 @@ int ProcessCmdLine()
 				if (_tcscmp(szOpt2, _T("-w")) == 0) {
 					nCmdOptUsed = 2;
 					bFullscreen = 0;
+				} else {
+					if (_tcscmp(szOpt2, _T("-p")) == 0) bDoIpsPatch = true;
 				}
 			}
 		}
@@ -1062,10 +1064,19 @@ int ProcessCmdLine()
 
 				for (i = 0; i < nBurnDrvCount; i++) {
 					nBurnDrvActive = i;
-					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))){
+					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
+						if (_tcslen(szOpt2) > 1 &&
+							!bDoIpsPatch &&
+							_tcscmp(szCmdLine + _tcslen(szCmdLine) - 2, _T("-p")) == 0)
+							bDoIpsPatch = true;
+
+						if (bDoIpsPatch) LoadIpsActivePatches();
+
 						if (DrvInit(i, true)) { // failed (bad romset, etc.)
 							nVidFullscreen = 0; // Don't get stuck in fullscreen mode
 						}
+
+						bDoIpsPatch = false;
 						break;
 					}
 				}

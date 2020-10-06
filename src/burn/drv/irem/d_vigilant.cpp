@@ -654,9 +654,9 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },				// 16	Samples
 	
-	{ "p09_1618.bin",  0x00117, 0xdf368a7a, BRF_GRA },				// 17	PALs
-	{ "m05_1618.bin",  0x00117, 0xdbca4204, BRF_GRA },				// 18
-	{ "b01_1618.bin",  0x00104, 0x1beae498, BRF_GRA },				// 19
+	{ "p09_16l8.bin",  0x00117, 0xdf368a7a, BRF_GRA },				// 17	PALs
+	{ "m05_16l8.bin",  0x00117, 0xdbca4204, BRF_GRA },				// 18
+	{ "b01_16l8.bin",  0x00104, 0x1beae498, BRF_GRA },				// 19
 	
 	{ "a07_129.bin",   0x00100, 0xc324835e, BRF_OPT },				// 20	Video Timing PROM
 	{ "t10_129a.bin",  0x00100, 0x1513df33, BRF_OPT },				// 21

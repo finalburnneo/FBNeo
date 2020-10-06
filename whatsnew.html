@@ -6,106 +6,106 @@
 <title>FinalBurn Neo - What's New</title>
 <meta charset="UTF-8" />
 <style>
-    body {
-        font-family: verdana, lucida, sans-serif;
-        font-size: 0.8em;
-        color: #333333;
-        background-color: #CE6A57;
-        margin: 0em;
-        text-align: center;
-    }
+	body {
+		font-family: verdana, lucida, sans-serif;
+		font-size: 0.8em;
+		color: #333333;
+		background-color: #CE6A57;
+		margin: 0em;
+		text-align: center;
+	}
 
-    a:link {
-        color: #C03029;
-        text-decoration: none;
-    }
+	a:link {
+		color: #C03029;
+		text-decoration: none;
+	}
 
-    a:visited {
-        color: #C03029;
-        text-decoration: none;
-    }
+	a:visited {
+		color: #C03029;
+		text-decoration: none;
+	}
 
-    a:hover {
-        color: #333333;
-        text-decoration: underline;
-    }
+	a:hover {
+		color: #333333;
+		text-decoration: underline;
+	}
 
-    a:active {
-        color: #C03029;
-        text-decoration: underline;
-    }
+	a:active {
+		color: #C03029;
+		text-decoration: underline;
+	}
 
-    a.active:link {
-        color: #C03029;
-        text-decoration: none;
-        font-weight:bold;
-        font-style: italic;
-    }
+	a.active:link {
+		color: #C03029;
+		text-decoration: none;
+		font-weight:bold;
+		font-style: italic;
+	}
 
-    a.active:visited {
-        color: #C03029;
-        text-decoration: none;
-        font-weight:bold;
-        font-style: italic;
-    }
+	a.active:visited {
+		color: #C03029;
+		text-decoration: none;
+		font-weight:bold;
+		font-style: italic;
+	}
 
-    a.active:hover {
-        color: #333333;
-        text-decoration: underline;
-        font-weight:bold;
-        font-style: italic;
-    }
+	a.active:hover {
+		color: #333333;
+		text-decoration: underline;
+		font-weight:bold;
+		font-style: italic;
+	}
 
-    a.active:active {
-        color: #C03029;
-        text-decoration: underline;
-        font-weight:bold;
-        font-style: italic;
-    }
+	a.active:active {
+		color: #C03029;
+		text-decoration: underline;
+		font-weight:bold;
+		font-style: italic;
+	}
 
-    h2 {
-        color: #C03029;
-        font-size: 1.4em;
-        margin-top: 1em;
-    }
+	h2 {
+		color: #C03029;
+		font-size: 1.4em;
+		margin-top: 1em;
+	}
 
-    h3 {
-        color: #FFFFFF;
-        font-size: 1.2em;
+	h3 {
+		color: #FFFFFF;
+		font-size: 1.2em;
 		margin-top: 3em;
 		background-color: #aaaaaa;
 		width: 6.0em;
 		padding: 0.5em;
 		border-radius: 10px;
 		text-align: center;
-    }
+	}
 
 	h4 {
-        color: #C03029;
-        font-size: 1.0em;
-    }
+		color: #C03029;
+		font-size: 1.0em;
+	}
 
-    li {
-        padding: 0.1em;
-    }
+	li {
+		padding: 0.1em;
+	}
 
-    .outer {
-        width: 78em;
-        margin: 0em auto;
-        text-align: left;
-        padding: 0.7em 0.7em 0.7em 0.7em;
-        background-color: #FFFFFF;
-        border: 0.08em solid #808080;
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
+	.outer {
+		width: 78em;
+		margin: 0em auto;
+		text-align: left;
+		padding: 0.7em 0.7em 0.7em 0.7em;
+		background-color: #FFFFFF;
+		border: 0.08em solid #808080;
+		margin-top: 1em;
+		margin-bottom: 1em;
+	}
 
-    .note {
-        color: #C03029;
-        padding: 1em;
-        background-color: #DDD9D9;
-        font-style: italic;
-    }
+	.note {
+		color: #C03029;
+		padding: 1em;
+		background-color: #DDD9D9;
+		font-style: italic;
+	}
 </style>
 </head>
 
@@ -218,6 +218,8 @@
 <li>Capcom CPS3: support rowscroll for fg (character) layer, fixes player 2 hit counter in JoJo games. [Haze]</li>
 <li>Capcom CPS3: fixed some gfx glitches in the JoJo games, and possibly others [dink]</li>
 <li>Capcom CPS3: updated driver to catch up with latest MAME, added a dips to revert to the old glitchy behavior with less sprite lag [MetalliC, dink, barbudreadmon]</li>
+<li>Capcom CPS3: added a dips to toggle widescreen mode in sfiii and sfiii2 [barbudreadmon]</li>
+<li>Seta 2: updated driver to catch up with latest MAME [Haze, dink, barbudreadmon]</li>
 <li>Fixed Pac 'n Pal boot problem [dink]</li>
 <li>Fixed flickery main sprite in Ozma Wars [dink]</li>
 <li>Added per-chip routing and volume to the Pokey chip [dink]</li>
@@ -307,8 +309,8 @@
 	<li>S.S.RPG, Double Dragon, Last Blade 2 works now</li>
 	<li>Fast loading times (even faster with F1/ffwd)</li>
 	<li>Dozens of bugs fixed</li>
-        <li>Convert your old-style Neo Geo CD .iso + .wav's to .bin/.cue, <a href="http://neo-source.com/index.php?topic=2487.msg26465#msg26465"> <b>>> click for howto <<</b> </a></li>
-        <li>Big thanks to Silanda and barbudreadmon for bug reports, ideas, talks and HW tests</li>
+	<li>Convert your old-style Neo Geo CD .iso + .wav's to .bin/.cue, <a href="http://neo-source.com/index.php?topic=2487.msg26465#msg26465"> <b>>> click for howto <<</b> </a></li>
+	<li>Big thanks to Silanda and barbudreadmon for bug reports, ideas, talks and HW tests</li>
 </ul></li>
 <li>Sync romsets with MAME 0.206 [Barry]</li>
 <li>Hook up analog dials for Pachinko Sexy Reaction 1 &amp; 2 [dink]</li>
@@ -421,6 +423,7 @@
 <li>Emulate Kick 'n Run MCU [dink]</li>
 <li>Dec8 HW: Fix Gondomania, emulate all MCU's from scratch [dink]</li>
 <li>Fixed starfield and DIPS in Gaplus [sasuke-arcade]</li>
+<li>Fixed frame duping bug in midway T/W Unit [Romhack, dink]</li>
 <li> []</li>
 <li> []</li>
 <li> []</li>
@@ -629,6 +632,7 @@
 <li>Added Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2018-02-23, FEITIANXUE) [HBMAME, JacKc]</li>
 <li>Added Knights of Valour Super Heroes Plus (The Road to Survival True King Version 2020-01-03, FEITIANXUE) [HBMAME, JacKc]</li>
 <li>Added missing Gottlieb/Mylstar games in the QBert driver [iq_132, dink]</li>
+<li>Added various hacks to dkong driver [HBMAME, barbudreadmon]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>
@@ -803,10 +807,10 @@
 </ul></li>
 <li>Fix crash with NBA Jam Tournament Edition on Megadrive [dink]</li>
 <li>Improve 68k timing for Megadrive, fixes... [dink]<ul>
-        <li>Graphics issues/corruption in Galahad</li>
-        <li>Flickery separator line in VS mode on Sonic 2 and 3</li>
+	<li>Graphics issues/corruption in Galahad</li>
+	<li>Flickery separator line in VS mode on Sonic 2 and 3</li>
 	<li>Fix freeze with Desert Strike on Megadrive</li>
-        <li>Overall, probably improves everything</li>
+	<li>Overall, probably improves everything</li>
 </ul></li>
 <li>Fix music hangs in Sonic 3 when Sonic is underwater (Z80 timing) [dink]</li>
 <li>Fix PGM Arm7 crash on 64bit systems w/theglad, kov* [dink]</li>

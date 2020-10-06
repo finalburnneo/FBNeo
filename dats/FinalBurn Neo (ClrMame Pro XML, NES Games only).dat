@@ -278,6 +278,20 @@
 		<rom name="Airwolf (USA).nes" size="163856" crc="f0a5eb24"/>
 		<driver status="good"/>
 	</game>
+	<game name="akiraj" cloneof="akira" romof="akira">
+		<description>Akira (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Akira (Japan).nes" size="393232" crc="9d83974c"/>
+		<driver status="good"/>
+	</game>
+	<game name="akira">
+		<description>Akira (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Akira (T-Eng).nes" size="524304" crc="ab6a9ee1"/>
+		<driver status="good"/>
+	</game>
 	<game name="akumadenj" cloneof="castliii" romof="castliii">
 		<description>Akumajou Densetsu (Japan)</description>
 		<year>1989</year>
@@ -514,6 +528,20 @@
 		<year>1991</year>
 		<manufacturer>IGS</manufacturer>
 		<rom name="Armadillo (T-eng).nes" size="393232" crc="651c9916"/>
+		<driver status="good"/>
+	</game>
+	<game name="armeddrafanvilj" cloneof="armeddrafanvil" romof="armeddrafanvil">
+		<description>Armed Dragon Fantasy Villgust (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Armed Dragon Fantasy Villgust (Japan).nes" size="393232" crc="5a8bfdf5"/>
+		<driver status="good"/>
+	</game>
+	<game name="armeddrafanvil">
+		<description>Armed Dragon Fantasy Villgust (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Armed Dragon Fantasy Villgust (T-Eng).nes" size="524304" crc="de77f40a"/>
 		<driver status="good"/>
 	</game>
 	<game name="asmikkunland">
@@ -1405,7 +1433,7 @@
 		<rom name="Captain Planet and the Planeteers (USA).nes" size="262160" crc="21d34187"/>
 		<driver status="good"/>
 	</game>
-	<game name="captainsaver">
+	<game name="captainsaver" cloneof="powerblade2" romof="powerblade2">
 		<description>Captain Saver (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1494,6 +1522,13 @@
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Castlevania (USA).nes" size="131088" crc="856114c8"/>
+		<driver status="good"/>
+	</game>
+	<game name="castliih" cloneof="castlii" romof="castlii">
+		<description>Castlevania II - Simon's Quest (Hack, ReTrans+Map)</description>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Castlevania II - Simon's Quest (Hack, ReTrans+Map).nes" size="262160" crc="153143e9"/>
 		<driver status="good"/>
 	</game>
 	<game name="castlii">
@@ -1865,6 +1900,13 @@
 		<year>2017-07-29</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Contra (T-Chi).nes" size="393232" crc="2a39628d"/>
+		<driver status="good"/>
+	</game>
+	<game name="contrat" cloneof="contra" romof="contra">
+		<description>Contra (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Contra (T-Eng).nes" size="262160" crc="d93f2c45"/>
 		<driver status="good"/>
 	</game>
 	<game name="contra">
@@ -2399,11 +2441,18 @@
 		<rom name="Dizzy The Adventurer (USA).nes" size="131088" crc="92847456"/>
 		<driver status="good"/>
 	</game>
-	<game name="dokidokyuu">
+	<game name="dokidokyuuj" cloneof="dokidokyuu" romof="dokidokyuu">
 		<description>Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Vap</manufacturer>
 		<rom name="Doki!Doki! Yuuenchi - Crazy Land Daisakusen (Japan).nes" size="262160" crc="6058397f"/>
+		<driver status="good"/>
+	</game>
+	<game name="dokidokyuu">
+		<description>Doki!Doki! Yuuenchi - Crazy Land Daisakusen (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Doki!Doki! Yuuenchi - Crazy Land Daisakusen (T-Eng).nes" size="262160" crc="9aad9b7a"/>
 		<driver status="good"/>
 	</game>
 	<game name="dondokodon">
@@ -2446,6 +2495,13 @@
 		<year>1983</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey Kong (World) (Rev A).nes" size="24592" crc="e40b593b"/>
+		<driver status="good"/>
+	</game>
+	<game name="donkeykong3">
+		<description>Donkey Kong 3 (USA)</description>
+		<year>1984</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Donkey Kong 3 (USA).nes" size="24592" crc="d1cac3c2"/>
 		<driver status="good"/>
 	</game>
 	<game name="donkekoncou4">
@@ -3167,6 +3223,27 @@
 		<year>1987</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Family Boxing (Japan).nes" size="131088" crc="381b51f3"/>
+		<driver status="good"/>
+	</game>
+	<game name="familcir91">
+		<description>Family Circuit '91 (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Family Circuit '91 (Japan).nes" size="655376" crc="cfbb646d"/>
+		<driver status="good"/>
+	</game>
+	<game name="familycircuitj" cloneof="familycircuit" romof="familycircuit">
+		<description>Family Circuit (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Family Circuit (Japan).nes" size="163856" crc="51ce0655"/>
+		<driver status="good"/>
+	</game>
+	<game name="familycircuit">
+		<description>Family Circuit (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Family Circuit (T-Eng).nes" size="163856" crc="e44892f7"/>
 		<driver status="good"/>
 	</game>
 	<game name="familypicross">
@@ -4401,11 +4478,18 @@
 		<rom name="Hokuto no Ken 2 (Japan).nes" size="131088" crc="e2fe0c0e"/>
 		<driver status="good"/>
 	</game>
-	<game name="holydiver">
+	<game name="holydiverj" cloneof="holydiver" romof="holydiver">
 		<description>Holy Diver (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Holy Diver (Japan).nes" size="262160" crc="c4cf0e8e"/>
+		<driver status="good"/>
+	</game>
+	<game name="holydiver">
+		<description>Holy Diver (T-Eng)</description>
+		<year>1989</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Holy Diver (T-Eng).nes" size="262160" crc="28d1d380"/>
 		<driver status="good"/>
 	</game>
 	<game name="homealone">
@@ -4968,6 +5052,20 @@
 		<rom name="Juuryoku Soukou Metal Storm (Japan).nes" size="393232" crc="984ef54b"/>
 		<driver status="good"/>
 	</game>
+	<game name="juveiquestj" cloneof="juveiquest" romof="juveiquest">
+		<description>Juvei Quest (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Juvei Quest (Japan).nes" size="524304" crc="2e937d80"/>
+		<driver status="good"/>
+	</game>
+	<game name="juveiquest">
+		<description>Juvei Quest (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="Juvei Quest (T-Eng).nes" size="786448" crc="00a5b4f2"/>
+		<driver status="good"/>
+	</game>
 	<game name="jy45in1">
 		<description>JY 45-in-1 (Unl)</description>
 		<year>1989?</year>
@@ -5416,11 +5514,18 @@
 		<rom name="Kunio-kun no Nekketsu Soccer League (Japan).nes" size="262160" crc="9659bca6"/>
 		<driver status="good"/>
 	</game>
-	<game name="kyoursenjuu">
+	<game name="kyoursenjuuj" cloneof="kyoursenjuu" romof="kyoursenjuu">
 		<description>Kyouryuu Sentai Juuranger (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Kyouryuu Sentai Juuranger (Japan).nes" size="262160" crc="7bf82c80"/>
+		<driver status="good"/>
+	</game>
+	<game name="kyoursenjuu">
+		<description>Kyouryuu Sentai Juuranger (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Kyouryuu Sentai Juuranger (T-Eng).nes" size="262160" crc="7a272f4c"/>
 		<driver status="good"/>
 	</game>
 	<game name="kyuukyokutiger" cloneof="twincobra" romof="twincobra">
@@ -6165,11 +6270,18 @@
 		<rom name="Metal Gear (USA).nes" size="131088" crc="b27de2d8"/>
 		<driver status="good"/>
 	</game>
-	<game name="metalmax">
+	<game name="metalmaxj" cloneof="metalmax" romof="metalmax">
 		<description>Metal Max (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="Metal Max (Japan).nes" size="524304" crc="334f45bb"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalmax">
+		<description>Metal Max (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="Metal Max (T-Eng).nes" size="786448" crc="74a85272"/>
 		<driver status="good"/>
 	</game>
 	<game name="metalmec">
@@ -6177,6 +6289,20 @@
 		<year>1991</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Metal Mech - Man &amp; Machine (USA).nes" size="262160" crc="6884a729"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalslagloj" cloneof="metalslaglo" romof="metalslaglo">
+		<description>Metal Slader Glory (Japan)</description>
+		<year>1991</year>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Metal Slader Glory (Japan).nes" size="1048592" crc="c032f38f"/>
+		<driver status="good"/>
+	</game>
+	<game name="metalslaglo">
+		<description>Metal Slader Glory (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Metal Slader Glory (T-Eng).nes" size="1572880" crc="13981241"/>
 		<driver status="good"/>
 	</game>
 	<game name="metalstorm">
@@ -6235,11 +6361,18 @@
 		<rom name="Mickey Mania 7 (Unl).nes" size="524304" crc="a1460ad3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mickemouiii">
+	<game name="mickemouiiij" cloneof="mickemouiii" romof="mickemouiii">
 		<description>Mickey Mouse III - Yume Fuusen (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="Mickey Mouse III - Yume Fuusen (Japan).nes" size="262160" crc="8ad9a9be"/>
+		<driver status="good"/>
+	</game>
+	<game name="mickemouiii">
+		<description>Mickey Mouse III - Yume Fuusen (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Mickey Mouse III - Yume Fuusen (T-Eng).nes" size="262160" crc="5cb55b23"/>
 		<driver status="good"/>
 	</game>
 	<game name="mickemou">
@@ -6324,6 +6457,20 @@
 		<year>1987</year>
 		<manufacturer>King Records</manufacturer>
 		<rom name="Miracle Ropit's - 2100 Nen no Daibouken (Japan).nes" size="131088" crc="ac8ae5ef"/>
+		<driver status="good"/>
+	</game>
+	<game name="miraisenj" cloneof="miraisen" romof="miraisen">
+		<description>Mirai Senshi - Lios (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Pack-In-Video</manufacturer>
+		<rom name="Mirai Senshi - Lios (Japan).nes" size="262160" crc="8ce29756"/>
+		<driver status="good"/>
+	</game>
+	<game name="miraisen">
+		<description>Mirai Senshi - Lios (T-Eng)</description>
+		<year>1989</year>
+		<manufacturer>Pack-In-Video</manufacturer>
+		<rom name="Mirai Senshi - Lios (T-Eng).nes" size="262160" crc="932c263b"/>
 		<driver status="good"/>
 	</game>
 	<game name="missioncobra">
@@ -7936,11 +8083,18 @@
 		<rom name="Rolling Thunder (USA) (Unl).nes" size="262160" crc="e68a35bc"/>
 		<driver status="good"/>
 	</game>
-	<game name="romancia">
+	<game name="romanciaj" cloneof="romancia" romof="romancia">
 		<description>Romancia (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Tokyo Shoseki</manufacturer>
 		<rom name="Romancia (Japan).nes" size="131088" crc="1d5c630b"/>
+		<driver status="good"/>
+	</game>
+	<game name="romancia">
+		<description>Romancia (T-Eng)</description>
+		<year>1987</year>
+		<manufacturer>Tokyo Shoseki</manufacturer>
+		<rom name="Romancia (T-Eng).nes" size="131088" crc="c0785ed4"/>
 		<driver status="good"/>
 	</game>
 	<game name="rushnattack">

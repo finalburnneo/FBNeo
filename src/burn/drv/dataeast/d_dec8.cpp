@@ -1,8 +1,6 @@
 // FB Alpha Data East 8-bit driver module
 // Based on MAME driver by Bryan McPhail and Stephane Humbert
 
-// todo: remove csilver mcu byte-patches when new roms are available!
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_ym2203.h"
@@ -1321,15 +1319,6 @@ static void DrvMCUInit(INT32 game)
 			mcu_divid = 1;
 			break;
 		case 3: // csilver
-			// csilver mcu (0xca663965) has 3 bad bits:          -dink May 2020
-			DrvMCURom[0x185] = 0x90; // was 0x98  - id/init comms
-			DrvMCURom[0x186] = 0x11; // was 0x19  - id/init comms
-			DrvMCURom[0x1a6] = 0x06; // was 0x0e  - p2 coin bit..
-
-			if (!strcmp(BurnDrvGetTextA(DRV_NAME), "csilverj")) {
-				bprintf(0, _T("**  modify csilver (world) mcu to work with csilverj*\n"));
-				DrvMCURom[0x180] = 0x4a; // japan id
-			}
 			mcs51_set_write_handler(mcu_write_port_csilver);
 			mcs51_set_read_handler(mcu_read_port);
 			pTotalCycles = M6809TotalCycles;
@@ -5952,7 +5941,7 @@ static INT32 CsilverInit()
 		if (BurnLoadRom(DrvGfxROM2   + 0x40000,  13, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2   + 0x50000,  14, 1)) return 1;
 
-		BurnLoadRom(DrvMCURom  + 0x00000, 15, 1); // don't fail here, one or more set might be missing mcu
+		if (BurnLoadRom(DrvMCURom    + 0x00000,  15, 1)) return 1;
 
 		LastmissGfxDecode();
 	}
@@ -6141,7 +6130,7 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "dx-8.19a",		0x01000, 0xc0266263, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilver)
@@ -6192,7 +6181,7 @@ static struct BurnRomInfo csilverjRomDesc[] = {
 	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverj)
@@ -6234,7 +6223,7 @@ static struct BurnRomInfo csilverjaRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverja)

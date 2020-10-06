@@ -11470,6 +11470,25 @@ struct BurnDriver BurnSpecalterego = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Cheril the Goddess (HB, v2)
+
+static struct BurnRomInfo SpeccherilgodRomDesc[] = {
+	{ "Cheril The Goddess V2 (2011)(Mojon Twins).tap", 43545, 0x94cc3db8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speccherilgod, Speccherilgod, Spec128)
+STD_ROM_FN(Speccherilgod)
+
+struct BurnDriver BurnSpeccherilgod = {
+	"spec_cherilgod", NULL, "spec_spec128", NULL, "2011",
+	"Cheril the Goddess (HB, v2)\0", NULL, "Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpeccherilgodRomInfo, SpeccherilgodRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Danterrifik (HB)
 
 static struct BurnRomInfo SpecdanterrifikRomDesc[] = {
@@ -11485,6 +11504,25 @@ struct BurnDriver BurnSpecdanterrifik = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecdanterrifikRomInfo, SpecdanterrifikRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Danterrifik 2 (HB)
+
+static struct BurnRomInfo Specdanterrifik2RomDesc[] = {
+	{ "Danterrifik 2 (2020)(Toku Soft).tap", 49982, 0x478c7adf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specdanterrifik2, Specdanterrifik2, Spec128)
+STD_ROM_FN(Specdanterrifik2)
+
+struct BurnDriver BurnSpecdanterrifik2 = {
+	"spec_danterrifik2", NULL, "spec_spec128", NULL, "2020",
+	"Danterrifik 2 (HB)\0", NULL, "Toku Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Specdanterrifik2RomInfo, Specdanterrifik2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -11584,6 +11622,25 @@ struct BurnDriver BurnSpecjumpjupiter = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Lost Treasures of Tulum, the (HB)
+
+static struct BurnRomInfo SpeclostulumRomDesc[] = {
+	{ "Lost Treasures of Tulum, the (2020)(RetroWorks).tap", 75999, 0xc64c38ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speclostulum, Speclostulum, Spec128)
+STD_ROM_FN(Speclostulum)
+
+struct BurnDriver BurnSpeclostulum = {
+	"spec_lostulum", NULL, "spec_spec128", NULL, "2020",
+	"Lost Treasures of Tulum, the (HB)\0", NULL, "RetroWorks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpeclostulumRomInfo, SpeclostulumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // MultiDude (RetroSouls)
 
 static struct BurnRomInfo SpecmultidudeRomDesc[] = {
@@ -11618,6 +11675,44 @@ struct BurnDriver BurnSpecoldtower = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecoldtowerRomInfo, SpecoldtowerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Rat-A-Tat (HB)
+
+static struct BurnRomInfo SpecratatatRomDesc[] = {
+	{ "Rat-A-Tat (2020)(Joesoft).z80", 48861, 0x39227a8c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specratatat, Specratatat, Spec128)
+STD_ROM_FN(Specratatat)
+
+struct BurnDriver BurnSpecratatat = {
+	"spec_ratatat", NULL, "spec_spec128", NULL, "2020",
+	"Rat-A-Tat (HB)\0", NULL, "JoeSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecratatatRomInfo, SpecratatatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Relic, the (HB)
+
+static struct BurnRomInfo SpecrelicRomDesc[] = {
+	{ "The Relic 128K (2020)(Roolandoo).tap",  46629, 0x183c5158, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specrelic, Specrelic, Spec128)
+STD_ROM_FN(Specrelic)
+
+struct BurnDriver BurnSpecrelic = {
+	"spec_relic", NULL, "spec_spec128", NULL, "2020",
+	"Relic, the (HB)\0", NULL, "Roolandoo", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecrelicRomInfo, SpecrelicRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

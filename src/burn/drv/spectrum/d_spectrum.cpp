@@ -11428,6 +11428,26 @@ struct BurnDriver BurnSpecdesperado1trn = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Star Wars
+
+static struct BurnRomInfo SpecStarwarsRomDesc[] = {
+	{ "Star Wars.tap", 0xa323, 0x14f2595f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStarwars, SpecStarwars, Spec128)
+STD_ROM_FN(SpecStarwars)
+
+struct BurnDriver BurnSpecStarwars = {
+	"spec_starwars", NULL, "spec_spec128", NULL, "1987",
+	"Star Wars\0", NULL, "Domark Ltd (UK)", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecStarwarsRomInfo, SpecStarwarsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

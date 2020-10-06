@@ -68,6 +68,8 @@ LSB_FIRST = 1
 # Include png.h from burner.h
 INCLUDE_LIB_PNGH = 1
 
+# Enable CRT resolution switching
+# INCLUDE_SWITCHRES = 1
 
 #
 #	execute an appropriate system-specific makefile

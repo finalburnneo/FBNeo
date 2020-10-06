@@ -604,7 +604,7 @@ static struct BurnRomInfo tempestRomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  6 avg prom
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9
@@ -640,7 +640,7 @@ static struct BurnRomInfo tempest1rRomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  6 user1
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9
@@ -688,7 +688,7 @@ static struct BurnRomInfo tempest3RomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 12 user1
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9
@@ -730,7 +730,7 @@ static struct BurnRomInfo tempest2RomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 12 user1
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9
@@ -772,7 +772,7 @@ static struct BurnRomInfo tempest1RomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 12 user1
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9
@@ -814,7 +814,7 @@ static struct BurnRomInfo temptubeRomDesc[] = {
 
 	{ "136002-125.d7",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 12 user1
 
-	{ "136002.126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
+	{ "136002-126.a1",	0x0020, 0x8b04f921, 3 | BRF_GRA },           //  7 mathbox prom
 
 	{ "136002-132.l1",	0x0100, 0x2af82e87, 4 | BRF_GRA },           //  8 user3
 	{ "136002-131.k1",	0x0100, 0xb31f6e24, 4 | BRF_GRA },           //  9

@@ -833,6 +833,60 @@ static struct BurnRomInfo Hangon2RomDesc[] = {
 STD_ROM_PICK(Hangon2)
 STD_ROM_FN(Hangon2)
 
+static struct BurnRomInfo HangonvfRomDesc[] = {
+	{ "9.3n	",   		  0x08000, 0x20b1c2b0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "11.1n",    		  0x08000, 0x7d9db1bf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "8.3k",   		  0x08000, 0xfea12367, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "10.1k",    		  0x08000, 0xac883240, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "6.6l",    		  0x08000, 0x1c95013e, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "7.5l",    		  0x08000, 0x6ca30d69, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "2.3j",    		  0x08000, 0x255a3a58, SYS16_ROM_TILES | BRF_GRA },
+	{ "3.2j",    		  0x08000, 0x88b9ffd9, SYS16_ROM_TILES | BRF_GRA },
+	{ "4.1j",     		  0x08000, 0x18882328, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "19.5b",    		  0x08000, 0x469dad07, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "25.6b",    		  0x08000, 0x87cbc6de, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "18.5c",    		  0x08000, 0x15792969, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "24.6c",    		  0x08000, 0xe9718de5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "17.5d",    		  0x08000, 0x49422691, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "23.6d",    		  0x08000, 0x701deaa4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "16.5e",    		  0x08000, 0xf003a000, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "22.6e",    		  0x08000, 0x08b007e2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "15.5f",    		  0x08000, 0x7fa1bfb6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "21.6f",    		  0x08000, 0x8e880c93, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "14.5h",    		  0x08000, 0x47e63dd1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "20.6h",    		  0x08000, 0x33d1aa6e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "12.3f",    		  0x08000, 0x22fc088e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "13.4f",    		  0x08000, 0x032738ba, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "5.9r",   		  0x08000, 0x581230e3, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "28.12h",    		  0x04000, 0x3b942f5f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "26.1e",     		  0x08000, 0xcfef5481, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "27.1g",     		  0x08000, 0x4165aea5, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "1.9d",   		  0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	
+	{ "a_pal16r4a.9e",    0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "b_pls153an.9f",    0x000eb, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "c_pal16r6a.7m",    0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d_pal16r6a.7r",    0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "e_pal16r6a.7s",    0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "f_pls153n.6s",     0x000eb, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "g_pal16l8a.3r",    0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	// no PLD marked 'H'
+	{ "i_pls153n_snd.6f", 0x000eb, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "j_pal16l8a_db.bin",0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "k_pal16r4a_db.bin",0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+};
+
+
+STD_ROM_PICK(Hangonvf)
+STD_ROM_FN(Hangonvf)
+
 static struct BurnRomInfo ShangonroRomDesc[] = {
 	{ "epr-10842.22",     0x08000, 0x24289138, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10839.8",      0x08000, 0x70f92d5e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1751,10 +1805,20 @@ struct BurnDriver BurnDrvHangon1 = {
 
 struct BurnDriver BurnDrvHangon2 = {
 	"hangon2", "hangon", NULL, NULL, "1985",
-	"Hang-On (ride-on)\0", NULL, "Sega", "Hang-On",
+	"Hang-On (Rev A, ride-on)\0", NULL, "Sega", "Hang-On",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_YM2203, GBF_RACING, 0,
 	NULL, Hangon2RomInfo, Hangon2RomName, NULL, NULL, NULL, NULL, HangonInputInfo, HangonDIPInfo,
+	HangonInit, System16Exit, HangonYM2203Frame, HangonAltRender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvHangonvf = {
+	"hangonvf", "hangon", NULL, NULL, "1985",
+	"VF (bootleg of Hang-On)\0", NULL, "bootleg", "Hang-On",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_YM2203, GBF_RACING, 0,
+	NULL, HangonvfRomInfo, HangonvfRomName, NULL, NULL, NULL, NULL, HangonInputInfo, HangonDIPInfo,
 	HangonInit, System16Exit, HangonYM2203Frame, HangonAltRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

@@ -4693,11 +4693,11 @@ static struct BurnRomInfo SsibRomDesc[] = {
 	{ "c64_12.ic9",       	0x040000, 0xd5716d7e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c64_13.ic8",       	0x040000, 0x99e3dd1c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "c64-09.13",          0x010000, 0x88d7f65c, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "c64-09.ic38",        0x010000, 0x88d7f65c, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
-	{ "c64-01.1",           0x100000, 0xa1b4f486, BRF_GRA | TAITO_SPRITESA },
+	{ "c64-01.ic51",        0x100000, 0xa1b4f486, BRF_GRA | TAITO_SPRITESA },
 	
-	{ "c64-02.2",           0x020000, 0x3cb0b907, BRF_SND | TAITO_YM2610A },
+	{ "c64-02.ic1",         0x020000, 0x3cb0b907, BRF_SND | TAITO_YM2610A },
 	
 	// originals are protected PAL16L8s, these are brute-forced and reversed for GAL16V8s
 	{ "c64-10.ic42",		0x000117, 0x08e8c3d6, BRF_OPT },

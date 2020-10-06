@@ -1,8 +1,6 @@
 // FB Alpha Data East 8-bit driver module
 // Based on MAME driver by Bryan McPhail and Stephane Humbert
 
-// todo: remove csilver mcu byte-patches when new roms are available!
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "burn_ym2203.h"
@@ -1321,15 +1319,6 @@ static void DrvMCUInit(INT32 game)
 			mcu_divid = 1;
 			break;
 		case 3: // csilver
-			// csilver mcu (0xca663965) has 3 bad bits:          -dink May 2020
-			DrvMCURom[0x185] = 0x90; // was 0x98  - id/init comms
-			DrvMCURom[0x186] = 0x11; // was 0x19  - id/init comms
-			DrvMCURom[0x1a6] = 0x06; // was 0x0e  - p2 coin bit..
-
-			if (!strcmp(BurnDrvGetTextA(DRV_NAME), "csilverj")) {
-				bprintf(0, _T("**  modify csilver (world) mcu to work with csilverj*\n"));
-				DrvMCURom[0x180] = 0x4a; // japan id
-			}
 			mcs51_set_write_handler(mcu_write_port_csilver);
 			mcs51_set_read_handler(mcu_read_port);
 			pTotalCycles = M6809TotalCycles;
@@ -4326,12 +4315,12 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt00-e.f3",		0x08000, 0x912a7eee, 1 }, //  0 maincpu
 	{ "dt01.f5",		0x10000, 0xc39bb877, 1 }, //  1
-	{ "dt02.f6",		0x10000, 0xbb5e674b, 1 }, //  2
+	{ "dt02.f6",		0x10000, 0x925307a4, 1 }, //  2
 	{ "dt03-e.f7",		0x10000, 0xee7475eb, 1 }, //  3
 
 	{ "dt05-e.h5",		0x08000, 0xec08aa29, 2 }, //  4 audiocpu
 
-	{ "dt14.b18",		0x08000, 0x4bef16e1, 3 }, //  5 gfx1
+	{ "dt14-e.b18",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
 
 	{ "dt19.f13",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
 	{ "dt20-e.f15",		0x08000, 0x0eef7f56, 4 }, //  7
@@ -4351,7 +4340,7 @@ static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt10.h13",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt11.h15",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "dt-e.b1",     	0x01000, 0x00000000, 6 | BRF_NODUMP }, // 22 i8751 microcontroller
+	{ "dt-e.b1",     	0x01000, 0x0d0532ec, 6 }, // 22 i8751 microcontroller
 
 	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 };
@@ -4361,9 +4350,9 @@ STD_ROM_FN(gondo)
 
 struct BurnDriver BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (World)\0", "please use 'gondou' instead!", "Data East USA", "DEC8",
+	"Gondomania (World)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
 	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
@@ -5952,7 +5941,7 @@ static INT32 CsilverInit()
 		if (BurnLoadRom(DrvGfxROM2   + 0x40000,  13, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2   + 0x50000,  14, 1)) return 1;
 
-		BurnLoadRom(DrvMCURom  + 0x00000, 15, 1); // don't fail here, one or more set might be missing mcu
+		if (BurnLoadRom(DrvMCURom    + 0x00000,  15, 1)) return 1;
 
 		LastmissGfxDecode();
 	}
@@ -6141,7 +6130,7 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "dx-8.19a",		0x01000, 0xc0266263, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilver)
@@ -6192,7 +6181,7 @@ static struct BurnRomInfo csilverjRomDesc[] = {
 	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverj)
@@ -6234,7 +6223,7 @@ static struct BurnRomInfo csilverjaRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 i8751 microcontroller
+	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
 };
 
 STD_ROM_PICK(csilverja)

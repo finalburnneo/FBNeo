@@ -423,6 +423,26 @@ static void __fastcall SpecZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
+static UINT8 SpecSpecSpecSpecSpecFloatingMemory()
+{
+	// port 0xff - "floating memory"   -dink Oct 06, 2020
+	// returns current attribute being drawn or 0xff if in border
+	// Sidewize needs this feature to synchronize the cpu w/ screen
+	INT32 x = ((ZetTotalCycles() - SpecHorStartCycles) * 2) + 88;
+	INT32 y = nScanline;
+
+	UINT16 xSrc = x - SPEC_BORDER_LEFT;
+	UINT16 ySrc = y - SPEC_BORDER_TOP;
+
+	if (xSrc < SPEC_SCREEN_XSIZE && ySrc < SPEC_SCREEN_YSIZE) {
+		UINT8 attr = *(SpecVideoRam + ((ySrc & 0xF8) << 2) + (xSrc >> 3) + 0x1800);
+		return attr;
+	} // else
+
+	// in border
+	return 0xff;
+}
+
 static UINT8 SpecIntf2PortFERead(UINT16 offset)
 {
 	UINT8 data = 0xff;
@@ -438,13 +458,16 @@ static UINT8 SpecIntf2PortFERead(UINT16 offset)
 static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 {
 	if ((a & 0xff) != 0xfe) {
-		if ((a & 0x1f) == 0x1f) {
+		if ((a & 0x1f) == 0x1f && !(a & 0xe0)) {
 			// kempston
 			return SpecInput[8] & 0x1f;
 		}
 		
-		bprintf(PRINT_NORMAL, _T("Read Port %x\n"), a);
-		return (nScanline < 193) ? SpecVideoRam[(nScanline & 0xf8) << 2] : 0xff;
+		if ((a & 0xff) == 0xff) {
+			return SpecSpecSpecSpecSpecFloatingMemory();
+		}
+
+		return 0xff;
 	}
 	
 	UINT8 lines = a >> 8;
@@ -576,17 +599,20 @@ static void __fastcall SpecSpec128Z80Write(UINT16 a, UINT8 d)
 static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 {
 	if ((a & 0xff) != 0xfe) {
-		if ((a & 0x1f) == 0x1f) {
+		if ((a & 0x1f) == 0x1f && !(a & 0xe0)) {
 			// kempston
 			return SpecInput[8] & 0x1f;
 		}
-		
+
 		if (a == 0xfffd) {
 			return AY8910Read(0);
 		}
-		
-		bprintf(PRINT_NORMAL, _T("Read Port %x\n"), a);
-		return (nScanline < 193) ? SpecVideoRam[0x1800 | ((nScanline & 0xf8) << 2)] : 0xff;
+
+		if ((a & 0xff) == 0xff) {
+			return SpecSpecSpecSpecSpecFloatingMemory();
+		}
+
+		return 0xff;
 	}
 
 	UINT8 lines = a >> 8;
@@ -10709,7 +10735,7 @@ struct BurnDriver BurnSpecrobinofwood = {
 // Sidewize (128K)
 
 static struct BurnRomInfo SpecsidewizeRomDesc[] = {
-	{ "Sidewize (1987)(Firebird Software).z80", 0x0a58e, 0xa7f7e339, BRF_ESS | BRF_PRG },
+	{ "Sidewize (1987)(Firebird Software).tap", 0x0a2c8, 0xdb066855, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specsidewize, Specsidewize, Spec128)
@@ -10721,7 +10747,7 @@ struct BurnDriver BurnSpecsidewize = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecsidewizeRomInfo, SpecsidewizeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

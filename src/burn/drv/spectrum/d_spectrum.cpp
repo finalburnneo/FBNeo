@@ -11720,6 +11720,25 @@ struct BurnDriver BurnSpecspindizzy = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Hopping Mad
+
+static struct BurnRomInfo SpechoppingmadRomDesc[] = {
+	{ "Hopping Mad (1988)(Elite Systems).tap", 40347, 0x620ba84c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spechoppingmad, Spechoppingmad, Spec128)
+STD_ROM_FN(Spechoppingmad)
+
+struct BurnDriver BurnSpechoppingmad = {
+	"spec_hoppingmad", NULL, "spec_spec128", NULL, "1987",
+	"Hopping Mad\0", NULL, "U.S. Gold", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpechoppingmadRomInfo, SpechoppingmadRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

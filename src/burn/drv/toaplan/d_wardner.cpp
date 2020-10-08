@@ -262,7 +262,7 @@ static void palette_write(INT32 offset)
 {
 	offset &= 0xffe;
 
-	INT32 p = *((UINT16*)(DrvPalRAM + offset));
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >>  0) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -711,10 +711,17 @@ static INT32 LoadNibbles(UINT8 *dst, INT32 idx, INT32 len)
 {
 	UINT8 *tmp = (UINT8*)BurnMalloc(len*2);
 
+#ifdef LSB_FIRST
 	if (BurnLoadRom(dst + 0, idx + 1, 2)) return 1;
 	if (BurnLoadRom(dst + 1, idx + 3, 2)) return 1;
 	if (BurnLoadRom(tmp + 0, idx + 0, 2)) return 1;
 	if (BurnLoadRom(tmp + 1, idx + 2, 2)) return 1;
+#else
+	if (BurnLoadRom(dst + 0, idx + 3, 2)) return 1;
+	if (BurnLoadRom(dst + 1, idx + 1, 2)) return 1;
+	if (BurnLoadRom(tmp + 0, idx + 2, 2)) return 1;
+	if (BurnLoadRom(tmp + 1, idx + 0, 2)) return 1;
+#endif
 
 	for (INT32 i = 0; i < len * 2; i++) {
 		dst[i] = (dst[i] & 0xf) | (tmp[i] << 4);
@@ -827,7 +834,7 @@ static INT32 DrvExit()
 static void DrvPaletteUpdate()
 {
 	for (INT32 i = 0; i < 0xe00; i+=2) {
-		INT32 p = *((UINT16*)(DrvPalRAM + i));
+		INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + i)));
 
 		INT32 r = (p >>  0) & 0x1f;
 		INT32 g = (p >>  5) & 0x1f;
@@ -866,7 +873,7 @@ static void draw_layer(INT32 layer, INT32 rambank, INT32 rombank)
 		sy -= yscroll;
 		if (sy < -7) sy += height;
 
-		INT32 attr  = ram[layer][offs + (rambank/2)];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[layer][offs + (rambank/2)]);
 		INT32 color = attr >> colshift[layer];
 		INT32 code  = (attr & ((1 << colshift[layer])-1)) + rombank;
 
@@ -885,18 +892,18 @@ static void predraw_sprites()
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs += 4)
 	{
-		INT32 attr = ram[offs + 1];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
 		INT32 prio = (attr >> 10) & 3;
 		if (prio == 0) continue;
 
-		INT32 sy = ram[offs + 3] >> 7;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) >> 7;
 
 		if (sy != 0x0100)
 		{
-			INT32 code  = ram[offs] & 0x7ff;
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x7ff;
 			INT32 color = (attr & 0x3f) | ((attr >> 4) & 0xc0);
 
-			INT32 sx    = ram[offs + 2] >> 7;
+			INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) >> 7;
 			INT32 flipx = attr & 0x100;
 			if (flipx) sx -= xoffs_flipped;
 

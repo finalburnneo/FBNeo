@@ -38,6 +38,9 @@ typedef struct
 
 	const struct z80_irq_daisy_chain *daisy;
 	int (*irq_callback)(int irqline);
+
+	int (*spectrum_tape_cb)();
+	int spectrum_mode;
 } Z80_Regs;
 
 enum {
@@ -75,6 +78,7 @@ void Z80SetContext (void *src);
 int Z80Scan(int nAction);
 INT32 z80TotalCycles();
 void Z80StopExecute();
+void z80_set_spectrum_tape_callback(int (*tape_cb)());
 
 extern unsigned char Z80Vector;
 extern void (*z80edfe_callback)(Z80_Regs *Regs);
@@ -95,14 +99,22 @@ void Z80SetProgramWriteHandler(Z80WriteProgHandler handler);
 void Z80SetCPUOpReadHandler(Z80ReadOpHandler handler);
 void Z80SetCPUOpArgReadHandler(Z80ReadOpArgHandler handler);
 
+void ActiveZ80SetPC(int pc);
 int ActiveZ80GetPC();
+int ActiveZ80GetAF();
+int ActiveZ80GetAF2();
 int ActiveZ80GetBC();
 int ActiveZ80GetDE();
 int ActiveZ80GetHL();
 int ActiveZ80GetI();
+int ActiveZ80GetIX();
 int ActiveZ80GetIM();
 int ActiveZ80GetSP();
 int ActiveZ80GetPrevPC();
+void ActiveZ80SetCarry(int carry);
+int ActiveZ80GetCarry();
+int ActiveZ80GetCarry2();
+
 void ActiveZ80SetIRQHold();
 int ActiveZ80GetVector();
 void ActiveZ80SetVector(INT32 vector);

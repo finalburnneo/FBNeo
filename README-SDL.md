@@ -26,6 +26,18 @@ Assuming you have a working GCC (Mingw and GCC under ubuntu 18.04 have been test
 
 and out will pop an fbneo executable.
 
+### SDL2 + CRT mode switching
+
+Linux now supports modeswitching for CRT monitors using https://github.com/antonioginer/switchres (which is the switchres code of GroovyMAME extracted by its author as a library for emulators that wish to implement resolution switching). In order to get this to work, you need to:
+  * `git clone https://github.com/antonioginer/switchres.git` + `make` then `make install`. You'll also need to copy the repos `switchres.ini` to `/etc` and customize it. Monitors presets can be found at http://forum.arcadecontrols.com/index.php/topic,116023.msg1230485.html#msg1230485
+  * build fbneo with `make INCLUDE_SWITCHRES=1 sdl2`
+
+Current known limitations:
+  * the SDL2 backend doesn't support rom interlace. Although switchres can compute an interlace resolution, FBNeo isn't yet passing that flag.
+  * Vertical screens are not detected, so vertical games will always be rendered as horizontal
+  * in-game resolution switching is not yet supported
+  * if the monitor's refresh rate is too different from the game refresh rate, no mechanism comes to smooth the video output, so tearing can happen.
+
 ## Running
 
 ### SDL1.2

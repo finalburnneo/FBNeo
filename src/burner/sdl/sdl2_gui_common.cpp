@@ -38,6 +38,8 @@ float randomRange(float low, float high)
 void renderPanel(SDL_Renderer* sdlRenderer, int x, int y, int w, int h, UINT8 r, UINT8 g, UINT8 b )
 {
 	SDL_Rect fillRect = { x, y, w, h };
-	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 0);
+	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 200);
 	SDL_RenderFillRect(sdlRenderer, &fillRect);
+	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_NONE);
 }

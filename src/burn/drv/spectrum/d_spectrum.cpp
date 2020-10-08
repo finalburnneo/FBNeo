@@ -11701,6 +11701,25 @@ struct BurnDriver BurnSpecindytempledoom = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Spindizzy (48K)
+
+static struct BurnRomInfo SpecspindizzyRomDesc[] = {
+	{ "Spindizzy (1986)(Electric Dreams).tap", 47877, 0x568a095a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specspindizzy, Specspindizzy, Spectrum)
+STD_ROM_FN(Specspindizzy)
+
+struct BurnDriver BurnSpecspindizzy = {
+	"spec_spindizzy", NULL, "spec_spectrum", NULL, "1986",
+	"Spindizzy (48K)\0", NULL, "Electric Dreams", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecspindizzyRomInfo, SpecspindizzyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

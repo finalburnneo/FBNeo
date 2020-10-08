@@ -45,7 +45,7 @@
 #include "zlib.h"
 
 #ifdef __LIBRETRO__
- #include "streams/file_stream_transforms.h"
+ #include <streams/file_stream_transforms.h>
  #ifndef USE_FILE32API
   #define USE_FILE32API
  #endif

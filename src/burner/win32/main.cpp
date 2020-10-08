@@ -1082,7 +1082,6 @@ int ProcessCmdLine()
 
 							while (argv != NULL) {
 								int nIndex = 0;
-								TCHAR* szBuf = NULL;
 
 								while (argv[0] != '\0') {
 									if (argv[0] != '\"')
@@ -1093,7 +1092,6 @@ int ProcessCmdLine()
 										break;
 									}
 								}
-								szBuf = NULL;
 								argv -= nIndex;  // Returns the first digit of a string
 
 								while (argv[0] != '\0') {
@@ -1117,7 +1115,7 @@ int ProcessCmdLine()
 								argv = _tcstok(NULL, _T(","));
 							}
 
-							if (nList > 0) {  // write in
+							if (nList > 0) {
 								TCHAR szIni[64] = { '\0' };
 								_stprintf(szIni, _T("config\\ips\\%s.ini"), BurnDrvGetText(DRV_NAME));
 
@@ -1132,7 +1130,7 @@ int ProcessCmdLine()
 							}
 						}
 							
-						bDoIpsPatch = _tcsstr(szCmdLine, _T("-ips")) ? true : false;
+						bDoIpsPatch = _tcsstr(szCmdLine, _T("-ips"));
 						if (bDoIpsPatch) LoadIpsActivePatches();
 
 						if (DrvInit(i, true)) { // failed (bad romset, etc.)

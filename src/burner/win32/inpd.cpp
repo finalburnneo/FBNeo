@@ -1059,7 +1059,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				// Check that the checkbox is properly checked
 				if (ListView_GetCheckState(hInpdList, pNMListView->iItem)){
 					ListView_SetCheckState(hInpdList, pNMListView->iItem, 0);
-					MessageBox(hInpdDlg, FBALoadStringEx(hAppInst, IDS_ERR_MARCO_NOT_MAPPING, true), NULL, MB_ICONWARNING);
+					MessageBox(hInpdDlg, FBALoadStringEx(hAppInst, IDS_ERR_MACRO_NOT_MAPPING, true), NULL, MB_ICONWARNING);
 				}
 		}
 		if (Id == IDC_INPD_LIST && pnm->code == NM_CUSTOMDRAW) {

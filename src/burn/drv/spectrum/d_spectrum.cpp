@@ -11730,8 +11730,8 @@ STDROMPICKEXT(Spechoppingmad, Spechoppingmad, Spec128)
 STD_ROM_FN(Spechoppingmad)
 
 struct BurnDriver BurnSpechoppingmad = {
-	"spec_hoppingmad", NULL, "spec_spec128", NULL, "1987",
-	"Hopping Mad\0", NULL, "U.S. Gold", "ZX Spectrum",
+	"spec_hoppingmad", NULL, "spec_spec128", NULL, "1988",
+	"Hopping Mad\0", NULL, "Elite Systems", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpechoppingmadRomInfo, SpechoppingmadRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

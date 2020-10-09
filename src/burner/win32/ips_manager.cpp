@@ -12,6 +12,7 @@ int nIpsSelectedLanguage		= 0;
 static TCHAR szFullName[1024];
 static TCHAR szLanguages[NUM_LANGUAGES][32];
 static TCHAR szLanguageCodes[NUM_LANGUAGES][6];
+static TCHAR szPngName[MAX_PATH];
 
 static HTREEITEM hItemHandles[MAX_NODES];
 
@@ -442,6 +443,7 @@ static int IpsManagerInit()
 
 static void RefreshPatch()
 {
+	szPngName[0] = _T('\0');  // Reset the file name of the preview picture
 	SendMessage(GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT), WM_SETTEXT, (WPARAM)0, (LPARAM)NULL);
 	SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPreview);
 
@@ -481,6 +483,7 @@ static void RefreshPatch()
 			fp = _tfopen(szImageFileName, _T("rb"));
 			HBITMAP hNewImage = NULL;
 			if (fp) {
+				_tcscpy(szPngName, szImageFileName);  // Associated preview picture
 				hNewImage = PNGLoadBitmap(hIpsDlg, fp, 304, 228, 3);
 				fclose(fp);
 			}
@@ -591,10 +594,38 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			SetWindowLongPtr (GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE, Style);
 
 			IpsManagerInit();
-
+			int nBurnDrvActiveOld = nBurnDrvActive;		// RockyWall Add
 			WndInMid(hDlg, hScrnWnd);
-			SetFocus(hDlg);											// Enable Esc=close
+			SetFocus(hDlg);								// Enable Esc=close
+			nBurnDrvActive = nBurnDrvActiveOld;			// RockyWall Add
 			break;
+		}
+
+		case WM_LBUTTONDBLCLK: {
+			RECT PreviewRect;
+			POINT Point;
+
+			memset(&PreviewRect, 0, sizeof(RECT));
+			memset(&Point, 0, sizeof(POINT));
+
+			if (GetCursorPos(&Point) && GetWindowRect(GetDlgItem(hIpsDlg, IDC_SCREENSHOT_H), &PreviewRect)) {
+				if (PtInRect(&PreviewRect, Point)) {
+					FILE* fp = NULL;
+
+					fp = _tfopen(szPngName, _T("rb"));
+					if (fp) {
+						fclose(fp);
+						ShellExecute(  // Open the image with the associated program
+							GetDlgItem(hIpsDlg, IDC_SCREENSHOT_H),
+							NULL,
+							szPngName,
+							NULL,
+							NULL,
+							SW_SHOWNORMAL);
+					}
+				}
+			}
+			return 0;
 		}
 
 		case WM_COMMAND: {
@@ -631,7 +662,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				RefreshPatch();
 				return 0;
 			}
-
 			break;
 		}
 
@@ -663,6 +693,13 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if (thi.flags == TVHT_ONITEMSTATEICON) {
 					TreeView_SelectItem(hIpsList, thi.hItem);
 				}
+
+				return 1;
+			}
+
+			if (LOWORD(wParam) == IDC_CHOOSE_LIST && pNmHdr->code == NM_DBLCLK) {
+				// disable double-click node-expand
+				SetWindowLongPtr(hIpsDlg, DWLP_MSGRESULT, 1);
 
 				return 1;
 			}
@@ -850,6 +887,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 					continue;
 
                 ips_name = strtok(NULL, "\r\n");
+
+				if (ips_name[0] == '\t') ips_name++;
 
 				if (!ips_name)
 					continue;

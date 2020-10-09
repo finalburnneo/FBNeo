@@ -239,7 +239,13 @@ static INT32 pgmGetRoms(bool bLoad)
 		nPGMSPRMaskROMLen = PGMSPRMaskROMLoad - PGMSPRMaskROM;
 
 		nPGMSNDROMLen = (((PGMSNDROMLoad - ICSSNDROM) - 1) | 0xfffff) + 1;
-		
+
+		// Round the soundrom length to the next power of 2 so the soundcore can make a proper mask from it.
+		UINT32 Pages = 0;
+		for (Pages = 1; Pages < nPGMSNDROMLen; Pages <<= 1); // Calculate nearest power of 2 of len
+		//bprintf(0, _T("pgm_run: sndlen %x  pow2 %x\n"), nPGMSNDROMLen, Pages);
+		nPGMSNDROMLen = Pages;
+
 		nPGMExternalARMLen = (PGMUSER0Load - PGMUSER0) + 0x100000;
 
 	//	bprintf (0, _T("68k: %x, tile: %x, sprmask: %x, sndrom: %x, arm7: %x\n"), nPGM68KROMLen, nPGMTileROMLen, nPGMSPRMaskROMLen, nPGMSNDROMLen, nPGMExternalARMLen);

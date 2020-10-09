@@ -86,6 +86,24 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="actionforce2" romof="spec128">
+		<description>Action Force II</description>
+		<year>1988</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Action Force II (1988)(Virgin Games).tap" size="46813" crc="3d4139b7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="actionreflex" romof="spec128">
+		<description>Action Reflex</description>
+		<year>1986</year>
+		<manufacturer>Mirrorsoft</manufacturer>
+		<rom name="Action Reflex (1986)(Mirrorsoft).tap" size="41597" crc="aada6209"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="addfamth" romof="spec128">
 		<description>Addams Family, The (128K)</description>
 		<year>1991</year>
@@ -874,6 +892,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="cherilgod" romof="spec128">
+		<description>Cheril the Goddess (HB, v2) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Mojon Twins</manufacturer>
+		<rom name="Cheril The Goddess V2 (2011)(Mojon Twins).tap" size="43545" crc="94cc3db8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="chicago30" romof="spec128">
 		<description>Chicago 30's (128K)</description>
 		<year>1988</year>
@@ -1159,6 +1186,15 @@
 		<year>2020</year>
 		<manufacturer>Toku Soft</manufacturer>
 		<rom name="Danterrifik v1.1 (2020)(Toku Soft).tap" size="49067" crc="6a088600"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="danterrifik2" romof="spec128">
+		<description>Danterrifik 2 (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Toku Soft</manufacturer>
+		<rom name="Danterrifik 2 (2020)(Toku Soft).tap" size="49982" crc="478c7adf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2087,12 +2123,30 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="hoppingmad" romof="spec128">
+		<description>Hopping Mad</description>
+		<year>1988</year>
+		<manufacturer>Elite Systems</manufacturer>
+		<rom name="Hopping Mad (1988)(Elite Systems).tap" size="40347" crc="620ba84c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="horacesk" romof="spectrum">
 		<description>Horace Goes Skiing (48K)</description>
 		<year>1982</year>
 		<manufacturer>Sinclair Research</manufacturer>
 		<rom name="Horace Goes Skiing (1982)(Sinclair Research).z80" size="49182" crc="02cd124b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="hostages" romof="spec128">
+		<description>Hostages</description>
+		<year>1990</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="Hostages (1990)(Infogrames).tap" size="222554" crc="171b72b5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="howbast" romof="spec128">
@@ -2179,6 +2233,24 @@
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Incredible Shrinking Fireman, The (1986)(Mastertronic).z80" size="36200" crc="7061d0e3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="indylastcrusade" romof="spec128">
+		<description>Indiana Jones and the Last Crusade</description>
+		<year>1989</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Indiana Jones and the Last Crusade (1989)(U.S. Gold).tap" size="145470" crc="e43fcead"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="indytempledoom" romof="spec128">
+		<description>Indiana Jones and the Temple of Doom</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Indiana Jones and the Temple of Doom (1987)(U.S. Gold).tap" size="76529" crc="2c9fa63e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="indrsoccr" romof="spectrum">
@@ -2399,6 +2471,14 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="kraal" romof="spectrum">
+		<description>Kraal (48K)</description>
+		<year>1990</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Kraal (1990)(Hewson Consultants).tap" size="57614" crc="84276314"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
 	<game name="kungfum" romof="spectrum">
 		<description>Kung-Fu Master (48K)</description>
 		<year>1986</year>
@@ -2510,6 +2590,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="lostulum" romof="spec128">
+		<description>Lost Treasures of Tulum, the (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>RetroWorks</manufacturer>
+		<rom name="Lost Treasures of Tulum, the (2020)(RetroWorks).tap" size="75999" crc="c64c38ad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="lotustc" romof="spec128">
 		<description>Lotus Esprit Turbo Challenge (128K)</description>
 		<year>1990</year>
@@ -2584,6 +2673,15 @@
 		<manufacturer>Manic Miner Technologies</manufacturer>
 		<rom name="Manic Miner - Eugene - Lord of the Bathroom (1999)(Manic Miner Technologies).z80" size="30610" crc="3062e7d8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="marauder" romof="spec128">
+		<description>Marauder</description>
+		<year>1988</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Marauder (1988)(Hewson Consultants).tap" size="54339" crc="cbd7f723"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="marblem" romof="spectrum">
@@ -2925,6 +3023,15 @@
 		<manufacturer>The Hit Squad</manufacturer>
 		<rom name="Nemesis (1987)(The Hit Squad)[re-release].z80" size="42781" crc="ad42684d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="netherworld" romof="spec128">
+		<description>Netherworld</description>
+		<year>1988</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Netherworld (1988)(Hewson Consultants).tap" size="44343" crc="48db7496"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="tnzs" romof="spec128">
@@ -3397,11 +3504,37 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="ranarama" romof="spectrum">
+		<description>Ranarama (48K)</description>
+		<year>1987</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Ranarama (1987)(Hewson Consultants).z80" size="38541" crc="4894e422"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
 	<game name="rastan" romof="spec128">
 		<description>Rastan (128K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Rastan (1988)(Imagine Software)[128K].z80" size="82975" crc="0440b5e8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="ratatat" romof="spec128">
+		<description>Rat-A-Tat (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>JoeSoft</manufacturer>
+		<rom name="Rat-A-Tat (2020)(Joesoft).z80" size="48861" crc="39227a8c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="relic" romof="spec128">
+		<description>Relic, the (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="The Relic 128K (2020)(Roolandoo).tap" size="46629" crc="183c5158"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3706,6 +3839,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="thesentinel" romof="spec128">
+		<description>Sentinel, The</description>
+		<year>1987</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Sentinel, The (1987)(Firebird Software).z80" size="39141" crc="716e7ebf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="seymmovi" romof="spectrum">
 		<description>Seymour at the Movies (48K)</description>
 		<year>1991</year>
@@ -3753,7 +3895,7 @@
 		<description>Sidewize (128K)</description>
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
-		<rom name="Sidewize (1987)(Firebird Software).z80" size="42382" crc="a7f7e339"/>
+		<rom name="Sidewize (1987)(Firebird Software).tap" size="41672" crc="db066855"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3963,6 +4105,14 @@
 		<year>1990</year>
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="Space Harrier II (1990)(Grandslam Entertainments).z80" size="41700" crc="2f556b72"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="spindizzy" romof="spectrum">
+		<description>Spindizzy (48K)</description>
+		<year>1986</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Spindizzy (1986)(Electric Dreams).tap" size="47877" crc="568a095a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
@@ -4459,6 +4609,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="uridium" romof="spec128">
+		<description>Uridium</description>
+		<year>1986</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Uridium (1986)(Hewson Consultants).tap" size="49818" crc="9431e885"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="valleyofrains" romof="spec128">
 		<description>Valley of Rains (128k)</description>
 		<year>2019</year>
@@ -4687,6 +4846,15 @@
 		<year>1984</year>
 		<manufacturer>Sinclair Research Limited</manufacturer>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="zynaps" romof="spec128">
+		<description>Zynaps</description>
+		<year>1987</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="Zynaps (1987)(Hewson Consultants).tap" size="42473" crc="2e272efc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game isbios="yes" name="spec128">

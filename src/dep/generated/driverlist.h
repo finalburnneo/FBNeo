@@ -187,8 +187,10 @@ DRV		BurnDrvAfightere;
 DRV		BurnDrvAFightera;
 DRV		BurnDrvAFighterb;
 DRV		BurnDrvAFighter;
+DRV		BurnSpecactionforce2;
 DRV		BurnDrvActionhw;
 DRV		BurnDrvnes_actioinnewyor;
+DRV		BurnSpecactionreflex;
 DRV		BurnDrvmd_ar;
 DRV		BurnDrvMSX_actman;
 DRV		BurnDrvMSX_actmana;
@@ -2090,6 +2092,7 @@ DRV		BurnDrvChqflag;
 DRV		BurnDrvnes_cherilpc;
 DRV		BurnDrvsg1k_cherilp;
 DRV		BurnDrvnes_mojontwichegod;
+DRV		BurnSpeccherilgod;
 DRV		BurnDrvnes_mojontwichewri;
 DRV		BurnDrvMSX_chess;
 DRV		BurnDrvmd_chess;
@@ -2807,6 +2810,7 @@ DRV		BurnDrvmd_dangseed;
 DRV		BurnDrvDFeveron;
 DRV		BurnDrvnes_dannysulsindhe;
 DRV		BurnSpecdanterrifik;
+DRV		BurnSpecdanterrifik2;
 DRV		BurnDrvnes_daoshuai;
 DRV		BurnDrvDaraku;
 DRV		BurnDrvsms_darc;
@@ -5574,11 +5578,13 @@ DRV		BurnDrvHoops96;
 DRV		BurnDrvHoops95;
 DRV		BurnDrvMSX_hopper;
 DRV		BurnDrvhopprobo;
+DRV		BurnSpechoppingmad;
 DRV		BurnDrvHopmappy;
 DRV		BurnSpechoracesk;
 DRV		BurnDrvHorizon;
 DRV		BurnDrvsms_hoshiw;
 DRV		BurnDrvMSX_hostages;
+DRV		BurnSpechostages;
 DRV		BurnDrvHotbubla;
 DRV		BurnDrvHotbubl;
 DRV		BurnDrvHotchase;
@@ -5751,8 +5757,10 @@ DRV		BurnDrvgg_indycrus;
 DRV		BurnDrvnes_indiajonandlascrt;
 DRV		BurnDrvnes_indiajonandlascr;
 DRV		BurnDrvmd_indycrusu;
+DRV		BurnSpecindylastcrusade;
 DRV		BurnDrvMSX_indy;
 DRV		BurnDrvnes_indiajonandtemdo;
+DRV		BurnSpecindytempledoom;
 DRV		BurnDrvTurbobl;
 DRV		BurnDrvnes_indivisible;
 DRV		BurnSpecindrsoccr;
@@ -6554,6 +6562,7 @@ DRV		BurnDrvStrahlja;
 DRV		BurnDrvStrahl;
 DRV		BurnDrvKroozr;
 DRV		BurnDrvKozure;
+DRV		BurnSpeckraal;
 DRV		BurnDrvMSX_krakout;
 DRV		BurnDrvcv_krtetris;
 DRV		BurnDrvcv_ktetris;
@@ -6912,6 +6921,7 @@ DRV		BurnDrvMSX_lorna;
 DRV		BurnDrvsms_lostraider101;
 DRV		BurnDrvLosttomb;
 DRV		BurnDrvLosttombh;
+DRV		BurnSpeclostulum;
 DRV		BurnDrvCpsLostwrldo;
 DRV		BurnDrvCpsLostwrld;
 DRV		BurnDrvnes_lotlot;
@@ -7184,6 +7194,7 @@ DRV		BurnDrvMappy;
 DRV		BurnDrvnes_mappykids;
 DRV		BurnDrvnes_mappykidsc;
 DRV		BurnDrvnes_mappyland;
+DRV		BurnSpecmarauder;
 DRV		BurnDrvsms_marble;
 DRV		BurnDrvgg_marble;
 DRV		BurnDrvmd_marble;
@@ -8303,6 +8314,7 @@ DRV		BurnDrvnes_nesopetougol;
 DRV		BurnDrvnes_nescape;
 DRV		BurnDrvMSX_nkoshien;
 DRV		BurnDrvNetwars;
+DRV		BurnSpecnetherworld;
 DRV		BurnDrvpce_neutopi2;
 DRV		BurnDrvtg_neutopi2;
 DRV		BurnDrvpce_neutopia;
@@ -9972,6 +9984,7 @@ DRV		BurnDrvRampart;			// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvmd_rampart;
 DRV		BurnDrvnes_rampart;
+DRV		BurnSpecranarama;
 DRV		BurnDrvmd_rangerx;
 DRV		BurnDrvmd_rangerxu;
 DRV		BurnDrvmd_ransei;
@@ -9993,6 +10006,7 @@ DRV		BurnDrvRastsag2;
 DRV		BurnDrvmd_rastan2j;
 DRV		BurnDrvmd_rastan2;
 DRV		BurnDrvpce_rastan2;
+DRV		BurnSpecratatat;
 DRV		BurnDrvMSX_raththa;
 DRV		BurnDrvRayforce;
 DRV		BurnDrvRayforcej;
@@ -10034,6 +10048,7 @@ DRV		BurnDrvsms_regjacks;
 DRV		BurnDrvReguluso;
 DRV		BurnDrvRegulus;
 DRV		BurnDrvRegulusu;
+DRV		BurnSpecrelic;
 DRV		BurnDrvMSX_relics;
 DRV		BurnDrvfds_relics;
 DRV		BurnDrvRelief;
@@ -10694,6 +10709,7 @@ DRV		BurnDrvmd_sensible;
 DRV		BurnDrvsms_sensible;
 DRV		BurnDrvmd_sensiblep;
 DRV		BurnDrvmd_sensibie;
+DRV		BurnSpecthesentinel;
 DRV		BurnDrvsg1k_serizawa;
 DRV		BurnDrvmd_sesame;
 DRV		BurnDrvMSX_sewersam;
@@ -11475,6 +11491,7 @@ DRV		BurnDrvpce_spinpair;
 DRV		BurnDrvSpinlbrj;
 DRV		BurnDrvSpinlbru;
 DRV		BurnDrvSpinlbrk;
+DRV		BurnSpecspindizzy;
 DRV		BurnDrvpce_spirwave;
 DRV		BurnDrvmd_spiritwf;
 DRV		BurnDrvmd_spirou;
@@ -14048,6 +14065,7 @@ DRV		BurnDrvgg_ustrike;
 DRV		BurnDrvmd_ustrike;
 DRV		BurnDrvnes_urbanstrike;
 DRV		BurnDrvMSX_uridium;
+DRV		BurnSpecuridium;
 DRV		BurnDrvnes_uruseyat;
 DRV		BurnDrvMustangs;
 DRV		BurnDrvMustang;
@@ -15157,6 +15175,7 @@ DRV		BurnSpecSpec128BIOS;
 DRV		BurnSpecSpec128;
 DRV		BurnSpecSpectrumBIOS;
 DRV		BurnSpecSpectrum;
+DRV		BurnSpeczynaps;
 DRV		BurnDrvZzyzzyxx;
 DRV		BurnDrvZzyzzyxx2;
 #undef DRV
@@ -15349,8 +15368,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAFightera,			// Action Fighter (unprotected)
 	&BurnDrvAFighterb,			// Action Fighter (unprotected, analog controls)
 	&BurnDrvAFighter,			// Action Fighter, FD1089A 317-0018
+	&BurnSpecactionforce2,		// Action Force II
 	&BurnDrvActionhw,			// Action Hollywood
 	&BurnDrvnes_actioinnewyor,	// Action in New York (Europe)
+	&BurnSpecactionreflex,		// Action Reflex
 	&BurnDrvmd_ar,				// Action Replay (Euro)
 	&BurnDrvMSX_actman,			// Actman (Jpn)
 	&BurnDrvMSX_actmana,		// Actman (Jpn, Alt)
@@ -17252,6 +17273,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_cherilpc,		// Cheril Perils Classic (HB)
 	&BurnDrvsg1k_cherilp,		// Cheril Perils Classic SG-1000 (HB)
 	&BurnDrvnes_mojontwichegod,	// Cheril The Goddess (HB)
+	&BurnSpeccherilgod,			// Cheril the Goddess (HB, v2)
 	&BurnDrvnes_mojontwichewri,	// Cheril The Writer (HB)
 	&BurnDrvMSX_chess,			// Chess (Jpn)
 	&BurnDrvmd_chess,			// Chess (Rus) [no comment, NOT WORKING]
@@ -17969,6 +17991,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDFeveron,			// Dangun Feveron (Japan, ver. 98/09/17)
 	&BurnDrvnes_dannysulsindhe,	// Danny Sullivan's Indy Heat (USA)
 	&BurnSpecdanterrifik,		// Danterrifik (HB, v1.1)
+	&BurnSpecdanterrifik2,		// Danterrifik 2 (HB)
 	&BurnDrvnes_daoshuai,		// Dao Shuai (Asia) (Unl)
 	&BurnDrvDaraku,				// Daraku Tenshi - The Fallen Angels
 	&BurnDrvsms_darc,			// DARC (HB, v1.0)
@@ -20736,11 +20759,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHoops95,			// Hoops (Europe/Asia 1.7)
 	&BurnDrvMSX_hopper,			// Hopper (Euro)
 	&BurnDrvhopprobo,			// Hopper Robo
+	&BurnSpechoppingmad,		// Hopping Mad
 	&BurnDrvHopmappy,			// Hopping Mappy
 	&BurnSpechoracesk,			// Horace Goes Skiing (48K)
 	&BurnDrvHorizon,			// Horizon
 	&BurnDrvsms_hoshiw,			// Hoshi wo Sagashite... (Jpn)
 	&BurnDrvMSX_hostages,		// Hostages (Spa, Hacked by Martos)
+	&BurnSpechostages,			// Hostages
 	&BurnDrvHotbubla,			// Hot Bubble (Korea)
 	&BurnDrvHotbubl,			// Hot Bubble (Korea, with adult pictures)
 	&BurnDrvHotchase,			// Hot Chase (set 1)
@@ -20913,8 +20938,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_indiajonandlascrt,// Indiana Jones and the Last Crusade (USA) (Taito)
 	&BurnDrvnes_indiajonandlascr,// Indiana Jones and the Last Crusade (USA) (UBI Soft)
 	&BurnDrvmd_indycrusu,		// Indiana Jones and the Last Crusade (USA)
+	&BurnSpecindylastcrusade,	// Indiana Jones and the Last Crusade
 	&BurnDrvMSX_indy,			// Indiana Jones and the Temple of Doom (Euro)
 	&BurnDrvnes_indiajonandtemdo,// Indiana Jones and the Temple of Doom (USA) (Rev A)
+	&BurnSpecindytempledoom,	// Indiana Jones and the Temple of Doom
 	&BurnDrvTurbobl,			// Indianapolis (bootleg of Turbo)
 	&BurnDrvnes_indivisible,	// Indivisible (HB)
 	&BurnSpecindrsoccr,			// Indoor Soccer (48K)
@@ -21716,6 +21743,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStrahl,				// Koutetsu Yousai Strahl (World)
 	&BurnDrvKroozr,				// Kozmik Kroozr
 	&BurnDrvKozure,				// Kozure Ookami (Japan)
+	&BurnSpeckraal,				// Kraal (48K)
 	&BurnDrvMSX_krakout,		// Krakout (Euro)
 	&BurnDrvcv_krtetris,		// Kralizec Tetris (HB)
 	&BurnDrvcv_ktetris,			// Kralizec Tetris (HB)
@@ -22074,6 +22102,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_lostraider101,	// Lost Raider (HB, v1.01)
 	&BurnDrvLosttomb,			// Lost Tomb (Easy)
 	&BurnDrvLosttombh,			// Lost Tomb (Hard)
+	&BurnSpeclostulum,			// Lost Treasures of Tulum, the (HB)
 	&BurnDrvCpsLostwrldo,		// Lost Worlds (Japan Old ver.)
 	&BurnDrvCpsLostwrld,		// Lost Worlds (Japan)
 	&BurnDrvnes_lotlot,			// Lot Lot (Japan)
@@ -22346,6 +22375,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mappykids,		// Mappy Kids (Japan)
 	&BurnDrvnes_mappykidsc,		// Mappy Kids (T-Chi, v1.1)
 	&BurnDrvnes_mappyland,		// Mappy-Land (USA)
+	&BurnSpecmarauder,			// Marauder
 	&BurnDrvsms_marble,			// Marble Madness (Euro)
 	&BurnDrvgg_marble,			// Marble Madness (Euro, USA)
 	&BurnDrvmd_marble,			// Marble Madness (Euro, USA)
@@ -23465,6 +23495,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nescape,		// NEScape (HB)
 	&BurnDrvMSX_nkoshien,		// Nessen Koushien (Jpn)
 	&BurnDrvNetwars,			// Net Wars
+	&BurnSpecnetherworld,		// Netherworld
 	&BurnDrvpce_neutopi2,		// Neutopia II
 	&BurnDrvtg_neutopi2,		// Neutopia II
 	&BurnDrvpce_neutopia,		// Neutopia
@@ -25134,6 +25165,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvmd_rampart,			// Rampart (USA)
 	&BurnDrvnes_rampart,		// Rampart (USA)
+	&BurnSpecranarama,			// Ranarama (48K)
 	&BurnDrvmd_rangerx,			// Ranger-X (Euro)
 	&BurnDrvmd_rangerxu,		// Ranger-X (USA)
 	&BurnDrvmd_ransei,			// Ransei no Hasha (Jpn)
@@ -25155,6 +25187,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rastan2j,		// Rastan Saga II (Jpn)
 	&BurnDrvmd_rastan2,			// Rastan Saga II (USA)
 	&BurnDrvpce_rastan2,		// Rastan Saga II
+	&BurnSpecratatat,			// Rat-A-Tat (HB)
 	&BurnDrvMSX_raththa,		// Rath-Tha (Spa)
 	&BurnDrvRayforce,			// Ray Force (Ver 2.3A 1994/01/20)
 	&BurnDrvRayforcej,			// Ray Force (Ver 2.3J 1994/01/20)
@@ -25196,6 +25229,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvReguluso,			// Regulus (315-5033)
 	&BurnDrvRegulus,			// Regulus (315-5033, rev. A)
 	&BurnDrvRegulusu,			// Regulus (not encrypted)
+	&BurnSpecrelic,				// Relic, the (HB)
 	&BurnDrvMSX_relics,			// Relics (Jpn)
 	&BurnDrvfds_relics,			// Relics - Ankoku Yousai (Japan)
 	&BurnDrvRelief,				// Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)
@@ -25856,6 +25890,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_sensible,		// Sensible Soccer (Euro)
 	&BurnDrvmd_sensiblep,		// Sensible Soccer (Prototype)
 	&BurnDrvmd_sensibie,		// Sensible Soccer - International Edition (Euro)
+	&BurnSpecthesentinel,		// Sentinel, The
 	&BurnDrvsg1k_serizawa,		// Serizawa Hachidan no Tsumeshogi (Jpn)
 	&BurnDrvmd_sesame,			// Sesame Street Counting Cafe (USA)
 	&BurnDrvMSX_sewersam,		// Sewer Sam (Jpn)
@@ -26637,6 +26672,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpinlbrj,			// Spinal Breakers (Japan)
 	&BurnDrvSpinlbru,			// Spinal Breakers (US)
 	&BurnDrvSpinlbrk,			// Spinal Breakers (World)
+	&BurnSpecspindizzy,			// Spindizzy (48K)
 	&BurnDrvpce_spirwave,		// Spiral Wave
 	&BurnDrvmd_spiritwf,		// Spiritual Warfare (USA)
 	&BurnDrvmd_spirou,			// Spirou (Euro)
@@ -29210,6 +29246,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ustrike,			// Urban Strike (Euro, USA)
 	&BurnDrvnes_urbanstrike,	// Urban Strike (USA)
 	&BurnDrvMSX_uridium,		// Uridium (HB)
+	&BurnSpecuridium,			// Uridium
 	&BurnDrvnes_uruseyat,		// Urusei Yatsura - Lum no Wedding Bell (Japan)
 	&BurnDrvMustangs,			// US AAF Mustang (25th May. 1990 / Seoul Trading)
 	&BurnDrvMustang,			// US AAF Mustang (25th May. 1990)
@@ -30319,6 +30356,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSpec128,			// ZX Spectrum 128
 	&BurnSpecSpectrumBIOS,		// ZX Spectrum [BIOS Only, NOT WORKING]
 	&BurnSpecSpectrum,			// ZX Spectrum
+	&BurnSpeczynaps,			// Zynaps
 	&BurnDrvZzyzzyxx,			// Zzyzzyxx (set 1)
 	&BurnDrvZzyzzyxx2,			// Zzyzzyxx (set 2)
 };

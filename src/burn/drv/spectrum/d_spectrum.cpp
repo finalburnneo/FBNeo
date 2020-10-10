@@ -37,7 +37,7 @@ static UINT8 SpecDIP[2]         = {0, 0};
 static UINT8 SpecInput[16]      = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static UINT8 SpecReset          = 0;
 
-static UINT8 *Mem               = NULL;
+static UINT8 *AllMem            = NULL;
 static UINT8 *MemEnd            = NULL;
 static UINT8 *RamStart          = NULL;
 static UINT8 *RamEnd            = NULL;
@@ -48,6 +48,7 @@ UINT8 *SpecTAP			        = NULL;
 INT32  SpecTAPLen               = 0;
 UINT8 *SpecZ80Ram               = NULL;
 static UINT32 *SpecPalette      = NULL;
+static UINT8 *SpecContentionTab = NULL;
 static UINT8 SpecRecalc;
 
 static INT32 nActiveSnapshotType = SPEC_NO_SNAPSHOT;
@@ -58,8 +59,8 @@ static INT32 SpecFrameInvertCount = 0;
 static INT32 SpecFlashInvert = 0;
 static INT32 SpecNumScanlines = 312;
 static INT32 SpecNumCylesPerScanline = 224;
-static INT32 SpecVBlankScanline = 310;
-static UINT32 SpecHorStartCycles = 0;
+
+static INT32 SpecRamPage = 0;
 
 static UINT32 nPreviousScreenX = 0;
 static UINT32 nPreviousScreenY = 0;
@@ -84,19 +85,19 @@ static struct BurnInputInfo SpecInputList[] =
 	{"Kempston Left"        , BIT_DIGITAL  , SpecInputPort8 + 1 , "p1 left"          },
 	{"Kempston Right"       , BIT_DIGITAL  , SpecInputPort8 + 0 , "p1 right"         },
 	{"Kempston Fire"        , BIT_DIGITAL  , SpecInputPort8 + 4 , "p1 fire 1"        },
-	
+
 	{"Intf2 Stick 1 Up"     , BIT_DIGITAL  , SpecInputPort9 + 1 , "p1 up"            },
 	{"Intf2 Stick 1 Down"   , BIT_DIGITAL  , SpecInputPort9 + 2 , "p1 down"          },
 	{"Intf2 Stick 1 Left"   , BIT_DIGITAL  , SpecInputPort9 + 4 , "p1 left"          },
 	{"Intf2 Stick 1 Right"  , BIT_DIGITAL  , SpecInputPort9 + 3 , "p1 right"         },
 	{"Intf2 Stick 1 Fire"   , BIT_DIGITAL  , SpecInputPort9 + 0 , "p1 fire 1"        },
-	
+
 	{"Intf2 Stick 2 Up"     , BIT_DIGITAL  , SpecInputPort10 + 3, "p2 up"            },
 	{"Intf2 Stick 2 Down"   , BIT_DIGITAL  , SpecInputPort10 + 2, "p2 down"          },
 	{"Intf2 Stick 2 Left"   , BIT_DIGITAL  , SpecInputPort10 + 0, "p2 left"          },
 	{"Intf2 Stick 2 Right"  , BIT_DIGITAL  , SpecInputPort10 + 1, "p2 right"         },
 	{"Intf2 Stick 2 Fire"   , BIT_DIGITAL  , SpecInputPort10 + 4, "p2 fire 1"        },
-	
+
 	{"ENTER"				, BIT_DIGITAL  , SpecInputPort6 + 0, "keyb_enter"        },
 	{"SPACE"				, BIT_DIGITAL  , SpecInputPort7 + 0, "keyb_space"        },
 	{"CAPS SHIFT"			, BIT_DIGITAL  , SpecInputPort0 + 0, "keyb_left_shift"   },
@@ -137,28 +138,28 @@ static struct BurnInputInfo SpecInputList[] =
 	{"8"					, BIT_DIGITAL  , SpecInputPort4 + 2, "keyb_8"            },
 	{"9"					, BIT_DIGITAL  , SpecInputPort4 + 1, "keyb_9"            },
 	{"0"					, BIT_DIGITAL  , SpecInputPort4 + 0, "keyb_0"            },
-	
+
 	{"EDIT"					, BIT_DIGITAL  , SpecInputPort11 + 0, "keyb_insert"      },
 	{"CAPS LOCK"			, BIT_DIGITAL  , SpecInputPort11 + 1, "keyb_caps_lock"   },
 	{"TRUE VID"				, BIT_DIGITAL  , SpecInputPort11 + 2, "keyb_home"        },
 	{"INV VID"				, BIT_DIGITAL  , SpecInputPort11 + 3, "keyb_end"         },
 	{"Cursor Left"			, BIT_DIGITAL  , SpecInputPort11 + 4, "keyb_left"        },
-	
+
 	{"DEL"					, BIT_DIGITAL  , SpecInputPort12 + 0, "keyb_backspace"   },
 	{"GRAPH"				, BIT_DIGITAL  , SpecInputPort12 + 1, "keyb_left_alt"    },
 	{"Cursor Right"			, BIT_DIGITAL  , SpecInputPort12 + 2, "keyb_right"       },
 	{"Cursor Up"			, BIT_DIGITAL  , SpecInputPort12 + 3, "keyb_up"          },
 	{"Cursor Down"			, BIT_DIGITAL  , SpecInputPort12 + 4, "keyb_down"        },
-	
+
 	{"BREAK"				, BIT_DIGITAL  , SpecInputPort13 + 0, "keyb_pause"       },
 	{"EXT MODE"				, BIT_DIGITAL  , SpecInputPort13 + 1, "keyb_left_ctrl"   },
-	
+
 	{"\""					, BIT_DIGITAL  , SpecInputPort14 + 0, "keyb_apost"       },
 	{";"					, BIT_DIGITAL  , SpecInputPort14 + 1, "keyb_colon"       },
-	
+
 	{"."					, BIT_DIGITAL  , SpecInputPort15 + 0, "keyb_stop"        },
 	{","					, BIT_DIGITAL  , SpecInputPort15 + 1, "keyb_comma"       },
-	
+
 	{"Reset"				, BIT_DIGITAL  , &SpecReset        , "reset"             },
 	{"Dip 1"				, BIT_DIPSWITCH, SpecDIP + 0       , "dip"               },
 };
@@ -242,7 +243,7 @@ static void TAPAutoLoadRobot()
 static inline void SpecMakeInputs()
 {
 	SpecInput[0] = SpecInput[1] = SpecInput[2] = SpecInput[3] = SpecInput[4] = SpecInput[5] = SpecInput[6] = SpecInput[7] = SpecInput[9] = SpecInput[10] = SpecInput[11] = SpecInput[12] = SpecInput[13] = SpecInput[14] = SpecInput[15] = 0x1f;
-	
+
 	SpecInput[8] = 0x00;
 
 	for (INT32 i = 0; i < 8; i++) {
@@ -297,7 +298,7 @@ INT32 SpectrumGetZipName(char** pszName, UINT32 i)
 {
 	static char szFilename[MAX_PATH];
 	char* pszGameName = NULL;
-	
+
 	if (pszName == NULL) {
 		return 1;
 	}
@@ -316,13 +317,13 @@ INT32 SpectrumGetZipName(char** pszName, UINT32 i)
 		*pszName = NULL;
 		return 1;
 	}
-	
+
 	// remove leader
 	memset(szFilename, 0, MAX_PATH);
 	for (UINT32 j = 0; j < (strlen(pszGameName) - 5); j++) {
 		szFilename[j] = pszGameName[j + 5];
 	}
-	
+
 	*pszName = szFilename;
 
 	return 0;
@@ -345,19 +346,20 @@ STD_ROM_FN(Spec128)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	SpecZ80Rom              = Next; Next += 0x08000;
 	SpecSnapshotData        = Next; Next += 0x20000;
 	SpecTAP                 = Next; Next += 0x800000;
+	SpecContentionTab		= Next; Next += 80000; // cycles
 
 	RamStart                = Next;
 	SpecZ80Ram              = Next; Next += 0x20000;
 	RamEnd                  = Next;
-	
+
 	SpecPalette             = (UINT32*)Next; Next += 0x00010 * sizeof(UINT32);
 	dacbuf                  = (INT16*)Next; Next += 0x800 * 2 * sizeof(INT16);
-	
+
 	MemEnd                  = Next;
 
 	return 0;
@@ -368,24 +370,24 @@ static INT32 SpecDoReset()
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
-	
+
 	DACReset();
-	
+
 	if (SpecIsSpec128) AY8910Reset(0);
-	
+
 	nPreviousScreenX = 0;
 	nPreviousScreenY = 0;
 	nPreviousBorderX = 0;
 	nPreviousBorderY = 0;
 	nPort7FFDData = 0;
 	nPortFEData = 0;
-	
+
 	if (SpecIsSpec128) {
 		ZetOpen(0);
 		spectrum_128_update_memory();
 		ZetClose();
 	}
-	
+
 	if (nActiveSnapshotType == SPEC_SNAPSHOT_SNA) SpecLoadSNASnapshot();
 	if (nActiveSnapshotType == SPEC_SNAPSHOT_Z80) SpecLoadZ80Snapshot();
 	if (nActiveSnapshotType == SPEC_TAPE_TAP) {
@@ -394,42 +396,87 @@ static INT32 SpecDoReset()
 	}
 
 	ay_table_initted = 0;
-	
+
 	dac_lastin = 0;
 	dac_lastout = 0;
-	
-	return 0;
-}
-
-static UINT8 __fastcall SpecZ80Read(UINT16 a)
-{
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Read => %04X\n"), a);
-		}
-	}
 
 	return 0;
 }
 
-static void __fastcall SpecZ80Write(UINT16 a, UINT8 d)
+// Emulation Quirks (Contention and Floating Bus support) -dink oct.2020
+// Floating Bus required for several games to function (Arkanoid, Sidewize, ...)
+// Contention required for several games to function (Hostages, Yazzie, ...)
+
+// **NOTE** It's not perfect, raster-racing multicolor effects in newer homebrew
+// games don't work yet.
+
+static void init_contention_table()
 {
-	if (a < 0x4000) return;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Write => %04X, %02X\n"), a, d);
+	const INT32 CYCS[8] = { 6, 5, 4, 3, 2, 1, 0, 0 };
+	const INT32 StartingLine[2] = { 64, 63 }; // 48k, 128k
+	const INT32 Hblank_Border = 0;//48 + 24;
+
+	for (INT32 line = 0; line < SpecNumScanlines; line++)
+	{
+		if (line >= StartingLine[SpecIsSpec128] && line < StartingLine[SpecIsSpec128] + 192)
+		{
+			for (INT32 x = Hblank_Border; x < Hblank_Border + 128; x++)
+			{
+				SpecContentionTab[(line * SpecNumCylesPerScanline) + x] = CYCS[x % 8];
+			}
 		}
 	}
 }
 
-static UINT8 SpecSpecSpecSpecSpecFloatingMemory()
+static void SpecContentionCallback(INT32 cyc_start, INT32 cyc_end)
+{
+	INT32 eat_cycs = 0;
+	for (INT32 i = cyc_start; i <= cyc_end; i++)
+	{
+		eat_cycs = ZetTotalCycles();
+		ZetIdle(SpecContentionTab[eat_cycs]);
+	}
+}
+
+static void Contend(INT32 mempage, INT32 port)
+{
+	INT32 do_contend = 0;
+
+	switch (mempage) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+			do_contend = 1;
+		break;
+	}
+
+	if (port == 0xfe) {
+		do_contend = 1;
+	}
+
+	z80_op_is_contention = do_contend;
+}
+
+static UINT8 SpecGetFloatingMemory()
 {
 	// port 0xff - "floating memory"   -dink Oct 06, 2020
 	// returns current attribute being drawn or 0xff if in border
 	// Sidewize needs this feature to synchronize the cpu w/ screen
-	INT32 x = ((ZetTotalCycles() - SpecHorStartCycles) * 2) + 88;
-	INT32 y = nScanline;
+	UINT32 x = ((ZetTotalCycles() % 228) * 2);
+	UINT32 y = ZetTotalCycles() / 228;
+
+	if (y >= 48) { // timing.. http://www.zxdesign.info/vidparam.shtml
+		y -= 48;
+	} else {
+		return 0xff;
+	}
+
+	if (x >= 48+8) { // timing.. http://www.zxdesign.info/vidparam.shtml
+		x -= 48+8;
+	} else {
+		return 0xff;
+	}
 
 	UINT16 xSrc = x - SPEC_BORDER_LEFT;
 	UINT16 ySrc = y - SPEC_BORDER_TOP;
@@ -443,6 +490,46 @@ static UINT8 SpecSpecSpecSpecSpecFloatingMemory()
 	return 0xff;
 }
 
+static UINT8 __fastcall SpecZ80Read(UINT16 a)
+{
+	if (a < 0x4000) {
+		return SpecZ80Rom[a];
+	}
+
+	if (a >= 0x4000 && a <= 0x7fff) {
+		Contend(1, 0);
+
+		return SpecZ80Ram[a & 0x3fff];
+	}
+
+	if (a >= 0x8000 && a <= 0xffff) {
+		return SpecZ80Ram[0x4000 + (a & 0x7fff)];
+	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 Read => %04X\n"), a);
+
+	return 0;
+}
+
+static void __fastcall SpecZ80Write(UINT16 a, UINT8 d)
+{
+	if (a < 0x4000) return;
+
+	if (a >= 0x4000 && a <= 0x7fff) {
+		Contend(1, 0);
+
+		SpecZ80Ram[a & 0x3fff] = d;
+		return;
+	}
+
+	if (a >= 0x8000 && a <= 0xffff) {
+		SpecZ80Ram[0x4000 + (a & 0x7fff)] = d;
+		return;
+	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 Write => %04X, %02X\n"), a, d);
+}
+
 static UINT8 SpecIntf2PortFERead(UINT16 offset)
 {
 	UINT8 data = 0xff;
@@ -451,7 +538,7 @@ static UINT8 SpecIntf2PortFERead(UINT16 offset)
 	if ((lines & 8) == 0) data = SpecInput[10] | (0xff ^ 0x1f);
 
 	if ((lines & 16) == 0) data = SpecInput[9] | (0xff ^ 0x1f);
-	
+
 	return data;
 }
 
@@ -462,17 +549,19 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 			// kempston
 			return SpecInput[8] & 0x1f;
 		}
-		
+
 		if ((a & 0xff) == 0xff) {
-			return SpecSpecSpecSpecSpecFloatingMemory();
+			return SpecGetFloatingMemory();
 		}
 
 		return 0xff;
 	}
-	
+
+	Contend(0,0xfe);
+
 	UINT8 lines = a >> 8;
 	UINT8 data = 0xff;
-	
+
 	INT32 cs_extra1 = 0x1f;
 	INT32 cs_extra2 = 0x1f;
 	INT32 cs_extra3 = 0x1f;
@@ -480,15 +569,15 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 	INT32 ss_extra2 = 0x1f;
 	INT32 joy1 = 0x1f;
 	INT32 joy2 = 0x1f;
-	
+
 	// keys: Caps - V
 	if ((lines & 1) == 0) {
 		data &= SpecInput[0];
-		
+
 		// CAPS for extra keys
 		if (cs_extra1 != 0x1f || cs_extra2 != 0x1f || cs_extra3 != 0x1f) data &= ~0x01;
 	}
-	
+
 	// keys: A - G
 	if ((lines & 2) == 0) data &= SpecInput[1];
 
@@ -510,7 +599,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 	// keys: B - Space
 	if ((lines & 128) == 0) {
 		data &= SpecInput[7] & cs_extra3 & ss_extra2;
-		
+
 		// SYMBOL SHIFT for extra keys
 		if (ss_extra1 != 0x1f || ss_extra2 != 0x1f) data &= ~0x02;
 	}
@@ -521,17 +610,17 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 a)
 
 	// expansion port
 	data &= SpecIntf2PortFERead(a);
-	
+
 	// Issue 2 Spectrums default to having bits 5, 6 & 7 set. Issue 3 Spectrums default to having bits 5 & 7 set and bit 6 reset.
 	if (SpecDIP[0] & 0x80) data ^= (0x40);
-	
+
 	return data;
 }
 
 static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
-	
+
 	if (~a & 0x0001) {
 		UINT8 Changed = nPortFEData ^ d;
 
@@ -549,6 +638,8 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 
 		nPortFEData = d;
 
+		Contend(0, 0xfe);
+
 		return;
 	}
 
@@ -557,11 +648,8 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 
 void spectrum_128_update_memory()
 {
-	INT32 ram_page = nPort7FFDData & 0x07;
-	ZetMapArea(0xc000, 0xffff, 0, SpecZ80Ram + (ram_page << 14));
-	ZetMapArea(0xc000, 0xffff, 1, SpecZ80Ram + (ram_page << 14));
-	ZetMapArea(0xc000, 0xffff, 2, SpecZ80Ram + (ram_page << 14));
-	
+	SpecRamPage = nPort7FFDData & 0x07;
+
 	if (BIT(nPort7FFDData, 3)) {
 		SpecVideoRam = SpecZ80Ram + (7 << 14);
 	} else {
@@ -571,11 +659,28 @@ void spectrum_128_update_memory()
 
 static UINT8 __fastcall SpecSpec128Z80Read(UINT16 a)
 {
+	spectrum_UpdateScreenBitmap(false);
+
 	if (a < 0x4000) {
 		INT32 ROMSelection = BIT(nPort7FFDData, 4);
 		return SpecZ80Rom[(ROMSelection << 14) + a];
 	}
-	
+
+	if (a >= 0x4000 && a <= 0x7fff) {
+		Contend(5, 0);
+		return SpecZ80Ram[(5 << 14) + (a & 0x3fff)];
+	}
+
+	if (a >= 0x8000 && a <= 0xbfff) {
+		return SpecZ80Ram[(2 << 14) + (a & 0x3fff)];
+	}
+
+	if (a >= 0xc000 && a <= 0xffff) {
+		Contend(SpecRamPage, 0);
+
+		return SpecZ80Ram[(SpecRamPage << 14) + (a & 0x3fff)];
+	}
+
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 Read => %04X\n"), a);
@@ -587,8 +692,28 @@ static UINT8 __fastcall SpecSpec128Z80Read(UINT16 a)
 
 static void __fastcall SpecSpec128Z80Write(UINT16 a, UINT8 d)
 {
-	if (a <= 0x4000) return;
-	
+	spectrum_UpdateScreenBitmap(false);
+
+	if (a < 0x4000) return; // ROM
+
+	if (a >= 0x4000 && a <= 0x7fff) {
+		Contend(5, 0);
+		SpecZ80Ram[(5 << 14) + (a & 0x3fff)] = d;
+		return;
+	}
+
+	if (a >= 0x8000 && a <= 0xbfff) {
+		SpecZ80Ram[(2 << 14) + (a & 0x3fff)] = d;
+		return;
+	}
+
+	if (a >= 0xc000 && a <= 0xffff) {
+		Contend(SpecRamPage, 0);
+
+		SpecZ80Ram[(SpecRamPage << 14) + (a & 0x3fff)] = d;
+		return;
+	}
+
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 Write => %04X, %02X\n"), a, d);
@@ -609,32 +734,34 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 		}
 
 		if ((a & 0xff) == 0xff) {
-			return SpecSpecSpecSpecSpecFloatingMemory();
+			return SpecGetFloatingMemory();
 		}
 
 		return 0xff;
 	}
 
+	Contend(0, 0xfe);
+
 	UINT8 lines = a >> 8;
 	UINT8 data = 0xff;
-	
+
 	INT32 cs_extra1 = SpecInput[11] & 0x1f;
 	INT32 cs_extra2 = SpecInput[12] & 0x1f;
 	INT32 cs_extra3 = SpecInput[13] & 0x1f;
 	INT32 ss_extra1 = SpecInput[14] & 0x1f;
 	INT32 ss_extra2 = SpecInput[15] & 0x1f;
-	
+
 	INT32 joy1 = 0x1f;
 	INT32 joy2 = 0x1f;
-	
+
 	// keys: Caps - V
 	if ((lines & 1) == 0) {
 		data &= SpecInput[0];
-		
+
 		// CAPS for extra keys
 		if (cs_extra1 != 0x1f || cs_extra2 != 0x1f || cs_extra3 != 0x1f) data &= ~0x01;
 	}
-	
+
 	// keys: A - G
 	if ((lines & 2) == 0) data &= SpecInput[1];
 
@@ -656,7 +783,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 	// keys: B - Space
 	if ((lines & 128) == 0) {
 		data &= SpecInput[7] & cs_extra3 & ss_extra2;
-		
+
 		// SYMBOL SHIFT for extra keys
 		if (ss_extra1 != 0x1f || ss_extra2 != 0x1f) data &= ~0x02;
 	}
@@ -667,10 +794,10 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 a)
 
 	// expansion port
 	data &= SpecIntf2PortFERead(a);
-	
+
 	// Issue 2 Spectrums default to having bits 5, 6 & 7 set. Issue 3 Spectrums default to having bits 5 & 7 set and bit 6 reset.
 	if (SpecDIP[0] & 0x80) data ^= (0x40);
-	
+
 	return data;
 }
 
@@ -678,22 +805,22 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 {
 	if (!(a & 0x8002)) {
 		if (nPort7FFDData & 0x20) return;
-			
+
 		if ((nPort7FFDData ^ d) & 0x08) spectrum_UpdateScreenBitmap(false);
-		
+
 		nPort7FFDData = d;
-		
+
 		spectrum_128_update_memory();
 		return;
 	}
-	
+
 	if (~a & 0x0001) {
 		UINT8 Changed = nPortFEData ^ d;
-			
+
 		if ((Changed & 0x07) != 0) {
 			spectrum_UpdateBorderBitmap();
 		}
-		
+
 		if ((Changed & (1 << 4)) != 0) {
 			DACWrite(0, BIT(d, 4) * 0x80);
 		}
@@ -703,6 +830,9 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 		}
 
 		nPortFEData = d;
+
+		Contend(0, 0xfe);
+
 		return;
 	}
 
@@ -767,7 +897,7 @@ static INT32 SpecTAPCallback()
 
 	UINT8 *data = SpecTAPBlock[SpecTAPBlocknum];
 
-	INT32 carry_val = 1;
+	INT32 carry_val = 0;
 
 	INT32 tap_block = data[0];
 	INT32 cpu_block = ActiveZ80GetAF2() >> 8;
@@ -819,17 +949,12 @@ static INT32 SpecTAPCallback()
 static INT32 SpectrumInit(INT32 nSnapshotType)
 {
 	nActiveSnapshotType = nSnapshotType;
-	
-	INT32 nRet = 0, nLen;
-	
+
 	BurnSetRefreshRate(50.0);
 
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	INT32 nRet = 0;
 
 	if (nSnapshotType == SPEC_NO_SNAPSHOT) {
 		nRet = BurnLoadRom(SpecZ80Rom + 0x00000, 0, 1); if (nRet != 0) return 1;
@@ -848,55 +973,49 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 		nRet = BurnLoadRom(SpecSnapshotData + 0x00000, 0, 1); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(SpecZ80Rom + 0x00000, 0x80, 1); if (nRet != 0) return 1;
 	}
-	
+
 	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(SpecZ80Read);
 	ZetSetWriteHandler(SpecZ80Write);
 	ZetSetInHandler(SpecZ80PortRead);
 	ZetSetOutHandler(SpecZ80PortWrite);
-	ZetMapArea(0x0000, 0x3fff, 0, SpecZ80Rom             );
-	ZetMapArea(0x0000, 0x3fff, 2, SpecZ80Rom             );
-	ZetMapArea(0x4000, 0xffff, 0, SpecZ80Ram             );
-	ZetMapArea(0x4000, 0xffff, 1, SpecZ80Ram             );
-	ZetMapArea(0x4000, 0xffff, 2, SpecZ80Ram             );
 	if (nSnapshotType == SPEC_TAPE_TAP) {
 		bprintf(0, _T("**  Spectrum: Using TAP file (len 0x%x)..\n"), SpecTAPLen);
 		z80_set_spectrum_tape_callback(SpecTAPCallback);
 	}
+	z80_contention_callback = SpecContentionCallback;
 	ZetClose();
-	
+
 	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	
+
 	SpecFrameInvertCount = 16;
 	SpecFrameNumber = 0;
 	SpecFlashInvert = 0;
 	SpecNumScanlines = 312;
 	SpecNumCylesPerScanline = 224;
-	SpecVBlankScanline = 310;
 	nPort7FFDData = -1;
 	SpecVideoRam = SpecZ80Ram;
-	
+
+	init_contention_table();
+
 	SpecDoReset();
-	
+
 	return 0;
 }
 
 static INT32 Spectrum128Init(INT32 nSnapshotType)
 {
 	nActiveSnapshotType = nSnapshotType;
-	
-	INT32 nRet = 0, nLen;
-	
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+
+	BurnSetRefreshRate(50.0);
+
+	BurnAllocMemIndex();
+
+	INT32 nRet = 0;
 
 	if (nSnapshotType == SPEC_NO_SNAPSHOT) {
 		nRet = BurnLoadRom(SpecZ80Rom + 0x00000, 0, 1); if (nRet != 0) return 1;
@@ -917,47 +1036,41 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 		nRet = BurnLoadRom(SpecZ80Rom + 0x00000, 0x80, 1); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(SpecZ80Rom + 0x04000, 0x81, 1); if (nRet != 0) return 1;
 	}
-	
+
 	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(SpecSpec128Z80Read);
 	ZetSetWriteHandler(SpecSpec128Z80Write);
 	ZetSetInHandler(SpecSpec128Z80PortRead);
 	ZetSetOutHandler(SpecSpec128Z80PortWrite);
-	ZetMapArea(0x4000, 0x7fff, 0, SpecZ80Ram + (5 << 14) );
-	ZetMapArea(0x4000, 0x7fff, 1, SpecZ80Ram + (5 << 14) );
-	ZetMapArea(0x4000, 0x7fff, 2, SpecZ80Ram + (5 << 14) );
-	ZetMapArea(0x8000, 0xbfff, 0, SpecZ80Ram + (2 << 14) );
-	ZetMapArea(0x8000, 0xbfff, 1, SpecZ80Ram + (2 << 14) );
-	ZetMapArea(0x8000, 0xbfff, 2, SpecZ80Ram + (2 << 14) );
 	if (nSnapshotType == SPEC_TAPE_TAP) {
 		bprintf(0, _T("**  Spectrum 128k: Using TAP file (len 0x%x)..\n"), SpecTAPLen);
 		z80_set_spectrum_tape_callback(SpecTAPCallback);
 	}
+	z80_contention_callback = SpecContentionCallback;
 	ZetClose();
-	
-	BurnSetRefreshRate(50.0);
 
 	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
+
 	AY8910Init(0, 17734475 / 10, 0);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	
+
 	SpecFrameInvertCount = 16;
 	SpecFrameNumber = 0;
 	SpecFlashInvert = 0;
 	SpecNumScanlines = 311;
-	SpecNumCylesPerScanline = 224;
-	SpecVBlankScanline = 296;
+	SpecNumCylesPerScanline = 228;
 	SpecIsSpec128 = 1;
 	nPort7FFDData = 0;
 	SpecVideoRam = SpecZ80Ram;
-	
+
+	init_contention_table();
+
 	SpecDoReset();
-	
+
 	return 0;
 }
 
@@ -999,17 +1112,17 @@ static INT32 Z80128KSnapshotInit()
 static INT32 SpecExit()
 {
 	ZetExit();
-	
+
 	DACExit();
-	
+
 	if (SpecIsSpec128) AY8910Exit(0);
 
 	GenericTilesExit();
 
-	BurnFree(Mem);
-	
+	BurnFreeMemIndex();
+
 	SpecVideoRam = NULL;
-	
+
 	nActiveSnapshotType = SPEC_NO_SNAPSHOT;
 	nCyclesDone = 0;
 	nScanline = 0;
@@ -1018,7 +1131,6 @@ static INT32 SpecExit()
 	SpecFlashInvert = 0;
 	SpecNumScanlines = 312;
 	SpecNumCylesPerScanline = 224;
-	SpecVBlankScanline = 310;
 	SpecIsSpec128 = 0;
 	nPort7FFDData = 1;
 
@@ -1052,18 +1164,38 @@ static INT32 SpecDraw()
 
 void spectrum_UpdateScreenBitmap(bool eof)
 {
-	UINT32 x = 0; //hpos
-	UINT32 y = nScanline;
-	
+
+	UINT32 x = ((ZetTotalCycles() % 228) * 2);
+	UINT32 y = ZetTotalCycles() / 228;
+	if (x >= SPEC_BITMAP_WIDTH) {
+		x -= SPEC_BITMAP_WIDTH;
+		y++;
+	}
+	if (x >= SPEC_BITMAP_WIDTH || y >= SPEC_BITMAP_HEIGHT) return;
+
+	if (y >= 48) { // timing.. http://www.zxdesign.info/vidparam.shtml
+		y -= 48;
+	} else {
+		return;
+	}
+
+	if (x >= 48+8) { // timing.. http://www.zxdesign.info/vidparam.shtml
+		x -= 48+8;
+	} else {
+		return;
+	}
+
 	INT32 width = SPEC_BITMAP_WIDTH;
 	INT32 height = SPEC_BITMAP_HEIGHT;
-	
+
 	if ((nPreviousScreenX == x) && (nPreviousScreenY == y) && !eof) return;
-	
+
+	INT32 stupid = 0;
+
 	do {
 		UINT16 xSrc = nPreviousScreenX - SPEC_BORDER_LEFT;
 		UINT16 ySrc = nPreviousScreenY - SPEC_BORDER_TOP;
-		
+
 		if (xSrc < SPEC_SCREEN_XSIZE && ySrc < SPEC_SCREEN_YSIZE) {
 			if ((xSrc & 7) == 0) {
 				UINT16 *bm = pTransDraw + (nPreviousScreenY * nScreenWidth) + nPreviousScreenX;
@@ -1071,31 +1203,33 @@ void spectrum_UpdateScreenBitmap(bool eof)
 				UINT8 scr = *(SpecVideoRam + ((ySrc & 7) << 8) + ((ySrc & 0x38) << 2) + ((ySrc & 0xC0) << 5) + (xSrc >> 3));
 				UINT16 ink = (attr & 0x07) + ((attr >> 3) & 0x08);
 				UINT16 pap = (attr >> 3) & 0x0f;
-				
+
 				if (SpecFlashInvert && (attr & 0x80)) scr = ~scr;
-						
+
 				for (UINT8 b = 0x80; b != 0; b >>= 1) {
 					*bm++ = (scr & b) ? ink : pap;
 				}
 			}
 		}
-			
+
 		nPreviousScreenX++;
-		
+
 		if (nPreviousScreenX >= width) {
 			nPreviousScreenX = 0;
 			nPreviousScreenY++;
-			
+
 			if (nPreviousScreenY >= height) {
 				nPreviousScreenY = 0;
 			}
 		}
+		stupid++;
+		if (stupid > 0x10000) break;
 	} while (!((nPreviousScreenX == x) && (nPreviousScreenY == y)));
 }
 
 void spectrum_UpdateBorderBitmap()
 {
-	UINT32 x = ((ZetTotalCycles() - SpecHorStartCycles) * 2) + 88;
+	UINT32 x = 0;
 	UINT32 y = nScanline;
 
 	if (x >= SPEC_BITMAP_WIDTH) {
@@ -1103,10 +1237,10 @@ void spectrum_UpdateBorderBitmap()
 		y++;
 	}
 	if (x >= SPEC_BITMAP_WIDTH || y >= SPEC_BITMAP_HEIGHT) return;
-	
+
 	INT32 width = SPEC_BITMAP_WIDTH;
 	INT32 height = SPEC_BITMAP_HEIGHT;
-	
+
 	UINT16 border = nPortFEData & 0x07;
 	INT32 safety_breakout = 0;
 
@@ -1187,33 +1321,34 @@ static void sinc_flt_plus_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums
 static INT32 SpecFrame()
 {
 	if (SpecReset) SpecDoReset();
-	
+
 	if (nActiveSnapshotType == SPEC_TAPE_TAP) TAPAutoLoadRobot();
 
 	SpecMakeInputs();
 
 	if (pBurnDraw) SpecCalcPalette();
-	
+
 	nCyclesDone = 0;
+	INT32 nCyclesDo = 0;
 	INT32 nSoundBufferPos = 0;
 	SpecMakeAYUpdateTable(); // _must_ be called in-frame since nBurnSoundLen is pre-calculated @ 60hz in SpecDoReset() @ init.
-	
+
 	ZetNewFrame();
 	ZetOpen(0);
 
 	for (nScanline = 0; nScanline < SpecNumScanlines; nScanline++) {
-		SpecHorStartCycles = nCyclesDone;
-
-		if (nScanline == SpecVBlankScanline) {
+		if (nScanline == (SpecNumScanlines-1)) {
 			// VBlank
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			nCyclesDo += 32;
 			nCyclesDone += ZetRun(32);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			nCyclesDone += ZetRun(SpecNumCylesPerScanline - 32);
-			
+			nCyclesDo += SpecNumCylesPerScanline - 32;
+			nCyclesDone += ZetRun(nCyclesDo - ZetTotalCycles());
+
 			spectrum_UpdateBorderBitmap();
 			spectrum_UpdateScreenBitmap(true);
-			
+
 			SpecFrameNumber++;
 
 			if (SpecFrameNumber >= SpecFrameInvertCount) {
@@ -1221,11 +1356,12 @@ static INT32 SpecFrame()
 				SpecFlashInvert = !SpecFlashInvert;
 			}
 		} else {
-			nCyclesDone += ZetRun(SpecNumCylesPerScanline);
+			nCyclesDo += SpecNumCylesPerScanline;
+			nCyclesDone += ZetRun(nCyclesDo - ZetTotalCycles());
 		}
-		
+
 		spectrum_UpdateScreenBitmap(false);
-		
+
 		if (SpecIsSpec128 && pBurnSoundOut) {
 			INT32 nSegmentLength = ay_table[nScanline];
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1233,9 +1369,9 @@ static INT32 SpecFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-	
+
 	if (pBurnDraw) BurnTransferCopy(SpecPalette);
-	
+
 	if (pBurnSoundOut) {
 		if (SpecIsSpec128) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -1248,7 +1384,7 @@ static INT32 SpecFrame()
 		DACUpdate(dacbuf, nBurnSoundLen);
 		sinc_flt_plus_dcblock(dacbuf, pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	ZetClose();
 
 	return 0;
@@ -1257,7 +1393,7 @@ static INT32 SpecFrame()
 static INT32 SpecScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {			// Return minimum compatible version
 		*pnMin = 0x029672;
 	}
@@ -11878,7 +12014,7 @@ struct BurnDriver BurnSpecgluf = {
 // GraviBots (RetroSouls)
 
 static struct BurnRomInfo SpecgravibotsRomDesc[] = {
-	{ "GraviBots (2014)(RetroSouls).tap",  31249, 0x3b5604e1, BRF_ESS | BRF_PRG },
+	{ "GraviBots (2014)(RetroSouls).z80",  29436, 0x375bfa1c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specgravibots, Specgravibots, Spec128)
@@ -11888,9 +12024,9 @@ struct BurnDriver BurnSpecgravibots = {
 	"spec_gravibots", NULL, "spec_spec128", NULL, "2014",
 	"GraviBots (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecgravibotsRomInfo, SpecgravibotsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -12097,8 +12233,46 @@ struct BurnDriver BurnSpecyazzie = {
 	"spec_yazzie", NULL, "spec_spec128", NULL, "2019",
 	"Yazzie (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecyazzieRomInfo, SpecyazzieRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy The Wasp
+
+static struct BurnRomInfo SpecWwaspRomDesc[] = {
+	{ "Willy The Wasp (The Death Squad)(2014).tap", 41193, 0x030e8442, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWwasp, SpecWwasp, Spec128)
+STD_ROM_FN(SpecWwasp)
+
+struct BurnDriver BurnSpecWwasp = {
+	"spec_wwasp", NULL, "spec_spec128", NULL, "2014",
+	"Willy The Wasp (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecWwaspRomInfo, SpecWwaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy The Wasp 2
+
+static struct BurnRomInfo SpecWwasp2RomDesc[] = {
+	{ "Willy The Wasp 2 (The Death Squad)(2014).tap", 64604, 0x3e8b70fb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWwasp2, SpecWwasp2, Spec128)
+STD_ROM_FN(SpecWwasp2)
+
+struct BurnDriver BurnSpecWwasp2 = {
+	"spec_wwasp2", NULL, "spec_spec128", NULL, "2014",
+	"Willy The Wasp 2 (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecWwasp2RomInfo, SpecWwasp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

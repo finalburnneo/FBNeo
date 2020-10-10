@@ -44813,3 +44813,346 @@ struct BurnDriver BurnDrvmd_alterego = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Langrisser Hikari II (T-Chi)
+// Translation by Xing Kong
+static struct BurnRomInfo md_langris2cRomDesc[] = {
+	{ "Langrisser Hikari II (T-Chi).bin", 0x200000, 0x26233aee, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_langris2c)
+STD_ROM_FN(md_langris2c)
+
+
+struct BurnDriverD BurnDrvmd_langris2c = {
+	"md_langris2c", "md_langris2", NULL, NULL, "2015",
+	"Langrisser Hikari II (T-Chi)\0", NULL, "NCS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_langris2cRomInfo, md_langris2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// NHK Taiga Drama - Taiheiki (T-Chi)
+// Translation by cslrxyz
+static struct BurnRomInfo md_nhktaidrcRomDesc[] = {
+	{ "nhk taiga drama - taiheiki (T-Chi).bin", 0x100000, 0x19864175, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nhktaidrc)
+STD_ROM_FN(md_nhktaidrc)
+
+struct BurnDriverD BurnDrvmd_nhktaidrc = {
+	"md_nhktaidrc", "md_nhktaidr", NULL, NULL, "1991",
+	"NHK Taiga Drama - Taiheiki (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_nhktaidrcRomInfo, md_nhktaidrcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ninja Burai Densetsu (T-Chi)
+// Translation by Xu Yong Sheng
+static struct BurnRomInfo md_ninjabtRomDesc[] = {
+	{ "ninja burai densetsu (T-Chi).bin", 0x100000, 0x107cbf61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ninjabt)
+STD_ROM_FN(md_ninjabt)
+
+struct BurnDriverD BurnDrvmd_ninjabt = {
+	"md_ninjabt", "md_ninjab", NULL, NULL, "1991",
+	"Ninja Burai Densetsu (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_ninjabtRomInfo, md_ninjabtRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shining Force II - Koe no Fuuin (T-Chi, v2)
+// Translation by Yi Zhi Zhi Lu
+static struct BurnRomInfo md_shinfrc2cRomDesc[] = {
+	{ "shining force ii - koe no fuuin (T-Chi, v2).bin", 0x300000, 0x5dd08aea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrc2c)
+STD_ROM_FN(md_shinfrc2c)
+
+struct BurnDriverD BurnDrvmd_shinfrc2c = {
+	"md_shinfrc2c", "md_shinfrc2", NULL, NULL, "2007-01",
+	"Shining Force II - Koe no Fuuin (T-Chi, v2)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Super Shinobi II (T-Chi)
+// Translation by cslrxyz
+static struct BurnRomInfo md_supshin2cRomDesc[] = {
+	{ "super shinobi ii, the (Chinese).bin", 0x100000, 0x8d8fb732, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_supshin2c)
+STD_ROM_FN(md_supshin2c)
+
+struct BurnDriverD BurnDrvmd_supshin2c = {
+	"md_supshin2c", "md_shinobi3", NULL, NULL, "2009",
+	"The Super Shinobi II (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_supshin2cRomInfo, md_supshin2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Story of Thor - Hikari o Tsugumono (T-Chi)
+// Translation by KEN & MADCELL
+static struct BurnRomInfo md_thorcRomDesc[] = {
+	{ "story of thor, the - hikari o tsugumono (T-Chi).bin", 0x300000, 0x3ca3fcd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_thorc)
+STD_ROM_FN(md_thorc)
+
+struct BurnDriver BurnDrvmd_thorc = {
+	"md_thorc", "md_thor", NULL, NULL, "2004",
+	"The Story of Thor - Hikari o Tsugumono (T-Chi)\0", NULL, "YUZO", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_thorcRomInfo, md_thorcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Monster World IV (T-Chi, v2)
+// Translation by wolfteam & HA MU
+static struct BurnRomInfo md_mworld4cRomDesc[] = {
+	{ "Monster World IV (T-Chi, v2).bin", 0x200000, 0x08d46b12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mworld4c)
+STD_ROM_FN(md_mworld4c)
+
+struct BurnDriver BurnDrvmd_mworld4c = {
+	"md_mworld4c", "md_mworld4", NULL, NULL, "2019-06-21",
+	"Monster World IV (T-Chi, v2)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_mworld4cRomInfo, md_mworld4cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Gunstar Heroes (T-Chi)
+// Translation by ???
+static struct BurnRomInfo md_gunstarcRomDesc[] = {
+	{ "gunstar heroes (T-Chi).bin", 0x200000, 0xa046c36e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gunstarc)
+STD_ROM_FN(md_gunstarc)
+
+struct BurnDriver BurnDrvmd_gunstarc = {
+	"md_gunstarc", "md_gunstar", NULL, NULL, "2018",
+	"Gunstar Heroes (T-Chi)\0", NULL, "Treasure", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_gunstarcRomInfo, md_gunstarcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Taikou Risshiden (T-Chi)
+// Translation by Xu Yong Sheng
+static struct BurnRomInfo md_taikoriscRomDesc[] = {
+	{ "taikou risshiden (T-Chi).bin", 0x140000, 0x185f7902, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_taikorisc)
+STD_ROM_FN(md_taikorisc)
+
+struct BurnDriver BurnDrvmd_taikorisc = {
+	"md_taikorisc", "md_taikoris", NULL, NULL, "2009",
+	"Taikou Risshiden (T-Chi)\0", NULL, "Koei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_taikoriscRomInfo, md_taikoriscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Nobunaga no Yabou - Haouden (T-Chi)
+// Translation by Xu Yong Sheng
+static struct BurnRomInfo md_nobuhaocRomDesc[] = {
+	{ "nobunaga no yabou - haouden (T-Chi).bin", 0x200000, 0x0a0993cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nobuhaoc)
+STD_ROM_FN(md_nobuhaoc)
+
+struct BurnDriver BurnDrvmd_nobuhaoc = {
+	"md_nobuhaoc", "md_nobuhao", NULL, NULL, "1994",
+	"Nobunaga no Yabou - Haouden (T-Chi)\0", NULL, "Koei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_nobuhaocRomInfo, md_nobuhaocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shin Souseiki Ragnacenty (T-Chi)
+// Translation by Xu Yong Sheng
+static struct BurnRomInfo md_ragnacencRomDesc[] = {
+	{ "shin souseiki ragnacenty (T-Chi).bin", 0x200000, 0xa6dce438, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ragnacenc)
+STD_ROM_FN(md_ragnacenc)
+
+struct BurnDriver BurnDrvmd_ragnacenc = {
+	"md_ragnacenc", "md_soleil", NULL, NULL, "1994",
+	"Shin Souseiki Ragnacenty (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_ragnacencRomInfo, md_ragnacencRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Dial Q o Mawase! (T-Chi)
+// Translation by Phanteam
+static struct BurnRomInfo md_dialqocRomDesc[] = {
+	{ "dial q o mawase! (T-Chi) (unl).bin", 0x100000, 0x1002c02f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_dialqoc)
+STD_ROM_FN(md_dialqoc)
+
+struct BurnDriver BurnDrvmd_dialqoc = {
+	"md_dialqoc", "md_dialqo", NULL, NULL, "2001",
+	"Dial Q o Mawase! (T-Chi)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_dialqocRomInfo, md_dialqocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Hybrid Front (T-Chi)
+// Translation by cslrxyz
+static struct BurnRomInfo md_hybridfcRomDesc[] = {
+	{ "hybrid front, the (T-Chi).bin", 0x200000, 0x0d6d06f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hybridfc)
+STD_ROM_FN(md_hybridfc)
+
+struct BurnDriver BurnDrvmd_hybridfc = {
+	"md_hybridfc", "md_hybridf", NULL, NULL, "1994",
+	"The Hybrid Front (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_hybridfcRomInfo, md_hybridfcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Zero Wing (T-Chi)
+// Translation by Bear Team
+static struct BurnRomInfo md_zerowingcRomDesc[] = {
+	{ "zero wing (T-Chi).bin", 0x100000, 0x7218212f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_zerowingc)
+STD_ROM_FN(md_zerowingc)
+
+struct BurnDriver BurnDrvmd_zerowingc = {
+	"md_zerowingc", "md_zerowing", NULL, NULL, "1991",
+	"Zero Wing (T-Chi)\0", NULL, "Toaplan", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_zerowingcRomInfo, md_zerowingcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Surging Aura (T-Chi)
+// Translation by Yi Zhi Zhi Lu
+static struct BurnRomInfo md_surgingcRomDesc[] = {
+	{ "surging aura (T-Chi).bin", 0x240000, 0x38a17fd0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_surgingc)
+STD_ROM_FN(md_surgingc)
+
+struct BurnDriver BurnDrvmd_surgingc = {
+	"md_surgingc", "md_surging", NULL, NULL, "1995",
+	"Surging Aura (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_surgingcRomInfo, md_surgingcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Aoki Ookami to Shiroki Mejika - Genchou Hishi (T-Chi)
+// Translation by SKOB
+static struct BurnRomInfo md_genchohicRomDesc[] = {
+	{ "aoki ookami to shiroki meshika - genchou hishi (T-Chi).bin", 0x140000, 0x7c161c48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_genchohic)
+STD_ROM_FN(md_genchohic)
+
+struct BurnDriver BurnDrvmd_genchohic = {
+	"md_genchohic", "md_genghis2", NULL, NULL, "1993",
+	"Aoki Ookami to Shiroki Mejika - Genchou Hishi (T-Chi)\0", NULL, "Koei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_genchohicRomInfo, md_genchohicRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (T-Chi)
+// Translation by Bear Team
+static struct BurnRomInfo md_slamdunkcRomDesc[] = {
+	{ "from tv animation slam dunk - kyougou makkou taiketsu! (T-Chi).bin", 0x200000, 0x89253739, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_slamdunkc)
+STD_ROM_FN(md_slamdunkc)
+
+struct BurnDriver BurnDrvmd_slamdunkc = {
+	"md_slamdunkc", "md_slamdunk", NULL, NULL, "1995",
+	"From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (T-Chi)\0", NULL, "Bandai", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_slamdunkcRomInfo, md_slamdunkcRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Landstalker - Koutei no Zaihou (T-Chi)
+// Translation by Yi Zhi Zhi Lu
+static struct BurnRomInfo md_landstlkcRomDesc[] = {
+	{ "landstalker - koutei no zaihou (T-Chi).bin", 0x230000, 0xd2982a65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_landstlkc)
+STD_ROM_FN(md_landstlkc)
+
+struct BurnDriver BurnDrvmd_landstlkc = {
+	"md_landstlkc", "md_landstlk", NULL, NULL, "2007",
+	"Landstalker - Koutei no Zaihou (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
+	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

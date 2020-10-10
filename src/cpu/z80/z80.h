@@ -85,6 +85,12 @@ extern void (*z80edfe_callback)(Z80_Regs *Regs);
 extern int z80_ICount;
 extern UINT32 EA;
 
+extern int z80_op_cycle_start;
+extern int z80_op_cycle_end;
+extern int z80_op_is_contention;
+extern void (*z80_contention_callback)(int, int);
+
+
 typedef unsigned char (__fastcall *Z80ReadIoHandler)(unsigned int a);
 typedef void (__fastcall *Z80WriteIoHandler)(unsigned int a, unsigned char v);
 typedef unsigned char (__fastcall *Z80ReadProgHandler)(unsigned int a);

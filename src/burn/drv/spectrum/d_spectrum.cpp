@@ -11707,7 +11707,7 @@ struct BurnDriver BurnSpeczynaps = {
 // Uridium
 
 static struct BurnRomInfo SpecuridiumRomDesc[] = {
-	{ "Uridium (1986)(Hewson Consultants).tap", 49818, 0x9431e885, BRF_ESS | BRF_PRG },
+	{ "Uridium (1986)(Hewson Consultants).tap", 27747, 0x28bdbbfc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specuridium, Specuridium, Spec128)
@@ -11772,7 +11772,7 @@ STD_ROM_FN(Speckraal)
 
 struct BurnDriver BurnSpeckraal = {
 	"spec_kraal", NULL, "spec_spectrum", NULL, "1990",
-	"Kraal (48K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
+	"Kraal (48K)\0", "Use Keyboard", "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpeckraalRomInfo, SpeckraalRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

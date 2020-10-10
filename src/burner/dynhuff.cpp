@@ -573,7 +573,10 @@ void EncodeBuffer(unsigned char data)
 		c_buffer_idx       = 0;
 
 		// leave space for the 4 flags
-		fwrite(&code_count,sizeof(int),4,cFile);
+		fwrite(&code_count,sizeof(int),1,cFile);
+		fwrite(&code_count,sizeof(int),1,cFile);
+		fwrite(&code_count,sizeof(int),1,cFile);
+		fwrite(&code_count,sizeof(int),1,cFile);
 
 		// init code buffer
 		AllocBufferC(MAX_BUFFER_LEN);

@@ -11875,6 +11875,82 @@ struct BurnDriver BurnSpechoppingmad = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Indiana Jones and the Fate of Atlantis
+
+static struct BurnRomInfo SpecindyfateatlantisRomDesc[] = {
+	{ "Indiana Jones and the Fate of Atlantis (1992)(U.S. Gold).tap", 366350, 0xb6341899, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specindyfateatlantis, Specindyfateatlantis, Spec128)
+STD_ROM_FN(Specindyfateatlantis)
+
+struct BurnDriver BurnSpecindyfateatlantis = {
+	"spec_indyfateatlantis", NULL, "spec_spec128", NULL, "1992",
+	"Indiana Jones and the Fate of Atlantis\0", NULL, "U.S. Gold", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecindyfateatlantisRomInfo, SpecindyfateatlantisRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Black Lamp
+
+static struct BurnRomInfo SpecblacklampRomDesc[] = {
+	{ "Black Lamp (1988)(Firebird Software).tap", 47656, 0xaffec634, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specblacklamp, Specblacklamp, Spec128)
+STD_ROM_FN(Specblacklamp)
+
+struct BurnDriver BurnSpecblacklamp = {
+	"spec_blacklamp", NULL, "spec_spec128", NULL, "1988",
+	"Black Lamp\0", NULL, "Firebird Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecblacklampRomInfo, SpecblacklampRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dark Fusion
+
+static struct BurnRomInfo SpecdarkfusionRomDesc[] = {
+	{ "Dark Fusion (1988)(Gremlin Graphics).tap", 65624, 0x87c7d4d6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specdarkfusion, Specdarkfusion, Spec128)
+STD_ROM_FN(Specdarkfusion)
+
+struct BurnDriver BurnSpecdarkfusion = {
+	"spec_darkfusion", NULL, "spec_spec128", NULL, "1988",
+	"Dark Fusion\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecdarkfusionRomInfo, SpecdarkfusionRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Switchblade
+
+static struct BurnRomInfo SpecswitchbladeRomDesc[] = {
+	{ "Switchblade (1991)(Gremlin Graphics).tap", 52937, 0xa050f9d6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specswitchblade, Specswitchblade, Spec128)
+STD_ROM_FN(Specswitchblade)
+
+struct BurnDriver BurnSpecswitchblade = {
+	"spec_switchblade", NULL, "spec_spec128", NULL, "1991",
+	"Switchblade\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecswitchbladeRomInfo, SpecswitchbladeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

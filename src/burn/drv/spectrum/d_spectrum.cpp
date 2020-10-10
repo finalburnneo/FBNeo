@@ -12315,7 +12315,7 @@ struct BurnDriver BurnSpecyazzie = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Willy The Wasp
+// Willy The Wasp (HB)
 
 static struct BurnRomInfo SpecWwaspRomDesc[] = {
 	{ "Willy The Wasp (The Death Squad)(2014).tap", 41193, 0x030e8442, BRF_ESS | BRF_PRG },
@@ -12328,13 +12328,13 @@ struct BurnDriver BurnSpecWwasp = {
 	"spec_wwasp", NULL, "spec_spec128", NULL, "2014",
 	"Willy The Wasp (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecWwaspRomInfo, SpecWwaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Willy The Wasp 2
+// Willy The Wasp 2 (HB)
 
 static struct BurnRomInfo SpecWwasp2RomDesc[] = {
 	{ "Willy The Wasp 2 (The Death Squad)(2014).tap", 64604, 0x3e8b70fb, BRF_ESS | BRF_PRG },
@@ -12347,8 +12347,198 @@ struct BurnDriver BurnSpecWwasp2 = {
 	"spec_wwasp2", NULL, "spec_spec128", NULL, "2014",
 	"Willy The Wasp 2 (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecWwasp2RomInfo, SpecWwasp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Black & White v1.1 (HB)
+
+static struct BurnRomInfo SpecbnwRomDesc[] = {
+	{ "Black & White v1.1 (2020)(Pat Morita Team).tap", 72706, 0x6629deb1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specbnw, Specbnw, Spec128)
+STD_ROM_FN(Specbnw)
+
+struct BurnDriver BurnSpecbnw = {
+	"spec_bnw", NULL, "spec_spec128", NULL, "2020",
+	"Black & White (HB, v1.1)\0", NULL, "Pat Morita Team", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecbnwRomInfo, SpecbnwRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Circuitry 48k  v1.1 (HB)
+
+static struct BurnRomInfo SpeccircuitryRomDesc[] = {
+	{ "Circuitry48k v1.1 (2017)(Rucksack Games).tap", 31538, 0xc97061d1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speccircuitry, Speccircuitry, Spec128)
+STD_ROM_FN(Speccircuitry)
+
+struct BurnDriver BurnSpeccircuitry = {
+	"spec_circuitry", NULL, "spec_spec128", NULL, "2017",
+	"Circuitry (HB, v1.1)\0", NULL, "Rucksack Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpeccircuitryRomInfo, SpeccircuitryRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Coloco (HB)
+
+static struct BurnRomInfo SpeccolocoRomDesc[] = {
+	{ "Coloco (2020)(Mojon Twins).tap", 46855, 0xdd07fa17, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speccoloco, Speccoloco, Spec128)
+STD_ROM_FN(Speccoloco)
+
+struct BurnDriver BurnSpeccoloco = {
+	"spec_coloco", NULL, "spec_spec128", NULL, "2020",
+	"Coloco (HB)\0", NULL, "Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpeccolocoRomInfo, SpeccolocoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Foggy's Quest 128k (HB)
+
+static struct BurnRomInfo SpecfoggyquestRomDesc[] = {
+	{ "Foggy's Quest128k (2017)(Rucksack Games).tap", 43528, 0x0d624a1c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specfoggyquest, Specfoggyquest, Spec128)
+STD_ROM_FN(Specfoggyquest)
+
+struct BurnDriver BurnSpecfoggyquest = {
+	"spec_foggyquest", NULL, "spec_spec128", NULL, "2017",
+	"Foggy's Quest (HB)\0", NULL, "Rucksack Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecfoggyquestRomInfo, SpecfoggyquestRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// All Hallows Rise of Pumpkin (HB)
+
+static struct BurnRomInfo SpechlwpumpkinRomDesc[] = {
+	{ "ALL Hallows Rise of Pumpkin (2018)(Rucksack Games).tap", 46999, 0x76ecb3a0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spechlwpumpkin, Spechlwpumpkin, Spec128)
+STD_ROM_FN(Spechlwpumpkin)
+
+struct BurnDriver BurnSpechlwpumpkin = {
+	"spec_hlwpumpkin", NULL, "spec_spec128", NULL, "2018",
+	"All Hallows Rise of Pumpkin (HB)\0", NULL, "Rucksack Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpechlwpumpkinRomInfo, SpechlwpumpkinRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ninjajar v1.1 (HB)
+
+static struct BurnRomInfo SpecninjajarRomDesc[] = {
+	{ "Ninjajar v1.1 (2014)(Mojon Twins).tap", 122675, 0x617db06c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specninjajar, Specninjajar, Spec128)
+STD_ROM_FN(Specninjajar)
+
+struct BurnDriver BurnSpecninjajar = {
+	"spec_ninjajar", NULL, "spec_spec128", NULL, "2014",
+	"Ninjajar (HB, v1.1)\0", NULL, "Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecninjajarRomInfo, SpecninjajarRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Rubicon v1.1 (HB)
+
+static struct BurnRomInfo SpecrubiconRomDesc[] = {
+	{ "Rubicon v1.1 (2018)(Rucksack Games).tap", 48224, 0x99ec517e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specrubicon, Specrubicon, Spectrum)
+STD_ROM_FN(Specrubicon)
+
+struct BurnDriver BurnSpecrubicon = {
+	"spec_rubicon", NULL, "spec_spectrum", NULL, "2018",
+	"Rubicon (HB, v1.1)\0", NULL, "Rucksack Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
+	SpectrumGetZipName, SpecrubiconRomInfo, SpecrubiconRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sector Invasion (HB)
+
+static struct BurnRomInfo SpecsectinvnRomDesc[] = {
+	{ "Sector Invasion (2014).tap", 38873, 0x275c56d5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specsectinvn, Specsectinvn, Spec128)
+STD_ROM_FN(Specsectinvn)
+
+struct BurnDriver BurnSpecsectinvn = {
+	"spec_sectinvn", NULL, "spec_spec128", NULL, "2014",
+	"Sector Invasion (HB)\0", NULL, "(Unknown)", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecsectinvnRomInfo, SpecsectinvnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tenebra Macabre (HB)
+
+static struct BurnRomInfo SpectmacabreRomDesc[] = {
+	{ "Tenebra Macabre (2013)(Mojon Twins).tap", 39490, 0xbfa58b2c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spectmacabre, Spectmacabre, Spec128)
+STD_ROM_FN(Spectmacabre)
+
+struct BurnDriver BurnSpectmacabre = {
+	"spec_tmacabre", NULL, "spec_spec128", NULL, "2013",
+	"Tenebra Macabre (HB)\0", NULL, "Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpectmacabreRomInfo, SpectmacabreRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Vampire Vengeance v1.1 (HB)
+
+static struct BurnRomInfo SpecvampvengRomDesc[] = {
+	{ "Vampire Vengeance v1.1 (2020)(Poe Games).tap", 58059, 0x2796871d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specvampveng, Specvampveng, Spec128)
+STD_ROM_FN(Specvampveng)
+
+struct BurnDriver BurnSpecvampveng = {
+	"spec_vampveng", NULL, "spec_spec128", NULL, "2020",
+	"Vampire Vengeance (HB, v1.1)\0", NULL, "Poe Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecvampvengRomInfo, SpecvampvengRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

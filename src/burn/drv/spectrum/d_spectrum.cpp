@@ -12542,3 +12542,136 @@ struct BurnDriver BurnSpecvampveng = {
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Cray-5
+
+static struct BurnRomInfo SpecCray5RomDesc[] = {
+	{ "Cray-5 (Retroworks)(2011).tap", 53875, 0xa1467bf5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCray5, SpecCray5, Spec128)
+STD_ROM_FN(SpecCray5)
+
+struct BurnDriver BurnSpecCray5 = {
+	"spec_cray5", NULL, "spec_spec128", NULL, "2011",
+	"Cray-5 (HB)\0", NULL, "Retroworks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecCray5RomInfo, SpecCray5RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dead Flesh Boy
+
+static struct BurnRomInfo SpecDfboyRomDesc[] = {
+	{ "Dead Flesh Boy (VANB)(2015).tap", 40669, 0x3375d2c9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDfboy, SpecDfboy, Spec128)
+STD_ROM_FN(SpecDfboy)
+
+struct BurnDriver BurnSpecDfboy = {
+	"spec_dfboy", NULL, "spec_spec128", NULL, "2015",
+	"Dead Flesh Boy (HB)\0", NULL, "VANB", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDfboyRomInfo, SpecDfboyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Flype
+
+static struct BurnRomInfo SpecFlypeRomDesc[] = {
+	{ "Flype (Repixel8)(2015).tap", 41719, 0x2b9a90f2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFlype, SpecFlype, Spec128)
+STD_ROM_FN(SpecFlype)
+
+struct BurnDriver BurnSpecFlype = {
+	"spec_flype", NULL, "spec_spec128", NULL, "2015",
+	"Flype (HB)\0", NULL, "Repixel8", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecFlypeRomInfo, SpecFlypeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Horace and the Robots
+
+static struct BurnRomInfo SpecHoracerobotsRomDesc[] = {
+	{ "Horace and the Robots (Steve Snake)(2017).tap", 25517, 0x05fd13e2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHoracerobots, SpecHoracerobots, Spec128)
+STD_ROM_FN(SpecHoracerobots)
+
+struct BurnDriver BurnSpecHoracerobots = {
+	"spec_horacerobots", NULL, "spec_spec128", NULL, "2017",
+	"Horace and the Robots (HB)\0", NULL, "Steve Snake", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHoracerobotsRomInfo, SpecHoracerobotsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ooze
+
+static struct BurnRomInfo SpecOozeRomDesc[] = {
+	{ "Ooze (Bubblesoft)(2017).tap", 49790, 0x188d3e4e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOoze, SpecOoze, Spec128)
+STD_ROM_FN(SpecOoze)
+
+struct BurnDriver BurnSpecOoze = {
+	"spec_ooze", NULL, "spec_spec128", NULL, "2017",
+	"Ooze (HB)\0", NULL, "Bubblesoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecOozeRomInfo, SpecOozeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Restless Andre
+
+static struct BurnRomInfo SpecRestlessandreRomDesc[] = {
+	{ "Restless Andre (Jaime Grilo)(2019).tap", 48113, 0x0db7023a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRestlessandre, SpecRestlessandre, Spec128)
+STD_ROM_FN(SpecRestlessandre)
+
+struct BurnDriver BurnSpecRestlessandre = {
+	"spec_restlessandre", NULL, "spec_spec128", NULL, "2019",
+	"Restless Andre (HB)\0", NULL, "Jaime Grilo", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecRestlessandreRomInfo, SpecRestlessandreRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Terrahawks
+
+static struct BurnRomInfo SpecTerrahawksRomDesc[] = {
+	{ "Terrahawks (Gary James)(2014).tap", 24138, 0xd6f05303, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTerrahawks, SpecTerrahawks, Spec128)
+STD_ROM_FN(SpecTerrahawks)
+
+struct BurnDriver BurnSpecTerrahawks = {
+	"spec_terrahawks", NULL, "spec_spec128", NULL, "2014",
+	"Terrahawks (HB)\0", NULL, "Gary James", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecTerrahawksRomInfo, SpecTerrahawksRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

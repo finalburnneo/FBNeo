@@ -27,7 +27,7 @@ struct ZetExt {
  
 static INT32 nZetCyclesDone[MAX_Z80];
 static INT32 nZetCyclesDelayed[MAX_Z80];
-static INT32 nZetCyclesTotal;
+INT32 nZetCyclesTotal;
 
 static INT32 nOpenedCPU = -1;
 static INT32 nCPUCount = 0;

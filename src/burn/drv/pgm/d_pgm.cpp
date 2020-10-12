@@ -3032,13 +3032,22 @@ static INT32 kov2Init()
 	return nRet;
 }
 
+static INT32 kov2107Init()
+{
+	INT32 nRet = kov2Init();
+	
+	// Fixed the bug that Xia Houyuan didn't move and the plot didn't advance after 107 version of recruiting Xia Houyuan
+	PGM68KROM[0xa7379] = 0x67;
+
+	return nRet;
+}
 struct BurnDriver BurnDrvKov2 = {
 	"kov2", NULL, "pgm", NULL, "2000",
 	"Knights of Valour 2 (V107, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V107, 102, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2RomInfo, kov2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2DIPInfo,
-	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	kov2107Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -7630,31 +7639,31 @@ struct BurnDriver BurnDrvoldsmx = {
 
 // Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack) / 三國戰紀 - 群雄亂舞 2020 (修改版)
 // Hacked by Shuanger
-// GOTVG ver. 20200910
+// GOTVG ver. 20201010
 
 static struct BurnRomInfo kovplus2020txRomDesc[] = {
-	{ "kovplus2020tx_p0600.119",	0x0400000, 0x1564ca87, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "2020tx_p0603_119.u1",	0x0400000, 0x255EC0A1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "kovplus2020tx_t0600.u11",	0x0800000, 0xe451df7f, 2 | BRF_GRA },			//  1 Tile data
+	{ "2020tx_t0600.u11",		0x0800000, 0xe451df7f, 2 | BRF_GRA },			//  1 Tile data
 	
-	{ "kovplus2020tx_a0600.u2",		0x0800000, 0x783df23c, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a0601.u4",				0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  3
-	{ "kovplus2020tx_a0602.u6",		0x0800000, 0x58615616, 3 | BRF_GRA },			//  4
-	{ "kovplus2020tx_a0603.u9",		0x0400000, 0x4d755da5, 3 | BRF_GRA },			//  5
+	{ "2020tx_a0600.u2",		0x0800000, 0x783df23c, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a0601.u4",			0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  3
+	{ "2020tx_a0602.u6",		0x0800000, 0x58615616, 3 | BRF_GRA },			//  4
+	{ "2020tx_a0603.u9",		0x0400000, 0x4d755da5, 3 | BRF_GRA },			//  5
 	
-	{ "kovplus2020tx_b0600.u5",		0x0800000, 0xe3bf000f, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "kovplus2020tx_b0601.u7",		0x0400000, 0xc91abed0, 4 | BRF_GRA },			//  7
+	{ "2020tx_b0600.u5",		0x0800000, 0xe3bf000f, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "2020tx_b0601.u7",		0x0400000, 0xc91abed0, 4 | BRF_GRA },			//  7
 	
-	{ "kovplus2020tx_m0600.u3",		0x0400000, 0xd84343ec, 5 | BRF_SND },			//  8 Samples
+	{ "2020tx_m0600.u3",		0x0400000, 0xd84343ec, 5 | BRF_SND },			//  8 Samples
 	
-	{ "kov_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
+	{ "kov_igs027a.bin",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovplus2020tx, kovplus2020tx, pgm)
 STD_ROM_FN(kovplus2020tx)
 
 struct BurnDriver BurnDrvkovplus2020tx = {
-	"kovplus2020tx", "kovplus", "pgm", NULL, "2020-09-10",
+	"kovplus2020tx", "kovplus", "pgm", NULL, "2020-10-10",
 	"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u96c4\u4e82\u821e 2020 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

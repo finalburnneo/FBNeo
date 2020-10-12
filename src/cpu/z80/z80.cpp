@@ -3573,10 +3573,18 @@ void Z80Reset()
 	change_pc(PCD);
 }
 
+// bus contentions for zx spectrum
+int z80_op_cycle_start = 0;
+int z80_op_cycle_end = 0;
+int z80_op_is_contention = 0;
+void (*z80_contention_callback)(int, int) = NULL;
+extern INT32 nZetCyclesTotal;
+
 void Z80Exit()
 {
 	Z80.spectrum_tape_cb = NULL;
 	Z80.spectrum_mode = 0;
+	z80_contention_callback = NULL;
 
     if (Z80.daisy) {
         z80daisy_exit();
@@ -3620,10 +3628,23 @@ int Z80Execute(int cycles)
 			take_interrupt();
 		Z80.after_ei = FALSE;
 
+		// bus contentions for zx spectrum
+		z80_op_cycle_start = nZetCyclesTotal + z80TotalCycles();
+		z80_op_is_contention = 0;
+		// "" bus contentions
+
 		PRVPC = PCD;
 //		CALL_DEBUGGER(PCD);
 		R++;
 		EXEC_INLINE(op,ROP());
+
+		// bus contentions for zx spectrum
+		z80_op_cycle_end = nZetCyclesTotal + z80TotalCycles();
+		if (z80_op_is_contention) {
+			z80_contention_callback(z80_op_cycle_start, z80_op_cycle_end);
+		}
+		// "" bus contentions
+
 	} while( Z80.ICount > 0 && !Z80.end_run );
 
 	cycles = cycles - Z80.ICount;

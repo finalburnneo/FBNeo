@@ -25,8 +25,6 @@ extern UINT8 *SpecZ80Ram;
 extern UINT8 nPortFEData;
 extern INT32 nPort7FFDData;
 
-void spectrum_UpdateScreenBitmap(bool);
-void spectrum_UpdateBorderBitmap();
 void spectrum_128_update_memory();
 
 // spectrum_states.cpp

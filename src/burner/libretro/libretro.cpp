@@ -506,7 +506,7 @@ static int create_variables_from_cheats()
 		// Ignore "empty" cheats, they seem common in cheat bundles (as separators and/or hints ?)
 		int count = 0;
 		for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-			if(pCurrentCheat->pOption[i]->szOptionName == NULL) break;
+			if(pCurrentCheat->pOption[i] == NULL || pCurrentCheat->pOption[i]->szOptionName == NULL) break;
 			count++;
 		}
 		if (count > 0)

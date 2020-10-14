@@ -100,7 +100,8 @@
 #define	FALSE			0
 #define TRUE			1
 #define Z80_INLINE		static
-#define change_pc(newpc)	Z80.pc.w.l = (newpc)
+#define change_pc(newpc)	
+//Z80.pc.w.l = (newpc)
 
 static Z80ReadIoHandler Z80IORead;
 static Z80WriteIoHandler Z80IOWrite;
@@ -124,7 +125,31 @@ static Z80ReadOpArgHandler Z80CPUReadOpArg;
 #define BIG_FLAGS_ARRAY		1
 
 /* on JP and JR opcodes check for tight loops */
-#define BUSY_LOOP_HACKS		1
+#define BUSY_LOOP_HACKS     0
+
+// SpecZ80
+static void eat_cycles(int type, int cycles);
+static void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir);
+static void capture_opcode_history_finish();
+static void parse_script(const char *script_desc, CM_SCRIPT_BREAKDOWN *breakdown);
+static bool find_script();
+static void run_script();
+static int  get_ula_delay();
+static int  get_memory_access_delay(UINT16 pc_address);
+static void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg);
+
+static int		m_ula_variant;			// ULA_VARIANT_SINCLAIR  | ULA_VARIANT_AMSTRAD
+static const char*	m_ula_delay_sequence;		// "654321200"           | "10765432"
+static const char*	m_contended_banks;		// "1357"                | "4567"
+static int		m_contended_banks_length;
+static CM_SCRIPT	m_scripts[MAX_CM_SCRIPTS];	// "pc:4,pc+1:4,ir:1" etc...
+static int 		m_cycles_contention_start;
+static int 		m_cycles_per_line;
+static int 		m_cycles_per_frame;
+static void		(*m_raster_cb)(int); 			//Let the driver know a good time (in T-States) to update the video raster position.
+static OPCODE_HISTORY	m_opcode_history;		// A list of reads/writes per opcode.
+static int		m_tstate_counter;		// The current t-state / cpu cycle.
+static int		m_selected_bank; 		// What ram bank 7ffd port has selected.
 
 /****************************************************************************/
 /* The Z80 registers. HALT is set to 1 when the CPU is halted, the refresh  */
@@ -265,22 +290,23 @@ static const UINT8 cc_ed[0x100] = {
  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8};
 
 static const UINT8 cc_xy[0x100] = {
- 4, 4, 4, 4, 4, 4, 4, 4, 4,15, 4, 4, 4, 4, 4, 4,
- 4, 4, 4, 4, 4, 4, 4, 4, 4,15, 4, 4, 4, 4, 4, 4,
- 4,14,20,10, 9, 9, 9, 4, 4,15,20,10, 9, 9, 9, 4,
- 4, 4, 4, 4,23,23,19, 4, 4,15, 4, 4, 4, 4, 4, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 9, 9, 9, 9, 9, 9,19, 9, 9, 9, 9, 9, 9, 9,19, 9,
-19,19,19,19,19,19, 4,19, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 9, 9,19, 4, 4, 4, 4, 4, 9, 9,19, 4,
- 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4,
- 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
- 4,14, 4,23, 4,15, 4, 4, 4, 8, 4, 4, 4, 4, 4, 4,
- 4, 4, 4, 4, 4, 4, 4, 4, 4,10, 4, 4, 4, 4, 4, 4};
+	4+4,10+4, 7+4, 6+4, 4+4, 4+4, 7+4, 4+4, 4+4,11+4, 7+4, 6+4, 4+4, 4+4, 7+4, 4+4,
+	8+4,10+4, 7+4, 6+4, 4+4, 4+4, 7+4, 4+4,12+4,11+4, 7+4, 6+4, 4+4, 4+4, 7+4, 4+4,
+	7+4,10+4,16+4, 6+4, 4+4, 4+4, 7+4, 4+4, 7+4,11+4,16+4, 6+4, 4+4, 4+4, 7+4, 4+4,
+	7+4,10+4,13+4, 6+4,23  ,23  ,19  , 4+4, 7+4,11+4,13+4, 6+4, 4+4, 4+4, 7+4, 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	19 ,19  ,19  ,19  ,19  ,19  , 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4, 4+4, 4+4, 4+4, 4+4, 4+4, 4+4,19  , 4+4,
+	5+4,10+4,10+4,10+4,10+4,11+4, 7+4,11+4, 5+4,10+4,10+4, 0  ,10+4,17+4, 7+4,11+4, /* cb -> cc_xycb */
+	5+4,10+4,10+4,11+4,10+4,11+4, 7+4,11+4, 5+4, 4+4,10+4,11+4,10+4, 4  , 7+4,11+4, /* dd -> cc_xy again */
+	5+4,10+4,10+4,19+4,10+4,11+4, 7+4,11+4, 5+4, 4+4,10+4, 4+4,10+4, 4  , 7+4,11+4, /* ed -> cc_ed */
+	5+4,10+4,10+4, 4+4,10+4,11+4, 7+4,11+4, 5+4, 6+4,10+4, 4+4,10+4, 4  , 7+4,11+4  /* fd -> cc_xy again */
+};
 
 static const UINT8 cc_xycb[0x100] = {
 23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,
@@ -322,6 +348,180 @@ static const UINT8 cc_ex[0x100] = {
 static const UINT8 *cc[6];
 #define Z80_TABLE_dd	Z80_TABLE_xy
 #define Z80_TABLE_fd	Z80_TABLE_xy
+
+enum ContendedMemoryID
+{
+	//37 different contended memory scripts (CM00 to CM36)
+	CM00,CM01,CM02,CM03,CM04,CM05,CM06,CM07,CM08,CM09,
+	CM10,CM11,CM12,CM13,CM14,CM15,CM16,CM17,CM18,CM19,
+	CM20,CM21,CM22,CM23,CM24,CM25,CM26,CM27,CM28,CM29,
+	CM30,CM31,CM32,CM33,CM34,CM35,CM36,
+	OPII, //The opcode that follows the dd or fd should be treated standard opcode (cc_op[]) except it works on the IX or IY register instead.
+	ILL1, //The opcode that follows the dd or fd should be treated standard opcode (cc_op[]). These are all undocumented.
+	ILL2, //(Undocumented EDXX) Process these the same as CM01 (I could have put CM01 in the cc_ed_contended table instead of ILL2, but I think it was a good idea to be able to see there was a distinction).
+	_CB_, //Go to the cc_cb_contended[] table
+	_ED_, //Go to the cc_ed_contended[] table.
+	_XY_, //Go to the cc_xy_contended[] table (for dd of fd prefixed opcodes)
+	XYCB  //Use the cc_xycb_contended[] table (for ddcb or fdcb prefixed opcodes)
+};
+
+
+///////////////////////////////////////////////////////
+// Scripts derived from the SinclairFAQ              //
+// https://faqwiki.zxnet.co.uk/wiki/Contended_memory //
+///////////////////////////////////////////////////////
+CM_SCRIPT_DESCRIPTION cm_script_descriptions[MAX_CM_SCRIPTS] =
+{
+        // ID	  Sinclair				Amstrad
+	//						(If NULL, its the same as the Sinclair ULA)
+	{/*CM00*/ "0:4",				NULL},
+	{/*CM01*/ "0:4,1:4",				NULL},
+	{/*CM02*/ "0:4,1:4,ir:1",			"0:4,1:5"},
+	{/*CM03*/ "0:4,ir:1x2",				"0:6"},
+	{/*CM04*/ "0:4,ir:1x7",				"0:11"},
+	{/*CM05*/ "0:4,1:4,ir:1x7",			"0:4,1:11"},
+	{/*CM06*/ "0:4,1:3",				NULL},
+	{/*CM07*/ "0:4,1:3",				NULL},
+	{/*CM08*/ "0:4,1:3",				NULL},
+	{/*CM09*/ "0:4,1:4,2:3,2:1x5,3:3",		"0:4,1:4,2:8,3:3"},
+	{/*CM10*/ "0:4,1:4,2:3,2:1",			"0:4,1:4,2:4"},
+	{/*CM11*/ "0:4,1:4,2:3,3:3,3:1x2,4:3,4:1",	"0:4,1:4,2:3,3:5,4:4"},
+	{/*CM12*/ "0:4,1:3,2:3",			NULL},
+	{/*CM13*/ "0:4,1:3,2:3",			NULL},
+	{/*CM14*/ "0:4,1:4,2:3,3:3,3:1x2,4:3",		"0:4,1:4,2:3,3:5,4:3"},
+	{/*CM15*/ "0:4,1:3,2:3,3:3",			NULL},
+	{/*CM16*/ "0:4,1:3,2:3,3:3,4:3",		NULL},
+	{/*CM17*/ "0:4,1:4,2:3,3:3,4:3,5:3",		NULL},
+	{/*CM18*/ "0:4,1:3,1:1,2:3",			"0:4,1:4,2:3"},
+	{/*CM19*/ "0:4,1:4,2:3,2:1,3:3",		"0:4,1:4,2:4,3:3"},
+	{/*CM20*/ "0:4,1:4,2:3,2:1x5,3:3,3:1,4:3",	"0:4,1:4,2:8,3:4,4:3"},
+	{/*CM21*/ "0:4,1:4,2:3,3:3,3:1x2,4:3,4:1,5:3",	"0:4,1:4,2:3,3:5,4:4,5:3"},
+	{/*CM22*/ "0:4,1:3,2:3",			NULL},
+	{/*CM23*/ "0:4,1:4,2:3,3:3",			NULL},
+	{/*CM24*/ "0:4,ir:1,[1:3,2:3]",			"0:5,[1:3,2:3"},
+	{/*CM25*/ "0:4,ir:1,1:3,2:3",			NULL},
+	{/*CM26*/ "0:4,1:3,2:3,[2:1,3:3,4:3]",		"0:4,1:3,2:3,[N:1,3:3,4:3]"},
+	{/*CM27*/ "0:4,1:3,[1:1x5]",			"0:4,1:3,[N:5]"},
+	{/*CM28*/ "0:4,ir:1,1:3,[1:1x5]",		"0:5,1:3,[N:5]"},
+	{/*CM29*/ "0:4,1:4,2:3,2:1x4,3:3",		"0:4,1:4,2:7,3:3"},
+	{/*CM30*/ "0:4,1:3,2:IO",			NULL},
+	{/*CM31*/ "0:4,1:4,2:IO",			NULL},
+	{/*CM32*/ "0:4,1:3,2:3,2:1,3:3,4:3,4:1x2",	"0:4,1:3,2:4,3:3,4:5"},
+	{/*CM33*/ "0:4,1:4,2:3,3:3,3:1x2,[3:1x5]",	"0:4,1:4,2:3,3:5,[N:5]"},
+	{/*CM34*/ "0:4,1:4,2:3,2:1x5,[2:1x5]",		"0:4,1:4,2:8,[N:5]"},
+	{/*CM35*/ "0:4,1:4,ir:1,2:IO,3:3,[3:1x5]",	"0:4,1:5,2:IO,3:3,[N:5]"},
+	{/*CM36*/ "0:4,1:4,ir:1,2:3,3:IO,[bc:1x5]",	"0:4,1:5,2:3,3:IO,[N:5]"}
+};
+
+
+static const int cc_op_contended[0x100] = {
+/*	0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F */
+/* 0 */	CM00,CM12,CM07,CM03,CM00,CM00,CM06,CM00,CM00,CM04,CM07,CM03,CM00,CM00,CM06,CM00,
+/* 1 */	CM28,CM12,CM07,CM03,CM00,CM00,CM06,CM00,CM27,CM04,CM07,CM03,CM00,CM00,CM06,CM00,
+/* 2 */	CM27,CM12,CM16,CM03,CM00,CM00,CM06,CM00,CM27,CM04,CM16,CM03,CM00,CM00,CM06,CM00,
+/* 3 */	CM27,CM12,CM15,CM03,CM18,CM18,CM13,CM00,CM27,CM04,CM15,CM03,CM00,CM00,CM06,CM00,
+/* 4 */	CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,
+/* 5 */	CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,
+/* 6 */	CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,
+/* 7 */	CM07,CM07,CM07,CM07,CM07,CM07,CM00,CM07,CM00,CM00,CM00,CM00,CM00,CM00,CM07,CM00,
+/* 8 */	CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,
+/* 9 */	CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,
+/* A */	CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,
+/* B */	CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,CM00,CM00,CM00,CM00,CM00,CM00,CM08,CM00,
+/* C */	CM24,CM22,CM12,CM12,CM26,CM25,CM06,CM25,CM24,CM22,CM12,_CB_,CM26,CM26,CM06,CM25,
+/* D */	CM24,CM22,CM12,CM30,CM26,CM25,CM06,CM25,CM24,CM00,CM12,CM30,CM26,_XY_,CM06,CM25,
+/* E */	CM24,CM22,CM12,CM32,CM26,CM25,CM06,CM25,CM24,CM00,CM12,CM00,CM26,_ED_,CM06,CM25,
+/* F */	CM24,CM22,CM12,CM00,CM26,CM25,CM06,CM25,CM24,CM03,CM12,CM00,CM26,_XY_,CM06,CM25
+};
+
+static const int cc_ed_contended[0x100] = {
+/*	0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F */
+/* 0 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* 1 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* 2 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* 3 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* 4 */	CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM02,CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM02,
+/* 5 */	CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM02,CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM02,
+/* 6 */	CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM29,CM31,CM31,CM05,CM17,CM01,CM23,CM01,CM29,
+/* 7 */	CM31,CM31,CM05,CM17,CM01,CM23,CM01,ILL2,CM31,CM31,CM05,CM17,CM01,CM23,CM01,ILL2,
+/* 8 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* 9 */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* A */	CM33,CM34,CM35,CM36,ILL2,ILL2,ILL2,ILL2,CM33,CM34,CM35,CM36,ILL2,ILL2,ILL2,ILL2,
+/* B */	CM33,CM34,CM35,CM36,ILL2,ILL2,ILL2,ILL2,CM33,CM34,CM35,CM36,ILL2,ILL2,ILL2,ILL2,
+/* C */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* D */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* E */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,
+/* F */	ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2,ILL2
+};
+
+static const int cc_cb_contended[0x100] = {
+/*	0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F */
+/* 0 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* 1 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* 2 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* 3 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* 4 */	CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,
+/* 5 */	CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,
+/* 6 */	CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,
+/* 7 */	CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM10,CM01,
+/* 8 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* 9 */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* A */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* B */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* C */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* D */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* E */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+/* F */	CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,CM01,CM01,CM01,CM01,CM01,CM01,CM19,CM01,
+};
+
+
+//This is for opcodes that start with dd or fd (Saves us having a cc_dd_contended table and a
+//cc_fd_contended table, which would both be identical). If the byte following the
+//dd/fd falls on OPII or ILL1, then the opcode is processed by cc_op_contended[] + 4 tstates for
+//reading the dd/fd.
+static const int cc_xy_contended[0x100] = {
+/*	0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F */
+/* 0 */	ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,
+/* 1 */	ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,
+/* 2 */	ILL1,OPII,OPII,OPII,OPII,OPII,OPII,ILL1,ILL1,OPII,OPII,OPII,OPII,OPII,OPII,ILL1,
+/* 3 */	ILL1,ILL1,ILL1,ILL1,CM20,CM20,CM14,ILL1,ILL1,OPII,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,
+/* 4 */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* 5 */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* 6 */	OPII,OPII,OPII,OPII,OPII,OPII,CM09,OPII,OPII,OPII,OPII,OPII,OPII,OPII,CM09,OPII,
+/* 7 */	CM09,CM09,CM09,CM09,CM09,CM09,ILL1,CM09,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* 8 */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* 9 */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* A */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* B */	ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,OPII,CM09,ILL1,
+/* C */	ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,XYCB,ILL1,ILL1,ILL1,ILL1,
+/* D */	ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,
+/* E */	ILL1,OPII,ILL1,OPII,ILL1,OPII,ILL1,ILL1,ILL1,OPII,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,
+/* F */	ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1,OPII,ILL1,ILL1,ILL1,ILL1,ILL1,ILL1
+};
+
+
+//This is for opcodes that start with ddcb or fdcb (Saves us having a cc_ddcb_contended table and a
+//cc_fdcb_contended table, which would both be identical).
+static const int cc_xycb_contended[0x100] = {
+/*	0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F */
+/* 0 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* 1 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* 2 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* 3 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* 4 */	CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,
+/* 5 */	CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,
+/* 6 */	CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,
+/* 7 */	CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,CM11,
+/* 8 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* 9 */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* A */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* B */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* C */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* D */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* E */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,
+/* F */	CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21,CM21
+};
+
 
 static void take_interrupt(void);
 //void Z80Burn(int cycles);
@@ -439,6 +639,7 @@ PROTOTYPES(Z80xycb,xycb);
 /* Burn an odd amount of cycles, that is instructions taking something      */
 /* different from 4 T-states per opcode (and R increment)                   */
 /****************************************************************************/
+#if 0
 Z80_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 {
 	if( cycles > 0 )
@@ -447,6 +648,7 @@ Z80_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 		Z80.ICount -= (cycles / cyclesum) * cyclesum;
 	}
 }
+#endif
 
 /***************************************************************
  * define an opcode function
@@ -456,7 +658,8 @@ Z80_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 /***************************************************************
  * adjust cycle count by n T-states
  ***************************************************************/
-#define CC(prefix,opcode) Z80.ICount -= cc[Z80_TABLE_##prefix][opcode]
+//#define CC(prefix,opcode) Z80.ICount -= cc[Z80_TABLE_##prefix][opcode]
+#define CC(prefix,opcode) do { eat_cycles(CYCLES_EXEC, cc[Z80_TABLE_##prefix][opcode]); } while (0)
 
 /***************************************************************
  * execute an opcode
@@ -552,8 +755,6 @@ Z80_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 #define ENTER_HALT {											\
 	PC--;														\
 	HALT = 1;													\
-	if( Z80.irq_state == Z80_CLEAR_LINE )							\
-		Z80Burn( Z80.ICount );									\
 }
 
 /***************************************************************
@@ -570,17 +771,35 @@ Z80_INLINE void BURNODD(int cycles, int opcodes, int cyclesum)
 /***************************************************************
  * Input a byte from given I/O port
  ***************************************************************/
-#define IN(port)   ((UINT8)Z80IORead(port))
+Z80_INLINE UINT8 IN(INT16 port)
+{
+	// For floating bus support, the read_byte triggers the
+	// 'spectrum_port_ula_r' callback which will require the tstate
+	// counter to be up-to-date.
+	store_rwinfo(port, -1, RWINFO_READ|RWINFO_IO_PORT, "in port");
+	return Z80IORead(port);
+}
 
 /***************************************************************
  * Output a byte to given I/O port
  ***************************************************************/
-#define OUT(port,value) Z80IOWrite(port,value)
+//#define OUT(port,value) Z80IOWrite(port,value)
+Z80_INLINE void OUT(UINT16 port, UINT8 value)
+{
+	store_rwinfo(port, value, RWINFO_WRITE|RWINFO_IO_PORT, "out port");
+	Z80IOWrite(port, value);
+}
 
 /***************************************************************
  * Read a byte from given memory location
  ***************************************************************/
-#define RM(addr) (UINT8)Z80ProgramRead(addr)
+//#define RM(addr) (UINT8)Z80ProgramRead(addr)
+Z80_INLINE UINT8 RM(UINT16 addr)
+{
+	UINT8 res = Z80ProgramRead(addr);
+	store_rwinfo(addr, res, RWINFO_READ|RWINFO_MEMORY, "rm");
+	return res;
+}
 
 /***************************************************************
  * Read a word from given memory location
@@ -594,7 +813,12 @@ Z80_INLINE void RM16( UINT32 addr, Z80_PAIR *r )
 /***************************************************************
  * Write a byte to given memory location
  ***************************************************************/
-#define WM(addr,value) Z80ProgramWrite(addr,value)
+//#define WM(addr,value) Z80ProgramWrite(addr,value)
+Z80_INLINE void WM(UINT16 addr, UINT8 value)
+{
+	store_rwinfo(addr, value, RWINFO_WRITE|RWINFO_MEMORY, "wm");
+	Z80ProgramWrite(addr,value);
+}
 
 #define cpu_readop(n) Z80CPUReadOp(n)
 #define cpu_readop_arg(n) Z80CPUReadOpArg(n)
@@ -617,7 +841,9 @@ Z80_INLINE UINT8 ROP(void)
 {
 	unsigned pc = PCD;
 	PC++;
-	return cpu_readop(pc);
+	UINT8 res = cpu_readop(pc);
+	store_rwinfo(((PAIR*)(&pc))->w.l, res, RWINFO_READ|RWINFO_MEMORY, "rop");
+	return res;
 }
 
 /****************************************************************
@@ -630,14 +856,24 @@ Z80_INLINE UINT8 ARG(void)
 {
 	unsigned pc = PCD;
 	PC++;
-	return cpu_readop_arg(pc);
+
+	UINT8 res = cpu_readop_arg(pc);
+	store_rwinfo(((PAIR*)(&pc))->w.l, res, RWINFO_READ|RWINFO_MEMORY, "arg");
+
+	return res;
 }
 
-Z80_INLINE UINT32 ARG16(void)
+Z80_INLINE UINT16 ARG16(void)
 {
-	unsigned pc = PCD;
+	unsigned pc1 = PCD;
+	unsigned pc2 = (pc1+1)&0xffff;
 	PC += 2;
-	return cpu_readop_arg(pc) | (cpu_readop_arg((pc+1)&0xffff) << 8);
+	UINT8 res1 = cpu_readop_arg(pc1);
+	store_rwinfo(((PAIR*)(&pc1))->w.l, res1, RWINFO_READ|RWINFO_MEMORY, "arg16 byte1");
+	UINT8 res2 = cpu_readop_arg(pc2);
+	store_rwinfo(((PAIR*)(&pc2))->w.l, res2, RWINFO_READ|RWINFO_MEMORY, "arg16 byte2");
+
+	return res1 | (res2 << 8);
 }
 
 /***************************************************************
@@ -655,53 +891,16 @@ Z80_INLINE UINT32 ARG16(void)
 /***************************************************************
  * PUSH
  ***************************************************************/
-#define PUSH(SR) do { SP -= 2; WM16( SPD, &Z80.SR ); } while (0)
+#define PUSH(SR) do { SP --; WM( SPD, Z80.SR.b.h ); SP --; WM( SPD, Z80.SR.b.l ); } while (0)
 
 /***************************************************************
  * JP
  ***************************************************************/
-#if BUSY_LOOP_HACKS
-#define JP {													\
-	unsigned oldpc = PCD-1;										\
-	PCD = ARG16();												\
-	WZ = PCD;													\
-	change_pc(PCD);												\
-	/* speed up busy loop */									\
-	if( PCD == oldpc )											\
-	{															\
-		if( Z80.irq_state == Z80_CLEAR_LINE )						\
-			BURNODD( Z80.ICount, 1, cc[Z80_TABLE_op][0xc3] );	\
-	}															\
-	else														\
-	{															\
-		UINT8 op = cpu_readop(PCD);								\
-		if( PCD == oldpc-1 )									\
-		{														\
-			/* NOP - JP $-1 or EI - JP $-1 */					\
-			if ( op == 0x00 || op == 0xfb )						\
-			{													\
-				if( Z80.irq_state == Z80_CLEAR_LINE )				\
-					BURNODD( Z80.ICount-cc[Z80_TABLE_op][0x00], \
-						2, cc[Z80_TABLE_op][0x00]+cc[Z80_TABLE_op][0xc3]); \
-			}													\
-		}														\
-		else													\
-		/* LD SP,#xxxx - JP $-3 (Galaga) */						\
-		if( PCD == oldpc-3 && op == 0x31 )						\
-		{														\
-			if( Z80.irq_state == Z80_CLEAR_LINE )					\
-				BURNODD( Z80.ICount-cc[Z80_TABLE_op][0x31],		\
-					2, cc[Z80_TABLE_op][0x31]+cc[Z80_TABLE_op][0xc3]); \
-		}														\
-	}															\
-}
-#else
 #define JP {													\
 	PCD = ARG16();												\
 	WZ = PCD;													\
 	change_pc(PCD);												\
 }
-#endif
 
 /***************************************************************
  * JP_COND
@@ -716,8 +915,7 @@ Z80_INLINE UINT32 ARG16(void)
 	}															\
 	else														\
 	{															\
-		PC += 2;												\
-		WZ = PCD;												\
+		WZ = ARG16(); /* implicit do PC += 2 */                 \
 	}
 
 /***************************************************************
@@ -725,39 +923,10 @@ Z80_INLINE UINT32 ARG16(void)
  ***************************************************************/
 #define JR()													\
 {																\
-	unsigned oldpc = PCD-1;										\
 	INT8 arg = (INT8)ARG(); /* ARG() also increments PC */		\
 	PC += arg;				/* so don't do PC += ARG() */		\
 	WZ = PC;													\
 	change_pc(PCD);												\
-	/* speed up busy loop */									\
-	if( PCD == oldpc )											\
-	{															\
-		if( Z80.irq_state == Z80_CLEAR_LINE )						\
-			BURNODD( Z80.ICount, 1, cc[Z80_TABLE_op][0x18] );	\
-	}															\
-	else														\
-	{															\
-		UINT8 op = cpu_readop(PCD);								\
-		if( PCD == oldpc-1 )									\
-		{														\
-			/* NOP - JR $-1 or EI - JR $-1 */					\
-			if ( op == 0x00 || op == 0xfb )						\
-			{													\
-				if( Z80.irq_state == Z80_CLEAR_LINE )				\
-				   BURNODD( Z80.ICount-cc[Z80_TABLE_op][0x00],	\
-					   2, cc[Z80_TABLE_op][0x00]+cc[Z80_TABLE_op][0x18]); \
-			}													\
-		}														\
-		else													\
-		/* LD SP,#xxxx - JR $-3 */								\
-		if( PCD == oldpc-3 && op == 0x31 )						\
-		{														\
-			if( Z80.irq_state == Z80_CLEAR_LINE )					\
-			   BURNODD( Z80.ICount-cc[Z80_TABLE_op][0x31],		\
-				   2, cc[Z80_TABLE_op][0x31]+cc[Z80_TABLE_op][0x18]); \
-		}														\
-	}															\
 }
 
 /***************************************************************
@@ -766,13 +935,16 @@ Z80_INLINE UINT32 ARG16(void)
 #define JR_COND(cond,opcode)									\
 	if( cond )													\
 	{															\
-		INT8 arg = (INT8)ARG(); /* ARG() also increments PC */	\
-		PC += arg;				/* so don't do PC += ARG() */	\
-	    WZ = PC;													\
 		CC(ex,opcode);											\
-		change_pc(PCD);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
+																\
+		JR()                                                    \
 	}															\
-	else PC++;													\
+	else                                                        \
+	{                                                           \
+		ARG();													\
+	}
 
 /***************************************************************
  * CALL
@@ -790,11 +962,13 @@ Z80_INLINE UINT32 ARG16(void)
 #define CALL_COND(cond,opcode)									\
 	if( cond )													\
 	{															\
+		CC(ex,opcode);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		EA = ARG16();											\
 	    WZ = EA;												\
 		PUSH( pc );												\
 		PCD = EA;												\
-		CC(ex,opcode);											\
 		change_pc(PCD);											\
 	}															\
 	else														\
@@ -808,10 +982,12 @@ Z80_INLINE UINT32 ARG16(void)
 #define RET_COND(cond,opcode)									\
 	if( cond )													\
 	{															\
+		CC(ex,opcode);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		POP( pc );												\
 		WZ = PC;												\
 		change_pc(PCD);											\
-		CC(ex,opcode);											\
 	}
 
 // zx spectrum tapeload bios callback for opcode 0xc0 (ret nz) -dink sept.29 2020
@@ -824,10 +1000,12 @@ static inline void RET_COND_SPECTRUM(int cond, UINT8 opcode)
 
 	if( cond )
 	{
+		CC(ex,opcode);
+		m_opcode_history.do_optional = true;
+		run_script();
 		POP( pc );
 		WZ = PC;
 		change_pc(PCD);
-		CC(ex,opcode);
 	}
 }
 
@@ -1483,9 +1661,11 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	LDI;														\
 	if( BC )													\
 	{															\
+		CC(ex,0xb0);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		PC -= 2;												\
 		WZ = PC + 1;											\
-		CC(ex,0xb0);											\
 	}
 
 /***************************************************************
@@ -1495,9 +1675,11 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	CPI;														\
 	if( BC && !(F & ZF) )										\
 	{															\
+		CC(ex,0xb1);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		PC -= 2;												\
 		WZ = PC + 1;											\
-		CC(ex,0xb1);											\
 	}
 
 /***************************************************************
@@ -1507,8 +1689,10 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	INI;														\
 	if( B )														\
 	{															\
-		PC -= 2;												\
 		CC(ex,0xb2);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
+		PC -= 2;												\
 	}
 
 /***************************************************************
@@ -1518,8 +1702,10 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	OUTI;														\
 	if( B )														\
 	{															\
-		PC -= 2;												\
 		CC(ex,0xb3);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
+		PC -= 2;												\
 	}
 
 /***************************************************************
@@ -1529,9 +1715,11 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	LDD;														\
 	if( BC )													\
 	{															\
+		CC(ex,0xb8);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		PC -= 2;												\
 		WZ = PC + 1;											\
-		CC(ex,0xb8);											\
 	}
 
 /***************************************************************
@@ -1541,9 +1729,11 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	CPD;														\
 	if( BC && !(F & ZF) )										\
 	{															\
+		CC(ex,0xb9);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
 		PC -= 2;												\
 		WZ = PC + 1;											\
-		CC(ex,0xb9);											\
 	}
 
 /***************************************************************
@@ -1553,8 +1743,10 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	IND;														\
 	if( B )														\
 	{															\
-		PC -= 2;												\
 		CC(ex,0xba);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
+		PC -= 2;												\
 	}
 
 /***************************************************************
@@ -1564,8 +1756,10 @@ Z80_INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	OUTD;														\
 	if( B )														\
 	{															\
-		PC -= 2;												\
 		CC(ex,0xbb);											\
+		m_opcode_history.do_optional = true;                    \
+		run_script();                                           \
+		PC -= 2;												\
 	}
 
 /***************************************************************
@@ -3388,7 +3582,7 @@ static void take_interrupt(void)
 		RM16( irq_vector, &Z80.pc );
 //		LOG(("Z80 #%d IM2 [$%04x] = $%04x\n",cpu_getactivecpu() , irq_vector, PCD));
 		/* CALL opcode timing */
-		Z80.ICount -= cc[Z80_TABLE_op][0xcd];
+		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xcd] + cc[Z80_TABLE_ex][0xff]);
 	}
 	else
 	/* Interrupt mode 1. RST 38h */
@@ -3398,7 +3592,7 @@ static void take_interrupt(void)
 		PUSH( pc );
 		PCD = 0x0038;
 		/* RST $38 + 'interrupt latency' cycles */
-		Z80.ICount -= cc[Z80_TABLE_op][0xff] + cc[Z80_TABLE_ex][0xff];
+		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xff] + cc[Z80_TABLE_ex][0xff]);
 	}
 	else
 	{
@@ -3412,20 +3606,22 @@ static void take_interrupt(void)
 				PUSH( pc );
 				PCD = irq_vector & 0xffff;
 				 /* CALL $xxxx + 'interrupt latency' cycles */
-				Z80.ICount -= cc[Z80_TABLE_op][0xcd] + cc[Z80_TABLE_ex][0xff];
+				eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xcd]);
 				break;
 			case 0xc30000:	/* jump */
 				PCD = irq_vector & 0xffff;
 				/* JP $xxxx + 2 cycles */
-				Z80.ICount -= cc[Z80_TABLE_op][0xc3] + cc[Z80_TABLE_ex][0xff];
+				eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xc3]);
 				break;
 			default:		/* rst (or other opcodes?) */
 				PUSH( pc );
 				PCD = irq_vector & 0x0038;
 				/* RST $xx + 2 cycles */
-				Z80.ICount -= cc[Z80_TABLE_op][PCD] + cc[Z80_TABLE_ex][PCD];
+				eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][PCD]);
 				break;
 		}
+		/* 'interrupt latency' cycles */
+		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_ex][0xff]);
 	}
 	WZ=PCD;	
 	change_pc(PCD);
@@ -3534,6 +3730,98 @@ void Z80Init()
 //	Z80.irq_callback = irqcallback;
 	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
 	F = ZF;			/* Zero flag is set */
+	Z80InitContention(0, NULL);
+}
+
+void Z80Contention_set_bank(int bankno)
+{
+	m_selected_bank = bankno;
+}
+
+static void raster_dummy_callback(int)
+{
+}
+
+void Z80InitContention(int is_on_type, void (*rastercallback)(int))
+{
+	int i;
+	const char *default_pattern = "00000000";
+	const char *ula_pattern 	= "65432100";
+	const char *s128k_banks     = "1357";
+	m_raster_cb = (rastercallback) ? rastercallback : raster_dummy_callback;
+
+	memset(&m_scripts, 0, sizeof(m_scripts));
+	memset(&m_opcode_history, 0, sizeof(m_opcode_history));
+
+	switch (is_on_type) {
+		case 128:
+			m_ula_variant = ULA_VARIANT_SINCLAIR;
+			m_ula_delay_sequence = ula_pattern;
+			m_contended_banks = s128k_banks; // 128k
+			m_cycles_contention_start = 14361; //128k (48k is 14335)
+			m_cycles_per_line = 228;
+			m_cycles_per_frame = 70908; //228*311
+			break;
+		case 48:
+			m_ula_variant = ULA_VARIANT_SINCLAIR;
+			m_ula_delay_sequence = "65432100";
+			m_contended_banks = "";
+			m_cycles_contention_start = 14335;
+			m_cycles_per_line = 224;
+			m_cycles_per_frame = 69888; //224*312;
+			break;
+		case 0:
+			m_ula_variant = ULA_VARIANT_NONE;
+			m_ula_delay_sequence = "00000000";
+			m_contended_banks = "";
+			m_cycles_contention_start = 0;
+			m_cycles_per_line = 0;
+			m_cycles_per_frame = 0;
+			break;
+	}
+
+	for(i=0; i<MAX_CM_SCRIPTS; i++)
+	{
+		//Create 'sinclair' variant breakdown tables by default.
+		m_scripts[i].id = i;
+		m_scripts[i].desc = cm_script_descriptions[i].sinclair;
+
+		if((m_ula_variant == ULA_VARIANT_AMSTRAD) && (cm_script_descriptions[i].amstrad != NULL))
+			m_scripts[i].desc = cm_script_descriptions[i].amstrad;
+
+		parse_script(m_scripts[i].desc, &(m_scripts[i].breakdown));
+	}
+
+	//Check the ula_delay_sequence.... (Set it to "00000000" if "" has been set)
+	if(m_ula_delay_sequence == NULL) m_ula_delay_sequence = default_pattern;
+	if(strlen(m_ula_delay_sequence) == 0) m_ula_delay_sequence = default_pattern;
+	if(strlen(m_ula_delay_sequence) != 8)
+	{
+		bprintf(0, _T("ULA delay sequence length must be 8 numeric digits in length (%S)\n"), m_ula_delay_sequence);
+	}
+	for(i=0; i<8; i++)
+	{
+		if((m_ula_delay_sequence[i] < '0') || (m_ula_delay_sequence[i] > '9'))
+		{
+			bprintf(0, _T("Bad character in ULA delay sequence"));
+		}
+	}
+
+	//Check contended banks...
+	if(m_contended_banks == NULL) m_contended_banks = "";
+	m_contended_banks_length = strlen(m_contended_banks);
+	for(i=0; i<m_contended_banks_length; i++)
+	{
+		if((m_contended_banks[i] < '0') || (m_contended_banks[i] > '9'))
+		{
+			bprintf(0, _T("Bad character in contended banks string"));
+		}
+	}
+
+	memset(&m_opcode_history, 0, sizeof(OPCODE_HISTORY));
+	m_opcode_history.capturing = false;
+	m_tstate_counter = 0;
+	m_selected_bank = 0;
 }
 
 void z80_set_spectrum_tape_callback(int (*tape_cb)())
@@ -3571,20 +3859,17 @@ void Z80Reset()
 		z80daisy_reset(Z80.daisy);
 
 	change_pc(PCD);
-}
 
-// bus contentions for zx spectrum
-int z80_op_cycle_start = 0;
-int z80_op_cycle_end = 0;
-int z80_op_is_contention = 0;
-void (*z80_contention_callback)(int, int) = NULL;
-extern INT32 nZetCyclesTotal;
+	memset(&m_opcode_history, 0, sizeof(OPCODE_HISTORY));
+	m_opcode_history.capturing = false;
+	m_tstate_counter = 0;
+	m_selected_bank = 0;
+}
 
 void Z80Exit()
 {
 	Z80.spectrum_tape_cb = NULL;
 	Z80.spectrum_mode = 0;
-	z80_contention_callback = NULL;
 
     if (Z80.daisy) {
         z80daisy_exit();
@@ -3617,7 +3902,7 @@ int Z80Execute(int cycles)
 		PCD = 0x0066;
 		WZ=PCD;
 		change_pc(PCD);
-		Z80.ICount -= 11;
+		eat_cycles(CYCLES_ISR, 11);
 		Z80.nmi_pending = FALSE;
 	}
 
@@ -3628,23 +3913,21 @@ int Z80Execute(int cycles)
 			take_interrupt();
 		Z80.after_ei = FALSE;
 
-		// bus contentions for zx spectrum
-		z80_op_cycle_start = nZetCyclesTotal + z80TotalCycles();
-		z80_op_is_contention = 0;
-		// "" bus contentions
-
 		PRVPC = PCD;
 //		CALL_DEBUGGER(PCD);
 		R++;
-		EXEC_INLINE(op,ROP());
+		if (m_ula_variant == ULA_VARIANT_NONE)
+		{
+			EXEC_INLINE(op,ROP());
+		} else {
+			capture_opcode_history_start((UINT16)BC,(UINT16)(I << 8));
+			EXEC_INLINE(op,ROP());
+			capture_opcode_history_finish();
 
-		// bus contentions for zx spectrum
-		z80_op_cycle_end = nZetCyclesTotal + z80TotalCycles();
-		if (z80_op_is_contention) {
-			z80_contention_callback(z80_op_cycle_start, z80_op_cycle_end);
+			// Elimiates sprite flicker on various games (E.g. Marauder and
+			// Stormlord) and makes Firefly playable.
+			m_raster_cb(m_tstate_counter);
 		}
-		// "" bus contentions
-
 	} while( Z80.ICount > 0 && !Z80.end_run );
 
 	cycles = cycles - Z80.ICount;
@@ -3668,6 +3951,7 @@ INT32 z80TotalCycles()
 	return Z80.cycles_left - Z80.ICount;
 }
 
+#if 0
 void Z80Burn(int cycles)
 {
 	if( cycles > 0 )
@@ -3678,6 +3962,7 @@ void Z80Burn(int cycles)
 		Z80.ICount -= 4 * n;
 	}
 }
+#endif
 
 void Z80SetIrqLine(int irqline, int state)
 {
@@ -3845,456 +4130,681 @@ int ActiveZ80GetVector()
 	return Z80Vector;
 }
 
-#if 0
-/****************************************************************************
- * Processor initialization
- ****************************************************************************/
-static void z80_init(int index, int clock, const void *config, int (*irqcallback)(int))
+/**************************************************************************
+ * Contended Memory Functions                                 [geecab 2018]
+ **************************************************************************/
+void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir)
 {
-	int i, p;
+	m_opcode_history.rw_count = 0;
+	m_opcode_history.tstate_start = m_tstate_counter;
+	m_opcode_history.register_bc = reg_bc;
+	m_opcode_history.register_ir = reg_ir;
+	m_opcode_history.uncontended_cycles_predicted = 0;
+	m_opcode_history.uncontended_cycles_eaten = 0;
 
-	/* setup cycle tables */
-	cc[Z80_TABLE_op] = cc_op;
-	cc[Z80_TABLE_cb] = cc_cb;
-	cc[Z80_TABLE_ed] = cc_ed;
-	cc[Z80_TABLE_xy] = cc_xy;
-	cc[Z80_TABLE_xycb] = cc_xycb;
-	cc[Z80_TABLE_ex] = cc_ex;
+	//We'll find out sometime during the opcode's execution whether to process the
+	//optional script elements or not.
+	m_opcode_history.do_optional = false; //Just process mandatory script elements (for now).
 
-#if BIG_FLAGS_ARRAY
-	if( !SZHVC_add || !SZHVC_sub )
+	//Reset the script position
+	m_opcode_history.script = NULL;
+	m_opcode_history.breakdown = NULL;
+	m_opcode_history.element = 0;
+
+	//And we are good to go!
+	m_opcode_history.capturing = true;
+}
+
+void capture_opcode_history_finish()
+{
+	int i;
+	bool success = true;
+
+	//Stops us capturing rwinfo when we are processing interrupts
+	m_opcode_history.capturing = false;
+
+	if (m_opcode_history.uncontended_cycles_predicted != m_opcode_history.uncontended_cycles_eaten)
 	{
-		int oldval, newval, val;
-		UINT8 *padd, *padc, *psub, *psbc;
-		/* allocate big flag arrays once */
-		SZHVC_add = (UINT8 *)malloc(2*256*256);
-		SZHVC_sub = (UINT8 *)malloc(2*256*256);
-		if( !SZHVC_add || !SZHVC_sub )
+		bprintf(0, _T("Wrong amount of uncontended cycles eaten (predicted=%d eaten=%d)\n"), m_opcode_history.uncontended_cycles_predicted, m_opcode_history.uncontended_cycles_eaten);
+		success = false;
+	}
+
+	//All the reads and writes we did for the last instruction should have been
+	//processed for contention.
+	for(i=0; i<m_opcode_history.rw_count; i++)
+	{
+		if(!(m_opcode_history.rw[i].flags & RWINFO_PROCESSED))
 		{
-			fatalerror("Z80: failed to allocate 2 * 128K flags arrays!!!");
+			bprintf(0, _T("RWINFO %d not processed for contention\n"), i);
+			success = false;
+			break;
 		}
-		padd = &SZHVC_add[	0*256];
-		padc = &SZHVC_add[256*256];
-		psub = &SZHVC_sub[	0*256];
-		psbc = &SZHVC_sub[256*256];
-		for (oldval = 0; oldval < 256; oldval++)
+	}
+
+	if(!success)
+	{
+		if(m_opcode_history.script == NULL)
 		{
-			for (newval = 0; newval < 256; newval++)
+			bprintf(0, _T("Contended Memory Script Unknown\n"));
+		}
+		else
+		{
+			bprintf(0, _T("Contended Memory Script CM%02d breakdown=%S\n"), m_opcode_history.script->id, m_opcode_history.script->desc);
+		}
+
+		bprintf(0, _T("Last Opcode History:\n"));
+		for(i=0; i<m_opcode_history.rw_count; i++)
+		{
+#if 1
+			bprintf(0, _T(" [%d] addr=0x%04X val=0x%02X (%S, %S, Processed=%S dbg=%S)\n"),
+					i,
+					m_opcode_history.rw[i].addr,
+					m_opcode_history.rw[i].val,
+					m_opcode_history.rw[i].flags & RWINFO_READ     ? "Read" : "Write",
+					m_opcode_history.rw[i].flags & RWINFO_IO_PORT   ? "IO"  : "Addr",
+					m_opcode_history.rw[i].flags & RWINFO_PROCESSED ? "Y"   : "N",
+					 m_opcode_history.rw[i].dbg);
+#endif
+		}
+		//assert_always(false, "Failed to process opcode history");
+	}
+}
+
+
+bool find_script()
+{
+	if(m_opcode_history.script == NULL)
+	{
+		RWINFO *rw = m_opcode_history.rw;
+		int contended_type = -1;
+
+		if(m_opcode_history.rw_count <= 0) return false;
+		contended_type = cc_op_contended[rw[0].val];
+
+		if (contended_type == _CB_)
+		{
+			//CB** opcodes...
+			if(m_opcode_history.rw_count <= 1) return false;
+			contended_type = cc_cb_contended[rw[1].val];
+			m_opcode_history.script = &m_scripts[contended_type];
+			m_opcode_history.breakdown = &(m_opcode_history.script->breakdown);
+		}
+		else if(contended_type == _ED_)
+		{
+			//ED** opcodes...
+			if(m_opcode_history.rw_count <= 1) return false;
+			contended_type = cc_ed_contended[rw[1].val];
+			if(contended_type == ILL2) contended_type = CM01; //Illegal_2 ED** opcodes can be processed using the CM01 script
+			m_opcode_history.script = &m_scripts[contended_type];
+			m_opcode_history.breakdown = &(m_opcode_history.script->breakdown);
+		}
+		else if(contended_type == _XY_)
+		{
+			//DD** or FD** opcodes...
+			if(m_opcode_history.rw_count <= 1) return false;
+			contended_type = cc_xy_contended[rw[1].val];
+
+			if(contended_type == XYCB)
 			{
-				/* add or adc w/o carry set */
-				val = newval - oldval;
-				*padd = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
-				*padd |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-				if( (newval & 0x0f) < (oldval & 0x0f) ) *padd |= HF;
-				if( newval < oldval ) *padd |= CF;
-				if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padd |= VF;
-				padd++;
-
-				/* adc with carry set */
-				val = newval - oldval - 1;
-				*padc = (newval) ? ((newval & 0x80) ? SF : 0) : ZF;
-				*padc |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-				if( (newval & 0x0f) <= (oldval & 0x0f) ) *padc |= HF;
-				if( newval <= oldval ) *padc |= CF;
-				if( (val^oldval^0x80) & (val^newval) & 0x80 ) *padc |= VF;
-				padc++;
-
-				/* cp, sub or sbc w/o carry set */
-				val = oldval - newval;
-				*psub = NF | ((newval) ? ((newval & 0x80) ? SF : 0) : ZF);
-				*psub |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-				if( (newval & 0x0f) > (oldval & 0x0f) ) *psub |= HF;
-				if( newval > oldval ) *psub |= CF;
-				if( (val^oldval) & (oldval^newval) & 0x80 ) *psub |= VF;
-				psub++;
-
-				/* sbc with carry set */
-				val = oldval - newval - 1;
-				*psbc = NF | ((newval) ? ((newval & 0x80) ? SF : 0) : ZF);
-				*psbc |= (newval & (YF | XF));	/* undocumented flag bits 5+3 */
-				if( (newval & 0x0f) >= (oldval & 0x0f) ) *psbc |= HF;
-				if( newval >= oldval ) *psbc |= CF;
-				if( (val^oldval) & (oldval^newval) & 0x80 ) *psbc |= VF;
-				psbc++;
+				 //DDCB**** opcodes or FDCB**** opcodes
+				if(m_opcode_history.rw_count <= 3) return false;
+				contended_type = cc_xycb_contended[rw[3].val];
+				m_opcode_history.script = &m_scripts[contended_type];
+				m_opcode_history.breakdown = &(m_opcode_history.script->breakdown);
+			}
+			else if((contended_type == OPII) || (contended_type == ILL1))
+			{
+				//Run one of the bog standard opcodes, but with an IX/IY shift.
+				eat_cycles(CYCLES_CONTENDED, get_memory_access_delay(rw[0].addr));
+				eat_cycles(CYCLES_UNCONTENDED, 4);
+				rw[0] = rw[1];
+				m_opcode_history.rw_count--;
+				return find_script();
+			}
+			else
+			{
+				m_opcode_history.script = &(m_scripts[contended_type]);
+				m_opcode_history.breakdown = &(m_opcode_history.script->breakdown);
+			}
+		}
+		else
+		{
+			m_opcode_history.script = &(m_scripts[contended_type]);
+			m_opcode_history.breakdown = &(m_opcode_history.script->breakdown);
+			if((rw[0].val == 0xCD) || (rw[0].val == 0x18))
+			{
+				//0xCD ("call **", CM26) and 0x18 ("jz *", CM27) are non-optional
+				//but they all its optional elements need processing
+				m_opcode_history.do_optional = true;
 			}
 		}
 	}
-#endif
-	for (i = 0; i < 256; i++)
+
+	return true; //Good to go!
+}
+
+
+void run_script()
+{
+	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return;
+
+	if(!find_script())
 	{
-		p = 0;
-		if( i&0x01 ) ++p;
-		if( i&0x02 ) ++p;
-		if( i&0x04 ) ++p;
-		if( i&0x08 ) ++p;
-		if( i&0x10 ) ++p;
-		if( i&0x20 ) ++p;
-		if( i&0x40 ) ++p;
-		if( i&0x80 ) ++p;
-		SZ[i] = i ? i & SF : ZF;
-		SZ[i] |= (i & (YF | XF));		/* undocumented flag bits 5+3 */
-		SZ_BIT[i] = i ? i & SF : ZF | PF;
-		SZ_BIT[i] |= (i & (YF | XF));	/* undocumented flag bits 5+3 */
-		SZP[i] = SZ[i] | ((p & 1) ? 0 : PF);
-		SZHV_inc[i] = SZ[i];
-		if( i == 0x80 ) SZHV_inc[i] |= VF;
-		if( (i & 0x0f) == 0x00 ) SZHV_inc[i] |= HF;
-		SZHV_dec[i] = SZ[i] | NF;
-		if( i == 0x7f ) SZHV_dec[i] |= VF;
-		if( (i & 0x0f) == 0x0f ) SZHV_dec[i] |= HF;
+		//Stop here. We don't know what script this opcode uses (yet).
+		return;
 	}
 
-	state_save_register_item("z80", index, Z80.prvpc.w.l);
-	state_save_register_item("z80", index, Z80.pc.w.l);
-	state_save_register_item("z80", index, Z80.sp.w.l);
-	state_save_register_item("z80", index, Z80.af.w.l);
-	state_save_register_item("z80", index, Z80.bc.w.l);
-	state_save_register_item("z80", index, Z80.de.w.l);
-	state_save_register_item("z80", index, Z80.hl.w.l);
-	state_save_register_item("z80", index, Z80.ix.w.l);
-	state_save_register_item("z80", index, Z80.iy.w.l);
-	state_save_register_item("z80", index, Z80.af2.w.l);
-	state_save_register_item("z80", index, Z80.bc2.w.l);
-	state_save_register_item("z80", index, Z80.de2.w.l);
-	state_save_register_item("z80", index, Z80.hl2.w.l);
-	state_save_register_item("z80", index, Z80.r);
-	state_save_register_item("z80", index, Z80.r2);
-	state_save_register_item("z80", index, Z80.iff1);
-	state_save_register_item("z80", index, Z80.iff2);
-	state_save_register_item("z80", index, Z80.halt);
-	state_save_register_item("z80", index, Z80.im);
-	state_save_register_item("z80", index, Z80.i);
-	state_save_register_item("z80", index, Z80.nmi_state);
-	state_save_register_item("z80", index, Z80.nmi_pending);
-	state_save_register_item("z80", index, Z80.irq_state);
-	state_save_register_item("z80", index, Z80.after_ei);
-
-	/* Reset registers to their initial values */
-	memset(&Z80, 0, sizeof(Z80));
-	Z80.daisy = config;
-	Z80.irq_callback = irqcallback;
-	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
-	F = ZF;			/* Zero flag is set */
-}
-
-/****************************************************************************
- * Do a reset
- ****************************************************************************/
-
-// NOTE:
-// This is here for reference only!!  Z80Reset(); is what you're looking for.
-
-static void z80_reset(void)
-{
-	PC = 0x0000;
-	I = 0;
-	R = 0;
-	R2 = 0;
-	Z80.nmi_state = Z80_CLEAR_LINE;
-	Z80.nmi_pending = FALSE;
-	Z80.irq_state = Z80_CLEAR_LINE;
-	Z80.after_ei = FALSE;
-
-	Z80Vector = 0xff; // Correct to reset this to 0xff?
-
-	if (Z80.daisy)
-		z80daisy_reset(Z80.daisy);
-
-	change_pc(PCD);
-}
-
-static void z80_exit(void)
-{
-#if BIG_FLAGS_ARRAY
-	if (SZHVC_add) free(SZHVC_add);
-	SZHVC_add = NULL;
-	if (SZHVC_sub) free(SZHVC_sub);
-	SZHVC_sub = NULL;
-#endif
-}
-
-/****************************************************************************
- * Execute 'cycles' T-states. Return number of T-states really executed
- ****************************************************************************/
-
-// NOTE:
-// This is here for reference only!!  Z80Execute(); is what you're looking for.
-
-static int z80_execute(int cycles)
-{
-	Z80.ICount = cycles;
-
-	/* check for NMIs on the way in; they can only be set externally */
-	/* via timers, and can't be dynamically enabled, so it is safe */
-	/* to just check here */
-	if (Z80.nmi_pending)
+	for(; m_opcode_history.element < m_opcode_history.breakdown->number_of_elements; m_opcode_history.element++)
 	{
-		LOG(("Z80 #%d take NMI\n", cpu_getactivecpu()));
-		PRVPC = -1;			/* there isn't a valid previous program counter */
-		LEAVE_HALT;			/* Check if processor was halted */
+		CMSE *se = &(m_opcode_history.breakdown->elements[m_opcode_history.element]);
+		RWINFO *rw;
+		int mult;
 
-		IFF1 = 0;
-		PUSH( pc );
-		PCD = 0x0066;
-		WZ=PCD;
-		change_pc(PCD);
-		Z80.ICount -= 11;
-		Z80.nmi_pending = FALSE;
-	}
+		if(se->rw_ix >= m_opcode_history.rw_count)
+		{
+			//Stop here. We don't have the rwinfo stored that will be required to process this script element (yet).
+			return;
+		}
 
-	do
-	{
-		/* check for IRQs before each instruction */
-		if (Z80.irq_state != Z80_CLEAR_LINE && IFF1 && !Z80.after_ei)
-			take_interrupt();
-		Z80.after_ei = FALSE;
+		//Check if this is an optional element.
+		if(se->is_optional && !m_opcode_history.do_optional)
+		{
+			//Stop here. This is an optional script element and we are not sure (yet)
+	                //if this opcode will need to go down the optional path.
+			return;
+		}
 
-		PRVPC = PCD;
-		CALL_DEBUGGER(PCD);
-		R++;
-		EXEC_INLINE(op,ROP());
-	} while( Z80.ICount > 0 );
 
-	return cycles - Z80.ICount;
-}
+		if(se->type == CMSE_TYPE_IO_PORT) //***Process PORT contention***
+		{
+			bool high_byte = false;
+			bool low_bit = false;
 
-/****************************************************************************
- * Burn 'cycles' T-states. Adjust R register for the lost time
- ****************************************************************************/
-static void z80_burn(int cycles)
-{
-	if( cycles > 0 )
-	{
-		/* NOP takes 4 cycles per instruction */
-		int n = (cycles + 3) / 4;
-		R += n;
-		Z80.ICount -= 4 * n;
-	}
-}
+			rw = &(m_opcode_history.rw[se->rw_ix]);
+			rw->flags |= RWINFO_PROCESSED;
 
-/****************************************************************************
- * Get all registers in given buffer
- ****************************************************************************/
-static void z80_get_context (void *dst)
-{
-	if( dst )
-		*(Z80_Regs*)dst = Z80;
-}
+			if(m_ula_variant == ULA_VARIANT_AMSTRAD)
+			{
+				//For +2a/+3, just eat 4 uncontended cycles for IO operations.
+				//Note. According to https://faqwiki.zxnet.co.uk/wiki/Contended_I/O
+				//On the +2a/+3 Spectrum, the ULA applies contention only when the
+				//Z80's MREQ line is active, which it is not during an I/O operation.
+#ifdef DEBUG_CM
+				printf("  IO  TState=%d ULA=%d - Addr=%04X Val=%02X (C:0, N:4)\n",
+					m_tstate_counter,
+					get_ula_delay(),
+					m_opcode_history.rw[se->rw_ix].addr,
+					m_opcode_history.rw[se->rw_ix].val);
+#endif //DEBUG_CM
+				eat_cycles(CYCLES_UNCONTENDED, 4);
+			}
+			else //ULA_VARIANT_SINCLAIR
+			{
+				/*
+				High byte   |         |
+				in 40 - 7F? | Low bit | Contention pattern
+				------------+---------+-------------------
+				No          |  Reset  | N:1, C:3
+				No          |   Set   | N:4
+				Yes         |  Reset  | C:1, C:3
+				Yes         |   Set   | C:1, C:1, C:1, C:1
+				*/
+				if ((rw->addr >= 0x4000) && (rw->addr <= 0x7fff))
+				{
+					high_byte  = true;
+				}
 
-/****************************************************************************
- * Set all registers to given values
- ****************************************************************************/
-static void z80_set_context (void *src)
-{
-	if( src )
-		Z80 = *(Z80_Regs*)src;
-	change_pc(PCD);
-}
+				if(rw->addr & 0x0001)
+				{
+					low_bit = true;
+				}
 
-/****************************************************************************
- * Set IRQ line state
- ****************************************************************************/
-static void set_irq_line(int irqline, int state)
-{
-	if (irqline == INPUT_LINE_NMI)
-	{
-		/* mark an NMI pending on the rising edge */
-		if (Z80.nmi_state == Z80_CLEAR_LINE && state != Z80_CLEAR_LINE)
-			Z80.nmi_pending = TRUE;
-		Z80.nmi_state = state;
-	}
-	else
-	{
-		/* update the IRQ state via the daisy chain */
-		Z80.irq_state = state;
-		if (Z80.daisy)
-			Z80.irq_state = z80daisy_update_irq_state(Z80.daisy);
+#ifdef DEBUG_CM
+				printf("  IO  TState=%d ULA=%d - Addr=%04X (HiByte=%d LoBit=%d)\n",
+						m_tstate_counter,
+						get_ula_delay(),
+						rw->addr,
+						high_byte,
+						low_bit);
+#endif //DEBUG_CM
 
-		/* the main execute loop will take the interrupt */
-	}
-}
+				if((high_byte == false) && (low_bit == false))
+				{
+					//N:1, C:3
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 3);
+				}
+				else if((high_byte == false) && (low_bit == true))
+				{
+					//N:4
+					eat_cycles(CYCLES_UNCONTENDED, 4);
+				}
+				else if((high_byte == true) && (low_bit == false))
+				{
+					//C:1, C:3
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 3);
+				}
+				else //((high_byte == true) && (low_bit == true))
+				{
+					//C:1, C:1, C:1, C:1
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					eat_cycles(CYCLES_UNCONTENDED, 1);
+				}
+			}
+		}
+		else if(se->type == CMSE_TYPE_MEMORY) //***Process Memory Address Contention***
+		{
+			rw = &(m_opcode_history.rw[se->rw_ix]);
+			rw->flags |= RWINFO_PROCESSED;
 
-/**************************************************************************
- * Generic set_info
- **************************************************************************/
+			for(mult=0;mult<se->multiplier;mult++)
+			{
+#ifdef DEBUG_CM
+				printf("  MEM TState=%d ULA=%d - Addr=%04X Val=%02X (C:%d, N:%d)\n",
+					m_tstate_counter,
+					get_ula_delay(),
+					m_opcode_history.rw[se->rw_ix].addr,
+					m_opcode_history.rw[se->rw_ix].val,
+					get_memory_access_delay(m_opcode_history.rw[se->rw_ix].addr),
+					se->inst_cycles);
+#endif //DEBUG_CM
 
-static void z80_set_info(UINT32 state, cpuinfo *info)
-{
-	switch (state)
-	{
-		/* --- the following bits of info are set as 64-bit signed integers --- */
-		case CPUINFO_INT_INPUT_STATE + INPUT_LINE_NMI:		set_irq_line(INPUT_LINE_NMI, info->i); break;
-		case CPUINFO_INT_INPUT_STATE + 0:					set_irq_line(0, info->i);			break;
+				eat_cycles(CYCLES_CONTENDED, get_memory_access_delay(m_opcode_history.rw[se->rw_ix].addr));
+				eat_cycles(CYCLES_UNCONTENDED, se->inst_cycles);
+			}
+		}
+		else if(se->type == CMSE_TYPE_IR_REGISTER) //***Process IR Register Pair contention***
+		{
+			for(mult=0;mult<se->multiplier;mult++)
+			{
+#ifdef DEBUG_CM
+				printf("  IR  TState=%d ULA=%d - Addr=%04X        (C:%d, N:%d)\n",
+					m_tstate_counter,
+					get_ula_delay(),
+					m_opcode_history.register_ir,
+					get_memory_access_delay(m_opcode_history.register_ir),
+					se->inst_cycles);
+#endif //DEBUG_CM
 
-		case CPUINFO_INT_PC:								PC = info->i; change_pc(PCD);		break;
-		case CPUINFO_INT_REGISTER + Z80_PC:					Z80.pc.w.l = info->i;				break;
-		case CPUINFO_INT_SP:								SP = info->i;						break;
-		case CPUINFO_INT_REGISTER + Z80_SP:					Z80.sp.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_A:					Z80.af.b.h = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_B:					Z80.bc.b.h = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_C:					Z80.bc.b.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_D:					Z80.de.b.h = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_E:					Z80.de.b.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_H:					Z80.hl.b.h = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_L:					Z80.hl.b.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_AF:					Z80.af.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_BC:					Z80.bc.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_DE:					Z80.de.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_HL:					Z80.hl.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_IX:					Z80.ix.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_IY:					Z80.iy.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_R:					Z80.r = info->i; Z80.r2 = info->i & 0x80; break;
-		case CPUINFO_INT_REGISTER + Z80_I:					Z80.i = info->i;					break;
-		case CPUINFO_INT_REGISTER + Z80_AF2:				Z80.af2.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_BC2:				Z80.bc2.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_DE2:				Z80.de2.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_HL2:				Z80.hl2.w.l = info->i;				break;
-		case CPUINFO_INT_REGISTER + Z80_IM:					Z80.im = info->i;					break;
-		case CPUINFO_INT_REGISTER + Z80_IFF1:				Z80.iff1 = info->i;					break;
-		case CPUINFO_INT_REGISTER + Z80_IFF2:				Z80.iff2 = info->i;					break;
-		case CPUINFO_INT_REGISTER + Z80_HALT:				Z80.halt = info->i;					break;
+				eat_cycles(CYCLES_CONTENDED, get_memory_access_delay(m_opcode_history.register_ir));
+				eat_cycles(CYCLES_UNCONTENDED, se->inst_cycles);
+			}
+		}
+		else if(se->type == CMSE_TYPE_BC_REGISTER) //***Process BC Register Pair contention***
+		{
+			for(mult=0;mult<se->multiplier;mult++)
+			{
+#ifdef DEBUG_CM
+				printf("  BC  TState=%d ULA=%d - Addr=%04X        (C:%d, N:%d)\n",
+					m_tstate_counter,
+					get_ula_delay(),
+					m_opcode_history.register_bc,
+					get_memory_access_delay(m_opcode_history.register_bc),
+					se->inst_cycles);
+#endif //DEBUG_CM
 
-		/* --- the following bits of info are set as pointers to data or functions --- */
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_op:	cc[Z80_TABLE_op] = info->p;			break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_cb:	cc[Z80_TABLE_cb] = info->p;			break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_ed:	cc[Z80_TABLE_ed] = info->p;			break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_xy:	cc[Z80_TABLE_xy] = info->p;			break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_xycb:	cc[Z80_TABLE_xycb] = info->p;		break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_ex:	cc[Z80_TABLE_ex] = info->p;			break;
+				eat_cycles(CYCLES_CONTENDED, get_memory_access_delay(m_opcode_history.register_bc));
+				eat_cycles(CYCLES_UNCONTENDED, se->inst_cycles);
+			}
+		}
+		else if(se->type == CMSE_TYPE_UNCONTENDED) //***Process uncontended cycles***
+		{
+			for(mult=0;mult<se->multiplier;mult++)
+			{
+#ifdef DEBUG_CM
+				printf("  N   TState=%d ULA=%d -                       (N:%d)\n",
+					m_tstate_counter,
+					get_ula_delay(),
+					se->inst_cycles);
+#endif //DEBUG_CM
+				eat_cycles(CYCLES_UNCONTENDED, se->inst_cycles);
+			}
+		}
+		else
+		{
+			bprintf(0, _T("Unknown CMSE type 0x%X\n"), se->type);
+			//assert_always(false, "Uknown element type in contented memory script");
+		}
 	}
 }
 
 
-
-/**************************************************************************
- * Generic get_info
- **************************************************************************/
-
-void z80_get_info(UINT32 state, cpuinfo *info)
+void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
 {
-	switch (state)
+	enum CMSE_STATE
 	{
-		/* --- the following bits of info are returned as 64-bit signed integers --- */
-		case CPUINFO_INT_CONTEXT_SIZE:				info->i = sizeof(Z80);						break;
-		case CPUINFO_INT_INPUT_LINES:				info->i = 1;								break;
-		case CPUINFO_INT_DEFAULT_IRQ_VECTOR:		info->i = 0xff;								break;
-		case CPUINFO_INT_ENDIANNESS:				info->i = CPU_IS_LE;						break;
-		case CPUINFO_INT_CLOCK_MULTIPLIER:			info->i = 1;								break;
-		case CPUINFO_INT_CLOCK_DIVIDER:				info->i = 1;								break;
-		case CPUINFO_INT_MIN_INSTRUCTION_BYTES:		info->i = 1;								break;
-		case CPUINFO_INT_MAX_INSTRUCTION_BYTES:		info->i = 4;								break;
-		case CPUINFO_INT_MIN_CYCLES:				info->i = 1;								break;
-		case CPUINFO_INT_MAX_CYCLES:				info->i = 16;								break;
+		CMSE_GET_INDEX,
+		CMSE_SAVED_INDEX,
+		CMSE_GET_CYCLES,
+		CMSE_SAVED_CYCLES,
+		CMSE_GET_MULTIPLIER,
+		CMSE_SAVED_MULTIPLIER,
+	};
+	int state = CMSE_GET_INDEX;
+	bool finished = false;
+	bool is_optional = false;
+	int pos = 0;
+	int ch = '?';
+	int ch2= '?';
+	int *cycles_mandatory = &(breakdown->inst_cycles_mandatory);
+	int *cycles_optional = &(breakdown->inst_cycles_optional);
+	int  *count = &(breakdown->number_of_elements);
+	CMSE *element = &(breakdown->elements[0]);
 
-		case CPUINFO_INT_DATABUS_WIDTH + ADDRESS_SPACE_PROGRAM:	info->i = 8;					break;
-		case CPUINFO_INT_ADDRBUS_WIDTH + ADDRESS_SPACE_PROGRAM:	info->i = 16;					break;
-		case CPUINFO_INT_ADDRBUS_SHIFT + ADDRESS_SPACE_PROGRAM:	info->i = 0;					break;
-		case CPUINFO_INT_DATABUS_WIDTH + ADDRESS_SPACE_DATA:	info->i = 0;					break;
-		case CPUINFO_INT_ADDRBUS_WIDTH + ADDRESS_SPACE_DATA:	info->i = 0;					break;
-		case CPUINFO_INT_ADDRBUS_SHIFT + ADDRESS_SPACE_DATA:	info->i = 0;					break;
-		case CPUINFO_INT_DATABUS_WIDTH + ADDRESS_SPACE_IO:		info->i = 8;					break;
-		case CPUINFO_INT_ADDRBUS_WIDTH + ADDRESS_SPACE_IO:		info->i = 16;					break;
-		case CPUINFO_INT_ADDRBUS_SHIFT + ADDRESS_SPACE_IO:		info->i = 0;					break;
 
-		case CPUINFO_INT_INPUT_STATE + INPUT_LINE_NMI:	info->i = Z80.nmi_state;				break;
-		case CPUINFO_INT_INPUT_STATE + 0:			info->i = Z80.irq_state;					break;
+	memset(breakdown, 0, sizeof(CM_SCRIPT_BREAKDOWN));
 
-		case CPUINFO_INT_PREVIOUSPC:				info->i = Z80.prvpc.w.l;					break;
+	while (!finished)
+	{
+		ch  = script[pos];
+		if(ch == '\0') ch2 = '\0';
+		else ch2 = script[pos+1];
 
-		case CPUINFO_INT_PC:						info->i = PCD;								break;
-		case CPUINFO_INT_REGISTER + Z80_PC:			info->i = Z80.pc.w.l;						break;
-		case CPUINFO_INT_SP:						info->i = SPD;								break;
-		case CPUINFO_INT_REGISTER + Z80_SP:			info->i = Z80.sp.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_A:			info->i = Z80.af.b.h;						break;
-		case CPUINFO_INT_REGISTER + Z80_B:			info->i = Z80.bc.b.h;						break;
-		case CPUINFO_INT_REGISTER + Z80_C:			info->i = Z80.bc.b.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_D:			info->i = Z80.de.b.h;						break;
-		case CPUINFO_INT_REGISTER + Z80_E:			info->i = Z80.de.b.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_H:			info->i = Z80.hl.b.h;						break;
-		case CPUINFO_INT_REGISTER + Z80_L:			info->i = Z80.hl.b.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_AF:			info->i = Z80.af.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_BC:			info->i = Z80.bc.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_DE:			info->i = Z80.de.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_HL:			info->i = Z80.hl.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_IX:			info->i = Z80.ix.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_IY:			info->i = Z80.iy.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_R:			info->i = (Z80.r & 0x7f) | (Z80.r2 & 0x80);	break;
-		case CPUINFO_INT_REGISTER + Z80_I:			info->i = Z80.i;							break;
-		case CPUINFO_INT_REGISTER + Z80_AF2:		info->i = Z80.af2.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_BC2:		info->i = Z80.bc2.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_DE2:		info->i = Z80.de2.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_HL2:		info->i = Z80.hl2.w.l;						break;
-		case CPUINFO_INT_REGISTER + Z80_IM:			info->i = Z80.im;							break;
-		case CPUINFO_INT_REGISTER + Z80_IFF1:		info->i = Z80.iff1;							break;
-		case CPUINFO_INT_REGISTER + Z80_IFF2:		info->i = Z80.iff2;							break;
-		case CPUINFO_INT_REGISTER + Z80_HALT:		info->i = Z80.halt;							break;
+		if(ch == ' ')
+		{
+			//ignore
+		}
+		else if((ch == '\0') || (ch == ',') || (ch == ']'))
+		{
+			//Save the last entry and move onto the next
+			if((state == CMSE_SAVED_CYCLES) || (state == CMSE_SAVED_MULTIPLIER))
+			{
+				int total_cycles = element[*count].inst_cycles * element[*count].multiplier;
 
-		/* --- the following bits of info are returned as pointers to data or functions --- */
-		case CPUINFO_PTR_SET_INFO:					info->setinfo = z80_set_info;				break;
-		case CPUINFO_PTR_GET_CONTEXT:				info->getcontext = z80_get_context;			break;
-		case CPUINFO_PTR_SET_CONTEXT:				info->setcontext = z80_set_context;			break;
-		case CPUINFO_PTR_INIT:						info->init = z80_init;						break;
-		case CPUINFO_PTR_RESET:						info->reset = z80_reset;					break;
-		case CPUINFO_PTR_EXIT:						info->exit = z80_exit;						break;
-		case CPUINFO_PTR_EXECUTE:					info->execute = z80_execute;				break;
-		case CPUINFO_PTR_BURN:						info->burn = NULL;							break;
-#ifdef ENABLE_DEBUGGER
-		case CPUINFO_PTR_DISASSEMBLE:				info->disassemble = z80_dasm;				break;
-#endif
-		case CPUINFO_PTR_INSTRUCTION_COUNTER:				info->icount = &Z80.ICount;			break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_op:	info->p = (void *)cc[Z80_TABLE_op];	break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_cb:	info->p = (void *)cc[Z80_TABLE_cb];	break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_ed:	info->p = (void *)cc[Z80_TABLE_ed];	break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_xy:	info->p = (void *)cc[Z80_TABLE_xy];	break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_xycb:	info->p = (void *)cc[Z80_TABLE_xycb]; break;
-		case CPUINFO_PTR_Z80_CYCLE_TABLE + Z80_TABLE_ex:	info->p = (void *)cc[Z80_TABLE_ex];	break;
+				if(is_optional == false)
+				{
+					*cycles_mandatory += total_cycles;
+				}
+				else
+				{
+					*cycles_optional += total_cycles;
+				}
 
-		/* --- the following bits of info are returned as NULL-terminated strings --- */
-		case CPUINFO_STR_NAME:						strcpy(info->s, "Z80");						break;
-		case CPUINFO_STR_CORE_FAMILY:				strcpy(info->s, "Zilog Z80");				break;
-		case CPUINFO_STR_CORE_VERSION:				strcpy(info->s, "3.7");						break;
-		case CPUINFO_STR_CORE_FILE:					strcpy(info->s, __FILE__);					break;
-		case CPUINFO_STR_CORE_CREDITS:				strcpy(info->s, "Copyright Juergen Buchmueller, all rights reserved."); break;
+				(*count)++; //Save the last entry
+				state = CMSE_GET_INDEX; //onto the next
+			}
 
-		case CPUINFO_STR_FLAGS:
-			sprintf(info->s, "%c%c%c%c%c%c%c%c",
-				Z80.af.b.l & 0x80 ? 'S':'.',
-				Z80.af.b.l & 0x40 ? 'Z':'.',
-				Z80.af.b.l & 0x20 ? '5':'.',
-				Z80.af.b.l & 0x10 ? 'H':'.',
-				Z80.af.b.l & 0x08 ? '3':'.',
-				Z80.af.b.l & 0x04 ? 'P':'.',
-				Z80.af.b.l & 0x02 ? 'N':'.',
-				Z80.af.b.l & 0x01 ? 'C':'.');
-			break;
+			if (ch == ']') is_optional = false;
+			else if (ch == '\0') finished = true;
+		}
+		else if(ch == '[')
+		{
+			is_optional = true;
+		}
+		else if(ch == ':')
+		{
+			state = CMSE_GET_CYCLES;
+		}
+		else if(ch == 'x')
+		{
+			state = CMSE_GET_MULTIPLIER;
+		}
+		else if((ch == 'I') && (ch2 == 'O'))
+		{
+			pos++;
+			if(state == CMSE_GET_CYCLES)
+			{
+				//It takes a minimum of 4 Tstates for the Z80 to read a value
+				//from an I/O port, or write a value to a port. As is the case with
+				//memory access, this can be lengthened by the ULA.
+				element[*count].inst_cycles = 4;
+				element[*count].type = CMSE_TYPE_IO_PORT;
+				state = CMSE_SAVED_CYCLES;
+			}
+			else break; //Failure!
+		}
+		else if((ch == 'i') && (ch2 == 'r'))
+		{
+			pos++;
+			if(state == CMSE_GET_INDEX)
+			{
+				if( *count >= MAX_CMSE)
+				{
+					//assert_always(false, "Too many script elements (Parsing 'ir')");
+				}
 
-		case CPUINFO_STR_REGISTER + Z80_PC:			sprintf(info->s, "PC:%04X", Z80.pc.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_SP:			sprintf(info->s, "SP:%04X", Z80.sp.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_A:			sprintf(info->s, "~A:%02X", Z80.af.b.h);	break;
-		case CPUINFO_STR_REGISTER + Z80_B:			sprintf(info->s, "~B:%02X", Z80.bc.b.h);	break;
-		case CPUINFO_STR_REGISTER + Z80_C:			sprintf(info->s, "~C:%02X", Z80.bc.b.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_D:			sprintf(info->s, "~D:%02X", Z80.de.b.h);	break;
-		case CPUINFO_STR_REGISTER + Z80_E:			sprintf(info->s, "~E:%02X", Z80.de.b.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_H:			sprintf(info->s, "~H:%02X", Z80.hl.b.h);	break;
-		case CPUINFO_STR_REGISTER + Z80_L:			sprintf(info->s, "~L:%02X", Z80.hl.b.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_AF:			sprintf(info->s, "AF:%04X", Z80.af.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_BC:			sprintf(info->s, "BC:%04X", Z80.bc.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_DE:			sprintf(info->s, "DE:%04X", Z80.de.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_HL:			sprintf(info->s, "HL:%04X", Z80.hl.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_IX:			sprintf(info->s, "IX:%04X", Z80.ix.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_IY:			sprintf(info->s, "IY:%04X", Z80.iy.w.l);
-			break;
-		case CPUINFO_STR_REGISTER + Z80_R:			sprintf(info->s, "R:%02X", (Z80.r & 0x7f) | (Z80.r2 & 0x80)); break;
-		case CPUINFO_STR_REGISTER + Z80_I:			sprintf(info->s, "I:%02X", Z80.i);			break;
-		case CPUINFO_STR_REGISTER + Z80_AF2:		sprintf(info->s, "AF2:%04X", Z80.af2.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_BC2:		sprintf(info->s, "BC2:%04X", Z80.bc2.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_DE2:		sprintf(info->s, "DE2:%04X", Z80.de2.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_HL2:		sprintf(info->s, "HL2:%04X", Z80.hl2.w.l);	break;
-		case CPUINFO_STR_REGISTER + Z80_IM:			sprintf(info->s, "IM:%X", Z80.im);			break;
-		case CPUINFO_STR_REGISTER + Z80_IFF1:		sprintf(info->s, "IFF1:%X", Z80.iff1);		break;
-		case CPUINFO_STR_REGISTER + Z80_IFF2:		sprintf(info->s, "IFF2:%X", Z80.iff2);		break;
-		case CPUINFO_STR_REGISTER + Z80_HALT:		sprintf(info->s, "HALT:%X", Z80.halt);		break;
+				element[*count].rw_ix = -1;
+				element[*count].is_optional = is_optional;
+				element[*count].multiplier = 1;
+				element[*count].type = CMSE_TYPE_IR_REGISTER;
+				state = CMSE_SAVED_INDEX;
+			}
+			else break; //Failure!
+		}
+		else if((ch == 'b') && (ch2 == 'c'))
+		{
+			pos++;
+			if(state == CMSE_GET_INDEX)
+			{
+				if( *count >= MAX_CMSE)
+				{
+					//assert_always(false, "Too many script elements (Parsing 'bc')");
+				}
+
+				element[*count].rw_ix = -1;
+				element[*count].is_optional = is_optional;
+				element[*count].multiplier = 1;
+				element[*count].type = CMSE_TYPE_BC_REGISTER;
+				state = CMSE_SAVED_INDEX;
+			}
+			else break; //Failure!
+		}
+		else if(ch == 'N')
+		{
+			if(state == CMSE_GET_INDEX)
+			{
+				if( *count >= MAX_CMSE)
+				{
+					//assert_always(false, "Too many script elements (Parsing 'N')");
+				}
+
+				element[*count].rw_ix = -1;
+				element[*count].is_optional = is_optional;
+				element[*count].multiplier = 1;
+				element[*count].type = CMSE_TYPE_UNCONTENDED;
+				state = CMSE_SAVED_INDEX;
+			}
+			else break; //Failure!
+		}
+		else
+		{
+			if((ch >= '0') && (ch<='9'))
+			{
+				if(state == CMSE_GET_INDEX)
+				{
+					if( *count >= MAX_CMSE)
+					{
+						//assert_always(false, "Too many script elements (Parsing '0' to '9')");
+					}
+
+					element[*count].rw_ix = ch-'0';
+					element[*count].is_optional = is_optional;
+					element[*count].multiplier = 1;
+					element[*count].type = CMSE_TYPE_MEMORY;
+					state = CMSE_SAVED_INDEX;
+				}
+				else if(state == CMSE_GET_CYCLES)
+				{
+					element[*count].inst_cycles = ch-'0';
+
+					//Might be greater than 10 so lets have a cheeky peak forward.
+					ch = script[pos+1];
+					if((ch>=0x30) && (ch<=0x39))
+					{
+						//Yup, good job we had a peak!
+						pos++;
+						element[*count].inst_cycles *= 10;
+						element[*count].inst_cycles += ch-'0';
+					}
+					state = CMSE_SAVED_CYCLES;
+				}
+				else if(state == CMSE_GET_MULTIPLIER)
+				{
+					element[*count].multiplier = ch-'0';
+					state = CMSE_SAVED_MULTIPLIER;
+				}
+				else
+				{
+					break; //Failure!
+				}
+			}
+			else
+			{
+				break; //Failure!
+			}
+		}
+
+		pos++;
+	};
+
+	//If we broke out the loop before finishing, something went wrong
+	if(!finished)
+	{
+		bprintf(0, _T("Unexpected char '%c' (In script '%S')\n"), ch, script);
+		//assert_always(false, "Unexpected character in script");
+	}
+
+	breakdown->inst_cycles_total = *cycles_mandatory + *cycles_optional;
+}
+
+
+int get_ula_delay()
+{
+	if(m_tstate_counter >= m_cycles_contention_start)
+	{
+		int base = m_tstate_counter - m_cycles_contention_start;
+		int y_pos = base/m_cycles_per_line;
+		int x_pos = base%m_cycles_per_line;
+		if ((y_pos < 192) && (x_pos < 128))
+		{
+			return m_ula_delay_sequence[x_pos%8]-'0';
+		}
+	}
+
+	return 0;
+}
+
+
+int get_memory_access_delay(UINT16 pc_address)
+{
+	if((pc_address >= 0x4000) && (pc_address <=0x7fff))
+	{
+		return get_ula_delay();
+	}
+	else if((pc_address >= 0xc000) && (pc_address <=0xffff))
+	{
+		if(m_selected_bank > 0)
+		{
+			int i;
+			for(i=0; i<m_contended_banks_length; i++)
+			{
+				if(m_selected_bank == (m_contended_banks[i]-'0'))
+				{
+					return get_ula_delay();
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+void eat_cycles(int type, int cycles)
+{
+	// When this function is called and type CYCLES_CONTENDED or CYCLES_UNCONTENDED is set,
+	// it means the run_script function is processing the opcode history and that cycles are
+	// to be eaten immediately. Note. Only ever occurs when ULA_VARIANT_SINCLAIR or
+	// ULA_VARIANT_AMSTRAD is set.
+	//
+	// When this function is called and type is CYCLES_ISR, it means opcodes during an ISR
+	// have been processed. As memory contention processing is not required during ISRs, the
+	// predicted cycles are eaten immediately.
+	//
+	// When this function is called and type is CYCLES_EXEC, it means the EXEC() macro has
+	// been called. If ULA_VARIANT_NONE is set, as memory contention processing is not
+	// required, the predicted cycles are eaten immediately. If ULA_VARIANT_SINCLAIR or
+	// ULA_VARIANT_AMSTRAD is set, as memory contention processing IS required, then the
+	// predicted cycles are not eaten. Instead, it will be left to the run_script() function
+	// to eat cycles (CYCLES_CONTENDED or CYCLES_UNCONTENDED) based on the opcode's contended
+	// memory script. Note. Once all the history for an opcode has been captured, the total
+	// amount of CYCLES_UNCONTENDED should match up with the total amount of CYCLES_PREDICTED.
+	//
+	// Based on the above, this boils down to some simple logic to work out when to eat
+	// and when not to...
+	if((type == CYCLES_EXEC) && (m_ula_variant != ULA_VARIANT_NONE))
+	{
+		m_opcode_history.uncontended_cycles_predicted += cycles;
+		return;
+	}
+	else if(type == CYCLES_UNCONTENDED)
+	{
+		m_opcode_history.uncontended_cycles_eaten += cycles;
+	}
+
+	Z80.ICount -= cycles;
+	m_tstate_counter += cycles;
+	if(m_tstate_counter >= m_cycles_per_frame) {
+		//bprintf(0, _T("z80.cpp eof %d\n"), m_tstate_counter);
+		m_tstate_counter -= m_cycles_per_frame;
 	}
 }
 
-#endif
+
+void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
+{
+	RWINFO *rw;
+
+	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return;
+
+	if(m_opcode_history.rw_count >= MAX_RWINFO)
+	{
+		bprintf(0, _T("RWINFO overflow. No room for addr=0x%04X val=0x%02X flags=0x%X (%S) tstate=%d\n"), addr, val, flags, dbg, m_tstate_counter);
+		//assert_always(false, "Opcode history list is full");
+	}
+
+	//Save the new rwinfo
+	rw = &(m_opcode_history.rw[m_opcode_history.rw_count]);
+	rw->addr = addr;
+	rw->val = val;
+	rw->flags = flags;
+	rw->dbg = dbg;
+	m_opcode_history.rw_count++;
+
+	run_script();
+
+	//Originally, the intention was to update the screen raster each time
+	//any tstates were eaten (I.e. call the raster_cb from inside the
+	//eat_cycles function) which worked well but wasn't efficient.
+	//So below is the opimisation, it is based on the fact that the screen
+	//raster only needs to be updated immediately *before* a border or screen colour
+	//attribute write occurs.
+	if(rw->flags & RWINFO_WRITE)
+	{
+		if(rw->flags & RWINFO_IO_PORT)
+		{
+			if((addr & 0xff) == 0xfe) //Border change
+			{
+				m_raster_cb(m_tstate_counter);
+			}
+		}
+		else if(rw->flags & RWINFO_MEMORY)
+		{
+			// Screen or attribute change (48K and 128K)
+			if((addr >= 0x4000) && (addr <= 0x5AFF))
+				m_raster_cb(m_tstate_counter);
+			// Screen or attribute change (128K models - bank 5)
+			else if( (m_selected_bank == 5) && ((addr >= 0xC000) && (addr <= 0xDAFF)) )
+				m_raster_cb(m_tstate_counter);
+		}
+	}
+}

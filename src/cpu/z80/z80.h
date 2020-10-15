@@ -68,6 +68,8 @@ enum
 };
 
 void Z80Init();
+void Z80InitContention(int is_on_type, void (*rastercallback)(int));
+void Z80Contention_set_bank(int bankno);
 void Z80Reset();
 void Z80Exit();
 int  Z80Execute(int cycles);
@@ -84,12 +86,6 @@ extern unsigned char Z80Vector;
 extern void (*z80edfe_callback)(Z80_Regs *Regs);
 extern int z80_ICount;
 extern UINT32 EA;
-
-extern int z80_op_cycle_start;
-extern int z80_op_cycle_end;
-extern int z80_op_is_contention;
-extern void (*z80_contention_callback)(int, int);
-
 
 typedef unsigned char (__fastcall *Z80ReadIoHandler)(unsigned int a);
 typedef void (__fastcall *Z80WriteIoHandler)(unsigned int a, unsigned char v);
@@ -124,6 +120,100 @@ int ActiveZ80GetCarry2();
 void ActiveZ80SetIRQHold();
 int ActiveZ80GetVector();
 void ActiveZ80SetVector(INT32 vector);
+
+#define MAX_CMSE	9	//Maximum contended memory script elements
+#define MAX_RWINFO	6	//Maximum reads/writes per opcode
+#define MAX_CM_SCRIPTS 37
+
+enum CMSE_TYPES
+{
+	CMSE_TYPE_MEMORY,
+	CMSE_TYPE_IO_PORT,
+	CMSE_TYPE_IR_REGISTER,
+	CMSE_TYPE_BC_REGISTER,
+	CMSE_TYPE_UNCONTENDED
+};
+
+enum ULA_VARIANT_TYPES
+{
+	ULA_VARIANT_NONE,
+	ULA_VARIANT_SINCLAIR,
+	ULA_VARIANT_AMSTRAD
+};
+
+enum RWINFO_FLAGS
+{
+	RWINFO_READ      = 0x01,
+	RWINFO_WRITE     = 0x02,
+	RWINFO_IO_PORT   = 0x04,
+	RWINFO_MEMORY    = 0x08,
+	RWINFO_PROCESSED = 0x10
+};
+
+typedef struct ContendedMemoryScriptElement
+{
+	int	rw_ix;
+	int	inst_cycles;
+	int     type;
+	int	multiplier;
+	bool	is_optional;
+}CMSE;
+
+typedef struct ContendedMemoryScriptBreakdown
+{
+	CMSE elements[MAX_CMSE];
+	int  number_of_elements;
+	int  inst_cycles_mandatory;
+	int  inst_cycles_optional;
+	int  inst_cycles_total;
+}CM_SCRIPT_BREAKDOWN;
+
+typedef struct ContendedMemoryScriptDescription
+{
+	const char*		sinclair;
+	const char*		amstrad;
+}CM_SCRIPT_DESCRIPTION;
+
+typedef struct ContendedMemoryScript
+{
+	int 			id;
+	const char*		desc;
+	CM_SCRIPT_BREAKDOWN	breakdown;
+}CM_SCRIPT;
+
+typedef struct MemoryReadWriteInformation
+{
+	UINT16   addr;
+	UINT8    val;
+        UINT16   flags;
+	const char *dbg;
+} RWINFO;
+
+typedef struct OpcodeHistory
+{
+	bool     capturing;
+	RWINFO   rw[MAX_RWINFO];
+	int      rw_count;
+	int      tstate_start;
+	UINT16 register_ir;
+	UINT16 register_bc;
+
+	int 	 uncontended_cycles_predicted;
+	int      uncontended_cycles_eaten;
+	bool     do_optional;
+
+	CM_SCRIPT           *script;
+	CM_SCRIPT_BREAKDOWN *breakdown;
+	int                 element;
+}OPCODE_HISTORY;
+
+enum CYCLES_TYPE
+{
+	CYCLES_ISR,		// Cycles eaten when processing interrupts
+	CYCLES_EXEC,		// Cycles eaten when the EXEC() macro is called
+	CYCLES_CONTENDED,	// Contended cycles eaten when processing opcode history (specz80_device only)
+	CYCLES_UNCONTENDED	// Uncontended cycles eaten when processing opcode history (specz80_device only)
+};
 
 #endif
 

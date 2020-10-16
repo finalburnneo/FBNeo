@@ -4488,7 +4488,7 @@ void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
 		CMSE_GET_CYCLES,
 		CMSE_SAVED_CYCLES,
 		CMSE_GET_MULTIPLIER,
-		CMSE_SAVED_MULTIPLIER,
+		CMSE_SAVED_MULTIPLIER
 	};
 	int state = CMSE_GET_INDEX;
 	bool finished = false;

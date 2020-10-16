@@ -7501,45 +7501,45 @@ struct BurnDriver BurnDrvkov2pshpd = {
 
 // Oriental Legend Special / Da Sheng Gui Lai (Hack)
 // Hacked by XIAOYUER
-// GOTVG 2020-08-03
+// GOTVG 20201009
 
-static struct BurnRomInfo zerofxzdsglRomDesc[] = {
-	{ "zerofxzdsgl_p0500.u24",		0x0400000, 0x8aee6443, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+static struct BurnRomInfo oldsdsglRomDesc[] = {
+	{ "dsgl_p0500_v100.u24",	0x0400000, 0x9db0d56b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "zerofxzdsgl_t0500.u18",		0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
-	{ "pgm_t0501.u19",				0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
+	{ "dsgl_t0500.u18",			0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
+	{ "pgm_t0501.u19",			0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
 
-	{ "pgm_a0500.u5",				0x0400000, 0x80a59197, 3 | BRF_GRA },			//  3 Sprite Color Data
-	{ "pgm_a0501.u6",				0x0400000, 0x98c931b1, 3 | BRF_GRA },			//  4
-	{ "pgm_a0502.u7",				0x0400000, 0xc3fcdf1d, 3 | BRF_GRA },			//  5
-	{ "pgm_a0503.u8",				0x0400000, 0x066dffec, 3 | BRF_GRA },			//  6
-	{ "pgm_a0504.u11",				0x0400000, 0x45337583, 3 | BRF_GRA },			//  7
-	{ "pgm_a0505.u12",				0x0400000, 0x5b8cf3a5, 3 | BRF_GRA },			//  8
-	{ "zerofxzdsgl_a0506.u13",		0x0400000, 0x1c174e4a, 3 | BRF_GRA },			//  9
+	{ "pgm_a0500.u5",			0x0400000, 0x80a59197, 3 | BRF_GRA },			//  3 Sprite Color Data
+	{ "pgm_a0501.u6",			0x0400000, 0x98c931b1, 3 | BRF_GRA },			//  4
+	{ "pgm_a0502.u7",			0x0400000, 0xc3fcdf1d, 3 | BRF_GRA },			//  5
+	{ "pgm_a0503.u8",			0x0400000, 0x066dffec, 3 | BRF_GRA },			//  6
+	{ "pgm_a0504.u11",			0x0400000, 0x45337583, 3 | BRF_GRA },			//  7
+	{ "pgm_a0505.u12",			0x0400000, 0x5b8cf3a5, 3 | BRF_GRA },			//  8
+	{ "dsgl_a0506.u13",			0x0400000, 0x1c174e4a, 3 | BRF_GRA },			//  9
 
-	{ "pgm_b0500.u9",				0x0400000, 0xcde07f74, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
-	{ "pgm_b0501.u10",				0x0400000, 0x1546c2e9, 4 | BRF_GRA },			// 11
-	{ "pgm_b0502.u15",				0x0400000, 0xe97b31c3, 4 | BRF_GRA },			// 12
-	{ "zerofxzdsgl_b0503.u16",		0x0400000, 0x4922301f, 4 | BRF_GRA },			// 13
+	{ "pgm_b0500.u9",			0x0400000, 0xcde07f74, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
+	{ "pgm_b0501.u10",			0x0400000, 0x1546c2e9, 4 | BRF_GRA },			// 11
+	{ "pgm_b0502.u15",			0x0400000, 0xe97b31c3, 4 | BRF_GRA },			// 12
+	{ "dsgl_b0503.u16",			0x0400000, 0x4922301f, 4 | BRF_GRA },			// 13
 
-	{ "pgm_m0500.u1",				0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
+	{ "pgm_m0500.u1",			0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
 #if !defined (ROM_VERIFY)
-	{ "sp_data.u6",	   				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
+	{ "sp_data.u6",				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
 #else
-	{ "ram_dump",	   				0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
+	{ "ram_dump",				0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
 #endif
 };
 
-STDROMPICKEXT(zerofxzdsgl, zerofxzdsgl, pgm)
-STD_ROM_FN(zerofxzdsgl)
+STDROMPICKEXT(oldsdsgl, oldsdsgl, pgm)
+STD_ROM_FN(oldsdsgl)
 
-struct BurnDriver BurnDrvzerofxzdsgl = {
-	"zerofxzdsgl", "olds", "pgm", NULL, "2020-08-03",
+struct BurnDriver BurnDrvoldsdsgl = {
+	"oldsdsgl", "olds", "pgm", NULL, "2020-10-09",
 	"Oriental Legend Special - Da Sheng Gui Lai (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Da Sheng Gui Lai (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5927\u8056\u6b78\u4f86 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, zerofxzdsglRomInfo, zerofxzdsglRomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldschsDIPInfo,
+	NULL, oldsdsglRomInfo, oldsdsglRomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldschsDIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -7639,10 +7639,10 @@ struct BurnDriver BurnDrvoldsmx = {
 
 // Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack) / 三國戰紀 - 群雄亂舞 2020 (修改版)
 // Hacked by Shuanger
-// GOTVG ver. 20201010
+// GOTVG ver. 20201014
 
 static struct BurnRomInfo kovplus2020txRomDesc[] = {
-	{ "2020tx_p0603_119.u1",	0x0400000, 0x255EC0A1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "2020tx_p0603_119.u1",	0x0400000, 0x8726ffed, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "2020tx_t0600.u11",		0x0800000, 0xe451df7f, 2 | BRF_GRA },			//  1 Tile data
 	
@@ -7663,7 +7663,7 @@ STDROMPICKEXT(kovplus2020tx, kovplus2020tx, pgm)
 STD_ROM_FN(kovplus2020tx)
 
 struct BurnDriver BurnDrvkovplus2020tx = {
-	"kovplus2020tx", "kovplus", "pgm", NULL, "2020-10-10",
+	"kovplus2020tx", "kovplus", "pgm", NULL, "2020-10-14",
 	"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u96c4\u4e82\u821e 2020 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

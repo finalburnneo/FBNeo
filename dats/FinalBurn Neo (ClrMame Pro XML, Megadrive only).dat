@@ -16141,6 +16141,13 @@
 		<rom name="mpr-14556.bin" size="786432" crc="1592f5b0"/>
 		<driver status="good"/>
 	</game>
+	<game name="wboymwi" cloneof="wboymw" romof="wboymw">
+		<description>Wonder Boy in Monster World (Hack, Italian)</description>
+		<year>2008</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-14556 (italian translation).bin" size="786432" crc="aae9f03d"/>
+		<driver status="good"/>
+	</game>
 	<game name="wboy5" cloneof="wboymw" romof="wboymw">
 		<description>Wonder Boy V - Monster World III (Jpn, Kor)</description>
 		<year>1991</year>

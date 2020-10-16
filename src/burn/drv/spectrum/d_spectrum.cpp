@@ -5,6 +5,10 @@
 
 #include "spectrum.h"
 #include "z80_intf.h"
+#if defined (_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif
+#include "math.h"
 
 #define SPEC_SCREEN_XSIZE			256
 #define SPEC_SCREEN_YSIZE			192
@@ -50,17 +54,17 @@ UINT8 *SpecZ80Ram               = NULL;
 static UINT32 *SpecPalette      = NULL;
 static UINT8 SpecRecalc;
 
+static INT16 *Buzzer = NULL;
+
 static UINT8 ula_attr;
 static UINT8 ula_scr;
 static UINT8 ula_byte;
+static UINT8 ula_flash;
 static INT32 ula_last_cyc = 0;
 static INT32 nExtraCycles;
 
 static INT32 nActiveSnapshotType = SPEC_NO_SNAPSHOT;
 static INT32 nScanline = 0;
-static INT32 SpecFrameNumber = 0;
-static INT32 SpecFrameInvertCount = 0;
-static INT32 SpecFlashInvert = 0;
 static INT32 SpecScanlines = 312;
 static INT32 SpecCylesPerScanline = 224;
 static INT32 SpecContention = 0;
@@ -237,6 +241,187 @@ static void TAPAutoLoadRobot()
 	}
 	CASFrameCounter++;
 }
+// End TAP Robot
+
+// (Pasted biquad filter from k054539.cpp)
+// direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
+enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
+
+struct BIQ {
+	double a0;
+	double a1;
+	double a2;
+	double b1;
+	double b2;
+	double q;
+	double z1;
+	double z2;
+	double frequency;
+	double samplerate;
+	double output;
+};
+
+static BIQ filters[8];
+
+static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q, double gain)
+{
+	BIQ *f = &filters[num];
+
+	memset(f, 0, sizeof(BIQ));
+
+	f->samplerate = sample_rate;
+	f->frequency = freqhz;
+	f->q = q;
+
+	double k = tan(M_PI * f->frequency / f->samplerate);
+	double norm = 1 / (1 + k / f->q + k * k);
+	double v = pow(10, fabs(gain) / 20);
+
+	switch (type) {
+		case FILT_HIGHPASS:
+			{
+				f->a0 = 1 * norm;
+				f->a1 = -2 * f->a0;
+				f->a2 = f->a0;
+				f->b1 = 2 * (k * k - 1) * norm;
+				f->b2 = (1 - k / f->q + k * k) * norm;
+			}
+			break;
+		case FILT_LOWPASS:
+			{
+				f->a0 = k * k * norm;
+				f->a1 = 2 * f->a0;
+				f->a2 = f->a0;
+				f->b1 = 2 * (k * k - 1) * norm;
+				f->b2 = (1 - k / f->q + k * k) * norm;
+			}
+			break;
+		case FILT_LOWSHELF:
+			{
+				if (gain >= 0) {
+					norm = 1 / (1 + sqrt(2.0) * k + k * k);
+					f->a0 = (1 + sqrt(2*v) * k + v * k * k) * norm;
+					f->a1 = 2 * (v * k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
+					f->b1 = 2 * (k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
+				} else {
+					norm = 1 / (1 + sqrt(2*v) * k + v * k * k);
+					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
+					f->b1 = 2 * (v * k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
+				}
+			}
+			break;
+		case FILT_HIGHSHELF:
+			{
+				if (gain >= 0) {
+					norm = 1 / (1 + sqrt(2.0) * k + k * k);
+					f->a0 = (v + sqrt(2*v) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - v) * norm;
+					f->a2 = (v - sqrt(2*v) * k + k * k) * norm;
+					f->b1 = 2 * (k * k - 1) * norm;
+					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
+				} else {
+					norm = 1 / (v + sqrt(2*v) * k + k * k);
+					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
+					f->a1 = 2 * (k * k - 1) * norm;
+					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
+					f->b1 = 2 * (k * k - v) * norm;
+					f->b2 = (v - sqrt(2*v) * k + k * k) * norm;
+				}
+			}
+			break;
+	}
+}
+
+static float biquad_do(INT32 num, float input)
+{
+	BIQ *f = &filters[num];
+
+	f->output = input * f->a0 + f->z1;
+	f->z1 = input * f->a1 + f->z2 - f->b1 * f->output;
+	f->z2 = input * f->a2 - f->b2 * f->output;
+	return (float)f->output;
+}
+// end biquad filter
+
+// Oversampling Buzzer-DAC
+static INT32 buzzer_last_update;
+static INT32 buzzer_last_data;
+static INT32 buzzer_data_len;
+static INT32 buzzer_data_frame;
+static INT32 buzzer_data_frame_minute;
+
+static const INT32 buzzer_oversample = 2000;
+
+static void BuzzerInit()
+{
+	bprintf(0, _T("*** BuzzerInit(): succeeded.\n"));
+	init_biquad(FILT_LOWPASS, 0, nBurnSoundRate, 7000, 0.554, 0.0);
+	init_biquad(FILT_LOWPASS, 1, nBurnSoundRate, 8000, 0.554, 0.0);
+
+	buzzer_data_frame_minute = (SpecCylesPerScanline * SpecScanlines * 50.00);
+	buzzer_data_frame = ((double)(SpecCylesPerScanline * SpecScanlines) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+}
+
+static void BuzzerAdd(INT16 data)
+{
+	data *= (1 << 12);
+
+	if (data != buzzer_last_data) {
+		INT32 len = ((double)(ZetTotalCycles() - buzzer_last_update) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+#if 0
+		extern int counter;
+		if (counter)
+			bprintf(0, _T("%x:\tadding %x\t samples of %d\n"), ZetTotalCycles(), len, buzzer_last_data);
+#endif
+		if (len > 0 && (len+buzzer_data_len) < buzzer_data_frame)
+		{
+			for (INT32 i = buzzer_data_len; i < buzzer_data_len+len; i++) {
+				Buzzer[i] = buzzer_last_data;
+			}
+			buzzer_data_len += len;
+		}
+
+		buzzer_last_data = data;
+		buzzer_last_update = ZetTotalCycles();
+	}
+}
+
+static void BuzzerRender(INT16 *dest)
+{
+	INT32 buzzer_data_pos = 0;
+
+	// fill buffer (if needed)
+	if (buzzer_data_len < buzzer_data_frame) {
+		for (INT32 i = buzzer_data_len; i < buzzer_data_frame; i++) {
+			Buzzer[i] = buzzer_last_data;
+		}
+		buzzer_data_len = buzzer_data_frame;
+	}
+
+	// average + mixdown
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT32 sample = 0;
+		for (INT32 j = 0; j < buzzer_oversample; j++) {
+			sample += Buzzer[buzzer_data_pos++];
+		}
+		sample = (INT32)(biquad_do(1, biquad_do(0, (double)sample / buzzer_oversample)));
+		//sample = (INT32)(biquad_do(0, (double)sample / buzzer_oversample));
+		//sample = (INT32)((double)sample / buzzer_oversample);
+		dest[0] = BURN_SND_CLIP(sample);
+		dest[1] = BURN_SND_CLIP(sample);
+		dest += 2;
+	}
+
+	buzzer_data_len = 0;
+	buzzer_last_update = 0;
+}
+
+// end Oversampling Buzzer-DAC
 
 static struct BurnDIPInfo SpecDIPList[]=
 {
@@ -331,6 +516,8 @@ static INT32 MemIndex()
 	SpecPalette             = (UINT32*)Next; Next += 0x00010 * sizeof(UINT32);
 	dacbuf                  = (INT16*)Next; Next += 0x800 * 2 * sizeof(INT16);
 
+	Buzzer                  = (INT16*)Next; Next += 1000 * buzzer_oversample * sizeof(INT16);
+
 	MemEnd                  = Next;
 
 	return 0;
@@ -343,6 +530,8 @@ static INT32 SpecDoReset()
 	DACReset();
 	if (SpecIsSpec128) AY8910Reset(0);
 	ZetClose();
+
+	BuzzerInit();
 
 	nPort7FFDData = 0;
 	nPortFEData = 0;
@@ -501,9 +690,8 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 	if (~a & 0x0001) {
 		UINT8 Changed = nPortFEData ^ d;
 
-		if (Changed & 0x10) {
-			DACWrite(0, ((d & 0x10) >> 4) * 0x80);
-		}
+		//DACWrite(0, ((d & 0x10) >> 4) * 0x80);
+		BuzzerAdd((d & 0x10) >> 4);
 
 		if (Changed & 0x08) {
 			// write cassette data
@@ -679,9 +867,8 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 	if (~a & 0x0001) {
 		UINT8 Changed = nPortFEData ^ d;
 
-		if (Changed & 0x10) {
-			DACWrite(0, ((d & 0x10) >> 4) * 0x80);
-		}
+		//DACWrite(0, ((d & 0x10) >> 4) * 0x80);
+		BuzzerAdd((d & 0x10) >> 4);
 
 		if (Changed & 0x08) {
 			// write cassette data
@@ -853,9 +1040,6 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 
 	GenericTilesInit();
 
-	SpecFrameInvertCount = 16;
-	SpecFrameNumber = 0;
-	SpecFlashInvert = 0;
 	SpecScanlines = 312;
 	SpecCylesPerScanline = 224;
 	SpecContention = 14335;
@@ -921,9 +1105,6 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 
 	GenericTilesInit();
 
-	SpecFrameInvertCount = 16;
-	SpecFrameNumber = 0;
-	SpecFlashInvert = 0;
 	SpecScanlines = 311;
 	SpecCylesPerScanline = 228;
 	SpecContention = 14361;
@@ -989,9 +1170,6 @@ static INT32 SpecExit()
 
 	nActiveSnapshotType = SPEC_NO_SNAPSHOT;
 	nScanline = 0;
-	SpecFrameNumber = 0;
-	SpecFrameInvertCount = 0;
-	SpecFlashInvert = 0;
 	SpecScanlines = 312;
 	SpecCylesPerScanline = 224;
 	SpecIsSpec128 = 0;
@@ -1037,7 +1215,7 @@ static INT32 BORDER_END;
 static void ula_init()
 {
 	CONT_OFFSET = 3;
-	CONT_START  = (SpecContention + CONT_OFFSET);
+	CONT_START  = (SpecContention + CONT_OFFSET); // 14335 / 14361
 	CONT_END    = (CONT_START + 192 * SpecCylesPerScanline);
 	BORDER_START= (SpecIsSpec128) ? 14368 : 14342;
 	BORDER_START-=(SpecCylesPerScanline * 16) + 6; // "+ 6": (center handlebars in paperboy HS screen)
@@ -1100,7 +1278,7 @@ static void ula_run_cyc(INT32 cyc)
 					UINT8 ink = (ula_attr & 0x07) + ((ula_attr >> 3) & 0x08);
 					UINT8 pap = (ula_attr >> 3) & 0x07;
 
-					if (SpecFlashInvert && (ula_attr & 0x80)) ula_scr = ~ula_scr;
+					if (ula_flash & 0x10 && ula_attr & 0x80) ula_scr = ~ula_scr;
 
 					for (UINT8 b = 0x80; b != 0; b >>= 1) {
 						*dst++ = (ula_scr & b) ? ink : pap;
@@ -1130,32 +1308,20 @@ static void update_ula(INT32 cycle)
 	ula_last_cyc = cycle;
 }
 
-static void sinc_flt_plus_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
+static void mix_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
 {
-	static INT16 delayLine[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	const double filterCoef[8] = { 0.841471, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
-	double result, ampsum;
 	INT16 out;
 
 	for (INT32 sample = 0; sample < sample_nums; sample++)
 	{
-		// sinc filter
-		for (INT32 i = 6; i >= 0; i--) {
-			delayLine[i + 1] = delayLine[i];
-		}
-		delayLine[0] = inbuf[sample * 2 + 0];
-
-		result = ampsum = 0;
-		for (INT32 i = 0; i < 8; i++) {
-			result += delayLine[i] * filterCoef[i];
-			ampsum += filterCoef[i];
-		}
-		result /= ampsum;
+		INT16 result = inbuf[sample * 2 + 0]; // source sample
 
 		// dc block
-		out = result - dac_lastin + 0.995 * dac_lastout;
+		out = result - dac_lastin + 0.998 * dac_lastout;
 		dac_lastin = result;
 		dac_lastout = out;
+
+		out *= 2.5;
 
 		// add to stream (+include ay if Spec128)
 		if (SpecIsSpec128) {
@@ -1218,12 +1384,7 @@ static INT32 SpecFrame()
 			nCyclesDo += SpecCylesPerScanline - 32;
 			nCyclesDone += ZetRun(nCyclesDo - ZetTotalCycles());
 
-			SpecFrameNumber++;
-
-			if (SpecFrameNumber >= SpecFrameInvertCount) {
-				SpecFrameNumber = 0;
-				SpecFlashInvert = !SpecFlashInvert;
-			}
+			ula_flash = (ula_flash + 1) & 0x1f;
 		} else {
 			nCyclesDo += SpecCylesPerScanline;
 			nCyclesDone += ZetRun(nCyclesDo - ZetTotalCycles());
@@ -1237,8 +1398,8 @@ static INT32 SpecFrame()
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		}
 
-		DACUpdate(dacbuf, nBurnSoundLen);
-		sinc_flt_plus_dcblock(dacbuf, pBurnSoundOut, nBurnSoundLen);
+		BuzzerRender(dacbuf);
+	    mix_dcblock(dacbuf, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	INT32 tot_frame = SpecScanlines * SpecCylesPerScanline;
@@ -1271,10 +1432,8 @@ static INT32 SpecScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(ula_attr);
 		SCAN_VAR(ula_scr);
 		SCAN_VAR(ula_byte);
+		SCAN_VAR(ula_flash);
 		SCAN_VAR(ula_last_cyc);
-
-		SCAN_VAR(SpecFrameNumber);
-		SCAN_VAR(SpecFlashInvert);
 
 		SCAN_VAR(nPortFEData);
 		SCAN_VAR(nPort7FFDData);
@@ -13277,4 +13436,3 @@ struct BurnDriver BurnSpecRygar2020 = {
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
-

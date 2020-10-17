@@ -660,57 +660,6 @@ static struct BurnDIPInfo MidresDIPList[]=
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x1b, 0x01, 0x03, 0x03, "3"                      },
-	{0x1b, 0x01, 0x03, 0x02, "4"                      },
-	{0x1b, 0x01, 0x03, 0x01, "5"                      },
-	{0x1b, 0x01, 0x03, 0x00, "Infinite"               },
-	
-	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1b, 0x01, 0x0c, 0x08, "Easy"                   },
-	{0x1b, 0x01, 0x0c, 0x0c, "Normal"                 },
-	{0x1b, 0x01, 0x0c, 0x04, "Hard"                   },
-	{0x1b, 0x01, 0x0c, 0x00, "Hardest"                },
-	
-	{0   , 0xfe, 0   , 2   , "Allow continue"         },
-	{0x1b, 0x01, 0x40, 0x40, "No"                     },
-	{0x1b, 0x01, 0x40, 0x00, "Yes"                    },
-};
-
-STDDIPINFO(Midres)
-
-static struct BurnDIPInfo MidresuDIPList[]=
-{
-	// Default Values
-	{0x1a, 0xff, 0xff, 0xff, NULL                     },
-	{0x1b, 0xff, 0xff, 0xbf, NULL                     },
-
-	// Dip 1
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x1a, 0x01, 0x03, 0x00, "3 Coins 1 Play"         },
-	{0x1a, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
-	{0x1a, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
-	{0x1a, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
-	
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x1a, 0x01, 0x0c, 0x00, "3 Coins 1 Play"         },
-	{0x1a, 0x01, 0x0c, 0x04, "2 Coins 1 Play"         },
-	{0x1a, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
-	{0x1a, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
-	
-	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x1a, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1a, 0x01, 0x10, 0x00, "On"                     },
-	
-	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x1a, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1a, 0x01, 0x20, 0x20, "On"                     },
-	
-	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1a, 0x01, 0x40, 0x40, "Off"                    },
-	{0x1a, 0x01, 0x40, 0x00, "On"                     },
-	
-	// Dip 2
-	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x1b, 0x01, 0x03, 0x01, "1"                      },
 	{0x1b, 0x01, 0x03, 0x03, "3"                      },
 	{0x1b, 0x01, 0x03, 0x02, "5"                      },
@@ -727,7 +676,7 @@ static struct BurnDIPInfo MidresuDIPList[]=
 	{0x1b, 0x01, 0x40, 0x00, "Yes"                    },
 };
 
-STDDIPINFO(Midresu)
+STDDIPINFO(Midres)
 
 static struct BurnDIPInfo RobocopDIPList[]=
 {
@@ -5963,7 +5912,7 @@ struct BurnDriver BurnDrvMidresu = {
 	"Midnight Resistance (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
@@ -5973,7 +5922,7 @@ struct BurnDriver BurnDrvMidresj = {
 	"Midnight Resistance (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
-	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, NULL, NULL, MidresInputInfo, MidresDIPInfo,
 	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

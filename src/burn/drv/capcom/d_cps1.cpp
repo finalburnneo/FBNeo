@@ -12510,6 +12510,7 @@ STD_ROM_PICK(Sf2ceeab2)
 STD_ROM_FN(Sf2ceeab2)
 
 static struct BurnRomInfo Sf2ceeab3RomDesc[] = {
+	// This set is known as sf2ceb2 in MAME
 	// f205v id 1395
 	{ "3.ic172",      0x0080000, 0x11b5fe98, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "1.ic171",      0x0080000, 0x6d948623, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12536,6 +12537,7 @@ STD_ROM_PICK(Sf2ceeab3)
 STD_ROM_FN(Sf2ceeab3)
 
 static struct BurnRomInfo Sf2ceeab4RomDesc[] = {
+	// This set is known as sf2ceb3 in MAME
 	// f20v id 1394
 	{ "3.ic172",      0x0080000, 0x30848e16, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "1.ic171",      0x0080000, 0x6d948623, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12561,8 +12563,8 @@ static struct BurnRomInfo Sf2ceeab4RomDesc[] = {
 STD_ROM_PICK(Sf2ceeab4)
 STD_ROM_FN(Sf2ceeab4)
 
-
 static struct BurnRomInfo Sf2ceeab5RomDesc[] = {
+	// This set is known as sf2ceb4 in MAME
 	// f205v id 1400
     { "3.ic172",      0x0080000, 0x11b5fe98, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "5.ic171",      0x0080000, 0x43e85f2c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -22148,7 +22150,7 @@ struct BurnDriver BurnDrvCpsSf2ceb = {
 
 struct BurnDriver BurnDrvCpsSf2ceba = {
 	"sf2ceba", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II': Champion Edition (Playmark bootleg, set 2)\0", NULL, "bootleg (Playmark)", "CPS1",
+	"Street Fighter II': Champion Edition (Playmark bootleg, set 3)\0", NULL, "bootleg (Playmark)", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cebaRomInfo, Sf2cebaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -22198,7 +22200,7 @@ struct BurnDriver BurnDrvCpsSf2ceeab4 = {
 
 struct BurnDriver BurnDrvCpsSf2ceeab5 = {
 	"sf2ceeab5", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Champion Edition (920313 etc bootleg set 5)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Playmark bootleg, set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeab5RomInfo, Sf2ceeab5RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

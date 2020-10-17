@@ -1291,6 +1291,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Big Karnak
+/* PCB silkscreened REF.901112 */
 
 static struct BurnRomInfo bigkarnkRomDesc[] = {
 	{ "d16",		0x40000, 0x44fb9c73, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1304,6 +1305,9 @@ static struct BurnRomInfo bigkarnkRomDesc[] = {
 	{ "d1",			0x40000, 0x26444ad1, 3 | BRF_SND },           //  6 M6295 Samples
 
 	{ "d5",			0x10000, 0x3b73b9c5, 4 | BRF_PRG | BRF_ESS }, //  7 M6809 Code
+	
+	{ "bigkarnak_gal16v8.d6", 0x00117, 0x587fe895, 5 | BRF_OPT }, //  8 plds
+	{ "bigkarnak_gal20v8.d6", 0x00157, 0x0dcb286e, 5 | BRF_OPT }, //  9
 };
 
 STD_ROM_PICK(bigkarnk)
@@ -1532,6 +1536,11 @@ static struct BurnRomInfo squashRomDesc[] = {
 	{ "squash.c09",			0x80000, 0x0bb91c69, 2 | BRF_GRA },           //  5 
 
 	{ "squash.d01",			0x80000, 0xa1b9651b, 3 | BRF_SND },           //  6 M6295 Samples
+	
+	{ "squashv1_gal16v8.f2",	0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
+	{ "squashv1_gal16v8.j16",	0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
+	{ "squashv1_gal20v8.d21",	0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
+	{ "squashv1_gal16v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
 };
 
 STD_ROM_PICK(squash)
@@ -1555,12 +1564,17 @@ static struct BurnRomInfo thoopRomDesc[] = {
 	{ "th18dea1.040",		0x080000, 0x59bad625, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "th161eb4.020",		0x040000, 0x6add61ed, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "c09",			0x100000, 0x06f0edbf, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "c10",			0x100000, 0x2d227085, 2 | BRF_GRA },           //  3
-	{ "c11",			0x100000, 0x7403ef7e, 2 | BRF_GRA },           //  4
-	{ "c12",			0x100000, 0x29a5ca36, 2 | BRF_GRA },           //  5
+	{ "c09",				0x100000, 0x06f0edbf, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "c10",				0x100000, 0x2d227085, 2 | BRF_GRA },           //  3
+	{ "c11",				0x100000, 0x7403ef7e, 2 | BRF_GRA },           //  4
+	{ "c12",				0x100000, 0x29a5ca36, 2 | BRF_GRA },           //  5
 
-	{ "sound",			0x100000, 0x99f80961, 3 | BRF_SND },           //  6 M6295 Samples
+	{ "sound",				0x100000, 0x99f80961, 3 | BRF_SND },           //  6 M6295 Samples
+	
+	{ "thunderhoop_gal16v8.f2",	 0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
+	{ "thunderhoop_gal16v8.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
+	{ "thunderhoop_gal20v8.d21", 0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
+	{ "thunderhoop_gal16v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
 };
 
 STD_ROM_PICK(thoop)

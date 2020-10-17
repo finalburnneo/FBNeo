@@ -1320,28 +1320,28 @@ struct BurnDriver BurnDrvBagnardio = {
 };
 
 
-// Bagman (Stern Electronics, set 1)
+// Bagman (Stern Electronics, revision A5)
 
 static struct BurnRomInfo bagmansRomDesc[] = {
-	{ "a4_9e.bin",		0x1000, 0x5fb0a1a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "a5-9f",			0x1000, 0x2ddf6bb9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a4_9j.bin",		0x1000, 0xb2da8b77, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a5-9k",			0x1000, 0xf91d617b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "a4_9m.bin",		0x1000, 0xb8e75eb6, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "a5-9n",			0x1000, 0x68e4b64d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "bagman_a4_9e.9e",		0x1000, 0x5fb0a1a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "bagman_a5_9f.9f",		0x1000, 0x2ddf6bb9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bagman_a4_9j.9j",		0x1000, 0xb2da8b77, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bagman_a5_9k.9k",		0x1000, 0xf91d617b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bagman_a4_9m.9m",		0x1000, 0xb8e75eb6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bagman_a5_9n.9n",		0x1000, 0x68e4b64d, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "a2_1e.bin",		0x1000, 0xf217ac09, 2 | BRF_GRA },           //  6 Graphics
-	{ "j1_b04.bin",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
-	{ "a2_1c.bin",		0x1000, 0xf3e11bd7, 2 | BRF_GRA },           //  8
-	{ "a2_1f.bin",		0x1000, 0xd0f7105b, 2 | BRF_GRA },           //  9
+	{ "bagman_a2_1e.1e",		0x1000, 0xf217ac09, 2 | BRF_GRA },           //  6 Graphics
+	{ "bagman_a2_1j.1j",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
+	{ "bagman_a2_1c.1c",		0x1000, 0xf3e11bd7, 2 | BRF_GRA },           //  8
+	{ "bagman_a2_1f.1f",		0x1000, 0xd0f7105b, 2 | BRF_GRA },           //  9
 
-	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 10 Color Data
-	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 11
+	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   		 // 10 Color Data
+	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   		 // 11
 
-	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 12 TMS5110 State Machine
+	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
 
-	{ "r9_b11.bin",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
-	{ "t9_b12.bin",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
+	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
 STD_ROM_PICK(bagmans)
@@ -1349,7 +1349,7 @@ STD_ROM_FN(bagmans)
 
 struct BurnDriver BurnDrvBagmans = {
 	"bagmans", "bagman", NULL, NULL, "1982",
-	"Bagman (Stern Electronics, set 1)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
+	"Bagman (Stern Electronics, revision A5)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmansRomInfo, bagmansRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmansDIPInfo,
@@ -1358,45 +1358,84 @@ struct BurnDriver BurnDrvBagmans = {
 };
 
 
-// Bagman (Stern Electronics, set 2)
+// Bagman (Stern Electronics, revision A4)
 
-static struct BurnRomInfo bagmans2RomDesc[] = {
-	{ "a4_9e.bin",		0x1000, 0x5fb0a1a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "a4_9f.bin",		0x1000, 0x7871206e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a4_9j.bin",		0x1000, 0xb2da8b77, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a4_9k.bin",		0x1000, 0x36b6a944, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "a4_9m.bin",		0x1000, 0xb8e75eb6, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "a4_9n.bin",		0x1000, 0x83fccb1c, 1 | BRF_PRG | BRF_ESS }, //  5
+static struct BurnRomInfo bagmans4RomDesc[] = {
+	{ "bagman_a4_9e.9e",		0x1000, 0x5fb0a1a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "bagman_a4_9f.9f",		0x1000, 0x7871206e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bagman_a4_9j.9j",		0x1000, 0xb2da8b77, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bagman_a4_9k.9k",		0x1000, 0x36b6a944, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bagman_a4_9m.9m",		0x1000, 0xb8e75eb6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bagman_a4_9n.9n",		0x1000, 0x83fccb1c, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "a2_1e.bin",		0x1000, 0xf217ac09, 2 | BRF_GRA },           //  6 Graphics
-	{ "j1_b04.bin",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
-	{ "a2_1c.bin",		0x1000, 0xf3e11bd7, 2 | BRF_GRA },           //  8
-	{ "a2_1f.bin",		0x1000, 0xd0f7105b, 2 | BRF_GRA },           //  9
+	{ "bagman_a2_1e.1e",		0x1000, 0xf217ac09, 2 | BRF_GRA },           //  6 Graphics
+	{ "bagman_a2_1j.1j",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
+	{ "bagman_a2_1c.1c",		0x1000, 0xf3e11bd7, 2 | BRF_GRA },           //  8
+	{ "bagman_a2_1f.1f",		0x1000, 0xd0f7105b, 2 | BRF_GRA },           //  9
 
-	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 10 Color Data
-	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 11
+	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   		 // 10 Color Data
+	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   		 // 11
 
-	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 12 TMS5110 State Machine
+	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
 
-	{ "r9_b11.bin",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
-	{ "t9_b12.bin",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
+	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
-STD_ROM_PICK(bagmans2)
-STD_ROM_FN(bagmans2)
+STD_ROM_PICK(bagmans4)
+STD_ROM_FN(bagmans4)
 
-struct BurnDriver BurnDrvBagmans2 = {
-	"bagmans2", "bagman", NULL, NULL, "1982",
-	"Bagman (Stern Electronics, set 2)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
+struct BurnDriver BurnDrvBagmans4 = {
+	"bagmans4", "bagman", NULL, NULL, "1982",
+	"Bagman (Stern Electronics, revision A4)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, bagmans2RomInfo, bagmans2RomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
+	NULL, bagmans4RomInfo, bagmans4RomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
+	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Bagman (Stern Electronics, revision A3)
+
+static struct BurnRomInfo bagmans3RomDesc[] = {
+	{ "bagman_a2_9e.9e",		0x1000, 0x5f04d805, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "bagman_a3_9f.9f",		0x1000, 0x136a78aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bagman_a2_9j.9j",		0x1000, 0xf94f5626, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bagman_a2_9k.9k",		0x1000, 0x31788fc1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bagman_a2_9m.9m",		0x1000, 0xb8e75eb6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bagman_a3_9n.9n",		0x1000, 0xab66d4c1, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "bagman_a2_1e.1e",		0x1000, 0xf217ac09, 2 | BRF_GRA },           //  6 Graphics
+	{ "bagman_a2_1j.1j",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  7
+	{ "bagman_a2_1c.1c",		0x1000, 0xf3e11bd7, 2 | BRF_GRA },           //  8
+	{ "bagman_a2_1f.1f",		0x1000, 0xd0f7105b, 2 | BRF_GRA },           //  9
+
+	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   		 // 10 Color Data
+	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   		 // 11
+
+	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
+
+	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
+	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+};
+
+STD_ROM_PICK(bagmans3)
+STD_ROM_FN(bagmans3)
+
+struct BurnDriver BurnDrvBagmans3 = {
+	"bagmans3", "bagman", NULL, NULL, "1982",
+	"Bagman (Stern Electronics, revision A3)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, bagmans3RomInfo, bagmans3RomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
 
 
 // Bagman (Taito)
+// based on Stern's Bagman revision A4 set (bagmans4)
 
 static struct BurnRomInfo bagmanjRomDesc[] = {
 	{ "bf8_06.e9",		0x1000, 0x5fb0a1a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1411,10 +1450,12 @@ static struct BurnRomInfo bagmanjRomDesc[] = {
 	{ "bf8_02.c1",		0x1000, 0x404283ed, 2 | BRF_GRA },           //  8
 	{ "bf8_04-1.f1",	0x1000, 0x3f5c991e, 2 | BRF_GRA },           //  9
 
-	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 10 Color Data
-	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 11
-
-	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_GRA },           // 12 TMS5110 State Machine
+	// not dumped for this set
+	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   // 10 Color Data
+	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   // 11
+	
+	// not dumped for this set
+	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   // 12 TMS5110 State Machine
 
 	{ "bf8_12.r9",		0x1000, 0x2e0057ff, 5 | BRF_GRA },           // 13 TMS5110 Speech Data
 	{ "bf8_13.t9",		0x1000, 0xb2120edd, 5 | BRF_GRA },           // 14
@@ -1489,18 +1530,18 @@ static struct BurnRomInfo sbagman2RomDesc[] = {
 	{ "5.9e",			0x1000, 0x1b1d6b0a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "6.9f",			0x1000, 0xac49cb82, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "7.9j",			0x1000, 0x9a1c778d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "8.9k",			0x1000, 0xb94fbb73, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "9.9m",			0x1000, 0x601f34ba, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "10.9n",			0x1000, 0x5f750918, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sb8v3.9k",		0x1000, 0xb94fbb73, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sb9v3.9m",		0x1000, 0x601f34ba, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sb10v3.9n",		0x1000, 0x5f750918, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "13.8d",			0x1000, 0x944a4453, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "14.8f",			0x1000, 0x83b10139, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "15.8j",			0x1000, 0xfe924879, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "16.8k",			0x1000, 0xb77eb1f5, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sb14v3.8f",		0x1000, 0x83b10139, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sb15v3.8j",		0x1000, 0xfe924879, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sb16v3.8k",		0x1000, 0xb77eb1f5, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "2.1e",			0x1000, 0xf4d3d4e6, 2 | BRF_GRA },           // 10 Graphics
-	{ "4.1j",			0x1000, 0x2c6a510d, 2 | BRF_GRA },           // 11
-	{ "1.1c",			0x1000, 0xa046ff44, 2 | BRF_GRA },           // 12
-	{ "3.1f",			0x1000, 0xa4422da4, 2 | BRF_GRA },           // 13
+	{ "sb2v3.1e",		0x1000, 0xf4d3d4e6, 2 | BRF_GRA },           // 10 Graphics
+	{ "sb4v3.1j",		0x1000, 0x2c6a510d, 2 | BRF_GRA },           // 11
+	{ "sb1v3.1c",		0x1000, 0xa046ff44, 2 | BRF_GRA },           // 12
+	{ "sb3v3.1f",		0x1000, 0xa4422da4, 2 | BRF_GRA },           // 13
 
 	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 14 Color Data
 	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 15
@@ -1526,6 +1567,7 @@ struct BurnDriver BurnDrvSbagman2 = {
 
 
 // Super Bagman (Stern Electronics)
+// known to come in the form of a Bagman to Super Bagman conversion kit
 
 static struct BurnRomInfo sbagmansRomDesc[] = {
 	{ "sbag_9e.bin",	0x1000, 0xc19696f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1539,18 +1581,18 @@ static struct BurnRomInfo sbagmansRomDesc[] = {
 	{ "15.8j",			0x1000, 0xfe924879, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "16.8k",			0x1000, 0xb77eb1f5, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "2.1e",			0x1000, 0xf4d3d4e6, 2 | BRF_GRA },           // 10 Graphics
-	{ "4.1j",			0x1000, 0x2c6a510d, 2 | BRF_GRA },           // 11
-	{ "sbag_1c.bin",	0x1000, 0x262f870a, 2 | BRF_GRA },           // 12
-	{ "sbag_1f.bin",	0x1000, 0x350ed0fb, 2 | BRF_GRA },           // 13
+	{ "sb2v3.1e",				0x1000, 0xf4d3d4e6, 2 | BRF_GRA },   // 10 Graphics
+	{ "sb4v3.1j",				0x1000, 0x2c6a510d, 2 | BRF_GRA },   // 11
+	{ "s._bagman_a1_1c.1c",		0x1000, 0x262f870a, 2 | BRF_GRA },   // 12
+	{ "s._bagman_a1_1f.1f",		0x1000, 0x350ed0fb, 2 | BRF_GRA },   // 13
 
-	{ "p3.bin",			0x0020, 0x2a855523, 3 | BRF_GRA },           // 14 Color Data
-	{ "r3.bin",			0x0020, 0xae6f1019, 3 | BRF_GRA },           // 15
+	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   // 14 Color Data
+	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   // 15
+	
+	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   // 16 TMS5110 State Machine
 
-	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 16 TMS5110 State Machine
-
-	{ "11.9r",			0x1000, 0x2e0057ff, 5 | BRF_SND },           // 17 TMS5110 Speech Data
-	{ "12.9t",			0x1000, 0xb2120edd, 5 | BRF_SND },           // 18
+	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },   // 17 TMS5110 Speech Data
+	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },   // 18
 };
 
 STD_ROM_PICK(sbagmans)

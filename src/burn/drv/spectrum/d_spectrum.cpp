@@ -12328,7 +12328,7 @@ struct BurnDriver BurnSpecdestinymission = {
 // Frost Byte
 
 static struct BurnRomInfo SpecfrostbyteRomDesc[] = {
-	{ "Frost Byte (1986)(Mikro-Gen).tap", 49465, 0x89fc6d8, BRF_ESS | BRF_PRG },
+	{ "Frost Byte (1986)(Mikro-Gen).tap", 49465, 0x895fc6d8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specfrostbyte, Specfrostbyte, Spec128)
@@ -12664,6 +12664,44 @@ struct BurnDriver BurnSpecrescategolfo2 = {
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Specrescategolfo2RomInfo, Specrescategolfo2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Bobby Bearing
+
+static struct BurnRomInfo SpecbobbybearingRomDesc[] = {
+	{ "Bobby Bearing (1986)(The Edge).tap", 27778, 0x6b6895d2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specbobbybearing, Specbobbybearing, Spec128)
+STD_ROM_FN(Specbobbybearing)
+
+struct BurnDriver BurnSpecbobbybearing = {
+	"spec_bobbybearing", NULL, "spec_spec128", NULL, "1986",
+	"Bobby Bearing\0", NULL, "The Edge", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecbobbybearingRomInfo, SpecbobbybearingRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Incredible Shrinking Sphere
+
+static struct BurnRomInfo SpecincshrinksphereRomDesc[] = {
+	{ "Incredible Shrinking Sphere (1989)(Electric Dreams).tap", 42625, 0xf89b035d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specincshrinksphere, Specincshrinksphere, Spec128)
+STD_ROM_FN(Specincshrinksphere)
+
+struct BurnDriver BurnSpecincshrinksphere = {
+	"spec_incshrinksphere", NULL, "spec_spec128", NULL, "1989",
+	"Incredible Shrinking Sphere\0", NULL, "Electric Dreams", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecincshrinksphereRomInfo, SpecincshrinksphereRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

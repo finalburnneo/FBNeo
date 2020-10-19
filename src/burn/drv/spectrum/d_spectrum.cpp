@@ -12328,7 +12328,7 @@ struct BurnDriver BurnSpecdestinymission = {
 // Frost Byte
 
 static struct BurnRomInfo SpecfrostbyteRomDesc[] = {
-	{ "Frost Byte (1986)(Mikro-Gen).tap", 49465, 0x89fc6d8, BRF_ESS | BRF_PRG },
+	{ "Frost Byte (1986)(Mikro-Gen).tap", 49465, 0x895fc6d8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specfrostbyte, Specfrostbyte, Spec128)

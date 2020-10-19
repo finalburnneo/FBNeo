@@ -260,7 +260,7 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 	return info->regs[offset];
 }
 
-// direct form II(transposted) biquadradic filter, needed for delay(echo) effect's filter taps -dink
+// direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
 enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
 
 struct BIQ {

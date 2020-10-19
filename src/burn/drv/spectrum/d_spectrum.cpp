@@ -17,6 +17,9 @@
 #define SPEC_BITMAP_WIDTH			448
 #define SPEC_BITMAP_HEIGHT			312
 
+static INT32 SpecMode = 0;
+#define SPEC_INVES (1 << 3) // Spanish non-contended clone
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "", 0, 0, 0 },
 };
@@ -355,7 +358,7 @@ static INT32 buzzer_data_len;
 static INT32 buzzer_data_frame;
 static INT32 buzzer_data_frame_minute;
 
-static const INT32 buzzer_oversample = 2000;
+static const INT32 buzzer_oversample = 3000;
 
 static void BuzzerInit()
 {
@@ -897,10 +900,14 @@ static INT32 SpecTAPBlockLen[BLKNUM];
 
 static INT32 SpecTAPBlocks = 0; // 1-based
 static INT32 SpecTAPBlocknum = 0; // 0-based
+static INT32 SpecTAPPos = 0; // 0-based
+static INT32 SpecTAPLoading = 0;
 
 static void SpecTAPReset()
 {
 	SpecTAPBlocknum = 0;
+	SpecTAPPos = 0;
+	SpecTAPLoading = 0;
 }
 
 static void SpecTAPInit()
@@ -936,13 +943,17 @@ static void SpecTAPInit()
 	}
 }
 
-static INT32 SpecTAPCallback()
+static INT32 SpecTAPDMACallback()
 {
 	if (SpecTAPBlocks == 0 || nActiveSnapshotType != SPEC_TAPE_TAP) return 0;
 
 	UINT8 *data = SpecTAPBlock[SpecTAPBlocknum];
 
+	INT32 transfer_ok = 0;
 	INT32 carry_val = 0;
+	INT32 checksum = 0;
+	INT32 offset = 0;
+	UINT8 byte = 0;
 
 	INT32 tap_block = data[0];
 	INT32 cpu_block = ActiveZ80GetAF2() >> 8;
@@ -960,18 +971,19 @@ static INT32 SpecTAPCallback()
 
 	if (cpu_block == tap_block) { // we found our block! :)
 		if (ActiveZ80GetCarry2()) {
-				if (DEBUG_TAP) {
-					bprintf(0, _T("loading data\n"));
-				}
+			if (DEBUG_TAP) {
+				bprintf(0, _T("loading data\n"));
+			}
 			// load
-			INT32 offset = 0;
-			INT32 checksum = tap_block;
+			offset = 0;
+			checksum = tap_block;
 			while (offset < length) {
 				if (offset+1 > SpecTAPBlockLen[SpecTAPBlocknum]) {
 					bprintf(0, _T(".TAP Loader: trying to read past block.  offset %x  blocklen %x\n"), offset, SpecTAPBlockLen[SpecTAPBlocknum]);
 					carry_val = 0;
 					break;
 				}
+				byte = data[offset+1];
 				ZetWriteByte((address + offset) & 0xffff, data[offset+1]);
 				checksum ^= data[offset+1];
 				offset++;
@@ -980,10 +992,14 @@ static INT32 SpecTAPCallback()
 				bprintf(0, _T("end dma, checksum %x  tap checksum %x\n"), checksum, data[offset+1]);
 			}
 			carry_val = (checksum == data[offset+1]);
+			transfer_ok = 1;
 		}
 	}
 
 	ActiveZ80SetCarry(carry_val);
+	ActiveZ80SetIX((address + offset) & 0xffff);
+	if (transfer_ok) ActiveZ80SetDE(0);
+	ActiveZ80SetHL((checksum << 8) | byte);
 	ActiveZ80SetPC(0x05e2);
 
 	SpecTAPBlocknum = (SpecTAPBlocknum + 1) % SpecTAPBlocks;
@@ -994,9 +1010,10 @@ static INT32 SpecTAPCallback()
 static void update_ula(INT32 cycle); // forward
 static void ula_init();
 
-static INT32 SpectrumInit(INT32 nSnapshotType)
+static INT32 SpectrumInit(INT32 nSnapshotType, INT32 Mode)
 {
 	nActiveSnapshotType = nSnapshotType;
+	SpecMode = Mode;
 
 	BurnSetRefreshRate(50.0);
 
@@ -1029,10 +1046,12 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 	ZetSetInHandler(SpecZ80PortRead);
 	ZetSetOutHandler(SpecZ80PortWrite);
 	if (nSnapshotType == SPEC_TAPE_TAP) {
-		bprintf(0, _T("**  Spectrum: Using TAP file (len 0x%x)..\n"), SpecTAPLen);
-		z80_set_spectrum_tape_callback(SpecTAPCallback);
+		bprintf(0, _T("**  Spectrum: Using TAP file (len 0x%x) - DMA Loader\n"), SpecTAPLen);
+		z80_set_spectrum_tape_callback(SpecTAPDMACallback);
 	}
-	Z80InitContention(48, &update_ula);
+	if (~SpecMode & SPEC_INVES) {
+		Z80InitContention(48, &update_ula);
+	}
 	ZetClose();
 
 	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
@@ -1053,9 +1072,10 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 	return 0;
 }
 
-static INT32 Spectrum128Init(INT32 nSnapshotType)
+static INT32 Spectrum128Init(INT32 nSnapshotType, INT32 Mode)
 {
 	nActiveSnapshotType = nSnapshotType;
+	SpecMode = Mode;
 
 	BurnSetRefreshRate(50.0);
 
@@ -1090,10 +1110,12 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 	ZetSetInHandler(SpecSpec128Z80PortRead);
 	ZetSetOutHandler(SpecSpec128Z80PortWrite);
 	if (nSnapshotType == SPEC_TAPE_TAP) {
-		bprintf(0, _T("**  Spectrum 128k: Using TAP file (len 0x%x)..\n"), SpecTAPLen);
-		z80_set_spectrum_tape_callback(SpecTAPCallback);
+		bprintf(0, _T("**  Spectrum 128k: Using TAP file (len 0x%x) - DMA Loader\n"), SpecTAPLen);
+		z80_set_spectrum_tape_callback(SpecTAPDMACallback);
 	}
-	Z80InitContention(128, &update_ula);
+	if (~SpecMode & SPEC_INVES) {
+		Z80InitContention(128, &update_ula);
+	}
 	ZetClose();
 
 	DACInit(0, 0, 0, ZetTotalCycles, 228*311*50);
@@ -1121,17 +1143,22 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 
 static INT32 SpecInit()
 {
-	return SpectrumInit(SPEC_NO_SNAPSHOT);
+	return SpectrumInit(SPEC_NO_SNAPSHOT, 0);
 }
 
 static INT32 TAPInit()
 {
-	return SpectrumInit(SPEC_TAPE_TAP);
+	return SpectrumInit(SPEC_TAPE_TAP, 0);
 }
 
 static INT32 TAP128KInit()
 {
-	return Spectrum128Init(SPEC_TAPE_TAP);
+	return Spectrum128Init(SPEC_TAPE_TAP, 0);
+}
+
+static INT32 TAP128KInvesInit()
+{
+	return Spectrum128Init(SPEC_TAPE_TAP, SPEC_INVES);
 }
 
 /*static INT32 SNASnapshotInit()
@@ -1141,17 +1168,17 @@ static INT32 TAP128KInit()
 
 static INT32 Z80SnapshotInit()
 {
-	return SpectrumInit(SPEC_SNAPSHOT_Z80);
+	return SpectrumInit(SPEC_SNAPSHOT_Z80, 0);
 }
 
 static INT32 SpecSpec128Init()
 {
-	return Spectrum128Init(SPEC_NO_SNAPSHOT);
+	return Spectrum128Init(SPEC_NO_SNAPSHOT, 0);
 }
 
 static INT32 Z80128KSnapshotInit()
 {
-	return Spectrum128Init(SPEC_SNAPSHOT_Z80);
+	return Spectrum128Init(SPEC_SNAPSHOT_Z80, 0);
 }
 
 static INT32 SpecExit()
@@ -1388,6 +1415,10 @@ static INT32 SpecFrame()
 		} else {
 			nCyclesDo += SpecCylesPerScanline;
 			nCyclesDone += ZetRun(nCyclesDo - ZetTotalCycles());
+		}
+
+		if (SpecMode & SPEC_INVES) {
+			update_ula(ZetTotalCycles());
 		}
 	}
 
@@ -10580,7 +10611,7 @@ struct BurnDriver BurnSpecLorna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecLornaRomInfo, SpecLornaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	TAP128KInvesInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

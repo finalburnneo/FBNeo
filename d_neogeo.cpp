@@ -18568,6 +18568,8 @@ struct BurnDriver BurnDrvrbffspbh = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
+
+
 // Garou - Mark of the Wolves (Boss Hack)
 /* Original Version - Encrypted GFX */ /* MVS VERSION - later revision */
 
@@ -18600,69 +18602,6 @@ static struct BurnRomInfo garoubhRomDesc[] = {
 
 STDROMPICKEXT(garoubh, garoubh, neogeo)
 STD_ROM_FN(garou)
-
-static void garoubhSMADecrypt()
-{
-	for (INT32 i = 0; i < 0x800000 / 2; i++) {
-		((UINT16*)(Neo68KROMActive + 0x100000))[i] = BITSWAP16(BURN_ENDIAN_SWAP_INT16(((UINT16*)(Neo68KROMActive + 0x100000))[i]), 13, 12, 14, 10, 8, 2, 3, 1, 5, 9, 11, 4, 15, 0, 6, 7);
-	}
-
-	for (INT32 i = 0; i < 0x0C0000 / 2; i++) {
-		((UINT16*)Neo68KROMActive)[i] = BURN_ENDIAN_SWAP_INT16(((UINT16*)Neo68KROMActive)[0x710000 / 2 + BITSWAP24(i, 23, 22, 21, 20, 19, 18, 4, 5, 16, 14, 7, 9, 6, 13, 17, 15, 3, 1, 2, 12, 11, 8, 10, 0)]);
-	}
-
-	for (INT32 i = 0; i < 0x800000 / 2; i += 0x8000 / 2) {
-		UINT16 nBuffer[0x8000 / 2];
-		memmove(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x8000);
-		for (INT32 j = 0; j < 0x8000 / 2; j++) {
-			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 9, 4, 8, 3, 13, 6, 2, 7, 0, 12, 1, 11, 10, 5)]);
-		}
-	}
-}
-
-void __fastcall garouWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
-{
-	if (sekAddress == 0x2FFFC0) {
-		static UINT32 bankoffset[64] = {
-			0x100000, 0x200000, 0x300000, 0x400000, // 00
-			0x380000, 0x480000, 0x3d0000, 0x4d0000, // 04
-			0x3f0000, 0x4f0000, 0x500000, 0x600000, // 08
-			0x520000, 0x620000, 0x540000, 0x640000, // 12
-			0x598000, 0x698000, 0x5a0000, 0x6a0000, // 16
-			0x5a8000, 0x6a8000, 0x5b0000, 0x6b0000, // 20
-			0x5b8000, 0x6b8000, 0x5c0000, 0x6c0000, // 24
-			0x5c8000, 0x6c8000, 0x5d0000, 0x6d0000, // 28
-			0x558000, 0x658000, 0x560000, 0x660000, // 32
-			0x568000, 0x668000, 0x570000, 0x670000, // 36
-			0x578000, 0x678000, 0x580000, 0x680000, // 40
-			0x588000, 0x688000, 0x590000, 0x690000, // 44
-			0x6d0000, 0x6d8000, 0x6e0000, 0x6e8000, // 48
-			0x6f0000, 0x6f8000, 0x700000, /* rest not used? */
-		};
-
-		// Unscramble bank number
-		INT32 nBank =
-			(((wordValue >>  5) & 1) << 0) +
-			(((wordValue >>  9) & 1) << 1) +
-			(((wordValue >>  7) & 1) << 2) +
-			(((wordValue >>  6) & 1) << 3) +
-			(((wordValue >> 14) & 1) << 4) +
-			(((wordValue >> 12) & 1) << 5);
-
-		if (bankoffset[nBank] != nNeo68KROMBank) {
-			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
-		}
-	}
-}
-
-static INT32 garouInit()
-{
-	nNeoProtectionXor = 0x06;
-
-	return NeoSMAInit(garouSMADecrypt, garouWriteWordBankswitch, 0x2FFFCC, 0x2FFFF0);
-}
 
 struct BurnDriver BurnDrvGaroubh = {
 	"garoubh", NULL, "neogeo", NULL, "1999",

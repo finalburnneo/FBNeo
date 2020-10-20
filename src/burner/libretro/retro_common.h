@@ -127,6 +127,7 @@ extern bool allow_neogeo_mode;
 extern bool core_aspect_par;
 extern bool bAllowDepth32;
 extern bool bLightgunHideCrosshairEnabled;
+extern bool bPatchedRomsetsEnabled;
 extern UINT32 nVerticalMode;
 extern UINT32 nFrameskip;
 extern UINT32 nMemcardMode;

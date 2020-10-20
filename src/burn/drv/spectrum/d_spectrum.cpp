@@ -13984,7 +13984,7 @@ struct BurnDriver BurnSpecsophia2 = {
 // Apulija-13
 
 static struct BurnRomInfo SpecApulija13RomDesc[] = {
-	{ "Apulija-13 (Alessandro Grussu)(2013).tap", 28214, 0x356db043, BRF_ESS | BRF_PRG },
+	{ "Apulija-13 (2013)(Alessandro Grussu).tap", 28214, 0x356db043, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecApulija13, SpecApulija13, Spec128)
@@ -14003,7 +14003,7 @@ struct BurnDriver BurnSpecApulija13 = {
 // Astronaut Labyrinth
 
 static struct BurnRomInfo SpecAstrolabyRomDesc[] = {
-	{ "Astronaut Labyrinth (Jaime Grilo)(2018).tap", 44602, 0x984c2c8a, BRF_ESS | BRF_PRG },
+	{ "Astronaut Labyrinth (2018)(Jaime Grilo).tap", 44602, 0x984c2c8a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAstrolaby, SpecAstrolaby, Spec128)
@@ -14022,7 +14022,7 @@ struct BurnDriver BurnSpecAstrolaby = {
 // Bean Brothers
 
 static struct BurnRomInfo SpecBeanbrosRomDesc[] = {
-	{ "Bean Brothers (Stonechat Productions)(2018).tap", 55722, 0xaf989916, BRF_ESS | BRF_PRG },
+	{ "Bean Brothers (2018)(Stonechat Productions).tap", 55722, 0xaf989916, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBeanbros, SpecBeanbros, Spec128)
@@ -14041,7 +14041,7 @@ struct BurnDriver BurnSpecBeanbros = {
 // Castle Of Sorrow
 
 static struct BurnRomInfo SpecCastleofsorrowRomDesc[] = {
-	{ "Castle Of Sorrow (ZXMan48k)(2018).tap", 42259, 0x7750645b, BRF_ESS | BRF_PRG },
+	{ "Castle Of Sorrow (2018)(ZXMan48k).tap", 42259, 0x7750645b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCastleofsorrow, SpecCastleofsorrow, Spec128)
@@ -14060,7 +14060,7 @@ struct BurnDriver BurnSpecCastleofsorrow = {
 // Dungeon Raiders
 
 static struct BurnRomInfo SpecDungeonraidersRomDesc[] = {
-	{ "Dungeon Raiders (Payndz)(2018).tap", 33635, 0x9bfd967b, BRF_ESS | BRF_PRG },
+	{ "Dungeon Raiders (2018)(Payndz).tap", 33635, 0x9bfd967b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDungeonraiders, SpecDungeonraiders, Spec128)
@@ -14079,7 +14079,7 @@ struct BurnDriver BurnSpecDungeonraiders = {
 // The Eggsterminator
 
 static struct BurnRomInfo SpecEggsterminatorRomDesc[] = {
-	{ "The Eggsterminator (The Death Squad)(2018).tap", 48022, 0x6960fff0, BRF_ESS | BRF_PRG },
+	{ "The Eggsterminator (2018)(The Death Squad).tap", 48022, 0x6960fff0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecEggsterminator, SpecEggsterminator, Spec128)
@@ -14098,7 +14098,7 @@ struct BurnDriver BurnSpecEggsterminator = {
 // Impossabubble
 
 static struct BurnRomInfo SpecImpossabubbleRomDesc[] = {
-	{ "Impossabubble (Dave Clarke)(2018).tap", 46080, 0x7cd3626a, BRF_ESS | BRF_PRG },
+	{ "Impossabubble (2018)(Dave Clarke).tap", 46080, 0x7cd3626a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecImpossabubble, SpecImpossabubble, Spec128)
@@ -14117,7 +14117,7 @@ struct BurnDriver BurnSpecImpossabubble = {
 // Mister Kung-Fu
 
 static struct BurnRomInfo SpecMrkungfuRomDesc[] = {
-	{ "Mister Kung-Fu (Uprising)(2018).tap", 49193, 0x5ed14eb8, BRF_ESS | BRF_PRG },
+	{ "Mister Kung-Fu (2018)(Uprising).tap", 49193, 0x5ed14eb8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMrkungfu, SpecMrkungfu, Spec128)
@@ -14136,7 +14136,7 @@ struct BurnDriver BurnSpecMrkungfu = {
 // OctuKtty
 
 static struct BurnRomInfo SpecOctuKttyRomDesc[] = {
-	{ "OctuKtty (UltraNarwhal)(2018).tap", 43800, 0x28b574a6, BRF_ESS | BRF_PRG },
+	{ "OctuKtty (2018)(UltraNarwhal).tap", 43800, 0x28b574a6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecOctuKtty, SpecOctuKtty, Spec128)
@@ -14155,7 +14155,7 @@ struct BurnDriver BurnSpecOctuKtty = {
 // Pooper Scooper
 
 static struct BurnRomInfo SpecPooperscooperRomDesc[] = {
-	{ "Pooper Scooper (The Death Squad)(2018).tap", 43438, 0x7bfc504c, BRF_ESS | BRF_PRG },
+	{ "Pooper Scooper (2018)(The Death Squad).tap", 43438, 0x7bfc504c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPooperscooper, SpecPooperscooper, Spec128)

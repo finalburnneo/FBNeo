@@ -209,6 +209,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensneo" romof="spec128">
+		<description>Aliens Neoplasma (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Sanchez Crew</manufacturer>
+		<rom name="Aliens Neoplasma (2019)(Sanchez Crew).tap" size="64233" crc="6cf1a406"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="hlwpumpkin" romof="spec128">
 		<description>All Hallows Rise of Pumpkin (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -259,6 +268,24 @@
 		<year>1989</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="APB - All Points Bulletin (1989)(Domark)[128K].z80" size="80999" crc="81a2cb39"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="apulija13" romof="spec128">
+		<description>Apulija-13 (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Alessandro Grussu</manufacturer>
+		<rom name="Apulija-13 (2013)(Alessandro Grussu).tap" size="28214" crc="356db043"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="arcofyesod" romof="spec128">
+		<description>Arc of Yesod, The</description>
+		<year>1985</year>
+		<manufacturer>Thor Computer Software</manufacturer>
+		<rom name="Arc of Yesod, The (1985)(Thor Computer Software).tap" size="74016" crc="b4c5351b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -328,7 +355,25 @@
 		<description>AstroCop (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>MK1</manufacturer>
-		<rom name="AstroCop (MK1)(2020).tap" size="41005" crc="2c1e9ca5"/>
+		<rom name="AstroCop (2020)(MK1).tap" size="41005" crc="2c1e9ca5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="astrolaby" romof="spec128">
+		<description>Astronaut Labyrinth (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Astronaut Labyrinth (2018)(Jaime Grilo).tap" size="44602" crc="984c2c8a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="athena" romof="spec128">
+		<description>Athena (128K)</description>
+		<year>1987</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Athena (1987)(Imagine Software).z80" size="108395" crc="f0547094"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -533,6 +578,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="beanbros" romof="spec128">
+		<description>Bean Brothers (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Stonechat Productions</manufacturer>
+		<rom name="Bean Brothers (2018)(Stonechat Productions).tap" size="55722" crc="af989916"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="beyicepa" romof="spec128">
 		<description>Beyond the Ice Palace (128K)</description>
 		<year>1988</year>
@@ -610,6 +664,33 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloodbrothers1" romof="spec128">
+		<description>Blood Brothers (Module 1)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Blood Brothers (Module 1)(1988)(Gremlin Graphics).z80" size="42931" crc="b32fcea7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodbrothers2" romof="spec128">
+		<description>Blood Brothers (Module 2)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Blood Brothers (Module 2)(1988)(Gremlin Graphics).z80" size="42790" crc="3fc07585"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodbrothers3" romof="spec128">
+		<description>Blood Brothers (Module 3)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Blood Brothers (Module 3)(1988)(Gremlin Graphics).z80" size="42935" crc="735098ec"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmxfrees" romof="spec128">
 		<description>BMX Freestyle Simulator (128K)</description>
 		<year>1989</year>
@@ -627,11 +708,20 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="bobbybearing" romof="spec128">
+		<description>Bobby Bearing</description>
+		<year>1986</year>
+		<manufacturer>The Edge</manufacturer>
+		<rom name="Bobby Bearing (1986)(The Edge).tap" size="27778" crc="6b6895d2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="bobbycarrot" romof="spec128">
 		<description>Bobby Carrot (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Diver, Quiet, Kyv, Zorba</manufacturer>
-		<rom name="Bobby Carrot (Diver, Quiet, Kyv, Zorba)(2018).tap" size="34125" crc="af5919ca"/>
+		<rom name="Bobby Carrot (2018)(Diver, Quiet, Kyv, Zorba).tap" size="34125" crc="af5919ca"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -659,6 +749,15 @@
 		<manufacturer>Elite Systems</manufacturer>
 		<rom name="Bomb Jack II (1987)(Elite Systems).z80" size="45490" crc="6327f471"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="bootyremake" romof="spec128">
+		<description>Booty the Remake (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>salvaKantero</manufacturer>
+		<rom name="Booty the Remake (2019)(salvaKantero).tap" size="65706" crc="aeaad13f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="bossthe" romof="spectrum">
@@ -724,6 +823,15 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Bruce Lee (1984)(U.S. Gold).z80" size="36075" crc="8298df22"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="bruceleerx" romof="spec128">
+		<description>Bruce Lee RX (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Bruce Lee RX (2019)(highriser).tap" size="28795" crc="9dd8a157"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="bublbobl" romof="spec128">
@@ -828,6 +936,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="carwars" romof="spec128">
+		<description>Car Wars (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Salva Cantero</manufacturer>
+		<rom name="Car Wars (2017)(Salva Cantero).tap" size="73019" crc="6a59ae25"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="carlossainz" romof="spec128">
 		<description>Carlos Sainz (128K)</description>
 		<year>1990</year>
@@ -845,11 +962,20 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="castleofsorrow" romof="spec128">
+		<description>Castle Of Sorrow (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>ZXMan48k</manufacturer>
+		<rom name="Castle Of Sorrow (2018)(ZXMan48k).tap" size="42259" crc="7750645b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="castlecapers" romof="spec128">
 		<description>CastleCapers (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Gabriele Amore</manufacturer>
-		<rom name="CastleCapers (Gabriele Amore)(2017).tap" size="36751" crc="db772c7c"/>
+		<rom name="CastleCapers (2017)(Gabriele Amore).tap" size="36751" crc="db772c7c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1033,6 +1159,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="cocoatm" romof="spec128">
+		<description>Cocoa and the Time Machine (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Cocoa and the Time Machine (2020)(Minilop).tap" size="46020" crc="bba37879"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="coliseum" romof="spec128">
 		<description>Coliseum (128K)</description>
 		<year>1988</year>
@@ -1101,6 +1236,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="coreycb" romof="spec128">
+		<description>Corey Coolbrew (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Blue Bilby</manufacturer>
+		<rom name="Corey Coolbrew (2020)(Blue Bilby).tap" size="33670" crc="6f1f52e4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="corsarios1" romof="spec128">
 		<description>Corsarios (Part 1 of 2) (128K)</description>
 		<year>1989</year>
@@ -1123,7 +1267,7 @@
 		<description>Cray-5 (HB) [Homebrew]</description>
 		<year>2011</year>
 		<manufacturer>Retroworks</manufacturer>
-		<rom name="Cray-5 (Retroworks)(2011).tap" size="53875" crc="a1467bf5"/>
+		<rom name="Cray-5 (2011)(Retroworks).tap" size="53875" crc="a1467bf5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1311,7 +1455,7 @@
 		<description>Dead Flesh Boy (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>VANB</manufacturer>
-		<rom name="Dead Flesh Boy (VANB)(2015).tap" size="40669" crc="3375d2c9"/>
+		<rom name="Dead Flesh Boy (2015)(VANB).tap" size="40669" crc="3375d2c9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1351,11 +1495,20 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="destinymission" romof="spec128">
+		<description>Destiny Mission</description>
+		<year>1990</year>
+		<manufacturer>Williams Technology</manufacturer>
+		<rom name="Destiny Mission (1990)(Williams Technology).tap" size="42759" crc="71528fa3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="dirtydozer" romof="spec128">
 		<description>Dirty Dozer (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Miguetelo</manufacturer>
-		<rom name="Dirty Dozer (Miguetelo)(2019).tap" size="41391" crc="af06dd37"/>
+		<rom name="Dirty Dozer (2019)(Miguetelo).tap" size="41391" crc="af06dd37"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1636,6 +1789,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="dungeonraiders" romof="spec128">
+		<description>Dungeon Raiders (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Payndz</manufacturer>
+		<rom name="Dungeon Raiders (2018)(Payndz).tap" size="33635" crc="9bfd967b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="dynadan" romof="spectrum">
 		<description>Dynamite Dan (48K)</description>
 		<year>1985</year>
@@ -1674,7 +1836,7 @@
 		<description>ElStompo (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Stonechat Productions</manufacturer>
-		<rom name="ElStompo (Stonechat Productions)(2014).tap" size="44449" crc="b2370ea9"/>
+		<rom name="ElStompo (2014)(Stonechat Productions).tap" size="44449" crc="b2370ea9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1849,7 +2011,7 @@
 		<description>Flype (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Repixel8</manufacturer>
-		<rom name="Flype (Repixel8)(2015).tap" size="41719" crc="2b9a90f2"/>
+		<rom name="Flype (2015)(Repixel8).tap" size="41719" crc="2b9a90f2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1986,6 +2148,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="frostbyte" romof="spec128">
+		<description>Frost Byte</description>
+		<year>1986</year>
+		<manufacturer>Mikro-Gen</manufacturer>
+		<rom name="Frost Byte (1986)(Mikro-Gen).tap" size="49465" crc="895fc6d8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="gloc" romof="spec128">
 		<description>G-LOC (128K)</description>
 		<year>1992</year>
@@ -2016,7 +2187,7 @@
 		<description>Gandalf Deluxe (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Speccy Nights</manufacturer>
-		<rom name="Gandalf Deluxe (Speccy Nights)(2018).tap" size="95019" crc="1f7f26c8"/>
+		<rom name="Gandalf Deluxe (2018)(Speccy Nights).tap" size="95019" crc="1f7f26c8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2044,6 +2215,15 @@
 		<manufacturer>Gremlin Graphics Software</manufacturer>
 		<rom name="Gary Lineker's Super Star Soccer (1987)(Gremlin Graphics Software).z80" size="40004" crc="700248d9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="gauntlet3" romof="spec128">
+		<description>Gauntlet III - The Final Quest</description>
+		<year>1991</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Gauntlet III - The Final Quest (1991)(U.S. Gold).tap" size="344602" crc="8c5a72ce"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="ghostb" romof="spec128">
@@ -2210,6 +2390,14 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="hadesnebula" romof="spectrum">
+		<description>Hades Nebula</description>
+		<year>1987</year>
+		<manufacturer>Nexus Productions</manufacturer>
+		<rom name="Hades Nebula (1987)(Nexus Productions).tap" size="43264" crc="beac467c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
 	<game name="hammerboy1" romof="spec128">
 		<description>Hammer Boy (Part 1 of 2) (128K)</description>
 		<year>1991</year>
@@ -2274,7 +2462,7 @@
 		<description>Herbert the Turbot (HB) [Homebrew]</description>
 		<year>2010</year>
 		<manufacturer>Bob Smith</manufacturer>
-		<rom name="Herbert the Turbot (Bob Smith)(2010).z80" size="81123" crc="0a9c0799"/>
+		<rom name="Herbert the Turbot (2010)(Bob Smith).z80" size="81123" crc="0a9c0799"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2316,7 +2504,7 @@
 		<description>Horace and the Robots (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Steve Snake</manufacturer>
-		<rom name="Horace and the Robots (Steve Snake)(2017).tap" size="25517" crc="05fd13e2"/>
+		<rom name="Horace and the Robots (2017)(Steve Snake).tap" size="25517" crc="05fd13e2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2389,6 +2577,24 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="hydrofool" romof="spec128">
+		<description>Hydrofool</description>
+		<year>1987</year>
+		<manufacturer>Faster Than Light</manufacturer>
+		<rom name="Hydrofool (1987)(Faster Than Light).tap" size="45889" crc="82e3db69"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="hyperkill" romof="spec128">
+		<description>Hyperkill (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Mat Recardo</manufacturer>
+		<rom name="Hyperkill (2017)(Mat Recardo).tap" size="42502" crc="382ad799"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="iball_128" romof="spec128">
 		<description>I, Ball (128k)</description>
 		<year>1987</year>
@@ -2416,6 +2622,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="impossabubble" romof="spec128">
+		<description>Impossabubble (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Dave Clarke</manufacturer>
+		<rom name="Impossabubble (2018)(Dave Clarke).tap" size="46080" crc="7cd3626a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="impossamole" romof="spec128">
 		<description>Impossamole</description>
 		<year>1990</year>
@@ -2439,6 +2654,15 @@
 		<manufacturer>Rucksack Games</manufacturer>
 		<rom name="Incredible Shrinking Professor, the (2017)(Rucksack Games).tap" size="44116" crc="03e3de19"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="incshrinksphere" romof="spec128">
+		<description>Incredible Shrinking Sphere</description>
+		<year>1989</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Incredible Shrinking Sphere (1989)(Electric Dreams).tap" size="42625" crc="f89b035d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="indyfateatlantis" romof="spec128">
@@ -2577,11 +2801,20 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="jetpackjock" romof="spec128">
+		<description>Jetpack Jock (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Gaz Marshall</manufacturer>
+		<rom name="Jetpack Jock (2020)(Gaz Marshall).tap" size="24820" crc="028217db"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="jetpacrx" cloneof="jetpac" romof="jetpac">
 		<description>JetpacRX (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>highriser</manufacturer>
-		<rom name="JetpacRX (highriser)(2020).tap" size="22814" crc="2f0a86ff"/>
+		<rom name="JetpacRX (2020)(highriser).tap" size="22814" crc="2f0a86ff"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -2704,6 +2937,24 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="kongsrevenge1" romof="spec128">
+		<description>Kong's Revenge (Part 1)</description>
+		<year>1991</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Kong's Revenge (Part 1)(1991)(Zigurat Software).tap" size="56868" crc="20a7e7ce"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="kongsrevenge2" romof="spec128">
+		<description>Kong's Revenge (Part 2)</description>
+		<year>1991</year>
+		<manufacturer>Zigurat Software</manufacturer>
+		<rom name="Kong's Revenge (Part 2)(1991)(Zigurat Software).tap" size="56868" crc="df77b41f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="kraal" romof="spectrum">
 		<description>Kraal (48K) [Use Keyboard]</description>
 		<year>1990</year>
@@ -2741,7 +2992,7 @@
 		<description>La Reliquia (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Angel Colaso</manufacturer>
-		<rom name="La Reliquia (Angel Colaso)(2020).tap" size="46629" crc="183c5158"/>
+		<rom name="La Reliquia (2020)(Angel Colaso).tap" size="46629" crc="183c5158"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3023,7 +3274,7 @@
 		<description>Metal Man (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Oleg Origin</manufacturer>
-		<rom name="Metal Man (Oleg Origin)(2014).tap" size="48298" crc="ef74d54b"/>
+		<rom name="Metal Man (2014)(Oleg Origin).tap" size="48298" crc="ef74d54b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3066,7 +3317,7 @@
 		<description>Mighty Final Fight (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>SaNchez</manufacturer>
-		<rom name="Mighty Final Fight (SaNchez)(2018).tap" size="302096" crc="1697a6ed"/>
+		<rom name="Mighty Final Fight (2018)(SaNchez).tap" size="302096" crc="1697a6ed"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3076,6 +3327,15 @@
 		<year>1985</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Mikie (1985)(Imagine Software).tap" size="48249" crc="45203b87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrkungfu" romof="spec128">
+		<description>Mister Kung-Fu (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Uprising</manufacturer>
+		<rom name="Mister Kung-Fu (2018)(Uprising).tap" size="49193" crc="5ed14eb8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3178,6 +3438,15 @@
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Mot (1989)(Opera Soft)(Part 3 of 3)(128k).z80" size="38487" crc="dcf09507"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrdo" romof="spec128">
+		<description>Mr. Do! (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Adrian Singh</manufacturer>
+		<rom name="Mr. Do! (2019)(Adrian Singh).tap" size="59653" crc="e3983c0e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3330,11 +3599,20 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="nbreed" romof="spec128">
+		<description>Night Breed</description>
+		<year>1990</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Night Breed (1990)(Ocean).tap" size="188653" crc="5701dcaf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjagaiden" romof="spec128">
 		<description>Ninja Gaiden Shadow Warriors (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Jerri, DaRkHoRaCe, Diver</manufacturer>
-		<rom name="Ninja Gaiden Shadow Warriors (Jerri, DaRkHoRaCe, Diver)(2018).tap" size="103645" crc="44081e87"/>
+		<rom name="Ninja Gaiden Shadow Warriors (2018)(Jerri, DaRkHoRaCe, Diver).tap" size="103645" crc="44081e87"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3366,11 +3644,38 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="nodesofyesod" romof="spec128">
+		<description>Nodes of Yesod</description>
+		<year>1985</year>
+		<manufacturer>Odin Computer Graphics</manufacturer>
+		<rom name="Nodes of Yesod (1985)(Odin Computer Graphics).tap" size="76905" crc="1c251259"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="northnsouth" romof="spec128">
 		<description>North &amp; South (128K)</description>
 		<year>1991</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="North &amp; South (1991)(Infogrames)(128k).z80" size="114539" crc="8ca87f0d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="northstar" romof="spec128">
+		<description>North Star</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="North Star (1988)(Gremlin Graphics).tap" size="49369" crc="61d487db"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="octuKtty" romof="spec128">
+		<description>OctuKtty (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>UltraNarwhal</manufacturer>
+		<rom name="OctuKtty (2018)(UltraNarwhal).tap" size="43800" crc="28b574a6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3412,7 +3717,7 @@
 		<description>Ooze (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Bubblesoft</manufacturer>
-		<rom name="Ooze (Bubblesoft)(2017).tap" size="49790" crc="188d3e4e"/>
+		<rom name="Ooze (2017)(Bubblesoft).tap" size="49790" crc="188d3e4e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3557,7 +3862,7 @@
 		<description>Parachute (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Miguetelo</manufacturer>
-		<rom name="Parachute (Miguetelo)(2018).tap" size="40791" crc="d23bd0ec"/>
+		<rom name="Parachute (2018)(Miguetelo).tap" size="40791" crc="d23bd0ec"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3575,7 +3880,7 @@
 		<description>Parsec (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Martin Mangan</manufacturer>
-		<rom name="Parsec (Martin Mangan)(2020).tap" size="40874" crc="a61d638d"/>
+		<rom name="Parsec (2020)(Martin Mangan).tap" size="40874" crc="a61d638d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3602,6 +3907,15 @@
 		<year>1989</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Perico Delgado Maillot Amarillo (1989)(Topo Soft)(es).tap" size="149887" crc="284b616d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="perilsofwilly" romof="spec128">
+		<description>Perils of Willy (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Perils of Willy (2020)(highriser).tap" size="26968" crc="19e22f49"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3725,6 +4039,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="pooperscooper" romof="spec128">
+		<description>Pooper Scooper (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>The Death Squad</manufacturer>
+		<rom name="Pooper Scooper (2018)(The Death Squad).tap" size="43438" crc="7bfc504c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="pdrift" romof="spec128">
 		<description>Power Drift (128K)</description>
 		<year>1989</year>
@@ -3739,6 +4062,32 @@
 		<year>1990</year>
 		<manufacturer>MicroProse Software</manufacturer>
 		<rom name="Project Stealth Fighter (1990)(MicroProse Software).tap" size="179689" crc="f0b7dc66"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="psychohopper" romof="spectrum">
+		<description>Psycho Hopper</description>
+		<year>1990</year>
+		<manufacturer>Mastertronic Plus</manufacturer>
+		<rom name="Psycho Hopper (1990)(Mastertronic Plus).tap" size="50178" crc="beda1169"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="psychopigs" romof="spec128">
+		<description>Psycho Pigs U.X.B.</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Psycho Pigs U.X.B. (1988)(U.S. Gold).tap" size="50190" crc="3632f18a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="putamili" romof="spec128">
+		<description>Puta Mili (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>ejvg</manufacturer>
+		<rom name="Puta Mili (2020)(ejvg).tap" size="39535" crc="04778248"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3857,7 +4206,7 @@
 		<description>Rat-A-Tat (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>JoeSoft</manufacturer>
-		<rom name="Rat-A-Tat (2020)(Joesoft).z80" size="48861" crc="39227a8c"/>
+		<rom name="Rat-A-Tat (2020)(JoeSoft).tap" size="43232" crc="2d675b93"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3866,7 +4215,7 @@
 		<description>Redshift (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Ariel Ruiz</manufacturer>
-		<rom name="Redshift (Ariel Ruiz)(2019).tap" size="79855" crc="2198fb31"/>
+		<rom name="Redshift (2019)(Ariel Ruiz).tap" size="79855" crc="2198fb31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3924,11 +4273,29 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="rescategolfo1" romof="spec128">
+		<description>Rescate en el Golfo (Part 1 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 1 of 2).z80" size="34779" crc="d7add860"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="rescategolfo2" romof="spec128">
+		<description>Rescate en el Golfo (Part 2 of 2)</description>
+		<year>1990</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Rescate en el Golfo (1990)(Opera Soft)(Part 2 of 2).z80" size="37620" crc="370d2085"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="restlessandre" romof="spec128">
 		<description>Restless Andre (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Jaime Grilo</manufacturer>
-		<rom name="Restless Andre (Jaime Grilo)(2019).tap" size="48113" crc="0db7023a"/>
+		<rom name="Restless Andre (2019)(Jaime Grilo).tap" size="48113" crc="0db7023a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4093,7 +4460,7 @@
 		<description>Rygar 2020 (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Ralf</manufacturer>
-		<rom name="Rygar 2020 (Ralf)(2020).tap" size="35648" crc="c0af87aa"/>
+		<rom name="Rygar 2020 (2020)(Ralf).tap" size="35648" crc="c0af87aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4294,6 +4661,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="silentshadow" romof="spec128">
+		<description>Silent Shadow</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Silent Shadow (1988)(Topo Soft).tap" size="146162" crc="a6fb7413"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="silkworm" romof="spec128">
 		<description>Silkworm (128K)</description>
 		<year>1989</year>
@@ -4434,6 +4810,14 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="snoopy" romof="spectrum">
+		<description>Snoopy</description>
+		<year>1990</year>
+		<manufacturer>The Edge</manufacturer>
+		<rom name="Snoopy (1990)(The Edge).tap" size="40149" crc="a24e7539"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
 	<game name="solnegro1" romof="spec128">
 		<description>Sol Negro (Spanish) (Part 1 of 2) (128K)</description>
 		<year>1989</year>
@@ -4466,6 +4850,24 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Solomon's Key (1987)(U.S. Gold).z80" size="38408" crc="e9a42bde"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="sophia" romof="spec128">
+		<description>Sophia (HB)</description>
+		<year>2017</year>
+		<manufacturer>Alessandro Grussu</manufacturer>
+		<rom name="Sophia (2017)(Alessandro Grussu).tap" size="86193" crc="3681c3a0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="sophia2" romof="spec128">
+		<description>Sophia II (HB)</description>
+		<year>2019</year>
+		<manufacturer>Alessandro Grussu</manufacturer>
+		<rom name="Sophia II (2019)(Alessandro Grussu).tap" size="78009" crc="ea86b2a1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="sovietpart1" romof="spec128">
@@ -4506,7 +4908,7 @@
 		<description>Space Junk (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Miguetelo</manufacturer>
-		<rom name="Space Junk (Miguetelo)(2017).tap" size="42761" crc="aa8930bf"/>
+		<rom name="Space Junk (2017)(Miguetelo).tap" size="42761" crc="aa8930bf"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4564,7 +4966,7 @@
 		<description>Squares (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Kas29</manufacturer>
-		<rom name="Squares (Kas29)(2017).tap" size="16053" crc="1b924ae6"/>
+		<rom name="Squares (2017)(Kas29).tap" size="16053" crc="1b924ae6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4574,6 +4976,15 @@
 		<year>1990</year>
 		<manufacturer>Storm Software</manufacturer>
 		<rom name="St. Dragon (1990)(Storm Software).tap" size="188760" crc="6bb077c8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="stainlesssteel" romof="spec128">
+		<description>Stainless Steel</description>
+		<year>1986</year>
+		<manufacturer>Mikro-Gen</manufacturer>
+		<rom name="Stainless Steel (1986)(Mikro-Gen).tap" size="44663" crc="c01c4113"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4624,7 +5035,7 @@
 		<description>Stormfinch (HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Stonechat</manufacturer>
-		<rom name="Stormfinch (Stonechat)(2015).tap" size="47695" crc="cc53ba30"/>
+		<rom name="Stormfinch (2015)(Stonechat).tap" size="47695" crc="cc53ba30"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4840,7 +5251,16 @@
 		<description>Sword Of Ilana (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>RetroWorks</manufacturer>
-		<rom name="Sword Of Ilana (RetroWorks)(2017).tap" size="212617" crc="448410cc"/>
+		<rom name="Sword Of Ilana (2017)(RetroWorks).tap" size="212617" crc="448410cc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="taichitortoise" romof="spec128">
+		<description>Tai Chi Tortoise</description>
+		<year>1991</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Tai Chi Tortoise (1991)(Zeppelin Games).tap" size="29553" crc="5a60396a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4899,7 +5319,7 @@
 		<description>Terrahawks (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Gary James</manufacturer>
-		<rom name="Terrahawks (Gary James)(2014).tap" size="24138" crc="d6f05303"/>
+		<rom name="Terrahawks (2014)(Gary James).tap" size="24138" crc="d6f05303"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4935,6 +5355,24 @@
 		<year>1990</year>
 		<manufacturer>Fuxoft</manufacturer>
 		<rom name="Tetris 2 (1990)(Fuxoft).tap" size="24510" crc="eb9220fd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="cursetrasmoz" romof="spec128">
+		<description>The Curse of Trasmoz (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>VolcanoBytes</manufacturer>
+		<rom name="The Curse of Trasmoz (2020)(VolcanoBytes).tap" size="48706" crc="8649a0b2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="eggsterminator" romof="spec128">
+		<description>The Eggsterminator (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>The Death Squad</manufacturer>
+		<rom name="The Eggsterminator (2018)(The Death Squad).tap" size="48022" crc="6960fff0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5044,6 +5482,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="towdieen" romof="spec128">
+		<description>Towdie (English)</description>
+		<year>1994</year>
+		<manufacturer>Ultrasoft</manufacturer>
+		<rom name="Towdie (English)(1994)(Ultrasoft).tap" size="55179" crc="20bd2e70"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="tracfiel" romof="spectrum">
 		<description>Track and Field (48K)</description>
 		<year>1988</year>
@@ -5104,6 +5551,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="typhoon" romof="spec128">
+		<description>Typhoon</description>
+		<year>1988</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Typhoon (1988)(Imagine Software).tap" size="130475" crc="1ab3aa4a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="underwur" romof="spectrum">
 		<description>Underwurlde (48K)</description>
 		<year>1984</year>
@@ -5134,6 +5590,15 @@
 		<year>2009</year>
 		<manufacturer>Mojon Twins</manufacturer>
 		<rom name="Uwol (2010)(Mojon Twins).tap" size="50254" crc="4fee82ec"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="vallation" romof="spec128">
+		<description>Vallation (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Psytronik</manufacturer>
+		<rom name="Vallation (2017)(Psytronik).tap" size="68513" crc="a30a4662"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5281,7 +5746,7 @@
 		<description>Willy The Wasp (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>The Death Squad</manufacturer>
-		<rom name="Willy The Wasp (The Death Squad)(2014).tap" size="41193" crc="030e8442"/>
+		<rom name="Willy The Wasp (2014)(The Death Squad).tap" size="41193" crc="030e8442"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5290,7 +5755,7 @@
 		<description>Willy The Wasp 2 (HB) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>The Death Squad</manufacturer>
-		<rom name="Willy The Wasp 2 (The Death Squad)(2014).tap" size="64604" crc="3e8b70fb"/>
+		<rom name="Willy The Wasp 2 (2014)(The Death Squad).tap" size="64604" crc="3e8b70fb"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

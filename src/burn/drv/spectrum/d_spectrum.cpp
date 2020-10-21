@@ -12696,7 +12696,7 @@ struct BurnDriver BurnSpecGuerrillawar = {
 // Predator
 
 static struct BurnRomInfo SpecPredatorRomDesc[] = {
-	{ "Predator (1987)(Activision).tap", 197504, 0x1060bf74, BRF_ESS | BRF_PRG },
+	{ "Predator (1987)(Activision).tap", 147030, 0xe6ffa821, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPredator, SpecPredator, Spec128)

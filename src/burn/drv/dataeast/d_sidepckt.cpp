@@ -215,14 +215,17 @@ static struct BurnDIPInfo DrvbDIPList[]=
 };
 
 STDDIPINFO(Drvb)
- /* DE-0245-2 */
+
+// Side Pocket (World)
+/* DE-0245-2 */
  
 static struct BurnRomInfo DrvRomDesc[] = {
 	{ "dh00-e.3c",     0x10000, 0x251b316e, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
 	
 	{ "dh04.3h",       0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
-	
-	{ "dh.6d",     	   0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 microcontroller
+
+	// i8751 MCU (BAD_DUMP because it was created from the Japanese version)	
+	{ "dh-e.6d",       0x01000, 0x00654574, BRF_OPT }, 				//  2	I8751 microcontroller
 	
 	{ "dh07-e.13k",    0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
 	{ "dh06-e.13j",    0x08000, 0x580e4e43, BRF_GRA },	     		//  4
@@ -239,12 +242,16 @@ static struct BurnRomInfo DrvRomDesc[] = {
 STD_ROM_PICK(Drv)
 STD_ROM_FN(Drv)
 
+
+// Side Pocket (Japan, Cocktail)
+/* DE-0245-1 */
+
 static struct BurnRomInfo DrvjRomDesc[] = {
-	{ "dh00.3c",       0x10000, 0xa66bc28d, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
+	{ "dh00-1.3c",     0x10000, 0xa66bc28d, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
 	
-	{ "dh04.3h",       0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
+	{ "dh04_6-19.3h",  0x08000, 0x053ff83a, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
 	
-	{ "dh.6d",         0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 MCU
+	{ "dh.6d",         0x01000, 0xf7e099b6, BRF_OPT }, 				//  2	I8751 MCU
 	
 	{ "dh07.13k",      0x08000, 0x7d0ce858, BRF_GRA },	    		//  3	Chars
 	{ "dh06.13j",      0x08000, 0xb86ddf72, BRF_GRA },	     		//  4
@@ -260,6 +267,9 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 
 STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
+
+
+// Side Pocket (bootleg, set 1)
 
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "sp_09.bin",     0x04000, 0x3c6fe54b, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
@@ -281,6 +291,9 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 
 STD_ROM_PICK(Drvb)
 STD_ROM_FN(Drvb)
+
+
+// Side Pocket (bootleg, set 2)
 
 static struct BurnRomInfo Drvb2RomDesc[] = {
 	{ "b-9.2a",        0x04000, 0x40fd0d85, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
@@ -940,7 +953,7 @@ struct BurnDriver BurnDrvSidepckt = {
 
 struct BurnDriver BurnDrvSidepcktj = {
 	"sidepcktj", "sidepckt", NULL, NULL, "1986",
-	"Side Pocket (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Side Pocket (Japan, Cocktail)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvjDIPInfo,
@@ -950,7 +963,7 @@ struct BurnDriver BurnDrvSidepcktj = {
 
 struct BurnDriver BurnDrvSidepcktb = {
 	"sidepcktb", "sidepckt", NULL, NULL, "1986",
-	"Side Pocket (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Side Pocket (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvbDIPInfo,
@@ -960,7 +973,7 @@ struct BurnDriver BurnDrvSidepcktb = {
 
 struct BurnDriver BurnDrvSidepcktb2 = {
 	"sidepcktb2", "sidepckt", NULL, NULL, "1986",
-	"Side Pocket (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Side Pocket (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -2194,6 +2194,8 @@ static struct BurnRomInfo bangRomDesc[] = {
 	{ "bang5.ic5",		0x80000, 0x9bee444c, 2 | BRF_GRA },           // 13
 	{ "bang21.ic21",	0x80000, 0xfd93d7f2, 2 | BRF_GRA },           // 14
 	{ "bang14.ic14",	0x80000, 0x858fcbf9, 2 | BRF_GRA },           // 15
+	
+	{ "bang_gal16v8.ic56", 0x00117, 0x226923ac, 3 | BRF_OPT },		  // 16 plds
 };
 
 STD_ROM_PICK(bang)
@@ -2241,6 +2243,8 @@ static struct BurnRomInfo bangjRomDesc[] = {
 	{ "bang5.ic5",		0x80000, 0x9bee444c, 2 | BRF_GRA },           // 13
 	{ "bang-a.ic21",	0x80000, 0x531ce3b6, 2 | BRF_GRA },           // 14
 	{ "bang-a.ic14",	0x80000, 0xf8e1cf84, 2 | BRF_GRA },           // 15
+	
+	{ "bang_gal16v8.ic56", 0x00117, 0x226923ac, 3 | BRF_OPT },		  // 16 plds
 };
 
 STD_ROM_PICK(bangj)

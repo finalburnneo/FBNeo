@@ -12199,22 +12199,60 @@ struct BurnDriver BurnSpecnodesofyesod = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Blood Brothers
+// Blood Brothers (Module 1)
 
-static struct BurnRomInfo SpecbloodbrothersRomDesc[] = {
-	{ "Blood Brothers (1988)(Gremlin Graphics).tap", 79244, 0x8b657e93, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Specbloodbrothers1RomDesc[] = {
+	{ "Blood Brothers (Module 1)(1988)(Gremlin Graphics).z80", 42931, 0xb32fcea7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbloodbrothers, Specbloodbrothers, Spec128)
-STD_ROM_FN(Specbloodbrothers)
+STDROMPICKEXT(Specbloodbrothers1, Specbloodbrothers1, Spec128)
+STD_ROM_FN(Specbloodbrothers1)
 
-struct BurnDriver BurnSpecbloodbrothers = {
-	"spec_bloodbrothers", NULL, "spec_spec128", NULL, "1988",
-	"Blood Brothers\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+struct BurnDriver BurnSpecbloodbrothers1 = {
+	"spec_bloodbrothers1", NULL, "spec_spec128", NULL, "1988",
+	"Blood Brothers (Module 1)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecbloodbrothersRomInfo, SpecbloodbrothersRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpectrumGetZipName, Specbloodbrothers1RomInfo, Specbloodbrothers1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Blood Brothers (Module 2)
+
+static struct BurnRomInfo Specbloodbrothers2RomDesc[] = {
+	{ "Blood Brothers (Module 2)(1988)(Gremlin Graphics).z80", 42790, 0x3fc07585, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specbloodbrothers2, Specbloodbrothers2, Spec128)
+STD_ROM_FN(Specbloodbrothers2)
+
+struct BurnDriver BurnSpecbloodbrothers2 = {
+	"spec_bloodbrothers2", NULL, "spec_spec128", NULL, "1988",
+	"Blood Brothers (Module 2)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specbloodbrothers2RomInfo, Specbloodbrothers2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Blood Brothers (Module 3)
+
+static struct BurnRomInfo Specbloodbrothers3RomDesc[] = {
+	{ "Blood Brothers (Module 3)(1988)(Gremlin Graphics).z80", 42935, 0x735098ec, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specbloodbrothers3, Specbloodbrothers3, Spec128)
+STD_ROM_FN(Specbloodbrothers3)
+
+struct BurnDriver BurnSpecbloodbrothers3 = {
+	"spec_bloodbrothers3", NULL, "spec_spec128", NULL, "1988",
+	"Blood Brothers (Module 3)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, Specbloodbrothers3RomInfo, Specbloodbrothers3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

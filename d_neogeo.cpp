@@ -20250,8 +20250,8 @@ static struct BurnRomInfo samshobhRomDesc[] = {
 	{ "045-v2.v2",    0x200000, 0x568b20cf, 5 | BRF_SND },           // 11 					/ TC5316200
 };
 
-STDROMPICKEXT(samsho, samsho, neogeo)
-STD_ROM_FN(samsho)
+STDROMPICKEXT(samshobh, samshobh, neogeo)
+STD_ROM_FN(samshobh)
 
 struct BurnDriver BurnDrvSamshobh = {
 	"samshobh", NULL, "neogeo", NULL, "1993",
@@ -20381,7 +20381,7 @@ static struct BurnRomInfo kof95bhRomDesc[] = {
 STDROMPICKEXT(kof95bh, kof95bh, neogeo)
 STD_ROM_FN(kof95bh)
 
-struct BurnDriver BurnDrvKof95 = {
+struct BurnDriver BurnDrvKof95bh = {
 	"kof95bh", NULL, "neogeo", NULL, "1995",
 	"The King of Fighters '95 (Boss Hack)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
@@ -20420,7 +20420,7 @@ static struct BurnRomInfo matrimbhRomDesc[] = {
 STDROMPICKEXT(matrimbh, matrimbh, neogeo)
 STD_ROM_FN(matrimbh)
 
-struct BurnDriver BurnDrvmatrim = {
+struct BurnDriver BurnDrvmatrimbh = {
 	"matrimbh", NULL, "neogeo", NULL, "2002",
 	"Matrimelee / Shin Gouketsuji Ichizoku Toukon (Boss Hack)\0", NULL, "Noise Factory / Atlus", "Neo Geo MVS",
 	L"\u65B0\u8C6A\u8840\u5BFA\u4E00\u65CF - \u95D8\u5A5A\0Matrimelee (Boss Hack)\0", NULL, NULL, NULL,

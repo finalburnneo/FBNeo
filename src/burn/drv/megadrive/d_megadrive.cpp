@@ -8108,6 +8108,25 @@ struct BurnDriver BurnDrvmd_comixup = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Comix Zone (Hack, Italian)
+//Translation project: https://romhacking.it/project/view/id/49
+static struct BurnRomInfo md_comixiRomDesc[] = {
+	{ "comix zone (italian translation).bin", 0x200000, 0xf2bba578, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_comixi)
+STD_ROM_FN(md_comixi)
+
+struct BurnDriver BurnDrvmd_comixi = {
+	"md_comixi", "md_comix", NULL, NULL, "2002",
+	"Comix Zone (Hack, Italian)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_comixiRomInfo, md_comixiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Congo (Prototype)
 static struct BurnRomInfo md_congoRomDesc[] = {
 	{ "congo (unknown) (prototype).bin", 0x0f7d36, 0x13746716, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

@@ -993,7 +993,7 @@ Z80_INLINE UINT16 ARG16(void)
 // zx spectrum tapeload bios callback for opcode 0xc0 (ret nz) -dink sept.29 2020
 static inline void RET_COND_SPECTRUM(int cond, UINT8 opcode)
 {
-	if (Z80.spectrum_mode && (PRVPC == 0x056b || PRVPC == 0x0111))
+	if (Z80.spectrum_mode && PRVPC == 0x056b /* LD-BYTES Hook */)
 	{
 		cond = Z80.spectrum_tape_cb();
 	}
@@ -4036,9 +4036,22 @@ void Z80SetCPUOpArgReadHandler(Z80ReadOpArgHandler handler)
 	Z80CPUReadOpArg = handler;
 }
 
+void ActiveZ80EXAF()
+{
+	EX_AF;
+}
+
 int ActiveZ80GetPC()
 {
 	return Z80.pc.w.l;
+}
+
+int ActiveZ80GetPOP()
+{
+	Z80_PAIR addr;
+	RM16( SPD, &addr );
+	SP += 2;
+	return addr.w.l;
 }
 
 void ActiveZ80SetPC(int pc)
@@ -4060,6 +4073,36 @@ int ActiveZ80GetCarry()
 	return F & CF;
 }
 
+int ActiveZ80GetA()
+{
+	return A;
+}
+
+void ActiveZ80SetA(int a)
+{
+	A = a;
+}
+
+int ActiveZ80GetF()
+{
+	return F;
+}
+
+void ActiveZ80SetF(int f)
+{
+	F = f;
+}
+
+int ActiveZ80GetIFF1()
+{
+	return IFF1;
+}
+
+int ActiveZ80GetIFF2()
+{
+	return IFF2;
+}
+
 int ActiveZ80GetCarry2()
 {
 	return Z80.af2.b.l & CF;
@@ -4075,6 +4118,11 @@ int ActiveZ80GetAF2()
 	return Z80.af2.w.l;
 }
 
+void ActiveZ80SetAF2(int af2)
+{
+	Z80.af2.w.l = af2;
+}
+
 int ActiveZ80GetBC()
 {
 	return Z80.bc.w.l;
@@ -4085,9 +4133,19 @@ int ActiveZ80GetDE()
 	return Z80.de.w.l;
 }
 
+void ActiveZ80SetDE(int de)
+{
+	Z80.de.w.l = de;
+}
+
 int ActiveZ80GetHL()
 {
 	return Z80.hl.w.l;
+}
+
+void ActiveZ80SetHL(int hl)
+{
+	Z80.hl.w.l = hl;
 }
 
 int ActiveZ80GetI()
@@ -4100,6 +4158,11 @@ int ActiveZ80GetIX()
 	return IX;
 }
 
+void ActiveZ80SetIX(int ix)
+{
+	IX = ix;
+}
+
 int ActiveZ80GetIM()
 {
 	return Z80.im;
@@ -4108,6 +4171,11 @@ int ActiveZ80GetIM()
 int ActiveZ80GetSP()
 {
 	return Z80.sp.w.l;
+}
+
+void ActiveZ80SetSP(int sp)
+{
+	Z80.sp.w.l = sp;
 }
 
 int ActiveZ80GetPrevPC()

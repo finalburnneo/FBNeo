@@ -20084,45 +20084,6 @@ struct BurnDriver BurnDrvFatfury3bh = {
 	0x1000, 320, 224, 4, 3
 };
 
-/ Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (Boss Hack)
-/* MVS AND AES VERSION */
-
-static struct BurnRomInfo fatfury2bhRomDesc[] = {
-	{ "047-p1bh.p1",    0x100000, 0xA94A8FA5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
-	/* The original p1 is 8mbit; also found MVS set with p1 / p2 4mbit on eprom 
-	on PROG board NEO-MVS PROG-G2 (SNK-9201)
-	{ "047-epr.ep1",  0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
-	{ "047-epr.ep2",  0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
-	/* also found AES set with P1 / P3 on emprom on PROG board NEO-AEG PROG-G2 (SNK-9201); 
-	{ "047-epr.p1",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC574200
-	{ "047-epr.p3",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
-	
-	{ "047-s1.s1",    0x020000, 0xd7dbbf39, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
-
-	{ "047-c1.c1",    0x200000, 0xf72a939e, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
-	{ "047-c2.c2",    0x200000, 0x05119a0d, 3 | BRF_GRA },           //  4 					/ TC5316200
-	{ "047-c3.c3",    0x200000, 0x01e00738, 3 | BRF_GRA },           //  5 					/ TC5316200
-	{ "047-c4.c4",    0x200000, 0x9fe27432, 3 | BRF_GRA },           //  6 					/ TC5316200
-
-	{ "047-m1.m1",    0x020000, 0x820b0ba7, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code 		/ TC531001
-
-	{ "047-v1.v1",    0x200000, 0xd9d00784, 5 | BRF_SND },           //  8 Sound data 		/ TC5316200
-	{ "047-v2.v2",    0x200000, 0x2c9a4b33, 5 | BRF_SND },           //  9 					/ TC5316200
-};
-
-STDROMPICKEXT(fatfury2bh, fatfury2bh, neogeo)
-STD_ROM_FN(fatfury2bh)
-
-struct BurnDriver BurnDrvFatfury2bh = {
-	"fatfury2bh", NULL, "neogeo", NULL, "1992",
-	"Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (Boss Hack)\0", NULL, "SNK", "Neo Geo MVS",
-	L"Fatal Fury 2\0\u9913\u72FC\u4F1D\u8AAC\uFF12 - \u65B0\u305F\u306A\u308B\u95D8 (Boss Hack)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, FBF_FATFURY,
-	NULL, fatfury2bhRomInfo, fatfury2bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	fatfury2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 320, 224, 4, 3
-};
-
 
 // Art of Fighting 2 / Ryuuko no Ken 2 (Boss Hack)
 /* MVS VERSION */

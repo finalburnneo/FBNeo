@@ -163,7 +163,7 @@ static const struct retro_core_option_definition var_fbneo_hiscores = {
 static const struct retro_core_option_definition var_fbneo_allow_patched_romsets = {
 	"fbneo-allow-patched-romsets",
 	"Allow patched romsets",
-	"Allow romsets from your system/fbneo/patched/ folder to override your romsets, crcs will be ignored but sizes and names must still match",
+	"Allow romsets from your system/fbneo/patched/ folder to override your romsets, crcs will be ignored but sizes and names must still match, you need to close content for this setting to take effect",
 	{
 		{ "disabled", NULL },
 		{ "enabled", NULL },

@@ -141,13 +141,14 @@ static struct BurnInputInfo SpecInputList[] =
 	{"CAPS LOCK"			, BIT_DIGITAL  , SpecInputPort11 + 1, "keyb_caps_lock"   },
 	{"TRUE VID"				, BIT_DIGITAL  , SpecInputPort11 + 2, "keyb_home"        },
 	{"INV VID"				, BIT_DIGITAL  , SpecInputPort11 + 3, "keyb_end"         },
-	{"Cursor Left"			, BIT_DIGITAL  , SpecInputPort11 + 4, "keyb_left"        },
 
 	{"DEL"					, BIT_DIGITAL  , SpecInputPort12 + 0, "keyb_backspace"   },
 	{"GRAPH"				, BIT_DIGITAL  , SpecInputPort12 + 1, "keyb_left_alt"    },
-	{"Cursor Right"			, BIT_DIGITAL  , SpecInputPort12 + 2, "keyb_right"       },
-	{"Cursor Up"			, BIT_DIGITAL  , SpecInputPort12 + 3, "keyb_up"          },
-	{"Cursor Down"			, BIT_DIGITAL  , SpecInputPort12 + 4, "keyb_down"        },
+
+	{"Cursor Up"			, BIT_DIGITAL  , SpecInputPort12 + 3, "keyb_cursor_up"   }, // don't auto-map these cursors by default
+	{"Cursor Down"			, BIT_DIGITAL  , SpecInputPort12 + 4, "keyb_cursor_down" }, // causes trouble w/games when using cursors
+	{"Cursor Left"			, BIT_DIGITAL  , SpecInputPort11 + 4, "keyb_cursor_left" }, // as joystick! (yie ar kungfu, ...)
+	{"Cursor Right"			, BIT_DIGITAL  , SpecInputPort12 + 2, "keyb_cursor_right"},
 
 	{"BREAK"				, BIT_DIGITAL  , SpecInputPort13 + 0, "keyb_pause"       },
 	{"EXT MODE"				, BIT_DIGITAL  , SpecInputPort13 + 1, "keyb_left_ctrl"   },
@@ -239,7 +240,7 @@ static void TAPAutoLoadRobot()
 }
 // End TAP Robot
 
-// (Pasted biquad filter from k054539.cpp)
+// (also appears in k054539.cpp c/o dink)
 // direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
 enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
 
@@ -637,12 +638,12 @@ static UINT8 read_keyboard(UINT16 address)
 
 				case 7:
 					keytmp &= SpecInput[i] & SpecInput[13] & SpecInput[15]; // caps2, shift1
-						if (check_shifts()) keytmp &= 0xfd;
-						break;
+					if (check_shifts()) keytmp &= 0xfd;
+					break;
 
 				default:
 					keytmp &= SpecInput[i];
-						break;
+					break;
 			}
 		}
 	}
@@ -660,19 +661,11 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 		return read_keyboard(address);
 	}
 
-	if ((address & 0xff) != 0xfe) {
-		if ((address & 0x1f) == 0x1f && !(address & 0xe0)) {
-			return SpecInput[8] & 0x1f; // kempston
-		}
-
-		if ((address & 0xff) == 0xff) {
-			return ula_byte; // Floating Memory
-		}
-
-		return 0xff;
+	if ((address & 0x1f) == 0x1f && (address & 0xe0) == 0) {
+		return SpecInput[8] & 0x1f; // kempston
 	}
 
-	return 0xff;
+	return ula_byte; // Floating Memory
 }
 
 static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
@@ -707,8 +700,7 @@ void spectrum_128_update_memory()
 static UINT8 __fastcall SpecSpec128Z80Read(UINT16 address)
 {
 	if (address < 0x4000) {
-		INT32 ROMSelection = (nPort7FFDData & 0x10) >> 4;
-		return SpecZ80Rom[(ROMSelection << 14) + address];
+		return SpecZ80Rom[((nPort7FFDData & 0x10) << 10) + address];
 	}
 
 	if (address >= 0x4000 && address <= 0x7fff) {
@@ -757,28 +749,26 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 		return read_keyboard(address);
 	}
 
-	if ((address & 0xff) != 0xfe) {
-		if ((address & 0x1f) == 0x1f && !(address & 0xe0)) {
-			return SpecInput[8] & 0x1f; // kempston
-		}
-
-		if ((address & 0xc002) == 0xc000) {
-			return AY8910Read(0);
-		}
-
-		if ((address & 0xff) == 0xff) {
-			return ula_byte; // Floating Memory
-		}
-
-		return 0xff;
+	if ((address & 0x1f) == 0x1f && (address & 0xe0) == 0) {
+		return SpecInput[8] & 0x1f; // kempston
 	}
 
-	return 0xff;
+	if ((address & 0xc002) == 0xc000) {
+		return AY8910Read(0);
+	}
+
+	if ((address & 0x8002) == 0x0000) {
+		// todo: figure out what 0x7ffd / 3ffd read does
+		//bprintf(0, _T("reading %x (%x)\n"), address, nPort7FFDData);
+	}
+
+	return ula_byte; // Floating Memory
 }
 
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 {
 	if (!(address & 0x8002)) {
+		//bprintf(0, _T("writing %x  %x\n"), address, data);
 		if (nPort7FFDData & 0x20) return; // memory lock-latch enabled
 
 		nPort7FFDData = data;
@@ -1215,7 +1205,7 @@ static void ula_run_cyc(INT32 cyc)
 				case 3:
 					UINT16 *dst = pTransDraw + ((y + 16) * nScreenWidth) + ((x + 16) & ~7);
 					UINT8 ink = (ula_attr & 0x07) + ((ula_attr >> 3) & 0x08);
-					UINT8 pap = (ula_attr >> 3) & 0x07;
+					UINT8 pap = (ula_attr >> 3) & 0x0f;
 
 					if (ula_flash & 0x10 && ula_attr & 0x80) ula_scr = ~ula_scr;
 
@@ -1280,7 +1270,8 @@ static INT32 SpecFrame()
 	if (nActiveSnapshotType == SPEC_TAPE_TAP) TAPAutoLoadRobot();
 
 	{
-		SpecInput[0] = SpecInput[1] = SpecInput[2] = SpecInput[3] = SpecInput[4] = SpecInput[5] = SpecInput[6] = SpecInput[7] = SpecInput[9] = SpecInput[10] = SpecInput[11] = SpecInput[12] = SpecInput[13] = SpecInput[14] = SpecInput[15] = 0x1f;
+		SpecInput[0] = SpecInput[1] = SpecInput[2] = SpecInput[3] = SpecInput[4] = SpecInput[5] = SpecInput[6] = SpecInput[7] = 0x1f;
+		SpecInput[9] = SpecInput[10] = SpecInput[11] = SpecInput[12] = SpecInput[13] = SpecInput[14] = SpecInput[15] = 0x1f;
 		SpecInput[8] = 0x00;
 
 		for (INT32 i = 0; i < 8; i++) {

@@ -45216,7 +45216,7 @@ struct BurnDriver BurnDrvmd_landstlkc = {
 
 // Mad Stalker - Full Metal Forth
 static struct BurnRomInfo md_madstalkerRomDesc[] = {
-	{ "Mad Stalker - Full Metal Forth", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_madstalker)

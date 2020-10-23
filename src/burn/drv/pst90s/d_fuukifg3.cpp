@@ -467,6 +467,8 @@ static INT32 DrvDoReset()
 	BurnYMF262Reset();
 	ZetClose();
 
+        HiscoreReset();
+
 	return 0;
 }
 

@@ -32924,6 +32924,25 @@ struct BurnDriver BurnDrvmd_tecmocup = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Tecmo Cup (Hack, Italian)
+//Translation project: https://romhacking.it/project/view/id/360
+static struct BurnRomInfo md_tecmocupiRomDesc[] = {
+	{ "tecmo cup (italian translation).bin", 0x080000, 0x580ad795, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tecmocupi)
+STD_ROM_FN(md_tecmocupi)
+
+struct BurnDriver BurnDrvmd_tecmocupi = {
+	"md_tecmocupi", "md_tecmocup", NULL, NULL, "2007",
+	"Tecmo Cup (Hack, Italian)\0", NULL, "<unknown>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tecmocupiRomInfo, md_tecmocupiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Tecmo Super Baseball (USA)
 static struct BurnRomInfo md_tecmobbRomDesc[] = {
 	{ "tecmo super baseball (usa).bin", 0x100000, 0x227a1178, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -45191,6 +45210,24 @@ struct BurnDriver BurnDrvmd_landstlkc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mad Stalker - Full Metal Forth
+static struct BurnRomInfo md_madstalkerRomDesc[] = {
+	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madstalker)
+STD_ROM_FN(md_madstalker)
+
+struct BurnDriver BurnDrvmd_madstalker = {
+	"md_madstalker", NULL, NULL, NULL, "2020",
+	"Mad Stalker - Full Metal Forth\0", NULL, "OPERAHOUSE", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_madstalkerRomInfo, md_madstalkerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

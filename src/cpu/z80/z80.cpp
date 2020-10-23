@@ -3541,6 +3541,9 @@ static void take_interrupt(void)
 {
 	int irq_vector = Z80Vector;
 
+	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= 32)
+		return;
+
 	/* there isn't a valid previous program counter */
 	PRVPC = (UINT32)-1;
 

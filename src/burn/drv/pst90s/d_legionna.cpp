@@ -848,7 +848,7 @@ static INT32 DrvDoReset()
 	memset (scroll, 0, sizeof(scroll));
 	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
 
-        HiscoreReset();
+	HiscoreReset();
 
 	return 0;
 }

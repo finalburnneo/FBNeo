@@ -480,7 +480,9 @@ static int DrvDoReset()
 
 	oki_bankswitch(0);
 	MSM6295Reset(0);
-
+	
+	HiscoreReset();
+	
 	return 0;
 }
 

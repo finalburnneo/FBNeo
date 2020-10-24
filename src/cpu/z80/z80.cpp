@@ -4004,7 +4004,12 @@ int Z80Scan(int nAction)
 {
     if (Z80.daisy) {
         z80daisy_scan(nAction);
-    }
+	}
+
+	if (m_ula_variant != ULA_VARIANT_NONE) {
+		SCAN_VAR(m_tstate_counter);
+		SCAN_VAR(m_selected_bank);
+	}
 
 	return 0;
 }
@@ -4825,7 +4830,7 @@ void eat_cycles(int type, int cycles)
 	Z80.ICount -= cycles;
 	m_tstate_counter += cycles;
 	if(m_tstate_counter >= m_cycles_per_frame) {
-		//bprintf(0, _T("z80.cpp eof %d\n"), m_tstate_counter);
+		//bprintf(0, _T("z80.cpp: spec frame eof %d\n"), m_tstate_counter);
 		m_tstate_counter -= m_cycles_per_frame;
 	}
 }

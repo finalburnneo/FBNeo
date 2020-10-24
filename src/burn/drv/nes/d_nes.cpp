@@ -30966,6 +30966,40 @@ struct BurnDriver BurnDrvnes_princeofpersia = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_princtominsalkijRomDesc[] = {
+	{ "Princess Tomato in Salad Kingdom (Japan).nes",          262160, 0x5085d4f4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_princtominsalkij)
+STD_ROM_FN(nes_princtominsalkij)
+
+struct BurnDriver BurnDrvnes_princtominsalkij = {
+	"nes_princtominsalkij", "nes_princtominsalki", NULL, NULL, "1989?",
+	"Princess Tomato in Salad Kingdom (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_princtominsalkijRomInfo, nes_princtominsalkijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_princtominsalkitRomDesc[] = {
+	{ "Princess Tomato in Salad Kingdom (T-Eng).nes",          524304, 0xa395e0b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_princtominsalkit)
+STD_ROM_FN(nes_princtominsalkit)
+
+struct BurnDriver BurnDrvnes_princtominsalkit = {
+	"nes_princtominsalkit", "nes_princtominsalki", NULL, NULL, "1989?",
+	"Princess Tomato in Salad Kingdom (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_princtominsalkitRomInfo, nes_princtominsalkitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_princtominsalkiRomDesc[] = {
 	{ "Princess Tomato in Salad Kingdom (USA).nes",          262160, 0x079c2139, BRF_ESS | BRF_PRG },
 };

@@ -848,6 +848,8 @@ static INT32 DrvDoReset()
 	memset (scroll, 0, sizeof(scroll));
 	memset (coin_inserted_counter, 0, sizeof(coin_inserted_counter));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1817,7 +1819,7 @@ struct BurnDriver BurnDrvLegionna = {
 	"legionna", NULL, NULL, NULL, "1992",
 	"Legionnaire (World)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, legionnaRomInfo, legionnaRomName, NULL, NULL, NULL, NULL, LegionnaInputInfo, LegionnaDIPInfo,
 	LegionnaInit, DrvExit, DrvFrame, LegionnaDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3
@@ -1856,7 +1858,7 @@ struct BurnDriver BurnDrvLegionnaj = {
 	"legionnaj", "legionna", NULL, NULL, "1992",
 	"Legionnaire (Japan)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, legionnajRomInfo, legionnajRomName, NULL, NULL, NULL, NULL, LegionnaInputInfo, LegionnaDIPInfo,
 	LegionnaInit, DrvExit, DrvFrame, LegionnaDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3
@@ -1895,7 +1897,7 @@ struct BurnDriver BurnDrvLegionnau = {
 	"legionnau", "legionna", NULL, NULL, "1992",
 	"Legionnaire (US)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, legionnauRomInfo, legionnauRomName, NULL, NULL, NULL, NULL, LegionnaInputInfo, LegionnaDIPInfo,
 	LegionnaInit, DrvExit, DrvFrame, LegionnaDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3
@@ -2241,7 +2243,7 @@ struct BurnDriver BurnDrvDenjinmk = {
 	"denjinmk", NULL, NULL, NULL, "1994",
 	"Denjin Makai (set 1)\0", NULL, "Winkysoft (Banpresto license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, denjinmkRomInfo, denjinmkRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
 	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 256, 4, 3
@@ -2286,7 +2288,7 @@ struct BurnDriver BurnDrvDenjinmka = {
 	"denjinmka", "denjinmk", NULL, NULL, "1994",
 	"Denjin Makai (set 2)\0", NULL, "Winkysoft (Banpresto license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, denjinmkaRomInfo, denjinmkaRomName, NULL, NULL, NULL, NULL, DenjinmkInputInfo, DenjinmkDIPInfo,
 	DenjinmkInit, DrvExit, DrvYM2151Frame, DenjinmkDraw, DrvScan, &DrvRecalc, 0x801,
 	320, 256, 4, 3

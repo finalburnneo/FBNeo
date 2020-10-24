@@ -2020,6 +2020,25 @@ struct BurnDriver BurnDrvmd_3ninja = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// 3 Ninjas Kick Back (Hack, Spanish)
+// https://www.romhacking.net/translations/2785/
+static struct BurnRomInfo md_3ninjasRomDesc[] = {
+	{ "3 Ninjas Kick Back (Hack, Spanish).bin", 2097152, 0x9a0e98a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_3ninjas)
+STD_ROM_FN(md_3ninjas)
+
+struct BurnDriver BurnDrvmd_3ninjass = {
+	"md_3ninjas", "md_3ninja", NULL, NULL, "2018",
+	"3 Ninjas Kick Back (Hack, Spanish)\0", NULL, "Sony Imagesoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_3ninjasRomInfo, md_3ninjasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // 3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)
 static struct BurnRomInfo md_3in1fwtRomDesc[] = {
 	{ "3-in-1 flashback - world champ. soccer - tecmo world cup 92 (pirate).bin", 0x200000, 0xa8fd28d7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

@@ -7509,6 +7509,20 @@
 		<rom name="Prince of Persia (USA).nes" size="131088" crc="43c7e445"/>
 		<driver status="good"/>
 	</game>
+	<game name="princtominsalkij" cloneof="princtominsalki" romof="princtominsalki">
+		<description>Princess Tomato in Salad Kingdom (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Princess Tomato in Salad Kingdom (Japan).nes" size="262160" crc="5085d4f4"/>
+		<driver status="good"/>
+	</game>
+	<game name="princtominsalkit" cloneof="princtominsalki" romof="princtominsalki">
+		<description>Princess Tomato in Salad Kingdom (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Princess Tomato in Salad Kingdom (T-Eng).nes" size="524304" crc="a395e0b5"/>
+		<driver status="good"/>
+	</game>
 	<game name="princtominsalki">
 		<description>Princess Tomato in Salad Kingdom (USA)</description>
 		<year>1991</year>

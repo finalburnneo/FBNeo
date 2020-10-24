@@ -83,6 +83,13 @@
 		<rom name="3-in-1 road rash - ms. pac-man - block out (pirate).bin" size="1048576" crc="13c96154"/>
 		<driver status="good"/>
 	</game>
+	<game name="3ninjas" cloneof="3ninja" romof="3ninja">
+		<description>3 Ninjas Kick Back (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Sony Imagesoft</manufacturer>
+		<rom name="3 Ninjas Kick Back (Hack, Spanish).bin" size="2097152" crc="9a0e98a9"/>
+		<driver status="good"/>
+	</game>
 	<game name="3ninja">
 		<description>3 Ninjas Kick Back (USA)</description>
 		<year>1994</year>
@@ -2475,6 +2482,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="comix zone (prototype - jul 12, 1995).bin" size="2097152" crc="e28c89c1"/>
+		<driver status="good"/>
+	</game>
+	<game name="comixi" cloneof="comix" romof="comix">
+		<description>Comix Zone (Hack, Italian)</description>
+		<year>2002</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="comix zone (italian translation).bin" size="2097152" crc="f2bba578"/>
 		<driver status="good"/>
 	</game>
 	<game name="comixj" cloneof="comix" romof="comix">
@@ -6810,6 +6824,13 @@
 		<year>1994</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="ma qiao e mo ta - devilish mahjong tower (chi) (unl).bin" size="1048576" crc="12e35994"/>
+		<driver status="good"/>
+	</game>
+	<game name="madstalker">
+		<description>Mad Stalker - Full Metal Forth [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>OPERAHOUSE</manufacturer>
+		<rom name="Mad Stalker - Full Metal Forth.bin" size="2097152" crc="64e7f1cd"/>
 		<driver status="good"/>
 	</game>
 	<game name="madagopp" cloneof="magichat" romof="magichat">
@@ -13611,6 +13632,13 @@
 		<year>1990</year>
 		<manufacturer>Razorsoft</manufacturer>
 		<rom name="technocop (usa).bin" size="524288" crc="7459ad06"/>
+		<driver status="good"/>
+	</game>
+	<game name="tecmocupi" cloneof="tecmocup" romof="tecmocup">
+		<description>Tecmo Cup (Hack, Italian)</description>
+		<year>2007</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="tecmo cup (italian translation).bin" size="524288" crc="580ad795"/>
 		<driver status="good"/>
 	</game>
 	<game name="tecmocup">

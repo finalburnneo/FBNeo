@@ -467,6 +467,8 @@ static INT32 DrvDoReset()
 	BurnYMF262Reset();
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1293,7 +1295,7 @@ struct BurnDriver BurnDrvAsurabld = {
 	"asurabld", NULL, NULL, NULL, "1998",
 	"Asura Blade - Sword of Dynasty (Japan)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabldRomInfo, asurabldRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabldDIPInfo,
 	BladeDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
@@ -1337,7 +1339,7 @@ struct BurnDriver BurnDrvAsurabus = {
 	"asurabus", NULL, NULL, NULL, "2000",
 	"Asura Buster - Eternal Warriors (Japan)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusRomInfo, asurabusRomName, NULL, NULL, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
@@ -1381,7 +1383,7 @@ struct BurnDriver BurnDrvAsurabusa = {
 	"asurabusa", "asurabus", NULL, NULL, "2000",
 	"Asura Buster - Eternal Warriors (Japan) (ARCADIA review build)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusaRomInfo, asurabusaRomName, NULL, NULL, NULL, NULL, AsurabusaInputInfo, AsurabusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3

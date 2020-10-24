@@ -9168,7 +9168,7 @@ struct BurnDriver BurnDrvAliensyn = {
 	"aliensyn", NULL, NULL, NULL, "1987",
 	"Alien Syndrome (set 4, System 16B, unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_MAZE, 0,
 	NULL, AliensynRomInfo, AliensynRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9198,7 +9198,7 @@ struct BurnDriver BurnDrvAliensynj = {
 	"aliensynj", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 6, Japan, new, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
 	NULL, AliensynjRomInfo, AliensynjRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynjDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9208,7 +9208,7 @@ struct BurnDriver BurnDrvAltbeast = {
 	"altbeast", NULL, NULL, NULL, "1988",
 	"Altered Beast (set 8, 8751 317-0078)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastRomInfo, AltbeastRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9218,7 +9218,7 @@ struct BurnDriver BurnDrvAltbeastj = {
 	"altbeastj", "altbeast", NULL, NULL, "1988",
 	"Juuouki (set 7, Japan, 8751 317-0077)\0", NULL, "Sega", "System 16B",
 	L"Juuoki (set 7, Japan, 8751 317-0077)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastjRomInfo, AltbeastjRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastjInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9268,7 +9268,7 @@ struct BurnDriver BurnDrvAltbeast4 = {
 	"altbeast4", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (set 4, MC-8123B 317-0066)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeast4RomInfo, Altbeast4RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast4Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9638,7 +9638,7 @@ struct BurnDriver BurnDrvEswat = {
 	"eswat", NULL, NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 4, World, FD1094 317-0130)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatRomInfo, EswatRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	EswatInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9658,7 +9658,7 @@ struct BurnDriver BurnDrvEswatj = {
 	"eswatj", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 2, Japan, FD1094 317-0128)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatjRomInfo, EswatjRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	EswatInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9698,7 +9698,7 @@ struct BurnDriver BurnDrvEswatu = {
 	"eswatu", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 3, US, FD1094 317-0129)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatuRomInfo, EswatuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	EswatInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9858,7 +9858,7 @@ struct BurnDriver BurnDrvGoldnaxe = {
 	"goldnaxe", NULL, NULL, NULL, "1989",
 	"Golden Axe (set 6, US, 8751 317-123A)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxeRomInfo, GoldnaxeRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	GoldnaxeInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9918,7 +9918,7 @@ struct BurnDriver BurnDrvGoldnaxej = {
 	"goldnaxej", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 4, Japan, FD1094 317-0121)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxejRomInfo, GoldnaxejRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10118,7 +10118,7 @@ struct BurnDriver BurnDrvRiotcity = {
 	"riotcity", NULL, NULL, NULL, "1991",
 	"Riot City (Japan)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, RiotcityRomInfo, RiotcityRomName, NULL, NULL, NULL, NULL, System16bInputInfo, RiotcityDIPInfo,
 	RiotcityInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

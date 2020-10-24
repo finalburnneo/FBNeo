@@ -157,6 +157,111 @@ static INT32 CheckHiscoreAllowed()
 	return Allowed;
 }
 
+void HiscoreSearch(FILE *fp, const char *name)
+{
+	char buffer[MAX_CONFIG_LINE_SIZE];
+	enum { FIND_NAME, FIND_DATA, FETCH_DATA } mode;
+	mode = FIND_NAME;
+
+	while (fgets(buffer, MAX_CONFIG_LINE_SIZE, fp)) {
+		if (mode == FIND_NAME) {
+			if (matching_game_name(buffer, name)) {
+				mode = FIND_DATA;
+			}
+		} else {
+			if (buffer[0] == '@' && buffer[1] == ':') {
+				if (is_mem_range_new(buffer)) {
+					if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
+						const char *pBuf = buffer;
+						char cCpu[80];
+						char *pCpu = &cCpu[0];
+
+						// increment pBuf to the address
+						char c;
+						
+						for (;;) {
+							c = *pBuf++;
+							if (c == ':') break;
+						}
+						
+						c = *pBuf; /* character following first ':' */
+
+						// cpu id -> cCpu
+						for(;;)
+						{
+							c = *pBuf++;
+							if (c == ',') { *pCpu++ = '\0'; break; }
+							else *pCpu++ = c;
+						}
+						c = *pBuf; /* character following first ',' */
+						
+						// address space - ignore for now
+						for(;;)
+						{
+							c = *pBuf++;
+							if (c == ',') break;
+						}
+						c = *pBuf; /* character following second ',' */
+
+						// now set the high score data
+						HiscoreMemRange[nHiscoreNumRanges].Loaded = 0;
+						HiscoreMemRange[nHiscoreNumRanges].nCpu = cpustr2num(&cCpu[0]);
+						HiscoreMemRange[nHiscoreNumRanges].Address = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].NumBytes = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].StartValue = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].EndValue = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].ApplyNextFrame = 0;
+						HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
+						HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
+						memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
+						
+#if 1 && defined FBNEO_DEBUG
+						bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i (%S), Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, cCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
+#endif
+						
+						nHiscoreNumRanges++;
+						
+						mode = FETCH_DATA;
+					} else {
+						break;
+					}
+				} else {
+					if (mode == FETCH_DATA) break;
+				}
+			} else {
+				if (is_mem_range(buffer)) {
+					if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
+						const char *pBuf = buffer;
+					
+						HiscoreMemRange[nHiscoreNumRanges].Loaded = 0;
+						HiscoreMemRange[nHiscoreNumRanges].nCpu = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].Address = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].NumBytes = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].StartValue = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].EndValue = hexstr2num(&pBuf);
+						HiscoreMemRange[nHiscoreNumRanges].ApplyNextFrame = 0;
+						HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
+						HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
+						memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
+					
+#if 1 && defined FBNEO_DEBUG
+						bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded - CPU %i, Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
+#endif
+					
+						nHiscoreNumRanges++;
+					
+						mode = FETCH_DATA;
+					} else {
+						break;
+					}
+				} else {
+					if (mode == FETCH_DATA) break;
+				}
+			}
+		}
+	}
+}
+
 void HiscoreInit()
 {
 	Debug_HiscoreInitted = 1;
@@ -170,108 +275,15 @@ void HiscoreInit()
 
 	FILE *fp = _tfopen(szDatFilename, _T("r"));
 	if (fp) {
-		char buffer[MAX_CONFIG_LINE_SIZE];
-		enum { FIND_NAME, FIND_DATA, FETCH_DATA } mode;
-		mode = FIND_NAME;
+		HiscoreSearch(fp, BurnDrvGetTextA(DRV_NAME));
 
-		while (fgets(buffer, MAX_CONFIG_LINE_SIZE, fp)) {
-			if (mode == FIND_NAME) {
-				if (matching_game_name(buffer, BurnDrvGetTextA(DRV_NAME))) {
-					mode = FIND_DATA;
-				}
-			} else {
-				if (buffer[0] == '@' && buffer[1] == ':') {
-					if (is_mem_range_new(buffer)) {
-						if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
-							const char *pBuf = buffer;
-							char cCpu[80];
-							char *pCpu = &cCpu[0];
-
-							// increment pBuf to the address
-							char c;
-							
-							for (;;) {
-								c = *pBuf++;
-								if (c == ':') break;
-							}
-							
-							c = *pBuf; /* character following first ':' */
-	
-							// cpu id -> cCpu
-							for(;;)
-							{
-								c = *pBuf++;
-								if (c == ',') { *pCpu++ = '\0'; break; }
-								else *pCpu++ = c;
-							}
-							c = *pBuf; /* character following first ',' */
-							
-							// address space - ignore for now
-							for(;;)
-							{
-								c = *pBuf++;
-								if (c == ',') break;
-							}
-							c = *pBuf; /* character following second ',' */
-
-							// now set the high score data
-							HiscoreMemRange[nHiscoreNumRanges].Loaded = 0;
-							HiscoreMemRange[nHiscoreNumRanges].nCpu = cpustr2num(&cCpu[0]);
-							HiscoreMemRange[nHiscoreNumRanges].Address = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].NumBytes = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].StartValue = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].EndValue = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].ApplyNextFrame = 0;
-							HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
-							HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
-							memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
-							
-#if 1 && defined FBNEO_DEBUG
-							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i (%S), Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, cCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
-#endif
-							
-							nHiscoreNumRanges++;
-							
-							mode = FETCH_DATA;
-						} else {
-							break;
-						}
-					} else {
-						if (mode == FETCH_DATA) break;
-					}
-				} else {
-					if (is_mem_range(buffer)) {
-						if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
-							const char *pBuf = buffer;
-						
-							HiscoreMemRange[nHiscoreNumRanges].Loaded = 0;
-							HiscoreMemRange[nHiscoreNumRanges].nCpu = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].Address = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].NumBytes = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].StartValue = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].EndValue = hexstr2num(&pBuf);
-							HiscoreMemRange[nHiscoreNumRanges].ApplyNextFrame = 0;
-							HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
-							HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
-							memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
-						
-#if 1 && defined FBNEO_DEBUG
-							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded - CPU %i, Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
-#endif
-						
-							nHiscoreNumRanges++;
-						
-							mode = FETCH_DATA;
-						} else {
-							break;
-						}
-					} else {
-						if (mode == FETCH_DATA) break;
-					}
-				}
-			}
+		// no hiscore entry for this game in hiscore.dat, and the game is a clone (probably a hack)
+		// let's try using parent entry as a fallback, the success rate seems reasonably good
+		if ((BurnDrvGetFlags() & BDF_CLONE) && HiscoresInUse == 0) {
+			fseek(fp, 0, SEEK_SET);
+			HiscoreSearch(fp, BurnDrvGetTextA(DRV_PARENT));
 		}
-		
+
 		fclose(fp);
 	}
 	

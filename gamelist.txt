@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15102 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15127 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -167,6 +167,7 @@ This list contains all games supported by FinalBurn Neo.
 | actfancr1	|  	| Act-Fancer Cybernetick Hyper Weapon (World revision 1)| actfancr	| 1989	| Data East Corp| Miscellaneous	| 					|
 | actfancr2	|  	| Act-Fancer Cybernetick Hyper Weapon (World revision 2)| actfancr	| 1989	| Data East Corp| Miscellaneous	| 					|
 | actfancr	|  	| Act-Fancer Cybernetick Hyper Weapon (World revision 3)| 		| 1989	| Data East Corp| Miscellaneous	| 					|
+| md_action52s	|  	| Action 52 (Hack, Spanish)				| md_action52	| 2018	| Active Enterpr| Sega Megadrive| 					|
 | md_action52	|  	| Action 52 (USA)					| 		| 1993	| Active Enterpr| Sega Megadrive| 					|
 | nes_action52	|  	| Action 52 (USA)					| 		| 1991	| Active Enterpr| Miscellaneous	| 					|
 | md_action52a	|  	| Action 52 (USA, Alt)					| md_action52	| 1993	| Active Enterpr| Sega Megadrive| 					|
@@ -194,6 +195,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_actman	|  	| Actman (Jpn)						| 		| 1985	| ASCII		| MSX		| 					|
 | msx_actmana	|  	| Actman (Jpn, Alt)					| msx_actman	| 1985	| ASCII		| MSX		| 					|
 | md_addfamv	|  	| Addams Family Values (Euro)				| 		| 1994	| Ocean		| Sega Megadrive| 					|
+| md_addfamvs	|  	| Addams Family Values (Hack, Spanish)			| md_addfamv	| 2020	| Ocean		| Sega Megadrive| 					|
 | spec_addfamth	|  	| Addams Family, The (128K)				| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_addamfam	|  	| Addams Family, The (USA)				| 		| 1992	| Ocean		| Miscellaneous	| 					|
 | nes_addamfampugsschu|  	| Addams Family, The - Pugsley's Scavenger Hunt (USA)	| 		| 1993	| Ocean		| Miscellaneous	| 					|
@@ -241,9 +243,11 @@ This list contains all games supported by FinalBurn Neo.
 | sonicwi3	|  	| Aero Fighters 3 / Sonic Wings 3			| 		| 1995	| Video System C| Neo Geo MVS	| 					|
 | aerofgt	|  	| Aero Fighters						| 		| 1992	| Video System C| Video System	| 					|
 | md_aero	|  	| Aero the Acro-Bat (Euro)				| 		| 1993	| Sunsoft	| Sega Megadrive| 					|
+| md_aeros	|  	| Aero The Acro-Bat (Hack, Spanish)			| md_aero	| 2020	| SunSoft	| Sega Megadrive| 					|
 | md_aerop	|  	| Aero the Acro-Bat (Prototype)				| md_aero	| 1993	| Sunsoft	| Sega Megadrive| 					|
 | md_aerou	|  	| Aero the Acro-Bat (USA)				| md_aero	| 1993	| Sunsoft	| Sega Megadrive| 					|
 | md_aero2	|  	| Aero the Acro-Bat 2 (Euro)				| 		| 1994	| Sunsoft	| Sega Megadrive| 					|
+| md_aero2s	|  	| Aero The Acro-Bat 2 (Hack, Spanish)			| md_aero2	| 2020	| SunSoft	| Sega Megadrive| 					|
 | md_aero2u	|  	| Aero the Acro-Bat 2 (USA)				| md_aero2	| 1994	| Sunsoft	| Sega Megadrive| 					|
 | md_aerobiz	|  	| Aerobiz (USA)						| 		| 1992	| Koei		| Sega Megadrive| 					|
 | md_aerobizs	|  	| Aerobiz Supersonic (USA)				| 		| 1994	| Koei		| Sega Megadrive| 					|
@@ -254,6 +258,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_aburner	|  	| After Burner (World)					| 		| 1987	| Sega		| Sega Master Sy| 					|
 | md_aburner2	|  	| After Burner II (Euro, USA)				| 		| 1990	| Sega		| Sega Megadrive| 					|
 | aburner2g	|  	| After Burner II (German)				| aburner2	| 1987	| Sega		| X-Board	| 					|
+| md_aburner2s	|  	| After Burner II (Hack, Spanish)			| md_aburner2	| 2020	| Sega		| Sega Megadrive| 					|
 | nes_afterburnerii|  	| After Burner II (Japan)				| 		| 1989	| Sunsoft	| Miscellaneous	| 					|
 | md_aburner2j	|  	| After Burner II (Jpn)					| md_aburner2	| 1990	| Denpa Shinbuns| Sega Megadrive| 					|
 | aburner2	|  	| After Burner II					| 		| 1987	| Sega		| X-Board	| 					|
@@ -283,6 +288,7 @@ This list contains all games supported by FinalBurn Neo.
 | airbustrj	|  	| Air Buster: Trouble Specialty Raid Unit (Japan)	| airbustr	| 1990	| Kaneko (Namco | Miscellaneous	| 					|
 | md_airbustr	|  	| Air Buster: Trouble Specialty Raid Unit (USA)		| 		| 1991	| Kaneko	| Sega Megadrive| 					|
 | airbustr	|  	| Air Buster: Trouble Specialty Raid Unit (World)	| 		| 1990	| Kaneko (Namco | Miscellaneous	| 					|
+| md_airdivers	|  	| Air Diver (Hack, Spanish)				| md_airdiver	| 2020	| Seismic	| Sega Megadrive| 					|
 | md_airdiverj	|  	| Air Diver (Jpn)					| md_airdiver	| 1990	| Asmik Ace	| Sega Megadrive| 					|
 | md_airdiver	|  	| Air Diver (USA)					| 		| 1990	| Seismic	| Sega Megadrive| 					|
 | airdueljm72	|  	| Air Duel (Japan, M72 hardware)			| airduel	| 1990	| Irem		| Irem M72	| 					|
@@ -360,6 +366,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_alexshin	|  	| Alex Kidd in Shinobi World (Euro, USA, Bra)		| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_alexkidd1	|  	| Alex Kidd in the Enchanted Castle (Euro)		| md_alexkidd	| 1990	| Sega		| Sega Megadrive| 					|
 | md_alexkidd	|  	| Alex Kidd in the Enchanted Castle (Euro, Rev. A)	| 		| 1990	| Sega		| Sega Megadrive| 					|
+| md_alexkidds	|  	| Alex Kidd In The Enchanted Castle (Hack, Spanish)	| md_alexkidd	| 2020	| Sega		| Sega Megadrive| 					|
 | md_alexkiddj	|  	| Alex Kidd in the Enchanted Castle (Jpn)		| md_alexkidd	| 1989	| Sega		| Sega Megadrive| 					|
 | md_alexkiddu	|  	| Alex Kidd in the Enchanted Castle (USA)		| md_alexkidd	| 1989	| Sega		| Sega Megadrive| 					|
 | sms_alexkiddj	|  	| Alex Kidd no Miracle World (Jpn)			| sms_alexkidd	| 1986	| Sega		| Sega Master Sy| 					|
@@ -376,6 +383,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_alibaba	|  	| Alibaba and 40 Thieves (Kor)				| 		| 1989	| HiCom		| Sega Master Sy| 					|
 | sms_alien3	|  	| Alien 3 (Euro, Bra)					| 		| 1992	| Arena		| Sega Master Sy| 					|
 | gg_alien3	|  	| Alien 3 (Euro, USA)					| 		| 1992	| Arena		| Sega Game Gear| 					|
+| md_alien3s	|  	| Alien 3 (Hack, Spanish)				| md_alien3	| 2020	| Arena		| Sega Megadrive| 					|
 | gg_alien3j	|  	| Alien 3 (Jpn)						| gg_alien3	| 1992	| Acclaim Entert| Sega Game Gear| 					|
 | nes_alien3	|  	| Alien 3 (USA)						| 		| 1993	| LJN		| Miscellaneous	| 					|
 | msx_alien8	|  	| Alien 8 (Jpn)						| 		| 1987	| Jaleco	| MSX		| 					|
@@ -390,8 +398,10 @@ This list contains all games supported by FinalBurn Neo.
 | alienres	|  	| Alien Rescue (Homebrew, Test Build July 2019)		| 		| 2019	| MonstersGoBoom| Pac-man	| monstersgoboom.itch.io		|
 | aliensec	|  	| Alien Sector						| 		| 1985	| Namco		| Miscellaneous	| 					|
 | md_aliensol	|  	| Alien Soldier (Euro)					| 		| 1995	| Sega		| Sega Megadrive| 					|
+| md_aliensols	|  	| Alien Soldier (Hack, Spanish)				| md_aliensol	| 2020	| Treasure	| Sega Megadrive| 					|
 | md_aliensolj	|  	| Alien Soldier (Jpn)					| md_aliensol	| 1995	| Sega		| Sega Megadrive| 					|
 | sms_astorm	|  	| Alien Storm (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
+| md_astorms	|  	| Alien Storm (Hack, Spanish)				| md_astorm	| 2020	| Sega		| Sega Megadrive| 					|
 | astormjd	|  	| Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317| astorm	| 1990	| Sega		| System 18	| 					|
 | astormj	|  	| Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317| astorm	| 1990	| Sega		| System 18	| 					|
 | astormud	|  	| Alien Storm (set 2, US, 3 Players, FD1094 317-0147 dec| astorm	| 1990	| Sega		| System 18	| 					|
@@ -437,6 +447,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_aliensa	|  	| Aliens - Alien 2 (Jpn, Alt)				| msx_aliens	| 1987	| Square	| MSX		| 					|
 | spec_aliensneo|  	| Aliens Neoplasma (HB)					| 		| 2019	| Sanchez Crew	| ZX Spectrum	| 					|
 | md_alisiad	|  	| Alisia Dragoon (Euro)					| 		| 1992	| Sega		| Sega Megadrive| 					|
+| md_alisiads	|  	| Alisia Dragoon (Hack, Spanish)			| md_alisiad	| 2018	| Sega		| Sega Megadrive| 					|
 | md_alisiadj	|  	| Alisia Dragoon (Jpn)					| md_alisiad	| 1992	| Game Arts	| Sega Megadrive| 					|
 | md_alisiadu	|  	| Alisia Dragoon (USA)					| md_alisiad	| 1992	| Sega		| Sega Megadrive| 					|
 | spec_hlwpumpkin|  	| All Hallows Rise of Pumpkin (HB)			| 		| 2018	| Rucksack Games| ZX Spectrum	| 					|
@@ -467,6 +478,7 @@ This list contains all games supported by FinalBurn Neo.
 | altbeastbl	| D NW	| Altered Beast (Datsu bootleg)				| altbeast	| 1988	| bootleg (Datsu| System 16B	| no Sound				|
 | md_altbeast	|  	| Altered Beast (Euro, USA)				| 		| 1989	| Sega		| Sega Megadrive| 					|
 | sms_altbeast	|  	| Altered Beast (Euro, USA, Bra)			| 		| 1988	| Sega		| Sega Master Sy| 					|
+| md_altbeasts	|  	| Altered Beast (Hack, Spanish)				| md_altbeast	| 2017	| Sega		| Sega Megadrive| 					|
 | altbeast2	|  	| Altered Beast (set 2, MC-8123B 317-0066)		| altbeast	| 1988	| Sega		| System 16B	| 					|
 | altbeast4	|  	| Altered Beast (set 4, MC-8123B 317-0066)		| altbeast	| 1988	| Sega		| System 16B	| 					|
 | altbeast5d	|  	| Altered Beast (set 5, FD1094 317-0069 decrypted)	| altbeast	| 1988	| Sega		| System 16B	| 					|
@@ -520,6 +532,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_angeloa	|  	| Angelo (Jpn, Alt)					| msx_angelo	| 1984	| ASCII		| MSX		| 					|
 | cadanglr	|  	| Angler Dangler (DECO Cassette) (US)			| 		| 1982	| Data East Corp| Cassette Syste| 					|
 | md_animania	|  	| Animaniacs (Euro)					| 		| 1994	| Konami	| Sega Megadrive| 					|
+| md_animanias	|  	| Animaniacs (Hack, Spanish)				| md_animania	| 2018	| Konami	| Sega Megadrive| 					|
 | md_animaniau	|  	| Animaniacs (USA)					| md_animania	| 1994	| Konami	| Sega Megadrive| 					|
 | pce_ankoku	|  	| Ankoku Densetsu					| 		| 1990	| Victor Interac| PC Engine	| 					|
 | sms_anmitsu	|  	| Anmitsu Hime (Jpn)					| sms_alexhitw	| 1987	| Sega		| Sega Master Sy| 					|
@@ -659,11 +672,13 @@ This list contains all games supported by FinalBurn Neo.
 | msx_armymove	|  	| Army Moves (Euro)					| 		| 1987	| Dinamic Softwa| MSX		| Select Keyboard mode, and use Joystick|
 | sg1k_arnodash	|  	| Arno Dash (HB)					| 		| 2020	| Under4MHz	| Sega SG-1000	| 					|
 | md_arnoldp	|  	| Arnold Palmer Tournament Golf (Euro, USA)		| 		| 1989	| Sega		| Sega Megadrive| 					|
+| md_arrows	|  	| Arrow Flash (Hack, Spanish)				| md_arrow	| 2019	| Renovation	| Sega Megadrive| 					|
 | md_arrowp	|  	| Arrow Flash (USA, Prototype)				| md_arrow	| 1990	| Renovation	| Sega Megadrive| 					|
 | md_arrow	|  	| Arrow Flash (World)					| 		| 1990	| Sega		| Sega Megadrive| 					|
 | md_artalive	|  	| Art Alive (World)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_aof	|  	| Art of Fighting (Euro)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_aofec	|  	| Art of Fighting (Hack, Enhanced Colors)		| md_aof	| 2015	| Sega - Pyron	| Sega Megadrive| 					|
+| md_aofs	|  	| Art Of Fighting (Hack, Spanish)			| md_aof	| 2019	| SNK		| Sega Megadrive| 					|
 | md_aofp	|  	| Art of Fighting (Prototype, 19940711)			| md_aof	| 1994	| Sega		| Sega Megadrive| 					|
 | md_aofu	|  	| Art of Fighting (USA)					| md_aof	| 1994	| Sega		| Sega Megadrive| 					|
 | aof		|  	| Art of Fighting / Ryuuko no Ken (NGM-044)(NGH-044)	| 		| 1992	| SNK		| Neo Geo MVS	| 					|
@@ -774,6 +789,7 @@ This list contains all games supported by FinalBurn Neo.
 | atomboy	|  	| Atomic Boy (revision B)				| wilytowr	| 1985	| Irem (Memetron| Irem M63	| 					|
 | atomicp	|  	| Atomic Point (Korea)					| 		| 1990	| Philco	| System 16B	| 					|
 | atompunk	|  	| Atomic Punk (US)					| dynablst	| 1991	| Irem America (| Irem M90	| 					|
+| md_atomrobos	|  	| Atomic Robo-Kid (Hack, Spanish)			| md_atomrobo	| 2019	| Treco		| Sega Megadrive| 					|
 | robokidj3	|  	| Atomic Robo-kid (Japan)				| robokid	| 1988	| UPL		| Miscellaneous	| 					|
 | robokidj	|  	| Atomic Robo-kid (Japan, Type-2, set 1)		| robokid	| 1988	| UPL		| Miscellaneous	| 					|
 | robokidj2	|  	| Atomic Robo-kid (Japan, Type-2, set 2)		| robokid	| 1988	| UPL		| Miscellaneous	| 					|
@@ -782,6 +798,7 @@ This list contains all games supported by FinalBurn Neo.
 | robokid	|  	| Atomic Robo-kid (World, Type-2)			| 		| 1988	| UPL		| Miscellaneous	| 					|
 | pce_atomrobo	|  	| Atomic Robo-kid Special				| 		| 1990	| UPL		| PC Engine	| 					|
 | md_atomrun	|  	| Atomic Runner (Euro)					| 		| 1992	| Data East	| Sega Megadrive| 					|
+| md_atomruns	|  	| Atomic Runner (Hack, Spanish)				| md_atomrun	| 2018	| Data East	| Sega Megadrive| 					|
 | md_atomrunu	|  	| Atomic Runner (USA)					| md_atomrun	| 1992	| Data East	| Sega Megadrive| 					|
 | md_atptour	|  	| ATP Tour Championship Tennis (Euro)			| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_atptourp7	|  	| ATP Tour Championship Tennis (Prototype, 19940509)	| md_atptour	| 1994	| Sega		| Sega Megadrive| 					|
@@ -1879,6 +1896,7 @@ This list contains all games supported by FinalBurn Neo.
 | captcommb3	|  	| Captain Commando (bootleg set 3 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommp4	|  	| Captain Commando (Enhanced edition 1 V 4, Hack)	| captcomm	| 2015-12-05| hack		| CPS1		| 					|
 | captcommr1pwx	|  	| Captain Commando (Unlimited Bullet Update 2020-02-19)	| captcomm	| 2020	| Hack		| CPS1		| 					|
+| spec_captaindrexx|  	| Captain Drexx (HB)					| 		| 2014	| Vladimir Buren| ZX Spectrum	| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
 | md_captlang	|  	| Captain Lang (Jpn)					| md_havoc	| 1994	| Data East	| Sega Megadrive| 					|
 | md_captplan	|  	| Captain Planet and the Planeteers (Euro)		| 		| 1993	| Sega		| Sega Megadrive| 					|
@@ -2421,6 +2439,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_commands	|  	| Commandos (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | comotion	|  	| CoMOTION						| 		| 1976	| Gremlin	| Miscellaneous	| 					|
 | complexx	|  	| Complex X						| 		| 1984	| Taito America | Miscellaneous	| 					|
+| spec_complicadx|  	| Complica DX (HB)					| 		| 2015	| Einar Saukas	| ZX Spectrum	| Play with Keys 1-4			|
 | msx_cbilliar	|  	| Computer Billiards (Jpn)				| 		| 1983	| Sony		| MSX		| 					|
 | msx_cnyumon	|  	| Computer Nyuumon (Jpn)				| 		| 1985	| Casio		| MSX		| 					|
 | msx_cpachi	|  	| Computer Pachinko (Jpn)				| 		| 1984	| Sony		| MSX		| 					|
@@ -3080,7 +3099,7 @@ This list contains all games supported by FinalBurn Neo.
 | dimahoud	|  	| Dimahoo (000121 USA Phoenix Edition)			| dimahoo	| 2000	| bootleg	| CPS2		| 					|
 | dimahoou	|  	| Dimahoo (000121 USA)					| dimahoo	| 2000	| 8ing / Raizing| CPS2		| 					|
 | dingoe	| D NW	| Dingo (encrypted)					| dingo		| 1983	| Ashby Computer| Galaxian	| Encrypted				|
-| spec_dingo	|  	| Dingo (HB)						| 		| 2011	| Sokurah, Tardi| ZX Spectrum	| 					|
+| spec_dingo	|  	| Dingo (HB)						| 		| 2015	| Sokurah, Tardi| ZX Spectrum	| 					|
 | dingo		|  	| Dingo							| 		| 1983	| Ashby Computer| Galaxian	| 					|
 | md_dinodini	|  	| Dino Dini's Soccer (Euro)				| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | md_dinoland	|  	| Dino Land (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
@@ -3116,6 +3135,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_ariel	|  	| Disney's Ariel The Little Mermaid (Bra)		| 		| 1997	| Tec Toy	| Sega Master Sy| 					|
 | gg_ariel	|  	| Disney's Ariel the Little Mermaid (Euro, USA)		| 		| 1991	| Sega		| Sega Game Gear| 					|
 | md_ariel	|  	| Disney's Ariel the Little Mermaid (Euro, USA)		| 		| 1992	| Sega		| Sega Megadrive| 					|
+| md_ariels	|  	| Disney's Ariel the Little Mermaid (Hack, Spanish)	| md_ariel	| 2019	| Sega		| Sega Megadrive| 					|
 | md_beauty	|  	| Disney's Beauty and the Beast - Belle's Quest (USA)	| 		| 1993	| Sunsoft	| Sega Megadrive| 					|
 | md_beautyrb	|  	| Disney's Beauty and the Beast - Roar of the Beast (USA| 		| 1993	| Sunsoft	| Sega Megadrive| 					|
 | sms_bonkers	|  	| Disney's Bonkers Wax Up! (Bra)			| 		| 1994	| Tec Toy	| Sega Master Sy| 					|
@@ -6893,6 +6913,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_loretta	|  	| Loretta no Shouzou (Jpn)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | spec_lorna	|  	| Lorna (128K)						| 		| 1990	| Topo Soft	| ZX Spectrum	| 					|
 | msx_lorna	|  	| Lorna (Spa)						| 		| 1990	| Topo Soft	| MSX		| 					|
+| spec_brunilda	|  	| Los Amores De Brunilda (HB)				| 		| 2013	| RetroWorks	| ZX Spectrum	| 					|
 | sms_lostraider101|  	| Lost Raider (HB, v1.01)				| 		| 2015	| Vingazole & Ic| Sega Master Sy| The game lacks sound			|
 | losttomb	|  	| Lost Tomb (Easy)					| 		| 1982	| Stern		| Galaxian	| 					|
 | losttombh	|  	| Lost Tomb (Hard)					| losttomb	| 1982	| Stern		| Galaxian	| 					|
@@ -11029,6 +11050,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfply	|  	| Smurf Play and Learn (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| spec_snakeescape|  	| Snake Escape (HB)					| 		| 2016	| Einar Saukas	| ZX Spectrum	| 					|
 | msx_snakeit	|  	| Snake It (Euro)					| 		| 1986?	| Eaglesoft	| MSX		| 					|
 | nes_snakeratnrol|  	| Snake Rattle n Roll (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | md_snakernr	|  	| Snake Rattle n' Roll (Euro)				| 		| 1993	| Sega		| Sega Megadrive| 					|
@@ -11466,6 +11488,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_splatth3j	|  	| Splatterhouse Part 3 (Jpn, Kor)			| md_splatth3	| 1993	| Namcot	| Sega Megadrive| 					|
 | pce_splatth	|  	| Splatterhouse						| 		| 1990	| Namcot	| PC Engine	| 					|
 | tg_splatth	|  	| Splatterhouse						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
+| spec_splattr	|  	| splATTR (HB)						| 		| 2008	| Bob Smith	| ZX Spectrum	| 					|
 | md_spongbob	|  	| Sponge Bob (Rus)					| md_coolspot	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | msx_spooksl	|  	| Spooks & Ladders					| 		| 1985	| Kuma Computers| MSX		| 					|
 | md_sportg	|  	| Sport Games (Bra)					| 		| 199?	| Tec Toy	| Sega Megadrive| 					|
@@ -12052,6 +12075,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_sumgames	|  	| Summer Games (Euro)					| 		| 1991	| Sega		| Sega Master Sy| 					|
 | sms_sumgamesp	|  	| Summer Games (Euro, Prototype)			| sms_sumgames	| 1991	| Sega		| Sega Master Sy| 					|
 | sms_sumgamesfm|  	| Summer Games (FM Mod)					| sms_sumgames	| 2018	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
+| spec_sunbucket|  	| Sun Bucket (HB)					| 		| 2014	| Stonechat	| ZX Spectrum	| 					|
 | sunaq		|  	| SunA Quiz 6000 Academy (940620-6)			| 		| 1994	| SunA		| Miscellaneous	| 					|
 | nes_sundafun	|  	| Sunday Funday - The Ride (USA) (Unl)			| nes_menacebeach| 1995	| Wisdom Tree	| Miscellaneous	| 					|
 | nes_sunman	|  	| Sunman (Europe) (Prototype)				| 		| 0000	| Sunsoft	| Miscellaneous	| 					|
@@ -13004,6 +13028,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_dambustr	|  	| The Dam Busters (Euro?)				| 		| 1985	| Comptiq	| MSX		| 					|
 | msx_dambustra	|  	| The Dam Busters (Jpn)					| msx_dambustr	| 1985	| Comptiq	| MSX		| 					|
 | cv_dambust	|  	| The Dam Busters					| 		| 1984	| Coleco	| ColecoVision	| 					|
+| spec_thedark	|  	| The Dark (HB)						| 		| 1997	| Oleg Origin	| ZX Spectrum	| 					|
 | dealer	|  	| The Dealer						| 		| 198?	| Epos Corporati| EPOS Tristar	| Incorrect Colors			|
 | md_deathret	|  	| The Death and Return of Superman (USA)		| 		| 1995	| Sunsoft	| Sega Megadrive| 					|
 | thedeep	|  	| The Deep (Japan)					| 		| 1987	| Woodplace Inc.| Miscellaneous	| 					|

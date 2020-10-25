@@ -999,6 +999,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="captaindrexx" romof="spec128">
+		<description>Captain Drexx (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Vladimir Burenko</manufacturer>
+		<rom name="Captain Drexx (2014)(Vladimir Burenko).tap" size="38766" crc="1c7be669"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="carwars" romof="spec128">
 		<description>Car Wars (HB) [Homebrew]</description>
 		<year>2017</year>
@@ -1298,6 +1307,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="complicadx" romof="spec128">
+		<description>Complica DX (HB) [Homebrew, Play with Keys 1-4]</description>
+		<year>2015</year>
+		<manufacturer>Einar Saukas</manufacturer>
+		<rom name="Complica DX (2015)(Einar Saukas).tap" size="48389" crc="4a72648f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="contcirc" romof="spec128">
 		<description>Continental Circus (128K)</description>
 		<year>1989</year>
@@ -1595,9 +1613,9 @@
 	</game>
 	<game name="dingo" romof="spec128">
 		<description>Dingo (HB) [Homebrew]</description>
-		<year>2011</year>
+		<year>2015</year>
 		<manufacturer>Sokurah, Tardis</manufacturer>
-		<rom name="Dingo (2011)(Sokurah, Tardis).tap" size="42152" crc="4044d8f2"/>
+		<rom name="Dingo (2015)(Sokurah, Tardis).tap" size="41567" crc="b22b60c3"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3267,6 +3285,15 @@
 		<year>1990</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Lorna (1990)(Topo Soft)(Sp).tap" size="118666" crc="a09afe9a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="brunilda" romof="spec128">
+		<description>Los Amores De Brunilda (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>RetroWorks</manufacturer>
+		<rom name="Los Amores De Brunilda (2013)(RetroWorks).tap" size="85072" crc="bfa8a647"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5069,6 +5096,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="snakeescape" romof="spec128">
+		<description>Snake Escape (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>Einar Saukas</manufacturer>
+		<rom name="Snake Escape (2016)(Einar Saukas).tap" size="39093" crc="870cc8cd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="snoopy" romof="spectrum">
 		<description>Snoopy</description>
 		<year>1990</year>
@@ -5187,6 +5223,15 @@
 		<manufacturer>Electric Dreams</manufacturer>
 		<rom name="Spindizzy (1986)(Electric Dreams).tap" size="47877" crc="568a095a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="splattr" romof="spec128">
+		<description>splATTR (HB) [Homebrew]</description>
+		<year>2008</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="splATTR (2008)(Bob Smith).tap" size="87068" crc="c1c7b410"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="springbot" romof="spec128">
@@ -5439,6 +5484,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="sunbucket" romof="spec128">
+		<description>Sun Bucket (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Stonechat</manufacturer>
+		<rom name="Sun Bucket (2014)(Stonechat).tap" size="44159" crc="d9761fa3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="shangon" romof="spectrum">
 		<description>Super Hang-On - Part 1 - Beginner (48K)</description>
 		<year>1986</year>
@@ -5659,6 +5713,15 @@
 		<year>2020</year>
 		<manufacturer>VolcanoBytes</manufacturer>
 		<rom name="The Curse of Trasmoz (2020)(VolcanoBytes).tap" size="48706" crc="8649a0b2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thedark" romof="spec128">
+		<description>The Dark (HB) [Homebrew]</description>
+		<year>1997</year>
+		<manufacturer>Oleg Origin</manufacturer>
+		<rom name="The Dark (1997)(Oleg Origin).tap" size="42940" crc="8b93b94c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

@@ -167,6 +167,13 @@
 		<rom name="aaahh!!! real monsters (usa).bin" size="2097152" crc="fdc80bfc"/>
 		<driver status="good"/>
 	</game>
+	<game name="action52s" cloneof="action52" romof="action52">
+		<description>Action 52 (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Active Enterprises</manufacturer>
+		<rom name="Action 52 (Hack, Spanish).bin" size="2097152" crc="26e09366"/>
+		<driver status="good"/>
+	</game>
 	<game name="action52">
 		<description>Action 52 (USA)</description>
 		<year>1993</year>
@@ -193,6 +200,13 @@
 		<year>1994</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="addams family values (euro).bin" size="2097152" crc="b906b992"/>
+		<driver status="good"/>
+	</game>
+	<game name="addfamvs" cloneof="addfamv" romof="addfamv">
+		<description>Addams Family Values (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="addams family values (Hack, Spanish).bin" size="2101280" crc="07cf6ffd"/>
 		<driver status="good"/>
 	</game>
 	<game name="advdaisn">
@@ -223,6 +237,13 @@
 		<rom name="mpr-16603.bin" size="1048576" crc="1a3eaf57"/>
 		<driver status="good"/>
 	</game>
+	<game name="aeros" cloneof="aero" romof="aero">
+		<description>Aero The Acro-Bat (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="aero the acro-bat (Hack, Spanish).bin" size="1048576" crc="fcaf58d3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aerop" cloneof="aero" romof="aero">
 		<description>Aero the Acro-Bat (Prototype)</description>
 		<year>1993</year>
@@ -242,6 +263,13 @@
 		<year>1994</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="mpr-17303.ic1" size="2097152" crc="a451f9a1"/>
+		<driver status="good"/>
+	</game>
+	<game name="aero2s" cloneof="aero2" romof="aero2">
+		<description>Aero The Acro-Bat 2 (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="aero the acro-bat 2 (Hack, Spanish).bin" size="2097152" crc="096c0978"/>
 		<driver status="good"/>
 	</game>
 	<game name="aero2u" cloneof="aero2" romof="aero2">
@@ -272,6 +300,13 @@
 		<rom name="mpr-13261.bin" size="524288" crc="ccafe00e"/>
 		<driver status="good"/>
 	</game>
+	<game name="aburner2s" cloneof="aburner2" romof="aburner2">
+		<description>After Burner II (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="after burner II (Hack, Spanish).bin" size="524288" crc="2e08b330"/>
+		<driver status="good"/>
+	</game>
 	<game name="aburner2j" cloneof="aburner2" romof="aburner2">
 		<description>After Burner II (Jpn)</description>
 		<year>1990</year>
@@ -284,6 +319,13 @@
 		<year>1991</year>
 		<manufacturer>Kaneko</manufacturer>
 		<rom name="air buster (usa).bin" size="524288" crc="f3d65baa"/>
+		<driver status="good"/>
+	</game>
+	<game name="airdivers" cloneof="airdiver" romof="airdiver">
+		<description>Air Diver (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Seismic</manufacturer>
+		<rom name="air diver (Hack, Spanish).bin" size="524288" crc="3ce6094a"/>
 		<driver status="good"/>
 	</game>
 	<game name="airdiverj" cloneof="airdiver" romof="airdiver">
@@ -349,6 +391,13 @@
 		<rom name="mpr-12608a.ic1" size="262144" crc="778a0f00"/>
 		<driver status="good"/>
 	</game>
+	<game name="alexkidds" cloneof="alexkidd" romof="alexkidd">
+		<description>Alex Kidd In The Enchanted Castle (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd in the enchanted castle (Hack, Spanish).bin" size="262144" crc="d2f3a29e"/>
+		<driver status="good"/>
+	</game>
 	<game name="alexkiddj" cloneof="alexkidd" romof="alexkidd">
 		<description>Alex Kidd in the Enchanted Castle (Jpn)</description>
 		<year>1989</year>
@@ -363,6 +412,13 @@
 		<rom name="alex kidd in the enchanted castle (usa).bin" size="262144" crc="47dba0ac"/>
 		<driver status="good"/>
 	</game>
+	<game name="alien3s" cloneof="alien3" romof="alien3">
+		<description>Alien 3 (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Arena</manufacturer>
+		<rom name="alien3 (Hack, Spanish).bin" size="524288" crc="701d308e"/>
+		<driver status="good"/>
+	</game>
 	<game name="aliensol">
 		<description>Alien Soldier (Euro)</description>
 		<year>1995</year>
@@ -370,11 +426,25 @@
 		<rom name="alien soldier (euro).bin" size="2097152" crc="0496e06c"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensols" cloneof="aliensol" romof="aliensol">
+		<description>Alien Soldier (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Treasure</manufacturer>
+		<rom name="alien soldier (Hack, Spanish).bin" size="2097152" crc="ab991070"/>
+		<driver status="good"/>
+	</game>
 	<game name="aliensolj" cloneof="aliensol" romof="aliensol">
 		<description>Alien Soldier (Jpn)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="alien soldier (jpn).bin" size="2097152" crc="90fa1539"/>
+		<driver status="good"/>
+	</game>
+	<game name="astorms" cloneof="astorm" romof="astorm">
+		<description>Alien Storm (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Alien Storm (Hack, Spanish).bin" size="524288" crc="f79748ce"/>
 		<driver status="good"/>
 	</game>
 	<game name="astorm">
@@ -405,6 +475,13 @@
 		<rom name="mpr-14680.ic1" size="1048576" crc="28165bd1"/>
 		<driver status="good"/>
 	</game>
+	<game name="alisiads" cloneof="alisiad" romof="alisiad">
+		<description>Alisia Dragoon (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alisia dragoon (Hack, Spanish).bin" size="1048576" crc="13fc10e1"/>
+		<driver status="good"/>
+	</game>
 	<game name="alisiadj" cloneof="alisiad" romof="alisiad">
 		<description>Alisia Dragoon (Jpn)</description>
 		<year>1992</year>
@@ -424,6 +501,13 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12538.bin" size="524288" crc="154d59bb"/>
+		<driver status="good"/>
+	</game>
+	<game name="altbeasts" cloneof="altbeast" romof="altbeast">
+		<description>Altered Beast (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="altered beast (Hack, Spanish).bin" size="524288" crc="e4ea5e40"/>
 		<driver status="good"/>
 	</game>
 	<game name="alterego">
@@ -466,6 +550,13 @@
 		<year>1994</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="fx014a1.bin" size="1048576" crc="92b6f255"/>
+		<driver status="good"/>
+	</game>
+	<game name="animanias" cloneof="animania" romof="animania">
+		<description>Animaniacs (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="animaniacs (Hack, Spanish).bin" size="1048576" crc="cceaf148"/>
 		<driver status="good"/>
 	</game>
 	<game name="animaniau" cloneof="animania" romof="animania">
@@ -545,6 +636,13 @@
 		<rom name="mpr-12645.bin" size="524288" crc="35b995ef"/>
 		<driver status="good"/>
 	</game>
+	<game name="arrows" cloneof="arrow" romof="arrow">
+		<description>Arrow Flash (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="arrow flash (Hack, Spanish).bin" size="524288" crc="06421584"/>
+		<driver status="good"/>
+	</game>
 	<game name="arrowp" cloneof="arrow" romof="arrow">
 		<description>Arrow Flash (USA, Prototype)</description>
 		<year>1990</year>
@@ -578,6 +676,13 @@
 		<year>2015</year>
 		<manufacturer>Sega - Pyron</manufacturer>
 		<rom name="art of fighting (enhanced colors).md" size="2097152" crc="f28b2502"/>
+		<driver status="good"/>
+	</game>
+	<game name="aofs" cloneof="aof" romof="aof">
+		<description>Art Of Fighting (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="art of fighting (Hack, Spanish).bin" size="2097152" crc="60ffdc60"/>
 		<driver status="good"/>
 	</game>
 	<game name="aofp" cloneof="aof" romof="aof">
@@ -650,6 +755,13 @@
 		<rom name="asterix and the power of the gods (euro) (beta).bin" size="2097152" crc="45c8b5b7"/>
 		<driver status="good"/>
 	</game>
+	<game name="atomrobos" cloneof="atomrobo" romof="atomrobo">
+		<description>Atomic Robo-Kid (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Treco</manufacturer>
+		<rom name="atomic robo-kid (Hack, Spanish).bin" size="524288" crc="ce250d1b"/>
+		<driver status="good"/>
+	</game>
 	<game name="atomroboj" cloneof="atomrobo" romof="atomrobo">
 		<description>Atomic Robo-Kid (Jpn)</description>
 		<year>1990</year>
@@ -669,6 +781,13 @@
 		<year>1992</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="mpr-15286.bin" size="1048576" crc="b3c05418"/>
+		<driver status="good"/>
+	</game>
+	<game name="atomruns" cloneof="atomrun" romof="atomrun">
+		<description>Atomic Runner (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="atomic runner (Hack, Spanish).bin" size="1048576" crc="930a9593"/>
 		<driver status="good"/>
 	</game>
 	<game name="atomrunu" cloneof="atomrun" romof="atomrun">
@@ -3371,6 +3490,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15153.bin" size="524288" crc="58e297df"/>
+		<driver status="good"/>
+	</game>
+	<game name="ariels" cloneof="ariel" romof="ariel">
+		<description>Disney's Ariel the Little Mermaid (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ariel (Hack, Spanish).bin" size="524288" crc="599a1bfb"/>
 		<driver status="good"/>
 	</game>
 	<game name="beauty">

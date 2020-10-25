@@ -33,24 +33,24 @@ static UINT8 SpecInputPort12[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // keyboard (128K) E
 static UINT8 SpecInputPort13[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // keyboard (128K) Extra Keys
 static UINT8 SpecInputPort14[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // keyboard (128K) Extra Keys
 static UINT8 SpecInputPort15[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // keyboard (128K) Extra Keys
-static UINT8 SpecDIP[2]         = {0, 0};
-static UINT8 SpecInput[16]      = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-static UINT8 SpecReset          = 0;
+static UINT8 SpecDIP[1];
+static UINT8 SpecInput[16];
+static UINT8 SpecReset;
 
-static UINT8 *AllMem            = NULL;
-static UINT8 *MemEnd            = NULL;
-static UINT8 *RamStart          = NULL;
-static UINT8 *RamEnd            = NULL;
-UINT8 *SpecZ80Rom               = NULL;
-UINT8 *SpecVideoRam             = NULL;
-UINT8 *SpecSnapshotData         = NULL;
-UINT8 *SpecTAP			        = NULL;
-INT32  SpecTAPLen               = 0;
-UINT8 *SpecZ80Ram               = NULL;
-static UINT32 *SpecPalette      = NULL;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *RamStart;
+static UINT8 *RamEnd;
+UINT8 *SpecZ80Rom;
+UINT8 *SpecVideoRam;
+UINT8 *SpecSnapshotData;
+UINT8 *SpecTAP;
+INT32  SpecTAPLen;
+UINT8 *SpecZ80Ram;
+static UINT32 *SpecPalette;
 static UINT8 SpecRecalc;
 
-static INT16 *Buzzer = NULL;
+static INT16 *Buzzer;
 
 static UINT8 ula_attr;
 static UINT8 ula_scr;
@@ -72,136 +72,137 @@ INT32 nPort7FFDData = -1;
 
 static INT32 SpecIsSpec128 = 0;
 
-static INT16 *dacbuf; // for dc offset removal & sinc filter
+static INT16 *dacbuf; // for dc offset filter
 static INT16 dac_lastin;
 static INT16 dac_lastout;
 
 static struct BurnInputInfo SpecInputList[] =
 {
-	{"Kempston Up"          , BIT_DIGITAL  , SpecInputPort8 + 3 , "p1 up"            },
-	{"Kempston Down"        , BIT_DIGITAL  , SpecInputPort8 + 2 , "p1 down"          },
-	{"Kempston Left"        , BIT_DIGITAL  , SpecInputPort8 + 1 , "p1 left"          },
-	{"Kempston Right"       , BIT_DIGITAL  , SpecInputPort8 + 0 , "p1 right"         },
-	{"Kempston Fire"        , BIT_DIGITAL  , SpecInputPort8 + 4 , "p1 fire 1"        },
+	{"P1 Up",			BIT_DIGITAL,	SpecInputPort8 + 3,	"p1 up"				},
+	{"P1 Down",			BIT_DIGITAL,	SpecInputPort8 + 2,	"p1 down"			},
+	{"P1 Left",			BIT_DIGITAL,	SpecInputPort8 + 1,	"p1 left"			},
+	{"P1 Right",		BIT_DIGITAL,	SpecInputPort8 + 0,	"p1 right"			},
+	{"P1 Fire",			BIT_DIGITAL,	SpecInputPort8 + 4,	"p1 fire 1"			},
 
-	{"Intf2 Stick 1 Up"     , BIT_DIGITAL  , SpecInputPort9 + 1 , "p1 up"            },
-	{"Intf2 Stick 1 Down"   , BIT_DIGITAL  , SpecInputPort9 + 2 , "p1 down"          },
-	{"Intf2 Stick 1 Left"   , BIT_DIGITAL  , SpecInputPort9 + 4 , "p1 left"          },
-	{"Intf2 Stick 1 Right"  , BIT_DIGITAL  , SpecInputPort9 + 3 , "p1 right"         },
-	{"Intf2 Stick 1 Fire"   , BIT_DIGITAL  , SpecInputPort9 + 0 , "p1 fire 1"        },
+	{"P2 Up",			BIT_DIGITAL,	SpecInputPort10 + 3,"p2 up"				},
+	{"P2 Down",			BIT_DIGITAL,	SpecInputPort10 + 2,"p2 down"			},
+	{"P2 Left",			BIT_DIGITAL,	SpecInputPort10 + 0,"p2 left"			},
+	{"P2 Right",		BIT_DIGITAL,	SpecInputPort10 + 1,"p2 right"			},
+	{"P2 Fire",			BIT_DIGITAL,	SpecInputPort10 + 4,"p2 fire 1"			},
 
-	{"Intf2 Stick 2 Up"     , BIT_DIGITAL  , SpecInputPort10 + 3, "p2 up"            },
-	{"Intf2 Stick 2 Down"   , BIT_DIGITAL  , SpecInputPort10 + 2, "p2 down"          },
-	{"Intf2 Stick 2 Left"   , BIT_DIGITAL  , SpecInputPort10 + 0, "p2 left"          },
-	{"Intf2 Stick 2 Right"  , BIT_DIGITAL  , SpecInputPort10 + 1, "p2 right"         },
-	{"Intf2 Stick 2 Fire"   , BIT_DIGITAL  , SpecInputPort10 + 4, "p2 fire 1"        },
+	{"ENTER",			BIT_DIGITAL,	SpecInputPort6 + 0, "keyb_enter"		},
+	{"SPACE",			BIT_DIGITAL,	SpecInputPort7 + 0, "keyb_space"		},
+	{"CAPS SHIFT",		BIT_DIGITAL,	SpecInputPort0 + 0, "keyb_left_shift"   },
+	{"SYMBOL SHIFT",	BIT_DIGITAL,	SpecInputPort7 + 1, "keyb_right_shift"  },
+	{"Q",				BIT_DIGITAL,	SpecInputPort2 + 0, "keyb_Q"		    },
+	{"W",				BIT_DIGITAL,	SpecInputPort2 + 1, "keyb_W"		    },
+	{"E",				BIT_DIGITAL,	SpecInputPort2 + 2, "keyb_E"		    },
+	{"R",				BIT_DIGITAL,	SpecInputPort2 + 3, "keyb_R"		    },
+	{"T",				BIT_DIGITAL,	SpecInputPort2 + 4, "keyb_T"		    },
+	{"Y",				BIT_DIGITAL,	SpecInputPort5 + 4, "keyb_Y"		    },
+	{"U",				BIT_DIGITAL,	SpecInputPort5 + 3, "keyb_U"		    },
+	{"I",				BIT_DIGITAL,	SpecInputPort5 + 2, "keyb_I"		    },
+	{"O",				BIT_DIGITAL,	SpecInputPort5 + 1, "keyb_O"		    },
+	{"P",				BIT_DIGITAL,	SpecInputPort5 + 0, "keyb_P"		    },
+	{"A",				BIT_DIGITAL,	SpecInputPort1 + 0, "keyb_A"		    },
+	{"S",				BIT_DIGITAL,	SpecInputPort1 + 1, "keyb_S"		    },
+	{"D",				BIT_DIGITAL,	SpecInputPort1 + 2, "keyb_D"		    },
+	{"F",				BIT_DIGITAL,	SpecInputPort1 + 3, "keyb_F"		    },
+	{"G",				BIT_DIGITAL,	SpecInputPort1 + 4, "keyb_G"		    },
+	{"H",				BIT_DIGITAL,	SpecInputPort6 + 4, "keyb_H"		    },
+	{"J",				BIT_DIGITAL,	SpecInputPort6 + 3, "keyb_J"		    },
+	{"K",				BIT_DIGITAL,	SpecInputPort6 + 2, "keyb_K"		    },
+	{"L",				BIT_DIGITAL,	SpecInputPort6 + 1, "keyb_L"		    },
+	{"Z",				BIT_DIGITAL,	SpecInputPort0 + 1, "keyb_Z"		    },
+	{"X",				BIT_DIGITAL,	SpecInputPort0 + 2, "keyb_X"		    },
+	{"C",				BIT_DIGITAL,	SpecInputPort0 + 3, "keyb_C"		    },
+	{"V",				BIT_DIGITAL,	SpecInputPort0 + 4, "keyb_V"		    },
+	{"B",				BIT_DIGITAL,	SpecInputPort7 + 4, "keyb_B"		    },
+	{"N",				BIT_DIGITAL,	SpecInputPort7 + 3, "keyb_N"		    },
+	{"M",				BIT_DIGITAL,	SpecInputPort7 + 2, "keyb_M"		    },
+	{"1",				BIT_DIGITAL,	SpecInputPort3 + 0, "keyb_1"		    },
+	{"2",				BIT_DIGITAL,	SpecInputPort3 + 1, "keyb_2"		    },
+	{"3",				BIT_DIGITAL,	SpecInputPort3 + 2, "keyb_3"		    },
+	{"4",				BIT_DIGITAL,	SpecInputPort3 + 3, "keyb_4"		    },
+	{"5",				BIT_DIGITAL,	SpecInputPort3 + 4, "keyb_5"		    },
+	{"6",				BIT_DIGITAL,	SpecInputPort4 + 4, "keyb_6"		    },
+	{"7",				BIT_DIGITAL,	SpecInputPort4 + 3, "keyb_7"		    },
+	{"8",				BIT_DIGITAL,	SpecInputPort4 + 2, "keyb_8"		    },
+	{"9",				BIT_DIGITAL,	SpecInputPort4 + 1, "keyb_9"		    },
+	{"0",				BIT_DIGITAL,	SpecInputPort4 + 0, "keyb_0"		    },
 
-	{"ENTER"				, BIT_DIGITAL  , SpecInputPort6 + 0, "keyb_enter"        },
-	{"SPACE"				, BIT_DIGITAL  , SpecInputPort7 + 0, "keyb_space"        },
-	{"CAPS SHIFT"			, BIT_DIGITAL  , SpecInputPort0 + 0, "keyb_left_shift"   },
-	{"SYMBOL SHIFT"			, BIT_DIGITAL  , SpecInputPort7 + 1, "keyb_right_shift"  },
-	{"Q"					, BIT_DIGITAL  , SpecInputPort2 + 0, "keyb_Q"            },
-	{"W"					, BIT_DIGITAL  , SpecInputPort2 + 1, "keyb_W"            },
-	{"E"					, BIT_DIGITAL  , SpecInputPort2 + 2, "keyb_E"            },
-	{"R"					, BIT_DIGITAL  , SpecInputPort2 + 3, "keyb_R"            },
-	{"T"					, BIT_DIGITAL  , SpecInputPort2 + 4, "keyb_T"            },
-	{"Y"					, BIT_DIGITAL  , SpecInputPort5 + 4, "keyb_Y"            },
-	{"U"					, BIT_DIGITAL  , SpecInputPort5 + 3, "keyb_U"            },
-	{"I"					, BIT_DIGITAL  , SpecInputPort5 + 2, "keyb_I"            },
-	{"O"					, BIT_DIGITAL  , SpecInputPort5 + 1, "keyb_O"            },
-	{"P"					, BIT_DIGITAL  , SpecInputPort5 + 0, "keyb_P"            },
-	{"A"					, BIT_DIGITAL  , SpecInputPort1 + 0, "keyb_A"            },
-	{"S"					, BIT_DIGITAL  , SpecInputPort1 + 1, "keyb_S"            },
-	{"D"					, BIT_DIGITAL  , SpecInputPort1 + 2, "keyb_D"            },
-	{"F"					, BIT_DIGITAL  , SpecInputPort1 + 3, "keyb_F"            },
-	{"G"					, BIT_DIGITAL  , SpecInputPort1 + 4, "keyb_G"            },
-	{"H"					, BIT_DIGITAL  , SpecInputPort6 + 4, "keyb_H"            },
-	{"J"					, BIT_DIGITAL  , SpecInputPort6 + 3, "keyb_J"            },
-	{"K"					, BIT_DIGITAL  , SpecInputPort6 + 2, "keyb_K"            },
-	{"L"					, BIT_DIGITAL  , SpecInputPort6 + 1, "keyb_L"            },
-	{"Z"					, BIT_DIGITAL  , SpecInputPort0 + 1, "keyb_Z"            },
-	{"X"					, BIT_DIGITAL  , SpecInputPort0 + 2, "keyb_X"            },
-	{"C"					, BIT_DIGITAL  , SpecInputPort0 + 3, "keyb_C"            },
-	{"V"					, BIT_DIGITAL  , SpecInputPort0 + 4, "keyb_V"            },
-	{"B"					, BIT_DIGITAL  , SpecInputPort7 + 4, "keyb_B"            },
-	{"N"					, BIT_DIGITAL  , SpecInputPort7 + 3, "keyb_N"            },
-	{"M"					, BIT_DIGITAL  , SpecInputPort7 + 2, "keyb_M"            },
-	{"1"					, BIT_DIGITAL  , SpecInputPort3 + 0, "keyb_1"            },
-	{"2"					, BIT_DIGITAL  , SpecInputPort3 + 1, "keyb_2"            },
-	{"3"					, BIT_DIGITAL  , SpecInputPort3 + 2, "keyb_3"            },
-	{"4"					, BIT_DIGITAL  , SpecInputPort3 + 3, "keyb_4"            },
-	{"5"					, BIT_DIGITAL  , SpecInputPort3 + 4, "keyb_5"            },
-	{"6"					, BIT_DIGITAL  , SpecInputPort4 + 4, "keyb_6"            },
-	{"7"					, BIT_DIGITAL  , SpecInputPort4 + 3, "keyb_7"            },
-	{"8"					, BIT_DIGITAL  , SpecInputPort4 + 2, "keyb_8"            },
-	{"9"					, BIT_DIGITAL  , SpecInputPort4 + 1, "keyb_9"            },
-	{"0"					, BIT_DIGITAL  , SpecInputPort4 + 0, "keyb_0"            },
+	{"EDIT",			BIT_DIGITAL,	SpecInputPort11 + 0, "keyb_insert"		},
+	{"CAPS LOCK",		BIT_DIGITAL,	SpecInputPort11 + 1, "keyb_caps_lock"	},
+	{"TRUE VID",		BIT_DIGITAL,	SpecInputPort11 + 2, "keyb_home"		},
+	{"INV VID",			BIT_DIGITAL,	SpecInputPort11 + 3, "keyb_end"			},
 
-	{"EDIT"					, BIT_DIGITAL  , SpecInputPort11 + 0, "keyb_insert"      },
-	{"CAPS LOCK"			, BIT_DIGITAL  , SpecInputPort11 + 1, "keyb_caps_lock"   },
-	{"TRUE VID"				, BIT_DIGITAL  , SpecInputPort11 + 2, "keyb_home"        },
-	{"INV VID"				, BIT_DIGITAL  , SpecInputPort11 + 3, "keyb_end"         },
+	{"DEL",				BIT_DIGITAL,	SpecInputPort12 + 0, "keyb_backspace"	},
+	{"GRAPH",			BIT_DIGITAL,	SpecInputPort12 + 1, "keyb_left_alt"	},
 
-	{"DEL"					, BIT_DIGITAL  , SpecInputPort12 + 0, "keyb_backspace"   },
-	{"GRAPH"				, BIT_DIGITAL  , SpecInputPort12 + 1, "keyb_left_alt"    },
+	{"Cursor Up",		BIT_DIGITAL,	SpecInputPort12 + 3, "keyb_cursor_up"	}, // don't auto-map these cursors by default
+	{"Cursor Down",		BIT_DIGITAL,	SpecInputPort12 + 4, "keyb_cursor_down"	}, // causes trouble w/games when using cursors
+	{"Cursor Left",		BIT_DIGITAL,	SpecInputPort11 + 4, "keyb_cursor_left"	}, // as joystick! (yie ar kungfu, ...)
+	{"Cursor Right",	BIT_DIGITAL,	SpecInputPort12 + 2, "keyb_cursor_right"},
 
-	{"Cursor Up"			, BIT_DIGITAL  , SpecInputPort12 + 3, "keyb_cursor_up"   }, // don't auto-map these cursors by default
-	{"Cursor Down"			, BIT_DIGITAL  , SpecInputPort12 + 4, "keyb_cursor_down" }, // causes trouble w/games when using cursors
-	{"Cursor Left"			, BIT_DIGITAL  , SpecInputPort11 + 4, "keyb_cursor_left" }, // as joystick! (yie ar kungfu, ...)
-	{"Cursor Right"			, BIT_DIGITAL  , SpecInputPort12 + 2, "keyb_cursor_right"},
+	{"BREAK",			BIT_DIGITAL,	SpecInputPort13 + 0, "keyb_pause"		},
+	{"EXT MODE",		BIT_DIGITAL,	SpecInputPort13 + 1, "keyb_left_ctrl"	},
 
-	{"BREAK"				, BIT_DIGITAL  , SpecInputPort13 + 0, "keyb_pause"       },
-	{"EXT MODE"				, BIT_DIGITAL  , SpecInputPort13 + 1, "keyb_left_ctrl"   },
+	{"\"",				BIT_DIGITAL,	SpecInputPort14 + 0, "keyb_apost"		},
+	{";",				BIT_DIGITAL,	SpecInputPort14 + 1, "keyb_colon"		},
 
-	{"\""					, BIT_DIGITAL  , SpecInputPort14 + 0, "keyb_apost"       },
-	{";"					, BIT_DIGITAL  , SpecInputPort14 + 1, "keyb_colon"       },
+	{".",				BIT_DIGITAL,	SpecInputPort15 + 0, "keyb_stop"		},
+	{",",				BIT_DIGITAL,	SpecInputPort15 + 1, "keyb_comma"		},
 
-	{"."					, BIT_DIGITAL  , SpecInputPort15 + 0, "keyb_stop"        },
-	{","					, BIT_DIGITAL  , SpecInputPort15 + 1, "keyb_comma"       },
-
-	{"Reset"				, BIT_DIGITAL  , &SpecReset        , "reset"             },
-	{"Dip 1"				, BIT_DIPSWITCH, SpecDIP + 0       , "dip"               },
+	{"Reset",			BIT_DIGITAL,	&SpecReset,			"reset"				},
+	{"Dip 1",			BIT_DIPSWITCH,	SpecDIP + 0,		"dip"				},
 };
 
 STDINPUTINFO(Spec)
 
 static struct BurnDIPInfo SpecDIPList[]=
 {
-	// Default Values (Issue 3 HW)
-	DIP_OFFSET(72)
+	DIP_OFFSET(0x43)
 
-	{0, 0xfe, 0   , 2   , "Hardware Version"       },
-	{0, 0x01, 0x80, 0x00, "Issue 2"                },
-	{0, 0x01, 0x80, 0x80, "Issue 3"                },
+	{0, 0xfe, 0   , 2   , "Hardware Version"		},
+	{0, 0x01, 0x80, 0x00, "Issue 2"					},
+	{0, 0x01, 0x80, 0x80, "Issue 3"					},
 
-	{0, 0xfe, 0   , 3   , "Map Kempston to Keys"   },
-	{0, 0x01, 0x03, 0x00, "Disabled"               },
-	{0, 0x01, 0x03, 0x01, "QAOPM"                  },
-	{0, 0x01, 0x03, 0x02, "QAOP Space"             },
+	{0, 0xfe, 0   , 5   , "Joystick Config"			},
+	{0, 0x01, 0x0f, 0x00, "Kempston"				},
+	{0, 0x01, 0x0f, 0x01, "Sinclair Interface 2"	},
+	{0, 0x01, 0x0f, 0x02, "QAOPM"					},
+	{0, 0x01, 0x0f, 0x04, "QAOP Space"				},
+	{0, 0x01, 0x0f, 0x08, "Disabled"				},
 };
 
 static struct BurnDIPInfo SpecDefaultDIPList[]=
 {
-	{0, 0xff, 0xff, 0x80, NULL                     }, // Issue 3 (Blinky's Scary School requires issue 3)
+	{0, 0xff, 0xff, 0x80, NULL						}, // Issue 3 + Kempston (Blinky's Scary School requires issue 3)
 };
 
 static struct BurnDIPInfo SpecIssue2DIPList[]=
 {
-	{0, 0xff, 0xff, 0x00, NULL                     }, // Issue 2 (Abu Simbel requires issue 2)
+	{0, 0xff, 0xff, 0x00, NULL						}, // Issue 2 + Kempston (Abu Simbel requires issue 2)
+};
+
+static struct BurnDIPInfo SpecIntf2DIPList[]=
+{
+	{0, 0xff, 0xff, 0x81, NULL						}, // Sinclair Interface 2 (2 Joysticks)
 };
 
 static struct BurnDIPInfo SpecQAOPMDIPList[]=
 {
-	{0, 0xff, 0xff, 0x81, NULL                     }, // Kempston mapped to QAOPM (moon ranger)
+	{0, 0xff, 0xff, 0x82, NULL						}, // Kempston mapped to QAOPM (moon ranger)
 };
 
 static struct BurnDIPInfo SpecQAOPSpaceDIPList[]=
 {
-	{0, 0xff, 0xff, 0x82, NULL                     }, // Kempston mapped to QAOPSpace (jet pack bob)
+	{0, 0xff, 0xff, 0x84, NULL						}, // Kempston mapped to QAOPSpace (jet pack bob)
 };
 
 STDDIPINFOEXT(Spec, SpecDefault, Spec)
 STDDIPINFOEXT(SpecIssue2, SpecIssue2, Spec)
+STDDIPINFOEXT(SpecIntf2, SpecIntf2, Spec)
 STDDIPINFOEXT(SpecQAOPM, SpecQAOPM, Spec)
 STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
 
@@ -460,56 +461,6 @@ static void BuzzerRender(INT16 *dest)
 
 // end Oversampling Buzzer-DAC
 
-INT32 SpectrumGetZipName(char** pszName, UINT32 i)
-{
-	static char szFilename[MAX_PATH];
-	char* pszGameName = NULL;
-
-	if (pszName == NULL) {
-		return 1;
-	}
-
-	if (i == 0) {
-		pszGameName = BurnDrvGetTextA(DRV_NAME);
-	} else {
-		if (i == 1 && BurnDrvGetTextA(DRV_BOARDROM)) {
-			pszGameName = BurnDrvGetTextA(DRV_BOARDROM);
-		} else {
-			pszGameName = BurnDrvGetTextA(DRV_PARENT);
-		}
-	}
-
-	if (pszGameName == NULL || i > 2) {
-		*pszName = NULL;
-		return 1;
-	}
-
-	// remove leader
-	memset(szFilename, 0, MAX_PATH);
-	for (UINT32 j = 0; j < (strlen(pszGameName) - 5); j++) {
-		szFilename[j] = pszGameName[j + 5];
-	}
-
-	*pszName = szFilename;
-
-	return 0;
-}
-
-static struct BurnRomInfo SpectrumRomDesc[] = {
-	{ "spectrum.rom",  0x04000, 0xddee531f, BRF_BIOS },
-};
-
-STD_ROM_PICK(Spectrum)
-STD_ROM_FN(Spectrum)
-
-static struct BurnRomInfo Spec128RomDesc[] = {
-	{ "zx128_0.rom",   0x04000, 0xe76799d2, BRF_BIOS },
-	{ "zx128_1.rom",   0x04000, 0xb96a36be, BRF_BIOS },
-};
-
-STD_ROM_PICK(Spec128)
-STD_ROM_FN(Spec128)
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
@@ -628,6 +579,7 @@ static INT32 check_shifts()
 static UINT8 read_keyboard(UINT16 address)
 {
 	UINT8 keytmp = 0xff;
+
 	for (INT32 i = 0; i < 8; i++) { // process all kbd rows
 		if (~address & (1 << (i+8))) {
 			switch (i) {
@@ -674,7 +626,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 	}
 
 	if ((address & 0x1f) == 0x1f && (address & 0xe0) == 0) {
-		return SpecInput[8] & 0x1f; // kempston
+		return SpecInput[8]; // kempston (returns 0xff if disabled)
 	}
 
 	return ula_byte; // Floating Memory
@@ -762,7 +714,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 	}
 
 	if ((address & 0x1f) == 0x1f && (address & 0xe0) == 0) {
-		return SpecInput[8] & 0x1f; // kempston
+		return SpecInput[8]; // kempston
 	}
 
 	if ((address & 0xc002) == 0xc000) {
@@ -1283,33 +1235,31 @@ static INT32 SpecFrame()
 
 	{
 		SpecInput[0] = SpecInput[1] = SpecInput[2] = SpecInput[3] = SpecInput[4] = SpecInput[5] = SpecInput[6] = SpecInput[7] = 0x1f;
-		SpecInput[9] = SpecInput[10] = SpecInput[11] = SpecInput[12] = SpecInput[13] = SpecInput[14] = SpecInput[15] = 0x1f;
-		SpecInput[8] = 0x00;
+		SpecInput[11] = SpecInput[12] = SpecInput[13] = SpecInput[14] = SpecInput[15] = 0x1f;
 
-		if (SpecDIP[0] & 0x03) { // map Kempston to QAOPM/QAOP SPACE
-			if (SpecInputPort8[3]) { // Up
-				SpecInputPort2[0] = 1; // Q
-			}
-			if (SpecInputPort8[2]) { // Down
-				SpecInputPort1[0] = 1; // A
-			}
-			if (SpecInputPort8[1]) { // Left
-				SpecInputPort5[1] = 1; // O
-			}
-			if (SpecInputPort8[0]) { // Right
-				SpecInputPort5[0] = 1; // P
-			}
+		SpecInput[8] = 0x00; // kempston joy (active high)
+		SpecInput[9] = SpecInput[10] = 0x1f; // intf2 joy (active low)
 
-			switch (SpecDIP[0] & 0x03) {
-				case 0x01:
-					if (SpecInputPort8[4]) { // Fire
-						SpecInputPort7[2] = 1; // M
-					}
-					break;
+		if (SpecDIP[0] & 0x01) { // map joy1 to intf2
+			SpecInputPort9[1] = SpecInputPort8[3];
+			SpecInputPort9[2] = SpecInputPort8[2];
+			SpecInputPort9[4] = SpecInputPort8[1];
+			SpecInputPort9[3] = SpecInputPort8[0];
+			SpecInputPort9[0] = SpecInputPort8[4];
+		}
+
+		if (SpecDIP[0] & (0x02|0x04)) { // map Kempston to QAOPM/QAOP SPACE
+			SpecInputPort2[0] = SpecInputPort8[3]; // Up -> Q
+			SpecInputPort1[0] = SpecInputPort8[2]; // Down -> A
+			SpecInputPort5[1] = SpecInputPort8[1]; // Left -> O
+			SpecInputPort5[0] = SpecInputPort8[0]; // Right -> P
+
+			switch (SpecDIP[0] & (0x02|0x04)) {
 				case 0x02:
-					if (SpecInputPort8[4]) { // Fire
-						SpecInputPort7[0] = 1; // Space
-					}
+					SpecInputPort7[2] = SpecInputPort8[4]; // Fire -> M
+					break;
+				case 0x04:
+					SpecInputPort7[0] = SpecInputPort8[4]; // Fire -> Space
 					break;
 			}
 		}
@@ -1332,6 +1282,14 @@ static INT32 SpecFrame()
 			SpecInput[14] ^= (SpecInputPort14[i] & 1) << i;
 			SpecInput[15] ^= (SpecInputPort15[i] & 1) << i;
 		}
+
+		// Disable inactive hw
+		if ((SpecDIP[0] & 0x0f) != 0x00) { // kempston not selected
+			SpecInput[8] = 0xff; // kempston joy (active high, none present returns 0xff)
+		}
+		if ((SpecDIP[0] & 0x0f) != 0x01) { // intf2 not selected
+			SpecInput[9] = SpecInput[10] = 0x1f; // intf2 joy (active low)
+		}
 	}
 
 	if (pBurnDraw) SpecCalcPalette();
@@ -1346,7 +1304,7 @@ static INT32 SpecFrame()
 
 	for (nScanline = 0; nScanline < SpecScanlines; nScanline++) {
 		if (nScanline == 0) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDo += 32;
 			nCyclesDone += ZetRun(32);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -1434,6 +1392,56 @@ static INT32 SpecScan(INT32 nAction, INT32* pnMin)
 
 	return 0;
 }
+
+static INT32 SpectrumGetZipName(char** pszName, UINT32 i)
+{
+	static char szFilename[MAX_PATH];
+	char* pszGameName = NULL;
+
+	if (pszName == NULL) {
+		return 1;
+	}
+
+	if (i == 0) {
+		pszGameName = BurnDrvGetTextA(DRV_NAME);
+	} else {
+		if (i == 1 && BurnDrvGetTextA(DRV_BOARDROM)) {
+			pszGameName = BurnDrvGetTextA(DRV_BOARDROM);
+		} else {
+			pszGameName = BurnDrvGetTextA(DRV_PARENT);
+		}
+	}
+
+	if (pszGameName == NULL || i > 2) {
+		*pszName = NULL;
+		return 1;
+	}
+
+	// remove leader
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 5); j++) {
+		szFilename[j] = pszGameName[j + 5];
+	}
+
+	*pszName = szFilename;
+
+	return 0;
+}
+
+static struct BurnRomInfo SpectrumRomDesc[] = {
+	{ "spectrum.rom",  0x04000, 0xddee531f, BRF_BIOS },
+};
+
+STD_ROM_PICK(Spectrum)
+STD_ROM_FN(Spectrum)
+
+static struct BurnRomInfo Spec128RomDesc[] = {
+	{ "zx128_0.rom",   0x04000, 0xe76799d2, BRF_BIOS },
+	{ "zx128_1.rom",   0x04000, 0xb96a36be, BRF_BIOS },
+};
+
+STD_ROM_PICK(Spec128)
+STD_ROM_FN(Spec128)
 
 struct BurnDriver BurnSpecSpectrumBIOS = {
 	"spec_spectrum", NULL, NULL, NULL, "1984",
@@ -6526,7 +6534,7 @@ struct BurnDriver BurnSpeclotustc = {
 	"Lotus Esprit Turbo Challenge (128K)\0", NULL, "Gremlin Graphics Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpeclotustcRomInfo, SpeclotustcRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpeclotustcRomInfo, SpeclotustcRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Z80128KSnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -9432,7 +9440,7 @@ struct BurnDriver BurnSpecstopexpr = {
 	"Stop the Express (48K)\0", NULL, "Sinclair Research", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecstopexprRomInfo, SpecstopexprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecstopexprRomInfo, SpecstopexprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -11009,7 +11017,7 @@ struct BurnDriver BurnSpecstdragon = {
 	"St. Dragon\0", NULL, "Storm Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecstdragonRomInfo, SpecstdragonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecstdragonRomInfo, SpecstdragonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -11579,7 +11587,7 @@ struct BurnDriver BurnSpecdesperado1trn = {
 	"Desperado (Gunsmoke) (Trainer)\0", NULL, "Topo Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Specdesperado1trnRomInfo, Specdesperado1trnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, Specdesperado1trnRomInfo, Specdesperado1trnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -13218,7 +13226,7 @@ struct BurnDriver BurnSpecjumpjupiter = {
 	"Jumpin' Jupiter (HB)\0", NULL, "Quantum Sheep", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecjumpjupiterRomInfo, SpecjumpjupiterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecjumpjupiterRomInfo, SpecjumpjupiterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

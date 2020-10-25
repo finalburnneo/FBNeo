@@ -15073,3 +15073,136 @@ struct BurnDriver BurnSpecUfo = {
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Los Amores De Brunilda
+
+static struct BurnRomInfo SpecBrunildaRomDesc[] = {
+	{ "Los Amores De Brunilda (2013)(RetroWorks).tap", 85072, 0xbfa8a647, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBrunilda, SpecBrunilda, Spec128)
+STD_ROM_FN(SpecBrunilda)
+
+struct BurnDriver BurnSpecBrunilda = {
+	"spec_brunilda", NULL, "spec_spec128", NULL, "2013",
+	"Los Amores De Brunilda (HB)\0", NULL, "RetroWorks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecBrunildaRomInfo, SpecBrunildaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Captain Drexx
+
+static struct BurnRomInfo SpecCaptaindrexxRomDesc[] = {
+	{ "Captain Drexx (2014)(Vladimir Burenko).tap", 38766, 0x1c7be669, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCaptaindrexx, SpecCaptaindrexx, Spec128)
+STD_ROM_FN(SpecCaptaindrexx)
+
+struct BurnDriver BurnSpecCaptaindrexx = {
+	"spec_captaindrexx", NULL, "spec_spec128", NULL, "2014",
+	"Captain Drexx (HB)\0", NULL, "Vladimir Burenko", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecCaptaindrexxRomInfo, SpecCaptaindrexxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Complica DX
+
+static struct BurnRomInfo SpecComplicadxRomDesc[] = {
+	{ "Complica DX (2015)(Einar Saukas).tap", 48389, 0x4a72648f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecComplicadx, SpecComplicadx, Spec128)
+STD_ROM_FN(SpecComplicadx)
+
+struct BurnDriver BurnSpecComplicadx = {
+	"spec_complicadx", NULL, "spec_spec128", NULL, "2015",
+	"Complica DX (HB)\0", "Play with Keys 1-4", "Einar Saukas", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecComplicadxRomInfo, SpecComplicadxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Snake Escape
+
+static struct BurnRomInfo SpecSnakeescapeRomDesc[] = {
+	{ "Snake Escape (2016)(Einar Saukas).tap", 39093, 0x870cc8cd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSnakeescape, SpecSnakeescape, Spec128)
+STD_ROM_FN(SpecSnakeescape)
+
+struct BurnDriver BurnSpecSnakeescape = {
+	"spec_snakeescape", NULL, "spec_spec128", NULL, "2016",
+	"Snake Escape (HB)\0", NULL, "Einar Saukas", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSnakeescapeRomInfo, SpecSnakeescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// splATTR
+
+static struct BurnRomInfo SpecSplattrRomDesc[] = {
+	{ "splATTR (2008)(Bob Smith).tap", 87068, 0xc1c7b410, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSplattr, SpecSplattr, Spec128)
+STD_ROM_FN(SpecSplattr)
+
+struct BurnDriver BurnSpecSplattr = {
+	"spec_splattr", NULL, "spec_spec128", NULL, "2008",
+	"splATTR (HB)\0", NULL, "Bob Smith", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSplattrRomInfo, SpecSplattrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sun Bucket
+
+static struct BurnRomInfo SpecSunbucketRomDesc[] = {
+	{ "Sun Bucket (2014)(Stonechat).tap", 44159, 0xd9761fa3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSunbucket, SpecSunbucket, Spec128)
+STD_ROM_FN(SpecSunbucket)
+
+struct BurnDriver BurnSpecSunbucket = {
+	"spec_sunbucket", NULL, "spec_spec128", NULL, "2014",
+	"Sun Bucket (HB)\0", NULL, "Stonechat", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSunbucketRomInfo, SpecSunbucketRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// The Dark
+
+static struct BurnRomInfo SpecThedarkRomDesc[] = {
+	{ "The Dark (1997)(Oleg Origin).tap", 42940, 0x8b93b94c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecThedark, SpecThedark, Spec128)
+STD_ROM_FN(SpecThedark)
+
+struct BurnDriver BurnSpecThedark = {
+	"spec_thedark", NULL, "spec_spec128", NULL, "1997",
+	"The Dark (HB)\0", NULL, "Oleg Origin", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecThedarkRomInfo, SpecThedarkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

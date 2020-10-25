@@ -14849,14 +14849,14 @@ struct BurnDriver BurnSpecBiscuitsih = {
 // Dingo
 
 static struct BurnRomInfo SpecDingoRomDesc[] = {
-	{ "Dingo (2011)(Sokurah, Tardis).tap", 42152, 0x4044d8f2, BRF_ESS | BRF_PRG },
+	{ "Dingo (2015)(Sokurah, Tardis).tap", 41567, 0xb22b60c3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDingo, SpecDingo, Spec128)
 STD_ROM_FN(SpecDingo)
 
 struct BurnDriver BurnSpecDingo = {
-	"spec_dingo", NULL, "spec_spec128", NULL, "2011",
+	"spec_dingo", NULL, "spec_spec128", NULL, "2015",
 	"Dingo (HB)\0", NULL, "Sokurah, Tardis", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,

@@ -13093,44 +13093,6 @@ struct BurnDriver BurnSpecAliensus = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Budokan - The Martial Spirit - Dojo
-
-static struct BurnRomInfo SpecBudodojoRomDesc[] = {
-	{ "Budokan - The Martial Spirit - Dojo (1991)(Dro Soft).tap", 110384, 0x7e7c59de, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecBudodojo, SpecBudodojo, Spec128)
-STD_ROM_FN(SpecBudodojo)
-
-struct BurnDriver BurnSpecBudodojo = {
-	"spec_budodojo", NULL, "spec_spec128", NULL, "1991",
-	"Budokan - The Martial Spirit - Dojo\0", NULL, "Dro Soft", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecBudodojoRomInfo, SpecBudodojoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Budokan - The Martial Spirit - Tournament
-
-static struct BurnRomInfo SpecBudotourneyRomDesc[] = {
-	{ "Budokan - The Martial Spirit - Tournament (1991)(Dro Soft).tap", 190068, 0x58444d51, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecBudotourney, SpecBudotourney, Spec128)
-STD_ROM_FN(SpecBudotourney)
-
-struct BurnDriver BurnSpecBudotourney = {
-	"spec_budotourney", NULL, "spec_spec128", NULL, "1991",
-	"Budokan - The Martial Spirit - Tournament\0", NULL, "Dro Soft", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecBudotourneyRomInfo, SpecBudotourneyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // Casanova
 
 static struct BurnRomInfo SpecCasanovaRomDesc[] = {

@@ -502,7 +502,6 @@ static INT32 SpecDoReset()
 		ZetClose();
 	}
 
-	if (nActiveSnapshotType == SPEC_SNAPSHOT_SNA) SpecLoadSNASnapshot();
 	if (nActiveSnapshotType == SPEC_SNAPSHOT_Z80) SpecLoadZ80Snapshot();
 	if (nActiveSnapshotType == SPEC_TAPE_TAP) {
 		SpecLoadTAP(); // reset robot
@@ -15429,6 +15428,139 @@ struct BurnDriver BurnSpecThedark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecThedarkRomInfo, SpecThedarkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cattivik
+
+static struct BurnRomInfo SpecCattivikRomDesc[] = {
+	{ "Cattivik (2013)(Gabriele Amore, Alessandro Grussu).tap", 65828, 0x92e705bb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCattivik, SpecCattivik, Spec128)
+STD_ROM_FN(SpecCattivik)
+
+struct BurnDriver BurnSpecCattivik = {
+	"spec_cattivik", NULL, "spec_spec128", NULL, "2013",
+	"Cattivik (HB)\0", NULL, "Gabriele Amore, Alessandro Grussu", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecCattivikRomInfo, SpecCattivikRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// HELL YEAH!
+
+static struct BurnRomInfo SpecHellyeahRomDesc[] = {
+	{ "HELL YEAH! (2020)(Andy Precious).tap", 47898, 0x6f2404b4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHellyeah, SpecHellyeah, Spec128)
+STD_ROM_FN(SpecHellyeah)
+
+struct BurnDriver BurnSpecHellyeah = {
+	"spec_hellyeah", NULL, "spec_spec128", NULL, "2020",
+	"HELL YEAH! (HB)\0", NULL, "Andy Precious", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHellyeahRomInfo, SpecHellyeahRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// AtomiCat
+
+static struct BurnRomInfo SpecAtomicatRomDesc[] = {
+	{ "AtomiCat (2020)(Poe Games).tap", 40363, 0xe4f56a9d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAtomicat, SpecAtomicat, Spec128)
+STD_ROM_FN(SpecAtomicat)
+
+struct BurnDriver BurnSpecAtomicat = {
+	"spec_atomicat", NULL, "spec_spec128", NULL, "2020",
+	"AtomiCat (HB)\0", NULL, "Poe Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecAtomicatRomInfo, SpecAtomicatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Bat Boy
+
+static struct BurnRomInfo SpecBatboyRomDesc[] = {
+	{ "Bat Boy (2020)(Antonio Perez).tap", 55621, 0x354abdb7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBatboy, SpecBatboy, Spec128)
+STD_ROM_FN(SpecBatboy)
+
+struct BurnDriver BurnSpecBatboy = {
+	"spec_batboy", NULL, "spec_spec128", NULL, "2020",
+	"Bat Boy (HB)\0", NULL, "Antonio Perez", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecBatboyRomInfo, SpecBatboyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Bonnie and Clyde
+
+static struct BurnRomInfo SpecBonnieclydeRomDesc[] = {
+	{ "Bonnie and Clyde (1986)(Zosya).tap", 47115, 0xf075ba62, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBonnieclyde, SpecBonnieclyde, Spec128)
+STD_ROM_FN(SpecBonnieclyde)
+
+struct BurnDriver BurnSpecBonnieclyde = {
+	"spec_bonnieclyde", NULL, "spec_spec128", NULL, "1986",
+	"Bonnie and Clyde (HB)\0", NULL, "Zosya", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecBonnieclydeRomInfo, SpecBonnieclydeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Patrick Paddle
+
+static struct BurnRomInfo SpecPatrickpaddleRomDesc[] = {
+	{ "Patrick Paddle (2020)(PROSM Software).tap", 13883, 0x952f6855, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPatrickpaddle, SpecPatrickpaddle, Spec128)
+STD_ROM_FN(SpecPatrickpaddle)
+
+struct BurnDriver BurnSpecPatrickpaddle = {
+	"spec_patrickpaddle", NULL, "spec_spec128", NULL, "2020",
+	"Patrick Paddle (HB)\0", NULL, "PROSM Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecPatrickpaddleRomInfo, SpecPatrickpaddleRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Trinidad
+
+static struct BurnRomInfo SpecTrinidadRomDesc[] = {
+	{ "Trinidad (2020)(Polybius).tap", 43020, 0x4879e658, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTrinidad, SpecTrinidad, Spec128)
+STD_ROM_FN(SpecTrinidad)
+
+struct BurnDriver BurnSpecTrinidad = {
+	"spec_trinidad", NULL, "spec_spec128", NULL, "2020",
+	"Trinidad (HB)\0", NULL, "Polybius", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecTrinidadRomInfo, SpecTrinidadRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	TAP128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

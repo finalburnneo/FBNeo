@@ -324,9 +324,9 @@ static void TUnitDmaCallback()
 
 static UINT16 TUnitDmaRead(UINT32 address)
 {
-    UINT32 offset = (address >> 4) & 0xF;
-    if (offset == 0)
-        offset = 1;
+	UINT32 offset = (address >> 4) & 0xF;
+	if (offset == 0)
+		offset = 1;
 	return nDMA[offset];
 }
 

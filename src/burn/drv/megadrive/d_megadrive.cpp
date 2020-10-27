@@ -3066,6 +3066,25 @@ struct BurnDriver BurnDrvmd_aliensolj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Alien Soldier (Hack, Italian)
+//Translation project: https://romhacking.it/project/view/id/47
+static struct BurnRomInfo md_aliensoliRomDesc[] = {
+	{ "alien soldier (italian translation).bin", 0x200000, 0xe5e614a5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aliensoli)
+STD_ROM_FN(md_aliensoli)
+
+struct BurnDriver BurnDrvmd_aliensoli = {
+	"md_aliensoli", "md_aliensol", NULL, NULL, "2002",
+	"Alien Soldier (Hack, Italian)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_aliensoliRomInfo, md_aliensoliRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Alien Storm (World)
 static struct BurnRomInfo md_astormRomDesc[] = {
 	{ "mpr-13941.bin", 0x080000, 0xf5ac8de5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

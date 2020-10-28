@@ -8,6 +8,8 @@
 
 #if defined (_MSC_VER)
 #define _USE_MATH_DEFINES
+#elif defined (__APPLE__)
+#define stricmp strcasecmp
 #endif
 #include "math.h" // for biquad filter
 

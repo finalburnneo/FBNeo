@@ -1704,7 +1704,7 @@ bool retro_load_game(const struct retro_game_info *info)
 	extract_directory(g_rom_dir, info->path, sizeof(g_rom_dir));
 	extract_basename(g_rom_parent_dir, g_rom_dir, sizeof(g_rom_parent_dir),"");
 	char * prefix="";
-	if(strcmp(g_rom_parent_dir, "coleco")==0) {
+	if(strcmp(g_rom_parent_dir, "coleco")==0 || strcmp(g_rom_parent_dir, "colecovision")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem cv identified from parent folder\n");
 		if (strncmp(g_driver_name, "cv_", 3) != 0) prefix = "cv_";
 	}
@@ -1712,15 +1712,15 @@ bool retro_load_game(const struct retro_game_info *info)
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem gg identified from parent folder\n");
 		if (strncmp(g_driver_name, "gg_", 3) != 0) prefix = "gg_";
 	}
-	if(strcmp(g_rom_parent_dir, "megadriv")==0) {
+	if(strcmp(g_rom_parent_dir, "megadriv")==0 || strcmp(g_rom_parent_dir, "megadrive")==0 || strcmp(g_rom_parent_dir, "genesis")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem md identified from parent folder\n");
 		if (strncmp(g_driver_name, "md_", 3) != 0) prefix = "md_";
 	}
-	if(strcmp(g_rom_parent_dir, "msx")==0) {
+	if(strcmp(g_rom_parent_dir, "msx")==0 || strcmp(g_rom_parent_dir, "msx1")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem msx identified from parent folder\n");
 		if (strncmp(g_driver_name, "msx_", 4) != 0) prefix = "msx_";
 	}
-	if(strcmp(g_rom_parent_dir, "pce")==0) {
+	if(strcmp(g_rom_parent_dir, "pce")==0 || strcmp(g_rom_parent_dir, "pcengine")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem pce identified from parent folder\n");
 		if (strncmp(g_driver_name, "pce_", 4) != 0) prefix = "pce_";
 	}
@@ -1728,15 +1728,15 @@ bool retro_load_game(const struct retro_game_info *info)
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sg1k identified from parent folder\n");
 		if (strncmp(g_driver_name, "sg1k_", 5) != 0) prefix = "sg1k_";
 	}
-	if(strcmp(g_rom_parent_dir, "sgx")==0) {
+	if(strcmp(g_rom_parent_dir, "sgx")==0 || strcmp(g_rom_parent_dir, "supergrafx")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sgx identified from parent folder\n");
 		if (strncmp(g_driver_name, "sgx_", 4) != 0) prefix = "sgx_";
 	}
-	if(strcmp(g_rom_parent_dir, "sms")==0) {
+	if(strcmp(g_rom_parent_dir, "sms")==0 || strcmp(g_rom_parent_dir, "mastersystem")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem sms identified from parent folder\n");
 		if (strncmp(g_driver_name, "sms_", 4) != 0) prefix = "sms_";
 	}
-	if(strcmp(g_rom_parent_dir, "spectrum")==0) {
+	if(strcmp(g_rom_parent_dir, "spectrum")==0 || strcmp(g_rom_parent_dir, "zxspectrum")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem spec identified from parent folder\n");
 		if (strncmp(g_driver_name, "spec_", 5) != 0) prefix = "spec_";
 	}

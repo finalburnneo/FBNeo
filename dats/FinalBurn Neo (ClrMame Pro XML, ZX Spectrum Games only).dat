@@ -227,6 +227,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensuk" romof="spec128">
+		<description>Aliens UK</description>
+		<year>1986</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Aliens UK (1986)(Electric Dreams).tap" size="48291" crc="db83e425"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="aliensus" romof="spec128">
+		<description>Aliens US</description>
+		<year>1987</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Aliens US (1987)(Electric Dreams).tap" size="192788" crc="d7c22d0d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="hlwpumpkin" romof="spec128">
 		<description>All Hallows Rise of Pumpkin (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -422,6 +440,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="atomicat" romof="spec128">
+		<description>AtomiCat (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Poe Games</manufacturer>
+		<rom name="AtomiCat (2020)(Poe Games).tap" size="40363" crc="e4f56a9d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="atvsim" romof="spec128">
 		<description>ATV Simulator - All Terrain Vehicle (128K)</description>
 		<year>1987</year>
@@ -563,6 +590,15 @@
 		<manufacturer>Palace Software</manufacturer>
 		<rom name="Barbarian - 2 Players (1987)(Palace Software).z80" size="41650" crc="a856967f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="batboy" romof="spec128">
+		<description>Bat Boy (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Antonio Perez</manufacturer>
+		<rom name="Bat Boy (2020)(Antonio Perez).tap" size="55621" crc="354abdb7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="batman" romof="spec128">
@@ -814,6 +850,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="bonnieclyde" romof="spec128">
+		<description>Bonnie and Clyde (HB) [Homebrew]</description>
+		<year>1986</year>
+		<manufacturer>Zosya</manufacturer>
+		<rom name="Bonnie and Clyde (1986)(Zosya).tap" size="47115" crc="f075ba62"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="bootyremake" romof="spec128">
 		<description>Booty the Remake (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -1026,6 +1071,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="casanova" romof="spec128">
+		<description>Casanova</description>
+		<year>1989</year>
+		<manufacturer>Iber Software</manufacturer>
+		<rom name="Casanova (1989)(Iber Software).tap" size="45005" crc="1c66d96d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="cashdash" romof="spectrum">
 		<description>Cashdash (48K)</description>
 		<year>19xx</year>
@@ -1066,6 +1120,15 @@
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
 		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team)(Rus).tap" size="127054" crc="45561b70"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="cattivik" romof="spec128">
+		<description>Cattivik (HB) [Homebrew]</description>
+		<year>2013</year>
+		<manufacturer>Gabriele Amore, Alessandro Grussu</manufacturer>
+		<rom name="Cattivik (2013)(Gabriele Amore, Alessandro Grussu).tap" size="65828" crc="92e705bb"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1983,14 +2046,6 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
-	<game name="emuspdt" romof="spectrum">
-		<description>Emulator Speed Test (48K)</description>
-		<year>19xx</year>
-		<manufacturer>Unknown</manufacturer>
-		<rom name="Emulator Speed Test (19xx)(-).z80" size="4084" crc="ff1bd89e"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<driver status="good"/>
-	</game>
 	<game name="efmb" romof="spec128">
 		<description>Endless Forms Most Beautiful (HB) [Homebrew]</description>
 		<year>2012</year>
@@ -2191,12 +2246,13 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="ftmanwc" romof="spectrum">
-		<description>Football Manager - World Cup Edition (Spanish) (48K)</description>
+	<game name="ftmanwc" romof="spec128">
+		<description>Football Manager - World Cup Edition (Spanish) (128K)</description>
 		<year>1990</year>
 		<manufacturer>Addictive Games</manufacturer>
 		<rom name="Football Manager - World Cup Edition (1990)(Addictive Games)(es).z80" size="45105" crc="8f0527c8"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="footman2" romof="spectrum">
@@ -2619,6 +2675,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="hellyeah" romof="spec128">
+		<description>HELL YEAH! (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Andy Precious</manufacturer>
+		<rom name="HELL YEAH! (2020)(Andy Precious).tap" size="47898" crc="6f2404b4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="herberttb" romof="spec128">
 		<description>Herbert the Turbot (HB) [Homebrew]</description>
 		<year>2010</year>
@@ -2713,6 +2778,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="humankillmachine" romof="spec128">
+		<description>Human Killing Machine</description>
+		<year>1988</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Human Killing Machine (1988)(U.S. Gold).z80" size="82727" crc="f2a03282"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="humphrey" romof="spec128">
 		<description>Humphrey (Spanish)</description>
 		<year>1988</year>
@@ -2761,6 +2835,24 @@
 		<year>2017</year>
 		<manufacturer>Mat Recardo</manufacturer>
 		<rom name="Hyperkill (2017)(Mat Recardo).tap" size="42502" crc="382ad799"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="hypsys1" romof="spec128">
+		<description>Hypsys - Part 1</description>
+		<year>1989</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Hypsys - Part 1 (1989)(Dro Soft).tap" size="49162" crc="0d76e3f1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="hypsys2" romof="spec128">
+		<description>Hypsys - Part 2</description>
+		<year>1989</year>
+		<manufacturer>Dro Soft</manufacturer>
+		<rom name="Hypsys - Part 2 (1989)(Dro Soft).tap" size="49809" crc="97b3d2d9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -3054,6 +3146,24 @@
 		<year>1990</year>
 		<manufacturer>Dro Soft</manufacturer>
 		<rom name="Karateka (1990)(Dro Soft).tap" size="67058" crc="61d5c8ac"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="karnov" romof="spec128">
+		<description>Karnov</description>
+		<year>1988</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Karnov (1988)(Electric Dreams).tap" size="234536" crc="95d92161"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="kendowarrior" romof="spec128">
+		<description>Kendo Warrior</description>
+		<year>1989</year>
+		<manufacturer>Byte Back</manufacturer>
+		<rom name="Kendo Warrior (1989)(Byte Back).tap" size="48922" crc="aa02e5d8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4124,6 +4234,15 @@
 		<manufacturer>Image Works</manufacturer>
 		<rom name="Passing Shot (1989)(Image Works).z80" size="31503" crc="183331fc"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="patrickpaddle" romof="spec128">
+		<description>Patrick Paddle (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>PROSM Software</manufacturer>
+		<rom name="Patrick Paddle (2020)(PROSM Software).tap" size="13883" crc="952f6855"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="pericodelgado" romof="spec128">
@@ -5761,6 +5880,42 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="thundbirds1" romof="spec128">
+		<description>Thunderbirds - Part 1</description>
+		<year>1989</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Thunderbirds - Part 1 (1989)(Grandslam Entertainments).tap" size="52409" crc="a914189f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thundbirds2" romof="spec128">
+		<description>Thunderbirds - Part 2</description>
+		<year>1989</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Thunderbirds - Part 2 (1989)(Grandslam Entertainments).tap" size="52409" crc="0869b04e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thundbirds3" romof="spec128">
+		<description>Thunderbirds - Part 3</description>
+		<year>1989</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Thunderbirds - Part 3 (1989)(Grandslam Entertainments).tap" size="52409" crc="b156bc82"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thundbirds4" romof="spec128">
+		<description>Thunderbirds - Part 4</description>
+		<year>1989</year>
+		<manufacturer>Grandslam Entertainments</manufacturer>
+		<rom name="Thunderbirds - Part 4 (1989)(Grandslam Entertainments).tap" size="52409" crc="9aafecf7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="tigeroad" romof="spec128">
 		<description>Tiger Road (128K)</description>
 		<year>1988</year>
@@ -5878,6 +6033,15 @@
 		<year>1984</year>
 		<manufacturer>New Generation</manufacturer>
 		<rom name="Trashman (1984)(New Generation).tap" size="33845" crc="79aac256"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="trinidad" romof="spec128">
+		<description>Trinidad (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Polybius</manufacturer>
+		<rom name="Trinidad (2020)(Polybius).tap" size="43020" crc="4879e658"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

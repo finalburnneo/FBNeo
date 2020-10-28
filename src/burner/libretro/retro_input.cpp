@@ -1904,117 +1904,117 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	// Handle Spectrum
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
 		if (strcmp("keyb_A", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_B", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_b, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_b, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_C", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_c, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_c, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_D", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_d, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_d, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_E", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_e, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_e, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_F", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_f, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_f, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_G", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_g, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_g, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_H", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_h, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_h, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_I", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_i, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_i, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_J", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_j, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_j, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_K", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_k, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_k, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_L", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_l, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_l, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_M", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_m, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_m, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_N", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_n, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_n, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_O", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_o, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_o, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_P", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_p, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_p, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_Q", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_q, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_q, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_R", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_r, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_r, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_S", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_s, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_s, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_T", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_t, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_t, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_U", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_u, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_u, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_V", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_v, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_v, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_W", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_w, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_w, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_X", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_x, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_x, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_Y", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_y, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_y, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_Z", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_z, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_z, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_0", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_0, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_0, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_1", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_1, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_1, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_2", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_2, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_2, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_3", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_3, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_3, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_4", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_4, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_4, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_5", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_5, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_5, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_6", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_6, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_6, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_7", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_7, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_7, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_8", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_8, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_8, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_9", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_9, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_9, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_enter", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_RETURN, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_RETURN, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_space", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_SPACE, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_SPACE, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_left_shift", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_LSHIFT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_LSHIFT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_right_shift", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_RSHIFT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_RSHIFT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_insert", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_INSERT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_INSERT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_caps_lock", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_CAPSLOCK, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_CAPSLOCK, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_home", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_HOME, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_HOME, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_end", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_END, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_END, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_backspace", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_BACKSPACE, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_BACKSPACE, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_left_alt", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_LALT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_LALT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_left", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_LEFT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_LEFT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_right", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_RIGHT, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_RIGHT, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_up", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_UP, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_UP, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_down", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_DOWN, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_DOWN, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_pause", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_PAUSE, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_PAUSE, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_left_ctrl", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_LCTRL, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_LCTRL, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_apost", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_QUOTEDBL, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_QUOTEDBL, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_colon", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_COLON, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_COLON, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_stop", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_PERIOD, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_PERIOD, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_comma", szi) == 0)
-			GameInpDigital2RetroInpKey(pgi, 0, RETROK_COMMA, szn, RETRO_DEVICE_KEYBOARD);
+			GameInpDigital2RetroInpKey(pgi, 2, RETROK_COMMA, szn, RETRO_DEVICE_KEYBOARD);
 	}
 
 	// FDS disk buttons
@@ -2184,28 +2184,51 @@ static bool PollDiagInput()
 
 void SetControllerInfo()
 {
-	static const struct retro_controller_description controller_description[] = {
-		{ "Classic", RETROPAD_CLASSIC },
-		{ "Modern", RETROPAD_MODERN },
-		{ "Mouse (ball only)", RETROMOUSE_BALL },
-		{ "Mouse (full)", RETROMOUSE_FULL },
-		{ "Pointer", RETRO_DEVICE_POINTER },
-		{ "Lightgun", RETRO_DEVICE_LIGHTGUN }
-	};
+	int nHardwareCode = BurnDrvGetHardwareCode();
 
-	struct retro_controller_info *controller_infos = (struct retro_controller_info*)calloc(nMaxPlayers+1, sizeof(struct retro_controller_info));
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
+		// Let's have some custom spectrum device handling, so that we can use the keyboard remapping
+		static const struct retro_controller_description joystick_description[] = {
+			{ "Joystick", RETRO_DEVICE_JOYPAD }
+		};
 
-	for (int i = 0; i < nMaxPlayers; i++)
-	{
-		controller_infos[i].types = controller_description;
-		controller_infos[i].num_types = sizeof(controller_description) / sizeof(controller_description[0]);
+		static const struct retro_controller_description keyboard_description[] = {
+			{ "Keyboard", RETRO_DEVICE_KEYBOARD }
+		};
+
+		static const struct retro_controller_info controller_infos[4] = {
+			{ joystick_description, 1 },
+			{ joystick_description, 1 },
+			{ keyboard_description, 1 },
+			{ NULL, 0 }
+		};
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CONTROLLER_INFO, (void*)controller_infos);
+	} else {
+		// For anything else, let's use standard device handling for now
+		static const struct retro_controller_description controller_description[] = {
+			{ "Classic", RETROPAD_CLASSIC },
+			{ "Modern", RETROPAD_MODERN },
+			{ "Mouse (ball only)", RETROMOUSE_BALL },
+			{ "Mouse (full)", RETROMOUSE_FULL },
+			{ "Pointer", RETRO_DEVICE_POINTER },
+			{ "Lightgun", RETRO_DEVICE_LIGHTGUN }
+		};
+
+		struct retro_controller_info *controller_infos = (struct retro_controller_info*)calloc(nMaxPlayers+1, sizeof(struct retro_controller_info));
+
+		for (int i = 0; i < nMaxPlayers; i++)
+		{
+			controller_infos[i].types = controller_description;
+			controller_infos[i].num_types = sizeof(controller_description) / sizeof(controller_description[0]);
+		}
+
+		controller_infos[nMaxPlayers].types = NULL;
+		controller_infos[nMaxPlayers].num_types = 0;
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CONTROLLER_INFO, controller_infos);
+		free(controller_infos);
 	}
-
-	controller_infos[nMaxPlayers].types = NULL;
-	controller_infos[nMaxPlayers].num_types = 0;
-
-	environ_cb(RETRO_ENVIRONMENT_SET_CONTROLLER_INFO, controller_infos);
-	free(controller_infos);
 }
 
 static void SetFakeInputDescriptors()

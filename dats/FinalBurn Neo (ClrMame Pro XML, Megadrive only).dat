@@ -426,6 +426,13 @@
 		<rom name="alien soldier (euro).bin" size="2097152" crc="0496e06c"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliensoli" cloneof="aliensol" romof="aliensol">
+		<description>Alien Soldier (Hack, Italian)</description>
+		<year>2002</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alien soldier (italian translation).bin" size="2097152" crc="e5e614a5"/>
+		<driver status="good"/>
+	</game>
 	<game name="aliensols" cloneof="aliensol" romof="aliensol">
 		<description>Alien Soldier (Hack, Spanish)</description>
 		<year>2020</year>
@@ -979,6 +986,13 @@
 		<rom name="back to the future part iii (color fix).md" size="524288" crc="51f67e2f"/>
 		<driver status="good"/>
 	</game>
+	<game name="backtof3s" cloneof="backtof3" romof="backtof3">
+		<description>Back to the Future Part III (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Arena</manufacturer>
+		<rom name="back to the future part iii (Hack, Spanish).bin" size="524288" crc="52493680"/>
+		<driver status="good"/>
+	</game>
 	<game name="backtof3u" cloneof="backtof3" romof="backtof3">
 		<description>Back to the Future Part III (USA)</description>
 		<year>1991</year>
@@ -1182,6 +1196,13 @@
 		<rom name="mpr-14561.ic1" size="524288" crc="61c60c35"/>
 		<driver status="good"/>
 	</game>
+	<game name="batmans" cloneof="batman" romof="batman">
+		<description>Batman (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="batman (Hack, Spanish).bin" size="524288" crc="ebf4ca7f"/>
+		<driver status="good"/>
+	</game>
 	<game name="batmanj" cloneof="batman" romof="batman">
 		<description>Batman (Jpn)</description>
 		<year>1990</year>
@@ -1210,6 +1231,13 @@
 		<rom name="batman forever (world).bin" size="3145728" crc="8b723d01"/>
 		<driver status="good"/>
 	</game>
+	<game name="batmanrns" cloneof="batmanrn" romof="batmanrn">
+		<description>Batman Returns (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="batman returns (Hack, Spanish).bin" size="1048576" crc="543701ef"/>
+		<driver status="good"/>
+	</game>
 	<game name="batmanrn">
 		<description>Batman Returns (World)</description>
 		<year>1992</year>
@@ -1222,6 +1250,13 @@
 		<year>2017</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="battle golfer yui (english translation).md" size="1048576" crc="2d7e868c"/>
+		<driver status="good"/>
+	</game>
+	<game name="battlyuis" cloneof="battlyui" romof="battlyui">
+		<description>Battle Golfer Yui (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="battle golfer yui (Hack, Spanish).bin" size="1048576" crc="1ed9c6d0"/>
 		<driver status="good"/>
 	</game>
 	<game name="battlyui">
@@ -1245,6 +1280,13 @@
 		<rom name="battle mania daiginjou (english translation).bin" size="1048576" crc="fab20c39"/>
 		<driver status="good"/>
 	</game>
+	<game name="btlmanids" cloneof="btlmanid" romof="btlmanid">
+		<description>Battle Mania Daiginjou (Hack, Spanish)</description>
+		<year>2013</year>
+		<manufacturer>Vic Tokai</manufacturer>
+		<rom name="battle mania daiginjou (Hack, Spanish).bin" size="1048576" crc="9e0ef510"/>
+		<driver status="good"/>
+	</game>
 	<game name="btlmanid">
 		<description>Battle Mania Daiginjou (Jpn, Kor)</description>
 		<year>1993</year>
@@ -1257,6 +1299,13 @@
 		<year>1990</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="battle squadron (euro, usa).bin" size="524288" crc="0feaa8bf"/>
+		<driver status="good"/>
+	</game>
+	<game name="battlesqs" cloneof="battlesq" romof="battlesq">
+		<description>Battle Squadron (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="battle squadron (Hack, Spanish).bin" size="524288" crc="cde81fbc"/>
 		<driver status="good"/>
 	</game>
 	<game name="battlems">
@@ -1273,11 +1322,25 @@
 		<rom name="battletech - a game of armored combat (usa).bin" size="2097152" crc="409e5d14"/>
 		<driver status="good"/>
 	</game>
+	<game name="btoadsdds" cloneof="btoadsdd" romof="btoadsdd">
+		<description>Battletoads &amp; Double Dragon (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tradewest</manufacturer>
+		<rom name="battletoads &amp; double dragon (Hack, Spanish).bin" size="1048576" crc="5fb95d53"/>
+		<driver status="good"/>
+	</game>
 	<game name="btoadsdd">
 		<description>Battletoads &amp; Double Dragon - The Ultimate Team (USA)</description>
 		<year>1993</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="battletoads &amp; double dragon (usa).bin" size="1048576" crc="8239dd17"/>
+		<driver status="good"/>
+	</game>
+	<game name="btoadss" cloneof="btoads" romof="btoads">
+		<description>Battletoads (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Tradewest</manufacturer>
+		<rom name="battletoads (Hack, Spanish).bin" size="524288" crc="be072fdd"/>
 		<driver status="good"/>
 	</game>
 	<game name="btoads">
@@ -1315,11 +1378,32 @@
 		<rom name="beast ball.bin" size="1030368" crc="6a176576"/>
 		<driver status="good"/>
 	</game>
+	<game name="beautys" cloneof="beauty" romof="beauty">
+		<description>Beauty And The Beast - Belle's Quest (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="beauty and the beast - belle's quest (Hack, Spanish).bin" size="1048576" crc="37123c7e"/>
+		<driver status="good"/>
+	</game>
+	<game name="beautyrbs" cloneof="beautyrb" romof="beautyrb">
+		<description>Beauty And The Beast - Roar Of The Beast (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="beauty and the beast - roar of the beast (Hack, Spanish).bin" size="1048576" crc="c0f52a6d"/>
+		<driver status="good"/>
+	</game>
 	<game name="beavis">
 		<description>Beavis and Butt-Head (Euro)</description>
 		<year>1994</year>
 		<manufacturer>Viacom New Media</manufacturer>
 		<rom name="beavis and butt-head (euro).bin" size="2097152" crc="c7b6435e"/>
+		<driver status="good"/>
+	</game>
+	<game name="beaviss" cloneof="beavis" romof="beavis">
+		<description>Beavis And Butt-Head (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Viacom New Media</manufacturer>
+		<rom name="beavis and butt-head (Hack, Spanish).bin" size="2097152" crc="10967d96"/>
 		<driver status="good"/>
 	</game>
 	<game name="beavisu" cloneof="beavis" romof="beavis">
@@ -1434,6 +1518,13 @@
 		<rom name="mpr-15204.bin" size="1048576" crc="95b0ea2b"/>
 		<driver status="good"/>
 	</game>
+	<game name="biohazrbs" cloneof="biohazrb" romof="biohazrb">
+		<description>Bio Hazard Battle (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="bio hazard battle (Hack, Spanish).bin" size="1048576" crc="5a025101"/>
+		<driver status="good"/>
+	</game>
 	<game name="biohazrbp" cloneof="biohazrb" romof="biohazrb">
 		<description>Bio Hazard Battle (USA, Prototype)</description>
 		<year>1992</year>
@@ -1460,6 +1551,13 @@
 		<year>1993</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="blades of vengeance (euro, usa).bin" size="1048576" crc="74c65a49"/>
+		<driver status="good"/>
+	</game>
+	<game name="bladevens" cloneof="bladeven" romof="bladeven">
+		<description>Blades Of Vengeance (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="blades of vengeance (Hack, Spanish).bin" size="1048576" crc="19e90563"/>
 		<driver status="good"/>
 	</game>
 	<game name="bmaster2">
@@ -1588,6 +1686,13 @@
 		<rom name="mpr-13905a.bin" size="524288" crc="c6aac589"/>
 		<driver status="good"/>
 	</game>
+	<game name="bnzabross" cloneof="bnzabros" romof="bnzabros">
+		<description>Bonanza Bros. (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="bonanza bros. (Hack, Spanish).bin" size="524288" crc="96f3fba6"/>
+		<driver status="good"/>
+	</game>
 	<game name="bnzabrosu" cloneof="bnzabros" romof="bnzabros">
 		<description>Bonanza Bros. (USA, Kor)</description>
 		<year>1991</year>
@@ -1600,6 +1705,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="bonkers (euro, usa).bin" size="1048576" crc="d1e66017"/>
+		<driver status="good"/>
+	</game>
+	<game name="bonkerss" cloneof="bonkers" romof="bonkers">
+		<description>Bonkers (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="bonkers (Hack, Spanish).bin" size="1048576" crc="2bde8dc6"/>
 		<driver status="good"/>
 	</game>
 	<game name="bonkersp5" cloneof="bonkers" romof="bonkers">
@@ -1763,11 +1875,25 @@
 		<rom name="bubba'n'stix - a strategy adventure (usa).bin" size="1048576" crc="d45cb46f"/>
 		<driver status="good"/>
 	</game>
+	<game name="bubbas" cloneof="bubba" romof="bubba">
+		<description>Bubba'n'Stix - A Strategy Adventure (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Core Design</manufacturer>
+		<rom name="bubba'n'stix - a strategy adventure (Hack, Spanish).bin" size="1048576" crc="dcd45650"/>
+		<driver status="good"/>
+	</game>
 	<game name="bubblesq">
 		<description>Bubble and Squeak (Euro)</description>
 		<year>1994</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="bubble and squeak (euro).bin" size="524288" crc="86151bf1"/>
+		<driver status="good"/>
+	</game>
+	<game name="bubblesqs" cloneof="bubblesq" romof="bubblesq">
+		<description>Bubble and Squeak (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="bubble and squeak (Hack, Spanish).bin" size="524288" crc="5d67b1c6"/>
 		<driver status="good"/>
 	</game>
 	<game name="bubblesqu" cloneof="bubblesq" romof="bubblesq">
@@ -1789,6 +1915,13 @@
 		<year>1993</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="bubsy in claws encounters of the furred kind (euro, usa).bin" size="2097152" crc="3e30d365"/>
+		<driver status="good"/>
+	</game>
+	<game name="bubsys" cloneof="bubsy" romof="bubsy">
+		<description>Bubsy In Claws Encounters Of The Furred Kind (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="bubsy in claws encounters of the furred kind (Hack, Spanish).bin" size="2097152" crc="0db8ca11"/>
 		<driver status="good"/>
 	</game>
 	<game name="buckrog">

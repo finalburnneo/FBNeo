@@ -1227,7 +1227,7 @@ static void SpecCalcPalette()
 		0x000000, 0x0000bf, 0xbf0000, 0xbf00bf,
 		0x00bf00, 0x00bfbf, 0xbfbf00, 0xbfbfbf,
 		0x000000, 0x0000ff, 0xff0000, 0xff00ff,
-		0x00ff00, 0x00ffff,	0xffff00, 0xffffff
+		0x00ff00, 0x00ffff, 0xffff00, 0xffffff
 	};
 
 	for (INT32 i = 0; i < 0x10; i++) {
@@ -1476,7 +1476,6 @@ static INT32 SpecFrame()
 
 	INT32 tot_frame = SpecScanlines * SpecCylesPerScanline;
 	nExtraCycles = ZetTotalCycles() - tot_frame;
-	//bprintf(0, _T("d_spectrum eof %d\n"), ZetTotalCycles());
 
 	ZetClose();
 

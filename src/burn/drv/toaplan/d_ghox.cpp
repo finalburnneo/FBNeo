@@ -22,8 +22,7 @@ static UINT8 *ShareRAM;
 static UINT8 *Rom02;
 static UINT8 *Ram02;
 
-static INT16 DrvAnalogPort0 = 0;
-static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort[4] = { 0, 0, 0, 0 };
 static INT8 Paddle[2];
 static INT8 PaddleOld[2];
 
@@ -39,7 +38,8 @@ static struct BurnInputInfo GhoxInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-	A("P1 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Spinner X", BIT_ANALOG_REL, &DrvAnalogPort[0],"p1 x-axis"),
+	A("P1 Spinner Y", BIT_ANALOG_REL, &DrvAnalogPort[1],"p1 y-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvButton + 6,	"p2 start"	},
@@ -49,7 +49,8 @@ static struct BurnInputInfo GhoxInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-	A("P2 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort1,"p2 x-axis"),
+	A("P2 Spinner X", BIT_ANALOG_REL, &DrvAnalogPort[2],"p2 x-axis"),
+	A("P2 Spinner Y", BIT_ANALOG_REL, &DrvAnalogPort[3],"p2 y-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvButton + 0,	"service"	},
@@ -63,7 +64,7 @@ STDINPUTINFO(Ghox)
 
 static struct BurnDIPInfo GhoxDIPList[]=
 {
-	DIP_OFFSET(0x15)
+	DIP_OFFSET(0x17)
 
 	{0x00, 0xff, 0xff, 0x00, NULL		},
 	{0x01, 0xff, 0xff, 0x00, NULL		},
@@ -153,7 +154,7 @@ STDDIPINFO(Ghox)
 
 static struct BurnDIPInfo GhoxjoDIPList[]=
 {
-	DIP_OFFSET(0x15)
+	DIP_OFFSET(0x17)
 
 	{0x00, 0xff, 0xff, 0x00, NULL		},
 	{0x01, 0xff, 0xff, 0x00, NULL		},
@@ -617,19 +618,37 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	memset (DrvInput, 0, 3);
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
-		DrvInput[2] |= (DrvButton[i] & 1) << i;
-	}
-	ToaClearOpposites(&DrvInput[0]);
-	ToaClearOpposites(&DrvInput[1]);
+	{
+		// Y-axis hack (Y axis moves digital up/down)
+		// P1:
+		UINT8 an = ProcessAnalog(DrvAnalogPort[1], 0, INPUT_DEADZONE, 0x00, 0xff);
 
-	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x02, 0x0f);
-	BurnTrackballUDLR(0, DrvJoy2[2], DrvJoy2[3], DrvJoy1[2], DrvJoy1[3]);
-	BurnTrackballUpdate(0);
+		if (an > (0x80+10) || an < (0x80-10)) {
+			if (an < (0x80-10)) DrvJoy1[0] = 1;
+			if (an > (0x80+10)) DrvJoy1[1] = 1;
+		}
+		// P2:
+		an = ProcessAnalog(DrvAnalogPort[3], 0, INPUT_DEADZONE, 0x00, 0xff);
+
+		if (an > (0x80+10) || an < (0x80-10)) {
+			if (an < (0x80-10)) DrvJoy2[0] = 1;
+			if (an > (0x80+10)) DrvJoy2[1] = 1;
+		}
+
+		memset (DrvInput, 0, 3);
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInput[0] |= (DrvJoy1[i] & 1) << i;
+			DrvInput[1] |= (DrvJoy2[i] & 1) << i;
+			DrvInput[2] |= (DrvButton[i] & 1) << i;
+		}
+		ToaClearOpposites(&DrvInput[0]);
+		ToaClearOpposites(&DrvInput[1]);
+
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, DrvAnalogPort[0], DrvAnalogPort[2], 0x02, 0x0f);
+		BurnTrackballUDLR(0, DrvJoy2[2], DrvJoy2[3], DrvJoy1[2], DrvJoy1[3]);
+		BurnTrackballUpdate(0);
+	}
 
 	SekNewFrame();
 

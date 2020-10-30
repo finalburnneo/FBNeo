@@ -13462,6 +13462,25 @@ struct BurnDriver BurnSpecdominator = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Sword of the Samurai
+
+static struct BurnRomInfo SpecSwordsamuraiRomDesc[] = {
+	{ "Sword of the Samurai (1992)(Zeppelin Games Ltd).tap", 41439, 0x42e23e9f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSwordsamurai, SpecSwordsamurai, Spec128)
+STD_ROM_FN(SpecSwordsamurai)
+
+struct BurnDriver BurnSpecSwordsamurai = {
+	"spec_swordsamurai", NULL, "spec_spec128", NULL, "1992",
+	"Sword of the Samurai\0", NULL, "Zeppelin Games Ltd", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSwordsamuraiRomInfo, SpecSwordsamuraiRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

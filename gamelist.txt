@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15164 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15187 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1297,6 +1297,7 @@ This list contains all games supported by FinalBurn Neo.
 | bioniccbl	|  	| Bionic Commandos (bootleg, set 1)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioniccbl2	|  	| Bionic Commandos (bootleg, set 2)			| bionicc	| 1987	| bootleg	| Miscellaneous	| 					|
 | bioplayc	|  	| Bioplaything Cop (Ver. 1.0.1823, prototype)		| biomtoy	| 1995	| Gaelco	| Miscellaneous	| 					|
+| msx_birdchairs|  	| Bird & Chairs (HB)					| 		| 2017	| N.I		| MSX		| 					|
 | nes_birdweek	|  	| Bird Week (Japan)					| 		| 1986	| Toemiland	| Miscellaneous	| 					|
 | birdtrya	|  	| Birdie Try (Japan revision 2)				| birdtry	| 1988	| Data East Corp| DEC0		| 					|
 | birdtry	|  	| Birdie Try (Japan revision 2, revision 1 MCU)		| 		| 1988	| Data East Corp| DEC0		| 					|
@@ -1806,6 +1807,7 @@ This list contains all games supported by FinalBurn Neo.
 | cadashf	|  	| Cadash (France)					| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | cadashg	|  	| Cadash (Germany, version 1)				| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | md_cadashac	|  	| Cadash (Hack, Arcade Colors)				| md_cadash	| 2018	| Taito - Tor La| Sega Megadrive| 					|
+| md_cadashs	|  	| Cadash (Hack, Spanish)				| md_cadash	| 2020	| Taito		| Sega Megadrive| 					|
 | cadashi	|  	| Cadash (Italy)					| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | cadashjo	|  	| Cadash (Japan, oldest version)			| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
 | cadashj1	|  	| Cadash (Japan, version 1)				| cadash	| 1989	| Taito Corporat| Taito Misc	| 					|
@@ -1838,6 +1840,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_caesars	|  	| Caesars Palace (USA)					| 		| 1993	| Virgin Interac| Sega Game Gear| 					|
 | md_caesars	|  	| Caesars Palace (USA)					| 		| 1993	| Virgin Interac| Sega Megadrive| 					|
 | md_calripkn	|  	| Cal Ripken Jr. Baseball (USA)				| 		| 1992	| Mindscape	| Sega Megadrive| 					|
+| md_cal50s	|  	| Cal.50 - Caliber Fifty  (Hack, Spanish)		| md_cal50	| 2019	| Mentrix Softwa| Sega Megadrive| 					|
 | md_cal50	|  	| Cal.50 - Caliber Fifty (USA)				| 		| 1991	| Mentrix Softwa| Sega Megadrive| 					|
 | calibr50	|  	| Caliber 50						| 		| 1989	| Athena / Seta	| Seta		| 					|
 | md_calgames	|  	| California Games (Euro, USA)				| 		| 1991	| Sega		| Sega Megadrive| 					|
@@ -1924,6 +1927,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
 | md_captlang	|  	| Captain Lang (Jpn)					| md_havoc	| 1994	| Data East	| Sega Megadrive| 					|
 | md_captplan	|  	| Captain Planet and the Planeteers (Euro)		| 		| 1993	| Sega		| Sega Megadrive| 					|
+| md_captplans	|  	| Captain Planet And The Planeteers (Hack, Spanish)	| md_captplan	| 2018	| SEGA		| Sega Megadrive| 					|
 | md_captplanu	|  	| Captain Planet and the Planeteers (USA)		| md_captplan	| 1993	| Sega		| Sega Megadrive| 					|
 | nes_captaplaandpla|  	| Captain Planet and the Planeteers (USA)		| 		| 1991	| Mindscape	| Miscellaneous	| 					|
 | nes_captainsaver|  	| Captain Saver (Japan)					| nes_powerblade2| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -1985,12 +1989,14 @@ This list contains all games supported by FinalBurn Neo.
 | sms_castlill	|  	| Castle of Illusion Starring Mickey Mouse (Euro, Bra)	| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_castlill	|  	| Castle of Illusion Starring Mickey Mouse (Euro, USA)	| 		| 1990	| Sega		| Sega Megadrive| 					|
 | gg_castlill	|  	| Castle of Illusion Starring Mickey Mouse (Euro, USA, S| 		| 1991	| Sega		| Sega Game Gear| 					|
+| md_castlills	|  	| Castle Of Illusion Starring Mickey Mouse (Hack, Spanis| md_castlill	| 2014	| SEGA		| Sega Megadrive| 					|
 | sms_castlillu	|  	| Castle of Illusion Starring Mickey Mouse (USA)	| sms_castlill	| 1990	| Sega		| Sega Master Sy| 					|
 | sms_castlills	|  	| Castle of Illusion Starring Mickey Mouse (USA, Display| sms_castlill	| 1990	| Sega		| Sega Master Sy| 					|
 | spec_castleofsorrow|  	| Castle Of Sorrow (HB)					| 		| 2018	| ZXMan48k	| ZX Spectrum	| 					|
 | spec_castlecapers|  	| CastleCapers (HB)					| 		| 2017	| Gabriele Amore| ZX Spectrum	| 					|
 | nes_castlevania|  	| Castlevania (USA)					| 		| 1987	| Konami	| Miscellaneous	| 					|
 | md_cvaniaec	|  	| Castlevania - Bloodlines (Hack, Enhanced Colors)	| md_cvania	| 2014	| Konami - Pyron| Sega Megadrive| 					|
+| md_cvanias	|  	| Castlevania - Bloodlines (Hack, Spanish)		| md_cvania	| 2017	| Konami	| Sega Megadrive| 					|
 | md_cvaniau	|  	| Castlevania - Bloodlines (USA)			| md_cvania	| 1994	| Konami	| Sega Megadrive| 					|
 | spec_castlevania|  	| Castlevania - Spectral Interlude (128K)		| 		| 2015	| Rewind Team	| ZX Spectrum	| 					|
 | spec_castlevanrus|  	| Castlevania - Spectral Interlude (Russian)(128K)	| spec_castlevania| 2015	| Rewind Team	| ZX Spectrum	| 					|
@@ -2036,6 +2042,7 @@ This list contains all games supported by FinalBurn Neo.
 | chainrec	|  	| Chain Reaction (World, Version 2.2, 1995.09.25)	| 		| 1995	| Data East	| Simple 156	| 					|
 | gg_chakan	|  	| Chakan (Euro, USA)					| 		| 1992	| Sega		| Sega Game Gear| 					|
 | md_chakan	|  	| Chakan (Euro, USA)					| 		| 1992	| Sega		| Sega Megadrive| 					|
+| md_chakans	|  	| Chakan (Hack, Spanish)				| md_chakan	| 2019	| SEGA		| Sega Megadrive| 					|
 | sg1k_chaldrby	|  	| Challenge Derby (Jpn, OMV)				| 		| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_chaldrbya|  	| Challenge Derby (Jpn, OMV, Alt)			| sg1k_chaldrby	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
 | sg1k_chaldrbyb|  	| Challenge Derby (Jpn, OMV, Hacked)			| sg1k_chaldrby	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
@@ -2143,6 +2150,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_chessa	|  	| Chess (Rus, Alt)					| md_chess	| 1998	| BSComp	| Sega Megadrive| 					|
 | md_chessb	|   NW	| Chess (Rus, v1.05)					| md_chess	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_chester	|  	| Chester Cheetah - Too Cool to Fool (USA)		| 		| 1992	| Kaneko	| Sega Megadrive| 					|
+| md_chesterws	|  	| Chester Cheetah - Wild Wild Quest (Hack, Spanish)	| md_chesterw	| 2019	| Kaneko	| Sega Megadrive| 					|
 | md_chesterw	|  	| Chester Cheetah - Wild Wild Quest (USA)		| 		| 1992	| Kaneko	| Sega Megadrive| 					|
 | nes_chestfie	|  	| Chester Field - Ankoku Shin e no Chousen (Japan)	| 		| 1987	| Vic Tokai	| Miscellaneous	| 					|
 | tg_chewman	|  	| Chew Man Fu						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
@@ -2254,6 +2262,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_chucknor	|  	| Chuck Norris Superkicks				| 		| 1983	| Xonox		| ColecoVision	| 					|
 | md_chuckrck	|  	| Chuck Rock (Euro)					| 		| 1992	| Virgin Games	| Sega Megadrive| 					|
 | sms_chuckrck	|  	| Chuck Rock (Euro, Bra)				| 		| 1992	| Virgin Interac| Sega Master Sy| 					|
+| md_chuckrcks	|  	| Chuck Rock (Hack, Spanish)				| md_chuckrck	| 2018	| Virgin Games	| Sega Megadrive| 					|
 | md_chuckrcku	|  	| Chuck Rock (USA)					| md_chuckrck	| 1992	| Virgin Games	| Sega Megadrive| 					|
 | gg_chuckrck	|  	| Chuck Rock (World)					| 		| 1992	| Sega		| Sega Game Gear| 					|
 | gg_chuckrckp	|  	| Chuck Rock (World, Prototype)				| gg_chuckrck	| 1992	| Sega		| Sega Game Gear| 					|
@@ -2262,6 +2271,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_chukrck2	|  	| Chuck Rock II - Son of Chuck (Euro)			| 		| 1994	| Virgin Interac| Sega Game Gear| 					|
 | md_chukrck2	|  	| Chuck Rock II - Son of Chuck (Euro)			| 		| 1993	| Core Design	| Sega Megadrive| 					|
 | sms_chukrck2	|  	| Chuck Rock II - Son of Chuck (Euro)			| 		| 1993	| Core Design	| Sega Master Sy| 					|
+| md_chukrck2s	|  	| Chuck Rock II - Son Of Chuck (Hack, Spanish)		| md_chukrck2	| 2018	| Virgin Games	| Sega Megadrive| 					|
 | gg_chukrck2u	|  	| Chuck Rock II - Son of Chuck (USA)			| gg_chukrck2	| 1994	| Virgin Interac| Sega Game Gear| 					|
 | md_chukrck2u	|  	| Chuck Rock II - Son of Chuck (USA)			| md_chukrck2	| 1993	| Virgin Games	| Sega Megadrive| 					|
 | md_chukrck2up	|  	| Chuck Rock II - Son of Chuck (USA, Prototype)		| md_chukrck2	| 1993	| Virgin Games	| Sega Megadrive| 					|
@@ -2413,6 +2423,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_columns	|  	| Columns						| 		| 1991	| Nihon Telenet	| PC Engine	| 					|
 | md_combat	|  	| Combat Aces (Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_combatca	|  	| Combat Cars (Euro, USA)				| 		| 1994	| Accolade	| Sega Megadrive| 					|
+| md_combatcas	|  	| Combat Cars (Hack, Spanish)				| md_combatca	| 2019	| Accolade	| Sega Megadrive| 					|
 | combh		|  	| Combat Hawk						| 		| 1987	| Sega / Sanrits| Miscellaneous	| 					|
 | spec_cschool	|  	| Combat School (128K)					| 		| 1987	| Ocean		| ZX Spectrum	| 					|
 | spec_cschool_48|  	| Combat School (48K)					| spec_cschool	| 1987	| Ocean		| ZX Spectrum	| 					|
@@ -2437,6 +2448,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_comixi	|  	| Comix Zone (Hack, Italian)				| md_comix	| 2002	| Sega		| Sega Megadrive| 					|
 | md_comixj	|  	| Comix Zone (Jpn)					| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
 | md_comixkp	|  	| Comix Zone (Kor, Prototype, 19950609)			| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
+| md_comixs	|  	| Comix Zone (NTSC) (Hack, Spanish)			| md_comix	| 2014	| SEGA		| Sega Megadrive| 					|
 | md_comixup10	|  	| Comix Zone (Prototype, 19950526)			| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
 | md_comixup09	|  	| Comix Zone (Prototype, 19950530)			| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
 | md_comixsc	|  	| Comix Zone (Sega Channel, Prototype, 19950612)	| md_comix	| 1995	| Sega		| Sega Megadrive| 					|
@@ -2506,6 +2518,7 @@ This list contains all games supported by FinalBurn Neo.
 | contra1	|  	| Contra (US / Asia, set 2)				| contra	| 1987	| Konami	| GX633		| 					|
 | contrae	|  	| Contra (US / Asia, set 3)				| contra	| 1987	| Konami	| GX633		| 					|
 | nes_contra	|  	| Contra (USA)						| 		| 1988	| Konami	| Miscellaneous	| 					|
+| md_contras	|  	| Contra - Hard Corps (Hack, Spanish)			| md_contra	| 2013	| Konami	| Sega Megadrive| 					|
 | md_contra	|  	| Contra - Hard Corps (USA, Kor)			| 		| 1994	| Konami	| Sega Megadrive| 					|
 | nes_contrredfalwar|  	| Contra - Red Falcon War (USA)				| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_contrrevredfal|  	| Contra - Revenge of the Red Falcon (USA)		| nes_contra	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -2528,6 +2541,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_coolspot	|  	| Cool Spot (Euro)					| 		| 1993	| Virgin Interac| Sega Game Gear| 					|
 | md_coolspot	|  	| Cool Spot (Euro)					| 		| 1994	| Virgin Games	| Sega Megadrive| 					|
 | sms_coolspot	|  	| Cool Spot (Euro)					| 		| 1993	| Virgin Interac| Sega Master Sy| 					|
+| md_coolspots	|  	| Cool Spot (Hack, Spanish)				| md_coolspot	| 2019	| Virgin Interac| Sega Megadrive| 					|
 | md_coolspotj	|  	| Cool Spot (Jpn, Kor)					| md_coolspot	| 1994	| Virgin Games	| Sega Megadrive| 					|
 | gg_coolspotu	|  	| Cool Spot (USA)					| gg_coolspot	| 1993	| Virgin Interac| Sega Game Gear| 					|
 | md_coolspotu	|  	| Cool Spot (USA)					| md_coolspot	| 1994	| Virgin Games	| Sega Megadrive| 					|
@@ -2651,6 +2665,7 @@ This list contains all games supported by FinalBurn Neo.
 | croquis	|  	| Croquis (Germany)					| logicpro	| 1996	| Deniam	| Deniam-16b Har| 					|
 | crossbld	|  	| Cross Blades! (Japan)					| bmaster	| 1991	| Irem		| Irem M92	| 					|
 | msx_crossblm	|  	| Cross Blaim (Jpn)					| 		| 1986	| dB-Soft	| MSX		| 					|
+| md_xfires	|  	| Cross Fire (Hack, Spanish)				| md_xfire	| 2019	| Kyugo		| Sega Megadrive| 					|
 | nes_crossfire	|  	| Cross Fire (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_xfire	|  	| Cross Fire (USA)					| 		| 1991	| Kyugo Boueki	| Sega Megadrive| 					|
 | crospang	|  	| Cross Pang						| 		| 1998	| F2 System	| Miscellaneous	| 					|
@@ -2698,6 +2713,7 @@ This list contains all games supported by FinalBurn Neo.
 | ccastlesp	|  	| Crystal Castles (version 3, Spanish)			| ccastles	| 1983	| Atari		| Miscellaneous	| 					|
 | ccastles	|  	| Crystal Castles (version 4)				| 		| 1983	| Atari		| Miscellaneous	| 					|
 | gg_crystalw	|  	| Crystal Warriors (Euro, USA)				| 		| 1992	| Sega		| Sega Game Gear| 					|
+| md_crystlpts	|  	| Crystal's Pony Tale (Hack, Spanish)			| md_crystlpt	| 2019	| SEGA		| Sega Megadrive| 					|
 | md_crystlpt	|  	| Crystal's Pony Tale (USA)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_crystlptp15|  	| Crystal's Pony Tale (USA, Prototype, 19940511)	| md_crystlpt	| 1994	| Sega		| Sega Megadrive| 					|
 | md_crystlptp14|  	| Crystal's Pony Tale (USA, Prototype, 19940519)	| md_crystlpt	| 1994	| Sega		| Sega Megadrive| 					|
@@ -2727,6 +2743,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_cutiesuz	|  	| Cutie Suzuki no Ringside Angel (Jpn)			| 		| 1990	| Asmik Ace	| Sega Megadrive| 					|
 | gg_cutthr	|  	| Cutthroat Island (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Game Gear| 					|
 | md_cutthr	|  	| CutThroat Island (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
+| md_cutthrs	|  	| Cutthroat Island (Hack, Spanish)			| md_cutthr	| 2019	| Acclaim	| Sega Megadrive| 					|
 | md_cutthrp	|  	| CutThroat Island (Prototye)				| md_cutthr	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | gg_cutthrp	|  	| Cutthroat Island (Prototype 19950916)			| gg_cutthr	| 1995	| Acclaim Entert| Sega Game Gear| 					|
 | cybattlr	|  	| Cybattler						| 		| 1993	| Jaleco	| Mega System 1	| 					|
@@ -3254,6 +3271,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_dokidoki	|  	| Dokidoki Penguin Land (Jpn)				| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | ngp_dokodemo	|  	| Dokodemo Mahjong (Jpn)				| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | dolmen	|  	| Dolmen						| 		| 1995	| Afega		| NMK16		| 					|
+| spec_dominator|  	| Dominator						| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | md_domino	|  	| Domino (Rus)						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | domino	|  	| Domino Man						| 		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | md_dominus	|  	| Dominus (USA, Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -8947,6 +8965,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_papillongals|  	| Papillon Gals (Japan) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_parachute|  	| Parachute (HB)					| 		| 2018	| Miguetelo	| ZX Spectrum	| 					|
 | msx_pjoe	|  	| Parachuteless Joe (HB)				| 		| 2005	| Paxanga Soft	| MSX		| 					|
+| spec_paradisecafe|  	| Paradise Cafe						| 		| 1985	| Damatta	| ZX Spectrum	| 					|
 | pturn		|  	| Parallel Turn						| 		| 1984	| Jaleco	| Miscellaneous	| 					|
 | nes_parallelworld|  	| Parallel World (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_paranoia	|  	| Paranoia						| 		| 1990	| Naxat		| PC Engine	| 					|
@@ -9542,6 +9561,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_proyak	|  	| Pro Yakyuu World Stadium				| 		| 1988	| Namcot	| PC Engine	| 					|
 | md_probot	|  	| Probotector (Euro)					| md_contra	| 1994	| Konami	| Sega Megadrive| 					|
 | nes_probotector|  	| Probotector (Europe)					| nes_contra	| 1990	| Konami	| Miscellaneous	| 					|
+| md_probots	|  	| Probotector (Hack, Spanish)				| md_contra	| 2017	| Konami	| Sega Megadrive| 					|
 | msx_profbb	|  	| Professional Baseball (Jpn)				| 		| 1986	| Technopolis So| MSX		| 					|
 | progeara	|  	| Progear (010117 Asia)					| progear	| 2001	| Capcom / Cave	| CPS2		| 					|
 | progear	|  	| Progear (010117 USA)					| 		| 2001	| Capcom / Cave	| CPS2		| 					|
@@ -12003,6 +12023,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sora	|  	| Streets of Rage (Euro, USA) ~ Bare Knuckle - Ikari no | md_sor	| 1991	| Sega		| Sega Megadrive| 					|
 | md_sor	|  	| Streets of Rage (Euro, USA, Rev. A) ~ Bare Knuckle - I| 		| 1991	| Sega		| Sega Megadrive| 					|
 | gg_sor	|  	| Streets of Rage (World) ~ Bare Knuckle (Jpn)		| 		| 1992	| Sega		| Sega Game Gear| 					|
+| md_sor2i	|  	| Streets of Rage 2 (Hack, Italian)			| md_sor2	| 2003	| Sega		| Sega Megadrive| 					|
 | md_sor2usw	|  	| Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, Apr| md_sor2	| 1992	| 2016 Gsaurus	| Sega Megadrive| 					|
 | md_sor2u	|  	| Streets of Rage 2 (USA)				| md_sor2	| 1992	| Sega		| Sega Megadrive| 					|
 | md_sor2bk3b	|  	| Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1)| md_sor2	| 2017	| Kratus	| Sega Megadrive| 					|
@@ -12564,6 +12585,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_swordofilana|  	| Sword Of Ilana (HB)					| 		| 2017	| RetroWorks	| ZX Spectrum	| 					|
 | md_swordsod	|  	| Sword of Sodan (Euro, USA)				| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_swordsodj	|  	| Sword of Sodan (Jpn)					| md_swordsod	| 1990	| Sega		| Sega Megadrive| 					|
+| spec_swordsamurai|  	| Sword of the Samurai					| 		| 1992	| Zeppelin Games| ZX Spectrum	| 					|
 | md_vermil	|  	| Sword of Vermilion (Euro, USA)			| 		| 1990	| Sega		| Sega Megadrive| 					|
 | nes_swordandser|  	| Swords and Serpents (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | md_sydvalis	|  	| Syd of Valis (USA)					| 		| 1992	| Renovation	| Sega Megadrive| 					|
@@ -14904,6 +14926,7 @@ This list contains all games supported by FinalBurn Neo.
 | xsleena	|  	| Xain'd Sleena (World)					| 		| 1986	| Technos Japan | Miscellaneous	| 					|
 | msx_xanadu	|  	| Xanadu - Dragon Slayer II (Jpn)			| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | md_xdr	|  	| XDR - X Dazedly Ray (Jpn)				| 		| 1990	| Unipac	| Sega Megadrive| 					|
+| spec_xecutor	|  	| Xecutor						| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | md_xenocrisis	|  	| Xeno Crisis (HB, USA)					| 		| 2019	| Bitmap Bureau	| Sega Megadrive| 					|
 | spec_xenon	|  	| Xenon (48K)						| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
 | msx_xenon	|  	| Xenon (Spa)						| 		| 1988	| Dro Soft	| MSX		| 					|

@@ -2008,6 +2008,13 @@
 		<rom name="cadash (arcade colors).md" size="524288" crc="84480043"/>
 		<driver status="good"/>
 	</game>
+	<game name="cadashs" cloneof="cadash" romof="cadash">
+		<description>Cadash (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="cadash (Hack, Spanish).bin" size="524288" crc="1bcfdc31"/>
+		<driver status="good"/>
+	</game>
 	<game name="cadash">
 		<description>Cadash (USA, Asia, Kor)</description>
 		<year>1992</year>
@@ -2041,6 +2048,13 @@
 		<year>1992</year>
 		<manufacturer>Mindscape</manufacturer>
 		<rom name="cal ripken jr. baseball (usa).bin" size="1048576" crc="9b1c96c0"/>
+		<driver status="good"/>
+	</game>
+	<game name="cal50s" cloneof="cal50" romof="cal50">
+		<description>Cal.50 - Caliber Fifty  (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Mentrix Software</manufacturer>
+		<rom name="caliber .50 (Hack, Spanish).bin" size="1048576" crc="a6ebf46f"/>
 		<driver status="good"/>
 	</game>
 	<game name="cal50">
@@ -2127,6 +2141,13 @@
 		<rom name="captain planet and the planeteers (euro).bin" size="524288" crc="7672efa5"/>
 		<driver status="good"/>
 	</game>
+	<game name="captplans" cloneof="captplan" romof="captplan">
+		<description>Captain Planet And The Planeteers (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="captain planet and the planeteers (Hack, Spanish).bin" size="524288" crc="c939d288"/>
+		<driver status="good"/>
+	</game>
 	<game name="captplanu" cloneof="captplan" romof="captplan">
 		<description>Captain Planet and the Planeteers (USA)</description>
 		<year>1993</year>
@@ -2155,11 +2176,25 @@
 		<rom name="castle of illusion starring mickey mouse (euro, usa).bin" size="524288" crc="ba4e9fd0"/>
 		<driver status="good"/>
 	</game>
+	<game name="castlills" cloneof="castlill" romof="castlill">
+		<description>Castle Of Illusion Starring Mickey Mouse (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="castle of illusion starring mickey mouse (Hack, Spanish).bin" size="524288" crc="7813743d"/>
+		<driver status="good"/>
+	</game>
 	<game name="cvaniaec" cloneof="cvania" romof="cvania">
 		<description>Castlevania - Bloodlines (Hack, Enhanced Colors)</description>
 		<year>2014</year>
 		<manufacturer>Konami - Pyron</manufacturer>
 		<rom name="castlevania - bloodlines (hack - enhanced colors).md" size="1048576" crc="5ffdffa7"/>
+		<driver status="good"/>
+	</game>
+	<game name="cvanias" cloneof="cvania" romof="cvania">
+		<description>Castlevania - Bloodlines (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="castlevania - bloodlines (Hack, Spanish).bin" size="1048576" crc="6107d697"/>
 		<driver status="good"/>
 	</game>
 	<game name="cvaniau" cloneof="cvania" romof="cvania">
@@ -2202,6 +2237,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="chakan (euro, usa).bin" size="1048576" crc="046a48de"/>
+		<driver status="good"/>
+	</game>
+	<game name="chakans" cloneof="chakan" romof="chakan">
+		<description>Chakan (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="chakan (Hack, Spanish).bin" size="1048576" crc="5efeccac"/>
 		<driver status="good"/>
 	</game>
 	<game name="kidchamj" cloneof="kidcham" romof="kidcham">
@@ -2309,6 +2351,13 @@
 		<rom name="chester cheetah - too cool to fool (usa).bin" size="1048576" crc="250e3ec3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chesterws" cloneof="chesterw" romof="chesterw">
+		<description>Chester Cheetah - Wild Wild Quest (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Kaneko</manufacturer>
+		<rom name="chester cheetah - wild wild quest (Hack, Spanish).bin" size="1048576" crc="031bc0b5"/>
+		<driver status="good"/>
+	</game>
 	<game name="chesterw">
 		<description>Chester Cheetah - Wild Wild Quest (USA)</description>
 		<year>1992</year>
@@ -2400,6 +2449,13 @@
 		<rom name="chuck rock (euro).bin" size="1048576" crc="7cd40bea"/>
 		<driver status="good"/>
 	</game>
+	<game name="chuckrcks" cloneof="chuckrck" romof="chuckrck">
+		<description>Chuck Rock (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="chuck rock (Hack, Spanish).bin" size="1048576" crc="97bea810"/>
+		<driver status="good"/>
+	</game>
 	<game name="chuckrcku" cloneof="chuckrck" romof="chuckrck">
 		<description>Chuck Rock (USA)</description>
 		<year>1992</year>
@@ -2419,6 +2475,13 @@
 		<year>1993</year>
 		<manufacturer>Core Design</manufacturer>
 		<rom name="chuck rock ii - son of chuck (euro).bin" size="1048576" crc="1ade9488"/>
+		<driver status="good"/>
+	</game>
+	<game name="chukrck2s" cloneof="chukrck2" romof="chukrck2">
+		<description>Chuck Rock II - Son Of Chuck (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="chuck rock ii - son of chuck (Hack, Spanish).bin" size="1048576" crc="7b46f45e"/>
 		<driver status="good"/>
 	</game>
 	<game name="chukrck2u" cloneof="chukrck2" romof="chukrck2">
@@ -2715,6 +2778,13 @@
 		<rom name="combat cars (euro, usa).bin" size="1048576" crc="e439b101"/>
 		<driver status="good"/>
 	</game>
+	<game name="combatcas" cloneof="combatca" romof="combatca">
+		<description>Combat Cars (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="combat cars (Hack, Spanish).bin" size="1048576" crc="ea3af06f"/>
+		<driver status="good"/>
+	</game>
 	<game name="comix">
 		<description>Comix Zone (Euro)</description>
 		<year>1995</year>
@@ -2755,6 +2825,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="comix zone (kor) (prototype - jun 09, 1995).bin" size="2097152" crc="e45a15f4"/>
+		<driver status="good"/>
+	</game>
+	<game name="comixs" cloneof="comix" romof="comix">
+		<description>Comix Zone (NTSC) (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="comix zone (Hack, Spanish).bin" size="2097152" crc="9acaffc5"/>
 		<driver status="good"/>
 	</game>
 	<game name="comixup10" cloneof="comix" romof="comix">
@@ -2862,6 +2939,13 @@
 		<rom name="congo (unknown) (prototype).bin" size="1015094" crc="13746716"/>
 		<driver status="good"/>
 	</game>
+	<game name="contras" cloneof="contra" romof="contra">
+		<description>Contra - Hard Corps (Hack, Spanish)</description>
+		<year>2013</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="contra - hard corps (Hack, Spanish).bin" size="2097152" crc="d421f78d"/>
+		<driver status="good"/>
+	</game>
 	<game name="contra">
 		<description>Contra - Hard Corps (USA, Kor)</description>
 		<year>1994</year>
@@ -2881,6 +2965,13 @@
 		<year>1994</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="mpr-15477.bin" size="1048576" crc="5f09fa41"/>
+		<driver status="good"/>
+	</game>
+	<game name="coolspots" cloneof="coolspot" romof="coolspot">
+		<description>Cool Spot (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="cool spot (Hack, Spanish).bin" size="1048576" crc="40a18f52"/>
 		<driver status="good"/>
 	</game>
 	<game name="coolspotj" cloneof="coolspot" romof="coolspot">
@@ -2960,6 +3051,13 @@
 		<rom name="crayon shin-chan - arashi o yobu enji (jpn).bin" size="2097152" crc="97fc42d2"/>
 		<driver status="good"/>
 	</game>
+	<game name="xfires" cloneof="xfire" romof="xfire">
+		<description>Cross Fire (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Kyugo</manufacturer>
+		<rom name="cross fire (Hack, Spanish).bin" size="524288" crc="628b2c53"/>
+		<driver status="good"/>
+	</game>
 	<game name="xfire">
 		<description>Cross Fire (USA)</description>
 		<year>1991</year>
@@ -3000,6 +3098,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="crying - aseimei sensou (jpn).bin" size="1048576" crc="4aba1d6a"/>
+		<driver status="good"/>
+	</game>
+	<game name="crystlpts" cloneof="crystlpt" romof="crystlpt">
+		<description>Crystal's Pony Tale (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="crystal's pony tale (Hack, Spanish)" size="1048576" crc="3b9e41bf"/>
 		<driver status="good"/>
 	</game>
 	<game name="crystlpt">
@@ -3140,6 +3245,13 @@
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="cutthroat island (euro, usa).bin" size="2097152" crc="ebabbc70"/>
+		<driver status="good"/>
+	</game>
+	<game name="cutthrs" cloneof="cutthr" romof="cutthr">
+		<description>Cutthroat Island (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="cutthroat island (Hack, Spanish)" size="2097152" crc="ca275ae6"/>
 		<driver status="good"/>
 	</game>
 	<game name="cutthrp" cloneof="cutthr" romof="cutthr">
@@ -10218,6 +10330,13 @@
 		<rom name="probotector (euro).bin" size="2097152" crc="bc597d48"/>
 		<driver status="good"/>
 	</game>
+	<game name="probots" cloneof="contra" romof="contra">
+		<description>Probotector (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="probotector (Hack, Spanish).bin" size="2097152" crc="47abdaa3"/>
+		<driver status="good"/>
+	</game>
 	<game name="psyoblade" cloneof="psyoblad" romof="psyoblad">
 		<description>Psy-O-Blade (Hack, English)</description>
 		<year>2015</year>
@@ -12911,6 +13030,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14125a.ic1" size="524288" crc="4052e845"/>
+		<driver status="good"/>
+	</game>
+	<game name="sor2i" cloneof="sor2" romof="sor2">
+		<description>Streets of Rage 2 (Hack, Italian)</description>
+		<year>2003</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="streets of rage 2 (italian translation).bin" size="2097152" crc="7c034b79"/>
 		<driver status="good"/>
 	</game>
 	<game name="sor2usw" cloneof="sor2" romof="sor2">

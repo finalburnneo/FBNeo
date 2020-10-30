@@ -1873,6 +1873,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="dominator" romof="spec128">
+		<description>Dominator</description>
+		<year>1987</year>
+		<manufacturer>ACE Software</manufacturer>
+		<rom name="Dominator (1989)(System 3).tap" size="67437" crc="3af9c9f7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="dkong" romof="spectrum">
 		<description>Donkey Kong (48K)</description>
 		<year>1986</year>
@@ -4201,6 +4210,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="paradisecafe" romof="spec128">
+		<description>Paradise Cafe</description>
+		<year>1985</year>
+		<manufacturer>Damatta</manufacturer>
+		<rom name="Paradise Cafe (1985)(Damatta).tap" size="30777" crc="e6f5c3ea"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="parisdakares" romof="spec128">
 		<description>Paris-Dakar (Spanish)</description>
 		<year>1988</year>
@@ -5706,6 +5724,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="swordsamurai" romof="spec128">
+		<description>Sword of the Samurai</description>
+		<year>1992</year>
+		<manufacturer>Zeppelin Games Ltd</manufacturer>
+		<rom name="Sword of the Samurai (1992)(Zeppelin Games Ltd).tap" size="41439" crc="42e23e9f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="taichitortoise" romof="spec128">
 		<description>Tai Chi Tortoise</description>
 		<year>1991</year>
@@ -6314,6 +6341,15 @@
 		<year>1991</year>
 		<manufacturer>Ocean Software</manufacturer>
 		<rom name="WWF WrestleMania (1991)(Ocean Software).tap" size="209329" crc="b377350f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="xecutor" romof="spec128">
+		<description>Xecutor</description>
+		<year>1987</year>
+		<manufacturer>ACE Software</manufacturer>
+		<rom name="Xecutor (1987)(ACE Software).tap" size="42063" crc="d1047062"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

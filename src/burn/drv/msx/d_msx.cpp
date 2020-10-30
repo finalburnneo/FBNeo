@@ -26039,3 +26039,22 @@ struct BurnDriver BurnDrvMSX_skyfox = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Bird & Chairs
+
+static struct BurnRomInfo MSX_birdchairsRomDesc[] = {
+	{ "bird-ch.rom",	0x8000, 0x0236deea, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_birdchairs, MSX_birdchairs, msx_msx)
+STD_ROM_FN(MSX_birdchairs)
+
+struct BurnDriver BurnDrvMSX_birdchairs = {
+	"msx_birdchairs", NULL, "msx_msx", NULL, "2017",
+	"Bird & Chairs (HB)\0", NULL, "N.I", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	MSXGetZipName, MSX_birdchairsRomInfo, MSX_birdchairsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

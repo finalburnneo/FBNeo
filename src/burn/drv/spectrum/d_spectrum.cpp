@@ -1227,7 +1227,7 @@ static void SpecCalcPalette()
 		0x000000, 0x0000bf, 0xbf0000, 0xbf00bf,
 		0x00bf00, 0x00bfbf, 0xbfbf00, 0xbfbfbf,
 		0x000000, 0x0000ff, 0xff0000, 0xff00ff,
-		0x00ff00, 0x00ffff,	0xffff00, 0xffffff
+		0x00ff00, 0x00ffff, 0xffff00, 0xffffff
 	};
 
 	for (INT32 i = 0; i < 0x10; i++) {
@@ -1476,7 +1476,6 @@ static INT32 SpecFrame()
 
 	INT32 tot_frame = SpecScanlines * SpecCylesPerScanline;
 	nExtraCycles = ZetTotalCycles() - tot_frame;
-	//bprintf(0, _T("d_spectrum eof %d\n"), ZetTotalCycles());
 
 	ZetClose();
 
@@ -10361,7 +10360,7 @@ struct BurnDriver BurnSpecvindicat = {
 	"Vindicators (128K)\0", NULL, "Domark", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecvindicatRomInfo, SpecvindicatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecvindicatRomInfo, SpecvindicatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -13402,6 +13401,82 @@ struct BurnDriver BurnSpecThundbirds4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecThundbirds4RomInfo, SpecThundbirds4RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Paradise Cafe
+
+static struct BurnRomInfo SpecparadisecafeRomDesc[] = {
+	{ "Paradise Cafe (1985)(Damatta).tap", 30777, 0xe6f5c3ea, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specparadisecafe, Specparadisecafe, Spec128)
+STD_ROM_FN(Specparadisecafe)
+
+struct BurnDriver BurnSpecparadisecafe = {
+	"spec_paradisecafe", NULL, "spec_spec128", NULL, "1985",
+	"Paradise Cafe\0", NULL, "Damatta", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecparadisecafeRomInfo, SpecparadisecafeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Xecutor
+
+static struct BurnRomInfo SpecxecutorRomDesc[] = {
+	{ "Xecutor (1987)(ACE Software).tap", 42063, 0xd1047062, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specxecutor, Specxecutor, Spec128)
+STD_ROM_FN(Specxecutor)
+
+struct BurnDriver BurnSpecxecutor = {
+	"spec_xecutor", NULL, "spec_spec128", NULL, "1987",
+	"Xecutor\0", NULL, "ACE Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecxecutorRomInfo, SpecxecutorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dominator
+
+static struct BurnRomInfo SpecdominatorRomDesc[] = {
+	{ "Dominator (1989)(System 3).tap", 67437, 0x3af9c9f7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specdominator, Specdominator, Spec128)
+STD_ROM_FN(Specdominator)
+
+struct BurnDriver BurnSpecdominator = {
+	"spec_dominator", NULL, "spec_spec128", NULL, "1987",
+	"Dominator\0", NULL, "ACE Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecdominatorRomInfo, SpecdominatorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sword of the Samurai
+
+static struct BurnRomInfo SpecSwordsamuraiRomDesc[] = {
+	{ "Sword of the Samurai (1992)(Zeppelin Games Ltd).tap", 41439, 0x42e23e9f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSwordsamurai, SpecSwordsamurai, Spec128)
+STD_ROM_FN(SpecSwordsamurai)
+
+struct BurnDriver BurnSpecSwordsamurai = {
+	"spec_swordsamurai", NULL, "spec_spec128", NULL, "1992",
+	"Sword of the Samurai\0", NULL, "Zeppelin Games Ltd", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSwordsamuraiRomInfo, SpecSwordsamuraiRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

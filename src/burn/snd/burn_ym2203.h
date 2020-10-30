@@ -39,8 +39,8 @@ extern INT32 bYM2203UseSeperateVolumes;
 #define BurnYM2203Read(i, a) YM2203Read(i, a)
 
 #if defined FBNEO_DEBUG
-	#define BurnYM2203Write(i, a, n) if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Write called without init\n")); YM2203Write(i, a, n)
-	#define BurnYM2203SetPorts(c, read0, read1, write0, write1)	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetPorts called without init\n")); AY8910SetPorts(c, read0, read1, write0, write1)
+	#define BurnYM2203Write(i, a, n) do { if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Write called without init\n")); YM2203Write(i, a, n); } while (0)
+	#define BurnYM2203SetPorts(c, read0, read1, write0, write1)	do { if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetPorts called without init\n")); AY8910SetPorts(c, read0, read1, write0, write1); } while (0)
 #else
 	#define BurnYM2203Write(i, a, n) YM2203Write(i, a, n)
 	#define BurnYM2203SetPorts(c, read0, read1, write0, write1)	AY8910SetPorts(c, read0, read1, write0, write1)

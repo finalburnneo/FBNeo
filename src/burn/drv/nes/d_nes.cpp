@@ -21448,8 +21448,25 @@ struct BurnDriver BurnDrvnes_esperboukentai = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_esperdre2RomDesc[] = {
+static struct BurnRomInfo nes_esperdre2jRomDesc[] = {
 	{ "Esper Dream 2 - Aratanaru Tatakai (Japan).nes",          393232, 0x72344f1d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_esperdre2j)
+STD_ROM_FN(nes_esperdre2j)
+
+struct BurnDriver BurnDrvnes_esperdre2j = {
+	"nes_esperdre2j", "nes_esperdre2", NULL, NULL, "1992",
+	"Esper Dream 2 - Aratanaru Tatakai (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_esperdre2jRomInfo, nes_esperdre2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_esperdre2RomDesc[] = {
+	{ "Esper Dream 2 - Aratanaru Tatakai (T-Eng).nes",          393232, 0x892b32eb, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_esperdre2)
@@ -21457,7 +21474,7 @@ STD_ROM_FN(nes_esperdre2)
 
 struct BurnDriver BurnDrvnes_esperdre2 = {
 	"nes_esperdre2", NULL, NULL, NULL, "1992",
-	"Esper Dream 2 - Aratanaru Tatakai (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Esper Dream 2 - Aratanaru Tatakai (T-Eng)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_esperdre2RomInfo, nes_esperdre2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22009,6 +22026,40 @@ struct BurnDriver BurnDrvnes_faria = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_faxanadujRomDesc[] = {
+	{ "Faxanadu (Japan).nes",          262160, 0xf9e6e6ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_faxanaduj)
+STD_ROM_FN(nes_faxanaduj)
+
+struct BurnDriver BurnDrvnes_faxanaduj = {
+	"nes_faxanaduj", "nes_faxanadu", NULL, NULL, "1987",
+	"Faxanadu (Japan)\0", NULL, "Hudson Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_faxanadujRomInfo, nes_faxanadujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_faxanadutRomDesc[] = {
+	{ "Faxanadu (T-Eng).nes",          524304, 0xed0a6836, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_faxanadut)
+STD_ROM_FN(nes_faxanadut)
+
+struct BurnDriver BurnDrvnes_faxanadut = {
+	"nes_faxanadut", "nes_faxanadu", NULL, NULL, "1987",
+	"Faxanadu (T-Eng)\0", NULL, "Hudson Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_faxanadutRomInfo, nes_faxanadutRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_faxanaduRomDesc[] = {
 	{ "Faxanadu (USA) (Rev A).nes",          262160, 0xb6f4f544, BRF_ESS | BRF_PRG },
 };
@@ -22265,35 +22316,35 @@ struct BurnDriver BurnDrvnes_finalfaniii = {
 };
 
 static struct BurnRomInfo nes_finalfanviiRomDesc[] = {
-	{ "Final Fantasy VII (Ch).nes",          2097168, 0xe5bf8f0c, BRF_ESS | BRF_PRG },
+	{ "Final Fantasy VII (China).nes",          2097168, 0xe5bf8f0c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_finalfanvii)
 STD_ROM_FN(nes_finalfanvii)
 
 struct BurnDriver BurnDrvnes_finalfanvii = {
-	"nes_finalfanvii", NULL, NULL, NULL, "1989?",
-	"Final Fantasy VII (Ch)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_finalfanvii", "nes_finalfanviiadvch", NULL, NULL, "1989?",
+	"Final Fantasy VII (China)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_finalfanviiRomInfo, nes_finalfanviiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_finalfanviiadvchv11RomDesc[] = {
-	{ "Final Fantasy VII - Advent Children v1.1 (Ch).nes",          2097168, 0x8de6d62f, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo nes_finalfanviiadvchRomDesc[] = {
+	{ "Final Fantasy VII - Advent Children (T-Eng).nes",          2097168, 0x8de6d62f, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_finalfanviiadvchv11)
-STD_ROM_FN(nes_finalfanviiadvchv11)
+STD_ROM_PICK(nes_finalfanviiadvch)
+STD_ROM_FN(nes_finalfanviiadvch)
 
-struct BurnDriver BurnDrvnes_finalfanviiadvchv11 = {
-	"nes_finalfanviiadvchv11", NULL, NULL, NULL, "1989?",
-	"Final Fantasy VII - Advent Children v1.1 (Ch)\0", NULL, "Nintendo", "Miscellaneous",
+struct BurnDriver BurnDrvnes_finalfanviiadvch = {
+	"nes_finalfanviiadvch", NULL, NULL, NULL, "1989?",
+	"Final Fantasy VII - Advent Children (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_finalfanviiadvchv11RomInfo, nes_finalfanviiadvchv11RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_finalfanviiadvchRomInfo, nes_finalfanviiadvchRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -34058,6 +34109,23 @@ struct BurnDriver BurnDrvnes_streefigii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_streefigiiRomInfo, nes_streefigiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_streefigiihacRomDesc[] = {
+	{ "Street Fighter II Hack (Hack of SFIII).nes",          655376, 0x470ce47e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefigiihac)
+STD_ROM_FN(nes_streefigiihac)
+
+struct BurnDriver BurnDrvnes_streefigiihac = {
+	"nes_streefigiihac", "nes_streefigiii", NULL, NULL, "1989?",
+	"Street Fighter II Hack (Hack of SFIII)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_streefigiihacRomInfo, nes_streefigiihacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

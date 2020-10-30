@@ -11760,6 +11760,42 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_somariRomDesc[] = {
+	{ "Somari (Unl).nes",          524304, 0x51589daf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_somari)
+STD_ROM_FN(nes_somari)
+
+struct BurnDriver BurnDrvnes_somari = {
+	"nes_somari", NULL, NULL, NULL, "1994",
+	"Somari (Unl)\0", NULL, "Hummer Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_somariRomInfo, nes_somariRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sonic Improvement vol.2
+// http://www.romhacking.net/hacks/5026/
+static struct BurnRomInfo nes_sonicRomDesc[] = {
+	{ "Sonic the Hedgehog (Hack).nes",          786448, 0xb9ebd682, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sonic)
+STD_ROM_FN(nes_sonic)
+
+struct BurnDriver BurnDrvnes_sonic = {
+	"nes_sonic", "nes_somari", NULL, NULL, "2020",
+	"Sonic the Hedgehog (Hack)\0", NULL, "Terwilf", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_sonicRomInfo, nes_sonicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Bowsette 2 (Hack, Red version)
 // https://www.romhacking.net/hacks/4326/
 

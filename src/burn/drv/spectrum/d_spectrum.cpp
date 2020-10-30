@@ -13636,7 +13636,7 @@ struct BurnDriver BurnSpecLemmings = {
 // P-47 Thunderbolt
 
 static struct BurnRomInfo SpecP47thunderboltRomDesc[] = {
-	{ "P-47 Thunderbolt (1990)(Firebird).tap", 91435, 0xcfde3cef, BRF_ESS | BRF_PRG },
+	{ "P-47 Thunderbolt (1990)(Firebird).tap", 72894, 0x9efaf7fc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecP47thunderbolt, SpecP47thunderbolt, Spec128)

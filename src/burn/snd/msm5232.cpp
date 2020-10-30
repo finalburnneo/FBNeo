@@ -414,9 +414,11 @@ void MSM5232Write(INT32 offset, UINT8 data)
 		case 0x0c:  /* group1 control */
 			m_control1 = data;
 
-			for (i=0; i<4; i++)
+			for (i=0; i<4; i++) {
+				if (data & 0x10 && m_voi[i].eg_sect == 1)
+					m_voi[i].eg_sect = 0;
 				m_voi[i].eg_arm = data&0x10;
-
+			}
 			m_EN_out16[0] = (data&1) ? ~0:0;
 			m_EN_out8[0]  = (data&2) ? ~0:0;
 			m_EN_out4[0]  = (data&4) ? ~0:0;
@@ -428,9 +430,11 @@ void MSM5232Write(INT32 offset, UINT8 data)
 			m_control2 = data;
 			gate_update();
 
-			for (i=0; i<4; i++)
+			for (i=0; i<4; i++) {
+				if (data & 0x10 && m_voi[i+4].eg_sect == 1)
+					m_voi[i+4].eg_sect = 0;
 				m_voi[i+4].eg_arm = data&0x10;
-
+			}
 			m_EN_out16[1] = (data&1) ? ~0:0;
 			m_EN_out8[1]  = (data&2) ? ~0:0;
 			m_EN_out4[1]  = (data&4) ? ~0:0;

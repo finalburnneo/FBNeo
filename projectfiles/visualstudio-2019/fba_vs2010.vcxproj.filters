@@ -3678,9 +3678,6 @@
     <ClCompile Include="..\..\src\burn\drv\spectrum\d_spectrum.cpp">
       <Filter>Burn\drv\spectrum</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\spectrum\spectrum_states.cpp">
-      <Filter>Burn\drv\spectrum</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_crbaloon.cpp">
       <Filter>Burn\drv\taito</Filter>
     </ClCompile>
@@ -4531,9 +4528,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt">
-      <Filter>Burn\drv\spectrum</Filter>
-    </Text>
     <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt">
       <Filter>libs\7z</Filter>
     </Text>

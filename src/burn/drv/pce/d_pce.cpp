@@ -7848,6 +7848,25 @@ struct BurnDriver BurnDrvtg_rtype = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// R-Type - Chris Covell's Unfinished SGX Hack
+// https://www.chrismcovell.com/creations.html#courrtype
+
+static struct BurnRomInfo sgx_rtypeuhRomDesc[] = {
+	{ "r-type (unfinished hack).sgx", 0x080000, 0xcdc9bb74, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sgx_rtypeuh)
+STD_ROM_FN(sgx_rtypeuh)
+
+struct BurnDriver BurnDrvsgx_rtypeuh = {
+	"sgx_rtypeuh", "tg_rtype", NULL, NULL, "2019",
+	"R-Type - Chris Covell's Unfinished SGX Hack\0", NULL, "NEC", "SuperGrafx",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
+	SgxGetZipName, sgx_rtypeuhRomInfo, sgx_rtypeuhRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
 
 // Raiden
 

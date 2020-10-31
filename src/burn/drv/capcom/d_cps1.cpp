@@ -23798,10 +23798,10 @@ struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 
 // Cadillacs and Dinosaurs (God of War Edition, Hack)
 // Hacked by Ngs
-// GOTVG Last update: 2020-09-24
+// GOTVG 20201025
 
 static struct BurnRomInfo DinodsRomDesc[] = {
-	{ "dinods.bin",		0x200000, 0xa32961d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinods.bin",		0x200000, 0x08a53082, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -23818,7 +23818,7 @@ static struct BurnRomInfo DinodsRomDesc[] = {
 	{ "cd-q2.2k",       0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "cd-q3.3k",       0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "cd-q4.4k",       0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
-	
+
 	{ "dino.key",       0x000080, 0x230b6eb0, BRF_OPT },
 };
 
@@ -23826,7 +23826,7 @@ STD_ROM_PICK(Dinods)
 STD_ROM_FN(Dinods)
 
 struct BurnDriver BurnDrvCpsDinods = {
-	"dinods", "dino", NULL, NULL, "2020-09-24",
+	"dinods", "dino", NULL, NULL, "2020-10-25",
 	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,

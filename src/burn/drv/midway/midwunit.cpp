@@ -494,17 +494,7 @@ static void MakeInputs()
 
 static void HandleDCSIRQ(INT32 line)
 {
-	if (nBurnFPS == 6000) {
-		// 60hz needs 2 irq's/frame (this is here for "force 60hz"/etc)
-		if (line == 0 || line == 144) DcsIRQ(); // 2x per frame
-	} else {
-		// 54.71hz needs 5 irq's every 2 frames
-		if (nCurrentFrame & 1) {
-			if (line == 0 || line == 144) DcsIRQ(); // 2x per frame
-		} else {
-			if (line == 0 || line == 96 || line == 192) DcsIRQ(); // 3x
-		}
-	}
+	if (line == 0 || line == 96 || line == 192) DcsCheckIRQ();
 }
 
 INT32 WolfUnitFrame()

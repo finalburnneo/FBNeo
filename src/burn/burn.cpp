@@ -800,14 +800,16 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
-	if (!bForce60Hz) {
-		nBurnFPS = (INT32)(100.0 * dFrameRate);
-#ifdef __LIBRETRO__
-		// By design, libretro dislike having nBurnSoundRate > nBurnFPS * 10
-		if (nBurnSoundRate > nBurnFPS * 10)
-			nBurnSoundRate = nBurnFPS * 10;
-#endif
+	if (bForce60Hz) {
+		dFrameRate = 60.00;
 	}
+
+	nBurnFPS = (INT32)(100.0 * dFrameRate);
+#ifdef __LIBRETRO__
+	// By design, libretro dislike having nBurnSoundRate > nBurnFPS * 10
+	if (nBurnSoundRate > nBurnFPS * 10)
+		nBurnSoundRate = nBurnFPS * 10;
+#endif
 
 	nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;
 

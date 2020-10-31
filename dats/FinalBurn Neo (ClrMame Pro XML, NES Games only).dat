@@ -3071,11 +3071,18 @@
 		<rom name="Esper Bouken Tai (Japan).nes" size="262160" crc="56b7dfe3"/>
 		<driver status="good"/>
 	</game>
-	<game name="esperdre2">
+	<game name="esperdre2j" cloneof="esperdre2" romof="esperdre2">
 		<description>Esper Dream 2 - Aratanaru Tatakai (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Esper Dream 2 - Aratanaru Tatakai (Japan).nes" size="393232" crc="72344f1d"/>
+		<driver status="good"/>
+	</game>
+	<game name="esperdre2">
+		<description>Esper Dream 2 - Aratanaru Tatakai (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Esper Dream 2 - Aratanaru Tatakai (T-Eng).nes" size="393232" crc="892b32eb"/>
 		<driver status="good"/>
 	</game>
 	<game name="espitundherpim">
@@ -3330,6 +3337,20 @@
 		<rom name="Faria - A World of Mystery &amp; Danger! (USA).nes" size="262160" crc="1c059dfb"/>
 		<driver status="good"/>
 	</game>
+	<game name="faxanaduj" cloneof="faxanadu" romof="faxanadu">
+		<description>Faxanadu (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Faxanadu (Japan).nes" size="262160" crc="f9e6e6ad"/>
+		<driver status="good"/>
+	</game>
+	<game name="faxanadut" cloneof="faxanadu" romof="faxanadu">
+		<description>Faxanadu (T-Eng)</description>
+		<year>1987</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Faxanadu (T-Eng).nes" size="524304" crc="ed0a6836"/>
+		<driver status="good"/>
+	</game>
 	<game name="faxanadu">
 		<description>Faxanadu (USA) (Rev A)</description>
 		<year>1989</year>
@@ -3435,18 +3456,18 @@
 		<rom name="Final Fantasy III (Japan).nes" size="524304" crc="99f5db31"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalfanvii">
-		<description>Final Fantasy VII (Ch)</description>
+	<game name="finalfanvii" cloneof="finalfanviiadvch" romof="finalfanviiadvch">
+		<description>Final Fantasy VII (China)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Final Fantasy VII (Ch).nes" size="2097168" crc="e5bf8f0c"/>
+		<rom name="Final Fantasy VII (China).nes" size="2097168" crc="e5bf8f0c"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalfanviiadvchv11">
-		<description>Final Fantasy VII - Advent Children v1.1 (Ch)</description>
+	<game name="finalfanviiadvch">
+		<description>Final Fantasy VII - Advent Children (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Final Fantasy VII - Advent Children v1.1 (Ch).nes" size="2097168" crc="8de6d62f"/>
+		<rom name="Final Fantasy VII - Advent Children (T-Eng).nes" size="2097168" crc="8de6d62f"/>
 		<driver status="good"/>
 	</game>
 	<game name="finalfight3">
@@ -5652,6 +5673,20 @@
 		<year>1987</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Legend of Kage, The (USA).nes" size="49168" crc="6785c961"/>
+		<driver status="good"/>
+	</game>
+	<game name="triforcegc" cloneof="triforceg" romof="triforceg">
+		<description>Legend of Zelda - Triforce of the Gods (China)</description>
+		<year>1989?</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Legend of Zelda - Triforce of the Gods (China).nes" size="2097168" crc="3a1b4502"/>
+		<driver status="good"/>
+	</game>
+	<game name="triforceg">
+		<description>Legend of Zelda - Triforce of the Gods (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Legend of Zelda - Triforce of the Gods (T-Eng).nes" size="2097168" crc="0be2d8fd"/>
 		<driver status="good"/>
 	</game>
 	<game name="legenzeldx" cloneof="legenzel" romof="legenzel">
@@ -8629,11 +8664,25 @@
 		<rom name="Solstice - The Quest for the Staff of Demnos (USA).nes" size="131088" crc="1d60732e"/>
 		<driver status="good"/>
 	</game>
+	<game name="somari">
+		<description>Somari (Unl)</description>
+		<year>1994</year>
+		<manufacturer>Hummer Team</manufacturer>
+		<rom name="Somari (Unl).nes" size="524304" crc="51589daf"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonson">
 		<description>Son Son (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Son Son (Japan).nes" size="40976" crc="f7c8f42d"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic" cloneof="somari" romof="somari">
+		<description>Sonic the Hedgehog (Hack)</description>
+		<year>2020</year>
+		<manufacturer>Terwilf</manufacturer>
+		<rom name="Sonic the Hedgehog (Hack).nes" size="786448" crc="b9ebd682"/>
 		<driver status="good"/>
 	</game>
 	<game name="spaceharrier">
@@ -8907,6 +8956,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Street Fighter II - The World Warrior (Unl).nes" size="262160" crc="dedfa5bb"/>
+		<driver status="good"/>
+	</game>
+	<game name="streefigiihac" cloneof="streefigiii" romof="streefigiii">
+		<description>Street Fighter II Hack (Hack of SFIII)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Street Fighter II Hack (Hack of SFIII).nes" size="655376" crc="470ce47e"/>
 		<driver status="good"/>
 	</game>
 	<game name="streefigiii">

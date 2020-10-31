@@ -24,4 +24,4 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength);
 void Dcs2kReset();
 void Dcs2kNewFrame();
 UINT32 Dcs2kTotalCycles();
-void DcsIRQ();
+void DcsCheckIRQ();

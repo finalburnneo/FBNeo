@@ -6210,6 +6210,36 @@ static void mapper150_map()
 	}
 }
 
+// ---[ mapper 162 Zelda Triforce of the Gods
+#define mapper162_reg(x)			(mapper_regs[0x00 + (x)])
+
+static void mapper162_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x5000 && address <= 0x5fff) {
+		mapper162_reg((address >> 8) & 0x03) = data;
+
+		mapper_map();
+	}
+}
+
+static void mapper162_map()
+{
+	switch (mapper162_reg(3) & 0x05) {
+		case 0:
+			mapper_map_prg(32, 0, (mapper162_reg(1) & 0x02) | ((mapper162_reg(2) & 0x0f) << 4) | (mapper162_reg(0) & 0x0c));
+			break;
+		case 1:
+			mapper_map_prg(32, 0, ((mapper162_reg(2) & 0x0f) << 4) | (mapper162_reg(0) & 0x0c));
+			break;
+		case 4:
+			mapper_map_prg(32, 0, ((mapper162_reg(1) & 0x02) >> 1) | ((mapper162_reg(2) & 0x0f) << 4) | (mapper162_reg(0) & 0x0e));
+			break;
+		case 5:
+			mapper_map_prg(32, 0, ((mapper162_reg(2) & 0x0f) << 4) | (mapper162_reg(0) & 0x0f));
+			break;
+	}
+}
+
 // ---[ mapper 163 Final Fantasy VII (NJ063) + Advent Children ver. (&etc.)
 #define mapper163_reg(x)			(mapper_regs[0x00 + (x)])
 #define mapper163_chr(x)			(mapper_regs[0x08 + (x)])
@@ -7276,6 +7306,17 @@ static INT32 mapper_init(INT32 mappernum)
 			cart_exp_write = mapper150_write; // 6000 - 7fff
 			cart_exp_read  = mapper150_read;
 			mapper_map     = mapper150_map;
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 162: { // (Waixing) Zelda - Triforce of the Gods
+			psg_area_write = mapper162_write; // 4020 - 5fff
+			mapper_map     = mapper162_map;
+			mapper162_reg(0) = 0x03;
+			mapper162_reg(3) = 0x07;
+			mapper_map_chr( 8, 0, 0);
 		    mapper_map();
 			retval = 0;
 			break;
@@ -12701,6 +12742,41 @@ struct BurnDriver BurnDrvnes_jigokgokmarc = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+static struct BurnRomInfo nes_triforcegcRomDesc[] = {
+	{ "Legend of Zelda - Triforce of the Gods (China).nes",          2097168, 0x3a1b4502, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_triforcegc)
+STD_ROM_FN(nes_triforcegc)
+
+struct BurnDriver BurnDrvnes_triforcegc = {
+	"nes_triforcegc", "nes_triforceg", NULL, NULL, "1989?",
+	"Legend of Zelda - Triforce of the Gods (China)\0", NULL, "Waixing", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_triforcegcRomInfo, nes_triforcegcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_triforcegRomDesc[] = {
+	{ "Legend of Zelda - Triforce of the Gods (T-Eng).nes",          2097168, 0x0be2d8fd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_triforceg)
+STD_ROM_FN(nes_triforceg)
+
+struct BurnDriver BurnDrvnes_triforceg = {
+	"nes_triforceg", NULL, NULL, NULL, "1989?",
+	"Legend of Zelda - Triforce of the Gods (T-Eng)\0", NULL, "Waixing", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_triforcegRomInfo, nes_triforcegRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)

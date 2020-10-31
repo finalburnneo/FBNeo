@@ -7040,6 +7040,37 @@ static struct BurnRomInfo ForgottnueRomDesc[] = {
 STD_ROM_PICK(Forgottnue)
 STD_ROM_FN(Forgottnue)
 
+static struct BurnRomInfo ForgottnjRomDesc[] = {
+	/* comes from a PCB with a very early serial number:  LW00022 */
+	{ "11.14f",        0x020000, 0xc9a6b319, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "15.14g",        0x020000, 0x524f920e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "10.13f",        0x020000, 0xff7e41d9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "14.13g",        0x020000, 0x80c3a813, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "lw-07.13e",     0x080000, 0xfd252a26, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "lw-01.9d",      0x080000, 0x0318f298, BRF_GRA | CPS1_TILES },
+	{ "lw-08.9f",      0x080000, 0x25a8e43c, BRF_GRA | CPS1_TILES },
+	{ "lw-05.9e",      0x080000, 0xe4552fd7, BRF_GRA | CPS1_TILES },
+	{ "lw-12.9g",      0x080000, 0x8e6a832b, BRF_GRA | CPS1_TILES },
+	{ "lw-02.12d",     0x080000, 0x43e6c5c8, BRF_GRA | CPS1_TILES },
+	{ "lw-09.12f",     0x080000, 0x899cb4ad, BRF_GRA | CPS1_TILES },
+	{ "lw-06.12e",     0x080000, 0x5b9edffc, BRF_GRA | CPS1_TILES },
+	{ "lw-13.12g",     0x080000, 0x8e058ef5, BRF_GRA | CPS1_TILES },
+
+	{ "00.14a",        0x010000, 0x3bc962ea, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "lw-03u.14c",    0x020000, 0x807d051f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "lw-04u.13c",    0x020000, 0xe6cd098e, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "lwchr.3a",      0x000117, 0x54ed4c39, BRF_OPT },	// b-board PLDs
+	{ "lwio.15e",      0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Forgottnj)
+STD_ROM_FN(Forgottnj)
+
 static struct BurnRomInfo LostwrldRomDesc[] = {
 	{ "lw_11c.14f",    0x020000, 0x67e42546, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "lw_15c.14g",    0x020000, 0x402e2a46, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -15042,6 +15073,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "forgottnuaa"   , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "forgottnuc"    , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "forgottnue"    , CPS_B_01    , mapper_LWCHR , 1, NULL                },
+	{ "forgottnj"     , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrld"      , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrldo"     , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "ganbare"       , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
@@ -20490,6 +20522,16 @@ struct BurnDriver BurnDrvCpsForgottnue = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsForgottnj = {
+	"forgottnj", "forgottn", NULL, NULL, "1988",
+	"Forgotten Worlds (Japan)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
+	NULL, ForgottnjRomInfo, ForgottnjRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
+	ForgottnInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsLostwrld = {
 	"lostwrld", "forgottn", NULL, NULL, "1988",
 	"Lost Worlds (Japan)\0", NULL, "Capcom", "CPS1",
@@ -23818,7 +23860,7 @@ static struct BurnRomInfo DinodsRomDesc[] = {
 	{ "cd-q2.2k",       0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "cd-q3.3k",       0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "cd-q4.4k",       0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
-
+	
 	{ "dino.key",       0x000080, 0x230b6eb0, BRF_OPT },
 };
 

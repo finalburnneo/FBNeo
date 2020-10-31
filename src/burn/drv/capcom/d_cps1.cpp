@@ -12421,7 +12421,33 @@ static struct BurnRomInfo Sf2cebRomDesc[] = {
 STD_ROM_PICK(Sf2ceb)
 STD_ROM_FN(Sf2ceb)
 
-static struct BurnRomInfo Sf2cebaRomDesc[] = {
+static struct BurnRomInfo Sf2ceb4RomDesc[] = {
+	// f205v id 1400
+    { "3.ic172",      0x0080000, 0x11b5fe98, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "5.ic171",      0x0080000, 0x43e85f2c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.ic176",      0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "4.ic175",      0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "10.ic90",      0x0080000, 0x896eaf48, BRF_GRA | CPS1_TILES },
+	{ "16.ic89",      0x0080000, 0x305dd72a, BRF_GRA | CPS1_TILES },	
+	{ "7.ic88",       0x0080000, 0xef3f5be8, BRF_GRA | CPS1_TILES },	
+	{ "13.ic87",      0x0080000, 0xe57f6db9, BRF_GRA | CPS1_TILES },
+	{ "11.ic91",      0x0080000, 0x054cd5c4, BRF_GRA | CPS1_TILES },
+	{ "17.ic92",      0x0080000, 0x87e069e8, BRF_GRA | CPS1_TILES },
+	{ "8.ic93",       0x0080000, 0x818ca33d, BRF_GRA | CPS1_TILES },	
+	{ "14.ic94",      0x0080000, 0x5dfb44d1, BRF_GRA | CPS1_TILES },
+	{ "9.ic86",       0x0080000, 0x34bbb3fa, BRF_GRA | CPS1_TILES },
+	{ "15.ic85",      0x0080000, 0x7d9f1a67, BRF_GRA | CPS1_TILES },
+	{ "6.ic84",       0x0080000, 0xcea6d1d6, BRF_GRA | CPS1_TILES },	
+	{ "12.ic83",      0x0080000, 0x91a9a05d, BRF_GRA | CPS1_TILES },
+
+	{ "1.ic26",       0x0020000, 0x17d5ba8a, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Sf2ceb4)
+STD_ROM_FN(Sf2ceb4)
+
+static struct BurnRomInfo Sf2ceb5RomDesc[] = {
 	// f205v id 1680
 	// main PCB is marked "110-09-91 CH35/1 COMP" on component side
 	// sub PCB is marked "LS 938" on solder side 
@@ -12438,20 +12464,13 @@ static struct BurnRomInfo Sf2cebaRomDesc[] = {
 	{ "pf9-sh065.ic84", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
 
 	{ "5.ic26",         0x0020000, 0x17d5ba8a, BRF_PRG | CPS1_Z80_PROGRAM },
-	
-	{ "gal20v8a-25lp.ic120.bin",   	0x000157, 0xef2de683, BRF_OPT },
-	{ "gal20v8a-25lp.ic121.bin",   	0x000157, 0xe6ea84bc, BRF_OPT },
-	{ "palce16v8h-25pc-4.ic7.bin",  0x000117, 0x7e3d99d8, BRF_OPT },
-	{ "palce16v8h-25pc-4.ic72.bin", 0x000117, 0x7e3d99d8, BRF_OPT },
-	{ "palce16v8h-25pc-4.ic80.bin", 0x000117, 0x7e3d99d8, BRF_OPT },
-	{ "vp20v8e-25pc.bin", 			0x000157, 0xd2daa114, BRF_OPT },
-	
+		
 	// extra graphics roms are required (see bike's on Chun-Li stage), but using the current dumps we have lead to a corrupt
 	// Street Fighter II logo
 };
 
-STD_ROM_PICK(Sf2ceba)
-STD_ROM_FN(Sf2ceba)
+STD_ROM_PICK(Sf2ceb5)
+STD_ROM_FN(Sf2ceb5)
 
 static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 	// this set was previously known as sf2m16
@@ -12562,33 +12581,6 @@ static struct BurnRomInfo Sf2ceeab4RomDesc[] = {
 
 STD_ROM_PICK(Sf2ceeab4)
 STD_ROM_FN(Sf2ceeab4)
-
-static struct BurnRomInfo Sf2ceeab5RomDesc[] = {
-	// This set is known as sf2ceb4 in MAME
-	// f205v id 1400
-    { "3.ic172",      0x0080000, 0x11b5fe98, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "5.ic171",      0x0080000, 0x43e85f2c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "2.ic176",      0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-    { "4.ic175",      0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-
-	{ "10.ic90",      0x0080000, 0x896eaf48, BRF_GRA | CPS1_TILES },
-	{ "16.ic89",      0x0080000, 0x305dd72a, BRF_GRA | CPS1_TILES },	
-	{ "7.ic88",       0x0080000, 0xef3f5be8, BRF_GRA | CPS1_TILES },	
-	{ "13.ic87",      0x0080000, 0xe57f6db9, BRF_GRA | CPS1_TILES },
-	{ "11.ic91",      0x0080000, 0x054cd5c4, BRF_GRA | CPS1_TILES },
-	{ "17.ic92",      0x0080000, 0x87e069e8, BRF_GRA | CPS1_TILES },
-	{ "8.ic93",       0x0080000, 0x818ca33d, BRF_GRA | CPS1_TILES },	
-	{ "14.ic94",      0x0080000, 0x5dfb44d1, BRF_GRA | CPS1_TILES },
-	{ "9.ic86",       0x0080000, 0x34bbb3fa, BRF_GRA | CPS1_TILES },
-	{ "15.ic85",      0x0080000, 0x7d9f1a67, BRF_GRA | CPS1_TILES },
-	{ "6.ic84",       0x0080000, 0xcea6d1d6, BRF_GRA | CPS1_TILES },	
-	{ "12.ic83",      0x0080000, 0x91a9a05d, BRF_GRA | CPS1_TILES },
-
-	{ "1.ic26",       0x0020000, 0x17d5ba8a, BRF_PRG | CPS1_Z80_PROGRAM },
-};
-
-STD_ROM_PICK(Sf2ceeab5)
-STD_ROM_FN(Sf2ceeab5)
 
 static struct BurnRomInfo Sf2cejablRomDesc[] = {
 	// this set was previously known as sf2m11
@@ -15194,7 +15186,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2mdtb"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdtc"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceb"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2ceba"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceb4"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceb5"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlona"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonb"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonc"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -15217,7 +15210,6 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceeab2"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "sf2ceeab3"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceeab4"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2ceeab5"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejabl"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2cejab2"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceupl"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
@@ -22148,12 +22140,22 @@ struct BurnDriver BurnDrvCpsSf2ceb = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2ceba = {
-	"sf2ceba", "sf2ce", NULL, NULL, "1992",
+struct BurnDriver BurnDrvCpsSf2ceb4 = {
+	"sf2ceb4", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Champion Edition (Playmark bootleg, set 2)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ceb4RomInfo, Sf2ceb4RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2mdtbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceb5 = {
+	"sf2ceb5", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II': Champion Edition (Playmark bootleg, set 3)\0", NULL, "bootleg (Playmark)", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2cebaRomInfo, Sf2cebaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	NULL, Sf2ceb5RomInfo, Sf2ceb5RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -22194,16 +22196,6 @@ struct BurnDriver BurnDrvCpsSf2ceeab4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeab4RomInfo, Sf2ceeab4RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	Sf2mdtbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvCpsSf2ceeab5 = {
-	"sf2ceeab5", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Champion Edition (Playmark bootleg, set 2)\0", NULL, "bootleg", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceeab5RomInfo, Sf2ceeab5RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

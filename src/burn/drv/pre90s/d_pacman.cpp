@@ -4504,36 +4504,6 @@ struct BurnDriver BurnDrvmspacmanbg2 = {
 };
 
 
-// Ms. Pac-Man ('Made in Greece' bootleg, set 3)
-
-static struct BurnRomInfo mspacmanbg3RomDesc[] = {
-	{ "11.bin",   	  0x8000, 0xb2894fa8, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-
-	// originally dumped as 27256 with first half 0xff filled, redumped as 27128, data matches
-	{ "13.bin",   	  0x4000, 0x0ee117c9, 2 | BRF_GRA },			//  1 Graphics
-
-	// sound PROMs, not dumped for this set
-	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
-	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
-
-	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
-	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
-};
-
-STD_ROM_PICK(mspacmanbg3)
-STD_ROM_FN(mspacmanbg3)
-
-struct BurnDriver BurnDrvmspacmanbg3 = {
-	"mspacmanbg3", "mspacman", NULL, NULL, "198?",
-	"Ms. Pac-Man ('Made in Greece' bootleg, set 3)\0", NULL, "bootleg", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, mspacmanbg3RomInfo, mspacmanbg3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
-	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
 // Miss Pukman ('Made in Greece' Datamat bootleg)
 
 static struct BurnRomInfo mspacmanbgdRomDesc[] = {

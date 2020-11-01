@@ -3962,39 +3962,72 @@ struct BurnDriver BurnDrvSilentdu = {
 };
 
 
-// Ryu Jin (Japan)
+// Ryu Jin (Japan, ET910000B PCB)
 
 static struct BurnRomInfo ryujinRomDesc[] = {
-	{ "ruj02.27",			0x020000, 0x0d223aee, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "ruj01.26",			0x020000, 0xc6bcdd1e, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "ruj04.29",			0x020000, 0x0c153cab, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "ruj03.28",			0x020000, 0x7695f89c, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "rjn_02.ic32",		0x020000, 0x5fd353d5, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "rjn_01.ic10",		0x020000, 0xf775e4b6, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "ruj_04.ic31",		0x020000, 0x0c153cab, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "ruj_03.ic9",			0x020000, 0x7695f89c, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "ruj05.39",			0x010000, 0x95270b16, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "ruj_05.ic15",		0x010000, 0x95270b16, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "ryujin07.2",			0x100000, 0x34f50980, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "ryujin06.1",			0x100000, 0x1b85ff34, TAITO_CHARS },		//  6
+	{ "ryujin-07.ic28",		0x100000, 0x34f50980, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "ryujin-06.ic39",		0x100000, 0x1b85ff34, TAITO_CHARS },		//  6
 
-	{ "ryujin08.11",		0x080000, 0x480d040d, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "ryujin-08.ic1",		0x080000, 0x480d040d, TAITO_YM2610A },		//  7 YM2610 A Samples
+	
+	{ "pal1618b-east-07.ic46", 0x0104, 0x0cb80f64, BRF_OPT },			//  8 plds
+	{ "pal1618b-east-08.ic47", 0x0104, 0xbdce045f, BRF_OPT },			//  9
 };
 
 STD_ROM_PICK(ryujin)
 STD_ROM_FN(ryujin)
 
-static INT32 RyujinInit()
+struct BurnDriver BurnDrvRyujin = {
+	"ryujin", NULL, NULL, NULL, "1993",
+	"Ryu Jin (Japan, ET910000B PCB)\0", NULL, "Taito Corporation", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_VERSHOOT, 0,
+	NULL, ryujinRomInfo, ryujinRomName, NULL, NULL, NULL, NULL, SelfeenaInputInfo, RyujinDIPInfo,
+	SilentdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	224, 320, 3, 4
+};
+
+
+// Ryu Jin (Japan, ET910000A PCB)
+
+static struct BurnRomInfo ryujinaRomDesc[] = {
+	{ "ruj_02.27",			0x020000, 0x0d223aee, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "ruj_01.26",			0x020000, 0xc6bcdd1e, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "ruj_04.29",			0x020000, 0x0c153cab, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "ruj_03.28",			0x020000, 0x7695f89c, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "ruj_05.39",			0x010000, 0x95270b16, TAITO_Z80ROM1 },		//  4 Z80 Code
+
+	{ "ryujin-07.2",		0x100000, 0x34f50980, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "ryujin-06.1",		0x100000, 0x1b85ff34, TAITO_CHARS },		//  6
+
+	{ "ryujin-08.11",		0x080000, 0x480d040d, TAITO_YM2610A },		//  7 YM2610 A Samples
+};
+
+STD_ROM_PICK(ryujina)
+STD_ROM_FN(ryujina)
+
+static INT32 RyujinaInit()
 {
 	spritelag_disable = 1;
 
 	return SelfeenaInit();
 }
 
-struct BurnDriver BurnDrvRyujin = {
-	"ryujin", NULL, NULL, NULL, "1993",
-	"Ryu Jin (Japan)\0", NULL, "Taito Corporation", "Taito B System",
+struct BurnDriver BurnDrvRyujina = {
+	"ryujina", "ryujin", NULL, NULL, "1993",
+	"Ryu Jin (Japan, ET910000A PCB)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_VERSHOOT, 0,
-	NULL, ryujinRomInfo, ryujinRomName, NULL, NULL, NULL, NULL, SelfeenaInputInfo, RyujinDIPInfo,
-	RyujinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_VERSHOOT, 0,
+	NULL, ryujinaRomInfo, ryujinaRomName, NULL, NULL, NULL, NULL, SelfeenaInputInfo, RyujinDIPInfo,
+	RyujinaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	224, 320, 3, 4
 };
 
@@ -4012,7 +4045,7 @@ static struct BurnRomInfo qzshowbyRomDesc[] = {
 
 	{ "d72-01.bin",			0x200000, 0xb82b8830, TAITO_YM2610A },		//  5 YM2610 A Samples
 	
-	{ "pal16l8-d72-05.bin",		  0x0104, 0xc3d4cb7e, BRF_OPT },		//  6 PLDs
+	{ "pal16l8-d72-05.bin",		  0x0104, 0xc3d4cb7e, BRF_OPT },		//  6 plds
 	{ "pal16l8-d72-06.bin",		  0x0104, 0x27580efc, BRF_OPT }, 		//  7
 	{ "palce20v8-d72-07.bin",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
 	{ "palce20v8-d72-08.bin",	  0x0157, 0x746a6474, BRF_OPT }, 		//  9

@@ -1341,7 +1341,7 @@ static struct BurnRomInfo bagmansRomDesc[] = {
 	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
 
 	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
-	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	{ "bagman_a1_9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
 STD_ROM_PICK(bagmans)
@@ -1379,7 +1379,7 @@ static struct BurnRomInfo bagmans4RomDesc[] = {
 	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
 
 	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
-	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	{ "bagman_a1_9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
 STD_ROM_PICK(bagmans4)
@@ -1417,7 +1417,7 @@ static struct BurnRomInfo bagmans3RomDesc[] = {
 	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   		 // 12 TMS5110 State Machine
 
 	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 13 TMS5110 Speech Data
-	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
+	{ "bagman_a1_9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 14
 };
 
 STD_ROM_PICK(bagmans3)
@@ -1451,7 +1451,7 @@ static struct BurnRomInfo bagmanjRomDesc[] = {
 	{ "bf8_04-1.f1",	0x1000, 0x3f5c991e, 2 | BRF_GRA },           //  9
 
 	// not dumped for this set
-	{ "bagman_color_3pa2.3p",	0x0020, 0x47504204, 3 | BRF_GRA },   // 10 Color Data
+	{ "bagman_color_3pa2.3p",	0x0020, 0x2a855523, 3 | BRF_GRA },   // 10 Color Data
 	{ "bagman_color_3ra1.3r",	0x0020, 0xae6f1019, 3 | BRF_GRA },   // 11
 	
 	// not dumped for this set
@@ -1548,8 +1548,8 @@ static struct BurnRomInfo sbagman2RomDesc[] = {
 
 	{ "r6.bin",			0x0020, 0xc58a4f6a, 4 | BRF_SND },           // 16 TMS5110 State Machine
 
-	{ "11.9r",			0x1000, 0x2e0057ff, 5 | BRF_SND },           // 17 TMS5110 Speech Data
-	{ "12.9t",			0x1000, 0xb2120edd, 5 | BRF_SND },           // 18
+	{ "b11v3.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },           // 17 TMS5110 Speech Data
+	{ "b12v3.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },           // 18
 };
 
 STD_ROM_PICK(sbagman2)
@@ -1592,7 +1592,7 @@ static struct BurnRomInfo sbagmansRomDesc[] = {
 	{ "bagman_sound_6ra2.6r",	0x0020, 0xc58a4f6a, 4 | BRF_SND },   // 16 TMS5110 State Machine
 
 	{ "bagman_a1_9r.9r",		0x1000, 0x2e0057ff, 5 | BRF_SND },   // 17 TMS5110 Speech Data
-	{ "bagman_a1.9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },   // 18
+	{ "bagman_a1_9t.9t",		0x1000, 0xb2120edd, 5 | BRF_SND },   // 18
 };
 
 STD_ROM_PICK(sbagmans)

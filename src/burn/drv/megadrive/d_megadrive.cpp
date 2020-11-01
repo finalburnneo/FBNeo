@@ -10099,7 +10099,7 @@ static struct BurnRomInfo md_ddragon2RomDesc[] = {
 STD_ROM_PICK(md_ddragon2)
 STD_ROM_FN(md_ddragon2)
 
-struct BurnDriverD BurnDrvmd_ddragon2 = {
+struct BurnDriver BurnDrvmd_ddragon2 = {
 	"md_ddragon2", NULL, NULL, NULL, "1991",
 	"Double Dragon II - The Revenge (Jpn)\0", NULL, "Palsoft", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -10297,7 +10297,7 @@ static struct BurnRomInfo md_dslayedRomDesc[] = {
 STD_ROM_PICK(md_dslayed)
 STD_ROM_FN(md_dslayed)
 
-struct BurnDriverD BurnDrvmd_dslayed = {
+struct BurnDriver BurnDrvmd_dslayed = {
 	"md_dslayed", NULL, NULL, NULL, "1994",
 	"Dragon Slayer - Eiyuu Densetsu (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -10315,7 +10315,7 @@ static struct BurnRomInfo md_dslayed2RomDesc[] = {
 STD_ROM_PICK(md_dslayed2)
 STD_ROM_FN(md_dslayed2)
 
-struct BurnDriverD BurnDrvmd_dslayed2 = {
+struct BurnDriver BurnDrvmd_dslayed2 = {
 	"md_dslayed2", NULL, NULL, NULL, "1995",
 	"Dragon Slayer - Eiyuu Densetsu II (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

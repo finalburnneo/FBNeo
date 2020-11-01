@@ -11954,6 +11954,40 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_bookymanRomDesc[] = {
+	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bookyman)
+STD_ROM_FN(nes_bookyman)
+
+struct BurnDriver BurnDrvnes_bookyman = {
+	"nes_bookyman", NULL, NULL, NULL, "1991",
+	"Bookyman (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bookymanRomInfo, nes_bookymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_destroyerRomDesc[] = {
+	{ "Destroyer (1992)(Mega Soft).nes",          65552, 0xd9362123, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_destroyer)
+STD_ROM_FN(nes_destroyer)
+
+struct BurnDriver BurnDrvnes_destroyer = {
+	"nes_destroyer", NULL, NULL, NULL, "1992",
+	"Destroyer (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_destroyerRomInfo, nes_destroyerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_somariRomDesc[] = {
 	{ "Somari (Unl).nes",          524304, 0x51589daf, BRF_ESS | BRF_PRG },
 };
@@ -12933,6 +12967,23 @@ struct BurnDriver BurnDrvnes_triforceg = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_galfRomDesc[] = {
+	{ "Galf (2018)(Limited Run Games).nes",          262160, 0x52340070, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_galf)
+STD_ROM_FN(nes_galf)
+
+struct BurnDriver BurnDrvnes_galf = {
+	"nes_galf", NULL, NULL, NULL, "2018",
+	"Galf (HB)\0", NULL, "Limited Run Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_galfRomInfo, nes_galfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_sharksharkRomDesc[] = {
 	{ "Shark! Shark! (HB).nes",          24592, 0x5f33e5b4, BRF_ESS | BRF_PRG },
@@ -34478,8 +34529,25 @@ struct BurnDriver BurnDrvnes_sugorque = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_sukebandeka3RomDesc[] = {
+static struct BurnRomInfo nes_sukebandeka3jRomDesc[] = {
 	{ "Sukeban Deka 3 (Japan).nes",          131088, 0x1bc8ce10, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sukebandeka3j)
+STD_ROM_FN(nes_sukebandeka3j)
+
+struct BurnDriver BurnDrvnes_sukebandeka3j = {
+	"nes_sukebandeka3j", "nes_sukebandeka3", NULL, NULL, "1989?",
+	"Sukeban Deka 3 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_sukebandeka3jRomInfo, nes_sukebandeka3jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_sukebandeka3RomDesc[] = {
+	{ "Sukeban Deka 3 (T-Eng).nes",          131088, 0xfec242b9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_sukebandeka3)
@@ -34487,7 +34555,7 @@ STD_ROM_FN(nes_sukebandeka3)
 
 struct BurnDriver BurnDrvnes_sukebandeka3 = {
 	"nes_sukebandeka3", NULL, NULL, NULL, "1989?",
-	"Sukeban Deka 3 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Sukeban Deka 3 (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_sukebandeka3RomInfo, nes_sukebandeka3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

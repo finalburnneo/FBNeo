@@ -16,7 +16,7 @@
 
 #include <streams/file_stream.h>
 
-#define FBNEO_VERSION "v0.2.97.44"
+#define FBNEO_VERSION "v1.0.0.0"
 #define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
 #define PRINTF_BUFFER_SIZE 512
 

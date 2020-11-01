@@ -9867,7 +9867,7 @@ This list contains all games supported by FinalBurn Neo.
 | rtypeb	|  	| R-Type (World bootleg)				| rtype		| 1987	| bootleg	| Irem M72	| 					|
 | rtype		|  	| R-Type (World)					| 		| 1987	| Irem		| Irem M72	| 					|
 | sms_rtype	|  	| R-Type (World)					| 		| 1988	| Sega		| Sega Master Sy| 					|
-| sgx_rtypeuh	|  	| R-Type - Chris Covell's Unfinished SGX Hack		| tg_rtype	| 2019	| NEC		| SuperGrafx	| 					|
+| sgx_rtypeuh	|  	| R-Type - Chris Covell's Unfinished SGX Hack		| 		| 2019	| NEC		| SuperGrafx	| 					|
 | rtype2j	|  	| R-Type II (Japan)					| rtype2	| 1989	| Irem		| Irem M82	| 					|
 | rtype2jc	|  	| R-Type II (Japan, revision C)				| rtype2	| 1989	| Irem		| Irem M82	| 					|
 | rtype2	|  	| R-Type II (World)					| 		| 1989	| Irem		| Irem M82	| 					|

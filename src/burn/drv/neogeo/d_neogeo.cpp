@@ -18092,9 +18092,9 @@ struct BurnDriver BurnDrvK2k2ps2re1 = {
 // GOTVG 20201022
 
 static struct BurnRomInfo kof2k2plusRomDesc[] = {
-	{ "265-p1pls.p1",		0x100000, 0xdc6da89f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p1pls.p1",		0x100000, 0x059da6f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2pls.p2",		0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "265-p3pls.p3",		0x020000, 0xf9dacaae, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "265-p3pls.p3",		0x020000, 0x80aacc1f, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "265-s1pls.s1",		0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
 

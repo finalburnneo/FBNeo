@@ -1244,6 +1244,13 @@
 		<rom name="Boogerman (Unl).nes" size="524304" crc="f10d5e5b"/>
 		<driver status="good"/>
 	</game>
+	<game name="bookyman">
+		<description>Bookyman (Unl)</description>
+		<year>1991</year>
+		<manufacturer>Mega Soft</manufacturer>
+		<rom name="Bookyman (1991)(Mega Soft).nes" size="24592" crc="d8f11b78"/>
+		<driver status="good"/>
+	</game>
 	<game name="mojontwiboo">
 		<description>Bootee (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -2320,6 +2327,13 @@
 		<year>1990</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="Destination Earthstar (USA).nes" size="65552" crc="a4b27af2"/>
+		<driver status="good"/>
+	</game>
+	<game name="destroyer">
+		<description>Destroyer (Unl)</description>
+		<year>1992</year>
+		<manufacturer>Mega Soft</manufacturer>
+		<rom name="Destroyer (1992)(Mega Soft).nes" size="65552" crc="d9362123"/>
 		<driver status="good"/>
 	</game>
 	<game name="destructorel">
@@ -3769,6 +3783,13 @@
 		<year>1991</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Galaxy 5000 (USA).nes" size="262160" crc="37b3ad54"/>
+		<driver status="good"/>
+	</game>
+	<game name="galf">
+		<description>Galf (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Limited Run Games</manufacturer>
+		<rom name="Galf (2018)(Limited Run Games).nes" size="262160" crc="52340070"/>
 		<driver status="good"/>
 	</game>
 	<game name="gameparty">
@@ -9014,11 +9035,18 @@
 		<rom name="Sugoro Quest - Dice no Senshitachi (T-eng).nes" size="262160" crc="d2cdeb7b"/>
 		<driver status="good"/>
 	</game>
-	<game name="sukebandeka3">
+	<game name="sukebandeka3j" cloneof="sukebandeka3" romof="sukebandeka3">
 		<description>Sukeban Deka 3 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Sukeban Deka 3 (Japan).nes" size="131088" crc="1bc8ce10"/>
+		<driver status="good"/>
+	</game>
+	<game name="sukebandeka3">
+		<description>Sukeban Deka 3 (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Sukeban Deka 3 (T-Eng).nes" size="131088" crc="fec242b9"/>
 		<driver status="good"/>
 	</game>
 	<game name="summecar92">

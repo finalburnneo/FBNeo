@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15221 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15229 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1546,6 +1546,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_boogie2	|  	| Boogie Woogi Jungle (Jpn, Alt 2)			| msx_boogie	| 1983	| Ample Software| MSX		| 					|
 | msx_boogie1	|  	| Boogie Woogi Jungle (Jpn, Alt)			| msx_boogie	| 1983	| Ample Software| MSX		| 					|
 | md_boogie	|  	| Boogie Woogie Bowling (Jpn)				| md_champbwl	| 1993	| Visco		| Sega Megadrive| 					|
+| nes_bookyman	|  	| Bookyman (Unl)					| 		| 1991	| Mega Soft	| Miscellaneous	| 					|
 | boomrang	|  	| Boomer Rang'r / Genesis (set 1)			| 		| 1983	| Data East Corp| Miscellaneous	| 					|
 | boomranga	|  	| Boomer Rang'r / Genesis (set 2)			| boomrang	| 1983	| Data East Corp| Miscellaneous	| 					|
 | msx_boomrang	|  	| Boomerang (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
@@ -1831,7 +1832,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-09-24| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-10-25| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -3078,6 +3079,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_destiear	|  	| Destination Earthstar (USA)				| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | spec_destinymission|  	| Destiny Mission					| 		| 1990	| Williams Techn| ZX Spectrum	| 					|
 | msx_destroyr	|  	| Destroyer (Spa)					| 		| 1986	| Mind Games Esp| MSX		| 					|
+| nes_destroyer	|  	| Destroyer (Unl)					| 		| 1992	| Mega Soft	| Miscellaneous	| 					|
 | cv_destruct	|  	| Destructor						| 		| 1984	| Coleco	| ColecoVision	| Select w/ Controller #2		|
 | nes_destructorel|  	| Destructor, El (Spain) (Gluk Video) (Unl)		| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | detatwin	|  	| Detana!! Twin Bee (Japan ver. J)			| blswhstl	| 1991	| Konami	| GX060		| 					|
@@ -3400,7 +3402,7 @@ This list contains all games supported by FinalBurn Neo.
 | ddragon3p	|  	| Double Dragon 3 - The Rosetta Stone (prototype)	| ddragon3	| 1990	| Technos Japan	| Miscellaneous	| 					|
 | ddragon3	|  	| Double Dragon 3 - The Rosetta Stone (US)		| 		| 1990	| Technos Japan	| Miscellaneous	| 					|
 | ddragon2j	|  	| Double Dragon II - The Revenge (Japan)		| ddragon2	| 1988	| Technos Japan	| Miscellaneous	| 					|
-| md_ddragon2	| D	| Double Dragon II - The Revenge (Jpn)			| 		| 1991	| Palsoft	| Sega Megadrive| 					|
+| md_ddragon2	|  	| Double Dragon II - The Revenge (Jpn)			| 		| 1991	| Palsoft	| Sega Megadrive| 					|
 | ddragon2b	|  	| Double Dragon II - The Revenge (US bootleg, set 1)	| ddragon2	| 1988	| bootleg	| Miscellaneous	| 					|
 | ddragon2b2	|  	| Double Dragon II - The Revenge (US bootleg, set 2)	| ddragon2	| 1988	| bootleg	| Miscellaneous	| 					|
 | ddragon2u	|  	| Double Dragon II - The Revenge (US)			| ddragon2	| 1988	| Technos Japan	| Miscellaneous	| 					|
@@ -3520,8 +3522,8 @@ This list contains all games supported by FinalBurn Neo.
 | pce_dsaber	|  	| Dragon Saber - After Story of Dragon Spirit		| 		| 1991	| Namcot	| PC Engine	| 					|
 | nes_dragoscr	|  	| Dragon Scroll - Yomigaerishi Maryuu (Japan)		| 		| 1987	| Konami	| Miscellaneous	| 					|
 | msx_dslayer	|  	| Dragon Slayer (Jpn)					| 		| 1985	| Square	| MSX		| 					|
-| md_dslayed	| D	| Dragon Slayer - Eiyuu Densetsu (Jpn)			| 		| 1994	| Sega		| Sega Megadrive| 					|
-| md_dslayed2	| D	| Dragon Slayer - Eiyuu Densetsu II (Jpn)		| 		| 1995	| Sega		| Sega Megadrive| 					|
+| md_dslayed	|  	| Dragon Slayer - Eiyuu Densetsu (Jpn)			| 		| 1994	| Sega		| Sega Megadrive| 					|
+| md_dslayed2	|  	| Dragon Slayer - Eiyuu Densetsu II (Jpn)		| 		| 1995	| Sega		| Sega Megadrive| 					|
 | nes_dragosla4	|  	| Dragon Slayer 4 - Drasle Family (Japan)		| 		| 1987	| Namco		| Miscellaneous	| 					|
 | msx_dslayer4	|  	| Dragon Slayer IV - Drasle Family (Jpn)		| 		| 1987	| Nihon Falcom	| MSX		| 					|
 | dspirit2	|  	| Dragon Spirit (DS2)					| dspirit	| 1987	| Namco		| System 1	| 					|
@@ -4468,6 +4470,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_foreman	|  	| Foreman for Real (World)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | spec_forgottn	|  	| Forgotten Worlds (128K)				| 		| 1989	| U.S. Gold	| ZX Spectrum	| 					|
 | sms_forgottn	|  	| Forgotten Worlds (Euro, Bra, Aus)			| 		| 1991	| Sega		| Sega Master Sy| 					|
+| forgottnj	|  	| Forgotten Worlds (Japan)				| forgottn	| 1988	| Capcom	| CPS1		| 					|
 | forgottnua	|  	| Forgotten Worlds (US, B-Board 88618B-2, rev A)	| forgottn	| 1988	| Capcom	| CPS1		| 					|
 | forgottnuaa	|  	| Forgotten Worlds (US, B-Board 88618B-2, rev AA)	| forgottn	| 1988	| Capcom	| CPS1		| 					|
 | forgottnuc	|  	| Forgotten Worlds (US, B-Board 88618B-2, Rev C)	| forgottn	| 1988	| Capcom	| CPS1		| 					|
@@ -4700,6 +4703,7 @@ This list contains all games supported by FinalBurn Neo.
 | galaxygn	|  	| Galaxy Gunners					| 		| 1989	| Electronic Dev| Miscellaneous	| No Sound.				|
 | galwars2	|  	| Galaxy Wars II (Defender bootleg)			| defender	| 1981	| bootleg (Sonic| 6809 System	| 					|
 | galaxyx	|  	| Galaxy X (bootleg of Galaxian)			| galaxian	| 1979	| bootleg	| Galaxian	| 					|
+| nes_galf	|  	| Galf (HB)						| 		| 2018	| Limited Run Ga| Miscellaneous	| 					|
 | msx_galforce	|  	| Gall Force - Defense of Chaos (Jpn)			| 		| 1986	| Sony		| MSX		| 					|
 | msx_galforcea	|  	| Gall Force - Defense of Chaos (Jpn, Alt)		| msx_galforce	| 1986	| Sony		| MSX		| 					|
 | fds_gallforj	|  	| Gall Force - Eternal Story (Japan)			| fds_gallfor	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -7730,7 +7734,8 @@ This list contains all games supported by FinalBurn Neo.
 | missb2	|  	| Miss Bubble II					| 		| 1996	| Alpha Co.	| Miscellaneous	| 					|
 | missmw96	|  	| Miss Mister World '96 (Nude)				| missw96	| 1996	| Comad		| Miscellaneous	| 					|
 | mspacmanbgd	|  	| Miss Pukman ('Made in Greece' Datamat bootleg)	| mspacman	| 1992	| bootleg (Datam| Pac-man	| 					|
-| mspacmanblt	|  	| Miss Pukman ('Made in Greece' Triunvi bootleg)	| mspacman	| 1991	| bootleg (Triun| Pac-man	| 					|
+| mspacmanblt	|  	| Miss Pukman ('Made in Greece' Triunvi bootleg, set 1)	| mspacman	| 1991	| bootleg (Triun| Pac-man	| 					|
+| mspacmanblt2	|  	| Miss Pukman ('Made in Greece' Triunvi bootleg, set 2)	| mspacman	| 1991	| bootleg (Triun| Pac-man	| 					|
 | mspuzzleg	|  	| Miss Puzzle (Clone of Gumbo)				| gumbo		| 1994	| Min Corp.	| Miscellaneous	| 					|
 | mspuzzlea	|  	| Miss Puzzle (Nudes, less explicit)			| mspuzzle	| 1994	| Min Corp.	| Miscellaneous	| 					|
 | mspuzzleb	|  	| Miss Puzzle (Nudes, more explicit)			| mspuzzle	| 1994	| Min Corp.	| Miscellaneous	| imperfect graphics			|
@@ -9862,6 +9867,7 @@ This list contains all games supported by FinalBurn Neo.
 | rtypeb	|  	| R-Type (World bootleg)				| rtype		| 1987	| bootleg	| Irem M72	| 					|
 | rtype		|  	| R-Type (World)					| 		| 1987	| Irem		| Irem M72	| 					|
 | sms_rtype	|  	| R-Type (World)					| 		| 1988	| Sega		| Sega Master Sy| 					|
+| sgx_rtypeuh	|  	| R-Type - Chris Covell's Unfinished SGX Hack		| tg_rtype	| 2019	| NEC		| SuperGrafx	| 					|
 | rtype2j	|  	| R-Type II (Japan)					| rtype2	| 1989	| Irem		| Irem M82	| 					|
 | rtype2jc	|  	| R-Type II (Japan, revision C)				| rtype2	| 1989	| Irem		| Irem M82	| 					|
 | rtype2	|  	| R-Type II (World)					| 		| 1989	| Irem		| Irem M82	| 					|
@@ -10432,7 +10438,8 @@ This list contains all games supported by FinalBurn Neo.
 | rygarb	|  	| Rygar (US, bootleg)					| rygar		| 1986	| Tecmo		| Miscellaneous	| 					|
 | nes_rygar	|  	| Rygar (USA) (Rev A)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | spec_rygar2020|  	| Rygar 2020 (HB)					| spec_rygar	| 2020	| Ralf		| ZX Spectrum	| 					|
-| ryujin	|  	| Ryu Jin (Japan)					| 		| 1993	| Taito Corporat| Taito B System| 					|
+| ryujina	|  	| Ryu Jin (Japan, ET910000A PCB)			| ryujin	| 1993	| Taito Corporat| Taito B System| 					|
+| ryujin	|  	| Ryu Jin (Japan, ET910000B PCB)			| 		| 1993	| Taito Corporat| Taito B System| 					|
 | ryukyua	|  	| RyuKyu (Japan) (FD1094 317-5023)			| ryukyu	| 1990	| Success / Sega| System 16B	| 					|
 | ryukyud	|  	| RyuKyu (Japan, FD1094 317-5023 decrypted)		| ryukyu	| 1990	| Success / Sega| System 16B	| 					|
 | ryukyu	|  	| RyuKyu (Rev A, Japan) (FD1094 317-5023A)		| 		| 1990	| Success / Sega| System 16B	| 					|
@@ -11917,7 +11924,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2md		|  	| Street Fighter II' - Champion Edition (Magic Delta, bo| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2mega	|  	| Street Fighter II' - Champion Edition (Mega Co bootleg| sf2ce		| 1992	| Mega Co	| CPS1		| 					|
 | sf2mega2	|  	| Street Fighter II' - Champion Edition (Mega Co bootleg| sf2ce		| 1992	| Mega Co	| CPS1		| 					|
-| sf2ceeab5	|  	| Street Fighter II' - Champion Edition (Playmark bootle| sf2ce		| 1992	| bootleg	| CPS1		| 					|
+| sf2ceb4	|  	| Street Fighter II' - Champion Edition (Playmark bootle| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb		|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb2	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2rb3	|  	| Street Fighter II' - Champion Edition (Rainbow bootleg| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -11969,7 +11976,7 @@ This list contains all games supported by FinalBurn Neo.
 | sf2hfj	|  	| Street Fighter II' Turbo - Hyper Fighting (street figh| sf2hf		| 1992	| Capcom	| CPS1		| 					|
 | sf2dongb	|  	| Street Fighter II': Champion Edition (Dongfang Bubai p| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceb	|  	| Street Fighter II': Champion Edition (Playmark bootleg| sf2ce		| 1992	| bootleg (Playm| CPS1		| 					|
-| sf2ceba	|  	| Street Fighter II': Champion Edition (Playmark bootleg| sf2ce		| 1992	| bootleg (Playm| CPS1		| 					|
+| sf2ceb5	|  	| Street Fighter II': Champion Edition (Playmark bootleg| sf2ce		| 1992	| bootleg (Playm| CPS1		| 					|
 | nes_streefigiii|  	| Street Fighter III (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sfiii2n	|  	| Street Fighter III 2nd Impact: Giant Attack (Asia 9709| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
 | sfiii2j	|  	| Street Fighter III 2nd Impact: Giant Attack (Japan 970| sfiii2	| 1997	| Capcom	| CPS-3		| 					|
@@ -12144,7 +12151,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_sugorquej	|  	| Sugoro Quest - Dice no Senshitachi (Japan)		| nes_sugorque	| 1991	| Technos	| Miscellaneous	| 					|
 | nes_sugorque	|  	| Sugoro Quest - Dice no Senshitachi (T-eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_suhocheo	|  	| Suho Jeonsa (Kor)					| 		| 19??	| Unknown	| Sega Master Sy| 					|
-| nes_sukebandeka3|  	| Sukeban Deka 3 (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_sukebandeka3j|  	| Sukeban Deka 3 (Japan)				| nes_sukebandeka3| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_sukebandeka3|  	| Sukeban Deka 3 (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_sukeban	|  	| Sukeban Deka II - Shoujo Tekkamen Densetsu (Jpn)	| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sjryuko1	|  	| Sukeban Jansi Ryuko (set 1, System 16A, FD1089B 317-50| sjryuko	| 1987	| White Board	| System 16A	| 					|
 | sjryuko	|  	| Sukeban Jansi Ryuko (set 2, System 16B, FD1089B 317-50| 		| 1987	| White Board	| System 16B	| 					|
@@ -13290,7 +13298,7 @@ This list contains all games supported by FinalBurn Neo.
 | kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 Public B| kof2002	| 2018-12-17| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
 | kf2k2ps2b	|  	| The King of Fighters 2002 (PlayStation 2, Hack)	| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
-| kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-07-17| Hack		| Neo Geo MVS	| 					|
+| kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-10-22| Hack		| Neo Geo MVS	| 					|
 | kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 2020-06-14| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kf2k2mp2	|  	| The King of Fighters 2002 Magic Plus II (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|

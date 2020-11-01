@@ -19778,20 +19778,20 @@
 	</game>
 	<game name="kof2k2plus" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 2002 (Plus 2017, Hack) [Hack]</description>
-		<year>2020-07-17</year>
+		<year>2020-10-22</year>
 		<manufacturer>Hack</manufacturer>
-		<rom name="kof2k2plus-p1.p1" size="1048576" crc="dc6da89f"/>
-		<rom name="kof2k2plus-p2.p2" size="5242880" crc="7ad26451"/>
-		<rom name="kof2k2plus-p3.p3" size="131072" crc="f9dacaae"/>
-		<rom name="kof2k2plus-s1.s1" size="131072" crc="96bdd036"/>
-		<rom name="kof2k2plus-c1.c1" size="8388608" crc="93cf6345"/>
-		<rom name="kof2k2plus-c2.c2" size="8388608" crc="d7373d66"/>
-		<rom name="kof2k2plus-c3.c3" size="8388608" crc="959fad0b"/>
-		<rom name="kof2k2plus-c4.c4" size="8388608" crc="efe6a468"/>
-		<rom name="kof2k2plus-c5.c5" size="8388608" crc="74bba7c6"/>
-		<rom name="kof2k2plus-c6.c6" size="8388608" crc="e20d2216"/>
-		<rom name="kof2k2plus-c7.c7" size="8388608" crc="8a5b561c"/>
-		<rom name="kof2k2plus-c8.c8" size="8388608" crc="bef667a3"/>
+		<rom name="265-p1pls.p1" size="1048576" crc="dc6da89f"/>
+		<rom name="265-p2pls.p2" size="5242880" crc="7ad26451"/>
+		<rom name="265-p3pls.p3" size="131072" crc="f9dacaae"/>
+		<rom name="265-s1pls.s1" size="131072" crc="96bdd036"/>
+		<rom name="265-c1pls.c1" size="8388608" crc="93cf6345"/>
+		<rom name="265-c2pls.c2" size="8388608" crc="d7373d66"/>
+		<rom name="265-c3d.c3" size="8388608" crc="959fad0b"/>
+		<rom name="265-c4d.c4" size="8388608" crc="efe6a468"/>
+		<rom name="265-c5d.c5" size="8388608" crc="74bba7c6"/>
+		<rom name="265-c6d.c6" size="8388608" crc="e20d2216"/>
+		<rom name="265-c7d.c7" size="8388608" crc="8a5b561c"/>
+		<rom name="265-c8d.c8" size="8388608" crc="bef667a3"/>
 		<rom name="265-m1.m1" merge="265-m1.m1" size="131072" crc="85aaa632"/>
 		<rom name="265-v1.v1" merge="265-v1.v1" size="8388608" crc="15e8f3f5"/>
 		<rom name="265-v2.v2" merge="265-v2.v2" size="8388608" crc="da41d6f9"/>

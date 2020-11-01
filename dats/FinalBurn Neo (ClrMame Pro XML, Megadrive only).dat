@@ -3884,6 +3884,13 @@
 		<rom name="double dragon 3 - the arcade game (euro, usa).bin" size="1048576" crc="b36ab75c"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddragon2">
+		<description>Double Dragon II - The Revenge (Jpn)</description>
+		<year>1991</year>
+		<manufacturer>Palsoft</manufacturer>
+		<rom name="double dragon ii - the revenge (jpn).bin" size="524288" crc="a8bfdbd6"/>
+		<driver status="good"/>
+	</game>
 	<game name="ddragon5">
 		<description>Double Dragon V - The Shadow Falls (USA)</description>
 		<year>1994</year>
@@ -3945,6 +3952,20 @@
 		<year>1994</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="dragon ball z - l'appel du destin (france).bin" size="2097152" crc="f035c737"/>
+		<driver status="good"/>
+	</game>
+	<game name="dslayed">
+		<description>Dragon Slayer - Eiyuu Densetsu (Jpn)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="dragon slayer - eiyuu densetsu (jpn).bin" size="2097152" crc="01bc1604"/>
+		<driver status="good"/>
+	</game>
+	<game name="dslayed2">
+		<description>Dragon Slayer - Eiyuu Densetsu II (Jpn)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="dragon slayer - eiyuu densetsu ii (jpn).bin" size="2097152" crc="46924dc3"/>
 		<driver status="good"/>
 	</game>
 	<game name="shangh3">

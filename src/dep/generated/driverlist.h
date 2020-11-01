@@ -1564,6 +1564,7 @@ DRV		BurnDrvMSX_boogie;
 DRV		BurnDrvMSX_boogie2;
 DRV		BurnDrvMSX_boogie1;
 DRV		BurnDrvmd_boogie;
+DRV		BurnDrvnes_bookyman;
 DRV		BurnDrvBoomrang;
 DRV		BurnDrvBoomranga;
 DRV		BurnDrvMSX_boomrang;
@@ -3124,6 +3125,7 @@ DRV		BurnSpecDesperado;
 DRV		BurnDrvnes_destiear;
 DRV		BurnSpecdestinymission;
 DRV		BurnDrvMSX_destroyr;
+DRV		BurnDrvnes_destroyer;
 DRV		BurnDrvcv_destruct;
 DRV		BurnDrvnes_destructorel;
 DRV		BurnDrvDetatwin;
@@ -3456,9 +3458,7 @@ DRV		BurnDrvDdrago3j;
 DRV		BurnDrvDdrago3p;
 DRV		BurnDrvDdragon3;
 DRV		BurnDrvDdragon2j;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvmd_ddragon2;		// no comment
-#endif
+DRV		BurnDrvmd_ddragon2;
 DRV		BurnDrvDdragon2b;
 DRV		BurnDrvDdragon2b2;
 DRV		BurnDrvDdragon2u;
@@ -3578,10 +3578,8 @@ DRV		BurnDrvpce_dsaber1;
 DRV		BurnDrvpce_dsaber;
 DRV		BurnDrvnes_dragoscr;
 DRV		BurnDrvMSX_dslayer;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvmd_dslayed;		// no comment
-DRV		BurnDrvmd_dslayed2;		// no comment
-#endif
+DRV		BurnDrvmd_dslayed;
+DRV		BurnDrvmd_dslayed2;
 DRV		BurnDrvnes_dragosla4;
 DRV		BurnDrvMSX_dslayer4;
 DRV		BurnDrvDspirit2;
@@ -4540,6 +4538,7 @@ DRV		BurnDrvgg_foreman;
 DRV		BurnDrvmd_foreman;
 DRV		BurnSpecforgottn;
 DRV		BurnDrvsms_forgottn;
+DRV		BurnDrvCpsForgottnj;
 DRV		BurnDrvCpsForgottnua;
 DRV		BurnDrvCpsForgottnuaa;
 DRV		BurnDrvCpsForgottnuc;
@@ -4778,6 +4777,7 @@ DRV		BurnDrvmd_gforce2;
 DRV		BurnDrvGalaxygn;
 DRV		BurnDrvGalwars2;
 DRV		BurnDrvGalaxyx;
+DRV		BurnDrvnes_galf;
 DRV		BurnDrvMSX_galforce;
 DRV		BurnDrvMSX_galforceb;
 DRV		BurnDrvfds_gallforj;
@@ -7855,6 +7855,7 @@ DRV		BurnDrvMissb2;
 DRV		BurnDrvMissmw96;
 DRV		BurnDrvmspacmanbgd;
 DRV		BurnDrvmspacmanblt;
+DRV		BurnDrvmspacmanblt2;
 DRV		BurnDrvMspuzzlg;
 DRV		BurnDrvMspuzzlea;
 DRV		BurnDrvMspuzzleb;
@@ -10032,6 +10033,7 @@ DRV		BurnDrvRtypeu;
 DRV		BurnDrvRtypeb;
 DRV		BurnDrvRtype;
 DRV		BurnDrvsms_rtype;
+DRV		BurnDrvsgx_rtypeuh;
 DRV		BurnDrvRtype2j;
 DRV		BurnDrvRtype2jc;
 DRV		BurnDrvRtype2;
@@ -10610,6 +10612,7 @@ DRV		BurnDrvRygar3;
 DRV		BurnDrvRygarb;
 DRV		BurnDrvnes_rygar;
 DRV		BurnSpecRygar2020;
+DRV		BurnDrvRyujina;
 DRV		BurnDrvRyujin;
 DRV		BurnDrvRyukyua;
 DRV		BurnDrvRyukyud;
@@ -12117,7 +12120,7 @@ DRV		BurnDrvCpsSf2level;
 DRV		BurnDrvCpsSf2md;
 DRV		BurnDrvCpsSf2mega;
 DRV		BurnDrvCpsSf2mega2;
-DRV		BurnDrvCpsSf2ceeab5;
+DRV		BurnDrvCpsSf2ceb4;
 DRV		BurnDrvCpsSf2rb;
 DRV		BurnDrvCpsSf2rb2;
 DRV		BurnDrvCpsSf2rb3;
@@ -12171,7 +12174,7 @@ DRV		BurnDrvCpsSf2hfjb2;
 DRV		BurnDrvCpsSf2hfj;
 DRV		BurnDrvCpsSf2dongb;
 DRV		BurnDrvCpsSf2ceb;
-DRV		BurnDrvCpsSf2ceba;
+DRV		BurnDrvCpsSf2ceb5;
 DRV		BurnDrvnes_streefigiii;
 DRV		BurnDrvSfiii2n;
 DRV		BurnDrvSfiii2j;
@@ -12348,6 +12351,7 @@ DRV		BurnDrvcv_sudoku;
 DRV		BurnDrvnes_sugorquej;
 DRV		BurnDrvnes_sugorque;
 DRV		BurnDrvsms_suhocheo;
+DRV		BurnDrvnes_sukebandeka3j;
 DRV		BurnDrvnes_sukebandeka3;
 DRV		BurnDrvsms_sukeban;
 DRV		BurnDrvSjryuko1;
@@ -17062,6 +17066,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_boogie2,		// Boogie Woogi Jungle (Jpn, Alt 2)
 	&BurnDrvMSX_boogie1,		// Boogie Woogi Jungle (Jpn, Alt)
 	&BurnDrvmd_boogie,			// Boogie Woogie Bowling (Jpn)
+	&BurnDrvnes_bookyman,		// Bookyman (Unl)
 	&BurnDrvBoomrang,			// Boomer Rang'r / Genesis (set 1)
 	&BurnDrvBoomranga,			// Boomer Rang'r / Genesis (set 2)
 	&BurnDrvMSX_boomrang,		// Boomerang (Jpn)
@@ -18622,6 +18627,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_destiear,		// Destination Earthstar (USA)
 	&BurnSpecdestinymission,	// Destiny Mission
 	&BurnDrvMSX_destroyr,		// Destroyer (Spa)
+	&BurnDrvnes_destroyer,		// Destroyer (Unl)
 	&BurnDrvcv_destruct,		// Destructor
 	&BurnDrvnes_destructorel,	// Destructor, El (Spain) (Gluk Video) (Unl)
 	&BurnDrvDetatwin,			// Detana!! Twin Bee (Japan ver. J)
@@ -18954,9 +18960,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDdrago3p,			// Double Dragon 3 - The Rosetta Stone (prototype)
 	&BurnDrvDdragon3,			// Double Dragon 3 - The Rosetta Stone (US)
 	&BurnDrvDdragon2j,			// Double Dragon II - The Revenge (Japan)
-#if defined FBNEO_DEBUG
-	&BurnDrvmd_ddragon2,		// Double Dragon II - The Revenge (Jpn) [no comment]
-#endif
+	&BurnDrvmd_ddragon2,		// Double Dragon II - The Revenge (Jpn)
 	&BurnDrvDdragon2b,			// Double Dragon II - The Revenge (US bootleg, set 1)
 	&BurnDrvDdragon2b2,			// Double Dragon II - The Revenge (US bootleg, set 2)
 	&BurnDrvDdragon2u,			// Double Dragon II - The Revenge (US)
@@ -19076,10 +19080,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_dsaber,			// Dragon Saber - After Story of Dragon Spirit
 	&BurnDrvnes_dragoscr,		// Dragon Scroll - Yomigaerishi Maryuu (Japan)
 	&BurnDrvMSX_dslayer,		// Dragon Slayer (Jpn)
-#if defined FBNEO_DEBUG
-	&BurnDrvmd_dslayed,			// Dragon Slayer - Eiyuu Densetsu (Jpn) [no comment]
-	&BurnDrvmd_dslayed2,		// Dragon Slayer - Eiyuu Densetsu II (Jpn) [no comment]
-#endif
+	&BurnDrvmd_dslayed,			// Dragon Slayer - Eiyuu Densetsu (Jpn)
+	&BurnDrvmd_dslayed2,		// Dragon Slayer - Eiyuu Densetsu II (Jpn)
 	&BurnDrvnes_dragosla4,		// Dragon Slayer 4 - Drasle Family (Japan)
 	&BurnDrvMSX_dslayer4,		// Dragon Slayer IV - Drasle Family (Jpn)
 	&BurnDrvDspirit2,			// Dragon Spirit (DS2)
@@ -20038,6 +20040,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_foreman,			// Foreman for Real (World)
 	&BurnSpecforgottn,			// Forgotten Worlds (128K)
 	&BurnDrvsms_forgottn,		// Forgotten Worlds (Euro, Bra, Aus)
+	&BurnDrvCpsForgottnj,		// Forgotten Worlds (Japan)
 	&BurnDrvCpsForgottnua,		// Forgotten Worlds (US, B-Board 88618B-2, rev A)
 	&BurnDrvCpsForgottnuaa,		// Forgotten Worlds (US, B-Board 88618B-2, rev AA)
 	&BurnDrvCpsForgottnuc,		// Forgotten Worlds (US, B-Board 88618B-2, Rev C)
@@ -20276,6 +20279,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalaxygn,			// Galaxy Gunners
 	&BurnDrvGalwars2,			// Galaxy Wars II (Defender bootleg)
 	&BurnDrvGalaxyx,			// Galaxy X (bootleg of Galaxian)
+	&BurnDrvnes_galf,			// Galf (HB)
 	&BurnDrvMSX_galforce,		// Gall Force - Defense of Chaos (Jpn)
 	&BurnDrvMSX_galforceb,		// Gall Force - Defense of Chaos (Jpn, Alt)
 	&BurnDrvfds_gallforj,		// Gall Force - Eternal Story (Japan)
@@ -23352,7 +23356,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMissb2,				// Miss Bubble II
 	&BurnDrvMissmw96,			// Miss Mister World '96 (Nude)
 	&BurnDrvmspacmanbgd,		// Miss Pukman ('Made in Greece' Datamat bootleg)
-	&BurnDrvmspacmanblt,		// Miss Pukman ('Made in Greece' Triunvi bootleg)
+	&BurnDrvmspacmanblt,		// Miss Pukman ('Made in Greece' Triunvi bootleg, set 1)
+	&BurnDrvmspacmanblt2,		// Miss Pukman ('Made in Greece' Triunvi bootleg, set 2)
 	&BurnDrvMspuzzlg,			// Miss Puzzle (Clone of Gumbo)
 	&BurnDrvMspuzzlea,			// Miss Puzzle (Nudes, less explicit)
 	&BurnDrvMspuzzleb,			// Miss Puzzle (Nudes, more explicit)
@@ -25530,6 +25535,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRtypeb,				// R-Type (World bootleg)
 	&BurnDrvRtype,				// R-Type (World)
 	&BurnDrvsms_rtype,			// R-Type (World)
+	&BurnDrvsgx_rtypeuh,		// R-Type - Chris Covell's Unfinished SGX Hack
 	&BurnDrvRtype2j,			// R-Type II (Japan)
 	&BurnDrvRtype2jc,			// R-Type II (Japan, revision C)
 	&BurnDrvRtype2,				// R-Type II (World)
@@ -26108,7 +26114,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRygarb,				// Rygar (US, bootleg)
 	&BurnDrvnes_rygar,			// Rygar (USA) (Rev A)
 	&BurnSpecRygar2020,			// Rygar 2020 (HB)
-	&BurnDrvRyujin,				// Ryu Jin (Japan)
+	&BurnDrvRyujina,			// Ryu Jin (Japan, ET910000A PCB)
+	&BurnDrvRyujin,				// Ryu Jin (Japan, ET910000B PCB)
 	&BurnDrvRyukyua,			// RyuKyu (Japan) (FD1094 317-5023)
 	&BurnDrvRyukyud,			// RyuKyu (Japan, FD1094 317-5023 decrypted)
 	&BurnDrvRyukyu,				// RyuKyu (Rev A, Japan) (FD1094 317-5023A)
@@ -27615,7 +27622,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2md,			// Street Fighter II' - Champion Edition (Magic Delta, bootleg, 920313 etc)
 	&BurnDrvCpsSf2mega,			// Street Fighter II' - Champion Edition (Mega Co bootleg set 1, 920313 etc)
 	&BurnDrvCpsSf2mega2,		// Street Fighter II' - Champion Edition (Mega Co bootleg set 2, 920313 etc)
-	&BurnDrvCpsSf2ceeab5,		// Street Fighter II' - Champion Edition (Playmark bootleg, set 2)
+	&BurnDrvCpsSf2ceb4,			// Street Fighter II' - Champion Edition (Playmark bootleg, set 2)
 	&BurnDrvCpsSf2rb,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 1, 920322 etc)
 	&BurnDrvCpsSf2rb2,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 2, 920322 etc)
 	&BurnDrvCpsSf2rb3,			// Street Fighter II' - Champion Edition (Rainbow bootleg set 3, 920322 etc)
@@ -27669,7 +27676,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2hfj,			// Street Fighter II' Turbo - Hyper Fighting (street fighter 2' T 921209 Japan)
 	&BurnDrvCpsSf2dongb,		// Street Fighter II': Champion Edition (Dongfang Bubai protection bootleg, etc 920313)
 	&BurnDrvCpsSf2ceb,			// Street Fighter II': Champion Edition (Playmark bootleg, set 1)
-	&BurnDrvCpsSf2ceba,			// Street Fighter II': Champion Edition (Playmark bootleg, set 3)
+	&BurnDrvCpsSf2ceb5,			// Street Fighter II': Champion Edition (Playmark bootleg, set 3)
 	&BurnDrvnes_streefigiii,	// Street Fighter III (Unl)
 	&BurnDrvSfiii2n,			// Street Fighter III 2nd Impact: Giant Attack (Asia 970930, NO CD)
 	&BurnDrvSfiii2j,			// Street Fighter III 2nd Impact: Giant Attack (Japan 970930)
@@ -27846,7 +27853,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_sugorquej,		// Sugoro Quest - Dice no Senshitachi (Japan)
 	&BurnDrvnes_sugorque,		// Sugoro Quest - Dice no Senshitachi (T-eng)
 	&BurnDrvsms_suhocheo,		// Suho Jeonsa (Kor)
-	&BurnDrvnes_sukebandeka3,	// Sukeban Deka 3 (Japan)
+	&BurnDrvnes_sukebandeka3j,	// Sukeban Deka 3 (Japan)
+	&BurnDrvnes_sukebandeka3,	// Sukeban Deka 3 (T-Eng)
 	&BurnDrvsms_sukeban,		// Sukeban Deka II - Shoujo Tekkamen Densetsu (Jpn)
 	&BurnDrvSjryuko1,			// Sukeban Jansi Ryuko (set 1, System 16A, FD1089B 317-5021)
 	&BurnDrvSjryuko,			// Sukeban Jansi Ryuko (set 2, System 16B, FD1089B 317-5021)

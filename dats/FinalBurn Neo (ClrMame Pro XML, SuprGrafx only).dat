@@ -61,4 +61,11 @@
 		<rom name="madou ou granzort (japan).pce" size="524288" crc="1f041166"/>
 		<driver status="good"/>
 	</game>
+	<game name="rtypeuh" cloneof="type" romof="type">
+		<description>R-Type - Chris Covell's Unfinished SGX Hack</description>
+		<year>2019</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="r-type (unfinished hack).sgx" size="524288" crc="cdc9bb74"/>
+		<driver status="good"/>
+	</game>
 </datafile>

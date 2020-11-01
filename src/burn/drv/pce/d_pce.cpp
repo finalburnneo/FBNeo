@@ -7859,10 +7859,10 @@ STD_ROM_PICK(sgx_rtypeuh)
 STD_ROM_FN(sgx_rtypeuh)
 
 struct BurnDriver BurnDrvsgx_rtypeuh = {
-	"sgx_rtypeuh", "tg_rtype", NULL, NULL, "2019",
+	"sgx_rtypeuh", NULL, NULL, NULL, "2019",
 	"R-Type - Chris Covell's Unfinished SGX Hack\0", NULL, "NEC", "SuperGrafx",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
 	SgxGetZipName, sgx_rtypeuhRomInfo, sgx_rtypeuhRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3

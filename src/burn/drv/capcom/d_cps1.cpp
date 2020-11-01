@@ -2443,6 +2443,52 @@ static struct BurnDIPInfo ForgottnDIPList[]=
 
 STDDIPINFO(Forgottn)
 
+static struct BurnDIPInfo ForgottnjDIPList[]=
+{
+	// Defaults
+	{0x16, 0xff, 0xff, 0x00, NULL                     },
+	{0x17, 0xff, 0xff, 0x00, NULL                     },
+	{0x18, 0xff, 0xff, 0x00, NULL                     },
+	{0x19, 0xff, 0xff, 0x00, NULL                     },
+
+	// Dip A
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x16, 0x01, 0x80, 0x00, "Off"                    },
+	{0x16, 0x01, 0x80, 0x80, "On"                     },
+
+	// Dip B
+	CPS1_COINAGE_1(0x17)
+
+	{0   , 0xfe, 0   , 2   , "Speed Up"               },
+	{0x17, 0x01, 0x40, 0x00, "Off"                    },
+	{0x17, 0x01, 0x40, 0x40, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x17, 0x01, 0x80, 0x00, "Off"                    },
+	{0x17, 0x01, 0x80, 0x80, "On"                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Slow Motion"            },
+	{0x18, 0x01, 0x01, 0x00, "Off"                    },
+	{0x18, 0x01, 0x01, 0x01, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Slowest Motion"         },
+	{0x18, 0x01, 0x02, 0x00, "Off"                    },
+	{0x18, 0x01, 0x02, 0x02, "On"                     },
+
+	{0   , 0xfe, 0   , 3   , "Freeze"                 },
+	{0x18, 0x01, 0xc0, 0x00, "Off"                    },
+	{0x18, 0x01, 0xc0, 0x40, "On"                     },
+	{0x18, 0x01, 0xc0, 0xc0, "On with Alignment Character" },
+
+	// Fake dip for "turn"-input inversion
+	{0   , 0xfe, 0   , 2   , "Invert \"Turn\" inputs" },
+	{0x19, 0x01, 0x80, 0x00, "Off"                    },
+	{0x19, 0x01, 0x80, 0x80, "On"                     },
+};
+
+STDDIPINFO(Forgottnj)
+
 static struct BurnDIPInfo GanbareDIPList[]=
 {
 	// Defaults
@@ -20527,7 +20573,7 @@ struct BurnDriver BurnDrvCpsForgottnj = {
 	"Forgotten Worlds (Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
-	NULL, ForgottnjRomInfo, ForgottnjRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
+	NULL, ForgottnjRomInfo, ForgottnjRomName, NULL, NULL, NULL, NULL, ForgottnInputInfo, ForgottnjDIPInfo,
 	ForgottnInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

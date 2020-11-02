@@ -7868,6 +7868,26 @@ struct BurnDriver BurnDrvsgx_rtypeuh = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// RTA2 - Homebrew conversion of RTA2, bonus game present on Revivel Chase CD
+// https://www.gamopat-forum.com/t86439-rt2a-sur-supergrafx
+
+static struct BurnRomInfo sgx_rta2RomDesc[] = {
+	{ "rta2.sgx", 0x028200, 0x4a4db3da, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sgx_rta2)
+STD_ROM_FN(sgx_rta2)
+
+struct BurnDriver BurnDrvsgx_rta2 = {
+	"sgx_rta2", NULL, NULL, NULL, "2016",
+	"RTA2 - Homebrew conversion of RTA2\0", NULL, "REVIVAL GAMES", "SuperGrafx",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
+	SgxGetZipName, sgx_rta2RomInfo, sgx_rta2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
 // Raiden
 
 static struct BurnRomInfo tg_raidenRomDesc[] = {

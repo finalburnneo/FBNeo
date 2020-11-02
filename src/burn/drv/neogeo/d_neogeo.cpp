@@ -18087,25 +18087,25 @@ struct BurnDriver BurnDrvK2k2ps2re1 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2002 (Plus 2017, Hack) ver. 20200222
-// Hacked by GSC2007
-// YZKOF (The date of the last file 2020-07-17 - kof2k2plus-p1.p1 & kof2k2plus-p3.p3)
+// The King of Fighters 2002 (Plus 2017, Hack) ver. 20201022
+// Hack by GSC2007
+// GOTVG 20201022
 
 static struct BurnRomInfo kof2k2plusRomDesc[] = {
-	{ "kof2k2plus-p1.p1",	0x100000, 0xdc6da89f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof2k2plus-p2.p2",	0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "kof2k2plus-p3.p3",	0x020000, 0xf9dacaae, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "265-p1pls.p1",		0x100000, 0x059da6f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2pls.p2",		0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265-p3pls.p3",		0x020000, 0x80aacc1f, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "kof2k2plus-s1.s1",	0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "265-s1pls.s1",		0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "kof2k2plus-c1.c1",	0x800000, 0x93cf6345, 3 | BRF_GRA },           //  4 Sprite data
-	{ "kof2k2plus-c2.c2",	0x800000, 0xd7373d66, 3 | BRF_GRA },           //  5
-	{ "kof2k2plus-c3.c3",	0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
-	{ "kof2k2plus-c4.c4", 	0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
-	{ "kof2k2plus-c5.c5", 	0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
-	{ "kof2k2plus-c6.c6", 	0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
-	{ "kof2k2plus-c7.c7",   0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
-	{ "kof2k2plus-c8.c8",   0x800000, 0xbef667a3, 3 | BRF_GRA },           // 10
+	{ "265-c1pls.c1",		0x800000, 0x93cf6345, 3 | BRF_GRA },           //  4 Sprite data
+	{ "265-c2pls.c2",		0x800000, 0xd7373d66, 3 | BRF_GRA },           //  5
+	{ "265-c3d.c3",			0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
+	{ "265-c4d.c4", 		0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
+	{ "265-c5d.c5", 		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265-c6d.c6", 		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
+	{ "265-c8d.c8",			0x800000, 0xbef667a3, 3 | BRF_GRA },           // 10
 
 	/* Encrypted */
 	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
@@ -18118,16 +18118,17 @@ static struct BurnRomInfo kof2k2plusRomDesc[] = {
 STDROMPICKEXT(kof2k2plus, kof2k2plus, neogeo)
 STD_ROM_FN(kof2k2plus)
 
-static UINT8 *kof2k2plusExtraROM;
+static UINT8* kof2k2plusExtraROM;
 
 static INT32 kof2k2plusInit()
 {
 	INT32 nRet = NeoInit();
 
-	if (nRet == 0) {kof2k2plusExtraROM = (UINT8*)BurnMalloc(0x20000);
+	if (nRet == 0) {
+		kof2k2plusExtraROM = (UINT8*)BurnMalloc(0x20000);
 
 		if (BurnLoadRom(kof2k2plusExtraROM, 2, 1)) return 1;
-		
+
 		SekOpen(0);
 		SekMapMemory(kof2k2plusExtraROM, 0x900000, 0x91ffff, MAP_ROM);
 		SekClose();
@@ -18136,23 +18137,23 @@ static INT32 kof2k2plusInit()
 
 		PCM2DecryptV2(&Info);
 	}
-	
+
 	return nRet;
 }
 
 static INT32 kof2k2plusExit()
 {
-	BurnFree (kof2k2plusExtraROM);
+	BurnFree(kof2k2plusExtraROM);
 
 	return NeoExit();
 }
 
 struct BurnDriver BurnDrvkof2k2plus = {
-	"kof2k2plus", "kof2002", "neogeo", NULL, "2020-07-17",
+	"kof2k2plus", "kof2002", "neogeo", NULL, "2020-10-22",
 	"The King of Fighters 2002 (Plus 2017, Hack)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,  
+	NULL, kof2k2plusRomInfo, kof2k2plusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	kof2k2plusInit, kof2k2plusExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

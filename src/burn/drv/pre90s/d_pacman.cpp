@@ -4532,7 +4532,7 @@ struct BurnDriver BurnDrvmspacmanbgd = {
 };
 
 
-// Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg)
+// Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 1)
 
 static struct BurnRomInfo mspacmanbltRomDesc[] = {
 	{ "triunvi.1.bin",     0x8000, 0xd9da2917, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4551,10 +4551,41 @@ STD_ROM_FN(mspacmanblt)
 
 struct BurnDriver BurnDrvmspacmanblt = {
 	"mspacmanblt", "mspacman", NULL, NULL, "1991",
-	"Miss Pukman ('Made in Greece' Triunvi bootleg)\0", NULL, "bootleg (Triunvi)", "Pac-man",
+	"Miss Pukman ('Made in Greece' Triunvi bootleg, set 1)\0", NULL, "bootleg (Triunvi)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmanbltRomInfo, mspacmanbltRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 2)
+// very small differences to the above
+
+static struct BurnRomInfo mspacmanblt2RomDesc[] = {
+	{ "11.bin",       0x8000, 0x763c2abb, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "13.bin",       0x8000, 0xf2c5da43, 2 | BRF_GRA },			//  1 Graphics
+
+	// not dumped for this set
+	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+
+	// sound PROMs, not dumped for this set
+	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanblt2)
+STD_ROM_FN(mspacmanblt2)
+
+struct BurnDriver BurnDrvmspacmanblt2 = {
+	"mspacmanblt2", "mspacman", NULL, NULL, "1991",
+	"Miss Pukman ('Made in Greece' Triunvi bootleg, set 2)\0", NULL, "bootleg (Triunvi)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmanblt2RomInfo, mspacmanblt2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

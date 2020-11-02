@@ -1187,7 +1187,6 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sms\smstms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sms\smsvdp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\spectrum\d_spectrum.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\spectrum\spectrum_states.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\cchip.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_arkanoid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_ashnojoe.cpp" />
@@ -1648,7 +1647,6 @@ del build_details.exe
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\src\burn\drv\spectrum\spectrum_games.txt" />
     <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

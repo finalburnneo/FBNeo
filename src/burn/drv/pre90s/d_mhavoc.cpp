@@ -956,7 +956,7 @@ static struct BurnRomInfo mhavoc2RomDesc[] = {
 
 	{ "136025.108",		0x4000, 0x93faf210, 2 | BRF_PRG | BRF_ESS }, //  7 M6502 #1 Code
 
-	{ "036408-01.b1",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.6c",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
 };
 
 STD_ROM_PICK(mhavoc2)
@@ -986,7 +986,7 @@ static struct BurnRomInfo mhavocrvRomDesc[] = {
 
 	{ "136025.908",		0x4000, 0xc52ec664, 2 | BRF_PRG | BRF_ESS }, //  7 M6502 #1 Code
 
-	{ "036408-01.b1",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.6c",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
 };
 
 STD_ROM_PICK(mhavocrv)
@@ -1016,7 +1016,7 @@ static struct BurnRomInfo mhavocpRomDesc[] = {
 
 	{ "136025.008",		0x4000, 0x22ea7399, 2 | BRF_PRG | BRF_ESS }, //  7 M6502 #1 Code
 
-	{ "036408-01.b1",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.6c",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
 };
 
 STD_ROM_PICK(mhavocp)
@@ -1046,7 +1046,7 @@ static struct BurnRomInfo alphaoneRomDesc[] = {
 	{ "vec_pg01.tw",	0x4000, 0xe392a94d, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "vec_pg23.tw",	0x4000, 0x1ff74292, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "036408-01.b1",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.6c",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
 };
 
 STD_ROM_PICK(alphaone)

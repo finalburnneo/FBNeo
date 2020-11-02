@@ -834,7 +834,7 @@ STD_ROM_PICK(Hangon2)
 STD_ROM_FN(Hangon2)
 
 static struct BurnRomInfo HangonvfRomDesc[] = {
-	{ "9.3n	",   		  0x08000, 0x20b1c2b0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "9.3n",   		  0x08000, 0x20b1c2b0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "11.1n",    		  0x08000, 0x7d9db1bf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "8.3k",   		  0x08000, 0xfea12367, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "10.1k",    		  0x08000, 0xac883240, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },

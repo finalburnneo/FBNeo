@@ -510,8 +510,6 @@
 		FE1B261F23561A770065200C /* d_cps3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207423561A6B0065200C /* d_cps3.cpp */; };
 		FE1B262023561A770065200C /* cps3snd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207623561A6B0065200C /* cps3snd.cpp */; };
 		FE1B262123561A770065200C /* cps3run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207723561A6B0065200C /* cps3run.cpp */; settings = {COMPILER_FLAGS = "-Wno-logical-not-parentheses"; }; };
-		FE1B262223561A770065200C /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
-		FE1B262323561A770065200C /* spectrum_states.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207A23561A6B0065200C /* spectrum_states.cpp */; };
 		FE1B262523561A770065200C /* psikyo_tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207E23561A6B0065200C /* psikyo_tile.cpp */; };
 		FE1B262623561A770065200C /* psikyo_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B208023561A6B0065200C /* psikyo_sprite.cpp */; };
 		FE1B262723561A770065200C /* psikyosh_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B208123561A6C0065200C /* psikyosh_render.cpp */; };
@@ -1015,6 +1013,7 @@
 		FEC5D3D6235C136F00ABA9FB /* FBVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D5235C136F00ABA9FB /* FBVideo.mm */; };
 		FEC5D3D9235C160600ABA9FB /* FBScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D3D8235C160600ABA9FB /* FBScreenView.mm */; };
 		FED03ADE23FAF8E900E99A10 /* mdeeprom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FED03ADD23FAF8E900E99A10 /* mdeeprom.cpp */; };
+		FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
 		FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */; };
@@ -1888,9 +1887,6 @@
 		FE1B207623561A6B0065200C /* cps3snd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cps3snd.cpp; sourceTree = "<group>"; };
 		FE1B207723561A6B0065200C /* cps3run.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cps3run.cpp; sourceTree = "<group>"; };
 		FE1B207923561A6B0065200C /* d_spectrum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_spectrum.cpp; sourceTree = "<group>"; };
-		FE1B207A23561A6B0065200C /* spectrum_states.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spectrum_states.cpp; sourceTree = "<group>"; };
-		FE1B207B23561A6B0065200C /* spectrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum.h; sourceTree = "<group>"; };
-		FE1B207C23561A6B0065200C /* spectrum_games.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spectrum_games.txt; sourceTree = "<group>"; };
 		FE1B207E23561A6B0065200C /* psikyo_tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = psikyo_tile.cpp; sourceTree = "<group>"; };
 		FE1B207F23561A6B0065200C /* psikyo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = psikyo.h; sourceTree = "<group>"; };
 		FE1B208023561A6B0065200C /* psikyo_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = psikyo_sprite.cpp; sourceTree = "<group>"; };
@@ -4077,9 +4073,6 @@
 			isa = PBXGroup;
 			children = (
 				FE1B207923561A6B0065200C /* d_spectrum.cpp */,
-				FE1B207A23561A6B0065200C /* spectrum_states.cpp */,
-				FE1B207B23561A6B0065200C /* spectrum.h */,
-				FE1B207C23561A6B0065200C /* spectrum_games.txt */,
 			);
 			path = spectrum;
 			sourceTree = "<group>";
@@ -5458,7 +5451,6 @@
 				FE1B271323561A780065200C /* d_btime.cpp in Sources */,
 				FE1B27C823561A790065200C /* atarijsa.cpp in Sources */,
 				FE1B275E23561A780065200C /* d_aeroboto.cpp in Sources */,
-				FE1B262223561A770065200C /* d_spectrum.cpp in Sources */,
 				FE1B277D23561A790065200C /* pokey.cpp in Sources */,
 				FE1B253623561A760065200C /* d_nmg5.cpp in Sources */,
 				FE1B287A23561A7A0065200C /* un7z.cpp in Sources */,
@@ -5849,6 +5841,7 @@
 				FE1B25B023561A760065200C /* d_fastlane.cpp in Sources */,
 				FE1B27B523561A790065200C /* burn_gun.cpp in Sources */,
 				FE1B266F23561A770065200C /* d_darius2.cpp in Sources */,
+				FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */,
 				FE1B25CA23561A760065200C /* d_contra.cpp in Sources */,
 				FE1B273A23561A780065200C /* d_srumbler.cpp in Sources */,
 				FE0A7EA42394ED91001E6997 /* FBDropFileScrollView.m in Sources */,
@@ -6034,7 +6027,6 @@
 				FE1B27E923561A790065200C /* unzip.c in Sources */,
 				FE1B26C723561A770065200C /* d_cclimber.cpp in Sources */,
 				FE1B27B223561A790065200C /* cheat.cpp in Sources */,
-				FE1B262323561A770065200C /* spectrum_states.cpp in Sources */,
 				FE1B24D223561A750065200C /* d_pwrinst2.cpp in Sources */,
 				FE1B257823561A760065200C /* d_supbtime.cpp in Sources */,
 				FE1B26C423561A770065200C /* d_wc90.cpp in Sources */,

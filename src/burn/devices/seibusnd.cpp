@@ -296,7 +296,7 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 		// type 2
 		case 0x6008:
 		case 0x6009:
-			if (seibu_snd_type == 2) BurnYM2203Write(1, address & 1, data);
+			if (seibu_snd_type & 2) BurnYM2203Write(1, address & 1, data);
 		return;
 
 		case 0x601a:

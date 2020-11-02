@@ -6,6 +6,10 @@
 #include "z80_intf.h"
 #include "ay8910.h"
 
+#if defined (_MSC_VER)
+#define strcasecmp stricmp
+#endif
+
 static INT32 SpecMode = 0;
 #define SPEC_TAP	(1 << 0)
 #define SPEC_Z80	(1 << 1)

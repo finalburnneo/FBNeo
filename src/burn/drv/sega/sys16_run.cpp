@@ -138,6 +138,7 @@ bool AlienSyndrome = false;
 bool HammerAway = false;
 bool Lockonph = false;
 bool AltbeastMode = false;
+bool ThndrbldMode = false;
 bool System16Z80Enable = true;
 bool System1668KEnable = true;
 
@@ -2642,6 +2643,7 @@ INT32 System16Exit()
 	HammerAway = false;
 	Lockonph = false;
 	AltbeastMode = false;
+	ThndrbldMode = false;
 	System1668KEnable = true;
 	System16Z80Enable = true;
 
@@ -3359,6 +3361,10 @@ INT32 XBoardFrame()
 			ZetClose();
 		}
 
+		if (i == 0 && ThndrbldMode && pBurnDraw) {
+			XBoardRender();
+		}
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -3384,7 +3390,7 @@ INT32 XBoardFrame()
 		}
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw && ThndrbldMode == false) {
 		XBoardRender();
 	}
 

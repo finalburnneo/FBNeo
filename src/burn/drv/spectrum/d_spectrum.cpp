@@ -8,8 +8,6 @@
 
 #if defined (_MSC_VER)
 #define _USE_MATH_DEFINES
-#elif defined (__APPLE__)
-#define stricmp strcasecmp
 #endif
 #include "math.h" // for biquad filter
 
@@ -1181,10 +1179,10 @@ static INT32 get_type()
 		INT32 len = strlen(rn);
 
 		if (len > 4) {
-			if (!stricmp(".z80", rn + (len-4))) {
+			if (!strcasecmp(".z80", rn + (len-4))) {
 				return SPEC_Z80;
 			}
-			if (!stricmp(".tap", rn + (len-4))) {
+			if (!strcasecmp(".tap", rn + (len-4))) {
 				return SPEC_TAP;
 			}
 		}

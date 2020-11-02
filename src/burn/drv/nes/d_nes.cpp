@@ -12570,7 +12570,7 @@ STD_ROM_PICK(nes_kagec)
 STD_ROM_FN(nes_kagec)
 
 struct BurnDriver BurnDrvnes_kagec = {
-	"nes_kagec", "nes_kage", NULL, NULL, "2010",
+	"nes_kagec", "nes_shadonin", NULL, NULL, "2010",
 	"Kage (T-Chi, v2.0)\0", NULL, "NATSUME", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,

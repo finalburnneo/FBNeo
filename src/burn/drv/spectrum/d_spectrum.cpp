@@ -7,11 +7,8 @@
 #include "ay8910.h"
 
 #if defined (_MSC_VER)
-#define _USE_MATH_DEFINES
-#elif defined (__APPLE__)
-#define stricmp strcasecmp
+#define strcasecmp stricmp
 #endif
-#include "math.h" // for biquad filter
 
 static INT32 SpecMode = 0;
 #define SPEC_TAP	(1 << 0)
@@ -292,6 +289,8 @@ static void TAPAutoLoadRobot()
 // direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
 enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
 
+#define BIQ_PI	3.14159265358979323846
+
 struct BIQ {
 	double a0;
 	double a1;
@@ -318,7 +317,7 @@ static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, 
 	f->frequency = freqhz;
 	f->q = q;
 
-	double k = tan(M_PI * f->frequency / f->samplerate);
+	double k = tan(BIQ_PI * f->frequency / f->samplerate);
 	double norm = 1 / (1 + k / f->q + k * k);
 	double v = pow(10, fabs(gain) / 20);
 
@@ -1181,10 +1180,10 @@ static INT32 get_type()
 		INT32 len = strlen(rn);
 
 		if (len > 4) {
-			if (!stricmp(".z80", rn + (len-4))) {
+			if (!strcasecmp(".z80", rn + (len-4))) {
 				return SPEC_Z80;
 			}
-			if (!stricmp(".tap", rn + (len-4))) {
+			if (!strcasecmp(".tap", rn + (len-4))) {
 				return SPEC_TAP;
 			}
 		}

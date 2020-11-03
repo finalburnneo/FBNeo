@@ -4,9 +4,9 @@
 <datafile>
 	<header>
 		<name>FinalBurn Neo - Megadrive Games</name>
-		<description>FinalBurn Neo v1.0.0.00 Megadrive Games</description>
+		<description>FinalBurn Neo v1.0.0.01 Megadrive Games</description>
 		<category>Standard DatFile</category>
-		<version>1.0.0.00</version>
+		<version>1.0.0.01</version>
 		<author>FinalBurn Neo</author>
 		<homepage>https://neo-source.com/</homepage>
 		<url>https://neo-source.com/</url>
@@ -6917,6 +6917,13 @@
 		<rom name="mpr-13845.bin" size="524288" crc="b6ea5016"/>
 		<driver status="good"/>
 	</game>
+	<game name="langris2c" cloneof="langris2" romof="langris2">
+		<description>Langrisser Hikari II (T-Chi)</description>
+		<year>2015</year>
+		<manufacturer>NCS</manufacturer>
+		<rom name="Langrisser Hikari II (T-Chi).bin" size="2097152" crc="26233aee"/>
+		<driver status="good"/>
+	</game>
 	<game name="langris2e" cloneof="langris2" romof="langris2">
 		<description>Langrisser II (Hack, English)</description>
 		<year>2011</year>
@@ -9069,6 +9076,13 @@
 		<rom name="nhk taiga drama - taiheiki (jpn).bin" size="1048576" crc="09fbb30e"/>
 		<driver status="good"/>
 	</game>
+	<game name="nhktaidrc" cloneof="nhktaidr" romof="nhktaidr">
+		<description>NHK Taiga Drama - Taiheiki (T-Chi)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="nhk taiga drama - taiheiki (T-Chi).bin" size="1048576" crc="19864175"/>
+		<driver status="good"/>
+	</game>
 	<game name="nhl94">
 		<description>NHL '94 (Euro, USA)</description>
 		<year>1993</year>
@@ -9298,6 +9312,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ninja burai densetsu (jpn).bin" size="1048576" crc="a8d828a0"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjabt" cloneof="ninjab" romof="ninjab">
+		<description>Ninja Burai Densetsu (T-Chi)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ninja burai densetsu (T-Chi).bin" size="1048576" crc="107cbf61"/>
 		<driver status="good"/>
 	</game>
 	<game name="ngaiden">
@@ -11708,6 +11729,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force ii - koe no fuuin (jpn).bin" size="2097152" crc="0288f3e1"/>
+		<driver status="good"/>
+	</game>
+	<game name="shinfrc2c" cloneof="shinfrc2" romof="shinfrc2">
+		<description>Shining Force II - Koe no Fuuin (T-Chi, v2)</description>
+		<year>2007-01</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="shining force ii - koe no fuuin (T-Chi, v2).bin" size="3145728" crc="5dd08aea"/>
 		<driver status="good"/>
 	</game>
 	<game name="shindarkbr" cloneof="shindark" romof="shindark">
@@ -15159,6 +15187,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super shinobi ii, the (jpn) (beta) (earlier).bin" size="1048576" crc="1ee5bce3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supshin2c" cloneof="shinobi3" romof="shinobi3">
+		<description>The Super Shinobi II (T-Chi)</description>
+		<year>2009</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="super shinobi ii, the (Chinese).bin" size="1048576" crc="8d8fb732"/>
 		<driver status="good"/>
 	</game>
 	<game name="termintr">

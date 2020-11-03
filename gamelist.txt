@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15229 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15251 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -36,7 +36,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_180	|  	| 180 (128K)						| 		| 1986	| Mastertronic A| ZX Spectrum	| 					|
 | spec_180_48	|  	| 180 (48K)						| spec_180	| 1986	| Mastertronic A| ZX Spectrum	| 					|
 | msx_180	|  	| 180 Degrees						| 		| 1986	| MAD		| MSX		| 					|
-| fds_19neunzehn|  	| 19 - Neunzehn (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_19neunzehnj|  	| 19 - Neunzehn (Japan)					| fds_19neunzehn| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_19neunzehn|  	| 19 - Neunzehn (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | 1941u		|  	| 1941 - Counter Attack (900227 USA)			| 1941		| 1990	| Capcom	| CPS1		| 					|
 | 1941		|  	| 1941 - Counter Attack (900227 World)			| 		| 1990	| Capcom	| CPS1		| 					|
 | 1941j		|  	| 1941 - Counter Attack (Japan)				| 1941		| 1990	| Capcom	| CPS1		| 					|
@@ -1275,6 +1276,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_binarylnd	|  	| Binary Land						| 		| 1984	| Kuma Computers| MSX		| 					|
 | bioatack	|  	| Bio Attack						| 		| 1983	| Taito Corporat| Taito SJ Syste| 					|
 | nes_bioforceape|  	| Bio Force Ape (Japan) (En) (Proto)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_biohazardc|  	| Bio Hazard (China)					| nes_biohazard	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_biohazard	|  	| Bio Hazard (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_biohazrb	|  	| Bio Hazard Battle (Euro, USA)				| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_biohazrbs	|  	| Bio Hazard Battle (Hack, Spanish)			| md_biohazrb	| 2018	| SEGA		| Sega Megadrive| 					|
 | md_biohazrbp	|  	| Bio Hazard Battle (USA, Prototype)			| md_biohazrb	| 1992	| Sega		| Sega Megadrive| 					|
@@ -2860,7 +2863,8 @@ This list contains all games supported by FinalBurn Neo.
 | dankuga	|  	| Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)		| 		| 1994	| Taito Corporat| Taito F3 Syste| Missing graphics are normal in this pr|
 | sms_danan	|  	| Danan: The Jungle Fighter (Euro, Bra)			| 		| 1990	| Sega		| Sega Master Sy| 					|
 | cv_dncfntsy	|  	| Dance Fantasy						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
-| fds_dandy	|  	| Dandy - Zeuon no Fukkatsu (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dandyj	|  	| Dandy - Zeuon no Fukkatsu (Japan)			| fds_dandy	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dandy	|  	| Dandy - Zeuon no Fukkatsu (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cv_dangrtower	|  	| Danger Tower (HB)					| 		| 2017	| Danger Team	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | msx_dangertower|  	| Danger Tower (HB)					| 		| 2009	| Danger Team	| MSX		| 					|
 | dngrtrck	|  	| Danger Track (Rally X bootleg)			| rallyx	| 1980	| bootleg	| Miscellaneous	| 					|
@@ -3163,7 +3167,8 @@ This list contains all games supported by FinalBurn Neo.
 | dirtfoxj	|  	| Dirt Fox (Japan)					| 		| 1989	| Namco		| System 2	| 					|
 | spec_dirtydozer|  	| Dirty Dozer (HB)					| 		| 2019	| Miguetelo	| ZX Spectrum	| 					|
 | nes_dirtyhar	|  	| Dirty Harry - The War Against Drugs (USA)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| fds_dirtypai	|  	| Dirty Pair - Project Eden (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dirtypaij	|  	| Dirty Pair - Project Eden (Japan)			| fds_dirtypai	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_dirtypai	|  	| Dirty Pair - Project Eden (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_discwarr	|  	| Disc Warrior (Euro)					| 		| 1984	| Alligata Softw| MSX		| 					|
 | cdiscon1	|  	| Disco No.1 (DECO Cassette) (US)			| 		| 1982	| Data East Corp| Cassette Syste| 					|
 | discof	|  	| Disco No.1 (Rev.F)					| disco		| 1982	| Data East	| Miscellaneous	| 					|
@@ -4780,6 +4785,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_robocop	|  	| Gangcheol RoboCop (Kor)				| 		| 1992	| Sieco		| Sega Master Sy| 					|
 | sms_gangster	|  	| Gangster Town (Euro, USA, Bra)			| 		| 1987	| Sega		| Sega Master Sy| Light Phaser game			|
 | ganryu	|  	| Ganryu / Musashi Ganryuki				| 		| 1999	| Visco		| Neo Geo MVS	| 					|
+| nes_gansosaij	|  	| Ganso Saiyuuki - Super Monkey Daibouken (Japan)	| nes_gansosai	| 1986	| Vap		| Miscellaneous	| 					|
+| nes_gansosai	|  	| Ganso Saiyuuki - Super Monkey Daibouken (T-Eng)	| 		| 1986	| Vap		| Miscellaneous	| 					|
 | gaplusd	|  	| Gaplus (GP2 rev D, alternate hardware)		| gaplus	| 1984	| Namco		| Miscellaneous	| 					|
 | gaplus	|  	| Gaplus (GP2 rev. B)					| 		| 1984	| Namco		| Miscellaneous	| 					|
 | gaplusa	|  	| Gaplus (GP2)						| gaplus	| 1984	| Namco		| Miscellaneous	| 					|
@@ -4880,6 +4887,8 @@ This list contains all games supported by FinalBurn Neo.
 | genpeitd	|  	| Genpei ToumaDen					| 		| 1986	| Namco		| System 86	| 					|
 | pce_genpei	|  	| Genpei Toumaden					| 		| 1990	| Namcot	| PC Engine	| 					|
 | gensitou	|  	| Genshi-Tou 1930's (Japan)				| prehisle	| 1989	| SNK		| Prehistoric Is| 					|
+| nes_genuinemonkeyc|  	| Genuine Monkey (China)				| nes_genuinemonkey| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_genuinemonkey|  	| Genuine Monkey (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_georgeko	|  	| George Foreman's KO Boxing (Euro)			| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | sms_georgeko	|  	| George Foreman's KO Boxing (Euro, Bra)		| 		| 1992	| Flying Edge	| Sega Master Sy| 					|
 | gg_georgeko	|  	| George Foreman's KO Boxing (Euro, USA)		| 		| 1992	| Flying Edge	| Sega Game Gear| 					|
@@ -5035,6 +5044,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_goldnax2	|  	| Golden Axe II (World)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_goldnax2p	|  	| Golden Axe II (World, Prototype)			| md_goldnax2	| 1991	| Sega		| Sega Megadrive| 					|
 | md_goldnax3	|  	| Golden Axe III (Jpn)					| 		| 1993	| Sega		| Sega Megadrive| 					|
+| nes_goldenaxeiii|  	| Golden Axe III (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_goldnax3nc	|  	| Golden Axe III - New Character (Ver. 9) (Hack)	| md_goldnax3	| 2020-06-08| Ti		| Sega Megadrive| 					|
 | sms_gaxewarr	|  	| Golden Axe Warrior (Euro, USA, Bra)			| 		| 1990	| Sega		| Sega Master Sy| 					|
 | spec_goldenaxe1|  	| Golden Axe						| 		| 1990	| Virgin Games	| ZX Spectrum	| 					|
@@ -5888,6 +5898,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_irons	|  	| Ironsword - Wizards & Warriors II (USA)		| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | isgsm		|  	| ISG Selection Master Type 2006 System BIOS		| 		| 2006	| ISG		| ISG Selection | BIOS only				|
 | md_ishido	|  	| Ishido - The Way of Stones (USA)			| 		| 1990	| Accolade	| Sega Megadrive| 					|
+| fds_ishidouj	|  	| Ishidou (Japan)					| fds_ishidou	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_ishidou	|  	| Ishidou (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_isitar7	|  	| Isitar 7 (HB)						| 		| 2019	| N.I		| MSX		| 					|
 | nes_isolatedwarrior|  	| Isolated Warrior (USA)				| 		| 1991	| NTVIC		| Miscellaneous	| 					|
 | msx_issun	|  	| Issunboushi no Donnamondai (Jpn)			| 		| 1987	| Casio		| MSX		| 					|
@@ -6230,7 +6242,7 @@ This list contains all games supported by FinalBurn Neo.
 | kabukiz	|  	| Kabuki-Z (World)					| 		| 1988	| Taito Corporat| Miscellaneous	| 					|
 | fds_kaettmarbro|  	| Kaettekita Mario Brothers (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_kage	|  	| Kage (Japan)						| nes_shadonin	| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_kagec	|  	| Kage (T-Chi, v2.0)					| nes_kage	| 2010	| NATSUME	| Miscellaneous	| 					|
+| nes_kagec	|  	| Kage (T-Chi, v2.0)					| nes_shadonin	| 2010	| NATSUME	| Miscellaneous	| 					|
 | nes_kagenodensetsu|  	| Kage no Densetsu (Japan)				| nes_legenkag	| 1986	| Taito		| Miscellaneous	| 					|
 | msx_legkage	|  	| Kage no Densetsu - The Legend of Kage (Jpn)		| 		| 1986	| Taito		| MSX		| 					|
 | kagekih	|  	| Kageki (hack)						| kageki	| 1992	| Taito Corporat| Miscellaneous	| 					|
@@ -6473,6 +6485,8 @@ This list contains all games supported by FinalBurn Neo.
 | cv_kngtlore	|  	| Knight Lore (HB)					| 		| 2018	| Ultimate	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | msx_knightlr	|  	| Knight Lore (Jpn)					| 		| 1986	| Nihon Dexter	| MSX		| 					|
 | fds_knighlor	|  	| Knight Lore - Majou no Ookami Otoko (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_knightmovej|  	| Knight Move (Japan)					| fds_knightmove| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_knightmove|  	| Knight Move (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_knightrider|  	| Knight Rider (USA)					| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | pce_knightrs	|  	| Knight Rider Special					| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
 | spec_knighttyme|  	| Knight Tyme						| 		| 1986	| Mastertronic	| ZX Spectrum	| 					|
@@ -6734,7 +6748,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_landstlku	|  	| Landstalker - The Treasures of King Nole (USA)	| md_landstlk	| 1992	| Sega		| Sega Megadrive| 					|
 | md_landstlkup	|  	| Landstalker - Treasure of King Nole (USA, Prototype)	| md_landstlk	| 1992	| Sega		| Sega Megadrive| 					|
 | md_langriss	|  	| Langrisser (Jpn)					| md_warsong	| 1991	| NCS		| Sega Megadrive| 					|
-| md_langris2c	| D	| Langrisser Hikari II (T-Chi)				| md_langris2	| 2015	| NCS		| Sega Megadrive| 					|
+| md_langris2c	|  	| Langrisser Hikari II (T-Chi)				| md_langris2	| 2015	| NCS		| Sega Megadrive| 					|
 | md_langris2e	|  	| Langrisser II (Hack, English)				| md_langris2	| 2011	| NCS		| Sega Megadrive| 					|
 | md_langris2b	|  	| Langrisser II (Jpn)					| md_langris2	| 1994	| NCS		| Sega Megadrive| 					|
 | md_langris2a	|  	| Langrisser II (Jpn, v1.1)				| md_langris2	| 1994	| NCS		| Sega Megadrive| 					|
@@ -6917,6 +6931,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_lionkin3b	|  	| Lion King 3 (Alt 2?)					| md_lionkin3	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_lionkin3a	|  	| Lion King 3 (Alt?)					| md_lionkin3	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_lionkin3	|  	| Lion King 3						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| nes_lionkinlegc|  	| Lion King Legend, The (China)				| nes_lionkinleg| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_lionkinleg|  	| Lion King Legend, The (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | liquidku	|  	| Liquid Kids (US)					| liquidk	| 1990	| Taito America | Taito F2	| 					|
 | liquidk	|  	| Liquid Kids (World)					| 		| 1990	| Taito Corporat| Taito F2	| 					|
 | lithero	|  	| Little Hero						| kidniki	| 1987	| bootleg	| Irem M62	| 					|
@@ -7849,7 +7865,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_montezump	|  	| Montezuma's Revenge Featuring Panama Joe (USA, Prototy| sms_montezum	| 1989	| Parker Brother| Sega Master Sy| 					|
 | cv_montezum	|  	| Montezuma's Revenge					| 		| 1984	| Parker Brother| ColecoVision	| 					|
 | spec_montrun	|  	| Monty on the Run (128K)				| 		| 1985	| Gremlin Graphi| ZX Spectrum	| 					|
-| fds_montyonrun|  	| Monty on the Run - Monty no Doki Doki Dai Dassou (Japa| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_montyonrunj|  	| Monty on the Run - Monty no Doki Doki Dai Dassou (Japa| fds_montyonrun| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_montyonrun|  	| Monty on the Run - Monty no Doki Doki Dai Dassou (T-En| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | moonal2b	|  	| Moon Alien Part 2 (older version)			| moonal2	| 1980	| Nichibutsu	| Galaxian	| 					|
 | moonal2	|  	| Moon Alien Part 2					| 		| 1980	| Nichibutsu	| Galaxian	| 					|
 | moonaln	|  	| Moon Alien						| galaxian	| 1979	| Nichibutsu (Ka| Galaxian	| 					|
@@ -8451,7 +8468,7 @@ This list contains all games supported by FinalBurn Neo.
 | ngem2k	|  	| NGEM2K (beta 2006-01-18)				| 		| 2006	| homebrew	| Neo Geo MVS	| 					|
 | ngftdemo	|  	| NGF Transparency Demo					| 		| 2012	| CeL		| Neo Geo	| redarmor.net				|
 | md_nhktaidr	|  	| NHK Taiga Drama - Taiheiki (Jpn)			| 		| 1991	| Sega		| Sega Megadrive| 					|
-| md_nhktaidrc	| D	| NHK Taiga Drama - Taiheiki (T-Chi)			| md_nhktaidr	| 1991	| Sega		| Sega Megadrive| 					|
+| md_nhktaidrc	|  	| NHK Taiga Drama - Taiheiki (T-Chi)			| md_nhktaidr	| 1991	| Sega		| Sega Megadrive| 					|
 | pce_nhktaidr	|  	| NHK Taiga Drama - Taiheiki				| 		| 1992	| NHK Enterprise| PC Engine	| 					|
 | md_nhl94	|  	| NHL '94 (Euro, USA)					| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_nhl95	|  	| NHL 95 (Euro, USA)					| 		| 1995	| Electronic Art| Sega Megadrive| 					|
@@ -8548,7 +8565,7 @@ This list contains all games supported by FinalBurn Neo.
 | nbbatmanu	|  	| Ninja Baseball Batman (US)				| nbbatman	| 1993	| Irem America	| Irem M92	| 					|
 | nbbatman	|  	| Ninja Baseball Batman (World)				| 		| 1993	| Irem		| Irem M92	| 					|
 | md_ninjab	|  	| Ninja Burai Densetsu (Jpn)				| 		| 1991	| Sega		| Sega Megadrive| 					|
-| md_ninjabt	| D	| Ninja Burai Densetsu (T-Chi)				| md_ninjab	| 1991	| Sega		| Sega Megadrive| 					|
+| md_ninjabt	|  	| Ninja Burai Densetsu (T-Chi)				| md_ninjab	| 1991	| Sega		| Sega Megadrive| 					|
 | ncombath	|  	| Ninja Combat (NGH-009)				| ncombat	| 1990	| Alpha Denshi C| Neo Geo MVS	| 					|
 | ncombat	|  	| Ninja Combat (NGM-009)				| 		| 1990	| Alpha Denshi C| Neo Geo MVS	| 					|
 | ncommand	|  	| Ninja Commando					| 		| 1992	| Alpha Denshi C| Neo Geo MVS	| 					|
@@ -9715,7 +9732,8 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_pbobblea	|  	| Puzzle Bobble Mini (Euro, Jpn, v09)			| ngp_pbobble	| 1999	| SNK		| NeoGeo Pocket | 					|
 | ngp_pbobble	|  	| Puzzle Bobble Mini (Euro, Jpn, v10)			| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | pce_puzzlboy	|  	| Puzzle Boy						| 		| 1991	| Nihon Telenet	| PC Engine	| 					|
-| fds_puzzleboys|  	| Puzzle Boys (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_puzzleboysj|  	| Puzzle Boys (Japan)					| fds_puzzleboys| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_puzzleboys|  	| Puzzle Boys (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pzlbreak	|  	| Puzzle Break						| 		| 1997	| SemiCom	| Kaneko Pandora| 					|
 | puzlclub	|  	| Puzzle Club (Japan prototype)				| 		| 1990	| Namco		| System 1	| 					|
 | pclubys	|  	| Puzzle Club (Yun Sung, set 1)				| 		| 2000	| Yun Sung	| Miscellaneous	| 					|
@@ -10417,6 +10435,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_royalbld	|  	| Royal Blood (Jpn)					| md_gemfire	| 1992	| Koei		| Sega Megadrive| 					|
 | gg_royalstne	|  	| Royal Stone - Hirakareshi Toki no Tobira (Hack, Englis| gg_royalstn	| 2013	| Sega		| Sega Game Gear| 					|
 | gg_royalstn	|  	| Royal Stone - Hirakareshi Toki no Tobira (Jpn)	| 		| 1995	| Sega		| Sega Game Gear| 					|
+| sgx_rta2	|  	| RTA2 - Homebrew conversion of RTA2			| 		| 2016	| REVIVAL GAMES	| SuperGrafx	| 					|
 | spec_rubicon	|  	| Rubicon (HB, v1.1)					| 		| 2018	| Rucksack Games| ZX Spectrum	| 					|
 | rugrats	|  	| Rug Rats						| wiping	| 1983	| Nichibutsu	| Miscellaneous	| 					|
 | md_rugbywc	|  	| Rugby World Cup 1995 (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -10869,7 +10888,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_shinfrc2p2	|  	| Shining Force II (USA, Prototype, 19940404)		| md_shinfrc2	| 1994	| Sega		| Sega Megadrive| 					|
 | md_shinfrc2p1	|  	| Shining Force II (USA, Prototype, 19940607)		| md_shinfrc2	| 1994	| Sega		| Sega Megadrive| 					|
 | md_shinfrc2j	|  	| Shining Force II - Koe no Fuuin (Jpn)			| md_shinfrc2	| 1993	| Sega		| Sega Megadrive| 					|
-| md_shinfrc2c	| D	| Shining Force II - Koe no Fuuin (T-Chi, v2)		| md_shinfrc2	| 2007-01| Sega		| Sega Megadrive| 					|
+| md_shinfrc2c	|  	| Shining Force II - Koe no Fuuin (T-Chi, v2)		| md_shinfrc2	| 2007-01| Sega		| Sega Megadrive| 					|
 | gg_shinfrc2	|  	| Shining Force II - The Sword of Hajya (Euro, USA)	| 		| 1994	| Sega		| Sega Game Gear| 					|
 | gg_shinfrc2p4	|  	| Shining Force II - The Sword of Hajya (Prototype, 1994| gg_shinfrc2	| 1994	| Sega		| Sega Game Gear| 					|
 | gg_shinfrc2p3	|  	| Shining Force II - The Sword of Hajya (Prototype, 1994| gg_shinfrc2	| 1994	| Sega		| Sega Game Gear| 					|
@@ -13491,7 +13510,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_supshin2	|  	| The Super Shinobi II (Jpn, Kor)			| md_shinobi3	| 1993	| Sega		| Sega Megadrive| 					|
 | md_supshin2p1	|  	| The Super Shinobi II (Jpn, Prototype)			| md_shinobi3	| 1993	| Sega		| Sega Megadrive| 					|
 | md_supshin2p2	|  	| The Super Shinobi II (Jpn, Prototype, Earlier)	| md_shinobi3	| 1993	| Sega		| Sega Megadrive| 					|
-| md_supshin2c	| D	| The Super Shinobi II (T-Chi)				| md_shinobi3	| 2009	| Sega		| Sega Megadrive| 					|
+| md_supshin2c	|  	| The Super Shinobi II (T-Chi)				| md_shinobi3	| 2009	| Sega		| Sega Megadrive| 					|
 | superspy	|  	| The Super Spy (NGM-011)(NGH-011)			| 		| 1990	| SNK		| Neo Geo MVS	| 					|
 | sms_termntrb	|  	| The Terminator (Bra)					| sms_termntr	| 1992	| Tec Toy	| Sega Master Sy| 					|
 | md_termintr	|  	| The Terminator (Euro)					| 		| 1991	| Virgin Games	| Sega Megadrive| 					|
@@ -14557,6 +14576,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_winshot	|  	| Winning Shot						| 		| 1989	| Data East	| PC Engine	| 					|
 | md_wintchal	|  	| Winter Challenge (Euro, USA, Rev. 1)			| 		| 1992	| Ballistic	| Sega Megadrive| 					|
 | md_wintchalp	|  	| Winter Challenge (Prototype)				| md_wintchal	| 1992	| Ballistic	| Sega Megadrive| 					|
+| fds_wintergames|  	| Winter Games (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_wintergames|  	| Winter Games						| 		| 1986	| U.S. Gold	| ZX Spectrum	| 					|
 | md_wintolu	|  	| Winter Olympic Games (USA)				| md_wintol	| 1993	| U.S. Gold	| Sega Megadrive| 					|
 | md_wintol	|  	| Winter Olympics (Euro)				| 		| 1994	| U.S. Gold	| Sega Megadrive| 					|
@@ -14774,6 +14794,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_worldilljp	|  	| World of Illusion - Fushigi na Magic Box (Jpn, Prototy| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
 | md_worldill	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_worldillu	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
+| nes_worldwarc	|  	| World of Warcraft - Demon Hunter (China)		| nes_worldwar	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_worldwar	|  	| World of Warcraft - Demon Hunter (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | wpksoc	| D NW	| World PK Soccer					| 		| 1995	| Jaleco	| Irem M107	| 					|
 | wrallyat	|  	| World Rally (US, 930217)				| wrally	| 1993	| Gaelco (Atari | Miscellaneous	| 					|
 | wrally	|  	| World Rally (Version 1.0, Checksum 0E56)		| 		| 1993	| Gaelco	| Miscellaneous	| 					|

@@ -4,9 +4,9 @@
 <datafile>
 	<header>
 		<name>FinalBurn Neo - NES Games</name>
-		<description>FinalBurn Neo v1.0.0.00 NES Games</description>
+		<description>FinalBurn Neo v1.0.0.01 NES Games</description>
 		<category>Standard DatFile</category>
-		<version>1.0.0.00</version>
+		<version>1.0.0.01</version>
 		<author>FinalBurn Neo</author>
 		<homepage>https://neo-source.com/</homepage>
 		<url>https://neo-source.com/</url>
@@ -1046,6 +1046,20 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Bio Force Ape (Japan) (En) (Proto).nes" size="262160" crc="339d5a6d"/>
+		<driver status="good"/>
+	</game>
+	<game name="biohazardc" cloneof="biohazard" romof="biohazard">
+		<description>Bio Hazard (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Bio Hazard (China).nes" size="1048592" crc="75914cb8"/>
+		<driver status="good"/>
+	</game>
+	<game name="biohazard">
+		<description>Bio Hazard (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Bio Hazard (T-Eng).nes" size="1048592" crc="8ca694fc"/>
 		<driver status="good"/>
 	</game>
 	<game name="biomirbokupa">
@@ -3855,6 +3869,20 @@
 		<rom name="Ganbare Pennant Race! (Japan).nes" size="262160" crc="d15edc9a"/>
 		<driver status="good"/>
 	</game>
+	<game name="gansosaij" cloneof="gansosai" romof="gansosai">
+		<description>Ganso Saiyuuki - Super Monkey Daibouken (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Vap</manufacturer>
+		<rom name="Ganso Saiyuuki - Super Monkey Daibouken (Japan).nes" size="65552" crc="74de437a"/>
+		<driver status="good"/>
+	</game>
+	<game name="gansosai">
+		<description>Ganso Saiyuuki - Super Monkey Daibouken (T-Eng)</description>
+		<year>1986</year>
+		<manufacturer>Vap</manufacturer>
+		<rom name="Ganso Saiyuuki - Super Monkey Daibouken (T-Eng).nes" size="65552" crc="f6bc9964"/>
+		<driver status="good"/>
+	</game>
 	<game name="gaplus">
 		<description>Gaplus</description>
 		<year>2020</year>
@@ -3937,6 +3965,20 @@
 		<year>1990</year>
 		<manufacturer>Koei</manufacturer>
 		<rom name="Genghis Khan (USA).nes" size="262160" crc="478a04d8"/>
+		<driver status="good"/>
+	</game>
+	<game name="genuinemonkeyc" cloneof="genuinemonkey" romof="genuinemonkey">
+		<description>Genuine Monkey (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Genuine Monkey (China).nes" size="524304" crc="c2ad9c76"/>
+		<driver status="good"/>
+	</game>
+	<game name="genuinemonkey">
+		<description>Genuine Monkey (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Genuine Monkey (T-Eng).nes" size="524304" crc="66f20682"/>
 		<driver status="good"/>
 	</game>
 	<game name="georgforskobo">
@@ -4049,6 +4091,13 @@
 		<year>1992</year>
 		<manufacturer>Toho</manufacturer>
 		<rom name="Godzilla 2 - War of the Monsters (USA).nes" size="262160" crc="f200080d"/>
+		<driver status="good"/>
+	</game>
+	<game name="goldenaxeiii">
+		<description>Golden Axe III (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Golden Axe III (Unl).nes" size="524304" crc="9cdbf17b"/>
 		<driver status="good"/>
 	</game>
 	<game name="golf">
@@ -5771,6 +5820,20 @@
 		<year>1992</year>
 		<manufacturer>Camerica</manufacturer>
 		<rom name="Linus Spacehead's Cosmic Crusade (USA).nes" size="262160" crc="fffddf99"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkinlegc" cloneof="lionkinleg" romof="lionkinleg">
+		<description>Lion King Legend, The (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Lion King Legend, The (China).nes" size="524304" crc="0f95fc73"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkinleg">
+		<description>Lion King Legend, The (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
 		<driver status="good"/>
 	</game>
 	<game name="littlemedusa">
@@ -10510,6 +10573,20 @@
 		<year>1991</year>
 		<manufacturer>Romstar</manufacturer>
 		<rom name="World Champ (USA).nes" size="262160" crc="af00ed3f"/>
+		<driver status="good"/>
+	</game>
+	<game name="worldwarc" cloneof="worldwar" romof="worldwar">
+		<description>World of Warcraft - Demon Hunter (China)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="World of Warcraft - Demon Hunter (China).nes" size="1048592" crc="c9644f6c"/>
+		<driver status="good"/>
+	</game>
+	<game name="worldwar">
+		<description>World of Warcraft - Demon Hunter (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="World of Warcraft - Demon Hunter (T-Eng).nes" size="1048592" crc="45593e64"/>
 		<driver status="good"/>
 	</game>
 	<game name="wrathblaman">

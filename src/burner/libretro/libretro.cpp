@@ -16,7 +16,6 @@
 
 #include <streams/file_stream.h>
 
-#define FBNEO_VERSION "v1.0.0.0"
 #define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
 #define PRINTF_BUFFER_SIZE 512
 
@@ -255,14 +254,20 @@ extern unsigned int (__cdecl *BurnHighCol) (signed int r, signed int g, signed i
 
 void retro_get_system_info(struct retro_system_info *info)
 {
+	char *library_version = (char*)calloc(22, sizeof(char));
+
+	sprintf(library_version, "v%x.%x.%x.%02x %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, GIT_VERSION);
+
 	info->library_name = APP_TITLE;
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
 #endif
-	info->library_version = FBNEO_VERSION GIT_VERSION;
+	info->library_version = strdup(library_version);
 	info->need_fullpath = true;
 	info->block_extract = true;
 	info->valid_extensions = "zip|7z|cue|ccd";
+
+	free(library_version);
 }
 
 static void InpDIPSWGetOffset (void)

@@ -14053,7 +14053,7 @@ struct BurnDriver BurnSpecArcadeflightsim = {
 // Battle Ships
 
 static struct BurnRomInfo SpecBattleshipsRomDesc[] = {
-	{ "Battle Ships (1987)(Hit-Pak).tap", 54823, 0x353325c6, BRF_ESS | BRF_PRG },
+	{ "Battle Ships (1987)(Hit-Pak).z80", 35142, 0x1e72de5a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBattleships, SpecBattleships, Spec128)
@@ -14281,7 +14281,7 @@ struct BurnDriver BurnSpecRodland = {
 // Shadow Of The Beast
 
 static struct BurnRomInfo SpecShadowofthebeastRomDesc[] = {
-	{ "Shadow Of The Beast (1990)(Gremlin Graphics).tap", 163217, 0xd8a507f7, BRF_ESS | BRF_PRG },
+	{ "Shadow Of The Beast (1990)(Gremlin Graphics).z80", 114104, 0x0507010d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecShadowofthebeast, SpecShadowofthebeast, Spec128)

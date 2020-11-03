@@ -44938,7 +44938,7 @@ STD_ROM_PICK(md_langris2c)
 STD_ROM_FN(md_langris2c)
 
 
-struct BurnDriverD BurnDrvmd_langris2c = {
+struct BurnDriver BurnDrvmd_langris2c = {
 	"md_langris2c", "md_langris2", NULL, NULL, "2015",
 	"Langrisser Hikari II (T-Chi)\0", NULL, "NCS", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -44957,7 +44957,7 @@ static struct BurnRomInfo md_nhktaidrcRomDesc[] = {
 STD_ROM_PICK(md_nhktaidrc)
 STD_ROM_FN(md_nhktaidrc)
 
-struct BurnDriverD BurnDrvmd_nhktaidrc = {
+struct BurnDriver BurnDrvmd_nhktaidrc = {
 	"md_nhktaidrc", "md_nhktaidr", NULL, NULL, "1991",
 	"NHK Taiga Drama - Taiheiki (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -44976,7 +44976,7 @@ static struct BurnRomInfo md_ninjabtRomDesc[] = {
 STD_ROM_PICK(md_ninjabt)
 STD_ROM_FN(md_ninjabt)
 
-struct BurnDriverD BurnDrvmd_ninjabt = {
+struct BurnDriver BurnDrvmd_ninjabt = {
 	"md_ninjabt", "md_ninjab", NULL, NULL, "1991",
 	"Ninja Burai Densetsu (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -44995,7 +44995,7 @@ static struct BurnRomInfo md_shinfrc2cRomDesc[] = {
 STD_ROM_PICK(md_shinfrc2c)
 STD_ROM_FN(md_shinfrc2c)
 
-struct BurnDriverD BurnDrvmd_shinfrc2c = {
+struct BurnDriver BurnDrvmd_shinfrc2c = {
 	"md_shinfrc2c", "md_shinfrc2", NULL, NULL, "2007-01",
 	"Shining Force II - Koe no Fuuin (T-Chi, v2)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -45014,7 +45014,7 @@ static struct BurnRomInfo md_supshin2cRomDesc[] = {
 STD_ROM_PICK(md_supshin2c)
 STD_ROM_FN(md_supshin2c)
 
-struct BurnDriverD BurnDrvmd_supshin2c = {
+struct BurnDriver BurnDrvmd_supshin2c = {
 	"md_supshin2c", "md_shinobi3", NULL, NULL, "2009",
 	"The Super Shinobi II (T-Chi)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

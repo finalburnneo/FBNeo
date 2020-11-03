@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -58,7 +58,7 @@
                                 </constraints>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mqu-HR-p0a">
                                     <font key="font" metaFont="system"/>
-                                    <string key="title">Ⓒ 2019 Akop Karapetyan © 2004-2019 Team FB Neo © 2001 Dave  You may freely use, modify, and distribute both the FB Neo source code and binary, however restrictions apply to the FB Neo original material.  See License below for more information.
+                                    <string key="title">Ⓒ 2020 Akop Karapetyan © 2004-2020 Team FB Neo © 2001 Dave  You may freely use, modify, and distribute both the FB Neo source code and binary, however restrictions apply to the FB Neo original material.  See License below for more information.
 </string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -3332,7 +3332,9 @@ static UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 static INT32 ThndrbldInit()
 {
 	System16ProcessAnalogControlsDo = ThndrbldProcessAnalogControls;
-	
+
+	ThndrbldMode = true;
+
 	return System16Init();
 }
 

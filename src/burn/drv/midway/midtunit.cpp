@@ -1271,7 +1271,7 @@ INT32 TUnitFrame()
 	}
 
 	// Buffering palette for 1 frame, fix mk2 palette glitch in intro fadeouts
-	memcpy(DrvPaletteB2,DrvPaletteB,0x8000);
+	memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32));
 
 	return 0;
 }

@@ -13866,16 +13866,16 @@ static struct BurnRomInfo Spec21eroticRomDesc[] = {
 	{ "21 Erotic (1995)(JardaSoft).tap", 10336, 0x80cb68c0, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec21erotic, Spec21erotic, Spec128)
+STDROMPICKEXT(Spec21erotic, Spec21erotic, Spectrum)
 STD_ROM_FN(Spec21erotic)
 
 struct BurnDriver BurnSpec21erotic = {
-	"spec_21erotic", NULL, "spec_spec128", NULL, "1995",
+	"spec_21erotic", NULL, "spec_spectrum", NULL, "1995",
 	"21 Erotic\0", NULL, "JardaSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spec21eroticRomInfo, Spec21eroticRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -14018,16 +14018,16 @@ static struct BurnRomInfo SpecAlien8RomDesc[] = {
 	{ "Alien 8 (1985)(Ultimate Play The Game).tap", 47264, 0x043d8dae, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecAlien8, SpecAlien8, Spec128)
+STDROMPICKEXT(SpecAlien8, SpecAlien8, Spectrum)
 STD_ROM_FN(SpecAlien8)
 
 struct BurnDriver BurnSpecAlien8 = {
-	"spec_alien8", NULL, "spec_spec128", NULL, "1985",
+	"spec_alien8", NULL, "spec_spectrum", NULL, "1985",
 	"Alien 8\0", NULL, "Ultimate Play The Game", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecAlien8RomInfo, SpecAlien8RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -14208,16 +14208,16 @@ static struct BurnRomInfo SpecJackalRomDesc[] = {
 	{ "Jackal (1986)(Konami).tap", 26861, 0x954fae85, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecJackal, SpecJackal, Spec128)
+STDROMPICKEXT(SpecJackal, SpecJackal, Spectrum)
 STD_ROM_FN(SpecJackal)
 
 struct BurnDriver BurnSpecJackal = {
-	"spec_jackal", NULL, "spec_spec128", NULL, "1986",
+	"spec_jackal", NULL, "spec_spectrum", NULL, "1986",
 	"Jackal\0", NULL, "Konami", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecJackalRomInfo, SpecJackalRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

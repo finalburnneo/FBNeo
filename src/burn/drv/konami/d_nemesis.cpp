@@ -4549,11 +4549,11 @@ static struct BurnRomInfo twinbeebRomDesc[] = {
 	{ "400-a02.fse",	0x00100, 0x2f44f970, 5 | BRF_SND },           //  5
 };
 
-STDROMPICKEXT(twinbeeb, twinbeeb, bubsys)
+STD_ROM_PICK(twinbeeb)
 STD_ROM_FN(twinbeeb)
 
 struct BurnDriver BurnDrvTwinbeeb = {
-	"twinbeeb", "twinbee", "bubsys", NULL, "1985",
+	"twinbeeb", "twinbee", NULL, NULL, "1985",
 	"TwinBee (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,

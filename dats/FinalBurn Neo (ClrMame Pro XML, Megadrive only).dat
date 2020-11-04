@@ -3324,6 +3324,13 @@
 		<rom name="Dahna - Goddess' Birth (E).bin" size="1048576" crc="d04d2df7"/>
 		<driver status="good"/>
 	</game>
+	<game name="dahnams" cloneof="dahnam" romof="dahnam">
+		<description>Dahna Megami Tanjou (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>IGS</manufacturer>
+		<rom name="dahna megami tanjou (Hack, Spanish).bin" size="1048576" crc="50aef45d"/>
+		<driver status="good"/>
+	</game>
 	<game name="dahnam">
 		<description>Dahna Megami Tanjou (Jpn)</description>
 		<year>1991</year>
@@ -3378,6 +3385,13 @@
 		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="dark castle (euro, usa).bin" size="524288" crc="0464aca4"/>
+		<driver status="good"/>
+	</game>
+	<game name="darkcasts" cloneof="darkcast" romof="darkcast">
+		<description>Dark Castle (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="dark castle (Hack, Spanish).bin" size="524288" crc="ccb09cc4"/>
 		<driver status="good"/>
 	</game>
 	<game name="darwin">
@@ -3457,6 +3471,13 @@
 		<rom name="davis cup world tour tennis 2 (beta 1).bin" size="2097152" crc="6f4183c0"/>
 		<driver status="good"/>
 	</game>
+	<game name="dazexmass" cloneof="dazexmas" romof="dazexmas">
+		<description>Daze Before Christmas (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SunSoft</manufacturer>
+		<rom name="daze before christmas (Hack, Spanish).bin" size="2097152" crc="4b061cf5"/>
+		<driver status="good"/>
+	</game>
 	<game name="dazexmas">
 		<description>Daze Before Christmas (Oceania)</description>
 		<year>1994</year>
@@ -3471,6 +3492,13 @@
 		<rom name="daze before christmas (aus) (beta).bin" size="2097152" crc="317c9491"/>
 		<driver status="good"/>
 	</game>
+	<game name="deadlymvs" cloneof="deadlymv" romof="deadlymv">
+		<description>Deadly Moves (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Kaneko</manufacturer>
+		<rom name="deadly moves (Hack, Spanish).bin" size="1048576" crc="bdc2eaf1"/>
+		<driver status="good"/>
+	</game>
 	<game name="deadlymv">
 		<description>Deadly Moves (USA)</description>
 		<year>1992</year>
@@ -3483,6 +3511,13 @@
 		<year>199?</year>
 		<manufacturer>Tomsoft</manufacturer>
 		<rom name="death caliber.bin" size="4194304" crc="3cd2c797"/>
+		<driver status="good"/>
+	</game>
+	<game name="deathdls" cloneof="deathdl" romof="deathdl">
+		<description>Death Duel (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Razorsoft</manufacturer>
+		<rom name="death duel (Hack, Spanish).bin" size="1048576" crc="0b7de738"/>
 		<driver status="good"/>
 	</game>
 	<game name="deathdl">
@@ -3511,6 +3546,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14249.bin" size="524288" crc="73dc0dd8"/>
+		<driver status="good"/>
+	</game>
+	<game name="decapatts" cloneof="decapatt" romof="decapatt">
+		<description>DecapAttack (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="decapattack (Hack, Spanish).bin" size="524288" crc="47dda2c0"/>
 		<driver status="good"/>
 	</game>
 	<game name="deerhunt">
@@ -3618,6 +3660,13 @@
 		<rom name="desert strike (euro, usa).bin" size="1048576" crc="67a9860b"/>
 		<driver status="good"/>
 	</game>
+	<game name="dstrikes" cloneof="dstrike" romof="dstrike">
+		<description>Desert Strike (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="desert strike (Hack, Spanish).bin" size="1048576" crc="09a27380"/>
+		<driver status="good"/>
+	</game>
 	<game name="dstrikej" cloneof="dstrike" romof="dstrike">
 		<description>Desert Strike (Jpn, Kor)</description>
 		<year>1993</year>
@@ -3630,6 +3679,13 @@
 		<year>1993</year>
 		<manufacturer>Technosoft</manufacturer>
 		<rom name="devil crash md (jpn).bin" size="524288" crc="4c4caad8"/>
+		<driver status="good"/>
+	</game>
+	<game name="devilishs" cloneof="devilish" romof="devilish">
+		<description>Devilish - The Next Possession (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Sage's Creation</manufacturer>
+		<rom name="devilish - the next possession (Hack, Spanish).bin" size="524288" crc="83aa9530"/>
 		<driver status="good"/>
 	</game>
 	<game name="devilish">
@@ -3667,6 +3723,13 @@
 		<rom name="dial q o mawase! (T-Chi) (unl).bin" size="1048576" crc="1002c02f"/>
 		<driver status="good"/>
 	</game>
+	<game name="dicktrs" cloneof="dicktr" romof="dicktr">
+		<description>Dick Tracy (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="dick tracy (Hack, Spanish).bin" size="524288" crc="f3b40a46"/>
+		<driver status="good"/>
+	</game>
 	<game name="dicktr">
 		<description>Dick Tracy (World)</description>
 		<year>1991</year>
@@ -3688,6 +3751,13 @@
 		<rom name="dino dini's soccer (euro).bin" size="1048576" crc="4608f53a"/>
 		<driver status="good"/>
 	</game>
+	<game name="dinolands" cloneof="dinoland" romof="dinoland">
+		<description>Dino Land (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="dino land (Hack, Spanish).bin" size="524288" crc="26f380d8"/>
+		<driver status="good"/>
+	</game>
 	<game name="dinoland">
 		<description>Dino Land (USA)</description>
 		<year>1991</year>
@@ -3700,6 +3770,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15939.bin" size="2097152" crc="d1845e8f"/>
+		<driver status="good"/>
+	</game>
+	<game name="aladdins" cloneof="aladdin" romof="aladdin">
+		<description>Disney's Aladdin (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="aladdin (Hack, Spanish).bin" size="2097152" crc="a6cf0b89"/>
 		<driver status="good"/>
 	</game>
 	<game name="aladdinj" cloneof="aladdin" romof="aladdin">
@@ -3786,6 +3863,13 @@
 		<rom name="mpr-14560.bin" size="524288" crc="860e749a"/>
 		<driver status="good"/>
 	</game>
+	<game name="djboys" cloneof="djboy" romof="djboy">
+		<description>Dj Boy (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Kaneko</manufacturer>
+		<rom name="dj boy (Hack, Spanish).bin" size="524288" crc="18614e10"/>
+		<driver status="good"/>
+	</game>
 	<game name="djboyj" cloneof="djboy" romof="djboy">
 		<description>DJ Boy (Jpn)</description>
 		<year>1990</year>
@@ -3826,6 +3910,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="donald in maui mallard (euro).bin" size="3145728" crc="b2dd857f"/>
+		<driver status="good"/>
+	</game>
+	<game name="mauimalls" cloneof="mauimall" romof="mauimall">
+		<description>Donald In Maui Mallard (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="donald in maui mallard (Hack, Spanish).bin" size="3145728" crc="1ba0bc17"/>
 		<driver status="good"/>
 	</game>
 	<game name="dongguri" cloneof="drrobotn" romof="drrobotn">
@@ -3877,6 +3968,13 @@
 		<rom name="double dragon (hack - enhanced colors).md" size="524288" crc="db8416cb"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddragons" cloneof="ddragon" romof="ddragon">
+		<description>Double Dragon (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Ballistic</manufacturer>
+		<rom name="double dragon (Hack, Spanish).bin" size="524288" crc="5b42c057"/>
+		<driver status="good"/>
+	</game>
 	<game name="ddragon3">
 		<description>Double Dragon 3 - The Arcade Game (Euro, USA)</description>
 		<year>1992</year>
@@ -3884,11 +3982,32 @@
 		<rom name="double dragon 3 - the arcade game (euro, usa).bin" size="1048576" crc="b36ab75c"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddragon3s" cloneof="ddragon3" romof="ddragon3">
+		<description>Double Dragon 3 - The Arcade Game (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="double dragon 3 - the arcade game (Hack, Spanish).bin" size="1048576" crc="4e8e616d"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddragon2s" cloneof="ddragon2" romof="ddragon2">
+		<description>Double Dragon II - The Revenge (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>PalSoft</manufacturer>
+		<rom name="double dragon II - the revenge (Hack, Spanish).bin" size="524288" crc="a53fe35d"/>
+		<driver status="good"/>
+	</game>
 	<game name="ddragon2">
 		<description>Double Dragon II - The Revenge (Jpn)</description>
 		<year>1991</year>
 		<manufacturer>Palsoft</manufacturer>
 		<rom name="double dragon ii - the revenge (jpn).bin" size="524288" crc="a8bfdbd6"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddragon5s" cloneof="ddragon5" romof="ddragon5">
+		<description>Double Dragon V - The Shadow Falls (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Tradewest</manufacturer>
+		<rom name="double dragon v - the shadow falls (Hack, Spanish).bin" size="3145728" crc="42c385ab"/>
 		<driver status="good"/>
 	</game>
 	<game name="ddragon5">
@@ -3912,6 +4031,13 @@
 		<rom name="dr. robotnik's mean bean machine (euro).bin" size="1048576" crc="70680706"/>
 		<driver status="good"/>
 	</game>
+	<game name="drrobotns" cloneof="drrobotn" romof="drrobotn">
+		<description>Dr. Robotnik's Mean Bean Machine (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="dr. robotnik's mean bean machine (Hack, Spanish).bin" size="1048576" crc="86ed4079"/>
+		<driver status="good"/>
+	</game>
 	<game name="drrobotnu" cloneof="drrobotn" romof="drrobotn">
 		<description>Dr. Robotnik's Mean Bean Machine (USA)</description>
 		<year>1993</year>
@@ -3933,6 +4059,13 @@
 		<rom name="dragon - the bruce lee story (euro).bin" size="2097152" crc="fdeed51d"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragons" cloneof="dragon" romof="dragon">
+		<description>Dragon - The Bruce Lee Story (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="dragon - the bruce lee story (Hack, Spanish).bin" size="2097152" crc="30766d12"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragonu" cloneof="dragon" romof="dragon">
 		<description>Dragon - The Bruce Lee Story (USA)</description>
 		<year>1994</year>
@@ -3952,6 +4085,13 @@
 		<year>1994</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="dragon ball z - l'appel du destin (france).bin" size="2097152" crc="f035c737"/>
+		<driver status="good"/>
+	</game>
+	<game name="dbzs" cloneof="dbz" romof="dbz">
+		<description>Dragon Ball Z - L'Appel Du Destin (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="dragon ball z - l'appel du destin (Hack, Spanish).bin" size="2097152" crc="a1e5e963"/>
 		<driver status="good"/>
 	</game>
 	<game name="dslayed">
@@ -3982,6 +4122,13 @@
 		<rom name="dragon's fury (euro, usa).bin" size="524288" crc="58037bc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="dfurys" cloneof="dfury" romof="dfury">
+		<description>Dragon's Fury (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="dragon's fury (Hack, Spanish).bin" size="524288" crc="120aaabe"/>
+		<driver status="good"/>
+	</game>
 	<game name="dlair">
 		<description>Dragon's Lair (USA, Prototype)</description>
 		<year>199?</year>
@@ -3996,6 +4143,13 @@
 		<rom name="dragon's revenge (euro, usa).bin" size="1048576" crc="841edbc0"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragnrevs" cloneof="dragnrev" romof="dragnrev">
+		<description>Dragon's Revenge (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="dragon's revenge (Hack, Spanish).bin" size="1048576" crc="8847d12b"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragnrevj" cloneof="dragnrev" romof="dragnrev">
 		<description>Dragon's Revenge (Jpn)</description>
 		<year>1993</year>
@@ -4008,6 +4162,13 @@
 		<year>1998</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="duke nukem 3d (bra).bin" size="4194304" crc="6bd2accb"/>
+		<driver status="good"/>
+	</game>
+	<game name="dukenk3ds" cloneof="dukenk3d" romof="dukenk3d">
+		<description>Duke Nukem 3D (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tec Toy</manufacturer>
+		<rom name="duke nukem 3d (Hack, Spanish).bin" size="4194304" crc="74a8b676"/>
 		<driver status="good"/>
 	</game>
 	<game name="duneu" cloneof="dune2" romof="dune2">
@@ -4059,6 +4220,13 @@
 		<rom name="dyna brothers 2 - sega channel special (jpn).bin" size="2621440" crc="ba3554bc"/>
 		<driver status="good"/>
 	</game>
+	<game name="dyndukes" cloneof="dynduke" romof="dynduke">
+		<description>Dynamite Duke (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Seibu Kahatsu</manufacturer>
+		<rom name="dynamite duke (Hack, Spanish).bin" size="524288" crc="df440f0e"/>
+		<driver status="good"/>
+	</game>
 	<game name="dynduke1" cloneof="dynduke" romof="dynduke">
 		<description>Dynamite Duke (World)</description>
 		<year>1990</year>
@@ -4085,6 +4253,13 @@
 		<year>2007</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite headdy (english translation).bin" size="2097152" crc="003e54e5"/>
+		<driver status="good"/>
+	</game>
+	<game name="dheads" cloneof="dhead" romof="dhead">
+		<description>Dynamite Headdy (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="dynamite headdy (Hack, Spanish).bin" size="2097152" crc="003fc283"/>
 		<driver status="good"/>
 	</game>
 	<game name="dheadj" cloneof="dhead" romof="dhead">
@@ -4150,6 +4325,13 @@
 		<rom name="ea304.bin" size="1048576" crc="a0b54cbc"/>
 		<driver status="good"/>
 	</game>
+	<game name="earnests" cloneof="earnest" romof="earnest">
+		<description>Earnest Evans (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="earnest evans (Hack, Spanish).bin" size="1048576" crc="f0d9a696"/>
+		<driver status="good"/>
+	</game>
 	<game name="earnest">
 		<description>Earnest Evans (USA)</description>
 		<year>1992</year>
@@ -4164,6 +4346,13 @@
 		<rom name="earthworm jim (euro).bin" size="3145728" crc="1c07b337"/>
 		<driver status="good"/>
 	</game>
+	<game name="ejims" cloneof="ejim" romof="ejim">
+		<description>Earthworm Jim (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Playmates</manufacturer>
+		<rom name="earthworm jim (Hack, Spanish).bin" size="3145728" crc="21a1378f"/>
+		<driver status="good"/>
+	</game>
 	<game name="ejimu" cloneof="ejim" romof="ejim">
 		<description>Earthworm Jim (USA)</description>
 		<year>1994</year>
@@ -4176,6 +4365,13 @@
 		<year>1995</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="earthworm jim 2 (euro).bin" size="3145728" crc="af235fdf"/>
+		<driver status="good"/>
+	</game>
+	<game name="ejim2s" cloneof="ejim2" romof="ejim2">
+		<description>Earthworm Jim 2 (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="earthworm jim 2 (Hack, Spanish).bin" size="3145728" crc="f5cab28c"/>
 		<driver status="good"/>
 	</game>
 	<game name="ejim2u" cloneof="ejim2" romof="ejim2">
@@ -4248,6 +4444,13 @@
 		<rom name="mpr-15265.bin" size="1048576" crc="45547390"/>
 		<driver status="good"/>
 	</game>
+	<game name="eccos" cloneof="ecco" romof="ecco">
+		<description>Ecco the Dolphin (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="ecco the dolphin (Hack, Spanish).bin" size="1048576" crc="6cb0aad7"/>
+		<driver status="good"/>
+	</game>
 	<game name="eccoj" cloneof="ecco" romof="ecco">
 		<description>Ecco the Dolphin (Jpn)</description>
 		<year>1993</year>
@@ -4260,6 +4463,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16996.bin" size="2097152" crc="062d439c"/>
+		<driver status="good"/>
+	</game>
+	<game name="elvientos" cloneof="elviento" romof="elviento">
+		<description>El Viento (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wolf Team</manufacturer>
+		<rom name="el viento (Hack, Spanish).bin" size="1048576" crc="d1e1e998"/>
 		<driver status="good"/>
 	</game>
 	<game name="elvientoj" cloneof="elviento" romof="elviento">
@@ -4288,6 +4498,13 @@
 		<year>1993</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="elemental master (usa).bin" size="524288" crc="390918c6"/>
+		<driver status="good"/>
+	</game>
+	<game name="elimdowns" cloneof="elimdown" romof="elimdown">
+		<description>Eliminate Down (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Soft Vision International</manufacturer>
+		<rom name="eliminate down (Hack, Spanish).bin" size="1048576" crc="5b3604bb"/>
 		<driver status="good"/>
 	</game>
 	<game name="elimdown">
@@ -4476,6 +4693,13 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13192a.ic1" size="524288" crc="e72f8a36"/>
+		<driver status="good"/>
+	</game>
+	<game name="eswats" cloneof="eswat" romof="eswat">
+		<description>ESWAT - City Under Siege (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="eswat - city under siege (Hack, Spanish).bin" size="524288" crc="63611cb7"/>
 		<driver status="good"/>
 	</game>
 	<game name="eternalc">
@@ -4766,6 +4990,13 @@
 		<rom name="fatal labyrinth (euro, usa).bin" size="131072" crc="5f0bd984"/>
 		<driver status="good"/>
 	</game>
+	<game name="fatallabs" cloneof="fatallab" romof="fatallab">
+		<description>Fatal Labyrinth (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="fatal labyrinth (Hack, Spanish).bin" size="131072" crc="2b27dbd1"/>
+		<driver status="good"/>
+	</game>
 	<game name="fatalrew">
 		<description>Fatal Rewind (Euro, USA)</description>
 		<year>1991</year>
@@ -4934,6 +5165,13 @@
 		<rom name="fifa world cup 2002 (unl).bin" size="1048576" crc="852bff8e"/>
 		<driver status="good"/>
 	</game>
+	<game name="fightmass" cloneof="fightmas" romof="fightmas">
+		<description>Fighting Masters (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Treco</manufacturer>
+		<rom name="fighting masters (Hack, Spanish).bin" size="524288" crc="128cddbe"/>
+		<driver status="good"/>
+	</game>
 	<game name="fightmasj" cloneof="fightmas" romof="fightmas">
 		<description>Fighting Masters (Jpn, Kor)</description>
 		<year>1991</year>
@@ -4962,6 +5200,13 @@
 		<rom name="final zone -- fz senki axis (usa, jpn).bin" size="524288" crc="731fa4a1"/>
 		<driver status="good"/>
 	</game>
+	<game name="fzones" cloneof="fzone" romof="fzone">
+		<description>Final Zone -- FZ Senki Axis (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="final zone -- fz senki axis (Hack, Spanish).bin" size="524288" crc="d0294acb"/>
+		<driver status="good"/>
+	</game>
 	<game name="nemo" cloneof="jpond" romof="jpond">
 		<description>Finding Nemo (Rus)</description>
 		<year>199?</year>
@@ -4981,6 +5226,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14341.bin" size="524288" crc="2351ce61"/>
+		<driver status="good"/>
+	</game>
+	<game name="fireshrks" cloneof="fireshrk" romof="fireshrk">
+		<description>Fire Shark (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>DreamWorks</manufacturer>
+		<rom name="fire shark (Hack, Spanish).bin" size="524288" crc="9f0eca9e"/>
 		<driver status="good"/>
 	</game>
 	<game name="fireshrku" cloneof="fireshrk" romof="fireshrk">
@@ -5025,6 +5277,13 @@
 		<rom name="flashback (jpn).bin" size="1572864" crc="b790e3b4"/>
 		<driver status="good"/>
 	</game>
+	<game name="flashbs" cloneof="flashb" romof="flashb">
+		<description>Flashback - The Quest for Identity (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="flashback - the quest for identity (Hack, Spanish).bin" size="1572864" crc="d88b3a54"/>
+		<driver status="good"/>
+	</game>
 	<game name="flashbu" cloneof="flashb" romof="flashb">
 		<description>Flashback - The Quest for Identity (USA)</description>
 		<year>1993</year>
@@ -5044,6 +5303,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="flicky (euro, usa).bin" size="131072" crc="4291c8ab"/>
+		<driver status="good"/>
+	</game>
+	<game name="flickys" cloneof="flicky" romof="flicky">
+		<description>Flicky (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="flicky (Hack, Spanish).bin" size="131072" crc="cb2072fa"/>
 		<driver status="good"/>
 	</game>
 	<game name="flink">
@@ -5100,6 +5366,13 @@
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="frank thomas big hurt baseball (euro, usa).bin" size="4194304" crc="863e0950"/>
+		<driver status="good"/>
+	</game>
+	<game name="froggers" cloneof="frogger" romof="frogger">
+		<description>Frogger (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Majesco</manufacturer>
+		<rom name="frogger (Hack, Spanish).bin" size="524288" crc="4f656a99"/>
 		<driver status="good"/>
 	</game>
 	<game name="frogger">
@@ -13982,6 +14255,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15058.bin" size="524288" crc="f5c0c8d0"/>
+		<driver status="good"/>
+	</game>
+	<game name="talespins" cloneof="talespin" romof="talespin">
+		<description>TaleSpin (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="talespin (Hack, Spanish).bin" size="524288" crc="4306e326"/>
 		<driver status="good"/>
 	</game>
 	<game name="talmit">

@@ -3709,10 +3709,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="frombelow">
-		<description>From Below (HB, v7.24.2020) [Homebrew]</description>
+		<description>From Below (HB, v8.11.2020) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Goose2k</manufacturer>
-		<rom name="From Below (HB, v7.24.2020).nes" size="40976" crc="e948b976"/>
+		<rom name="From Below (HB, v8.11.2020).nes" size="40976" crc="98fb6b1f"/>
 		<driver status="good"/>
 	</game>
 	<game name="frontline">
@@ -5826,7 +5826,7 @@
 		<description>Lion King Legend, The (China)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Lion King Legend, The (China).nes" size="524304" crc="0f95fc73"/>
+		<rom name="Lion King Legend, The (China).nes" size="524304" crc="1309fa69"/>
 		<driver status="good"/>
 	</game>
 	<game name="lionkinleg">
@@ -6845,10 +6845,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nalleland">
-		<description>Nalle Land (HB, v034) [Homebrew]</description>
+		<description>Nalle Land (HB, v040) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Benjamin Larsson</manufacturer>
-		<rom name="Nalle Land (HB, v034).nes" size="32784" crc="f4a24d8b"/>
+		<rom name="Nalle Land (HB, v040).nes" size="49168" crc="c1a447b0"/>
 		<driver status="good"/>
 	</game>
 	<game name="namcoclassic">

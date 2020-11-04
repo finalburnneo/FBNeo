@@ -99,7 +99,7 @@ cpu_core_config TMS34010Config =
 	TMS34010Run,
 	TMS34010RunEnd,
 	TMS34010Reset,
-	0x100000000,
+	0x100000000ULL,
 	0
 };
 // end cheat-engine hook-up

@@ -38474,7 +38474,7 @@ struct BurnDriver BurnDrvnes_goldenaxeiii = {
 };
 
 static struct BurnRomInfo nes_lionkinlegcRomDesc[] = {
-	{ "Lion King Legend, The (China).nes",          524304, 0x0f95fc73, BRF_ESS | BRF_PRG },
+	{ "Lion King Legend, The (China).nes",          524304, 0x1309fa69, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_lionkinlegc)

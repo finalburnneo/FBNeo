@@ -13292,7 +13292,7 @@ struct BurnDriver BurnDrvnes_blockage = {
 };
 
 static struct BurnRomInfo nes_frombelowRomDesc[] = {
-	{ "From Below (HB, v7.24.2020).nes",          40976, 0xe948b976, BRF_ESS | BRF_PRG },
+	{ "From Below (HB, v8.11.2020).nes",          40976, 0x98fb6b1f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_frombelow)
@@ -13300,7 +13300,7 @@ STD_ROM_FN(nes_frombelow)
 
 struct BurnDriver BurnDrvnes_frombelow = {
 	"nes_frombelow", NULL, NULL, NULL, "2020",
-	"From Below (HB, v7.24.2020)\0", NULL, "Goose2k", "Miscellaneous",
+	"From Below (HB, v8.11.2020)\0", NULL, "Goose2k", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_frombelowRomInfo, nes_frombelowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -14143,7 +14143,7 @@ struct BurnDriver BurnDrvnes_novasqu = {
 };
 
 static struct BurnRomInfo nes_nallelandRomDesc[] = {
-	{ "Nalle Land (HB, v034).nes",          32784, 0xf4a24d8b, BRF_ESS | BRF_PRG },
+	{ "Nalle Land (HB, v040).nes",          49168, 0xc1a447b0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nalleland)
@@ -14151,7 +14151,7 @@ STD_ROM_FN(nes_nalleland)
 
 struct BurnDriver BurnDrvnes_nalleland = {
 	"nes_nalleland", NULL, NULL, NULL, "2020",
-	"Nalle Land (HB, v034)\0", NULL, "Benjamin Larsson", "Miscellaneous",
+	"Nalle Land (HB, v040)\0", NULL, "Benjamin Larsson", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_nallelandRomInfo, nes_nallelandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -38474,7 +38474,7 @@ struct BurnDriver BurnDrvnes_goldenaxeiii = {
 };
 
 static struct BurnRomInfo nes_lionkinlegcRomDesc[] = {
-	{ "Lion King Legend, The (China).nes",          524304, 0x0f95fc73, BRF_ESS | BRF_PRG },
+	{ "Lion King Legend, The (China).nes",          524304, 0x1309fa69, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_lionkinlegc)

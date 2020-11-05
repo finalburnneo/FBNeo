@@ -380,10 +380,6 @@ int BzipOpen(bool bootApp)
 	nTotalSize = 0;
 	nBzipError = 0;
 
-	if (szBzipName == NULL) {
-		return 1;
-	}
-
 	BzipClose();														// Make sure nothing is open
 
 	// Count the number of roms needed

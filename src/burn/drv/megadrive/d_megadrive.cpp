@@ -42878,6 +42878,25 @@ struct BurnDriver BurnDrvmd_umk3h = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ultimate Mortal Kombat 3 (Hack, V0.7)
+// http://elektropage.ru/
+static struct BurnRomInfo md_umk3h07RomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 (Hack, V0.7).bin", 6366778, 0xb069ab33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3h07)
+STD_ROM_FN(md_umk3h07)
+
+struct BurnDriver BurnDrvmd_umk3h07 = {
+	"md_umk3h07", "md_umk3", NULL, NULL, "2016",
+	"Ultimate Mortal Kombat 3 (Hack, V0.7)\0", NULL, "Elektropage Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_umk3h07RomInfo, md_umk3h07RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mortal Kombat 3 Mini-Hack By Nemesis_c,r57shell
 static struct BurnRomInfo md_mk3mRomDesc[] = {
 	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

@@ -421,7 +421,7 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x16/2;offs < (0x1000/2)-4;offs += 4)
 	{
-		if (ram[offs] & 0x2000) break;
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x2000) break;
 		INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0xfff);
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> 12) & color_mask;
 		INT32 sx    = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x1ff) - 20;

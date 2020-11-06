@@ -29684,6 +29684,23 @@ struct BurnDriver BurnDrvnes_mother = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_mothe25tannediRomDesc[] = {
+	{ "Mother - 25th Anniversay Edition (Hack).nes",          524304, 0x6e24f190, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mothe25tannedi)
+STD_ROM_FN(nes_mothe25tannedi)
+
+struct BurnDriver BurnDrvnes_mothe25tannedi = {
+	"nes_mothe25tannedi", "nes_earthbound", NULL, NULL, "1989?",
+	"Mother - 25th Anniversay Edition (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mothe25tannediRomInfo, nes_mothe25tannediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_motocchajRomDesc[] = {
 	{ "Motocross Champion (Japan).nes",          262160, 0x8b7a23b0, BRF_ESS | BRF_PRG },
 };

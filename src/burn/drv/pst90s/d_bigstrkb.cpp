@@ -216,7 +216,7 @@ static tilemap_callback( tx )
 {
 	UINT16 *ram = (UINT16*)DrvTxRAM;
 
-	INT32 code = ram[offs];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(0, code & 0xfff, code >> 12, 0);
 }
@@ -225,7 +225,7 @@ static tilemap_callback( fg )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
 
-	INT32 code = ram[offs];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(1, code & 0xfff, code >> 12, 0);
 }
@@ -234,7 +234,7 @@ static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	INT32 code = ram[offs];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(2, code & 0xfff, code >> 12, 0);
 }
@@ -418,10 +418,10 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x800 / 2; i+=8)
 	{
-		INT32 code  = ram[i + 0] & 0x0fff;
-		INT32 attr  = ram[i + 1];
-		INT32 sx    = ram[i + 2] - 126;
-		INT32 sy    =(ram[i + 3] ^ 0xffff) - 32;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[i + 0]) & 0x0fff;
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[i + 1]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[i + 2]) - 126;
+		INT32 sy    =(BURN_ENDIAN_SWAP_INT16(ram[i + 3]) ^ 0xffff) - 32;
 		INT32 flipx = attr & 0x0100;
 		INT32 color = attr & 0x000f;
 
@@ -498,7 +498,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029698;
+		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029698);
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {

@@ -213,19 +213,19 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		switch (address)
 		{
 			case 0x100004:
-				*fg_scroll_x = ((data ^ 0x0000) + 32) & 0x1ff;
+				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) + 32) & 0x1ff);
 			return;
 
 			case 0x100006:
-				*fg_scroll_y = ((data ^ 0xff54) +  7) & 0x1ff;
+				*fg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xff54) +  7) & 0x1ff);
 			return;
 
 			case 0x10000a:
-				*bg_scroll_y = ((data ^ 0xfeaa) +  7) & 0x1ff;
+				*bg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xfeaa) +  7) & 0x1ff);
 			return;
 
 			case 0x10000c:
-				*bg_scroll_x = ((data ^ 0x0000) - 60) & 0x1ff;
+				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) - 60) & 0x1ff);
 			return;
 
 			case 0x270000:
@@ -236,19 +236,19 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		switch (address)
 		{
 			case 0x100006:
-				*fg_scroll_x = ((data ^ 0x0000) + 32) & 0x1ff;
+				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) + 32) & 0x1ff);
 			return;
 
 			case 0x100008:
-				*fg_scroll_y = ((data ^ 0xff54) +  7) & 0x1ff;
+				*fg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xff54) +  7) & 0x1ff);
 			return;
 
 			case 0x10000a:
-				*bg_scroll_x = ((data ^ 0x0000) - 60) & 0x1ff;
+				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) - 60) & 0x1ff);
 			return;
 
 			case 0x10000c:
-				*bg_scroll_y = ((data ^ 0xfeaa) +  7) & 0x1ff;
+				*bg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xfeaa) +  7) & 0x1ff);
 			return;
 
 			case 0x270000:
@@ -259,19 +259,19 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		switch (address)
 		{
 			case 0x100002:
-				*fg_scroll_y = (data + 8) & 0x1ff;
+				*fg_scroll_y = BURN_ENDIAN_SWAP_INT16((data + 8) & 0x1ff);
 			return;
 
 			case 0x100004:
-				*bg_scroll_x = (data + 4) & 0x1ff;
+				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16((data + 4) & 0x1ff);
 			return;
 
 			case 0x100006:
-				*bg_scroll_y = (data + 8) & 0x1ff;
+				*bg_scroll_y = BURN_ENDIAN_SWAP_INT16((data + 8) & 0x1ff);
 			return;
 
 			case 0x100008:
-				*fg_scroll_x = (data + 0) & 0x1ff;
+				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16((data + 0) & 0x1ff);
 			return;
 
 			case 0x270000:
@@ -733,7 +733,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029698;
+		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029698);
 	}
 
 	if (nAction & ACB_VOLATILE) {

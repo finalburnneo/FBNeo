@@ -14835,16 +14835,16 @@ static struct BurnRomInfo SpecIntrugbyRomDesc[] = {
 	{ "International Rugby (1987)(Codemasters).tap", 40161, 0xbaf57b6c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecIntrugby, SpecIntrugby, Spec128)
+STDROMPICKEXT(SpecIntrugby, SpecIntrugby, Spectrum)
 STD_ROM_FN(SpecIntrugby)
 
 struct BurnDriver BurnSpecIntrugby = {
-	"spec_intrugby", NULL, "spec_spec128", NULL, "1987",
+	"spec_intrugby", NULL, "spec_spectrum", NULL, "1987",
 	"International Rugby\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecIntrugbyRomInfo, SpecIntrugbyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

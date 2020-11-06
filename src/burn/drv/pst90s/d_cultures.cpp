@@ -245,7 +245,7 @@ static tilemap_callback( bg1 )
 {
 	UINT16 *map = (UINT16*)DrvGfxROM1;
 
-	UINT16 code = map[0x100000 + nBgBank1 * 0x40000 + offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(map[0x100000 + nBgBank1 * 0x40000 + offs]);
 
 	code = (code << 8) | (code >> 8); //?
 
@@ -256,7 +256,7 @@ static tilemap_callback( bg2 )
 {
 	UINT16 *map = (UINT16*)DrvGfxROM2;
 
-	UINT16 code = map[0x100000 + nBgBank2 * 0x40000 + offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(map[0x100000 + nBgBank2 * 0x40000 + offs]);
 
 	code = (code << 8) | (code >> 8);//?
 

@@ -299,8 +299,8 @@ static void blackt96_sound_writeport(UINT16 port, UINT8 data)
 static tilemap_callback( text )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
-	UINT16 code  = ram[offs * 2 + 0] & 0xff;
-	UINT16 color = ram[offs * 2 + 1];
+	UINT16 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]) & 0xff;
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
 	TILE_SET_INFO(0, code + (txt_bank * 0x100), color, 0);
 }
@@ -489,9 +489,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		UINT8 r = (ram[i] >> 8) & 0xf;
-		UINT8 g = (ram[i] >> 4) & 0xf;
-		UINT8 b = (ram[i] >> 0) & 0xf;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(ram[i]) >> 8) & 0xf;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(ram[i]) >> 4) & 0xf;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(ram[i]) >> 0) & 0xf;
 
 		DrvPalette[i] = BurnHighCol(r+r*16,g+g*16,b+b*16,0);
 	}
@@ -504,8 +504,8 @@ static void draw_sprites(INT32 group)
 
 	for (INT32 offs = 0; offs < 0x800; offs += 0x40)
 	{
-		INT32 sx = (spriteram[offs + 2*group] & 0xff) << 4;
-		INT32 sy = spriteram[offs + 2*group + 1];
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2*group]) & 0xff) << 4;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2*group + 1]);
 
 		sx = sx | (sy >> 12);
 
@@ -526,8 +526,8 @@ static void draw_sprites(INT32 group)
 
 			if (sy < nScreenHeight && (sy + 15) >= 0)
 			{
-				INT32 color = *(tiledata++) & 0x7f;
-				INT32 code = *(tiledata++);
+				INT32 color = BURN_ENDIAN_SWAP_INT16(*(tiledata++)) & 0x7f;
+				INT32 code = BURN_ENDIAN_SWAP_INT16(*(tiledata++));
 				INT32 flipx = code & 0x4000;
 				INT32 flipy = code & 0x8000;
 
@@ -633,7 +633,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029698;
+		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029698);
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {

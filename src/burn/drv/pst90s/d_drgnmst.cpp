@@ -726,7 +726,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029697);
+		*pnMin = 0x029697;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {

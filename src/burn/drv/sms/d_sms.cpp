@@ -17260,7 +17260,7 @@ struct BurnDriver BurnDrvgg_jleagu94 = {
 	"gg_jleagu94", NULL, NULL, NULL, "1994",
 	"J.League GG Pro Striker '94 (Jpn)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_JAPANESE, GBF_SPORTSFOOTBALL, 0,
 	GGGetZipName, gg_jleagu94RomInfo, gg_jleagu94RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

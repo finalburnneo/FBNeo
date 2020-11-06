@@ -3017,7 +3017,7 @@ static INT32 Z80YM2151Scan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029707);
+		*pnMin = 0x029707;
 	}
 
 	if (nAction & ACB_VOLATILE) {		
@@ -3053,7 +3053,7 @@ static INT32 Drv68KScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = BURN_ENDIAN_SWAP_INT32(0x029707);
+		*pnMin = 0x029707;
 	}
 
 	if (nAction & ACB_VOLATILE) {		

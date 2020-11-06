@@ -18202,35 +18202,35 @@ struct BurnDriver BurnDrvkof10thd = {
 };
 
 // The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)
-// hack by GeZiFeiLa
-// GOTVG last update 20200103 (kf10udo-p1.p1)
+// Hack by DOVE FLY
+// GOTVG 20201030
 
 static struct BurnRomInfo kof10thuoRomDesc[] = {
-	{ "kf10udo-p1.p1",   0x800000, 0xa92246ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kf10udo-p1.p1",   0x800000, 0x77b4bf26, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "kf10udo-s1.s1",   0x020000, 0x0ebe5645, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "kf10udo-s1.s1",   0x020000, 0x312bf34b, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "kf10udo-c1.c1",   0x800000, 0x2491af91, 3 | BRF_GRA },           //  3 Sprite data
-	{ "kf10udo-c2.c2",   0x800000, 0x47ff1d91, 3 | BRF_GRA },           //  4
-	{ "kf10udo-c3.c3",   0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5
-	{ "kf10udo-c4.c4",   0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6
-	{ "kf10udo-c5.c5",   0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
-	{ "kf10udo-c6.c6",   0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
-	{ "kf10udo-c7.c7",   0x800000, 0x8a5b561c, 3 | BRF_GRA },           //
-	{ "kf10udo-c8.c8",   0x800000, 0xbef667a3, 3 | BRF_GRA },           //
+	{ "kf10udo-c1.c1",   0x800000, 0x2c59db66, 3 | BRF_GRA },           //  2 Sprite data
+	{ "kf10udo-c2.c2",   0x800000, 0x024ffd69, 3 | BRF_GRA },           //  3
+	{ "kf10udo-c3.c3",   0x800000, 0x959fad0b, 3 | BRF_GRA },           //  4
+	{ "kf10udo-c4.c4",   0x800000, 0xefe6a468, 3 | BRF_GRA },           //  5
+	{ "kf10udo-c5.c5",   0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  6
+	{ "kf10udo-c6.c6",   0x800000, 0xe20d2216, 3 | BRF_GRA },           //  7
+	{ "kf10udo-c7.c7",   0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  8
+	{ "kf10udo-c8.c8",   0x800000, 0xbef667a3, 3 | BRF_GRA },           //  9
 
-	{ "kf10udo-m1.m1",   0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "kf10udo-m1.m1",   0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "kf10udo-v1.v1",   0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 10 Sound data
-	{ "kf10udo-v2.v2",   0x800000, 0xb8c475a4, 5 | BRF_SND },           // 11
+	{ "kf10udo-v1.v1",   0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 11 Sound data
+	{ "kf10udo-v2.v2",   0x800000, 0xb8c475a4, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(kof10thuo, kof10thuo, neogeo)
 STD_ROM_FN(kof10thuo)
 
 struct BurnDriver BurnDrvkof10thuo = {
-	"kof10thuo", "kof2002", "neogeo", NULL, "2020-01-03",
-	"The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)\0", NULL, "hack", "Miscellaneous",
+	"kof10thuo", "kof2002", "neogeo", NULL, "2020-10-30",
+	"The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)\0", NULL, "Hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof10thuoRomInfo, kof10thuoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

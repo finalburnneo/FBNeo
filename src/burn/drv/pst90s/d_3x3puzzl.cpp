@@ -216,21 +216,21 @@ static tilemap_callback( layer0 )
 {
 	UINT16 *ram = (UINT16*)DrvVidBuf0;
 
-	TILE_SET_INFO(0, ram[offs], 0, 0);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[offs]), 0, 0);
 }
 
 static tilemap_callback( layer1 )
 {
 	UINT16 *ram = (UINT16*)DrvVidBuf1;
 
-	TILE_SET_INFO(1, ram[offs], 0, 0);
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs]), 0, 0);
 }
 
 static tilemap_callback( layer2 )
 {
 	UINT16 *ram = (UINT16*)DrvVidBuf2;
 
-	TILE_SET_INFO(2, ram[offs], 0, 0);
+	TILE_SET_INFO(2, BURN_ENDIAN_SWAP_INT16(ram[offs]), 0, 0);
 }
 
 static INT32 DrvDoReset()
@@ -408,9 +408,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x600/2; i++)
 	{
-		UINT8 r = (p[i] & 0x001f);
-		UINT8 g = (p[i] & 0x03e0) >> 5;
-		UINT8 b = (p[i] & 0x7c00) >> 10;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0x001f);
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0x03e0) >> 5;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0x7c00) >> 10;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);

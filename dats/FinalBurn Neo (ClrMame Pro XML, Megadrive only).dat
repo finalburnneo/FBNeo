@@ -11319,10 +11319,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rnrracinh" cloneof="rnrracin" romof="rnrracin">
-		<description>Rock n' Roll Racing Hack v15 By Ti (Hack, December 30, 2013)</description>
-		<year>2013</year>
-		<manufacturer>2013 Ti</manufacturer>
-		<rom name="Rock n Roll Racing Hack v15.bin" size="2097152" crc="205f4afc"/>
+		<description>Rock n' Roll Racing Hack v16 By Ti (Hack, January 20, 2020)</description>
+		<year>2020</year>
+		<manufacturer>2020 Ti</manufacturer>
+		<rom name="Rock n Roll Racing Hack v16.bin" size="2097152" crc="676e3039"/>
 		<driver status="good"/>
 	</game>
 	<game name="rocket">
@@ -15490,6 +15490,13 @@
 		<rom name="terminator, the (usa).bin" size="1048576" crc="31a629be"/>
 		<driver status="good"/>
 	</game>
+	<game name="termintruh" cloneof="termintr" romof="termintr">
+		<description>The Terminator - Remastered Edition (Hack, USA)</description>
+		<year>2020</year>
+		<manufacturer>Linkuei</manufacturer>
+		<rom name="terminator, the (remastered hack, usa).bin" size="1139804" crc="d1fa8dfb"/>
+		<driver status="good"/>
+	</game>
 	<game name="tick">
 		<description>The Tick (USA)</description>
 		<year>1994</year>
@@ -16139,6 +16146,13 @@
 		<year>2012</year>
 		<manufacturer>Nemesis_c</manufacturer>
 		<rom name="Ultimate Mortal Kombat 3 Hack Ver. 0.6 (By Nemesis_c).bin" size="6248922" crc="d8c152ff"/>
+		<driver status="good"/>
+	</game>
+	<game name="umk3h07" cloneof="umk3" romof="umk3">
+		<description>Ultimate Mortal Kombat 3 (Hack, V0.7)</description>
+		<year>2016</year>
+		<manufacturer>Elektropage Team</manufacturer>
+		<rom name="Ultimate Mortal Kombat 3 (Hack, V0.7).bin" size="6366778" crc="b069ab33"/>
 		<driver status="good"/>
 	</game>
 	<game name="umk3u" cloneof="umk3" romof="umk3">

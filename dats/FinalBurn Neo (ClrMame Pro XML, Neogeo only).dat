@@ -18570,12 +18570,12 @@
 	</game>
 	<game name="kof10thuo" cloneof="kof2002" romof="kof2002">
 		<description>The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack) [Hack]</description>
-		<year>2020-01-03</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="kf10udo-p1.p1" size="8388608" crc="a92246ab"/>
-		<rom name="kf10udo-s1.s1" size="131072" crc="0ebe5645"/>
-		<rom name="kf10udo-c1.c1" size="8388608" crc="2491af91"/>
-		<rom name="kf10udo-c2.c2" size="8388608" crc="47ff1d91"/>
+		<year>2020-10-30</year>
+		<manufacturer>Hack</manufacturer>
+		<rom name="kf10udo-p1.p1" size="8388608" crc="77b4bf26"/>
+		<rom name="kf10udo-s1.s1" size="131072" crc="312bf34b"/>
+		<rom name="kf10udo-c1.c1" size="8388608" crc="2c59db66"/>
+		<rom name="kf10udo-c2.c2" size="8388608" crc="024ffd69"/>
 		<rom name="kf10udo-c3.c3" size="8388608" crc="959fad0b"/>
 		<rom name="kf10udo-c4.c4" size="8388608" crc="efe6a468"/>
 		<rom name="kf10udo-c5.c5" size="8388608" crc="74bba7c6"/>

@@ -6746,6 +6746,13 @@
 		<rom name="Mother (Japan).nes" size="393232" crc="282a5caa"/>
 		<driver status="good"/>
 	</game>
+	<game name="mothe25tannedi" cloneof="earthbound" romof="earthbound">
+		<description>Mother - 25th Anniversay Edition (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mother - 25th Anniversay Edition (Hack).nes" size="524304" crc="6e24f190"/>
+		<driver status="good"/>
+	</game>
 	<game name="motocchaj" cloneof="motoccha" romof="motoccha">
 		<description>Motocross Champion (Japan)</description>
 		<year>1989</year>

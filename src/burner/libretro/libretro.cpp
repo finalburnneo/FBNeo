@@ -1057,12 +1057,8 @@ void retro_init()
 	retro_audio_buff_occupancy = 0;
 	retro_audio_buff_underrun  = false;
 
-	struct retro_audio_buffer_status_callback buf_status_cb;
-
-	buf_status_cb.callback = retro_audio_buff_status_cb;
-	bLibretroSupportsAudioBuffStatus = environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, &buf_status_cb);
-	if (!bLibretroSupportsAudioBuffStatus)
-		log_cb(RETRO_LOG_WARN, "Frontend does not support audio buffer status monitoring.\n");
+	// Check RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK support
+	bLibretroSupportsAudioBuffStatus = environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, NULL);
 }
 
 void retro_deinit()
@@ -1120,6 +1116,8 @@ void retro_run()
 		else
 			nFrameskipCounter++;
 	}
+	else if (!bLibretroSupportsAudioBuffStatus)
+		bSkipFrame = !(nCurrentFrame % nFrameskip == 0);
 
 	// if frameskip settings have changed, update frontend audio latency
 	if (bUpdateAudioLatency)
@@ -1129,14 +1127,21 @@ void retro_run()
 			float frame_time_msec = 100000.0f / nBurnFPS;
 			nAudioLatency = (UINT32)((6.0f * frame_time_msec) + 0.5f);
 			nAudioLatency = (nAudioLatency + 0x1F) & ~0x1F;
+
+			struct retro_audio_buffer_status_callback buf_status_cb;
+			buf_status_cb.callback = retro_audio_buff_status_cb;
+			environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, &buf_status_cb);
 		}
 		else
+		{
 			nAudioLatency = 0;
+			environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, NULL);
+		}
 		environ_cb(RETRO_ENVIRONMENT_SET_MINIMUM_AUDIO_LATENCY, &nAudioLatency);
 		bUpdateAudioLatency = false;
 	}
 
-	ForceFrameStep(bSkipFrame ? 0 : (nCurrentFrame % nFrameskip == 0));
+	ForceFrameStep(bSkipFrame ? 0 : 1);
 
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;
@@ -1682,6 +1687,9 @@ static bool retro_load_game_common()
 
 		set_environment();
 		check_variables();
+
+		if (nFrameskipType > 0)
+			bUpdateAudioLatency = true;
 
 #ifdef USE_CYCLONE
 		SetSekCpuCore();

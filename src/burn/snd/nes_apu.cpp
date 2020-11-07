@@ -819,7 +819,9 @@ static void apu_update(struct nesapu_info *info)
 		INT32 dmc = dmc_buffer[dmcoffs];
 		INT32 ext = nes_ext_buffer[dmcoffs];
 
-		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 2*noise + dmc] +
+		// dink nov7,2020: note, supposed to be 2*noise, but shot doesn't sound right in kid icarus.
+
+		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 1*noise + dmc] +
 							  info->square_table[square1 + square2] + info->square_table[square3 + square4]) * 0x2fff);
 
 		if (~nesapu_mixermode & MIXER_APU) out = 0;

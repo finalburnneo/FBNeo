@@ -41,6 +41,15 @@ static struct BurnInputInfo TopshootInputList[] = {
 
 STDINPUTINFO(Topshoot)
 
+static INT32 mdarcblInit()
+{
+	INT32 rc = MegadriveInit();
+	MegadriveDIP[0] = 0x00;
+	MegadriveDIP[1] = 0x03;
+
+	return rc;
+}
+
 // Super Bubble Bobble (Sun Mixing, Megadrive clone hardware)
 
 static struct BurnRomInfo sbubsmRomDesc[] = {
@@ -59,7 +68,7 @@ struct BurnDriver BurnDrvSbubsm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_PCB_SBUBBOB | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_MISC, 0,
 	NULL, sbubsmRomInfo, sbubsmRomName, NULL, NULL, NULL, NULL, SbubsmInputInfo, NULL,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	mdarcblInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
@@ -82,6 +91,6 @@ struct BurnDriver BurnDrvTopshoot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_MISC, 0,
 	NULL, topshootRomInfo, topshootRomName, NULL, NULL, NULL, NULL, TopshootInputInfo, NULL,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	mdarcblInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

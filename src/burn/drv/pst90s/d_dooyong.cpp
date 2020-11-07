@@ -740,7 +740,7 @@ STDDIPINFO(Popbingo)
 
 static inline void palette_write_4bgr(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = p & 0x0f;
 	INT32 g = (p >> 4) & 0x0f;
@@ -751,7 +751,7 @@ static inline void palette_write_4bgr(INT32 offset)
 
 static inline void palette_write_5rgb(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 b = (p >> 0) & 0x1f;
 	INT32 g = (p >> 5) & 0x1f;
@@ -1099,7 +1099,7 @@ static void __fastcall superx_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000; // fix address for rshark
 
 	if ((address & 0x0ff000) == 0x088000) {
-		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write_5rgb(address & 0xffe);
 		return;
 	}
@@ -2523,18 +2523,18 @@ static void draw_sprites_rshark(INT32 priority)
 
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs += 8)
 	{
-		if (ram[offs] & 0x0001)
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0001)
 		{
-			INT32 color  = ram[offs+7] & 0x000f;
+			INT32 color  = BURN_ENDIAN_SWAP_INT16(ram[offs+7]) & 0x000f;
 
 			INT32 pri (((color == 0x00) || (color == 0x0f)) ? 0 : 1);
 			if (priority != pri) continue;
 
-			INT32 code   = ram[offs+3];
-			INT32 width  = ram[offs+1] & 0x000f;
-			INT32 height = (ram[offs+1] & 0x00f0) >> 4;
-			INT32 sx     = ram[offs+4] & 0x01ff;
-			INT32 sy     = (INT16)ram[offs+6] & 0x01ff;
+			INT32 code   = BURN_ENDIAN_SWAP_INT16(ram[offs+3]);
+			INT32 width  = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0x000f;
+			INT32 height = (BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0x00f0) >> 4;
+			INT32 sx     = BURN_ENDIAN_SWAP_INT16(ram[offs+4]) & 0x01ff;
+			INT32 sy     = (INT16)BURN_ENDIAN_SWAP_INT16(ram[offs+6]) & 0x01ff;
 			if (sy & 0x0100) sy |= ~(int)0x01ff;
 
 			for (INT32 y = 0; y <= height; y++)

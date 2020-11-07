@@ -317,7 +317,7 @@ inline static void palette_write(INT32 offset)
 {
 	offset &= 0x1ffe;
 
-	UINT16 data = *((UINT16 *)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(DrvPalRAM + offset)));
 	UINT8 r, g, b;
 	offset >>= 1;
 
@@ -437,18 +437,18 @@ static tilemap_callback( background )
 {
 	UINT16 *ram = (UINT16*)DrvBg1RAM;
 	UINT32 *lnscroll = (UINT32  *)DrvBgScrollRAM;
-	INT32 bank = (lnscroll[0x104] >> 9) & 0x2000;
+	INT32 bank = (BURN_ENDIAN_SWAP_INT32(lnscroll[0x104]) >> 9) & 0x2000;
 
-	TILE_SET_INFO(0, (ram[offs] & 0x1fff) + bank, (ram[offs] >> 13) + 0x80, 0);
+	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff) + bank, (BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13) + 0x80, 0);
 }
 
 static tilemap_callback( foreground )
 {
 	UINT16 *ram = (UINT16*)DrvBg2RAM;
 	UINT32 *lnscroll = (UINT32  *)DrvBgScrollRAM;
-	INT32 bank = (lnscroll[0x105] >> 9) & 0x2000;
+	INT32 bank = (BURN_ENDIAN_SWAP_INT32(lnscroll[0x105]) >> 9) & 0x2000;
 
-	TILE_SET_INFO(0, (ram[offs] & 0x1fff) + bank, (ram[offs] >> 13) + 0xc0, 0);
+	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff) + bank, (BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13) + 0xc0, 0);
 }
 
 static INT32 DrvDoReset()
@@ -713,10 +713,10 @@ static void draw_layer(INT32 layer)
 	UINT32 *scroll = (UINT32 *)DrvBgScrollRAM;
 	UINT16 *lnscroll = (UINT16 *)DrvBgScrollRAM;
 
-	INT32 ctrl = scroll[0x104 + layer] >> 16;
+	INT32 ctrl = BURN_ENDIAN_SWAP_INT32(scroll[0x104 + layer]) >> 16;
 
-	INT32 scrolly = scroll[0x100 + (layer * 2)] >> 16;
-	INT32 scrollx = (scroll[0x101 + (layer * 2)] >> 16) + (layer ? 5 : 3);
+	INT32 scrolly = BURN_ENDIAN_SWAP_INT32(scroll[0x100 + (layer * 2)]) >> 16;
+	INT32 scrollx = (BURN_ENDIAN_SWAP_INT32(scroll[0x101 + (layer * 2)]) >> 16) + (layer ? 5 : 3);
 
 	GenericTilemapSetScrollY(layer, scrolly + 32);
 
@@ -730,7 +730,7 @@ static void draw_layer(INT32 layer)
 
 		for (INT32 y = 0; y < 256; y += 16)
 		{
-			GenericTilemapSetScrollRow(layer, ((y + scrolly + 32) & 0xff) / 16, scrollx + (scroll[y / 16] >> 16));
+			GenericTilemapSetScrollRow(layer, ((y + scrolly + 32) & 0xff) / 16, scrollx + (BURN_ENDIAN_SWAP_INT32(scroll[y / 16]) >> 16));
 		}
 	}
 	else if ((ctrl & 0x0300) == 0x100)	// line scroll
@@ -741,7 +741,7 @@ static void draw_layer(INT32 layer)
 
 		for (INT32 y = 0; y < 256; y++)
 		{
-			GenericTilemapSetScrollRow(layer, (y + scrolly + 32) & 0x3ff, (scrollx + (lnscroll[(y + 32) & 0xff])));
+			GenericTilemapSetScrollRow(layer, (y + scrolly + 32) & 0x3ff, (scrollx + (BURN_ENDIAN_SWAP_INT16(lnscroll[(y + 32) & 0xff]))));
 		}
 	}
 	else if ((ctrl & 0x0300) == 0)		// normal scroll
@@ -765,15 +765,15 @@ static void draw_sprites()
 		INT32 xpos, ypos, tileno, code, colour, xflip, yflip;
 		INT32 xsize, ysize, xinc, yinc, xct, yct;
 
-		xpos   = (source[1]&0x01ff);
-		ypos   = (source[0]&0x01ff);
-		xsize  = (source[1]&0x0e00) >> 9;
-		ysize  = (source[0]&0x0e00) >> 9;
-		tileno = (source[3]&0xffff);
-		if (source[2]&1) tileno += 0x10000; // fix sprites in cute fighter -dink
-		colour = (source[2]&0x3f00) >> 8;
-		xflip  = (source[2]&0x4000);
-		yflip  = (source[2]&0x8000);
+		xpos   = (BURN_ENDIAN_SWAP_INT16(source[1])&0x01ff);
+		ypos   = (BURN_ENDIAN_SWAP_INT16(source[0])&0x01ff);
+		xsize  = (BURN_ENDIAN_SWAP_INT16(source[1])&0x0e00) >> 9;
+		ysize  = (BURN_ENDIAN_SWAP_INT16(source[0])&0x0e00) >> 9;
+		tileno = (BURN_ENDIAN_SWAP_INT16(source[3])&0xffff);
+		if (BURN_ENDIAN_SWAP_INT16(source[2])&1) tileno += 0x10000; // fix sprites in cute fighter -dink
+		colour = (BURN_ENDIAN_SWAP_INT16(source[2])&0x3f00) >> 8;
+		xflip  = (BURN_ENDIAN_SWAP_INT16(source[2])&0x4000);
+		yflip  = (BURN_ENDIAN_SWAP_INT16(source[2])&0x8000);
 
 		xinc = 16;
 		yinc = 16;
@@ -796,7 +796,7 @@ static void draw_sprites()
 		{
 			for (xct=0;xct<xsize+1;xct++)
 			{
-				code = redirect[tileno];
+				code = BURN_ENDIAN_SWAP_INT16(redirect[tileno]);
 
 				if (yflip) {
 					if (xflip) {

@@ -248,7 +248,6 @@ static void NeoCDList_iso9660_CheckDirRecord(HWND hList, TCHAR* pszFile,  FILE* 
 				iso9660_ReadOffset(&LEN_FI, fp, lOffset + 32, 1, sizeof(UINT8));
 
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(char));
-				strncpy(File, File, LEN_FI);
 				File[LEN_FI] = 0;
 
 				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
@@ -1121,7 +1120,6 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 	return 0;
 }
 
-//static DWORD WINAPI NeoCDList_DoProc(LPVOID)
 static unsigned __stdcall NeoCDList_DoProc(void*)
 {
 	if(bProcessingList) return 0;
@@ -1130,21 +1128,9 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 
 	bProcessingList = true;
 	ListView_DeleteAllItems(hListView);
-
 	NeoCDList_ScanDir(hListView, szNeoCDGamesDir);
 
 	bProcessingList = false;
-
-	PostThreadMessage(ProcessThreadID, WM_APP + 0, 0, 0);
-
-	// Wait for the thread to finish
-	if (WaitForSingleObject(hProcessThread, 10000) != WAIT_OBJECT_0) {
-		// If the thread doesn't finish within 10 seconds, forcibly kill it
-		TerminateThread(hProcessThread, 1);
-		bProcessingList = false;
-	}
-
-	CloseHandle(hProcessThread);
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
 

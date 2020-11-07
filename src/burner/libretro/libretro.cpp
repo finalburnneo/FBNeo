@@ -602,14 +602,14 @@ void Reinitialise(void)
 	nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 }
 
-static void ForceFrameStep(int bDraw)
+static void ForceFrameStep(bool bSkip)
 {
 #ifdef FBNEO_DEBUG
 	nFramesEmulated++;
 #endif
 	nCurrentFrame++;
 
-	if (!bDraw)
+	if (bSkip)
 		pBurnDraw = NULL;
 #ifdef FBNEO_DEBUG
 	else
@@ -1141,7 +1141,7 @@ void retro_run()
 		bUpdateAudioLatency = false;
 	}
 
-	ForceFrameStep(bSkipFrame ? 0 : 1);
+	ForceFrameStep(bSkipFrame);
 
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;

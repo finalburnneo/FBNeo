@@ -222,7 +222,7 @@ static UINT8 __fastcall sshangha_main_read_byte(UINT32 address)
 static void __fastcall sshangha_write_palette_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x380000) {
-		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 		INT32 offset = address & 0x3fe;
 		switch (address & 0xc00)
@@ -233,7 +233,7 @@ static void __fastcall sshangha_write_palette_word(UINT32 address, UINT16 data)
 			case 0xc00: offset |= 0x800; break;
 		}
 
-		*((UINT16*)(DrvPalRAMFixed + offset)) = data;
+		*((UINT16*)(DrvPalRAMFixed + offset)) = BURN_ENDIAN_SWAP_INT16(data);
 	}
 }
 
@@ -259,7 +259,7 @@ static void __fastcall sshangha_write_palette_byte(UINT32 address, UINT8 data)
 static void __fastcall sshangha_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff8) == 0xf800) {
-		*((UINT16*)(DrvShareRAM + (address & 7) * 2)) = data;
+		*((UINT16*)(DrvShareRAM + (address & 7) * 2)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -285,7 +285,7 @@ static void __fastcall sshangha_sound_write(UINT16 address, UINT8 data)
 static UINT8 __fastcall sshangha_sound_read(UINT16 address)
 {
 	if ((address & 0xfff8) == 0xf800) {
-		return *((UINT16*)(DrvShareRAM + (address & 7) * 2)) & 0xff;
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvShareRAM + (address & 7) * 2))) & 0xff;
 	}
 
 	if (address >= 0xf800) {
@@ -521,14 +521,14 @@ static void draw_sprites(INT32 sprite_chip)
 	for (INT32 offs = 0; offs < 0x400; offs += 4)
 	{
 		INT32 inc, mult;
-		INT32 sprite = spriteram[offs + 1];
-		INT32 y = spriteram[offs];
+		INT32 sprite = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]);
+		INT32 y = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
 		INT32 flash = y & 0x1000;
 		INT32 w = y & 0x0800;
 
 		if (!(flash && (nCurrentFrame & 1)))
 		{
-			INT32 x = spriteram[offs + 2];
+			INT32 x = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 			INT32 color = (x >> 9) & 0x7f;
 			INT32 fx = y & 0x2000;
 			INT32 fy = y & 0x4000;
@@ -627,7 +627,7 @@ static INT32 DrvDraw()
 			// combine to 8bpp
 			for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
 			{
-				INT32 pixel = (bitmap0[i] & 0xf) | ((bitmap1[i] & 0xf) << 4);
+				INT32 pixel = (BURN_ENDIAN_SWAP_INT16(bitmap0[i]) & 0xf) | ((BURN_ENDIAN_SWAP_INT16(bitmap1[i]) & 0xf) << 4);
 
 				if ((pixel & 0xff) != 0xff) pTransDraw[i] = pixel + 0x200; 
 			}
@@ -805,14 +805,14 @@ static INT32 SshanghajInit()
 	if (nRet == 0)
 	{
 		// hack in debug dips
-		*((UINT16*)(Drv68KROM + 0x384)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x386)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x388)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x38a)) = 0x4e71;
+		*((UINT16*)(Drv68KROM + 0x384)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		*((UINT16*)(Drv68KROM + 0x386)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		*((UINT16*)(Drv68KROM + 0x388)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		*((UINT16*)(Drv68KROM + 0x38a)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
 		// fix checksum error
-		*((UINT16*)(Drv68KROM + 0x428)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x42a)) = 0x4e71;
+		*((UINT16*)(Drv68KROM + 0x428)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		*((UINT16*)(Drv68KROM + 0x42a)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	}
 
 	return nRet;

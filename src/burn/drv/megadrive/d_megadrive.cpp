@@ -33450,6 +33450,25 @@ struct BurnDriver BurnDrvmd_termintru = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// The Terminator (Remastered Hack, USA)
+// http://www.romhacking.net/hacks/5512/
+static struct BurnRomInfo md_termintruhRomDesc[] = {
+	{ "terminator, the (remastered hack, usa).bin", 1139804, 0xd1fa8dfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_termintruh)
+STD_ROM_FN(md_termintruh)
+
+struct BurnDriver BurnDrvmd_termintruh = {
+	"md_termintruh", "md_termintr", NULL, NULL, "2020",
+	"The Terminator - Remastered Edition (Hack, USA)\0", NULL, "Linkuei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_termintruhRomInfo, md_termintruhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Test Drive II - The Duel (Euro, USA)
 static struct BurnRomInfo md_td2RomDesc[] = {
 	{ "test drive ii - the duel (euro, usa).bin", 0x100000, 0xf9bdf8c5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42408,17 +42427,17 @@ struct BurnDriver BurnDrvmd_umk3t = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rock n' Roll Racing Hack v15 By Ti
+// Rock n' Roll Racing Hack v16 By Ti
 static struct BurnRomInfo md_rnrracinhRomDesc[] = {
-	{ "Rock n Roll Racing Hack v15.bin", 0x200000, 0x205F4AFC, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Rock n Roll Racing Hack v16.bin", 0x200000, 0x676e3039, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rnrracinh)
 STD_ROM_FN(md_rnrracinh)
 
 struct BurnDriver BurnDrvmd_rnrracinh = {
-	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2013",
-	"Rock n' Roll Racing Hack v15 By Ti (Hack, December 30, 2013)\0", NULL, "2013 Ti", "Sega Megadrive",
+	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2020",
+	"Rock n' Roll Racing Hack v16 By Ti (Hack, January 20, 2020)\0", NULL, "2020 Ti", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42874,6 +42893,25 @@ struct BurnDriver BurnDrvmd_umk3h = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_umk3hRomInfo, md_umk3hRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 (Hack, V0.7)
+// http://elektropage.ru/
+static struct BurnRomInfo md_umk3h07RomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 (Hack, V0.7).bin", 6366778, 0xb069ab33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3h07)
+STD_ROM_FN(md_umk3h07)
+
+struct BurnDriver BurnDrvmd_umk3h07 = {
+	"md_umk3h07", "md_umk3", NULL, NULL, "2016",
+	"Ultimate Mortal Kombat 3 (Hack, V0.7)\0", NULL, "Elektropage Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_umk3h07RomInfo, md_umk3h07RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

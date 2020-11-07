@@ -79,6 +79,26 @@ static UINT8* pVidImage = NULL;
 static bool bVidImageNeedRealloc = false;
 static int16_t *g_audio_buf = NULL;
 
+// Frameskipping v2 Support
+#define FRAMESKIP_MAX 30
+
+UINT32 nFrameskipType                      = 0;
+UINT32 nFrameskipThreshold                 = 0;
+static UINT32 nFrameskipCounter            = 0;
+static UINT32 nAudioLatency                = 0;
+static bool bUpdateAudioLatency            = false;
+
+static bool retro_audio_buff_active        = false;
+static unsigned retro_audio_buff_occupancy = 0;
+static bool retro_audio_buff_underrun      = false;
+
+static void retro_audio_buff_status_cb(bool active, unsigned occupancy, bool underrun_likely)
+{
+	retro_audio_buff_active    = active;
+	retro_audio_buff_occupancy = occupancy;
+	retro_audio_buff_underrun  = underrun_likely;
+}
+
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
 UINT32 nGameInpCount = 0;
@@ -1027,6 +1047,22 @@ void retro_init()
 #ifdef AUTOGEN_DATS
 	CreateAllDatfiles();
 #endif
+
+	nFrameskipType             = 0;
+	nFrameskipThreshold        = 0;
+	nFrameskipCounter          = 0;
+	nAudioLatency              = 0;
+	bUpdateAudioLatency        = false;
+	retro_audio_buff_active    = false;
+	retro_audio_buff_occupancy = 0;
+	retro_audio_buff_underrun  = false;
+
+	struct retro_audio_buffer_status_callback buf_status_cb;
+
+	buf_status_cb.callback = retro_audio_buff_status_cb;
+	bLibretroSupportsAudioBuffStatus = environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, &buf_status_cb);
+	if (!bLibretroSupportsAudioBuffStatus)
+		log_cb(RETRO_LOG_WARN, "Frontend does not support audio buffer status monitoring.\n");
 }
 
 void retro_deinit()
@@ -1059,10 +1095,48 @@ void retro_run()
 {
 	pBurnDraw = pVidImage;
 	bDisableSerialize = 0;
+	bool bSkipFrame = false;
 
 	InputMake();
 
-	ForceFrameStep(nCurrentFrame % nFrameskip == 0);
+	// Check whether current frame should be skipped
+	if ((nFrameskipType > 0) && retro_audio_buff_active)
+	{
+		switch (nFrameskipType)
+		{
+			case 1:
+				bSkipFrame = retro_audio_buff_underrun;
+			break;
+			case 2:
+				bSkipFrame = (retro_audio_buff_occupancy < nFrameskipThreshold);
+			break;
+		}
+
+		if (!bSkipFrame || nFrameskipCounter >= FRAMESKIP_MAX)
+		{
+			bSkipFrame        = false;
+			nFrameskipCounter = 0;
+		}
+		else
+			nFrameskipCounter++;
+	}
+
+	// if frameskip settings have changed, update frontend audio latency
+	if (bUpdateAudioLatency)
+	{
+		if (nFrameskipType > 0)
+		{
+			float frame_time_msec = 100000.0f / nBurnFPS;
+			nAudioLatency = (UINT32)((6.0f * frame_time_msec) + 0.5f);
+			nAudioLatency = (nAudioLatency + 0x1F) & ~0x1F;
+		}
+		else
+			nAudioLatency = 0;
+		environ_cb(RETRO_ENVIRONMENT_SET_MINIMUM_AUDIO_LATENCY, &nAudioLatency);
+		bUpdateAudioLatency = false;
+	}
+
+	ForceFrameStep(bSkipFrame ? 0 : (nCurrentFrame % nFrameskip == 0));
 
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;
@@ -1084,6 +1158,7 @@ void retro_run()
 	{
 		neo_geo_modes old_g_opt_neo_geo_mode = g_opt_neo_geo_mode;
 		UINT32 old_nVerticalMode = nVerticalMode;
+		UINT32 old_nFrameskipType = nFrameskipType;
 
 		check_variables();
 
@@ -1106,6 +1181,9 @@ void retro_run()
 			// Readahead randomly crashes the core when switching bios
 			bDisableSerialize = 1;
 		}
+
+		if (old_nFrameskipType != nFrameskipType)
+			bUpdateAudioLatency = true;
 	}
 }
 

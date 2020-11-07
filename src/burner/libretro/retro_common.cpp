@@ -59,6 +59,7 @@ bool neogeo_use_specific_default_bios = false;
 bool bAllowDepth32 = false;
 bool bLightgunHideCrosshairEnabled = true;
 bool bPatchedRomsetsEnabled = true;
+bool bLibretroSupportsAudioBuffStatus = false;
 UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
@@ -119,6 +120,43 @@ static const struct retro_core_option_definition var_fbneo_frameskip = {
 		{ NULL, NULL },
 	},
 	"0"
+};
+static const struct retro_core_option_definition var_fbneo_frameskip_v2 = {
+	"fbneo-frameskip-v2",
+	"Frameskip",
+	"Skip frames to avoid audio buffer under-run (crackling). Improves performance at the expense of visual smoothness. 'Auto' skips frames when advised by the frontend. 'Manual' utilises the 'Frameskip Threshold (%)' setting.",
+	{
+		{ "disabled", NULL },
+		{ "Auto", NULL },
+		{ "Manual", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
+};
+static const struct retro_core_option_definition var_fbneo_frameskip_v2_threshold = {
+	"fbneo-frameskip-v2-threshold",
+	"Frameskip Threshold (%)",
+	"When 'Frameskip' is set to 'Manual', specifies the audio buffer occupancy threshold (percentage) below which frames will be skipped. Higher values reduce the risk of crackling by causing frames to be dropped more frequently.",
+	{
+		{ "15", NULL },
+		{ "18", NULL },
+		{ "21", NULL },
+		{ "24", NULL },
+		{ "27", NULL },
+		{ "30", NULL },
+		{ "33", NULL },
+		{ "36", NULL },
+		{ "39", NULL },
+		{ "42", NULL },
+		{ "45", NULL },
+		{ "48", NULL },
+		{ "51", NULL },
+		{ "54", NULL },
+		{ "57", NULL },
+		{ "60", NULL },
+		{ NULL, NULL },
+	},
+	"33"
 };
 static const struct retro_core_option_definition var_fbneo_cpu_speed_adjust = {
 	"fbneo-cpu-speed-adjust",
@@ -541,7 +579,13 @@ void set_environment()
 	// Add the Global core options
 	vars_systems.push_back(&var_fbneo_allow_depth_32);
 	vars_systems.push_back(&var_fbneo_vertical_mode);
-	vars_systems.push_back(&var_fbneo_frameskip);
+	if (bLibretroSupportsAudioBuffStatus)
+	{
+		vars_systems.push_back(&var_fbneo_frameskip_v2);
+		vars_systems.push_back(&var_fbneo_frameskip_v2_threshold);
+	}
+	else
+		vars_systems.push_back(&var_fbneo_frameskip);
 	vars_systems.push_back(&var_fbneo_cpu_speed_adjust);
 	vars_systems.push_back(&var_fbneo_hiscores);
 	vars_systems.push_back(&var_fbneo_allow_patched_romsets);
@@ -865,21 +909,41 @@ void check_variables(void)
 			nVerticalMode = 0;
 	}
 
-	var.key = var_fbneo_frameskip.key;
-	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	if (bLibretroSupportsAudioBuffStatus)
 	{
-		if (strcmp(var.value, "0") == 0)
-			nFrameskip = 1;
-		else if (strcmp(var.value, "1") == 0)
-			nFrameskip = 2;
-		else if (strcmp(var.value, "2") == 0)
-			nFrameskip = 3;
-		else if (strcmp(var.value, "3") == 0)
-			nFrameskip = 4;
-		else if (strcmp(var.value, "4") == 0)
-			nFrameskip = 5;
-		else if (strcmp(var.value, "5") == 0)
-			nFrameskip = 6;
+		var.key = var_fbneo_frameskip_v2.key;
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		{
+			if (strcmp(var.value, "disabled") == 0)
+				nFrameskipType = 0;
+			else if (strcmp(var.value, "Auto") == 0)
+				nFrameskipType = 1;
+			else if (strcmp(var.value, "Manual") == 0)
+				nFrameskipType = 2;
+		}
+
+		var.key             = var_fbneo_frameskip_v2_threshold.key;
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+			nFrameskipThreshold = strtol(var.value, NULL, 10);
+	}
+	else
+	{
+		var.key = var_fbneo_frameskip.key;
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+		{
+			if (strcmp(var.value, "0") == 0)
+				nFrameskip = 1;
+			else if (strcmp(var.value, "1") == 0)
+				nFrameskip = 2;
+			else if (strcmp(var.value, "2") == 0)
+				nFrameskip = 3;
+			else if (strcmp(var.value, "3") == 0)
+				nFrameskip = 4;
+			else if (strcmp(var.value, "4") == 0)
+				nFrameskip = 5;
+			else if (strcmp(var.value, "5") == 0)
+				nFrameskip = 6;
+		}
 	}
 
 	if (pgi_diag)

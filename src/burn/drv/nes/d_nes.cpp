@@ -202,6 +202,10 @@ static struct BurnDIPInfo NESDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
 	{0x01, 0x01, 0x01, 0x00, "Off"	},
 	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+
+	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"	},
+	{0x01, 0x01, 0x02, 0x02, "On"	},
 };
 
 STDDIPINFO(NES)
@@ -219,6 +223,10 @@ static struct BurnDIPInfo NESZapperDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
 	{0x01, 0x01, 0x01, 0x00, "Off"	},
 	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+
+	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"	},
+	{0x01, 0x01, 0x02, 0x02, "On"	},
 };
 
 STDDIPINFO(NESZapper)
@@ -236,6 +244,10 @@ static struct BurnDIPInfo NES4ScoreDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
 	{0x01, 0x01, 0x01, 0x00, "Off"	},
 	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+
+	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"	},
+	{0x01, 0x01, 0x02, 0x02, "On"	},
 };
 
 STDDIPINFO(NES4Score)
@@ -257,6 +269,10 @@ static struct BurnDIPInfo NESFDSDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
 	{0x01, 0x01, 0x01, 0x00, "Off"	},
 	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+
+	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"	},
+	{0x01, 0x01, 0x02, 0x02, "On"	},
 };
 
 STDDIPINFO(NESFDS)
@@ -8744,6 +8760,80 @@ static INT32 NESZapperInit()
 	return rc;
 }
 
+// stereo effector (delay line+comb filter)
+struct ms_ring {
+	INT16 *l;
+	INT16 *r;
+	INT32 ring_size;
+	INT32 inpos;
+	INT32 outpos_l;
+	INT32 outpos_r;
+
+	void exit() {
+		if (ring_size || l || r) {
+			BurnFree(l);
+			BurnFree(r);
+			ring_size = 0;
+			bprintf(0, _T("ms_ring exited.\n"));
+		}
+	}
+
+	void init() {
+		ring_size = (INT32)((double)14 / 1000 * nBurnSoundRate); // 14ms ring buffer
+
+		l = (INT16*)BurnMalloc(ring_size * sizeof(INT16));
+		r = (INT16*)BurnMalloc(ring_size * sizeof(INT16));
+
+		for (INT32 i = 0; i < ring_size; i++) {
+			write(0, 0);
+		}
+		inpos = 0; // position in @ beginning of ring, out @ end
+		outpos_l = 1;
+		outpos_r = 1;
+		bprintf(0, _T("ms_ring initted (%d entry ringbuffer)\n"), ring_size);
+	}
+
+	INT32 needs_init() {
+		return (l == NULL || r == NULL || ring_size == 0);
+	}
+
+	void write(INT16 sam_l, INT16 sam_r) {
+		l[inpos] = sam_l;
+		r[inpos] = sam_r;
+		inpos = (inpos + 1) % ring_size;
+	}
+
+	INT16 read_r() {
+		INT16 temp = r[outpos_r];
+		outpos_r = (outpos_r + 1) % ring_size;
+		return temp;
+	}
+
+	INT16 read_l() {
+		INT16 temp = l[outpos_l];
+		outpos_l = (outpos_l + 1) % ring_size;
+		return temp;
+	}
+
+	void process(INT16 *buffer, INT32 samples) {
+		if (needs_init()) {
+			init();
+		}
+
+		for (INT32 i = 0; i < samples; i++) {
+			write(buffer[i * 2 + 0], buffer[i * 2 + 1]);
+			INT16 sam_mask = ((read_l(), read_r()) / 2) * 0.75;
+			INT16 sam_now = (buffer[i * 2 + 0] + buffer[i * 2 + 1]) / 2;
+			buffer[i * 2 + 0] = sam_now + sam_mask;
+			buffer[i * 2 + 1] = sam_now - sam_mask;
+		}
+	}
+};
+
+static ms_ring ms_delay;
+
+// end stereoeffect
+
 static INT32 NESExit()
 {
 	GenericTilesExit();
@@ -8784,6 +8874,8 @@ static INT32 NESExit()
 	BurnFree(NES_CPU_RAM);
 	BurnFree(Cart.WorkRAM);
 	BurnFree(Cart.CHRRam);
+
+	ms_delay.exit();
 
 	return 0;
 }
@@ -9029,6 +9121,10 @@ static INT32 NESFrame()
 
 		if (Cart.Mapper == 85) { // VRC7 audio expansion - YM2413
 			BurnYM2413Render(pBurnSoundOut, nBurnSoundLen);
+		}
+
+		if (DrvDips[1] & 0x02) {
+			ms_delay.process(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 	M6502Close();

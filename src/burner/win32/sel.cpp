@@ -1569,6 +1569,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		hSelDlg = hDlg;
 
+		// add WS_MAXIMIZEBOX button;
+		SetWindowLongPtr(hSelDlg, GWL_STYLE, GetWindowLongPtr(hSelDlg, GWL_STYLE) | WS_MAXIMIZEBOX);
+
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 

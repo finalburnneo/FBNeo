@@ -416,10 +416,11 @@ static void BuzzerAdd(INT16 data)
 
 	if (data != buzzer_last_data) {
 		INT32 len = ((double)(ZetTotalCycles() - buzzer_last_update) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
-		if (len > 0 && (len+buzzer_data_len) < buzzer_data_frame)
+		if (len > 0)
 		{
 			for (INT32 i = buzzer_data_len; i < buzzer_data_len+len; i++) {
-				Buzzer[i] = buzzer_last_data;
+				// if len goes over buzzer_data_frame, wrap around to the beginning.
+				Buzzer[i % buzzer_data_frame] = buzzer_last_data;
 			}
 			buzzer_data_len += len;
 		}

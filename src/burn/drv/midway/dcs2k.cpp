@@ -183,6 +183,11 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength)
 	// theory: check 3x a frame w/DcsCheckIRQ(), if mixer_pos gets below
 	// samples_from - run IRQ to get more samples. -dink oct.29, 2020
 
+	if (mixer_pos == 0) { // nothing to output
+		memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
+		return;
+	}
+
 	for (INT32 j = 0; j < nSegmentLength; j++)
 	{
 		INT32 k = (samples_from * j) / nBurnSoundLen;
@@ -393,6 +398,7 @@ void Dcs2kReset()
     nTotalCycles = 0ULL;
     nNextIRQCycle = ~0ULL;
 
+	nCurrentBank = 0;
     nOutputData = 0;
     nInputData = 0;
     nLatchControl = 0;

@@ -15172,44 +15172,6 @@ struct BurnDriver BurnSpecNarc = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Navy Seals - Part 1
-
-static struct BurnRomInfo SpecNavyseals1RomDesc[] = {
-	{ "Navy Seals - Part 1 (1991)(Ocean).tap", 136806, 0x01b1a341, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecNavyseals1, SpecNavyseals1, Spec128)
-STD_ROM_FN(SpecNavyseals1)
-
-struct BurnDriver BurnSpecNavyseals1 = {
-	"spec_navyseals1", NULL, "spec_spec128", NULL, "1991",
-	"Navy Seals - Part 1\0", NULL, "Ocean", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecNavyseals1RomInfo, SpecNavyseals1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Navy Seals - Part 2
-
-static struct BurnRomInfo SpecNavyseals2RomDesc[] = {
-	{ "Navy Seals - Part 2 (1991)(Ocean).tap", 136805, 0x6b7f3a21, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecNavyseals2, SpecNavyseals2, Spec128)
-STD_ROM_FN(SpecNavyseals2)
-
-struct BurnDriver BurnSpecNavyseals2 = {
-	"spec_navyseals2", NULL, "spec_spec128", NULL, "1991",
-	"Navy Seals - Part 2\0", NULL, "Ocean", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecNavyseals2RomInfo, SpecNavyseals2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // Simpsons - Bart vs. the Space Mutants, The
 
 static struct BurnRomInfo SpecSimpsonsbartvsspacemutRomDesc[] = {

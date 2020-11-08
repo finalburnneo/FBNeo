@@ -23893,11 +23893,12 @@ struct BurnDriver BurnDrvCpsCaptcommp4 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Captain Commando (Unlimited Bullet Update 2020-02-19)
-// this set is known as captcomms87 in HBMAME
+// Captain Commando (Unlimited Bullet)
+// Hack by Jing Gai
+// GOTVG 20201105
 
 static struct BurnRomInfo Captcommr1pwxRomDesc[] = {
-	{ "ccs87.10f",     0x302532, 0xc60301c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccs87.10f",     0x3024fa, 0x4f7ccdba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cc-5m.3a",      0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
 	{ "cc-7m.5a",      0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
@@ -23926,8 +23927,8 @@ STD_ROM_PICK(Captcommr1pwx)
 STD_ROM_FN(Captcommr1pwx)
 
 struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
-	"captcommr1pwx", "captcomm", NULL, NULL, "2020",
-	"Captain Commando (Unlimited Bullet Update 2020-02-19)\0", NULL, "Hack", "CPS1",
+	"captcommr1pwx", "captcomm", NULL, NULL, "2020-11-05",
+	"Captain Commando (Unlimited Bullet)\0", NULL, "Hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15361 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15362 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1955,7 +1955,7 @@ This list contains all games supported by FinalBurn Neo.
 | captcommb2	|   NW	| Captain Commando (bootleg set 2 (with 2xMSM5205), 9110| captcomm	| 1991	| bootleg	| CPS1		| unemulated graphics			|
 | captcommb3	|  	| Captain Commando (bootleg set 3 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommp4	|  	| Captain Commando (Enhanced edition 1 V 4, Hack)	| captcomm	| 2015-12-05| hack		| CPS1		| 					|
-| captcommr1pwx	|  	| Captain Commando (Unlimited Bullet Update 2020-02-19)	| captcomm	| 2020	| Hack		| CPS1		| 					|
+| captcommr1pwx	|  	| Captain Commando (Unlimited Bullet)			| captcomm	| 2020-11-05| Hack		| CPS1		| 					|
 | spec_captaindrexx|  	| Captain Drexx (HB)					| 		| 2014	| Vladimir Buren| ZX Spectrum	| 					|
 | spec_captaindynamo|  	| Captain Dynamo					| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
@@ -14643,6 +14643,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_widget	|  	| Widget (USA)						| 		| 1992	| Atlus		| Miscellaneous	| 					|
 | wiggie	|  	| Wiggie Waggie						| 		| 1994	| Promat	| Seta		| 					|
 | wildfang	|  	| Wild Fang / Tecmo Knight				| 		| 1989	| Tecmo		| Miscellaneous	| 					|
+| wildfangs	|  	| Wild Fang						| wildfang	| 1989	| Tecmo		| Miscellaneous	| 					|
 | nes_wildgunman|  	| Wild Gunman (World) (Rev A)				| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | wildplt	|  	| Wild Pilot						| 		| 1992	| Jaleco	| Miscellaneous	| 					|
 | md_wildsnak	|  	| Wild Snake (USA, Prototype)				| 		| 1994	| Bullet-Proof S| Sega Megadrive| 					|

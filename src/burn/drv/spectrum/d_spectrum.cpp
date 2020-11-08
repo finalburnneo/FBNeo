@@ -416,10 +416,11 @@ static void BuzzerAdd(INT16 data)
 
 	if (data != buzzer_last_data) {
 		INT32 len = ((double)(ZetTotalCycles() - buzzer_last_update) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
-		if (len > 0 && (len+buzzer_data_len) < buzzer_data_frame)
+		if (len > 0)
 		{
 			for (INT32 i = buzzer_data_len; i < buzzer_data_len+len; i++) {
-				Buzzer[i] = buzzer_last_data;
+				// if len goes over buzzer_data_frame, wrap around to the beginning.
+				Buzzer[i % buzzer_data_frame] = buzzer_last_data;
 			}
 			buzzer_data_len += len;
 		}
@@ -14558,7 +14559,7 @@ struct BurnDriver BurnSpecDjpuff = {
 	"DJ Puff\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecDjpuffRomInfo, SpecDjpuffRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecDjpuffRomInfo, SpecDjpuffRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

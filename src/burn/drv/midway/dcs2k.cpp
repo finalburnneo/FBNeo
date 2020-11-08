@@ -366,15 +366,15 @@ void Dcs2kMapSoundROM(void *ptr, INT32 size)
 
 void Dcs2kBoot()
 {
-    UINT8 buffer[0x1000];
-    UINT16 *base;
-    INT32 i;
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x2000); // +0x1000 for adsp paging
+	UINT16 *base = (UINT16*)pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
-    base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
+	for (INT32 i = 0; i < 0x1000; i++)
+		buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
 
-    for (i = 0; i < 0x1000; i++)
-        buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
-    Adsp2100LoadBootROM(buffer, pIntRAM);
+	Adsp2100LoadBootROM(buffer, pIntRAM);
+
+	BurnFree(buffer);
 }
 
 void Dcs2kReset()

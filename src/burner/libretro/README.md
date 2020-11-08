@@ -98,7 +98,7 @@ This libretro port also support various features which are usually buggy or abse
 
 ### How do i use cheat code ?
 From a libretro point of view, there should be partial support through the API relying on main ram exposition. 
-Otherwise if you put native FBNeo cheat .ini files into `SYSTEM_DIRECTORY/fbneo/cheats`, they will be translated to core options (NB : MAME/Nebula formats don't work yet).
+Otherwise if you put native FBNeo cheat .ini files (there is a pack available [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)) into `SYSTEM_DIRECTORY/fbneo/cheats`, they will be translated to core options (NB : MAME/Nebula formats don't work yet).
 
 ### Neogeo CD doesn't work, why ?
 There are several things to know :

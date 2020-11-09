@@ -183,6 +183,11 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength)
 	// theory: check 3x a frame w/DcsCheckIRQ(), if mixer_pos gets below
 	// samples_from - run IRQ to get more samples. -dink oct.29, 2020
 
+	if (mixer_pos == 0) { // nothing to output
+		memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
+		return;
+	}
+
 	for (INT32 j = 0; j < nSegmentLength; j++)
 	{
 		INT32 k = (samples_from * j) / nBurnSoundLen;
@@ -366,15 +371,15 @@ void Dcs2kMapSoundROM(void *ptr, INT32 size)
 
 void Dcs2kBoot()
 {
-    UINT8 buffer[0x1000];
-    UINT16 *base;
-    INT32 i;
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x2000); // +0x1000 for adsp paging
+	UINT16 *base = (UINT16*)pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
-    base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
+	for (INT32 i = 0; i < 0x1000; i++)
+		buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
 
-    for (i = 0; i < 0x1000; i++)
-        buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
-    Adsp2100LoadBootROM(buffer, pIntRAM);
+	Adsp2100LoadBootROM(buffer, pIntRAM);
+
+	BurnFree(buffer);
 }
 
 void Dcs2kReset()
@@ -393,6 +398,7 @@ void Dcs2kReset()
     nTotalCycles = 0ULL;
     nNextIRQCycle = ~0ULL;
 
+	nCurrentBank = 0;
     nOutputData = 0;
     nInputData = 0;
     nLatchControl = 0;

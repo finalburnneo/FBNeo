@@ -215,7 +215,7 @@ static tilemap_callback( text )
 {
 	UINT16 *ram = (UINT16*)DrvTxRAM;
 
-	UINT16 code = ram[offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(0, code & 0xfff, code >> 12, 0);
 }
@@ -224,7 +224,7 @@ static tilemap_callback( background )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	UINT16 code = ram[offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(1, code & 0xfff, code >> 12, 0);
 }
@@ -233,7 +233,7 @@ static tilemap_callback( foreground )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
 
-	UINT16 code = ram[offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(2, code & 0xfff, code >> 12, 0);
 }
@@ -421,12 +421,12 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x16/2;offs < (0x1000/2)-4;offs += 4)
 	{
-		if (ram[offs] & 0x2000) break;
-		INT32 code  = (ram[offs+3] & 0xfff);
-		INT32 color = (ram[offs+2] >> 12) & color_mask;
-		INT32 sx    = (ram[offs+2] & 0x1ff) - 20;
-		INT32 sy    = (0xff - (ram[offs] & 0xff)) - (15 + 16);
-		INT32 flipx = (ram[offs] & 0x4000) >> 14;
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x2000) break;
+		INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0xfff);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> 12) & color_mask;
+		INT32 sx    = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x1ff) - 20;
+		INT32 sy    = (0xff - (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xff)) - (15 + 16);
+		INT32 flipx = (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x4000) >> 14;
 
 		draw_single_sprite(code+0, color, flipx ? (sx+16) : (sx), sy, flipx, 0);
 		draw_single_sprite(code+1, color, flipx ? (sx) : (sx+16), sy, flipx, 0);

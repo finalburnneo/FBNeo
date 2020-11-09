@@ -195,7 +195,7 @@ static tilemap_callback( bg )
 	UINT16 *vram = (UINT16*)(DrvVidRAM0 + 0x0000);
 	UINT16 *cram = (UINT16*)(DrvVidRAM1 + 0x0000);
 
-	TILE_SET_INFO(0, vram[offs], cram[offs], 0);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(vram[offs]), BURN_ENDIAN_SWAP_INT16(cram[offs]), 0);
 }
 
 static tilemap_callback( fg )
@@ -203,7 +203,7 @@ static tilemap_callback( fg )
 	UINT16 *vram = (UINT16*)(DrvVidRAM0 + 0x1000);
 	UINT16 *cram = (UINT16*)(DrvVidRAM1 + 0x1000);
 
-	TILE_SET_INFO(0, vram[offs], cram[offs], 0);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(vram[offs]), BURN_ENDIAN_SWAP_INT16(cram[offs]), 0);
 }
 
 static INT32 DrvDoReset()
@@ -346,9 +346,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		UINT8 r = (p[i] >>  0) & 0x1f;
-		UINT8 g = (p[i] >>  5) & 0x1f;
-		UINT8 b = (p[i] >> 10) & 0x1f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -367,9 +367,9 @@ static void draw_sprites()
 	{
 		INT32 dimx, dimy, tile_xinc, tile_xstart, flipx, y0;
 
-		INT32 y = m_videoram[(0xf800/2) + offs + 0];
-		INT32 x = m_videoram[(0xf800/2) + offs + 1];
-		INT32 dim = m_videoram2[(0xf800/2) + offs + 0];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(m_videoram[(0xf800/2) + offs + 0]);
+		INT32 x = BURN_ENDIAN_SWAP_INT16(m_videoram[(0xf800/2) + offs + 1]);
+		INT32 dim = BURN_ENDIAN_SWAP_INT16(m_videoram2[(0xf800/2) + offs + 0]);
 
 		INT32 srcpg = ((y & 0xf000) >> 12) + ((x & 0x0200) >> 5); // src page
 		INT32 srcx = ((y >> 8) & 0xf) * 2;                    // src col
@@ -416,8 +416,8 @@ static void draw_sprites()
 			for (int dx = 0; dx < dimx * 8; dx += 8)
 			{
 				INT32 addr = (srcpg * 0x20 * 0x20) + ((srcx + tile_x) & 0x1f) * 0x20 + ((srcy + tile_y) & 0x1f);
-				INT32 tile = m_videoram[addr];
-				INT32 attr = m_videoram2[addr];
+				INT32 tile = BURN_ENDIAN_SWAP_INT16(m_videoram[addr]);
+				INT32 attr = BURN_ENDIAN_SWAP_INT16(m_videoram2[addr]);
 
 				INT32 sx = x + dx;
 				INT32 sy = (y + dy) & 0xff;

@@ -244,14 +244,14 @@ static INT32 DrvDoReset()
 
 static tilemap_callback( bg )
 {
-	INT32 code = *((UINT16*)(DrvVidRAM[0] + offs * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(0, code, 0, 0);
 }
 
 static tilemap_callback( fg )
 {
-	INT32 code = *((UINT16*)(DrvVidRAM[1] + offs * 2));
+	INT32 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[1] + offs * 2)));
 
 	TILE_SET_INFO(1, code, 0, 0);
 }

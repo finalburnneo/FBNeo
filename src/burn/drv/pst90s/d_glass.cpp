@@ -154,7 +154,7 @@ static void __fastcall glass_write_word(UINT32 address, UINT16 data)
 		case 0x108002:
 		case 0x108004:
 		case 0x108006:
-			*((UINT16*)(DrvVidRegs + (address & 0x06))) = data;
+			*((UINT16*)(DrvVidRegs + (address & 0x06))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x700008:
@@ -245,8 +245,8 @@ static tilemap_callback( screen0 )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
 
-	UINT16 data = ram[(offs << 1) + 0];
-	UINT16 attr = ram[(offs << 1) + 1];
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[(offs << 1) + 0]);
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(ram[(offs << 1) + 1]);
 	UINT32 code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
 
 	TILE_SET_INFO(0, code, attr, TILE_FLIPYX(attr >> 6));
@@ -256,8 +256,8 @@ static tilemap_callback( screen1 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x1000);
 
-	UINT16 data = ram[(offs << 1) + 0];
-	UINT16 attr = ram[(offs << 1) + 1];
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[(offs << 1) + 0]);
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(ram[(offs << 1) + 1]);
 	UINT32 code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
 
 	TILE_SET_INFO(0, code, attr, TILE_FLIPYX(attr >> 6));
@@ -448,11 +448,11 @@ static void draw_sprites()
 
 	for (INT32 i = 3; i < (0x1000 - 6) / 2; i += 4)
 	{
-		INT32 sx    =(ram[i + 2] & 0x01ff) - 15;
-		INT32 sy    = ((240 - (ram[i] & 0x00ff)) & 0x00ff) - 16;
-		INT32 code  = ram[i + 3];
-		INT32 color =(ram[i + 2] & 0x1e00) >> 9;
-		INT32 attr  = ram[i];
+		INT32 sx    =(BURN_ENDIAN_SWAP_INT16(ram[i + 2]) & 0x01ff) - 15;
+		INT32 sy    = ((240 - (BURN_ENDIAN_SWAP_INT16(ram[i]) & 0x00ff)) & 0x00ff) - 16;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[i + 3]);
+		INT32 color =(BURN_ENDIAN_SWAP_INT16(ram[i + 2]) & 0x1e00) >> 9;
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[i]);
 
 		INT32 flipx = attr & 0x4000;
 		INT32 flipy = attr & 0x8000;
@@ -484,10 +484,10 @@ static INT32 DrvDraw()
 
 	UINT16 *vreg = (UINT16*)DrvVidRegs;
 
-	GenericTilemapSetScrollY(0, vreg[0]);
-	GenericTilemapSetScrollX(0, vreg[1] + 4);
-	GenericTilemapSetScrollY(1, vreg[2]);
-	GenericTilemapSetScrollX(1, vreg[3]);
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(vreg[0]));
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(vreg[1]) + 4);
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(vreg[2]));
+	GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(vreg[3]));
 
 	BurnTransferClear();
 

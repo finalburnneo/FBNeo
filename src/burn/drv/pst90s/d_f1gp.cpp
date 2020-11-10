@@ -238,7 +238,7 @@ STDDIPINFO(F1gp2)
 
 static inline void expand_dynamic_tiles(INT32 offset)
 {
-	UINT16 data = *((UINT16*)(DrvZoomRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvZoomRAM + offset)));
 
 	offset <<= 1;
 
@@ -261,9 +261,9 @@ void __fastcall f1gp_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xfc0000) == 0xc00000) {
 		UINT16 *p = (UINT16*)(DrvZoomRAM + (address & 0x3fffe));
 
-		if (p[0] == data) return;
+		if (p[0] == BURN_ENDIAN_SWAP_INT16(data)) return;
 
-		p[0] = data;
+		p[0] = BURN_ENDIAN_SWAP_INT16(data);
 
 		expand_dynamic_tiles(address & 0x3fffe);
 
@@ -273,9 +273,9 @@ void __fastcall f1gp_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xff8000) == 0xd00000) {
 		UINT16 *p = (UINT16*)(DrvRozVidRAM + (address & 0x1ffe));
 
-		if (p[0] == data) return;
+		if (p[0] == BURN_ENDIAN_SWAP_INT16(data)) return;
 
-		p[0] = data;
+		p[0] = BURN_ENDIAN_SWAP_INT16(data);
 
 		DrvBgDirty[(address >> 1) & 0xfff] = 1;
 
@@ -770,10 +770,10 @@ static void draw_foreground(INT32 transp)
 		sy -= *DrvFgScrollY;
 		if (sy < -7) sy += 256;
 	
-		INT32 code  = vram[offs] & 0x7fff;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x7fff;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 flipy = vram[offs] & 0x8000;
+		INT32 flipy = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x8000;
 
 		if (transp) {
 			if (flipy) {
@@ -826,13 +826,13 @@ static void draw_16x16_zoom(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32
 	{
 		INT32 yy = sy + y;
 
-		if (ym[(y ^ fy) % 16] == -1 || yy < 0 || yy >= nScreenHeight) continue;
+		if (BURN_ENDIAN_SWAP_INT16(ym[(y ^ fy) % 16]) == -1 || yy < 0 || yy >= nScreenHeight) continue;
 
-		INT32 yyz = (ym[(y ^ fy) % 16] << 4);
+		INT32 yyz = (BURN_ENDIAN_SWAP_INT16(ym[(y ^ fy) % 16]) << 4);
 
 		for (INT32 x = 0; x < 16; x++)
 		{
-			INT16 xxz = xm[(x ^ fx) % 16];
+			INT16 xxz = BURN_ENDIAN_SWAP_INT16(xm[(x ^ fx) % 16]);
 			if (xxz == -1) continue;
 
 			INT32 xx = sx + x;
@@ -854,25 +854,25 @@ static void f1gp_draw_sprites(UINT8 *ram0, UINT8 *ram1, UINT8 *gfx, INT32 colo)
 
 	static const INT32 zoomtable[16] = { 0,7,14,20,25,30,34,38,42,46,49,52,54,57,59,61 };
 
-	first = 4 * spram[0x1fe];
+	first = 4 * BURN_ENDIAN_SWAP_INT16(spram[0x1fe]);
 
 	for (attr_start = first; attr_start < 0x0200; attr_start += 4)
 	{
 		INT32 map_start;
 		INT32 ox,oy,x,y,xsize,ysize,zoomx,zoomy,flipx,flipy,color;
 
-		if (!(spram[attr_start + 2] & 0x0080)) continue;
+		if (!(BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x0080)) continue;
 
-		oy    =  spram[attr_start + 0] & 0x01ff;
-		zoomy = (spram[attr_start + 0] & 0xf000) >> 12;
-		ox    =  spram[attr_start + 1] & 0x01ff;
-		zoomx = (spram[attr_start + 1] & 0xf000) >> 12;
-		xsize = (spram[attr_start + 2] & 0x0700) >> 8;
-		flipx =  spram[attr_start + 2] & 0x0800;
-		ysize = (spram[attr_start + 2] & 0x7000) >> 12;
-		flipy =  spram[attr_start + 2] & 0x8000;
-		color = (spram[attr_start + 2] & 0x000f) | colo;
-		map_start = spram[attr_start + 3];
+		oy    =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 0]) & 0x01ff;
+		zoomy = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 0]) & 0xf000) >> 12;
+		ox    =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 1]) & 0x01ff;
+		zoomx = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 1]) & 0xf000) >> 12;
+		xsize = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x0700) >> 8;
+		flipx =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x0800;
+		ysize = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x7000) >> 12;
+		flipy =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x8000;
+		color = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x000f) | colo;
+		map_start = BURN_ENDIAN_SWAP_INT16(spram[attr_start + 3]);
 
 		zoomx = 16 - zoomtable[zoomx]/8;
 		zoomy = 16 - zoomtable[zoomy]/8;
@@ -891,7 +891,7 @@ static void f1gp_draw_sprites(UINT8 *ram0, UINT8 *ram1, UINT8 *gfx, INT32 colo)
 				if (flipx) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
 				else sx = ((ox + zoomx * x + 16) & 0x1ff) - 16;
 
-				code = spram2[map_start & 0x1fff] & 0x1fff; 
+				code = BURN_ENDIAN_SWAP_INT16(spram2[map_start & 0x1fff]) & 0x1fff; 
 				map_start++;
 
 				draw_16x16_zoom(gfx, code, color, sx, sy-8, zoomx, zoomy, flipx, flipy);
@@ -911,29 +911,29 @@ static void f1gp2_draw_sprites()
 	UINT16 *spram  = (UINT16*)DrvSprVRAM1;
 	UINT16 *spram2 = (UINT16*)DrvSprCGRAM1;
 
-	while (offs < 0x0400 && (spram[offs] & 0x4000) == 0)
+	while (offs < 0x0400 && (BURN_ENDIAN_SWAP_INT16(spram[offs]) & 0x4000) == 0)
 	{
 		INT32 attr_start;
 		INT32 map_start;
 		INT32 ox,oy,x,y,xsize,ysize,zoomx,zoomy,flipx,flipy,color;
 
-		attr_start = 4 * (spram[offs++] & 0x01ff);
+		attr_start = 4 * (BURN_ENDIAN_SWAP_INT16(spram[offs++]) & 0x01ff);
 
-		oy    =  spram[attr_start + 0] & 0x01ff;
-		ysize = (spram[attr_start + 0] & 0x0e00) >> 9;
-		zoomy = (spram[attr_start + 0] & 0xf000) >> 12;
-		ox    =  spram[attr_start + 1] & 0x01ff;
-		xsize = (spram[attr_start + 1] & 0x0e00) >> 9;
-		zoomx = (spram[attr_start + 1] & 0xf000) >> 12;
-		flipx =  spram[attr_start + 2] & 0x4000;
-		flipy =  spram[attr_start + 2] & 0x8000;
-		color = (spram[attr_start + 2] & 0x1f00) >> 8;
-		map_start = spram[attr_start + 3] & 0x7fff;
+		oy    =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 0]) & 0x01ff;
+		ysize = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 0]) & 0x0e00) >> 9;
+		zoomy = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 0]) & 0xf000) >> 12;
+		ox    =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 1]) & 0x01ff;
+		xsize = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 1]) & 0x0e00) >> 9;
+		zoomx = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 1]) & 0xf000) >> 12;
+		flipx =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x4000;
+		flipy =  BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x8000;
+		color = (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x1f00) >> 8;
+		map_start = BURN_ENDIAN_SWAP_INT16(spram[attr_start + 3]) & 0x7fff;
 
 		zoomx = 32 - zoomx;
 		zoomy = 32 - zoomy;
 
-		if (spram[attr_start + 2] & 0x20ff) color = GetCurrentFrame() & 0x0f; // good enough?
+		if (BURN_ENDIAN_SWAP_INT16(spram[attr_start + 2]) & 0x20ff) color = GetCurrentFrame() & 0x0f; // good enough?
 
 		for (y = 0;y <= ysize;y++)
 		{
@@ -949,7 +949,7 @@ static void f1gp2_draw_sprites()
 				if (flipx) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 				else sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 
-				code = spram2[map_start & 0x3fff] & 0x3fff;
+				code = BURN_ENDIAN_SWAP_INT16(spram2[map_start & 0x3fff]) & 0x3fff;
 				map_start++;
 
 				if (*flipscreen) {
@@ -976,8 +976,8 @@ static void predraw_roz_tile(INT32 offset)
 
 	UINT16 *dst = DrvBgTmp + (sy * 1024) + sx;
 
-	INT32 code = (data & 0x7ff) | (*roz_bank << 11);
-	INT32 color = ((data >> 12) << 4) | ((nScreenStartY) ? 0x300 : 0x100);
+	INT32 code = (BURN_ENDIAN_SWAP_INT16(data) & 0x7ff) | (*roz_bank << 11);
+	INT32 color = ((BURN_ENDIAN_SWAP_INT16(data) >> 12) << 4) | ((nScreenStartY) ? 0x300 : 0x100);
 	UINT8 *src = DrvGfxROM3 + (code << 8);
 
 	for (INT32 y = 0; y < 16; y++) {
@@ -994,7 +994,7 @@ static void predraw_background()
 {
 	UINT16 *ptr = (UINT16*)DrvRozVidRAM;
 	for (INT32 i = 0; i < 0x2000; i+=2, ptr++) {
-		if (DrvBgDirty[i/2] || DrvBgTileDirty[*ptr & 0x7ff]) {
+		if (DrvBgDirty[i/2] || DrvBgTileDirty[BURN_ENDIAN_SWAP_INT16(*ptr) & 0x7ff]) {
 			predraw_roz_tile(i);
 			DrvBgDirty[i/2] = 0;
 		}
@@ -1068,9 +1068,9 @@ static void recalculate_palette()
 		UINT8 r,g,b;
 		UINT16 *p = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x400; i++) {
-			r = (p[i] >> 10) & 0x1f;
-			g = (p[i] >>  5) & 0x1f;
-			b = (p[i] >>  0) & 0x1f;
+			r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+			g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+			b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 			r = (r << 3) | (r >> 2);
 			g = (g << 3) | (g >> 2);

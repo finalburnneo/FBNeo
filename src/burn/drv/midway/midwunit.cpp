@@ -28,6 +28,7 @@ static UINT8 *DrvRAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvPalette;
 static UINT32 *DrvPaletteB;
+static UINT32 *DrvPaletteB2;
 static UINT8 *DrvVRAM;
 static UINT16 *DrvVRAM16;
 
@@ -81,6 +82,7 @@ static INT32 MemIndex()
 	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
+	DrvPaletteB2	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 
@@ -500,7 +502,7 @@ static void HandleDCSIRQ(INT32 line)
 INT32 WolfUnitFrame()
 {
 	if (nWolfReset) WolfDoReset();
-	
+
 	MakeInputs();
 
 	TMS34010NewFrame();
@@ -520,17 +522,21 @@ INT32 WolfUnitFrame()
 		sound_sync(); // sync to main cpu
 		if (i == nInterleave - 1)
 			sound_sync_end();
-    }
+	}
 
 	if (pBurnDraw) {
 		WolfUnitDraw();
 	}
-	
-	if (pBurnSoundOut) {
-        Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
-    }
 
-    return 0;
+	// Buffering palette for 1 frame, fix umk3pb1 palette glitch when
+	// transitioning from title screen to select screen
+	memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32));
+
+	if (pBurnSoundOut) {
+		Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	return 0;
 }
 
 INT32 WolfUnitExit()
@@ -553,7 +559,7 @@ INT32 WolfUnitDraw()
 	}
 
 	// TMS34010 renders scanlines direct to pTransDraw
-	BurnTransferCopy(DrvPaletteB);
+	BurnTransferCopy(DrvPaletteB2);
 
 	return 0;
 }

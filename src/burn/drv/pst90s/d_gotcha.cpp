@@ -426,7 +426,7 @@ static void draw_layer(UINT8 *ram, INT32 col, INT32 scrollx, INT32 scrolly, INT3
 
 		INT32 ofst = (offs & 0x1f) | ((offs & 0x7c0)>>1) | ((offs & 0x20) << 5);
 
-		INT32 attr = vram[ofst];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
 		INT32 code = (attr & 0x3ff) | (DrvGfxBank[(attr >> 10) & 3] << 10);
 		INT32 color = (attr >> 12) | col;
 
@@ -440,13 +440,13 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x800/2; offs += 4)
 	{
-		INT32 sx     = 0x13b - ((vram[offs + 2] + 0x10) & 0x1ff);
-		INT32 sy     = vram[offs + 0] + 8;
-		INT32 code   = vram[offs + 1] & 0x3fff;
-		INT32 color  = vram[offs + 2] >> 9;
-		INT32 height = 1 << ((vram[offs + 0] & 0x0600) >> 9);
-		INT32 flipx  = vram[offs + 0] & 0x2000;
-		INT32 flipy  = vram[offs + 0] & 0x4000;
+		INT32 sx     = 0x13b - ((BURN_ENDIAN_SWAP_INT16(vram[offs + 2]) + 0x10) & 0x1ff);
+		INT32 sy     = BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) + 8;
+		INT32 code   = BURN_ENDIAN_SWAP_INT16(vram[offs + 1]) & 0x3fff;
+		INT32 color  = BURN_ENDIAN_SWAP_INT16(vram[offs + 2]) >> 9;
+		INT32 height = 1 << ((BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) & 0x0600) >> 9);
+		INT32 flipx  = BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) & 0x2000;
+		INT32 flipy  = BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) & 0x4000;
 
 		for (INT32 y = 0; y < height; y++)
 		{
@@ -476,7 +476,7 @@ static INT32 DrvDraw()
 		UINT16 *pal = (UINT16*)DrvPalRAM;
 
 		for (INT32 i = 0; i < 0x600/2; i++) {
-			INT32 d = pal[i];
+			INT32 d = BURN_ENDIAN_SWAP_INT16(pal[i]);
 
 			r = (d >> 10) & 0x1f;
 			g = (d >>  5) & 0x1f;

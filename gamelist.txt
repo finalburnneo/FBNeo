@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15362 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15376 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3944,6 +3944,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_tazmarsu	|  	| Escape from Mars Starring Taz (USA)			| md_tazmars	| 1994	| Sega		| Sega Megadrive| 					|
 | cv_mindmstr	|  	| Escape from the Mindmaster (Prototype)		| 		| 1983	| Epyx		| ColecoVision	| 					|
 | eprom		|  	| Escape from the Planet of the Robot Monsters (set 1)	| 		| 1989	| Atari Games	| Miscellaneous	| 					|
+| spec_escplanetrobotmon|  	| Escape from the Planet of the Robot Monsters	| 		| 1990	| Domark	| ZX Spectrum	| 					|
 | esckids	|  	| Escape Kids (Asia, 4 Players)				| 		| 1991	| Konami	| GX975		| 					|
 | esckidsj	|  	| Escape Kids (Japan, 2 Players)			| esckids	| 1991	| Konami	| GX975		| 					|
 | nes_eskimbobdeledi|  	| Eskimo Bob Deluxe Edition (HB)			| 		| 2019	| Spoony Bard Pr| Miscellaneous	| 					|
@@ -4929,6 +4930,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gauntletii|  	| Gauntlet II (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
 | gaunt2	|  	| Gauntlet II						| 		| 1986	| Atari Games	| Atari Gauntlet| 					|
 | spec_gauntlet3|  	| Gauntlet III - The Final Quest			| 		| 1991	| U.S. Gold	| ZX Spectrum	| 					|
+| spec_gauntlet2|  	| Gauntlet II						| 		| 1987	| U.S. Gold	| ZX Spectrum	| 					|
 | md_gauntlt4a	|  	| Gauntlet IV (Euro, USA, 199308)			| md_gauntlt4	| 1993	| Tengen	| Sega Megadrive| 					|
 | md_gauntlt4	|  	| Gauntlet IV (Euro, USA, 199309)			| 		| 1993	| Tengen	| Sega Megadrive| 					|
 | spec_gauntlet	|  	| Gauntlet						| 		| 1987	| U.S. Gold	| ZX Spectrum	| 					|
@@ -6896,6 +6898,7 @@ This list contains all games supported by FinalBurn Neo.
 | kyustrkr	|  	| Last Striker / Kyuukyoku no Striker			| 		| 1989	| East Technolog| Taito X	| 					|
 | lastsurvd	|  	| Last Survivor (FD1094 317-0083 decrypted)		| lastsurv	| 1987	| Sega		| X-Board	| 					|
 | lastsurv	|  	| Last Survivor (FD1094 317-0083)			| 		| 1987	| Sega		| X-Board	| 					|
+| spec_lastvampire|  	| Last Vampire, The					| 		| 1990	| Atlantis	| ZX Spectrum	| 					|
 | nes_lawnmower	|  	| Lawn Mower (HB)					| 		| 2011	| Shiru		| Miscellaneous	| 					|
 | nes_layla	|  	| Layla (Japan)						| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_lazyjones	|  	| Lazy Jones						| 		| 1985	| Terminal Softw| MSX		| Crashes... check later		|
@@ -7718,6 +7721,8 @@ This list contains all games supported by FinalBurn Neo.
 | mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
 | md_mwalk1	|  	| Michael Jackson's Moonwalker (World)			| md_mwalk	| 1990	| Sega		| Sega Megadrive| 					|
 | md_mwalk	|  	| Michael Jackson's Moonwalker (World, Rev. A)		| 		| 1990	| Sega		| Sega Megadrive| 					|
+| spec_michelfutbolchamp|  	| Michel Futbol Master - Championship		| 		| 1989	| Dinamic	| ZX Spectrum	| 					|
+| spec_michelfutbolskills|  	| Michel Futbol Master - Super Skills		| 		| 1989	| Dinamic	| ZX Spectrum	| 					|
 | md_mickmack	|  	| Mick & Mack as the Global Gladiators (Euro)		| 		| 1993	| Virgin Games	| Sega Megadrive| 					|
 | md_mickmacku	|  	| Mick & Mack as the Global Gladiators (USA)		| md_mickmack	| 1992	| Virgin Games	| Sega Megadrive| 					|
 | md_mickmackup	|  	| Mick & Mack as the Global Gladiators (USA, Prototype)	| md_mickmack	| 1992	| Virgin Games	| Sega Megadrive| 					|
@@ -8292,6 +8297,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_blodwolf	|  	| Narazumono Sentai Butai - Bloody Wolf			| 		| 1989	| Data East	| PC Engine	| 					|
 | nes_narc	|  	| NARC (USA)						| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | spec_narcopol	|  	| Narco Police (128K)					| 		| 1991	| Rajsoft	| ZX Spectrum	| 					|
+| spec_narc	|  	| NARC							| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | md_narnia3	|  	| Narnia 3 (Rus)					| md_galahad	| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_naruto	|  	| Naruto (Rus)						| md_3ninja	| 199?	| <unknown>	| Sega Megadrive| 					|
 | nastar	|  	| Nastar (World)					| 		| 1988	| Taito Corporat| Taito B System| 					|
@@ -11124,6 +11130,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_silvi	|  	| Silviana - Ai Ippai no Little Angel (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_simcity	|  	| Sim City (48K)					| 		| 1989	| Infogrames	| ZX Spectrum	| 					|
 | nes_simcity	|  	| Sim City (Prototype)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| spec_simpsonsbartvsspacemut|  	| Simpsons - Bart vs. the Space Mutants, The	| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_simpsbarvsspamu|  	| Simpsons, The - Bart vs. the Space Mutants (USA) (Rev | 		| 1991	| Acclaim	| Miscellaneous	| 					|
 | nes_simpsbarvswor|  	| Simpsons, The - Bart vs. the World (USA)		| 		| 1991	| Acclaim	| Miscellaneous	| 					|
 | nes_simpsbarmeeradman|  	| Simpsons, The - Bartman Meets Radioactive Man (USA)	| 		| 1992	| Acclaim	| Miscellaneous	| 					|
@@ -11155,6 +11162,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_skateboy	|  	| Skate Boy (Spain) (Gluk Video) (Unl)			| 		| 1992	| Gluk Video	| Miscellaneous	| 					|
 | nes_skateordie|  	| Skate or Die (USA)					| 		| 1988	| Ultra Games	| Miscellaneous	| 					|
 | nes_skateordie2|  	| Skate or Die 2 - The Search for Double Trouble (USA)	| 		| 1990	| Electronic Art| Miscellaneous	| 					|
+| spec_skateball|  	| Skateball						| 		| 1988	| Ubi Soft	| ZX Spectrum	| 					|
 | cskater	|  	| Skater (DECO Cassette) (Japan)			| 		| 1983	| Data East Corp| Cassette Syste| 					|
 | skelagon	| D NW	| Skelagon						| sfx		| 1983	| Nichibutsu USA| Galaxian	| Bad Dump				|
 | md_skelkrew	|  	| Skeleton Krew (Euro)					| 		| 1995	| Core Design	| Sega Megadrive| 					|
@@ -11242,6 +11250,7 @@ This list contains all games supported by FinalBurn Neo.
 | slyspy2	|  	| Sly Spy (US revision 2)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
 | slyspy3	|  	| Sly Spy (US revision 3)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
 | slyspy	|  	| Sly Spy (US revision 4)				| secretag	| 1989	| Data East USA	| DEC0		| 					|
+| spec_slyspy	|  	| Sly Spy - Secret Agent				| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | msx_smackwac	|  	| Smack Wacker (Euro)					| 		| 1986	| Eaglesoft	| MSX		| 					|
 | md_smartmouse	|  	| Smart Mouse (HB)					| 		| 199X	| Chuanpu	| Sega Megadrive| 					|
 | fds_smashpingpong|  	| Smash Ping Pong (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -11891,6 +11900,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_steeltal	|  	| Steel Talons (Euro, USA)				| 		| 1992	| Tengen	| Sega Megadrive| 					|
 | md_steeltalj	|  	| Steel Talons (Jpn, Kor)				| md_steeltal	| 1993	| Tengen	| Sega Megadrive| 					|
 | md_steeltalp	|  	| Steel Talons (USA, Prototype)				| md_steeltal	| 1992	| Tengen	| Sega Megadrive| 					|
+| spec_steg	|  	| Steg							| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | nes_steinsgate|  	| Steins Gate (HB)					| 		| 2018	| Chiyomaru	| Miscellaneous	| 					|
 | msx_stepup	|  	| Step Up (Jpn)						| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_stepupa	|  	| Step Up (Jpn, Alt)					| msx_stepup	| 1983	| HAL Kenkyuujo	| MSX		| 					|
@@ -13870,6 +13880,7 @@ This list contains all games supported by FinalBurn Neo.
 | toobin	|  	| Toobin' (rev 3)					| 		| 1988	| Atari Games	| Miscellaneous	| 					|
 | nes_toobin	|  	| Toobin' (USA)						| 		| 1989	| Tengen	| Miscellaneous	| 					|
 | msx_toobin	|  	| Toobin'						| 		| 1989	| Domark	| MSX		| 					|
+| spec_toobin	|  	| Toobin'						| 		| 1989	| Domark	| ZX Spectrum	| 					|
 | md_topfight	|  	| Top Fighter 2000 MK VIII				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topf2k5	|  	| Top Fighter 2005					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_topgear2	|  	| Top Gear 2 (USA)					| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
@@ -14499,6 +14510,7 @@ This list contains all games supported by FinalBurn Neo.
 | vsgongf	|  	| VS Gong Fight						| 		| 1984	| Kaneko	| Miscellaneous	| 					|
 | ryouran	|  	| VS Mahjong Otome Ryouran				| 		| 1998	| Electro Design| Super Kaneko N| 					|
 | fds_vsexcitebike|  	| Vs. Excitebike (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| spec_vocean	|  	| V							| 		| 1986	| Ocean		| ZX Spectrum	| 					|
 | vulcan	|  	| Vulcan Venture (New)					| 		| 1988	| Konami	| GX785		| 					|
 | vulcana	|  	| Vulcan Venture (Old)					| vulcan	| 1988	| Konami	| GX785		| 					|
 | vulcanb	|  	| Vulcan Venture (Oldest)				| vulcan	| 1988	| Konami	| GX785		| 					|
@@ -14633,6 +14645,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_whereintimiscasa|  	| Where in Time is Carmen Sandiego (USA)		| 		| 1991	| Konami	| Miscellaneous	| 					|
 | md_carmntimb	|  	| Where in Time Is Carmen Sandiego? (Bra)		| md_carmntim	| 199?	| Tec Toy	| Sega Megadrive| 					|
 | md_carmntim	|  	| Where in Time Is Carmen Sandiego? (Euro, USA)		| 		| 1992	| Electronic Art| Sega Megadrive| 					|
+| spec_wheretimestoodstill|  	| Where Time Stood Still			| 		| 1988	| Ocean		| ZX Spectrum	| 					|
 | nes_whereswaldo|  	| Where's Waldo (USA)					| 		| 1991	| THQ		| Miscellaneous	| 					|
 | md_whiprush	|  	| Whip Rush (USA)					| 		| 1990	| Renovation	| Sega Megadrive| 					|
 | md_whiprushj	|  	| Whip Rush - Wakusei Voltegas no Nazo (Jpn)		| md_whiprush	| 1990	| Sega		| Sega Megadrive| 					|
@@ -14718,6 +14731,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_wizlair	|  	| Wizard's Lair (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
 | nes_wizarwar	|  	| Wizards & Warriors (USA)				| 		| 1987	| Acclaim	| Miscellaneous	| 					|
 | nes_wizarwariii|  	| Wizards & Warriors III - Kuros - Visions of Power (USA| 		| 1992	| Acclaim	| Miscellaneous	| 					|
+| spec_wizball	|  	| Wizball						| 		| 1987	| Ocean		| ZX Spectrum	| 					|
 | wiz		|  	| Wiz							| 		| 1985	| Seibu Kaihatsu| Miscellaneous	| 					|
 | wizzquiz	|   NW	| Wizz Quiz (Konami version)				| 		| 1985	| Zilec-Zenitone| Miscellaneous	| 					|
 | wizzquiza	|   NW	| Wizz Quiz (version 4)					| wizzquiz	| 1985	| Zilec-Zenitone| Miscellaneous	| 					|

@@ -869,7 +869,7 @@ static void __fastcall gaelco2_sound_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall gaelco2_sound_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvSprRAM + (address & 0xfffe))) = data;
+	*((UINT16*)(DrvSprRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if (address >= 0x202890 && address <= 0x2028ff) {
 		gaelcosnd_w((address - 0x202890) >> 1, data);
@@ -890,7 +890,7 @@ static UINT16 __fastcall gaelco2_sound_read_word(UINT32 address)
 	if (address >= 0x202890 && address <= 0x2028ff) {
 		return gaelcosnd_r((address - 0x202890) >> 1);
 	}
-	return *((UINT16*)(DrvSprRAM + (address & 0xfffe)));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvSprRAM + (address & 0xfffe))));
 }
 
 static void dallas_sharedram_write(INT32 address, UINT8 data)
@@ -925,7 +925,7 @@ static void palette_update(INT32 offset)
 
 	offset = (offset & 0x1ffe);
 
-	UINT16 color = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (color >> 10) & 0x1f;
 	INT32 g = (color >>  5) & 0x1f;
@@ -956,7 +956,7 @@ static void __fastcall gaelco2_palette_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall gaelco2_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0x1ffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	palette_update(address);
 }
 
@@ -1388,7 +1388,7 @@ static void draw_layer(INT32 layer)
 
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 
-	INT32 scrolly = (ram[(0x2800 + (layer * 4))/2] + 0x01 - global_y_offset) & 0x1ff;
+	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(ram[(0x2800 + (layer * 4))/2]) + 0x01 - global_y_offset) & 0x1ff;
 
 	INT32 xoffset = 0;
 
@@ -1396,7 +1396,7 @@ static void draw_layer(INT32 layer)
 
 	if ((DrvVidRegs[layer] & 0x8000) == 0)
 	{
-		INT32 scrollx = (ram[(0x2802 + (layer * 4))/2] + 0x10 + (layer ? 0 : 4)) & 0x3ff;
+		INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(ram[(0x2802 + (layer * 4))/2]) + 0x10 + (layer ? 0 : 4)) & 0x3ff;
 
 		for (INT32 offs = 0; offs < 64 * 32; offs++)
 		{
@@ -1412,8 +1412,8 @@ static void draw_layer(INT32 layer)
 
 			if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-			INT32 attr0 = ram[offset + (offs * 2) + 0];
-			INT32 attr1 = ram[offset + (offs * 2) + 1];
+			INT32 attr0 = BURN_ENDIAN_SWAP_INT16(ram[offset + (offs * 2) + 0]);
+			INT32 attr1 = BURN_ENDIAN_SWAP_INT16(ram[offset + (offs * 2) + 1]);
 
 			INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
 
@@ -1447,12 +1447,12 @@ static void draw_layer(INT32 layer)
 			INT32 yy = (sy + scrolly) & 0x1ff;
 			INT32 yy2 = (game_select == 4) ? yy : sy;
 
-			INT32 scrollx = (ram[(0x2802 + (layer * 4))/2] + 0x10 + (layer ? 0 : 4)) & 0x3ff;
+			INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(ram[(0x2802 + (layer * 4))/2]) + 0x10 + (layer ? 0 : 4)) & 0x3ff;
 			if (DrvVidRegs[layer] & 0x8000) {
 				if (layer) {
-					scrollx = (ram[(0x2400/2) + yy2] + 0x10) & 0x3ff;
+					scrollx = (BURN_ENDIAN_SWAP_INT16(ram[(0x2400/2) + yy2]) + 0x10) & 0x3ff;
 				} else {
-					scrollx = (ram[(0x2000/2) + yy2] + 0x14) & 0x3ff;
+					scrollx = (BURN_ENDIAN_SWAP_INT16(ram[(0x2000/2) + yy2]) + 0x14) & 0x3ff;
 				}
 			}
 
@@ -1509,10 +1509,10 @@ static void draw_sprites(INT32 xoffs)
 
 	for (j = start_offset; j < end_offset; j += 8)
 	{
-		int data = buffered_spriteram16[(j/2) + 0];
-		int data2 = buffered_spriteram16[(j/2) + 1];
-		int data3 = buffered_spriteram16[(j/2) + 2];
-		int data4 = buffered_spriteram16[(j/2) + 3];
+		int data = BURN_ENDIAN_SWAP_INT16(buffered_spriteram16[(j/2) + 0]);
+		int data2 = BURN_ENDIAN_SWAP_INT16(buffered_spriteram16[(j/2) + 1]);
+		int data3 = BURN_ENDIAN_SWAP_INT16(buffered_spriteram16[(j/2) + 2]);
+		int data4 = BURN_ENDIAN_SWAP_INT16(buffered_spriteram16[(j/2) + 3]);
 
 		int sx = data3 & 0x3ff;
 		int sy = data2 & 0x1ff;
@@ -1535,7 +1535,7 @@ static void draw_sprites(INT32 xoffs)
 			{
 				for (x = 0; x < xsize; x++)
 				{
-					int data5 = buffered_spriteram16[((data4/2) + (y*xsize + x)) & 0x7fff];
+					int data5 = BURN_ENDIAN_SWAP_INT16(buffered_spriteram16[((data4/2) + (y*xsize + x)) & 0x7fff]);
 					int number = (((data & 0x1ff) << 10) + (data5 & 0x0fff)) & gfxmask;
 					int color = ((data >> 9) & 0x7f) + ((data5 >> 12) & 0x0f);
 					int color_effect = bDualMonitor ? ((color & 0x3f) == 0x3f) : (color == 0x7f);

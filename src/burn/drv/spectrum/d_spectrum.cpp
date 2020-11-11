@@ -15882,16 +15882,16 @@ static struct BurnRomInfo SpecJacksoncityRomDesc[] = {
 	{ "Jackson City (1990)(Diabolic).tap", 42878, 0x320d1aec, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecJacksoncity, SpecJacksoncity, Spec128)
+STDROMPICKEXT(SpecJacksoncity, SpecJacksoncity, Spectrum)
 STD_ROM_FN(SpecJacksoncity)
 
 struct BurnDriver BurnSpecJacksoncity = {
-	"spec_jacksoncity", NULL, "spec_spec128", NULL, "1990",
+	"spec_jacksoncity", NULL, "spec_spectrum", NULL, "1990",
 	"Jackson City\0", NULL, "Diabolic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecJacksoncityRomInfo, SpecJacksoncityRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -15901,16 +15901,16 @@ static struct BurnRomInfo SpecLaserzoneRomDesc[] = {
 	{ "Laser Zone (1983)(Quicksilva).tap", 17800, 0x701e7685, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecLaserzone, SpecLaserzone, Spec128)
+STDROMPICKEXT(SpecLaserzone, SpecLaserzone, Spectrum)
 STD_ROM_FN(SpecLaserzone)
 
 struct BurnDriver BurnSpecLaserzone = {
-	"spec_laserzone", NULL, "spec_spec128", NULL, "1983",
+	"spec_laserzone", NULL, "spec_spectrum", NULL, "1983",
 	"Laser Zone\0", NULL, "Quicksilva", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecLaserzoneRomInfo, SpecLaserzoneRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

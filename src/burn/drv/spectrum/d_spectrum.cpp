@@ -16756,16 +16756,16 @@ static struct BurnRomInfo SpecProskisimRomDesc[] = {
 	{ "Professional Ski Simulator (1987)(Codemasters).tap", 48913, 0xce33d499, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecProskisim, SpecProskisim, Spec128)
+STDROMPICKEXT(SpecProskisim, SpecProskisim, Spectrum)
 STD_ROM_FN(SpecProskisim)
 
 struct BurnDriver BurnSpecProskisim = {
-	"spec_proskisim", NULL, "spec_spec128", NULL, "1987",
+	"spec_proskisim", NULL, "spec_spectrum", NULL, "1987",
 	"Professional Ski Simulator\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecProskisimRomInfo, SpecProskisimRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

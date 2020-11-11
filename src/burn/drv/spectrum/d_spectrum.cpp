@@ -3,7 +3,7 @@
 // input: kbd, kempston: joy1, sinclair intf.2: joy1 & joy2
 
 #include "tiles_generic.h"
-#include "z80_intf.h"
+#include "z80_intf.h"p
 #include "ay8910.h"
 
 #if defined (_MSC_VER)
@@ -16604,16 +16604,16 @@ static struct BurnRomInfo SpecPhantomasRomDesc[] = {
 	{ "Phantomas (1986)(Dinamic).tap", 48127, 0x34c8919a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecPhantomas, SpecPhantomas, Spec128)
+STDROMPICKEXT(SpecPhantomas, SpecPhantomas, Spectrum)
 STD_ROM_FN(SpecPhantomas)
 
 struct BurnDriver BurnSpecPhantomas = {
-	"spec_phantomas", NULL, "spec_spec128", NULL, "1986",
+	"spec_phantomas", NULL, "spec_spectrum", NULL, "1986",
 	"Phantomas\0", NULL, "Dinamic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecPhantomasRomInfo, SpecPhantomasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

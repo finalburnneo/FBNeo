@@ -17209,19 +17209,19 @@ struct BurnDriver BurnSpecSuperhero = {
 // Super Robin Hood
 
 static struct BurnRomInfo SpecSuperrobinhoodRomDesc[] = {
-	{ "Super Robin Hood (1987)(Codemasters).tap", 48128, 0xc1aa50c2, BRF_ESS | BRF_PRG },
+	{ "Super Robin Hood (1987)(Codemasters).tap", 47900, 0x61d90998, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSuperrobinhood, SpecSuperrobinhood, Spec128)
+STDROMPICKEXT(SpecSuperrobinhood, SpecSuperrobinhood, Spectrum)
 STD_ROM_FN(SpecSuperrobinhood)
 
 struct BurnDriver BurnSpecSuperrobinhood = {
-	"spec_superrobinhood", NULL, "spec_spec128", NULL, "1987",
+	"spec_superrobinhood", NULL, "spec_spectrum", NULL, "1987",
 	"Super Robin Hood\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecSuperrobinhoodRomInfo, SpecSuperrobinhoodRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

@@ -827,8 +827,9 @@ static INT32 SpecTAPDMACallback()
 	INT32 offset = 0;
 	UINT8 byte = 0;
 
+	ActiveZ80EXAF();
 	INT32 tap_block = data[0];
-	INT32 cpu_block = ActiveZ80GetAF2() >> 8;
+	INT32 cpu_block = ActiveZ80GetAF() >> 8;
 	INT32 address = ActiveZ80GetIX();
 	INT32 length = ActiveZ80GetDE();
 
@@ -842,7 +843,7 @@ static INT32 SpecTAPDMACallback()
 	}
 
 	if (cpu_block == tap_block) { // we found our block! :)
-		if (ActiveZ80GetCarry2()) {
+		if (ActiveZ80GetCarry()) {
 			if (DEBUG_TAP) {
 				bprintf(0, _T("loading data\n"));
 			}
@@ -15683,7 +15684,7 @@ struct BurnDriver BurnSpecWwasp = {
 	"Willy The Wasp (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecWwaspRomInfo, SpecWwaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecWwaspRomInfo, SpecWwaspRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -15702,7 +15703,7 @@ struct BurnDriver BurnSpecWwasp2 = {
 	"Willy The Wasp 2 (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecWwasp2RomInfo, SpecWwasp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecWwasp2RomInfo, SpecWwasp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -16690,7 +16691,7 @@ struct BurnDriver BurnSpecEggsterminator = {
 	"The Eggsterminator (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecEggsterminatorRomInfo, SpecEggsterminatorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecEggsterminatorRomInfo, SpecEggsterminatorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -16766,7 +16767,7 @@ struct BurnDriver BurnSpecPooperscooper = {
 	"Pooper Scooper (HB)\0", NULL, "The Death Squad", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecPooperscooperRomInfo, SpecPooperscooperRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecPooperscooperRomInfo, SpecPooperscooperRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

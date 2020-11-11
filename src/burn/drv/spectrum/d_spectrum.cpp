@@ -16281,16 +16281,16 @@ static struct BurnRomInfo Spec3dstarfighterRomDesc[] = {
 	{ "3D Starfighter (1988)(Codemasters).tap", 48891, 0x4f3f2fbe, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec3dstarfighter, Spec3dstarfighter, Spec128)
+STDROMPICKEXT(Spec3dstarfighter, Spec3dstarfighter, Spectrum)
 STD_ROM_FN(Spec3dstarfighter)
 
 struct BurnDriver BurnSpec3dstarfighter = {
-	"spec_3dstarfighter", NULL, "spec_spec128", NULL, "1988",
+	"spec_3dstarfighter", NULL, "spec_spectrum", NULL, "1988",
 	"3D Starfighter\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spec3dstarfighterRomInfo, Spec3dstarfighterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

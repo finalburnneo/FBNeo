@@ -16509,16 +16509,16 @@ static struct BurnRomInfo SpecMurraymousesupercopRomDesc[] = {
 	{ "Murray Mouse Super Cop (1992)(Codemasters).tap", 32045, 0x67637ddf, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecMurraymousesupercop, SpecMurraymousesupercop, Spec128)
+STDROMPICKEXT(SpecMurraymousesupercop, SpecMurraymousesupercop, Spectrum)
 STD_ROM_FN(SpecMurraymousesupercop)
 
 struct BurnDriver BurnSpecMurraymousesupercop = {
-	"spec_murraymousesupercop", NULL, "spec_spec128", NULL, "1992",
+	"spec_murraymousesupercop", NULL, "spec_spectrum", NULL, "1992",
 	"Murray Mouse Super Cop\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecMurraymousesupercopRomInfo, SpecMurraymousesupercopRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

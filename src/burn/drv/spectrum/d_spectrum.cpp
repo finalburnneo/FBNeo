@@ -16946,16 +16946,16 @@ static struct BurnRomInfo SpecSasoperationthunderflashRomDesc[] = {
 	{ "S.A.S. Operation Thunderflash (1986)(Sparklers).tap", 48345, 0x7013a78b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSasoperationthunderflash, SpecSasoperationthunderflash, Spec128)
+STDROMPICKEXT(SpecSasoperationthunderflash, SpecSasoperationthunderflash, Spectrum)
 STD_ROM_FN(SpecSasoperationthunderflash)
 
 struct BurnDriver BurnSpecSasoperationthunderflash = {
-	"spec_sasoperationthunderflash", NULL, "spec_spec128", NULL, "1986",
+	"spec_sasoperationthunderflash", NULL, "spec_spectrum", NULL, "1986",
 	"S.A.S. Operation Thunderflash\0", NULL, "Sparklers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecSasoperationthunderflashRomInfo, SpecSasoperationthunderflashRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

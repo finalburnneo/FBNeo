@@ -47457,3 +47457,97 @@ struct BurnDriver BurnDrvmd_gunstars = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// haunting starring polterguy (Hack, Spanish)
+// https://www.romhacking.net/translations/5439/
+static struct BurnRomInfo md_hauntingsRomDesc[] = {
+	{ "haunting starring polterguy (Hack, Spanish).bin",2097152, 0x2b8e0550, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hauntings)
+STD_ROM_FN(md_hauntings)
+
+struct BurnDriver BurnDrvmd_hauntings = {
+	"md_hauntings", "md_haunting", NULL, NULL, "2020",
+	"Haunting Starring Polterguy (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_hauntingsRomInfo, md_hauntingsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// heavy unit (Hack, Spanish)
+// https://www.romhacking.net/translations/5439/
+static struct BurnRomInfo md_hvyunitsRomDesc[] = {
+	{ "heavy unit (Hack, Spanish).bin",524288, 0xe8a0f97f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hvyunits)
+STD_ROM_FN(md_hvyunits)
+
+struct BurnDriver BurnDrvmd_hvyunits = {
+	"md_hvyunits", "md_hvyunit", NULL, NULL, "2020",
+	"Heavy Unit (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_hvyunitsRomInfo, md_hvyunitsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// hellfire (Hack, Spanish)
+// https://www.romhacking.net/translations/4532/
+static struct BurnRomInfo md_hellfiresRomDesc[] = {
+	{ "hellfire (Hack, Spanish).bin",524288, 0xa8f15ed3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hellfires)
+STD_ROM_FN(md_hellfires)
+
+struct BurnDriver BurnDrvmd_hellfires = {
+	"md_hellfires", "md_hellfire", NULL, NULL, "2019",
+	"Hellfire (Hack, Spanish)\0", NULL, "	Seismic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_hellfiresRomInfo, md_hellfiresRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// herzog zwei (Hack, Spanish)
+// https://www.romhacking.net/translations/4555/
+static struct BurnRomInfo md_herzogsRomDesc[] = {
+	{ "herzog zwei (Hack, Spanish).bin",524288, 0x7172837d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_herzogs)
+STD_ROM_FN(md_herzogs)
+
+struct BurnDriver BurnDrvmd_herzogs = {
+	"md_herzogs", "md_herzog", NULL, NULL, "2019",
+	"Herzog Zwei (Hack, Spanish)\0", NULL, "TechnoSoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_herzogsRomInfo, md_herzogsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// hook (Hack, Spanish)
+// https://www.romhacking.net/translations/3245/
+static struct BurnRomInfo md_hooksRomDesc[] = {
+	{ "hook (Hack, Spanish).bin",1048576, 0xa2f81d5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hooks)
+STD_ROM_FN(md_hooks)
+
+struct BurnDriver BurnDrvmd_hooks = {
+	"md_hooks", "md_hook", NULL, NULL, "2017",
+	"Hook (Hack, Spanish)\0", NULL, "Sony Imagesoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_hooksRomInfo, md_hooksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

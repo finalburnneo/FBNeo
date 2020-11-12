@@ -2755,7 +2755,7 @@ static void shogwarr_calc3_mcu_run()
 
 	if (calc3.dsw_addr) SekWriteByte((calc3.dsw_addr+0x200000), (~Kaneko16Dip[0])&0xff);
 
-	mcu_command = m_calc3_mcuram[calc3.mcu_command_offset/2 + 0];
+	mcu_command = BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[calc3.mcu_command_offset/2 + 0]);
 
 	if (mcu_command == 0) return;
 
@@ -2766,17 +2766,17 @@ static void shogwarr_calc3_mcu_run()
 			// clear old command (handshake to main cpu)
 			m_calc3_mcuram[(calc3.mcu_command_offset>>1)+0] = 0x0000;
 
-			calc3.dsw_addr =           m_calc3_mcuram[(0>>1) + 1];
-			calc3.eeprom_addr =        m_calc3_mcuram[(0>>1) + 2];
-			calc3.mcu_command_offset = m_calc3_mcuram[(0>>1) + 3];
-			calc3.poll_addr =          m_calc3_mcuram[(0>>1) + 4];
-			calc3.checksumaddress =    m_calc3_mcuram[(0>>1) + 5];
-			calc3.writeaddress =      (m_calc3_mcuram[(0>>1) + 6] << 16) | (m_calc3_mcuram[(0>>1) + 7]);
+			calc3.dsw_addr =           BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 1]);
+			calc3.eeprom_addr =        BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 2]);
+			calc3.mcu_command_offset = BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 3]);
+			calc3.poll_addr =          BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 4]);
+			calc3.checksumaddress =    BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 5]);
+			calc3.writeaddress =      (BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 6]) << 16) | (BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(0>>1) + 7]));
 
 			// set our current write / stack pointer to the address specified
 			calc3.writeaddress_current = calc3.writeaddress;
 
-			m_calc3_mcuram[calc3.checksumaddress / 2] = calc3.mcu_crc;              // MCU Rom Checksum!
+			m_calc3_mcuram[calc3.checksumaddress / 2] = BURN_ENDIAN_SWAP_INT16(calc3.mcu_crc);              // MCU Rom Checksum!
 
 			UINT8 *eeprom = (UINT8*)Kaneko16NVRam;
 
@@ -2794,8 +2794,8 @@ static void shogwarr_calc3_mcu_run()
 
 			for (INT32 i=0;i<num_transfers;i++)
 			{
-				int param1 = m_calc3_mcuram[(calc3.mcu_command_offset>>1) + 1 + (2*i)];
-				int param2 = m_calc3_mcuram[(calc3.mcu_command_offset>>1) + 2 + (2*i)];
+				int param1 = BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(calc3.mcu_command_offset>>1) + 1 + (2*i)]);
+				int param2 = BURN_ENDIAN_SWAP_INT16(m_calc3_mcuram[(calc3.mcu_command_offset>>1) + 2 + (2*i)]);
 				UINT8  commandtabl = (param1&0xff00) >> 8;
 				UINT16 commandaddr =param2;
 				UINT8  commandunk =  (param1&0x00ff);
@@ -3026,8 +3026,8 @@ static void GtmrMCURun()
 	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
 	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
 
-	UINT16 MCUCommand = MCURam[0x10/2];
-	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	UINT16 MCUCommand = BURN_ENDIAN_SWAP_INT16(MCURam[0x10/2]);
+	UINT16 MCUOffset = BURN_ENDIAN_SWAP_INT16(MCURam[0x12/2]) >> 1;
 
 	switch (MCUCommand >> 8) {
 		case 0x02: {
@@ -3036,20 +3036,20 @@ static void GtmrMCURun()
 		}
 
 		case 0x03: {
-			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0xff00 - (Kaneko16Dip[0] << 8));
 			return;
 		}
 
 		case 0x04: {
 			/* MCU writes the string "MM0525-TOYBOX199" to shared ram */
-			MCURam[MCUOffset + 0] = 0x4d4d;
-			MCURam[MCUOffset + 1] = 0x3035;
-			MCURam[MCUOffset + 2] = 0x3235;
-			MCURam[MCUOffset + 3] = 0x2d54;
-			MCURam[MCUOffset + 4] = 0x4f59;
-			MCURam[MCUOffset + 5] = 0x424f;
-			MCURam[MCUOffset + 6] = 0x5831;
-			MCURam[MCUOffset + 7] = 0x3939;
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0x4d4d);
+			MCURam[MCUOffset + 1] = BURN_ENDIAN_SWAP_INT16(0x3035);
+			MCURam[MCUOffset + 2] = BURN_ENDIAN_SWAP_INT16(0x3235);
+			MCURam[MCUOffset + 3] = BURN_ENDIAN_SWAP_INT16(0x2d54);
+			MCURam[MCUOffset + 4] = BURN_ENDIAN_SWAP_INT16(0x4f59);
+			MCURam[MCUOffset + 5] = BURN_ENDIAN_SWAP_INT16(0x424f);
+			MCURam[MCUOffset + 6] = BURN_ENDIAN_SWAP_INT16(0x5831);
+			MCURam[MCUOffset + 7] = BURN_ENDIAN_SWAP_INT16(0x3939);
 			return;
 		}
 
@@ -3065,8 +3065,8 @@ static void GtmrevoMCURun()
 	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
 	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
 
-	UINT16 MCUCommand = MCURam[0x10/2];
-	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	UINT16 MCUCommand = BURN_ENDIAN_SWAP_INT16(MCURam[0x10/2]);
+	UINT16 MCUOffset = BURN_ENDIAN_SWAP_INT16(MCURam[0x12/2]) >> 1;
 
 	switch (MCUCommand >> 8) {
 		case 0x02: {
@@ -3075,20 +3075,20 @@ static void GtmrevoMCURun()
 		}
 
 		case 0x03: {
-			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0xff00 - (Kaneko16Dip[0] << 8));
 			return;
 		}
 
 		case 0x04: {
 			/* MCU writes the string "USMM0713-TB1994 " to shared ram */
-			MCURam[MCUOffset + 0] = 0x5553;
-			MCURam[MCUOffset + 1] = 0x4d4d;
-			MCURam[MCUOffset + 2] = 0x3037;
-			MCURam[MCUOffset + 3] = 0x3133;
-			MCURam[MCUOffset + 4] = 0x2d54;
-			MCURam[MCUOffset + 5] = 0x4231;
-			MCURam[MCUOffset + 6] = 0x3939;
-			MCURam[MCUOffset + 7] = 0x3420;
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0x5553);
+			MCURam[MCUOffset + 1] = BURN_ENDIAN_SWAP_INT16(0x4d4d);
+			MCURam[MCUOffset + 2] = BURN_ENDIAN_SWAP_INT16(0x3037);
+			MCURam[MCUOffset + 3] = BURN_ENDIAN_SWAP_INT16(0x3133);
+			MCURam[MCUOffset + 4] = BURN_ENDIAN_SWAP_INT16(0x2d54);
+			MCURam[MCUOffset + 5] = BURN_ENDIAN_SWAP_INT16(0x4231);
+			MCURam[MCUOffset + 6] = BURN_ENDIAN_SWAP_INT16(0x3939);
+			MCURam[MCUOffset + 7] = BURN_ENDIAN_SWAP_INT16(0x3420);
 			return;
 		}
 
@@ -3104,8 +3104,8 @@ static void GtmroMCURun()
 	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
 	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
 
-	UINT16 MCUCommand = MCURam[0x10/2];
-	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	UINT16 MCUCommand = BURN_ENDIAN_SWAP_INT16(MCURam[0x10/2]);
+	UINT16 MCUOffset = BURN_ENDIAN_SWAP_INT16(MCURam[0x12/2]) >> 1;
 
 	switch (MCUCommand >> 8) {
 		case 0x02: {
@@ -3114,20 +3114,20 @@ static void GtmroMCURun()
 		}
 
 		case 0x03: {
-			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0xff00 - (Kaneko16Dip[0] << 8));
 			return;
 		}
 
 		case 0x04: {
 			/* MCU writes the string 'TOYBOX1994-" ?[GS]?W' to shared ram  - [GS] = ASCII Group Separator */
-			MCURam[MCUOffset + 0] = 0x544f;
-			MCURam[MCUOffset + 1] = 0x5942;
-			MCURam[MCUOffset + 2] = 0x4f58;
-			MCURam[MCUOffset + 3] = 0x3139;
-			MCURam[MCUOffset + 4] = 0x3934;
-			MCURam[MCUOffset + 5] = 0x9300;
-			MCURam[MCUOffset + 6] = 0xfa1d;
-			MCURam[MCUOffset + 7] = 0x9e57;
+			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0x544f);
+			MCURam[MCUOffset + 1] = BURN_ENDIAN_SWAP_INT16(0x5942);
+			MCURam[MCUOffset + 2] = BURN_ENDIAN_SWAP_INT16(0x4f58);
+			MCURam[MCUOffset + 3] = BURN_ENDIAN_SWAP_INT16(0x3139);
+			MCURam[MCUOffset + 4] = BURN_ENDIAN_SWAP_INT16(0x3934);
+			MCURam[MCUOffset + 5] = BURN_ENDIAN_SWAP_INT16(0x9300);
+			MCURam[MCUOffset + 6] = BURN_ENDIAN_SWAP_INT16(0xfa1d);
+			MCURam[MCUOffset + 7] = BURN_ENDIAN_SWAP_INT16(0x9e57);
 			return;
 		}
 
@@ -3762,7 +3762,7 @@ void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
 		}
 
 		case 0x900000: {
-			Kaneko16SpriteRegs[0] = d;
+			Kaneko16SpriteRegs[0] = BURN_ENDIAN_SWAP_INT16(d);
 			if (d & 0xff) {
 				Kaneko16SpriteFlipX = d & 2;
 				Kaneko16SpriteFlipY = d & 1;
@@ -3880,7 +3880,11 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 		case 0x60001a:
 		case 0x60001c:
 		case 0x60001e: {
+#ifdef LSB_FIRST
 			Kaneko16Layer0Regs[(a - 0x600000) >> 1] = d;
+#else
+			Kaneko16Layer0Regs[a - 0x600000] = d;
+#endif
 			return;
 		}
 
@@ -3902,7 +3906,11 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 		case 0x68001a:
 		case 0x68001c:
 		case 0x68001e: {
+#ifdef LSB_FIRST
 			Kaneko16Layer1Regs[(a - 0x680000) >> 1] = d;
+#else
+			Kaneko16Layer1Regs[a - 0x680000] = d;
+#endif
 			return;
 		}
 
@@ -3922,7 +3930,11 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 		case 0x70001a:
 		case 0x70001c:
 		case 0x70001e: {
+#ifdef LSB_FIRST
 			UINT32 offset = (a - 0x700000) >> 1;
+#else
+			UINT32 offset = a - 0x700000;
+#endif
 			Kaneko16SpriteRegs[offset] = d;
 			if (offset == 0 && (d & 0xff)) {
 				Kaneko16SpriteFlipX = d & 2;
@@ -4055,7 +4067,7 @@ void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 		}
 
 		case 0x700000: {
-			Kaneko16SpriteRegs[0] = d;
+			Kaneko16SpriteRegs[0] = BURN_ENDIAN_SWAP_INT16(d);
 			if (d & 0xff) {
 				Kaneko16SpriteFlipX = d & 2;
 				Kaneko16SpriteFlipY = d & 1;
@@ -5914,10 +5926,10 @@ static INT32 Kaneko16ParseSpriteType0(INT32 i, struct tempsprite *s)
 
 	if (Offset >= (Kaneko16SpriteRamSize >> 1)) return -1;
 
-	Attr = SpriteRam[Offset + 0];
-	s->code = SpriteRam[Offset + 1];
-	s->x = SpriteRam[Offset + 2];
-	s->y = SpriteRam[Offset + 3];
+	Attr = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
+	s->code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
+	s->x = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
+	s->y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 
 	s->color = (Attr & 0xfc) >> 2;
 	s->priority = (Attr & 0x300) >> 8;
@@ -5925,11 +5937,10 @@ static INT32 Kaneko16ParseSpriteType0(INT32 i, struct tempsprite *s)
 	s->flipx = Attr & 0x002;
 
 	xOffs = (Attr & 0x1800) >> 11;
-	s->yoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1];
-	s->xoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0];
+	s->yoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1]);
+	s->xoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0]);
 
-	s->yoffs -= Kaneko16SpriteRegs[0x01];
-
+	s->yoffs -= BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x01]);
 	return ((Attr & 0x2000) ? USE_LATCHED_XY : 0) | ((Attr & 0x4000) ? USE_LATCHED_COLOUR: 0) | ((Attr & 0x8000) ? USE_LATCHED_CODE : 0);
 }
 
@@ -5942,10 +5953,10 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s)
 
 	if (Offset >= (Kaneko16SpriteRamSize >> 1)) return -1;
 
-	Attr = SpriteRam[Offset + 0];
-	s->code = SpriteRam[Offset + 1];
-	s->x = SpriteRam[Offset + 2];
-	s->y = SpriteRam[Offset + 3];
+	Attr = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
+	s->code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
+	s->x = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
+	s->y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 
 	s->color = Attr & 0x3f;
 	s->priority = (Attr & 0xc0) >> 6;
@@ -5954,11 +5965,11 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s)
 	s->code += (s->y & 1) << 16;
 
 	xOffs = (Attr & 0x1800) >> 11;
-	s->yoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1];
-	s->xoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0];
+	s->yoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1]);
+	s->xoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0]);
 
-	s->yoffs -= Kaneko16SpriteRegs[0x01];
-
+	s->yoffs -= BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x01]);
+	
 	return ((Attr & 0x2000) ? USE_LATCHED_XY : 0) | ((Attr & 0x4000) ? USE_LATCHED_COLOUR: 0) | ((Attr & 0x8000) ? USE_LATCHED_CODE : 0);
 }
 
@@ -5971,10 +5982,10 @@ static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s)
 
 	if (Offset >= (Kaneko16SpriteRamSize >> 1)) return -1;
 
-	Attr = SpriteRam[Offset + 0];
-	s->code = SpriteRam[Offset + 1];
-	s->x = SpriteRam[Offset + 2];
-	s->y = SpriteRam[Offset + 3];
+	Attr = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
+	s->code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
+	s->x = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
+	s->y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 
 	s->color = (Attr & 0xfc) >> 2;
 	s->priority = (Attr & 0x300) >> 8;
@@ -5982,11 +5993,11 @@ static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s)
 	s->flipx = Attr & 0x002;
 
 	xOffs = (Attr & 0x1800) >> 11;
-	s->yoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1];
-	s->xoffs = Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0];
+	s->yoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 1]);
+	s->xoffs = BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x08 + (xOffs * 2) + 0]);
 
-	s->yoffs -= Kaneko16SpriteRegs[0x01];
-
+	s->yoffs -= BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0x01]);
+	
 	return ((Attr & 0x2000) ? USE_LATCHED_XY : 0) | ((Attr & 0x4000) ? USE_LATCHED_COLOUR: 0) | ((Attr & 0x8000) ? USE_LATCHED_CODE : 0);
 }
 
@@ -6218,7 +6229,7 @@ static void Kaneko16RenderSprite_PrioBuffer(UINT32 Code, UINT32 Colour, INT32 Fl
 				UINT8 *Source = SourceBase + ((yIndex >> 16) * 16);
 				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
 
-				if ((~Kaneko16SpriteRegs[0] & 4) && Kaneko16SpriteFbuffer)
+				if ((~(BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0])) & 4) && Kaneko16SpriteFbuffer)
 					pPixel = Kaneko16SpriteFbuffer + (y * nScreenWidth); // mgcrystl overdraw mode
 
 				UINT8 *pri = Kaneko16PrioBitmap + (y * nScreenWidth);
@@ -6427,15 +6438,15 @@ static void Kaneko16QueueTilesLayer(INT32 Layer)
 		}
 	}
 
-	xScroll = LAYERREGS[xScrollReg];
+	xScroll = BURN_ENDIAN_SWAP_INT16(LAYERREGS[xScrollReg]);
 	xOffs = Kaneko16TilesXOffset + xOffs;
-	yScroll = ((LAYERREGS[yScrollReg] >> 6) & 0x1ff) - Kaneko16TilesYOffset;
+	yScroll = ((BURN_ENDIAN_SWAP_INT16(LAYERREGS[yScrollReg]) >> 6) & 0x1ff) - Kaneko16TilesYOffset;
 
 	mx = my = -1;
 	for (y = 0; y < 512; y++) {
 		if (!(y % 16)) my++;
 
-		LineScroll = VSCROLLRAM[y];
+		LineScroll = BURN_ENDIAN_SWAP_INT16(VSCROLLRAM[y]);
 		py = y - yScroll;
 
 		if (py < -30) py += 512;
@@ -6454,12 +6465,12 @@ static void Kaneko16QueueTilesLayer(INT32 Layer)
 
 			if (numTiles & 0xfff)
 			{ // gtmr2
-				Code = VRAM[TileIndex + 1];
+				Code = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 1]);
 				if (Code >= numTiles) continue;
 			} else {
-				Code = VRAM[TileIndex + 1] & (numTiles - 1);
+				Code = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 1]) & (numTiles - 1);
 			}
-			Attr = VRAM[TileIndex + 0];
+			Attr = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 0]);
 			Priority = (Attr >> 8) & 7;
 			Colour = (Attr >> 2) & 0x3f;
 			Flip = Attr & 3;
@@ -6587,13 +6598,13 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 
 			if (numTiles & 0xfff)
 			{ // gtmr2
-				Code = VRAM[TileIndex + 1];
+				Code = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 1]);
 				if (Code >= numTiles) continue;
 			} else {
-				Code = VRAM[TileIndex + 1] & (numTiles - 1);
+				Code = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 1]) & (numTiles - 1);
 			}
 
-			Attr = VRAM[TileIndex + 0];
+			Attr = BURN_ENDIAN_SWAP_INT16(VRAM[TileIndex + 0]);
 			Colour = (Attr >> 2) & 0x3f;
 			Flip = Attr & 3;
 			Priority = (Attr >> 8) & 7;
@@ -6603,7 +6614,7 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 				y = 16 * my;
 
 				x -= (xScroll >> 6) & 0x1ff;
-				y -= (LAYERREGS[yScrollReg] >> 6) & 0x1ff;
+				y -= (BURN_ENDIAN_SWAP_INT16(LAYERREGS[yScrollReg]) >> 6) & 0x1ff;
 
 				if (x < -7) x += 512;
 				if (y < -30) y += 512;
@@ -6686,7 +6697,7 @@ INT32 Kaneko16CalcPalette(INT32 num)
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)Kaneko16PaletteRam, pd = Kaneko16Palette; i < num; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 
 	return 0;
@@ -6727,11 +6738,11 @@ static INT32 BerlwallFrameRender()
 	INT32 vScroll0Enabled = 0;
 	INT32 vScroll1Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
@@ -6759,11 +6770,11 @@ static INT32 BerlwallFrameRender()
 		Kaneko16RecalcBg15Palette = 0;
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
@@ -6793,21 +6804,21 @@ static INT32 BlazeonFrameRender() // and Wingforc
 	INT32 vScroll0Enabled = 0;
 	INT32 vScroll1Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
 	memset(Kaneko16PrioBitmap, 0, 320 * 232);
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
@@ -6832,20 +6843,20 @@ static INT32 ShogwarrFrameRender()
 	INT32 vScroll0Enabled = 0;
 	INT32 vScroll1Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4] & 0x008)) {
 		HANDLE_VSCROLL(1)
 	}
 
@@ -6877,34 +6888,34 @@ static INT32 BloodwarFrameRender()
 	INT32 vScroll2Enabled = 0;
 	INT32 vScroll3Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
-	INT32 xScroll2 = Kaneko16Layer1Regs[2];
-	INT32 xScroll3 = Kaneko16Layer1Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
+	INT32 xScroll2 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[2]);
+	INT32 xScroll3 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x1000) Layer2Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x0010) Layer3Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x1000) Layer2Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x0010) Layer3Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x10000);
 
 	if (!Kaneko16DisplayEnable) return 0;
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(2)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(3)
 	}
 
@@ -6938,32 +6949,32 @@ static INT32 ExplbrkrFrameRender()
 	INT32 vScroll2Enabled = 0;
 	INT32 vScroll3Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
-	INT32 xScroll2 = Kaneko16Layer1Regs[2];
-	INT32 xScroll3 = Kaneko16Layer1Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
+	INT32 xScroll2 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[2]);
+	INT32 xScroll3 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x1000) Layer2Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x0010) Layer3Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x1000) Layer2Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x0010) Layer3Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x1000);
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(2)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(3)
 	}
 
@@ -6997,15 +7008,15 @@ static INT32 GtmrFrameRender()
 	INT32 vScroll2Enabled = 0;
 	INT32 vScroll3Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
-	INT32 xScroll2 = Kaneko16Layer1Regs[2];
-	INT32 xScroll3 = Kaneko16Layer1Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
+	INT32 xScroll2 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[2]);
+	INT32 xScroll3 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x1000) Layer2Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x0010) Layer3Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x1000) Layer2Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x0010) Layer3Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x10000);
@@ -7013,19 +7024,19 @@ static INT32 GtmrFrameRender()
 
 	if (!Kaneko16DisplayEnable) return 0;
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(2)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(3)
 	}
 
@@ -7056,36 +7067,36 @@ static INT32 MgcrystlFrameRender()
 	INT32 vScroll2Enabled = 0;
 	INT32 vScroll3Enabled = 0;
 
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
-	INT32 xScroll2 = Kaneko16Layer1Regs[2];
-	INT32 xScroll3 = Kaneko16Layer1Regs[0];
+	INT32 xScroll0 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[2]);
+	INT32 xScroll1 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[0]);
+	INT32 xScroll2 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[2]);
+	INT32 xScroll3 = BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[0]);
 
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x1000) Layer2Enabled = 1;
-	if (~Kaneko16Layer1Regs[4] & 0x0010) Layer3Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x1000) Layer0Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4])) & 0x0010) Layer1Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x1000) Layer2Enabled = 1;
+	if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4])) & 0x0010) Layer3Enabled = 1;
 
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x1000);
 	memset(Kaneko16PrioBitmap, 0, 320 * 240);
 
-	if (Kaneko16Layer0Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
 
-	if (Kaneko16Layer0Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 
 	UINT8 *tmp = Kaneko16PrioBitmap; // Don't write priority for 2nd tilemap chip (layers 2,3)
 	Kaneko16PrioBitmap = NULL;
 
-	if (Kaneko16Layer1Regs[4] & 0x800) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x800) {
 		HANDLE_VSCROLL(2)
 	}
 
-	if (Kaneko16Layer1Regs[4] & 0x008) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer1Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(3)
 	}
 
@@ -7102,7 +7113,7 @@ static INT32 MgcrystlFrameRender()
 	}
 
 	if (nSpriteEnable & 1) {
-		if (~Kaneko16SpriteRegs[0] & 4) { // sprite framebuffer/overdraw mode
+		if (~(BURN_ENDIAN_SWAP_INT16(Kaneko16SpriteRegs[0])) & 4) { // sprite framebuffer/overdraw mode
 			Kaneko16RenderSprites_PrioBuffer();
 			for (INT32 y = 0; y < nScreenHeight; y++) {
 				UINT16 *pPixel = (UINT16*)Kaneko16SpriteFbuffer + (y * nScreenWidth);

@@ -765,7 +765,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 }
 
 // Spectrum TAP loader (c) 2020 dink
-#define DEBUG_TAP 1
+#define DEBUG_TAP 0
 #define BLKNUM 0x200
 static UINT8 *SpecTAPBlock[BLKNUM];
 static INT32 SpecTAPBlockLen[BLKNUM];
@@ -16934,16 +16934,16 @@ static struct BurnRomInfo SpecSascombatsimRomDesc[] = {
 	{ "S.A.S. Combat Simulator (1988)(Codemasters).tap", 42914, 0x6324df81, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSascombatsim, SpecSascombatsim, Spec128)
+STDROMPICKEXT(SpecSascombatsim, SpecSascombatsim, Spectrum)
 STD_ROM_FN(SpecSascombatsim)
 
 struct BurnDriver BurnSpecSascombatsim = {
-	"spec_sascombatsim", NULL, "spec_spec128", NULL, "1988",
+	"spec_sascombatsim", NULL, "spec_spectrum", NULL, "1988",
 	"S.A.S. Combat Simulator\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecSascombatsimRomInfo, SpecSascombatsimRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

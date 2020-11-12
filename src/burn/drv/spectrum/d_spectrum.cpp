@@ -10402,10 +10402,10 @@ STDROMPICKEXT(Specwackdart, Specwackdart, Spectrum)
 STD_ROM_FN(Specwackdart)
 
 struct BurnDriver BurnSpecwackdart = {
-	"spec_wackdart", NULL, "spec_spectrum", NULL, "1991",
+	"spec_wackdart", "spec_wackydarts", "spec_spectrum", NULL, "1991",
 	"Wacky Darts (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecwackdartRomInfo, SpecwackdartRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

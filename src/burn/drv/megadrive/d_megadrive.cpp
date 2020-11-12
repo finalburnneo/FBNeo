@@ -45625,7 +45625,7 @@ STD_ROM_FN(md_aofs)
 
 struct BurnDriver BurnDrvmd_aofs = {
 	"md_aofs", "md_aof", NULL, NULL, "2019",
-	"Art Of Fighting (Hack, Spanish)\0", NULL, "SNK", "Sega Megadrive",
+	"Art of Fighting (Hack, Spanish)\0", NULL, "SNK", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_aofsRomInfo, md_aofsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45834,7 +45834,7 @@ STD_ROM_FN(md_beautys)
 
 struct BurnDriver BurnDrvmd_beautys = {
 	"md_beautys", "md_beauty", NULL, NULL, "2017",
-	"Beauty And The Beast - Belle's Quest (Hack, Spanish)\0", NULL, "SunSoft", "Sega Megadrive",
+	"Beauty and the Beast - Belle's Quest (Hack, Spanish)\0", NULL, "SunSoft", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_beautysRomInfo, md_beautysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45853,7 +45853,7 @@ STD_ROM_FN(md_beautyrbs)
 
 struct BurnDriver BurnDrvmd_beautyrbs = {
 	"md_beautyrbs", "md_beautyrb", NULL, NULL, "2017",
-	"Beauty And The Beast - Roar Of The Beast (Hack, Spanish)\0", NULL, "SunSoft", "Sega Megadrive",
+	"Beauty and the Beast - Roar of the Beast (Hack, Spanish)\0", NULL, "SunSoft", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_beautyrbsRomInfo, md_beautyrbsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45872,7 +45872,7 @@ STD_ROM_FN(md_beaviss)
 
 struct BurnDriver BurnDrvmd_beaviss = {
 	"md_beaviss", "md_beavis", NULL, NULL, "2018",
-	"Beavis And Butt-Head (Hack, Spanish)\0", NULL, "Viacom New Media", "Sega Megadrive",
+	"Beavis and Butt-Head (Hack, Spanish)\0", NULL, "Viacom New Media", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_beavissRomInfo, md_beavissRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45910,7 +45910,7 @@ STD_ROM_FN(md_bladevens)
 
 struct BurnDriver BurnDrvmd_bladevens = {
 	"md_bladevens", "md_bladeven", NULL, NULL, "2018",
-	"Blades Of Vengeance (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	"Blades of Vengeance (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_bladevensRomInfo, md_bladevensRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46005,7 +46005,7 @@ STD_ROM_FN(md_bubsys)
 
 struct BurnDriver BurnDrvmd_bubsys = {
 	"md_bubsys", "md_bubsy", NULL, NULL, "2019",
-	"Bubsy In Claws Encounters Of The Furred Kind (Hack, Spanish)\0", NULL, "Accolade", "Sega Megadrive",
+	"Bubsy In Claws Encounters of The Furred Kind (Hack, Spanish)\0", NULL, "Accolade", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_bubsysRomInfo, md_bubsysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46081,7 +46081,7 @@ STD_ROM_FN(md_castlills)
 
 struct BurnDriver BurnDrvmd_castlills = {
 	"md_castlills", "md_castlill", NULL, NULL, "2014",
-	"Castle Of Illusion Starring Mickey Mouse (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	"Castle of Illusion Starring Mickey Mouse (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_castlillsRomInfo, md_castlillsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46176,7 +46176,7 @@ STD_ROM_FN(md_chukrck2s)
 
 struct BurnDriver BurnDrvmd_chukrck2s = {
 	"md_chukrck2s", "md_chukrck2", NULL, NULL, "2018",
-	"Chuck Rock II - Son Of Chuck (Hack, Spanish)\0", NULL, "Virgin Games", "Sega Megadrive",
+	"Chuck Rock II - Son of Chuck (Hack, Spanish)\0", NULL, "Virgin Games", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_chukrck2sRomInfo, md_chukrck2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

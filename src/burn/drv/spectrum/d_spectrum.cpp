@@ -8996,12 +8996,31 @@ STDROMPICKEXT(Specseymmovi, Specseymmovi, Spectrum)
 STD_ROM_FN(Specseymmovi)
 
 struct BurnDriver BurnSpecseymmovi = {
-	"spec_seymmovi", NULL, "spec_spectrum", NULL, "1991",
+	"spec_seymmovi", "spec_seymouratthemovies", "spec_spectrum", NULL, "1991",
 	"Seymour at the Movies (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecseymmoviRomInfo, SpecseymmoviRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Seymour at the Movies
+
+static struct BurnRomInfo SpecSeymouratthemoviesRomDesc[] = {
+	{ "Seymour at the Movies (1991)(Codemasters).z80", 79527, 0xd1a72ae0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSeymouratthemovies, SpecSeymouratthemovies, Spec128)
+STD_ROM_FN(SpecSeymouratthemovies)
+
+struct BurnDriver BurnSpecSeymouratthemovies = {
+	"spec_seymouratthemovies", NULL, "spec_spec128", NULL, "1991",
+	"Seymour at the Movies\0", NULL, "Codemasters", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSeymouratthemoviesRomInfo, SpecSeymouratthemoviesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -10383,10 +10402,10 @@ STDROMPICKEXT(Specwackdart, Specwackdart, Spectrum)
 STD_ROM_FN(Specwackdart)
 
 struct BurnDriver BurnSpecwackdart = {
-	"spec_wackdart", NULL, "spec_spectrum", NULL, "1991",
+	"spec_wackdart", "spec_wackydarts", "spec_spectrum", NULL, "1991",
 	"Wacky Darts (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecwackdartRomInfo, SpecwackdartRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

@@ -46,10 +46,6 @@ It's also possible to use folder's name for detection (this second method was ad
 
 Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`
 
-## hiscore.dat
-
-Copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/`
-
 ## Mapping
 
 We don't have a convenient tool like the MAME OSD, instead we use the retroarch api to customize mappings, you can do that by going into `Quick menu > Controls`.
@@ -94,7 +90,7 @@ Most likely for the same reason as above.
 
 ### Game XXX runs faster in MAME2003/MAME2010, why ?
 Overall, FBNeo is slower than old MAME version because it's more accurate (meaning less bugs).
-This libretro port also support various features which are usually buggy or absent in MAME cores (readahead, netplay, rewind, retroachievements, ...). It might use additional resources.
+This libretro port also support various features which are usually buggy or absent in MAME cores (runahead, netplay, rewind, retroachievements, ...). It might use additional resources.
 
 ### How do i use cheat code ?
 From a libretro point of view, there should be partial support through the API relying on main ram exposition. 
@@ -120,8 +116,8 @@ That driver was disabled for now, it doesn't meet our quality criteria.
 * ~~If your rom is at `ROM_DIRECTORY/kinst.zip`, you'll need the uncompressed disc image at `ROM_DIRECTORY/kinst/kinst.img`~~
 * ~~To get the uncompressed disc image, you'll need to use the chdman tool from MAME on the chd from mame, the command looks like this : `chdman extracthd -i kinst.chd -o kinst.img`~~
 
-### Hiscore won't work, why ?
-Having hiscore.dat and the core option enabled doesn't guarantee hiscores will work for a specific game, sometimes a driver will be missing the necessary code. You can request support in the issue tracker as long as the request is reasonable (i.e avoid making a list of several dozens/hundreds of games)
+### Hiscore won't save, why ?
+You need to copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and to have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores. You can request support in the issue tracker as long as the request is reasonable (avoid making a list of several dozens/hundreds of games if you don't want to be ignored). There are also some cases where libretro features will prevent hiscores from working properly, runahead is a well-known case but there might be other savestates-related features causing issues.
 
 ### On my android device, game XXX is closing my app at launch, why ?
 Android OS has one of the worst features ever created : it kills an app if it considers it's taking too long to display something, no question asked ! Furthermore 2 devices will have 2 different time limit (how the time limit is calculated is a mystery). That's called ANR and that's something you can supposedly workaround by enabling some option about ANR (Application Not Responding) inside Android's hidden developper menu. Some people also reported that those ANR issues would disappear after changing from a controller to another.

@@ -8,7 +8,7 @@ jobs:
     name: build
     runs-on: macOS-latest
     env:
-      DEVELOPER_DIR: /Applications/Xcode_11.app
+      DEVELOPER_DIR: /Applications/Xcode_12.app
     steps:
       - uses: actions/checkout@v1
       - name: build

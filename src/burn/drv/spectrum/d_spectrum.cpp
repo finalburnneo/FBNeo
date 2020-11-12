@@ -765,7 +765,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 }
 
 // Spectrum TAP loader (c) 2020 dink
-#define DEBUG_TAP 0
+#define DEBUG_TAP 1
 #define BLKNUM 0x200
 static UINT8 *SpecTAPBlock[BLKNUM];
 static INT32 SpecTAPBlockLen[BLKNUM];
@@ -832,6 +832,10 @@ static INT32 SpecTAPDMACallback()
 	INT32 cpu_block = ActiveZ80GetAF() >> 8;
 	INT32 address = ActiveZ80GetIX();
 	INT32 length = ActiveZ80GetDE();
+	INT32 length_unadjusted = length;
+
+	// If anything is changed here, try the following testcases:
+	// Chickin Chase, Alter Ego, V
 
 	if (DEBUG_TAP) {
 		bprintf(0, _T("TAP blocknum %d\n"), SpecTAPBlocknum);
@@ -841,7 +845,10 @@ static INT32 SpecTAPDMACallback()
 		bprintf(0, _T("CPU address %x\n"), address);
 		bprintf(0, _T("CPU length %x\n"), length);
 	}
-
+	if (length > SpecTAPBlockLen[SpecTAPBlocknum]) {
+		bprintf(0, _T("CPU Requested length %x > tape block length %x, adjusting.\n"), length, SpecTAPBlockLen[SpecTAPBlocknum]);
+		length = SpecTAPBlockLen[SpecTAPBlocknum];
+	}
 	if (cpu_block == tap_block) { // we found our block! :)
 		if (ActiveZ80GetCarry()) {
 			if (DEBUG_TAP) {
@@ -871,7 +878,7 @@ static INT32 SpecTAPDMACallback()
 
 	ActiveZ80SetCarry(carry_val);
 	ActiveZ80SetIX((address + offset) & 0xffff);
-	if (transfer_ok) ActiveZ80SetDE(0);
+	if (transfer_ok) ActiveZ80SetDE(length_unadjusted - SpecTAPBlockLen[SpecTAPBlocknum]);
 	ActiveZ80SetHL((checksum << 8) | byte);
 	ActiveZ80SetPC(0x05e2);
 
@@ -15578,16 +15585,16 @@ static struct BurnRomInfo SpecChickinchaseRomDesc[] = {
 	{ "Chickin Chase (1985)(Firebird).tap", 50446, 0x5762f239, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecChickinchase, SpecChickinchase, Spec128)
+STDROMPICKEXT(SpecChickinchase, SpecChickinchase, Spectrum)
 STD_ROM_FN(SpecChickinchase)
 
 struct BurnDriver BurnSpecChickinchase = {
-	"spec_chickinchase", NULL, "spec_spec128", NULL, "1985",
+	"spec_chickinchase", NULL, "spec_spectrum", NULL, "1985",
 	"Chickin Chase\0", NULL, "Firebird", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecChickinchaseRomInfo, SpecChickinchaseRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -16034,16 +16041,16 @@ static struct BurnRomInfo SpecParatroopersRomDesc[] = {
 	{ "Paratroopers (1983)(Rabbit).tap", 21732, 0xc19b3a5d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecParatroopers, SpecParatroopers, Spec128)
+STDROMPICKEXT(SpecParatroopers, SpecParatroopers, Spectrum)
 STD_ROM_FN(SpecParatroopers)
 
 struct BurnDriver BurnSpecParatroopers = {
-	"spec_paratroopers", NULL, "spec_spec128", NULL, "1983",
+	"spec_paratroopers", NULL, "spec_spectrum", NULL, "1983",
 	"Paratroopers\0", NULL, "Rabbit", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecParatroopersRomInfo, SpecParatroopersRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -16110,16 +16117,16 @@ static struct BurnRomInfo SpecShadowskimmerRomDesc[] = {
 	{ "Shadow Skimmer (1987)(The Edge).z80", 41483, 0xc7d0a073, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecShadowskimmer, SpecShadowskimmer, Spec128)
+STDROMPICKEXT(SpecShadowskimmer, SpecShadowskimmer, Spectrum)
 STD_ROM_FN(SpecShadowskimmer)
 
 struct BurnDriver BurnSpecShadowskimmer = {
-	"spec_shadowskimmer", NULL, "spec_spec128", NULL, "1987",
+	"spec_shadowskimmer", NULL, "spec_spectrum", NULL, "1987",
 	"Shadow Skimmer\0", NULL, "The Edge", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecShadowskimmerRomInfo, SpecShadowskimmerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -16148,16 +16155,16 @@ static struct BurnRomInfo SpecStarfirebirdsRomDesc[] = {
 	{ "Star Firebirds (1985)(Firebird).z80", 34053, 0xe38dec78, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecStarfirebirds, SpecStarfirebirds, Spec128)
+STDROMPICKEXT(SpecStarfirebirds, SpecStarfirebirds, Spectrum)
 STD_ROM_FN(SpecStarfirebirds)
 
 struct BurnDriver BurnSpecStarfirebirds = {
-	"spec_starfirebirds", NULL, "spec_spec128", NULL, "1985",
+	"spec_starfirebirds", NULL, "spec_spectrum", NULL, "1985",
 	"Star Firebirds\0", NULL, "Firebird", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecStarfirebirdsRomInfo, SpecStarfirebirdsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -17031,6 +17038,25 @@ struct BurnDriver BurnSpecSpikeintransylvania = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecSpikeintransylvaniaRomInfo, SpecSpikeintransylvaniaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Star Dragon
+
+static struct BurnRomInfo SpecStardragonRomDesc[] = {
+	{ "Star Dragon (1991)(Ultrasoft).tap", 34469, 0xf7a81a91, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStardragon, SpecStardragon, Spec128)
+STD_ROM_FN(SpecStardragon)
+
+struct BurnDriver BurnSpecStardragon = {
+	"spec_stardragon", NULL, "spec_spec128", NULL, "1991",
+	"Star Dragon\0", NULL, "Ultrasoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecStardragonRomInfo, SpecStardragonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

@@ -209,6 +209,13 @@
 		<rom name="addams family values (Hack, Spanish).bin" size="2101280" crc="07cf6ffd"/>
 		<driver status="good"/>
 	</game>
+	<game name="gleylancs" cloneof="gleylanc" romof="gleylanc">
+		<description>Advanced Busterhawk Gleylancer (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>NCS</manufacturer>
+		<rom name="advanced busterhawk gleylancer (Hack, Spanish).bin" size="1048576" crc="c30496b5"/>
+		<driver status="good"/>
+	</game>
 	<game name="advdaisn">
 		<description>Advanced Daisenryaku - Deutsch Dengeki Sakusen (Jpn, Rev. A)</description>
 		<year>1991</year>
@@ -5452,6 +5459,13 @@
 		<rom name="fx unit yuki - the henshin engine (world) (unl).bin" size="6291456" crc="2906876b"/>
 		<driver status="good"/>
 	</game>
+	<game name="glocs" cloneof="gloc" romof="gloc">
+		<description>G-Loc Air Battle (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="g-loc air battle (Hack, Spanish).bin" size="1048576" crc="dc326396"/>
+		<driver status="good"/>
+	</game>
 	<game name="gloc">
 		<description>G-LOC Air Battle (World)</description>
 		<year>1993</year>
@@ -5473,11 +5487,25 @@
 		<rom name="gadget twins (usa).bin" size="1048576" crc="7ae5e248"/>
 		<driver status="good"/>
 	</game>
+	<game name="gaiaress" cloneof="gaiares" romof="gaiares">
+		<description>Gaiares (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="gaiares (Hack, Spanish).bin" size="1048576" crc="a62ec19c"/>
+		<driver status="good"/>
+	</game>
 	<game name="gaiares">
 		<description>Gaiares (Jpn, USA)</description>
 		<year>1990</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="gaiares (usa, jpn).bin" size="1048576" crc="5d8bf68b"/>
+		<driver status="good"/>
+	</game>
+	<game name="ggrounds" cloneof="gground" romof="gground">
+		<description>Gain Ground (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="gain ground (Hack, Spanish).bin" size="524288" crc="eb5e835c"/>
 		<driver status="good"/>
 	</game>
 	<game name="gground1p" cloneof="gground" romof="gground">
@@ -5499,6 +5527,20 @@
 		<year>1992</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="gal01.bin" size="1048576" crc="679557bc"/>
+		<driver status="good"/>
+	</game>
+	<game name="galahads" cloneof="galahad" romof="galahad">
+		<description>Galahad (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="galahad (Hack, Spanish).bin" size="1048576" crc="29cb154b"/>
+		<driver status="good"/>
+	</game>
+	<game name="gforce2s" cloneof="gforce2" romof="gforce2">
+		<description>Galaxy Force II (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="galaxy force II (Hack, Spanish).bin" size="1048576" crc="21cdf3cd"/>
 		<driver status="good"/>
 	</game>
 	<game name="gforce2a" cloneof="gforce2" romof="gforce2">
@@ -5555,6 +5597,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="garfield - caught in the act (euro, usa).bin" size="2097152" crc="f0ff078e"/>
+		<driver status="good"/>
+	</game>
+	<game name="gargoyles" cloneof="gargoyle" romof="gargoyle">
+		<description>Gargoyles (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Buena Vista Interactive</manufacturer>
+		<rom name="gargoyles (Hack, Spanish).bin" size="3145728" crc="9547f2ff"/>
 		<driver status="good"/>
 	</game>
 	<game name="gargoyle">
@@ -5662,6 +5711,13 @@
 		<rom name="george foreman's ko boxing (usa).bin" size="1048576" crc="e1fdc787"/>
 		<driver status="good"/>
 	</game>
+	<game name="ghostbsts" cloneof="ghostbst" romof="ghostbst">
+		<description>Ghostbusters (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="ghostbusters (Hack, Spanish).bin" size="524288" crc="4ed2c651"/>
+		<driver status="good"/>
+	</game>
 	<game name="ghostbst1" cloneof="ghostbst" romof="ghostbst">
 		<description>Ghostbusters (World)</description>
 		<year>1990</year>
@@ -5692,6 +5748,13 @@
 		<rom name="mpr-12606a w57.ic2" size="524288" crc="5291d097"/>
 		<driver status="good"/>
 	</game>
+	<game name="ghoulss" cloneof="ghouls" romof="ghouls">
+		<description>Ghouls'n Ghosts (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="ghouls'n ghosts (Hack, Spanish).bin" size="655360" crc="f71cd080"/>
+		<driver status="good"/>
+	</game>
 	<game name="gleylance" cloneof="gleylanc" romof="gleylanc">
 		<description>GleyLancer (Hack, English)</description>
 		<year>2007</year>
@@ -5718,6 +5781,13 @@
 		<year>1993</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="gods (euro).bin" size="1048576" crc="6c415016"/>
+		<driver status="good"/>
+	</game>
+	<game name="godss" cloneof="gods" romof="gods">
+		<description>Gods (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Mindscape</manufacturer>
+		<rom name="gods (Hack, Spanish).bin" size="1048576" crc="184498c6"/>
 		<driver status="good"/>
 	</game>
 	<game name="godsj" cloneof="gods" romof="gods">
@@ -5748,6 +5818,13 @@
 		<rom name="golden 10-in-1 (bad dump).bin" size="1048576" crc="4fa3f82b"/>
 		<driver status="preliminary"/>
 	</game>
+	<game name="goldnaxes" cloneof="goldnaxe" romof="goldnaxe">
+		<description>Golden Axe (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="golden axe (Hack, Spanish).bin" size="524288" crc="84828ee6"/>
+		<driver status="good"/>
+	</game>
 	<game name="goldnaxe1" cloneof="goldnaxe" romof="goldnaxe">
 		<description>Golden Axe (World)</description>
 		<year>1989</year>
@@ -5769,6 +5846,13 @@
 		<rom name="golden axe ii (enhanced colors).md" size="524288" crc="696caae2"/>
 		<driver status="good"/>
 	</game>
+	<game name="goldnax2s" cloneof="goldnax2" romof="goldnax2">
+		<description>Golden Axe II (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="golden axe ii (Hack, Spanish).bin" size="524288" crc="df84e888"/>
+		<driver status="good"/>
+	</game>
 	<game name="goldnax2">
 		<description>Golden Axe II (World)</description>
 		<year>1991</year>
@@ -5783,6 +5867,13 @@
 		<rom name="golden axe ii (world) (beta).bin" size="524288" crc="e62ea1bb"/>
 		<driver status="good"/>
 	</game>
+	<game name="goldnax3s" cloneof="goldnax3" romof="goldnax3">
+		<description>Golden Axe III (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="golden axe iii (Hack, Spanish).bin" size="1048576" crc="45eaec5b"/>
+		<driver status="good"/>
+	</game>
 	<game name="goldnax3">
 		<description>Golden Axe III (Jpn)</description>
 		<year>1993</year>
@@ -5795,6 +5886,13 @@
 		<year>2020-06-08</year>
 		<manufacturer>Ti</manufacturer>
 		<rom name="GoldenAxeIII_New Character_Hack.bin" size="2097152" crc="29a27509"/>
+		<driver status="good"/>
+	</game>
+	<game name="goofys" cloneof="goofy" romof="goofy">
+		<description>Goofy's Hysterical History Tour (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Absolute Entertainment</manufacturer>
+		<rom name="goofy's hysterical history tour (Hack, Spanish).bin" size="1048576" crc="9dac66ef"/>
 		<driver status="good"/>
 	</game>
 	<game name="goofy">
@@ -5816,6 +5914,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="gran turismo 5 (unl).bin" size="1220816" crc="d4392181"/>
+		<driver status="good"/>
+	</game>
+	<game name="granadas" cloneof="granada" romof="granada">
+		<description>Granada (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="granada (Hack, Spanish).bin" size="524288" crc="491b0a71"/>
 		<driver status="good"/>
 	</game>
 	<game name="granada1" cloneof="granada" romof="granada">
@@ -5881,6 +5986,13 @@
 		<rom name="mpr-14993.bin" size="524288" crc="c4820a03"/>
 		<driver status="good"/>
 	</game>
+	<game name="greendogs" cloneof="greendog" romof="greendog">
+		<description>Greendog - The Beached Surfer Dude! (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="greendog - the beached surfer dude! (Hack, Spanish).bin" size="524288" crc="e0abaaeb"/>
+		<driver status="good"/>
+	</game>
 	<game name="grielqst">
 		<description>Griel's Quest for the Holy Porron (HB) [Homebrew]</description>
 		<year>2017</year>
@@ -5888,11 +6000,25 @@
 		<rom name="Griel's Quest for the Holy Porron.bin" size="2359296" crc="e1c3e75c"/>
 		<driver status="good"/>
 	</game>
+	<game name="grindsts" cloneof="grindst" romof="grindst">
+		<description>Grind Stormer (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="grind stormer (Hack, Spanish).bin" size="1048576" crc="bd764c90"/>
+		<driver status="good"/>
+	</game>
 	<game name="grindst">
 		<description>Grind Stormer (USA)</description>
 		<year>1994</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="grind stormer (usa).bin" size="1048576" crc="7e6bef15"/>
+		<driver status="good"/>
+	</game>
+	<game name="growls" cloneof="growl" romof="growl">
+		<description>Growl (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="growl (Hack, Spanish).bin" size="524288" crc="95308c0a"/>
 		<driver status="good"/>
 	</game>
 	<game name="growl">
@@ -5914,6 +6040,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gunstar heroes (euro).bin" size="1048576" crc="866ed9d0"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunstars" cloneof="gunstar" romof="gunstar">
+		<description>Gunstar Heroes (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Treasure</manufacturer>
+		<rom name="gunstar heroes (Hack, Spanish).bin" size="1048576" crc="f296f1c6"/>
 		<driver status="good"/>
 	</game>
 	<game name="gunstarj" cloneof="gunstar" romof="gunstar">
@@ -6014,6 +6147,13 @@
 		<rom name="haunting starring polterguy (euro, usa).bin" size="2097152" crc="c9fc876d"/>
 		<driver status="good"/>
 	</game>
+	<game name="hauntings" cloneof="haunting" romof="haunting">
+		<description>Haunting Starring Polterguy (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="haunting starring polterguy (Hack, Spanish).bin" size="2097152" crc="2b8e0550"/>
+		<driver status="good"/>
+	</game>
 	<game name="headon" cloneof="feverpit" romof="feverpit">
 		<description>Head-On Soccer (USA)</description>
 		<year>1995</year>
@@ -6026,6 +6166,13 @@
 		<year>1992</year>
 		<manufacturer>Micronet</manufacturer>
 		<rom name="heavy nova (usa).bin" size="1048576" crc="f6b6a9d8"/>
+		<driver status="good"/>
+	</game>
+	<game name="hvyunits" cloneof="hvyunit" romof="hvyunit">
+		<description>Heavy Unit (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="heavy unit (Hack, Spanish).bin" size="524288" crc="e8a0f97f"/>
 		<driver status="good"/>
 	</game>
 	<game name="hvyunit">
@@ -6047,6 +6194,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14430.bin" size="524288" crc="cf30acec"/>
+		<driver status="good"/>
+	</game>
+	<game name="hellfires" cloneof="hellfire" romof="hellfire">
+		<description>Hellfire (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>	Seismic</manufacturer>
+		<rom name="hellfire (Hack, Spanish).bin" size="524288" crc="a8f15ed3"/>
 		<driver status="good"/>
 	</game>
 	<game name="hellfirej" cloneof="hellfire" romof="hellfire">
@@ -6082,6 +6236,13 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12929.ic1" size="524288" crc="a605b65b"/>
+		<driver status="good"/>
+	</game>
+	<game name="herzogs" cloneof="herzog" romof="herzog">
+		<description>Herzog Zwei (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>TechnoSoft</manufacturer>
+		<rom name="herzog zwei (Hack, Spanish).bin" size="524288" crc="7172837d"/>
 		<driver status="good"/>
 	</game>
 	<game name="herzogj" cloneof="herzog" romof="herzog">
@@ -6145,6 +6306,13 @@
 		<year>1992</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="hook (euro).bin" size="1048576" crc="a154433a"/>
+		<driver status="good"/>
+	</game>
+	<game name="hooks" cloneof="hook" romof="hook">
+		<description>Hook (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Sony Imagesoft</manufacturer>
+		<rom name="hook (Hack, Spanish).bin" size="1048576" crc="a2f81d5a"/>
 		<driver status="good"/>
 	</game>
 	<game name="hooku" cloneof="hook" romof="hook">

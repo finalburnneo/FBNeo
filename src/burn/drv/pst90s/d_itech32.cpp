@@ -2954,9 +2954,9 @@ static void PaletteUpdate16()
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries()*2; i+=2)
 	{
-		UINT8 r = p[i];
-		UINT8 g = p[i] >> 8;
-		UINT8 b = p[i+1] >> 8;
+		UINT8 r = BURN_ENDIAN_SWAP_INT16(p[i]);
+		UINT8 g = BURN_ENDIAN_SWAP_INT16(p[i]) >> 8;
+		UINT8 b = BURN_ENDIAN_SWAP_INT16(p[i+1]) >> 8;
 
 		r = (UINT8)(r * palette_intensity);
 		g = (UINT8)(g * palette_intensity);
@@ -2974,9 +2974,9 @@ static void PaletteUpdate32()
 	{
 		UINT8 r,g,b;
 
-		r = p[i] >>  0;
-		g = p[i] >> 24;
-		b = p[i] >> 16;
+		r = BURN_ENDIAN_SWAP_INT32(p[i]) >>  0;
+		g = BURN_ENDIAN_SWAP_INT32(p[i]) >> 24;
+		b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 16;
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}

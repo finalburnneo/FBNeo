@@ -733,16 +733,16 @@ STD_ROM_PICK(Hyperpacb)
 STD_ROM_FN(Hyperpacb)
 
 static struct BurnRomInfo Cookbib2RomDesc[] = {
-	{ "cookbib2.02",   0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "cookbib2.01",   0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "unico_02.uh12", 0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico_01.ui12", 0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
-	{ "cookbib2.05",   0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
-	{ "cookbib2.04",   0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
-	{ "cookbib2.03",   0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
+	{ "unico_05.ua4",  0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
+	{ "unico_04.ua5",  0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
+	{ "unico_03.ua6",  0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
 
-	{ "cookbib2.07",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
+	{ "unico_07.u1",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
 
-	{ "cookbib2.06",   0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
+	{ "unico_06.uj15", 0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
 
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 
@@ -754,6 +754,27 @@ STD_ROM_PICK(Cookbib2)
 STD_ROM_FN(Cookbib2)
 
 static struct BurnRomInfo Cookbib2aRomDesc[] = {
+	{ "unico.uh12",    0x40000, 0x19421631, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico.ui12",    0x40000, 0x0d09ecf5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "unico_05.ua4",  0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
+	{ "unico_04.ua5",  0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
+	{ "unico_03.ua6",  0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
+
+	{ "unico_07.u1",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
+
+	{ "unico_06.uj15", 0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
+
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+
+	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Cookbib2a)
+STD_ROM_FN(Cookbib2a)
+
+static struct BurnRomInfo Cookbib2bRomDesc[] = {
 	{ "uh12.020",      		0x40000, 0xa44ec1f8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "ui12.020",      		0x40000, 0xbdbcd0d1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
@@ -771,8 +792,8 @@ static struct BurnRomInfo Cookbib2aRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Cookbib2a)
-STD_ROM_FN(Cookbib2a)
+STD_ROM_PICK(Cookbib2b)
+STD_ROM_FN(Cookbib2b)
 
 static struct BurnRomInfo Cookbib3RomDesc[] = {
 	{ "u52.bin",       0x40000, 0x65134893, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -4059,6 +4080,16 @@ struct BurnDriver BurnDrvCookbib2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2aRomInfo, Cookbib2aRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
+	Cookbib2Init, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCookbib2b = {
+	"cookbib2b", "cookbib2", NULL, NULL, "1996",
+	"Cookie & Bibi 2 (set 3)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Cookbib2bRomInfo, Cookbib2bRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
 	Cookbib2Init, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

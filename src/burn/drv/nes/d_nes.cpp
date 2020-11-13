@@ -35883,6 +35883,23 @@ struct BurnDriver BurnDrvnes_tmntiiarcgamj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_tmntiiarcgameRomDesc[] = {
+	{ "Teenage Mutant Hero Turtles II - The Arcade Game (Europe).nes",          524304, 0xa5bbb96b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmntiiarcgame)
+STD_ROM_FN(nes_tmntiiarcgame)
+
+struct BurnDriver BurnDrvnes_tmntiiarcgame = {
+	"nes_tmntiiarcgame", "nes_tmntiiarcgam", NULL, NULL, "1990",
+	"Teenage Mutant Hero Turtles II - The Arcade Game (Europe)\0", NULL, "Ultra Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tmntiiarcgameRomInfo, nes_tmntiiarcgameRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_tmntiiarcgamRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (USA).nes",          524304, 0xc9ffbbdb, BRF_ESS | BRF_PRG },
 };

@@ -23170,7 +23170,7 @@ struct BurnDriver BurnDrvMSX_buzzoff = {
 // Bumpy (Fra)
 
 static struct BurnRomInfo MSX_bumpyRomDesc[] = {
-	{ "bumpy (1989)(loriciels)(fr)[run'cas-'].cas",	0x0becb, 0xdc1d5578, BRF_PRG | BRF_ESS },
+	{ "bumpy (1989)(loriciels)(fr)[run'cas-'].cas",	48851, 0xc5ae9a42, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_bumpy, MSX_bumpy, msx_msx)

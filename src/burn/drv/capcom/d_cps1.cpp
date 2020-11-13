@@ -15281,6 +15281,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceja"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejb"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejc"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2cemix"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb2"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb3"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -24010,6 +24011,54 @@ struct BurnDriver BurnDrvCpsWofjdr = {
 	L"\u5929\u5730\u3092\u55b0\u3089\u3046 II - \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba \u30d0\u30fc\u30b8\u30e7\u30f3, \u30cf\u30c3\u30af)\0Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition, Hack)\0 ", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjdrRomInfo, WofjdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter II Mix (Ver 0.96)
+// Hacked by ZERO800 - BRAZIL
+// For more infomation, please visit: https://sf2mix.github.io/
+static struct BurnRomInfo sf2cemixRomDesc[] = {
+	{ "s92e_23b.8f",   0x080000, 0xfef67c2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_22b.7f",    0x080000, 0x03f5e41c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_21a.6f",    0x080000, 0x0f54c8f7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",     0x080000, 0xa1d1a20f, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",     0x080000, 0x0708bb01, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",     0x080000, 0x42e159b9, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",     0x080000, 0xcac353a3, BRF_GRA | CPS1_TILES },
+	{ "s92-5m.7a",     0x080000, 0x19e279c7, BRF_GRA | CPS1_TILES },
+	{ "s92-7m.9a",     0x080000, 0xdbfade45, BRF_GRA | CPS1_TILES },
+	{ "s92-6m.8a",     0x080000, 0x1d1ff44a, BRF_GRA | CPS1_TILES },
+	{ "s92-8m.10a",    0x080000, 0x40b816d8, BRF_GRA | CPS1_TILES },
+	{ "s92-10m.3c",    0x080000, 0x31ac767a, BRF_GRA | CPS1_TILES },
+	{ "s92-12m.5c",    0x080000, 0x76dab841, BRF_GRA | CPS1_TILES },
+	{ "s92-11m.4c",    0x080000, 0xd7fc65e2, BRF_GRA | CPS1_TILES },
+	{ "s92-13m.6c",    0x080000, 0x84ad4dcc, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",    0x010000, 0xa379fdc5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",    0x020000, 0x6aa5d7fa, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",    0x020000, 0xf92f5a4f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",     0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(sf2cemix)
+STD_ROM_FN(sf2cemix)
+
+struct BurnDriver BurnDrvCpssf2cemix = {
+	"sf2cemix", "sf2ce", NULL, NULL, "2020",
+	"Street Fighter II Mix(0.96)\0", NULL, "Hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, sf2cemixRomInfo, sf2cemixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

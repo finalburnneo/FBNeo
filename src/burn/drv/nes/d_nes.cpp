@@ -24,7 +24,7 @@ static UINT8 NESJoy2[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 NESJoy3[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 NESJoy4[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvInputs[4]   = { 0, 0, 0, 0 };
-static UINT8 DrvDips[2]     = { 0, 0 };
+static UINT8 DrvDips[3]     = { 0, 0, 0 };
 
 static UINT32 JoyShifter[2] = { 0, 0 };
 static UINT8 JoyStrobe      = 0;
@@ -87,6 +87,7 @@ static struct BurnInputInfo NESInputList[] =
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
 	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
+	{"Dip C",		  BIT_DIPSWITCH, DrvDips + 2, "dip"       },
 };
 
 STDINPUTINFO(NES)
@@ -111,6 +112,7 @@ static struct BurnInputInfo NESZapperInputList[] =
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
 	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
+	{"Dip C",		  BIT_DIPSWITCH, DrvDips + 2, "dip"       },
 };
 #undef A
 STDINPUTINFO(NESZapper)
@@ -156,6 +158,7 @@ static struct BurnInputInfo NES4ScoreInputList[] =
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
 	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
+	{"Dip C",		  BIT_DIPSWITCH, DrvDips + 2, "dip"       },
 };
 
 STDINPUTINFO(NES4Score)
@@ -185,94 +188,115 @@ static struct BurnInputInfo NESFDSInputList[] =
 	{"Reset", 		  BIT_DIGITAL,   &DrvReset  , "reset"     },
 	{"Dip A",		  BIT_DIPSWITCH, DrvDips + 0, "dip"       },
 	{"Dip B",		  BIT_DIPSWITCH, DrvDips + 1, "dip"       },
+	{"Dip C",		  BIT_DIPSWITCH, DrvDips + 2, "dip"       },
 };
 
 STDINPUTINFO(NESFDS)
 
 static struct BurnDIPInfo NESDIPList[] =
 {
-	{0x11, 0xf0, 0xff, 0xff, "dip_offset" },
-	{0x00, 0xff, 0xff, 0x00, NULL},
-	{0x01, 0xff, 0xff, 0x00, NULL},
+	{0x11, 0xf0, 0xff, 0xff, "dip_offset"	},
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+	{0x02, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
-	{0x00, 0x01, 0x01, 0x01, "Off"	},
-	{0x00, 0x01, 0x01, 0x00, "On"	},
+	{0x00, 0x01, 0x01, 0x01, "Off"			},
+	{0x00, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
-	{0x01, 0x01, 0x01, 0x00, "Off"	},
-	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"			},
+	{0x01, 0x01, 0x01, 0x01, "4:3"			},
 
 	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
-	{0x01, 0x01, 0x02, 0x00, "Off"	},
-	{0x01, 0x01, 0x02, 0x02, "On"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"			},
+	{0x01, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Palette"		},
+	{0x02, 0x01, 0x01, 0x00, "Famicom"		},
+	{0x02, 0x01, 0x01, 0x01, "RGB"			},
 };
 
 STDDIPINFO(NES)
 
 static struct BurnDIPInfo NESZapperDIPList[] =
 {
-	{0x0d, 0xf0, 0xff, 0xff, "dip_offset" },
-	{0x00, 0xff, 0xff, 0x00, NULL},
-	{0x01, 0xff, 0xff, 0x00, NULL},
+	{0x0d, 0xf0, 0xff, 0xff, "dip_offset"	},
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+	{0x02, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
-	{0x00, 0x01, 0x01, 0x01, "Off"	},
-	{0x00, 0x01, 0x01, 0x00, "On"	},
+	{0x00, 0x01, 0x01, 0x01, "Off"			},
+	{0x00, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
-	{0x01, 0x01, 0x01, 0x00, "Off"	},
-	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"			},
+	{0x01, 0x01, 0x01, 0x01, "4:3"			},
 
 	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
-	{0x01, 0x01, 0x02, 0x00, "Off"	},
-	{0x01, 0x01, 0x02, 0x02, "On"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"			},
+	{0x01, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Palette"		},
+	{0x02, 0x01, 0x01, 0x00, "Famicom"		},
+	{0x02, 0x01, 0x01, 0x01, "RGB"			},
 };
 
 STDDIPINFO(NESZapper)
 
 static struct BurnDIPInfo NES4ScoreDIPList[] =
 {
-	{0x21, 0xf0, 0xff, 0xff, "dip_offset" },
-	{0x00, 0xff, 0xff, 0x00, NULL},
-	{0x01, 0xff, 0xff, 0x00, NULL},
+	{0x21, 0xf0, 0xff, 0xff, "dip_offset"	},
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+	{0x02, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
-	{0x00, 0x01, 0x01, 0x01, "Off"	},
-	{0x00, 0x01, 0x01, 0x00, "On"	},
+	{0x00, 0x01, 0x01, 0x01, "Off"			},
+	{0x00, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
-	{0x01, 0x01, 0x01, 0x00, "Off"	},
-	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"			},
+	{0x01, 0x01, 0x01, 0x01, "4:3"			},
 
 	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
-	{0x01, 0x01, 0x02, 0x00, "Off"	},
-	{0x01, 0x01, 0x02, 0x02, "On"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"			},
+	{0x01, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Palette"		},
+	{0x02, 0x01, 0x01, 0x00, "Famicom"		},
+	{0x02, 0x01, 0x01, 0x01, "RGB"			},
 };
 
 STDDIPINFO(NES4Score)
 
 static struct BurnDIPInfo NESFDSDIPList[] =
 {
-	{0x12, 0xf0, 0xff, 0xff, "dip_offset" },
-	{0x00, 0xff, 0xff, 0x00, NULL},
-	{0x01, 0xff, 0xff, 0x00, NULL},
+	{0x12, 0xf0, 0xff, 0xff, "dip_offset"	},
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+	{0x02, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"	},
-	{0x00, 0x01, 0x01, 0x01, "Off"	},
-	{0x00, 0x01, 0x01, 0x00, "On"	},
+	{0x00, 0x01, 0x01, 0x01, "Off"			},
+	{0x00, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Auto Insert/Eject" },
-	{0x00, 0x01, 0x02, 0x02, "Off"	},
-	{0x00, 0x01, 0x02, 0x00, "On"	},
+	{0x00, 0x01, 0x02, 0x02, "Off"			},
+	{0x00, 0x01, 0x02, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Aspect Ratio"	},
-	{0x01, 0x01, 0x01, 0x00, "Off"	},
-	{0x01, 0x01, 0x01, 0x01, "4:3"	},
+	{0x01, 0x01, 0x01, 0x00, "Off"			},
+	{0x01, 0x01, 0x01, 0x01, "4:3"			},
 
 	{0   , 0xfe, 0   ,    2, "Stereoizer"	},
-	{0x01, 0x01, 0x02, 0x00, "Off"	},
-	{0x01, 0x01, 0x02, 0x02, "On"	},
+	{0x01, 0x01, 0x02, 0x00, "Off"			},
+	{0x01, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Palette"		},
+	{0x02, 0x01, 0x01, 0x00, "Famicom"		},
+	{0x02, 0x01, 0x01, 0x01, "RGB"			},
 };
 
 STDDIPINFO(NESFDS)
@@ -7584,17 +7608,26 @@ static void mapper_run()
 
 // --------[ end Mappers
 
-static UINT32 nes_palette[0x40] =
-{
+static UINT32 nes_palette[2][0x40] = {
+{ // dink-fami
 	0x5c5c5c, 0x00237e, 0x100e9e, 0x33009b, 0x520074, 0x630037, 0x610500, 0x4c1700, 0x2b2c00, 0x093e00, 0x004700, 0x004505, 0x003744, 0x000000, 0x000000, 0x000000,
 	0xa7a7a7, 0x1157d6, 0x3b38ff, 0x6d21fe, 0x9916c8, 0xb11973, 0xae2a1a, 0x904500, 0x626400, 0x307d00, 0x0a8a00, 0x00862a, 0x007385, 0x000000, 0x000000, 0x000000,
 	0xfeffff, 0x5ba9ff, 0x8a88ff, 0xc16eff, 0xef61ff, 0xff65c7, 0xff7866, 0xe6961b, 0xb4b700, 0x7fd200, 0x53e027, 0x3cdc79, 0x3fc7da, 0x454545, 0x000000, 0x000000,
 	0xfeffff, 0xbadbff, 0xcecdff, 0xe5c2ff, 0xf8bcff, 0xffbee7, 0xffc6be, 0xf4d39c, 0xe0e18a, 0xc9ec8c, 0xb6f2a2, 0xacf0c6, 0xade8ef, 0xb0b0b0, 0x000000, 0x000000,
-};
+},
+{ // rgb
+	0x7c7c7c, 0x0000fc, 0x0000bc, 0x4428bc, 0x940084, 0xa80020, 0xa81000, 0x881400,	0x503000, 0x007800, 0x006800, 0x005800, 0x004058, 0x000000, 0x000000, 0x000000,
+	0xbcbcbc, 0x0078f8, 0x0058f8, 0x6844fc, 0xd800cc, 0xe40058, 0xf83800, 0xe45c10,	0xac7c00, 0x00b800, 0x00a800, 0x00a844, 0x008888, 0x000000, 0x000000, 0x000000,
+	0xf8f8f8, 0x3cbcfc, 0x6888fc, 0x9878f8, 0xf878f8, 0xf85898, 0xf87858, 0xfca044,	0xf8b800, 0xb8f818, 0x58d854, 0x58f898, 0x00e8d8, 0x787878, 0x000000, 0x000000,
+	0xfcfcfc, 0xa4e4fc, 0xb8b8f8, 0xd8b8f8, 0xf8b8f8, 0xf8a4c0, 0xf0d0b0, 0xfce0a8,	0xf8d878, 0xd8f878, 0xb8f8b8, 0xb8f8d8, 0x00fcfc, 0xf8d8f8, 0x000000, 0x000000
+} };
+
+#define DIP_PALETTE (DrvDips[2] & 1)
+static INT32 last_palette;
 
 static UINT8 GetAvgBrightness(INT32 x, INT32 y)
 {
-	UINT32 rgbcolor = nes_palette[pTransDraw[(y) * 256 + x] & 0x3f];
+	UINT32 rgbcolor = nes_palette[DIP_PALETTE][pTransDraw[(y) * 256 + x] & 0x3f];
 	INT32 t = (rgbcolor & 0xff) + ((rgbcolor >> 8) & 0xff) + ((rgbcolor >> 16) & 0xff);
 
 	return t / 3;
@@ -8384,6 +8417,8 @@ static void ppu_reset()
 
 	oam_cnt = 0;
 	oam2_cnt = 0;
+
+	last_palette = DIP_PALETTE;
 }
 
 static void ppu_init(INT32 is_pal)
@@ -8924,11 +8959,11 @@ static UINT32 EmphRGB(INT32 pal_idx, UINT8 type)
 		eb = (eb *   EMPH) >> 16;
 	}
 
-	UINT32 r = (((nes_palette[pal_idx & 0x3f] >> 16) & 0xff) * er) >> 16;
+	UINT32 r = (((nes_palette[DIP_PALETTE][pal_idx & 0x3f] >> 16) & 0xff) * er) >> 16;
 	if (r > 0xff) r = 0xff;
-	UINT32 g = (((nes_palette[pal_idx & 0x3f] >>  8) & 0xff) * eg) >> 16;
+	UINT32 g = (((nes_palette[DIP_PALETTE][pal_idx & 0x3f] >>  8) & 0xff) * eg) >> 16;
 	if (g > 0xff) g = 0xff;
-	UINT32 b = (((nes_palette[pal_idx & 0x3f] >>  0) & 0xff) * eb) >> 16;
+	UINT32 b = (((nes_palette[DIP_PALETTE][pal_idx & 0x3f] >>  0) & 0xff) * eb) >> 16;
 	if (b > 0xff) b = 0xff;
 
 	return BurnHighCol(r, g, b, 0);
@@ -8938,7 +8973,7 @@ static void DrvCalcPalette()
 {
 	// Normal NES Palette
 	for (INT32 i = 0; i < 0x40; i++) {
-		DrvPalette[i] = BurnHighCol((nes_palette[i] >> 16) & 0xff, (nes_palette[i] >> 8) & 0xff, nes_palette[i] & 0xff, 0);
+		DrvPalette[i] = BurnHighCol((nes_palette[DIP_PALETTE][i] >> 16) & 0xff, (nes_palette[DIP_PALETTE][i] >> 8) & 0xff, nes_palette[DIP_PALETTE][i] & 0xff, 0);
 	}
 
 	// Emphasized Palettes (all combinations, see comments-table in EmphRGB)
@@ -8956,9 +8991,10 @@ static void DrvCalcPalette()
 
 static INT32 NESDraw()
 {
-	if (NESRecalc) {
+	if (NESRecalc || last_palette != DIP_PALETTE) {
 		DrvCalcPalette();
 		NESRecalc = 0;
+		last_palette = DIP_PALETTE;
 	}
 
 	if ((NESMode & IS_FDS) && (FDSFrameAction == SWAP_DISK || FDSFrameAction == FA_FADEOUT)) {
@@ -34997,6 +35033,57 @@ struct BurnDriver BurnDrvnes_smb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_smbRomInfo, nes_smbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smbspehRomDesc[] = {
+	{ "Super Mario Bros. Special (Hack, Triforce89).nes",          98320, 0xab872e74, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbspeh)
+STD_ROM_FN(nes_smbspeh)
+
+struct BurnDriver BurnDrvnes_smbspeh = {
+	"nes_smbspeh", "nes_smb", NULL, NULL, "1989?",
+	"Super Mario Bros. Special (Hack, Triforce89)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbspehRomInfo, nes_smbspehRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smbspeRomDesc[] = {
+	{ "Super Mario Bros. Special (Hack, v1.0-rc1).nes",          73744, 0xba34bcad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbspe)
+STD_ROM_FN(nes_smbspe)
+
+struct BurnDriver BurnDrvnes_smbspe = {
+	"nes_smbspe", "nes_smb", NULL, NULL, "1989?",
+	"Super Mario Bros. Special (Hack, v1.0-rc1)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbspeRomInfo, nes_smbspeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smbspex1RomDesc[] = {
+	{ "Super Mario Bros. Special X1 (Hack).nes",          98320, 0x5a44876f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbspex1)
+STD_ROM_FN(nes_smbspex1)
+
+struct BurnDriver BurnDrvnes_smbspex1 = {
+	"nes_smbspex1", "nes_smb", NULL, NULL, "1989?",
+	"Super Mario Bros. Special X1 (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbspex1RomInfo, nes_smbspex1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

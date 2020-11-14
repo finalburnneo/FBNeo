@@ -2856,28 +2856,16 @@ static UINT16 ToyboxMCUStatusRead()
 	return 0;
 }
 
-#ifdef LSB_FIRST
 #define MCU_RESPONSE(d) memcpy(&MCURam[MCUOffset], d, sizeof(d))
-#else
-#define MCU_RESPONSE(d) {						\
-	UINT32 rsize = sizeof(d);					\
-	UINT8 *dest = (UINT8*)&MCURam[MCUOffset];   \
-	UINT8 *src  = (UINT8*)&d;					\
-	for (UINT32 i = 0; i < rsize; i+=2) {		\
-		dest[i] = src[i^1];						\
-		dest[i^1] = src[i];						\
-	}											\
-}
-#endif
 
 static void BloodwarMCURun()
 {
 	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
 	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
 
-	UINT16 MCUCommand = BURN_ENDIAN_SWAP_INT16(MCURam[0x10/2]);
-	UINT16 MCUOffset = BURN_ENDIAN_SWAP_INT16(MCURam[0x12/2]) >> 1;
-	UINT16 MCUData = BURN_ENDIAN_SWAP_INT16(MCURam[0x14/2]);
+	UINT16 MCUCommand = MCURam[0x10/2];
+	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	UINT16 MCUData = MCURam[0x14/2];
 
 	switch (MCUCommand >> 8) {
 		case 0x02: {
@@ -2886,7 +2874,7 @@ static void BloodwarMCURun()
 		}
 
 		case 0x03: {
-			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0xff00 - (Kaneko16Dip[0] << 8));
+			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
 			return;
 		}
 
@@ -2960,9 +2948,9 @@ static void BonkadvMCURun()
 	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
 	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
 
-	UINT16 MCUCommand = BURN_ENDIAN_SWAP_INT16(MCURam[0x10/2]);
-	UINT16 MCUOffset = BURN_ENDIAN_SWAP_INT16(MCURam[0x12/2]) >> 1;
-	UINT16 MCUData = BURN_ENDIAN_SWAP_INT16(MCURam[0x14/2]);
+	UINT16 MCUCommand = MCURam[0x10/2];
+	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	UINT16 MCUData = MCURam[0x14/2];
 
 	switch (MCUCommand >> 8) {
 		case 0x02: {
@@ -2971,7 +2959,7 @@ static void BonkadvMCURun()
 		}
 
 		case 0x03: {
-			MCURam[MCUOffset + 0] = BURN_ENDIAN_SWAP_INT16(0xff00 - (Kaneko16Dip[0] << 8));
+			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
 			return;
 		}
 
@@ -3025,17 +3013,7 @@ static void BonkadvMCURun()
 
 		case 0x43: {
 			// Reset defaults
-#ifdef LSB_FIRST
 			memcpy(NVRam, bonkadv_mcu_43, sizeof(bonkadv_mcu_43));
-#else
-			UINT8* dest = (UINT8*)NVRam;
-			UINT8* src = (UINT8*)bonkadv_mcu_43;
-			for (UINT32 i = 0; i < sizeof(bonkadv_mcu_43); i+=2)
-			{
-				dest[i] = src[i ^ 1];
-				dest[i^1] = src[i];
-			}
-#endif
 			return;
 		}
 	}

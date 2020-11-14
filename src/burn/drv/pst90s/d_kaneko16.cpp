@@ -2856,7 +2856,19 @@ static UINT16 ToyboxMCUStatusRead()
 	return 0;
 }
 
+#ifdef LSB_FIRST
 #define MCU_RESPONSE(d) memcpy(&MCURam[MCUOffset], d, sizeof(d))
+#else
+#define MCU_RESPONSE(d) {						\
+	UINT32 rsize = sizeof(d);					\
+	UINT8 *dest = (UINT8*)&MCURam[MCUOffset];   \
+	UINT8 *src  = (UINT8*)&d;					\
+	for (UINT32 i = 0; i < rsize; i+=2) {		\
+		dest[i] = src[i^1];						\
+		dest[i^1] = src[i];						\
+	}											\
+}
+#endif
 
 static void BloodwarMCURun()
 {
@@ -3013,7 +3025,17 @@ static void BonkadvMCURun()
 
 		case 0x43: {
 			// Reset defaults
+#ifdef LSB_FIRST
 			memcpy(NVRam, bonkadv_mcu_43, sizeof(bonkadv_mcu_43));
+#else
+			UINT8* dest = (UINT8*)NVRam;
+			UINT8* src = (UINT8*)bonkadv_mcu_43;
+			for (UINT32 i = 0; i < sizeof(bonkadv_mcu_43); i+=2)
+			{
+				dest[i] = src[i ^ 1];
+				dest[i^1] = src[i];
+			}
+#endif
 			return;
 		}
 	}

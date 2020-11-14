@@ -23178,10 +23178,29 @@ STD_ROM_FN(MSX_bumpy)
 
 struct BurnDriver BurnDrvMSX_bumpy = {
 	"msx_bumpy", NULL, "msx_msx", NULL, "1989",
-	"Bumpy (Fra)\0", NULL, "Loriciels", "MSX",
+	"Bumpy (Loriciels)\0", NULL, "Loriciels", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_bumpyRomInfo, MSX_bumpyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Bumpy (Spa)
+
+static struct BurnRomInfo MSX_bumpyspaRomDesc[] = {
+	{ "Bumpy (19xx)(Grupo de Trabajo Software)(es)[RUN'CAS-'].cas",	17485, 0x8c8342a6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bumpyspa, MSX_bumpyspa, msx_msx)
+STD_ROM_FN(MSX_bumpyspa)
+
+struct BurnDriver BurnDrvMSX_bumpyspa = {
+	"msx_bumpyspa", NULL, "msx_msx", NULL, "19xx",
+	"Bumpy (Grupo de Trabajo)\0", NULL, "Grupo de Trabajo Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_bumpyspaRomInfo, MSX_bumpyspaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

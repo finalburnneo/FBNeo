@@ -6331,21 +6331,21 @@ struct BurnDriver BurnSpeckickoff = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Kick Off 2 (128K)
+// Kick Off 2
 
-static struct BurnRomInfo Speckickoff2RomDesc[] = {
-	{ "Kick Off 2 (1990)(Anco Software)[128K].z80", 0x0be06, 0xc6367c82, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecKickoff2RomDesc[] = {
+	{ "Kick Off 2 (1990)(Anco).tap", 77052, 0x74a921aa, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speckickoff2, Speckickoff2, Spec128)
-STD_ROM_FN(Speckickoff2)
+STDROMPICKEXT(SpecKickoff2, SpecKickoff2, Spec128)
+STD_ROM_FN(SpecKickoff2)
 
-struct BurnDriver BurnSpeckickoff2 = {
+struct BurnDriver BurnSpecKickoff2 = {
 	"spec_kickoff2", NULL, "spec_spec128", NULL, "1990",
-	"Kick Off 2 (128K)\0", NULL, "Anco Software", "ZX Spectrum",
+	"Kick Off 2\0", NULL, "Anco", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Speckickoff2RomInfo, Speckickoff2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecKickoff2RomInfo, SpecKickoff2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -14426,20 +14426,20 @@ struct BurnDriver BurnSpec1stdivmanager = {
 
 // 750cc Grand Prix
 
-static struct BurnRomInfo Spec750ccgpRomDesc[] = {
-	{ "750cc Grand Prix (1991)(Codemasters).z80", 38227, 0x902f4462, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Spec750ccRomDesc[] = {
+	{ "750cc Grand Prix (1991)(Code Masters).tap", 82394, 0xc9073683, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec750ccgp, Spec750ccgp, Spectrum)
-STD_ROM_FN(Spec750ccgp)
+STDROMPICKEXT(Spec750cc, Spec750cc, Spec128)
+STD_ROM_FN(Spec750cc)
 
-struct BurnDriver BurnSpec750ccgp = {
-	"spec_750ccgp", NULL, "spec_spectrum", NULL, "1991",
-	"750cc Grand Prix\0", NULL, "Codemasters", "ZX Spectrum",
+struct BurnDriver BurnSpec750cc = {
+	"spec_750cc", NULL, "spec_spec128", NULL, "1991",
+	"750cc Grand Prix\0", NULL, "Code Masters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Spec750ccgpRomInfo, Spec750ccgpRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpectrumGetZipName, Spec750ccRomInfo, Spec750ccRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

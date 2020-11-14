@@ -9245,6 +9245,27 @@
 		<rom name="Super Mario Bros. 3 (USA) (Rev A).nes" size="393232" crc="0b742b33"/>
 		<driver status="good"/>
 	</game>
+	<game name="smbspeh" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Special (Hack, Triforce89)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. Special (Hack, Triforce89).nes" size="98320" crc="ab872e74"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbspe" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Special (Hack, v1.0-rc1)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. Special (Hack, v1.0-rc1).nes" size="73744" crc="ba34bcad"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbspex1" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Special X1 (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. Special X1 (Hack).nes" size="98320" crc="5a44876f"/>
+		<driver status="good"/>
+	</game>
 	<game name="supermarwor">
 		<description>Super Mario World (Unl)</description>
 		<year>1989?</year>
@@ -9607,6 +9628,20 @@
 		<year>1990</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Tecmo World Wrestling (USA).nes" size="262160" crc="12444337"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmht" cloneof="tmnt" romof="tmnt">
+		<description>Teenage Mutant Hero Turtles (Europe)</description>
+		<year>1990</year>
+		<manufacturer>Palcom</manufacturer>
+		<rom name="Teenage Mutant Hero Turtles (Europe).nes" size="262160" crc="6d1e30a7"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmhtiiarcgam" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
+		<description>Teenage Mutant Hero Turtles II - The Arcade Game (Europe)</description>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Teenage Mutant Hero Turtles II - The Arcade Game (Europe).nes" size="524304" crc="a5bbb96b"/>
 		<driver status="good"/>
 	</game>
 	<game name="tmntc" cloneof="tmnt" romof="tmnt">

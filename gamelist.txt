@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15543 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15550 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -142,7 +142,7 @@ This list contains all games supported by FinalBurn Neo.
 | 7ordi		|  	| 7 Ordi (Korea)					| 		| 2002	| Yun Sung	| Miscellaneous	| 					|
 | spec_720deg	|  	| 720 Degrees (48K)					| 		| 1986	| U.S. Gold	| ZX Spectrum	| 					|
 | nes_720degrees|  	| 720 Degrees (USA)					| 		| 1989	| Mindscape	| Miscellaneous	| 					|
-| spec_750ccgp	|  	| 750cc Grand Prix					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
+| spec_750cc	|  	| 750cc Grand Prix					| 		| 1991	| Code Masters	| ZX Spectrum	| 					|
 | nes_8eyes	|  	| 8 Eyes (USA)						| 		| 1990	| Taxan		| Miscellaneous	| 					|
 | nes_8bitrhylan|  	| 8-Bit Rhythm Land (HB)				| 		| 2018	| Columbus Circl| Miscellaneous	| 					|
 | 800fatha	|  	| 800 Fathoms (older)					| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
@@ -1788,7 +1788,8 @@ This list contains all games supported by FinalBurn Neo.
 | bnj		|  	| Bump 'n' Jump						| brubber	| 1982	| Data East USA	| Miscellaneous	| 					|
 | cv_bnj	|  	| Bump 'n' Jump						| 		| 1984	| Coleco	| ColecoVision	| 					|
 | nes_bumpnjump	|  	| Bump'n'Jump (USA)					| 		| 1988	| Vic Tokai	| Miscellaneous	| 					|
-| msx_bumpy	|  	| Bumpy (Fra)						| 		| 1989	| Loriciels	| MSX		| 					|
+| msx_bumpyspa	|  	| Bumpy (Grupo de Trabajo)				| 		| 19xx	| Grupo de Traba| MSX		| 					|
+| msx_bumpy	|  	| Bumpy (Loriciels)					| 		| 1989	| Loriciels	| MSX		| 					|
 | nes_buraifighterj|  	| Burai Fighter (Japan)					| nes_buraifighter| 1990	| Taito		| Miscellaneous	| 					|
 | nes_buraifighter|  	| Burai Fighter (USA)					| 		| 1990	| Taxan		| Miscellaneous	| 					|
 | btime		|  	| Burger Time (Data East set 1)				| 		| 1982	| Data East Corp| Miscellaneous	| 					|
@@ -6526,7 +6527,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_kickoff	|  	| Kick Off (48K)					| 		| 1989	| Anco Software	| ZX Spectrum	| 					|
 | nes_kickoff	|  	| Kick Off (Europe)					| 		| 1992	| Imagineer	| Miscellaneous	| 					|
 | kickoff	|  	| Kick Off (Japan)					| 		| 1988	| Jaleco	| Mega System 1	| 					|
-| spec_kickoff2	|  	| Kick Off 2 (128K)					| 		| 1990	| Anco Software	| ZX Spectrum	| 					|
+| spec_kickoff2	|  	| Kick Off 2						| 		| 1990	| Anco		| ZX Spectrum	| 					|
 | md_kickoff3	|  	| Kick Off 3 - European Challenge (Euro)		| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
 | spec_kickoffw	|  	| Kick Off World Cup Edition (128K)			| 		| 1990	| Anco Software	| ZX Spectrum	| 					|
 | kickridr	|  	| Kick Rider						| 		| 1984	| Universal	| Miscellaneous	| 					|
@@ -12158,6 +12159,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_streefigii|  	| Street Fighter II - The World Warrior (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sf2ly		|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | nes_streefigiihac|  	| Street Fighter II Hack (Hack of SFIII)		| nes_streefigiii| 1989?	| Nintendo	| Miscellaneous	| 					|
+| sf2mix	|  	| Street Fighter II Mix (v0.96)				| sf2ce		| 2020	| Hack		| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -12638,6 +12640,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_smb3c	|  	| Super Mario Bros. 3 (T-Chi)				| nes_smb3	| 2016-06-03| Nintendo	| Miscellaneous	| 					|
 | nes_smb3	|  	| Super Mario Bros. 3 (USA) (Rev A)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | md_smb4md	|  	| Super Mario Bros. 4 MD				| 		| 2010	| Mairtrus	| Sega Megadrive| 					|
+| nes_smbspeh	|  	| Super Mario Bros. Special (Hack, Triforce89)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_smbspe	|  	| Super Mario Bros. Special (Hack, v1.0-rc1)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_smbspex1	|  	| Super Mario Bros. Special X1 (Hack)			| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_supermarbro|  	| Super Mario Brothers (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_supermarbro2|  	| Super Mario Brothers 2 (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_supermarwor|  	| Super Mario World (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -13115,6 +13120,7 @@ This list contains all games supported by FinalBurn Neo.
 | teddybbobl	|  	| TeddyBoy Blues (bootleg)				| teddybb	| 1985	| bootleg	| System 1	| 					|
 | spec_tmht	|  	| Teenage Mutant Hero Turtles (128K)			| 		| 1990	| Image Works	| ZX Spectrum	| 					|
 | spec_tmht_48	|  	| Teenage Mutant Hero Turtles (48K)			| spec_tmht	| 1990	| Image Works	| ZX Spectrum	| 					|
+| nes_tmht	|  	| Teenage Mutant Hero Turtles (Europe)			| nes_tmnt	| 1990	| Palcom	| Miscellaneous	| 					|
 | tmht2pa	|  	| Teenage Mutant Hero Turtles (UK 2 Players, version ?)	| tmnt		| 1989	| Konami	| GX963		| 					|
 | tmht2p	|  	| Teenage Mutant Hero Turtles (UK 2 Players, version U)	| tmnt		| 1989	| Konami	| GX963		| 					|
 | tmhtb		|  	| Teenage Mutant Hero Turtles (UK 4 Players, version ?)	| tmnt		| 1989	| Konami	| GX963		| 					|
@@ -13125,6 +13131,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_tmhttf	|  	| Teenage Mutant Hero Turtles - Tournament Fighters (Eur| 		| 1993	| Konami	| Sega Megadrive| 					|
 | tmht22pe	|  	| Teenage Mutant Hero Turtles - Turtles in Time (2 Playe| tmnt2		| 1991	| Konami	| GX063		| 					|
 | tmht24pe	|  	| Teenage Mutant Hero Turtles - Turtles in Time (4 Playe| tmnt2		| 1991	| Konami	| GX063		| 					|
+| nes_tmhtiiarcgam|  	| Teenage Mutant Hero Turtles II - The Arcade Game (Euro| nes_tmntiiarcgam| 1991	| Konami	| Miscellaneous	| 					|
 | tmnta		|  	| Teenage Mutant Ninja Turtles (Asia 4 Players, version | tmnt		| 1990	| Konami	| GX963		| 					|
 | tmnti		|  	| Teenage Mutant Ninja Turtles (Intro demo)		| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | tmntia	|  	| Teenage Mutant Ninja Turtles (Intro demo, alt)	| tmnti		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|

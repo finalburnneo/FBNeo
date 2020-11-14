@@ -1675,11 +1675,21 @@
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="bumpyspa" romof="msx">
+		<description>Bumpy (Grupo de Trabajo)</description>
+		<year>19xx</year>
+		<manufacturer>Grupo de Trabajo Software</manufacturer>
+		<rom name="Bumpy (19xx)(Grupo de Trabajo Software)(es)[RUN'CAS-'].cas" size="17485" crc="8c8342a6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<driver status="good"/>
+	</game>
 	<game name="bumpy" romof="msx">
-		<description>Bumpy (Fra)</description>
+		<description>Bumpy (Loriciels)</description>
 		<year>1989</year>
 		<manufacturer>Loriciels</manufacturer>
-		<rom name="bumpy (1989)(loriciels)(fr)[run'cas-'].cas" size="48843" crc="dc1d5578"/>
+		<rom name="bumpy (1989)(loriciels)(fr)[run'cas-'].cas" size="48851" crc="c5ae9a42"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

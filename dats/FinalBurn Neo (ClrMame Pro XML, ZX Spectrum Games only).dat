@@ -185,12 +185,13 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
-	<game name="750ccgp" romof="spectrum">
+	<game name="750cc" romof="spec128">
 		<description>750cc Grand Prix</description>
 		<year>1991</year>
-		<manufacturer>Codemasters</manufacturer>
-		<rom name="750cc Grand Prix (1991)(Codemasters).z80" size="38227" crc="902f4462"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<manufacturer>Code Masters</manufacturer>
+		<rom name="750cc Grand Prix (1991)(Code Masters).tap" size="82394" crc="c9073683"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="911ts" romof="spec128">
@@ -4181,10 +4182,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickoff2" romof="spec128">
-		<description>Kick Off 2 (128K)</description>
+		<description>Kick Off 2</description>
 		<year>1990</year>
-		<manufacturer>Anco Software</manufacturer>
-		<rom name="Kick Off 2 (1990)(Anco Software)[128K].z80" size="48646" crc="c6367c82"/>
+		<manufacturer>Anco</manufacturer>
+		<rom name="Kick Off 2 (1990)(Anco).tap" size="77052" crc="74a921aa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

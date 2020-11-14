@@ -144,7 +144,7 @@ DRV		BurnDrvmd_688atsub;
 DRV		BurnDrvOrdi7;
 DRV		BurnSpec720deg;
 DRV		BurnDrvnes_720degrees;
-DRV		BurnSpec750ccgp;
+DRV		BurnSpec750cc;
 DRV		BurnDrvnes_8eyes;
 DRV		BurnDrvnes_8bitrhylan;
 DRV		BurnDrvEighthundredfatha;
@@ -1810,6 +1810,7 @@ DRV		BurnDrvCbnj;
 DRV		BurnDrvBnj;
 DRV		BurnDrvcv_bnj;
 DRV		BurnDrvnes_bumpnjump;
+DRV		BurnDrvMSX_bumpyspa;
 DRV		BurnDrvMSX_bumpy;
 DRV		BurnDrvnes_buraifighterj;
 DRV		BurnDrvnes_buraifighter;
@@ -6630,7 +6631,7 @@ DRV		BurnDrvnes_kickmaster;
 DRV		BurnSpeckickoff;
 DRV		BurnDrvnes_kickoff;
 DRV		BurnDrvKickoff;
-DRV		BurnSpeckickoff2;
+DRV		BurnSpecKickoff2;
 DRV		BurnDrvmd_kickoff3;
 DRV		BurnSpeckickoffw;
 DRV		BurnDrvKickridr;
@@ -12346,6 +12347,7 @@ DRV		BurnDrvCpsSf2thndr2;
 DRV		BurnDrvnes_streefigii;
 DRV		BurnDrvCpsSf2ly;
 DRV		BurnDrvnes_streefigiihac;
+DRV		BurnDrvCpssf2mix;
 DRV		BurnDrvCpsSf2cebltw;
 DRV		BurnDrvCpsSf2ceeabl;
 DRV		BurnDrvCpsSf2ceeab2;
@@ -12840,6 +12842,9 @@ DRV		BurnDrvnes_smb2j;
 DRV		BurnDrvnes_smb3c;
 DRV		BurnDrvnes_smb3;
 DRV		BurnDrvmd_smb4md;
+DRV		BurnDrvnes_smbspeh;
+DRV		BurnDrvnes_smbspe;
+DRV		BurnDrvnes_smbspex1;
 DRV		BurnDrvfds_supermarbro;
 DRV		BurnDrvfds_supermarbro2;
 DRV		BurnDrvnes_supermarwor;
@@ -13321,6 +13326,7 @@ DRV		BurnDrvTeddybbo;
 DRV		BurnDrvTeddybbobl;
 DRV		BurnSpectmht;
 DRV		BurnSpectmht_48;
+DRV		BurnDrvnes_tmht;
 DRV		BurnDrvTmht2pa;
 DRV		BurnDrvTmht2p;
 DRV		BurnDrvTmhtb;
@@ -13331,6 +13337,7 @@ DRV		BurnDrvmd_tmhthh;
 DRV		BurnDrvmd_tmhttf;
 DRV		BurnDrvTmht22pe;
 DRV		BurnDrvTmht24pe;
+DRV		BurnDrvnes_tmhtiiarcgam;
 DRV		BurnDrvTmnta;
 DRV		BurnDrvtmnti;
 DRV		BurnDrvtmntia;
@@ -15950,7 +15957,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrdi7,				// 7 Ordi (Korea)
 	&BurnSpec720deg,			// 720 Degrees (48K)
 	&BurnDrvnes_720degrees,		// 720 Degrees (USA)
-	&BurnSpec750ccgp,			// 750cc Grand Prix
+	&BurnSpec750cc,				// 750cc Grand Prix
 	&BurnDrvnes_8eyes,			// 8 Eyes (USA)
 	&BurnDrvnes_8bitrhylan,		// 8-Bit Rhythm Land (HB)
 	&BurnDrvEighthundredfatha,	// 800 Fathoms (older)
@@ -17616,7 +17623,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBnj,				// Bump 'n' Jump
 	&BurnDrvcv_bnj,				// Bump 'n' Jump
 	&BurnDrvnes_bumpnjump,		// Bump'n'Jump (USA)
-	&BurnDrvMSX_bumpy,			// Bumpy (Fra)
+	&BurnDrvMSX_bumpyspa,		// Bumpy (Grupo de Trabajo)
+	&BurnDrvMSX_bumpy,			// Bumpy (Loriciels)
 	&BurnDrvnes_buraifighterj,	// Burai Fighter (Japan)
 	&BurnDrvnes_buraifighter,	// Burai Fighter (USA)
 	&BurnDrvBtime,				// Burger Time (Data East set 1)
@@ -22436,7 +22444,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpeckickoff,			// Kick Off (48K)
 	&BurnDrvnes_kickoff,		// Kick Off (Europe)
 	&BurnDrvKickoff,			// Kick Off (Japan)
-	&BurnSpeckickoff2,			// Kick Off 2 (128K)
+	&BurnSpecKickoff2,			// Kick Off 2
 	&BurnDrvmd_kickoff3,		// Kick Off 3 - European Challenge (Euro)
 	&BurnSpeckickoffw,			// Kick Off World Cup Edition (128K)
 	&BurnDrvKickridr,			// Kick Rider
@@ -28152,6 +28160,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_streefigii,		// Street Fighter II - The World Warrior (Unl)
 	&BurnDrvCpsSf2ly,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvnes_streefigiihac,	// Street Fighter II Hack (Hack of SFIII)
+	&BurnDrvCpssf2mix,			// Street Fighter II Mix (v0.96)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
 	&BurnDrvCpsSf2ceeab2,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 2)
@@ -28646,6 +28655,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smb3c,			// Super Mario Bros. 3 (T-Chi)
 	&BurnDrvnes_smb3,			// Super Mario Bros. 3 (USA) (Rev A)
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
+	&BurnDrvnes_smbspeh,		// Super Mario Bros. Special (Hack, Triforce89)
+	&BurnDrvnes_smbspe,			// Super Mario Bros. Special (Hack, v1.0-rc1)
+	&BurnDrvnes_smbspex1,		// Super Mario Bros. Special X1 (Hack)
 	&BurnDrvfds_supermarbro,	// Super Mario Brothers (Japan)
 	&BurnDrvfds_supermarbro2,	// Super Mario Brothers 2 (Japan)
 	&BurnDrvnes_supermarwor,	// Super Mario World (Unl)
@@ -29127,6 +29139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTeddybbobl,			// TeddyBoy Blues (bootleg)
 	&BurnSpectmht,				// Teenage Mutant Hero Turtles (128K)
 	&BurnSpectmht_48,			// Teenage Mutant Hero Turtles (48K)
+	&BurnDrvnes_tmht,			// Teenage Mutant Hero Turtles (Europe)
 	&BurnDrvTmht2pa,			// Teenage Mutant Hero Turtles (UK 2 Players, version ?)
 	&BurnDrvTmht2p,				// Teenage Mutant Hero Turtles (UK 2 Players, version U)
 	&BurnDrvTmhtb,				// Teenage Mutant Hero Turtles (UK 4 Players, version ?)
@@ -29137,6 +29150,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tmhttf,			// Teenage Mutant Hero Turtles - Tournament Fighters (Euro)
 	&BurnDrvTmht22pe,			// Teenage Mutant Hero Turtles - Turtles in Time (2 Players ver. EBA)
 	&BurnDrvTmht24pe,			// Teenage Mutant Hero Turtles - Turtles in Time (4 Players ver. EAA)
+	&BurnDrvnes_tmhtiiarcgam,	// Teenage Mutant Hero Turtles II - The Arcade Game (Europe)
 	&BurnDrvTmnta,				// Teenage Mutant Ninja Turtles (Asia 4 Players, version ?)
 	&BurnDrvtmnti,				// Teenage Mutant Ninja Turtles (Intro demo)
 	&BurnDrvtmntia,				// Teenage Mutant Ninja Turtles (Intro demo, alt)

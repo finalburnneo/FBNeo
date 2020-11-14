@@ -18203,10 +18203,10 @@ struct BurnDriver BurnDrvkof10thd = {
 
 // The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)
 // Hack by DOVE FLY
-// GOTVG 20201030
+// GOTVG 20201111
 
 static struct BurnRomInfo kof10thuoRomDesc[] = {
-	{ "kf10udo-p1.p1",   0x800000, 0x77b4bf26, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kf10udo-p1.p1",   0x800000, 0x5c261d57, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "kf10udo-s1.s1",   0x020000, 0x312bf34b, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -18229,7 +18229,7 @@ STDROMPICKEXT(kof10thuo, kof10thuo, neogeo)
 STD_ROM_FN(kof10thuo)
 
 struct BurnDriver BurnDrvkof10thuo = {
-	"kof10thuo", "kof2002", "neogeo", NULL, "2020-10-30",
+	"kof10thuo", "kof2002", "neogeo", NULL, "2020-11-11",
 	"The King of Fighters 10th Anniversary 2019 (Optimized version 2019, hack)\0", NULL, "Hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,

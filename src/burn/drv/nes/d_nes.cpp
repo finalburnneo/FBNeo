@@ -576,6 +576,8 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
+	NESMode |= (ROMCRC == 0x6d1e30a7) ? IS_PAL : 0; // TMHT
+	NESMode |= (ROMCRC == 0xa5bbb96b) ? IS_PAL : 0; // TMHTII
 	NESMode |= (ROMCRC == 0x6453f65e) ? IS_PAL : 0; // Uforia
 	NESMode |= (ROMCRC == 0x55cbc495) ? IS_PAL : 0; // Super Turrican
 	NESMode |= (ROMCRC == 0x11a245a0) ? IS_PAL : 0; // Rod Land
@@ -35866,19 +35868,19 @@ struct BurnDriver BurnDrvnes_tmnt = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmnteRomDesc[] = {
-	{ "Teenage Mutant Hero Turtles (Europe).nes",         262160, 0x6d1e30a7, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo nes_tmhtRomDesc[] = {
+	{ "Teenage Mutant Hero Turtles (Europe).nes",          262160, 0x6d1e30a7, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmnte)
-STD_ROM_FN(nes_tmnte)
+STD_ROM_PICK(nes_tmht)
+STD_ROM_FN(nes_tmht)
 
-struct BurnDriver BurnDrvnes_tmnte = {
-	"nes_tmnte", "nes_tmnt", NULL, NULL, "1990",
-	"Teenage Mutant Hero Turtles (Europe).nes\0", NULL, "Konami", "Miscellaneous",
+struct BurnDriver BurnDrvnes_tmht = {
+	"nes_tmht", "nes_tmnt", NULL, NULL, "1990",
+	"Teenage Mutant Hero Turtles (Europe)\0", NULL, "Palcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmnteRomInfo, nes_tmnteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmhtRomInfo, nes_tmhtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -35900,19 +35902,19 @@ struct BurnDriver BurnDrvnes_tmntiiarcgamj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tmntiiarcgameRomDesc[] = {
+static struct BurnRomInfo nes_tmhtiiarcgamRomDesc[] = {
 	{ "Teenage Mutant Hero Turtles II - The Arcade Game (Europe).nes",          524304, 0xa5bbb96b, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tmntiiarcgame)
-STD_ROM_FN(nes_tmntiiarcgame)
+STD_ROM_PICK(nes_tmhtiiarcgam)
+STD_ROM_FN(nes_tmhtiiarcgam)
 
-struct BurnDriver BurnDrvnes_tmntiiarcgame = {
-	"nes_tmntiiarcgame", "nes_tmntiiarcgam", NULL, NULL, "1990",
-	"Teenage Mutant Hero Turtles II - The Arcade Game (Europe)\0", NULL, "Ultra Games", "Miscellaneous",
+struct BurnDriver BurnDrvnes_tmhtiiarcgam = {
+	"nes_tmhtiiarcgam", "nes_tmntiiarcgam", NULL, NULL, "1991",
+	"Teenage Mutant Hero Turtles II - The Arcade Game (Europe)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tmntiiarcgameRomInfo, nes_tmntiiarcgameRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tmhtiiarcgamRomInfo, nes_tmhtiiarcgamRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

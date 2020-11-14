@@ -15,6 +15,7 @@ static INT32 SpecMode = 0;
 #define SPEC_Z80	(1 << 1)
 #define SPEC_128K   (1 << 2)
 #define SPEC_INVES	(1 << 3) // Spanish clone (non-contended ula)
+#define SPEC_AY8910	(1 << 4)
 
 static UINT8 SpecInputKbd[0x10][0x05] = {
 	{ 0, 0, 0, 0, 0 }, // Shift, Z, X, C, V
@@ -486,7 +487,7 @@ static INT32 SpecDoReset()
 {
 	ZetOpen(0);
 	ZetReset();
-	if (SpecMode & SPEC_128K) {
+	if (SpecMode & SPEC_AY8910) {
 		AY8910Reset(0);
 	}
 	ZetClose();
@@ -639,6 +640,10 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 		return SpecInput[8]; // kempston (returns 0xff when disabled)
 	}
 
+	if ((address & 0xc002) == 0xc000 && (SpecMode & SPEC_AY8910)) {
+		return AY8910Read(0);
+	}
+
 	return ula_byte; // Floating Memory
 }
 
@@ -653,7 +658,14 @@ static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if (address == 0xfd) return; // Ignore (Jetpac writes here due to a bug in the game code)
+	if (SpecMode & SPEC_AY8910) {
+		switch (address & 0xc002) {
+			case 0x8000: AY8910Write(0, 1, data); return;
+			case 0xc000: AY8910Write(0, 0, data); return;
+		}
+	}
+
+	if (address == 0xfd) return; // Ignore (Jetpac writes here due to a bug in the game code, and it's the reason it won't work on 128k)
 
 	bprintf(0, _T("pw %x %x\n"), address, data);
 }
@@ -723,7 +735,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 		return SpecInput[8]; // kempston (returns 0xff when disabled)
 	}
 
-	if ((address & 0xc002) == 0xc000) {
+	if ((address & 0xc002) == 0xc000 && (SpecMode & SPEC_AY8910)) {
 		return AY8910Read(0);
 	}
 
@@ -754,9 +766,11 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 		return;
 	}
 
-	switch (address & 0xc002) {
-		case 0x8000: AY8910Write(0, 1, data); return;
-		case 0xc000: AY8910Write(0, 0, data); return;
+	if (SpecMode & SPEC_AY8910) {
+		switch (address & 0xc002) {
+			case 0x8000: AY8910Write(0, 1, data); return;
+			case 0xc000: AY8910Write(0, 0, data); return;
+		}
 	}
 
 	if (address == 0xff3b || address == 0xbf3b) return; // ignore (some games check for "ula plus" here)
@@ -1021,7 +1035,8 @@ static void spectrum_loadz80()
 
 		ZetSetPC(0, mem2uint16(32, 0));
 
-		if (is_128k) { // || SpecSnapshotData[37] & (1<<2); // AY enabled (48k)
+		if (SpecMode & SPEC_AY8910 && SpecSnapshotData[37] & (1<<2)) { // AY8910
+			bprintf(0, _T(".z80 contains AY8910 registers\n"));
 			ZetOpen(0);
 			for (INT32 i = 0; i < 0x10; i++) { // write regs
 				AY8910Write(0, 0, i);
@@ -1112,6 +1127,12 @@ static INT32 SpectrumInit(INT32 Mode)
 	}
 	ZetClose();
 
+	AY8910Init(0, 17734475 / 10, 0);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 224*312*50);
+
+	SpecMode |= SPEC_AY8910;
+
 	GenericTilesInit();
 
 	ula_init(312, 224, 14335);
@@ -1171,6 +1192,8 @@ static INT32 Spectrum128Init(INT32 Mode)
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 228*311*50);
 
+	SpecMode |= SPEC_AY8910;
+
 	GenericTilesInit();
 
 	ula_init(311, 228, 14361);
@@ -1220,7 +1243,7 @@ static INT32 SpecExit()
 {
 	ZetExit();
 
-	if (SpecMode & SPEC_128K) AY8910Exit(0);
+	if (SpecMode & SPEC_AY8910) AY8910Exit(0);
 
 	GenericTilesExit();
 
@@ -1474,7 +1497,7 @@ static INT32 SpecFrame()
 	}
 
 	if (pBurnSoundOut) {
-		if (SpecMode & SPEC_128K) {
+		if (SpecMode & SPEC_AY8910) {
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		}
 
@@ -1503,7 +1526,7 @@ static INT32 SpecScan(INT32 nAction, INT32* pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 
-		if (SpecMode & SPEC_128K) {
+		if (SpecMode & SPEC_AY8910) {
 			AY8910Scan(nAction, pnMin);
 		}
 
@@ -3594,7 +3617,7 @@ struct BurnDriver BurnSpeccjseleph128 = {
 // CJ In the USA (128K)
 
 static struct BurnRomInfo SpeccjiiiusaRomDesc[] = {
-	{ "CJ In the USA (1991)(Codemasters)(128k).z80", 0x0d966, 0xc8e7d99e, BRF_ESS | BRF_PRG },
+	{ "CJ In the USA (1991)(Codemasters)(128k).tap", 64000, 0x455F660B, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speccjiiiusa, Speccjiiiusa, Spec128)
@@ -3605,7 +3628,7 @@ struct BurnDriver BurnSpeccjiiiusa = {
 	"CJ In the USA (128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpeccjiiiusaRomInfo, SpeccjiiiusaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpeccjiiiusaRomInfo, SpeccjiiiusaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -6308,21 +6331,21 @@ struct BurnDriver BurnSpeckickoff = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Kick Off 2 (128K)
+// Kick Off 2
 
-static struct BurnRomInfo Speckickoff2RomDesc[] = {
-	{ "Kick Off 2 (1990)(Anco Software)[128K].z80", 0x0be06, 0xc6367c82, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecKickoff2RomDesc[] = {
+	{ "Kick Off 2 (1990)(Anco).tap", 77052, 0x74a921aa, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speckickoff2, Speckickoff2, Spec128)
-STD_ROM_FN(Speckickoff2)
+STDROMPICKEXT(SpecKickoff2, SpecKickoff2, Spec128)
+STD_ROM_FN(SpecKickoff2)
 
-struct BurnDriver BurnSpeckickoff2 = {
+struct BurnDriver BurnSpecKickoff2 = {
 	"spec_kickoff2", NULL, "spec_spec128", NULL, "1990",
-	"Kick Off 2 (128K)\0", NULL, "Anco Software", "ZX Spectrum",
+	"Kick Off 2\0", NULL, "Anco", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Speckickoff2RomInfo, Speckickoff2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecKickoff2RomInfo, SpecKickoff2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -10406,7 +10429,7 @@ struct BurnDriver BurnSpecwackdart = {
 	"Wacky Darts (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecwackdartRomInfo, SpecwackdartRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecwackdartRomInfo, SpecwackdartRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -10425,7 +10448,7 @@ struct BurnDriver BurnSpecwackrace = {
 	"Wacky Races (Trainer)(128K)\0", NULL, "Hi-Tec Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecwackraceRomInfo, SpecwackraceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecwackraceRomInfo, SpecwackraceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -10444,7 +10467,7 @@ struct BurnDriver BurnSpecwackracestd = {
 	"Wacky Races (Standard)(128K)\0", NULL, "Hi-Tec Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecwackracestdRomInfo, SpecwackracestdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecwackracestdRomInfo, SpecwackracestdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -14403,20 +14426,20 @@ struct BurnDriver BurnSpec1stdivmanager = {
 
 // 750cc Grand Prix
 
-static struct BurnRomInfo Spec750ccgpRomDesc[] = {
-	{ "750cc Grand Prix (1991)(Codemasters).z80", 38227, 0x902f4462, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Spec750ccRomDesc[] = {
+	{ "750cc Grand Prix (1991)(Code Masters).tap", 82394, 0xc9073683, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec750ccgp, Spec750ccgp, Spectrum)
-STD_ROM_FN(Spec750ccgp)
+STDROMPICKEXT(Spec750cc, Spec750cc, Spec128)
+STD_ROM_FN(Spec750cc)
 
-struct BurnDriver BurnSpec750ccgp = {
-	"spec_750ccgp", NULL, "spec_spectrum", NULL, "1991",
-	"750cc Grand Prix\0", NULL, "Codemasters", "ZX Spectrum",
+struct BurnDriver BurnSpec750cc = {
+	"spec_750cc", NULL, "spec_spec128", NULL, "1991",
+	"750cc Grand Prix\0", NULL, "Code Masters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Spec750ccgpRomInfo, Spec750ccgpRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpectrumGetZipName, Spec750ccRomInfo, Spec750ccRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -17607,7 +17630,7 @@ struct BurnDriver BurnSpecWackydarts = {
 	"Wacky Darts\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecWackydartsRomInfo, SpecWackydartsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecWackydartsRomInfo, SpecWackydartsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

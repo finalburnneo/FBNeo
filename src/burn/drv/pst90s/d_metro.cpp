@@ -5169,7 +5169,7 @@ struct BurnDriver BurnDrvKaratour = {
 };
 
 
-// The Karate Tournament (Japan)
+// Chatan Yara Kuushanku - The Karate Tournament (Japan)
 
 static struct BurnRomInfo karatourjRomDesc[] = {
 	{ "kt002.8g",			0x040000, 0x316a97ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -5190,7 +5190,7 @@ STD_ROM_FN(karatourj)
 
 struct BurnDriver BurnDrvKaratourj = {
 	"karatourj", "karatour", NULL, NULL, "1992",
-	"The Karate Tournament (Japan)\0", NULL, "Mitchell", "Miscellaneous",
+	"Chatan Yara Kuushanku - The Karate Tournament (Japan)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, karatourjRomInfo, karatourjRomName, NULL, NULL, NULL, NULL, KaratourInputInfo, KaratourDIPInfo,

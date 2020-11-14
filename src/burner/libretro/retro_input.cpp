@@ -11,6 +11,7 @@ static retro_input_poll_t poll_cb;
 static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
+static unsigned nMahjongKeyboards = 0;
 static int nDeviceType[MAX_PLAYERS] = { -1,  };
 static int nLibretroInputBitmask[MAX_PLAYERS] = { -1, };
 static std::vector<retro_input_descriptor> normal_input_descriptors;
@@ -75,6 +76,7 @@ static void AnalyzeGameLayout()
 	INT32 nKickx3[4] = {0, 0, 0, 0};
 
 	bStreetFighterLayout = false;
+	nMahjongKeyboards = 0;
 	bVolumeIsFireButton = false;
 	nFireButtons = 0;
 
@@ -101,7 +103,13 @@ static void AnalyzeGameLayout()
 					nFireButtons++;
 				}
 			}
-			
+
+			// guess if there are mahjong controls, and for how many players
+			// TOFIX : some mahjong games are missing player number in their szName 
+			if ((strncmp("mah ", bii.szInfo, 4) == 0)) {
+				if (nMahjongKeyboards < nPlayer)
+					nMahjongKeyboards = nPlayer;
+			}
 			if ((strncmp("Volume", bii.szName, 6) == 0) && (strncmp(" fire", bii.szInfo + 2, 5) == 0)) {
 				bVolumeIsFireButton = true;
 			}
@@ -1893,6 +1901,58 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 				}
 			}
 		}
+
+		// assign per player mahjong controls (require 1 keyboard per player, does the frontend actually support this ?)
+		if (nMahjongKeyboards > 0)
+		{
+			int mahjongKeyboardPort = nMaxPlayers-nMahjongKeyboards+nPlayer+1;
+			if (strcmp("mah a", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah b", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_b, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah c", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_c, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah d", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_d, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah e", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_e, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah f", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_f, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah g", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_g, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah h", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_h, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah i", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_i, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah j", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_j, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah k", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_k, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah l", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_l, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah m", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_m, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah n", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_n, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah kan", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_LCTRL, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah pon", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_LALT, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah chi", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_SPACE, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah reach", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_LSHIFT, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah ron", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_z, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah ff", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_y, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah lc", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_RALT, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah bet", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_2, szn, RETRO_DEVICE_KEYBOARD);
+			if (strcmp("mah score", szi) == 0)
+				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_RCTRL, szn, RETRO_DEVICE_KEYBOARD);
+		}
 	}
 
 	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
@@ -2215,12 +2275,29 @@ void SetControllerInfo()
 			{ "Lightgun", RETRO_DEVICE_LIGHTGUN }
 		};
 
+		// prepare additional devices for mahjong games
+		if (nMahjongKeyboards > 0)
+			nMaxPlayers += nMahjongKeyboards;
+
 		struct retro_controller_info *controller_infos = (struct retro_controller_info*)calloc(nMaxPlayers+1, sizeof(struct retro_controller_info));
 
 		for (int i = 0; i < nMaxPlayers; i++)
 		{
 			controller_infos[i].types = controller_description;
 			controller_infos[i].num_types = sizeof(controller_description) / sizeof(controller_description[0]);
+		}
+
+		if (nMahjongKeyboards > 0)
+		{
+			// Assign a keyboard for each player
+			static const struct retro_controller_description keyboard_description[] = {
+				{ "Keyboard", RETRO_DEVICE_KEYBOARD }
+			};
+			for (int i = 1; i <= nMahjongKeyboards; i++)
+			{
+				controller_infos[nMaxPlayers-i].types = keyboard_description;
+				controller_infos[nMaxPlayers-i].num_types = 1;
+			}
 		}
 
 		controller_infos[nMaxPlayers].types = NULL;

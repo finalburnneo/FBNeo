@@ -1670,10 +1670,12 @@ static bool retro_load_game_common()
 
 		// Define nMaxPlayers early;
 		nMaxPlayers = BurnDrvGetMaxPlayers();
-		SetControllerInfo();
 
 		// Initialize inputs
 		InputInit();
+
+		// Calling RETRO_ENVIRONMENT_SET_CONTROLLER_INFO after RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS shouldn't hurt ?
+		SetControllerInfo();
 
 		// Initialize dipswitches
 		create_variables_from_dipswitches();

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15550 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15552 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2186,6 +2186,7 @@ This list contains all games supported by FinalBurn Neo.
 | chasehq	|  	| Chase H.Q. (World)					| 		| 1988	| Taito Corporat| Taito Z	| 					|
 | md_chasehq2	|  	| Chase H.Q. II (USA)					| 		| 1992	| Taito		| Sega Megadrive| 					|
 | spec_chasehq2	|  	| Chase H.Q. II - Special Criminal Investigations (128K)| 		| 1990	| Ocean		| ZX Spectrum	| 					|
+| karatourj	|  	| Chatan Yara Kuushanku - The Karate Tournament (Japan)	| karatour	| 1992	| Mitchell	| Miscellaneous	| 					|
 | md_chavez2	|  	| Chavez II (USA)					| md_boxinglg	| 1993	| American Softw| Sega Megadrive| 					|
 | nes_cheman	|  	| Che-Man (HB)						| 		| 2018	| The Mojon Twin| Miscellaneous	| 					|
 | checkmanj	|  	| Check Man (Japan)					| checkman	| 1982	| Jaleco	| Galaxian	| 					|
@@ -2571,9 +2572,9 @@ This list contains all games supported by FinalBurn Neo.
 | contcircu	|  	| Continental Circus (US set 1)				| contcirc	| 1987	| Taito America | Taito Z	| 					|
 | contcircua	|  	| Continental Circus (US set 2)				| contcirc	| 1987	| Taito America | Taito Z	| 3D Effect cannot be disabled, use US S|
 | contcirc	|  	| Continental Circus (World)				| 		| 1987	| Taito Corporat| Taito Z	| 					|
-| contrab	|  	| Contra (bootleg)					| contra	| 1987	| Konami	| GX633		| 					|
-| contrabj	|  	| Contra (Japan bootleg, set 1)				| contra	| 1987	| Konami	| GX633		| 					|
-| contrabj1	|  	| Contra (Japan bootleg, set 2)				| contra	| 1987	| Konami	| GX633		| 					|
+| contrab	|  	| Contra (bootleg)					| contra	| 1987	| bootleg	| GX633		| 					|
+| contrabj	|  	| Contra (Japan bootleg, set 1)				| contra	| 1987	| bootleg	| GX633		| 					|
+| contrabj1	|  	| Contra (Japan bootleg, set 2)				| contra	| 1987	| bootleg	| GX633		| 					|
 | nes_contraj	|  	| Contra (Japan)					| nes_contra	| 1988	| Konami	| Miscellaneous	| 					|
 | contraj	|  	| Contra (Japan, set 1)					| contra	| 1987	| Konami	| GX633		| 					|
 | contraj1	|  	| Contra (Japan, set 2)					| contra	| 1987	| Konami	| GX633		| 					|
@@ -10859,7 +10860,8 @@ This list contains all games supported by FinalBurn Neo.
 | saurob	|  	| Sauro (bootleg)					| sauro		| 1987	| bootleg	| Miscellaneous	| Missing speech is normal		|
 | saurop	|  	| Sauro (Philko license)				| sauro		| 1987	| Tecfri (Philko| Miscellaneous	| 					|
 | saurorr	|  	| Sauro (Recreativos Real S.A. license)			| sauro		| 1987	| Tecfri (Recrea| Miscellaneous	| 					|
-| sauro		|  	| Sauro							| 		| 1987	| Tecfri	| Miscellaneous	| 					|
+| sauro		|  	| Sauro (set 1)						| 		| 1987	| Tecfri	| Miscellaneous	| 					|
+| sauroa	|  	| Sauro (set 2)						| sauro		| 1987	| Tecfri	| Miscellaneous	| 					|
 | msx_saurus	|  	| Saurusland (Jpn)					| 		| 1983	| Nihon Columbia| MSX		| 					|
 | spec_savage1	|  	| Savage (Part 1 of 3) (48K)				| 		| 1988	| Firebird Softw| ZX Spectrum	| 					|
 | spec_savage2	|  	| Savage (Part 2 of 3) (48K)				| 		| 1988	| Firebird Softw| ZX Spectrum	| 					|
@@ -12554,8 +12556,9 @@ This list contains all games supported by FinalBurn Neo.
 | cv_sprcross	|  	| Super Cross Force					| 		| 1983	| Spectravideo	| ColecoVision	| 					|
 | sprcros2	|  	| Super Cross II (Japan, set 1)				| 		| 1986	| GM Shoji	| Miscellaneous	| 					|
 | sprcros2a	|  	| Super Cross II (Japan, set 2)				| sprcros2	| 1986	| GM Shoji	| Miscellaneous	| 					|
-| scfinalso	|  	| Super Cup Finals (Ver 2.1O 1993/11/19)		| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
-| scfinals	|  	| Super Cup Finals (Ver 2.2O 1994/01/13)		| 		| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
+| scfinalsoc	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
+| scfinalso	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
+| scfinals	|  	| Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)	| 		| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
 | md_supdaisna	|  	| Super Daisenryaku (Jpn)				| md_supdaisn	| 1989	| Sega		| Sega Megadrive| 					|
 | md_supdaisn	|  	| Super Daisenryaku (Jpn, Rev. 02)			| 		| 1989	| Sega		| Sega Megadrive| 					|
 | cv_superdk	|  	| Super DK! (Prototype)					| 		| 1982	| Nintendo	| ColecoVision	| 					|
@@ -13489,7 +13492,6 @@ This list contains all games supported by FinalBurn Neo.
 | gg_jungle	|  	| The Jungle Book (Euro)				| 		| 1994	| Virgin Interac| Sega Game Gear| 					|
 | sms_jungle	|  	| The Jungle Book (Euro, Bra)				| 		| 1994	| Virgin Interac| Sega Master Sy| 					|
 | gg_jungleu	|  	| The Jungle Book (USA)					| gg_jungle	| 1994	| Virgin Interac| Sega Game Gear| 					|
-| karatourj	|  	| The Karate Tournament (Japan)				| karatour	| 1992	| Mitchell	| Miscellaneous	| 					|
 | karatour	|  	| The Karate Tournament					| 		| 1992	| Mitchell	| Miscellaneous	| 					|
 | md_kickbox	|  	| The Kick Boxing (Jpn, Kor)				| md_bestof	| 1993	| Micro World	| Sega Megadrive| 					|
 | killbld104	|  	| The Killing Blade (V104)				| killbld	| 1998	| IGS		| PolyGameMaster| 					|
@@ -13567,7 +13569,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof10th	|  	| The King of Fighters 10th Anniversary (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|
 | kof10thd	|  	| The King of Fighters 10th Anniversary (The King of Fig| kof2002	| 200?	| hack		| Miscellaneous	| 					|
 | kf2k5uni	|  	| The King of Fighters 10th Anniversary 2005 Unique (boo| kof2002	| 2004	| bootleg	| Neo Geo MVS	| 					|
-| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized | kof2002	| 2020-10-30| Hack		| Miscellaneous	| 					|
+| kof10thuo	|  	| The King of Fighters 10th Anniversary 2019 (Optimized | kof2002	| 2020-11-11| Hack		| Miscellaneous	| 					|
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
 | kof2000	|  	| The King of Fighters 2000 (NGM-2570) (NGH-2570)	| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|

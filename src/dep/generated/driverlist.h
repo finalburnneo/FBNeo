@@ -2218,6 +2218,7 @@ DRV		BurnDrvChasehqu;
 DRV		BurnDrvChasehq;
 DRV		BurnDrvmd_chasehq2;
 DRV		BurnSpecchasehq2;
+DRV		BurnDrvKaratourj;
 DRV		BurnDrvmd_chavez2;
 DRV		BurnDrvnes_cheman;
 DRV		BurnDrvCheckmanj;
@@ -11034,6 +11035,7 @@ DRV		BurnDrvSaurob;
 DRV		BurnDrvSaurop;
 DRV		BurnDrvSaurorr;
 DRV		BurnDrvSauro;
+DRV		BurnDrvSauroa;
 DRV		BurnDrvMSX_saurus;
 DRV		BurnSpecsavage1;
 DRV		BurnSpecsavage2;
@@ -12752,6 +12754,7 @@ DRV		BurnDrvMSX_superxf;
 DRV		BurnDrvcv_sprcross;
 DRV		BurnDrvSprcros2;
 DRV		BurnDrvSprcros2a;
+DRV		BurnDrvScfinalsoc;
 DRV		BurnDrvScfinalso;
 DRV		BurnDrvScfinals;
 DRV		BurnDrvmd_supdaisna;
@@ -13697,7 +13700,6 @@ DRV		BurnDrvmd_itchy;
 DRV		BurnDrvgg_jungle;
 DRV		BurnDrvsms_jungle;
 DRV		BurnDrvgg_jungleu;
-DRV		BurnDrvKaratourj;
 DRV		BurnDrvKaratour;
 DRV		BurnDrvmd_kickbox;
 DRV		BurnDrvKillbld104;
@@ -18031,6 +18033,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvChasehq,			// Chase H.Q. (World)
 	&BurnDrvmd_chasehq2,		// Chase H.Q. II (USA)
 	&BurnSpecchasehq2,			// Chase H.Q. II - Special Criminal Investigations (128K)
+	&BurnDrvKaratourj,			// Chatan Yara Kuushanku - The Karate Tournament (Japan)
 	&BurnDrvmd_chavez2,			// Chavez II (USA)
 	&BurnDrvnes_cheman,			// Che-Man (HB)
 	&BurnDrvCheckmanj,			// Check Man (Japan)
@@ -26846,7 +26849,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSaurob,				// Sauro (bootleg)
 	&BurnDrvSaurop,				// Sauro (Philko license)
 	&BurnDrvSaurorr,			// Sauro (Recreativos Real S.A. license)
-	&BurnDrvSauro,				// Sauro
+	&BurnDrvSauro,				// Sauro (set 1)
+	&BurnDrvSauroa,				// Sauro (set 2)
 	&BurnDrvMSX_saurus,			// Saurusland (Jpn)
 	&BurnSpecsavage1,			// Savage (Part 1 of 3) (48K)
 	&BurnSpecsavage2,			// Savage (Part 2 of 3) (48K)
@@ -28565,8 +28569,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_sprcross,		// Super Cross Force
 	&BurnDrvSprcros2,			// Super Cross II (Japan, set 1)
 	&BurnDrvSprcros2a,			// Super Cross II (Japan, set 2)
-	&BurnDrvScfinalso,			// Super Cup Finals (Ver 2.1O 1993/11/19)
-	&BurnDrvScfinals,			// Super Cup Finals (Ver 2.2O 1994/01/13)
+	&BurnDrvScfinalsoc,			// Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)
+	&BurnDrvScfinalso,			// Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)
+	&BurnDrvScfinals,			// Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)
 	&BurnDrvmd_supdaisna,		// Super Daisenryaku (Jpn)
 	&BurnDrvmd_supdaisn,		// Super Daisenryaku (Jpn, Rev. 02)
 	&BurnDrvcv_superdk,			// Super DK! (Prototype)
@@ -29510,7 +29515,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_jungle,			// The Jungle Book (Euro)
 	&BurnDrvsms_jungle,			// The Jungle Book (Euro, Bra)
 	&BurnDrvgg_jungleu,			// The Jungle Book (USA)
-	&BurnDrvKaratourj,			// The Karate Tournament (Japan)
 	&BurnDrvKaratour,			// The Karate Tournament
 	&BurnDrvmd_kickbox,			// The Kick Boxing (Jpn, Kor)
 	&BurnDrvKillbld104,			// The Killing Blade (V104)

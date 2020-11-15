@@ -937,7 +937,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Sauro
+// Sauro (set 1)
 
 static struct BurnRomInfo sauroRomDesc[] = {
 	{ "sauro-2.bin",	0x8000, 0x19f8de25, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -968,7 +968,7 @@ STD_ROM_FN(sauro)
 
 struct BurnDriver BurnDrvSauro = {
 	"sauro", NULL, NULL, NULL, "1987",
-	"Sauro\0", NULL, "Tecfri", "Miscellaneous",
+	"Sauro (set 1)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauroRomInfo, sauroRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
@@ -977,22 +977,62 @@ struct BurnDriver BurnDrvSauro = {
 };
 
 
+// Sauro (set 2)
+
+static struct BurnRomInfo sauroaRomDesc[] = {
+	{ "sauro-2a.bin",	0x8000, 0x2e356e2d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sauro-1a.bin",	0x8000, 0x95d03e5e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+
+	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+
+	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
+	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
+	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
+	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+
+	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
+	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
+	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+
+	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+};
+
+STD_ROM_PICK(sauroa)
+STD_ROM_FN(sauroa)
+
+struct BurnDriver BurnDrvSauroa = {
+	"sauroa", "sauro", NULL, NULL, "1987",
+	"Sauro (set 2)\0", NULL, "Tecfri", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, sauroaRomInfo, sauroaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 224, 4, 3
+};
+
+
 // Sauro (Philko license)
 
 static struct BurnRomInfo sauropRomDesc[] = {
-	{ "s2.3k",		0x8000, 0x79846222, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "s1.3f",		0x8000, 0x3efd13ed, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "s2.3k",			0x8000, 0x79846222, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "s1.3f",			0x8000, 0x3efd13ed, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "s3.5x",		0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "s3.5x",			0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "s6.7x",		0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "s7.7z",		0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{ "s6.7x",			0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "s7.7z",			0x8000, 0x187da060, 3 | BRF_GRA },           //  4
 
-	{ "s4.7h",		0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "s5.7k",		0x8000, 0xde5cd249, 4 | BRF_GRA },           //  6
+	{ "s4.7h",			0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "s5.7k",			0x8000, 0xde5cd249, 4 | BRF_GRA },           //  6
 
-	{ "s8.10l",		0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "s9.10p",		0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
+	{ "s8.10l",			0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
+	{ "s9.10p",			0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
 	{ "s10.10r",		0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
 	{ "s11.10t",		0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
 

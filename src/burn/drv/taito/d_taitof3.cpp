@@ -800,6 +800,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 			};
 			if (strstr(BurnDrvGetTextA(DRV_NAME), "scfinalso")) {
 				EEPROMFill(scfinalso_eeprom, 0, 128);
+			} else if (strstr(BurnDrvGetTextA(DRV_NAME), "scfinalsoc")) {
+				EEPROMFill(scfinalso_eeprom, 0, 128);
 			} else {
 				EEPROMFill(scfinals_eeprom, 0, 128);
 			}
@@ -2714,7 +2716,8 @@ struct BurnDriver BurnDrvRayforcej = {
 };
 
 
-// Super Cup Finals (Ver 2.2O 1994/01/13)
+// Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)
+/* This is the single PCB version */
 
 static struct BurnRomInfo scfinalsRomDesc[] = {
 	{ "d68-09.ic40",	0x040000, 0x28193b3f, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
@@ -2765,7 +2768,7 @@ static INT32 scfinalsInit()
 
 struct BurnDriver BurnDrvScfinals = {
 	"scfinals", NULL, NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.2O 1994/01/13)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+	"Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
@@ -2774,9 +2777,53 @@ struct BurnDriver BurnDrvScfinals = {
 };
 
 
-// Super Cup Finals (Ver 2.1O 1993/11/19)
+// Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)
+/* This is the single PCB version of v2.1O */
 
 static struct BurnRomInfo scfinalsoRomDesc[] = {
+	{ "s-final_rom_24_071293.ic24",		0x020000, 0x466700c8, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "s-final_rom_26_071293.ic26",		0x020000, 0x824092de, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "s-final_rom_37_071293.ic37",		0x020000, 0x9aa0cca4, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "s-final_rom_35_071293.ic35",		0x020000, 0xe7a298fa, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  				  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  				  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  				  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  				  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           				  //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           				  //  9
+
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     				  // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     				  // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              				  // 12
+
+	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   				  // 13 68k Code
+	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   				  // 14
+
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    				  // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    				  // 16
+
+	{ "scfinalso.nv",	0x000080, 0x1319752e, TAITO_DEFAULT_EEPROM },     				  // 17 eeprom
+};
+
+STD_ROM_PICK(scfinalso)
+STD_ROM_FN(scfinalso)
+
+struct BurnDriver BurnDrvScfinalso = {
+	"scfinalso", "scfinals", NULL, NULL, "1993",
+	"Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
+	NULL, scfinalsoRomInfo, scfinalsoRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)
+/* This is the Cart version of v2.1O */
+
+static struct BurnRomInfo scfinalsocRomDesc[] = {
 	{ "d68-01.20",		0x040000, 0xcb951856, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
 	{ "d68-02.19",		0x040000, 0x4f94413a, TAITO_68KROM1_BYTESWAP32 }, //  1
 	{ "d68-04.18",		0x040000, 0x4a4e4972, TAITO_68KROM1_BYTESWAP32 }, //  2
@@ -2802,15 +2849,15 @@ static struct BurnRomInfo scfinalsoRomDesc[] = {
 	{ "scfinalso.nv",	0x000080, 0x1319752e, TAITO_DEFAULT_EEPROM },     // 17 eeprom
 };
 
-STD_ROM_PICK(scfinalso)
-STD_ROM_FN(scfinalso)
+STD_ROM_PICK(scfinalsoc)
+STD_ROM_FN(scfinalsoc)
 
-struct BurnDriver BurnDrvScfinalso = {
-	"scfinalso", "scfinals", NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.1O 1993/11/19)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+struct BurnDriver BurnDrvScfinalsoc = {
+	"scfinalsoc", "scfinals", NULL, NULL, "1993",
+	"Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
-	NULL, scfinalsoRomInfo, scfinalsoRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, scfinalsocRomInfo, scfinalsocRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3
 };

@@ -1006,15 +1006,15 @@ STD_ROM_PICK(myangel2)
 STD_ROM_FN(myangel2)
 
 static struct BurnRomInfo pzlbowlRomDesc[] = {
-	{ "kup-u06.i03",  0x080000, 0x314e03ac, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "kup-u07.i03",  0x080000, 0xa0423a04, BRF_ESS | BRF_PRG },
+	{ "kup_u06_i03.u6",  0x080000, 0x314e03ac, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "kup_u07_i03.u7",  0x080000, 0xa0423a04, BRF_ESS | BRF_PRG },
 
-	{ "kuc-u38.i00",  0x400000, 0x3db24172,	BRF_GRA },				// GFX
-	{ "kuc-u39.i00",  0x400000, 0x9b26619b,	BRF_GRA },
-	{ "kuc-u40.i00",  0x400000, 0x7e49a2cf,	BRF_GRA },
-	{ "kuc-u41.i00",  0x400000, 0x2febf19b,	BRF_GRA },
+	{ "kuc-u38-i00.u38", 0x400000, 0x3db24172,	BRF_GRA },				// GFX
+	{ "kuc-u39-i00.u39", 0x400000, 0x9b26619b,	BRF_GRA },
+	{ "kuc-u40-i00.u40", 0x400000, 0x7e49a2cf,	BRF_GRA },
+	{ "kuc-u41-i00.u41", 0x400000, 0x2febf19b,	BRF_GRA },
 
-	{ "kus-u18.i00",  0x400000, 0xe2b1dfcf, BRF_SND },				// PCM
+	{ "kus-u18-i00.u18", 0x400000, 0xe2b1dfcf, BRF_SND },				// PCM
 
 };
 

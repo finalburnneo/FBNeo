@@ -17432,7 +17432,7 @@ STD_ROM_FN(kof2000otc)
 
 struct BurnDriver BurnDrvkof2000otc = {
 	"kof2000otc", "kof2000", "neogeo", NULL, "2020-06-15",
-	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enable in AES mode", "hack", "Neo Geo MVS",
+	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enabled in AES mode", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
@@ -17762,7 +17762,7 @@ STD_ROM_FN(kf2k2ps2b)
 
 struct BurnDriver BurnDrvkf2k2ps2b = {
 	"kf2k2ps2b", "kof2002", "neogeo", NULL, "2018",
-	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
+	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "hack only enabled in AES mode", "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k2ps2bRomInfo, kf2k2ps2bRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,

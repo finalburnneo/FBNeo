@@ -47551,3 +47551,61 @@ struct BurnDriver BurnDrvmd_hooks = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// indiana jones and the last crusade (Hack, Spanish)
+// https://www.romhacking.net/translations/3723/
+static struct BurnRomInfo md_indycrussRomDesc[] = {
+	{ "indiana jones and the last crusade (Hack, Spanish).bin",1048576, 0x8c7871ad, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_indycruss)
+STD_ROM_FN(md_indycruss)
+
+struct BurnDriver BurnDrvmd_indycruss = {
+	"md_indycruss", "md_indycrus", NULL, NULL, "2018",
+	"Indiana Jones and the Last Crusade (Hack, Spanish)\0", NULL, "SU.S. Gold", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_indycrussRomInfo, md_indycrussRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// insector x (Hack, Spanish)
+// https://www.romhacking.net/translations/4505/
+static struct BurnRomInfo md_insectxsRomDesc[] = {
+	{ "insector x (Hack, Spanish).bin",524288, 0x0a96a725, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_insectxs)
+STD_ROM_FN(md_insectxs)
+
+struct BurnDriver BurnDrvmd_insectxs = {
+	"md_insectxs", "md_insectx", NULL, NULL, "2019",
+	"Insector X (Hack, Spanish)\0", NULL, "Sage's Creation", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_insectxsRomInfo, md_insectxsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// // ishido - the way of stones (Hack, Spanish)
+// https://www.romhacking.net/translations/4856/
+static struct BurnRomInfo md_ishidosRomDesc[] = {
+	{ "ishido - the way of stones (Hack, Spanish).bin",131072, 0x9f24780c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ishidos)
+STD_ROM_FN(md_ishidos)
+
+struct BurnDriver BurnDrvmd_ishidos = {
+	"md_ishidos", "md_ishido", NULL, NULL, "2019",
+	"Ishido - The Way of Stones (Hack, Spanish)\0", NULL, "Accolade", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ishidosRomInfo, md_ishidosRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

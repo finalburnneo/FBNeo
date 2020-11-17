@@ -1408,14 +1408,14 @@ static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 ext_bank, IN
 
 	for (INT32 offs = 0; offs < 0x400; offs += 4)
 	{
-		UINT16 data = spriteram[offs];
+		UINT16 data = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
 		if (!(data & 0x8000)) continue;
 
 		INT32 pri_mask = 0;
 
 		if (pri_masks == NULL)
 		{
-			UINT8 cur_pri = (spriteram[offs+1] >> 14) | ((data & 0x40) >> 4);
+			UINT8 cur_pri = (BURN_ENDIAN_SWAP_INT16(spriteram[offs+1]) >> 14) | ((data & 0x40) >> 4);
 
 			switch (cur_pri)
 			{
@@ -1429,14 +1429,14 @@ static void draw_sprites(INT32 ram_offset, UINT16 *pri_masks, INT32 ext_bank, IN
 		}
 		else
 		{
-			pri_mask = pri_masks[spriteram[offs+1] >> 14];
+			pri_mask = pri_masks[BURN_ENDIAN_SWAP_INT16(spriteram[offs+1]) >> 14];
 		}
 
-		INT32 sprite = (spriteram[offs+1] & 0x3fff);
-		if (ext_bank) sprite |= ((data & 0x0040) << 8) | (spriteram[offs+3] & 0x8000);
+		INT32 sprite = (BURN_ENDIAN_SWAP_INT16(spriteram[offs+1]) & 0x3fff);
+		if (ext_bank) sprite |= ((data & 0x0040) << 8) | (BURN_ENDIAN_SWAP_INT16(spriteram[offs+3]) & 0x8000);
 
-		INT32 y = spriteram[offs+3] & (screen_mask - 1);
-		INT32 x = spriteram[offs+2] & (screen_mask - 1);
+		INT32 y = BURN_ENDIAN_SWAP_INT16(spriteram[offs+3]) & (screen_mask - 1);
+		INT32 x = BURN_ENDIAN_SWAP_INT16(spriteram[offs+2]) & (screen_mask - 1);
 		if (x & (screen_mask / 2)) x -= screen_mask;
 		if (y & (screen_mask / 2)) y -= screen_mask;
 

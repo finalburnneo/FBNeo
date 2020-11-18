@@ -168,7 +168,7 @@ STDDIPINFO(Mwarr)
 
 static inline void palette_write(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	UINT16 b = (p >> 10) & 0x1f;
 	b = (((b << 3) | (b >> 2)) * bright) / 256;
@@ -272,13 +272,13 @@ static void __fastcall mwarr_write_byte(UINT32 address, UINT8 data)
 static void __fastcall mwarr_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x104000) {
-		*((UINT16 *)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16 *)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0xffe);
 		return;
 	}
 
 	if (address >= 0x110020 && address <= 0x11ffff) {
-		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = data;
+		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -298,7 +298,7 @@ static void __fastcall mwarr_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0x110000 && address <= 0x11ffff) {
-		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = data;
+		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -343,7 +343,7 @@ static void __fastcall stlforce_write_byte(UINT32 address, UINT8 data)
 static void __fastcall stlforce_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x104000) {
-		*((UINT16 *)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16 *)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0xffe);
 		return;
 	}
@@ -512,28 +512,28 @@ static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	TILE_SET_INFO(4, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
+	TILE_SET_INFO(4, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13, 0);
 }
 
 static tilemap_callback( low )
 {
 	UINT16 *ram = (UINT16*)DrvMloRAM;
 
-	TILE_SET_INFO(3, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
+	TILE_SET_INFO(3, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13, 0);
 }
 
 static tilemap_callback( mid )
 {
 	UINT16 *ram = (UINT16*)DrvMhiRAM;
 
-	TILE_SET_INFO(2, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
+	TILE_SET_INFO(2, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13, 0);
 }
 
 static tilemap_callback( txt )
 {
 	UINT16 *ram = (UINT16*)DrvTxtRAM;
 
-	TILE_SET_INFO(1, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13, 0);
 }
 
 static INT32 MwarrInit()
@@ -783,21 +783,21 @@ static void draw_sprites(INT32 use_priority)
 
 	while (source >= finish)
 	{
-		if (source[0] & 0x0800)
+		if (BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0800)
 		{
-			INT32 y     = 512 - (source[0] & 0x01ff);
-			INT32 x     = (source[3] & 0x3ff) - x_offset;
-			INT32 color = ((source[1] & 0x000f) << DrvSpriteBpp) + 0x400;
-			INT32 flipx =  source[1] & 0x0200;
-			INT32 dy    = (source[0] & 0xf000) >> 12;
+			INT32 y     = 512 - (BURN_ENDIAN_SWAP_INT16(source[0]) & 0x01ff);
+			INT32 x     = (BURN_ENDIAN_SWAP_INT16(source[3]) & 0x3ff) - x_offset;
+			INT32 color = ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x000f) << DrvSpriteBpp) + 0x400;
+			INT32 flipx = BURN_ENDIAN_SWAP_INT16(source[1]) & 0x0200;
+			INT32 dy    = (BURN_ENDIAN_SWAP_INT16(source[0]) & 0xf000) >> 12;
 
-			INT32 pri_mask = ~((1 << (((source[1] & 0x3c00) >> 10) + 1)) - 1);
+			INT32 pri_mask = ~((1 << (((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x3c00) >> 10) + 1)) - 1);
 			if (use_priority == 0) pri_mask = ~0xffff; // over everything except text layer
 
 			for (INT32 i = 0; i <= dy; i++)
 			{
 				INT32 yy = y + i * 16;
-				INT32 code = (source[2]+i);// & sprite_mask; // breaks mwarr sprites.
+				INT32 code = (BURN_ENDIAN_SWAP_INT16(source[2])+i);// & sprite_mask; // breaks mwarr sprites.
 				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x     , yy    , flipx, 0, 16, 16, pri_mask);
 				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x-1024, yy    , flipx, 0, 16, 16, pri_mask);
 				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x-1024, yy-512, flipx, 0, 16, 16, pri_mask);
@@ -825,45 +825,45 @@ static INT32 DrvDraw()
 	UINT16 *loscroll = (UINT16 *)DrvMloScrollRAM;
 	UINT16 *mgscroll = (UINT16 *)DrvMhiScrollRAM;
 
-	if (scroll[6] & 0x01) {
+	if (BURN_ENDIAN_SWAP_INT16(scroll[6]) & 0x01) {
 		GenericTilemapSetScrollRows(0, 256);
 
 		for (INT32 y = 0; y < 256; y++) {
-			GenericTilemapSetScrollRow(0, y, bgscroll[y] + 20);
+			GenericTilemapSetScrollRow(0, y, BURN_ENDIAN_SWAP_INT16(bgscroll[y]) + 20);
 		}
 	} else {
 		GenericTilemapSetScrollRows(0, 1);
-		GenericTilemapSetScrollX(0, bgscroll[0] + 19);
+		GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(bgscroll[0]) + 19);
 	}
 
-	if (scroll[6] & 0x04) {
+	if (BURN_ENDIAN_SWAP_INT16(scroll[6]) & 0x04) {
 		GenericTilemapSetScrollRows(1, 256);
 
 		for (INT32 y = 0; y < 256; y++) {
-			GenericTilemapSetScrollRow(1, y, loscroll[y] + 19);
+			GenericTilemapSetScrollRow(1, y, BURN_ENDIAN_SWAP_INT16(loscroll[y]) + 19);
 		}
 	} else {
 		GenericTilemapSetScrollRows(1, 1);
-		GenericTilemapSetScrollX(1, loscroll[0] + 19);
+		GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(loscroll[0]) + 19);
 	}
 
-	if (scroll[6] & 0x10) {
+	if (BURN_ENDIAN_SWAP_INT16(scroll[6]) & 0x10) {
 		GenericTilemapSetScrollRows(2, 256);
 
 		for (INT32 y = 0; y < 256; y++) {
-			GenericTilemapSetScrollRow(2, y, mgscroll[y] + 19);
+			GenericTilemapSetScrollRow(2, y, BURN_ENDIAN_SWAP_INT16(mgscroll[y]) + 19);
 		}
 	} else {
 		GenericTilemapSetScrollRows(2, 1);
-		GenericTilemapSetScrollX(2, mgscroll[0] + 19);
+		GenericTilemapSetScrollX(2, BURN_ENDIAN_SWAP_INT16(mgscroll[0]) + 19);
 	}
 
-	GenericTilemapSetScrollX(3, scroll[0]);
+	GenericTilemapSetScrollX(3, BURN_ENDIAN_SWAP_INT16(scroll[0]));
 
-	GenericTilemapSetScrollY(0, scroll[1] + 1);
-	GenericTilemapSetScrollY(1, scroll[2] + 1);
-	GenericTilemapSetScrollY(2, scroll[3] + 1);
-	GenericTilemapSetScrollY(3, scroll[4] + 1);
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(scroll[1]) + 1);
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(scroll[2]) + 1);
+	GenericTilemapSetScrollY(2, BURN_ENDIAN_SWAP_INT16(scroll[3]) + 1);
+	GenericTilemapSetScrollY(3, BURN_ENDIAN_SWAP_INT16(scroll[4]) + 1);
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x01, 0xff);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0x02, 0xff);
@@ -943,8 +943,8 @@ static INT32 DrvFrame()
 		UINT16 *inps = (UINT16*)Drv68KRAM;
 
 		for (INT32 i = 0; i < 16; i++) {
-			inps[0] ^= (DrvJoy1[i] & 1) << i;
-			inps[1] ^= (DrvJoy2[i] & 1) << i;
+			inps[0] ^= BURN_ENDIAN_SWAP_INT16((DrvJoy1[i] & 1) << i);
+			inps[1] ^= BURN_ENDIAN_SWAP_INT16((DrvJoy2[i] & 1) << i);
 		}
 
 		Drv68KRAM[4] = DrvDips[0];

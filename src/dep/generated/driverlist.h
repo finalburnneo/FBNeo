@@ -1682,6 +1682,7 @@ DRV		BurnDrvMSX_breakout;
 DRV		BurnDrvMSX_breakoutt;
 DRV		BurnDrvBrkthru;
 DRV		BurnDrvMSX_breaker;
+DRV		BurnDrvbreakrevbh;
 DRV		BurnDrvbrkrevext;
 DRV		BurnDrvbreakrev;
 DRV		BurnDrvbreakers;
@@ -4590,6 +4591,7 @@ DRV		BurnDrvFlashgala;
 DRV		BurnDrvMSX_fpoint;
 DRV		BurnDrvsms_fpoint;
 DRV		BurnDrvMSX_fpointa;
+DRV		BurnDrvnes_flea;
 DRV		BurnDrvnes_fleademo;
 DRV		BurnDrvFlicky;
 DRV		BurnDrvFlickya;
@@ -5085,6 +5087,7 @@ DRV		BurnDrvGeminij;
 DRV		BurnDrvGemini;
 DRV		BurnDrvGeminib;
 DRV		BurnDrvmd_gems;
+DRV		BurnSpecGenerdigital;
 DRV		BurnDrvmd_genchaos;
 DRV		BurnDrvmd_genchaosj;
 DRV		BurnDrvmd_genelost;
@@ -5525,8 +5528,9 @@ DRV		BurnDrvnes_gunnacc;
 DRV		BurnDrvnes_gunnact;
 DRV		BurnDrvnes_gunnac;
 DRV		BurnDrvnes_gunsight;
-DRV		BurnDrvnes_gundec;
+DRV		BurnDrvnes_gundecj;
 DRV		BurnDrvnes_gundecc;
+DRV		BurnDrvnes_gundec;
 DRV		BurnDrvGunsmokeg;
 DRV		BurnDrvfds_gunsmoke;
 DRV		BurnDrvGunsmokej;
@@ -6080,6 +6084,7 @@ DRV		BurnDrvmd_indycrus;
 DRV		BurnDrvsms_indycrus;
 DRV		BurnDrvsms_indycrusp;
 DRV		BurnDrvgg_indycrus;
+DRV		BurnDrvmd_indycruss;
 DRV		BurnDrvnes_indiajonandlascrt;
 DRV		BurnDrvnes_indiajonandlascr;
 DRV		BurnDrvmd_indycrusu;
@@ -6095,6 +6100,7 @@ DRV		BurnDrvnes_infiltrator;
 DRV		BurnDrvngpc_infinity;
 DRV		BurnDrvmd_inktober;
 DRV		BurnDrvInsector;
+DRV		BurnDrvmd_insectxs;
 DRV		BurnDrvInsectxj;
 DRV		BurnDrvnes_insectorx;
 DRV		BurnDrvmd_insectxj;
@@ -6149,6 +6155,7 @@ DRV		BurnDrvgg_ironman1;
 DRV		BurnDrvnes_irontan;
 DRV		BurnDrvnes_irons;
 DRV		BurnDrvIsgsm;
+DRV		BurnDrvmd_ishidos;
 DRV		BurnDrvmd_ishido;
 DRV		BurnDrvfds_ishidouj;
 DRV		BurnDrvfds_ishidou;
@@ -7357,8 +7364,9 @@ DRV		BurnDrvMSX_mgunjoe;
 DRV		BurnDrvMachomou;
 DRV		BurnDrvMacross2k;
 DRV		BurnDrvMacrossp;
-DRV		BurnDrvnes_madcity;
+DRV		BurnDrvnes_madcityj;
 DRV		BurnDrvnes_madcityc;
+DRV		BurnDrvnes_madcity;
 DRV		BurnDrvMadcrash;
 DRV		BurnDrvMadcrush;
 DRV		BurnDrvMaddonna;
@@ -8029,6 +8037,8 @@ DRV		BurnDrvMilliped;
 DRV		BurnDrvminasan;
 DRV		BurnDrvmd_traysiaj;
 DRV		BurnDrvMinefld;
+DRV		BurnDrvnes_minelsagj;
+DRV		BurnDrvnes_minelsag;
 DRV		BurnDrvcv_mine2049a;
 DRV		BurnDrvcv_mine2049;
 DRV		BurnDrvMineswpr4;
@@ -8476,6 +8486,7 @@ DRV		BurnDrvmyststni;
 DRV		BurnDrvmyststno;
 DRV		BurnSpecmystnile;
 DRV		BurnDrvnes_mysteryquest;
+DRV		BurnDrvnes_mystewordiz;
 DRV		BurnDrvmd_mystdefa;
 DRV		BurnDrvmd_mystdef;
 DRV		BurnDrvnes_mysticorigins;
@@ -11909,6 +11920,7 @@ DRV		BurnDrvSpcinvdj;
 DRV		BurnDrvGalap1;
 DRV		BurnDrvSinvasnb;
 DRV		BurnDrvSinvasn;
+DRV		BurnSpecSpacejourney;
 DRV		BurnSpecSpacejunk;
 DRV		BurnDrvMSX_spacmaze;
 DRV		BurnDrvMSX_spacmazeb;
@@ -17497,6 +17509,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_breakoutt,		// Break Out!
 	&BurnDrvBrkthru,			// Break Thru (US)
 	&BurnDrvMSX_breaker,		// Breaker Breaker (Euro)
+	&BurnDrvbreakrevbh,			// Breakers Revenge - Boss Hack (Bai-Hu)
 	&BurnDrvbrkrevext,			// Breakers Revenge - Extra Mode (Hack)
 	&BurnDrvbreakrev,			// Breakers Revenge
 	&BurnDrvbreakers,			// Breakers
@@ -20405,6 +20418,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fpoint,			// Flashpoint (Kor)
 	&BurnDrvsms_fpoint,			// Flashpoint (Kor)
 	&BurnDrvMSX_fpointa,		// Flashpoint (Kor, Alt)
+	&BurnDrvnes_flea,			// FLEA! (HB)
 	&BurnDrvnes_fleademo,		// FLEA! demo (HB)
 	&BurnDrvFlicky,				// Flicky (128k Version, 315-5051)
 	&BurnDrvFlickya,			// Flicky (128k Version, 315-5051, larger roms))
@@ -20559,7 +20573,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvFrogs,				// Frogs [No sound]
 #endif
-	&BurnDrvnes_frombelow,		// From Below (HB, v8.11.2020)
+	&BurnDrvnes_frombelow,		// From Below (HB, v1.0)
 	&BurnDrvgg_slamdunk,		// From TV Animation - Slam Dunk - Shouri e no Starting 5 (Jpn)
 	&BurnDrvmd_slamdunk,		// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Jpn)
 	&BurnDrvmd_slamdunkc,		// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (T-Chi)
@@ -20900,6 +20914,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGemini,				// Gemini Wing (World)
 	&BurnDrvGeminib,			// Gemini Wing (World, bootleg)
 	&BurnDrvmd_gems,			// GEMS v2.8
+	&BurnSpecGenerdigital,		// Generacio Digital (HB)
 	&BurnDrvmd_genchaos,		// General Chaos (Euro, USA)
 	&BurnDrvmd_genchaosj,		// General Chaos Daikonsen (Jpn)
 	&BurnDrvmd_genelost,		// Generations Lost (Euro, USA)
@@ -21340,8 +21355,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_gunnact,		// Gun Nac (T-Eng)
 	&BurnDrvnes_gunnac,			// Gun Nac (USA)
 	&BurnDrvnes_gunsight,		// Gun Sight (Japan)
-	&BurnDrvnes_gundec,			// Gun-Dec (Japan)
+	&BurnDrvnes_gundecj,		// Gun-Dec (Japan)
 	&BurnDrvnes_gundecc,		// Gun-Dec (T-Chi)
+	&BurnDrvnes_gundec,			// Gun-Dec (T-Eng)
 	&BurnDrvGunsmokeg,			// Gun.Smoke (Germany, censored)
 	&BurnDrvfds_gunsmoke,		// Gun.Smoke (Japan)
 	&BurnDrvGunsmokej,			// Gun.Smoke (Japan, 851115)
@@ -21895,6 +21911,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_indycrus,		// Indiana Jones and the Last Crusade (Euro, Bra)
 	&BurnDrvsms_indycrusp,		// Indiana Jones and the Last Crusade (Euro, Prototype)
 	&BurnDrvgg_indycrus,		// Indiana Jones and the Last Crusade (Euro, USA)
+	&BurnDrvmd_indycruss,		// Indiana Jones and the Last Crusade (Hack, Spanish)
 	&BurnDrvnes_indiajonandlascrt,// Indiana Jones and the Last Crusade (USA) (Taito)
 	&BurnDrvnes_indiajonandlascr,// Indiana Jones and the Last Crusade (USA) (UBI Soft)
 	&BurnDrvmd_indycrusu,		// Indiana Jones and the Last Crusade (USA)
@@ -21910,6 +21927,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_infinity,		// Infinity Cure (Jpn)
 	&BurnDrvmd_inktober,		// INKtober (HB)
 	&BurnDrvInsector,			// Insector (prototype)
+	&BurnDrvmd_insectxs,		// Insector X (Hack, Spanish)
 	&BurnDrvInsectxj,			// Insector X (Japan)
 	&BurnDrvnes_insectorx,		// Insector X (Japan)
 	&BurnDrvmd_insectxj,		// Insector X (Jpn, Kor)
@@ -21964,6 +21982,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_irontan,		// Iron Tank - The Invasion of Normandy (USA)
 	&BurnDrvnes_irons,			// Ironsword - Wizards & Warriors II (USA)
 	&BurnDrvIsgsm,				// ISG Selection Master Type 2006 System BIOS
+	&BurnDrvmd_ishidos,			// Ishido - The Way of Stones (Hack, Spanish)
 	&BurnDrvmd_ishido,			// Ishido - The Way of Stones (USA)
 	&BurnDrvfds_ishidouj,		// Ishidou (Japan)
 	&BurnDrvfds_ishidou,		// Ishidou (T-Eng)
@@ -23172,8 +23191,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMachomou,			// Macho Mouse
 	&BurnDrvMacross2k,			// Macross II (Korea)
 	&BurnDrvMacrossp,			// Macross Plus
-	&BurnDrvnes_madcity,		// Mad City (Japan)
+	&BurnDrvnes_madcityj,		// Mad City (Japan)
 	&BurnDrvnes_madcityc,		// Mad City (T-Chi, v2)
+	&BurnDrvnes_madcity,		// Mad City (T-Eng)
 	&BurnDrvMadcrash,			// Mad Crasher
 	&BurnDrvMadcrush,			// Mad Crusher (Japan)
 	&BurnDrvMaddonna,			// Mad Donna (set 1)
@@ -23844,6 +23864,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvminasan,			// Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(MOH-001)
 	&BurnDrvmd_traysiaj,		// Minato no Traysia (Jpn)
 	&BurnDrvMinefld,			// Minefield
+	&BurnDrvnes_minelsagj,		// Minelvaton Saga - Ragon no Fukkatsu (Japan)
+	&BurnDrvnes_minelsag,		// Minelvaton Saga - Ragon no Fukkatsu (T-Eng)
 	&BurnDrvcv_mine2049a,		// Miner 2049er (Alt)
 	&BurnDrvcv_mine2049,		// Miner 2049er
 	&BurnDrvMineswpr4,			// Minesweeper (4-Player)
@@ -24291,6 +24313,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmyststno,			// Mysterious Stones - Dr. Kick in Adventure
 	&BurnSpecmystnile,			// Mystery of the Nile, The (128K)
 	&BurnDrvnes_mysteryquest,	// Mystery Quest (USA)
+	&BurnDrvnes_mystewordiz,	// Mystery World Dizzy (HB)
 	&BurnDrvmd_mystdefa,		// Mystic Defender (Euro, USA)
 	&BurnDrvmd_mystdef,			// Mystic Defender (Euro, USA, Rev. A)
 	&BurnDrvnes_mysticorigins,	// Mystic Origins (HB)
@@ -27724,6 +27747,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalap1,				// Space Invaders Galactica (galaxiaj hack)
 	&BurnDrvSinvasnb,			// Space Invasion (bootleg)
 	&BurnDrvSinvasn,			// Space Invasion (Europe)
+	&BurnSpecSpacejourney,		// Space Journey (HB)
 	&BurnSpecSpacejunk,			// Space Junk (HB)
 	&BurnDrvMSX_spacmaze,		// Space Maze Attack (Jpn)
 	&BurnDrvMSX_spacmazeb,		// Space Maze Attack (Jpn, Alt 2)

@@ -422,7 +422,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliengirldemo" romof="spectrum">
-		<description>Alien Girl - 48k Demo (HB)</description>
+		<description>Alien Girl - 48k Demo (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Javier Fopiani</manufacturer>
 		<rom name="Alien Girl - 48k Demo (2020)(Javier Fopiani).tap" size="44475" crc="4e1c2f21"/>
@@ -3213,6 +3213,15 @@
 		<year>1987</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Gauntlet (1987)(U.S. Gold)(48K-128K).tap" size="150888" crc="173177cc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="generdigital" romof="spec128">
+		<description>Generacio Digital (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Catalunya Radio</manufacturer>
+		<rom name="Generacio Digital (2019)(Catalunya Radio).tap" size="39117" crc="76ec9f7d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -6921,6 +6930,15 @@
 		<manufacturer>Grandslam Entertainments</manufacturer>
 		<rom name="Space Harrier II (1990)(Grandslam Entertainments).z80" size="41700" crc="2f556b72"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="spacejourney" romof="spec128">
+		<description>Space Journey (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Roman Cikryt</manufacturer>
+		<rom name="Space Journey (2020)(Roman Cikryt).tap" size="46896" crc="b55f0534"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="spacejunk" romof="spec128">

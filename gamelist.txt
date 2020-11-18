@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15552 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15564 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1662,6 +1662,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_breakoutt	|  	| Break Out!						| 		| 1985	| Toshiba-EMI	| MSX		| 					|
 | brkthru	|  	| Break Thru (US)					| 		| 1986	| Data East USA	| Miscellaneous	| 					|
 | msx_breaker	|  	| Breaker Breaker (Euro)				| 		| 1988	| Eurosoft	| MSX		| 					|
+| breakrevbh	|  	| Breakers Revenge - Boss Hack (Bai-Hu)			| breakrev	| 1998	| Visco		| Neo Geo MVS	| 					|
 | brkrevext	|  	| Breakers Revenge - Extra Mode (Hack)			| breakrev	| 2018	| Visco		| Neo Geo MVS	| 					|
 | breakrev	|  	| Breakers Revenge					| 		| 1998	| Visco		| Neo Geo MVS	| 					|
 | breakers	|  	| Breakers						| 		| 1996	| Visco		| Neo Geo MVS	| 					|
@@ -4522,7 +4523,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_fpoint	|  	| Flashpoint (Kor)					| 		| 1991	| Zemina	| MSX		| 					|
 | sms_fpoint	|  	| Flashpoint (Kor)					| 		| 199?	| Zemina	| Sega Master Sy| 					|
 | msx_fpointa	|  	| Flashpoint (Kor, Alt)					| msx_fpoint	| 1991	| Zemina	| MSX		| 					|
-| nes_fleademo	|  	| FLEA! demo (HB)					| 		| 2019	| Lowtek	| Miscellaneous	| 					|
+| nes_flea	|  	| FLEA! (HB)						| 		| 2020	| Lowtek	| Miscellaneous	| 					|
+| nes_fleademo	|  	| FLEA! demo (HB)					| nes_flea	| 2019	| Lowtek	| Miscellaneous	| 					|
 | flicky	|  	| Flicky (128k Version, 315-5051)			| 		| 1984	| Sega		| System 1	| 					|
 | flickya	|  	| Flicky (128k Version, 315-5051, larger roms))		| flicky	| 1984	| Sega		| System 1	| 					|
 | flickys2	|  	| Flicky (128k Version, not encrypted)			| flicky	| 1984	| Sega		| System 1	| 					|
@@ -4672,7 +4674,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_frogger	|  	| Frogger						| 		| 1983	| Parker Brother| ColecoVision	| 					|
 | frogger	|  	| Frogger						| 		| 1981	| Konami	| Galaxian	| 					|
 | frogs		| D	| Frogs							| 		| 1978	| Gremlin	| Vic Dual	| No sound				|
-| nes_frombelow	|  	| From Below (HB, v8.11.2020)				| 		| 2020	| Goose2k	| Miscellaneous	| 					|
+| nes_frombelow	|  	| From Below (HB, v1.0)					| 		| 2020	| Goose2k	| Miscellaneous	| 					|
 | gg_slamdunk	|  	| From TV Animation - Slam Dunk - Shouri e no Starting 5| 		| 1994	| Bandai	| Sega Game Gear| 					|
 | md_slamdunk	|  	| From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!| 		| 1995	| Bandai	| Sega Megadrive| 					|
 | md_slamdunkc	|  	| From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!| md_slamdunk	| 1995	| Bandai	| Sega Megadrive| 					|
@@ -5007,6 +5009,7 @@ This list contains all games supported by FinalBurn Neo.
 | gemini	|  	| Gemini Wing (World)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
 | geminib	|  	| Gemini Wing (World, bootleg)				| gemini	| 1987	| Tecmo		| Miscellaneous	| 					|
 | md_gems	|  	| GEMS v2.8						| 		| 199?	| <unknown>	| Sega Megadrive| 					|
+| spec_generdigital|  	| Generacio Digital (HB)				| 		| 2019	| Catalunya Radi| ZX Spectrum	| 					|
 | md_genchaos	|  	| General Chaos (Euro, USA)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | md_genchaosj	|  	| General Chaos Daikonsen (Jpn)				| md_genchaos	| 1994	| Electronic Art| Sega Megadrive| 					|
 | md_genelost	|  	| Generations Lost (Euro, USA)				| 		| 1994	| Time Warner In| Sega Megadrive| 					|
@@ -5445,8 +5448,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_gunnact	|  	| Gun Nac (T-Eng)					| nes_gunnac	| 1990	| Tonkin House	| Miscellaneous	| 					|
 | nes_gunnac	|  	| Gun Nac (USA)						| 		| 1991	| Nexoft	| Miscellaneous	| 					|
 | nes_gunsight	|  	| Gun Sight (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_gundec	|  	| Gun-Dec (Japan)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_gundecj	|  	| Gun-Dec (Japan)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_gundecc	|  	| Gun-Dec (T-Chi)					| nes_vice	| 2019-08-01| Sammy		| Miscellaneous	| 					|
+| nes_gundec	|  	| Gun-Dec (T-Eng)					| nes_vice	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gunsmokeg	|  	| Gun.Smoke (Germany, censored)				| gunsmoke	| 1986	| Capcom	| Miscellaneous	| 					|
 | fds_gunsmoke	|  	| Gun.Smoke (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gunsmokej	|  	| Gun.Smoke (Japan, 851115)				| gunsmoke	| 1985	| Capcom	| Miscellaneous	| 					|
@@ -5992,6 +5996,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_indycrus	|  	| Indiana Jones and the Last Crusade (Euro, Bra)	| 		| 1990	| U.S. Gold	| Sega Master Sy| 					|
 | sms_indycrusp	|  	| Indiana Jones and the Last Crusade (Euro, Prototype)	| sms_indycrus	| 1990	| U.S. Gold	| Sega Master Sy| 					|
 | gg_indycrus	|  	| Indiana Jones and the Last Crusade (Euro, USA)	| 		| 1992	| U.S. Gold	| Sega Game Gear| 					|
+| md_indycruss	|  	| Indiana Jones and the Last Crusade (Hack, Spanish)	| md_indycrus	| 2018	| SU.S. Gold	| Sega Megadrive| 					|
 | nes_indiajonandlascrt|  	| Indiana Jones and the Last Crusade (USA) (Taito)	| nes_indiajonandlascr| 1991	| Taito		| Miscellaneous	| 					|
 | nes_indiajonandlascr|  	| Indiana Jones and the Last Crusade (USA) (UBI Soft)	| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
 | md_indycrusu	|  	| Indiana Jones and the Last Crusade (USA)		| md_indycrus	| 1992	| U.S. Gold	| Sega Megadrive| 					|
@@ -6007,6 +6012,7 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_infinity	|  	| Infinity Cure (Jpn)					| 		| 2000	| KID		| NeoGeo Pocket | 					|
 | md_inktober	|  	| INKtober (HB)						| 		| 2019	| Brunni	| Sega Megadrive| 					|
 | insector	|  	| Insector (prototype)					| 		| 1982	| Gottlieb	| Miscellaneous	| 					|
+| md_insectxs	|  	| Insector X (Hack, Spanish)				| md_insectx	| 2019	| Sage's Creatio| Sega Megadrive| 					|
 | insectxj	|  	| Insector X (Japan)					| insectx	| 1989	| Taito Corporat| Miscellaneous	| 					|
 | nes_insectorx	|  	| Insector X (Japan)					| 		| 1990	| Taito		| Miscellaneous	| 					|
 | md_insectxj	|  	| Insector X (Jpn, Kor)					| md_insectx	| 1990	| Hot-B		| Sega Megadrive| 					|
@@ -6057,6 +6063,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_irontan	|  	| Iron Tank - The Invasion of Normandy (USA)		| 		| 1988	| SNK		| Miscellaneous	| 					|
 | nes_irons	|  	| Ironsword - Wizards & Warriors II (USA)		| 		| 1989	| Acclaim	| Miscellaneous	| 					|
 | isgsm		|  	| ISG Selection Master Type 2006 System BIOS		| 		| 2006	| ISG		| ISG Selection | BIOS only				|
+| md_ishidos	|  	| Ishido - The Way of Stones (Hack, Spanish)		| md_ishido	| 2019	| Accolade	| Sega Megadrive| 					|
 | md_ishido	|  	| Ishido - The Way of Stones (USA)			| 		| 1990	| Accolade	| Sega Megadrive| 					|
 | fds_ishidouj	|  	| Ishidou (Japan)					| fds_ishidou	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_ishidou	|  	| Ishidou (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -7243,8 +7250,9 @@ This list contains all games supported by FinalBurn Neo.
 | machomou	|  	| Macho Mouse						| 		| 1982	| Techstar	| Miscellaneous	| 					|
 | macross2k	|  	| Macross II (Korea)					| macross2	| 1993	| Banpresto	| NMK16		| 					|
 | macrossp	|  	| Macross Plus						| 		| 1996	| MOSS / Banpres| Miscellaneous	| 					|
-| nes_madcity	|  	| Mad City (Japan)					| nes_advenbaybil| 1988	| Konami	| Miscellaneous	| 					|
+| nes_madcityj	|  	| Mad City (Japan)					| nes_advenbaybil| 1988	| Konami	| Miscellaneous	| 					|
 | nes_madcityc	|  	| Mad City (T-Chi, v2)					| nes_advenbaybil| 2018	| Konami	| Miscellaneous	| 					|
+| nes_madcity	|  	| Mad City (T-Eng)					| nes_advenbaybil| 1988	| Konami	| Miscellaneous	| 					|
 | madcrash	|  	| Mad Crasher						| 		| 1984	| SNK		| Miscellaneous	| 					|
 | madcrush	|  	| Mad Crusher (Japan)					| madcrash	| 1984	| SNK		| Miscellaneous	| 					|
 | maddonna	|  	| Mad Donna (set 1)					| 		| 1995	| Tuning	| Miscellaneous	| 					|
@@ -7911,6 +7919,8 @@ This list contains all games supported by FinalBurn Neo.
 | minasan	|  	| Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(M| 		| 1990	| Monolith Corp.| Neo Geo MVS	| 					|
 | md_traysiaj	|  	| Minato no Traysia (Jpn)				| md_traysia	| 1992	| Riot		| Sega Megadrive| 					|
 | minefld	|  	| Minefield						| 		| 1983	| Stern		| Galaxian	| 					|
+| nes_minelsagj	|  	| Minelvaton Saga - Ragon no Fukkatsu (Japan)		| nes_minelsag	| 1987	| Taito		| Miscellaneous	| 					|
+| nes_minelsag	|  	| Minelvaton Saga - Ragon no Fukkatsu (T-Eng)		| 		| 1987	| Taito		| Miscellaneous	| 					|
 | cv_mine2049a	|  	| Miner 2049er (Alt)					| cv_mine2049	| 1983	| Micro Fun	| ColecoVision	| 					|
 | cv_mine2049	|  	| Miner 2049er						| 		| 1983	| Micro Fun	| ColecoVision	| 					|
 | mineswpr4	|  	| Minesweeper (4-Player)				| mineswpr	| 1977	| Amutech	| Miscellaneous	| 					|
@@ -8352,6 +8362,7 @@ This list contains all games supported by FinalBurn Neo.
 | myststono	|  	| Mysterious Stones - Dr. Kick in Adventure		| mystston	| 1984	| Technos	| Miscellaneous	| 					|
 | spec_mystnile	|  	| Mystery of the Nile, The (128K)			| 		| 1987	| Firebird Softw| ZX Spectrum	| 					|
 | nes_mysteryquest|  	| Mystery Quest (USA)					| 		| 1989	| Taxan		| Miscellaneous	| 					|
+| nes_mystewordiz|  	| Mystery World Dizzy (HB)				| 		| 2017	| Oliver Twins	| Miscellaneous	| 					|
 | md_mystdefa	|  	| Mystic Defender (Euro, USA)				| md_mystdef	| 1989	| Sega		| Sega Megadrive| 					|
 | md_mystdef	|  	| Mystic Defender (Euro, USA, Rev. A)			| 		| 1989	| Sega		| Sega Megadrive| 					|
 | nes_mysticorigins|  	| Mystic Origins (HB)					| 		| 2019	| Nintendo	| Miscellaneous	| 					|
@@ -11725,6 +11736,7 @@ This list contains all games supported by FinalBurn Neo.
 | galap1	|  	| Space Invaders Galactica (galaxiaj hack)		| galaxian	| 1979	| hack		| Galaxian	| 					|
 | sinvasnb	|  	| Space Invasion (bootleg)				| commando	| 1985	| bootleg	| Miscellaneous	| 					|
 | sinvasn	|  	| Space Invasion (Europe)				| commando	| 1985	| Capcom	| Miscellaneous	| 					|
+| spec_spacejourney|  	| Space Journey (HB)					| 		| 2020	| Roman Cikryt	| ZX Spectrum	| 					|
 | spec_spacejunk|  	| Space Junk (HB)					| 		| 2017	| Miguetelo	| ZX Spectrum	| 					|
 | msx_spacmaze	|  	| Space Maze Attack (Jpn)				| 		| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_spacmazeb	|  	| Space Maze Attack (Jpn, Alt 2)			| msx_spacmaze	| 1983	| HAL Kenkyuujo	| MSX		| 					|
@@ -13573,7 +13585,7 @@ This list contains all games supported by FinalBurn Neo.
 | kf10thep	|  	| The King of Fighters 10th Anniversary Extra Plus (boot| kof2002	| 2005	| bootleg	| Neo Geo MVS	| 					|
 | kof2000	|  	| The King of Fighters 2000 (NGM-2570) (NGH-2570)	| 		| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|
-| kof2000otc	|  	| The King of Fighters 2000 (OTC, hack)			| kof2000	| 2020-06-15| hack		| Neo Geo MVS	| ZERO only enable in AES mode		|
+| kof2000otc	|  	| The King of Fighters 2000 (OTC, hack)			| kof2000	| 2020-06-15| hack		| Neo Geo MVS	| ZERO only enabled in AES mode		|
 | kof2000ps2	|  	| The King of Fighters 2000 (Playstation 2 ver. , EGHT h| kof2000	| 2000	| hack		| Neo Geo MVS	| hack only enable in AES mode		|
 | kof2001h	|  	| The King of Fighters 2001 (NGH-2621)			| kof2001	| 2001	| SNK / Eolith	| Neo Geo AES	| 					|
 | kof2001	|  	| The King of Fighters 2001 (NGM-262?)			| 		| 2001	| SNK / Eolith	| Neo Geo MVS	| 					|
@@ -13588,7 +13600,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof2k2omg9	|  	| The King of Fighters 2002 (Omega v0.9)		| kof2002	| 2012	| hack		| KOF-ON Team	| 					|
 | kf2k2ps2re1	|  	| The King of Fighters 2002 (PlayStation 2 v1.0 Public B| kof2002	| 2018-12-17| Hack		| Neo Geo MVS	| hack only enable in AES mode, imperfec|
 | kf2k2ps2	|  	| The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT| kof2002	| 2007	| hack		| Neo Geo MVS	| 					|
-| kf2k2ps2b	|  	| The King of Fighters 2002 (PlayStation 2, Hack)	| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
+| kf2k2ps2b	|  	| The King of Fighters 2002 (PlayStation 2, Hack)	| kof2002	| 2018	| Hack		| Neo Geo MVS	| hack only enabled in AES mode		|
 | kof2k2plus	|  	| The King of Fighters 2002 (Plus 2017, Hack)		| kof2002	| 2020-10-22| Hack		| Neo Geo MVS	| 					|
 | kf2k23rd	|  	| The King of Fighters 2002 - 3rd Strike of Orochi (Hack| kof2002	| 2020-06-14| hack		| Miscellaneous	| 					|
 | kf2k2mp	|  	| The King of Fighters 2002 Magic Plus (bootleg)	| kof2002	| 2002	| bootleg	| Neo Geo MVS	| 					|

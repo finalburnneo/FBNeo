@@ -6441,6 +6441,13 @@
 		<rom name="mpr-15207.bin" size="1048576" crc="eb8f4374"/>
 		<driver status="good"/>
 	</game>
+	<game name="indycruss" cloneof="indycrus" romof="indycrus">
+		<description>Indiana Jones and the Last Crusade (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SU.S. Gold</manufacturer>
+		<rom name="indiana jones and the last crusade (Hack, Spanish).bin" size="1048576" crc="8c7871ad"/>
+		<driver status="good"/>
+	</game>
 	<game name="indycrusu" cloneof="indycrus" romof="indycrus">
 		<description>Indiana Jones and the Last Crusade (USA)</description>
 		<year>1992</year>
@@ -6453,6 +6460,13 @@
 		<year>2019</year>
 		<manufacturer>Brunni</manufacturer>
 		<rom name="inktober (brunni)(2019).bin" size="917504" crc="09c7bb37"/>
+		<driver status="good"/>
+	</game>
+	<game name="insectxs" cloneof="insectx" romof="insectx">
+		<description>Insector X (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sage's Creation</manufacturer>
+		<rom name="insector x (Hack, Spanish).bin" size="524288" crc="0a96a725"/>
 		<driver status="good"/>
 	</game>
 	<game name="insectxj" cloneof="insectx" romof="insectx">
@@ -6572,6 +6586,13 @@
 		<year>199?</year>
 		<manufacturer>Tomsoft</manufacturer>
 		<rom name="iraq war 2003 (unl).bin" size="1048576" crc="49dd6f52"/>
+		<driver status="good"/>
+	</game>
+	<game name="ishidos" cloneof="ishido" romof="ishido">
+		<description>Ishido - The Way of Stones (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="ishido - the way of stones (Hack, Spanish).bin" size="131072" crc="9f24780c"/>
 		<driver status="good"/>
 	</game>
 	<game name="ishido">

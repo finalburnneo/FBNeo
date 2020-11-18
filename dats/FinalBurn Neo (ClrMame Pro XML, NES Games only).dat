@@ -3603,7 +3603,14 @@
 		<rom name="Flappy Bird (HB).nes" size="24592" crc="3653c07d"/>
 		<driver status="good"/>
 	</game>
-	<game name="fleademo">
+	<game name="flea">
+		<description>FLEA! (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Lowtek</manufacturer>
+		<rom name="flea! (HB).nes" size="524304" crc="d208c6da"/>
+		<driver status="good"/>
+	</game>
+	<game name="fleademo" cloneof="flea" romof="flea">
 		<description>FLEA! demo (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Lowtek</manufacturer>
@@ -3709,10 +3716,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="frombelow">
-		<description>From Below (HB, v8.11.2020) [Homebrew]</description>
+		<description>From Below (HB, v1.0) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Goose2k</manufacturer>
-		<rom name="From Below (HB, v8.11.2020).nes" size="40976" crc="98fb6b1f"/>
+		<rom name="From Below (HB, v1.0).nes" size="40976" crc="8ce49adb"/>
 		<driver status="good"/>
 	</game>
 	<game name="frontline">
@@ -4310,7 +4317,7 @@
 		<rom name="Gun Sight (Japan).nes" size="262160" crc="592d3855"/>
 		<driver status="good"/>
 	</game>
-	<game name="gundec" cloneof="vice" romof="vice">
+	<game name="gundecj" cloneof="vice" romof="vice">
 		<description>Gun-Dec (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -4322,6 +4329,13 @@
 		<year>2019-08-01</year>
 		<manufacturer>Sammy</manufacturer>
 		<rom name="Gun-Dec (T-Chi).nes" size="393232" crc="647eccfa"/>
+		<driver status="good"/>
+	</game>
+	<game name="gundec" cloneof="vice" romof="vice">
+		<description>Gun-Dec (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Gun-Dec (T-Eng).nes" size="393232" crc="0b7c7e99"/>
 		<driver status="good"/>
 	</game>
 	<game name="gunsmokec" cloneof="gunsmoke" romof="gunsmoke">
@@ -5997,7 +6011,7 @@
 		<rom name="Machine Cave (HB, v1.9).nes" size="40976" crc="2d904baf"/>
 		<driver status="good"/>
 	</game>
-	<game name="madcity" cloneof="advenbaybil" romof="advenbaybil">
+	<game name="madcityj" cloneof="advenbaybil" romof="advenbaybil">
 		<description>Mad City (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -6009,6 +6023,13 @@
 		<year>2018</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Mad City (T-Chi, v2).nes" size="393232" crc="3b2ad28b"/>
+		<driver status="good"/>
+	</game>
+	<game name="madcity" cloneof="advenbaybil" romof="advenbaybil">
+		<description>Mad City (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Mad City (T-Eng).nes" size="262160" crc="52389803"/>
 		<driver status="good"/>
 	</game>
 	<game name="madmax">
@@ -6564,6 +6585,20 @@
 		<rom name="Millipede - Kyodai Konchuu no Gyakushuu (Japan).nes" size="24592" crc="154cac47"/>
 		<driver status="good"/>
 	</game>
+	<game name="minelsagj" cloneof="minelsag" romof="minelsag">
+		<description>Minelvaton Saga - Ragon no Fukkatsu (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Minelvaton Saga - Ragon no Fukkatsu (Japan).nes" size="262160" crc="cb2ff607"/>
+		<driver status="good"/>
+	</game>
+	<game name="minelsag">
+		<description>Minelvaton Saga - Ragon no Fukkatsu (T-Eng)</description>
+		<year>1987</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Minelvaton Saga - Ragon no Fukkatsu (T-Eng).nes" size="393232" crc="a0da91d6"/>
+		<driver status="good"/>
+	</game>
 	<game name="miniputt">
 		<description>Mini Putt (Japan)</description>
 		<year>1991</year>
@@ -6631,7 +6666,7 @@
 		<description>Mitsume ga Tooru (T-Eng)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Mitsume ga Tooru (T-Eng).nes" size="262160" crc="d1157a30"/>
+		<rom name="Mitsume ga Tooru (T-Eng).nes" size="262160" crc="c5f60062"/>
 		<driver status="good"/>
 	</game>
 	<game name="moaikun">
@@ -6842,6 +6877,13 @@
 		<year>1989</year>
 		<manufacturer>Taxan</manufacturer>
 		<rom name="Mystery Quest (USA).nes" size="65552" crc="faf994be"/>
+		<driver status="good"/>
+	</game>
+	<game name="mystewordiz">
+		<description>Mystery World Dizzy (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Oliver Twins</manufacturer>
+		<rom name="Mystery World Dizzy (HB).nes" size="262160" crc="03124bf3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mysticorigins">

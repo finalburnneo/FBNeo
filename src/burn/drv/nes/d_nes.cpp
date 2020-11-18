@@ -14089,6 +14089,24 @@ struct BurnDriver BurnDrvnes_flappybird = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://lowtekgames.itch.io/fleanes
+static struct BurnRomInfo nes_fleaRomDesc[] = {
+	{ "flea! (HB).nes",          524304, 0xd208c6da, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_flea)
+STD_ROM_FN(nes_flea)
+
+struct BurnDriver BurnDrvnes_flea = {
+	"nes_flea", NULL, NULL, NULL, "2020",
+	"FLEA! (HB)\0", NULL, "Lowtek", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_fleaRomInfo, nes_fleaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_fleademoRomDesc[] = {
 	{ "flea! demo (HB).nes",          524304, 0x6d18f7c4, BRF_ESS | BRF_PRG },
 };
@@ -14097,10 +14115,10 @@ STD_ROM_PICK(nes_fleademo)
 STD_ROM_FN(nes_fleademo)
 
 struct BurnDriver BurnDrvnes_fleademo = {
-	"nes_fleademo", NULL, NULL, NULL, "2019",
+	"nes_fleademo", "nes_flea", NULL, NULL, "2019",
 	"FLEA! demo (HB)\0", NULL, "Lowtek", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_fleademoRomInfo, nes_fleademoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

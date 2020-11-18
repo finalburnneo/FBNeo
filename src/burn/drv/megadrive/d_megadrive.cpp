@@ -47836,3 +47836,79 @@ MegadriveGetZipName,md_jleaguesRomInfo,md_jleaguesRomName, NULL, NULL, NULL, NUL
 MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 &bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+//ka-ge-ki - fists of steel (Hack, Spanish)
+//https://www.romhacking.net/translations/4736/
+static struct BurnRomInfo md_kagekisRomDesc[] = {
+{ "ka-ge-ki - fists of steel (Hack, Spanish).bin",1048576, 0x7978b1e4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kagekis)
+STD_ROM_FN(md_kagekis)
+
+struct BurnDriver BurnDrvmd_kagekis = {
+"md_kagekis","md_kageki", NULL, NULL,"2019",
+"Ka-Ge-Ki - Fists of Steel (Hack, Spanish).bin\0", NULL,"Sage's Creation", "Sega Megadrive",
+NULL, NULL, NULL, NULL,
+BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+MegadriveGetZipName,md_kagekisRomInfo,md_kagekisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//kid chameleon (Hack, Spanish)
+//https://www.romhacking.net/translations/3709/
+static struct BurnRomInfo md_kidchamsRomDesc[] = {
+{ "kid chameleon (Hack, Spanish).bin",1048576, 0x4871962f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kidchams)
+STD_ROM_FN(md_kidchams)
+
+struct BurnDriver BurnDrvmd_kidchams = {
+"md_kidchams","md_kidcham", NULL, NULL,"2018",
+"Kid Chameleon (Hack, Spanish).bin\0", NULL,"SEGA", "Sega Megadrive",
+NULL, NULL, NULL, NULL,
+BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+MegadriveGetZipName,md_kidchamsRomInfo,md_kidchamsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//tougiou king colossus (Hack, Spanish)
+//https://www.romhacking.net/translations/5515/
+static struct BurnRomInfo md_kingcolsRomDesc[] = {
+{ "tougiou king colossus (Hack, Spanish).bin",1048576, 0xa6c9e0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kingcols)
+STD_ROM_FN(md_kingcols)
+
+struct BurnDriver BurnDrvmd_kingcols = {
+"md_kingcols","md_kingcol", NULL, NULL,"2020",
+"Tougiou King Colossus (Hack, Spanish).bin\0", NULL,"SEGA", "Sega Megadrive",
+NULL, NULL, NULL, NULL,
+BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+MegadriveGetZipName,md_kingcolsRomInfo,md_kingcolsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//krusty's super fun house (Hack, Spanish)
+//https://www.romhacking.net/translations/4916/
+static struct BurnRomInfo md_krustysRomDesc[] = {
+{ "krusty's super fun house (Hack, Spanish).bin",524288, 0xe3a453db, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_krustys)
+STD_ROM_FN(md_krustys)
+
+struct BurnDriver BurnDrvmd_krustys = {
+"md_krustys","md_krusty", NULL, NULL,"2019",
+"Krusty's Super Fun House (Hack, Spanish).bin\0", NULL,"Flying Edge", "Sega Megadrive",
+NULL, NULL, NULL, NULL,
+BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+MegadriveGetZipName,md_krustysRomInfo,md_krustysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

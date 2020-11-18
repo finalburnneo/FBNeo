@@ -378,9 +378,9 @@ static void DrvPaletteUpdate()
 	
 	for (INT32 i = 0; i < 0x800/2; i++)
 	{
-		INT32 r = (p[i] >>  0) & 0x1f;
-		INT32 g = (p[i] >>  5) & 0x1f;
-		INT32 b = (p[i] >> 10) & 0x1f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 0) & 0x1f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 5) & 0x1f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -397,14 +397,14 @@ static void draw_sprites()
 	for (INT32 offs = 0x400-4; offs >= 0; offs -= 4)
 	{
 		INT32 inc, mult;
-		INT32 y = spriteram[offs];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
 		INT32 flash = y & 0x1000;
 
 		if (!(flash && (nCurrentFrame & 1)))
 		{
-			INT32 sprite = spriteram[offs + 1] & 0x7fff;
+			INT32 sprite = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x7fff;
 			INT32 w = y & 0x0800;
-			INT32 x = spriteram[offs + 2];
+			INT32 x = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 
 			INT32 colour = (x >> 9) & 0x3f;
 

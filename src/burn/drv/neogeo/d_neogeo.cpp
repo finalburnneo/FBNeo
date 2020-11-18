@@ -13463,6 +13463,41 @@ struct BurnDriver BurnDrvbreakrev = {
 	0x1000,	320, 224, 4, 3
 };
 
+// Breakers Revenge Boss Hack by Yumeji, play as Bai-Hu
+/* MVS ONLY RELEASE */
+
+static struct BurnRomInfo breakrevbhRomDesc[] = {
+	{ "245-p1bh.p1",  0x200000, 0x33bde12a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	/* The chip labels and sizes are correct */
+	{ "245-c1.c1",    0x400000, 0x68d4ae76, 3 | BRF_GRA },           //  2 Sprite data
+	{ "245-c2.c2",    0x400000, 0xfdee05cd, 3 | BRF_GRA },           //  3
+	{ "245-c3.c3",    0x400000, 0x645077f3, 3 | BRF_GRA },           //  4
+	{ "245-c4.c4",    0x400000, 0x63aeb74c, 3 | BRF_GRA },           //  5
+	{ "245-c5.c5",    0x400000, 0xb5f40e7f, 3 | BRF_GRA },           //  6
+	{ "245-c6.c6",    0x400000, 0xd0337328, 3 | BRF_GRA },           //  7
+
+	{ "245-m1.m1",    0x020000, 0x00f31c66, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "245-v1.v1",    0x400000, 0xe255446c, 5 | BRF_SND },           //  9 Sound data
+	{ "245-v2.v2",    0x400000, 0x9068198a, 5 | BRF_SND },           // 10
+};
+
+STDROMPICKEXT(breakrevbh, breakrevbh, neogeo)
+STD_ROM_FN(breakrevbh)
+
+struct BurnDriver BurnDrvbreakrevbh = {
+	"breakrevbh", "breakrev", "neogeo", NULL, "1998",
+	"Breakers Revenge - Boss Hack (Bai-Hu)\0", NULL, "Visco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, breakrevbhRomInfo, breakrevbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 // Battle Flip Shot
 /* MVS ONLY RELEASE */
 
@@ -17432,7 +17467,7 @@ STD_ROM_FN(kof2000otc)
 
 struct BurnDriver BurnDrvkof2000otc = {
 	"kof2000otc", "kof2000", "neogeo", NULL, "2020-06-15",
-	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enable in AES mode", "hack", "Neo Geo MVS",
+	"The King of Fighters 2000 (OTC, hack)\0", "ZERO only enabled in AES mode", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2000otcRomInfo, kof2000otcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
@@ -17762,7 +17797,7 @@ STD_ROM_FN(kf2k2ps2b)
 
 struct BurnDriver BurnDrvkf2k2ps2b = {
 	"kf2k2ps2b", "kof2002", "neogeo", NULL, "2018",
-	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "hack only enable in AES mode", "Hack", "Neo Geo MVS",
+	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "hack only enabled in AES mode", "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k2ps2bRomInfo, kf2k2ps2bRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,

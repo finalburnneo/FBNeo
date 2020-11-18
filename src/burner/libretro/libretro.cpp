@@ -1290,6 +1290,12 @@ bool retro_unserialize(const void *data, size_t size)
 	SCAN_VAR(nCurrentFrame);
 	BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, 0);
 	BurnRecalcPal();
+#if 1
+	// Used to convert the libretro savestate we are loading into a savestate compatible with standalone
+	char convert_save_path[MAX_PATH];
+	snprintf_nowarn (convert_save_path, sizeof(convert_save_path), "%s%cfbneo%c%s.save", g_save_dir, path_default_slash_c(), path_default_slash_c(), BurnDrvGetTextA(DRV_NAME));
+	BurnStateSave(convert_save_path, 1);
+#endif
 	return true;
 }
 

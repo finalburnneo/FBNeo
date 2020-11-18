@@ -84,6 +84,8 @@ ifneq (,$(findstring unix,$(platform)))
 		PLATFORM_DEFINES := -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
 		HAVE_NEON = 1
 		USE_CYCLONE = 1
+	else ifneq (,$(findstring rpi4_64,$(platform)))
+		PLATFORM_DEFINES := -march=armv8-a+crc+simd -mtune=cortex-a72
 	endif
 
 	# Solaris

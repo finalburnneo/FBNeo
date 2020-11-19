@@ -13463,11 +13463,11 @@ struct BurnDriver BurnDrvbreakrev = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Breakers Revenge Boss Hack by Yumeji, play as Bai-Hu
+// Breakers Revenge Boss Hack by Yumeji, Enable Bai-Hu, with portrait.
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo breakrevbhRomDesc[] = {
-	{ "245-p1bh.p1",  0x200000, 0x33bde12a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "245-p1bh.p1",  0x200000, 0x52c978b5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -13490,9 +13490,9 @@ STD_ROM_FN(breakrevbh)
 
 struct BurnDriver BurnDrvbreakrevbh = {
 	"breakrevbh", "breakrev", "neogeo", NULL, "1998",
-	"Breakers Revenge - Boss Hack (Bai-Hu)\0", NULL, "Visco", "Neo Geo MVS",
+	"Breakers Revenge - Boss Hack (Bai-Hu)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
 	NULL, breakrevbhRomInfo, breakrevbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3

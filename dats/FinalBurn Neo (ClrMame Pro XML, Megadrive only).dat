@@ -6199,7 +6199,7 @@
 	<game name="hellfires" cloneof="hellfire" romof="hellfire">
 		<description>Hellfire (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>	Seismic</manufacturer>
+		<manufacturer>Seismic</manufacturer>
 		<rom name="hellfire (Hack, Spanish).bin" size="524288" crc="a8f15ed3"/>
 		<driver status="good"/>
 	</game>
@@ -6665,11 +6665,25 @@
 		<rom name="mpr-13262.bin" size="524288" crc="87bbcf2a"/>
 		<driver status="good"/>
 	</game>
+	<game name="jbdougkos" cloneof="jbdougko" romof="jbdougko">
+		<description>James 'Buster' Douglas Knockout Boxing (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="james 'buster' douglas knockout boxing (Hack, Spanish).bin" size="524288" crc="915c96b4"/>
+		<driver status="good"/>
+	</game>
 	<game name="jb007">
 		<description>James Bond 007 - The Duel (Euro, Rev. A)</description>
 		<year>1992</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="mpr-15312a" size="524288" crc="66635364"/>
+		<driver status="good"/>
+	</game>
+	<game name="jb007s" cloneof="jb007" romof="jb007">
+		<description>James Bond 007 - The Duel (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Domark</manufacturer>
+		<rom name="james bond 007 - the duel (Hack, Spanish).bin" size="524288" crc="4daf3d0d"/>
 		<driver status="good"/>
 	</game>
 	<game name="jb007j" cloneof="jb007" romof="jb007">
@@ -6693,11 +6707,25 @@
 		<rom name="james_pond_u1_jam03" size="524288" crc="d0e7b466"/>
 		<driver status="good"/>
 	</game>
+	<game name="jponds" cloneof="jpond" romof="jpond">
+		<description>James Pond - Underwater Agent (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="james pond - underwater agent (Hack, Spanish).bin" size="524288" crc="442cd24e"/>
+		<driver status="good"/>
+	</game>
 	<game name="jpond3">
 		<description>James Pond 3 - Operation Starfish (Euro, USA)</description>
 		<year>1993</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="james pond 3 - operation starfish (euro, usa).bin" size="2097152" crc="26f64b2a"/>
+		<driver status="good"/>
+	</game>
+	<game name="jpond3s" cloneof="jpond3" romof="jpond3">
+		<description>James Pond 3 - Operation Starfish (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="james pond 3 - operation starfish (Hack, Spanish).bin" size="2097152" crc="4803b7f3"/>
 		<driver status="good"/>
 	</game>
 	<game name="robocod">
@@ -6707,11 +6735,25 @@
 		<rom name="pond_ii_robocod_ro_b02" size="524288" crc="c32b5d66"/>
 		<driver status="good"/>
 	</game>
+	<game name="robocods" cloneof="robocod" romof="robocod">
+		<description>James Pond II - Codename Robocod (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="james pond II - codename robocod (Hack, Spanish).bin" size="524288" crc="4733a2ec"/>
+		<driver status="good"/>
+	</game>
 	<game name="robocodj" cloneof="robocod" romof="robocod">
 		<description>James Pond II - Codename RoboCod (Jpn, Kor)</description>
 		<year>1993</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="james pond ii - codename robocod (jpn, kor).bin" size="524288" crc="98794702"/>
+		<driver status="good"/>
+	</game>
+	<game name="jammits" cloneof="jammit" romof="jammit">
+		<description>Jammit (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="jammit (Hack, Spanish).bin" size="2097152" crc="70c27091"/>
 		<driver status="good"/>
 	</game>
 	<game name="jammit">
@@ -6791,6 +6833,13 @@
 		<rom name="mpr-14118a.ic1" size="524288" crc="cee98813"/>
 		<driver status="good"/>
 	</game>
+	<game name="jewelmss" cloneof="jewelms" romof="jewelms">
+		<description>Jewel Master (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="jewel master (Hack, Spanish).bin" size="524288" crc="d084b98c"/>
+		<driver status="good"/>
+	</game>
 	<game name="jewelmsj" cloneof="jewelms" romof="jewelms">
 		<description>Jewel Master (Jpn)</description>
 		<year>1991</year>
@@ -6817,6 +6866,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="jiu ji ma jiang ii - ye yan bian (chi) (unl).bin" size="1048576" crc="e9829b22"/>
+		<driver status="good"/>
+	</game>
+	<game name="joemacs" cloneof="joemac" romof="joemac">
+		<description>Joe &amp; Mac (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Takara</manufacturer>
+		<rom name="joe &amp; mac (Hack, Spanish).bin" size="1048576" crc="aa290350"/>
 		<driver status="good"/>
 	</game>
 	<game name="joemac">
@@ -6910,6 +6966,13 @@
 		<rom name="judge dredd (world).bin" size="2097152" crc="ea342ed8"/>
 		<driver status="good"/>
 	</game>
+	<game name="junctions" cloneof="junction" romof="junction">
+		<description>Junction (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Micronet</manufacturer>
+		<rom name="junction (Hack, Spanish).bin" size="524288" crc="8d2cce27"/>
+		<driver status="good"/>
+	</game>
 	<game name="junction">
 		<description>Junction (Jpn, USA)</description>
 		<year>1990</year>
@@ -6952,6 +7015,13 @@
 		<rom name="mpr-15679.bin" size="2097152" crc="448341f6"/>
 		<driver status="good"/>
 	</game>
+	<game name="jparks" cloneof="jpark" romof="jpark">
+		<description>Jurassic Park (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="jurassic park (Hack, Spanish).bin" size="2097152" crc="53d3dd70"/>
+		<driver status="good"/>
+	</game>
 	<game name="jparkj" cloneof="jpark" romof="jpark">
 		<description>Jurassic Park (Jpn)</description>
 		<year>1993</year>
@@ -6978,6 +7048,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="jurassic park - rampage edition (euro, usa).bin" size="2097152" crc="98b4aa1b"/>
+		<driver status="good"/>
+	</game>
+	<game name="jparkres" cloneof="jparkre" romof="jparkre">
+		<description>Jurassic Park - Rampage Edition (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="jurassic park - rampage edition (Hack, Spanish).bin" size="2097152" crc="954efbf2"/>
 		<driver status="good"/>
 	</game>
 	<game name="jparkrep9" cloneof="jparkre" romof="jparkre">
@@ -7043,6 +7120,13 @@
 		<rom name="jurassic park - rampage edition (prototype - jul 18, 1994).bin" size="2097152" crc="1a62b826"/>
 		<driver status="good"/>
 	</game>
+	<game name="jleagues" cloneof="jleague" romof="jleague">
+		<description>Justice League Task Force (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="justice league task force (Hack, Spanish).bin" size="3145728" crc="09844391"/>
+		<driver status="good"/>
+	</game>
 	<game name="jleague">
 		<description>Justice League Task Force (World)</description>
 		<year>1995</year>
@@ -7092,6 +7176,13 @@
 		<rom name="ka-ge-ki (jpn).bin" size="1048576" crc="391866a1"/>
 		<driver status="good"/>
 	</game>
+	<game name="kagekis" cloneof="kageki" romof="kageki">
+		<description>Ka-Ge-Ki - Fists of Steel (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sage's Creation</manufacturer>
+		<rom name="ka-ge-ki - fists of steel (Hack, Spanish).bin" size="1048576" crc="7978b1e4"/>
+		<driver status="good"/>
+	</game>
 	<game name="kageki">
 		<description>Ka-Ge-Ki - Fists of Steel (USA)</description>
 		<year>1991</year>
@@ -7125,6 +7216,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14557.ic1" size="1048576" crc="ce36e6cc"/>
+		<driver status="good"/>
+	</game>
+	<game name="kidchams" cloneof="kidcham" romof="kidcham">
+		<description>Kid Chameleon (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="kid chameleon (Hack, Spanish).bin" size="1048576" crc="4871962f"/>
 		<driver status="good"/>
 	</game>
 	<game name="patlabor">
@@ -7251,6 +7349,13 @@
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="krusty's super fun house (euro, usa) (v1.1).bin" size="524288" crc="56976261"/>
+		<driver status="good"/>
+	</game>
+	<game name="krustys" cloneof="krusty" romof="krusty">
+		<description>Krusty's Super Fun House (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="krusty's super fun house (Hack, Spanish).bin" size="524288" crc="e3a453db"/>
 		<driver status="good"/>
 	</game>
 	<game name="kujaku2" cloneof="mystdef" romof="mystdef">
@@ -16062,6 +16167,13 @@
 		<year>2006</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tougiou king colossus (english translation).bin" size="1048576" crc="016afd40"/>
+		<driver status="good"/>
+	</game>
+	<game name="kingcols" cloneof="kingcol" romof="kingcol">
+		<description>Tougiou King Colossus (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="tougiou king colossus (Hack, Spanish).bin" size="1048576" crc="a6c9e0b6"/>
 		<driver status="good"/>
 	</game>
 	<game name="kingcol">

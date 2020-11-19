@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15564 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15580 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5693,7 +5693,7 @@ This list contains all games supported by FinalBurn Neo.
 | hellfire	|  	| Hellfire (2P set)					| 		| 1989	| Toaplan (Taito| Toaplan BCU-2 | 					|
 | hellfire2a	|  	| Hellfire (2P set, older)				| hellfire	| 1989	| Toaplan (Taito| Toaplan BCU-2 | 					|
 | md_hellfire	|  	| Hellfire (Euro)					| 		| 1991	| Sega		| Sega Megadrive| 					|
-| md_hellfires	|  	| Hellfire (Hack, Spanish)				| md_hellfire	| 2019	| 	Seismic	| Sega Megadrive| 					|
+| md_hellfires	|  	| Hellfire (Hack, Spanish)				| md_hellfire	| 2019	| Seismic	| Sega Megadrive| 					|
 | md_hellfirej	|  	| Hellfire (Jpn)					| md_hellfire	| 1990	| NCS		| Sega Megadrive| 					|
 | md_hellfireu	|  	| Hellfire (USA)					| md_hellfire	| 1991	| Seismic	| Sega Megadrive| 					|
 | nes_hellokitnooha|  	| Hello Kitty no Ohanabatake (Japan)			| 		| 1992	| Character Soft| Miscellaneous	| 					|
@@ -6138,25 +6138,31 @@ This list contains all games supported by FinalBurn Neo.
 | nes_jajamnincho|  	| Jajamaru Ninpou Chou (T-Eng)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_jajamnodai|  	| Jajamaru no Daibouken (Japan)				| 		| 1986	| Jaleco	| Miscellaneous	| 					|
 | md_jbdougko	|  	| James 'Buster' Douglas Knockout Boxing (Euro, USA)	| 		| 1990	| Taito		| Sega Megadrive| 					|
+| md_jbdougkos	|  	| James 'Buster' Douglas Knockout Boxing (Hack, Spanish)| md_jbdougko	| 2019	| Taito		| Sega Megadrive| 					|
 | sms_jbdougko	|  	| James 'Buster' Douglas Knockout Boxing (USA)		| sms_heavyw	| 1990	| Sega		| Sega Master Sy| 					|
 | sms_jbdougkop	|  	| James 'Buster' Douglas Knockout Boxing (USA, Prototype| sms_heavyw	| 1990	| Sega		| Sega Master Sy| 					|
 | sms_jb007b	|  	| James Bond 007 - The Duel (Bra)			| sms_jb007	| 1993	| Tec Toy	| Sega Master Sy| 					|
 | gg_jb007	|  	| James Bond 007 - The Duel (Euro)			| 		| 1993	| Domark	| Sega Game Gear| 					|
 | sms_jb007	|  	| James Bond 007 - The Duel (Euro)			| 		| 1993	| Domark	| Sega Master Sy| 					|
 | md_jb007	|  	| James Bond 007 - The Duel (Euro, Rev. A)		| 		| 1992	| Domark	| Sega Megadrive| 					|
+| md_jb007s	|  	| James Bond 007 - The Duel (Hack, Spanish)		| md_jb007	| 2019	| Domark	| Sega Megadrive| 					|
 | md_jb007j	|  	| James Bond 007 - The Duel (Jpn)			| md_jb007	| 1993	| Tengen	| Sega Megadrive| 					|
 | md_jb007u	|  	| James Bond 007 - The Duel (USA)			| md_jb007	| 1992	| Domark	| Sega Megadrive| 					|
 | cv_jbond	|  	| James Bond 007					| 		| 1984	| Parker Brother| ColecoVision	| 					|
 | nes_jamesbondjr|  	| James Bond Jr (USA)					| 		| 1992	| THQ		| Miscellaneous	| 					|
 | md_jpond	|  	| James Pond - Underwater Agent (Euro, USA)		| 		| 1993	| Electronic Art| Sega Megadrive| 					|
+| md_jponds	|  	| James Pond - Underwater Agent (Hack, Spanish)		| md_jpond	| 2018	| Electronic Art| Sega Megadrive| 					|
 | sms_robocod	|  	| James Pond 2 - Codename RoboCod (Euro, Bra)		| 		| 1993	| U.S. Gold	| Sega Master Sy| 					|
 | gg_jpond3	|  	| James Pond 3 - Operation Starfish (Euro)		| 		| 1994	| U.S. Gold	| Sega Game Gear| 					|
 | md_jpond3	|  	| James Pond 3 - Operation Starfish (Euro, USA)		| 		| 1993	| Electronic Art| Sega Megadrive| 					|
+| md_jpond3s	|  	| James Pond 3 - Operation Starfish (Hack, Spanish)	| md_jpond3	| 2019	| Electronic Art| Sega Megadrive| 					|
 | gg_robocod	|  	| James Pond II - Codename RoboCod (Euro)		| 		| 1993	| U.S. Gold	| Sega Game Gear| 					|
 | md_robocod	|  	| James Pond II - Codename RoboCod (Euro, USA)		| 		| 1991	| Electronic Art| Sega Megadrive| 					|
+| md_robocods	|  	| James Pond II - Codename Robocod (Hack, Spanish)	| md_robocod	| 2018	| Electronic Art| Sega Megadrive| 					|
 | md_robocodj	|  	| James Pond II - Codename RoboCod (Jpn, Kor)		| md_robocod	| 1993	| Electronic Art| Sega Megadrive| 					|
 | gg_robocodu	|  	| James Pond II - Codename RoboCod (USA)		| gg_robocod	| 1993	| U.S. Gold	| Sega Game Gear| 					|
 | nes_jamg	|  	| JAMG - The Lost Coins (HB)				| 		| 2018	| OCDreproductio| Miscellaneous	| 					|
+| md_jammits	|  	| Jammit (Hack, Spanish)				| md_jammit	| 2019	| Virgin Interac| Sega Megadrive| 					|
 | md_jammit	|  	| Jammit (USA)						| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | jjparad2	|  	| Jan Jan Paradise 2					| 		| 1997	| Electro Design| Super Kaneko N| 					|
 | jjparads	|  	| Jan Jan Paradise					| 		| 1996	| Electro Design| Super Kaneko N| 					|
@@ -6204,6 +6210,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_jetsonsj	|  	| Jetsons, The - Cogswell's Caper! (Japan)		| nes_jetsons	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_jetsons	|  	| Jetsons, The - Cogswell's Caper! (USA)		| 		| 1992	| Taito		| Miscellaneous	| 					|
 | md_jewelms	|  	| Jewel Master (Euro, USA, Rev. A)			| 		| 1991	| Sega		| Sega Megadrive| 					|
+| md_jewelmss	|  	| Jewel Master (Hack, Spanish)				| md_jewelms	| 2017	| SEGA		| Sega Megadrive| 					|
 | md_jewelmsj	|  	| Jewel Master (Jpn)					| md_jewelms	| 1991	| Sega		| Sega Megadrive| 					|
 | sg1k_champkent|  	| Jiandao (Tw)						| sg1k_champken	| 1986?	| Unknown	| Sega SG-1000	| 					|
 | samesamecn	|  	| Jiao! Jiao! Jiao! (China, 2P set)			| fireshrk	| 1989	| Toaplan (Hong | Toaplan BCU-2 | 					|
@@ -6230,6 +6237,7 @@ This list contains all games supported by FinalBurn Neo.
 | jockeyc	| D NW	| Jockey Club						| 		| 1990	| [Seta] (Visco | Seta		| 					|
 | jockeygp	|  	| Jockey Grand Prix (set 1)				| 		| 2001	| Sun Amusement | Neo Geo MVS	| 					|
 | jockeygpa	|  	| Jockey Grand Prix (set 2)				| jockeygp	| 2001	| Sun Amusement | Neo Geo MVS	| 					|
+| md_joemacs	|  	| Joe & Mac (Hack, Spanish)				| md_joemac	| 2019	| Takara	| Sega Megadrive| 					|
 | md_joemac	|  	| Joe & Mac (USA)					| 		| 1991	| Takara	| Sega Megadrive| 					|
 | nes_joemac	|  	| Joe & Mac (USA)					| 		| 1992	| Data East	| Miscellaneous	| 					|
 | joemacrj	|  	| Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)	| joemacr	| 1994	| Data East	| Simple 156	| 					|
@@ -6343,6 +6351,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_jrabbit	|  	| Jumping Rabbit					| 		| 1984	| MIA		| MSX		| 					|
 | cv_jmpmanjra	|  	| Jumpman Junior (Alt)					| cv_jmpmanjr	| 1984	| Epyx		| ColecoVision	| 					|
 | cv_jmpmanjr	|  	| Jumpman Junior					| 		| 1984	| Epyx		| ColecoVision	| 					|
+| md_junctions	|  	| Junction (Hack, Spanish)				| md_junction	| 2018	| Micronet	| Sega Megadrive| 					|
 | gg_junctionj	|  	| Junction (Jpn)					| gg_junction	| 1991	| Micronet	| Sega Game Gear| 					|
 | md_junction	|  	| Junction (Jpn, USA)					| 		| 1990	| Micronet	| Sega Megadrive| 					|
 | gg_junction	|  	| Junction (USA)					| 		| 1991	| Micronet	| Sega Game Gear| 					|
@@ -6373,12 +6382,14 @@ This list contains all games supported by FinalBurn Neo.
 | md_jpark	|  	| Jurassic Park (Euro)					| 		| 1993	| Sega		| Sega Megadrive| 					|
 | sms_jpark	|  	| Jurassic Park (Euro)					| 		| 1993	| Sega		| Sega Master Sy| 					|
 | gg_jpark	|  	| Jurassic Park (Euro, USA)				| 		| 1993	| Sega		| Sega Game Gear| 					|
+| md_jparks	|  	| Jurassic Park (Hack, Spanish)				| md_jpark	| 2018	| SEGA		| Sega Megadrive| 					|
 | gg_jparkj	|  	| Jurassic Park (Jpn)					| gg_jpark	| 1993	| Sega		| Sega Game Gear| 					|
 | md_jparkj	|  	| Jurassic Park (Jpn)					| md_jpark	| 1993	| Sega		| Sega Megadrive| 					|
 | md_jparku	|  	| Jurassic Park (USA)					| md_jpark	| 1993	| Sega		| Sega Megadrive| 					|
 | nes_jurassicpark|  	| Jurassic Park (USA)					| 		| 1993	| Ocean		| Miscellaneous	| 					|
 | md_jparkup	|  	| Jurassic Park (USA, Prototype)			| md_jpark	| 1993	| Sega		| Sega Megadrive| 					|
 | md_jparkre	|  	| Jurassic Park - Rampage Edition (Euro, USA)		| 		| 1994	| Sega		| Sega Megadrive| 					|
+| md_jparkres	|  	| Jurassic Park - Rampage Edition (Hack, Spanish)	| md_jparkre	| 2018	| SEGA		| Sega Megadrive| 					|
 | md_jparkrep9	|   NW	| Jurassic Park - Rampage Edition (Prototype, 19940620)	| md_jparkre	| 1994	| Sega		| Sega Megadrive| 					|
 | md_jparkrep8	|   NW	| Jurassic Park - Rampage Edition (Prototype, 19940622)	| md_jparkre	| 1994	| Sega		| Sega Megadrive| 					|
 | md_jparkrep7	|  	| Jurassic Park - Rampage Edition (Prototype, 19940630)	| md_jparkre	| 1994	| Sega		| Sega Megadrive| 					|
@@ -6391,6 +6402,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_justbreedj|  	| Just Breed (Japan)					| nes_justbreed	| 1992	| Enix		| Miscellaneous	| 					|
 | nes_justbreed	|  	| Just Breed (T-Eng)					| 		| 1992	| Enix		| Miscellaneous	| 					|
 | nes_justiceduel|  	| Justice Duel (HB)					| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
+| md_jleagues	|  	| Justice League Task Force (Hack, Spanish)		| md_jleague	| 2019	| Acclaim	| Sega Megadrive| 					|
 | md_jleague	|  	| Justice League Task Force (World)			| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | pce_juuouki1	|  	| Juuouki (Alt)						| pce_juuouki	| 1989	| NEC		| PC Engine	| 					|
 | nes_juuoukij	|  	| Juuouki (Japan)					| nes_juuouki	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -6412,6 +6424,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_kof98a	|  	| K.O.F 98' (Unprotected?)				| md_kof98	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_kof98	|   NW	| K.O.F 98'						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_kagekij	|  	| Ka-Ge-Ki (Jpn)					| md_kageki	| 1991	| Hot-B		| Sega Megadrive| 					|
+| md_kagekis	|  	| Ka-Ge-Ki - Fists of Steel (Hack, Spanish)		| md_kageki	| 2019	| Sage's Creatio| Sega Megadrive| 					|
 | md_kageki	|  	| Ka-Ge-Ki - Fists of Steel (USA)			| 		| 1991	| Sage's Creatio| Sega Megadrive| 					|
 | cv_kaboom	|  	| Kaboom! (HB)						| 		| 2017	| Activision	| ColecoVision	| Published by Team Pixelboy		|
 | nes_kabuki	|  	| Kabuki - Quantum Fighter (USA)			| 		| 1991	| HAL Laboratory| Miscellaneous	| 					|
@@ -6546,6 +6559,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_kicklecubicle|  	| Kickle Cubicle (USA)					| 		| 1990	| Irem		| Miscellaneous	| 					|
 | kickman	|  	| Kickman (upright)					| kick		| 1981	| Midway	| Miscellaneous	| 					|
 | md_kidcham	|  	| Kid Chameleon (Euro, Korea, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
+| md_kidchams	|  	| Kid Chameleon (Hack, Spanish)				| md_kidcham	| 2018	| SEGA		| Sega Megadrive| 					|
 | nes_kiddracula|  	| Kid Dracula (English)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_kidicarus	|  	| Kid Icarus (USA, Europe)				| 		| 1987	| Nintendo	| Miscellaneous	| 					|
 | nes_kidkloinnigmawo|  	| Kid Klown in Night Mayor World (USA)			| 		| 1993	| Kemco		| Miscellaneous	| 					|
@@ -6831,6 +6845,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_krustsfunhou|  	| Krusty's Fun House (USA)				| 		| 1992	| Acclaim	| Miscellaneous	| 					|
 | md_krusty1	|  	| Krusty's Super Fun House (Euro, USA)			| md_krusty	| 1992	| Flying Edge	| Sega Megadrive| 					|
 | md_krusty	|  	| Krusty's Super Fun House (Euro, USA, v1.1)		| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
+| md_krustys	|  	| Krusty's Super Fun House (Hack, Spanish)		| md_krusty	| 2019	| Flying Edge	| Sega Megadrive| 					|
 | kuhga		|  	| Kuhga - Operation Code 'Vapor Trail' (Japan revision 3| vaportra	| 1989	| Data East Corp| DECO IC16	| 					|
 | sms_kujaku	|  	| Kujaku Ou (Jpn)					| sms_spellcst	| 1988	| Sega		| Sega Master Sy| 					|
 | md_kujaku2	|  	| Kujaku Ou 2 - Geneijou (Jpn)				| md_mystdef	| 1989	| Sega		| Sega Megadrive| 					|
@@ -14109,6 +14124,7 @@ This list contains all games supported by FinalBurn Neo.
 | tturf		|  	| Tough Turf (set 2, Japan, 8751 317-0104)		| 		| 1989	| Sega / Sunsoft| System 16B	| 					|
 | md_toughman	|  	| Toughman Contest (Euro, USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_kingcole	|  	| Tougiou King Colossus (Hack, English)			| md_kingcol	| 2006	| Sega		| Sega Megadrive| 					|
+| md_kingcols	|  	| Tougiou King Colossus (Hack, Spanish)			| md_kingcol	| 2020	| SEGA		| Sega Megadrive| 					|
 | md_kingcol	|  	| Tougiou King Colossus (Jpn)				| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_touhourououmu|  	| Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)	| 		| 2019	| takahirox	| Miscellaneous	| 					|
 | tkdenshoa	|  	| Toukidenshou - Angel Eyes (VER. 960427)		| tkdensho	| 1996	| Tecmo		| Miscellaneous	| 					|

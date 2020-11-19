@@ -6230,25 +6230,31 @@ DRV		BurnDrvnes_jajamninchoj;
 DRV		BurnDrvnes_jajamnincho;
 DRV		BurnDrvnes_jajamnodai;
 DRV		BurnDrvmd_jbdougko;
+DRV		BurnDrvmd_jbdougkos;
 DRV		BurnDrvsms_jbdougko;
 DRV		BurnDrvsms_jbdougkop;
 DRV		BurnDrvsms_jb007b;
 DRV		BurnDrvgg_jb007;
 DRV		BurnDrvsms_jb007;
 DRV		BurnDrvmd_jb007;
+DRV		BurnDrvmd_jb007s;
 DRV		BurnDrvmd_jb007j;
 DRV		BurnDrvmd_jb007u;
 DRV		BurnDrvcv_jbond;
 DRV		BurnDrvnes_jamesbondjr;
 DRV		BurnDrvmd_jpond;
+DRV		BurnDrvmd_jponds;
 DRV		BurnDrvsms_robocod;
 DRV		BurnDrvgg_jpond3;
 DRV		BurnDrvmd_jpond3;
+DRV		BurnDrvmd_jpond3s;
 DRV		BurnDrvgg_robocod;
 DRV		BurnDrvmd_robocod;
+DRV		BurnDrvmd_robocods;
 DRV		BurnDrvmd_robocodj;
 DRV		BurnDrvgg_robocodu;
 DRV		BurnDrvnes_jamg;
+DRV		BurnDrvmd_jammits;
 DRV		BurnDrvmd_jammit;
 DRV		BurnDrvJjparad2;
 DRV		BurnDrvJjparads;
@@ -6296,6 +6302,7 @@ DRV		BurnSpecJetpacrx;
 DRV		BurnDrvnes_jetsonsj;
 DRV		BurnDrvnes_jetsons;
 DRV		BurnDrvmd_jewelms;
+DRV		BurnDrvmd_jewelmss;
 DRV		BurnDrvmd_jewelmsj;
 DRV		BurnDrvsg1k_champkent;
 DRV		BurnDrvSamesamecn;
@@ -6324,6 +6331,7 @@ DRV		BurnDrvJockeyc;			// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvjockeygp;
 DRV		BurnDrvjockeygpa;
+DRV		BurnDrvmd_joemacs;
 DRV		BurnDrvmd_joemac;
 DRV		BurnDrvnes_joemac;
 DRV		BurnDrvJoemacrj;
@@ -6443,6 +6451,7 @@ DRV		BurnDrvJumppope;
 DRV		BurnDrvMSX_jrabbit;
 DRV		BurnDrvcv_jmpmanjra;
 DRV		BurnDrvcv_jmpmanjr;
+DRV		BurnDrvmd_junctions;
 DRV		BurnDrvgg_junctionj;
 DRV		BurnDrvmd_junction;
 DRV		BurnDrvgg_junction;
@@ -6473,12 +6482,14 @@ DRV		BurnDrvnes_jurassicboy;
 DRV		BurnDrvmd_jpark;
 DRV		BurnDrvsms_jpark;
 DRV		BurnDrvgg_jpark;
+DRV		BurnDrvmd_jparks;
 DRV		BurnDrvgg_jparkj;
 DRV		BurnDrvmd_jparkj;
 DRV		BurnDrvmd_jparku;
 DRV		BurnDrvnes_jurassicpark;
 DRV		BurnDrvmd_jparkup;
 DRV		BurnDrvmd_jparkre;
+DRV		BurnDrvmd_jparkres;
 DRV		BurnDrvmd_jparkrep9;
 DRV		BurnDrvmd_jparkrep8;
 DRV		BurnDrvmd_jparkrep7;
@@ -6491,6 +6502,7 @@ DRV		BurnDrvmd_jparkrep1;
 DRV		BurnDrvnes_justbreedj;
 DRV		BurnDrvnes_justbreed;
 DRV		BurnDrvnes_justiceduel;
+DRV		BurnDrvmd_jleagues;
 DRV		BurnDrvmd_jleague;
 DRV		BurnDrvpce_juuouki1;
 DRV		BurnDrvnes_juuoukij;
@@ -6512,6 +6524,7 @@ DRV		BurnDrvmd_kof2k;
 DRV		BurnDrvmd_kof98a;
 DRV		BurnDrvmd_kof98;
 DRV		BurnDrvmd_kagekij;
+DRV		BurnDrvmd_kagekis;
 DRV		BurnDrvmd_kageki;
 DRV		BurnDrvcv_kaboom;
 DRV		BurnDrvnes_kabuki;
@@ -6650,6 +6663,7 @@ DRV		BurnDrvKikcubicb;
 DRV		BurnDrvnes_kicklecubicle;
 DRV		BurnDrvKickman;
 DRV		BurnDrvmd_kidcham;
+DRV		BurnDrvmd_kidchams;
 DRV		BurnDrvnes_kiddracula;
 DRV		BurnDrvnes_kidicarus;
 DRV		BurnDrvnes_kidkloinnigmawo;
@@ -6941,6 +6955,7 @@ DRV		BurnDrvgg_krustyfh;
 DRV		BurnDrvnes_krustsfunhou;
 DRV		BurnDrvmd_krusty1;
 DRV		BurnDrvmd_krusty;
+DRV		BurnDrvmd_krustys;
 DRV		BurnDrvKuhga;
 DRV		BurnDrvsms_kujaku;
 DRV		BurnDrvmd_kujaku2;
@@ -14325,6 +14340,7 @@ DRV		BurnDrvTturfu;
 DRV		BurnDrvTturf;
 DRV		BurnDrvmd_toughman;
 DRV		BurnDrvmd_kingcole;
+DRV		BurnDrvmd_kingcols;
 DRV		BurnDrvmd_kingcol;
 DRV		BurnDrvnes_touhourououmu;
 DRV		BurnDrvTkdenshoa;
@@ -22057,25 +22073,31 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_jajamnincho,	// Jajamaru Ninpou Chou (T-Eng)
 	&BurnDrvnes_jajamnodai,		// Jajamaru no Daibouken (Japan)
 	&BurnDrvmd_jbdougko,		// James 'Buster' Douglas Knockout Boxing (Euro, USA)
+	&BurnDrvmd_jbdougkos,		// James 'Buster' Douglas Knockout Boxing (Hack, Spanish)
 	&BurnDrvsms_jbdougko,		// James 'Buster' Douglas Knockout Boxing (USA)
 	&BurnDrvsms_jbdougkop,		// James 'Buster' Douglas Knockout Boxing (USA, Prototype)
 	&BurnDrvsms_jb007b,			// James Bond 007 - The Duel (Bra)
 	&BurnDrvgg_jb007,			// James Bond 007 - The Duel (Euro)
 	&BurnDrvsms_jb007,			// James Bond 007 - The Duel (Euro)
 	&BurnDrvmd_jb007,			// James Bond 007 - The Duel (Euro, Rev. A)
+	&BurnDrvmd_jb007s,			// James Bond 007 - The Duel (Hack, Spanish)
 	&BurnDrvmd_jb007j,			// James Bond 007 - The Duel (Jpn)
 	&BurnDrvmd_jb007u,			// James Bond 007 - The Duel (USA)
 	&BurnDrvcv_jbond,			// James Bond 007
 	&BurnDrvnes_jamesbondjr,	// James Bond Jr (USA)
 	&BurnDrvmd_jpond,			// James Pond - Underwater Agent (Euro, USA)
+	&BurnDrvmd_jponds,			// James Pond - Underwater Agent (Hack, Spanish)
 	&BurnDrvsms_robocod,		// James Pond 2 - Codename RoboCod (Euro, Bra)
 	&BurnDrvgg_jpond3,			// James Pond 3 - Operation Starfish (Euro)
 	&BurnDrvmd_jpond3,			// James Pond 3 - Operation Starfish (Euro, USA)
+	&BurnDrvmd_jpond3s,			// James Pond 3 - Operation Starfish (Hack, Spanish)
 	&BurnDrvgg_robocod,			// James Pond II - Codename RoboCod (Euro)
 	&BurnDrvmd_robocod,			// James Pond II - Codename RoboCod (Euro, USA)
+	&BurnDrvmd_robocods,		// James Pond II - Codename Robocod (Hack, Spanish)
 	&BurnDrvmd_robocodj,		// James Pond II - Codename RoboCod (Jpn, Kor)
 	&BurnDrvgg_robocodu,		// James Pond II - Codename RoboCod (USA)
 	&BurnDrvnes_jamg,			// JAMG - The Lost Coins (HB)
+	&BurnDrvmd_jammits,			// Jammit (Hack, Spanish)
 	&BurnDrvmd_jammit,			// Jammit (USA)
 	&BurnDrvJjparad2,			// Jan Jan Paradise 2
 	&BurnDrvJjparads,			// Jan Jan Paradise
@@ -22123,6 +22145,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_jetsonsj,		// Jetsons, The - Cogswell's Caper! (Japan)
 	&BurnDrvnes_jetsons,		// Jetsons, The - Cogswell's Caper! (USA)
 	&BurnDrvmd_jewelms,			// Jewel Master (Euro, USA, Rev. A)
+	&BurnDrvmd_jewelmss,		// Jewel Master (Hack, Spanish)
 	&BurnDrvmd_jewelmsj,		// Jewel Master (Jpn)
 	&BurnDrvsg1k_champkent,		// Jiandao (Tw)
 	&BurnDrvSamesamecn,			// Jiao! Jiao! Jiao! (China, 2P set)
@@ -22151,6 +22174,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvjockeygp,			// Jockey Grand Prix (set 1)
 	&BurnDrvjockeygpa,			// Jockey Grand Prix (set 2)
+	&BurnDrvmd_joemacs,			// Joe & Mac (Hack, Spanish)
 	&BurnDrvmd_joemac,			// Joe & Mac (USA)
 	&BurnDrvnes_joemac,			// Joe & Mac (USA)
 	&BurnDrvJoemacrj,			// Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)
@@ -22270,6 +22294,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_jrabbit,		// Jumping Rabbit
 	&BurnDrvcv_jmpmanjra,		// Jumpman Junior (Alt)
 	&BurnDrvcv_jmpmanjr,		// Jumpman Junior
+	&BurnDrvmd_junctions,		// Junction (Hack, Spanish)
 	&BurnDrvgg_junctionj,		// Junction (Jpn)
 	&BurnDrvmd_junction,		// Junction (Jpn, USA)
 	&BurnDrvgg_junction,		// Junction (USA)
@@ -22300,12 +22325,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_jpark,			// Jurassic Park (Euro)
 	&BurnDrvsms_jpark,			// Jurassic Park (Euro)
 	&BurnDrvgg_jpark,			// Jurassic Park (Euro, USA)
+	&BurnDrvmd_jparks,			// Jurassic Park (Hack, Spanish)
 	&BurnDrvgg_jparkj,			// Jurassic Park (Jpn)
 	&BurnDrvmd_jparkj,			// Jurassic Park (Jpn)
 	&BurnDrvmd_jparku,			// Jurassic Park (USA)
 	&BurnDrvnes_jurassicpark,	// Jurassic Park (USA)
 	&BurnDrvmd_jparkup,			// Jurassic Park (USA, Prototype)
 	&BurnDrvmd_jparkre,			// Jurassic Park - Rampage Edition (Euro, USA)
+	&BurnDrvmd_jparkres,		// Jurassic Park - Rampage Edition (Hack, Spanish)
 	&BurnDrvmd_jparkrep9,		// Jurassic Park - Rampage Edition (Prototype, 19940620) [no comment, NOT WORKING]
 	&BurnDrvmd_jparkrep8,		// Jurassic Park - Rampage Edition (Prototype, 19940622) [no comment, NOT WORKING]
 	&BurnDrvmd_jparkrep7,		// Jurassic Park - Rampage Edition (Prototype, 19940630)
@@ -22318,6 +22345,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_justbreedj,		// Just Breed (Japan)
 	&BurnDrvnes_justbreed,		// Just Breed (T-Eng)
 	&BurnDrvnes_justiceduel,	// Justice Duel (HB)
+	&BurnDrvmd_jleagues,		// Justice League Task Force (Hack, Spanish)
 	&BurnDrvmd_jleague,			// Justice League Task Force (World)
 	&BurnDrvpce_juuouki1,		// Juuouki (Alt)
 	&BurnDrvnes_juuoukij,		// Juuouki (Japan)
@@ -22339,6 +22367,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_kof98a,			// K.O.F 98' (Unprotected?)
 	&BurnDrvmd_kof98,			// K.O.F 98' [no comment, NOT WORKING]
 	&BurnDrvmd_kagekij,			// Ka-Ge-Ki (Jpn)
+	&BurnDrvmd_kagekis,			// Ka-Ge-Ki - Fists of Steel (Hack, Spanish)
 	&BurnDrvmd_kageki,			// Ka-Ge-Ki - Fists of Steel (USA)
 	&BurnDrvcv_kaboom,			// Kaboom! (HB)
 	&BurnDrvnes_kabuki,			// Kabuki - Quantum Fighter (USA)
@@ -22477,6 +22506,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_kicklecubicle,	// Kickle Cubicle (USA)
 	&BurnDrvKickman,			// Kickman (upright)
 	&BurnDrvmd_kidcham,			// Kid Chameleon (Euro, Korea, USA)
+	&BurnDrvmd_kidchams,		// Kid Chameleon (Hack, Spanish)
 	&BurnDrvnes_kiddracula,		// Kid Dracula (English)
 	&BurnDrvnes_kidicarus,		// Kid Icarus (USA, Europe)
 	&BurnDrvnes_kidkloinnigmawo,// Kid Klown in Night Mayor World (USA)
@@ -22768,6 +22798,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_krustsfunhou,	// Krusty's Fun House (USA)
 	&BurnDrvmd_krusty1,			// Krusty's Super Fun House (Euro, USA)
 	&BurnDrvmd_krusty,			// Krusty's Super Fun House (Euro, USA, v1.1)
+	&BurnDrvmd_krustys,			// Krusty's Super Fun House (Hack, Spanish)
 	&BurnDrvKuhga,				// Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)
 	&BurnDrvsms_kujaku,			// Kujaku Ou (Jpn)
 	&BurnDrvmd_kujaku2,			// Kujaku Ou 2 - Geneijou (Jpn)
@@ -30152,6 +30183,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTturf,				// Tough Turf (set 2, Japan, 8751 317-0104)
 	&BurnDrvmd_toughman,		// Toughman Contest (Euro, USA)
 	&BurnDrvmd_kingcole,		// Tougiou King Colossus (Hack, English)
+	&BurnDrvmd_kingcols,		// Tougiou King Colossus (Hack, Spanish)
 	&BurnDrvmd_kingcol,			// Tougiou King Colossus (Jpn)
 	&BurnDrvnes_touhourououmu,	// Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)
 	&BurnDrvTkdenshoa,			// Toukidenshou - Angel Eyes (VER. 960427)

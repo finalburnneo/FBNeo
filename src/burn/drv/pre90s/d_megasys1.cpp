@@ -3154,11 +3154,11 @@ static void draw_layer(INT32 tmap, INT32 flags, INT32 priority)
 
 static void screen_update()
 {
-	int reallyactive = 0;
+	INT32 reallyactive = 0;
 
 	UINT32 pri = m_layers_order[(m_active_layers & 0x0f0f) >> 8];
 
-	if (pri == 0xfffff) pri = 0x04132;
+	if (pri == 0xfffff || pri == 0xffff) pri = 0x04132;
 
 	for (INT32 i = 0;i < 5;i++) {
 		reallyactive |= 1 << ((pri >> (4 * i)) & 0x0f);

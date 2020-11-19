@@ -47912,3 +47912,79 @@ struct BurnDriver BurnDrvmd_krustys = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+//landstalker - the treasures of king nole (Hack, Spanish)
+//https://www.romhacking.net/translations/3377/
+static struct BurnRomInfo md_landstlksRomDesc[] = {
+	{ "landstalker - the treasures of king nole (Hack, Spanish).bin",2359296, 0x019cb7a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_landstlks)
+STD_ROM_FN(md_landstlks)
+
+struct BurnDriver BurnDrvmd_landstlks = {
+	"md_landstlks","md_landstlk", NULL, NULL,"2018",
+	"Landstalker - The Treasures of King Nole (Hack, Spanish)\0", NULL,"SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName,md_landstlksRomInfo,md_landstlksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//langrisser ii (Hack, Spanish)
+//https://www.romhacking.net/translations/3144/
+static struct BurnRomInfo md_langris2sRomDesc[] = {
+	{ "langrisser ii (Hack, Spanish).bin",2097152, 0x6ed77151, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_langris2s)
+STD_ROM_FN(md_langris2s)
+
+struct BurnDriver BurnDrvmd_langris2s = {
+	"md_langris2s","md_langris2", NULL, NULL,"2017",
+	"Langrisser II (Hack, Spanish)\0", NULL,"NCS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName,md_langris2sRomInfo,md_langris2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//lord monarch - legendary battle royale (Hack, English)
+//http://www.romhacking.net/translations/5762/
+static struct BurnRomInfo md_lordmoneRomDesc[] = {
+	{ "lord monarch - legendary battle royale (Hack, English)",2097152, 0x2a576a01, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lordmone)
+STD_ROM_FN(md_lordmone)
+
+struct BurnDriver BurnDrvmd_lordmone = {
+	"md_lordmone","md_lordmon", NULL, NULL,"2020",
+	"Lord Monarch - Legendary Battle Royale (Hack, English)\0", NULL,"SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName,md_lordmoneRomInfo,md_lordmoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+//thunder force iv (Hack, Spanish)
+//https://www.romhacking.net/translations/5467/
+static struct BurnRomInfo md_tf4sRomDesc[] = {
+	{ "thunder force iv (Hack, Spanish).bin",1048576, 0x04845342, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tf4s)
+STD_ROM_FN(md_tf4s)
+
+struct BurnDriver BurnDrvmd_tf4s = {
+	"md_tf4s","md_tf4", NULL, NULL,"2020",
+	"Thunder Force IV (Hack, Spanish)\0", NULL,"Technosoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName,md_tf4sRomInfo,md_tf4sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -39683,6 +39683,24 @@ struct BurnDriver BurnDrvmd_majiana = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// 16 Zhang Mahjong II
+static struct BurnRomInfo md_16zhangmahRomDesc[] = {
+	{ "16 Zhang Mahjong II (Taiwan) (Unl).md", 1048576, 0xb4f4249f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_16zhangmah)
+STD_ROM_FN(md_16zhangmah)
+
+struct BurnDriver BurnDrvmd_16zhangmah = {
+	"md_16zhangmah", NULL, NULL, NULL, "199?",
+	"16 Zhang Mahjong II\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG, GBF_MISC, 0,
+	MegadriveGetZipName, md_16zhangmahRomInfo, md_16zhangmahRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pokemon Stadium
 static struct BurnRomInfo md_pokestadRomDesc[] = {
 	{ "pokemon stadium (unl).bin", 0x200000, 0xfe187c5d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

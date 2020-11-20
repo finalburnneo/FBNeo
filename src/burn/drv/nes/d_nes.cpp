@@ -48,6 +48,7 @@ static UINT32 FDSFrameDiskIcon;
 static UINT32 NESMode = 0;
 #define NO_WORKRAM		0x0001 // 6000-7fff reads data openbus
 #define BUS_CONFLICTS	0x0002 // rom conflicts with writes, needs special handling
+#define ALT_MMC3        0x0004 // alternate mmc3 scanline timing
 #define USE_4SCORE      0x0100 // 4-Player device (NES)
 #define USE_HORI4P      0x0200 // 4-Player device Mode 2 (Famicom)
 #define USE_ZAPPER      0x0400 // Zapper Gun device
@@ -591,6 +592,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
+	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -2728,6 +2730,10 @@ static UINT8 *mmc5_mask; // mmc3/mmc5 ppumask-sniffer // 0x18 = rendering
 
 static void mapper04_scanline()
 {
+	if (NESMode & ALT_MMC3 && (mmc5_mask[0] & 0x18) == 0x00) {
+		return;
+	}
+
 	INT32 cnt = mapper4_irqcount;
 	if (mapper4_irqcount == 0 || mapper4_irqreload) {
 		mapper4_irqreload = 0;
@@ -2737,7 +2743,7 @@ static void mapper04_scanline()
 	}
 
 	if (cnt && mapper4_irqenable && mapper4_irqcount == 0) {
-		if (mmc5_mask[0] & 0x18) { // aka if (RENDERING)
+		if ((~NESMode & ALT_MMC3 && mmc5_mask[0] & 0x18) || NESMode & ALT_MMC3) { // aka if (RENDERING)
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 	}
@@ -8364,7 +8370,9 @@ static void ppu_scan(INT32 nAction)
 static void ppu_reset()
 {
 	mmc5_nt_ram = &nt_ram[0];
-	scanline = 240;
+
+	// start at (around) vblank to remove 1 full frame of input lag
+	scanline = 239; // line on titlescreen of micromachines if starts on 240
 	pixel = 0;
 	ppu_frame = 0;
 

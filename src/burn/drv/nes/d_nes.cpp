@@ -12266,6 +12266,23 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_blockoutRomDesc[] = {
+	{ "Block Out (USA).nes",          131088, 0xdeff01f6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blockout)
+STD_ROM_FN(nes_blockout)
+
+struct BurnDriver BurnDrvnes_blockout = {
+	"nes_blockout", NULL, NULL, NULL, "1989?",
+	"Block Out (USA)\0", NULL, "California Dreams / Technos", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_blockoutRomInfo, nes_blockoutRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_bookymanRomDesc[] = {
 	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
 };

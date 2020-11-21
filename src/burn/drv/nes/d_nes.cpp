@@ -25322,6 +25322,40 @@ struct BurnDriver BurnDrvnes_hook = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_hostaRomDesc[] = {
+	{ "Hostages - The Embassy Mission (Japan).nes",          262160, 0xe876b411, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hosta)
+STD_ROM_FN(nes_hosta)
+
+struct BurnDriver BurnDrvnes_hosta = {
+	"nes_hosta", "nes_rescue", NULL, NULL, "1989",
+	"Hostages - The Embassy Mission (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hostaRomInfo, nes_hostaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_rescueRomDesc[] = {
+	{ "Rescue - The Embassy Mission (USA).nes",          262160, 0x0e4fe1f3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rescue)
+STD_ROM_FN(nes_rescue)
+
+struct BurnDriver BurnDrvnes_rescue = {
+	"nes_rescue", NULL, NULL, NULL, "1990",
+	"Rescue - The Embassy Mission (USA)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_rescueRomInfo, nes_rescueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_hottanochitanRomDesc[] = {
 	{ "Hottaaman no Chitei Tanken (Japan).nes",          65552, 0x7d5ee762, BRF_ESS | BRF_PRG },
 };

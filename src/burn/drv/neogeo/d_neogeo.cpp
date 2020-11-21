@@ -19170,6 +19170,211 @@ struct BurnDriver BurnDrvFatfury1bh = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Samurai Shodown / Samurai Spirits (Secret Character Hack)
+/* MVS VERSION */
+
+static struct BurnRomInfo samshoehRomDesc[] = {
+  { "045-p1eh.p1",  0x100000, 0xba5277df, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
+  { "045-p2eh.sp2",   0x080000, 0x71768728, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC534200 */
+	/* also found MVS set with p1 / p2 on board NEO-MVS PROGGSC; same rom data as samshoh
+	{ "045-p1.p1",    0x100000, 0xdfe51bf0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
+	{ "045-p2.sp2",   0x080000, 0x38ee9ba9, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC534200 */
+
+	{ "045-s1.s1",    0x020000, 0x9142a4d3, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	/* It also exists MVS set with different 6xC layout on board NEO-MVS CHA42G-3;
+	naming scheme is 045-Cx.
+	{ "045-c1.c1",    0x200000, 0x2e5873a4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
+	{ "045-c2.c2",    0x200000, 0x04febb10, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "045-c3.c3",    0x200000, 0xf3dabd1e, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "045-c4.c4",    0x200000, 0x935c62f0, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "045-c5.c5",    0x080000, 0xa2bb8284, 3 | BRF_GRA },           //  7 					/ TC534200
+	{ "045-c6.c6",    0x080000, 0x4fa71252, 3 | BRF_GRA },           //  8 					/ TC534200 */
+	{ "045-c1.c1",    0x200000, 0x2e5873a4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
+	{ "045-c2.c2",    0x200000, 0x04febb10, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "045-c3.c3",    0x200000, 0xf3dabd1e, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "045-c4.c4",    0x200000, 0x935c62f0, 3 | BRF_GRA },           //  6 					/ TC5316200
+  { "045-c5eh.c5",   0x100000, 0xa2bb8284, 3 | BRF_GRA },           //  7 					/ TC538200}
+  { "045-c6eh.c6",   0x100000, 0x4fa71252, 3 | BRF_GRA },           //  8 					/ TC538200
+
+	{ "045-m1.m1",    0x020000, 0x95170640, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code 		/ TC531001
+
+	{ "045-v1.v1",    0x200000, 0x37f78a9b, 5 | BRF_SND },           // 10 Sound data 		/ TC5316200
+	{ "045-v2.v2",    0x200000, 0x568b20cf, 5 | BRF_SND },           // 11 					/ TC5316200
+};
+
+STDROMPICKEXT(samshoeh, samshoeh, neogeo)
+STD_ROM_FN(samshoeh)
+
+struct BurnDriver BurnDrvSamshobh = {
+	"samshobh", "samsho", "neogeo", NULL, "1993",
+	"Samurai Shodown / Samurai Spirits (Secret Character Hack)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samshoehRomInfo, samshoehRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+// Samurai Shodown V / Samurai Spirits Zero (Secret Character Hack)
+/* Encrypted Set */ /* MVS VERSION */
+
+static struct BurnRomInfo samsho5bhRomDesc[] = {
+	{ "270-p1d.p1",    0x400000, 0xa00cceba, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "270-p2d.sp2",   0x400000, 0x91979dee, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "270-c1d.c1",    0x800000, 0x9adec562, 3 | BRF_GRA },           //  2
+	{ "270-c2d.c1",    0x800000, 0xac0309e5, 3 | BRF_GRA },           //  3
+	{ "270-c3d.c1",    0x800000, 0x82db9dae, 3 | BRF_GRA },           //  4
+	{ "270-c4d.c1",    0x800000, 0xf8041153, 3 | BRF_GRA },           //  5
+	{ "270-c5d.c1",    0x800000, 0xe689d62d, 3 | BRF_GRA },           //  6
+	{ "270-c6d.c1",    0x800000, 0xa993bdcf, 3 | BRF_GRA },           //  7
+	{ "270-c7d.c1",    0x800000, 0x02914b0b, 3 | BRF_GRA },           //  8
+	{ "270-c8d.c8",    0x800000, 0xe874ac8b, 3 | BRF_GRA },           //  9
+
+	/* Encrypted */
+	{ "270-m1d.m1",    0x080000, 0x65495887, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	/* Encrypted */
+	{ "270-v1d.v1",    0x800000, 0x809c7617, 5 | BRF_SND },           // 11 Sound dat
+	{ "270-v2d.v2",    0x800000, 0x42671607, 5 | BRF_SND },           // 12
+	{ "270-s1d.s1",    0x800000, 0x2ad6048b, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(samsho5bh, samsho5bh, neogeo)
+STD_ROM_FN(samsho5bh)
+
+struct BurnDriver BurnDrvsamsho5bh = {
+	"samsho5bh", "samsho5", "neogeo", NULL, "2003",
+	"Samurai Shodown V / Samurai Spirits Zero (Secret Character Hack)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
+	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (NGM-2700, set 1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho5bhRomInfo, samsho5bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	samsho5Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Secret Character Hack)
+/* MVS AND AES VERSION */
+
+static struct BurnRomInfo samsho2bhRomDesc[] = {
+	{ "063-p1bh.p1",    0x200000, 0x2682710f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
+	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom on PROG board NEO-MVS PROGTOP;
+	and CHA board NEO-MVS CHA256 (same layout and chip labels).
+	{ "063-epr.p1",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 		/ D27C4000 NEC JAPAN
+	{ "063-epr.sp2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ D27C4000 NEC JAPAN
+	{ "063-epr.ep1",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  2 					/ M27C4002
+	{ "063-epr.ep2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002 */
+
+	{ "063-s1.s1",    0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "063-c2.c2",    0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "063-c3.c3",    0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "063-c4.c4",    0x200000, 0x751025ce, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "063-c5.c5",    0x200000, 0x20d3a475, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "063-c6.c6",    0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "063-c7.c7",    0x200000, 0x2df3cbcf, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "063-c8.c8",    0x200000, 0x1ffc6dfa, 3 | BRF_GRA },           //  9 					/ TC5316200
+
+	{ "063-m1.m1",    0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
+
+	{ "063-v1.v1",    0x200000, 0x37703f91, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "063-v2.v2",    0x200000, 0x0142bde8, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "063-v3.v3",    0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 13 					/ TC5316200
+	{ "063-v4.v4",    0x100000, 0x24aab4bb, 5 | BRF_SND },           // 14 					/ TC538200
+};
+
+STDROMPICKEXT(samsho2bh, samsho2bh, neogeo)
+STD_ROM_FN(samsho2bh)
+
+struct BurnDriver BurnDrvSamsho2bh = {
+	"samsho2bh", "samsho2", "neogeo", NULL, "1994",
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Secret Character Hack)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (NGM-063)(NGH-063)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho2bhRomInfo, samsho2bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (Secret Character Hack)
+/* AES VERSION */
+
+static struct BurnRomInfo samsho3bhRomDesc[] = {
+  { "087-p1bh.p1",    0x100000, 0x251d9b3f, 1 | BRF_ESS | BRF_PRG }, //  0 					/ TC538200
+	{ "087-p2bh.p2",    0x100000, 0x9bbe27e0, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC538200
+
+	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332202
+	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 					/ TC5332202
+	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 					/ TC538200
+	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 					/ TC538200
+
+	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
+
+	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data		/ TC5332201
+	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 					/ TC5316200
+};
+
+STDROMPICKEXT(samsho3bh, samsho3bh, neogeo)
+STD_ROM_FN(samsho3bh)
+
+struct BurnDriver BurnDrvSamSho3bh = {
+	"samsho3bh", "samsho3", "neogeo", NULL, "1995",
+	"Samurai Shodown III / Samurai Spirits - Zankurou Musouken (Secret Character Hack)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Samurai Shodown III\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4 - \u65AC\u7D05\u90CE\u7121\u53CC\u5263 (NGH-087)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho3bhRomInfo, samsho3bhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Secret Character Hack)
+/* MVS AND AES VERSION */
+
+static struct BurnRomInfo samsho4psRomDesc[] = {
+	{ "222-p1ps.p1",    0x100000, 0x70dd94fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/* TC538200 */
+	{ "222-p2ps.sp2",   0x400000, 0x2c9c64db, 1 | BRF_ESS | BRF_PRG }, //  1 					/* TC5332205 */
+
+	{ "222-s1.s1",    0x020000, 0x8d3d3bf9, 2 | BRF_GRA },           //  2 Text layer tiles /* TC531000 */
+
+	{ "222-c1.c1",    0x400000, 0x68f2ed95, 3 | BRF_GRA },           //  3 Sprite data		/* TC5332205 */
+	{ "222-c2.c2",    0x400000, 0xa6e9aff0, 3 | BRF_GRA },           //  4 					/* TC5332205 */
+	{ "222-c3.c3",    0x400000, 0xc91b40f4, 3 | BRF_GRA },           //  5 					/* TC5332205 */
+	{ "222-c4.c4",    0x400000, 0x359510a4, 3 | BRF_GRA },           //  6 					/* TC5332205 */
+	{ "222-c5.c5",    0x400000, 0x9cfbb22d, 3 | BRF_GRA },           //  7 					/* TC5332205 */
+	{ "222-c6.c6",    0x400000, 0x685efc32, 3 | BRF_GRA },           //  8 					/* TC5332205 */
+	{ "222-c7ps.c7",    0x400000, 0xecb13c24, 3 | BRF_GRA },           //  9 					/* TC5332205 */
+	{ "222-c8ps.c8",    0x400000, 0x0f9a0bda, 3 | BRF_GRA },           // 10 					/* TC5332205 */
+
+	{ "222-m1.m1",    0x020000, 0x7615bc1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/* TC531001 */
+
+	{ "222-v1.v1",    0x400000, 0x7d6ba95f, 5 | BRF_SND },           // 12 Sound data		/* TC5332204 */
+	{ "222-v2.v2",    0x400000, 0x6c33bb5d, 5 | BRF_SND },           // 13 					/* TC5332204 */
+	{ "222-v3.v3",    0x200000, 0x831ea8c0, 5 | BRF_SND },           // 14 					/* TC5316200 */
+};
+
+STDROMPICKEXT(samsho4ps, samsho4ps, neogeo)
+STD_ROM_FN(samsho4ps)
+
+struct BurnDriver BurnDrvSamSho4ps = {
+	"samsho4ps", "samsho4", "neogeo", NULL, "1996",
+	"Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Secret Character Hack)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Samurai Shodown IV - Amakusa's Revenge\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4 - \u5929\u8349\u964D\u81E8 (NGM-222)(NGH-222)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho4psRomInfo, samsho4psRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // -----------------------------------------------------------------------------
 // Diagnostic Cartridges
 

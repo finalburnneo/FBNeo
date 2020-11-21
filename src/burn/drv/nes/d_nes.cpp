@@ -14286,7 +14286,7 @@ struct BurnDriver BurnDrvnes_steinsgate = {
 };
 
 static struct BurnRomInfo nes_boblRomDesc[] = {
-	{ "bobl (HB).nes",          65552, 0xb5340d71, BRF_ESS | BRF_PRG },
+	{ "bobl (HB).nes",          65552, 0x831956ea, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bobl)
@@ -14294,7 +14294,7 @@ STD_ROM_FN(nes_bobl)
 
 struct BurnDriver BurnDrvnes_bobl = {
 	"nes_bobl", NULL, NULL, NULL, "2020",
-	"BoBL (HB)\0", NULL, "Morphcat Games", "Miscellaneous",
+	"BoBL (HB, v1.1)\0", NULL, "Morphcat Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_boblRomInfo, nes_boblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

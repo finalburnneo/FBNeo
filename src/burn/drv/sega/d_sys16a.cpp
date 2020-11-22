@@ -1433,7 +1433,7 @@ static struct BurnRomInfo BodyslamRomDesc[] = {
 	{ "epr-10031.c3",  0x08000, 0xea3c4472, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-10032.c4",  0x08000, 0x0aabebce, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "317-0015.bin",  0x01000, 0x833869e2, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
+	{ "317-0015.bin",  0x01000, 0x833869e2, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 };
 
 
@@ -1709,7 +1709,7 @@ static struct BurnRomInfo QuartetRomDesc[] = {
 	{ "epr-7474.3c",   0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",   0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "315-5194.mcu",  0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
+	{ "315-5194.mcu",  0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 	
 	{ "pal16r6a.22g",  0x00104, 0x00000000, BRF_NODUMP }, // plds
 	{ "pal16r6a.23g",  0x00104, 0x00000000, BRF_NODUMP }, 
@@ -1750,7 +1750,7 @@ static struct BurnRomInfo QuartetaRomDesc[] = {
 	{ "epr-7474.3c",        0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",        0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "315-5194.mcu",       0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
+	{ "315-5194.mcu",       0x01000, 0xb7298f66, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 	
 	{ "pal16r6a.22g",       0x00104, 0x00000000, BRF_NODUMP }, // plds
 	{ "pal16r6a.23g",       0x00104, 0x00000000, BRF_NODUMP },  
@@ -1791,7 +1791,7 @@ static struct BurnRomInfo Quartet2RomDesc[] = {
 	{ "epr-7474.3c",   0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",   0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "317-0010.bin",  0x01000, 0x8c2033ea, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
+	{ "317-0010.bin",  0x01000, 0x8c2033ea, SYS16_ROM_I8751 | BRF_PRG | BRF_ESS },
 };
 
 
@@ -2300,6 +2300,8 @@ STD_ROM_FN(Wb35d)
 Memory Handlers
 ====================================================*/
 
+void sys16_sync_mcu(); //forward (ext: sys16_run.cpp)
+
 void System16APPI0WritePortA(UINT8 data)
 {
 	System16SoundLatch = data & 0xff;
@@ -2310,12 +2312,10 @@ void System16APPI0WritePortB(UINT8 data)
 	System16VideoControl = data;
 	System16VideoEnable = data & 0x10;
 	System16ScreenFlip = data & 0x80;
-	
+
 	if (System16I8751RomNum) {
-		if (data & 0x40) {
-			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
-			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
-		}
+		sys16_sync_mcu();
+		mcs51_set_irq_line(MCS51_INT1_LINE, (data & 0x40) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 	}
 }
 
@@ -2364,10 +2364,10 @@ UINT8 __fastcall System16AReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc40001:
-		case 0xc40003: 
+		case 0xc40003:
 		case 0xc40005:
 		case 0xc40007: {
-			return ppi8255_r(0, (a - 0xc40000) >> 1);
+			return ppi8255_r(0, (a & 7) >> 1);
 		}
 		
 		case 0xc41001: {
@@ -2414,6 +2414,7 @@ void __fastcall System16AWriteWord(UINT32 a, UINT16 d)
 	}
 	
 	switch (a) {
+		case 0xc42000:
 		case 0xc40000:
 		case 0xc40002:
 		case 0xc40004:
@@ -2425,7 +2426,7 @@ void __fastcall System16AWriteWord(UINT32 a, UINT16 d)
 		case 0xc60000: {
 			return;
 		}
-	}		
+	}
 
 #if 0 && defined FBNEO_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
@@ -2441,10 +2442,10 @@ void __fastcall System16AWriteByte(UINT32 a, UINT8 d)
 	
 	switch (a) {
 		case 0xc40001:
-		case 0xc40003: 
+		case 0xc40003:
 		case 0xc40005:
 		case 0xc40007: {
-			ppi8255_w(0, (a - 0xc40000) >> 1, d & 0xff);
+			ppi8255_w(0, (a & 7) >> 1, d & 0xff);
 			return;
 		}
 	}
@@ -2461,14 +2462,14 @@ UINT8 System16A_I8751ReadPort(INT32 port)
 			case 0: {
 				if (port <= 0x3fff) {
 					// watchdog reset
-					return 0;
+					return 0xff;
 				}
 				
-				if (port >= 0x4000 && port < 0x8000) {
-					return SekReadByte(0xffc001 ^ (port & 0x3fff));
+				if (port >= 0x4000 && port <= 0x7fff) {
+					return SekReadByte((0xc70001 ^ (port & 0x3fff)) | 0x38c000);
 				}
 				
-				if (port >= 0x8000 && port < 0xc000) {
+				if (port >= 0x8000 && port <= 0xbfff) {
 					return SekReadByte(0xc40001 ^ (port & 0x3fff));
 				}
 				
@@ -2476,10 +2477,12 @@ UINT8 System16A_I8751ReadPort(INT32 port)
 			}
 			
 			case 1: {
-				if (port >= 0x8000 && port < 0x9000) {
+				if (port >= 0x0000 && port <= 0x7fff) {
+					return SekReadByte(0x400001 ^ (port & 0x7fff));
+				}
+				if (port >= 0x8000 && port <= 0x8fff) {
 					return SekReadByte(0x410001 ^ (port & 0xfff));
 				}
-				
 				return 0xff;
 			}
 			
@@ -2516,12 +2519,12 @@ void System16A_I8751WritePort(INT32 port, UINT8 data)
 	if (port >= 0x0000 && port <= 0xffff) {
 		switch ((System16MCUData >> 3) & 7) {
 			case 0: {
-				if (port >= 0x4000 && port < 0x8000) {
-					SekWriteByte(0xffc001 ^ (port & 0x3fff), data);
+				if (port >= 0x4000 && port <= 0x7fff) {
+					SekWriteByte((0xc70001 ^ (port & 0x3fff)) | 0x38c000, data);
 					return;
 				}
 				
-				if (port >= 0x8000 && port < 0xc000) {
+				if (port >= 0x8000 && port <= 0xbfff) {
 					SekWriteByte(0xc40001 ^ (port & 0x3fff), data);
 					return;
 				}
@@ -2530,7 +2533,11 @@ void System16A_I8751WritePort(INT32 port, UINT8 data)
 			}
 			
 			case 1: {
-				if (port >= 0x8000 && port < 0x9000) {
+				if (port >= 0x0000 && port <= 0x7fff) {
+					SekWriteByte(0x400001 ^ (port & 0x7fff), data);
+					return;
+				}
+				if (port >= 0x8000 && port <= 0x8fff) {
 					SekWriteByte(0x410001 ^ (port & 0xfff), data);
 					return;
 				}
@@ -2552,39 +2559,32 @@ void System16A_I8751WritePort(INT32 port, UINT8 data)
 			if (SekGetActive() > -1) {
 				if (data & 0x40) {
 					System1668KEnable = false;
-					
-					SekReset();
-					
+
 					System16VideoEnable = 1;
 				} else {
+					if (System1668KEnable == false) {
+						SekReset();
+					}
 					System1668KEnable = true;
 				}
-				
+
 				for (INT32 irqline = 1; irqline <= 7; irqline++) {
 					if ((~data & 7) == irqline) {
-						if (irqline == 4) {
-							SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
-							nSystem16CyclesDone[0] += SekRun(200);
-							SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
-						} else {
-							SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
-						}
-					} else {
-						SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
+						SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
 					}
 				}
-				
-				if ((System16MCUData ^ data) & 0x40) {
-					nSystem16CyclesDone[0] += SekRun(10000);
+
+				if ((System16MCUData ^ data) & 0x40 && System1668KEnable) {
+					nSystem16CyclesDone[0] += SekRun(20);
 				}
 			}
-			
+
 			System16MCUData = data;
-			
+
 			return;
 		}
 	}
-}	
+}
 
 static INT16 AceattacaTrack1X = 0;
 static INT16 AceattacaTrack1Y = 0;

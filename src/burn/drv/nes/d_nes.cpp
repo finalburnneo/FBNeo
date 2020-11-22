@@ -48,6 +48,7 @@ static UINT32 FDSFrameDiskIcon;
 static UINT32 NESMode = 0;
 #define NO_WORKRAM		0x0001 // 6000-7fff reads data openbus
 #define BUS_CONFLICTS	0x0002 // rom conflicts with writes, needs special handling
+#define ALT_MMC3        0x0004 // alternate mmc3 scanline timing
 #define USE_4SCORE      0x0100 // 4-Player device (NES)
 #define USE_HORI4P      0x0200 // 4-Player device Mode 2 (Famicom)
 #define USE_ZAPPER      0x0400 // Zapper Gun device
@@ -591,6 +592,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
+	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -2728,6 +2730,10 @@ static UINT8 *mmc5_mask; // mmc3/mmc5 ppumask-sniffer // 0x18 = rendering
 
 static void mapper04_scanline()
 {
+	if (NESMode & ALT_MMC3 && (mmc5_mask[0] & 0x18) == 0x00) {
+		return;
+	}
+
 	INT32 cnt = mapper4_irqcount;
 	if (mapper4_irqcount == 0 || mapper4_irqreload) {
 		mapper4_irqreload = 0;
@@ -2737,7 +2743,7 @@ static void mapper04_scanline()
 	}
 
 	if (cnt && mapper4_irqenable && mapper4_irqcount == 0) {
-		if (mmc5_mask[0] & 0x18) { // aka if (RENDERING)
+		if ((~NESMode & ALT_MMC3 && mmc5_mask[0] & 0x18) || NESMode & ALT_MMC3) { // aka if (RENDERING)
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 	}
@@ -8364,7 +8370,9 @@ static void ppu_scan(INT32 nAction)
 static void ppu_reset()
 {
 	mmc5_nt_ram = &nt_ram[0];
-	scanline = 240;
+
+	// start at (around) vblank to remove 1 full frame of input lag
+	scanline = 239; // line on titlescreen of micromachines if starts on 240
 	pixel = 0;
 	ppu_frame = 0;
 
@@ -12258,6 +12266,23 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_blockoutRomDesc[] = {
+	{ "Block Out (USA).nes",          131088, 0xdeff01f6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blockout)
+STD_ROM_FN(nes_blockout)
+
+struct BurnDriver BurnDrvnes_blockout = {
+	"nes_blockout", NULL, NULL, NULL, "1989?",
+	"Block Out (USA)\0", NULL, "California Dreams / Technos", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_blockoutRomInfo, nes_blockoutRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_bookymanRomDesc[] = {
 	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
 };
@@ -14261,7 +14286,7 @@ struct BurnDriver BurnDrvnes_steinsgate = {
 };
 
 static struct BurnRomInfo nes_boblRomDesc[] = {
-	{ "bobl (HB).nes",          65552, 0xb5340d71, BRF_ESS | BRF_PRG },
+	{ "bobl (HB).nes",          65552, 0x831956ea, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bobl)
@@ -14269,7 +14294,7 @@ STD_ROM_FN(nes_bobl)
 
 struct BurnDriver BurnDrvnes_bobl = {
 	"nes_bobl", NULL, NULL, NULL, "2020",
-	"BoBL (HB)\0", NULL, "Morphcat Games", "Miscellaneous",
+	"BoBL (HB, v1.1)\0", NULL, "Morphcat Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_boblRomInfo, nes_boblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25293,6 +25318,40 @@ struct BurnDriver BurnDrvnes_hook = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_hookRomInfo, nes_hookRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hostaRomDesc[] = {
+	{ "Hostages - The Embassy Mission (Japan).nes",          262160, 0xe876b411, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hosta)
+STD_ROM_FN(nes_hosta)
+
+struct BurnDriver BurnDrvnes_hosta = {
+	"nes_hosta", "nes_rescue", NULL, NULL, "1989",
+	"Hostages - The Embassy Mission (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hostaRomInfo, nes_hostaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_rescueRomDesc[] = {
+	{ "Rescue - The Embassy Mission (USA).nes",          262160, 0x0e4fe1f3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rescue)
+STD_ROM_FN(nes_rescue)
+
+struct BurnDriver BurnDrvnes_rescue = {
+	"nes_rescue", NULL, NULL, NULL, "1990",
+	"Rescue - The Embassy Mission (USA)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_rescueRomInfo, nes_rescueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

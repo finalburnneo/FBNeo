@@ -47,6 +47,13 @@
 		<rom name="16 zhang ma jiang (chi) (unl).bin" size="1048576" crc="36407c82"/>
 		<driver status="good"/>
 	</game>
+	<game name="16zhangmah">
+		<description>16 Zhang Mahjong II</description>
+		<year>199?</year>
+		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<rom name="16 Zhang Mahjong II (Taiwan) (Unl).md" size="1048576" crc="b4f4249f"/>
+		<driver status="good"/>
+	</game>
 	<game name="16bitrhythmld">
 		<description>16-Bit Rhythm Land (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -7463,6 +7470,13 @@
 		<rom name="landstalker - the treasures of king nole (euro).bin" size="2097152" crc="e3c65277"/>
 		<driver status="good"/>
 	</game>
+	<game name="landstlks" cloneof="landstlk" romof="landstlk">
+		<description>Landstalker - The Treasures of King Nole (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="landstalker - the treasures of king nole (Hack, Spanish).bin" size="2359296" crc="019cb7a6"/>
+		<driver status="good"/>
+	</game>
 	<game name="landstlku" cloneof="landstlk" romof="landstlk">
 		<description>Landstalker - The Treasures of King Nole (USA)</description>
 		<year>1992</year>
@@ -7496,6 +7510,13 @@
 		<year>2011</year>
 		<manufacturer>NCS</manufacturer>
 		<rom name="langrisser ii (english translation).bin" size="2097152" crc="e8f28522"/>
+		<driver status="good"/>
+	</game>
+	<game name="langris2s" cloneof="langris2" romof="langris2">
+		<description>Langrisser II (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>NCS</manufacturer>
+		<rom name="langrisser ii (Hack, Spanish).bin" size="2097152" crc="6ed77151"/>
 		<driver status="good"/>
 	</game>
 	<game name="langris2b" cloneof="langris2" romof="langris2">
@@ -7721,6 +7742,13 @@
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="long (chi) (unl).bin" size="262144" crc="1b86e623"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="lordmone" cloneof="lordmon" romof="lordmon">
+		<description>Lord Monarch - Legendary Battle Royale (Hack, English)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="lord monarch - legendary battle royale (Hack, English).bin" size="2097152" crc="2a576a01"/>
+		<driver status="good"/>
 	</game>
 	<game name="lordmon">
 		<description>Lord Monarch - Tokoton Sentou Densetsu (Jpn)</description>
@@ -15845,6 +15873,13 @@
 		<year>1993</year>
 		<manufacturer>Technosoft</manufacturer>
 		<rom name="mpr-15209.bin" size="1048576" crc="e7e3c05b"/>
+		<driver status="good"/>
+	</game>
+	<game name="tf4s" cloneof="tf4" romof="tf4">
+		<description>Thunder Force IV (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Technosoft</manufacturer>
+		<rom name="thunder force iv (Hack, Spanish).bin" size="1048576" crc="04845342"/>
 		<driver status="good"/>
 	</game>
 	<game name="tf4j" cloneof="tf4" romof="tf4">

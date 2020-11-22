@@ -1153,6 +1153,13 @@
 		<rom name="Blob Man (Unl).nes" size="40976" crc="eef9db4b"/>
 		<driver status="good"/>
 	</game>
+	<game name="blockout">
+		<description>Block Out (USA)</description>
+		<year>1989?</year>
+		<manufacturer>California Dreams / Technos</manufacturer>
+		<rom name="Block Out (USA).nes" size="131088" crc="deff01f6"/>
+		<driver status="good"/>
+	</game>
 	<game name="blockage">
 		<description>Blockage (HB, v0.3.2) [Homebrew]</description>
 		<year>2019</year>
@@ -1203,10 +1210,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bobl">
-		<description>BoBL (HB) [Homebrew]</description>
+		<description>BoBL (HB, v1.1) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Morphcat Games</manufacturer>
-		<rom name="bobl (HB).nes" size="65552" crc="b5340d71"/>
+		<rom name="bobl (HB).nes" size="65552" crc="831956ea"/>
 		<driver status="good"/>
 	</game>
 	<game name="bokosukawars">
@@ -4616,6 +4623,13 @@
 		<year>1992</year>
 		<manufacturer>Sony (CSG) Imagesoft</manufacturer>
 		<rom name="Hook (USA).nes" size="262160" crc="b5902c20"/>
+		<driver status="good"/>
+	</game>
+	<game name="hosta" cloneof="rescue" romof="rescue">
+		<description>Hostages - The Embassy Mission (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Hostages - The Embassy Mission (Japan).nes" size="262160" crc="e876b411"/>
 		<driver status="good"/>
 	</game>
 	<game name="hottanochitan">
@@ -8046,6 +8060,13 @@
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Renegade (USA).nes" size="131088" crc="935f5d29"/>
+		<driver status="good"/>
+	</game>
+	<game name="rescue">
+		<description>Rescue - The Embassy Mission (USA)</description>
+		<year>1990</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Rescue - The Embassy Mission (USA).nes" size="262160" crc="0e4fe1f3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ringking">

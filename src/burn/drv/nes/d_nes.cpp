@@ -323,6 +323,7 @@ enum Mirroring { VERTICAL = 0, HORIZONTAL, SINGLE_LOW, SINGLE_HIGH, FOUR_SCREEN,
 
 union PPUCTRL
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 nttab   : 2;  // Base nametable address (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)
 		UINT8 incr    : 1;  // VRAM address increment (0 = 1, 1 = 32)
@@ -333,10 +334,23 @@ union PPUCTRL
 		UINT8 nmi     : 1;  // Generate NMI @ VBL
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 nmi     : 1;  // Generate NMI @ VBL
+		UINT8 slave   : 1;  // PPU master/slave select
+		UINT8 sprsize : 1;  // Sprite size, 8x8 / 8x16
+		UINT8 bgtab   : 1;  // Background pattern table address
+		UINT8 sprtab  : 1;  // Sprite Pattern table address for 8x8 sprites
+		UINT8 incr    : 1;  // VRAM address increment (0 = 1, 1 = 32)
+		UINT8 nttab   : 2;  // Base nametable address (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)
+	} bit;
+#endif
 };
 
 union PPUMASK
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 gray    : 1;  // Grayscale
 		UINT8 bgLeft  : 1;  // Show background in left 8 px of screen
@@ -348,10 +362,24 @@ union PPUMASK
 		UINT8 blue    : 1;  // Emphasize blue
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 blue    : 1;  // Emphasize blue
+		UINT8 green   : 1;  // Emphasize green
+		UINT8 red     : 1;  // Emphasize red
+		UINT8 spr     : 1;  // Show sprites
+		UINT8 bg      : 1;  // Show background
+		UINT8 sprLeft : 1;  // Show sprite in left 8 px
+		UINT8 bgLeft  : 1;  // Show background in left 8 px of screen
+		UINT8 gray    : 1;  // Grayscale
+	} bit;
+#endif
 };
 
 union PPUSTATUS
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 bus     : 5;  // Open bus
 		UINT8 spovrf  : 1;  // Sprite overflow (8+ sprites/scanline)
@@ -359,6 +387,15 @@ union PPUSTATUS
 		UINT8 VBlank  : 1;  // Vertical blanking
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 VBlank  : 1;  // Vertical blanking
+		UINT8 sp0hit  : 1;  // Sprite 0 Hit
+		UINT8 spovrf  : 1;  // Sprite overflow (8+ sprites/scanline)
+		UINT8 bus     : 5;  // Open bus
+	} bit;
+#endif
 };
 
 struct OAMBUF

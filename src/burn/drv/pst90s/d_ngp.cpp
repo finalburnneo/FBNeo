@@ -1152,10 +1152,10 @@ STDROMPICKEXT(ngpc_bakumats, ngpc_bakumats, ngpc_ngp)
 STD_ROM_FN(ngpc_bakumats)
 
 struct BurnDriver BurnDrvngpc_bakumats = {
-	"ngp_bakumats", NULL, "ngp_ngp", NULL, "2000",
+	"ngp_bakumats", "ngp_lastblad", "ngp_ngp", NULL, "2000",
 	"Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_bakumatsRomInfo, ngpc_bakumatsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2432,10 +2432,10 @@ STDROMPICKEXT(ngpc_oekakip, ngpc_oekakip, ngpc_ngp)
 STD_ROM_FN(ngpc_oekakip)
 
 struct BurnDriver BurnDrvngpc_oekakip = {
-	"ngp_oekakip", NULL, "ngp_ngp", NULL, "2000",
+	"ngp_oekakip", "ngp_picturep", "ngp_ngp", NULL, "2000",
 	"Oekaki Puzzle (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_oekakipRomInfo, ngpc_oekakipRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -2632,10 +2632,10 @@ STDROMPICKEXT(ngpc_pockrevj, ngpc_pockrevj, ngpc_ngp)
 STD_ROM_FN(ngpc_pockrevj)
 
 struct BurnDriver BurnDrvngpc_pockrevj = {
-	"ngp_pockrevj", NULL, "ngp_ngp", NULL, "2000",
+	"ngp_pockrevj", "ngp_pockrev", "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Jpn)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pockrevjRomInfo, ngpc_pockrevjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3012,10 +3012,10 @@ STDROMPICKEXT(ngpc_rockmanbd, ngpc_rockmanbd, ngpc_ngp)
 STD_ROM_FN(ngpc_rockmanbd)
 
 struct BurnDriver BurnDrvngpc_rockmanbd = {
-	"ngp_rockmanbd", NULL, "ngp_ngp", NULL, "2000",
+	"ngp_rockmanbd", "ngp_rockmanb", "ngp_ngp", NULL, "2000",
 	"Rockman - Battle & Fighters (Jpn, Demo)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_rockmanbdRomInfo, ngpc_rockmanbdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3

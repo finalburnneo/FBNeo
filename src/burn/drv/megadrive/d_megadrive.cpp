@@ -48425,4 +48425,101 @@ struct BurnDriver BurnDrvmd_mysticfs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// onslaught (Hack, Spanish)
+// https://www.romhacking.net/translations/4873/
+static struct BurnRomInfo md_onslausRomDesc[] = {
+	{ "onslaught (Hack, Spanish).bin", 524288, 0x1e034ff6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_onslaus)
+STD_ROM_FN(md_onslaus)
+
+struct BurnDriver BurnDrvmd_onslaus = {
+	"md_onslaus", "md_onslau", NULL, NULL, "2019",
+	"Onslaught (Hack, Spanish)\0", NULL, "Ballistic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_onslausRomInfo, md_onslausRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrun (Hack, Spanish)
+// https://www.romhacking.net/translations/3797/
+static struct BurnRomInfo md_outrunsRomDesc[] = {
+	{ "outrun (Hack, Spanish).bin", 1048576, 0x85774b3f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_outruns)
+STD_ROM_FN(md_outruns)
+
+struct BurnDriver BurnDrvmd_outruns = {
+	"md_outruns", "md_outrun", NULL, NULL, "2018",
+	"Outrun (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_outrunsRomInfo, md_outrunsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrun 2019 (Hack, Spanish)
+// https://www.romhacking.net/translations/4070/
+static struct BurnRomInfo md_outr2019sRomDesc[] = {
+	{ "outrun 2019 (Hack, Spanish).bin", 1048576, 0x1a831f41, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_outr2019s)
+STD_ROM_FN(md_outr2019s)
+
+struct BurnDriver BurnDrvmd_outr2019s = {
+	"md_outr2019s", "md_outr2019", NULL, NULL, "2018",
+	"Outrun 2019 (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_outr2019sRomInfo, md_outr2019sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrunners (Hack, Spanish)
+// https://www.romhacking.net/hacks/4969/
+static struct BurnRomInfo md_orunnerssRomDesc[] = {
+	{ "outrunners (Hack, Spanish).bin", 2097152, 0x3a0b4aba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_orunnerss)
+STD_ROM_FN(md_orunnerss)
+
+struct BurnDriver BurnDrvmd_orunnerss = {
+	"md_orunnerss", "md_orunners", NULL, NULL, "2018",
+	"OutRunners (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_orunnerssRomInfo, md_orunnerssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrunners (usa) (Hack, Restoration)
+// https://www.romhacking.net/hacks/4969/
+static struct BurnRomInfo md_orunnershrRomDesc[] = {
+	{ "outrunners (usa) (Hack, Restoration).bin", 2097152, 0xe280aada, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_orunnershr)
+STD_ROM_FN(md_orunnershr)
+
+struct BurnDriver BurnDrvmd_orunnershr = {
+	"md_orunnershr", "md_orunners", NULL, NULL, "2020",
+	"OutRunners (USA) (Hack, Restoration)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_orunnershrRomInfo, md_orunnershrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+
+
 

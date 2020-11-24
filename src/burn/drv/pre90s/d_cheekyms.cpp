@@ -27,7 +27,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvReset;
 static UINT8 DrvDip[2];
 
-static INT32 palettebnk, scrolly, flip;
+static INT32 palettebnk, scrolly, flipped;
 static INT32 prevcoin;
 static INT32 irqmask;
 
@@ -35,7 +35,6 @@ static UINT32 bHasSamples = 0;
 
 // for samples..
 static UINT8 lastdata = 0;
-static INT32 lastdataframe = 0;
 
 static struct BurnInputInfo CheekymsInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"   },
@@ -49,8 +48,8 @@ static struct BurnInputInfo CheekymsInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 right"  },
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1" },
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
 };
 
 STDINPUTINFO(Cheekyms)
@@ -58,32 +57,32 @@ STDINPUTINFO(Cheekyms)
 
 static struct BurnDIPInfo CheekymsDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x75, NULL		},
+	{0x0a, 0xff, 0xff, 0x65, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0a, 0x01, 0x03, 0x00, "2"		},
-	{0x0a, 0x01, 0x03, 0x01, "3"		},
-	{0x0a, 0x01, 0x03, 0x02, "4"		},
-	{0x0a, 0x01, 0x03, 0x03, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x0a, 0x01, 0x03, 0x00, "2"				},
+	{0x0a, 0x01, 0x03, 0x01, "3"				},
+	{0x0a, 0x01, 0x03, 0x02, "4"				},
+	{0x0a, 0x01, 0x03, 0x03, "5"				},
 
-	{0   , 0xfe, 0   ,    3, "Coinage"		},
-	{0x0a, 0x01, 0x0c, 0x08, "2 Coins 1 Credits"		},
-	{0x0a, 0x01, 0x0c, 0x04, "1 Coin  1 Credits"		},
-	{0x0a, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    3, "Coinage"			},
+	{0x0a, 0x01, 0x0c, 0x08, "2 Coins 1 Credit"	},
+	{0x0a, 0x01, 0x0c, 0x04, "1 Coin  1 Credit"	},
+	{0x0a, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0a, 0x01, 0x10, 0x10, "Upright"		},
-	{0x0a, 0x01, 0x10, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x0a, 0x01, 0x10, 0x10, "Upright"			},
+	{0x0a, 0x01, 0x10, 0x00, "Cocktail"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0a, 0x01, 0x20, 0x00, "Off"		},
-	{0x0a, 0x01, 0x20, 0x20, "On"		},
+	{0x0a, 0x01, 0x20, 0x00, "Off"				},
+	{0x0a, 0x01, 0x20, 0x20, "On"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0a, 0x01, 0xc0, 0x40, "3000"		},
-	{0x0a, 0x01, 0xc0, 0x80, "4500"		},
-	{0x0a, 0x01, 0xc0, 0xc0, "6000"		},
-	{0x0a, 0x01, 0xc0, 0x00, "None"		},
+	{0x0a, 0x01, 0xc0, 0x40, "3000"				},
+	{0x0a, 0x01, 0xc0, 0x80, "4500"				},
+	{0x0a, 0x01, 0xc0, 0xc0, "6000"				},
+	{0x0a, 0x01, 0xc0, 0x00, "None"				},
 };
 
 STDDIPINFO(Cheekyms)
@@ -102,7 +101,6 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 		case 0x40:
 			if (data != lastdata)
 			{
-				//bprintf(0, _T("frame %d\t%x\n"), nCurrentFrame, data);
 				if (data & 0x02) // mystery squeek
 					BurnSamplePlay(0);
 				if (data & 0x04) // mouse squeak
@@ -110,19 +108,16 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 				if (data & 0x08) // mystery dead
 					if (BurnSampleGetStatus(2) != SAMPLE_PLAYING) BurnSamplePlay(2);
 				if (data & 0x10) { // mouse dead.
-					BurnSampleStop(4); // stop hammer sound, its baked into "mouse dead"
 					if (BurnSampleGetStatus(3) != SAMPLE_PLAYING) BurnSamplePlay(3);
-				} else if (data & 0x20) { // hammer
-					if (!(lastdataframe == nCurrentFrame-1 && lastdata & 0x10)) {
-						BurnSamplePlay(4);
-					}
+				}
+				if (data & 0x20) { // hammer
+					BurnSamplePlay(4);
 				}
 				if (data & 0x40) // eating cheese
 					if (BurnSampleGetStatus(5) != SAMPLE_PLAYING) BurnSamplePlay(5);
 				// coin = 6
 			}
 			lastdata = data;
-			lastdataframe = nCurrentFrame;
 
 			DACWrite(0, data & 0x80);
 		return;
@@ -130,7 +125,7 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 		case 0x80:
 			palettebnk = (data >> 2) & 0x10;
 			scrolly = ((data >> 3) & 0x07);
-			flip = data & 0x80;
+			flipped = data & 0x80;
 			irqmask = data & 0x04;
 		return;
 	}
@@ -155,14 +150,11 @@ static UINT8 __fastcall port_read(UINT16 port)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	palettebnk = scrolly = flip = 0;
+	palettebnk = scrolly = flipped = 0;
 	prevcoin = 0;
 
-	lastdataframe = 0;
 	lastdata = 0;
 
 	ZetOpen(0);
@@ -336,7 +328,7 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
-	flip = scrolly = palettebnk = 0;
+	flipped = scrolly = palettebnk = 0;
 
 	return 0;
 }
@@ -357,24 +349,28 @@ static void draw_sprites()
 
 		if (x < 0 || y < -7 || x >= nScreenWidth || y >= nScreenHeight) continue;
 
+		if (flipped) {
+			x += -3;
+		}
+
 		if (DrvSpriteRAM[offs + 0] & 0x80)
 		{
-			if (!flip)
+			if (!flipped)
 				code++;
 
-			Render16x16Tile_Mask_Clip(pTransDraw, code, x, y, color, 2, 0, poffset, Gfx1);
+			Draw16x16MaskTile(pTransDraw, code, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
 		}
 		else
 		{
 			if (DrvSpriteRAM[offs + 0] & 0x02)
 			{
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x20, x, y, color, 2, 0, poffset, Gfx1);
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x21, x + 0x10, y, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x20, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x21, x + 0x10, y, 0, 0, color, 2, 0, poffset, Gfx1);
 			}
 			else
 			{
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x20, x, y, color, 2, 0, poffset, Gfx1);
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x21, x, y + 0x10, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x20, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x21, x, y + 0x10, 0, 0, color, 2, 0, poffset, Gfx1);
 			}
 		}
 	}
@@ -383,24 +379,10 @@ static void draw_sprites()
 static void draw_tiles()
 {
 	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
-		INT32 sx, sy, man_area;
+		INT32 sx = offs % 32;
+		INT32 sy = offs / 32;
 
-		sx = offs % 32;
-		sy = offs / 32;
-
-		if (flip)
-		{
-			man_area = ((sy >=  5) && (sy <= 25) && (sx >=  8) && (sx <= 12));
-		}
-		else
-		{
-			man_area = ((sy >=  6) && (sy <= 26) && (sx >=  8) && (sx <= 12));
-		}
-
-		if (flip) {
-			sx = 31 - sx;
-			sy = 31 - sy;
-		}
+		INT32 man_area = ((sy >=  6) && (sy <= 26) && (sx >=  8) && (sx <= 12));
 
 		INT32 code = DrvVidRAM[offs];
 		INT32 color = palettebnk;
@@ -421,11 +403,16 @@ static void draw_tiles()
 				color = palettebnk | (sx >> 1);
 		}
 
+		if (flipped) {
+			sx = 31 - sx;
+			sy = 31 - sy;
+		}
+
 		sx *= 8;
 		sy = (sy * 8) - (man_area ? scrolly : 0);
 		sy -= 32; //offset
 
-		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, Gfx0);
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipped, flipped, color, 2, 0, 0, Gfx0);
 	}
 }
 
@@ -440,6 +427,8 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 2) draw_sprites();
 	if (nBurnLayer & 1) draw_tiles();
+
+	BurnTransferFlip(flipped, flipped); // unflip coctailmode
 
 	BurnTransferCopy(Palette);
 
@@ -503,7 +492,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029736;
+		*pnMin = 0x029744;
 	}
 
 	if (nAction & ACB_VOLATILE) {
@@ -517,10 +506,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		DACScan(nAction, pnMin);
 		BurnSampleScan(nAction, pnMin);
 
-		SCAN_VAR(flip);
+		SCAN_VAR(flipped);
 		SCAN_VAR(palettebnk);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(irqmask);
+		SCAN_VAR(prevcoin);
+		SCAN_VAR(lastdata);
 	}
 
 	return 0;
@@ -543,20 +534,20 @@ STD_SAMPLE_FN(Cheekyms)
 // Cheeky Mouse
 
 static struct BurnRomInfo cheekymsRomDesc[] = {
-	{ "cm03.c5",	0x0800, 0x1ad0cb40, 1 }, //  0 maincpu
-	{ "cm04.c6",	0x0800, 0x2238f607, 1 }, //  1
-	{ "cm05.c7",	0x0800, 0x4169eba8, 1 }, //  2
-	{ "cm06.c8",	0x0800, 0x7031660c, 1 }, //  3
+	{ "cm03.c5",	0x0800, 0x1ad0cb40, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu (z80)
+	{ "cm04.c6",	0x0800, 0x2238f607, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cm05.c7",	0x0800, 0x4169eba8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cm06.c8",	0x0800, 0x7031660c, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cm01.c1",	0x0800, 0x26f73bd7, 2 }, //  4 gfx1
-	{ "cm02.c2",	0x0800, 0x885887c3, 2 }, //  5
+	{ "cm01.c1",	0x0800, 0x26f73bd7, 2 | BRF_GRA }, //  4 gfx1 (tiles)
+	{ "cm02.c2",	0x0800, 0x885887c3, 2 | BRF_GRA }, //  5
 
-	{ "cm07.n5",	0x0800, 0x2738c88d, 3 }, //  6 gfx2
-	{ "cm08.n6",	0x0800, 0xb3fbd4ac, 3 }, //  7
+	{ "cm07.n5",	0x0800, 0x2738c88d, 3 | BRF_GRA }, //  6 gfx2 (sprites)
+	{ "cm08.n6",	0x0800, 0xb3fbd4ac, 3 | BRF_GRA }, //  7
 
-	{ "cm.m9",	0x0020, 0xdb9c59a5, 4 }, //  8 proms
-	{ "cm.m8",	0x0020, 0x2386bc68, 4 }, //  9
-	{ "cm.p3",	0x0020, 0x6ac41516, 4 }, // 10
+	{ "cm.m9",		0x0020, 0xdb9c59a5, 4 | BRF_GRA }, //  8 proms (color info)
+	{ "cm.m8",		0x0020, 0x2386bc68, 4 | BRF_GRA }, //  9
+	{ "cm.p3",		0x0020, 0x6ac41516, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(cheekyms)

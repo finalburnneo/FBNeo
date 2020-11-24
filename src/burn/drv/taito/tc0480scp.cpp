@@ -769,7 +769,7 @@ static INT32 TC0480SCPPlaneOffsets[4] = { 0, 1, 2, 3 };
 static INT32 TC0480SCPXOffsets[8]     = { 4, 0, 12, 8, 20, 16, 28, 24 };
 static INT32 TC0480SCPYOffsets[8]     = { 0, 32, 64, 96, 128, 160, 192, 224 };
 
-void TC0480SCPRenderCharLayer()
+void TC0480SCPRenderCharLayer(INT32 Prio)
 {
 	INT32 mx, my, Attr, Code, Colour, x, y, TileIndex = 0, Flip, xFlip, yFlip;
 	
@@ -797,6 +797,12 @@ void TC0480SCPRenderCharLayer()
 			if (x < -8) x += 512;
 			if (y < -8) y += 512;
 
+			if (Prio != -1) {
+				Draw8x8PrioMaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, 0, Prio, TC0480SCPChars);
+			} else {
+				Draw8x8MaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, 0, TC0480SCPChars);
+			}
+#if 0
 			if (x >= 8 && x < (nScreenWidth - 8) && y >= 8 && y < (nScreenHeight - 8)) {
 				if (xFlip) {
 					if (yFlip) {
@@ -825,8 +831,9 @@ void TC0480SCPRenderCharLayer()
 						Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, TC0480SCPChars);
 					}
 				}
-			}			
-			
+			}
+#endif
+
 			TileIndex++;
 		}
 	}
@@ -836,6 +843,7 @@ void TC0480SCPReset()
 {
 	memset(TC0480SCPChars, 0, 256 * 8 * 8);
 	memset(TC0480SCPCtrl, 0, sizeof(TC0480SCPCtrl));
+	memset(TC0480SCPRam, 0, 0x10000);
 	BgScrollX[0] = BgScrollX[1] = BgScrollX[2] = BgScrollX[3] = 0;
 	BgScrollY[0] = BgScrollY[1] = BgScrollY[2] = BgScrollY[3] = 0;
 	CharScrollX = 0;
@@ -852,6 +860,11 @@ void TC0480SCPSetPriMap(UINT8 *PriMap)
 INT32 TC0480SCPGetBgPriority()
 {
 	return TC0480SCPBgPriLookup[(TC0480SCPPriReg & 0x1c) >> 2];
+}
+
+INT32 TC0480SCPGetBgPriReg()
+{
+	return TC0480SCPPriReg;
 }
 
 void TC0480SCPInit(INT32 nNumTiles, INT32 Pixels, INT32 xOffset, INT32 yOffset, INT32 xTextOffset, INT32 yTextOffset, INT32 VisYOffset)

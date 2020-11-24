@@ -48006,3 +48006,520 @@ struct BurnDriver BurnDrvmd_tf4s = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// musha - metallic uniframe super hybrid armor (Hack, Spanish)
+// https://www.romhacking.net/translations/2874/
+static struct BurnRomInfo md_mushasRomDesc[] = {
+	{ "musha - metallic uniframe super hybrid armor (Hack, Spanish).bin", 524288, 0x8013ed8b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mushas)
+STD_ROM_FN(md_mushas)
+
+struct BurnDriver BurnDrvmd_mushas = {
+	"md_mushas", "md_musha", NULL, NULL, "2017",
+	"Musha - Metallic Uniframe Super Hybrid Armor (Hack, Spanish)\0", NULL, "Seismic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mushasRomInfo, md_mushasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// master of monsters (Hack, Spanish)
+// https://www.romhacking.net/translations/4857/
+static struct BurnRomInfo md_mastermsRomDesc[] = {
+	{ "master of monsters (Hack, Spanish).bin", 524288, 0xfc206e6b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_masterms)
+STD_ROM_FN(md_masterms)
+
+struct BurnDriver BurnDrvmd_masterms = {
+	"md_masterms", "md_masterm", NULL, NULL, "2019",
+	"Master of Monsters (Hack, Spanish)\0", NULL, "Renovation", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mastermsRomInfo, md_mastermsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mcdonald's treasure land adventure (Hack, Spanish)
+// https://www.romhacking.net/translations/5111/
+static struct BurnRomInfo md_mcdonaldsRomDesc[] = {
+	{ "mcdonald's treasure land adventure (Hack, Spanish).bin", 1048576, 0x1245b748, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mcdonalds)
+STD_ROM_FN(md_mcdonalds)
+
+struct BurnDriver BurnDrvmd_mcdonalds = {
+	"md_mcdonalds", "md_mcdonald", NULL, NULL, "2019",
+	"Mcdonald's Treasure Land Adventure (Hack, Spanish)\0", NULL, "Treasure", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mcdonaldsRomInfo, md_mcdonaldsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};	
+
+// mega man - the wily wars (Hack, Spanish)
+// https://www.romhacking.net/translations/3585/
+static struct BurnRomInfo md_megamansRomDesc[] = {
+	{ "mega man - the wily wars (Hack, Spanish).bin", 2097152, 0xc6c7f5b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megamans)
+STD_ROM_FN(md_megamans)
+
+struct BurnDriver BurnDrvmd_megamans = {
+	"md_megamans", "md_megaman", NULL, NULL, "2018",
+	"Mega Man - The Wily Wars (Hack, Spanish)\0", NULL, "Capcom", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_megamansRomInfo, md_megamansRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mega turrican (Hack, Spanish)
+// https://www.romhacking.net/translations/4132/
+static struct BurnRomInfo md_megaturrsRomDesc[] = {
+	{ "mega turrican (Hack, Spanish).bin", 1048576, 0xb2901f8e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megaturrs)
+STD_ROM_FN(md_megaturrs)
+
+struct BurnDriver BurnDrvmd_megaturrs = {
+	"md_megaturrs", "md_megaturr", NULL, NULL, "2019",
+	"Mega Turrican (Hack, Spanish)\0", NULL, "Data East", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_megaturrsRomInfo, md_megaturrsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mercs (Hack, Spanish)
+// https://www.romhacking.net/translations/2873/
+static struct BurnRomInfo md_mercssRomDesc[] = {
+	{ "mercs (Hack, Spanish).bin", 1048576, 0xdb0a96e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mercss)
+STD_ROM_FN(md_mercss)
+
+struct BurnDriver BurnDrvmd_mercss = {
+	"md_mercss", "md_mercs", NULL, NULL, "2017",
+	"Mercs (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mercssRomInfo, md_mercssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// michael jackson's moonwalker (Hack, Spanish)
+// https://www.romhacking.net/translations/4571/
+static struct BurnRomInfo md_mwalksRomDesc[] = {
+	{ "michael jackson's moonwalker (Hack, Spanish).bin", 524288, 0x6d849e61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mwalks)
+STD_ROM_FN(md_mwalks)
+
+struct BurnDriver BurnDrvmd_mwalks = {
+	"md_mwalks", "md_mwalk", NULL, NULL, "2019",
+	"Michael Jackson's Moonwalker (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mwalksRomInfo, md_mwalksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mick & mack as the global gladiators (Hack, Spanish)
+// https://www.romhacking.net/translations/3997/
+static struct BurnRomInfo md_mickmacksRomDesc[] = {
+	{ "mick & mack as the global gladiators (Hack, Spanish).bin", 1048576, 0x12236d34, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mickmacks)
+STD_ROM_FN(md_mickmacks)
+
+struct BurnDriver BurnDrvmd_mickmacks = {
+	"md_mickmacks", "md_mickmack", NULL, NULL, "2018",
+	"Mick & Mack as the Global Gladiators (Hack, Spanish)\0", NULL, " Virgin Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mickmacksRomInfo, md_mickmacksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mickey mania - the timeless adventures of mickey mouse (Hack, Spanish)
+// https://www.romhacking.net/translations/3111/
+static struct BurnRomInfo md_mmaniasRomDesc[] = {
+	{ "mickey mania - the timeless adventures of mickey mouse (Hack, Spanish).bin", 2097152, 0xa65dae53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mmanias)
+STD_ROM_FN(md_mmanias)
+
+struct BurnDriver BurnDrvmd_mmanias = {
+	"md_mmanias", "md_mmania", NULL, NULL, "2017",
+	"Mickey Mania - The Timeless Adventures of Mickey Mouse (Hack, Spanish)\0", NULL, "Sony Imagesoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mmaniasRomInfo, md_mmaniasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// micro machines (Hack, Spanish)
+// https://www.romhacking.net/translations/4195/
+static struct BurnRomInfo md_micromacsRomDesc[] = {
+	{ "micro machines (Hack, Spanish).bin", 524288, 0x3ba6932d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_micromacs)
+STD_ROM_FN(md_micromacs)
+
+struct BurnDriver BurnDrvmd_micromacs = {
+	"md_micromacs", "md_micromac", NULL, NULL, "2019",
+	"Micro Machines (Hack, Spanish)\0", NULL, "Codemasters", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_micromacsRomInfo, md_micromacsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// micro machines - turbo tournament '96 (Hack, Spanish)
+// https://www.romhacking.net/translations/2112/
+static struct BurnRomInfo md_microm96sRomDesc[] = {
+	{ "micro machines - turbo tournament '96 (Hack, Spanish).bin", 1048576, 0x7ceb363d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_microm96s)
+STD_ROM_FN(md_microm96s)
+
+struct BurnDriver BurnDrvmd_microm96s = {
+	"md_microm96s", "md_microm96", NULL, NULL, "2014",
+	"Micro Machines - Turbo Tournament '96 (Hack, Spanish)\0", NULL, "Codemasters", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_microm96sRomInfo, md_microm96sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// midnight resistance (Hack, Spanish)
+// https://www.romhacking.net/translations/4131/
+static struct BurnRomInfo md_midressRomDesc[] = {
+	{ "midnight resistance (Hack, Spanish).bin", 1048576, 0xfb38b80c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_midress)
+STD_ROM_FN(md_midress)
+
+struct BurnDriver BurnDrvmd_midress = {
+	"md_midress", "md_midres", NULL, NULL, "2019",
+	"Midnight Resistance (Hack, Spanish)\0", NULL, "Data East", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_midressRomInfo, md_midressRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mighty morphin power rangers (Hack, Spanish)
+// https://www.romhacking.net/translations/3732/
+static struct BurnRomInfo md_mmprsRomDesc[] = {
+	{ "mighty morphin power rangers (Hack, Spanish).bin", 2097152, 0x5a34dc26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mmprs)
+STD_ROM_FN(md_mmprs)
+
+struct BurnDriver BurnDrvmd_mmprs = {
+	"md_mmprs", "md_mmpr", NULL, NULL, "2018",
+	"Mighty Morphin Power Rangers (Hack, Spanish)\0", NULL, "Banpresto", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mmprsRomInfo, md_mmprsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mighty morphin power rangers - the movie (Hack, Spanish)
+// https://www.romhacking.net/translations/3731/
+static struct BurnRomInfo md_mmprtmsRomDesc[] = {
+	{ "mighty morphin power rangers - the movie (Hack, Spanish).bin", 2097152, 0xcb3852b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mmprtms)
+STD_ROM_FN(md_mmprtms)
+
+struct BurnDriver BurnDrvmd_mmprtms = {
+	"md_mmprtms", "md_mmprtm", NULL, NULL, "2018",
+	"Mighty Morphin Power Rangers - The Movie (Hack, Spanish)\0", NULL, "Banpresto", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mmprtmsRomInfo, md_mmprtmsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// monster world iv (Hack, Spanish)
+// https://www.romhacking.net/translations/5678/
+static struct BurnRomInfo md_mworld4sRomDesc[] = {
+	{ "monster world iv (Hack, Spanish).bin", 2097152, 0x7dbbfa4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mworld4s)
+STD_ROM_FN(md_mworld4s)
+
+struct BurnDriver BurnDrvmd_mworld4s = {
+	"md_mworld4s", "md_mworld4", NULL, NULL, "2020",
+	"Monster World IV (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mworld4sRomInfo, md_mworld4sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mortal kombat (Hack, Spanish)
+// https://www.romhacking.net/translations/2068/
+static struct BurnRomInfo md_mksRomDesc[] = {
+	{ "mortal kombat (Hack, Spanish).bin", 2097152, 0x75046fcf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mks)
+STD_ROM_FN(md_mks)
+
+struct BurnDriver BurnDrvmd_mks = {
+	"md_mks", "md_mk", NULL, NULL, "2013",
+	"Mortal Kombat (Hack, Spanish)\0", NULL, "Acclaim", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mksRomInfo, md_mksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)
+// https://www.romhacking.net/hacks/1722/
+static struct BurnRomInfo md_mk2wusRomDesc[] = {
+	{ "Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish).bin", 4136840, 0x40b29dd4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk2wus)
+STD_ROM_FN(md_mk2wus)
+
+struct BurnDriver BurnDrvmd_mk2wus = {
+	"md_mk2wus", "md_mk2", NULL, NULL, "2013",
+	"Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)\0", NULL, "2011 Smoke", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mk2wusRomInfo, md_mk2wusRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2310/
+static struct BurnRomInfo md_mk2wuecRomDesc[] = {
+	{ "Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors).bin", 4136840, 0x1867b4d9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk2wuec)
+STD_ROM_FN(md_mk2wuec)
+
+struct BurnDriver BurnDrvmd_mk2wuec = {
+	"md_mk2wuec", "md_mk2", NULL, NULL, "2013",
+	"Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors)\0", NULL, "2011 Smoke", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mk2wuecRomInfo, md_mk2wuecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mr. nutz (Hack, Spanish)
+// https://www.romhacking.net/translations/4585/
+static struct BurnRomInfo md_mrnutzsRomDesc[] = {
+	{ "mr. nutz (Hack, Spanish).bin", 1048576, 0xf032c867, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mrnutzs)
+STD_ROM_FN(md_mrnutzs)
+
+struct BurnDriver BurnDrvmd_mrnutzs = {
+	"md_mrnutzs", "md_mrnutz", NULL, NULL, "2019",
+	"Mr. Nutz (Hack, Spanish)\0", NULL, "Ocean", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mrnutzsRomInfo, md_mrnutzsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// ms. pac-man (Hack, Spanish)
+// https://www.romhacking.net/translations/4048/
+static struct BurnRomInfo md_mspacmansRomDesc[] = {
+	{ "ms. pac-man (Hack, Spanish).bin", 131072, 0xf9148289, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mspacmans)
+STD_ROM_FN(md_mspacmans)
+
+struct BurnDriver BurnDrvmd_mspacmans = {
+	"md_mspacmans", "md_mspacman", NULL, NULL, "2018",
+	"Ms. Pac-Man (Hack, Spanish)\0", NULL, "Tengen", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mspacmansRomInfo, md_mspacmansRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mystic defender (Hack, Spanish)
+// https://www.romhacking.net/translations/3660/
+static struct BurnRomInfo md_mystdefsRomDesc[] = {
+	{ "mystic defender (Hack, Spanish).bin", 524288, 0x2df12159, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mystdefs)
+STD_ROM_FN(md_mystdefs)
+
+struct BurnDriver BurnDrvmd_mystdefs = {
+	"md_mystdefs", "md_mystdef", NULL, NULL, "2018",
+	"Mystic Defender (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mystdefsRomInfo, md_mystdefsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// mystical fighter (Hack, Spanish)
+// https://www.romhacking.net/translations/4553/
+static struct BurnRomInfo md_mysticfsRomDesc[] = {
+	{ "mystical fighter (Hack, Spanish).bin", 524288, 0x56c54ae8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mysticfs)
+STD_ROM_FN(md_mysticfs)
+
+struct BurnDriver BurnDrvmd_mysticfs = {
+	"md_mysticfs", "md_mysticf", NULL, NULL, "2019",
+	"Mystical Fighter (Hack, Spanish)\0", NULL, "Dreamworks/NCS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mysticfsRomInfo, md_mysticfsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// onslaught (Hack, Spanish)
+// https://www.romhacking.net/translations/4873/
+static struct BurnRomInfo md_onslausRomDesc[] = {
+	{ "onslaught (Hack, Spanish).bin", 524288, 0x1e034ff6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_onslaus)
+STD_ROM_FN(md_onslaus)
+
+struct BurnDriver BurnDrvmd_onslaus = {
+	"md_onslaus", "md_onslau", NULL, NULL, "2019",
+	"Onslaught (Hack, Spanish)\0", NULL, "Ballistic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_onslausRomInfo, md_onslausRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrun (Hack, Spanish)
+// https://www.romhacking.net/translations/3797/
+static struct BurnRomInfo md_outrunsRomDesc[] = {
+	{ "outrun (Hack, Spanish).bin", 1048576, 0x85774b3f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_outruns)
+STD_ROM_FN(md_outruns)
+
+struct BurnDriver BurnDrvmd_outruns = {
+	"md_outruns", "md_outrun", NULL, NULL, "2018",
+	"Outrun (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_outrunsRomInfo, md_outrunsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrun 2019 (Hack, Spanish)
+// https://www.romhacking.net/translations/4070/
+static struct BurnRomInfo md_outr2019sRomDesc[] = {
+	{ "outrun 2019 (Hack, Spanish).bin", 1048576, 0x1a831f41, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_outr2019s)
+STD_ROM_FN(md_outr2019s)
+
+struct BurnDriver BurnDrvmd_outr2019s = {
+	"md_outr2019s", "md_outr2019", NULL, NULL, "2018",
+	"Outrun 2019 (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_outr2019sRomInfo, md_outr2019sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrunners (Hack, Spanish)
+// https://www.romhacking.net/hacks/4969/
+static struct BurnRomInfo md_orunnerssRomDesc[] = {
+	{ "outrunners (Hack, Spanish).bin", 2097152, 0x3a0b4aba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_orunnerss)
+STD_ROM_FN(md_orunnerss)
+
+struct BurnDriver BurnDrvmd_orunnerss = {
+	"md_orunnerss", "md_orunners", NULL, NULL, "2018",
+	"OutRunners (Hack, Spanish)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_orunnerssRomInfo, md_orunnerssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// outrunners (usa) (Hack, Restoration)
+// https://www.romhacking.net/hacks/4969/
+static struct BurnRomInfo md_orunnershrRomDesc[] = {
+	{ "outrunners (usa) (Hack, Restoration).bin", 2097152, 0xe280aada, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_orunnershr)
+STD_ROM_FN(md_orunnershr)
+
+struct BurnDriver BurnDrvmd_orunnershr = {
+	"md_orunnershr", "md_orunners", NULL, NULL, "2020",
+	"OutRunners (USA) (Hack, Restoration)\0", NULL, "SEGA", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_orunnershrRomInfo, md_orunnershrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+
+
+

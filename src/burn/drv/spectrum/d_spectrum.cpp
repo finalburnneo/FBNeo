@@ -17692,6 +17692,44 @@ struct BurnDriver BurnSpecWrestlingsuperstars = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Hero Quest
+
+static struct BurnRomInfo SpecHeroquestRomDesc[] = {
+	{ "Hero Quest (1991)(Gremlin Graphics).tap", 111870, 0x76faec29, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHeroquest, SpecHeroquest, Spec128)
+STD_ROM_FN(SpecHeroquest)
+
+struct BurnDriver BurnSpecHeroquest = {
+	"spec_heroquest", NULL, "spec_spec128", NULL, "1991",
+	"Hero Quest\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHeroquestRomInfo, SpecHeroquestRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hero Quest - Return of the Witch Lord
+
+static struct BurnRomInfo SpecHeroquestwitchlordRomDesc[] = {
+	{ "Hero Quest - Return of the Witch Lord (1991)(Gremlin Graphics).tap", 131173, 0x65141180, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHeroquestwitchlord, SpecHeroquestwitchlord, Spec128)
+STD_ROM_FN(SpecHeroquestwitchlord)
+
+struct BurnDriver BurnSpecHeroquestwitchlord = {
+	"spec_heroquestwitchlord", NULL, "spec_spec128", NULL, "1991",
+	"Hero Quest - Return of the Witch Lord\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHeroquestwitchlordRomInfo, SpecHeroquestwitchlordRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

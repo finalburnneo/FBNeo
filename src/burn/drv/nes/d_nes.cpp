@@ -323,6 +323,7 @@ enum Mirroring { VERTICAL = 0, HORIZONTAL, SINGLE_LOW, SINGLE_HIGH, FOUR_SCREEN,
 
 union PPUCTRL
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 nttab   : 2;  // Base nametable address (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)
 		UINT8 incr    : 1;  // VRAM address increment (0 = 1, 1 = 32)
@@ -333,10 +334,23 @@ union PPUCTRL
 		UINT8 nmi     : 1;  // Generate NMI @ VBL
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 nmi     : 1;  // Generate NMI @ VBL
+		UINT8 slave   : 1;  // PPU master/slave select
+		UINT8 sprsize : 1;  // Sprite size, 8x8 / 8x16
+		UINT8 bgtab   : 1;  // Background pattern table address
+		UINT8 sprtab  : 1;  // Sprite Pattern table address for 8x8 sprites
+		UINT8 incr    : 1;  // VRAM address increment (0 = 1, 1 = 32)
+		UINT8 nttab   : 2;  // Base nametable address (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)
+	} bit;
+#endif
 };
 
 union PPUMASK
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 gray    : 1;  // Grayscale
 		UINT8 bgLeft  : 1;  // Show background in left 8 px of screen
@@ -348,10 +362,24 @@ union PPUMASK
 		UINT8 blue    : 1;  // Emphasize blue
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 blue    : 1;  // Emphasize blue
+		UINT8 green   : 1;  // Emphasize green
+		UINT8 red     : 1;  // Emphasize red
+		UINT8 spr     : 1;  // Show sprites
+		UINT8 bg      : 1;  // Show background
+		UINT8 sprLeft : 1;  // Show sprite in left 8 px
+		UINT8 bgLeft  : 1;  // Show background in left 8 px of screen
+		UINT8 gray    : 1;  // Grayscale
+	} bit;
+#endif
 };
 
 union PPUSTATUS
 {
+#ifdef LSB_FIRST
 	struct {
 		UINT8 bus     : 5;  // Open bus
 		UINT8 spovrf  : 1;  // Sprite overflow (8+ sprites/scanline)
@@ -359,6 +387,15 @@ union PPUSTATUS
 		UINT8 VBlank  : 1;  // Vertical blanking
 	} bit;
 	UINT8 reg;
+#else
+	UINT8 reg;
+	struct {
+		UINT8 VBlank  : 1;  // Vertical blanking
+		UINT8 sp0hit  : 1;  // Sprite 0 Hit
+		UINT8 spovrf  : 1;  // Sprite overflow (8+ sprites/scanline)
+		UINT8 bus     : 5;  // Open bus
+	} bit;
+#endif
 };
 
 struct OAMBUF
@@ -602,6 +639,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
+	NESMode |= (ROMCRC == 0x3a0b6dd2) ? IS_PAL : 0; // Hero Quest
 	NESMode |= (ROMCRC == 0x6d1e30a7) ? IS_PAL : 0; // TMHT
 	NESMode |= (ROMCRC == 0xa5bbb96b) ? IS_PAL : 0; // TMHTII
 	NESMode |= (ROMCRC == 0x6453f65e) ? IS_PAL : 0; // Uforia
@@ -12369,6 +12407,25 @@ struct BurnDriver BurnDrvnes_bowsette2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_bowsette2RomInfo, nes_bowsette2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Mario Unlimited Deluxe
+// http://www.romhacking.net/hacks/5546/
+static struct BurnRomInfo nes_smbunldlxRomDesc[] = {
+	{ "Super Mario Unlimited Deluxe (Hack).nes",          196624, 0x716c9eb4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbunldlx)
+STD_ROM_FN(nes_smbunldlx)
+
+struct BurnDriver BurnDrvnes_smbunldlx = {
+	"nes_smbunldlx", "nes_smb", NULL, NULL, "2020",
+	"Super Mario Unlimited Deluxe (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbunldlxRomInfo, nes_smbunldlxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -25029,6 +25086,40 @@ struct BurnDriver BurnDrvnes_hellokitwor = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_hellokitworRomInfo, nes_hellokitworRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_heroquesteRomDesc[] = {
+	{ "Hero Quest (Europe) (Prototype).nes",          131088, 0x3a0b6dd2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_heroqueste)
+STD_ROM_FN(nes_heroqueste)
+
+struct BurnDriver BurnDrvnes_heroqueste = {
+	"nes_heroqueste", "nes_heroquest", NULL, NULL, "0000",
+	"Hero Quest (Europe) (Prototype)\0", NULL, "Gremlin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_heroquesteRomInfo, nes_heroquesteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_heroquestRomDesc[] = {
+	{ "Hero Quest (USA) (Prototype).nes",          131088, 0x60484008, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_heroquest)
+STD_ROM_FN(nes_heroquest)
+
+struct BurnDriver BurnDrvnes_heroquest = {
+	"nes_heroquest", NULL, NULL, NULL, "1989?",
+	"Hero Quest (USA) (Prototype)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_heroquestRomInfo, nes_heroquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

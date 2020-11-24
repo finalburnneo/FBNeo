@@ -3767,7 +3767,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			break;
 		case 48:
 			m_ula_variant = ULA_VARIANT_SINCLAIR;
-			m_ula_delay_sequence = "65432100";
+			m_ula_delay_sequence = ula_pattern;
 			m_contended_banks = "";
 			m_cycles_contention_start = 14335;
 			m_cycles_per_line = 224;
@@ -3775,7 +3775,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			break;
 		case 0:
 			m_ula_variant = ULA_VARIANT_NONE;
-			m_ula_delay_sequence = "00000000";
+			m_ula_delay_sequence = default_pattern;
 			m_contended_banks = "";
 			m_cycles_contention_start = 0;
 			m_cycles_per_line = 0;

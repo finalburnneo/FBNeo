@@ -482,6 +482,7 @@ void TC0100SCNReset()
 	for (INT32 i = 0;i < TC0100SCNNum; i++) {
 		memset(TC0100SCNCtrl[i], 0, sizeof(TC0100SCNCtrl[i]));
 		memset(TC0100SCNChars[i], 0, 256 * 8 * 8);
+		memset(TC0100SCNRam[i], 0, 0x14000);
 
 		BgScrollX[i] = 0;
 		BgScrollY[i] = 0;

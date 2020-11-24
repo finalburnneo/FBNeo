@@ -3547,6 +3547,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="heroquestwitchlord" romof="spec128">
+		<description>Hero Quest - Return of the Witch Lord</description>
+		<year>1991</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Hero Quest - Return of the Witch Lord (1991)(Gremlin Graphics).tap" size="131173" crc="65141180"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="heroquest" romof="spec128">
+		<description>Hero Quest</description>
+		<year>1991</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Hero Quest (1991)(Gremlin Graphics).tap" size="111870" crc="76faec29"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="highenco" romof="spectrum">
 		<description>Highway Encounter (48K)</description>
 		<year>1985</year>

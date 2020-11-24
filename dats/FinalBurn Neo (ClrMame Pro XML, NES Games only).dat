@@ -4506,6 +4506,20 @@
 		<rom name="Hello Kitty World (Japan).nes" size="131088" crc="54dc10cd"/>
 		<driver status="good"/>
 	</game>
+	<game name="heroqueste" cloneof="heroquest" romof="heroquest">
+		<description>Hero Quest (Europe) (Prototype)</description>
+		<year>0000</year>
+		<manufacturer>Gremlin</manufacturer>
+		<rom name="Hero Quest (Europe) (Prototype).nes" size="131088" crc="3a0b6dd2"/>
+		<driver status="good"/>
+	</game>
+	<game name="heroquest">
+		<description>Hero Quest (USA) (Prototype)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Hero Quest (USA) (Prototype).nes" size="131088" crc="60484008"/>
+		<driver status="good"/>
+	</game>
 	<game name="higem">
 		<description>Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan)</description>
 		<year>1987</year>
@@ -9327,6 +9341,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. Special X1 (Hack).nes" size="98320" crc="5a44876f"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbunldlx" cloneof="smb" romof="smb">
+		<description>Super Mario Unlimited Deluxe (Hack)</description>
+		<year>2020</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Unlimited Deluxe (Hack).nes" size="196624" crc="716c9eb4"/>
 		<driver status="good"/>
 	</game>
 	<game name="supermarwor">

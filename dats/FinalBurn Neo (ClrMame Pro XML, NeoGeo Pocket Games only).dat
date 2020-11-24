@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="bakumats" romof="ngp">
+	<game name="bakumats" cloneof="lastblad" romof="lastblad">
 		<description>Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
@@ -435,7 +435,7 @@
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>
 	</game>
-	<game name="oekakip" romof="ngp">
+	<game name="oekakip" cloneof="picturep" romof="picturep">
 		<description>Oekaki Puzzle (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Success</manufacturer>
@@ -741,7 +741,7 @@
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>
 	</game>
-	<game name="pockrevj" romof="ngp">
+	<game name="pockrevj" cloneof="pockrev" romof="pockrev">
 		<description>Pocket Reversi (Jpn)</description>
 		<year>2000</year>
 		<manufacturer>Success</manufacturer>
@@ -912,7 +912,7 @@
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>
 	</game>
-	<game name="rockmanbd" romof="ngp">
+	<game name="rockmanbd" cloneof="rockmanb" romof="rockmanb">
 		<description>Rockman - Battle &amp; Fighters (Jpn, Demo)</description>
 		<year>2000</year>
 		<manufacturer>Capcom</manufacturer>

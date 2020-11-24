@@ -5793,6 +5793,10 @@ DRV		BurnDrvmd_hercules;
 DRV		BurnDrvHero;
 DRV		BurnDrvHerodku;
 DRV		BurnDrvHerodk;
+DRV		BurnDrvnes_heroqueste;
+DRV		BurnDrvnes_heroquest;
+DRV		BurnSpecHeroquestwitchlord;
+DRV		BurnSpecHeroquest;
 DRV		BurnDrvsms_had;
 DRV		BurnDrvcv_heroesar;
 DRV		BurnDrvMSX_heroesarena;
@@ -7705,6 +7709,7 @@ DRV		BurnDrvMastboyob;
 DRV		BurnDrvnes_mastechuanddruhu;
 DRV		BurnDrvgg_mastdark;
 DRV		BurnDrvsms_mastdark;
+DRV		BurnDrvmd_masterms;
 DRV		BurnDrvmd_mastermj;
 DRV		BurnDrvmd_masterm;
 DRV		BurnDrvMSX_mastlamp;
@@ -7745,6 +7750,7 @@ DRV		BurnDrvmd_mazinwar;
 DRV		BurnDrvmazingerj;
 DRV		BurnDrvmazinger;
 DRV		BurnDrvmd_mcdonald;
+DRV		BurnDrvmd_mcdonalds;
 DRV		BurnDrvmd_mcdonaldj;
 DRV		BurnDrvmd_mcdonaldjp;
 DRV		BurnDrvmd_mcdonaldu;
@@ -7783,6 +7789,7 @@ DRV		BurnDrvCpsMegamana;
 DRV		BurnDrvCpsMegaman;
 DRV		BurnDrvCpsMmancp2u;
 DRV		BurnDrvmd_megamaneu;
+DRV		BurnDrvmd_megamans;
 DRV		BurnDrvmd_megaman;
 DRV		BurnDrvnes_megaman2;
 DRV		BurnDrvCpsMegaman2a;
@@ -7802,6 +7809,7 @@ DRV		BurnDrvmd_megaswiv;
 DRV		BurnDrvmd_megaswivb;
 DRV		BurnDrvmd_megaswivci;
 DRV		BurnDrvmd_megaturr;
+DRV		BurnDrvmd_megaturrs;
 DRV		BurnDrvmd_megaturru;
 DRV		BurnDrvCpsMtwins;
 DRV		BurnDrvMegazoneh;
@@ -7853,6 +7861,7 @@ DRV		BurnDrvCpsMercsur1;
 DRV		BurnDrvCpsMercsu;
 DRV		BurnDrvsms_mercs;
 DRV		BurnDrvmd_mercs;
+DRV		BurnDrvmd_mercss;
 DRV		BurnSpecmercs;
 DRV		BurnSpecmerlin_128;
 DRV		BurnSpecmerlin;
@@ -7941,6 +7950,7 @@ DRV		BurnDrvnes_michaandsworgrpr;
 DRV		BurnDrvfds_michaengdai;
 DRV		BurnDrvMWalkbl2;
 DRV		BurnDrvsms_mwalk;
+DRV		BurnDrvmd_mwalks;
 DRV		BurnDrvMWalkjd;
 DRV		BurnDrvMWalkj;
 DRV		BurnDrvMWalk;
@@ -7953,11 +7963,13 @@ DRV		BurnDrvmd_mwalk;
 DRV		BurnSpecMichelfutbolchamp;
 DRV		BurnSpecMichelfutbolskills;
 DRV		BurnDrvmd_mickmack;
+DRV		BurnDrvmd_mickmacks;
 DRV		BurnDrvmd_mickmacku;
 DRV		BurnDrvmd_mickmackup;
 DRV		BurnDrvsms_mickmack;
 DRV		BurnDrvgg_mickmack;
 DRV		BurnDrvmd_mmania;
+DRV		BurnDrvmd_mmanias;
 DRV		BurnDrvmd_mmaniaj;
 DRV		BurnDrvmd_mmaniau;
 DRV		BurnDrvmd_mmaniaup;
@@ -7977,7 +7989,9 @@ DRV		BurnDrvsms_micromac;
 DRV		BurnDrvmd_micromac;
 DRV		BurnDrvmd_micromacb;
 DRV		BurnDrvmd_micromaca;
+DRV		BurnDrvmd_micromacs;
 DRV		BurnDrvnes_micromachines;
+DRV		BurnDrvmd_microm96s;
 DRV		BurnDrvgg_micromc2;
 DRV		BurnDrvmd_micromc2;
 DRV		BurnDrvmd_micromc2a;
@@ -7992,6 +8006,7 @@ DRV		BurnDrvMSX_midbrosa;
 DRV		BurnDrvMSX_midbuild;
 DRV		BurnSpecmresist;
 DRV		BurnSpecmresist_48;
+DRV		BurnDrvmd_midress;
 DRV		BurnDrvMidresj;
 DRV		BurnDrvmd_midresj;
 DRV		BurnDrvMidresu;
@@ -8017,6 +8032,7 @@ DRV		BurnDrvMimonscra;
 DRV		BurnDrvMimonkey;
 DRV		BurnDrvmd_mmpr;
 DRV		BurnDrvgg_mmpr;
+DRV		BurnDrvmd_mmprs;
 DRV		BurnDrvmd_mmprp6;
 DRV		BurnDrvgg_mmprp;
 DRV		BurnDrvmd_mmprp5;
@@ -8028,6 +8044,7 @@ DRV		BurnDrvmd_mmprp3;
 DRV		BurnDrvmd_mmprfe;
 DRV		BurnDrvmd_mmprtm;
 DRV		BurnDrvgg_mmprtm;
+DRV		BurnDrvmd_mmprtms;
 DRV		BurnDrvgg_mmprtmp;
 DRV		BurnDrvmd_mmprtmu;
 DRV		BurnDrvmd_mmprtmp4;
@@ -8192,6 +8209,7 @@ DRV		BurnDrvnes_monsttrural;
 DRV		BurnDrvgg_monstwar;
 DRV		BurnDrvgg_mworld2;
 DRV		BurnDrvmd_mworld4eng;
+DRV		BurnDrvmd_mworld4s;
 DRV		BurnDrvmd_mworld4;
 DRV		BurnDrvmd_mworld4c;
 DRV		BurnDrvmd_mworld4eng2;
@@ -8279,6 +8297,7 @@ DRV		BurnSpecmortfilemon22;
 DRV		BurnDrvMSX_mortadelo2;
 DRV		BurnDrvsms_mk;
 DRV		BurnDrvgg_mk;
+DRV		BurnDrvmd_mks;
 DRV		BurnDrvgg_mkj;
 DRV		BurnDrvMkr4;
 DRV		BurnDrvMk;
@@ -8307,6 +8326,8 @@ DRV		BurnDrvMk2;
 DRV		BurnDrvMk2r32e;
 DRV		BurnDrvMk2r42;
 DRV		BurnDrvMk2r91;
+DRV		BurnDrvmd_mk2wuec;
+DRV		BurnDrvmd_mk2wus;
 DRV		BurnDrvmd_mk2wu;
 DRV		BurnDrvgg_mk2;
 DRV		BurnDrvmd_mk2;
@@ -8389,6 +8410,7 @@ DRV		BurnDrvMrkougar;
 DRV		BurnDrvmrlo;
 DRV		BurnDrvMSX_mrmole;
 DRV		BurnDrvmd_mrnutz;
+DRV		BurnDrvmd_mrnutzs;
 DRV		BurnDrvmd_mrnutz2;
 DRV		BurnDrvnes_mrsplash;
 DRV		BurnDrvmrtnt;
@@ -8404,6 +8426,7 @@ DRV		BurnDrvmspacmab;
 DRV		BurnDrvmspacmab2;
 DRV		BurnDrvsms_mspacman;
 DRV		BurnDrvmd_mspacman;
+DRV		BurnDrvmd_mspacmans;
 DRV		BurnDrvmspacmbmc;
 DRV		BurnDrvmd_mspacmanpir;
 DRV		BurnDrvgg_mspacman;
@@ -8467,6 +8490,7 @@ DRV		BurnDrvCpsMbombrdj;
 //		BurnDrvCpsMbombrdh;		// no comment
 //		BurnDrvCpsMbombrdu;		// no comment
 DRV		BurnDrvCpsMbombrd;
+DRV		BurnDrvmd_mushas;
 DRV		BurnDrvmd_musha;
 DRV		BurnDrvmd_mushaj;
 DRV		BurnDrvsg1k_musicj;
@@ -8511,6 +8535,7 @@ DRV		BurnDrvnes_mysteryquest;
 DRV		BurnDrvnes_mystewordiz;
 DRV		BurnDrvmd_mystdefa;
 DRV		BurnDrvmd_mystdef;
+DRV		BurnDrvmd_mystdefs;
 DRV		BurnDrvnes_mysticorigins;
 DRV		BurnDrvMysticrib;
 DRV		BurnDrvMysticri;
@@ -8519,6 +8544,7 @@ DRV		BurnDrvMystwarra;
 DRV		BurnDrvMystwarr;
 DRV		BurnDrvMystwarrj;
 DRV		BurnDrvMystwarru;
+DRV		BurnDrvmd_mysticfs;
 DRV		BurnDrvmd_mysticf;
 DRV		BurnSpecMyth;
 DRV		BurnDrvMSX_mythos;
@@ -9100,6 +9126,7 @@ DRV		BurnDrvnmaster;
 DRV		BurnDrvOnna34ra;
 DRV		BurnDrvOnna34ro;
 DRV		BurnDrvmd_onslau;
+DRV		BurnDrvmd_onslaus;
 DRV		BurnDrvnes_onyankotown;
 DRV		BurnSpecOoze;
 DRV		BurnDrvCoozumou;
@@ -9202,13 +9229,17 @@ DRV		BurnDrvMSX_outroyd;
 DRV		BurnSpecOutrun;
 DRV		BurnDrvmd_outrun;
 DRV		BurnDrvmd_outrunac;
+DRV		BurnDrvmd_outruns;
 DRV		BurnDrvmd_outrunj;
 DRV		BurnDrvmd_outr2019;
+DRV		BurnDrvmd_outr2019s;
 DRV		BurnDrvmd_outr2019j;
 DRV		BurnDrvmd_outr2019u;
 DRV		BurnDrvmd_outr2019up;
 DRV		BurnSpecOutruneu;
+DRV		BurnDrvmd_orunnerss;
 DRV		BurnDrvmd_orunnersj;
+DRV		BurnDrvmd_orunnershr;
 DRV		BurnDrvmd_orunners;
 DRV		BurnDrvnes_overhorizon;
 DRV		BurnDrvovertop;
@@ -12886,6 +12917,7 @@ DRV		BurnDrvnes_smbspe;
 DRV		BurnDrvnes_smbspex1;
 DRV		BurnDrvfds_supermarbro;
 DRV		BurnDrvfds_supermarbro2;
+DRV		BurnDrvnes_smbunldlx;
 DRV		BurnDrvnes_supermarwor;
 DRV		BurnDrvmd_smario64h;
 DRV		BurnDrvmd_smario64;
@@ -21646,6 +21678,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHero,				// Hero [Parent set for working drivers, NOT WORKING]
 	&BurnDrvHerodku,			// Hero in the Castle of Doom (DK conversion not encrypted)
 	&BurnDrvHerodk,				// Hero in the Castle of Doom (DK conversion)
+	&BurnDrvnes_heroqueste,		// Hero Quest (Europe) (Prototype)
+	&BurnDrvnes_heroquest,		// Hero Quest (USA) (Prototype)
+	&BurnSpecHeroquestwitchlord,// Hero Quest - Return of the Witch Lord
+	&BurnSpecHeroquest,			// Hero Quest
 	&BurnDrvsms_had,			// Heroes Against Demons (HB, v1.03)
 	&BurnDrvcv_heroesar,		// Heroes Arena (HB)
 	&BurnDrvMSX_heroesarena,	// Heroes Arena (HB)
@@ -23558,6 +23594,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mastechuanddruhu,// Master Chu and the Drunkard Hu (USA) (Unl)
 	&BurnDrvgg_mastdark,		// Master of Darkness (Euro)
 	&BurnDrvsms_mastdark,		// Master of Darkness (Euro, Bra)
+	&BurnDrvmd_masterms,		// Master of Monsters (Hack, Spanish)
 	&BurnDrvmd_mastermj,		// Master of Monsters (Jpn)
 	&BurnDrvmd_masterm,			// Master of Monsters (USA)
 	&BurnDrvMSX_mastlamp,		// Master of the Lamps (Euro)
@@ -23598,6 +23635,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmazingerj,			// Mazinger Z (Japan, ver. 94/06/27)
 	&BurnDrvmazinger,			// Mazinger Z (World, ver. 94/06/27)
 	&BurnDrvmd_mcdonald,		// McDonald's Treasure Land Adventure (Euro)
+	&BurnDrvmd_mcdonalds,		// Mcdonald's Treasure Land Adventure (Hack, Spanish)
 	&BurnDrvmd_mcdonaldj,		// McDonald's Treasure Land Adventure (Jpn)
 	&BurnDrvmd_mcdonaldjp,		// McDonald's Treasure Land Adventure (Jpn, Prototype)
 	&BurnDrvmd_mcdonaldu,		// McDonald's Treasure Land Adventure (USA)
@@ -23636,6 +23674,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMegaman,			// Mega Man - the power battle (951006 USA)
 	&BurnDrvCpsMmancp2u,		// Mega Man - The Power Battle (951006 USA, SAMPLE Version)
 	&BurnDrvmd_megamaneu,		// Mega Man - The Wily Wars (Euro)
+	&BurnDrvmd_megamans,		// Mega Man - The Wily Wars (Hack, Spanish)
 	&BurnDrvmd_megaman,			// Mega Man - The Wily Wars (USA)
 	&BurnDrvnes_megaman2,		// Mega Man 2 (USA)
 	&BurnDrvCpsMegaman2a,		// Mega Man 2 - the power fighters (960708 Asia)
@@ -23655,6 +23694,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_megaswivb,		// Mega SWIV (Euro, Pirate)
 	&BurnDrvmd_megaswivci,		// Mega SWIV (Hack, Color Improvement v1.05)
 	&BurnDrvmd_megaturr,		// Mega Turrican (Euro)
+	&BurnDrvmd_megaturrs,		// Mega Turrican (Hack, Spanish)
 	&BurnDrvmd_megaturru,		// Mega Turrican (USA)
 	&BurnDrvCpsMtwins,			// Mega Twins (chiki chiki boys 900619 etc)
 	&BurnDrvMegazoneh,			// Mega Zone (program code H)
@@ -23706,6 +23746,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMercsu,			// Mercs (900608 USA)
 	&BurnDrvsms_mercs,			// Mercs (Euro, Bra)
 	&BurnDrvmd_mercs,			// Mercs (Euro, USA) ~ Senjou no Ookami II (Jpn)
+	&BurnDrvmd_mercss,			// Mercs (Hack, Spanish)
 	&BurnSpecmercs,				// Mercs
 	&BurnSpecmerlin_128,		// Merlin (128K)
 	&BurnSpecmerlin,			// Merlin (Alternative)(48K)
@@ -23794,6 +23835,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_michaengdai,	// Michael English Daibouken (Japan)
 	&BurnDrvMWalkbl2,			// Michael Jackson's Moonwalker (bootleg)
 	&BurnDrvsms_mwalk,			// Michael Jackson's Moonwalker (Euro, USA, Bra, Kor)
+	&BurnDrvmd_mwalks,			// Michael Jackson's Moonwalker (Hack, Spanish)
 	&BurnDrvMWalkjd,			// Michael Jackson's Moonwalker (Japan) (bootleg of FD1094/8751 317-0157 set)
 	&BurnDrvMWalkj,				// Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-0157)
 	&BurnDrvMWalk,				// Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)
@@ -23806,11 +23848,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMichelfutbolchamp,	// Michel Futbol Master - Championship
 	&BurnSpecMichelfutbolskills,// Michel Futbol Master - Super Skills
 	&BurnDrvmd_mickmack,		// Mick & Mack as the Global Gladiators (Euro)
+	&BurnDrvmd_mickmacks,		// Mick & Mack as the Global Gladiators (Hack, Spanish)
 	&BurnDrvmd_mickmacku,		// Mick & Mack as the Global Gladiators (USA)
 	&BurnDrvmd_mickmackup,		// Mick & Mack as the Global Gladiators (USA, Prototype)
 	&BurnDrvsms_mickmack,		// Mick and Mack as the Global Gladiators (Euro, Bra)
 	&BurnDrvgg_mickmack,		// Mick and Mack as the Global Gladiators (Euro, USA)
 	&BurnDrvmd_mmania,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Euro)
+	&BurnDrvmd_mmanias,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Hack, Spanish)
 	&BurnDrvmd_mmaniaj,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Jpn)
 	&BurnDrvmd_mmaniau,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA)
 	&BurnDrvmd_mmaniaup,		// Mickey Mania - The Timeless Adventures of Mickey Mouse (USA, Prototype)
@@ -23830,7 +23874,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_micromac,		// Micro Machines (Euro, USA)
 	&BurnDrvmd_micromacb,		// Micro Machines (Euro, USA, Alt 2)
 	&BurnDrvmd_micromaca,		// Micro Machines (Euro, USA, Alt)
+	&BurnDrvmd_micromacs,		// Micro Machines (Hack, Spanish)
 	&BurnDrvnes_micromachines,	// Micro Machines (USA) (Unl)
+	&BurnDrvmd_microm96s,		// Micro Machines - Turbo Tournament '96 (Hack, Spanish)
 	&BurnDrvgg_micromc2,		// Micro Machines 2 - Turbo Tournament (Euro)
 	&BurnDrvmd_micromc2,		// Micro Machines 2 - Turbo Tournament (Euro, J-Cart)
 	&BurnDrvmd_micromc2a,		// Micro Machines 2 - Turbo Tournament (Euro, J-Cart, Alt)
@@ -23845,6 +23891,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_midbuild,		// Midnight Building (Jpn)
 	&BurnSpecmresist,			// Midnight Resistance (128K)
 	&BurnSpecmresist_48,		// Midnight Resistance (48K)
+	&BurnDrvmd_midress,			// Midnight Resistance (Hack, Spanish)
 	&BurnDrvMidresj,			// Midnight Resistance (Japan)
 	&BurnDrvmd_midresj,			// Midnight Resistance (Jpn)
 	&BurnDrvMidresu,			// Midnight Resistance (US)
@@ -23870,6 +23917,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMimonkey,			// Mighty Monkey
 	&BurnDrvmd_mmpr,			// Mighty Morphin Power Rangers (Euro)
 	&BurnDrvgg_mmpr,			// Mighty Morphin Power Rangers (Euro, USA)
+	&BurnDrvmd_mmprs,			// Mighty Morphin Power Rangers (Hack, Spanish)
 	&BurnDrvmd_mmprp6,			// Mighty Morphin Power Rangers (Prototype, 19940708)
 	&BurnDrvgg_mmprp,			// Mighty Morphin Power Rangers (Prototype, 19940716)
 	&BurnDrvmd_mmprp5,			// Mighty Morphin Power Rangers (Prototype, 19940718)
@@ -23881,6 +23929,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mmprfe,			// Mighty Morphin Power Rangers - The Fighting Edition (Rus)
 	&BurnDrvmd_mmprtm,			// Mighty Morphin Power Rangers - The Movie (Euro)
 	&BurnDrvgg_mmprtm,			// Mighty Morphin Power Rangers - The Movie (Euro, USA)
+	&BurnDrvmd_mmprtms,			// Mighty Morphin Power Rangers - The Movie (Hack, Spanish)
 	&BurnDrvgg_mmprtmp,			// Mighty Morphin Power Rangers - The Movie (Prototype, 19950530)
 	&BurnDrvmd_mmprtmu,			// Mighty Morphin Power Rangers - The Movie (USA)
 	&BurnDrvmd_mmprtmp4,		// Mighty Morphin Power Rangers - The Movie (USA, Prototype, 19950713)
@@ -24045,6 +24094,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_monstwar,		// Monster Truck Wars (Euro, USA)
 	&BurnDrvgg_mworld2,			// Monster World II - Dragon no Wana (Jpn)
 	&BurnDrvmd_mworld4eng,		// Monster World IV (Hack, English v2.2)
+	&BurnDrvmd_mworld4s,		// Monster World IV (Hack, Spanish)
 	&BurnDrvmd_mworld4,			// Monster World IV (Jpn)
 	&BurnDrvmd_mworld4c,		// Monster World IV (T-Chi, v2)
 	&BurnDrvmd_mworld4eng2,		// Monster World IV (USA, Europe) (En,Ja) (Virtual Console)
@@ -24132,6 +24182,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mortadelo2,		// Mortadelo y Filemon II - Safari Callejero (Spa)
 	&BurnDrvsms_mk,				// Mortal Kombat (Euro, Bra)
 	&BurnDrvgg_mk,				// Mortal Kombat (Euro, USA, v2.6)
+	&BurnDrvmd_mks,				// Mortal Kombat (Hack, Spanish)
 	&BurnDrvgg_mkj,				// Mortal Kombat (Jpn, v3.3)
 	&BurnDrvMkr4,				// Mortal Kombat (rev 4.0 T-Unit 02/11/93)
 	&BurnDrvMk,					// Mortal Kombat (rev 5.0 T-Unit 03/19/93)
@@ -24160,6 +24211,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMk2r32e,			// Mortal Kombat II (rev L3.2 (European))
 	&BurnDrvMk2r42,				// Mortal Kombat II (rev L4.2, hack)
 	&BurnDrvMk2r91,				// Mortal Kombat II (rev L9.1, hack)
+	&BurnDrvmd_mk2wuec,			// Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors)
+	&BurnDrvmd_mk2wus,			// Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)
 	&BurnDrvmd_mk2wu,			// Mortal Kombat II (World) Unlimited (Hack, v1.0)
 	&BurnDrvgg_mk2,				// Mortal Kombat II (World)
 	&BurnDrvmd_mk2,				// Mortal Kombat II (World)
@@ -24242,6 +24295,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmrlo,				// Mr. Lo!
 	&BurnDrvMSX_mrmole,			// Mr. Mole (HB)
 	&BurnDrvmd_mrnutz,			// Mr. Nutz (Euro)
+	&BurnDrvmd_mrnutzs,			// Mr. Nutz (Hack, Spanish)
 	&BurnDrvmd_mrnutz2,			// Mr. Nutz - Hoppin' Mad (Prototype)
 	&BurnDrvnes_mrsplash,		// Mr. Splash (HB)
 	&BurnDrvmrtnt,				// Mr. TNT
@@ -24257,6 +24311,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmspacmab2,			// Ms. Pac-Man (bootleg, set 2)
 	&BurnDrvsms_mspacman,		// Ms. Pac-Man (Euro, Bra)
 	&BurnDrvmd_mspacman,		// Ms. Pac-Man (Euro, USA)
+	&BurnDrvmd_mspacmans,		// Ms. Pac-Man (Hack, Spanish)
 	&BurnDrvmspacmbmc,			// Ms. Pac-Man (Marti Colls bootleg)
 	&BurnDrvmd_mspacmanpir,		// Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1)
 	&BurnDrvgg_mspacman,		// Ms. Pac-Man (USA)
@@ -24320,6 +24375,7 @@ static struct BurnDriver* pDriver[] = {
 //	&BurnDrvCpsMbombrdh,		// Muscle Bomber Duo - ultimate team battle (931206 Hispanic) [no comment]
 //	&BurnDrvCpsMbombrdu,		// Muscle Bomber Duo - ultimate team battle (931206 USA) [no comment]
 	&BurnDrvCpsMbombrd,			// Muscle Bomber Duo - ultimate team battle (931206 World)
+	&BurnDrvmd_mushas,			// Musha - Metallic Uniframe Super Hybrid Armor (Hack, Spanish)
 	&BurnDrvmd_musha,			// MUSHA - Metallic Uniframe Super Hybrid Armor (USA)
 	&BurnDrvmd_mushaj,			// Musha Aleste - Full Metal Fighter Ellinor (Jpn)
 	&BurnDrvsg1k_musicj,		// Music (Jpn)
@@ -24364,6 +24420,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_mystewordiz,	// Mystery World Dizzy (HB)
 	&BurnDrvmd_mystdefa,		// Mystic Defender (Euro, USA)
 	&BurnDrvmd_mystdef,			// Mystic Defender (Euro, USA, Rev. A)
+	&BurnDrvmd_mystdefs,		// Mystic Defender (Hack, Spanish)
 	&BurnDrvnes_mysticorigins,	// Mystic Origins (HB)
 	&BurnDrvMysticrib,			// Mystic Riders (bootleg?)
 	&BurnDrvMysticri,			// Mystic Riders (World)
@@ -24372,6 +24429,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMystwarr,			// Mystic Warriors (ver EAA)
 	&BurnDrvMystwarrj,			// Mystic Warriors (ver JAA)
 	&BurnDrvMystwarru,			// Mystic Warriors (ver UAA)
+	&BurnDrvmd_mysticfs,		// Mystical Fighter (Hack, Spanish)
 	&BurnDrvmd_mysticf,			// Mystical Fighter (USA)
 	&BurnSpecMyth,				// Myth - History In The Making (128K)
 	&BurnDrvMSX_mythos,			// Mythos (Euro)
@@ -24953,6 +25011,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOnna34ra,			// Onna Sansirou - Typhoon Gal (bootleg)
 	&BurnDrvOnna34ro,			// Onna Sansirou - Typhoon Gal
 	&BurnDrvmd_onslau,			// Onslaught (Euro, USA)
+	&BurnDrvmd_onslaus,			// Onslaught (Hack, Spanish)
 	&BurnDrvnes_onyankotown,	// Onyanko Town (Japan)
 	&BurnSpecOoze,				// Ooze (HB)
 	&BurnDrvCoozumou,			// Oozumou - The Grand Sumo (DECO Cassette) (Japan)
@@ -25055,13 +25114,17 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecOutrun,			// Outrun (128K)
 	&BurnDrvmd_outrun,			// OutRun (Euro, USA)
 	&BurnDrvmd_outrunac,		// OutRun (Hack, Arcade Colors v2.1)
+	&BurnDrvmd_outruns,			// Outrun (Hack, Spanish)
 	&BurnDrvmd_outrunj,			// OutRun (Jpn)
 	&BurnDrvmd_outr2019,		// OutRun 2019 (Euro)
+	&BurnDrvmd_outr2019s,		// Outrun 2019 (Hack, Spanish)
 	&BurnDrvmd_outr2019j,		// OutRun 2019 (Jpn)
 	&BurnDrvmd_outr2019u,		// OutRun 2019 (USA)
 	&BurnDrvmd_outr2019up,		// OutRun 2019 (USA, Prototype)
 	&BurnSpecOutruneu,			// Outrun Europa (128K)
+	&BurnDrvmd_orunnerss,		// OutRunners (Hack, Spanish)
 	&BurnDrvmd_orunnersj,		// OutRunners (Jpn)
+	&BurnDrvmd_orunnershr,		// OutRunners (USA) (Hack, Restoration)
 	&BurnDrvmd_orunners,		// OutRunners (USA)
 	&BurnDrvnes_overhorizon,	// Over Horizon (Japan)
 	&BurnDrvovertop,			// Over Top
@@ -28739,6 +28802,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smbspex1,		// Super Mario Bros. Special X1 (Hack)
 	&BurnDrvfds_supermarbro,	// Super Mario Brothers (Japan)
 	&BurnDrvfds_supermarbro2,	// Super Mario Brothers 2 (Japan)
+	&BurnDrvnes_smbunldlx,		// Super Mario Unlimited Deluxe (Hack)
 	&BurnDrvnes_supermarwor,	// Super Mario World (Unl)
 	&BurnDrvmd_smario64h,		// Super Mario World 64 (Hacked Protection)
 	&BurnDrvmd_smario64,		// Super Mario World 64 [no comment, NOT WORKING]

@@ -8058,6 +8058,13 @@
 		<rom name="Masiaka-by-Resistance-2017.bin" size="3145728" crc="d237b970"/>
 		<driver status="good"/>
 	</game>
+	<game name="masterms" cloneof="masterm" romof="masterm">
+		<description>Master of Monsters (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="master of monsters (Hack, Spanish).bin" size="524288" crc="fc206e6b"/>
+		<driver status="good"/>
+	</game>
 	<game name="mastermj" cloneof="masterm" romof="masterm">
 		<description>Master of Monsters (Jpn)</description>
 		<year>1991</year>
@@ -8126,6 +8133,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mcdonald's treasure land adventure (euro).bin" size="1048576" crc="6ab6a8da"/>
+		<driver status="good"/>
+	</game>
+	<game name="mcdonalds" cloneof="mcdonald" romof="mcdonald">
+		<description>Mcdonald's Treasure Land Adventure (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Treasure</manufacturer>
+		<rom name="mcdonald's treasure land adventure (Hack, Spanish).bin" size="1048576" crc="1245b748"/>
 		<driver status="good"/>
 	</game>
 	<game name="mcdonaldj" cloneof="mcdonald" romof="mcdonald">
@@ -8247,6 +8261,13 @@
 		<rom name="mega man - the wily wars (euro).bin" size="2097152" crc="dcf6e8b2"/>
 		<driver status="good"/>
 	</game>
+	<game name="megamans" cloneof="megaman" romof="megaman">
+		<description>Mega Man - The Wily Wars (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="mega man - the wily wars (Hack, Spanish).bin" size="2097152" crc="c6c7f5b1"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaman">
 		<description>Mega Man - The Wily Wars (USA)</description>
 		<year>1994</year>
@@ -8294,6 +8315,13 @@
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="mega turrican (euro).bin" size="1048576" crc="b1d15d0f"/>
+		<driver status="good"/>
+	</game>
+	<game name="megaturrs" cloneof="megaturr" romof="megaturr">
+		<description>Mega Turrican (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="mega turrican (Hack, Spanish).bin" size="1048576" crc="b2901f8e"/>
 		<driver status="good"/>
 	</game>
 	<game name="megaturru" cloneof="megaturr" romof="megaturr">
@@ -8380,6 +8408,13 @@
 		<rom name="mpr-14242.bin" size="1048576" crc="16113a72"/>
 		<driver status="good"/>
 	</game>
+	<game name="mercss" cloneof="mercs" romof="mercs">
+		<description>Mercs (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="mercs (Hack, Spanish).bin" size="1048576" crc="db0a96e0"/>
+		<driver status="good"/>
+	</game>
 	<game name="mb2277">
 		<description>Metal Blast 2277 (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -8408,6 +8443,13 @@
 		<rom name="Metal Sonic Hyperdrive (V4.2) (Hack By Darkon).bin" size="1048576" crc="195219e0"/>
 		<driver status="good"/>
 	</game>
+	<game name="mwalks" cloneof="mwalk" romof="mwalk">
+		<description>Michael Jackson's Moonwalker (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="michael jackson's moonwalker (Hack, Spanish).bin" size="524288" crc="6d849e61"/>
+		<driver status="good"/>
+	</game>
 	<game name="mwalk1" cloneof="mwalk" romof="mwalk">
 		<description>Michael Jackson's Moonwalker (World)</description>
 		<year>1990</year>
@@ -8429,6 +8471,13 @@
 		<rom name="mpr-15237.bin" size="1048576" crc="5c218c6a"/>
 		<driver status="good"/>
 	</game>
+	<game name="mickmacks" cloneof="mickmack" romof="mickmack">
+		<description>Mick &amp; Mack as the Global Gladiators (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer> Virgin Games</manufacturer>
+		<rom name="mick &amp; mack as the global gladiators (Hack, Spanish).bin" size="1048576" crc="12236d34"/>
+		<driver status="good"/>
+	</game>
 	<game name="mickmacku" cloneof="mickmack" romof="mickmack">
 		<description>Mick &amp; Mack as the Global Gladiators (USA)</description>
 		<year>1992</year>
@@ -8448,6 +8497,13 @@
 		<year>1994</year>
 		<manufacturer>Sony Imagesoft</manufacturer>
 		<rom name="mpr-17089.bin" size="2097152" crc="cb5a8b85"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmanias" cloneof="mmania" romof="mmania">
+		<description>Mickey Mania - The Timeless Adventures of Mickey Mouse (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Sony Imagesoft</manufacturer>
+		<rom name="mickey mania - the timeless adventures of mickey mouse (Hack, Spanish).bin" size="2097152" crc="a65dae53"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmaniaj" cloneof="mmania" romof="mmania">
@@ -8506,6 +8562,20 @@
 		<rom name="micro machines (euro, usa) (alt).bin" size="524288" crc="e5cf560d"/>
 		<driver status="good"/>
 	</game>
+	<game name="micromacs" cloneof="micromac" romof="micromac">
+		<description>Micro Machines (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="micro machines (Hack, Spanish).bin" size="524288" crc="3ba6932d"/>
+		<driver status="good"/>
+	</game>
+	<game name="microm96s" cloneof="microm96" romof="microm96">
+		<description>Micro Machines - Turbo Tournament '96 (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="micro machines - turbo tournament '96 (Hack, Spanish).bin" size="1048576" crc="7ceb363d"/>
+		<driver status="good"/>
+	</game>
 	<game name="micromc2">
 		<description>Micro Machines 2 - Turbo Tournament (Euro, J-Cart)</description>
 		<year>1994</year>
@@ -8539,6 +8609,13 @@
 		<year>1995</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="mm96mdeddb.bin" size="1048576" crc="23319d0d"/>
+		<driver status="good"/>
+	</game>
+	<game name="midress" cloneof="midres" romof="midres">
+		<description>Midnight Resistance (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="midnight resistance (Hack, Spanish).bin" size="1048576" crc="fb38b80c"/>
 		<driver status="good"/>
 	</game>
 	<game name="midresj" cloneof="midres" romof="midres">
@@ -8595,6 +8672,13 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mighty morphin power rangers (euro).bin" size="2097152" crc="7f96e663"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmprs" cloneof="mmpr" romof="mmpr">
+		<description>Mighty Morphin Power Rangers (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Banpresto</manufacturer>
+		<rom name="mighty morphin power rangers (Hack, Spanish).bin" size="2097152" crc="5a34dc26"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprp6" cloneof="mmpr" romof="mmpr">
@@ -8658,6 +8742,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mighty morphin power rangers - the movie (euro).bin" size="2097152" crc="254a4972"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmprtms" cloneof="mmprtm" romof="mmprtm">
+		<description>Mighty Morphin Power Rangers - The Movie (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Banpresto</manufacturer>
+		<rom name="mighty morphin power rangers - the movie (Hack, Spanish).bin" size="2097152" crc="cb3852b1"/>
 		<driver status="good"/>
 	</game>
 	<game name="mmprtmu" cloneof="mmprtm" romof="mmprtm">
@@ -8793,6 +8884,13 @@
 		<rom name="Monster World IV (J) [!] [T-Eng].bin" size="2097152" crc="c94a35bf"/>
 		<driver status="good"/>
 	</game>
+	<game name="mworld4s" cloneof="mworld4" romof="mworld4">
+		<description>Monster World IV (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="monster world iv (Hack, Spanish).bin" size="2097152" crc="7dbbfa4a"/>
+		<driver status="good"/>
+	</game>
 	<game name="mworld4">
 		<description>Monster World IV (Jpn)</description>
 		<year>1994</year>
@@ -8819,6 +8917,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="monsters inc. (unl).bin" size="524288" crc="3f4657d5"/>
+		<driver status="good"/>
+	</game>
+	<game name="mks" cloneof="mk" romof="mk">
+		<description>Mortal Kombat (Hack, Spanish)</description>
+		<year>2013</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="mortal kombat (Hack, Spanish).bin" size="2097152" crc="75046fcf"/>
 		<driver status="good"/>
 	</game>
 	<game name="mka" cloneof="mk" romof="mk">
@@ -8856,6 +8961,20 @@
 		<rom name="Mortal Kombat 3 Mini-Hack.bin" size="4194304" crc="d925aa80"/>
 		<driver status="good"/>
 	</game>
+	<game name="mk2wuec" cloneof="mk2" romof="mk2">
+		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors)</description>
+		<year>2013</year>
+		<manufacturer>2011 Smoke</manufacturer>
+		<rom name="Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Enhanced Colors).bin" size="4136840" crc="1867b4d9"/>
+		<driver status="good"/>
+	</game>
+	<game name="mk2wus" cloneof="mk2" romof="mk2">
+		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)</description>
+		<year>2013</year>
+		<manufacturer>2011 Smoke</manufacturer>
+		<rom name="Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish).bin" size="4136840" crc="40b29dd4"/>
+		<driver status="good"/>
+	</game>
 	<game name="mk2wu" cloneof="mk2" romof="mk2">
 		<description>Mortal Kombat II (World) Unlimited (Hack, v1.0)</description>
 		<year>1994</year>
@@ -8884,6 +9003,13 @@
 		<rom name="mr. nutz (euro).bin" size="1048576" crc="0786ea0b"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrnutzs" cloneof="mrnutz" romof="mrnutz">
+		<description>Mr. Nutz (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="mr. nutz (Hack, Spanish).bin" size="1048576" crc="f032c867"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrnutz2">
 		<description>Mr. Nutz - Hoppin' Mad (Prototype)</description>
 		<year>1994</year>
@@ -8896,6 +9022,13 @@
 		<year>1991</year>
 		<manufacturer>Tengen ~ Time Warner Interactive</manufacturer>
 		<rom name="ms. pac-man (euro, usa).bin" size="131072" crc="af041be6"/>
+		<driver status="good"/>
+	</game>
+	<game name="mspacmans" cloneof="mspacman" romof="mspacman">
+		<description>Ms. Pac-Man (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="ms. pac-man (Hack, Spanish).bin" size="131072" crc="f9148289"/>
 		<driver status="good"/>
 	</game>
 	<game name="mspacmanpir" cloneof="mspacman" romof="mspacman">
@@ -8931,6 +9064,13 @@
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="muhammad ali heavyweight boxing (usa) (beta).bin" size="1048576" crc="7b852653"/>
+		<driver status="good"/>
+	</game>
+	<game name="mushas" cloneof="musha" romof="musha">
+		<description>Musha - Metallic Uniframe Super Hybrid Armor (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Seismic</manufacturer>
+		<rom name="musha - metallic uniframe super hybrid armor (Hack, Spanish).bin" size="524288" crc="8013ed8b"/>
 		<driver status="good"/>
 	</game>
 	<game name="musha">
@@ -8980,6 +9120,20 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12707a.bin" size="524288" crc="50fd5d93"/>
+		<driver status="good"/>
+	</game>
+	<game name="mystdefs" cloneof="mystdef" romof="mystdef">
+		<description>Mystic Defender (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="mystic defender (Hack, Spanish).bin" size="524288" crc="2df12159"/>
+		<driver status="good"/>
+	</game>
+	<game name="mysticfs" cloneof="mysticf" romof="mysticf">
+		<description>Mystical Fighter (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Dreamworks/NCS</manufacturer>
+		<rom name="mystical fighter (Hack, Spanish).bin" size="524288" crc="56c54ae8"/>
 		<driver status="good"/>
 	</game>
 	<game name="mysticf">
@@ -10042,6 +10196,13 @@
 		<rom name="onslaught (euro, usa).bin" size="524288" crc="9f19d6df"/>
 		<driver status="good"/>
 	</game>
+	<game name="onslaus" cloneof="onslau" romof="onslau">
+		<description>Onslaught (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Ballistic</manufacturer>
+		<rom name="onslaught (Hack, Spanish).bin" size="524288" crc="1e034ff6"/>
+		<driver status="good"/>
+	</game>
 	<game name="opeurope">
 		<description>Operation Europe - Path to Victory 1939-45 (USA)</description>
 		<year>1994</year>
@@ -10098,6 +10259,13 @@
 		<rom name="outrun (arcade colors)(v2.1).bin" size="1048576" crc="921e6107"/>
 		<driver status="good"/>
 	</game>
+	<game name="outruns" cloneof="outrun" romof="outrun">
+		<description>Outrun (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="outrun (Hack, Spanish).bin" size="1048576" crc="85774b3f"/>
+		<driver status="good"/>
+	</game>
 	<game name="outrunj" cloneof="outrun" romof="outrun">
 		<description>OutRun (Jpn)</description>
 		<year>1991</year>
@@ -10110,6 +10278,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15482.bin" size="1048576" crc="5cb3536a"/>
+		<driver status="good"/>
+	</game>
+	<game name="outr2019s" cloneof="outr2019" romof="outr2019">
+		<description>Outrun 2019 (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="outrun 2019 (Hack, Spanish).bin" size="1048576" crc="1a831f41"/>
 		<driver status="good"/>
 	</game>
 	<game name="outr2019j" cloneof="outr2019" romof="outr2019">
@@ -10133,11 +10308,25 @@
 		<rom name="outrun 2019 (usa) (beta).bin" size="1048576" crc="d2ecddfa"/>
 		<driver status="good"/>
 	</game>
+	<game name="orunnerss" cloneof="orunners" romof="orunners">
+		<description>OutRunners (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="outrunners (Hack, Spanish).bin" size="2097152" crc="3a0b4aba"/>
+		<driver status="good"/>
+	</game>
 	<game name="orunnersj" cloneof="orunners" romof="orunners">
 		<description>OutRunners (Jpn)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="outrunners (jpn).bin" size="2097152" crc="e164a09f"/>
+		<driver status="good"/>
+	</game>
+	<game name="orunnershr" cloneof="orunners" romof="orunners">
+		<description>OutRunners (USA) (Hack, Restoration)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="outrunners (usa) (Hack, Restoration).bin" size="2097152" crc="e280aada"/>
 		<driver status="good"/>
 	</game>
 	<game name="orunners">

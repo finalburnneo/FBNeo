@@ -1892,7 +1892,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-10-25| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-11-21| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -9039,7 +9039,7 @@ This list contains all games supported by FinalBurn Neo.
 | orlegend	|  	| Oriental Legend - Xi Yo Gi Shi Re Zuang (V126)	| 		| 1997	| IGS		| PolyGameMaster| 					|
 | oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
-| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-11-19| Hack		| PolyGameMaster| 					|
+| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-11-23| Hack		| PolyGameMaster| 					|
 | oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-08-03| Hack		| PolyGameMaster| 					|
 | olds100a	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|

@@ -4,11 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"
-#define USE_SAMPLE_HACK // allow use of sampled SFX.
-
-#ifdef USE_SAMPLE_HACK
 #include "samples.h"
-#endif
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -26,20 +22,19 @@ static UINT8 *Prom;
 static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
-static INT16 *dacbuf; // for dc offset removal
-static INT16 dac_lastin;
-static INT16 dac_lastout;
-
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvReset;
 static UINT8 DrvDip[2];
 
-static INT32 palettebnk, scrolly, flip;
+static INT32 palettebnk, scrolly, flipped;
 static INT32 prevcoin;
 static INT32 irqmask;
 
 static UINT32 bHasSamples = 0;
+
+// for samples..
+static UINT8 lastdata = 0;
 
 static struct BurnInputInfo CheekymsInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"   },
@@ -53,8 +48,8 @@ static struct BurnInputInfo CheekymsInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 right"  },
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1" },
 
-	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
 };
 
 STDINPUTINFO(Cheekyms)
@@ -62,40 +57,38 @@ STDINPUTINFO(Cheekyms)
 
 static struct BurnDIPInfo CheekymsDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x75, NULL		},
+	{0x0a, 0xff, 0xff, 0x65, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0a, 0x01, 0x03, 0x00, "2"		},
-	{0x0a, 0x01, 0x03, 0x01, "3"		},
-	{0x0a, 0x01, 0x03, 0x02, "4"		},
-	{0x0a, 0x01, 0x03, 0x03, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x0a, 0x01, 0x03, 0x00, "2"				},
+	{0x0a, 0x01, 0x03, 0x01, "3"				},
+	{0x0a, 0x01, 0x03, 0x02, "4"				},
+	{0x0a, 0x01, 0x03, 0x03, "5"				},
 
-	{0   , 0xfe, 0   ,    3, "Coinage"		},
-	{0x0a, 0x01, 0x0c, 0x08, "2 Coins 1 Credits"		},
-	{0x0a, 0x01, 0x0c, 0x04, "1 Coin  1 Credits"		},
-	{0x0a, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    3, "Coinage"			},
+	{0x0a, 0x01, 0x0c, 0x08, "2 Coins 1 Credit"	},
+	{0x0a, 0x01, 0x0c, 0x04, "1 Coin  1 Credit"	},
+	{0x0a, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0a, 0x01, 0x10, 0x10, "Upright"		},
-	{0x0a, 0x01, 0x10, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x0a, 0x01, 0x10, 0x10, "Upright"			},
+	{0x0a, 0x01, 0x10, 0x00, "Cocktail"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0a, 0x01, 0x20, 0x00, "Off"		},
-	{0x0a, 0x01, 0x20, 0x20, "On"		},
+	{0x0a, 0x01, 0x20, 0x00, "Off"				},
+	{0x0a, 0x01, 0x20, 0x20, "On"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0a, 0x01, 0xc0, 0x40, "3000"		},
-	{0x0a, 0x01, 0xc0, 0x80, "4500"		},
-	{0x0a, 0x01, 0xc0, 0xc0, "6000"		},
-	{0x0a, 0x01, 0xc0, 0x00, "None"		},
+	{0x0a, 0x01, 0xc0, 0x40, "3000"				},
+	{0x0a, 0x01, 0xc0, 0x80, "4500"				},
+	{0x0a, 0x01, 0xc0, 0xc0, "6000"				},
+	{0x0a, 0x01, 0xc0, 0x00, "None"				},
 };
 
 STDDIPINFO(Cheekyms)
 
 static void __fastcall port_write(UINT16 port, UINT8 data)
 {
-	static UINT8 lastdata = 0;
-
 	port &= 0xff;
 
 	if (port >= 0x20 && port <= 0x3f) { // sprite ram
@@ -108,18 +101,21 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 		case 0x40:
 			if (data != lastdata)
 			{
-				if (data & 0x02) // short squeek / mouse counter
+				if (data & 0x02) // mystery squeek
 					BurnSamplePlay(0);
-				if (data & 0x04) // squeak
-					BurnSamplePlay(4);
-				if (data & 0x10) // dead.
-					BurnSamplePlay(0);
-				if (data & 0x20) // 
-					BurnSamplePlay(3);
-				if (data & 0x30) // dead.
-					BurnSamplePlay(2);
-				if (data & 0x40) // 
+				if (data & 0x04) // mouse squeak
 					BurnSamplePlay(1);
+				if (data & 0x08) // mystery dead
+					if (BurnSampleGetStatus(2) != SAMPLE_PLAYING) BurnSamplePlay(2);
+				if (data & 0x10) { // mouse dead.
+					if (BurnSampleGetStatus(3) != SAMPLE_PLAYING) BurnSamplePlay(3);
+				}
+				if (data & 0x20) { // hammer
+					BurnSamplePlay(4);
+				}
+				if (data & 0x40) // eating cheese
+					if (BurnSampleGetStatus(5) != SAMPLE_PLAYING) BurnSamplePlay(5);
+				// coin = 6
 			}
 			lastdata = data;
 
@@ -129,7 +125,7 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 		case 0x80:
 			palettebnk = (data >> 2) & 0x10;
 			scrolly = ((data >> 3) & 0x07);
-			flip = data & 0x80;
+			flipped = data & 0x80;
 			irqmask = data & 0x04;
 		return;
 	}
@@ -152,31 +148,21 @@ static UINT8 __fastcall port_read(UINT16 port)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (2500000.000 / (nBurnFPS / 100.000))));
-}
-
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	palettebnk = scrolly = flip = 0;
+	palettebnk = scrolly = flipped = 0;
 	prevcoin = 0;
 
-	dac_lastin = 0;
-	dac_lastout = 0;
+	lastdata = 0;
 
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
 	DACReset();
 
-#ifdef USE_SAMPLE_HACK
 	BurnSampleReset();
-#endif
 
 	HiscoreReset();
 
@@ -249,9 +235,6 @@ static INT32 MemIndex()
 	DrvSpriteRAM    = Next; Next += 0x00100;
 
 	RamEnd			= Next;
-
-	dacbuf          = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	MemEnd          = Next;
 
 	return 0;
@@ -268,20 +251,20 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{
-		if(BurnLoadRom(DrvROM + 0x0000,  0, 1)) return 1;
-		if(BurnLoadRom(DrvROM + 0x0800,  1, 1)) return 1;
-		if(BurnLoadRom(DrvROM + 0x1000,  2, 1)) return 1;
-		if(BurnLoadRom(DrvROM + 0x1800,  3, 1)) return 1;
+		if (BurnLoadRom(DrvROM + 0x0000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvROM + 0x0800,  1, 1)) return 1;
+		if (BurnLoadRom(DrvROM + 0x1000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvROM + 0x1800,  3, 1)) return 1;
 
-		if(BurnLoadRom(Gfx0 + 0x0000,  4, 1)) return 1;
-		if(BurnLoadRom(Gfx0 + 0x0800,  5, 1)) return 1;
+		if (BurnLoadRom(Gfx0 + 0x0000,  4, 1)) return 1;
+		if (BurnLoadRom(Gfx0 + 0x0800,  5, 1)) return 1;
 
-		if(BurnLoadRom(Gfx1 + 0x0000,  6, 1)) return 1;
-		if(BurnLoadRom(Gfx1 + 0x0800,  7, 1)) return 1;
+		if (BurnLoadRom(Gfx1 + 0x0000,  6, 1)) return 1;
+		if (BurnLoadRom(Gfx1 + 0x0800,  7, 1)) return 1;
 
-		if(BurnLoadRom(Prom + 0x0000,  8, 1)) return 1;
-		if(BurnLoadRom(Prom + 0x0020,  9, 1)) return 1;
-		if(BurnLoadRom(Prom + 0x0040,  10, 1)) return 1;
+		if (BurnLoadRom(Prom + 0x0000,  8, 1)) return 1;
+		if (BurnLoadRom(Prom + 0x0020,  9, 1)) return 1;
+		if (BurnLoadRom(Prom + 0x0040,  10, 1)) return 1;
 
 		palette_init();
 		gfx_decode();
@@ -296,25 +279,41 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvVidRAM,         0x3800, 0x3bff, MAP_RAM);
 	ZetClose();
 
-	DACInit(0, 0, 0, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 2500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	GenericTilesInit();
 
-#ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
 	bBurnSampleTrimSampleEnd = 1;
-	BurnSampleInit(1);
+	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
-    bHasSamples = BurnSampleGetStatus(0) != -1;
+
+	// mystery
+	BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+
+	// mouse dead
+	BurnSampleSetRoute(3, BURN_SND_SAMPLE_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(3, BURN_SND_SAMPLE_ROUTE_2, 0.20, BURN_SND_ROUTE_BOTH);
+
+	// eating cheese
+	BurnSampleSetRoute(5, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(5, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
+
+	// coin
+	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
+
+	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	if (!bHasSamples) { // Samples not found
 		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
 	} else {
 		bprintf(0, _T("Using Cheeky Mouse SFX samples!\n"));
 	}
-#endif
- 
+
 	DrvDoReset();
 
 	return 0;
@@ -324,14 +323,12 @@ static INT32 DrvExit()
 {
 	ZetExit();
 	DACExit();
-#ifdef USE_SAMPLE_HACK
 	BurnSampleExit();
-#endif
 	GenericTilesExit();
 
 	BurnFree(AllMem);
 
-	flip = scrolly = palettebnk = 0;
+	flipped = scrolly = palettebnk = 0;
 
 	return 0;
 }
@@ -341,7 +338,7 @@ static void draw_sprites()
 	for (INT32 offs = 0; offs < 0x20; offs += 4)
 	{
 		INT32 x, y, code, color;
-		UINT8 poffset = 0x10;
+		UINT8 poffset = 0x80;
 
 		if ((DrvSpriteRAM[offs + 3] & 0x08) == 0x00) continue;
 
@@ -352,24 +349,28 @@ static void draw_sprites()
 
 		if (x < 0 || y < -7 || x >= nScreenWidth || y >= nScreenHeight) continue;
 
+		if (flipped) {
+			x += -3;
+		}
+
 		if (DrvSpriteRAM[offs + 0] & 0x80)
 		{
-			if (!flip)
+			if (!flipped)
 				code++;
 
-			Render16x16Tile_Mask_Clip(pTransDraw, code, x, y, color, 2, 0, poffset, Gfx1);
+			Draw16x16MaskTile(pTransDraw, code, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
 		}
 		else
 		{
 			if (DrvSpriteRAM[offs + 0] & 0x02)
 			{
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x20, x, y, color, 2, 0, poffset, Gfx1);
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x21, x + 0x10, y, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x20, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x21, x + 0x10, y, 0, 0, color, 2, 0, poffset, Gfx1);
 			}
 			else
 			{
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x20, x, y, color, 2, 0, poffset, Gfx1);
-				Render16x16Tile_Mask_Clip(pTransDraw, code | 0x21, x, y + 0x10, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x20, x, y, 0, 0, color, 2, 0, poffset, Gfx1);
+				Draw16x16MaskTile(pTransDraw, code | 0x21, x, y + 0x10, 0, 0, color, 2, 0, poffset, Gfx1);
 			}
 		}
 	}
@@ -378,24 +379,10 @@ static void draw_sprites()
 static void draw_tiles()
 {
 	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
-		INT32 sx, sy, man_area;
+		INT32 sx = offs % 32;
+		INT32 sy = offs / 32;
 
-		sx = offs % 32;
-		sy = offs / 32;
-
-		if (flip)
-		{
-			man_area = ((sy >=  5) && (sy <= 25) && (sx >=  8) && (sx <= 12));
-		}
-		else
-		{
-			man_area = ((sy >=  6) && (sy <= 26) && (sx >=  8) && (sx <= 12));
-		}
-
-		if (flip) {
-			sx = 31 - sx;
-			sy = 31 - sy;
-		}
+		INT32 man_area = ((sy >=  6) && (sy <= 26) && (sx >=  8) && (sx <= 12));
 
 		INT32 code = DrvVidRAM[offs];
 		INT32 color = palettebnk;
@@ -416,11 +403,16 @@ static void draw_tiles()
 				color = palettebnk | (sx >> 1);
 		}
 
+		if (flipped) {
+			sx = 31 - sx;
+			sy = 31 - sy;
+		}
+
 		sx *= 8;
 		sy = (sy * 8) - (man_area ? scrolly : 0);
 		sy -= 32; //offset
 
-		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, Gfx0);
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipped, flipped, color, 2, 0, 0, Gfx0);
 	}
 }
 
@@ -436,24 +428,11 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 2) draw_sprites();
 	if (nBurnLayer & 1) draw_tiles();
 
+	BurnTransferFlip(flipped, flipped); // unflip coctailmode
+
 	BurnTransferCopy(Palette);
 
 	return 0;
-}
-
-static void dcfilter_dac()
-{
-	for (INT32 i = 0; i < nBurnSoundLen; i++) {
-		INT16 r = dacbuf[i*2+0]; // dac is mono, ignore 'l'.
-		//INT16 l = dacbuf[i*2+1];
-
-		INT16 out = r - dac_lastin + 0.995 * dac_lastout;
-
-		dac_lastin = r;
-		dac_lastout = out;
-		pBurnSoundOut[i*2+0] = out;
-		pBurnSoundOut[i*2+1] = out;
-	}
 }
 
 static INT32 DrvFrame()
@@ -463,21 +442,31 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal = 2500000 / 60;
+	INT32 nCyclesTotal[1] = { 2500000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	ZetNewFrame();
 	ZetOpen(0);
 
 	if ((DrvJoy2[0]) && (prevcoin != DrvJoy2[0])) {
 		ZetNmi();
+		BurnSamplePlay(6); // coin
 	}
 	prevcoin = DrvJoy2[0] & 1;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 
 		if ((i == nInterleave-1) && irqmask)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	ZetClose();
 
@@ -486,12 +475,13 @@ static INT32 DrvFrame()
 	}
 	
 	if (pBurnSoundOut) {
-		DACUpdate(dacbuf, nBurnSoundLen);
-		dcfilter_dac();
-#ifdef USE_SAMPLE_HACK
-		if(bHasSamples)
-			BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-#endif
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		if (nSegmentLength) {
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnSampleRender(pSoundBuf, nSegmentLength);
+		}
+
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;
@@ -502,7 +492,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029736;
+		*pnMin = 0x029744;
 	}
 
 	if (nAction & ACB_VOLATILE) {
@@ -514,29 +504,27 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		DACScan(nAction, pnMin);
+		BurnSampleScan(nAction, pnMin);
 
-		SCAN_VAR(flip);
+		SCAN_VAR(flipped);
 		SCAN_VAR(palettebnk);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(irqmask);
-
-		SCAN_VAR(dac_lastin);
-		SCAN_VAR(dac_lastout);
+		SCAN_VAR(prevcoin);
+		SCAN_VAR(lastdata);
 	}
 
 	return 0;
 }
 
 static struct BurnSampleInfo CheekymsSampleDesc[] = {
-#ifdef USE_SAMPLE_HACK
-#if !defined ROM_VERIFY
-	{ "squeek", SAMPLE_NOLOOP },
-	{ "hammer", SAMPLE_NOLOOP },
-	{ "squeekdead", SAMPLE_NOLOOP },
-	{ "two", SAMPLE_NOLOOP },
-	{ "squeek2", SAMPLE_NOLOOP },
-#endif
-#endif
+	{ "mystery squeek",	SAMPLE_NOLOOP },
+	{ "mouse squeek",	SAMPLE_NOLOOP },
+	{ "mystery dead",	SAMPLE_NOLOOP },
+	{ "mouse dead",		SAMPLE_NOLOOP },
+	{ "hammer",			SAMPLE_NOLOOP },
+	{ "eating cheese",	SAMPLE_NOLOOP },
+	{ "coin",			SAMPLE_NOLOOP },
 	{ "", 0 }
 };
 
@@ -546,20 +534,20 @@ STD_SAMPLE_FN(Cheekyms)
 // Cheeky Mouse
 
 static struct BurnRomInfo cheekymsRomDesc[] = {
-	{ "cm03.c5",	0x0800, 0x1ad0cb40, 1 }, //  0 maincpu
-	{ "cm04.c6",	0x0800, 0x2238f607, 1 }, //  1
-	{ "cm05.c7",	0x0800, 0x4169eba8, 1 }, //  2
-	{ "cm06.c8",	0x0800, 0x7031660c, 1 }, //  3
+	{ "cm03.c5",	0x0800, 0x1ad0cb40, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu (z80)
+	{ "cm04.c6",	0x0800, 0x2238f607, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cm05.c7",	0x0800, 0x4169eba8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cm06.c8",	0x0800, 0x7031660c, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cm01.c1",	0x0800, 0x26f73bd7, 2 }, //  4 gfx1
-	{ "cm02.c2",	0x0800, 0x885887c3, 2 }, //  5
+	{ "cm01.c1",	0x0800, 0x26f73bd7, 2 | BRF_GRA }, //  4 gfx1 (tiles)
+	{ "cm02.c2",	0x0800, 0x885887c3, 2 | BRF_GRA }, //  5
 
-	{ "cm07.n5",	0x0800, 0x2738c88d, 3 }, //  6 gfx2
-	{ "cm08.n6",	0x0800, 0xb3fbd4ac, 3 }, //  7
+	{ "cm07.n5",	0x0800, 0x2738c88d, 3 | BRF_GRA }, //  6 gfx2 (sprites)
+	{ "cm08.n6",	0x0800, 0xb3fbd4ac, 3 | BRF_GRA }, //  7
 
-	{ "cm.m9",	0x0020, 0xdb9c59a5, 4 }, //  8 proms
-	{ "cm.m8",	0x0020, 0x2386bc68, 4 }, //  9
-	{ "cm.p3",	0x0020, 0x6ac41516, 4 }, // 10
+	{ "cm.m9",		0x0020, 0xdb9c59a5, 4 | BRF_GRA }, //  8 proms (color info)
+	{ "cm.m8",		0x0020, 0x2386bc68, 4 | BRF_GRA }, //  9
+	{ "cm.p3",		0x0020, 0x6ac41516, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(cheekyms)

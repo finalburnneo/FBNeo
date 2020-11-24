@@ -17692,6 +17692,44 @@ struct BurnDriver BurnSpecWrestlingsuperstars = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Hero Quest
+
+static struct BurnRomInfo SpecHeroquestRomDesc[] = {
+	{ "Hero Quest (1991)(Gremlin Graphics).tap", 111870, 0x76faec29, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHeroquest, SpecHeroquest, Spec128)
+STD_ROM_FN(SpecHeroquest)
+
+struct BurnDriver BurnSpecHeroquest = {
+	"spec_heroquest", NULL, "spec_spec128", NULL, "1991",
+	"Hero Quest\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHeroquestRomInfo, SpecHeroquestRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hero Quest - Return of the Witch Lord
+
+static struct BurnRomInfo SpecHeroquestwitchlordRomDesc[] = {
+	{ "Hero Quest - Return of the Witch Lord (1991)(Gremlin Graphics).tap", 131173, 0x65141180, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHeroquestwitchlord, SpecHeroquestwitchlord, Spec128)
+STD_ROM_FN(SpecHeroquestwitchlord)
+
+struct BurnDriver BurnSpecHeroquestwitchlord = {
+	"spec_heroquestwitchlord", NULL, "spec_spec128", NULL, "1991",
+	"Hero Quest - Return of the Witch Lord\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecHeroquestwitchlordRomInfo, SpecHeroquestwitchlordRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
@@ -20330,8 +20368,46 @@ struct BurnDriver BurnSpecAliengirldemo = {
 	"spec_aliengirldemo", NULL, "spec_spectrum", NULL, "2020",
 	"Alien Girl - 48k Demo (HB)\0", NULL, "Javier Fopiani", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecAliengirldemoRomInfo, SpecAliengirldemoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Generacio Digital
+
+static struct BurnRomInfo SpecGenerdigitalRomDesc[] = {
+	{ "Generacio Digital (2019)(Catalunya Radio).tap", 39117, 0x76ec9f7d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGenerdigital, SpecGenerdigital, Spec128)
+STD_ROM_FN(SpecGenerdigital)
+
+struct BurnDriver BurnSpecGenerdigital = {
+	"spec_generdigital", NULL, "spec_spec128", NULL, "2019",
+	"Generacio Digital (HB)\0", NULL, "Catalunya Radio", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecGenerdigitalRomInfo, SpecGenerdigitalRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Space Journey
+
+static struct BurnRomInfo SpecSpacejourneyRomDesc[] = {
+	{ "Space Journey (2020)(Roman Cikryt).tap", 46896, 0xb55f0534, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSpacejourney, SpecSpacejourney, Spec128)
+STD_ROM_FN(SpecSpacejourney)
+
+struct BurnDriver BurnSpecSpacejourney = {
+	"spec_spacejourney", NULL, "spec_spec128", NULL, "2020",
+	"Space Journey (HB)\0", NULL, "Roman Cikryt", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSpacejourneyRomInfo, SpecSpacejourneyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

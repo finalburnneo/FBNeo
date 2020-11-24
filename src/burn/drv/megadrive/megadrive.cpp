@@ -2480,6 +2480,18 @@ static UINT16 __fastcall TopfigReadWord(UINT32 sekAddress)
 	return 0;
 }
 
+static UINT16 __fastcall _16ZhangReadWord(UINT32 sekAddress)
+{
+	if (sekAddress == 0x400004) return 0xc900;
+
+	return 0xffff;
+}
+
+static UINT8 __fastcall _16ZhangReadByte(UINT32 sekAddress)
+{
+	return _16ZhangReadWord(sekAddress) >> ((~sekAddress & 1) << 3);
+}
+
 static void __fastcall TopfigWriteByte(UINT32 /*sekAddress*/, UINT8 byteValue)
 {
 	if (byteValue == 0x002a)
@@ -2842,6 +2854,15 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG) {
+		bprintf(0, _T("md 16zhang mapper\n"));
+		SekOpen(0);
+		SekMapHandler(7, 0x400000, 0x400004 | 0x3ff, MAP_READ);
+		SekSetReadByteHandler(7, _16ZhangReadByte);
+		SekSetReadWordHandler(7, _16ZhangReadWord);
+		SekClose();
+	}
+
 	switch ((BurnDrvGetHardwareCode() & 0xc0)) {
 		case HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY:
 			FourWayPlayMode = 1;
@@ -3142,7 +3163,7 @@ static void MegadriveSetupSRAM()
 		SekClose();
 	}
 
-	if (((BurnDrvGetHardwareCode() & 0xff) & HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		bprintf(PRINT_IMPORTANT, _T("Serial EEPROM, NBAJam.\n"));
 		EEPROM_init(2, 1, 0, 1, SRam);

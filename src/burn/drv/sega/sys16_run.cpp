@@ -2735,9 +2735,17 @@ INT32 System16Exit()
 Frame Functions
 ====================================================*/
 
+void sys16_sync_mcu()
+{
+	INT32 todo = ((double)SekTotalCycles() * (8000000/12) / 10000000) - mcs51TotalCycles();
+	if (todo > 0) {
+		mcs51Run(todo);
+	}
+}
+
 INT32 System16AFrame()
 {
-	INT32 nInterleave = 100; // alien syndrome needs high interleave for the DAC sounds to be processed
+	INT32 nInterleave = 262; // alien syndrome needs high interleave for the DAC sounds to be processed
 	
 	if (System16Reset) System16DoReset();
 
@@ -2753,7 +2761,8 @@ INT32 System16AFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	I8039NewFrame();
+	I8039NewFrame(); // dac?
+	mcs51NewFrame(); // prot mcu
 
 	SekOpen(0);
 
@@ -2795,14 +2804,17 @@ INT32 System16AFrame()
 			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 			nSystem16CyclesDone[nCurrentCPU] += mcs51Run(nCyclesSegment);
 			
-			if (i == (nInterleave - 1)) {
+			if (i == 224) { // irq must be open duration of vblank (testcase: quartet, missing trapdoor @ beginning of level 15)
 				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+			}
+
+			if (i == nInterleave - 1) {
 				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
 			}
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 			ZetOpen(0);

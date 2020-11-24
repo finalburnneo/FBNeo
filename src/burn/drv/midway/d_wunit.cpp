@@ -911,11 +911,11 @@ struct BurnDriver BurnDrvUmk3te = {
 };
 
 
-// Ultimate Mortal Kombat 3 Cup Edition (2020-09-15)
+// Ultimate Mortal Kombat 3 Cup Edition (2020-11-22)
 
 static struct BurnRomInfo umk3ucRomDesc[] = {
-	{ "umk3uc-u54.bin",			0x080000, 0x7d2d5ce3, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3uc-u63.bin",			0x080000, 0xdf16455c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "umk3uc-u54.bin",			0x080000, 0x6fa00f6b, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3uc-u63.bin",			0x080000, 0x745bcb3e, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "umk3uc-u2.bin",			0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "umk3uc-u3.bin",			0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -942,10 +942,10 @@ static struct BurnRomInfo umk3ucRomDesc[] = {
 	{ "umk3uc-u119.bin",		0x100000, 0x948d4aa7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "umk3uc-u118.bin",		0x100000, 0xab7ca588, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "umk3uc-u117.bin",		0x100000, 0x86267654, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
-	{ "umk3uc-u116.bin",		0x100000, 0xeee8ebf0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
-	{ "umk3uc-u115.bin",		0x100000, 0x4bffa1d6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
-	{ "umk3uc-u114.bin",		0x100000, 0x128e3a4c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	{ "umk3uc-u117.bin",		0x100000, 0xa13cc937, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3uc-u116.bin",		0x100000, 0x28c6c310, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3uc-u115.bin",		0x100000, 0xc71d53ba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3uc-u114.bin",		0x100000, 0x624b2d46, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
 
 	{ "umk3uc-u113.bin",		0x100000, 0xb352019b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
 	{ "umk3uc-u112.bin",		0x100000, 0x71143b7c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
@@ -960,7 +960,7 @@ STD_ROM_FN(umk3uc)
 
 struct BurnDriver BurnDrvUmk3uc = {
 	"umk3uc", "umk3", NULL, NULL, "2020",
-	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-09-15)\0", NULL, "hack", "MIDWAY Wolf-Unit",
+	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-11-22)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ucRomInfo, umk3ucRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,

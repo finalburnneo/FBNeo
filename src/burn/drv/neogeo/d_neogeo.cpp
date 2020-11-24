@@ -19170,6 +19170,118 @@ struct BurnDriver BurnDrvFatfury1bh = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Art of Fighting / Ryuuko no Ken (Boss Hack)
+/* MVS AND AES VERSION */
+
+static struct BurnRomInfo aofbhRomDesc[] = {
+	{ "044-p1.p1bh",    0x080000, 0x202a60d8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
+
+	{ "044-s1.s1",    0x020000, 0x89903f39, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "044-c1.c1",    0x200000, 0xddab98a7, 3 | BRF_GRA },           //  2 Sprite data 		/ TC5316200
+	{ "044-c2.c2",    0x200000, 0xd8ccd575, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "044-c3.c3",    0x200000, 0x403e898a, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "044-c4.c4",    0x200000, 0x6235fbaa, 3 | BRF_GRA },           //  5 					/ TC5316200
+
+	{ "044-m1.m1bh",    0x020000, 0x0981345f8, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ TC531001
+
+	{ "044-v2.v2",    0x200000, 0x3ec632ea, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
+	{ "044-v4.v4",    0x200000, 0x4b0f8e23, 5 | BRF_SND },           //  8 					/ TC5316200
+	/* also found MVS set with EP1 on M27C4002 eprom on PROG board NEO-MVS PROG4096; correct chip label unknown
+	and v1 / v2 with different chip location on CHA board NEO-MVS CHA42G-1.
+	{ "044-v2.v1",    0x200000, 0x3ec632ea, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
+	{ "044-v4.v2",    0x200000, 0x4b0f8e23, 5 | BRF_SND },           //  8 					/ TC5316200 */
+};
+
+STDROMPICKEXT(aofbh, aofbh, neogeo)
+STD_ROM_FN(aofbh)
+
+struct BurnDriver BurnDrvAofbh = {
+	"aofbh", "aof", "neogeo", NULL, "1992",
+	"Art of Fighting / Ryuuko no Ken (Boss Hack)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Art of Fighting (Boss Hack)\0\u9F8D\u864E\u306E\u62F3 (NGM-044)(NGH-044)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, 0,
+	NULL, aofRomInfo, aofRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// World Heroes Perfect (Enable Secret Characters Hack)
+
+static struct BurnRomInfo whpbhRomDesc[] = {
+	/* It also exists MVS sets with PROG board NEO-MVS PROGGSC and CHA board NEO-MVS CHA256,
+	PROG board NEO-MVS PROGGSC and CHA board NEO-MVS CHA256B, PROG board NEO-MVS PROGBK1
+	and NEO-MVS CHA256B; same chip labels */
+	{ "090-p1bh.p1",    0x200000, 0x9bd000f2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
+
+	{ "090-s1bh.s1",    0x020000, 0xF2DE6500, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+
+	{ "090-c1.c1",    0x400000, 0xcd30ed9b, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "090-c2.c2",    0x400000, 0x10eed5ee, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "064-c4.c4",    0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "064-c5.c5",    0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "064-c6.c6",    0x200000, 0xa43e4766, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "064-c7.c7",    0x200000, 0x59d97215, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
+	{ "064-c8.c8",    0x200000, 0xfc092367, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
+
+	{ "090-m1.m1",    0x020000, 0x28065668, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ mask rom TC531001
+
+	{ "090-v1.v1",    0x200000, 0x30cf2709, 5 | BRF_SND },           // 11 Sound data		/ mask rom TC5316200
+	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           // 12 					/ mask rom TC5316200
+	{ "090-v3.v3",    0x200000, 0x1908a7ce, 5 | BRF_SND },           // 13 					/ mask rom TC5316200
+};
+
+STDROMPICKEXT(whpbh, whpbh, neogeo)
+STD_ROM_FN(whpbh)
+
+struct BurnDriver BurnDrvwhpbh = {
+	"whpbh", "whp", "neogeo", NULL, "1995",
+	"World Heroes Perfect (Enable Secret Characters Hack)\0", NULL, "ADK / SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK,| BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, whpbhRomInfo, whpbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Galaxy Fight - Universal Warriors (Boss Hack)
+
+static struct BurnRomInfo galaxyfgbhRomDesc[] = {
+	{ "078-p1bh.p1",    0x200000, 0xbbfffa22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
+
+	{ "078-s1.s1",    0x020000, 0x72f8923e, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+
+	{ "078-c1.c1",    0x200000, 0xc890c7c0, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "078-c2.c2",    0x200000, 0xb6d25419, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "078-c3.c3",    0x200000, 0x9d87e761, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "078-c4.c4",    0x200000, 0x765d7cb8, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "078-c5.c5",    0x200000, 0xe6b77e6a, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "078-c6.c6",    0x200000, 0xd779a181, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "078-c7.c7",    0x100000, 0x4f27d580, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
+	{ "078-c8.c8",    0x100000, 0x0a7cc0d8, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
+
+	{ "078-m1.m1",    0x020000, 0x8e9e3b10, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ mask rom TC531001
+
+	{ "078-v1.v1",    0x200000, 0xe3b735ac, 5 | BRF_SND },           // 11 Sound data		/ mask rom TC5316200
+	{ "078-v2.v2",    0x200000, 0x6a8e78c2, 5 | BRF_SND },           // 12 					/ mask rom TC5316200
+	{ "078-v3.v3",    0x100000, 0x70bca656, 5 | BRF_SND },           // 13 					/ mask rom TC538200
+};
+
+STDROMPICKEXT(galaxyfgbh, galaxyfgbh, neogeo)
+STD_ROM_FN(galaxyfgbh)
+
+struct BurnDriver BurnDrvgalaxyfgbh = {
+	"galaxyfgbh", "galaxyfg", "neogeo", NULL, "1995",
+	"Galaxy Fight - Universal Warriors (Boss Hack)\0", NULL, "Sunsoft", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, galaxyfgbhRomInfo, galaxyfgbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // -----------------------------------------------------------------------------
 // Diagnostic Cartridges
 

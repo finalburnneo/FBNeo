@@ -48428,7 +48428,7 @@ struct BurnDriver BurnDrvmd_mysticfs = {
 // onslaught (Hack, Spanish)
 // https://www.romhacking.net/translations/4873/
 static struct BurnRomInfo md_onslausRomDesc[] = {
-	{ "onslaught (Hack, Spanish).bin", 524288, 0x1e034ff6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "onslaught (Hack, Spanish).bin", 524288, 0xf47789e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_onslaus)
@@ -48483,7 +48483,7 @@ struct BurnDriver BurnDrvmd_outr2019s = {
 };
 
 // outrunners (Hack, Spanish)
-// https://www.romhacking.net/hacks/4969/
+// https://www.romhacking.net/translations/4071/
 static struct BurnRomInfo md_orunnerssRomDesc[] = {
 	{ "outrunners (Hack, Spanish).bin", 2097152, 0x3a0b4aba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };

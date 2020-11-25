@@ -12305,7 +12305,7 @@ struct BurnDriver BurnDrvnes_allpads = {
 // Non Homebrew (hand-added!)
 
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {
-	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8fa8d991, BRF_ESS | BRF_PRG },
+	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8a13acc3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_maniacmanunc)

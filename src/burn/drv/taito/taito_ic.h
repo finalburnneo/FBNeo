@@ -207,9 +207,10 @@ extern UINT16 TC0480SCPCtrl[0x18];
 void TC0480SCPCtrlWordWrite(INT32 Offset, UINT16 Data);
 void TC0480SCPTilemapRender(INT32 Layer, INT32 Opaque, UINT8 *pSrc);
 void TC0480SCPTilemapRenderPrio(INT32 Layer, INT32 Opaque, INT32 Prio, UINT8 *pSrc);
-void TC0480SCPRenderCharLayer();
+void TC0480SCPRenderCharLayer(INT32 Prio = -1);
 void TC0480SCPReset();
 INT32 TC0480SCPGetBgPriority();
+INT32 TC0480SCPGetBgPriReg();
 void TC0480SCPSetPriMap(UINT8 *PriMap);
 void TC0480SCPInit(INT32 nNumTiles, INT32 Pixels, INT32 xOffset, INT32 yOffset, INT32 xTextOffset, INT32 yTextOffset, INT32 VisYOffset);
 void TC0480SCPSetColourBase(INT32 Base); // color base must be shifted back 4.  f.ex 0x1000 -> 0x100

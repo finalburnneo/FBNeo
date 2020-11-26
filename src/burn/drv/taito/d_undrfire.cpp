@@ -1,9 +1,6 @@
 // FB Alpha Taito Under Fire / Chase Bombers
 // Based on MAME driver by Bryan McPhail and David Graves
 
-// do-to:
-// cbombers priority mess :(
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "taito.h"
@@ -14,7 +11,6 @@
 #include "burn_shift.h"
 #include "burn_gun.h"
 
-static INT32 subcpu_in_reset;
 static INT32 interrupt5_timer;
 
 static UINT8 ReloadGun[2] = { 0, 0 };
@@ -22,11 +18,12 @@ static UINT8 ReloadGun[2] = { 0, 0 };
 static INT32 has_subcpu = 0;
 static UINT8 DrvRecalc;
 
+static UINT8 *TaitoSpriteRamBuffered2;
+static UINT8 *TaitoSpriteRamBuffered3;
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo UndrfireInputList[] = {
-	{"Coin 1",			BIT_DIGITAL,	TaitoInputPort3 + 2,	"p1 coin"	},
-	{"Coin 2",			BIT_DIGITAL,	TaitoInputPort3 + 3,	"p2 coin"	},
-
+	{"P1 Coin",			BIT_DIGITAL,	TaitoInputPort3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TaitoInputPort2 + 4,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TaitoInputPort1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TaitoInputPort1 + 5,	"p1 fire 2"	},
@@ -34,6 +31,7 @@ static struct BurnInputInfo UndrfireInputList[] = {
 	A("P1 Gun X",       BIT_ANALOG_REL, &TaitoAnalogPort0,      "mouse x-axis"),
 	A("P1 Gun Y",       BIT_ANALOG_REL, &TaitoAnalogPort1,      "mouse y-axis"),
 
+	{"P2 Coin",			BIT_DIGITAL,	TaitoInputPort3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort2 + 5,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort1 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort1 + 7,	"p2 fire 2"	},
@@ -54,13 +52,12 @@ static struct BurnInputInfo CbombersInputList[] = {
 
 	{"P1 Accelerator",	BIT_DIGITAL,	TaitoInputPort0 + 2,    "p1 fire 1"	},
 	{"P1 Brake",	    BIT_DIGITAL,	TaitoInputPort0 + 3,    "p1 fire 2"	},
-	{"P1 Nitro",		BIT_DIGITAL,	TaitoInputPort0 + 1,    "p1 fire 3"	},
+	{"P1 Weapon",		BIT_DIGITAL,	TaitoInputPort0 + 1,    "p1 fire 3"	},
 	{"P1 Gear Shift",	BIT_DIGITAL,	TaitoInputPort0 + 0,    "p1 fire 4"	},
 
 	A("P1 Steering",	BIT_ANALOG_REL, &TaitoAnalogPort0,		"p1 x-axis" ),
 
 	{"P2 Coin",			BIT_DIGITAL,	TaitoInputPort3 + 3,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort2 + 4,    "p2 start"	},
 
 	{"Freeze",			BIT_DIGITAL,	TaitoInputPort1 + 3,	"p1 fire 5"	},
 	{"Reset",			BIT_DIGITAL,	&TaitoReset,			"reset"		},
@@ -71,7 +68,6 @@ static struct BurnInputInfo CbombersInputList[] = {
 STDINPUTINFO(Cbombers)
 #undef A
 
-
 static void __fastcall undrfire_main_write_long(UINT32 a, UINT32 d)
 {
 	TC0100SCN0LongWrite_Map(0x900000, 0x90ffff)
@@ -80,13 +76,9 @@ static void __fastcall undrfire_main_write_long(UINT32 a, UINT32 d)
 	{
 		case 0x400000:
 		{
-			if (!has_subcpu) return; // for chase bomber
+			if (!has_subcpu) return; // for chase bombers
 
-			INT32 previous = subcpu_in_reset;
-			subcpu_in_reset = (~d >> 12) & 1;
-			if (!subcpu_in_reset && previous) {
-				SekReset(2);
-			}
+			SekSetRESETLine(2, (~d >> 12) & 1);
 		}
 		return;
 
@@ -118,6 +110,11 @@ static void __fastcall undrfire_main_write_byte(UINT32 a, UINT8 d)
 {
 	TC0100SCN0ByteWrite_Map(0x900000, 0x90ffff)
 
+	if (a >= 0xb00000 && a <= 0xb0000f) {
+		TC0360PRIWrite(a & 0xf, d);
+		return;
+	}
+
 	switch (a)
 	{
 		case 0x400000:
@@ -130,7 +127,7 @@ static void __fastcall undrfire_main_write_byte(UINT32 a, UINT8 d)
 		}
 		return;
 
-		case 0x500000:	
+		case 0x500000:
 			BurnWatchdogWrite();
 		return;
 
@@ -154,6 +151,9 @@ static void __fastcall undrfire_main_write_byte(UINT32 a, UINT8 d)
 		return;
 
 		case 0x600000:
+			if (has_subcpu) {
+				interrupt5_timer = 2;
+			}
 		case 0x600001:
 		case 0x600002:
 		case 0x600003:
@@ -161,9 +161,6 @@ static void __fastcall undrfire_main_write_byte(UINT32 a, UINT8 d)
 		case 0x600005:
 		case 0x600006:
 		case 0x600007:
-			if (has_subcpu) {
-				interrupt5_timer = 10;
-			}
 		return;
 
 		case 0xc00000:
@@ -190,7 +187,7 @@ static UINT32 __fastcall undrfire_main_read_long(UINT32 address)
 {
 	bprintf (0, _T("RL: %5.5x\n"), address);
 
-	return 0;
+	return 0xffffffff;
 }
 
 static UINT16 __fastcall undrfire_main_read_word(UINT32 address)
@@ -205,7 +202,7 @@ static UINT16 __fastcall undrfire_main_read_word(UINT32 address)
 
 	bprintf (0, _T("RW: %5.5x\n"), address);
 
-	return 0;
+	return 0xffff;
 }
 
 static UINT8 __fastcall undrfire_main_read_byte(UINT32 address)
@@ -254,8 +251,8 @@ static UINT8 __fastcall undrfire_main_read_byte(UINT32 address)
 		case 0xc00004:
 		case 0xc00005:
 		case 0xc00006:
-		case 0xc00007: // nop
-			return 0;
+		case 0xc00007: // lan stuff (will randomly lock-up if not 0xff -dink)
+			return 0xff;
 	}
 
 	if ((address & 0xfffff8) == 0xf00000) {
@@ -269,6 +266,7 @@ static UINT8 __fastcall undrfire_main_read_byte(UINT32 address)
 	}
 
 	bprintf (0, _T("RB: %5.5x\n"), address);
+
 	return 0;
 }
 
@@ -280,6 +278,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	SekReset(0);
 	SekReset(2);
+	SekSetRESETLine(2, 1);
 
 	TaitoICReset();
 	TaitoF3SoundReset();
@@ -293,7 +292,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		EEPROMFill(TaitoDefaultEEProm, 0, 0x80);
 	}
 
-	subcpu_in_reset = 0;
 	interrupt5_timer = -1;
 
 	return 0;
@@ -329,6 +327,9 @@ static INT32 MemIndex()
 
 	TaitoSharedRam		= Next; Next += 0x010000;
 	TaitoSpriteRam		= Next; Next += 0x004000;
+	TaitoSpriteRamBuffered = Next; Next += 0x004000;
+	TaitoSpriteRamBuffered2= Next; Next += 0x004000;
+	TaitoSpriteRamBuffered3= Next; Next += 0x004000;
 	TaitoSpriteRam2		= Next; Next += 0x000400;
 	Taito68KRam1		= Next; Next += 0x020000;
 	Taito68KRam3		= Next; Next += 0x010000;
@@ -574,13 +575,15 @@ static INT32 CommonInit(INT32 game_select)
 	}
 
 	GenericTilesInit();
-	TC0100SCNInit(0, 0x10000, 50, 24, 0, NULL);
+	TC0100SCNInit(0, 0x10000, 50, 24, 0, pPrioDraw);
 	TC0100SCNSetColourDepth(0, 6);
 	TC0100SCNSetCharLayerGranularity(4);
 
 	TC0480SCPInit(0x8000, 0, 36, 0, -1, 0, 24);
 	TC0480SCPSetColourBase(game_select ? (0x1000 >> 4) : 0);
 	TC0480SCPSetPriMap(pPrioDraw);
+
+	TC0360PRIInit();
 
 	SekInit(0, 0x68ec020);
 	SekOpen(0);
@@ -591,7 +594,10 @@ static INT32 CommonInit(INT32 game_select)
 	SekMapMemory(TC0480SCPRam,			0x800000, 0x80ffff, MAP_RAM);
 	SekMapMemory(TC0100SCNRam[0],		0x900000, 0x90ffff, MAP_READ);
 	SekMapMemory(TaitoPaletteRam,		0xa00000, 0xa0ffff, MAP_RAM);
-	SekMapMemory(TaitoSpriteRam2,		0xb00000, 0xb003ff, MAP_RAM); // Unknown
+	if (game_select == 0) {
+		// undrfire, on cbombers this is the tc0360pri's area.
+		SekMapMemory(TaitoSpriteRam2,		0xb00000, 0xb003ff, MAP_RAM); // Unknown
+	}
 	SekMapMemory(TaitoSharedRam,		0xe00000, 0xe0ffff, MAP_RAM); // not on undrfire
 	SekSetWriteLongHandler(0,			undrfire_main_write_long);
 	SekSetWriteWordHandler(0,			undrfire_main_write_word);
@@ -639,6 +645,7 @@ static INT32 DrvExit()
 
 	BurnShiftExit();
 	BurnGunExit();
+	BurnWatchdogExit();
 
 	BurnFree(TaitoMem);
 
@@ -779,9 +786,9 @@ static void draw_sprites(INT32 *primasks,INT32 x_offs,INT32 y_offs)
 	}
 }
 
-static void draw_sprites_cbombers(const INT32 *primasks,INT32 x_offs,INT32 y_offs)
+static void draw_sprites_cbombers(const UINT8 *pritable, INT32 x_offs, INT32 y_offs)
 {
-	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRam;
+	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRamBuffered3;
 	UINT16 *spritemap = (UINT16*)TaitoSpriteMapRom;
 	UINT8 *spritemapHibit = TaitoSpriteMapRom + 0x80000;
 
@@ -875,7 +882,7 @@ static void draw_sprites_cbombers(const INT32 *primasks,INT32 x_offs,INT32 y_off
 			sprite_ptr->y = cury;
 			sprite_ptr->xZoom = zx << 12;
 			sprite_ptr->yZoom = zy << 12;
-			sprite_ptr->Priority = priority;
+			sprite_ptr->Priority = UINT32(~1) << pritable[priority];
 			sprite_ptr++;
 		}
 	}
@@ -890,7 +897,7 @@ static void draw_sprites_cbombers(const INT32 *primasks,INT32 x_offs,INT32 y_off
 			sprite_ptr->x, sprite_ptr->y-24,
 			sprite_ptr->xFlip,sprite_ptr->yFlip,
 			16, 16,
-			sprite_ptr->xZoom,sprite_ptr->yZoom, primasks[sprite_ptr->Priority]);
+			sprite_ptr->xZoom,sprite_ptr->yZoom, sprite_ptr->Priority);
 	}
 }
 
@@ -947,6 +954,23 @@ static INT32 UndrfireDraw()
 	return 0;
 }
 
+static void draw_layer(INT32 layer, INT32 pri, INT32 opaque)
+{
+	INT32 Disable = 0x00; //TC0100SCNCtrl[0][6] & 0xf7;
+
+	switch (layer) {
+		case 0:
+			if ((nBurnLayer & 1) && (~Disable & 0x01)) TC0100SCNRenderBgLayer(0, opaque, TaitoCharsPivot, pri);
+			break;
+		case 1:
+			if ((nBurnLayer & 2) && (~Disable & 0x02)) TC0100SCNRenderFgLayer(0, opaque, TaitoCharsPivot, pri);
+			break;
+		case 2:
+			if ((nBurnLayer & 4) && (~Disable & 0x04)) TC0100SCNRenderCharLayer(0, pri);
+			break;
+	}
+}
+
 static INT32 CbombersDraw()
 {
 //	if (DrvRecalc) {
@@ -954,9 +978,14 @@ static INT32 CbombersDraw()
 		DrvRecalc = 0;
 //	}
 
-
 	UINT8 layer[5];
+	UINT8 scclayer[3];
+	UINT8 tc0480scp_pri[5];
+	UINT8 tc0620scc_pri[2];
+	UINT8 sprite_pri[4];
+
 	UINT16 priority = TC0480SCPGetBgPriority();
+	if (priority == 0x3210) priority = 0x2310; // fix bg over fg after selecting race -dink
 
 	layer[0] = (priority & 0xf000) >> 12;
 	layer[1] = (priority & 0x0f00) >>  8;
@@ -964,34 +993,53 @@ static INT32 CbombersDraw()
 	layer[3] = (priority & 0x000f) >>  0;
 	layer[4] = 4;
 
+	scclayer[0] = TC0100SCNBottomLayer(0);
+	scclayer[1] = scclayer[0] ^ 1;
+	scclayer[2] = 2;
+
+	// parse priority values
+	tc0480scp_pri[layer[0]] = TC0360PRIRegs[5] & 0x0f;
+	tc0480scp_pri[layer[1]] = (TC0360PRIRegs[5] >> 4) & 0x0f;
+	tc0480scp_pri[layer[2]] = TC0360PRIRegs[4] & 0x0f;
+	tc0480scp_pri[layer[3]] = (TC0360PRIRegs[4] >> 4) & 0x0f;
+	tc0480scp_pri[layer[4]] = (TC0360PRIRegs[6] >> 4) & 0x0f;
+
+	tc0620scc_pri[scclayer[0]] = (TC0360PRIRegs[7] >> 4) & 0x0f;
+	tc0620scc_pri[scclayer[1]] = TC0360PRIRegs[7] & 0x0f;
+
+	sprite_pri[0] = TC0360PRIRegs[8] & 0x0f;
+	sprite_pri[1] = (TC0360PRIRegs[8] >> 4) & 0x0f;
+	sprite_pri[2] = TC0360PRIRegs[9] & 0x0f;
+	sprite_pri[3] = (TC0360PRIRegs[9] >> 4) & 0x0f;
+
 	BurnTransferClear();
 
-	if (TC0100SCNBottomLayer(0)) {
-		if (nSpriteEnable & 2) TC0100SCNRenderFgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 1) TC0100SCNRenderBgLayer(0, 0, TaitoCharsPivot);
-	} else {
-		if (nSpriteEnable & 1) TC0100SCNRenderBgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 2) TC0100SCNRenderFgLayer(0, 0, TaitoCharsPivot);
-	}
-
-	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(layer[0], 0, 1, TaitoChars);
-	if (nBurnLayer & 2) TC0480SCPTilemapRenderPrio(layer[1], 0, 2, TaitoChars);
-	if (nBurnLayer & 4) TC0480SCPTilemapRenderPrio(layer[2], 0, 4, TaitoChars);
-	if (nBurnLayer & 8) TC0480SCPTilemapRenderPrio(layer[3], 0, 8, TaitoChars);
-
-	if ((TC0480SCPCtrl[0xf] & 0x3) == 3) // priority control
+	for (INT32 p = 0; p < 16; p++)
 	{
-		INT32 primasks[4] = {0xfff0, 0xff00, 0x0, 0x0};
-		if (nSpriteEnable & 16) draw_sprites_cbombers(primasks, 80, -208);
-	}
-	else
-	{
-		INT32 primasks[4] = {0xfffc, 0xfff0, 0xff00, 0x0};
-		if (nSpriteEnable & 16) draw_sprites_cbombers(primasks, 80, -208);
+		const UINT8 prival = p + 1;
+
+		for (INT32 scc = 0; scc < 2; scc++) {
+			if (tc0620scc_pri[scclayer[scc]] == p) {
+				draw_layer(scclayer[scc], prival, (scc == 0));
+			}
+		}
+
+		for (INT32 scp = 0; scp < 4; scp++)	{
+			if (tc0480scp_pri[layer[scp]] == p) {
+				if (nSpriteEnable & (1<<scp)) {
+					TC0480SCPTilemapRenderPrio(layer[scp], 0, prival, TaitoChars);
+				}
+			}
+		}
+
+		if (tc0480scp_pri[layer[4]] == p) {
+			if (nSpriteEnable & 0x10) TC0480SCPRenderCharLayer(prival);
+		}
 	}
 
-	if (nSpriteEnable & 4) TC0100SCNRenderCharLayer(0);
-	if (nSpriteEnable & 8) TC0480SCPRenderCharLayer();
+	if (nSpriteEnable & 0x20) draw_sprites_cbombers(sprite_pri, 80, -210);
+
+	if (nBurnLayer & 8) TC0100SCNRenderCharLayer(0, 0);
 
 	BurnTransferCopy(TaitoPalette);
 
@@ -1004,7 +1052,7 @@ static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
 
-//	SekNewFrame();
+	SekNewFrame();
 
 	if (TaitoReset) {
 		DrvDoReset(1);
@@ -1052,20 +1100,20 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (i == (nInterleave - 1))
 		{
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
-		else if (interrupt5_timer >= 0)
+		else if (interrupt5_timer > 0)
 		{
+			interrupt5_timer--;
+
 			if (interrupt5_timer == 0)
 			{
 				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			}
-
-			interrupt5_timer--;
 		}
 
 		SekClose();
@@ -1075,18 +1123,11 @@ static INT32 DrvFrame()
 		if (has_subcpu) { // cbombers only
 			SekOpen(2);
 
-			if (subcpu_in_reset == 0)
-			{
-				nCyclesDone[1] += SekRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, Sek);
 
-				if (i == (nInterleave - 1))
-				{
-					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-				}
-			}
-			else
+			if (i == (nInterleave - 1))
 			{
-				SekIdle(nCyclesTotal[1] / nInterleave);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
 
 			SekClose();
@@ -1099,6 +1140,12 @@ static INT32 DrvFrame()
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
+
+		if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
+			memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+			memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
+			memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
+		}
 	}
 
 	return 0;
@@ -1128,7 +1175,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnShiftScan(nAction);
 		BurnGunScan();
 
-		SCAN_VAR(subcpu_in_reset);
 		SCAN_VAR(interrupt5_timer);
 	}
 
@@ -1286,7 +1332,7 @@ static INT32 CbombersInit()
 
 struct BurnDriver BurnDrvCbombers = {
 	"cbombers", NULL, NULL, NULL, "1994",
-	"Chase Bombers (World)\0", "With graphics issues", "Taito Corporation Japan", "K1100809A",
+	"Chase Bombers (World)\0", NULL, "Taito Corporation Japan", "K1100809A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, cbombersRomInfo, cbombersRomName, NULL, NULL, NULL, NULL, CbombersInputInfo, NULL,
@@ -1343,7 +1389,7 @@ STD_ROM_FN(cbombersj)
 
 struct BurnDriver BurnDrvCbombersj = {
 	"cbombersj", "cbombers", NULL, NULL, "1994",
-	"Chase Bombers (Japan)\0", "With graphics issues", "Taito Corporation", "K1100809A",
+	"Chase Bombers (Japan)\0", NULL, "Taito Corporation", "K1100809A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, cbombersjRomInfo, cbombersjRomName, NULL, NULL, NULL, NULL, CbombersInputInfo, NULL,
@@ -1436,7 +1482,7 @@ static INT32 CbomberspInit()
 
 struct BurnDriver BurnDrvCbombersp = {
 	"cbombersp", "cbombers", NULL, NULL, "1994",
-	"Chase Bombers (Japan Prototype)\0", "With graphics issues", "Taito Corporation", "Miscellaneous",
+	"Chase Bombers (Japan Prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, cbomberspRomInfo, cbomberspRomName, NULL, NULL, NULL, NULL, CbombersInputInfo, NULL,

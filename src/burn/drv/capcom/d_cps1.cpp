@@ -23982,10 +23982,10 @@ struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 
 // Cadillacs and Dinosaurs (God of War Edition, Hack)
 // Hacked by Ngs
-// GOTVG 20201025
+// GOTVG 20201121
 
 static struct BurnRomInfo DinodsRomDesc[] = {
-	{ "dinods.bin",		0x200000, 0x08a53082, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinods.bin",		0x200000, 0x28b08a4a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -24010,7 +24010,7 @@ STD_ROM_PICK(Dinods)
 STD_ROM_FN(Dinods)
 
 struct BurnDriver BurnDrvCpsDinods = {
-	"dinods", "dino", NULL, NULL, "2020-10-25",
+	"dinods", "dino", NULL, NULL, "2020-11-21",
 	"Cadillacs and Dinosaurs (God of War Edition, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
@@ -24058,22 +24058,22 @@ struct BurnDriver BurnDrvCpsWofjdr = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II Mix (Ver 0.96d)
+// Street Fighter II Mix (Ver 0.97)
 // Hacked by ZERO800 - BRAZIL
 // For more infomation, please visit: https://sf2mix.github.io/
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0x93e95ee7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0xf74c6502, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0x7918a0d3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0xdba189f5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x78517c23, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0x91a5f422, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa1d1a20f, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0x0708bb01, BRF_GRA | CPS1_TILES },
 	{ "smx-2m.4a",     0x080000, 0x42e159b9, BRF_GRA | CPS1_TILES },
 	{ "smx-4m.6a",     0x080000, 0xcac353a3, BRF_GRA | CPS1_TILES },
-	{ "smx-5m.7a",     0x080000, 0x6f3264af, BRF_GRA | CPS1_TILES },
-	{ "smx-7m.9a",     0x080000, 0x2e4d1ae0, BRF_GRA | CPS1_TILES },
-	{ "smx-6m.8a",     0x080000, 0x967b5e52, BRF_GRA | CPS1_TILES },
-	{ "smx-8m.10a",    0x080000, 0xbeb3829d, BRF_GRA | CPS1_TILES },
+	{ "smx-5m.7a",     0x080000, 0xcd128779, BRF_GRA | CPS1_TILES },
+	{ "smx-7m.9a",     0x080000, 0x66dc2114, BRF_GRA | CPS1_TILES },
+	{ "smx-6m.8a",     0x080000, 0xbcf5a5d4, BRF_GRA | CPS1_TILES },
+	{ "smx-8m.10a",    0x080000, 0xb51db630, BRF_GRA | CPS1_TILES },
 	{ "smx-10m.3c",    0x080000, 0xc2a6eaa1, BRF_GRA | CPS1_TILES },
 	{ "smx-12m.5c",    0x080000, 0x7033d28b, BRF_GRA | CPS1_TILES },
 	{ "smx-11m.4c",    0x080000, 0x0c300970, BRF_GRA | CPS1_TILES },
@@ -24098,7 +24098,7 @@ STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpssf2mix = {
 	"sf2mix", "sf2ce", NULL, NULL, "2020",
-	"Street Fighter II Mix (v0.96d)\0", NULL, "Hack", "CPS1",
+	"Street Fighter II Mix (v0.97)\0", NULL, "Hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

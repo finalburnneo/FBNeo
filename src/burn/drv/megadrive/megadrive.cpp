@@ -43,12 +43,6 @@
 #define MAX_CARTRIDGE_SIZE      0xc00000
 #define MAX_SRAM_SIZE           0x010000
 
-#if defined (__GNUC__) && defined (__LIBRETRO__)
-#define OPTIMIZE_ATTR __attribute__((optimize("O2")))
-#else
-#define OPTIMIZE_ATTR
-#endif
-
 // PicoDrive Sek interface
 static UINT64 SekCycleCnt, SekCycleAim, SekCycleCntDELTA, line_base_cycles;
 
@@ -408,7 +402,7 @@ static INT32 MemIndex()
 
 	MegadriveCurPal		= (UINT32 *) Next; Next += 0x000040 * sizeof(UINT32) * 4;
 
-	HighColFull	= Next; Next += (8 + 320 + 8) * 240 + 1;
+	HighColFull	= Next; Next += (8 + 320 + 8) * 240 + 1 + 3; // +3 alignment
 
 	LineBuf     = (UINT16 *) Next; Next += 320 * 320 * sizeof(UINT16); // palete-processed line-buffer (dink / for sonic mode)
 
@@ -4210,7 +4204,7 @@ static void DrawSpritesFromCache(INT32 *hc, INT32 sh)
 // Index + 0  :    hhhhvvvv ab--hhvv yyyyyyyy yyyyyyyy // a: offscreen h, b: offs. v, h: horiz. size
 // Index + 4  :    xxxxxxxx xxxxxxxx pccvhnnn nnnnnnnn // x: x coord + 8
 
-static void OPTIMIZE_ATTR PrepareSprites(INT32 full)
+static void PrepareSprites(INT32 full)
 {
 	INT32 u=0,link=0,sblocks=0;
 	INT32 table=0;
@@ -4575,7 +4569,7 @@ INT32 MegadriveDraw()
 #define CYCLES_M68K_VINT_LAG  68
 #define CYCLES_M68K_ASD      148
 
-INT32 OPTIMIZE_ATTR MegadriveFrame()
+INT32 MegadriveFrame()
 {
 	if (MegadriveReset) {
 		MegadriveResetDo();

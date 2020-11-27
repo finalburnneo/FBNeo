@@ -10200,7 +10200,7 @@
 		<description>Onslaught (Hack, Spanish)</description>
 		<year>2019</year>
 		<manufacturer>Ballistic</manufacturer>
-		<rom name="onslaught (Hack, Spanish).bin" size="524288" crc="1e034ff6"/>
+		<rom name="onslaught (Hack, Spanish).bin" size="524288" crc="f47789e3"/>
 		<driver status="good"/>
 	</game>
 	<game name="opeurope">
@@ -10392,6 +10392,20 @@
 		<rom name="paddle fighter (jpn) (sn).bin" size="262144" crc="3d8147e6"/>
 		<driver status="good"/>
 	</game>
+	<game name="pcottone" cloneof="pcotton" romof="pcotton">
+		<description>Panorama Cotton (Hack, English)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="panorama cotton (Hack, English).bin" size="2621440" crc="ed7d8f14"/>
+		<driver status="good"/>
+	</game>
+	<game name="pcottons" cloneof="pcotton" romof="pcotton">
+		<description>Panorama Cotton (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="panorama cotton (Hack, Spanish).bin" size="2621440" crc="7affb73a"/>
+		<driver status="good"/>
+	</game>
 	<game name="pcotton">
 		<description>Panorama Cotton (Jpn)</description>
 		<year>1994</year>
@@ -10406,6 +10420,13 @@
 		<rom name="paperboy (euro, usa).bin" size="524288" crc="0a44819b"/>
 		<driver status="good"/>
 	</game>
+	<game name="paperboys" cloneof="paperboy" romof="paperboy">
+		<description>Paperboy (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="paperboy (Hack, Spanish).bin" size="524288" crc="023b647c"/>
+		<driver status="good"/>
+	</game>
 	<game name="paperboyj" cloneof="paperboy" romof="paperboy">
 		<description>Paperboy (Jpn)</description>
 		<year>1992</year>
@@ -10418,6 +10439,13 @@
 		<year>1992</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="mpr-15320.ic1" size="1048576" crc="1de28bb1"/>
+		<driver status="good"/>
+	</game>
+	<game name="paperbo2s" cloneof="paperbo2" romof="paperbo2">
+		<description>Paperboy 2 (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="paperboy 2 (Hack, Spanish).bin" size="1048576" crc="d0a39c49"/>
 		<driver status="good"/>
 	</game>
 	<game name="papi">
@@ -10806,6 +10834,13 @@
 		<rom name="phelios (euro).bin" size="524288" crc="13abc2b2"/>
 		<driver status="good"/>
 	</game>
+	<game name="phelioss" cloneof="phelios" romof="phelios">
+		<description>Phelios (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="phelios (Hack, Spanish).bin" size="524288" crc="3c7e8979"/>
+		<driver status="good"/>
+	</game>
 	<game name="pheliosj" cloneof="phelios" romof="phelios">
 		<description>Phelios (Jpn)</description>
 		<year>1990</year>
@@ -10832,6 +10867,13 @@
 		<year>1993</year>
 		<manufacturer>TecMagik</manufacturer>
 		<rom name="mpr-16065.ic1" size="1048576" crc="b5804771"/>
+		<driver status="good"/>
+	</game>
+	<game name="pinks" cloneof="pink" romof="pink">
+		<description>Pink Goes to Hollywood (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>TecMagik</manufacturer>
+		<rom name="pink goes to hollywood (Hack, Spanish).bin" size="1048576" crc="de7a08dd"/>
 		<driver status="good"/>
 	</game>
 	<game name="pinkp" cloneof="pink" romof="pink">
@@ -11030,6 +11072,13 @@
 		<rom name="predator 2 (euro, usa).bin" size="1048576" crc="bdba113e"/>
 		<driver status="good"/>
 	</game>
+	<game name="predatr2s" cloneof="predatr2" romof="predatr2">
+		<description>Predator 2 (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Arena</manufacturer>
+		<rom name="predator 2 (Hack, Spanish).bin" size="1048576" crc="ab9bbe50"/>
+		<driver status="good"/>
+	</game>
 	<game name="premierm">
 		<description>Premier Manager (Euro)</description>
 		<year>1995</year>
@@ -11063,6 +11112,13 @@
 		<year>1993</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="prince of persia (euro).bin" size="1048576" crc="61de6fe0"/>
+		<driver status="good"/>
+	</game>
+	<game name="ppersias" cloneof="ppersia" romof="ppersia">
+		<description>Prince of Persia (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="prince of persia (Hack, Spanish).bin" size="1048576" crc="a7d7f64d"/>
 		<driver status="good"/>
 	</game>
 	<game name="ppersiap" cloneof="ppersia" romof="ppersia">
@@ -11170,6 +11226,13 @@
 		<rom name="psy-o-blade (english translation).md" size="785184" crc="427f95cd"/>
 		<driver status="good"/>
 	</game>
+	<game name="psyoblads" cloneof="psyoblad" romof="psyoblad">
+		<description>Psy-O-Blade (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sigma Enterprises</manufacturer>
+		<rom name="psy-o-blade (Hack, Spanish).bin" size="785184" crc="8247a914"/>
+		<driver status="good"/>
+	</game>
 	<game name="psyoblad">
 		<description>Psy-O-Blade (Jpn)</description>
 		<year>1990</year>
@@ -11196,6 +11259,13 @@
 		<year>1993</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="puggsy (euro).bin" size="1048576" crc="5d5c9ade"/>
+		<driver status="good"/>
+	</game>
+	<game name="puggsys" cloneof="puggsy" romof="puggsy">
+		<description>Puggsy (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Psygnosis</manufacturer>
+		<rom name="puggsy (Hack, Spanish).bin" size="1048576" crc="b7cce9e5"/>
 		<driver status="good"/>
 	</game>
 	<game name="puggsyp" cloneof="puggsy" romof="puggsy">
@@ -11315,6 +11385,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pyramid magic special (jpn) (sn).bin" size="262144" crc="153a3afa"/>
+		<driver status="good"/>
+	</game>
+	<game name="quackshts" cloneof="quacksht" romof="quacksht">
+		<description>Quack Shot Starring Donald Duck (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="quack shot starring donald duck (Hack, Spanish).bin" size="524288" crc="2e304494"/>
 		<driver status="good"/>
 	</game>
 	<game name="quacksht">

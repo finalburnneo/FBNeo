@@ -1260,11 +1260,19 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
-	<game name="zeldanoden" romof="fdsbios">
+	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden">
 		<description>Zelda no Densetsu - The Hyrule Fantasy (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Zelda no Densetsu - The Hyrule Fantasy (Japan).fds" size="131016" crc="3fbdddcd"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="zeldanoden" romof="fdsbios">
+		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Eng).fds" size="131016" crc="ee11aa63"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

@@ -4450,7 +4450,7 @@
 		<rom name="Heavy Shreddin' (USA).nes" size="262160" crc="86a637b0"/>
 		<driver status="good"/>
 	</game>
-	<game name="hebereke" cloneof="ufouria" romof="ufouria">
+	<game name="heberekej" cloneof="ufouria" romof="ufouria">
 		<description>Hebereke (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -4462,6 +4462,13 @@
 		<year>2019-07-23</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Hebereke (T-Chi, v1.2).nes" size="393232" crc="48e8bcee"/>
+		<driver status="good"/>
+	</game>
+	<game name="hebereke" cloneof="ufouria" romof="ufouria">
+		<description>Hebereke (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Hebereke (T-Eng).nes" size="393232" crc="ac2e16e9"/>
 		<driver status="good"/>
 	</game>
 	<game name="hector87">
@@ -5745,11 +5752,18 @@
 		<rom name="Lawn Mower (HB).nes" size="24592" crc="2e03cb7f"/>
 		<driver status="good"/>
 	</game>
-	<game name="layla">
+	<game name="laylaj" cloneof="layla" romof="layla">
 		<description>Layla (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Layla (Japan).nes" size="131088" crc="d9381fe7"/>
+		<driver status="good"/>
+	</game>
+	<game name="layla">
+		<description>Layla (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Layla (T-Eng).nes" size="262160" crc="3f4f9465"/>
 		<driver status="good"/>
 	</game>
 	<game name="leetresfiggo">
@@ -6240,6 +6254,13 @@
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Maniac Mansion (USA).nes" size="262160" crc="68309d06"/>
+		<driver status="good"/>
+	</game>
+	<game name="maniacmanunc" cloneof="maniacmansion" romof="maniacmansion">
+		<description>Maniac Mansion Uncensored (Hack)</description>
+		<year>2020</year>
+		<manufacturer>Gzip</manufacturer>
+		<rom name="Maniac Mansion Uncensored (Hack).nes" size="262160" crc="8a13acc3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mappy">

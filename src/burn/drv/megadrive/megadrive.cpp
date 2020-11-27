@@ -168,7 +168,7 @@ struct MegadriveJoyPad {
 	TeamPlayer teamplayer[2]; // Sega "team player" 4 port adapter
 };
 
-static UINT8 *Mem = NULL, *MemEnd = NULL;
+static UINT8 *AllMem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 
 static UINT8 *RomMain;
@@ -378,7 +378,7 @@ inline static void CalcCol(INT32 index, UINT16 nColour)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 	RomMain 	= Next; Next += MAX_CARTRIDGE_SIZE;	// 68000 ROM, Max enough
 
 	RamStart	= Next;
@@ -3277,12 +3277,13 @@ static INT32 __fastcall MegadriveTAScallback(void)
 
 INT32 MegadriveInit()
 {
-	Mem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	// unmapped cart-space must return 0xff -dink (Nov.27, 2020)
+	// Fido Dido (Prototype) goes into a weird debug mode in bonus stage #2
+	// if 0x645046 is 0x00 - making the game unplayable.
+
+	memset(RomMain, 0xff, MAX_CARTRIDGE_SIZE);
 
 	MegadriveLoadRoms(0);
 	if (MegadriveLoadRoms(1)) return 1;
@@ -3396,10 +3397,7 @@ INT32 MegadriveExit()
 	BurnMD2612Exit();
 	SN76496Exit();
 
-	if (Mem) {
-		BurnFree(Mem);
-		Mem = NULL;
-	}
+	BurnFreeMemIndex();
 
 	if (OriginalRom) {
 		BurnFree(OriginalRom);

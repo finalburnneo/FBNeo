@@ -8786,13 +8786,6 @@
 		<rom name="mighty morphin power ranger - the fighting edition (unl).bin" size="2097152" crc="b53ff16c"/>
 		<driver status="good"/>
 	</game>
-	<game name="mmprfe">
-		<description>Mighty Morphin Power Rangers - The Fighting Edition</description>
-		<year>199?</year>
-		<manufacturer>Unlicensed</manufacturer>
-		<rom name="Mighty Morphin Power Rangers - The Fighting Edition.md" size="2097152" crc="1046d696"/>
-		<driver status="good"/>
-	</game>
 	<game name="mmprtm">
 		<description>Mighty Morphin Power Rangers - The Movie (Euro)</description>
 		<year>1995</year>

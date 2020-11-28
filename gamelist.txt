@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15657 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15656 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7937,7 +7937,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_mmprp4	|  	| Mighty Morphin Power Rangers (USA, Prototype, 19940804| md_mmpr	| 1994	| Sega		| Sega Megadrive| 					|
 | md_mmprp3	|  	| Mighty Morphin Power Rangers (USA, Prototype, 19940808| md_mmpr	| 1994	| Sega		| Sega Megadrive| 					|
 | md_mmprfe	|  	| Mighty Morphin Power Rangers - The Fighting Edition (R| 		| 199?	| <unknown>	| Sega Megadrive| 					|
-| md_mmprfe	|  	| Mighty Morphin Power Rangers - The Fighting Edition	| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_mmprtm	|  	| Mighty Morphin Power Rangers - The Movie (Euro)	| 		| 1995	| Sega		| Sega Megadrive| 					|
 | gg_mmprtm	|  	| Mighty Morphin Power Rangers - The Movie (Euro, USA)	| 		| 1995	| Sega		| Sega Game Gear| 					|
 | md_mmprtms	|  	| Mighty Morphin Power Rangers - The Movie (Hack, Spanis| md_mmprtm	| 2018	| Banpresto	| Sega Megadrive| 					|

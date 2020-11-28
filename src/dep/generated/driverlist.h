@@ -8055,7 +8055,6 @@ DRV		BurnDrvmd_mmpru;
 DRV		BurnDrvmd_mmprp4;
 DRV		BurnDrvmd_mmprp3;
 DRV		BurnDrvmd_mmprfe;
-DRV		Burnmd_Mmprfe;
 DRV		BurnDrvmd_mmprtm;
 DRV		BurnDrvgg_mmprtm;
 DRV		BurnDrvmd_mmprtms;
@@ -23975,7 +23974,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mmprp4,			// Mighty Morphin Power Rangers (USA, Prototype, 19940804)
 	&BurnDrvmd_mmprp3,			// Mighty Morphin Power Rangers (USA, Prototype, 19940808)
 	&BurnDrvmd_mmprfe,			// Mighty Morphin Power Rangers - The Fighting Edition (Rus)
-	&Burnmd_Mmprfe,				// Mighty Morphin Power Rangers - The Fighting Edition
 	&BurnDrvmd_mmprtm,			// Mighty Morphin Power Rangers - The Movie (Euro)
 	&BurnDrvgg_mmprtm,			// Mighty Morphin Power Rangers - The Movie (Euro, USA)
 	&BurnDrvmd_mmprtms,			// Mighty Morphin Power Rangers - The Movie (Hack, Spanish)

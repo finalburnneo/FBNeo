@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15675 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15657 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1768,7 +1768,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_budokan	|  	| Budokan - The Martial Spirit (Euro)			| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_budokanu	|  	| Budokan - The Martial Spirit (USA)			| md_budokan	| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_bughunt	|  	| Bug Hunt (HB)						| 		| 2015	| The Afromonkey| Sega Megadrive| 					|
-| md_bugslife	|  	| Bug's Life, A						| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | buggychlt	|  	| Buggy Challenge (Tecfri)				| buggychl	| 1984	| Taito Corporat| Miscellaneous	| 					|
 | buggychl	|  	| Buggy Challenge					| 		| 1984	| Taito Corporat| Miscellaneous	| 					|
 | nes_buggypopper|  	| Buggy Popper (Japan)					| nes_bumpnjump	| 1986	| Data East	| Miscellaneous	| 					|
@@ -2219,7 +2218,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_chess	|   NW	| Chess (Rus)						| 		| 1998	| BSComp	| Sega Megadrive| 					|
 | md_chessa	|  	| Chess (Rus, Alt)					| md_chess	| 1998	| BSComp	| Sega Megadrive| 					|
 | md_chessb	|   NW	| Chess (Rus, v1.05)					| md_chess	| 199?	| <unknown>	| Sega Megadrive| 					|
-| md_chess	|  	| Chess							| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_chester	|  	| Chester Cheetah - Too Cool to Fool (USA)		| 		| 1992	| Kaneko	| Sega Megadrive| 					|
 | md_chesterws	|  	| Chester Cheetah - Wild Wild Quest (Hack, Spanish)	| md_chesterw	| 2019	| Kaneko	| Sega Megadrive| 					|
 | md_chesterw	|  	| Chester Cheetah - Wild Wild Quest (USA)		| 		| 1992	| Kaneko	| Sega Megadrive| 					|
@@ -5716,7 +5714,6 @@ This list contains all games supported by FinalBurn Neo.
 | spec_herberttb|  	| Herbert the Turbot (HB)				| 		| 2010	| Bob Smith	| ZX Spectrum	| 					|
 | herbiedk	|  	| Herbie at the Olympics (DK conversion)		| huncholy	| 1984	| Century Electr| Miscellaneous	| No sound				|
 | msx_hercules	|  	| Hercules - Slayer of the Damned (Euro)		| 		| 1988	| Gremlin Graphi| MSX		| 					|
-| md_hercules2	|  	| Hercules 2						| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_herculs2	|  	| Hercules 2						| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_hercules	|  	| Hercules						| md_dahnam	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | hero		|   NW	| Hero							| 		| 1984	| Century Electr| Miscellaneous	| Parent set for working drivers	|
@@ -6625,8 +6622,6 @@ This list contains all games supported by FinalBurn Neo.
 | kingofb	|  	| King of Boxer (World)					| 		| 1985	| Wood Place Inc| Miscellaneous	| 					|
 | pce_kingcasn	|  	| King of Casino					| 		| 1990	| Victor Interac| PC Engine	| 					|
 | tg_kingcasn	|  	| King of Casino					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
-| md_kof2000	|  	| King of Fighters 2000, The				| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
-| md_kof98	|  	| King of Fighters 98', The				| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | ngp_kof_mlon	|  	| King of Fighters R-1 & Melon-chan no Seichou Nikki (Jp| 		| 1998	| SNK		| NeoGeo Pocket	| 					|
 | kog		|  	| King of Gladiator (The King of Fighters '97 bootleg)	| kof97		| 1997	| bootleg	| Neo Geo MVS	| 					|
 | kogplus	|  	| King of Gladiator Plus (The King of Fighters '97 bootl| kof97		| 1997	| bootleg	| Neo Geo MVS	| 					|
@@ -7146,9 +7141,7 @@ This list contains all games supported by FinalBurn Neo.
 | loffired	|  	| Line of Fire / Bakudan Yarou (World, FD1094 317-0136 d| loffire	| 1989	| Sega		| X-Board	| 					|
 | loffire	|  	| Line of Fire / Bakudan Yarou (World, FD1094 317-0136)	| 		| 1989	| Sega		| X-Board	| 					|
 | msx_linez	|  	| Linez (HB)						| 		| 2018	| Wim DeWijngaer| MSX		| 					|
-| md_linghuan	|  	| Ling Huan Daoshi - Super Magican			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_supmagic	|  	| Linghuan Daoshi Super Magician (Chi)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| md_linkdrag	|  	| Link Dragon						| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | fds_linknobou	|  	| Link no Bouken - The Legend of Zelda 2 (Japan)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cv_linklogc	|  	| Linking Logic						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | linkypip	|  	| Linky Pipe						| 		| 1998	| Eolith	| Miscellaneous	| 					|
@@ -8042,7 +8035,6 @@ This list contains all games supported by FinalBurn Neo.
 | ngp_mizuki	|  	| Mizuki Shigeru no Youkai Shashinkan (Jpn)		| 		| 1999	| SNK		| NeoGeo Pocket | 					|
 | md_mk5a	|  	| MK 5 - Mortal Combat - SubZero (Pirate)		| md_mk5	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_mk5	|  	| MK 5 - Mortal Combat - SubZero			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
-| md_mk5subz	|  	| MK5 - Mortal Kombat Mythologies - Sub-Zero		| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | gg_mlbpa	|  	| MLBPA Baseball (USA)					| 		| 1995	| Electronic Art| Sega Game Gear| 					|
 | md_mlbpa	|  	| MLBPA Baseball (USA)					| 		| 1992	| Electronic Art| Sega Megadrive| 					|
 | sg1k_motianda	|  	| Mo Tian Da Lou (Tw)					| sg1k_rocknbol	| 1985?	| Aaronix	| Sega SG-1000	| 					|
@@ -10892,7 +10884,6 @@ This list contains all games supported by FinalBurn Neo.
 | tg_samuraig	|  	| Samurai-Ghost						| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | md_sanguoyan	|  	| San Guo Yan Yi - Huo Shao Chi Bi			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_sanguo	|  	| San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)	| md_sangoret	| 199?	| <unknown>	| Sega Megadrive| 					|
-| md_sanguozhi	|  	| San Guo Zhi Lie Zhuan - Luan Shi Qun Ying		| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_sanguo5	|  	| San Guo Zhi V (Chi)					| 		| 199?	| SKOB		| Sega Megadrive| 					|
 | md_sansan	|  	| San San (Jpn)						| 		| 1994	| San San Co.	| Sega Megadrive| 					|
 | sg1k_3ninmj	|  	| San-nin Mahjong (Jpn, OMV)				| sg1k_mahjong	| 1984	| Tsukuda Origin| Sega SG-1000	| 					|
@@ -10922,7 +10913,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_sangoku3	|  	| Sangokushi III (Jpn)					| md_roman3k3	| 1992	| Koei		| Sega Megadrive| 					|
 | wofchdx	|  	| Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)	| wofch		| 2018	| Hack		| CPS Changer	| 					|
 | md_sangoret	|  	| Sangokushi Retsuden - Ransei no Eiyuutachi (Jpn)	| 		| 1991	| Sega		| Sega Megadrive| 					|
-| md_sangokushi5|  	| Sangokushi V						| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | 3kokushi	|  	| Sankokushi (Japan)					| 		| 1996	| Mitchell	| Miscellaneous	| Graphics corruption on score/bonus scr|
 | ssanchan	|  	| Sanrin San Chan (Japan)				| spatter	| 1984	| Sega		| System 1	| 					|
 | nes_sansaranagaj|  	| Sansara Naga (Japan)					| nes_sansaranaga| 1990	| Victor	| Miscellaneous	| 					|
@@ -11201,7 +11191,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_shijie	|  	| Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94| 		| 1994	| C&E		| Sega Megadrive| 					|
 | md_labdeathgnk|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, Game no Kand| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|
 | md_labdeath	|  	| Shi no Meikyuu - Labyrinth of Death (Jpn, SegaNet)	| md_fatallab	| 1991	| Sega		| Sega Megadrive| 					|
-| md_shisanzhang|  	| Shi San Zhang Ma Jiang 98 - Mei Shao Nv		| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_lionkin2a	|  	| Shi Zi Wang II - Lion King II (Pirate, Hacked?)	| md_lionkin2	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_lionkin2	|  	| Shi Zi Wang II - Lion King II				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_sokoban	|  	| Shijou Saidai no Soukoban (Jpn)			| md_shoveit	| 1990	| NCS		| Sega Megadrive| 					|
@@ -12039,7 +12028,6 @@ This list contains all games supported by FinalBurn Neo.
 | msx_starblaza	|  	| Star Blazer (Jpn, Alt)				| msx_starblaz	| 1985	| Sony		| MSX		| 					|
 | md_starchaser	|  	| Star Chaser (HB)					| 		| 2014	| Sik		| Sega Megadrive| 					|
 | md_starctrl	|  	| Star Control (USA)					| 		| 1991	| Ballistic	| Sega Megadrive| 					|
-| md_starcontrol|  	| Star Control						| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_starcruse	|  	| Star Cruiser (Hack, English)				| md_starcrus	| 2016	| NCS		| Sega Megadrive| 					|
 | md_starcrus	|  	| Star Cruiser (Jpn)					| 		| 1990	| NCS		| Sega Megadrive| 					|
 | msx_bosco	|  	| Star Destroyer Bosconian (Jpn)			| 		| 1984	| Namcot	| MSX		| 					|
@@ -13263,7 +13251,6 @@ This list contains all games supported by FinalBurn Neo.
 | md_tmntshj	|  	| Teenage Mutant Ninja Turtles - Return of the Shredder | md_tmhthh	| 1992	| Konami	| Sega Megadrive| 					|
 | md_tmnthhec	|  	| Teenage Mutant Ninja Turtles - The Hyperstone Heist (H| md_tmhthh	| 2015	| Konami - Pyron| Sega Megadrive| 					|
 | md_tmnthh	|  	| Teenage Mutant Ninja Turtles - The Hyperstone Heist (U| md_tmhthh	| 1992	| Konami	| Sega Megadrive| 					|
-| md_tmntlegend	|  	| Teenage Mutant Ninja Turtles - The Legend Returns	| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_tmnttficb	|  	| Teenage Mutant Ninja Turtles - Tournament Fighters (Ha| md_tmhttf	| 2014	| Color By fusar| Sega Megadrive| 					|
 | md_tmnttfj	|  	| Teenage Mutant Ninja Turtles - Tournament Fighters (Jp| md_tmhttf	| 1993	| Konami	| Sega Megadrive| 					|
 | md_tmnttfu	|  	| Teenage Mutant Ninja Turtles - Tournament Fighters (US| md_tmhttf	| 1993	| Konami	| Sega Megadrive| 					|
@@ -13310,7 +13297,6 @@ This list contains all games supported by FinalBurn Neo.
 | gg_tempojrp1	|  	| Tempo Jr. (Prototype, 19950215)			| gg_tempojr	| 1995	| Sega		| Sega Game Gear| 					|
 | gg_tempojr	|  	| Tempo Jr. (World)					| 		| 1995	| Sega		| Sega Game Gear| 					|
 | msx_temptations|  	| Temptations						| 		| 1988	| Topo Soft	| MSX		| 					|
-| md_tenchiok3	|  	| Tenchi o Kurau III - Sangoku Gaiden			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | dynwarjr	|  	| Tenchi wo Kurau (Japan Resale Ver.)			| dynwar	| 1989	| Capcom	| CPS1		| 					|
 | dynwarj	|  	| Tenchi wo Kurau (Japan)				| dynwar	| 1989	| Capcom	| CPS1		| 					|
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
@@ -14009,7 +13995,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_thunderbolt2|  	| Thunderbolt 2 (Ch)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_tbolt2	|  	| Thunderbolt II (Prototype)				| 		| 1995	| 1995 SUN GREEN| Sega Megadrive| 					|
 | md_tbolt2a	|  	| Thunderbolt II (Unprotected, Prototype)		| 		| 1995	| SUN GREEN	| Sega Megadrive| 					|
-| md_thunderbolt2|  	| Thunderbolt II					| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | nes_thundercade|  	| Thundercade (USA)					| 		| 1989	| Sammy		| Miscellaneous	| 					|
 | tndrcade	|  	| Thundercade / Twin Formation				| 		| 1987	| Seta (Taito li| Seta		| 					|
 | thunderja	|  	| ThunderJaws (rev 2)					| thunderj	| 1990	| Atari Games	| Miscellaneous	| 					|
@@ -14341,7 +14326,6 @@ This list contains all games supported by FinalBurn Neo.
 | tumbleb2	|  	| Tumble Pop (bootleg set 2)				| tumblep	| 1991	| Data East Corp| Miscellaneous	| 					|
 | tumblepj	|  	| Tumble Pop (Japan)					| tumblep	| 1991	| Data East Corp| DECO IC16	| 					|
 | tumblep	|  	| Tumble Pop (World)					| 		| 1991	| Data East Corp| DECO IC16	| 					|
-| md_tunshitian3|  	| Tun Shi Tian Di 3 - San Guo Wai Chuan			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_tunshi1	|  	| Tun Shi Tian Di III (Chi)				| md_tunshi	| 199?	| SKOB		| Sega Megadrive| 					|
 | md_tunshi	|  	| Tun Shi Tian Di III (China, Simple Chinese)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | cv_tunnels	|  	| Tunnels and Trolls (Demo)				| 		| 1983	| Coleco	| ColecoVision	| 					|
@@ -15467,7 +15451,6 @@ This list contains all games supported by FinalBurn Neo.
 | yellowcbj	|  	| Yellow Cab (Japan)					| kamikcab	| 1984	| Data East Corp| Miscellaneous	| 					|
 | msx_yellowsb	|  	| Yellow Submarine (Jpn)				| 		| 1987	| Brother Kougyo| MSX		| 					|
 | yesnoj	|  	| Yes/No Sinri Tokimeki Chart				| 		| 1992	| Taito Corporat| Taito F2	| 					|
-| md_yimenying	|  	| Yi Men Ying Lie - Yang Jia Jiang			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | spec_yiarkufu	|  	| Yie Ar Kung-Fu (128K)					| 		| 1985	| Imagine Softwa| ZX Spectrum	| 					|
 | spec_yiarkufu_48|  	| Yie Ar Kung-Fu (48K)					| spec_yiarkufu	| 1985	| Imagine Softwa| ZX Spectrum	| 					|
 | yieartf	|  	| Yie Ar Kung-Fu (GX361 conversion)			| yiear		| 1985	| Konami	| Miscellaneous	| 					|
@@ -15615,7 +15598,6 @@ This list contains all games supported by FinalBurn Neo.
 | nes_zhenbenxiyouji|  	| Zhen Ben Xi You Ji (Asia) (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | drgw2100c	|  	| Zhong Guo Long II (V100, China)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2101c	|  	| Zhong Guo Long II (V101, China)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
-| md_zhongguoxqi|  	| Zhong Guo Xiang Qi					| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_zhuogu	|  	| Zhuo Gui Da Shi - Ghost Hunter (Chi)			| 		| 1994	| Shenchi Techno| Sega Megadrive| 					|
 | zigzagb	|  	| Zig Zag (Galaxian hardware, set 1)			| 		| 1982	| LAX		| Galaxian	| 					|
 | zigzagb2	|  	| Zig Zag (Galaxian hardware, set 2)			| zigzagb	| 1982	| LAX		| Galaxian	| 					|

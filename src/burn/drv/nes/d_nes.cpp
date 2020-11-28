@@ -10605,8 +10605,7 @@ struct BurnDriver BurnDrvfds_haokunnofusnata = {
 };
 
 static struct BurnRomInfo fds_hikarshiRomDesc[] = {
-	{ "Hikari Shinwa - Palthena no Kagami (Japan).fds",          131016, 0x0c177561, BRF_ESS | BRF_PRG },
-	//{ "Hikari Shinwa - Palutena no Kagami (Japan).fds",          131000, 0x32516fcf, BRF_ESS | BRF_PRG },
+	{ "Hikari Shinwa - Palutena no Kagami (Japan).fds",          131000, 0x32516fcf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_hikarshi, fds_hikarshi, fds_fdsbios)
@@ -12319,6 +12318,22 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_smbchrediRomDesc[] = {
+	{ "Super Mario Bros. Christmas Edition (Hack).nes",          73744, 0xc81b8012, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbchredi)
+STD_ROM_FN(nes_smbchredi)
+
+struct BurnDriver BurnDrvnes_smbchredi = {
+	"nes_smbchredi", "nes_smb", NULL, NULL, "2020",
+	"Super Mario Bros. Christmas Edition (Hack)\0", NULL, "U Retro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbchrediRomInfo, nes_smbchrediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {
 	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8a13acc3, BRF_ESS | BRF_PRG },

@@ -3442,11 +3442,18 @@
 		<rom name="Fighting Hero III (Unl).nes" size="786448" crc="52b2045f"/>
 		<driver status="good"/>
 	</game>
-	<game name="fightingroad">
+	<game name="fightingroadj" cloneof="fightingroad" romof="fightingroad">
 		<description>Fighting Road (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Toei Animation</manufacturer>
 		<rom name="Fighting Road (Japan).nes" size="262160" crc="bdde0fd7"/>
+		<driver status="good"/>
+	</game>
+	<game name="fightingroad">
+		<description>Fighting Road (T-Eng)</description>
+		<year>1988</year>
+		<manufacturer>Toei Animation</manufacturer>
+		<rom name="Fighting Road (T-Eng).nes" size="262160" crc="3b9e7aa1"/>
 		<driver status="good"/>
 	</game>
 	<game name="finalcombat">
@@ -3517,6 +3524,20 @@
 		<year>1988</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Final Lap (Japan).nes" size="262160" crc="a65568a9"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalmissionj" cloneof="scat" romof="scat">
+		<description>Final Mission (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Natsume</manufacturer>
+		<rom name="Final Mission (Japan).nes" size="262160" crc="b8273b87"/>
+		<driver status="good"/>
+	</game>
+	<game name="finalmission" cloneof="scat" romof="scat">
+		<description>Final Mission (T-Eng)</description>
+		<year>1990</year>
+		<manufacturer>Natsume</manufacturer>
+		<rom name="Final Mission (T-Eng).nes" size="393232" crc="01c4633e"/>
 		<driver status="good"/>
 	</game>
 	<game name="firenice">
@@ -7677,11 +7698,18 @@
 		<rom name="Power Blade 2 (USA).nes" size="262160" crc="f8e0bc9b"/>
 		<driver status="good"/>
 	</game>
-	<game name="powerblazer">
+	<game name="powerblazerj" cloneof="powerblazer" romof="powerblazer">
 		<description>Power Blazer (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Power Blazer (Japan).nes" size="262160" crc="2b17a194"/>
+		<driver status="good"/>
+	</game>
+	<game name="powerblazer">
+		<description>Power Blazer (T-Eng)</description>
+		<year>1990</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Power Blazer (T-Eng).nes" size="262160" crc="a9bd2381"/>
 		<driver status="good"/>
 	</game>
 	<game name="powerpunchii">
@@ -8650,6 +8678,20 @@
 		<rom name="Silk Worm (USA).nes" size="262160" crc="8af9b095"/>
 		<driver status="good"/>
 	</game>
+	<game name="silvasagaj" cloneof="silvasaga" romof="silvasaga">
+		<description>Silva Saga (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Silva Saga (Japan).nes" size="524304" crc="3648889b"/>
+		<driver status="good"/>
+	</game>
+	<game name="silvasaga">
+		<description>Silva Saga (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Silva Saga (T-Eng).nes" size="786448" crc="75a9eb48"/>
+		<driver status="good"/>
+	</game>
 	<game name="silvereagle">
 		<description>Silver Eagle (Taiwan)</description>
 		<year>1989?</year>
@@ -8902,11 +8944,18 @@
 		<rom name="Spartan X (Japan).nes" size="40976" crc="872adc83"/>
 		<driver status="good"/>
 	</game>
-	<game name="spartanx2">
+	<game name="spartanx2j" cloneof="spartanx2" romof="spartanx2">
 		<description>Spartan X 2 (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Spartan X 2 (Japan).nes" size="262160" crc="09825979"/>
+		<driver status="good"/>
+	</game>
+	<game name="spartanx2">
+		<description>Spartan X 2 (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Spartan X 2 (T-Eng).nes" size="262160" crc="30003fc6"/>
 		<driver status="good"/>
 	</game>
 	<game name="spelunker">

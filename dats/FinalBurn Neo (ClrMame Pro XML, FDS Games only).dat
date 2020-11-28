@@ -621,7 +621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hikarshi" romof="fdsbios">
-		<description>Hikari Shinwa - Palthena no Kagami (Japan)</description>
+		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hikari Shinwa - Palthena no Kagami (Japan).fds" size="131016" crc="0c177561"/>
@@ -720,7 +720,7 @@
 		<description>Kiki Kaikai - Dotou Hen (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Kiki Kaikai - Dotou Hen (Japan).fds" size="131016" crc="851c555b"/>
+		<rom name="Kiki Kaikai - Dotou Hen (Japan).fds" size="131000" crc="7f446c09"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
@@ -832,7 +832,7 @@
 		<description>Metroid (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Metroid (Japan).fds" size="131016" crc="1b3ee73d"/>
+		<rom name="Metroid (Japan).fds" size="131000" crc="5e4f013d"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

@@ -1056,6 +1056,13 @@
 		<rom name="ballz 3d - fighting at its ballziest (euro, usa).bin" size="2097152" crc="b362b705"/>
 		<driver status="good"/>
 	</game>
+	<game name="baoxiao">
+		<description>Bao Xiao San Guo</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Bao Xiao San Guo.md" size="1048576" crc="496eb1d1"/>
+		<driver status="good"/>
+	</game>
 	<game name="barbarianami">
 		<description>Barbarian - Amiga (HB) [Homebrew, raw conversion - no improvements]</description>
 		<year>2017</year>
@@ -1966,6 +1973,13 @@
 		<rom name="bug hunt (2015)(afromonkeys, the).bin" size="393216" crc="20175de8"/>
 		<driver status="good"/>
 	</game>
+	<game name="bugslife">
+		<description>Bug's Life, A</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Bug's Life, A.md" size="1048576" crc="10458e09"/>
+		<driver status="good"/>
+	</game>
 	<game name="bugsbun">
 		<description>Bugs Bunny in Double Trouble (Euro)</description>
 		<year>1996</year>
@@ -2302,6 +2316,20 @@
 		<rom name="chao ji da fu weng (chi) (unl).bin" size="1048576" crc="2e2ea687"/>
 		<driver status="good"/>
 	</game>
+	<game name="chaojimah">
+		<description>Chao Ji Mahjong Club</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Chao Ji Mahjong Club.md" size="1048576" crc="2b4b40e3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chaojipok">
+		<description>Chao Ji Poker</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Chao Ji Poker.md" size="4194304" crc="c37e6858"/>
+		<driver status="good"/>
+	</game>
 	<game name="chase">
 		<description>Chase (HB) [Homebrew]</description>
 		<year>2014</year>
@@ -2357,6 +2385,13 @@
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="chess (unl) [rus v1.05].bin" size="1048576" crc="10683e83"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="chess">
+		<description>Chess</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Chess.md" size="524288" crc="47380edd"/>
+		<driver status="good"/>
 	</game>
 	<game name="chester">
 		<description>Chester Cheetah - Too Cool to Fool (USA)</description>
@@ -4087,6 +4122,13 @@
 		<rom name="dragon - the bruce lee story (usa).bin" size="2097152" crc="efe850e5"/>
 		<driver status="good"/>
 	</game>
+	<game name="dballfinal">
+		<description>Dragon Ball - Final Bout</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Dragon Ball - Final Bout.md" size="2097152" crc="63847005"/>
+		<driver status="good"/>
+	</game>
 	<game name="dbz">
 		<description>Dragon Ball Z - Buyuu Retsuden (Jpn)</description>
 		<year>1994</year>
@@ -4169,6 +4211,13 @@
 		<year>1993</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="dragon's revenge (japan).bin" size="1048576" crc="d8d2efd7"/>
+		<driver status="good"/>
+	</game>
+	<game name="dushenzhi">
+		<description>Du Shen Zhi Meng Huan Poker</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Du Shen Zhi Meng Huan Poker.md" size="1048576" crc="1d81a67c"/>
 		<driver status="good"/>
 	</game>
 	<game name="dukenk3d">
@@ -6035,6 +6084,13 @@
 		<rom name="growl (usa).bin" size="524288" crc="f60ef143"/>
 		<driver status="good"/>
 	</game>
+	<game name="gun3in1">
+		<description>Gunfight 3 in 1</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Gunfight 3 in 1.md" size="1048576" crc="e5785d45"/>
+		<driver status="good"/>
+	</game>
 	<game name="gunship">
 		<description>Gunship (Euro)</description>
 		<year>1993</year>
@@ -6222,6 +6278,13 @@
 		<year>1991</year>
 		<manufacturer>Seismic</manufacturer>
 		<rom name="hellfire (usa).bin" size="524288" crc="184018f9"/>
+		<driver status="good"/>
+	</game>
+	<game name="hercules2">
+		<description>Hercules 2</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Hercules 2.md" size="2097152" crc="292623db"/>
 		<driver status="good"/>
 	</game>
 	<game name="herculs2">
@@ -7239,6 +7302,20 @@
 		<rom name="kidou keisatsu patlabor - 98-shiki kidou seyo! (jpn).bin" size="524288" crc="21a0e749"/>
 		<driver status="good"/>
 	</game>
+	<game name="kof2000">
+		<description>King of Fighters 2000, The</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="King of Fighters 2000, The.md" size="2097152" crc="34cbac5d"/>
+		<driver status="good"/>
+	</game>
+	<game name="kof98">
+		<description>King of Fighters 98', The</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="King of Fighters 98', The.md" size="2097152" crc="cbc38eea"/>
+		<driver status="good"/>
+	</game>
 	<game name="kotm">
 		<description>King of the Monsters (Euro)</description>
 		<year>1993</year>
@@ -7694,11 +7771,25 @@
 		<rom name="lightening force - quest for the darkstar (usa).bin" size="1048576" crc="c8f8c0e0"/>
 		<driver status="good"/>
 	</game>
+	<game name="linghuan">
+		<description>Ling Huan Daoshi - Super Magican</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Ling Huan Daoshi - Super Magican.md" size="1048576" crc="e24ac6b2"/>
+		<driver status="good"/>
+	</game>
 	<game name="supmagic">
 		<description>Linghuan Daoshi Super Magician (Chi)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="elf wor (chi) (unl).bin" size="1048576" crc="e24ac6b2"/>
+		<driver status="good"/>
+	</game>
+	<game name="linkdrag">
+		<description>Link Dragon</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Link Dragon.md" size="262144" crc="1b86e623"/>
 		<driver status="good"/>
 	</game>
 	<game name="lionkin3b" cloneof="lionkin3" romof="lionkin3">
@@ -7903,6 +7994,13 @@
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="magic_bubble.bin" size="524288" crc="ce4a0c46"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="magbubble">
+		<description>Magic Bubble</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Magic Bubble.md" size="524288" crc="3ec61dc1"/>
+		<driver status="good"/>
 	</game>
 	<game name="magicgirl" cloneof="xiaomo" romof="xiaomo">
 		<description>Magic Girl featuring Ling Ling the little Witch (HB) [Homebrew]</description>
@@ -8737,6 +8835,13 @@
 		<rom name="mighty morphin power ranger - the fighting edition (unl).bin" size="2097152" crc="b53ff16c"/>
 		<driver status="good"/>
 	</game>
+	<game name="mmprfe">
+		<description>Mighty Morphin Power Rangers - The Fighting Edition</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Mighty Morphin Power Rangers - The Fighting Edition.md" size="2097152" crc="1046d696"/>
+		<driver status="good"/>
+	</game>
 	<game name="mmprtm">
 		<description>Mighty Morphin Power Rangers - The Movie (Euro)</description>
 		<year>1995</year>
@@ -8847,6 +8952,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="mk 5 - mortal combat - subzero (unl).bin" size="2097152" crc="11e367a1"/>
+		<driver status="good"/>
+	</game>
+	<game name="mk5subz">
+		<description>MK5 - Mortal Kombat Mythologies - Sub-Zero</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="MK5 - Mortal Kombat Mythologies - Sub-Zero.md" size="2097152" crc="11e367a1"/>
 		<driver status="good"/>
 	</game>
 	<game name="mlbpa">
@@ -12109,11 +12221,32 @@
 		<rom name="samurai spirits (jpn).bin" size="3145728" crc="0ea2ae36"/>
 		<driver status="good"/>
 	</game>
+	<game name="samsho2">
+		<description>Samurai Spirits II</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Samurai Spirits II.md" size="2097152" crc="2942f180"/>
+		<driver status="good"/>
+	</game>
+	<game name="sanguoyan">
+		<description>San Guo Yan Yi - Huo Shao Chi Bi</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="San Guo Yan Yi - Huo Shao Chi Bi.md" size="2097152" crc="3a71e961"/>
+		<driver status="good"/>
+	</game>
 	<game name="sanguo" cloneof="sangoret" romof="sangoret">
 		<description>San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="san guo zhi lie zhuan - luan shi qun ying (chi).bin" size="1048576" crc="3b5cc398"/>
+		<driver status="good"/>
+	</game>
+	<game name="sanguozhi">
+		<description>San Guo Zhi Lie Zhuan - Luan Shi Qun Ying</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="San Guo Zhi Lie Zhuan - Luan Shi Qun Ying.md" size="1048576" crc="3b5cc398"/>
 		<driver status="good"/>
 	</game>
 	<game name="sanguo5">
@@ -12149,6 +12282,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sangokushi retsuden - ransei no eiyuutachi (jpn).bin" size="1048576" crc="0f56785a"/>
+		<driver status="good"/>
+	</game>
+	<game name="sangokushi5">
+		<description>Sangokushi V</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Sangokushi V.md" size="2097152" crc="cd7e53d0"/>
 		<driver status="good"/>
 	</game>
 	<game name="slammast">
@@ -12478,6 +12618,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shi no meikyuu - labyrinth of death (jpn) (sn).bin" size="262144" crc="a6d7e02d"/>
+		<driver status="good"/>
+	</game>
+	<game name="shisanzhang">
+		<description>Shi San Zhang Ma Jiang 98 - Mei Shao Nv</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Shi San Zhang Ma Jiang 98 - Mei Shao Nv.md" size="655360" crc="68b372f6"/>
 		<driver status="good"/>
 	</game>
 	<game name="lionkin2a" cloneof="lionkin2" romof="lionkin2">
@@ -13676,6 +13823,13 @@
 		<rom name="star control (usa).bin" size="1572864" crc="8e2bceaf"/>
 		<driver status="good"/>
 	</game>
+	<game name="starcontrol">
+		<description>Star Control</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Star Control.md" size="1572864" crc="8e2bceaf"/>
+		<driver status="good"/>
+	</game>
 	<game name="starcruse" cloneof="starcrus" romof="starcrus">
 		<description>Star Cruiser (Hack, English)</description>
 		<year>2016</year>
@@ -14628,6 +14782,13 @@
 		<rom name="super street fighter ii - the new challengers (usa).bin" size="5242880" crc="165defbf"/>
 		<driver status="good"/>
 	</game>
+	<game name="supertankwar">
+		<description>Super Tank War</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Super Tank War.md" size="262144" crc="5e519ea1"/>
+		<driver status="good"/>
+	</game>
 	<game name="stbladj" cloneof="stblad" romof="stblad">
 		<description>Super Thunder Blade (Jpn, Launch Cart)</description>
 		<year>1988</year>
@@ -15076,6 +15237,13 @@
 		<rom name="teenage mutant ninja turtles - the hyperstone heist (usa).bin" size="1048576" crc="679c41de"/>
 		<driver status="good"/>
 	</game>
+	<game name="tmntlegend">
+		<description>Teenage Mutant Ninja Turtles - The Legend Returns</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles - The Legend Returns.md" size="1048576" crc="7fb1356e"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmnttficb" cloneof="tmhttf" romof="tmhttf">
 		<description>Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)</description>
 		<year>2014</year>
@@ -15125,6 +15293,13 @@
 		<rom name="tekken 3 special (unl).bin" size="2097152" crc="7fcae658"/>
 		<driver status="good"/>
 	</game>
+	<game name="tekkensp">
+		<description>Tekken Special</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Tekken Special.md" size="2097152" crc="010f6369"/>
+		<driver status="good"/>
+	</game>
 	<game name="telmah">
 		<description>Tel-Tel Mahjong (Jpn)</description>
 		<year>1990</year>
@@ -15144,6 +15319,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="telebradesco residencia (bra).bin" size="262144" crc="1db99045"/>
+		<driver status="good"/>
+	</game>
+	<game name="tenchiok3">
+		<description>Tenchi o Kurau III - Sangoku Gaiden</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Tenchi o Kurau III - Sangoku Gaiden.md" size="2097152" crc="e833bc6e"/>
 		<driver status="good"/>
 	</game>
 	<game name="td2">
@@ -16190,6 +16372,13 @@
 		<rom name="Thunderbolt II (Unl) [f1].bin" size="524288" crc="a2ef16de"/>
 		<driver status="good"/>
 	</game>
+	<game name="thunderbolt2">
+		<description>Thunderbolt II</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Thunderbolt II.md" size="524288" crc="d5fcc49f"/>
+		<driver status="good"/>
+	</game>
 	<game name="timedom" cloneof="socket" romof="socket">
 		<description>Time Dominator 1st (Jpn, Kor)</description>
 		<year>1994</year>
@@ -16594,6 +16783,13 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="truxton -- tatsujin (world).bin" size="524288" crc="5bd0882d"/>
+		<driver status="good"/>
+	</game>
+	<game name="tunshitian3">
+		<description>Tun Shi Tian Di 3 - San Guo Wai Chuan</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Tun Shi Tian Di 3 - San Guo Wai Chuan.md" size="2097152" crc="6f98247d"/>
 		<driver status="good"/>
 	</game>
 	<game name="tunshi1" cloneof="tunshi" romof="tunshi">
@@ -18479,6 +18675,13 @@
 		<rom name="Yazzie.bin" size="655360" crc="93d5ad8a"/>
 		<driver status="good"/>
 	</game>
+	<game name="yimenying">
+		<description>Yi Men Ying Lie - Yang Jia Jiang</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Yi Men Ying Lie - Yang Jia Jiang.md" size="2097152" crc="6604a79e"/>
+		<driver status="good"/>
+	</game>
 	<game name="yiearkf">
 		<description>Yie Ar Kung-Fu (HB) [Homebrew]</description>
 		<year>2007</year>
@@ -18604,6 +18807,20 @@
 		<year>1991</year>
 		<manufacturer>Toaplan</manufacturer>
 		<rom name="zero wing (T-Chi).bin" size="1048576" crc="7218212f"/>
+		<driver status="good"/>
+	</game>
+	<game name="zhanqichess">
+		<description>Zhan Qi Chinese Battle Chess</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Zhan Qi Chinese Battle Chess.md" size="1048576" crc="9d3dde48"/>
+		<driver status="good"/>
+	</game>
+	<game name="zhongguoxqi">
+		<description>Zhong Guo Xiang Qi</description>
+		<year>199?</year>
+		<manufacturer>Unlicensed</manufacturer>
+		<rom name="Zhong Guo Xiang Qi.md" size="524288" crc="475215a0"/>
 		<driver status="good"/>
 	</game>
 	<game name="zhuogu">

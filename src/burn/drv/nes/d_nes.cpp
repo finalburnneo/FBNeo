@@ -12336,7 +12336,7 @@ struct BurnDriver BurnDrvnes_allpads = {
 // Non Homebrew (hand-added!)
 
 static struct BurnRomInfo nes_smbchrediRomDesc[] = {
-	{ "Super Mario Bros. Christmas Edition (Hack).nes",          73744, 0xc81b8012, BRF_ESS | BRF_PRG },
+	{ "Super Mario Bros. Christmas Edition (Hack).nes",          73744, 0xb293a7c4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_smbchredi)

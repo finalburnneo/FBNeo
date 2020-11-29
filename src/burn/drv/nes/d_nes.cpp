@@ -29558,6 +29558,23 @@ struct BurnDriver BurnDrvnes_metroid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_metroidmotherRomDesc[] = {
+	{ "Metroid Mother (Hack).nes",          393232, 0x04819e27, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_metroidmother)
+STD_ROM_FN(nes_metroidmother)
+
+struct BurnDriver BurnDrvnes_metroidmother = {
+	"nes_metroidmother", NULL, NULL, NULL, "1989?",
+	"Metroid Mother (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_metroidmotherRomInfo, nes_metroidmotherRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_metroorienhRomDesc[] = {
 	{ "Metroid - Origin Enhanced (USA).nes",          393232, 0xa81055ab, BRF_ESS | BRF_PRG },
 };

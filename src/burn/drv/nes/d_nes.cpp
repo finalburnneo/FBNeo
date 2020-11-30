@@ -35066,19 +35066,53 @@ struct BurnDriver BurnDrvnes_starwars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_starwarRomDesc[] = {
+static struct BurnRomInfo nes_starwaresbRomDesc[] = {
 	{ "Star Wars - The Empire Strikes Back (USA).nes",          524304, 0x44d3224f, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_starwar)
-STD_ROM_FN(nes_starwar)
+STD_ROM_PICK(nes_starwaresb)
+STD_ROM_FN(nes_starwaresb)
 
-struct BurnDriver BurnDrvnes_starwar = {
-	"nes_starwar", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvnes_starwaresb = {
+	"nes_starwaresb", NULL, NULL, NULL, "1992",
 	"Star Wars - The Empire Strikes Back (USA)\0", NULL, "JVC", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_starwarRomInfo, nes_starwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_starwaresbRomInfo, nes_starwaresbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_starwaresbeasRomDesc[] = {
+	{ "Star Wars - The Empire Strikes Back Easy (Hack).nes",          524304, 0x11be60fe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starwaresbeas)
+STD_ROM_FN(nes_starwaresbeas)
+
+struct BurnDriver BurnDrvnes_starwaresbeas = {
+	"nes_starwaresbeas", "nes_starwaresb", NULL, NULL, "1989?",
+	"Star Wars - The Empire Strikes Back Easy (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_starwaresbeasRomInfo, nes_starwaresbeasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_starwarseasyRomDesc[] = {
+	{ "Star Wars Easy (Hack).nes",          262160, 0x964f462d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starwarseasy)
+STD_ROM_FN(nes_starwarseasy)
+
+struct BurnDriver BurnDrvnes_starwarseasy = {
+	"nes_starwarseasy", "nes_starwars", NULL, NULL, "1989?",
+	"Star Wars Easy (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_starwarseasyRomInfo, nes_starwarseasyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

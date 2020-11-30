@@ -367,20 +367,47 @@ static void TexToQuad()
 	glFinish();
 }
 
+void DrawText(char *string, int x, int y)
+{
+	//TODO
+}
+
+static void RenderMessage()
+{
+	// First render anything that is key-held based
+	if (bAppDoFast)
+	{
+		//DrawText("FFWD", 10, 10);
+	}
+	if (bAppShowFPS)
+	{
+		if (bAppFullscreen)
+		{
+			//DrawText(fpsstring, 10, 10);
+		} 
+		else 
+		{
+			sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+			SDL_SetWindowTitle(sdlWindow, Windowtitle);
+		}
+	}
+
+	if (messageFrames > 1)
+	{
+		//DrawText(lastMessage, 10, 10);
+		messageFrames--;
+	}
+}
+
 // Paint the BlitFX surface onto the primary surface
 static int Paint(int bValidate)
 {
 
 	SurfToTex();
 	TexToQuad();
+	RenderMessage();
 	
-	if (bAppShowFPS && !bAppFullscreen)
-	{
-		sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
-		SDL_SetWindowTitle(sdlWindow, Windowtitle);
-	}
 	SDL_GL_SwapWindow(sdlWindow);
-
 
 	return 0;
 }

@@ -333,7 +333,8 @@ int RunExit()
 int RunMessageLoop()
 {
 	int quit = 0;
-
+	static char Windowtitle[512];
+	
 	RunInit();
 	GameInpCheckMouse();                                                                     // Hide the cursor
 
@@ -362,6 +363,11 @@ int RunMessageLoop()
 					break;
 				case SDLK_F11:
 					bAppShowFPS = !bAppShowFPS;
+					if (!bAppShowFPS)
+					{
+						sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+						SDL_SetWindowTitle(sdlWindow, Windowtitle);
+					}
 					break;
 #ifdef BUILD_SDL2
 				case SDLK_TAB:

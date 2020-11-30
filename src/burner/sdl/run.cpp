@@ -17,6 +17,7 @@ static bool bAppDoStep = 0;
 bool        bAppDoFast = 0;
 bool        bAppShowFPS = 0;
 static int  nFastSpeed = 6;
+static bool bscreenshot = 0;
 
 UINT32 messageFrames = 0;
 char lastMessage[MESSAGE_MAX_LENGTH];
@@ -368,6 +369,13 @@ int RunMessageLoop()
 					ingame_gui_start(sdlRenderer);
 					break;
 #endif
+				case SDLK_F6: // screeenshot
+					if (!bscreenshot) {
+						MakeScreenShot();
+						bscreenshot = 1;
+					}
+					break;
+	
 				default:
 					break;
 				}
@@ -379,7 +387,9 @@ int RunMessageLoop()
 				case SDLK_F1:
 					bAppDoFast = 0;
 					break;
-
+				case SDLK_F6: 
+					bscreenshot = 0;
+					break;
 				case SDLK_F12:
 					quit = 1;
 					break;

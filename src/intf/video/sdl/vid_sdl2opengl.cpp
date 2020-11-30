@@ -6,6 +6,8 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
+extern char videofiltering[3];
+
 static SDL_GLContext glContext = NULL;
 
 static int nInitedSubsytems = 0;
@@ -133,8 +135,16 @@ void init_gl()
 	glDepthMask(GL_FALSE);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	if (strcmp(videofiltering, "1") == 0) 
+	{
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	}
+	else
+	{
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
 
 	glMatrixMode(GL_PROJECTION);
@@ -272,10 +282,17 @@ static int Init()
 	VidSScaleImage(&test_rect);
 	printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
 
+	Uint32 screenFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+
+	if (bAppFullscreen)
+	{
+		screenFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN;
+	}
+
 	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 	
 	screen = SDL_CreateWindow(Windowtitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
-		test_rect.bottom * nSize, SDL_WINDOW_OPENGL);
+		test_rect.bottom * nSize, screenFlags);
 	glContext = SDL_GL_CreateContext(screen);
 	// Initialize the buffer surfaces
 	BlitFXInit();

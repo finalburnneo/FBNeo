@@ -366,7 +366,9 @@ int RunMessageLoop()
 					break;
 #ifdef BUILD_SDL2
 				case SDLK_TAB:
-					ingame_gui_start(sdlRenderer);
+					if(!nVidSelect) {
+						ingame_gui_start(sdlRenderer);
+					}
 					break;
 #endif
 				case SDLK_F6: // screeenshot

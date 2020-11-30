@@ -26,6 +26,8 @@ static int nUseBlitter;
 static int nRotateGame = 0;
 static bool bFlipped = false;
 
+static char Windowtitle[512];
+
 static int BlitFXExit()
 {
 	SDL_DestroyWindow(screen);
@@ -270,8 +272,9 @@ static int Init()
 	VidSScaleImage(&test_rect);
 	printf("correctx after %d, %d\n", test_rect.right, test_rect.bottom);
 
-
-	screen = SDL_CreateWindow("FBNeo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
+	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+	
+	screen = SDL_CreateWindow(Windowtitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
 		test_rect.bottom * nSize, SDL_WINDOW_OPENGL);
 	glContext = SDL_GL_CreateContext(screen);
 	// Initialize the buffer surfaces
@@ -353,6 +356,12 @@ static int Paint(int bValidate)
 
 	SurfToTex();
 	TexToQuad();
+	
+	if (bAppShowFPS && !bAppFullscreen)
+	{
+		sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+		SDL_SetWindowTitle(screen, Windowtitle);
+	}
 	SDL_GL_SwapWindow(screen);
 
 

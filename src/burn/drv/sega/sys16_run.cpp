@@ -139,6 +139,7 @@ bool HammerAway = false;
 bool Lockonph = false;
 bool AltbeastMode = false;
 bool ThndrbldMode = false;
+bool TturfMode = false;
 bool System16Z80Enable = true;
 bool System1668KEnable = true;
 
@@ -533,7 +534,6 @@ void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d)
 					if (!(d & 0x10)) UPD7759BankAddress = 0x20000;
 					if (!(d & 0x20)) UPD7759BankAddress = 0x30000;
 					UPD7759BankAddress += (d & 0x03) * 0x4000;
-					
 				}
 				
 				if (((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5521) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704_PS2)) {
@@ -1168,7 +1168,11 @@ INT32 System16LoadRoms(bool bLoad)
 			System16Z80RomNum += System16RF5C68DataNum;
 			System16Z80RomSize = 0x210000;
 		}
-		
+
+		if (TturfMode) { // Japan version only!
+			System16UPD7759DataSize += 0x10000;
+		}
+
 #if 1 && defined FBNEO_DEBUG	
 		bprintf(PRINT_NORMAL, _T("68K Rom Size: 0x%X (%i roms)\n"), System16RomSize, System16RomNum);
 		if (System16Rom2Size) bprintf(PRINT_NORMAL, _T("68K #2 Rom Size: 0x%X (%i roms)\n"), System16Rom2Size, System16Rom2Num);
@@ -2644,6 +2648,7 @@ INT32 System16Exit()
 	Lockonph = false;
 	AltbeastMode = false;
 	ThndrbldMode = false;
+	TturfMode = false;
 	System1668KEnable = true;
 	System16Z80Enable = true;
 

@@ -119,6 +119,7 @@ extern bool HammerAway;
 extern bool Lockonph;
 extern bool AltbeastMode;
 extern bool ThndrbldMode;
+extern bool TturfMode;
 extern bool System16Z80Enable;
 extern bool System1668KEnable;
 

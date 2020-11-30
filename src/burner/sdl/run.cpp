@@ -1,6 +1,8 @@
 // Run module
 #include "burner.h"
-
+#ifdef BUILD_SDL2
+#include "sdl2_gui_common.h"
+#endif
 #include <sys/time.h>
 
 static unsigned int nDoFPS = 0;
@@ -22,14 +24,11 @@ static bool bscreenshot = 0;
 UINT32 messageFrames = 0;
 char lastMessage[MESSAGE_MAX_LENGTH];
 
-/// Ingame gui
 #ifdef BUILD_SDL2
+/// Ingame gui
 extern SDL_Renderer* sdlRenderer;
 extern void ingame_gui_start(SDL_Renderer* renderer);
-#endif
-
 /// Save States
-#ifdef BUILD_SDL2
 static char* szSDLSavePath = NULL;
 #endif
 
@@ -368,6 +367,13 @@ int RunMessageLoop()
 				case SDLK_TAB:
 					if(!nVidSelect) {
 						ingame_gui_start(sdlRenderer);
+					}
+					break;
+				
+				case SDLK_RETURN:
+					if (event.key.keysym.mod & KMOD_ALT) 
+					{
+						SetFullscreen(!GetFullscreen());
 					}
 					break;
 #endif

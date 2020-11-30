@@ -5,7 +5,7 @@
 
 extern char videofiltering[3];
 
-static SDL_Window* sdlWindow = NULL;
+//static SDL_Window* sdlWindow = NULL;
 static SDL_Renderer* sdlRenderer = NULL;
 
 static SDL_Texture* titleTexture = NULL;
@@ -1011,10 +1011,17 @@ int gui_process()
 					findPrevLetter();
 					break;
 				case SDLK_RETURN:
-					nBurnDrvActive = gametoplay;
-					if (gameAv[nBurnDrvActive])
+					if (e.key.keysym.mod & KMOD_ALT) 
 					{
-						return gametoplay;
+						SetFullscreen(!GetFullscreen());
+					} 
+					else 
+					{
+						nBurnDrvActive = gametoplay;
+						if (gameAv[nBurnDrvActive])
+						{
+							return gametoplay;
+						}
 					}
 					break;
 				case SDLK_F1:

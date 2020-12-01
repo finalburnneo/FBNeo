@@ -492,8 +492,10 @@ static INT32 ConfigParseMAMEFile()
 		_stscanf (tmp, _T("%x"), &nAttrib);
 
 		tmpcpy(5);						// cheat name
-				   //was x7f00
-		if (flags & 0x80007c00) continue;			// skip various cheats (unhandled methods at this time)
+
+		//was x7f00
+		//was 7c00 (breaks riot starting level cheat)
+		if (flags & 0x80004c00) continue;			// skip various cheats (unhandled methods at this time)
 
 		if ( flags & 0x00008000 || (flags & 0x00010000 && !menu)) { // Linked cheat "(2/2) etc.."
 			if (nCurrentAddress < CHEAT_MAX_ADDRESS) {

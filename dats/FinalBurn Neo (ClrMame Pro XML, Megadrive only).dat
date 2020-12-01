@@ -11541,6 +11541,13 @@
 		<rom name="radical rex (euro).bin" size="1048576" crc="d02d3282"/>
 		<driver status="good"/>
 	</game>
+	<game name="radrexs" cloneof="radrex" romof="radrex">
+		<description>Radical Rex (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="radical rex (Hack, Spanish).bin" size="1048576" crc="3a33bd58"/>
+		<driver status="good"/>
+	</game>
 	<game name="radrexu" cloneof="radrex" romof="radrex">
 		<description>Radical Rex (USA)</description>
 		<year>1994</year>
@@ -11562,11 +11569,32 @@
 		<rom name="raiden trad -- raiden densetsu (usa, jpn).bin" size="1048576" crc="f839a811"/>
 		<driver status="good"/>
 	</game>
+	<game name="raidens" cloneof="raiden" romof="raiden">
+		<description>Raiden Trad ~ Raiden Densetsu (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Micronet</manufacturer>
+		<rom name="raiden trad -- raiden densetsu (Hack, Spanish).bin" size="1048576" crc="eee74b65"/>
+		<driver status="good"/>
+	</game>
+	<game name="rbislands" cloneof="rbisland" romof="rbisland">
+		<description>Rainbow Islands Extra (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="rainbow islands extra (Hack, Spanish).bin" size="524288" crc="7a131386"/>
+		<driver status="good"/>
+	</game>
 	<game name="rbisland">
 		<description>Rainbow Islands Extra (Jpn)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="rainbow islands extra (jpn).bin" size="524288" crc="c74dcb35"/>
+		<driver status="good"/>
+	</game>
+	<game name="rambo3s" cloneof="rambo3" romof="rambo3">
+		<description>Rambo III (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="rambo iii (Hack, Spanish).bin" size="262144" crc="e28d6cb0"/>
 		<driver status="good"/>
 	</game>
 	<game name="rambo3a" cloneof="rambo3" romof="rambo3">
@@ -11604,6 +11632,13 @@
 		<rom name="ranger-x (euro).bin" size="1048576" crc="b8c04804"/>
 		<driver status="good"/>
 	</game>
+	<game name="rangerxs" cloneof="rangerx" romof="rangerx">
+		<description>Ranger-X (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="ranger-x (Hack, Spanish).bin" size="1048576" crc="73f94d57"/>
+		<driver status="good"/>
+	</game>
 	<game name="rangerxu" cloneof="rangerx" romof="rangerx">
 		<description>Ranger-X (USA)</description>
 		<year>1993</year>
@@ -11616,6 +11651,13 @@
 		<year>1991</year>
 		<manufacturer>Asmik Ace</manufacturer>
 		<rom name="ransei no hasha (jpn).bin" size="1048576" crc="a9a0083d"/>
+		<driver status="good"/>
+	</game>
+	<game name="rastan2s" cloneof="rastan2" romof="rastan2">
+		<description>Rastan Saga II (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="rastan saga ii (Hack, Spanish).bin" size="524288" crc="aef20d9e"/>
 		<driver status="good"/>
 	</game>
 	<game name="rastan2j" cloneof="rastan2" romof="rastan2">
@@ -11644,6 +11686,13 @@
 		<year>2015</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="rent a hero (english translation).bin" size="1271968" crc="820dac90"/>
+		<driver status="good"/>
+	</game>
+	<game name="rentheros" cloneof="renthero" romof="renthero">
+		<description>Rent a Hero (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="rent a hero (Hack, Spanish).bin" size="1476768" crc="c248feb3"/>
 		<driver status="good"/>
 	</game>
 	<game name="renthero">
@@ -11794,6 +11843,13 @@
 		<rom name="ristar (euro, usa) (september 1994).bin" size="2097152" crc="6511aa61"/>
 		<driver status="good"/>
 	</game>
+	<game name="ristars" cloneof="ristar" romof="ristar">
+		<description>Ristar (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="ristar (Hack, Spanish).bin" size="2097152" crc="adaf912c"/>
+		<driver status="good"/>
+	</game>
 	<game name="ristarp4" cloneof="ristar" romof="ristar">
 		<description>Ristar (Prototype, 19940701)</description>
 		<year>1994</year>
@@ -11850,6 +11906,13 @@
 		<rom name="road rash (euro, usa).bin" size="786432" crc="dea53d19"/>
 		<driver status="good"/>
 	</game>
+	<game name="roadrashs" cloneof="roadrash" romof="roadrash">
+		<description>Road Rash (Hack, Spanish)</description>
+		<year>2014</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="road rash (Hack, Spanish).bin" size="786432" crc="373d2fba"/>
+		<driver status="good"/>
+	</game>
 	<game name="rrash2a" cloneof="rrash2" romof="rrash2">
 		<description>Road Rash II (Euro, USA)</description>
 		<year>1992</year>
@@ -11862,6 +11925,13 @@
 		<year>1992</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="road rash ii (euro, usa) (v1.2).bin" size="1048576" crc="0876e992"/>
+		<driver status="good"/>
+	</game>
+	<game name="rrash2s" cloneof="rrash2" romof="rrash2">
+		<description>Road Rash II (Hack Spanish)</description>
+		<year>2013</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="road rash ii (Hack Spanish).bin" size="1048576" crc="a8ec5695"/>
 		<driver status="good"/>
 	</game>
 	<game name="rrash2j" cloneof="rrash2" romof="rrash2">
@@ -11892,11 +11962,25 @@
 		<rom name="robocop 3 (euro, usa).bin" size="524288" crc="34fb7b27"/>
 		<driver status="good"/>
 	</game>
+	<game name="robocop3s" cloneof="robocop3" romof="robocop3">
+		<description>Robocop 3 (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="robocop 3 (Hack, Spanish).bin" size="524288" crc="eecbff56"/>
+		<driver status="good"/>
+	</game>
 	<game name="roboterm">
 		<description>RoboCop versus The Terminator (Euro)</description>
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="robocop versus the terminator (euro).bin" size="2097152" crc="85a93f8d"/>
+		<driver status="good"/>
+	</game>
+	<game name="roboterms" cloneof="roboterm" romof="roboterm">
+		<description>Robocop versus The Terminator (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="robocop versus the terminator (Hack, Spanish).bin" size="2097152" crc="431feb53"/>
 		<driver status="good"/>
 	</game>
 	<game name="robotermj" cloneof="roboterm" romof="roboterm">
@@ -11969,6 +12053,13 @@
 		<rom name="fx004.bin" size="1048576" crc="8eedfd51"/>
 		<driver status="good"/>
 	</game>
+	<game name="rockets" cloneof="rocket" romof="rocket">
+		<description>Rocket Knight Adventures (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="rocket knight adventures (Hack, Spanish).bin" size="1048576" crc="4ecd1bd6"/>
+		<driver status="good"/>
+	</game>
 	<game name="rocketj" cloneof="rocket" romof="rocket">
 		<description>Rocket Knight Adventures (Jpn)</description>
 		<year>1993</year>
@@ -12018,6 +12109,13 @@
 		<rom name="rolling thunder 2 (euro).bin" size="1048576" crc="c440f292"/>
 		<driver status="good"/>
 	</game>
+	<game name="rthun2s" cloneof="rthun2" romof="rthun2">
+		<description>Rolling Thunder 2 (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="rolling thunder 2 (Hack, Spanish).bin" size="1048576" crc="43588ef3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rthun2j" cloneof="rthun2" romof="rthun2">
 		<description>Rolling Thunder 2 (Jpn)</description>
 		<year>1991</year>
@@ -12032,6 +12130,13 @@
 		<rom name="rolling thunder 2 (usa).bin" size="1048576" crc="3ace429b"/>
 		<driver status="good"/>
 	</game>
+	<game name="rthun3s" cloneof="rthun3" romof="rthun3">
+		<description>Rolling Thunder 3 (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="rolling thunder 3 (Hack, Spanish).bin" size="1572864" crc="0ad48d02"/>
+		<driver status="good"/>
+	</game>
 	<game name="rthun3">
 		<description>Rolling Thunder 3 (USA)</description>
 		<year>1993</year>
@@ -12044,6 +12149,13 @@
 		<year>1992</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="rolo to the rescue (euro, usa).bin" size="524288" crc="306861a2"/>
+		<driver status="good"/>
+	</game>
+	<game name="rolos" cloneof="rolo" romof="rolo">
+		<description>Rolo to the Rescue (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="rolo to the rescue (Hack, Spanish).bin" size="524288" crc="0c4584a4"/>
 		<driver status="good"/>
 	</game>
 	<game name="roman3k2">

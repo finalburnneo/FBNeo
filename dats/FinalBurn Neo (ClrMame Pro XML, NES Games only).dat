@@ -1573,6 +1573,13 @@
 		<rom name="Castlevania III - Dracula's Curse (USA).nes" size="393232" crc="7cc9c669"/>
 		<driver status="good"/>
 	</game>
+	<game name="castlsim" cloneof="castlevania" romof="castlevania">
+		<description>Castlevania Simplified (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Castlevania Simplified (Hack).nes" size="131088" crc="451a0c75"/>
+		<driver status="good"/>
+	</game>
 	<game name="catninteyj" cloneof="catnintey" romof="catnintey">
 		<description>Cat Ninden Teyandee (Japan)</description>
 		<year>1991</year>
@@ -6319,6 +6326,13 @@
 		<rom name="Marble Madness (USA).nes" size="131088" crc="f9282f28"/>
 		<driver status="good"/>
 	</game>
+	<game name="marioadventure" cloneof="smb3" romof="smb3">
+		<description>Mario Adventure (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mario Adventure (Hack).nes" size="426000" crc="2e6d3fdc"/>
+		<driver status="good"/>
+	</game>
 	<game name="mariobros">
 		<description>Mario Bros. (World)</description>
 		<year>1983</year>
@@ -6548,6 +6562,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid - Rogue Dawn (USA).nes" size="786448" crc="2120dfea"/>
+		<driver status="good"/>
+	</game>
+	<game name="metroidmother">
+		<description>Metroid Mother (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Metroid Mother (Hack).nes" size="393232" crc="04819e27"/>
 		<driver status="good"/>
 	</game>
 	<game name="micemission">
@@ -9119,11 +9140,25 @@
 		<rom name="Star Wars (USA).nes" size="262160" crc="eb506bf9"/>
 		<driver status="good"/>
 	</game>
-	<game name="starwar">
+	<game name="starwaresb">
 		<description>Star Wars - The Empire Strikes Back (USA)</description>
 		<year>1992</year>
 		<manufacturer>JVC</manufacturer>
 		<rom name="Star Wars - The Empire Strikes Back (USA).nes" size="524304" crc="44d3224f"/>
+		<driver status="good"/>
+	</game>
+	<game name="starwaresbeas" cloneof="starwaresb" romof="starwaresb">
+		<description>Star Wars - The Empire Strikes Back Easy (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Star Wars - The Empire Strikes Back Easy (Hack).nes" size="524304" crc="11be60fe"/>
+		<driver status="good"/>
+	</game>
+	<game name="starwarseasy" cloneof="starwars" romof="starwars">
+		<description>Star Wars Easy (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Star Wars Easy (Hack).nes" size="262160" crc="964f462d"/>
 		<driver status="good"/>
 	</game>
 	<game name="starshiphector">
@@ -9392,6 +9427,27 @@
 		<rom name="Super Mario Bros. 3 (USA) (Rev A).nes" size="393232" crc="0b742b33"/>
 		<driver status="good"/>
 	</game>
+	<game name="smb3defedi" cloneof="smb3" romof="smb3">
+		<description>Super Mario Bros. 3 Definitive Edition (Hack)</description>
+		<year>1990</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. 3 Definitive Edition (Hack).nes" size="524304" crc="2a59f8c5"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb3mi" cloneof="smb3" romof="smb3">
+		<description>Super Mario Bros. 3Mix (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. 3Mix (Hack).nes" size="786448" crc="16b3fe50"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbchredi" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Christmas Edition (Hack)</description>
+		<year>2020</year>
+		<manufacturer>U Retro</manufacturer>
+		<rom name="Super Mario Bros. Christmas Edition (Hack).nes" size="73744" crc="b293a7c4"/>
+		<driver status="good"/>
+	</game>
 	<game name="smbspeh" cloneof="smb" romof="smb">
 		<description>Super Mario Bros. Special (Hack, Triforce89)</description>
 		<year>1989?</year>
@@ -9411,6 +9467,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. Special X1 (Hack).nes" size="98320" crc="5a44876f"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbtwopla" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Two Players (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. Two Players (Hack).nes" size="73744" crc="393bc874"/>
 		<driver status="good"/>
 	</game>
 	<game name="smbunldlx" cloneof="smb" romof="smb">
@@ -10540,6 +10603,13 @@
 		<rom name="Volleyball (USA).nes" size="40976" crc="c0056ceb"/>
 		<driver status="good"/>
 	</game>
+	<game name="vssmbhomedi" cloneof="smb" romof="smb">
+		<description>VS. Super Mario Bros. Home Edition (Hack)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="VS. Super Mario Bros. Home Edition (Hack).nes" size="65552" crc="13c77383"/>
+		<driver status="good"/>
+	</game>
 	<game name="wackyraces">
 		<description>Wacky Races (USA)</description>
 		<year>1992</year>
@@ -10657,6 +10727,13 @@
 		<year>1990</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="Werewolf - The Last Warrior (USA).nes" size="262160" crc="19af4032"/>
+		<driver status="good"/>
+	</game>
+	<game name="whatremains">
+		<description>What Remains (HB)</description>
+		<year>2019</year>
+		<manufacturer>Iodine Dynamics</manufacturer>
+		<rom name="What Remains (HB).nes" size="524304" crc="2f2d03e5"/>
 		<driver status="good"/>
 	</game>
 	<game name="whereintimiscasa">

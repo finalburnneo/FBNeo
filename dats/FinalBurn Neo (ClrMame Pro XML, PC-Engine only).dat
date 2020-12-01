@@ -824,6 +824,13 @@
 		<rom name="honoo no toukyuuji dodge danpei (japan).pce" size="524288" crc="b01ee703"/>
 		<driver status="good"/>
 	</game>
+	<game name="huzero">
+		<description>HuZERO</description>
+		<year>2014</year>
+		<manufacturer>Chris Covell</manufacturer>
+		<rom name="HuZERO_by_Chris_Covell.pce" size="262144" crc="2871c4c0"/>
+		<driver status="good"/>
+	</game>
 	<game name="idolhana">
 		<description>Idol Hanafuda Fan Club</description>
 		<year>1991</year>
@@ -1223,6 +1230,13 @@
 		<rom name="mr. heli no daibouken (japan).pce" size="524288" crc="2cb92290"/>
 		<driver status="good"/>
 	</game>
+	<game name="nantet">
+		<description>Nantettatte Engine</description>
+		<year>2017</year>
+		<manufacturer>Atherbyte</manufacturer>
+		<rom name="Nantettatte Engine.pce" size="262144" crc="3974fb41"/>
+		<driver status="good"/>
+	</game>
 	<game name="blodwolf">
 		<description>Narazumono Sentai Butai - Bloody Wolf</description>
 		<year>1989</year>
@@ -1319,6 +1333,13 @@
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="obocchama kun (japan).pce" size="524288" crc="4d3b0bc9"/>
+		<driver status="good"/>
+	</game>
+	<game name="offthewall">
+		<description>Off the Wall (Prototype)</description>
+		<year>1992</year>
+		<manufacturer>Tengen/Atari</manufacturer>
+		<rom name="Off the Wall [Proto 1].pce" size="524800" crc="40f04a7c"/>
 		<driver status="good"/>
 	</game>
 	<game name="opwolf">
@@ -2019,6 +2040,13 @@
 		<year>1992</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
 		<rom name="toilet kids (japan).pce" size="524288" crc="53b7784b"/>
+		<driver status="good"/>
+	</game>
+	<game name="tongueman">
+		<description>Tongueman's Logic</description>
+		<year>2007</year>
+		<manufacturer>Chris Covell</manufacturer>
+		<rom name="Tongueman's Logic (FINAL 1.0).pce" size="524288" crc="fe451c22"/>
 		<driver status="good"/>
 	</game>
 	<game name="toramich">

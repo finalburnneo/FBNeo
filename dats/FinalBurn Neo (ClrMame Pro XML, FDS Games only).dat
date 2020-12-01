@@ -624,7 +624,7 @@
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Hikari Shinwa - Palthena no Kagami (Japan).fds" size="131016" crc="0c177561"/>
+		<rom name="Hikari Shinwa - Palutena no Kagami (Japan).fds" size="131000" crc="32516fcf"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
@@ -772,11 +772,19 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
-	<game name="linknobou" romof="fdsbios">
+	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Link no Bouken - The Legend of Zelda 2 (Japan).fds" size="131016" crc="a118214f"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="linknobou" romof="fdsbios">
+		<description>Link no Bouken - The Legend of Zelda 2 (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Link no Bouken - The Legend of Zelda 2 (T-Eng).fds" size="131000" crc="359d3f2b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

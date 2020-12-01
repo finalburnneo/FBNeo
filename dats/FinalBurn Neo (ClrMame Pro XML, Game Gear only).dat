@@ -1559,7 +1559,7 @@
 		<rom name="head buster (japan).bin" size="131072" crc="7e689995"/>
 		<driver status="good"/>
 	</game>
-	<game name="heavyw">
+	<game name="heavyw" cloneof="georgeko" romof="georgeko">
 		<description>Heavy Weight Champ (Jpn)</description>
 		<year>1991</year>
 		<manufacturer>SIMS</manufacturer>

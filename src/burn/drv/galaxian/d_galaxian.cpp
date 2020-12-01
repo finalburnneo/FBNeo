@@ -11101,6 +11101,23 @@ static struct BurnRomInfo MooncptcRomDesc[] = {
 STD_ROM_PICK(Mooncptc)
 STD_ROM_FN(Mooncptc)
 
+static struct BurnRomInfo MouncrstRomDesc[] = {
+	{ "w.7f",          0x01000, 0xb8ef3a6b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "x.7h",          0x01000, 0xb878f354, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "y.7j",          0x01000, 0x021762f4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "z.7k",          0x01000, 0x714330e5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "k.1h",          0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "m.1h",          0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "l.1k",          0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "n.1k",          0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom.6l",       0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mouncrst)
+STD_ROM_FN(Mouncrst)
+
 static struct BurnRomInfo Sirio2RomDesc[] = {
 	{ "sirio2_1.bin",  0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "sirio2_2.bin",  0x00800, 0x0b316f33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11970,6 +11987,16 @@ struct BurnDriver BurnDrvMooncptc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncptcRomInfo, MooncptcRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMouncrst = {
+	"mouncrst", "mooncrst", NULL, NULL, "1980",
+	"Moune Creste (Jeutel French Moon Cresta bootleg)\0", NULL, "bootleg (Jeutel)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MouncrstRomInfo, MouncrstRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrstDIPInfo,
+	Mooncrs3Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

@@ -6331,6 +6331,44 @@ struct BurnDriver BurnDrvtheglobp = {
 };
 
 
+// The Glob (Pac-Man hardware, bootleg) 
+
+static struct BurnRomInfo theglobpbRomDesc[] = {
+	{ "8.bin",        	0x0800, 0x3fb1ab3d, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "4.bin",        	0x0800, 0x554a0461, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "7.bin",        	0x0800, 0x07a2faf7, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "3.bin",        	0x0800, 0xb097cb29, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "6.bin",        	0x0800, 0xb459ba66, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "2.bin",        	0x0800, 0xd8ef9f98, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "5.bin",        	0x0800, 0x7204e11d, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "1.bin",        	0x0800, 0xedac5b91, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "9.bin",        	0x0800, 0x36408c76, 2 | BRF_GRA },				//  8 Graphics
+	{ "11.bin",       	0x0800, 0xb8ba069c, 2 | BRF_GRA },				//  9
+	{ "10.bin",       	0x0800, 0xe0478b4e, 2 | BRF_GRA },				// 10
+	{ "12.bin",       	0x0800, 0x7c4456a4, 2 | BRF_GRA },				// 11
+
+	{ "n82s123an_a.7f", 0x0020, 0x1f617527, 3 | BRF_GRA },				// 12 Color Prom
+	{ "n82s129n_b.4a",  0x0100, 0x28faa769, 3 | BRF_GRA },				// 13
+
+	{ "63s141_b.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 14 Sound Prom
+	{ "63s141_b.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(theglobpb)
+STD_ROM_FN(theglobpb)
+
+struct BurnDriver BurnDrvtheglobpb = {
+	"theglobpb", "suprglob", NULL, NULL, "1983",
+	"The Glob (Pac-Man hardware, bootleg)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
+	NULL, theglobpbRomInfo, theglobpbRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Super Glob (Pac-Man hardware)
 
 static struct BurnRomInfo sprglobpRomDesc[] = {

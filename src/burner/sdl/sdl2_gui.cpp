@@ -776,9 +776,14 @@ void gui_init()
 	sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (sdlRenderer == NULL)
 	{
-		// In the case that the window could not be made...
-		printf("Could not create renderer: %s\n", SDL_GetError());
-		return;
+		// failed back to SOFTWARE renderer
+		sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_SOFTWARE);	
+		if (sdlRenderer == NULL)
+		{
+			// In the case that the window could not be made...
+			printf("Could not create renderer: %s\n", SDL_GetError());
+			return;
+		}
 	}
 	if (bIntegerScale)
 	{

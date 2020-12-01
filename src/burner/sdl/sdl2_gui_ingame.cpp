@@ -91,7 +91,7 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
  {"Controller Options\0", ControllerMenuSelected, NULL},
  {"Save State\0", QuickSave, NULL},
  {"Load State\0", QuickLoad, NULL},
- {"Save Screenshot\0", NULL, NULL},
+ {"Save Screenshot\0", MakeScreenShot, NULL},
  {"Back to Game!\0", BackToGameSelected, NULL},
 };
 

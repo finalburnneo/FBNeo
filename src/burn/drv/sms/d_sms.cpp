@@ -16937,10 +16937,10 @@ STD_ROM_PICK(gg_heavyw)
 STD_ROM_FN(gg_heavyw)
 
 struct BurnDriver BurnDrvgg_heavyw = {
-	"gg_heavyw", NULL, NULL, NULL, "1991",
+	"gg_heavyw", "gg_georgeko", NULL, NULL, "1991",
 	"Heavy Weight Champ (Jpn)\0", NULL, "SIMS", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_VSFIGHT, 0,
 	GGGetZipName, gg_heavywRomInfo, gg_heavywRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

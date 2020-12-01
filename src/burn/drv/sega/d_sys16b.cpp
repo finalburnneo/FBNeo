@@ -8930,7 +8930,9 @@ static void Tturf_Sim8751()
 static INT32 TturfInit()
 {
 	Simulate8751 = Tturf_Sim8751;
-	
+
+	TturfMode = 1;
+
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0xe0000 - 0x80000;
 
@@ -8939,6 +8941,11 @@ static INT32 TturfInit()
 	if (!nRet) {
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
+			//re-arrange UPD7759 Data
+			memmove(&System16UPD7759Data[0x20000], &System16UPD7759Data[0x10000], 0x10000);
+			memset(&System16UPD7759Data[0x10000], 0xff, 0x10000);
+
+			// re-arrange Sprite Data
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0xe0000);
 			memcpy(System16Sprites + 0x000000, pTemp + 0x00000, 0x20000);

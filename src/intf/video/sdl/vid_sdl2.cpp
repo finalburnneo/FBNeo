@@ -24,6 +24,8 @@ static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
 static int screenh, screenw;
+static char Windowtitle[512];
+
 
 void RenderMessage()
 {
@@ -34,7 +36,15 @@ void RenderMessage()
 	}
 	if (bAppShowFPS)
 	{
-		inprint_shadowed(sdlRenderer, fpsstring, 10, 50);
+		if (bAppFullscreen)
+		{
+			inprint_shadowed(sdlRenderer, fpsstring, 10, 50);
+		} 
+		else 
+		{
+			sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+			SDL_SetWindowTitle(sdlWindow, Windowtitle);
+		}
 	}
 
 	if (messageFrames > 1)
@@ -119,9 +129,7 @@ static int Init()
 		}
 	}
 
-	char title[512];
-
-	sprintf(title, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 
 	Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
@@ -149,7 +157,7 @@ static int Init()
 	if (nRotateGame)
 	{
 		sdlWindow = SDL_CreateWindow(
-			title,
+			Windowtitle,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			display_h,
@@ -165,7 +173,7 @@ static int Init()
 	else
 	{
 		sdlWindow = SDL_CreateWindow(
-			title,
+			Windowtitle,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			display_h,
@@ -195,9 +203,13 @@ static int Init()
 	sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, renderflags);
 	if (sdlRenderer == NULL)
 	{
-		// In the case that the window could not be made...
-		printf("Could not create renderer: %s\n", SDL_GetError());
-		return 1;
+		sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_SOFTWARE);
+		if (sdlRenderer == NULL)
+		{	
+			// In the case that the window could not be made...
+			printf("Could not create renderer: %s\n", SDL_GetError());
+			return 1;
+		}
 	}
 
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_NONE);

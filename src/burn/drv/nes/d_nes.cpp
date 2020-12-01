@@ -10605,8 +10605,7 @@ struct BurnDriver BurnDrvfds_haokunnofusnata = {
 };
 
 static struct BurnRomInfo fds_hikarshiRomDesc[] = {
-	{ "Hikari Shinwa - Palthena no Kagami (Japan).fds",          131016, 0x0c177561, BRF_ESS | BRF_PRG },
-	//{ "Hikari Shinwa - Palutena no Kagami (Japan).fds",          131000, 0x32516fcf, BRF_ESS | BRF_PRG },
+	{ "Hikari Shinwa - Palutena no Kagami (Japan).fds",          131000, 0x32516fcf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_hikarshi, fds_hikarshi, fds_fdsbios)
@@ -10928,8 +10927,25 @@ struct BurnDriver BurnDrvfds_konekmon = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo fds_linknobouRomDesc[] = {
+static struct BurnRomInfo fds_linknoboujRomDesc[] = {
 	{ "Link no Bouken - The Legend of Zelda 2 (Japan).fds",          131016, 0xa118214f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_linknobouj, fds_linknobouj, fds_fdsbios)
+STD_ROM_FN(fds_linknobouj)
+
+struct BurnDriver BurnDrvfds_linknobouj = {
+	"fds_linknobouj", "fds_linknobou", "fds_fdsbios", NULL, "1989?",
+	"Link no Bouken - The Legend of Zelda 2 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_linknoboujRomInfo, fds_linknoboujRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo fds_linknobouRomDesc[] = {
+	{ "Link no Bouken - The Legend of Zelda 2 (T-Eng).fds",          131000, 0x359d3f2b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_linknobou, fds_linknobou, fds_fdsbios)
@@ -10937,7 +10953,7 @@ STD_ROM_FN(fds_linknobou)
 
 struct BurnDriver BurnDrvfds_linknobou = {
 	"fds_linknobou", NULL, "fds_fdsbios", NULL, "1989?",
-	"Link no Bouken - The Legend of Zelda 2 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Link no Bouken - The Legend of Zelda 2 (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_MISC, 0,
 	NESGetZipName, fds_linknobouRomInfo, fds_linknobouRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -12319,6 +12335,22 @@ struct BurnDriver BurnDrvnes_allpads = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_smbchrediRomDesc[] = {
+	{ "Super Mario Bros. Christmas Edition (Hack).nes",          73744, 0xb293a7c4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbchredi)
+STD_ROM_FN(nes_smbchredi)
+
+struct BurnDriver BurnDrvnes_smbchredi = {
+	"nes_smbchredi", "nes_smb", NULL, NULL, "2020",
+	"Super Mario Bros. Christmas Edition (Hack)\0", NULL, "U Retro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbchrediRomInfo, nes_smbchrediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {
 	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8a13acc3, BRF_ESS | BRF_PRG },
@@ -13386,6 +13418,23 @@ struct BurnDriver BurnDrvnes_triforceg = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_whatremainsRomDesc[] = {
+	{ "What Remains (HB).nes",          524304, 0x2f2d03e5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_whatremains)
+STD_ROM_FN(nes_whatremains)
+
+struct BurnDriver BurnDrvnes_whatremains = {
+	"nes_whatremains", NULL, NULL, NULL, "2019",
+	"What Remains (HB)\0", NULL, "Iodine Dynamics", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_whatremainsRomInfo, nes_whatremainsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_galfRomDesc[] = {
 	{ "Galf (2018)(Limited Run Games).nes",          262160, 0x52340070, BRF_ESS | BRF_PRG },
@@ -18846,6 +18895,23 @@ struct BurnDriver BurnDrvnes_castlevania = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_castlevaniaRomInfo, nes_castlevaniaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_castlsimRomDesc[] = {
+	{ "Castlevania Simplified (Hack).nes",          131088, 0x451a0c75, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castlsim)
+STD_ROM_FN(nes_castlsim)
+
+struct BurnDriver BurnDrvnes_castlsim = {
+	"nes_castlsim", "nes_castlevania", NULL, NULL, "1989?",
+	"Castlevania Simplified (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_castlsimRomInfo, nes_castlsimRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -29492,6 +29558,23 @@ struct BurnDriver BurnDrvnes_metroid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_metroidmotherRomDesc[] = {
+	{ "Metroid Mother (Hack).nes",          393232, 0x04819e27, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_metroidmother)
+STD_ROM_FN(nes_metroidmother)
+
+struct BurnDriver BurnDrvnes_metroidmother = {
+	"nes_metroidmother", NULL, NULL, NULL, "1989?",
+	"Metroid Mother (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_metroidmotherRomInfo, nes_metroidmotherRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_metroorienhRomDesc[] = {
 	{ "Metroid - Origin Enhanced (USA).nes",          393232, 0xa81055ab, BRF_ESS | BRF_PRG },
 };
@@ -34983,19 +35066,53 @@ struct BurnDriver BurnDrvnes_starwars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_starwarRomDesc[] = {
+static struct BurnRomInfo nes_starwaresbRomDesc[] = {
 	{ "Star Wars - The Empire Strikes Back (USA).nes",          524304, 0x44d3224f, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_starwar)
-STD_ROM_FN(nes_starwar)
+STD_ROM_PICK(nes_starwaresb)
+STD_ROM_FN(nes_starwaresb)
 
-struct BurnDriver BurnDrvnes_starwar = {
-	"nes_starwar", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvnes_starwaresb = {
+	"nes_starwaresb", NULL, NULL, NULL, "1992",
 	"Star Wars - The Empire Strikes Back (USA)\0", NULL, "JVC", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_starwarRomInfo, nes_starwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_starwaresbRomInfo, nes_starwaresbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_starwaresbeasRomDesc[] = {
+	{ "Star Wars - The Empire Strikes Back Easy (Hack).nes",          524304, 0x11be60fe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starwaresbeas)
+STD_ROM_FN(nes_starwaresbeas)
+
+struct BurnDriver BurnDrvnes_starwaresbeas = {
+	"nes_starwaresbeas", "nes_starwaresb", NULL, NULL, "1989?",
+	"Star Wars - The Empire Strikes Back Easy (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_starwaresbeasRomInfo, nes_starwaresbeasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_starwarseasyRomDesc[] = {
+	{ "Star Wars Easy (Hack).nes",          262160, 0x964f462d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starwarseasy)
+STD_ROM_FN(nes_starwarseasy)
+
+struct BurnDriver BurnDrvnes_starwarseasy = {
+	"nes_starwarseasy", "nes_starwars", NULL, NULL, "1989?",
+	"Star Wars Easy (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_starwarseasyRomInfo, nes_starwarseasyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -35476,6 +35593,40 @@ struct BurnDriver BurnDrvnes_smb = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_smbtwoplaRomDesc[] = {
+	{ "Super Mario Bros. Two Players (Hack).nes",          73744, 0x393bc874, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbtwopla)
+STD_ROM_FN(nes_smbtwopla)
+
+struct BurnDriver BurnDrvnes_smbtwopla = {
+	"nes_smbtwopla", "nes_smb", NULL, NULL, "1989?",
+	"Super Mario Bros. Two Players (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbtwoplaRomInfo, nes_smbtwoplaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_vssmbhomediRomDesc[] = {
+	{ "VS. Super Mario Bros. Home Edition (Hack).nes",          65552, 0x13c77383, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vssmbhomedi)
+STD_ROM_FN(nes_vssmbhomedi)
+
+struct BurnDriver BurnDrvnes_vssmbhomedi = {
+	"nes_vssmbhomedi", "nes_smb", NULL, NULL, "1989?",
+	"VS. Super Mario Bros. Home Edition (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_vssmbhomediRomInfo, nes_vssmbhomediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_smbspehRomDesc[] = {
 	{ "Super Mario Bros. Special (Hack, Triforce89).nes",          98320, 0xab872e74, BRF_ESS | BRF_PRG },
 };
@@ -35574,6 +35725,57 @@ struct BurnDriver BurnDrvnes_smb3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_smb3RomInfo, nes_smb3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_marioadventureRomDesc[] = {
+	{ "Mario Adventure (Hack).nes",          426000, 0x2e6d3fdc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_marioadventure)
+STD_ROM_FN(nes_marioadventure)
+
+struct BurnDriver BurnDrvnes_marioadventure = {
+	"nes_marioadventure", "nes_smb3", NULL, NULL, "1989?",
+	"Mario Adventure (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_marioadventureRomInfo, nes_marioadventureRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smb3defediRomDesc[] = {
+	{ "Super Mario Bros. 3 Definitive Edition (Hack).nes",          524304, 0x2a59f8c5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb3defedi)
+STD_ROM_FN(nes_smb3defedi)
+
+struct BurnDriver BurnDrvnes_smb3defedi = {
+	"nes_smb3defedi", "nes_smb3", NULL, NULL, "1990",
+	"Super Mario Bros. 3 Definitive Edition (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smb3defediRomInfo, nes_smb3defediRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_smb3miRomDesc[] = {
+	{ "Super Mario Bros. 3Mix (Hack).nes",          786448, 0x16b3fe50, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb3mi)
+STD_ROM_FN(nes_smb3mi)
+
+struct BurnDriver BurnDrvnes_smb3mi = {
+	"nes_smb3mi", "nes_smb3", NULL, NULL, "1989?",
+	"Super Mario Bros. 3Mix (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smb3miRomInfo, nes_smb3miRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

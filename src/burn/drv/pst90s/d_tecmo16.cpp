@@ -348,7 +348,7 @@ static struct BurnRomInfo GinkunRomDesc[] = {
 	{ "ginkun09.i22",  0x80000, 0x233384b9, BRF_GRA },			 //  5
 	{ "ginkun06.i16",  0x80000, 0xf8589184, BRF_GRA },			 //  6
 
-	{ "ginkun07.i17",  0x10000, 0x8836b1aa, BRF_PRG | BRF_SND },	//  7	Z80 Program Code
+	{ "ginkun07.i17",  0x10000, 0x8836b1aa, BRF_PRG | BRF_SND }, //  7	Z80 Program Code
 
 	{ "ginkun08.i18",  0x20000, 0x8b7583c7, BRF_SND },			 //  8	Samples
 };
@@ -358,23 +358,42 @@ STD_ROM_PICK(Ginkun)
 STD_ROM_FN(Ginkun)
 
 static struct BurnRomInfo RiotRomDesc[] = {
-	{ "1.ic1",  0x40000, 0x9ef4232e, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "2.ic2",  0x40000, 0xf2c6fbbf, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "1.ic1",  0x40000, 0x9ef4232e, BRF_ESS | BRF_PRG }, //  0	 68000 Program Code
+	{ "2.ic2",  0x40000, 0xf2c6fbbf, BRF_ESS | BRF_PRG }, //  1	 68000 Program Code
 	
-	{ "3.ic3",  0x20000, 0xf60f5c96, BRF_GRA }, //  2
-	{ "5.ic9",  0x80000, 0x056fce78, BRF_GRA }, //  3
-	{ "4.ic5",  0x80000, 0x0894e7b4, BRF_GRA }, //  4
-	{ "9.ic22", 0x80000, 0x0ead54f3, BRF_GRA }, //  5
-	{ "6.ic16", 0x80000, 0x96ef61da, BRF_GRA }, //  6
+	{ "3.ic3",  0x20000, 0xf60f5c96, BRF_GRA }, 		  //  2
+	{ "5.ic9",  0x80000, 0x056fce78, BRF_GRA }, 		  //  3
+	{ "4.ic5",  0x80000, 0x0894e7b4, BRF_GRA }, 		  //  4
+	{ "9.ic22", 0x80000, 0x0ead54f3, BRF_GRA }, 		  //  5
+	{ "6.ic16", 0x80000, 0x96ef61da, BRF_GRA }, 		  //  6
 
-	{ "7.ic17", 0x10000, 0x0a95b8f3, BRF_PRG | BRF_SND },	//  7	Z80 Program Code
+	{ "7.ic17", 0x10000, 0x0a95b8f3, BRF_PRG | BRF_SND }, //  7	 Z80 Program Code
 	
-	{ "8.ic18", 0x20000, 0x4b70e266, BRF_SND }, //  8	Samples
+	{ "8.ic18", 0x20000, 0x4b70e266, BRF_SND }, 		  //  8	 Samples
 };
 
 
 STD_ROM_PICK(Riot)
 STD_ROM_FN(Riot)
+
+static struct BurnRomInfo RiotwRomDesc[] = {
+	{ "riotw1.ic1",  0x40000, 0xc1849b44, BRF_ESS | BRF_PRG }, //  0  68000 Program Code
+	{ "riotw2.ic2",  0x40000, 0xd6dc0c09, BRF_ESS | BRF_PRG }, //  1  68000 Program Code
+	
+	{ "3.ic3",  	 0x20000, 0xf60f5c96, BRF_GRA }, 		   //  2
+	{ "5.ic9",  	 0x80000, 0x056fce78, BRF_GRA }, 		   //  3
+	{ "4.ic5",  	 0x80000, 0x0894e7b4, BRF_GRA }, 		   //  4
+	{ "9.ic22", 	 0x80000, 0x0ead54f3, BRF_GRA }, 		   //  5
+	{ "6.ic16", 	 0x80000, 0x96ef61da, BRF_GRA }, 		   //  6
+
+	{ "7.ic17", 	 0x10000, 0x0a95b8f3, BRF_PRG | BRF_SND }, //  7  Z80 Program Code
+	
+	{ "8.ic18", 	 0x20000, 0x4b70e266, BRF_SND }, 		   //  8  Samples
+};
+
+
+STD_ROM_PICK(Riotw)
+STD_ROM_FN(Riotw)
 
 static INT32 DrvDoReset()
 {
@@ -1354,6 +1373,16 @@ struct BurnDriver BurnDrvRiot = {
 	L"\u96F7\u8ECB\u6597 Riot\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, RiotRomInfo, RiotRomName, NULL, NULL, NULL, NULL, RiotInputInfo, RiotDIPInfo,
+	RiotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x2000, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvRiotw = {
+	"riotw", "riot", NULL, NULL, "1992",
+	"Riot (Woong Bi license)\0", NULL, "Woong Bi", "Miscellaneous",
+	L"\u96F7\u8ECB\u6597 Riot (Woong Bi license)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, RiotwRomInfo, RiotwRomName, NULL, NULL, NULL, NULL, RiotInputInfo, RiotDIPInfo,
 	RiotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 256, 224, 4, 3
 };

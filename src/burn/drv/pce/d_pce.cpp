@@ -8821,3 +8821,78 @@ struct BurnDriver BurnDrvpce_mikkokue = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// Nantettatte Engine
+
+static struct BurnRomInfo pce_nantetRomDesc[] = {
+	{ "Nantettatte Engine.pce", 0x040000, 0x3974fb41, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_nantet)
+STD_ROM_FN(pce_nantet)
+
+struct BurnDriver BurnDrvpce_nantet = {
+	"pce_nantet", NULL, NULL, NULL, "2017",
+	"Nantettatte Engine\0", NULL, "Atherbyte", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_nantetRomInfo, pce_nantetRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+// Tongueman's Logic
+
+static struct BurnRomInfo pce_tonguemanRomDesc[] = {
+	{ "Tongueman's Logic (FINAL 1.0).pce", 0x080000, 0xfe451c22, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_tongueman)
+STD_ROM_FN(pce_tongueman)
+
+struct BurnDriver BurnDrvpce_tongueman = {
+	"pce_tongueman", NULL, NULL, NULL, "2007",
+	"Tongueman's Logic\0", NULL, "Chris Covell", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_tonguemanRomInfo, pce_tonguemanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+// HuZERO
+
+static struct BurnRomInfo pce_huzeroRomDesc[] = {
+	{ "HuZERO_by_Chris_Covell.pce", 0x040000, 0x2871c4c0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_huzero)
+STD_ROM_FN(pce_huzero)
+
+struct BurnDriver BurnDrvpce_huzero = {
+	"pce_huzero", NULL, NULL, NULL, "2014",
+	"HuZERO\0", NULL, "Chris Covell", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_huzeroRomInfo, pce_huzeroRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+// Off the Wall (Prototype)
+
+static struct BurnRomInfo pce_offthewallRomDesc[] = {
+	{ "Off the Wall [Proto 1].pce", 0x080200, 0x40f04a7c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_offthewall)
+STD_ROM_FN(pce_offthewall)
+
+struct BurnDriver BurnDrvpce_offthewall = {
+	"pce_offthewall", NULL, NULL, NULL, "1992",
+	"Off the Wall (Prototype)\0", NULL, "Tengen/Atari", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_offthewallRomInfo, pce_offthewallRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};

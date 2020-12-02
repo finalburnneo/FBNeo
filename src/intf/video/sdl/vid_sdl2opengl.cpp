@@ -15,7 +15,7 @@ static int nInitedSubsytems = 0;
 static int nGamesWidth = 0, nGamesHeight = 0; // screen size
 
 static GLint texture_type = GL_UNSIGNED_BYTE;
-extern SDL_Window* sdlWindow;
+static SDL_Window* screen = NULL;
 static unsigned char* texture = NULL;
 static unsigned char* gamescreen = NULL;
 
@@ -32,7 +32,7 @@ static char Windowtitle[512];
 
 static int BlitFXExit()
 {
-	SDL_DestroyWindow(sdlWindow);
+	SDL_DestroyWindow(screen);
 	SDL_GL_DeleteContext(glContext);
 	free(texture);
 	free(gamescreen);
@@ -291,9 +291,9 @@ static int Init()
 
 	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 	
-	sdlWindow = SDL_CreateWindow(Windowtitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
+	screen = SDL_CreateWindow(Windowtitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, test_rect.right * nSize,
 		test_rect.bottom * nSize, screenFlags);
-	glContext = SDL_GL_CreateContext(sdlWindow);
+	glContext = SDL_GL_CreateContext(screen);
 	// Initialize the buffer surfaces
 	BlitFXInit();
 
@@ -367,47 +367,20 @@ static void TexToQuad()
 	glFinish();
 }
 
-void DrawText(char *string, int x, int y)
-{
-	//TODO
-}
-
-static void RenderMessage()
-{
-	// First render anything that is key-held based
-	if (bAppDoFast)
-	{
-		//DrawText("FFWD", 10, 10);
-	}
-	if (bAppShowFPS)
-	{
-		if (bAppFullscreen)
-		{
-			//DrawText(fpsstring, 10, 10);
-		} 
-		else 
-		{
-			sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
-			SDL_SetWindowTitle(sdlWindow, Windowtitle);
-		}
-	}
-
-	if (messageFrames > 1)
-	{
-		//DrawText(lastMessage, 10, 10);
-		messageFrames--;
-	}
-}
-
 // Paint the BlitFX surface onto the primary surface
 static int Paint(int bValidate)
 {
 
 	SurfToTex();
 	TexToQuad();
-	RenderMessage();
 	
-	SDL_GL_SwapWindow(sdlWindow);
+	if (bAppShowFPS && !bAppFullscreen)
+	{
+		sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+		SDL_SetWindowTitle(screen, Windowtitle);
+	}
+	SDL_GL_SwapWindow(screen);
+
 
 	return 0;
 }

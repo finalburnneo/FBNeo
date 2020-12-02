@@ -31,8 +31,6 @@ TCHAR szAppBurnVer[16];
 char videofiltering[3];
 
 #ifdef BUILD_SDL2
-SDL_Window* sdlWindow = NULL;
- 
 static char* szSDLeepromPath = NULL;
 static char* szSDLhiscorePath = NULL;
 static char* szSDLHDDPath = NULL;

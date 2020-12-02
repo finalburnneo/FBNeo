@@ -14,7 +14,7 @@ extern int vsync;
 extern char videofiltering[3];
 
 static unsigned char* VidMem = NULL;
-extern SDL_Window* sdlWindow;
+static SDL_Window* sdlWindow = NULL;
 SDL_Renderer* sdlRenderer = NULL;
 static SDL_Texture* sdlTexture = NULL;
 static int  nRotateGame = 0;

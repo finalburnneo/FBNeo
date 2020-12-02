@@ -44,9 +44,7 @@ extern TCHAR szAppBurnVer[16];
 extern bool  bAppFullscreen;
 extern bool bIntegerScale;
 extern bool bAlwaysMenu;
-#ifdef BUILD_SDL2
-extern SDL_Window* sdlWindow;
-#endif
+
 extern TCHAR* GetIsoPath();
 
 TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize);

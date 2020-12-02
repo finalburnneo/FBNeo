@@ -911,11 +911,11 @@ struct BurnDriver BurnDrvUmk3te = {
 };
 
 
-// Ultimate Mortal Kombat 3 Cup Edition (2020-11-22)
+// Ultimate Mortal Kombat 3 Cup Edition (2020-12-01)
 
 static struct BurnRomInfo umk3ucRomDesc[] = {
-	{ "umk3uc-u54.bin",			0x080000, 0x6fa00f6b, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "umk3uc-u63.bin",			0x080000, 0x745bcb3e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "umk3uc-u54.bin",			0x080000, 0x5010d92d, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "umk3uc-u63.bin",			0x080000, 0xc5342423, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "umk3uc-u2.bin",			0x100000, 0x3838cfe5, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "umk3uc-u3.bin",			0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -960,7 +960,7 @@ STD_ROM_FN(umk3uc)
 
 struct BurnDriver BurnDrvUmk3uc = {
 	"umk3uc", "umk3", NULL, NULL, "2020",
-	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-11-22)\0", NULL, "hack", "MIDWAY Wolf-Unit",
+	"Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-12-01)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ucRomInfo, umk3ucRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,

@@ -377,7 +377,7 @@ static int Paint(int bValidate)
 	if (bAppShowFPS && !bAppFullscreen)
 	{
 		sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
-		SDL_SetWindowTitle(screen, Windowtitle);
+		SDL_SetWindowTitle(sdlWindow, Windowtitle);
 	}
 	SDL_GL_SwapWindow(sdlWindow);
 

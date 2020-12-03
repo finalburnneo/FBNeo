@@ -580,7 +580,7 @@ STDDIPINFO(Wondstck)
 
 static void palette_write(INT32 offset)
 {
-	INT32 data = *((UINT16*)(DrvPalRAM + offset));
+	INT32 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (data >>  0) & 0x1f;
 	INT32 g = (data >>  5) & 0x1f;
@@ -643,7 +643,7 @@ void __fastcall nmg5_write_byte(UINT32 address, UINT8 data)
 void __fastcall nmg5_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0x140000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x7ff);
 		return;
 	}
@@ -779,7 +779,7 @@ void __fastcall pclubys_write_byte(UINT32 address, UINT8 data)
 void __fastcall pclubys_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0x440000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x7ff);
 		return;
 	}
@@ -1187,16 +1187,16 @@ static void draw_bitmap()
 
 			INT32 ofst = ((y - 9) * nScreenWidth) + ((x << 2) - 12);
 
-			pix = bitmap[count] >> 12;
+			pix = BURN_ENDIAN_SWAP_INT16(bitmap[count]) >> 12;
 			if (pix) pTransDraw[ofst    ] = pix | 0x300;
 
-			pix = (bitmap[count]&0x0f00)>>8;
+			pix = (BURN_ENDIAN_SWAP_INT16(bitmap[count])&0x0f00)>>8;
 			if (pix) pTransDraw[ofst | 1] = pix | 0x300;
 
-			pix = (bitmap[count]&0x00f0)>>4;
+			pix = (BURN_ENDIAN_SWAP_INT16(bitmap[count])&0x00f0)>>4;
 			if (pix) pTransDraw[ofst | 2] = pix | 0x300;
 
-			pix = bitmap[count] & 0x000f;
+			pix = BURN_ENDIAN_SWAP_INT16(bitmap[count]) & 0x000f;
 			if (pix) pTransDraw[ofst | 3] = pix | 0x300;
 		}
 	}
@@ -1211,7 +1211,7 @@ static void DrawTiles(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, I
 		INT32 sx    = (offs & 0x3f) << 3;
 		INT32 sy    = (offs >> 6) << 3;
 
-		INT32 code  = vram[offs] | (gfx_bank << 16);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]) | (gfx_bank << 16);
 
 		sx -= scrollx;
 		sy -= scrolly;
@@ -1232,10 +1232,10 @@ static void draw_sprites()
 
 	for (INT32 offs = 0;offs < 0x800/2;offs += 4)
 	{
-		INT32 sx     = spriteram16[offs + 2] & 0x1ff;
-		INT32 sy     = spriteram16[offs];
-		INT32 code   = spriteram16[offs + 1];
-		INT32 color  = (spriteram16[offs + 2] >> 9) & 0xf;
+		INT32 sx     = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 2]) & 0x1ff;
+		INT32 sy     = BURN_ENDIAN_SWAP_INT16(spriteram16[offs]);
+		INT32 code   = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 1]);
+		INT32 color  = (BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 2]) >> 9) & 0xf;
 		INT32 height = 1 << ((sy & 0x0600) >> 9);
 		INT32 flipx  = sy & 0x2000;
 		INT32 flipy  = sy & 0x4000;

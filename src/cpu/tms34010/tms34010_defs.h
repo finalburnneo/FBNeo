@@ -43,7 +43,7 @@
 #define FE0 ((_st & ST_FE0) ? 32 : 0)
 #define FE1 ((_st & ST_FE1) ? 32 : 0)
 
-#define CONSUME_CYCLES(n) cpu->icounter -= (n)
+#define CONSUME_CYCLES(n) do { cpu->icounter -= (n); tms::check_timer(cpu, (n)); } while (0)
 
 #define FW(i)         ((_st >> (i ? 6 : 0)) & 0x1f)
 #define FWEX(i)       ((_st >> (i ? 6 : 0)) & 0x3f)

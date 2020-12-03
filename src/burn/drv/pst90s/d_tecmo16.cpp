@@ -1219,8 +1219,8 @@ static INT32 DrvDraw()
 
 	if (~nBurnLayer & 1) memset (pBitmap[0], 0, 256 * 256 * 2);
 	if (~nBurnLayer & 2) memset (pBitmap[1], 0, 256 * 256 * 2);
-	if (~nBurnLayer & 4) memset (pBitmap[2], 0, 256 * 256 * 2);
-	if (~nBurnLayer & 8) memset (pBitmap[3], 0, 256 * 256 * 2);
+	if (~nBurnLayer & 4) memset (pBitmap[3], 0, 256 * 256 * 2);
+	if (~nBurnLayer & 8) memset (pBitmap[2], 0, 256 * 256 * 2);
 
 	if (nBurnLayer & 1) FstarfrcRenderBgLayer();
 	if (nBurnLayer & 2) FstarfrcRenderFgLayer();
@@ -1265,10 +1265,16 @@ static INT32 DrvFrame()
 			if (pBurnDraw) {
 				DrvDraw();
 			}
-			SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
+			if (Ginkun || Riot) {
+				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			} else {
+				SekSetIRQLine(5, CPU_IRQSTATUS_ACK); // fstarfrc
+			}
 		}
 		if (i == 239+16) {
-			SekSetIRQLine(5, CPU_IRQSTATUS_NONE);
+			if (!(Ginkun || Riot)) {
+				SekSetIRQLine(5, CPU_IRQSTATUS_NONE); // fstarfrc
+			}
 		}
 	}
 

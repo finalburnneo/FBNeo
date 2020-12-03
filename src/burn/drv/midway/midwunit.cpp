@@ -376,6 +376,8 @@ static void WolfDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	MidwaySerialPicReset();
+
 	bCMOSWriteEnable = false;
 	nVideoBank = 1;
 	nWolfUnitCtrl = 0;
@@ -384,6 +386,7 @@ static void WolfDoReset()
 	nGfxBankOffset[1] = 0x400000;
 
 	TMS34010Reset();
+
 	Dcs2kReset();
 }
 
@@ -425,10 +428,11 @@ INT32 WolfUnitInit()
 	Dcs2kSetVolume(5.50);
 
     MidwaySerialPicInit(528);
-    MidwaySerialPicReset();
+	MidwaySerialPicReset();
 
     TMS34010MapReset();
     TMS34010Init();
+	TMS34010TimerSetCB(TUnitDmaCallback);
 
     TMS34010SetScanlineRender(ScanlineRender);
     TMS34010SetToShift(WolfUnitToShift);
@@ -476,7 +480,7 @@ INT32 WolfUnitInit()
 	GenericTilesInit();
 	
 	WolfDoReset();
-	
+
     return 0;
 }
 
@@ -513,7 +517,7 @@ INT32 WolfUnitFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, TMS34010);
 
 		TMS34010GenerateScanline(i);
 
@@ -584,11 +588,13 @@ INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 		TMS34010Scan(nAction);
 
 		Dcs2kScan(nAction, pnMin);
+		MidwaySerialPicScan(nAction, pnMin);
 
 		SCAN_VAR(nVideoBank);
 		SCAN_VAR(nWolfUnitCtrl);
 		SCAN_VAR(bCMOSWriteEnable);
 		SCAN_VAR(nGfxBankOffset);
+		SCAN_VAR(nIOShuffle);
 	}
 
 	if (nAction & ACB_NVRAM) {

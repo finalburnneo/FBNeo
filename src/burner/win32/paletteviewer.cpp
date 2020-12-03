@@ -8,6 +8,18 @@ static HBRUSH PaletteBrush[256] = {NULL,};
 static int nPalettePosition;
 static int nPaletteEntries;
 
+static int is_CapcomCPS1or2()
+{
+	UINT32 cap =
+		((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1) ||
+		((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_QSOUND) ||
+		((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_GENERIC) ||
+		((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPSCHANGER) ||
+		((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2);
+
+	return cap != 0;
+}
+
 static void CalcBrushes(int nStartColour)
 {
 	int Colour, r, g, b;
@@ -17,7 +29,11 @@ static void CalcBrushes(int nStartColour)
 		PaletteBrush[i] = NULL;
 
 		if (i + nStartColour < nPaletteEntries) {
-			Colour = pBurnDrvPalette[i + nStartColour];
+			if (is_CapcomCPS1or2()) {
+				Colour = pBurnDrvPalette[(i + nStartColour) ^ 0xf];
+			} else {
+				Colour = pBurnDrvPalette[i + nStartColour];
+			}
 
 			if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 				// 15-bit
@@ -124,7 +140,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if ((HWND)lParam == PaletteControl[i]) {
 					int Colour, r, g, b;
 
-					Colour = pBurnDrvPalette[i + nPalettePosition];
+					if (is_CapcomCPS1or2()) {
+						Colour = pBurnDrvPalette[(i + nPalettePosition) ^ 0xf];
+					} else {
+						Colour = pBurnDrvPalette[i + nPalettePosition];
+					}
 
 					if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 						// 15-bit

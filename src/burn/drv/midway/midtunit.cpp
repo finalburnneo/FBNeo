@@ -992,6 +992,7 @@ INT32 TUnitInit()
 
 	TMS34010MapReset();
 	TMS34010Init();
+	TMS34010TimerSetCB(TUnitDmaCallback);
 
 	TMS34010SetScanlineRender(ScanlineRender);
 	TMS34010SetToShift(TUnitToShift);
@@ -1220,7 +1221,7 @@ INT32 TUnitFrame()
 	if (nSoundType == SOUND_ADPCM) M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += TMS34010Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, TMS34010);
 
 		TMS34010GenerateScanline(i);
 

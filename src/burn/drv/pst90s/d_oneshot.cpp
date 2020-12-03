@@ -349,21 +349,21 @@ static tilemap_callback( background )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	TILE_SET_INFO(0, ram[offs * 2 + 1], 0, 0);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]), 0, 0);
 }
 
 static tilemap_callback( midground )
 {
 	UINT16 *ram = (UINT16*)DrvMgRAM;
 
-	TILE_SET_INFO(1, ram[offs * 2 + 1], 0, 0);
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]), 0, 0);
 }
 
 static tilemap_callback( foreground )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
 
-	TILE_SET_INFO(2, ram[offs * 2 + 1], 0, 0);
+	TILE_SET_INFO(2, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]), 0, 0);
 }
 
 static void DrvYM3812IrqHandler(INT32, INT32 nStatus)
@@ -553,9 +553,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x800/2; i++)
 	{
-		INT32 r = (p[i] >>  0) & 0x1f;
-		INT32 g = (p[i] >>  5) & 0x1f;
-		INT32 b = (p[i] >> 10) & 0x1f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -571,15 +571,15 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x1000 / 2; i+=4)
 	{
-		if (source[i + 0] == 0x0001)
+		if (source[i + 0] == BURN_ENDIAN_SWAP_INT16(0x0001))
 			break;
 
-		INT32 num   = (source[i + 1]);
-		INT32 xsize = (source[i + 2] & 0x000f) + 1;
-		INT32 ysize = (source[i + 3] & 0x000f) + 1;
+		INT32 num   = (BURN_ENDIAN_SWAP_INT16(source[i + 1]));
+		INT32 xsize = (BURN_ENDIAN_SWAP_INT16(source[i + 2]) & 0x000f) + 1;
+		INT32 ysize = (BURN_ENDIAN_SWAP_INT16(source[i + 3]) & 0x000f) + 1;
 
-		INT32 xpos  = (source[i + 2] >> 7) - 8;
-		INT32 ypos  = (source[i + 3] >> 7) - 6;
+		INT32 xpos  = (BURN_ENDIAN_SWAP_INT16(source[i + 2]) >> 7) - 8;
+		INT32 ypos  = (BURN_ENDIAN_SWAP_INT16(source[i + 3]) >> 7) - 6;
 
 		for (INT32 blockx = 0; blockx < xsize; blockx++)
 		{
@@ -603,8 +603,8 @@ static INT32 OneshotDraw()
 
 	UINT16 *scroll = (UINT16*)DrvScroll;
 
-	GenericTilemapSetScrollX(1, scroll[0] - 0x1f5);
-	GenericTilemapSetScrollY(1, scroll[1]);
+	GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(scroll[0]) - 0x1f5);
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(scroll[1]));
 
 	BurnTransferClear();
 	
@@ -633,7 +633,7 @@ static INT32 MaddonnaDraw()
 
 	UINT16 *scroll = (UINT16*)DrvScroll;
 
-	GenericTilemapSetScrollY(1, scroll[1]);
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(scroll[1]));
 
 	GenericTilemapDraw(1, pTransDraw, 0);
 	GenericTilemapDraw(2, pTransDraw, 0);

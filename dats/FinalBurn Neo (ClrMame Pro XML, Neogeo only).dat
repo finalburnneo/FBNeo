@@ -8906,17 +8906,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="nsmb" romof="neogeo">
-		<description>Neo Super Mario Bros Demo! [Demo, Homebrew]</description>
+		<description>Neo Super Mario Bros Demo 0.01! [Demo, Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>OzzyOuzo</manufacturer>
-		<rom name="nsmb-p1.bin" size="1048576" crc="6abacc0f"/>
+		<rom name="nsmb-p1.bin" size="1048576" crc="9e0fded1"/>
 		<rom name="nsmb-s1.bin" size="131072" crc="a545b593"/>
-		<rom name="nsmb-c1.bin" size="8388608" crc="81ac72e5"/>
-		<rom name="nsmb-c2.bin" size="8388608" crc="a94a817b"/>
-		<rom name="nsmb-m1.bin" size="65536" crc="40d6f48d"/>
-		<rom name="nsmb-v1.bin" size="1048576" crc="d94bea55"/>
-		<rom name="nsmb-v2.bin" size="1048576" crc="b110df8b"/>
-		<rom name="nsmb-v3.bin" size="1048576" crc="3c623679"/>
+		<rom name="nsmb-c1.bin" size="8388608" crc="f187934c"/>
+		<rom name="nsmb-c2.bin" size="8388608" crc="7ecfc8bb"/>
+		<rom name="nsmb-m1.bin" size="65536" crc="3c99e181"/>
+		<rom name="nsmb-v1.bin" size="1048576" crc="d1e4fc94"/>
+		<rom name="nsmb-v2.bin" size="1048576" crc="7d42fab3"/>
+		<rom name="nsmb-v3.bin" size="1048576" crc="806b797d"/>
 		<rom name="nsmb-v4.bin" size="1048576" crc="fbf00c96"/>
 		<rom name="nsmb-v5.bin" size="1048576" crc="9b2031d4"/>
 		<rom name="nsmb-v6.bin" size="1048576" crc="107cfc89"/>

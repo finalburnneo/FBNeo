@@ -8663,7 +8663,7 @@ This list contains all games supported by FinalBurn Neo.
 | neonopon	|  	| Neo No Panepon (beta)					| 		| ????	| blastar@gmx.ne| Neo Geo MVS	| 					|
 | neoponga	|  	| Neo Pong (ver 1.0)					| neopong	| 2002	| Neo Dev Corpor| Neo Geo MVS	| 					|
 | neopong	|  	| Neo Pong (ver 1.1)					| 		| 2002	| Neo Dev Corpor| Neo Geo MVS	| 					|
-| nsmb		|  	| Neo Super Mario Bros Demo!				| 		| 2020	| OzzyOuzo	| Neo Geo MVS	| 					|
+| nsmb		|  	| Neo Super Mario Bros Demo 0.01!			| 		| 2020	| OzzyOuzo	| Neo Geo MVS	| 					|
 | syscheck	|  	| Neo System Check (ver 1.0b)				| 		| ????	| blastar@gmx.ne| Neo Geo MVS	| 					|
 | neothndr	|  	| Neo Thunder						| 		| 2012	| Sebastian Miha| Neo Geo	| sebastianmihai.com			|
 | turfmast	|  	| Neo Turf Masters / Big Tournament Golf		| 		| 1996	| Nazca		| Neo Geo MVS	| 					|

@@ -121,9 +121,14 @@ int TMS34010Run(int cycles)
     return tms::run(&tms34010, cycles);
 }
 
-void TMS34010TimerCB(INT64 cycles, void (*timer_cb)())
+void TMS34010TimerSetCB(void (*timer_cb)())
 {
-	tms::timer_arm(&tms34010, cycles, timer_cb);
+	tms::timer_set_cb(&tms34010, timer_cb);
+}
+
+void TMS34010TimerSet(int cycles)
+{
+	tms::timer_arm(&tms34010, cycles);
 }
 
 INT64 TMS34010TotalCycles()

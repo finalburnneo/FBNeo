@@ -24305,6 +24305,23 @@ struct BurnDriver BurnDrvnes_ghostbustersii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_ghostsngoblinshRomDesc[] = {
+	{ "Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0).nes",          131088, 0x66751cad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ghostsngoblinsh)
+STD_ROM_FN(nes_ghostsngoblinsh)
+
+struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
+	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "1989?",
+	"Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ghostsngoblinshRomInfo, nes_ghostsngoblinshRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_ghostsngoblinsRomDesc[] = {
 	{ "Ghosts'n Goblins (USA).nes",          131088, 0x983dd1de, BRF_ESS | BRF_PRG },
 };
@@ -33111,8 +33128,25 @@ struct BurnDriver BurnDrvnes_robocop = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_robocop2hRomDesc[] = {
+	{ "RoboCop 2 (USA)(Hack, Responsive Controls v1.1).nes",          262160, 0xff6885d8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_robocop2h)
+STD_ROM_FN(nes_robocop2h)
+
+struct BurnDriver BurnDrvnes_robocop2h = {
+	"nes_robocop2h", "nes_robocop2", NULL, NULL, "1991",
+	"RoboCop 2 (USA)(Hack, Responsive Controls v1.1)\0", NULL, "Data East", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_robocop2hRomInfo, nes_robocop2hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_robocop2RomDesc[] = {
-	{ "RoboCop 2 (USA) (Rev A).nes",          262160, 0xf4baa4ee, BRF_ESS | BRF_PRG },
+	{ "RoboCop 2 (USA).nes",          262160, 0xf4baa4ee, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_robocop2)
@@ -33120,7 +33154,7 @@ STD_ROM_FN(nes_robocop2)
 
 struct BurnDriver BurnDrvnes_robocop2 = {
 	"nes_robocop2", NULL, NULL, NULL, "1991",
-	"RoboCop 2 (USA) (Rev A)\0", NULL, "Data East", "Miscellaneous",
+	"RoboCop 2 (USA)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_robocop2RomInfo, nes_robocop2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

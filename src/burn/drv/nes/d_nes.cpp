@@ -38313,16 +38313,33 @@ struct BurnDriver BurnDrvnes_wagyanland3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_waiwaiworldRomDesc[] = {
+static struct BurnRomInfo nes_waiwaiworldjRomDesc[] = {
 	{ "Wai Wai World (Japan).nes",          262160, 0xb27bcf3d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_waiwaiworldj)
+STD_ROM_FN(nes_waiwaiworldj)
+
+struct BurnDriver BurnDrvnes_waiwaiworldj = {
+	"nes_waiwaiworldj", "nes_waiwaiworld", NULL, NULL, "1988",
+	"Wai Wai World (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_waiwaiworldjRomInfo, nes_waiwaiworldjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_waiwaiworldRomDesc[] = {
+	{ "Wai Wai World (T-Eng).nes",          262160, 0xf668103d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_waiwaiworld)
 STD_ROM_FN(nes_waiwaiworld)
 
 struct BurnDriver BurnDrvnes_waiwaiworld = {
-	"nes_waiwaiworld", NULL, NULL, NULL, "1988",
-	"Wai Wai World (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"nes_waiwaiworld", NULL, NULL, NULL, "1989?",
+	"Wai Wai World (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_waiwaiworldRomInfo, nes_waiwaiworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -38330,8 +38347,25 @@ struct BurnDriver BurnDrvnes_waiwaiworld = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_waiwaiwor2RomDesc[] = {
+static struct BurnRomInfo nes_waiwaiwor2jRomDesc[] = {
 	{ "Wai Wai World 2 - SOS!! Paseri Jou (Japan).nes",          393232, 0xebd96a66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_waiwaiwor2j)
+STD_ROM_FN(nes_waiwaiwor2j)
+
+struct BurnDriver BurnDrvnes_waiwaiwor2j = {
+	"nes_waiwaiwor2j", "nes_waiwaiwor2", NULL, NULL, "1991",
+	"Wai Wai World 2 - SOS!! Paseri Jou (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_waiwaiwor2jRomInfo, nes_waiwaiwor2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_waiwaiwor2RomDesc[] = {
+	{ "Wai Wai World 2 - SOS!! Paseri Jou (T-Eng).nes",          393232, 0x45fadda1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_waiwaiwor2)
@@ -38339,7 +38373,7 @@ STD_ROM_FN(nes_waiwaiwor2)
 
 struct BurnDriver BurnDrvnes_waiwaiwor2 = {
 	"nes_waiwaiwor2", NULL, NULL, NULL, "1991",
-	"Wai Wai World 2 - SOS!! Paseri Jou (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_waiwaiwor2RomInfo, nes_waiwaiwor2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

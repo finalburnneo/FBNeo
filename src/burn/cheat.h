@@ -46,7 +46,7 @@ extern UINT32 CheatSearchShowResultValues[CHEATSEARCH_SHOWRESULTS];
 
 INT32 CheatSearchInit();
 void CheatSearchExit();
-void CheatSearchStart();
+int CheatSearchStart();
 UINT32 CheatSearchValueNoChange();
 UINT32 CheatSearchValueChange();
 UINT32 CheatSearchValueDecreased();

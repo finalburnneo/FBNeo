@@ -2391,18 +2391,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 
 		case MENU_CHEATSEARCH_START: {
-			CheatSearchStart();
+			if (CheatSearchStart() == 0) {
+				TCHAR szText[100];
+				_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_NEW, true));
+				VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
 
-			TCHAR szText[100];
-			_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_NEW, true));
-			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
-
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_INCREASE, MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DUMPFILE, MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_INCREASE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_DUMPFILE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT, MF_ENABLED | MF_BYCOMMAND);
+			}
 			break;
 		}
 

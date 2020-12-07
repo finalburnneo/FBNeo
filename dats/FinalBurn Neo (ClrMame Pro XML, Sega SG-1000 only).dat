@@ -593,14 +593,14 @@
 		<rom name="othello (tw).bin" size="32768" crc="1d1a0ca3"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemj1" cloneof="mahjong" romof="mahjong">
+	<game name="homemj1" cloneof="homemj" romof="homemj">
 		<description>Home Mahjong (Jpn, v0)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="home mahjong (japan) (v1.0).bin" size="49152" crc="c9d1ae7d"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemj" cloneof="mahjong" romof="mahjong">
+	<game name="homemj">
 		<description>Home Mahjong (Jpn, v1)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -817,7 +817,7 @@
 		<rom name="castle, the [msx] (tw).bin" size="49152" crc="2e366ccf"/>
 		<driver status="good"/>
 	</game>
-	<game name="musicj">
+	<game name="musicj" cloneof="music" romof="music">
 		<description>Music (Jpn)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1069,14 +1069,14 @@
 		<rom name="safari race (tw).bin" size="32768" crc="b2724428"/>
 		<driver status="good"/>
 	</game>
-	<game name="3ninmj" cloneof="mahjong" romof="mahjong">
+	<game name="3ninmj">
 		<description>San-nin Mahjong (Jpn, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
 		<rom name="san-nin mahjong.bin" size="16384" crc="885fa64d"/>
 		<driver status="good"/>
 	</game>
-	<game name="3ninmjt" cloneof="mahjong" romof="mahjong">
+	<game name="3ninmjt" cloneof="3ninmj" romof="3ninmj">
 		<description>San-nin Mahjong (Tw)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1398,7 +1398,7 @@
 		<rom name="yie ar kung-fu ii [dahjee] (tw).bin" size="49152" crc="fc87463c"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemjt" cloneof="mahjong" romof="mahjong">
+	<game name="homemjt" cloneof="homemj" romof="homemj">
 		<description>Yon-nin Mahjong (Tw)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>

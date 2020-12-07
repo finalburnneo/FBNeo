@@ -2973,6 +2973,13 @@
 		<rom name="Duck Hunt (USA).nes" size="24592" crc="4644085e"/>
 		<driver status="good"/>
 	</game>
+	<game name="duckmaze">
+		<description>Duck Maze (USA)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Duck Maze (USA).nes" size="40976" crc="01c1ca36"/>
+		<driver status="good"/>
+	</game>
 	<game name="ducktales">
 		<description>DuckTales (USA)</description>
 		<year>1989</year>
@@ -2999,6 +3006,13 @@
 		<year>1990</year>
 		<manufacturer>AVE</manufacturer>
 		<rom name="Dudes With Attitude (Unl).nes" size="65552" crc="e9151645"/>
+		<driver status="good"/>
+	</game>
+	<game name="dungemag">
+		<description>Dungeon Magic - Sword of the Elements (USA)</description>
+		<year>1990</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Dungeon Magic - Sword of the Elements (USA).nes" size="262160" crc="7a365bf8"/>
 		<driver status="good"/>
 	</game>
 	<game name="dushlan">
@@ -3057,11 +3071,18 @@
 		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
 		<driver status="good"/>
 	</game>
-	<game name="egypt">
+	<game name="egyptj" cloneof="egypt" romof="egypt">
 		<description>Egypt (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Human Entertainment</manufacturer>
 		<rom name="Egypt (Japan).nes" size="65552" crc="38df4be7"/>
+		<driver status="good"/>
+	</game>
+	<game name="egypt">
+		<description>Egypt (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Human Entertainment</manufacturer>
+		<rom name="Egypt (T-Eng).nes" size="65552" crc="bb7f1c06"/>
 		<driver status="good"/>
 	</game>
 	<game name="elevatoraction">
@@ -3076,6 +3097,13 @@
 		<year>1991</year>
 		<manufacturer>Electro Brain</manufacturer>
 		<rom name="Eliminator Boat Duel (USA).nes" size="262160" crc="682d2df1"/>
+		<driver status="good"/>
+	</game>
+	<game name="elite">
+		<description>Elite (Europe)</description>
+		<year>1991</year>
+		<manufacturer>Imagineer</manufacturer>
+		<rom name="Elite (Europe).nes" size="131088" crc="4cf12d39"/>
 		<driver status="good"/>
 	</game>
 	<game name="elnarknozaihou">
@@ -4065,6 +4093,13 @@
 		<rom name="Ghostbusters II (USA).nes" size="262160" crc="8d4e6fa3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ghostsngoblinsh" cloneof="ghostsngoblins" romof="ghostsngoblins">
+		<description>Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0).nes" size="131088" crc="66751cad"/>
+		<driver status="good"/>
+	</game>
 	<game name="ghostsngoblins">
 		<description>Ghosts'n Goblins (USA)</description>
 		<year>1986</year>
@@ -4140,6 +4175,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Golden Axe III (Unl).nes" size="524304" crc="9cdbf17b"/>
+		<driver status="good"/>
+	</game>
+	<game name="goldenfive">
+		<description>Golden Five (Pegasus 5-in-1)(Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Golden Five (Pegasus 5-in-1)(Unl).nes" size="1310736" crc="6e8a695f"/>
 		<driver status="good"/>
 	</game>
 	<game name="golf">
@@ -5276,7 +5318,7 @@
 		<rom name="Kagerou Densetsu (Japan).nes" size="262160" crc="205631f7"/>
 		<driver status="good"/>
 	</game>
-	<game name="kaikeyanmar">
+	<game name="kaikeyanmar" cloneof="kidnik" romof="kidnik">
 		<description>Kaiketsu Yancha Maru (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
@@ -6550,21 +6592,21 @@
 		<rom name="Metroid (USA).nes" size="131088" crc="a2c89cb9"/>
 		<driver status="good"/>
 	</game>
-	<game name="metroorienh">
+	<game name="metroorienh" cloneof="metroid" romof="metroid">
 		<description>Metroid - Origin Enhanced (USA)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid - Origin Enhanced (USA).nes" size="393232" crc="a81055ab"/>
 		<driver status="good"/>
 	</game>
-	<game name="metrorogdaw">
+	<game name="metrorogdaw" cloneof="metroid" romof="metroid">
 		<description>Metroid - Rogue Dawn (USA)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid - Rogue Dawn (USA).nes" size="786448" crc="2120dfea"/>
 		<driver status="good"/>
 	</game>
-	<game name="metroidmother">
+	<game name="metroidmother" cloneof="metroid" romof="metroid">
 		<description>Metroid Mother (Hack)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -8090,6 +8132,13 @@
 		<rom name="Rainbow Islands - Ocean (Europe).nes" size="262160" crc="fac97247"/>
 		<driver status="good"/>
 	</game>
+	<game name="rainbisltaij" cloneof="rainbisltai" romof="rainbisltai">
+		<description>Rainbow Islands - Taito (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="Rainbow Islands - Taito (Japan).nes" size="131088" crc="39872654"/>
+		<driver status="good"/>
+	</game>
 	<game name="rainbisltai">
 		<description>Rainbow Islands - Taito (USA)</description>
 		<year>1991</year>
@@ -8181,11 +8230,25 @@
 		<rom name="Road Runner (USA) (Unl).nes" size="196624" crc="d4aa300d"/>
 		<driver status="good"/>
 	</game>
+	<game name="roadworker">
+		<description>Road Worker (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Road Worker (Unl).nes" size="49168" crc="7877b76d"/>
+		<driver status="good"/>
+	</game>
 	<game name="roadblasters">
 		<description>RoadBlasters (USA)</description>
 		<year>1990</year>
 		<manufacturer>Mindscape</manufacturer>
 		<rom name="RoadBlasters (USA).nes" size="262160" crc="e76915b9"/>
+		<driver status="good"/>
+	</game>
+	<game name="robinhoo">
+		<description>Robin Hood - Prince of Thieves (USA)</description>
+		<year>1991</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Robin Hood - Prince of Thieves (USA).nes" size="262160" crc="922583bf"/>
 		<driver status="good"/>
 	</game>
 	<game name="robowarrior">
@@ -8209,11 +8272,18 @@
 		<rom name="RoboCop (USA).nes" size="262160" crc="33be5cfd"/>
 		<driver status="good"/>
 	</game>
-	<game name="robocop2">
-		<description>RoboCop 2 (USA) (Rev A)</description>
+	<game name="robocop2h" cloneof="robocop2" romof="robocop2">
+		<description>RoboCop 2 (USA)(Hack, Responsive Controls v1.1)</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
-		<rom name="RoboCop 2 (USA) (Rev A).nes" size="262160" crc="f4baa4ee"/>
+		<rom name="RoboCop 2 (USA)(Hack, Responsive Controls v1.1).nes" size="262160" crc="ff6885d8"/>
+		<driver status="good"/>
+	</game>
+	<game name="robocop2">
+		<description>RoboCop 2 (USA)</description>
+		<year>1991</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="RoboCop 2 (USA).nes" size="262160" crc="f4baa4ee"/>
 		<driver status="good"/>
 	</game>
 	<game name="robocop3">
@@ -8251,11 +8321,25 @@
 		<rom name="Rockball (Asia) (Unl).nes" size="131088" crc="9490c38e"/>
 		<driver status="good"/>
 	</game>
+	<game name="rocketranger">
+		<description>Rocket Ranger (USA)</description>
+		<year>1990</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Rocket Ranger (USA).nes" size="262160" crc="361e3634"/>
+		<driver status="good"/>
+	</game>
 	<game name="rocketeerthe">
 		<description>Rocketeer, The (USA)</description>
 		<year>1991</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Rocketeer, The (USA).nes" size="262160" crc="4c84abe0"/>
+		<driver status="good"/>
+	</game>
+	<game name="rocketman">
+		<description>Rocketman (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Rocketman (Unl).nes" size="40976" crc="c18196f2"/>
 		<driver status="good"/>
 	</game>
 	<game name="rockinkats">
@@ -9429,7 +9513,7 @@
 	</game>
 	<game name="smb3defedi" cloneof="smb3" romof="smb3">
 		<description>Super Mario Bros. 3 Definitive Edition (Hack)</description>
-		<year>1990</year>
+		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. 3 Definitive Edition (Hack).nes" size="524304" crc="2a59f8c5"/>
 		<driver status="good"/>
@@ -10575,6 +10659,13 @@
 		<rom name="Veggie Invaders (HB).nes" size="65552" crc="6276c0a0"/>
 		<driver status="good"/>
 	</game>
+	<game name="venicbeavol">
+		<description>Venice Beach Volleyball (Unl)</description>
+		<year>1991</year>
+		<manufacturer>AVE</manufacturer>
+		<rom name="Venice Beach Volleyball (Unl).nes" size="65552" crc="4a267783"/>
+		<driver status="good"/>
+	</game>
 	<game name="vice">
 		<description>Vice - Project Doom (USA)</description>
 		<year>1991</year>
@@ -10638,7 +10729,7 @@
 		<rom name="Wagyan Land 3 (Japan).nes" size="524304" crc="7aff2388"/>
 		<driver status="good"/>
 	</game>
-	<game name="waiwaiworld">
+	<game name="waiwaiworldj" cloneof="waiwaiworld" romof="waiwaiworld">
 		<description>Wai Wai World (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -10652,11 +10743,25 @@
 		<rom name="Wai Wai World (T-Chi).nes" size="524304" crc="ae26fdde"/>
 		<driver status="good"/>
 	</game>
-	<game name="waiwaiwor2">
+	<game name="waiwaiworld">
+		<description>Wai Wai World (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Wai Wai World (T-Eng).nes" size="262160" crc="f668103d"/>
+		<driver status="good"/>
+	</game>
+	<game name="waiwaiwor2j" cloneof="waiwaiwor2" romof="waiwaiwor2">
 		<description>Wai Wai World 2 - SOS!! Paseri Jou (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (Japan).nes" size="393232" crc="ebd96a66"/>
+		<driver status="good"/>
+	</game>
+	<game name="waiwaiwor2">
+		<description>Wai Wai World 2 - SOS!! Paseri Jou (T-Eng)</description>
+		<year>1991</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Eng).nes" size="393232" crc="45fadda1"/>
 		<driver status="good"/>
 	</game>
 	<game name="wall">
@@ -10750,6 +10855,13 @@
 		<rom name="Where's Waldo (USA).nes" size="262160" crc="e9d532af"/>
 		<driver status="good"/>
 	</game>
+	<game name="whofrarograb">
+		<description>Who Framed Roger Rabbit (USA)</description>
+		<year>1989</year>
+		<manufacturer>LJN</manufacturer>
+		<rom name="Who Framed Roger Rabbit (USA).nes" size="131088" crc="e21dab3e"/>
+		<driver status="good"/>
+	</game>
 	<game name="whompem">
 		<description>Whomp 'Em (USA)</description>
 		<year>1991</year>
@@ -10778,11 +10890,25 @@
 		<rom name="Willow (USA).nes" size="262160" crc="5f86a065"/>
 		<driver status="good"/>
 	</game>
+	<game name="winlosordra">
+		<description>Win, Lose or Draw (USA)</description>
+		<year>1990</year>
+		<manufacturer>Hi Tech Expressions</manufacturer>
+		<rom name="Win, Lose or Draw (USA).nes" size="131088" crc="258d6838"/>
+		<driver status="good"/>
+	</game>
 	<game name="wingmad">
 		<description>Wing of Madoola, The (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Wing of Madoola, The (Japan).nes" size="65552" crc="929899d8"/>
+		<driver status="good"/>
+	</game>
+	<game name="wintergames">
+		<description>Winter Games (USA)</description>
+		<year>1987</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="Winter Games (USA).nes" size="131088" crc="55699336"/>
 		<driver status="good"/>
 	</game>
 	<game name="wits">

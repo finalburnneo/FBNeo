@@ -282,6 +282,15 @@
 		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
 		<driver status="good"/>
 	</game>
+	<game name="gearsoffate" romof="ngp">
+		<description>Gears of Fate (HB)</description>
+		<year>2000</year>
+		<manufacturer>SNK</manufacturer>
+		<rom name="Gears of Fate (2009)(Thor).ngp" size="1917732" crc="3c75807e"/>
+		<rom name="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket BIOS (1998)(SNK)(en-ja).bin" size="65536" crc="6232df8d"/>
+		<rom name="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" merge="SNK Neo-Geo Pocket Color BIOS (1999)(SNK)(en-ja).bin" size="65536" crc="6eeb6f40"/>
+		<driver status="good"/>
+	</game>
 	<game name="infinity" romof="ngp">
 		<description>Infinity Cure (Jpn)</description>
 		<year>2000</year>

@@ -405,10 +405,10 @@ STD_ROM_PICK(sg1k_3ninmj)
 STD_ROM_FN(sg1k_3ninmj)
 
 struct BurnDriver BurnDrvsg1k_3ninmj = {
-	"sg1k_3ninmj", "sg1k_mahjong", NULL, NULL, "1984",
+	"sg1k_3ninmj", NULL, NULL, NULL, "1984",
 	"San-nin Mahjong (Jpn, OMV)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_3ninmjRomInfo, sg1k_3ninmjRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -425,7 +425,7 @@ STD_ROM_PICK(sg1k_3ninmjt)
 STD_ROM_FN(sg1k_3ninmjt)
 
 struct BurnDriver BurnDrvsg1k_3ninmjt = {
-	"sg1k_3ninmjt", "sg1k_mahjong", NULL, NULL, "1984?",
+	"sg1k_3ninmjt", "sg1k_3ninmj", NULL, NULL, "1984?",
 	"San-nin Mahjong (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
@@ -2165,10 +2165,10 @@ STD_ROM_PICK(sg1k_homemj)
 STD_ROM_FN(sg1k_homemj)
 
 struct BurnDriver BurnDrvsg1k_homemj = {
-	"sg1k_homemj", "sg1k_mahjong", NULL, NULL, "1984",
+	"sg1k_homemj", NULL, NULL, NULL, "1984",
 	"Home Mahjong (Jpn, v1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_homemjRomInfo, sg1k_homemjRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2185,7 +2185,7 @@ STD_ROM_PICK(sg1k_homemj1)
 STD_ROM_FN(sg1k_homemj1)
 
 struct BurnDriver BurnDrvsg1k_homemj1 = {
-	"sg1k_homemj1", "sg1k_mahjong", NULL, NULL, "1984",
+	"sg1k_homemj1", "sg1k_homemj", NULL, NULL, "1984",
 	"Home Mahjong (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
@@ -2205,7 +2205,7 @@ STD_ROM_PICK(sg1k_homemjt)
 STD_ROM_FN(sg1k_homemjt)
 
 struct BurnDriver BurnDrvsg1k_homemjt = {
-	"sg1k_homemjt", "sg1k_mahjong", NULL, NULL, "1984?",
+	"sg1k_homemjt", "sg1k_homemj", NULL, NULL, "1984?",
 	"Yon-nin Mahjong (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
@@ -4364,10 +4364,10 @@ STD_ROM_PICK(sg1k_musicj)
 STD_ROM_FN(sg1k_musicj)
 
 struct BurnDriver BurnDrvsg1k_musicj = {
-	"sg1k_musicj", NULL, NULL, NULL, "1983",
+	"sg1k_musicj", "sg1k_music", NULL, NULL, "1983",
 	"Music (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_musicjRomInfo, sg1k_musicjRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

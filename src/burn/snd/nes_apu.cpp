@@ -127,6 +127,8 @@ static UINT8 *dmc_buffer;
 INT16 *nes_ext_buffer;
 INT16 (*nes_ext_sound_cb)();
 
+static const INT32 *dpcm_clocks;
+
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan);
 
 void nesapu_runclock(INT32 cycle)
@@ -1020,6 +1022,9 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 
 	/* Initialize global variables */
 	cycles_per_frame = (is_pal) ? 33248 : 29781;
+
+	dpcm_clocks = &dpcm_freq[(is_pal) ? 1 : 0][0];
+
 	info->samps_per_sync = 7445; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;

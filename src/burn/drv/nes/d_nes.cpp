@@ -521,7 +521,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	// Mapper EXT-hardware inits
 	// Initted here, because mapper_init() is called on reset
 	if (Cart.Mapper == 69) { // SunSoft fme-7 (5b) audio expansion - ay8910
-		AY8910Init(0, 1789773, 1);
+		AY8910Init(0, 1789773 / 2, 1);
 		AY8910SetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);
 		AY8910SetBuffered(M6502TotalCycles, 1789773);
 	}
@@ -640,6 +640,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
+	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
 	NESMode |= (ROMCRC == 0x4cf12d39) ? IS_PAL : 0; // Elite
 	NESMode |= (ROMCRC == 0x3a0b6dd2) ? IS_PAL : 0; // Hero Quest
 	NESMode |= (ROMCRC == 0x6d1e30a7) ? IS_PAL : 0; // TMHT
@@ -24579,6 +24580,23 @@ struct BurnDriver BurnDrvnes_gimmick = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_mrgimmickRomDesc[] = {
+	{ "Mr. Gimmick (Europe).nes",          393232, 0xbf80b241, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mrgimmick)
+STD_ROM_FN(nes_mrgimmick)
+
+struct BurnDriver BurnDrvnes_mrgimmick = {
+	"nes_mrgimmick", "nes_gimmick", NULL, NULL, "0000",
+	"Mr. Gimmick (Europe)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mrgimmickRomInfo, nes_mrgimmickRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
 static struct BurnRomInfo nes_glukthuwarRomDesc[] = {
 	{ "Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl).nes",          262160, 0x5d615d1d, BRF_ESS | BRF_PRG },
 };
@@ -30699,16 +30717,33 @@ struct BurnDriver BurnDrvnes_mourysenmad = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_mspacmanuRomDesc[] = {
+	{ "Ms. Pac-Man (USA)(Namco).nes",          40976, 0x51a0c9de, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mspacmanu)
+STD_ROM_FN(nes_mspacmanu)
+
+struct BurnDriver BurnDrvnes_mspacmanu = {
+	"nes_mspacmanu", "nes_mspacman", NULL, NULL, "1993",
+	"Ms. Pac-Man (USA)(Namco)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mspacmanuRomInfo, nes_mspacmanuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_mspacmanRomDesc[] = {
-	{ "Ms. Pac-Man (USA).nes",          40976, 0x480ff69c, BRF_ESS | BRF_PRG },
+	{ "Ms. Pac-Man (USA)(Tengen).nes",          40976, 0xbd0e29b3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_mspacman)
 STD_ROM_FN(nes_mspacman)
 
 struct BurnDriver BurnDrvnes_mspacman = {
-	"nes_mspacman", NULL, NULL, NULL, "1993",
-	"Ms. Pac-Man (USA)\0", NULL, "Namco", "Miscellaneous",
+	"nes_mspacman", NULL, NULL, NULL, "1990",
+	"Ms. Pac-Man (USA)(Tengen)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mspacmanRomInfo, nes_mspacmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -36514,6 +36514,23 @@ struct BurnDriver BurnDrvnes_swordmaster = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_swordmasterhRomDesc[] = {
+	{ "Sword Master (USA)(Hack Sample Fix).nes",          262160, 0xcc1a0cfa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_swordmasterh)
+STD_ROM_FN(nes_swordmasterh)
+
+struct BurnDriver BurnDrvnes_swordmasterh = {
+	"nes_swordmasterh", "nes_swordmaster", NULL, NULL, "1992",
+	"Sword Master (USA)(Hack Sample Fix)\0", NULL, "Activision", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_swordmasterhRomInfo, nes_swordmasterhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_swordandserRomDesc[] = {
 	{ "Swords and Serpents (USA).nes",          131088, 0x071e3f72, BRF_ESS | BRF_PRG },
 };

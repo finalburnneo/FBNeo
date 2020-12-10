@@ -11,6 +11,7 @@
 #include "taito.h"
 #include "taito_ic.h"
 #include "burn_ym2610.h"
+#include "burn_gun.h" // trackball
 
 static UINT8 *TaitoDirtyTile;
 static UINT16 *TaitoTempBitmap[2];
@@ -26,66 +27,65 @@ static UINT8 DrvJoy1[8]; // Syvalion synthesized digital inputs
 
 static INT32 syvalionpmode = 0;
 
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
-static INT32 DrvAnalogPort2 = 0;
-static INT32 DrvAnalogPort3 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort2 = 0;
+static INT16 DrvAnalogPort3 = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
-
 static struct BurnInputInfo SyvalionInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,				"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,				"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,				"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,				"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p1 fire 1"	},
-	A("P1 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort0,		"p1 x-axis"     ),
-	A("P1 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort1,		"p1 y-axis"     ),
+	A("P1 Trackball X",	BIT_ANALOG_REL, &DrvAnalogPort0,			"p1 x-axis" ),
+	A("P1 Trackball Y",	BIT_ANALOG_REL, &DrvAnalogPort1,			"p1 y-axis" ),
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 right"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 4,				"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 5,				"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 6,				"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 7,				"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 fire 1"	},
-	A("P2 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort2,		"p2 x-axis"     ),
-	A("P2 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort3,		"p2 y-axis"     ),
+	A("P2 Trackball X",	BIT_ANALOG_REL, &DrvAnalogPort2,			"p2 x-axis" ),
+	A("P2 Trackball Y",	BIT_ANALOG_REL, &DrvAnalogPort3,			"p2 y-axis" ),
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 #undef A
 
 STDINPUTINFO(Syvalion)
 
 static struct BurnInputInfo TetristhInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort2 + 5,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort2 + 7,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Tetristh)
@@ -115,115 +115,115 @@ static struct BurnInputInfo RecordbrInputList[] = {
 STDINPUTINFO(Recordbr)
 
 static struct BurnInputInfo DleagueInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p1 up"	},
-	{"P1 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	TC0220IOCInputPort1 + 5,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	TC0220IOCInputPort1 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TC0220IOCInputPort1 + 7,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
-	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	TC0220IOCDip + 0,		"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
+	{"Reset",			BIT_DIGITAL,	&TaitoReset,				"reset"		},
+	{"Service",			BIT_DIGITAL,	TC0220IOCInputPort0 + 0,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	TC0220IOCInputPort0 + 1,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	TC0220IOCDip + 0,			"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	TC0220IOCDip + 1,			"dip"		},
 };
 
 STDINPUTINFO(Dleague)
 
 static struct BurnDIPInfo SyvalionDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xfe, NULL			},
-	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xfe, NULL					},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    1, "Cabinet"		},
-	{0x15, 0x01, 0x01, 0x00, "Upright"		},
+	{0   , 0xfe, 0   ,    1, "Cabinet"				},
+	{0x15, 0x01, 0x01, 0x00, "Upright"				},
 	//{0x15, 0x01, 0x01, 0x01, "Cocktail"		}, //needs screen flipping for this to work
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x15, 0x01, 0x02, 0x02, "Off"			},
-	{0x15, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x15, 0x01, 0x02, 0x02, "Off"					},
+	{0x15, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x04, 0x04, "Off"			},
-	{0x15, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x15, 0x01, 0x04, 0x04, "Off"					},
+	{0x15, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x08, 0x00, "Off"			},
-	{0x15, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x15, 0x01, 0x08, 0x00, "Off"					},
+	{0x15, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
 	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
 	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
 	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x03, 0x02, "Easy"			},
-	{0x16, 0x01, 0x03, 0x03, "Medium"		},
-	{0x16, 0x01, 0x03, 0x01, "Hard"			},
-	{0x16, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x16, 0x01, 0x03, 0x02, "Easy"					},
+	{0x16, 0x01, 0x03, 0x03, "Medium"				},
+	{0x16, 0x01, 0x03, 0x01, "Hard"					},
+	{0x16, 0x01, 0x03, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x16, 0x01, 0x0c, 0x08, "1000k"		},
-	{0x16, 0x01, 0x0c, 0x0c, "1500k"		},
-	{0x16, 0x01, 0x0c, 0x04, "2000k"		},
-	{0x16, 0x01, 0x0c, 0x00, "None"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x16, 0x01, 0x0c, 0x08, "1000k"				},
+	{0x16, 0x01, 0x0c, 0x0c, "1500k"				},
+	{0x16, 0x01, 0x0c, 0x04, "2000k"				},
+	{0x16, 0x01, 0x0c, 0x00, "None"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x16, 0x01, 0x30, 0x00, "2"			},
-	{0x16, 0x01, 0x30, 0x30, "3"			},
-	{0x16, 0x01, 0x30, 0x20, "4"			},
-	{0x16, 0x01, 0x30, 0x10, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x16, 0x01, 0x30, 0x00, "2"					},
+	{0x16, 0x01, 0x30, 0x30, "3"					},
+	{0x16, 0x01, 0x30, 0x20, "4"					},
+	{0x16, 0x01, 0x30, 0x10, "5"					},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x16, 0x01, 0x40, 0x40, "Off"			},
-	{0x16, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x16, 0x01, 0x40, 0x40, "Off"					},
+	{0x16, 0x01, 0x40, 0x00, "On"					},
 };
 
 STDDIPINFO(Syvalion)
 
 static struct BurnDIPInfo TetristhDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x11, 0xff, 0xff, 0xff, NULL					},
+	{0x12, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x11, 0x01, 0x02, 0x02, "Off"					},
+	{0x11, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x04, 0x04, "Off"			},
-	{0x11, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x11, 0x01, 0x04, 0x04, "Off"					},
+	{0x11, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x08, 0x00, "Off"			},
-	{0x11, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x11, 0x01, 0x08, 0x00, "Off"					},
+	{0x11, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x11, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x11, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x11, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
 	{0x11, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x11, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x11, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
 	{0x11, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
@@ -236,104 +236,103 @@ static struct BurnDIPInfo RecordbrDIPList[]=
 {
 	{0x0f, 0xf0, 0xff, 0xff, NULL /*dip offset*/	},
 
-	{0x00, 0xff, 0xff, 0xff, NULL			},
-	{0x01, 0xff, 0xff, 0xff, NULL			},
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x00, 0x01, 0x02, 0x02, "Off"			},
-	{0x00, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x00, 0x01, 0x04, 0x04, "Off"			},
-	{0x00, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x00, 0x01, 0x08, 0x00, "Off"			},
-	{0x00, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
 	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
 	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
 	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"	},
 	{0x00, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"	},
 	{0x00, 0x01, 0xc0, 0x40, "1 Coin  4 Credits"	},
 	{0x00, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x01, 0x01, 0x03, 0x02, "Easy"			},
-	{0x01, 0x01, 0x03, 0x03, "Medium"		},
-	{0x01, 0x01, 0x03, 0x01, "Hard"			},
-	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x03, 0x02, "Easy"					},
+	{0x01, 0x01, 0x03, 0x03, "Medium"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 };
 
 STDDIPINFO(Recordbr)
 
 static struct BurnDIPInfo GogoldDIPList[]=
 {
-	{0x0f, 0xf0, 0xff, 0xff, NULL /*dip offset*/	},
+	DIP_OFFSET(0x0f)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
-	{0x00, 0xff, 0xff, 0xff, NULL			},
-	{0x01, 0xff, 0xff, 0xff, NULL			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x00, 0x01, 0x02, 0x02, "Off"			},
-	{0x00, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x00, 0x01, 0x04, 0x04, "Off"			},
-	{0x00, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x00, 0x01, 0x08, 0x00, "Off"			},
-	{0x00, 0x01, 0x08, 0x08, "On"			},
-
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
 	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
 	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
 	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x01, 0x01, 0x03, 0x02, "Easy"			},
-	{0x01, 0x01, 0x03, 0x03, "Medium"		},
-	{0x01, 0x01, 0x03, 0x01, "Hard"			},
-	{0x01, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x03, 0x02, "Easy"					},
+	{0x01, 0x01, 0x03, 0x03, "Medium"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 };
 
 STDDIPINFO(Gogold)
 
 static struct BurnDIPInfo DleagueDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x13, 0x01, 0x01, 0x01, "Constant"		},
-	{0x13, 0x01, 0x01, 0x00, "Based on Inning"	},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
+	{0x13, 0x01, 0x01, 0x01, "Constant"				},
+	{0x13, 0x01, 0x01, 0x00, "Based on Inning"		},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"			},
-	{0x13, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x02, 0x02, "Off"					},
+	{0x13, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"			},
-	{0x13, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x04, 0x04, "Off"					},
+	{0x13, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"			},
-	{0x13, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x08, 0x00, "Off"					},
+	{0x13, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"				},
 	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
 	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
@@ -343,10 +342,10 @@ static struct BurnDIPInfo DleagueDIPList[]=
 	{0x13, 0x01, 0xc0, 0x00, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0xc0, 0x80, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0xc0, 0xc0, "Same as Start"	},
+	{0x13, 0x01, 0xc0, 0xc0, "Same as Start"		},
 
 	{0   , 0xfe, 0   ,    4, "Extra Credit Needed"		},
-	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"		},
+	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"			},
 	{0x14, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
 	{0x14, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
 	{0x14, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
@@ -356,39 +355,39 @@ STDDIPINFO(Dleague)
 
 static struct BurnDIPInfo DleaguejDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x13, 0x01, 0x01, 0x01, "Constant"		},
-	{0x13, 0x01, 0x01, 0x00, "Based on Inning"	},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
+	{0x13, 0x01, 0x01, 0x01, "Constant"				},
+	{0x13, 0x01, 0x01, 0x00, "Based on Inning"		},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"			},
-	{0x13, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x02, 0x02, "Off"					},
+	{0x13, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"			},
-	{0x13, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x04, 0x04, "Off"					},
+	{0x13, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"			},
-	{0x13, 0x01, 0x08, 0x08, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x08, 0x00, "Off"					},
+	{0x13, 0x01, 0x08, 0x08, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
 	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"				},
 	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
 	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
 	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
 	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Extra Credit Needed"		},
-	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"		},
+	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"			},
 	{0x14, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
 	{0x14, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
 	{0x14, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
@@ -448,22 +447,6 @@ static void __fastcall syvalion_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-// coord-buffers. syvalion expects each coord to return 0 if there was no
-// change since the last read.
-static INT32 PaddleX[2] = { 0, 0 };
-static INT32 PaddleY[2] = { 0, 0 };
-static INT32 PaddleX2[2] = { 0, 0 };
-static INT32 PaddleY2[2] = { 0, 0 };
-
-static INT32 Paddle_read(INT32 PaddlePortnum, INT32 *Paddle_X) {
-	if (PaddlePortnum != *Paddle_X) {
-		*Paddle_X = PaddlePortnum;
-		return PaddlePortnum / 4;
-	} else {
-		return 0;
-	}
-}
-
 static UINT8 syvalion_extended_read()
 {
 	static UINT8 DOWN_LATCH[2] = { 0, 0 };
@@ -476,15 +459,9 @@ static UINT8 syvalion_extended_read()
 
 	UINT8 ret = 0;
 
-	INT32 AnalogPorts[2][2] = {{ DrvAnalogPort0, DrvAnalogPort1 }, { DrvAnalogPort2, DrvAnalogPort3 }};
 	INT32 DigitalPorts[2][4] = {{ DrvJoy1[0], DrvJoy1[1], DrvJoy1[3], DrvJoy1[2] }, { DrvJoy1[4], DrvJoy1[5], DrvJoy1[7], DrvJoy1[6] }};
 
 	if (syvalionpmode) {
-		AnalogPorts[0][0] = DrvAnalogPort1;
-		AnalogPorts[0][1] = 0-DrvAnalogPort0;
-		AnalogPorts[1][0] = DrvAnalogPort3;
-		AnalogPorts[1][1] = 0-DrvAnalogPort2;
-
 		DigitalPorts[0][0] = DrvJoy1[3]; // p1
 		DigitalPorts[0][1] = DrvJoy1[2];
 		DigitalPorts[0][2] = DrvJoy1[1];
@@ -502,62 +479,58 @@ static UINT8 syvalion_extended_read()
 	if (!syvalionpmode) {
 		switch (port & ~4) // [syvalion] Syvalion (Japan)
 		{
-			// P2 UP
+			// Px UP
 			case 0x08: if (DigitalPorts[plrnum][0]) return 0x10;
 			else if (DOWN_LATCH[plrnum]) { DOWN_LATCH[plrnum] = 0; return 0xf2; }
 			else {
-				ret = PaddleY2[plrnum]&0xff; PaddleY2[plrnum] = 0;
+				ret = BurnTrackballRead(plrnum, 1);
 				break;
 			}
-			// P2 DOWN
+			// Px DOWN
 			case 0x09: if (DigitalPorts[plrnum][1]) { DOWN_LATCH[plrnum] = 1; return 0xff; }
 			else {
-				PaddleY2[plrnum] = 0-Paddle_read(AnalogPorts[plrnum][1], &PaddleY[plrnum]);
-				ret = (PaddleY2[plrnum] & 0x3000) ? 0xff : 0x00;
+				ret = (BurnTrackballReadSigned(plrnum, 1) < 0) ? 0xff : 0x00;
 				break;
 			}
-			// P2 RIGHT
+			// Px RIGHT
 			case 0x0a: if (DigitalPorts[plrnum][2]) return 0x10;
 			else {
-				ret = PaddleX2[plrnum]&0xff; PaddleX2[plrnum] = 0;
+				ret = BurnTrackballRead(plrnum, 0);
 				break;
 			}
-			// P2 LEFT
+			// Px LEFT
 			case 0x0b: if (DigitalPorts[plrnum][3]) return 0xff;
 			else {
-				PaddleX2[plrnum] = Paddle_read(AnalogPorts[plrnum][0], &PaddleX[plrnum]);
-				ret = (PaddleX2[plrnum] & 0x3000) ? 0xff : 0x00;
+				ret = (BurnTrackballReadSigned(plrnum, 0) < 0) ? 0xff : 0x00;
 				break;
 			}
 		}
 	} else {
 		switch (port & ~4) // [syvalionp] Syvalion (World, prototype)
 		{
-			// P1 RIGHT
+			// Px RIGHT
 			case 0x08: if (DigitalPorts[plrnum][0]) return 0x10;
 			else {
-				ret = PaddleY2[plrnum]&0xff; PaddleY2[plrnum] = 0;
+				ret = BurnTrackballRead(plrnum, 0);
 				break;
 			}
-			// P1 LEFT
+			// Px LEFT
 			case 0x09: if (DigitalPorts[plrnum][1]) return 0xff;
 			else {
-				PaddleY2[plrnum] = 0-Paddle_read(AnalogPorts[plrnum][1], &PaddleY[plrnum]);
-				ret = (PaddleY2[plrnum] & 0x3000) ? 0xff : 0x00;
+				ret = (BurnTrackballReadSigned(plrnum, 0) < 0) ? 0xff : 0x00;
 				break;
 			}
-			// P1 DOWN
+			// Px DOWN
 			case 0x0a: if (DigitalPorts[plrnum][2]) return 0x10;
 			else if (DOWN_LATCH[plrnum]) { DOWN_LATCH[plrnum] = 0; return 0xf2; }
 			else {
-				ret = PaddleX2[plrnum]&0xff; PaddleX2[plrnum] = 0;
+				ret = BurnTrackballRead(plrnum, 1);
 				break;
 			}
-			// P1 UP
+			// Px UP
 			case 0x0b: if (DigitalPorts[plrnum][3]) { DOWN_LATCH[plrnum] = 1; return 0xff; }
 			else {
-				PaddleX2[plrnum] = Paddle_read(AnalogPorts[plrnum][0], &PaddleX[plrnum]);
-				ret = (PaddleX2[plrnum] & 0x3000) ? 0xff : 0x00;
+				ret = (BurnTrackballReadSigned(plrnum, 1) < 0) ? 0xff : 0x00;
 				break;
 			}
 		}
@@ -968,6 +941,8 @@ static INT32 CommonInit()
 
 	GenericTilesInit();
 
+	BurnTrackballInit(2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -1022,7 +997,7 @@ static INT32 DrvExit()
 
 	BurnYM2610Exit();
 
-	TaitoExit();
+	TaitoExit(); // BurnTrackballExit() (BurnGunExit); is called in here
 
 	TaitoInputConfig = 0x0c;
 	irq_config = 2;
@@ -1763,6 +1738,16 @@ static INT32 DrvFrame()
 			TC0220IOCInput[1] ^= (TC0220IOCInputPort1[i] & 1) << i;
 			TC0220IOCInput[2] ^= (TC0220IOCInputPort2[i] & 1) << i;
 		}
+
+		BurnTrackballReadReset();
+
+		BurnTrackballConfig(0, AXIS_NORMAL, (syvalionpmode) ? AXIS_NORMAL : AXIS_REVERSED);
+		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 1, 0xf);
+		BurnTrackballUpdate(0);
+
+		BurnTrackballConfig(1, AXIS_NORMAL, (syvalionpmode) ? AXIS_NORMAL : AXIS_REVERSED);
+		BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 1, 0xf);
+		BurnTrackballUpdate(1);
 	}
 
 	SekOpen(0);
@@ -1775,7 +1760,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave / 1) - 1) SekSetIRQLine(irq_config, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
@@ -1838,6 +1823,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2610Scan(nAction, pnMin);
 
 		TaitoICScan(nAction);
+
+		BurnTrackballScan();
 	}
 
 	if (nAction & ACB_WRITE) {

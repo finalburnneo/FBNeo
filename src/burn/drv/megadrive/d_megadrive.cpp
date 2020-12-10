@@ -49404,7 +49404,7 @@ struct BurnDriver BurnDrvmd_shdancers = {
 // shadow of the beast (Hack, Spanish)
 // https://www.romhacking.net/translations/3668/
 static struct BurnRomInfo md_beastsRomDesc[] = {
-	{ "shadow of the beast (Hack, Spanish).bin", 1048576, 0xbd385c27, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shadow of the beast (Hack, Spanish).bin", 1048576, 0xde6b78e7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beasts)

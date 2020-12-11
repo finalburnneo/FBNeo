@@ -12214,11 +12214,32 @@
 		<rom name="mdss12c4.bin" size="1048576" crc="cae0e3a6"/>
 		<driver status="good"/>
 	</game>
+	<game name="manovers" cloneof="manover" romof="manover">
+		<description>S.S. Lucifer - Man Overboard! (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Codemasters</manufacturer>
+		<rom name="s.s. lucifer - man overboard! (Hack, Spanish).bin" size="1048576" crc="17edbbfe"/>
+		<driver status="good"/>
+	</game>
+	<game name="sagaias" cloneof="sagaia" romof="sagaia">
+		<description>Sagaia (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="sagaia (Hack, Spanish).bin" size="1048576" crc="29e1fb66"/>
+		<driver status="good"/>
+	</game>
 	<game name="sagaia">
 		<description>Sagaia (USA)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="sagaia (usa).bin" size="1048576" crc="f1e22f43"/>
+		<driver status="good"/>
+	</game>
+	<game name="sswords" cloneof="ssword" romof="ssword">
+		<description>Saint Sword (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="saint sword (Hack, Spanish).bin" size="524288" crc="fe603ec4"/>
 		<driver status="good"/>
 	</game>
 	<game name="sswordj" cloneof="ssword" romof="ssword">
@@ -12254,6 +12275,13 @@
 		<year>2015</year>
 		<manufacturer>Takara - Pyron</manufacturer>
 		<rom name="samurai shodown (enhanced colors)(v2.0).md" size="3145728" crc="12cf057a"/>
+		<driver status="good"/>
+	</game>
+	<game name="samshos" cloneof="samsho" romof="samsho">
+		<description>Samurai Shodown (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Takara</manufacturer>
+		<rom name="samurai shodown (Hack, Spanish).bin" size="3145728" crc="f65a06f4"/>
 		<driver status="good"/>
 	</game>
 	<game name="samshou" cloneof="samsho" romof="samsho">
@@ -12333,6 +12361,13 @@
 		<rom name="saturday night slammasters (euro).bin" size="4194304" crc="08fa5a3f"/>
 		<driver status="good"/>
 	</game>
+	<game name="slammasts" cloneof="slammast" romof="slammast">
+		<description>Saturday Night Slammasters (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Capcom</manufacturer>
+		<rom name="saturday night slammasters (Hack, Spanish).bin" size="4194304" crc="c4ebbfa1"/>
+		<driver status="good"/>
+	</game>
 	<game name="slammastu" cloneof="slammast" romof="slammast">
 		<description>Saturday Night Slammasters (USA)</description>
 		<year>1994</year>
@@ -12387,6 +12422,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="magic school bus, the (usa).bin" size="1048576" crc="1a5d4412"/>
+		<driver status="good"/>
+	</game>
+	<game name="scoobys" cloneof="scooby" romof="scooby">
+		<description>Scooby Doo Mystery (Hack, Spanish)</description>
+		<year>2016</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="scooby doo mystery (Hack, Spanish).bin" size="2097152" crc="ebf49926"/>
 		<driver status="good"/>
 	</game>
 	<game name="scooby">
@@ -12515,11 +12557,25 @@
 		<rom name="hunting season 3 (unl).bin" size="593184" crc="b433878c"/>
 		<driver status="good"/>
 	</game>
+	<game name="shadows" cloneof="shadow" romof="shadow">
+		<description>Shadow Blasters (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sage's Creation</manufacturer>
+		<rom name="shadow blasters (Hack, Spanish).bin" size="524288" crc="1abd9d5b"/>
+		<driver status="good"/>
+	</game>
 	<game name="shadow">
 		<description>Shadow Blasters (USA)</description>
 		<year>1990</year>
 		<manufacturer>Sage's Creation</manufacturer>
 		<rom name="shadow blasters (usa).bin" size="524288" crc="713d377b"/>
+		<driver status="good"/>
+	</game>
+	<game name="shdancers" cloneof="shdancer" romof="shdancer">
+		<description>Shadow Dancer - The Secret of Shinobi (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="shadow dancer - the secret of shinobi (Hack, Spanish).bin" size="524288" crc="dd156a80"/>
 		<driver status="good"/>
 	</game>
 	<game name="shdancer">
@@ -12543,6 +12599,13 @@
 		<rom name="shadow of the beast (enhanced colors).md" size="1048576" crc="7eaa73de"/>
 		<driver status="good"/>
 	</game>
+	<game name="beasts" cloneof="beast" romof="beast">
+		<description>Shadow of the Beast (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="shadow of the beast (Hack, Spanish).bin" size="1048576" crc="de6b78e7"/>
+		<driver status="good"/>
+	</game>
 	<game name="beastj" cloneof="beast" romof="beast">
 		<description>Shadow of the Beast - Mashou no Okite (Jpn)</description>
 		<year>1992</year>
@@ -12555,6 +12618,13 @@
 		<year>1992</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="shadow of the beast ii (euro, usa).bin" size="1048576" crc="2dede3db"/>
+		<driver status="good"/>
+	</game>
+	<game name="beast2s" cloneof="beast2" romof="beast2">
+		<description>Shadow of the Beast II (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="shadow of the beast ii (Hack, Spanish).bin" size="1048576" crc="03b05238"/>
 		<driver status="good"/>
 	</game>
 	<game name="shadowrnj" cloneof="shadowrn" romof="shadowrn">
@@ -12711,6 +12781,13 @@
 		<rom name="mpr-13807.bin" size="1048576" crc="496af51c"/>
 		<driver status="good"/>
 	</game>
+	<game name="shinfrces" cloneof="shinfrce" romof="shinfrce">
+		<description>Shining Force (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="shining force (Hack, Spanish).bin" size="2621440" crc="be1677da"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinfrce">
 		<description>Shining Force (USA)</description>
 		<year>1992</year>
@@ -12800,6 +12877,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15798.ic1" size="1048576" crc="0b6d3eb5"/>
+		<driver status="good"/>
+	</game>
+	<game name="shinobi3s" cloneof="shinobi3" romof="shinobi3">
+		<description>Shinobi III - Return of the Ninja Master (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="shinobi iii - return of the ninja master (Hack, Spanish).bin" size="1048576" crc="ecd332e1"/>
 		<driver status="good"/>
 	</game>
 	<game name="shinobi3u" cloneof="shinobi3" romof="shinobi3">
@@ -12907,6 +12991,13 @@
 		<rom name="side pocket (euro).bin" size="1048576" crc="36e08145"/>
 		<driver status="good"/>
 	</game>
+	<game name="sidepocks" cloneof="sidepock" romof="sidepock">
+		<description>Side Pocket (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="side pocket (Hack, Spanish).bin" size="1048576" crc="8b0d72f8"/>
+		<driver status="good"/>
+	</game>
 	<game name="sidepockj" cloneof="sidepock" romof="sidepock">
 		<description>Side Pocket (Jpn)</description>
 		<year>1992</year>
@@ -12928,6 +13019,13 @@
 		<rom name="skeleton krew (euro).bin" size="2097152" crc="5f872737"/>
 		<driver status="good"/>
 	</game>
+	<game name="skelkrews" cloneof="skelkrew" romof="skelkrew">
+		<description>Skeleton Krew (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Core Design</manufacturer>
+		<rom name="skeleton krew (Hack, Spanish).bin" size="2097152" crc="fc818137"/>
+		<driver status="good"/>
+	</game>
 	<game name="skelkrewu" cloneof="skelkrew" romof="skelkrew">
 		<description>Skeleton Krew (USA)</description>
 		<year>1995</year>
@@ -12947,6 +13045,13 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="slam - shaq vs. the legends (prototype).bin" size="2050138" crc="c19c200e"/>
+		<driver status="good"/>
+	</game>
+	<game name="slapfighs" cloneof="slapfigh" romof="slapfigh">
+		<description>Slap Fight MD (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="slap fight md (Hack, Spanish).bin" size="1048576" crc="b825e72d"/>
 		<driver status="good"/>
 	</game>
 	<game name="slapfigh">
@@ -12984,11 +13089,25 @@
 		<rom name="snake rattle n' roll (euro).bin" size="524288" crc="543bed30"/>
 		<driver status="good"/>
 	</game>
+	<game name="snakernrs" cloneof="snakernr" romof="snakernr">
+		<description>Snake Rattle n' Roll (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="snake rattle n' roll (Hack, Spanish).bin" size="524288" crc="3fc9a196"/>
+		<driver status="good"/>
+	</game>
 	<game name="snezkoro" cloneof="mickmack" romof="mickmack">
 		<description>Snezhnaya Koroleva (Rus)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="snow queen (unl).bin" size="2097152" crc="e6c07946"/>
+		<driver status="good"/>
+	</game>
+	<game name="snowbross" cloneof="snowbros" romof="snowbros">
+		<description>Snow Bros. - Nick &amp; Tom (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="snow bros. - nick &amp; tom (Hack, Spanish).bin" size="1048576" crc="eeea9522"/>
 		<driver status="good"/>
 	</game>
 	<game name="snowbros">
@@ -13010,6 +13129,13 @@
 		<year>1992</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="sol-deace (usa).bin" size="1048576" crc="a77e4e9f"/>
+		<driver status="good"/>
+	</game>
+	<game name="soldforts" cloneof="chaoseng" romof="chaoseng">
+		<description>Soldiers of Fortune (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Spectrum Holobyte</manufacturer>
+		<rom name="soldiers of fortune (Hack, Spanish).bin" size="1572864" crc="a595e787"/>
 		<driver status="good"/>
 	</game>
 	<game name="soldfort" cloneof="chaoseng" romof="chaoseng">
@@ -13190,6 +13316,13 @@
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic 3d blast -- sonic 3d - flickies' island (euro, usa, kor).bin" size="4194304" crc="44a2ca44"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonic3ds" cloneof="sonic3d" romof="sonic3d">
+		<description>Sonic 3D Blast (Hack , Spanish)</description>
+		<year>2019</year>
+		<manufacturer>SEGA</manufacturer>
+		<rom name="sonic 3d blast -- sonic 3d - flickies' island (Hack , Spanish).bin" size="4194304" crc="6486eb24"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonic3dp8" cloneof="sonic3d" romof="sonic3d">
@@ -13648,6 +13781,13 @@
 		<rom name="space invaders 90 (jpn).bin" size="262144" crc="22adbd66"/>
 		<driver status="good"/>
 	</game>
+	<game name="sinv91s" cloneof="sinv91" romof="sinv91">
+		<description>space invaders 91 (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="space invaders 91 (Hack, Spanish).bin" size="262144" crc="648c1179"/>
+		<driver status="good"/>
+	</game>
 	<game name="sinv91">
 		<description>Space Invaders 91 (USA)</description>
 		<year>1991</year>
@@ -13660,6 +13800,13 @@
 		<year>1994</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="sparkster (euro).bin" size="1048576" crc="d63e9f2d"/>
+		<driver status="good"/>
+	</game>
+	<game name="sparkstrs" cloneof="sparkstr" romof="sparkstr">
+		<description>Sparkster (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="sparkster (Hack, Spanish).bin" size="1048576" crc="a110dfe9"/>
 		<driver status="good"/>
 	</game>
 	<game name="sparkstrj" cloneof="sparkstr" romof="sparkstr">

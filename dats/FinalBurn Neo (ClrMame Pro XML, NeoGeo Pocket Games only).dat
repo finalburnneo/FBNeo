@@ -283,7 +283,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gearsoffate" romof="ngp">
-		<description>Gears of Fate (HB)</description>
+		<description>Gears of Fate (HB) [Homebrew]</description>
 		<year>2000</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="Gears of Fate (2009)(Thor).ngp" size="1917732" crc="3c75807e"/>

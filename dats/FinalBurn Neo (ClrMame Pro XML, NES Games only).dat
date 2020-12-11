@@ -5423,6 +5423,13 @@
 		<rom name="Karnov (USA).nes" size="196624" crc="103f0755"/>
 		<driver status="good"/>
 	</game>
+	<game name="kartfighter">
+		<description>Kart Fighter (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Kart Fighter (Unl).nes" size="393232" crc="4877213a"/>
+		<driver status="good"/>
+	</game>
 	<game name="kerokerkernodaj" cloneof="kerokerkernoda" romof="kerokerkernoda">
 		<description>Kero Kero Keroppi no Daibouken (Japan)</description>
 		<year>1991</year>
@@ -6963,6 +6970,13 @@
 		<rom name="Mouryou Senki Madara (T-eng).nes" size="524304" crc="d9dcee07"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrgimmick" cloneof="gimmick" romof="gimmick">
+		<description>Mr. Gimmick (Europe)</description>
+		<year>0000</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Mr. Gimmick (Europe).nes" size="393232" crc="bf80b241"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrsplash">
 		<description>Mr. Splash (HB) [Homebrew]</description>
 		<year>2008</year>
@@ -6970,11 +6984,18 @@
 		<rom name="Mr. Splash (HB).nes" size="750052" crc="8b86978b"/>
 		<driver status="good"/>
 	</game>
-	<game name="mspacman">
-		<description>Ms. Pac-Man (USA)</description>
+	<game name="mspacmanu" cloneof="mspacman" romof="mspacman">
+		<description>Ms. Pac-Man (USA)(Namco)</description>
 		<year>1993</year>
 		<manufacturer>Namco</manufacturer>
-		<rom name="Ms. Pac-Man (USA).nes" size="40976" crc="480ff69c"/>
+		<rom name="Ms. Pac-Man (USA)(Namco).nes" size="40976" crc="51a0c9de"/>
+		<driver status="good"/>
+	</game>
+	<game name="mspacman">
+		<description>Ms. Pac-Man (USA)(Tengen)</description>
+		<year>1990</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="Ms. Pac-Man (USA)(Tengen).nes" size="40976" crc="bd0e29b3"/>
 		<driver status="good"/>
 	</game>
 	<game name="multidude">
@@ -9719,6 +9740,13 @@
 		<year>1989</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Sweet Home (Japan).nes" size="262160" crc="40803bc5"/>
+		<driver status="good"/>
+	</game>
+	<game name="swordmasterh" cloneof="swordmaster" romof="swordmaster">
+		<description>Sword Master (USA)(Hack Sample Fix)</description>
+		<year>1992</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Sword Master (USA)(Hack Sample Fix).nes" size="262160" crc="cc1a0cfa"/>
 		<driver status="good"/>
 	</game>
 	<game name="swordmaster">

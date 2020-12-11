@@ -346,6 +346,22 @@ UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB)
 		return TrackA[dev] & 0xffff;
 }
 
+INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB)
+{
+	if (isB)
+		return TrackB[dev];
+	else
+		return TrackA[dev];
+}
+
+void BurnTrackballReadReset()
+{
+	for (INT32 i = 0; i < MAX_GUNS; i++) {
+		TrackA[i] = 0;
+		TrackB[i] = 0;
+	}
+}
+
 void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r)
 {
 	DrvJoyT[(dev*4) + 0] |= l;
@@ -469,7 +485,7 @@ void BurnTrackballInit(INT32 nNumPlayers)
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 {
 	Debug_BurnGunInitted = 1;
-	
+
 	if (nNumPlayers > MAX_GUNS) nNumPlayers = MAX_GUNS;
 	nBurnGunNumPlayers = nNumPlayers;
 	bBurnGunDrawTargets = bDrawTargets;

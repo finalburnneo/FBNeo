@@ -3519,7 +3519,7 @@ struct BurnDriver BurnDrvngpc_gearsoffate = {
 	"ngp_gearsoffate", NULL, "ngp_ngp", NULL, "2000",
 	"Gears of Fate (HB)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_gearsoffateRomInfo, ngpc_gearsoffateRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3

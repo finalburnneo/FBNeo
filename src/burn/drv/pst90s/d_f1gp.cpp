@@ -1237,9 +1237,60 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// F-1 Grand Prix
+// F-1 Grand Prix (set 1)
 
 static struct BurnRomInfo f1gpRomDesc[] = {
+	{ "v1.rom1.rom",	0x040000, 0x56c8eccd, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "rom11-a.2",		0x040000, 0x53df8ea1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom10-a.1",		0x040000, 0x46a289fb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rom13-a.4",		0x040000, 0x7d92e1fa, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rom12-a.3",		0x040000, 0xd8c1bcf4, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rom6-a.6",		0x040000, 0x6d947a3f, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rom7-a.5",		0x040000, 0x7a014ba6, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rom9-a.8",		0x040000, 0x49286572, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rom8-a.7",		0x040000, 0x0ed783c7, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "rom2-a.06",		0x100000, 0x747dd112, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "rom3-a.05",		0x100000, 0x264aed13, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "rom4-a.4",		0x020000, 0x8e811d36, 2 | BRF_PRG | BRF_ESS }, // 11 68K #1 Code
+
+	{ "rom5-a.8",		0x020000, 0x9ea36e35, 3 | BRF_PRG | BRF_ESS }, // 12 Z80 Code
+
+	{ "rom3-b.07",		0x100000, 0xffb1d489, 4 | BRF_GRA }, 	       // 13 Character Tiles
+	{ "rom2-b.04",		0x100000, 0xd1b3471f, 4 | BRF_GRA }, 	       // 14
+
+	{ "rom5-b.2",		0x080000, 0x17572b36, 5 | BRF_GRA }, 	       // 15 Sprite Bank 0
+	{ "rom4-b.3",		0x080000, 0x72d12129, 5 | BRF_GRA }, 	       // 16
+
+	{ "rom7-b.17",		0x040000, 0x2aed9003, 6 | BRF_GRA }, 	       // 17 Sprite Bank 1
+	{ "rom6-b.16",		0x040000, 0x6789ef12, 6 | BRF_GRA }, 	       // 18
+
+	{ "rom14-a.09",		0x100000, 0xb4c1ac31, 7 | BRF_SND }, 	       // 19 YM2610 Samples
+	{ "rom17-a.08",		0x100000, 0xea70303d, 7 | BRF_SND }, 	       // 20
+};
+
+STD_ROM_PICK(f1gp)
+STD_ROM_FN(f1gp)
+
+static INT32 F1gpInit()
+{
+	return DrvInit(0);
+}
+
+struct BurnDriver BurnDrvF1gp = {
+	"f1gp", NULL, NULL, NULL, "1991",
+	"F-1 Grand Prix (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, f1gpRomInfo, f1gpRomName, NULL, NULL, NULL, NULL, F1gpInputInfo, F1gpDIPInfo,
+	F1gpInit, DrvExit, DrvFrame, F1gpDraw, DrvScan, &DrvRecalc, 0x401,
+	240, 320, 3, 4
+};
+
+
+// F-1 Grand Prix (set 2)
+
+static struct BurnRomInfo f1gpaRomDesc[] = {
 	{ "rom1-a.3",	0x020000, 0x2d8f785b, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
 	{ "rom11-a.2",	0x040000, 0x53df8ea1, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rom10-a.1",	0x040000, 0x46a289fb, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1269,20 +1320,15 @@ static struct BurnRomInfo f1gpRomDesc[] = {
 	{ "rom17-a.08",	0x100000, 0xea70303d, 7 | BRF_SND }, 	       // 20
 };
 
-STD_ROM_PICK(f1gp)
-STD_ROM_FN(f1gp)
+STD_ROM_PICK(f1gpa)
+STD_ROM_FN(f1gpa)
 
-static INT32 F1gpInit()
-{
-	return DrvInit(0);
-}
-
-struct BurnDriver BurnDrvF1gp = {
-	"f1gp", NULL, NULL, NULL, "1991",
-	"F-1 Grand Prix\0", NULL, "Video System Co.", "Miscellaneous",
+struct BurnDriver BurnDrvF1gpa = {
+	"f1gpa", "f1gp", NULL, NULL, "1991",
+	"F-1 Grand Prix (set 2)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, f1gpRomInfo, f1gpRomName, NULL, NULL, NULL, NULL, F1gpInputInfo, F1gpDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, f1gpaRomInfo, f1gpaRomName, NULL, NULL, NULL, NULL, F1gpInputInfo, F1gpDIPInfo,
 	F1gpInit, DrvExit, DrvFrame, F1gpDraw, DrvScan, &DrvRecalc, 0x401,
 	240, 320, 3, 4
 };
@@ -1291,31 +1337,31 @@ struct BurnDriver BurnDrvF1gp = {
 // F-1 Grand Prix (Playmark bootleg)
 
 static struct BurnRomInfo f1gpbRomDesc[] = {
-	{ "1.ic38",	0x020000, 0x046dd83a, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 code
-	{ "7.ic39",	0x020000, 0x960f5db4, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "2.ic48",	0x080000, 0xb3b315c3, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "8.ic41",	0x080000, 0x39af8180, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.ic38",		0x020000, 0x046dd83a, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 code
+	{ "7.ic39",		0x020000, 0x960f5db4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.ic48",		0x080000, 0xb3b315c3, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "8.ic41",		0x080000, 0x39af8180, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "3.ic165",	0x080000, 0xb7295a30, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "9.ic166",	0x080000, 0xbb596d5b, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "4.ic42",	0x080000, 0x5dbde98a, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "4.ic42",		0x080000, 0x5dbde98a, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "10.ic43",	0x080000, 0xd60e7706, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "5.ic167",	0x080000, 0x48c36293, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "11.ic168",	0x080000, 0x92a28e52, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "16.u7",	0x010000, 0x7609d818, 2 | BRF_PRG | BRF_ESS }, // 10 68K #1 Code
-	{ "17.u6",	0x010000, 0x951befde, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "16.u7",		0x010000, 0x7609d818, 2 | BRF_PRG | BRF_ESS }, // 10 68K #1 Code
+	{ "17.u6",		0x010000, 0x951befde, 2 | BRF_PRG | BRF_ESS }, // 11
 
 	{ "13.ic151",	0x080000, 0x4238074b, 3 | BRF_GRA }, 	       // 12 Character Tiles
 	{ "12.ic152",	0x080000, 0xe97c2b6e, 3 | BRF_GRA }, 	       // 13
 	{ "15.ic153",	0x080000, 0xc2867d7f, 3 | BRF_GRA }, 	       // 14
 	{ "14.ic154",	0x080000, 0x0cd20423, 3 | BRF_GRA }, 	       // 15
 
-	{ "rom21",	0x080000, 0x7a08c3b7, 4 | BRF_GRA }, 	       // 16 Sprite Banks
-	{ "rom20",	0x080000, 0xbd1273d0, 4 | BRF_GRA }, 	       // 17
+	{ "rom21",		0x080000, 0x7a08c3b7, 4 | BRF_GRA }, 	       // 16 Sprite Banks
+	{ "rom20",		0x080000, 0xbd1273d0, 4 | BRF_GRA }, 	       // 17
 	{ "19.ic141",	0x080000, 0xaa4ebdfe, 4 | BRF_GRA }, 	       // 18
 	{ "18.ic140",	0x080000, 0x9b2a4325, 4 | BRF_GRA }, 	       // 19
 
-	{ "6.ic13",	0x080000, 0x6e83ffd8, 5 | BRF_SND }, 	       // 20 OKI MSM6295 Samples
+	{ "6.ic13",		0x080000, 0x6e83ffd8, 5 | BRF_SND }, 	       // 20 OKI MSM6295 Samples
 };
 
 STD_ROM_PICK(f1gpb)
@@ -1342,23 +1388,23 @@ struct BurnDriverD BurnDrvF1gpb = {
 static struct BurnRomInfo f1gp2RomDesc[] = {
 	{ "rom12.v1",	0x020000, 0xc5c5f199, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
 	{ "rom14.v2",	0x020000, 0xdd5388e2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rom2",	0x200000, 0x3b0cfa82, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rom2",		0x200000, 0x3b0cfa82, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "rom13.v3",	0x020000, 0xc37aa303, 2 | BRF_PRG | BRF_ESS }, //  3 68K #1 Code
 
 	{ "rom5.v4",	0x020000, 0x6a9398a1, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "rom1",	0x200000, 0xf2d55ad7, 4 | BRF_GRA }, 	       //  5 Character Tiles
+	{ "rom1",		0x200000, 0xf2d55ad7, 4 | BRF_GRA }, 	       //  5 Character Tiles
 
-	{ "rom15",	0x200000, 0x1ac03e2e, 5 | BRF_GRA }, 	       //  6 Sprites
+	{ "rom15",		0x200000, 0x1ac03e2e, 5 | BRF_GRA }, 	       //  6 Sprites
 
-	{ "rom11",	0x100000, 0xb22a2c1f, 6 | BRF_GRA }, 	       //  7 Background Tiles
-	{ "rom10",	0x100000, 0x43fcbe23, 6 | BRF_GRA }, 	       //  8
-	{ "rom9",	0x100000, 0x1bede8a1, 6 | BRF_GRA }, 	       //  9
-	{ "rom8",	0x100000, 0x98baf2a1, 6 | BRF_GRA }, 	       // 10
+	{ "rom11",		0x100000, 0xb22a2c1f, 6 | BRF_GRA }, 	       //  7 Background Tiles
+	{ "rom10",		0x100000, 0x43fcbe23, 6 | BRF_GRA }, 	       //  8
+	{ "rom9",		0x100000, 0x1bede8a1, 6 | BRF_GRA }, 	       //  9
+	{ "rom8",		0x100000, 0x98baf2a1, 6 | BRF_GRA }, 	       // 10
 
-	{ "rom4",	0x080000, 0xc2d3d7ad, 7 | BRF_SND }, 	       // 11 YM2610 Samples
-	{ "rom3",	0x100000, 0x7f8f066f, 7 | BRF_SND }, 	       // 12
+	{ "rom4",		0x080000, 0xc2d3d7ad, 7 | BRF_SND }, 	       // 11 YM2610 Samples
+	{ "rom3",		0x100000, 0x7f8f066f, 7 | BRF_SND }, 	       // 12
 };
 
 STD_ROM_PICK(f1gp2)

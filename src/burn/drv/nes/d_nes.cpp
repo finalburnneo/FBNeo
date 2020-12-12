@@ -13456,6 +13456,23 @@ struct BurnDriver BurnDrvnes_triforceg = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_tapewpuzdisRomDesc[] = {
+	{ "Tapeworm Puzzle Disco (HB)(Demo 8).nes",          65552, 0x30e0689f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tapewpuzdis)
+STD_ROM_FN(nes_tapewpuzdis)
+
+struct BurnDriver BurnDrvnes_tapewpuzdis = {
+	"nes_tapewpuzdis", NULL, NULL, NULL, "2020",
+	"Tapeworm Puzzle Disco (HB)(Demo 8)\0", NULL, "LowtekGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tapewpuzdisRomInfo, nes_tapewpuzdisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_whatremainsRomDesc[] = {
 	{ "What Remains (HB).nes",          524304, 0x2f2d03e5, BRF_ESS | BRF_PRG },
 };

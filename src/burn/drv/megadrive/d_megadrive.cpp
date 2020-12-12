@@ -10299,7 +10299,7 @@ STD_ROM_PICK(md_dbzec)
 STD_ROM_FN(md_dbzec)
 
 struct BurnDriver BurnDrvmd_dbzec = {
-	"md_dbzec", "md_dbzec", NULL, NULL, "2020",
+	"md_dbzec", "md_dbz", NULL, NULL, "2020",
 	"Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)\0", NULL, "Bandai", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
@@ -10307,7 +10307,6 @@ struct BurnDriver BurnDrvmd_dbzec = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
-
 
 // Dragon Slayer - Eiyuu Densetsu (Jpn)
 static struct BurnRomInfo md_dslayedRomDesc[] = {

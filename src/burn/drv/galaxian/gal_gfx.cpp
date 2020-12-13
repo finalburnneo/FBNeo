@@ -141,6 +141,21 @@ void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
 }
 
 // Sprite extend helpers
+void PacmanblExtendSpriteInfo(const UINT8*, INT32 *sx, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
+{
+	// Sprites on the topmost row of the maze are ok, everywhere else need
+	// their x-offset attenuated to keep sprites off of the maze walls. -dink dec.2020
+	if (*sx >= 18 && *sx <= 24) {
+		*sx += 1;
+	}
+	if (*sx >= 25 && *sx <= 29) {
+		*sx += 2;
+	}
+	if (*sx >= 30) {
+		*sx += 3;
+	}
+}
+
 void UpperExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
 {
 	*Code += 0x40;
@@ -892,7 +907,7 @@ static void GalRenderSprites(const UINT8 *SpriteBase)
 	INT32 ClipOfs = GalFlipScreenX ? 16 : 0;
 	INT32 xMin = GalSpriteClipStart - ClipOfs;
 	INT32 xMax = GalSpriteClipEnd - ClipOfs + 1;
-	
+
 	for (SprNum = 7; SprNum >= 0; SprNum--) {
 		const UINT8 *Base = &SpriteBase[SprNum * 4];
 		UINT8 Base0 = FroggerAdjust ? ((Base[0] >> 4) | (Base[0] << 4)) : Base[0];

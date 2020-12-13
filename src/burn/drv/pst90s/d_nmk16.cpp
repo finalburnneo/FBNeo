@@ -6173,7 +6173,7 @@ static struct BurnRomInfo tharrierRomDesc[] = {
 
 	{ "12.4l",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "1.bin",			0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
+	{ "1.13b",			0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
 
 	{ "89050-4.16f",	0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
 

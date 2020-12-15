@@ -20757,7 +20757,7 @@ struct BurnDriver BurnSpecCosmicpayback = {
 // Cygnus - Alpha
 
 static struct BurnRomInfo SpecCygnusalphaRomDesc[] = {
-	{ "Cygnus - Alpha (2020)(ILFORD).tap", 50933, 0x2096d6d4, BRF_ESS | BRF_PRG },
+	{ "Cygnus - Alpha (2020)(ILFORD).z80", 50933, 0x2096d6d4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCygnusalpha, SpecCygnusalpha, Spec128)

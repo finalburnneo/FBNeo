@@ -6168,28 +6168,28 @@ struct BurnDriver BurnDrvnmk004 = {
 // Task Force Harrier
 
 static struct BurnRomInfo tharrierRomDesc[] = {
-	{ "2.bin",		0x020000, 0xf3887a44, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3.bin",		0x020000, 0x65c247f6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.18b",			0x020000, 0xf3887a44, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3.21b",			0x020000, 0x65c247f6, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "12",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "12.4l",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "1.bin",		0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
+	{ "1.13b",			0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
 
-	{ "89050-4",	0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
+	{ "89050-4.16f",	0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
 
-	{ "89050-13",	0x080000, 0x24db3fa4, 5 | BRF_GRA },           //  5 Sprites
-	{ "89050-17",	0x080000, 0x7f715421, 5 | BRF_GRA },           //  6
+	{ "89050-13.16d",	0x080000, 0x24db3fa4, 5 | BRF_GRA },           //  5 Sprites
+	{ "89050-17.16e",	0x080000, 0x7f715421, 5 | BRF_GRA },           //  6
 
-	{ "89050-8",	0x080000, 0x11ee4c39, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "89050-8.4j",		0x080000, 0x11ee4c39, 6 | BRF_SND },           //  7 OKI1 Samples
 
-	{ "89050-10",	0x080000, 0x893552ab, 7 | BRF_SND },           //  8 OKI2 Samples
+	{ "89050-10.14j",	0x080000, 0x893552ab, 7 | BRF_SND },           //  8 OKI2 Samples
 
-	{ "21.bpr",		0x000100, 0xfcd5efea, 0 | BRF_OPT },           //  9 Unused proms
-	{ "22.bpr",		0x000100, 0xcfdbb86c, 0 | BRF_OPT },           // 10
-	{ "23.bpr",		0x000020, 0xfc3569f4, 0 | BRF_OPT },           // 11
-	{ "24.bpr",		0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 12
-	{ "25.bpr",		0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 13
-	{ "26.bpr",		0x000020, 0x0cbfb33e, 0 | BRF_OPT },           // 14
+	{ "21.bpr",			0x000100, 0xfcd5efea, 0 | BRF_OPT },           //  9 Unused proms
+	{ "22.bpr",			0x000100, 0xcfdbb86c, 0 | BRF_OPT },           // 10
+	{ "23.bpr",			0x000020, 0xfc3569f4, 0 | BRF_OPT },           // 11
+	{ "24.bpr",			0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 12
+	{ "25.bpr",			0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 13
+	{ "26.bpr",			0x000020, 0x0cbfb33e, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(tharrier)
@@ -6260,28 +6260,28 @@ struct BurnDriver BurnDrvTharrier = {
 // US version but no regional notice
 
 static struct BurnRomInfo tharrieruRomDesc[] = {
-	{ "2",			0x020000, 0x78923aaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3",			0x020000, 0x99cea259, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u_2.18b",		0x020000, 0x78923aaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "u_3.21b",		0x020000, 0x99cea259, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "12",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "12.4l",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "1",			0x010000, 0xc7402e4a, 3 | BRF_GRA },           //  3 Characters
+	{ "1.13b",			0x010000, 0xc7402e4a, 3 | BRF_GRA },           //  3 Characters
 
-	{ "89050-4",	0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
+	{ "89050-4.16f",	0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
 
-	{ "89050-13",	0x080000, 0x24db3fa4, 5 | BRF_GRA },           //  5 Sprites
-	{ "89050-17",	0x080000, 0x7f715421, 5 | BRF_GRA },           //  6
+	{ "89050-13.16d",	0x080000, 0x24db3fa4, 5 | BRF_GRA },           //  5 Sprites
+	{ "89050-17.16e",	0x080000, 0x7f715421, 5 | BRF_GRA },           //  6
 
-	{ "89050-8",	0x080000, 0x11ee4c39, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "89050-8.4j",		0x080000, 0x11ee4c39, 6 | BRF_SND },           //  7 OKI1 Samples
 
-	{ "89050-10",	0x080000, 0x893552ab, 7 | BRF_SND },           //  8 OKI2 Samples
+	{ "89050-10.14j",	0x080000, 0x893552ab, 7 | BRF_SND },           //  8 OKI2 Samples
 
-	{ "21.bpr",		0x000100, 0xfcd5efea, 0 | BRF_OPT },           //  9 Unused proms
-	{ "22.bpr",		0x000100, 0xcfdbb86c, 0 | BRF_OPT },           // 10
-	{ "23.bpr",		0x000020, 0xfc3569f4, 0 | BRF_OPT },           // 11
-	{ "24.bpr",		0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 12
-	{ "25.bpr",		0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 13
-	{ "26.bpr",		0x000020, 0x0cbfb33e, 0 | BRF_OPT },           // 14
+	{ "21.bpr",			0x000100, 0xfcd5efea, 0 | BRF_OPT },           //  9 Unused proms
+	{ "22.bpr",			0x000100, 0xcfdbb86c, 0 | BRF_OPT },           // 10
+	{ "23.bpr",			0x000020, 0xfc3569f4, 0 | BRF_OPT },           // 11
+	{ "24.bpr",			0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 12
+	{ "25.bpr",			0x000100, 0xe0a009fe, 0 | BRF_OPT },           // 13
+	{ "26.bpr",			0x000020, 0x0cbfb33e, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(tharrieru)

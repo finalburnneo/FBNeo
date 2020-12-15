@@ -3472,6 +3472,50 @@ static INT32 TileFlip(INT32 sx,INT32 addr,INT32 pal)
 	return 1; // Tile blank
 }
 
+static INT32 TileNormRlim(INT32 sx,INT32 addr,INT32 pal,INT32 rlim)
+{
+	UINT8 *pd = HighCol+sx;
+	UINT32 pack=0;
+	UINT32 t=0;
+
+	pack = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid + addr)); // Get 8 pixels
+	if (pack) {
+		switch (rlim) {
+			case 7: t=pack&0x00f00000; if (t) pd[6]=(UINT8)(pal|(t>>20)); // no breaks!
+			case 6: t=pack&0x0f000000; if (t) pd[5]=(UINT8)(pal|(t>>24));
+			case 5: t=pack&0xf0000000; if (t) pd[4]=(UINT8)(pal|(t>>28));
+			case 4: t=pack&0x0000000f; if (t) pd[3]=(UINT8)(pal|(t    ));
+			case 3: t=pack&0x000000f0; if (t) pd[2]=(UINT8)(pal|(t>> 4));
+			case 2: t=pack&0x00000f00; if (t) pd[1]=(UINT8)(pal|(t>> 8));
+			case 1: t=pack&0x0000f000; if (t) pd[0]=(UINT8)(pal|(t>>12));
+		}
+		return 0;
+	}
+	return 1;
+}
+
+static INT32 TileFlipRlim(INT32 sx,INT32 addr,INT32 pal,INT32 rlim)
+{
+	UINT8 *pd = HighCol+sx;
+	UINT32 pack=0;
+	UINT32 t=0;
+
+	pack = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid + addr)); // Get 8 pixels
+	if (pack) {
+		switch (rlim) {
+			case 7: t=pack&0x00000f00; if (t) pd[6]=(UINT8)(pal|(t>> 8)); // no breaks!
+			case 6: t=pack&0x000000f0; if (t) pd[5]=(UINT8)(pal|(t>> 4));
+			case 5: t=pack&0x0000000f; if (t) pd[4]=(UINT8)(pal|(t    ));
+			case 4: t=pack&0xf0000000; if (t) pd[3]=(UINT8)(pal|(t>>28));
+			case 3: t=pack&0x0f000000; if (t) pd[2]=(UINT8)(pal|(t>>24));
+			case 2: t=pack&0x00f00000; if (t) pd[1]=(UINT8)(pal|(t>>20));
+			case 1: t=pack&0x000f0000; if (t) pd[0]=(UINT8)(pal|(t>>16));
+		}
+		return 0;
+	}
+	return 1;
+}
+
 // tile renderers for hacky operator sprite support
 #define sh_pix(x) \
   if(!t); \
@@ -3917,7 +3961,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 	//*hcache = 0;
 }
 
-static void DrawTilesFromCache(INT32 *hc, INT32 sh)
+static void DrawTilesFromCache(INT32 *hc, INT32 sh, INT32 rlim)
 {
 	INT32 code, addr, zero, dx;
 	INT32 pal;
@@ -3954,8 +3998,13 @@ static void DrawTilesFromCache(INT32 *hc, INT32 sh)
 
 		pal=((code>>9)&0x30);
 
-		if (code&0x0800) zero=TileFlip(dx,addr,pal);
-		else             zero=TileNorm(dx,addr,pal);
+		if (rlim - dx < 0) {
+			if (code&0x0800) zero=TileFlipRlim(dx,addr,pal,rlim-dx+8);
+			else             zero=TileNormRlim(dx,addr,pal,rlim-dx+8);
+		} else {
+			if (code&0x0800) zero=TileFlip(dx,addr,pal);
+			else             zero=TileNorm(dx,addr,pal);
+		}
 
 		if(zero) blank=(INT16)code;
 	}
@@ -4437,14 +4486,14 @@ static INT32 DrawDisplay(INT32 sh)
 	if (nSpriteEnable & 1) DrawAllSprites(HighCacheS, maxw, 0, sh);
 
 	if(HighCacheB[0])
-		DrawTilesFromCache(HighCacheB, sh);
+		DrawTilesFromCache(HighCacheB, sh, maxw);
 	if(hvwind == 1)
 		DrawWindow(0, maxcells>>1, 1, sh);
 	else if(hvwind == 2) {
-		if(HighCacheA[0]) DrawTilesFromCache(HighCacheA, sh);
+		if(HighCacheA[0]) DrawTilesFromCache(HighCacheA, sh, (win&0x80) ? edge<<4 : maxw);
 		DrawWindow((win&0x80) ? edge : 0, (win&0x80) ? maxcells>>1 : edge, 1, sh);
 	} else
-		if(HighCacheA[0]) DrawTilesFromCache(HighCacheA, sh);
+		if(HighCacheA[0]) DrawTilesFromCache(HighCacheA, sh, maxw);
 	if (nSpriteEnable & 2) DrawAllSprites(HighCacheS, maxw, 1, sh);
 
 	return 0;

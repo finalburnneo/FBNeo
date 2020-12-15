@@ -827,6 +827,87 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
+// Croquis (Korea)
+
+static struct BurnRomInfo croquisRomDesc[] = {
+	{ "sys_e0",			0x40000, 0xb74cd4a9, 1 | BRF_PRG | BRF_ESS  }, //  0 68k Code
+	{ "sys_o0",			0x40000, 0x346e18f4, 1 | BRF_PRG | BRF_ESS  }, //  1
+
+	{ "logicpro.r2",	0x10000, 0x000d624b, 2 | BRF_PRG | BRF_ESS  }, //  2 Z80 Code
+
+	{ "logicpro.r5",	0x80000, 0xdedf18c9, 3 | BRF_GRA },            //  3 Graphics Tiles
+	{ "logicpro.r6",	0x80000, 0x3ecbd1c2, 3 | BRF_GRA },            //  4
+	{ "logicpro.r7",	0x80000, 0x47135521, 3 | BRF_GRA },            //  5
+
+	{ "logicpro.r9",	0x80000, 0xa98bc1d2, 4 | BRF_GRA },            //  6 Sprites
+	{ "logicpro.r8",	0x80000, 0x1de46298, 4 | BRF_GRA },            //  7
+
+	{ "logicpro.r1",	0x80000, 0xa1fec4d4, 5 | BRF_SND },            //  8 Samples
+};
+
+STD_ROM_PICK(croquis)
+STD_ROM_FN(croquis)
+
+static INT32 logicproInit()
+{
+	bg_scrollx_reg = 0x00a4/2;
+	bg_scrolly_reg = 0x00a8/2;
+	bg_page_reg    = 0x00ac/2;
+	fg_scrollx_reg = 0x00a2/2;
+	fg_scrolly_reg = 0x00a6/2;
+	fg_page_reg    = 0x00aa/2;
+
+	bg_scrollx_offs = 0x00d;
+	bg_scrolly_offs = 0x000;
+	fg_scrollx_offs = 0x009;
+	fg_scrolly_offs = 0x000;
+
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvCroquis = {
+	"croquis", NULL, NULL, NULL, "1996",
+	"Croquis (Korea)\0", NULL, "Deniam", "Deniam-16b Hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, croquisRomInfo, croquisRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
+	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 224, 4, 3
+};
+
+
+// Croquis (Germany)
+
+static struct BurnRomInfo croquisgRomDesc[] = {
+	{ "r4.bin",			0x40000, 0x03c9055e, 1 | BRF_PRG | BRF_ESS  }, //  0 68k Code
+	{ "r3.bin",			0x40000, 0xa98ae4f6, 1 | BRF_PRG | BRF_ESS  }, //  1
+
+	{ "logicpro.r2",	0x10000, 0x000d624b, 2 | BRF_PRG | BRF_ESS  }, //  2 Z80 Code
+
+	{ "logicpro.r5",	0x80000, 0xdedf18c9, 3 | BRF_GRA },            //  3 Graphics Tiles
+	{ "logicpro.r6",	0x80000, 0x3ecbd1c2, 3 | BRF_GRA },            //  4
+	{ "logicpro.r7",	0x80000, 0x47135521, 3 | BRF_GRA },            //  5
+
+	{ "logicpro.r9",	0x80000, 0xa98bc1d2, 4 | BRF_GRA },            //  6 Sprites
+	{ "logicpro.r8",	0x80000, 0x1de46298, 4 | BRF_GRA },            //  7
+
+	{ "logicpro.r1",	0x80000, 0xa1fec4d4, 5 | BRF_SND },            //  8 Samples
+};
+
+STD_ROM_PICK(croquisg)
+STD_ROM_FN(croquisg)
+
+struct BurnDriver BurnDrvCroquisg = {
+	"croquisg", "croquis", NULL, NULL, "1996",
+	"Croquis (Germany)\0", NULL, "Deniam", "Deniam-16b Hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, croquisgRomInfo, croquisgRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
+	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 224, 4, 3
+};
+
+
 // Logic Pro (Japan)
 
 static struct BurnRomInfo logicproRomDesc[] = {
@@ -848,61 +929,12 @@ static struct BurnRomInfo logicproRomDesc[] = {
 STD_ROM_PICK(logicpro)
 STD_ROM_FN(logicpro)
 
-static INT32 logicproInit()
-{
-	bg_scrollx_reg = 0x00a4/2;
-	bg_scrolly_reg = 0x00a8/2;
-	bg_page_reg    = 0x00ac/2;
-	fg_scrollx_reg = 0x00a2/2;
-	fg_scrolly_reg = 0x00a6/2;
-	fg_page_reg    = 0x00aa/2;
-
-	bg_scrollx_offs = 0x00d;
-	bg_scrolly_offs = 0x000;
-	fg_scrollx_offs = 0x009;
-	fg_scrolly_offs = 0x000;
-
-	return DrvInit();
-}
-
 struct BurnDriver BurnDrvLogicpro = {
-	"logicpro", NULL, NULL, NULL, "1996",
+	"logicpro", "croquis", NULL, NULL, "1996",
 	"Logic Pro (Japan)\0", NULL, "Deniam", "Deniam-16b Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, logicproRomInfo, logicproRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
-	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	320, 224, 4, 3
-};
-
-
-// Croquis (Germany)
-
-static struct BurnRomInfo croquisRomDesc[] = {
-	{ "r4.bin",		0x40000, 0x03c9055e, 1 | BRF_PRG | BRF_ESS  }, //  0 68k Code
-	{ "r3.bin",		0x40000, 0xa98ae4f6, 1 | BRF_PRG | BRF_ESS  }, //  1
-
-	{ "logicpro.r2",	0x10000, 0x000d624b, 2 | BRF_PRG | BRF_ESS  }, //  2 Z80 Code
-
-	{ "logicpro.r5",	0x80000, 0xdedf18c9, 3 | BRF_GRA },            //  3 Graphics Tiles
-	{ "logicpro.r6",	0x80000, 0x3ecbd1c2, 3 | BRF_GRA },            //  4
-	{ "logicpro.r7",	0x80000, 0x47135521, 3 | BRF_GRA },            //  5
-
-	{ "logicpro.r9",	0x80000, 0xa98bc1d2, 4 | BRF_GRA },            //  6 Sprites
-	{ "logicpro.r8",	0x80000, 0x1de46298, 4 | BRF_GRA },            //  7
-
-	{ "logicpro.r1",	0x80000, 0xa1fec4d4, 5 | BRF_SND },            //  8 Samples
-};
-
-STD_ROM_PICK(croquis)
-STD_ROM_FN(croquis)
-
-struct BurnDriver BurnDrvCroquis = {
-	"croquis", "logicpro", NULL, NULL, "1996",
-	"Croquis (Germany)\0", NULL, "Deniam", "Deniam-16b Hardware",
-	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, croquisRomInfo, croquisRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
+	NULL, logicproRomInfo, logicproRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
 	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

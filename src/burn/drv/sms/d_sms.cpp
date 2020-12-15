@@ -5216,10 +5216,10 @@ STD_ROM_PICK(sms_heavyw)
 STD_ROM_FN(sms_heavyw)
 
 struct BurnDriver BurnDrvsms_heavyw = {
-	"sms_heavyw", NULL, NULL, NULL, "1991",
+	"sms_heavyw", "sms_georgeko", NULL, NULL, "1991",
 	"Heavyweight Champ (Euro)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VSFIGHT, 0,
 	SMSGetZipName, sms_heavywRomInfo, sms_heavywRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -5516,7 +5516,7 @@ STD_ROM_PICK(sms_jbdougko)
 STD_ROM_FN(sms_jbdougko)
 
 struct BurnDriver BurnDrvsms_jbdougko = {
-	"sms_jbdougko", "sms_heavyw", NULL, NULL, "1990",
+	"sms_jbdougko", "sms_georgeko", NULL, NULL, "1990",
 	"James 'Buster' Douglas Knockout Boxing (USA)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VSFIGHT, 0,
@@ -5536,7 +5536,7 @@ STD_ROM_PICK(sms_jbdougkop)
 STD_ROM_FN(sms_jbdougkop)
 
 struct BurnDriver BurnDrvsms_jbdougkop = {
-	"sms_jbdougkop", "sms_heavyw", NULL, NULL, "1990",
+	"sms_jbdougkop", "sms_georgeko", NULL, NULL, "1990",
 	"James 'Buster' Douglas Knockout Boxing (USA, Prototype)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VSFIGHT, 0,

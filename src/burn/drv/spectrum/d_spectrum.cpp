@@ -20700,7 +20700,7 @@ struct BurnDriver BurnSpecBulletstorm = {
 // Captain Gofer (Russian)
 
 static struct BurnRomInfo SpecCaptaingoferRomDesc[] = {
-	{ "Captain Gofer (2020)(Dwa83).tap", 28711, 0xae298c30, BRF_ESS | BRF_PRG },
+	{ "Captain Gofer (2020)(Dwa83).z80", 27917, 0xf843ec65, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCaptaingofer, SpecCaptaingofer, Spec128)
@@ -20757,7 +20757,7 @@ struct BurnDriver BurnSpecCosmicpayback = {
 // Cygnus - Alpha
 
 static struct BurnRomInfo SpecCygnusalphaRomDesc[] = {
-	{ "Cygnus - Alpha (2020)(ILFORD).tap", 52324, 0x830a0b99, BRF_ESS | BRF_PRG },
+	{ "Cygnus - Alpha (2020)(ILFORD).tap", 50933, 0x2096d6d4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCygnusalpha, SpecCygnusalpha, Spec128)

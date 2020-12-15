@@ -2617,6 +2617,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="duckstroma" romof="spec128">
+		<description>Duckstroma (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>UltraNarwhal</manufacturer>
+		<rom name="Duckstroma (2020)(UltraNarwhal).z80" size="37973" crc="f4634cc5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="duet" romof="spec128">
 		<description>Duet</description>
 		<year>1987</year>
@@ -2798,6 +2807,24 @@
 		<year>19xx</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="Fantasy Zone 2, The (19xx)(-)[128K].z80" size="23660" crc="e09d79d8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="fjhm" romof="spec128">
+		<description>Farmer Jack and the Hedge Monkeys (HB) [Homebrew]</description>
+		<year>2008</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="Farmer Jack and the Hedge Monkeys (2008)(Bob Smith).tap" size="48405" crc="de828b58"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="fjhh" romof="spec128">
+		<description>Farmer Jack in Harvest Havoc (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="Farmer Jack in Harvest Havoc (2006)(Bob Smith).tap" size="39223" crc="936f2345"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4096,6 +4123,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="jillysfarm1" romof="spec128">
+		<description>Jilly's Farm Volume 1 - SokoBAArn (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="Jilly's Farm Volume 1 - SokoBAArn (2018)(Bob Smith).tap" size="47687" crc="52c86488"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="joebld" romof="spectrum">
 		<description>Joe Blade (48K)</description>
 		<year>1987</year>
@@ -4541,6 +4577,15 @@
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="Mad Mix Game (1988)(Topo Soft)(es)(128k).z80" size="43437" crc="c35eb329"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="magentajim" romof="spec128">
+		<description>Magenta Jim (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Gaz Marshall</manufacturer>
+		<rom name="Magenta Jim (2020)(Gaz Marshall).tap" size="23797" crc="1fee648d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5188,11 +5233,29 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="nightstalker" romof="spec128">
+		<description>Night Stalker ZX (HB) [Homebrew]</description>
+		<year>2018</year>
+		<manufacturer>AMCgames</manufacturer>
+		<rom name="Night Stalker ZX (2018)(AMCgames).tap" size="34047" crc="6c112118"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjagaiden" romof="spec128">
 		<description>Ninja Gaiden Shadow Warriors (HB) [Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Jerri, DaRkHoRaCe, Diver</manufacturer>
 		<rom name="Ninja Gaiden Shadow Warriors (2018)(Jerri, DaRkHoRaCe, Diver).tap" size="103645" crc="44081e87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjagardensim" romof="spec128">
+		<description>Ninja Gardening-Simulator (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Andrew Bunker</manufacturer>
+		<rom name="Ninja Gardening-Simulator (2019)(Andrew Bunker).tap" size="45008" crc="80d96a46"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5256,6 +5319,15 @@
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="North Star (1988)(Gremlin Graphics).tap" size="49369" crc="61d487db"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="nosy" romof="spec128">
+		<description>Nosy (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Javier Fopiani</manufacturer>
+		<rom name="Nosy (2020)(Javier Fopiani).tap" size="43998" crc="efb0331a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5892,6 +5964,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="pumpkinpoe" romof="spec128">
+		<description>Pumpkin Poe (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Ariel Endaraues</manufacturer>
+		<rom name="Pumpkin Poe (2020)(Ariel Endaraues).tap" size="39685" crc="64d9129d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="putamili" romof="spec128">
 		<description>Puta Mili (HB) [Homebrew]</description>
 		<year>2020</year>
@@ -6051,6 +6132,15 @@
 		<year>2020</year>
 		<manufacturer>JoeSoft</manufacturer>
 		<rom name="Rat-A-Tat (2020)(JoeSoft).tap" size="43232" crc="2d675b93"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="redplanet" romof="spec128">
+		<description>Red Planet (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>salvakantero</manufacturer>
+		<rom name="Red Planet (2015)(salvakantero).tap" size="42978" crc="6b8baac0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -6482,6 +6572,15 @@
 		<year>2018</year>
 		<manufacturer>Gabriel Amore</manufacturer>
 		<rom name="Saving Kong (2018)(Gabriel Amore).tap" size="40684" crc="84860fed"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="sc0tb0t" romof="spec128">
+		<description>Sc0tb0t (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Dougie mcg</manufacturer>
+		<rom name="Sc0tb0t (2020)(Dougie mcg).tap" size="37704" crc="8848666f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -7223,6 +7322,15 @@
 		<year>1990</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Stormlord II Deliverance (1990)(Hewson Consultants)(Part 3 of 3).z80" size="36532" crc="115a02d9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="stranded25" romof="spec128">
+		<description>Stranded 2.5 (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="Stranded 2.5 (2007)(Bob Smith).tap" size="38037" crc="7b9f1cec"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -8255,14 +8363,6 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
-	<game name="whb" romof="spectrum">
-		<description>W*H*B (HB) [Homebrew]</description>
-		<year>2009</year>
-		<manufacturer>Bob Smith</manufacturer>
-		<rom name="whb.z80" size="39295" crc="98d261cb"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<driver status="good"/>
-	</game>
 	<game name="wackdart" cloneof="wackydarts" romof="wackydarts">
 		<description>Wacky Darts (48K)</description>
 		<year>1991</year>
@@ -8339,6 +8439,15 @@
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="WEC Le Mans (1988)(Imagine Software).z80" size="41534" crc="83a8e1f7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="whb" romof="spec128">
+		<description>WHB (HB) [Homebrew]</description>
+		<year>2009</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="WHB (2009)(Bob Smith).tap" size="47750" crc="d55e0561"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="wheretimestoodstill" romof="spec128">
@@ -8456,11 +8565,29 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="wudang" romof="spec128">
+		<description>Wudang (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>World XXI Soft</manufacturer>
+		<rom name="Wudang (2020)(World XXI Soft).tap" size="22457" crc="68b849e6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="wwfwresmania" romof="spec128">
 		<description>WWF WrestleMania</description>
 		<year>1991</year>
 		<manufacturer>Ocean Software</manufacturer>
 		<rom name="WWF WrestleMania (1991)(Ocean Software).tap" size="209329" crc="b377350f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="xyz" romof="spec128">
+		<description>X=Y=Z (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>Bob Smith</manufacturer>
+		<rom name="X=Y=Z (2014)(Bob Smith).tap" size="18555" crc="44da8f4e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

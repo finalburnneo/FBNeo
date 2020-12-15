@@ -1720,7 +1720,7 @@
 		<rom name="hang-on and safari hunt [proto].bin" size="131072" crc="a120b77f"/>
 		<driver status="good"/>
 	</game>
-	<game name="heavyw">
+	<game name="heavyw" cloneof="georgeko" romof="georgeko">
 		<description>Heavyweight Champ (Euro)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
@@ -1825,14 +1825,14 @@
 		<rom name="indiana jones and the last crusade (europe) (beta).bin" size="262144" crc="acec894d"/>
 		<driver status="good"/>
 	</game>
-	<game name="jbdougko" cloneof="heavyw" romof="heavyw">
+	<game name="jbdougko" cloneof="georgeko" romof="georgeko">
 		<description>James 'Buster' Douglas Knockout Boxing (USA)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="james 'buster' douglas knockout boxing (usa).bin" size="262144" crc="6a664405"/>
 		<driver status="good"/>
 	</game>
-	<game name="jbdougkop" cloneof="heavyw" romof="heavyw">
+	<game name="jbdougkop" cloneof="georgeko" romof="georgeko">
 		<description>James 'Buster' Douglas Knockout Boxing (USA, Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>

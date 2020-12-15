@@ -1693,6 +1693,28 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="mazezam" romof="coleco">
+		<description>MazezaM (HB) [Homebrew]</description>
+		<year>2004</year>
+		<manufacturer>Ventzislav Tzvetkov</manufacturer>
+		<rom name="MazezaM (2004)(Ventzislav Tzvetkov).rom" size="16384" crc="150006fc"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="mazezamch" romof="coleco">
+		<description>MazezaM Challenge (HB) [Homebrew]</description>
+		<year>2016</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="MazezaM Challenge (2016)(Collectorvision).bin" size="32768" crc="8eded0e2"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="mecha8" romof="coleco">
 		<description>Mecha-8 (HB) [Homebrew, SGM - Super Game Module]</description>
 		<year>2013</year>

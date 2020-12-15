@@ -4115,6 +4115,13 @@
 		<rom name="Dragon Ball - Final Bout.md" size="2097152" crc="63847005"/>
 		<driver status="good"/>
 	</game>
+	<game name="dbzec" cloneof="dbz" romof="dbz">
+		<description>Dragon Ball Z - Buyuu Retsuden (Hack, Enhanced Colors)</description>
+		<year>2020</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="dragon ball z - buyuu retsuden (Hack, Enhanced Colors).bin" size="2097152" crc="31834e9c"/>
+		<driver status="good"/>
+	</game>
 	<game name="dbz">
 		<description>Dragon Ball Z - Buyuu Retsuden (Jpn)</description>
 		<year>1994</year>

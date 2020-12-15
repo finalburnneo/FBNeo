@@ -5969,6 +5969,13 @@
 		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
 		<driver status="good"/>
 	</game>
+	<game name="lionkingthe">
+		<description>Lion King, The (Europe)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Lion King, The (Europe).nes" size="262160" crc="149e367f"/>
+		<driver status="good"/>
+	</game>
 	<game name="littlemedusa">
 		<description>Little Medusa (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -9866,6 +9873,13 @@
 		<year>1991</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="TaleSpin (USA).nes" size="262160" crc="143dcab6"/>
+		<driver status="good"/>
+	</game>
+	<game name="tapewpuzdis">
+		<description>Tapeworm Puzzle Disco (HB)(Demo 8)</description>
+		<year>2020</year>
+		<manufacturer>LowtekGames</manufacturer>
+		<rom name="Tapeworm Puzzle Disco (HB)(Demo 8).nes" size="65552" crc="30e0689f"/>
 		<driver status="good"/>
 	</game>
 	<game name="targetrenegade">

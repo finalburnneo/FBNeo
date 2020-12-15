@@ -1338,16 +1338,14 @@ static INT32 tape_speed = 0;
 static INT32 tape_timer = 0;
 static INT32 tape_dir = 0;
 
-static INT64 tape_freerun = 0; // continuously counts up from mcu clock
-
 static double tapetimer()
 {
-	return tape_freerun * (1.0 / 500000);
+	return i8x41TotalCycles() * (1.0 / 500000);
 }
 
 static void tapetimer_reset()
 {
-	tape_freerun = 0;
+	i8x41NewFrame();
 }
 
 static INT32 firsttime = 1;
@@ -2177,7 +2175,7 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 			if ((data & 8) ^ 8)
 			{
-				i8x41_reset();
+				i8x41Reset();
 			}
 		}
 		return;
@@ -2596,7 +2594,9 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 
-	i8x41_reset();
+	i8x41Open(0);
+	i8x41Reset();
+	i8x41Close();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -2638,11 +2638,10 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainBIOS		= Next; Next += 0x001000;
-	DrvSoundBIOS		= Next; Next += 0x001000;
+	DrvSoundBIOS	= Next; Next += 0x001000;
 	DrvCassette		= Next; Next += 0x0020000;
 	DrvGfxData		= Next; Next += 0x00a0000;
 	DrvDongle		= Next; Next += 0x0100000; // 1mb (needed for widel multi)
-	I8x41Mem		= Next;
 	DrvMCUROM		= Next; Next += 0x0009000; // 0x400 + 0x500 for ram, for now
 
 	DrvCharExp		= Next; Next += 0x0100000;
@@ -2787,9 +2786,11 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	M6502SetReadHandler(decocass_sound_read);
 	M6502Close();
 
-	i8x41_init(NULL);
+	i8x41Init(0, DrvMCUROM);
+	i8x41Open(0);
 	i8x41_set_read_port(i8x41_read_ports);
 	i8x41_set_write_port(i8x41_write_ports);
+	i8x41Close();
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
@@ -2813,7 +2814,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	M6502Exit();
-	i8x41_exit();
+	i8x41Exit();
 
 	AY8910Exit(0);
 	AY8910Exit(1);
@@ -3265,10 +3266,10 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)510000 / 57.444853), (INT32)((double)500000 / 57.444853) };
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
-	INT32 nSegment = 0;
 
 	vblank = 1;
 
+	i8x41Open(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
@@ -3303,20 +3304,14 @@ static INT32 DrvFrame()
 
 		if (decocass_reset & 0x08)
 		{
-			nSegment = (i + 1) * nCyclesTotal[2] / nInterleave;
-			INT32 derp = nSegment - nCyclesDone[2];
-			nCyclesDone[2] += derp;
-			tape_freerun += derp;
+			CPU_IDLE(2, i8x41);
 		}
 		else
 		{
-			nSegment = (i + 1) * nCyclesTotal[2] / nInterleave;
-			INT32 derp = i8x41_run(nSegment - nCyclesDone[2]);
-			nCyclesDone[2] += derp;
-			tape_freerun += derp;
-
+			CPU_RUN(2, i8x41);
 		}
 	}
+	i8x41Close();
 
 	if (pBurnSoundOut) {
         AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -3340,17 +3335,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = I8x41Mem;
-		ba.nLen	  = 0x900;
-		ba.szName = "MCU Ram";
-		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
 		M6502Scan(nAction);
-		i8x41_scan(nAction);
+		i8x41Scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
 
@@ -3401,8 +3390,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tape_speed);
 		SCAN_VAR(tape_timer);
 		SCAN_VAR(tape_dir);
-
-		SCAN_VAR(tape_freerun);
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);

@@ -88,15 +88,17 @@ enum {
 #endif /* _I8X41_H */
 
 
-
-extern UINT8 *I8x41Mem;
 void i8x41_set_read_port(UINT8 (*read)(UINT16));
 void i8x41_set_write_port(void (*write)(UINT16, UINT8));
 
-void i8x41_init(int (*irqcallback)(int));
-void i8x41_reset();
-void i8x41_exit();
-INT32 i8x41_run(INT32 cycles);
+void i8x41Init(INT32 nCpu, UINT8 *ram);
+void i8x41Reset();
+void i8x41Exit();
+void i8x41Open(INT32 nCpu);
+void i8x41Close();
+INT32 i8x41GetActive();
+
+INT32 i8x41Run(INT32 cycles);
 void i8x41RunEnd();
 INT32 i8x41TotalCycles();
 void i8x41NewFrame();
@@ -104,4 +106,4 @@ INT32 i8x41Idle(INT32 cycles);
 
 UINT8 i8x41_get_register(UINT32 reg);
 void i8x41_set_register(UINT32 reg, UINT8 data);
-void i8x41_scan(INT32 nAction);
+void i8x41Scan(INT32 nAction);

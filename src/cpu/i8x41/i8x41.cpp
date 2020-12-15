@@ -88,51 +88,19 @@
  *
  *****************************************************************************/
 
-//#include "debugger.h"
 #include "burnint.h"
 #include "i8x41.h"
-#include "driver.h"
 #include <stddef.h>
-
-UINT8 *I8x41Mem = NULL;
-
-
-static UINT8 program_read_byte_8(UINT16 a)
-{
-	if (a >= 0x900) return 0;
-
-	return I8x41Mem[a];
-}
-
-static void program_write_byte_8(UINT16 a, UINT8 d)
-{
-	if (a >= 0x900) return;
-
-	I8x41Mem[a] = d;
-}
-
-#define cpu_readop(a) program_read_byte_8(a)
-#define cpu_readop_arg(a)	program_read_byte_8(a)
-
-static void (*io_write_byte_8)(UINT16 p, UINT8 d) = NULL;
-static UINT8 (*io_read_byte_8)(UINT16 p) = NULL;
-
-void i8x41_set_read_port(UINT8 (*read)(UINT16))
-{
-	io_read_byte_8 = read;
-}
-
-void i8x41_set_write_port(void (*write)(UINT16, UINT8))
-{
-	io_write_byte_8 = write;
-}
-
 
 #ifndef INLINE
 #define INLINE	inline
 #endif
+#define CLEAR_LINE	0
+#define ASSERT_LINE 1
 
-typedef struct {
+#define MAX_I8x41 6
+
+struct I8X41 {
 	UINT16	ppc;
 	UINT16	pc;
 	UINT8	timer;
@@ -149,33 +117,121 @@ typedef struct {
 	UINT8	p2;
 	UINT8	p2_hs;
 	INT32   total_cycles;
+	INT32 	ICount;
+	INT32 	cycle_start;
+	INT32 	end_run;
+
+	INT32   ptr_divider;
 
 	UINT8	*ram;
-	INT32 	(*irq_callback)(INT32 irqline);
-}	I8X41;
 
-int i8x41_ICount = 0;
-int i8x41_cycle_start = 0;
-int i8x41_end_run = 0;
+	void	(*io_write_byte_8)(UINT16 p, UINT8 d);
+	UINT8	(*io_read_byte_8)(UINT16 p);
+};
 
-static I8X41 i8x41;
+static I8X41 *i8x41 = NULL;
+static I8X41 i8x41_state_store[MAX_I8x41];
+static INT32 i8x41_active_cpu = -1;
+static INT32 i8x41_total_cpus = 0; // nCpu + 1!
 
-void i8x41_scan(INT32 nAction)
+/*
+ * Memory locations
+ * Note:
+ * 000-3ff      internal ROM for 8x41 (1K)
+ * 400-7ff      (more) internal for 8x42 type (2K)
+ * 800-8ff      internal RAM
+ */
+
+static UINT8 program_read_byte_8(UINT16 a)
+{
+	if (a >= 0x900) return 0;
+
+	return i8x41->ram[a];
+}
+
+static void program_write_byte_8(UINT16 a, UINT8 d)
+{
+	if (a >= 0x900) return;
+
+	i8x41->ram[a] = d;
+}
+
+#define cpu_readop(a)		program_read_byte_8(a)
+#define cpu_readop_arg(a)	program_read_byte_8(a)
+
+void i8x41_set_read_port(UINT8 (*read)(UINT16))
+{
+	i8x41->io_read_byte_8 = read;
+}
+
+void i8x41_set_write_port(void (*write)(UINT16, UINT8))
+{
+	i8x41->io_write_byte_8 = write;
+}
+
+void i8x41Scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		struct BurnArea ba;
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &i8x41;
-		ba.nLen	  = STRUCT_SIZE_HELPER(I8X41, total_cycles);
-		ba.szName = "i8x41 Regs";
-		BurnAcb(&ba);
+		for (INT32 i = 0; i < i8x41_total_cpus; i++) {
+			I8X41 *ptr = &i8x41_state_store[i];
+
+			ScanVar(ptr, STRUCT_SIZE_HELPER(I8X41, ptr_divider), "i8x41 Regs");
+			ScanVar(&ptr->ram[0x800], 0x100, "i8x41 Ram");
+		}
 	}
 }
 
+INT32 i8x41GetActive()
+{
+	return i8x41_active_cpu;
+}
+
+void i8x41Open(INT32 nCpu)
+{
+	if (i8x41_active_cpu != -1)	{
+		bprintf(PRINT_ERROR, _T("i8x41Open(%d); when cpu already open.\n"), nCpu);
+	}
+
+	i8x41 = &i8x41_state_store[nCpu];
+	i8x41_active_cpu = nCpu;
+}
+
+void i8x41Close()
+{
+	if (i8x41_active_cpu == -1)	{
+		bprintf(PRINT_ERROR, _T("i8x41Close(); when cpu already closed.\n"));
+	}
+	i8x41 = NULL;
+	i8x41_active_cpu = -1;
+}
+
+void i8x41Init(INT32 nCpu, UINT8 *ram)
+{
+	if (nCpu >= MAX_I8x41) {
+		bprintf(PRINT_ERROR, _T("i8x41Init(%d, x); cpu number too high, increase MAX_I8x41.\n"), nCpu);
+	}
+
+	i8x41_total_cpus = nCpu + 1;
+
+	i8x41Open(nCpu);
+	memset(i8x41, 0x00, sizeof(I8X41));
+	i8x41->ram = ram;
+	i8x41Close();
+}
+
+
+void i8x41Exit()
+{
+	i8x41 = NULL;
+	i8x41_active_cpu = -1;
+	i8x41_total_cpus = 0;
+}
+
+
 #define RM(a)	program_read_byte_8(a)
 #define WM(a,v) program_write_byte_8(a,v)
-#define RP(a)	io_read_byte_8(a)
-#define WP(a,v) io_write_byte_8(a,v)
+#define RP(a)	i8x41->io_read_byte_8(a)
+#define WP(a,v) i8x41->io_write_byte_8(a,v)
 #define ROP(pc) cpu_readop(pc)
 #define ROP_ARG(pc) cpu_readop_arg(pc)
 
@@ -232,24 +288,43 @@ void i8x41_scan(INT32 nAction)
 
 
 /* shorter names for the I8x41 structure elements */
-#define PPC 		i8x41.ppc
-#define PC			i8x41.pc
-#define A			i8x41.a
-#define PSW 		i8x41.psw
-#define DBBI		i8x41.dbbi
-#define DBBO		i8x41.dbbo
-#define R(n)		i8x41.ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)]
-#define STATE		i8x41.state
-#define ENABLE		i8x41.enable
-#define TIMER		i8x41.timer
-#define PRESCALER	i8x41.prescaler
-#define P1			i8x41.p1
-#define P2			i8x41.p2
-#define P2_HS		i8x41.p2_hs		/* Port 2 Hand Shaking */
-#define CONTROL		i8x41.control
+#define PPC 		i8x41->ppc
+#define PC			i8x41->pc
+#define A			i8x41->a
+#define PSW 		i8x41->psw
+#define DBBI		i8x41->dbbi
+#define DBBO		i8x41->dbbo
+#define R(n)		i8x41->ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)]
+#define STATE		i8x41->state
+#define ENABLE		i8x41->enable
+#define TIMER		i8x41->timer
+#define PRESCALER	i8x41->prescaler
+#define P1			i8x41->p1
+#define P2			i8x41->p2
+#define P2_HS		i8x41->p2_hs		/* Port 2 Hand Shaking */
+#define CONTROL		i8x41->control
 
 
 static void set_irq_line(int irqline, int state);
+
+/****************************************************************************
+ *  Reset registers to their initial values
+ ****************************************************************************/
+
+void i8x41Reset()
+{
+	memset(i8x41, 0, STRUCT_SIZE_HELPER(I8X41, ptr_divider));
+
+	/* default to 8041 behaviour for DBBI/DBBO and extended commands */
+	i8x41->subtype = 8041;
+	ENABLE = IBFI | TCNTI;
+	DBBI = 0xff;
+	DBBO = 0xff;
+	/* Set Ports 1 and 2 to input mode */
+	P1   = 0xff;
+	P2   = 0xff;
+	P2_HS= 0xff;
+}
 
 
 /************************************************************************
@@ -600,7 +675,7 @@ INLINE void en_i(void)
 	{
 		ENABLE |= IBFI;		/* enable input buffer full interrupt */
 		if( STATE & IBF )	/* already got data in the buffer? */
-			set_irq_line(I8X41_INT_IBF, HOLD_LINE);
+			set_irq_line(I8X41_INT_IBF, ASSERT_LINE);
 	}
 }
 
@@ -619,8 +694,9 @@ INLINE void en_tcnti(void)
  ***********************************/
 INLINE void in_a_dbb(void)
 {
-	if( i8x41.irq_callback )
-		(*i8x41.irq_callback)(I8X41_INT_IBF);
+	//if( i8x41->irq_callback )
+	//	(*i8x41->irq_callback)(I8X41_INT_IBF);
+	set_irq_line(I8X41_INT_IBF, CLEAR_LINE);
 
 	STATE &= ~IBF;					/* clear input buffer full flag */
 	if( ENABLE & FLAGS )
@@ -1362,78 +1438,19 @@ static UINT8 i8x41_cycles[] = {
 /****************************************************************************
  *  Inits CPU emulation
  ****************************************************************************/
-
-void i8x41_init(int (*irqcallback)(int))
-{
-	i8x41.irq_callback = irqcallback;
-#if 0
-	state_save_register_item("i8x41", index, i8x41.ppc);
-	state_save_register_item("i8x41", index, i8x41.pc);
-	state_save_register_item("i8x41", index, i8x41.timer);
-	state_save_register_item("i8x41", index, i8x41.prescaler);
-	state_save_register_item("i8x41", index, i8x41.subtype);
-	state_save_register_item("i8x41", index, i8x41.a);
-	state_save_register_item("i8x41", index, i8x41.psw);
-	state_save_register_item("i8x41", index, i8x41.state);
-	state_save_register_item("i8x41", index, i8x41.enable);
-	state_save_register_item("i8x41", index, i8x41.control);
-	state_save_register_item("i8x41", index, i8x41.dbbi);
-	state_save_register_item("i8x41", index, i8x41.dbbo);
-	state_save_register_item("i8x41", index, i8x41.p1);
-	state_save_register_item("i8x41", index, i8x41.p2);
-	state_save_register_item("i8x41", index, i8x41.p2_hs);
-#endif
-}
-
-
-/****************************************************************************
- *  Reset registers to their initial values
- ****************************************************************************/
-
-void i8x41_reset()
-{
-	int (*save_irqcallback)(int) = i8x41.irq_callback;
-	memset(&i8x41, 0, sizeof(I8X41));
-	i8x41.irq_callback = save_irqcallback;
-
-	/* default to 8041 behaviour for DBBI/DBBO and extended commands */
-	i8x41.subtype = 8041;
-	/* ugly hack.. excuse my lazyness */
-	i8x41.ram = I8x41Mem; //memory_region(REGION_CPU1 + cpu_getactivecpu());
-	ENABLE = IBFI | TCNTI;
-	DBBI = 0xff;
-	DBBO = 0xff;
-	/* Set Ports 1 and 2 to input mode */
-	P1   = 0xff;
-	P2   = 0xff;
-	P2_HS= 0xff;
-}
-
-
-/****************************************************************************
- *  Shut down CPU emulation
- ****************************************************************************/
-
-void i8x41_exit()
-{
-	I8x41Mem = NULL;
-
-	io_write_byte_8 = NULL;
-	io_read_byte_8 = NULL;
-}
-
+// see up top!
 
 /****************************************************************************
  *  Execute cycles - returns number of cycles actually run
  ****************************************************************************/
 
-INT32 i8x41_run(INT32 cycles)
+INT32 i8x41Run(INT32 cycles)
 {
 	int inst_cycles, T1_level;
 
-	i8x41_cycle_start = cycles;
-	i8x41_ICount = cycles;
-	i8x41_end_run = 0;
+	i8x41->cycle_start = cycles;
+	i8x41->ICount = cycles;
+	i8x41->end_run = 0;
 
 	do
 	{
@@ -1444,7 +1461,7 @@ INT32 i8x41_run(INT32 cycles)
 	//	CALL_MAME_DEBUG;
 
 		PC += 1;
-		i8x41_ICount -= i8x41_cycles[op];
+		i8x41->ICount -= i8x41_cycles[op];
 
 		switch( op )
 		{
@@ -2051,7 +2068,7 @@ INT32 i8x41_run(INT32 cycles)
 					PC = V_IBF;
 					CONTROL &= ~IBFI_PEND;
 					CONTROL |= IBFI_EXEC;
-					i8x41_ICount -= 2;
+					i8x41->ICount -= 2;
 				}
 			}
 			if( 0 == (CONTROL & IRQ_EXEC) )	/* Are any Interrupts being serviced ? */
@@ -2063,40 +2080,43 @@ INT32 i8x41_run(INT32 cycles)
 					CONTROL &= ~TIRQ_PEND;
 					CONTROL |= TIRQ_EXEC;
 					if( ENABLE & T ) PRESCALER += 2;	/* 2 states */
-					i8x41_ICount -= 2;		/* 2 states to take interrupt */
+					i8x41->ICount -= 2;		/* 2 states to take interrupt */
 				}
 			}
 		}
 
 
-	} while( i8x41_ICount > 0 && !i8x41_end_run );
+	} while( i8x41->ICount > 0 && !i8x41->end_run );
 
-	cycles = cycles - i8x41_ICount;
-	i8x41_ICount = i8x41_cycle_start = 0;
+	cycles = cycles - i8x41->ICount;
+	i8x41->ICount = i8x41->cycle_start = 0;
 
-	i8x41.total_cycles += cycles;
+	i8x41->total_cycles += cycles;
 
 	return cycles;
 }
 
 void i8x41RunEnd()
 {
-	i8x41_end_run = 1;
+	i8x41->end_run = 1;
 }
 
 INT32 i8x41TotalCycles()
 {
-	return i8x41.total_cycles + (i8x41_cycle_start - i8x41_ICount);
+	return i8x41->total_cycles + (i8x41->cycle_start - i8x41->ICount);
 }
 
 void i8x41NewFrame()
 {
-	i8x41.total_cycles = 0;
+	for (INT32 i = 0; i < MAX_I8x41; i++) {
+		I8X41 *ptr = &i8x41_state_store[i];
+		ptr->total_cycles = 0;
+	}
 }
 
 INT32 i8x41Idle(INT32 cycles)
 {
-	i8x41.total_cycles += cycles;
+	i8x41->total_cycles += cycles;
 
 	return cycles;
 }
@@ -2174,14 +2194,14 @@ static void set_irq_line(int irqline, int state)
 
 
 /**************************************************************************
- * Register accesses catching uninitialized i8x41.ram pointer
+ * Register accesses catching uninitialized i8x41->ram pointer
  **************************************************************************/
-#define GETR(n) (NULL == i8x41.ram ? 0 : \
-	i8x41.ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)])
+#define GETR(n) (NULL == i8x41->ram ? 0 : \
+	i8x41->ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)])
 
 #define SETR(n,v) do { \
-	if (NULL != i8x41.ram) { \
-		i8x41.ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)] = (v); \
+	if (NULL != i8x41->ram) { \
+		i8x41->ram[((PSW & BS) ? M_BANK1:M_BANK0)+(n)] = (v); \
 	} \
 } while (0)
 
@@ -2218,7 +2238,7 @@ void i8x41_set_register(UINT32 reg, UINT8 data)
 #endif
 		case I8X41_DATA:
 			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
+			if( i8x41->subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
 				DBBO = data;
 			STATE &= ~F1;
 			STATE |= IBF;
@@ -2237,13 +2257,13 @@ void i8x41_set_register(UINT32 reg, UINT8 data)
 			/* Same as I8X41_DATA, except this is used by the */
 			/* debugger and does not upset the flag states */
 			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
+			if( i8x41->subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
 				DBBO = data;
 			break;
 
 		case I8X41_CMND:
 			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
+			if( i8x41->subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
 				DBBO = data;
 			STATE |= F1;
 			STATE |= IBF;
@@ -2262,7 +2282,7 @@ void i8x41_set_register(UINT32 reg, UINT8 data)
 			/* Same as I8X41_CMND, except this is used by the */
 			/* debugger and does not upset the flag states */
 			DBBI = data;
-			if( i8x41.subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
+			if( i8x41->subtype == 8041 ) /* plain 8041 had no split input/output DBB buffers */
 				DBBO = data;
 			break;
 
@@ -2366,7 +2386,7 @@ UINT8 i8x41_get_register(UINT32 reg)
 //#ifdef MAME_DEBUG
 //		case CPUINFO_PTR_DISASSEMBLE:					info->disassemble = i8x41_dasm;			break;
 //#endif /* MAME_DEBUG */
-		case CPUINFO_PTR_INSTRUCTION_COUNTER:			datacount = &i8x41_ICount;			break;
+		case CPUINFO_PTR_INSTRUCTION_COUNTER:			datacount = &i8x41->ICount;			break;
 
 		/* --- the following bits of info are returned as NULL-terminated strings --- */
 		case CPUINFO_STR_NAME:							strcpy(info->s, "I8X41");				break;
@@ -2377,21 +2397,21 @@ UINT8 i8x41_get_register(UINT32 reg)
 
 		case CPUINFO_STR_FLAGS:
 			sprintf(info->s, "%c%c%c%c%c%c%c%c",
-				i8x41.psw & 0x80 ? 'C':'.',
-				i8x41.psw & 0x40 ? 'A':'.',
-				i8x41.psw & 0x20 ? '0':'.',
-				i8x41.psw & 0x10 ? 'B':'.',
-				i8x41.psw & 0x08 ? '?':'.',
-				i8x41.psw & 0x04 ? 's':'.',
-				i8x41.psw & 0x02 ? 's':'.',
-				i8x41.psw & 0x01 ? 's':'.');
+				i8x41->psw & 0x80 ? 'C':'.',
+				i8x41->psw & 0x40 ? 'A':'.',
+				i8x41->psw & 0x20 ? '0':'.',
+				i8x41->psw & 0x10 ? 'B':'.',
+				i8x41->psw & 0x08 ? '?':'.',
+				i8x41->psw & 0x04 ? 's':'.',
+				i8x41->psw & 0x02 ? 's':'.',
+				i8x41->psw & 0x01 ? 's':'.');
 			break;
 
-		case CPUINFO_STR_REGISTER + I8X41_PC:			sprintf(info->s, "PC:%04X", i8x41.pc);	break;
-		case CPUINFO_STR_REGISTER + I8X41_SP:			sprintf(info->s, "S:%X", i8x41.psw & SP); break;
-		case CPUINFO_STR_REGISTER + I8X41_PSW:			sprintf(info->s, "PSW:%02X", i8x41.psw); break;
-		case CPUINFO_STR_REGISTER + I8X41_A:			sprintf(info->s, "A:%02X", i8x41.a);	break;
-		case CPUINFO_STR_REGISTER + I8X41_T:			sprintf(info->s, "T:%02X.%02X", i8x41.timer, (i8x41.prescaler & 0x1f) ); break;
+		case CPUINFO_STR_REGISTER + I8X41_PC:			sprintf(info->s, "PC:%04X", i8x41->pc);	break;
+		case CPUINFO_STR_REGISTER + I8X41_SP:			sprintf(info->s, "S:%X", i8x41->psw & SP); break;
+		case CPUINFO_STR_REGISTER + I8X41_PSW:			sprintf(info->s, "PSW:%02X", i8x41->psw); break;
+		case CPUINFO_STR_REGISTER + I8X41_A:			sprintf(info->s, "A:%02X", i8x41->a);	break;
+		case CPUINFO_STR_REGISTER + I8X41_T:			sprintf(info->s, "T:%02X.%02X", i8x41->timer, (i8x41->prescaler & 0x1f) ); break;
 		case CPUINFO_STR_REGISTER + I8X41_R0:			sprintf(info->s, "R0:%02X", GETR(0));	break;
 		case CPUINFO_STR_REGISTER + I8X41_R1:			sprintf(info->s, "R1:%02X", GETR(1));	break;
 		case CPUINFO_STR_REGISTER + I8X41_R2:			sprintf(info->s, "R2:%02X", GETR(2));	break;
@@ -2400,11 +2420,11 @@ UINT8 i8x41_get_register(UINT32 reg)
 		case CPUINFO_STR_REGISTER + I8X41_R5:			sprintf(info->s, "R5:%02X", GETR(5));	break;
 		case CPUINFO_STR_REGISTER + I8X41_R6:			sprintf(info->s, "R6:%02X", GETR(6));	break;
 		case CPUINFO_STR_REGISTER + I8X41_R7:			sprintf(info->s, "R7:%02X", GETR(7));	break;
-		case CPUINFO_STR_REGISTER + I8X41_P1:			sprintf(info->s, "P1:%02X", i8x41.p1);	break;
-		case CPUINFO_STR_REGISTER + I8X41_P2:			sprintf(info->s, "P2:%02X", i8x41.p2);	break;
-		case CPUINFO_STR_REGISTER + I8X41_DATA_DASM:	sprintf(info->s, "DBBI:%02X", i8x41.dbbi); break;
-		case CPUINFO_STR_REGISTER + I8X41_CMND_DASM:	sprintf(info->s, "DBBO:%02X", i8x41.dbbo); break;
-		case CPUINFO_STR_REGISTER + I8X41_STAT:			sprintf(info->s, "STAT:%02X", i8x41.state);	break;
+		case CPUINFO_STR_REGISTER + I8X41_P1:			sprintf(info->s, "P1:%02X", i8x41->p1);	break;
+		case CPUINFO_STR_REGISTER + I8X41_P2:			sprintf(info->s, "P2:%02X", i8x41->p2);	break;
+		case CPUINFO_STR_REGISTER + I8X41_DATA_DASM:	sprintf(info->s, "DBBI:%02X", i8x41->dbbi); break;
+		case CPUINFO_STR_REGISTER + I8X41_CMND_DASM:	sprintf(info->s, "DBBO:%02X", i8x41->dbbo); break;
+		case CPUINFO_STR_REGISTER + I8X41_STAT:			sprintf(info->s, "STAT:%02X", i8x41->state);	break;
 #endif
 	}
 	return data;

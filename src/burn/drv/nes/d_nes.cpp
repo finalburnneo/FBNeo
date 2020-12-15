@@ -640,6 +640,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
 	NESMode |= (ROMCRC == 0xab862073) ? ALT_TIMING : 0; // ultimate frogger champ.
 	NESMode |= (ROMCRC == 0x2a798367) ? ALT_TIMING : 0; // jy 45-in-1
+	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
 	NESMode |= (ROMCRC == 0x4cf12d39) ? IS_PAL : 0; // Elite
 	NESMode |= (ROMCRC == 0x3a0b6dd2) ? IS_PAL : 0; // Hero Quest
@@ -13455,6 +13456,23 @@ struct BurnDriver BurnDrvnes_triforceg = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_tapewpuzdisRomDesc[] = {
+	{ "Tapeworm Puzzle Disco (HB)(Demo 8).nes",          65552, 0x30e0689f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tapewpuzdis)
+STD_ROM_FN(nes_tapewpuzdis)
+
+struct BurnDriver BurnDrvnes_tapewpuzdis = {
+	"nes_tapewpuzdis", NULL, NULL, NULL, "2020",
+	"Tapeworm Puzzle Disco (HB)(Demo 8)\0", NULL, "LowtekGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tapewpuzdisRomInfo, nes_tapewpuzdisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_whatremainsRomDesc[] = {
 	{ "What Remains (HB).nes",          524304, 0x2f2d03e5, BRF_ESS | BRF_PRG },
@@ -28524,6 +28542,23 @@ struct BurnDriver BurnDrvnes_lionkinleg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_lionkingtheRomDesc[] = {
+	{ "Lion King, The (Europe).nes",          262160, 0x149e367f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lionkingthe)
+STD_ROM_FN(nes_lionkingthe)
+
+struct BurnDriver BurnDrvnes_lionkingthe = {
+	"nes_lionkingthe", NULL, NULL, NULL, "1994",
+	"Lion King, The (Europe)\0", NULL, "Virgin Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_lionkingtheRomInfo, nes_lionkingtheRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
 static struct BurnRomInfo nes_littlmerjRomDesc[] = {
 	{ "Little Mermaid, The (Japan).nes",          131088, 0x57c9290f, BRF_ESS | BRF_PRG },
 };
@@ -36510,6 +36545,23 @@ struct BurnDriver BurnDrvnes_swordmaster = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_swordmasterRomInfo, nes_swordmasterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_swordmasterhRomDesc[] = {
+	{ "Sword Master (USA)(Hack Sample Fix).nes",          262160, 0xcc1a0cfa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_swordmasterh)
+STD_ROM_FN(nes_swordmasterh)
+
+struct BurnDriver BurnDrvnes_swordmasterh = {
+	"nes_swordmasterh", "nes_swordmaster", NULL, NULL, "1992",
+	"Sword Master (USA)(Hack Sample Fix)\0", NULL, "Activision", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_swordmasterhRomInfo, nes_swordmasterhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

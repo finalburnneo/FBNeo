@@ -1447,29 +1447,29 @@ struct BurnDriver BurnDrvRygarb = {
 // Silk Worm (World)
 
 static struct BurnRomInfo silkwormRomDesc[] = {
-	{ "silkworm.4",		0x10000, 0xa5277cce, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "silkworm.5",		0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.5s",		0x10000, 0xa5277cce, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "5.6s",		0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "silkworm.3",		0x08000, 0xb589f587, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+	{ "3.5j",		0x08000, 0xb589f587, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
-	{ "silkworm.2",		0x08000, 0xe80a1cd9, 3 | BRF_GRA },	      //  3 - Characters
+	{ "2.3j",		0x08000, 0xe80a1cd9, 3 | BRF_GRA },	      //  3 - Characters
 
-	{ "silkworm.6",		0x10000, 0x1138d159, 4 | BRF_GRA },	      //  4 - Sprites
-	{ "silkworm.7",		0x10000, 0xd96214f7, 4 | BRF_GRA },	      //  5
-	{ "silkworm.8",		0x10000, 0x0494b38e, 4 | BRF_GRA },	      //  6
-	{ "silkworm.9",		0x10000, 0x8ce3cdf5, 4 | BRF_GRA },	      //  7
+	{ "6.1c",		0x10000, 0x1138d159, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "7.1d",		0x10000, 0xd96214f7, 4 | BRF_GRA },	      //  5
+	{ "8.1f",		0x10000, 0x0494b38e, 4 | BRF_GRA },	      //  6
+	{ "9.1h",		0x10000, 0x8ce3cdf5, 4 | BRF_GRA },	      //  7
 
-	{ "silkworm.10",	0x10000, 0x8c7138bb, 5 | BRF_GRA },	      //  8 - Foreground Tiles
-	{ "silkworm.11",	0x10000, 0x6c03c476, 5 | BRF_GRA },	      //  9
-	{ "silkworm.12",	0x10000, 0xbb0f568f, 5 | BRF_GRA },	      // 10
-	{ "silkworm.13",	0x10000, 0x773ad0a4, 5 | BRF_GRA },	      // 11
+	{ "10.1p",		0x10000, 0x8c7138bb, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "11.12p",		0x10000, 0x6c03c476, 5 | BRF_GRA },	      //  9
+	{ "12.2p",		0x10000, 0xbb0f568f, 5 | BRF_GRA },	      // 10
+	{ "13.3p",		0x10000, 0x773ad0a4, 5 | BRF_GRA },	      // 11
 
-	{ "silkworm.14",	0x10000, 0x409df64b, 6 | BRF_GRA },	      // 12 - Background Tiles
-	{ "silkworm.15",	0x10000, 0x6e4052c9, 6 | BRF_GRA },	      // 13
-	{ "silkworm.16",	0x10000, 0x9292ed63, 6 | BRF_GRA },	      // 14
-	{ "silkworm.17",	0x10000, 0x3fa4563d, 6 | BRF_GRA },	      // 15
+	{ "14.1s",		0x10000, 0x409df64b, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "15.12s",		0x10000, 0x6e4052c9, 6 | BRF_GRA },	      // 13
+	{ "16.2s",		0x10000, 0x9292ed63, 6 | BRF_GRA },	      // 14
+	{ "17.3s",		0x10000, 0x3fa4563d, 6 | BRF_GRA },	      // 15
 
-	{ "silkworm.1",		0x08000, 0x5b553644, 7 | BRF_SND },	      // 16 - Samples
+	{ "1.6b",		0x08000, 0x5b553644, 7 | BRF_SND },	      // 16 - Samples
 };
 
 STD_ROM_PICK(silkworm)

@@ -7215,3 +7215,40 @@ struct BurnDriver BurnDrvcv_explodingfoot = {
     272, 228, 4, 3
 };
 
+// MazezaM
+
+static struct BurnRomInfo cv_mazezamRomDesc[] = {
+    { "MazezaM (2004)(Ventzislav Tzvetkov).rom",	16384, 0x150006fc, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mazezam, cv_mazezam, cv_coleco)
+STD_ROM_FN(cv_mazezam)
+
+struct BurnDriver BurnDrvcv_mazezam = {
+    "cv_mazezam", NULL, "cv_coleco", NULL, "2004",
+    "MazezaM (HB)\0", NULL, "Ventzislav Tzvetkov", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+    CVGetZipName, cv_mazezamRomInfo, cv_mazezamRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// MazezaM Challenge
+
+static struct BurnRomInfo cv_mazezamchRomDesc[] = {
+    { "MazezaM Challenge (2016)(Collectorvision).bin",	32768, 0x8eded0e2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mazezamch, cv_mazezamch, cv_coleco)
+STD_ROM_FN(cv_mazezamch)
+
+struct BurnDriver BurnDrvcv_mazezamch = {
+    "cv_mazezamch", NULL, "cv_coleco", NULL, "2016",
+    "MazezaM Challenge (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+    CVGetZipName, cv_mazezamchRomInfo, cv_mazezamchRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

@@ -638,9 +638,9 @@ static void DrvPaletteUpdate()
 	{
 		UINT16 *p = (UINT16*)DrvPalRAM;
 
-		UINT8 r = (p[i] >> 10) & 0x1f;
-		UINT8 g = (p[i] >>  5) & 0x1f;
-		UINT8 b = (p[i] >>  0) & 0x1f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -654,25 +654,25 @@ static void draw_sprites(INT32 pri_param)
 {
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 
-	INT32 first = (4 * ram[0x1fe]) & 0x1ff;
+	INT32 first = (4 * BURN_ENDIAN_SWAP_INT16(ram[0x1fe])) & 0x1ff;
 	if (first > 0x1fc) first = 0x1fc;
 
 	for (INT32 offs = first; offs != 0x1fc; offs += 4)
 	{
-		if ((ram[offs+2] & 0x0080) == 0)	// sprite disabled
+		if ((BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0080) == 0)	// sprite disabled
 			continue;
 
-		INT32 oy    =  (ram[offs+0] & 0x01ff) - 6;
-		INT32 zoomy =  (ram[offs+0] & 0xf000) >> 12;
-		INT32 ox =     (ram[offs+1] & 0x01ff) - 13;
-		INT32 zoomx =  (ram[offs+1] & 0xf000) >> 12;
-		INT32 xsize =  (ram[offs+2] & 0x0700) >> 8;
-		INT32 flipx =  (ram[offs+2] & 0x0800);
-		INT32 ysize =  (ram[offs+2] & 0x7000) >> 12;
-		INT32 flipy =  (ram[offs+2] & 0x8000);
-		INT32 color = ((ram[offs+2] & 0x000f) << 4) + 0x400;
-		INT32 pri =    (ram[offs+2] & 0x0010) >> 4;
-		INT32 map =    (ram[offs+3]);
+		INT32 oy    =  (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x01ff) - 6;
+		INT32 zoomy =  (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0xf000) >> 12;
+		INT32 ox =     (BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0x01ff) - 13;
+		INT32 zoomx =  (BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0xf000) >> 12;
+		INT32 xsize =  (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0700) >> 8;
+		INT32 flipx =  (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0800);
+		INT32 ysize =  (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x7000) >> 12;
+		INT32 flipy =  (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x8000);
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x000f) << 4) + 0x400;
+		INT32 pri =    (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0010) >> 4;
+		INT32 map =    (BURN_ENDIAN_SWAP_INT16(ram[offs+3]));
 
 		if (pri != pri_param)
 			continue;

@@ -172,8 +172,8 @@ static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	UINT16 code  = ram[offs * 2 + 0];
-	UINT16 color = ram[offs * 2 + 1] & 0x7f;
+	UINT16 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x7f;
 
 	TILE_SET_INFO(0, code, color, 0);
 }
@@ -182,8 +182,8 @@ static tilemap_callback( mg )
 {
 	UINT16 *ram = (UINT16*)DrvMgRAM;
 
-	UINT16 code  = ram[offs * 2 + 0];
-	UINT16 color = ram[offs * 2 + 1] & 0x7f;
+	UINT16 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x7f;
 
 	TILE_SET_INFO(0, code, color, 0);
 }
@@ -192,8 +192,8 @@ static tilemap_callback( fg )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
 
-	UINT16 code  = ram[offs * 2 + 0];
-	UINT16 color = ram[offs * 2 + 1] & 0x7f;
+	UINT16 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x7f;
 
 	TILE_SET_INFO(0, code, color, 0);
 }
@@ -330,9 +330,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		UINT8 r = (p[i] >> 10) & 0x1f;
-		UINT8 g = (p[i] >>  5) & 0x1f;
-		UINT8 b = (p[i] >>  0) & 0x1f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);

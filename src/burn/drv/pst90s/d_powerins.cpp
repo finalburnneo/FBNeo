@@ -57,7 +57,7 @@ static INT32 nCyclesSegment;
 inline static void CalcCol(INT32 idx)
 {
 	/* RRRR GGGG BBBB RGBx */
-	UINT16 wordValue = RamPal[idx];
+	UINT16 wordValue = BURN_ENDIAN_SWAP_INT16(RamPal[idx]);
 	INT32 r = ((wordValue >> 8) & 0xF0 ) | ((wordValue << 0) & 0x08) | ((wordValue >> 13) & 0x07 );
 	INT32 g = ((wordValue >> 4) & 0xF0 ) | ((wordValue << 1) & 0x08) | ((wordValue >>  9) & 0x07 );
 	INT32 b = ((wordValue >> 0) & 0xF0 ) | ((wordValue << 2) & 0x08) | ((wordValue >>  5) & 0x07 );
@@ -611,7 +611,7 @@ static void __fastcall powerinsWriteWordPalette(UINT32 sekAddress, UINT16 wordVa
 {
 	sekAddress -= 0x120000;
 	sekAddress >>= 1;
-	RamPal[sekAddress] = wordValue;
+	RamPal[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	CalcCol( sekAddress );
 }
 
@@ -1245,7 +1245,7 @@ static void TileBackground()
 
 		if ( x<=-16 || x>=320 || y <=-16 || y>=224 ) continue;
 		else {
-			INT32 attr = RamBg[offs];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(RamBg[offs]);
 			INT32 code = ((attr & 0x7ff) + tile_bank);
 			INT32 color = (attr >> 12) | ((attr >> 7) & 0x10);
 
@@ -1266,19 +1266,19 @@ static void TileForeground()
 		if (x > 320) x -= 512;
 		if ( x<0 || x>(320-8) || y<0 || y>(224-8)) continue;
 		else {
-			if ((RamFg[offs] & 0x0FFF) == 0) continue;
-			UINT8 *d = RomFg + (RamFg[offs] & 0x0FFF) * 32;
- 			UINT16 c = ((RamFg[offs] & 0xF000) >> 8) | 0x200;
+			if ((BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0x0FFF) == 0) continue;
+			UINT8 *d = RomFg + (BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0x0FFF) * 32;
+ 			UINT16 c = ((BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0xF000) >> 8) | 0x200;
  			UINT16 *p = pTransDraw + y * 320 + x;
 			for (INT32 k=0;k<8;k++) {
- 				if ((d[0] >>  4) != 15) p[0] = (d[0] >>  4) | c;
- 				if ((d[0] & 0xF) != 15) p[1] = (d[0] & 0xF) | c;
- 				if ((d[1] >>  4) != 15) p[2] = (d[1] >>  4) | c;
- 				if ((d[1] & 0xF) != 15) p[3] = (d[1] & 0xF) | c;
- 				if ((d[2] >>  4) != 15) p[4] = (d[2] >>  4) | c;
- 				if ((d[2] & 0xF) != 15) p[5] = (d[2] & 0xF) | c;
- 				if ((d[3] >>  4) != 15) p[6] = (d[3] >>  4) | c;
- 				if ((d[3] & 0xF) != 15) p[7] = (d[3] & 0xF) | c;
+ 				if ((d[0] >>  4) != 15) p[0] = BURN_ENDIAN_SWAP_INT16((d[0] >>  4) | c);
+ 				if ((d[0] & 0xF) != 15) p[1] = BURN_ENDIAN_SWAP_INT16((d[0] & 0xF) | c);
+ 				if ((d[1] >>  4) != 15) p[2] = BURN_ENDIAN_SWAP_INT16((d[1] >>  4) | c);
+ 				if ((d[1] & 0xF) != 15) p[3] = BURN_ENDIAN_SWAP_INT16((d[1] & 0xF) | c);
+ 				if ((d[2] >>  4) != 15) p[4] = BURN_ENDIAN_SWAP_INT16((d[2] >>  4) | c);
+ 				if ((d[2] & 0xF) != 15) p[5] = BURN_ENDIAN_SWAP_INT16((d[2] & 0xF) | c);
+ 				if ((d[3] >>  4) != 15) p[6] = BURN_ENDIAN_SWAP_INT16((d[3] >>  4) | c);
+ 				if ((d[3] & 0xF) != 15) p[7] = BURN_ENDIAN_SWAP_INT16((d[3] & 0xF) | c);
  				d += 4;
  				p += 320;
  			}
@@ -1308,13 +1308,13 @@ static void DrawSprites()
 
 	for ( ; source < finish; source += 8 ) {
 
-		if (!(source[0]&1)) continue;
+		if (!(BURN_ENDIAN_SWAP_INT16(source[0])&1)) continue;
 
-		INT32	size	=	source[1];
-		INT32	code	=	(source[3] & 0x7fff) + ( (size & 0x0100) << 7 );
-		INT32	sx		=	source[4];
-		INT32	sy		=	source[6];
-		INT32	color	=	source[7] & 0x3F;
+		INT32	size	=	BURN_ENDIAN_SWAP_INT16(source[1]);
+		INT32	code	=	(BURN_ENDIAN_SWAP_INT16(source[3]) & 0x7fff) + ( (size & 0x0100) << 7 );
+		INT32	sx		=	BURN_ENDIAN_SWAP_INT16(source[4]);
+		INT32	sy		=	BURN_ENDIAN_SWAP_INT16(source[6]);
+		INT32	color	=	BURN_ENDIAN_SWAP_INT16(source[7]) & 0x3F;
 		INT32	flipx	=	size & 0x1000;
 		INT32	dimx	=	((size >> 0) & 0xf ) + 1;
 		INT32	dimy	=	((size >> 4) & 0xf ) + 1;

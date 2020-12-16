@@ -13453,6 +13453,25 @@ struct BurnDriver BurnDrvnes_triforceg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// wanpakuduck (T-Chi)
+// Translation by Advance Team - Ju Jue Rong Hua & Shao Nian Bu Zhi Chou
+static struct BurnRomInfo nes_wanpakuduckRomDesc[] = {
+	{ "Wanpaku Duck Yume Bouken (T-Chi).nes",          196624, 0x9fe55e12, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wanpakuduck)
+STD_ROM_FN(nes_wanpakuduck)
+
+struct BurnDriver BurnDrvnes_wanpakuduck = {
+	"nes_wanpakuduck", "nes_ducktales", NULL, NULL, "2020",
+	"Wanpaku Duck Yume Bouken (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_wanpakuduckRomInfo, nes_wanpakuduckRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -37225,6 +37244,23 @@ struct BurnDriver BurnDrvnes_tekken3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_tekken3RomInfo, nes_tekken3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchiwokurauiiRomDesc[] = {
+	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (Japan).nes",          524304, 0x8bd1a162, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchiwokurauii)
+STD_ROM_FN(nes_tenchiwokurauii)
+
+struct BurnDriver BurnDrvnes_tenchiwokurauii = {
+	"nes_tenchiwokurauii", NULL, NULL, NULL, "1991",
+	"Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchiwokurauiiRomInfo, nes_tenchiwokurauiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -329,6 +329,69 @@ int RunExit()
 	return 0;
 }
 
+#ifdef BUILD_SDL2
+void pause_game()
+{
+	AudSoundStop();	
+	
+	if(nVidSelect) {
+		// no Text in OpenGL...
+		SDL_GL_SwapWindow(sdlWindow);
+	}else{
+		inprint_shadowed(sdlRenderer, "PAUSE", 10, 10);
+		SDL_RenderPresent(sdlRenderer);
+	}
+	
+    int finished = 0;
+	while (!finished)
+  	{
+		starting_stick = SDL_GetTicks();
+		
+ 		SDL_Event e;
+
+		while (SDL_PollEvent(&e))
+		{
+			if (e.type == SDL_QUIT)
+			{
+				finished=1;
+			}
+			if (e.type == SDL_KEYDOWN)
+			{
+			  switch (e.key.keysym.sym)
+			  {
+				  case SDLK_TAB:
+				  case SDLK_p:
+					finished=1;
+					break;
+				  default:
+					break;
+			  }
+			}
+			if (e.type == SDL_WINDOWEVENT)  
+			{ // Window Event
+				switch (e.window.event) 
+				{
+					//case SDL_WINDOWEVENT_RESTORED: // keep pause when restore window
+					case SDL_WINDOWEVENT_FOCUS_GAINED:
+						finished=1;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		// limit 5 FPS (free CPU usage)		
+		if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick) {
+			SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
+		}
+		
+	}	
+	
+	AudSoundPlay();	
+}
+#endif
+
 #ifndef BUILD_MACOS
 // The main message loop
 int RunMessageLoop()
@@ -340,6 +403,7 @@ int RunMessageLoop()
 
 	while (!quit)
 	{
+		
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
@@ -349,6 +413,18 @@ int RunMessageLoop()
 				quit = 1;
 				break;
 
+#ifdef BUILD_SDL2
+			case SDL_WINDOWEVENT:  // Window Event
+				switch (event.window.event) 
+				{
+					case SDL_WINDOWEVENT_MINIMIZED:
+					case SDL_WINDOWEVENT_FOCUS_LOST:
+						pause_game();
+						break;
+				}
+				break;			
+#endif
+					
 			case SDL_KEYDOWN:                                                // need to find a nicer way of doing this...
 				switch (event.key.keysym.sym)
 				{
@@ -375,6 +451,9 @@ int RunMessageLoop()
 				case SDLK_TAB:
 					if(!nVidSelect) {
 						ingame_gui_start(sdlRenderer);
+					} else {
+						// Pause with SDL2 OpenGL mode
+						pause_game();
 					}
 					break;
 				
@@ -416,7 +495,9 @@ int RunMessageLoop()
 				break;
 			}
 		}
+		
 		RunIdle();
+
 	}
 
 	RunExit();

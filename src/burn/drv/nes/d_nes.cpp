@@ -20656,6 +20656,23 @@ struct BurnDriver BurnDrvnes_destiear = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_destianempRomDesc[] = {
+	{ "Destiny of an Emperor (USA).nes",          262160, 0xc0f73d85, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_destianemp)
+STD_ROM_FN(nes_destianemp)
+
+struct BurnDriver BurnDrvnes_destianemp = {
+	"nes_destianemp", NULL, NULL, NULL, "1990",
+	"Destiny of an Emperor (USA)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_destianempRomInfo, nes_destianempRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_destructorelRomDesc[] = {
 	{ "Destructor, El (Spain) (Gluk Video) (Unl).nes",          65552, 0xeb33ea3b, BRF_ESS | BRF_PRG },
 };
@@ -37248,19 +37265,53 @@ struct BurnDriver BurnDrvnes_tekken3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tenchiwokurauiiRomDesc[] = {
-	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (Japan).nes",          524304, 0x8bd1a162, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo nes_tenchiwokurauRomDesc[] = {
+	{ "Tenchi wo Kurau (Japan).nes",          262160, 0xf14e7fc1, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_tenchiwokurauii)
-STD_ROM_FN(nes_tenchiwokurauii)
+STD_ROM_PICK(nes_tenchiwokurau)
+STD_ROM_FN(nes_tenchiwokurau)
 
-struct BurnDriver BurnDrvnes_tenchiwokurauii = {
-	"nes_tenchiwokurauii", NULL, NULL, NULL, "1991",
+struct BurnDriver BurnDrvnes_tenchiwokurau = {
+	"nes_tenchiwokurau", "nes_destianemp", NULL, NULL, "1989",
+	"Tenchi wo Kurau (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchiwokurauRomInfo, nes_tenchiwokurauRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchwokuriijRomDesc[] = {
+	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (Japan).nes",          524304, 0x052519a2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchwokuriij)
+STD_ROM_FN(nes_tenchwokuriij)
+
+struct BurnDriver BurnDrvnes_tenchwokuriij = {
+	"nes_tenchwokuriij", "nes_tenchwokurii", NULL, NULL, "1991",
 	"Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchwokuriijRomInfo, nes_tenchwokuriijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchwokuriiRomDesc[] = {
+	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng).nes",          524304, 0x6dcfda9e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchwokurii)
+STD_ROM_FN(nes_tenchwokurii)
+
+struct BurnDriver BurnDrvnes_tenchwokurii = {
+	"nes_tenchwokurii", NULL, NULL, NULL, "1991",
+	"Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_tenchiwokurauiiRomInfo, nes_tenchiwokurauiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_tenchwokuriiRomInfo, nes_tenchwokuriiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

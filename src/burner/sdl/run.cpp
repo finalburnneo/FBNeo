@@ -25,6 +25,7 @@ UINT32 messageFrames = 0;
 char lastMessage[MESSAGE_MAX_LENGTH];
 
 #ifdef BUILD_SDL2
+static Uint32 starting_stick;
 /// Ingame gui
 extern SDL_Renderer* sdlRenderer;
 extern void ingame_gui_start(SDL_Renderer* renderer);

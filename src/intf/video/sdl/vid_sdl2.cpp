@@ -230,7 +230,7 @@ static int Init()
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 
-	printf("setting logical size w: %d h: %d", display_w, display_h);
+	printf("setting logical size w: %d h: %d\n", display_w, display_h);
 
 	if (nRotateGame)
 	{

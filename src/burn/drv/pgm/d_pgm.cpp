@@ -7790,3 +7790,39 @@ struct BurnDriver BurnDrvMarmatsc = {
 	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+
+// Oriental Legend 2 (One Key Edition, Hack)
+// Hack by 哆啦A梦
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=702576&extra=page%3D1
+
+static struct BurnRomInfo oldsplusoRomDesc[] = {
+	{ "v-205cn_onekey.u10",			0x0400000, 0xa3cd1b1d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t05301w064.u2",			0x0800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a05301w064.u3",			0x0800000, 0x57946fd2, 3 | BRF_GRA },	 		//  2 Sprite Color Data
+	{ "igs_a05302w064.u4",			0x0800000, 0x3459a0b8, 3 | BRF_GRA },			//  3
+	{ "igs_a05303w064.u6",			0x0800000, 0x13475d85, 3 | BRF_GRA },			//  4
+	{ "igs_a05304w064.u8",			0x0800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
+
+	{ "igs_b05301w064.u9",			0x0800000, 0xfd98f503, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05302w064.u11",			0x0800000, 0x9f6094a8, 4 | BRF_GRA },			//  7
+
+	{ "igs_w05301b032.u5",			0x0400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
+
+	{ "oldspluso_igs027a.bin",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(oldspluso, oldspluso, pgm)
+STD_ROM_FN(oldspluso)
+
+struct BurnDriver BurnDrvoldspluso = {
+	"oldspluso", "oldsplus", "pgm", NULL, "2020-12-10",
+	"Oriental Legend 2 (One Key Edition, Hack)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, oldsplusoRomInfo, oldsplusoRomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
+	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

@@ -84,7 +84,7 @@ inline static void genix_hack()
 
 static void palette_write(INT32 offset)
 {
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	UINT8 r,g,b;
 
@@ -138,14 +138,14 @@ void __fastcall pirates_write_byte(UINT32 address, UINT8 data)
 void __fastcall pirates_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffc00) == 0x109c00) {
-		*((UINT16 *)(Drv68KRAM + (address & 0xfffe))) = data;
+		*((UINT16 *)(Drv68KRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		genix_hack();
 
 		return;
 	}
 
 	if ((address & 0xffc000) == 0x800000) {
-		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = data;
+		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x3ffe);
 		return;
 	}
@@ -292,12 +292,12 @@ static void pirates_decrypt_68k()
 		UINT8 vl, vr;
 
  		adrl = BITSWAP24(i,23,22,21,20,19,18,4,8,3,14,2,15,17,0,9,13,10,5,16,7,12,6,1,11);
-		vl = BITSWAP08(buf[adrl],    4,2,7,1,6,5,0,3);
+		vl = BITSWAP08(BURN_ENDIAN_SWAP_INT16(buf[adrl]),    4,2,7,1,6,5,0,3);
 
 		adrr = BITSWAP24(i,23,22,21,20,19,18,4,10,1,11,12,5,9,17,14,0,13,6,15,8,3,16,7,2);
-		vr = BITSWAP08(buf[adrr]>>8, 1,4,7,0,3,5,6,2);
+		vr = BITSWAP08(BURN_ENDIAN_SWAP_INT16(buf[adrr])>>8, 1,4,7,0,3,5,6,2);
 
-		rom[i] = (vr<<8) | vl;
+		rom[i] = BURN_ENDIAN_SWAP_INT16((vr<<8) | vl);
 	}
 
     BurnFree (buf);
@@ -383,7 +383,7 @@ static INT32 DrvInit()
 	}
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pirates") || !strcmp(BurnDrvGetTextA(DRV_NAME), "piratesb")) {
-		*((UINT16*)(Drv68KROM + 0x62c0)) = 0x6006; // bypass protection
+		*((UINT16*)(Drv68KROM + 0x62c0)) = BURN_ENDIAN_SWAP_INT16(0x6006); // bypass protection
 	} else {
 		is_genix = 1;
 	}
@@ -444,8 +444,8 @@ static void draw_layer(INT32 offset, INT32 coloffs, INT32 transp)
 
 		if (sy < 16 || sy > 239 || sx > 287 || sx < -15) continue;
 
-		INT32 code = vram[offs*2];
-		INT32 color = vram[offs*2+1];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs*2]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs*2+1]);
 
 		if (transp) {
 			if (!code && !color) continue;
@@ -468,8 +468,8 @@ static void draw_text_layer()
 
 		if (sy < 16 || sy > 239 || sx >= 288) continue;
 
-		INT32 code = vram[offs*2];
-		INT32 color = vram[offs*2+1];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs*2]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs*2+1]);
 
 		if (!code && !color) continue;
 
@@ -486,15 +486,15 @@ static void draw_sprites()
 	{
 		INT32 sx, sy, flipx, flipy, code, color;
 
-		sx = source[1] - 32;
-		sy = source[-1];
+		sx = BURN_ENDIAN_SWAP_INT16(source[1]) - 32;
+		sy = BURN_ENDIAN_SWAP_INT16(source[-1]);
 
 		if (sy & 0x8000) break;
 
-		code  = source[2] >> 2;
-		color = source[0] & 0xff;
-		flipx = source[2] & 2;
-		flipy = source[2] & 1;
+		code  = BURN_ENDIAN_SWAP_INT16(source[2]) >> 2;
+		color = BURN_ENDIAN_SWAP_INT16(source[0]) & 0xff;
+		flipx = BURN_ENDIAN_SWAP_INT16(source[2]) & 2;
+		flipy = BURN_ENDIAN_SWAP_INT16(source[2]) & 1;
 
 		sy = (0xf2 - sy) - 16;
 

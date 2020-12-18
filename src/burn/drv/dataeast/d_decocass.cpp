@@ -2786,7 +2786,7 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	M6502SetReadHandler(decocass_sound_read);
 	M6502Close();
 
-	i8x41Init(0, DrvMCUROM);
+	i8x41Init(0, 8041, DrvMCUROM);
 	i8x41Open(0);
 	i8x41_set_read_port(i8x41_read_ports);
 	i8x41_set_write_port(i8x41_write_ports);

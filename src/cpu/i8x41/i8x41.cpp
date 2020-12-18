@@ -105,7 +105,6 @@ struct I8X41 {
 	UINT16	pc;
 	UINT8	timer;
 	UINT8	prescaler;
-	UINT16	subtype;
 	UINT8	a;
 	UINT8	psw;
 	UINT8	state;
@@ -123,8 +122,8 @@ struct I8X41 {
 
 	INT32   ptr_divider;
 
+	UINT16	subtype;
 	UINT8	*ram;
-
 	void	(*io_write_byte_8)(UINT16 p, UINT8 d);
 	UINT8	(*io_read_byte_8)(UINT16 p);
 };
@@ -205,7 +204,7 @@ void i8x41Close()
 	i8x41_active_cpu = -1;
 }
 
-void i8x41Init(INT32 nCpu, UINT8 *ram)
+void i8x41Init(INT32 nCpu, INT32 subtype, UINT8 *ram)
 {
 	if (nCpu >= MAX_I8x41) {
 		bprintf(PRINT_ERROR, _T("i8x41Init(%d, x); cpu number too high, increase MAX_I8x41.\n"), nCpu);
@@ -215,6 +214,7 @@ void i8x41Init(INT32 nCpu, UINT8 *ram)
 
 	i8x41Open(nCpu);
 	memset(i8x41, 0x00, sizeof(I8X41));
+	i8x41->subtype = subtype; //8041;
 	i8x41->ram = ram;
 	i8x41Close();
 }
@@ -316,7 +316,6 @@ void i8x41Reset()
 	memset(i8x41, 0, STRUCT_SIZE_HELPER(I8X41, ptr_divider));
 
 	/* default to 8041 behaviour for DBBI/DBBO and extended commands */
-	i8x41->subtype = 8041;
 	ENABLE = IBFI | TCNTI;
 	DBBI = 0xff;
 	DBBO = 0xff;
@@ -2299,6 +2298,16 @@ void i8x41_set_register(UINT32 reg, UINT8 data)
 /**************************************************************************
  * Generic get_info
  **************************************************************************/
+
+void i8x41_master_w(INT32 offset, UINT8 data)
+{
+	i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+}
+
+UINT8 i8x41_master_r(INT32 offset)
+{
+	return i8x41_get_register((offset & 1) ? I8X41_STAT : I8X41_DATA);
+}
 
 UINT8 i8x41_get_register(UINT32 reg)
 {

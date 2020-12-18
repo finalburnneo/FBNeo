@@ -376,6 +376,10 @@ void pause_game()
 					case SDL_WINDOWEVENT_FOCUS_GAINED:
 						finished=1;
 						break;
+					case SDL_WINDOWEVENT_CLOSE:
+						finished=1;
+						RunExit();
+						break;
 					default:
 						break;
 				}

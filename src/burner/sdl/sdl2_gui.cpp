@@ -5,6 +5,9 @@
 
 extern char videofiltering[3];
 
+// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, decocass, midssio, cchip, fdsbios, ngp, bubsys)
+// don't reduce for these as we display them in the list (neogeo, neocdz)
+#define REDUCE_TOTAL_SETS_BIOS		16
 // Limit CPU usage
 #define maxfps 25
 static Uint32 starting_stick;
@@ -268,6 +271,9 @@ static void DoFilterGames()
 		filterGames = NULL;
 	}
 
+	filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
+	filterGamesCount = 0;
+			
 	if (bShowAvailableOnly)
 	{
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
@@ -289,10 +295,6 @@ static void DoFilterGames()
 
 			}
 		}
-
-		filterGames = (unsigned int*)malloc(count * sizeof(unsigned int));
-
-		filterGamesCount = 0;
 
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
@@ -318,8 +320,6 @@ static void DoFilterGames()
 	}
 	else
 	{
-		filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
-		filterGamesCount = 0;
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			nBurnDrvActive = i;
@@ -755,7 +755,7 @@ void gui_init()
 
 
 	sdlWindow = SDL_CreateWindow(
-		"FBNeo - Choose your weapon...",
+		"FBNeo - Select Game...",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		nVidGuiWidth,
@@ -878,7 +878,7 @@ void gui_render()
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FBNeo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 5);
 	if (strlen(systemName) != 0) {
-		snprintf(newLine, MAX_PATH, "Active Filter: %s", systemName);
+		snprintf(newLine, MAX_PATH, "Active Filter: %s - Showing : %d of %d", systemName, filterGamesCount, (nBurnDrvCount - REDUCE_TOTAL_SETS_BIOS));
 		inprint(sdlRenderer, newLine, 10, 15);
 	}
 	incolor(normal_color, /* unused */ 0);
@@ -955,8 +955,11 @@ int gui_process()
 {
 	SDL_Event e;
 	bool quit = false;
-	static UINT32 previousSelected;
+	static UINT32 previousSelected = -1;
 
+	snprintf(systemName, MAX_PATH, "Everything");
+	nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+	
 	while (!quit)
 	{
 		starting_stick = SDL_GetTicks();

@@ -1421,6 +1421,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="bulletstorm" romof="spec128">
+		<description>Bullet Storm</description>
+		<year>2020</year>
+		<manufacturer>VolatiL</manufacturer>
+		<rom name="Bullet Storm (2020)(VolatiL).tap" size="48736" crc="16a8ccf9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="bulleye" romof="spectrum">
 		<description>Bulls Eye (48K)</description>
 		<year>1984</year>
@@ -1529,6 +1538,15 @@
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Captain Dynamo (1992)(Codemasters).tap" size="68500" crc="62855d75"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="captaingofer" romof="spec128">
+		<description>Captain Gofer (Russian)</description>
+		<year>2020</year>
+		<manufacturer>Dwa83</manufacturer>
+		<rom name="Captain Gofer (2020)(Dwa83).z80" size="27917" crc="f843ec65"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -1826,6 +1844,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="code112" romof="spec128">
+		<description>Code-112</description>
+		<year>2020</year>
+		<manufacturer>PCNONOGames</manufacturer>
+		<rom name="Code-112 (2020)(PCNONOGames).tap" size="47864" crc="d3a6349d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="coliseum" romof="spec128">
 		<description>Coliseum (128K)</description>
 		<year>1988</year>
@@ -1948,6 +1975,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="cosmicpayback" romof="spec128">
+		<description>Cosmic Payback</description>
+		<year>2020</year>
+		<manufacturer>John Connolly</manufacturer>
+		<rom name="Cosmic Payback (2020)(John Connolly).tap" size="58570" crc="c91aa72f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="cosmicwartoad" romof="spec128">
 		<description>Cosmic Wartoad</description>
 		<year>1985</year>
@@ -2042,6 +2078,15 @@
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Cybernoid II (1988)(Hewson Consultants).z80" size="42619" crc="b7018e24"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="cygnusalpha" romof="spec128">
+		<description>Cygnus - Alpha</description>
+		<year>2020</year>
+		<manufacturer>ILFORD</manufacturer>
+		<rom name="Cygnus - Alpha (2020)(ILFORD).z80" size="50933" crc="2096d6d4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="dtdecthn" romof="spectrum">
@@ -2736,6 +2781,15 @@
 		<year>1987</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Enduro Racer (1987)(Activision)[128K].z80" size="42808" crc="f9d78fc5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="enignimatik" romof="spec128">
+		<description>Enigmatik</description>
+		<year>2020</year>
+		<manufacturer>IADVD</manufacturer>
+		<rom name="Enigmatik (2020)(IADVD).tap" size="45841" crc="c02dcd01"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4648,6 +4702,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="marsmarealienation" romof="spec128">
+		<description>Marsmare - Alienation</description>
+		<year>2020</year>
+		<manufacturer>Drunk Fly</manufacturer>
+		<rom name="Marsmare - Alienation (2020)(Drunk Fly).tap" size="115080" crc="906f7098"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="mask" romof="spec128">
 		<description>Mask</description>
 		<year>1987</year>
@@ -6145,6 +6208,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="redraidside1" romof="spec128">
+		<description>Red Raid - The Beginning (Side A)</description>
+		<year>2020</year>
+		<manufacturer>ZXBitles</manufacturer>
+		<rom name="Red Raid - The Beginning, Side A (2020)(ZXBitles).tap" size="46995" crc="d768649a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="redraidside2" romof="spec128">
+		<description>Red Raid - The Beginning (Side B)</description>
+		<year>2020</year>
+		<manufacturer>ZXBitles</manufacturer>
+		<rom name="Red Raid - The Beginning, Side B (2020)(ZXBitles).tap" size="47521" crc="d534f9c0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="redshift" romof="spec128">
 		<description>Redshift (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -6846,6 +6927,15 @@
 		<year>1990</year>
 		<manufacturer>Zigurat Software</manufacturer>
 		<rom name="Sito Pons 500cc Grand Prix (1990)(Zigurat Software)(es)(128k).z80" size="40559" crc="1f9a9466"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="sixsixsixsix" romof="spec128">
+		<description>Sixsixsixsix (Russian)</description>
+		<year>2020</year>
+		<manufacturer>Anhot Studio</manufacturer>
+		<rom name="Sixsixsixsix (2020)(Anhot Studio).tap" size="42560" crc="aaae62a6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -7728,6 +7818,14 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="technoalice" romof="spectrum">
+		<description>Techno Alice (Russian)(48k)</description>
+		<year>2020</year>
+		<manufacturer>ALKO</manufacturer>
+		<rom name="Techno Alice (2020)(ALKO).tap" size="44226" crc="6e631df4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
 	<game name="tmht" romof="spec128">
 		<description>Teenage Mutant Hero Turtles (128K)</description>
 		<year>1990</year>
@@ -8467,6 +8565,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="whitejaguar" romof="spec128">
+		<description>White Jaguar</description>
+		<year>2020</year>
+		<manufacturer>Romancha</manufacturer>
+		<rom name="White Jaguar (2020)(Romancha).tap" size="24324" crc="bb1edf8f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="whodareswinsii" romof="spec128">
 		<description>Who Dares Wins II</description>
 		<year>1986</year>
@@ -8667,6 +8774,15 @@
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Yie Ar Kung-Fu II (1986)(Imagine Software).z80" size="36718" crc="ef420fe9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="yoyogreatadventure" romof="spec128">
+		<description>Yoyo's Great Adventure</description>
+		<year>2020</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="Yoyo's Great Adventure (2020)(Rafal Miazga).tap" size="48287" crc="a4f5b9b9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="zaxxon" romof="spectrum">

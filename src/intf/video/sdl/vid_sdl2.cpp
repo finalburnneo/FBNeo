@@ -64,7 +64,10 @@ static int Exit()
 	SDL_DestroyRenderer(sdlRenderer);
 	SDL_DestroyWindow(sdlWindow);
 
-	free(VidMem);
+	if (VidMem)
+	{
+		free(VidMem);
+	}
 	return 0;
 }
 static int display_w = 400, display_h = 300;
@@ -91,7 +94,14 @@ static int Init()
 	{
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
-		BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		{
+			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
+		}
+		else
+		{
+			BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+		}
 
 		display_w = nVidImageWidth;
 #ifdef INCLUDE_SWITCHRES
@@ -101,7 +111,6 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 			printf("Vertical\n");
 			nRotateGame = 1;
 			sr_set_rotation(1);
@@ -114,7 +123,6 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 			printf("Vertical\n");
 			nRotateGame = 1;
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
@@ -342,20 +350,21 @@ static int Paint(int bValidate)
 	if (nRotateGame)
 	{
 		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-		if (nRotateGame && bFlipped)
+		if (bFlipped)
 		{
 			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 90, NULL, SDL_FLIP_NONE);
 		}
-		if (nRotateGame && !bFlipped)
+		else
 		{
 			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 270, NULL, SDL_FLIP_NONE);
 		}
 	}
 	else
 	{
-		SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
-		memcpy(pixels, pVidImage, nVidImagePitch * nVidImageHeight);
-		SDL_UnlockTexture(sdlTexture);
+	//	SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
+	//	memcpy(pixels, pVidImage, nVidImagePitch * nVidImageHeight);
+	//	SDL_UnlockTexture(sdlTexture);
+		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
 		SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &dstrect);
 	}
 

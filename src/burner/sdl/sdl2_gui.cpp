@@ -5,6 +5,10 @@
 
 extern char videofiltering[3];
 
+// Limit CPU usage
+#define maxfps 25
+static Uint32 starting_stick;
+
 static SDL_Renderer* sdlRenderer = NULL;
 
 static SDL_Texture* titleTexture = NULL;
@@ -24,7 +28,6 @@ static unsigned int thirdscreenwidth =0;
 static unsigned int listoffsetY =0;
 static unsigned int listwidthY =0;
 
-
 const int JOYSTICK_DEAD_ZONE = 8000;
 SDL_GameController* gGameController = NULL;
 
@@ -38,11 +41,10 @@ static bool bShowAvailableOnly = true;
 static bool bShowClones = true;
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
 static char systemName[MAX_PATH] = { 0 };
+static char genre[MAX_PATH] = { 0 };
 static int gameSelectedFromFilter = -1;
 static char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 static UINT8 currentLetterCount = 0;
-
-
 
 SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 {
@@ -82,7 +84,6 @@ static void CreateRomDatName(TCHAR* szRomDat)
 #endif
 	return;
 }
-
 
 int WriteGameAvb()
 {
@@ -720,14 +721,13 @@ void gui_init()
 		    if (SDL_IsGameController(i)) {
 		        gGameController = SDL_GameControllerOpen(i);
 		        if (gGameController) {
-							  printf("Found a joypad!\n");
+					printf("Found a joypad : %s\n", SDL_GameControllerName(gGameController));
 		            break;
 		        } else {
 		            printf("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
 		        }
 		    }
 		}
-
 	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -823,8 +823,38 @@ void gui_init()
 	DoFilterGames();
 }
 
+void getGenre()
+{
+	if (BurnDrvGetGenreFlags() & GBF_HORSHOOT)			snprintf(genre, MAX_PATH, "Shooter / Horizontal / Sh'mup");
+	if (BurnDrvGetGenreFlags() & GBF_VERSHOOT)			snprintf(genre, MAX_PATH, "Shooter / Vertical / Sh'mup");
+	if (BurnDrvGetGenreFlags() & GBF_SCRFIGHT)			snprintf(genre, MAX_PATH, "Fighting / Beat 'em Up");
+	if (BurnDrvGetGenreFlags() & GBF_VSFIGHT)			snprintf(genre, MAX_PATH, "Fighting / Versus");
+	if (BurnDrvGetGenreFlags() & GBF_BIOS)				snprintf(genre, MAX_PATH, "BIOS");
+	if (BurnDrvGetGenreFlags() & GBF_BREAKOUT)			snprintf(genre, MAX_PATH, "Breakout");
+	if (BurnDrvGetGenreFlags() & GBF_CASINO)			snprintf(genre, MAX_PATH, "Casino");
+	if (BurnDrvGetGenreFlags() & GBF_BALLPADDLE)		snprintf(genre, MAX_PATH, "Ball & Paddle");
+	if (BurnDrvGetGenreFlags() & GBF_MAZE)				snprintf(genre, MAX_PATH, "Maze");
+	if (BurnDrvGetGenreFlags() & GBF_MINIGAMES)			snprintf(genre, MAX_PATH, "Mini-Games");
+	if (BurnDrvGetGenreFlags() & GBF_PINBALL)			snprintf(genre, MAX_PATH, "Pinball");
+	if (BurnDrvGetGenreFlags() & GBF_PLATFORM)			snprintf(genre, MAX_PATH, "Platformer");
+	if (BurnDrvGetGenreFlags() & GBF_PUZZLE)			snprintf(genre, MAX_PATH, "Puzzle");
+	if (BurnDrvGetGenreFlags() & GBF_QUIZ)				snprintf(genre, MAX_PATH, "Quiz");
+	if (BurnDrvGetGenreFlags() & GBF_SPORTSMISC)		snprintf(genre, MAX_PATH, "Sports");
+	if (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL)	snprintf(genre, MAX_PATH, "Sports / Football");
+	if (BurnDrvGetGenreFlags() & GBF_MISC)				snprintf(genre, MAX_PATH, "Misc");
+	if (BurnDrvGetGenreFlags() & GBF_MAHJONG)			snprintf(genre, MAX_PATH, "Mahjong");
+	if (BurnDrvGetGenreFlags() & GBF_RACING)			snprintf(genre, MAX_PATH, "Racing");
+	if (BurnDrvGetGenreFlags() & GBF_SHOOT)				snprintf(genre, MAX_PATH, "Shooter");
+	if (BurnDrvGetGenreFlags() & GBF_ACTION)			snprintf(genre, MAX_PATH, "Run 'n Gun (Shooter)");
+	if (BurnDrvGetGenreFlags() & GBF_RUNGUN)			snprintf(genre, MAX_PATH, "Strategy");
+	if (BurnDrvGetGenreFlags() & GBF_STRATEGY)			snprintf(genre, MAX_PATH, "Action (Classic)");
+	if (BurnDrvGetGenreFlags() & GBF_RPG)				snprintf(genre, MAX_PATH, "RPG");
+	if (BurnDrvGetGenreFlags() & GBF_SIM)				snprintf(genre, MAX_PATH, "Simulator");
+}
+
 void gui_render()
 {
+	char newLine[MAX_PATH];
 
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
@@ -833,20 +863,24 @@ void gui_render()
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
 	}
 	
-		// Game List
+	// header
 	renderPanel(sdlRenderer, 0,  0, nVidGuiWidth, 28,  0x00, 0x00, 0x00);
 
 	// Game List
-	renderPanel(sdlRenderer, listoffsetY,  28, listwidthY, (thirdscreenheight*2)-28,  0x40, 0x20, 0x0b);
+	renderPanel(sdlRenderer, listoffsetY, 28, listwidthY, (thirdscreenheight*2)-28,  0x40, 0x20, 0x0b);
 
 	// Selected game background
 	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
+	
 	// game info
 	renderPanel(sdlRenderer,  0, nVidGuiHeight - 60, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 
 	incolor(fbn_color, /* unused */ 0);
-	inprint(sdlRenderer, "FinalBurn Neo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 10);
-	inprint(sdlRenderer, systemName, 10, 20);
+	inprint(sdlRenderer, "FBNeo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 5);
+	if (strlen(systemName) != 0) {
+		snprintf(newLine, MAX_PATH, "Active Filter: %s", systemName);
+		inprint(sdlRenderer, newLine, 10, 15);
+	}
 	incolor(normal_color, /* unused */ 0);
 	for (unsigned int i = startGame, game_counter = 0; game_counter < gamesperscreen; i++, game_counter++)
 	{
@@ -855,22 +889,45 @@ void gui_render()
 			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)
 			{
+				
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
+	
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = filterGames[i];
 				gameSelectedFromFilter = i;
 
 				incolor(info_color, /* unused */ 0);
-				char infoLine[512];
-				snprintf(infoLine, 512, "Year: %s - Manufacturer: %s - System: %s", BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_SYSTEM));
-				char romLine[512];
-				snprintf(romLine, 512, "Romset: %s - Parent: %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
+								
+				snprintf(newLine, MAX_PATH, "Game: %s",  BurnDrvGetTextA(DRV_FULLNAME));
+				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 60);
+				
+				if (!BurnDrvGetTextA(DRV_PARENT)) { 
+					snprintf(newLine, MAX_PATH, "Rom: %s", BurnDrvGetTextA(DRV_NAME));	
+				}else{
+					snprintf(newLine, MAX_PATH, "Rom: %s (Clone: %s)", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
+				}
+				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 50);
+				
+				if (BurnDrvGetMaxPlayers() == 1) {
+					snprintf(newLine, MAX_PATH, "Info: 1 Player");
+				}else{
+					snprintf(newLine, MAX_PATH, "Info: %d Players Max", BurnDrvGetMaxPlayers());
+				}
+				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 40);
 
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, nVidGuiHeight - 60);
-				inprint_shadowed(sdlRenderer, infoLine, listoffsetY, nVidGuiHeight - 50);
-				inprint_shadowed(sdlRenderer, romLine, listoffsetY, nVidGuiHeight - 40);
-				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_COMMENT), listoffsetY, nVidGuiHeight - 30);
+				snprintf(newLine, MAX_PATH, "Release: %s (%s, %s Hardware)", BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_SYSTEM));
+				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 30);
+				
+				getGenre();
+				snprintf(newLine, MAX_PATH, "Genre: %s", genre);
+				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 20);
+				
+				if (BurnDrvGetTextA(DRV_COMMENT)) {
+					snprintf(newLine, MAX_PATH, "Note: %s", BurnDrvGetTextA(DRV_COMMENT));
+					inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 10);
+				}
+				
 			}
 			else
 			{
@@ -902,6 +959,8 @@ int gui_process()
 
 	while (!quit)
 	{
+		starting_stick = SDL_GetTicks();
+		
 		//TODO: probably move this down inside the while (SDL_pollevent) bit...
 		SDL_GameControllerUpdate();
 		if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)<= -JOYSTICK_DEAD_ZONE)
@@ -1085,6 +1144,10 @@ int gui_process()
 		previousSelected = gametoplay;
 
 		gui_render();
+		
+		if ( ( 1000 / maxfps ) > SDL_GetTicks() - starting_stick) {
+			SDL_Delay( 1000 / maxfps - ( SDL_GetTicks() - starting_stick ) );
+		}
 	}
 	return -1;
 }

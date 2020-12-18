@@ -923,6 +923,25 @@ static struct BurnRomInfo TwinkleRomDesc[] = {
 STD_ROM_PICK(Twinkle)
 STD_ROM_FN(Twinkle)
 
+static struct BurnRomInfo TwinkleaRomDesc[] = {
+	{ "uh12.bin",      0x20000, 0x6cc6e53c, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12.bin",      0x20000, 0x79420382, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "ua4.bin",       0x80000, 0x6b64bb09, BRF_GRA },			 //  2	Sprites
+
+	{ "u1.bin",        0x10000, 0xe40481da, BRF_SND },			 //  3	Z80 Program Code
+
+	{ "uj15.bin",      0x40000, 0x0a534b37, BRF_SND },			 //  4	Samples
+
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+
+	{ "protdata.bin",  0x00200, 0x00d3e4b4, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Twinklea)
+STD_ROM_FN(Twinklea)
+
 static struct BurnRomInfo PzlbreakRomDesc[] = {
 	{ "4.uh12",        0x20000, 0xb3f04f80, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "5.ui12",        0x20000, 0x13c298a0, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -4146,10 +4165,20 @@ struct BurnDriver BurnDrvToppyrap = {
 
 struct BurnDriver BurnDrvTwinkle = {
 	"twinkle", NULL, NULL, NULL, "1997",
-	"Twinkle\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Twinkle (set 1)\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, TwinkleRomInfo, TwinkleRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
+	TwinkleInit, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTwinklea = {
+	"twinklea", "twinkle", NULL, NULL, "1997",
+	"Twinkle (set 2)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	NULL, TwinkleaRomInfo, TwinkleaRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
 	TwinkleInit, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

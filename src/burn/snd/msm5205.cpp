@@ -24,6 +24,8 @@
 
 #define MAX_MSM5205	2
 
+#define SCANLINE_TABLE_SIZE (256 * 8)
+
 static INT32 nNumChips = 0;
 
 struct _MSM5205_state
@@ -275,7 +277,7 @@ void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vc
 	stream[chip]		= (INT16*)BurnMalloc(nSoundLen * sizeof(INT16));
 
 	if (chip == 0)
-		scanline_table = (UINT8*)BurnMalloc(256 * 2); // just incase.
+		scanline_table = (UINT8*)BurnMalloc(SCANLINE_TABLE_SIZE);
 
 	ComputeTables (chip);
 	
@@ -415,6 +417,11 @@ void MSM5205NewFrame(INT32 chip, INT32 cpu_speed, INT32 interleave)
 	INT32 MSMCalcdInterleave = MSM5205CalcInterleave(chip, cpu_speed);
 	INT32 LastIdx = -1;
 	INT32 Idx = 0;
+
+	if (interleave >= SCANLINE_TABLE_SIZE) {
+		bprintf(PRINT_ERROR, _T("*** MSM5205 error: interleave too large (%d), increase SCANLINE_TABLE_SIZE!\n"), interleave);
+		return;
+	}
 
 	for (INT32 i = 0; i < interleave; i++)
 	{

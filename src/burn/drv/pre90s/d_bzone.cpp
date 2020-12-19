@@ -1037,7 +1037,7 @@ struct BurnDriver BurnDrvBzone = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 4, 3
+	580, 400, 580, 400
 };
 
 
@@ -1076,7 +1076,7 @@ struct BurnDriver BurnDrvBzonea = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 4, 3
+	580, 400, 580, 400
 };
 
 
@@ -1116,7 +1116,7 @@ struct BurnDriver BurnDrvBzonec = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 4, 3
+	580, 400, 580, 400
 };
 
 
@@ -1157,7 +1157,7 @@ struct BurnDriver BurnDrvBradley = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
 	BradleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 4, 3
+	580, 400, 580, 400
 };
 
 
@@ -1198,7 +1198,7 @@ struct BurnDriver BurnDrvRedbaron = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	520, 400, 4, 3
+	520, 400, 520, 400
 };
 
 static INT32 RedbaronaInit()
@@ -1246,5 +1246,5 @@ struct BurnDriver BurnDrvRedbarona = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	520, 400, 4, 3
+	520, 400, 520, 400
 };

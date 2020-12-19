@@ -1196,7 +1196,7 @@ struct BurnDriver BurnDrvStarwars = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwarsRomInfo, starwarsRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	500, 400, 5, 4
 };
 
 
@@ -1231,7 +1231,7 @@ struct BurnDriver BurnDrvStarwars1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwars1RomInfo, starwars1RomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	500, 400, 5, 4
 };
 
 
@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvStarwarso = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwarsoRomInfo, starwarsoRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	500, 400, 5, 4
 };
 
 
@@ -1347,7 +1347,7 @@ struct BurnDriver BurnDrvEsb = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, esbRomInfo, esbRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
 	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	500, 400, 5, 4
 };
 
 

@@ -157,7 +157,7 @@ static void __fastcall wrally_main_write_word(UINT32 address, UINT16 data)
 		case 0x108002:
 		case 0x108004:
 		case 0x108006:
-			*((UINT16*)(DrvVRegs + (address & 0x6))) = data;
+			*((UINT16*)(DrvVRegs + (address & 0x6))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x70000a:
@@ -265,18 +265,18 @@ static tilemap_callback( screen0 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x0000 + offs * 4);
 
-	INT32 flags = TILE_FLIPYX(ram[1] >> 6) | TILE_GROUP((ram[1] >> 5) & 1);
+	INT32 flags = TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 6) | TILE_GROUP((BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5) & 1);
 
-	flags |= DrvTransTab[transparent_select][ram[0]&0x3fff] ? TILE_SKIP : 0;
+	flags |= DrvTransTab[transparent_select][BURN_ENDIAN_SWAP_INT16(ram[0])&0x3fff] ? TILE_SKIP : 0;
 
-	TILE_SET_INFO(0, ram[0], ram[1] & 0x1f, flags);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[0]), BURN_ENDIAN_SWAP_INT16(ram[1]) & 0x1f, flags);
 }
 
 static tilemap_callback( screen1 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x2000 + offs * 4);
 
-	TILE_SET_INFO(0, ram[0], ram[1] & 0x1f, TILE_FLIPYX(ram[1] >> 6) | TILE_GROUP((ram[1] >> 5) & 1));
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[0]), BURN_ENDIAN_SWAP_INT16(ram[1]) & 0x1f, TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 6) | TILE_GROUP((BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5) & 1));
 }
 
 static INT32 DrvDoReset()
@@ -484,11 +484,11 @@ static void draw_sprites(INT32 priority)
 
 	for (INT32 i = 6/2; i < (0x1000 - 6)/2; i += 4)
 	{
-		INT32 sx = (m_spriteram[i+2] & 0x03ff) - 8;
-		INT32 sy = (240 - (m_spriteram[i] & 0x00ff)) & 0x00ff;
-		INT32 number = m_spriteram[i+3] & 0x3fff;
-		INT32 color = (m_spriteram[i+2] & 0x7c00) >> 10;
-		INT32 attr = (m_spriteram[i] & 0xfe00) >> 9;
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(m_spriteram[i+2]) & 0x03ff) - 8;
+		INT32 sy = (240 - (BURN_ENDIAN_SWAP_INT16(m_spriteram[i]) & 0x00ff)) & 0x00ff;
+		INT32 number = BURN_ENDIAN_SWAP_INT16(m_spriteram[i+3]) & 0x3fff;
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(m_spriteram[i+2]) & 0x7c00) >> 10;
+		INT32 attr = (BURN_ENDIAN_SWAP_INT16(m_spriteram[i]) & 0xfe00) >> 9;
 
 		INT32 xflip = attr & 0x20;
 		INT32 yflip = attr & 0x40;
@@ -550,17 +550,17 @@ static INT32 DrvDraw()
 	{
 		GenericTilemapSetFlip(TMAP_GLOBAL, TMAP_FLIPXY);
 
-		GenericTilemapSetScrollY(0, 248 - vregs[0]);
-		GenericTilemapSetScrollX(0, 1024 - vregs[1] - 4);
-		GenericTilemapSetScrollY(1, 248 - vregs[2]);
-		GenericTilemapSetScrollX(1, 1024 - vregs[3]);
+		GenericTilemapSetScrollY(0, 248 - BURN_ENDIAN_SWAP_INT16(vregs[0]));
+		GenericTilemapSetScrollX(0, 1024 - BURN_ENDIAN_SWAP_INT16(vregs[1]) - 4);
+		GenericTilemapSetScrollY(1, 248 - BURN_ENDIAN_SWAP_INT16(vregs[2]));
+		GenericTilemapSetScrollX(1, 1024 - BURN_ENDIAN_SWAP_INT16(vregs[3]));
 	}
 	else
 	{
-		GenericTilemapSetScrollY(0, vregs[0]);
-		GenericTilemapSetScrollX(0, vregs[1] + 4);
-		GenericTilemapSetScrollY(1, vregs[2]);
-		GenericTilemapSetScrollX(1, vregs[3]);
+		GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(vregs[0]));
+		GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(vregs[1]) + 4);
+		GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(vregs[2]));
+		GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(vregs[3]));
 	}
 
 	GenericTilemapDraw(1, pTransDraw, 0 | TMAP_FORCEOPAQUE);

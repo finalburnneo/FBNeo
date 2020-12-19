@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15820 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15821 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -12314,6 +12314,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfa2		|  	| Street Fighter Alpha 2 (960229 Euro)			| 		| 1996	| Capcom	| CPS2		| 					|
 | sfa2ur1	|  	| Street Fighter Alpha 2 (960306 USA)			| sfa2		| 1996	| Capcom	| CPS2		| 					|
 | sfa2u		|  	| Street Fighter Alpha 2 (960430 USA)			| sfa2		| 1996	| Capcom	| CPS2		| 					|
+| sfa2uhc	|  	| Street Fighter Alpha 2 - Unlock Hidden Characters (Hac| sfa2		| 2009	| Hack		| CPS2		| 					|
 | sfa3us	|  	| Street Fighter Alpha 3 (980616 USA, SAMPLE Version)	| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfa3b		|  	| Street Fighter Alpha 3 (980629 Brazil)		| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfa3hr1	|  	| Street Fighter Alpha 3 (980629 Hispanic)		| sfa3		| 1998	| Capcom	| CPS2		| 					|
@@ -14724,7 +14725,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_valkyr	|  	| Valkyr (Euro)						| 		| 1985	| Gremlin Graphi| MSX		| 					|
 | nes_valkynobouj|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)	| nes_valkynobou| 1986	| Namco		| Miscellaneous	| 					|
 | nes_valkynobou|  	| Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)	| 		| 1986	| Namco		| Miscellaneous	| 					|
-| valkyrie	|  	| Valkyrie No Densetsu (Japan)				| 		| 1989	| Namco		| System 2	| 					|
+| valkyrie	|  	| Valkyrie no Densetsu (Japan)				| 		| 1989	| Namco		| System 2	| 					|
+| pce_valkyrie	|  	| Valkyrie no Densetsu					| 		| 1990	| Namcot	| PC Engine	| 					|
 | spec_vallation|  	| Vallation (HB)					| 		| 2017	| Psytronik	| ZX Spectrum	| 					|
 | spec_valleyofrains|  	| Valley of Rains (128k)				| 		| 2019	| Zosya Entertai| ZX Spectrum	| 					|
 | valtric	|  	| Valtric						| 		| 1986	| NMK (Jaleco li| Miscellaneous	| 					|
@@ -14970,7 +14972,6 @@ This list contains all games supported by FinalBurn Neo.
 | wakuwak7	|  	| Waku Waku 7						| 		| 1996	| Sunsoft	| Neo Geo MVS	| 					|
 | ultracin	|  	| Waku Waku Ultraman Racing				| 		| 1996	| Sega		| System 16B	| Emulation not complete		|
 | fds_wakusatogai|  	| Wakusei Aton Gaiden (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| pce_valkyrie	|  	| Walkuere no Densetsu					| 		| 1990	| Namcot	| PC Engine	| 					|
 | nes_wall	|  	| Wall (HB, Demo)					| 		| 1999	| Chris Covell	| Miscellaneous	| 					|
 | wallc		|  	| Wall Crash (set 1)					| 		| 1984	| Midcoin	| Miscellaneous	| 					|
 | wallca	|  	| Wall Crash (set 2)					| wallc		| 1984	| Midcoin	| Miscellaneous	| 					|

@@ -2119,6 +2119,13 @@
 		<rom name="usa pro basketball (japan).pce" size="262144" crc="1cad4b7f"/>
 		<driver status="good"/>
 	</game>
+	<game name="valkyrie">
+		<description>Valkyrie no Densetsu</description>
+		<year>1990</year>
+		<manufacturer>Namcot</manufacturer>
+		<rom name="walkuere no densetsu (japan).pce" size="524288" crc="a3303978"/>
+		<driver status="good"/>
+	</game>
 	<game name="veigues">
 		<description>Veigues - Tactical Gladiator</description>
 		<year>1990</year>
@@ -2166,13 +2173,6 @@
 		<year>1989</year>
 		<manufacturer>Video System</manufacturer>
 		<rom name="wai wai mahjong - yukaina janyuu tachi (japan).pce" size="262144" crc="a2a0776e"/>
-		<driver status="good"/>
-	</game>
-	<game name="valkyrie">
-		<description>Walkuere no Densetsu</description>
-		<year>1990</year>
-		<manufacturer>Namcot</manufacturer>
-		<rom name="walkuere no densetsu (japan).pce" size="524288" crc="a3303978"/>
 		<driver status="good"/>
 	</game>
 	<game name="wallaby">

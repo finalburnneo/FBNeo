@@ -12502,6 +12502,7 @@ DRV		BurnDrvCpsSfaud;
 DRV		BurnDrvCpsSfa2;
 DRV		BurnDrvCpsSfa2ur1;
 DRV		BurnDrvCpsSfa2u;
+DRV		BurnDrvCpsSfa2uhc;
 DRV		BurnDrvCpsSfa3us;
 DRV		BurnDrvCpsSfa3b;
 DRV		BurnDrvCpsSfa3hr1;
@@ -14949,6 +14950,7 @@ DRV		BurnDrvMSX_valkyr;
 DRV		BurnDrvnes_valkynobouj;
 DRV		BurnDrvnes_valkynobou;
 DRV		BurnDrvValkyrie;
+DRV		BurnDrvpce_valkyrie;
 DRV		BurnSpecVallation;
 DRV		BurnSpecvalleyofrains;
 DRV		BurnDrvValtric;
@@ -15200,7 +15202,6 @@ DRV		BurnDrvwakuwak7bh;
 DRV		BurnDrvwakuwak7;
 DRV		BurnDrvUltracin;
 DRV		BurnDrvfds_wakusatogai;
-DRV		BurnDrvpce_valkyrie;
 DRV		BurnDrvnes_wall;
 DRV		BurnDrvWallc;
 DRV		BurnDrvWallca;
@@ -28585,6 +28586,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfa2,			// Street Fighter Alpha 2 (960229 Euro)
 	&BurnDrvCpsSfa2ur1,			// Street Fighter Alpha 2 (960306 USA)
 	&BurnDrvCpsSfa2u,			// Street Fighter Alpha 2 (960430 USA)
+	&BurnDrvCpsSfa2uhc,			// Street Fighter Alpha 2 - Unlock Hidden Characters (Hack By Yumeji)
 	&BurnDrvCpsSfa3us,			// Street Fighter Alpha 3 (980616 USA, SAMPLE Version)
 	&BurnDrvCpsSfa3b,			// Street Fighter Alpha 3 (980629 Brazil)
 	&BurnDrvCpsSfa3hr1,			// Street Fighter Alpha 3 (980629 Hispanic)
@@ -31031,7 +31033,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_valkyr,			// Valkyr (Euro)
 	&BurnDrvnes_valkynobouj,	// Valkyrie no Bouken - Toki no Kagi Densetsu (Japan)
 	&BurnDrvnes_valkynobou,		// Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)
-	&BurnDrvValkyrie,			// Valkyrie No Densetsu (Japan)
+	&BurnDrvValkyrie,			// Valkyrie no Densetsu (Japan)
+	&BurnDrvpce_valkyrie,		// Valkyrie no Densetsu
 	&BurnSpecVallation,			// Vallation (HB)
 	&BurnSpecvalleyofrains,		// Valley of Rains (128k)
 	&BurnDrvValtric,			// Valtric
@@ -31283,7 +31286,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvwakuwak7,			// Waku Waku 7
 	&BurnDrvUltracin,			// Waku Waku Ultraman Racing
 	&BurnDrvfds_wakusatogai,	// Wakusei Aton Gaiden (Japan)
-	&BurnDrvpce_valkyrie,		// Walkuere no Densetsu
 	&BurnDrvnes_wall,			// Wall (HB, Demo)
 	&BurnDrvWallc,				// Wall Crash (set 1)
 	&BurnDrvWallca,				// Wall Crash (set 2)

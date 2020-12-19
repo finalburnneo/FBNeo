@@ -199,10 +199,10 @@ else ifeq ($(platform), qnx)
 	USE_CYCLONE = 1
 
 # PS3
-else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
+else ifneq (,$(filter $(platform), psl1ght))
 	TARGET := $(TARGET_NAME)_libretro_ps3.a
 	ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
-	PLATFORM_DEFINES += -D__CELLOS_LV2__
+	PLATFORM_DEFINES += -D__PSL1GHT__
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 

@@ -35,7 +35,7 @@ typedef union {
 #define BURN_ENDIAN_SWAP_INT32(x)				(_byteswap_ulong(x))
 #define BURN_ENDIAN_SWAP_INT64(x)				(_byteswap_uint64(x))
 /* PlayStation3 */
-#elif defined(__CELLOS_LV2__)
+#elif defined(__PSL1GHT__)
 #include <ppu_intrinsics.h>
 #include <math.h>
 #define BURN_ENDIAN_SWAP_INT8(x)				(x^1)

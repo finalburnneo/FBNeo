@@ -6240,7 +6240,7 @@ STD_ROM_FN(pce_valkyrie)
 
 struct BurnDriver BurnDrvpce_valkyrie = {
 	"pce_valkyrie", NULL, NULL, NULL, "1990",
-	"Walkuere no Densetsu\0", NULL, "Namcot", "PC Engine",
+	"Valkyrie no Densetsu\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_valkyrieRomInfo, pce_valkyrieRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,

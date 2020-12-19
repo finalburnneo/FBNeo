@@ -3379,7 +3379,8 @@ static struct BurnDIPInfo MtwinsDIPList[]=
 	// Dip B
 	CPS1_DIFFICULTY_1(0x16)
 
-	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0   , 0xfe, 0   , 5   , "Lives (Reserve)"        },
+	{0x16, 0x01, 0x38, 0x00, "0"                      },
 	{0x16, 0x01, 0x38, 0x28, "1"                      },
 	{0x16, 0x01, 0x38, 0x20, "2"                      },
 	{0x16, 0x01, 0x38, 0x30, "3"                      },

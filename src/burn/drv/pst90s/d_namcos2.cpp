@@ -4637,9 +4637,11 @@ static INT32 ValkyrieInit()
 	return rc;
 }
 
+// Valkyrie no Densetsu, lowercase "no" in title is proper :)
+
 struct BurnDriver BurnDrvValkyrie = {
 	"valkyrie", NULL, NULL, NULL, "1989",
-	"Valkyrie No Densetsu (Japan)\0", NULL, "Namco", "System 2",
+	"Valkyrie no Densetsu (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, valkyrieRomInfo, valkyrieRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,

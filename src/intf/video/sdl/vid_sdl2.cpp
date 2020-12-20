@@ -184,14 +184,11 @@ static int Init()
 			Windowtitle,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			display_h,
 			display_w,
+			display_h,
 			screenFlags
 		);
 	}
-
-
-
 
 	// Check that the window was successfully created
 	if (sdlWindow == NULL)
@@ -249,6 +246,14 @@ static int Init()
 		SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
 	}
 
+	// Force to scale * 2
+	// TODO
+	int w;
+	int h;
+	SDL_GetWindowSize(sdlWindow, &w, &h);
+	SDL_SetWindowSize(sdlWindow, w*2, h*2);
+	SDL_SetWindowPosition(sdlWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	
 	inrenderer(sdlRenderer); //TODO: this is not supposed to be here
 	prepare_inline_font();   // TODO: BAD
 	incolor(0xFFF000, 0);

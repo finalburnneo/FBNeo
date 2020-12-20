@@ -26,10 +26,10 @@ static unsigned int gamesperscreen_halfway = 6;
 static unsigned int gametoplay = 0;
 static unsigned int halfscreenheight = 0;
 static unsigned int halfscreenwidth = 0;
-static unsigned int thirdscreenheight =0;
-static unsigned int thirdscreenwidth =0;
-static unsigned int listoffsetY =0;
-static unsigned int listwidthY =0;
+static unsigned int thirdscreenheight = 0;
+static unsigned int thirdscreenwidth = 0;
+static unsigned int listoffsetY = 0;
+static unsigned int listwidthY = 0;
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 SDL_GameController* gGameController = NULL;
@@ -38,7 +38,7 @@ static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
 static char* gameAv = NULL;
-static unsigned int *filterGames= NULL;
+static unsigned int *filterGames = NULL;
 static int filterGamesCount = 0;
 static bool bShowAvailableOnly = true;
 static bool bShowClones = true;
@@ -62,6 +62,13 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	snprintf(titlePath, MAX_PATH, "support\\titles\\%s.png", BurnDrvGetTextA(0));
 #endif
 	loadedTexture = IMG_LoadTexture(renderer, titlePath);
+	if (loadedTexture == NULL)
+	{
+		//miscImage = IMG_ReadXPMFromArray(misc_image);
+		//titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
+		//SDL_FreeSurface(miscImage);
+	}
+	
 	SDL_QueryTexture(loadedTexture, NULL, NULL, &w, &h);
 
 	title_texture_rect.x = 0; //the x coordinate
@@ -689,8 +696,10 @@ void RefreshRomList(bool force_rescan)
 
 void gui_exit()
 {
-	SDL_GameControllerClose( gGameController );
-	gGameController = NULL;
+	if (gGameController!=NULL) {
+		SDL_GameControllerClose( gGameController );
+		gGameController = NULL;
+	}
 
 	if (filterGames!=NULL)
 	{
@@ -699,10 +708,11 @@ void gui_exit()
 	}
 
 	kill_inline_font();
-	SDL_DestroyTexture(titleTexture);
+	if (titleTexture != NULL) {
+		SDL_DestroyTexture(titleTexture);
+	}
 	SDL_DestroyRenderer(sdlRenderer);
 	SDL_DestroyWindow(sdlWindow);
-	SDL_FreeSurface(miscImage);
 	free(gameAv);
 }
 
@@ -791,11 +801,6 @@ void gui_init()
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 	SDL_RenderSetLogicalSize(sdlRenderer, nVidGuiWidth, nVidGuiHeight);
 
-	miscImage = IMG_ReadXPMFromArray(misc_image);
-	if(!miscImage) {
-		printf("IMG_ReadXPMFromArray: %s\n", IMG_GetError());
-		// handle error
-	}
 	inrenderer(sdlRenderer);
 	prepare_inline_font();
 
@@ -956,9 +961,11 @@ int gui_process()
 	SDL_Event e;
 	bool quit = false;
 	static UINT32 previousSelected = -1;
-
-	snprintf(systemName, MAX_PATH, "Everything");
-	nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+	
+	if (strlen(systemName) != 0) {
+		snprintf(systemName, MAX_PATH, "Everything");
+		nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
+	}	
 	
 	while (!quit)
 	{
@@ -976,6 +983,7 @@ int gui_process()
 		}
 		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
 		{
+			previousSelected = -1;
 			nBurnDrvActive = gametoplay;
 
 			if (gameAv[nBurnDrvActive])
@@ -1017,6 +1025,7 @@ int gui_process()
 				switch (e.button.button)
 				{
 				case SDL_BUTTON_LEFT:
+					previousSelected = -1;
 					nBurnDrvActive = gametoplay;
 					if (gameAv[nBurnDrvActive])
 					{
@@ -1079,6 +1088,7 @@ int gui_process()
 					else 
 					{
 						nBurnDrvActive = gametoplay;
+						previousSelected = -1;
 						if (gameAv[nBurnDrvActive])
 						{
 							return gametoplay;
@@ -1122,26 +1132,10 @@ int gui_process()
 			startGame = filterGamesCount - gamesperscreen_halfway - 1;
 		}
 
-		if (previousSelected != gametoplay)
+		if (previousSelected != gametoplay || previousSelected == -1)
 		{
-			SDL_DestroyTexture(titleTexture);
+			if (titleTexture != NULL) SDL_DestroyTexture(titleTexture);
 			titleTexture = LoadTitleImage(sdlRenderer, titleTexture);
-			if (titleTexture==NULL)
-			{
-				// Commented out for now :)
-				// int w, h;
-				// titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
-				// SDL_QueryTexture(titleTexture, NULL, NULL, &w, &h);
-				// title_texture_rect.x = 0; //the x coordinate
-				// title_texture_rect.y = 0; // the y coordinate
-				// title_texture_rect.w = w; //the width of the texture
-				// title_texture_rect.h = h; //the height of the texture
-
-				// dest_title_texture_rect.x = 0; //the x coordinate
-				// dest_title_texture_rect.y = 0; // the y coordinate
-				// dest_title_texture_rect.w = nVidGuiWidth;
-				// dest_title_texture_rect.h = nVidGuiHeight;
-			}
 		}
 
 		previousSelected = gametoplay;

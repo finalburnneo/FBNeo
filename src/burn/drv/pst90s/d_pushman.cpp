@@ -623,7 +623,7 @@ static void draw_foreground()
 		sy -= 16;
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = (attr & 0xff) | ((attr & 0xc000) >> 6) | ((attr & 0x2000) >> 3);
 		INT32 color = (attr >> 8) & 0x0f;
 		INT32 flipy = (attr & 0x1000);
@@ -642,17 +642,17 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x0800-4; offs >= 0; offs -= 4)
 	{
-		INT32 x     = vram[offs + 3] & 0x1ff;
+		INT32 x     = BURN_ENDIAN_SWAP_INT16(vram[offs + 3]) & 0x1ff;
 		if (x == 0x180) continue;
 
 		if (x > 0xff) x=0-(0x200-x);
 
-		INT32 y     = 240-vram[offs + 2];
-		INT32 color = (vram[offs + 1] >> 2) & 0xf;
-		INT32 code  = vram[offs + 0] & 0x7ff;
+		INT32 y     = 240-BURN_ENDIAN_SWAP_INT16(vram[offs + 2]);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(vram[offs + 1]) >> 2) & 0xf;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) & 0x7ff;
 
-		INT32 flipx = vram[offs + 1] & 2;
-		INT32 flipy = vram[offs + 1] & 1;
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(vram[offs + 1]) & 2;
+		INT32 flipy = BURN_ENDIAN_SWAP_INT16(vram[offs + 1]) & 1;
 
 		if (*flipscreen)
 		{
@@ -686,9 +686,9 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *p = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0x200 / 2; i < 0x680 / 2; i++) {
-			r = (p[i] >> 8) & 0x0f;
-			g = (p[i] >> 4) & 0x0f;
-			b = (p[i] >> 0) & 0x0f;
+			r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0x0f;
+			g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0x0f;
+			b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 0) & 0x0f;
 
 			r |= r << 4;
 			g |= g << 4;

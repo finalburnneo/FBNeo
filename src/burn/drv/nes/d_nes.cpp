@@ -30592,10 +30592,10 @@ STD_ROM_PICK(nes_mortakom3)
 STD_ROM_FN(nes_mortakom3)
 
 struct BurnDriver BurnDrvnes_mortakom3 = {
-	"nes_mortakom3", NULL, NULL, NULL, "1989?",
+	"nes_mortakom3", "nes_mortakomiispe", NULL, NULL, "1989?",
 	"Mortal Kombat 3 - Special 56 Peoples (Unl)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mortakom3RomInfo, nes_mortakom3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30643,10 +30643,10 @@ STD_ROM_PICK(nes_mortakomiiispe)
 STD_ROM_FN(nes_mortakomiiispe)
 
 struct BurnDriver BurnDrvnes_mortakomiiispe = {
-	"nes_mortakomiiispe", NULL, NULL, NULL, "1989?",
+	"nes_mortakomiiispe", "nes_mortakomiispe", NULL, NULL, "1989?",
 	"Mortal Kombat III Special (Unl)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mortakomiiispeRomInfo, nes_mortakomiiispeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15821 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15824 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2919,6 +2919,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dai2jisuprotaj|  	| Dai-2-ji Super Robot Taisen (Japan)			| nes_dai2jisuprota| 1991	| Banpresto	| Miscellaneous	| 					|
 | nes_dai2jisuprota|  	| Dai-2-ji Super Robot Taisen (T-eng)			| 		| 1991	| Banpresto	| Miscellaneous	| 					|
 | pce_donaturl	|  	| Daichi Kun Crisis - Do Natural			| 		| 1989	| Salio		| PC Engine	| 					|
+| daikaiju	|  	| Daikaiju no Gyakushu					| 		| 1986	| Taito		| Miscellaneous	| 					|
 | md_daikokai	|  	| Daikoukai Jidai (Jpn)					| md_unchartd	| 1992	| Koei		| Sega Megadrive| 					|
 | md_daikok2	|  	| Daikoukai Jidai II (Jpn)				| md_newhoriz	| 1994	| Koei		| Sega Megadrive| 					|
 | nes_daikunogensan|  	| Daiku no Gen-san (Japan)				| 		| 1991	| Irem		| Miscellaneous	| 					|
@@ -6991,6 +6992,7 @@ This list contains all games supported by FinalBurn Neo.
 | landmakr	|  	| Land Maker (Ver 2.02O 1998/06/02)			| 		| 1998	| Taito Corporat| Taito F3 Syste| 					|
 | sms_landill	|  	| Land of Illusion Starring Mickey Mouse (Euro, Bra)	| 		| 1992	| Sega		| Sega Master Sy| 					|
 | gg_landill	|  	| Land of Illusion Starring Mickey Mouse (Euro, USA)	| 		| 1993	| Sega		| Sega Game Gear| 					|
+| lsasquad	|  	| Land Sea Air Squad / Riku Kai Kuu Saizensen		| 		| 1986	| Taito		| Miscellaneous	| 					|
 | md_landstlkg	|  	| Landstalker - Die Schatze von Konig Nolo (Ger)	| md_landstlk	| 1993	| Sega		| Sega Megadrive| 					|
 | md_landstlkj	|  	| Landstalker - Koutei no Zaihou (Jpn)			| md_landstlk	| 1992	| Sega		| Sega Megadrive| 					|
 | md_landstlkc	|  	| Landstalker - Koutei no Zaihou (T-Chi)		| md_landstlk	| 2007	| Sega		| Sega Megadrive| 					|
@@ -8252,7 +8254,7 @@ This list contains all games supported by FinalBurn Neo.
 | mk3r20	|  	| Mortal Kombat 3 (rev 2.0)				| mk3		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | mk3		|  	| Mortal Kombat 3 (rev 2.1)				| 		| 1994	| Midway	| MIDWAY Wolf-Un| 					|
 | md_mk3u	|  	| Mortal Kombat 3 (USA)					| md_mk3	| 1995	| Williams	| Sega Megadrive| Press A+C+Start for 4P mode.		|
-| nes_mortakom3	|  	| Mortal Kombat 3 - Special 56 Peoples (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mortakom3	|  	| Mortal Kombat 3 - Special 56 Peoples (Unl)		| nes_mortakomiispe| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_mk3m	|  	| Mortal Kombat 3 Mini (Hack)				| md_mk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | nes_mortalkombat4|  	| Mortal Kombat 4 (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_mk2	|  	| Mortal Kombat II (Euro, Bra)				| 		| 1994	| Acclaim Entert| Sega Master Sy| 					|
@@ -8275,7 +8277,7 @@ This list contains all games supported by FinalBurn Neo.
 | mk2p		|  	| Mortal Kombat II Plus (Beta 2, Hack)			| mk2		| 1993	| hack		| Midway T-Unit	| 					|
 | nes_mortakomiispe|  	| Mortal Kombat II Special (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | mk2ute	|  	| Mortal Kombat II Ultimate Tournament Edition (hack, V5| mk2		| 2014	| hack		| Midway T-Unit	| 					|
-| nes_mortakomiiispe|  	| Mortal Kombat III Special (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_mortakomiiispe|  	| Mortal Kombat III Special (Unl)			| nes_mortakomiispe| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_mkr	|  	| Mortal Kombat Revelations (Hack, Version 1.0)		| md_umk3t	| 2012	| SMOKE		| Sega Megadrive| 					|
 | mosaicf2	|  	| Mosaic (F2 System)					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | mosaica	|  	| Mosaic (Fuuki)					| mosaic	| 1990	| Space (Fuuki l| Miscellaneous	| 					|
@@ -12270,6 +12272,7 @@ This list contains all games supported by FinalBurn Neo.
 | stmblade	|  	| Storm Blade (US)					| 		| 1996	| Visco		| SSV		| 					|
 | spec_stormbringer|  	| Stormbringer						| 		| 1987	| Mastertronic	| ZX Spectrum	| 					|
 | spec_stormfinch|  	| Stormfinch (HB)					| 		| 2015	| Stonechat	| ZX Spectrum	| 					|
+| storming	|  	| Storming Party / Riku Kai Kuu Saizensen		| lsasquad	| 1986	| bootleg	| Miscellaneous	| 					|
 | spec_stormlor128|  	| Stormlord (128K)					| 		| 1989	| Hewson Consult| ZX Spectrum	| 					|
 | md_strmlords	|  	| Stormlord (Hack, Spanish)				| md_strmlord	| 2020	| Razorsoft	| Sega Megadrive| 					|
 | md_strmlordj	|  	| Stormlord (Jpn)					| md_strmlord	| 1990	| Micro World	| Sega Megadrive| 					|

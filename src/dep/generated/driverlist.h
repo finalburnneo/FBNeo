@@ -2959,6 +2959,7 @@ DRV		BurnDrvMSX_dskeiba;
 DRV		BurnDrvnes_dai2jisuprotaj;
 DRV		BurnDrvnes_dai2jisuprota;
 DRV		BurnDrvpce_donaturl;
+DRV		BurnDrvDaikaiju;
 DRV		BurnDrvmd_daikokai;
 DRV		BurnDrvmd_daikok2;
 DRV		BurnDrvnes_daikunogensan;
@@ -7101,6 +7102,7 @@ DRV		BurnDrvLandmakrp;
 DRV		BurnDrvLandmakr;
 DRV		BurnDrvsms_landill;
 DRV		BurnDrvgg_landill;
+DRV		BurnDrvLsasquad;
 DRV		BurnDrvmd_landstlkg;
 DRV		BurnDrvmd_landstlkj;
 DRV		BurnDrvmd_landstlkc;
@@ -12458,6 +12460,7 @@ DRV		BurnDrvStmbladej;
 DRV		BurnDrvStmblade;
 DRV		BurnSpecstormbringer;
 DRV		BurnSpecStormfinch;
+DRV		BurnDrvStorming;
 DRV		BurnSpecstormlor128;
 DRV		BurnDrvmd_strmlords;
 DRV		BurnDrvmd_strmlordj;
@@ -19043,6 +19046,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dai2jisuprotaj,	// Dai-2-ji Super Robot Taisen (Japan)
 	&BurnDrvnes_dai2jisuprota,	// Dai-2-ji Super Robot Taisen (T-eng)
 	&BurnDrvpce_donaturl,		// Daichi Kun Crisis - Do Natural
+	&BurnDrvDaikaiju,			// Daikaiju no Gyakushu
 	&BurnDrvmd_daikokai,		// Daikoukai Jidai (Jpn)
 	&BurnDrvmd_daikok2,			// Daikoukai Jidai II (Jpn)
 	&BurnDrvnes_daikunogensan,	// Daiku no Gen-san (Japan)
@@ -23185,6 +23189,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLandmakr,			// Land Maker (Ver 2.02O 1998/06/02)
 	&BurnDrvsms_landill,		// Land of Illusion Starring Mickey Mouse (Euro, Bra)
 	&BurnDrvgg_landill,			// Land of Illusion Starring Mickey Mouse (Euro, USA)
+	&BurnDrvLsasquad,			// Land Sea Air Squad / Riku Kai Kuu Saizensen
 	&BurnDrvmd_landstlkg,		// Landstalker - Die Schatze von Konig Nolo (Ger)
 	&BurnDrvmd_landstlkj,		// Landstalker - Koutei no Zaihou (Jpn)
 	&BurnDrvmd_landstlkc,		// Landstalker - Koutei no Zaihou (T-Chi)
@@ -28542,6 +28547,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStmblade,			// Storm Blade (US)
 	&BurnSpecstormbringer,		// Stormbringer
 	&BurnSpecStormfinch,		// Stormfinch (HB)
+	&BurnDrvStorming,			// Storming Party / Riku Kai Kuu Saizensen
 	&BurnSpecstormlor128,		// Stormlord (128K)
 	&BurnDrvmd_strmlords,		// Stormlord (Hack, Spanish)
 	&BurnDrvmd_strmlordj,		// Stormlord (Jpn)

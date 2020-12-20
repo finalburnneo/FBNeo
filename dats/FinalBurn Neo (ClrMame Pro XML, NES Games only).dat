@@ -6900,7 +6900,7 @@
 		<rom name="Moon Ranger (USA) (Unl).nes" size="131088" crc="22172117"/>
 		<driver status="good"/>
 	</game>
-	<game name="mortakom3">
+	<game name="mortakom3" cloneof="mortakomiispe" romof="mortakomiispe">
 		<description>Mortal Kombat 3 - Special 56 Peoples (Unl)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -6921,7 +6921,7 @@
 		<rom name="Mortal Kombat II Special (Unl).nes" size="655376" crc="99d81100"/>
 		<driver status="good"/>
 	</game>
-	<game name="mortakomiiispe">
+	<game name="mortakomiiispe" cloneof="mortakomiispe" romof="mortakomiispe">
 		<description>Mortal Kombat III Special (Unl)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>

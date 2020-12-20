@@ -552,7 +552,7 @@ struct BurnDriver BurnDrvOmegrace = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 800, 1, 1
 };
 
 
@@ -581,7 +581,7 @@ struct BurnDriver BurnDrvOmegrace2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, omegrace2RomInfo, omegrace2RomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 800, 1, 1
 };
 
 
@@ -610,5 +610,5 @@ struct BurnDriver BurnDrvDeltrace = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 800, 1, 1
 };

@@ -5237,6 +5237,7 @@ DRV		BurnDrvGteikoku;
 DRV		BurnDrvcv_ggarden;
 DRV		BurnDrvsg1k_girlgard;
 DRV		BurnDrvsg1k_girlgardt;
+DRV		BurnDrvGladiatr;
 DRV		BurnDrvSgladiat;
 DRV		BurnDrvMSX_glass;
 DRV		BurnDrvGlass10;
@@ -6997,7 +6998,6 @@ DRV		BurnDrvKozure;
 DRV		BurnSpeckraal;
 DRV		BurnDrvMSX_krakout;
 DRV		BurnDrvcv_krtetris;
-DRV		BurnDrvcv_ktetris;
 DRV		BurnDrvMSX_ktetrisv2;
 //		BurnDrvKram3;			// no comment [NOT WORKING]
 DRV		BurnDrvKram;
@@ -21321,6 +21321,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_ggarden,			// Girl's Garden (HB)
 	&BurnDrvsg1k_girlgard,		// Girl's Garden (Jpn)
 	&BurnDrvsg1k_girlgardt,		// Girl's Garden (Tw)
+	&BurnDrvGladiatr,			// Gladiator (US)
 	&BurnDrvSgladiat,			// Gladiator 1984
 	&BurnDrvMSX_glass,			// Glass (Spa)
 	&BurnDrvGlass10,			// Glass (Ver 1.0, Break Edition) (set 1)
@@ -23081,7 +23082,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpeckraal,				// Kraal (48K)
 	&BurnDrvMSX_krakout,		// Krakout (Euro)
 	&BurnDrvcv_krtetris,		// Kralizec Tetris (HB)
-	&BurnDrvcv_ktetris,			// Kralizec Tetris (HB)
 	&BurnDrvMSX_ktetrisv2,		// Kralizec Tetris v2 (HB)
 //	&BurnDrvKram3,				// Kram (encrypted) [no comment, NOT WORKING]
 	&BurnDrvKram,				// Kram (set 1)

@@ -5159,6 +5159,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_ggarden	|  	| Girl's Garden (HB)					| 		| 2010	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | sg1k_girlgard	|  	| Girl's Garden (Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | sg1k_girlgardt|  	| Girl's Garden (Tw)					| sg1k_girlgard	| 1984?	| Aaronix	| Sega SG-1000	| 					|
+| gladiatr	|  	| Gladiator (US)					| 		| 1986	| Allumer / Tait| Miscellaneous	| 					|
 | sgladiat	|  	| Gladiator 1984					| 		| 1984	| SNK		| Miscellaneous	| 					|
 | msx_glass	|  	| Glass (Spa)						| 		| 1985	| Quicksilva	| MSX		| 					|
 | glass10	|  	| Glass (Ver 1.0, Break Edition) (set 1)		| glass		| 1993	| OMK / Gaelco	| Miscellaneous	| 					|
@@ -6887,7 +6888,6 @@ This list contains all games supported by FinalBurn Neo.
 | spec_kraal	|  	| Kraal (48K)						| 		| 1990	| Hewson Consult| ZX Spectrum	| Use Keyboard				|
 | msx_krakout	|  	| Krakout (Euro)					| 		| 1987	| Gremlin Graphi| MSX		| 					|
 | cv_krtetris	|  	| Kralizec Tetris (HB)					| 		| 2017	| Kralizec	| ColecoVision	| Published by Team Pixelboy		|
-| cv_ktetris	|  	| Kralizec Tetris (HB)					| 		| 2016	| Team Pixelboy	| ColecoVision	| 					|
 | msx_ktetrisv2	|  	| Kralizec Tetris v2 (HB)				| 		| 2005	| Kralizec	| MSX		| 					|
 | kram3		| X NW	| Kram (encrypted)					| kram		| 1982	| Taito America | Miscellaneous	| 					|
 | kram		|  	| Kram (set 1)						| 		| 1982	| Taito America | Miscellaneous	| 					|

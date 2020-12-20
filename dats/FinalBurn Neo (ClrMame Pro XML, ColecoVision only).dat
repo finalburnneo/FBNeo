@@ -1566,17 +1566,6 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
-	<game name="ktetris" romof="coleco">
-		<description>Kralizec Tetris (HB) [Homebrew]</description>
-		<year>2016</year>
-		<manufacturer>Team Pixelboy</manufacturer>
-		<rom name="kralizec-tetris-2016.rom" size="32768" crc="e8a91349"/>
-		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
-		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
-		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
-		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
-		<driver status="good"/>
-	</game>
 	<game name="kungfumstr" romof="coleco">
 		<description>Kung-Fu Master (HB) [Homebrew]</description>
 		<year>2016</year>

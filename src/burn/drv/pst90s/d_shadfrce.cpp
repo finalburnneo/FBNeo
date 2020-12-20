@@ -142,7 +142,7 @@ STDDIPINFO(shadfrce)
 
 inline static void CalcCol(INT32 idx)
 {
-	UINT16 nColour = RamPal[idx];
+	UINT16 nColour = BURN_ENDIAN_SWAP_INT16(RamPal[idx]);
 	INT32 r = (nColour & 0x001F) << 3; r |= r >> 5;	// Red
 	INT32 g = (nColour & 0x03E0) >> 2; g |= g >> 5;	// Green
 	INT32 b = (nColour & 0x7C00) >> 7; b |= b >> 5;	// Blue
@@ -332,7 +332,7 @@ static void __fastcall shadfrceWriteWordPalette(UINT32 sekAddress, UINT16 wordVa
 {
 	sekAddress &= 0x7FFF;
 	sekAddress >>= 1;
-	RamPal[sekAddress] = wordValue;
+	RamPal[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	CalcCol(sekAddress);
 }
 
@@ -486,25 +486,25 @@ static INT32 DrvGfxDecode()
 
 static tilemap_callback( background0 )
 {
-	INT32 attr = RamBg00[offs * 2 + 0];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(RamBg00[offs * 2 + 0]);
 	INT32 color = (attr & 0x1f);
 	if (color & 0x10) color ^= 0x30;
 
-	TILE_SET_INFO(1, RamBg00[offs * 2 + 1] & 0x3fff, color, TILE_FLIPYX((attr >> 6) & 3));
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(RamBg00[offs * 2 + 1]) & 0x3fff, color, TILE_FLIPYX((attr >> 6) & 3));
 }
 
 static tilemap_callback( background1 )
 {
-	INT32 attr = RamBg01[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(RamBg01[offs]);
 
 	TILE_SET_INFO(1, attr & 0xfff, (attr >> 12) + 0x40, 0);
 }
 
 static tilemap_callback( foreground )
 {
-	INT32 attr = RamFg[offs * 2 + 1] & 0xff;
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(RamFg[offs * 2 + 1]) & 0xff;
 
-	TILE_SET_INFO(0, (RamFg[offs * 2] & 0xff) + (attr << 8), attr >> 4, 0);
+	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(RamFg[offs * 2]) & 0xff) + (attr << 8), attr >> 4, 0);
 }
 
 static INT32 shadfrceInit()
@@ -615,15 +615,15 @@ static void drawSprites()
 
 	while (source>=finish)
 	{
-		INT32 ypos = 0x100 - (((source[0] & 0x0003) << 8) | (source[1] & 0x00ff));
-		INT32 xpos = (((source[4] & 0x0001) << 8) | (source[5] & 0x00ff)) + 1;
-		INT32 tile = ((source[2] & 0x00ff) << 8) | (source[3] & 0x00ff);
-		INT32 height = ((source[0] & 0x00e0) >> 5) + 1;
-		INT32 enable = ((source[0] & 0x0004));
-		INT32 flipx = ((source[0] & 0x0010) >> 4);
-		INT32 flipy = ((source[0] & 0x0008) >> 3);
-		INT32 color = ((source[4] & 0x003e));
-		INT32 pri_mask = (source[4] & 0x0040) ? 0x02 : 0x00;
+		INT32 ypos = 0x100 - (((BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0003) << 8) | (BURN_ENDIAN_SWAP_INT16(source[1]) & 0x00ff));
+		INT32 xpos = (((BURN_ENDIAN_SWAP_INT16(source[4]) & 0x0001) << 8) | (BURN_ENDIAN_SWAP_INT16(source[5]) & 0x00ff)) + 1;
+		INT32 tile = ((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x00ff) << 8) | (BURN_ENDIAN_SWAP_INT16(source[3]) & 0x00ff);
+		INT32 height = ((BURN_ENDIAN_SWAP_INT16(source[0]) & 0x00e0) >> 5) + 1;
+		INT32 enable = ((BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0004));
+		INT32 flipx = ((BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0010) >> 4);
+		INT32 flipy = ((BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0008) >> 3);
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(source[4]) & 0x003e));
+		INT32 pri_mask = (BURN_ENDIAN_SWAP_INT16(source[4]) & 0x0040) ? 0x02 : 0x00;
 
 		if (color & 0x20) color ^= 0x60;	// skip hole
 		color <<= 5;

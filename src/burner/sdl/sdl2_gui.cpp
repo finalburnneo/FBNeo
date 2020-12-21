@@ -171,6 +171,7 @@ static bool CheckIfSystem(INT32 gameTocheck)
 				case HARDWARE_SEGA_OUTRUN:
 				case HARDWARE_SEGA_SYSTEM1:
 				case HARDWARE_SEGA_MISC:
+				case HARDWARE_SEGA_SYSTEM24:
 					bRet = true;
 					break;
 			}
@@ -286,7 +287,7 @@ static void DoFilterGames()
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			nBurnDrvActive = i;
-			if (gameAv[i] && CheckIfSystem(i))
+			if (gameAv[i] && CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
 			{
 				if(bShowClones)
 				{
@@ -306,7 +307,7 @@ static void DoFilterGames()
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			nBurnDrvActive = i;
-			if (gameAv[i] && CheckIfSystem(i))
+			if (gameAv[i] && CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
 			{
 				if(bShowClones)
 				{
@@ -330,7 +331,7 @@ static void DoFilterGames()
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
 		{
 			nBurnDrvActive = i;
-			if (CheckIfSystem(i))
+			if (CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
 			{
 				if(bShowClones)
 				{
@@ -883,7 +884,7 @@ void gui_render()
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FBNeo * F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F12 - Quit *", 10, 5);
 	if (strlen(systemName) != 0) {
-		snprintf(newLine, MAX_PATH, "Active Filter: %s - Showing : %d of %d", systemName, filterGamesCount, (nBurnDrvCount - REDUCE_TOTAL_SETS_BIOS));
+		snprintf(newLine, MAX_PATH, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount + 1 - REDUCE_TOTAL_SETS_BIOS));
 		inprint(sdlRenderer, newLine, 10, 15);
 	}
 	incolor(normal_color, /* unused */ 0);

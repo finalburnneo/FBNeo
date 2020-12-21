@@ -475,7 +475,22 @@ int RunMessageLoop()
 						bscreenshot = 1;
 					}
 					break;
-	
+				case SDLK_KP_MINUS: // volumme -
+					nAudVolume -= 500;
+					if (nAudVolume < 0) {
+						nAudVolume = 0;
+					}
+					if (AudSoundSetVolume() == 0) {
+					}
+					break;
+				case SDLK_KP_PLUS: // volume -+
+					nAudVolume += 500;
+					if (nAudVolume > 10000) {
+						nAudVolume = 10000;
+					}
+					if (AudSoundSetVolume() == 0) {
+					}
+					break;
 				default:
 					break;
 				}

@@ -91,10 +91,12 @@ The above will give you a nicely scalend game screen and the menu for launching 
 
 ## In-game controls
 
-'tab' - brings up the in game menu
+'TAB' - brings up the in game menu (or game PAUSE)
 'F12' - quit game.
 'F1' - fast forward game.
 'F11' - show FPS counter
+'F6' - Screenshot
+'ALT-ENTER' - Switch window/fullscreen
 
 ## SDL2 in menu controls
 
@@ -103,3 +105,4 @@ The above will give you a nicely scalend game screen and the menu for launching 
 'F3' - Swap current system
 'F12' - quit menu. This will return you to the game select menu if run with '-menu'. Press 'f12' again to quit 
 'q'/'w' - Skip to next letter
+'ALT-ENTER' - Switch window/fullscreen

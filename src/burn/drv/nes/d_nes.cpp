@@ -13453,6 +13453,25 @@ struct BurnDriver BurnDrvnes_triforceg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// wanpakuduck (T-Chi)
+// Translation by Advance Team - Ju Jue Rong Hua & Shao Nian Bu Zhi Chou
+static struct BurnRomInfo nes_wanpakuduckRomDesc[] = {
+	{ "Wanpaku Duck Yume Bouken (T-Chi).nes",          196624, 0x9fe55e12, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wanpakuduck)
+STD_ROM_FN(nes_wanpakuduck)
+
+struct BurnDriver BurnDrvnes_wanpakuduck = {
+	"nes_wanpakuduck", "nes_ducktales", NULL, NULL, "2020",
+	"Wanpaku Duck Yume Bouken (T-Chi)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_wanpakuduckRomInfo, nes_wanpakuduckRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -20633,6 +20652,23 @@ struct BurnDriver BurnDrvnes_destiear = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_destiearRomInfo, nes_destiearRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_destianempRomDesc[] = {
+	{ "Destiny of an Emperor (USA).nes",          262160, 0xc0f73d85, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_destianemp)
+STD_ROM_FN(nes_destianemp)
+
+struct BurnDriver BurnDrvnes_destianemp = {
+	"nes_destianemp", NULL, NULL, NULL, "1990",
+	"Destiny of an Emperor (USA)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_destianempRomInfo, nes_destianempRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30556,10 +30592,10 @@ STD_ROM_PICK(nes_mortakom3)
 STD_ROM_FN(nes_mortakom3)
 
 struct BurnDriver BurnDrvnes_mortakom3 = {
-	"nes_mortakom3", NULL, NULL, NULL, "1989?",
+	"nes_mortakom3", "nes_mortakomiispe", NULL, NULL, "1989?",
 	"Mortal Kombat 3 - Special 56 Peoples (Unl)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mortakom3RomInfo, nes_mortakom3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30607,10 +30643,10 @@ STD_ROM_PICK(nes_mortakomiiispe)
 STD_ROM_FN(nes_mortakomiiispe)
 
 struct BurnDriver BurnDrvnes_mortakomiiispe = {
-	"nes_mortakomiiispe", NULL, NULL, NULL, "1989?",
+	"nes_mortakomiiispe", "nes_mortakomiispe", NULL, NULL, "1989?",
 	"Mortal Kombat III Special (Unl)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mortakomiiispeRomInfo, nes_mortakomiiispeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -37225,6 +37261,57 @@ struct BurnDriver BurnDrvnes_tekken3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_tekken3RomInfo, nes_tekken3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchiwokurauRomDesc[] = {
+	{ "Tenchi wo Kurau (Japan).nes",          262160, 0xf14e7fc1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchiwokurau)
+STD_ROM_FN(nes_tenchiwokurau)
+
+struct BurnDriver BurnDrvnes_tenchiwokurau = {
+	"nes_tenchiwokurau", "nes_destianemp", NULL, NULL, "1989",
+	"Tenchi wo Kurau (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchiwokurauRomInfo, nes_tenchiwokurauRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchwokuriijRomDesc[] = {
+	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (Japan).nes",          524304, 0x052519a2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchwokuriij)
+STD_ROM_FN(nes_tenchwokuriij)
+
+struct BurnDriver BurnDrvnes_tenchwokuriij = {
+	"nes_tenchwokuriij", "nes_tenchwokurii", NULL, NULL, "1991",
+	"Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchwokuriijRomInfo, nes_tenchwokuriijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenchwokuriiRomDesc[] = {
+	{ "Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng).nes",          524304, 0x6dcfda9e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenchwokurii)
+STD_ROM_FN(nes_tenchwokurii)
+
+struct BurnDriver BurnDrvnes_tenchwokurii = {
+	"nes_tenchwokurii", NULL, NULL, NULL, "1991",
+	"Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_tenchwokuriiRomInfo, nes_tenchwokuriiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

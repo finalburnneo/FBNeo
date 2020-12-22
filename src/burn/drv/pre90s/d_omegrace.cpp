@@ -245,15 +245,15 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale(1080, 1080);
+			vector_rescale((1080*800/600), 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Height != 800) {
-			vector_rescale(800, 800);
+		if (Height != 600) {
+			vector_rescale(800, 600);
 			return 1;
 		}
 	}
@@ -552,7 +552,7 @@ struct BurnDriver BurnDrvOmegrace = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -581,7 +581,7 @@ struct BurnDriver BurnDrvOmegrace2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, omegrace2RomInfo, omegrace2RomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 600, 4, 3
 };
 
 
@@ -610,5 +610,5 @@ struct BurnDriver BurnDrvDeltrace = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	800, 800, 4, 3
+	800, 600, 4, 3
 };

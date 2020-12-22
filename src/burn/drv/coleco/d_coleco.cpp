@@ -5619,25 +5619,6 @@ struct BurnDriver BurnDrvcv_jeepcrep = {
 	272, 228, 4, 3
 };
 
-// Kralizec Tetris (HB)
-
-static struct BurnRomInfo cv_ktetrisRomDesc[] = {
-	{ "kralizec-tetris-2016.rom",	0x08000, 0xe8a91349, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_ktetris, cv_ktetris, cv_coleco)
-STD_ROM_FN(cv_ktetris)
-
-struct BurnDriver BurnDrvcv_ktetris = {
-	"cv_ktetris", NULL, "cv_coleco", NULL, "2016",
-	"Kralizec Tetris (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
-	CVGetZipName, cv_ktetrisRomInfo, cv_ktetrisRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	272, 228, 4, 3
-};
-
 // Shmup! (HB)
 
 static struct BurnRomInfo cv_shmupRomDesc[] = {

@@ -151,7 +151,7 @@ STDDIPINFO(Sandscrp)
 
 static inline void palette_update(UINT16 offset)
 {
-	INT32 p = *((UINT16*)(DrvPalRAM + offset));
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >>  5) & 0x1f;
 	INT32 g = (p >> 10) & 0x1f;
@@ -356,7 +356,7 @@ static void __fastcall sandscrp_pandora_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall sandscrp_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	palette_update(address & 0xffe);
 }
 

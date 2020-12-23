@@ -752,7 +752,8 @@ void RefreshRomList(bool force_rescan)
 			SDL_RenderClear(sdlRenderer);
 
 			// draw a progress bar
-			fillRect = { 0, 80, (int)(((i * 100) / nBurnDrvCount) * screenpercentage) , 70 };
+			float x = (i * 100) / nBurnDrvCount;
+			fillRect = { 0, 80, (int)(x * screenpercentage), 70 };
 
 			SDL_SetRenderDrawColor(sdlRenderer, 0, 0xb3, 0x3b, 0xFF);
 			SDL_RenderFillRect(sdlRenderer, &fillRect);
@@ -763,6 +764,12 @@ void RefreshRomList(bool force_rescan)
 
 			inprint(sdlRenderer, "Scanning for ROM:", 10, 40);
 			inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 50);
+			
+			incolor(unavailable_color, /* unused */ 0);
+			char newLine[MAX_PATH];
+			snprintf(newLine, MAX_PATH, "%d%", (int)(x));
+			inprint(sdlRenderer, newLine, (int)((x * screenpercentage) - 30), 110);
+			// TODO : Progress %
 			
 			SDL_RenderPresent(sdlRenderer);
 			SDL_PollEvent(&e); // poll some events so OS doesn't think it's crashed

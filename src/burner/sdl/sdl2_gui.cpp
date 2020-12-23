@@ -752,7 +752,7 @@ void RefreshRomList(bool force_rescan)
 			SDL_RenderClear(sdlRenderer);
 
 			// draw a progress bar
-			fillRect = { 0, 70, (int)(((i * 100) / nBurnDrvCount) * screenpercentage) , 70 };
+			fillRect = { 0, 80, (int)(((i * 100) / nBurnDrvCount) * screenpercentage) , 70 };
 
 			SDL_SetRenderDrawColor(sdlRenderer, 0, 0xb3, 0x3b, 0xFF);
 			SDL_RenderFillRect(sdlRenderer, &fillRect);
@@ -761,8 +761,9 @@ void RefreshRomList(bool force_rescan)
 			inprint(sdlRenderer, "FinalBurn Neo", 10, 10);
 			inprint(sdlRenderer, "=============", 10, 20);
 
-			inprint(sdlRenderer, "Scanning for ROM:", 10, 30);
-			inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 40);
+			inprint(sdlRenderer, "Scanning for ROM:", 10, 40);
+			inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 50);
+			
 			SDL_RenderPresent(sdlRenderer);
 			SDL_PollEvent(&e); // poll some events so OS doesn't think it's crashed
 		}

@@ -558,8 +558,10 @@
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_galastrm.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_gladiatr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_lsasquad.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
@@ -569,6 +571,7 @@
     <ClCompile Include="..\..\src\burn\snd\t6w28.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
+    <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -1353,7 +1356,6 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\cpu\hd6309_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\i8039\i8039.cpp" />
     <ClCompile Include="..\..\src\cpu\i8051\mcs51.cpp" />
-    <ClCompile Include="..\..\src\cpu\i8x41\i8x41.cpp" />
     <ClCompile Include="..\..\src\cpu\konami\konami.cpp" />
     <ClCompile Include="..\..\src\cpu\konami_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\m6502\m6502.cpp" />

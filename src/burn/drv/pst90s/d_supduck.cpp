@@ -256,7 +256,7 @@ static tilemap_scan( supduck )
 
 static tilemap_callback( text )
 {
-	UINT16 attr = *((UINT16*)(DrvTxtRAM + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTxtRAM + offs * 2)));
 	UINT16 code = (attr & 0xff) | ((attr & 0xc000) >> 6) | ((attr & 0x2000) >> 3);
 
 	TILE_SET_INFO(0, code, (attr >> 8) & 0xf, TILE_FLIPXY((attr >> 12) & 1));
@@ -264,7 +264,7 @@ static tilemap_callback( text )
 
 static tilemap_callback( fore )
 {
-	UINT16 attr = *((UINT16*)(DrvForRAM + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvForRAM + offs * 2)));
 	UINT16 code = (attr & 0xff) | ((attr & 0xc000) >> 6);
 
 	TILE_SET_INFO(1, code, (attr >> 8) & 0xf, TILE_FLIPXY(attr >> 12));
@@ -272,7 +272,7 @@ static tilemap_callback( fore )
 
 static tilemap_callback( back )
 {
-	UINT16 attr = *((UINT16*)(DrvBakRAM + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBakRAM + offs * 2)));
 	UINT16 code = (attr & 0xff) | ((attr & 0xc000) >> 6);
 
 	TILE_SET_INFO(2, code, (attr >> 8) & 0xf, TILE_FLIPXY(attr >> 12));
@@ -469,7 +469,7 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x800/2; i++)
 	{
-		UINT16 p = ram[i];
+		UINT16 p = BURN_ENDIAN_SWAP_INT16(ram[i]);
 
 		UINT8 r = (p >>  8) & 0xf;
 		UINT8 g = (p >>  4) & 0xf;
@@ -493,10 +493,10 @@ static void draw_sprites()
 
 	for (INT32 i = 0x1000 - 4; i >= 0; i -= 4)
 	{
-		INT32 code = ram[i + 0];
-		INT32 attr = ram[i + 1];
-		INT32 sy   = ram[i + 2] & 0x1ff;
-		INT32 sx   = ram[i + 3] & 0x1ff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(ram[i + 0]);
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[i + 1]);
+		INT32 sy   = BURN_ENDIAN_SWAP_INT16(ram[i + 2]) & 0x1ff;
+		INT32 sx   = BURN_ENDIAN_SWAP_INT16(ram[i + 3]) & 0x1ff;
 
 		INT32 flipx = attr & 0x02;
 		INT32 flipy = attr & 0x01;

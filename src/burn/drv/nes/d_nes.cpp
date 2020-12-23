@@ -2839,7 +2839,7 @@ static UINT8 mmc5_expram[1024];
 #define mmc5_prgprot1		(mapper_regs[0x2])
 #define mmc5_prgprot2		(mapper_regs[0x3])
 #define mmc5_expram_mode	(mapper_regs[0x4])
-#define mmc5_mirror(x)		(mapper_regs[0x18 + (x)])
+#define mmc5_mirror(x)		(mapper_regs[0x1b + (x)])
 #define mmc5_filltile		(mapper_regs[0x5])
 #define mmc5_fillcolor		(mapper_regs[0x6])
 #define mmc5_prgexp			(mapper_regs[0x7])
@@ -2868,6 +2868,10 @@ static UINT8 mmc5_expram[1024];
 #define mmc5_lastchr		(mapper_regs[0x16])
 #define mmc5_expramattr		(mapper_regs[0x17])
 
+#define mmc5_pcmwrmode		(mapper_regs[0x18])
+#define mmc5_pcmirq			(mapper_regs[0x19])
+#define mmc5_pcmdata		(mapper_regs[0x1a])
+
 enum { CHR_GUESS = 0, CHR_TILE, CHR_SPRITE, CHR_LASTREG };
 
 static void mapper5_reset()
@@ -2887,11 +2891,20 @@ static void mapper5_reset()
 	mmc5_fillcolor = 0xff;
 	mmc5_mult0 = 0xff;
 	mmc5_mult1 = 0xff; // default
+
+	mmc5_pcmwrmode = 0x00;
+	mmc5_pcmirq = 0x00;
+	mmc5_pcmdata = 0x00;
 }
 
 static void mapper5_scan()
 {
 	SCAN_VAR(mmc5_expram);
+}
+
+static INT16 mapper5_mixer()
+{
+	return (INT16)(mmc5_pcmdata << 4);
 }
 
 static void mmc5_mapchr(UINT8 type)
@@ -2975,7 +2988,17 @@ static void mapper5_map()
 static UINT8 mapper5_read(UINT16 address)
 {
 	if (address >= 0x5000 && address <= 0x5015) {
-		return nesapuRead(0, (address & 0x1f) | 0x80);
+		switch (address) {
+			case 0x5010: {
+				bprintf(0, _T("mmc5 irq ack\n"));
+				UINT8 ret = ((mmc5_pcmirq & 1) << 7) | (~mmc5_pcmwrmode & 1);
+				mmc5_pcmirq &= ~1; // clear flag
+				M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+				return ret;
+			}
+			default:
+				return nesapuRead(0, (address & 0x1f) | 0x80);
+		}
 	}
 
 	if (address >= 0x5c00 && address <= 0x5fff) {
@@ -3019,7 +3042,25 @@ static void mapper5_prg_write(UINT16 address, UINT8 data)
 static void mapper5_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x5000 && address <= 0x5015) {
-		nesapuWrite(0, (address & 0x1f) | 0x80, data);
+		// Audio section
+		switch (address) {
+			case 0x5010:
+				mmc5_pcmwrmode = ~data & 1;
+				mmc5_pcmirq = data & 0x80;
+				break;
+			case 0x5011:
+				if (mmc5_pcmwrmode) {
+					if (data == 0x00 && mmc5_pcmirq) {
+						mapper_irq(0);
+						mmc5_pcmirq |= 0x01;
+					}
+					mmc5_pcmdata = data;
+				}
+				break;
+			default:
+				nesapuWrite(0, (address & 0x1f) | 0x80, data);
+				break;
+		}
 		return;
 	}
 
@@ -6816,6 +6857,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper5_map;
 			mapper_scan_cb  = mapper5_scan;
 			mapper_ppu_clockall = mapper5_ppu_clk;
+			nes_ext_sound_cb = mapper5_mixer;
 
 			read_nt = &mapper5_ntread;
 			write_nt = &mapper5_ntwrite;
@@ -12372,6 +12414,40 @@ struct BurnDriver BurnDrvnes_allpads = {
 #endif
 */
 // Non Homebrew (hand-added!)
+
+static struct BurnRomInfo nes_ultimexoremRomDesc[] = {
+	{ "Ultima - Exodus Remastered (USA)(Hack).nes",          262160, 0x8afe467a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultimexorem)
+STD_ROM_FN(nes_ultimexorem)
+
+struct BurnDriver BurnDrvnes_ultimexorem = {
+	"nes_ultimexorem", "nes_ultimaexodus", NULL, NULL, "2020",
+	"Ultima - Exodus Remastered (USA)(Hack)\0", NULL, "Fox Cunning", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_ultimexoremRomInfo, nes_ultimexoremRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_supermarallstanesRomDesc[] = {
+	{ "Super Mario All Stars NES (Hack).nes",          2097168, 0xbe155d3e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supermarallstanes)
+STD_ROM_FN(nes_supermarallstanes)
+
+struct BurnDriver BurnDrvnes_supermarallstanes = {
+	"nes_supermarioallst", NULL, NULL, NULL, "2020",
+	"Super Mario All Stars NES (Hack)\0", NULL, "infidelity", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_supermarallstanesRomInfo, nes_supermarallstanesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_smbchrediRomDesc[] = {
 	{ "Super Mario Bros. Christmas Edition (Hack).nes",          73744, 0xb293a7c4, BRF_ESS | BRF_PRG },

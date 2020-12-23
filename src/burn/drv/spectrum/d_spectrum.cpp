@@ -20924,3 +20924,79 @@ struct BurnDriver BurnSpecYoyogreatadventure = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Dizzy VIII - Wonderful Dizzy
+
+static struct BurnRomInfo SpecDizzy8RomDesc[] = {
+	{ "Dizzy VIII - Wonderful Dizzy (2020)(Team Yolkfolk).tap", 116323, 0x0f8b91f8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDizzy8, SpecDizzy8, Spec128)
+STD_ROM_FN(SpecDizzy8)
+
+struct BurnDriver BurnSpecDizzy8 = {
+	"spec_dizzy8", NULL, "spec_spec128", NULL, "2020",
+	"Dizzy VIII - Wonderful Dizzy\0", NULL, "Team Yolkfolk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDizzy8RomInfo, SpecDizzy8RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mousetrap
+
+static struct BurnRomInfo SpecMousetrapRomDesc[] = {
+	{ "Mousetrap (2020)(Chris Maling).tap", 10185, 0x170bd6b3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMousetrap, SpecMousetrap, Spec128)
+STD_ROM_FN(SpecMousetrap)
+
+struct BurnDriver BurnSpecMousetrap = {
+	"spec_mousetrap", NULL, "spec_spec128", NULL, "2020",
+	"Mousetrap\0", NULL, "Chris Maling", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecMousetrapRomInfo, SpecMousetrapRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Roger the Pangolin in 2020 Knurled Tour
+
+static struct BurnRomInfo SpecRogerpangolinRomDesc[] = {
+	{ "Roger the Pangolin in 2020 Knurled Tour (2020)(Joefish).tap", 42586, 0x94fea62c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRogerpangolin, SpecRogerpangolin, Spec128)
+STD_ROM_FN(SpecRogerpangolin)
+
+struct BurnDriver BurnSpecRogerpangolin = {
+	"spec_rogerpangolin", NULL, "spec_spec128", NULL, "2020",
+	"Roger the Pangolin in 2020 Knurled Tour\0", NULL, "Joefish", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecRogerpangolinRomInfo, SpecRogerpangolinRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// A Very Sheepy Christmas
+
+static struct BurnRomInfo SpecVerysheepyxmasRomDesc[] = {
+	{ "A Very Sheepy Christmas (2020)(Quantum Sheep).tap", 27498, 0x94185496, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecVerysheepyxmas, SpecVerysheepyxmas, Spec128)
+STD_ROM_FN(SpecVerysheepyxmas)
+
+struct BurnDriver BurnSpecVerysheepyxmas = {
+	"spec_verysheepyxmas", NULL, "spec_spec128", NULL, "2020",
+	"A Very Sheepy Christmas\0", NULL, "Quantum Sheep", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecVerysheepyxmasRomInfo, SpecVerysheepyxmasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

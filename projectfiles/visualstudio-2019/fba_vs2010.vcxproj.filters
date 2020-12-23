@@ -3816,9 +3816,6 @@
     <ClCompile Include="..\..\src\cpu\adsp2100\adsp2100.cpp">
       <Filter>cpus\adsp2100</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\cpu\i8x41\i8x41.cpp">
-      <Filter>cpus\i8x41</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\cpu\i8051\mcs51.cpp">
       <Filter>cpus\i8051</Filter>
     </ClCompile>
@@ -4240,6 +4237,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_mdarcbl.cpp">
       <Filter>Burn\drv\megadrive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp">
+      <Filter>cpus\i8x41</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_gladiatr.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_lsasquad.cpp">
+      <Filter>Burn\drv\taito</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

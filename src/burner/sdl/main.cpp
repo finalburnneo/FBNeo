@@ -26,7 +26,11 @@ int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
 bool bSaveconfig = 1;
 bool bIntegerScale = false;
 bool bAlwaysMenu = false;
-
+int nGameSelect = 0;
+int nFilterSelect = HARDWARE_PUBLIC_MASK;
+bool bShowAvailableOnly = true;
+bool bShowClones = true;
+int gameSelectedFromFilter = -1;
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
 

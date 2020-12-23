@@ -801,6 +801,12 @@ void gui_init()
 	gameAv = (char*)malloc(nBurnDrvCount);
 	memset(gameAv, 0, nBurnDrvCount);
 
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
+		return;
+	}
+	
 	if( SDL_NumJoysticks() < 1 )
 	{
 		printf( "Warning: No joysticks connected!\n" );
@@ -818,13 +824,6 @@ void gui_init()
 		        }
 		    }
 		}
-	}
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("vid init error\n");
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
-		return;
 	}
 
 	Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
@@ -1165,6 +1164,7 @@ int gui_process()
 				case SDLK_q:
 					findPrevLetter();
 					break;
+				case SDLK_KP_ENTER:
 				case SDLK_RETURN:
 					if (e.key.keysym.mod & KMOD_ALT) 
 					{

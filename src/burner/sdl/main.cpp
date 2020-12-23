@@ -374,7 +374,7 @@ int main(int argc, char* argv[])
 	}
 #endif
 
-	SDL_ShowCursor(SDL_DISABLE);
+	//SDL_ShowCursor(SDL_DISABLE);
 
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	szSDLhiscorePath = SDL_GetPrefPath("fbneo", "hiscore");

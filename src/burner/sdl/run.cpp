@@ -376,6 +376,10 @@ void pause_game()
 					case SDL_WINDOWEVENT_FOCUS_GAINED:
 						finished=1;
 						break;
+					case SDL_WINDOWEVENT_CLOSE:
+						finished=1;
+						RunExit();
+						break;
 					default:
 						break;
 				}
@@ -471,7 +475,22 @@ int RunMessageLoop()
 						bscreenshot = 1;
 					}
 					break;
-	
+				case SDLK_KP_MINUS: // volumme -
+					nAudVolume -= 500;
+					if (nAudVolume < 0) {
+						nAudVolume = 0;
+					}
+					if (AudSoundSetVolume() == 0) {
+					}
+					break;
+				case SDLK_KP_PLUS: // volume -+
+					nAudVolume += 500;
+					if (nAudVolume > 10000) {
+						nAudVolume = 10000;
+					}
+					if (AudSoundSetVolume() == 0) {
+					}
+					break;
 				default:
 					break;
 				}

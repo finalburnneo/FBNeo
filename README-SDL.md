@@ -97,6 +97,7 @@ The above will give you a nicely scalend game screen and the menu for launching 
 'F11' - show FPS counter
 'F6' - Screenshot
 'ALT-ENTER' - Switch window/fullscreen
+'+'/'-' - Volume controls
 
 ## SDL2 in menu controls
 

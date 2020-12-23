@@ -152,7 +152,7 @@ void init_gl()
 
 	if (!nRotateGame)
 	{
-		glRotatef(0.0, 0.0, 0.0, 1.0);
+		glRotatef((bFlipped ? 180.0 : 0.0), 0.0, 0.0, 1.0);
 		glOrtho(0, nGamesWidth, nGamesHeight, 0, -1, 1);
 	}
 	else

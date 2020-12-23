@@ -274,7 +274,7 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 	INT32 sprite_flip;
 	INT32 sprite_x_scroll;
 	INT32 sprite_y_scroll;
-	INT32 disabled = sprite_regs[0x04/4] & 0x08; // RWR1
+	INT32 disabled = BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x08; // RWR1
 	INT32 xsize,ysize, size, xpos=0,ypos=0, pri=0, romoffset, colour=0, xflip,yflip, joint;
 	INT32 sx,sy;
 	INT32 endromoffs=0, gfxlen;

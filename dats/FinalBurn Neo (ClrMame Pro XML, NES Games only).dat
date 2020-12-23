@@ -9504,6 +9504,13 @@
 		<rom name="Super Homebrew War (HB).nes" size="65552" crc="16b8d50a"/>
 		<driver status="good"/>
 	</game>
+	<game name="supermarioallst">
+		<description>Super Mario All Stars NES (Hack)</description>
+		<year>2020</year>
+		<manufacturer>infidelity</manufacturer>
+		<rom name="Super Mario All Stars NES (Hack).nes" size="2097168" crc="be155d3e"/>
+		<driver status="good"/>
+	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
 		<description>Super Mario Bros DX (HB, v3.4) [Homebrew]</description>
 		<year>2018</year>
@@ -10580,6 +10587,13 @@
 		<year>1989</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Ultima - Exodus (USA).nes" size="262160" crc="c1a9e6c0"/>
+		<driver status="good"/>
+	</game>
+	<game name="ultimexorem" cloneof="ultimaexodus" romof="ultimaexodus">
+		<description>Ultima - Exodus Remastered (USA)(Hack)</description>
+		<year>2020</year>
+		<manufacturer>Fox Cunning</manufacturer>
+		<rom name="Ultima - Exodus Remastered (USA)(Hack).nes" size="262160" crc="8afe467a"/>
 		<driver status="good"/>
 	</game>
 	<game name="ultimqueava">

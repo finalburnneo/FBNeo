@@ -203,6 +203,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="verysheepyxmas" romof="spec128">
+		<description>A Very Sheepy Christmas [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Quantum Sheep</manufacturer>
+		<rom name="A Very Sheepy Christmas (2020)(Quantum Sheep).tap" size="27498" crc="94185496"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="aaargh" romof="spec128">
 		<description>Aaargh!</description>
 		<year>1989</year>
@@ -2527,6 +2536,15 @@
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy VII - Crystal Kingdom Dizzy (1993)(Codemasters)(ru)[128K].z80" size="61746" crc="d6b0801d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy8" romof="spec128">
+		<description>Dizzy VIII - Wonderful Dizzy [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Team Yolkfolk</manufacturer>
+		<rom name="Dizzy VIII - Wonderful Dizzy (2020)(Team Yolkfolk).tap" size="116323" crc="0f8b91f8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -5104,6 +5122,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="mousetrap" romof="spec128">
+		<description>Mousetrap [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Chris Maling</manufacturer>
+		<rom name="Mousetrap (2020)(Chris Maling).tap" size="10185" crc="170bd6b3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrdo" romof="spec128">
 		<description>Mr. Do! (HB) [Homebrew]</description>
 		<year>2019</year>
@@ -6469,6 +6496,15 @@
 		<year>1991</year>
 		<manufacturer>Storm</manufacturer>
 		<rom name="Rod-Land (1991)(Storm).tap" size="117150" crc="cd3ecd05"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="rogerpangolin" romof="spec128">
+		<description>Roger the Pangolin in 2020 Knurled Tour [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Joefish</manufacturer>
+		<rom name="Roger the Pangolin in 2020 Knurled Tour (2020)(Joefish).tap" size="42586" crc="94fea62c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

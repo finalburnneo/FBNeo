@@ -159,6 +159,7 @@ DRV		BurnDrvmd_dinotale;
 DRV		BurnDrvMSX_m36;
 DRV		BurnDrvMSX_anaza;
 DRV		BurnDrvmd_aresshmd;
+DRV		BurnSpecVerysheepyxmas;
 DRV		BurnDrvAblast;
 DRV		BurnDrvAbcopjd;
 DRV		BurnDrvAbcopj;
@@ -3398,6 +3399,7 @@ DRV		BurnSpecdizzy6_48;
 DRV		BurnSpecdizzy7;
 DRV		BurnSpecdizzy7_48;
 DRV		BurnSpecdizzy7r;
+DRV		BurnSpecDizzy8;
 DRV		BurnDrvmd_djboy;
 DRV		BurnDrvmd_djboys;
 DRV		BurnDrvDjboyj;
@@ -8434,6 +8436,7 @@ DRV		BurnDrvMSX_mouser;
 DRV		BurnDrvMouser;
 DRV		BurnDrvcv_mtrapa;
 DRV		BurnDrvcv_mtrap;
+DRV		BurnSpecMousetrap;
 DRV		BurnDrvsg1k_castlet;
 DRV		BurnDrvMSX_mrchin;
 DRV		BurnDrvMSX_mrchink;
@@ -10940,6 +10943,7 @@ DRV		BurnDrvmd_mvpbb;
 DRV		BurnDrvfds_rogerrabbit;
 DRV		BurnDrvMSX_rogerrub;
 DRV		BurnDrvMSX_rogerruba;
+DRV		BurnSpecRogerpangolin;
 DRV		BurnSpecRoguetrooper;
 DRV		BurnDrvRohga1;
 DRV		BurnDrvRohga2;
@@ -13068,6 +13072,7 @@ DRV		BurnDrvfds_superlodrunii;
 DRV		BurnDrvSuplup;
 DRV		BurnDrvmd_smario2a;
 DRV		BurnDrvmd_smario2;
+DRV		BurnDrvnes_supermarallstanes;
 DRV		BurnDrvnes_smbdx;
 DRV		BurnDrvnes_smb;
 DRV		BurnDrvmd_smbbc;
@@ -14849,6 +14854,7 @@ DRV		BurnDrvDangarbt;
 DRV		BurnDrvUfosensi;
 DRV		BurnDrvnes_ufouria;
 DRV		BurnDrvnes_ultimaexodus;
+DRV		BurnDrvnes_ultimexorem;
 DRV		BurnDrvnes_ultimqueava;
 DRV		BurnDrvnes_ultimwardes;
 DRV		BurnDrvsms_ultima4;
@@ -16246,6 +16252,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_m36,			// A Life Planet - M36 - Mother Brain has been aliving (Jpn)
 	&BurnDrvMSX_anaza,			// A Na Za - Kaleidoscope Special (Jpn)
 	&BurnDrvmd_aresshmd,		// A Ressha de Ikou MD - Take the 'A' Train (Jpn)
+	&BurnSpecVerysheepyxmas,	// A Very Sheepy Christmas
 	&BurnDrvAblast,				// A-Blast (Japan)
 	&BurnDrvAbcopjd,			// A.B. Cop (Japan, FD1094 317-0169b decrypted)
 	&BurnDrvAbcopj,				// A.B. Cop (Japan, FD1094 317-0169b)
@@ -19485,6 +19492,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecdizzy7,			// Dizzy VII - Crystal Kingdom Dizzy (128K)
 	&BurnSpecdizzy7_48,			// Dizzy VII - Crystal Kingdom Dizzy (48K)
 	&BurnSpecdizzy7r,			// Dizzy VII - Crystal Kingdom Dizzy (Russian) (128K)
+	&BurnSpecDizzy8,			// Dizzy VIII - Wonderful Dizzy
 	&BurnDrvmd_djboy,			// DJ Boy (Euro)
 	&BurnDrvmd_djboys,			// Dj Boy (Hack, Spanish)
 	&BurnDrvDjboyj,				// DJ Boy (Japan, set 1)
@@ -24521,6 +24529,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMouser,				// Mouser
 	&BurnDrvcv_mtrapa,			// Mousetrap (Alt)
 	&BurnDrvcv_mtrap,			// Mousetrap
+	&BurnSpecMousetrap,			// Mousetrap
 	&BurnDrvsg1k_castlet,		// Mowang migong ~ The Castle (Tw)
 	&BurnDrvMSX_mrchin,			// Mr. Chin (Jpn)
 	&BurnDrvMSX_mrchink,		// Mr. Chin (Kor)
@@ -27027,6 +27036,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_rogerrabbit,	// Roger Rabbit (Japan)
 	&BurnDrvMSX_rogerrub,		// Roger Rubbish (Euro)
 	&BurnDrvMSX_rogerruba,		// Roger Rubbish (Euro, Alt)
+	&BurnSpecRogerpangolin,		// Roger the Pangolin in 2020 Knurled Tour
 	&BurnSpecRoguetrooper,		// Rogue Trooper
 	&BurnDrvRohga1,				// Rohga Armor Force (Asia/Europe v3.0 Set 1)
 	&BurnDrvRohga2,				// Rohga Armor Force (Asia/Europe v3.0 Set 2)
@@ -29155,6 +29165,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSuplup,				// Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0 / 990518)
 	&BurnDrvmd_smario2a,		// Super Mario 2 (Alt?) [no comment, NOT WORKING]
 	&BurnDrvmd_smario2,			// Super Mario 2 1998
+	&BurnDrvnes_supermarallstanes,// Super Mario All Stars NES (Hack)
 	&BurnDrvnes_smbdx,			// Super Mario Bros DX (HB, v3.4)
 	&BurnDrvnes_smb,			// Super Mario Bros. (World)
 	&BurnDrvmd_smbbc,			// Super Mario Bros. + Battle City (Rus)
@@ -30936,6 +30947,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUfosensi,			// Ufo Senshi Yohko Chan (MC-8123, 317-0064)
 	&BurnDrvnes_ufouria,		// Ufouria - The Saga (Europe)
 	&BurnDrvnes_ultimaexodus,	// Ultima - Exodus (USA)
+	&BurnDrvnes_ultimexorem,	// Ultima - Exodus Remastered (USA)(Hack)
 	&BurnDrvnes_ultimqueava,	// Ultima - Quest of the Avatar (USA)
 	&BurnDrvnes_ultimwardes,	// Ultima - Warriors of Destiny (USA)
 	&BurnDrvsms_ultima4,		// Ultima IV - Quest of the Avatar (Euro, Bra)

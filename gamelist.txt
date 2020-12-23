@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15824 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15830 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -157,6 +157,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_m36	|  	| A Life Planet - M36 - Mother Brain has been aliving (J| 		| 1987	| Pixel		| MSX		| 					|
 | msx_anaza	|  	| A Na Za - Kaleidoscope Special (Jpn)			| 		| 1987	| GA-Yume	| MSX		| 					|
 | md_aresshmd	|  	| A Ressha de Ikou MD - Take the 'A' Train (Jpn)	| 		| 1992	| Sega		| Sega Megadrive| 					|
+| spec_verysheepyxmas|  	| A Very Sheepy Christmas				| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
 | ablast	|  	| A-Blast (Japan)					| penbros	| 2000	| Subsino	| Newer Seta	| 					|
 | abcopjd	|  	| A.B. Cop (Japan, FD1094 317-0169b decrypted)		| abcop		| 1990	| Sega		| X-Board	| 					|
 | abcopj	|  	| A.B. Cop (Japan, FD1094 317-0169b)			| abcop		| 1990	| Sega		| X-Board	| 					|
@@ -3348,6 +3349,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_dizzy7	|  	| Dizzy VII - Crystal Kingdom Dizzy (128K)		| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy7_48|  	| Dizzy VII - Crystal Kingdom Dizzy (48K)		| spec_dizzy7	| 1992	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy7r	|  	| Dizzy VII - Crystal Kingdom Dizzy (Russian) (128K)	| spec_dizzy7	| 1993	| Codemasters	| ZX Spectrum	| 					|
+| spec_dizzy8	|  	| Dizzy VIII - Wonderful Dizzy				| 		| 2020	| Team Yolkfolk	| ZX Spectrum	| 					|
 | md_djboy	|  	| DJ Boy (Euro)						| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_djboys	|  	| Dj Boy (Hack, Spanish)				| md_djboy	| 2018	| Kaneko	| Sega Megadrive| 					|
 | djboyj	|  	| DJ Boy (Japan, set 1)					| djboy		| 1989	| Kaneko (Sega l| Miscellaneous	| 					|
@@ -8314,6 +8316,7 @@ This list contains all games supported by FinalBurn Neo.
 | mouser	|  	| Mouser						| 		| 1983	| UPL		| Miscellaneous	| 					|
 | cv_mtrapa	|  	| Mousetrap (Alt)					| cv_mtrap	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_mtrap	|  	| Mousetrap						| 		| 1982	| Coleco	| ColecoVision	| 					|
+| spec_mousetrap|  	| Mousetrap						| 		| 2020	| Chris Maling	| ZX Spectrum	| 					|
 | sg1k_castlet	|  	| Mowang migong ~ The Castle (Tw)			| sg1k_castle	| 1986?	| DahJee	| Sega SG-1000	| 					|
 | msx_mrchin	|  	| Mr. Chin (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_mrchink	|  	| Mr. Chin (Kor)					| msx_mrchin	| 198?	| Zemina	| MSX		| 					|
@@ -10776,6 +10779,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_rogerrabbit|  	| Roger Rabbit (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_rogerrub	|  	| Roger Rubbish (Euro)					| 		| 1985	| Spectravideo	| MSX		| 					|
 | msx_rogerruba	|  	| Roger Rubbish (Euro, Alt)				| msx_rogerrub	| 1985	| Spectravideo	| MSX		| 					|
+| spec_rogerpangolin|  	| Roger the Pangolin in 2020 Knurled Tour		| 		| 2020	| Joefish	| ZX Spectrum	| 					|
 | spec_roguetrooper|  	| Rogue Trooper						| 		| 1986	| Piranha	| ZX Spectrum	| 					|
 | rohga1	|  	| Rohga Armor Force (Asia/Europe v3.0 Set 1)		| rohga		| 1991	| Data East Corp| DECO IC16	| 					|
 | rohga2	|  	| Rohga Armor Force (Asia/Europe v3.0 Set 2)		| rohga		| 1991	| Data East Corp| DECO IC16	| 					|
@@ -12866,6 +12870,7 @@ This list contains all games supported by FinalBurn Neo.
 | suplup	|  	| Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0| 		| 1999	| Omega System	| Miscellaneous	| 					|
 | md_smario2a	|   NW	| Super Mario 2 (Alt?)					| md_smario2	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | md_smario2	|  	| Super Mario 2 1998					| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| nes_supermarioallst|  	| Super Mario All Stars NES (Hack)			| 		| 2020	| infidelity	| Miscellaneous	| 					|
 | nes_smbdx	|  	| Super Mario Bros DX (HB, v3.4)			| nes_smb	| 2018	| Flamephanter	| Miscellaneous	| 					|
 | nes_smb	|  	| Super Mario Bros. (World)				| 		| 1985	| Nintendo	| Miscellaneous	| 					|
 | md_smbbc	|  	| Super Mario Bros. + Battle City (Rus)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -14625,6 +14630,7 @@ This list contains all games supported by FinalBurn Neo.
 | ufosensi	|  	| Ufo Senshi Yohko Chan (MC-8123, 317-0064)		| 		| 1988	| Sega		| System 2	| 					|
 | nes_ufouria	|  	| Ufouria - The Saga (Europe)				| 		| 1992	| Sunsoft	| Miscellaneous	| 					|
 | nes_ultimaexodus|  	| Ultima - Exodus (USA)					| 		| 1989	| FCI		| Miscellaneous	| 					|
+| nes_ultimexorem|  	| Ultima - Exodus Remastered (USA)(Hack)		| nes_ultimaexodus| 2020	| Fox Cunning	| Miscellaneous	| 					|
 | nes_ultimqueava|  	| Ultima - Quest of the Avatar (USA)			| 		| 1990	| FCI		| Miscellaneous	| 					|
 | nes_ultimwardes|  	| Ultima - Warriors of Destiny (USA)			| 		| 1993	| FCI		| Miscellaneous	| 					|
 | sms_ultima4	|  	| Ultima IV - Quest of the Avatar (Euro, Bra)		| 		| 1990	| Sega		| Sega Master Sy| 					|

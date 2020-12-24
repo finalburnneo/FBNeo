@@ -479,7 +479,7 @@ void VezRunEnd()
 	VezCurrentCPU->runend();
 }
 
-void VezIdle(INT32 cycles)
+INT32 VezIdle(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezIdle called without init\n"));
@@ -487,6 +487,8 @@ void VezIdle(INT32 cycles)
 #endif
 
 	VezCurrentCPU->idle(cycles);
+
+	return cycles;
 }
 
 INT32 VezTotalCycles()

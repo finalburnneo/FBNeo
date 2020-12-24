@@ -188,7 +188,7 @@ static const INT32 freq_limit[8] =
 /* table of noise frequencies */
 static const INT32 noise_freq[16] =
 {
-   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 2046
+   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
 };
 
 /* dpcm transfer freqs */

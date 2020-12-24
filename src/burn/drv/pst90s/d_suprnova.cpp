@@ -759,7 +759,11 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 	address &= 0xc7ffffff;
 
 	if ((address & 0xfffc0000) == 0x4800000) {
+#ifdef LSB_FIRST
 		DrvGfxRAM[(address & 0x3ffff) ^ 3] = data;
+#else
+		DrvGfxRAM[(address & 0x3ffff)] = data;
+#endif
 		decode_graphics_ram(address);
 		return;
 
@@ -808,7 +812,11 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffffe0) == 0x02a00000) {
+#ifdef LSB_FIRST
 		DrvPalRegs[(address & 0x1f) ^ 3] = data;
+#else
+		DrvPalRegs[(address & 0x1f)] = data;
+#endif
 		skns_pal_regs_w(address);
 		return;
 	}
@@ -830,7 +838,11 @@ static void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
 	address &= 0xc7fffffe;
 
 	if ((address & 0xfffc0000) == 0x4800000) {
+#ifdef LSB_FIRST
 		*((UINT16*)(DrvGfxRAM + ((address & 0x3fffe) ^ 2))) = data;
+#else
+		*((UINT16*)(DrvGfxRAM + ((address & 0x3fffe)))) = data;
+#endif		
 		decode_graphics_ram(address);
 		return;
 
@@ -887,16 +899,25 @@ static UINT16 __fastcall suprnova_hack_read_word(UINT32 a)
 {
 	suprnova_speedhack(a);
 
+#ifdef LSB_FIRST
 	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe) ^ 2)));
+#else
+	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe))));
+#endif
 }
 
 static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 {
 	suprnova_speedhack(a);
 
+#ifdef LSB_FIRST
 	return DrvSh2RAM[(a & 0xfffff) ^ 3];
+#else
+	return DrvSh2RAM[(a & 0xfffff)];
+#endif
 }
 
+#ifdef LSB_FIRST
 static void BurnSwapEndian(UINT8 *src, INT32 len)
 {
 	for (INT32 i = 0; i < len; i+=4) {
@@ -908,6 +929,7 @@ static void BurnSwapEndian(UINT8 *src, INT32 len)
 		src[i + 2] = t;
 	}
 }
+#endif
 
 static INT32 MemIndex(INT32 gfxlen0)
 {
@@ -1088,8 +1110,10 @@ static INT32 DrvInit(INT32 bios)
 
 		if (BurnLoadRom(DrvSh2BIOS, 0x00080 + bios, 1)) return 1;	// bios
 		region = bios;
+#ifdef LSB_FIRST
 		BurnSwapEndian(DrvSh2BIOS, 0x80000);
 		BurnSwapEndian(DrvSh2ROM, 0x200000);
+#endif
 	}
 
 	Sh2Init(1);

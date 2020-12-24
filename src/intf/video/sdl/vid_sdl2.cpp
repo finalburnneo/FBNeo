@@ -351,26 +351,21 @@ static int Paint(int bValidate)
 	int   pitch;
 
 	SDL_RenderClear(sdlRenderer);
-
+	SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
 	if (nRotateGame)
 	{
-		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-		if (bFlipped)
-		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 90, NULL, SDL_FLIP_NONE);
-		}
-		else
-		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 270, NULL, SDL_FLIP_NONE);
-		}
+		SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, (bFlipped ? 90 : 270), NULL, SDL_FLIP_NONE);
 	}
 	else
 	{
-	//	SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
-	//	memcpy(pixels, pVidImage, nVidImagePitch * nVidImageHeight);
-	//	SDL_UnlockTexture(sdlTexture);
-		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-		SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &dstrect);
+		if (bFlipped)
+		{
+			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 180, NULL, SDL_FLIP_NONE);
+		}
+		else
+		{
+			SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &dstrect);
+		}
 	}
 
 	RenderMessage();

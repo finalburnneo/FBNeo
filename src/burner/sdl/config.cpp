@@ -64,7 +64,12 @@ int ConfigAppLoad()
 		VAR(nVidSelect);                           // video mode select
 		VAR(bVidFullStretch);
 		VAR(nAutoFireRate);
-		VAR(bAlwaysMenu);		
+		VAR(bAlwaysMenu);	
+		VAR(nGameSelect); 	
+		VAR(nFilterSelect);		
+		VAR(bShowAvailableOnly);
+		VAR(bShowClones);
+		VAR(gameSelectedFromFilter);
 #endif
 		VAR(bVidScanlines);
 		VAR(bDoGamma);
@@ -161,7 +166,16 @@ int ConfigAppSave()
 	VAR(nAutoFireRate);
 	fprintf(f, "\n// Automatically go to the menu\n");
 	VAR(bAlwaysMenu);
-	
+	fprintf(f, "\n// Last game selection\n");
+	VAR(nGameSelect);
+	fprintf(f, "\n// Last filter selection\n");
+	VAR(nFilterSelect);
+	fprintf(f, "\n// show available game only filter\n");
+	VAR(bShowAvailableOnly);
+	fprintf(f, "\n// show clones game filter\n");
+	VAR(bShowClones);
+	fprintf(f, "\n// Last game selected from filter\n");
+	VAR(gameSelectedFromFilter);
 #endif
 	fprintf(f, "\n// If non-zero, enable scanlines\n");
 	VAR(bVidScanlines);
@@ -169,6 +183,7 @@ int ConfigAppSave()
 	VAR(bDoGamma);
 	_ftprintf(f, _T("\n// Gamma to correct with\n"));
 	FLT(nGamma);
+	fprintf(f, "\n// Audio sample rate\n");
 	VAR(nAudSampleRate[0]);
 	fprintf(f, "\n// If non-zero, enable DSP filter\n");
 	VAR(nAudDSPModule[0]);

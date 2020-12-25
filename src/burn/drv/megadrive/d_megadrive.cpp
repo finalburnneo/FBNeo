@@ -50351,3 +50351,21 @@ struct BurnDriver BurnDrvmd_ssf2fh = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Street Fighter II Hyper Champion Edition (Hack)
+// https://www.youtube.com/watch?v=FwHAwDbYKbc
+static struct BurnRomInfo md_sf2hceRomDesc[] = {
+	{ "Street Fighter II Hyper Champion Edition.bin", 3145728, 0xbe0805cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2hce)
+STD_ROM_FN(md_sf2hce)
+
+struct BurnDriver BurnDrvmd_sf2hce = {
+	"md_sf2hce", "md_sf2", NULL, NULL, "2020",
+	"Street Fighter II Hyper Champion Edition\0", NULL, "Capcom", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sf2hceRomInfo, md_sf2hceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

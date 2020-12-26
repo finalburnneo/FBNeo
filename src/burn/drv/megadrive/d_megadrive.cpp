@@ -50624,7 +50624,7 @@ struct BurnDriver BurnDrvmd_ssf2fh = {
 // Street Fighter II Hyper Champion Edition (Hack)
 // https://www.youtube.com/watch?v=FwHAwDbYKbc
 static struct BurnRomInfo md_sf2hceRomDesc[] = {
-	{ "Street Fighter II Hyper Champion Edition.bin", 3145728, 0xbe0805cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Street Fighter II' - Hyper Champion Edition (Hack).bin", 3145728, 0xbe0805cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sf2hce)
@@ -50632,10 +50632,106 @@ STD_ROM_FN(md_sf2hce)
 
 struct BurnDriver BurnDrvmd_sf2hce = {
 	"md_sf2hce", "md_sf2", NULL, NULL, "2020",
-	"Street Fighter II Hyper Champion Edition\0", NULL, "Capcom", "Sega Megadrive",
+	"Street Fighter II' - Hyper Champion Edition (Hack)\0", NULL, "Capcom", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sf2hceRomInfo, md_sf2hceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// the aquatic games starring james pond and the aquabats (Hack, Spanish)
+// https://www.romhacking.net/translations/4932/
+static struct BurnRomInfo md_aquagamesRomDesc[] = {
+	{ "the aquatic games starring james pond and the aquabats (Hack, Spanish).bin", 524288, 0x1776fc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aquagames)
+STD_ROM_FN(md_aquagames)
+
+struct BurnDriver BurnDrvmd_aquagames = {
+	"md_aquagames", "md_aquagame", NULL, NULL, "2019",
+	"The Aquatic Games Starring James Pond and the Aquabats (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_aquagamesRomInfo, md_aquagamesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// the berenstain bears' camping adventure (Hack, Spanish)
+// https://www.romhacking.net/translations/4215/
+static struct BurnRomInfo md_berenssRomDesc[] = {
+	{ "the berenstain bears' camping adventure (Hack, Spanish).bin", 1048576, 0xd2774706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_berenss)
+STD_ROM_FN(md_berenss)
+
+struct BurnDriver BurnDrvmd_berenss = {
+	"md_berenss", "md_berens", NULL, NULL, "2019",
+	"The Berenstain Bears' Camping Adventure (Hack, Spanish)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_berenssRomInfo, md_berenssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// the death and return of superman (Hack, Spanish)
+// https://www.romhacking.net/translations/3673/
+static struct BurnRomInfo md_deathretsRomDesc[] = {
+	{ "the death and return of superman (Hack, Spanish).bin", 2097152, 0x82b94fc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_deathrets)
+STD_ROM_FN(md_deathrets)
+
+struct BurnDriver BurnDrvmd_deathrets = {
+	"md_deathrets", "md_deathret", NULL, NULL, "2018",
+	"The Death and Return of Superman (Hack, Spanish)\0", NULL, "SunSoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_deathretsRomInfo, md_deathretsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// the flintstones (Hack, Spanish)
+// https://www.romhacking.net/translations/2113/
+static struct BurnRomInfo md_flintsRomDesc[] = {
+	{ "the flintstones (Hack, Spanish).bin", 524288, 0x2539bd5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_flints)
+STD_ROM_FN(md_flints)
+
+struct BurnDriver BurnDrvmd_flints = {
+	"md_flints", "md_flint", NULL, NULL, "2014",
+	"The Flintstones (Hack, Spanish)\0", NULL, "Taito", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_flintsRomInfo, md_flintsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// gadget twins (Hack, Spanish)
+// https://www.romhacking.net/translations/4507/
+static struct BurnRomInfo md_gadgetsRomDesc[] = {
+	{ "gadget twins (Hack, Spanish).bin", 1048576, 0xb5e21dcb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gadgets)
+STD_ROM_FN(md_gadgets)
+
+struct BurnDriver BurnDrvmd_gadgets = {
+	"md_gadgets", "md_gadget", NULL, NULL, "2019",
+	"Gadget twins (Hack, Spanish)\0", NULL, "GameTek", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_gadgetsRomInfo, md_gadgetsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

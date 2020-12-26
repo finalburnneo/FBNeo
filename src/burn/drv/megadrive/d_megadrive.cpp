@@ -1911,6 +1911,24 @@ struct BurnDriver BurnDrvmd_psycho1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Psycho Pinball (Prototype)
+static struct BurnRomInfo md_psychopRomDesc[] = {
+	{ "psycho pinball (prototype).bin", 0x200000, 0xf29a5532, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_psychop)
+STD_ROM_FN(md_psychop)
+
+struct BurnDriver BurnDrvmd_psychop = {
+	"md_psychop", "md_psycho", NULL, NULL, "1994",
+	"Psycho Pinball (Prototype)\0", NULL, "Codemasters", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_psychopRomInfo, md_psychopRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Micro Machines (Euro, USA)
 static struct BurnRomInfo md_micromacRomDesc[] = {
 	{ "mdmmacd3.bin", 0x080000, 0x50081a0b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -3927,6 +3945,24 @@ struct BurnDriver BurnDrvmd_austrarl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_austrarlRomInfo, md_austrarlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Australian Rugby League (Prototype)
+static struct BurnRomInfo md_austrarlpRomDesc[] = {
+	{ "australian rugby league (prototype).bin", 0x200000, 0x51117c67, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_austrarlp)
+STD_ROM_FN(md_austrarlp)
+
+struct BurnDriver BurnDrvmd_austrarlp = {
+	"md_austrarlp", "md_austrarl", NULL, NULL, "1994",
+	"Australian Rugby League (Prototype)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_austrarlpRomInfo, md_austrarlpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -6715,11 +6751,29 @@ STD_ROM_PICK(md_champwcs)
 STD_ROM_FN(md_champwcs)
 
 struct BurnDriver BurnDrvmd_champwcs = {
-	"md_champwcs", NULL, NULL, NULL, "1993",
+	"md_champwcs", NULL, NULL, NULL, "1994",
 	"Champions World Class Soccer (World)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_champwcsRomInfo, md_champwcsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Champions World Class Soccer (Prototype, 19940318)
+static struct BurnRomInfo md_champwcspRomDesc[] = {
+	{ "champions world class soccer (prototype - mar 18, 1994).bin", 0x100000, 0x7b3eb69d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_champwcsp)
+STD_ROM_FN(md_champwcsp)
+
+struct BurnDriver BurnDrvmd_champwcsp = {
+	"md_champwcsp", "md_champwcs", NULL, NULL, "1993",
+	"Champions World Class Soccer (Prototype, 19940318)\0", NULL, "Flying Edge", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_champwcspRomInfo, md_champwcspRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -7332,6 +7386,24 @@ struct BurnDriver BurnDrvmd_colleg96 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_colleg96RomInfo, md_colleg96RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// College Football USA 96 (USA, Prototype, 19950621)
+static struct BurnRomInfo md_colleg96pRomDesc[] = {
+	{ "college football usa 96 (prototype - jun 21, 1995).bin", 0x200000, 0xe70bd01d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_colleg96p)
+STD_ROM_FN(md_colleg96p)
+
+struct BurnDriver BurnDrvmd_colleg96p = {
+	"md_colleg96p", "md_colleg96", NULL, NULL, "1995",
+	"College Football USA 96 (USA, Prototype 19950621)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_colleg96pRomInfo, md_colleg96pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -10542,6 +10614,24 @@ struct BurnDriver BurnDrvmd_duneu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Dune - The Battle for Arrakis (Prototype, 19940111)
+static struct BurnRomInfo md_dunepRomDesc[] = {
+	{ "dune - the battle for arrakis (prototype - Jan 11, 1994).bin", 0x100000, 0x781cb285, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_dunep)
+STD_ROM_FN(md_dunep)
+
+struct BurnDriver BurnDrvmd_dunep = {
+	"md_dunep", "md_dune2", NULL, NULL, "1993",
+	"Dune - The Battle for Arrakis (Prototype, 19940111)\0", NULL, "Virgin Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_dunepRomInfo, md_dunepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Dungeons & Dragons - Warriors of the Eternal Sun (Euro, USA)
 static struct BurnRomInfo md_ddwaresRomDesc[] = {
 	{ "dungeons & dragons - warriors of the eternal sun (euro, usa).bin", 0x100000, 0xaf4a9cd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -10971,6 +11061,24 @@ struct BurnDriver BurnDrvmd_eccoj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_eccojRomInfo, md_eccojRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ecco the Dolphin (Prototype, 19930421)
+static struct BurnRomInfo md_eccopRomDesc[] = {
+	{ "ecco the dolphin (prototype - apr 21, 1993).bin", 0x100000, 0x17e24509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_eccop)
+STD_ROM_FN(md_eccop)
+
+struct BurnDriver BurnDrvmd_eccop = {
+	"md_eccop", "md_ecco", NULL, NULL, "1993",
+	"Ecco the Dolphin (Prototype, 19930421)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_eccopRomInfo, md_eccopRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -14014,6 +14122,24 @@ struct BurnDriver BurnDrvmd_granada1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_granada1RomInfo, md_granada1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Granada (REV01 prototype)
+static struct BurnRomInfo md_granadapRomDesc[] = {
+	{ "granada (rev01 prototype).bin", 0x080000, 0x129a37dd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_granadap)
+STD_ROM_FN(md_granadap)
+
+struct BurnDriver BurnDrvmd_granadap = {
+	"md_granadap", "md_granada", NULL, NULL, "1990",
+	"Granada (REV01 prototype)\0", NULL, "Renovation ~ Wolf Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_granadapRomInfo, md_granadapRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -25321,6 +25447,24 @@ struct BurnDriver BurnDrvmd_puttergnk = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Putty Squad (Early prototype)
+static struct BurnRomInfo md_puttysquadpRomDesc[] = {
+	{ "putty squad (early prototype).bin", 0x100000, 0x4974ae73, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_puttysquadp)
+STD_ROM_FN(md_puttysquadp)
+
+struct BurnDriver BurnDrvmd_puttysquadp = {
+	"md_puttysquadp", NULL, NULL, NULL, "1991",
+	"Putty Squad (Early prototype)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_puttysquadpRomInfo, md_puttysquadpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Puyo Puyo (Jpn)
 static struct BurnRomInfo md_puyopuyoRomDesc[] = {
 	{ "puyo puyo (jpn).bin", 0x080000, 0x7f26614e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -25731,6 +25875,24 @@ struct BurnDriver BurnDrvmd_radrexu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_radrexuRomInfo, md_radrexuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Radical Rex (Prototype)
+static struct BurnRomInfo md_radrexpRomDesc[] = {
+	{ "radical rex (prototype).bin", 0x100000, 0xbf2912e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_radrexp)
+STD_ROM_FN(md_radrexp)
+
+struct BurnDriver BurnDrvmd_radrexp = {
+	"md_radrexp", "md_radrex", NULL, NULL, "1994",
+	"Radical Rex (Prototype)\0", NULL, "Activision", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_radrexpRomInfo, md_radrexpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -30975,6 +31137,24 @@ struct BurnDriver BurnDrvmd_sracer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MISC, 0,
 	MegadriveGetZipName, md_sracerRomInfo, md_sracerRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Racer (Prototype, 19950321)
+static struct BurnRomInfo md_sracerpRomDesc[] = {
+	{ "street racer (prototype - mar 21, 1995).bin", 0x100000, 0xa439a96e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sracerp)
+STD_ROM_FN(md_sracerp)
+
+struct BurnDriver BurnDrvmd_sracerp = {
+	"md_sracerp", "md_sracer", NULL, NULL, "1995",
+	"Street Racer (Prototype, 19950321)\0", NULL, "Ubi Soft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MISC, 0,
+	MegadriveGetZipName, md_sracerpRomInfo, md_sracerpRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -37506,20 +37686,38 @@ struct BurnDriver BurnDrvmd_worldillj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// World of Illusion - Fushigi na Magic Box (Jpn, Prototype)
-static struct BurnRomInfo md_worldilljpRomDesc[] = {
-	{ "world of illusion - fushigi na magic box (jpn) (beta).bin", 0x100000, 0x577f680f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// World of Illusion - Fushigi na Magic Box (Jpn, Prototype A)
+static struct BurnRomInfo md_worldilljp1RomDesc[] = {
+	{ "world of illusion - fushigi na magic box (jpn, prototype a).bin", 0x100000, 0x577f680f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_worldilljp)
-STD_ROM_FN(md_worldilljp)
+STD_ROM_PICK(md_worldilljp1)
+STD_ROM_FN(md_worldilljp1)
 
-struct BurnDriver BurnDrvmd_worldilljp = {
-	"md_worldilljp", "md_worldill", NULL, NULL, "1992",
-	"World of Illusion - Fushigi na Magic Box (Jpn, Prototype)\0", NULL, "Sega", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_worldilljp1 = {
+	"md_worldilljp1", "md_worldill", NULL, NULL, "1992",
+	"World of Illusion - Fushigi na Magic Box (Jpn, Prototype A)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_worldilljpRomInfo, md_worldilljpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_worldilljp1RomInfo, md_worldilljp1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// World of Illusion - Fushigi na Magic Box (Jpn, Prototype B)
+static struct BurnRomInfo md_worldilljp2RomDesc[] = {
+	{ "world of illusion - fushigi na magic box (jpn, prototype b).bin", 0x100000, 0xf807176c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_worldilljp2)
+STD_ROM_FN(md_worldilljp2)
+
+struct BurnDriver BurnDrvmd_worldilljp2 = {
+	"md_worldilljp2", "md_worldill", NULL, NULL, "1992",
+	"World of Illusion - Fushigi na Magic Box (Jpn, Prototype B)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_worldilljp2RomInfo, md_worldilljp2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

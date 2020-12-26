@@ -604,6 +604,24 @@ struct BurnDriver BurnDrvmd_mightmax = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Akira (Prototype)
+static struct BurnRomInfo md_akirapRomDesc[] = {
+	{ "akira (prototype).bin", 0x200000, 0x6d32d468, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_akirap)
+STD_ROM_FN(md_akirap)
+
+struct BurnDriver BurnDrvmd_akirap = {
+	"md_akirap", NULL, NULL, NULL, "1993",
+	"Akira (Prototype)\0", NULL, "Black Pearl Software", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_akirapRomInfo, md_akirapRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Alex Kidd in the Enchanted Castle (Euro, Rev. A)
 static struct BurnRomInfo md_alexkiddRomDesc[] = {
 	{ "mpr-12608a.ic1", 0x040000, 0x778a0f00, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -30439,6 +30457,24 @@ struct BurnDriver BurnDrvmd_sttngp01 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Star Wars (Prototype, 19930125)
+static struct BurnRomInfo md_starwarspRomDesc[] = {
+	{ "star wars (prototype - jan 25, 1994).bin", 0x100000, 0xe1c32fec, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_starwarsp)
+STD_ROM_FN(md_starwarsp)
+
+struct BurnDriver BurnDrvmd_starwarsp = {
+	"md_starwarsp", NULL, NULL, NULL, "1994",
+	"Star Wars (Prototype, 19930125)\0", NULL, "Sega Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_starwarspRomInfo, md_starwarspRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Starflight (Euro, USA, v1.1)
 static struct BurnRomInfo md_starflRomDesc[] = {
 	{ "starflight (euro, usa) (v1.1).bin", 0x100000, 0x1217dbea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -30867,6 +30903,42 @@ struct BurnDriver BurnDrvmd_sf2u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_sf2uRomInfo, md_sf2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Champion Edition (Prototype, 19930730)
+static struct BurnRomInfo md_sf2p1RomDesc[] = {
+	{ "street fighter ii' - champion edition (prototype - Jul 30, 1993).bin", 0x200000, 0x7ffa8b23, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2p1)
+STD_ROM_FN(md_sf2p1)
+
+struct BurnDriver BurnDrvmd_sf2p1 = {
+	"md_sf2p1", "md_sf2", NULL, NULL, "1993",
+	"Street Fighter II' - Champion Edition (Prototype, 19930730)\0", NULL, "Capcom", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2p1RomInfo, md_sf2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Champion Edition (Prototype, 19930325)
+static struct BurnRomInfo md_sf2p2RomDesc[] = {
+	{ "street fighter ii' - champion edition (prototype - Mar 25, 1993).bin", 0x200000, 0x7bb62db2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2p2)
+STD_ROM_FN(md_sf2p2)
+
+struct BurnDriver BurnDrvmd_sf2p2 = {
+	"md_sf2p2", "md_sf2", NULL, NULL, "1993",
+	"Street Fighter II' - Champion Edition (Prototype, 19930325)\0", NULL, "Capcom", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2p2RomInfo, md_sf2p2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

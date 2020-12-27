@@ -50735,3 +50735,192 @@ struct BurnDriver BurnDrvmd_gadgets = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// the great circus mystery starring mickey & minnie (Hack, Spanish)
+// https://www.romhacking.net/translations/3413/
+static struct BurnRomInfo md_mickeycmsRomDesc[] = {
+	{ "the great circus mystery starring mickey & minnie (hack, spanish).bin", 2097152, 0x58cd70c5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mickeycms)
+STD_ROM_FN(md_mickeycms)
+
+struct BurnDriver BurnDrvmd_mickeycms = {
+	"md_mickeycms", "md_mickeycm", NULL, NULL, "2018",
+	"The Great Circus Mystery Starring Mickey & Minnie (Hack, Spanish)\0", NULL, "Capcom", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mickeycmsRomInfo, md_mickeycmsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Immortal (Hack, Spanish)
+// https://www.romhacking.net/translations/5466/
+static struct BurnRomInfo md_immortalsRomDesc[] = {
+	{ "the immortal (hack, spanish).bin", 1048576, 0x2b411d4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_immortals)
+STD_ROM_FN(md_immortals)
+
+struct BurnDriver BurnDrvmd_immortals = {
+	"md_immortals", "md_immortal", NULL, NULL, "2020",
+	"The Immortal (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_immortalsRomInfo, md_immortalsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// disney's the jungle book (Hack, Spanish)
+// https://www.romhacking.net/translations/3455/
+static struct BurnRomInfo md_junglesRomDesc[] = {
+	{ "disney's the jungle book (hack, spanish).bin", 2097152, 0x5c4a909c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_jungles)
+STD_ROM_FN(md_jungles)
+
+struct BurnDriver BurnDrvmd_jungles = {
+	"md_jungles", "md_jungle", NULL, NULL, "2018",
+	"Disney's The Jungle Book (Hack, Spanish)\0", NULL, "Virgin Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_junglesRomInfo, md_junglesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Lion King (Hack, Spanish)
+// https://www.romhacking.net/translations/3455/
+static struct BurnRomInfo md_lionkingsRomDesc[] = {
+	{ "the lion king (hack, spanish).bin", 3145728, 0x5c8cf251, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lionkings)
+STD_ROM_FN(md_lionkings)
+
+struct BurnDriver BurnDrvmd_lionkings = {
+	"md_lionkings", "md_lionking", NULL, NULL, "2018",
+	"The Lion King (Hack, Spanish)\0", NULL, "Virgin Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_lionkingsRomInfo, md_lionkingsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Lost Vikings (Hack, Spanish)
+// https://www.romhacking.net/translations/5581/
+static struct BurnRomInfo md_lostviksRomDesc[] = {
+{ "the lost vikings (hack, spanish).bin", 1048576, 0x8b88b1e8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lostviks)
+STD_ROM_FN(md_lostviks)
+
+struct BurnDriver BurnDrvmd_lostviks = {
+	"md_lostviks", "md_lostvik", NULL, NULL, "2020",
+	"The Lost Vikings (Hack, Spanish)\0", NULL, "Published", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_lostviksRomInfo, md_lostviksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Lost World - Jurassic Park (Hack, Spanish)
+// https://www.romhacking.net/translations/3946/
+static struct BurnRomInfo md_lostwrldsRomDesc[] = {
+	{ "the lost world - jurassic park (hack, spanish).bin", 4194304, 0x629e1312, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lostwrlds)
+STD_ROM_FN(md_lostwrlds)
+
+struct BurnDriver BurnDrvmd_lostwrlds = {
+	"md_lostwrlds", "md_lostwrld", NULL, NULL, "2020",
+	"The Lost World - Jurassic Park (Hack, Spanish)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_lostwrldsRomInfo, md_lostwrldsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The New Zealand Story (Hack, Spanish)
+// https://www.romhacking.net/translations/3902/
+static struct BurnRomInfo md_tnzssRomDesc[] = {
+	{ "the new zealand story (hack, spanish).bin", 524288, 0x684d738a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tnzss)
+STD_ROM_FN(md_tnzss)
+
+struct BurnDriver BurnDrvmd_tnzss = {
+	"md_tnzss", "md_tnzs", NULL, NULL, "2019",
+	"The New Zealand Story (Hack, Spanish)\0", NULL, "Taito", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tnzssRomInfo, md_tnzssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Pirates of Dark Water (Hack, Spanish)
+// https://www.romhacking.net/translations/3902/
+static struct BurnRomInfo md_piratedwsRomDesc[] = {
+	{ "the pirates of dark water (hack, spanish).bin", 2097152, 0x30c39d61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_piratedws)
+STD_ROM_FN(md_piratedws)
+
+struct BurnDriver BurnDrvmd_piratedws = {
+	"md_piratedws", "md_piratedw", NULL, NULL, "2018",
+	"The Pirates of Dark Water (Hack, Spanish)\0", NULL, "Sunsoft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_piratedwsRomInfo, md_piratedwsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Punisher (Hack, Spanish)
+// https://www.romhacking.net/translations/2888/
+static struct BurnRomInfo md_punishersRomDesc[] = {
+	{ "the punisher (hack, spanish).bin", 2097152, 0xd1315970, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_punishers)
+STD_ROM_FN(md_punishers)
+
+struct BurnDriver BurnDrvmd_punishers = {
+	"md_punishers", "md_punisher", NULL, NULL, "2018",
+	"The Punisher (Hack, Spanish)\0", NULL, "Published", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_punishersRomInfo, md_punishersRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Revenge of Shinobi (Hack, Spanish)
+// https://www.romhacking.net/translations/3120/
+static struct BurnRomInfo md_revshinsRomDesc[] = {
+	{ "the revenge of shinobi (hack, spanish).bin", 524288, 0x99f889c1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_revshins)
+STD_ROM_FN(md_revshins)
+
+struct BurnDriver BurnDrvmd_revshins = {
+	"md_revshins", "md_revshin", NULL, NULL, "2017",
+	"The Revenge of Shinobi (Hack, Spanish)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_revshinsRomInfo, md_revshinsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -2059,7 +2059,7 @@ struct BurnDriver BurnDrvmd_3ninja = {
 // 3 Ninjas Kick Back (Hack, Spanish)
 // https://www.romhacking.net/translations/2785/
 static struct BurnRomInfo md_3ninjasRomDesc[] = {
-	{ "3 Ninjas Kick Back (Hack, Spanish).bin", 2097152, 0x9a0e98a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "3 Ninjas Kick Back (hack, spanish).bin", 2097152, 0x9a0e98a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_3ninjas)
@@ -45637,7 +45637,7 @@ struct BurnDriver BurnDrvmd_madstalker = {
 // Action 52 (Hack, Spanish)
 // https://www.romhacking.net/translations/3599/
 static struct BurnRomInfo md_action52sRomDesc[] = {
-	{ "Action 52 (Hack, Spanish).bin", 2097152, 0x26e09366, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Action 52 (hack, spanish).bin", 2097152, 0x26e09366, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_action52s)
@@ -45656,7 +45656,7 @@ struct BurnDriver BurnDrvmd_action52s = {
 // addams family values (Hack, Spanish)
 // https://www.romhacking.net/translations/5708/
 static struct BurnRomInfo md_addfamvsRomDesc[] = {
-	{ "addams family values (Hack, Spanish).bin", 2101280, 0x07cf6ffd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "addams family values (hack, spanish).bin", 2101280, 0x07cf6ffd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_addfamvs)
@@ -45675,7 +45675,7 @@ struct BurnDriver BurnDrvmd_addfamvs = {
 // aero the acro-bat (Hack, Spanish)
 // https://www.romhacking.net/translations/4378/
 static struct BurnRomInfo md_aerosRomDesc[] = {
-	{ "aero the acro-bat (Hack, Spanish).bin", 1048576, 0xfcaf58d3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "aero the acro-bat (hack, spanish).bin", 1048576, 0xfcaf58d3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aeros)
@@ -45695,7 +45695,7 @@ struct BurnDriver BurnDrvmd_aeros = {
 // aero the acro-bat 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/5027/
 static struct BurnRomInfo md_aero2sRomDesc[] = {
-	{ "aero the acro-bat 2 (Hack, Spanish).bin", 2097152, 0x096c0978, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "aero the acro-bat 2 (hack, spanish).bin", 2097152, 0x096c0978, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aero2s)
@@ -45714,7 +45714,7 @@ struct BurnDriver BurnDrvmd_aero2s = {
 // After Burner II (Hack, Spanish)
 // https://www.romhacking.net/translations/4168/
 static struct BurnRomInfo md_aburner2sRomDesc[] = {
-	{ "after burner II (Hack, Spanish).bin", 524288, 0x2e08b330, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "after burner II (hack, spanish).bin", 524288, 0x2e08b330, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aburner2s)
@@ -45733,7 +45733,7 @@ struct BurnDriver BurnDrvmd_aburner2s = {
 // alex kidd in the enchanted castle (Hack, Spanish)
 // https://www.romhacking.net/translations/3109/
 static struct BurnRomInfo md_alexkiddsRomDesc[] = {
-	{ "alex kidd in the enchanted castle (Hack, Spanish).bin", 262144, 0xd2f3a29e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "alex kidd in the enchanted castle (hack, spanish).bin", 262144, 0xd2f3a29e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_alexkidds)
@@ -45752,7 +45752,7 @@ struct BurnDriver BurnDrvmd_alexkidds = {
 // alien 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/3436/
 static struct BurnRomInfo md_alien3sRomDesc[] = {
-	{ "alien3 (Hack, Spanish).bin", 524288, 0x701d308e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "alien3 (hack, spanish).bin", 524288, 0x701d308e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_alien3s)
@@ -45772,7 +45772,7 @@ struct BurnDriver BurnDrvmd_alien3s = {
 // alien soldier (Hack, Spanish)
 // https://www.romhacking.net/translations/5551/
 static struct BurnRomInfo md_aliensolsRomDesc[] = {
-	{ "alien soldier (Hack, Spanish).bin", 2097152, 0xab991070, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "alien soldier (hack, spanish).bin", 2097152, 0xab991070, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aliensols)
@@ -45791,7 +45791,7 @@ struct BurnDriver BurnDrvmd_aliensols = {
 // Alien Storm (Hack, Spanish)
 // https://www.romhacking.net/translations/3503/
 static struct BurnRomInfo md_astormsRomDesc[] = {
-	{ "Alien Storm (Hack, Spanish).bin", 524288, 0xf79748ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Alien Storm (hack, spanish).bin", 524288, 0xf79748ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_astorms)
@@ -45810,7 +45810,7 @@ struct BurnDriver BurnDrvmd_astorms = {
 // air diver (Hack, Spanish)
 // https://www.romhacking.net/translations/4771/
 static struct BurnRomInfo md_airdiversRomDesc[] = {
-	{ "air diver (Hack, Spanish).bin", 524288, 0x3ce6094a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "air diver (hack, spanish).bin", 524288, 0x3ce6094a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_airdivers)
@@ -45829,7 +45829,7 @@ struct BurnDriver BurnDrvmd_airdivers = {
 // alisia dragoon (Hack, Spanish)
 //https://www.romhacking.net/translations/3669/
 static struct BurnRomInfo md_alisiadsRomDesc[] = {
-	{ "alisia dragoon (Hack, Spanish).bin", 1048576, 0x13fc10e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "alisia dragoon (hack, spanish).bin", 1048576, 0x13fc10e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_alisiads)
@@ -45848,7 +45848,7 @@ struct BurnDriver BurnDrvmd_alisiads = {
 // altered beast (Hack, Spanish)
 //https://www.romhacking.net/translations/3179/
 static struct BurnRomInfo md_altbeastsRomDesc[] = {
-	{ "altered beast (Hack, Spanish).bin", 524288, 0xe4ea5e40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "altered beast (hack, spanish).bin", 524288, 0xe4ea5e40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_altbeasts)
@@ -45867,7 +45867,7 @@ struct BurnDriver BurnDrvmd_altbeasts = {
 // animaniacs (Hack, Spanish)
 //https://www.romhacking.net/translations/3425/
 static struct BurnRomInfo md_animaniasRomDesc[] = {
-	{ "animaniacs (Hack, Spanish).bin", 1048576, 0xcceaf148, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "animaniacs (hack, spanish).bin", 1048576, 0xcceaf148, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_animanias)
@@ -45886,7 +45886,7 @@ struct BurnDriver BurnDrvmd_animanias = {
 // ariel (Hack, Spanish)
 //https://www.romhacking.net/translations/4273/
 static struct BurnRomInfo md_arielsRomDesc[] = {
-	{ "ariel (Hack, Spanish).bin", 524288, 0x599a1bfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ariel (hack, spanish).bin", 524288, 0x599a1bfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ariels)
@@ -45905,7 +45905,7 @@ struct BurnDriver BurnDrvmd_ariels = {
 // arrow flash (Hack, Spanish)
 //https://www.romhacking.net/translations/4379/
 static struct BurnRomInfo md_arrowsRomDesc[] = {
-	{ "arrow flash (Hack, Spanish).bin", 524288, 0x06421584, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "arrow flash (hack, spanish).bin", 524288, 0x06421584, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_arrows)
@@ -45924,7 +45924,7 @@ struct BurnDriver BurnDrvmd_arrows = {
 // art of fighting (Hack, Spanish)
 //https://www.romhacking.net/translations/3083/
 static struct BurnRomInfo md_aofsRomDesc[] = {
-	{ "art of fighting (Hack, Spanish).bin", 2097152, 0x60ffdc60, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "art of fighting (hack, spanish).bin", 2097152, 0x60ffdc60, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aofs)
@@ -45943,7 +45943,7 @@ struct BurnDriver BurnDrvmd_aofs = {
 // atomic robo-kid (Hack, Spanish)
 //https://www.romhacking.net/translations/3083/
 static struct BurnRomInfo md_atomrobosRomDesc[] = {
-	{ "atomic robo-kid (Hack, Spanish).bin", 524288, 0xce250d1b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "atomic robo-kid (hack, spanish).bin", 524288, 0xce250d1b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_atomrobos)
@@ -45962,7 +45962,7 @@ struct BurnDriver BurnDrvmd_atomrobos = {
 // atomic runner (Hack, Spanish)
 //https://www.romhacking.net/translations/3526/
 static struct BurnRomInfo md_atomrunsRomDesc[] = {
-	{ "atomic runner (Hack, Spanish).bin", 1048576, 0x930a9593, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "atomic runner (hack, spanish).bin", 1048576, 0x930a9593, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_atomruns)
@@ -45981,7 +45981,7 @@ struct BurnDriver BurnDrvmd_atomruns = {
 // Back to the Future Part III  (Hack, Spanish)
 // https://www.romhacking.net/translations/3720/
 static struct BurnRomInfo md_backtof3sRomDesc[] = {
-	{ "back to the future part iii (Hack, Spanish).bin", 524288, 0x52493680, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "back to the future part iii (hack, spanish).bin", 524288, 0x52493680, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_backtof3s)
@@ -46000,7 +46000,7 @@ struct BurnDriver BurnDrvmd_backtof3s = {
 // batman returns (Hack, Spanish)
 // https://www.romhacking.net/translations/3943/
 static struct BurnRomInfo md_batmanrnsRomDesc[] = {
-	{ "batman returns (Hack, Spanish).bin", 1048576, 0x543701ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "batman returns (hack, spanish).bin", 1048576, 0x543701ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_batmanrns)
@@ -46019,7 +46019,7 @@ struct BurnDriver BurnDrvmd_batmanrns = {
 // batman (Hack, Spanish)
 // https://www.romhacking.net/translations/3175/
 static struct BurnRomInfo md_batmansRomDesc[] = {
-	{ "batman (Hack, Spanish).bin", 524288, 0xebf4ca7f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "batman (hack, spanish).bin", 524288, 0xebf4ca7f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_batmans)
@@ -46038,7 +46038,7 @@ struct BurnDriver BurnDrvmd_batmans = {
 // battle golfer yui (Hack, Spanish)
 // https://www.romhacking.net/translations/5485/
 static struct BurnRomInfo md_battlyuisRomDesc[] = {
-	{ "battle golfer yui (Hack, Spanish).bin", 1048576, 0x1ed9c6d0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "battle golfer yui (hack, spanish).bin", 1048576, 0x1ed9c6d0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_battlyuis)
@@ -46057,7 +46057,7 @@ struct BurnDriver BurnDrvmd_battlyuis = {
 // battle mania daiginjou (Hack, Spanish)
 // https://www.romhacking.net/translations/2071/
 static struct BurnRomInfo md_btlmanidsRomDesc[] = {
-	{ "battle mania daiginjou (Hack, Spanish).bin", 1048576, 0x9e0ef510, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "battle mania daiginjou (hack, spanish).bin", 1048576, 0x9e0ef510, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_btlmanids)
@@ -46076,7 +46076,7 @@ struct BurnDriver BurnDrvmd_btlmanids = {
 // battle squadron (Hack, Spanish)
 // https://www.romhacking.net/translations/3659/
 static struct BurnRomInfo md_battlesqsRomDesc[] = {
-	{ "battle squadron (Hack, Spanish).bin", 524288, 0xcde81fbc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "battle squadron (hack, spanish).bin", 524288, 0xcde81fbc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_battlesqs)
@@ -46095,7 +46095,7 @@ struct BurnDriver BurnDrvmd_battlesqs = {
 // battletoads (Hack, Spanish)
 // https://www.romhacking.net/translations/3569/
 static struct BurnRomInfo md_btoadssRomDesc[] = {
-	{ "battletoads (Hack, Spanish).bin", 524288, 0xbe072fdd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "battletoads (hack, spanish).bin", 524288, 0xbe072fdd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_btoadss)
@@ -46114,7 +46114,7 @@ struct BurnDriver BurnDrvmd_btoadss = {
 // Battletoads & Double Dragon (Hack, Spanish)
 // https://www.romhacking.net/translations/5243/
 static struct BurnRomInfo md_btoadsddsRomDesc[] = {
-	{ "battletoads & double dragon (Hack, Spanish).bin", 1048576, 0x5fb95d53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "battletoads & double dragon (hack, spanish).bin", 1048576, 0x5fb95d53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_btoadsdds)
@@ -46133,7 +46133,7 @@ struct BurnDriver BurnDrvmd_btoadsdds = {
 // beauty and the beast - belle's quest (Hack, Spanish)
 // https://www.romhacking.net/translations/3150/
 static struct BurnRomInfo md_beautysRomDesc[] = {
-	{ "beauty and the beast - belle's quest (Hack, Spanish).bin", 1048576, 0x37123c7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "beauty and the beast - belle's quest (hack, spanish).bin", 1048576, 0x37123c7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beautys)
@@ -46152,7 +46152,7 @@ struct BurnDriver BurnDrvmd_beautys = {
 // beauty and the beast - roar of the beast (Hack, Spanish)
 // https://www.romhacking.net/translations/3150/
 static struct BurnRomInfo md_beautyrbsRomDesc[] = {
-	{ "beauty and the beast - roar of the beast (Hack, Spanish).bin", 1048576, 0xc0f52a6d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "beauty and the beast - roar of the beast (hack, spanish).bin", 1048576, 0xc0f52a6d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beautyrbs)
@@ -46171,7 +46171,7 @@ struct BurnDriver BurnDrvmd_beautyrbs = {
 // beavis and butt-head (Hack, Spanish)
 // https://www.romhacking.net/translations/3466/
 static struct BurnRomInfo md_beavissRomDesc[] = {
-	{ "beavis and butt-head (Hack, Spanish).bin", 2097152, 0x10967d96, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "beavis and butt-head (hack, spanish).bin", 2097152, 0x10967d96, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beaviss)
@@ -46190,7 +46190,7 @@ struct BurnDriver BurnDrvmd_beaviss = {
 // bio hazard battle (Hack, Spanish)
 // https://www.romhacking.net/translations/3809/
 static struct BurnRomInfo md_biohazrbsRomDesc[] = {
-	{ "bio hazard battle (Hack, Spanish).bin", 1048576, 0x5a025101, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bio hazard battle (hack, spanish).bin", 1048576, 0x5a025101, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_biohazrbs)
@@ -46209,7 +46209,7 @@ struct BurnDriver BurnDrvmd_biohazrbs = {
 // blades of vengeance (Hack, Spanish)
 // https://www.romhacking.net/translations/3570/
 static struct BurnRomInfo md_bladevensRomDesc[] = {
-	{ "blades of vengeance (Hack, Spanish).bin", 1048576, 0x19e90563, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "blades of vengeance (hack, spanish).bin", 1048576, 0x19e90563, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bladevens)
@@ -46228,7 +46228,7 @@ struct BurnDriver BurnDrvmd_bladevens = {
 // bonanza bros. (Hack, Spanish)
 // https://www.romhacking.net/translations/3325/
 static struct BurnRomInfo md_bnzabrossRomDesc[] = {
-	{ "bonanza bros. (Hack, Spanish).bin", 524288, 0x96f3fba6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bonanza bros. (hack, spanish).bin", 524288, 0x96f3fba6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bnzabross)
@@ -46247,7 +46247,7 @@ struct BurnDriver BurnDrvmd_bnzabross = {
 // bonkers (Hack, Spanish)
 // https://www.romhacking.net/translations/4236/
 static struct BurnRomInfo md_bonkerssRomDesc[] = {
-	{ "bonkers (Hack, Spanish).bin", 1048576, 0x2bde8dc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bonkers (hack, spanish).bin", 1048576, 0x2bde8dc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bonkerss)
@@ -46266,7 +46266,7 @@ struct BurnDriver BurnDrvmd_bonkerss = {
 // bubba'n'stix - a strategy adventure (Hack, Spanish)
 // https://www.romhacking.net/translations/4840/
 static struct BurnRomInfo md_bubbasRomDesc[] = {
-	{ "bubba'n'stix - a strategy adventure (Hack, Spanish).bin", 1048576, 0xdcd45650, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bubba'n'stix - a strategy adventure (hack, spanish).bin", 1048576, 0xdcd45650, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bubbas)
@@ -46285,7 +46285,7 @@ struct BurnDriver BurnDrvmd_bubbas = {
 // bubble and squeak (Hack, Spanish)
 // https://www.romhacking.net/translations/4841/
 static struct BurnRomInfo md_bubblesqsRomDesc[] = {
-	{ "bubble and squeak (Hack, Spanish).bin", 524288, 0x5d67b1c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bubble and squeak (hack, spanish).bin", 524288, 0x5d67b1c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bubblesqs)
@@ -46304,7 +46304,7 @@ struct BurnDriver BurnDrvmd_bubblesqs = {
 // bubsy in claws encounters of the furred kind (Hack, Spanish)
 // https://www.romhacking.net/translations/4731/
 static struct BurnRomInfo md_bubsysRomDesc[] = {
-	{ "bubsy in claws encounters of the furred kind (Hack, Spanish).bin", 2097152, 0x0db8ca11, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "bubsy in claws encounters of the furred kind (hack, spanish).bin", 2097152, 0x0db8ca11, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bubsys)
@@ -46323,7 +46323,7 @@ struct BurnDriver BurnDrvmd_bubsys = {
 // cadash (Hack, Spanish)
 // https://www.romhacking.net/translations/5536/
 static struct BurnRomInfo md_cadashsRomDesc[] = {
-	{ "cadash (Hack, Spanish).bin", 524288, 0x1bcfdc31, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "cadash (hack, spanish).bin", 524288, 0x1bcfdc31, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cadashs)
@@ -46342,7 +46342,7 @@ struct BurnDriver BurnDrvmd_cadashs = {
 // caliber .50 (Hack, Spanish)
 // https://www.romhacking.net/translations/4560/
 static struct BurnRomInfo md_cal50sRomDesc[] = {
-	{ "caliber .50 (Hack, Spanish).bin", 1048576, 0xa6ebf46f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "caliber .50 (hack, spanish).bin", 1048576, 0xa6ebf46f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cal50s)
@@ -46361,7 +46361,7 @@ struct BurnDriver BurnDrvmd_cal50s = {
 // captain planet and the planeteers (Hack, Spanish)
 // https://www.romhacking.net/translations/3957/
 static struct BurnRomInfo md_captplansRomDesc[] = {
-	{ "captain planet and the planeteers (Hack, Spanish).bin", 524288, 0xc939d288, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "captain planet and the planeteers (hack, spanish).bin", 524288, 0xc939d288, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_captplans)
@@ -46380,7 +46380,7 @@ struct BurnDriver BurnDrvmd_captplans = {
 // castle of illusion starring mickey mouse (Hack, Spanish)
 // https://www.romhacking.net/translations/2119/
 static struct BurnRomInfo md_castlillsRomDesc[] = {
-	{ "castle of illusion starring mickey mouse (Hack, Spanish).bin", 524288, 0x7813743d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "castle of illusion starring mickey mouse (hack, spanish).bin", 524288, 0x7813743d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_castlills)
@@ -46399,7 +46399,7 @@ struct BurnDriver BurnDrvmd_castlills = {
 // castlevania - bloodlines (Hack, Spanish)
 // https://www.romhacking.net/translations/3187/
 static struct BurnRomInfo md_cvaniasRomDesc[] = {
-	{ "castlevania - bloodlines (Hack, Spanish).bin", 1048576, 0x6107d697, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "castlevania - bloodlines (hack, spanish).bin", 1048576, 0x6107d697, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cvanias)
@@ -46418,7 +46418,7 @@ struct BurnDriver BurnDrvmd_cvanias = {
 // chakan (Hack, Spanish)
 // https://www.romhacking.net/translations/4296/
 static struct BurnRomInfo md_chakansRomDesc[] = {
-	{ "chakan (Hack, Spanish).bin", 1048576, 0x5efeccac, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "chakan (hack, spanish).bin", 1048576, 0x5efeccac, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chakans)
@@ -46437,7 +46437,7 @@ struct BurnDriver BurnDrvmd_chakans = {
 // chester cheetah - wild wild quest (Hack, Spanish)
 // https://www.romhacking.net/translations/4541/
 static struct BurnRomInfo md_chesterwsRomDesc[] = {
-	{ "chester cheetah - wild wild quest (Hack, Spanish).bin", 1048576, 0x031bc0b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "chester cheetah - wild wild quest (hack, spanish).bin", 1048576, 0x031bc0b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chesterws)
@@ -46456,7 +46456,7 @@ struct BurnDriver BurnDrvmd_chesterws = {
 // chuck rock (Hack, Spanish)
 // https://www.romhacking.net/translations/3977/
 static struct BurnRomInfo md_chuckrcksRomDesc[] = {
-	{ "chuck rock (Hack, Spanish).bin", 1048576, 0x97bea810, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "chuck rock (hack, spanish).bin", 1048576, 0x97bea810, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chuckrcks)
@@ -46475,7 +46475,7 @@ struct BurnDriver BurnDrvmd_chuckrcks = {
 // chuck rock ii - son of chuck (Hack, Spanish)
 // https://www.romhacking.net/translations/3971/
 static struct BurnRomInfo md_chukrck2sRomDesc[] = {
-	{ "chuck rock ii - son of chuck (Hack, Spanish).bin", 1048576, 0x7b46f45e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "chuck rock ii - son of chuck (hack, spanish).bin", 1048576, 0x7b46f45e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chukrck2s)
@@ -46494,7 +46494,7 @@ struct BurnDriver BurnDrvmd_chukrck2s = {
 // combat cars (Hack, Spanish)
 // https://www.romhacking.net/translations/4978/
 static struct BurnRomInfo md_combatcasRomDesc[] = {
-	{ "combat cars (Hack, Spanish).bin", 1048576, 0xea3af06f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "combat cars (hack, spanish).bin", 1048576, 0xea3af06f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_combatcas)
@@ -46513,7 +46513,7 @@ struct BurnDriver BurnDrvmd_combatcas = {
 // comix zone (Hack, Spanish)
 // https://www.romhacking.net/translations/2117/
 static struct BurnRomInfo md_comixsRomDesc[] = {
-	{ "comix zone (Hack, Spanish).bin", 2097152, 0x9acaffc5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "comix zone (hack, spanish).bin", 2097152, 0x9acaffc5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_comixs)
@@ -46532,7 +46532,7 @@ struct BurnDriver BurnDrvmd_comixs = {
 // contra - hard corps (Hack, Spanish)
 // https://www.romhacking.net/translations/2070/
 static struct BurnRomInfo md_contrasRomDesc[] = {
-	{ "contra - hard corps (Hack, Spanish).bin", 2097152, 0xd421f78d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "contra - hard corps (hack, spanish).bin", 2097152, 0xd421f78d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_contras)
@@ -46551,7 +46551,7 @@ struct BurnDriver BurnDrvmd_contras = {
 // probotector (Hack, Spanish)
 // https://www.romhacking.net/translations/2890/
 static struct BurnRomInfo md_probotsRomDesc[] = {
-	{ "probotector (Hack, Spanish).bin", 2097152, 0x47abdaa3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "probotector (hack, spanish).bin", 2097152, 0x47abdaa3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_probots)
@@ -46570,7 +46570,7 @@ struct BurnDriver BurnDrvmd_probots = {
 // cool spot (Hack, Spanish)
 // https://www.romhacking.net/translations/4766/
 static struct BurnRomInfo md_coolspotsRomDesc[] = {
-	{ "cool spot (Hack, Spanish).bin", 1048576, 0x40a18f52, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "cool spot (hack, spanish).bin", 1048576, 0x40a18f52, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_coolspots)
@@ -46589,7 +46589,7 @@ struct BurnDriver BurnDrvmd_coolspots = {
 // cross fire (Hack, Spanish)
 // https://www.romhacking.net/translations/4190/
 static struct BurnRomInfo md_xfiresRomDesc[] = {
-	{ "cross fire (Hack, Spanish).bin", 524288, 0x628b2c53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "cross fire (hack, spanish).bin", 524288, 0x628b2c53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_xfires)
@@ -46646,7 +46646,7 @@ struct BurnDriver BurnDrvmd_cutthrs = {
 // dahna megami tanjou (Hack, Spanish)
 // https://www.romhacking.net/translations/3326/
 static struct BurnRomInfo md_dahnamsRomDesc[] = {
-	{ "dahna megami tanjou (Hack, Spanish).bin", 1048576, 0x50aef45d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dahna megami tanjou (hack, spanish).bin", 1048576, 0x50aef45d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dahnams)
@@ -46665,7 +46665,7 @@ struct BurnDriver BurnDrvmd_dahnams = {
 // dark castle (Hack, Spanish)
 // https://www.romhacking.net/translations/4447/
 static struct BurnRomInfo md_darkcastsRomDesc[] = {
-	{ "dark castle (Hack, Spanish).bin", 524288, 0xccb09cc4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dark castle (hack, spanish).bin", 524288, 0xccb09cc4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_darkcasts)
@@ -46684,7 +46684,7 @@ struct BurnDriver BurnDrvmd_darkcasts = {
 // daze before christmas (Hack, Spanish)
 // https://www.romhacking.net/translations/3511/
 static struct BurnRomInfo md_dazexmassRomDesc[] = {
-	{ "daze before christmas (Hack, Spanish).bin", 2097152, 0x4b061cf5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "daze before christmas (hack, spanish).bin", 2097152, 0x4b061cf5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dazexmass)
@@ -46703,7 +46703,7 @@ struct BurnDriver BurnDrvmd_dazexmass = {
 // deadly moves (Hack, Spanish)
 // https://www.romhacking.net/translations/4842/
 static struct BurnRomInfo md_deadlymvsRomDesc[] = {
-	{ "deadly moves (Hack, Spanish).bin", 1048576, 0xbdc2eaf1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "deadly moves (hack, spanish).bin", 1048576, 0xbdc2eaf1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_deadlymvs)
@@ -46722,7 +46722,7 @@ struct BurnDriver BurnDrvmd_deadlymvs = {
 // death duel (Hack, Spanish)
 // https://www.romhacking.net/translations/4448/
 static struct BurnRomInfo md_deathdlsRomDesc[] = {
-	{ "death duel (Hack, Spanish).bin", 1048576, 0x0b7de738, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "death duel (hack, spanish).bin", 1048576, 0x0b7de738, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_deathdls)
@@ -46741,7 +46741,7 @@ struct BurnDriver BurnDrvmd_deathdls = {
 // decapattack (Hack, Spanish)
 // https://www.romhacking.net/translations/3350/
 static struct BurnRomInfo md_decapattsRomDesc[] = {
-	{ "decapattack (Hack, Spanish).bin", 524288, 0x47dda2c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "decapattack (hack, spanish).bin", 524288, 0x47dda2c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_decapatts)
@@ -46760,7 +46760,7 @@ struct BurnDriver BurnDrvmd_decapatts = {
 // desert strike (Hack, Spanish)
 // https://www.romhacking.net/translations/2883/
 static struct BurnRomInfo md_dstrikesRomDesc[] = {
-	{ "desert strike (Hack, Spanish).bin", 1048576, 0x09a27380, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "desert strike (hack, spanish).bin", 1048576, 0x09a27380, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dstrikes)
@@ -46779,7 +46779,7 @@ struct BurnDriver BurnDrvmd_dstrikes = {
 // devilish - the next possession (Hack, Spanish)
 // https://www.romhacking.net/translations/3811/
 static struct BurnRomInfo md_devilishsRomDesc[] = {
-	{ "devilish - the next possession (Hack, Spanish).bin", 524288, 0x83aa9530, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "devilish - the next possession (hack, spanish).bin", 524288, 0x83aa9530, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_devilishs)
@@ -46798,7 +46798,7 @@ struct BurnDriver BurnDrvmd_devilishs = {
 // dick tracy (Hack, Spanish)
 // https://www.romhacking.net/translations/4521/
 static struct BurnRomInfo md_dicktrsRomDesc[] = {
-	{ "dick tracy (Hack, Spanish).bin", 524288, 0xf3b40a46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dick tracy (hack, spanish).bin", 524288, 0xf3b40a46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dicktrs)
@@ -46817,7 +46817,7 @@ struct BurnDriver BurnDrvmd_dicktrs = {
 // dino land (Hack, Spanish)
 // https://www.romhacking.net/translations/4380/
 static struct BurnRomInfo md_dinolandsRomDesc[] = {
-	{ "dino land (Hack, Spanish).bin", 524288, 0x26f380d8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dino land (hack, spanish).bin", 524288, 0x26f380d8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dinolands)
@@ -46836,7 +46836,7 @@ struct BurnDriver BurnDrvmd_dinolands = {
 // aladdin (Hack, Spanish)
 // https://www.romhacking.net/translations/3399/
 static struct BurnRomInfo md_aladdinsRomDesc[] = {
-	{ "aladdin (Hack, Spanish).bin",2097152, 0xa6cf0b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "aladdin (hack, spanish).bin",2097152, 0xa6cf0b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aladdins)
@@ -46855,7 +46855,7 @@ struct BurnDriver BurnDrvmd_aladdins = {
 // talespin (Hack, Spanish)
 // https://www.romhacking.net/translations/4221/
 static struct BurnRomInfo md_talespinsRomDesc[] = {
-	{ "talespin (Hack, Spanish).bin",524288, 0x4306e326, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "talespin (hack, spanish).bin",524288, 0x4306e326, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_talespins)
@@ -46874,7 +46874,7 @@ struct BurnDriver BurnDrvmd_talespins = {
 // dj boy (Hack, Spanish)
 // https://www.romhacking.net/translations/3914/
 static struct BurnRomInfo md_djboysRomDesc[] = {
-	{ "dj boy (Hack, Spanish).bin",524288, 0x18614e10, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dj boy (hack, spanish).bin",524288, 0x18614e10, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_djboys)
@@ -46893,7 +46893,7 @@ struct BurnDriver BurnDrvmd_djboys = {
 // donald in maui mallard (Hack, Spanish)
 // https://www.romhacking.net/translations/4927/
 static struct BurnRomInfo md_mauimallsRomDesc[] = {
-	{ "donald in maui mallard (Hack, Spanish).bin",3145728, 0x1ba0bc17, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "donald in maui mallard (hack, spanish).bin",3145728, 0x1ba0bc17, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mauimalls)
@@ -46912,7 +46912,7 @@ struct BurnDriver BurnDrvmd_mauimalls = {
 // double dragon (Hack, Spanish)
 // https://www.romhacking.net/translations/3763/
 static struct BurnRomInfo md_ddragonsRomDesc[] = {
-	{ "double dragon (Hack, Spanish).bin",524288, 0x5b42c057, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "double dragon (hack, spanish).bin",524288, 0x5b42c057, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ddragons)
@@ -46931,7 +46931,7 @@ struct BurnDriver BurnDrvmd_ddragons = {
 // double dragon II - the revenge (Hack, Spanish)
 // https://www.romhacking.net/translations/3761/
 static struct BurnRomInfo md_ddragon2sRomDesc[] = {
-	{ "double dragon II - the revenge (Hack, Spanish).bin",524288, 0xa53fe35d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "double dragon II - the revenge (hack, spanish).bin",524288, 0xa53fe35d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ddragon2s)
@@ -46950,7 +46950,7 @@ struct BurnDriver BurnDrvmd_ddragon2s = {
 // double dragon 3 - the arcade game (Hack, Spanish)
 // https://www.romhacking.net/translations/3757/
 static struct BurnRomInfo md_ddragon3sRomDesc[] = {
-	{ "double dragon 3 - the arcade game (Hack, Spanish).bin",1048576, 0x4e8e616d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "double dragon 3 - the arcade game (hack, spanish).bin",1048576, 0x4e8e616d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ddragon3s)
@@ -46969,7 +46969,7 @@ struct BurnDriver BurnDrvmd_ddragon3s = {
 // double dragon v - the shadow falls (Hack, Spanish)
 // https://www.romhacking.net/translations/3310/
 static struct BurnRomInfo md_ddragon5sRomDesc[] = {
-	{ "double dragon v - the shadow falls (Hack, Spanish).bin",3145728, 0x42c385ab, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "double dragon v - the shadow falls (hack, spanish).bin",3145728, 0x42c385ab, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ddragon5s)
@@ -46988,7 +46988,7 @@ struct BurnDriver BurnDrvmd_ddragon5s = {
 // dr. robotnik's mean bean machine (Hack, Spanish)
 // https://www.romhacking.net/translations/4518/
 static struct BurnRomInfo md_drrobotnsRomDesc[] = {
-	{ "dr. robotnik's mean bean machine (Hack, Spanish).bin",1048576, 0x86ed4079, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dr. robotnik's mean bean machine (hack, spanish).bin",1048576, 0x86ed4079, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_drrobotns)
@@ -47007,7 +47007,7 @@ struct BurnDriver BurnDrvmd_drrobotns = {
 // dragon ball z - l'appel du destin (Hack, Spanish)
 // https://www.romhacking.net/translations/3394/
 static struct BurnRomInfo md_dbzsRomDesc[] = {
-	{ "dragon ball z - l'appel du destin (Hack, Spanish).bin",2097152, 0xa1e5e963, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon ball z - l'appel du destin (hack, spanish).bin",2097152, 0xa1e5e963, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dbzs)
@@ -47026,7 +47026,7 @@ struct BurnDriver BurnDrvmd_dbzs = {
 // dragon's fury (Hack, Spanish)
 // https://www.romhacking.net/translations/3394/
 static struct BurnRomInfo md_dfurysRomDesc[] = {
-	{ "dragon's fury (Hack, Spanish).bin",524288, 0x120aaabe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon's fury (hack, spanish).bin",524288, 0x120aaabe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dfurys)
@@ -47045,7 +47045,7 @@ struct BurnDriver BurnDrvmd_dfurys = {
 // dragon's revenge (Hack, Spanish)
 // https://www.romhacking.net/translations/5109/
 static struct BurnRomInfo md_dragnrevsRomDesc[] = {
-	{ "dragon's revenge (Hack, Spanish).bin",1048576, 0x8847d12b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon's revenge (hack, spanish).bin",1048576, 0x8847d12b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dragnrevs)
@@ -47064,7 +47064,7 @@ struct BurnDriver BurnDrvmd_dragnrevs = {
 // dragon - the bruce lee story (Hack, Spanish)
 // https://www.romhacking.net/translations/3783/
 static struct BurnRomInfo md_dragonsRomDesc[] = {
-	{ "dragon - the bruce lee story (Hack, Spanish).bin",2097152, 0x30766d12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon - the bruce lee story (hack, spanish).bin",2097152, 0x30766d12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dragons)
@@ -47083,7 +47083,7 @@ struct BurnDriver BurnDrvmd_dragons = {
 // duke nukem 3d (Hack, Spanish)
 // https://www.romhacking.net/translations/4158/
 static struct BurnRomInfo md_dukenk3dsRomDesc[] = {
-	{ "duke nukem 3d (Hack, Spanish).bin",4194304, 0x74a8b676, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "duke nukem 3d (hack, spanish).bin",4194304, 0x74a8b676, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dukenk3ds)
@@ -47102,7 +47102,7 @@ struct BurnDriver BurnDrvmd_dukenk3ds = {
 // dynamite duke (Hack, Spanish)
 // https://www.romhacking.net/translations/5612/
 static struct BurnRomInfo md_dyndukesRomDesc[] = {
-	{ "dynamite duke (Hack, Spanish).bin",524288, 0xdf440f0e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dynamite duke (hack, spanish).bin",524288, 0xdf440f0e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dyndukes)
@@ -47121,7 +47121,7 @@ struct BurnDriver BurnDrvmd_dyndukes = {
 // dynamite headdy (Hack, Spanish)
 // https://www.romhacking.net/translations/3339/
 static struct BurnRomInfo md_dheadsRomDesc[] = {
-	{ "dynamite headdy (Hack, Spanish).bin",2097152, 0x003fc283, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dynamite headdy (hack, spanish).bin",2097152, 0x003fc283, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheads)
@@ -47140,7 +47140,7 @@ struct BurnDriver BurnDrvmd_dheads = {
 // earnest evans (Hack, Spanish)
 // https://www.romhacking.net/translations/4449/
 static struct BurnRomInfo md_earnestsRomDesc[] = {
-	{ "earnest evans (Hack, Spanish).bin",1048576, 0xf0d9a696, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "earnest evans (hack, spanish).bin",1048576, 0xf0d9a696, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earnests)
@@ -47159,7 +47159,7 @@ struct BurnDriver BurnDrvmd_earnests = {
 // earthworm jim (Hack, Spanish)
 // https://www.romhacking.net/translations/3774/
 static struct BurnRomInfo md_ejimsRomDesc[] = {
-	{ "earthworm jim (Hack, Spanish).bin",3145728, 0x21a1378f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "earthworm jim (hack, spanish).bin",3145728, 0x21a1378f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejims)
@@ -47178,7 +47178,7 @@ struct BurnDriver BurnDrvmd_ejims = {
 // earthworm jim 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/5406/
 static struct BurnRomInfo md_ejim2sRomDesc[] = {
-	{ "earthworm jim 2 (Hack, Spanish).bin",3145728, 0xf5cab28c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "earthworm jim 2 (hack, spanish).bin",3145728, 0xf5cab28c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejim2s)
@@ -47197,7 +47197,7 @@ struct BurnDriver BurnDrvmd_ejim2s = {
 // ecco the dolphin (Hack, Spanish)
 // https://www.romhacking.net/translations/3855/
 static struct BurnRomInfo md_eccosRomDesc[] = {
-	{ "ecco the dolphin (Hack, Spanish).bin",1048576, 0x6cb0aad7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ecco the dolphin (hack, spanish).bin",1048576, 0x6cb0aad7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eccos)
@@ -47216,7 +47216,7 @@ struct BurnDriver BurnDrvmd_eccos = {
 // el viento (Hack, Spanish)
 // https://www.romhacking.net/translations/3198/
 static struct BurnRomInfo md_elvientosRomDesc[] = {
-	{ "el viento (Hack, Spanish).bin",1048576, 0xd1e1e998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "el viento (hack, spanish).bin",1048576, 0xd1e1e998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elvientos)
@@ -47235,7 +47235,7 @@ struct BurnDriver BurnDrvmd_elvientos = {
 // eliminate down (Hack, Spanish)
 // https://www.romhacking.net/translations/4510/
 static struct BurnRomInfo md_elimdownsRomDesc[] = {
-	{ "eliminate down (Hack, Spanish).bin",1048576, 0x5b3604bb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "eliminate down (hack, spanish).bin",1048576, 0x5b3604bb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elimdowns)
@@ -47254,7 +47254,7 @@ struct BurnDriver BurnDrvmd_elimdowns = {
 // eswat - city under siege (Hack, Spanish)
 // https://www.romhacking.net/translations/3916/
 static struct BurnRomInfo md_eswatsRomDesc[] = {
-	{ "eswat - city under siege (Hack, Spanish).bin",524288, 0x63611cb7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "eswat - city under siege (hack, spanish).bin",524288, 0x63611cb7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eswats)
@@ -47273,7 +47273,7 @@ struct BurnDriver BurnDrvmd_eswats = {
 // fatal labyrinth (Hack, Spanish)
 // https://www.romhacking.net/translations/4780/
 static struct BurnRomInfo md_fatallabsRomDesc[] = {
-	{ "fatal labyrinth (Hack, Spanish).bin",131072, 0x2b27dbd1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "fatal labyrinth (hack, spanish).bin",131072, 0x2b27dbd1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fatallabs)
@@ -47292,7 +47292,7 @@ struct BurnDriver BurnDrvmd_fatallabs = {
 // fighting masters (Hack, Spanish)
 // https://www.romhacking.net/translations/4735/
 static struct BurnRomInfo md_fightmassRomDesc[] = {
-	{ "fighting masters (Hack, Spanish).bin",524288, 0x128cddbe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "fighting masters (hack, spanish).bin",524288, 0x128cddbe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fightmass)
@@ -47311,7 +47311,7 @@ struct BurnDriver BurnDrvmd_fightmass = {
 // final zone -- fz senki axis (Hack, Spanish)
 // https://www.romhacking.net/translations/4803/
 static struct BurnRomInfo md_fzonesRomDesc[] = {
-	{ "final zone -- fz senki axis (Hack, Spanish).bin",524288, 0xd0294acb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "final zone -- fz senki axis (hack, spanish).bin",524288, 0xd0294acb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fzones)
@@ -47330,7 +47330,7 @@ struct BurnDriver BurnDrvmd_fzones = {
 // fire shark (Hack, Spanish)
 // https://www.romhacking.net/translations/4508/
 static struct BurnRomInfo md_fireshrksRomDesc[] = {
-	{ "fire shark (Hack, Spanish).bin",524288, 0x9f0eca9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "fire shark (hack, spanish).bin",524288, 0x9f0eca9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fireshrks)
@@ -47349,7 +47349,7 @@ struct BurnDriver BurnDrvmd_fireshrks = {
 // flashback - the quest for identity (Hack, Spanish)
 // https://www.romhacking.net/translations/3677/
 static struct BurnRomInfo md_flashbsRomDesc[] = {
-	{ "flashback - the quest for identity (Hack, Spanish).bin",1572864, 0xd88b3a54, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "flashback - the quest for identity (hack, spanish).bin",1572864, 0xd88b3a54, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_flashbs)
@@ -47368,7 +47368,7 @@ struct BurnDriver BurnDrvmd_flashbs = {
 // flicky (Hack, Spanish)
 // https://www.romhacking.net/translations/3637/
 static struct BurnRomInfo md_flickysRomDesc[] = {
-	{ "flicky (Hack, Spanish).bin",131072, 0xcb2072fa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "flicky (hack, spanish).bin",131072, 0xcb2072fa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_flickys)
@@ -47387,7 +47387,7 @@ struct BurnDriver BurnDrvmd_flickys = {
 // frogger (Hack, Spanish)
 // https://www.romhacking.net/translations/5067/
 static struct BurnRomInfo md_froggersRomDesc[] = {
-	{ "frogger (Hack, Spanish).bin",524288, 0x4f656a99, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "frogger (hack, spanish).bin",524288, 0x4f656a99, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_froggers)
@@ -47406,7 +47406,7 @@ struct BurnDriver BurnDrvmd_froggers = {
 // g-loc air battle (Hack, Spanish)
 // https://www.romhacking.net/translations/4782/
 static struct BurnRomInfo md_glocsRomDesc[] = {
-	{ "g-loc air battle (Hack, Spanish).bin",1048576, 0xdc326396, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "g-loc air battle (hack, spanish).bin",1048576, 0xdc326396, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_glocs)
@@ -47425,7 +47425,7 @@ struct BurnDriver BurnDrvmd_glocs = {
 // gaiares (Hack, Spanish)
 // https://www.romhacking.net/translations/3020/
 static struct BurnRomInfo md_gaiaressRomDesc[] = {
-	{ "gaiares (Hack, Spanish).bin",1048576, 0xa62ec19c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gaiares (hack, spanish).bin",1048576, 0xa62ec19c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gaiaress)
@@ -47444,7 +47444,7 @@ struct BurnDriver BurnDrvmd_gaiaress = {
 // gain ground (Hack, Spanish)
 // https://www.romhacking.net/translations/3707/
 static struct BurnRomInfo md_ggroundsRomDesc[] = {
-	{ "gain ground (Hack, Spanish).bin",524288, 0xeb5e835c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gain ground (hack, spanish).bin",524288, 0xeb5e835c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ggrounds)
@@ -47463,7 +47463,7 @@ struct BurnDriver BurnDrvmd_ggrounds = {
 // galahad (Hack, Spanish)
 // https://www.romhacking.net/translations/2891/
 static struct BurnRomInfo md_galahadsRomDesc[] = {
-	{ "galahad (Hack, Spanish).bin",1048576, 0x29cb154b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "galahad (hack, spanish).bin",1048576, 0x29cb154b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_galahads)
@@ -47482,7 +47482,7 @@ struct BurnDriver BurnDrvmd_galahads = {
 // galaxy force II (Hack, Spanish)
 // https://www.romhacking.net/translations/5698/
 static struct BurnRomInfo md_gforce2sRomDesc[] = {
-	{ "galaxy force II (Hack, Spanish).bin",1048576, 0x21cdf3cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "galaxy force II (hack, spanish).bin",1048576, 0x21cdf3cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gforce2s)
@@ -47501,7 +47501,7 @@ struct BurnDriver BurnDrvmd_gforce2s = {
 // gargoyles (Hack, Spanish)
 // https://www.romhacking.net/translations/3287/
 static struct BurnRomInfo md_gargoylesRomDesc[] = {
-	{ "gargoyles (Hack, Spanish).bin",3145728, 0x9547f2ff, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gargoyles (hack, spanish).bin",3145728, 0x9547f2ff, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gargoyles)
@@ -47520,7 +47520,7 @@ struct BurnDriver BurnDrvmd_gargoyles = {
 // ghostbusters (Hack, Spanish)
 // https://www.romhacking.net/translations/3600/
 static struct BurnRomInfo md_ghostbstsRomDesc[] = {
-	{ "ghostbusters (Hack, Spanish).bin",524288, 0x4ed2c651, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ghostbusters (hack, spanish).bin",524288, 0x4ed2c651, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ghostbsts)
@@ -47539,7 +47539,7 @@ struct BurnDriver BurnDrvmd_ghostbsts = {
 // ghouls'n ghosts (Hack, Spanish)
 // https://www.romhacking.net/translations/4120/
 static struct BurnRomInfo md_ghoulssRomDesc[] = {
-	{ "ghouls'n ghosts (Hack, Spanish).bin",655360, 0xf71cd080, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ghouls'n ghosts (hack, spanish).bin",655360, 0xf71cd080, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ghoulss)
@@ -47558,7 +47558,7 @@ struct BurnDriver BurnDrvmd_ghoulss = {
 // advanced busterhawk gleylancer (Hack, Spanish)
 // https://www.romhacking.net/translations/3042/
 static struct BurnRomInfo md_gleylancsRomDesc[] = {
-	{ "advanced busterhawk gleylancer (Hack, Spanish).bin",1048576, 0xc30496b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "advanced busterhawk gleylancer (hack, spanish).bin",1048576, 0xc30496b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gleylancs)
@@ -47577,7 +47577,7 @@ struct BurnDriver BurnDrvmd_gleylancs = {
 // gods (Hack, Spanish)
 // https://www.romhacking.net/translations/4649/
 static struct BurnRomInfo md_godssRomDesc[] = {
-	{ "gods (Hack, Spanish).bin",1048576, 0x184498c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gods (hack, spanish).bin",1048576, 0x184498c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_godss)
@@ -47596,7 +47596,7 @@ struct BurnDriver BurnDrvmd_godss = {
 // golden axe (Hack, Spanish)
 // https://www.romhacking.net/translations/3794/
 static struct BurnRomInfo md_goldnaxesRomDesc[] = {
-	{ "golden axe (Hack, Spanish).bin",524288, 0x84828ee6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "golden axe (hack, spanish).bin",524288, 0x84828ee6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goldnaxes)
@@ -47615,7 +47615,7 @@ struct BurnDriver BurnDrvmd_goldnaxes = {
 // golden axe ii (Hack, Spanish)
 // https://www.romhacking.net/translations/3273/
 static struct BurnRomInfo md_goldnax2sRomDesc[] = {
-	{ "golden axe ii (Hack, Spanish).bin",524288, 0xdf84e888, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "golden axe ii (hack, spanish).bin",524288, 0xdf84e888, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goldnax2s)
@@ -47634,7 +47634,7 @@ struct BurnDriver BurnDrvmd_goldnax2s = {
 // golden axe iii (Hack, Spanish)
 // https://www.romhacking.net/translations/3274/
 static struct BurnRomInfo md_goldnax3sRomDesc[] = {
-	{ "golden axe iii (Hack, Spanish).bin",1048576, 0x45eaec5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "golden axe iii (hack, spanish).bin",1048576, 0x45eaec5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goldnax3s)
@@ -47653,7 +47653,7 @@ struct BurnDriver BurnDrvmd_goldnax3s = {
 // goofy's hysterical history tour (Hack, Spanish)
 // https://www.romhacking.net/translations/3674/
 static struct BurnRomInfo md_goofysRomDesc[] = {
-	{ "goofy's hysterical history tour (Hack, Spanish).bin",1048576, 0x9dac66ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "goofy's hysterical history tour (hack, spanish).bin",1048576, 0x9dac66ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goofys)
@@ -47672,7 +47672,7 @@ struct BurnDriver BurnDrvmd_goofys = {
 // granada (Hack, Spanish)
 // https://www.romhacking.net/translations/3601/
 static struct BurnRomInfo md_granadasRomDesc[] = {
-	{ "granada (Hack, Spanish).bin",524288, 0x491b0a71, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "granada (hack, spanish).bin",524288, 0x491b0a71, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_granadas)
@@ -47691,7 +47691,7 @@ struct BurnDriver BurnDrvmd_granadas = {
 // greendog - the beached surfer dude! (Hack, Spanish)
 // https://www.romhacking.net/translations/3141/
 static struct BurnRomInfo md_greendogsRomDesc[] = {
-	{ "greendog - the beached surfer dude! (Hack, Spanish).bin",524288, 0xe0abaaeb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "greendog - the beached surfer dude! (hack, spanish).bin",524288, 0xe0abaaeb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_greendogs)
@@ -47710,7 +47710,7 @@ struct BurnDriver BurnDrvmd_greendogs = {
 // grind stormer (Hack, Spanish)
 // https://www.romhacking.net/translations/5590/
 static struct BurnRomInfo md_grindstsRomDesc[] = {
-	{ "grind stormer (Hack, Spanish).bin",1048576, 0xbd764c90, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "grind stormer (hack, spanish).bin",1048576, 0xbd764c90, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_grindsts)
@@ -47729,7 +47729,7 @@ struct BurnDriver BurnDrvmd_grindsts = {
 // growl (Hack, Spanish)
 // https://www.romhacking.net/translations/3571/
 static struct BurnRomInfo md_growlsRomDesc[] = {
-	{ "growl (Hack, Spanish).bin",524288, 0x95308c0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "growl (hack, spanish).bin",524288, 0x95308c0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_growls)
@@ -47748,7 +47748,7 @@ struct BurnDriver BurnDrvmd_growls = {
 // gunstar heroes (Hack, Spanish)
 // https://www.romhacking.net/translations/3344/
 static struct BurnRomInfo md_gunstarsRomDesc[] = {
-	{ "gunstar heroes (Hack, Spanish).bin",1048576, 0xf296f1c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gunstar heroes (hack, spanish).bin",1048576, 0xf296f1c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gunstars)
@@ -47767,7 +47767,7 @@ struct BurnDriver BurnDrvmd_gunstars = {
 // haunting starring polterguy (Hack, Spanish)
 // https://www.romhacking.net/translations/5439/
 static struct BurnRomInfo md_hauntingsRomDesc[] = {
-	{ "haunting starring polterguy (Hack, Spanish).bin",2097152, 0x2b8e0550, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "haunting starring polterguy (hack, spanish).bin",2097152, 0x2b8e0550, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_hauntings)
@@ -47786,7 +47786,7 @@ struct BurnDriver BurnDrvmd_hauntings = {
 // heavy unit (Hack, Spanish)
 // https://www.romhacking.net/translations/5439/
 static struct BurnRomInfo md_hvyunitsRomDesc[] = {
-	{ "heavy unit (Hack, Spanish).bin",524288, 0xe8a0f97f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "heavy unit (hack, spanish).bin",524288, 0xe8a0f97f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_hvyunits)
@@ -47805,7 +47805,7 @@ struct BurnDriver BurnDrvmd_hvyunits = {
 // hellfire (Hack, Spanish)
 // https://www.romhacking.net/translations/4532/
 static struct BurnRomInfo md_hellfiresRomDesc[] = {
-	{ "hellfire (Hack, Spanish).bin",524288, 0xa8f15ed3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "hellfire (hack, spanish).bin",524288, 0xa8f15ed3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_hellfires)
@@ -47824,7 +47824,7 @@ struct BurnDriver BurnDrvmd_hellfires = {
 // herzog zwei (Hack, Spanish)
 // https://www.romhacking.net/translations/4555/
 static struct BurnRomInfo md_herzogsRomDesc[] = {
-	{ "herzog zwei (Hack, Spanish).bin",524288, 0x7172837d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "herzog zwei (hack, spanish).bin",524288, 0x7172837d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_herzogs)
@@ -47843,7 +47843,7 @@ struct BurnDriver BurnDrvmd_herzogs = {
 // hook (Hack, Spanish)
 // https://www.romhacking.net/translations/3245/
 static struct BurnRomInfo md_hooksRomDesc[] = {
-	{ "hook (Hack, Spanish).bin",1048576, 0xa2f81d5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "hook (hack, spanish).bin",1048576, 0xa2f81d5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_hooks)
@@ -47862,7 +47862,7 @@ struct BurnDriver BurnDrvmd_hooks = {
 // indiana jones and the last crusade (Hack, Spanish)
 // https://www.romhacking.net/translations/3723/
 static struct BurnRomInfo md_indycrussRomDesc[] = {
-	{ "indiana jones and the last crusade (Hack, Spanish).bin",1048576, 0x8c7871ad, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "indiana jones and the last crusade (hack, spanish).bin",1048576, 0x8c7871ad, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_indycruss)
@@ -47881,7 +47881,7 @@ struct BurnDriver BurnDrvmd_indycruss = {
 // insector x (Hack, Spanish)
 // https://www.romhacking.net/translations/4505/
 static struct BurnRomInfo md_insectxsRomDesc[] = {
-	{ "insector x (Hack, Spanish).bin",524288, 0x0a96a725, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "insector x (hack, spanish).bin",524288, 0x0a96a725, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_insectxs)
@@ -47900,7 +47900,7 @@ struct BurnDriver BurnDrvmd_insectxs = {
 // ishido - the way of stones (Hack, Spanish)
 // https://www.romhacking.net/translations/4856/
 static struct BurnRomInfo md_ishidosRomDesc[] = {
-	{ "ishido - the way of stones (Hack, Spanish).bin",131072, 0x9f24780c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ishido - the way of stones (hack, spanish).bin",131072, 0x9f24780c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ishidos)
@@ -47919,7 +47919,7 @@ struct BurnDriver BurnDrvmd_ishidos = {
 // james 'buster' douglas knockout boxing (Hack, Spanish)
 // https://www.romhacking.net/translations/5051/
 static struct BurnRomInfo md_jbdougkosRomDesc[] = {
-	{ "james 'buster' douglas knockout boxing (Hack, Spanish).bin",524288, 0x915c96b4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "james 'buster' douglas knockout boxing (hack, spanish).bin",524288, 0x915c96b4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jbdougkos)
@@ -47938,7 +47938,7 @@ struct BurnDriver BurnDrvmd_jbdougkos = {
 // james bond 007 - the duel (Hack, Spanish)
 // https://www.romhacking.net/translations/4899/
 static struct BurnRomInfo md_jb007sRomDesc[] = {
-	{ "james bond 007 - the duel (Hack, Spanish).bin",524288, 0x4daf3d0d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "james bond 007 - the duel (hack, spanish).bin",524288, 0x4daf3d0d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jb007s)
@@ -47957,7 +47957,7 @@ struct BurnDriver BurnDrvmd_jb007s = {
 // james pond II - codename robocod (Hack, Spanish)
 // https://www.romhacking.net/translations/4057/
 static struct BurnRomInfo md_robocodsRomDesc[] = {
-	{ "james pond II - codename robocod (Hack, Spanish).bin",524288, 0x4733a2ec, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "james pond II - codename robocod (hack, spanish).bin",524288, 0x4733a2ec, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_robocods)
@@ -47976,7 +47976,7 @@ struct BurnDriver BurnDrvmd_robocods = {
 // james pond 3 - operation starfish (Hack, Spanish)
 // https://www.romhacking.net/translations/4934/
 static struct BurnRomInfo md_jpond3sRomDesc[] = {
-	{ "james pond 3 - operation starfish (Hack, Spanish).bin",2097152, 0x4803b7f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "james pond 3 - operation starfish (hack, spanish).bin",2097152, 0x4803b7f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jpond3s)
@@ -47995,7 +47995,7 @@ struct BurnDriver BurnDrvmd_jpond3s = {
 // james pond - underwater agent (Hack, Spanish)
 // https://www.romhacking.net/translations/3742/
 static struct BurnRomInfo md_jpondsRomDesc[] = {
-	{ "james pond - underwater agent (Hack, Spanish).bin",524288, 0x442cd24e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "james pond - underwater agent (hack, spanish).bin",524288, 0x442cd24e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jponds)
@@ -48014,7 +48014,7 @@ struct BurnDriver BurnDrvmd_jponds = {
 // jammit (Hack, Spanish)
 // https://www.romhacking.net/translations/4802/
 static struct BurnRomInfo md_jammitsRomDesc[] = {
-	{ "jammit (Hack, Spanish).bin",2097152, 0x70c27091, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "jammit (hack, spanish).bin",2097152, 0x70c27091, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jammits)
@@ -48033,7 +48033,7 @@ struct BurnDriver BurnDrvmd_jammits = {
 // jewel master (Hack, Spanish)
 // https://www.romhacking.net/translations/3247/
 static struct BurnRomInfo md_jewelmssRomDesc[] = {
-	{ "jewel master (Hack, Spanish).bin",524288, 0xd084b98c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "jewel master (hack, spanish).bin",524288, 0xd084b98c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jewelmss)
@@ -48052,7 +48052,7 @@ struct BurnDriver BurnDrvmd_jewelmss = {
 // joe & mac (Hack, Spanish)
 // https://www.romhacking.net/translations/4545/
 static struct BurnRomInfo md_joemacsRomDesc[] = {
-	{ "joe & mac (Hack, Spanish).bin",1048576, 0xaa290350, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "joe & mac (hack, spanish).bin",1048576, 0xaa290350, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_joemacs)
@@ -48071,7 +48071,7 @@ struct BurnDriver BurnDrvmd_joemacs = {
 // junction (Hack, Spanish)
 // https://www.romhacking.net/translations/4046/
 static struct BurnRomInfo md_junctionsRomDesc[] = {
-	{ "junction (Hack, Spanish).bin",524288, 0x8d2cce27, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "junction (hack, spanish).bin",524288, 0x8d2cce27, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_junctions)
@@ -48090,7 +48090,7 @@ struct BurnDriver BurnDrvmd_junctions = {
 // jurassic park (Hack, Spanish)
 // https://www.romhacking.net/translations/3578/
 static struct BurnRomInfo md_jparksRomDesc[] = {
-	{ "jurassic park (Hack, Spanish).bin",2097152, 0x53d3dd70, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "jurassic park (hack, spanish).bin",2097152, 0x53d3dd70, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jparks)
@@ -48109,7 +48109,7 @@ struct BurnDriver BurnDrvmd_jparks = {
 // jurassic park - rampage edition (Hack, Spanish)
 // https://www.romhacking.net/translations/3616/
 static struct BurnRomInfo md_jparkresRomDesc[] = {
-	{ "jurassic park - rampage edition (Hack, Spanish).bin",2097152, 0x954efbf2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "jurassic park - rampage edition (hack, spanish).bin",2097152, 0x954efbf2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jparkres)
@@ -48128,7 +48128,7 @@ struct BurnDriver BurnDrvmd_jparkres = {
 // justice league task force (Hack, Spanish)
 // https://www.romhacking.net/translations/5197/
 static struct BurnRomInfo md_jleaguesRomDesc[] = {
-	{ "justice league task force (Hack, Spanish).bin",3145728, 0x9844391, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "justice league task force (hack, spanish).bin",3145728, 0x9844391, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jleagues)
@@ -48147,7 +48147,7 @@ struct BurnDriver BurnDrvmd_jleagues = {
 // ka-ge-ki - fists of steel (Hack, Spanish)
 // https://www.romhacking.net/translations/4736/
 static struct BurnRomInfo md_kagekisRomDesc[] = {
-	{ "ka-ge-ki - fists of steel (Hack, Spanish).bin",1048576, 0x7978b1e4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ka-ge-ki - fists of steel (hack, spanish).bin",1048576, 0x7978b1e4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_kagekis)
@@ -48166,7 +48166,7 @@ struct BurnDriver BurnDrvmd_kagekis = {
 // kid chameleon (Hack, Spanish)
 // https://www.romhacking.net/translations/3709/
 static struct BurnRomInfo md_kidchamsRomDesc[] = {
-	{ "kid chameleon (Hack, Spanish).bin",1048576, 0x4871962f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "kid chameleon (hack, spanish).bin",1048576, 0x4871962f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_kidchams)
@@ -48185,7 +48185,7 @@ struct BurnDriver BurnDrvmd_kidchams = {
 // tougiou king colossus (Hack, Spanish)
 // https://www.romhacking.net/translations/5515/
 static struct BurnRomInfo md_kingcolsRomDesc[] = {
-	{ "tougiou king colossus (Hack, Spanish).bin",1048576, 0xa6c9e0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "tougiou king colossus (hack, spanish).bin",1048576, 0xa6c9e0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_kingcols)
@@ -48204,7 +48204,7 @@ struct BurnDriver BurnDrvmd_kingcols = {
 // krusty's super fun house (Hack, Spanish)
 // https://www.romhacking.net/translations/4916/
 static struct BurnRomInfo md_krustysRomDesc[] = {
-	{ "krusty's super fun house (Hack, Spanish).bin",524288, 0xe3a453db, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "krusty's super fun house (hack, spanish).bin",524288, 0xe3a453db, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_krustys)
@@ -48223,7 +48223,7 @@ struct BurnDriver BurnDrvmd_krustys = {
 // landstalker - the treasures of king nole (Hack, Spanish)
 // https://www.romhacking.net/translations/3377/
 static struct BurnRomInfo md_landstlksRomDesc[] = {
-	{ "landstalker - the treasures of king nole (Hack, Spanish).bin", 2359296, 0x019cb7a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "landstalker - the treasures of king nole (hack, spanish).bin", 2359296, 0x019cb7a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_landstlks)
@@ -48242,7 +48242,7 @@ struct BurnDriver BurnDrvmd_landstlks = {
 // langrisser ii (Hack, Spanish)
 // https://www.romhacking.net/translations/3144/
 static struct BurnRomInfo md_langris2sRomDesc[] = {
-	{ "langrisser ii (Hack, Spanish).bin", 2097152, 0x6ed77151, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "langrisser ii (hack, spanish).bin", 2097152, 0x6ed77151, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_langris2s)
@@ -48280,7 +48280,7 @@ struct BurnDriver BurnDrvmd_lordmone = {
 // thunder force iv (Hack, Spanish)
 // https://www.romhacking.net/translations/5467/
 static struct BurnRomInfo md_tf4sRomDesc[] = {
-	{ "thunder force iv (Hack, Spanish).bin", 1048576, 0x04845342, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "thunder force iv (hack, spanish).bin", 1048576, 0x04845342, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tf4s)
@@ -48299,7 +48299,7 @@ struct BurnDriver BurnDrvmd_tf4s = {
 // musha - metallic uniframe super hybrid armor (Hack, Spanish)
 // https://www.romhacking.net/translations/2874/
 static struct BurnRomInfo md_mushasRomDesc[] = {
-	{ "musha - metallic uniframe super hybrid armor (Hack, Spanish).bin", 524288, 0x8013ed8b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "musha - metallic uniframe super hybrid armor (hack, spanish).bin", 524288, 0x8013ed8b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mushas)
@@ -48318,7 +48318,7 @@ struct BurnDriver BurnDrvmd_mushas = {
 // master of monsters (Hack, Spanish)
 // https://www.romhacking.net/translations/4857/
 static struct BurnRomInfo md_mastermsRomDesc[] = {
-	{ "master of monsters (Hack, Spanish).bin", 524288, 0xfc206e6b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "master of monsters (hack, spanish).bin", 524288, 0xfc206e6b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_masterms)
@@ -48337,7 +48337,7 @@ struct BurnDriver BurnDrvmd_masterms = {
 // mcdonald's treasure land adventure (Hack, Spanish)
 // https://www.romhacking.net/translations/5111/
 static struct BurnRomInfo md_mcdonaldsRomDesc[] = {
-	{ "mcdonald's treasure land adventure (Hack, Spanish).bin", 1048576, 0x1245b748, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mcdonald's treasure land adventure (hack, spanish).bin", 1048576, 0x1245b748, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcdonalds)
@@ -48356,7 +48356,7 @@ struct BurnDriver BurnDrvmd_mcdonalds = {
 // mega man - the wily wars (Hack, Spanish)
 // https://www.romhacking.net/translations/3585/
 static struct BurnRomInfo md_megamansRomDesc[] = {
-	{ "mega man - the wily wars (Hack, Spanish).bin", 2097152, 0xc6c7f5b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mega man - the wily wars (hack, spanish).bin", 2097152, 0xc6c7f5b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megamans)
@@ -48375,7 +48375,7 @@ struct BurnDriver BurnDrvmd_megamans = {
 // mega turrican (Hack, Spanish)
 // https://www.romhacking.net/translations/4132/
 static struct BurnRomInfo md_megaturrsRomDesc[] = {
-	{ "mega turrican (Hack, Spanish).bin", 1048576, 0xb2901f8e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mega turrican (hack, spanish).bin", 1048576, 0xb2901f8e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megaturrs)
@@ -48394,7 +48394,7 @@ struct BurnDriver BurnDrvmd_megaturrs = {
 // mercs (Hack, Spanish)
 // https://www.romhacking.net/translations/2873/
 static struct BurnRomInfo md_mercssRomDesc[] = {
-	{ "mercs (Hack, Spanish).bin", 1048576, 0xdb0a96e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mercs (hack, spanish).bin", 1048576, 0xdb0a96e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mercss)
@@ -48413,7 +48413,7 @@ struct BurnDriver BurnDrvmd_mercss = {
 // michael jackson's moonwalker (Hack, Spanish)
 // https://www.romhacking.net/translations/4571/
 static struct BurnRomInfo md_mwalksRomDesc[] = {
-	{ "michael jackson's moonwalker (Hack, Spanish).bin", 524288, 0x6d849e61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "michael jackson's moonwalker (hack, spanish).bin", 524288, 0x6d849e61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mwalks)
@@ -48432,7 +48432,7 @@ struct BurnDriver BurnDrvmd_mwalks = {
 // mick & mack as the global gladiators (Hack, Spanish)
 // https://www.romhacking.net/translations/3997/
 static struct BurnRomInfo md_mickmacksRomDesc[] = {
-	{ "mick & mack as the global gladiators (Hack, Spanish).bin", 1048576, 0x12236d34, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mick & mack as the global gladiators (hack, spanish).bin", 1048576, 0x12236d34, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mickmacks)
@@ -48451,7 +48451,7 @@ struct BurnDriver BurnDrvmd_mickmacks = {
 // mickey mania - the timeless adventures of mickey mouse (Hack, Spanish)
 // https://www.romhacking.net/translations/3111/
 static struct BurnRomInfo md_mmaniasRomDesc[] = {
-	{ "mickey mania - the timeless adventures of mickey mouse (Hack, Spanish).bin", 2097152, 0xa65dae53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mickey mania - the timeless adventures of mickey mouse (hack, spanish).bin", 2097152, 0xa65dae53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mmanias)
@@ -48470,7 +48470,7 @@ struct BurnDriver BurnDrvmd_mmanias = {
 // micro machines (Hack, Spanish)
 // https://www.romhacking.net/translations/4195/
 static struct BurnRomInfo md_micromacsRomDesc[] = {
-	{ "micro machines (Hack, Spanish).bin", 524288, 0x3ba6932d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "micro machines (hack, spanish).bin", 524288, 0x3ba6932d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_micromacs)
@@ -48489,7 +48489,7 @@ struct BurnDriver BurnDrvmd_micromacs = {
 // micro machines - turbo tournament '96 (Hack, Spanish)
 // https://www.romhacking.net/translations/2112/
 static struct BurnRomInfo md_microm96sRomDesc[] = {
-	{ "micro machines - turbo tournament '96 (Hack, Spanish).bin", 1048576, 0x7ceb363d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "micro machines - turbo tournament '96 (hack, spanish).bin", 1048576, 0x7ceb363d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_microm96s)
@@ -48508,7 +48508,7 @@ struct BurnDriver BurnDrvmd_microm96s = {
 // midnight resistance (Hack, Spanish)
 // https://www.romhacking.net/translations/4131/
 static struct BurnRomInfo md_midressRomDesc[] = {
-	{ "midnight resistance (Hack, Spanish).bin", 1048576, 0xfb38b80c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "midnight resistance (hack, spanish).bin", 1048576, 0xfb38b80c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_midress)
@@ -48527,7 +48527,7 @@ struct BurnDriver BurnDrvmd_midress = {
 // mighty morphin power rangers (Hack, Spanish)
 // https://www.romhacking.net/translations/3732/
 static struct BurnRomInfo md_mmprsRomDesc[] = {
-	{ "mighty morphin power rangers (Hack, Spanish).bin", 2097152, 0x5a34dc26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mighty morphin power rangers (hack, spanish).bin", 2097152, 0x5a34dc26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mmprs)
@@ -48546,7 +48546,7 @@ struct BurnDriver BurnDrvmd_mmprs = {
 // mighty morphin power rangers - the movie (Hack, Spanish)
 // https://www.romhacking.net/translations/3731/
 static struct BurnRomInfo md_mmprtmsRomDesc[] = {
-	{ "mighty morphin power rangers - the movie (Hack, Spanish).bin", 2097152, 0xcb3852b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mighty morphin power rangers - the movie (hack, spanish).bin", 2097152, 0xcb3852b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mmprtms)
@@ -48565,7 +48565,7 @@ struct BurnDriver BurnDrvmd_mmprtms = {
 // monster world iv (Hack, Spanish)
 // https://www.romhacking.net/translations/5678/
 static struct BurnRomInfo md_mworld4sRomDesc[] = {
-	{ "monster world iv (Hack, Spanish).bin", 2097152, 0x7dbbfa4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "monster world iv (hack, spanish).bin", 2097152, 0x7dbbfa4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mworld4s)
@@ -48584,7 +48584,7 @@ struct BurnDriver BurnDrvmd_mworld4s = {
 // mortal kombat (Hack, Spanish)
 // https://www.romhacking.net/translations/2068/
 static struct BurnRomInfo md_mksRomDesc[] = {
-	{ "mortal kombat (Hack, Spanish).bin", 2097152, 0x75046fcf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mortal kombat (hack, spanish).bin", 2097152, 0x75046fcf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mks)
@@ -48603,7 +48603,7 @@ struct BurnDriver BurnDrvmd_mks = {
 // Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish)
 // https://www.romhacking.net/hacks/1722/
 static struct BurnRomInfo md_mk2wusRomDesc[] = {
-	{ "Mortal Kombat II (World) Unlimited (Hack, v1.0) (Hack, Spanish).bin", 4136840, 0x40b29dd4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat II (World) Unlimited (Hack, v1.0) (hack, spanish).bin", 4136840, 0x40b29dd4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mk2wus)
@@ -48641,7 +48641,7 @@ struct BurnDriver BurnDrvmd_mk2wuec = {
 // mr. nutz (Hack, Spanish)
 // https://www.romhacking.net/translations/4585/
 static struct BurnRomInfo md_mrnutzsRomDesc[] = {
-	{ "mr. nutz (Hack, Spanish).bin", 1048576, 0xf032c867, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mr. nutz (hack, spanish).bin", 1048576, 0xf032c867, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mrnutzs)
@@ -48660,7 +48660,7 @@ struct BurnDriver BurnDrvmd_mrnutzs = {
 // ms. pac-man (Hack, Spanish)
 // https://www.romhacking.net/translations/4048/
 static struct BurnRomInfo md_mspacmansRomDesc[] = {
-	{ "ms. pac-man (Hack, Spanish).bin", 131072, 0xf9148289, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ms. pac-man (hack, spanish).bin", 131072, 0xf9148289, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mspacmans)
@@ -48679,7 +48679,7 @@ struct BurnDriver BurnDrvmd_mspacmans = {
 // mystic defender (Hack, Spanish)
 // https://www.romhacking.net/translations/3660/
 static struct BurnRomInfo md_mystdefsRomDesc[] = {
-	{ "mystic defender (Hack, Spanish).bin", 524288, 0x2df12159, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mystic defender (hack, spanish).bin", 524288, 0x2df12159, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mystdefs)
@@ -48698,7 +48698,7 @@ struct BurnDriver BurnDrvmd_mystdefs = {
 // mystical fighter (Hack, Spanish)
 // https://www.romhacking.net/translations/4553/
 static struct BurnRomInfo md_mysticfsRomDesc[] = {
-	{ "mystical fighter (Hack, Spanish).bin", 524288, 0x56c54ae8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "mystical fighter (hack, spanish).bin", 524288, 0x56c54ae8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mysticfs)
@@ -48717,7 +48717,7 @@ struct BurnDriver BurnDrvmd_mysticfs = {
 // onslaught (Hack, Spanish)
 // https://www.romhacking.net/translations/4873/
 static struct BurnRomInfo md_onslausRomDesc[] = {
-	{ "onslaught (Hack, Spanish).bin", 524288, 0xf47789e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "onslaught (hack, spanish).bin", 524288, 0xf47789e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_onslaus)
@@ -48736,7 +48736,7 @@ struct BurnDriver BurnDrvmd_onslaus = {
 // outrun (Hack, Spanish)
 // https://www.romhacking.net/translations/3797/
 static struct BurnRomInfo md_outrunsRomDesc[] = {
-	{ "outrun (Hack, Spanish).bin", 1048576, 0x85774b3f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "outrun (hack, spanish).bin", 1048576, 0x85774b3f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_outruns)
@@ -48755,7 +48755,7 @@ struct BurnDriver BurnDrvmd_outruns = {
 // outrun 2019 (Hack, Spanish)
 // https://www.romhacking.net/translations/4070/
 static struct BurnRomInfo md_outr2019sRomDesc[] = {
-	{ "outrun 2019 (Hack, Spanish).bin", 1048576, 0x1a831f41, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "outrun 2019 (hack, spanish).bin", 1048576, 0x1a831f41, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_outr2019s)
@@ -48774,7 +48774,7 @@ struct BurnDriver BurnDrvmd_outr2019s = {
 // outrunners (Hack, Spanish)
 // https://www.romhacking.net/translations/4071/
 static struct BurnRomInfo md_orunnerssRomDesc[] = {
-	{ "outrunners (Hack, Spanish).bin", 2097152, 0x3a0b4aba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "outrunners (hack, spanish).bin", 2097152, 0x3a0b4aba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_orunnerss)
@@ -48812,7 +48812,7 @@ struct BurnDriver BurnDrvmd_orunnershr = {
 // panorama cotton (Hack, Spanish)
 // https://www.romhacking.net/translations/5421/
 static struct BurnRomInfo md_pcottonsRomDesc[] = {
-	{ "panorama cotton (Hack, Spanish).bin", 2621440, 0x7affb73a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "panorama cotton (hack, spanish).bin", 2621440, 0x7affb73a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pcottons)
@@ -48850,7 +48850,7 @@ struct BurnDriver BurnDrvmd_pcottone = {
 // paperboy (Hack, Spanish)
 // https://www.romhacking.net/translations/4075/
 static struct BurnRomInfo md_paperboysRomDesc[] = {
-	{ "paperboy (Hack, Spanish).bin", 524288, 0x023b647c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "paperboy (hack, spanish).bin", 524288, 0x023b647c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_paperboys)
@@ -48869,7 +48869,7 @@ struct BurnDriver BurnDrvmd_paperboys = {
 // paperboy 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/4074/
 static struct BurnRomInfo md_paperbo2sRomDesc[] = {
-	{ "paperboy 2 (Hack, Spanish).bin", 1048576, 0xd0a39c49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "paperboy 2 (hack, spanish).bin", 1048576, 0xd0a39c49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_paperbo2s)
@@ -48888,7 +48888,7 @@ struct BurnDriver BurnDrvmd_paperbo2s = {
 // phelios (Hack, Spanish)
 // https://www.romhacking.net/translations/5458/
 static struct BurnRomInfo md_pheliossRomDesc[] = {
-	{ "phelios (Hack, Spanish).bin", 524288, 0x3c7e8979, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "phelios (hack, spanish).bin", 524288, 0x3c7e8979, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_phelioss)
@@ -48907,7 +48907,7 @@ struct BurnDriver BurnDrvmd_phelioss = {
 // pink goes to hollywood (Hack, Spanish)
 // https://www.romhacking.net/translations/3653/
 static struct BurnRomInfo md_pinksRomDesc[] = {
-	{ "pink goes to hollywood (Hack, Spanish).bin", 1048576, 0xde7a08dd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "pink goes to hollywood (hack, spanish).bin", 1048576, 0xde7a08dd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pinks)
@@ -48926,7 +48926,7 @@ struct BurnDriver BurnDrvmd_pinks = {
 // predator 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/4825/
 static struct BurnRomInfo md_predatr2sRomDesc[] = {
-	{ "predator 2 (Hack, Spanish).bin", 1048576, 0xab9bbe50, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "predator 2 (hack, spanish).bin", 1048576, 0xab9bbe50, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_predatr2s)
@@ -48945,7 +48945,7 @@ struct BurnDriver BurnDrvmd_predatr2s = {
 // prince of persia (Hack, Spanish)
 // https://www.romhacking.net/translations/4824/
 static struct BurnRomInfo md_ppersiasRomDesc[] = {
-	{ "prince of persia (Hack, Spanish).bin", 1048576, 0xa7d7f64d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "prince of persia (hack, spanish).bin", 1048576, 0xa7d7f64d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ppersias)
@@ -48964,7 +48964,7 @@ struct BurnDriver BurnDrvmd_ppersias = {
 // psy-o-blade (Hack, Spanish)
 // https://www.romhacking.net/translations/5221/
 static struct BurnRomInfo md_psyobladsRomDesc[] = {
-	{ "psy-o-blade (Hack, Spanish).bin", 785184, 0x8247a914, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "psy-o-blade (hack, spanish).bin", 785184, 0x8247a914, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_psyoblads)
@@ -48983,7 +48983,7 @@ struct BurnDriver BurnDrvmd_psyoblads = {
 // puggsy (Hack, Spanish)
 // https://www.romhacking.net/translations/4647/
 static struct BurnRomInfo md_puggsysRomDesc[] = {
-	{ "puggsy (Hack, Spanish).bin", 1048576, 0xb7cce9e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "puggsy (hack, spanish).bin", 1048576, 0xb7cce9e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_puggsys)
@@ -49002,7 +49002,7 @@ struct BurnDriver BurnDrvmd_puggsys = {
 // quack shot starring donald duck (Hack, Spanish)
 // https://www.romhacking.net/translations/2118/
 static struct BurnRomInfo md_quackshtsRomDesc[] = {
-	{ "quack shot starring donald duck (Hack, Spanish).bin", 524288, 0x2e304494, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "quack shot starring donald duck (hack, spanish).bin", 524288, 0x2e304494, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_quackshts)
@@ -49237,7 +49237,7 @@ struct BurnDriver Burnmd_Zhanqichess = {
 // radical rex (Hack, Spanish)
 // https://www.romhacking.net/translations/4267/
 static struct BurnRomInfo md_radrexsRomDesc[] = {
-	{ "radical rex (Hack, Spanish).bin", 1048576, 0x3a33bd58, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "radical rex (hack, spanish).bin", 1048576, 0x3a33bd58, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_radrexs)
@@ -49256,7 +49256,7 @@ struct BurnDriver BurnDrvmd_radrexs = {
 // raiden trad -- raiden densetsu (Hack, Spanish)
 // https://www.romhacking.net/translations/4799/
 static struct BurnRomInfo md_raidensRomDesc[] = {
-	{ "raiden trad -- raiden densetsu (Hack, Spanish).bin", 1048576, 0xeee74b65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "raiden trad -- raiden densetsu (hack, spanish).bin", 1048576, 0xeee74b65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_raidens)
@@ -49275,7 +49275,7 @@ struct BurnDriver BurnDrvmd_raidens = {
 // rainbow islands extra (Hack, Spanish)
 // https://www.romhacking.net/translations/4217/
 static struct BurnRomInfo md_rbislandsRomDesc[] = {
-	{ "rainbow islands extra (Hack, Spanish).bin", 524288, 0x7a131386, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rainbow islands extra (hack, spanish).bin", 524288, 0x7a131386, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rbislands)
@@ -49294,7 +49294,7 @@ struct BurnDriver BurnDrvmd_rbislands = {
 // rambo iii (Hack, Spanish)
 // https://www.romhacking.net/translations/3163/
 static struct BurnRomInfo md_rambo3sRomDesc[] = {
-	{ "rambo iii (Hack, Spanish).bin", 262144, 0xe28d6cb0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rambo iii (hack, spanish).bin", 262144, 0xe28d6cb0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rambo3s)
@@ -49313,7 +49313,7 @@ struct BurnDriver BurnDrvmd_rambo3s = {
 // ranger-x (Hack, Spanish)
 // https://www.romhacking.net/translations/4061/
 static struct BurnRomInfo md_rangerxsRomDesc[] = {
-	{ "ranger-x (Hack, Spanish).bin", 1048576, 0x73f94d57, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ranger-x (hack, spanish).bin", 1048576, 0x73f94d57, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rangerxs)
@@ -49332,7 +49332,7 @@ struct BurnDriver BurnDrvmd_rangerxs = {
 // rastan saga ii (Hack, Spanish)
 // https://www.romhacking.net/translations/2986/
 static struct BurnRomInfo md_rastan2sRomDesc[] = {
-	{ "rastan saga ii (Hack, Spanish).bin", 524288, 0xaef20d9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rastan saga ii (hack, spanish).bin", 524288, 0xaef20d9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rastan2s)
@@ -49351,7 +49351,7 @@ struct BurnDriver BurnDrvmd_rastan2s = {
 // rent a hero (Hack, Spanish)
 // https://www.romhacking.net/translations/5520/
 static struct BurnRomInfo md_rentherosRomDesc[] = {
-	{ "rent a hero (Hack, Spanish).bin", 1476768, 0xc248feb3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rent a hero (hack, spanish).bin", 1476768, 0xc248feb3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rentheros)
@@ -49370,7 +49370,7 @@ struct BurnDriver BurnDrvmd_rentheros = {
 // ristar (Hack, Spanish)
 // https://www.romhacking.net/translations/3370/
 static struct BurnRomInfo md_ristarsRomDesc[] = {
-	{ "ristar (Hack, Spanish).bin", 2097152, 0xadaf912c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "ristar (hack, spanish).bin", 2097152, 0xadaf912c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ristars)
@@ -49389,7 +49389,7 @@ struct BurnDriver BurnDrvmd_ristars = {
 // road rash (Hack, Spanish)
 // https://www.romhacking.net/translations/2104/
 static struct BurnRomInfo md_roadrashsRomDesc[] = {
-	{ "road rash (Hack, Spanish).bin", 786432, 0x373d2fba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "road rash (hack, spanish).bin", 786432, 0x373d2fba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_roadrashs)
@@ -49427,7 +49427,7 @@ struct BurnDriver BurnDrvmd_rrash2s = {
 // robocop 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/3048/
 static struct BurnRomInfo md_robocop3sRomDesc[] = {
-	{ "robocop 3 (Hack, Spanish).bin", 524288, 0xeecbff56, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "robocop 3 (hack, spanish).bin", 524288, 0xeecbff56, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_robocop3s)
@@ -49446,7 +49446,7 @@ struct BurnDriver BurnDrvmd_robocop3s = {
 // robocop versus the terminator (Hack, Spanish)
 // https://www.romhacking.net/translations/2939/
 static struct BurnRomInfo md_robotermsRomDesc[] = {
-	{ "robocop versus the terminator (Hack, Spanish).bin", 2097152, 0x431feb53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "robocop versus the terminator (hack, spanish).bin", 2097152, 0x431feb53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_roboterms)
@@ -49465,7 +49465,7 @@ struct BurnDriver BurnDrvmd_roboterms = {
 // rocket knight adventures (Hack, Spanish)
 // https://www.romhacking.net/translations/3641/
 static struct BurnRomInfo md_rocketsRomDesc[] = {
-	{ "rocket knight adventures (Hack, Spanish).bin", 1048576, 0x4ecd1bd6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rocket knight adventures (hack, spanish).bin", 1048576, 0x4ecd1bd6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rockets)
@@ -49484,7 +49484,7 @@ struct BurnDriver BurnDrvmd_rockets = {
 // rolling thunder 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/3542/
 static struct BurnRomInfo md_rthun2sRomDesc[] = {
-	{ "rolling thunder 2 (Hack, Spanish).bin", 1048576, 0x43588ef3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rolling thunder 2 (hack, spanish).bin", 1048576, 0x43588ef3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rthun2s)
@@ -49503,7 +49503,7 @@ struct BurnDriver BurnDrvmd_rthun2s = {
 // rolling thunder 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/3543/
 static struct BurnRomInfo md_rthun3sRomDesc[] = {
-	{ "rolling thunder 3 (Hack, Spanish).bin", 1572864, 0x0ad48d02, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rolling thunder 3 (hack, spanish).bin", 1572864, 0x0ad48d02, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rthun3s)
@@ -49522,7 +49522,7 @@ struct BurnDriver BurnDrvmd_rthun3s = {
 // rolo to the rescue (Hack, Spanish)
 // https://www.romhacking.net/translations/4996/
 static struct BurnRomInfo md_rolosRomDesc[] = {
-	{ "rolo to the rescue (Hack, Spanish).bin", 524288, 0x0c4584a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "rolo to the rescue (hack, spanish).bin", 524288, 0x0c4584a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rolos)
@@ -49541,7 +49541,7 @@ struct BurnDriver BurnDrvmd_rolos = {
 // s.s. lucifer - man overboard! (Hack, Spanish)
 // https://www.romhacking.net/translations/4801
 static struct BurnRomInfo md_manoversRomDesc[] = {
-	{ "s.s. lucifer - man overboard! (Hack, Spanish).bin", 1048576, 0x17edbbfe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "s.s. lucifer - man overboard! (hack, spanish).bin", 1048576, 0x17edbbfe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_manovers)
@@ -49560,7 +49560,7 @@ struct BurnDriver BurnDrvmd_manovers = {
 // sagaia (Hack, Spanish)
 // https://www.romhacking.net/translations/3541/
 static struct BurnRomInfo md_sagaiasRomDesc[] = {
-	{ "sagaia (Hack, Spanish).bin", 1048576, 0x29e1fb66, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sagaia (hack, spanish).bin", 1048576, 0x29e1fb66, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sagaias)
@@ -49579,7 +49579,7 @@ struct BurnDriver BurnDrvmd_sagaias = {
 // saint sword (Hack, Spanish)
 // https://www.romhacking.net/translations/4739/
 static struct BurnRomInfo md_sswordsRomDesc[] = {
-	{ "saint sword (Hack, Spanish).bin", 524288, 0xfe603ec4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "saint sword (hack, spanish).bin", 524288, 0xfe603ec4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sswords)
@@ -49598,7 +49598,7 @@ struct BurnDriver BurnDrvmd_sswords = {
 // samurai shodown (Hack, Spanish)
 // https://www.romhacking.net/translations/4087/
 static struct BurnRomInfo md_samshosRomDesc[] = {
-	{ "samurai shodown (Hack, Spanish).bin", 3145728, 0xf65a06f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "samurai shodown (hack, spanish).bin", 3145728, 0xf65a06f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_samshos)
@@ -49617,7 +49617,7 @@ struct BurnDriver BurnDrvmd_samshos = {
 // saturday night slammasters (Hack, Spanish)
 // https://www.romhacking.net/translations/5573/
 static struct BurnRomInfo md_slammastsRomDesc[] = {
-	{ "saturday night slammasters (Hack, Spanish).bin", 4194304, 0xc4ebbfa1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "saturday night slammasters (hack, spanish).bin", 4194304, 0xc4ebbfa1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_slammasts)
@@ -49636,7 +49636,7 @@ struct BurnDriver BurnDrvmd_slammasts = {
 // scooby doo mystery (Hack, Spanish)
 // https://www.romhacking.net/translations/2672/
 static struct BurnRomInfo md_scoobysRomDesc[] = {
-	{ "scooby doo mystery (Hack, Spanish).bin", 2097152, 0xebf49926, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "scooby doo mystery (hack, spanish).bin", 2097152, 0xebf49926, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_scoobys)
@@ -49655,7 +49655,7 @@ struct BurnDriver BurnDrvmd_scoobys = {
 // shadow blasters (Hack, Spanish)
 // https://www.romhacking.net/translations/4827/
 static struct BurnRomInfo md_shadowsRomDesc[] = {
-	{ "shadow blasters (Hack, Spanish).bin", 524288, 0x1abd9d5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shadow blasters (hack, spanish).bin", 524288, 0x1abd9d5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shadows)
@@ -49674,7 +49674,7 @@ struct BurnDriver BurnDrvmd_shadows = {
 // shadow dancer - the secret of shinobi (Hack, Spanish)
 // https://www.romhacking.net/translations/3119/
 static struct BurnRomInfo md_shdancersRomDesc[] = {
-	{ "shadow dancer - the secret of shinobi (Hack, Spanish).bin", 524288, 0xdd156a80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shadow dancer - the secret of shinobi (hack, spanish).bin", 524288, 0xdd156a80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shdancers)
@@ -49693,7 +49693,7 @@ struct BurnDriver BurnDrvmd_shdancers = {
 // shadow of the beast (Hack, Spanish)
 // https://www.romhacking.net/translations/3668/
 static struct BurnRomInfo md_beastsRomDesc[] = {
-	{ "shadow of the beast (Hack, Spanish).bin", 1048576, 0xde6b78e7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shadow of the beast (hack, spanish).bin", 1048576, 0xde6b78e7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beasts)
@@ -49712,7 +49712,7 @@ struct BurnDriver BurnDrvmd_beasts = {
 // shadow of the beast ii (Hack, Spanish)
 // https://www.romhacking.net/translations/4285/
 static struct BurnRomInfo md_beast2sRomDesc[] = {
-	{ "shadow of the beast ii (Hack, Spanish).bin", 1048576, 0x03b05238, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shadow of the beast ii (hack, spanish).bin", 1048576, 0x03b05238, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_beast2s)
@@ -49731,7 +49731,7 @@ struct BurnDriver BurnDrvmd_beast2s = {
 // shining force (Hack, Spanish)
 // https://www.romhacking.net/translations/5500/
 static struct BurnRomInfo md_shinfrcesRomDesc[] = {
-	{ "shining force (Hack, Spanish).bin", 2621440, 0xbe1677da, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shining force (hack, spanish).bin", 2621440, 0xbe1677da, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinfrces)
@@ -49750,7 +49750,7 @@ struct BurnDriver BurnDrvmd_shinfrces = {
 // shinobi iii - return of the ninja master (Hack, Spanish)
 // https://www.romhacking.net/translations/3118/
 static struct BurnRomInfo md_shinobi3sRomDesc[] = {
-	{ "shinobi iii - return of the ninja master (Hack, Spanish).bin", 1048576, 0xecd332e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "shinobi iii - return of the ninja master (hack, spanish).bin", 1048576, 0xecd332e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinobi3s)
@@ -49769,7 +49769,7 @@ struct BurnDriver BurnDrvmd_shinobi3s = {
 // side pocket (Hack, Spanish)
 // https://www.romhacking.net/translations/4829/
 static struct BurnRomInfo md_sidepocksRomDesc[] = {
-	{ "side pocket (Hack, Spanish).bin", 1048576, 0x8b0d72f8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "side pocket (hack, spanish).bin", 1048576, 0x8b0d72f8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sidepocks)
@@ -49788,7 +49788,7 @@ struct BurnDriver BurnDrvmd_sidepocks = {
 // skeleton krew (Hack, Spanish)
 // https://www.romhacking.net/translations/3655/
 static struct BurnRomInfo md_skelkrewsRomDesc[] = {
-	{ "skeleton krew (Hack, Spanish).bin", 2097152, 0xfc818137, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "skeleton krew (hack, spanish).bin", 2097152, 0xfc818137, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_skelkrews)
@@ -49807,7 +49807,7 @@ struct BurnDriver BurnDrvmd_skelkrews = {
 // slap fight md (Hack, Spanish)
 // https://www.romhacking.net/translations/5198/
 static struct BurnRomInfo md_slapfighsRomDesc[] = {
-	{ "slap fight md (Hack, Spanish).bin", 1048576, 0xb825e72d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "slap fight md (hack, spanish).bin", 1048576, 0xb825e72d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_slapfighs)
@@ -49826,7 +49826,7 @@ struct BurnDriver BurnDrvmd_slapfighs = {
 // snake rattle n' roll (Hack, Spanish)
 // https://www.romhacking.net/translations/4984/
 static struct BurnRomInfo md_snakernrsRomDesc[] = {
-	{ "snake rattle n' roll (Hack, Spanish).bin", 524288, 0x3fc9a196, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "snake rattle n' roll (hack, spanish).bin", 524288, 0x3fc9a196, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_snakernrs)
@@ -49845,7 +49845,7 @@ struct BurnDriver BurnDrvmd_snakernrs = {
 // snow bros. - nick & tom (Hack, Spanish)
 // https://www.romhacking.net/translations/3734/
 static struct BurnRomInfo md_snowbrossRomDesc[] = {
-	{ "snow bros. - nick & tom (Hack, Spanish).bin", 1048576, 0xeeea9522, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "snow bros. - nick & tom (hack, spanish).bin", 1048576, 0xeeea9522, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_snowbross)
@@ -49864,7 +49864,7 @@ struct BurnDriver BurnDrvmd_snowbross = {
 // soldiers of fortune (Hack, Spanish)
 // https://www.romhacking.net/translations/4999/
 static struct BurnRomInfo md_chaosengsRomDesc[] = {
-	{ "soldiers of fortune (Hack, Spanish).bin", 1572864, 0xa595e787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "soldiers of fortune (hack, spanish).bin", 1572864, 0xa595e787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chaosengs)
@@ -49902,7 +49902,7 @@ struct BurnDriver BurnDrvmd_sonic3ds = {
 // space invaders 91 (Hack, Spanish)
 // https://www.romhacking.net/translations/4372/
 static struct BurnRomInfo md_sinv91sRomDesc[] = {
-	{ "space invaders 91 (Hack, Spanish).bin", 262144, 0x648c1179, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "space invaders 91 (hack, spanish).bin", 262144, 0x648c1179, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sinv91s)
@@ -49921,7 +49921,7 @@ struct BurnDriver BurnDrvmd_sinv91s = {
 // sparkster (Hack, Spanish)
 // https://www.romhacking.net/translations/3642/
 static struct BurnRomInfo md_sparkstrsRomDesc[] = {
-	{ "sparkster (Hack, Spanish).bin", 1048576, 0xa110dfe9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sparkster (hack, spanish).bin", 1048576, 0xa110dfe9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sparkstrs)
@@ -49940,7 +49940,7 @@ struct BurnDriver BurnDrvmd_sparkstrs = {
 // spider-man and venom - maximum carnage (Hack, Spanish)
 // https://www.romhacking.net/translations/3656/
 static struct BurnRomInfo md_spidmaxcsRomDesc[] = {
-	{ "spider-man and venom - maximum carnage (Hack, Spanish).bin", 2097152, 0x13135784, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "spider-man and venom - maximum carnage (hack, spanish).bin", 2097152, 0x13135784, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_spidmaxcs)
@@ -49959,7 +49959,7 @@ struct BurnDriver BurnDrvmd_spidmaxcs = {
 // spider-man vs. the kingpin (Hack, Spanish)
 // https://www.romhacking.net/translations/3478/
 static struct BurnRomInfo md_spidkingsRomDesc[] = {
-	{ "spider-man vs. the kingpin (Hack, Spanish).bin", 524288, 0xe04a7f0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "spider-man vs. the kingpin (hack, spanish).bin", 524288, 0xe04a7f0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_spidkings)
@@ -49978,7 +49978,7 @@ struct BurnDriver BurnDrvmd_spidkings = {
 // splatterhouse 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/3799/
 static struct BurnRomInfo md_splatth3sRomDesc[] = {
-	{ "splatterhouse 3 (Hack, Spanish).bin", 2097152, 0xa89df7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "splatterhouse 3 (hack, spanish).bin", 2097152, 0xa89df7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_splatth3s)
@@ -49997,7 +49997,7 @@ struct BurnDriver BurnDrvmd_splatth3s = {
 // stormlord (Hack, Spanish)
 // https://www.romhacking.net/translations/5350/
 static struct BurnRomInfo md_strmlordsRomDesc[] = {
-	{ "stormlord (Hack, Spanish).bin", 524288, 0x7cb3255c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "stormlord (hack, spanish).bin", 524288, 0x7cb3255c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_strmlords)
@@ -50016,7 +50016,7 @@ struct BurnDriver BurnDrvmd_strmlords = {
 // street fighter ii' - special champion edition (Hack, Spanish)
 // https://www.romhacking.net/translations/2075/
 static struct BurnRomInfo md_sf2sRomDesc[] = {
-	{ "street fighter ii' - special champion edition (Hack, Spanish).bin", 3145728, 0x8ae5c323, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "street fighter ii' - special champion edition (hack, spanish).bin", 3145728, 0x8ae5c323, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sf2s)
@@ -50035,7 +50035,7 @@ struct BurnDriver BurnDrvmd_sf2s = {
 // street smart (Hack, Spanish)
 // https://www.romhacking.net/translations/4877/
 static struct BurnRomInfo md_ssmartsRomDesc[] = {
-	{ "street smart (Hack, Spanish).bin", 524288, 0xe678d57e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "street smart (hack, spanish).bin", 524288, 0xe678d57e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssmarts)
@@ -50054,7 +50054,7 @@ struct BurnDriver BurnDrvmd_ssmarts = {
 // Streets of Rage (Hack, Spanish)
 // https://www.romhacking.net/translations/3801/
 static struct BurnRomInfo md_sorsRomDesc[] = {
-	{ "streets of rage (Hack, Spanish).bin", 524288, 0x3e8baf7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "streets of rage (hack, spanish).bin", 524288, 0x3e8baf7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sors)
@@ -50073,7 +50073,7 @@ struct BurnDriver BurnDrvmd_sors = {
 // streets of rage 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/2876/
 static struct BurnRomInfo md_sor2sRomDesc[] = {
-	{ "streets of rage 2 (Hack, Spanish).bin", 2097152, 0x05deb02e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "streets of rage 2 (hack, spanish).bin", 2097152, 0x05deb02e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sor2s)
@@ -50092,7 +50092,7 @@ struct BurnDriver BurnDrvmd_sor2s = {
 // streets of rage 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/5427/
 static struct BurnRomInfo md_sor3sRomDesc[] = {
-	{ "streets of rage 3 (Hack, Spanish).bin", 3145728, 0xf52d84e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "streets of rage 3 (hack, spanish).bin", 3145728, 0xf52d84e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sor3s)
@@ -50111,7 +50111,7 @@ struct BurnDriver BurnDrvmd_sor3s = {
 // strider (Hack, Spanish)
 // https://www.romhacking.net/translations/2887/
 static struct BurnRomInfo md_stridersRomDesc[] = {
-	{ "strider (Hack, Spanish).bin", 1048576, 0xebabd8a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "strider (hack, spanish).bin", 1048576, 0xebabd8a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_striders)
@@ -50130,7 +50130,7 @@ struct BurnDriver BurnDrvmd_striders = {
 // Strider Returns - Journey from Darkness (Hack, Spanish)
 // https://www.romhacking.net/translations/3296/
 static struct BurnRomInfo md_strider2sRomDesc[] = {
-	{ "strider returns - journey from darkness (Hack, Spanish).bin", 1048576, 0x6844745a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "strider returns - journey from darkness (hack, spanish).bin", 1048576, 0x6844745a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_strider2s)
@@ -50149,7 +50149,7 @@ struct BurnDriver BurnDrvmd_strider2s = {
 // subterrania (Hack, Spanish)
 // https://www.romhacking.net/translations/5613/
 static struct BurnRomInfo md_subterrsRomDesc[] = {
-	{ "subterrania (Hack, Spanish).bin", 2097152, 0x5bfd7998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "subterrania (hack, spanish).bin", 2097152, 0x5bfd7998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_subterrs)
@@ -50168,7 +50168,7 @@ struct BurnDriver BurnDrvmd_subterrs = {
 // sunset riders (Hack, Spanish)
 // https://www.romhacking.net/translations/4763/
 static struct BurnRomInfo md_ssriderssRomDesc[] = {
-	{ "sunset riders (Hack, Spanish).bin", 524288, 0x63909c3d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sunset riders (hack, spanish).bin", 524288, 0x63909c3d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssriderss)
@@ -50187,7 +50187,7 @@ struct BurnDriver BurnDrvmd_ssriderss = {
 // Super Fantasy Zone (Hack, Spanish)
 // https://www.romhacking.net/translations/4783/
 static struct BurnRomInfo md_sfzonesRomDesc[] = {
-	{ "super fantasy zone (Hack, Spanish).bin", 1048576, 0xe79f6216, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super fantasy zone (hack, spanish).bin", 1048576, 0xe79f6216, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sfzones)
@@ -50206,7 +50206,7 @@ struct BurnDriver BurnDrvmd_sfzones = {
 // super hang-on (Hack, Spanish)
 // https://www.romhacking.net/translations/3210/
 static struct BurnRomInfo md_shangonsRomDesc[] = {
-	{ "super hang-on (Hack, Spanish).bin", 524288, 0x9586e314, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super hang-on (hack, spanish).bin", 524288, 0x9586e314, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shangons)
@@ -50225,7 +50225,7 @@ struct BurnDriver BurnDrvmd_shangons = {
 // super off road (Hack, Spanish)
 // https://www.romhacking.net/translations/4110/
 static struct BurnRomInfo md_superoffsRomDesc[] = {
-	{ "super off road (Hack, Spanish).bin", 524288, 0x050bbb2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super off road (hack, spanish).bin", 524288, 0x050bbb2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_superoffs)
@@ -50244,7 +50244,7 @@ struct BurnDriver BurnDrvmd_superoffs = {
 // super smash tv (Hack, Spanish)
 // https://www.romhacking.net/translations/4879/
 static struct BurnRomInfo md_ssmashtvsRomDesc[] = {
-	{ "super smash tv (Hack, Spanish).bin", 524288, 0x349b2a6c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super smash tv (hack, spanish).bin", 524288, 0x349b2a6c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssmashtvs)
@@ -50263,7 +50263,7 @@ struct BurnDriver BurnDrvmd_ssmashtvs = {
 // Super Street Fighter II - The New Challengers (Hack, Spanish)
 // https://www.romhacking.net/translations/2884/
 static struct BurnRomInfo md_ssf2sRomDesc[] = {
-	{ "super street fighter ii - the new challengers (Hack, Spanish).bin", 5242880, 0xe8eda797, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super street fighter ii - the new challengers (hack, spanish).bin", 5242880, 0xe8eda797, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssf2s)
@@ -50301,7 +50301,7 @@ struct BurnDriver BurnDrvmd_bk3s = {
 // King's Bounty - The Conqueror's Quest (Hack, Spanish)
 // https://www.romhacking.net/translations/5813/
 static struct BurnRomInfo md_kingsbtysRomDesc[] = {
-	{ "king's bounty - the conqueror's quest (Hack, Spanish).bin", 524288, 0x06f79c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "king's bounty - the conqueror's quest (hack, spanish).bin", 524288, 0x06f79c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_kingsbtys)
@@ -50320,7 +50320,7 @@ struct BurnDriver BurnDrvmd_kingsbtys = {
 // Superman (Hack, Spanish)
 // https://www.romhacking.net/translations/3527/
 static struct BurnRomInfo md_SupermansRomDesc[] = {
-	{ "superman (Hack, Spanish).bin", 1048576, 0x5d538528, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "superman (hack, spanish).bin", 1048576, 0x5d538528, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_Supermans)
@@ -50339,7 +50339,7 @@ struct BurnDriver BurnDrvmd_Supermans = {
 // sword of sodan (Hack, Spanish)
 // https://www.romhacking.net/translations/4831/
 static struct BurnRomInfo md_swordsodsRomDesc[] = {
-	{ "sword of sodan (Hack, Spanish).bin", 524288, 0x5e504f77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sword of sodan (hack, spanish).bin", 524288, 0x5e504f77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_swordsods)
@@ -50358,7 +50358,7 @@ struct BurnDriver BurnDrvmd_swordsods = {
 // sword of vermilion (Hack, Spanish)
 // https://www.romhacking.net/translations/3716/
 static struct BurnRomInfo md_vermilsRomDesc[] = {
-	{ "sword of vermilion (Hack, Spanish).bin", 655360, 0x8cf83e5f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "sword of vermilion (hack, spanish).bin", 655360, 0x8cf83e5f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_vermils)
@@ -50377,7 +50377,7 @@ struct BurnDriver BurnDrvmd_vermils = {
 // syd of valis (Hack, Spanish)
 // https://www.romhacking.net/translations/2870/
 static struct BurnRomInfo md_sydvalissRomDesc[] = {
-	{ "syd of valis (Hack, Spanish).bin", 524288, 0x57f7783f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "syd of valis (hack, spanish).bin", 524288, 0x57f7783f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sydvaliss)
@@ -50396,7 +50396,7 @@ struct BurnDriver BurnDrvmd_sydvaliss = {
 // T2 - The Arcade Game (Hack, Spanish)
 // https://www.romhacking.net/translations/4710/
 static struct BurnRomInfo md_t2agsRomDesc[] = {
-	{ "t2 - the arcade game (Hack, Spanish).bin", 1048576, 0xc1a8c2b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "t2 - the arcade game (hack, spanish).bin", 1048576, 0xc1a8c2b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_t2ags)
@@ -50415,7 +50415,7 @@ struct BurnDriver BurnDrvmd_t2ags = {
 // Target Earth (Hack, Spanish)
 // https://www.romhacking.net/translations/4581/
 static struct BurnRomInfo md_trgearthsRomDesc[] = {
-	{ "target earth (Hack, Spanish).bin", 524288, 0x85691cde, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "target earth (hack, spanish).bin", 524288, 0x85691cde, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_trgearths)
@@ -50434,7 +50434,7 @@ struct BurnDriver BurnDrvmd_trgearths = {
 // task force harrier ex (Hack, Spanish)
 // https://www.romhacking.net/translations/4535/
 static struct BurnRomInfo md_taskfhexsRomDesc[] = {
-	{ "task force harrier ex (Hack, Spanish).bin", 1048576, 0x2f15e258, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "task force harrier ex (hack, spanish).bin", 1048576, 0x2f15e258, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_taskfhexs)
@@ -50453,7 +50453,7 @@ struct BurnDriver BurnDrvmd_taskfhexs = {
 // escape from mars starring taz (Hack, Spanish)
 // https://www.romhacking.net/translations/3421/
 static struct BurnRomInfo md_tazmarssRomDesc[] = {
-	{ "escape from mars starring taz (Hack, Spanish).bin", 2097152, 0x4e2074d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "escape from mars starring taz (hack, spanish).bin", 2097152, 0x4e2074d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tazmarss)
@@ -50472,7 +50472,7 @@ struct BurnDriver BurnDrvmd_tazmarss = {
 // taz-mania (Hack, Spanish)
 // https://www.romhacking.net/translations/2074/
 static struct BurnRomInfo md_tazmaniasRomDesc[] = {
-	{ "taz-mania (Hack, Spanish).bin", 524288, 0x3943f0fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "taz-mania (hack, spanish).bin", 524288, 0x3943f0fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tazmanias)
@@ -50491,7 +50491,7 @@ struct BurnDriver BurnDrvmd_tazmanias = {
 // Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Spanish)
 // https://www.romhacking.net/translations/2886/
 static struct BurnRomInfo md_tmhthhsRomDesc[] = {
-	{ "teenage mutant ninja turtles - the hyperstone heist (Hack, Spanish).bin", 1048576, 0x157d773d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "teenage mutant ninja turtles - the hyperstone heist (hack, spanish).bin", 1048576, 0x157d773d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmhthhs)
@@ -50510,7 +50510,7 @@ struct BurnDriver BurnDrvmd_tmhthhs = {
 // Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Spanish)
 // https://www.romhacking.net/translations/2875/
 static struct BurnRomInfo md_tmnttfsRomDesc[] = {
-	{ "teenage mutant ninja turtles - tournament fighters (Hack, Spanish).bin", 2097152, 0x7c91ba38, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "teenage mutant ninja turtles - tournament fighters (hack, spanish).bin", 2097152, 0x7c91ba38, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmnttfs)
@@ -50529,7 +50529,7 @@ struct BurnDriver BurnDrvmd_tmnttfs = {
 // Terminator 2 - Judgment Day (Hack, Spanish)
 // https://www.romhacking.net/translations/5030/
 static struct BurnRomInfo md_term2sRomDesc[] = {
-{ "terminator 2 - judgment day (Hack, Spanish).bin", 1048576, 0xdf9e55de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+{ "terminator 2 - judgment day (hack, spanish).bin", 1048576, 0xdf9e55de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_term2s)
@@ -50548,7 +50548,7 @@ MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 // tetris (Hack, Spanish)
 // https://www.romhacking.net/translations/4375/
 static struct BurnRomInfo md_tetrissRomDesc[] = {
-	{ "tetris (Hack, Spanish).bin", 262144, 0x6fe8f5c1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "tetris (hack, spanish).bin", 262144, 0x6fe8f5c1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tetriss)
@@ -50567,7 +50567,7 @@ struct BurnDriver BurnDrvmd_tetriss = {
 // The Addams Family (Hack, Spanish)
 // https://www.romhacking.net/translations/3575/
 static struct BurnRomInfo md_addfamsRomDesc[] = {
-	{ "the addams family (Hack, Spanish).bin", 1048576, 0x3b1aa679, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the addams family (hack, spanish).bin", 1048576, 0x3b1aa679, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_addfams)
@@ -50586,7 +50586,7 @@ struct BurnDriver BurnDrvmd_addfams = {
 // the adventures of batman & robin (Hack, Spanish)
 // https://www.romhacking.net/translations/2109/
 static struct BurnRomInfo md_advbatrsRomDesc[] = {
-	{ "the adventures of batman & robin (Hack, Spanish).bin", 2097152, 0x903f8ca7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the adventures of batman & robin (hack, spanish).bin", 2097152, 0x903f8ca7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_advbatrs)
@@ -50605,7 +50605,7 @@ struct BurnDriver BurnDrvmd_advbatrs = {
 // Super Street Fighter II (USA)(20-12-2020)
 // https://www.youtube.com/watch?v=sagYtK0ppfM&t=157s
 static struct BurnRomInfo md_ssf2fhRomDesc[] = {
-	{ "super street fighter ii - the new challengers (Hack, Final).bin", 5242880, 0x8e6772aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "super street fighter ii - the new challengers (hack, final).bin", 5242880, 0x8e6772aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssf2fh)
@@ -50624,7 +50624,7 @@ struct BurnDriver BurnDrvmd_ssf2fh = {
 // Street Fighter II Hyper Champion Edition (Hack)
 // https://www.youtube.com/watch?v=FwHAwDbYKbc
 static struct BurnRomInfo md_sf2hceRomDesc[] = {
-	{ "Street Fighter II' - Hyper Champion Edition (Hack).bin", 3145728, 0xbe0805cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "street fighter ii' - hyper champion edition (hack).bin", 3145728, 0xbe0805cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sf2hce)
@@ -50643,7 +50643,7 @@ struct BurnDriver BurnDrvmd_sf2hce = {
 // the aquatic games starring james pond and the aquabats (Hack, Spanish)
 // https://www.romhacking.net/translations/4932/
 static struct BurnRomInfo md_aquagamesRomDesc[] = {
-	{ "the aquatic games starring james pond and the aquabats (Hack, Spanish).bin", 524288, 0x1776fc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the aquatic games starring james pond and the aquabats (hack, spanish).bin", 524288, 0x1776fc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aquagames)
@@ -50662,7 +50662,7 @@ struct BurnDriver BurnDrvmd_aquagames = {
 // the berenstain bears' camping adventure (Hack, Spanish)
 // https://www.romhacking.net/translations/4215/
 static struct BurnRomInfo md_berenssRomDesc[] = {
-	{ "the berenstain bears' camping adventure (Hack, Spanish).bin", 1048576, 0xd2774706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the berenstain bears' camping adventure (hack, spanish).bin", 1048576, 0xd2774706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_berenss)
@@ -50681,7 +50681,7 @@ struct BurnDriver BurnDrvmd_berenss = {
 // the death and return of superman (Hack, Spanish)
 // https://www.romhacking.net/translations/3673/
 static struct BurnRomInfo md_deathretsRomDesc[] = {
-	{ "the death and return of superman (Hack, Spanish).bin", 2097152, 0x82b94fc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the death and return of superman (hack, spanish).bin", 2097152, 0x82b94fc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_deathrets)
@@ -50700,7 +50700,7 @@ struct BurnDriver BurnDrvmd_deathrets = {
 // the flintstones (Hack, Spanish)
 // https://www.romhacking.net/translations/2113/
 static struct BurnRomInfo md_flintsRomDesc[] = {
-	{ "the flintstones (Hack, Spanish).bin", 524288, 0x2539bd5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "the flintstones (hack, spanish).bin", 524288, 0x2539bd5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_flints)
@@ -50719,7 +50719,7 @@ struct BurnDriver BurnDrvmd_flints = {
 // gadget twins (Hack, Spanish)
 // https://www.romhacking.net/translations/4507/
 static struct BurnRomInfo md_gadgetsRomDesc[] = {
-	{ "gadget twins (Hack, Spanish).bin", 1048576, 0xb5e21dcb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "gadget twins (hack, spanish).bin", 1048576, 0xb5e21dcb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_gadgets)

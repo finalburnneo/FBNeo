@@ -228,6 +228,13 @@ static INT32 pgmGetRoms(bool bLoad)
 				BurnLoadRom(PGMProtROM, i, 1);
 			}
 		}
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 0xa)
+		{ // nvram
+			if (bLoad) {
+				BurnLoadRom(PGM68KRAM, i, 1);
+			}
+		}
 	}
 
 	if (!bLoad) {

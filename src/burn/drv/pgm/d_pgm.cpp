@@ -5289,7 +5289,7 @@ static struct BurnRomInfo ddp3RomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3, ddp3, ddp3Bios) // custom bios
@@ -5331,7 +5331,7 @@ static struct BurnRomInfo ddp3aRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3a, ddp3a, ddp3Bios) // custom bios
@@ -5367,7 +5367,7 @@ static struct BurnRomInfo ddpdojpRomDesc[] = {
 
 	{ "sndmask.rom_mcs1.u3.27c322",	0x0400000, 0x5a0dbd76, 5 | BRF_SND },           // 10 Samples
 
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },           // 11 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },           // 11 NV RAM
 };
 
 STDROMPICKEXT(ddpdojp, ddpdojp, ddp3Bios) // custom bios
@@ -5413,7 +5413,7 @@ static struct BurnRomInfo ddp3bRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3b, ddp3b, ddp3Bios) // custom bios
@@ -5446,7 +5446,7 @@ static struct BurnRomInfo ddp3cRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3c, ddp3c, ddp3Bios) // custom bios
@@ -5479,7 +5479,7 @@ static struct BurnRomInfo ddp3blkRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0xA | BRF_PRG },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blk, ddp3blk, ddp3Bios) // custom bios
@@ -5538,7 +5538,7 @@ static struct BurnRomInfo ddp3blkaRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0xA | BRF_PRG },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blka, ddp3blka, ddp3Bios) // custom bios

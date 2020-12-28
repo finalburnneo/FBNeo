@@ -12411,6 +12411,24 @@ struct BurnDriver BurnDrvnes_allpads = {
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+static struct BurnRomInfo nes_apudinknoiseRomDesc[] = {
+	{ "apu_dink_noise.nes",          32784, 0xb19c71f8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_apudinknoise)
+STD_ROM_FN(nes_apudinknoise)
+
+struct BurnDriver BurnDrvnes_apudinknoise = {
+	"nes_apudinknoise", NULL, NULL, NULL, "1989?",
+	"apu_dink_noise\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_apudinknoiseRomInfo, nes_apudinknoiseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 #endif
 */
 // Non Homebrew (hand-added!)
@@ -30690,6 +30708,23 @@ struct BurnDriver BurnDrvnes_mortalkombat4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mortalkombat4RomInfo, nes_mortalkombat4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mortalkombat4hRomDesc[] = {
+	{ "Mortal Kombat 4 (Hack, UMK3).nes",          2097168, 0xeecfb699, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mortalkombat4h)
+STD_ROM_FN(nes_mortalkombat4h)
+
+struct BurnDriver BurnDrvnes_mortalkombat4h = {
+	"nes_mortalkombat4h", "nes_mortalkombat4", NULL, NULL, "1989?",
+	"Mortal Kombat 4 (Hack, UMK3)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mortalkombat4hRomInfo, nes_mortalkombat4hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

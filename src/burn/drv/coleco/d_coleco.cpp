@@ -7340,7 +7340,7 @@ STD_ROM_FN(cv_boomingboy)
 
 struct BurnDriver BurnDrvcv_boomingboy = {
     "cv_boomingboy", NULL, "cv_coleco", NULL, "2017",
-    "Booming Boy (HB)\0", "SGM - Published by Team Pixelboy", "Armando Pérez Abad and Nene Franz", "ColecoVision",
+    "Booming Boy (HB)\0", "SGM - Published by Team Pixelboy", "Armando Perez Abad and Nene Franz", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_boomingboyRomInfo, cv_boomingboyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

@@ -35,6 +35,10 @@ include:
   # Nintendo 3DS
   - project: 'libretro-infrastructure/ci-templates'
     file: '/ctr-static.yml'
+    
+  # Nintendo WiiU
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/wiiu-static.yml'
 
   # Nintendo Switch
   - project: 'libretro-infrastructure/ci-templates'
@@ -98,6 +102,12 @@ android-x86:
 libretro-build-ctr:
   extends:
     - .libretro-ctr-static-retroarch-master
+    - .core-defs
+    
+# Nintendo WiiU
+libretro-build-wiiu:
+  extends:
+    - .libretro-wiiu-static-retroarch-master
     - .core-defs
 
 # Nintendo Switch

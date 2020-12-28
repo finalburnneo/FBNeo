@@ -116,7 +116,7 @@ typedef struct triangle_s
 typedef struct noise_s
 {
    uint8 regs[4]; /* regs[1] unused */
-   INT32 cur_pos;
+   INT32 lfsr;
    INT32 vbl_length;
    INT32 phaseacc;
    INT32 output_vol;

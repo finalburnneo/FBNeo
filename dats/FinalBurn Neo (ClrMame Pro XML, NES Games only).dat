@@ -6907,6 +6907,13 @@
 		<rom name="Mortal Kombat 3 - Special 56 Peoples (Unl).nes" size="655376" crc="0ba8e82e"/>
 		<driver status="good"/>
 	</game>
+	<game name="mortalkombat4h" cloneof="mortalkombat4" romof="mortalkombat4">
+		<description>Mortal Kombat 4 (Hack, UMK3)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mortal Kombat 4 (Hack, UMK3).nes" size="2097168" crc="eecfb699"/>
+		<driver status="good"/>
+	</game>
 	<game name="mortalkombat4">
 		<description>Mortal Kombat 4 (Unl)</description>
 		<year>1989?</year>

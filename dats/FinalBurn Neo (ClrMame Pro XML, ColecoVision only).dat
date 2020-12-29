@@ -301,6 +301,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="boomingboy" romof="coleco">
+		<description>Booming Boy (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>2017</year>
+		<manufacturer>Armando Perez Abad and Nene Franz</manufacturer>
+		<rom name="booming_boy_cv_sgm.rom" size="32768" crc="924a7d57"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="bdash" romof="coleco">
 		<description>Boulder Dash</description>
 		<year>1984</year>
@@ -555,6 +566,17 @@
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="centiped.1" size="8192" crc="4afc1fea"/>
 		<rom name="centiped.2" size="8192" crc="9ca2a63d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="chprowres" romof="coleco">
+		<description>Champion Pro Wrestling [Homebrew, Published by Team Pixelboy]</description>
+		<year>1985</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="champion_pro_wrestling_cv_sgm.rom" size="32768" crc="045c54d6"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1170,6 +1192,17 @@
 		<manufacturer>Epyx</manufacturer>
 		<rom name="apshai.1" size="8192" crc="aa3ec181"/>
 		<rom name="apshai.2" size="8192" crc="0e440f8f"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="gauntlet" romof="coleco">
+		<description>Gauntlet (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>1985</year>
+		<manufacturer>Atari Games Ltd.</manufacturer>
+		<rom name="gauntlet_cv_sgm.rom" size="262144" crc="652d533e"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1980,6 +2013,17 @@
 		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
 		<driver status="good"/>
 	</game>
+	<game name="multiverse" romof="coleco">
+		<description>Multiverse (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2019</year>
+		<manufacturer>Hikaru Games</manufacturer>
+		<rom name="multiverse_cv.rom" size="32768" crc="d45475ac"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
 	<game name="musicbox" romof="coleco">
 		<description>Music Box (Demo)</description>
 		<year>1987</year>
@@ -2337,6 +2381,17 @@
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
 		<rom name="qbert.bin" size="8192" crc="532f61ba"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbiqs" romof="coleco">
+		<description>QBIQS (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>2010</year>
+		<manufacturer>Z80ST Software</manufacturer>
+		<rom name="qbiqs_cv_sgm.rom" size="131072" crc="ee530ad2"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3488,6 +3543,17 @@
 		<manufacturer>Sega</manufacturer>
 		<rom name="upndown.1" size="8192" crc="20020b8c"/>
 		<rom name="upndown.2" size="8192" crc="ecc346e6"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<driver status="good"/>
+	</game>
+	<game name="uridium" romof="coleco">
+		<description>Uridium (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
+		<year>2019</year>
+		<manufacturer>Trilobyte</manufacturer>
+		<rom name="uridium_cv_sgm.rom" size="131072" crc="bc8320a0"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

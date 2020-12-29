@@ -328,10 +328,14 @@ double BurnGetTime();
 
 // Handy debug binary-file dumper
 #if defined (FBNEO_DEBUG)
-void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize);
+void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize, INT32 append);
 #define BurnDump(fn, b, bs) do { \
     bprintf(0, _T("Dumping %S (0x%x bytes) to %S\n"), #b, bs, #fn); \
-    BurnDump_(fn, b, bs); } while (0)
+    BurnDump_(fn, b, bs, 0); } while (0)
+
+#define BurnDumpAppend(fn, b, bs) do { \
+    bprintf(0, _T("Dumping %S (0x%x bytes) to %S (append)\n"), #b, bs, #fn); \
+    BurnDump_(fn, b, bs, 1); } while (0)
 
 void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
 #define BurnDumpLoad(fn, b, bs) do { \

@@ -20,7 +20,7 @@ extern INT32 nVezCount;
 INT32 VezTotalCycles();
 void VezNewFrame();
 void VezRunEnd();
-void VezIdle(INT32 cycles);
+INT32 VezIdle(INT32 cycles);
 
 INT32 VezInit(INT32 nCPU, INT32 type, INT32 clock); // v20/v25/v30/v33/v35
 INT32 VezInit(INT32 cpu, INT32 type); // v20/v30/v33 only

@@ -20369,10 +20369,10 @@ static struct BurnRomInfo nblktigerRomDesc[] = {
 #if 0
 	{ "nblktiger-c3.bin",    0x800000, 0xaa469494, 3 | BRF_GRA },           //  Duplicate Sprite data files
 	{ "nblktiger-c4.bin",    0x800000, 0xfa07ba1e, 3 | BRF_GRA },           //
-	{ "nblktiger-c3.bin",    0x800000, 0xaa469494, 3 | BRF_GRA },           //  
-	{ "nblktiger-c4.bin",    0x800000, 0xfa07ba1e, 3 | BRF_GRA },           //
-	{ "nblktiger-c3.bin",    0x800000, 0xaa469494, 3 | BRF_GRA },           //  
-	{ "nblktiger-c4.bin",    0x800000, 0xfa07ba1e, 3 | BRF_GRA },           //
+	{ "nblktiger-c5.bin",    0x800000, 0xaa469494, 3 | BRF_GRA },           //  
+	{ "nblktiger-c6.bin",    0x800000, 0xfa07ba1e, 3 | BRF_GRA },           //
+	{ "nblktiger-c7.bin",    0x800000, 0xaa469494, 3 | BRF_GRA },           //  
+	{ "nblktiger-c8.bin",    0x800000, 0xfa07ba1e, 3 | BRF_GRA },           //
 #endif
 
 	{ "nblktiger-m1.bin",    0x010000, 0x2037dc19, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
@@ -20397,6 +20397,51 @@ struct BurnDriver BurnDrvNblktiger = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, nblktigerRomInfo, nblktigerRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The Eye of Typhoon Demo
+// https://ozzyouzo.itch.io/teot
+
+static struct BurnRomInfo teotRomDesc[] = {
+	{ "teot-p1.bin",    0x100000, 0x759b68d3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "teot-s1.bin",    0x020000, 0xa545b593, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "teot-c1.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  2 Sprite data
+	{ "teot-c2.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //  3
+#if 0
+	{ "teot-c3.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  Duplicate Sprite data files
+	{ "teot-c4.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
+	{ "teot-c5.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  
+	{ "teot-c6.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
+	{ "teot-c7.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  
+	{ "teot-c8.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
+#endif
+
+	{ "teot-m1.bin",    0x010000, 0x2b5738dc, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "teot-v1.bin",    0x100000, 0xac261416, 5 | BRF_SND },           //  5 Sound data
+	{ "teot-v2.bin",    0x100000, 0x95ea979a, 5 | BRF_SND },           //  6
+	{ "teot-v3.bin",    0x100000, 0x493223d3, 5 | BRF_SND },           //  7
+	{ "teot-v4.bin",    0x100000, 0xfbf00c96, 5 | BRF_SND },           //  8
+	{ "teot-v5.bin",    0x100000, 0x9b2031d4, 5 | BRF_SND },           //  9
+	{ "teot-v6.bin",    0x100000, 0x107cfc89, 5 | BRF_SND },           // 10
+	{ "teot-v7.bin",    0x100000, 0x0703b761, 5 | BRF_SND },           // 11
+	{ "teot-v8.bin",    0x100000, 0x8d525588, 5 | BRF_SND },           // 12
+	{ "teot-v9.bin",    0x100000, 0x97f073b6, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(teot, teot, neogeo)
+STD_ROM_FN(teot)
+
+struct BurnDriver BurnDrvTeot = {
+	"teot", NULL, "neogeo", NULL, "2020",
+	"The Eye of Typhoon Demo\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesjapanDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

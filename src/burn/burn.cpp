@@ -1037,9 +1037,9 @@ void logerror(char* szFormat, ...)
 #endif
 
 #if defined (FBNEO_DEBUG)
-void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize)
+void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize, INT32 append)
 {
-    FILE *f = fopen(filename, "wb+");
+	FILE *f = fopen(filename, (append) ? "a+b" : "wb+");
     fwrite(buffer, 1, bufsize, f);
     fclose(f);
 }

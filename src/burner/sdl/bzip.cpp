@@ -498,7 +498,9 @@ int BzipOpen(bool bootApp)
 		for (int d = 0; d < DIRS_MAX; d++)
 		{
 			TCHAR szFullName[MAX_PATH];
-
+			if (strlen(szAppRomPaths[d]) == 0) 
+				continue;
+			
 			_stprintf(szFullName, _T("%s%hs"), szAppRomPaths[d], szName);
 
 			if (RomArchiveExists(szFullName))                  // Check existence of the rom zip/7z archive file

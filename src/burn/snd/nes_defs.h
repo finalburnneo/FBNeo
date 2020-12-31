@@ -116,7 +116,7 @@ typedef struct triangle_s
 typedef struct noise_s
 {
    uint8 regs[4]; /* regs[1] unused */
-   INT32 cur_pos;
+   INT32 lfsr;
    INT32 vbl_length;
    INT32 phaseacc;
    INT32 output_vol;
@@ -188,7 +188,7 @@ static const INT32 freq_limit[8] =
 /* table of noise frequencies */
 static const INT32 noise_freq[16] =
 {
-   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 2046
+   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
 };
 
 /* dpcm transfer freqs */

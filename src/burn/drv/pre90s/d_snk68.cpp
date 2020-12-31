@@ -1650,6 +1650,41 @@ struct BurnDriver BurnDrvpow = {
 };
 
 
+// P.O.W. - Prisoners of War (US version 1, mask ROM sprites )
+
+static struct BurnRomInfo powaRomDesc[] = {
+	{ "dg1ver1.j14", 	0x20000, 0x8e71a8af, 1 | BRF_PRG }, //  0 68k Code
+	{ "dg2ver1.l14", 	0x20000, 0x4287affc, 1 | BRF_PRG }, //  1
+
+	{ "dg8.e25",     	0x10000, 0xd1d61da3, 2 | BRF_PRG }, //  2 Z80 Code
+
+	{ "dg9.l25",     	0x08000, 0xdf864a08, 3 | BRF_GRA }, //  3 Characters
+	{ "dg10.m25",    	0x08000, 0x9e470d53, 3 | BRF_GRA }, //  4
+
+	{ "pow8804_w50.4",  0x80000, 0x18fd04a3, 4 | BRF_GRA }, //  5 Sprites
+	{ "pow8806_w52.6",  0x80000, 0x09b654e9, 4 | BRF_GRA }, //  6
+	{ "pow8803_w49.3",  0x80000, 0xf68712a3, 4 | BRF_GRA }, //  7
+	{ "pow8805_w51.5",  0x80000, 0x8595cf76, 4 | BRF_GRA }, //  8
+	
+	{ "dg7.d20",     	0x10000, 0xaba9a9d3, 5 | BRF_SND }, //  9 upd7759 samples
+
+	{ "pal20l10.a6", 	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 10 pld
+};
+
+STD_ROM_PICK(powa)
+STD_ROM_FN(powa)
+
+struct BurnDriver BurnDrvpowa = {
+	"powa", "pow", NULL, NULL, "1988",
+	"P.O.W. - Prisoners of War (US version 1, mask ROM sprites )\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, powaRomInfo, powaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PowDIPInfo,
+	powInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 256, 224, 4, 3
+};
+
+
 // Datsugoku - Prisoners of War (Japan)
 
 static struct BurnRomInfo powjRomDesc[] = {

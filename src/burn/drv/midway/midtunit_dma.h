@@ -436,7 +436,6 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
         else
             pixels = 0;
     }
-
 skipdma:
-	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*pixels) * 0.0063447), TUnitDmaCallback);
+	TMS34010TimerSet(((double)((double)50000000/8/1000000000) * (41*pixels)));
 }

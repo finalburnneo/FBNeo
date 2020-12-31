@@ -14,7 +14,7 @@ extern int vsync;
 extern char videofiltering[3];
 
 static unsigned char* VidMem = NULL;
-static SDL_Window* sdlWindow = NULL;
+extern SDL_Window* sdlWindow;
 SDL_Renderer* sdlRenderer = NULL;
 static SDL_Texture* sdlTexture = NULL;
 static int  nRotateGame = 0;
@@ -24,6 +24,8 @@ static SDL_Rect title_texture_rect;
 static SDL_Rect dest_title_texture_rect;
 
 static int screenh, screenw;
+static char Windowtitle[512];
+
 
 void RenderMessage()
 {
@@ -34,7 +36,15 @@ void RenderMessage()
 	}
 	if (bAppShowFPS)
 	{
-		inprint_shadowed(sdlRenderer, fpsstring, 10, 50);
+		if (bAppFullscreen)
+		{
+			inprint_shadowed(sdlRenderer, fpsstring, 10, 50);
+		} 
+		else 
+		{
+			sprintf(Windowtitle, "FBNeo - FPS: %s - %s - %s", fpsstring, BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+			SDL_SetWindowTitle(sdlWindow, Windowtitle);
+		}
 	}
 
 	if (messageFrames > 1)
@@ -54,7 +64,10 @@ static int Exit()
 	SDL_DestroyRenderer(sdlRenderer);
 	SDL_DestroyWindow(sdlWindow);
 
-	free(VidMem);
+	if (VidMem)
+	{
+		free(VidMem);
+	}
 	return 0;
 }
 static int display_w = 400, display_h = 300;
@@ -81,7 +94,14 @@ static int Init()
 	{
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
-		BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)))
+		{
+			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
+		}
+		else
+		{
+			BurnDrvGetAspect(&GameAspectX, &GameAspectY);
+		}
 
 		display_w = nVidImageWidth;
 #ifdef INCLUDE_SWITCHRES
@@ -91,7 +111,6 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 			printf("Vertical\n");
 			nRotateGame = 1;
 			sr_set_rotation(1);
@@ -104,7 +123,6 @@ static int Init()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
 			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
 			printf("Vertical\n");
 			nRotateGame = 1;
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
@@ -119,9 +137,7 @@ static int Init()
 		}
 	}
 
-	char title[512];
-
-	sprintf(title, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
+	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 
 	Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
@@ -149,7 +165,7 @@ static int Init()
 	if (nRotateGame)
 	{
 		sdlWindow = SDL_CreateWindow(
-			title,
+			Windowtitle,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			display_h,
@@ -165,17 +181,14 @@ static int Init()
 	else
 	{
 		sdlWindow = SDL_CreateWindow(
-			title,
+			Windowtitle,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			display_h,
 			display_w,
+			display_h,
 			screenFlags
 		);
 	}
-
-
-
 
 	// Check that the window was successfully created
 	if (sdlWindow == NULL)
@@ -195,9 +208,13 @@ static int Init()
 	sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, renderflags);
 	if (sdlRenderer == NULL)
 	{
-		// In the case that the window could not be made...
-		printf("Could not create renderer: %s\n", SDL_GetError());
-		return 1;
+		sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_SOFTWARE);
+		if (sdlRenderer == NULL)
+		{	
+			// In the case that the window could not be made...
+			printf("Could not create renderer: %s\n", SDL_GetError());
+			return 1;
+		}
 	}
 
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_NONE);
@@ -218,7 +235,7 @@ static int Init()
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
 
-	printf("setting logical size w: %d h: %d", display_w, display_h);
+	printf("setting logical size w: %d h: %d\n", display_w, display_h);
 
 	if (nRotateGame)
 	{
@@ -229,6 +246,14 @@ static int Init()
 		SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
 	}
 
+	// Force to scale * 2
+	// TODO
+	int w;
+	int h;
+	SDL_GetWindowSize(sdlWindow, &w, &h);
+	SDL_SetWindowSize(sdlWindow, w*2, h*2);
+	SDL_SetWindowPosition(sdlWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	
 	inrenderer(sdlRenderer); //TODO: this is not supposed to be here
 	prepare_inline_font();   // TODO: BAD
 	incolor(0xFFF000, 0);
@@ -326,25 +351,21 @@ static int Paint(int bValidate)
 	int   pitch;
 
 	SDL_RenderClear(sdlRenderer);
-
+	SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
 	if (nRotateGame)
 	{
-		SDL_UpdateTexture(sdlTexture, NULL, pVidImage, nVidImagePitch);
-		if (nRotateGame && bFlipped)
-		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 90, NULL, SDL_FLIP_NONE);
-		}
-		if (nRotateGame && !bFlipped)
-		{
-			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 270, NULL, SDL_FLIP_NONE);
-		}
+		SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, (bFlipped ? 90 : 270), NULL, SDL_FLIP_NONE);
 	}
 	else
 	{
-		SDL_LockTexture(sdlTexture, NULL, &pixels, &pitch);
-		memcpy(pixels, pVidImage, nVidImagePitch * nVidImageHeight);
-		SDL_UnlockTexture(sdlTexture);
-		SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &dstrect);
+		if (bFlipped)
+		{
+			SDL_RenderCopyEx(sdlRenderer, sdlTexture, NULL, &dstrect, 180, NULL, SDL_FLIP_NONE);
+		}
+		else
+		{
+			SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, &dstrect);
+		}
 	}
 
 	RenderMessage();

@@ -510,6 +510,11 @@ static void initialize_flash_config()
 	m_flash_chip[0].state = F_READ;
 	m_flash_chip[0].manufacturer_id = 0x98;
 
+	if (ri.nLen > 0x100000 && ri.nLen < 0x200000) {
+		bprintf(0, _T("Weird cart size, padding up to 0x200000.\n"));
+		ri.nLen = 0x200000;
+	}
+
 	switch ( ri.nLen )
 	{
 		case 0x08000:
@@ -3501,3 +3506,21 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 	160, 152, 4, 3
 };
 
+// Gears of Fate (HB)
+
+static struct BurnRomInfo ngpc_gearsoffateRomDesc[] = {
+	{ "Gears of Fate (2009)(Thor).ngp", 1917732, 0x3c75807e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_gearsoffate, ngpc_gearsoffate, ngpc_ngp)
+STD_ROM_FN(ngpc_gearsoffate)
+
+struct BurnDriver BurnDrvngpc_gearsoffate = {
+	"ngp_gearsoffate", NULL, "ngp_ngp", NULL, "2000",
+	"Gears of Fate (HB)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	NgpGetZipName, ngpc_gearsoffateRomInfo, ngpc_gearsoffateRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};

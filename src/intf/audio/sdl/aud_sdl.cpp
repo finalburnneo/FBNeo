@@ -216,6 +216,9 @@ static int SDLSoundStop()
 
 static int SDLSoundSetVolume()
 {
+	nSDLVolume = int(SDL_MIX_MAXVOLUME * nAudVolume / 10000);
+	if (nSDLVolume > SDL_MIX_MAXVOLUME) nSDLVolume=SDL_MIX_MAXVOLUME;
+	if (nSDLVolume < 0) nSDLVolume=0;
 	return 1;
 }
 

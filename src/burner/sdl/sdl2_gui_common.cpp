@@ -39,7 +39,26 @@ void renderPanel(SDL_Renderer* sdlRenderer, int x, int y, int w, int h, UINT8 r,
 {
 	SDL_Rect fillRect = { x, y, w, h };
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 200);
+	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 180);
 	SDL_RenderFillRect(sdlRenderer, &fillRect);
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_NONE);
+}
+
+int GetFullscreen()
+{
+		return bAppFullscreen?1:0;
+}
+
+void SetFullscreen(int f)
+{
+	bAppFullscreen = f?1:0;
+
+	if (bAppFullscreen)
+	{
+		SDL_SetWindowFullscreen(sdlWindow, SDL_WINDOW_FULLSCREEN);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(sdlWindow, 0);
+	}
 }

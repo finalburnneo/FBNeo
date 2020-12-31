@@ -13,6 +13,9 @@ const UINT32 gmask = 0x00ff0000;
 const UINT32 bmask = 0xff000000;
 #endif
 
+
+static Uint32 starting_stick;
+
 static SDL_Renderer* sdlRenderer = NULL;
 static SDL_Surface* screenshot = NULL;
 static SDL_Texture* screenshotTexture = NULL;
@@ -91,7 +94,7 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
  {"Controller Options\0", ControllerMenuSelected, NULL},
  {"Save State\0", QuickSave, NULL},
  {"Load State\0", QuickLoad, NULL},
- {"Save Screenshot\0", NULL, NULL},
+ {"Save Screenshot\0", MakeScreenShot, NULL},
  {"Back to Game!\0", BackToGameSelected, NULL},
 };
 
@@ -229,15 +232,22 @@ void ingame_gui_start(SDL_Renderer* renderer)
 
 	dest_title_texture_rect.x = 150; //the x coordinate
 	dest_title_texture_rect.y = 0; // the y coordinate
-	dest_title_texture_rect.w = 50; //the width of the texture
-	dest_title_texture_rect.h = 50; //the height of the texture
+	dest_title_texture_rect.w = 100; //the width of the texture
+	dest_title_texture_rect.h = 100; //the height of the texture
 
   ingame_gui_init();
 
   while (!finished)
   {
+	starting_stick = SDL_GetTicks();  
+	  
     finished = ingame_gui_process();
     ingame_gui_render();
+	  
+	// limit 5 FPS (free CPU usage)		
+	if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick) {
+		SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
+	}
   }
 
   ingame_gui_exit();

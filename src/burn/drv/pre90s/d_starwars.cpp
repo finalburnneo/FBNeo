@@ -694,15 +694,15 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale((1080*500/400), 1080);
+			vector_rescale((1080*640/480), 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Height != 400) {
-			vector_rescale(500, 400);
+		if (Height != 480) {
+			vector_rescale(640, 480);
 			return 1;
 		}
 	}
@@ -1196,7 +1196,7 @@ struct BurnDriver BurnDrvStarwars = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwarsRomInfo, starwarsRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	640, 480, 4, 3
 };
 
 
@@ -1231,7 +1231,7 @@ struct BurnDriver BurnDrvStarwars1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwars1RomInfo, starwars1RomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	640, 480, 4, 3
 };
 
 
@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvStarwarso = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, starwarsoRomInfo, starwarsoRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,
 	StarwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	640, 480, 4, 3
 };
 
 
@@ -1347,7 +1347,7 @@ struct BurnDriver BurnDrvEsb = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, esbRomInfo, esbRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
 	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
-	500, 400, 4, 3
+	640, 480, 4, 3
 };
 
 

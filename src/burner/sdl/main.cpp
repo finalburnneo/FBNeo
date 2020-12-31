@@ -26,11 +26,17 @@ int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
 bool bSaveconfig = 1;
 bool bIntegerScale = false;
 bool bAlwaysMenu = false;
-
+int nGameSelect = 0;
+int nFilterSelect = HARDWARE_PUBLIC_MASK;
+bool bShowAvailableOnly = true;
+bool bShowClones = true;
+int gameSelectedFromFilter = -1;
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
 
 #ifdef BUILD_SDL2
+SDL_Window* sdlWindow = NULL;
+ 
 static char* szSDLeepromPath = NULL;
 static char* szSDLhiscorePath = NULL;
 static char* szSDLHDDPath = NULL;
@@ -368,7 +374,7 @@ int main(int argc, char* argv[])
 	}
 #endif
 
-	SDL_ShowCursor(SDL_DISABLE);
+	//SDL_ShowCursor(SDL_DISABLE);
 
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	szSDLhiscorePath = SDL_GetPrefPath("fbneo", "hiscore");

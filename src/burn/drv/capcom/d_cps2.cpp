@@ -1090,8 +1090,33 @@ STD_ROM_PICK(Ninexxjr2)
 STD_ROM_FN(Ninexxjr2)
 
 static struct BurnRomInfo Nine44RomDesc[] = {
+	{ "nffe.03",       0x080000, 0x7544b926, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffe.04",       0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffe.05",       0x080000, 0xd78d31d3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xf809d898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15ba4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3dd41b8c, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3fe3a54b, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565cd231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63ca5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21eb8f3b, CPS2_GFX | BRF_GRA },
+
+	{ "nff.01",        0x020000, 0xd2e44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
+	
+	{ "1944.key",      0x000014, 0x5f22140e, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Nine44)
+STD_ROM_FN(Nine44)
+
+static struct BurnRomInfo Nine44uRomDesc[] = {
 	{ "nffu.03",       0x080000, 0x9693cf8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.04",       0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "nffu.05",       0x080000, 0xea813eb7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },
@@ -1108,15 +1133,15 @@ static struct BurnRomInfo Nine44RomDesc[] = {
 	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
 	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
 	
-	{ "1944.key",      0x000014, 0x61734f5b, CPS2_ENCRYPTION_KEY },
+	{ "1944u.key",     0x000014, 0x61734f5b, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Nine44)
-STD_ROM_FN(Nine44)
+STD_ROM_PICK(Nine44u)
+STD_ROM_FN(Nine44u)
 
 static struct BurnRomInfo Nine44jRomDesc[] = {
 	{ "nffj.03",       0x080000, 0x247521ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffj.04",       0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "nffj.05",       0x080000, 0x7f20c2ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },
@@ -5686,6 +5711,35 @@ static struct BurnRomInfo Sfa2ur1RomDesc[] = {
 STD_ROM_PICK(Sfa2ur1)
 STD_ROM_FN(Sfa2ur1)
 
+static struct BurnRomInfo Sfa2uhcRomDesc[] = {
+	{ "sz2uhc.03",     0x080000, 0x916316e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.04",       0x080000, 0xac46e5ed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.05",       0x080000, 0x6c0c79d3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.06",       0x080000, 0xc5c8eb63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.07",       0x080000, 0x5de01cc5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.08",       0x080000, 0xbea11d56, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz2.13m",       0x400000, 0x4d1f1f22, CPS2_GFX | BRF_GRA },
+	{ "sz2.15m",       0x400000, 0x19cea680, CPS2_GFX | BRF_GRA },
+	{ "sz2.17m",       0x400000, 0xe01b4588, CPS2_GFX | BRF_GRA },
+	{ "sz2.19m",       0x400000, 0x0feeda64, CPS2_GFX | BRF_GRA },
+	{ "sz2.14m",       0x100000, 0x0560c6aa, CPS2_GFX | BRF_GRA },
+	{ "sz2.16m",       0x100000, 0xae940f87, CPS2_GFX | BRF_GRA },
+	{ "sz2.18m",       0x100000, 0x4bc3c8bc, CPS2_GFX | BRF_GRA },
+	{ "sz2.20m",       0x100000, 0x39e674c0, CPS2_GFX | BRF_GRA },
+
+	{ "sz2.01a",       0x020000, 0x1bc323cf, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz2.02a",       0x020000, 0xba6a5013, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
+	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+
+	{ "sfa2u.key",     0x000014, 0x4a8d91ef, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfa2uhc)
+STD_ROM_FN(Sfa2uhc)
+
 static struct BurnRomInfo Sfz2aRomDesc[] = {
 	{ "sz2a.03a",      0x080000, 0x30d2099f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2a.04a",      0x080000, 0x1cc94db1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8867,7 +8921,7 @@ struct BurnDriver BurnDrvCps19xxjr2 = {
 
 struct BurnDriver BurnDrvCps1944 = {
 	"1944", NULL, NULL, NULL, "2000",
-	"1944 - the loop master (000620 USA)\0", NULL, "Capcom / 8ing / Raizing", "CPS2",
+	"1944 - the loop master (000620 Euro)\0", NULL, "Eighting / Raizing (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, Nine44RomInfo, Nine44RomName, NULL, NULL, NULL, NULL, Nine44InputInfo, NULL,
@@ -8875,9 +8929,19 @@ struct BurnDriver BurnDrvCps1944 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCps1944u = {
+	"1944u", "1944", NULL, NULL, "2000",
+	"1944 - the loop master (000620 USA)\0", NULL, "Eighting / Raizing (Capcom license)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
+	NULL, Nine44uRomInfo, Nine44uRomName, NULL, NULL, NULL, NULL, Nine44InputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCps1944j = {
 	"1944j", "1944", NULL, NULL, "2000",
-	"1944 - the loop master (000620 Japan)\0", NULL, "Capcom / 8ing / Raizing", "CPS2",
+	"1944 - the loop master (000620 Japan)\0", NULL, "Eighting / Raizing (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, Nine44jRomInfo, Nine44jRomName, NULL, NULL, NULL, NULL, Nine44InputInfo, NULL,
@@ -10491,6 +10555,16 @@ struct BurnDriver BurnDrvCpsSfa2ur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa2ur1RomInfo, Sfa2ur1RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfa2uhc = {
+	"sfa2uhc", "sfa2", "sfa2ur1", NULL, "2009",
+	"Street Fighter Alpha 2 - Unlock Hidden Characters (Hack By Yumeji)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa2uhcRomInfo, Sfa2uhcRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

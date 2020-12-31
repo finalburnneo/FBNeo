@@ -2154,28 +2154,29 @@ static INT32 MetamrphInit()
 	EEPROMInit(&mystwarr_eeprom_interface);
 
 	K054539Init(0, 48000, DrvSndROM, 0x400000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	K054539_set_gain(0, 0, 0.80);
-	K054539_set_gain(0, 1, 0.80);
-	K054539_set_gain(0, 2, 0.80);
-	K054539_set_gain(0, 3, 0.80);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.70, BURN_SND_ROUTE_LEFT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.70, BURN_SND_ROUTE_RIGHT);
+	K054539SetFlags(0, K054539_REVERSE_STEREO | K054539_UPDATE_AT_KEYON);
+	K054539_set_gain(0, 0, 0.98);
+	K054539_set_gain(0, 1, 0.98);
+	K054539_set_gain(0, 2, 0.98);
+	K054539_set_gain(0, 3, 0.98);  // drums, choir
 	K054539_set_gain(0, 4, 1.80);
 	K054539_set_gain(0, 5, 1.80);
 	K054539_set_gain(0, 6, 1.80);
-	K054539_set_gain(0, 7, 1.80);
+	K054539_set_gain(0, 7, 1.80); // voice horns flute
 
 	K054539Init(1, 48000, DrvSndROM, 0x400000);
-	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	K054539_set_gain(1, 0, 0.80);
-	K054539_set_gain(1, 1, 0.80);
-	K054539_set_gain(1, 2, 0.80);
-	K054539_set_gain(1, 3, 0.80);
-	K054539_set_gain(1, 4, 0.80);
-	K054539_set_gain(1, 5, 0.80);
-	K054539_set_gain(1, 6, 0.80);
-	K054539_set_gain(1, 7, 0.80);
+	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.70, BURN_SND_ROUTE_LEFT);
+	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.70, BURN_SND_ROUTE_RIGHT);
+	K054539_set_gain(1, 0, 0.60); // horns, choir
+	K054539_set_gain(1, 1, 0.60);
+	K054539_set_gain(1, 2, 0.60);
+	K054539_set_gain(1, 3, 0.60);
+	K054539_set_gain(1, 4, 0.70);
+	K054539_set_gain(1, 5, 0.70);
+	K054539_set_gain(1, 6, 0.70);
+	K054539_set_gain(1, 7, 0.70);
 
 	DrvDoReset();
 

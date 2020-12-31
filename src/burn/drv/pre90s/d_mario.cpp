@@ -983,45 +983,6 @@ struct BurnDriver BurnDrvMarioe = {
 };
 
 
-// Mario Bros. (US, Unknown Rev)
-
-static struct BurnRomInfo mariooRomDesc[] = {
-	{ "tma1-c-7f_.7f",	0x2000, 0xc0c6e014, 1 }, //  0 maincpu
-	{ "tma1-c-7f_.7e",	0x2000, 0x116b3856, 1 }, //  1
-	{ "tma1-c-7f_.7d",	0x2000, 0xdcceb6c1, 1 }, //  2
-	{ "tma1-c-7f_.7c",	0x1000, 0x4a63d96b, 1 }, //  3
-
-	{ "tma1-c-6k_e.6k",	0x1000, 0x06b9ff85, 2 }, //  4 audiocpu
-
-	{ "tma1-v-3f.3f",	0x1000, 0x28b0c42c, 3 }, //  5 gfx1
-	{ "tma1-v-3j.3j",	0x1000, 0x0c8cc04d, 3 }, //  6
-
-	{ "tma1-v-7m.7m",	0x1000, 0x22b7372e, 4 }, //  7 gfx2
-	{ "tma1-v-7n.7n",	0x1000, 0x4f3a1f47, 4 }, //  8
-	{ "tma1-v-7p.7p",	0x1000, 0x56be6ccd, 4 }, //  9
-	{ "tma1-v-7s.7s",	0x1000, 0x56f1d613, 4 }, // 10
-	{ "tma1-v-7t.7t",	0x1000, 0x641f0008, 4 }, // 11
-	{ "tma1-v-7u.7u",	0x1000, 0x7baf5309, 4 }, // 12
-
-	{ "tma1-c-4p.4p",	0x0200, 0xafc9bd41, 5 }, // 13 proms
-
-	{ "tma1-c-5p.5p",	0x0020, 0x58d86098, 6 }, // 14 unk_proms
-};
-
-STD_ROM_PICK(marioo)
-STD_ROM_FN(marioo)
-
-struct BurnDriver BurnDrvMarioo = {
-	"marioo", "mario", NULL, "mario", "1983",
-	"Mario Bros. (US, Unknown Rev)\0", NULL, "Nintendo of America", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, mariooRomInfo, mariooRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MariooInputInfo, MarioDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
 // Mario Bros. (Japan)
 
 static struct BurnRomInfo mariojRomDesc[] = {
@@ -1066,6 +1027,7 @@ static INT32 DrvInitmasao()
 	masao = 1;
 	return DrvInit();
 }
+
 
 // Masao
 

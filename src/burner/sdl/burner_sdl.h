@@ -44,7 +44,15 @@ extern TCHAR szAppBurnVer[16];
 extern bool  bAppFullscreen;
 extern bool bIntegerScale;
 extern bool bAlwaysMenu;
+extern int 	nGameSelect;
+extern int 	nFilterSelect;
+extern bool bShowAvailableOnly;
+extern bool bShowClones;
+extern int gameSelectedFromFilter;
 
+#ifdef BUILD_SDL2
+extern SDL_Window* sdlWindow;
+#endif
 extern TCHAR* GetIsoPath();
 
 TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize);

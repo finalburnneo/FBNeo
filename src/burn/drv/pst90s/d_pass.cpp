@@ -305,7 +305,7 @@ static void draw_foreground_layer()
 
 		if (sx >= nScreenWidth || sx < -3 || sy >= nScreenHeight || sy < -3) continue;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = attr & 0x3fff;
 		INT32 flipy = (attr & 0x8000) >> 15;
 		INT32 flipx = (attr & 0x4000) >> 14;
@@ -339,7 +339,7 @@ static void draw_background_layer()
 
 		if (sx >= nScreenWidth || sx < -7 || sy >= nScreenHeight || sy < -7) continue;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = attr & 0x1fff;
 		INT32 flipy = attr & 0x8000;
 		INT32 flipx = attr & 0x4000;
@@ -366,7 +366,7 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *pal = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x200; i++) {
-			INT32 d = pal[i];
+			INT32 d = BURN_ENDIAN_SWAP_INT16(pal[i]);
 
 			r = ((d >> 10) & 0x1f);
 			g = ((d >>  5) & 0x1f);

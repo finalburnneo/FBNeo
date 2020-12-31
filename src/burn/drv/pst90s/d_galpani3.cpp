@@ -555,7 +555,7 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
 }
 
 #define COPY_SPRITE_PIXEL(prio)		\
-	if ((sprpri == (prio)) && sprdat) dst = DrvPalette[sprline[drawx] & 0x3fff]
+	{ if ((sprpri == (prio)) && sprdat) dst = DrvPalette[sprline[drawx] & 0x3fff]; }
 
 #define DRAW_BLIT_PIXEL(dat,fb)						\
 {													\
@@ -577,9 +577,30 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
 	}												\
 }
 
-#define DRAW_BLITLAYER1()	DRAW_BLIT_PIXEL(dat1+0x4000,0)
-#define DRAW_BLITLAYER2()	DRAW_BLIT_PIXEL(dat2+0x4100,1)
-#define DRAW_BLITLAYER3()	DRAW_BLIT_PIXEL(dat3+0x4200,2)
+#define DRAW_BLIT_PIXELTRANSPEN(dat,fb)				\
+{													\
+	UINT16 pen = dat;								\
+	UINT32 pal = DrvPalette[pen];					\
+	INT32 alpha = 0xff;								\
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + pen * 2))) >> 15) {	\
+		alpha = fbbright2[fb] & 0xff;				\
+	} else {										\
+		alpha = fbbright1[fb] & 0xff;				\
+	}												\
+	if (alpha != 0xff)								\
+	{												\
+		if (pal) dst = alpha_blend(dst, pal, alpha);\
+	}												\
+	else											\
+	{												\
+	    if (pal) dst = pal;   						\
+	}												\
+}
+
+#define DRAW_BLITLAYER1()	DRAW_BLIT_PIXEL(dat1+0x4000, 0)
+#define DRAW_BLITLAYER2()	DRAW_BLIT_PIXEL(dat2+0x4100, 1)
+#define DRAW_BLITLAYER3()	DRAW_BLIT_PIXEL(dat3+0x4200, 2)
+#define DRAW_BLITLAYER3TRANSPEN()	DRAW_BLIT_PIXELTRANSPEN(dat3+0x4200, 2)
 
 static INT32 DrvDraw()
 {
@@ -590,6 +611,7 @@ static INT32 DrvDraw()
 	if (~BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x04) {
 		BurnBitmapFill(1, 0);
 	}
+
 	skns_draw_sprites(BurnBitmapGetBitmap(1), (UINT32*)DrvSprRAM, 0x4000, DrvSprROM, 0x200000, (UINT32*)DrvSprRegs, 0);
 
 	for (INT32 drawy = 0; drawy < nScreenHeight; drawy++)
@@ -617,46 +639,48 @@ static INT32 DrvDraw()
 
 			if (pridat==0x0f)
 			{
-				COPY_SPRITE_PIXEL(0x0000);
-				if (enable[2]) DRAW_BLITLAYER3()
-				COPY_SPRITE_PIXEL(0x4000);
-				if (dat1 && enable[0]) DRAW_BLITLAYER1()
-				COPY_SPRITE_PIXEL(0x8000);
-				if (dat2 && enable[1]) DRAW_BLITLAYER2()
-				COPY_SPRITE_PIXEL(0xc000);
+				if (nSpriteEnable & 1) COPY_SPRITE_PIXEL(0x0000);
+				if (nBurnLayer & 1 && enable[2]) DRAW_BLITLAYER3();
+				if (nSpriteEnable & 2) COPY_SPRITE_PIXEL(0x4000);
+				if (nBurnLayer & 2 && dat1 && enable[0]) DRAW_BLITLAYER1();
+				if (nSpriteEnable & 4) COPY_SPRITE_PIXEL(0x8000);
+				if (nBurnLayer & 4 && dat2 && enable[1]) DRAW_BLITLAYER2();
+				if (nSpriteEnable & 8) COPY_SPRITE_PIXEL(0xc000);
 			}
 			else if (pridat==0xcf)
 			{
-				COPY_SPRITE_PIXEL(0x0000);
-				if (nBurnLayer & 1 && enable[0]) DRAW_BLIT_PIXEL(0x4300, 0)
-				COPY_SPRITE_PIXEL(0x4000);
-				if (nBurnLayer & 2 && enable[1]) DRAW_BLIT_PIXEL(0x4301, 1)
-				COPY_SPRITE_PIXEL(0x8000);
-				if (dat3 && enable[2]) DRAW_BLITLAYER3()
-				COPY_SPRITE_PIXEL(0xc000);
+				//   -all-: black lines left-behind (silhouette)   - dec.  23, 2020 (dink)
+				if (nSpriteEnable & 1) COPY_SPRITE_PIXEL(0x0000);
+				if (nBurnLayer & 1 && enable[0]) DRAW_BLIT_PIXEL(0x4300, 0);
+				if (nSpriteEnable & 2) COPY_SPRITE_PIXEL(0x4000);
+				if (nBurnLayer & 2 && enable[1]) DRAW_BLIT_PIXEL(0x4301, 1);
+				if (nSpriteEnable & 4) COPY_SPRITE_PIXEL(0x8000);
+				if (nBurnLayer & 4 && dat3 && enable[2]) DRAW_BLITLAYER3TRANSPEN();
+				if (nSpriteEnable & 8) COPY_SPRITE_PIXEL(0xc000);
 			}
 			else if (pridat==0x30)
 			{
-				COPY_SPRITE_PIXEL(0x0000);
-				if (enable[1]) DRAW_BLITLAYER2()
-				COPY_SPRITE_PIXEL(0x4000);
-				if (dat1 && enable[0]) DRAW_BLITLAYER1()
-				COPY_SPRITE_PIXEL(0x8000);
-				if (dat3 && enable[1]) DRAW_BLITLAYER3()
-				COPY_SPRITE_PIXEL(0xc000);
+				if (nSpriteEnable & 1) COPY_SPRITE_PIXEL(0x0000);
+				if (nBurnLayer & 1 && enable[1]) DRAW_BLITLAYER2();
+				if (nSpriteEnable & 2) COPY_SPRITE_PIXEL(0x4000);
+				if (nBurnLayer & 2 && dat1 && enable[0]) DRAW_BLITLAYER1();
+				if (nSpriteEnable & 4) COPY_SPRITE_PIXEL(0x8000);
+				if (nBurnLayer & 4 && dat3 && enable[1]) DRAW_BLITLAYER3();
+				if (nSpriteEnable & 8) COPY_SPRITE_PIXEL(0xc000);
 			}
 			else
 			{
 				// Usually pridat = 0x00.  Used @
 				//   Bootup
 				//   Minigame: Girl with ice-cubes infront   - april 16, 2020 (dink)
-				COPY_SPRITE_PIXEL(0x0000);
-				if (enable[0]) DRAW_BLITLAYER1()
-				if (dat2 && enable[1]) DRAW_BLITLAYER2()
-				COPY_SPRITE_PIXEL(0x4000);
-				COPY_SPRITE_PIXEL(0x8000);
-				if (dat3 && enable[2]) DRAW_BLITLAYER3()
-				COPY_SPRITE_PIXEL(0xc000);
+				//   -all-: black lines left-behind (girl)   - dec.  23, 2020 (dink)
+				if (nSpriteEnable & 1) COPY_SPRITE_PIXEL(0x0000);
+				if (nBurnLayer & 1 && enable[0]) DRAW_BLITLAYER1();
+				if (nBurnLayer & 2 && dat2 && enable[1]) DRAW_BLITLAYER2();
+				if (nSpriteEnable & 2) COPY_SPRITE_PIXEL(0x4000);
+				if (nSpriteEnable & 4) COPY_SPRITE_PIXEL(0x8000);
+				if (nBurnLayer & 4 && dat3 && enable[2]) DRAW_BLITLAYER3TRANSPEN();
+				if (nSpriteEnable & 8) COPY_SPRITE_PIXEL(0xc000);
 			}
 
 			PutPix(bmp + drawx * nBurnBpp, BurnHighCol((dst >> 16) & 0xff, (dst >> 8) & 0xff, dst & 0xff, 0));

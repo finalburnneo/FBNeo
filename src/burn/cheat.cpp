@@ -398,13 +398,18 @@ void CheatSearchExit()
 	memset(CheatSearchShowResultValues, 0, sizeof(CheatSearchShowResultValues));
 }
 
-void CheatSearchStart()
+int CheatSearchStart()
 {
 	UINT32 nAddress;
 	
 	INT32 nActiveCPU = 0;
 	cheat_ptr = &cpus[nActiveCPU];
 	cheat_subptr = cheat_ptr->cpuconfig;
+
+	if (cheat_subptr->nMemorySize & 0x80000000 || cheat_subptr->nMemorySize >= 0x20000000) {
+		bprintf(0, _T("*  CPU memory range too huge, can't cheat search.\n"));
+		return 1; // fail
+	}
 
 	nActiveCPU = cheat_subptr->active();
 	if (nActiveCPU >= 0) {
@@ -433,6 +438,8 @@ void CheatSearchStart()
 		// re-open cpu which was open when cheatsearch started.
 		cheat_subptr->open(nActiveCPU);
 	}
+
+	return 0; // success
 }
 
 static void CheatSearchGetResults()

@@ -144,14 +144,14 @@ static tilemap_scan( patapata )
 
 static tilemap_callback( bg )
 {
-	UINT16 code = *((UINT16*)(DrvBgRAM + (offs * 2)));
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM + (offs * 2))));
 
 	TILE_SET_INFO(0, code, code >> 12, 0);
 }
 
 static tilemap_callback( fg )
 {
-	UINT16 code = *((UINT16*)(DrvFgRAM + (offs * 2)));
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvFgRAM + (offs * 2))));
 
 	TILE_SET_INFO(1, (code & 0xfff) | fg_bank, code >> 12, 0);
 }
@@ -308,9 +308,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x300; i++)
 	{
-		UINT8 r = ((p[i] >> 11) & 0x1e) | ((p[i] >> 3) & 1);
-		UINT8 g = ((p[i] >>  7) & 0x1e) | ((p[i] >> 2) & 1);
-		UINT8 b = ((p[i] >>  3) & 0x1e) | ((p[i] >> 1) & 1);
+		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 11) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 3) & 1);
+		UINT8 g = ((BURN_ENDIAN_SWAP_INT16(p[i]) >>  7) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 2) & 1);
+		UINT8 b = ((BURN_ENDIAN_SWAP_INT16(p[i]) >>  3) & 0x1e) | ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 1) & 1);
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -329,17 +329,17 @@ static INT32 DrvDraw()
 
 	UINT16 *regs = (UINT16*)DrvVidRegs;
 
-	fg_bank = (regs[4] & 0x3) << 12;
+	fg_bank = (BURN_ENDIAN_SWAP_INT16(regs[4]) & 0x3) << 12;
 
-	INT32 scrollx = (regs[2] - 0xff0) & 0xfff;
-	INT32 scrolly = (regs[3] - 0x7b0) & 0xfff;
+	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(regs[2]) - 0xff0) & 0xfff;
+	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(regs[3]) - 0x7b0) & 0xfff;
 	if (scrolly & 0x200) scrollx += 0x1000;
 
 	GenericTilemapSetScrollX(0, scrollx);
 	GenericTilemapSetScrollY(0, scrolly & 0x1ff);
 
-	scrollx = (regs[0] - 0xff0) & 0xfff;
-	scrolly = (regs[1] - 0x7b0) & 0xfff;
+	scrollx = (BURN_ENDIAN_SWAP_INT16(regs[0]) - 0xff0) & 0xfff;
+	scrolly = (BURN_ENDIAN_SWAP_INT16(regs[1]) - 0x7b0) & 0xfff;
 	if (scrolly & 0x200) scrollx += 0x1000;
 
 	GenericTilemapSetScrollX(1, scrollx);

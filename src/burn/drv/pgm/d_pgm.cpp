@@ -5289,7 +5289,7 @@ static struct BurnRomInfo ddp3RomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3, ddp3, ddp3Bios) // custom bios
@@ -5331,7 +5331,7 @@ static struct BurnRomInfo ddp3aRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3a, ddp3a, ddp3Bios) // custom bios
@@ -5367,7 +5367,7 @@ static struct BurnRomInfo ddpdojpRomDesc[] = {
 
 	{ "sndmask.rom_mcs1.u3.27c322",	0x0400000, 0x5a0dbd76, 5 | BRF_SND },           // 10 Samples
 
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },           // 11 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },           // 11 NV RAM
 };
 
 STDROMPICKEXT(ddpdojp, ddpdojp, ddp3Bios) // custom bios
@@ -5413,7 +5413,7 @@ static struct BurnRomInfo ddp3bRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3b, ddp3b, ddp3Bios) // custom bios
@@ -5446,7 +5446,7 @@ static struct BurnRomInfo ddp3cRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
-	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+	{ "ddp3_defaults.nv",			0x0020000, 0x571e96c0, 0xA | BRF_PRG },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ddp3c, ddp3c, ddp3Bios) // custom bios
@@ -5479,7 +5479,7 @@ static struct BurnRomInfo ddp3blkRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0xA | BRF_PRG },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blk, ddp3blk, ddp3Bios) // custom bios
@@ -5538,7 +5538,7 @@ static struct BurnRomInfo ddp3blkaRomDesc[] = {
 
 	{ "ddp3_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",		0x0020000, 0xa1651904, 0xA | BRF_PRG },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blka, ddp3blka, ddp3Bios) // custom bios
@@ -7788,5 +7788,41 @@ struct BurnDriver BurnDrvMarmatsc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, marmatscRomInfo, marmatscRomName, NULL, NULL, NULL, NULL, pgmInputInfo, martmastDIPInfo,
 	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Oriental Legend 2 (One Key Edition, Hack)
+// Hack by 哆啦A梦
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=702576&extra=page%3D1
+
+static struct BurnRomInfo oldsplusoRomDesc[] = {
+	{ "v-205cn_onekey.u10",			0x0400000, 0xa3cd1b1d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t05301w064.u2",			0x0800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a05301w064.u3",			0x0800000, 0x57946fd2, 3 | BRF_GRA },	 		//  2 Sprite Color Data
+	{ "igs_a05302w064.u4",			0x0800000, 0x3459a0b8, 3 | BRF_GRA },			//  3
+	{ "igs_a05303w064.u6",			0x0800000, 0x13475d85, 3 | BRF_GRA },			//  4
+	{ "igs_a05304w064.u8",			0x0800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
+
+	{ "igs_b05301w064.u9",			0x0800000, 0xfd98f503, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05302w064.u11",			0x0800000, 0x9f6094a8, 4 | BRF_GRA },			//  7
+
+	{ "igs_w05301b032.u5",			0x0400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
+
+	{ "oldspluso_igs027a.bin",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(oldspluso, oldspluso, pgm)
+STD_ROM_FN(oldspluso)
+
+struct BurnDriver BurnDrvoldspluso = {
+	"oldspluso", "oldsplus", "pgm", NULL, "2020-12-10",
+	"Oriental Legend 2 (One Key Edition, Hack)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, oldsplusoRomInfo, oldsplusoRomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
+	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

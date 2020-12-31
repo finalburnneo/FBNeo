@@ -60,6 +60,7 @@
 #include "m6502_intf.h"
 #include "nes_apu.h"
 #include "nes_defs.h"
+#include "downsample.h"
 
 #define CHIP_NUM	2
 
@@ -90,8 +91,7 @@ struct nesapu_info
 	INT16 *stream;
 	INT32 samples_per_frame;
 
-	UINT32 nSampleSize;
-	INT32 nFractionalPosition;
+	Downsampler resamp;
 
 	UINT32 (*pSyncCallback)(INT32 samples_per_frame);
 	INT32 current_position;
@@ -126,6 +126,8 @@ static INT32 clocky;
 static UINT8 *dmc_buffer;
 INT16 *nes_ext_buffer;
 INT16 (*nes_ext_sound_cb)();
+
+static const INT32 *dpcm_clocks;
 
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan);
 
@@ -209,23 +211,6 @@ static void create_squaretab(float *buf)
 
 	for (int i = 1; i < 254; i++)
 		buf[i] = 95.52 / (8128.00 / i + 100.00);
-}
-
-/* INITIALIZE NOISE LOOKUP TABLE */
-static void create_noise(UINT8 *buf, const INT32 bits, INT32 size)
-{
-   static INT32 m = 0x0011;
-   INT32 xor_val, i;
-
-   for (i = 0; i < size; i++)
-   {
-      xor_val = m & 1;
-      m >>= 1;
-      xor_val ^= (m & 1);
-      m |= xor_val << (bits - 1);
-
-      buf[i] = m;
-   }
 }
 
 /* TODO: sound channels should *ALL* have DC volume decay */
@@ -385,7 +370,6 @@ static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
 /* OUTPUT NOISE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
 {
-   INT32 freq, env_delay;
    UINT8 outvol;
    UINT8 output;
 
@@ -397,18 +381,22 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
    if (false == chan->enabled)
       return 0;
 
-   /* enveloping */
-   env_delay = info->sync_times1[chan->regs[0] & 0x0F];
-
-   /* decay is at a rate of (env_regs + 1) / 240 secs */
-   chan->env_phase -= 4;
-   while (chan->env_phase < 0)
-   {
-      chan->env_phase += env_delay;
-      if (chan->regs[0] & 0x20)
-         chan->env_vol = (chan->env_vol + 1) & 15;
-      else if (chan->env_vol < 15)
-         chan->env_vol++;
+   if (chan->env_phase & 0x80000) {
+	   // env start-up
+	   // reset phase for env -dink (fixes clicks in Eggerland FDS title music)
+	   chan->env_phase = info->sync_times1[chan->regs[0] & 0x0F];
+	   chan->env_vol = 0x00;
+   } else {
+	   /* decay is at a rate of (env_regs + 1) / 240 secs */
+	   chan->env_phase -= 4;
+	   if (chan->env_phase < 0)
+	   {
+		   chan->env_phase += info->sync_times1[chan->regs[0] & 0x0F];
+		   if (chan->regs[0] & 0x20)
+			   chan->env_vol = (chan->env_vol + 1) & 15;
+		   else if (chan->env_vol < 15)
+			   chan->env_vol++;
+	   }
    }
 
    /* length counter */
@@ -418,38 +406,27 @@ static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
          chan->vbl_length--;
    }
 
-   if (0 == chan->vbl_length)
+   if (chan->vbl_length <= 0)
       return 0;
 
-   freq = noise_freq[chan->regs[2] & 0x0F];
    chan->phaseacc -= 4;
-   while (chan->phaseacc < 0)
+   if (chan->phaseacc < 0)
    {
-      chan->phaseacc += freq;
+      chan->phaseacc += noise_freq[chan->regs[2] & 0x0F];
 
-      chan->cur_pos++;
-      if (NOISE_SHORT == chan->cur_pos && (chan->regs[2] & 0x80))
-         chan->cur_pos = 0;
-      else if (NOISE_LONG == chan->cur_pos)
-         chan->cur_pos = 0;
+	  UINT16 feedback = (chan->lfsr & 0x01) ^ ((chan->lfsr >> ((chan->regs[2] & 0x80) ? 6 : 1)) & 0x01);
+	  chan->lfsr = ((chan->lfsr >> 1) | (feedback << 14)) & 0x7fff;
    }
 
    if (chan->regs[0] & 0x10) /* fixed volume */
-      outvol = chan->regs[0] & 0x0F;
+	   outvol = chan->regs[0] & 0x0F;
    else
 	   outvol = 0x0F - chan->env_vol;
 
-   output = info->noise_lut[chan->cur_pos];
-   if (output > outvol)
-      output = outvol;
+   output = (chan->lfsr & 1) ? 0 : outvol;
 
-   if (info->noise_lut[chan->cur_pos] & 0x80) /* make it negative */
-      output = 0;
-
-   return (int8) output;
+   return output;
 }
-
-static void apu_update(struct nesapu_info *info);
 
 // parts from dink's unfinished nes-apu
 static inline void apu_dpcmreset(dpcm_t *chan)
@@ -651,10 +628,8 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
 
       if (info->APU.noi.enabled)
       {
-         info->APU.noi.vbl_length = info->vbl_times[value >> 3];
-         info->APU.noi.env_vol = 0x0; /* reset envelope */
-		 // reset phase for env -dink (fixes clicks in Eggerland FDS title music)
-		 info->APU.noi.env_phase = info->sync_times1[info->APU.noi.regs[0] & 0x0F];
+		  info->APU.noi.vbl_length = info->vbl_times[value >> 3];
+		  info->APU.noi.env_phase = 0x80000; // force restart
 	  }
       break;
 
@@ -819,10 +794,8 @@ static void apu_update(struct nesapu_info *info)
 		INT32 dmc = dmc_buffer[dmcoffs];
 		INT32 ext = nes_ext_buffer[dmcoffs];
 
-		// dink nov7,2020: note, supposed to be 2*noise, but shot doesn't sound right in kid icarus.
-
-		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 1*noise + dmc] +
-							  info->square_table[square1 + square2] + info->square_table[square3 + square4]) * 0x2fff);
+		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 2*noise + dmc] +
+							  info->square_table[square1 + square2] + info->square_table[square3 + square4]) * 0x3fff);
 
 		if (~nesapu_mixermode & MIXER_APU) out = 0;
 		if (~nesapu_mixermode & MIXER_EXT) ext = 0;
@@ -840,54 +813,20 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 
 	struct nesapu_info *info = &nesapu_chips[chip];
 
+	info->fill_buffer_hack = 1;
+	apu_update(info);
+
 	if (pBurnSoundOut == NULL) {
 		info->current_position = 0;
 		return;
 	}
 
-	info->fill_buffer_hack = 1;
-	apu_update(info);
+	INT16 *source = info->stream + 5;
 
-	INT32 nAdd = info->bAdd;
+	info->resamp.resample(source, buffer, samples, info->gain[BURN_SND_NESAPU_ROUTE_1]);
 
-	INT32 nSamplesNeeded = info->samples_per_frame;
-	if (nBurnSoundRate < 44100) nSamplesNeeded += 6; // add a few samples to make up for division/precision loss when dealing with 22 & 11khz
+	info->current_position = 0;
 
-	INT16 *pBufL = info->stream + 5;
-
-	for (INT32 i = (info->nFractionalPosition & 0xFFFF0000) >> 15; i < (samples << 1); i += 2, info->nFractionalPosition += info->nSampleSize) {
-		INT32 nLeftSample[4] = {0, 0, 0, 0};
-		INT32 nTotalLeftSample; // it's mono!
-
-		nLeftSample[0] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 3]);
-		nLeftSample[1] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 2]);
-		nLeftSample[2] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 1]);
-		nLeftSample[3] += (INT32)(pBufL[(info->nFractionalPosition >> 16) - 0]);
-
-		nTotalLeftSample  = INTERPOLATE4PS_16BIT((info->nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * info->gain[BURN_SND_NESAPU_ROUTE_1]);
-
-		if (nAdd) {
-			buffer[i + 0] = BURN_SND_CLIP(buffer[i + 0] + nTotalLeftSample);
-			buffer[i + 1] = BURN_SND_CLIP(buffer[i + 1] + nTotalLeftSample);
-		} else {
-			buffer[i + 0] = BURN_SND_CLIP(nTotalLeftSample);
-			buffer[i + 1] = BURN_SND_CLIP(nTotalLeftSample);
-		}
-	}
-
-	if (samples >= nBurnSoundLen) {
-		INT32 nExtraSamples = nSamplesNeeded - (info->nFractionalPosition >> 16);
-	   // bprintf(0, _T("extra samples: %d\n"), nExtraSamples);
-		for (INT32 i = -4; i < nExtraSamples; i++) {
-			pBufL[i] = pBufL[(info->nFractionalPosition >> 16) + i];
-		}
-
-		info->nFractionalPosition &= 0xFFFF;
-
-		info->current_position = nExtraSamples;
-		if (info->current_position < -3) info->current_position = -3; // guard sanity
-	}
 }
 
 /* READ VALUES FROM REGISTERS */
@@ -991,7 +930,7 @@ void nesapuReset()
 		memset(&info->APU.regs, 0, sizeof(info->APU.regs));
 
 		info->APU.dpcm.bits_left = 8;
-
+		info->APU.noi.lfsr = 1;
 	    clocky = 0;
 		mode4017 = 0xc0;
 		step4017 = 0;
@@ -1020,6 +959,9 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 
 	/* Initialize global variables */
 	cycles_per_frame = (is_pal) ? 33248 : 29781;
+
+	dpcm_clocks = &dpcm_freq[(is_pal) ? 1 : 0][0];
+
 	info->samps_per_sync = 7445; //(rate * 100) / nBurnFPS;
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
@@ -1027,7 +969,6 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	//bprintf(0, _T("apu_incsize: %f\n"), info->apu_incsize);
 
 	/* Use initializer calls */
-	create_noise(info->noise_lut, 13, NOISE_LONG);
 	create_vbltimes(info->vbl_times,vbl_length,info->samps_per_sync);
 	create_syncs(info, info->samps_per_sync);
 	create_tndtab(info->tnd_table);
@@ -1038,9 +979,9 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 
 	info->samples_per_frame = ((info->real_rate * 100) / nBurnFPS) + 1;
 
-	info->nSampleSize = (UINT64)info->real_rate * (1 << 16) / ((nBurnSoundRate == 0) ? 44100 : nBurnSoundRate);
+	if (nBurnSoundRate < 44100) info->samples_per_frame += 10; // deal w/ a bug in nBurnSoundRate's calculation for 22050 and lower.
 
-	info->nFractionalPosition = 0;
+	info->resamp.init(info->real_rate, nBurnSoundRate, bAdd);
 
 	info->pSyncCallback = pSyncCallback;
 
@@ -1088,6 +1029,7 @@ void nesapuExit()
 		info = &nesapu_chips[i];
 		if (info->stream)
 			BurnFree(info->stream);
+		info->resamp.exit();
 	}
 
 	BurnFree(dmc_buffer);

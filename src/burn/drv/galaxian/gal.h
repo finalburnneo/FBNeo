@@ -107,6 +107,7 @@ extern GalRenderFrame GalRenderFrameFunction;
 
 void UpperExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
 void UpperExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
+void PacmanblExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void PiscesExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
 void PiscesExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void Batman2ExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);

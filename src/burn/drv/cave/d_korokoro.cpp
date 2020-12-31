@@ -305,16 +305,16 @@ static void KorokoroPaletteUpdate()
 {
 	for (INT32 color = 0; color < 0x40; color++) {
 		for (INT32 pen = 0; pen < 0x10; pen++) {
-			CavePalette[(color << 8) | pen] = CalcCol(*(UINT16*)(CavePalSrc + ((0x3c00 | (color << 4) | pen)*2)));
+			CavePalette[(color << 8) | pen] = CalcCol(BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CavePalSrc + ((0x3c00 | (color << 4) | pen)*2))));
 		}
 
 		for (INT32 pen = 0x10; pen < 0x100; pen++) {
-			CavePalette[(color << 8) | pen] = CalcCol(*(UINT16*)(CavePalSrc + ((0x0000 | (color << 8) | pen)*2)));
+			CavePalette[(color << 8) | pen] = CalcCol(BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CavePalSrc + ((0x0000 | (color << 8) | pen)*2))));
 		}
 	}
 
 	for (INT32 color = 0; color < 0x4000; color++) {
-		CavePalette[color+0x4000] = CalcCol(*(UINT16*)(CavePalSrc + color*2));
+		CavePalette[color+0x4000] = CalcCol(BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CavePalSrc + color*2)));
 	}
 
 	pBurnDrvPalette = CavePalette;

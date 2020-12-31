@@ -116,7 +116,7 @@ typedef struct triangle_s
 typedef struct noise_s
 {
    uint8 regs[4]; /* regs[1] unused */
-   INT32 cur_pos;
+   INT32 lfsr;
    INT32 vbl_length;
    INT32 phaseacc;
    INT32 output_vol;
@@ -188,14 +188,17 @@ static const INT32 freq_limit[8] =
 /* table of noise frequencies */
 static const INT32 noise_freq[16] =
 {
-   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 2046
+   4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
 };
 
 /* dpcm transfer freqs */
-static const INT32 dpcm_clocks[16] =
-{
-   428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 84, 72, 54
-};
+static const INT32 dpcm_freq[2][16] = {
+{   // NTSC
+	428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 84, 72, 54
+},
+{   // PAL
+	398, 354, 316, 298, 276, 236, 210, 198, 176, 148, 132, 118, 98, 78, 66, 50
+} };
 
 /* ratios of pos/neg pulse for square waves */
 /* 2/16 = 12.5%, 4/16 = 25%, 8/16 = 50%, 12/16 = 75% */

@@ -22,7 +22,6 @@
 		FE1B23A023561A750065200C /* m68kcpu.c in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1C9C23561A610065200C /* m68kcpu.c */; settings = {COMPILER_FLAGS = "-Wno-sometimes-uninitialized -Wno-conditional-uninitialized"; }; };
 		FE1B23A423561A750065200C /* z180_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA223561A610065200C /* z180_intf.cpp */; };
 		FE1B23A523561A750065200C /* z80_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA323561A610065200C /* z80_intf.cpp */; };
-		FE1B23A723561A750065200C /* i8x41.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA623561A610065200C /* i8x41.cpp */; settings = {COMPILER_FLAGS = "-Wno-parentheses"; }; };
 		FE1B23A823561A750065200C /* m6800_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CA823561A610065200C /* m6800_intf.cpp */; };
 		FE1B23A923561A750065200C /* m6805.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CAB23561A610065200C /* m6805.cpp */; };
 		FE1B23AB23561A750065200C /* mips3_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B1CAE23561A620065200C /* mips3_intf.cpp */; };
@@ -991,6 +990,13 @@
 		FE34741A23675C4C006646E7 /* FBAudio.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE34741823675C4C006646E7 /* FBAudio.mm */; };
 		FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE34742423696150006646E7 /* SDLAudioEngine.m */; };
 		FE3BD61623A4979700570784 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FE3BD61523A4979700570784 /* License.rtf */; };
+		FE5560FB258E841900A19F2D /* mcs48.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5560F9258E841200A19F2D /* mcs48.cpp */; };
+		FE5560FD258E84A400A19F2D /* d_gladiatr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5560FC258E84A400A19F2D /* d_gladiatr.cpp */; };
+		FE556115258E95B600A19F2D /* filter_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = FE556111258E95B600A19F2D /* filter_neon.S */; };
+		FE556116258E95B600A19F2D /* filter_neon_intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556112258E95B600A19F2D /* filter_neon_intrinsics.c */; };
+		FE556117258E95B600A19F2D /* arm_init.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556113258E95B600A19F2D /* arm_init.c */; };
+		FE556118258E95B600A19F2D /* palette_neon_intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */; };
+		FE55611C2590698100A19F2D /* d_lsasquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE55611B2590698100A19F2D /* d_lsasquad.cpp */; };
 		FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE65925223EFE87200CA92B2 /* d_stuntair.cpp */; };
 		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
 		FE83290F2439A3A000059993 /* d_vegaeo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83290B2439A3A000059993 /* d_vegaeo.cpp */; };
@@ -1104,9 +1110,6 @@
 		FE1B1CA123561A610065200C /* m68k_in.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68k_in.c; sourceTree = "<group>"; };
 		FE1B1CA223561A610065200C /* z180_intf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = z180_intf.cpp; sourceTree = "<group>"; };
 		FE1B1CA323561A610065200C /* z80_intf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = z80_intf.cpp; sourceTree = "<group>"; };
-		FE1B1CA523561A610065200C /* 8x41dasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 8x41dasm.c; sourceTree = "<group>"; };
-		FE1B1CA623561A610065200C /* i8x41.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i8x41.cpp; sourceTree = "<group>"; };
-		FE1B1CA723561A610065200C /* i8x41.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i8x41.h; sourceTree = "<group>"; };
 		FE1B1CA823561A610065200C /* m6800_intf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = m6800_intf.cpp; sourceTree = "<group>"; };
 		FE1B1CAA23561A610065200C /* m6805.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = m6805.h; sourceTree = "<group>"; };
 		FE1B1CAB23561A610065200C /* m6805.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = m6805.cpp; sourceTree = "<group>"; };
@@ -2537,6 +2540,15 @@
 		FE34742423696150006646E7 /* SDLAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLAudioEngine.m; sourceTree = "<group>"; };
 		FE34742523696151006646E7 /* SDLAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLAudioEngine.h; sourceTree = "<group>"; };
 		FE3BD61523A4979700570784 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
+		FE5560F9258E841200A19F2D /* mcs48.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mcs48.cpp; sourceTree = "<group>"; };
+		FE5560FA258E841200A19F2D /* mcs48.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mcs48.h; sourceTree = "<group>"; };
+		FE5560FC258E84A400A19F2D /* d_gladiatr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_gladiatr.cpp; sourceTree = "<group>"; };
+		FE556111258E95B600A19F2D /* filter_neon.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = filter_neon.S; sourceTree = "<group>"; };
+		FE556112258E95B600A19F2D /* filter_neon_intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filter_neon_intrinsics.c; sourceTree = "<group>"; };
+		FE556113258E95B600A19F2D /* arm_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arm_init.c; sourceTree = "<group>"; };
+		FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = palette_neon_intrinsics.c; sourceTree = "<group>"; };
+		FE55611B2590698100A19F2D /* d_lsasquad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_lsasquad.cpp; sourceTree = "<group>"; };
+		FE55611D25906B4E00A19F2D /* FinalBurn NeoDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FinalBurn NeoDebug.entitlements"; sourceTree = "<group>"; };
 		FE65925223EFE87200CA92B2 /* d_stuntair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stuntair.cpp; sourceTree = "<group>"; };
 		FE811004236B73BD000B5F73 /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		FE83290B2439A3A000059993 /* d_vegaeo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_vegaeo.cpp; sourceTree = "<group>"; };
@@ -2667,6 +2679,7 @@
 		FE1B108F235615940065200C /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
+				FE55611D25906B4E00A19F2D /* FinalBurn NeoDebug.entitlements */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
 				FE3BD61423A4979700570784 /* Doc */,
 				FE2BC6BD2362BF9200B9D150 /* Nibs */,
@@ -2797,9 +2810,8 @@
 		FE1B1CA423561A610065200C /* i8x41 */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B1CA523561A610065200C /* 8x41dasm.c */,
-				FE1B1CA623561A610065200C /* i8x41.cpp */,
-				FE1B1CA723561A610065200C /* i8x41.h */,
+				FE5560F9258E841200A19F2D /* mcs48.cpp */,
+				FE5560FA258E841200A19F2D /* mcs48.h */,
 			);
 			path = i8x41;
 			sourceTree = "<group>";
@@ -3193,6 +3205,7 @@
 		FE1B1DAA23561A640065200C /* libpng */ = {
 			isa = PBXGroup;
 			children = (
+				FE556110258E95B600A19F2D /* arm */,
 				FE1B1DAB23561A640065200C /* pnginfo.h */,
 				FE1B1DAC23561A640065200C /* pngrio.c */,
 				FE1B1DAD23561A640065200C /* pngerror.c */,
@@ -4148,11 +4161,13 @@
 				FE1B20E023561A6C0065200C /* d_exzisus.cpp */,
 				FE1B20AE23561A6C0065200C /* d_flstory.cpp */,
 				FE2FEF0724CDEB2F0047F3A5 /* d_galastrm.cpp */,
+				FE5560FC258E84A400A19F2D /* d_gladiatr.cpp */,
 				FE1B20CE23561A6C0065200C /* d_groundfx.cpp */,
 				FE1B20E923561A6C0065200C /* d_gunbuster.cpp */,
 				FE1B20C723561A6C0065200C /* d_jollyjgr.cpp */,
 				FE1B20AC23561A6C0065200C /* d_ksayakyu.cpp */,
 				FE1B20CC23561A6C0065200C /* d_lkage.cpp */,
+				FE55611B2590698100A19F2D /* d_lsasquad.cpp */,
 				FE1B20BD23561A6C0065200C /* d_mexico86.cpp */,
 				FE1B20B223561A6C0065200C /* d_minivdr.cpp */,
 				FE1B20B623561A6C0065200C /* d_msisaac.cpp */,
@@ -4812,6 +4827,17 @@
 			path = Doc;
 			sourceTree = SOURCE_ROOT;
 		};
+		FE556110258E95B600A19F2D /* arm */ = {
+			isa = PBXGroup;
+			children = (
+				FE556113258E95B600A19F2D /* arm_init.c */,
+				FE556112258E95B600A19F2D /* filter_neon_intrinsics.c */,
+				FE556111258E95B600A19F2D /* filter_neon.S */,
+				FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */,
+			);
+			path = arm;
+			sourceTree = "<group>";
+		};
 		FE811001236B6B29000B5F73 /* generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -4947,7 +4973,7 @@
 		FE1B1085235615940065200C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Akop Karapetyan";
 				TargetAttributes = {
 					FE1B108C235615940065200C = {
@@ -5134,6 +5160,7 @@
 				FE1B252523561A760065200C /* d_pkscram.cpp in Sources */,
 				FE1B276423561A790065200C /* tilemap_generic.cpp in Sources */,
 				FE1B262D23561A770065200C /* d_cps2.cpp in Sources */,
+				FE556118258E95B600A19F2D /* palette_neon_intrinsics.c in Sources */,
 				FE1B26E923561A780065200C /* d_alpha68k1.cpp in Sources */,
 				FE1B244E23561A750065200C /* 7zBuf.c in Sources */,
 				FE1B23DC23561A750065200C /* m6809_intf.cpp in Sources */,
@@ -5362,6 +5389,7 @@
 				FE1B23B323561A750065200C /* z80daisy.cpp in Sources */,
 				FE1B24B623561A750065200C /* d_vigilant.cpp in Sources */,
 				FE1B255423561A760065200C /* d_xbrd.cpp in Sources */,
+				FE556117258E95B600A19F2D /* arm_init.c in Sources */,
 				FE1B279523561A790065200C /* k053260.cpp in Sources */,
 				FE1B257C23561A760065200C /* d_shootout.cpp in Sources */,
 				FE1B269C23561A770065200C /* d_momoko.cpp in Sources */,
@@ -5396,7 +5424,6 @@
 				FE1B25C523561A760065200C /* d_rocnrope.cpp in Sources */,
 				FE1B26D323561A780065200C /* d_deadang.cpp in Sources */,
 				FE1E0C822454F7D600C774C3 /* d_tubep.cpp in Sources */,
-				FE1B23A723561A750065200C /* i8x41.cpp in Sources */,
 				FE1B259923561A760065200C /* d_decocass.cpp in Sources */,
 				FEED9E0C23576F2A00B7AF83 /* drv.cpp in Sources */,
 				FE1B24E323561A760065200C /* d_thunderj.cpp in Sources */,
@@ -5532,6 +5559,7 @@
 				FE1B25DB23561A760065200C /* d_gradius3.cpp in Sources */,
 				FE1B265323561A770065200C /* d_msisaac.cpp in Sources */,
 				FE1B25EF23561A760065200C /* d_aliens.cpp in Sources */,
+				FE55611C2590698100A19F2D /* d_lsasquad.cpp in Sources */,
 				FE1B271E23561A780065200C /* d_spacefb.cpp in Sources */,
 				FE1B26F523561A780065200C /* d_alpha68k2.cpp in Sources */,
 				FE1B279123561A790065200C /* burn_y8950.cpp in Sources */,
@@ -5644,6 +5672,7 @@
 				FE1B274B23561A780065200C /* d_battlex.cpp in Sources */,
 				FE1B24F523561A760065200C /* d_ohmygod.cpp in Sources */,
 				FE1B26CA23561A780065200C /* d_cabal.cpp in Sources */,
+				FE5560FD258E84A400A19F2D /* d_gladiatr.cpp in Sources */,
 				FE1B261323561A760065200C /* d_truxton2.cpp in Sources */,
 				FE1B26C523561A770065200C /* d_lastduel.cpp in Sources */,
 				FE1B277623561A790065200C /* k005289.cpp in Sources */,
@@ -5775,6 +5804,7 @@
 				FE1B256B23561A760065200C /* d_angelkds.cpp in Sources */,
 				FE1B261D23561A770065200C /* toaplan1.cpp in Sources */,
 				FE1B274A23561A780065200C /* d_galivan.cpp in Sources */,
+				FE556115258E95B600A19F2D /* filter_neon.S in Sources */,
 				FE1B24D723561A750065200C /* d_akkaarrh.cpp in Sources */,
 				FE1B241523561A750065200C /* pngrio.c in Sources */,
 				FE1B26DE23561A780065200C /* d_gunsmoke.cpp in Sources */,
@@ -5885,6 +5915,7 @@
 				FE1B27AD23561A790065200C /* c6280.cpp in Sources */,
 				FE1B23A523561A750065200C /* z80_intf.cpp in Sources */,
 				FE1B267723561A770065200C /* d_taitob.cpp in Sources */,
+				FE556116258E95B600A19F2D /* filter_neon_intrinsics.c in Sources */,
 				FE1B24E923561A760065200C /* d_badlands.cpp in Sources */,
 				FE1B243123561A750065200C /* Bra.c in Sources */,
 				FE1B250523561A760065200C /* d_shadfrce.cpp in Sources */,
@@ -5944,6 +5975,7 @@
 				FE1B263023561A770065200C /* d_cps1.cpp in Sources */,
 				FE1B23AC23561A750065200C /* tms34010_intf.cpp in Sources */,
 				FE1B27EB23561A790065200C /* misc.cpp in Sources */,
+				FE5560FB258E841900A19F2D /* mcs48.cpp in Sources */,
 				FE1B24E423561A760065200C /* d_skullxbo.cpp in Sources */,
 				FE1B25A623561A760065200C /* d_gyruss.cpp in Sources */,
 				FE1B260123561A760065200C /* d_neogeo.cpp in Sources */,
@@ -6215,6 +6247,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -6273,6 +6306,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -6302,10 +6336,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Emulator/FinalBurn NeoDebug.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
+				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -6363,9 +6399,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Emulator/FinalBurnNeo.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",

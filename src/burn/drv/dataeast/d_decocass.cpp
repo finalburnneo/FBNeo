@@ -12,7 +12,7 @@ cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
 #include "m6502_intf.h"
 #include "bitswap.h"
 #include "flt_rc.h"
-#include "i8x41.h"
+#include "mcs48.h"
 #include "ay8910.h"
 
 static UINT8 *AllMem;
@@ -1338,16 +1338,14 @@ static INT32 tape_speed = 0;
 static INT32 tape_timer = 0;
 static INT32 tape_dir = 0;
 
-static INT64 tape_freerun = 0; // continuously counts up from mcu clock
-
 static double tapetimer()
 {
-	return tape_freerun * (1.0 / 500000);
+	return mcs48TotalCycles() * (1.0 / 500000);
 }
 
 static void tapetimer_reset()
 {
-	tape_freerun = 0;
+	mcs48NewFrame();
 }
 
 static INT32 firsttime = 1;
@@ -1590,7 +1588,7 @@ static UINT8 decocass_type1_read(UINT16 offset)
 	if (1 == (offset & 1))
 	{
 		if (0 == (offset & E5XX_MASK))
-			data = i8x41_get_register(I8X41_STAT);
+			data = mcs48_master_r(1);
 		else
 			data = 0xff;
 
@@ -1609,7 +1607,7 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		}
 
 		if (0 == (offset & E5XX_MASK))
-			data = i8x41_get_register(I8X41_DATA);
+			data = mcs48_master_r(0);
 		else
 			data = 0xff;
 
@@ -1643,7 +1641,7 @@ static UINT8 decocass_nodongle_read(UINT16 offset)
 {
 	if ((offset & 0x02) == 0)
 	{
-		return i8x41_get_register((offset & 1) ? I8X41_STAT : I8X41_DATA);
+		return mcs48_master_r(offset & 1);
 	}
 
 	return 0xff;
@@ -1661,7 +1659,7 @@ static UINT8 decocass_type2_read(UINT16 offset)
 	else
 	{
 		if ((offset & 0x02) == 0)
-			return i8x41_get_register((offset & 1) ? I8X41_STAT : I8X41_DATA);
+			return mcs48_master_r(offset & 1);
 
 		return offset;
 	}
@@ -1689,7 +1687,7 @@ static void decocass_type2_write(UINT16 offset, UINT8 data)
 		}
 	}
 
-	i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+	mcs48_master_w(offset & 1, data);
 }
 
 static UINT8 decocass_type3_read(UINT16 offset)
@@ -1709,7 +1707,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 		{
 			if (0 == (offset & E5XX_MASK))
 			{
-				data = i8x41_get_register(1 ? I8X41_STAT : I8X41_DATA);
+				data = mcs48_master_r(1);
 			}
 			else
 			{
@@ -1727,7 +1725,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 		{
 			if (0 == (offset & E5XX_MASK))
 			{
-				save = i8x41_get_register(0 ? I8X41_STAT : I8X41_DATA);
+				save = mcs48_master_r(0);
 
 				switch (type3_swap)
 				{
@@ -1898,7 +1896,7 @@ static void decocass_type3_write(UINT16 offset,UINT8 data)
 			type3_pal_19 = 1;
 	}
 
-	i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+	mcs48_master_w(offset & 1, data);
 }
 
 static UINT8 decocass_type4_read(UINT16 offset)
@@ -1907,7 +1905,7 @@ static UINT8 decocass_type4_read(UINT16 offset)
 	{
 		if ((offset & E5XX_MASK) == 0)
 		{
-			return i8x41_get_register(I8X41_STAT);
+			return mcs48_master_r(1);
 		}
 	}
 	else
@@ -1922,7 +1920,7 @@ static UINT8 decocass_type4_read(UINT16 offset)
 		{
 			if ((offset & E5XX_MASK) == 0)
 			{
-				return i8x41_get_register(I8X41_DATA);
+				return mcs48_master_r(0);
 			}
 		}
 	}
@@ -1953,7 +1951,7 @@ static void decocass_type4_write(UINT16 offset, UINT8 data)
 		}
 	}
 
-	i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+	mcs48_master_w(offset & 1, data);
 }
 
 static UINT8 decocass_e5xx_read(UINT8 offset)
@@ -1991,7 +1989,7 @@ static void decocass_e5xx_write(UINT8 offset, UINT8 data)
 
 	if (0 == (offset & E5XX_MASK))
 	{
-		i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+		mcs48_master_w(offset & 1, data);
 	}
 }
 
@@ -2177,7 +2175,7 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 			if ((data & 8) ^ 8)
 			{
-				i8x41_reset();
+				mcs48Reset();
 			}
 		}
 		return;
@@ -2516,29 +2514,29 @@ static UINT8 i8041_p2_read()
 	return i8041_p2;
 }
 
-static UINT8 i8x41_read_ports(UINT16 port)
+static UINT8 mcs48_read_ports(UINT32 port)
 {
 	switch (port)
 	{
-		case 0x01:
+		case MCS48_P1:
 			return i8041_p1_read();
 
-		case 0x02:
+		case MCS48_P2:
 			return i8041_p2_read();
 	}
 
 	return 0;
 }
 
-static void i8x41_write_ports(UINT16 port, UINT8 data)
+static void mcs48_write_ports(UINT32 port, UINT8 data)
 {
 	switch (port)
 	{
-		case 0x01:
+		case MCS48_P1:
 			i8041_p1_write(data);
 		return;
 
-		case 0x02:
+		case MCS48_P2:
 			i8041_p2_write(data);
 		return;
 	}
@@ -2596,7 +2594,9 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 
-	i8x41_reset();
+	mcs48Open(0);
+	mcs48Reset();
+	mcs48Close();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -2638,11 +2638,10 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainBIOS		= Next; Next += 0x001000;
-	DrvSoundBIOS		= Next; Next += 0x001000;
+	DrvSoundBIOS	= Next; Next += 0x001000;
 	DrvCassette		= Next; Next += 0x0020000;
 	DrvGfxData		= Next; Next += 0x00a0000;
 	DrvDongle		= Next; Next += 0x0100000; // 1mb (needed for widel multi)
-	I8x41Mem		= Next;
 	DrvMCUROM		= Next; Next += 0x0009000; // 0x400 + 0x500 for ram, for now
 
 	DrvCharExp		= Next; Next += 0x0100000;
@@ -2787,9 +2786,11 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	M6502SetReadHandler(decocass_sound_read);
 	M6502Close();
 
-	i8x41_init(NULL);
-	i8x41_set_read_port(i8x41_read_ports);
-	i8x41_set_write_port(i8x41_write_ports);
+	mcs48Init(0, 8041, DrvMCUROM);
+	mcs48Open(0);
+	mcs48_set_read_port(mcs48_read_ports);
+	mcs48_set_write_port(mcs48_write_ports);
+	mcs48Close();
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
@@ -2813,7 +2814,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	M6502Exit();
-	i8x41_exit();
+	mcs48Exit();
 
 	AY8910Exit(0);
 	AY8910Exit(1);
@@ -3265,10 +3266,10 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)510000 / 57.444853), (INT32)((double)500000 / 57.444853) };
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
-	INT32 nSegment = 0;
 
 	vblank = 1;
 
+	mcs48Open(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
@@ -3303,20 +3304,14 @@ static INT32 DrvFrame()
 
 		if (decocass_reset & 0x08)
 		{
-			nSegment = (i + 1) * nCyclesTotal[2] / nInterleave;
-			INT32 derp = nSegment - nCyclesDone[2];
-			nCyclesDone[2] += derp;
-			tape_freerun += derp;
+			CPU_IDLE(2, mcs48);
 		}
 		else
 		{
-			nSegment = (i + 1) * nCyclesTotal[2] / nInterleave;
-			INT32 derp = i8x41_run(nSegment - nCyclesDone[2]);
-			nCyclesDone[2] += derp;
-			tape_freerun += derp;
-
+			CPU_RUN(2, mcs48);
 		}
 	}
+	mcs48Close();
 
 	if (pBurnSoundOut) {
         AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -3340,17 +3335,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = I8x41Mem;
-		ba.nLen	  = 0x900;
-		ba.szName = "MCU Ram";
-		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
 		M6502Scan(nAction);
-		i8x41_scan(nAction);
+		mcs48Scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
 
@@ -3401,8 +3390,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tape_speed);
 		SCAN_VAR(tape_timer);
 		SCAN_VAR(tape_dir);
-
-		SCAN_VAR(tape_freerun);
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
@@ -5019,7 +5006,7 @@ static UINT8 decocass_widel_read(UINT16 offset)
 		{
 			if (widel_latch) widel_ctrs = (widel_ctrs + 0x100) & 0xfffff;
 
-			return i8x41_get_register(I8X41_STAT);
+			return mcs48_master_r(1);
 		}
 	}
 	else
@@ -5032,7 +5019,7 @@ static UINT8 decocass_widel_read(UINT16 offset)
 		}
 		else if ((offset & E5XX_MASK) == 0)
 		{
-			return i8x41_get_register(I8X41_DATA);
+			return mcs48_master_r(0);
 		}
 	}
 
@@ -5062,7 +5049,7 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 		}
 	}
 
-	i8x41_set_register((offset & 1) ? I8X41_CMND : I8X41_DATA, data);
+	mcs48_master_w(offset & 1, data);
 }
 
 

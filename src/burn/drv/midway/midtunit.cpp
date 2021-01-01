@@ -497,12 +497,15 @@ static void TUnitPalRecalc()
 
 static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 {
-	if (!pBurnDraw) 
+	if (!pBurnDraw)
 		return 0;
 
 	line -= 0x14; // offset
 
-	if (line < 0 || line >= nScreenHeight)
+	INT32 nHeight = nScreenHeight;
+	if (nHeight > 254) nHeight = 254;
+
+	if (line < 0 || line >= nHeight)
 		return 0;
 
 	UINT16 *src = &DrvVRAM16[(info->rowaddr << 9) & 0x3FE00];

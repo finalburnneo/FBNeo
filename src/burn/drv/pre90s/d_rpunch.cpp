@@ -545,15 +545,15 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	// FBA doesn't support memory masks, so use mirroring instead
-	for (INT32 i = 0; i < 1 << 24; i+= 1 << 20) {
-		SekMapMemory(Drv68KROM,			i+0x000000, i+0x03ffff, MAP_ROM);
-		SekMapMemory(DrvBMPRAM,			i+0x040000, i+0x04ffff, MAP_RAM);
-		SekMapMemory(DrvSprRAM,			i+0x060000, i+0x060fff, MAP_RAM);
-		SekMapMemory(DrvVidRAM,			i+0x080000, i+0x083fff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,			i+0x0a0000, i+0x0a07ff, MAP_ROM);
-		SekMapMemory(Drv68KRAM,			i+0x0fc000, i+0x0fffff, MAP_RAM);
-	}
+
+	SekSetAddressMask(0xfffff);
+	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(DrvBMPRAM,			0x040000, 0x04ffff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,			0x060000, 0x060fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM,			0x080000, 0x083fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0x0a0000, 0x0a07ff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,			0x0fc000, 0x0fffff, MAP_RAM);
+
 	SekSetWriteWordHandler(0,	rpunch_main_write_word);
 	SekSetWriteByteHandler(0,	rpunch_main_write_byte);
 	SekSetReadWordHandler(0,	rpunch_main_read_word);
@@ -577,6 +577,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 4000000);
 
 	DrvDoReset();
 
@@ -750,20 +751,15 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 
 		if (crtc_timer == 2 && i == ((nInterleave / 2) - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += ZetRun(nSegment);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			nSegment = nBurnSoundLen / nInterleave;
-
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			UPD7759Update(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-
 			nSoundBufferPos += nSegment;
 		}
 	}
@@ -774,14 +770,8 @@ static INT32 DrvFrame()
 		nSegment = nBurnSoundLen - nSoundBufferPos;
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			UPD7759Update(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
-
-		// UPD7759 does not have volume controls, so do all sounds at 100% and reduce levels
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[i*2+0] /= 2;
-			pBurnSoundOut[i*2+1] /= 2;
-		}
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

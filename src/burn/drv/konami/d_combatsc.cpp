@@ -550,6 +550,7 @@ static INT32 DrvInit()
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 3579545);
 
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg0_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg1_map_callback, 8, 8, 32, 32);
@@ -723,7 +724,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += HD6309Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, HD6309);
 
 		if (i == 240) {
 			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_HOLD);
@@ -740,7 +741,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		UPD7759Update(0, pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	HD6309Close();

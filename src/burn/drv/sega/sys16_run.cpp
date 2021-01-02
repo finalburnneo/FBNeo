@@ -2064,6 +2064,7 @@ INT32 System16Init()
 			UPD7759SetDrqCallback(0, System16UPD7759DrqCallback);
 			UPD7759SetSyncCallback(0, ZetTotalCycles, 5000000);
 			UPD7759SetRoute(0, 0.48, BURN_SND_ROUTE_BOTH);
+			UPD7759SetFilter(0, 2000);
 			BurnTimerAttachZet(5000000);
 		}
 		

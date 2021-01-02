@@ -5,6 +5,7 @@
 #include "downsample.h"
 #include "timer.h"
 #include <math.h>
+#include "biquad.h"
 
 #define FRAC_BITS			20
 #define FRAC_ONE			(1 << FRAC_BITS)
@@ -75,13 +76,13 @@ struct upd7759_chip
 	Downsampler resamp;
 	INT16 *     out_buf;
 	INT16 *     out_buf_linear;
+	INT16 *     out_buf_linear_resampled;
 	INT32       out_buf_size;
 	INT32       out_pos;
 
 	// filter
-	INT32 filt_sa;
-	INT32 filt_sb;
-	INT32 filt_prev;
+	BIQ biquadL;
+	BIQ biquadR;
 
 	// stream sync
 	INT32 (*pTotalCyclesCB)();
@@ -474,8 +475,16 @@ void UPD7759Render(INT32 chip, INT16 *pSoundBuf, INT32 samples)
 	    Chip->out_buf[cpos] = 0;
 	}
 
-	// resample to host rate & mixdown
-	Chip->resamp.resample(Chip->out_buf_linear, pSoundBuf, samples, Chip->volume, Chip->output_dir);
+	// resample to host rate
+	Chip->resamp.resample(Chip->out_buf_linear, Chip->out_buf_linear_resampled, samples, Chip->volume, Chip->output_dir);
+
+	// filter and mix into pSoundBuf
+	for (INT32 i = 0; i < samples; i++) {
+		INT32 l = Chip->biquadL.filter(Chip->out_buf_linear_resampled[i*2 + 0]);
+		INT32 r = Chip->biquadR.filter(Chip->out_buf_linear_resampled[i*2 + 1]);
+		pSoundBuf[i*2 + 0] = BURN_SND_CLIP(pSoundBuf[i*2 + 0] + l);
+		pSoundBuf[i*2 + 1] = BURN_SND_CLIP(pSoundBuf[i*2 + 0] + r);
+	}
 
 	Chip->sample_counts = 0; // ready for next frame!
 }
@@ -536,22 +545,25 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 	SlaveMode = 0;
 
 	Chip->ChipNum = chip;
-	Chip->resamp.init(clock / 4, nBurnSoundRate, 1);
+	// init resampler
+	Chip->resamp.init(clock / 4, nBurnSoundRate, 0);
 
-	// Init 2khz lp filter coefficient @ (clock / 4)hz
-	double omeg = exp(-2.0 * 3.1415926 * 2000 / (clock / 4));
-    Chip->filt_sa = (INT32)(omeg * (double)(1 << 12));
-    Chip->filt_sb = (1 << 12) - Chip->filt_sa;
+	// init filter (basically passthru w/these settings)
+	Chip->biquadL.init(FILT_LOWPASS, nBurnSoundRate, 15000, 0.554, 0.0);
+	Chip->biquadR.init(FILT_LOWPASS, nBurnSoundRate, 15000, 0.554, 0.0);
 
 	Chip->step = (INT32)(4 * FRAC_ONE);
 	Chip->state = STATE_IDLE;
 	Chip->clock_period = 1.0 / (double)clock;
 
 	// our 16bit (INT16) output buffer is 2 frames in length @ 640,000 kHz
+	// out_buf - circular buffer @ clock/4 rate
+	// out_buf_linear - linearized right before resampling and rendering
+	// out_buf_linear_resampled - resampled and ready to be filtered
 	Chip->out_buf_size = (clock / 4) * 100 / (nBurnFPS / 2); // word-size (byte size = *2)
 	Chip->out_buf = (INT16*)BurnMalloc(Chip->out_buf_size * sizeof(INT16));
 	Chip->out_buf_linear = (INT16*)BurnMalloc(Chip->out_buf_size * sizeof(INT16));
-
+	Chip->out_buf_linear_resampled = (INT16*)BurnMalloc(Chip->out_buf_size * sizeof(INT16));
 	Chip->out_pos = 0;
 
 	if (pSoundData) {
@@ -570,6 +582,19 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 	nNumChips = chip;
 	
 	UPD7759Reset();
+}
+
+void UPD7759SetFilter(INT32 chip, INT32 nCutOff)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_UPD7759Initted) bprintf(PRINT_ERROR, _T("UPD7759SetFilter called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("UPD7759SetFilter called with invalid chip %i\n"), chip);
+#endif
+
+	Chip = Chips[chip];
+
+	Chip->biquadL.init(FILT_LOWPASS, nBurnSoundRate, nCutOff, 0.554, 0.0);
+	Chip->biquadR.init(FILT_LOWPASS, nBurnSoundRate, nCutOff, 0.554, 0.0);
 }
 
 void UPD7759SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
@@ -730,8 +755,11 @@ void UPD7759Exit()
 	{
 		Chip = Chips[i];
 		if (Chip) {
+			Chip->biquadL.exit();
+			Chip->biquadR.exit();
 			BurnFree(Chip->out_buf);
 			BurnFree(Chip->out_buf_linear);
+			BurnFree(Chip->out_buf_linear_resampled);
 			BurnFree(Chips[i]);
 		}
 	}

@@ -299,13 +299,19 @@ static const INT32 buzzer_oversample = 3000;
 
 static BIQ biquad[2]; // snd/biquad.h
 
-static void BuzzerInit()
+static void BuzzerInit() // keep in DoReset()!
 {
 	biquad[0].init(FILT_LOWPASS, nBurnSoundRate, 7000, 0.554, 0.0);
 	biquad[1].init(FILT_LOWPASS, nBurnSoundRate, 8000, 0.554, 0.0);
 
 	buzzer_data_frame_minute = (SpecCylesPerScanline * SpecScanlines * 50.00);
 	buzzer_data_frame = ((double)(SpecCylesPerScanline * SpecScanlines) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+}
+
+static void BuzzerExit()
+{
+	biquad[0].exit();
+	biquad[1].exit();
 }
 
 static void BuzzerAdd(INT16 data)
@@ -1028,6 +1034,8 @@ static INT32 SpectrumInit(INT32 Mode)
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 224*312*50);
 
+	// Init Buzzer (in DoReset!)
+
 	SpecMode |= SPEC_AY8910;
 
 	GenericTilesInit();
@@ -1089,6 +1097,8 @@ static INT32 Spectrum128Init(INT32 Mode)
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 228*311*50);
 
+	// Init Buzzer (in DoReset!)
+
 	SpecMode |= SPEC_AY8910;
 
 	GenericTilesInit();
@@ -1141,6 +1151,8 @@ static INT32 SpecExit()
 	ZetExit();
 
 	if (SpecMode & SPEC_AY8910) AY8910Exit(0);
+
+	BuzzerExit();
 
 	GenericTilesExit();
 

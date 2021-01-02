@@ -393,6 +393,9 @@ void K054539Exit()
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];
 		BurnFree (info->delay_ram);
+
+		info->biquad[0].exit();
+		info->biquad[1].exit();
 	}
 	
 	DebugSnd_K054539Initted = 0;

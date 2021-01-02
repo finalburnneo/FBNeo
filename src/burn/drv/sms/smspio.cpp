@@ -7,6 +7,7 @@
 
 io_state io_lut[2][256];
 io_state *io_current;
+UINT8 *hc_ntsc_256 = NULL;
 
 void pio_init(void)
 {
@@ -42,6 +43,15 @@ void pio_init(void)
 		}
 	}
 
+	// Generate h-counts table
+	if (hc_ntsc_256 == NULL) {
+		hc_ntsc_256 = (UINT8*)BurnMalloc(0x100);
+		for (i = 0; i < 256; i++) {
+			// Algo by Rupert Carmichael
+			hc_ntsc_256[i] = ((i + 244) - (i / 4) - ((i + 1) % 4 == 0 ? 1 : 0) + (i > 212 ? 85 : 0)) % 256;
+		}
+	}
+
 	// hack dos code doesn't call system_reset
 	pio_reset();
 
@@ -67,7 +77,10 @@ void pio_reset(void)
 
 void pio_shutdown(void)
 {
-	/* Nothing to do */
+	BurnFree(hc_ntsc_256);
+	hc_ntsc_256 = NULL;
+
+	/* Nothing else to do */
 }
 
 

@@ -2906,8 +2906,14 @@ INT32 System16BFrame()
 		if (System16Z80RomNum || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) && System16Z80Enable)) {
 			nCurrentCPU = 1;
 			ZetOpen(0);
-			BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
-			if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[nCurrentCPU]);
+			if (System16UPD7759DataSize) { // upd7759 uses BurnTimer
+				BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
+				if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[nCurrentCPU]);
+			} else {
+				nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+				nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+				nSystem16CyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+			}
 			ZetClose();
 		}
 		

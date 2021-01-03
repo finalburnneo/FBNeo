@@ -543,7 +543,7 @@ struct BurnDriver BurnDrvMk3 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, mk3RomInfo, mk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -594,7 +594,7 @@ struct BurnDriver BurnDrvMk3r20 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, mk3r20RomInfo, mk3r20RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -645,7 +645,7 @@ struct BurnDriver BurnDrvMk3r10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, mk3r10RomInfo, mk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -696,7 +696,7 @@ struct BurnDriver BurnDrvMk3p40 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, mk3p40RomInfo, mk3p40RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvUmk3 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3RomInfo, umk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -802,7 +802,7 @@ struct BurnDriver BurnDrvUmk3r11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3r11RomInfo, umk3r11RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -855,7 +855,7 @@ struct BurnDriver BurnDrvUmk3r10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3r10RomInfo, umk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 // Ultimate Mortal Kombat 3 Tournament Edition 2.0.042 (August 2018)
@@ -907,7 +907,7 @@ struct BurnDriver BurnDrvUmk3te = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3teRomInfo, umk3teRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -965,7 +965,7 @@ struct BurnDriver BurnDrvUmk3uc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3ucRomInfo, umk3ucRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
 	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-	400, 254, 4, 3
+	400, 256, 4, 3
 };
 
 
@@ -1024,7 +1024,7 @@ struct BurnDriver BurnDrvUmk3pb1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3pb1RomInfo, umk3pb1RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1070,7 +1070,7 @@ struct BurnDriverD BurnDrvOpenice = {
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, openiceRomInfo, openiceRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1117,7 +1117,7 @@ struct BurnDriverD BurnDrvOpenicea = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, openiceaRomInfo, openiceaRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1170,7 +1170,7 @@ struct BurnDriverD BurnDrvNbahangt = {
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, nbahangtRomInfo, nbahangtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1230,7 +1230,7 @@ struct BurnDriverD BurnDrvNbamht = {
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1283,7 +1283,7 @@ struct BurnDriverD BurnDrvNbamht1 = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, nbamht1RomInfo, nbamht1RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1331,7 +1331,7 @@ struct BurnDriver BurnDrvRmpgwt = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, rmpgwtRomInfo, rmpgwtRomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1379,7 +1379,7 @@ struct BurnDriver BurnDrvRmpgwt11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, rmpgwt11RomInfo, rmpgwt11RomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1425,7 +1425,7 @@ struct BurnDriverD BurnDrvWwfmania = {
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, wwfmaniaRomInfo, wwfmaniaRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1471,7 +1471,7 @@ struct BurnDriverD BurnDrvWwfmaniab = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, wwfmaniabRomInfo, wwfmaniabRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1517,7 +1517,7 @@ struct BurnDriverD BurnDrvWwfmaniac = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, wwfmaniacRomInfo, wwfmaniacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };
 
 
@@ -1564,5 +1564,5 @@ struct BurnDriverD BurnDrvWwfmaniap = {
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, wwfmaniapRomInfo, wwfmaniapRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 254, 4, 3
+    400, 256, 4, 3
 };

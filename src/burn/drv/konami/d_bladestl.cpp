@@ -541,6 +541,7 @@ static INT32 DrvInit()
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUpdROM);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, M6809TotalCycles, 2000000);
 
 	BurnYM2203Init(1, 3579545, NULL, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &bladestl_ym2203_write_portA, &bladestl_ym2203_write_portB);
@@ -661,6 +662,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 6000000 / 60, 2000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	HD6309Open(0);
 	M6809Open(0);
@@ -669,7 +671,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		HD6309Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, HD6309);
 
 		if (i == 240) {
 			if (K007342_irq_enabled()) HD6309SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
@@ -691,7 +693,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		UPD7759Update(0, pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	HD6309Close();

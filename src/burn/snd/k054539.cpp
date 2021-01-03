@@ -21,8 +21,9 @@
 #endif
 
 #include "burnint.h"
-#include "math.h"
+#include <math.h>
 #include "k054539.h"
+#include "biquad.h"
 
 static INT32 nNumChips = 0;
 
@@ -69,9 +70,10 @@ struct k054539_info {
 	UINT32 rom_mask;
 
 	INT32 clock;
-	
+
 	double volume[2];
 	INT32 output_dir[2];
+	BIQ biquad[2];
 
 	k054539_channel channels[8];
 };
@@ -260,119 +262,6 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 	return info->regs[offset];
 }
 
-// direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
-enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
-
-struct BIQ {
-	double a0;
-	double a1;
-	double a2;
-	double b1;
-	double b2;
-	double q;
-	double z1;
-	double z2;
-	double frequency;
-	double samplerate;
-	double output;
-};
-
-static BIQ filters[8];
-
-static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q, double gain)
-{
-	BIQ *f = &filters[num];
-
-	memset(f, 0, sizeof(BIQ));
-
-	f->samplerate = sample_rate;
-	f->frequency = freqhz;
-	f->q = q;
-
-	double k = tan(M_PI * f->frequency / f->samplerate);
-	double norm = 1 / (1 + k / f->q + k * k);
-	double v = pow(10, fabs(gain) / 20);
-
-	switch (type) {
-		case FILT_HIGHPASS:
-			{
-				f->a0 = 1 * norm;
-				f->a1 = -2 * f->a0;
-				f->a2 = f->a0;
-				f->b1 = 2 * (k * k - 1) * norm;
-				f->b2 = (1 - k / f->q + k * k) * norm;
-			}
-			break;
-		case FILT_LOWPASS:
-			{
-				f->a0 = k * k * norm;
-				f->a1 = 2 * f->a0;
-				f->a2 = f->a0;
-				f->b1 = 2 * (k * k - 1) * norm;
-				f->b2 = (1 - k / f->q + k * k) * norm;
-			}
-			break;
-		case FILT_LOWSHELF:
-			{
-				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2.0) * k + k * k);
-					f->a0 = (1 + sqrt(2*v) * k + v * k * k) * norm;
-					f->a1 = 2 * (v * k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
-					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
-				} else {
-					norm = 1 / (1 + sqrt(2*v) * k + v * k * k);
-					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
-					f->b1 = 2 * (v * k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
-				}
-			}
-			break;
-		case FILT_HIGHSHELF:
-			{
-				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2.0) * k + k * k);
-					f->a0 = (v + sqrt(2*v) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - v) * norm;
-					f->a2 = (v - sqrt(2*v) * k + k * k) * norm;
-					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
-				} else {
-					norm = 1 / (v + sqrt(2*v) * k + k * k);
-					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
-					f->b1 = 2 * (k * k - v) * norm;
-					f->b2 = (v - sqrt(2*v) * k + k * k) * norm;
-				}
-			}
-			break;
-	}
-
-#if DELAY_DEBUG
-	bprintf(0, _T("BIQ coefficients\n"));
-	bprintf(0, _T("a0 %g\t  %Lf\n"), f->a0, f->a0);
-	bprintf(0, _T("a1 %g\t  %Lf\n"), f->a1, f->a1);
-	bprintf(0, _T("a2 %g\t  %Lf\n"), f->a2, f->a2);
-	bprintf(0, _T("b1 %g\t  %Lf\n"), f->b1, f->b1);
-	bprintf(0, _T("b2 %g\t  %Lf\n"), f->b2, f->b2);
-#endif
-}
-
-static float biquad_do(INT32 num, float input)
-{
-	BIQ *f = &filters[num];
-
-	f->output = input * f->a0 + f->z1;
-	f->z1 = input * f->a1 + f->z2 - f->b1 * f->output;
-	f->z2 = input * f->a2 - f->b2 * f->output;
-	return (float)f->output;
-}
-// end biquad filter
-
 void K054539Reset(INT32 chip)
 {
 #if defined FBNEO_DEBUG
@@ -386,10 +275,6 @@ void K054539Reset(INT32 chip)
 	info->delay_size = 0;
 	info->delay_decay = 0.6;
 	memset(info->delay_ram, 0, DELAYRAM_SIZE);
-
-	bprintf(0, _T("*   K054539: init biquad filter for delay taps.\n"));
-	init_biquad(FILT_HIGHPASS, 2*chip + 0, 48000, 500, 1.0, 0.0);
-	init_biquad(FILT_LOWPASS, 2*chip + 1, 48000, 12000, 1.0, 0.0);
 
 	info->cur_ptr = 0;
 	info->cur_zone = info->rom;
@@ -428,6 +313,10 @@ static void k054539_init_chip(INT32 clock, UINT8 *rom, INT32 nLen)
 	info->volume[BURN_SND_K054539_ROUTE_2] = 1.00;
 	info->output_dir[BURN_SND_K054539_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 	info->output_dir[BURN_SND_K054539_ROUTE_2] = BURN_SND_ROUTE_BOTH;
+
+	bprintf(0, _T("*   K054539: init biquad filter for delay taps.\n"));
+	info->biquad[0].init(FILT_HIGHPASS, 48000, 500, 1.0, 0.0);
+	info->biquad[1].init(FILT_LOWPASS, 48000, 12000, 1.0, 0.0);
 
 	//	if(info->intf->irq)
 //		timer_pulse(ATTOTIME_IN_HZ(480), info, 0, k054539_irq); // 10% of usual clock...
@@ -504,6 +393,9 @@ void K054539Exit()
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];
 		BurnFree (info->delay_ram);
+
+		info->biquad[0].exit();
+		info->biquad[1].exit();
 	}
 	
 	DebugSnd_K054539Initted = 0;
@@ -554,7 +446,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 		if(!(info->k054539_flags & K054539_DISABLE_REVERB) && info->delay_size) {
 			lval = rval = delay_line[info->delay_pos];
 
-			INT16 tap0 = biquad_do(2*chip + 1, delay_line[info->delay_pos]) / 2;
+			INT16 tap0 = info->biquad[1].filter(delay_line[info->delay_pos]) / 2;
 			delay_line[info->delay_pos] = tap0;
 			delay_line[info->delay_pos] *= info->delay_decay; // delay decay length
 			info->delay_pos = (info->delay_pos + 1) % (info->delay_size);
@@ -754,7 +646,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 
 				if (chan->delay_on) {
 					double monovol = (lvol + rvol) / 2;
-					INT16 tap = (INT16)(biquad_do(2*chip + 0, cur_val * monovol));
+					INT16 tap = (INT16)(info->biquad[0].filter(cur_val * monovol));
 					delay_line[info->delay_pos & 0x3fff] += tap;
 				}
 
@@ -785,7 +677,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 					// click aversion w/delay:
 					// we still have to process delay until we hit a zero crossing.  or else.
 					double monovol = (chan->lvol + chan->rvol) / 2;
-					INT16 tap = (INT16)(biquad_do(2*chip + 0, chan->val * monovol));
+					INT16 tap = (INT16)(info->biquad[0].filter(chan->val * monovol));
 					delay_line[info->delay_pos & 0x3fff] += tap;
 
 					if (tap == 0) chan->delay_on = 0;

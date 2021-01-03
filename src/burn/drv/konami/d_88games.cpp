@@ -467,6 +467,8 @@ static INT32 DrvInit()
 	UPD7759Init(1, UPD7759_STANDARD_CLOCK, DrvSndROM1);
 	UPD7759SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 	UPD7759SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 3579545);
+	UPD7759SetSyncCallback(1, ZetTotalCycles, 3579545);
 
 	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x7ffff);
 	K052109SetCallback(K052109Callback);
@@ -559,20 +561,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
+		CPU_RUN(0, konami);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
-			UPD7759Update(1, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -584,9 +579,8 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
-			UPD7759Update(1, pSoundBuf, nSegmentLength);
 		}
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	konamiClose();
@@ -599,7 +593,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -607,7 +601,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

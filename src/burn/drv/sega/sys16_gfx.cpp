@@ -222,9 +222,7 @@ void System16BTileMapsInit(INT32 bOpaque)
 	pSys16FgAltTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	pSys16FgAltTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
-		pSys18SpriteBMP = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
-	}
+	pSys18SpriteBMP = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 }
 
 void System16TileMapsExit()
@@ -240,9 +238,7 @@ void System16TileMapsExit()
 	BurnFree(pSys16FgAltTileMapPri0);
 	BurnFree(pSys16FgAltTileMapPri1);
 
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
-		BurnFree(pSys18SpriteBMP);
-	}
+	BurnFree(pSys18SpriteBMP);
 }
 
 static void System16ACreateBgTileMaps()
@@ -3188,68 +3184,9 @@ inline static void System16BUpdateTileValues()
 	}
 }
 
-INT32 System16BRender()
-{
-	if (!System16IgnoreVideoEnable) {
-		if (!System16VideoEnable) {
-			BurnTransferClear();
-			return 0;
-		}
-	}
-	
-	System16BUpdateTileValues();
-	System16BCreateTileMaps();
-	
-	if (Lockonph) {
-		PhilkoCalcPalette();
-	} else {
-		System16CalcPalette();
-	}
-	
-	System16BRenderTileLayer(1, 0, 0);
-	System16BRenderSpriteLayer(1);
-	System16BRenderTileLayer(1, 0, 1);
-	System16BRenderSpriteLayer(2);
-	System16BRenderTileLayer(1, 1, 1);
-	System16BRenderTileLayer(0, 0, 1);
-	System16BRenderSpriteLayer(4);
-	System16BRenderTileLayer(0, 1, 1);
-	System16BRenderTextLayer(0);
-	System16BRenderSpriteLayer(8);
-	System16BRenderTextLayer(1);
-	BurnTransferCopy(System16Palette);
+// System 18 / 16B v dink.01
+static INT32 AltModeKludge = 0; // a couple System 16B games have slightly different rendering (dunkshot, timescan)
 
-	return 0;
-}
-
-INT32 System16BAltRender()
-{
-	if (!System16VideoEnable) {
-		BurnTransferClear();
-		return 0;
-	}
-
-	System16BUpdateTileValues();
-	System16BAltCreateTileMaps();
-	
-	System16CalcPalette();
-	System16BRenderTileLayer(1, 0, 0);
-	System16BRenderSpriteLayer(1);
-	System16BRenderTileLayer(1, 0, 1);
-	System16BRenderSpriteLayer(2);
-	System16BRenderTileLayer(1, 1, 1);
-	System16BRenderTileLayer(0, 0, 1);
-	System16BRenderSpriteLayer(4);
-	System16BRenderTileLayer(0, 1, 1);
-	System16BAltRenderTextLayer(0);
-	System16BRenderSpriteLayer(8);
-	System16BAltRenderTextLayer(1);
-	BurnTransferCopy(System16Palette);
-
-	return 0;
-}
-
-// system 18 dink
 static void System18RenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Transparent, INT32 Priority)
 {
 	INT32 xScroll, yScroll, x, y;
@@ -3387,7 +3324,7 @@ static void System18RenderTextLayer(INT32 PriorityDraw, INT32 tpri)
 
 			if (Priority == PriorityDraw) {
 				Colour = (Code >> 9) & 0x07;
-				Code &= 0x1ff;
+				Code &= (AltModeKludge) ? 0xff : 0x1ff;
 
 				Code += System16TileBanks[0] * System16TileBankSize;
 
@@ -3608,6 +3545,83 @@ INT32 System18Render()
 	BurnTransferCopy(System16Palette);
 
 	BurnGunDrawTargets();
+
+	return 0;
+}
+
+INT32 System16BAltRender()
+{
+	AltModeKludge = 1;
+	return System16BRender();
+}
+
+INT32 System16BRender()
+{
+	BurnTransferClear();
+
+	// clear sprite mixer buffer
+	memset(pSys18SpriteBMP, 0xff, nScreenHeight * nScreenWidth * sizeof(UINT16));
+
+	// tiles_generic priority mixer: mix-all
+	GenericTilesPRIMASK = 0xff;
+
+	if (!System16VideoEnable) {
+		return 0;
+	}
+	System16BUpdateTileValues();
+
+	if (AltModeKludge) {
+		System16BAltCreateTileMaps();
+	} else {
+		System16BCreateTileMaps();
+	}
+
+	if (Lockonph) {
+		PhilkoCalcPalette();
+	} else {
+		System16CalcPalette();
+	}
+
+	if (nBurnLayer & 1) System18RenderTileLayer(1, 0, 0, 0);
+	if (nBurnLayer & 1) System18RenderTileLayer(1, 1, 0, 0);
+
+	if (nBurnLayer & 2) System18RenderTileLayer(1, 0, 1, 1);
+	if (nBurnLayer & 4) System18RenderTileLayer(1, 1, 1, 2);
+
+	if (nBurnLayer & 8)    System18RenderTileLayer(0, 0, 1, 2);
+	if (nSpriteEnable & 1) System18RenderTileLayer(0, 1, 1, 4);
+
+	if (nSpriteEnable & 2) System18RenderTextLayer(0, 4);
+	if (nSpriteEnable & 4) System18RenderTextLayer(1, 8);
+
+	if (nSpriteEnable & 8) System18RenderSpriteLayer();
+
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			UINT16* pPixel = pSys18SpriteBMP + (y * 320);
+			UINT8*    pPri = pPrioDraw  + (y * nScreenWidth);
+			UINT16*  pDest = pTransDraw + (y * 320);
+			UINT16 *PalRAM = (UINT16*)System16PaletteRam;
+
+			UINT16 pix = pPixel[x];
+			INT32 pri = (pix >> 10) & 3;
+
+			if (pix != 0xffff) {
+				if ((1<<pri) > pPri[x]) {
+
+					if ((pix & 0x3f0) == 0x3f0) {
+						pDest[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+					} else {
+						pDest[x] = ((pix & 0x3ff) | System16SpritePalOffset);
+					}
+				}
+			}
+		}
+	}
+
+	BurnTransferCopy(System16Palette);
+
+	AltModeKludge = 0;
 
 	return 0;
 }

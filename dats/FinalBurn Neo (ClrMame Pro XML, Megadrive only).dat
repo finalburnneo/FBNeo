@@ -17097,7 +17097,7 @@
 		<description>Thunder Fox (Hack, Spanish)</description>
 		<year>2018</year>
 		<manufacturer>Published</manufacturer>
-		<rom name="thunder fox (hack, spanish).bin" size="1048576" crc="e0eb74e6"/>
+		<rom name="thunder fox (hack, spanish).bin" size="1048576" crc="a1b50389"/>
 		<driver status="good"/>
 	</game>
 	<game name="tfoxj" cloneof="tfox" romof="tfox">

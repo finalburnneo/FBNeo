@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15903 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15904 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1718,8 +1718,8 @@ This list contains all games supported by FinalBurn Neo.
 | fds_bubblebobble|  	| Bubble Bobble (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | bublbobl1	|  	| Bubble Bobble (Japan, Ver 0.0)			| bublbobl	| 1986	| Taito Corporat| Taito Misc	| 					|
 | bublbobl	|  	| Bubble Bobble (Japan, Ver 0.1)			| 		| 1986	| Taito Corporat| Taito Misc	| 					|
-| sms_bublbokc	|  	| Bubble Bobble (Kor, Clover)				| sms_bublbobl	| 1990	| Clover	| Sega Master Sy| 					|
-| sms_bublboky	|  	| Bubble Bobble (Kor, YM Soft)				| sms_bublbobl	| 1990	| YM Soft	| Sega Master Sy| 					|
+| sms_bublbokc	|  	| Bubble Bobble (Kor, Clover)				| 		| 1990	| Clover	| Sega Master Sy| 					|
+| sms_bublboky	|  	| Bubble Bobble (Kor, YM Soft)				| sms_bublbokc	| 1990	| YM Soft	| Sega Master Sy| 					|
 | bublboblp	|  	| Bubble Bobble (prototype on Tokio hardware)		| bublbobl	| 1986	| Taito Corporat| Taito Misc	| 					|
 | bublboblu	|  	| Bubble Bobble (Ultra Version, Hack)			| bublbobl	| 2011	| Hack (Penta Pe| Taito Misc	| 					|
 | bublboblr1	|  	| Bubble Bobble (US, Ver 1.0)				| bublbobl	| 1986	| Taito America | Taito Misc	| 					|
@@ -1905,7 +1905,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-12-02| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-12-31| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -8744,7 +8744,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_n3dgwaia	|  	| New 3D Golf Simulation - Waialae no Kiseki (Jpn)	| 		| 1994	| Sega		| Sega Megadrive| 					|
 | tg_advislnd	|  	| New Adventure Island					| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | newapunk	|  	| New Atomic Punk - Global Quest (US)			| bbmanw	| 1992	| Irem America	| Irem M90	| 					|
-| sms_newbogl2	|  	| New Boggle Boggle 2 (Kor)				| sms_bublbobl	| 1989	| Zemina	| Sega Master Sy| 					|
+| sms_newbogl2	|  	| New Boggle Boggle 2 (Kor)				| 		| 1989	| Zemina	| Sega Master Sy| 					|
 | newxpang	|  	| New Cross Pang					| 		| 1999	| F2 System	| Miscellaneous	| 					|
 | newfanta	|  	| New Fantasia (1994 copyright)				| newfant	| 1995	| Comad / New Ja| Miscellaneous	| 					|
 | newfant	|  	| New Fantasia (1995 copyright)				| 		| 1995	| Comad / New Ja| Miscellaneous	| 					|
@@ -9139,7 +9139,7 @@ This list contains all games supported by FinalBurn Neo.
 | oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldspluso	|  	| Oriental Legend 2 (One Key Edition, Hack)		| oldsplus	| 2020-12-10| Hack		| PolyGameMaster| Incomplete Dump			|
-| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-11-23| Hack		| PolyGameMaster| 					|
+| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-12-31| Hack		| PolyGameMaster| 					|
 | oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-08-03| Hack		| PolyGameMaster| 					|
 | olds100a	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -12414,7 +12414,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_streefigii|  	| Street Fighter II - The World Warrior (Unl)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sf2ly		|  	| Street Fighter II - The World Warrior (with bosses lik| sf2		| 1991	| Capcom	| CPS1		| 					|
 | nes_streefigiihac|  	| Street Fighter II Hack (Hack of SFIII)		| nes_streefigiii| 1989?	| Nintendo	| Miscellaneous	| 					|
-| sf2mix	|  	| Street Fighter II Mix (v0.98c)			| sf2ce		| 2020	| Hack		| CPS1		| 					|
+| sf2mix	|  	| Street Fighter II Mix (v0.99a)			| sf2ce		| 2020	| Hack		| CPS1		| 					|
 | sf2cebltw	|  	| Street Fighter II' - Champion Edition (920313 'Taiwan'| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeabl	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
 | sf2ceeab2	|  	| Street Fighter II' - Champion Edition (920313 etc boot| sf2ce		| 1992	| bootleg	| CPS1		| 					|
@@ -12772,7 +12772,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_sboy2a	|  	| Super Boy II. (Kor, Alt)				| msx_sboy2	| 1989	| Zemina	| MSX		| 					|
 | sb2003a	|  	| Super Bubble 2003 (Asia, Ver 1.0)			| sb2003	| 2003	| Limenko	| Miscellaneous	| 					|
 | sb2003	|  	| Super Bubble 2003 (World, Ver 1.0)			| 		| 2003	| Limenko	| Miscellaneous	| 					|
-| sms_suprbubl	|  	| Super Bubble Bobble (Kor)				| sms_bublbobl	| 1989	| Zemina	| Sega Master Sy| 					|
+| sms_suprbubl	|  	| Super Bubble Bobble (Kor)				| 		| 1989	| Zemina	| Sega Master Sy| 					|
 | sbubsm	|  	| Super Bubble Bobble (Sun Mixing, Megadrive clone hardw| 		| 199?	| Sun Mixing	| Sega Megadrive| 					|
 | md_suprbubl	|  	| Super Bubble Bobble MD (Chi)				| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | sbp		| D NW	| Super Bubble Pop					| 		| 2004	| Vektorlogic	| Neo Geo MVS	| 					|
@@ -12916,6 +12916,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_smb3mi	|  	| Super Mario Bros. 3Mix (Hack)				| nes_smb3	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_smb4md	|  	| Super Mario Bros. 4 MD				| 		| 2010	| Mairtrus	| Sega Megadrive| 					|
 | nes_smbchredi	|  	| Super Mario Bros. Christmas Edition (Hack)		| nes_smb	| 2020	| U Retro	| Miscellaneous	| 					|
+| nes_smbendssmbha1|  	| Super Mario Bros. Ende's SMB Hack 1 (Hack)		| nes_smb	| 2004	| Nintendo	| Miscellaneous	| 					|
 | nes_smbspeh	|  	| Super Mario Bros. Special (Hack, Triforce89)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smbspe	|  	| Super Mario Bros. Special (Hack, v1.0-rc1)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smbspex1	|  	| Super Mario Bros. Special X1 (Hack)			| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -13499,7 +13500,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-09-13| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-12-27| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | nes_tenchwokuriij|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)	| nes_tenchwokurii| 1991	| Capcom	| Miscellaneous	| 					|
 | nes_tenchwokurii|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)	| 		| 1991	| Capcom	| Miscellaneous	| 					|

@@ -13118,6 +13118,7 @@ DRV		BurnDrvnes_smb3defedi;
 DRV		BurnDrvnes_smb3mi;
 DRV		BurnDrvmd_smb4md;
 DRV		BurnDrvnes_smbchredi;
+DRV		BurnDrvnes_smbendssmbha1;
 DRV		BurnDrvnes_smbspeh;
 DRV		BurnDrvnes_smbspe;
 DRV		BurnDrvnes_smbspex1;
@@ -28768,7 +28769,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_streefigii,		// Street Fighter II - The World Warrior (Unl)
 	&BurnDrvCpsSf2ly,			// Street Fighter II - The World Warrior (with bosses like Champion Edition, 910522 Japan, CPS-B-11)
 	&BurnDrvnes_streefigiihac,	// Street Fighter II Hack (Hack of SFIII)
-	&BurnDrvCpssf2mix,			// Street Fighter II Mix (v0.98c)
+	&BurnDrvCpssf2mix,			// Street Fighter II Mix (v0.99a)
 	&BurnDrvCpsSf2cebltw,		// Street Fighter II' - Champion Edition (920313 'Taiwan' bootleg with PAL)
 	&BurnDrvCpsSf2ceeabl,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 1)
 	&BurnDrvCpsSf2ceeab2,		// Street Fighter II' - Champion Edition (920313 etc bootleg set 2)
@@ -29284,6 +29285,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smb3mi,			// Super Mario Bros. 3Mix (Hack)
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
 	&BurnDrvnes_smbchredi,		// Super Mario Bros. Christmas Edition (Hack)
+	&BurnDrvnes_smbendssmbha1,	// Super Mario Bros. Ende's SMB Hack 1 (Hack)
 	&BurnDrvnes_smbspeh,		// Super Mario Bros. Special (Hack, Triforce89)
 	&BurnDrvnes_smbspe,			// Super Mario Bros. Special (Hack, v1.0-rc1)
 	&BurnDrvnes_smbspex1,		// Super Mario Bros. Special X1 (Hack)

@@ -544,14 +544,14 @@
 		<rom name="mpr-14177-f.ic1" size="262144" crc="e843ba7e"/>
 		<driver status="good"/>
 	</game>
-	<game name="bublbokc" cloneof="bublbobl" romof="bublbobl">
+	<game name="bublbokc">
 		<description>Bubble Bobble (Kor, Clover)</description>
 		<year>1990</year>
 		<manufacturer>Clover</manufacturer>
 		<rom name="bobble bobble [clover] (kr).bin" size="32768" crc="25eb9f80"/>
 		<driver status="good"/>
 	</game>
-	<game name="bublboky" cloneof="bublbobl" romof="bublbobl">
+	<game name="bublboky" cloneof="bublbokc" romof="bublbokc">
 		<description>Bubble Bobble (Kor, YM Soft)</description>
 		<year>1990</year>
 		<manufacturer>YM Soft</manufacturer>
@@ -2343,7 +2343,7 @@
 		<rom name="nemesis 2 (kr).bin" size="131072" crc="0a77fa5e"/>
 		<driver status="good"/>
 	</game>
-	<game name="newbogl2" cloneof="bublbobl" romof="bublbobl">
+	<game name="newbogl2">
 		<description>New Boggle Boggle 2 (Kor)</description>
 		<year>1989</year>
 		<manufacturer>Zemina</manufacturer>
@@ -3414,7 +3414,7 @@
 		<rom name="super boy ii (kor).bin" size="49152" crc="67c2f0ff"/>
 		<driver status="good"/>
 	</game>
-	<game name="suprbubl" cloneof="bublbobl" romof="bublbobl">
+	<game name="suprbubl">
 		<description>Super Bubble Bobble (Kor)</description>
 		<year>1989</year>
 		<manufacturer>Zemina</manufacturer>

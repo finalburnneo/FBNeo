@@ -9581,6 +9581,13 @@
 		<rom name="Super Mario Bros. Christmas Edition (Hack).nes" size="73744" crc="b293a7c4"/>
 		<driver status="good"/>
 	</game>
+	<game name="smbendssmbha1" cloneof="smb" romof="smb">
+		<description>Super Mario Bros. Ende's SMB Hack 1 (Hack)</description>
+		<year>2004</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros. Ende's SMB Hack 1 (Hack).nes" size="40976" crc="1eeab4b1"/>
+		<driver status="good"/>
+	</game>
 	<game name="smbspeh" cloneof="smb" romof="smb">
 		<description>Super Mario Bros. Special (Hack, Triforce89)</description>
 		<year>1989?</year>

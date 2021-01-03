@@ -44,7 +44,7 @@ struct upd7759_chip
 	UINT8		reset;						/* current state of the RESET line */
 	UINT8		start;						/* current state of the START line */
 	UINT8		drq;						/* current state of the DRQ line */
-	void (*drqcallback)(INT32 param);			/* drq callback */
+	void (*drqcallback)(INT32 param);		/* drq callback */
 
 	/* internal state machine */
 	INT8		state;						/* current overall chip state */
@@ -336,7 +336,7 @@ static void UPD7759AdvanceState()
 
 static void UPD7759SlaveModeUpdate()
 {
-	Chip = Chips[0];
+	Chip = Chips[0]; // slave mode only available on Chip 0
 	UINT8 OldDrq = Chip->drq;
 
 	UpdateStream(Chip->ChipNum);
@@ -483,7 +483,7 @@ void UPD7759Render(INT32 chip, INT16 *pSoundBuf, INT32 samples)
 		INT32 l = Chip->biquadL.filter(Chip->out_buf_linear_resampled[i*2 + 0]);
 		INT32 r = Chip->biquadR.filter(Chip->out_buf_linear_resampled[i*2 + 1]);
 		pSoundBuf[i*2 + 0] = BURN_SND_CLIP(pSoundBuf[i*2 + 0] + l);
-		pSoundBuf[i*2 + 1] = BURN_SND_CLIP(pSoundBuf[i*2 + 0] + r);
+		pSoundBuf[i*2 + 1] = BURN_SND_CLIP(pSoundBuf[i*2 + 1] + r);
 	}
 
 	Chip->sample_counts = 0; // ready for next frame!

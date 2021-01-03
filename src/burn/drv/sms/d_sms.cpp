@@ -2176,10 +2176,10 @@ STD_ROM_PICK(sms_bublbokc)
 STD_ROM_FN(sms_bublbokc)
 
 struct BurnDriver BurnDrvsms_bublbokc = {
-	"sms_bublbokc", "sms_bublbobl", NULL, NULL, "1990",
+	"sms_bublbokc", NULL, NULL, NULL, "1990",
 	"Bubble Bobble (Kor, Clover)\0", NULL, "Clover", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_bublbokcRomInfo, sms_bublbokcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -2196,7 +2196,7 @@ STD_ROM_PICK(sms_bublboky)
 STD_ROM_FN(sms_bublboky)
 
 struct BurnDriver BurnDrvsms_bublboky = {
-	"sms_bublboky", "sms_bublbobl", NULL, NULL, "1990",
+	"sms_bublboky", "sms_bublbokc", NULL, NULL, "1990",
 	"Bubble Bobble (Kor, YM Soft)\0", NULL, "YM Soft", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_PLATFORM, 0,
@@ -2216,10 +2216,10 @@ STD_ROM_PICK(sms_suprbubl)
 STD_ROM_FN(sms_suprbubl)
 
 struct BurnDriver BurnDrvsms_suprbubl = {
-	"sms_suprbubl", "sms_bublbobl", NULL, NULL, "1989",
+	"sms_suprbubl", NULL, NULL, NULL, "1989",
 	"Super Bubble Bobble (Kor)\0", NULL, "Zemina", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_suprbublRomInfo, sms_suprbublRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -2236,10 +2236,10 @@ STD_ROM_PICK(sms_newbogl2)
 STD_ROM_FN(sms_newbogl2)
 
 struct BurnDriver BurnDrvsms_newbogl2 = {
-	"sms_newbogl2", "sms_bublbobl", NULL, NULL, "1989",
+	"sms_newbogl2", NULL, NULL, NULL, "1989",
 	"New Boggle Boggle 2 (Kor)\0", NULL, "Zemina", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_newbogl2RomInfo, sms_newbogl2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -3599,7 +3599,7 @@ struct BurnDriver BurnDrvsms_ejim = {
 	"sms_ejim", NULL, NULL, NULL, "1995",
 	"Earthworm Jim (Bra)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_ejimRomInfo, sms_ejimRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

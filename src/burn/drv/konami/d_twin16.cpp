@@ -1030,6 +1030,7 @@ static INT32 DrvInit(INT32 (pLoadCallback)())
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM1);
 	UPD7759SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 3579545);
 
 	GenericTilesInit();
 
@@ -1368,6 +1369,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame(); // upd7759
+
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
 
@@ -1399,24 +1402,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 		if ((twin16_CPUA_register & 0x20) && i == nInterleave-1) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (twin16_custom_video != 1) {
 			SekOpen(1);
-			nCyclesDone[1] += SekRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+			CPU_RUN(1, Sek);
 			if ((twin16_CPUB_register & 0x02) && i == nInterleave-1) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 
-		nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 
 		if (pBurnSoundOut && (i%4)==3) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1429,10 +1431,10 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);
 		}
-	}	
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	ZetClose();
 

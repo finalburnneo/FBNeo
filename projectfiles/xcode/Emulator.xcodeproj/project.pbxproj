@@ -2575,6 +2575,8 @@
 		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
+		FEB8081925A0F6AB0065DE86 /* biquad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = biquad.h; sourceTree = "<group>"; };
+		FEB8081A25A0F6AB0065DE86 /* downsample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = downsample.h; sourceTree = "<group>"; };
 		FEC0A0DF249677750015AABF /* d_wecleman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_wecleman.cpp; sourceTree = "<group>"; };
 		FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_magmax.cpp; sourceTree = "<group>"; };
 		FEC0A0E324ACDFBE0015AABF /* d_cischeat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_cischeat.cpp; sourceTree = "<group>"; };
@@ -2679,12 +2681,12 @@
 		FE1B108F235615940065200C /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
+				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE55611D25906B4E00A19F2D /* FinalBurn NeoDebug.entitlements */,
 				FE2BC6AF23615BBC00B9D150 /* Controllers */,
 				FE3BD61423A4979700570784 /* Doc */,
 				FE2BC6BD2362BF9200B9D150 /* Nibs */,
 				FE0A7E9E2394B87B001E6997 /* Views */,
-				FE1B109B235615960065200C /* FinalBurnNeo.entitlements */,
 				FE1B1090235615940065200C /* AppDelegate.h */,
 				FE1B1091235615940065200C /* AppDelegate.m */,
 				FE1B1099235615950065200C /* main.m */,
@@ -4475,6 +4477,7 @@
 				FE1B221123561A700065200C /* asteroids.h */,
 				FE1B225C23561A700065200C /* ay8910.c */,
 				FE1B221223561A700065200C /* ay8910.h */,
+				FEB8081925A0F6AB0065DE86 /* biquad.h */,
 				FE1B225023561A700065200C /* burn_md2612.cpp */,
 				FE1B222A23561A700065200C /* burn_md2612.h */,
 				FE1B223623561A700065200C /* burn_y8950.cpp */,
@@ -4507,6 +4510,7 @@
 				FE1B222523561A700065200C /* c6280.h */,
 				FE1B220E23561A700065200C /* dac.cpp */,
 				FE1B21FC23561A700065200C /* dac.h */,
+				FEB8081A25A0F6AB0065DE86 /* downsample.h */,
 				FE1B220323561A700065200C /* es5506.cpp */,
 				FE1B222C23561A700065200C /* es5506.h */,
 				FE1B223A23561A700065200C /* es8712.cpp */,

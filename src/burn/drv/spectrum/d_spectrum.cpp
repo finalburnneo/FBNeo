@@ -5,6 +5,8 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include <math.h>
+#include "biquad.h"
 
 #if defined (_MSC_VER)
 #define strcasecmp stricmp
@@ -286,113 +288,6 @@ static void TAPAutoLoadRobot()
 }
 // End TAP Robot
 
-// (also appears in k054539.cpp c/o dink)
-// direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
-enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
-
-#define BIQ_PI	3.14159265358979323846
-
-struct BIQ {
-	double a0;
-	double a1;
-	double a2;
-	double b1;
-	double b2;
-	double q;
-	double z1;
-	double z2;
-	double frequency;
-	double samplerate;
-	double output;
-};
-
-static BIQ filters[8];
-
-static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q, double gain)
-{
-	BIQ *f = &filters[num];
-
-	memset(f, 0, sizeof(BIQ));
-
-	f->samplerate = sample_rate;
-	f->frequency = freqhz;
-	f->q = q;
-
-	double k = tan(BIQ_PI * f->frequency / f->samplerate);
-	double norm = 1 / (1 + k / f->q + k * k);
-	double v = pow(10, fabs(gain) / 20);
-
-	switch (type) {
-		case FILT_HIGHPASS:
-			{
-				f->a0 = 1 * norm;
-				f->a1 = -2 * f->a0;
-				f->a2 = f->a0;
-				f->b1 = 2 * (k * k - 1) * norm;
-				f->b2 = (1 - k / f->q + k * k) * norm;
-			}
-			break;
-		case FILT_LOWPASS:
-			{
-				f->a0 = k * k * norm;
-				f->a1 = 2 * f->a0;
-				f->a2 = f->a0;
-				f->b1 = 2 * (k * k - 1) * norm;
-				f->b2 = (1 - k / f->q + k * k) * norm;
-			}
-			break;
-		case FILT_LOWSHELF:
-			{
-				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2.0) * k + k * k);
-					f->a0 = (1 + sqrt(2*v) * k + v * k * k) * norm;
-					f->a1 = 2 * (v * k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
-					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
-				} else {
-					norm = 1 / (1 + sqrt(2*v) * k + v * k * k);
-					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
-					f->b1 = 2 * (v * k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2*v) * k + v * k * k) * norm;
-				}
-			}
-			break;
-		case FILT_HIGHSHELF:
-			{
-				if (gain >= 0) {
-					norm = 1 / (1 + sqrt(2.0) * k + k * k);
-					f->a0 = (v + sqrt(2*v) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - v) * norm;
-					f->a2 = (v - sqrt(2*v) * k + k * k) * norm;
-					f->b1 = 2 * (k * k - 1) * norm;
-					f->b2 = (1 - sqrt(2.0) * k + k * k) * norm;
-				} else {
-					norm = 1 / (v + sqrt(2*v) * k + k * k);
-					f->a0 = (1 + sqrt(2.0) * k + k * k) * norm;
-					f->a1 = 2 * (k * k - 1) * norm;
-					f->a2 = (1 - sqrt(2.0) * k + k * k) * norm;
-					f->b1 = 2 * (k * k - v) * norm;
-					f->b2 = (v - sqrt(2*v) * k + k * k) * norm;
-				}
-			}
-			break;
-	}
-}
-
-static float biquad_do(INT32 num, float input)
-{
-	BIQ *f = &filters[num];
-
-	f->output = input * f->a0 + f->z1;
-	f->z1 = input * f->a1 + f->z2 - f->b1 * f->output;
-	f->z2 = input * f->a2 - f->b2 * f->output;
-	return (float)f->output;
-}
-// end biquad filter
-
 // Oversampling Buzzer-DAC
 static INT32 buzzer_last_update;
 static INT32 buzzer_last_data;
@@ -402,13 +297,21 @@ static INT32 buzzer_data_frame_minute;
 
 static const INT32 buzzer_oversample = 3000;
 
-static void BuzzerInit()
+static BIQ biquad[2]; // snd/biquad.h
+
+static void BuzzerInit() // keep in DoReset()!
 {
-	init_biquad(FILT_LOWPASS, 0, nBurnSoundRate, 7000, 0.554, 0.0);
-	init_biquad(FILT_LOWPASS, 1, nBurnSoundRate, 8000, 0.554, 0.0);
+	biquad[0].init(FILT_LOWPASS, nBurnSoundRate, 7000, 0.554, 0.0);
+	biquad[1].init(FILT_LOWPASS, nBurnSoundRate, 8000, 0.554, 0.0);
 
 	buzzer_data_frame_minute = (SpecCylesPerScanline * SpecScanlines * 50.00);
 	buzzer_data_frame = ((double)(SpecCylesPerScanline * SpecScanlines) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+}
+
+static void BuzzerExit()
+{
+	biquad[0].exit();
+	biquad[1].exit();
 }
 
 static void BuzzerAdd(INT16 data)
@@ -449,7 +352,7 @@ static void BuzzerRender(INT16 *dest)
 		for (INT32 j = 0; j < buzzer_oversample; j++) {
 			sample += Buzzer[buzzer_data_pos++];
 		}
-		sample = (INT32)(biquad_do(1, biquad_do(0, (double)sample / buzzer_oversample)));
+		sample = (INT32)(biquad[1].filter(biquad[0].filter((double)sample / buzzer_oversample)));
 		dest[0] = BURN_SND_CLIP(sample);
 		dest[1] = BURN_SND_CLIP(sample);
 		dest += 2;
@@ -1131,6 +1034,8 @@ static INT32 SpectrumInit(INT32 Mode)
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 224*312*50);
 
+	// Init Buzzer (in DoReset!)
+
 	SpecMode |= SPEC_AY8910;
 
 	GenericTilesInit();
@@ -1192,6 +1097,8 @@ static INT32 Spectrum128Init(INT32 Mode)
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 228*311*50);
 
+	// Init Buzzer (in DoReset!)
+
 	SpecMode |= SPEC_AY8910;
 
 	GenericTilesInit();
@@ -1244,6 +1151,8 @@ static INT32 SpecExit()
 	ZetExit();
 
 	if (SpecMode & SPEC_AY8910) AY8910Exit(0);
+
+	BuzzerExit();
 
 	GenericTilesExit();
 

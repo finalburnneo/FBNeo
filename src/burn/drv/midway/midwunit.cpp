@@ -51,6 +51,9 @@ static INT32 nIOShuffle[16];
 
 static INT32 wwfmania = 0;
 
+static INT32 nExtraCycles = 0;
+
+
 #define RGB888(r,g,b)   ((r) | ((g) << 8) | ((b) << 16))
 #define RGB888_r(x) ((x) & 0xFF)
 #define RGB888_g(x) (((x) >>  8) & 0xFF)
@@ -76,7 +79,7 @@ static INT32 MemIndex()
 	DrvSoundROM	= Next;				Next += 0x1000000 * sizeof(UINT8);
 	DrvGfxROM 	= Next;				Next += 0x2000000 * sizeof(UINT8);
 
-	DrvNVRAM	= Next;             Next += TOBYTE(0x60000) * sizeof(UINT16);
+	DrvNVRAM	= Next;             Next += 0x8000 * sizeof(UINT16);
 
 	AllRam		= Next;
 	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
@@ -210,7 +213,7 @@ void WolfUnitSecurityWrite(UINT32 address, UINT16 value)
 UINT16 WolfUnitCMOSRead(UINT32 address)
 {
     UINT16 *wn = (UINT16*)DrvNVRAM;
-	UINT32 offset = (address & 0x05ffff) >> 4;
+	UINT32 offset = (address & 0x07ffff) >> 4;
     return wn[offset];
 }
 
@@ -218,7 +221,7 @@ void WolfUnitCMOSWrite(UINT32 address, UINT16 value)
 {
     if (bCMOSWriteEnable) {
 		UINT16 *wn = (UINT16*)DrvNVRAM;
-		UINT32 offset = (address & 0x05ffff) >> 4;
+		UINT32 offset = (address & 0x07ffff) >> 4;
 		wn[offset] = value;
 		bCMOSWriteEnable = false;
     }
@@ -391,6 +394,8 @@ static void WolfDoReset()
 	TMS34010Reset();
 
 	Dcs2kReset();
+
+	nExtraCycles = 0;
 }
 
 INT32 WolfUnitInit()
@@ -454,7 +459,7 @@ INT32 WolfUnitInit()
     TMS34010MapHandler(3, 0x01600000, 0x0160001f, MAP_READ | MAP_WRITE);
 
     TMS34010SetHandlers(4, WolfUnitCMOSRead, WolfUnitCMOSWrite);
-    TMS34010MapHandler(4, 0x01400000, 0x0145ffff, MAP_READ | MAP_WRITE);
+    TMS34010MapHandler(4, 0x01400000, 0x0147ffff, MAP_READ | MAP_WRITE);
 
     TMS34010SetWriteHandler(5, WolfUnitCMOSWriteEnable);
     TMS34010MapHandler(5, 0x01480000, 0x014fffff, MAP_READ | MAP_WRITE);
@@ -516,8 +521,8 @@ INT32 WolfUnitFrame()
 	Dcs2kNewFrame();
 
 	INT32 nInterleave = 288;
-	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(10000000 / 54.71) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.706840), (INT32)(10000000 / 54.706840) };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
@@ -534,6 +539,8 @@ INT32 WolfUnitFrame()
 	if (pBurnDraw) {
 		WolfUnitDraw();
 	}
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	// Buffering palette for 1 frame, fix umk3pb1 palette glitch when
 	// transitioning from title screen to select screen
@@ -598,11 +605,12 @@ INT32 WolfUnitScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bCMOSWriteEnable);
 		SCAN_VAR(nGfxBankOffset);
 		SCAN_VAR(nIOShuffle);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {
 		ba.Data		= DrvNVRAM;
-		ba.nLen		= TOBYTE(0x60000);
+		ba.nLen		= 0x8000;
 		ba.nAddress	= 0;
 		ba.szName	= "NV RAM";
 		BurnAcb(&ba);

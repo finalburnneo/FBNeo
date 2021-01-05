@@ -3606,6 +3606,7 @@ DRV		BurnDrvpce_ddungw;
 DRV		BurnDrvtg_ddungw;
 DRV		BurnDrvsms_doublhwk;
 DRV		BurnDrvsms_doublhwkp;
+DRV		BurnDrvsms_doublhwkfm;
 DRV		BurnDrvDblpoind;
 DRV		BurnDrvDblpoint;
 DRV		BurnDrvnes_doublestrike;
@@ -19773,6 +19774,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_ddungw,			// Double Dungeons - W
 	&BurnDrvsms_doublhwk,		// Double Hawk (Euro)
 	&BurnDrvsms_doublhwkp,		// Double Hawk (Euro, Prototype)
+	&BurnDrvsms_doublhwkfm,		// Double Hawk (FM Mod)
 	&BurnDrvDblpoind,			// Double Point (Dong Bang Electron, bootleg?)
 	&BurnDrvDblpoint,			// Double Point
 	&BurnDrvnes_doublestrike,	// Double Strike (Unl)

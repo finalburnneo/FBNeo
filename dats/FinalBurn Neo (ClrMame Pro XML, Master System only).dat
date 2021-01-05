@@ -957,6 +957,13 @@
 		<rom name="double hawk (europe) (beta).bin" size="262144" crc="f76d5cee"/>
 		<driver status="good"/>
 	</game>
+	<game name="doublhwkfm" cloneof="doublhwk" romof="doublhwk">
+		<description>Double Hawk (FM Mod) [YM2413 FM sound chip supported]</description>
+		<year>1990</year>
+		<manufacturer>Sega - fatnick</manufacturer>
+		<rom name="double hawk fm.bin" size="262144" crc="fe7f9f17"/>
+		<driver status="good"/>
+	</game>
 	<game name="doubltgt" cloneof="quartet" romof="quartet">
 		<description>Double Target - Cynthia no Nemuri (Jpn)</description>
 		<year>1987</year>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15904 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15905 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3550,6 +3550,7 @@ This list contains all games supported by FinalBurn Neo.
 | tg_ddungw	|  	| Double Dungeons - W					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | sms_doublhwk	|  	| Double Hawk (Euro)					| 		| 1990	| Sega		| Sega Master Sy| 					|
 | sms_doublhwkp	|  	| Double Hawk (Euro, Prototype)				| sms_doublhwk	| 1990	| Sega		| Sega Master Sy| 					|
+| sms_doublhwkfm|  	| Double Hawk (FM Mod)					| sms_doublhwk	| 1990	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
 | dblpointd	|  	| Double Point (Dong Bang Electron, bootleg?)		| dblpoint	| 1995	| Dong Bang Elec| Miscellaneous	| 					|
 | dblpoint	|  	| Double Point						| 		| 1995	| Min Corp.	| Miscellaneous	| 					|
 | nes_doublestrike|  	| Double Strike (Unl)					| 		| 1990	| AVE		| Miscellaneous	| 					|
@@ -7912,16 +7913,16 @@ This list contains all games supported by FinalBurn Neo.
 | nes_micemission|  	| Mice Mission (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_michaandsworgrpr|  	| Michael Andretti's World Grand Prix (USA)		| 		| 1990	| Sammy		| Miscellaneous	| 					|
 | fds_michaengdai|  	| Michael English Daibouken (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| mwalkbl2	|  	| Michael Jackson's Moonwalker (bootleg)		| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
+| mwalkbl2	|  	| Michael Jackson's Moonwalker (bootleg)		| mwalk		| 1990	| bootleg	| System 18	| 					|
 | sms_mwalk	|  	| Michael Jackson's Moonwalker (Euro, USA, Bra, Kor)	| 		| 1990	| Sega		| Sega Master Sy| 					|
 | md_mwalks	|  	| Michael Jackson's Moonwalker (Hack, Spanish)		| md_mwalk	| 2019	| Sega		| Sega Megadrive| 					|
-| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
-| mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
-| mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| Graphics issues			|
-| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
-| mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| Graphics issues			|
+| mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| 					|
+| mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| 					|
+| mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| 					|
+| mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| bootleg	| System 18	| 					|
+| mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| 					|
 | sms_mwalkp	|  	| Michael Jackson's Moonwalker (USA, Prototype)		| sms_mwalk	| 1990	| Sega		| Sega Master Sy| 					|
-| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| Graphics issues			|
+| mwalkd	|  	| Michael Jackson's Moonwalker (World) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| 					|
 | md_mwalk1	|  	| Michael Jackson's Moonwalker (World)			| md_mwalk	| 1990	| Sega		| Sega Megadrive| 					|
 | md_mwalk	|  	| Michael Jackson's Moonwalker (World, Rev. A)		| 		| 1990	| Sega		| Sega Megadrive| 					|
 | spec_michelfutbolchamp|  	| Michel Futbol Master - Championship		| 		| 1989	| Dinamic	| ZX Spectrum	| 					|

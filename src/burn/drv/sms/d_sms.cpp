@@ -3285,6 +3285,24 @@ struct BurnDriver BurnDrvsms_doublhwk = {
 	256, 192, 4, 3
 };
 
+// Double Hawk (FM Mod)
+
+static struct BurnRomInfo sms_doublhwkfmRomDesc[] = {
+	{ "double hawk fm.bin",	0x40000, 0xfe7f9f17, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_doublhwkfm)
+STD_ROM_FN(sms_doublhwkfm)
+
+struct BurnDriver BurnDrvsms_doublhwkfm = {
+	"sms_doublhwkfm", "sms_doublhwk", NULL, NULL, "1990",
+	"Double Hawk (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - fatnick", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_SHOOT, 0,
+	SMSGetZipName, sms_doublhwkfmRomInfo, sms_doublhwkfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
 
 // Double Hawk (Euro, Prototype)
 

@@ -2535,10 +2535,12 @@ static INT32 TmntDoReset()
 	INT32 nRet = DrvDoReset();
 	
 	if (uses_k007232) K007232Reset(0);
+
+	ZetOpen(0);
 	UPD7759Reset();
-	
-	UPD7759StartWrite(0, 0);
+	UPD7759StartWrite(0, 0); // First sample is cut w/o this hack. ("Fire!" after coin-up/select character)
 	UPD7759ResetWrite(0, 1);
+	ZetClose();
 	
 	return nRet;
 }
@@ -4741,7 +4743,8 @@ static INT32 TmntInit()
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
-	
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 3579545);
+
 	TmntTitleSampleSetRoute(1.00, BURN_SND_ROUTE_BOTH);
 	
 	LayerColourBase[0] = 0;
@@ -5905,7 +5908,6 @@ static INT32 TmntFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
 			if (PlayTitleSample) RenderTitleSample(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -5919,9 +5921,11 @@ static INT32 TmntFrame()
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);
-			UPD7759Update(0, pSoundBuf, nSegmentLength);
 			if (PlayTitleSample) RenderTitleSample(pSoundBuf, nSegmentLength);
 		}
+		ZetOpen(0);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 	
 	if (pBurnDraw) TmntDraw();

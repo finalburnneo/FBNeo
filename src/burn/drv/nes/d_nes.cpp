@@ -12484,6 +12484,23 @@ struct BurnDriver BurnDrvnes_smbchredi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_smbendssmbha1RomDesc[] = {
+	{ "Super Mario Bros. Ende's SMB Hack 1 (Hack).nes",          40976, 0x1eeab4b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbendssmbha1)
+STD_ROM_FN(nes_smbendssmbha1)
+
+struct BurnDriver BurnDrvnes_smbendssmbha1 = {
+	"nes_smbendssmbha1", "nes_smb", NULL, NULL, "2004",
+	"Super Mario Bros. Ende's SMB Hack 1 (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_smbendssmbha1RomInfo, nes_smbendssmbha1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {
 	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8a13acc3, BRF_ESS | BRF_PRG },
 };

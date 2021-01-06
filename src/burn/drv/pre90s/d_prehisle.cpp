@@ -458,7 +458,8 @@ static INT32 PrehisleInit()
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
-	
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 4000000);
+
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 1024, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_COLS, fg_map_callback, 16, 16,  256, 32);
@@ -590,25 +591,21 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 1;
 	INT32 nCyclesTotal[2] = { 9000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	
+
 	SekOpen(0);
 	ZetOpen(0);
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
 
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, Sek);
+
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	}
-	
+
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		UPD7759Update(0, pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

@@ -51275,7 +51275,7 @@ struct BurnDriver BurnDrvmd_tf3s = {
 // Thunder Fox (Hack, Spanish)
 // https://www.romhacking.net/translations/3546/
 static struct BurnRomInfo md_tfoxsRomDesc[] = {
-	{ "thunder fox (hack, spanish).bin", 1048576, 0xe0eb74e6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "thunder fox (hack, spanish).bin", 1048576, 0xa1b50389, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tfoxs)

@@ -823,7 +823,7 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 
 	INT16 *source = info->stream + 5;
 
-	info->resamp.resample(source, buffer, samples, info->gain[BURN_SND_NESAPU_ROUTE_1]);
+	info->resamp.resample(source, buffer, samples, info->gain[BURN_SND_NESAPU_ROUTE_1], BURN_SND_ROUTE_BOTH);
 
 	info->current_position = 0;
 

@@ -11,6 +11,7 @@
 #include "tms34010_shift.h"
 #include "tms34010_gfx.h"
 #include "stddef.h"
+#include "tiles_generic.h"
 
 #ifdef TMS34010_DEBUGGER
 #include <algorithm>
@@ -285,7 +286,10 @@ void write_ioreg(cpu_state *cpu, dword addr, word value)
 		}
         break;
     case DPYSTRT:
-        break;
+		break;
+	case HSTCTLL:
+		//bprintf(0,_T("hstctll %x\n"), value);
+		break;
     case VTOTAL:
     case HTOTAL:
     case HSBLNK:
@@ -306,7 +310,19 @@ void write_ioreg(cpu_state *cpu, dword addr, word value)
 
 dword read_ioreg(cpu_state *cpu, dword addr)
 {
-    int reg = (addr >> 4) & 0x1F;
+	int reg = (addr >> 4) & 0x1F;
+	switch(reg) {
+		case HCOUNT: {
+			INT32 hc = TMS34010TotalCycles() % nScreenWidth;
+			INT32 ht = cpu->io_regs[HTOTAL] + 1;
+			hc = hc * ht / nScreenWidth;
+			hc += cpu->io_regs[HEBLNK];
+			return (hc > ht) ? (hc - ht) : hc;
+		}
+		case REFCNT:
+			return (TMS34010TotalCycles() / 0x10) & 0xfffc;
+	}
+
     return cpu->io_regs[reg];
 }
 

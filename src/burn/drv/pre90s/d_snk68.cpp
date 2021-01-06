@@ -8,9 +8,7 @@
 #include "upd7759.h"
 
 // Notes:
-//   March 11, 2016: hooked up rotational code to SAR and Ikari 3, left in old
-//   analogue rotational code (see #if 0's) just incase we need to base
-//   something else off of it in the future.
+//   March 11, 2016: hooked up rotational code to SAR and Ikari 3,
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -18,10 +16,6 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-#if 0
-static UINT32 nAnalogAxis[2] = {0,0};
-static UINT16 DrvAxis[2];
-#endif
 
 static INT32 Rotary1 = 0;
 static INT32 Rotary1OldVal = 0;
@@ -701,17 +695,12 @@ static INT32 DrvDoReset()
 	pow_charbase = 0;
 	invert_controls = 0;
 
-#if 0
-	nAnalogAxis[1] = 0;
-	nAnalogAxis[0] = 0;
-#endif
-
 	RotateReset();
 
 	return 0;
 }
 
-void pow_paletteram16_word_w(UINT32 address)
+static void pow_paletteram16_word_w(UINT32 address)
 {
 	INT32 r,g,b;
 	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRam + (address & 0x0ffe))));
@@ -727,7 +716,7 @@ void pow_paletteram16_word_w(UINT32 address)
 	DrvPalette[(address >> 1) & 0x7ff] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall pow_write_word(UINT32 address, UINT16 data)
+static void __fastcall pow_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff8000) == 0x100000 && game_select & 1) {
 		if (!(address & 2))
@@ -747,7 +736,7 @@ void __fastcall pow_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall pow_write_byte(UINT32 address, UINT8 data)
+static void __fastcall pow_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffff8000) == 0x100000 && game_select == 1) {
 		if ((address & 3) == 3) data = 0xff;
@@ -785,7 +774,7 @@ void __fastcall pow_write_byte(UINT32 address, UINT8 data)
 }
 
 
-UINT16 __fastcall pow_read_word(UINT32 address)
+static UINT16 __fastcall pow_read_word(UINT32 address)
 {
 	if (address != 0xe0000)
 		bprintf (PRINT_NORMAL, _T("read %x, w\n"), address);
@@ -793,7 +782,7 @@ UINT16 __fastcall pow_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall pow_read_byte(UINT32 address)
+static UINT8 __fastcall pow_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -825,7 +814,7 @@ UINT8 __fastcall pow_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall sar_read_byte(UINT32 address)
+static UINT8 __fastcall sar_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -876,11 +865,11 @@ UINT8 __fastcall sar_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall pow_sound_write(UINT16, UINT8)
+static void __fastcall pow_sound_write(UINT16, UINT8)
 {
 }
 
-void __fastcall pow_sound_out(UINT16 address, UINT8 data)
+static void __fastcall pow_sound_out(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
@@ -902,14 +891,14 @@ void __fastcall pow_sound_out(UINT16 address, UINT8 data)
 
 }
 
-UINT8 __fastcall pow_sound_read(UINT16 address)
+static UINT8 __fastcall pow_sound_read(UINT16 address)
 {
 	if (address == 0xf800) return soundlatch;
 
 	return 0;
 }
 
-UINT8 __fastcall pow_sound_in(UINT16 address)
+static UINT8 __fastcall pow_sound_in(UINT16 address)
 {
 	address &= 0xff;
 
@@ -1175,6 +1164,7 @@ static INT32 DrvInit(INT32 game)
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
 	UPD7759SetRoute(0, ((game_select == 1) ? 1.50 : 0.50), BURN_SND_ROUTE_BOTH);
+	UPD7759SetSyncCallback(0, ZetTotalCycles, 4000000);
 
 	DrvDoReset();
 
@@ -1478,42 +1468,8 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= DrvJoy2[i] << i;
 			DrvInputs[2] ^= DrvJoy3[i] << i;
 		}
-
-#if 0
-		nAnalogAxis[0] -= DrvAxis[0];
-		DrvInputs[6] = (~nAnalogAxis[0] >> 8) & 0xfe;
-
-		nAnalogAxis[1] -= DrvAxis[1];
-		DrvInputs[7] = (~nAnalogAxis[1] >> 8) & 0xfe;
-#endif
 	}
 	
-#if 0
-	if (game_select == 1 || game_select == 3) {
-		if ((DrvInputs[6] >> 4) < Rotary1OldVal) {
-			Rotary1++;
-		}
-
-		if ((DrvInputs[6] >> 4) > Rotary1OldVal) {
-			Rotary1--;
-		}
-		Rotary1OldVal = DrvInputs[6] >> 4;
-		if (Rotary1 > 11) Rotary1 = 0;
-		if (Rotary1 < 0) Rotary1 = 11;
-		
-		if ((DrvInputs[7] >> 4) < Rotary2OldVal) {
-			Rotary2++;
-		}
-
-		if ((DrvInputs[7] >> 4) > Rotary2OldVal) {
-			Rotary2--;
-		}
-		Rotary2OldVal = DrvInputs[7] >> 4;
-		if (Rotary2 > 11) Rotary2 = 0;
-		if (Rotary2 < 0) Rotary2 = 11;
-	}
-#endif
-
 	if (game_rotates) {
 		SuperJoy2Rotate();
 	}
@@ -1532,7 +1488,7 @@ static INT32 DrvFrame()
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		UPD7759Update(0, pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1546,7 +1502,7 @@ static INT32 DrvFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1554,16 +1510,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029682;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {	
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-
-		if (nAction & ACB_WRITE)
-			DrvRecalc = 1;
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -1578,10 +1531,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(sprite_flip);
 		SCAN_VAR(pow_charbase);
-#if 0
-		SCAN_VAR(nAnalogAxis[0]);
-		SCAN_VAR(nAnalogAxis[1]);
-#endif
 		SCAN_VAR(Rotary1);
 		SCAN_VAR(Rotary1OldVal);
 		SCAN_VAR(Rotary2);

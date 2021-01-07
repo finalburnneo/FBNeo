@@ -14,7 +14,7 @@
 #include "midwunit.h"
 #include "midwayic.h"
 #include "dcs2k.h"
-#include "tms34010_intf.h"
+#include "tms34_intf.h"
 #include <stddef.h>
 
 static UINT8 *AllMem;
@@ -305,12 +305,12 @@ void WolfSoundWrite(UINT32 address, UINT16 value)
 	Dcs2kRun(20);
 }
 
-static void WolfUnitToShift(UINT32 address, void *dst)
+static void WolfUnitToShift(UINT32 address, UINT16 *dst)
 {
 	memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
 }
 
-static void WolfUnitFromShift(UINT32 address, void *src)
+static void WolfUnitFromShift(UINT32 address, UINT16 *src)
 {
 	memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
 }
@@ -440,6 +440,7 @@ INT32 WolfUnitInit()
 
     TMS34010MapReset();
     TMS34010Init();
+	TMS34010SetPixClock(8000000, 1);
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
     TMS34010SetScanlineRender(ScanlineRender);
@@ -557,7 +558,9 @@ INT32 WolfUnitExit()
 {
 	Dcs2kExit();
 	BurnFree(AllMem);
-	
+
+	TMS34010Exit();
+
 	GenericTilesExit();
 
 	wwfmania = 0;

@@ -550,15 +550,15 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale((1080*(redbaron || redbarona ? 520 : 580)/400), 1080);
+			vector_rescale(1440, 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Height != 400) {
-			vector_rescale((redbaron || redbarona ? 520 : 580), 400);
+		if (Height != 480) {
+			vector_rescale(640, 480);
 			return 1;
 		}
 	}
@@ -1037,7 +1037,7 @@ struct BurnDriver BurnDrvBzone = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 580, 400
+	640, 480, 4, 3
 };
 
 
@@ -1076,7 +1076,7 @@ struct BurnDriver BurnDrvBzonea = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 580, 400
+	640, 480, 4, 3
 };
 
 
@@ -1116,7 +1116,7 @@ struct BurnDriver BurnDrvBzonec = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
 	BzoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 580, 400
+	640, 480, 4, 3
 };
 
 
@@ -1157,7 +1157,7 @@ struct BurnDriver BurnDrvBradley = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bradleyRomInfo, bradleyRomName, NULL, NULL, NULL, NULL, BradleyInputInfo, BradleyDIPInfo,
 	BradleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	580, 400, 580, 400
+	640, 480, 4, 3
 };
 
 
@@ -1198,7 +1198,7 @@ struct BurnDriver BurnDrvRedbaron = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	520, 400, 520, 400
+	640, 480, 4, 3
 };
 
 static INT32 RedbaronaInit()
@@ -1246,5 +1246,5 @@ struct BurnDriver BurnDrvRedbarona = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, redbaronaRomInfo, redbaronaRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,
 	RedbaronaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	520, 400, 520, 400
+	640, 480, 4, 3
 };

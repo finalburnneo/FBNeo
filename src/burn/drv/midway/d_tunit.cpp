@@ -1160,7 +1160,7 @@ struct BurnDriverD BurnDrvNbajam = {
 	"nbajam", NULL, NULL, NULL, "1993",
 	"NBA Jam (rev 3.01 04/07/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamRomInfo, nbajamRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1203,7 +1203,7 @@ struct BurnDriverD BurnDrvNbajamr2 = {
 	"nbajamr2", "nbajam", NULL, NULL, "1993",
 	"NBA Jam (rev 2.00 02/10/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamr2RomInfo, nbajamr2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1246,7 +1246,7 @@ struct BurnDriverD BurnDrvNbajamr1 = {
 	"nbajamr1", "nbajam", NULL, NULL, "1993",
 	"NBA Jam (rev 1.00 02/1/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamr1RomInfo, nbajamr1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1296,7 +1296,7 @@ struct BurnDriverD BurnDrvNbajamte = {
 	"nbajamte", NULL, NULL, NULL, "1994",
 	"NBA Jam TE (rev 4.0 03/23/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamteRomInfo, nbajamteRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1339,7 +1339,7 @@ struct BurnDriverD BurnDrvNbajamte3 = {
 	"nbajamte3", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 3.0 03/04/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte3RomInfo, nbajamte3RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1382,7 +1382,7 @@ struct BurnDriverD BurnDrvNbajamte2 = {
 	"nbajamte2", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 2.0 01/28/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte2RomInfo, nbajamte2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1425,7 +1425,7 @@ struct BurnDriverD BurnDrvNbajamte1 = {
 	"nbajamte1", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 1.0 01/17/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1468,7 +1468,7 @@ struct BurnDriverD BurnDrvNbajamten = {
 	"nbajamten", "nbajamte", NULL, NULL, "1995",
 	"NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamtenRomInfo, nbajamtenRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1518,7 +1518,7 @@ struct BurnDriverD BurnDrvJdreddp = {
 	"jdreddp", NULL, NULL, NULL, "1995",
 	"Judge Dredd (rev TA1 7/12/92, location test)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, jdreddpRomInfo, jdreddpRomName, NULL, NULL, NULL, NULL, JdreddpInputInfo, JdreddpDIPInfo,
     JdreddpInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
 	400, 256, 4, 3

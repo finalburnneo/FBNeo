@@ -67,6 +67,7 @@ BURN_BLACKLIST := $(FBNEO_CPU_DIR)/arm7/arm7exec.c \
 	$(FBNEO_CPU_DIR)/tms34/34010fld.c \
 	$(FBNEO_CPU_DIR)/tms34/34010gfx.c \
 	$(FBNEO_CPU_DIR)/tms34/34010ops.c \
+	$(FBNEO_CPU_DIR)/tms34/34010tbl.c \
 	$(FBNEO_CPU_DIR)/tms34010_intf.cpp \
 	$(FBNEO_BURN_DIR)/drv/capcom/ctv_make.cpp \
 	$(FBNEO_BURN_DIR)/drv/pgm/pgm_sprite_create.cpp \

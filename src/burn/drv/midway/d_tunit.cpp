@@ -1156,7 +1156,7 @@ static INT32 NbajamInit()
 	return TUnitInit();
 }
 
-struct BurnDriverD BurnDrvNbajam = {
+struct BurnDriver BurnDrvNbajam = {
 	"nbajam", NULL, NULL, NULL, "1993",
 	"NBA Jam (rev 3.01 04/07/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1199,7 +1199,7 @@ static struct BurnRomInfo nbajamr2RomDesc[] = {
 STD_ROM_PICK(nbajamr2)
 STD_ROM_FN(nbajamr2)
 
-struct BurnDriverD BurnDrvNbajamr2 = {
+struct BurnDriver BurnDrvNbajamr2 = {
 	"nbajamr2", "nbajam", NULL, NULL, "1993",
 	"NBA Jam (rev 2.00 02/10/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1242,7 +1242,7 @@ static struct BurnRomInfo nbajamr1RomDesc[] = {
 STD_ROM_PICK(nbajamr1)
 STD_ROM_FN(nbajamr1)
 
-struct BurnDriverD BurnDrvNbajamr1 = {
+struct BurnDriver BurnDrvNbajamr1 = {
 	"nbajamr1", "nbajam", NULL, NULL, "1993",
 	"NBA Jam (rev 1.00 02/1/93)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1292,7 +1292,7 @@ static INT32 NbajamteInit()
 	return TUnitInit();
 }
 
-struct BurnDriverD BurnDrvNbajamte = {
+struct BurnDriver BurnDrvNbajamte = {
 	"nbajamte", NULL, NULL, NULL, "1994",
 	"NBA Jam TE (rev 4.0 03/23/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1335,7 +1335,7 @@ static struct BurnRomInfo nbajamte3RomDesc[] = {
 STD_ROM_PICK(nbajamte3)
 STD_ROM_FN(nbajamte3)
 
-struct BurnDriverD BurnDrvNbajamte3 = {
+struct BurnDriver BurnDrvNbajamte3 = {
 	"nbajamte3", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 3.0 03/04/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1378,7 +1378,7 @@ static struct BurnRomInfo nbajamte2RomDesc[] = {
 STD_ROM_PICK(nbajamte2)
 STD_ROM_FN(nbajamte2)
 
-struct BurnDriverD BurnDrvNbajamte2 = {
+struct BurnDriver BurnDrvNbajamte2 = {
 	"nbajamte2", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 2.0 01/28/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1421,7 +1421,7 @@ static struct BurnRomInfo nbajamte1RomDesc[] = {
 STD_ROM_PICK(nbajamte1)
 STD_ROM_FN(nbajamte1)
 
-struct BurnDriverD BurnDrvNbajamte1 = {
+struct BurnDriver BurnDrvNbajamte1 = {
 	"nbajamte1", "nbajamte", NULL, NULL, "1994",
 	"NBA Jam TE (rev 1.0 01/17/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1464,7 +1464,7 @@ static struct BurnRomInfo nbajamtenRomDesc[] = {
 STD_ROM_PICK(nbajamten)
 STD_ROM_FN(nbajamten)
 
-struct BurnDriverD BurnDrvNbajamten = {
+struct BurnDriver BurnDrvNbajamten = {
 	"nbajamten", "nbajamte", NULL, NULL, "1995",
 	"NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1514,7 +1514,7 @@ static INT32 JdreddpInit()
 	return TUnitInit();
 }
 
-struct BurnDriverD BurnDrvJdreddp = {
+struct BurnDriver BurnDrvJdreddp = {
 	"jdreddp", NULL, NULL, NULL, "1995",
 	"Judge Dredd (rev TA1 7/12/92, location test)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,

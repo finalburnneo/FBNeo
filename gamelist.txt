@@ -94,8 +94,8 @@ This list contains all games supported by FinalBurn Neo.
 | 19xxj		|  	| 19XX - the war against destiny (960104 Japan, yellow c| 19xx		| 1996	| Capcom	| CPS2		| 					|
 | spec_1stdivmanager|  	| 1st Division Manager					| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | md_2psymmac	|  	| 2 in 1 - Psycho Pinball & Micro Machines (Euro)	| 		| 1993	| Codemasters	| Sega Megadrive| 					|
-| openice	| D	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| openicea	| D	| 2 On 2 Open Ice Challenge (rev 1.2A)			| openice	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| openice	|  	| 2 On 2 Open Ice Challenge (rev 1.21)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| openicea	|  	| 2 On 2 Open Ice Challenge (rev 1.2A)			| openice	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_20em1	| D	| 20 em 1 (Bra)						| 		| 1995	| Tec Toy	| Sega Master Sy| 					|
 | nes_2010	|  	| 2010 - Street Fighter (Japan)				| 		| 1990	| Capcom	| Miscellaneous	| 					|
 | cv_2010p1	|  	| 2010: The Graphic Action Game (Prototype v44)		| cv_2010	| 1984	| Coleco	| ColecoVision	| 					|
@@ -6386,7 +6386,7 @@ This list contains all games supported by FinalBurn Neo.
 | jrpacmanf	|  	| Jr. Pac-Man (speedup hack)				| jrpacman	| 1983	| hack		| Miscellaneous	| 					|
 | jt104		|  	| JT 104 / NinjaKun Ashura no Shou			| ninjakd2	| 1987	| UPL (United Am| Miscellaneous	| 					|
 | gg_jdredd	|  	| Judge Dredd (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Game Gear| 					|
-| jdreddp	| D	| Judge Dredd (rev TA1 7/12/92, location test)		| 		| 1995	| Midway	| Midway T-Unit	| 					|
+| jdreddp	|  	| Judge Dredd (rev TA1 7/12/92, location test)		| 		| 1995	| Midway	| Midway T-Unit	| 					|
 | md_jdreddp1	|  	| Judge Dredd (USA, Prototype)				| md_jdredd	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_jdreddp2	|  	| Judge Dredd (USA, Prototype, Alt)			| md_jdredd	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_jdredd	|  	| Judge Dredd (World)					| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
@@ -8634,7 +8634,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaallst	|  	| NBA All-Star Challenge (Euro, USA)			| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | md_nbahang	|  	| NBA Hang Time (Euro)					| 		| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
 | md_nbahangu	|  	| NBA Hang Time (USA)					| md_nbahang	| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
-| nbahangt	| D	| NBA Hangtime (rev L1.1 04/16/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangt	|  	| NBA Hangtime (rev L1.1 04/16/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_nbajam	|  	| NBA Jam (Euro, Prototype)				| 		| 1994	| Acclaim	| Sega Master Sy| 					|
 | gg_nbajam1	|  	| NBA Jam (Euro, USA)					| gg_nbajam	| 1993	| Arena		| Sega Game Gear| 					|
 | md_nbajam1	|  	| NBA Jam (Euro, USA)					| md_nbajam	| 1993	| Arena		| Sega Megadrive| 					|
@@ -8642,15 +8642,15 @@ This list contains all games supported by FinalBurn Neo.
 | gg_nbajamj	|  	| NBA Jam (Jpn)						| gg_nbajam	| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | md_nbajamj	|  	| NBA Jam (Jpn)						| md_nbajam	| 1994	| Acclaim Japan	| Sega Megadrive| 					|
 | md_nbajamjp	|  	| NBA Jam (Jpn, Prototype)				| md_nbajam	| 1994	| Acclaim Japan	| Sega Megadrive| 					|
-| nbajamr1	| D	| NBA Jam (rev 1.00 02/1/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
-| nbajamr2	| D	| NBA Jam (rev 2.00 02/10/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
-| nbajam	| D	| NBA Jam (rev 3.01 04/07/93)				| 		| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajamr1	|  	| NBA Jam (rev 1.00 02/1/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajamr2	|  	| NBA Jam (rev 2.00 02/10/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajam	|  	| NBA Jam (rev 3.01 04/07/93)				| 		| 1993	| Midway	| Midway T-Unit	| 					|
 | gg_nbajam	|  	| NBA Jam (USA, v1.1)					| 		| 1993	| Arena		| Sega Game Gear| 					|
-| nbajamten	| D	| NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)| nbajamte	| 1995	| Midway	| Midway T-Unit	| 					|
-| nbajamte1	| D	| NBA Jam TE (rev 1.0 01/17/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte2	| D	| NBA Jam TE (rev 2.0 01/28/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte3	| D	| NBA Jam TE (rev 3.0 03/04/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte	| D	| NBA Jam TE (rev 4.0 03/23/94)				| 		| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamten	|  	| NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)| nbajamte	| 1995	| Midway	| Midway T-Unit	| 					|
+| nbajamte1	|  	| NBA Jam TE (rev 1.0 01/17/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte2	|  	| NBA Jam TE (rev 2.0 01/28/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte3	|  	| NBA Jam TE (rev 3.0 03/04/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte	|  	| NBA Jam TE (rev 4.0 03/23/94)				| 		| 1994	| Midway	| Midway T-Unit	| 					|
 | gg_nbajamte	|  	| NBA Jam Tournament Edition (World)			| 		| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | md_nbajamte	|  	| NBA Jam Tournament Edition (World)			| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_nbajamtef	|  	| NBA Jam Tournament Edition (World, 2002 Fix Release)	| md_nbajamte	| 2002?	| Acclaim Entert| Sega Megadrive| 					|
@@ -8659,8 +8659,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaliv96	|  	| NBA Live 96 (Euro, USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv97	|  	| NBA Live 97 (Euro, USA)				| 		| 1996	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv98	|  	| NBA Live 98 (USA)					| 		| 1997	| Electronic Art| Sega Megadrive| 					|
-| nbamht1	| D	| NBA Maximum Hangtime (rev L1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
-| nbamht	| D	| NBA Maximum Hangtime (rev L1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamht1	|  	| NBA Maximum Hangtime (rev L1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamht	|  	| NBA Maximum Hangtime (rev L1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | md_bullvsblj	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn)			| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_bullvsblj1	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)		| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_nbapro94	|  	| NBA Pro Basketball '94 (Jpn)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -10457,8 +10457,8 @@ This list contains all games supported by FinalBurn Neo.
 | rampage2	|  	| Rampage (Rev 2, 8/4/86)				| rampage	| 1986	| Bally Midway	| MCR3		| 					|
 | rampage	|  	| Rampage (Rev 3, 8/27/86)				| 		| 1986	| Bally Midway	| MCR3		| 					|
 | nes_rampage	|  	| Rampage (USA)						| 		| 1988	| Data East	| Miscellaneous	| 					|
-| rmpgwt11	|  	| Rampage: World Tour (rev 1.1)				| rmpgwt	| 1997	| Midway	| MIDWAY Wolf-Un| Player #2 not working, please use Play|
-| rmpgwt	|  	| Rampage: World Tour (rev 1.3)				| 		| 1997	| Midway	| MIDWAY Wolf-Un| Player #2 not working, please use Play|
+| rmpgwt11	|  	| Rampage: World Tour (rev 1.1)				| rmpgwt	| 1997	| Midway	| MIDWAY Wolf-Un| 					|
+| rmpgwt	|  	| Rampage: World Tour (rev 1.3)				| 		| 1997	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_rampart	|  	| Rampart (Euro)					| 		| 1991	| Tengen	| Sega Master Sy| 					|
 | rampartj	| D NW	| Rampart (Japan, Joystick)				| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
 | rampart2p	| D NW	| Rampart (Joystick, bigger ROMs)			| rampart	| 1990	| Atari Games	| Miscellaneous	| 					|
@@ -15535,10 +15535,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_wwfagp	|  	| WWF WrestleMania - The Arcade Game (USA, Prototype)	| md_wwfag	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | gg_wwfsteel	|  	| WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)| 		| 1993	| Flying Edge	| Sega Game Gear| 					|
 | spec_wwfwresmania|  	| WWF WrestleMania					| 		| 1991	| Ocean Software| ZX Spectrum	| 					|
-| wwfmaniap	| D	| WWF: Wrestlemania (proto 2.01 06/07/95)		| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmaniac	| D	| WWF: Wrestlemania (rev 1.1 07/11/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmaniab	| D	| WWF: Wrestlemania (rev 1.20 08/02/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
-| wwfmania	| D	| WWF: Wrestlemania (rev 1.30 08/10/95)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniap	|  	| WWF: Wrestlemania (proto 2.01 06/07/95)		| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniac	|  	| WWF: Wrestlemania (rev 1.1 07/11/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmaniab	|  	| WWF: Wrestlemania (rev 1.20 08/02/95)			| wwfmania	| 1995	| Midway	| MIDWAY Wolf-Un| 					|
+| wwfmania	|  	| WWF: Wrestlemania (rev 1.30 08/10/95)			| 		| 1995	| Midway	| MIDWAY Wolf-Un| 					|
 | wyvernf0	|  	| Wyvern F-0 (Rev 1)					| 		| 1985	| Taito Corporat| Miscellaneous	| 					|
 | wyvernf0a	|  	| Wyvern F-0						| wyvernf0	| 1985	| Taito Corporat| Miscellaneous	| 					|
 | wyvernwg	|  	| Wyvern Wings (set 1)					| wivernwg	| 2001	| SemiCom (Game | Miscellaneous	| 					|

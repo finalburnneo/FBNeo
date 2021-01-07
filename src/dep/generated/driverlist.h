@@ -94,9 +94,9 @@ DRV		BurnDrvCps19xx;
 DRV		BurnDrvCps19xxj;
 DRV		BurnSpec1stdivmanager;
 DRV		BurnDrvmd_2psymmac;
+DRV		BurnDrvOpenice;
+DRV		BurnDrvOpenicea;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvOpenice;			// no comment
-DRV		BurnDrvOpenicea;		// no comment
 DRV		BurnDrvsms_20em1;		// no comment
 #endif
 DRV		BurnDrvnes_2010;
@@ -6482,9 +6482,7 @@ DRV		BurnDrvJrpacman;
 DRV		BurnDrvJrpacmanf;
 DRV		BurnDrvJt104;
 DRV		BurnDrvgg_jdredd;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvJdreddp;			// no comment
-#endif
+DRV		BurnDrvJdreddp;
 DRV		BurnDrvmd_jdreddp1;
 DRV		BurnDrvmd_jdreddp2;
 DRV		BurnDrvmd_jdredd;
@@ -8762,9 +8760,7 @@ DRV		BurnDrvgg_nbaact;
 DRV		BurnDrvmd_nbaallst;
 DRV		BurnDrvmd_nbahang;
 DRV		BurnDrvmd_nbahangu;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvNbahangt;		// no comment
-#endif
+DRV		BurnDrvNbahangt;
 DRV		BurnDrvsms_nbajam;
 DRV		BurnDrvgg_nbajam1;
 DRV		BurnDrvmd_nbajam1;
@@ -8772,19 +8768,15 @@ DRV		BurnDrvmd_nbajam;
 DRV		BurnDrvgg_nbajamj;
 DRV		BurnDrvmd_nbajamj;
 DRV		BurnDrvmd_nbajamjp;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvNbajamr1;		// no comment
-DRV		BurnDrvNbajamr2;		// no comment
-DRV		BurnDrvNbajam;			// no comment
-#endif
+DRV		BurnDrvNbajamr1;
+DRV		BurnDrvNbajamr2;
+DRV		BurnDrvNbajam;
 DRV		BurnDrvgg_nbajam;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvNbajamten;		// no comment
-DRV		BurnDrvNbajamte1;		// no comment
-DRV		BurnDrvNbajamte2;		// no comment
-DRV		BurnDrvNbajamte3;		// no comment
-DRV		BurnDrvNbajamte;		// no comment
-#endif
+DRV		BurnDrvNbajamten;
+DRV		BurnDrvNbajamte1;
+DRV		BurnDrvNbajamte2;
+DRV		BurnDrvNbajamte3;
+DRV		BurnDrvNbajamte;
 DRV		BurnDrvgg_nbajamte;
 DRV		BurnDrvmd_nbajamte;
 DRV		BurnDrvmd_nbajamtef;
@@ -8793,10 +8785,8 @@ DRV		BurnDrvmd_nbaliv95k;
 DRV		BurnDrvmd_nbaliv96;
 DRV		BurnDrvmd_nbaliv97;
 DRV		BurnDrvmd_nbaliv98;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvNbamht1;			// no comment
-DRV		BurnDrvNbamht;			// no comment
-#endif
+DRV		BurnDrvNbamht1;
+DRV		BurnDrvNbamht;
 DRV		BurnDrvmd_bullvsblj;
 DRV		BurnDrvmd_bullvsblj1;
 DRV		BurnDrvmd_nbapro94;
@@ -15777,12 +15767,10 @@ DRV		BurnDrvmd_wwfag;
 DRV		BurnDrvmd_wwfagp;
 DRV		BurnDrvgg_wwfsteel;
 DRV		BurnSpecwwfwresmania;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvWwfmaniap;		// no comment
-DRV		BurnDrvWwfmaniac;		// no comment
-DRV		BurnDrvWwfmaniab;		// no comment
-DRV		BurnDrvWwfmania;		// no comment
-#endif
+DRV		BurnDrvWwfmaniap;
+DRV		BurnDrvWwfmaniac;
+DRV		BurnDrvWwfmaniab;
+DRV		BurnDrvWwfmania;
 DRV		BurnDrvWyvernf0;
 DRV		BurnDrvWyvernf0a;
 DRV		BurnDrvWyvernwg;
@@ -16262,9 +16250,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCps19xxj,			// 19XX - the war against destiny (960104 Japan, yellow case)
 	&BurnSpec1stdivmanager,		// 1st Division Manager
 	&BurnDrvmd_2psymmac,		// 2 in 1 - Psycho Pinball & Micro Machines (Euro)
+	&BurnDrvOpenice,			// 2 On 2 Open Ice Challenge (rev 1.21)
+	&BurnDrvOpenicea,			// 2 On 2 Open Ice Challenge (rev 1.2A)
 #if defined FBNEO_DEBUG
-	&BurnDrvOpenice,			// 2 On 2 Open Ice Challenge (rev 1.21) [no comment]
-	&BurnDrvOpenicea,			// 2 On 2 Open Ice Challenge (rev 1.2A) [no comment]
 	&BurnDrvsms_20em1,			// 20 em 1 (Bra) [no comment]
 #endif
 	&BurnDrvnes_2010,			// 2010 - Street Fighter (Japan)
@@ -22650,9 +22638,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJrpacmanf,			// Jr. Pac-Man (speedup hack)
 	&BurnDrvJt104,				// JT 104 / NinjaKun Ashura no Shou
 	&BurnDrvgg_jdredd,			// Judge Dredd (Euro, USA)
-#if defined FBNEO_DEBUG
-	&BurnDrvJdreddp,			// Judge Dredd (rev TA1 7/12/92, location test) [no comment]
-#endif
+	&BurnDrvJdreddp,			// Judge Dredd (rev TA1 7/12/92, location test)
 	&BurnDrvmd_jdreddp1,		// Judge Dredd (USA, Prototype)
 	&BurnDrvmd_jdreddp2,		// Judge Dredd (USA, Prototype, Alt)
 	&BurnDrvmd_jdredd,			// Judge Dredd (World)
@@ -24930,9 +24916,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbaallst,		// NBA All-Star Challenge (Euro, USA)
 	&BurnDrvmd_nbahang,			// NBA Hang Time (Euro)
 	&BurnDrvmd_nbahangu,		// NBA Hang Time (USA)
-#if defined FBNEO_DEBUG
-	&BurnDrvNbahangt,			// NBA Hangtime (rev L1.1 04/16/96) [no comment]
-#endif
+	&BurnDrvNbahangt,			// NBA Hangtime (rev L1.1 04/16/96)
 	&BurnDrvsms_nbajam,			// NBA Jam (Euro, Prototype)
 	&BurnDrvgg_nbajam1,			// NBA Jam (Euro, USA)
 	&BurnDrvmd_nbajam1,			// NBA Jam (Euro, USA)
@@ -24940,19 +24924,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_nbajamj,			// NBA Jam (Jpn)
 	&BurnDrvmd_nbajamj,			// NBA Jam (Jpn)
 	&BurnDrvmd_nbajamjp,		// NBA Jam (Jpn, Prototype)
-#if defined FBNEO_DEBUG
-	&BurnDrvNbajamr1,			// NBA Jam (rev 1.00 02/1/93) [no comment]
-	&BurnDrvNbajamr2,			// NBA Jam (rev 2.00 02/10/93) [no comment]
-	&BurnDrvNbajam,				// NBA Jam (rev 3.01 04/07/93) [no comment]
-#endif
+	&BurnDrvNbajamr1,			// NBA Jam (rev 1.00 02/1/93)
+	&BurnDrvNbajamr2,			// NBA Jam (rev 2.00 02/10/93)
+	&BurnDrvNbajam,				// NBA Jam (rev 3.01 04/07/93)
 	&BurnDrvgg_nbajam,			// NBA Jam (USA, v1.1)
-#if defined FBNEO_DEBUG
-	&BurnDrvNbajamten,			// NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype) [no comment]
-	&BurnDrvNbajamte1,			// NBA Jam TE (rev 1.0 01/17/94) [no comment]
-	&BurnDrvNbajamte2,			// NBA Jam TE (rev 2.0 01/28/94) [no comment]
-	&BurnDrvNbajamte3,			// NBA Jam TE (rev 3.0 03/04/94) [no comment]
-	&BurnDrvNbajamte,			// NBA Jam TE (rev 4.0 03/23/94) [no comment]
-#endif
+	&BurnDrvNbajamten,			// NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)
+	&BurnDrvNbajamte1,			// NBA Jam TE (rev 1.0 01/17/94)
+	&BurnDrvNbajamte2,			// NBA Jam TE (rev 2.0 01/28/94)
+	&BurnDrvNbajamte3,			// NBA Jam TE (rev 3.0 03/04/94)
+	&BurnDrvNbajamte,			// NBA Jam TE (rev 4.0 03/23/94)
 	&BurnDrvgg_nbajamte,		// NBA Jam Tournament Edition (World)
 	&BurnDrvmd_nbajamte,		// NBA Jam Tournament Edition (World)
 	&BurnDrvmd_nbajamtef,		// NBA Jam Tournament Edition (World, 2002 Fix Release)
@@ -24961,10 +24941,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbaliv96,		// NBA Live 96 (Euro, USA)
 	&BurnDrvmd_nbaliv97,		// NBA Live 97 (Euro, USA)
 	&BurnDrvmd_nbaliv98,		// NBA Live 98 (USA)
-#if defined FBNEO_DEBUG
-	&BurnDrvNbamht1,			// NBA Maximum Hangtime (rev L1.0 11/08/96) [no comment]
-	&BurnDrvNbamht,				// NBA Maximum Hangtime (rev L1.03 06/09/97) [no comment]
-#endif
+	&BurnDrvNbamht1,			// NBA Maximum Hangtime (rev L1.0 11/08/96)
+	&BurnDrvNbamht,				// NBA Maximum Hangtime (rev L1.03 06/09/97)
 	&BurnDrvmd_bullvsblj,		// NBA Playoffs - Bulls Vs Blazers (Jpn)
 	&BurnDrvmd_bullvsblj1,		// NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)
 	&BurnDrvmd_nbapro94,		// NBA Pro Basketball '94 (Jpn)
@@ -31945,12 +31923,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wwfagp,			// WWF WrestleMania - The Arcade Game (USA, Prototype)
 	&BurnDrvgg_wwfsteel,		// WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)
 	&BurnSpecwwfwresmania,		// WWF WrestleMania
-#if defined FBNEO_DEBUG
-	&BurnDrvWwfmaniap,			// WWF: Wrestlemania (proto 2.01 06/07/95) [no comment]
-	&BurnDrvWwfmaniac,			// WWF: Wrestlemania (rev 1.1 07/11/95) [no comment]
-	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95) [no comment]
-	&BurnDrvWwfmania,			// WWF: Wrestlemania (rev 1.30 08/10/95) [no comment]
-#endif
+	&BurnDrvWwfmaniap,			// WWF: Wrestlemania (proto 2.01 06/07/95)
+	&BurnDrvWwfmaniac,			// WWF: Wrestlemania (rev 1.1 07/11/95)
+	&BurnDrvWwfmaniab,			// WWF: Wrestlemania (rev 1.20 08/02/95)
+	&BurnDrvWwfmania,			// WWF: Wrestlemania (rev 1.30 08/10/95)
 	&BurnDrvWyvernf0,			// Wyvern F-0 (Rev 1)
 	&BurnDrvWyvernf0a,			// Wyvern F-0
 	&BurnDrvWyvernwg,			// Wyvern Wings (set 1)

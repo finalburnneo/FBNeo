@@ -1063,7 +1063,7 @@ static struct BurnRomInfo openiceRomDesc[] = {
 STD_ROM_PICK(openice)
 STD_ROM_FN(openice)
 
-struct BurnDriverD BurnDrvOpenice = {
+struct BurnDriver BurnDrvOpenice = {
 	"openice", NULL, NULL, NULL, "1995",
 	"2 On 2 Open Ice Challenge (rev 1.21)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1110,7 +1110,7 @@ static struct BurnRomInfo openiceaRomDesc[] = {
 STD_ROM_PICK(openicea)
 STD_ROM_FN(openicea)
 
-struct BurnDriverD BurnDrvOpenicea = {
+struct BurnDriver BurnDrvOpenicea = {
 	"openicea", "openice", NULL, NULL, "1995",
 	"2 On 2 Open Ice Challenge (rev 1.2A)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1163,7 +1163,7 @@ static struct BurnRomInfo nbahangtRomDesc[] = {
 STD_ROM_PICK(nbahangt)
 STD_ROM_FN(nbahangt)
 
-struct BurnDriverD BurnDrvNbahangt = {
+struct BurnDriver BurnDrvNbahangt = {
 	"nbahangt", NULL, NULL, NULL, "1996",
 	"NBA Hangtime (rev L1.1 04/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1223,7 +1223,7 @@ static struct BurnRomInfo nbamhtRomDesc[] = {
 STD_ROM_PICK(nbamht)
 STD_ROM_FN(nbamht)
 
-struct BurnDriverD BurnDrvNbamht = {
+struct BurnDriver BurnDrvNbamht = {
 	"nbamht", NULL, NULL, NULL, "1996",
 	"NBA Maximum Hangtime (rev L1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1276,7 +1276,7 @@ static struct BurnRomInfo nbamht1RomDesc[] = {
 STD_ROM_PICK(nbamht1)
 STD_ROM_FN(nbamht1)
 
-struct BurnDriverD BurnDrvNbamht1 = {
+struct BurnDriver BurnDrvNbamht1 = {
 	"nbamht1", "nbamht", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (rev L1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1418,7 +1418,7 @@ static struct BurnRomInfo wwfmaniaRomDesc[] = {
 STD_ROM_PICK(wwfmania)
 STD_ROM_FN(wwfmania)
 
-struct BurnDriverD BurnDrvWwfmania = {
+struct BurnDriver BurnDrvWwfmania = {
 	"wwfmania", NULL, NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.30 08/10/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1464,7 +1464,7 @@ static struct BurnRomInfo wwfmaniabRomDesc[] = {
 STD_ROM_PICK(wwfmaniab)
 STD_ROM_FN(wwfmaniab)
 
-struct BurnDriverD BurnDrvWwfmaniab = {
+struct BurnDriver BurnDrvWwfmaniab = {
 	"wwfmaniab", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.20 08/02/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1510,7 +1510,7 @@ static struct BurnRomInfo wwfmaniacRomDesc[] = {
 STD_ROM_PICK(wwfmaniac)
 STD_ROM_FN(wwfmaniac)
 
-struct BurnDriverD BurnDrvWwfmaniac = {
+struct BurnDriver BurnDrvWwfmaniac = {
 	"wwfmaniac", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.1 07/11/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
@@ -1557,7 +1557,7 @@ static struct BurnRomInfo wwfmaniapRomDesc[] = {
 STD_ROM_PICK(wwfmaniap)
 STD_ROM_FN(wwfmaniap)
 
-struct BurnDriverD BurnDrvWwfmaniap = {
+struct BurnDriver BurnDrvWwfmaniap = {
 	"wwfmaniap", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (proto 2.01 06/07/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,

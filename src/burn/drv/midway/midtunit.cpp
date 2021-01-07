@@ -4,7 +4,7 @@
 
 #include "tiles_generic.h"
 #include "midtunit.h"
-#include "tms34010_intf.h"
+#include "tms34_intf.h"
 #include "m6809_intf.h"
 #include "burn_ym2151.h"
 #include "dcs2k.h"
@@ -401,12 +401,12 @@ static INT32 LoadSoundBanksNbajam()
 	return 0;
 }
 
-static void TUnitToShift(UINT32 address, void *dst)
+static void TUnitToShift(UINT32 address, UINT16 *dst)
 {
 	memcpy(dst, &DrvVRAM16[(address >> 3)], 4096/2);
 }
 
-static void TUnitFromShift(UINT32 address, void *src)
+static void TUnitFromShift(UINT32 address, UINT16 *src)
 {
 	memcpy(&DrvVRAM16[(address >> 3)], src, 4096/2);
 }
@@ -995,6 +995,7 @@ INT32 TUnitInit()
 
 	TMS34010MapReset();
 	TMS34010Init();
+	TMS34010SetPixClock(4000000, 2);
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
 	TMS34010SetScanlineRender(ScanlineRender);
@@ -1167,6 +1168,8 @@ INT32 TUnitExit()
 	if (nSoundType == SOUND_DCS) {
 		Dcs2kExit();
 	}
+
+	TMS34010Exit();
 
 	GenericTilesExit();
 

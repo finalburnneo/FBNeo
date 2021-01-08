@@ -49641,7 +49641,7 @@ struct BurnDriver BurnDrvmd_roadrashs = {
 // road rash ii (Hack Spanish)
 // https://www.romhacking.net/translations/2069/
 static struct BurnRomInfo md_rrash2sRomDesc[] = {
-	{ "road rash ii (Hack Spanish).bin", 1048576, 0xa8ec5695, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "road rash ii (hack, spanish).bin", 1048576, 0xa8ec5695, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rrash2s)
@@ -49649,7 +49649,7 @@ STD_ROM_FN(md_rrash2s)
 
 struct BurnDriver BurnDrvmd_rrash2s = {
 	"md_rrash2s", "md_rrash2", NULL, NULL, "2013",
-	"Road Rash II (Hack Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
+	"Road Rash II (Hack, Spanish)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_rrash2sRomInfo, md_rrash2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -51633,3 +51633,173 @@ struct BurnDriver BurnDrvmd_twocrudes = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ultimate Qix (Hack, Spanish)
+// https://www.romhacking.net/translations/4385/
+static struct BurnRomInfo md_ultqixsRomDesc[] = {
+	{ "ultimate qix (hack, spanish).bin", 262144, 0x94f99786, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ultqixs)
+STD_ROM_FN(md_ultqixs)
+
+struct BurnDriver BurnDrvmd_ultqixs = {
+	"md_ultqixs", "md_ultqix", NULL, NULL, "2019",
+	"Ultimate Qix (Hack, Spanish)\0", NULL, "Taito", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ultqixsRomInfo, md_ultqixsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Universal Soldier (Hack, Spanish)
+// https://www.romhacking.net/translations/4163/
+static struct BurnRomInfo md_univsoldsRomDesc[] = {
+	{ "universal soldier (hack, spanish).bin", 1048576, 0xafbc56d4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_univsolds)
+STD_ROM_FN(md_univsolds)
+
+struct BurnDriver BurnDrvmd_univsolds = {
+	"md_univsolds", "md_univsold", NULL, NULL, "2019",
+	"Universal Soldier (Hack, Spanish)\0", NULL, "Ballistic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_univsoldsRomInfo, md_univsoldsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Valis (Hack, Spanish)
+// https://www.romhacking.net/translations/2845/
+static struct BurnRomInfo md_valissRomDesc[] = {
+	{ "valis (hack, spanish).bin", 1048576, 0xc83c33b2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_valiss)
+STD_ROM_FN(md_valiss)
+
+struct BurnDriver BurnDrvmd_valiss = {
+	"md_valiss", "md_valis", NULL, NULL, "2017",
+	"Valis (Hack, Spanish)\0", NULL, "Renovation", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_valissRomInfo, md_valissRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Valis III (Hack, Spanish)
+// https://www.romhacking.net/translations/2845/
+static struct BurnRomInfo md_valis3sRomDesc[] = {
+	{ "valis III (hack, spanish).bin", 1048576, 0xefab343b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_valis3s)
+STD_ROM_FN(md_valis3s)
+
+struct BurnDriver BurnDrvmd_valis3s = {
+	"md_valis3s", "md_valis3", NULL, NULL, "2017",
+	"Valis III (Hack, Spanish)\0", NULL, "Renovation", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_valis3sRomInfo, md_valis3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Vapor Trail (Hack, Spanish)
+// https://www.romhacking.net/translations/5200/
+static struct BurnRomInfo md_vaportrsRomDesc[] = {
+	{ "vapor trail (hack, spanish).bin", 1048576, 0x8cb8c8fd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_vaportrs)
+STD_ROM_FN(md_vaportrs)
+
+struct BurnDriver BurnDrvmd_vaportrs = {
+	"md_vaportrs", "md_vaportr", NULL, NULL, "2019",
+	"Vapor Trail (Hack, Spanish)\0", NULL, "Published", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_vaportrsRomInfo, md_vaportrsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Vectorman 2 (Hack, Spanish)
+// https://www.romhacking.net/translations/5075/
+static struct BurnRomInfo md_vecman2sRomDesc[] = {
+	{ "vectorman 2 (hack, spanish).bin", 3145728, 0x998989b2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_vecman2s)
+STD_ROM_FN(md_vecman2s)
+
+struct BurnDriver BurnDrvmd_vecman2s = {
+	"md_vecman2s", "md_vecman2", NULL, NULL, "2019",
+	"Vectorman 2 (Hack, Spanish)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_vecman2sRomInfo, md_vecman2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Venom & Spider-Man - Separation Anxiety (Hack, Spanish)
+// https://www.romhacking.net/translations/5610/
+static struct BurnRomInfo md_venomsRomDesc[] = {
+	{ "venom & spider-man - separation anxiety (hack, spanish).bin", 3145728, 0xbbc1ff1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_venoms)
+STD_ROM_FN(md_venoms)
+
+struct BurnDriver BurnDrvmd_venoms = {
+	"md_venoms", "md_venom", NULL, NULL, "2019",
+	"Venom & Spider-Man - Separation Anxiety (Hack, Spanish)\0", NULL, "Acclaim", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_venomsRomInfo, md_venomsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Virtua Fighter 2 - Genesis (Hack, Spanish)
+// https://www.romhacking.net/translations/5610/
+static struct BurnRomInfo md_vf2sRomDesc[] = {
+	{ "virtua fighter 2 - genesis (hack, spanish).bin", 4194304, 0x78ab7230, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_vf2s)
+STD_ROM_FN(md_vf2s)
+
+struct BurnDriver BurnDrvmd_vf2s = {
+	"md_vf2s", "md_vf2", NULL, NULL, "2020",
+	"Virtua Fighter 2 - Genesis (Hack, Spanish)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_vf2sRomInfo, md_vf2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Vixen 357 (Hack, Spanish)
+// https://www.romhacking.net/translations/4241/
+static struct BurnRomInfo md_vixen357sRomDesc[] = {
+	{ "vixen 357 (hack, spanish).bin", 1310720, 0xb33b1568, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_vixen357s)
+STD_ROM_FN(md_vixen357s)
+
+struct BurnDriver BurnDrvmd_vixen357s = {
+	"md_vixen357s", "md_vixen357", NULL, NULL, "2020",
+	"Vixen 357 (Hack, Spanish)\0", NULL, "Published", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_vixen357sRomInfo, md_vixen357sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -55,6 +55,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     GLint textureFormat;
     CVDisplayLinkRef displayLink;
     BOOL useDisplayLink;
+    GLfloat backingScaleFactor;
 }
 
 #pragma mark - Initialize, Dealloc
@@ -76,6 +77,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
     _lastMouseAction = CFAbsoluteTimeGetCurrent();
     _lastCursorPosition = NSMakePoint(-1, -1);
     textureFormat = GL_UNSIGNED_SHORT_5_6_5;
+    backingScaleFactor = 1;
+
+    if ([self respondsToSelector:@selector(setWantsBestResolutionOpenGLSurface:)]) {
+        self.wantsBestResolutionOpenGLSurface = YES;
+    }
 
     [self resetTrackingArea];
 }
@@ -159,6 +165,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
 
     viewBounds = self.bounds;
     viewSize = [self convertRectToBacking:viewBounds].size;
+    if ([self.window respondsToSelector:@selector(backingScaleFactor)]) {
+        backingScaleFactor = self.window.backingScaleFactor;
+    }
 
     [self.openGLContext makeCurrentContext];
     CGLLockContext(self.openGLContext.CGLContextObj);
@@ -404,6 +413,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink,
 
     NSSize size = viewSize;
     CGFloat offset = 0;
+
+    if (backingScaleFactor != 1) {
+        size = NSMakeSize((int)(size.width / backingScaleFactor),
+                          (int)(size.height / backingScaleFactor));
+    }
 
     glBegin(GL_QUADS);
     glTexCoord2f(0.0, 0.0);

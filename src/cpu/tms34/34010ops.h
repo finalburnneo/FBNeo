@@ -225,7 +225,9 @@ enum
 		TMS34010_WRMEM_WORD(offset, (masked_data >> shift) | old);					\
 	}																				\
 
-#if 0
+#if 1
+// this is slower than below, but works with our word-based interface
+// luckily most games seldom use 8bit reads/writes. -dink
 #define WFIELDMAC_8																	\
 		WFIELDMAC(0xff,9);															\
 
@@ -234,7 +236,8 @@ enum
 
 #endif
 
-#if 1
+#if 0
+// this is faster for 8bit r/w, but won't work since tms34_intf is word-based
 #define WFIELDMAC_8																	\
 	if (offset & 0x07)																\
 	{																				\

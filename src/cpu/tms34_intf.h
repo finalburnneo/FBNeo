@@ -14,6 +14,7 @@ typedef tms34010_display_params TMS34010Display;
 typedef scanline_render_t pTMS34010ScanlineRender;
 
 void TMS34010Init();
+void TMS34020Init();
 void TMS34010Exit();
 int TMS34010Run(int cycles);
 int TMS34010Idle(int cycles);
@@ -24,7 +25,6 @@ void TMS34010Scan(INT32 nAction);
 void TMS34010RunEnd();
 void TMS34010NewFrame();
 void TMS34010Reset();
-void TMS34020Reset(); // reset w/ this to use tms34020!
 void TMS34010GenerateIRQ(UINT32 line);
 void TMS34010ClearIRQ(UINT32 line);
 void TMS34010SetScanlineRender(pTMS34010ScanlineRender sr);

@@ -29,7 +29,7 @@ void bsmt2k_write_data(UINT16 data)
 
 INT32 bsmt2k_read_status()
 {
-	return write_pending ? 0 : 1;
+	return write_pending ^ 1;
 }
 
 static INT32 BSMTSyncDAC()
@@ -91,7 +91,7 @@ static UINT16 bsmt2k_read_port(INT32 port)
 		}
 
 		case TMS32010_BIO:
-			return (write_pending) ? 1 : 0;
+			return write_pending;
 	}
 
 	return 0;
@@ -112,6 +112,7 @@ void bsmt2kReset()
 	data_right = 0;
 }
 
+// To switch modes, the game sets a register then reboots the tms32010
 void bsmt2kResetCpu()
 {
 	tms32010_reset();
@@ -144,7 +145,7 @@ void bsmt2kInit(INT32 clock, UINT8 *tmsrom, UINT8 *tmsram, UINT8 *data, INT32 si
 	bsmt2k_clock = clock;
 
 	tms32010_rom = (UINT16*)tmsrom; // 0x1000 words (0x2000 bytes)
-	tms32010_ram = (UINT16*)tmsram; // 0x100 bytes
+	tms32010_ram = (UINT16*)tmsram; // 0x100 words (0x200 bytes)
 
 	datarom = data;
 	datarom_len = size;

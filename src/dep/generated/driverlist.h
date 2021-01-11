@@ -14493,8 +14493,10 @@ DRV		BurnSpectintmoon;
 DRV		BurnDrvmd_ttoonbhtk;
 DRV		BurnDrvnes_tinytooadv;
 DRV		BurnDrvmd_ttacme;
+DRV		BurnDrvmd_ttacmes;
 DRV		BurnDrvmd_ttacmeu;
 DRV		BurnDrvmd_ttoonbht;
+DRV		BurnDrvmd_ttoonbhts;
 DRV		BurnDrvmd_ttoonbhtu;
 DRV		BurnDrvnes_tinytooadv2molaheyo;
 DRV		BurnDrvnes_tinytooadv2trinwa;
@@ -14515,11 +14517,14 @@ DRV		BurnDrvfds_tobiddai;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvTjumpman;		// Coin input not working? [NOT WORKING]
 #endif
+DRV		BurnDrvmd_slimews;
 DRV		BurnDrvmd_slimew;
+DRV		BurnDrvmd_toejams;
 DRV		BurnDrvmd_toejama;
 DRV		BurnDrvmd_toejam;
 DRV		BurnDrvmd_toejam2g;
 DRV		BurnDrvmd_toejam2;
+DRV		BurnDrvmd_toejam2s;
 DRV		BurnDrvmd_toejam2j;
 DRV		BurnDrvmd_toejam2u;
 DRV		BurnDrvpce_toiletk;
@@ -14530,6 +14535,7 @@ DRV		BurnDrvTokiua;
 DRV		BurnDrvnes_toki;
 DRV		BurnDrvToki;
 DRV		BurnDrvTokia;
+DRV		BurnDrvmd_tokis;
 DRV		BurnDrvmd_toki1;
 DRV		BurnDrvmd_toki;
 DRV		BurnDrvTokisens;
@@ -14653,11 +14659,13 @@ DRV		BurnSpectowdieen;
 DRV		BurnDrvnes_towerdru;
 DRV		BurnDrvsms_tos;
 DRV		BurnDrvnes_towerofturmoil;
+DRV		BurnDrvmd_toxiccs;
 DRV		BurnDrvmd_toxicc;
 DRV		BurnDrvnes_toxiccrusaders;
 DRV		BurnDrvToyland;
 DRV		BurnDrvpce_toyshopb;
 DRV		BurnDrvmd_toystory;
+DRV		BurnDrvmd_toystorys;
 DRV		BurnDrvmd_toystoryu;
 DRV		BurnDrvToypop;
 DRV		BurnDrvmd_toys;
@@ -14744,12 +14752,15 @@ DRV		BurnDrvTronger;
 DRV		BurnSpecTrooperpoint5;
 DRV		BurnDrvTrophyh;
 DRV		BurnDrvTroangel;
+DRV		BurnDrvmd_troubshts;
 DRV		BurnDrvmd_troubsht;
 DRV		BurnDrvmd_troyaik;
 DRV		BurnDrvmd_truco96;
+DRV		BurnDrvmd_trueliess;
 DRV		BurnDrvgg_truelies;
 DRV		BurnDrvmd_truelies;
 DRV		BurnDrvmd_truxton;
+DRV		BurnDrvmd_truxtons;
 DRV		BurnDrvTruxton;
 DRV		BurnDrvTruxton2;
 DRV		BurnDrvngpc_tsunapn2;
@@ -14796,6 +14807,7 @@ DRV		BurnDrvToutrun;
 DRV		BurnSpecToutrun;
 DRV		BurnDrvmd_toutrun;
 DRV		BurnDrvmd_toutrunch;
+DRV		BurnDrvmd_toutruns;
 DRV		BurnDrvmd_toutrunp;
 DRV		BurnSpecTurbothetortoise;
 DRV		BurnDrvMSX_turboat;
@@ -14813,6 +14825,7 @@ DRV		BurnDrvTurpins;
 DRV		BurnDrvTurpin;
 DRV		BurnDrvmd_turrican;
 DRV		BurnDrvmd_turricanf;
+DRV		BurnDrvmd_turricans;
 DRV		BurnSpecturrican2;
 DRV		BurnSpecturrican1;
 DRV		BurnDrvtg_turrican;
@@ -14844,6 +14857,7 @@ DRV		BurnDrvTwinbrat;
 DRV		BurnDrvTwinbrata;
 DRV		BurnDrvTwinbratb;
 DRV		BurnDrvmd_twincobrgfx;
+DRV		BurnDrvmd_twincobrs;
 DRV		BurnDrvTwincobru;
 DRV		BurnDrvmd_twincobr;
 DRV		BurnDrvnes_twincobra;
@@ -14859,6 +14873,7 @@ DRV		BurnDrvTwinfalc;
 DRV		BurnDrvMSX_twinhamm;
 DRV		BurnDrvmd_twinhawkgfx;
 DRV		BurnDrvmd_twinhawk;
+DRV		BurnDrvmd_twinhawks;
 DRV		BurnDrvTwinhawku;
 DRV		BurnDrvTwinhawk;
 DRV		BurnDrvTwinqix;
@@ -14873,6 +14888,7 @@ DRV		BurnDrvTwinkle;
 DRV		BurnDrvTwinklea;
 DRV		BurnDrvtwinspri;
 DRV		BurnDrvmd_twinklete;
+DRV		BurnDrvmd_twinklets;
 DRV		BurnDrvmd_twinklet;
 DRV		BurnDrvMSX_twinlight;
 DRV		BurnDrvCpsMtwinsb;
@@ -14880,6 +14896,7 @@ DRV		BurnDrvmd_twistedf;
 DRV		BurnDrvTwocrude;
 DRV		BurnDrvTwocrudea;
 DRV		BurnDrvmd_twocrude;
+DRV		BurnDrvmd_twocrudes;
 DRV		BurnDrvmd_twocrudeu;
 DRV		BurnDrvTwotiger;
 #if defined FBNEO_DEBUG
@@ -14940,6 +14957,7 @@ DRV		BurnDrvmd_umk3mh;
 DRV		BurnDrvUmk3pb1;
 DRV		BurnDrvUmk3te;
 DRV		BurnDrvmd_umk3t;
+DRV		BurnDrvmd_ultqixs;
 DRV		BurnDrvmd_ultqix;
 DRV		BurnDrvmd_ultsoccr;
 DRV		BurnDrvsms_ultsoccr;
@@ -14977,6 +14995,7 @@ DRV		BurnDrvnes_underadv;
 DRV		BurnSpecunderwur;
 DRV		BurnDrvnes_uninvited;
 DRV		BurnDrvmd_univsold;
+DRV		BurnDrvmd_univsolds;
 DRV		BurnDrvnes_univesol;
 DRV		BurnDrvMSX_univunk;
 DRV		BurnDrvUniwarsa;
@@ -15015,8 +15034,10 @@ DRV		BurnDrvvliner54;
 DRV		BurnDrvvliner6e;
 DRV		BurnDrvvliner;
 DRV		BurnDrvvliner7e;
+DRV		BurnDrvmd_valiss;
 DRV		BurnDrvmd_valis;
 DRV		BurnDrvnes_valis;
+DRV		BurnDrvmd_valis3s;
 DRV		BurnDrvmd_valis3j;
 DRV		BurnDrvmd_valis3;
 DRV		BurnDrvMSX_valkyr;
@@ -15064,6 +15085,7 @@ DRV		BurnDrvVanguardg;
 DRV		BurnDrvVanguardj;
 DRV		BurnDrvVanguard;
 DRV		BurnDrvVangrd2;
+DRV		BurnDrvmd_vaportrs;
 DRV		BurnDrvmd_vaportr;
 DRV		BurnDrvmd_vaportrec;
 DRV		BurnDrvVaportrau;
@@ -15092,6 +15114,7 @@ DRV		BurnDrvmd_vecman;
 DRV		BurnDrvmd_vecmanp1;
 DRV		BurnDrvmd_vecmanp3;
 DRV		BurnDrvmd_vecmanp2;
+DRV		BurnDrvmd_vecman2s;
 DRV		BurnDrvmd_vecman2p1;
 DRV		BurnDrvmd_vecman2p6;
 DRV		BurnDrvmd_vecman2p5;
@@ -15113,6 +15136,7 @@ DRV		BurnDrvVendetta;
 DRV		BurnDrvVendettaun;
 DRV		BurnDrvnes_venicbeavol;
 DRV		BurnDrvmd_venom;
+DRV		BurnDrvmd_venoms;
 DRV		BurnDrvcv_venture;
 DRV		BurnDrvVenus;
 DRV		BurnDrvVerbena;
@@ -15185,6 +15209,7 @@ DRV		BurnDrvViostormj;
 DRV		BurnDrvViostormub;
 DRV		BurnDrvViostormu;
 DRV		BurnDrvmd_vf2;
+DRV		BurnDrvmd_vf2s;
 DRV		BurnDrvmd_vf2k;
 DRV		BurnDrvmd_vf2p5;
 DRV		BurnDrvmd_vf2p4;
@@ -15211,6 +15236,7 @@ DRV		BurnSpecVixen1;
 DRV		BurnSpecVixen2;
 DRV		BurnSpecVixen3;
 DRV		BurnDrvmd_vixen357e;
+DRV		BurnDrvmd_vixen357s;
 DRV		BurnDrvmd_vixen357;
 DRV		BurnDrvMSX_voidrun;
 DRV		BurnDrvmd_virak;
@@ -26987,7 +27013,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_roadrashu,		// Road Rash (USA)
 	&BurnDrvmd_rrash2a,			// Road Rash II (Euro, USA)
 	&BurnDrvmd_rrash2,			// Road Rash II (Euro, USA, v1.2)
-	&BurnDrvmd_rrash2s,			// Road Rash II (Hack Spanish)
+	&BurnDrvmd_rrash2s,			// Road Rash II (Hack, Spanish)
 	&BurnDrvmd_rrash2j,			// Road Rash II (Jpn)
 	&BurnDrvnes_roadrunner,		// Road Runner (USA) (Unl)
 	&BurnDrvnes_roadworker,		// Road Worker (Unl)
@@ -30649,8 +30675,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ttoonbhtk,		// Tiny Toon Adventures (Kor) [no comment, NOT WORKING]
 	&BurnDrvnes_tinytooadv,		// Tiny Toon Adventures (USA)
 	&BurnDrvmd_ttacme,			// Tiny Toon Adventures - Acme All-Stars (Euro)
+	&BurnDrvmd_ttacmes,			// Tiny Toon Adventures - Acme All-Stars (Hack, Spanish)
 	&BurnDrvmd_ttacmeu,			// Tiny Toon Adventures - Acme All-Stars (USA, Kor)
 	&BurnDrvmd_ttoonbht,		// Tiny Toon Adventures - Buster's Hidden Treasure (Euro)
+	&BurnDrvmd_ttoonbhts,		// Tiny Toon Adventures - Buster's Hidden Treasure (Hack, Spanish)
 	&BurnDrvmd_ttoonbhtu,		// Tiny Toon Adventures - Buster's Hidden Treasure (USA)
 	&BurnDrvnes_tinytooadv2molaheyo,// Tiny Toon Adventures 2 - Montana Land he Youkoso (Japan)
 	&BurnDrvnes_tinytooadv2trinwa,// Tiny Toon Adventures 2 - Trouble in Wackyland (USA)
@@ -30671,11 +30699,14 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvTjumpman,			// Tobikose! Jumpman [Coin input not working?, NOT WORKING]
 #endif
+	&BurnDrvmd_slimews,			// Todd's Adventures in Slime World (Hack, Spanish)
 	&BurnDrvmd_slimew,			// Todd's Adventures in Slime World (USA)
+	&BurnDrvmd_toejams,			// Toe Jam & Earl (Hack, Spanish)
 	&BurnDrvmd_toejama,			// Toe Jam & Earl (World)
 	&BurnDrvmd_toejam,			// Toe Jam & Earl (World, Rev. A)
 	&BurnDrvmd_toejam2g,		// Toe Jam & Earl in Panic auf Funkotron (Ger)
 	&BurnDrvmd_toejam2,			// Toe Jam & Earl in Panic on Funkotron (Euro)
+	&BurnDrvmd_toejam2s,		// Toe Jam & Earl in Panic on Funkotron (Hack, Spanish)
 	&BurnDrvmd_toejam2j,		// Toe Jam & Earl in Panic on Funkotron (Jpn)
 	&BurnDrvmd_toejam2u,		// Toe Jam & Earl in Panic on Funkotron (USA)
 	&BurnDrvpce_toiletk,		// Toilet Kids
@@ -30686,6 +30717,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_toki,			// Toki (USA)
 	&BurnDrvToki,				// Toki (World, set 1)
 	&BurnDrvTokia,				// Toki (World, set 2)
+	&BurnDrvmd_tokis,			// Toki - Going Ape Spit ~ JuJu Densetsu (Hack, Spanish)
 	&BurnDrvmd_toki1,			// Toki - Going Ape Spit ~ JuJu Densetsu (World)
 	&BurnDrvmd_toki,			// Toki - Going Ape Spit ~ JuJu Densetsu (World, Rev. A)
 	&BurnDrvTokisens,			// Toki no Senshi - Chrono Soldier (MC-8123, 317-0040)
@@ -30809,11 +30841,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_towerdru,		// Tower of Druaga, The (Japan)
 	&BurnDrvsms_tos,			// Tower of Sorrow (HB, rev3)
 	&BurnDrvnes_towerofturmoil,	// Tower of Turmoil (HB, v1.03)
+	&BurnDrvmd_toxiccs,			// Toxic Crusaders (Hack, Spanish)
 	&BurnDrvmd_toxicc,			// Toxic Crusaders (USA)
 	&BurnDrvnes_toxiccrusaders,	// Toxic Crusaders (USA)
 	&BurnDrvToyland,			// Toy Land Adventure
 	&BurnDrvpce_toyshopb,		// Toy Shop Boys
 	&BurnDrvmd_toystory,		// Toy Story (Euro)
+	&BurnDrvmd_toystorys,		// Toy Story (Hack, Spanish)
 	&BurnDrvmd_toystoryu,		// Toy Story (USA)
 	&BurnDrvToypop,				// Toypop
 	&BurnDrvmd_toys,			// Toys (USA)
@@ -30900,12 +30934,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTrooperpoint5,		// Trooper Point 5 (HB)
 	&BurnDrvTrophyh,			// Trophy Hunting - Bear & Moose V1.00
 	&BurnDrvTroangel,			// Tropical Angel
+	&BurnDrvmd_troubshts,		// Trouble Shooter (Hack, Spanish)
 	&BurnDrvmd_troubsht,		// Trouble Shooter (USA)
 	&BurnDrvmd_troyaik,			// Troy Aikman NFL Football (USA)
 	&BurnDrvmd_truco96,			// Truco '96 (Arg)
+	&BurnDrvmd_trueliess,		// True Lies (Hack, Spanish)
 	&BurnDrvgg_truelies,		// True Lies (World)
 	&BurnDrvmd_truelies,		// True Lies (World)
 	&BurnDrvmd_truxton,			// Truxton (Euro, USA) ~ Tatsujin (Jpn)
+	&BurnDrvmd_truxtons,		// Truxton (Hack, Spanish)
 	&BurnDrvTruxton,			// Truxton / Tatsujin
 	&BurnDrvTruxton2,			// Truxton II\0Tatsujin Oh
 	&BurnDrvngpc_tsunapn2,		// Tsunagete Pon! 2 (Jpn)
@@ -30952,6 +30989,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecToutrun,			// Turbo Outrun (128K)
 	&BurnDrvmd_toutrun,			// Turbo OutRun (Euro, Jpn)
 	&BurnDrvmd_toutrunch,		// Turbo OutRun (Hack, Color Improvement)
+	&BurnDrvmd_toutruns,		// Turbo OutRun (Hack, Spanish)
 	&BurnDrvmd_toutrunp,		// Turbo OutRun (Prototype, 19911209)
 	&BurnSpecTurbothetortoise,	// Turbo the Tortoise
 	&BurnDrvMSX_turboat,		// Turboat (Jpn)
@@ -30969,6 +31007,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTurpin,				// Turpin
 	&BurnDrvmd_turrican,		// Turrican (Euro, USA)
 	&BurnDrvmd_turricanf,		// Turrican (Hack, Colors and Lifebar Fix)
+	&BurnDrvmd_turricans,		// Turrican (Hack, Spanish)
 	&BurnSpecturrican2,			// Turrican II
 	&BurnSpecturrican1,			// Turrican
 	&BurnDrvtg_turrican,		// Turrican
@@ -31000,6 +31039,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTwinbrata,			// Twin Brats (set 2)
 	&BurnDrvTwinbratb,			// Twin Brats (set 3)
 	&BurnDrvmd_twincobrgfx,		// Twin Cobra (Hack, Arcade GFX v2.0)
+	&BurnDrvmd_twincobrs,		// Twin Cobra (Hack, Spanish)
 	&BurnDrvTwincobru,			// Twin Cobra (US)
 	&BurnDrvmd_twincobr,		// Twin Cobra (USA)
 	&BurnDrvnes_twincobra,		// Twin Cobra (USA)
@@ -31015,6 +31055,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_twinhamm,		// Twin Hammer (Euro)
 	&BurnDrvmd_twinhawkgfx,		// Twin Hawk (Arcade GFX)
 	&BurnDrvmd_twinhawk,		// Twin Hawk (Euro) ~ Daisenpuu (Jpn)
+	&BurnDrvmd_twinhawks,		// Twin Hawk (Hack, Spanish)
 	&BurnDrvTwinhawku,			// Twin Hawk (US)
 	&BurnDrvTwinhawk,			// Twin Hawk (World)
 	&BurnDrvTwinqix,			// Twin Qix (Ver 1.0A 1995/01/17) (Prototype)
@@ -31029,6 +31070,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTwinklea,			// Twinkle (set 2)
 	&BurnDrvtwinspri,			// Twinkle Star Sprites
 	&BurnDrvmd_twinklete,		// Twinkle Tale (Hack, English)
+	&BurnDrvmd_twinklets,		// Twinkle Tale (Hack, Spanish)
 	&BurnDrvmd_twinklet,		// Twinkle Tale (Jpn)
 	&BurnDrvMSX_twinlight,		// Twinlight (HB)
 	&BurnDrvCpsMtwinsb,			// Twins (bootleg of Mega Twins)
@@ -31036,6 +31078,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTwocrude,			// Two Crude (US FT revision 1)
 	&BurnDrvTwocrudea,			// Two Crude (US FT version)
 	&BurnDrvmd_twocrude,		// Two Crude Dudes (Euro)
+	&BurnDrvmd_twocrudes,		// Two Crude Dudes (Hack, Spanish)
 	&BurnDrvmd_twocrudeu,		// Two Crude Dudes (USA)
 	&BurnDrvTwotiger,			// Two Tigers (dedicated)
 #if defined FBNEO_DEBUG
@@ -31096,6 +31139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)
 	&BurnDrvmd_umk3t,			// Ultimate Mortal Kombat Trilogy Hack rev.5149
+	&BurnDrvmd_ultqixs,			// Ultimate Qix (Hack, Spanish)
 	&BurnDrvmd_ultqix,			// Ultimate Qix (USA)
 	&BurnDrvmd_ultsoccr,		// Ultimate Soccer (Euro)
 	&BurnDrvsms_ultsoccr,		// Ultimate Soccer (Euro, Bra)
@@ -31133,6 +31177,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecunderwur,			// Underwurlde (48K)
 	&BurnDrvnes_uninvited,		// Uninvited (USA)
 	&BurnDrvmd_univsold,		// Universal Soldier (Euro, USA)
+	&BurnDrvmd_univsolds,		// Universal Soldier (Hack, Spanish)
 	&BurnDrvnes_univesol,		// Universe Soldiers, The (Ch)
 	&BurnDrvMSX_univunk,		// Universe Unknown (HB)
 	&BurnDrvUniwarsa,			// UniWar S (bootleg)
@@ -31171,8 +31216,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvvliner6e,			// V-Liner (v0.6e)
 	&BurnDrvvliner,				// V-Liner (v0.7a)
 	&BurnDrvvliner7e,			// V-Liner (v0.7e)
+	&BurnDrvmd_valiss,			// Valis (Hack, Spanish)
 	&BurnDrvmd_valis,			// Valis (USA)
 	&BurnDrvnes_valis,			// Valis - The Fantastic Soldier (Japan)
+	&BurnDrvmd_valis3s,			// Valis III (Hack, Spanish)
 	&BurnDrvmd_valis3j,			// Valis III (Jpn, Rev. A)
 	&BurnDrvmd_valis3,			// Valis III (USA)
 	&BurnDrvMSX_valkyr,			// Valkyr (Euro)
@@ -31220,6 +31267,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVanguardj,			// Vanguard (Japan)
 	&BurnDrvVanguard,			// Vanguard (SNK)
 	&BurnDrvVangrd2,			// Vanguard II
+	&BurnDrvmd_vaportrs,		// Vapor Trail (Hack, Spanish)
 	&BurnDrvmd_vaportr,			// Vapor Trail (US)
 	&BurnDrvmd_vaportrec,		// Vapor Trail (USA)
 	&BurnDrvVaportrau,			// Vapor Trail - Hyper Offence Formation (US)
@@ -31248,6 +31296,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_vecmanp1,		// Vectorman (Prototype)
 	&BurnDrvmd_vecmanp3,		// Vectorman (Prototype, 19950724)
 	&BurnDrvmd_vecmanp2,		// Vectorman (Prototype, Alt)
+	&BurnDrvmd_vecman2s,		// Vectorman 2 (Hack, Spanish)
 	&BurnDrvmd_vecman2p1,		// Vectorman 2 (Prototype)
 	&BurnDrvmd_vecman2p6,		// Vectorman 2 (Prototype, 19960815)
 	&BurnDrvmd_vecman2p5,		// Vectorman 2 (Prototype, 19960816)
@@ -31269,6 +31318,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVendettaun,			// Vendetta (World, 4 Players, ver. ?)
 	&BurnDrvnes_venicbeavol,	// Venice Beach Volleyball (Unl)
 	&BurnDrvmd_venom,			// Venom & Spider-Man - Separation Anxiety (Euro, USA)
+	&BurnDrvmd_venoms,			// Venom & Spider-Man - Separation Anxiety (Hack, Spanish)
 	&BurnDrvcv_venture,			// Venture
 	&BurnDrvVenus,				// Venus
 	&BurnDrvVerbena,			// Verbena (bootleg of Carnival)
@@ -31341,6 +31391,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvViostormub,			// Violent Storm (ver UAB)
 	&BurnDrvViostormu,			// Violent Storm (ver UAC)
 	&BurnDrvmd_vf2,				// Virtua Fighter 2 - Genesis (Euro, USA)
+	&BurnDrvmd_vf2s,			// Virtua Fighter 2 - Genesis (Hack, Spanish)
 	&BurnDrvmd_vf2k,			// Virtua Fighter 2 - Genesis (Kor)
 	&BurnDrvmd_vf2p5,			// Virtua Fighter 2 - Genesis (Prototype, 19960819)
 	&BurnDrvmd_vf2p4,			// Virtua Fighter 2 - Genesis (Prototype, 19960830)
@@ -31367,6 +31418,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecVixen2,			// Vixen - Part 2
 	&BurnSpecVixen3,			// Vixen - Part 3
 	&BurnDrvmd_vixen357e,		// Vixen 357 (Hack, English)
+	&BurnDrvmd_vixen357s,		// Vixen 357 (Hack, Spanish)
 	&BurnDrvmd_vixen357,		// Vixen 357 (Jpn)
 	&BurnDrvMSX_voidrun,		// Void Runner (Euro)
 	&BurnDrvmd_virak,			// Voina Irak (Pirate) [no comment, NOT WORKING]

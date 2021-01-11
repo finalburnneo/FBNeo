@@ -12082,10 +12082,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rrash2s" cloneof="rrash2" romof="rrash2">
-		<description>Road Rash II (Hack Spanish)</description>
+		<description>Road Rash II (Hack, Spanish)</description>
 		<year>2013</year>
 		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="road rash ii (Hack Spanish).bin" size="1048576" crc="a8ec5695"/>
+		<rom name="road rash ii (hack, spanish).bin" size="1048576" crc="a8ec5695"/>
 		<driver status="good"/>
 	</game>
 	<game name="rrash2j" cloneof="rrash2" romof="rrash2">
@@ -17191,6 +17191,13 @@
 		<rom name="mpr-17066.bin" size="1048576" crc="1227b2b2"/>
 		<driver status="good"/>
 	</game>
+	<game name="ttacmes" cloneof="ttacme" romof="ttacme">
+		<description>Tiny Toon Adventures - Acme All-Stars (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="tiny toon adventures - acme all-stars (hack, spanish).bin" size="1048576" crc="07b7f6d6"/>
+		<driver status="good"/>
+	</game>
 	<game name="ttacmeu" cloneof="ttacme" romof="ttacme">
 		<description>Tiny Toon Adventures - Acme All-Stars (USA, Kor)</description>
 		<year>1994</year>
@@ -17203,6 +17210,13 @@
 		<year>1993</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="mpr-15406.bin" size="524288" crc="d10fba51"/>
+		<driver status="good"/>
+	</game>
+	<game name="ttoonbhts" cloneof="ttoonbht" romof="ttoonbht">
+		<description>Tiny Toon Adventures - Buster's Hidden Treasure (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="tiny toon adventures - buster's hidden treasure (hack, spanish).bin" size="524288" crc="dd7b42eb"/>
 		<driver status="good"/>
 	</game>
 	<game name="ttoonbhtu" cloneof="ttoonbht" romof="ttoonbht">
@@ -17233,11 +17247,25 @@
 		<rom name="tnn outdoors bass tournament '96 (usa).bin" size="2097152" crc="5c523c0b"/>
 		<driver status="good"/>
 	</game>
+	<game name="slimews" cloneof="slimew" romof="slimew">
+		<description>Todd's Adventures in Slime World (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="todd's adventures in slime world (hack, spanish).bin" size="524288" crc="661326ae"/>
+		<driver status="good"/>
+	</game>
 	<game name="slimew">
 		<description>Todd's Adventures in Slime World (USA)</description>
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="todd's adventures in slime world (usa).bin" size="524288" crc="652e8b7d"/>
+		<driver status="good"/>
+	</game>
+	<game name="toejams" cloneof="toejam" romof="toejam">
+		<description>Toe Jam &amp; Earl (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="toe jam &amp; earl (hack, spanish).bin" size="1048576" crc="a11a0710"/>
 		<driver status="good"/>
 	</game>
 	<game name="toejama" cloneof="toejam" romof="toejam">
@@ -17268,6 +17296,13 @@
 		<rom name="mpr-16179.bin" size="2097152" crc="47b0a871"/>
 		<driver status="good"/>
 	</game>
+	<game name="toejam2s" cloneof="toejam2" romof="toejam2">
+		<description>Toe Jam &amp; Earl in Panic on Funkotron (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="toe jam &amp; earl in panic on funkotron (hack, spanish).bin" size="2097152" crc="e8e2c74d"/>
+		<driver status="good"/>
+	</game>
 	<game name="toejam2j" cloneof="toejam2" romof="toejam2">
 		<description>Toe Jam &amp; Earl in Panic on Funkotron (Jpn)</description>
 		<year>1993</year>
@@ -17280,6 +17315,13 @@
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="toe jam &amp; earl in panic on funkotron (usa).bin" size="2097152" crc="aa021bdd"/>
+		<driver status="good"/>
+	</game>
+	<game name="tokis" cloneof="toki" romof="toki">
+		<description>Toki - Going Ape Spit ~ JuJu Densetsu (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="toki - going ape spit ~ juJu densetsu (hack, spanish).bin" size="524288" crc="ef5bf668"/>
 		<driver status="good"/>
 	</game>
 	<game name="toki1" cloneof="toki" romof="toki">
@@ -17436,6 +17478,13 @@
 		<rom name="mpr-14929.bin" size="1048576" crc="ffe7b3c7"/>
 		<driver status="good"/>
 	</game>
+	<game name="toxiccs" cloneof="toxicc" romof="toxicc">
+		<description>Toxic Crusaders (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="toxic crusaders (hack, spanish).bin" size="524288" crc="c2541e0a"/>
+		<driver status="good"/>
+	</game>
 	<game name="toxicc">
 		<description>Toxic Crusaders (USA)</description>
 		<year>1992</year>
@@ -17448,6 +17497,13 @@
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18848.bin" size="4194304" crc="8e89a9f3"/>
+		<driver status="good"/>
+	</game>
+	<game name="toystorys" cloneof="toystory" romof="toystory">
+		<description>Toy Story (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Disney Interactive</manufacturer>
+		<rom name="toy story (hack, spanish).bin" size="4194304" crc="82cf5f0e"/>
 		<driver status="good"/>
 	</game>
 	<game name="toystoryu" cloneof="toystory" romof="toystory">
@@ -17513,6 +17569,13 @@
 		<rom name="tronow.bin" size="327680" crc="f484fa21"/>
 		<driver status="good"/>
 	</game>
+	<game name="troubshts" cloneof="troubsht" romof="troubsht">
+		<description>Trouble Shooter (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Vic Tokai</manufacturer>
+		<rom name="trouble shooter (hack, spanish).bin" size="524288" crc="6549645a"/>
+		<driver status="good"/>
+	</game>
 	<game name="troubsht">
 		<description>Trouble Shooter (USA)</description>
 		<year>1991</year>
@@ -17534,6 +17597,13 @@
 		<rom name="truco96.bin" size="1048576" crc="cddbecfc"/>
 		<driver status="good"/>
 	</game>
+	<game name="trueliess" cloneof="truelies" romof="truelies">
+		<description>True Lies (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="true lies (hack, spanish).bin" size="2097152" crc="97821532"/>
+		<driver status="good"/>
+	</game>
 	<game name="truelies">
 		<description>True Lies (World)</description>
 		<year>1995</year>
@@ -17546,6 +17616,13 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="truxton -- tatsujin (world).bin" size="524288" crc="5bd0882d"/>
+		<driver status="good"/>
+	</game>
+	<game name="truxtons" cloneof="truxton" romof="truxton">
+		<description>Truxton (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="truxton (hack, spanish).bin" size="524288" crc="0c92ea14"/>
 		<driver status="good"/>
 	</game>
 	<game name="tunshi1" cloneof="tunshi" romof="tunshi">
@@ -17576,6 +17653,13 @@
 		<rom name="turbo outrun (color hack).md" size="524288" crc="8884c73a"/>
 		<driver status="good"/>
 	</game>
+	<game name="toutruns" cloneof="toutrun" romof="toutrun">
+		<description>Turbo OutRun (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="turbo outrun (hack, spanish).bin" size="524288" crc="5ee9ce5b"/>
+		<driver status="good"/>
+	</game>
 	<game name="toutrunp" cloneof="toutrun" romof="toutrun">
 		<description>Turbo OutRun (Prototype, 19911209)</description>
 		<year>1992</year>
@@ -17604,11 +17688,25 @@
 		<rom name="Turrican (USA, fixed Linkuei and Helder).bin" size="524288" crc="60f8bbdd"/>
 		<driver status="good"/>
 	</game>
+	<game name="turricans" cloneof="turrican" romof="turrican">
+		<description>Turrican (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="turrican (hack, spanish).bin" size="524288" crc="29991d29"/>
+		<driver status="good"/>
+	</game>
 	<game name="twincobrgfx" cloneof="twincobr" romof="twincobr">
 		<description>Twin Cobra (Hack, Arcade GFX v2.0)</description>
 		<year>2016</year>
 		<manufacturer>Sega - fusaru</manufacturer>
 		<rom name="twin cobra (arcade gfx v2.0).md" size="704120" crc="88ea1e4e"/>
+		<driver status="good"/>
+	</game>
+	<game name="twincobrs" cloneof="twincobr" romof="twincobr">
+		<description>Twin Cobra (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="twin cobra (hack, spanish).bin" size="655360" crc="8102ceea"/>
 		<driver status="good"/>
 	</game>
 	<game name="twincobr">
@@ -17632,11 +17730,25 @@
 		<rom name="twin hawk -- daisenpuu (euro, jpn).bin" size="524288" crc="a2ec8c67"/>
 		<driver status="good"/>
 	</game>
+	<game name="twinhawks" cloneof="twinhawk" romof="twinhawk">
+		<description>Twin Hawk (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="twin hawk (hack, spanish).bin" size="524288" crc="42115f8e"/>
+		<driver status="good"/>
+	</game>
 	<game name="twinklete" cloneof="twinklet" romof="twinklet">
 		<description>Twinkle Tale (Hack, English)</description>
 		<year>2007</year>
 		<manufacturer>Toyo Records</manufacturer>
 		<rom name="twinkle tale (english translation).bin" size="1048576" crc="0c43b66b"/>
+		<driver status="good"/>
+	</game>
+	<game name="twinklets" cloneof="twinklet" romof="twinklet">
+		<description>Twinkle Tale (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Toyo Recording Group</manufacturer>
+		<rom name="twinkle tale (hack, spanish).bin" size="1048576" crc="cacdb98e"/>
 		<driver status="good"/>
 	</game>
 	<game name="twinklet">
@@ -17658,6 +17770,13 @@
 		<year>1992</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="two crude dudes (euro).bin" size="1048576" crc="b6d90a10"/>
+		<driver status="good"/>
+	</game>
+	<game name="twocrudes" cloneof="twocrude" romof="twocrude">
+		<description>Two Crude Dudes (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="two crude dudes (hack, spanish).bin" size="1048576" crc="4d359802"/>
 		<driver status="good"/>
 	</game>
 	<game name="twocrudeu" cloneof="twocrude" romof="twocrude">
@@ -17730,6 +17849,13 @@
 		<rom name="UMKT_5149.bin" size="10485760" crc="1d9d2eba"/>
 		<driver status="good"/>
 	</game>
+	<game name="ultqixs" cloneof="ultqix" romof="ultqix">
+		<description>Ultimate Qix (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Taito</manufacturer>
+		<rom name="ultimate qix (hack, spanish).bin" size="262144" crc="94f99786"/>
+		<driver status="good"/>
+	</game>
 	<game name="ultqix">
 		<description>Ultimate Qix (USA)</description>
 		<year>1991</year>
@@ -17793,6 +17919,13 @@
 		<rom name="universal soldier (euro, usa).bin" size="1048576" crc="352ebd49"/>
 		<driver status="good"/>
 	</game>
+	<game name="univsolds" cloneof="univsold" romof="univsold">
+		<description>Universal Soldier (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Ballistic</manufacturer>
+		<rom name="universal soldier (hack, spanish).bin" size="1048576" crc="afbc56d4"/>
+		<driver status="good"/>
+	</game>
 	<game name="unknown2">
 		<description>Unknown Game 2 (Rockman-related?)</description>
 		<year>199?</year>
@@ -17849,11 +17982,25 @@
 		<rom name="v-v (jpn).bin" size="1048576" crc="ad9d0ec0"/>
 		<driver status="good"/>
 	</game>
+	<game name="valiss" cloneof="valis" romof="valis">
+		<description>Valis (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="valis (hack, spanish).bin" size="1048576" crc="c83c33b2"/>
+		<driver status="good"/>
+	</game>
 	<game name="valis">
 		<description>Valis (USA)</description>
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="valis (usa).bin" size="1048576" crc="13bc5b72"/>
+		<driver status="good"/>
+	</game>
+	<game name="valis3s" cloneof="valis3" romof="valis3">
+		<description>Valis III (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Renovation</manufacturer>
+		<rom name="valis III (hack, spanish).bin" size="1048576" crc="efab343b"/>
 		<driver status="good"/>
 	</game>
 	<game name="valis3j" cloneof="valis3" romof="valis3">
@@ -17868,6 +18015,13 @@
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="valis iii (usa).bin" size="1048576" crc="59a2a368"/>
+		<driver status="good"/>
+	</game>
+	<game name="vaportrs" cloneof="vaportr" romof="vaportr">
+		<description>Vapor Trail (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="vapor trail (hack, spanish).bin" size="1048576" crc="8cb8c8fd"/>
 		<driver status="good"/>
 	</game>
 	<game name="vaportr">
@@ -17910,6 +18064,13 @@
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="vectorman (beta) (alt).bin" size="2097152" crc="2084d3da"/>
+		<driver status="good"/>
+	</game>
+	<game name="vecman2s" cloneof="vecman2" romof="vecman2">
+		<description>Vectorman 2 (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="vectorman 2 (hack, spanish).bin" size="3145728" crc="998989b2"/>
 		<driver status="good"/>
 	</game>
 	<game name="vecman2p1" cloneof="vecman2" romof="vecman2">
@@ -17968,6 +18129,13 @@
 		<rom name="spider-man and venom - separation anxiety (euro, usa).bin" size="3145728" crc="512ade32"/>
 		<driver status="good"/>
 	</game>
+	<game name="venoms" cloneof="venom" romof="venom">
+		<description>Venom &amp; Spider-Man - Separation Anxiety (Hack, Spanish)</description>
+		<year>2019</year>
+		<manufacturer>Acclaim</manufacturer>
+		<rom name="venom &amp; spider-man - separation anxiety (hack, spanish).bin" size="3145728" crc="bbc1ff1f"/>
+		<driver status="good"/>
+	</game>
 	<game name="vermilj" cloneof="vermil" romof="vermil">
 		<description>Vermilion (Jpn)</description>
 		<year>1989</year>
@@ -18001,6 +18169,13 @@
 		<year>1997</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-19107+mpr-19108.bin" size="4194304" crc="937380f3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vf2s" cloneof="vf2" romof="vf2">
+		<description>Virtua Fighter 2 - Genesis (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="virtua fighter 2 - genesis (hack, spanish).bin" size="4194304" crc="78ab7230"/>
 		<driver status="good"/>
 	</game>
 	<game name="vf2k" cloneof="vf2" romof="vf2">
@@ -18071,6 +18246,13 @@
 		<year>2016</year>
 		<manufacturer>NCS</manufacturer>
 		<rom name="vixen 357 (english translation).bin" size="1310720" crc="f8ce2e43"/>
+		<driver status="good"/>
+	</game>
+	<game name="vixen357s" cloneof="vixen357" romof="vixen357">
+		<description>Vixen 357 (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Published</manufacturer>
+		<rom name="vixen 357 (hack, spanish).bin" size="1310720" crc="b33b1568"/>
 		<driver status="good"/>
 	</game>
 	<game name="vixen357">

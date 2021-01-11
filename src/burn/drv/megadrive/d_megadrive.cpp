@@ -38876,19 +38876,19 @@ struct BurnDriver BurnDrvmd_xmenu = {
 
 // Ultimate X-Men (Hack, Enhanced)
 // https://www.romhacking.net/translations/5639/
-static struct BurnRomInfo md_ux-menRomDesc[] = {
+static struct BurnRomInfo md_uxmenRomDesc[] = {
 	{ "ultimate x-men (hack, enhanced).bin", 1048576, 0x452ba2bb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_ux-men)
-STD_ROM_FN(md_ux-men)
+STD_ROM_PICK(md_uxmen)
+STD_ROM_FN(md_uxmen)
 
 struct BurnDriver BurnDrvmd_ux-men = {
-	"md_ux-men", "md_xmen", NULL, NULL, "2021",
+	"md_uxmen", "md_xmen", NULL, NULL, "2021",
 	"Ultimate X-Men (Hack, Enhanced)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_ux-menRomInfo, md_ux-menRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_uxmenRomInfo, md_uxmenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

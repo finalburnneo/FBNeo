@@ -850,9 +850,6 @@
     <ClInclude Include="..\..\src\cpu\tlcs90_intf.h">
       <Filter>cpus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\cpu\tms34010_intf.h">
-      <Filter>cpus</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\cpu\upd7810_intf.h">
       <Filter>cpus</Filter>
     </ClInclude>
@@ -1029,6 +1026,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\burn\devices\poly.h">
       <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cpu\tms34_intf.h">
+      <Filter>cpus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3837,9 +3837,6 @@
     <ClCompile Include="..\..\src\cpu\tms32010\tms32010.cpp">
       <Filter>cpus\tms32010</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\cpu\tms34010\tms34010.cpp">
-      <Filter>cpus\tms34010</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\cpu\upd7725\upd7725.cpp">
       <Filter>cpus\upd7725</Filter>
     </ClCompile>
@@ -3871,9 +3868,6 @@
       <Filter>cpus</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\tlcs90_intf.cpp">
-      <Filter>cpus</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\tms34010_intf.cpp">
       <Filter>cpus</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\z180_intf.cpp">
@@ -4022,9 +4016,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\placeholder.cpp">
       <Filter>burner\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\tms34010\tms34010_optable.cpp">
-      <Filter>cpus\tms34010</Filter>
     </ClCompile>
     <ClCompile Include="generated\m68kops.c">
       <Filter>generated</Filter>
@@ -4246,6 +4237,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_lsasquad.cpp">
       <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\tms34\tms34010.cpp">
+      <Filter>cpus\tms34010</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\tms34_intf.cpp">
+      <Filter>cpus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

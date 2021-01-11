@@ -13,6 +13,8 @@
 #define MAXHANDLER  32
 #define PFN(x)  (((x) >> PAGE_SHIFT) & 0xFFFFF)
 
+static INT32 CPU_TYPE = 0;
+
 template<typename T>
 inline T tms_fast_read(UINT8 *ptr, UINT32 adr) {
     return *((T*)  ((UINT8*) ptr + TOBYTE(adr & PAGE_MASK)));
@@ -43,6 +45,8 @@ static void default_shift_op(UINT32,UINT16*){}
 
 static UINT16 IO_read(UINT32 address) { return tms34010_io_register_r(address); }
 static void IO_write(UINT32 address, UINT16 value) { tms34010_io_register_w(address, value); }
+static UINT16 IO_read020(UINT32 address) { return tms34020_io_register_r(address); }
+static void IO_write020(UINT32 address, UINT16 value) { tms34020_io_register_w(address, value); }
 
 // cheat-engine hook-up
 void TMS34010Open(INT32 num)
@@ -95,6 +99,7 @@ cpu_core_config TMS34010Config =
 
 void TMS34010Init()
 {
+	CPU_TYPE = 10;
 	tms34010_init();
 	TMS34010SetToShift(default_shift_op);
 	TMS34010SetFromShift(default_shift_op);
@@ -106,9 +111,25 @@ void TMS34010Init()
 	CpuCheatRegister(0, &TMS34010Config);
 }
 
+void TMS34020Init()
+{
+	CPU_TYPE = 20;
+	tms34010_init();
+	TMS34010SetToShift(default_shift_op);
+	TMS34010SetFromShift(default_shift_op);
+
+    // map IO registers
+    TMS34010SetHandlers(MAXHANDLER-1, IO_read020, IO_write020);
+	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00003ff, MAP_READ | MAP_WRITE);
+
+	CpuCheatRegister(0, &TMS34010Config);
+}
+
 void TMS34010Exit()
 {
 	tms34010_exit();
+
+	CPU_TYPE = 0;
 }
 
 void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock)
@@ -170,12 +191,10 @@ UINT32 TMS34010GetPPC()
 
 void TMS34010Reset()
 {
-    tms34010_reset();
-}
-
-void TMS34020Reset()
-{
-    tms34020_reset();
+	switch (CPU_TYPE) {
+		case 10: tms34010_reset(); break;
+		case 20: tms34020_reset(); break;
+	}
 }
 
 void TMS34010GenerateIRQ(UINT32 line)

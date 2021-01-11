@@ -7441,9 +7441,9 @@ static INT32 kov2pfwllInit()
 {
 	INT32 nRet = kov2pInit();
 	
-	if (nRet == 0 && PGM68KROM[0xc3c] == 0x64 && PGM68KROM[0x336cb] == 0x4e && PGMARMROM[0x26f] == 0x0a) {
+	if (nRet == 0 && PGM68KROM[0xc3c] == 0x64 && PGM68KROM[0x336cc] == 0x63 && PGMARMROM[0x26f] == 0x0a) {
 		PGM68KROM[0xc3c] = 0x44;	// 4M address patch
-		PGM68KROM[0x336cb] = 0x02;	// scene switching patch
+		PGM68KROM[0x336cc] = 0x43;	// scene switching patch
 		PGMARMROM[0x26f] = 0xea;	// crash patch
 	}
 

@@ -1356,7 +1356,7 @@ void tms34020_io_register_w(INT32 offset, UINT32 data)
 {
 	int oldreg, newreg;
 
-	offset = (offset >> 4) & 0x1f;
+	offset = (offset >> 4) & 0x3f;
 
 	/* Set register */
 	oldreg = IOREG(offset);
@@ -1564,7 +1564,7 @@ UINT16 tms34020_io_register_r(INT32 offset)
 {
 	int result, total;
 
-	offset = (offset >> 4) & 0x1f;
+	offset = (offset >> 4) & 0x3f;
 
 	//if (LOG_CONTROL_REGS)
 	//	logerror("CPU#%d@%08X: read %s\n", cpunum, activecpu_get_pc(), ioreg_name[offset]);

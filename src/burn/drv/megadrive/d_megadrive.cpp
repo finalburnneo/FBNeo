@@ -38883,7 +38883,7 @@ static struct BurnRomInfo md_uxmenRomDesc[] = {
 STD_ROM_PICK(md_uxmen)
 STD_ROM_FN(md_uxmen)
 
-struct BurnDriver BurnDrvmd_ux-men = {
+struct BurnDriver BurnDrvmd_uxmen = {
 	"md_uxmen", "md_xmen", NULL, NULL, "2021",
 	"Ultimate X-Men (Hack, Enhanced)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

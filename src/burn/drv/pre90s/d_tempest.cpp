@@ -267,15 +267,15 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale((1080*500/600), 1080);
+			vector_rescale((1080*480/640), 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Height != 600) {
-			vector_rescale(500, 600);
+		if (Height != 640) {
+			vector_rescale(480, 640);
 			return 1;
 		}
 	}
@@ -624,7 +624,7 @@ struct BurnDriver BurnDrvTempest = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempestRomInfo, tempestRomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };
 
 
@@ -660,7 +660,7 @@ struct BurnDriver BurnDrvTempest1r = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest1rRomInfo, tempest1rRomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };
 
 static INT32 DrvInitSmall()
@@ -708,7 +708,7 @@ struct BurnDriver BurnDrvTempest3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest3RomInfo, tempest3RomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };
 
 
@@ -750,7 +750,7 @@ struct BurnDriver BurnDrvTempest2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest2RomInfo, tempest2RomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };
 
 
@@ -792,7 +792,7 @@ struct BurnDriver BurnDrvTempest1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, tempest1RomInfo, tempest1RomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };
 
 
@@ -834,5 +834,5 @@ struct BurnDriver BurnDrvTemptube = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION | GBF_VECTOR, 0,
 	NULL, temptubeRomInfo, temptubeRomName, NULL, NULL, NULL, NULL, TempestInputInfo, TempestDIPInfo,
 	DrvInitSmall, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
-	500, 600, 5, 6
+	480, 640, 3, 4
 };

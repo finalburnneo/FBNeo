@@ -98,6 +98,9 @@ void vector_rescale(INT32 x, INT32 y)
 	vector_set_clip(0, nScreenWidth, 0, nScreenHeight);
 
 	vector_set_scale(vector_scaleX_int, vector_scaleY_int);
+
+	// This is bit hacky, but thicker lines are more enjoyable at 1080p -barbudreadmon
+	vector_intens = (y == 1080 ? 2.0 : 1.0);
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)

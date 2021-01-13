@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15931 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15933 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1191,6 +1191,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_battletoads|  	| Battletoads (USA)					| 		| 1991	| Tradewest	| Miscellaneous	| 					|
 | md_btoads	|  	| Battletoads (World)					| 		| 1991	| Tradewest	| Sega Megadrive| 					|
 | nes_battldoudra|  	| Battletoads-Double Dragon (USA)			| 		| 1993	| Tradewest	| Miscellaneous	| 					|
+| btoads	|  	| Battletoads						| 		| 1994	| Rare / Electro| Miscellaneous	| 					|
 | spec_batty	|  	| Batty							| 		| 1987	| Hit-Pak	| ZX Spectrum	| 					|
 | bayroute1	|  	| Bay Route (set 1, US, unprotected)			| bayroute	| 1989	| Sunsoft / Sega| System 16B	| 					|
 | bayroutejd	|  	| Bay Route (set 2, Japan, FD1094 317-0115 decrypted)	| bayroute	| 1989	| Sunsoft / Sega| System 16B	| 					|
@@ -14750,6 +14751,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ultsoccr	|  	| Ultimate Soccer (Euro, Jpn, Bra)			| 		| 1993	| Sega		| Sega Game Gear| 					|
 | md_ultsoccrp	|  	| Ultimate Soccer (Euro, Prototype)			| md_ultsoccr	| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_ultimstu	|  	| Ultimate Stuntman, The (USA) (Unl)			| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| md_uxmen	|  	| Ultimate X-Men (Hack, Enhanced)			| md_xmen	| 2021	| Sega		| Sega Megadrive| 					|
 | uballoon	|  	| Ultra Balloon						| 		| 1996	| SunA		| Miscellaneous	| 					|
 | utoukond	|  	| Ultra Toukon Densetsu (Japan)				| 		| 1993	| Banpresto / Ts| Seta		| 					|
 | ultraxg	|  	| Ultra X Weapons / Ultra Keibitai (GAMEST review build)| ultrax	| 1995	| Banpresto / Ts| SSV		| 					|
@@ -14871,9 +14873,9 @@ This list contains all games supported by FinalBurn Neo.
 | vanguardj	|  	| Vanguard (Japan)					| vanguard	| 1981	| SNK		| Miscellaneous	| 					|
 | vanguard	|  	| Vanguard (SNK)					| 		| 1981	| SNK		| Miscellaneous	| 					|
 | vangrd2	|  	| Vanguard II						| 		| 1984	| SNK		| Miscellaneous	| 					|
+| md_vaportrec	|  	| Vapor Trail (Enhanced Colors)				| md_vaportr	| 2015	| Renovation - P| Sega Megadrive| 					|
 | md_vaportrs	|  	| Vapor Trail (Hack, Spanish)				| md_vaportr	| 2019	| Published	| Sega Megadrive| 					|
-| md_vaportr	|  	| Vapor Trail (US)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
-| md_vaportrec	|  	| Vapor Trail (USA)					| md_vaportr	| 2015	| Renovation - P| Sega Megadrive| 					|
+| md_vaportr	|  	| Vapor Trail (USA)					| 		| 1991	| Renovation	| Sega Megadrive| 					|
 | vaportrau	|  	| Vapor Trail - Hyper Offence Formation (US)		| vaportra	| 1989	| Data East USA	| DECO IC16	| 					|
 | vaportra	|  	| Vapor Trail - Hyper Offence Formation (World revision | 		| 1989	| Data East Corp| DECO IC16	| 					|
 | vaportra3	|  	| Vapor Trail - Hyper Offence Formation (World revision | vaportra	| 1989	| Data East Corp| DECO IC16	| 					|

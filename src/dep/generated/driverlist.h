@@ -1203,6 +1203,7 @@ DRV		BurnDrvgg_btoadsu;
 DRV		BurnDrvnes_battletoads;
 DRV		BurnDrvmd_btoads;
 DRV		BurnDrvnes_battldoudra;
+DRV		BurnDrvBtoads;
 DRV		BurnSpecBatty;
 DRV		BurnDrvBayroute1;
 DRV		BurnDrvBayroutejd;
@@ -14964,6 +14965,7 @@ DRV		BurnDrvsms_ultsoccr;
 DRV		BurnDrvgg_ultsoccr;
 DRV		BurnDrvmd_ultsoccrp;
 DRV		BurnDrvnes_ultimstu;
+DRV		BurnDrvmd_uxmen;
 DRV		BurnDrvUballoon;
 DRV		BurnDrvUtoukond;
 DRV		BurnDrvUltraxg;
@@ -15085,9 +15087,9 @@ DRV		BurnDrvVanguardg;
 DRV		BurnDrvVanguardj;
 DRV		BurnDrvVanguard;
 DRV		BurnDrvVangrd2;
+DRV		BurnDrvmd_vaportrec;
 DRV		BurnDrvmd_vaportrs;
 DRV		BurnDrvmd_vaportr;
-DRV		BurnDrvmd_vaportrec;
 DRV		BurnDrvVaportrau;
 DRV		BurnDrvVaportra;
 DRV		BurnDrvVaportraw3;
@@ -17385,6 +17387,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_battletoads,	// Battletoads (USA)
 	&BurnDrvmd_btoads,			// Battletoads (World)
 	&BurnDrvnes_battldoudra,	// Battletoads-Double Dragon (USA)
+	&BurnDrvBtoads,				// Battletoads
 	&BurnSpecBatty,				// Batty
 	&BurnDrvBayroute1,			// Bay Route (set 1, US, unprotected)
 	&BurnDrvBayroutejd,			// Bay Route (set 2, Japan, FD1094 317-0115 decrypted)
@@ -31146,6 +31149,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ultsoccr,		// Ultimate Soccer (Euro, Jpn, Bra)
 	&BurnDrvmd_ultsoccrp,		// Ultimate Soccer (Euro, Prototype)
 	&BurnDrvnes_ultimstu,		// Ultimate Stuntman, The (USA) (Unl)
+	&BurnDrvmd_uxmen,			// Ultimate X-Men (Hack, Enhanced)
 	&BurnDrvUballoon,			// Ultra Balloon
 	&BurnDrvUtoukond,			// Ultra Toukon Densetsu (Japan)
 	&BurnDrvUltraxg,			// Ultra X Weapons / Ultra Keibitai (GAMEST review build)
@@ -31267,9 +31271,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVanguardj,			// Vanguard (Japan)
 	&BurnDrvVanguard,			// Vanguard (SNK)
 	&BurnDrvVangrd2,			// Vanguard II
+	&BurnDrvmd_vaportrec,		// Vapor Trail (Enhanced Colors)
 	&BurnDrvmd_vaportrs,		// Vapor Trail (Hack, Spanish)
-	&BurnDrvmd_vaportr,			// Vapor Trail (US)
-	&BurnDrvmd_vaportrec,		// Vapor Trail (USA)
+	&BurnDrvmd_vaportr,			// Vapor Trail (USA)
 	&BurnDrvVaportrau,			// Vapor Trail - Hyper Offence Formation (US)
 	&BurnDrvVaportra,			// Vapor Trail - Hyper Offence Formation (World revision 1)
 	&BurnDrvVaportraw3,			// Vapor Trail - Hyper Offence Formation (World revision 3)

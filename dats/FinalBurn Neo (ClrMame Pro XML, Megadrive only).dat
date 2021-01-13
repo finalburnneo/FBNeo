@@ -17877,6 +17877,13 @@
 		<rom name="world soccer (prototype).bin" size="1048576" crc="9d451f72"/>
 		<driver status="good"/>
 	</game>
+	<game name="uxmen" cloneof="xmen" romof="xmen">
+		<description>Ultimate X-Men (Hack, Enhanced)</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ultimate x-men (hack, enhanced).bin" size="1048576" crc="4528a2bb"/>
+		<driver status="good"/>
+	</game>
 	<game name="ultracore">
 		<description>Ultracore (HB, USA) [Homebrew]</description>
 		<year>2019</year>
@@ -18017,6 +18024,13 @@
 		<rom name="valis iii (usa).bin" size="1048576" crc="59a2a368"/>
 		<driver status="good"/>
 	</game>
+	<game name="vaportrec" cloneof="vaportr" romof="vaportr">
+		<description>Vapor Trail (Enhanced Colors)</description>
+		<year>2015</year>
+		<manufacturer>Renovation - Pyron</manufacturer>
+		<rom name="vapor trail (enhanced colors)(v2.0).md" size="1048576" crc="8ed751a7"/>
+		<driver status="good"/>
+	</game>
 	<game name="vaportrs" cloneof="vaportr" romof="vaportr">
 		<description>Vapor Trail (Hack, Spanish)</description>
 		<year>2019</year>
@@ -18025,17 +18039,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="vaportr">
-		<description>Vapor Trail (US)</description>
+		<description>Vapor Trail (USA)</description>
 		<year>1991</year>
 		<manufacturer>Renovation</manufacturer>
 		<rom name="vapor trail (usa).bin" size="1048576" crc="c49e3a0a"/>
-		<driver status="good"/>
-	</game>
-	<game name="vaportrec" cloneof="vaportr" romof="vaportr">
-		<description>Vapor Trail (USA)</description>
-		<year>2015</year>
-		<manufacturer>Renovation - Pyron</manufacturer>
-		<rom name="vapor trail (enhanced colors)(v2.0).md" size="1048576" crc="8ed751a7"/>
 		<driver status="good"/>
 	</game>
 	<game name="vecman">

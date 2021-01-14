@@ -1346,12 +1346,13 @@ static void FUNCTION_NAME(pixblt)(int src_is_linear, int dst_is_linear)
 	if (state.gfxcycles > tms34010_ICount)
 	{
 		state.gfxcycles -= tms34010_ICount;
+		COUNT_CYCLES(tms34010_ICount);
 		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
 	{
-		tms34010_ICount -= state.gfxcycles;
+		COUNT_CYCLES(state.gfxcycles);
 		state.st &= ~STBIT_P;
 		if (src_is_linear && dst_is_linear)
 			SADDR += DYDX_Y * SPTCH;
@@ -1611,12 +1612,13 @@ static void FUNCTION_NAME(pixblt_r)(int src_is_linear, int dst_is_linear)
 	if (state.gfxcycles > tms34010_ICount)
 	{
 		state.gfxcycles -= tms34010_ICount;
+		COUNT_CYCLES(tms34010_ICount);
 		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
 	{
-		tms34010_ICount -= state.gfxcycles;
+		COUNT_CYCLES(state.gfxcycles);
 		state.st &= ~STBIT_P;
 		if (src_is_linear && dst_is_linear)
 			SADDR += DYDX_Y * SPTCH;
@@ -1830,12 +1832,13 @@ static void FUNCTION_NAME(pixblt_b)(int dst_is_linear)
 	if (state.gfxcycles > tms34010_ICount)
 	{
 		state.gfxcycles -= tms34010_ICount;
+		COUNT_CYCLES(tms34010_ICount);
 		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
 	{
-		tms34010_ICount -= state.gfxcycles;
+		COUNT_CYCLES(state.gfxcycles);
 		state.st &= ~STBIT_P;
 		SADDR += DYDX_Y * SPTCH;
 		if (dst_is_linear)
@@ -2012,12 +2015,13 @@ static void FUNCTION_NAME(fill)(int dst_is_linear)
 	if (state.gfxcycles > tms34010_ICount)
 	{
 		state.gfxcycles -= tms34010_ICount;
+		COUNT_CYCLES(tms34010_ICount);
 		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
 	{
-		tms34010_ICount -= state.gfxcycles;
+		COUNT_CYCLES(state.gfxcycles);
 		state.st &= ~STBIT_P;
 		if (dst_is_linear)
 			DADDR += DYDX_Y * DPTCH;

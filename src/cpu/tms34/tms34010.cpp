@@ -85,6 +85,8 @@ typedef struct tms34010_regs
 	/* for the 34010, we only copy 32 of these into the new state */
 	UINT16 IOregs[64];
 
+	UINT8 external_host_access;
+
 	UINT32 pointer_separator;
 
 	const tms34010_config *config;
@@ -105,7 +107,6 @@ typedef struct tms34010_regs
 
 /* internal state */
 static tms34010_regs 		state;
-static UINT8				external_host_access;
 
 /* default configuration */
 static tms34010_config default_config =
@@ -644,8 +645,6 @@ static void check_interrupt(void)
 ***************************************************************************/
 void tms34010_init()
 {
-	external_host_access = 0;
-
 	memset(&state, 0, sizeof(state));
 	memset(&default_config, 0, sizeof(default_config));
 
@@ -657,6 +656,16 @@ void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock)
 {
 	default_config.pixclock = pxlclock;
 	default_config.pixperclock = pxl_per_clock;
+}
+
+void tms34010_set_output_int(void (*oi_func)(INT32))
+{
+	default_config.output_int = oi_func;
+}
+
+void tms34010_set_halt_on_reset(INT32 onoff)
+{
+	default_config.halt_on_reset = onoff;
 }
 
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *))
@@ -709,7 +718,6 @@ void tms34010_scan(INT32 nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		ScanVar(&state, STRUCT_SIZE_HELPER(struct tms34010_regs, pointer_separator), "TMS340x0 Struct");
 		ScanVar(state.shiftreg, SHIFTREG_SIZE, "TMS340x0 Shiftreg");
-		SCAN_VAR(external_host_access);
 	}
 
 	if (nAction & ACB_WRITE) { // load state
@@ -1118,6 +1126,9 @@ void tms34010_get_display_params(tms34010_display_params *params)
 	params->heblnk = SMART_IOREG(HEBLNK) * state.config->pixperclock;
 	params->hsblnk = SMART_IOREG(HSBLNK) * state.config->pixperclock;
 
+	params->htotal = SMART_IOREG(HTOTAL);
+	params->vtotal = SMART_IOREG(VTOTAL);
+
 	/* 34010 gets its address from DPYADR and DPYTAP */
 	if (!state.is_34020)
 	{
@@ -1248,7 +1259,7 @@ void tms34010_io_register_w(INT32 offset, UINT32 data)
 
 		case REG_HSTCTLH:
 			/* if the CPU is halting itself, stop execution right away */
-			if ((data & 0x8000) && !external_host_access)
+			if ((data & 0x8000) && !state.external_host_access)
 				tms34010_ICount = 0;
 			//cpunum_set_input_line(state.screen->machine, cpunum, INPUT_LINE_HALT, (data & 0x8000) ? ASSERT_LINE : CLEAR_LINE);
 
@@ -1260,7 +1271,7 @@ void tms34010_io_register_w(INT32 offset, UINT32 data)
 
 		case REG_HSTCTLL:
 			/* the TMS34010 can change MSGOUT, can set INTOUT, and can clear INTIN */
-			if (!external_host_access)
+			if (!state.external_host_access)
 			{
 				newreg = (oldreg & 0xff8f) | (data & 0x0070);
 				newreg |= data & 0x0080;
@@ -1401,7 +1412,7 @@ void tms34020_io_register_w(INT32 offset, UINT32 data)
 
 		case REG020_HSTCTLH:
 			/* if the CPU is halting itself, stop execution right away */
-			if ((data & 0x8000) && !external_host_access)
+			if ((data & 0x8000) && !state.external_host_access)
 				tms34010_ICount = 0;
 			//cpunum_set_input_line(state.screen->machine, cpunum, INPUT_LINE_HALT, (data & 0x8000) ? ASSERT_LINE : CLEAR_LINE);
 
@@ -1412,7 +1423,7 @@ void tms34020_io_register_w(INT32 offset, UINT32 data)
 
 		case REG020_HSTCTLL:
 			/* the TMS34010 can change MSGOUT, can set INTOUT, and can clear INTIN */
-			if (!external_host_access)
+			if (!state.external_host_access)
 			{
 				newreg = (oldreg & 0xff8f) | (data & 0x0070);
 				newreg |= data & 0x0080;
@@ -1655,17 +1666,15 @@ static STATE_POSTLOAD( tms34010_state_postload )
 	set_pixel_function();
 }
 
+#endif
 
 /***************************************************************************
     HOST INTERFACE WRITES
 ***************************************************************************/
 
-void tms34010_host_w(int cpunum, int reg, int data)
+void tms34010_host_w(INT32 reg, UINT16 data)
 {
 	unsigned int addr;
-
-	/* swap to the target cpu */
-	cpuintrf_push_context(cpunum);
 
 	switch (reg)
 	{
@@ -1697,21 +1706,17 @@ void tms34010_host_w(int cpunum, int reg, int data)
 
 		/* control register */
 		case TMS34010_HOST_CONTROL:
-			external_host_access = TRUE;
+			state.external_host_access = 1;
 			tms34010_io_register_w(REG_HSTCTLH, data & 0xff00);
 			tms34010_io_register_w(REG_HSTCTLL, data & 0x00ff);
-			external_host_access = FALSE;
+			state.external_host_access = 0;
 			break;
 
 		/* error case */
 		default:
-			logerror("tms34010_host_control_w called on invalid register %d\n", reg);
+			//logerror("tms34010_host_control_w called on invalid register %d\n", reg);
 			break;
 	}
-
-	/* swap back */
-	cpuintrf_pop_context();
-	activecpu_reset_banking();
 }
 
 
@@ -1720,13 +1725,10 @@ void tms34010_host_w(int cpunum, int reg, int data)
     HOST INTERFACE READS
 ***************************************************************************/
 
-int tms34010_host_r(int cpunum, int reg)
+UINT16 tms34010_host_r(INT32 reg)
 {
 	unsigned int addr;
 	int result = 0;
-
-	/* swap to the target cpu */
-	cpuintrf_push_context(cpunum);
 
 	switch (reg)
 	{
@@ -1764,18 +1766,14 @@ int tms34010_host_r(int cpunum, int reg)
 
 		/* error case */
 		default:
-			logerror("tms34010_host_control_r called on invalid register %d\n", reg);
+			//logerror("tms34010_host_control_r called on invalid register %d\n", reg);
 			break;
 	}
-
-	/* swap back */
-	cpuintrf_pop_context();
-	activecpu_reset_banking();
 
 	return result;
 }
 
-
+#if 0
 
 /**************************************************************************
  * Generic set_info

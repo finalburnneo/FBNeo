@@ -104,7 +104,8 @@ void TMS34010Init()
 	TMS34010SetToShift(default_shift_op);
 	TMS34010SetFromShift(default_shift_op);
 
-    // map IO registers
+	// map IO registers
+	TMS34010MapReset();
     TMS34010SetHandlers(MAXHANDLER-1, IO_read, IO_write);
 	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
 
@@ -137,12 +138,22 @@ void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock)
 	tms34010_set_pixclock(pxlclock, pix_per_clock);
 }
 
-int TMS34010Run(int cycles)
+void TMS34010SetOutputINT(void (*output_int_func)(INT32))
+{
+	tms34010_set_output_int(output_int_func);
+}
+
+void TMS34010SetHaltOnReset(INT32 onoff)
+{
+	tms34010_set_halt_on_reset(onoff);
+}
+
+INT32 TMS34010Run(INT32 cycles)
 {
     return tms34010_run(cycles);
 }
 
-int TMS34010Idle(int cycles)
+INT32 TMS34010Idle(INT32 cycles)
 {
     return tms34010_idle(cycles);
 }
@@ -152,7 +163,7 @@ void TMS34010TimerSetCB(void (*timer_cb)())
 	tms34010_timer_set_cb(timer_cb);
 }
 
-void TMS34010TimerSet(int cycles)
+void TMS34010TimerSet(INT32 cycles)
 {
 	tms34010_timer_arm(cycles);
 }
@@ -222,10 +233,20 @@ void TMS34010SetFromShift(void (*writer)(UINT32 addr, UINT16 *src))
     tms34010_set_fromshift(writer);
 }
 
-int TMS34010GenerateScanline(int line)
+INT32 TMS34010GenerateScanline(INT32 line)
 {
 	tms34010_generate_scanline(line, scanlineRenderCallback);
 	return 0;
+}
+
+void TMS34010HostWrite(INT32 reg, UINT16 data)
+{
+	tms34010_host_w(reg, data);
+}
+
+UINT16 TMS34010HostRead(INT32 reg)
+{
+	return tms34010_host_r(reg);
 }
 
 UINT8 TMS34010ReadByte(UINT32 address)

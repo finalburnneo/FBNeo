@@ -2083,7 +2083,8 @@ static void blmove(void)
 			src += 0x10;
 			dst += 0x10;
 			bits -= 0x10;
-			tms34010_ICount -= 2;
+			//tms34010_ICount -= 2;
+			COUNT_CYCLES(2);
 		}
 		if (bits != 0 && tms34010_ICount > 0)
 		{
@@ -2091,7 +2092,8 @@ static void blmove(void)
 			dst += bits;
 			src += bits;
 			bits = 0;
-			tms34010_ICount -= 2;
+			//tms34010_ICount -= 2;
+			COUNT_CYCLES(2);
 		}
 	}
 

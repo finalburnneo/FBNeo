@@ -804,8 +804,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-int fucktrumpscanline = 0;
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {

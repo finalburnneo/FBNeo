@@ -61,6 +61,7 @@ typedef struct _tms34010_display_params tms34010_display_params;
 struct _tms34010_display_params
 {
 	UINT16	vcount;								/* most recent VCOUNT */
+	UINT16	vtotal, htotal;
 	UINT16	veblnk, vsblnk;						/* start/end of VBLANK */
 	UINT16	heblnk, hsblnk;						/* start/end of HBLANK */
 	UINT16	rowaddr, coladdr;					/* row/column addresses */
@@ -76,8 +77,8 @@ struct _tms34010_config
 {
 	UINT8	halt_on_reset;						/* /HCS pin, which determines HALT state after reset */
 	UINT32	pixclock;							/* the pixel clock (0 means don't adjust screen size) */
-	int		pixperclock;						/* pixels per clock */
-	void	(*output_int)(int state);			/* output interrupt callback */
+	INT32	pixperclock;						/* pixels per clock */
+	void	(*output_int)(INT32 state);			/* output interrupt callback */
 	void	(*to_shiftreg)(UINT32, UINT16 *);	/* shift register write */
 	void	(*from_shiftreg)(UINT32, UINT16 *);	/* shift register read */
 };
@@ -94,6 +95,9 @@ void tms34010_init();
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *));
 void tms34010_set_fromshift(void (*from_shiftreg)(UINT32, UINT16 *));
 void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock);
+void tms34010_set_output_int(void (*oi_func)(INT32));
+void tms34010_set_halt_on_reset(INT32 onoff);
+
 void tms34010_exit();
 void tms34010_reset();
 void tms34020_reset();
@@ -110,51 +114,19 @@ UINT32 tms34010_get_pc();
 void tms34010_timer_set_cb(void (*t_cb)());
 void tms34010_timer_arm(int cycle);
 
-
-
-#if 0
-VIDEO_UPDATE( tms340x0 );
-
-void tms34010_get_info(UINT32 state, cpuinfo *info);
-
-int 		tms34010_io_display_blanked(int cpu);
-int 		tms34010_get_DPYSTRT(int cpu);
-
-
-/* PUBLIC FUNCTIONS - 34020 */
-void tms34020_get_info(UINT32 state, cpuinfo *info);
-
-int 		tms34020_io_display_blanked(int cpu);
-int 		tms34020_get_DPYSTRT(int cpu);
-#endif
-
-
 /* Host control interface */
 #define TMS34010_HOST_ADDRESS_L		0
 #define TMS34010_HOST_ADDRESS_H		1
 #define TMS34010_HOST_DATA			2
 #define TMS34010_HOST_CONTROL		3
 
-#if 0
-void		tms34010_host_w(int reg, int data);
-int			tms34010_host_r(int reg);
+void tms34010_host_w(INT32 reg, UINT16 data);
+UINT16 tms34010_host_r(INT32 reg);
 
-
-/* Reads & writes to the 34010 I/O registers; place at 0xc0000000 */
-WRITE16_HANDLER( tms34010_io_register_w );
-READ16_HANDLER( tms34010_io_register_r );
-
-/* Reads & writes to the 34020 I/O registers; place at 0xc0000000 */
-WRITE16_HANDLER( tms34020_io_register_w );
-READ16_HANDLER( tms34020_io_register_r );
-#endif
 
 /* Use this macro in the memory definitions to specify bit-based addresses */
 #define TOBYTE(bitaddr) ((offs_t)(bitaddr) >> 3)
 #define TOWORD(bitaddr) ((offs_t)(bitaddr) >> 4)
 
-
-//offs_t tms34010_dasm(char *buffer, offs_t pc, const UINT8 *oprom, const UINT8 *opram);
-//offs_t tms34020_dasm(char *buffer, offs_t pc, const UINT8 *oprom, const UINT8 *opram);
 
 #endif /* __TMS34010_H__ */

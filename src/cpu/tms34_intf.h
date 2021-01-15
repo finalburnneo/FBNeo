@@ -16,10 +16,10 @@ typedef scanline_render_t pTMS34010ScanlineRender;
 void TMS34010Init();
 void TMS34020Init();
 void TMS34010Exit();
-int TMS34010Run(int cycles);
-int TMS34010Idle(int cycles);
+INT32 TMS34010Run(INT32 cycles);
+INT32 TMS34010Idle(INT32 cycles);
 void TMS34010TimerSetCB(void (*timer_cb)());
-void TMS34010TimerSet(int cycles);
+void TMS34010TimerSet(INT32 cycles);
 INT64 TMS34010TotalCycles();
 void TMS34010Scan(INT32 nAction);
 void TMS34010RunEnd();
@@ -31,7 +31,10 @@ void TMS34010SetScanlineRender(pTMS34010ScanlineRender sr);
 void TMS34010SetToShift(void (*SL)(UINT32 addr, UINT16 *dst));
 void TMS34010SetFromShift(void (*FS)(UINT32 addr, UINT16 *src));
 void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock);
-int TMS34010GenerateScanline(int line);
+void TMS34010SetOutputINT(void (*output_int_func)(INT32));
+void TMS34010SetHaltOnReset(INT32 onoff);
+
+INT32 TMS34010GenerateScanline(INT32 line);
 UINT32 TMS34010GetPC();
 UINT32 TMS34010GetPPC();
 
@@ -46,5 +49,16 @@ int TMS34010SetReadHandler(UINT32 num, pTMS34010ReadHandler handler);
 int TMS34010SetWriteHandler(UINT32 num, pTMS34010WriteHandler handler);
 int TMS34010SetHandlers(UINT32 num, pTMS34010ReadHandler rhandler, pTMS34010WriteHandler whandler);
 
+// Host control interface
+/*
+register defines: (from tms34/tms34010.h)
+ TMS34010_HOST_ADDRESS_L		0
+ TMS34010_HOST_ADDRESS_H		1
+ TMS34010_HOST_DATA				2
+ TMS34010_HOST_CONTROL			3
+*/
+
+void TMS34010HostWrite(INT32 reg, UINT16 data);
+UINT16 TMS34010HostRead(INT32 reg);
 
 #endif // TMS34010_INTF_H

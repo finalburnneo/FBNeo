@@ -20909,3 +20909,79 @@ struct BurnDriver BurnSpecVerysheepyxmas = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Dark Redux, The
+
+static struct BurnRomInfo SpecDarkreduxRomDesc[] = {
+	{ "Dark Redux, The (2021)(Zosya Entertainment).tap", 46873, 0x34f3deef, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDarkredux, SpecDarkredux, Spec128)
+STD_ROM_FN(SpecDarkredux)
+
+struct BurnDriver BurnSpecDarkredux = {
+	"spec_darkredux", NULL, "spec_spec128", NULL, "2021",
+	"Dark Redux, The\0", NULL, "Zosya Entertainment", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDarkreduxRomInfo, SpecDarkreduxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Krpat
+
+static struct BurnRomInfo SpecKrpatRomDesc[] = {
+	{ "Krpat (2020)(Bizard).tap", 28477, 0xd4b9f078, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKrpat, SpecKrpat, Spec128)
+STD_ROM_FN(SpecKrpat)
+
+struct BurnDriver BurnSpecKrpat = {
+	"spec_krpat", NULL, "spec_spec128", NULL, "2020",
+	"Krpat\0", NULL, "Bizard", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecKrpatRomInfo, SpecKrpatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Red Raid - The Sinking, Side A
+
+static struct BurnRomInfo SpecRedraidsinking1RomDesc[] = {
+	{ "Red Raid - The Sinking, Side A (2020)(ZXBitles).tap", 47159, 0x5738cae9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRedraidsinking1, SpecRedraidsinking1, Spec128)
+STD_ROM_FN(SpecRedraidsinking1)
+
+struct BurnDriver BurnSpecRedraidsinking1 = {
+	"spec_redraidsinking1", NULL, "spec_spec128", NULL, "2020",
+	"Red Raid - The Sinking, Side A\0", NULL, "ZXBitles", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecRedraidsinking1RomInfo, SpecRedraidsinking1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Red Raid - The Sinking, Side B
+
+static struct BurnRomInfo SpecRedraidsinking2RomDesc[] = {
+	{ "Red Raid - The Sinking, Side B (2020)(ZXBitles).tap", 47338, 0xc364362c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRedraidsinking2, SpecRedraidsinking2, Spec128)
+STD_ROM_FN(SpecRedraidsinking2)
+
+struct BurnDriver BurnSpecRedraidsinking2 = {
+	"spec_redraidsinking2", NULL, "spec_spec128", NULL, "2020",
+	"Red Raid - The Sinking, Side B\0", NULL, "ZXBitles", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecRedraidsinking2RomInfo, SpecRedraidsinking2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

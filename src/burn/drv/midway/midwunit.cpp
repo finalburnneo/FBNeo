@@ -1,15 +1,5 @@
 // midway wolf unit
 
-// bugs due to tms34010:
-//  1: wwfmania crashes shortly after booting.  missing raster ops in tms34010?
-//  2: openice goes bonkers on game start, cpu players wont move
-//     plus writes garbage to cmos
-//  3: nbahangt, missing video objects
-//
-// easy:
-//  4: figure out why last line doesn't always render in rampgwt
-//    3: answer, screen is offset by -1 line
-
 #include "tiles_generic.h"
 #include "midwunit.h"
 #include "midwayic.h"
@@ -321,6 +311,17 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	if (!pBurnDraw)
 		return 0;
 
+#if 0
+	if (line == 0x15) {
+		bprintf(0, _T("ENAB %d\n"), info->enabled);
+		bprintf(0, _T("he %d\n"), info->heblnk);
+		bprintf(0, _T("hs %d\n"), info->hsblnk);
+		bprintf(0, _T("ve %d\n"), info->veblnk);
+		bprintf(0, _T("vs %d\n"), info->vsblnk);
+		bprintf(0, _T("vt %d\n"), info->vtotal);
+		bprintf(0, _T("ht %d\n"), info->htotal);
+	}
+#endif
 	line -= 0x14; // offset
 
 	INT32 nHeight = nScreenHeight;
@@ -527,6 +528,7 @@ INT32 WolfUnitFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
+		CPU_RUN(0, TMS34010); // finish line incase dma op ended line early
 
 		TMS34010GenerateScanline(i);
 

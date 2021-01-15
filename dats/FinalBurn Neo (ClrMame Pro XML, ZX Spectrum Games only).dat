@@ -2208,6 +2208,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="darkredux" romof="spec128">
+		<description>Dark Redux, The</description>
+		<year>2021</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Dark Redux, The (2021)(Zosya Entertainment).tap" size="46873" crc="34f3deef"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="darkstar" romof="spec128">
 		<description>Dark Star</description>
 		<year>1984</year>
@@ -4401,6 +4410,15 @@
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<driver status="good"/>
 	</game>
+	<game name="krpat" romof="spec128">
+		<description>Krpat</description>
+		<year>2020</year>
+		<manufacturer>Bizard</manufacturer>
+		<rom name="Krpat (2020)(Bizard).tap" size="28477" crc="d4b9f078"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="kungfum" romof="spectrum">
 		<description>Kung-Fu Master (48K)</description>
 		<year>1986</year>
@@ -6249,6 +6267,24 @@
 		<year>2020</year>
 		<manufacturer>ZXBitles</manufacturer>
 		<rom name="Red Raid - The Beginning, Side B (2020)(ZXBitles).tap" size="47521" crc="d534f9c0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="redraidsinking1" romof="spec128">
+		<description>Red Raid - The Sinking, Side A</description>
+		<year>2020</year>
+		<manufacturer>ZXBitles</manufacturer>
+		<rom name="Red Raid - The Sinking, Side A (2020)(ZXBitles).tap" size="47159" crc="5738cae9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="redraidsinking2" romof="spec128">
+		<description>Red Raid - The Sinking, Side B</description>
+		<year>2020</year>
+		<manufacturer>ZXBitles</manufacturer>
+		<rom name="Red Raid - The Sinking, Side B (2020)(ZXBitles).tap" size="47338" crc="c364362c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

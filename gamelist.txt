@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15933 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15963 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1948,6 +1948,7 @@ This list contains all games supported by FinalBurn Neo.
 | candance	|  	| Cannon Dancer (Japan)					| osman		| 1996	| Mitchell (Atlu| Simple 156	| 					|
 | msx_cannonfgt	|  	| Cannon Fighter					| 		| 1984	| Policy	| MSX		| 					|
 | md_cfodder	|  	| Cannon Fodder (Euro)					| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
+| md_cfodders	|  	| Cannon Fodder (Hack, Spanish)				| md_cfodder	| 2019	| Virgin Interac| Sega Megadrive| 					|
 | msx_cannont	|  	| Cannon Turbo (Jpn)					| 		| 198?	| Brother Kougyo| MSX		| 					|
 | md_canon	|  	| Canon - Legend of the New Gods (HB)			| 		| 2015	| Piko Interacti| Sega Megadrive| 					|
 | canvas	|  	| Canvas Croquis					| 		| 1985	| SNK		| Miscellaneous	| 					|
@@ -3005,6 +3006,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_darkcasts	|  	| Dark Castle (Hack, Spanish)				| md_darkcast	| 2019	| Electronic Art| Sega Megadrive| 					|
 | spec_darkfusion|  	| Dark Fusion						| 		| 1988	| Gremlin Graphi| ZX Spectrum	| 					|
 | darkplnt	|  	| Dark Planet						| 		| 1982	| Stern		| Galaxian	| 					|
+| spec_darkredux|  	| Dark Redux, The					| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
 | darksealj	|  	| Dark Seal (Japan)					| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal1	|  	| Dark Seal (World revision 1)				| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
 | darkseal	|  	| Dark Seal (World revision 3)				| 		| 1990	| Data East Corp| DECO IC16	| 					|
@@ -4076,6 +4078,7 @@ This list contains all games supported by FinalBurn Neo.
 | twcup90b1	|  	| Euro League (Italian hack of Tecmo World Cup '90)	| twcup90	| 1989	| bootleg	| Miscellaneous	| 					|
 | md_eurosens	|  	| Europa Sensen (Jpn)					| md_opeurope	| 1993	| Koei		| Sega Megadrive| 					|
 | md_euroclub	|  	| European Club Soccer (Euro)				| 		| 1992	| Virgin Games	| Sega Megadrive| 					|
+| md_euroclubs	|  	| European Club Soccer (Hack, Spanish)			| md_euroclub	| 2018	| Published	| Sega Megadrive| 					|
 | gg_evander	|  	| Evander Holyfield Boxing (Euro, USA)			| 		| 1992	| Sega		| Sega Game Gear| 					|
 | md_evander	|  	| Evander Holyfield's 'Real Deal' Boxing (World)	| 		| 1992	| Sega		| Sega Megadrive| 					|
 | evilston	|  	| Evil Stone						| 		| 1990	| Spacy Industri| Taito L System| 					|
@@ -4560,6 +4563,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_flappybird|  	| Flappy Bird (HB)					| 		| 2014	| Nioreh	| Miscellaneous	| 					|
 | cfboy0a1	|  	| Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/S| 		| 1981	| Data East Corp| Cassette Syste| 					|
 | msx_flashgor	|  	| Flash Gordon (Euro)					| 		| 1987	| Mastertronic A| MSX		| 					|
+| md_flashps	|  	| Flash Point (Hack, Spanish) ( Prototype)		| md_flashp	| 2019	| Sega		| Sega Megadrive| 					|
 | fpointbj	|  	| Flash Point (Japan, bootleg)				| fpoint	| 1989	| bootleg	| System 16B	| 					|
 | md_flashp	|  	| Flash Point (Jpn, Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | fpoint1d	|  	| Flash Point (set 1, Japan, FD1094 317-0127A decrypted)| fpoint	| 1989	| Sega		| System 16B	| 					|
@@ -4754,6 +4758,7 @@ This list contains all games supported by FinalBurn Neo.
 | fullthrl	|  	| Full Throttle (Japan)					| topspeed	| 1987	| Taito Corporat| Taito Misc	| 					|
 | md_funngame	|  	| Fun 'N Games (Euro)					| 		| 1993	| Sony Imagesoft| Sega Megadrive| 					|
 | md_funngameu	|  	| Fun 'N' Games (USA)					| md_funngame	| 1993	| Tradewest	| Sega Megadrive| 					|
+| md_funcars	|  	| Fun Car Rally (Hack, Spanish) (Prototype)		| md_funcar	| 2019	| Published	| Sega Megadrive| 					|
 | md_funcar	|  	| Fun Car Rally (USA, Prototype)			| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_funhouse	|  	| Fun House (USA)					| 		| 1991	| Hi Tech Expres| Miscellaneous	| 					|
 | funcube2	| D NW	| Funcube 2 (v1.1)					| 		| 2001	| Namco		| Newer Seta	| Unemulated Sub CPU			|
@@ -6918,6 +6923,7 @@ This list contains all games supported by FinalBurn Neo.
 | krzybowl	|  	| Krazy Bowl						| 		| 1994	| American Sammy| Seta		| 					|
 | nes_krazykreatures|  	| Krazy Kreatures (USA) (Unl)				| 		| 1990	| AVE		| Miscellaneous	| 					|
 | nes_krioncon	|  	| Krion Conquest, The (USA)				| 		| 1991	| Vic Tokai	| Miscellaneous	| 					|
+| spec_krpat	|  	| Krpat							| 		| 2020	| Bizard	| ZX Spectrum	| 					|
 | krull		|  	| Krull							| 		| 1983	| Gottlieb	| Miscellaneous	| 					|
 | sms_krustyfh	|  	| Krusty's Fun House (Euro, Bra)			| 		| 1992	| Flying Edge	| Sega Master Sy| 					|
 | gg_krustyfh	|  	| Krusty's Fun House (Euro, USA)			| 		| 1992	| Flying Edge	| Sega Game Gear| 					|
@@ -7116,6 +7122,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_legenkag	|  	| Legend of Kage, The (USA)				| 		| 1987	| Taito		| Miscellaneous	| 					|
 | lomakai	|  	| Legend of Makai (World)				| 		| 1988	| Jaleco	| Mega System 1	| 					|
 | legendos	|  	| Legend of Success Joe / Ashitano Joe Densetsu		| 		| 1991	| SNK / WAVE	| Neo Geo MVS	| 					|
+| md_wukonge	|  	| Legend Of Wukong (Hack, English) (SRAM Patched)	| md_wukong	| 2008	| Published	| Sega Megadrive| 					|
+| md_wukongs	|  	| Legend Of Wukong (Hack, Spanish) (SRAM Patched)	| md_wukong	| 2017	| Super Fighter | Sega Megadrive| 					|
 | nes_triforcegc|  	| Legend of Zelda - Triforce of the Gods (China)	| nes_triforceg	| 1989?	| Waixing	| Miscellaneous	| 					|
 | nes_triforceg	|  	| Legend of Zelda - Triforce of the Gods (T-Eng)	| 		| 1989?	| Waixing	| Miscellaneous	| 					|
 | nes_legenzeldx|  	| Legend of Zelda DX, The (HB)				| nes_legenzel	| 2014	| pacnsacdave	| Miscellaneous	| 					|
@@ -7775,6 +7783,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_megaswiv	|  	| Mega SWIV (Euro)					| 		| 1994	| Time Warner In| Sega Megadrive| 					|
 | md_megaswivb	|  	| Mega SWIV (Euro, Pirate)				| md_megaswiv	| 1994	| Time Warner In| Sega Megadrive| 					|
 | md_megaswivci	|  	| Mega SWIV (Hack, Color Improvement v1.05)		| md_megaswiv	| 2016	| Time Warner In| Sega Megadrive| 					|
+| md_megaswivs	|  	| Mega SWIV (Hack, Spanish)				| md_megaswiv	| 2019	| Time Warner In| Sega Megadrive| 					|
 | md_megaturr	|  	| Mega Turrican (Euro)					| 		| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | md_megaturrs	|  	| Mega Turrican (Hack, Spanish)				| md_megaturr	| 2019	| Data East	| Sega Megadrive| 					|
 | md_megaturru	|  	| Mega Turrican (USA)					| md_megaturr	| 1994	| Data East	| Sega Megadrive| 					|
@@ -9957,6 +9966,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ppersiau	|  	| Prince of Persia (USA, SMS Mode)			| gg_ppersia	| 1992	| Domark	| Sega Game Gear| 					|
 | md_ppersia2r	|  	| Prince of Persia 2 - Remastered Edition (Hack, v1.5)	| md_ppersia2	| 2019	| Linkuei	| Sega Megadrive| 					|
 | md_ppersia2	|  	| Prince of Persia 2 - The Shadow and the Flame (Euro, P| 		| 1995	| Psygnosis	| Sega Megadrive| 					|
+| md_ppersia2s	|  	| Prince of Persia 2 - The Shadow and the Flame (Hack, S| md_ppersia2	| 2017	| Psygnosis	| Sega Megadrive| 					|
 | cv_pquest	|  	| Princess Quest (HB)					| 		| 2012	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | msx_princessquest|  	| Princess Quest (HB)					| 		| 2012	| Oscar Toledo G| MSX		| 					|
 | nes_princtominsalkij|  	| Princess Tomato in Salad Kingdom (Japan)		| nes_princtominsalki| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -10527,6 +10537,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_redplanet|  	| Red Planet (HB)					| 		| 2015	| salvakantero	| ZX Spectrum	| 					|
 | spec_redraidside1|  	| Red Raid - The Beginning (Side A)			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
 | spec_redraidside2|  	| Red Raid - The Beginning (Side B)			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
+| spec_redraidsinking1|  	| Red Raid - The Sinking, Side A			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
+| spec_redraidsinking2|  	| Red Raid - The Sinking, Side B			| 		| 2020	| ZXBitles	| ZX Spectrum	| 					|
 | redrobin	|  	| Red Robin						| 		| 1986	| Elettronolo	| Miscellaneous	| 					|
 | md_redzone	|  	| Red Zone (Euro, USA)					| 		| 1994	| Time Warner In| Sega Megadrive| 					|
 | msx_redzone	|  	| Red Zone (Jpn)					| 		| 1985	| ASCII		| MSX		| 					|
@@ -15113,6 +15125,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_warroom	|  	| War Room						| 		| 1983	| Probe 2000	| ColecoVision	| 					|
 | warzardr1	|  	| War-Zard / Red Earth (Japan 961023)			| redearth	| 1996	| Capcom	| CPS-3		| 					|
 | warzard	|  	| War-Zard / Red Earth (Japan 961121)			| redearth	| 1996	| Capcom	| CPS-3		| 					|
+| md_wardners	|  	| Wardner (Hack, Spanish)				| md_wardner	| 2018	| Mentrix Softwa| Sega Megadrive| 					|
 | md_wardner	|  	| Wardner (USA)						| 		| 1991	| Mentrix Softwa| Sega Megadrive| 					|
 | wardner	|  	| Wardner (World)					| 		| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | fds_wardnernomori|  	| Wardner no Mori (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -15121,6 +15134,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_wario3	|  	| Wario Land 3 (Rus)					| md_puggsy	| 199?	| Glorysun	| Sega Megadrive| 					|
 | nes_warioswoods|  	| Wario's Woods (USA)					| 		| 1994	| Nintendo	| Miscellaneous	| 					|
 | md_warlock	|  	| Warlock (Euro, USA)					| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
+| md_warlocks	|  	| Warlock (Hack, Spanish)				| md_warlock	| 2019	| Acclaim	| Sega Megadrive| 					|
 | md_warlockp	|  	| Warlock (USA, Prototype)				| md_warlock	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | msx_warpwarp	|  	| Warp & Warp (Jpn)					| 		| 1984	| Namcot	| MSX		| 					|
 | warpwarp	|  	| Warp & Warp						| 		| 1981	| Namco		| Miscellaneous	| 					|
@@ -15140,6 +15154,7 @@ This list contains all games supported by FinalBurn Neo.
 | woffr		| X	| Warriors of Fate (French Translation)			| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | msx_warroid	|  	| Warroid (Jpn)						| 		| 1985	| ASCII		| MSX		| 					|
 | msx_warroida	|  	| Warroid (Jpn, Alt)					| msx_warroid	| 1985	| ASCII		| MSX		| 					|
+| md_warsongs	|  	| Warsong (Hack, Spanish)				| md_warsong	| 2017	| Published	| Sega Megadrive| 					|
 | md_warsong	|  	| Warsong (USA)						| 		| 1991	| Treco		| Sega Megadrive| 					|
 | watrball	|  	| Water Balls						| 		| 1996	| ABM		| Miscellaneous	| 					|
 | msx_waterdrv	|  	| Water Driver (Jpn)					| 		| 1984	| Colpax?	| MSX		| 					|
@@ -15188,6 +15203,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_carmntim	|  	| Where in Time Is Carmen Sandiego? (Euro, USA)		| 		| 1992	| Electronic Art| Sega Megadrive| 					|
 | spec_wheretimestoodstill|  	| Where Time Stood Still			| 		| 1988	| Ocean		| ZX Spectrum	| 					|
 | nes_whereswaldo|  	| Where's Waldo (USA)					| 		| 1991	| THQ		| Miscellaneous	| 					|
+| md_whiprushs	|  	| Whip Rush (Hack, Spanish)				| md_whiprush	| 2020	| Sega		| Sega Megadrive| 					|
 | md_whiprush	|  	| Whip Rush (USA)					| 		| 1990	| Renovation	| Sega Megadrive| 					|
 | md_whiprushj	|  	| Whip Rush - Wakusei Voltegas no Nazo (Jpn)		| md_whiprush	| 1990	| Sega		| Sega Megadrive| 					|
 | spec_whiteheat|  	| White Heat						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
@@ -15227,6 +15243,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_wimbled	|  	| Wimbledon (Euro)					| 		| 1992	| Sega		| Sega Master Sy| 					|
 | gg_wimbled	|  	| Wimbledon (World)					| 		| 1992	| Sega		| Sega Game Gear| 					|
 | md_wimbled	|  	| Wimbledon Championship Tennis (Euro)			| 		| 1994	| Sega		| Sega Megadrive| 					|
+| md_wimbleds	|  	| Wimbledon Championship Tennis (Hack, Spanish)		| md_wimbled	| 2019	| Sega		| Sega Megadrive| 					|
 | md_wimbledj	|  	| Wimbledon Championship Tennis (Jpn)			| md_wimbled	| 1994	| Sega		| Sega Megadrive| 					|
 | md_wimbledu	|  	| Wimbledon Championship Tennis (USA)			| md_wimbled	| 1993	| Sega		| Sega Megadrive| 					|
 | md_wimbledup	|  	| Wimbledon Championship Tennis (USA, Prototype)	| md_wimbled	| 1993	| Sega		| Sega Megadrive| 					|
@@ -15269,6 +15286,7 @@ This list contains all games supported by FinalBurn Neo.
 | wizwarz	|  	| Wiz Warz (prototype)					| 		| 1984	| Mylstar	| Miscellaneous	| 					|
 | md_wiznlizu	|  	| Wiz'n'Liz (USA)					| md_wiznliz	| 1993	| Psygnosis	| Sega Megadrive| 					|
 | md_wiznliz	|  	| Wiz'n'Liz - The Frantic Wabbit Wescue (Euro)		| 		| 1993	| Psygnosis	| Sega Megadrive| 					|
+| md_wiznlizs	|  	| Wiz'n'Liz - The Frantic Wabbit Wescue (Hack, Spanish)	| md_wiznliz	| 2020	| Psysgnosis	| Sega Megadrive| 					|
 | wizdfire	|  	| Wizard Fire (Over Sea v2.1)				| 		| 1992	| Data East Corp| DECO IC16	| 					|
 | wizdfireu	|  	| Wizard Fire (US v1.1)					| wizdfire	| 1992	| Data East Corp| DECO IC16	| 					|
 | cv_wizmath	|  	| Wizard of Id's Wizmath				| 		| 1984	| Sierra On-Line| ColecoVision	| 					|
@@ -15287,6 +15305,7 @@ This list contains all games supported by FinalBurn Neo.
 | wolffang	|  	| Wolf Fang -Kuhga 2001- (Japan)			| rohga		| 1991	| Data East Corp| DECO IC16	| 					|
 | gg_wolfchld	|  	| Wolfchild (Euro)					| 		| 1993	| Virgin Interac| Sega Game Gear| 					|
 | sms_wolfchld	|  	| Wolfchild (Euro, Bra)					| 		| 1993	| Virgin Interac| Sega Master Sy| 					|
+| md_wolfchlds	|  	| Wolfchild (Hack,Spanish)				| md_wolfchld	| 2018	| Published	| Sega Megadrive| 					|
 | md_wolfchld	|  	| Wolfchild (USA)					| 		| 1993	| JVC Musical In| Sega Megadrive| 					|
 | md_wolfstn3d	|  	| Wolfenstein 3D (HB, fv11 fix)				| 		| 2015	| gasega68k	| Sega Megadrive| 					|
 | nes_wolfling	|  	| Wolfling (HB, v1.4)					| 		| 2018	| Lazy Cow	| Miscellaneous	| 					|
@@ -15314,6 +15333,7 @@ This list contains all games supported by FinalBurn Neo.
 | wb3bbl	| D NW	| Wonder Boy III - Monster Lair (bootleg)		| wb3		| 1988	| bootleg	| System 16B	| 					|
 | md_wboy3	|  	| Wonder Boy III - Monster Lair (Euro) ~ Monster Lair (J| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_wboy3ac	|  	| Wonder Boy III - Monster Lair (Hack, Arcade Colors)	| md_wboy3	| 2020	| Sega -fabio	| Sega Megadrive| 					|
+| md_wboy3s	|  	| Wonder Boy III - Monster Lair (Hack, Spanish)		| md_wboy3	| 2017	| Sega		| Sega Megadrive| 					|
 | wb31d		|  	| Wonder Boy III - Monster Lair (set 1, Japan, System 16| wb3		| 1988	| Sega / Westone| System 16A	| 					|
 | wb31		|  	| Wonder Boy III - Monster Lair (set 1, Japan, System 16| wb3		| 1988	| Sega / Westone| System 16A	| 					|
 | wb32d		|  	| Wonder Boy III - Monster Lair (set 2, Japan, System 16| wb3		| 1988	| Sega / Westone| System 16B	| 					|
@@ -15436,6 +15456,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_worldgpp	|  	| World Grand Prix (USA, Prototype)			| sms_worldgp	| 1986	| Sega		| Sega Master Sy| 					|
 | wh1h		|  	| World Heroes (ALH-005)				| wh1		| 1992	| Alpha Denshi C| Neo Geo MVS	| 					|
 | wh1		|  	| World Heroes (ALM-005)				| 		| 1992	| Alpha Denshi C| Neo Geo MVS	| 					|
+| md_whs	|  	| World Heroes (Hack, Spanish)				| md_wh		| 2020	| Sega		| Sega Megadrive| 					|
 | md_whj	|  	| World Heroes (Jpn)					| md_wh		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_whjp5	|  	| World Heroes (Jpn, Prototype, 19940330)		| md_wh		| 1994	| Sega		| Sega Megadrive| 					|
 | md_whjp4	|  	| World Heroes (Jpn, Prototype, 19940408)		| md_wh		| 1994	| Sega		| Sega Megadrive| 					|
@@ -15467,6 +15488,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_worldilljp1|  	| World of Illusion - Fushigi na Magic Box (Jpn, Prototy| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
 | md_worldilljp2|  	| World of Illusion - Fushigi na Magic Box (Jpn, Prototy| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
 | md_worldill	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| 		| 1992	| Sega		| Sega Megadrive| 					|
+| md_worldills	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| md_worldill	| 2018	| Sega		| Sega Megadrive| 					|
 | md_worldillu	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
 | nes_worldwarc	|  	| World of Warcraft - Demon Hunter (China)		| nes_worldwar	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_worldwar	|  	| World of Warcraft - Demon Hunter (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -15519,6 +15541,7 @@ This list contains all games supported by FinalBurn Neo.
 | ws89		|  	| World Stadium '89 (Japan)				| ws		| 1989	| Namco		| System 1	| 					|
 | ws90		|  	| World Stadium '90 (Japan)				| ws		| 1990	| Namco		| System 1	| 					|
 | ws		|  	| World Stadium (Japan)					| 		| 1988	| Namco		| System 1	| 					|
+| md_worldtss	|  	| World Trophy Soccer (Hack, Spanish)			| md_euroclub	| 2019	|  Virgin Intera| Sega Megadrive| 					|
 | md_worldts	|  	| World Trophy Soccer (USA)				| md_euroclub	| 1992	| Virgin Games	| Sega Megadrive| 					|
 | worldwar	|  	| World Wars (World?)					| 		| 1987	| SNK		| Miscellaneous	| 					|
 | md_worms	|  	| Worms (Euro)						| 		| 1995	| Ocean		| Sega Megadrive| 					|
@@ -15619,6 +15642,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_xmenmojop2	|  	| X-Men - Mojo World (Prototype, 19960628)		| gg_xmenmojo	| 1996	| Sega		| Sega Game Gear| 					|
 | gg_xmenmojop1	|  	| X-Men - Mojo World (Prototype, 19960629)		| gg_xmenmojo	| 1996	| Sega		| Sega Game Gear| 					|
 | md_xmen2	|  	| X-Men 2 - Clone Wars (Euro, USA)			| 		| 1995	| Sega		| Sega Megadrive| 					|
+| md_xmen2s	|  	| X-Men 2 - Clone Wars (Hack, Spanish)			| md_xmen2	| 2017	| Published	| Sega Megadrive| 					|
 | md_xmen2p19	|  	| X-Men 2 - Clone Wars (Prototype, 19940506)		| md_xmen2	| 1994	| Sega		| Sega Megadrive| 					|
 | md_xmen2p18	|  	| X-Men 2 - Clone Wars (Prototype, 19940510)		| md_xmen2	| 1994	| Sega		| Sega Megadrive| 					|
 | md_xmen2p17	|   NW	| X-Men 2 - Clone Wars (Prototype, 19941018)		| md_xmen2	| 1994	| Sega		| Sega Megadrive| 					|
@@ -15664,6 +15688,7 @@ This list contains all games supported by FinalBurn Neo.
 | xsleenaj	|  	| Xain'd Sleena (Japan)					| xsleena	| 1986	| Technos Japan	| Miscellaneous	| 					|
 | xsleena	|  	| Xain'd Sleena (World)					| 		| 1986	| Technos Japan | Miscellaneous	| 					|
 | msx_xanadu	|  	| Xanadu - Dragon Slayer II (Jpn)			| 		| 1987	| Nihon Falcom	| MSX		| 					|
+| md_xdrs	|  	| XDR - X Dazedly Ray (Hack, Spanish)			| md_xdr	| 2019	| UNIPACC	| Sega Megadrive| 					|
 | md_xdr	|  	| XDR - X Dazedly Ray (Jpn)				| 		| 1990	| Unipac	| Sega Megadrive| 					|
 | spec_xecutorremix|  	| Xecutor - Remix					| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | spec_xecutor	|  	| Xecutor						| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
@@ -15672,6 +15697,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_xenon	|  	| Xenon (Spa)						| 		| 1988	| Dro Soft	| MSX		| 					|
 | md_xenon2	|  	| Xenon 2 - Megablast (Euro)				| 		| 1992	| Virgin Games	| Sega Megadrive| 					|
 | md_xenon2ac	|  	| Xenon 2 - Megablast (Hack, Amiga Colors)		| md_xenon2	| 2016	| Virgin Games -| Sega Megadrive| 					|
+| md_xenon2s	|  	| Xenon 2 - Megablast (Hack, Spanish)			| md_xenon2	| 2020	| Virgin Interac| Sega Megadrive| 					|
 | sms_xenon2	|  	| Xenon 2 - Megablast (Image Works) (Euro)		| 		| 1991	| Image Works	| Sega Master Sy| 					|
 | sms_xenon2v	|  	| Xenon 2 - Megablast (Virgin) (Euro)			| sms_xenon2	| 1991	| Virgin Interac| Sega Master Sy| 					|
 | nes_xenophobe	|  	| Xenophobe (USA)					| 		| 1988	| Sunsoft	| Miscellaneous	| 					|
@@ -15784,6 +15810,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_yuyumte	|  	| Yu Yu Hakusho - Makyou Toitsusen (Hack, English)	| md_yuyusf	| 2007	| Sega		| Sega Megadrive| 					|
 | md_yuyumt	|  	| Yu Yu Hakusho - Makyou Toitsusen (Jpn)		| md_yuyusf	| 1994	| Sega		| Sega Megadrive| 					|
 | md_yuyusf	|  	| Yu Yu Hakusho - Sunset Fighters (Bra)			| 		| 199?	| Tec Toy	| Sega Megadrive| 					|
+| md_yuyusfs	|  	| Yu Yu Hakusho - Sunset Fighters (Hack, Spanish)	| md_yuyusf	| 2020	| Segfa		| Sega Megadrive| 					|
 | gg_yuyu2	|  	| Yu Yu Hakusho 2 - Gekitou! Nanakyou no Tatakai (Jpn)	| 		| 1994	| Sega		| Sega Game Gear| 					|
 | md_yuyug	|  	| Yu Yu Hakusho Gaiden (Jpn)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | yukiwo	|  	| Yukiwo (World, prototype)				| masterw	| 1989	| Taito Corporat| Taito B System| Imperfect graphics			|
@@ -15852,6 +15879,7 @@ This list contains all games supported by FinalBurn Neo.
 | zeroteamsr	|  	| Zero Team Suicide Revival Kit				| zeroteam	| 1993	| Seibu Kaihatsu| Miscellaneous	| No game code! Black screen normal!	|
 | zeroteam	|  	| Zero Team USA (set 1, US, Fabtek license)		| 		| 1993	| Seibu Kaihatsu| Miscellaneous	| Unemulated protection			|
 | md_zero	|  	| Zero the Kamikaze Squirrel (Euro)			| 		| 1994	| SunSoft	| Sega Megadrive| 					|
+| md_zeros	|  	| Zero the Kamikaze Squirrel (Hack, Spanish)		| md_zero	| 2018	| Sunsoft	| Sega Megadrive| 					|
 | md_zerou	|  	| Zero the Kamikaze Squirrel (USA)			| md_zero	| 1994	| SunSoft	| Sega Megadrive| 					|
 | zerotimed	|  	| Zero Time (Datamat)					| galaxian	| 1979	| bootleg (Datam| Galaxian	| 					|
 | zerotimemc	|  	| Zero Time (Marti Colls)				| galaxian	| 1979	| bootleg (Marti| Galaxian	| 					|
@@ -15862,6 +15890,7 @@ This list contains all games supported by FinalBurn Neo.
 | zerowing	|  	| Zero Wing (2P set)					| 		| 1989	| Toaplan	| Toaplan BCU-2 | 					|
 | zerowingw	|  	| Zero Wing (2P set, Williams license)			| zerowing	| 1989	| Toaplan (Willi| Toaplan BCU-2 | 					|
 | md_zerowing	|  	| Zero Wing (Euro)					| 		| 1991	| Sega		| Sega Megadrive| 					|
+| md_zerowings	|  	| Zero Wing (Hack, Spanish)				| md_zerowing	| 2018	| Sega		| Sega Megadrive| 					|
 | md_zerowingj	|  	| Zero Wing (Jpn)					| md_zerowing	| 1991	| Toaplan	| Sega Megadrive| 					|
 | md_zerowingc	|  	| Zero Wing (T-Chi)					| md_zerowing	| 1991	| Toaplan	| Sega Megadrive| 					|
 | zerozone	|  	| Zero Zone						| 		| 1993	| Comad		| Miscellaneous	| 					|
@@ -15911,6 +15940,7 @@ This list contains all games supported by FinalBurn Neo.
 | zookeep3	|  	| Zoo Keeper (set 3)					| zookeep	| 1982	| Taito America | Miscellaneous	| 					|
 | gg_zool	|  	| Zool (Euro)						| 		| 1994	| Gremlin	| Sega Game Gear| 					|
 | md_zool	|  	| Zool (Euro)						| 		| 1993	| Electronic Art| Sega Megadrive| 					|
+| md_zools	|  	| Zool (Hack, Spanish)					| md_zool	| 2018	| Published	| Sega Megadrive| 					|
 | gg_zoolu	|  	| Zool (USA)						| gg_zool	| 1993	| GameTek	| Sega Game Gear| 					|
 | md_zoolu	|  	| Zool (USA)						| md_zool	| 1993	| GameTek	| Sega Megadrive| 					|
 | sms_zool	|  	| Zool - Ninja of the 'Nth' Dimension (Euro)		| 		| 1993	| Gremlin Intera| Sega Master Sy| 					|

@@ -658,6 +658,16 @@ void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock)
 	default_config.pixperclock = pxl_per_clock;
 }
 
+void tms34010_set_output_int(void (*oi_func)(INT32))
+{
+	default_config.output_int = oi_func;
+}
+
+void tms34010_set_halt_on_reset(INT32 onoff)
+{
+	default_config.halt_on_reset = onoff;
+}
+
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *))
 {
 	default_config.to_shiftreg = to_shiftreg;

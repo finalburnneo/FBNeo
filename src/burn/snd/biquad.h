@@ -1,6 +1,6 @@
 // (also appears in k054539.cpp, d_spectrum.cpp c/o dink)
 // direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
-enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3 };
+enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3, FILT_PEAK = 4, FILT_NOTCH = 5 };
 
 struct BIQ {
 	double a0;
@@ -98,7 +98,66 @@ struct BIQ {
 					}
 				}
 				break;
+			case FILT_PEAK:
+				{
+					if (gain >= 0) {
+						norm = 1 / (1 + 1 / q * k + k * k);
+						a0 = (1 + v / q * k + k * k) * norm;
+						a1 = 2 * (k * k - 1) * norm;
+						a2 = (1 - v / q * k + k * k) * norm;
+						b1 = a1;
+						b2 = (1 - 1 / q * k + k * k) * norm;
+					} else {
+						norm = 1 / (1 + v / q * k + k * k);
+						a0 = (1 + 1 / q * k + k * k) * norm;
+						a1 = 2 * (k * k - 1) * norm;
+						a2 = (1 - 1 / q * k + k * k) * norm;
+						b1 = a1;
+						b2 = (1 - v / q * k + k * k) * norm;
+					}
+				}
+				break;
+			case FILT_NOTCH:
+				{
+					norm = 1 / (1 + k / q + k * k);
+					a0 = (1 + k * k) * norm;
+					a1 = 2 * (k * k - 1) * norm;
+					a2 = a0;
+					b1 = a1;
+					b2 = (1 - k / q + k * k) * norm;
+				}
+				break;
 		}
 	}
 };
 // end biquad filter
+
+struct BIQSTEREO {
+	BIQ L;
+	BIQ R;
+
+	void init(INT32 type, INT32 sample_rate, INT32 freqhz, double q_, double gain) {
+		L.init(type, sample_rate, freqhz, q_, gain);
+		R.init(type, sample_rate, freqhz, q_, gain);
+	}
+
+	void reset() {
+		L.reset();
+		R.reset();
+	}
+
+	void exit() {
+		L.exit();
+		R.exit();
+	}
+
+	void filter_buffer(INT16 *buffer, INT32 buflen) {
+		for (INT32 i = 0; i < buflen; i++) {
+			INT32 idx = i * 2;
+			INT32 l = L.filter(buffer[idx + 0]);
+			INT32 r = R.filter(buffer[idx + 1]);
+			buffer[idx + 0] = BURN_SND_CLIP(l);
+			buffer[idx + 1] = BURN_SND_CLIP(r);
+		}
+	}
+};

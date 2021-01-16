@@ -34,7 +34,7 @@ static struct BurnInputInfo MkInputList[] = {
 
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
-	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
+	{ "Service Mode",	BIT_DIGITAL,	nTServMode + 0,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
@@ -74,7 +74,7 @@ static struct BurnInputInfo Mk2InputList[] = {
 
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
-	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
+	{ "Service Mode",	BIT_DIGITAL,	nTServMode + 0,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
 	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 10, "p1 fire 7" },
 	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 8" },
@@ -127,7 +127,7 @@ static struct BurnInputInfo NbajamInputList[] = {
 
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
-	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
+	{ "Service Mode",	BIT_DIGITAL,	nTServMode + 0,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
 	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
 	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },
@@ -175,7 +175,7 @@ static struct BurnInputInfo JdreddpInputList[] = {
 
 	{ "Reset",			BIT_DIGITAL,	&nTUnitReset,    "reset"     },
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
-	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
+	{ "Service Mode",	BIT_DIGITAL,	nTServMode + 0,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
 	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
 	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },

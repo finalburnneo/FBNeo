@@ -288,15 +288,15 @@ static INT32 res_check()
 		BurnDrvGetVisibleSize(&Width, &Height);
 
 		if (Height != 1080) {
-			vector_rescale((1080*600/900), 1080);
+			vector_rescale((1080*480/640), 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Height != 900) {
-			vector_rescale(600, 900);
+		if (Height != 640) {
+			vector_rescale(480, 640);
 			return 1;
 		}
 	}
@@ -627,7 +627,7 @@ struct BurnDriver BurnDrvQuantum = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, quantumRomInfo, quantumRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	600, 900, 2, 3
+	480, 640, 3, 4
 };
 
 
@@ -660,7 +660,7 @@ struct BurnDriver BurnDrvQuantum1 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, quantum1RomInfo, quantum1RomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	600, 900, 2, 3
+	480, 640, 3, 4
 };
 
 
@@ -693,5 +693,5 @@ struct BurnDriver BurnDrvQuantump = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, quantumpRomInfo, quantumpRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	600, 900, 2, 3
+	480, 640, 3, 4
 };

@@ -29,11 +29,11 @@ struct RomBiosInfo aes_bioses[] = {
 };
 
 struct RomBiosInfo uni_bioses[] = {
-	{"uni-bios_4_0.rom",  0xa7aab458, 0x13, "Universe BIOS ver. 3.3 (free)"  ,  1 },
-	{"uni-bios_3_3.rom",  0x24858466, 0x14, "Universe BIOS ver. 3.3 (free)"  ,  2 },
-	{"uni-bios_3_2.rom",  0xa4e8b9b3, 0x15, "Universe BIOS ver. 3.2 (free)"  ,  3 },
-	{"uni-bios_3_1.rom",  0x0c58093f, 0x16, "Universe BIOS ver. 3.1 (free)"  ,  4 },
-	{"uni-bios_3_0.rom",  0xa97c89a9, 0x17, "Universe BIOS ver. 3.0 (free)"  ,  5 },
+	{"uni-bios_4_0.rom",  0xa7aab458, 0x13, "Universe BIOS ver. 4.0"         ,  1 },
+	{"uni-bios_3_3.rom",  0x24858466, 0x14, "Universe BIOS ver. 3.3"         ,  2 },
+	{"uni-bios_3_2.rom",  0xa4e8b9b3, 0x15, "Universe BIOS ver. 3.2"         ,  3 },
+	{"uni-bios_3_1.rom",  0x0c58093f, 0x16, "Universe BIOS ver. 3.1"         ,  4 },
+	{"uni-bios_3_0.rom",  0xa97c89a9, 0x17, "Universe BIOS ver. 3.0"         ,  5 },
 	{"uni-bios_2_3.rom",  0x27664eb5, 0x18, "Universe BIOS ver. 2.3"         ,  6 },
 	{"uni-bios_2_3o.rom", 0x601720ae, 0x19, "Universe BIOS ver. 2.3 (alt)"   ,  7 },
 	{"uni-bios_2_2.rom",  0x2d50996a, 0x1a, "Universe BIOS ver. 2.2"         ,  8 },

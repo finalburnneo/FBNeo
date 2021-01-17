@@ -1116,7 +1116,7 @@ STD_ROM_FN(Nine44)
 
 static struct BurnRomInfo Nine44uRomDesc[] = {
 	{ "nffu.03",       0x080000, 0x9693cf8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nffu.04",       0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "nffu.05",       0x080000, 0xea813eb7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },

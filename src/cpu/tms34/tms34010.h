@@ -86,10 +86,10 @@ struct _tms34010_config
 
 /* PUBLIC FUNCTIONS - 34010 */
 void tms34010_get_display_params(tms34010_display_params *params);
-void tms34010_io_register_w(INT32 offset, UINT32 data);
-void tms34020_io_register_w(INT32 offset, UINT32 data);
-UINT16 tms34010_io_register_r(INT32 offset);
-UINT16 tms34020_io_register_r(INT32 offset);
+void tms34010_io_register_w(INT32 address, UINT32 data);
+void tms34020_io_register_w(INT32 address, UINT32 data);
+UINT16 tms34010_io_register_r(INT32 address);
+UINT16 tms34020_io_register_r(INT32 address);
 
 void tms34010_init();
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *));

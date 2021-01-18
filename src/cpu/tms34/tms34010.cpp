@@ -699,7 +699,7 @@ void tms34010_reset()
 	/* the first time we are run */
 	state.reset_deferred = state.config->halt_on_reset;
 	if (state.config->halt_on_reset)
-		tms34010_io_register_w(REG_HSTCTLH, 0x8000);
+		tms34010_io_register_w(REG_HSTCTLH << 4, 0x8000);
 
 	state.timer_active = 0;
 	state.timer_cyc = 0;
@@ -979,10 +979,11 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 	vtotal = SMART_IOREG(VTOTAL);
 
 #if 0  // for driver debug -dink
-	if (line==0) {
+	if (line == 1) {
 		bprintf(0, _T("vsblnk %x\n"), vsblnk);
 		bprintf(0, _T("veblnk %x\n"), veblnk);
 		bprintf(0, _T("vtotal %x\n"), vtotal);
+		bprintf(0, _T("enabled: %x  master %x\n"), enabled, master);
 	}
 #endif
 
@@ -1219,10 +1220,11 @@ static const char *const ioreg_name[] =
 	"HCOUNT", "VCOUNT", "DPYADR", "REFCNT"
 };
 
-void tms34010_io_register_w(INT32 offset, UINT32 data)
+void tms34010_io_register_w(INT32 address, UINT32 data)
 {
 	int oldreg, newreg;
-	offset = (offset >> 4) & 0x1f;
+	INT32 offset = (address >> 4) & 0x1f;
+	//bprintf(0, _T("tms34_io_w  %x  %S -> %x\n"), address, ioreg_name[offset], data);
 
 	/* Set register */
 	oldreg = IOREG(offset);
@@ -1363,11 +1365,11 @@ static const char *const ioreg020_name[] =
 	"IHOST3L", "IHOST3H", "IHOST4L", "IHOST4H"
 };
 
-void tms34020_io_register_w(INT32 offset, UINT32 data)
+void tms34020_io_register_w(INT32 address, UINT32 data)
 {
 	int oldreg, newreg;
 
-	offset = (offset >> 4) & 0x3f;
+	INT32 offset = (address >> 4) & 0x3f;
 
 	/* Set register */
 	oldreg = IOREG(offset);
@@ -1527,11 +1529,12 @@ void tms34020_io_register_w(INT32 offset, UINT32 data)
     I/O REGISTER READS
 ***************************************************************************/
 
-UINT16 tms34010_io_register_r(INT32 offset)
+UINT16 tms34010_io_register_r(INT32 address)
 {
 	int result, total;
+	INT32 offset = (address >> 4) & 0x1f;
 
-	offset = (offset >> 4) & 0x1f;
+	//bprintf(0, _T("tms34_io_r  %x  %S  rv: 0x%X (%d)\n"), offset, ioreg_name[offset], IOREG(offset), IOREG(offset));
 
 	//if (LOG_CONTROL_REGS)
 	//	logerror("CPU#%d@%08X: read %s\n", cpunum, activecpu_get_pc(), ioreg_name[offset]);
@@ -1571,11 +1574,11 @@ UINT16 tms34010_io_register_r(INT32 offset)
 }
 
 
-UINT16 tms34020_io_register_r(INT32 offset)
+UINT16 tms34020_io_register_r(INT32 address)
 {
 	int result, total;
 
-	offset = (offset >> 4) & 0x3f;
+	INT32 offset = (address >> 4) & 0x3f;
 
 	//if (LOG_CONTROL_REGS)
 	//	logerror("CPU#%d@%08X: read %s\n", cpunum, activecpu_get_pc(), ioreg_name[offset]);
@@ -1707,8 +1710,8 @@ void tms34010_host_w(INT32 reg, UINT16 data)
 		/* control register */
 		case TMS34010_HOST_CONTROL:
 			state.external_host_access = 1;
-			tms34010_io_register_w(REG_HSTCTLH, data & 0xff00);
-			tms34010_io_register_w(REG_HSTCTLL, data & 0x00ff);
+			tms34010_io_register_w(REG_HSTCTLH << 4, data & 0xff00);
+			tms34010_io_register_w(REG_HSTCTLL << 4, data & 0x00ff);
 			state.external_host_access = 0;
 			break;
 

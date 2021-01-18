@@ -48,6 +48,8 @@ static void IO_write(UINT32 address, UINT16 value) { tms34010_io_register_w(addr
 static UINT16 IO_read020(UINT32 address) { return tms34020_io_register_r(address); }
 static void IO_write020(UINT32 address, UINT16 value) { tms34020_io_register_w(address, value); }
 
+static void TMS34010MapReset();
+
 // cheat-engine hook-up
 void TMS34010Open(INT32 num)
 {
@@ -314,7 +316,7 @@ void TMS34010WriteROM(UINT32 address, UINT8 value) // for cheat-engine
 	}
 }
 
-void TMS34010MapReset()
+static void TMS34010MapReset()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
         g_mmap.map[page] = NULL;

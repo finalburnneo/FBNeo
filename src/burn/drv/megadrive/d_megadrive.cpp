@@ -42697,6 +42697,24 @@ struct BurnDriver BurnDrvmd_sks3 = {
 
 // -- Homebrew additions below --
 
+// Arkagis Revolution - https://arkagis.itch.io/arkagis-revolution
+static struct BurnRomInfo md_arkagisrRomDesc[] = {
+	{ "Arkagis Revolution (2019)(Sik).bin", 4194304, 0xa9bdc71b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_arkagisr)
+STD_ROM_FN(md_arkagisr)
+
+struct BurnDriver BurnDrvmd_arkagisr = {
+	"md_arkagisr", NULL, NULL, NULL, "2019",
+	"Arkagis Revolution (HB)\0", NULL, "Sik", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_arkagisrRomInfo, md_arkagisrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Uwol Quest for Money (HB)
 static struct BurnRomInfo md_uwolRomDesc[] = {
 	{ "uwol.bin", 0x010000, 0x6fa88172, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

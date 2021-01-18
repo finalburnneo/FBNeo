@@ -410,8 +410,8 @@ void render_obj_sms(INT16 line)
 	UINT8 *cache_ptr;
 
 	INT32 width = 8;
-
-	if (line > 0xff) return;
+	INT32 max = (vdp.extended) ? 256 : 224;
+	if ((line >= max) && (line < 240)) return;
 
 	/* Adjust dimensions for double size sprites */
 	if(vdp.reg[1] & 0x01)

@@ -1018,7 +1018,6 @@ INT32 TUnitInit()
 	nRet = LoadGfxBanks();
 	if (nRet != 0) return 1;
 
-	TMS34010MapReset();
 	TMS34010Init();
 	TMS34010SetPixClock(4000000, 2);
 	TMS34010TimerSetCB(TUnitDmaCallback);

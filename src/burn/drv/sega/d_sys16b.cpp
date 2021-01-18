@@ -4698,7 +4698,7 @@ static struct BurnRomInfo HwchampRomDesc[] = {
 	{ "mpr-11244.a11",  0x20000, 0x4191c03d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-11245.a12",  0x20000, 0xa4d53f7b, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "pls153.bin",     0x000eb, 0x39b47212, BRF_OPT }, // PLD
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4732,7 +4732,7 @@ static struct BurnRomInfo HwchampjRomDesc[] = {
 	
 	{ "317-0046.key",   0x02000, 0x488b3f8b, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 	
-	{ "pls153.bin",     0x000eb, 0x39b47212, BRF_OPT }, // PLD
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4764,7 +4764,7 @@ static struct BurnRomInfo HwchampjdRomDesc[] = {
 	{ "epr-11200.a11",          0x20000, 0x5c41a68a, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11201.a12",          0x20000, 0x9a993120, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "pls153.bin",     		0x000eb, 0x39b47212, BRF_OPT }, // PLD
+	{ "315-5298.b9",     		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 

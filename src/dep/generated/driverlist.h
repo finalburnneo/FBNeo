@@ -649,6 +649,7 @@ DRV		BurnDrvRygarj;
 DRV		BurnDrvArgus;
 DRV		BurnDrvArian;
 DRV		BurnDrvArkarea;
+DRV		BurnDrvmd_arkagisr;
 DRV		BurnSpecarkanoid;
 DRV		BurnDrvarkgcbl;
 DRV		BurnDrvarkanoidjbl;
@@ -2253,6 +2254,7 @@ DRV		BurnDrvCheekyms;
 DRV		BurnDrvgg_cheese;
 DRV		BurnDrvmd_cheese;
 DRV		BurnDrvsms_cheese;
+DRV		BurnDrvCheesech;
 DRV		BurnDrvmd_chelnov;
 DRV		BurnDrvChelnovj;
 DRV		BurnDrvChelnovu;
@@ -2428,6 +2430,7 @@ DRV		BurnDrvCircusc;
 DRV		BurnDrvCircusc2;
 DRV		BurnDrvCircusc3;
 DRV		BurnDrvCircusc4;
+DRV		BurnDrvsg1k_circusc;
 DRV		BurnDrvpce_circusld;
 DRV		BurnDrvCischeat;
 DRV		BurnDrvCitybombj;
@@ -7820,7 +7823,6 @@ DRV		BurnDrvMatrimbh;
 DRV		BurnDrvmatrim;
 DRV		BurnDrvMaxrpm;
 DRV		BurnDrvnes_maxwar;
-DRV		BurnDrvsg1k_circusc;
 DRV		BurnDrvMSX_maxima;
 DRV		BurnDrvMayday;
 DRV		BurnDrvMaydaya;
@@ -10474,6 +10476,7 @@ DRV		BurnDrvgg_rcgp;
 DRV		BurnDrvnes_rcproam;
 DRV		BurnDrvnes_rcproamii;
 DRV		BurnDrvRabbit;
+DRV		BurnDrvRabbitj;
 DRV		BurnDrvRabbitjt;
 DRV		BurnSpecRabbitinn;
 DRV		BurnDrvRpunch;
@@ -12488,6 +12491,9 @@ DRV		BurnDrvmd_renstimup;
 DRV		BurnDrvStinger2;
 DRV		BurnDrvnes_stinger;
 DRV		BurnDrvStinger;
+DRV		BurnDrvStonebal2o;
+DRV		BurnDrvStonebal2;
+DRV		BurnDrvStonebal;
 DRV		BurnDrvcv_stonew;
 DRV		BurnDrvmd_stonprot;
 DRV		BurnDrvStoneage;
@@ -12753,6 +12759,7 @@ DRV		BurnDrvCpsSfz3ar1;
 DRV		BurnDrvCpsSfz3jr1;
 DRV		BurnDrvCpsSfz3a;
 DRV		BurnDrvCpsSfz3j;
+DRV		BurnDrvCpsSfz3te;
 DRV		BurnDrvSftm110;
 DRV		BurnDrvSftm111;
 DRV		BurnDrvSftm;
@@ -14977,6 +14984,8 @@ DRV		BurnDrvsms_ultsoccr;
 DRV		BurnDrvgg_ultsoccr;
 DRV		BurnDrvmd_ultsoccrp;
 DRV		BurnDrvnes_ultimstu;
+DRV		BurnDrvUltennisj;
+DRV		BurnDrvUltennis;
 DRV		BurnDrvmd_uxmen;
 DRV		BurnDrvUballoon;
 DRV		BurnDrvUtoukond;
@@ -16863,6 +16872,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArgus,				// Argus
 	&BurnDrvArian,				// Arian Mission
 	&BurnDrvArkarea,			// Ark Area
+	&BurnDrvmd_arkagisr,		// Arkagis Revolution (HB)
 	&BurnSpecarkanoid,			// Arkanoid (48K)
 	&BurnDrvarkgcbl,			// Arkanoid (bootleg on Block hardware)
 	&BurnDrvarkanoidjbl,		// Arkanoid (bootleg with MCU set 1)
@@ -18467,6 +18477,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_cheese,			// Cheese Cat-astrophe Starring Speedy Gonzales (Euro)
 	&BurnDrvmd_cheese,			// Cheese Cat-Astrophe Starring Speedy Gonzales (Euro)
 	&BurnDrvsms_cheese,			// Cheese Cat-astrophe Starring Speedy Gonzales (Euro, Bra)
+	&BurnDrvCheesech,			// Cheese Chase
 	&BurnDrvmd_chelnov,			// Chelnov (Jpn)
 	&BurnDrvChelnovj,			// Chelnov - Atomic Runner (Japan)
 	&BurnDrvChelnovu,			// Chelnov - Atomic Runner (US)
@@ -18642,6 +18653,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCircusc2,			// Circus Charlie (level select, set 2)
 	&BurnDrvCircusc3,			// Circus Charlie (level select, set 3)
 	&BurnDrvCircusc4,			// Circus Charlie (no level select)
+	&BurnDrvsg1k_circusc,		// Circus Charlie (Tw)
 	&BurnDrvpce_circusld,		// Circus Lido
 	&BurnDrvCischeat,			// Cisco Heat
 	&BurnDrvCitybombj,			// City Bomber (Japan)
@@ -23776,7 +23788,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_mkidwiz,		// Magical Kid Wiz (Jpn)
 	&BurnDrvMSX_mkidwizb,		// Magical Kid Wiz (Jpn, Alt 2)
 	&BurnDrvMSX_mkidwiza,		// Magical Kid Wiz (Jpn, Alt)
-	&BurnDrvsg1k_mkidwiz,		// Magical Kid Wiz (Tw) [Stuck at boot logo?, NOT WORKING]
+	&BurnDrvsg1k_mkidwiz,		// Magical Kid Wiz (Tw)
 	&BurnDrvnes_magickidsdor,	// Magical Kid's Doropie (Japan)
 	&BurnDrvgg_magiclpp,		// Magical Puzzle Popils (World)
 	&BurnDrvMSX_magical,		// Magical Stones (HB)
@@ -24034,7 +24046,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmatrim,				// Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)
 	&BurnDrvMaxrpm,				// Max RPM (ver 2)
 	&BurnDrvnes_maxwar,			// Max Warrior - Wakusei Kaigenrei (Japan)
-	&BurnDrvsg1k_circusc,		// Maxi Tuan ~ Circus Charlie (Tw)
 	&BurnDrvMSX_maxima,			// Maxima (Euro)
 	&BurnDrvMayday,				// Mayday (set 1)
 	&BurnDrvMaydaya,			// Mayday (set 2)
@@ -26688,6 +26699,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_rcproam,		// R.C. Pro-Am (USA) (Rev A)
 	&BurnDrvnes_rcproamii,		// R.C. Pro-Am II (USA)
 	&BurnDrvRabbit,				// Rabbit (Asia 3/6)
+	&BurnDrvRabbitj,			// Rabbit (Japan 3/6?)
 	&BurnDrvRabbitjt,			// Rabbit (Japan, location test)
 	&BurnSpecRabbitinn,			// Rabbit in Nightmareland (HB)
 	&BurnDrvRpunch,				// Rabbit Punch (US)
@@ -28702,6 +28714,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStinger2,			// Stinger (prototype?)
 	&BurnDrvnes_stinger,		// Stinger (USA)
 	&BurnDrvStinger,			// Stinger
+	&BurnDrvStonebal2o,			// Stone Ball (2 Players, v1-20 21/10/1994)
+	&BurnDrvStonebal2,			// Stone Ball (2 Players, v1-20 7/11/1994)
+	&BurnDrvStonebal,			// Stone Ball (4 Players, v1-20 13/12/1994)
 	&BurnDrvcv_stonew,			// Stone of Wisdom (HB)
 	&BurnDrvmd_stonprot,		// Stone Protectors (USA, Prototype)
 	&BurnDrvStoneage,			// Stoneage (bootleg of Caveman Ninja)
@@ -28967,6 +28982,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3jr1,			// Street Fighter Zero 3 (980727 Japan)
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
+	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)
 	&BurnDrvSftm,				// Street Fighter: The Movie (v1.12)
@@ -31191,6 +31207,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ultsoccr,		// Ultimate Soccer (Euro, Jpn, Bra)
 	&BurnDrvmd_ultsoccrp,		// Ultimate Soccer (Euro, Prototype)
 	&BurnDrvnes_ultimstu,		// Ultimate Stuntman, The (USA) (Unl)
+	&BurnDrvUltennisj,			// Ultimate Tennis (v 1.4, Japan)
+	&BurnDrvUltennis,			// Ultimate Tennis
 	&BurnDrvmd_uxmen,			// Ultimate X-Men (Hack, Enhanced)
 	&BurnDrvUballoon,			// Ultra Balloon
 	&BurnDrvUtoukond,			// Ultra Toukon Densetsu (Japan)

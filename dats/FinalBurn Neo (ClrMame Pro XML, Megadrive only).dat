@@ -657,6 +657,13 @@
 		<rom name="arcus odyssey (usa).bin" size="1048576" crc="bc4d9b20"/>
 		<driver status="good"/>
 	</game>
+	<game name="arkagisr">
+		<description>Arkagis Revolution (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Sik</manufacturer>
+		<rom name="Arkagis Revolution (2019)(Sik).bin" size="4194304" crc="a9bdc71b"/>
+		<driver status="good"/>
+	</game>
 	<game name="arnoldp">
 		<description>Arnold Palmer Tournament Golf (Euro, USA)</description>
 		<year>1989</year>

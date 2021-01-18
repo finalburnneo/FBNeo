@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15963 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15972 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -641,6 +641,7 @@ This list contains all games supported by FinalBurn Neo.
 | argus		|  	| Argus							| 		| 1986	| NMK (Jaleco li| Miscellaneous	| 					|
 | arian		|  	| Arian Mission						| aso		| 1985	| SNK		| Miscellaneous	| 					|
 | arkarea	|  	| Ark Area						| 		| 1988	| UPL		| Miscellaneous	| 					|
+| md_arkagisr	|  	| Arkagis Revolution (HB)				| 		| 2019	| Sik		| Sega Megadrive| 					|
 | spec_arkanoid	|  	| Arkanoid (48K)					| 		| 1987	| Imagine Softwa| ZX Spectrum	| 					|
 | arkgcbl	|  	| Arkanoid (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
 | arkanoidjbl	|  	| Arkanoid (bootleg with MCU set 1)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -2221,6 +2222,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_cheese	|  	| Cheese Cat-astrophe Starring Speedy Gonzales (Euro)	| 		| 1995	| Sega		| Sega Game Gear| 					|
 | md_cheese	|  	| Cheese Cat-Astrophe Starring Speedy Gonzales (Euro)	| 		| 1995	| Sega		| Sega Megadrive| 					|
 | sms_cheese	|  	| Cheese Cat-astrophe Starring Speedy Gonzales (Euro, Br| 		| 1995	| Sega		| Sega Master Sy| 					|
+| cheesech	|  	| Cheese Chase						| 		| 1994	| Art & Magic	| Miscellaneous	| 					|
 | md_chelnov	|  	| Chelnov (Jpn)						| md_atomrun	| 1992	| Data East	| Sega Megadrive| 					|
 | chelnovj	|  	| Chelnov - Atomic Runner (Japan)			| chelnov	| 1988	| Data East Corp| Miscellaneous	| 					|
 | chelnovu	|  	| Chelnov - Atomic Runner (US)				| chelnov	| 1988	| Data East USA	| Miscellaneous	| 					|
@@ -2394,6 +2396,7 @@ This list contains all games supported by FinalBurn Neo.
 | circusc2	|  	| Circus Charlie (level select, set 2)			| circusc	| 1984	| Konami	| GX380		| 					|
 | circusc3	|  	| Circus Charlie (level select, set 3)			| circusc	| 1984	| Konami	| GX380		| 					|
 | circusc4	|  	| Circus Charlie (no level select)			| circusc	| 1984	| Konami	| GX380		| 					|
+| sg1k_circusc	|  	| Circus Charlie (Tw)					| 		| 198?	| Aaronix	| Sega SG-1000	| 					|
 | pce_circusld	|  	| Circus Lido						| 		| 1991	| Yuni Post	| PC Engine	| 					|
 | cischeat	|  	| Cisco Heat						| 		| 1990	| Jaleco	| Miscellaneous	| Imperfect graphics			|
 | citybombj	|  	| City Bomber (Japan)					| citybomb	| 1987	| Konami	| GX787		| 					|
@@ -7448,7 +7451,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_mkidwiz	|  	| Magical Kid Wiz (Jpn)					| 		| 1986	| Sony		| MSX		| 					|
 | msx_mkidwizb	|  	| Magical Kid Wiz (Jpn, Alt 2)				| msx_mkidwiz	| 1986	| Sony		| MSX		| 					|
 | msx_mkidwiza	|  	| Magical Kid Wiz (Jpn, Alt)				| msx_mkidwiz	| 1986	| Sony		| MSX		| 					|
-| sg1k_mkidwiz	|   NW	| Magical Kid Wiz (Tw)					| 		| 198?	| Aaronix	| Sega SG-1000	| Stuck at boot logo?			|
+| sg1k_mkidwiz	|  	| Magical Kid Wiz (Tw)					| 		| 198?	| Aaronix	| Sega SG-1000	| Stuck at boot logo?			|
 | nes_magickidsdor|  	| Magical Kid's Doropie (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | gg_magiclpp	|  	| Magical Puzzle Popils (World)				| 		| 1991	| Tengen	| Sega Game Gear| 					|
 | msx_magical	|  	| Magical Stones (HB)					| 		| 2005	| Dioniso (Alfon| MSX		| 					|
@@ -7706,7 +7709,6 @@ This list contains all games supported by FinalBurn Neo.
 | matrim	|  	| Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660| 		| 2002	| Noise Factory | Neo Geo MVS	| 					|
 | maxrpm	|  	| Max RPM (ver 2)					| 		| 1986	| Bally Midway	| MCR3		| 					|
 | nes_maxwar	|  	| Max Warrior - Wakusei Kaigenrei (Japan)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| sg1k_circusc	|  	| Maxi Tuan ~ Circus Charlie (Tw)			| 		| 198?	| Aaronix	| Sega SG-1000	| 					|
 | msx_maxima	|  	| Maxima (Euro)						| 		| 1984	| PSS		| MSX		| 					|
 | mayday	|  	| Mayday (set 1)					| 		| 1980	| Hoei		| 6809 System	| 					|
 | maydaya	|  	| Mayday (set 2)					| mayday	| 1980	| Hoei		| 6809 System	| 					|
@@ -10324,6 +10326,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_rcproam	|  	| R.C. Pro-Am (USA) (Rev A)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_rcproamii	|  	| R.C. Pro-Am II (USA)					| 		| 1992	| Tradewest	| Miscellaneous	| 					|
 | rabbit	|  	| Rabbit (Asia 3/6)					| 		| 1997	| Aorn / Electro| Miscellaneous	| 					|
+| rabbitj	|  	| Rabbit (Japan 3/6?)					| rabbit	| 1996	| Aorn / Electro| Miscellaneous	| 					|
 | rabbitjt	|  	| Rabbit (Japan, location test)				| rabbit	| 1996	| Aorn / Electro| Miscellaneous	| 					|
 | spec_rabbitinn|  	| Rabbit in Nightmareland (HB)				| 		| 2015	| Javier Fopiani| ZX Spectrum	| 					|
 | rpunch	|  	| Rabbit Punch (US)					| rabiolep	| 1987	| V-System Co. (| Miscellaneous	| 					|
@@ -12310,6 +12313,9 @@ This list contains all games supported by FinalBurn Neo.
 | stinger2	|  	| Stinger (prototype?)					| stinger	| 1983	| Seibu Denshi	| Miscellaneous	| 					|
 | nes_stinger	|  	| Stinger (USA)						| nes_moerotwi	| 1987	| Konami	| Miscellaneous	| 					|
 | stinger	|  	| Stinger						| 		| 1983	| Seibu Denshi	| Miscellaneous	| 					|
+| stonebal2o	|  	| Stone Ball (2 Players, v1-20 21/10/1994)		| stonebal	| 1994	| Art & Magic	| Miscellaneous	| 					|
+| stonebal2	|  	| Stone Ball (2 Players, v1-20 7/11/1994)		| stonebal	| 1994	| Art & Magic	| Miscellaneous	| 					|
+| stonebal	|  	| Stone Ball (4 Players, v1-20 13/12/1994)		| 		| 1994	| Art & Magic	| Miscellaneous	| 					|
 | cv_stonew	|  	| Stone of Wisdom (HB)					| 		| 2015	| Team Pixelboy	| ColecoVision	| 					|
 | md_stonprot	|  	| Stone Protectors (USA, Prototype)			| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
 | stoneage	|  	| Stoneage (bootleg of Caveman Ninja)			| cninja	| 1991	| bootleg	| DECO IC16	| 					|
@@ -12573,6 +12579,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfz3jr1	|  	| Street Fighter Zero 3 (980727 Japan)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfz3a		|  	| Street Fighter Zero 3 (980904 Asia)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
 | sfz3j		|  	| Street Fighter Zero 3 (980904 Japan)			| sfa3		| 1998	| Capcom	| CPS2		| 					|
+| sfz3te	|  	| Street Fighter Zero 3 Training Edition v1.1 (980629 Ja| sfa3		| 2020	| hack		| CPS2		| 					|
 | sftm110	|  	| Street Fighter: The Movie (v1.10)			| sftm		| 1995	| Capcom / Incre| Miscellaneous	| 					|
 | sftm111	|  	| Street Fighter: The Movie (v1.11)			| sftm		| 1995	| Capcom / Incre| Miscellaneous	| 					|
 | sftm		|  	| Street Fighter: The Movie (v1.12)			| 		| 1995	| Capcom / Incre| Miscellaneous	| 					|
@@ -14763,6 +14770,8 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ultsoccr	|  	| Ultimate Soccer (Euro, Jpn, Bra)			| 		| 1993	| Sega		| Sega Game Gear| 					|
 | md_ultsoccrp	|  	| Ultimate Soccer (Euro, Prototype)			| md_ultsoccr	| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_ultimstu	|  	| Ultimate Stuntman, The (USA) (Unl)			| 		| 1991	| Camerica	| Miscellaneous	| 					|
+| ultennisj	|  	| Ultimate Tennis (v 1.4, Japan)			| ultennis	| 1993	| Art & Magic (B| Miscellaneous	| 					|
+| ultennis	|  	| Ultimate Tennis					| 		| 1993	| Art & Magic	| Miscellaneous	| 					|
 | md_uxmen	|  	| Ultimate X-Men (Hack, Enhanced)			| md_xmen	| 2021	| Sega		| Sega Megadrive| 					|
 | uballoon	|  	| Ultra Balloon						| 		| 1996	| SunA		| Miscellaneous	| 					|
 | utoukond	|  	| Ultra Toukon Densetsu (Japan)				| 		| 1993	| Banpresto / Ts| Seta		| 					|

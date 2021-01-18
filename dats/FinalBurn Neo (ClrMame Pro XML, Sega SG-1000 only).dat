@@ -320,6 +320,13 @@
 		<rom name="circus charlie (kr).bin" size="32768" crc="7f7f009d"/>
 		<driver status="good"/>
 	</game>
+	<game name="circusc">
+		<description>Circus Charlie (Tw)</description>
+		<year>198?</year>
+		<manufacturer>Aaronix</manufacturer>
+		<rom name="circus charlie (tw).bin" size="32768" crc="3404fce4"/>
+		<driver status="good"/>
+	</game>
 	<game name="congoa" cloneof="congo" romof="congo">
 		<description>Congo Bongo (Euro, Jpn, v1 Alt)</description>
 		<year>1983</year>
@@ -731,7 +738,7 @@
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="magical kid wiz (tw).bin" size="49152" crc="ffc4ee3f"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="magtree">
 		<description>Magical Tree (Tw)</description>
@@ -759,13 +766,6 @@
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="mahjong (tw).bin" size="24576" crc="bc823a89"/>
-		<driver status="good"/>
-	</game>
-	<game name="circusc">
-		<description>Maxi Tuan ~ Circus Charlie (Tw)</description>
-		<year>198?</year>
-		<manufacturer>Aaronix</manufacturer>
-		<rom name="circus charlie (tw).bin" size="32768" crc="3404fce4"/>
 		<driver status="good"/>
 	</game>
 	<game name="motianda" cloneof="rocknbol" romof="rocknbol">

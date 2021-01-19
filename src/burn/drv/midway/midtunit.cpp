@@ -1225,6 +1225,8 @@ INT32 TUnitDraw()
 {
 	if (nTUnitRecalc) {
 		TUnitPalRecalc();
+		memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32)); // update palette buffer
+
 		nTUnitRecalc = 0;
 	}
 

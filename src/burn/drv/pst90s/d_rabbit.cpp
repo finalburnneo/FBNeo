@@ -813,7 +813,7 @@ STD_ROM_PICK(rabbitj)
 STD_ROM_FN(rabbitj)
 
 struct BurnDriver BurnDrvRabbitj = {
-	"rabbitj", "rabbit", NULL, NULL, "1996",
+	"rabbitj", "rabbit", NULL, NULL, "1997",
 	"Rabbit (Japan 3/6?)\0", NULL, "Aorn / Electronic Arts", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,

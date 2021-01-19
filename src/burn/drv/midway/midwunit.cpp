@@ -573,6 +573,8 @@ INT32 WolfUnitDraw()
 {
 	if (nWolfUnitRecalc) {
 		WolfUnitPalRecalc();
+		memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32)); // update palette buffer
+
 		nWolfUnitRecalc = 0;
 	}
 

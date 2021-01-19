@@ -28,8 +28,8 @@ static UINT16 blitter_data[8];
 static INT32 blitter_page;
 static UINT32 blitter_mask; // gfx size / 2
 
-static UINT8 prot_input[12];
-static UINT8 prot_output[12];
+static UINT8 prot_input[0x10];
+static UINT8 prot_output[0x10];
 static UINT8 prot_input_index;
 static UINT8 prot_output_index;
 static UINT8 prot_output_bit;

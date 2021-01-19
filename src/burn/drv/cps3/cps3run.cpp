@@ -2096,14 +2096,14 @@ INT32 cps3Frame()
 	if (strncmp(BurnDrvGetTextA(DRV_NAME), "jojo", 4) == 0) {
 		if (Cps3Input[3] & (1 << 2)) { // p1 'all attacks' button
 			Cps3Input[3] &= ~(1 << 2); // clear 'all attacks' button
-			Cps3Input[1] |= (1 << 4) | (1 << 5) | (1 << 6); // press Weak, Medium, and Strong attack buttons
+			Cps3Input[0] |= (1 << 4) | (1 << 5) | (1 << 6); // press Weak, Medium, and Strong attack buttons
 		}
 		
 		if (Cps3Input[3] & (1 << 5)) { // p2 'all attacks' button
 			Cps3Input[3] &= ~(1 << 5); // clear 'all attacks' button
-			Cps3Input[1] |= (1 << 12) | (1 << 13) | (1 << 14); // press Weak, Medium, and Strong attack buttons
+			Cps3Input[0] |= (1 << 12) | (1 << 13) | (1 << 14); // press Weak, Medium, and Strong attack buttons
 		}
-	}	
+	}
 
 	// Clear Opposites
 	Cps3ClearOpposites(&Cps3Input[0]);

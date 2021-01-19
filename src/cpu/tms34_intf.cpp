@@ -122,6 +122,7 @@ void TMS34020Init()
 	TMS34010SetFromShift(default_shift_op);
 
     // map IO registers
+	TMS34010MapReset();
     TMS34010SetHandlers(MAXHANDLER-1, IO_read020, IO_write020);
 	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00003ff, MAP_READ | MAP_WRITE);
 

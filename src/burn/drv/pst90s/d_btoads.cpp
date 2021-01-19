@@ -729,7 +729,6 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvBSMTPrg   + 0x000000,  k++, 1)) return 1;
 	}
 
-	TMS34010MapReset();
 	TMS34020Init(); // 34020 !
 	TMS34010SetPixClock(10000000, 1);
 

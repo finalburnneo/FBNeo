@@ -439,7 +439,6 @@ INT32 WolfUnitInit()
     MidwaySerialPicInit(528);
 	MidwaySerialPicReset();
 
-    TMS34010MapReset();
     TMS34010Init();
 	TMS34010SetPixClock(8000000, 1);
 	TMS34010TimerSetCB(TUnitDmaCallback);
@@ -574,6 +573,8 @@ INT32 WolfUnitDraw()
 {
 	if (nWolfUnitRecalc) {
 		WolfUnitPalRecalc();
+		memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32)); // update palette buffer
+
 		nWolfUnitRecalc = 0;
 	}
 

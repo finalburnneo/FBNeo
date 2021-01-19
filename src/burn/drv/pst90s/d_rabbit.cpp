@@ -767,6 +767,8 @@ static struct BurnRomInfo rabbitRomDesc[] = {
 	{ "jsn0.11",			0x400000, 0xe1f726e8, 4 | BRF_GRA },           // 11 i5000snd Samples
 
 	{ "rabbit.nv",			0x000080, 0x73d471ed, 5 | BRF_PRG | BRF_ESS }, // 12 Default EEPROM
+	
+	{ "epm7032.u1",			0x000798, 0xbb1c930e, 0 | BRF_OPT }, 		   // 13 plds
 };
 
 STD_ROM_PICK(rabbit)
@@ -778,6 +780,44 @@ struct BurnDriver BurnDrvRabbit = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, rabbitRomInfo, rabbitRomName, NULL, NULL, NULL, NULL, RabbitInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	320, 224, 4, 3
+};
+
+
+// Rabbit (Japan 3/6?)
+
+static struct BurnRomInfo rabbitjRomDesc[] = {
+	{ "pvo0.u82",	0x080000, 0x56ee441b, 1 | BRF_PRG | BRF_ESS }, //  0 M68ec020 Code
+	{ "pvo1.u84",	0x080000, 0x7d8addc5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pvo2.u83",	0x080000, 0x4a333d89, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pvo3.u85",	0x080000, 0x791bf835, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "jfv0.00",	0x400000, 0xb2a4d3d3, 2 | BRF_GRA },           //  4 Sprites
+	{ "jfv1.01",	0x400000, 0x83f3926e, 2 | BRF_GRA },           //  5
+	{ "jfv2.02",	0x400000, 0xb264bfb5, 2 | BRF_GRA },           //  6
+	{ "jfv3.03",	0x400000, 0x3e1a9be2, 2 | BRF_GRA },           //  7
+
+	{ "jbg0.40",	0x200000, 0x89662944, 3 | BRF_GRA },           //  8 Background Tiles
+	{ "jbg1.50",	0x200000, 0x1fc7f6e0, 3 | BRF_GRA },           //  9
+	{ "jbg2.60",	0x200000, 0xaee265fc, 3 | BRF_GRA },           // 10
+
+	{ "jsn0.11",	0x400000, 0xe1f726e8, 4 | BRF_GRA },           // 11 i5000snd Samples
+
+	{ "rabbit.nv",	0x000080, 0x73d471ed, 5 | BRF_PRG | BRF_ESS }, // 12 Default EEPROM
+	
+	{ "epm7032.u1",	0x000798, 0xbb1c930e, 0 | BRF_OPT }, 		   // 13 plds
+};
+
+STD_ROM_PICK(rabbitj)
+STD_ROM_FN(rabbitj)
+
+struct BurnDriver BurnDrvRabbitj = {
+	"rabbitj", "rabbit", NULL, NULL, "1997",
+	"Rabbit (Japan 3/6?)\0", NULL, "Aorn / Electronic Arts", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	NULL, rabbitjRomInfo, rabbitjRomName, NULL, NULL, NULL, NULL, RabbitInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	320, 224, 4, 3
 };
@@ -803,6 +843,8 @@ static struct BurnRomInfo rabbitjtRomDesc[] = {
 	{ "jsn0.11",			0x400000, 0xe1f726e8, 4 | BRF_GRA },           // 11 i5000snd Samples
 
 	{ "rabbit.nv",			0x000080, 0x73d471ed, 5 | BRF_PRG | BRF_ESS }, // 12 Default EEPROM
+	
+	{ "epm7032.u1",			0x000798, 0xbb1c930e, 0 | BRF_OPT }, 		   // 13 plds
 };
 
 STD_ROM_PICK(rabbitjt)

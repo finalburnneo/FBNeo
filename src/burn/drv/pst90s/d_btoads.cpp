@@ -682,7 +682,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvTMSROM		= Next; Next += 0x0800000;
+	DrvTMSROM		= Next; Next += 0x0800000 * 2;
 
 	DrvZ80ROM		= Next; Next += 0x0008000;
 

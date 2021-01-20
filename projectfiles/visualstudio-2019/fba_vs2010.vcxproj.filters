@@ -1030,6 +1030,9 @@
     <ClInclude Include="..\..\src\cpu\tms34_intf.h">
       <Filter>cpus</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\tlc34076.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4243,6 +4246,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\tms34_intf.cpp">
       <Filter>cpus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\tlc34076.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_artmagic.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_btoads.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -350,8 +350,10 @@ void HiscoreReset()
 		
 		/*if (HiscoreMemRange[i].Loaded)*/ {
 			cpu_open(HiscoreMemRange[i].nCpu);
-			cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
-			if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
+			// in some games, system16b (aliensyn, everything else) rom is mapped (for cheats)
+			// on reset where the hiscore should be.  Writing here is bad.
+			//cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
+			//if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
 			cheat_subptr->close();
 			
 #if 1 && defined FBNEO_DEBUG

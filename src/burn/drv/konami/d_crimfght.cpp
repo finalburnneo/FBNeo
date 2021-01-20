@@ -40,94 +40,94 @@ static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo CrimfghtInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"service"},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Crimfght)
 
 static struct BurnInputInfo CrimfghtuInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy5 + 2,	"p3 coin"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p3 coin"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy5 + 3,	"p4 coin"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 left"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p4 coin"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 2,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 0,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"service"	},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"},
-	{"Service 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"service3"},
-	{"Service 4",		BIT_DIGITAL,	DrvJoy5 + 7,	"service4"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"service3"	},
+	{"Service 4",		BIT_DIGITAL,	DrvJoy5 + 7,	"service4"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Crimfghtu)
 
 static struct BurnDIPInfo CrimfghtDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xff, NULL			},
-	{0x16, 0xff, 0xff, 0x5f, NULL			},
-	{0x17, 0xff, 0xff, 0xfb, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL					},
+	{0x16, 0xff, 0xff, 0x5f, NULL					},
+	{0x17, 0xff, 0xff, 0xfb, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x15, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   },
-	{0x15, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   },
-	{0x15, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   },
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
+	{0x15, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   	},
+	{0x15, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   	},
+	{0x15, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   	},
 	{0x15, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
 	{0x15, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   },
+	{0x15, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   	},
 	{0x15, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
 	{0x15, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
 	{0x15, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
@@ -137,15 +137,15 @@ static struct BurnDIPInfo CrimfghtDIPList[]=
 	{0x15, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
 	{0x15, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
 	{0x15, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x15, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x15, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x15, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"   },
-	{0x15, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"   },
-	{0x15, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"   },
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
+	{0x15, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"   	},
+	{0x15, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"   	},
+	{0x15, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"   	},
 	{0x15, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
 	{0x15, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"   },
+	{0x15, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"   	},
 	{0x15, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
 	{0x15, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
 	{0x15, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
@@ -155,48 +155,48 @@ static struct BurnDIPInfo CrimfghtDIPList[]=
 	{0x15, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
 	{0x15, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x15, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x15, 0x01, 0xf0, 0x00, "Not Use"		},
+	{0x15, 0x01, 0xf0, 0x00, "Not Use"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x16, 0x01, 0x03, 0x03, "1"			},
-	{0x16, 0x01, 0x03, 0x02, "2"			},
-	{0x16, 0x01, 0x03, 0x01, "3"			},
-	{0x16, 0x01, 0x03, 0x00, "4"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x16, 0x01, 0x03, 0x03, "1"					},
+	{0x16, 0x01, 0x03, 0x02, "2"					},
+	{0x16, 0x01, 0x03, 0x01, "3"					},
+	{0x16, 0x01, 0x03, 0x00, "4"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x60, 0x60, "Easy"			},
-	{0x16, 0x01, 0x60, 0x40, "Normal"		},
-	{0x16, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x16, 0x01, 0x60, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x16, 0x01, 0x60, 0x60, "Easy"					},
+	{0x16, 0x01, 0x60, 0x40, "Normal"				},
+	{0x16, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x16, 0x01, 0x60, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x16, 0x01, 0x80, 0x80, "Off"			},
-	{0x16, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x16, 0x01, 0x80, 0x80, "Off"					},
+	{0x16, 0x01, 0x80, 0x00, "On"					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x17, 0x01, 0x01, 0x01, "Off"			},
-//	{0x17, 0x01, 0x01, 0x00, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x17, 0x01, 0x01, 0x01, "Off"					},
+//	{0x17, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x17, 0x01, 0x04, 0x00, "Off"			},
-	{0x17, 0x01, 0x04, 0x04, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x17, 0x01, 0x04, 0x00, "Off"					},
+	{0x17, 0x01, 0x04, 0x04, "On"					},
 };
 
 STDDIPINFO(Crimfght)
 
 static struct BurnDIPInfo CrimfghtuDIPList[]=
 {
-	{0x21, 0xff, 0xff, 0xff, NULL			},
-	{0x22, 0xff, 0xff, 0x5f, NULL			},
-	{0x23, 0xff, 0xff, 0xfb, NULL			},
+	{0x21, 0xff, 0xff, 0xff, NULL					},
+	{0x22, 0xff, 0xff, 0x5f, NULL					},
+	{0x23, 0xff, 0xff, 0xfb, NULL					},
 
-	{0   , 0xfe, 0   ,   16, "Coinage"		},
-	{0x21, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   },
+	{0   , 0xfe, 0   ,   16, "Coinage"				},
+	{0x21, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   	},
+	{0x21, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   	},
+	{0x21, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   	},
 	{0x21, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
 	{0x21, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   },
+	{0x21, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   	},
 	{0x21, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
 	{0x21, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
 	{0x21, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
@@ -208,13 +208,13 @@ static struct BurnDIPInfo CrimfghtuDIPList[]=
 	{0x21, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
 	{0x21, 0x01, 0x0f, 0x00, "1 Coin 99 Credits"	},
 
-/*	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x21, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"  },
+/*	{0   , 0xfe, 0   ,    16, "Coin B"				},
+	{0x21, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"  	},
+	{0x21, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"  	},
+	{0x21, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"  	},
 	{0x21, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
 	{0x21, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x21, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"  },
+	{0x21, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"  	},
 	{0x21, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
 	{0x21, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
 	{0x21, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
@@ -224,25 +224,25 @@ static struct BurnDIPInfo CrimfghtuDIPList[]=
 	{0x21, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
 	{0x21, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x21, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x21, 0x01, 0xf0, 0x00, "No Coin B"		},*/
+	{0x21, 0x01, 0xf0, 0x00, "No Coin B"			},*/
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x22, 0x01, 0x60, 0x60, "Easy"			},
-	{0x22, 0x01, 0x60, 0x40, "Normal"		},
-	{0x22, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x22, 0x01, 0x60, 0x00, "Very difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x22, 0x01, 0x60, 0x60, "Easy"					},
+	{0x22, 0x01, 0x60, 0x40, "Normal"				},
+	{0x22, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x22, 0x01, 0x60, 0x00, "Very difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x22, 0x01, 0x80, 0x80, "Off"			},
-	{0x22, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x22, 0x01, 0x80, 0x80, "Off"					},
+	{0x22, 0x01, 0x80, 0x00, "On"					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x23, 0x01, 0x01, 0x01, "Off"			},
-//	{0x23, 0x01, 0x01, 0x00, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x23, 0x01, 0x01, 0x01, "Off"					},
+//	{0x23, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x23, 0x01, 0x04, 0x00, "Off"			},
-	{0x23, 0x01, 0x04, 0x04, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x23, 0x01, 0x04, 0x00, "Off"					},
+	{0x23, 0x01, 0x04, 0x04, "On"					},
 };
 
 STDDIPINFO(Crimfghtu)
@@ -258,7 +258,7 @@ static void set_ram_bank(INT32 data)
 	}
 }
 
-void crimfght_main_write(UINT16 address, UINT8 data)
+static void crimfght_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -275,7 +275,7 @@ void crimfght_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 crimfght_main_read(UINT16 address)
+static UINT8 crimfght_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -315,7 +315,7 @@ UINT8 crimfght_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall crimfght_sound_write(UINT16 address, UINT8 data)
+static void __fastcall crimfght_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xe000) {
 		K007232WriteReg(0, address & 0x0f, data);
@@ -334,7 +334,7 @@ void __fastcall crimfght_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall crimfght_sound_read(UINT16 address)
+static UINT8 __fastcall crimfght_sound_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0xe000) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -356,8 +356,8 @@ UINT8 __fastcall crimfght_sound_read(UINT16 address)
 
 static void DrvK007232VolCallback(INT32 v)
 {
-	K007232SetVolume(0, 0, (v >> 0x4) * 0x11, 0);
-	K007232SetVolume(0, 1, 0, (v & 0x0f) * 0x11);
+	K007232SetVolume(0, 0, (v & 0x0f) * 0x11, 0);
+	K007232SetVolume(0, 1, 0, (v >> 0x4) * 0x11);
 }
 
 static void DrvYM2151WritePort(UINT32, UINT32 data)
@@ -435,8 +435,8 @@ static INT32 MemIndex()
 
 	DrvGfxROM0		= Next; Next += 0x080000;
 	DrvGfxROM1		= Next; Next += 0x100000;
-	DrvGfxROMExp0		= Next; Next += 0x100000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
+	DrvGfxROMExp0	= Next; Next += 0x100000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
 
 	DrvSndROM		= Next; Next += 0x040000;
 
@@ -453,7 +453,7 @@ static INT32 MemIndex()
 	soundlatch		= Next; Next += 0x000001;
 
 	nDrvRamBank		= Next; Next += 0x000001;
-	nDrvKonamiBank		= Next; Next += 0x000001;
+	nDrvKonamiBank	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -610,13 +610,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
+		CPU_RUN(0, konami);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -648,7 +643,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -656,7 +651,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029704;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

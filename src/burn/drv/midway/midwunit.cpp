@@ -75,7 +75,7 @@ static INT32 MemIndex()
 	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvPaletteB2	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
+	DrvPaletteB2= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 
@@ -527,7 +527,6 @@ INT32 WolfUnitFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
-		CPU_RUN(0, TMS34010); // finish line incase dma op ended line early
 
 		TMS34010GenerateScanline(i);
 

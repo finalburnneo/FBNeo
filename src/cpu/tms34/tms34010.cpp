@@ -838,9 +838,9 @@ int tms34010_run(int cycles)
 
 	/* check interrupts first */
 	check_timer(0);
-	check_interrupt();
 	do
 	{
+		check_interrupt();
 		state.op = ROPCODE();
 		(*opcode_table[state.op >> 4])();
 

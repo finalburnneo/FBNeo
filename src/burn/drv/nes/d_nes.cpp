@@ -41793,24 +41793,6 @@ struct BurnDriver BurnDrvnes_mancmansuproc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)
-static struct BurnRomInfo nes_NekketsuStBsktRomDesc[] = {
-	{ "nekketsu! street basket - ganbare dunk heroes (japan).nes",          262160, 0xa2952508, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_NekketsuStBskt)
-STD_ROM_FN(nes_NekketsuStBskt)
-
-struct BurnDriver BurnDrvnes_NekketsuStBskt = {
-	"nes_NekketsuStBskt", NULL, NULL, NULL, "1993",
-	"Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan)\0", NULL, "Technos", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_NekketsuStBsktRomInfo, nes_NekketsuStBsktRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_NekketsuStBsktcRomDesc[] = {
@@ -41821,7 +41803,7 @@ STD_ROM_PICK(nes_NekketsuStBsktc)
 STD_ROM_FN(nes_NekketsuStBsktc)
 
 struct BurnDriver BurnDrvnes_NekketsuStBsktc = {
-	"nes_NekketsuStBsktc", "nes_NekketsuStBskt", NULL, NULL, "1989 ?",
+	"nes_NekketsuStBsktc", "nes_nekkestrbas", NULL, NULL, "1989 ?",
 	"Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,

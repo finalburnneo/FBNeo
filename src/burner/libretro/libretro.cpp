@@ -534,7 +534,7 @@ static int create_variables_from_cheats()
 			if(pCurrentCheat->pOption[i] == NULL || pCurrentCheat->pOption[i]->szOptionName == NULL) break;
 			count++;
 		}
-		if (count > 0)
+		if (count > 0 && count < RETRO_NUM_CORE_OPTION_VALUES_MAX)
 		{
 			cheat_core_options.push_back(cheat_core_option());
 			cheat_core_option *cheat_option = &cheat_core_options.back();

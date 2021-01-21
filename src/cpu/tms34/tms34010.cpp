@@ -1083,7 +1083,9 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 		tms34010_get_display_params(&params);
 
 		// screen update callback - clipping is done in the driver -dink
-		render(line, &params);
+		if (render) {
+			render(line, &params);
+		}
 	}
 
 	/* if we are in the visible area, increment DPYADR by DUDATE */

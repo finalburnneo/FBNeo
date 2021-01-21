@@ -1016,7 +1016,7 @@ static INT32 DrvInit(INT32 game_select)
 	SekSetReadByteHandler(0,				artmagic_main_read_byte);
 	SekClose();
 
-	TMS34010Init();
+	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010MapMemory(DrvVidRAM[0],	0x00000000, 0x001fffff, MAP_READ | MAP_WRITE);
 	TMS34010MapMemory(DrvVidRAM[1],	0x00400000, 0x005fffff, MAP_READ | MAP_WRITE);

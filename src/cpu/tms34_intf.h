@@ -13,8 +13,8 @@ typedef void (*pTMS34010WriteHandler)(UINT32, UINT16);
 typedef tms34010_display_params TMS34010Display;
 typedef scanline_render_t pTMS34010ScanlineRender;
 
-void TMS34010Init();
-void TMS34020Init();
+void TMS34010Init(INT32 nCpu);
+void TMS34020Init(INT32 nCpu);
 void TMS34010Exit();
 void TMS34010Open(INT32 num);
 void TMS34010Close();

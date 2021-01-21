@@ -415,7 +415,9 @@ static void TUnitFromShift(UINT32 address, UINT16 *src)
 
 static void TUnitDoReset()
 {
+	TMS34010Open(0);
 	TMS34010Reset();
+	TMS34010Close();
 
 	switch (nSoundType)	{
 		case SOUND_ADPCM: {
@@ -1018,7 +1020,8 @@ INT32 TUnitInit()
 	nRet = LoadGfxBanks();
 	if (nRet != 0) return 1;
 
-	TMS34010Init();
+	TMS34010Init(0);
+	TMS34010Open(0);
 	TMS34010SetPixClock(4000000, 2);
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
@@ -1101,6 +1104,8 @@ INT32 TUnitInit()
 		TMS34010SetHandlers(13, JdreddpProtRead, JdreddpProtWrite);
 		TMS34010MapHandler(13, 0x1b00000, 0x1bfffff, MAP_READ | MAP_WRITE);
 	}
+
+	TMS34010Close();
 
 	if (TUnitIsMK || TUnitIsNbajam || TUnitIsNbajamTe || TUnitIsJdreddp) {
 		M6809Init(0);
@@ -1259,6 +1264,7 @@ INT32 TUnitFrame()
 	}
 	
 	if (nSoundType == SOUND_ADPCM) M6809Open(0);
+	TMS34010Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
@@ -1308,6 +1314,7 @@ INT32 TUnitFrame()
 	nExtraCycles = TMS34010TotalCycles() - nCyclesTotal[0];
 
 	if (nSoundType == SOUND_ADPCM) M6809Close();
+	TMS34010Close();
 
 	if (pBurnDraw) {
 		TUnitDraw();

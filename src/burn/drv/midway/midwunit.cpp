@@ -392,7 +392,9 @@ static void WolfDoReset()
 	nGfxBankOffset[0] = 0x000000;
 	nGfxBankOffset[1] = 0x400000;
 
+	TMS34010Open(0);
 	TMS34010Reset();
+	TMS34010Close();
 
 	Dcs2kReset();
 
@@ -439,7 +441,8 @@ INT32 WolfUnitInit()
     MidwaySerialPicInit(528);
 	MidwaySerialPicReset();
 
-    TMS34010Init();
+	TMS34010Init(0);
+	TMS34010Open(0);
 	TMS34010SetPixClock(8000000, 1);
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
@@ -480,6 +483,7 @@ INT32 WolfUnitInit()
 
     TMS34010SetHandlers(11, WolfUnitVramRead, WolfUnitVramWrite);
     TMS34010MapHandler(11, 0x00000000, 0x003fffff, MAP_READ | MAP_WRITE);
+	TMS34010Close();
 
 	Dcs2kBoot();
 
@@ -525,6 +529,8 @@ INT32 WolfUnitFrame()
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.706840), (INT32)(10000000 / 54.706840) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
+	TMS34010Open(0);
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, TMS34010);
 
@@ -542,6 +548,8 @@ INT32 WolfUnitFrame()
 	}
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
+	TMS34010Close();
 
 	// Buffering palette for 1 frame, fix umk3pb1 palette glitch when
 	// transitioning from title screen to select screen

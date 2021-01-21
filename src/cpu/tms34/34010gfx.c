@@ -203,16 +203,16 @@ static int compute_pixblt_b_cycles(int left_partials, int right_partials, int fu
 /* Shift register handling */
 static void shiftreg_w(UINT32 offset,UINT16 data)
 {
-	if (state.config->from_shiftreg)
-		(*state.config->from_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
+	if (state.config.from_shiftreg)
+		(*state.config.from_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
 	else
 		logerror("From ShiftReg function not set. PC = %08X\n", PC);
 }
 
 static UINT16 shiftreg_r(UINT32 offset)
 {
-	if (state.config->to_shiftreg)
-		(*state.config->to_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
+	if (state.config.to_shiftreg)
+		(*state.config.to_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
 	else
 		logerror("To ShiftReg function not set. PC = %08X\n", PC);
 	return state.shiftreg[0];

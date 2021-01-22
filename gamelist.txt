@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-15972 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+15973 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4143,6 +4143,7 @@ This list contains all games supported by FinalBurn Neo.
 | extrmatnu	|  	| Extermination (US, set 1)				| extrmatn	| 1987	| Taito (World G| Miscellaneous	| 					|
 | extrmatn	|  	| Extermination (World)					| 		| 1987	| Taito Corporat| Miscellaneous	| 					|
 | msx_extermin	|  	| Exterminator (Euro)					| 		| 1987	| Eaglesoft	| MSX		| 					|
+| exterm	|  	| Exterminator						| 		| 1989	| Gottlieb / Pre| Miscellaneous	| 					|
 | extdwnhl	|  	| Extreme Downhill (v1.5)				| 		| 1995	| Sammy Industri| Seta		| 					|
 | exzisusa	|  	| Exzisus (Japan, conversion)				| exzisus	| 1987	| Taito Corporat| Miscellaneous	| 					|
 | exzisus	|  	| Exzisus (Japan, dedicated)				| 		| 1987	| Taito Corporat| Miscellaneous	| 					|
@@ -10326,7 +10327,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_rcproam	|  	| R.C. Pro-Am (USA) (Rev A)				| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | nes_rcproamii	|  	| R.C. Pro-Am II (USA)					| 		| 1992	| Tradewest	| Miscellaneous	| 					|
 | rabbit	|  	| Rabbit (Asia 3/6)					| 		| 1997	| Aorn / Electro| Miscellaneous	| 					|
-| rabbitj	|  	| Rabbit (Japan 3/6?)					| rabbit	| 1996	| Aorn / Electro| Miscellaneous	| 					|
+| rabbitj	|  	| Rabbit (Japan 3/6?)					| rabbit	| 1997	| Aorn / Electro| Miscellaneous	| 					|
 | rabbitjt	|  	| Rabbit (Japan, location test)				| rabbit	| 1996	| Aorn / Electro| Miscellaneous	| 					|
 | spec_rabbitinn|  	| Rabbit in Nightmareland (HB)				| 		| 2015	| Javier Fopiani| ZX Spectrum	| 					|
 | rpunch	|  	| Rabbit Punch (US)					| rabiolep	| 1987	| V-System Co. (| Miscellaneous	| 					|

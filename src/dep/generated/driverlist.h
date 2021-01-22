@@ -4205,6 +4205,7 @@ DRV		BurnDrvExtrmatur;
 DRV		BurnDrvExtrmatu;
 DRV		BurnDrvExtrmatn;
 DRV		BurnDrvMSX_extermin;
+DRV		BurnDrvExterm;
 DRV		BurnDrvExtdwnhl;
 DRV		BurnDrvExzisusa;
 DRV		BurnDrvExzisus;
@@ -20428,6 +20429,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvExtrmatu,			// Extermination (US, set 1)
 	&BurnDrvExtrmatn,			// Extermination (World)
 	&BurnDrvMSX_extermin,		// Exterminator (Euro)
+	&BurnDrvExterm,				// Exterminator
 	&BurnDrvExtdwnhl,			// Extreme Downhill (v1.5)
 	&BurnDrvExzisusa,			// Exzisus (Japan, conversion)
 	&BurnDrvExzisus,			// Exzisus (Japan, dedicated)

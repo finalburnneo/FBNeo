@@ -36465,7 +36465,7 @@ struct BurnDriver BurnDrvnes_rainbisltaij = {
 };
 
 static struct BurnRomInfo nes_rainbisltaiRomDesc[] = {
-	{ "Rainbow Islands - Taito (USA).nes",          131088, 0xada80f42, BRF_ESS | BRF_PRG },
+	{ "Rainbow Islands - Taito (USA).nes",          131088, 0x5d56b6a4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_rainbisltai)

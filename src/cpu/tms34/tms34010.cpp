@@ -89,7 +89,7 @@ typedef struct tms34010_regs
 
 	UINT32 pointer_separator;
 
-	const tms34010_config *config;
+	tms34010_config config;
 	UINT16 *shiftreg;
 	void (*timer_cb)();
 
@@ -108,17 +108,25 @@ typedef struct tms34010_regs
 /* internal state */
 static tms34010_regs 		state;
 
-/* default configuration */
-static tms34010_config default_config =
-{
-	0
-};
-
 static void check_interrupt(void);
 static void check_timer(int cyc);
 static void set_raster_op(void);
 static void set_pixel_function(void);
 
+int tms34010_context_size()
+{
+	return sizeof(tms34010_regs);
+}
+
+void tms34010_get_context(void *get)
+{
+	memcpy(get, &state, sizeof(tms34010_regs));
+}
+
+void tms34010_set_context(void *set)
+{
+	memcpy(&state, set, sizeof(tms34010_regs));
+}
 
 /***************************************************************************
     MACROS
@@ -336,8 +344,8 @@ static UINT32 read_pixel_32(offs_t offset)
 /* Shift register read */
 static UINT32 read_pixel_shiftreg(offs_t offset)
 {
-	if (state.config->to_shiftreg)
-		state.config->to_shiftreg(offset, &state.shiftreg[0]);
+	if (state.config.to_shiftreg)
+		state.config.to_shiftreg(offset, &state.shiftreg[0]);
 	else
 		fatalerror("To ShiftReg function not set. PC = %08X\n", PC);
 	return state.shiftreg[0];
@@ -480,8 +488,8 @@ static void write_pixel_r_t_32(offs_t offset, UINT32 data)
 /* Shift register write */
 static void write_pixel_shiftreg(offs_t offset, UINT32 data)
 {
-	if (state.config->from_shiftreg)
-		state.config->from_shiftreg(offset, &state.shiftreg[0]);
+	if (state.config.from_shiftreg)
+		state.config.from_shiftreg(offset, &state.shiftreg[0]);
 	else
 		fatalerror("From ShiftReg function not set. PC = %08X\n", PC);
 }
@@ -646,36 +654,34 @@ static void check_interrupt(void)
 void tms34010_init()
 {
 	memset(&state, 0, sizeof(state));
-	memset(&default_config, 0, sizeof(default_config));
 
 	state.shiftreg = (UINT16*)BurnMalloc(SHIFTREG_SIZE);
-	state.config = &default_config;
 }
 
 void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock)
 {
-	default_config.pixclock = pxlclock;
-	default_config.pixperclock = pxl_per_clock;
+	state.config.pixclock = pxlclock;
+	state.config.pixperclock = pxl_per_clock;
 }
 
 void tms34010_set_output_int(void (*oi_func)(INT32))
 {
-	default_config.output_int = oi_func;
+	state.config.output_int = oi_func;
 }
 
 void tms34010_set_halt_on_reset(INT32 onoff)
 {
-	default_config.halt_on_reset = onoff;
+	state.config.halt_on_reset = onoff;
 }
 
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *))
 {
-	default_config.to_shiftreg = to_shiftreg;
+	state.config.to_shiftreg = to_shiftreg;
 }
 
 void tms34010_set_fromshift(void (*from_shiftreg)(UINT32, UINT16 *))
 {
-	default_config.from_shiftreg = from_shiftreg;
+	state.config.from_shiftreg = from_shiftreg;
 }
 
 void tms34010_exit()
@@ -697,8 +703,8 @@ void tms34010_reset()
 
 	/* HALT the CPU if requested, and remember to re-read the starting PC */
 	/* the first time we are run */
-	state.reset_deferred = state.config->halt_on_reset;
-	if (state.config->halt_on_reset)
+	state.reset_deferred = state.config.halt_on_reset;
+	if (state.config.halt_on_reset)
 		tms34010_io_register_w(REG_HSTCTLH << 4, 0x8000);
 
 	state.timer_active = 0;
@@ -838,9 +844,9 @@ int tms34010_run(int cycles)
 
 	/* check interrupts first */
 	check_timer(0);
-	check_interrupt();
 	do
 	{
+		check_interrupt();
 		state.op = ROPCODE();
 		(*opcode_table[state.op >> 4])();
 
@@ -1027,19 +1033,19 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 	{
 		/* only do this if we have an incoming pixel clock */
 		/* also, only do it if the HEBLNK/HSBLNK values are stable */
-		if (master && state.config->scanline_callback != NULL)
+		if (master && state.config.scanline_callback != NULL)
 		{
 			int htotal = SMART_IOREG(HTOTAL);
 			if (htotal > 0 && vtotal > 0)
 			{
-				attoseconds_t refresh = HZ_TO_ATTOSECONDS(state.config->pixclock) * (htotal + 1) * (vtotal + 1);
-				int width = (htotal + 1) * state.config->pixperclock;
+				attoseconds_t refresh = HZ_TO_ATTOSECONDS(state.config.pixclock) * (htotal + 1) * (vtotal + 1);
+				int width = (htotal + 1) * state.config.pixperclock;
 				int height = vtotal + 1;
 				rectangle visarea;
 
 				/* extract the visible area */
-				visarea.min_x = SMART_IOREG(HEBLNK) * state.config->pixperclock;
-				visarea.max_x = SMART_IOREG(HSBLNK) * state.config->pixperclock - 1;
+				visarea.min_x = SMART_IOREG(HEBLNK) * state.config.pixperclock;
+				visarea.max_x = SMART_IOREG(HSBLNK) * state.config.pixperclock - 1;
 				visarea.min_y = veblnk;
 				visarea.max_y = vsblnk - 1;
 
@@ -1077,7 +1083,9 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 		tms34010_get_display_params(&params);
 
 		// screen update callback - clipping is done in the driver -dink
-		render(line, &params);
+		if (render) {
+			render(line, &params);
+		}
 	}
 
 	/* if we are in the visible area, increment DPYADR by DUDATE */
@@ -1124,8 +1132,8 @@ void tms34010_get_display_params(tms34010_display_params *params)
 	params->vcount = SMART_IOREG(VCOUNT);
 	params->veblnk = SMART_IOREG(VEBLNK);
 	params->vsblnk = SMART_IOREG(VSBLNK);
-	params->heblnk = SMART_IOREG(HEBLNK) * state.config->pixperclock;
-	params->hsblnk = SMART_IOREG(HSBLNK) * state.config->pixperclock;
+	params->heblnk = SMART_IOREG(HEBLNK) * state.config.pixperclock;
+	params->hsblnk = SMART_IOREG(HSBLNK) * state.config.pixperclock;
 
 	params->htotal = SMART_IOREG(HTOTAL);
 	params->vtotal = SMART_IOREG(VTOTAL);
@@ -1175,7 +1183,7 @@ VIDEO_UPDATE( tms340x0 )
 	{
 		/* call through to the callback */
 		LOG(("  Update: scan=%3d ROW=%04X COL=%04X\n", cliprect->min_y, params.rowaddr, params.coladdr));
-		(*state.config->scanline_callback)(screen, bitmap, cliprect->min_y, &params);
+		(*state.config.scanline_callback)(screen, bitmap, cliprect->min_y, &params);
 	}
 
 	/* otherwise, just blank the current scanline */
@@ -1292,13 +1300,13 @@ void tms34010_io_register_w(INT32 address, UINT32 data)
 			/* the TMS34010 can set output interrupt? */
 			if (!(oldreg & 0x0080) && (newreg & 0x0080))
 			{
-				if (state.config->output_int)
-					(*state.config->output_int)(1);
+				if (state.config.output_int)
+					(*state.config.output_int)(1);
 			}
 			else if ((oldreg & 0x0080) && !(newreg & 0x0080))
 			{
-				if (state.config->output_int)
-					(*state.config->output_int)(0);
+				if (state.config.output_int)
+					(*state.config.output_int)(0);
 			}
 
 			/* input interrupt? (should really be state-based, but the functions don't exist!) */
@@ -1444,13 +1452,13 @@ void tms34020_io_register_w(INT32 address, UINT32 data)
 			/* the TMS34010 can set output interrupt? */
 			if (!(oldreg & 0x0080) && (newreg & 0x0080))
 			{
-				if (state.config->output_int)
-					(*state.config->output_int)(1);
+				if (state.config.output_int)
+					(*state.config.output_int)(1);
 			}
 			else if ((oldreg & 0x0080) && !(newreg & 0x0080))
 			{
-				if (state.config->output_int)
-					(*state.config->output_int)(0);
+				if (state.config.output_int)
+					(*state.config.output_int)(0);
 			}
 
 			/* input interrupt? (should really be state-based, but the functions don't exist!) */

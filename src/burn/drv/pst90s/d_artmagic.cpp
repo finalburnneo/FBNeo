@@ -28,8 +28,8 @@ static UINT16 blitter_data[8];
 static INT32 blitter_page;
 static UINT32 blitter_mask; // gfx size / 2
 
-static UINT8 prot_input[12];
-static UINT8 prot_output[12];
+static UINT8 prot_input[0x10];
+static UINT8 prot_output[0x10];
 static UINT8 prot_input_index;
 static UINT8 prot_output_index;
 static UINT8 prot_output_bit;
@@ -1016,7 +1016,7 @@ static INT32 DrvInit(INT32 game_select)
 	SekSetReadByteHandler(0,				artmagic_main_read_byte);
 	SekClose();
 
-	TMS34010Init();
+	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010MapMemory(DrvVidRAM[0],	0x00000000, 0x001fffff, MAP_READ | MAP_WRITE);
 	TMS34010MapMemory(DrvVidRAM[1],	0x00400000, 0x005fffff, MAP_READ | MAP_WRITE);

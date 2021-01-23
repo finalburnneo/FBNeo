@@ -111,6 +111,10 @@ INT64 tms34010_total_cycles();
 void tms34010_new_frame();
 UINT32 tms34010_get_pc();
 
+int tms34010_context_size();
+void tms34010_get_context(void *get);
+void tms34010_set_context(void *set);
+
 void tms34010_timer_set_cb(void (*t_cb)());
 void tms34010_timer_arm(int cycle);
 

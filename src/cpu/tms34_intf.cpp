@@ -3,6 +3,8 @@
 #include "tms34/tms34010.h"
 #include "tms34_intf.h"
 
+#define MAX_CPUS    4
+
 #define ADDR_BITS   32
 #define PAGE_SIZE   0x1000
 #define PAGE_SIZE_8 (0x1000 >> 3)
@@ -12,8 +14,6 @@
 #define PAGE_WADD    (PAGE_COUNT)
 #define MAXHANDLER  32
 #define PFN(x)  (((x) >> PAGE_SHIFT) & 0xFFFFF)
-
-static INT32 CPU_TYPE = 0;
 
 template<typename T>
 inline T tms_fast_read(UINT8 *ptr, UINT32 adr) {
@@ -26,17 +26,24 @@ inline void tms_fast_write(UINT8 *xptr, UINT32 adr, T value) {
     *ptr = value;
 }
 
-static pTMS34010ScanlineRender scanlineRenderCallback = NULL;
-
 struct TMS34010MemoryMap
 {
+	INT32 CPU_TYPE;
+
     UINT8 *map[PAGE_COUNT * 2];
+	UINT8 *context;
 
     pTMS34010ReadHandler read[MAXHANDLER];
     pTMS34010WriteHandler write[MAXHANDLER];
+
+	pTMS34010ScanlineRender scanlineRenderCallback;
 };
 
-static TMS34010MemoryMap g_mmap;
+static TMS34010MemoryMap MapStore[MAX_CPUS];
+static TMS34010MemoryMap *g_mmap = NULL;
+static INT32 active_cpu = -1;
+static INT32 total_cpus = 0;
+static INT32 context_size = 0;
 
 static UINT16 default_read(UINT32 address) { return ~0; }
 static void default_write(UINT32 address, UINT16 value) {}
@@ -51,19 +58,37 @@ static void IO_write020(UINT32 address, UINT16 value) { tms34020_io_register_w(a
 static void TMS34010MapReset();
 
 // cheat-engine hook-up
-void TMS34010Open(INT32 num)
+void TMS34010Open(INT32 nCpu)
 {
-	// not used, single core.
+	if (active_cpu != -1)	{
+		bprintf(PRINT_ERROR, _T("TMS34010Open(%d); when cpu already open.\n"), nCpu);
+	}
+
+	g_mmap = &MapStore[nCpu];
+	active_cpu = nCpu;
+
+	if (g_mmap->context) {
+		tms34010_set_context(g_mmap->context);
+	}
 }
 
 void TMS34010Close()
 {
-	// not used, single core.
+	if (active_cpu == -1)	{
+		bprintf(PRINT_ERROR, _T("TMS34010Close() called with no cpu open!\n"));
+	}
+
+	if (g_mmap->context) {
+		tms34010_get_context(g_mmap->context);
+	}
+
+	g_mmap = NULL;
+	active_cpu = -1;
 }
 
 INT32 TMS34010GetActive()
 {
-	return 0; // cpu is always active
+	return active_cpu;
 }
 
 void TMS34010WriteROM(UINT32 address, UINT8 value);
@@ -99,40 +124,72 @@ cpu_core_config TMS34010Config =
 };
 // end cheat-engine hook-up
 
-void TMS34010Init()
+static void TMS34010Init_Internal(INT32 nCpu, INT32 nType)
 {
-	CPU_TYPE = 10;
+	if (nCpu >= MAX_CPUS) {
+		bprintf(PRINT_ERROR, _T("TMS340%dInit(%d); cpu number too high, increase MAX_CPUS.\n"), nType, nCpu);
+	}
+
+	if (nType != 10 && nType != 20) {
+		bprintf(PRINT_ERROR, _T("TMS34010Init_Internal: Bad cpu nType specified.\n"));
+	}
+
+	if (nCpu == 0) {
+		memset(&MapStore, 0, sizeof(MapStore));
+	}
+
+	total_cpus = nCpu + 1;
+
+	TMS34010Open(nCpu);
+
+	g_mmap->CPU_TYPE = nType;
+
+	context_size = tms34010_context_size();
+	g_mmap->context = (UINT8*)BurnMalloc(context_size);
+
 	tms34010_init();
 	TMS34010SetToShift(default_shift_op);
 	TMS34010SetFromShift(default_shift_op);
 
 	// map IO registers
 	TMS34010MapReset();
-    TMS34010SetHandlers(MAXHANDLER-1, IO_read, IO_write);
-	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
+	switch (nType) {
+		case 10:
+			TMS34010SetHandlers(MAXHANDLER-1, IO_read, IO_write);
+			TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
+			break;
+		case 20:
+			TMS34010SetHandlers(MAXHANDLER-1, IO_read020, IO_write020);
+			TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00003ff, MAP_READ | MAP_WRITE);
+			break;
+	}
 
-	CpuCheatRegister(0, &TMS34010Config);
+	TMS34010Close();
+
+	CpuCheatRegister(nCpu, &TMS34010Config);
 }
 
-void TMS34020Init()
+void TMS34010Init(INT32 nCpu)
 {
-	CPU_TYPE = 20;
-	tms34010_init();
-	TMS34010SetToShift(default_shift_op);
-	TMS34010SetFromShift(default_shift_op);
+	TMS34010Init_Internal(nCpu, 10);
+}
 
-    // map IO registers
-    TMS34010SetHandlers(MAXHANDLER-1, IO_read020, IO_write020);
-	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00003ff, MAP_READ | MAP_WRITE);
-
-	CpuCheatRegister(0, &TMS34010Config);
+void TMS34020Init(INT32 nCpu)
+{
+	TMS34010Init_Internal(nCpu, 20);
 }
 
 void TMS34010Exit()
 {
-	tms34010_exit();
+	for (INT32 i = 0; i < total_cpus; i++) {
+		TMS34010Open(i);
+		tms34010_exit();
+		BurnFree(g_mmap->context);
+		TMS34010Close();
+	}
 
-	CPU_TYPE = 0;
+	total_cpus = 0;
+	active_cpu = -1;
 }
 
 void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock)
@@ -177,7 +234,11 @@ INT64 TMS34010TotalCycles()
 
 void TMS34010NewFrame()
 {
-	tms34010_new_frame();
+	for (INT32 i = 0; i < total_cpus; i++) {
+		TMS34010Open(i);
+		tms34010_new_frame();
+		TMS34010Close();
+	}
 }
 
 void TMS34010RunEnd()
@@ -187,7 +248,11 @@ void TMS34010RunEnd()
 
 void TMS34010Scan(INT32 nAction)
 {
-	tms34010_scan(nAction);
+	for (INT32 i = 0; i < total_cpus; i++) {
+		TMS34010Open(i);
+		tms34010_scan(nAction);
+		TMS34010Close();
+	}
 }
 
 UINT32 TMS34010GetPC()
@@ -204,7 +269,7 @@ UINT32 TMS34010GetPPC()
 
 void TMS34010Reset()
 {
-	switch (CPU_TYPE) {
+	switch (g_mmap->CPU_TYPE) {
 		case 10: tms34010_reset(); break;
 		case 20: tms34020_reset(); break;
 	}
@@ -222,7 +287,7 @@ void TMS34010ClearIRQ(UINT32 line)
 
 void TMS34010SetScanlineRender(pTMS34010ScanlineRender sr)
 {
-    scanlineRenderCallback = sr;
+    g_mmap->scanlineRenderCallback = sr;
 }
 
 void TMS34010SetToShift(void (*reader)(UINT32 addr, UINT16 *dst))
@@ -237,7 +302,7 @@ void TMS34010SetFromShift(void (*writer)(UINT32 addr, UINT16 *src))
 
 INT32 TMS34010GenerateScanline(INT32 line)
 {
-	tms34010_generate_scanline(line, scanlineRenderCallback);
+	tms34010_generate_scanline(line, g_mmap->scanlineRenderCallback);
 	return 0;
 }
 
@@ -254,62 +319,62 @@ UINT16 TMS34010HostRead(INT32 reg)
 UINT8 TMS34010ReadByte(UINT32 address)
 {
 	address <<= 3;
-    UINT8 *pr = g_mmap.map[PFN(address)];
+    UINT8 *pr = g_mmap->map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
         return tms_fast_read<UINT8>(pr,address);
     } else {
-        return g_mmap.read[(uintptr_t)pr](address);
+        return g_mmap->read[(uintptr_t)pr](address);
     }
 }
 
 UINT16 TMS34010ReadWord(UINT32 address)
 {
 	address <<= 3;
-    UINT8 *pr = g_mmap.map[PFN(address)];
+    UINT8 *pr = g_mmap->map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
         return BURN_ENDIAN_SWAP_INT16(tms_fast_read<UINT16>(pr,address));
     } else {
-        return g_mmap.read[(uintptr_t)pr](address);
+        return g_mmap->read[(uintptr_t)pr](address);
 	}
 }
 
 void TMS34010WriteByte(UINT32 address, UINT8 value)
 {
 	address <<= 3;
-    UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
+    UINT8 *pr = g_mmap->map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
         return tms_fast_write<UINT8>(pr,address, value);
     } else {
-        return g_mmap.write[(uintptr_t)pr](address, value);
+        return g_mmap->write[(uintptr_t)pr](address, value);
     }
 }
 
 void TMS34010WriteWord(UINT32 address, UINT16 value)
 {
 	address <<= 3;
-    UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
+    UINT8 *pr = g_mmap->map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
         return tms_fast_write<UINT16>(pr,address, BURN_ENDIAN_SWAP_INT16(value));
     } else {
-        return g_mmap.write[(uintptr_t)pr](address, value);
+        return g_mmap->write[(uintptr_t)pr](address, value);
     }
 }
 
 void TMS34010WriteROM(UINT32 address, UINT8 value) // for cheat-engine
 {
-    UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
+    UINT8 *pr = g_mmap->map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
 		tms_fast_write<UINT8>(pr,address, value);
     } else {
-		g_mmap.write[(uintptr_t)pr](address, value);
+		g_mmap->write[(uintptr_t)pr](address, value);
 	}
 
-	pr = g_mmap.map[PFN(address)];
+	pr = g_mmap->map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
 		tms_fast_write<UINT8>(pr,address, value);
@@ -319,12 +384,12 @@ void TMS34010WriteROM(UINT32 address, UINT8 value) // for cheat-engine
 static void TMS34010MapReset()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
-        g_mmap.map[page] = NULL;
-        g_mmap.map[page + PAGE_WADD] = NULL;
+        g_mmap->map[page] = NULL;
+        g_mmap->map[page + PAGE_WADD] = NULL;
     }
     for (int handler = 0; handler < MAXHANDLER; handler++) {
-        g_mmap.read[handler] = default_read;
-        g_mmap.write[handler] = default_write;
+        g_mmap->read[handler] = default_read;
+        g_mmap->write[handler] = default_write;
     }
 }
 
@@ -336,10 +401,10 @@ void TMS34010MapMemory(UINT8 *mem, UINT32 start, UINT32 end, UINT8 type)
     for (int i = 0; i < max_pages; i++, page++) {
 
         if (type & MAP_READ)
-            g_mmap.map[page] = mem + (PAGE_SIZE_8 * i);
+            g_mmap->map[page] = mem + (PAGE_SIZE_8 * i);
 
         if (type & MAP_WRITE)
-            g_mmap.map[page + PAGE_WADD] = mem + (PAGE_SIZE_8 * i);
+            g_mmap->map[page + PAGE_WADD] = mem + (PAGE_SIZE_8 * i);
     }
 }
 
@@ -351,10 +416,10 @@ void TMS34010MapHandler(uintptr_t num, UINT32 start, UINT32 end, UINT8 type)
     for (int i = 0; i < max_pages; i++, page++) {
 
         if (type & MAP_READ)
-            g_mmap.map[page] = (UINT8*) num;
+            g_mmap->map[page] = (UINT8*) num;
 
         if (type & MAP_WRITE)
-            g_mmap.map[page + PAGE_WADD] = (UINT8*) num;
+            g_mmap->map[page + PAGE_WADD] = (UINT8*) num;
     }
 }
 
@@ -362,7 +427,7 @@ int TMS34010SetReadHandler(UINT32 num, pTMS34010ReadHandler handler)
 {
     if (num >= MAXHANDLER)
         return 1;
-    g_mmap.read[num] = handler;
+    g_mmap->read[num] = handler;
     return 0;
 }
 
@@ -370,7 +435,7 @@ int TMS34010SetWriteHandler(UINT32 num, pTMS34010WriteHandler handler)
 {
     if (num >= MAXHANDLER)
         return 1;
-    g_mmap.write[num] = handler;
+    g_mmap->write[num] = handler;
     return 0;
 }
 
@@ -378,8 +443,8 @@ int TMS34010SetHandlers(UINT32 num, pTMS34010ReadHandler rhandler, pTMS34010Writ
 {
     if (num >= MAXHANDLER)
         return 1;
-    g_mmap.read[num] = rhandler;
-    g_mmap.write[num] = whandler;
+    g_mmap->read[num] = rhandler;
+    g_mmap->write[num] = whandler;
     return 0;
 }
 

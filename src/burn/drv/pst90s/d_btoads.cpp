@@ -647,7 +647,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	TMS34010Open(0);
 	TMS34010Reset();
+	TMS34010Close();
 
 	ZetOpen(0);
 	ZetReset();
@@ -682,7 +684,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvTMSROM		= Next; Next += 0x0800000;
+	DrvTMSROM		= Next; Next += 0x0800000 * 2;
 
 	DrvZ80ROM		= Next; Next += 0x0008000;
 
@@ -729,7 +731,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvBSMTPrg   + 0x000000,  k++, 1)) return 1;
 	}
 
-	TMS34020Init(); // 34020 !
+	TMS34020Init(0); // 34020 !
+	TMS34010Open(0);
 	TMS34010SetPixClock(10000000, 1);
 
 	TMS34010SetScanlineRender(ScanlineRender);
@@ -759,6 +762,7 @@ static INT32 DrvInit()
 
 	TMS34010SetHandlers(0x05, 	control_read, control_write);
 	TMS34010MapHandler(0x05, 	0x20000000, 0x20000fff, MAP_READ | MAP_WRITE);
+	TMS34010Close();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -832,6 +836,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ZetOpen(0);
+	TMS34010Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -858,6 +863,7 @@ static INT32 DrvFrame()
 	nExtraCycles[2] = tms32010TotalCycles() - nCyclesTotal[2];
 
 	ZetClose();
+	TMS34010Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

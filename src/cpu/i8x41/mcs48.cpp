@@ -787,9 +787,9 @@ OPHANDLER( da_a )
 
 	if ((mcs48->a & 0x0f) > 0x09 || (mcs48->psw & A_FLAG))
 	{
-		mcs48->a += 0x06;
-		if ((mcs48->a & 0xf0) == 0x00)
+		if (mcs48->a > 0xf9)
 			mcs48->psw |= C_FLAG;
+		mcs48->a += 0x06;
 	}
 	if ((mcs48->a & 0xf0) > 0x90 || (mcs48->psw & C_FLAG))
 	{

@@ -319,7 +319,6 @@ DECLARE_BLITTER_SET(dma_draw_noskip_noscale,   dma_state->bpp, EXTRACTGEN,   SKI
 static void TUnitDmaCallback()
 {
 	TMS34010GenerateIRQ(DMA_IRQ);
-	TMS34010RunEnd();
 	nDMA[DMA_COMMAND] &= ~0x8000;
 }
 

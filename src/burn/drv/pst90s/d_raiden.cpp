@@ -43,7 +43,7 @@ static UINT8 DrvJoy2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 enum {
-	GAME_RAIDEN=0,
+	GAME_RAIDEN = 0,
 	GAME_RAIDENB,
 	GAME_RAIDENK,
 	GAME_RAIDENU
@@ -182,9 +182,6 @@ static UINT8 __fastcall raidenReadByte(UINT32 vezAddress)
 		case 0x0e001: return ~DrvInput[2];
 		case 0x0e002: return ~DrvInput[3];
 		case 0x0e003: return ~DrvInput[4];
-
-	//  default:
-	//      bprintf(PRINT_NORMAL, _T("CPU #0 Attempt to read byte value of location %x\n"), vezAddress);
 	}
 
 	return 0;
@@ -227,9 +224,6 @@ static void __fastcall raidenWriteByte(UINT32 vezAddress, UINT8 byteValue)
 		case 0x0f034:
 			RamScroll[((vezAddress >> 2) & 1) | ((vezAddress >> 3) & 6)] = byteValue;
 		break;
-
-	//  default:
-	//      bprintf(PRINT_NORMAL, _T("CPU #0 Attempt to write byte value %x to location %x\n"), byteValue, vezAddress);
 	}
 }
 
@@ -257,9 +251,6 @@ static UINT8 __fastcall raidenAltReadByte(UINT32 vezAddress)
 		case 0x0d00c:
 		case 0x0d00d:
 			return seibu_main_word_read(vezAddress);
-
-	//  default:
-	//      bprintf(PRINT_NORMAL, _T("CPU #0 Attempt to read byte value of location %x\n"), vezAddress);
 	}
 
 	return 0;
@@ -323,9 +314,6 @@ static void __fastcall raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
 		case 0x0d067:
 			RamScroll[ vezAddress - 0x0d060 ] = byteValue;
 		break;
-
-	//  default:
-	//      bprintf(PRINT_NORMAL, _T("CPU #0 Attempt to write byte value %x to location %x\n"), byteValue, vezAddress);
 	}
 }
 
@@ -401,7 +389,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-void decode_gfx_1(UINT8 * dst, UINT8 * src)
+static void decode_gfx_1(UINT8 * dst, UINT8 * src)
 {
 	for(INT32 i=0;i<0x10000/32;i++) {
 		for (INT32 j=0;j<8;j++) {
@@ -420,7 +408,7 @@ void decode_gfx_1(UINT8 * dst, UINT8 * src)
 	}
 }
 
-void decode_gfx_2(UINT8 * dst, UINT8 * src)
+static void decode_gfx_2(UINT8 * dst, UINT8 * src)
 {
 	for(INT32 i=0;i<0x80000/128;i++) {
 		for (INT32 j=0;j<16;j++) {
@@ -636,6 +624,7 @@ static INT32 DrvInit(INT32 drv_select)
 	}
 
 	seibu_sound_init(0, 0x20000, 3579545, 3579545, 8000);
+	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -684,11 +673,7 @@ static void drawBackground()
 		INT32 code = BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0x0FFF;
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0xF000) >> 12;
 
-		if (sx < 0 || sx > 240 || sy < 0 || sy > 208) {
-			Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, RomGfx2);
-		} else {
-			Render16x16Tile(pTransDraw, code, sx, sy, color, 4, 0, RomGfx2);
-		}
+		Draw16x16Tile(pTransDraw, code, sx, sy, 0, 0, color, 4, 0, RomGfx2);
 	}
 }
 
@@ -720,11 +705,7 @@ static void drawForeground()
 		if (code == 0) continue;
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0xF000) >> 12;
 
-		if (sx < 0 || sx > 240 || sy < 0 || sy > 208) {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, RomGfx3);
-		} else {
-			Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 15, 0x100, RomGfx3);
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, 0, 0, color, 4, 15, 0x100, RomGfx3);
 	}
 }
 
@@ -746,38 +727,7 @@ static void drawSprites(INT32 pri)
 		INT32 color = RamSpr[offs+1] & 0xf;
 		INT32 code = (RamSpr[offs+2] | (RamSpr[offs+3] << 8)) & 0x0fff;
 
-		if (sx <= -16 || sx >= 256 || sy <= -16 || sy >= 224) continue;
-
-		if (sx < 0 || sx > 240 || sy < 0 || sy > 208)
-		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				}
-			}
-		} else {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				} else {
-					Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 15, 0x200, RomGfx4);
-				}
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 15, 0x200, RomGfx4);
 	}
 }
 
@@ -885,16 +835,16 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		VezOpen(0);
-		nCyclesDone[0] += VezRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Vez);
 		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
 		VezOpen(1);
-		nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Vez);
 		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[2]);

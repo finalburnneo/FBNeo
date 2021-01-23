@@ -85,6 +85,7 @@
     <ClInclude Include="..\..\src\burn\devices\st0020.h" />
     <ClInclude Include="..\..\src\burn\devices\t5182.h" />
     <ClInclude Include="..\..\src\burn\devices\timekpr.h" />
+    <ClInclude Include="..\..\src\burn\devices\tlc34076.h" />
     <ClInclude Include="..\..\src\burn\devices\tms34061.h" />
     <ClInclude Include="..\..\src\burn\devices\tms9928a.h" />
     <ClInclude Include="..\..\src\burn\devices\v3021.h" />
@@ -478,6 +479,7 @@
     <ClCompile Include="..\..\src\burn\devices\st0020.cpp" />
     <ClCompile Include="..\..\src\burn\devices\t5182.cpp" />
     <ClCompile Include="..\..\src\burn\devices\timekpr.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\tlc34076.cpp" />
     <ClCompile Include="..\..\src\burn\devices\tms34061.cpp" />
     <ClCompile Include="..\..\src\burn\devices\tms9928a.cpp" />
     <ClCompile Include="..\..\src\burn\devices\v3021.cpp" />
@@ -534,6 +536,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_artmagic.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_btoads.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_cischeat.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp" />

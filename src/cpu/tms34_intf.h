@@ -23,6 +23,7 @@ INT32 TMS34010Idle(INT32 cycles);
 void TMS34010TimerSetCB(void (*timer_cb)());
 void TMS34010TimerSet(INT32 cycles);
 INT64 TMS34010TotalCycles();
+INT32 TMS34010GetActive();
 void TMS34010Scan(INT32 nAction);
 void TMS34010RunEnd();
 void TMS34010NewFrame();

@@ -15957,8 +15957,6 @@ struct BurnDriver BurnDrvnes_swordmasterc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-//-------------------------------------------------------------------------------------------------------------------
-
 // Target - Renegade (USA) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_targetrenegadecRomDesc[] = {
@@ -16645,6 +16643,98 @@ struct BurnDriver BurnDrvnes_sdkbladej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_sdkbladejRomInfo, nes_sdkbladejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0
+static struct BurnRomInfo fds_sdgunworgacsescwacRomDesc[] = {
+	{ "sd gundam world - gachapon senshi - scramble wars (japan) [b] - castellano v1.0.fds",          131016, 0x53f73319, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_sdgunworgacsescwac, fds_sdgunworgacsescwac, fds_fdsbios)
+STD_ROM_FN(fds_sdgunworgacsescwac)
+
+struct BurnDriver BurnDrvfds_sdgunworgacsescwac = {
+	"fds_sdgunworgacsescwac", "fds_sdgunworgacsescwa", "fds_fdsbios", NULL, "1989?",
+	"SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_sdgunworgacsescwacRomInfo, fds_sdgunworgacsescwacRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Mario Brothers (Japan) - Castellano v1.0
+static struct BurnRomInfo fds_supermarbrocRomDesc[] = {
+	{ "super mario brothers (japan) - castellano v1.0.fds",          65516, 0x42d4a7c5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_supermarbroc, fds_supermarbroc, fds_fdsbios)
+STD_ROM_FN(fds_supermarbroc)
+
+struct BurnDriver BurnDrvfds_supermarbroc = {
+	"fds_supermarbroc", "fds_supermarbro", "fds_fdsbios", NULL, "1989?",
+	"Super Mario Brothers (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_supermarbrocRomInfo, fds_supermarbrocRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0
+static struct BurnRomInfo fds_linknoboucRomDesc[] = {
+	{ "link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds",          131000, 0x60a26198, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_linknobouc, fds_linknobouc, fds_fdsbios)
+STD_ROM_FN(fds_linknobouc)
+
+struct BurnDriver BurnDrvfds_linknobouc = {
+	"fds_linknobouc", "fds_linknobou", "fds_fdsbios", NULL, "1989?",
+	"Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_linknoboucRomInfo, fds_linknoboucRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Earth Bound Zero (USA)
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_earthboundzeroRomDesc[] = {
+	{ "earth bound zero (usa).nes",          524304, 0x6a5e39e2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_earthboundzero)
+STD_ROM_FN(nes_earthboundzero)
+
+struct BurnDriver BurnDrvnes_earthboundzero = {
+	"nes_earthboundzero", "nes_earthbound", NULL, NULL, "1989 ?",
+	"Earth Bound Zero (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_earthboundzeroRomInfo, nes_earthboundzeroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Earth Bound Zero (USA) - Castellano v0.99
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_earthboundzerocRomDesc[] = {
+	{ "earth bound zero (usa) - castellano v0.99.nes",          524304, 0x2e24c315, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_earthboundzeroc)
+STD_ROM_FN(nes_earthboundzeroc)
+
+struct BurnDriver BurnDrvnes_earthboundzeroc = {
+	"nes_earthboundzeroc", "nes_earthbound", NULL, NULL, "1989 ?",
+	"Earth Bound Zero (USA) - Castellano v0.99\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_earthboundzerocRomInfo, nes_earthboundzerocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

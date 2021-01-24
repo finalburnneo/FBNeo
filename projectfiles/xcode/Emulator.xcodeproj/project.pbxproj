@@ -1012,6 +1012,8 @@
 		FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6D246A6E03008938BC /* d_pasha2.cpp */; };
 		FEA35F70246A6E04008938BC /* d_shangha3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA35F6E246A6E03008938BC /* d_shangha3.cpp */; };
 		FEA5E79223563F5400DA2D9D /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA5E79023563F5400DA2D9D /* misc.cpp */; };
+		FEA608DC25BC0CD400E20B0D /* d_artmagic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA608DB25BC0CD300E20B0D /* d_artmagic.cpp */; };
+		FEA608DE25BC0EEB00E20B0D /* d_exterm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEA608DD25BC0EEB00E20B0D /* d_exterm.cpp */; };
 		FEC0A0E0249677750015AABF /* d_wecleman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0DF249677750015AABF /* d_wecleman.cpp */; };
 		FEC0A0E224A6F99A0015AABF /* d_magmax.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0E124A6F99A0015AABF /* d_magmax.cpp */; };
 		FEC0A0E424ACDFBF0015AABF /* d_cischeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEC0A0E324ACDFBE0015AABF /* d_cischeat.cpp */; };
@@ -2579,6 +2581,8 @@
 		FEA5E7BD2356721800DA2D9D /* neo_sprite_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = neo_sprite_func.pl; sourceTree = "<group>"; };
 		FEA5E7BE2356721800DA2D9D /* psikyo_tile_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = psikyo_tile_func.pl; sourceTree = "<group>"; };
 		FEA5E7BF2356721900DA2D9D /* toa_gp9001_func.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = toa_gp9001_func.pl; sourceTree = "<group>"; };
+		FEA608DB25BC0CD300E20B0D /* d_artmagic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_artmagic.cpp; sourceTree = "<group>"; };
+		FEA608DD25BC0EEB00E20B0D /* d_exterm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_exterm.cpp; sourceTree = "<group>"; };
 		FEB8081925A0F6AB0065DE86 /* biquad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = biquad.h; sourceTree = "<group>"; };
 		FEB8081A25A0F6AB0065DE86 /* downsample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = downsample.h; sourceTree = "<group>"; };
 		FEC0A0DF249677750015AABF /* d_wecleman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_wecleman.cpp; sourceTree = "<group>"; };
@@ -3665,6 +3669,7 @@
 				FE1B1F2F23561A680065200C /* d_aerofgt.cpp */,
 				FE1B1F5023561A680065200C /* d_airbustr.cpp */,
 				FE1B1F3823561A680065200C /* d_aquarium.cpp */,
+				FEA608DB25BC0CD300E20B0D /* d_artmagic.cpp */,
 				FE1B1F6723561A680065200C /* d_bestleag.cpp */,
 				FE1B1F7423561A680065200C /* d_bigstrkb.cpp */,
 				FE1B1F7823561A690065200C /* d_blackt96.cpp */,
@@ -4329,6 +4334,7 @@
 				FE1B211E23561A6D0065200C /* d_ettrivia.cpp */,
 				FE1B210123561A6D0065200C /* d_exedexes.cpp */,
 				FEFE604823C7805A00535CE2 /* d_exprraid.cpp */,
+				FEA608DD25BC0EEB00E20B0D /* d_exterm.cpp */,
 				FE1B219323561A6E0065200C /* d_fantland.cpp */,
 				FE1B218223561A6E0065200C /* d_fastfred.cpp */,
 				FE1B212823561A6D0065200C /* d_firetrap.cpp */,
@@ -6101,6 +6107,7 @@
 				FE1B24D223561A750065200C /* d_pwrinst2.cpp in Sources */,
 				FE1B257823561A760065200C /* d_supbtime.cpp in Sources */,
 				FE1B26C423561A770065200C /* d_wc90.cpp in Sources */,
+				FEA608DE25BC0EEB00E20B0D /* d_exterm.cpp in Sources */,
 				FE1B252D23561A760065200C /* d_raiden.cpp in Sources */,
 				FE1B26CE23561A780065200C /* d_popper.cpp in Sources */,
 				FE1B244B23561A750065200C /* Xz.c in Sources */,
@@ -6152,6 +6159,7 @@
 				FE1B271B23561A780065200C /* d_invaders.cpp in Sources */,
 				FE1B263823561A770065200C /* ctv.cpp in Sources */,
 				FE2BC6C12362CEBB00B9D150 /* FBPreferencesController.mm in Sources */,
+				FEA608DC25BC0CD400E20B0D /* d_artmagic.cpp in Sources */,
 				FE1B268F23561A770065200C /* d_sub.cpp in Sources */,
 				FE1B279023561A790065200C /* ym2413.c in Sources */,
 				FE1B271A23561A780065200C /* d_battlane.cpp in Sources */,

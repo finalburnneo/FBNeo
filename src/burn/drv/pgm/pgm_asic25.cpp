@@ -1588,7 +1588,7 @@ static UINT16 __fastcall olds_protection_r(UINT32 offset)
                             return 0x3f00 | ((m_olds_game_id >> 24) & 0xff);
 
                         default: // >= 5
-                            return 0x3f00 | BITSWAP08(m_olds_cmd, 5, 2, 9, 7, 10, 13, 12, 15);
+                            return 0x3f00 | BITSWAP08(m_olds_prot_hold, 5, 2, 9, 7, 10, 13, 12, 15);
                     }
                 }
 

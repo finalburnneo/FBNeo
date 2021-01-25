@@ -21,4 +21,3 @@ nvram
 *.nvr
 config/*
 fbneo.dat
-src/burn/snd/ics2115.cpp

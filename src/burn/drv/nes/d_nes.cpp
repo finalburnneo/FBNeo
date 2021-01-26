@@ -15459,7 +15459,7 @@ STD_ROM_PICK(nes_probotectorretc)
 STD_ROM_FN(nes_probotectorretc)
 
 struct BurnDriver BurnDrvnes_probotectorretc = {
-	"nes_probotectorretc", "nes_contra", NULL, NULL, "1989 ?",
+	"nes_probotectorretc", "nes_superc", NULL, NULL, "1989 ?",
 	"Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,

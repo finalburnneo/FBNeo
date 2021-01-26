@@ -16739,6 +16739,26 @@ struct BurnDriver BurnDrvnes_earthboundzeroc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_dai2jisuprotajcRomDesc[] = {
+	{ "Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes",          524304, 0x5b7ab480, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dai2jisuprotajc)
+STD_ROM_FN(nes_dai2jisuprotajc)
+
+struct BurnDriver BurnDrvnes_dai2jisuprotajc = {
+	"nes_dai2jisuprotajc", "nes_dai2jisuprota", NULL, NULL, "1989 ?",
+	"Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_dai2jisuprotajcRomInfo, nes_dai2jisuprotajcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)

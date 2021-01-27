@@ -6485,11 +6485,11 @@ STD_ROM_FN(cv_hrally)
 
 struct BurnDriver BurnDrvcv_hrally = {
     "cv_hrally", NULL, "cv_coleco", NULL, "2011",
-    "Hyper Rally (HB)\0", "Published by Team Pixelboy", "Konami", "ColecoVision",
+    "Hyper Rally (HB, Prototype)\0", "Tap accel. button for shift", "Konami", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_RACING, 0,
     CVGetZipName, cv_hrallyRomInfo, cv_hrallyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 

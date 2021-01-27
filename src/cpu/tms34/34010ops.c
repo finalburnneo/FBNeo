@@ -89,7 +89,7 @@ static const UINT8 fw_inc[32] = { 32,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,1
 
 static void unimpl(void)
 {
-	bprintf(0, _T("unimpl @ %x\n"), TMS34010GetPC());
+	bprintf(0, _T("CPU: %d  unimpl @ %x\n"), TMS34010GetActive(), TMS34010GetPC());
 #if 1
 	/* kludge for Super High Impact -- this doesn't seem to cause */
 	/* an illegal opcode exception */

@@ -14252,7 +14252,7 @@ static struct BurnRomInfo nes_dragobalziiirejinicRomDesc[] = {
 STD_ROM_PICK(nes_dragobalziiirejinic)
 STD_ROM_FN(nes_dragobalziiirejinic)
 
-struct BurnDriver BurnDrvnes_dragobalziiirejinic = {
+struct BurnDriverD BurnDrvnes_dragobalziiirejinic = {
 	"nes_dragobalziiirejinic", "nes_dragobalziiirejini", NULL, NULL, "1989 ?",
 	"Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -14556,7 +14556,7 @@ static struct BurnRomInfo nes_ganbagoegai2cRomDesc[] = {
 STD_ROM_PICK(nes_ganbagoegai2c)
 STD_ROM_FN(nes_ganbagoegai2c)
 
-struct BurnDriver BurnDrvnes_ganbagoegai2c = {
+struct BurnDriverD BurnDrvnes_ganbagoegai2c = {
 	"nes_ganbagoegai2c", "nes_ganbagoegai2", NULL, NULL, "1989 ?",
 	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Castellano v0.98\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -16619,7 +16619,7 @@ static struct BurnRomInfo nes_sdkbladeRomDesc[] = {
 STD_ROM_PICK(nes_sdkblade)
 STD_ROM_FN(nes_sdkblade)
 
-struct BurnDriver BurnDrvnes_sdkblade = {
+struct BurnDriverD BurnDrvnes_sdkblade = {
 	"nes_sdkblade", NULL, NULL, NULL, "1989 ?",
 	"SD Keiji - Blader (Japan) [T-Eng]\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -16637,7 +16637,7 @@ static struct BurnRomInfo nes_sdkbladejRomDesc[] = {
 STD_ROM_PICK(nes_sdkbladej)
 STD_ROM_FN(nes_sdkbladej)
 
-struct BurnDriver BurnDrvnes_sdkbladej = {
+struct BurnDriverD BurnDrvnes_sdkbladej = {
 	"nes_sdkbladej", "nes_sdkblade", NULL, NULL, "1989 ?",
 	"SD Keiji - Blader (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

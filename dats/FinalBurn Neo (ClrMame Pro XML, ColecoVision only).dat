@@ -1335,7 +1335,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hrally" romof="coleco">
-		<description>Hyper Rally (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<description>Hyper Rally (HB, Prototype) [Homebrew, Tap accel. button for shift]</description>
 		<year>2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Hyper Rally (2011)(Team Pixelboy).rom" size="32768" crc="f8b08810"/>

@@ -2997,6 +2997,7 @@ DRV		BurnDrvsgx_daimakai;
 DRV		BurnDrvDairesya;
 DRV		BurnDrvpce_daisenpu;
 DRV		BurnDrvMSX_dskeiba;
+DRV		BurnDrvnes_dai2jisuprotajc;
 DRV		BurnDrvnes_dai2jisuprotaj;
 DRV		BurnDrvnes_dai2jisuprota;
 DRV		BurnDrvpce_donaturl;
@@ -3715,7 +3716,9 @@ DRV		BurnDrvnes_dragobalzgaisajinzeje;
 DRV		BurnDrvnes_dragobalzgaisajinze;
 DRV		BurnDrvnes_dragobalziigefrj;
 DRV		BurnDrvnes_dragobalziigefr;
-DRV		BurnDrvnes_dragobalziiirejinic;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvnes_dragobalziiirejinic;// no comment
+#endif
 DRV		BurnDrvnes_dragobalziiirejinij;
 DRV		BurnDrvnes_dragobalziiirejini;
 DRV		BurnDrvDragnblz;
@@ -4014,6 +4017,8 @@ DRV		BurnDrvsms_eagles5;
 DRV		BurnDrvmd_earnests;
 DRV		BurnDrvmd_earnest;
 DRV		BurnDrvnes_earthboundc;
+DRV		BurnDrvnes_earthboundzeroc;
+DRV		BurnDrvnes_earthboundzero;
 DRV		BurnDrvnes_earthbound;
 DRV		BurnDrvsms_ejim;
 DRV		BurnDrvgg_ejim;
@@ -5087,7 +5092,9 @@ DRV		BurnDrvnes_ganbaregoemon2;
 DRV		BurnDrvnes_ganbagoegaic;
 DRV		BurnDrvnes_ganbagoegaij;
 DRV		BurnDrvnes_ganbagoegai;
-DRV		BurnDrvnes_ganbagoegai2c;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvnes_ganbagoegai2c;// no comment
+#endif
 DRV		BurnDrvnes_ganbagoegai2j;
 DRV		BurnDrvnes_ganbagoegai2;
 DRV		BurnDrvnes_ganbagoec;
@@ -7397,6 +7404,7 @@ DRV		BurnDrvLoffired;
 DRV		BurnDrvLoffire;
 DRV		BurnDrvMSX_linez;
 DRV		BurnDrvmd_supmagic;
+DRV		BurnDrvfds_linknobouc;
 DRV		BurnDrvfds_linknobouj;
 DRV		BurnDrvfds_linknobou;
 DRV		BurnDrvcv_linklogc;
@@ -9921,6 +9929,7 @@ DRV		BurnDrvPisces;
 DRV		BurnDrvPistoldm;
 DRV		BurnDrvPitnrun;
 DRV		BurnDrvPitnruna;
+DRV		BurnDrvPitfight3;
 DRV		BurnDrvPitfight;
 DRV		BurnDrvmd_pitfight1;
 DRV		BurnDrvmd_pitfight;
@@ -11450,11 +11459,14 @@ DRV		BurnDrvNeobattl;
 DRV		BurnDrvSdgndmps;
 DRV		BurnDrvGrainbow;
 DRV		BurnDrvGrainbowk;
+DRV		BurnDrvfds_sdgunworgacsescwac;
 DRV		BurnDrvfds_sdgunworgacsescwa;
 DRV		BurnDrvnes_sdhstangc;
 DRV		BurnDrvnes_sdhstang;
-DRV		BurnDrvnes_sdkblade;
-DRV		BurnDrvnes_sdkbladej;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvnes_sdkblade;	// no comment
+DRV		BurnDrvnes_sdkbladej;	// no comment
+#endif
 DRV		BurnDrvmd_sdvalis;
 DRV		BurnDrvsms_sdi;
 DRV		BurnDrvSdibl;
@@ -13276,6 +13288,7 @@ DRV		BurnDrvnes_smbspeh;
 DRV		BurnDrvnes_smbspe;
 DRV		BurnDrvnes_smbspex1;
 DRV		BurnDrvnes_smbtwopla;
+DRV		BurnDrvfds_supermarbroc;
 DRV		BurnDrvfds_supermarbro;
 DRV		BurnDrvfds_supermarbro2;
 DRV		BurnDrvnes_smbunldlx;
@@ -19384,6 +19397,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDairesya,			// Dai Ressya Goutou (Japan)
 	&BurnDrvpce_daisenpu,		// Dai Senpu
 	&BurnDrvMSX_dskeiba,		// Dai Shougai Keiba (Jpn)
+	&BurnDrvnes_dai2jisuprotajc,// Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0
 	&BurnDrvnes_dai2jisuprotaj,	// Dai-2-ji Super Robot Taisen (Japan)
 	&BurnDrvnes_dai2jisuprota,	// Dai-2-ji Super Robot Taisen (T-eng)
 	&BurnDrvpce_donaturl,		// Daichi Kun Crisis - Do Natural
@@ -20102,7 +20116,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dragobalzgaisajinze,// Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T-Eng)
 	&BurnDrvnes_dragobalziigefrj,// Dragon Ball Z II - Gekishin Freeza!! (Japan)
 	&BurnDrvnes_dragobalziigefr,// Dragon Ball Z II - Gekishin Freeza!! (T-Eng)
-	&BurnDrvnes_dragobalziiirejinic,// Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a
+#if defined FBNEO_DEBUG
+	&BurnDrvnes_dragobalziiirejinic,// Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a [no comment]
+#endif
 	&BurnDrvnes_dragobalziiirejinij,// Dragon Ball Z III - Ressen Jinzou Ningen (Japan)
 	&BurnDrvnes_dragobalziiirejini,// Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)
 	&BurnDrvDragnblz,			// Dragon Blaze
@@ -20401,6 +20417,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_earnests,		// Earnest Evans (Hack, Spanish)
 	&BurnDrvmd_earnest,			// Earnest Evans (USA)
 	&BurnDrvnes_earthboundc,	// Earth Bound (USA) (Proto) - Castellano v2.2
+	&BurnDrvnes_earthboundzeroc,// Earth Bound Zero (USA) - Castellano v0.99
+	&BurnDrvnes_earthboundzero,	// Earth Bound Zero (USA)
 	&BurnDrvnes_earthbound,		// Earthbound (USA) (Prototype)
 	&BurnDrvsms_ejim,			// Earthworm Jim (Bra)
 	&BurnDrvgg_ejim,			// Earthworm Jim (Euro)
@@ -21474,7 +21492,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ganbagoegaic,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - Castellano v0.99
 	&BurnDrvnes_ganbagoegaij,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)
 	&BurnDrvnes_ganbagoegai,	// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)
-	&BurnDrvnes_ganbagoegai2c,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Castellano v0.98
+#if defined FBNEO_DEBUG
+	&BurnDrvnes_ganbagoegai2c,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Castellano v0.98 [no comment]
+#endif
 	&BurnDrvnes_ganbagoegai2j,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)
 	&BurnDrvnes_ganbagoegai2,	// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)
 	&BurnDrvnes_ganbagoec,		// Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellano v1.0
@@ -23784,6 +23804,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLoffire,			// Line of Fire / Bakudan Yarou (World, FD1094 317-0136)
 	&BurnDrvMSX_linez,			// Linez (HB)
 	&BurnDrvmd_supmagic,		// Linghuan Daoshi Super Magician (Chi)
+	&BurnDrvfds_linknobouc,		// Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0
 	&BurnDrvfds_linknobouj,		// Link no Bouken - The Legend of Zelda 2 (Japan)
 	&BurnDrvfds_linknobou,		// Link no Bouken - The Legend of Zelda 2 (T-Eng)
 	&BurnDrvcv_linklogc,		// Linking Logic
@@ -26308,6 +26329,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPistoldm,			// Pistol Daimyo no Bouken (Japan)
 	&BurnDrvPitnrun,			// Pit & Run - F-1 Race (set 1)
 	&BurnDrvPitnruna,			// Pit & Run - F-1 Race (set 2)
+	&BurnDrvPitfight3,			// Pit Fighter (rev 3)
 	&BurnDrvPitfight,			// Pit Fighter (rev 9)
 	&BurnDrvmd_pitfight1,		// Pit-Fighter (World)
 	&BurnDrvmd_pitfight,		// Pit-Fighter (World, Rev. A)
@@ -27837,11 +27859,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSdgndmps,			// SD Gundam Psycho Salamander no Kyoui
 	&BurnDrvGrainbow,			// SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)
 	&BurnDrvGrainbowk,			// SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)
+	&BurnDrvfds_sdgunworgacsescwac,// SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0
 	&BurnDrvfds_sdgunworgacsescwa,// SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)
 	&BurnDrvnes_sdhstangc,		// SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Castellano v1.0
 	&BurnDrvnes_sdhstang,		// SD Hero Soukessen - Taose! Aku no Gundan (Japan)
-	&BurnDrvnes_sdkblade,		// SD Keiji - Blader (Japan) [T-Eng]
-	&BurnDrvnes_sdkbladej,		// SD Keiji - Blader (Japan)
+#if defined FBNEO_DEBUG
+	&BurnDrvnes_sdkblade,		// SD Keiji - Blader (Japan) [T-Eng] [no comment]
+	&BurnDrvnes_sdkbladej,		// SD Keiji - Blader (Japan) [no comment]
+#endif
 	&BurnDrvmd_sdvalis,			// SD Valis (Jpn)
 	&BurnDrvsms_sdi,			// SDI (Jpn)
 	&BurnDrvSdibl,				// SDI - Strategic Defense Initiative (bootleg, original hardware)
@@ -29663,6 +29688,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smbspe,			// Super Mario Bros. Special (Hack, v1.0-rc1)
 	&BurnDrvnes_smbspex1,		// Super Mario Bros. Special X1 (Hack)
 	&BurnDrvnes_smbtwopla,		// Super Mario Bros. Two Players (Hack)
+	&BurnDrvfds_supermarbroc,	// Super Mario Brothers (Japan) - Castellano v1.0
 	&BurnDrvfds_supermarbro,	// Super Mario Brothers (Japan)
 	&BurnDrvfds_supermarbro2,	// Super Mario Brothers 2 (Japan)
 	&BurnDrvnes_smbunldlx,		// Super Mario Unlimited Deluxe (Hack)

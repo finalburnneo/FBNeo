@@ -772,6 +772,14 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
+	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
+		<description>Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1) - Castellano v1.0</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds" size="131000" crc="60a26198"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
 	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1989?</year>
@@ -1004,6 +1012,14 @@
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>
+	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa">
+		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan) [b] - Castellano v1.0</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="sd gundam world - gachapon senshi - scramble wars (japan) [b] - castellano v1.0.fds" size="131016" crc="53f73319"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
 	<game name="sdgunworgacsescwa" romof="fdsbios">
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)</description>
 		<year>1989?</year>
@@ -1097,6 +1113,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Lode Runner II (Japan).fds" size="131000" crc="758888f4"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<driver status="good"/>
+	</game>
+	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro">
+		<description>Super Mario Brothers (Japan) - Castellano v1.0</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="super mario brothers (japan) - castellano v1.0.fds" size="65516" crc="42d4a7c5"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<driver status="good"/>
 	</game>

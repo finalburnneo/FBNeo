@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16136 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16143 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2957,6 +2957,7 @@ This list contains all games supported by FinalBurn Neo.
 | dairesya	|  	| Dai Ressya Goutou (Japan)				| ironhors	| 1986	| Konami (Kawaku| GX560		| 					|
 | pce_daisenpu	|  	| Dai Senpu						| 		| 1990	| NEC Avenue	| PC Engine	| 					|
 | msx_dskeiba	|  	| Dai Shougai Keiba (Jpn)				| 		| 1984	| Casio		| MSX		| 					|
+| nes_dai2jisuprotajc|  	| Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0	| nes_dai2jisuprota| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_dai2jisuprotaj|  	| Dai-2-ji Super Robot Taisen (Japan)			| nes_dai2jisuprota| 1991	| Banpresto	| Miscellaneous	| 					|
 | nes_dai2jisuprota|  	| Dai-2-ji Super Robot Taisen (T-eng)			| 		| 1991	| Banpresto	| Miscellaneous	| 					|
 | pce_donaturl	|  	| Daichi Kun Crisis - Do Natural			| 		| 1989	| Salio		| PC Engine	| 					|
@@ -3659,7 +3660,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dragobalzgaisajinze|  	| Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (T| 	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_dragobalziigefrj|  	| Dragon Ball Z II - Gekishin Freeza!! (Japan)		| nes_dragobalziigefr| 1991	| Bandai	| Miscellaneous	| 					|
 | nes_dragobalziigefr|  	| Dragon Ball Z II - Gekishin Freeza!! (T-Eng)		| 		| 1991	| Bandai	| Miscellaneous	| 					|
-| nes_dragobalziiirejinic|  	| Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Cas| nes_dragobalziiirejini| 1989 ?| Nintendo| Miscellaneous| 					|
+| nes_dragobalziiirejinic| D	| Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Cas| nes_dragobalziiirejini| 1989 ?| Nintendo| Miscellaneous| 					|
 | nes_dragobalziiirejinij|  	| Dragon Ball Z III - Ressen Jinzou Ningen (Japan)| nes_dragobalziiirejini| 1992| Bandai	| Miscellaneous	| 					|
 | nes_dragobalziiirejini|  	| Dragon Ball Z III - Ressen Jinzou Ningen (T-Eng)| 		| 1992	| Bandai	| Miscellaneous	| 					|
 | dragnblz	|  	| Dragon Blaze						| 		| 2000	| Psikyo	| PS5V2		| 					|
@@ -3952,6 +3953,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_earnests	|  	| Earnest Evans (Hack, Spanish)				| md_earnest	| 2019	| Renovation	| Sega Megadrive| 					|
 | md_earnest	|  	| Earnest Evans (USA)					| 		| 1992	| Renovation	| Sega Megadrive| 					|
 | nes_earthboundc|  	| Earth Bound (USA) (Proto) - Castellano v2.2		| nes_earthbound| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_earthboundzeroc|  	| Earth Bound Zero (USA) - Castellano v0.99		| nes_earthbound| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_earthboundzero|  	| Earth Bound Zero (USA)				| nes_earthbound| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_earthbound|  	| Earthbound (USA) (Prototype)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_ejim	|  	| Earthworm Jim (Bra)					| 		| 1995	| Tec Toy	| Sega Master Sy| 					|
 | gg_ejim	|  	| Earthworm Jim (Euro)					| 		| 1995	| Virgin Interac| Sega Game Gear| 					|
@@ -5011,7 +5014,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ganbagoegaic|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan) - C| nes_ganbagoegai| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_ganbagoegaij|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)	| nes_ganbagoegai| 1990	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegai|  	| Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| nes_ganbagoegai2c|  	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Ca| nes_ganbagoegai2| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_ganbagoegai2c| D	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Ca| nes_ganbagoegai2| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_ganbagoegai2j|  	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)	| nes_ganbagoegai2| 1992	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoegai2|  	| Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)	| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nes_ganbagoec	|  	| Ganbare Goemon! - Karakuri Douchuu (Japan) - Castellan| nes_ganbagoe	| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -7287,6 +7290,7 @@ This list contains all games supported by FinalBurn Neo.
 | loffire	|  	| Line of Fire / Bakudan Yarou (World, FD1094 317-0136)	| 		| 1989	| Sega		| X-Board	| 					|
 | msx_linez	|  	| Linez (HB)						| 		| 2018	| Wim DeWijngaer| MSX		| 					|
 | md_supmagic	|  	| Linghuan Daoshi Super Magician (Chi)			| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| fds_linknobouc|  	| Link no Bouken - The Legend of Zelda 2 (Japan) (Rev 1)| fds_linknobou	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_linknobouj|  	| Link no Bouken - The Legend of Zelda 2 (Japan)	| fds_linknobou	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_linknobou	|  	| Link no Bouken - The Legend of Zelda 2 (T-Eng)	| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | cv_linklogc	|  	| Linking Logic						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
@@ -9781,6 +9785,7 @@ This list contains all games supported by FinalBurn Neo.
 | pistoldm	|  	| Pistol Daimyo no Bouken (Japan)			| 		| 1990	| Namco		| System 1	| 					|
 | pitnrun	|  	| Pit & Run - F-1 Race (set 1)				| 		| 1984	| Taito Corporat| Miscellaneous	| Missing analog sounds and some gfx eff|
 | pitnruna	|  	| Pit & Run - F-1 Race (set 2)				| pitnrun	| 1984	| Taito Corporat| Miscellaneous	| Missing analog sounds and some gfx eff|
+| pitfight3	|  	| Pit Fighter (rev 3)					| pitfight	| 1990	| Atari Games	| Miscellaneous	| 					|
 | pitfight	|  	| Pit Fighter (rev 9)					| 		| 1990	| Atari Games	| Miscellaneous	| 					|
 | md_pitfight1	|  	| Pit-Fighter (World)					| md_pitfight	| 1991	| Tengen	| Sega Megadrive| 					|
 | md_pitfight	|  	| Pit-Fighter (World, Rev. A)				| 		| 1991	| Tengen	| Sega Megadrive| 					|
@@ -10110,7 +10115,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_probotectorc|  	| Probotector (Europe) - Castellano v1.0		| nes_contra	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_probotector|  	| Probotector (Europe)					| nes_contra	| 1990	| Konami	| Miscellaneous	| 					|
 | md_probots	|  	| Probotector (Hack, Spanish)				| md_contra	| 2017	| Konami	| Sega Megadrive| 					|
-| nes_probotectorretc|  	| Probotector II - Return of the Evil Forces (Europe) - | nes_contra	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_probotectorretc|  	| Probotector II - Return of the Evil Forces (Europe) - | nes_superc	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | msx_profbb	|  	| Professional Baseball (Jpn)				| 		| 1986	| Technopolis So| MSX		| 					|
 | spec_probmxsimexpert|  	| Professional BMX Simulator - Expert			| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
 | spec_probmxsimstandard|  	| Professional BMX Simulator - Standard		| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
@@ -11286,11 +11291,12 @@ This list contains all games supported by FinalBurn Neo.
 | sdgndmps	|  	| SD Gundam Psycho Salamander no Kyoui			| 		| 1991	| Banpresto / Ba| Miscellaneous	| 					|
 | grainbow	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Japan)	| 		| 1993	| Banpresto	| Miscellaneous	| 					|
 | grainbowk	|  	| SD Gundam Sangokushi Rainbow Tairiku Senki (Korea)	| grainbow	| 1993	| Banpresto	| Miscellaneous	| 					|
+| fds_sdgunworgacsescwac|  	| SD Gundam World - Gachapon Senshi - Scramble Wars (Jap| fds_sdgunworgacsescwa| 1989?| Nintendo	| Miscellaneous	| 					|
 | fds_sdgunworgacsescwa|  	| SD Gundam World - Gachapon Senshi - Scramble Wars (Jap| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_sdhstangc	|  	| SD Hero Soukessen - Taose! Aku no Gundan (Japan) - Cas| nes_sdhstang	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_sdhstang	|  	| SD Hero Soukessen - Taose! Aku no Gundan (Japan)	| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
-| nes_sdkblade	|  	| SD Keiji - Blader (Japan) [T-Eng]			| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
-| nes_sdkbladej	|  	| SD Keiji - Blader (Japan)				| nes_sdkblade	| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_sdkblade	| D	| SD Keiji - Blader (Japan) [T-Eng]			| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| nes_sdkbladej	| D	| SD Keiji - Blader (Japan)				| nes_sdkblade	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | md_sdvalis	|  	| SD Valis (Jpn)					| md_sydvalis	| 1992	| Laser Soft	| Sega Megadrive| 					|
 | sms_sdi	|  	| SDI (Jpn)						| sms_globald	| 1987	| Sega		| Sega Master Sy| 					|
 | sdibl		|  	| SDI - Strategic Defense Initiative (bootleg, original | sdi		| 1987	| Sega		| System 16B	| 					|
@@ -13084,6 +13090,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_smbspe	|  	| Super Mario Bros. Special (Hack, v1.0-rc1)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smbspex1	|  	| Super Mario Bros. Special X1 (Hack)			| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smbtwopla	|  	| Super Mario Bros. Two Players (Hack)			| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
+| fds_supermarbroc|  	| Super Mario Brothers (Japan) - Castellano v1.0	| fds_supermarbro| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_supermarbro|  	| Super Mario Brothers (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_supermarbro2|  	| Super Mario Brothers 2 (Japan)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_smbunldlx	|  	| Super Mario Unlimited Deluxe (Hack)			| nes_smb	| 2020	| Nintendo	| Miscellaneous	| 					|

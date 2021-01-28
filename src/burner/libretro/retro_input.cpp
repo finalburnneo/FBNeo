@@ -349,6 +349,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_JOYAXIS_FULL;
 			pgi->Input.JoyAxis.nAxis = axis;
 			pgi->Input.JoyAxis.nJoy = (UINT8)port;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -400,6 +401,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_MOUSEAXIS;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -416,6 +418,7 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			pgi->nInput = GIT_DIRECT_COORD;
 			pgi->Input.MouseAxis.nAxis = axis;
 			pgi->Input.MouseAxis.nMouse = (UINT8)port;
+			if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 			sAxiBinds[port][axis].index = index;
 			sAxiBinds[port][axis].id = id;
 			retro_input_descriptor descriptor;
@@ -439,6 +442,7 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	pgi->nInput = GIT_SWITCH;
 	if (!bInputInitialized)
 		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+	if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 	sKeyBinds[pgi->Input.Switch.nCode].id = id;
 	sKeyBinds[pgi->Input.Switch.nCode].port = port;
 	sKeyBinds[pgi->Input.Switch.nCode].device = device;
@@ -485,6 +489,7 @@ static INT32 GameInpDigital2RetroInpAnalogRight(struct GameInp* pgi, unsigned po
 	pgi->nInput = GIT_SWITCH;
 	if (!bInputInitialized)
 		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+	if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 	sKeyBinds[pgi->Input.Switch.nCode].id = id;
 	sKeyBinds[pgi->Input.Switch.nCode].port = port;
 	sKeyBinds[pgi->Input.Switch.nCode].device = RETRO_DEVICE_ANALOG;
@@ -514,6 +519,7 @@ static INT32 GameInpAnalog2RetroInpDualKeys(struct GameInp* pgi, unsigned port, 
 	pgi->nInput = GIT_JOYAXIS_FULL;
 	pgi->Input.JoyAxis.nAxis = axis;
 	pgi->Input.JoyAxis.nJoy = (UINT8)port;
+	if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
 	sAxiBinds[port][axis].index = -1;
 	sAxiBinds[port][axis].id_pos = id_pos;
 	sAxiBinds[port][axis].id_neg = id_neg;

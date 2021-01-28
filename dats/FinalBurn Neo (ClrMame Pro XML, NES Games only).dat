@@ -2343,6 +2343,13 @@
 		<rom name="Cycle Race - Road Man (Japan).nes" size="262160" crc="899ad1fd"/>
 		<driver status="good"/>
 	</game>
+	<game name="dai2jisuprotajc" cloneof="dai2jisuprota" romof="dai2jisuprota">
+		<description>Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dai-2-ji Super Robot Taisen (Japan) - Castellano v1.0.nes" size="524304" crc="5b7ab480"/>
+		<driver status="good"/>
+	</game>
 	<game name="dai2jisuprotaj" cloneof="dai2jisuprota" romof="dai2jisuprota">
 		<description>Dai-2-ji Super Robot Taisen (Japan)</description>
 		<year>1991</year>
@@ -3043,13 +3050,6 @@
 		<rom name="Dragon Ball Z II - Gekishin Freeza!! (T-Eng).nes" size="524304" crc="ffa1e20e"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragobalziiirejinic" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
-		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="dragon ball z iii - ressen jinzou ningen (japan) - castellano v1.0a.nes" size="524304" crc="ff1d3cf3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dragobalziiirejinij" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
 		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan)</description>
 		<year>1992</year>
@@ -3370,6 +3370,20 @@
 		<year>1989 ?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="earth bound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundzeroc" cloneof="earthbound" romof="earthbound">
+		<description>Earth Bound Zero (USA) - Castellano v0.99</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="earth bound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundzero" cloneof="earthbound" romof="earthbound">
+		<description>Earth Bound Zero (USA)</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="earth bound zero (usa).nes" size="524304" crc="6a5e39e2"/>
 		<driver status="good"/>
 	</game>
 	<game name="earthbound">
@@ -4273,13 +4287,6 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng).nes" size="524304" crc="a1c4c69e"/>
-		<driver status="good"/>
-	</game>
-	<game name="ganbagoegai2c" cloneof="ganbagoegai2" romof="ganbagoegai2">
-		<description>Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan) - Castellano v0.98</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="ganbare goemon gaiden 2 - tenka no zaihou (japan) - castellano v0.98.nes" size="524304" crc="c2e96c08"/>
 		<driver status="good"/>
 	</game>
 	<game name="ganbagoegai2j" cloneof="ganbagoegai2" romof="ganbagoegai2">
@@ -8636,7 +8643,7 @@
 		<rom name="Probotector (Europe).nes" size="131088" crc="8236d3e0"/>
 		<driver status="good"/>
 	</game>
-	<game name="probotectorretc" cloneof="contra" romof="contra">
+	<game name="probotectorretc" cloneof="superc" romof="superc">
 		<description>Probotector II - Return of the Evil Forces (Europe) - Castellano v1.0</description>
 		<year>1989 ?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -9544,20 +9551,6 @@
 		<year>1989 ?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="SD Hero Soukessen - Taose! Aku no Gundan (Japan).nes" size="262160" crc="f17fefdd"/>
-		<driver status="good"/>
-	</game>
-	<game name="sdkblade">
-		<description>SD Keiji - Blader (Japan) [T-Eng]</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="sd keiji - blader (japan) [t-eng].nes" size="393232" crc="1fa8a57d"/>
-		<driver status="good"/>
-	</game>
-	<game name="sdkbladej" cloneof="sdkblade" romof="sdkblade">
-		<description>SD Keiji - Blader (Japan)</description>
-		<year>1989 ?</year>
-		<manufacturer>Nintendo</manufacturer>
-		<rom name="sd keiji - blader (japan).nes" size="262160" crc="452c373c"/>
 		<driver status="good"/>
 	</game>
 	<game name="secretties">

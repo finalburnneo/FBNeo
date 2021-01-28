@@ -1,3 +1,6 @@
+#ifndef JOYPROCESS
+#define JOYPROCESS
+
 // ---[ ProcessJoystick() Flags (grep ProcessJoystick in drv/pre90s for examples)
 #define INPUT_4WAY              0x02  // convert 8-way inputs to 4-way
 #define INPUT_CLEAROPPOSITES    0x04  // disallow up+down or left+right
@@ -22,3 +25,33 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 INT16 AnalogDeadZone(INT16 anaval);
 
 UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max);
+
+// ButtonToggle, an easy-to-use state-scannable togglebutton
+struct ButtonToggle {
+	INT32 state;
+	INT32 last_state;
+
+	ButtonToggle() {
+		state = 0;
+		last_state = 0;
+	}
+
+	INT32 Toggle(UINT8 &input) {
+		INT32 toggled = 0;
+		if (!last_state && input) {
+			state ^= 1;
+			toggled = 1;
+		}
+		last_state = input;
+		input = state;
+
+		return (toggled);
+	}
+
+	void Scan() {
+		SCAN_VAR(state);
+		SCAN_VAR(last_state);
+	}
+};
+
+#endif

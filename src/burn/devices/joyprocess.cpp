@@ -1,3 +1,4 @@
+// JoyProcess (c)2016-2021 dink & iq_132
 #include "burnint.h"
 #include "joyprocess.h"
 

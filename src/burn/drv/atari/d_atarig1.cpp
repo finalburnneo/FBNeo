@@ -1059,3 +1059,79 @@ struct BurnDriver BurnDrvPitfight = {
 	336, 240, 4, 3
 };
 
+
+// Pit Fighter (rev 3)
+
+static struct BurnRomInfo pitfight3RomDesc[] = {
+	{ "136081-3028.05d",			0x10000, 0x99530da4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "136081-3029.05b",			0x10000, 0x78c7afbf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136081-3030.15d",			0x10000, 0xb053e779, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136081-3031.15b",			0x10000, 0x2b8c4d13, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "136081-1060.1b",				0x10000, 0x231d71d7, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
+
+	{ "136081-1017.130m",			0x10000, 0xad3cfea5, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "136081-1018.120m",			0x10000, 0x1a0f8bcf, 3 | BRF_GRA },           //  6
+	{ "136081-1021.90m",			0x10000, 0x777efee3, 3 | BRF_GRA },           //  7
+	{ "136081-1022.75m",			0x10000, 0x524319d0, 3 | BRF_GRA },           //  8
+	{ "136081-1025.45m",			0x10000, 0xfc41691a, 3 | BRF_GRA },           //  9
+
+	{ "136081-1027.15l",			0x10000, 0xa59f381d, 4 | BRF_GRA },           // 10 Alpha Tiles
+
+	{ "136081-1001.65r",			0x20000, 0x3af31444, 5 | BRF_GRA },           // 11 RLE-Compressed Sprites
+	{ "136081-1002.65n",			0x20000, 0xf1d76a4c, 5 | BRF_GRA },           // 12
+	{ "136081-1003.70r",			0x20000, 0x28c41c2a, 5 | BRF_GRA },           // 13
+	{ "136081-1004.70n",			0x20000, 0x977744da, 5 | BRF_GRA },           // 14
+	{ "136081-1005.75r",			0x20000, 0xae59aef2, 5 | BRF_GRA },           // 15
+	{ "136081-1006.75n",			0x20000, 0xb6ccd77e, 5 | BRF_GRA },           // 16
+	{ "136081-1007.90r",			0x20000, 0xba33b0c0, 5 | BRF_GRA },           // 17
+	{ "136081-1008.90n",			0x20000, 0x09bd047c, 5 | BRF_GRA },           // 18
+	{ "136081-1009.100r",			0x20000, 0xab85b00b, 5 | BRF_GRA },           // 19
+	{ "136081-1010.100n",			0x20000, 0xeca94bdc, 5 | BRF_GRA },           // 20
+	{ "136081-1011.115r",			0x20000, 0xa86582fd, 5 | BRF_GRA },           // 21
+	{ "136081-1012.115n",			0x20000, 0xefd1152d, 5 | BRF_GRA },           // 22
+	{ "136081-1013.120r",			0x20000, 0xa141379e, 5 | BRF_GRA },           // 23
+	{ "136081-1014.120n",			0x20000, 0x93bfcc15, 5 | BRF_GRA },           // 24
+	{ "136081-1015.130r",			0x20000, 0x9378ad0b, 5 | BRF_GRA },           // 25
+	{ "136081-1016.130n",			0x20000, 0x19c3fbe0, 5 | BRF_GRA },           // 26
+
+	{ "136081-1061.7k",				0x10000, 0x5b0468c6, 6 | BRF_GRA },           // 27 Samples
+	{ "136081-1062.7j",				0x10000, 0xf73fe3cb, 6 | BRF_GRA },           // 28
+	{ "136081-1063.7e",				0x10000, 0xaa93421d, 6 | BRF_GRA },           // 29
+	{ "136081-1064.7d",				0x10000, 0x33f045d5, 6 | BRF_GRA },           // 30
+
+	{ "136081-1040.30s",			0x00200, 0x9b0f8b95, 7 | BRF_GRA },           // 31  RLE-Control PROMs
+	{ "136081-1041.25s",			0x00200, 0xf7ba6153, 7 | BRF_GRA },           // 32
+	{ "136081-1042.20s",			0x00200, 0x3572fe68, 7 | BRF_GRA },           // 33
+
+	{ "gal16v8a-136081-1043.15e",	0x00117, 0x649d9c0d, 8 | BRF_OPT },           // 34 PLDs
+	{ "gal16v8a-136079-1045.40p",	0x00117, 0x535c4d2e, 8 | BRF_OPT },           // 35
+	{ "gal16v8a-136079-1046.65d",	0x00117, 0x38b22b2c, 8 | BRF_OPT },           // 36
+	{ "gal16v8a-136079-1047.40s",	0x00117, 0x20839904, 8 | BRF_OPT },           // 37
+	{ "gal16v8a-136079-1048.125f",	0x00117, 0xd16e8d6e, 8 | BRF_OPT },           // 38
+	{ "gal16v8a-136079-1049.120f",	0x00117, 0x68440ab1, 8 | BRF_OPT },           // 39
+	{ "gal16v8a-136079-1050.115f",	0x00117, 0x20dc296a, 8 | BRF_OPT },           // 40
+	{ "gal16v8a-136079-1051.105f",	0x00117, 0x45f0cb5f, 8 | BRF_OPT },           // 41
+	{ "gal16v8a-136079-1052.30n",	0x00117, 0x6b3d2669, 8 | BRF_OPT },           // 42
+};
+
+STD_ROM_PICK(pitfight3)
+STD_ROM_FN(pitfight3)
+
+static INT32 Pitfight111Init()
+{
+	pitfight = 1;
+
+	return DrvInit(1, 111);
+}
+
+struct BurnDriver BurnDrvPitfight3 = {
+	"pitfight3", "pitfight", NULL, NULL, "1990",
+	"Pit Fighter (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, pitfight3RomInfo, pitfight3RomName, NULL, NULL, NULL, NULL, PitfightInputInfo, PitfightDIPInfo,
+	Pitfight111Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
+	336, 240, 4, 3
+};
+

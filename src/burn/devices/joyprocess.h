@@ -1,3 +1,6 @@
+#ifndef JOYPROCESS
+#define JOYPROCESS
+
 // ---[ ProcessJoystick() Flags (grep ProcessJoystick in drv/pre90s for examples)
 #define INPUT_4WAY              0x02  // convert 8-way inputs to 4-way
 #define INPUT_CLEAROPPOSITES    0x04  // disallow up+down or left+right
@@ -50,3 +53,5 @@ struct ButtonToggle {
 		SCAN_VAR(last_state);
 	}
 };
+
+#endif

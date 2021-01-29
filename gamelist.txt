@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16143 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16193 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5867,6 +5867,12 @@ This list contains all games supported by FinalBurn Neo.
 | hidnc2k	|  	| Hidden Catch 2000 (AT89c52 protected)			| 		| 1999	| Eolith	| Miscellaneous	| 					|
 | hidctch3	|  	| Hidden Catch 3 (ver 1.00 / pcb ver 3.05)		| 		| 2000	| Eolith	| Miscellaneous	| 					|
 | nes_higem	|  	| Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Ja| 		| 1987	| Capcom	| Miscellaneous	| 					|
+| hiimpactp	|  	| High Impact Football (prototype, revision0 proto 8.6 1| hiimpact	| 1990	| Williams	| Y Unit	| 					|
+| hiimpact1	|  	| High Impact Football (rev LA1 12/16/90)		| hiimpact	| 1990	| Williams	| Y Unit	| 					|
+| hiimpact2	|  	| High Impact Football (rev LA2 12/26/90)		| hiimpact	| 1990	| Williams	| Y Unit	| 					|
+| hiimpact3	|  	| High Impact Football (rev LA3 12/27/90)		| hiimpact	| 1990	| Williams	| Y Unit	| 					|
+| hiimpact4	|  	| High Impact Football (rev LA4 02/04/91)		| hiimpact	| 1990	| Williams	| Y Unit	| 					|
+| hiimpact	|  	| High Impact Football (rev LA5 02/15/91)		| 		| 1990	| Williams	| Y Unit	| 					|
 | sms_highsc	|  	| High School! Kimengumi (Jpn)				| 		| 1986	| Sega		| Sega Master Sy| 					|
 | sms_highsce	|  	| High School! Kimengumi (T-eng)			| sms_highsc	| 2005	| Sega - SMS Pow| Sega Master Sy| 					|
 | md_havocu	|  	| High Seas Havoc (USA)					| md_havoc	| 1993	| Data East	| Sega Megadrive| 					|
@@ -8371,11 +8377,27 @@ This list contains all games supported by FinalBurn Neo.
 | gg_mk		|  	| Mortal Kombat (Euro, USA, v2.6)			| 		| 1993	| Arena		| Sega Game Gear| 					|
 | md_mks	|  	| Mortal Kombat (Hack, Spanish)				| md_mk		| 2013	| Acclaim	| Sega Megadrive| 					|
 | gg_mkj	|  	| Mortal Kombat (Jpn, v3.3)				| gg_mk		| 1993	| Acclaim Entert| Sega Game Gear| 					|
+| mknifty666	|  	| Mortal Kombat (Nifty Kombo 666, hack)			| mk		| 1992	| hack		| Y Unit	| 					|
+| mknifty	|  	| Mortal Kombat (Nifty Kombo, hack)			| mk		| 1992	| hack		| Y Unit	| 					|
+| mkprot4	|  	| Mortal Kombat (prototype, rev 4.0 07/14/92)		| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkprot8	|  	| Mortal Kombat (prototype, rev 8.0 07/21/92)		| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkprot9	|  	| Mortal Kombat (prototype, rev 9.0 07/28/92)		| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkrep		| D	| Mortal Kombat (Reptile Man hack)			| mk		| 1992	| hack		| Y Unit	| 					|
+| mkla1		|  	| Mortal Kombat (rev 1.0 08/09/92)			| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkla2		|  	| Mortal Kombat (rev 2.0 08/18/92)			| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkla3		|  	| Mortal Kombat (rev 3.0 08/31/92)			| mk		| 1992	| Midway	| Y Unit	| 					|
+| mkla4		|  	| Mortal Kombat (rev 4.0 09/28/92)			| mk		| 1992	| Midway	| Y Unit	| 					|
 | mkr4		|  	| Mortal Kombat (rev 4.0 T-Unit 02/11/93)		| mk		| 1992	| Midway	| Midway T-Unit	| 					|
 | mk		|  	| Mortal Kombat (rev 5.0 T-Unit 03/19/93)		| 		| 1992	| Midway	| Midway T-Unit	| 					|
+| mkyturboe	|  	| Mortal Kombat (Turbo 3.0 08/31/92, hack)		| mk		| 1992	| hack		| Y Unit	| 					|
+| mkyturbo	|  	| Mortal Kombat (Turbo 3.1 09/09/93, hack)		| mk		| 1992	| hack		| Y Unit	| 					|
 | mktturbo	|  	| Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)	| mk		| 1992	| Hack		| Midway T-Unit	| 					|
 | md_mka	|  	| Mortal Kombat (World)					| md_mk		| 1993	| Arena		| Sega Megadrive| 					|
 | md_mk		|  	| Mortal Kombat (World, v1.1)				| 		| 1993	| Arena		| Sega Megadrive| 					|
+| mkyawdim	|  	| Mortal Kombat (Yawdim bootleg, set 1)			| mk		| 1992	| bootleg (Yawdi| Y Unit	| 					|
+| mkyawdim2	|  	| Mortal Kombat (Yawdim bootleg, set 2)			| mk		| 1992	| bootleg (Yawdi| Y Unit	| 					|
+| mkyawdim3	|  	| Mortal Kombat (Yawdim bootleg, set 3)			| mk		| 1992	| bootleg (Yawdi| Y Unit	| 					|
+| mkyawdim4	|  	| Mortal Kombat (Yawdim bootleg, set 4)			| mk		| 1992	| bootleg (Yawdi| Y Unit	| 					|
 | sms_mk3	|  	| Mortal Kombat 3 (Bra)					| 		| 1996	| Tec Toy	| Sega Master Sy| 					|
 | md_mk3	|  	| Mortal Kombat 3 (Euro)				| 		| 1995	| Acclaim Entert| Sega Megadrive| Press A+C+Start for 4P mode.		|
 | gg_mk3	|  	| Mortal Kombat 3 (Euro)				| 		| 1995	| Acclaim Entert| Sega Game Gear| 					|
@@ -8644,6 +8666,11 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nantebas	|  	| Nantettatte!! Baseball (T-eng)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
 | md_smasters	|  	| Naomichi Ozaki no Super Masters (Jpn)			| md_arnoldp	| 1989	| Sega		| Sega Megadrive| 					|
 | pce_blodwolf	|  	| Narazumono Sentai Butai - Bloody Wolf			| 		| 1989	| Data East	| PC Engine	| 					|
+| narc1		|  	| Narc (rev 1.80)					| narc		| 1988	| Williams	| Z Unit	| 					|
+| narc2		|  	| Narc (rev 2.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
+| narc3		|  	| Narc (rev 3.20)					| narc		| 1988	| Williams	| Z Unit	| 					|
+| narc4		|  	| Narc (rev 4.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
+| narc		|  	| Narc (rev 7.00)					| 		| 1988	| Williams	| Z Unit	| 					|
 | nes_narc	|  	| NARC (USA)						| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | spec_narcopol	|  	| Narco Police (128K)					| 		| 1991	| Rajsoft	| ZX Spectrum	| 					|
 | spec_narc	|  	| NARC							| 		| 1990	| Ocean		| ZX Spectrum	| 					|
@@ -11767,6 +11794,11 @@ This list contains all games supported by FinalBurn Neo.
 | md_smartmouse	|  	| Smart Mouse (HB)					| 		| 199X	| Chuanpu	| Sega Megadrive| 					|
 | fds_smashpingpong|  	| Smash Ping Pong (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | sms_smashtv	|  	| Smash T.V. (Euro)					| 		| 1992	| Flying Edge	| Sega Master Sy| 					|
+| smashtv3	|  	| Smash T.V. (rev 3.01)					| smashtv	| 1990	| Williams	| Y Unit	| 					|
+| smashtv4	|  	| Smash T.V. (rev 4.00)					| smashtv	| 1990	| Williams	| Y Unit	| 					|
+| smashtv5	|  	| Smash T.V. (rev 5.00)					| smashtv	| 1990	| Williams	| Y Unit	| 					|
+| smashtv6	|  	| Smash T.V. (rev 6.00)					| smashtv	| 1990	| Williams	| Y Unit	| 					|
+| smashtv	|  	| Smash T.V. (rev 8.00)					| 		| 1990	| Williams	| Y Unit	| 					|
 | nes_smashtvc	|  	| Smash T.V. (USA) - Castellano v1.0			| nes_smashtv	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_smashtv	|  	| Smash T.V. (USA)					| 		| 1991	| Acclaim	| Miscellaneous	| 					|
 | gg_smashtv	|  	| Smash T.V. (World)					| 		| 1992	| Flying Edge	| Sega Game Gear| 					|
@@ -12806,6 +12838,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_strider2u	|  	| Strider Returns - Journey from Darkness (USA)		| md_strider2	| 1990	| U.S. Gold	| Sega Megadrive| 					|
 | strkfgtrj	|  	| Strike Fighter (Japan)				| strkfgtr	| 1991	| Sega		| Y-Board	| 					|
 | strkfgtr	|  	| Strike Fighter (World)				| 		| 1991	| Sega		| Y-Board	| 					|
+| strkforc	|  	| Strike Force (rev 1 02/25/91)				| 		| 1991	| Midway	| Y Unit	| 					|
 | stg		|  	| Strike Gunner S.T.G					| 		| 1991	| Athena / Tecmo| Seta		| 					|
 | cv_strikeit	|  	| Strike It!						| 		| 1983	| Telegames	| ColecoVision	| 					|
 | nes_strikewolf|  	| Strike Wolf (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -13047,6 +13080,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_shangone	|  	| Super Hang-On Enhanced (Hack)				| md_shangon	| 2018	| Sega - Pyron	| Sega Megadrive| 					|
 | suprheli	|  	| Super Heli (Super Cobra bootleg)			| scobra	| 1981	| bootleg	| Galaxian	| 					|
 | spec_superhero|  	| Super Hero						| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
+| shimpactp4	|  	| Super High Impact (prototype, proto 4.0 09/10/91)	| shimpact	| 1991	| Midway	| Y Unit	| 					|
+| shimpactp5	|  	| Super High Impact (prototype, proto 5.0 09/15/91)	| shimpact	| 1991	| Midway	| Y Unit	| 					|
+| shimpactp6	|  	| Super High Impact (prototype, proto 6.0 09/23/91)	| shimpact	| 1991	| Midway	| Y Unit	| 					|
+| shimpact	|  	| Super High Impact (rev LA1 09/30/91)			| 		| 1991	| Midway	| Y Unit	| 					|
 | md_shimpact	|  	| Super High Impact (USA)				| 		| 1992	| Arena		| Sega Megadrive| 					|
 | nes_superhomwar|  	| Super Homebrew War (HB)				| 		| 2019	| gauauu	| Miscellaneous	| 					|
 | md_suphydl	|  	| Super Hydlide (Euro)					| 		| 1991	| Sega		| Sega Megadrive| 					|
@@ -13700,6 +13737,12 @@ This list contains all games supported by FinalBurn Neo.
 | spec_terminator2|  	| Terminator 2 - Judgement Day				| 		| 1991	| Ocean Software| ZX Spectrum	| 					|
 | sms_term2	|  	| Terminator 2 - Judgment Day (Euro)			| 		| 1993	| Flying Edge	| Sega Master Sy| 					|
 | gg_term2	|  	| Terminator 2 - Judgment Day (Euro, USA)		| 		| 1993	| Flying Edge	| Sega Game Gear| Glitchy graphics, use the SMS version,|
+| term2lg1	|  	| Terminator 2 - Judgment Day (German, rev LG1 11/04/91)| term2		| 1991	| Midway	| Y Unit	| 					|
+| term2pa2	|  	| Terminator 2 - Judgment Day (prototype, rev PA2 10/18/| term2		| 1991	| Midway	| Y Unit	| 					|
+| term2la1	|  	| Terminator 2 - Judgment Day (rev LA1 11/01/91)	| term2		| 1991	| Midway	| Y Unit	| 					|
+| term2la2	|  	| Terminator 2 - Judgment Day (rev LA2 12/09/91)	| term2		| 1991	| Midway	| Y Unit	| 					|
+| term2la3	|  	| Terminator 2 - Judgment Day (rev LA3 03/27/92)	| term2		| 1991	| Midway	| Y Unit	| 					|
+| term2		|  	| Terminator 2 - Judgment Day (rev LA4 08/03/92)	| 		| 1991	| Midway	| Y Unit	| 					|
 | nes_termi2c	|  	| Terminator 2 - Judgment Day (USA) - Castellano v1.0	| nes_termi2	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_termi2	|  	| Terminator 2 - Judgment Day (USA)			| 		| 1992	| LJN		| Miscellaneous	| 					|
 | nes_terminatorthe|  	| Terminator, The (USA)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
@@ -14600,6 +14643,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_tornadoecr|  	| Tornado ECR						| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | toryumon	|  	| Toryumon						| 		| 1994	| Sega / Westone| System 16B	| 					|
 | pce_etercity	|  	| Toshi Tensou Keikaku - Eternal City			| 		| 1991	| Naxat		| PC Engine	| 					|
+| totcarnp	|  	| Total Carnage (prototype, proto v1.0 01/25/92)	| totcarn	| 1992	| Midway	| Y Unit	| 					|
+| totcarn	|  	| Total Carnage (rev LA1 03/10/92)			| 		| 1992	| Midway	| Y Unit	| 					|
 | md_totlfoot	|  	| Total Football (Euro)					| 		| 1995	| Domark	| Sega Megadrive| 					|
 | spec_totrcall	|  	| Total Recall (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_totalrecallc|  	| Total Recall (USA) - Castellano v1.0			| nes_totalrecall| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -14712,6 +14757,11 @@ This list contains all games supported by FinalBurn Neo.
 | trvmstrc	|  	| Trivia Master (set 4)					| trvmstr	| 1985	| Enerdyne Techn| Miscellaneous	| 					|
 | sms_trivial	|  	| Trivial Pursuit - Genus Edition (Euro)		| 		| 1992	| Domark	| Sega Master Sy| 					|
 | md_tronow	|  	| Tro-Now (HB)						| 		| 2015	| 1985 - bitbitJ| Sega Megadrive| 					|
+| trogpa4	|  	| Trog (prototype, rev 4.00 07/27/90)			| trog		| 1990	| Midway	| Y Unit	| 					|
+| trogpa6	|  	| Trog (prototype, rev PA6-PAC 09/09/90)		| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog3		|  	| Trog (rev LA3 02/14/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog4		|  	| Trog (rev LA4 03/11/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog		|  	| Trog (rev LA5 03/29/91)				| 		| 1990	| Midway	| Y Unit	| 					|
 | nes_trog	|  	| Trog (USA)						| 		| 1991	| Acclaim	| Miscellaneous	| 					|
 | trojanb	|  	| Trojan (bootleg)					| trojan	| 1986	| bootleg	| Miscellaneous	| 					|
 | trojanr	|  	| Trojan (Romstar)					| trojan	| 1986	| Capcom (Romsta| Miscellaneous	| 					|

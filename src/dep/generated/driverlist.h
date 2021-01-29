@@ -5955,6 +5955,12 @@ DRV		BurnDrvHidctch2;
 DRV		BurnDrvHidnc2k;
 DRV		BurnDrvHidctch3;
 DRV		BurnDrvnes_higem;
+DRV		BurnDrvHiimpactp;
+DRV		BurnDrvHiimpact1;
+DRV		BurnDrvHiimpact2;
+DRV		BurnDrvHiimpact3;
+DRV		BurnDrvHiimpact4;
+DRV		BurnDrvHiimpact;
 DRV		BurnDrvsms_highsc;
 DRV		BurnDrvsms_highsce;
 DRV		BurnDrvmd_havocu;
@@ -8493,11 +8499,29 @@ DRV		BurnDrvsms_mk;
 DRV		BurnDrvgg_mk;
 DRV		BurnDrvmd_mks;
 DRV		BurnDrvgg_mkj;
+DRV		BurnDrvMknifty666;
+DRV		BurnDrvMknifty;
+DRV		BurnDrvMkprot4;
+DRV		BurnDrvMkprot8;
+DRV		BurnDrvMkprot9;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvMkrep;			// no comment
+#endif
+DRV		BurnDrvMkla1;
+DRV		BurnDrvMkla2;
+DRV		BurnDrvMkla3;
+DRV		BurnDrvMkla4;
 DRV		BurnDrvMkr4;
 DRV		BurnDrvMk;
+DRV		BurnDrvMkyturboe;
+DRV		BurnDrvMkyturbo;
 DRV		BurnDrvMktturbo;
 DRV		BurnDrvmd_mka;
 DRV		BurnDrvmd_mk;
+DRV		BurnDrvMkyawdim;
+DRV		BurnDrvMkyawdim2;
+DRV		BurnDrvMkyawdim3;
+DRV		BurnDrvMkyawdim4;
 DRV		BurnDrvsms_mk3;
 DRV		BurnDrvmd_mk3;
 DRV		BurnDrvgg_mk3;
@@ -8774,6 +8798,11 @@ DRV		BurnDrvnes_nantebasj;
 DRV		BurnDrvnes_nantebas;
 DRV		BurnDrvmd_smasters;
 DRV		BurnDrvpce_blodwolf;
+DRV		BurnDrvNarc1;
+DRV		BurnDrvNarc2;
+DRV		BurnDrvNarc3;
+DRV		BurnDrvNarc4;
+DRV		BurnDrvNarc;
 DRV		BurnDrvnes_narc;
 DRV		BurnSpecNarcopol;
 DRV		BurnSpecNarc;
@@ -11943,6 +11972,11 @@ DRV		BurnDrvMSX_smackwac;
 DRV		BurnDrvmd_smartmouse;
 DRV		BurnDrvfds_smashpingpong;
 DRV		BurnDrvsms_smashtv;
+DRV		BurnDrvSmashtv3;
+DRV		BurnDrvSmashtv4;
+DRV		BurnDrvSmashtv5;
+DRV		BurnDrvSmashtv6;
+DRV		BurnDrvSmashtv;
 DRV		BurnDrvnes_smashtvc;
 DRV		BurnDrvnes_smashtv;
 DRV		BurnDrvgg_smashtv;
@@ -12992,6 +13026,7 @@ DRV		BurnDrvmd_strider2s;
 DRV		BurnDrvmd_strider2u;
 DRV		BurnDrvStrkfgtrj;
 DRV		BurnDrvStrkfgtr;
+DRV		BurnDrvStrkforc;
 DRV		BurnDrvStg;
 DRV		BurnDrvcv_strikeit;
 DRV		BurnDrvnes_strikewolf;
@@ -13245,6 +13280,10 @@ DRV		BurnSpecshangon4;
 DRV		BurnDrvmd_shangone;
 DRV		BurnDrvSuprheli;
 DRV		BurnSpecSuperhero;
+DRV		BurnDrvShimpactp4;
+DRV		BurnDrvShimpactp5;
+DRV		BurnDrvShimpactp6;
+DRV		BurnDrvShimpact;
 DRV		BurnDrvmd_shimpact;
 DRV		BurnDrvnes_superhomwar;
 DRV		BurnDrvmd_suphydl;
@@ -13904,6 +13943,12 @@ DRV		BurnDrvsg1k_terebioe;
 DRV		BurnSpecTerminator2;
 DRV		BurnDrvsms_term2;
 DRV		BurnDrvgg_term2;
+DRV		BurnDrvTerm2lg1;
+DRV		BurnDrvTerm2pa2;
+DRV		BurnDrvTerm2la1;
+DRV		BurnDrvTerm2la2;
+DRV		BurnDrvTerm2la3;
+DRV		BurnDrvTerm2;
 DRV		BurnDrvnes_termi2c;
 DRV		BurnDrvnes_termi2;
 DRV		BurnDrvnes_terminatorthe;
@@ -14812,6 +14857,8 @@ DRV		BurnDrvTornado2;		// no comment [NOT WORKING]
 DRV		BurnSpecTornadoecr;
 DRV		BurnDrvToryumon;
 DRV		BurnDrvpce_etercity;
+DRV		BurnDrvTotcarnp;
+DRV		BurnDrvTotcarn;
 DRV		BurnDrvmd_totlfoot;
 DRV		BurnSpectotrcall;
 DRV		BurnDrvnes_totalrecallc;
@@ -14926,6 +14973,11 @@ DRV		BurnDrvTrvmstrb;
 DRV		BurnDrvTrvmstrc;
 DRV		BurnDrvsms_trivial;
 DRV		BurnDrvmd_tronow;
+DRV		BurnDrvTrogpa4;
+DRV		BurnDrvTrogpa6;
+DRV		BurnDrvTrog3;
+DRV		BurnDrvTrog4;
+DRV		BurnDrvTrog;
 DRV		BurnDrvnes_trog;
 DRV		BurnDrvTrojanb;
 DRV		BurnDrvTrojanr;
@@ -22355,6 +22407,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHidnc2k,			// Hidden Catch 2000 (AT89c52 protected)
 	&BurnDrvHidctch3,			// Hidden Catch 3 (ver 1.00 / pcb ver 3.05)
 	&BurnDrvnes_higem,			// Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan)
+	&BurnDrvHiimpactp,			// High Impact Football (prototype, revision0 proto 8.6 12/09/90)
+	&BurnDrvHiimpact1,			// High Impact Football (rev LA1 12/16/90)
+	&BurnDrvHiimpact2,			// High Impact Football (rev LA2 12/26/90)
+	&BurnDrvHiimpact3,			// High Impact Football (rev LA3 12/27/90)
+	&BurnDrvHiimpact4,			// High Impact Football (rev LA4 02/04/91)
+	&BurnDrvHiimpact,			// High Impact Football (rev LA5 02/15/91)
 	&BurnDrvsms_highsc,			// High School! Kimengumi (Jpn)
 	&BurnDrvsms_highsce,		// High School! Kimengumi (T-eng)
 	&BurnDrvmd_havocu,			// High Seas Havoc (USA)
@@ -24893,11 +24951,29 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_mk,				// Mortal Kombat (Euro, USA, v2.6)
 	&BurnDrvmd_mks,				// Mortal Kombat (Hack, Spanish)
 	&BurnDrvgg_mkj,				// Mortal Kombat (Jpn, v3.3)
+	&BurnDrvMknifty666,			// Mortal Kombat (Nifty Kombo 666, hack)
+	&BurnDrvMknifty,			// Mortal Kombat (Nifty Kombo, hack)
+	&BurnDrvMkprot4,			// Mortal Kombat (prototype, rev 4.0 07/14/92)
+	&BurnDrvMkprot8,			// Mortal Kombat (prototype, rev 8.0 07/21/92)
+	&BurnDrvMkprot9,			// Mortal Kombat (prototype, rev 9.0 07/28/92)
+#if defined FBNEO_DEBUG
+	&BurnDrvMkrep,				// Mortal Kombat (Reptile Man hack) [no comment]
+#endif
+	&BurnDrvMkla1,				// Mortal Kombat (rev 1.0 08/09/92)
+	&BurnDrvMkla2,				// Mortal Kombat (rev 2.0 08/18/92)
+	&BurnDrvMkla3,				// Mortal Kombat (rev 3.0 08/31/92)
+	&BurnDrvMkla4,				// Mortal Kombat (rev 4.0 09/28/92)
 	&BurnDrvMkr4,				// Mortal Kombat (rev 4.0 T-Unit 02/11/93)
 	&BurnDrvMk,					// Mortal Kombat (rev 5.0 T-Unit 03/19/93)
+	&BurnDrvMkyturboe,			// Mortal Kombat (Turbo 3.0 08/31/92, hack)
+	&BurnDrvMkyturbo,			// Mortal Kombat (Turbo 3.1 09/09/93, hack)
 	&BurnDrvMktturbo,			// Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)
 	&BurnDrvmd_mka,				// Mortal Kombat (World)
 	&BurnDrvmd_mk,				// Mortal Kombat (World, v1.1)
+	&BurnDrvMkyawdim,			// Mortal Kombat (Yawdim bootleg, set 1)
+	&BurnDrvMkyawdim2,			// Mortal Kombat (Yawdim bootleg, set 2)
+	&BurnDrvMkyawdim3,			// Mortal Kombat (Yawdim bootleg, set 3)
+	&BurnDrvMkyawdim4,			// Mortal Kombat (Yawdim bootleg, set 4)
 	&BurnDrvsms_mk3,			// Mortal Kombat 3 (Bra)
 	&BurnDrvmd_mk3,				// Mortal Kombat 3 (Euro)
 	&BurnDrvgg_mk3,				// Mortal Kombat 3 (Euro)
@@ -25174,6 +25250,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nantebas,		// Nantettatte!! Baseball (T-eng)
 	&BurnDrvmd_smasters,		// Naomichi Ozaki no Super Masters (Jpn)
 	&BurnDrvpce_blodwolf,		// Narazumono Sentai Butai - Bloody Wolf
+	&BurnDrvNarc1,				// Narc (rev 1.80)
+	&BurnDrvNarc2,				// Narc (rev 2.00)
+	&BurnDrvNarc3,				// Narc (rev 3.20)
+	&BurnDrvNarc4,				// Narc (rev 4.00)
+	&BurnDrvNarc,				// Narc (rev 7.00)
 	&BurnDrvnes_narc,			// NARC (USA)
 	&BurnSpecNarcopol,			// Narco Police (128K)
 	&BurnSpecNarc,				// NARC
@@ -28343,6 +28424,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smartmouse,		// Smart Mouse (HB)
 	&BurnDrvfds_smashpingpong,	// Smash Ping Pong (Japan)
 	&BurnDrvsms_smashtv,		// Smash T.V. (Euro)
+	&BurnDrvSmashtv3,			// Smash T.V. (rev 3.01)
+	&BurnDrvSmashtv4,			// Smash T.V. (rev 4.00)
+	&BurnDrvSmashtv5,			// Smash T.V. (rev 5.00)
+	&BurnDrvSmashtv6,			// Smash T.V. (rev 6.00)
+	&BurnDrvSmashtv,			// Smash T.V. (rev 8.00)
 	&BurnDrvnes_smashtvc,		// Smash T.V. (USA) - Castellano v1.0
 	&BurnDrvnes_smashtv,		// Smash T.V. (USA)
 	&BurnDrvgg_smashtv,			// Smash T.V. (World)
@@ -29392,6 +29478,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_strider2u,		// Strider Returns - Journey from Darkness (USA)
 	&BurnDrvStrkfgtrj,			// Strike Fighter (Japan)
 	&BurnDrvStrkfgtr,			// Strike Fighter (World)
+	&BurnDrvStrkforc,			// Strike Force (rev 1 02/25/91)
 	&BurnDrvStg,				// Strike Gunner S.T.G
 	&BurnDrvcv_strikeit,		// Strike It!
 	&BurnDrvnes_strikewolf,		// Strike Wolf (USA)
@@ -29645,6 +29732,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_shangone,		// Super Hang-On Enhanced (Hack)
 	&BurnDrvSuprheli,			// Super Heli (Super Cobra bootleg)
 	&BurnSpecSuperhero,			// Super Hero
+	&BurnDrvShimpactp4,			// Super High Impact (prototype, proto 4.0 09/10/91)
+	&BurnDrvShimpactp5,			// Super High Impact (prototype, proto 5.0 09/15/91)
+	&BurnDrvShimpactp6,			// Super High Impact (prototype, proto 6.0 09/23/91)
+	&BurnDrvShimpact,			// Super High Impact (rev LA1 09/30/91)
 	&BurnDrvmd_shimpact,		// Super High Impact (USA)
 	&BurnDrvnes_superhomwar,	// Super Homebrew War (HB)
 	&BurnDrvmd_suphydl,			// Super Hydlide (Euro)
@@ -30304,6 +30395,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTerminator2,		// Terminator 2 - Judgement Day
 	&BurnDrvsms_term2,			// Terminator 2 - Judgment Day (Euro)
 	&BurnDrvgg_term2,			// Terminator 2 - Judgment Day (Euro, USA)
+	&BurnDrvTerm2lg1,			// Terminator 2 - Judgment Day (German, rev LG1 11/04/91)
+	&BurnDrvTerm2pa2,			// Terminator 2 - Judgment Day (prototype, rev PA2 10/18/91)
+	&BurnDrvTerm2la1,			// Terminator 2 - Judgment Day (rev LA1 11/01/91)
+	&BurnDrvTerm2la2,			// Terminator 2 - Judgment Day (rev LA2 12/09/91)
+	&BurnDrvTerm2la3,			// Terminator 2 - Judgment Day (rev LA3 03/27/92)
+	&BurnDrvTerm2,				// Terminator 2 - Judgment Day (rev LA4 08/03/92)
 	&BurnDrvnes_termi2c,		// Terminator 2 - Judgment Day (USA) - Castellano v1.0
 	&BurnDrvnes_termi2,			// Terminator 2 - Judgment Day (USA)
 	&BurnDrvnes_terminatorthe,	// Terminator, The (USA)
@@ -31212,6 +31309,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTornadoecr,		// Tornado ECR
 	&BurnDrvToryumon,			// Toryumon
 	&BurnDrvpce_etercity,		// Toshi Tensou Keikaku - Eternal City
+	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v1.0 01/25/92)
+	&BurnDrvTotcarn,			// Total Carnage (rev LA1 03/10/92)
 	&BurnDrvmd_totlfoot,		// Total Football (Euro)
 	&BurnSpectotrcall,			// Total Recall (128K)
 	&BurnDrvnes_totalrecallc,	// Total Recall (USA) - Castellano v1.0
@@ -31326,6 +31425,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTrvmstrc,			// Trivia Master (set 4)
 	&BurnDrvsms_trivial,		// Trivial Pursuit - Genus Edition (Euro)
 	&BurnDrvmd_tronow,			// Tro-Now (HB)
+	&BurnDrvTrogpa4,			// Trog (prototype, rev 4.00 07/27/90)
+	&BurnDrvTrogpa6,			// Trog (prototype, rev PA6-PAC 09/09/90)
+	&BurnDrvTrog3,				// Trog (rev LA3 02/14/91)
+	&BurnDrvTrog4,				// Trog (rev LA4 03/11/91)
+	&BurnDrvTrog,				// Trog (rev LA5 03/29/91)
 	&BurnDrvnes_trog,			// Trog (USA)
 	&BurnDrvTrojanb,			// Trojan (bootleg)
 	&BurnDrvTrojanr,			// Trojan (Romstar)

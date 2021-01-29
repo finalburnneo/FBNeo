@@ -2945,7 +2945,7 @@ struct BurnDriver BurnDrvMkyawdim = {
 static struct BurnRomInfo mkyawdim2RomDesc[] = {
 	{ "yawdim.u167",									0x010000, 0x16da7efb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "yawdim.u159",									0x080000, 0x95b120af, 2 | BRF_SND },           //  1 Samples
+	{ "yawdim.u159",									0x040000, 0x95b120af, 2 | BRF_SND },           //  1 Samples
 	{ "mw-15.u160",										0x080000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "4.u25",											0x080000, 0xb12b3bf2, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
@@ -3023,7 +3023,7 @@ struct BurnDriver BurnDrvMkyawdim2 = {
 static struct BurnRomInfo mkyawdim3RomDesc[] = {
 	{ "15.bin",											0x10000, 0xb58d229e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "13.bin",											0x80000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
+	{ "13.bin",											0x20000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
 	{ "14.bin",											0x80000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "p1.bin",											0x80000, 0x2337a0f9, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
@@ -3062,7 +3062,7 @@ struct BurnDriver BurnDrvMkyawdim3 = {
 static struct BurnRomInfo mkyawdim4RomDesc[] = {
 	{ "14.bin",											0x10000, 0xb58d229e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "15.bin",											0x80000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
+	{ "15.bin",											0x20000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
 	{ "16.bin",											0x80000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "17.bin",											0x80000, 0x671b533d, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code

@@ -119,6 +119,10 @@
     <ClInclude Include="..\..\src\burn\drv\midway\midtunit_dma.h" />
     <ClInclude Include="..\..\src\burn\drv\midway\midwayic.h" />
     <ClInclude Include="..\..\src\burn\drv\midway\midwunit.h" />
+    <ClInclude Include="..\..\src\burn\drv\midway\narc_sound.h" />
+    <ClInclude Include="..\..\src\burn\drv\midway\williams_adpcm.h" />
+    <ClInclude Include="..\..\src\burn\drv\midway\williams_cvsd.h" />
+    <ClInclude Include="..\..\src\burn\drv\midway\yawdim_sound.h" />
     <ClInclude Include="..\..\src\burn\drv\neogeo\neogeo.h" />
     <ClInclude Include="..\..\src\burn\drv\neogeo\neo_sprite_render.h" />
     <ClInclude Include="..\..\src\burn\drv\neogeo\neo_text_render.h" />
@@ -523,6 +527,11 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_wecleman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_mdarcbl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\d_yunit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\narc_sound.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\williams_cvsd.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />

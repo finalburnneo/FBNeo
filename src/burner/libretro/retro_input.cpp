@@ -1726,6 +1726,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(strcmp("Right Up", description) == 0) ||
 		(strcmp("Right Stick Up", description) == 0) ||
 		(strcmp("Rght Stick Up", description) == 0) ||
+		(strcmp("Fire Up", description) == 0) ||
 		(strcmp("up 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "Up/Down (Right Stick)");
@@ -1735,6 +1736,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(strcmp("Right Down", description) == 0) ||
 		(strcmp("Right Stick Down", description) == 0) ||
 		(strcmp("Rght Stick Down", description) == 0) ||
+		(strcmp("Fire Down", description) == 0) ||
 		(strcmp("down 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "Up/Down (Right Stick)");
@@ -1744,6 +1746,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(strcmp("Right Left", description) == 0) ||
 		(strcmp("Right Stick Left", description) == 0) ||
 		(strcmp("Rght Stick Left", description) == 0) ||
+		(strcmp("Fire Left", description) == 0) ||
 		(strcmp("left 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "Left/Right (Right Stick)");
@@ -1753,6 +1756,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(strcmp("Right Right", description) == 0) ||
 		(strcmp("Right Stick Right", description) == 0) ||
 		(strcmp("Rght Stick Right", description) == 0) ||
+		(strcmp("Fire Right", description) == 0) ||
 		(strcmp("right 2", szi + 3) == 0)
 	) {
 		GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "Left/Right (Right Stick)");

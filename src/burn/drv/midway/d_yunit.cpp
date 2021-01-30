@@ -100,6 +100,8 @@ static UINT16 DrvInputs[6];
 static UINT8 DrvReset;
 static INT16 Gun[4];
 
+static INT32 nExtraCycles = 0;
+
 static ButtonToggle service;
 static UINT8 DrvServ[1]; // service mode/diag toggle (f2)
 
@@ -1352,6 +1354,8 @@ static INT32 DrvDoReset()
 	DrvServ[0] = 0;
 	DrvJoy2[4] = 0; // this needs to be cleared for games that use toggle.
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -1736,7 +1740,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = (palette_mask == 0x1fff) ? 433 : 289; // narc : others
 	INT32 nCyclesTotal[3] = { (INT32)((INT64)(master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 	INT32 bDrawn = 0;
 
@@ -1757,10 +1761,8 @@ static INT32 DrvFrame()
 		}
 		M6809Close();
 
-		if (i == vb_start) {
-			if (pBurnDraw) {
-				BurnDrvRedraw();
-			}
+		if (i == vb_start && pBurnDraw) {
+			BurnDrvRedraw();
 			bDrawn = 1;
 		}
 
@@ -1783,6 +1785,8 @@ static INT32 DrvFrame()
 			M6809Close();
 		}
     }
+
+	nExtraCycles = TMS34010TotalCycles() - nCyclesTotal[0];
 
 	TMS34010Close();
 
@@ -1828,7 +1832,8 @@ static INT32 YawdimFrame()
 
 	INT32 nInterleave = 304;
 	INT32 nCyclesTotal[2] = { (INT32)((INT64)((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
+	INT32 bDrawn = 0;
 
 	TMS34010Open(0);
 	ZetOpen(0);
@@ -1838,13 +1843,20 @@ static INT32 YawdimFrame()
 		CPU_RUN(0, TMS34010);
 		TMS34010GenerateScanline(i);
 
+		if (i == vb_start && pBurnDraw) {
+			BurnDrvRedraw();
+			bDrawn = 1;
+		}
+
 		CPU_RUN(1, Zet);
     }
+
+	nExtraCycles = TMS34010TotalCycles() - nCyclesTotal[0];
 
 	ZetClose();
 	TMS34010Close();
 
-	if (pBurnDraw) {
+	if (pBurnDraw && bDrawn == 0) {
 		BurnDrvRedraw();
 	}
 
@@ -1888,6 +1900,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(palette_mask);
 		SCAN_VAR(cmos_w_enable);
 		SCAN_VAR(t2_analog_sel);
+
+		SCAN_VAR(nExtraCycles);
+
+		service.Scan();
 	}
 
 	if (nAction & ACB_NVRAM) {

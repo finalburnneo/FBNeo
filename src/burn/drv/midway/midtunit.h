@@ -4,7 +4,6 @@
 extern UINT8 nTUnitJoy1[32];
 extern UINT8 nTUnitJoy2[32];
 extern UINT8 nTUnitJoy3[32];
-extern UINT8 nTServMode[1];
 extern UINT8 nTUnitDSW[2];
 extern UINT8 nTUnitReset;
 extern UINT8 nTUnitRecalc;

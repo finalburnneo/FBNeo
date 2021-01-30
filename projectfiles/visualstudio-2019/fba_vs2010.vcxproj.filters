@@ -1033,6 +1033,18 @@
     <ClInclude Include="..\..\src\burn\devices\tlc34076.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\midway\narc_sound.h">
+      <Filter>Burn\drv\midway</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\midway\williams_adpcm.h">
+      <Filter>Burn\drv\midway</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\midway\williams_cvsd.h">
+      <Filter>Burn\drv\midway</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\midway\yawdim_sound.h">
+      <Filter>Burn\drv\midway</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4258,6 +4270,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exterm.cpp">
       <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\d_yunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\narc_sound.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\williams_cvsd.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp">
+      <Filter>Burn\drv\midway</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

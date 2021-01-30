@@ -4,6 +4,7 @@
 #include "msm6295.h"
 
 static UINT8 *yawdim_ram;
+static UINT8 *yawdim_rom;
 static INT32 yawdim_oki_bank;
 static UINT8 yawdim_soundlatch;
 
@@ -13,18 +14,16 @@ static void yawdim_set_oki_bank(UINT8 data)
 {
 	if (is_yawdim2)
 	{
+		yawdim_oki_bank = data;
 		INT32 bank = ((data >> 1) & 4) + (data & 3);
 
-		// complete -- iq_132!!
-
-		if ((data & 4) == 0) MSM6295Reset(0);
+		MSM6295SetBank(0, yawdim_rom + (bank * 0x40000), 0x00000, 0x3ffff);
 	}
 	else
 	{
 		if (data & 0x04) {
 			yawdim_oki_bank = data & 7;
-			MSM6295SetBank(0, MSM6295ROM + 0x00000 + (data & 3) * 0x20000, 0x00000, 0x1ffff);
-			MSM6295SetBank(0, MSM6295ROM + 0x80000 + (data & 3) * 0x20000, 0x20000, 0x3ffff);
+			MSM6295SetBank(0, yawdim_rom + (data & 3) * 0x40000, 0x00000, 0x3ffff);
 		}
 	}
 }
@@ -34,6 +33,7 @@ static void __fastcall yawdim_sound_write(UINT16 address, UINT8 data)
 	switch (address & ~0x7ff)
 	{
 		case 0x9000:
+			if (is_yawdim2 && ~data & 4) MSM6295Reset(0);
 			yawdim_set_oki_bank(data);
 		return;
 
@@ -50,7 +50,7 @@ static UINT8 __fastcall yawdim_sound_read(UINT16 address)
 		case 0x9800:
 			return MSM6295Read(0);
 
-		case 0x9000:
+		case 0xa000:
 			return yawdim_soundlatch;
 	}
 
@@ -84,7 +84,7 @@ void yawdim_sound_init(UINT8 *prgrom, UINT8 *samples, INT32 yawdim2)
 	is_yawdim2 = yawdim2;
 
 	yawdim_ram = (UINT8*)BurnMalloc(0x800);
-	MSM6295ROM = samples;
+	yawdim_rom = samples;
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -96,6 +96,11 @@ void yawdim_sound_init(UINT8 *prgrom, UINT8 *samples, INT32 yawdim2)
 
 	MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+
+	if (is_yawdim2) {
+		// try to avoid bad clipping in this one
+		MSM6295SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+	}
 }
 
 void yawdim_sound_exit()
@@ -115,7 +120,7 @@ void yawdim_sound_update(INT16 *output, INT32 length)
 INT32 yawdim_sound_scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}

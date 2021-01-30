@@ -16,7 +16,6 @@
 /*
  to do:
  	test (clones not tested)
-	yawdim2 incomplete bankswitch
 	strkforc keeps resetting the sound hw after boot(?) -dink
 */
 
@@ -1030,7 +1029,6 @@ static void dma_draw(UINT16 command)
 
 static void dma_callback()
 {
-	//bprintf(0, _T("DMA Callback @ %d\n"), TMS34010TotalCycles());
 	dma_register[DMA_COMMAND] &= ~0x8000; /* tell the cpu we're done */
 	TMS34010GenerateIRQ(0);
 }
@@ -1118,13 +1116,18 @@ static void dma_write(UINT32 offset, UINT16 )
 	}
 
 	// dma timer controls game speed -dink
-	//bprintf(0, _T("dma timer set @ %d\n"), TMS34010TotalCycles());
 	TMS34010TimerSet(((double)((double)master_clock/8/1000000000) * (41 * dma_state.width * dma_state.height)));
 }
 
 static void sync_sound()
 {
-	if (is_yawdim) return;
+	if (is_yawdim) {
+		INT32 cyc = (TMS34010TotalCycles() * 4000000 / (master_clock / 8)) - ZetTotalCycles(0);
+		if (cyc > 0) {
+			ZetRun(0, cyc);
+		}
+		return;
+	}
 
 	INT32 cyc = (TMS34010TotalCycles() * 2000000 / (master_clock / 8)) - M6809TotalCycles(0);
 	if (cyc > 0) {
@@ -1143,7 +1146,6 @@ static void midyunit_main_write(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff7ff00) == 0x1a00000) {
 		INT32 offset = (address >> 4) & 0xf;
-		//bprintf(0, _T("DMA %x  %x  %x\n"), address, offset, data);
 		dma_register[offset] = data;
 		dma_write(offset, data);
 		return;
@@ -1161,7 +1163,6 @@ static void midyunit_main_write(UINT32 address, UINT16 data)
 		INT32 offset = (address >> 4) & 0x1;
 		sync_sound();
 		if (sound_reset_write) sound_reset_write((~data & 0x100) >> 8);
-		//bprintf(0, _T("sound_write: %x  @  %x\n"), data, address);
 		if (sound_write) sound_write(data);
 		if (offset == 0) t2_analog_sel = (data & 0x3000) >> 12;
 		return;
@@ -1174,7 +1175,6 @@ static void midyunit_main_write(UINT32 address, UINT16 data)
 		autoerase_enable = ((data & 0x10) == 0);
 		return;
 	}
-	//bprintf(0, _T("--------=> mw %x   %x\n"), address, data);
 }
 
 static UINT16 midyunit_main_read(UINT32 address)
@@ -1232,11 +1232,10 @@ static UINT16 midyunit_main_read(UINT32 address)
 				break;
 
 			case 6:
-			case 7: //bprintf(0, _T("prot read @ %x: %x\n"), address, prot_result);
+			case 7:
 				rv = prot_result;
 				break;
 		}
-		//bprintf(0, _T("input_dbg(%x)  %x\n"), offset, rv);
 		return rv;
 	}
 
@@ -1246,7 +1245,7 @@ static UINT16 midyunit_main_read(UINT32 address)
 		if (palette_mask == 0x00ff) ret |= ret << 4;
 		return ret;
 	}
-	//bprintf(0, _T("mr %x\n"), address);
+
 	return 0xffff;
 }
 
@@ -1489,9 +1488,9 @@ static INT32 DrvLoadRoms(INT32 gfxbpp)
 
 		if ((ri.nType & BRF_PRG) && ((ri.nType & 7) == 1 || (ri.nType & 7) == 2)) { // M6809 Code
 			if (BurnLoadRom(pDest[(ri.nType - 1)  & 7], i, 1)) return 1;
-			bprintf(0, _T("loading snd rom #%x @ %x\n"), (ri.nType - 1) & 7, pDest[(ri.nType - 1) & 7] - pStart[(ri.nType - 1) & 7]);
+			//bprintf(0, _T("loading snd rom #%x @ %x\n"), (ri.nType - 1) & 7, pDest[(ri.nType - 1) & 7] - pStart[(ri.nType - 1) & 7]);
 			if (ri.nLen == 0x10000) {
-				bprintf(0, _T("mirroring it to + 0x10000\n"));
+				//bprintf(0, _T("mirroring it to + 0x10000\n"));
 				memmove (pDest[(ri.nType - 1) & 7] + 0x10000, pDest[(ri.nType - 1) & 7], 0x10000);
 				pDest[(ri.nType - 1) & 7] += 0x10000;
 			}
@@ -1630,7 +1629,7 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 
 		case 3: // yawdim (bootleg)
 		{
-			yawdim_sound_init(DrvSndROM[0], DrvSndROM[1], 0); // yawdim2?
+			yawdim_sound_init(DrvSndROM[0], DrvSndROM[1], sound_system & 4); // yawdim2?
 			sound_write = yawdim_soundlatch_write;
 			sound_reset_write = NULL;
 			sound_response_read = NULL;
@@ -1816,7 +1815,7 @@ static INT32 YawdimFrame()
 	TMS34010NewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 289;
+	INT32 nInterleave = 304;
 	INT32 nCyclesTotal[2] = { (INT32)((INT64)((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1978,16 +1977,11 @@ static struct BurnRomInfo narcRomDesc[] = {
 STD_ROM_PICK(narc)
 STD_ROM_FN(narc)
 
-static void NarcLoadCallback()
-{
-	//memmove (DrvSndROM[0] + 0x50000, DrvSndROM[0] + 0x10000, 0x40000);
-}
-
 static INT32 NarcInit()
 {
 	prot_data = NULL;
 
-	return CommonInit(NarcLoadCallback, 2, 48000000, 8, 0xcdff, 0xce29);
+	return CommonInit(NULL, 2, 48000000, 8, 0xcdff, 0xce29);
 }
 
 struct BurnDriver BurnDrvNarc = {
@@ -2909,13 +2903,13 @@ STD_ROM_FN(mkyawdim)
 static void MkyawdimLoadCallback()
 {
 	memcpy (DrvSndROM[0] + 0x00000, DrvSndROM[0] + 0x10000, 0x10000);
-	
+
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
-	
+
 	for (INT32 i = 0; i < 8; i++) {
-		memcpy (tmp + (i & 3) * 0x40000 + (i & 4) * 0x8000, DrvSndROM[1] + i * 0x20000, 0x20000);
+		memcpy (tmp + (i & 3) * 0x40000 + (((i & 4) >> 2) * 0x20000), DrvSndROM[1] + i * 0x20000, 0x20000);
 	}
-	
+
 	memcpy (DrvSndROM[1], tmp, 0x100000);
 
 	BurnFree (tmp);
@@ -2926,7 +2920,7 @@ static INT32 MkyawdimInit()
 	is_yawdim = 1;
 	prot_data = NULL;
 
-	return CommonInit(MkyawdimLoadCallback, 3, 48000000, 6, -1, -1);
+	return CommonInit(MkyawdimLoadCallback, 3, 40000000, 6, -1, -1);
 }
 
 struct BurnDriver BurnDrvMkyawdim = {
@@ -2945,7 +2939,7 @@ struct BurnDriver BurnDrvMkyawdim = {
 static struct BurnRomInfo mkyawdim2RomDesc[] = {
 	{ "yawdim.u167",									0x010000, 0x16da7efb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "yawdim.u159",									0x080000, 0x95b120af, 2 | BRF_SND },           //  1 Samples
+	{ "yawdim.u159",									0x040000, 0x95b120af, 2 | BRF_SND },           //  1 Samples
 	{ "mw-15.u160",										0x080000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "4.u25",											0x080000, 0xb12b3bf2, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
@@ -2984,18 +2978,17 @@ STD_ROM_FN(mkyawdim2)
 
 static void Mkyawdim2LoadCallback()
 {
-	INT32 sound_banks[16] = { 0x100000, 0x040000, 0x140000, 0x080000, 0x180000, 0x0c0000, 0x020000, 0x060000, 0x0a0000, 0x0e0000, 0x120000, 0x160000, 0x1a0000, 0x1e0000 };
-
 	memcpy (DrvSndROM[0], DrvSndROM[0] + 0x18000, 0x08000);
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x200000);
 
-	for (INT32 i = 0; i < 16; i++) {
-		memcpy (tmp + sound_banks[i], DrvSndROM[1] + i * 0x20000, 0x20000);
+	for (INT32 i = 0; i < 8; i++) {
+		memcpy (tmp + (i * 0x040000), DrvSndROM[1] + (((i & 4) >> 2) * 0x20000), 0x20000);
+		memcpy (tmp + 0x020000 + (i * 0x40000), DrvSndROM[1] + 0x80000 + ((i & 3) * 0x20000), 0x20000);
 	}
-	
+
 	memcpy (DrvSndROM[1], tmp, 0x200000);
-	
+
 	BurnFree (tmp);
 }
 
@@ -3004,7 +2997,7 @@ static INT32 Mkyawdim2Init()
 	is_yawdim = 1;
 	prot_data = NULL;
 
-	return CommonInit(Mkyawdim2LoadCallback, 3, 48000000, 6, -1, -1);
+	return CommonInit(Mkyawdim2LoadCallback, 3|4 /*|4 == yawdim2*/, 40000000, 6, -1, -1);
 }
 
 struct BurnDriver BurnDrvMkyawdim2 = {
@@ -3023,7 +3016,7 @@ struct BurnDriver BurnDrvMkyawdim2 = {
 static struct BurnRomInfo mkyawdim3RomDesc[] = {
 	{ "15.bin",											0x10000, 0xb58d229e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "13.bin",											0x80000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
+	{ "13.bin",											0x20000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
 	{ "14.bin",											0x80000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "p1.bin",											0x80000, 0x2337a0f9, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
@@ -3046,13 +3039,39 @@ static struct BurnRomInfo mkyawdim3RomDesc[] = {
 STD_ROM_PICK(mkyawdim3)
 STD_ROM_FN(mkyawdim3)
 
+static void Mkyawdim3LoadCallback()
+{
+	memcpy (DrvSndROM[0] + 0x00000, DrvSndROM[0] + 0x10000, 0x10000);
+
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
+
+	for (INT32 i = 0; i < 8; i++) {
+		if (i < 4)
+			memcpy (tmp + (i & 3) * 0x40000 + (((i & 4) >> 2) * 0x20000), DrvSndROM[1], 0x20000);
+		if (i > 3)
+			memcpy (tmp + (i & 3) * 0x40000 + (((i & 4) >> 2) * 0x20000), DrvSndROM[1] + i * 0x20000, 0x20000);
+	}
+
+	memcpy (DrvSndROM[1], tmp, 0x100000);
+
+	BurnFree (tmp);
+}
+
+static INT32 Mkyawdim3Init()
+{
+	is_yawdim = 1;
+	prot_data = NULL;
+
+	return CommonInit(Mkyawdim3LoadCallback, 3, 40000000, 6, -1, -1);
+}
+
 struct BurnDriver BurnDrvMkyawdim3 = {
 	"mkyawdim3", "mk", NULL, NULL, "1992",
 	"Mortal Kombat (Yawdim bootleg, set 3)\0", NULL, "bootleg (Yawdim)", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
 	NULL, mkyawdim3RomInfo, mkyawdim3RomName, NULL, NULL, NULL, NULL, Mkla4InputInfo, Mkla4DIPInfo,
-	MkyawdimInit, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	Mkyawdim3Init, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	400, 256, 4, 3
 };
 
@@ -3062,7 +3081,7 @@ struct BurnDriver BurnDrvMkyawdim3 = {
 static struct BurnRomInfo mkyawdim4RomDesc[] = {
 	{ "14.bin",											0x10000, 0xb58d229e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
 
-	{ "15.bin",											0x80000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
+	{ "15.bin",											0x20000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
 	{ "16.bin",											0x80000, 0x6e68e0b0, 2 | BRF_SND },           //  2
 
 	{ "17.bin",											0x80000, 0x671b533d, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
@@ -3091,7 +3110,7 @@ struct BurnDriver BurnDrvMkyawdim4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
 	NULL, mkyawdim4RomInfo, mkyawdim4RomName, NULL, NULL, NULL, NULL, Mkla4InputInfo, Mkla4DIPInfo,
-	MkyawdimInit, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	Mkyawdim3Init, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	400, 256, 4, 3
 };
 

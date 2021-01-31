@@ -6416,7 +6416,7 @@ static struct BurnRomInfo WrestwarRomDesc[] = {
 	{ "mpr-12148.a11",  0x20000, 0xfb9a7f29, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0103.c2",    0x01000, 0xaa0710f5, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG } // Intel i8751 protection MCU
+	{ "317-0103.c2",    0x01000, 0xaa0710f5, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG }, // Intel i8751 protection MCU
 
 	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };

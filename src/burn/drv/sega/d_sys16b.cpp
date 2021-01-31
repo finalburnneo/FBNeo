@@ -2457,6 +2457,8 @@ static struct BurnRomInfo AltbeastRomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0078.c2",    0x01000, 0x8101925f, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2495,6 +2497,8 @@ static struct BurnRomInfo AltbeastjRomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0077.c2",    0x01000, 0x00000000, BRF_NODUMP },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2524,6 +2528,8 @@ static struct BurnRomInfo Altbeast2RomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0066.key",   0x02000, 0xed85a054, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2554,6 +2560,8 @@ static struct BurnRomInfo Altbeastj1RomDesc[] = {
 	
 	// reconstructed key; some of the RNG-independent bits could be incorrect
 	{ "317-0065.key",   0x02000, 0x9e0f619d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2593,6 +2601,8 @@ static struct BurnRomInfo Altbeastj3RomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0068.key",   0x02000, 0xc1ed4310, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2629,6 +2639,8 @@ static struct BurnRomInfo Altbeastj3dRomDesc[] = {
 
 	{ "opr-11672.a11",          0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",          0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2667,6 +2679,8 @@ static struct BurnRomInfo Altbeast4RomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0066.key",   0x02000, 0xed85a054, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2705,6 +2719,8 @@ static struct BurnRomInfo Altbeast5RomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0069.key",   0x02000, 0x959e256a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2741,6 +2757,8 @@ static struct BurnRomInfo Altbeast5dRomDesc[] = {
 
 	{ "opr-11672.a11",          0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",          0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2779,6 +2797,8 @@ static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0076.c2",    0x01000, 0x32c91f89, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2903,6 +2923,8 @@ static struct BurnRomInfo AurailRomDesc[] = {
 	{ "epr-13448.a10",  0x08000, 0xb5183fb9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-13449.a11",  0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2944,6 +2966,8 @@ static struct BurnRomInfo Aurail1RomDesc[] = {
 	{ "mpr-13449.a11",  0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0168.key",   0x02000, 0xfed38390, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -2983,6 +3007,8 @@ static struct BurnRomInfo Aurail1dRomDesc[] = {
 	{ "epr-13448.a10",          0x08000, 0xb5183fb9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-13449.a11",          0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3024,6 +3050,8 @@ static struct BurnRomInfo AurailjRomDesc[] = {
 	{ "mpr-13449.a11",  0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0167.key",   0x02000, 0xfed38390, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3063,6 +3091,8 @@ static struct BurnRomInfo AurailjdRomDesc[] = {
 	{ "epr-13448.a10",          0x08000, 0xb5183fb9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-13449.a11",          0x20000, 0xd3d9aaf9, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3090,6 +3120,8 @@ static struct BurnRomInfo BayrouteRomDesc[] = {
 	{ "mpr-12461.a12",  0x20000, 0xb03b8b46, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0116.key",   0x02000, 0x8778ee49, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3115,6 +3147,8 @@ static struct BurnRomInfo BayroutedRomDesc[] = {
 
 	{ "mpr-12460.a11",          0x20000, 0x0bae570d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12461.a12",          0x20000, 0xb03b8b46, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3142,6 +3176,8 @@ static struct BurnRomInfo BayroutejRomDesc[] = {
 	{ "mpr-12461.a12",  0x20000, 0xb03b8b46, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0115.key",   0x02000, 0x75a55614, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3167,6 +3203,8 @@ static struct BurnRomInfo BayroutejdRomDesc[] = {
 
 	{ "mpr-12460.a11",          0x20000, 0x0bae570d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12461.a12",          0x20000, 0xb03b8b46, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3326,6 +3364,8 @@ static struct BurnRomInfo CottonRomDesc[] = {
 	{ "opr-13893.a11",  0x20000, 0x384233df, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0181a.key",  0x02000, 0x5c419b36, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3365,6 +3405,8 @@ static struct BurnRomInfo CottondRomDesc[] = {
 	{ "epr-13892.a10",           0x08000, 0xfdfbe6ad, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "opr-13893.a11",           0x20000, 0x384233df, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3406,6 +3448,8 @@ static struct BurnRomInfo CottonuRomDesc[] = {
 	{ "opr-13893.a11",  0x20000, 0x384233df, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0180.key",   0x02000, 0xa236b915, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3445,6 +3489,8 @@ static struct BurnRomInfo CottonudRomDesc[] = {
 	{ "epr-13892.a10",       0x08000, 0xfdfbe6ad, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "opr-13893.a11",       0x20000, 0x384233df, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    	 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3486,6 +3532,8 @@ static struct BurnRomInfo CottonjRomDesc[] = {
 	{ "opr-13061.a11",  0x20000, 0x4d21153f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0179b.key",  0x02000, 0x488096d3, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },  // Same key data, but labeled as REV B
+
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3525,6 +3573,8 @@ static struct BurnRomInfo CottonjdRomDesc[] = {
 	{ "epr-13860.a10",           0x08000, 0x6a57b027, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "opr-13061.a11",           0x20000, 0x4d21153f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3566,6 +3616,8 @@ static struct BurnRomInfo CottonjaRomDesc[] = {
 	{ "opr-13061.a11",  0x20000, 0x4d21153f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0179a.key",  0x02000, 0x488096d3, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3605,6 +3657,8 @@ static struct BurnRomInfo CottonjadRomDesc[] = {
 	{ "epr-13860.a10",           0x08000, 0x6a57b027, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "opr-13061.a11",           0x20000, 0x4d21153f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3629,6 +3683,8 @@ static struct BurnRomInfo DduxRomDesc[] = {
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0096.key",   0x02000, 0x6fd7d26e, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3651,6 +3707,8 @@ static struct BurnRomInfo DduxdRomDesc[] = {
 	{ "mpr-11923.b6",           0x20000, 0xc9ffe47d, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-11916.a10",          0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    	    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3675,6 +3733,8 @@ static struct BurnRomInfo Ddux1RomDesc[] = {
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0095.c2",    0x01000, 0xb06b4ca7, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3699,6 +3759,8 @@ static struct BurnRomInfo DduxjRomDesc[] = {
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0094.key",   0x02000, 0xdb98f594, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3721,6 +3783,8 @@ static struct BurnRomInfo DduxjdRomDesc[] = {
 	{ "mpr-11923.b6",           0x20000, 0xc9ffe47d, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-11916.a10",          0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3882,6 +3946,8 @@ static struct BurnRomInfo EswatRomDesc[] = {
 	{ "mpr-12616.a11",  0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0130.key",   0x02000, 0xba7b717b, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3906,6 +3972,8 @@ static struct BurnRomInfo EswatdRomDesc[] = {
 	{ "epr-12617.a13",          0x08000, 0x7efecf23, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12616.a11",          0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3932,6 +4000,8 @@ static struct BurnRomInfo EswatjRomDesc[] = {
 	{ "mpr-12616.a11",  0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0128.key",   0x02000, 0x95f96277, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3956,6 +4026,8 @@ static struct BurnRomInfo EswatjdRomDesc[] = {
 	{ "epr-12617.a13",          0x08000, 0x7efecf23, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12616.a11",          0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -3994,6 +4066,8 @@ static struct BurnRomInfo Eswatj1RomDesc[] = {
 	{ "mpr-12687.a12",  0x20000, 0x9e87571f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0131.key",   0x02000, 0x8f71726d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4030,6 +4104,8 @@ static struct BurnRomInfo Eswatj1dRomDesc[] = {
 
 	{ "mpr-12686.a11",          0x20000, 0xf451705e, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12687.a12",          0x20000, 0x9e87571f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4056,6 +4132,8 @@ static struct BurnRomInfo EswatuRomDesc[] = {
 	{ "mpr-12616.a11",  0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0129.key",   0x02000, 0x128302c7, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4080,6 +4158,8 @@ static struct BurnRomInfo EswatudRomDesc[] = {
 	{ "epr-12617.a13",          0x08000, 0x7efecf23, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12616.a11",          0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4228,6 +4308,8 @@ static struct BurnRomInfo Fantzn2xRomDesc[] = {
 	{ "fz2.a10",        0x008000, 0x92c92924, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "fz2.a11",        0x020000, 0x8c641bb9, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4345,6 +4427,8 @@ static struct BurnRomInfo Fpoint1RomDesc[] = {
 	{ "epr-12592.a10",  0x08000, 0x9a8c11bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0127a.key",  0x02000, 0x5adb0042, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4363,6 +4447,8 @@ static struct BurnRomInfo Fpoint1dRomDesc[] = {
 	{ "opr-12597.b5",            0x10000, 0x6961e676, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12592.a10",           0x08000, 0x9a8c11bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4431,6 +4517,8 @@ static struct BurnRomInfo GoldnaxeRomDesc[] = {
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0123a.c2",   0x01000, 0xcf19e7d4, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4457,6 +4545,8 @@ static struct BurnRomInfo Goldnaxe1RomDesc[] = {
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0110.key",   0x02000, 0xcd517dc6, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4481,6 +4571,8 @@ static struct BurnRomInfo Goldnaxe1dRomDesc[] = {
 	{ "epr-12390.ic8",           0x08000, 0x399fc5f5, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12384.ic6",           0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4509,6 +4601,8 @@ static struct BurnRomInfo Goldnaxe2RomDesc[] = {
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0112.c2",    0x01000, 0xbda31044, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4537,6 +4631,8 @@ static struct BurnRomInfo Goldnaxe3RomDesc[] = {
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0120.key",   0x02000, 0x946e9fa6, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4563,6 +4659,8 @@ static struct BurnRomInfo Goldnaxe3dRomDesc[] = {
 	{ "epr-12390.a10",          0x08000, 0x399fc5f5, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12384.a11",          0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4591,6 +4689,8 @@ static struct BurnRomInfo GoldnaxejRomDesc[] = {
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0121.key",   0x02000, 0x72afed01, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4617,6 +4717,8 @@ static struct BurnRomInfo GoldnaxejdRomDesc[] = {
 	{ "epr-12390.a10",          0x08000, 0x399fc5f5, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12384.a11",          0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4643,6 +4745,8 @@ static struct BurnRomInfo GoldnaxeuRomDesc[] = {
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0122.key",   0x02000, 0xf123c2fb, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4667,6 +4771,8 @@ static struct BurnRomInfo GoldnaxeudRomDesc[] = {
 	{ "epr-12390.ic8",           0x08000, 0x399fc5f5, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12384.ic6",           0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		 0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4818,6 +4924,8 @@ static struct BurnRomInfo MvpRomDesc[] = {
 	{ "epr-13001.a11",  0x40000, 0xe8cace8c, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0143.key",   0x02000, 0xfba2e8da, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4844,6 +4952,8 @@ static struct BurnRomInfo MvpdRomDesc[] = {
 	{ "epr-13002.a13",          0x08000, 0x1b6e1515, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-13001.a11",          0x40000, 0xe8cace8c, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4881,6 +4991,8 @@ static struct BurnRomInfo MvpjRomDesc[] = {
 	{ "epr-12970.a11",  0x20000, 0x8f7d7657, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0142.key",   0x02000, 0x90468045, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -4916,6 +5028,8 @@ static struct BurnRomInfo MvpjdRomDesc[] = {
 	{ "epr-12969.a10",          0x08000, 0xec621893, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-12970.a11",          0x20000, 0x8f7d7657, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5171,6 +5285,8 @@ static struct BurnRomInfo RiotcityRomDesc[] = {
 	{ "epr-14614.bin",  0x10000, 0xc65cc69a, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "epr-14615.bin",  0x20000, 0x46653db1, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5195,6 +5311,8 @@ static struct BurnRomInfo RyukyuRomDesc[] = {
 	{ "opr-13350.a11",  0x20000, 0x3c59a658, SYS16_ROM_UPD7759DATA | BRF_SND },
 		
 	{ "317-5023a.key",  0x02000, 0x5e372b89, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5219,6 +5337,8 @@ static struct BurnRomInfo RyukyuaRomDesc[] = {
 	{ "opr-13350.a11",  0x20000, 0x3c59a658, SYS16_ROM_UPD7759DATA | BRF_SND },
 		
 	{ "317-5023.key",   0x02000, 0x43704331, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5241,6 +5361,8 @@ static struct BurnRomInfo RyukyudRomDesc[] = {
 	{ "epr-13349.a10",          0x08000, 0xb83183f8, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "opr-13350.a11",          0x20000, 0x3c59a658, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5603,6 +5725,8 @@ static struct BurnRomInfo Shinobi4RomDesc[] = {
 	{ "mpr-11362.a11",  0x20000, 0x256af749, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0054.key",   0x02000, 0x39fd4535, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5654,6 +5778,8 @@ static struct BurnRomInfo Shinobi6RomDesc[] = {
 	{ "epr-11361.a10",  0x08000, 0x1f47ebcb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-11362.a11",  0x20000, 0x256af749, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5853,6 +5979,8 @@ static struct BurnRomInfo Tetris2RomDesc[] = {
 	{ "epr-12168.a7",  0x08000, 0xbd9ba01b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0092.key",  0x02000, 0xd10e1ad9, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",   0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5871,6 +5999,8 @@ static struct BurnRomInfo Tetris2dRomDesc[] = {
 	{ "mpr-12195.b5",           0x10000, 0xd6a02cba, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12168.a7",           0x08000, 0xbd9ba01b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -5974,6 +6104,8 @@ static struct BurnRomInfo TturfRomDesc[] = {
 	{ "opr-12330.a12",  0x10000, 0xfb762bca, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0104.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6032,6 +6164,8 @@ static struct BurnRomInfo UltracinRomDesc[] = {
 	
 	{ "epr-18947.ic6",  0x40000, 0x23122c51, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-18948.ic7",  0x40000, 0x6d060a08, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6058,6 +6192,8 @@ static struct BurnRomInfo Wb3RomDesc[] = {
 	{ "epr-12127.a10",  0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0098.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6138,6 +6274,8 @@ static struct BurnRomInfo Wb33RomDesc[] = {
 	{ "epr-12127.a10",  0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0089.key",   0x02000, 0x597d30d3, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6162,6 +6300,8 @@ static struct BurnRomInfo Wb33dRomDesc[] = {
 	{ "epr-12097.b8",           0x10000, 0xe645902c, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12127.a10",          0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6188,6 +6328,8 @@ static struct BurnRomInfo Wb34RomDesc[] = {
 	{ "epr-12127.a10",  0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "317-0087.key",   0x02000, 0x162cb531, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6212,6 +6354,8 @@ static struct BurnRomInfo Wb34dRomDesc[] = {
 	{ "epr-12097.b8",           0x10000, 0xe645902c, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12127.a10",          0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6273,6 +6417,8 @@ static struct BurnRomInfo WrestwarRomDesc[] = {
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0103.c2",    0x01000, 0xaa0710f5, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG } // Intel i8751 protection MCU
+
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6308,6 +6454,8 @@ static struct BurnRomInfo Wrestwar1RomDesc[] = {
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0090.key",   0x02000, 0xb7c24c4a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6341,6 +6489,8 @@ static struct BurnRomInfo Wrestwar1dRomDesc[] = {
 
 	{ "mpr-12148.a11",          0x20000, 0xfb9a7f29, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12149.a12",          0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6376,6 +6526,8 @@ static struct BurnRomInfo Wrestwar2RomDesc[] = {
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0102.key",   0x02000, 0x28ba1bf0, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 
@@ -6409,6 +6561,8 @@ static struct BurnRomInfo Wrestwar2dRomDesc[] = {
 
 	{ "mpr-12148.a11",          0x20000, 0xfb9a7f29, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12149.a12",          0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    		0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 

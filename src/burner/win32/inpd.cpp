@@ -622,6 +622,7 @@ INT32 HardwarePresetWrite(FILE* h)
 				if (ListView_GetCheckState(hInpdList, i) &&
 					_stricmp("System Pause", pgi->Macro.szName) != 0 &&
 					_stricmp("System FFWD", pgi->Macro.szName) != 0 &&
+					_stricmp("System Frame", pgi->Macro.szName) != 0 &&
 					_stricmp("System Load State", pgi->Macro.szName) != 0 &&
 					_stricmp("System Save State", pgi->Macro.szName) != 0 &&
 					_stricmp("System UNDO State", pgi->Macro.szName) != 0
@@ -870,6 +871,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					// Exclude system macros
 					if ((_stricmp("System Pause", pgi->Macro.szName) == 0 ||
 						_stricmp("System FFWD", pgi->Macro.szName) == 0 ||
+						_stricmp("System Frame", pgi->Macro.szName) == 0 ||
 						_stricmp("System Load State", pgi->Macro.szName) == 0 ||
 						_stricmp("System Save State", pgi->Macro.szName) == 0 ||
 						_stricmp("System UNDO State", pgi->Macro.szName) == 0) &&

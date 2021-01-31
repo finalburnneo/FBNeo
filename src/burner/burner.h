@@ -135,6 +135,7 @@ extern TCHAR szPlayerDefaultIni[5][MAX_PATH];
 // mappable System Macros for the Input Dialogue
 extern UINT8 macroSystemPause;
 extern UINT8 macroSystemFFWD;
+extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;

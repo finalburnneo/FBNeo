@@ -4152,6 +4152,8 @@ static INT32 BjtwinDoReset()
 	NMK112Reset();
 	MSM6295SetInitialBanks(2);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -7015,11 +7017,41 @@ static INT32 RedhawkiInit()
 
 struct BurnDriver BurnDrvRedhawki = {
 	"redhawki", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (horizontal, Italy)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
+	"Red Hawk (horizontal, Italy)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkiRomInfo, redhawkiRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
 	RedhawkiInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
+	256, 224, 4, 3
+};
+
+
+// Red Hawk (horizontal, Spain)
+
+static struct BurnRomInfo redhawksRomDesc[] = {
+	{ "2.bin",			0x020000, 0x8b427ef8, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3.bin",			0x020000, 0x117e3813, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "4.bin",			0x080000, 0x03a8d952, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "7.bin",			0x080000, 0x5c5b5fa1, 5 | BRF_GRA },           //  4 Characters
+	{ "6.bin",			0x080000, 0xaa6564e6, 5 | BRF_GRA },           //  5
+
+	{ "5.bin",			0x040000, 0xe911ce33, 6 | BRF_SND },           //  6 OKI1 Samples
+};
+
+STD_ROM_PICK(redhawks)
+STD_ROM_FN(redhawks)
+
+struct BurnDriver BurnDrvRedhawks = {
+	"redhawks", "stagger1", NULL, NULL, "1997",
+	"Red Hawk (horizontal, Spain)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, redhawksRomInfo, redhawksRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
+	Stagger1Init, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
 };
 
@@ -8426,7 +8458,7 @@ struct BurnDriver BurnDrvBjtwin = {
 	"bjtwin", NULL, NULL, NULL, "1993",
 	"Bombjack Twin (set 1)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinRomInfo, bjtwinRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinGameInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -8460,7 +8492,7 @@ struct BurnDriver BurnDrvBjtwina = {
 	"bjtwina", "bjtwin", NULL, NULL, "1993",
 	"Bombjack Twin (set 2)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinaRomInfo, bjtwinaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinGameInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -8527,7 +8559,7 @@ struct BurnDriver BurnDrvBjtwinp = {
 	"bjtwinp", "bjtwin", NULL, NULL, "1993",
 	"Bombjack Twin (prototype? with adult pictures, set 1)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinpRomInfo, bjtwinpRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinpInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -8596,7 +8628,7 @@ struct BurnDriver BurnDrvBjtwinpa = {
 	"bjtwinpa", "bjtwin", NULL, NULL, "1993",
 	"Bombjack Twin (prototype? with adult pictures, set 2)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinpaRomInfo, bjtwinpaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinpaInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4

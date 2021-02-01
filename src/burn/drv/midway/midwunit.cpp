@@ -18,7 +18,6 @@ static UINT8 *DrvRAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvPalette;
 static UINT32 *DrvPaletteB;
-static UINT32 *DrvPaletteB2;
 static UINT8 *DrvVRAM;
 static UINT16 *DrvVRAM16;
 
@@ -42,6 +41,8 @@ static INT32 nIOShuffle[16];
 static INT32 wwfmania = 0;
 
 static INT32 nExtraCycles = 0;
+
+static INT32 vb_start = 0;
 
 
 #define RGB888(r,g,b)   ((r) | ((g) << 8) | ((b) << 16))
@@ -75,7 +76,6 @@ static INT32 MemIndex()
 	DrvRAM		= Next;				Next += TOBYTE(0x400000) * sizeof(UINT16);
 	DrvPalette	= Next;				Next += 0x20000 * sizeof(UINT8);
 	DrvPaletteB	= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
-	DrvPaletteB2= (UINT32*)Next;	Next += 0x8000 * sizeof(UINT32);
 	DrvVRAM		= Next;				Next += 0x80000 * sizeof(UINT16);
 	DrvVRAM16	= (UINT16*)DrvVRAM;
 
@@ -311,6 +311,8 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	if (!pBurnDraw)
 		return 0;
 
+	vb_start = info->vsblnk;
+
 #if 0
 	if (line == 0x15) {
 		bprintf(0, _T("ENAB %d\n"), info->enabled);
@@ -322,6 +324,7 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 		bprintf(0, _T("ht %d\n"), info->htotal);
 	}
 #endif
+
 	line -= 0x14; // offset
 
 	INT32 nHeight = nScreenHeight;
@@ -491,7 +494,9 @@ INT32 WolfUnitInit()
 	Dcs2kResetWrite(0);
 
 	GenericTilesInit();
-	
+
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
 	WolfDoReset();
 
     return 0;
@@ -528,6 +533,7 @@ INT32 WolfUnitFrame()
 	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.706840), (INT32)(10000000 / 54.706840) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
+	INT32 bDrawn = 0;
 
 	TMS34010Open(0);
 
@@ -536,6 +542,11 @@ INT32 WolfUnitFrame()
 
 		TMS34010GenerateScanline(i);
 
+		if (i == vb_start && pBurnDraw) {
+			BurnDrvRedraw();
+			bDrawn = 1;
+		}
+
 		HandleDCSIRQ(i);
 
 		sound_sync(); // sync to main cpu
@@ -543,17 +554,13 @@ INT32 WolfUnitFrame()
 			sound_sync_end();
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw && bDrawn == 0) {
 		WolfUnitDraw();
 	}
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	TMS34010Close();
-
-	// Buffering palette for 1 frame, fix umk3pb1 palette glitch when
-	// transitioning from title screen to select screen
-	memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32));
 
 	if (pBurnSoundOut) {
 		Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
@@ -580,13 +587,11 @@ INT32 WolfUnitDraw()
 {
 	if (nWolfUnitRecalc) {
 		WolfUnitPalRecalc();
-		memcpy(DrvPaletteB2, DrvPaletteB, 0x8000 * sizeof(UINT32)); // update palette buffer
-
 		nWolfUnitRecalc = 0;
 	}
 
 	// TMS34010 renders scanlines direct to pTransDraw
-	BurnTransferCopy(DrvPaletteB2);
+	BurnTransferCopy(DrvPaletteB);
 
 	return 0;
 }

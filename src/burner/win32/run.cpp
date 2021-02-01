@@ -27,7 +27,7 @@ static bool bAppDoFasttoggled = 0;
 static int nFastSpeed = 6;
 
 // For System Macros (below)
-static int prevPause = 0, prevFFWD = 0, prevSState = 0, prevLState = 0, prevUState = 0;
+static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
@@ -40,12 +40,24 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		}
 	}
 	prevPause = macroSystemPause;
-	// FFWD
+
 	if (!kNetGame) {
+		// FFWD
 		if (macroSystemFFWD) {
 			bAppDoFast = 1; prevFFWD = 1;
 		} else if (prevFFWD) {
 			bAppDoFast = 0; prevFFWD = 0;
+		}
+
+		// Frame
+		if (macroSystemFrame) {
+			bRunPause = 1;
+			if (!prevFrame) {
+				bAppDoStep = 1;
+				prevFrame = 1;
+			}
+		} else {
+			prevFrame = 0;
 		}
 	}
 	// Load State
@@ -212,13 +224,13 @@ static int RunGetNextSound(int bDraw)
 
 	if (bRunPause) {
 		if (bAppDoStep) {
+			bAppDoStep = 0;									// done one step
 			RunFrame(bDraw, 0);
 			memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
 		} else {
 			RunFrame(bDraw, 1);
 		}
 
-		bAppDoStep = 0;									// done one step
 		return 0;
 	}
 

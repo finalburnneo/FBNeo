@@ -22,7 +22,10 @@ INT32 PsmInit()
 	if (BurnYM2151Init(3579540)) {				// Init FM sound chip
 		return 1;
 	}
-	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
+
+	//BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.35, BURN_SND_ROUTE_RIGHT);
 
 	// Allocate a buffer for the intermediate sound (between YM2151 and pBurnSoundOut)
 	nMemLen = nBurnSoundLen * 2 * sizeof(INT16);

@@ -700,7 +700,7 @@ static struct BurnRomInfo hotdogstRomDesc[] = {
 
 	{ "mp1.u65",       0x080000, 0x4868be1b, BRF_SND },			 //  8 MSM6295 #1 ADPCM data
 
-	{ "eeprom-hotdogst.bin", 0x0080, 0x12b4f934, BRF_ESS | BRF_PRG },
+	{ "eeprom-hotdogst.u14", 0x0080, 0x12b4f934, BRF_ESS | BRF_PRG },
 };
 
 

@@ -337,8 +337,17 @@ static INT32 ScanlineRender(INT32 line, TMS34010Display *info)
 	INT32 col = info->coladdr << 1;
 	UINT16 *dest = (UINT16*) pTransDraw + (line * nScreenWidth);
 
-	const INT32 heblnk = info->heblnk;
-	const INT32 hsblnk = info->hsblnk;
+	INT32 heblnk = info->heblnk;
+	INT32 hsblnk = info->hsblnk;
+
+	if (!info->enabled) heblnk = hsblnk; // blank line!
+
+	if ((hsblnk - heblnk) < nScreenWidth) {
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			dest[x] = 0;
+		}
+	}
+
 	for (INT32 x = heblnk; x < hsblnk; x++) {
 		if ((x - heblnk) >= nScreenWidth) break;
 		dest[x - heblnk] = BURN_ENDIAN_SWAP_INT16(src[col++ & 0x1FF] & BURN_ENDIAN_SWAP_INT16(0x7FFF));
@@ -444,9 +453,12 @@ INT32 WolfUnitInit()
     MidwaySerialPicInit(528);
 	MidwaySerialPicReset();
 
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
 	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010SetPixClock(8000000, 1);
+	TMS34010SetCpuCyclesPerFrame((INT32)(midtunit_cpurate/54.71));
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
     TMS34010SetScanlineRender(ScanlineRender);
@@ -488,14 +500,7 @@ INT32 WolfUnitInit()
     TMS34010MapHandler(11, 0x00000000, 0x003fffff, MAP_READ | MAP_WRITE);
 	TMS34010Close();
 
-	Dcs2kBoot();
-
-	Dcs2kResetWrite(1);
-	Dcs2kResetWrite(0);
-
 	GenericTilesInit();
-
-	midtunit_cpurate = 50000000/8; // midtunit_dma.h
 
 	WolfDoReset();
 

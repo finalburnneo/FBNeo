@@ -734,6 +734,7 @@ static INT32 DrvInit()
 	TMS34020Init(0); // 34020 !
 	TMS34010Open(0);
 	TMS34010SetPixClock(10000000, 1);
+	TMS34010SetCpuCyclesPerFrame(8000000 / 60);
 
 	TMS34010SetScanlineRender(ScanlineRender);
 	TMS34010SetToShift(to_shiftreg);

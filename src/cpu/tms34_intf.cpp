@@ -192,6 +192,11 @@ void TMS34010Exit()
 	active_cpu = -1;
 }
 
+void TMS34010SetCpuCyclesPerFrame(INT32 cpf)
+{
+	tms34010_set_cycperframe(cpf);
+}
+
 void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock)
 {
 	tms34010_set_pixclock(pxlclock, pix_per_clock);

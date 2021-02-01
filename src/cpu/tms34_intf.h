@@ -34,6 +34,7 @@ void TMS34010SetScanlineRender(pTMS34010ScanlineRender sr);
 void TMS34010SetToShift(void (*SL)(UINT32 addr, UINT16 *dst));
 void TMS34010SetFromShift(void (*FS)(UINT32 addr, UINT16 *src));
 void TMS34010SetPixClock(INT32 pxlclock, INT32 pix_per_clock);
+void TMS34010SetCpuCyclesPerFrame(INT32 cpf);
 void TMS34010SetOutputINT(void (*output_int_func)(INT32));
 void TMS34010SetHaltOnReset(INT32 onoff);
 

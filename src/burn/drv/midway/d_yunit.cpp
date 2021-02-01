@@ -1545,6 +1545,8 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 		}
 	}
 
+	master_clock = clock;
+
 	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010MapHandler(0, 				0x00000000, 0xbfffffff, MAP_READ | MAP_WRITE);
@@ -1573,6 +1575,7 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 	}
 
 	TMS34010SetPixClock((nScreenHeight == 400 ? 48000000 : 24000000) / 6, 1);
+	TMS34010SetCpuCyclesPerFrame((INT32)((master_clock / 8) * 100) / nBurnFPS);
 	TMS34010SetToShift(to_shiftreg);
 	TMS34010SetFromShift(from_shiftreg);
 	TMS34010SetHaltOnReset(0);
@@ -1580,7 +1583,6 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 	TMS34010TimerSetCB(dma_callback);
 	TMS34010Close();
 
-	master_clock = clock;
 	has_ym2151 = 0;
 
 	switch (sound_system & 3)
@@ -1739,7 +1741,7 @@ static INT32 DrvFrame()
 	M6809NewFrame();
 
 	INT32 nInterleave = (palette_mask == 0x1fff) ? 433 : 289; // narc : others
-	INT32 nCyclesTotal[3] = { (INT32)((INT64)(master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
+	INT32 nCyclesTotal[3] = { (INT32)((master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
 	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 	INT32 bDrawn = 0;
@@ -1831,7 +1833,7 @@ static INT32 YawdimFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 304;
-	INT32 nCyclesTotal[2] = { (INT32)((INT64)((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
+	INT32 nCyclesTotal[2] = { (INT32)(((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 bDrawn = 0;
 

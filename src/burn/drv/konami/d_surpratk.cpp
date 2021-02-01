@@ -22,6 +22,8 @@ static UINT8 *DrvPalRAM;
 static UINT32  *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles;
+
 static UINT8 *nDrvRomBank;
 static INT32 videobank;
 
@@ -37,30 +39,30 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[3];
 
 static struct BurnInputInfo SurpratkInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Test",		BIT_DIGITAL,	DrvJoy3 + 1,	"diag"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Test",			BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Surpratk)
@@ -149,7 +151,7 @@ static struct BurnDIPInfo BonusQuizDIPList[]=
 STDDIPINFO(Suratkj)
 STDDIPINFOEXT(Surpratk, Suratkj, BonusQuiz)
 
-UINT8 supratk_read(UINT16 address)
+static UINT8 supratk_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -193,7 +195,7 @@ UINT8 supratk_read(UINT16 address)
 	return 0;
 }
 
-void supratk_write(UINT16 address, UINT8 data)
+static void supratk_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -269,7 +271,7 @@ static void supratk_set_lines(INT32 lines)
 
 static void DrvYM2151IRQHandler(INT32 nStatus)
 {
-	konamiSetIrqLine(KONAMI_FIRQ_LINE, nStatus ? 3 /* use 3 as ACK */ : 0);
+	konamiSetIrqLine(KONAMI_FIRQ_LINE, (nStatus) ? CPU_IRQSTATUS_HOLD : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -288,6 +290,8 @@ static INT32 DrvDoReset()
 
 	videobank = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -296,9 +300,9 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvGfxROM0		= Next; Next += 0x080000;
-	DrvGfxROMExp0		= Next; Next += 0x100000;
+	DrvGfxROMExp0	= Next; Next += 0x100000;
 	DrvGfxROM1		= Next; Next += 0x080000;
-	DrvGfxROMExp1		= Next; Next += 0x100000;
+	DrvGfxROMExp1	= Next; Next += 0x100000;
 
 	DrvKonROM		= Next; Next += 0x050000;
 
@@ -322,12 +326,7 @@ static INT32 DrvInit()
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
@@ -447,30 +446,29 @@ static INT32 DrvFrame()
 	
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = (((3000000 / 60) * 133) / 100); // 33% overclock
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { (((3000000 / 60) * 133) / 100) }; // 33% overclock
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	konamiOpen(0);
 	
 	for (INT32 i = 0; i < nInterleave; i++)	{
-		INT32 nSegment = (nCyclesTotal / nInterleave) * (i + 1);
 
 		if (i == 240) {
 			if (K052109_irq_enabled) {
-				nCyclesDone += konamiRun(10); // avoid irq masking from ym2151-generated irq's
+				nCyclesDone[0] += konamiRun(10); // avoid irq masking from ym2151-generated irq's
 				konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_HOLD);
-				nCyclesDone += konamiRun(10);
+				nCyclesDone[0] += konamiRun(10);
 			}
 		}
 
-		nCyclesDone += konamiRun(nSegment - nCyclesDone);
+		CPU_RUN(0, konami);
 
 		if (pBurnSoundOut && i%8 == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
-		}	
+		}
 	}
 
 	if (pBurnSoundOut) {
@@ -482,6 +480,8 @@ static INT32 DrvFrame()
 	}
 
 	konamiClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -515,6 +515,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(videobank);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

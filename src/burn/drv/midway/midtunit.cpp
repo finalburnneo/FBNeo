@@ -1161,6 +1161,8 @@ INT32 TUnitInit()
 		Dcs2kResetWrite(0);
 	}
 
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
 	GenericTilesInit();
 
 	TUnitDoReset();

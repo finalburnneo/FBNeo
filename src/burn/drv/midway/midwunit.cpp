@@ -494,7 +494,9 @@ INT32 WolfUnitInit()
 	Dcs2kResetWrite(0);
 
 	GenericTilesInit();
-	
+
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
 	WolfDoReset();
 
     return 0;

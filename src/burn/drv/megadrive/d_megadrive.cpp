@@ -52334,3 +52334,21 @@ struct BurnDriver BurnDrvmd_wukonge = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Monster World IV - WB 6 (Hack, French)
+// http://terminus.romhack.net/index.php?page=jv&projet=wboy + FixChecksum
+static struct BurnRomInfo md_mworld4fRomDesc[] = {
+	{ "Monster World IV - WB 6 (Hack, French).bin", 2097152, 0x1cd6c514, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mworld4f)
+STD_ROM_FN(md_mworld4f)
+
+struct BurnDriver BurnDrvmd_mworld4f = {
+	"md_mworld4f", "md_mworld4", NULL, NULL, "1989?",
+	"Monster World IV - WB 6 (Hack, French)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mworld4fRomInfo, md_mworld4fRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -1020,6 +1020,16 @@ void v60NewFrame()
 	v60.current_cycles = 0;
 }
 
+UINT32 v60GetPC(INT32)
+{
+	return v60.reg[32];
+}
+
+UINT32 v60GetRegs(INT32 regs)
+{
+	return v60.reg[regs];
+}
+
 #if 0
 static void v60_get_context(void *dst)
 {

@@ -21,6 +21,9 @@ void v60SetReadWordHandler(UINT16 (*read)(UINT32));
 void v60SetReadLongHandler(UINT32 (*read)(UINT32));
 void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
 
+UINT32 v60GetPC(INT32);
+UINT32 v60GetRegs(INT32 regs);
+
 INT32 v60TotalCycles();
 void v60RunEnd();
 void v60NewFrame();

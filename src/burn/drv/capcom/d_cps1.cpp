@@ -13854,6 +13854,8 @@ static struct BurnRomInfo Slampic2RomDesc[] = {
 	{ "v1.bin",        0x040000, 0x8962b469, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "v2.bin",        0x080000, 0x6687df38, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "v3.bin",        0x080000, 0x5782baee, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "2_gal16v8.p1",  0x000117, 0xa944ff96, BRF_OPT },
 };
 
 STD_ROM_PICK(Slampic2)

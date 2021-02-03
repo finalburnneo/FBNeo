@@ -667,10 +667,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)
 
 static struct BurnRomInfo reliefRomDesc[] = {
-	{ "136093-0011d.19e",			0x20000, 0xcb3f73ad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "136093-0012d.19j",			0x20000, 0x90655721, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136093-0013.17e",			0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136093-0014.17j",			0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136093-0011d_cs_acff.19e",	0x20000, 0xcb3f73ad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "136093-0012d_cs_e5fe.19j",	0x20000, 0x90655721, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136093-0013_cs_cbbf.17e",	0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136093-0014_cs_3ebe.17j",	0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "136093-0025a.14s",			0x80000, 0x1b9e5ef2, 2 | BRF_GRA },           //  4 Graphics (Interleaved)
 	{ "136093-0026a.8d",			0x80000, 0x09b25d93, 2 | BRF_GRA },           //  5
@@ -710,10 +710,10 @@ struct BurnDriver BurnDrvRelief = {
 // Relief Pitcher (set 2, 26 Apr 1992 / 08 Apr 1992)
 
 static struct BurnRomInfo relief2RomDesc[] = {
-	{ "136093-0011c.19e",			0x20000, 0x41373e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "136093-0012c.19j",			0x20000, 0x8187b026, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136093-0013.17e",			0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136093-0014.17j",			0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136093-0011c_cs_baff.19e",	0x20000, 0x41373e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "136093-0012c_cs_8afe.19j",	0x20000, 0x8187b026, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136093-0013_cs_cbbf.17e",	0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136093-0014_cs_3ebe.17j",	0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "136093-0025a.14s",			0x80000, 0x1b9e5ef2, 2 | BRF_GRA },           //  4 Graphics (Interleaved)
 	{ "136093-0026a.8d",			0x80000, 0x09b25d93, 2 | BRF_GRA },           //  5
@@ -753,10 +753,10 @@ struct BurnDriver BurnDrvRelief2 = {
 // Relief Pitcher (set 3, 10 Apr 1992 / 08 Apr 1992)
 
 static struct BurnRomInfo relief3RomDesc[] = {
-	{ "136093-0011b.19e",			0x20000, 0x794cea33, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "136093-0012b.19j",			0x20000, 0x577495f8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136093-0013.17e",			0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136093-0014.17j",			0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136093-0011b_cs_23ff.19e",	0x20000, 0x794cea33, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "136093-0012b_cs_3cfe.19j",	0x20000, 0x577495f8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136093-0013_cs_cbbf.17e",	0x20000, 0x1e1e82e5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136093-0014_cs_3ebe.17j",	0x20000, 0x19e5decd, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "136093-0025a.14s",			0x80000, 0x1b9e5ef2, 2 | BRF_GRA },           //  4 Graphics (Interleaved)
 	{ "136093-0026a.8d",			0x80000, 0x09b25d93, 2 | BRF_GRA },           //  5

@@ -1022,9 +1022,12 @@ INT32 TUnitInit()
 	nRet = LoadGfxBanks();
 	if (nRet != 0) return 1;
 
+	midtunit_cpurate = 50000000/8; // midtunit_dma.h
+
 	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010SetPixClock(4000000, 2);
+	TMS34010SetCpuCyclesPerFrame((INT32)(midtunit_cpurate/54.71));
 	TMS34010TimerSetCB(TUnitDmaCallback);
 
 	TMS34010SetScanlineRender(ScanlineRender);
@@ -1154,11 +1157,6 @@ INT32 TUnitInit()
 		Dcs2kInit(DCS_2K, MHz(10));
 		Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
 		Dcs2kSetVolume(10.00);
-
-		Dcs2kBoot();
-
-		Dcs2kResetWrite(1);
-		Dcs2kResetWrite(0);
 	}
 
 	GenericTilesInit();

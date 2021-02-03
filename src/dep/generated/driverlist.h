@@ -8413,6 +8413,7 @@ DRV		BurnDrvmd_mworld4s;
 DRV		BurnDrvmd_mworld4;
 DRV		BurnDrvmd_mworld4c;
 DRV		BurnDrvmd_mworld4eng2;
+DRV		BurnDrvmd_mworld4f;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvMonsterz;		// Protected [NOT WORKING]
 #endif
@@ -10343,6 +10344,7 @@ DRV		BurnDrvtg_psychos;
 DRV		BurnSpecPubtrivia;
 DRV		BurnDrvPuchicarj;
 DRV		BurnDrvPuchicar;
+DRV		BurnDrvPuchicaru;
 DRV		BurnDrvpuckmanb;
 DRV		BurnDrvpuckmanh;
 DRV		BurnDrvpuckman;
@@ -10837,6 +10839,7 @@ DRV		BurnDrvRedhawke;
 DRV		BurnDrvRedhawkb;
 DRV		BurnDrvRedhawkg;
 DRV		BurnDrvRedhawki;
+DRV		BurnDrvRedhawks;
 DRV		BurnDrvRedhawkk;
 DRV		BurnDrvRedhawk;
 DRV		BurnSpecRedplanet;
@@ -10902,6 +10905,8 @@ DRV		BurnDrvgg_revenged;
 DRV		BurnDrvRevngr84;
 DRV		BurnDrvRevenger;
 DRV		BurnDrvmd_revx;
+DRV		BurnDrvRevxp5;
+DRV		BurnDrvRevx;
 DRV		BurnSpecrex;
 DRV		BurnSpecrex_48;
 DRV		BurnSpecrex2;
@@ -12688,6 +12693,7 @@ DRV		BurnDrvStmblade;
 DRV		BurnSpecstormbringer;
 DRV		BurnSpecStormfinch;
 DRV		BurnDrvStorming;
+DRV		BurnDrvStorminga;
 DRV		BurnSpecstormlor128;
 DRV		BurnDrvmd_strmlords;
 DRV		BurnDrvmd_strmlordj;
@@ -24865,6 +24871,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mworld4,			// Monster World IV (Jpn)
 	&BurnDrvmd_mworld4c,		// Monster World IV (T-Chi, v2)
 	&BurnDrvmd_mworld4eng2,		// Monster World IV (USA, Europe) (En,Ja) (Virtual Console)
+	&BurnDrvmd_mworld4f,		// Monster World IV - WB 6 (Hack, French)
 #if defined FBNEO_DEBUG
 	&BurnDrvMonsterz,			// Monster Zero [Protected, NOT WORKING]
 #endif
@@ -26795,6 +26802,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecPubtrivia,			// Pub Trivia
 	&BurnDrvPuchicarj,			// Puchi Carat (Ver 2.02J 1997/10/29)
 	&BurnDrvPuchicar,			// Puchi Carat (Ver 2.02O 1997/10/29)
+	&BurnDrvPuchicaru,			// Puchi Carat (Ver 2.04A 1997/11/08)
 	&BurnDrvpuckmanb,			// Puck Man (Bootleg set 1)
 	&BurnDrvpuckmanh,			// Puck Man (bootleg set 2)
 	&BurnDrvpuckman,			// Puck Man (Japan set 1)
@@ -27289,6 +27297,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRedhawkb,			// Red Hawk (horizontal, bootleg)
 	&BurnDrvRedhawkg,			// Red Hawk (horizontal, Greece)
 	&BurnDrvRedhawki,			// Red Hawk (horizontal, Italy)
+	&BurnDrvRedhawks,			// Red Hawk (horizontal, Spain)
 	&BurnDrvRedhawkk,			// Red Hawk (Korea)
 	&BurnDrvRedhawk,			// Red Hawk (USA, Canada & South America)
 	&BurnSpecRedplanet,			// Red Planet (HB)
@@ -27354,6 +27363,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRevngr84,			// Revenger '84 (set 1)
 	&BurnDrvRevenger,			// Revenger '84 (set 2) [Bad dump, NOT WORKING]
 	&BurnDrvmd_revx,			// Revolution X (Euro, USA)
+	&BurnDrvRevxp5,				// Revolution X (prototype, rev 5.0 5/23/94)
+	&BurnDrvRevx,				// Revolution X (rev 1.0 6/16/94)
 	&BurnSpecrex,				// Rex (Part 1 of 2) (128K)
 	&BurnSpecrex_48,			// Rex (Part 1 of 2) (48K)
 	&BurnSpecrex2,				// Rex (Part 2 of 2) (128K)
@@ -29139,7 +29150,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStmblade,			// Storm Blade (US)
 	&BurnSpecstormbringer,		// Stormbringer
 	&BurnSpecStormfinch,		// Stormfinch (HB)
-	&BurnDrvStorming,			// Storming Party / Riku Kai Kuu Saizensen
+	&BurnDrvStorming,			// Storming Party / Riku Kai Kuu Saizensen (set 1)
+	&BurnDrvStorminga,			// Storming Party / Riku Kai Kuu Saizensen (set 2)
 	&BurnSpecstormlor128,		// Stormlord (128K)
 	&BurnDrvmd_strmlords,		// Stormlord (Hack, Spanish)
 	&BurnDrvmd_strmlordj,		// Stormlord (Jpn)

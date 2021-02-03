@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16193 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16199 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3994,7 +3994,7 @@ This list contains all games supported by FinalBurn Neo.
 | ecofghtru	|  	| Eco Fighters (940215 USA)				| ecofghtr	| 1993	| Capcom	| CPS2		| 					|
 | msx_ekjumpch	|  	| Eddie Kidd Jump Challenge (Euro)			| 		| 1985	| Martech Games	| MSX		| 					|
 | nes_eeeaaaooo	|  	| EEEAAAOOO (HB)					| 		| 2020	| N.K		| Miscellaneous	| 					|
-| eeekkp	|  	| Eeekk! (Pac-man conversion)				| 		| 1984	| Epos Corporati| Pac-man	| 					|
+| eeekkp	|  	| Eeekk! (Pac-man conversion)				| eeekk		| 1984	| Epos Corporati| Pac-man	| 					|
 | eeekk		|  	| Eeekk!						| 		| 1983	| Epos Corporati| EPOS Tristar	| 					|
 | egghunt	|  	| Egg Hunt						| 		| 1995	| Invi Image	| Miscellaneous	| 					|
 | fds_eggerland	|  	| Egger Land (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -8293,6 +8293,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mworld4	|  	| Monster World IV (Jpn)				| 		| 1994	| Sega		| Sega Megadrive| 					|
 | md_mworld4c	|  	| Monster World IV (T-Chi, v2)				| md_mworld4	| 2019-06-21| Sega		| Sega Megadrive| 					|
 | md_mworld4eng2|  	| Monster World IV (USA, Europe) (En,Ja) (Virtual Consol| md_mworld4	| 2012	| Sega		| Sega Megadrive| 					|
+| md_mworld4f	|  	| Monster World IV - WB 6 (Hack, French)		| md_mworld4	| 1989?	| Sega		| Sega Megadrive| 					|
 | monsterz	| D NW	| Monster Zero						| 		| 19??	| Nihon		| Galaxian	| Protected				|
 | msx_mnstfair	|  	| Monster's Fair (Jpn)					| 		| 1986	| Toho		| MSX		| 					|
 | mstworld	|  	| Monsters World (bootleg of Super Pang)		| 		| 1994	| bootleg (TCH)	| Miscellaneous	| 					|
@@ -10191,6 +10192,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_pubtrivia|  	| Pub Trivia						| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | puchicarj	|  	| Puchi Carat (Ver 2.02J 1997/10/29)			| puchicar	| 1997	| Taito Corporat| Taito F3 Syste| 					|
 | puchicar	|  	| Puchi Carat (Ver 2.02O 1997/10/29)			| 		| 1997	| Taito Corporat| Taito F3 Syste| 					|
+| puchicaru	|  	| Puchi Carat (Ver 2.04A 1997/11/08)			| puchicar	| 1997	| Taito America | Taito F3 Syste| 					|
 | puckmanb	|  	| Puck Man (Bootleg set 1)				| puckman	| 1980	| bootleg	| Pac-man	| 					|
 | puckmanh	|  	| Puck Man (bootleg set 2)				| puckman	| 1981	| bootleg (Falco| Pac-man	| 					|
 | puckman	|  	| Puck Man (Japan set 1)				| 		| 1980	| Namco		| Pac-man	| 					|
@@ -10676,7 +10678,8 @@ This list contains all games supported by FinalBurn Neo.
 | redhawke	|  	| Red Hawk (Excellent Co., Ltd)				| stagger1	| 1997	| Afega (Excelle| NMK16		| 					|
 | redhawkb	|  	| Red Hawk (horizontal, bootleg)			| stagger1	| 1997	| bootleg (Vince| NMK16		| 					|
 | redhawkg	|  	| Red Hawk (horizontal, Greece)				| stagger1	| 1997	| Afega		| NMK16		| 					|
-| redhawki	|  	| Red Hawk (horizontal, Italy)				| stagger1	| 1997	| Afega (Hea Don| NMK16		| 					|
+| redhawki	|  	| Red Hawk (horizontal, Italy)				| stagger1	| 1997	| Afega (Hae Don| NMK16		| 					|
+| redhawks	|  	| Red Hawk (horizontal, Spain)				| stagger1	| 1997	| Afega (Hae Don| NMK16		| 					|
 | redhawkk	|  	| Red Hawk (Korea)					| stagger1	| 1997	| Afega Co.	| NMK16		| 					|
 | redhawk	|  	| Red Hawk (USA, Canada & South America)		| stagger1	| 1997	| Afega (New Vis| NMK16		| 					|
 | spec_redplanet|  	| Red Planet (HB)					| 		| 2015	| salvakantero	| ZX Spectrum	| 					|
@@ -10742,6 +10745,8 @@ This list contains all games supported by FinalBurn Neo.
 | revngr84	|  	| Revenger '84 (set 1)					| 		| 1984	| Epos Corporati| EPOS Tristar	| 					|
 | revenger	|   NW	| Revenger '84 (set 2)					| revngr84	| 1984	| Epos Corporati| EPOS Tristar	| Bad dump				|
 | md_revx	|  	| Revolution X (Euro, USA)				| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
+| revxp5	|  	| Revolution X (prototype, rev 5.0 5/23/94)		| revx		| 1994	| Midway	| X Unit	| 					|
+| revx		|  	| Revolution X (rev 1.0 6/16/94)			| 		| 1994	| Midway	| X Unit	| 					|
 | spec_rex	|  	| Rex (Part 1 of 2) (128K)				| 		| 1988	| Martech Games	| ZX Spectrum	| 					|
 | spec_rex_48	|  	| Rex (Part 1 of 2) (48K)				| spec_rex	| 1988	| Martech Games	| ZX Spectrum	| 					|
 | spec_rex2	|  	| Rex (Part 2 of 2) (128K)				| 		| 1988	| Martech Games	| ZX Spectrum	| 					|
@@ -12501,7 +12506,8 @@ This list contains all games supported by FinalBurn Neo.
 | stmblade	|  	| Storm Blade (US)					| 		| 1996	| Visco		| SSV		| 					|
 | spec_stormbringer|  	| Stormbringer						| 		| 1987	| Mastertronic	| ZX Spectrum	| 					|
 | spec_stormfinch|  	| Stormfinch (HB)					| 		| 2015	| Stonechat	| ZX Spectrum	| 					|
-| storming	|  	| Storming Party / Riku Kai Kuu Saizensen		| lsasquad	| 1986	| bootleg	| Miscellaneous	| 					|
+| storming	|  	| Storming Party / Riku Kai Kuu Saizensen (set 1)	| lsasquad	| 1986	| bootleg	| Miscellaneous	| 					|
+| storminga	|  	| Storming Party / Riku Kai Kuu Saizensen (set 2)	| lsasquad	| 1986	| bootleg	| Miscellaneous	| 					|
 | spec_stormlor128|  	| Stormlord (128K)					| 		| 1989	| Hewson Consult| ZX Spectrum	| 					|
 | md_strmlords	|  	| Stormlord (Hack, Spanish)				| md_strmlord	| 2020	| Razorsoft	| Sega Megadrive| 					|
 | md_strmlordj	|  	| Stormlord (Jpn)					| md_strmlord	| 1990	| Micro World	| Sega Megadrive| 					|

@@ -9143,6 +9143,13 @@
 		<rom name="Monster World IV (USA, Europe) (En,Ja) (Virtual Console).md" size="2097152" crc="af050c46"/>
 		<driver status="good"/>
 	</game>
+	<game name="mworld4f" cloneof="mworld4" romof="mworld4">
+		<description>Monster World IV - WB 6 (Hack, French)</description>
+		<year>1989?</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Monster World IV - WB 6 (Hack, French).bin" size="2097152" crc="1cd6c514"/>
+		<driver status="good"/>
+	</game>
 	<game name="monstinc" cloneof="decapatt" romof="decapatt">
 		<description>Monsters, Inc. (Rus)</description>
 		<year>199?</year>

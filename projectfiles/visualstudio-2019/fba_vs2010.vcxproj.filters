@@ -4286,6 +4286,9 @@
     <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp">
       <Filter>Burn\drv\midway</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\d_xunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

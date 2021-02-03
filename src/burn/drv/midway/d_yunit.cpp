@@ -1525,6 +1525,47 @@ static INT32 DrvLoadRoms(INT32 gfxbpp)
 	return 0;
 }
 
+static UINT8 term2_nvram_chunk[] = {
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x7f,0x00,0xff,0x00,0x80,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x7f,0x00,0xff,0x00,0x80,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0xff,0x00,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0x00,0xff,0x00,0x00,0x00,0x82,0x00,
+	0x00,0x00,0x80,0x00,0xfe,0x00,0xfd,0x00,0x00,0x00,0xff,0x00,0x00,0x00,0xff,0x00,
+	0xfe,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0xff,0x00,0xfe,0x00,
+	0x00,0x00,0x7e,0x00,0x00,0x00,0x80,0x00,0xff,0x00,0x01,0x00,0x00,0x00,0xfb,0x00,
+	0x00,0x00,0xfb,0x00,0xfe,0x00,0x09,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+
 static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 clock, INT32 gfx_depth, INT32 sndprot_start, INT32 sndprot_end)
 {
 	GenericTilesInit(); // get screen dims
@@ -1544,6 +1585,8 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 			case 8: reorder_8bpp_graphics(); midzunit_8bit(); break;
 		}
 	}
+
+	master_clock = clock;
 
 	TMS34010Init(0);
 	TMS34010Open(0);
@@ -1573,6 +1616,7 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 	}
 
 	TMS34010SetPixClock((nScreenHeight == 400 ? 48000000 : 24000000) / 6, 1);
+	TMS34010SetCpuCyclesPerFrame((INT32)((master_clock / 8) * 100) / nBurnFPS);
 	TMS34010SetToShift(to_shiftreg);
 	TMS34010SetFromShift(from_shiftreg);
 	TMS34010SetHaltOnReset(0);
@@ -1580,7 +1624,6 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 	TMS34010TimerSetCB(dma_callback);
 	TMS34010Close();
 
-	master_clock = clock;
 	has_ym2151 = 0;
 
 	switch (sound_system & 3)
@@ -1651,6 +1694,7 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 
 	if (is_term2) {
 		BurnGunInit(2, true);
+		memcpy(DrvCMOSRAM + 0x2000, term2_nvram_chunk, sizeof(term2_nvram_chunk));
 	}
 
 	DrvDoReset();
@@ -1739,7 +1783,7 @@ static INT32 DrvFrame()
 	M6809NewFrame();
 
 	INT32 nInterleave = (palette_mask == 0x1fff) ? 433 : 289; // narc : others
-	INT32 nCyclesTotal[3] = { (INT32)((INT64)(master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
+	INT32 nCyclesTotal[3] = { (INT32)((master_clock / 8) * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS, (2000060 * 100) / nBurnFPS };
 	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 	INT32 bDrawn = 0;
@@ -1831,7 +1875,7 @@ static INT32 YawdimFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 304;
-	INT32 nCyclesTotal[2] = { (INT32)((INT64)((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
+	INT32 nCyclesTotal[2] = { (INT32)(((master_clock / 8) * 100) / nBurnFPS), (4000000 * 100) / nBurnFPS };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 bDrawn = 0;
 
@@ -2401,26 +2445,26 @@ struct BurnDriver BurnDrvNarc1 = {
 // Mortal Kombat (rev 4.0 09/28/92)
 
 static struct BurnRomInfo mkla4RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkg-u105.la4",									0x80000, 0x29af348f, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkg-u89.la4",									0x80000, 0x1ad76662, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "l4_mortal_kombat_game_rom_u-105.u105",			0x80000, 0x29af348f, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "l4_mortal_kombat_game_rom_u-89.u89",				0x80000, 0x1ad76662, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkla4)
@@ -2453,26 +2497,26 @@ struct BurnDriver BurnDrvMkla4 = {
 // Mortal Kombat (rev 3.0 08/31/92)
 
 static struct BurnRomInfo mkla3RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkg-u105.la3",									0x80000, 0x2ce843c5, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkg-u89.la3",									0x80000, 0x49a46e10, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "l3_mortal_kombat_game_rom_u-105.u105",			0x80000, 0x2ce843c5, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "l3_mortal_kombat_game_rom_u-89.u89",				0x80000, 0x49a46e10, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkla3)
@@ -2492,26 +2536,26 @@ struct BurnDriver BurnDrvMkla3 = {
 // Mortal Kombat (rev 2.0 08/18/92)
 
 static struct BurnRomInfo mkla2RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkg-u105.la2",									0x80000, 0x8531d44e, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkg-u89.la2",									0x80000, 0xb88dc26e, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "l2_mortal_kombat_game_rom_u-105.u105",			0x80000, 0x8531d44e, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "l2_mortal_kombat_game_rom_u-89.u89",				0x80000, 0xb88dc26e, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkla2)
@@ -2531,26 +2575,26 @@ struct BurnDriver BurnDrvMkla2 = {
 // Mortal Kombat (rev 1.0 08/09/92)
 
 static struct BurnRomInfo mkla1RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkg-u105.la1",									0x80000, 0xe1f7b4c9, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkg-u89.la1",									0x80000, 0x9d38ac75, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_mortal_kombat_game_rom_u-105.u105",			0x80000, 0xe1f7b4c9, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "l1_mortal_kombat_game_rom_u-89.u89",				0x80000, 0x9d38ac75, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkla1)
@@ -2570,26 +2614,26 @@ struct BurnDriver BurnDrvMkla1 = {
 // Mortal Kombat (prototype, rev 9.0 07/28/92)
 
 static struct BurnRomInfo mkprot9RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkprot9.105",									0x80000, 0x20772bbd, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkprot9.89",										0x80000, 0x3238d45b, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "proto9_mortal_kombat_game_rom_u-105.u105",		0x80000, 0x20772bbd, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "proto9_mortal_kombat_game_rom_u-89.u89",			0x80000, 0x3238d45b, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkprot9)
@@ -2622,26 +2666,26 @@ struct BurnDriver BurnDrvMkprot9 = {
 // Mortal Kombat (prototype, rev 8.0 07/21/92)
 
 static struct BurnRomInfo mkprot8RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkprot8.105",									0x80000, 0x2f3c095d, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkprot8.89",										0x80000, 0xedcf217f, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "proto8_mortal_kombat_game_rom_u-105.u105",		0x80000, 0x2f3c095d, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "proto8_mortal_kombat_game_rom_u-89.u89",			0x80000, 0xedcf217f, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkprot8)
@@ -2661,26 +2705,26 @@ struct BurnDriver BurnDrvMkprot8 = {
 // Mortal Kombat (prototype, rev 4.0 07/14/92)
 
 static struct BurnRomInfo mkprot4RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
-	{ "mkprot4.105",									0x80000, 0xd7f8d78b, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "mkprot4.89",										0x80000, 0xa6b5d6d2, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "proto4_mortal_kombat_game_rom_u-105.u105",		0x80000, 0xd7f8d78b, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "proto4_mortal_kombat_game_rom_u-89.u89",			0x80000, 0xa6b5d6d2, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkprot4)
@@ -2700,26 +2744,26 @@ struct BurnDriver BurnDrvMkprot4 = {
 // Mortal Kombat (Turbo 3.1 09/09/93, hack)
 
 static struct BurnRomInfo mkyturboRomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
 	{ "kombo-rom-u105.bin",								0x80000, 0x80d5618c, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "kombo-rom-u89.bin",								0x80000, 0x450788e3, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkyturbo)
@@ -2746,26 +2790,26 @@ struct BurnDriver BurnDrvMkyturbo = {
 // Mortal Kombat (Turbo 3.0 08/31/92, hack)
 
 static struct BurnRomInfo mkyturboeRomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
 	{ "turbo30.u105",									0x80000, 0x59747c59, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "turbo30.u89",									0x80000, 0x84d66a75, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkyturboe)
@@ -2785,26 +2829,26 @@ struct BurnDriver BurnDrvMkyturboe = {
 // Mortal Kombat (Reptile Man hack)
 
 static struct BurnRomInfo mkrepRomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
 	{ "u105",											0x80000, 0x49a352ed, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "u89",											0x80000, 0x5d5113b2, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkrep)
@@ -2824,26 +2868,26 @@ struct BurnDriverD BurnDrvMkrep = {
 // Mortal Kombat (Nifty Kombo, hack)
 
 static struct BurnRomInfo mkniftyRomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
 	{ "nifty.105",										0x80000, 0xc66fd38d, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "nifty.89",										0x80000, 0xbbf8738d, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mknifty)
@@ -2863,26 +2907,26 @@ struct BurnDriver BurnDrvMknifty = {
 // Mortal Kombat (Nifty Kombo 666, hack)
 
 static struct BurnRomInfo mknifty666RomDesc[] = {
-	{ "mks-u3.rom",										0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "l1_mortal_kombat_u3_sound_rom.u3",				0x40000, 0xc615844c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
-	{ "mks-u12.rom",									0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 Samples
-	{ "mks-u13.rom",									0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
+	{ "l1_mortal_kombat_u12_sound_rom.u12",				0x40000, 0x258bd7f9, 2 | BRF_SND },           //  1 MSM6295 Samples
+	{ "l1_mortal_kombat_u13_sound_rom.u13",				0x40000, 0x7b7ec3b6, 2 | BRF_SND },           //  2
 
 	{ "mortall_kombo_rom_u105-j4.u105.bin",				0x80000, 0x243d8009, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "kombo-u89.u89",									0x80000, 0x7b26a6b1, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mknifty666)
@@ -2910,18 +2954,18 @@ static struct BurnRomInfo mkyawdimRomDesc[] = {
 	{ "4.u25",											0x80000, 0xb12b3bf2, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
 	{ "5.u26",											0x80000, 0x7a37dc5c, 3 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkg-u111.rom",									0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
-	{ "mkg-u112.rom",									0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
-	{ "mkg-u113.rom",									0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
-	{ "mkg-u114.rom",									0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
-	{ "mkg-u95.rom",									0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
-	{ "mkg-u96.rom",									0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
-	{ "mkg-u97.rom",									0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
-	{ "mkg-u98.rom",									0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
-	{ "mkg-u106.rom",									0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
-	{ "mkg-u107.rom",									0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
-	{ "mkg-u108.rom",									0x80000, 0x23308979, 4 | BRF_GRA },           // 15
-	{ "mkg-u109.rom",									0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+	{ "l1_mortal_kombat_game_rom_u-111.u111",			0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "l1_mortal_kombat_game_rom_u-112.u112",			0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "l1_mortal_kombat_game_rom_u-113.u113",			0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "l1_mortal_kombat_game_rom_u-114.u114",			0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "l1_mortal_kombat_game_rom_u-95.u95",				0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "l1_mortal_kombat_game_rom_u-96.u96",				0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "l1_mortal_kombat_game_rom_u-97.u97",				0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "l1_mortal_kombat_game_rom_u-98.u98",				0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "l1_mortal_kombat_game_rom_u-106.u106",			0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "l1_mortal_kombat_game_rom_u-107.u107",			0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "l1_mortal_kombat_game_rom_u-108.u108",			0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "l1_mortal_kombat_game_rom_u-109.u109",			0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(mkyawdim)

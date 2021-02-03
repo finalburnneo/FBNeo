@@ -940,9 +940,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Sauro (set 1)
 
 static struct BurnRomInfo sauroRomDesc[] = {
-	{ "sauro-2.bin",	0x8000, 0x19f8de25, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro-1.bin",	0x8000, 0x0f8b876f, 1 | BRF_PRG | BRF_ESS }, //  1
-
+	{ "sauro-2.bin",	0x8000, 0x2e356e2d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sauro-1.bin",	0x8000, 0x95d03e5e, 1 | BRF_PRG | BRF_ESS }, //  1
+	
 	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
@@ -980,8 +980,8 @@ struct BurnDriver BurnDrvSauro = {
 // Sauro (set 2)
 
 static struct BurnRomInfo sauroaRomDesc[] = {
-	{ "sauro-2a.bin",	0x8000, 0x2e356e2d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro-1a.bin",	0x8000, 0x95d03e5e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sauro-2.bin",	0x8000, 0x19f8de25, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sauro-1.bin",	0x8000, 0x0f8b876f, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 

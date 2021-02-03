@@ -1031,6 +1031,7 @@ static INT32 DrvInit(INT32 game_select)
 	TMS34010MapHandler(2, 			0x00c00000, 0x00c000ff, MAP_READ | MAP_WRITE);
 
 	TMS34010SetPixClock(40000000 / 6, 1);
+	TMS34010SetCpuCyclesPerFrame((INT32)(40000000 / 8 / 49.76));
 	TMS34010SetToShift(artmagic_to_shiftreg);
 	TMS34010SetFromShift(artmagic_from_shiftreg);
 	TMS34010SetOutputINT(m68k_gen_int);

@@ -535,6 +535,7 @@ static INT32 DrvInit()
 	TMS34010SetToShift(main_to_shift);
 	TMS34010SetFromShift(main_from_shift);
 	TMS34010SetPixClock(4000000, 2);
+	TMS34010SetCpuCyclesPerFrame(((40000000 / 8) * 100) / nBurnFPS);
 	TMS34010SetHaltOnReset(0);
 	TMS34010Close();
 
@@ -546,6 +547,7 @@ static INT32 DrvInit()
 	TMS34010SetToShift(sub_to_shift);
 	TMS34010SetFromShift(sub_from_shift);
 	TMS34010SetPixClock(4000000, 2);
+	TMS34010SetCpuCyclesPerFrame(((40000000 / 8) * 100) / nBurnFPS);
 	TMS34010SetHaltOnReset(1);
 	TMS34010Close();
 

@@ -893,7 +893,7 @@ struct BurnDriver BurnDrvLsasquad = {
 };
 
 
-// Storming Party / Riku Kai Kuu Saizensen
+// Storming Party / Riku Kai Kuu Saizensen (set 1)
 
 static struct BurnRomInfo stormingRomDesc[] = {
 	{ "stpartyj.001",	0x8000, 0x07e6bc61, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -931,10 +931,52 @@ static INT32 StormingInit()
 
 struct BurnDriver BurnDrvStorming = {
 	"storming", "lsasquad", NULL, NULL, "1986",
-	"Storming Party / Riku Kai Kuu Saizensen\0", NULL, "bootleg", "Miscellaneous",
+	"Storming Party / Riku Kai Kuu Saizensen (set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, stormingRomInfo, stormingRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, LsasquadDIPInfo,
+	StormingInit, DrvExit, DrvFrame, LsasquadDraw, DrvScan, &BurnRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Storming Party / Riku Kai Kuu Saizensen (set 2)
+
+static struct BurnRomInfo stormingaRomDesc[] = {
+	{ "1.ic4.1e",		0x8000, 0x07e6bc61, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.ic3.1c",		0x8000, 0x1c7fe5d5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.ic2.1b",		0x8000, 0x159f23a6, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a64-04.44",		0x8000, 0xc238406a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "4.ic44.5g",		0x8000, 0xbb4f1b37, 3 | BRF_GRA },           //  4 Layer Tiles
+	{ "5.ic29.2c",		0x8000, 0x8ee2443b, 3 | BRF_GRA },           //  5
+	{ "6.ic42.2d",		0x8000, 0xa3bbc0b3, 3 | BRF_GRA },           //  6
+	{ "8.ic43.3d",		0x8000, 0xf342d42f, 3 | BRF_GRA },           //  7
+
+	{ "9.ic2.14a",		0x8000, 0xa72e2041, 4 | BRF_GRA },           //  8 Sprites
+	{ "a.ic3.16a",		0x8000, 0x05206333, 4 | BRF_GRA },           //  9
+	{ "10.ic27.14b",	0x8000, 0x01ed5851, 4 | BRF_GRA },           // 10
+	{ "b.ic28.16b",		0x8000, 0x6eaf3735, 4 | BRF_GRA },           // 11
+
+	{ "ic22.2l",		0x0400, 0x82802bbb, 5 | BRF_GRA },           // 12 Color PROM
+	{ "ic23.2m",		0x0400, 0xaa9e1dbd, 5 | BRF_GRA },           // 13
+	{ "ic24.2m",		0x0400, 0xdca86295, 5 | BRF_GRA },           // 14
+
+	{ "ic9.1j",			0x0400, 0x7ced30ba, 6 | BRF_GRA },           // 15 Priority PROM
+
+	{ "pal16l8cj.ic14.2c",	0x0104, 0xa7cc157d, 7 | BRF_OPT },           // 16 PLDs
+};
+
+STD_ROM_PICK(storminga)
+STD_ROM_FN(storminga)
+
+struct BurnDriver BurnDrvStorminga = {
+	"storminga", "lsasquad", NULL, NULL, "1986",
+	"Storming Party / Riku Kai Kuu Saizensen (set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	NULL, stormingaRomInfo, stormingaRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, LsasquadDIPInfo,
 	StormingInit, DrvExit, DrvFrame, LsasquadDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 256, 3, 4
 };

@@ -553,6 +553,11 @@ void BurnGunScan()
 
 		SCAN_VAR(DIAL_INC);
 		SCAN_VAR(DrvJoyT);
+	} else {
+		// guns only!
+		SCAN_VAR(GunTargetTimer);
+		SCAN_VAR(GunTargetLastX);
+		SCAN_VAR(GunTargetLastY);
 	}
 }
 

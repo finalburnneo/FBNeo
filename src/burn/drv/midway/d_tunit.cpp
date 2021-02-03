@@ -433,8 +433,8 @@ static struct BurnDIPInfo JdreddpDIPList[]=
 	{0x25, 0x01, 0x40, 0x40, "Not Present"       },
 	
 	{0   , 0xfe, 0   ,    2, "Freeze"            },
-	{0x25, 0x01, 0x20, 0x80, "Off"               },
-	{0x25, 0x01, 0x20, 0x00, "On"                },
+	{0x25, 0x01, 0x80, 0x80, "Off"               },
+	{0x25, 0x01, 0x80, 0x00, "On"                },
 	
 	{0   , 0xfe, 0   ,    3, "Coin Counters"            },
 	{0x26, 0x01, 0x03, 0x00, "1 Counter, 1 count/coin"  },
@@ -462,28 +462,28 @@ static struct BurnDIPInfo JdreddpDIPList[]=
 STDDIPINFO(Jdreddp)
 
 static struct BurnRomInfo mkRomDesc[] = {
-	{ "mkt-uj12.bin",	0x080000, 0xf4990bf2, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "mkt-ug12.bin",	0x080000, 0xb06aeac1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "l5_mortal_kombat_t-unit_uj12_game_rom.uj12",	0x080000, 0xf4990bf2, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l5_mortal_kombat_t-unit_ug12_game_rom.ug12",	0x080000, 0xb06aeac1, 1 | BRF_PRG | BRF_ESS }, //  1
 	
-	{ "sl1_mortal_kombat_u3_sound_rom.u3",	0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	{ "sl1_mortal_kombat_u3_sound_rom.u3",			0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "sl1_mortal_kombat_u12_sound_rom.u12",	0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "sl1_mortal_kombat_u13_sound_rom.u13",	0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "sl1_mortal_kombat_u12_sound_rom.u12",		0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkt-ug14.bin",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
-	{ "mkt-uj14.bin",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
-	{ "mkt-ug19.bin",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
-	{ "mkt-uj19.bin",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
 
-	{ "mkt-ug16.bin",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
-	{ "mkt-uj16.bin",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
-	{ "mkt-ug20.bin",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
-	{ "mkt-uj20.bin",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+	{ "l1_mortal_kombat_t-unit_ug16_game_rom.ug16",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "l1_mortal_kombat_t-unit_uj16_game_rom.uj16",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "l1_mortal_kombat_t-unit_ug20_game_rom.ug20",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "l1_mortal_kombat_t-unit_uj20_game_rom.uj20",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
 
-	{ "mkt-ug17.bin",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
-	{ "mkt-uj17.bin",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
-	{ "mkt-ug22.bin",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
-	{ "mkt-uj22.bin",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	{ "l1_mortal_kombat_t-unit_ug17_game_rom.ug17",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "l1_mortal_kombat_t-unit_uj17_game_rom.uj17",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "l1_mortal_kombat_t-unit_ug22_game_rom.ug22",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "l1_mortal_kombat_t-unit_uj22_game_rom.uj22",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
 };
 
 STD_ROM_PICK(mk)
@@ -507,28 +507,28 @@ struct BurnDriver BurnDrvMk = {
 };
 
 static struct BurnRomInfo mkr4RomDesc[] = {
-	{ "mkr4uj12.bin",	0x080000, 0xa1b6635a, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "mkr4ug12.bin",	0x080000, 0xaa94f7ea, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "l4_mortal_kombat_t-unit_uj12_game_rom.uj12",	0x080000, 0xa1b6635a, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l4_mortal_kombat_t-unit_ug12_game_rom.ug12",	0x080000, 0xaa94f7ea, 1 | BRF_PRG | BRF_ESS }, //  1
 	
-	{ "sl1_mortal_kombat_u3_sound_rom.u3",	0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	{ "sl1_mortal_kombat_u3_sound_rom.u3",			0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "sl1_mortal_kombat_u12_sound_rom.u12",	0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "sl1_mortal_kombat_u13_sound_rom.u13",	0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "sl1_mortal_kombat_u12_sound_rom.u12",		0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkt-ug14.bin",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
-	{ "mkt-uj14.bin",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
-	{ "mkt-ug19.bin",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
-	{ "mkt-uj19.bin",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
 
-	{ "mkt-ug16.bin",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
-	{ "mkt-uj16.bin",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
-	{ "mkt-ug20.bin",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
-	{ "mkt-uj20.bin",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+	{ "l1_mortal_kombat_t-unit_ug16_game_rom.ug16",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "l1_mortal_kombat_t-unit_uj16_game_rom.uj16",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "l1_mortal_kombat_t-unit_ug20_game_rom.ug20",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "l1_mortal_kombat_t-unit_uj20_game_rom.uj20",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
 
-	{ "mkt-ug17.bin",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
-	{ "mkt-uj17.bin",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
-	{ "mkt-ug22.bin",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
-	{ "mkt-uj22.bin",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	{ "l1_mortal_kombat_t-unit_ug17_game_rom.ug17",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "l1_mortal_kombat_t-unit_uj17_game_rom.uj17",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "l1_mortal_kombat_t-unit_ug22_game_rom.ug22",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "l1_mortal_kombat_t-unit_uj22_game_rom.uj22",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
 };
 
 STD_ROM_PICK(mkr4)
@@ -548,25 +548,25 @@ static struct BurnRomInfo mktturboRomDesc[] = {
 	{ "kombo-rom-uj-12.bin",	0x080000, 0x7a441f2d, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "kombo-rom-ug-12.bin",	0x080000, 0x45bed5a1, 1 | BRF_PRG | BRF_ESS }, //  1
 	
-	{ "sl1_mortal_kombat_u3_sound_rom.u3",	0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	{ "sl1_mortal_kombat_u3_sound_rom.u3",			0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "sl1_mortal_kombat_u12_sound_rom.u12",	0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "sl1_mortal_kombat_u13_sound_rom.u13",	0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "sl1_mortal_kombat_u12_sound_rom.u12",		0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mkt-ug14.bin",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
-	{ "mkt-uj14.bin",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
-	{ "mkt-ug19.bin",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
-	{ "mkt-uj19.bin",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
 
-	{ "mkt-ug16.bin",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
-	{ "mkt-uj16.bin",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
-	{ "mkt-ug20.bin",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
-	{ "mkt-uj20.bin",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+	{ "l1_mortal_kombat_t-unit_ug16_game_rom.ug16",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "l1_mortal_kombat_t-unit_uj16_game_rom.uj16",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "l1_mortal_kombat_t-unit_ug20_game_rom.ug20",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "l1_mortal_kombat_t-unit_uj20_game_rom.uj20",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
 
-	{ "mkt-ug17.bin",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
-	{ "mkt-uj17.bin",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
-	{ "mkt-ug22.bin",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
-	{ "mkt-uj22.bin",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	{ "l1_mortal_kombat_t-unit_ug17_game_rom.ug17",	0x080000, 0xe34fe253, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "l1_mortal_kombat_t-unit_uj17_game_rom.uj17",	0x080000, 0xa56e12f5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "l1_mortal_kombat_t-unit_ug22_game_rom.ug22",	0x080000, 0xb537bb4e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "l1_mortal_kombat_t-unit_uj22_game_rom.uj22",	0x080000, 0x5e12523b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
 };
 
 STD_ROM_PICK(mktturbo)

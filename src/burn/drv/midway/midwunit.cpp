@@ -166,8 +166,9 @@ void WolfUnitIoWrite(UINT32 address, UINT16 value)
 		return;
 	}
 
-    UINT32 offset = (address >> 4) % 8;
-    switch(offset) {
+	UINT32 offset = nIOShuffle[(address >> 4) % 16] % 8;
+
+	switch(offset) {
 		case 1:
 			sound_sync();
 			Dcs2kResetWrite(value & 0x10);

@@ -67,6 +67,7 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[6];
 
 static INT32 is_shufshot = 0;
+static INT32 is_pubball = 0;
 
 static INT32 is_16bit = 0;
 
@@ -234,6 +235,44 @@ static struct BurnInputInfo SftmInputList[] = {
 
 STDINPUTINFO(Sftm)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo PubballInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	{"P1 First Base",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
+	{"P1 Second Base",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 2"	},
+	{"P1 Third Base",	BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 3"	},
+	{"P1 Home",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 4"	},
+	{"P1 Power Up",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 5"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
+	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
+	{"P2 First Base",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
+	{"P2 Second Base",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 2"	},
+	{"P2 Third Base",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 3"	},
+	{"P2 Home",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 4"	},
+	{"P2 Power Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 5"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy5 + 1,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvSvc0 + 0,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+};
+
+STDINPUTINFO(Pubball)
+
 
 static struct BurnInputInfo PairsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -260,7 +299,6 @@ static struct BurnInputInfo PairsInputList[] = {
 
 STDINPUTINFO(Pairs)
 
-#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo WcbowlInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
@@ -424,6 +462,30 @@ static struct BurnDIPInfo SftmDIPList[]=
 };
 
 STDDIPINFO(Sftm)
+
+static struct BurnDIPInfo PubballDIPList[]=
+{
+	DIP_OFFSET(0x1d)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Video Sync"			},
+	{0x00, 0x01, 0x10, 0x00, "-"					},
+	{0x00, 0x01, 0x10, 0x10, "+"					},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x20, 0x00, "Off"					},
+	{0x00, 0x01, 0x20, 0x20, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x80, 0x00, "Off"					},
+	{0x00, 0x01, 0x80, 0x80, "On"					},
+};
+
+STDDIPINFO(Pubball)
 
 static struct BurnDIPInfo PairsDIPList[]=
 {
@@ -898,9 +960,9 @@ static void itech32_update_interrupts(INT32 vint, INT32 xint, INT32 qint)
 #define XFERFLAG_DXDYSIGN		0x0020
 #define XFERFLAG_UNKNOWN8		0x0100
 #define XFERFLAG_CLIP			0x0400
-#define XFERFLAG_UNKNOWN15		0x8000
+#define XFERFLAG_WIDTHPIX		0x8000
 
-#define XFERFLAG_KNOWNFLAGS		(XFERFLAG_TRANSPARENT | XFERFLAG_XFLIP | XFERFLAG_YFLIP | XFERFLAG_DSTXSCALE | XFERFLAG_DYDXSIGN | XFERFLAG_DXDYSIGN | XFERFLAG_CLIP)
+#define XFERFLAG_KNOWNFLAGS		(XFERFLAG_TRANSPARENT | XFERFLAG_XFLIP | XFERFLAG_YFLIP | XFERFLAG_DSTXSCALE | XFERFLAG_DYDXSIGN | XFERFLAG_DXDYSIGN | XFERFLAG_CLIP | XFERFLAG_WIDTHPIX)
 
 #define VRAM_WIDTH				512
 
@@ -1098,6 +1160,117 @@ static void draw_raw(UINT16 *base, UINT16 color)
 			/* render all pixels */
 			sx = startx;
 			for (x = 0; x < width && sx < scaled_clip_rect.nMaxx; x += xsrcstep, sx += xdststep, ty += ystep)
+				if (ty >= scaled_clip_rect.nMiny && ty < scaled_clip_rect.nMaxy &&
+					sx >= scaled_clip_rect.nMinx && sx < scaled_clip_rect.nMaxx)
+				{
+					INT32 pixel = rowsrc[x >> 8];
+					if (pixel != transparent_pen)
+						base[compute_safe_address(sx >> 8, ty >> 8)] = pixel | color;
+				}
+		}
+
+		/* apply skew */
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DXDYSIGN)
+			startx += VIDEO_XSTEP_PER_Y;
+		else
+			startx -= VIDEO_XSTEP_PER_Y;
+	}
+
+	/* restore cliprects */
+	if (!(VIDEO_TRANSFER_FLAGS & XFERFLAG_CLIP))
+		enable_clipping();
+}
+
+static void draw_raw_widthpix(UINT16 *base, UINT16 color)
+{
+	UINT8 *src = &grom_base[(grom_bank | ((VIDEO_TRANSFER_ADDRHI & 0xff) << 16) | VIDEO_TRANSFER_ADDRLO) % grom_size];
+	INT32 transparent_pen = (VIDEO_TRANSFER_FLAGS & XFERFLAG_TRANSPARENT) ? 0xff : -1;
+	INT32 width = VIDEO_TRANSFER_WIDTH << 8;
+	INT32 height = ADJUSTED_HEIGHT(VIDEO_TRANSFER_HEIGHT) << 8;
+	INT32 xsrcstep = VIDEO_SRC_XSTEP;
+	INT32 ysrcstep = VIDEO_SRC_YSTEP;
+	INT32 sx, sy = (VIDEO_TRANSFER_Y & 0xfff) << 8;
+	INT32 startx = (VIDEO_TRANSFER_X & 0xfff) << 8;
+	INT32 xdststep = 0x100;
+	INT32 ydststep = VIDEO_DST_YSTEP;
+	INT32 x, y, px;
+
+	/* adjust for (lack of) clipping */
+	if (!(VIDEO_TRANSFER_FLAGS & XFERFLAG_CLIP))
+		disable_clipping();
+
+	/* adjust for scaling */
+	if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DSTXSCALE)
+		xdststep = VIDEO_DST_XSTEP;
+
+	/* adjust for flipping */
+	if (VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP)
+		xdststep = -xdststep;
+	if (VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP)
+		ydststep = -ydststep;
+
+	/* loop over Y in src pixels */
+	for (y = 0; y < height; y += ysrcstep, sy += ydststep)
+	{
+		UINT8 *rowsrc = &src[(y >> 8) * (width >> 8)];
+
+		x = 0;
+		px = 0;
+
+		/* simpler case: VIDEO_YSTEP_PER_X is zero */
+		if (VIDEO_YSTEP_PER_X == 0)
+		{
+			/* clip in the Y direction */
+			if (sy >= scaled_clip_rect.nMiny && sy < scaled_clip_rect.nMaxy)
+			{
+				UINT32 dstoffs;
+
+				/* direction matters here */
+				sx = startx;
+				if (xdststep > 0)
+				{
+					/* skip left pixels */
+					for ( ; px < width && sx < scaled_clip_rect.nMinx; x += xsrcstep, px += 0x100, sx += xdststep) ;
+
+					/* compute the address */
+					dstoffs = compute_safe_address(sx >> 8, sy >> 8) - (sx >> 8);
+
+					/* render middle pixels */
+					for ( ; px < width && sx < scaled_clip_rect.nMaxx; x += xsrcstep, px += 0x100, sx += xdststep)
+					{
+						INT32 pixel = rowsrc[x >> 8];
+						if (pixel != transparent_pen)
+							base[(dstoffs + (sx >> 8)) & vram_mask] = pixel | color;
+					}
+				}
+				else
+				{
+					/* skip right pixels */
+					for ( ; px < width && sx >= scaled_clip_rect.nMaxx; x += xsrcstep, px += 0x100, sx += xdststep);
+
+					/* compute the address */
+					dstoffs = compute_safe_address(sx >> 8, sy >> 8) - (sx >> 8);
+
+					/* render middle pixels */
+					for ( ; px < width && sx >= scaled_clip_rect.nMinx; x += xsrcstep, px += 0x100, sx += xdststep)
+					{
+						INT32 pixel = rowsrc[x >> 8];
+						if (pixel != transparent_pen)
+							base[(dstoffs + (sx >> 8)) & vram_mask] = pixel | color;
+					}
+				}
+			}
+		}
+
+		/* slow case: VIDEO_YSTEP_PER_X is non-zero */
+		else
+		{
+			INT32 ystep = (VIDEO_TRANSFER_FLAGS & XFERFLAG_DYDXSIGN) ? -VIDEO_YSTEP_PER_X : VIDEO_YSTEP_PER_X;
+			INT32 ty = sy;
+
+			/* render all pixels */
+			sx = startx;
+			for ( ; px < width && sx < scaled_clip_rect.nMaxx; x += xsrcstep, px += 0x100, sx += xdststep, ty += ystep)
 				if (ty >= scaled_clip_rect.nMiny && ty < scaled_clip_rect.nMaxy &&
 					sx >= scaled_clip_rect.nMinx && sx < scaled_clip_rect.nMaxx)
 				{
@@ -1424,8 +1597,13 @@ static void handle_video_command(void)
 	{
 		/* command 1: blit raw data */
 		case 1:
-			if (enable_latch[0]) draw_raw(videoplane[0], color_latch[0]);
-			if (enable_latch[1]) draw_raw(videoplane[1], color_latch[1]);
+			if (VIDEO_TRANSFER_FLAGS & XFERFLAG_WIDTHPIX) {
+				if (enable_latch[0]) draw_raw_widthpix(videoplane[0], color_latch[0]);
+				if (enable_latch[1]) draw_raw_widthpix(videoplane[1], color_latch[1]);
+			} else {
+				if (enable_latch[0]) draw_raw(videoplane[0], color_latch[0]);
+				if (enable_latch[1]) draw_raw(videoplane[1], color_latch[1]);
+			}
 			break;
 
 		/* command 2: blit RLE-compressed data */
@@ -2665,7 +2843,7 @@ static INT32 MemIndex()
 
 	DrvPalette			= (UINT32*)Next; Next += 0x8000 * sizeof(UINT32);
 
-	DrvNVRAM			= Next; Next += 0x004000;
+	DrvNVRAM			= Next; Next += 0x020000;
 
 	AllRam				= Next;
 
@@ -2746,12 +2924,16 @@ static INT32 DrvGetRoms(bool bLoad)
 			if (bLoad) {
 				if (BurnLoadRom(pSndLoad[bank] + 1, i, 2)) return 1;
 			}
-			if (nSndROMLen[1] || is_shufshot) {
-				// wcbowl,wcbowldx,wcbowl{140,165,161,16} have bank1 and 0x200000 spacing
-				// shufshot has 0x200000 spacing but only bank0
-				pSndLoad[bank] += 0x200000;
+			if (is_pubball) {
+				pSndLoad[bank] += 0x200000; // non-pow2 snd rom sizes need padding
 			} else {
-				pSndLoad[bank] += ri.nLen * 2;
+				if (nSndROMLen[1] || is_shufshot) {
+					// wcbowl,wcbowldx,wcbowl{140,165,161,16} have bank1 and 0x200000 spacing
+					// shufshot has 0x200000 spacing but only bank0
+					pSndLoad[bank] += 0x200000;
+				} else {
+					pSndLoad[bank] += ri.nLen * 2;
+				}
 			}
 			continue;
 		}
@@ -2898,7 +3080,7 @@ static INT32 Common32BitInit(UINT32 prot_addr, INT32 plane_num, INT32 color_bank
 	SekOpen(0);
 	SekMapMemory(Drv68KRAM,					0x000000, 0x007fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,					0x580000, 0x59ffff, MAP_RAM);
-	SekMapMemory(DrvNVRAM,					0x600000, 0x603fff, MAP_RAM);
+	SekMapMemory(DrvNVRAM,					0x600000, 0x61ffff, MAP_RAM);
 	SekMapMemory(Drv68KROM,					0x800000, 0x800000 + (n68KROMLen-1), MAP_ROM);
 	SekSetWriteLongHandler(0,				common32_main_write_long);
 	SekSetWriteWordHandler(0,				common32_main_write_word);
@@ -2943,6 +3125,7 @@ static INT32 DrvExit()
 	Trackball_Type = -1;
 
 	is_shufshot = 0;
+	is_pubball = 0;
 	is_16bit = 0;
 
 	return 0;
@@ -3183,7 +3366,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (is_16bit) {
 			ScanVar(Drv68KRAM, 0x10000, "NV RAM");
 		} else {
-			ScanVar(DrvNVRAM,  0x04000, "NV RAM");
+			ScanVar(DrvNVRAM,  (is_pubball) ? 0x20000 : 0x04000, "NV RAM");
 		}
 	}
 
@@ -4855,6 +5038,62 @@ struct BurnDriver BurnDrvSftmj112 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
+// Power Up Baseball (prototype)
+
+static struct BurnRomInfo pubballRomDesc[] = {
+	{ "bb0.bin",		0x025a91, 0xf9350590, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "bb1.bin",		0x025a91, 0x5711f503, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb2.bin",		0x025a91, 0x3e202dc6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb3.bin",		0x025a91, 0xe6d1ba8d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bball.bim",		0x020000, 0x915a9116, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "grom00_0.bin",	0x100000, 0x46822b0f, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "grom00_1.bin",	0x100000, 0xc11236ce, 3 | BRF_GRA },           //  6
+	{ "grom00_2.bin",	0x100000, 0xe6be30f3, 3 | BRF_GRA },           //  7
+	{ "grom00_3.bin",	0x100000, 0xe0d454fb, 3 | BRF_GRA },           //  8
+	{ "grom01_0.bin",	0x100000, 0x115a66f2, 3 | BRF_GRA },           //  9
+	{ "grom01_1.bin",	0x100000, 0x1dfc8dbd, 3 | BRF_GRA },           // 10
+	{ "grom01_2.bin",	0x100000, 0x23386483, 3 | BRF_GRA },           // 11
+	{ "grom01_3.bin",	0x100000, 0xac0123ce, 3 | BRF_GRA },           // 12
+	{ "grom02_0.bin",	0x100000, 0x06cd3cca, 3 | BRF_GRA },           // 13
+	{ "grom02_1.bin",	0x100000, 0x3df38e91, 3 | BRF_GRA },           // 14
+	{ "grom02_2.bin",	0x100000, 0x7c47dde9, 3 | BRF_GRA },           // 15
+	{ "grom02_3.bin",	0x100000, 0xe6eb01bf, 3 | BRF_GRA },           // 16
+	{ "grom3_0.bin",	0x080000, 0x376beb10, 3 | BRF_GRA },           // 17
+	{ "grom3_1.bin",	0x080000, 0x3b3cb8ba, 3 | BRF_GRA },           // 18
+	{ "grom3_2.bin",	0x080000, 0x3bdfac73, 3 | BRF_GRA },           // 19
+	{ "grom3_3.bin",	0x080000, 0x1de04025, 3 | BRF_GRA },           // 20
+
+	{ "bbsrom0.bin",	0x0f8b8e, 0x2a69f77e, 4 | BRF_SND },           // 21 Ensoniq Bank 0
+	{ "bbsrom1.bin",	0x0fe442, 0x4af8c871, 4 | BRF_SND },           // 22
+
+	{ "bbsrom2.bin",	0x0fe62d, 0xe4f9ad52, 5 | BRF_SND },           // 23 Ensoniq Bank 1
+	{ "bbsrom3.bin",	0x0f90b3, 0xb37e2906, 5 | BRF_SND },           // 24
+};
+
+STD_ROM_PICK(pubball)
+STD_ROM_FN(pubball)
+
+static INT32 PubballInit()
+{
+	Trackball_Type = TB_TYPE0;
+	is_pubball = 1;
+
+	return Common32BitInit(0x10000, 2, 0);
+}
+
+struct BurnDriver BurnDrvPubball = {
+	"pubball", NULL, NULL, NULL, "1996",
+	"Power Up Baseball (prototype)\0", NULL, "Midway / Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, pubballRomInfo, pubballRomName, NULL, NULL, NULL, NULL, PubballInputInfo, PubballDIPInfo,
+	PubballInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
 };
 

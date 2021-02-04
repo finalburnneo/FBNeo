@@ -10193,6 +10193,7 @@ DRV		BurnDrvPsurge;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvpce_ptennis;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvPubball;
 DRV		BurnDrvPwheelsj;
 DRV		BurnDrvmd_powerbal;
 DRV		BurnDrvCpsPgearr1;
@@ -26651,6 +26652,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvpce_ptennis,		// Power Tennis [no comment, NOT WORKING]
 #endif
+	&BurnDrvPubball,			// Power Up Baseball (prototype)
 	&BurnDrvPwheelsj,			// Power Wheels (Japan)
 	&BurnDrvmd_powerbal,		// Powerball (USA)
 	&BurnDrvCpsPgearr1,			// Powered Gear - strategic variant armor equipment (940916 Japan)

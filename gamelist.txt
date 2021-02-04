@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16199 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16200 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10043,6 +10043,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_pstrike2	|  	| Power Strike II (Euro, Bra)				| 		| 1993	| Sega		| Sega Master Sy| 					|
 | psurge	|  	| Power Surge						| 		| 1988	| Vision Electro| Miscellaneous	| 					|
 | pce_ptennis	| D NW	| Power Tennis						| 		| 1993	| Hudson	| PC Engine	| 					|
+| pubball	|  	| Power Up Baseball (prototype)				| 		| 1996	| Midway / Incre| Miscellaneous	| 					|
 | pwheelsj	|  	| Power Wheels (Japan)					| dblaxle	| 1991	| Taito Corporat| Taito Z	| 					|
 | md_powerbal	|  	| Powerball (USA)					| 		| 1991	| Namco		| Sega Megadrive| 					|
 | pgearr1	|  	| Powered Gear - strategic variant armor equipment (9409| armwar	| 1994	| Capcom	| CPS2		| 					|

@@ -255,6 +255,17 @@ static bool CheckIfSystem(INT32 gameTocheck)
 			}
 			break;
 
+		case HARDWARE_PREFIX_NGP:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_SNK_NGP:
+				case HARDWARE_SNK_NGPC:
+					bRet = true;
+					break;
+			}
+			break;
+
+
 
 		case HARDWARE_PUBLIC_MASK:
 			bRet = true;
@@ -379,6 +390,9 @@ static void SystemToCheck()
 		case HARDWARE_SNK_NEOGEO:
 			snprintf(systemName, MAX_PATH, "SNK NeoGeo");
 			break;
+		case HARDWARE_PREFIX_NGP:
+			snprintf(systemName, MAX_PATH, "SNK NeoGeo Pocket");
+			break;			
 		case HARDWARE_PREFIX_CAVE:
 			snprintf(systemName, MAX_PATH, "CAVE");
 			break;
@@ -481,8 +495,11 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_SNK_NEOGEO;
 			break;
 		case HARDWARE_SNK_NEOGEO:
-			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
+			nSystemToCheckMask = HARDWARE_PREFIX_NGP;
 			break;
+		case HARDWARE_PREFIX_NGP:
+			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
+			break;			
 		case HARDWARE_PREFIX_IGS_PGM:
 			nSystemToCheckMask = HARDWARE_PREFIX_TAITO;
 			break;

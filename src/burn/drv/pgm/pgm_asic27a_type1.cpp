@@ -691,129 +691,134 @@ static const UINT8 B0TABLE[8] = { 2, 0, 1, 4, 3 }; // Maps char portraits to tab
 
 static const UINT8 BATABLE[0x40] = {
 	0x00,0x29,0x2c,0x35,0x3a,0x41,0x4a,0x4e,0x57,0x5e,0x77,0x79,0x7a,0x7b,0x7c,0x7d,
-	0x7e,0x7f,0x80,0x81,0x82,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x90,
+	0x7e,0x7f,0x82,0x81,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x90,
 	0x95,0x96,0x97,0x98,0x99,0x9a,0x9b,0x9c,0x9e,0xa3,0xd4,0xa9,0xaf,0xb5,0xbb,0xc1
 };
 
 static void kov_asic27a_sim_command(UINT8 command)
 {
-	switch (command)
-	{
-		case 0x67: // unknown or status check?
-		case 0x8e:
-		case 0xa3:
-		case 0x33: // kovsgqyz (a3)
-		case 0x3a: // kovplus
-		case 0xc5: // kovplus
-			asic27a_sim_response = 0x880000;
-		break;
+    switch (command)
+    {
+        case 0x67: // unknown or status check?
+        case 0x8e:
+        case 0xa3:
+        case 0x33: // kovsgqyz (a3)
+        case 0x3a: // kovplus
+            asic27a_sim_response = 0x880000;
+            break;
+            
+        case 0xc5: // kovplus
+            asic27a_sim_response = 0x880000;
+            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] - 1;
+        break;
+            
+        case 0x99: // Reset
+            asic27a_sim_key = 0;
+            asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
+        break;
+        
+        case 0x9d: // Sprite palette offset
+            asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
+        break;
+            
+        case 0xb0: // Read from data table
+            asic27a_sim_response = B0TABLE[asic27a_sim_value & 0x0f];
+        break;
+            
+        case 0xb4: // Copy slot 'a' to slot 'b'
+        case 0xb7: // kovsgqyz (b4)
+        {
+            asic27a_sim_response = 0x880000;
+            
+//            if (asic27a_sim_value == 0x0102) asic27a_sim_value = 0x0100; // why?
+            
+            asic27a_sim_slots[(asic27a_sim_value >> 8) & 0x0f] = asic27a_sim_slots[(asic27a_sim_value >> 4) & 0x0f] + asic27a_sim_slots[(asic27a_sim_value >> 0) & 0x0f];
+        }
+        break;
+            
+        case 0xba: // Read from data table
+            asic27a_sim_response = BATABLE[asic27a_sim_value & 0x3f];
+        break;
+            
+        case 0xc0: // Text layer 'x' select
+            asic27a_sim_response = 0x880000;
+        break;
+            
+        case 0xc3: // Text layer offset
+            asic27a_sim_response = 0x904000 + ((asic27a_sim_regs[0xc0] + (asic27a_sim_value * 0x40)) * 4);
+        break;
+            
+        case 0xcb: // Background layer 'x' select
+            asic27a_sim_response = 0x880000;
+        break;
+            
+        case 0xcc: // Background layer offset
+        {
+            INT32 y = asic27a_sim_value;
+            if (0xf < y) y = y & 0xf;
+            if (y & 0x400) y = -(0x400 - (y & 0x3ff));
+            asic27a_sim_response = 0x900000 + (((asic27a_sim_regs[0xcb] + y * 64) * 4));
+        }
+        break;
+            
+        case 0xd0: // Text palette offset
+        case 0xcd: // kovsgqyz (d0)
+            asic27a_sim_response = 0xa01000 + (asic27a_sim_value * 0x20);
+        break;
+            
+        case 0xd6: // Copy slot to slot 0
+            asic27a_sim_response = 0x880000;
+            asic27a_sim_slots[asic27a_sim_value & 0xf] = asic27a_sim_slots[asic27a_sim_value & 0xf] + 1;
+        break;
+            
+        case 0xdc: // Background palette offset
+        case 0x11: // kovsgqyz (dc)
+            asic27a_sim_response = 0xa00800 + (asic27a_sim_value * 0x40);
+        break;
+            
+        case 0xe0: // Sprite palette offset
+        case 0x9e: // kovsgqyz (e0)
+            asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
+        break;
+            
+        case 0xe5: // Write slot (low)
+        {
+            asic27a_sim_response = 0x880000;
 
-		case 0x99: // Reset
-			asic27a_sim_key = 0;
-			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
-		break;
+            asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x00ff0000) | ((asic27a_sim_value & 0xffff) <<  0);
+        }
+        break;
+            
+        case 0xe7: // Write slot (and slot select) (high)
+        {
+            asic27a_sim_response = 0x880000;
+            asic27a_sim_internal_slot = (asic27a_sim_value >> 12) & 0x0f;
 
-		case 0x9d: // Sprite palette offset
-			asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
-		break;
+            asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x0000ffff) | ((asic27a_sim_value & 0x00ff) << 16);
+        }
+        break;
+            
+        case 0xf0: // Some sort of status read?
+            asic27a_sim_response = 0x00c000;
+        break;
+            
+        case 0xf8: // Read slot
+        case 0xab: // kovsgqyz (f8)
+            asic27a_sim_response = asic27a_sim_slots[asic27a_sim_value & 0x0f] & 0x00ffffff;
+        break;
 
-		case 0xb0: // Read from data table
-			asic27a_sim_response = B0TABLE[asic27a_sim_value & 0x07];
-		break;
+        case 0xfc: // Adjust damage level to char experience level
+            asic27a_sim_response = (asic27a_sim_value * asic27a_sim_regs[0xfe]) >> 6;
+        break;
+            
+        case 0xfe: // Damage level adjust
+            asic27a_sim_response = 0x880000;
+        break;
 
-		case 0xb4: // Copy slot 'a' to slot 'b'
-		case 0xb7: // kovsgqyz (b4)
-		{
-			asic27a_sim_response = 0x880000;
-
-			if (asic27a_sim_value == 0x0102) asic27a_sim_value = 0x0100; // why?
-
-			asic27a_sim_slots[(asic27a_sim_value >> 8) & 0x0f] = asic27a_sim_slots[(asic27a_sim_value >> 0) & 0x0f];
-		}
-		break;
-
-		case 0xba: // Read from data table
-			asic27a_sim_response = BATABLE[asic27a_sim_value & 0x3f];
-		break;
-
-		case 0xc0: // Text layer 'x' select
-			asic27a_sim_response = 0x880000;
-		break;
-
-		case 0xc3: // Text layer offset
-			asic27a_sim_response = 0x904000 + ((asic27a_sim_regs[0xc0] + (asic27a_sim_value * 0x40)) * 4);
-		break;
-
-		case 0xcb: // Background layer 'x' select
-			asic27a_sim_response = 0x880000;
-		break;
-
-		case 0xcc: // Background layer offset
-		{
-	   	 	INT32 y = asic27a_sim_value;
-	    		if (y & 0x400) y = -(0x400 - (y & 0x3ff));
-	    		asic27a_sim_response = 0x900000 + (((asic27a_sim_regs[0xcb] + y * 64) * 4));
-   		}
-		break;
-
-		case 0xd0: // Text palette offset
-		case 0xcd: // kovsgqyz (d0)
-			asic27a_sim_response = 0xa01000 + (asic27a_sim_value * 0x20);
-		break;
-
-		case 0xd6: // Copy slot to slot 0
-			asic27a_sim_response = 0x880000;
-			asic27a_sim_slots[0] = asic27a_sim_slots[asic27a_sim_value & 0x0f];
-		break;
-
-		case 0xdc: // Background palette offset
-		case 0x11: // kovsgqyz (dc)
-			asic27a_sim_response = 0xa00800 + (asic27a_sim_value * 0x40);
-		break;
-
-		case 0xe0: // Sprite palette offset
-		case 0x9e: // kovsgqyz (e0)
-			asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
-		break;
-
-		case 0xe5: // Write slot (low)
-		{
-			asic27a_sim_response = 0x880000;
-
-			asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x00ff0000) | ((asic27a_sim_value & 0xffff) <<  0);
-		}
-		break;
-
-		case 0xe7: // Write slot (and slot select) (high)
-		{
-			asic27a_sim_response = 0x880000;
-			asic27a_sim_internal_slot = (asic27a_sim_value >> 12) & 0x0f;
-
-			asic27a_sim_slots[asic27a_sim_internal_slot] = (asic27a_sim_slots[asic27a_sim_internal_slot] & 0x0000ffff) | ((asic27a_sim_value & 0x00ff) << 16);
-		}
-		break;
-
-		case 0xf0: // Some sort of status read?
-			asic27a_sim_response = 0x00c000;
-		break;
-
-		case 0xf8: // Read slot
-		case 0xab: // kovsgqyz (f8)
-			asic27a_sim_response = asic27a_sim_slots[asic27a_sim_value & 0x0f] & 0x00ffffff;
-		break;
-
-		case 0xfc: // Adjust damage level to char experience level
-			asic27a_sim_response = (asic27a_sim_value * asic27a_sim_regs[0xfe]) >> 6;
-		break;
-
-		case 0xfe: // Damage level adjust
-			asic27a_sim_response = 0x880000;
-		break;
-
-		default:
-			asic27a_sim_response = 0x880000;
-		break;
-	}
+        default:
+            asic27a_sim_response = 0x880000;
+        break;
+    }
 }
 
 void install_protection_asic27_kov()

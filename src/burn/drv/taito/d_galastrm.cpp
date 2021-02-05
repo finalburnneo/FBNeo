@@ -198,7 +198,7 @@ static UINT8 __fastcall galastrm_main_read_byte(UINT32 address)
 		case 0x500000:
 			return ProcessAnalog(TaitoAnalogPort0, 0, INPUT_DEADZONE, 0x00, 0xff);
 		case 0x500001:
-			return ProcessAnalog(TaitoAnalogPort1, 0, INPUT_DEADZONE, 0x00, 0xff);
+			return ProcessAnalog(TaitoAnalogPort1, 1, INPUT_DEADZONE, 0x00, 0xff);
 		case 0x500002:
 		case 0x500003:
 		case 0x500004:

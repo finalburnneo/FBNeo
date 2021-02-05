@@ -77,6 +77,7 @@ struct _tms34010_config
 {
 	UINT8	halt_on_reset;						/* /HCS pin, which determines HALT state after reset */
 	UINT32	pixclock;							/* the pixel clock (0 means don't adjust screen size) */
+	UINT32  cpu_cyc_per_frame;
 	INT32	pixperclock;						/* pixels per clock */
 	void	(*output_int)(INT32 state);			/* output interrupt callback */
 	void	(*to_shiftreg)(UINT32, UINT16 *);	/* shift register write */
@@ -95,6 +96,7 @@ void tms34010_init();
 void tms34010_set_toshift(void (*to_shiftreg)(UINT32, UINT16 *));
 void tms34010_set_fromshift(void (*from_shiftreg)(UINT32, UINT16 *));
 void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock);
+void tms34010_set_cycperframe(INT32 cpf);
 void tms34010_set_output_int(void (*oi_func)(INT32));
 void tms34010_set_halt_on_reset(INT32 onoff);
 

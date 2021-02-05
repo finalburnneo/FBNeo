@@ -527,6 +527,7 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_wecleman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_mdarcbl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\midway\d_xunit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\d_yunit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\narc_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp" />

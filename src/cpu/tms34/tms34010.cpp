@@ -658,6 +658,11 @@ void tms34010_init()
 	state.shiftreg = (UINT16*)BurnMalloc(SHIFTREG_SIZE);
 }
 
+void tms34010_set_cycperframe(INT32 cpf)
+{
+	state.config.cpu_cyc_per_frame = cpf;
+}
+
 void tms34010_set_pixclock(INT32 pxlclock, INT32 pxl_per_clock)
 {
 	state.config.pixclock = pxlclock;
@@ -1539,7 +1544,7 @@ void tms34020_io_register_w(INT32 address, UINT32 data)
 
 UINT16 tms34010_io_register_r(INT32 address)
 {
-	int result, total;
+	int result, total, cyc_per_line;
 	INT32 offset = (address >> 4) & 0x1f;
 
 	//bprintf(0, _T("tms34_io_r  %x  %S  rv: 0x%X (%d)\n"), offset, ioreg_name[offset], IOREG(offset), IOREG(offset));
@@ -1551,9 +1556,10 @@ UINT16 tms34010_io_register_r(INT32 address)
 	{
 		case REG_HCOUNT:
 			/* scale the horizontal position from screen width to HTOTAL */
-			result = TMS34010TotalCycles();
+			cyc_per_line = state.config.cpu_cyc_per_frame / IOREG(REG_VTOTAL);
+			result = TMS34010TotalCycles() % cyc_per_line;
 			total = IOREG(REG_HTOTAL) + 1;
-			result = result * total / nScreenWidth;
+			result = result * total / cyc_per_line;
 
 			/* offset by the HBLANK end */
 			result += IOREG(REG_HEBLNK);
@@ -1584,7 +1590,7 @@ UINT16 tms34010_io_register_r(INT32 address)
 
 UINT16 tms34020_io_register_r(INT32 address)
 {
-	int result, total;
+	int result, total, cyc_per_line;
 
 	INT32 offset = (address >> 4) & 0x3f;
 
@@ -1595,9 +1601,10 @@ UINT16 tms34020_io_register_r(INT32 address)
 	{
 		case REG020_HCOUNT:
 			/* scale the horizontal position from screen width to HTOTAL */
-			result = TMS34010TotalCycles();
+			cyc_per_line = state.config.cpu_cyc_per_frame / IOREG(REG020_VTOTAL);
+			result = TMS34010TotalCycles() % cyc_per_line;
 			total = IOREG(REG020_HTOTAL) + 1;
-			result = result * total / nScreenWidth;
+			result = result * total / cyc_per_line;
 
 			/* offset by the HBLANK end */
 			result += IOREG(REG020_HEBLNK);

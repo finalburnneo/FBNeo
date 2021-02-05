@@ -510,126 +510,95 @@ int OpenDebugLog()
 	return 0;
 }
 
-void GetAspectRatio (int x, int y, int *AspectX, int *AspectY)
+void GetAspectRatio(int x, int y, int *AspectX, int *AspectY)
 {
-	TCHAR szResXY[256] = _T("");
-	_stprintf(szResXY, _T("%dx%d"), x, y);
+	float aspect_ratio = (float)x / (float)y;
 
-	// Normal CRT (4:3) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("320x240"))	||
-		!_tcscmp(szResXY, _T("512x384"))	||
-		!_tcscmp(szResXY, _T("640x480"))	||
-		!_tcscmp(szResXY, _T("800x600"))	||
-		!_tcscmp(szResXY, _T("832x624"))	||
-		!_tcscmp(szResXY, _T("1024x768"))	||
-		!_tcscmp(szResXY, _T("1120x832"))	||
-		!_tcscmp(szResXY, _T("1152x864"))	||
-		!_tcscmp(szResXY, _T("1280x960"))	||
-		!_tcscmp(szResXY, _T("1400x1050"))	||
-		!_tcscmp(szResXY, _T("1600x1200"))	||
-		!_tcscmp(szResXY, _T("2048x1536"))	||
-		!_tcscmp(szResXY, _T("2800x2100"))	||
-		!_tcscmp(szResXY, _T("3200x2400"))	||
-		!_tcscmp(szResXY, _T("4096x3072"))	||
-		!_tcscmp(szResXY, _T("6400x4800")) ){
+	// Horizontal
+
+	// 4:3
+	if (fabs(aspect_ratio - 4.0f/3.0f) < 0.01f) {
 		*AspectX = 4;
 		*AspectY = 3;
 		return;
 	}
 
-	// Normal LCD (5:4) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("320x256"))	||
-		!_tcscmp(szResXY, _T("640x512"))	||
-		!_tcscmp(szResXY, _T("1280x1024"))	||
-		!_tcscmp(szResXY, _T("2560x2048"))	||
-		!_tcscmp(szResXY, _T("5120x4096")) ){
+	// 5:4
+	if (fabs(aspect_ratio - 5.0f/4.0f) < 0.01f) {
 		*AspectX = 5;
 		*AspectY = 4;
 		return;
 	}
 
-	// CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("480x270"))  ||
-		!_tcscmp(szResXY, _T("1280x720")) ||
-		!_tcscmp(szResXY, _T("1360x768")) ||
-		!_tcscmp(szResXY, _T("1366x768")) ||
-		!_tcscmp(szResXY, _T("1920x1080"))) {
+	// 16:9
+	if (fabs(aspect_ratio - 16.0f/9.0f) < 0.1f) {
 		*AspectX = 16;
 		*AspectY = 9;
 		return;
 	}
 
-	// LCD Widescreen (16:10) ( Verified at Wikipedia.Org )
-	if(	!_tcscmp(szResXY, _T("320x200"))	||
-		!_tcscmp(szResXY, _T("1280x800"))	||
-		!_tcscmp(szResXY, _T("1440x900"))	||
-		!_tcscmp(szResXY, _T("1680x1050"))	||
-		!_tcscmp(szResXY, _T("1920x1200"))	||
-		!_tcscmp(szResXY, _T("2560x1600"))	||
-		!_tcscmp(szResXY, _T("3840x2400"))	||
-		!_tcscmp(szResXY, _T("5120x3200"))	||
-		!_tcscmp(szResXY, _T("7680x4800")) ){
+	// 16:10
+	if (fabs(aspect_ratio - 16.0f/10.0f) < 0.1f) {
 		*AspectX = 16;
 		*AspectY = 10;
 		return;
 	}
 
-	// Vertically orientated Normal CRT (4:3) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("240x320"))	||
-		!_tcscmp(szResXY, _T("384x512"))	||
-		!_tcscmp(szResXY, _T("480x640"))	||
-		!_tcscmp(szResXY, _T("600x800"))	||
-		!_tcscmp(szResXY, _T("624x832"))	||
-		!_tcscmp(szResXY, _T("768x1024"))	||
-		!_tcscmp(szResXY, _T("832x1120"))	||
-		!_tcscmp(szResXY, _T("864x1152"))	||
-		!_tcscmp(szResXY, _T("960x1280"))	||
-		!_tcscmp(szResXY, _T("1050x1400"))	||
-		!_tcscmp(szResXY, _T("1200x1600"))	||
-		!_tcscmp(szResXY, _T("1536x2048"))	||
-		!_tcscmp(szResXY, _T("2100x2800"))	||
-		!_tcscmp(szResXY, _T("2400x3200"))	||
-		!_tcscmp(szResXY, _T("3072x4096"))	||
-		!_tcscmp(szResXY, _T("4800x6400")) ){
+	// 21:9
+	if (fabs(aspect_ratio - 21.0f/9.0f) < 0.1f) {
+		*AspectX = 21;
+		*AspectY = 9;
+		return;
+	}
+
+	// 32:9
+	if (fabs(aspect_ratio - 32.0f/9.0f) < 0.1f) {
+		*AspectX = 32;
+		*AspectY = 9;
+		return;
+	}
+
+	// Vertical
+
+	// 3:4
+	if (fabs(aspect_ratio - 3.0f/4.0f) < 0.01f) {
 		*AspectX = 3;
 		*AspectY = 4;
 		return;
 	}
 
-	// Vertically orientated Normal LCD (5:4) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("256x320"))	||
-		!_tcscmp(szResXY, _T("512x640"))	||
-		!_tcscmp(szResXY, _T("1024x1280"))	||
-		!_tcscmp(szResXY, _T("2048x2560"))	||
-		!_tcscmp(szResXY, _T("4096x5120")) ){
+	// 4:5
+	if (fabs(aspect_ratio - 4.0f/5.0f) < 0.01f) {
 		*AspectX = 4;
 		*AspectY = 5;
 		return;
 	}
 
-	// Vertically orientated CRT Widescreen (16:9) ( Verified at Wikipedia.Org )
-	if( !_tcscmp(szResXY, _T("270x480"))  ||
-		!_tcscmp(szResXY, _T("720x1280")) ||
-		!_tcscmp(szResXY, _T("768x1360")) ||
-		!_tcscmp(szResXY, _T("768x1366")) ||
-		!_tcscmp(szResXY, _T("1080x1920"))) {
+	// 9:16
+	if (fabs(aspect_ratio - 9.0f/16.0f) < 0.1f) {
 		*AspectX = 9;
 		*AspectY = 16;
 		return;
 	}
 
-	// Vertically orientated LCD Widescreen (10:16) ( Verified at Wikipedia.Org )
-	if(	!_tcscmp(szResXY, _T("200x320"))	||
-		!_tcscmp(szResXY, _T("800x1280"))	||
-		!_tcscmp(szResXY, _T("900x1440"))	||
-		!_tcscmp(szResXY, _T("1050x1680"))	||
-		!_tcscmp(szResXY, _T("1200x1920"))	||
-		!_tcscmp(szResXY, _T("1600x2560"))	||
-		!_tcscmp(szResXY, _T("2400x3840"))	||
-		!_tcscmp(szResXY, _T("3200x5120"))	||
-		!_tcscmp(szResXY, _T("4800x7680")) ){
+	// 10:16
+	if (fabs(aspect_ratio - 9.0f/16.0f) < 0.1f) {
 		*AspectX = 10;
 		*AspectY = 16;
+		return;
+	}
+
+	// 9:21
+	if (fabs(aspect_ratio - 9.0f/21.0f) < 0.1f) {
+		*AspectX = 9;
+		*AspectY = 21;
+		return;
+	}
+
+	// 9:32
+	if (fabs(aspect_ratio - 9.0f/32.0f) < 0.1f) {
+		*AspectX = 9;
+		*AspectY = 32;
 		return;
 	}
 }

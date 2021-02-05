@@ -21,6 +21,14 @@ void v60SetReadWordHandler(UINT16 (*read)(UINT32));
 void v60SetReadLongHandler(UINT32 (*read)(UINT32));
 void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
 
+void v60WriteWord(UINT32 address, UINT16 data);
+void v60WriteByte(UINT32 address, UINT8 data);
+UINT16 v60ReadWord(UINT32 address);
+UINT16 v60ReadByte(UINT32 address);
+
+UINT32 v60GetPC(INT32);
+UINT32 v60GetRegs(INT32 regs);
+
 INT32 v60TotalCycles();
 void v60RunEnd();
 void v60NewFrame();

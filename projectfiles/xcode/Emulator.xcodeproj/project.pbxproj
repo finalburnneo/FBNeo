@@ -1047,6 +1047,11 @@
 		FEED9E152358414300B7AF83 /* stringset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E142358414300B7AF83 /* stringset.cpp */; };
 		FEED9E1C235845EE00B7AF83 /* FBMainThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */; };
 		FEED9E1E2358B48C00B7AF83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEED9E1D2358B48C00B7AF83 /* main.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
+		FEF37E7625C7602F0036C4BD /* yawdim_sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF37E6E25C7602E0036C4BD /* yawdim_sound.cpp */; };
+		FEF37E7725C7602F0036C4BD /* williams_adpcm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF37E6F25C7602E0036C4BD /* williams_adpcm.cpp */; };
+		FEF37E7825C7602F0036C4BD /* d_yunit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF37E7025C7602E0036C4BD /* d_yunit.cpp */; };
+		FEF37E7925C7602F0036C4BD /* williams_cvsd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF37E7325C7602E0036C4BD /* williams_cvsd.cpp */; };
+		FEF37E7A25C7602F0036C4BD /* narc_sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEF37E7425C7602F0036C4BD /* narc_sound.cpp */; };
 		FEF4EE8123635500004E0DCE /* FBEmulatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8023635500004E0DCE /* FBEmulatorController.m */; };
 		FEF4EE8423635521004E0DCE /* Emulator.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF4EE8223635521004E0DCE /* Emulator.xib */; };
 		FEF4EE8723635CA0004E0DCE /* NSWindowController+Core.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF4EE8523635CA0004E0DCE /* NSWindowController+Core.m */; };
@@ -2631,6 +2636,15 @@
 		FEED9E1A235845EE00B7AF83 /* FBMainThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBMainThread.h; sourceTree = "<group>"; };
 		FEED9E1B235845EE00B7AF83 /* FBMainThread.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBMainThread.mm; sourceTree = "<group>"; };
 		FEED9E1D2358B48C00B7AF83 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FEF37E6D25C7602E0036C4BD /* narc_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = narc_sound.h; sourceTree = "<group>"; };
+		FEF37E6E25C7602E0036C4BD /* yawdim_sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yawdim_sound.cpp; sourceTree = "<group>"; };
+		FEF37E6F25C7602E0036C4BD /* williams_adpcm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = williams_adpcm.cpp; sourceTree = "<group>"; };
+		FEF37E7025C7602E0036C4BD /* d_yunit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_yunit.cpp; sourceTree = "<group>"; };
+		FEF37E7125C7602E0036C4BD /* yawdim_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yawdim_sound.h; sourceTree = "<group>"; };
+		FEF37E7225C7602E0036C4BD /* williams_adpcm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = williams_adpcm.h; sourceTree = "<group>"; };
+		FEF37E7325C7602E0036C4BD /* williams_cvsd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = williams_cvsd.cpp; sourceTree = "<group>"; };
+		FEF37E7425C7602F0036C4BD /* narc_sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = narc_sound.cpp; sourceTree = "<group>"; };
+		FEF37E7525C7602F0036C4BD /* williams_cvsd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = williams_cvsd.h; sourceTree = "<group>"; };
 		FEF4EE7F23635500004E0DCE /* FBEmulatorController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBEmulatorController.h; sourceTree = "<group>"; };
 		FEF4EE8023635500004E0DCE /* FBEmulatorController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBEmulatorController.m; sourceTree = "<group>"; };
 		FEF4EE8323635521004E0DCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Emulator.xib; sourceTree = "<group>"; };
@@ -3998,20 +4012,29 @@
 		FE1B203323561A6B0065200C /* midway */ = {
 			isa = PBXGroup;
 			children = (
-				FE1B203423561A6B0065200C /* ide.cpp */,
-				FE1B203523561A6B0065200C /* midtunit.h */,
-				FE1B203623561A6B0065200C /* ide.h */,
 				FE1B203723561A6B0065200C /* d_kinst.cpp */,
-				FE1B203823561A6B0065200C /* dcs2k.cpp */,
-				FE1B203923561A6B0065200C /* midwayic.cpp */,
-				FE1B203A23561A6B0065200C /* dcs2k.h */,
-				FE1B203B23561A6B0065200C /* midwunit.h */,
-				FE1B203C23561A6B0065200C /* midwunit.cpp */,
-				FE1B203D23561A6B0065200C /* midtunit_dma.h */,
 				FE1B203E23561A6B0065200C /* d_tunit.cpp */,
-				FE1B203F23561A6B0065200C /* midwayic.h */,
-				FE1B204023561A6B0065200C /* midtunit.cpp */,
 				FE1B204123561A6B0065200C /* d_wunit.cpp */,
+				FEF37E7025C7602E0036C4BD /* d_yunit.cpp */,
+				FE1B203823561A6B0065200C /* dcs2k.cpp */,
+				FE1B203A23561A6B0065200C /* dcs2k.h */,
+				FE1B203423561A6B0065200C /* ide.cpp */,
+				FE1B203623561A6B0065200C /* ide.h */,
+				FE1B203D23561A6B0065200C /* midtunit_dma.h */,
+				FE1B204023561A6B0065200C /* midtunit.cpp */,
+				FE1B203523561A6B0065200C /* midtunit.h */,
+				FE1B203923561A6B0065200C /* midwayic.cpp */,
+				FE1B203F23561A6B0065200C /* midwayic.h */,
+				FE1B203C23561A6B0065200C /* midwunit.cpp */,
+				FE1B203B23561A6B0065200C /* midwunit.h */,
+				FEF37E7425C7602F0036C4BD /* narc_sound.cpp */,
+				FEF37E6D25C7602E0036C4BD /* narc_sound.h */,
+				FEF37E6F25C7602E0036C4BD /* williams_adpcm.cpp */,
+				FEF37E7225C7602E0036C4BD /* williams_adpcm.h */,
+				FEF37E7325C7602E0036C4BD /* williams_cvsd.cpp */,
+				FEF37E7525C7602F0036C4BD /* williams_cvsd.h */,
+				FEF37E6E25C7602E0036C4BD /* yawdim_sound.cpp */,
+				FEF37E7125C7602E0036C4BD /* yawdim_sound.h */,
 			);
 			path = midway;
 			sourceTree = "<group>";
@@ -5234,6 +5257,7 @@
 				FE1B245623561A750065200C /* infback.c in Sources */,
 				FE1B271D23561A780065200C /* d_tigeroad.cpp in Sources */,
 				FE1B259723561A760065200C /* d_bwing.cpp in Sources */,
+				FEF37E7825C7602F0036C4BD /* d_yunit.cpp in Sources */,
 				FE1B252123561A760065200C /* d_galpanic.cpp in Sources */,
 				FE1B27CA23561A790065200C /* nmk112.cpp in Sources */,
 				FE1B27B123561A790065200C /* load.cpp in Sources */,
@@ -5381,6 +5405,7 @@
 				FE1B26F623561A780065200C /* d_sidearms.cpp in Sources */,
 				FE1B268B23561A770065200C /* d_cloud9.cpp in Sources */,
 				FE1B26D123561A780065200C /* d_citycon.cpp in Sources */,
+				FEF37E7725C7602F0036C4BD /* williams_adpcm.cpp in Sources */,
 				FE1B245A23561A750065200C /* uncompr.c in Sources */,
 				FE1B278F23561A790065200C /* rf5c68.cpp in Sources */,
 				FE1B258123561A760065200C /* d_actfancr.cpp in Sources */,
@@ -5416,6 +5441,7 @@
 				FE1B258723561A760065200C /* d_deco156.cpp in Sources */,
 				FE1B25EA23561A760065200C /* k052109.cpp in Sources */,
 				FE1B256023561A760065200C /* sys16_run.cpp in Sources */,
+				FEF37E7625C7602F0036C4BD /* yawdim_sound.cpp in Sources */,
 				FE1B271223561A780065200C /* d_ginganin.cpp in Sources */,
 				FE1B23C823561A750065200C /* cop0.cpp in Sources */,
 				FE1B266D23561A770065200C /* pc080sn.cpp in Sources */,
@@ -5652,6 +5678,7 @@
 				FE1B240323561A750065200C /* hd6309.cpp in Sources */,
 				FE1B250223561A760065200C /* d_aerofgt.cpp in Sources */,
 				FE1B25C723561A760065200C /* d_trackfld.cpp in Sources */,
+				FEF37E7A25C7602F0036C4BD /* narc_sound.cpp in Sources */,
 				FE1B256723561A760065200C /* d_sys16a.cpp in Sources */,
 				FE1B279E23561A790065200C /* sp0256.cpp in Sources */,
 				FE1B264623561A770065200C /* d_buggychl.cpp in Sources */,
@@ -6062,6 +6089,7 @@
 				FE1B258A23561A760065200C /* d_funkyjet.cpp in Sources */,
 				FE1B267223561A770065200C /* d_darkmist.cpp in Sources */,
 				FE1B25CC23561A760065200C /* d_mystwarr.cpp in Sources */,
+				FEF37E7925C7602F0036C4BD /* williams_cvsd.cpp in Sources */,
 				FE1B274423561A780065200C /* d_ddayjlc.cpp in Sources */,
 				FE1B25E523561A760065200C /* d_bottom9.cpp in Sources */,
 				FE1B270323561A780065200C /* d_dogfgt.cpp in Sources */,

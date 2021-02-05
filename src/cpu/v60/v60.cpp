@@ -424,6 +424,26 @@ static void program_write_byte_32le(UINT32 a, UINT8 d)
 	}
 }
 
+void v60WriteWord(UINT32 address, UINT16 data)
+{
+	program_write_word_16le(address, data);
+}
+
+void v60WriteByte(UINT32 address, UINT8 data)
+{
+	program_write_byte_16le(address, data);
+}
+
+UINT16 v60ReadWord(UINT32 address)
+{
+	return program_read_word_16le(address);
+}
+
+UINT16 v60ReadByte(UINT32 address)
+{
+	return program_read_byte_16le(address);
+}
+
 static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 {
 	v60SetIRQLine(line, state);
@@ -1018,6 +1038,16 @@ INT32 v60Idle(INT32 cycles)
 void v60NewFrame()
 {
 	v60.current_cycles = 0;
+}
+
+UINT32 v60GetPC(INT32)
+{
+	return v60.reg[32];
+}
+
+UINT32 v60GetRegs(INT32 regs)
+{
+	return v60.reg[regs];
 }
 
 #if 0

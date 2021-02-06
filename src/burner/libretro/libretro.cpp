@@ -276,12 +276,13 @@ void retro_get_system_info(struct retro_system_info *info)
 {
 	char *library_version = (char*)calloc(22, sizeof(char));
 
-	sprintf(library_version, "v%x.%x.%x.%02x %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, GIT_VERSION);
-
-	info->library_name = APP_TITLE;
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
 #endif
+
+	sprintf(library_version, "v%x.%x.%x.%02x %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, GIT_VERSION);
+
+	info->library_name = APP_TITLE;
 	info->library_version = strdup(library_version);
 	info->need_fullpath = true;
 	info->block_extract = true;

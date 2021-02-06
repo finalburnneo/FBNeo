@@ -95,7 +95,7 @@ static INT32 flip_screen_x = 0;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT16 DrvInputs[6];
 static UINT8 DrvReset;
 static INT16 Gun[4];
@@ -384,6 +384,7 @@ static struct BurnInputInfo Term2InputList[] = {
 	{"Tilt",					BIT_DIGITAL,	DrvJoy2 + 3,	"tilt"		},
 	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",					BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",					BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 #undef A
 STDINPUTINFO(Term2)
@@ -751,6 +752,7 @@ static struct BurnDIPInfo Term2DIPList[]=
 	DIP_OFFSET(0x10)
 	{0x00, 0xff, 0xff, 0xfb, NULL					},
 	{0x01, 0xff, 0xff, 0xcf, NULL					},
+	{0x02, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    8, "Credits"				},
 	{0x00, 0x01, 0x07, 0x07, "2 Start/1 Continue"	},
@@ -806,6 +808,10 @@ static struct BurnDIPInfo Term2DIPList[]=
 	{0x01, 0x01, 0xc0, 0xc0, "USA"					},
 	{0x01, 0x01, 0xc0, 0x80, "French"				},
 	{0x01, 0x01, 0xc0, 0x40, "German"				},
+
+	{0   , 0xfe, 0   ,    2, "Emulated Crosshair"	},
+	{0x02, 0x01, 0x01, 0x00, "Off"					},
+	{0x02, 0x01, 0x01, 0x01, "On"					},
 };
 
 STDDIPINFO(Term2)
@@ -1742,7 +1748,9 @@ static INT32 DrvDraw()
 
 	BurnTransferCopy(BurnPalette);
 
-	if (is_term2) {
+	if (is_term2 && DrvDips[2] & 1) {
+		// The emulated crosshair is only needed for calibration.
+		// The game has it's own set of crosshairs.
 		BurnGunDrawTargets();
 	}
 

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16200 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16202 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4922,6 +4922,7 @@ This list contains all games supported by FinalBurn Neo.
 | galaxbsf2	|  	| Galaxian (bootleg, set 3)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | galaxianbl2	|  	| Galaxian (bootleg, set 4)				| galaxian	| 1979	| bootleg	| Galaxian	| 					|
 | galaxcirsa	|  	| Galaxian (Cirsa Spanish bootleg)			| galaxian	| 1979	| bootleg (Cirsa| Galaxian	| 					|
+| galaxianem	|  	| Galaxian (Electromar Spanish bootleg)			| galaxian	| 1980	| bootleg (Elect| Galaxian	| 					|
 | galaxiani	|  	| Galaxian (Irem)					| galaxian	| 1979	| bootleg? (Irem| Galaxian	| 					|
 | fds_galaxian	|  	| Galaxian (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_galaxian	|  	| Galaxian (Japan)					| 		| 1984	| Namco		| Miscellaneous	| 					|
@@ -10059,8 +10060,9 @@ This list contains all games supported by FinalBurn Neo.
 | preisle2	|  	| Prehistoric Isle 2					| 		| 1999	| Yumekobo	| Neo Geo MVS	| 					|
 | prehislek	|  	| Prehistoric Isle in 1930 (Korea)			| prehisle	| 1989	| SNK (Victor li| Prehistoric Is| 					|
 | prehisleu	|  	| Prehistoric Isle in 1930 (US)				| prehisle	| 1989	| SNK of America| Prehistoric Is| 					|
-| prehisle	|  	| Prehistoric Isle in 1930 (World)			| 		| 1989	| SNK		| Prehistoric Is| 					|
 | prehisleb	|  	| Prehistoric Isle in 1930 (World, bootleg)		| prehisle	| 1989	| bootleg	| Prehistoric Is| 					|
+| prehisle	|  	| Prehistoric Isle in 1930 (World, set 1)		| 		| 1989	| SNK		| Prehistoric Is| 					|
+| prehislea	|  	| Prehistoric Isle in 1930 (World, set 2)		| prehisle	| 1989	| SNK		| Prehistoric Is| 					|
 | md_premierm	|  	| Premier Manager (Euro)				| 		| 1995	| Sega		| Sega Megadrive| 					|
 | md_premrm97	|  	| Premier Manager 97 (Euro)				| 		| 1996	| Sega		| Sega Megadrive| 					|
 | msx_prettykngdm|  	| Pretty Kingdom (HB)					| 		| 2014	| Nerlaska Studi| MSX		| 					|

@@ -4998,6 +4998,7 @@ DRV		BurnDrvGalaxianbl;
 DRV		BurnDrvGalaxbsf2;
 DRV		BurnDrvGalaxianbl2;
 DRV		BurnDrvGalaxcirsa;
+DRV		BurnDrvGalaxianem;
 DRV		BurnDrvGalaxiani;
 DRV		BurnDrvfds_galaxian;
 DRV		BurnDrvnes_galaxian;
@@ -10209,8 +10210,9 @@ DRV		BurnSpecPredator;
 DRV		BurnDrvpreisle2;
 DRV		BurnDrvPrehislk;
 DRV		BurnDrvPrehislu;
-DRV		BurnDrvPrehisle;
 DRV		BurnDrvPrehislb;
+DRV		BurnDrvPrehisle;
+DRV		BurnDrvPrehislea;
 DRV		BurnDrvmd_premierm;
 DRV		BurnDrvmd_premrm97;
 DRV		BurnDrvMSX_prettykngdm;
@@ -21457,6 +21459,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalaxbsf2,			// Galaxian (bootleg, set 3)
 	&BurnDrvGalaxianbl2,		// Galaxian (bootleg, set 4)
 	&BurnDrvGalaxcirsa,			// Galaxian (Cirsa Spanish bootleg)
+	&BurnDrvGalaxianem,			// Galaxian (Electromar Spanish bootleg)
 	&BurnDrvGalaxiani,			// Galaxian (Irem)
 	&BurnDrvfds_galaxian,		// Galaxian (Japan)
 	&BurnDrvnes_galaxian,		// Galaxian (Japan)
@@ -26668,8 +26671,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpreisle2,			// Prehistoric Isle 2
 	&BurnDrvPrehislk,			// Prehistoric Isle in 1930 (Korea)
 	&BurnDrvPrehislu,			// Prehistoric Isle in 1930 (US)
-	&BurnDrvPrehisle,			// Prehistoric Isle in 1930 (World)
 	&BurnDrvPrehislb,			// Prehistoric Isle in 1930 (World, bootleg)
+	&BurnDrvPrehisle,			// Prehistoric Isle in 1930 (World, set 1)
+	&BurnDrvPrehislea,			// Prehistoric Isle in 1930 (World, set 2)
 	&BurnDrvmd_premierm,		// Premier Manager (Euro)
 	&BurnDrvmd_premrm97,		// Premier Manager 97 (Euro)
 	&BurnDrvMSX_prettykngdm,	// Pretty Kingdom (HB)

@@ -19792,7 +19792,7 @@ struct BurnDriver BurnSpecCattivik = {
 // HELL YEAH!
 
 static struct BurnRomInfo SpecHellyeahRomDesc[] = {
-	{ "HELL YEAH! (2020)(Andy Precious).tap", 47898, 0x6f2404b4, BRF_ESS | BRF_PRG },
+	{ "HELL YEAH! (2020)(Andy Precious).tap", 47848, 0x064685ab, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecHellyeah, SpecHellyeah, Spec128)
@@ -20982,6 +20982,44 @@ struct BurnDriver BurnSpecRedraidsinking2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecRedraidsinking2RomInfo, SpecRedraidsinking2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dark Transit
+
+static struct BurnRomInfo SpecDarktransitRomDesc[] = {
+	{ "Dark Transit (2021)(Sasa Bjedovic).tap", 27345, 0xd963212d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDarktransit, SpecDarktransit, Spec128)
+STD_ROM_FN(SpecDarktransit)
+
+struct BurnDriver BurnSpecDarktransit = {
+	"spec_darktransit", NULL, "spec_spec128", NULL, "2021",
+	"Dark Transit\0", NULL, "Sasa Bjedovic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDarktransitRomInfo, SpecDarktransitRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Yanga Plus
+
+static struct BurnRomInfo SpecYangaplusRomDesc[] = {
+	{ "Yanga Plus (2021)(Serdjuk).tap", 55855, 0x4c6d1b08, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecYangaplus, SpecYangaplus, Spec128)
+STD_ROM_FN(SpecYangaplus)
+
+struct BurnDriver BurnSpecYangaplus = {
+	"spec_yangaplus", NULL, "spec_spec128", NULL, "2021",
+	"Yanga Plus\0", NULL, "Serdjuk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecYangaplusRomInfo, SpecYangaplusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

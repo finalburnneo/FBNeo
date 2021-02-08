@@ -19,7 +19,8 @@ void v60SetWriteLongHandler(void (*write)(UINT32,UINT32));
 void v60SetReadByteHandler(UINT8  (*read)(UINT32));
 void v60SetReadWordHandler(UINT16 (*read)(UINT32));
 void v60SetReadLongHandler(UINT32 (*read)(UINT32));
-void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
+void v60SetAddressMask(UINT32 mask);
+void v60MapMemory(UINT8 *ptr, UINT64 start, UINT64 end, UINT32 flags);
 
 void v60WriteWord(UINT32 address, UINT16 data);
 void v60WriteByte(UINT32 address, UINT8 data);

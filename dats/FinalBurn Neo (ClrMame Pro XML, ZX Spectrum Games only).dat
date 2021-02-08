@@ -2226,6 +2226,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="darktransit" romof="spec128">
+		<description>Dark Transit</description>
+		<year>2021</year>
+		<manufacturer>Sasa Bjedovic</manufacturer>
+		<rom name="Dark Transit (2021)(Sasa Bjedovic).tap" size="27345" crc="d963212d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="darkman" romof="spec128">
 		<description>Darkman (128K)</description>
 		<year>1991</year>
@@ -3641,7 +3650,7 @@
 		<description>HELL YEAH! (HB) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Andy Precious</manufacturer>
-		<rom name="HELL YEAH! (2020)(Andy Precious).tap" size="47898" crc="6f2404b4"/>
+		<rom name="HELL YEAH! (2020)(Andy Precious).tap" size="47848" crc="064685ab"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -8803,6 +8812,15 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Xevious (1987)(U.S. Gold).z80" size="23271" crc="ac2c0235"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="yangaplus" romof="spec128">
+		<description>Yanga Plus</description>
+		<year>2021</year>
+		<manufacturer>Serdjuk</manufacturer>
+		<rom name="Yanga Plus (2021)(Serdjuk).tap" size="55855" crc="4c6d1b08"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="yarsrevenge" romof="spec128">

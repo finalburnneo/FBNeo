@@ -3087,6 +3087,7 @@ DRV		BurnDrvDarkseal;
 DRV		BurnDrvDarkseal2;
 DRV		BurnSpecDarkstar;
 DRV		BurnDrvDarktowr;
+DRV		BurnSpecDarktransit;
 DRV		BurnSpecdarkman;
 DRV		BurnDrvnes_darkmanc;
 DRV		BurnDrvnes_darkman;
@@ -16221,6 +16222,7 @@ DRV		BurnDrvYamato2;
 DRV		BurnDrvMSX_hades;
 DRV		BurnDrvMSX_hadesa;
 DRV		BurnDrvmd_yangji;
+DRV		BurnSpecYangaplus;
 DRV		BurnDrvyankeedo;
 DRV		BurnSpecYarsrevenge;
 DRV		BurnDrvmd_yazzie;
@@ -19548,6 +19550,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDarkseal2,			// Dark Seal 2 (Japan v2.1)
 	&BurnSpecDarkstar,			// Dark Star
 	&BurnDrvDarktowr,			// Dark Tower
+	&BurnSpecDarktransit,		// Dark Transit
 	&BurnSpecdarkman,			// Darkman (128K)
 	&BurnDrvnes_darkmanc,		// Darkman (USA) - Castellano v1.0
 	&BurnDrvnes_darkman,		// Darkman (USA)
@@ -32682,6 +32685,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_hades,			// Yami no Ryuuou - Hades no Monshou (Jpn)
 	&BurnDrvMSX_hadesa,			// Yami no Ryuuou - Hades no Monshou (Jpn, Alt)
 	&BurnDrvmd_yangji,			// Yang Jia Jiang - Yang Warrior Family (Chi)
+	&BurnSpecYangaplus,			// Yanga Plus
 	&BurnDrvyankeedo,			// Yankee DO!
 	&BurnSpecYarsrevenge,		// Yars Revenge ZX (HB)
 	&BurnDrvmd_yazzie,			// Yazzie (HB)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16202 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16204 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3045,6 +3045,7 @@ This list contains all games supported by FinalBurn Neo.
 | darkseal2	|  	| Dark Seal 2 (Japan v2.1)				| wizdfire	| 1992	| Data East Corp| DECO IC16	| 					|
 | spec_darkstar	|  	| Dark Star						| 		| 1984	| Design Design	| ZX Spectrum	| 					|
 | darktowr	|  	| Dark Tower						| 		| 1992	| Game Room	| Miscellaneous	| 					|
+| spec_darktransit|  	| Dark Transit						| 		| 2021	| Sasa Bjedovic	| ZX Spectrum	| 					|
 | spec_darkman	|  	| Darkman (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_darkmanc	|  	| Darkman (USA) - Castellano v1.0			| nes_darkman	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_darkman	|  	| Darkman (USA)						| 		| 1991	| Ocean		| Miscellaneous	| 					|
@@ -15977,6 +15978,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hades	|  	| Yami no Ryuuou - Hades no Monshou (Jpn)		| 		| 1986	| Casio		| MSX		| 					|
 | msx_hadesa	|  	| Yami no Ryuuou - Hades no Monshou (Jpn, Alt)		| msx_hades	| 1986	| Casio		| MSX		| 					|
 | md_yangji	|  	| Yang Jia Jiang - Yang Warrior Family (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
+| spec_yangaplus|  	| Yanga Plus						| 		| 2021	| Serdjuk	| ZX Spectrum	| 					|
 | yankeedo	|  	| Yankee DO!						| mrdo		| 1982	| hack		| Miscellaneous	| 					|
 | spec_yarsrevenge|  	| Yars Revenge ZX (HB)					| 		| 2015	| Monument Micro| ZX Spectrum	| 					|
 | md_yazzie	|  	| Yazzie (HB)						| 		| 2020	| RetroSouls	| Sega Megadrive| 					|

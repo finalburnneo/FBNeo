@@ -853,8 +853,8 @@ void v60Init()
 	address_mask = 0xffffff;
 
 	for (INT32 i = 0; i < 3; i++) {
-		mem[i] = (UINT8**)BurnMalloc((address_mask / page_size) * sizeof(UINT8**));
-		memset (mem[i], 0, (address_mask / page_size) * sizeof(UINT8**));
+		mem[i] = (UINT8**)BurnMalloc(((address_mask / page_size) + 1) * sizeof(UINT8**));
+		memset (mem[i], 0, ((address_mask / page_size) + 1) * sizeof(UINT8**));
 	}
 
 	base_init();

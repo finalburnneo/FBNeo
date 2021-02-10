@@ -454,7 +454,7 @@ static void blitter_write()
 						src_offs++;
 	
 						dst_offs &= 0xffff;
-						dst[dst_offs*2+offs2] = b2;
+						dst[(dst_offs*2+offs2) & 0x1ffff] = b2;
 						dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
 					}
 					break;
@@ -469,7 +469,7 @@ static void blitter_write()
 					while (count--)
 					{
 						dst_offs &= 0xffff;
-						dst[dst_offs*2+offs2] = b2;
+						dst[(dst_offs*2+offs2) & 0x1ffff] = b2;
 						dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
 						b2++;
 					}
@@ -485,7 +485,7 @@ static void blitter_write()
 					while (count--)
 					{
 						dst_offs &= 0xffff;
-						dst[dst_offs*2+offs2] = b2;
+						dst[(dst_offs*2+offs2) & 0x1ffff] = b2;
 						dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
 					}
 					break;

@@ -724,7 +724,7 @@ static struct BurnRomInfo PrehisleaRomDesc[] = {
 
 	{ "pi8916.h16",    0x40000, 0x7cffe0f6, BRF_GRA },			 //  5	Background1 Layer Tiles
 
-	{ "9.bin",    	   0x20000, 0xd81f8db5, BRF_GRA },			 //  6	Sprite Layer Tiles
+	{ "9.bin",    	   0x20000, 0x6927a073, BRF_GRA },			 //  6	Sprite Layer Tiles
 	{ "8.bin",    	   0x20000, 0x5f3e0148, BRF_GRA },			 //  7
 	{ "7.bin",    	   0x20000, 0x4486939d, BRF_GRA },			 //  8
 	{ "6.bin",    	   0x20000, 0x099beac7, BRF_GRA },			 //  9

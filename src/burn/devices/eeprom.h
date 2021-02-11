@@ -46,10 +46,11 @@ void EEPROMSetCSLine(INT32 state);
 void EEPROMSetClockLine(INT32 state);
 
 // Or all at once
-#define EEPROMWrite(clock, cs, bit)		\
-	EEPROMWriteBit(bit);		\
-	EEPROMSetCSLine(cs ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);	\
-	EEPROMSetClockLine(clock ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE)
+#define EEPROMWrite(clock, cs, bit) do {								\
+	EEPROMWriteBit(bit);												\
+	EEPROMSetCSLine(cs ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);		\
+	EEPROMSetClockLine(clock ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);	\
+} while (0)
 
 void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length);
 

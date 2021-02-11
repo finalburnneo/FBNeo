@@ -39,12 +39,11 @@ inline UINT32 f2u(float f)
 
 //#define LOG_MEM
 
-#define address_range	0x1000000
-#define address_mask	0xffffff
 #define page_size	0x800
 #define page_mask	0x7ff
 
-static UINT8 *mem[3][(address_mask + 1) / page_size];
+static UINT8 **mem[3];
+static UINT32 address_mask;
 
 static UINT8  (*v60_read8)(UINT32) = NULL;
 static UINT16 (*v60_read16)(UINT32) = NULL;
@@ -91,16 +90,20 @@ void v60SetReadLongHandler(UINT32 (*read)(UINT32))
 	v60_read32 = read;
 }
 
+void v60SetAddressMask(UINT32 mask)
+{
+	address_mask = mask;
+}
 
-void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
+void v60MapMemory(UINT8 *ptr, UINT64 start, UINT64 end, UINT32 flags)
 {
 	// error check here!
 
-	for (UINT32 i = start; i < end; i+= page_size)
+	for (UINT64 i = start; i < end; i+= page_size)
 	{
-		if (flags & 1) mem[0][i/page_size] = ptr + (i - start);
-		if (flags & 2) mem[1][i/page_size] = ptr + (i - start);
-		if (flags & 4) mem[2][i/page_size] = ptr + (i - start);
+		if (flags & 1) mem[0][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
+		if (flags & 2) mem[1][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
+		if (flags & 4) mem[2][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
 	}
 }
 
@@ -341,6 +344,8 @@ static void io_write_byte_32le(UINT32 a, UINT8 d)
 
 static UINT32 program_read_dword_32le(UINT32 a)
 {
+	a &= address_mask;
+
 	UINT32 *p = (UINT32*)mem[0][a / page_size];
 
 	if (p) {
@@ -356,6 +361,8 @@ static UINT32 program_read_dword_32le(UINT32 a)
 
 static UINT16 program_read_word_32le(UINT32 a)
 {
+	a &= address_mask;
+
 	UINT16 *p = (UINT16*)mem[0][a / page_size];
 
 	if (p) {
@@ -371,6 +378,8 @@ static UINT16 program_read_word_32le(UINT32 a)
 
 static UINT8 program_read_byte_32le(UINT32 a)
 {
+	a &= address_mask;
+
 	if (mem[0][a / page_size]) {
 		return mem[0][a / page_size][a & page_mask];
 	}
@@ -384,6 +393,8 @@ static UINT8 program_read_byte_32le(UINT32 a)
 
 static void program_write_dword_32le(UINT32 a, UINT32 d)
 {
+	a &= address_mask;
+
 	UINT32 *p = (UINT32*)mem[1][a / page_size];
 
 	if (p) {
@@ -399,6 +410,8 @@ static void program_write_dword_32le(UINT32 a, UINT32 d)
 
 static void program_write_word_32le(UINT32 a, UINT16 d)
 {
+	a &= address_mask;
+
 	UINT16 *p = (UINT16*)mem[1][a / page_size];
 
 	if (p) {
@@ -414,6 +427,8 @@ static void program_write_word_32le(UINT32 a, UINT16 d)
 
 static void program_write_byte_32le(UINT32 a, UINT8 d)
 {
+	a &= address_mask;
+
 	if (mem[1][a / page_size]) {
 		mem[1][a / page_size][a & page_mask] = d;
 		return;
@@ -835,7 +850,12 @@ static void base_init()
 
 void v60Init()
 {
-	memset (mem, 0, 3 * ((address_mask + 1) / page_size) * sizeof(UINT8*));
+	address_mask = 0xffffff;
+
+	for (INT32 i = 0; i < 3; i++) {
+		mem[i] = (UINT8**)BurnMalloc(((address_mask / page_size) + 1) * sizeof(UINT8**));
+		memset (mem[i], 0, ((address_mask / page_size) + 1) * sizeof(UINT8**));
+	}
 
 	base_init();
 	// Set PIR (Processor ID) for NEC v60. LSB is reserved to NEC,
@@ -848,6 +868,13 @@ void v60Init()
 
 void v70Init()
 {
+	address_mask = 0xffffffff;
+
+	for (INT32 i = 0; i < 3; i++) {
+		mem[i] = (UINT8**)BurnMalloc(0x200000 * sizeof(UINT8**));
+		memset (mem[i], 0, 0x200000 * sizeof(UINT8**));
+	}
+
 	base_init();
 	// Set PIR (Processor ID) for NEC v70. LSB is reserved to NEC,
 	// so I don't know what it contains.
@@ -912,7 +939,9 @@ void v60Close()
 
 void v60Exit()
 {
-
+	for (INT32 i = 0; i < 3; i++) {
+		BurnFree(mem[i]);
+	}
 }
 
 

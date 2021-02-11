@@ -6960,6 +6960,23 @@ static struct BurnRomInfo GalaxrfRomDesc[] = {
 STD_ROM_PICK(Galaxrf)
 STD_ROM_FN(Galaxrf)
 
+static struct BurnRomInfo GalaxianemRomDesc[] = {
+	// Found on a Recreativos Franco PCB
+	{ "fg1.bin",       0x00800, 0x3d5d9bae, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "fg2.bin",       0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "fg3.bin",       0x00800, 0x7c86fc8a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "fg4.bin",       0x00800, 0xd74bdd2a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "fg5.bin",       0x00800, 0xf93fdd30, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "hj.bin",    	   0x00800, 0x5f1b4996, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "kl.bin",    	   0x00800, 0x18df5c90, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "im5610.bin",    0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianem)
+STD_ROM_FN(Galaxianem)
+
 static struct BurnRomInfo GalaxianrpRomDesc[] = {
 	{ "4.7k",    	   0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "5.7j",    	   0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7279,6 +7296,16 @@ struct BurnDriver BurnDrvGalaxrf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxrfRomInfo, GalaxrfRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianem = {
+	"galaxianem", "galaxian", NULL, NULL, "1980",
+	"Galaxian (Electromar Spanish bootleg)\0", NULL, "bootleg (Electromar)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxianemRomInfo, GalaxianemRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

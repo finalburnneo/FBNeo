@@ -7455,10 +7455,10 @@ struct BurnDriver BurnDrvkov2pshpd = {
 
 // Oriental Legend Special / Da Sheng Gui Lai (Hack)
 // Hacked by XIAOYUER
-// GOTVG 20201231
+// GOTVG 20210111
 
 static struct BurnRomInfo oldsdsglRomDesc[] = {
-	{ "dsgl_p0500_v100.u24",	0x0400000, 0xadcb2a8a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "dsgl_p0500_v100.u24",	0x0400000, 0xfd55142c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "dsgl_t0500.u18",			0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "pgm_t0501.u19",			0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -7490,7 +7490,7 @@ STDROMPICKEXT(oldsdsgl, oldsdsgl, pgm)
 STD_ROM_FN(oldsdsgl)
 
 struct BurnDriver BurnDrvoldsdsgl = {
-	"oldsdsgl", "olds", "pgm", NULL, "2020-12-31",
+	"oldsdsgl", "olds", "pgm", NULL, "2020-01-11",
 	"Oriental Legend Special - Da Sheng Gui Lai (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Oriental Legend Super - Da Sheng Gui Lai (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5927\u8056\u6b78\u4f86 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
@@ -7594,10 +7594,10 @@ struct BurnDriver BurnDrvoldsmx = {
 
 // Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack) / 三國戰紀 - 群雄亂舞 2020 (修改版)
 // Hacked by Shuanger
-// GOTVG ver. 20201014
+// GOTVG ver. 20210128
 
 static struct BurnRomInfo kovplus2020txRomDesc[] = {
-	{ "2020tx_p0603_119.u1",	0x0400000, 0x8726ffed, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "2020tx_p0603_119.u1",	0x0400000, 0xb3329d8f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "2020tx_t0600.u11",		0x0800000, 0xe451df7f, 2 | BRF_GRA },			//  1 Tile data
 	
@@ -7618,7 +7618,7 @@ STDROMPICKEXT(kovplus2020tx, kovplus2020tx, pgm)
 STD_ROM_FN(kovplus2020tx)
 
 struct BurnDriver BurnDrvkovplus2020tx = {
-	"kovplus2020tx", "kovplus", "pgm", NULL, "2020-10-14",
+	"kovplus2020tx", "kovplus", "pgm", NULL, "2021-01-28",
 	"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u96c4\u4e82\u821e 2020 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

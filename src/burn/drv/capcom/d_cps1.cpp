@@ -15217,6 +15217,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinotpic"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"      , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
 	{ "dinods"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinosyn"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dynwar"        , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwara"       , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwarj"       , CPS_B_02    , mapper_TK22B , 0, NULL                },
@@ -24070,6 +24071,45 @@ struct BurnDriver BurnDrvCpsDinods = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinodsRomInfo, DinodsRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Cadillacs and Dinosaurs (28th-Anniversary, Hack)
+// Hacked by GeYu
+// GOTVG 20210131
+
+static struct BurnRomInfo DinosynRomDesc[] = {
+	{ "dinosyn.bin",	0x200000, 0x358b7bf5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd_01.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd_02.4a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd_03.5a",		0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd_04.6a",		0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd_05.7a",		0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd_06.8a",		0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd_07.9a",		0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd_08.10a",		0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",		0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",		0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",		0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",		0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",		0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",		0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(Dinosyn)
+STD_ROM_FN(Dinosyn)
+
+struct BurnDriver BurnDrvCpsDinosyn = {
+	"dinosyn", "dino", NULL, NULL, "2021-01-31",
+	"Cadillacs and Dinosaurs (28th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, DinosynRomInfo, DinosynRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

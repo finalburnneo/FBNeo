@@ -7780,3 +7780,40 @@ struct BurnDriver BurnDrvoldspluso = {
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+
+// Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Edition (Hack, ver. 500)
+// GOTVG 20201218
+
+static struct BurnRomInfo kovshpd3dwRomDesc[] = {
+	{ "kovshpd3dw_p0600.rom",			0x0400000, 0xf88f4b0a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "kovshpd3dw_t0600.rom",			0x0800000, 0x1f78d522, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "kovshpd3dw_a0600.rom",			0x0800000, 0x72643288, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "kovshpd3dw_a0601.rom",			0x0800000, 0x94a0c63d, 3 | BRF_GRA }, 	        //  3 
+	{ "kovshpd3dw_a0602.rom",			0x0800000, 0xaf21456c, 3 | BRF_GRA }, 	        //  4
+	{ "kovshpd3dw_a0540.rom",			0x0800000, 0xa3204d56, 3 | BRF_GRA }, 	        //  5
+	{ "kovshpd3dw_a0541.rom",			0x0800000, 0xfac5160e, 3 | BRF_GRA }, 	        //  6
+
+	{ "kovshpd3dw_b0600.rom",	   		0x0800000, 0x0646c5ef, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "kovshpd3dw_b0540.rom",	   		0x0800000, 0x8697ec72, 4 | BRF_GRA },			//  8
+	{ "kovshpd3dw_b0601.rom",	   		0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			//  9
+	
+	{ "kovshpd3dw_m0600.rom",			0x0400000, 0xec3f335d, 5 | BRF_SND },			// 10 Samples
+
+	{ "kovshpd3dw_v100_china.asic", 	0x0004000, 0xd9a43086, 7 | BRF_PRG | BRF_ESS },	// 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshpd3dw, kovshpd3dw, pgm)
+STD_ROM_FN(kovshpd3dw)
+
+struct BurnDriver BurnDrvkovshpd3dw = {
+	"kovshpd3dw", "kovshp", "pgm", NULL, "2020-12-18",
+	"Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Edition (Hack, ver. 500)\0", "Imperfect Protection Emulation", "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshpd3dwRomInfo, kovshpd3dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,  
+	kovassgaInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

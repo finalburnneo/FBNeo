@@ -17476,6 +17476,55 @@ struct BurnDriver BurnDrvkof2000otc = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters 2000 - Special Edition (Final Version, Hack)
+// Hack by GSC2007 & EGCG
+/*
+NEWS:
+	1.调整BOSS性能，开启全人物
+	2.随机屏蔽小头像，随机配色
+	3.使用ABCD隐藏排序
+	4.开启隐藏援助
+	5.K'、八神、BOSS使用MAX超杀有血红背景特效
+	6.投技计算HIT
+	7.练习模式增加HUMAN
+	8.增加晕厥STUN提示
+	9.修复原版大量BUG
+*/
+
+static struct BurnRomInfo kof2000spRomDesc[] = {
+	{ "257sp-pg1.p1",		0x100000, 0xdccee7c7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257sp-pg2.sp2", 		0x400000, 0x48a1a381, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "257-c1d.c1",			0x800000, 0xabcdd424, 3 | BRF_GRA }, 		   //  2 Sprite data
+	{ "257-c2d.c2",			0x800000, 0xcda33778, 3 | BRF_GRA }, 		   //  3
+	{ "257-c3d.c3",			0x800000, 0x087fb15b, 3 | BRF_GRA }, 		   //  4
+	{ "257-c4d.c4",			0x800000, 0xfe9dfde4, 3 | BRF_GRA }, 		   //  5
+	{ "257-c5d.c5",			0x800000, 0x03ee4bf4, 3 | BRF_GRA }, 		   //  6
+	{ "257-c6d.c6",			0x800000, 0x8599cc5b, 3 | BRF_GRA }, 		   //  7
+	{ "257sp-c7d.c7",		0x800000, 0x110f72a3, 3 | BRF_GRA }, 		   //  8
+	{ "257sp-c8d.c8",		0x800000, 0x4347f6af, 3 | BRF_GRA }, 		   //  9
+
+	{ "257-m1d.m1",			0x040000, 0xd404db70, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "257-v1.v1",			0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
+	{ "257-v2.v2",			0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12
+	{ "257-v3.v3",			0x400000, 0x4605036a, 5 | BRF_SND },           // 13
+	{ "257-v4.v4",			0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(kof2000sp, kof2000sp, neogeo)
+STD_ROM_FN(kof2000sp)
+
+struct BurnDriver BurnDrvkof2000sp = {
+	"kof2000sp", "kof2000", "neogeo", NULL, "2021",
+	"The King of Fighters 2000 - Special Edition (Final Version, Hack)\0", NULL, "Hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2000spRomInfo, kof2000spRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // The King of Fighters 2001 Plus (set 2, bootleg / hack)
 
 static struct BurnRomInfo kf2k1paRomDesc[] = {

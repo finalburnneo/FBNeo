@@ -4136,6 +4136,13 @@
 		<rom name="dr. robotnik's mean bean machine (hack, spanish).bin" size="1048576" crc="86ed4079"/>
 		<driver status="good"/>
 	</game>
+	<game name="drrobotnp" cloneof="drrobotn" romof="drrobotn">
+		<description>Dr. Robotnik's Mean Bean Machine (Prototype B)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="dr. robotnik's mean bean machine (prototype b).bin" size="1048576" crc="c631bfff"/>
+		<driver status="good"/>
+	</game>
 	<game name="drrobotnu" cloneof="drrobotn" romof="drrobotn">
 		<description>Dr. Robotnik's Mean Bean Machine (USA)</description>
 		<year>1993</year>
@@ -4479,6 +4486,13 @@
 		<rom name="earthworm jim (hack, spanish).bin" size="3145728" crc="21a1378f"/>
 		<driver status="good"/>
 	</game>
+	<game name="ejimp" cloneof="ejim" romof="ejim">
+		<description>Earthworm Jim (Prototype, 19940728)</description>
+		<year>1994</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="earthworm jim (prototype- jul 28,1994).bin" size="3145728" crc="1c07b337"/>
+		<driver status="good"/>
+	</game>
 	<game name="ejimu" cloneof="ejim" romof="ejim">
 		<description>Earthworm Jim (USA)</description>
 		<year>1994</year>
@@ -4498,6 +4512,13 @@
 		<year>2020</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="earthworm jim 2 (hack, spanish).bin" size="3145728" crc="f5cab28c"/>
+		<driver status="good"/>
+	</game>
+	<game name="ejim2p" cloneof="ejim2" romof="ejim2">
+		<description>Earthworm Jim 2 (Protoype, 19950824)</description>
+		<year>1995</year>
+		<manufacturer>Virgin Interactive</manufacturer>
+		<rom name="earthworm jim 2 (prototype - aug 24, 1995).bin" size="3145728" crc="f92a931d"/>
 		<driver status="good"/>
 	</game>
 	<game name="ejim2u" cloneof="ejim2" romof="ejim2">
@@ -11142,6 +11163,13 @@
 		<rom name="pirates of the caribbean (unl).bin" size="2097152" crc="48da0bf4"/>
 		<driver status="good"/>
 	</game>
+	<game name="piratesp1" cloneof="pirates" romof="pirates">
+		<description>Pirates! Gold (Prototype, 19930401)</description>
+		<year>1993</year>
+		<manufacturer>Microprose</manufacturer>
+		<rom name="pirates! gold (prototype - apr 1, 1993).bin" size="1048576" crc="f61e5417"/>
+		<driver status="good"/>
+	</game>
 	<game name="pirates">
 		<description>Pirates! Gold (USA)</description>
 		<year>1993</year>
@@ -12170,6 +12198,13 @@
 		<year>1992</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="roadblasters (jpn).bin" size="524288" crc="a0015440"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadblstp" cloneof="roadblst" romof="roadblst">
+		<description>RoadBlasters (Prototype, 19910627)</description>
+		<year>1991</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="roadblasters (prototype - jun 27, 1991).bin" size="524288" crc="e4ef86b9"/>
 		<driver status="good"/>
 	</game>
 	<game name="roadblst">
@@ -13739,6 +13774,13 @@
 		<rom name="sonic spinball (beta).bin" size="1310720" crc="b1524979"/>
 		<driver status="good"/>
 	</game>
+	<game name="sspinp1" cloneof="sspin" romof="sspin">
+		<description>Sonic Spinball (Prototype, 19930907)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic spinball (prototype - 17 sep, 1993).bin" size="1048576" crc="c203c557"/>
+		<driver status="good"/>
+	</game>
 	<game name="sspinu" cloneof="sspin" romof="sspin">
 		<description>Sonic Spinball (USA)</description>
 		<year>1993</year>
@@ -13772,6 +13814,13 @@
 		<year>1991?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="sonic the hedgehog (euro, usa) (pirate).bin" size="524288" crc="7a093f0b"/>
+		<driver status="good"/>
+	</game>
+	<game name="sonicp" cloneof="sonic" romof="sonic">
+		<description>Sonic the Hedgehog (Prototype)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sonic the hedgehog (prototype).bin" size="524288" crc="917c9ca9"/>
 		<driver status="good"/>
 	</game>
 	<game name="sonictlw" cloneof="sonic" romof="sonic">
@@ -14395,6 +14444,13 @@
 		<year>1994</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="stargate (euro, usa).bin" size="2097152" crc="e587069e"/>
+		<driver status="good"/>
+	</game>
+	<game name="stargatep1" cloneof="stargate" romof="stargate">
+		<description>Stargate (Next Generation Magazine Prototype)</description>
+		<year>1994</year>
+		<manufacturer>Acclaim Entertainment</manufacturer>
+		<rom name="stargate (next generation magazine prototype).bin" size="2097152" crc="51946ea9"/>
 		<driver status="good"/>
 	</game>
 	<game name="steelemp" cloneof="empsteel" romof="empsteel">

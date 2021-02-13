@@ -798,7 +798,8 @@ DRV		BurnDrvgg_astermis;
 DRV		BurnDrvsms_astermis;
 DRV		BurnDrvAsterock;
 DRV		BurnDrvAsterockv;
-DRV		BurnDrvAsteroidb;
+DRV		BurnDrvAsteroidb1;
+DRV		BurnDrvAsteroidb2;
 DRV		BurnDrvAsteroid1;
 DRV		BurnDrvAsteroid2;
 DRV		BurnDrvAsteroid;
@@ -1943,6 +1944,7 @@ DRV		BurnDrvnes_cadaverion;
 DRV		BurnDrvCpsDinou;
 DRV		BurnDrvCpsDino;
 DRV		BurnDrvCpsDinoa;
+DRV		BurnDrvCpsDinosyn;
 DRV		BurnDrvCpsDinopic;
 DRV		BurnDrvCpsDinopic2;
 DRV		BurnDrvCpsDinopic3;
@@ -3678,6 +3680,7 @@ DRV		BurnDrvmd_drrobotn;
 DRV		BurnDrvsms_drrobotn;
 DRV		BurnDrvgg_drrobotn;
 DRV		BurnDrvmd_drrobotns;
+DRV		BurnDrvmd_drrobotnp;
 DRV		BurnDrvmd_drrobotnu;
 DRV		BurnDrvmd_drrobotnup;
 DRV		BurnDrvcv_drseuss;
@@ -4025,10 +4028,12 @@ DRV		BurnDrvsms_ejim;
 DRV		BurnDrvgg_ejim;
 DRV		BurnDrvmd_ejim;
 DRV		BurnDrvmd_ejims;
+DRV		BurnDrvmd_ejimp;
 DRV		BurnDrvgg_ejimu;
 DRV		BurnDrvmd_ejimu;
 DRV		BurnDrvmd_ejim2;
 DRV		BurnDrvmd_ejim2s;
+DRV		BurnDrvmd_ejim2p;
 DRV		BurnDrvmd_ejim2u;
 DRV		BurnDrvMSX_eatblue;
 DRV		BurnDrvMSX_eatit;
@@ -5626,6 +5631,8 @@ DRV		BurnDrvGrdnstrmg;
 DRV		BurnDrvGrdnstrmau;
 DRV		BurnDrvGrdnstrm;
 DRV		BurnDrvGrdnstrmv;
+DRV		BurnDrvGrdianslbs;
+DRV		BurnDrvGrdianslbss;
 DRV		BurnDrvGrdianssy;
 DRV		BurnDrvGrdians;
 DRV		BurnDrvMSX_guardic;
@@ -7517,6 +7524,7 @@ DRV		BurnDrvkovlsyx;
 DRV		BurnDrvkovlsyxqszl;
 DRV		BurnDrvkovlsyxqxzl;
 DRV		BurnDrvkovlsyxqxzlp;
+DRV		BurnDrvkovshpd3dw;
 DRV		BurnDrvLuckywldj;
 DRV		BurnDrvLuckywld;
 DRV		BurnDrvsms_luckypeng;
@@ -9953,6 +9961,7 @@ DRV		BurnDrvHigemaru;
 DRV		BurnDrvPirates;
 DRV		BurnDrvPiratesb;
 DRV		BurnDrvmd_pcarib;
+DRV		BurnDrvmd_piratesp1;
 DRV		BurnDrvmd_pirates;
 DRV		BurnDrvmd_piratesp;
 DRV		BurnDrvmd_pcarib2;
@@ -11011,6 +11020,7 @@ DRV		BurnDrvmd_rrash2j;
 DRV		BurnDrvnes_roadrunner;
 DRV		BurnDrvnes_roadworker;
 DRV		BurnDrvmd_roadblstj;
+DRV		BurnDrvmd_roadblstp;
 DRV		BurnDrvmd_roadblst;
 DRV		BurnDrvnes_roadblasters;
 DRV		BurnDrvcv_robinha;
@@ -12184,6 +12194,7 @@ DRV		BurnDrvgg_sspinp02;
 DRV		BurnDrvgg_sspinp01;
 DRV		BurnDrvgg_sspinp05;
 DRV		BurnDrvmd_sspinp;
+DRV		BurnDrvmd_sspinp1;
 DRV		BurnDrvmd_sspinu;
 DRV		BurnDrvmd_sspinua;
 DRV		BurnDrvgg_sonic;
@@ -12194,6 +12205,7 @@ DRV		BurnDrvnes_sonic;
 DRV		BurnDrvmd_sonicj;
 DRV		BurnDrvgg_sonicj;
 DRV		BurnDrvmd_sonicpir;
+DRV		BurnDrvmd_sonicp;
 DRV		BurnDrvgg_sonicp;
 DRV		BurnDrvngpc_sonic;
 DRV		BurnDrvngpc_sonicp2;
@@ -12646,6 +12658,7 @@ DRV		BurnDrvmd_starfl1;
 DRV		BurnDrvmd_starfl;
 DRV		BurnDrvmd_stargatep;
 DRV		BurnDrvmd_stargate;
+DRV		BurnDrvmd_stargatep1;
 DRV		BurnDrvgg_stargate;
 DRV		BurnDrvStargate;
 DRV		BurnSpecstarquak;
@@ -14324,6 +14337,7 @@ DRV		BurnDrvkof2000;
 DRV		BurnDrvkof2000n;
 DRV		BurnDrvkof2000otc;
 DRV		BurnDrvkof2000ps2;
+DRV		BurnDrvkof2000sp;
 DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
 DRV		BurnDrvkf2k1pkz;
@@ -17261,7 +17275,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_astermis,		// Asterix and the Secret Mission (Euro)
 	&BurnDrvAsterock,			// Asterock (Sidam bootleg of Asteroids)
 	&BurnDrvAsterockv,			// Asterock (Videotron bootleg of Asteroids)
-	&BurnDrvAsteroidb,			// Asteroids (bootleg on Lunar Lander hardware)
+	&BurnDrvAsteroidb1,			// Asteroids (bootleg on Lunar Lander hardware, set 1)
+	&BurnDrvAsteroidb2,			// Asteroids (bootleg on Lunar Lander hardware, set 2)
 	&BurnDrvAsteroid1,			// Asteroids (rev 1)
 	&BurnDrvAsteroid2,			// Asteroids (rev 2)
 	&BurnDrvAsteroid,			// Asteroids (rev 4)
@@ -18406,6 +18421,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDinou,			// Cadillacs & Dinosaurs (930201 USA)
 	&BurnDrvCpsDino,			// Cadillacs & Dinosaurs (930201 World)
 	&BurnDrvCpsDinoa,			// Cadillacs & Dinosaurs (930223 Asia TW)
+	&BurnDrvCpsDinosyn,			// Cadillacs and Dinosaurs (28th-Anniversary, Hack)
 	&BurnDrvCpsDinopic,			// Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic2,		// Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic3,		// Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57), 930201 etc)
@@ -20141,6 +20157,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_drrobotn,		// Dr. Robotnik's Mean Bean Machine (Euro, Bra)
 	&BurnDrvgg_drrobotn,		// Dr. Robotnik's Mean Bean Machine (Euro, USA)
 	&BurnDrvmd_drrobotns,		// Dr. Robotnik's Mean Bean Machine (Hack, Spanish)
+	&BurnDrvmd_drrobotnp,		// Dr. Robotnik's Mean Bean Machine (Prototype B)
 	&BurnDrvmd_drrobotnu,		// Dr. Robotnik's Mean Bean Machine (USA)
 	&BurnDrvmd_drrobotnup,		// Dr. Robotnik's Mean Bean Machine (USA, Prototype)
 	&BurnDrvcv_drseuss,			// Dr. Seuss's Fix-Up the Mix-Up Puzzler
@@ -20488,10 +20505,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ejim,			// Earthworm Jim (Euro)
 	&BurnDrvmd_ejim,			// Earthworm Jim (Euro)
 	&BurnDrvmd_ejims,			// Earthworm Jim (Hack, Spanish)
+	&BurnDrvmd_ejimp,			// Earthworm Jim (Prototype, 19940728)
 	&BurnDrvgg_ejimu,			// Earthworm Jim (USA)
 	&BurnDrvmd_ejimu,			// Earthworm Jim (USA)
 	&BurnDrvmd_ejim2,			// Earthworm Jim 2 (Euro)
 	&BurnDrvmd_ejim2s,			// Earthworm Jim 2 (Hack, Spanish)
+	&BurnDrvmd_ejim2p,			// Earthworm Jim 2 (Protoype, 19950824)
 	&BurnDrvmd_ejim2u,			// Earthworm Jim 2 (USA)
 	&BurnDrvMSX_eatblue,		// Eat Blue! (HB)
 	&BurnDrvMSX_eatit,			// Eat It
@@ -22089,6 +22108,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGrdnstrmau,			// Guardian Storm (horizontal, Australia)
 	&BurnDrvGrdnstrm,			// Guardian Storm (horizontal, not encrypted)
 	&BurnDrvGrdnstrmv,			// Guardian Storm (vertical)
+	&BurnDrvGrdianslbs,			// Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)
+	&BurnDrvGrdianslbss,		// Guardians (LBS Super Edition, Hack)\0Denjin Makai II (LBS Super Edition, Hack)
 	&BurnDrvGrdianssy,			// Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)
 	&BurnDrvGrdians,			// Guardians\0Denjin Makai II
 	&BurnDrvMSX_guardic,		// Guardic (Jpn)
@@ -23980,6 +24001,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovlsyxqszl,		// Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqxzl,		// Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knights of Valour Super Heroes Plus, ver. 500)
 	&BurnDrvkovlsyxqxzlp,		// Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of Knights of Valour Super Heroes Plus, ver. 500)
+	&BurnDrvkovshpd3dw,			// Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Edition (Hack, ver. 500)
 	&BurnDrvLuckywldj,			// Lucky & Wild (Japan)
 	&BurnDrvLuckywld,			// Lucky & Wild
 	&BurnDrvsms_luckypeng,		// Lucky Penguin (HB, v1.1)
@@ -26416,6 +26438,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPirates,			// Pirates (set 1)
 	&BurnDrvPiratesb,			// Pirates (set 2)
 	&BurnDrvmd_pcarib,			// Pirates of the Caribbean (Rus)
+	&BurnDrvmd_piratesp1,		// Pirates! Gold (Prototype, 19930401)
 	&BurnDrvmd_pirates,			// Pirates! Gold (USA)
 	&BurnDrvmd_piratesp,		// Pirates! Gold (USA, Prototype)
 	&BurnDrvmd_pcarib2,			// Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus)
@@ -27474,6 +27497,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_roadrunner,		// Road Runner (USA) (Unl)
 	&BurnDrvnes_roadworker,		// Road Worker (Unl)
 	&BurnDrvmd_roadblstj,		// RoadBlasters (Jpn)
+	&BurnDrvmd_roadblstp,		// RoadBlasters (Prototype, 19910627)
 	&BurnDrvmd_roadblst,		// RoadBlasters (USA)
 	&BurnDrvnes_roadblasters,	// RoadBlasters (USA)
 	&BurnDrvcv_robinha,			// Robin Hood (Alt)
@@ -28647,6 +28671,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_sspinp01,		// Sonic Spinball (Prototype 0530, 19940530, 23.25)
 	&BurnDrvgg_sspinp05,		// Sonic Spinball (Prototype 503B, 19940503, 19.27)
 	&BurnDrvmd_sspinp,			// Sonic Spinball (Prototype)
+	&BurnDrvmd_sspinp1,			// Sonic Spinball (Prototype, 19930907)
 	&BurnDrvmd_sspinu,			// Sonic Spinball (USA)
 	&BurnDrvmd_sspinua,			// Sonic Spinball (USA, Alt)
 	&BurnDrvgg_sonic,			// Sonic The Hedgehog (Euro, Jpn, v1)
@@ -28657,6 +28682,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sonicj,			// Sonic the Hedgehog (Jpn, Kor)
 	&BurnDrvgg_sonicj,			// Sonic The Hedgehog (Jpn, USA, v0)
 	&BurnDrvmd_sonicpir,		// Sonic the Hedgehog (Pirate, Ripped from Golden 10 in 1)
+	&BurnDrvmd_sonicp,			// Sonic the Hedgehog (Prototype)
 	&BurnDrvgg_sonicp,			// Sonic The Hedgehog (World, Prototype)
 	&BurnDrvngpc_sonic,			// Sonic the Hedgehog - Pocket Adventure (World)
 	&BurnDrvngpc_sonicp2,		// Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)
@@ -29109,6 +29135,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_starfl,			// Starflight (Euro, USA, v1.1)
 	&BurnDrvmd_stargatep,		// Stargate (Euro, Prototype)
 	&BurnDrvmd_stargate,		// Stargate (Euro, USA)
+	&BurnDrvmd_stargatep1,		// Stargate (Next Generation Magazine Prototype)
 	&BurnDrvgg_stargate,		// Stargate (World)
 	&BurnDrvStargate,			// Stargate
 	&BurnSpecstarquak,			// Starquake (48K)
@@ -30787,6 +30814,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
 	&BurnDrvkof2000otc,			// The King of Fighters 2000 (OTC, hack)
 	&BurnDrvkof2000ps2,			// The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)
+	&BurnDrvkof2000sp,			// The King of Fighters 2000 - Special Edition (Final Version, Hack)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
 	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
@@ -31666,7 +31694,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ultimmorkom3,	// Ultimate Mortal Kombat 3 (Unl)
 	&BurnDrvmd_umk3u,			// Ultimate Mortal Kombat 3 (USA)
 	&BurnDrvmd_umk3h,			// Ultimate Mortal Kombat 3 Arcade (Hack, V0.71)
-	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-12-26)
+	&BurnDrvUmk3uc,				// Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2021-02-09)
 	&BurnDrvmd_umk3mh,			// Ultimate Mortal Kombat 3 Mini V13 (Hack)
 	&BurnDrvUmk3pb1,			// Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)
 	&BurnDrvUmk3te,				// Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16204 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16218 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -790,7 +790,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_astermis	|  	| Asterix and the Secret Mission (Euro)			| 		| 1993	| Sega		| Sega Master Sy| 					|
 | asterock	|  	| Asterock (Sidam bootleg of Asteroids)			| asteroid	| 1979	| bootleg (Sidam| Miscellaneous	| 					|
 | asterockv	|  	| Asterock (Videotron bootleg of Asteroids)		| asteroid	| 1979	| bootleg (Video| Miscellaneous	| 					|
-| asteroidb	|  	| Asteroids (bootleg on Lunar Lander hardware)		| asteroid	| 1979	| bootleg	| Miscellaneous	| 					|
+| asteroidb1	|  	| Asteroids (bootleg on Lunar Lander hardware, set 1)	| asteroid	| 1979	| bootleg	| Miscellaneous	| 					|
+| asteroidb2	|  	| Asteroids (bootleg on Lunar Lander hardware, set 2)	| asteroid	| 1979	| bootleg	| Miscellaneous	| 					|
 | asteroid1	|  	| Asteroids (rev 1)					| asteroid	| 1979	| Atari		| Miscellaneous	| 					|
 | asteroid2	|  	| Asteroids (rev 2)					| asteroid	| 1979	| Atari		| Miscellaneous	| 					|
 | asteroid	|  	| Asteroids (rev 4)					| 		| 1979	| Atari		| Miscellaneous	| 					|
@@ -1921,6 +1922,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinou		|  	| Cadillacs & Dinosaurs (930201 USA)			| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dino		|  	| Cadillacs & Dinosaurs (930201 World)			| 		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinoa		|  	| Cadillacs & Dinosaurs (930223 Asia TW)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
+| dinosyn	|  	| Cadillacs and Dinosaurs (28th-Anniversary, Hack)	| dino		| 2021-01-31| Hack		| CPS1 / QSound	| 					|
 | dinopic	|  	| Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic2	|  	| Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic3	|  	| Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
@@ -1928,7 +1930,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2020-12-31| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2021-02-04| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -3622,6 +3624,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_drrobotn	|  	| Dr. Robotnik's Mean Bean Machine (Euro, Bra)		| 		| 1993	| Sega		| Sega Master Sy| 					|
 | gg_drrobotn	|  	| Dr. Robotnik's Mean Bean Machine (Euro, USA)		| 		| 1993	| Sega		| Sega Game Gear| 					|
 | md_drrobotns	|  	| Dr. Robotnik's Mean Bean Machine (Hack, Spanish)	| md_drrobotn	| 2019	| Sega		| Sega Megadrive| 					|
+| md_drrobotnp	|  	| Dr. Robotnik's Mean Bean Machine (Prototype B)	| md_drrobotn	| 1993	| Sega		| Sega Megadrive| 					|
 | md_drrobotnu	|  	| Dr. Robotnik's Mean Bean Machine (USA)		| md_drrobotn	| 1993	| Sega		| Sega Megadrive| 					|
 | md_drrobotnup	|  	| Dr. Robotnik's Mean Bean Machine (USA, Prototype)	| md_drrobotn	| 1993	| Sega		| Sega Megadrive| 					|
 | cv_drseuss	|  	| Dr. Seuss's Fix-Up the Mix-Up Puzzler			| 		| 1984	| Coleco	| ColecoVision	| 					|
@@ -3961,10 +3964,12 @@ This list contains all games supported by FinalBurn Neo.
 | gg_ejim	|  	| Earthworm Jim (Euro)					| 		| 1995	| Virgin Interac| Sega Game Gear| 					|
 | md_ejim	|  	| Earthworm Jim (Euro)					| 		| 1994	| Virgin Interac| Sega Megadrive| 					|
 | md_ejims	|  	| Earthworm Jim (Hack, Spanish)				| md_ejim	| 2018	| Playmates	| Sega Megadrive| 					|
+| md_ejimp	|  	| Earthworm Jim (Prototype, 19940728)			| md_ejim	| 1994	| Virgin Interac| Sega Megadrive| 					|
 | gg_ejimu	|  	| Earthworm Jim (USA)					| gg_ejim	| 1995	| Playmates Inte| Sega Game Gear| 					|
 | md_ejimu	|  	| Earthworm Jim (USA)					| md_ejim	| 1994	| Playmates Inte| Sega Megadrive| 					|
 | md_ejim2	|  	| Earthworm Jim 2 (Euro)				| 		| 1995	| Virgin Interac| Sega Megadrive| 					|
 | md_ejim2s	|  	| Earthworm Jim 2 (Hack, Spanish)			| md_ejim2	| 2020	| Virgin Interac| Sega Megadrive| 					|
+| md_ejim2p	|  	| Earthworm Jim 2 (Protoype, 19950824)			| md_ejim2	| 1995	| Virgin Interac| Sega Megadrive| 					|
 | md_ejim2u	|  	| Earthworm Jim 2 (USA)					| md_ejim2	| 1996	| Playmates Inte| Sega Megadrive| 					|
 | msx_eatblue	|  	| Eat Blue! (HB)					| 		| 2004	| Paxanga Soft	| MSX		| 					|
 | msx_eatit	|  	| Eat It						| 		| 1986	| Aackosoft	| MSX		| 					|
@@ -5542,7 +5547,9 @@ This list contains all games supported by FinalBurn Neo.
 | grdnstrmau	|  	| Guardian Storm (horizontal, Australia)		| grdnstrm	| 1998	| Afega		| NMK16		| 					|
 | grdnstrm	|  	| Guardian Storm (horizontal, not encrypted)		| 		| 1998	| Afega (Apples | NMK16		| 					|
 | grdnstrmv	|  	| Guardian Storm (vertical)				| grdnstrm	| 1998	| Afega (Apples | NMK16		| 					|
-| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-08-20| Hack		| Newer Seta	| 					|
+| grdianslbs	|  	| Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Ed| grdians	| 2021-02-11| Hack		| Newer Seta	| 					|
+| grdianslbss	|  	| Guardians (LBS Super Edition, Hack)\0Denjin Makai II (| grdians	| 2020-12-01| Hack		| Newer Seta	| 					|
+| grdianssy	|  	| Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (S| grdians	| 2020-12-28| Hack		| Newer Seta	| 					|
 | grdians	|  	| Guardians\0Denjin Makai II				| 		| 1995	| Banpresto	| Newer Seta	| 					|
 | msx_guardic	|  	| Guardic (Jpn)						| 		| 1986	| Compile	| MSX		| 					|
 | msx_guardica	|  	| Guardic (Jpn, Alt)					| msx_guardic	| 1986	| Compile	| MSX		| 					|
@@ -6891,7 +6898,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2p204	|  	| Knights of Valour 2 Plus - Nine Dragons (VM204XX, Chin| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p		|  	| Knights of Valour 2 Plus - Nine Dragons (VM205XX, Chin| 		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2pshpd	|  	| Knights of Valour 2 Plus - Xie Feng Tian Chi (Hack)	| kov2p		| 2019-12-16| Hack		| PolyGameMaster| 					|
-| kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2020-10-14| Hack		| PolyGameMaster| 					|
+| kovplus2020tx	|  	| Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)| kovplus	| 2021-01-28| Hack		| PolyGameMaster| 					|
 | kovplus	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119)	| 		| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovplusa	|  	| Knights of Valour Plus - Sangoku Senki Plus (V119, Kor| kovplus	| 1999	| IGS		| PolyGameMaster| no PLUS on screen when set to KOREA	|
 | kovytzyce	|  	| Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qi| kovshp	| 2020-07-21| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -7403,6 +7410,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovlsyxqszl	|  	| Luan Shi Ying Xiong - Qiu Sheng Zhi Lu (hack of Knight| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovlsyxqxzl	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu (hack of Knight| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | kovlsyxqxzlp	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu Plus (hack of K| kovshp	| 2018	| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
+| kovshpd3dw	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Editi| kovshp	| 2020-12-18| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | luckywldj	|  	| Lucky & Wild (Japan)					| luckywld	| 1992	| Namco		| System 2	| 					|
 | luckywld	|  	| Lucky & Wild						| 		| 1992	| Namco		| System 2	| 					|
 | sms_luckypeng	|  	| Lucky Penguin (HB, v1.1)				| 		| 2020	| Denine	| Sega Master Sy| 					|
@@ -9284,7 +9292,7 @@ This list contains all games supported by FinalBurn Neo.
 | oldsplus203	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| oldsplus	| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldsplus	|  	| Oriental Legend 2 (Korea) / Xi You Shi E Zhuan Super P| 		| 2004	| IGS		| PolyGameMaster| Incomplete Dump			|
 | oldspluso	|  	| Oriental Legend 2 (One Key Edition, Hack)		| oldsplus	| 2020-12-10| Hack		| PolyGameMaster| Incomplete Dump			|
-| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-12-31| Hack		| PolyGameMaster| 					|
+| oldsdsgl	|  	| Oriental Legend Special - Da Sheng Gui Lai (Hack)	| olds		| 2020-01-11| Hack		| PolyGameMaster| 					|
 | oldsmx	|  	| Oriental Legend Special - Meng Xun Ling Shan (Hack)	| olds		| 2020-08-03| Hack		| PolyGameMaster| 					|
 | olds100a	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
 | olds100	|  	| Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super | olds		| 1998	| IGS		| PolyGameMaster| Imperfect Protection Emulation	|
@@ -9807,6 +9815,7 @@ This list contains all games supported by FinalBurn Neo.
 | pirates	|  	| Pirates (set 1)					| 		| 1994	| NIX		| Miscellaneous	| 					|
 | piratesb	|  	| Pirates (set 2)					| pirates	| 1995	| NIX		| Miscellaneous	| 					|
 | md_pcarib	|  	| Pirates of the Caribbean (Rus)			| md_unchartd	| 199?	| <unknown>	| Sega Megadrive| 					|
+| md_piratesp1	|  	| Pirates! Gold (Prototype, 19930401)			| md_pirates	| 1993	| Microprose	| Sega Megadrive| 					|
 | md_pirates	|  	| Pirates! Gold (USA)					| 		| 1993	| Microprose	| Sega Megadrive| 					|
 | md_piratesp	|  	| Pirates! Gold (USA, Prototype)			| md_pirates	| 1993	| Microprose	| Sega Megadrive| 					|
 | md_pcarib2	|  	| Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirate| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -10851,6 +10860,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_roadrunner|  	| Road Runner (USA) (Unl)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
 | nes_roadworker|  	| Road Worker (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_roadblstj	|  	| RoadBlasters (Jpn)					| md_roadblst	| 1992	| Tengen	| Sega Megadrive| 					|
+| md_roadblstp	|  	| RoadBlasters (Prototype, 19910627)			| md_roadblst	| 1991	| Tengen	| Sega Megadrive| 					|
 | md_roadblst	|  	| RoadBlasters (USA)					| 		| 1991	| Tengen	| Sega Megadrive| 					|
 | nes_roadblasters|  	| RoadBlasters (USA)					| 		| 1990	| Mindscape	| Miscellaneous	| 					|
 | cv_robinha	|  	| Robin Hood (Alt)					| cv_robinh	| 1984	| Xonox		| ColecoVision	| 					|
@@ -12004,6 +12014,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_sspinp01	|  	| Sonic Spinball (Prototype 0530, 19940530, 23.25)	| gg_sspin	| 1994	| Sega		| Sega Game Gear| 					|
 | gg_sspinp05	|  	| Sonic Spinball (Prototype 503B, 19940503, 19.27)	| gg_sspin	| 1994	| Sega		| Sega Game Gear| 					|
 | md_sspinp	|  	| Sonic Spinball (Prototype)				| md_sspin	| 1993	| Sega		| Sega Megadrive| 					|
+| md_sspinp1	|  	| Sonic Spinball (Prototype, 19930907)			| md_sspin	| 1993	| Sega		| Sega Megadrive| 					|
 | md_sspinu	|  	| Sonic Spinball (USA)					| md_sspin	| 1993	| Sega		| Sega Megadrive| 					|
 | md_sspinua	|  	| Sonic Spinball (USA, Alt)				| md_sspin	| 1993	| Sega		| Sega Megadrive| 					|
 | gg_sonic	|  	| Sonic The Hedgehog (Euro, Jpn, v1)			| 		| 1991	| Sega		| Sega Game Gear| 					|
@@ -12014,6 +12025,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sonicj	|  	| Sonic the Hedgehog (Jpn, Kor)				| md_sonic	| 1991	| Sega		| Sega Megadrive| 					|
 | gg_sonicj	|  	| Sonic The Hedgehog (Jpn, USA, v0)			| gg_sonic	| 1991	| Sega		| Sega Game Gear| 					|
 | md_sonicpir	|  	| Sonic the Hedgehog (Pirate, Ripped from Golden 10 in 1| md_sonic	| 1991?	| <unlicensed>	| Sega Megadrive| 					|
+| md_sonicp	|  	| Sonic the Hedgehog (Prototype)			| md_sonic	| 1991	| Sega		| Sega Megadrive| 					|
 | gg_sonicp	|  	| Sonic The Hedgehog (World, Prototype)			| gg_sonic	| 1991	| Sega		| Sega Game Gear| 					|
 | ngp_sonic	|  	| Sonic the Hedgehog - Pocket Adventure (World)		| 		| 2000	| SNK		| NeoGeo Pocket | 					|
 | ngp_sonicp2	|  	| Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1| ngp_sonic	| 1999	| SNK		| NeoGeo Pocket | 					|
@@ -12460,6 +12472,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_starfl	|  	| Starflight (Euro, USA, v1.1)				| 		| 1991	| Electronic Art| Sega Megadrive| 					|
 | md_stargatep	|  	| Stargate (Euro, Prototype)				| md_stargate	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | md_stargate	|  	| Stargate (Euro, USA)					| 		| 1994	| Acclaim Entert| Sega Megadrive| 					|
+| md_stargatep1	|  	| Stargate (Next Generation Magazine Prototype)		| md_stargate	| 1994	| Acclaim Entert| Sega Megadrive| 					|
 | gg_stargate	|  	| Stargate (World)					| 		| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | stargate	|  	| Stargate						| 		| 1981	| Williams / Vid| 6809 System	| 					|
 | spec_starquak	|  	| Starquake (48K)					| 		| 1985	| Bubblebus Soft| ZX Spectrum	| 					|
@@ -13723,7 +13736,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2020-12-27| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2021-02-01| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | nes_tenchwokuriij|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)	| nes_tenchwokurii| 1991	| Capcom	| Miscellaneous	| 					|
 | nes_tenchwokurii|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)	| 		| 1991	| Capcom	| Miscellaneous	| 					|
@@ -14118,6 +14131,7 @@ This list contains all games supported by FinalBurn Neo.
 | kof2000n	|  	| The King of Fighters 2000 (not encrypted)		| kof2000	| 2000	| SNK		| Neo Geo MVS	| 					|
 | kof2000otc	|  	| The King of Fighters 2000 (OTC, hack)			| kof2000	| 2020-06-15| hack		| Neo Geo MVS	| ZERO only enabled in AES mode		|
 | kof2000ps2	|  	| The King of Fighters 2000 (Playstation 2 ver. , EGHT h| kof2000	| 2000	| hack		| Neo Geo MVS	| hack only enable in AES mode		|
+| kof2000sp	|  	| The King of Fighters 2000 - Special Edition (Final Ver| kof2000	| 2021	| Hack		| Neo Geo MVS	| 					|
 | kof2001h	|  	| The King of Fighters 2001 (NGH-2621)			| kof2001	| 2001	| SNK / Eolith	| Neo Geo AES	| 					|
 | kof2001	|  	| The King of Fighters 2001 (NGM-262?)			| 		| 2001	| SNK / Eolith	| Neo Geo MVS	| 					|
 | kf2k1pkz	|  	| The King of Fighters 2001 (PS2 Krizalid Edition)	| kof2001	| 2019-12-12| Hack		| Neo Geo MVS	| hack only enable in AES mode		|
@@ -14981,7 +14995,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ultimmorkom3|  	| Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
 | md_umk3h	|  	| Ultimate Mortal Kombat 3 Arcade (Hack, V0.71)		| md_umk3	| 2012?	| Nemesis_c	| Sega Megadrive| 					|
-| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2020-| umk3		| 2020	| hack		| MIDWAY Wolf-Un| 					|
+| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2021-| umk3		| 2020	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|

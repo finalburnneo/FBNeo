@@ -4744,6 +4744,105 @@ static void mapper91_map()
 #undef mapper91_irqcount
 #undef mapper91_irqenable
 
+// --[ mapper 17: FFE / Front Far East SMC (type 17)
+#define mapper17_prg(x)		(mapper_regs[0x00 + (x)])
+#define mapper17_chr(x)		(mapper_regs[0x04 + (x)])
+#define mapper17_irqcount   (mapper_regs16[0x00])
+#define mapper17_irqenable	(mapper_regs[0x1f - 0x00])
+#define mapper17_mirror		(mapper_regs[0x1f - 0x01])
+
+static void mapper17_write(UINT16 address, UINT8 data)
+{
+	switch (address) {
+		case 0x42fe:
+			switch (data & 0x10) {
+				case 0x00: mapper17_mirror = 2; break;
+				case 0x10: mapper17_mirror = 3; break;
+			}
+			break;
+		case 0x42ff:
+			switch (data & 0x10) {
+				case 0x00: mapper17_mirror = 0; break;
+				case 0x10: mapper17_mirror = 1; break;
+			}
+			break;
+
+		case 0x4501:
+			mapper17_irqenable = 0;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			break;
+		case 0x4502:
+			mapper17_irqcount = (mapper17_irqcount & 0xff00) | data;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			break;
+		case 0x4503:
+			mapper17_irqcount = (mapper17_irqcount & 0x00ff) | (data << 8);
+			mapper17_irqenable = 1;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			break;
+
+		case 0x4504:
+		case 0x4505:
+		case 0x4506:
+		case 0x4507:
+			mapper17_prg(address & 3) = data;
+			break;
+
+		case 0x4510:
+		case 0x4511:
+		case 0x4512:
+		case 0x4513:
+		case 0x4514:
+		case 0x4515:
+		case 0x4516:
+		case 0x4517:
+			mapper17_chr(address & 7) = data;
+			break;
+	}
+
+	mapper_map();
+}
+
+static void mapper17_cycle()
+{
+	if (mapper17_irqenable) {
+		mapper17_irqcount++;
+		if (mapper17_irqcount == 0x0000) {
+			mapper_irq(0);
+			mapper17_irqenable = 0;
+		}
+	}
+}
+
+static void mapper17_map()
+{
+	mapper_map_prg( 8, 0, mapper17_prg(0));
+	mapper_map_prg( 8, 1, mapper17_prg(1));
+	mapper_map_prg( 8, 2, mapper17_prg(2));
+	mapper_map_prg( 8, 3, mapper17_prg(3));
+
+	mapper_map_chr( 1, 0, mapper17_chr(0));
+	mapper_map_chr( 1, 1, mapper17_chr(1));
+	mapper_map_chr( 1, 2, mapper17_chr(2));
+	mapper_map_chr( 1, 3, mapper17_chr(3));
+	mapper_map_chr( 1, 4, mapper17_chr(4));
+	mapper_map_chr( 1, 5, mapper17_chr(5));
+	mapper_map_chr( 1, 6, mapper17_chr(6));
+	mapper_map_chr( 1, 7, mapper17_chr(7));
+
+	switch (mapper17_mirror & 0x3) {
+		case 0: set_mirroring(VERTICAL); break;
+		case 1: set_mirroring(HORIZONTAL); break;
+		case 2: set_mirroring(SINGLE_LOW); break;
+		case 3: set_mirroring(SINGLE_HIGH); break;
+	}
+}
+#undef mapper17_prg
+#undef mapper17_chr
+#undef mapper17_irqcount
+#undef mapper17_irqenable
+#undef mapper17_mirror
+
 // --[ mapper 28: Action53 Home-brew multicart
 #define mapper28_mirror		(mapper_regs[0x1f - 0])
 #define mapper28_mirrorbit  (mapper_regs[0x1f - 1])
@@ -7045,6 +7144,19 @@ static INT32 mapper_init(INT32 mappernum)
 			cart_exp_write = mapper91_write; // 6000 - 7fff
 			mapper_map = mapper91_map;
 			mapper_scanline = mapper91_scanline;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 17: { // Front Far East FFE SMC (Type 17)
+			psg_area_write = mapper17_write; // 4020 - 5fff
+			mapper_map = mapper17_map;
+			mapper_cycle = mapper17_cycle;
+			mapper_regs[0] = ~3;
+			mapper_regs[1] = ~2;
+			mapper_regs[2] = ~1;
+			mapper_regs[3] = ~0;
 			mapper_map();
 			retval = 0;
 			break;

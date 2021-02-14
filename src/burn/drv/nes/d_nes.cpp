@@ -12433,6 +12433,25 @@ struct BurnDriver BurnDrvnes_apudinknoise = {
 */
 // Non Homebrew (hand-added!)
 
+// Famista '93 (T-Eng)
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_famista93eRomDesc[] = {
+	{ "famista '93 (t-eng).nes",          262160, 0xd9301c12, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_famista93e)
+STD_ROM_FN(nes_famista93e)
+
+struct BurnDriver BurnDrvnes_famista93e = {
+	"nes_famista93e", "nes_famista93", NULL, NULL, "1993",
+	"Famista '93 (T-Eng)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_famista93eRomInfo, nes_famista93eRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_ultimexoremRomDesc[] = {
 	{ "Ultima - Exodus Remastered (USA)(Hack).nes",          262160, 0x8afe467a, BRF_ESS | BRF_PRG },
 };

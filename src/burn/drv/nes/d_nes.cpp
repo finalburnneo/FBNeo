@@ -5201,6 +5201,7 @@ static UINT8 mapper120_exp_read(UINT16 address)
 #define mapper64_irqlatch		(mapper_regs[0x1f - 5])
 #define mapper64_irqcount		(mapper_regs[0x1f - 6])
 #define mapper64_irqprescale	(mapper_regs[0x1f - 7])
+#define mapper64_cycles         (mapper_regs16[0])
 
 static void mapper64_write(UINT16 address, UINT8 data)
 {
@@ -5260,9 +5261,14 @@ static void mapper64_irq_reload_logic()
 {
 	if (mapper64_reload) {
 		mapper64_irqcount = (mapper64_irqlatch) ? mapper64_irqlatch | 1 : 0;
+		if (mapper64_irqcount == 0 && mapper64_cycles > 0x10)
+			mapper64_irqcount = 1;
 		mapper64_reload = 0;
+		mapper64_cycles = 0;
 	} else if (mapper64_irqcount == 0) {
 		mapper64_irqcount = mapper64_irqlatch;
+		if (mapper64_cycles > 0x10)
+			mapper64_cycles = 0;
 	} else mapper64_irqcount --;
 }
 
@@ -5282,6 +5288,8 @@ static void mapper64_scanline()
 
 static void mapper64_cycle()
 {
+	if (mapper64_cycles == 0xffff) mapper64_cycles = 0x10;
+	mapper64_cycles++;
 	if (mapper64_irqmode == 1) {
 		mapper64_irqprescale++;
 		while (mapper64_irqprescale == 4) {
@@ -6659,12 +6667,11 @@ static void mapper152_map()
 	set_mirroring((mapper_regs[0] & 0x80) ? SINGLE_HIGH : SINGLE_LOW);
 }
 
-// --[ mapper 156: Open (Metal Force, Buzz & Waldog, Koko Adv.)
+// --[ mapper 156: Open (Metal Force, Buzz & Waldog, Koko Adv., Janggun-ui Adeul)
 #define mapper156_chr_lo(x)     (mapper_regs[0 + (x)])  // x = 0 - 7
 #define mapper156_chr_hi(x)     (mapper_regs[8 + (x)])  // x = 0 - 7
 #define mapper156_prg           (mapper_regs[0x1f - 0])
 #define mapper156_mirror        (mapper_regs[0x1f - 1])
-#define mapper156_mirrorheur    (mapper_regs[0x1f - 2])
 
 static void mapper156_write(UINT16 address, UINT8 data)
 {
@@ -6693,8 +6700,7 @@ static void mapper156_write(UINT16 address, UINT8 data)
 			mapper156_prg = data;
 			break;
 		case 0xc014:
-			mapper156_mirror = (data & 1) ^ 1;
-			mapper156_mirrorheur = 1;
+			mapper156_mirror = 0x10 | (data & 1);
 			break;
 	}
 
@@ -6710,10 +6716,10 @@ static void mapper156_map()
 		mapper_map_chr( 1, i, (mapper156_chr_hi(i) << 8) | mapper156_chr_lo(i));
 	}
 
-	if (mapper156_mirrorheur) {
-		set_mirroring((mapper156_mirror) ? VERTICAL : HORIZONTAL);
-	} else {
-		set_mirroring(SINGLE_LOW);
+	switch (mapper156_mirror) {
+		case 0: set_mirroring(SINGLE_LOW); break;
+		case 0x10: set_mirroring(VERTICAL); break;
+		case 0x11: set_mirroring(HORIZONTAL); break;
 	}
 }
 
@@ -12544,6 +12550,40 @@ struct BurnDriver BurnDrvnes_apudinknoise = {
 #endif
 */
 // Non Homebrew (hand-added!)
+
+static struct BurnRomInfo nes_avpregirfigRomDesc[] = {
+	{ "AV Pretty Girl Fight (Unl).nes",          655376, 0xbceb088b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_avpregirfig)
+STD_ROM_FN(nes_avpregirfig)
+
+struct BurnDriver BurnDrvnes_avpregirfig = {
+	"nes_avpregirfig", NULL, NULL, NULL, "1994",
+	"AV Pretty Girl Fight (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_avpregirfigRomInfo, nes_avpregirfigRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_janggunuiadeulRomDesc[] = {
+	{ "Janggun-ui Adeul (Korea) (Unl).nes",          655376, 0x54171ca4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_janggunuiadeul)
+STD_ROM_FN(nes_janggunuiadeul)
+
+struct BurnDriver BurnDrvnes_janggunuiadeul = {
+	"nes_janggunuiadeul", NULL, NULL, NULL, "1992",
+	"Janggun-ui Adeul (Korea) (Unl)\0", NULL, "Daou", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_janggunuiadeulRomInfo, nes_janggunuiadeulRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // Famista '93 (T-Eng)
 // https://www.romhacking.net/
@@ -31409,10 +31449,10 @@ STD_ROM_PICK(nes_kokoadventure)
 STD_ROM_FN(nes_kokoadventure)
 
 struct BurnDriver BurnDrvnes_kokoadventure = {
-	"nes_kokoadventure", NULL, NULL, NULL, "1989?",
+	"nes_kokoadventure", "nes_buzzwaldog", NULL, NULL, "1989?",
 	"Koko Adventure (Korea)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kokoadventureRomInfo, nes_kokoadventureRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -43385,3 +43425,4 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+

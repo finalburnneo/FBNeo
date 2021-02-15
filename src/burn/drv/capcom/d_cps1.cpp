@@ -12,6 +12,7 @@
 #define CPS1_EXTRA_TILES_400000				9
 #define CPS1_EXTRA_TILES_SF2KORYU_400000	10
 #define CPS1_EXTRA_TILES_SF2B_400000		11
+#define CPS1_EXTRA_TILES_SF2MKOT_400000		12
 
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1GfxLoadCallbackFunction = NULL;
@@ -12920,8 +12921,9 @@ static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	
 	{ "ms6.u31",           0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
 	{ "ms6.u29",           0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
-
+	
 	{ "ms6.u133",          0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	
 	{ "ms6_gal20v8a.u104", 0x0000157, 0x67b56d29, BRF_OPT }, // pld devices
 };
 
@@ -12955,6 +12957,65 @@ static struct BurnRomInfo Sf2reRomDesc[] = {
 
 STD_ROM_PICK(Sf2re)
 STD_ROM_FN(Sf2re)
+
+// PCB is marked: "100P003" and "054-034" on solder side
+// PCB is labelled: "10037SI 7", "STREET FIGHTER 2" and "STREET FIGHTER II MAGIC TURBO" on component side
+static struct BurnRomInfo Sf2mkotRomDesc[] = {
+	{ "u222.bin",     	   	0x0080000, 0xb01a94b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u196.bin",     	   	0x0080000, 0x20461c47, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u221.bin",     	   	0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u195.bin",     	   	0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "d21.u70",      	   	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "d24.u68",      	   	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "d22.u69",      	   	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "d25.u64",      	   	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "d23.u19",      	   	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "d26.u18",      	   	0x0100000, 0x93ec42ae, BRF_GRA | CPS1_TILES },
+
+	{ "conv2.u191",        	0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "voice.u210",        	0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "moon-1.c173.u30",   	0x0040000, 0x7e36ec84, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 }, 
+	{ "moon-c.c132.u29",   	0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 },
+
+	{ "u133.bin",          	0x0010000, 0x13ea1c44, BRF_OPT }, // unknown (bootleg prority?)
+	
+	{ "gal16v8a-25lp.u6",  	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // plds
+	{ "gal16v8a-25lp.u15", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n03", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n05", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n06", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u95", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u96", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u107", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u125", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u139", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u151", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u173", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u176", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u177", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u178", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u183", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u198", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u218", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u20",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u21",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u34",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u35",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u39",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.n07",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.n08",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u104", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u131", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u135", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u140", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal22v10-25lp.u134", 0x00002e5, 0x00000000, BRF_OPT | BRF_NODUMP },
+};
+
+STD_ROM_PICK(Sf2mkot)
+STD_ROM_FN(Sf2mkot)
 
 static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 	{ "7.bin",         0x080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -15425,6 +15486,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab3"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab4"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2re"   	  , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2mkot"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab7"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -22496,6 +22558,16 @@ struct BurnDriver BurnDrvCpsSf2re = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2reRomInfo, Sf2reRomName, NULL, NULL, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
 	Sf2reInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2mkot = {
+	"sf2mkot", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Magic KO Turbo!! - Nightmare Crack)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mkotRomInfo, Sf2mkotRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2koryuInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

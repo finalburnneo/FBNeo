@@ -22563,7 +22563,7 @@ struct BurnDriver BurnDrvCpsSf2re = {
 
 struct BurnDriver BurnDrvCpsSf2mkot = {
 	"sf2mkot", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic KO Turbo!! - Nightmare Crack)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Magic KO Turbo!! - Nightmare Crack\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mkotRomInfo, Sf2mkotRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,

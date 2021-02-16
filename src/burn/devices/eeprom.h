@@ -52,7 +52,8 @@ void EEPROMSetClockLine(INT32 state);
 	EEPROMSetClockLine(clock ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);	\
 } while (0)
 
-void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length);
+void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length); // fill w/data
+void EEPROMByteFill(UINT8 byte, INT32 length); // fill with byte (ala memset)
 
 void EEPROMScan(INT32 nAction, INT32* pnMin);
 

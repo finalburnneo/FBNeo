@@ -12,6 +12,7 @@
 #define CPS1_EXTRA_TILES_400000				9
 #define CPS1_EXTRA_TILES_SF2KORYU_400000	10
 #define CPS1_EXTRA_TILES_SF2B_400000		11
+#define CPS1_EXTRA_TILES_SF2MKOT_400000		12
 
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1GfxLoadCallbackFunction = NULL;
@@ -12920,8 +12921,9 @@ static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	
 	{ "ms6.u31",           0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
 	{ "ms6.u29",           0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
-
+	
 	{ "ms6.u133",          0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	
 	{ "ms6_gal20v8a.u104", 0x0000157, 0x67b56d29, BRF_OPT }, // pld devices
 };
 
@@ -12955,6 +12957,65 @@ static struct BurnRomInfo Sf2reRomDesc[] = {
 
 STD_ROM_PICK(Sf2re)
 STD_ROM_FN(Sf2re)
+
+// PCB is marked: "100P003" and "054-034" on solder side
+// PCB is labelled: "10037SI 7", "STREET FIGHTER 2" and "STREET FIGHTER II MAGIC TURBO" on component side
+static struct BurnRomInfo Sf2mkotRomDesc[] = {
+	{ "u222.bin",     	   	0x0080000, 0xb01a94b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u196.bin",     	   	0x0080000, 0x20461c47, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u221.bin",     	   	0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "u195.bin",     	   	0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "d21.u70",      	   	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "d24.u68",      	   	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "d22.u69",      	   	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "d25.u64",      	   	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "d23.u19",      	   	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "d26.u18",      	   	0x0100000, 0x93ec42ae, BRF_GRA | CPS1_TILES },
+
+	{ "conv2.u191",        	0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "voice.u210",        	0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "moon-1.c173.u30",   	0x0040000, 0x7e36ec84, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 }, 
+	{ "moon-c.c132.u29",   	0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 },
+
+	{ "u133.bin",          	0x0010000, 0x13ea1c44, BRF_OPT }, // unknown (bootleg prority?)
+	
+	{ "gal16v8a-25lp.u6",  	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // plds
+	{ "gal16v8a-25lp.u15", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n03", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n05", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.n06", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u95", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u96", 	0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u107", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u125", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u139", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "gal16v8a-25lp.u151", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u173", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u176", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u177", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u178", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u183", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u198", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal16v8a-25lp.u218", 0x0000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u20",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u21",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u34",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u35",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u39",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.n07",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.n08",  0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u104", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u131", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u135", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal20v8a-25lp.u140", 0x0000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gal22v10-25lp.u134", 0x00002e5, 0x00000000, BRF_OPT | BRF_NODUMP },
+};
+
+STD_ROM_PICK(Sf2mkot)
+STD_ROM_FN(Sf2mkot)
 
 static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 	{ "7.bin",         0x080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -15217,6 +15278,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinotpic"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"      , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
 	{ "dinods"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinosyn"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dynwar"        , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwara"       , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwarj"       , CPS_B_02    , mapper_TK22B , 0, NULL                },
@@ -15424,6 +15486,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab3"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab4"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2re"   	  , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2mkot"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab7"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -22498,6 +22561,16 @@ struct BurnDriver BurnDrvCpsSf2re = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSf2mkot = {
+	"sf2mkot", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Magic KO Turbo!! - Nightmare Crack\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mkotRomInfo, Sf2mkotRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2koryuInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSf2ceuab5 = {
 	"sf2ceuab5", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 5)\0", NULL, "bootleg", "CPS1",
@@ -24070,6 +24143,45 @@ struct BurnDriver BurnDrvCpsDinods = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinodsRomInfo, DinodsRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Cadillacs and Dinosaurs (28th-Anniversary, Hack)
+// Hacked by GeYu
+// GOTVG 20210131
+
+static struct BurnRomInfo DinosynRomDesc[] = {
+	{ "dinosyn.bin",	0x200000, 0x358b7bf5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd_01.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd_02.4a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd_03.5a",		0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd_04.6a",		0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd_05.7a",		0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd_06.8a",		0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd_07.9a",		0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd_08.10a",		0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",		0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",		0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",		0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",		0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",		0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",		0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(Dinosyn)
+STD_ROM_FN(Dinosyn)
+
+struct BurnDriver BurnDrvCpsDinosyn = {
+	"dinosyn", "dino", NULL, NULL, "2021-01-31",
+	"Cadillacs and Dinosaurs (28th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, DinosynRomInfo, DinosynRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -3979,7 +3979,7 @@ struct BurnDriver BurnDrvmd_austrarlp = {
 	"md_austrarlp", "md_austrarl", NULL, NULL, "1994",
 	"Australian Rugby League (Prototype)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_austrarlpRomInfo, md_austrarlpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -8897,7 +8897,7 @@ struct BurnDriver BurnDrvmd_cursep = {
 	"md_cursep", "md_curse", NULL, NULL, "1989",
 	"Curse (Prototype, 19900626)\0", NULL, "U.S. License INTV Corp. / Micronet", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_cursepRomInfo, md_cursepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -11047,6 +11047,24 @@ struct BurnDriver BurnDrvmd_ejimu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Earthworm Jim (Prototype, 19940728)
+static struct BurnRomInfo md_ejimpRomDesc[] = {
+	{ "earthworm jim (prototype- jul 28,1994).bin", 0x300000, 0x1c07b337, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ejimp)
+STD_ROM_FN(md_ejimp)
+
+struct BurnDriver BurnDrvmd_ejimp = {
+	"md_ejimp", "md_ejim", NULL, NULL, "1994",
+	"Earthworm Jim (Prototype, 19940728)\0", NULL, "Virgin Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_ejimpRomInfo, md_ejimpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Earthworm Jim 2 (Euro)
 static struct BurnRomInfo md_ejim2RomDesc[] = {
 	{ "earthworm jim 2 (euro).bin", 0x300000, 0xaf235fdf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -11061,6 +11079,24 @@ struct BurnDriver BurnDrvmd_ejim2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_ejim2RomInfo, md_ejim2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Earthworm Jim 2 (prototype, 19950824)
+static struct BurnRomInfo md_ejim2pRomDesc[] = {
+	{ "earthworm jim 2 (prototype - aug 24, 1995).bin", 0x300000, 0xf92a931d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ejim2p)
+STD_ROM_FN(md_ejim2p)
+
+struct BurnDriver BurnDrvmd_ejim2p = {
+	"md_ejim2p", "md_ejim2", NULL, NULL, "1995",
+	"Earthworm Jim 2 (Protoype, 19950824)\0", NULL, "Virgin Interactive", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_ejim2pRomInfo, md_ejim2pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24779,6 +24815,24 @@ struct BurnDriver BurnDrvmd_piratesp = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Pirates! Gold (Prototype, 19930401)
+static struct BurnRomInfo md_piratesp1RomDesc[] = {
+	{ "pirates! gold (prototype - apr 1, 1993).bin", 0x100000, 0xf61e5417, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_piratesp1)
+STD_ROM_FN(md_piratesp1)
+
+struct BurnDriver BurnDrvmd_piratesp1 = {
+	"md_piratesp1", "md_pirates", NULL, NULL, "1993",
+	"Pirates! Gold (Prototype, 19930401)\0", NULL, "Microprose", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_piratesp1RomInfo, md_piratesp1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pit-Fighter (World, Rev. A)
 static struct BurnRomInfo md_pitfightRomDesc[] = {
 	{ "mpr-14320a.bin", 0x100000, 0xd48a8b02, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -27010,6 +27064,24 @@ struct BurnDriver BurnDrvmd_roadblst = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_roadblstRomInfo, md_roadblstRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// RoadBlasters (Prototype, 19910627)
+static struct BurnRomInfo md_roadblstpRomDesc[] = {
+	{ "roadblasters (prototype - jun 27, 1991).bin", 0x080000, 0xe4ef86b9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_roadblstp)
+STD_ROM_FN(md_roadblstp)
+
+struct BurnDriver BurnDrvmd_roadblstp = {
+	"md_roadblstp", "md_roadblst", NULL, NULL, "1991",
+	"RoadBlasters (Prototype, 19910627)\0", NULL, "Tengen", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_roadblstpRomInfo, md_roadblstpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -30957,6 +31029,24 @@ struct BurnDriver BurnDrvmd_stargatep = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_stargatepRomInfo, md_stargatepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Stargate (Next Generation Magazine Prototype)
+static struct BurnRomInfo md_stargatep1RomDesc[] = {
+	{ "stargate (next generation magazine prototype).bin", 0x200000, 0x51946ea9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_stargatep1)
+STD_ROM_FN(md_stargatep1)
+
+struct BurnDriver BurnDrvmd_stargatep1 = {
+	"md_stargatep1", "md_stargate", NULL, NULL, "1994",
+	"Stargate (Next Generation Magazine Prototype)\0", NULL, "Acclaim Entertainment", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_stargatep1RomInfo, md_stargatep1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -5995,6 +5995,7 @@ static void mapper116_write(UINT16 address, UINT8 data)
 {
 	if (address < 0x8000) {
 		if ((address & 0x4100) == 0x4100) {
+			// Someri
 			mapper116_mode = data;
 			if (address & 1) {
 				mapper116_mmc1_bitcount = 0;
@@ -6005,6 +6006,10 @@ static void mapper116_write(UINT16 address, UINT8 data)
 			mapper_map();
 		}
 	} else {
+		if (address == 0xa131) {
+			// Gouder SL-1632, mode & 2 == mmc3, ~mode & 2 == vrc2
+			mapper116_mode = (data & ~3) | ((data & 2) >> 1);
+		}
 		switch (mapper116_mode & 3) {
 			case 0:	{
 				if (address >= 0xb000 && address <= 0xe003) {
@@ -6082,6 +6087,8 @@ static void mapper116_map()
 			mapper_map_prg( 8, 1, mapper116_vrc2_prg(1));
 			mapper_map_prg( 8, 2, -2);
 			mapper_map_prg( 8, 3, -1);
+
+			set_mirroring((mapper116_vrc2_mirror) ? HORIZONTAL : VERTICAL);
 		}
 		break;
 		case 1: {
@@ -6130,6 +6137,52 @@ static void mapper116_map()
 				case 2: set_mirroring(VERTICAL); break;
 				case 3: set_mirroring(HORIZONTAL); break;
 			}
+		}
+		break;
+	}
+}
+
+static void mapper14_map()
+{
+	switch (mapper116_mode & 3) {
+		case 0: {
+			mapper_map_chr( 1, 0, mapper116_vrc2_chr(0));
+			mapper_map_chr( 1, 1, mapper116_vrc2_chr(1));
+			mapper_map_chr( 1, 2, mapper116_vrc2_chr(2));
+			mapper_map_chr( 1, 3, mapper116_vrc2_chr(3));
+			mapper_map_chr( 1, 4, mapper116_vrc2_chr(4));
+			mapper_map_chr( 1, 5, mapper116_vrc2_chr(5));
+			mapper_map_chr( 1, 6, mapper116_vrc2_chr(6));
+			mapper_map_chr( 1, 7, mapper116_vrc2_chr(7));
+
+			mapper_map_prg( 8, 0, mapper116_vrc2_prg(0));
+			mapper_map_prg( 8, 1, mapper116_vrc2_prg(1));
+			mapper_map_prg( 8, 2, -2);
+			mapper_map_prg( 8, 3, -1);
+
+			set_mirroring((mapper116_vrc2_mirror) ? HORIZONTAL : VERTICAL);
+		}
+		break;
+		case 1: {
+			mapper_map_prg(8, ((mapper116_mmc3_banksel & 0x40) >> 5), mapper116_mmc3_regs(6));
+			mapper_map_prg(8, 1, mapper116_mmc3_regs(7));
+			mapper_map_prg(8, 2 ^ ((mapper116_mmc3_banksel & 0x40) >> 5), mapper116_mmc3_regs(8));
+			mapper_map_prg(8, 3, mapper116_mmc3_regs(9));
+
+			INT32 swap = (mapper116_mmc3_banksel & 0x80) >> 5;
+			INT32 bank0 = (mapper116_mode & 0x08) << 5;
+			INT32 bank1 = (mapper116_mode & 0x20) << 3;
+			INT32 bank2 = (mapper116_mode & 0x80) << 1;
+			mapper_map_chr( 1, 0 ^ swap, (mapper116_mmc3_regs(0) & 0xfe) | bank0);
+			mapper_map_chr( 1, 1 ^ swap, (mapper116_mmc3_regs(0) | 0x01) | bank0);
+			mapper_map_chr( 1, 2 ^ swap, (mapper116_mmc3_regs(1) & 0xfe) | bank0);
+			mapper_map_chr( 1, 3 ^ swap, (mapper116_mmc3_regs(1) | 0x01) | bank0);
+			mapper_map_chr( 1, 4 ^ swap, mapper116_mmc3_regs(2) | bank1);
+			mapper_map_chr( 1, 5 ^ swap, mapper116_mmc3_regs(3) | bank1);
+			mapper_map_chr( 1, 6 ^ swap, mapper116_mmc3_regs(4) | bank2);
+			mapper_map_chr( 1, 7 ^ swap, mapper116_mmc3_regs(5) | bank2);
+
+			set_mirroring((mapper116_mmc3_mirror) ? HORIZONTAL : VERTICAL);
 		}
 		break;
 	}
@@ -8005,6 +8058,18 @@ static INT32 mapper_init(INT32 mappernum)
 			psg_area_write = mapper116_write;
 			cart_exp_write = mapper116_write;
 			mapper_map   = mapper116_map;
+			mapper_scanline = mapper116_mmc3_scanline;
+			mapper116_defaults();
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 14: { // Gouder SL-1632 (Samurai Spirits)
+			mapper_write = mapper116_write;
+			psg_area_write = mapper116_write;
+			cart_exp_write = mapper116_write;
+			mapper_map   = mapper14_map; // difference from 116
 			mapper_scanline = mapper116_mmc3_scanline;
 			mapper116_defaults();
 		    mapper_map();
@@ -12785,6 +12850,23 @@ struct BurnDriver BurnDrvnes_apudinknoise = {
 */
 // Non Homebrew (hand-added!)
 
+static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
+	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_samuraispirits)
+STD_ROM_FN(nes_samuraispirits)
+
+struct BurnDriver BurnDrvnes_samuraispirits = {
+	"nes_samuraispirits", NULL, NULL, NULL, "199x",
+	"Samurai Spirits (Unl)\0", NULL, "Rex Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_samuraispiritsRomInfo, nes_samuraispiritsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_avpregirfigRomDesc[] = {
 	{ "AV Pretty Girl Fight (Unl).nes",          655376, 0xc3d2b090, BRF_ESS | BRF_PRG },
 };
@@ -12794,7 +12876,7 @@ STD_ROM_FN(nes_avpregirfig)
 
 struct BurnDriver BurnDrvnes_avpregirfig = {
 	"nes_avpregirfig", NULL, NULL, NULL, "1994",
-	"AV Pretty Girl Fight (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"AV Pretty Girl Fight (Unl)\0", NULL, "Someri Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_avpregirfigRomInfo, nes_avpregirfigRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

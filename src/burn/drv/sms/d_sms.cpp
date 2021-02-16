@@ -5604,7 +5604,7 @@ struct BurnDriver BurnDrvsms_jb007b = {
 };
 
 
-// Janggun ui Adeul (Kor)
+// Janggun-ui Adeul (Kor)
 
 static struct BurnRomInfo sms_janggunRomDesc[] = {
 	{ "janggun ui adeul (kr).bin",	0x80000, 0x192949d5, BRF_PRG | BRF_ESS },
@@ -5615,7 +5615,7 @@ STD_ROM_FN(sms_janggun)
 
 struct BurnDriver BurnDrvsms_janggun = {
 	"sms_janggun", NULL, NULL, NULL, "1992",
-	"Janggun ui Adeul (Kor)\0", NULL, "Daou Infosys", "Sega Master System",
+	"Janggun-ui Adeul (Kor)\0", NULL, "Daou Infosys", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA8K, GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_janggunRomInfo, sms_janggunRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

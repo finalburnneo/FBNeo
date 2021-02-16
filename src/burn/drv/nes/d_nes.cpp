@@ -5945,6 +5945,228 @@ static void vrc7_cycle()
 #undef mapper85_irqcount
 #undef mapper85_irqcycle
 
+// --[ mapper 116: Somari (AV Girl Fighting)
+// it's a frankensteinian mess-mapper -dink
+#define mapper116_vrc2_prg(x)		(mapper_regs[0x00 + (x)])
+#define mapper116_vrc2_chr(x)		(mapper_regs[0x02 + (x)])
+#define mapper116_vrc2_mirror		(mapper_regs[0x0a])
+#define mapper116_mode				(mapper_regs[0x0b])
+
+#define mapper116_mmc3_banksel      (mapper_regs[0x0c])
+#define mapper116_mmc3_mirror		(mapper_regs[0x0d])
+#define mapper116_mmc3_irqlatch 	(mapper_regs[0x0e])
+#define mapper116_mmc3_irqcount		(mapper_regs[0x0f])
+#define mapper116_mmc3_irqenable	(mapper_regs[0x10])
+#define mapper116_mmc3_irqreload	(mapper_regs[0x11])
+#define mapper116_mmc3_regs(x)		(mapper_regs16[0x12 + (x)]) // must be regs16!
+
+#define mapper116_mmc1_regs(x)		(mapper_regs[0x1b + (x)])
+#define mapper116_mmc1_serialbyte	(mapper_regs16[0])
+#define mapper116_mmc1_bitcount		(mapper_regs16[1])
+
+static void mapper116_defaults()
+{
+	mapper116_vrc2_prg(0) = 0;
+	mapper116_vrc2_prg(1) = 1;
+	mapper116_vrc2_chr(0) = 0xff;
+	mapper116_vrc2_chr(1) = 0xff;
+	mapper116_vrc2_chr(2) = 0xff;
+	mapper116_vrc2_chr(3) = 0xff;
+	mapper116_vrc2_chr(4) = 4;
+	mapper116_vrc2_chr(5) = 5;
+	mapper116_vrc2_chr(6) = 6;
+	mapper116_vrc2_chr(7) = 7;
+
+	mapper116_mmc1_regs(0) = 0x0c;
+
+	mapper116_mmc3_regs(0) = 0;
+	mapper116_mmc3_regs(1) = 2;
+	mapper116_mmc3_regs(2) = 4;
+	mapper116_mmc3_regs(3) = 5;
+	mapper116_mmc3_regs(4) = 6;
+	mapper116_mmc3_regs(5) = 7;
+	mapper116_mmc3_regs(6) = -4;
+	mapper116_mmc3_regs(7) = -3;
+	mapper116_mmc3_regs(8) = -2;
+	mapper116_mmc3_regs(9) = -1;
+}
+
+static void mapper116_write(UINT16 address, UINT8 data)
+{
+	if (address < 0x8000) {
+		if ((address & 0x4100) == 0x4100) {
+			mapper116_mode = data;
+			if (address & 1) {
+				mapper116_mmc1_bitcount = 0;
+				mapper116_mmc1_serialbyte = 0;
+				mapper116_mmc1_regs(0) = 0x0c;
+				mapper116_mmc1_regs(3) = 0x00;
+			}
+			mapper_map();
+		}
+	} else {
+		switch (mapper116_mode & 3) {
+			case 0:	{
+				if (address >= 0xb000 && address <= 0xe003) {
+					INT32 reg = ((((address & 2) | (address >> 10)) >> 1) + 2) & 7;
+
+					if (~address & 1) {
+						mapper116_vrc2_chr(reg) = (mapper116_vrc2_chr(reg) & 0xf0) | (data & 0x0f);
+					} else {
+						mapper116_vrc2_chr(reg) = (mapper116_vrc2_chr(reg) & 0x0f) | ((data & 0x0f) << 4);
+					}
+				} else {
+					switch (address & 0xf000) {
+						case 0x8000: mapper116_vrc2_prg(0) = data; break;
+						case 0x9000: mapper116_vrc2_mirror = data & 1; break;
+						case 0xa000: mapper116_vrc2_prg(1) = data; break;
+					}
+				}
+				mapper_map();
+			}
+			break;
+			case 1: {
+				switch (address & 0xe001) {
+					case 0x8000: mapper116_mmc3_banksel = data; break;
+					case 0x8001: mapper116_mmc3_regs(mapper116_mmc3_banksel & 0x7) = data; break;
+					case 0xa000: mapper116_mmc3_mirror = data & 1; break;
+					case 0xc000: mapper116_mmc3_irqlatch = data; break;
+					case 0xc001: mapper116_mmc3_irqreload = 1; break;
+					case 0xe000: mapper116_mmc3_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+					case 0xe001: mapper116_mmc3_irqenable = 1; break;
+				}
+				mapper_map();
+			}
+			break;
+			case 2:
+			case 3: {
+				if (address & 0x8000) {
+					if (data & 0x80) { // bit 7, mapper reset
+						mapper116_mmc1_bitcount = 0;
+						mapper116_mmc1_serialbyte = 0;
+						mapper116_mmc1_regs(0) |= 0x0c;
+						if (mapper_map) mapper_map();
+					} else {
+						mapper116_mmc1_serialbyte |= (data & 1) << mapper116_mmc1_bitcount;
+						mapper116_mmc1_bitcount++;
+						if (mapper116_mmc1_bitcount == 5) {
+							UINT8 reg = (address >> 13) & 0x3;
+							mapper116_mmc1_regs(reg) = mapper116_mmc1_serialbyte;
+							mapper116_mmc1_bitcount = 0;
+							mapper116_mmc1_serialbyte = 0;
+							if (mapper_map) mapper_map();
+						}
+					}
+				}
+			}
+			break;
+		}
+	}
+}
+
+static void mapper116_map()
+{
+	INT32 bank = (mapper116_mode & 4) << 6;
+	switch (mapper116_mode & 3) {
+		case 0: {
+			mapper_map_chr( 1, 0, mapper116_vrc2_chr(0) | bank);
+			mapper_map_chr( 1, 1, mapper116_vrc2_chr(1) | bank);
+			mapper_map_chr( 1, 2, mapper116_vrc2_chr(2) | bank);
+			mapper_map_chr( 1, 3, mapper116_vrc2_chr(3) | bank);
+			mapper_map_chr( 1, 4, mapper116_vrc2_chr(4) | bank);
+			mapper_map_chr( 1, 5, mapper116_vrc2_chr(5) | bank);
+			mapper_map_chr( 1, 6, mapper116_vrc2_chr(6) | bank);
+			mapper_map_chr( 1, 7, mapper116_vrc2_chr(7) | bank);
+
+			mapper_map_prg( 8, 0, mapper116_vrc2_prg(0));
+			mapper_map_prg( 8, 1, mapper116_vrc2_prg(1));
+			mapper_map_prg( 8, 2, -2);
+			mapper_map_prg( 8, 3, -1);
+		}
+		break;
+		case 1: {
+			mapper_map_prg(8, ((mapper116_mmc3_banksel & 0x40) >> 5), mapper116_mmc3_regs(6));
+			mapper_map_prg(8, 1, mapper116_mmc3_regs(7));
+			mapper_map_prg(8, 2 ^ ((mapper116_mmc3_banksel & 0x40) >> 5), mapper116_mmc3_regs(8));
+			mapper_map_prg(8, 3, mapper116_mmc3_regs(9));
+
+			INT32 swap = (mapper116_mmc3_banksel & 0x80) >> 5;
+			mapper_map_chr( 1, 0 ^ swap, (mapper116_mmc3_regs(0) & 0xfe) | bank);
+			mapper_map_chr( 1, 1 ^ swap, (mapper116_mmc3_regs(0) | 0x01) | bank);
+			mapper_map_chr( 1, 2 ^ swap, (mapper116_mmc3_regs(1) & 0xfe) | bank);
+			mapper_map_chr( 1, 3 ^ swap, (mapper116_mmc3_regs(1) | 0x01) | bank);
+			mapper_map_chr( 1, 4 ^ swap, mapper116_mmc3_regs(2) | bank);
+			mapper_map_chr( 1, 5 ^ swap, mapper116_mmc3_regs(3) | bank);
+			mapper_map_chr( 1, 6 ^ swap, mapper116_mmc3_regs(4) | bank);
+			mapper_map_chr( 1, 7 ^ swap, mapper116_mmc3_regs(5) | bank);
+
+			set_mirroring((mapper116_mmc3_mirror) ? HORIZONTAL : VERTICAL);
+		}
+		break;
+		case 2:
+		case 3: {
+			if (mapper116_mmc1_regs(0) & 0x8) {
+				if (mapper116_mmc1_regs(0) & 0x4) {
+					mapper_map_prg(16, 0, mapper116_mmc1_regs(3) & 0xf);
+					mapper_map_prg(16, 1, 0x0f);
+				} else {
+					mapper_map_prg(16, 0, 0);
+					mapper_map_prg(16, 1, mapper116_mmc1_regs(3) & 0xf);
+				}
+			} else {
+				mapper_map_prg(32, 0, (mapper116_mmc1_regs(3) & 0xf) >> 1);
+			}
+
+			if (mapper116_mmc1_regs(0) & 0x10) {
+				mapper_map_chr( 4, 0, mapper116_mmc1_regs(1));
+				mapper_map_chr( 4, 1, mapper116_mmc1_regs(2));
+			} else {
+				mapper_map_chr( 8, 0, mapper116_mmc1_regs(1) >> 1);
+			}
+
+			switch (mapper116_mmc1_regs(0) & 3) {
+				case 0: set_mirroring(SINGLE_LOW); break;
+				case 1: set_mirroring(SINGLE_HIGH); break;
+				case 2: set_mirroring(VERTICAL); break;
+				case 3: set_mirroring(HORIZONTAL); break;
+			}
+		}
+		break;
+	}
+}
+
+static void mapper116_mmc3_scanline()
+{
+	if ((mapper116_mode & 0x03) != 1) return;
+
+	if (mapper116_mmc3_irqcount == 0 || mapper116_mmc3_irqreload) {
+		mapper116_mmc3_irqreload = 0;
+		mapper116_mmc3_irqcount = mapper116_mmc3_irqlatch;
+	} else {
+		mapper116_mmc3_irqcount--;
+	}
+
+	if (mapper116_mmc3_irqcount == 0 && mapper116_mmc3_irqenable && (mmc5_mask[0] & 0x18)) {
+		mapper_irq(0);
+	}
+}
+#undef mapper116_vrc2_prg
+#undef mapper116_vrc2_chr
+#undef mapper116_vrc2_mirror
+#undef mapper116_mode
+
+#undef mapper116_mmc3_banksel
+#undef mapper116_mmc3_mirror
+#undef mapper116_mmc3_irqlatch
+#undef mapper116_mmc3_irqcount
+#undef mapper116_mmc3_irqenable
+#undef mapper116_mmc3_irqreload
+#undef mapper116_mmc3_regs
+
+#undef mapper116_mmc1_regs
+#undef mapper116_mmc1_serialbyte
+#undef mapper116_mmc1_bitcount
+
 // --[ mapper 80: Taito X1-005
 // --[ mapper 207: with advanced mirroring
 #define mapper207_prg(x)     (mapper_regs[0 + x]) // 0 - 2
@@ -7773,6 +7995,18 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper115_map;
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 116: { // Somari (AV Girl Fighter)
+			mapper_write = mapper116_write;
+			psg_area_write = mapper116_write;
+			cart_exp_write = mapper116_write;
+			mapper_map   = mapper116_map;
+			mapper_scanline = mapper116_mmc3_scanline;
+			mapper116_defaults();
 		    mapper_map();
 			retval = 0;
 			break;
@@ -12552,7 +12786,7 @@ struct BurnDriver BurnDrvnes_apudinknoise = {
 // Non Homebrew (hand-added!)
 
 static struct BurnRomInfo nes_avpregirfigRomDesc[] = {
-	{ "AV Pretty Girl Fight (Unl).nes",          655376, 0xbceb088b, BRF_ESS | BRF_PRG },
+	{ "AV Pretty Girl Fight (Unl).nes",          655376, 0xc3d2b090, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_avpregirfig)
@@ -30915,7 +31149,7 @@ struct BurnDriver BurnDrvnes_karnov = {
 };
 
 static struct BurnRomInfo nes_kartfighterRomDesc[] = {
-	{ "Kart Fighter (Unl).nes",          393232, 0x4877213a, BRF_ESS | BRF_PRG },
+	{ "Kart Fighter (Unl).nes",          393232, 0x7318bed4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_kartfighter)

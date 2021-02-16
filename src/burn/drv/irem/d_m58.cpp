@@ -395,7 +395,7 @@ static INT32 DrvInit()
 	GenericTilesInit();
 	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 0x1f);
-	GenericTilemapSetOffsets(0, 0, -8);
+	GenericTilemapSetOffsets(0, 0, -26);
 
 	DrvDoReset();
 
@@ -490,7 +490,7 @@ static void draw_sprites()
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
 		INT32 sx = DrvSprRAM[offs + 3];
-		INT32 sy1 = 233 - DrvSprRAM[offs];
+		INT32 sy1 = 210 - DrvSprRAM[offs];
 		INT32 sy2 = 0;
 
 		if (flipy)

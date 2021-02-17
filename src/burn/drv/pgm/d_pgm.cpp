@@ -4588,6 +4588,7 @@ STD_ROM_FN(happy6)
 
 static void happy6Patch()
 {
+	PGMUSER0[0x411de] = 0xc0;
 	pgm_decrypt_happy6();
 	pgm_create_theglad_EO_data();
 	pgm_descramble_happy6_data(PGMSPRMaskROM,         0x800000);

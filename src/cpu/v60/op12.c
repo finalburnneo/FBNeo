@@ -717,6 +717,13 @@ static UINT32 opINB(void)
 {
 	F12DecodeFirstOperand(ReadAMAddress,0);
 	modWriteValB=PortRead8(f12Op1);
+
+	if ( v60.stall_io )
+	{
+		v60.stall_io = 0;
+		return 0;
+	}
+
 	F12WriteSecondOperand(0);
 	F12END();
 }
@@ -725,6 +732,13 @@ static UINT32 opINH(void)
 {
 	F12DecodeFirstOperand(ReadAMAddress,1);
 	modWriteValH=PortRead16(f12Op1);
+
+	if ( v60.stall_io )
+	{
+		v60.stall_io = 0;
+		return 0;
+	}
+
 	F12WriteSecondOperand(1);
 	F12END();
 }
@@ -733,6 +747,13 @@ static UINT32 opINW(void)
 {
 	F12DecodeFirstOperand(ReadAMAddress,2);
 	modWriteValW=PortRead32(f12Op1);
+
+	if ( v60.stall_io )
+	{
+		v60.stall_io = 0;
+		return 0;
+	}
+
 	F12WriteSecondOperand(2);
 	F12END();
 }

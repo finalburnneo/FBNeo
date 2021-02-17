@@ -222,6 +222,12 @@ INT32 BurnTransferCopy(UINT32* pPalette)
 
 #define nTransOverflow 16 // 16 lines of overflow, some games spill past the end of the allocated height causing heap corruption.
 
+void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight)
+{
+	nTransHeight = nHeight;
+	nTransWidth = nWidth;
+}
+
 void BurnTransferExit()
 {
 #if defined FBNEO_DEBUG

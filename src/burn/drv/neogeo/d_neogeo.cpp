@@ -20494,3 +20494,33 @@ struct BurnDriver BurnDrvTeot = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+
+// Cabal (Neo-Geo Unfinished Conversion)
+
+static struct BurnRomInfo cabalngRomDesc[] = {
+	{ "cabal-p1.bin",   0x100000, 0x49232965, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "cabal-s1.bin",	0x020000, 0x45f0bc5e, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "cabal-c1.bin",	0x100000, 0x9f5ea8bb, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "cabal-c2.bin",	0x100000, 0xedf277f2, 3 | BRF_GRA },           	//  3
+
+	{ "cabal-m1.bin",	0x010000, 0xefd97334, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "cabal-v1.bin",	0x100000, 0x1a5bbc12, 5 | BRF_SND },           	//  5 Sound data
+	{ "cabal-v2.bin",	0x100000, 0xa2b9c011, 5 | BRF_SND },           	//  5 Sound data
+};
+
+STDROMPICKEXT(cabalng, cabalng, neogeo)
+STD_ROM_FN(cabalng)
+
+struct BurnDriver BurnDrvCabalng = {
+	"cabalng", NULL, "neogeo", NULL, "1988",
+	"Cabal (Neo-Geo Unfinished Conversion)\0", "Buggy, works in MVS mode only!", "TAD Corporation", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};

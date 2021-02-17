@@ -336,6 +336,15 @@ void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length)
 	memcpy(eeprom_data + offset, data, length);
 }
 
+void EEPROMByteFill(UINT8 byte, INT32 length)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMByteFill called without init\n"));
+#endif
+
+	memset(eeprom_data, byte, length);
+}
+
 void EEPROMScan(INT32 nAction, INT32* pnMin)
 {
 #if defined FBNEO_DEBUG

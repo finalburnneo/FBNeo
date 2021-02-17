@@ -522,6 +522,7 @@ static struct v60info {
 	UINT32 PPC;
 	UINT32 current_cycles;
 	UINT32 cycles;
+	INT32 stall_io;
 } v60;
 
 
@@ -832,6 +833,7 @@ void v60WriteROM(UINT32 a, UINT8 d)
 
 static void base_init()
 {
+	memset(&v60, 0x00, sizeof(v60));
 	v60.irq_cb = v60_default_irq_cb;
 	v60.irq_line = CLEAR_LINE;
 	v60.nmi_line = CLEAR_LINE;
@@ -944,6 +946,10 @@ void v60Exit()
 	}
 }
 
+void v60_stall(void)
+{
+	v60.stall_io = 1;
+}
 
 static void v60_do_irq(int vector)
 {

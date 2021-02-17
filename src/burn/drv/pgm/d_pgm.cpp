@@ -556,6 +556,45 @@ static struct BurnDIPInfo happy6hkDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x04, "World"							},
 };
 
+static struct BurnDIPInfo drgw3DIPList[] = {
+    {0x2E,  0xFF, 0xFF, 0x05, NULL                              },
+
+    {0,     0xFE, 0,    7,    "Region (Fake)"                   },
+    {0x2E,  0x01, 0x0F, 0x01, "Japan (Alta License)"            },
+    {0x2E,  0x01, 0x0F, 0x02, "Korea"                           },
+    {0x2E,  0x01, 0x0F, 0x03, "Taiwan"                          },
+    {0x2E,  0x01, 0x0F, 0x04, "Hong Kong"                       },
+    {0x2E,  0x01, 0x0F, 0x05, "China"                           },
+    {0x2E,  0x01, 0x0F, 0x06, "World"                           },
+    {0x2E,  0x01, 0x0F, 0x07, "Singapore"                       },
+};
+
+static struct BurnDIPInfo drgw3106cnDIPList[] = {
+    {0x2E,  0xFF, 0xFF, 0x05, NULL                              },
+
+    {0,     0xFE, 0,    7,    "Region (Fake)"                   },
+    {0x2E,  0x01, 0x0F, 0x01, "Japan (Alta License)"            },
+    {0x2E,  0x01, 0x0F, 0x02, "Korea"                           },
+    {0x2E,  0x01, 0x0F, 0x03, "Taiwan"                          },
+    {0x2E,  0x01, 0x0F, 0x04, "Hong Kong"                       },
+    {0x2E,  0x01, 0x0F, 0x05, "China"                           },
+    {0x2E,  0x01, 0x0F, 0x06, "World"                           },
+    {0x2E,  0x01, 0x0F, 0x07, "Singapore"                       },
+};
+
+static struct BurnDIPInfo drgw3101jaDIPList[] = {
+    {0x2E,  0xFF, 0xFF, 0x01, NULL                              },
+
+    {0,     0xFE, 0,    7,    "Region (Fake)"                   },
+    {0x2E,  0x01, 0x0F, 0x01, "Japan (Alta License)"            },
+    {0x2E,  0x01, 0x0F, 0x02, "Korea"                           },
+    {0x2E,  0x01, 0x0F, 0x03, "Taiwan"                          },
+    {0x2E,  0x01, 0x0F, 0x04, "Hong Kong"                       },
+    {0x2E,  0x01, 0x0F, 0x05, "China"                           },
+    {0x2E,  0x01, 0x0F, 0x06, "World"                           },
+    {0x2E,  0x01, 0x0F, 0x07, "Singapore"                       },
+};
+
 static struct BurnDIPInfo dwexDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x06, NULL								},
 
@@ -649,6 +688,9 @@ STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
 STDDIPINFOEXT(happy6hk,		pgm,	happy6hk	 	)
+STDDIPINFOEXT(drgw3,        pgm,    drgw3           )
+STDDIPINFOEXT(drgw3106cn,   pgm,    drgw3106cn      )
+STDDIPINFOEXT(drgw3101ja,   pgm,    drgw3101ja      )
 STDDIPINFOEXT(dwex,		    pgm,	dwex	 		)
 STDDIPINFOEXT(dwex101cn,	pgm,	dwex101cn	 	)
 STDDIPINFOEXT(svg,			pgm,	svg	 			)
@@ -1532,12 +1574,12 @@ static INT32 drgw3Init()
 	return pgmInit();
 }
 
-struct BurnDriverD BurnDrvDrgw3 = {
+struct BurnDriver BurnDrvDrgw3 = {
 	"drgw3", NULL, "pgm", NULL, "1998",
 	"Dragon World 3 (V106, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw3RomInfo, drgw3RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw3RomInfo, drgw3RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3106cnDIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1568,8 +1610,8 @@ struct BurnDriverD BurnDrvDrgw3105 = {
 	"drgw3105", "drgw3", "pgm", NULL, "1998",
 	"Dragon World 3 (V105)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw3105RomInfo, drgw3105RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw3105RomInfo, drgw3105RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3DIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1597,12 +1639,12 @@ static struct BurnRomInfo drgw3103RomDesc[] = {
 STDROMPICKEXT(drgw3103, drgw3103, pgm)
 STD_ROM_FN(drgw3103)
 
-struct BurnDriverD BurnDrvDrgw3103 = {
+struct BurnDriver BurnDrvDrgw3103 = {
 	"drgw3103", "drgw3", "pgm", NULL, "1998",
 	"Chuugokuryuu 3 Special (ver. 103, japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw3103RomInfo, drgw3103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw3103RomInfo, drgw3103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3101jaDIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1636,12 +1678,12 @@ static struct BurnRomInfo drgw3100RomDesc[] = {
 STDROMPICKEXT(drgw3100, drgw3100, pgm)
 STD_ROM_FN(drgw3100)
 
-struct BurnDriverD BurnDrvDrgw3100 = {
+struct BurnDriver BurnDrvDrgw3100 = {
 	"drgw3100", "drgw3", "pgm", NULL, "1998",
 	"Chuugokuryuu 3 Special (ver. 100, Japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
-	NULL, drgw3100RomInfo, drgw3100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw3100RomInfo, drgw3100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3101jaDIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1676,11 +1718,11 @@ static struct BurnRomInfo dwexRomDesc[] = {
 STDROMPICKEXT(dwex, dwex, pgm)
 STD_ROM_FN(dwex)
 
-struct BurnDriverD BurnDrvDwex = {
+struct BurnDriver BurnDrvDwex = {
 	"dwex", NULL, "pgm", NULL, "1998",
 	"Dragon World 3 EX (V100, World)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, dwexRomInfo, dwexRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dwexDIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -1716,11 +1758,11 @@ static struct BurnRomInfo dwex101cnRomDesc[] = {
 STDROMPICKEXT(dwex101cn, dwex101cn, pgm)
 STD_ROM_FN(dwex101cn)
 
-struct BurnDriverD BurnDrvDwex101cn = {
+struct BurnDriver BurnDrvDwex101cn = {
 	"dwex101cn", "dwex", "pgm", NULL, "1998",
 	"Dragon World 3 EX (V101, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, dwex101cnRomInfo, dwex101cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dwex101cnDIPInfo,
 	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -4546,6 +4588,7 @@ STD_ROM_FN(happy6)
 
 static void happy6Patch()
 {
+	PGMUSER0[0x411de] = 0xc0;
 	pgm_decrypt_happy6();
 	pgm_create_theglad_EO_data();
 	pgm_descramble_happy6_data(PGMSPRMaskROM,         0x800000);

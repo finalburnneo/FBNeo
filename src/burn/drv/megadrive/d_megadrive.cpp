@@ -3979,7 +3979,7 @@ struct BurnDriver BurnDrvmd_austrarlp = {
 	"md_austrarlp", "md_austrarl", NULL, NULL, "1994",
 	"Australian Rugby League (Prototype)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_austrarlpRomInfo, md_austrarlpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -8897,7 +8897,7 @@ struct BurnDriver BurnDrvmd_cursep = {
 	"md_cursep", "md_curse", NULL, NULL, "1989",
 	"Curse (Prototype, 19900626)\0", NULL, "U.S. License INTV Corp. / Micronet", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_cursepRomInfo, md_cursepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

@@ -761,6 +761,13 @@
 		<rom name="AV Mahjong Club (T-Chi) (Unl).nes" size="262160" crc="663870dd"/>
 		<driver status="good"/>
 	</game>
+	<game name="avpregirfig">
+		<description>AV Pretty Girl Fight (Unl)</description>
+		<year>1994</year>
+		<manufacturer>Someri Team</manufacturer>
+		<rom name="AV Pretty Girl Fight (Unl).nes" size="655376" crc="c3d2b090"/>
+		<driver status="good"/>
+	</game>
 	<game name="bwings">
 		<description>B-Wings (Japan)</description>
 		<year>1986</year>
@@ -3050,6 +3057,13 @@
 		<rom name="Dragon Ball Z II - Gekishin Freeza!! (T-Eng).nes" size="524304" crc="ffa1e20e"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragobalziiirejinic" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
+		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan) - Castellano v1.0a [Hack]</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="dragon ball z iii - ressen jinzou ningen (japan) - castellano v1.0a.nes" size="524304" crc="ff1d3cf3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragobalziiirejinij" cloneof="dragobalziiirejini" romof="dragobalziiirejini">
 		<description>Dragon Ball Z III - Ressen Jinzou Ningen (Japan)</description>
 		<year>1992</year>
@@ -3706,6 +3720,13 @@
 		<year>1992</year>
 		<manufacturer>Namco</manufacturer>
 		<rom name="Famista '93 (Japan).nes" size="262160" crc="38511037"/>
+		<driver status="good"/>
+	</game>
+	<game name="famista93e" cloneof="famista93" romof="famista93">
+		<description>Famista '93 (T-Eng) [Hack]</description>
+		<year>1993</year>
+		<manufacturer>Namco</manufacturer>
+		<rom name="famista '93 (t-eng).nes" size="262160" crc="d9301c12"/>
 		<driver status="good"/>
 	</game>
 	<game name="famista94">
@@ -4674,6 +4695,13 @@
 		<rom name="Grand Master (Japan).nes" size="393232" crc="eff4603a"/>
 		<driver status="good"/>
 	</game>
+	<game name="grandmasterc" cloneof="grandmaster" romof="grandmaster">
+		<description>Grand Master (T-Chi, v1.1)</description>
+		<year>2021-01-01</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Grand Master (T-Chi, v1.1).nes" size="1048592" crc="505d11c0"/>
+		<driver status="good"/>
+	</game>
 	<game name="grandmaster">
 		<description>Grand Master (T-Eng)</description>
 		<year>1989?</year>
@@ -5465,6 +5493,13 @@
 		<rom name="JAMG - The Lost Coins (HB).nes" size="262160" crc="7a8877aa"/>
 		<driver status="good"/>
 	</game>
+	<game name="janggunuiadeul">
+		<description>Janggun-ui Adeul (Korea) (Unl)</description>
+		<year>1992</year>
+		<manufacturer>Daou</manufacturer>
+		<rom name="Janggun-ui Adeul (Korea) (Unl).nes" size="655376" crc="54171ca4"/>
+		<driver status="good"/>
+	</game>
 	<game name="jaws">
 		<description>Jaws (USA)</description>
 		<year>1987</year>
@@ -5910,7 +5945,7 @@
 		<description>Kart Fighter (Unl)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="Kart Fighter (Unl).nes" size="393232" crc="4877213a"/>
+		<rom name="Kart Fighter (Unl).nes" size="393232" crc="7318bed4"/>
 		<driver status="good"/>
 	</game>
 	<game name="kerokerkernodaj" cloneof="kerokerkernoda" romof="kerokerkernoda">
@@ -6144,7 +6179,7 @@
 		<rom name="Knight Rider (USA).nes" size="196624" crc="604fa3fc"/>
 		<driver status="good"/>
 	</game>
-	<game name="kokoadventure">
+	<game name="kokoadventure" cloneof="buzzwaldog" romof="buzzwaldog">
 		<description>Koko Adventure (Korea)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -7803,6 +7838,13 @@
 		<rom name="Nekketsu! Street Basket - Ganbare Dunk Heroes (Japan).nes" size="262160" crc="a2952508"/>
 		<driver status="good"/>
 	</game>
+	<game name="nekkestrbasc" cloneof="nekkestrbas" romof="nekkestrbas">
+		<description>Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)</description>
+		<year>2020-10-05</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes" size="524304" crc="8f359b4f"/>
+		<driver status="good"/>
+	</game>
 	<game name="neoheiali">
 		<description>NEO Heiankyo Alien (HB) [Homebrew]</description>
 		<year>2017</year>
@@ -9439,6 +9481,13 @@
 		<year>2020-04-30</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Salamander (T-Chi, v1.2).nes" size="393232" crc="fbe84b97"/>
+		<driver status="good"/>
+	</game>
+	<game name="samuraispirits">
+		<description>Samurai Spirits (Unl)</description>
+		<year>199x</year>
+		<manufacturer>Rex Soft</manufacturer>
+		<rom name="Samurai Spirits (Unl).nes" size="786448" crc="9b7305f7"/>
 		<driver status="good"/>
 	</game>
 	<game name="sansaranagaj" cloneof="sansaranaga" romof="sansaranaga">

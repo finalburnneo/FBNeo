@@ -47,6 +47,13 @@
 		<rom name="mpr-11043.ic1" size="131072" crc="3658f3e0"/>
 		<driver status="good"/>
 	</game>
+	<game name="herolancc" cloneof="herolanc" romof="herolanc">
+		<description>Advanced Dungeons and Dragons - Heroes of the Lance (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="advanced dungeons and dragons - heroes of the lance (euro, bra) - castellano v1.0.sms" size="524288" crc="7b33f65d"/>
+		<driver status="good"/>
+	</game>
 	<game name="herolanc">
 		<description>Advanced Dungeons and Dragons - Heroes of the Lance (Euro, Bra)</description>
 		<year>1991</year>
@@ -103,11 +110,25 @@
 		<rom name="Aleste IIgg2sms.sms" size="262144" crc="516d899d"/>
 		<driver status="good"/>
 	</game>
+	<game name="alexhitwc" cloneof="alexhitw" romof="alexhitw">
+		<description>Alex Kidd - High-Tech World (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd - high-tech world (usa, europe, brazil) - castellano v1.0.sms" size="131072" crc="aeb143f2"/>
+		<driver status="good"/>
+	</game>
 	<game name="alexhitw">
 		<description>Alex Kidd - High-Tech World (Euro, USA)</description>
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-12408.ic1" size="131072" crc="013c0a94"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexlostc" cloneof="alexlost" romof="alexlost">
+		<description>Alex Kidd - The Lost Stars (World) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd - the lost stars (world) - castellano v1.0.sms" size="262144" crc="d3fa9af0"/>
 		<driver status="good"/>
 	</game>
 	<game name="alexlost">
@@ -122,6 +143,13 @@
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexbmxc" cloneof="alexbmx" romof="alexbmx">
+		<description>Alex Kidd BMX Trial (Jpn) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd bmx trial (jpn) - castellano v1.1.sms" size="131072" crc="2a5449d4"/>
 		<driver status="good"/>
 	</game>
 	<game name="alexbmx">
@@ -145,6 +173,13 @@
 		<rom name="alex kidd in miracle world (usa, europe).bin" size="131072" crc="17a40e29"/>
 		<driver status="good"/>
 	</game>
+	<game name="alexkiddc" cloneof="alexkidd" romof="alexkidd">
+		<description>Alex Kidd in Miracle World (Euro, USA, v1) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd in miracle world (euro, usa, v1) - castellano v1.1.sms" size="131072" crc="a34e0c37"/>
+		<driver status="good"/>
+	</game>
 	<game name="alexkidd">
 		<description>Alex Kidd in Miracle World (Euro, USA, v1)</description>
 		<year>1986</year>
@@ -164,6 +199,13 @@
 		<year>2015</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Alex Kidd in Radaxian Rumble 1.5.sms" size="524288" crc="02760e17"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexshinc" cloneof="alexshin" romof="alexshin">
+		<description>Alex Kidd in Shinobi World (Euro, USA, Bra) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd in shinobi world (euro, usa, bra) - castellano v1.1.sms" size="262144" crc="738f1504"/>
 		<driver status="good"/>
 	</game>
 	<game name="alexshin">
@@ -192,6 +234,13 @@
 		<year>1989</year>
 		<manufacturer>HiCom</manufacturer>
 		<rom name="alibaba and 40 thieves (kr).sms" size="32768" crc="08bf3de3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alien3c" cloneof="alien3" romof="alien3">
+		<description>Alien 3 (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Alien 3 (Euro, Bra) - Castellano v1.0.sms" size="262144" crc="97a9a75d"/>
 		<driver status="good"/>
 	</game>
 	<game name="alien3">
@@ -390,11 +439,25 @@
 		<rom name="mpr-11121.ic1" size="131072" crc="ff614eb3"/>
 		<driver status="good"/>
 	</game>
+	<game name="backtof2c" cloneof="backtof2" romof="backtof2">
+		<description>Back to the Future Part II (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="back to the future part ii (euro, bra) - castellano v1.0.sms" size="262144" crc="4146138d"/>
+		<driver status="good"/>
+	</game>
 	<game name="backtof2">
 		<description>Back to the Future Part II (Euro, Bra)</description>
 		<year>1990</year>
 		<manufacturer>Image Works</manufacturer>
 		<rom name="back to the future part ii (europe).bin" size="262144" crc="e5ff50d8"/>
+		<driver status="good"/>
+	</game>
+	<game name="backtof3c" cloneof="backtof3" romof="backtof3">
+		<description>Back to the Future Part III (Euro) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="back to the future part iii (euro) - castellano v1.0.sms" size="262144" crc="423517c4"/>
 		<driver status="good"/>
 	</game>
 	<game name="backtof3">
@@ -409,6 +472,13 @@
 		<year>2017</year>
 		<manufacturer>SMS Power!</manufacturer>
 		<rom name="bad apple v100.sms" size="4194304" crc="38434560"/>
+		<driver status="good"/>
+	</game>
+	<game name="bakubakuc" cloneof="bakubaku" romof="bakubaku">
+		<description>Baku Baku Animal (Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="baku baku animal (bra) - castellano v1.0.sms" size="262144" crc="131e4852"/>
 		<driver status="good"/>
 	</game>
 	<game name="bakubaku">
@@ -516,6 +586,13 @@
 		<rom name="mpr-12043f.ic1" size="262144" crc="3084cf11"/>
 		<driver status="good"/>
 	</game>
+	<game name="bnzabrosc" cloneof="bnzabros" romof="bnzabros">
+		<description>Bonanza Bros. (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="bonanza bros. (euro, bra) - castellano v1.0.sms" size="262656" crc="a4999f47"/>
+		<driver status="good"/>
+	</game>
 	<game name="bnzabros">
 		<description>Bonanza Bros. (Euro, Bra)</description>
 		<year>1991</year>
@@ -607,6 +684,13 @@
 		<rom name="captain silver (usa).bin" size="131072" crc="b81f6fa5"/>
 		<driver status="good"/>
 	</game>
+	<game name="casinoc" cloneof="casino" romof="casino">
+		<description>Casino Games (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="casino games (euro, usa) - castellano v1.0.sms" size="262144" crc="bfe4457c"/>
+		<driver status="good"/>
+	</game>
 	<game name="casino">
 		<description>Casino Games (Euro, USA)</description>
 		<year>1989</year>
@@ -619,6 +703,13 @@
 		<year>1997</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="castelo ra-tim-bum (brazil).bin" size="524288" crc="31ffd7c3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlillc" cloneof="castlill" romof="castlill">
+		<description>Castle of Illusion Starring Mickey Mouse (Euro, Bra) - Castellano v1.1 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="castle of illusion starring mickey mouse (euro, bra) - castellano v1.1.sms" size="262144" crc="a0941272"/>
 		<driver status="good"/>
 	</game>
 	<game name="castlill">
@@ -740,6 +831,13 @@
 		<rom name="color and switch test (unknown) (v1.3).bin" size="32768" crc="7253c3ec"/>
 		<driver status="good"/>
 	</game>
+	<game name="columnsc" cloneof="columns" romof="columns">
+		<description>Columns (Euro, USA, Bra, Kor) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="columns (euro, usa, bra, kor) - castellano v1.0.sms" size="131072" crc="11deb730"/>
+		<driver status="good"/>
+	</game>
 	<game name="columns">
 		<description>Columns (Euro, USA, Bra, Kor)</description>
 		<year>1990</year>
@@ -852,6 +950,13 @@
 		<rom name="mpr-12654f.ic1" size="262144" crc="e2f7193e"/>
 		<driver status="good"/>
 	</game>
+	<game name="deepduckc" cloneof="deepduck" romof="deepduck">
+		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="deep duck trouble starring donald duck (euro, bra) - castellano v1.0.sms" size="524288" crc="35c391e1"/>
+		<driver status="good"/>
+	</game>
 	<game name="deepduck">
 		<description>Deep Duck Trouble Starring Donald Duck (Euro, Bra)</description>
 		<year>1993</year>
@@ -887,11 +992,25 @@
 		<rom name="dinobasher starring bignose the caveman (europe) (proto).bin" size="262144" crc="ea5c3a6f"/>
 		<driver status="good"/>
 	</game>
+	<game name="aladdinc" cloneof="aladdin" romof="aladdin">
+		<description>Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="disney's aladdin (euro, bra, kor) - castellano v1.0.sms" size="524288" crc="fcdc7ccf"/>
+		<driver status="good"/>
+	</game>
 	<game name="aladdin">
 		<description>Disney's Aladdin (Euro, Bra, Kor)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (europe).bin" size="524288" crc="c8718d40"/>
+		<driver status="good"/>
+	</game>
+	<game name="arielc" cloneof="ariel" romof="ariel">
+		<description>Disney's Ariel The Little Mermaid (Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="disney's ariel the little mermaid (bra) - castellano v1.0.sms" size="262144" crc="7930398d"/>
 		<driver status="good"/>
 	</game>
 	<game name="ariel">
@@ -906,6 +1025,13 @@
 		<year>1994</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="bonkers wax up! (brazil).bin" size="524288" crc="b3768a7a"/>
+		<driver status="good"/>
+	</game>
+	<game name="lionkingc" cloneof="lionking" romof="lionking">
+		<description>Disney's The Lion King (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="disney's the lion king (euro, bra) - castellano v1.0.sms" size="524288" crc="05174983"/>
 		<driver status="good"/>
 	</game>
 	<game name="lionking">
@@ -990,6 +1116,13 @@
 		<year>1994</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="dragon - the bruce lee story (europe).bin" size="262144" crc="c88a5064"/>
+		<driver status="good"/>
+	</game>
+	<game name="dcrystalc" cloneof="dcrystal" romof="dcrystal">
+		<description>Dragon Crystal (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="dragon crystal (euro, bra) - castellano v1.0.sms" size="131072" crc="4c77d21f"/>
 		<driver status="good"/>
 	</game>
 	<game name="dcrystal">
@@ -1510,6 +1643,13 @@
 		<rom name="mpr-13166.ic1" size="524288" crc="c08132fb"/>
 		<driver status="good"/>
 	</game>
+	<game name="gaxewarrc" cloneof="gaxewarr" romof="gaxewarr">
+		<description>Golden Axe Warrior (Euro, USA, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="golden axe warrior (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="d5c88c4d"/>
+		<driver status="good"/>
+	</game>
 	<game name="gaxewarr">
 		<description>Golden Axe Warrior (Euro, USA, Bra)</description>
 		<year>1990</year>
@@ -1529,6 +1669,13 @@
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="golfamania (europe) (beta).bin" size="262144" crc="5dabfdc3"/>
+		<driver status="good"/>
+	</game>
+	<game name="golvellc" cloneof="golvell" romof="golvell">
+		<description>Golvellius (Euro, USA) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="golvellius (euro, usa) - castellano v1.0.sms" size="262144" crc="15fae765"/>
 		<driver status="good"/>
 	</game>
 	<game name="golvell">
@@ -1741,6 +1888,13 @@
 		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
 		<driver status="good"/>
 	</game>
+	<game name="highscc" cloneof="highsc" romof="highsc">
+		<description>High School! Kimengumi (Jpn) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="high school! kimengumi (jpn) - castellano v1.0.sms" size="131072" crc="f12a3bb5"/>
+		<driver status="good"/>
+	</game>
 	<game name="highsc">
 		<description>High School! Kimengumi (Jpn)</description>
 		<year>1986</year>
@@ -1818,6 +1972,13 @@
 		<rom name="impossible mission (europe) (beta).bin" size="131072" crc="71c4ca8f"/>
 		<driver status="good"/>
 	</game>
+	<game name="indycrusc" cloneof="indycrus" romof="indycrus">
+		<description>Indiana Jones and the Last Crusade (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="indiana jones and the last crusade (euro, bra) - castellano v1.0.sms" size="262144" crc="e09b0b0e"/>
+		<driver status="good"/>
+	</game>
 	<game name="indycrus">
 		<description>Indiana Jones and the Last Crusade (Euro, Bra)</description>
 		<year>1990</year>
@@ -1875,7 +2036,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="janggun">
-		<description>Janggun ui Adeul (Kor)</description>
+		<description>Janggun-ui Adeul (Kor)</description>
 		<year>1992</year>
 		<manufacturer>Daou Infosys</manufacturer>
 		<rom name="janggun ui adeul (kr).bin" size="524288" crc="192949d5"/>
@@ -1944,6 +2105,13 @@
 		<rom name="knightmare ii - the maze of galious [kr].bin" size="131072" crc="f89af3cc"/>
 		<driver status="good"/>
 	</game>
+	<game name="krustyfhc" cloneof="krustyfh" romof="krustyfh">
+		<description>Krusty's Fun House (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="krusty's fun house (euro, bra) - castellano v1.0.sms" size="262144" crc="c7565a76"/>
+		<driver status="good"/>
+	</game>
 	<game name="krustyfh">
 		<description>Krusty's Fun House (Euro, Bra)</description>
 		<year>1992</year>
@@ -1984,6 +2152,13 @@
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="laser ghost (europe).bin" size="262144" crc="0ca95637"/>
+		<driver status="good"/>
+	</game>
+	<game name="legndillc" cloneof="legndill" romof="legndill">
+		<description>Legend of Illusion Starring Mickey Mouse (Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="legend of illusion starring mickey mouse (bra)- castellano v1.0.sms" size="524288" crc="611f2597"/>
 		<driver status="good"/>
 	</game>
 	<game name="legndill">
@@ -2119,6 +2294,13 @@
 		<rom name="mpr-10157f.ic2" size="131072" crc="e8215c2e"/>
 		<driver status="good"/>
 	</game>
+	<game name="mastdarkc" cloneof="mastdark" romof="mastdark">
+		<description>Master of Darkness (Euro, Bra) - Castellano v1.2 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="master of darkness (euro, bra) - castellano v1.2.sms" size="262144" crc="bda42f09"/>
+		<driver status="good"/>
+	</game>
 	<game name="mastdark">
 		<description>Master of Darkness (Euro, Bra)</description>
 		<year>1992</year>
@@ -2194,6 +2376,13 @@
 		<year>1994</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="micro machines (europe).bin" size="262144" crc="a577ce46"/>
+		<driver status="good"/>
+	</game>
+	<game name="miraclec" cloneof="miracle" romof="miracle">
+		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="miracle warriors - seal of the dark lord (euro, usa, bra) - castellano v1.0.sms" size="262144" crc="7e3f6a4c"/>
 		<driver status="good"/>
 	</game>
 	<game name="miracle">
@@ -2602,6 +2791,13 @@
 		<rom name="predator 2 (europe).bin" size="262144" crc="0047b615"/>
 		<driver status="good"/>
 	</game>
+	<game name="ppersiac" cloneof="ppersia" romof="ppersia">
+		<description>Prince of Persia (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="prince of persia (euro, bra) - castellano v1.0.sms" size="262144" crc="85e5065b"/>
+		<driver status="good"/>
+	</game>
 	<game name="ppersia">
 		<description>Prince of Persia (Euro, Bra)</description>
 		<year>1992</year>
@@ -2945,6 +3141,13 @@
 		<rom name="shadow dancer (europe).bin" size="524288" crc="3793c01a"/>
 		<driver status="good"/>
 	</game>
+	<game name="beastc" cloneof="beast" romof="beast">
+		<description>Shadow of the Beast (Euro, Bra) - Castellano v1.12a [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="shadow of the beast (euro, bra) - castellano v1.12a.sms" size="262144" crc="3e255ddb"/>
+		<driver status="good"/>
+	</game>
 	<game name="beast">
 		<description>Shadow of the Beast (Euro, Bra)</description>
 		<year>1991</year>
@@ -3190,6 +3393,13 @@
 		<rom name="speedball 2 (europe).bin" size="262144" crc="0c7366a0"/>
 		<driver status="good"/>
 	</game>
+	<game name="spellcstc" cloneof="spellcst" romof="spellcst">
+		<description>SpellCaster (Euro, USA, Bra) - Castellano v0,99 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="spellcaster (euro, usa, bra) - castellano v0,99.sms" size="524288" crc="32b31c6e"/>
+		<driver status="good"/>
+	</game>
 	<game name="spellcst">
 		<description>SpellCaster (Euro, USA, Bra)</description>
 		<year>1988</year>
@@ -3244,6 +3454,13 @@
 		<year>1986?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="spy vs spy (tw).bin" size="32768" crc="689f58a2"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
+		<description>Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
 		<driver status="good"/>
 	</game>
 	<game name="spyvsspy">
@@ -3624,6 +3841,13 @@
 		<rom name="tensai bakabon (japan).bin" size="262144" crc="8132ab2c"/>
 		<driver status="good"/>
 	</game>
+	<game name="term2c" cloneof="term2" romof="term2">
+		<description>Terminator 2 - Judgment Day (Euro) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="terminator 2 - judgment day (euro) - castellano v1,0.sms" size="262144" crc="87a3290f"/>
+		<driver status="good"/>
+	</game>
 	<game name="term2">
 		<description>Terminator 2 - Judgment Day (Euro)</description>
 		<year>1993</year>
@@ -3636,6 +3860,13 @@
 		<year>1992</year>
 		<manufacturer>Probe</manufacturer>
 		<rom name="a-team music [proto].bin" size="32768" crc="0eb430ff"/>
+		<driver status="good"/>
+	</game>
+	<game name="addfamc" cloneof="addfam" romof="addfam">
+		<description>The Addams Family (Euro) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="addams family, the (europe) - castellano v1.0.sms" size="262144" crc="dc3ed8dd"/>
 		<driver status="good"/>
 	</game>
 	<game name="addfam">
@@ -3778,6 +4009,20 @@
 		<rom name="mpr-16057.ic1" size="262144" crc="695a9a15"/>
 		<driver status="good"/>
 	</game>
+	<game name="junglec" cloneof="jungle" romof="jungle">
+		<description>The Jungle Book (Euro, Bra) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the jungle book (euro, bra).sms" size="262144" crc="dfa31d13"/>
+		<driver status="good"/>
+	</game>
+	<game name="luckydimc" cloneof="luckydim" romof="luckydim">
+		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the lucky dime caper starring donald duck (euro, bra) - castellano v1.0.sms" size="262144" crc="d285aefa"/>
+		<driver status="good"/>
+	</game>
 	<game name="luckydim">
 		<description>The Lucky Dime Caper Starring Donald Duck (Euro, Bra)</description>
 		<year>1991</year>
@@ -3834,11 +4079,25 @@
 		<rom name="mpr-10749.ic1" size="131072" crc="da9be8f0"/>
 		<driver status="good"/>
 	</game>
+	<game name="bartvssmc" cloneof="bartvssm" romof="bartvssm">
+		<description>The Simpsons - Bart vs. The Space Mutants (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the simpsons - bart vs. the space mutants (euro, bra) - castellano v1.0.sms" size="262144" crc="886e96d9"/>
+		<driver status="good"/>
+	</game>
 	<game name="bartvssm">
 		<description>The Simpsons - Bart vs. The Space Mutants (Euro, Bra)</description>
 		<year>1992</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="simpsons, the - bart vs. the space mutants (europe).bin" size="262144" crc="d1cc08ee"/>
+		<driver status="good"/>
+	</game>
+	<game name="bartvswc" cloneof="bartvsw" romof="bartvsw">
+		<description>The Simpsons - Bart vs. The World (Euro, Bra) - Castellano v1.0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the simpsons - bart vs. the world (euro, bra) - castellano v1.0.sms" size="262144" crc="2d0b87cf"/>
 		<driver status="good"/>
 	</game>
 	<game name="bartvsw">
@@ -3874,6 +4133,13 @@
 		<year>1992</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="terminator, the (brazil).bin" size="262144" crc="e3d5ce9a"/>
+		<driver status="good"/>
+	</game>
+	<game name="termntrc" cloneof="termntr" romof="termntr">
+		<description>The Terminator (Euro) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="the terminator (euro) - castellano v1,0.sms" size="262144" crc="cea55b21"/>
 		<driver status="good"/>
 	</game>
 	<game name="termntr">
@@ -3916,6 +4182,13 @@
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry (europe) (beta).bin" size="262144" crc="0c2fc2de"/>
+		<driver status="good"/>
+	</game>
+	<game name="tomjermvc" cloneof="tomjermv" romof="tomjermv">
+		<description>Tom and Jerry - The Movie (Euro, Bra) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="tom and jerry - the movie (euro, bra) - castellano v1,0.sms" size="262144" crc="8f549d4a"/>
 		<driver status="good"/>
 	</game>
 	<game name="tomjermv">
@@ -4128,11 +4401,25 @@
 		<rom name="super wonder boy (japan).bin" size="131072" crc="e2fcb6f3"/>
 		<driver status="good"/>
 	</game>
+	<game name="wboyc" cloneof="wboy" romof="wboy">
+		<description>Wonder Boy (Euro, USA, Bra, v1) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="wonder boy (euro, usa, bra, v1) - castellano v1,0.sms" size="131072" crc="ce62c859"/>
+		<driver status="good"/>
+	</game>
 	<game name="wboy">
 		<description>Wonder Boy (Euro, USA, Bra, v1)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy (usa, europe).bin" size="131072" crc="73705c02"/>
+		<driver status="good"/>
+	</game>
+	<game name="wboy3c" cloneof="wboy3" romof="wboy3">
+		<description>Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="wonder boy iii - the dragon's trap (euro, usa, kor) - castellano v1,0.sms" size="262144" crc="fed045bf"/>
 		<driver status="good"/>
 	</game>
 	<game name="wboy3">
@@ -4168,6 +4455,13 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy in monster land [proto].bin" size="262144" crc="8312c429"/>
+		<driver status="good"/>
+	</game>
+	<game name="wboymwldc" cloneof="wboymwld" romof="wboymwld">
+		<description>Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0.sms" size="524288" crc="db47ff25"/>
 		<driver status="good"/>
 	</game>
 	<game name="wboymwld">

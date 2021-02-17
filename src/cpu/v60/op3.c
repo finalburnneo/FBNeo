@@ -437,7 +437,6 @@ static UINT32 opTASI(void)
 	return amLength1 + 1;
 }
 
-#if 0
 static UINT32 opCLRTLB(void)
 {
 	modAdd=PC+1;
@@ -450,7 +449,6 @@ static UINT32 opCLRTLB(void)
 
 	return amLength1 + 1;
 }
-#endif
 
 static UINT32 opPOPM(void)
 {
@@ -619,10 +617,8 @@ static UINT32 opGETPSW_1(void) { modM=1; return opGETPSW(); }
 static UINT32 opTASI_0(void) { modM=0; return opTASI(); }
 static UINT32 opTASI_1(void) { modM=1; return opTASI(); }
 
-#if 0 // iq_132 - not used??
 static UINT32 opCLRTLB_0(void) { modM=0; return opCLRTLB(); }
 static UINT32 opCLRTLB_1(void) { modM=1; return opCLRTLB(); }
-#endif
 
 static UINT32 opPOPM_0(void) { modM=0; return opPOPM(); }
 static UINT32 opPOPM_1(void) { modM=1; return opPOPM(); }

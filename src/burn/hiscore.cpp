@@ -279,7 +279,7 @@ void HiscoreInit()
 
 		// no hiscore entry for this game in hiscore.dat, and the game is a clone (probably a hack)
 		// let's try using parent entry as a fallback, the success rate seems reasonably good
-		if ((BurnDrvGetFlags() & BDF_CLONE) && HiscoresInUse == 0) {
+		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetTextA(DRV_PARENT) && HiscoresInUse == 0) {
 			fseek(fp, 0, SEEK_SET);
 			HiscoreSearch(fp, BurnDrvGetTextA(DRV_PARENT));
 		}

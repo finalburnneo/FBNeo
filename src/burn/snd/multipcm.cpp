@@ -118,6 +118,7 @@ struct multi_chip {
 	float Rate;
 	unsigned int ARStep[0x40], DRStep[0x40]; //Envelope step table
 	unsigned int FNS_Table[0x400];      //Frequency step table
+	int mono;
 };
 
 // dink was here! feb 2020
@@ -602,6 +603,11 @@ void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 	MultiPCMReset();
 }
 
+void MultiPCMSetMono(INT32 ismono)
+{
+	chip.mono = (ismono) ? 1 : 0;
+}
+
 //-------------------------------------------------
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
@@ -661,6 +667,11 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 				smpr+=(RPANTABLE[vol]*sample)>>SHIFT;
 			}
 		}
+
+		if (chip.mono) {
+			smpl = smpr = (smpl + smpr);
+		}
+
 		*lmix++ = BURN_SND_CLIP(smpl);
 		*rmix++ = BURN_SND_CLIP(smpr);
 	}

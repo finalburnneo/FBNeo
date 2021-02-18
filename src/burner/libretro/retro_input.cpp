@@ -2644,7 +2644,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 
 void RefreshLightgunCrosshair()
 {
-	for (int i = 0; i < nMaxPlayers; i++)
+	for (int i = 0; i < MAX_GUNS; i++)
 		bBurnGunHide[i] = (bLightgunHideCrosshairEnabled && nDeviceType[i] == RETRO_DEVICE_LIGHTGUN);
 }
 

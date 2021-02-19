@@ -9790,8 +9790,8 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105, China)		| 		| 1999	| IGS		| PolyGameMaster| 					|
-| pgm3in1c100	|   NW	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
-| pgm3in1	|   NW	| Photo Y2K 2 (3-in-1, V102, China)			| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
+| pgm3in1c100	|  	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
+| pgm3in1	|  	| Photo Y2K 2 (3-in-1, V102, China)			| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, China)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|

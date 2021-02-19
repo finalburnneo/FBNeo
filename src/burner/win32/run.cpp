@@ -640,7 +640,7 @@ int RunMessageLoop()
 								}
 								break;
 							}
-							case 'T': {
+							case VK_OEM_2: {
 								if (kNetGame && hwndChat == NULL) {
 									if (AppMessage(&Msg)) {
 										ActivateChat();

@@ -4512,7 +4512,7 @@ struct BurnDriver BurnDrvPgm3in1 = {
 	"pgm3in1", NULL, "pgm", NULL, "2001",
 	"Photo Y2K 2 (3-in-1, V102, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -4549,7 +4549,7 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
 	"pgm3in1c100", "pgm3in1", "pgm", NULL, "2001",
 	"Photo Y2K 2 (3-in-1, V100, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

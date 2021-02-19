@@ -754,6 +754,14 @@ INT32 pgmInit()
 	BurnTimerAttachZet(Z80_FREQ);
 
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;
+    
+    if (strncmp(BurnDrvGetTextA(DRV_NAME), "pgm3in1", 7) == 0) {//load pgm3in1 mask rom and sound rom before pgm3in1's decrypt
+        UINT8 *maskROM = (UINT8 *)malloc(0x200000);
+        BurnLoadRom(maskROM,9,1);
+        memcpy((void *)(PGMSPRMaskROM + 0xf00000),maskROM,0x100000);
+        free(maskROM);
+        BurnLoadRom(ICSSNDROM + 0x800000,0x0b,1);
+    }
 
 	if (pPgmInitCallback) {
 		pPgmInitCallback();

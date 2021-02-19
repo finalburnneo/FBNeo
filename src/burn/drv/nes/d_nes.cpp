@@ -17245,6 +17245,44 @@ struct BurnDriver BurnDrvnes_dai2jisuprotajc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Grand Master (T-Chi, v1.1)
+// Translation by Han Hua Ni Mei Team - THIRTEEN, 姜维第二
+static struct BurnRomInfo nes_grandmastercRomDesc[] = {
+	{ "Grand Master (T-Chi, v1.1).nes",          1048592, 0x505d11c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_grandmasterc)
+STD_ROM_FN(nes_grandmasterc)
+
+struct BurnDriver BurnDrvnes_grandmasterc = {
+	"nes_grandmasterc", "nes_grandmaster", NULL, NULL, "2021-01-01",
+	"Grand Master (T-Chi, v1.1)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_grandmastercRomInfo, nes_grandmastercRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)
+// Translation by Han Hua Ni Mei Team - 惊风, 空气, 火光 & goner 
+static struct BurnRomInfo nes_nekkestrbascRomDesc[] = {
+	{ "nekketsu! street basket - ganbare dunk heroes (T-Chi, v2).nes",          524304, 0x8f359b4f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkestrbasc)
+STD_ROM_FN(nes_nekkestrbasc)
+
+struct BurnDriver BurnDrvnes_nekkestrbasc = {
+	"nes_nekkestrbasc", "nes_nekkestrbas", NULL, NULL, "2020-10-05",
+	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Chi, v2)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nekkestrbascRomInfo, nes_nekkestrbascRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 // END of "Non Homebrew (hand-added!)"
 

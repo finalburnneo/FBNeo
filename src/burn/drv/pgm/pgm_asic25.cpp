@@ -763,7 +763,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 			UINT8 taboff = ((x*2)+extraoffset) & 0xff;
 			UINT16 extraxor = ((dectable[taboff+0]) << 8) | (dectable[taboff+1] << 0);
 
-//			dat2 = ((dat2 & 0x00ff)<<8) | ((dat2 & 0xff00)>>8);
+			// dat2 = ((dat2 & 0x00ff)<<8) | ((dat2 & 0xff00)>>8);
 
 			if (mode==4)
 			{

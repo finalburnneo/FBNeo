@@ -254,6 +254,6 @@ static UINT32 (*const OpCodeTable[256])(void) =
 	/* 0xfb */ opRETIS_1,
 	/* 0xfc */ opSTTASK_0,
 	/* 0xfd */ opSTTASK_1,
-	/* 0xfe */ opUNHANDLED,
-	/* 0xff */ opUNHANDLED,
+	/* 0xfe */ opCLRTLB_0,
+	/* 0xff */ opCLRTLB_1,
 };

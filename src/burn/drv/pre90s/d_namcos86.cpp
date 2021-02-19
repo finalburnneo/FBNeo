@@ -2030,7 +2030,7 @@ struct BurnDriver BurnDrvRthunder = {
 	"rthunder", NULL, NULL, NULL, "1986",
 	"Rolling Thunder (rev 3)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, rthunderRomInfo, rthunderRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RthunderDIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -2309,7 +2309,7 @@ struct BurnDriver BurnDrvWndrmomo = {
 	"wndrmomo", NULL, NULL, NULL, "1987",
 	"Wonder Momo\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, wndrmomoRomInfo, wndrmomoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, WndrmomoDIPInfo,
 	WndrmomoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3

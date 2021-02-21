@@ -26389,6 +26389,40 @@ struct BurnDriver BurnDrvnes_explodingfist = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_f1heroRomDesc[] = {
+	{ "F-1 Hero (Japan).nes",          262160, 0xab82d025, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_f1hero)
+STD_ROM_FN(nes_f1hero)
+
+struct BurnDriver BurnDrvnes_f1hero = {
+	"nes_f1hero", NULL, NULL, NULL, "1988",
+	"F-1 Hero (Japan)\0", NULL, "Varie", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_f1heroRomInfo, nes_f1heroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_f1hero2RomDesc[] = {
+	{ "F-1 Hero 2 (Japan).nes",          262160, 0x36b9506d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_f1hero2)
+STD_ROM_FN(nes_f1hero2)
+
+struct BurnDriver BurnDrvnes_f1hero2 = {
+	"nes_f1hero2", NULL, NULL, NULL, "1991",
+	"F-1 Hero 2 (Japan)\0", NULL, "Varie", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_f1hero2RomInfo, nes_f1hero2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_f1raceRomDesc[] = {
 	{ "F-1 Race (Japan).nes",          24592, 0x827dc0b9, BRF_ESS | BRF_PRG },
 };
@@ -34787,6 +34821,23 @@ struct BurnDriver BurnDrvnes_nantebas = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_napoleonsenkiRomDesc[] = {
+	{ "Napoleon Senki (Japan).nes",          163856, 0x9fea33c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_napoleonsenki)
+STD_ROM_FN(nes_napoleonsenki)
+
+struct BurnDriver BurnDrvnes_napoleonsenki = {
+	"nes_napoleonsenki", NULL, NULL, NULL, "1988",
+	"Napoleon Senki (Japan)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_napoleonsenkiRomInfo, nes_napoleonsenkiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_narcRomDesc[] = {
 	{ "NARC (USA).nes",          131088, 0xf5985a75, BRF_ESS | BRF_PRG },
 };
@@ -39186,6 +39237,40 @@ struct BurnDriver BurnDrvnes_spyvsspy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_spyvsspyRomInfo, nes_spyvsspyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spyvsspyislcajRomDesc[] = {
+	{ "Spy vs Spy - The Island Caper (Japan).nes",          131088, 0x23dff27d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spyvsspyislcaj)
+STD_ROM_FN(nes_spyvsspyislcaj)
+
+struct BurnDriver BurnDrvnes_spyvsspyislcaj = {
+	"nes_spyvsspyislcaj", "nes_spyvsspyislca", NULL, NULL, "1987",
+	"Spy vs Spy - The Island Caper (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_spyvsspyislcajRomInfo, nes_spyvsspyislcajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spyvsspyislcaRomDesc[] = {
+	{ "Spy vs Spy - The Island Caper (T-Eng).nes",          131088, 0xf9e51c93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spyvsspyislca)
+STD_ROM_FN(nes_spyvsspyislca)
+
+struct BurnDriver BurnDrvnes_spyvsspyislca = {
+	"nes_spyvsspyislca", NULL, NULL, NULL, "1989?",
+	"Spy vs Spy - The Island Caper (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_spyvsspyislcaRomInfo, nes_spyvsspyislcaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43779,4 +43864,3 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
-

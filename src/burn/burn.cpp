@@ -591,6 +591,28 @@ extern "C" INT32 BurnDrvGetFamilyFlags()
 	return pDriver[nBurnDrvActive]->Family;
 }
 
+// Save Aspect & Screensize in BurnDrvInit(), restore in BurnDrvExit()
+// .. as games may need to change modes, etc.
+static INT32 DrvAspectX, DrvAspectY;
+static INT32 DrvX, DrvY;
+static INT32 DrvCached = 0;
+
+static void BurnCacheSizeAspect_Internal()
+{
+	BurnDrvGetVisibleSize(&DrvX, &DrvY);
+	BurnDrvGetAspect(&DrvAspectX, &DrvAspectY);
+	DrvCached = 1;
+}
+
+static void BurnRestoreSizeAspect_Internal()
+{
+	if (DrvCached) {
+		BurnDrvSetVisibleSize(DrvX, DrvY);
+		BurnDrvSetAspect(DrvAspectX, DrvAspectY);
+		DrvCached = 0;
+	}
+}
+
 // Init game emulation (loading any needed roms)
 extern "C" INT32 BurnDrvInit()
 {
@@ -642,6 +664,8 @@ extern "C" INT32 BurnDrvInit()
 #endif
 
 	BurnSetRefreshRate(60.0);
+
+	BurnCacheSizeAspect_Internal();
 
 	CheatInit();
 	HiscoreInit();
@@ -701,6 +725,8 @@ extern "C" INT32 BurnDrvExit()
 #if defined FBNEO_DEBUG
 	DebugTrackerExit();
 #endif
+
+	BurnRestoreSizeAspect_Internal();
 
 	return nRet;
 }

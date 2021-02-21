@@ -669,11 +669,11 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 		}
 
 		if (chip.mono) {
-			smpl = smpr = (smpl + smpr);
+			smpl = smpr;
 		}
 
-		*lmix++ = BURN_SND_CLIP(smpl);
-		*rmix++ = BURN_SND_CLIP(smpr);
+		*lmix++ = BURN_SND_CLIP(smpr); // why are these swapped??
+		*rmix++ = BURN_SND_CLIP(smpl);
 	}
 
 	// ghetto-tek resampler, #1 in the hood, g!

@@ -50,7 +50,9 @@ static void YM2612Render(INT32 nSegmentLength)
 	}
 
 	nSegmentLength -= nYM2612Position;
-	
+
+	if (nSegmentLength < 0) return;
+
 	pYM2612Buffer[0] = pBuffer + 0 * 4096 + 4 + nYM2612Position;
 	pYM2612Buffer[1] = pBuffer + 1 * 4096 + 4 + nYM2612Position;
 

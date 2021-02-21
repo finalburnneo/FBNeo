@@ -52,7 +52,7 @@ static struct BurnInputInfo pgmInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&PgmReset,		"reset"		},
 	{"Diagnostics 1",	BIT_DIGITAL,	PgmBtn1 + 4,	"diag"		},
-	{"Diagnostics 2",	BIT_DIGITAL,	PgmBtn1 + 6,	"diag"		},
+	{"Diagnostics 2",	BIT_DIGITAL,	PgmBtn1 + 6,	"diag2"		},
 	{"Service 1",		BIT_DIGITAL,	PgmBtn1 + 5,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	PgmBtn1 + 7,	"service2"	},
 

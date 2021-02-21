@@ -54,20 +54,20 @@ static INT32 watchdog;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo ChqflagInputList[] = {
-	{"P1 Coin",     BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Coin",     	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",    	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 
-	A("P1 Wheel",       BIT_ANALOG_REL, &AnalogPort0, "p1 x-axis"),
-	A("P1 Accelerator", BIT_ANALOG_REL, &AnalogPort1, "p1 fire 1"),
+	A("P1 Wheel",       BIT_ANALOG_REL, &AnalogPort0,	"p1 x-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &AnalogPort1,	"p1 fire 1"),
 
-	{"P1 Button 1", BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
-	{"P1 Button 2", BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
+	{"P1 Brake", 		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
+	{"P1 Shift", 		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Chqflag)
@@ -75,11 +75,11 @@ STDINPUTINFO(Chqflag)
 
 static struct BurnDIPInfo ChqflagDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0xff, NULL			},
-	{0x09, 0xff, 0xff, 0x5f, NULL			},
-	{0x0a, 0xff, 0xff, 0xe0, NULL			},
+	{0x08, 0xff, 0xff, 0xff, NULL					},
+	{0x09, 0xff, 0xff, 0x5f, NULL					},
+	{0x0a, 0xff, 0xff, 0xe0, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
 	{0x08, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x08, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x08, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -95,9 +95,9 @@ static struct BurnDIPInfo ChqflagDIPList[]=
 	{0x08, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
 	{0x08, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
 	{0x08, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x08, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x08, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
 	{0x08, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x08, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x08, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -113,25 +113,25 @@ static struct BurnDIPInfo ChqflagDIPList[]=
 	{0x08, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
 	{0x08, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x08, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x08, 0x01, 0xf0, 0x00, "Invalid"		},
+	{0x08, 0x01, 0xf0, 0x00, "Invalid"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x09, 0x01, 0x60, 0x60, "Easy"			},
-	{0x09, 0x01, 0x60, 0x40, "Normal"		},
-	{0x09, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x09, 0x01, 0x60, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x09, 0x01, 0x60, 0x60, "Easy"					},
+	{0x09, 0x01, 0x60, 0x40, "Normal"				},
+	{0x09, 0x01, 0x60, 0x20, "Difficult"			},
+	{0x09, 0x01, 0x60, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x09, 0x01, 0x80, 0x80, "Off"			},
-	{0x09, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x09, 0x01, 0x80, 0x80, "Off"					},
+	{0x09, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Title"		},
-	{0x0a, 0x01, 0x40, 0x40, "Chequered Flag"	},
-	{0x0a, 0x01, 0x40, 0x00, "Checkered Flag"	},
+	{0   , 0xfe, 0   ,    2, "Title"				},
+	{0x0a, 0x01, 0x40, 0x40, "Chequered Flag"		},
+	{0x0a, 0x01, 0x40, 0x00, "Checkered Flag"		},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0a, 0x01, 0x80, 0x80, "Off"			},
-	{0x0a, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0a, 0x01, 0x80, 0x80, "Off"					},
+	{0x0a, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Chqflag)
@@ -239,7 +239,7 @@ static inline UINT8 analog_port_read()
 	switch (analog_ctrl)
 	{
 		case 0x00: {
-			accelerator = ProcessAnalog(AnalogPort1, 0, INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL | INPUT_LINEAR, 0x01, 0xff);
+			accelerator = ProcessAnalog(AnalogPort1, 0, INPUT_DEADZONE | INPUT_MIGHTBEDIGITAL | INPUT_LINEAR, 0x00, 0xff);
 			return accelerator;
 		}
 		case 0x01: {
@@ -458,8 +458,8 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x100000;
 	DrvGfxROM1		= Next; Next += 0x020000;
 	DrvGfxROM2		= Next; Next += 0x100000;
-	DrvGfxROMExp0		= Next; Next += 0x200000;
-	DrvGfxROMExp1		= Next; Next += 0x040000;
+	DrvGfxROMExp0	= Next; Next += 0x200000;
+	DrvGfxROMExp1	= Next; Next += 0x040000;
 
 	DrvSndROM0		= Next; Next += 0x080000;
 	DrvSndROM1		= Next; Next += 0x080000;
@@ -671,11 +671,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
+		CPU_RUN(0, konami);
+		CPU_RUN(1, Zet);
 
 		if ((i&0xf)==0 && nNmiEnable) konamiSetIrqLine(0x20, CPU_IRQSTATUS_ACK); // iq_132 fix me!
 		if (i == 120 && K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_ACK);

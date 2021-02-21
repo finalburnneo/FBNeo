@@ -20454,39 +20454,38 @@ struct BurnDriver BurnDrvNblktiger = {
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x100000, 0x759b68d3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p1.bin",    0x100000, 0x3ab0b686, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p2.bin",    0x100000, 0x258909d5, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
-	{ "teot-s1.bin",    0x020000, 0xa545b593, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "teot-s1.bin",    0x020000, 0xa545b593, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "teot-c1.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  2 Sprite data
-	{ "teot-c2.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //  3
+	{ "teot-c1.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "teot-c2.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //  4
 #if 0
-	{ "teot-c3.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  Duplicate Sprite data files
-	{ "teot-c4.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
-	{ "teot-c5.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  
-	{ "teot-c6.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
-	{ "teot-c7.bin",    0x800000, 0x76b8e9ae, 3 | BRF_GRA },           //  
-	{ "teot-c8.bin",    0x800000, 0xb0c6b4d0, 3 | BRF_GRA },           //
+	{ "teot-c3.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  Duplicate Sprite data files
+	{ "teot-c4.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
+	{ "teot-c5.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  
+	{ "teot-c6.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
+	{ "teot-c7.bin",    0x800000, 0x94080cf2, 3 | BRF_GRA },           //  
+	{ "teot-c8.bin",    0x800000, 0xfb5116b6, 3 | BRF_GRA },           //
 #endif
 
-	{ "teot-m1.bin",    0x010000, 0x2b5738dc, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "teot-m1.bin",    0x010000, 0x62bd5336, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "teot-v1.bin",    0x100000, 0xac261416, 5 | BRF_SND },           //  5 Sound data
-	{ "teot-v2.bin",    0x100000, 0x95ea979a, 5 | BRF_SND },           //  6
-	{ "teot-v3.bin",    0x100000, 0x493223d3, 5 | BRF_SND },           //  7
-	{ "teot-v4.bin",    0x100000, 0xfbf00c96, 5 | BRF_SND },           //  8
-	{ "teot-v5.bin",    0x100000, 0x9b2031d4, 5 | BRF_SND },           //  9
-	{ "teot-v6.bin",    0x100000, 0x107cfc89, 5 | BRF_SND },           // 10
-	{ "teot-v7.bin",    0x100000, 0x0703b761, 5 | BRF_SND },           // 11
-	{ "teot-v8.bin",    0x100000, 0x8d525588, 5 | BRF_SND },           // 12
-	{ "teot-v9.bin",    0x100000, 0x97f073b6, 5 | BRF_SND },           // 13
+	{ "teot-v1.bin",    0x100000, 0xa0906304, 5 | BRF_SND },           //  6 Sound data
+	{ "teot-v2.bin",    0x100000, 0xc5e10c1a, 5 | BRF_SND },           //  7
+	{ "teot-v3.bin",    0x100000, 0xcb78034b, 5 | BRF_SND },           //  8
+	{ "teot-v4.bin",    0x100000, 0x4a2d0d6d, 5 | BRF_SND },           //  9
+	{ "teot-v5.bin",    0x100000, 0x51285019, 5 | BRF_SND },           // 10
+	{ "teot-v6.bin",    0x100000, 0x03641f40, 5 | BRF_SND },           // 11
+	{ "teot-v7.bin",    0x100000, 0xe425eff3, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(teot, teot, neogeo)
 STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
-	"teot", NULL, "neogeo", NULL, "2020",
+	"teot", NULL, "neogeo", NULL, "2021",
 	"The Eye of Typhoon Demo\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,

@@ -204,6 +204,11 @@ static void set_shift_draw_position()
 	}
 }
 
+void BurnShiftScreenSizeChanged()
+{
+	set_shift_draw_position();
+}
+
 void BurnShiftSetFlipscreen(INT32 flip)
 {
 #if defined FBNEO_DEBUG

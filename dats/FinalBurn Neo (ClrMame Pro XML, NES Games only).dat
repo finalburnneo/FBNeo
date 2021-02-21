@@ -3561,6 +3561,20 @@
 		<rom name="Exploding Fist (USA, Prototype).nes" size="65552" crc="c52ea831"/>
 		<driver status="good"/>
 	</game>
+	<game name="f1hero">
+		<description>F-1 Hero (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Varie</manufacturer>
+		<rom name="F-1 Hero (Japan).nes" size="262160" crc="ab82d025"/>
+		<driver status="good"/>
+	</game>
+	<game name="f1hero2">
+		<description>F-1 Hero 2 (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Varie</manufacturer>
+		<rom name="F-1 Hero 2 (Japan).nes" size="262160" crc="36b9506d"/>
+		<driver status="good"/>
+	</game>
 	<game name="f1race">
 		<description>F-1 Race (Japan)</description>
 		<year>1984</year>
@@ -7789,6 +7803,13 @@
 		<rom name="Nantettatte!! Baseball (T-eng).nes" size="262160" crc="294713b4"/>
 		<driver status="good"/>
 	</game>
+	<game name="napoleonsenki">
+		<description>Napoleon Senki (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Irem</manufacturer>
+		<rom name="Napoleon Senki (Japan).nes" size="163856" crc="9fea33c2"/>
+		<driver status="good"/>
+	</game>
 	<game name="narc">
 		<description>NARC (USA)</description>
 		<year>1990</year>
@@ -10139,6 +10160,20 @@
 		<year>1988</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="Spy vs Spy (USA).nes" size="40976" crc="23d23dcc"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspyislcaj" cloneof="spyvsspyislca" romof="spyvsspyislca">
+		<description>Spy vs Spy - The Island Caper (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Kemco</manufacturer>
+		<rom name="Spy vs Spy - The Island Caper (Japan).nes" size="131088" crc="23dff27d"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspyislca">
+		<description>Spy vs Spy - The Island Caper (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Spy vs Spy - The Island Caper (T-Eng).nes" size="131088" crc="f9e51c93"/>
 		<driver status="good"/>
 	</game>
 	<game name="sqoon">

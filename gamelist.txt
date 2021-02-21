@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16269 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16274 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -4236,6 +4236,8 @@ This list contains all games supported by FinalBurn Neo.
 | f1gpa		|  	| F-1 Grand Prix (set 2)				| f1gp		| 1991	| Video System C| Miscellaneous	| 					|
 | f1gp2		|  	| F-1 Grand Prix Part II				| 		| 1992	| Video System C| Miscellaneous	| 					|
 | f1gpstr2	|  	| F-1 Grand Prix Star II				| 		| 1993	| Jaleco	| Miscellaneous	| 					|
+| nes_f1hero	|  	| F-1 Hero (Japan)					| 		| 1988	| Varie		| Miscellaneous	| 					|
+| nes_f1hero2	|  	| F-1 Hero 2 (Japan)					| 		| 1991	| Varie		| Miscellaneous	| 					|
 | pce_f1pilot	|  	| F-1 Pilot - You're King of Kings			| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
 | nes_f1race	|  	| F-1 Race (Japan)					| 		| 1984	| Nintendo	| Miscellaneous	| 					|
 | nes_f1sensation|  	| F-1 Sensation (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -8709,6 +8711,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nantebasj	|  	| Nantettatte!! Baseball (Japan)			| nes_nantebas	| 1990	| Sunsoft	| Miscellaneous	| 					|
 | nes_nantebas	|  	| Nantettatte!! Baseball (T-eng)			| 		| 1990	| Sunsoft	| Miscellaneous	| 					|
 | md_smasters	|  	| Naomichi Ozaki no Super Masters (Jpn)			| md_arnoldp	| 1989	| Sega		| Sega Megadrive| 					|
+| nes_napoleonsenki|  	| Napoleon Senki (Japan)				| 		| 1988	| Irem		| Miscellaneous	| 					|
 | pce_blodwolf	|  	| Narazumono Sentai Butai - Bloody Wolf			| 		| 1989	| Data East	| PC Engine	| 					|
 | narc1		|  	| Narc (rev 1.80)					| narc		| 1988	| Williams	| Z Unit	| 					|
 | narc2		|  	| Narc (rev 2.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
@@ -12392,6 +12395,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_spyvsspytw|  	| Spy vs Spy (Tw)					| sms_spyvsspy	| 1986?	| Aaronix	| Sega Master Sy| 					|
 | nes_spyvsspyc	|  	| Spy Vs Spy (USA) - Castellano v1.0			| nes_spyvsspy	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_spyvsspy	|  	| Spy vs Spy (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
+| nes_spyvsspyislcaj|  	| Spy vs Spy - The Island Caper (Japan)			| nes_spyvsspyislca| 1987	| Kemco		| Miscellaneous	| 					|
+| nes_spyvsspyislca|  	| Spy vs Spy - The Island Caper (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_spyvspy2	|  	| Spy vs Spy II - The Island Caper (48K)		| 		| 1987	| Databyte	| ZX Spectrum	| 					|
 | msx_spyvssp2	|  	| Spy vs Spy II - The Island Caper (Euro)		| 		| 1987	| Databyte	| MSX		| 					|
 | spec_spyvspy3	|  	| Spy vs Spy III - Arctic Antics (48K)			| 		| 1988	| Databyte	| ZX Spectrum	| 					|

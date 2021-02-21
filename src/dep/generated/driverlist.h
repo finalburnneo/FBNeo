@@ -4298,6 +4298,8 @@ DRV		BurnDrvF1gp;
 DRV		BurnDrvF1gpa;
 DRV		BurnDrvF1gp2;
 DRV		BurnDrvF1gpstr2;
+DRV		BurnDrvnes_f1hero;
+DRV		BurnDrvnes_f1hero2;
 DRV		BurnDrvpce_f1pilot;
 DRV		BurnDrvnes_f1race;
 DRV		BurnDrvnes_f1sensation;
@@ -8837,6 +8839,7 @@ DRV		BurnDrvpce_nantet;
 DRV		BurnDrvnes_nantebasj;
 DRV		BurnDrvnes_nantebas;
 DRV		BurnDrvmd_smasters;
+DRV		BurnDrvnes_napoleonsenki;
 DRV		BurnDrvpce_blodwolf;
 DRV		BurnDrvNarc1;
 DRV		BurnDrvNarc2;
@@ -12572,6 +12575,8 @@ DRV		BurnDrvsms_spyvsspyk;
 DRV		BurnDrvsms_spyvsspytw;
 DRV		BurnDrvnes_spyvsspyc;
 DRV		BurnDrvnes_spyvsspy;
+DRV		BurnDrvnes_spyvsspyislcaj;
+DRV		BurnDrvnes_spyvsspyislca;
 DRV		BurnSpecspyvspy2;
 DRV		BurnDrvMSX_spyvssp2;
 DRV		BurnSpecspyvspy3;
@@ -20822,6 +20827,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvF1gpa,				// F-1 Grand Prix (set 2)
 	&BurnDrvF1gp2,				// F-1 Grand Prix Part II
 	&BurnDrvF1gpstr2,			// F-1 Grand Prix Star II
+	&BurnDrvnes_f1hero,			// F-1 Hero (Japan)
+	&BurnDrvnes_f1hero2,		// F-1 Hero 2 (Japan)
 	&BurnDrvpce_f1pilot,		// F-1 Pilot - You're King of Kings
 	&BurnDrvnes_f1race,			// F-1 Race (Japan)
 	&BurnDrvnes_f1sensation,	// F-1 Sensation (Japan)
@@ -25361,6 +25368,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nantebasj,		// Nantettatte!! Baseball (Japan)
 	&BurnDrvnes_nantebas,		// Nantettatte!! Baseball (T-eng)
 	&BurnDrvmd_smasters,		// Naomichi Ozaki no Super Masters (Jpn)
+	&BurnDrvnes_napoleonsenki,	// Napoleon Senki (Japan)
 	&BurnDrvpce_blodwolf,		// Narazumono Sentai Butai - Bloody Wolf
 	&BurnDrvNarc1,				// Narc (rev 1.80)
 	&BurnDrvNarc2,				// Narc (rev 2.00)
@@ -29096,6 +29104,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_spyvsspytw,		// Spy vs Spy (Tw)
 	&BurnDrvnes_spyvsspyc,		// Spy Vs Spy (USA) - Castellano v1.0
 	&BurnDrvnes_spyvsspy,		// Spy vs Spy (USA)
+	&BurnDrvnes_spyvsspyislcaj,	// Spy vs Spy - The Island Caper (Japan)
+	&BurnDrvnes_spyvsspyislca,	// Spy vs Spy - The Island Caper (T-Eng)
 	&BurnSpecspyvspy2,			// Spy vs Spy II - The Island Caper (48K)
 	&BurnDrvMSX_spyvssp2,		// Spy vs Spy II - The Island Caper (Euro)
 	&BurnSpecspyvspy3,			// Spy vs Spy III - Arctic Antics (48K)

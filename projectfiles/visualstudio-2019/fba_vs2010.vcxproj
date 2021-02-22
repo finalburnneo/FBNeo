@@ -163,6 +163,7 @@
     <ClInclude Include="..\..\src\burn\hiscore.h" />
     <ClInclude Include="..\..\src\burn\snd\asteroids.h" />
     <ClInclude Include="..\..\src\burn\snd\ay8910.h" />
+    <ClInclude Include="..\..\src\burn\snd\biquad.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_md2612.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_y8950.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ym2151.h" />
@@ -174,11 +175,13 @@
     <ClInclude Include="..\..\src\burn\snd\burn_ym3526.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ym3812.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ymf262.h" />
+    <ClInclude Include="..\..\src\burn\snd\burn_ymf271.h" />
     <ClInclude Include="..\..\src\burn\snd\burn_ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\bzone.h" />
     <ClInclude Include="..\..\src\burn\snd\c140.h" />
     <ClInclude Include="..\..\src\burn\snd\c6280.h" />
     <ClInclude Include="..\..\src\burn\snd\dac.h" />
+    <ClInclude Include="..\..\src\burn\snd\downsample.h" />
     <ClInclude Include="..\..\src\burn\snd\es5506.h" />
     <ClInclude Include="..\..\src\burn\snd\es8712.h" />
     <ClInclude Include="..\..\src\burn\snd\flower.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="..\..\src\burn\snd\msm5205.h" />
     <ClInclude Include="..\..\src\burn\snd\msm5232.h" />
     <ClInclude Include="..\..\src\burn\snd\msm6295.h" />
+    <ClInclude Include="..\..\src\burn\snd\multipcm.h" />
     <ClInclude Include="..\..\src\burn\snd\namco_snd.h" />
     <ClInclude Include="..\..\src\burn\snd\nes_apu.h" />
     <ClInclude Include="..\..\src\burn\snd\nes_defs.h" />
@@ -232,6 +236,7 @@
     <ClInclude Include="..\..\src\burn\snd\ym2612.h" />
     <ClInclude Include="..\..\src\burn\snd\ymdeltat.h" />
     <ClInclude Include="..\..\src\burn\snd\ymf262.h" />
+    <ClInclude Include="..\..\src\burn\snd\ymf271.h" />
     <ClInclude Include="..\..\src\burn\snd\ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\ymz280b.h" />
     <ClInclude Include="..\..\src\burn\state.h" />
@@ -569,6 +574,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_x2222.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />
@@ -581,10 +587,13 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\burn_ymf271.cpp" />
     <ClCompile Include="..\..\src\burn\snd\i5000.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\multipcm.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\t6w28.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\ymf271.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
     <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">

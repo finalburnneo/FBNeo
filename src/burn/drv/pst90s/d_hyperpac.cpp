@@ -733,20 +733,20 @@ STD_ROM_PICK(Hyperpacb)
 STD_ROM_FN(Hyperpacb)
 
 static struct BurnRomInfo Cookbib2RomDesc[] = {
-	{ "unico_02.uh12", 0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "unico_01.ui12", 0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "unico_02.uh12", 	0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico_01.ui12", 	0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
-	{ "unico_05.ua4",  0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
-	{ "unico_04.ua5",  0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
-	{ "unico_03.ua6",  0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
+	{ "unico_05.ua4",  	0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
+	{ "unico_04.ua5",  	0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
+	{ "unico_03.ua6",  	0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
 
-	{ "unico_07.u1",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
+	{ "unico_07.u1",   	0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
 
-	{ "unico_06.uj15", 0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
+	{ "unico_06.uj15", 	0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
 
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+	{ "p87c52ebpn.bin",	0x02000, 0xef042cef, BRF_PRG | BRF_OPT },
 
-	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+	{ "protdata.bin",  	0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -754,20 +754,20 @@ STD_ROM_PICK(Cookbib2)
 STD_ROM_FN(Cookbib2)
 
 static struct BurnRomInfo Cookbib2aRomDesc[] = {
-	{ "unico.uh12",    0x40000, 0x19421631, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "unico.ui12",    0x40000, 0x0d09ecf5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "unico.uh12",    	0x40000, 0x19421631, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico.ui12",    	0x40000, 0x0d09ecf5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
-	{ "unico_05.ua4",  0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
-	{ "unico_04.ua5",  0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
-	{ "unico_03.ua6",  0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
+	{ "unico_05.ua4",  	0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
+	{ "unico_04.ua5",  	0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
+	{ "unico_03.ua6",  	0x40000, 0xe1604821, BRF_GRA },			 //  4	Sprites
 
-	{ "unico_07.u1",   0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
+	{ "unico_07.u1",   	0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
 
-	{ "unico_06.uj15", 0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
+	{ "unico_06.uj15", 	0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
 
-	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+	{ "p87c52ebpn.bin",	0x02000, 0xef042cef, BRF_PRG | BRF_OPT },
 
-	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+	{ "protdata.bin",  	0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 

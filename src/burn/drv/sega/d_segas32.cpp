@@ -3613,12 +3613,6 @@ bail:
 
 static void sprite_render_list()
 {
-	clip_struct cliprect;
-	cliprect.nMiny = 0;
-	cliprect.nMaxx = nScreenWidth - 1;
-	cliprect.nMinx = 0;
-	cliprect.nMaxy = nScreenHeight - 1;
-
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 	clip_struct outerclip, clipin, clipout;
 	INT32 xoffs = 0, yoffs = 0;

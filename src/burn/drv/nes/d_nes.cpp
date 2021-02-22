@@ -17345,10 +17345,10 @@ struct BurnDriver BurnDrvnes_grandmasterjc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// A Ressha de Ikou (T -Eng)
+// A Ressha de Ikou (T-Eng)
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_atrainRomDesc[] = {
-{ "a ressha de ikou (t -eng).nes",          147472, 0xfd7bc532, BRF_ESS | BRF_PRG },
+{ "a ressha de ikou (t-eng).nes",          147472, 0xfd7bc532, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_atrain)
@@ -17356,7 +17356,7 @@ STD_ROM_FN(nes_atrain)
 
 struct BurnDriver BurnDrvnes_atrain = {
 "nes_atrain", NULL, NULL, NULL, "1989 ?",
-"A Ressha de Ikou (T -Eng)\0", NULL, "Nintendo", "Miscellaneous",
+"A Ressha de Ikou (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
 NULL, NULL, NULL, NULL,
 BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
 NESGetZipName, nes_atrainRomInfo, nes_atrainRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

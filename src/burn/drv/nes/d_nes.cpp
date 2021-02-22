@@ -17326,6 +17326,61 @@ struct BurnDriver BurnDrvnes_nekkestrbasc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Grand Master (Japan) (Castellano)
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_grandmasterjcRomDesc[] = {
+	{ "grand master (japan) - castellano.nes",          393232, 0x3ad512ce, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_grandmasterjc)
+STD_ROM_FN(nes_grandmasterjc)
+
+struct BurnDriver BurnDrvnes_grandmasterjc = {
+	"nes_grandmasterjc", "nes_grandmaster", NULL, NULL, "1989 ?",
+	"Grand Master (Japan) - Castellano\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_grandmasterjcRomInfo, nes_grandmasterjcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// A Ressha de Ikou (T-Eng)
+// https://www.romhacking.net/
+static struct BurnRomInfo nes_atrainRomDesc[] = {
+{ "a ressha de ikou (t-eng).nes",          147472, 0xfd7bc532, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_atrain)
+STD_ROM_FN(nes_atrain)
+
+struct BurnDriver BurnDrvnes_atrain = {
+"nes_atrain", NULL, NULL, NULL, "1989 ?",
+"A Ressha de Ikou (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+NULL, NULL, NULL, NULL,
+BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+NESGetZipName, nes_atrainRomInfo, nes_atrainRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// A Ressha de Ikou (Japan)
+static struct BurnRomInfo nes_atrainjRomDesc[] = {
+	{ "a ressha de ikou (japan).nes",          147472, 0x58fe5467, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_atrainj)
+STD_ROM_FN(nes_atrainj)
+
+	struct BurnDriver BurnDrvnes_atrainj = {
+	"nes_atrainj", "nes_atrain", NULL, NULL, "1991",
+	"A Ressha de Ikou (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_atrainjRomInfo, nes_atrainjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // END of "Non Homebrew (hand-added!)"
 

@@ -323,6 +323,7 @@ void UnloadDrvIcons();
 #define		ICON_16x16			0
 #define		ICON_24x24			1
 #define		ICON_32x32			2
+#define     DISABLECRC          (1 << 32)    
 extern bool bEnableIcons;
 extern bool bIconsLoaded;
 extern bool bIconsOnlyParents;

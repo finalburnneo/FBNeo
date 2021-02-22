@@ -496,7 +496,7 @@ int BzipOpen(bool bootApp)
 				if (List[nFind].nLen == ri.nLen) {
 					if (ri.nCrc) {										// If we know the CRC
 						if (List[nFind].nCrc != ri.nCrc) {				// Length okay, but CRC wrong
-							if (!(nLoadMenuShowY & DISABLECRC)) {
+							if (nLoadMenuShowY & DISABLECRC) {
 								ri.nCrc = List[nFind].nCrc;				// disable crc check
 								RomFind[i].nState = 1;
 							} else {

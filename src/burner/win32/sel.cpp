@@ -955,7 +955,7 @@ static void RefreshPanel()
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
 	// Clear the things in our Info-box
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 7; i++) {
 		SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)_T(""));
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
@@ -966,7 +966,7 @@ static void RefreshPanel()
 
 	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKCRC, (nLoadMenuShowY & DISABLECRC) ? BST_UNCHECKED : BST_CHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKCRC, (nLoadMenuShowY & DISABLECRC) ? BST_CHECKED : BST_UNCHECKED);
 }
 
 FILE* OpenPreview(int nIndex, TCHAR* szPath) 
@@ -2117,7 +2117,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 					break;
 				case IDC_SEL_IPSMANAGER:
-					 if (bDrvSelected) {
+					if (bDrvSelected) {
 						int nOldnBurnDrvActive = nBurnDrvActive;
 						IpsManagerCreate(hSelDlg);
 						nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.

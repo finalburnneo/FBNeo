@@ -4159,7 +4159,7 @@ static INT32 MultiScreenCheck()
 	if (screensize != nScreenWidth)
 	{
 		BurnTransferSetDimensions(screensize, 224);
-		GenericTilesSetClipRaw(0, screensize, 0, 224);
+		GenericTilesSetClipRaw(0, 320, 0, 224);
 		//GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
 		if (screensize == 320) {

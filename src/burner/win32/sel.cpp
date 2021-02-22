@@ -61,6 +61,7 @@ static int nDlgUnavailableChbInitialPos[4];
 static int nDlgAlwaysClonesChbInitialPos[4];
 static int nDlgZipnamesChbInitialPos[4];
 static int nDlgLatinTextChbInitialPos[4];
+static int nDlgCrcCheckChbInitialPos[4];
 static int nDlgRomDirsBtnInitialPos[4];
 static int nDlgScanRomsBtnInitialPos[4];
 static int nDlgFilterGrpInitialPos[4];
@@ -367,6 +368,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
 	GetInititalControlPos(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
 	GetInititalControlPos(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+	GetInititalControlPos(IDC_CHECKCRC, nDlgCrcCheckChbInitialPos);
 	GetInititalControlPos(IDROM, nDlgRomDirsBtnInitialPos);
 	GetInititalControlPos(IDRESCAN, nDlgScanRomsBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
@@ -958,15 +960,16 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-    CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowY & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
 	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKCRC, (nLoadMenuShowY & DISABLECRC) ? BST_UNCHECKED : BST_CHECKED);
 }
 
-FILE* OpenPreview(int nIndex, TCHAR *szPath)
+FILE* OpenPreview(int nIndex, TCHAR* szPath) 
 {
 	static bool bTryParent;
 
@@ -2101,6 +2104,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nLoadMenuShowY ^= ASCIIONLY;
 					RebuildEverything();
 					break;
+				case IDC_CHECKCRC:
+					nLoadMenuShowY ^= DISABLECRC;
+					RebuildEverything();
+					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
@@ -2110,17 +2117,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 					break;
 				case IDC_SEL_IPSMANAGER:
-                    if (bDrvSelected) {
-                        int nOldnBurnDrvActive = nBurnDrvActive;
+					 if (bDrvSelected) {
+						int nOldnBurnDrvActive = nBurnDrvActive;
 						IpsManagerCreate(hSelDlg);
-                        nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
+						nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
 						LoadIpsActivePatches();
-						if (GetIpsNumActivePatches()) {
+						if (GetIpsNumActivePatches()) {							
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
 						} else {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 						}
-                        SetFocus(hSelList);
+						SetFocus(hSelList);
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
@@ -2228,6 +2235,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetControlPosAlignTopRight(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
 		SetControlPosAlignTopRight(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
 		SetControlPosAlignTopRight(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+		SetControlPosAlignTopRight(IDC_CHECKCRC, nDlgCrcCheckChbInitialPos);
 		SetControlPosAlignTopRight(IDROM, nDlgRomDirsBtnInitialPos);
 		SetControlPosAlignTopRight(IDRESCAN, nDlgScanRomsBtnInitialPos);
 
@@ -2389,7 +2397,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					TvItem.mask = TVIF_PARAM | TVIF_STATE | TVIF_CHILDREN;
 					SendMessage(hSelList, TVM_GETITEM, 0, (LPARAM)&TvItem);
 
-//					dprintf(_T("  - Item (%i×%i) - (%i×%i) %hs\n"), lplvcd->nmcd.rc.left, lplvcd->nmcd.rc.top, lplvcd->nmcd.rc.right, lplvcd->nmcd.rc.bottom, ((NODEINFO*)TvItem.lParam)->pszROMName);
+					// dprintf(_T("  - Item (%iâ—Š%i) - (%iâ—Š%i) %hs\n"), lplvcd->nmcd.rc.left, lplvcd->nmcd.rc.top, lplvcd->nmcd.rc.right, lplvcd->nmcd.rc.bottom, ((NODEINFO*)TvItem.lParam)->pszROMName);
 
 					// Set the foreground and background colours unless the item is highlighted
 					if (!(TvItem.state & (TVIS_SELECTED | TVIS_DROPHILITED))) {

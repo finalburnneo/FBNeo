@@ -130,11 +130,11 @@ static int FindRom(int i)
 	}
 
 	if (ri.nCrc) {												// Search by crc first
-		nRet = FindRomByCrc(ri.nCrc);
-		if (nRet >= 0) {
-			return nRet;
-		}
+	nRet = FindRomByCrc(ri.nCrc);
+	if (nRet >= 0) {
+		return nRet;
 	}
+}
 
 	for (int nAka = 0; nAka < 0x10000; nAka++) {				// Failing that, search for possible names
 		char *szPossibleName = NULL;
@@ -192,7 +192,6 @@ static int CheckRomsBoot()
 		memset(&ri, 0, sizeof(ri));
 		BurnDrvGetRomInfo(&ri, i);			// Find information about the wanted rom
 		nState = RomFind[i].nState;			// Get the state of the rom in the zip file
-
 		if (nState != 1 && ri.nType && ri.nCrc) {
 			if (!(ri.nType & BRF_OPT) && !(ri.nType & BRF_NODUMP)) {
 				return 1;
@@ -497,7 +496,12 @@ int BzipOpen(bool bootApp)
 				if (List[nFind].nLen == ri.nLen) {
 					if (ri.nCrc) {										// If we know the CRC
 						if (List[nFind].nCrc != ri.nCrc) {				// Length okay, but CRC wrong
-							RomFind[i].nState = 2;
+							if (!(nLoadMenuShowY & DISABLECRC)) {
+								ri.nCrc = List[nFind].nCrc;				// disable crc check
+								RomFind[i].nState = 1;
+							} else {
+								RomFind[i].nState = 2;
+							}
 						}
 					}
 				} else {

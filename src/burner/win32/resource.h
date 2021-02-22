@@ -130,6 +130,7 @@
 #define IDC_TREE1                       	20073
 #define IDC_SEL_SHORTNAME					20074
 #define IDC_SEL_ASCIIONLY					20075
+#define IDC_CHECKCRC                        21160
 #define IDC_LIST1							20076
 #define IDC_SPRITE1                     	20077
 #define IDC_SPRITE2                     	20078

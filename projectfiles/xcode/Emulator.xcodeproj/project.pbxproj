@@ -1024,6 +1024,10 @@
 		FED7CBC325494A6C00193EED /* d_spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B207923561A6B0065200C /* d_spectrum.cpp */; };
 		FEDA8F89235D226F007A4D26 /* FBInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = FEDA8F87235D226E007A4D26 /* FBInput.mm */; };
 		FEDA9E2224C203960060BF0B /* poly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDA9E2024C203950060BF0B /* poly.cpp */; };
+		FEDF04B225E377F300F3EDD9 /* d_segas32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */; };
+		FEDF04B925E3786E00F3EDD9 /* multipcm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B325E3786D00F3EDD9 /* multipcm.cpp */; };
+		FEDF04BA25E3786E00F3EDD9 /* burn_ymf271.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B725E3786D00F3EDD9 /* burn_ymf271.cpp */; };
+		FEDF04BB25E3786E00F3EDD9 /* ymf271.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B825E3786E00F3EDD9 /* ymf271.cpp */; };
 		FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */; };
 		FEE7CC3E242285DC00B311BC /* d_sshangha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */; };
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
@@ -2607,6 +2611,13 @@
 		FEDA8F8E235EB752007A4D26 /* whatsnew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = whatsnew.html; path = ../../whatsnew.html; sourceTree = "<group>"; };
 		FEDA9E2024C203950060BF0B /* poly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poly.cpp; sourceTree = "<group>"; };
 		FEDA9E2124C203950060BF0B /* poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly.h; sourceTree = "<group>"; };
+		FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_segas32.cpp; sourceTree = "<group>"; };
+		FEDF04B325E3786D00F3EDD9 /* multipcm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multipcm.cpp; sourceTree = "<group>"; };
+		FEDF04B425E3786D00F3EDD9 /* burn_ymf271.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burn_ymf271.h; sourceTree = "<group>"; };
+		FEDF04B525E3786D00F3EDD9 /* multipcm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multipcm.h; sourceTree = "<group>"; };
+		FEDF04B625E3786D00F3EDD9 /* ymf271.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ymf271.h; sourceTree = "<group>"; };
+		FEDF04B725E3786D00F3EDD9 /* burn_ymf271.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = burn_ymf271.cpp; sourceTree = "<group>"; };
+		FEDF04B825E3786E00F3EDD9 /* ymf271.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ymf271.cpp; sourceTree = "<group>"; };
 		FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_x2222.cpp; sourceTree = "<group>"; };
 		FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_sshangha.cpp; sourceTree = "<group>"; };
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
@@ -3804,40 +3815,41 @@
 		FE1B1F8123561A690065200C /* sega */ = {
 			isa = PBXGroup;
 			children = (
+				FE1B1F9D23561A690065200C /* d_angelkds.cpp */,
+				FE1B1F9623561A690065200C /* d_appoooh.cpp */,
 				FE1B1F8223561A690065200C /* d_bankp.cpp */,
-				FE1B1F8323561A690065200C /* d_xbrd.cpp */,
+				FE1B1F8923561A690065200C /* d_dotrikun.cpp */,
+				FE1B1F9723561A690065200C /* d_hangon.cpp */,
+				FE1B1F9B23561A690065200C /* d_outrun.cpp */,
+				FE1B1F9123561A690065200C /* d_segae.cpp */,
+				FE1B1F9323561A690065200C /* d_segag80v.cpp */,
+				FEDF04B125E377F300F3EDD9 /* d_segas32.cpp */,
+				FE1B1F9A23561A690065200C /* d_suprloco.cpp */,
+				FE1B1FA023561A690065200C /* d_sys1.cpp */,
+				FE1B1F9923561A690065200C /* d_sys16a.cpp */,
+				FE1B1F9C23561A690065200C /* d_sys16b.cpp */,
 				FE1B1F8423561A690065200C /* d_sys18.cpp */,
 				FE1B1F8523561A690065200C /* d_sys24.cpp */,
-				FE1B1F8623561A690065200C /* sega_315_5195.cpp */,
-				FE1B1F8723561A690065200C /* mc8123.cpp */,
-				FE1B1F8823561A690065200C /* usb_snd.cpp */,
-				FE1B1F8923561A690065200C /* d_dotrikun.cpp */,
-				FE1B1F8A23561A690065200C /* genesis_vid.cpp */,
-				FE1B1F8B23561A690065200C /* fd1094_intf.cpp */,
-				FE1B1F8C23561A690065200C /* sys16_fd1094.cpp */,
 				FE1B1F8D23561A690065200C /* d_turbo.cpp */,
-				FE1B1F8E23561A690065200C /* fd1094.h */,
-				FE1B1F8F23561A690065200C /* fd1094.cpp */,
-				FE1B1F9023561A690065200C /* sys16_run.cpp */,
-				FE1B1F9123561A690065200C /* d_segae.cpp */,
-				FE1B1F9223561A690065200C /* mc8123.h */,
-				FE1B1F9323561A690065200C /* d_segag80v.cpp */,
+				FE1B1F8323561A690065200C /* d_xbrd.cpp */,
 				FE1B1F9423561A690065200C /* d_ybrd.cpp */,
-				FE1B1F9523561A690065200C /* fd1089.cpp */,
-				FE1B1F9623561A690065200C /* d_appoooh.cpp */,
-				FE1B1F9723561A690065200C /* d_hangon.cpp */,
-				FE1B1F9823561A690065200C /* genesis_vid.h */,
-				FE1B1F9923561A690065200C /* d_sys16a.cpp */,
-				FE1B1F9A23561A690065200C /* d_suprloco.cpp */,
-				FE1B1F9B23561A690065200C /* d_outrun.cpp */,
-				FE1B1F9C23561A690065200C /* d_sys16b.cpp */,
-				FE1B1F9D23561A690065200C /* d_angelkds.cpp */,
-				FE1B1F9E23561A690065200C /* fd1094_intf.h */,
-				FE1B1F9F23561A690065200C /* sys16_gfx.cpp */,
-				FE1B1FA023561A690065200C /* d_sys1.cpp */,
-				FE1B1FA123561A690065200C /* sys16.h */,
-				FE1B1FA223561A690065200C /* usb_snd.h */,
 				FE1B1FA323561A690065200C /* d_zaxxon.cpp */,
+				FE1B1F9523561A690065200C /* fd1089.cpp */,
+				FE1B1F8B23561A690065200C /* fd1094_intf.cpp */,
+				FE1B1F9E23561A690065200C /* fd1094_intf.h */,
+				FE1B1F8F23561A690065200C /* fd1094.cpp */,
+				FE1B1F8E23561A690065200C /* fd1094.h */,
+				FE1B1F8A23561A690065200C /* genesis_vid.cpp */,
+				FE1B1F9823561A690065200C /* genesis_vid.h */,
+				FE1B1F8723561A690065200C /* mc8123.cpp */,
+				FE1B1F9223561A690065200C /* mc8123.h */,
+				FE1B1F8623561A690065200C /* sega_315_5195.cpp */,
+				FE1B1F8C23561A690065200C /* sys16_fd1094.cpp */,
+				FE1B1F9F23561A690065200C /* sys16_gfx.cpp */,
+				FE1B1F9023561A690065200C /* sys16_run.cpp */,
+				FE1B1FA123561A690065200C /* sys16.h */,
+				FE1B1F8823561A690065200C /* usb_snd.cpp */,
+				FE1B1FA223561A690065200C /* usb_snd.h */,
 			);
 			path = sega;
 			sourceTree = "<group>";
@@ -4549,6 +4561,8 @@
 				FE1B224E23561A700065200C /* burn_ym3812.h */,
 				FE1B225E23561A700065200C /* burn_ymf262.cpp */,
 				FE1B220A23561A700065200C /* burn_ymf262.h */,
+				FEDF04B725E3786D00F3EDD9 /* burn_ymf271.cpp */,
+				FEDF04B425E3786D00F3EDD9 /* burn_ymf271.h */,
 				FE1B21F323561A6F0065200C /* burn_ymf278b.cpp */,
 				FE1B224623561A700065200C /* burn_ymf278b.h */,
 				FE1B224123561A700065200C /* bzone.cpp */,
@@ -4600,6 +4614,8 @@
 				FE1B21EB23561A6F0065200C /* msm5232.h */,
 				FE1B220023561A700065200C /* msm6295.cpp */,
 				FE1B226023561A700065200C /* msm6295.h */,
+				FEDF04B325E3786D00F3EDD9 /* multipcm.cpp */,
+				FEDF04B525E3786D00F3EDD9 /* multipcm.h */,
 				FE1B221823561A700065200C /* namco_snd.cpp */,
 				FE1B21F123561A6F0065200C /* namco_snd.h */,
 				FE1B222023561A700065200C /* nes_apu.cpp */,
@@ -4662,6 +4678,8 @@
 				FE1B222423561A700065200C /* ymdeltat.h */,
 				FE1B221023561A700065200C /* ymf262.cpp */,
 				FE1B227123561A710065200C /* ymf262.h */,
+				FEDF04B825E3786E00F3EDD9 /* ymf271.cpp */,
+				FEDF04B625E3786D00F3EDD9 /* ymf271.h */,
 				FE1B221723561A700065200C /* ymf278b.c */,
 				FE1B226F23561A710065200C /* ymf278b.h */,
 				FE1B21EC23561A6F0065200C /* ymz280b.cpp */,
@@ -5351,6 +5369,7 @@
 				FEED9DEF2356F5DB00B7AF83 /* neocdlist.cpp in Sources */,
 				FE1B242123561A750065200C /* png.c in Sources */,
 				FEA35F6F246A6E04008938BC /* d_pasha2.cpp in Sources */,
+				FEDF04BB25E3786E00F3EDD9 /* ymf271.cpp in Sources */,
 				FE1B24F823561A760065200C /* d_fuukifg3.cpp in Sources */,
 				FE1B27D423561A790065200C /* 8255ppi.cpp in Sources */,
 				FE1B255123561A760065200C /* d_yunsung8.cpp in Sources */,
@@ -5650,6 +5669,7 @@
 				FE1B261223561A760065200C /* toa_palette.cpp in Sources */,
 				FE1B23ED23561A750065200C /* tlcs90_intf.cpp in Sources */,
 				FE1B266E23561A770065200C /* pc090oj.cpp in Sources */,
+				FEDF04BA25E3786E00F3EDD9 /* burn_ymf271.cpp in Sources */,
 				FE1B267523561A770065200C /* d_retofinv.cpp in Sources */,
 				FE1B250123561A760065200C /* d_speedspn.cpp in Sources */,
 				FE1B264723561A770065200C /* d_chaknpop.cpp in Sources */,
@@ -5678,6 +5698,7 @@
 				FE1B272723561A780065200C /* d_fantland.cpp in Sources */,
 				FE1B264323561A770065200C /* qs_c.cpp in Sources */,
 				FE1B23FC23561A750065200C /* v60.cpp in Sources */,
+				FEDF04B925E3786E00F3EDD9 /* multipcm.cpp in Sources */,
 				FE1B255623561A760065200C /* d_sys24.cpp in Sources */,
 				FE1B240323561A750065200C /* hd6309.cpp in Sources */,
 				FE1B250223561A760065200C /* d_aerofgt.cpp in Sources */,
@@ -6178,6 +6199,7 @@
 				FE1B247B23561A750065200C /* xbr.cpp in Sources */,
 				FE1B251C23561A760065200C /* d_silvmil.cpp in Sources */,
 				FE1B26D423561A780065200C /* d_kingofbox.cpp in Sources */,
+				FEDF04B225E377F300F3EDD9 /* d_segas32.cpp in Sources */,
 				FE1B24E023561A760065200C /* d_arcadecl.cpp in Sources */,
 				FE1B24D623561A750065200C /* d_sailormn.cpp in Sources */,
 				FE1B267023561A770065200C /* d_superchs.cpp in Sources */,

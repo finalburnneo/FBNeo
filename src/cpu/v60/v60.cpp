@@ -3,6 +3,9 @@
 // Main hacking and coding by Farfetch'd
 // Portability fixes by Richter Belmont
 
+// Note: strange things can happen if setting an interrupt in a write
+// handler during an RMW op.  v60RunEnd() then call the irq from frame! -dink feb.2020
+
 #include "burnint.h"
 #include "bitswap.h" // ...xor_le
 #include "driver.h"

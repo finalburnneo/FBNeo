@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16334 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16337 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -156,6 +156,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_dinotale	|  	| A Dinosaur's Tale (USA)				| 		| 1993	| Hi-Tech Expres| Sega Megadrive| 					|
 | msx_m36	|  	| A Life Planet - M36 - Mother Brain has been aliving (J| 		| 1987	| Pixel		| MSX		| 					|
 | msx_anaza	|  	| A Na Za - Kaleidoscope Special (Jpn)			| 		| 1987	| GA-Yume	| MSX		| 					|
+| nes_atrainj	|  	| A Ressha de Ikou (Japan)				| nes_atrain	| 1991	| Pony Canyon	| Miscellaneous	| 					|
+| nes_atrain	|  	| A Ressha de Ikou (T-Eng)				| 		| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | md_aresshmd	|  	| A Ressha de Ikou MD - Take the 'A' Train (Jpn)	| 		| 1992	| Sega		| Sega Megadrive| 					|
 | spec_verysheepyxmas|  	| A Very Sheepy Christmas				| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
 | ablast	|  	| A-Blast (Japan)					| penbros	| 2000	| Subsino	| Newer Seta	| 					|
@@ -1955,7 +1957,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2021-02-04| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2021-02-19| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -5499,6 +5501,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_granada1	|  	| Granada (Jpn, USA)					| md_granada	| 1990	| Renovation ~ W| Sega Megadrive| 					|
 | md_granada	|  	| Granada (Jpn, USA, v1.1)				| 		| 1990	| Renovation ~ W| Sega Megadrive| 					|
 | md_granadap	|  	| Granada (REV01 prototype)				| md_granada	| 1990	| Renovation ~ W| Sega Megadrive| 					|
+| nes_grandmasterjc|  	| Grand Master (Japan) - Castellano			| nes_grandmaster| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_grandmasterj|  	| Grand Master (Japan)					| nes_grandmaster| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_grandmasterc|  	| Grand Master (T-Chi, v1.1)				| nes_grandmaster| 2021-01-01| Nintendo	| Miscellaneous	| 					|
 | nes_grandmaster|  	| Grand Master (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
@@ -13836,7 +13839,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2021-02-01| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2021-02-06| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | nes_tenchwokuriij|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)	| nes_tenchwokurii| 1991	| Capcom	| Miscellaneous	| 					|
 | nes_tenchwokurii|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)	| 		| 1991	| Capcom	| Miscellaneous	| 					|

@@ -158,6 +158,8 @@ DRV		BurnDrvmd_bugslife;
 DRV		BurnDrvmd_dinotale;
 DRV		BurnDrvMSX_m36;
 DRV		BurnDrvMSX_anaza;
+DRV		BurnDrvnes_atrainj;
+DRV		BurnDrvnes_atrain;
 DRV		BurnDrvmd_aresshmd;
 DRV		BurnSpecVerysheepyxmas;
 DRV		BurnDrvAblast;
@@ -5577,6 +5579,7 @@ DRV		BurnDrvmd_granadas;
 DRV		BurnDrvmd_granada1;
 DRV		BurnDrvmd_granada;
 DRV		BurnDrvmd_granadap;
+DRV		BurnDrvnes_grandmasterjc;
 DRV		BurnDrvnes_grandmasterj;
 DRV		BurnDrvnes_grandmasterc;
 DRV		BurnDrvnes_grandmaster;
@@ -16747,6 +16750,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dinotale,		// A Dinosaur's Tale (USA)
 	&BurnDrvMSX_m36,			// A Life Planet - M36 - Mother Brain has been aliving (Jpn)
 	&BurnDrvMSX_anaza,			// A Na Za - Kaleidoscope Special (Jpn)
+	&BurnDrvnes_atrainj,		// A Ressha de Ikou (Japan)
+	&BurnDrvnes_atrain,			// A Ressha de Ikou (T-Eng)
 	&BurnDrvmd_aresshmd,		// A Ressha de Ikou MD - Take the 'A' Train (Jpn)
 	&BurnSpecVerysheepyxmas,	// A Very Sheepy Christmas
 	&BurnDrvAblast,				// A-Blast (Japan)
@@ -22166,6 +22171,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_granada1,		// Granada (Jpn, USA)
 	&BurnDrvmd_granada,			// Granada (Jpn, USA, v1.1)
 	&BurnDrvmd_granadap,		// Granada (REV01 prototype)
+	&BurnDrvnes_grandmasterjc,	// Grand Master (Japan) - Castellano
 	&BurnDrvnes_grandmasterj,	// Grand Master (Japan)
 	&BurnDrvnes_grandmasterc,	// Grand Master (T-Chi, v1.1)
 	&BurnDrvnes_grandmaster,	// Grand Master (T-Eng)

@@ -68,6 +68,20 @@
 		<rom name="8-Bit Rhythm Land (HB).nes" size="786448" crc="48859a73"/>
 		<driver status="good"/>
 	</game>
+	<game name="atrainj" cloneof="atrain" romof="atrain">
+		<description>A Ressha de Ikou (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="a ressha de ikou (japan).nes" size="147472" crc="58fe5467"/>
+		<driver status="good"/>
+	</game>
+	<game name="atrain">
+		<description>A Ressha de Ikou (T-Eng) [Hack]</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="a ressha de ikou (t-eng).nes" size="147472" crc="fd7bc532"/>
+		<driver status="good"/>
+	</game>
 	<game name="abadox">
 		<description>Abadox - The Deadly Inner War (USA)</description>
 		<year>1990</year>
@@ -4700,6 +4714,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Gran Aventura Submarina, La (Spain).nes" size="65552" crc="6483756a"/>
+		<driver status="good"/>
+	</game>
+	<game name="grandmasterjc" cloneof="grandmaster" romof="grandmaster">
+		<description>Grand Master (Japan) - Castellano [Hack]</description>
+		<year>1989 ?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="grand master (japan) - castellano.nes" size="393232" crc="3ad512ce"/>
 		<driver status="good"/>
 	</game>
 	<game name="grandmasterj" cloneof="grandmaster" romof="grandmaster">

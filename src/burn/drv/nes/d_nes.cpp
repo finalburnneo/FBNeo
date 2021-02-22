@@ -2032,6 +2032,38 @@ static void mapper41_map()
 #undef mapper41_chr
 #undef mapper41_mirror
 
+// ---[ mapper 53 SuperVision 16-in-1
+#define mapper53_reg(x)	(mapper_regs[0 + (x)])
+
+static void mapper53_write(UINT16 address, UINT8 data)
+{
+	mapper53_reg((address & 0x8000) >> 15) = data;
+
+	mapper_map();
+}
+
+static UINT8 mapper53_exp_read(UINT16 address)
+{
+	return Cart.PRGRom[PRGExpMap + (address & 0x1fff)];
+}
+
+static void mapper53_map()
+{
+	UINT8 bank = (mapper53_reg(0) & 0xf) << 3;
+	mapper_map_exp_prg((0xf | (bank << 1)) + 4);
+	if (mapper53_reg(0) & 0x10) {
+		mapper_map_prg(16, 0, ((bank | (mapper53_reg(1) & 7)) + 2));
+		mapper_map_prg(16, 1, ((bank | 7) + 2));
+	} else {
+		mapper_map_prg(32, 0, 0);
+	}
+
+	mapper_map_chr( 8, 0, 0);
+
+	set_mirroring((mapper53_reg(0) & 0x20) ? HORIZONTAL : VERTICAL);
+}
+#undef mapper53_reg
+
 // ---[ mapper 104 Golden Five, Pegasus 5-in-1
 #define mapper104_prg(x)	(mapper_regs[0 + (x)])
 
@@ -7177,6 +7209,17 @@ static INT32 mapper_init(INT32 mappernum)
 			cart_exp_write = mapper41_write;
 			mapper_write = mapper41_write;
 			mapper_map   = mapper41_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 53: { // SuperVision 16-in-1
+			NESMode |= MAPPER_NOCLEAR; // preserve mapper regs on soft-reset
+			cart_exp_read = mapper53_exp_read;
+			cart_exp_write = mapper53_write;
+			mapper_write = mapper53_write;
+			mapper_map   = mapper53_map;
 			mapper_map();
 			retval = 0;
 			break;
@@ -26389,6 +26432,40 @@ struct BurnDriver BurnDrvnes_explodingfist = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_f1heroRomDesc[] = {
+	{ "F-1 Hero (Japan).nes",          262160, 0xab82d025, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_f1hero)
+STD_ROM_FN(nes_f1hero)
+
+struct BurnDriver BurnDrvnes_f1hero = {
+	"nes_f1hero", NULL, NULL, NULL, "1988",
+	"F-1 Hero (Japan)\0", NULL, "Varie", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_f1heroRomInfo, nes_f1heroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_f1hero2RomDesc[] = {
+	{ "F-1 Hero 2 (Japan).nes",          262160, 0x36b9506d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_f1hero2)
+STD_ROM_FN(nes_f1hero2)
+
+struct BurnDriver BurnDrvnes_f1hero2 = {
+	"nes_f1hero2", NULL, NULL, NULL, "1991",
+	"F-1 Hero 2 (Japan)\0", NULL, "Varie", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_f1hero2RomInfo, nes_f1hero2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_f1raceRomDesc[] = {
 	{ "F-1 Race (Japan).nes",          24592, 0x827dc0b9, BRF_ESS | BRF_PRG },
 };
@@ -34787,6 +34864,23 @@ struct BurnDriver BurnDrvnes_nantebas = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_napoleonsenkiRomDesc[] = {
+	{ "Napoleon Senki (Japan).nes",          163856, 0x9fea33c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_napoleonsenki)
+STD_ROM_FN(nes_napoleonsenki)
+
+struct BurnDriver BurnDrvnes_napoleonsenki = {
+	"nes_napoleonsenki", NULL, NULL, NULL, "1988",
+	"Napoleon Senki (Japan)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_napoleonsenkiRomInfo, nes_napoleonsenkiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_narcRomDesc[] = {
 	{ "NARC (USA).nes",          131088, 0xf5985a75, BRF_ESS | BRF_PRG },
 };
@@ -39190,6 +39284,40 @@ struct BurnDriver BurnDrvnes_spyvsspy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_spyvsspyislcajRomDesc[] = {
+	{ "Spy vs Spy - The Island Caper (Japan).nes",          131088, 0x23dff27d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spyvsspyislcaj)
+STD_ROM_FN(nes_spyvsspyislcaj)
+
+struct BurnDriver BurnDrvnes_spyvsspyislcaj = {
+	"nes_spyvsspyislcaj", "nes_spyvsspyislca", NULL, NULL, "1987",
+	"Spy vs Spy - The Island Caper (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_spyvsspyislcajRomInfo, nes_spyvsspyislcajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spyvsspyislcaRomDesc[] = {
+	{ "Spy vs Spy - The Island Caper (T-Eng).nes",          131088, 0xf9e51c93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spyvsspyislca)
+STD_ROM_FN(nes_spyvsspyislca)
+
+struct BurnDriver BurnDrvnes_spyvsspyislca = {
+	"nes_spyvsspyislca", NULL, NULL, NULL, "1989?",
+	"Spy vs Spy - The Island Caper (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_spyvsspyislcaRomInfo, nes_spyvsspyislcaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_sqoonRomDesc[] = {
 	{ "Sqoon (USA).nes",          40976, 0xa3815bac, BRF_ESS | BRF_PRG },
 };
@@ -40310,6 +40438,23 @@ struct BurnDriver BurnDrvnes_superturrican = {
 	NESGetZipName, nes_superturricanRomInfo, nes_superturricanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+static struct BurnRomInfo nes_super16in1RomDesc[] = {
+	{ "Supervision 16-in-1 (Unl).nes",          2129936, 0x48017a49, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_super16in1)
+STD_ROM_FN(nes_super16in1)
+
+struct BurnDriver BurnDrvnes_super16in1 = {
+	"nes_super16in1", NULL, NULL, NULL, "1989?",
+	"Supervision 16-in-1 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_super16in1RomInfo, nes_super16in1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 static struct BurnRomInfo nes_superxevRomDesc[] = {
@@ -43779,4 +43924,3 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
-

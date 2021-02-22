@@ -3,6 +3,9 @@
 // Main hacking and coding by Farfetch'd
 // Portability fixes by Richter Belmont
 
+// Note: strange things can happen if setting an interrupt in a write
+// handler during an RMW op.  v60RunEnd() then call the irq from frame! -dink feb.2020
+
 #include "burnint.h"
 #include "bitswap.h" // ...xor_le
 #include "driver.h"
@@ -523,6 +526,7 @@ static struct v60info {
 	UINT32 current_cycles;
 	UINT32 cycles;
 	INT32 stall_io;
+	INT32 end_run;
 } v60;
 
 
@@ -1012,12 +1016,14 @@ INT32 v60Run(int cycles)
 {
 	UINT32 inc;
 
+	v60.end_run = 0;
 	v60.cycles = cycles;
-
 	v60_ICount = cycles;
+
 	if(v60.irq_line != CLEAR_LINE)
 		v60_try_irq();
-	while(v60_ICount >= 0) {
+
+	do {
 		v60.PPC = PC;
 	//	CALL_MAME_DEBUG;
 		v60_ICount -= 8;	/* fix me -- this is just an average */
@@ -1025,7 +1031,7 @@ INT32 v60Run(int cycles)
 		PC += inc;
 		if(v60.irq_line != CLEAR_LINE)
 			v60_try_irq();
-	}
+	} while (v60_ICount > 0 && !v60.end_run);
 
 	cycles = cycles - v60_ICount;
 
@@ -1039,13 +1045,7 @@ INT32 v60Run(int cycles)
 void v60SetIRQLine(INT32 irqline, INT32 state)
 {
 	if (state == CPU_IRQSTATUS_AUTO) {
-	//	INT32 tmp0 = v60.current_cycles;
-	//	INT32 tmp1 = v60.cycles;
-		set_irq_line(irqline,1);
-		v60Run(100);
-	//	if (tmp1) tmp1 -= 100;
-		set_irq_line(irqline,0);
-		v60Run(100);
+		bprintf(0, _T("v60SetIRQLine(): there is no _AUTO !\n"));
 	}
 	else
 	{
@@ -1060,7 +1060,7 @@ INT32 v60TotalCycles()
 
 void v60RunEnd()
 {
-	v60_ICount = 0;
+	v60.end_run = 1;
 }
 
 INT32 v60Idle(INT32 cycles)

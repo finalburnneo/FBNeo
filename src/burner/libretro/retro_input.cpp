@@ -725,6 +725,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 	// Hang-On
 	// Enduro Racer
 	// Hang-On Jr.
+	// Sega System32 racing games
 	if ((parentrom && strcmp(parentrom, "outrun") == 0) ||
 		(drvname && strcmp(drvname, "outrun") == 0) ||
 		(parentrom && strcmp(parentrom, "shangon") == 0) ||
@@ -746,7 +747,21 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		(parentrom && strcmp(parentrom, "enduror") == 0) ||
 		(drvname && strcmp(drvname, "enduror") == 0) ||
 		(parentrom && strcmp(parentrom, "hangonjr") == 0) ||
-		(drvname && strcmp(drvname, "hangonjr") == 0)
+		(drvname && strcmp(drvname, "hangonjr") == 0) ||
+		(parentrom && strcmp(parentrom, "f1en") == 0) ||
+		(drvname && strcmp(drvname, "f1en") == 0) ||
+		(parentrom && strcmp(parentrom, "f1lap") == 0) ||
+		(drvname && strcmp(drvname, "f1lap") == 0) ||
+		(parentrom && strcmp(parentrom, "radm") == 0) ||
+		(drvname && strcmp(drvname, "radm") == 0) ||
+		(parentrom && strcmp(parentrom, "radr") == 0) ||
+		(drvname && strcmp(drvname, "radr") == 0) ||
+		(parentrom && strcmp(parentrom, "slipstrm") == 0) ||
+		(drvname && strcmp(drvname, "slipstrm") == 0) ||
+		(parentrom && strcmp(parentrom, "orunners") == 0) ||
+		(drvname && strcmp(drvname, "orunners") == 0) ||
+		(parentrom && strcmp(parentrom, "scross") == 0) ||
+		(drvname && strcmp(drvname, "scross") == 0)
 	) {
 		if (strcmp("Accelerate", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
@@ -1044,12 +1059,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 
 	// G-LOC Air Battle
 	// Galaxy Force 2
+	// Air Rescue
 	if ((parentrom && strcmp(parentrom, "gloc") == 0) ||
 		(drvname && strcmp(drvname, "gloc") == 0) ||
 		(parentrom && strcmp(parentrom, "gforce2") == 0) ||
 		(drvname && strcmp(drvname, "gforce2") == 0) ||
 		(parentrom && strcmp(parentrom, "rascot") == 0) ||
-		(drvname && strcmp(drvname, "rascot") == 0)
+		(drvname && strcmp(drvname, "rascot") == 0) ||
+		(parentrom && strcmp(parentrom, "arescue") == 0) ||
+		(drvname && strcmp(drvname, "arescue") == 0)
 	) {
 		if (strcmp("Throttle", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 2, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);

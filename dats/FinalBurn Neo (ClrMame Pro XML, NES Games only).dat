@@ -10820,6 +10820,13 @@
 		<rom name="Superman (USA).nes" size="262160" crc="721be58a"/>
 		<driver status="good"/>
 	</game>
+	<game name="super16in1">
+		<description>Supervision 16-in-1 (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Supervision 16-in-1 (Unl).nes" size="2129936" crc="48017a49"/>
+		<driver status="good"/>
+	</game>
 	<game name="swampthing">
 		<description>Swamp Thing (USA)</description>
 		<year>1992</year>

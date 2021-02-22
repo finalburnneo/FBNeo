@@ -3041,17 +3041,10 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	BurnBitmapGetDimensions(destbmp+5, &width, &height);
 
 	/* compute start/end tile numbers */
-#if 0
-	// figure out why this (proper clipping) breaks text in outrunners startup (network text) -dink
 	INT32 startx = cliprect.nMinx / 8;
 	INT32 starty = cliprect.nMiny / 8;
 	INT32 endx = cliprect.nMaxx / 8;
 	INT32 endy = cliprect.nMaxy / 8;
-#endif
-	INT32 startx = 0; //cliprect.nMinx / 8;
-	INT32 starty = 0; //cliprect.nMiny / 8;
-	INT32 endx = width / 8; //cliprect.nMaxx / 8;
-	INT32 endy = height / 8; //cliprect.nMaxy / 8;
 
 	// sonic and dbzvrvs boot up in 416px mode to display a disclaimer, then
 	// switch to 320px for the game.  If we move the text over 45px, it will
@@ -4097,7 +4090,7 @@ static void draw_screen(INT32 which)
 {
 	clip_struct cliprect;
 	cliprect.nMinx = 0;
-	cliprect.nMaxx = nScreenWidth - 1;
+	cliprect.nMaxx = (nScreenWidth >= 640 ? nScreenWidth/2 : nScreenWidth) - 1; // on dual-screen, we are only supposed to draw one side
 	cliprect.nMiny = 0;
 	cliprect.nMaxy = nScreenHeight - 1;
 

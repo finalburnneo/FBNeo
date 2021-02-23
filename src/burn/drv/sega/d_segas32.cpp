@@ -8,7 +8,7 @@ titlef	 (m)- broken background layer! (same in MAME)
 as1			- (not worth adding)
 
  :note:
- slipstrm	- gets hung booting if irq changes during RMW operation (in handler)
+slipstrm	- gets hung booting if irq changes during RMW operation (in handler)
               solution:	delay to end of opcode.
 */
 
@@ -4227,7 +4227,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
-		memset (DrvInputs, 0xff, sizeof(DrvExtra));
+		memset (DrvExtra, 0xff, sizeof(DrvExtra));
 
 		if (is_scross) { // button 2 (wheelie) is active high
 			DrvInputs[0] = 0xfd;

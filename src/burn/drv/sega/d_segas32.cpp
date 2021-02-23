@@ -8,7 +8,7 @@ titlef	 (m)- broken background layer! (same in MAME)
 as1			- (not worth adding)
 
  :note:
- slipstrm	- gets hung booting if irq changes during RMW operation (in handler)
+slipstrm	- gets hung booting if irq changes during RMW operation (in handler)
               solution:	delay to end of opcode.
 */
 
@@ -3051,8 +3051,8 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	// look perfect and avoid having to switch modes. -dink
 	INT32 wide_offs = (fake_wide_screen) ? 5 : 0; // "disclaimer" text offset (5*8)+5
 	/* loop over tiles */
-	for (INT32 y = starty; y < endy; y++)
-		for (INT32 x = startx; x < endx; x++)
+	for (INT32 y = starty; y <= endy; y++)
+		for (INT32 x = startx; x <= endx; x++)
 		{
 			INT32 tile = tilebase[y * 64 + (x + wide_offs)];
 			UINT16 const *src = &gfxbase[(tile & 0x1ff) * 16];
@@ -3196,7 +3196,7 @@ static void update_background(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 		/* if the color doesn't match, fill */
 		if ((m_bgcolor_line[y & 0x1ff] != color) || (m_prev_bgstartx[y & 0x1ff] != cliprect.nMinx) || (m_prev_bgendx[y & 0x1ff] != cliprect.nMaxx))
 		{
-			for (INT32 x = cliprect.nMinx; x < cliprect.nMaxx; x++)
+			for (INT32 x = cliprect.nMinx; x <= cliprect.nMaxx; x++)
 				dst[x] = color;
 
 			m_prev_bgstartx[y & 0x1ff] = cliprect.nMinx;
@@ -3613,12 +3613,6 @@ bail:
 
 static void sprite_render_list()
 {
-	clip_struct cliprect;
-	cliprect.nMiny = 0;
-	cliprect.nMaxx = nScreenWidth - 1;
-	cliprect.nMinx = 0;
-	cliprect.nMaxy = nScreenHeight - 1;
-
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 	clip_struct outerclip, clipin, clipout;
 	INT32 xoffs = 0, yoffs = 0;
@@ -3762,6 +3756,9 @@ static inline UINT16 *get_layer_scanline(INT32 layer, INT32 scanline)
 {
 	if (transparent_check[layer+5][scanline])
 		return (layer == MIXER_LAYER_SPRITES) ? solid_ffff : solid_0000;
+
+	// layer disable
+	if (layer < 7 && ~nSpriteEnable & (1 << layer)) return (layer == MIXER_LAYER_SPRITES) ? solid_ffff : solid_0000;
 
 	return BurnBitmapGetPosition(5 + layer, 0, scanline);
 }
@@ -4159,7 +4156,7 @@ static INT32 MultiScreenCheck()
 	if (screensize != nScreenWidth)
 	{
 		BurnTransferSetDimensions(screensize, 224);
-		GenericTilesSetClipRaw(0, 320, 0, 224);
+		GenericTilesSetClipRaw(0, screensize, 0, 224);
 		//GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
 		if (screensize == 320) {
@@ -4230,7 +4227,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
-		memset (DrvInputs, 0xff, sizeof(DrvExtra));
+		memset (DrvExtra, 0xff, sizeof(DrvExtra));
 
 		if (is_scross) { // button 2 (wheelie) is active high
 			DrvInputs[0] = 0xfd;

@@ -21023,3 +21023,194 @@ struct BurnDriver BurnSpecYangaplus = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// AntEater
+
+static struct BurnRomInfo SpecAnteaterRomDesc[] = {
+	{ "AntEater (2021)(Defb).tap", 44819, 0x31e117c5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAnteater, SpecAnteater, Spec128)
+STD_ROM_FN(SpecAnteater)
+
+struct BurnDriver BurnSpecAnteater = {
+	"spec_anteater", NULL, "spec_spec128", NULL, "2021",
+	"AntEater\0", NULL, "Defb", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecAnteaterRomInfo, SpecAnteaterRomName, NULL, NULL, NULL, 
+
+NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dark, The - Lost Pages
+
+static struct BurnRomInfo SpecDarklostpagesRomDesc[] = {
+	{ "Dark, The - Lost Pages (2021)(Zosya Entertainment).tap", 55037, 0x4ee940ee, BRF_ESS | 
+
+BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDarklostpages, SpecDarklostpages, Spec128)
+STD_ROM_FN(SpecDarklostpages)
+
+struct BurnDriver BurnSpecDarklostpages = {
+	"spec_darklostpages", NULL, "spec_spec128", NULL, "2021",
+	"Dark, The - Lost Pages\0", NULL, "Zosya Entertainment", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDarklostpagesRomInfo, SpecDarklostpagesRomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dizzy 1 Extended
+
+static struct BurnRomInfo SpecDizzy1extRomDesc[] = {
+	{ "Dizzy 1 Extended (2021)(Titus).tap", 38104, 0xd4393e5e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDizzy1ext, SpecDizzy1ext, Spec128)
+STD_ROM_FN(SpecDizzy1ext)
+
+struct BurnDriver BurnSpecDizzy1ext = {
+	"spec_dizzy1ext", NULL, "spec_spec128", NULL, "2021",
+	"Dizzy 1 Extended\0", NULL, "Titus", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDizzy1extRomInfo, SpecDizzy1extRomName, NULL, NULL, 
+
+NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dizzy 1 Extended (Russian)
+
+static struct BurnRomInfo SpecDizzy1extrusRomDesc[] = {
+	{ "Dizzy 1 Extended (2021)(Titus)(Rus).tap", 38214, 0x9df57a5a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDizzy1extrus, SpecDizzy1extrus, Spec128)
+STD_ROM_FN(SpecDizzy1extrus)
+
+struct BurnDriver BurnSpecDizzy1extrus = {
+	"spec_dizzy1extrus", "spec_dizzy1ext", "spec_spec128", NULL, "2021",
+	"Dizzy 1 Extended (Russian)\0", NULL, "Titus", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecDizzy1extrusRomInfo, SpecDizzy1extrusRomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lost Cavern
+
+static struct BurnRomInfo SpecLostcavernRomDesc[] = {
+	{ "Lost Cavern (2021)(Isaiasdiaz).tap", 46610, 0x987ec991, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLostcavern, SpecLostcavern, Spec128)
+STD_ROM_FN(SpecLostcavern)
+
+struct BurnDriver BurnSpecLostcavern = {
+	"spec_lostcavern", NULL, "spec_spec128", NULL, "2021",
+	"Lost Cavern\0", NULL, "Isaiasdiaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecLostcavernRomInfo, SpecLostcavernRomName, NULL, NULL, 
+
+NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lost Cavern - Easy
+
+static struct BurnRomInfo SpecLostcaverneasyRomDesc[] = {
+	{ "Lost Cavern - Easy (2021)(Isaiasdiaz).tap", 46585, 0x37e3379b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLostcaverneasy, SpecLostcaverneasy, Spec128)
+STD_ROM_FN(SpecLostcaverneasy)
+
+struct BurnDriver BurnSpecLostcaverneasy = {
+	"spec_lostcaverneasy", NULL, "spec_spec128", NULL, "2021",
+	"Lost Cavern - Easy\0", NULL, "Isaiasdiaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecLostcaverneasyRomInfo, SpecLostcaverneasyRomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ninja Poison - Part 1
+
+static struct BurnRomInfo SpecNinjapoison1RomDesc[] = {
+	{ "Ninja Poison - Part 1 (2021)(TokuSoft).tap", 45684, 0x2cd6d37d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNinjapoison1, SpecNinjapoison1, Spec128)
+STD_ROM_FN(SpecNinjapoison1)
+
+struct BurnDriver BurnSpecNinjapoison1 = {
+	"spec_ninjapoison1", NULL, "spec_spec128", NULL, "2021",
+	"Ninja Poison - Part 1\0", NULL, "TokuSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecNinjapoison1RomInfo, SpecNinjapoison1RomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ninja Poison - Part 2
+
+static struct BurnRomInfo SpecNinjapoison2RomDesc[] = {
+	{ "Ninja Poison - Part 2 (2021)(TokuSoft).tap", 48076, 0xe4cce9b9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNinjapoison2, SpecNinjapoison2, Spec128)
+STD_ROM_FN(SpecNinjapoison2)
+
+struct BurnDriver BurnSpecNinjapoison2 = {
+	"spec_ninjapoison2", NULL, "spec_spec128", NULL, "2021",
+	"Ninja Poison - Part 2\0", NULL, "TokuSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecNinjapoison2RomInfo, SpecNinjapoison2RomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Organic Matter
+
+static struct BurnRomInfo SpecOrganicmatterRomDesc[] = {
+	{ "Organic Matter (2021)(Chentzilla).tap", 38849, 0xc4798ebb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOrganicmatter, SpecOrganicmatter, Spec128)
+STD_ROM_FN(SpecOrganicmatter)
+
+struct BurnDriver BurnSpecOrganicmatter = {
+	"spec_organicmatter", NULL, "spec_spec128", NULL, "2021",
+	"Organic Matter\0", NULL, "Chentzilla", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecOrganicmatterRomInfo, SpecOrganicmatterRomName, NULL, 
+
+NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

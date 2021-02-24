@@ -537,6 +537,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="anteater" romof="spec128">
+		<description>AntEater</description>
+		<year>2021</year>
+		<manufacturer>Defb</manufacturer>
+		<rom name="AntEater (2021)(Defb).tap" size="44819" crc="31e117c5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="apb" romof="spec128">
 		<description>APB - All Points Bulletin (128K)</description>
 		<year>1989</year>
@@ -2235,6 +2244,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="darklostpages" romof="spec128">
+		<description>Dark, The - Lost Pages</description>
+		<year>2021</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Dark, The - Lost Pages (2021)(Zosya Entertainment).tap" size="55037" crc="4ee940ee"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="darkman" romof="spec128">
 		<description>Darkman (128K)</description>
 		<year>1991</year>
@@ -2416,6 +2434,24 @@
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)(ru)[128K].z80" size="51260" crc="27b9e86c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy1extrus" cloneof="dizzy1ext" romof="dizzy1ext">
+		<description>Dizzy 1 Extended (Russian)</description>
+		<year>2021</year>
+		<manufacturer>Titus</manufacturer>
+		<rom name="Dizzy 1 Extended (2021)(Titus)(Rus).tap" size="38214" crc="9df57a5a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy1ext" romof="spec128">
+		<description>Dizzy 1 Extended</description>
+		<year>2021</year>
+		<manufacturer>Titus</manufacturer>
+		<rom name="Dizzy 1 Extended (2021)(Titus).tap" size="38104" crc="d4393e5e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -4619,6 +4655,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="lostcaverneasy" romof="spec128">
+		<description>Lost Cavern - Easy</description>
+		<year>2021</year>
+		<manufacturer>Isaiasdiaz</manufacturer>
+		<rom name="Lost Cavern - Easy (2021)(Isaiasdiaz).tap" size="46585" crc="37e3379b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostcavern" romof="spec128">
+		<description>Lost Cavern</description>
+		<year>2021</year>
+		<manufacturer>Isaiasdiaz</manufacturer>
+		<rom name="Lost Cavern (2021)(Isaiasdiaz).tap" size="46610" crc="987ec991"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="lostulum" romof="spec128">
 		<description>Lost Treasures of Tulum, the (HB) [Homebrew]</description>
 		<year>2020</year>
@@ -5386,6 +5440,24 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninjapoison1" romof="spec128">
+		<description>Ninja Poison - Part 1</description>
+		<year>2021</year>
+		<manufacturer>TokuSoft</manufacturer>
+		<rom name="Ninja Poison - Part 1 (2021)(TokuSoft).tap" size="45684" crc="2cd6d37d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjapoison2" romof="spec128">
+		<description>Ninja Poison - Part 2</description>
+		<year>2021</year>
+		<manufacturer>TokuSoft</manufacturer>
+		<rom name="Ninja Poison - Part 2 (2021)(TokuSoft).tap" size="48076" crc="e4cce9b9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjajar" romof="spec128">
 		<description>Ninjajar (HB, v1.1) [Homebrew]</description>
 		<year>2014</year>
@@ -5550,6 +5622,15 @@
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Operation Wolf (1988)(Ocean).z80" size="38924" crc="75b79e29"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<driver status="good"/>
+	</game>
+	<game name="organicmatter" romof="spec128">
+		<description>Organic Matter</description>
+		<year>2021</year>
+		<manufacturer>Chentzilla</manufacturer>
+		<rom name="Organic Matter (2021)(Chentzilla).tap" size="38849" crc="c4798ebb"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
 	<game name="outrun" romof="spec128">

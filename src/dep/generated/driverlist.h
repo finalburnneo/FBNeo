@@ -619,6 +619,7 @@ DRV		BurnDrvMSX_antarctj;
 DRV		BurnDrvMSX_antarctk;
 DRV		BurnDrvcv_antarct;
 DRV		BurnDrvAnteater;
+DRV		BurnSpecAnteater;
 DRV		BurnDrvnes_anticipation;
 DRV		BurnDrvMSX_anty;
 DRV		BurnDrvMSX_antya;
@@ -3120,6 +3121,7 @@ DRV		BurnDrvDarkseal2;
 DRV		BurnSpecDarkstar;
 DRV		BurnDrvDarktowr;
 DRV		BurnSpecDarktransit;
+DRV		BurnSpecDarklostpages;
 DRV		BurnSpecdarkman;
 DRV		BurnDrvnes_darkmanc;
 DRV		BurnDrvnes_darkman;
@@ -3464,6 +3466,8 @@ DRV		BurnSpecdizzy_48;
 DRV		BurnSpecdizzyrstd;
 DRV		BurnSpecdizzy;
 DRV		BurnSpecdizzyr;
+DRV		BurnSpecDizzy1extrus;
+DRV		BurnSpecDizzy1ext;
 DRV		BurnSpecDizzy3andahalf;
 DRV		BurnDrvMSX_Dizzyballoon;
 DRV		BurnSpecdizzy2;
@@ -7564,6 +7568,8 @@ DRV		BurnDrvsms_loretta;
 DRV		BurnSpecLorna;
 DRV		BurnDrvMSX_lorna;
 DRV		BurnSpecBrunilda;
+DRV		BurnSpecLostcaverneasy;
+DRV		BurnSpecLostcavern;
 DRV		BurnDrvsms_lostraider101;
 DRV		BurnDrvLosttomb;
 DRV		BurnDrvLosttombh;
@@ -9299,6 +9305,8 @@ DRV		BurnDrvnes_ninjakid;
 DRV		BurnSpecNinjamassacre;
 DRV		BurnDrvNinjamasha;
 DRV		BurnDrvninjamas;
+DRV		BurnSpecNinjapoison1;
+DRV		BurnSpecNinjapoison2;
 DRV		BurnDrvNprinces;
 DRV		BurnDrvNprincesb;
 DRV		BurnDrvNprinceso;
@@ -9484,6 +9492,7 @@ DRV		BurnDrvOrdyneje;
 DRV		BurnDrvOrdyne;
 DRV		BurnDrvpce_ordyne;
 DRV		BurnDrvtg_ordyne;
+DRV		BurnSpecOrganicmatter;
 DRV		BurnDrvsg1k_orguss;
 DRV		BurnDrvOrlegend105k;
 DRV		BurnDrvOrlegend105t;
@@ -17211,6 +17220,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_antarctk,		// Antarctic Adventure (Kor)
 	&BurnDrvcv_antarct,			// Antarctic Adventure
 	&BurnDrvAnteater,			// Anteater
+	&BurnSpecAnteater,			// AntEater
 	&BurnDrvnes_anticipation,	// Anticipation (USA)
 	&BurnDrvMSX_anty,			// Anty (Jpn)
 	&BurnDrvMSX_antya,			// Anty (Jpn, Alt)
@@ -19712,6 +19722,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecDarkstar,			// Dark Star
 	&BurnDrvDarktowr,			// Dark Tower
 	&BurnSpecDarktransit,		// Dark Transit
+	&BurnSpecDarklostpages,		// Dark, The - Lost Pages
 	&BurnSpecdarkman,			// Darkman (128K)
 	&BurnDrvnes_darkmanc,		// Darkman (USA) - Castellano v1.0
 	&BurnDrvnes_darkman,		// Darkman (USA)
@@ -20056,6 +20067,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecdizzyrstd,			// Dizzy - The Ultimate Cartoon Adventure (Russian)(128k)
 	&BurnSpecdizzy,				// Dizzy - The Ultimate Cartoon Adventure (Trainer)(128K)
 	&BurnSpecdizzyr,			// Dizzy - The Ultimate Cartoon Adventure (Trainer)(Russian)(128K)
+	&BurnSpecDizzy1extrus,		// Dizzy 1 Extended (Russian)
+	&BurnSpecDizzy1ext,			// Dizzy 1 Extended
 	&BurnSpecDizzy3andahalf,	// Dizzy 3 & a Half
 	&BurnDrvMSX_Dizzyballoon,	// Dizzy Balloon
 	&BurnSpecdizzy2,			// Dizzy II - Treasure Island Dizzy (128K)
@@ -24156,6 +24169,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecLorna,				// Lorna (128K)
 	&BurnDrvMSX_lorna,			// Lorna (Spa)
 	&BurnSpecBrunilda,			// Los Amores De Brunilda (HB)
+	&BurnSpecLostcaverneasy,	// Lost Cavern - Easy
+	&BurnSpecLostcavern,		// Lost Cavern
 	&BurnDrvsms_lostraider101,	// Lost Raider (HB, v1.01)
 	&BurnDrvLosttomb,			// Lost Tomb (Easy)
 	&BurnDrvLosttombh,			// Lost Tomb (Hard)
@@ -25891,6 +25906,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNinjamassacre,		// Ninja Massacre
 	&BurnDrvNinjamasha,			// Ninja Master's - haoh-ninpo-cho (Plus)
 	&BurnDrvninjamas,			// Ninja Master's - haoh-ninpo-cho
+	&BurnSpecNinjapoison1,		// Ninja Poison - Part 1
+	&BurnSpecNinjapoison2,		// Ninja Poison - Part 2
 	&BurnDrvNprinces,			// Ninja Princess (315-5051, 64k Ver. bootleg?)
 	&BurnDrvNprincesb,			// Ninja Princess (315-5051?, 128k Ver. bootleg?)
 	&BurnDrvNprinceso,			// Ninja Princess (315-5098, 128k Ver.)
@@ -26076,6 +26093,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrdyne,				// Ordyne (World)
 	&BurnDrvpce_ordyne,			// Ordyne
 	&BurnDrvtg_ordyne,			// Ordyne
+	&BurnSpecOrganicmatter,		// Organic Matter
 	&BurnDrvsg1k_orguss,		// Orguss (Euro, Jpn)
 	&BurnDrvOrlegend105k,		// Oriental Legend (V105, Korea)
 	&BurnDrvOrlegend105t,		// Oriental Legend (V105, Taiwan)

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16337 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16346 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -611,6 +611,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_antarctk	|  	| Antarctic Adventure (Kor)				| msx_antarct	| 19??	| Prosoft	| MSX		| 					|
 | cv_antarct	|  	| Antarctic Adventure					| 		| 1984	| Coleco	| ColecoVision	| 					|
 | anteater	|  	| Anteater						| 		| 1982	| Stern (Tago li| Galaxian	| 					|
+| spec_anteater	|  	| AntEater						| 		| 2021	| Defb		| ZX Spectrum	| 					|
 | nes_anticipation|  	| Anticipation (USA)					| 		| 1988	| Nintendo	| Miscellaneous	| 					|
 | msx_anty	|  	| Anty (Jpn)						| 		| 1984	| ASCII		| MSX		| 					|
 | msx_antya	|  	| Anty (Jpn, Alt)					| msx_anty	| 1984	| ASCII		| MSX		| 					|
@@ -3080,6 +3081,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_darkstar	|  	| Dark Star						| 		| 1984	| Design Design	| ZX Spectrum	| 					|
 | darktowr	|  	| Dark Tower						| 		| 1992	| Game Room	| Miscellaneous	| 					|
 | spec_darktransit|  	| Dark Transit						| 		| 2021	| Sasa Bjedovic	| ZX Spectrum	| 					|
+| spec_darklostpages|  	| Dark, The - Lost Pages				| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
 | spec_darkman	|  	| Darkman (128K)					| 		| 1991	| Ocean		| ZX Spectrum	| 					|
 | nes_darkmanc	|  	| Darkman (USA) - Castellano v1.0			| nes_darkman	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_darkman	|  	| Darkman (USA)						| 		| 1991	| Ocean		| Miscellaneous	| 					|
@@ -3416,6 +3418,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_dizzyrstd|  	| Dizzy - The Ultimate Cartoon Adventure (Russian)(128k)| spec_dizzy_48	| 1987	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzy	|  	| Dizzy - The Ultimate Cartoon Adventure (Trainer)(128K)| spec_dizzy_48	| 1987	| Codemasters	| ZX Spectrum	| 					|
 | spec_dizzyr	|  	| Dizzy - The Ultimate Cartoon Adventure (Trainer)(Russi| spec_dizzy_48	| 1987	| Codemasters	| ZX Spectrum	| 					|
+| spec_dizzy1extrus|  	| Dizzy 1 Extended (Russian)				| spec_dizzy1ext| 2021	| Titus		| ZX Spectrum	| 					|
+| spec_dizzy1ext|  	| Dizzy 1 Extended					| 		| 2021	| Titus		| ZX Spectrum	| 					|
 | spec_dizzy3andahalf|  	| Dizzy 3 & a Half					| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
 | msx_dizzyballoon|  	| Dizzy Balloon						| 		| 1985	| Pony Canyon	| MSX		| 					|
 | spec_dizzy2	|  	| Dizzy II - Treasure Island Dizzy (128K)		| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
@@ -7454,6 +7458,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_lorna	|  	| Lorna (128K)						| 		| 1990	| Topo Soft	| ZX Spectrum	| 					|
 | msx_lorna	|  	| Lorna (Spa)						| 		| 1990	| Topo Soft	| MSX		| 					|
 | spec_brunilda	|  	| Los Amores De Brunilda (HB)				| 		| 2013	| RetroWorks	| ZX Spectrum	| 					|
+| spec_lostcaverneasy|  	| Lost Cavern - Easy					| 		| 2021	| Isaiasdiaz	| ZX Spectrum	| 					|
+| spec_lostcavern|  	| Lost Cavern						| 		| 2021	| Isaiasdiaz	| ZX Spectrum	| 					|
 | sms_lostraider101|  	| Lost Raider (HB, v1.01)				| 		| 2015	| Vingazole & Ic| Sega Master Sy| The game lacks sound			|
 | losttomb	|  	| Lost Tomb (Easy)					| 		| 1982	| Stern		| Galaxian	| 					|
 | losttombh	|  	| Lost Tomb (Hard)					| losttomb	| 1982	| Stern		| Galaxian	| 					|
@@ -9167,6 +9173,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_ninjamassacre|  	| Ninja Massacre					| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | ninjamasha	|  	| Ninja Master's - haoh-ninpo-cho (Plus)		| ninjamas	| 1996	| 007325	| Neo Geo MVS	| 					|
 | ninjamas	|  	| Ninja Master's - haoh-ninpo-cho			| 		| 1996	| ADK / SNK	| Neo Geo MVS	| 					|
+| spec_ninjapoison1|  	| Ninja Poison - Part 1					| 		| 2021	| TokuSoft	| ZX Spectrum	| 					|
+| spec_ninjapoison2|  	| Ninja Poison - Part 2					| 		| 2021	| TokuSoft	| ZX Spectrum	| 					|
 | nprinces	|  	| Ninja Princess (315-5051, 64k Ver. bootleg?)		| seganinj	| 1985	| bootleg?	| System 1	| 					|
 | nprincesb	|  	| Ninja Princess (315-5051?, 128k Ver. bootleg?)	| seganinj	| 1985	| bootleg?	| System 1	| 					|
 | nprinceso	|  	| Ninja Princess (315-5098, 128k Ver.)			| seganinj	| 1985	| Sega		| System 1	| 					|
@@ -9350,6 +9358,7 @@ This list contains all games supported by FinalBurn Neo.
 | ordyne	|  	| Ordyne (World)					| 		| 1988	| Namco		| System 2	| 					|
 | pce_ordyne	|  	| Ordyne						| 		| 1989	| Namcot	| PC Engine	| 					|
 | tg_ordyne	|  	| Ordyne						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
+| spec_organicmatter|  	| Organic Matter					| 		| 2021	| Chentzilla	| ZX Spectrum	| 					|
 | sg1k_orguss	|  	| Orguss (Euro, Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | orlegend105k	|  	| Oriental Legend (V105, Korea)				| orlegend	| 1997	| IGS		| PolyGameMaster| 					|
 | orlegend105t	|  	| Oriental Legend (V105, Taiwan)			| orlegend	| 1997	| IGS		| PolyGameMaster| 					|

@@ -2154,7 +2154,7 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 	}
 
 	// Sega system 24/32's "Service 1" is required to navigate in service menu
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM24 || ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MISC && BurnDrvGetTextA(DRV_SYSTEM) == "System 32")) {
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM24 || ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MISC && strcmp(BurnDrvGetTextA(DRV_SYSTEM), "System 32") == 0)) {
 		if (strcmp("Service 1", szn) == 0) {
 			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
 		}

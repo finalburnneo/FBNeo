@@ -685,7 +685,7 @@ void ymf271_update(INT16 **buffers, int samples)
 	int op;
 	INT32 *mixp;
 
-	memset(m_mix_buffer, 0x00, 4000);
+	memset(m_mix_buffer, 0x00, (m_master_clock / 384) * sizeof(INT32));
 
 	for (j = 0; j < 12; j++)
 	{

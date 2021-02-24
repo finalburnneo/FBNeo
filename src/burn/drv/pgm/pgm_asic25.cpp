@@ -761,7 +761,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 			UINT8 extraoffset = param&0xff;
 			UINT8* dectable = PGMProtROM;
 			UINT8 taboff = ((x*2)+extraoffset) & 0xff;
-			UINT16 extraxor = ((dectable[taboff+0]) << 8) | (dectable[taboff+1] << 0);
+			UINT16 extraxor = ((dectable[taboff+1]) << 8) | (dectable[taboff+0] << 0);
 
 			// dat2 = ((dat2 & 0x00ff)<<8) | ((dat2 & 0xff00)>>8);
 
@@ -800,7 +800,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 		for (INT32 x = 0; x < size; x++)
 		{
 			UINT16 dat2 = PROTROM[src + x];
-
+            dat2 = ((dat2 &0x00ff) << 8) | ((dat2 &0xff00) >> 8);
 			sharedprotram[dst + x] = dat2;
 		}
 	}
@@ -811,10 +811,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 		{
 			UINT16 dat2 = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
 
-			dat2 = ((dat2 & 0xf000) >> 12)|
-					((dat2 & 0x0f00) >> 4)|
-					((dat2 & 0x00f0) << 4)|
-					((dat2 & 0x000f) << 12);
+            dat2 = ((dat2 & 0xf0f0) >> 4) | ((dat2 & 0x0f0f) << 4);
 
 			sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat2);
 		}

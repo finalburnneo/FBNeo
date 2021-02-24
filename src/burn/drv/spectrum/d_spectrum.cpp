@@ -21038,9 +21038,7 @@ struct BurnDriver BurnSpecAnteater = {
 	"AntEater\0", NULL, "Defb", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecAnteaterRomInfo, SpecAnteaterRomName, NULL, NULL, NULL, 
-
-NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecAnteaterRomInfo, SpecAnteaterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21048,9 +21046,7 @@ NULL, SpecInputInfo, SpecDIPInfo,
 // Dark, The - Lost Pages
 
 static struct BurnRomInfo SpecDarklostpagesRomDesc[] = {
-	{ "Dark, The - Lost Pages (2021)(Zosya Entertainment).tap", 55037, 0x4ee940ee, BRF_ESS | 
-
-BRF_PRG },
+	{ "Dark, The - Lost Pages (2021)(Zosya Entertainment).tap", 55037, 0x4ee940ee, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDarklostpages, SpecDarklostpages, Spec128)
@@ -21061,9 +21057,7 @@ struct BurnDriver BurnSpecDarklostpages = {
 	"Dark, The - Lost Pages\0", NULL, "Zosya Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecDarklostpagesRomInfo, SpecDarklostpagesRomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecDarklostpagesRomInfo, SpecDarklostpagesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21082,9 +21076,7 @@ struct BurnDriver BurnSpecDizzy1ext = {
 	"Dizzy 1 Extended\0", NULL, "Titus", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecDizzy1extRomInfo, SpecDizzy1extRomName, NULL, NULL, 
-
-NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecDizzy1extRomInfo, SpecDizzy1extRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21103,9 +21095,7 @@ struct BurnDriver BurnSpecDizzy1extrus = {
 	"Dizzy 1 Extended (Russian)\0", NULL, "Titus", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecDizzy1extrusRomInfo, SpecDizzy1extrusRomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecDizzy1extrusRomInfo, SpecDizzy1extrusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21124,9 +21114,7 @@ struct BurnDriver BurnSpecLostcavern = {
 	"Lost Cavern\0", NULL, "Isaiasdiaz", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecLostcavernRomInfo, SpecLostcavernRomName, NULL, NULL, 
-
-NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecLostcavernRomInfo, SpecLostcavernRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21145,9 +21133,7 @@ struct BurnDriver BurnSpecLostcaverneasy = {
 	"Lost Cavern - Easy\0", NULL, "Isaiasdiaz", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecLostcaverneasyRomInfo, SpecLostcaverneasyRomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecLostcaverneasyRomInfo, SpecLostcaverneasyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21166,9 +21152,7 @@ struct BurnDriver BurnSpecNinjapoison1 = {
 	"Ninja Poison - Part 1\0", NULL, "TokuSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecNinjapoison1RomInfo, SpecNinjapoison1RomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecNinjapoison1RomInfo, SpecNinjapoison1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21187,9 +21171,7 @@ struct BurnDriver BurnSpecNinjapoison2 = {
 	"Ninja Poison - Part 2\0", NULL, "TokuSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecNinjapoison2RomInfo, SpecNinjapoison2RomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecNinjapoison2RomInfo, SpecNinjapoison2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -21208,9 +21190,7 @@ struct BurnDriver BurnSpecOrganicmatter = {
 	"Organic Matter\0", NULL, "Chentzilla", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecOrganicmatterRomInfo, SpecOrganicmatterRomName, NULL, 
-
-NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecOrganicmatterRomInfo, SpecOrganicmatterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

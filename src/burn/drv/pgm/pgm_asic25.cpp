@@ -856,8 +856,10 @@ static void IGS022_handle_command()
 
 	if (cmd == 0x6d)    // Store values to asic ram
 	{
-		UINT32 p1 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x298/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29a/2]);
-		UINT32 p2 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29c/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29e/2]);
+        UINT32 game_id = ((kb_game_id >> 16) & 0xff) & 0xf; // killbld == 1, drgw3 == 6
+        
+		UINT32 p1 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x298/2]) << (game_id == 1 ? 16 : 0)) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29a/2]);
+		UINT32 p2 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29c/2]) << (game_id == 1 ? 16 : 0)) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29e/2]);
 
 		if ((p2 & 0xffff) == 0x9)   // Set value
 		{
@@ -887,7 +889,7 @@ static void IGS022_handle_command()
 
 		if ((p2 & 0xffff) == 0xa)   // Get value
 		{
-            if ((((kb_game_id >> 16) & 0xff) & 0xf) == 1)
+            if (game_id == 1)
             {
                 p2 = p1;
             }

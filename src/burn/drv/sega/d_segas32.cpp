@@ -172,6 +172,7 @@ static void RadmAnalogTick();
 static INT32 MultiScreenCheck();
 
 static INT32 has_gun = 0;
+static INT32 clr_opposites = 0;
 
 static struct BurnInputInfo ArabfgtInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p1 coin"	},
@@ -2586,6 +2587,7 @@ static INT32 DrvExit()
 	has_gun = 0;
 	fake_wide_screen = 0;
 	can_modechange = 0;
+	clr_opposites = 0;
 
 	CURVE = NULL;
 
@@ -4215,6 +4217,42 @@ static INT32 MultiDraw()
 	return 0;
 }
 
+static void clear_opposites(UINT16 &i)
+{
+	if ((i & 0x30) == 0x00) i |= 0x30;
+	if ((i & 0xc0) == 0x00) i |= 0xc0;
+}
+
+static void check_opposites()
+{
+	switch (clr_opposites) {
+		case 2:
+			clear_opposites(DrvInputs[0]);
+			clear_opposites(DrvInputs[1]);
+			break;
+		case 4:
+			clear_opposites(DrvInputs[0]);
+			clear_opposites(DrvInputs[1]);
+			clear_opposites(DrvExtra[0]);
+			clear_opposites(DrvExtra[1]);
+			break;
+		case 6:
+			clear_opposites(DrvInputs[0]);
+			clear_opposites(DrvInputs[1]);
+			clear_opposites(DrvExtra[0]);
+			clear_opposites(DrvExtra[1]);
+			clear_opposites(DrvInputs[7]);
+			clear_opposites(DrvInputs[8]);
+			break;
+		case 0x2f: // titlef
+			clear_opposites(DrvInputs[0]);
+			clear_opposites(DrvInputs[1]);
+			clear_opposites(DrvInputs[6]);
+			clear_opposites(DrvInputs[7]);
+			break;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -4257,6 +4295,8 @@ static INT32 DrvFrame()
 			DrvExtra[2] ^= (DrvJoyX3[i] & 1) << i;
 			DrvExtra[3] ^= (DrvJoyX4[i] & 1) << i;
 		}
+
+		check_opposites();
 
 		CurveInitSet();
 
@@ -4769,6 +4809,8 @@ static INT32 ArabfgtInit()
 
 	custom_io_read_0 = extra_custom_io_read;
 
+	clr_opposites = 4;
+
 	DrvDoReset();
 
 	return 0;
@@ -4933,6 +4975,8 @@ static INT32 Ga2Init()
 	v25_protection_init(ga2_opcode_table);
 	custom_io_read_0 = extra_custom_io_read;
 
+	clr_opposites = 4;
+
 	DrvDoReset();
 
 	return 0;
@@ -5087,6 +5131,8 @@ static INT32 DarkedgeInit()
 	custom_io_read_0 = extra_custom_io_read; // CORRECT
 	system32_prot_vblank = darkedge_fd1149_vblank;
 
+	clr_opposites = 2;
+
 	DrvDoReset();
 
 	return 0;
@@ -5183,6 +5229,8 @@ static INT32 SpidmanInit()
 	tilemap_configure_allocate();
 
 	custom_io_read_0 = extra_custom_io_read; // CORRECT
+
+	clr_opposites = 4;
 
 	DrvDoReset();
 
@@ -5329,6 +5377,8 @@ static INT32 DbzvrvsInit()
 
 	protection_a00000_write = dbzvrvs_prot_write;
 
+	clr_opposites = 2;
+
 	DrvDoReset();
 
 	return 0;
@@ -5383,6 +5433,8 @@ static INT32 HoloInit()
 	tilemap_configure_allocate();
 
 	screen_vflip = 1;
+
+	clr_opposites = 2;
 
 	DrvDoReset();
 
@@ -5869,6 +5921,8 @@ static INT32 BrivalInit()
 	protection_a00000_write = brival_protection_write;
 
 	custom_io_read_0 = extra_custom_io_read;
+
+	clr_opposites = 2;
 
 	DrvDoReset();
 
@@ -6896,6 +6950,8 @@ static INT32 SvfInit()
 	custom_io_write_0 = analog_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
 
+	clr_opposites = 2;
+
 	DrvDoReset();
 
 	return 0;
@@ -7058,6 +7114,8 @@ static INT32 jleagueInit()
 
 	custom_io_write_0 = analog_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
+
+	clr_opposites = 2;
 
 	DrvDoReset();
 
@@ -7249,6 +7307,8 @@ static INT32 HarddunkInit()
 	tilemap_configure_allocate();
 
 	custom_io_read_0 = extra_custom_io_read;
+
+	clr_opposites = 6;
 
 	DrvDoReset();
 
@@ -7655,6 +7715,8 @@ static INT32 TitlefInit()
 	system32_v70_map();
 	multi32_sound_init();
 	tilemap_configure_allocate();
+
+	clr_opposites = 0x2f;
 
 	DrvDoReset();
 

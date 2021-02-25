@@ -2008,6 +2008,8 @@ static INT32 DrvDoReset()
 		MultiScreenCheck();
 	}
 
+	BurnRandomSetSeed(0xbeef1eaf);
+
 	return 0;
 }
 

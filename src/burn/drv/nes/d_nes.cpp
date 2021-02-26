@@ -12900,6 +12900,7 @@ static INT32 topriderInit()
 	if (!rc) {
 		// Top Rider size / crc: 163856, 0xca1a395a
 		// Patch in standard controller -dink feb.25, 2021
+		// Game Genie code: IUEOKOAL
 		// lda $494
 		// ora $311
 		// and #$10

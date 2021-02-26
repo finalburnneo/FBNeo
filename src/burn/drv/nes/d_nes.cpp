@@ -12893,6 +12893,45 @@ struct BurnDriver BurnDrvnes_apudinknoise = {
 */
 // Non Homebrew (hand-added!)
 
+static INT32 topriderInit()
+{
+	INT32 rc = NESInit();
+
+	if (!rc) {
+		// Top Rider size / crc: 163856, 0xca1a395a
+		// Patch in standard controller -dink feb.25, 2021
+		// lda $494
+		// ora $311
+		// and #$10
+		//*bne 99c5 ; start pressed, next screen
+		// jsr 9f68 ; check if code entered on controller #2
+		// bcs 99c2 ; yes? start game with normal controller in port #1
+		// ...
+		//*d0 38  bne 99c5 -> d0 35  bne 99c2
+
+		Cart.PRGRom[0x1998c] = 0x35;
+	}
+
+	return rc;
+}
+
+static struct BurnRomInfo nes_topriderRomDesc[] = {
+	{ "Top Rider (Japan).nes",          163856, 0xca1a395a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_toprider)
+STD_ROM_FN(nes_toprider)
+
+struct BurnDriver BurnDrvnes_toprider = {
+	"nes_toprider", NULL, NULL, NULL, "1988",
+	"Top Rider (Japan)\0", NULL, "Varie", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_topriderRomInfo, nes_topriderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	topriderInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
 	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
 };
@@ -42072,23 +42111,6 @@ struct BurnDriver BurnDrvnes_topgunsecmis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_topgunsecmisRomInfo, nes_topgunsecmisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_topriderRomDesc[] = {
-	{ "Top Rider (Japan).nes",          163856, 0xca1a395a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_toprider)
-STD_ROM_FN(nes_toprider)
-
-struct BurnDriver BurnDrvnes_toprider = {
-	"nes_toprider", NULL, NULL, NULL, "1988",
-	"Top Rider (Japan)\0", NULL, "Varie", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_topriderRomInfo, nes_topriderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

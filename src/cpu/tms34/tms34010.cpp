@@ -871,6 +871,11 @@ void tms34010_stop()
 	state.stop = 1;
 }
 
+void tms34010_modify_timeslice(int cycles)
+{ // only call this from a read/write handler while cpu is running!
+	tms34010_ICount += cycles;
+}
+
 int tms34010_idle(int cycles)
 {
 	state.total_cycles += cycles;

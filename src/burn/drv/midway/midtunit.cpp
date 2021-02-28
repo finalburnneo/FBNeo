@@ -1156,7 +1156,7 @@ INT32 TUnitInit()
 
 		Dcs2kInit(DCS_2K, MHz(10));
 		Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
-		Dcs2kSetVolume(10.00);
+		Dcs2kSetVolume(8.00);
 	}
 
 	GenericTilesInit();

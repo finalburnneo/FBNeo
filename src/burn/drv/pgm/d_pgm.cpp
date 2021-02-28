@@ -4076,7 +4076,7 @@ STDROMPICKEXT(dwpc101j, dwpc101j, pgm)
 STD_ROM_FN(dwpc101j)
 
 struct BurnDriver BurnDrvdwpc101j = {
-	"dwpc101", "dwpc", "pgm", NULL, "2001",
+	"dwpc101j", "dwpc", "pgm", NULL, "2001",
 	"Dragon World Pretty Chance (V101, Japan)\0", "Bad sound?", "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,

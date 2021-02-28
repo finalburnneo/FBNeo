@@ -516,7 +516,7 @@ static struct BurnRomInfo mkr4RomDesc[] = {
 	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
-	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_jg14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
 	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
 	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
 
@@ -554,7 +554,7 @@ static struct BurnRomInfo mktturboRomDesc[] = {
 	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
-	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_jg14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
 	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
 	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
 

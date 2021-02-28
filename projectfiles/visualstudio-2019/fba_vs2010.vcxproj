@@ -567,6 +567,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
@@ -1728,9 +1729,10 @@ del build_details.exe
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <TargetName>fbneod_vs</TargetName>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\..\src\dep\mingw\include\directx9;..\..\src\dep\vc\include;..\..\src\dep\vc\include\xaudio2;$(IncludePath)</IncludePath>
@@ -1745,6 +1747,7 @@ del build_details.exe
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <TargetName>fbneo_vs</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\..\src\dep\mingw\include\directx9;..\..\src\dep\vc\include;..\..\src\dep\vc\include\xaudio2;$(IncludePath)</IncludePath>

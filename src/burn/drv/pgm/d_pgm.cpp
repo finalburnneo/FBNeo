@@ -1606,7 +1606,7 @@ static struct BurnRomInfo drgw3105RomDesc[] = {
 STDROMPICKEXT(drgw3105, drgw3105, pgm)
 STD_ROM_FN(drgw3105)
 
-struct BurnDriverD BurnDrvDrgw3105 = {
+struct BurnDriver BurnDrvDrgw3105 = {
 	"drgw3105", "drgw3", "pgm", NULL, "1998",
 	"Dragon World 3 (V105)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
@@ -4055,7 +4055,7 @@ struct BurnDriver BurnDrvdwpc = {
    ROM TYPES: U11 (MASK) OKI M27C3202CZTK (BACKGROUND DATA).
    CREDITS TO: "GC8TECH.COM" */
 
-static struct BurnRomInfo dwpc101RomDesc[] = {
+static struct BurnRomInfo dwpc101jRomDesc[] = {
 	{ "dwpc_v101jp_u22.u22",		0x0080000, 0xb93027c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "dwpc_v100jp_u11.u11",		0x0400000, 0xc29d8831, 2 | BRF_GRA },			//  1 Tile data
@@ -4072,15 +4072,15 @@ static struct BurnRomInfo dwpc101RomDesc[] = {
 	{ "dwpc_v100jp_u12.u12",		0x0080000, 0x0d112126, 8 | BRF_PRG | BRF_ESS },	//  8 External ARM7 rom
 };
 
-STDROMPICKEXT(dwpc101, dwpc101, pgm)
-STD_ROM_FN(dwpc101)
+STDROMPICKEXT(dwpc101j, dwpc101j, pgm)
+STD_ROM_FN(dwpc101j)
 
-struct BurnDriver BurnDrvdwpc101 = {
+struct BurnDriver BurnDrvdwpc101j = {
 	"dwpc101", "dwpc", "pgm", NULL, "2001",
 	"Dragon World Pretty Chance (V101, Japan)\0", "Bad sound?", "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
-	NULL, dwpc101RomInfo, dwpc101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, dwpc101jRomInfo, dwpc101jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

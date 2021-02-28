@@ -112,6 +112,7 @@ int tms34010_idle(int cycles);
 INT64 tms34010_total_cycles();
 void tms34010_new_frame();
 UINT32 tms34010_get_pc();
+void tms34010_modify_timeslice(int cycles);
 
 int tms34010_context_size();
 void tms34010_get_context(void *get);

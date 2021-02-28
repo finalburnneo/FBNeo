@@ -39,6 +39,7 @@ static UINT16 nWolfUnitCtrl = 0;
 static INT32 nIOShuffle[16];
 
 static INT32 wwfmania = 0;
+static INT32 is_umk3 = 0;
 
 static INT32 nExtraCycles = 0;
 
@@ -223,6 +224,14 @@ void WolfUnitCMOSWriteEnable(UINT32 address, UINT16 value)
 	bCMOSWriteEnable = true;
 }
 
+void WolfUnitUMK3PaletteHack(UINT32 address, UINT16 value)
+{
+	if (address >= 0x0106a060 && address <= 0x0106a09f) {
+		tms34010_modify_timeslice(-100);
+	}
+	address &= 0xFFF;
+	*(UINT16*)(&DrvRAM[TOBYTE(0x6a000 + address)]) = value;
+}
 
 UINT16 WolfUnitPalRead(UINT32 address)
 {
@@ -446,6 +455,7 @@ INT32 WolfUnitInit()
     for (INT32 i = 0; i < 16; i++) nIOShuffle[i] = i % 8;
 
 	wwfmania = (strstr(BurnDrvGetTextA(DRV_NAME), "wwfmania") ? 1 : 0);
+	is_umk3 = (strstr(BurnDrvGetTextA(DRV_NAME), "umk3") ? 1 : 0);
 
     Dcs2kInit(DCS_8K, MHz(10));
     Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
@@ -499,6 +509,13 @@ INT32 WolfUnitInit()
 
     TMS34010SetHandlers(11, WolfUnitVramRead, WolfUnitVramWrite);
     TMS34010MapHandler(11, 0x00000000, 0x003fffff, MAP_READ | MAP_WRITE);
+
+	if (is_umk3) {
+		bprintf(0, _T("*** UMK3 Palette Fix active.\n"));
+		TMS34010SetWriteHandler(12, WolfUnitUMK3PaletteHack);
+		TMS34010MapHandler(12, 0x0106a000, 0x0106afff, MAP_WRITE);
+	}
+
 	TMS34010Close();
 
 	GenericTilesInit();
@@ -585,6 +602,7 @@ INT32 WolfUnitExit()
 	GenericTilesExit();
 
 	wwfmania = 0;
+	is_umk3 = 0;
 
     return 0;
 }

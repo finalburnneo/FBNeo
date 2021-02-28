@@ -4088,16 +4088,14 @@ struct BurnDriver BurnDrvdwpc101 = {
 
 // Demon Front (VM105XX, S105XX)
 
+/* IGS PCB-0387-03-FV MADE IN TAIWAN
+   IGS PCB-0390-00-FV-A MADE IN TAIWAN
+   SCREEN VER PIC: M105XX, S105XX, S100CN.
+   ROM TYPES: ST M27C160 U5
+   ROM TYPES: ST M27C322 U26
+   CREDITS TO: "IGSPGM.COM" */
+   
 static struct BurnRomInfo dmnfrntRomDesc[] = {
-	// 1st dump (01/01/2006) : v105_32m.u26 size 4 194 304 crc 877cac84
-	// - 1st and 2nd half identical crc 7c0690e1
-	// 2nd dump (15/04/2009) : v105_32m.u26 size 4 194 304 crc d200ee63
-	// - 1st half crc 341f0f22
-	// - 2nd half crc 3ce2fe8a
-	// 3rd dump (21/11/2009) : chinese-v105.u62 size 4 194 304 crc c798c2ef
-	// - 1st half crc 7c0690e1
-	// - 2nd half crc 3ce2fe8a
-	// Regarding these 3 dumps, only the 3rd is correct. Others are confirmed bad dumps.
 	{ "v105_16m.u5",   				0x0200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "igs_t04501w064.u29",			0x0800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data

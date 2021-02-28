@@ -11604,6 +11604,13 @@
 		<rom name="Top Gun - The Second Mission (USA).nes" size="262160" crc="4519fb7a"/>
 		<driver status="good"/>
 	</game>
+	<game name="toprider">
+		<description>Top Rider (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Varie</manufacturer>
+		<rom name="Top Rider (Japan).nes" size="163856" crc="ca1a395a"/>
+		<driver status="good"/>
+	</game>
 	<game name="topstriker">
 		<description>Top Striker (Japan)</description>
 		<year>1992</year>

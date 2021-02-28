@@ -1261,6 +1261,18 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// World PK Soccer V2
+	if ((parentrom && strcmp(parentrom, "wpksocv2") == 0) ||
+		(drvname && strcmp(drvname, "wpksocv2") == 0)
+	) {
+		if (strcmp("Kick", description) == 0) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, 1, RETRO_DEVICE_ID_JOYPAD_R2, RETRO_DEVICE_INDEX_ANALOG_BUTTON, description);
+		}
+		if (strcmp("Select", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+	}
+
 	// Lucky & Wild
 	// Dirt Fox
 	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||

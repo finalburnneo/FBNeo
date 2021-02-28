@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16346 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16366 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1318,6 +1318,7 @@ This list contains all games supported by FinalBurn Neo.
 | berzerka	|  	| Berzerk (revision RC31)				| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
 | berzerk	|  	| Berzerk (revision RC31A)				| 		| 1980	| Stern Electron| Miscellaneous	| 					|
 | berzerks	|  	| Berzerk (Spanish Speech, revision RC32)		| berzerk	| 1980	| Stern Electron| Miscellaneous	| 					|
+| bbbxing	|  	| Best Bout Boxing (ver 1.3)				| 		| 1994	| Jaleco	| MegaSystem 32	| 					|
 | bestleag	|  	| Best League (bootleg of Big Striker, Italian Serie A)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestleaw	|  	| Best League (bootleg of Big Striker, World Cup)	| bigstrik	| 1993	| bootleg	| Miscellaneous	| 					|
 | bestbest	|  	| Best Of Best						| 		| 1994	| SunA		| Miscellaneous	| 					|
@@ -1950,7 +1951,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinou		|  	| Cadillacs & Dinosaurs (930201 USA)			| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dino		|  	| Cadillacs & Dinosaurs (930201 World)			| 		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinoa		|  	| Cadillacs & Dinosaurs (930223 Asia TW)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
-| dinosyn	|  	| Cadillacs and Dinosaurs (28th-Anniversary, Hack)	| dino		| 2021-01-31| Hack		| CPS1 / QSound	| 					|
+| dinosyn	|  	| Cadillacs and Dinosaurs (28th-Anniversary, Hack)	| dino		| 2021-02-25| Hack		| CPS1 / QSound	| 					|
 | dinopic	|  	| Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic2	|  	| Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic3	|  	| Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
@@ -1958,7 +1959,7 @@ This list contains all games supported by FinalBurn Neo.
 | dinopic4	|  	| Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| No sound				|
 | dinopic5	|  	| Cadillacs and Dinosaurs (bootleg set 5 (with PIC16c57)| dino		| 1993	| Capcom	| CPS1		| 					|
 | dinohc	|  	| Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia | dino		| 1993	| bootleg	| CPS1		| 					|
-| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2021-02-19| Hack		| CPS1 / QSound	| 					|
+| dinods	|  	| Cadillacs and Dinosaurs (God of War Edition, Hack)	| dino		| 2021-02-26| Hack		| CPS1 / QSound	| 					|
 | dinoeh	|  	| Cadillacs and Dinosaurs (hack, 930201 etc)		| dino		| 1993	| Capcom	| CPS1 / QSound	| 					|
 | dinot		|  	| Cadillacs and Dinosaurs Turbo (bootleg set 1, 930223 A| dino		| 1993	| bootleg	| CPS1 / QSound	| 					|
 | dinotpic	|  	| Cadillacs and Dinosaurs Turbo (bootleg set 2 (with PIC| dino		| 1993	| bootleg	| CPS1		| No sound				|
@@ -2052,7 +2053,7 @@ This list contains all games supported by FinalBurn Neo.
 | captcommb2	|   NW	| Captain Commando (bootleg set 2 (with 2xMSM5205), 9110| captcomm	| 1991	| bootleg	| CPS1		| unemulated graphics			|
 | captcommb3	|  	| Captain Commando (bootleg set 3 (with YM2151 + 2xMSM52| captcomm	| 1991	| bootleg	| CPS1		| 					|
 | captcommp4	|  	| Captain Commando (Enhanced edition 1 V 4, Hack)	| captcomm	| 2015-12-05| hack		| CPS1		| 					|
-| captcommr1pwx	|  	| Captain Commando (Unlimited Bullet)			| captcomm	| 2020-11-05| Hack		| CPS1		| 					|
+| captcommr1pwx	|  	| Captain Commando (Unlimited Bullet)			| captcomm	| 2021-02-24| Hack		| CPS1		| 					|
 | spec_captaindrexx|  	| Captain Drexx (HB)					| 		| 2014	| Vladimir Buren| ZX Spectrum	| 					|
 | spec_captaindynamo|  	| Captain Dynamo					| 		| 1992	| Codemasters	| ZX Spectrum	| 					|
 | nes_captained	|  	| Captain ED (Japan)					| 		| 1989	| CBS / Sony Gro| Miscellaneous	| 					|
@@ -3256,6 +3257,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_dstrikes	|  	| Desert Strike (Hack, Spanish)				| md_dstrike	| 2017	| Electronic Art| Sega Megadrive| 					|
 | md_dstrikej	|  	| Desert Strike (Jpn, Kor)				| md_dstrike	| 1993	| Electronic Art| Sega Megadrive| 					|
 | gg_dstrikeu	|  	| Desert Strike - Return to the Gulf (USA)		| gg_dstrike	| 1992	| Domark	| Sega Game Gear| 					|
+| desertwr	|  	| Desert War / Wangan Sensou (ver 1.0)			| 		| 1995	| Jaleco	| MegaSystem 32	| 					|
 | msx_desolatr	|  	| Desolator (Euro)					| 		| 1986	| Gremlin Graphi| MSX		| 					|
 | spec_desperado1trn|  	| Desperado (Gunsmoke) (Trainer)			| 		| 1987	| Topo Soft	| ZX Spectrum	| 					|
 | msx_desperado	|  	| Desperado (Spa)					| 		| 1987	| Topo Soft	| MSX		| 					|
@@ -5521,6 +5523,8 @@ This list contains all games supported by FinalBurn Neo.
 | md_grandsl	|  	| GrandSlam - The Tennis Tournament (Euro)		| 		| 1992	| Sega		| Sega Megadrive| 					|
 | cgraplop2	|  	| Graplop (no title screen) (DECO Cassette) (US)	| cgraplop	| 1983	| Data East Corp| Cassette Syste| 					|
 | grasspin	|  	| Grasspin						| 		| 1983	| [Zilec Electro| Miscellaneous	| 					|
+| gratiaa	|  	| Gratia - Second Earth (ver 1.0, 91022-10 version)	| gratia	| 1996	| Jaleco	| MegaSystem 32	| 					|
+| gratia	|  	| Gratia - Second Earth (ver 1.0, 92047-01 version)	| 		| 1996	| Jaleco	| MegaSystem 32	| 					|
 | spec_gravibots|  	| GraviBots (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | gravitar1	|  	| Gravitar (version 1)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|
 | gravitar2	|  	| Gravitar (version 2)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|
@@ -5831,6 +5835,9 @@ This list contains all games supported by FinalBurn Neo.
 | msx_hhouse	|  	| Haunted House (Euro)					| 		| 1988	| Eurosoft	| MSX		| 					|
 | md_haunting	|  	| Haunting Starring Polterguy (Euro, USA)		| 		| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_hauntings	|  	| Haunting Starring Polterguy (Hack, Spanish)		| md_haunting	| 2020	| Electronic Art| Sega Megadrive| 					|
+| hayaosi2	|  	| Hayaoshi Quiz Grand Champion Taikai			| 		| 1994	| Jaleco	| MegaSystem 32	| 					|
+| hayaosi3a	|  	| Hayaoshi Quiz Nettou Namahousou (ver 1.2)		| hayaosi3	| 1994	| Jaleco	| MegaSystem 32	| 					|
+| hayaosi3	|  	| Hayaoshi Quiz Nettou Namahousou (ver 1.5)		| 		| 1994	| Jaleco	| MegaSystem 32	| 					|
 | hayaosi1	|  	| Hayaoshi Quiz Ouza Ketteisen - The King Of Quiz	| 		| 1993	| Jaleco	| Mega System 1	| 					|
 | gg_headbust	|  	| Head Buster (Jpn)					| 		| 1991	| Masaya	| Sega Game Gear| 					|
 | headon1	|  	| Head On (1 player)					| headon	| 1979	| Gremlin	| Vic Dual	| No sound				|
@@ -6166,6 +6173,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_iceworld	|  	| Ice World (Jpn)					| 		| 1985	| Casio		| MSX		| 					|
 | msx_icebreak	|  	| Ice-Breaker (Spa)					| 		| 1990	| Topo Soft	| MSX		| 					|
 | pce_idolhana	|  	| Idol Hanafuda Fan Club				| 		| 1991	| Game Express	| PC Engine	| 					|
+| suchie2o	|  	| Idol Janshi Suchie-Pai II (ver 1.0)			| suchie2	| 1994	| Jaleco	| MegaSystem 32	| 					|
+| suchie2	|  	| Idol Janshi Suchie-Pai II (ver 1.1)			| 		| 1994	| Jaleco	| MegaSystem 32	| 					|
 | froman2b	|  	| Idol Mahjong - final romance 2 (Neo CD Conversion)	| 		| 1995	| hack		| Neo Geo MVS	| 					|
 | iganinju	|  	| Iga Ninjyutsuden (Japan)				| kazan		| 1988	| Jaleco	| Mega System 1	| 					|
 | msx_iganinpo	|  	| Iga Ninpouchou (Jpn)					| 		| 1985	| Casio		| MSX		| 					|
@@ -7645,6 +7654,7 @@ This list contains all games supported by FinalBurn Neo.
 | sg1k_mahjong	|  	| Mahjong (Jpn)						| 		| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_mahjonga	|  	| Mahjong (Jpn, Alt)					| sg1k_mahjong	| 1983	| Sega		| Sega SG-1000	| 					|
 | sg1k_mahjongt	|  	| Mahjong (Tw)						| sg1k_mahjong	| 1983?	| Aaronix	| Sega SG-1000	| 					|
+| akiss		|  	| Mahjong Angel Kiss (ver 1.0)				| 		| 1995	| Jaleco	| MegaSystem 32	| 					|
 | md_mahjongc	|  	| Mahjong Cop Ryuu - Shiro Ookami no Yabou (Jpn)	| 		| 1989	| Sega		| Sega Megadrive| 					|
 | msx_mjdojo	|  	| Mahjong Dojo (Jpn)					| 		| 1984	| Konami	| MSX		| 					|
 | mjgtaste	|  	| Mahjong G-Taste					| 		| 2002	| Psikyo	| PS5V2		| 					|
@@ -9448,6 +9458,8 @@ This list contains all games supported by FinalBurn Neo.
 | p47je		|  	| P-47 - The Freedom Fighter (Japan, Export)		| p47		| 1988	| Jaleco	| Mega System 1	| 					|
 | pce_p47	|  	| P-47 - The Freedom Fighter				| 		| 1989	| Aicom		| PC Engine	| 					|
 | p47		|  	| P-47 - The Phantom Fighter (World)			| 		| 1988	| Jaleco	| Mega System 1	| 					|
+| p47acesa	|  	| P-47 Aces (ver 1.0)					| p47aces	| 1995	| Jaleco	| MegaSystem 32	| 					|
+| p47aces	|  	| P-47 Aces (ver 1.1)					| 		| 1995	| Jaleco	| MegaSystem 32	| 					|
 | spec_p47thunderbolt|  	| P-47 Thunderbolt					| 		| 1990	| Firebird	| ZX Spectrum	| 					|
 | pgemeni	|  	| P-GeMeni (060123)					| 		| 2006	| blastar@gmx.ne| PolyGameMaster| 					|
 | pow		|  	| P.O.W. - Prisoners of War (US version 1)		| 		| 1988	| SNK		| Miscellaneous	| 					|
@@ -11173,6 +11185,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_ryukoken	|  	| Ryuuko no Ken (Jpn)					| md_aof	| 1994	| Sega		| Sega Megadrive| 					|
 | gg_ryukyu	|  	| Ryuukyuu (Jpn)					| gg_solitarp	| 1991	| Face		| Sega Game Gear| 					|
 | pce_ryukyu	|  	| Ryuukyuu						| 		| 1990	| Face		| PC Engine	| 					|
+| kirarast	|  	| Ryuusei Janshi Kirara Star				| 		| 1996	| Jaleco	| MegaSystem 32	| 					|
 | spec_sascombatsim|  	| S.A.S. Combat Simulator				| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
 | spec_sasoperationthunderflash|  	| S.A.S. Operation Thunderflash			| 		| 1986	| Sparklers	| ZX Spectrum	| 					|
 | nes_scat	|  	| S.C.A.T. - Special Cybernetic Attack Team (USA)	| 		| 1991	| Natsume	| Miscellaneous	| 					|
@@ -13848,7 +13861,7 @@ This list contains all games supported by FinalBurn Neo.
 | wofj		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan| wof		| 1992	| Capcom	| CPS1 / QSound	| 					|
 | wofch		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer,| 		| 1992	| Capcom	| CPS Changer	| 					|
 | wofjh		|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031| wof		| 1992	| hack		| CPS1 / QSound	| 					|
-| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2021-02-06| Hack		| CPS1 / QSound	| 					|
+| wofjdr	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (Master Editi| wof		| 2021-02-24| Hack		| CPS1 / QSound	| 					|
 | wofchp	|  	| Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Versio| wofch		| 2019	| hack		| CPS Changer	| 					|
 | nes_tenchwokuriij|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)	| nes_tenchwokurii| 1991	| Capcom	| Miscellaneous	| 					|
 | nes_tenchwokurii|  	| Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng)	| 		| 1991	| Capcom	| Miscellaneous	| 					|
@@ -13940,8 +13953,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tetri2bom	|  	| Tetris 2 + Bombliss (Japan)				| 		| 1991	| Bullet-Proof S| Miscellaneous	| 					|
 | spec_tetris2	|  	| Tetris 2						| 		| 1990	| Fuxoft	| ZX Spectrum	| 					|
 | msx_tetris2	|  	| Tetris II (Kor)					| 		| 1989	| Prosoft	| MSX		| 					|
+| tetrisp	|  	| Tetris Plus (ver 1.0)					| 		| 1995	| Jaleco / BPS	| MegaSystem 32	| 					|
 | tetrisp2ja	|  	| Tetris Plus 2 (Japan, V2.1)				| tetrisp2	| 1997	| Jaleco / The T| Miscellaneous	| 					|
 | tetrisp2j	|  	| Tetris Plus 2 (Japan, V2.2)				| tetrisp2	| 1997	| Jaleco / The T| Miscellaneous	| 					|
+| tp2m32	|  	| Tetris Plus 2 (ver 1.0, MegaSystem 32 Version)	| tetrisp2	| 1997	| Jaleco	| MegaSystem 32	| 					|
 | tetrisp2a	|  	| Tetris Plus 2 (World, V2.7)				| tetrisp2	| 1997	| Jaleco / The T| Miscellaneous	| 					|
 | tetrisp2	|  	| Tetris Plus 2 (World, V2.8)				| 		| 1997	| Jaleco / The T| Miscellaneous	| 					|
 | tgm2p		|  	| Tetris the Absolute The Grand Master 2 Plus		| tgm2		| 2000	| Arika		| PS5V2		| 					|
@@ -14110,6 +14125,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_flints	|  	| The Flintstones (Hack, Spanish)			| md_flint	| 2014	| Taito		| Sega Megadrive| 					|
 | md_flintj	|  	| The Flintstones (Jpn)					| md_flint	| 1993	| Taito		| Sega Megadrive| 					|
 | md_flintu	|  	| The Flintstones (USA)					| md_flint	| 1993	| Taito		| Sega Megadrive| 					|
+| gametngk	|  	| The Game Paradise - Master of Shooting! / Game Tengoku| 		| 1995	| Jaleco	| MegaSystem 32	| 					|
 | md_wintchal1	|  	| The Games: Winter Challenge (Euro, USA)		| md_wintchal	| 1992	| Ballistic	| Sega Megadrive| 					|
 | gg_shinobi	|  	| The GG Shinobi (Euro, USA)				| 		| 1991	| Sega		| Sega Game Gear| 					|
 | gg_shinobij	|  	| The GG Shinobi (Jpn)					| gg_shinobi	| 1991	| Sega		| Sega Game Gear| 					|
@@ -14769,6 +14785,7 @@ This list contains all games supported by FinalBurn Neo.
 | trstaroj	|  	| Top Ranking Stars (Ver 2.1J 1993/05/21) (Old Version)	| trstar	| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | trstar	|  	| Top Ranking Stars (Ver 2.1O 1993/05/21) (New Version)	| 		| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | trstaro	|  	| Top Ranking Stars (Ver 2.1O 1993/05/21) (Old Version)	| trstar	| 1993	| Taito Corporat| Taito F3 Syste| 					|
+| nes_toprider	|  	| Top Rider (Japan)					| 		| 1988	| Varie		| Miscellaneous	| 					|
 | msx_toprollr	|  	| Top Roller! (Jpn)					| 		| 1984	| Jaleco	| MSX		| 					|
 | topsecrt	|  	| Top Secret (Japan, old revision)			| bionicc	| 1987	| Capcom	| Miscellaneous	| 					|
 | topsecrt2	|  	| Top Secret (Japan, revision B)			| bionicc	| 1987	| Capcom	| Miscellaneous	| 					|
@@ -15120,7 +15137,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_ultimmorkom3|  	| Ultimate Mortal Kombat 3 (Unl)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_umk3u	|  	| Ultimate Mortal Kombat 3 (USA)			| md_umk3	| 1996	| Williams	| Sega Megadrive| 					|
 | md_umk3h	|  	| Ultimate Mortal Kombat 3 Arcade (Hack, V0.71)		| md_umk3	| 2012?	| Nemesis_c	| Sega Megadrive| 					|
-| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2021-| umk3		| 2020	| hack		| MIDWAY Wolf-Un| 					|
+| umk3uc	|  	| Ultimate Mortal Kombat 3 Cup Edition (Hack, Ver. 2021-| umk3		| 2021	| hack		| MIDWAY Wolf-Un| 					|
 | md_umk3mh	|  	| Ultimate Mortal Kombat 3 Mini V13 (Hack)		| md_umk3	| 2011	| Nemesis_c, r57| Sega Megadrive| 					|
 | umk3pb1	|  	| Ultimate Mortal Kombat 3 Plus (Hack, Beta 1)		| umk3		| 2019	| Midway	| MIDWAY Wolf-Un| 					|
 | umk3te	|  	| Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.| umk3		| 2018	| Midway	| MIDWAY Wolf-Un| 					|
@@ -15430,6 +15447,8 @@ This list contains all games supported by FinalBurn Neo.
 | vsgongf	|  	| VS Gong Fight						| 		| 1984	| Kaneko	| Miscellaneous	| 					|
 | ryouran	|  	| VS Mahjong Otome Ryouran				| 		| 1998	| Electro Design| Super Kaneko N| 					|
 | fds_vsexcitebike|  	| Vs. Excitebike (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| bnstars	|  	| Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Versi| bnstars1	| 1997	| Jaleco	| MegaSystem 32	| 					|
+| bnstars1	|   NW	| Vs. Janshi Brandnew Stars				| 		| 1997	| Jaleco	| Miscellaneous	| Not currently emulated		|
 | nes_vssmbhomedi|  	| VS. Super Mario Bros. Home Edition (Hack)		| nes_smb	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_vocean	|  	| V							| 		| 1986	| Ocean		| ZX Spectrum	| 					|
 | vulcan	|  	| Vulcan Venture (New)					| 		| 1988	| Konami	| GX785		| 					|
@@ -15870,6 +15889,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_worldillu	|  	| World of Illusion Starring Mickey Mouse and Donald Duc| md_worldill	| 1992	| Sega		| Sega Megadrive| 					|
 | nes_worldwarc	|  	| World of Warcraft - Demon Hunter (China)		| nes_worldwar	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_worldwar	|  	| World of Warcraft - Demon Hunter (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| wpksocv2	|  	| World PK Soccer V2 (ver 1.1)				| 		| 1996	| Jaleco	| MegaSystem 32	| 					|
 | wpksoc	| D NW	| World PK Soccer					| 		| 1995	| Jaleco	| Irem M107	| 					|
 | wrallyat	|  	| World Rally (US, 930217)				| wrally	| 1993	| Gaelco (Atari | Miscellaneous	| 					|
 | wrally	|  	| World Rally (Version 1.0, Checksum 0E56)		| 		| 1993	| Gaelco	| Miscellaneous	| 					|

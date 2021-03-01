@@ -56,9 +56,7 @@ static UINT8 bestofbest_prot = 0;
 static UINT8 z80bankdata[2];
 
 static struct BurnInputInfo BestbestInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 14,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -71,6 +69,7 @@ static struct BurnInputInfo BestbestInputList[] = {
 	{"P1 Button 5"  , BIT_DIGITAL  , DrvJoy1 + 10,	 "p1 fire 5"},
 	{"P1 Button 6"  , BIT_DIGITAL  , DrvJoy1 + 11,	 "p1 fire 6"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 14,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -93,9 +92,7 @@ static struct BurnInputInfo BestbestInputList[] = {
 STDINPUTINFO(Bestbest)
 
 static struct BurnInputInfo UballoonInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 15,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 14,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -104,6 +101,7 @@ static struct BurnInputInfo UballoonInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 15,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 14,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -123,11 +121,7 @@ static struct BurnInputInfo UballoonInputList[] = {
 STDINPUTINFO(Uballoon)
 
 static struct BurnInputInfo BssoccerInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy6 + 4,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy6 + 5,	 "p2 coin"  },
-	{"Coin 3"       , BIT_DIGITAL  , DrvJoy6 + 6,	 "p3 coin"  },
-	{"Coin 4"       , BIT_DIGITAL  , DrvJoy6 + 7,	 "p4 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy6 + 4,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -136,7 +130,8 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 fire 3"},
-
+	
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy6 + 5,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 1,    "p2 down"  },
@@ -146,6 +141,7 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5,	 "p2 fire 2"},
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy2 + 6,	 "p2 fire 3"},
 
+	{"P3 Coin"      , BIT_DIGITAL  , DrvJoy6 + 6,	 "p3 coin"  },
 	{"P3 Start"     , BIT_DIGITAL  , DrvJoy3 + 7,	 "p3 start" },
 	{"P3 Up"        , BIT_DIGITAL  , DrvJoy3 + 0,    "p3 up"    },
 	{"P3 Down"      , BIT_DIGITAL  , DrvJoy3 + 1,    "p3 down"  },
@@ -155,6 +151,7 @@ static struct BurnInputInfo BssoccerInputList[] = {
 	{"P3 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	 "p3 fire 2"},
 	{"P3 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 6,	 "p3 fire 3"},
 
+	{"P4 Coin"      , BIT_DIGITAL  , DrvJoy6 + 7,	 "p4 coin"  },
 	{"P4 Start"     , BIT_DIGITAL  , DrvJoy4 + 7,	 "p4 start" },
 	{"P4 Up"        , BIT_DIGITAL  , DrvJoy4 + 0,    "p4 up"    },
 	{"P4 Down"      , BIT_DIGITAL  , DrvJoy4 + 1,    "p4 down"  },
@@ -175,15 +172,14 @@ static struct BurnInputInfo BssoccerInputList[] = {
 STDINPUTINFO(Bssoccer)
 
 static struct BurnInputInfo SunaqInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 7,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 start" },
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 0,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 1,	 "p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 2,	 "p1 fire 3"},
 	{"P1 Button 4"  , BIT_DIGITAL  , DrvJoy1 + 3,	 "p1 fire 4"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 7,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 6,	 "p2 start" },
 	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 0,	 "p2 fire 1"},
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 fire 2"},

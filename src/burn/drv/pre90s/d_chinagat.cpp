@@ -47,10 +47,7 @@ static INT32 is_bootleg = 0;
 static INT32 vblank;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
-	{"Coin 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"	},
-	{"Coin 3",		BIT_DIGITAL,	DrvJoy1 + 3,	"p3 coin"	},
-
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
@@ -60,6 +57,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
@@ -69,6 +67,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,      "reset"		},
+	{"Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"coin"	},
 
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},

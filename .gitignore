@@ -8,3 +8,8 @@ projectfiles/visualstudio-2015/m68kmake.exe
 projectfiles/visualstudio-2015/m68kmake.obj
 projectfiles/visualstudio-2015/fba_vs2015.VC.db
 projectfiles/visualstudio-2015/fba_vs2015.VC.VC.opendb
+src/dep/generated
+build/fcadefbneod.exe
+build/fcadefbneod.ilk
+*.db
+*.opendb

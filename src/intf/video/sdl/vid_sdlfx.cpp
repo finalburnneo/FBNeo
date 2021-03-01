@@ -6,7 +6,7 @@
 static int nInitedSubsytems = 0;
 
 static int nGameWidth = 0, nGameHeight = 0;			// screen size
-SDL_Surface* sdlsBlitFX[2] = {NULL, };				// The image surfaces
+SDL_Surface* sdlsBlitFX[2] = { NULL, };				// The image surfaces
 SDL_Surface* sdlsFramebuf = NULL;
 
 static int nSize;
@@ -74,14 +74,16 @@ static int BlitFXInit()
 	if (nRotateGame & 1) {
 		nVidImageWidth = nGameHeight;
 		nVidImageHeight = nGameWidth;
-	} else {
+	}
+	else {
 		nVidImageWidth = nGameWidth;
 		nVidImageHeight = nGameHeight;
 	}
 
 	if (nUseBlitter >= 7 && nUseBlitter <= 9) {
 		nVidImageDepth = 16;								// Use 565 format
-	} else {
+	}
+	else {
 		nVidImageDepth = sdlsFramebuf->format->BitsPerPixel;// Use color depth of primary surface
 	}
 	nVidImageBPP = sdlsFramebuf->format->BytesPerPixel;
@@ -133,13 +135,14 @@ static int Init()
 		// Get the game screen size
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 
-	    if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 			if (nVidRotationAdjust & 1) {
 				int n = nGameWidth;
 				nGameWidth = nGameHeight;
 				nGameHeight = n;
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else {
 				nRotateGame |= 1;
 			}
 		}
@@ -160,7 +163,8 @@ static int Init()
 			dprintf(_T("*** Couldn't enter fullscreen mode.\n"));
 			return 1;
 		}
-	} else {
+	}
+	else {
 		if ((sdlsFramebuf = SDL_SetVideoMode(nGameWidth * nSize, nGameHeight * nSize, 0, SDL_RESIZABLE | SDL_HWSURFACE)) == NULL) {
 			return 1;
 		}
@@ -181,7 +185,7 @@ static int Init()
 	return 0;
 }
 
-static int vidScale(RECT* , int, int)
+static int vidScale(RECT*, int, int)
 {
 	return 0;
 }
@@ -206,7 +210,7 @@ static int MemToSurf()
 		unsigned char* VidSurf = (unsigned char*)sdlsBlitFX[0]->pixels;
 		int nVidPitch = sdlsBlitFX[0]->pitch;
 
-		unsigned char *pd, *ps;
+		unsigned char* pd, * ps;
 
 		int nHeight = nGameHeight * nSize;
 
@@ -234,7 +238,8 @@ static int Frame(bool bRedraw)						// bRedraw = 0
 			if (BurnDrvRedraw()) {
 				BurnDrvFrame();						// No redraw function provided, advance one frame
 			}
-		} else {
+		}
+		else {
 			BurnDrvFrame();							// Run one frame and draw the screen
 		}
 
@@ -266,7 +271,8 @@ static int Paint(int bValidate)
 			return 1;
 		}
 		SDL_Flip(sdlsFramebuf);
-	} else {
+	}
+	else {
 		// Normal
 
 		if (SDL_BlitSurface(sdlsBlitFX[nUseSys], NULL, sdlsFramebuf, &sdlrDest)) {

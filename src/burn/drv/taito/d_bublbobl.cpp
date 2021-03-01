@@ -67,16 +67,15 @@ static UINT8 port1_out, port2_out, port3_out, port4_out;
 
 static struct BurnInputInfo BublboblInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 1" },
@@ -93,16 +92,15 @@ STDINPUTINFO(Bublbobl)
 
 static struct BurnInputInfo BoblboblInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 1" },

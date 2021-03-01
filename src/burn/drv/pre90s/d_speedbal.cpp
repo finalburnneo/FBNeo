@@ -615,9 +615,48 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Speed Ball
+// Speed Ball (set 1)
+// seems to have a more complete hidden test mode, with a 'hard test' that's not enabled in the alternate Speed Ball rom set
 
 static struct BurnRomInfo speedbalRomDesc[] = {
+	{ "1.u14",		0x8000, 0x94c6f107, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "3.u15",		0x8000, 0xa036687f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "2.u100",		0x8000, 0xe6a6d9b7, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "10.u50",		0x8000, 0x36dea4bf, 3 | BRF_GRA },           //  3 Characters
+
+	{ "9.u45",		0x8000, 0xb567e85e, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "5.u46",		0x8000, 0xb0eae4ba, 4 | BRF_GRA },           //  5
+	{ "8.u47",		0x8000, 0xd2bfbdb6, 4 | BRF_GRA },           //  6
+	{ "4.u48",		0x8000, 0x1d23a130, 4 | BRF_GRA },           //  7
+
+	{ "7.u67",		0x8000, 0x9f1b33d1, 5 | BRF_GRA },           //  8 Sprites (scrambled)
+	{ "6.u68",		0x8000, 0x0e2506eb, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(speedbal)
+STD_ROM_FN(speedbal)
+
+static INT32 SpeedbalInit()
+{
+	return DrvInit(0);
+}
+
+struct BurnDriver BurnDrvSpeedbal = {
+	"speedbal", NULL, NULL, NULL, "1987",
+	"Speed Ball (set 1)\0", NULL, "Tecfri / Desystem S.A.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, speedbalRomInfo, speedbalRomName, NULL, NULL, NULL, NULL, SpeedbalInputInfo, SpeedbalDIPInfo,
+	SpeedbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Speed Ball (set 2)
+
+static struct BurnRomInfo speedbalaRomDesc[] = {
 	{ "sb1.bin",	0x8000, 0x1c242e34, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "sb3.bin",	0x8000, 0x7682326a, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -634,20 +673,15 @@ static struct BurnRomInfo speedbalRomDesc[] = {
 	{ "sb6.bin",	0x8000, 0x0e2506eb, 5 | BRF_GRA },           //  9
 };
 
-STD_ROM_PICK(speedbal)
-STD_ROM_FN(speedbal)
+STD_ROM_PICK(speedbala)
+STD_ROM_FN(speedbala)
 
-static INT32 SpeedbalInit()
-{
-	return DrvInit(0);
-}
-
-struct BurnDriver BurnDrvSpeedbal = {
-	"speedbal", NULL, NULL, NULL, "1987",
-	"Speed Ball\0", NULL, "Tecfri / Desystem S.A.", "Miscellaneous",
+struct BurnDriver BurnDrvSpeedbala = {
+	"speedbala", "speedbal", NULL, NULL, "1987",
+	"Speed Ball (set 2)\0", NULL, "Tecfri / Desystem S.A.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
-	NULL, speedbalRomInfo, speedbalRomName, NULL, NULL, NULL, NULL, SpeedbalInputInfo, SpeedbalDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, speedbalaRomInfo, speedbalaRomName, NULL, NULL, NULL, NULL, SpeedbalInputInfo, SpeedbalDIPInfo,
 	SpeedbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
 };

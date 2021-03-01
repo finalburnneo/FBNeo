@@ -19,6 +19,8 @@ INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nS
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
 
+static UINT32 nSekAddressMask[SEK_MAX], nSekAddressMaskActive;
+
 static INT32 core_idle(INT32 cycles)
 {
 	SekRunAdjust(cycles);
@@ -256,7 +258,7 @@ inline static UINT8 ReadByte(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read8 0x%08X\n"), a);
 
@@ -272,7 +274,7 @@ inline static UINT8 FetchByte(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch8 0x%08X\n"), a);
 
@@ -288,7 +290,7 @@ inline static void WriteByte(UINT32 a, UINT8 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write8 0x%08X\n"), a);
 
@@ -305,7 +307,7 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -320,7 +322,7 @@ inline static UINT16 ReadWord(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read16 0x%08X\n"), a);
 
@@ -344,7 +346,7 @@ inline static UINT16 FetchWord(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch16 0x%08X\n"), a);
 
@@ -360,7 +362,7 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
 
@@ -392,7 +394,7 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -409,7 +411,7 @@ inline static UINT32 ReadLong(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("read32 0x%08X\n"), a);
 
@@ -443,7 +445,7 @@ inline static UINT32 FetchLong(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("fetch32 0x%08X\n"), a);
 
@@ -460,7 +462,7 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 //	bprintf(PRINT_NORMAL, _T("write32 0x%08X\n"), a);
 
@@ -495,7 +497,7 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
@@ -513,7 +515,7 @@ UINT8 __fastcall ReadByteBP(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 
@@ -530,7 +532,7 @@ void __fastcall WriteByteBP(UINT32 a, UINT8 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_W(a);
 
@@ -548,7 +550,7 @@ UINT16 __fastcall ReadWordBP(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 
@@ -564,7 +566,7 @@ void __fastcall WriteWordBP(UINT32 a, UINT16 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_W(a);
 
@@ -581,7 +583,7 @@ UINT32 __fastcall ReadLongBP(UINT32 a)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_R(a);
 
@@ -599,7 +601,7 @@ void __fastcall WriteLongBP(UINT32 a, UINT32 d)
 {
 	UINT8* pr;
 
-	a &= 0xFFFFFF;
+	a &= nSekAddressMaskActive;
 
 	pr = FIND_W(a);
 
@@ -674,7 +676,7 @@ void __fastcall A68KSingleStep(unsigned int pc) { SingleStep_PC(pc); }
 #ifdef EMU_A68K
 void __fastcall A68KChangePC(UINT32 pc)
 {
-	pc &= 0xFFFFFF;
+	pc &= nSekAddressMaskActive;
 
 	// Adjust OP_ROM to the current bank
 	OP_ROM = FIND_F(pc) - (pc & ~SEK_PAGEM);
@@ -842,6 +844,12 @@ extern "C" INT32 M68KIRQAcknowledge(INT32 nIRQ)
 {
 	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_AUTO) {
 		m68k_set_irq(0);
+		nSekIRQPending[nSekActive] = 0;
+	}
+
+	if (nSekIRQPending[nSekActive] & SEK_IRQSTATUS_VAUTO &&
+		(nSekIRQPending[nSekActive] & 0x0007) == nIRQ) {
+		m68k_set_virq(nIRQ, 0);
 		nSekIRQPending[nSekActive] = 0;
 	}
 	
@@ -1146,6 +1154,8 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	}
 #endif
 
+	nSekAddressMask[nCount] = 0xffffff;
+
 	nSekCycles[nCount] = 0;
 	nSekIRQPending[nCount] = 0;
 	nSekRESETLine[nCount] = 0;
@@ -1271,6 +1281,8 @@ void SekOpen(const INT32 i)
 		nSekActive = i;
 
 		pSekExt = SekExt[nSekActive];						// Point to cpu context
+
+		nSekAddressMaskActive = nSekAddressMask[nSekActive];
 
 #ifdef EMU_A68K
 		if (nSekCPUType[nSekActive] == 0) {
@@ -1553,9 +1565,8 @@ void SekSetVIRQLine(const INT32 line, INT32 nstatus)
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
 #endif
 
-	if (nstatus != 0 && nstatus != 1) {
-		bprintf(0, _T("SekSetVIRQLine(%d, %d); only supports ACK or NONE! \n"), line, nstatus);
-		return;
+	if (nstatus == CPU_IRQSTATUS_AUTO) {
+		nstatus = 4; // special handling for virq
 	}
 
 	INT32 status = nstatus << 12; // needed for compatibility
@@ -1589,7 +1600,6 @@ void SekSetVIRQLine(INT32 nCPU, const INT32 line, INT32 status)
 
 	SekCPUPop();
 }
-
 
 // Adjust the active CPU's timeslice
 void SekRunAdjust(const INT32 nCycles)
@@ -1883,6 +1893,17 @@ INT32 SekDbgSetBreakpointFetch(UINT32 nAddress, INT32 nIdentifier)
 
 // ----------------------------------------------------------------------------
 // Memory map setup
+
+void SekSetAddressMask(UINT32 nAddressMask)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetAddressMask called without init\n"));
+	if (nSekActive == -1) { bprintf(PRINT_ERROR, _T("SekSetAddressMask called when no CPU open\n")); return; }
+	if ((nAddressMask & 1) == 0) bprintf(PRINT_ERROR, _T("SekSetAddressMask called with invalid mask! (%x)\n"), nAddressMask);
+#endif
+
+	nSekAddressMask[nSekActive] = nSekAddressMaskActive = nAddressMask;
+}
 
 // Note - each page is 1 << SEK_BITS.
 INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
@@ -2419,6 +2440,30 @@ INT32 SekScan(INT32 nAction)
 		SCAN_VAR(nSekRESETLine[i]);
 		SCAN_VAR(nSekHALT[i]);
 
+		extern int kNetVersion;
+		if (kNetVersion >= 3) {
+			if (nAction == (ACB_FULLSCANL | ACB_READ) || nAction == (ACB_FULLSCANL | ACB_WRITE)) {
+				SCAN_VAR(nSekAddressMask[i]);
+				SCAN_VAR(nSekAddressMaskActive);
+			}
+		}
+
+    /*
+    * Definitely need to be scanned
+    */
+    SCAN_VAR(nSekCyclesTotal);
+    SCAN_VAR(nSekCyclesSegment);
+
+    /*
+    * Supicious... These look like they need to be saved, too.
+    */
+    SCAN_VAR(nSekCyclesScanline);
+    SCAN_VAR(nSekCyclesDone);
+    SCAN_VAR(nSekCyclesToDo);
+    SCAN_VAR(nSekIRQPending);
+    SCAN_VAR(nSekCycles);
+    SCAN_VAR(m68k_ICount);
+
 #if defined EMU_A68K && defined EMU_M68K
 		// Switch to another core if needed
 		if ((nAction & ACB_WRITE) && nType != nSekCPUType[i]) {
@@ -2450,6 +2495,8 @@ INT32 SekScan(INT32 nAction)
 				// Blank pointers
 				SekRegs[i]->IrqCallback = NULL;
 				SekRegs[i]->ResetCallback = NULL;
+				SekRegs[i]->RTECallback = NULL;
+				SekRegs[i]->CmpCallback = NULL;
 			}
 
 			BurnAcb(&ba);

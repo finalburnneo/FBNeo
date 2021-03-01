@@ -8,6 +8,8 @@ GalExtendTileInfo GalExtendTileInfoFunction;
 GalExtendSpriteInfo GalExtendSpriteInfoFunction;
 GalRenderFrame GalRenderFrameFunction;
 
+INT32 GalScreenUnflipper = 0;
+
 UINT8 GalFlipScreenX;
 UINT8 GalFlipScreenY;
 UINT8 *GalGfxBank;
@@ -574,11 +576,10 @@ void RockclimDrawBackground()
 			
 			y -= 16;
 
-			if (x > 8 && x < (nScreenWidth - 8) && y > 8 && y < (nScreenHeight - 8)) {
-				Render8x8Tile(pTransDraw, Code, x, y, Colour, 4, 32, RockclimTiles);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 32, RockclimTiles);
-			}
+			if (GalFlipScreenX) x = nScreenWidth - 8 - x;
+			if (GalFlipScreenY) y = nScreenHeight - 8 - y;
+
+			Draw8x8Tile(pTransDraw, Code, x, y, GalFlipScreenX, GalFlipScreenY, Colour, 4, 32, RockclimTiles);
 
 			TileIndex++;
 		}
@@ -815,7 +816,7 @@ static void GalRenderBgLayer(UINT8 *pVideoRam)
 			Colour = Attr  & ((GalColourDepth == 3) ? 0x03 : 0x07);
 			
 			if (GalExtendTileInfoFunction) GalExtendTileInfoFunction(&Code, &Colour, Attr, RamPos);
-			
+
 			if (SfxTilemap) {
 				x = 8 * my;
 				y = 8 * mx;
@@ -903,7 +904,7 @@ static void GalRenderSprites(const UINT8 *SpriteBase)
 		INT32 sx = Base[3];
 
 		if (GalExtendSpriteInfoFunction) GalExtendSpriteInfoFunction(Base, &sx, &sy, &xFlip, &yFlip, &Code, &Colour);
-		
+
 		if (GalFlipScreenX) {
 			sx = 242 - sx;
 			xFlip = !xFlip;
@@ -922,36 +923,8 @@ static void GalRenderSprites(const UINT8 *SpriteBase)
 			sx = 242 - 1 - sx;
 			xFlip = !xFlip;
 		}
-		
-		if (sx > 16 && sx < (nScreenWidth - 16) && sy > 16 && sy < (nScreenHeight - 16)) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, Code, sx, sy, Colour, GalColourDepth, 0, 0, GalSprites);
-				}
-			}
-		}
+
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy, xFlip, yFlip, Colour, GalColourDepth, 0, 0, GalSprites);
 	}
 }
 
@@ -1083,6 +1056,14 @@ static void GalDrawBullets(const UINT8 *Base)
 	}
 }
 
+// Add before BurnTransferCopy(); for the game you want to fix below & GalScreenUnflipper = 1 in game's init.
+static void Coctail_Unflippy()
+{
+	if (GalScreenUnflipper) {
+		BurnTransferFlip(GalFlipScreenX, GalFlipScreenY);
+	}
+}
+
 // Render a frame
 INT32 GalDraw()
 {
@@ -1091,10 +1072,17 @@ INT32 GalDraw()
 	} else {
 		BurnTransferClear();
 		GalCalcPaletteFunction();
-		if (GalRenderBackgroundFunction) GalRenderBackgroundFunction();
-		GalRenderBgLayer(GalVideoRam);
-		GalRenderSprites(&GalSpriteRam[0x40]);
-		if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0x60]);
+
+		if (nBurnLayer & 1 && GalRenderBackgroundFunction)
+			GalRenderBackgroundFunction();
+		if (nBurnLayer & 2)
+			GalRenderBgLayer(GalVideoRam);
+		if (nSpriteEnable & 1)
+			GalRenderSprites(&GalSpriteRam[0x40]);
+		if (nSpriteEnable & 2 && GalDrawBulletsFunction)
+			GalDrawBullets(&GalSpriteRam[0x60]);
+
+		Coctail_Unflippy();
 		BurnTransferCopy(GalPalette);
 	}
 
@@ -1110,6 +1098,7 @@ void ZigZagRenderFrame()
 	GalRenderSprites(&GalSpriteRam[0x40]);
 	GalRenderSprites(&GalSpriteRam[0x40 + 0x20]);
 	//if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0x60]);
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }
 
@@ -1124,6 +1113,7 @@ void DkongjrmRenderFrame()
 	GalRenderSprites(&GalSpriteRam[0xc0]);
 	GalRenderSprites(&GalSpriteRam[0xe0]);
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0x60]);
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }
 
@@ -1146,6 +1136,7 @@ void DambustrRenderFrame()
 		}
 		GalRenderBgLayer(GalVideoRam2);
 	}	
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }
 
@@ -1157,6 +1148,7 @@ void FantastcRenderFrame()
 	GalRenderBgLayer(GalVideoRam);
 	GalRenderSprites(&GalSpriteRam[0x40]);
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xc0]);
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }
 
@@ -1171,6 +1163,7 @@ void TimefgtrRenderFrame()
 	GalRenderSprites(&GalSpriteRam[0x240]);
 	GalRenderSprites(&GalSpriteRam[0x340]);
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xc0]);
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }
 
@@ -1182,5 +1175,6 @@ void ScramblerRenderFrame()
 	GalRenderBgLayer(GalVideoRam);
 	GalRenderSprites(&GalSpriteRam[0xc0]);
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xe0]);
+	Coctail_Unflippy();
 	BurnTransferCopy(GalPalette);
 }

@@ -18,11 +18,8 @@ static UINT8 asic27a_arm_to_68k = 0;
 
 static inline void pgm_cpu_sync()
 {
-	INT32 nCycles = SekTotalCycles() - Arm7TotalCycles();
-
-	if (nCycles > 100) {
-		Arm7Run(nCycles);
-	}
+	while (SekTotalCycles() > Arm7TotalCycles())
+		Arm7Run(SekTotalCycles() - Arm7TotalCycles());
 }
 
 static void svg_set_ram_bank(INT32 data)

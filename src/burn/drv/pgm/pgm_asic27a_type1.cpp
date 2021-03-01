@@ -35,11 +35,8 @@ static UINT32 kovsh_counter;
 
 static inline void pgm_cpu_sync()
 {
-	INT32 nCycles = SekTotalCycles() - Arm7TotalCycles();
-
-	if (nCycles > 100) {
-		Arm7Run(nCycles);
-	}
+	while (SekTotalCycles() > Arm7TotalCycles())
+		Arm7Run(SekTotalCycles() - Arm7TotalCycles());
 }
 
 static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)

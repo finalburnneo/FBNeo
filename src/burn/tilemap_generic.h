@@ -115,6 +115,9 @@ void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask);
 // Set a Transmask Split.  Specify TMAP_DRAWLAYER0 or TMAP_DRAWLAYER1 in draw flags, set "*category = layernum;" in callback.
 void GenericTilemapSetTransSplit(INT32 which, INT32 category, UINT16 layer0, UINT16 layer1);
 
+// Build a table of fully transparent tiles
+void GenericTilemapBuildSkipTable(INT32 which, INT32 gfxnum, INT32 transparent);
+
 // Set scroll x (horizontal) or y (vertical) for the tilemap
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx);
 void GenericTilemapSetScrollY(INT32 which, INT32 scrolly);
@@ -131,9 +134,16 @@ void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll);
 // Set scroll value for individual column. Must set GenericTilemapSetScrollCols first!
 void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll);
 
-// Set video offsets, this allows adjusting where the tilemap is displayed on the screen
-// This is applied AFTER the scroll values
+// Set video offsets, this allows adjusting where the tilemap is displayed on the screen.
+// This is applied AFTER the scroll values - this one assumes flipped screen uses same offsets.
+// TMAP_GLOBAL can be used for this function
 void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y);
+
+// Set video offsets, this allows adjusting where the tilemap is displayed on the screen. This 
+// is applied AFTER the scroll values - use this one if offsets are different when the screen
+// is flipped.
+// TMAP_GLOBAL can be used for this function
+void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y, INT32 x_flipped, INT32 y_flipped);
 
 // Used to flip the tilemap on the screen vertically or horizontally
 // Very useful for *flipscreen

@@ -658,8 +658,8 @@ struct BurnDriver BurnDrvMsbingo = {
 // Miss Puzzle
 
 static struct BurnRomInfo mspuzzleRomDesc[] = {
-	{ "u1.bin",	0x40000, 0xd9e63f12, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u2.bin",	0x40000, 0x9c3fc677, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u1.bin",		0x40000, 0xd9e63f12, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u2.bin",		0x40000, 0x9c3fc677, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "u210.bin",	0x40000, 0x0a223a38, 2 | BRF_SND },           //  2 Samples
 
@@ -686,32 +686,68 @@ struct BurnDriver BurnDrvMspuzzle = {
 };
 
 
-// Miss Puzzle (Nudes)
+// Miss Puzzle (Nudes, more explicit))
+/* sticker on PCB stated:  MISS PUZZLE  V ..8 */
 
-static struct BurnRomInfo mspuzzlenRomDesc[] = {
-	{ "u1.rom",	0x20000, 0xec940df4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u2.rom",	0x20000, 0x7b9cac82, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo mspuzzleaRomDesc[] = {
+	{ "u1.u1",		0x40000, 0x5e96ea17, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u2.u2",		0x40000, 0x8f161b0c, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "u210.bin",	0x40000, 0x0a223a38, 2 | BRF_SND },  		  //  2 Samples
 
-	{ "u210.rom",	0x40000, 0x8826b018, 2 | BRF_SND },  		           //  2 Samples
+	{ "u512.bin",	0x40000, 0x505ee3c2, 3 | BRF_GRA },		      //  3 Foreground Tiles
+	{ "u511.bin",	0x40000, 0x3d6b6c78, 3 | BRF_GRA },   		  //  4
 
-	{ "u512.bin",	0x40000, 0x505ee3c2, 3 | BRF_GRA },		           //  3 Foreground Tiles
-	{ "u511.bin",	0x40000, 0x3d6b6c78, 3 | BRF_GRA },   		           //  4
-
-	{ "u421.rom",	0x80000, 0x3c567c55, 4 | BRF_GRA },     		   //  5 Background Tiles
-	{ "u425.rom",	0x80000, 0x1c4c8fc1, 4 | BRF_GRA },           //  6
-	{ "u420.rom",	0x80000, 0xf52ab7fd, 4 | BRF_GRA }, 		           //  7
-	{ "u426.rom",	0x80000, 0xc28b2743, 4 | BRF_GRA },		           //  8
+	{ "u421.u421",	0x80000, 0x52b67ee5, 4 | BRF_GRA },     	  //  5 Background Tiles
+	{ "u425.u425",	0x80000, 0x933544e3, 4 | BRF_GRA },           //  6
+	{ "u420.u420",	0x80000, 0x3565696e, 4 | BRF_GRA }, 		  //  7
+	{ "u426.u426",	0x80000, 0xe458eb9d, 4 | BRF_GRA },		      //  8
 };
 
-STD_ROM_PICK(mspuzzlen)
-STD_ROM_FN(mspuzzlen)
+STD_ROM_PICK(mspuzzlea)
+STD_ROM_FN(mspuzzlea)
 
-struct BurnDriverD BurnDrvMspuzzlen = {
-	"mspuzzlen", "mspuzzle", NULL, NULL, "1994",
-	"Miss Puzzle (Nudes)\0", NULL, "Min Corp.", "Miscellaneous",
+struct BurnDriver BurnDrvMspuzzlea = {
+	"mspuzzlea", "mspuzzle", NULL, NULL, "1994",
+	"Miss Puzzle (Nudes, less explicit)\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, mspuzzlenRomInfo, mspuzzlenRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, mspuzzleaRomInfo, mspuzzleaRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
+	MspuzzleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 320, 3, 4
+};
+
+
+// Miss Puzzle (Nudes, more explicit))
+
+static struct BurnRomInfo mspuzzlebRomDesc[] = {
+	/* all the roms for this set needs a full redump, the PCB was in pretty bad condition and data reads were not consistent */
+//	{ "u1.rom",		0x20000, 0xec940df4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+//	{ "u2.rom",		0x20000, 0x7b9cac82, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u1.u1",		0x40000, 0x5e96ea17, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u2.u2",		0x40000, 0x8f161b0c, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "u210.rom",	0x40000, 0x8826b018, 2 | BRF_SND },  		  //  2 Samples
+
+	{ "u512.bin",	0x40000, 0x505ee3c2, 3 | BRF_GRA },		      //  3 Foreground Tiles
+	{ "u511.bin",	0x40000, 0x3d6b6c78, 3 | BRF_GRA },   		  //  4
+
+	{ "u421.rom",	0x80000, 0x3c567c55, 4 | BRF_GRA },     	  //  5 Background Tiles
+	/* 0x000000-0x3FFFF of u421.rom == 0x000000-0x3FFFF of u421 in mspuzzlea, all other data is corrupt to some degree */
+	{ "u425.rom",	0x80000, 0x1c4c8fc1, 4 | BRF_GRA },           //  6
+	{ "u420.rom",	0x80000, 0xf52ab7fd, 4 | BRF_GRA }, 		  //  7
+	{ "u426.rom",	0x80000, 0xc28b2743, 4 | BRF_GRA },		      //  8
+};
+
+STD_ROM_PICK(mspuzzleb)
+STD_ROM_FN(mspuzzleb)
+
+struct BurnDriver BurnDrvMspuzzleb = {
+	"mspuzzleb", "mspuzzle", NULL, NULL, "1994",
+	"Miss Puzzle (Nudes, more explicit)\0", "imperfect graphics", "Min Corp.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, mspuzzlebRomInfo, mspuzzlebRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
 	MspuzzleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
 };
@@ -720,8 +756,8 @@ struct BurnDriverD BurnDrvMspuzzlen = {
 // Double Point
 
 static struct BurnRomInfo dblpointRomDesc[] = {
-	{ "u1.bin",	0x20000, 0xb05c9e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u2.bin",	0x20000, 0xcab35cbe, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u1.bin",		0x20000, 0xb05c9e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u2.bin",		0x20000, 0xcab35cbe, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "u210.rom",	0x40000, 0xd35f975c, 2 | BRF_SND },           //  2 Samples
 

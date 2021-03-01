@@ -62,11 +62,8 @@ static UINT16 *DrvPriBmp	= NULL;
 
 static struct BurnInputInfo DariusInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort2 + 3, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort0 + 3, "p1 left"   },
@@ -74,6 +71,8 @@ static struct BurnInputInfo DariusInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort2 + 3, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort1 + 3, "p2 left"   },
@@ -112,16 +111,15 @@ STDINPUTINFO(Opwolf)
 
 static struct BurnInputInfo RbislandInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort2 + 4, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort2 + 5, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort2 + 6, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort2 + 7, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL   , TaitoInputPort3 + 5, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 fire 1" },
@@ -157,11 +155,8 @@ STDINPUTINFO(Jumping)
 
 static struct BurnInputInfo RastanInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort3 + 5, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort3 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort3 + 5, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort3 + 3, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort0 + 2, "p1 left"   },
@@ -169,6 +164,8 @@ static struct BurnInputInfo RastanInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort1 + 2, "p2 left"   },
@@ -212,17 +209,16 @@ STDINPUTINFO(Topspeed)
 
 static struct BurnInputInfo VolfiedInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort2 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort2 + 4, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort2 + 5, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort2 + 6, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort3 + 1, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort3 + 2, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 7, "p2 left"   },

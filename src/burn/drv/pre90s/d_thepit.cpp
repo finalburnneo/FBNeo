@@ -7,6 +7,10 @@
 #include "watchdog.h"
 #include "bitswap.h"
 
+// for 2-player / 2-joystick (netplay, etc)
+// note: coctail flipping doesn't work correctly for vertical games in this driver anyway..
+#define NO_COCTAIL_FLIPPING 1
+
 static UINT8 *AllMem;
 static UINT8 *AllRam;
 static UINT8 *MemEnd;
@@ -42,6 +46,7 @@ static INT32 color_prom_size; // suprmous
 static INT32 intrepid = 0;
 static INT32 rtriv = 0;
 static INT32 desertdn = 0;
+static INT32 thepit = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -51,67 +56,75 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo IntrepidInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Intrepid)
 
 static struct BurnInputInfo DockmanInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Dockman)
 
 
 static struct BurnInputInfo RtrivInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
@@ -124,8 +137,8 @@ static struct BurnInputInfo RtrivInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Rtriv)
@@ -345,27 +358,27 @@ STDDIPINFO(Intrepidb)
 
 static struct BurnDIPInfo DockmanDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0x05, NULL			},
+	{0x0f, 0xff, 0xff, 0x05, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x08, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x08, 0x01, 0x03, 0x01, "1 Coin  1 Credits"	},
-	{0x08, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x08, 0x01, 0x03, 0x03, "1 Coin  3 Credits"	},
+	{0x0f, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x0f, 0x01, 0x03, 0x01, "1 Coin  1 Credits"	},
+	{0x0f, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x03, 0x03, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x08, 0x01, 0x0c, 0x00, "2"			},
-	{0x08, 0x01, 0x0c, 0x04, "3"			},
-	{0x08, 0x01, 0x0c, 0x08, "4"			},
-	{0x08, 0x01, 0x0c, 0x0c, "5"			},
+	{0x0f, 0x01, 0x0c, 0x00, "2"			},
+	{0x0f, 0x01, 0x0c, 0x04, "3"			},
+	{0x0f, 0x01, 0x0c, 0x08, "4"			},
+	{0x0f, 0x01, 0x0c, 0x0c, "5"			},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x08, 0x01, 0x10, 0x00, "10000"		},
-	{0x08, 0x01, 0x10, 0x10, "30000"		},
+	{0x0f, 0x01, 0x10, 0x00, "10000"		},
+	{0x0f, 0x01, 0x10, 0x10, "30000"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x08, 0x01, 0x20, 0x00, "Upright"		},
-	{0x08, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0x0f, 0x01, 0x20, 0x00, "Upright"		},
+	{0x0f, 0x01, 0x20, 0x20, "Cocktail"		},
 };
 
 STDDIPINFO(Dockman)
@@ -498,7 +511,7 @@ static UINT8 rtriv_question_read(UINT16 offset)
 static UINT8 __fastcall thepit_main_read(UINT16 address)
 {
 	if ((address & 0xf000) == 0x4000) {
-		bprintf(0, _T("read %X. "), address);
+		//bprintf(0, _T("read %X. "), address);
 		return rtriv_question_read(address & 0xfff);
 	}
 
@@ -799,6 +812,7 @@ static INT32 DrvExit()
 	intrepid = 0;
 	rtriv = 0;
 	desertdn = 0;
+	thepit = 0;
 
 	return 0;
 }
@@ -887,7 +901,7 @@ static void draw_sprites(INT32 priority)
 
 	INT32 bank = (sprite_bank * 0x100) + (graphics_bank * 0x100);
 
-	if (flipscreen[0]) {
+	if (flipscreen[0] && !NO_COCTAIL_FLIPPING) {
 		if (desertdn)
 			GenericTilesSetClip(0*8+1, 24*8-1, 2*8, 30*8-1);
 		else
@@ -899,6 +913,16 @@ static void draw_sprites(INT32 priority)
 			GenericTilesSetClip(2*8+1, 32*8-1, 0*8, 28*8-1);
 	}
 
+	INT32 xoffs = 0;
+	INT32 yoffs = 0;
+
+	if (flipscreen[0] && thepit) {
+		// thepit in coctail mode has a -2,-2 sprite offset when the
+		// screen flipping bit is set.
+		xoffs = -2;
+		yoffs = -2;
+	}
+
 	for (INT32 offs = 0x20 - 4; offs >= 0; offs -= 4)
 	{
 		if ((DrvSprRAM[offs + 2] & 0x08) == priority)
@@ -908,8 +932,8 @@ static void draw_sprites(INT32 priority)
 				continue;
 			}
 
-			UINT8 sy = 240 - DrvSprRAM[offs];
-			UINT8 sx = DrvSprRAM[offs + 3] + 1;
+			UINT8 sy = (240 - DrvSprRAM[offs]) + xoffs;
+			UINT8 sx = (DrvSprRAM[offs + 3] + 1) + yoffs;
 
 			UINT8 flipx = DrvSprRAM[offs + 1] & 0x40;
 			UINT8 flipy = DrvSprRAM[offs + 1] & 0x80;
@@ -917,16 +941,18 @@ static void draw_sprites(INT32 priority)
 			INT32 code = (DrvSprRAM[offs + 1] & 0x3f) * 4 + bank;
 			INT32 color = DrvSprRAM[offs + 2] & color_mask;
 
-			if (flipscreen[1])
-			{
-				sy = 240 - sy;
-				flipy = !flipy;
-			}
+			if (!NO_COCTAIL_FLIPPING) {
+				if (flipscreen[1])
+				{
+					sy = 240 - sy;
+					flipy = !flipy;
+				}
 
-			if (flipscreen[0])
-			{
-				sx = 242 - sx;
-				flipx = !flipx;
+				if (flipscreen[0])
+				{
+					sx = 242 - sx;
+					flipx = !flipx;
+				}
 			}
 
 			if (offs < 16) sy++;	// sprites 0-3 are drawn one pixel down
@@ -946,10 +972,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	INT32 xshift = flipscreen[0] ? 128 : 0;
-	INT32 yshift = flipscreen[1] ? -8 : 0;
+	INT32 xshift = 0;
+	INT32 yshift = 0;
 
-	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
+	if (!NO_COCTAIL_FLIPPING) {
+		xshift = flipscreen[0] ? 128 : 0;
+		yshift = flipscreen[1] ? -8 : 0;
+		GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
+	}
 
 	GenericTilemapSetScrollX(0, xshift);
 	GenericTilemapSetScrollX(1, xshift);
@@ -1086,13 +1116,19 @@ static struct BurnRomInfo thepitRomDesc[] = {
 STD_ROM_PICK(thepit)
 STD_ROM_FN(thepit)
 
+static INT32 thepitInit()
+{
+	thepit = 1;
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvThepit = {
 	"thepit", NULL, NULL, NULL, "1982",
 	"The Pit\0", NULL, "Zilec Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, thepitRomInfo, thepitRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
 
@@ -1123,7 +1159,7 @@ struct BurnDriver BurnDrvThepitu1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, thepitu1RomInfo, thepitu1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
 
@@ -1154,7 +1190,7 @@ struct BurnDriver BurnDrvThepitu2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, thepitu2RomInfo, thepitu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
 
@@ -1186,7 +1222,7 @@ struct BurnDriver BurnDrvThepitj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, thepitjRomInfo, thepitjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
 
@@ -1756,7 +1792,7 @@ struct BurnDriverD BurnDrvRtriv = {
 	"rtriv", NULL, NULL, NULL, "198?",
 	"Romar Triv\0", "Incorrect colors", "Romar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, rtrivRomInfo, rtrivRomName, NULL, NULL, NULL, NULL, RtrivInputInfo, RtrivDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4

@@ -76,7 +76,7 @@ static UINT32 opCVTSW(void)
 
 	// Convert to UINT32
 	val = u2f(f2Op1);
-	modWriteValW = (UINT32)val;
+	modWriteValW = (INT32)val;
 
 	_OV=0;
 	_CY=(val < 0.0f);

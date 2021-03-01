@@ -792,6 +792,7 @@ static UINT8 __fastcall sparkman_read(UINT16 address)
 			return DrvDips[address & 1];
 
 		case 0xc080:
+		case 0xc081:
 			return (DrvInputs[2] & 0x3) | (vblank ? 0x40 : 0);
 
 		case 0xc0a3:

@@ -59,6 +59,8 @@ static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 static UINT8 DrvNMI = 0;
 
+static UINT8 dip_changed;
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -123,6 +125,10 @@ static struct BurnDIPInfo MSXDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Tape Side"	},
 	{0x17, 0x01, 0x40, 0x00, "Side A"	},
 	{0x17, 0x01, 0x40, 0x40, "Side B"	},
+
+	{0   , 0xfe, 0,       2, "Sprite Limit"	},
+	{0x17, 0x01, 0x08, 0x00, "Enabled"				},
+	{0x17, 0x01, 0x08, 0x08, "Disabled (hack)"				},
 };
 
 static struct BurnDIPInfo MSXDefaultDIPList[]=
@@ -1325,6 +1331,8 @@ static INT32 DrvDoReset()
 	K051649Reset();
 	DACReset();
 
+	dip_changed = DrvDips[0];
+
 	return 0;
 }
 
@@ -1463,6 +1471,8 @@ static INT32 DrvInit()
 	DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
+	TMS9928ASetSpriteslimit((DrvDips[0] & 0x08) ? 0 : 1);
+	bprintf(0, _T("Sprite Limit: %S\n"), (DrvDips[0] & 0x08) ? "Disabled" : "Enabled");
 
 	ppi8255_init(1);
 	ppi8255_set_read_ports(0, NULL, msx_ppi8255_portB_read, NULL);
@@ -1559,6 +1569,12 @@ static INT32 DrvFrame()
 			keyInput(0xf9, DrvJoy4[10]); // Key DOWN
 			keyInput(0xfa, DrvJoy4[11]); // Key LEFT
 			keyInput(0xfb, DrvJoy4[12]); // Key RIGHT
+		}
+
+		if ((dip_changed ^ DrvDips[0]) & 0x08) {
+			TMS9928ASetSpriteslimit((DrvDips[0] & 0x08) ? 0 : 1);
+			bprintf(0, _T("Sprite Limit: %S\n"), (DrvDips[0] & 0x08) ? "Disabled" : "Enabled");
+			dip_changed = DrvDips[0];
 		}
 	}
 

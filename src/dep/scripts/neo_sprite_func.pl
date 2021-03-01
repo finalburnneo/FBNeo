@@ -20,7 +20,7 @@ unless ( $OutfileFun ) {
 }
 
 $OutfileTab = $OutfileFun;
-$OutfileTab =~ s/(\.\w+)/_table$1/;
+$OutfileTab =~ s/(\.\w+)$/_table$1/;
 
 open( OUTFILEFUN, ">$OutfileFun" ) or die "\nError: Couldn't open OUTPUT file $OutfileFun: $!";
 open( OUTFILETAB, ">$OutfileTab" ) or die "\nError: Couldn't open OUTPUT file $OutfileTab: $!";

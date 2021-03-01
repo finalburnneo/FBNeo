@@ -179,9 +179,9 @@ static struct BurnInputInfo HbarrelInputList[] =
 	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
 	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3 (Rotate)"   , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0,  "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1,  "p1 rotate right" },
-	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 	
 	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
 	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
@@ -191,9 +191,9 @@ static struct BurnInputInfo HbarrelInputList[] =
 	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
 	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
 	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3 (Rotate)"   , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 	{"P2 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 2,  "p2 rotate left" },
 	{"P2 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 3,  "p2 rotate right" },
-	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
@@ -242,9 +242,9 @@ static struct BurnInputInfo MidresInputList[] =
 	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
+	{"P1 Fire 4 (Rotate)"   , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 4" },
 	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0,  "p1 rotate left" },
 	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1,  "p1 rotate right" },
-	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 	
 	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
 	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
@@ -255,9 +255,9 @@ static struct BurnInputInfo MidresInputList[] =
 	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
 	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
 	{"P2 Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
+	{"P2 Fire 4 (Rotate)"   , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 4" },
 	{"P2 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 2,  "p2 rotate left" },
 	{"P2 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 3,  "p2 rotate right" },
-	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
@@ -1081,7 +1081,7 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 	
 	{ "eg08.2c",            0x10000, 0x92f2c916, BRF_SND },				// 21	Samples
 	
-	{ "eg31.9a",            0x01000, 0xc3f6bc70, BRF_OPT },				// 22	I8751
+	{ "eg31.9a",            0x01000, 0x657aab2d, BRF_OPT },				// 22	I8751
 	
 	{ "mb7116e.12c",		0x00200, 0x86e775f8, BRF_OPT }, 			// 23 PROMs
 	{ "mb7122e.17e",		0x00400, 0xa5cda23e, BRF_OPT }, 			// 24
@@ -2491,10 +2491,6 @@ static UINT8 mcu_read_port(INT32 port)
 			return i8751Command >> 8;
 		if (~i8751PortData[2] & 0x20)
 			return i8751Command & 0xff;
-		if (~i8751PortData[2] & 0x40)
-			return i8751RetVal >> 8;
-		if (~i8751PortData[2] & 0x80)
-			return i8751RetVal & 0xff;
 	}
 
 	return 0xff;
@@ -2528,8 +2524,8 @@ static void mcu_write_port(INT32 port, UINT8 data)
 
 static void DrvMCUInit()
 {
-	mcs51_program_data = DrvMCURom;
-	mcs51_init ();
+	mcs51_init();
+	mcs51_set_program_data(DrvMCURom);
 	mcs51_set_write_handler(mcu_write_port);
 	mcs51_set_read_handler(mcu_read_port);
 

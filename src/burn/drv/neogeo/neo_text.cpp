@@ -283,23 +283,23 @@ void NeoSetTextSlot(INT32 nSlot)
 
 static void NeoTextBlendInit(INT32 nSlot)
 {
-	char filename[256];
+	TCHAR filename[MAX_PATH];
 
-	sprintf (filename, "support/blend/%s.blde", BurnDrvGetTextA(DRV_NAME));
+	_stprintf(filename, _T("%s%s.blde"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
 
-	FILE *fa = fopen(filename, "rt");
+	FILE *fa = _tfopen(filename, _T("rt"));
 
 	if (fa == NULL) {
-		sprintf (filename, "support/blend/%s.blde", BurnDrvGetTextA(DRV_PARENT));
+		_stprintf(filename, _T("%s%s.blde"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
 
-		fa = fopen(filename, "rt");
+		fa = _tfopen(filename, _T("rt"));
 
 		if (fa == NULL) {
 			return;
 		}
 	}
 
-	bprintf (PRINT_IMPORTANT, _T("Using text blending (.bld) table!\n"));
+	bprintf (PRINT_IMPORTANT, _T("Using text blending (.blde) table!\n"));
 
 	char szLine[64];
 

@@ -561,7 +561,7 @@ static void draw_bitmap(INT32 line)
 
 	for (INT32 y = lastline + SCREEN_START_OFFSET; y < line + SCREEN_START_OFFSET; y++)
 	{
-		if ((y - SCREEN_START_OFFSET) > nScreenHeight) continue;
+		if ((y - SCREEN_START_OFFSET) >= nScreenHeight) continue;
 		if ((y - SCREEN_START_OFFSET) < 0) continue;
 		UINT16 *dst = pTransDraw + (y - SCREEN_START_OFFSET) * nScreenWidth;
 		UINT16 *mosrc = DrvTempDraw + (y - SCREEN_START_OFFSET) * nScreenWidth;

@@ -125,6 +125,7 @@ private:
     bool check_breakpoint();
 #endif
     void tlb_init();
+    void tlb_exit();
     void tlb_flush();
     void cop0_reset();
     void cop0_execute(uint32_t opcode);

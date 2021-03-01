@@ -142,6 +142,14 @@ static struct BurnRomInfo SlapshotRomDesc[] = {
 	{ "d71-01.23",             0x100000, 0x0b1e8c27, BRF_GRA },
 	{ "d71-02.24",             0x100000, 0xccaaea2d, BRF_GRA },
 	{ "d71-03.25",             0x100000, 0xdccef9ec, BRF_GRA },
+	
+	//  Pals (not dumped)
+//  { "d71-08.40",  		   0x000000, 0x00000000, BRF_NODUMP },
+//  { "d71-09.57",  		   0x000000, 0x00000000, BRF_NODUMP },
+//  { "d71-10.60",  		   0x000000, 0x00000000, BRF_NODUMP },
+//  { "d71-11.42",  		   0x000000, 0x00000000, BRF_NODUMP },
+//  { "d71-12.59",  		   0x000000, 0x00000000, BRF_NODUMP },
+//  { "d71-13.8",   		   0x000000, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(Slapshot)
@@ -190,6 +198,28 @@ static struct BurnRomInfo Opwolf3uRomDesc[] = {
 
 STD_ROM_PICK(Opwolf3u)
 STD_ROM_FN(Opwolf3u)
+
+static struct BurnRomInfo Opwolf3jRomDesc[] = {
+	{ "d74_16.3",              0x080000, 0x198ff1f6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "d74_15.1",              0x080000, 0xa6015c65, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "d74_18.18",             0x080000, 0xbd5d7cdb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "d74_17.17",             0x080000, 0xac35a672, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "d74_19.77",             0x010000, 0x05d53f06, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "d74_05.80",             0x200000, 0x85ea64cc, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "d74_06.81",             0x200000, 0x2fa1e08d, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "d74_01.37",             0x200000, 0x115313e0, BRF_SND | TAITO_YM2610A },
+	
+	// Sprites - handled manually
+	{ "d74_02.23",             0x200000, 0xaab86332, BRF_GRA },
+	{ "d74_03.24",             0x200000, 0x3f398916, BRF_GRA },
+	{ "d74_04.25",             0x200000, 0x2f385638, BRF_GRA },
+};
+
+STD_ROM_PICK(Opwolf3j)
+STD_ROM_FN(Opwolf3j)
 
 static INT32 MemIndex()
 {
@@ -952,6 +982,16 @@ struct BurnDriver BurnDrvOpwolf3u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, Opwolf3uRomInfo, Opwolf3uRomName, NULL, NULL, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
+	Opwolf3Init, SlapshotExit, SlapshotFrame, SlapshotDraw, Opwolf3Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOpwolf3j = {
+	"opwolf3j", "opwolf3", NULL, NULL, "1994",
+	"Operation Wolf 3 (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, Opwolf3jRomInfo, Opwolf3jRomName, NULL, NULL, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
 	Opwolf3Init, SlapshotExit, SlapshotFrame, SlapshotDraw, Opwolf3Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

@@ -1,9 +1,9 @@
 // Define macros for appliction title and description
 #ifdef FBNEO_DEBUG
- #define APP_TITLE "FinalBurn Neo [DEBUG]"
+ #define APP_TITLE "Fightcade FBNeo [DEBUG]"
 #else
- #define APP_TITLE "FinalBurn Neo"
+ #define APP_TITLE "Fightcade FBNeo"
 #endif
 
-#define APP_DESCRIPTION "Emulator for arcade games"
+#define APP_DESCRIPTION "Fightcade FBNeo - Online Retro Gaming"
 

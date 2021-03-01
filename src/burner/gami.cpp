@@ -2,8 +2,8 @@
 #include "burner.h"
 
 // Player Default Controls
-INT32 nPlayerDefaultControls[4] = {0, 1, 2, 3};
-TCHAR szPlayerDefaultIni[4][MAX_PATH] = { _T(""), _T(""), _T(""), _T("") };
+INT32 nPlayerDefaultControls[5] = {0, 1, 2, 3, 4};
+TCHAR szPlayerDefaultIni[5][MAX_PATH] = { _T(""), _T(""), _T(""), _T(""), _T("") };
 
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
@@ -21,9 +21,11 @@ bool bLeftAltkeyMapped = false;
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
 UINT8 macroSystemFFWD = 0;
+UINT8 macroSystemFrame = 0;
 UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
+UINT8 macroSystemBoostCPU = 0;
 
 #define HW_NEOGEO ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) )
 
@@ -164,12 +166,14 @@ static void GameInpInitMacros()
 	struct GameInp* pgi;
 	struct BurnInputInfo bii;
 
-	INT32 nPunchx3[4] = {0, 0, 0, 0};
-	INT32 nPunchInputs[4][3];
-	INT32 nKickx3[4] = {0, 0, 0, 0};
-	INT32 nKickInputs[4][3];
+	INT32 nPunchx3[5] = {0, 0, 0, 0, 0};
+	INT32 nPunchInputs[5][3];
+	INT32 nKickx3[5] = {0, 0, 0, 0, 0};
+	INT32 nKickInputs[5][3];
+	INT32 nAttackx3[5] = {0, 0, 0, 0, 0};
+	INT32 nAttackInputs[5][3];
 
-	INT32 nNeogeoButtons[4][4];
+	INT32 nNeogeoButtons[5][4];
 	INT32 nPgmButtons[10][16];
 
 	bStreetFighterLayout = false;
@@ -204,6 +208,7 @@ static void GameInpInitMacros()
 				}
 			}
 
+			// 3x punch
 			if (_stricmp(" Weak Punch", bii.szName + 2) == 0) {
 				nPunchx3[nPlayer] |= 1;
 				nPunchInputs[nPlayer][0] = i;
@@ -216,6 +221,8 @@ static void GameInpInitMacros()
 				nPunchx3[nPlayer] |= 4;
 				nPunchInputs[nPlayer][2] = i;
 			}
+
+			// 3x kick
 			if (_stricmp(" Weak Kick", bii.szName + 2) == 0) {
 				nKickx3[nPlayer] |= 1;
 				nKickInputs[nPlayer][0] = i;
@@ -227,6 +234,20 @@ static void GameInpInitMacros()
 			if (_stricmp(" Strong Kick", bii.szName + 2) == 0) {
 				nKickx3[nPlayer] |= 4;
 				nKickInputs[nPlayer][2] = i;
+			}
+
+			// 3x attack
+			if (_stricmp(" Weak Attack", bii.szName + 2) == 0) {
+				nAttackx3[nPlayer] |= 1;
+				nAttackInputs[nPlayer][0] = i;
+			}
+			if (_stricmp(" Medium Attack", bii.szName + 2) == 0) {
+				nAttackx3[nPlayer] |= 2;
+				nAttackInputs[nPlayer][1] = i;
+			}
+			if (_stricmp(" Strong Attack", bii.szName + 2) == 0) {
+				nAttackx3[nPlayer] |= 4;
+				nAttackInputs[nPlayer][2] = i;
 			}
 
 			if (HW_NEOGEO) {
@@ -295,6 +316,16 @@ static void GameInpInitMacros()
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
 			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Frame");
+			pgi->Macro.pVal[0] = &macroSystemFrame;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
 			sprintf(pgi->Macro.szName, "System Load State");
 			pgi->Macro.pVal[0] = &macroSystemLoadState;
 			pgi->Macro.nVal[0] = 1;
@@ -320,7 +351,21 @@ static void GameInpInitMacros()
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;
+
+			/*
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "Boost CPU Speed");
+			pgi->Macro.pVal[0] = &macroSystemBoostCPU;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+			*/
 	}
+	
+	if (!kNetGame)
 	{ // Autofire!!!
 			for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
 				for (INT32 i = 0; i < nFireButtons; i++) {
@@ -356,7 +401,7 @@ static void GameInpInitMacros()
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
 
-			sprintf(pgi->Macro.szName, "P%i 3× Punch", nPlayer + 1);
+			sprintf(pgi->Macro.szName, "P%i 3x Punch", nPlayer + 1);
 			for (INT32 j = 0; j < 3; j++) {
 				BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][j]);
 				pgi->Macro.pVal[j] = bii.pVal;
@@ -372,9 +417,25 @@ static void GameInpInitMacros()
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
 
-			sprintf(pgi->Macro.szName, "P%i 3× Kick", nPlayer + 1);
+			sprintf(pgi->Macro.szName, "P%i 3x Kick", nPlayer + 1);
 			for (INT32 j = 0; j < 3; j++) {
 				BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][j]);
+				pgi->Macro.pVal[j] = bii.pVal;
+				pgi->Macro.nVal[j] = 1;
+			}
+
+			nMacroCount++;
+			pgi++;
+		}
+
+		if (nAttackx3[nPlayer] == 7) {		// Create a 3x attack macro
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+
+			sprintf(pgi->Macro.szName, "P%i 3x Attack", nPlayer + 1);
+			for (INT32 j = 0; j < 3; j++) {
+				BurnDrvGetInputInfo(&bii, nAttackInputs[nPlayer][j]);
 				pgi->Macro.pVal[j] = bii.pVal;
 				pgi->Macro.nVal[j] = 1;
 			}
@@ -713,6 +774,7 @@ static void GameInpInitMacros()
 	if ((nPunchx3[0] == 7) && (nKickx3[0] == 7)) {
 		bStreetFighterLayout = true;
 	}
+
 	if (nFireButtons >= 7 && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) {
 		// used to be 5 buttons in the above check - now we have volume buttons it is 7
 		bStreetFighterLayout = true;
@@ -1642,6 +1704,8 @@ INT32 ConfigGameLoadHardwareDefaults()
 {
 	TCHAR *szDefaultCpsFile = _T("config/presets/cps.ini");
 	TCHAR *szDefaultNeogeoFile = _T("config/presets/neogeo.ini");
+	TCHAR *szDefaultNESFile = _T("config/presets/nes.ini");
+	TCHAR *szDefaultFDSFile = _T("config/presets/fds.ini");
 	TCHAR *szDefaultPgmFile = _T("config/presets/pgm.ini");
 	TCHAR *szFileName = _T("");
 	INT32 nApplyHardwareDefaults = 0;
@@ -1655,6 +1719,16 @@ INT32 ConfigGameLoadHardwareDefaults()
 
 	if (nHardwareFlag == HARDWARE_SNK_NEOGEO || nHardwareFlag == HARDWARE_SNK_NEOCD) {
 		szFileName = szDefaultNeogeoFile;
+		nApplyHardwareDefaults = 1;
+	}
+
+	if (nHardwareFlag == HARDWARE_NES) {
+		szFileName = szDefaultNESFile;
+		nApplyHardwareDefaults = 1;
+	}
+
+	if (nHardwareFlag == HARDWARE_FDS) {
+		szFileName = szDefaultFDSFile;
 		nApplyHardwareDefaults = 1;
 	}
 
@@ -1828,4 +1902,3 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite)
 {
 	return AddCustomMacro(szVal, bOverWrite);
 }
-

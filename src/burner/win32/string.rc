@@ -204,6 +204,8 @@ BEGIN
 	IDS_SEL_COLECO				"ColecoVision"
 	IDS_SEL_GG					"Game Gear"
 	IDS_SEL_MSX					"MSX"
+	IDS_SEL_NES                 "NES"
+	IDS_SEL_FDS                 "FDS"
 	IDS_SEL_SPECTRUM			"ZX Spectrum"
 	IDS_SEL_MIDWAY				"Midway"
 	IDS_SEL_CAPCOM_GRP			"Capcom"
@@ -322,6 +324,7 @@ BEGIN
 	IDS_HARDWARE				"Hardware"
 	IDS_EMPTY					"Empty"
 	IDS_UNIDENTIFIED_CD			"Unidentified CD"
+	IDS_RUNAHEAD_WARNING		"Run ahead is a CPU intensive feature! Make sure you have a decent CPU with good single core performace (i5 or better) if you plan to use it online. Otherwise netplay will be affected and you can get not so smooth online games, even with good connections."
 
 	IDS_ERR_ERROR				"Error"
     IDS_ERR_WARNING				"Warning"
@@ -356,12 +359,12 @@ BEGIN
 
 	IDS_ERR_UI_NOSUPPORT		"%.32s is not supported by %.32s."
 	IDS_ERR_UI_WINDOW			"Couldn't create main window."
-	IDS_ERR_UI_MODULE			"Couldn't intialise '%s' module."
+	IDS_ERR_UI_MODULE			"Couldn't initialise '%s' module."
 	IDS_ERR_UI_TRIPLE			"Couldn't create a triple buffer."
 	IDS_ERR_UI_FULL_NOMODE		"No appropriate display mode supported. Please adjust your full-screen settings."
 	IDS_ERR_UI_FULL_PROBLEM		"Problem setting '%dx%dx%dbpp (%dHz)' display mode"
 	IDS_ERR_UI_FULL_CUSTRES		"\n\nThis is not a standard VGA resolution; please make sure it is supported by your video card."
-	IDS_ERR_UI_VID_MODULE		"Couldn't intialise '%s' module. Try installing the Direct X End User runtimes (June 2010)."
+	IDS_ERR_UI_VID_MODULE		"Couldn't initialise '%s' module. Try installing the Direct X End User runtimes (June 2010)."
 
 	IDS_ERR_DISK_CREATE			"Error creating "
 	IDS_ERR_DISK_LOAD			"Error loading "
@@ -369,7 +372,6 @@ BEGIN
 	IDS_ERR_DISK_TOONEW			" does not work with this version of %s."
 	IDS_ERR_DISK_TOOOLD			" requires a more recent version of %s, please upgrade."
 
-	IDS_ERR_NO_NETPLAYDLL		"Error finding 'kailleraclient.dll'."
 	IDS_ERR_NO_DRIVER_SELECTED	"No driver has been selected from the list."
 	IDS_ERR_NO_DRIVER_SEL_SLOT1	"No driver has been selected for slot 1."
 	IDS_ERR_NON_WORKING			"This game isn't working. Load it anyway?"

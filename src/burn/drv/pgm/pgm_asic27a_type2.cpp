@@ -17,11 +17,8 @@ static UINT8 asic27a_to_68k = 0;
 
 static inline void pgm_cpu_sync()
 {
-	INT32 nCycles = SekTotalCycles() - Arm7TotalCycles();
-
-	if (nCycles > 100) {
-		Arm7Run(nCycles);
-	}
+	while (SekTotalCycles() > Arm7TotalCycles())
+		Arm7Run(SekTotalCycles() - Arm7TotalCycles());
 }
 
 static void __fastcall asic27a_write_byte(UINT32 address, UINT8 data)

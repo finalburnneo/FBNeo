@@ -36,65 +36,67 @@ static UINT8 dealer_hw = 0;
 static int watchdog;
 
 static struct BurnInputInfo MegadonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 4,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Megadon)
 
 static struct BurnInputInfo SuprglobInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 4,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Suprglob)
 
 static struct BurnInputInfo Revngr84InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,     "diag"		},
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,	"diag"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Revngr84)
 
 static struct BurnInputInfo DealerInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
@@ -102,9 +104,9 @@ static struct BurnInputInfo DealerInputList[] = {
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 5"	},
 	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Dealer)
@@ -112,38 +114,38 @@ STDINPUTINFO(Dealer)
 
 static struct BurnDIPInfo MegadonDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0x28, NULL				},
-	{0x08, 0xff, 0xff, 0xfe, NULL				},
+	{0x08, 0xff, 0xff, 0x28, NULL				},
+	{0x09, 0xff, 0xff, 0xfe, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x07, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
-	{0x07, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+	{0x08, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x08, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
 
 	{0   , 0xfe, 0   ,    2, "Fuel Consumption"		},
-	{0x07, 0x01, 0x02, 0x00, "Slow"				},
-	{0x07, 0x01, 0x02, 0x02, "Fast"				},
+	{0x08, 0x01, 0x02, 0x00, "Slow"				},
+	{0x08, 0x01, 0x02, 0x02, "Fast"				},
 
 	{0   , 0xfe, 0   ,    2, "Rotation"			},
-	{0x07, 0x01, 0x04, 0x04, "Slow"				},
-	{0x07, 0x01, 0x04, 0x00, "Fast"				},
+	{0x08, 0x01, 0x04, 0x04, "Slow"				},
+	{0x08, 0x01, 0x04, 0x00, "Fast"				},
 
 	{0   , 0xfe, 0   ,    2, "ERG"				},
-	{0x07, 0x01, 0x08, 0x08, "Easy"				},
-	{0x07, 0x01, 0x08, 0x00, "Hard"				},
+	{0x08, 0x01, 0x08, 0x08, "Easy"				},
+	{0x08, 0x01, 0x08, 0x00, "Hard"				},
 
 	{0   , 0xfe, 0   ,    2, "Enemy Fire Rate"		},
-	{0x07, 0x01, 0x20, 0x20, "Slow"				},
-	{0x07, 0x01, 0x20, 0x00, "Fast"				},
+	{0x08, 0x01, 0x20, 0x20, "Slow"				},
+	{0x08, 0x01, 0x20, 0x00, "Fast"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x07, 0x01, 0x50, 0x00, "3"				},
-	{0x07, 0x01, 0x50, 0x10, "4"				},
-	{0x07, 0x01, 0x50, 0x40, "5"				},
-	{0x07, 0x01, 0x50, 0x50, "6"				},
+	{0x08, 0x01, 0x50, 0x00, "3"				},
+	{0x08, 0x01, 0x50, 0x10, "4"				},
+	{0x08, 0x01, 0x50, 0x40, "5"				},
+	{0x08, 0x01, 0x50, 0x50, "6"				},
 
 	{0   , 0xfe, 0   ,    2, "Game Mode"			},
-	{0x07, 0x01, 0x80, 0x00, "Arcade"			},
-	{0x07, 0x01, 0x80, 0x80, "Contest"			},
+	{0x08, 0x01, 0x80, 0x00, "Arcade"			},
+	{0x08, 0x01, 0x80, 0x80, "Contest"			},
 };
 
 STDDIPINFO(Megadon)
@@ -151,104 +153,140 @@ STDDIPINFO(Megadon)
 static struct BurnDIPInfo SuprglobDIPList[]=
 {
 	// Default Values
-	{0x09, 0xff, 0xff, 0x00, NULL				},
-	{0x0A, 0xff, 0xff, 0xbe, NULL				},
+	{0x0a, 0xff, 0xff, 0x00, NULL				},
+	{0x0b, 0xff, 0xff, 0xbe, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x09, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
-	{0x09, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+	{0x0a, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x0a, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
-	{0x09, 0x01, 0x08, 0x00, "10000 + Difficulty * 10000"	},
-	{0x09, 0x01, 0x08, 0x08, "90000 + Difficulty * 10000"	},
+	{0x0a, 0x01, 0x08, 0x00, "10000 + Difficulty * 10000"	},
+	{0x0a, 0x01, 0x08, 0x08, "90000 + Difficulty * 10000"	},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"			},
-	{0x09, 0x01, 0x26, 0x00, "1"				},
-	{0x09, 0x01, 0x26, 0x02, "2"				},
-	{0x09, 0x01, 0x26, 0x20, "3"				},
-	{0x09, 0x01, 0x26, 0x22, "4"				},
-	{0x09, 0x01, 0x26, 0x04, "5"				},
-	{0x09, 0x01, 0x26, 0x06, "6"				},
-	{0x09, 0x01, 0x26, 0x24, "7"				},
-	{0x09, 0x01, 0x26, 0x26, "8"				},
+	{0x0a, 0x01, 0x26, 0x00, "1"				},
+	{0x0a, 0x01, 0x26, 0x02, "2"				},
+	{0x0a, 0x01, 0x26, 0x20, "3"				},
+	{0x0a, 0x01, 0x26, 0x22, "4"				},
+	{0x0a, 0x01, 0x26, 0x04, "5"				},
+	{0x0a, 0x01, 0x26, 0x06, "6"				},
+	{0x0a, 0x01, 0x26, 0x24, "7"				},
+	{0x0a, 0x01, 0x26, 0x26, "8"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x09, 0x01, 0x50, 0x00, "3"				},
-	{0x09, 0x01, 0x50, 0x10, "4"				},
-	{0x09, 0x01, 0x50, 0x40, "5"				},
-	{0x09, 0x01, 0x50, 0x50, "6"				},
+	{0x0a, 0x01, 0x50, 0x00, "3"				},
+	{0x0a, 0x01, 0x50, 0x10, "4"				},
+	{0x0a, 0x01, 0x50, 0x40, "5"				},
+	{0x0a, 0x01, 0x50, 0x50, "6"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x09, 0x01, 0x80, 0x80, "Off"				},
-	{0x09, 0x01, 0x80, 0x00, "On"				},
+	{0x0a, 0x01, 0x80, 0x80, "Off"				},
+	{0x0a, 0x01, 0x80, 0x00, "On"				},
 };
 
 STDDIPINFO(Suprglob)
 
 static struct BurnDIPInfo IgmoDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x00, NULL				},
-	{0x0A, 0xff, 0xff, 0xfe, NULL				},
+	{0x0a, 0xff, 0xff, 0x00, NULL				},
+	{0x0b, 0xff, 0xff, 0xfe, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x09, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
-	{0x09, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+	{0x0a, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x0a, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x09, 0x01, 0x22, 0x00, "20000"			},
-	{0x09, 0x01, 0x22, 0x02, "40000"			},
-	{0x09, 0x01, 0x22, 0x20, "60000"			},
-	{0x09, 0x01, 0x22, 0x22, "80000"			},
+	{0x0a, 0x01, 0x22, 0x00, "20000"			},
+	{0x0a, 0x01, 0x22, 0x02, "40000"			},
+	{0x0a, 0x01, 0x22, 0x20, "60000"			},
+	{0x0a, 0x01, 0x22, 0x22, "80000"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x09, 0x01, 0x50, 0x00, "3"				},
-	{0x09, 0x01, 0x50, 0x10, "4"				},
-	{0x09, 0x01, 0x50, 0x40, "5"				},
-	{0x09, 0x01, 0x50, 0x50, "6"				},
+	{0x0a, 0x01, 0x50, 0x00, "3"				},
+	{0x0a, 0x01, 0x50, 0x10, "4"				},
+	{0x0a, 0x01, 0x50, 0x40, "5"				},
+	{0x0a, 0x01, 0x50, 0x50, "6"				},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"			},
-	{0x09, 0x01, 0x8c, 0x00, "1"				},
-	{0x09, 0x01, 0x8c, 0x04, "2"				},
-	{0x09, 0x01, 0x8c, 0x08, "3"				},
-	{0x09, 0x01, 0x8c, 0x0c, "4"				},
-	{0x09, 0x01, 0x8c, 0x80, "5"				},
-	{0x09, 0x01, 0x8c, 0x84, "6"				},
-	{0x09, 0x01, 0x8c, 0x88, "7"				},
-	{0x09, 0x01, 0x8c, 0x8c, "8"				},
+	{0x0a, 0x01, 0x8c, 0x00, "1"				},
+	{0x0a, 0x01, 0x8c, 0x04, "2"				},
+	{0x0a, 0x01, 0x8c, 0x08, "3"				},
+	{0x0a, 0x01, 0x8c, 0x0c, "4"				},
+	{0x0a, 0x01, 0x8c, 0x80, "5"				},
+	{0x0a, 0x01, 0x8c, 0x84, "6"				},
+	{0x0a, 0x01, 0x8c, 0x88, "7"				},
+	{0x0a, 0x01, 0x8c, 0x8c, "8"				},
 };
 
 STDDIPINFO(Igmo)
 
-static struct BurnDIPInfo CatapultDIPList[]=
+static struct BurnDIPInfo EeekkDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x00, NULL				},
-	{0x0A, 0xff, 0xff, 0xfe, NULL				},
+	{0x0a, 0xff, 0xff, 0x00, NULL				},
+	{0x0b, 0xff, 0xff, 0x3e, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x09, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
-	{0x09, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+	{0x0a, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x0a, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x09, 0x01, 0x0c, 0x00, "20000"			},
-	{0x09, 0x01, 0x0c, 0x04, "40000"			},
-	{0x09, 0x01, 0x0c, 0x08, "60000"			},
-	{0x09, 0x01, 0x0c, 0x0c, "80000"			},
-
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x09, 0x01, 0x22, 0x00, "1"				},
-	{0x09, 0x01, 0x22, 0x02, "2"				},
-	{0x09, 0x01, 0x22, 0x20, "3"				},
-	{0x09, 0x01, 0x22, 0x22, "4"				},
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
+	{0x0a, 0x01, 0x26, 0x00, "1 (easy)"			},
+	{0x0a, 0x01, 0x26, 0x02, "2"				},
+	{0x0a, 0x01, 0x26, 0x20, "3"				},
+	{0x0a, 0x01, 0x26, 0x22, "4"				},
+	{0x0a, 0x01, 0x26, 0x04, "5"				},
+	{0x0a, 0x01, 0x26, 0x06, "6"				},
+	{0x0a, 0x01, 0x26, 0x24, "7"				},
+	{0x0a, 0x01, 0x26, 0x26, "8 (Hard)"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x09, 0x01, 0x50, 0x00, "3"				},
-	{0x09, 0x01, 0x50, 0x10, "4"				},
-	{0x09, 0x01, 0x50, 0x40, "5"				},
-	{0x09, 0x01, 0x50, 0x50, "6"				},
+	{0x0a, 0x01, 0x50, 0x00, "3"				},
+	{0x0a, 0x01, 0x50, 0x10, "4"				},
+	{0x0a, 0x01, 0x50, 0x40, "5"				},
+	{0x0a, 0x01, 0x50, 0x50, "6"				},
+
+	{0   , 0xfe, 0   ,    2, "Extra life Range"			},
+	{0x0a, 0x01, 0x08, 0x08, "100000 - 170000 points"	},
+	{0x0a, 0x01, 0x08, 0x00, "20000 - 90000 points"		},
+	
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0a, 0x01, 0x80, 0x80, "Off"				},
+	{0x0a, 0x01, 0x80, 0x00, "On"				},
+};
+
+STDDIPINFO(Eeekk)
+
+static struct BurnDIPInfo CatapultDIPList[]=
+{
+	{0x0a, 0xff, 0xff, 0x00, NULL				},
+	{0x0b, 0xff, 0xff, 0xfe, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"			},
+	{0x0a, 0x01, 0x01, 0x00, "1 Coin 1 Credits "		},
+	{0x0a, 0x01, 0x01, 0x01, "1 Coin 2 Credits "		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x0a, 0x01, 0x0c, 0x00, "20000"			},
+	{0x0a, 0x01, 0x0c, 0x04, "40000"			},
+	{0x0a, 0x01, 0x0c, 0x08, "60000"			},
+	{0x0a, 0x01, 0x0c, 0x0c, "80000"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x0a, 0x01, 0x22, 0x00, "1"				},
+	{0x0a, 0x01, 0x22, 0x02, "2"				},
+	{0x0a, 0x01, 0x22, 0x20, "3"				},
+	{0x0a, 0x01, 0x22, 0x22, "4"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x0a, 0x01, 0x50, 0x00, "3"				},
+	{0x0a, 0x01, 0x50, 0x10, "4"				},
+	{0x0a, 0x01, 0x50, 0x40, "5"				},
+	{0x0a, 0x01, 0x50, 0x50, "6"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x09, 0x01, 0x80, 0x80, "Off"				},
-	{0x09, 0x01, 0x80, 0x00, "On"				},
+	{0x0a, 0x01, 0x80, 0x80, "Off"				},
+	{0x0a, 0x01, 0x80, 0x00, "On"				},
 };
 
 STDDIPINFO(Catapult)
@@ -572,8 +610,9 @@ static INT32 DrvInit()
 	ZetSetOutHandler(epos_write_port);
 	ZetClose();
 
-	AY8910Init(0, 2750000, 0);
+	AY8910Init(0, 687500, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 2750000);
 
 	GenericTilesInit();
 
@@ -617,9 +656,10 @@ static INT32 DealerInit()
 	ZetSetOutHandler(dealer_write_port);
 	ZetClose();
 
-	AY8910Init(0, 2750000, 0);
+	AY8910Init(0, 691200, 0);
 	AY8910SetPorts(0, AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 2750000);
 
 	ppi8255_init(1);
 	ppi8255_set_read_ports(0, DealerPPIReadA, NULL, NULL);
@@ -696,6 +736,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 	}
+	ZetNewFrame(); // for buffered ay8910
 
 	ZetOpen(0);
 	ZetRun(2750000 / 60);
@@ -732,6 +773,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
+		SCAN_VAR(watchdog);
+
 		if (dealer_hw) {
 			ppi8255_scan();
 
@@ -760,7 +803,7 @@ static struct BurnRomInfo megadonRomDesc[] = {
 	{ "2732u04b.bin",   0x1000, 0x9b8b7e92, BRF_ESS | BRF_PRG }, //  6
 	{ "2716u11b.bin",   0x0800, 0x599b8b61, BRF_ESS | BRF_PRG }, //  7
 
-	{ "74s288.bin",     0x0020, 0xc779ea99, BRF_GRA },	     //  8 Color PROM
+	{ "74s288.bin",     0x0020, 0xc779ea99, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(megadon)
@@ -789,7 +832,7 @@ static struct BurnRomInfo catapultRomDesc[] = {
 	{ "co3223.u04",     0x1000, 0x648453bc, BRF_ESS | BRF_PRG }, //  6
 	{ "co3223.u11",     0x0800, 0x08fb8c28, BRF_ESS | BRF_PRG }, //  7
 
-	{ "co3223.u66",     0x0020, 0xe7de76a7, BRF_GRA },	     //  8 Color PROM
+	{ "co3223.u66",     0x0020, 0xe7de76a7, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(catapult)
@@ -847,7 +890,7 @@ static struct BurnRomInfo theglobRomDesc[] = {
 	{ "globu4.bin",	    0x1000, 0x7ee9fdeb, BRF_ESS | BRF_PRG }, //  6
 	{ "globu11.bin",    0x0800, 0x9e05dee3, BRF_ESS | BRF_PRG }, //  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     //  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(theglob)
@@ -876,7 +919,7 @@ static struct BurnRomInfo theglob2RomDesc[] = {
 	{ "611293.u4",	    0x1000, 0xceea0018, BRF_ESS | BRF_PRG }, //  6
 	{ "611293.u11",	    0x0800, 0x6ac83f9b, BRF_ESS | BRF_PRG }, //  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     //  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	     	 //  8 Color PROM
 };
 
 STD_ROM_PICK(theglob2)
@@ -905,7 +948,7 @@ static struct BurnRomInfo theglob3RomDesc[] = {
 	{ "theglob3.u4",    0x1000, 0x81db53ad, BRF_ESS | BRF_PRG },	//  6
 	{ "theglob3.u11",   0x0800, 0x0e2e6359, BRF_ESS | BRF_PRG },	//  7
 
-	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	   	//  8 Color PROM
+	{ "82s123.u66",	    0x0020, 0xf4f6ddc5, BRF_GRA },	   			//  8 Color PROM
 };
 
 STD_ROM_PICK(theglob3)
@@ -946,6 +989,35 @@ struct BurnDriver BurnDrvIgmo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, igmoRomInfo, igmoRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, IgmoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
+	236, 272, 3, 4
+};
+
+
+// Eeekk!
+
+static struct BurnRomInfo eeekkRomDesc[] = {
+	{ "u10_e12063.u10",		0x1000, 0xedd05de2, BRF_ESS | BRF_PRG }, 	//  0 Z80 code
+	{ "u9_e12063.u9",		0x1000, 0x6f57114a, BRF_ESS | BRF_PRG }, 	//  1
+	{ "u8_e12063.u8",		0x1000, 0xbcb0ebbd, BRF_ESS | BRF_PRG }, 	//  2
+	{ "u7_e12063.u7",		0x1000, 0xa0df8f77, BRF_ESS | BRF_PRG }, 	//  3
+	{ "u6_e12063.u6",		0x1000, 0x61953b0a, BRF_ESS | BRF_PRG }, 	//  4
+	{ "u5_e12063.u5",		0x1000, 0x4c22c6d9, BRF_ESS | BRF_PRG }, 	//  5
+	{ "u4_e12063.u4",		0x1000, 0x3d341208, BRF_ESS | BRF_PRG }, 	//  6
+	{ "u11_e12063.u11",		0x0800, 0x417faff0, BRF_ESS | BRF_PRG }, 	//  7
+
+	{ "74s288.u66",			0x0020, 0xf2078c38, BRF_GRA },				//  8 Color Prom 
+};
+
+STD_ROM_PICK(eeekk)
+STD_ROM_FN(eeekk)
+
+struct BurnDriver BurnDrvEeekk = {
+	"eeekk", NULL, NULL, NULL, "1983",
+	"Eeekk!\0", NULL, "Epos Corporation", "EPOS Tristar",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, SuprglobInputInfo, EeekkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
 };

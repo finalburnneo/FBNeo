@@ -200,9 +200,6 @@ static int BlitFXInit()
 
 	RECT rect = { 0, 0, 0, 0 };
 	GetClientScreenRect(hVidWnd, &rect);
-	if (!nVidFullscreen) {
-		rect.top += nMenuHeight;
-	}
 
 	if (nUseBlitter >= FILTER_SUPEREAGLE && nUseBlitter <= FILTER_SUPER_2XSAI) {
 		nVidImageDepth = 16;								// Use 565 format
@@ -291,7 +288,6 @@ static int Init()
 	BlitFXPrim = NULL;								// No primary surface yet
 	BlitFXBack = NULL;
 
-	bVidScanlines = 0;								// !!!
 	nSize = VidSoftFXGetZoom(nUseBlitter);
 
 	// Remember the changes to the display
@@ -301,7 +297,7 @@ static int Init()
 			nZoom = nScreenSize;
 		}
 
-		if (VidSEnterFullscreenMode(nZoom, VidSoftFXCheckDepth(nUseBlitter, 16))) {
+		if (VidSEnterFullscreenMode(nZoom, VidSoftFXCheckDepth(nUseBlitter, nVidDepth))) {
 			Exit();
 			return 1;
 		}
@@ -407,6 +403,11 @@ static int MemToSurf()
 		int nHeight = nGameHeight * nSize;
 
 		pd = VidSurf; ps = Surf;
+
+		if (kNetLua) {
+			FBA_LuaGui((unsigned char*)ddsd.lpSurface,ddsd.dwWidth,ddsd.dwHeight,nVidImageBPP,ddsd.lPitch);
+		}
+
 		for (int y = 0; y < nHeight; y++, pd += nVidPitch, ps += nPitch) {
 			memcpy(pd, ps, nPitch);
 		}
@@ -470,9 +471,6 @@ static int Paint(int bValidate)
 	}
 
 	GetClientScreenRect(hVidWnd, &Dest);
-	if (!nVidFullscreen) {
-		Dest.top += nMenuHeight;
-	}
 
 	if (bVidArcaderes && nVidFullscreen) {
 		Dest.left = (Dest.right + Dest.left) / 2;

@@ -387,7 +387,7 @@ int VidSEnterFullscreenMode(int nZoom, int nDepth)
 	if (FAILED(pDD->SetDisplayMode(nWidth, nHeight, nDepth, nVidRefresh, 0))) {
 		VidSRestoreScreenMode();
 
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), nWidth, nHeight, nDepth, nVidRefresh);
 		if (bVidArcaderes && (nWidth != 320 && nHeight != 240)) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_CUSTRES));
 		}
@@ -453,127 +453,140 @@ bool VidSGetArcaderes(int* pWidth, int* pHeight)
 // - The window size
 int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanlines)
 {
-	int xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
-	int nScrnWidth, nScrnHeight;
-	int nScrnAspectX, nScrnAspectY;
+  int xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
+  int nScrnWidth, nScrnHeight;
+  int nScrnAspectX, nScrnAspectY;
 
-	int nGameAspectX = 4, nGameAspectY = 3;
-	int nWidth = pRect->right - pRect->left;
-	int nHeight = pRect->bottom - pRect->top;
+  int nGameAspectX = 4, nGameAspectY = 3;
+  int nWidth = pRect->right - pRect->left;
+  int nHeight = pRect->bottom - pRect->top;
 
-	if (bVidFullStretch) {								// Arbitrary stretch
-		return 0;
-	}
+  if (bVidFullStretch) {								// Arbitrary stretch
+    return 0;
+  }
 
-	nScrnAspectX = nVidScrnAspectX;
-	nScrnAspectY = nVidScrnAspectY;
+  nScrnAspectX = nVidScrnAspectX;
+  nScrnAspectY = nVidScrnAspectY;
 
-	if (bDrvOkay) {
-		if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1)) {
-			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
-		} else {
-			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
-		}
+  if (bDrvOkay) {
+    if ((BurnDrvGetFlags() & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) && (nVidRotationAdjust & 1)) {
+      BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
+    }
+    else {
+      BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
+    }
 
+    if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidFullscreen && !(nVidRotationAdjust & 1)) {
+      // Using vertically orientated monitor
+      nScrnAspectX = nVidVerScrnAspectX;
+      nScrnAspectY = nVidVerScrnAspectY;
+    }
+  }
 
-		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && nVidFullscreen && !(nVidRotationAdjust & 1)) {
-			// Using vertically orientated monitor
-			nScrnAspectX = nVidVerScrnAspectX;
-			nScrnAspectY = nVidVerScrnAspectY;
-		}
-	}
+  xm = nWidth / nGameWidth;
+  ym = nHeight / nGameHeight;
 
-	xm = nWidth / nGameWidth;
-	ym = nHeight / nGameHeight;
+  if (nVidFullscreen) {
+    nScrnWidth = nVidScrnWidth;
+    nScrnHeight = nVidScrnHeight;
+  }
+  else {
+    nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
+    nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
+  }
 
-	if (nVidFullscreen) {
-		nScrnWidth = nVidScrnWidth;
-		nScrnHeight = nVidScrnHeight;
-	} else {
-		nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
-		nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
-	}
+  if (bVidCorrectAspect && bVidScanlines && ((ym >= 2 && xm) || (ym && xm >= 2 && bVertScanlines))) {	// Correct aspect ratio with scanlines
+    int nWidthScratch, nHeightScratch;
+    if (nGameWidth < nGameHeight && bVertScanlines) {
+      int xmScratch = xm;
+      do {
+        nWidthScratch = nGameWidth * xmScratch;
+        nHeightScratch = nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+        xmScratch--;
+      } while (nHeightScratch > nHeight && xmScratch >= 2);
+      if (nHeightScratch > nHeight) {				// The image is too high
+        if (nGameWidth < nGameHeight) {			// Vertical games
+          nWidth = nHeight * nScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectY);
+        }
+        else {								// Horizontal games
+          nWidth = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
+        }
+      }
+      else {
+        nWidth = nWidthScratch;
+        nHeight = nHeightScratch;
+      }
+    }
+    else {
+      int ymScratch = ym;
+      do {
+        nHeightScratch = nGameHeight * ymScratch;
+        nWidthScratch = nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
+        ymScratch--;
+      } while (nWidthScratch > nWidth && ymScratch >= 2);
+      if (nWidthScratch > nWidth) {				// The image is too wide
+        if (nGameWidth < nGameHeight) {			// Vertical games
+          nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
+        }
+        else {								// Horizontal games
+          nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+        }
+      }
+      else {
+        nWidth = nWidthScratch;
+        nHeight = nHeightScratch;
+      }
+    }
+  }
+  else {
+    if (bVidCorrectAspect) {					// Correct aspect ratio
+      int nWidthScratch;
+      nWidthScratch = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
+      if (nWidthScratch > nWidth) {			// The image is too wide
+        if (nGameWidth < nGameHeight) {		// Vertical games
+          nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
+        }
+        else {							// Horizontal games
+          nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
+        }
+      }
+      else {
+        nWidth = nWidthScratch;
+      }
+    }
+    else {
+      if (xm && ym) {							// Don't correct aspect ratio
+        if (xm > ym) {
+          xm = ym;
+        }
+        else {
+          ym = xm;
+        }
+        nWidth = nGameWidth * xm;
+        nHeight = nGameHeight * ym;
+      }
+      else {
+        if (xm) {
+          nWidth = nGameWidth * xm * nHeight / nGameHeight;
+        }
+        else {
+          if (ym) {
+            nHeight = nGameHeight * ym * nWidth / nGameWidth;
+          }
+        }
+      }
+    }
+  }
 
-	if (bVidCorrectAspect && bVidScanlines && ((ym >= 2 && xm) || (ym && xm >= 2 && bVertScanlines))) {	// Correct aspect ratio with scanlines
-		int nWidthScratch, nHeightScratch;
-		if (nGameWidth < nGameHeight && bVertScanlines) {
-			int xmScratch = xm;
-			do {
-				nWidthScratch = nGameWidth * xmScratch;
-				nHeightScratch = nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
-				xmScratch--;
-			} while (nHeightScratch > nHeight && xmScratch >= 2);
-			if (nHeightScratch > nHeight) {				// The image is too high
-				if (nGameWidth < nGameHeight) {			// Vertical games
-					nWidth = nHeight * nScrnAspectX * nGameAspectX * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectY);
-				} else {								// Horizontal games
-					nWidth = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-				}
-			} else {
-				nWidth = nWidthScratch;
-				nHeight = nHeightScratch;
-			}
-		} else {
-			int ymScratch = ym;
-			do {
-				nHeightScratch = nGameHeight * ymScratch;
-				nWidthScratch = nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-				ymScratch--;
-			} while (nWidthScratch > nWidth && ymScratch >= 2);
-			if (nWidthScratch > nWidth) {				// The image is too wide
-				if (nGameWidth < nGameHeight) {			// Vertical games
-					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
-				} else {								// Horizontal games
-					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
-				}
-			} else {
-				nWidth = nWidthScratch;
-				nHeight = nHeightScratch;
-			}
-		}
-	} else {
-		if (bVidCorrectAspect) {					// Correct aspect ratio
-			int nWidthScratch;
-			nWidthScratch = nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
-			if (nWidthScratch > nWidth) {			// The image is too wide
-				if (nGameWidth < nGameHeight) {		// Vertical games
-					nHeight = nWidth * nScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectX);
-				} else {							// Horizontal games
-					nHeight = nWidth * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
-				}
-			} else {
-				nWidth = nWidthScratch;
-			}
-		} else {
-			if (xm && ym) {							// Don't correct aspect ratio
-				if (xm > ym) {
-					xm = ym;
-				} else {
-					ym = xm;
-				}
-				nWidth = nGameWidth * xm;
-				nHeight = nGameHeight * ym;
-			} else {
-				if (xm) {
-					nWidth = nGameWidth * xm * nHeight / nGameHeight;
-				} else {
-					if (ym) {
-						nHeight = nGameHeight * ym * nWidth / nGameWidth;
-					}
-				}
-			}
-		}
-	}
+  pRect->left = (pRect->right + pRect->left) / 2;
+  pRect->left -= nWidth / 2;
+  pRect->right = pRect->left + nWidth;
 
-	pRect->left = (pRect->right + pRect->left) / 2;
-	pRect->left -= nWidth / 2;
-	pRect->right = pRect->left + nWidth;
+  pRect->top = (pRect->top + pRect->bottom) / 2;
+  pRect->top -= nHeight / 2;
+  pRect->bottom = pRect->top + nHeight;
 
-	pRect->top = (pRect->top + pRect->bottom) / 2;
-	pRect->top -= nHeight / 2;
-	pRect->bottom = pRect->top + nHeight;
-
-	return 0;
+  return 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -597,7 +610,9 @@ static unsigned int nChatTimer;
 static int nChatFontSize;
 static int nChatShadowOffset;
 static int nChatOverFlow;
+
 static bool	bDrawChat;
+static bool bDrawTV = false;
 
 static HFONT EditTextFont = NULL;
 static HFONT EditCursorFont = NULL;
@@ -616,6 +631,7 @@ static HFONT JoystickMsgFont = NULL;
 static IDirectDrawSurface7* pShortMsgSurf = NULL;
 static IDirectDrawSurface7* pStatusSurf = NULL;
 static IDirectDrawSurface7* pChatSurf = NULL;
+static IDirectDrawSurface7* pTVSurf = NULL;
 static IDirectDrawSurface7* pEditSurf = NULL;
 static IDirectDrawSurface7* pTinyMsgSurf = NULL;
 static IDirectDrawSurface7* pJoystickMsgSurf = NULL;
@@ -641,6 +657,18 @@ TCHAR EditText[MAX_CHAT_SIZE + 1] = _T("");
 
 TCHAR OSDMsg[MAX_PATH] = _T("");
 unsigned int nOSDTimer = 0;
+
+static int nSpectator = 0;
+static int nRanked = 0;
+static int nPlayer = 0;
+static int nScore1 = 0;
+static int nScore2 = 0;
+static int nShowStats = 0;
+static TCHAR szPlayer1[64] = { 0 };
+static TCHAR szPlayer2[64] = { 0 };
+static TCHAR szSpectatorCount[256] = { 0 };
+static TCHAR szMatchInfo[256] = { 0 };
+static TCHAR szPing[256] = { 0 };
 
 static BOOL MyTextOut(HDC hdc, int nXStart, int nYStart, LPCTSTR lpString, int cbString, int nShadowOffset, int nColour)
 {
@@ -764,6 +792,11 @@ void VidSExitChat()
 	RELEASE(pChatSurf);
 }
 
+void VidSExitTV()
+{
+	RELEASE(pTVSurf);
+}
+
 static void VidSExitEdit()
 {
 	bEditActive = false;
@@ -784,12 +817,12 @@ void VidSExitOSD()
 {
 	VidSExitTinyMsg();
 	VidSExitJoystickMsg();
-	if (kNetGame) {
-		VidSExitEdit();
-	}
 	VidSExitChat();
 	VidSExitShortMsg();
 	VidSExitStatus();
+	if (kNetGame) {
+		VidSExitEdit();
+	}
 }
 
 static int VidSInitTinyMsg(int /*nFlags*/)
@@ -798,7 +831,7 @@ static int VidSInitTinyMsg(int /*nFlags*/)
 
 	VidSExitTinyMsg();
 
-	TinyMsgFont = CreateFont(12, 0, 0, 0, FW_SEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("MS Sans Serif"));
+	TinyMsgFont = CreateFont(14, 0, 0, 0, FW_SEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
 	VidSTinyMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -833,7 +866,7 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 	VidSExitJoystickMsg();
 
 	//JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
-	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
 	VidSJoystickMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -869,7 +902,7 @@ static int VidSInitShortMsg(int nFlags)
 
 	nShortMsgFlags = nFlags;
 
-	ShortMsgFont = CreateFont(24, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	ShortMsgFont = CreateFont(20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
 	VidSShortMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -905,7 +938,7 @@ static int VidSInitStatus(int nFlags)
 
 	nStatusFlags = nFlags;
 
-	StatusFont = CreateFont(48, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
+	StatusFont = CreateFont(48, 0, 0, 0, FW_NORMAL, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
 	StatusFontTiny = CreateFont(20, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
 	nPrevStatus = -1;
 
@@ -950,13 +983,13 @@ static int VidSInitChat(int /*nFlags*/)
 	}
 
 	//nChatFontSize = nMaxChatFontSize - ((nMaxChatFontSize - nMinChatFontSize) * nFlags) / 4;
-	nChatFontSize = 20; // used for cheat search only at the minute so only used in a window
+	nChatFontSize = 18; // used for cheat search only at the minute so only used in a window
 
-	ChatIDFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	ChatIDFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida.ttf"));
 	if (nChatFontSize > 20) {
-		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
-	} else {
 		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	} else {
+		ChatMainFont = CreateFont(nChatFontSize, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida.ttf"));
 	}
 
 	nChatShadowOffset = (nChatFontSize / 16) + 1;
@@ -997,6 +1030,47 @@ static int VidSInitChat(int /*nFlags*/)
 	return 0;
 }
 
+static int VidSInitTV(int nFlags)
+{
+	DDSURFACEDESC2 ddsd;
+
+	VidSExitTV();
+
+	// create surface to display the text
+	memset(&ddsd, 0, sizeof(ddsd));
+	ddsd.dwSize = sizeof(ddsd);
+	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
+	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
+	if (nVidFullscreen) {
+		RECT rect;
+		GetClientScreenRect(hScrnWnd, &rect);
+		ddsd.dwWidth = rect.right - rect.left;
+		ddsd.dwHeight = rect.bottom - rect.top;
+	} else {
+		extern RECT SystemWorkArea;
+		ddsd.dwWidth = SystemWorkArea.right - SystemWorkArea.left;
+		ddsd.dwHeight = SystemWorkArea.bottom - SystemWorkArea.top;
+	}
+
+	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
+	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
+
+	if (FAILED(pDD->CreateSurface(&ddsd, &pTVSurf, NULL))) {
+#ifdef PRINT_DEBUG_INFO
+		dprintf(_T("  * Error: Couldn't create TV texture.\n"));
+#endif
+		return 1;
+	}
+	DDCOLORKEY		ck = { 0 };
+	ck.dwColorSpaceLowValue = nKeyColour;
+	ck.dwColorSpaceHighValue = nKeyColour;
+	pTVSurf->SetColorKey(DDCKEY_SRCBLT, &ck);
+	VidSClearSurface(pTVSurf, nKeyColour, NULL);
+
+	bDrawTV = true;
+	return 0;
+}
+
 static int VidSInitEdit(int nFlags)
 {
 	DDSURFACEDESC2 ddsd;
@@ -1005,8 +1079,8 @@ static int VidSInitEdit(int nFlags)
 
 	nEditSize = nMaxChatFontSize + 8 - ((nMaxChatFontSize - nMinChatFontSize) * nFlags) / 4;
 
-	EditTextFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
-	EditCursorFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_BOLD, 0, TRUE, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	EditTextFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("8bit.ttf"));
+	EditCursorFont = CreateFont(nEditSize - 8, 0, 0, 0, FW_NORMAL, 0, TRUE, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("8bit.ttf"));
 
 	nEditShadowOffset = ((nEditSize - 8) / 16) + 1;
 
@@ -1058,10 +1132,13 @@ int VidSInitOSD(int nFlags)
 	if (VidSInitShortMsg(nFlags)) {
 		return 1;
 	}
-	if (VidSInitChat(nFlags)) {
+	if (VidSInitTV(nFlags)) {
 		return 1;
 	}
 	if (kNetGame) {
+		if (VidSInitChat(nFlags)) {
+			return 1;
+		}
 		if (VidSInitEdit(nFlags)) {
 			return 1;
 		}
@@ -1122,16 +1199,25 @@ int VidSRestoreOSD()
 		}
 	}
 
-	if (pChatSurf) {
-		if (FAILED(pChatSurf->IsLost())) {
-			if (FAILED(pChatSurf->Restore())) {
-				return 1;
-			}
-			VidSClearSurface(pChatSurf, nKeyColour, NULL);
-		}
-	}
-
 	if (kNetGame) {
+		if (pChatSurf) {
+			if (FAILED(pChatSurf->IsLost())) {
+				if (FAILED(pChatSurf->Restore())) {
+					return 1;
+				}
+				VidSClearSurface(pChatSurf, nKeyColour, NULL);
+			}
+		}
+
+		if (pTVSurf) {
+			if (FAILED(pTVSurf->IsLost())) {
+				if (FAILED(pTVSurf->Restore())) {
+					return 1;
+				}
+				VidSClearSurface(pTVSurf, nKeyColour, NULL);
+			}
+		}
+
 		if (pEditSurf) {
 			if (FAILED(pEditSurf->IsLost())) {
 				if (FAILED(pEditSurf->Restore())) {
@@ -1357,9 +1443,6 @@ static int VidSDrawChat(RECT* dest)
 		int nFit = 0;
 		SIZE sizeID, sizeMain;
 
-		// Clear the surface first
-		VidSClearSurface(pChatSurf, nKeyColour, NULL);
-
 		pChatSurf->GetDC(&hDC);
 		SetBkMode(hDC, TRANSPARENT);
 
@@ -1419,6 +1502,112 @@ static int VidSDrawChat(RECT* dest)
 	return 0;
 }
 
+int VidSSetGameInfo(const TCHAR *p1, const TCHAR *p2, INT32 spectator, INT32 ranked, INT32 player)
+{
+	nSpectator = spectator;
+	nRanked = ranked;
+	nPlayer = player;
+	if (p1)	_tcscpy(szPlayer1, p1);
+	if (p2) _tcscpy(szPlayer2, p2);
+
+	bDrawTV = true;
+	return 0;
+}
+
+int VidSSetGameScores(INT32 score1, INT32 score2)
+{
+	nScore1 = score1;
+	nScore2 = score2;
+
+	bDrawTV = true;
+	return 0;
+}
+
+int VidSSetGameSpectators(INT32 num)
+{
+	if (num > 1) {
+		_sntprintf(szSpectatorCount, 256, _T("%d spectator%s"), num - 1, num > 2 ? _T("s") : _T(""));
+	} else {
+		_sntprintf(szSpectatorCount, 256, _T(""));
+	}
+	bDrawTV = true;
+	return 0;
+}
+
+int VidSDrawTV(RECT *rcDest)
+{
+	if (pTVSurf == NULL || !bDrawTV) {
+		return 1;
+	}
+
+	HDC hDC;
+	HFONT hFont;
+	int pTVSurfPos = 0;
+	if (nZoom & 1) {
+		pTVSurfPos <<= 1;
+	}
+
+	VidSClearSurface(pTVSurf, nKeyColour, NULL);
+
+	pTVSurf->GetDC(&hDC);
+	SetBkMode(hDC, TRANSPARENT);
+	hFont = (HFONT)SelectObject(hDC, ChatIDFont);
+
+	if (kNetGame && szPlayer1[0] && szPlayer2[0] && bVidOverlay) {
+
+		// player1
+		int pos1 = 0;
+		int rank1 = 0;
+		int len1 = _tcslen(szPlayer1);
+		for (int i = len1; i > 0 && !pos1; --i) {
+			if (szPlayer1[i] == '#') {
+				pos1 = i;
+			}
+		}
+		_stscanf(&szPlayer1[pos1], _T("#%d"), &rank1);
+
+		// player2
+		int pos2 = 0;
+		int rank2 = 0;
+		int len2 = _tcslen(szPlayer2);
+		for (int i = len2; i > 0 && !pos2; --i) {
+			if (szPlayer2[i] == '#') {
+				pos2 = i;
+			}
+		}
+		_stscanf(&szPlayer2[pos2], _T("#%d"), &rank2);
+
+		if (nRanked > 1) {
+			char ranks[] = {'?', 'E', 'D', 'C', 'B', 'A', 'S'};
+			_sntprintf(szMatchInfo, 256, _T("(%c) %.*s - %d [FT%d] %d - %.*s (%c)"), ranks[rank1], pos1, szPlayer1, nScore1, nRanked, nScore2, pos2, szPlayer2, ranks[rank2]);
+		}
+		else if (bVidUnrankedScores) {
+			_sntprintf(szMatchInfo, 256, _T("%.*s - %d vs %d - %.*s"), pos1, szPlayer1, nScore1, nScore2, pos2, szPlayer2);
+		}
+		else {
+			_sntprintf(szMatchInfo, 256, _T("%.*s vs %.*s"), pos1, szPlayer1, pos2, szPlayer2);
+		}
+
+		SetTextAlign(hDC, TA_TOP | TA_LEFT);
+		MyTextOut(hDC, pTVSurfPos + 2, 3, szMatchInfo, _tcslen(szMatchInfo), nChatShadowOffset, RGB(0xee, 0xee, 0xee));
+
+		SetTextAlign(hDC, TA_TOP | TA_LEFT);
+		MyTextOut(hDC, pTVSurfPos + 2, 3 + nChatFontSize, szSpectatorCount, _tcslen(szSpectatorCount), nChatShadowOffset, RGB(0xcc, 0xcc, 0xcc));
+
+	}
+
+	if (nShowStats) {
+		SetTextAlign(hDC, TA_TOP | TA_RIGHT);
+		static int test = 0;
+		MyTextOut(hDC, rcDest->right - rcDest->left - 2, 3, szPing, _tcslen(szPing), nChatShadowOffset, RGB(0xee, 0xee, 0xee));
+	}
+
+	SelectObject(hDC, hFont);
+	pTVSurf->ReleaseDC(hDC);
+
+	return 0;
+}
+
 static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
 	if (nChatTimer || bDrawChat) {
@@ -1459,10 +1648,33 @@ static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 		// Scroll message if needed
 		if (nFramesEmulated > nChatTimer) {
 			nChatTimer = 0;
-			VidSAddChatMsg(NULL, 0, NULL, 0);
+			VidSAddChatLine(NULL, 0, NULL, 0);
 			bDrawChat = true;
 		}
 	}
+}
+
+static void VidSDisplayTV(IDirectDrawSurface7* pSurf, RECT* pRect)
+{
+	// Blit the message to the surface using a colourkey
+	RECT src = { 0, 0, pRect->right - pRect->left, pRect->bottom - pRect->top };
+	RECT dest = *pRect;
+
+	if (nZoom & 2) {
+		dest.top <<= 1;
+		dest.bottom <<= 1;
+	}
+
+	if (nZoom & 1) {
+		dest.left <<= 1;
+		dest.right <<= 1;
+	}
+	if (bDrawTV) {
+		VidSDrawTV(&dest);
+		bDrawTV = false;
+	}
+
+	pSurf->Blt(&dest, pTVSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
 }
 
 static void VidSDisplayEdit(IDirectDrawSurface7* pSurf, RECT* pRect)
@@ -1602,8 +1814,9 @@ void VidSDisplayOSD(IDirectDrawSurface7* pSurf, RECT* pRect, int nFlags)
 	VidSDisplayTinyMsg(pSurf, pRect);
 	VidSDisplayJoystickMsg(pSurf, pRect);
 	VidSDisplayShortMsg(pSurf, pRect);
-	VidSDisplayChat(pSurf, pRect);
+	VidSDisplayTV(pSurf, pRect);
 	if (kNetGame) {
+		VidSDisplayChat(pSurf, pRect);
 		VidSDisplayEdit(pSurf, pRect);
 	}
 }
@@ -1800,9 +2013,39 @@ void VidSKillOSDMsg()
 	nOSDTimer = 0;
 }
 
-int VidSAddChatMsg(const TCHAR* pID, int nIDRGB, const TCHAR* pMain, int nMainRGB)
+int VidSSetSystemMessage(TCHAR *status)
+{
+	return VidSNewShortMsg(status);
+}
+
+INT32 VidSSetStats(double fps, INT32 ping, INT32 delay)
+{
+	if (kNetSpectator || ping == 0) {
+		swprintf(szPing, _T("%2.2ffps"), fps);
+	}
+	else {
+		swprintf(szPing, _T("%2.2ffps | %dms (%d-%d)"), fps, ping, delay, nVidRunahead);
+	}
+
+	bDrawTV = true;
+	return 0;
+}
+
+INT32 VidSShowStats(INT32 show)
+{
+	nShowStats = show;
+
+	bDrawTV = true;
+	return 0;
+}
+
+int VidSAddChatLine(const TCHAR* pID, int nIDRGB, const TCHAR* pMain, int nMainRGB)
 {
 	if (pID || pMain) {
+		if (!_tcscmp(pID, _T("«Command» "))) {
+			return 0;
+		}
+
 		// Scroll the text buffers up one entry
 		if (VidSChatMessage[0].pIDText) {
 			free(VidSChatMessage[0].pIDText);

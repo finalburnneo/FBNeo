@@ -68,6 +68,8 @@ static UINT8 DrvInputs[6];
 
 static INT32 is_shufshot = 0;
 
+static INT32 is_16bit = 0;
+
 static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
@@ -2211,28 +2213,20 @@ static void __fastcall common32_main_write_byte(UINT32 address, UINT8 data)
 
 static UINT8 wcbowl_track_read(INT32 player)
 {
+	BurnTrackballUpdate(player);
 	return (BurnTrackballRead(player, 0) & 0xf) | ((BurnTrackballRead(player, 1) & 0xf) << 4);
 }
 
 static UINT16 track_read_8bit(INT32 player)
 {
+	BurnTrackballUpdate(player);
 	return (BurnTrackballRead(player, 0) & 0xff) | ((BurnTrackballRead(player, 1) & 0xff) << 8);
-}
-
-static INT32 shufshot_weird_y(INT16 ana)
-{
-	// todo: revisit at a later time.
-	// "git 'r dun"-style
-	if (ana > 1024) ana = 1024;
-	if (ana < -1024) ana = -1024;
-	ana /= 256; // -4 - +4
-	ana *= 0.9; // tone it down a bit..
-	return (ana);
 }
 
 static UINT32 track_read_4bit(INT32 player)
 {
 	if (tb_last_read[player] != scanline) {
+		BurnTrackballUpdate(player);
 		INT32 curx = BurnTrackballRead(player, 0);
 		INT32 cury = BurnTrackballRead(player, 1);
 
@@ -2249,11 +2243,6 @@ static UINT32 track_read_4bit(INT32 player)
 		else if (dy > 0x80) dy -= 0x100;
 		if (dy > 7) dy = 7;
 		else if (dy < -7) dy = -7;
-
-		if (is_shufshot) {
-			// keep shufshot happy...
-			dy = shufshot_weird_y((player == 0) ? DrvAnalogPort1 : DrvAnalogPort3);
-		}
 
 		tb_effy[player] = (tb_effy[player] + dy) & 0xff;
 		INT32 upper = tb_effy[player] & 15;
@@ -2599,7 +2588,13 @@ static UINT8 itech32_sound_read(UINT16 address)
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
-		memset (AllRam, 0, RamEnd - AllRam);
+		memset(DrvPalRAM, 0, 0x20000);
+		memset(DrvM6809RAM, 0, 0x2000);
+		memset(video_regs, 0, 0x80);
+		if (is_16bit == 0) {
+			// w/16bit games: Drv68KRAM is also NVRAM :)
+			memset(Drv68KRAM, 0, 0x10000);
+		}
 	}
 
 	memcpy (Drv68KRAM, Drv68KROM, 0x80); // copy vectors (before 68k RESET!!)
@@ -2821,12 +2816,15 @@ static INT32 TimekillInit()
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL); // not on this hardware (32-bit only!)
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
 	GenericTilesInit();
 
 	itech32VideoInit(512, 2, nGfxROMLen);
+
+	is_16bit = 1;
 
 	DrvDoReset(1);
 
@@ -2864,12 +2862,15 @@ static INT32 Common16BitInit()
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL); // not on this hardware (32-bit only!)
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
 	GenericTilesInit();
 
 	itech32VideoInit(1024, 1, nGfxROMLen);
+
+	is_16bit = 1;
 
 	DrvDoReset(1);
 
@@ -2910,6 +2911,7 @@ static INT32 Common32BitInit(UINT32 prot_addr, INT32 plane_num, INT32 color_bank
 	TimeKeeperInit(TIMEKEEPER_M48T02, NULL);
 	BurnWatchdogInit(DrvDoReset, 180);
 	BurnTrackballInit(2);
+	BurnTrackballSetVelocityCurve(1); // logarithmic curve
 
 	CommonSoundInit();
 
@@ -2941,6 +2943,7 @@ static INT32 DrvExit()
 	Trackball_Type = -1;
 
 	is_shufshot = 0;
+	is_16bit = 0;
 
 	return 0;
 }
@@ -3036,12 +3039,10 @@ static INT32 DrvFrame()
 
 		if (Trackball_Type != -1) {
 			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
-			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x06, 0x0a);
-			BurnTrackballUpdate(0);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x01, 0x20);
 
 			BurnTrackballConfig(1, AXIS_REVERSED, AXIS_NORMAL);
-			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x06, 0x0a);
-			BurnTrackballUpdate(1);
+			BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 0x01, 0x20);
         }
 
         DrvDips[0] = (DrvDips[0] & ~1) | (~DrvSvc0[0] & 1); // F2 (svc mode)
@@ -3064,16 +3065,11 @@ static INT32 DrvFrame()
 			scanline_interrupt();
 		}
 
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, M6809);
 
 		// iq_132 -- hack!!! until we have via emulation!
 		if ((i % (nInterleave/4))==((nInterleave/4)-1)) M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-
-		if ((i%64) == 63 && Trackball_Type != -1) {
-			BurnTrackballUpdate(0);
-			BurnTrackballUpdate(1);
-		}
 
 		if (i == (nScreenHeight - 1)) {
 			vblank = 1;
@@ -3184,11 +3180,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x04000;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
-		BurnAcb(&ba);
+		if (is_16bit) {
+			ScanVar(Drv68KRAM, 0x10000, "NV RAM");
+		} else {
+			ScanVar(DrvNVRAM,  0x04000, "NV RAM");
+		}
 	}
 
 	if (nAction & ACB_WRITE)
@@ -3392,6 +3388,43 @@ struct BurnDriver BurnDrvTimekill121a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, timekill121aRomInfo, timekill121aRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
+	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	384, 240, 4, 3
+};
+
+
+// Time Killers (v1.00)
+/* Version 1.00? - actual version not shown (3-tier board set: P/N 1050 Rev 1, P/N 1051 Rev 0 &  P/N 1052 Rev 2) */
+
+static struct BurnRomInfo timekill100RomDesc[] = {
+	{ "tk00.bim_u54.u54",					0x040000, 0x2b379f30, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "tk01.bim_u53.u53",					0x040000, 0xe43e029c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "timekillsnd_u17.u17",				0x020000, 0xab1684c3, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+
+	{ "time_killers_0.rom0",				0x200000, 0x94cbf6f8, 3 | BRF_GRA },           //  3 Graphics (Blitter data)
+	{ "time_killers_1.rom1",				0x200000, 0xc07dea98, 3 | BRF_GRA },           //  4
+	{ "time_killers_2.rom2",				0x200000, 0x183eed2a, 3 | BRF_GRA },           //  5
+	{ "time_killers_3.rom3",				0x200000, 0xb1da1058, 3 | BRF_GRA },           //  6
+	{ "timekill_grom01.grom1",				0x020000, 0xb030c3d9, 3 | BRF_GRA },           //  7
+	{ "timekill_grom02.grom2",				0x020000, 0xe98492a4, 3 | BRF_GRA },           //  8
+	{ "timekill_grom03.grom3",				0x020000, 0x6088fa64, 3 | BRF_GRA },           //  9
+	{ "timekill_grom04.grom4",				0x020000, 0x95be2318, 3 | BRF_GRA },           // 10
+
+	{ "tksrom00_u18.u18",					0x080000, 0x79d8b83a, 6 | BRF_SND },           // 11 Ensoniq Bank 2
+	{ "tksrom01_u20.u20",					0x080000, 0xec01648c, 6 | BRF_SND },           // 12
+	{ "tksrom02_u26.u26",					0x080000, 0x051ced3e, 6 | BRF_SND },           // 13
+};
+
+STD_ROM_PICK(timekill100)
+STD_ROM_FN(timekill100)
+
+struct BurnDriver BurnDrvTimekill100 = {
+	"timekill100", "timekill", NULL, NULL, "1992",
+	"Time Killers (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, timekill100RomInfo, timekill100RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
 };

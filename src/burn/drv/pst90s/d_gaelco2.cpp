@@ -1014,7 +1014,6 @@ static INT32 MemIndex()
 	Drv68KROM		= Next; Next += 0x0100000;
 
 	DrvMCURAM		= Next;
-	mcs51_program_data	= Next;
 	DrvMCUROM		= Next; Next += 0x0008000;
 	DrvMCUiRAM      = Next; Next += 0x00000ff;
 
@@ -1322,6 +1321,7 @@ static INT32 DrvInit(INT32 game_selector)
 	has_mcu = (DrvMCUROM[0] == 0x02) ? 1 : 0;
 
 	ds5002fp_init(((game_select == 7 || game_select == 8) ? 0x69 : 0x19), 0, 0x80); // defaults
+	mcs51_set_program_data(DrvMCUROM);
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 

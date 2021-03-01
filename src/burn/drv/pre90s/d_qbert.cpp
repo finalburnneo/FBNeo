@@ -868,6 +868,7 @@ static INT32 DrvFrame()
 		M6502Run(nCyclesTotal6502 / nInterleave);
 		if (*soundcpu_do_nmi) {
 			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+			M6502Run(1); // run nmi to avoid race condition w/ "*soundcpu_do_nmi"
 			*soundcpu_do_nmi = 0;
 		}
 

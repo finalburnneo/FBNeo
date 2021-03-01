@@ -47,66 +47,68 @@ static INT32 use_mcu;
 static INT32 Lkageb;
 static INT32 FakeMCUVal;
 
+static INT32 is_bygone = 0;
+
 static struct BurnInputInfo LkageInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Lkage)
 
 static struct BurnDIPInfo LkageDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x7f, NULL				},
-	{0x14, 0xff, 0xff, 0x00, NULL				},
-	{0x15, 0xff, 0xff, 0xfe, NULL				},
+	{0x13, 0xff, 0xff, 0x7f, NULL						},
+	{0x14, 0xff, 0xff, 0x00, NULL						},
+	{0x15, 0xff, 0xff, 0xfe, NULL						},
 
-	{0   , 0xfe, 0   ,    4, "Bonus_Life"			},
-	{0x13, 0x01, 0x03, 0x03, "30000 100000"			},
-	{0x13, 0x01, 0x03, 0x02, "30000 70000"			},
-	{0x13, 0x01, 0x03, 0x01, "20000 70000"			},
-	{0x13, 0x01, 0x03, 0x00, "20000 50000"			},
+	{0   , 0xfe, 0   ,    4, "Bonus_Life"				},
+	{0x13, 0x01, 0x03, 0x03, "30000 100000"				},
+	{0x13, 0x01, 0x03, 0x02, "30000 70000"				},
+	{0x13, 0x01, 0x03, 0x01, "20000 70000"				},
+	{0x13, 0x01, 0x03, 0x00, "20000 50000"				},
 
-	{0   , 0xfe, 0   ,    2, "Free_Play"			},
-	{0x13, 0x01, 0x04, 0x04, "Off"				},
-	{0x13, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Free_Play"				},
+	{0x13, 0x01, 0x04, 0x04, "Off"						},
+	{0x13, 0x01, 0x04, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x13, 0x01, 0x18, 0x18, "3"				},
-	{0x13, 0x01, 0x18, 0x10, "4"				},
-	{0x13, 0x01, 0x18, 0x08, "5"				},
-	{0x13, 0x01, 0x18, 0x00, "255 (Cheat)"			},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x13, 0x01, 0x18, 0x18, "3"						},
+	{0x13, 0x01, 0x18, 0x10, "4"						},
+	{0x13, 0x01, 0x18, 0x08, "5"						},
+	{0x13, 0x01, 0x18, 0x00, "255 (Cheat)"				},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x40, 0x40, "Off"				},
-	{0x13, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x13, 0x01, 0x40, 0x40, "Off"						},
+	{0x13, 0x01, 0x40, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x13, 0x01, 0x80, 0x00, "Upright"			},
-	{0x13, 0x01, 0x80, 0x80, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x13, 0x01, 0x80, 0x00, "Upright"					},
+	{0x13, 0x01, 0x80, 0x80, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    16, "Coin_A"			},
+	{0   , 0xfe, 0   ,    16, "Coin_A"					},
 	{0x14, 0x01, 0x0f, 0x0f, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0e, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0d, "7 Coins 1 Credits"		},
@@ -124,7 +126,7 @@ static struct BurnDIPInfo LkageDIPList[]=
 	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"		},
 	{0x14, 0x01, 0x0f, 0x07, "1 Coin  8 Credits"		},
 
-	{0   , 0xfe, 0   ,    16, "Coin_B"			},
+	{0   , 0xfe, 0   ,    16, "Coin_B"					},
 	{0x14, 0x01, 0xf0, 0xf0, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xe0, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xd0, "7 Coins 1 Credits"		},
@@ -142,64 +144,64 @@ static struct BurnDIPInfo LkageDIPList[]=
 	{0x14, 0x01, 0xf0, 0x60, "1 Coin  7 Credits"		},
 	{0x14, 0x01, 0xf0, 0x70, "1 Coin  8 Credits"		},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x15, 0x01, 0x01, 0x01, "Off"				},
-	{0x15, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x15, 0x01, 0x01, 0x01, "Off"						},
+	{0x15, 0x01, 0x01, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Initial Season"		},
-	{0x15, 0x01, 0x02, 0x02, "Spring"			},
-	{0x15, 0x01, 0x02, 0x00, "Winter"			},
+	{0   , 0xfe, 0   ,    2, "Initial Season"			},
+	{0x15, 0x01, 0x02, 0x02, "Spring"					},
+	{0x15, 0x01, 0x02, 0x00, "Winter"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x15, 0x01, 0x0c, 0x0c, "Easiest"			},
-	{0x15, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x15, 0x01, 0x0c, 0x04, "Normal"			},
-	{0x15, 0x01, 0x0c, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x15, 0x01, 0x0c, 0x0c, "Easiest"					},
+	{0x15, 0x01, 0x0c, 0x08, "Easy"						},
+	{0x15, 0x01, 0x0c, 0x04, "Normal"					},
+	{0x15, 0x01, 0x0c, 0x00, "Hard"						},
 
-	{0   , 0xfe, 0   ,    2, "Coinage Display"		},
-	{0x15, 0x01, 0x10, 0x10, "Coins/Credits"		},
-	{0x15, 0x01, 0x10, 0x00, "Insert Coin"			},
+	{0   , 0xfe, 0   ,    2, "Coinage Display"			},
+	{0x15, 0x01, 0x10, 0x10, "Coins/Credits"			},
+	{0x15, 0x01, 0x10, 0x00, "Insert Coin"				},
 
-	{0   , 0xfe, 0   ,    2, "Year Display"			},
-	{0x15, 0x01, 0x20, 0x00, "1985"				},
-	{0x15, 0x01, 0x20, 0x20, "MCMLXXXIV"			},
+	{0   , 0xfe, 0   ,    2, "Year Display"				},
+	{0x15, 0x01, 0x20, 0x00, "1985"						},
+	{0x15, 0x01, 0x20, 0x20, "MCMLXXXIV"				},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"	},
-	{0x15, 0x01, 0x40, 0x40, "Off"				},
-	{0x15, 0x01, 0x40, 0x00, "On"				},
+	{0x15, 0x01, 0x40, 0x40, "Off"						},
+	{0x15, 0x01, 0x40, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
-	{0x15, 0x01, 0x80, 0x80, "A and B"			},
-	{0x15, 0x01, 0x80, 0x00, "A only"			},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"				},
+	{0x15, 0x01, 0x80, 0x80, "A and B"					},
+	{0x15, 0x01, 0x80, 0x00, "A only"					},
 };
 
 STDDIPINFO(Lkage)
 
 static struct BurnDIPInfo BygoneDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x3c, NULL				},
-	{0x14, 0xff, 0xff, 0x00, NULL				},
-	{0x15, 0xff, 0xff, 0x40, NULL				},
+	{0x13, 0xff, 0xff, 0x3c, NULL						},
+	{0x14, 0xff, 0xff, 0x00, NULL						},
+	{0x15, 0xff, 0xff, 0x40, NULL						},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x13, 0x01, 0x04, 0x04, "Off"				},
-	{0x13, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Free Play"				},
+	{0x13, 0x01, 0x04, 0x04, "Off"						},
+	{0x13, 0x01, 0x04, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x13, 0x01, 0x18, 0x18, "3"				},
-	{0x13, 0x01, 0x18, 0x10, "4"				},
-	{0x13, 0x01, 0x18, 0x08, "5"				},
-	{0x13, 0x01, 0x18, 0x00, "255 (Cheat)"			},
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x13, 0x01, 0x18, 0x18, "3"						},
+	{0x13, 0x01, 0x18, 0x10, "4"						},
+	{0x13, 0x01, 0x18, 0x08, "5"						},
+	{0x13, 0x01, 0x18, 0x00, "255 (Cheat)"				},
 
-	{0   , 0xfe, 0   ,    0, "Flip Screen"			},
-	{0x13, 0x01, 0x40, 0x00, "Off"				},
-	{0x13, 0x01, 0x40, 0x40, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x13, 0x01, 0x40, 0x00, "Off"						},
+	{0x13, 0x01, 0x40, 0x40, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x13, 0x01, 0x80, 0x00, "Upright"			},
-	{0x13, 0x01, 0x80, 0x80, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x13, 0x01, 0x80, 0x00, "Upright"					},
+	{0x13, 0x01, 0x80, 0x80, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    2, "Coin A"			},
+	{0   , 0xfe, 0   ,   16, "Coin A"					},
 	{0x14, 0x01, 0x0f, 0x0f, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0e, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0d, "7 Coins 1 Credits"		},
@@ -217,7 +219,7 @@ static struct BurnDIPInfo BygoneDIPList[]=
 	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"		},
 	{0x14, 0x01, 0x0f, 0x07, "1 Coin  8 Credits"		},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"			},
+	{0   , 0xfe, 0   ,    16, "Coin B"					},
 	{0x14, 0x01, 0xf0, 0xf0, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xe0, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xd0, "7 Coins 1 Credits"		},
@@ -236,13 +238,13 @@ static struct BurnDIPInfo BygoneDIPList[]=
 	{0x14, 0x01, 0xf0, 0x70, "1 Coin  8 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"	},
-	{0x15, 0x01, 0x40, 0x40, "Off"				},
-	{0x15, 0x01, 0x40, 0x00, "On"				},
+	{0x15, 0x01, 0x40, 0x40, "Off"						},
+	{0x15, 0x01, 0x40, 0x00, "On"						},
 };
 
 STDDIPINFO(Bygone)
 
-void __fastcall lkage_main_write(UINT16 address, UINT8 data)
+static void __fastcall lkage_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0xe800) {
 
@@ -317,7 +319,7 @@ void __fastcall lkage_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall lkage_main_read(UINT16 address)
+static UINT8 __fastcall lkage_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -386,7 +388,7 @@ UINT8 __fastcall lkage_main_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall lkage_main_in(UINT16 port)
+static UINT8 __fastcall lkage_main_in(UINT16 port)
 {
 	if ((port & 0xc000) == 0x4000) {
 		return DrvPortData[port & 0x3fff];
@@ -395,7 +397,7 @@ UINT8 __fastcall lkage_main_in(UINT16 port)
 	return 0;
 }
 
-UINT8 __fastcall lkage_sound_read(UINT16 address)
+static UINT8 __fastcall lkage_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -415,7 +417,7 @@ UINT8 __fastcall lkage_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall lkage_sound_write(UINT16 address, UINT8 data)
+static void __fastcall lkage_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -549,7 +551,7 @@ static INT32 DrvInit()
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
-	
+
 	use_mcu = ~BurnDrvGetFlags() & BDF_BOOTLEG;
 
 	{
@@ -607,7 +609,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
-	
+
 	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
@@ -636,9 +638,10 @@ static INT32 DrvExit()
 	BurnYM2203Exit();
 
 	BurnFree (AllMem);
-	
+
 	Lkageb = 0;
 	FakeMCUVal = 0;
+	is_bygone = 0;
 
 	return 0;
 }
@@ -646,7 +649,7 @@ static INT32 DrvExit()
 
 static void draw_sprites(INT32 prio)
 {
-	INT32 dx = (strcmp ("bygone", BurnDrvGetTextA(DRV_NAME)) == 0) ? 1 : 0;
+	INT32 dx = (is_bygone) ? 1 : 0;
 
 	const UINT8 *source = DrvSprRAM + 0x60 - 4;
 	const UINT8 *finish = DrvSprRAM;
@@ -692,19 +695,7 @@ static void draw_sprites(INT32 prio)
 
 		for (y = 0;y < height;y++)
 		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite_number ^ y, sx, sy + (y << 4), color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite_number ^ y, sx, sy + (y << 4), color, 4, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite_number ^ y, sx, sy + (y << 4), color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sprite_number ^ y, sx, sy + (y << 4), color, 4, 0, 0, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, sprite_number ^ y, sx, sy + (y << 4), flipx, flipy, color, 4, 0, 0, DrvGfxROM1);
 		}
 		source -= 4;
 	}
@@ -748,33 +739,9 @@ static void draw_layer(INT32 offset, INT32 bank, INT32 color, INT32 transp, INT3
 		if (sy > 223) sy -= 256;
 
 		if (transp) {
-			if (flipscreen_y) {
-				if (flipscreen_x) {
-					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-				}
-			} else {
-				if (flipscreen_x) {
-					Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-				}
-			}
+			Draw8x8MaskTile(pTransDraw, code, sx, sy, flipscreen_x, flipscreen_y, color, 4, 0, 0, DrvGfxROM0);
 		} else {
-			if (flipscreen_y) {
-				if (flipscreen_x) {
-					Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-				}
-			} else {
-				if (flipscreen_x) {
-					Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM0);
-				}
-			}
+			Draw8x8Tile(pTransDraw, code, sx, sy, flipscreen_x, flipscreen_y, color, 4, 0, DrvGfxROM0);
 		}
 	}
 }
@@ -796,9 +763,10 @@ static INT32 DrvDraw()
 	INT32 bg_bank = ((DrvVidReg[1] & 0x08) >> 1) + 1;
 	INT32 fg_bank =  (DrvVidReg[0] & 0x04) >> 2;
 	INT32 tx_bank =  (DrvVidReg[0] & 0x02) << 1; // bygone
+	INT32 layer_enable 		= (is_bygone) ? 0x03 : 0xf0;
+	INT32 layer_enable_mask = (is_bygone) ? 0x0f : 0xf0;
 
-//	if ((DrvVidReg[2] & 0xf0) == 0xf0) // mame
-	if ((DrvVidReg[2] & 0x0f) == 0x03) // Correct? Seems to give proper results in bygone...
+	if ((DrvVidReg[2] & layer_enable_mask) == layer_enable)
 	{
 		draw_layer(0x800, bg_bank, 0x300 | color_bank, 0, lkage_scroll[4]+5, lkage_scroll[5]);
 
@@ -814,7 +782,7 @@ static INT32 DrvDraw()
 	}
 	else
 	{
-		if (nBurnLayer & 4)draw_layer(0x000, 0,       0x110,              0, lkage_scroll[0]+1, lkage_scroll[1]);
+		if (nBurnLayer & 4) draw_layer(0x000, 0,       0x110,             0, lkage_scroll[0]+1, lkage_scroll[1]);
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -841,36 +809,32 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6000000 / 60, 6000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
-
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
+		if (i == 240) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 		ZetClose();
 
-		// Run Z80 #2
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		ZetOpen(1);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 
 		if (use_mcu) {
 			m6805Open(0);
-			nCyclesSegment = nCyclesTotal[2] / nInterleave;
-			nCyclesDone[2] += m6805Run(nCyclesSegment);
+			CPU_RUN(2, m6805);
 			m6805Close();
 		}
 	}
-	
+
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
@@ -878,14 +842,10 @@ static INT32 DrvFrame()
 	}
 	ZetClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -907,8 +867,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(flipscreen_y);
 		SCAN_VAR(DrvNmiEnable);
 		SCAN_VAR(pending_nmi);
-
-		DrvRecalc = 1;
 	}
 
 	return 0;
@@ -932,12 +890,12 @@ static struct BurnRomInfo lkageRomDesc[] = {
 
 	{ "a54-10.2",		0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG | BRF_OPT }, //  9 68705 Code
+	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
-	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },           // 10 Plds (unused)
-	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },           // 11
-	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },           // 12
-	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },           // 13
+	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       // 10 Plds (unused)
+	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       // 11
+	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       // 12
+	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       // 13
 };
 
 STD_ROM_PICK(lkage)
@@ -971,12 +929,12 @@ static struct BurnRomInfo lkageoRomDesc[] = {
 
 	{ "a54-10.2",		0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG | BRF_OPT }, //  9 68705 Code
+	{ "a54-09.53",		0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
-	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },           // 10 Plds (unused)
-	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },           // 11
-	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },           // 12
-	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },           // 13
+	{ "pal16l8-a54-11.34",	0x0104, 0x56232113, 7 | BRF_OPT },       // 10 Plds (unused)
+	{ "pal16l8-a54-12.76",	0x0104, 0xe57c3c89, 7 | BRF_OPT },       // 11
+	{ "pal16l8a-a54-13.27",	0x0104, 0xc9b1938e, 7 | BRF_OPT },       // 12
+	{ "pal16l8a-a54-14.35",	0x0104, 0xa89c644e, 7 | BRF_OPT },       // 13
 };
 
 STD_ROM_PICK(lkageo)
@@ -1010,7 +968,7 @@ static struct BurnRomInfo lkageooRomDesc[] = {
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a54-09.53",	0x0800, 0x0e8b8846, 6 | BRF_PRG | BRF_OPT }, //  9 68705 Code
+	{ "a54-09.53",	0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 
 	{ "pal16l8-a54-11.34",   0x0104, 0x56232113, 7 | BRF_OPT },  // 10 Plds (unused)
 	{ "pal16l8-a54-12.76",   0x0104, 0xe57c3c89, 7 | BRF_OPT },  // 11
@@ -1035,17 +993,17 @@ struct BurnDriver BurnDrvLkageoo = {
 // The Legend of Kage (bootleg set 1)
 
 static struct BurnRomInfo lkagebRomDesc[] = {
-	{ "ic37_1",	0x8000, 0x05694f7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "ic38_2",	0x8000, 0x22efe29e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic37_1",	0x8000, 0x05694f7b, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
+	{ "ic38_2",	0x8000, 0x22efe29e, 1 | BRF_PRG | BRF_ESS },     //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
+	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
+	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
+	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
+	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1056,7 +1014,7 @@ STD_ROM_FN(lkageb)
 static INT32 LkagebInit()
 {
 	Lkageb = 1;
-	
+
 	return DrvInit();
 }
 
@@ -1074,17 +1032,17 @@ struct BurnDriver BurnDrvLkageb = {
 // The Legend of Kage (bootleg set 2)
 
 static struct BurnRomInfo lkageb2RomDesc[] = {
-	{ "lok.a",	0x8000, 0x866df793, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "lok.b",	0x8000, 0xfba9400f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "lok.a",	0x8000, 0x866df793, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
+	{ "lok.b",	0x8000, 0xfba9400f, 1 | BRF_PRG | BRF_ESS },     //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
+	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
+	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
+	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
+	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1106,17 +1064,17 @@ struct BurnDriver BurnDrvLkageb2 = {
 // The Legend of Kage (bootleg set 3)
 
 static struct BurnRomInfo lkageb3RomDesc[] = {
-	{ "z1.bin",	0x8000, 0x60cac488, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "z2.bin",	0x8000, 0x22c95f17, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "z1.bin",	0x8000, 0x60cac488, 1 | BRF_PRG | BRF_ESS },     //  0 Z80 #0 Code
+	{ "z2.bin",	0x8000, 0x22c95f17, 1 | BRF_PRG | BRF_ESS },     //  1
 
 	{ "a54-04.54",	0x8000, 0x541faf9a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "a54-03.51",	0x4000, 0x493e76d8, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Data
 
-	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },           //  4 Graphics
-	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },           //  5
-	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },           //  6
-	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },           //  7
+	{ "ic93_5",	0x4000, 0x76753e52, 4 | BRF_GRA },               //  4 Graphics
+	{ "ic94_6",	0x4000, 0xf33c015c, 4 | BRF_GRA },               //  5
+	{ "ic95_7",	0x4000, 0x0e02c2e8, 4 | BRF_GRA },               //  6
+	{ "ic96_8",	0x4000, 0x4ef5f073, 4 | BRF_GRA },               //  7
 
 	{ "a54-10.2",	0x0200, 0x17dfbd14, 5 | BRF_OPT },           //  8 Prom (unused)
 };
@@ -1152,11 +1110,18 @@ static struct BurnRomInfo bygoneRomDesc[] = {
 
 	{ "a54-10.ic2",		0x0400, 0x369722d9, 5 | BRF_OPT },           //  8 Prom (unused)
 
-	{ "a51_09.ic53",	0x0800, 0x0e8b8846, 6 | BRF_PRG | BRF_OPT }, //  9 68705 Code
+	{ "a51_09.ic53",	0x0800, 0x0e8b8846, 6 | BRF_PRG },           //  9 68705 Code
 };
 
 STD_ROM_PICK(bygone)
 STD_ROM_FN(bygone)
+
+static INT32 BygoneInit()
+{
+	is_bygone = 1;
+
+	return DrvInit();
+}
 
 struct BurnDriver BurnDrvBygone = {
 	"bygone", NULL, NULL, NULL, "1985",
@@ -1164,6 +1129,6 @@ struct BurnDriver BurnDrvBygone = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bygoneRomInfo, bygoneRomName, NULL, NULL, NULL, NULL, LkageInputInfo, BygoneDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	BygoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

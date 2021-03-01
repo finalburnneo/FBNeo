@@ -1024,6 +1024,37 @@ static struct BurnRomInfo pwrinst2jRomDesc[] = {
 STD_ROM_PICK(pwrinst2j)
 STD_ROM_FN(pwrinst2j)
 
+static struct BurnRomInfo pwrinst2kRomDesc[] = {
+	{ "g02k.u45",     0x080000, 0x5468cbe5, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "g02k.u44",     0x080000, 0x5561f620, BRF_ESS | BRF_PRG }, //  1
+	{ "g02k.u43",     0x080000, 0x5af96f07, BRF_ESS | BRF_PRG }, //  2
+	{ "g02k.u42",     0x080000, 0x56279c1c, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "g02.u3k",  	  0x020000, 0xebea5e1e, BRF_ESS | BRF_PRG }, //  4 Z80 Code
+
+	{ "g02.u61",      0x200000, 0x91e30398, BRF_GRA },			 //  5 Sprite data
+	{ "g02.u62",      0x200000, 0xd9455dd7, BRF_GRA },			 //  6
+	{ "g02.u63",      0x200000, 0x4d20560b, BRF_GRA },			 //  7
+	{ "g02.u64",      0x200000, 0xb17b9b6e, BRF_GRA },			 //  8
+	{ "g02.u65",      0x200000, 0x08541878, BRF_GRA },			 //  9
+	{ "g02.u66",      0x200000, 0xbecf2a36, BRF_GRA },			 //  10
+	{ "g02.u67",      0x200000, 0x52fe2b8b, BRF_GRA },			 //  11
+
+	{ "g02.u78",      0x200000, 0x1eca63d2, BRF_GRA },			 //  12 Layer 0 Tile data
+	{ "g02.u81",      0x100000, 0x8a3ff685, BRF_GRA },			 //  13 Layer 1 Tile data
+	{ "g02.u89",      0x100000, 0x373e1f73, BRF_GRA },			 //  14 Layer 2 Tile data
+	{ "g02k.82a",     0x080000, 0x4b3567d6, BRF_GRA },			 //  15 Layer 3 Tile data
+
+	{ "g02.u53",      0x200000, 0xc4bdd9e0, BRF_SND },			 //  16 MSM6295 #1 ADPCM data
+	{ "g02.u54",      0x200000, 0x1357d50e, BRF_SND },			 //  17
+	{ "g02.u55",      0x200000, 0x2d102898, BRF_SND },			 //  18 MSM6295 #2 ADPCM data
+	{ "g02.u56",      0x200000, 0x9ff50dda, BRF_SND },			 //  19
+};
+
+
+STD_ROM_PICK(pwrinst2k)
+STD_ROM_FN(pwrinst2k)
+
 static struct BurnRomInfo plegendsRomDesc[] = {
 	{ "d12.u45",        0x080000, 0xed8a2e3d, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "d13.u44",        0x080000, 0x25821731, BRF_ESS | BRF_PRG }, //  1
@@ -1108,6 +1139,16 @@ struct BurnDriver BurnDrvPwrinst2j = {
 	L"\u8C6A\u8840\u5BFA\u4E00\u65CF \uFF12 (Japan, ver. 94/04/08)\0Gouketsuji Ichizoku 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, pwrinst2jRomInfo, pwrinst2jRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvPwrinst2k = {
+	"pwrinst2k", "pwrinst2", NULL, NULL, "1994",
+	"Power instinct 2 (Korea, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
+	NULL, pwrinst2kRomInfo, pwrinst2kRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

@@ -414,8 +414,8 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(1,	thoop2_palette_write_byte);
 	SekClose();
 
-	mcs51_program_data = DrvMCUROM;
 	ds5002fp_init(0x79, 0x00, 0x80);
+	mcs51_set_program_data(DrvMCUROM);
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 

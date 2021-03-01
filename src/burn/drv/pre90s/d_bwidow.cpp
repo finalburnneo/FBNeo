@@ -611,15 +611,15 @@ static INT32 res_check()
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Width != 1080) {
-			vector_rescale(1080, 1440);
+		if (Height != 1080) {
+			vector_rescale((1080*600/800), 1080);
 			return 1;
 		}
 	} else {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 
-		if (Width != 600) {
+		if (Height != 800) {
 			vector_rescale(600, 800);
 			return 1;
 		}

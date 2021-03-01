@@ -44,6 +44,66 @@ static void default_shift_op(UINT32,void*){}
 static UINT16 IO_read(UINT32 address) { return tms::read_ioreg(&tms34010,address); }
 static void IO_write(UINT32 address, UINT16 value) { tms::write_ioreg(&tms34010, address, value); }
 
+// cheat-engine hook-up
+void TMS34010Open(INT32 num)
+{
+	// not used, single core.
+}
+
+void TMS34010Close()
+{
+	// not used, single core.
+}
+
+INT32 TMS34010GetActive()
+{
+	return 0; // cpu is always active
+}
+
+int TMS34010Idle(int cycles)
+{
+    return 0; // not impl.
+}
+
+void TMS34010WriteROM(UINT32 address, UINT8 value);
+UINT8 TMS34010ReadByte(UINT32 address);
+
+INT32 TMS34010TotalCyclesi32()
+{
+	return TMS34010TotalCycles();
+}
+
+void TMS34010SetIRQLine(INT32 cpu, INT32 vector, INT32 status)
+{
+	if (status == CPU_IRQSTATUS_NONE) {
+		TMS34010ClearIRQ(vector);
+	}
+
+	if (status == CPU_IRQSTATUS_ACK) {
+		TMS34010GenerateIRQ(vector);
+	}
+}
+
+cpu_core_config TMS34010Config =
+{
+	"TMS34010",
+	TMS34010Open,
+	TMS34010Close,
+	TMS34010ReadByte,
+	TMS34010WriteROM,
+	TMS34010GetActive,
+	TMS34010TotalCyclesi32,
+	TMS34010NewFrame,
+	TMS34010Idle,
+	TMS34010SetIRQLine,
+	TMS34010Run,
+	TMS34010RunEnd,
+	TMS34010Reset,
+	0x100000000ULL,
+	0
+};
+// end cheat-engine hook-up
+
 void TMS34010Init()
 {
     tms34010.shift_read_cycle = default_shift_op;
@@ -51,7 +111,9 @@ void TMS34010Init()
 
     // map IO registers
     TMS34010SetHandlers(MAXHANDLER-1, IO_read, IO_write);
-    TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
+	TMS34010MapHandler(MAXHANDLER-1, 0xc0000000, 0xc00001ff, MAP_READ | MAP_WRITE);
+
+	CpuCheatRegister(0, &TMS34010Config);
 }
 
 int TMS34010Run(int cycles)
@@ -59,9 +121,14 @@ int TMS34010Run(int cycles)
     return tms::run(&tms34010, cycles);
 }
 
-void TMS34010TimerCB(INT64 cycles, void (*timer_cb)())
+void TMS34010TimerSetCB(void (*timer_cb)())
 {
-	tms::timer_arm(&tms34010, cycles, timer_cb);
+	tms::timer_set_cb(&tms34010, timer_cb);
+}
+
+void TMS34010TimerSet(int cycles)
+{
+	tms::timer_arm(&tms34010, cycles);
 }
 
 INT64 TMS34010TotalCycles()
@@ -134,12 +201,23 @@ TMS34010State *TMS34010GetState()
     return &tms34010;
 }
 
+UINT8 TMS34010ReadByte(UINT32 address)
+{
+    UINT8 *pr = g_mmap.map[PFN(address)];
+    if ((uintptr_t)pr >= MAXHANDLER) {
+        // address is bit-address
+        return tms_fast_read<UINT8>(pr,address);
+    } else {
+        return g_mmap.read[(uintptr_t)pr](address);
+    }
+}
+
 UINT16 TMS34010ReadWord(UINT32 address)
 {
     UINT8 *pr = g_mmap.map[PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return tms_fast_read<UINT16>(pr,address);
+        return BURN_ENDIAN_SWAP_INT16(tms_fast_read<UINT16>(pr,address));
     } else {
         return g_mmap.read[(uintptr_t)pr](address);
     }
@@ -150,10 +228,27 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
     UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address
-        return tms_fast_write<UINT16>(pr,address,value);
+        return tms_fast_write<UINT16>(pr,address, BURN_ENDIAN_SWAP_INT16(value));
     } else {
         return g_mmap.write[(uintptr_t)pr](address, value);
     }
+}
+
+void TMS34010WriteROM(UINT32 address, UINT8 value) // for cheat-engine
+{
+    UINT8 *pr = g_mmap.map[PAGE_WADD + PFN(address)];
+    if ((uintptr_t)pr >= MAXHANDLER) {
+        // address is bit-address
+		tms_fast_write<UINT8>(pr,address, value);
+    } else {
+		g_mmap.write[(uintptr_t)pr](address, value);
+	}
+
+	pr = g_mmap.map[PFN(address)];
+    if ((uintptr_t)pr >= MAXHANDLER) {
+        // address is bit-address
+		tms_fast_write<UINT8>(pr,address, value);
+	}
 }
 
 void TMS34010MapReset()

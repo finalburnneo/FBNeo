@@ -1097,8 +1097,8 @@ STD_ROM_PICK(Tmntu)
 STD_ROM_FN(Tmntu)
 
 static struct BurnRomInfo TmntuaRomDesc[] = {
-	{ "963-j23.j17",        0x020000, 0xf77314e2, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "963-j24.k17",        0x020000, 0x47f662d3, BRF_ESS | BRF_PRG }, //  1
+	{ "963-n23.j17",        0x020000, 0x388c333f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "963-n24.k17",        0x020000, 0xaf3efd63, BRF_ESS | BRF_PRG }, //  1
 	{ "963-j21.j15",        0x010000, 0x7bee9fe8, BRF_ESS | BRF_PRG }, //  2
 	{ "963-j22.k15",        0x010000, 0x2efed09f, BRF_ESS | BRF_PRG }, //  3
 	
@@ -1126,6 +1126,35 @@ STD_ROM_PICK(Tmntua)
 STD_ROM_FN(Tmntua)
 
 static struct BurnRomInfo TmntubRomDesc[] = {
+	{ "963-j23.j17",        0x020000, 0xf77314e2, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "963-j24.k17",        0x020000, 0x47f662d3, BRF_ESS | BRF_PRG }, //  1
+	{ "963-j21.j15",        0x010000, 0x7bee9fe8, BRF_ESS | BRF_PRG }, //  2
+	{ "963-j22.k15",        0x010000, 0x2efed09f, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "963e20.g13",         0x008000, 0x1692a6d6, BRF_ESS | BRF_PRG }, //  4	Z80 Program 
+	
+	{ "963a28.h27",         0x080000, 0xdb4769a8, BRF_GRA },	       //  5	Tiles
+	{ "963a29.k27",         0x080000, 0x8069cd2e, BRF_GRA },	       //  6
+	
+	{ "963a17.h4",          0x080000, 0xb5239a44, BRF_GRA },	       //  7	Sprites
+	{ "963a18.h6",          0x080000, 0xdd51adef, BRF_GRA },	       //  8
+	{ "963a15.k4",          0x080000, 0x1f324eed, BRF_GRA },	       //  9
+	{ "963a16.k6",          0x080000, 0xd4bd9984, BRF_GRA },	       // 10
+	
+	{ "963a30.g7",          0x000100, 0xabd82680, BRF_GRA },	       // 11	PROMs
+	{ "963a31.g19",         0x000100, 0xf8004a1c, BRF_GRA },	       // 12
+	
+	{ "963a26.c13",         0x020000, 0xe2ac3063, BRF_SND },	       // 13	K007232 Samples
+	
+	{ "963a27.d18",         0x020000, 0x2dfd674b, BRF_SND },	       // 14	UP7759C Samples
+	
+	{ "963a25.d5",          0x080000, 0xfca078c7, BRF_SND },	       // 15	Title Music Sample
+};
+
+STD_ROM_PICK(Tmntub)
+STD_ROM_FN(Tmntub)
+
+static struct BurnRomInfo TmntucRomDesc[] = {
 	{ "963-h23.j17",        0x020000, 0x718086e1, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "963-h24.k17",        0x020000, 0x2f7d66e1, BRF_ESS | BRF_PRG }, //  1
 	{ "963-h21.j15",        0x010000, 0x1944641e, BRF_ESS | BRF_PRG }, //  2
@@ -1151,8 +1180,8 @@ static struct BurnRomInfo TmntubRomDesc[] = {
 	{ "963a25.d5",          0x080000, 0xfca078c7, BRF_SND },	       // 15	Title Music Sample
 };
 
-STD_ROM_PICK(Tmntub)
-STD_ROM_FN(Tmntub)
+STD_ROM_PICK(Tmntuc)
+STD_ROM_FN(Tmntuc)
 
 static struct BurnRomInfo TmhtRomDesc[] = {
 	{ "963-f23.j17",        0x020000, 0x9cb5e461, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -6523,7 +6552,7 @@ struct BurnDriver BurnDrvTmntu = {
 
 struct BurnDriver BurnDrvTmntua = {
 	"tmntua", "tmnt", NULL, NULL, "1989",
-	"Teenage Mutant Ninja Turtles (US 4 Players, version J)\0", NULL, "Konami", "GX963",
+	"Teenage Mutant Ninja Turtles (US 4 Players, version N)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntuaRomInfo, TmntuaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
@@ -6533,10 +6562,20 @@ struct BurnDriver BurnDrvTmntua = {
 
 struct BurnDriver BurnDrvTmntub = {
 	"tmntub", "tmnt", NULL, NULL, "1989",
-	"Teenage Mutant Ninja Turtles (US 4 Players, version H)\0", NULL, "Konami", "GX963",
+	"Teenage Mutant Ninja Turtles (US 4 Players, version J)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntubRomInfo, TmntubRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
+	NULL, 0x400, 304, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTmntuc = {
+	"tmntuc", "tmnt", NULL, NULL, "1989",
+	"Teenage Mutant Ninja Turtles (US 4 Players, version H)\0", NULL, "Konami", "GX963",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, TmntucRomInfo, TmntucRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };

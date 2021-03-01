@@ -93,43 +93,17 @@ void GalaxianRenderStarLayer()
 
 void JumpbugRenderStarLayer()
 {
-	if (GalCheckStarsBlinkState()) GalStarsBlinkState++;
-	
+	GalStarsScrollPos++;
+
 	for (INT32 Offs = 0; Offs < 252; Offs++) {
 		INT32 x, y;
-		
-		x = Stars[Offs].x >> 1;
-		y = Stars[Offs].y >> 1;
-		
-		if ((y & 0x01) ^ ((x >> 3) & 0x01)) {
-			switch (GalStarsBlinkState & 0x03) {
-				case 0: {
-					if (!(Stars[Offs].Colour & 0x01)) continue;
-					break;
-				}
-				
-				case 1: {
-					if (!(Stars[Offs].Colour & 0x04)) continue;
-					break;
-				}
-				
-				case 2: {
-					if (!(Stars[Offs].y & 0x02)) continue;
-					break;
-				}
-				
-				case 3: {
-					break;
-				}
-			}
-			
-			x = Stars[Offs].x >> 1;
-			y = Stars[Offs].y & 0xff;
-			
-			if (x >= 240) continue;
-			
-			if (GalFlipScreenX) x = 255 - x;
-			if (GalFlipScreenY) y = 255 - y;
+
+		x = ((Stars[Offs].x + GalStarsScrollPos) & 0x01ff) >> 1;
+		y = (Stars[Offs].y + ((GalStarsScrollPos + Stars[Offs].x) >> 9)) & 0xff;
+
+		if (((y & 0x01) ^ ((x >> 3) & 0x01)) && x < 232) {
+			if (GalFlipScreenX) x = 232 - x;
+			if (GalFlipScreenY) y = 232 - y;
 			y -= 16;
 			GalPlotStar(x, y, Stars[Offs].Colour);
 		}

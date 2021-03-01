@@ -77,8 +77,8 @@ static int SFactdExit()
 
 static void FrameAdvance()
 {
-	RunFrame(1, 0);
-	VidPaint(0);
+	RunFrame(1, 0, 1);
+	VidPaint(3);
 }
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lParam)
@@ -189,7 +189,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 	}
 
 	if (bRunPause) {
-		memset(nAudNextSound, 0, nAudSegLen << 2);		// Write silence into the buffer
+		AudWriteSilence();
 	}
 
 	return 0;

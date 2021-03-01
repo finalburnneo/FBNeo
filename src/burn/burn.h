@@ -247,11 +247,12 @@ extern UINT32 nFramesEmulated;
 extern UINT32 nFramesRendered;
 extern clock_t starttime;					// system time when emulation started and after roms loaded
 
-extern bool bForce60Hz;
-extern bool bBurnUseBlend;
+extern INT32 bForce60Hz;
+extern INT32 bBurnUseBlend;
 
 extern INT32 nBurnFPS;
 extern INT32 nBurnCPUSpeedAdjust;
+extern INT32 nBurnCPUSpeedTurbo;
 
 extern UINT32 nBurnDrvCount;			// Count of game drivers
 extern UINT32 nBurnDrvActive;			// Which game driver is selected
@@ -428,7 +429,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_PACMAN							(0x0f000000)
 #define HARDWARE_PREFIX_GALAXIAN						(0x10000000)
 #define HARDWARE_PREFIX_IREM							(0x11000000)
-//#define HARDWARE_PREFIX_NINTENDO_SNES					(0x12000000)
 #define HARDWARE_PREFIX_DATAEAST						(0x13000000)
 #define HARDWARE_PREFIX_CAPCOM_MISC						(0x14000000)
 #define HARDWARE_PREFIX_SETA							(0x15000000)
@@ -441,6 +441,8 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_SEGA_GAME_GEAR					(0x12000000)
 #define HARDWARE_PREFIX_MSX                             (0x1C000000)
 #define HARDWARE_PREFIX_SPECTRUM                        (0x1D000000)
+#define HARDWARE_PREFIX_NES                             (0x1E000000)
+#define HARDWARE_PREFIX_FDS                             (0x1F000000)
 
 #define HARDWARE_MISC_PRE90S							(HARDWARE_PREFIX_MISC_PRE90S)
 #define HARDWARE_MISC_POST90S							(HARDWARE_PREFIX_MISC_POST90S)
@@ -462,6 +464,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_OUTRUN							(HARDWARE_PREFIX_SEGA | 0x00080000)
 #define HARDWARE_SEGA_SYSTEM1							(HARDWARE_PREFIX_SEGA | 0x00090000)
 #define HARDWARE_SEGA_MISC								(HARDWARE_PREFIX_SEGA | 0x000a0000)
+#define HARDWARE_SEGA_SYSTEM24							(HARDWARE_PREFIX_SEGA | 0x000b0000)
 
 #define HARDWARE_SEGA_PCB_MASK							(0x0f)
 #define HARDWARE_SEGA_5358								(0x01)
@@ -622,9 +625,9 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON				(40)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2			(41)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_MULAN				(42)
-#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (43)
-#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (44)
-#define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (45)
+#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (0x40)
+#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (0x80)
+#define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (0xc0)
 
 #define HARDWARE_SEGA_MEGADRIVE_SRAM_00400				(0x0100)
 #define HARDWARE_SEGA_MEGADRIVE_SRAM_00800				(0x0200)
@@ -642,8 +645,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PACMAN									(HARDWARE_PREFIX_PACMAN)
 
 #define HARDWARE_GALAXIAN								(HARDWARE_PREFIX_GALAXIAN)
-
-//#define HARDWARE_NINTENDO_SNES							(HARDWARE_PREFIX_NINTENDO_SNES)
 
 #define HARWARE_CAPCOM_MISC								(HARDWARE_PREFIX_CAPCOM_MISC)
 
@@ -664,6 +665,8 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_MIDWAY_WUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00030000)
 #define HARDWARE_MIDWAY_YUNIT							(HARDWARE_PREFIX_MIDWAY | 0x00040000)
 
+#define HARDWARE_NES									(HARDWARE_PREFIX_NES)
+#define HARDWARE_FDS									(HARDWARE_PREFIX_FDS)
 
 // flags for the genre member
 #define GBF_HORSHOOT									(1 << 0)

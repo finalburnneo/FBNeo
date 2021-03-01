@@ -2999,7 +2999,7 @@ STD_ROM_PICK(mutantf)
 STD_ROM_FN(mutantf)
 
 struct BurnDriver BurnDrvMutantf = {
-	"mutantf", NULL, NULL, NULL, "1992",
+	"mutantf", NULL, NULL, NULL, "1991",
 	"Mutant Fighter (World ver EM-5)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
@@ -3048,7 +3048,7 @@ STD_ROM_PICK(mutantf4)
 STD_ROM_FN(mutantf4)
 
 struct BurnDriver BurnDrvMutantf4 = {
-	"mutantf4", "mutantf", NULL, NULL, "1992",
+	"mutantf4", "mutantf", NULL, NULL, "1991",
 	"Mutant Fighter (World ver EM-4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
@@ -3097,7 +3097,7 @@ STD_ROM_PICK(mutantf3)
 STD_ROM_FN(mutantf3)
 
 struct BurnDriver BurnDrvMutantf3 = {
-	"mutantf3", "mutantf", NULL, NULL, "1992",
+	"mutantf3", "mutantf", NULL, NULL, "1991",
 	"Mutant Fighter (World ver EM-3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
@@ -3146,7 +3146,7 @@ STD_ROM_PICK(mutantf2)
 STD_ROM_FN(mutantf2)
 
 struct BurnDriver BurnDrvMutantf2 = {
-	"mutantf2", "mutantf", NULL, NULL, "1992",
+	"mutantf2", "mutantf", NULL, NULL, "1991",
 	"Mutant Fighter (World ver EM-2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
@@ -3195,7 +3195,7 @@ STD_ROM_PICK(deathbrd)
 STD_ROM_FN(deathbrd)
 
 struct BurnDriver BurnDrvDeathbrd = {
-	"deathbrd", "mutantf", NULL, NULL, "1992",
+	"deathbrd", "mutantf", NULL, NULL, "1991",
 	"Death Brade (Japan ver JM-3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,

@@ -1319,6 +1319,14 @@ static int vidInit()
 		RECT rect;
 
 		SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
+		HMONITOR monitor = MonitorFromRect(&rect, MONITOR_DEFAULTTOPRIMARY);
+		MONITORINFO mi;
+
+		memset(&mi, 0, sizeof(mi));
+		mi.cbSize = sizeof(mi);
+		GetMonitorInfo(monitor, &mi);
+		rect = mi.rcMonitor; // needs to be set to monitor's resolution for proper aspect calculation
+
 		nVidScrnWidth = rect.right - rect.left;
 		nVidScrnHeight = rect.bottom - rect.top;
 
@@ -1401,9 +1409,6 @@ static int vidInit()
 			int nScaledSize, nOriginalSize;
 
 			GetClientScreenRect(hVidWnd, &rect);
-			if (!nVidFullscreen) {
-				rect.top += nMenuHeight;
-			}
 			VidImageSize(&rect, nGameWidth, nGameHeight);
 
 			if (bVidScanRotate && nGameWidth < nGameHeight) {
@@ -1733,10 +1738,6 @@ static int vidRenderImageA()
 	}
 
 	GetClientScreenRect(hVidWnd, &Dest);
-
-	if (nVidFullscreen == 0) {
-		Dest.top += nMenuHeight;
-	}
 
 	if (bVidArcaderes && nVidFullscreen) {
 		Dest.left = (Dest.right + Dest.left) / 2;
@@ -2316,8 +2317,6 @@ int vidPaint(int bValidate)
 
 	if (!bUsePageflip) {
 		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += nMenuHeight;
-
 		vidScale(&rect, nGameWidth, nGameHeight);
 
 		if ((rect.right - rect.left) != (Dest.right - Dest.left) || (rect.bottom - rect.top ) != (Dest.bottom - Dest.top)) {
@@ -2360,8 +2359,6 @@ int vidPaint(int bValidate)
 				pDD->WaitForVerticalBlank(DDWAITVB_BLOCKBEGIN, NULL);
 #if 0
 				GetClientScreenRect(hVidWnd, &rect);
-				rect.top += nMenuHeight;
-
 				vidScale(&rect, nGameImageWidth, nGameImageHeight);
 #endif
 				if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_ASYNC, NULL)))

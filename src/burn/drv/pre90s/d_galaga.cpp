@@ -3431,6 +3431,9 @@ static INT32 digdugScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(playFieldParams.playEnable);
 		SCAN_VAR(playFieldParams.playColor);
 
+	}
+
+	if (nAction & ACB_NVRAM) {
 		earom_scan(nAction, pnMin);
 	}
 
@@ -3454,8 +3457,8 @@ struct BurnDriver BurnDrvDigdug =
 	/* System = */                               NULL,
 	/* Flags = */                                BDF_GAME_WORKING |
 	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
+	BDF_ORIENTATION_FLIPPED,
+	/* digdug has EA-ROM, it saves highscores! BDF_HISCORE_SUPPORTED not needed. */
 	/* No of Players = */                        2,
 	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
 	/* Genre = */                                GBF_MAZE | GBF_ACTION,

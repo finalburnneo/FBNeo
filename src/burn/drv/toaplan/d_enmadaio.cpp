@@ -552,9 +552,9 @@ static struct BurnRomInfo enmadaioRomDesc[] = {
 STD_ROM_PICK(enmadaio)
 STD_ROM_FN(enmadaio)
 
-struct BurnDriverD BurnDrvEnmadaio = {
+struct BurnDriver BurnDrvEnmadaio = {
 	"enmadaio", NULL, NULL, NULL, "1993",
-	"Enma Daio (Japan)\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
+	"Enma Daio (Japan)\0", "Game unplayable.", "Toaplan / Taito", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_MISC, 0,
 	NULL, enmadaioRomInfo, enmadaioRomName, NULL, NULL, NULL, NULL, EnmadaioInputInfo, EnmadaioDIPInfo,

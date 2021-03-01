@@ -960,3 +960,61 @@ struct BurnDriver BurnDrvGunsmokeub = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
 	224, 256, 3, 4
 };
+
+
+// Gun.Smoke (Germany, censored)
+
+static struct BurnRomInfo gunsmokegRomDesc[] = {
+	{ "gsg03.09n",    0x8000, 0x8ad2754e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gs04.10n",     0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gs05.12n",     0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "gs02.14h", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "gs01.11f", 	  0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
+
+	{ "gs13.06c", 	  0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
+	{ "gs12.05c", 	  0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
+	{ "gs11.04c", 	  0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
+	{ "gsg10.02c", 	  0x8000, 0x0674ff4d, 4 | BRF_GRA },	       //  8
+	{ "gs09.06a", 	  0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
+	{ "gs08.05a", 	  0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
+	{ "gs07.04a", 	  0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
+	{ "gsg06.02a", 	  0x8000, 0x5cb850a7, 4 | BRF_GRA },	       // 12 
+
+	{ "gsg22.06n", 	  0x8000, 0x96779c38, 5 | BRF_GRA },	       // 13 Sprites
+	{ "gsg21.04n", 	  0x8000, 0x6e8a02c7, 5 | BRF_GRA },	       // 14
+	{ "gsg20.03n", 	  0x8000, 0x139bf927, 5 | BRF_GRA },	       // 15
+	{ "gsg19.01n", 	  0x8000, 0x8f249573, 5 | BRF_GRA },	       // 16
+	{ "gsg18.06l", 	  0x8000, 0xb290451c, 5 | BRF_GRA },	       // 17
+	{ "gsg17.04l", 	  0x8000, 0x61c9bd10, 5 | BRF_GRA },	       // 18
+	{ "gsg16.03l", 	  0x8000, 0x6620103b, 5 | BRF_GRA },	       // 19
+	{ "gsg15.01l", 	  0x8000, 0xccc1c1b6, 5 | BRF_GRA },	       // 20
+
+	{ "gs14.11c", 	  0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
+
+	{ "g-01.03b", 	  0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color DrvColPROMs
+	{ "g-02.04b", 	  0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
+	{ "g-03.05b", 	  0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
+	{ "g-04.09d", 	  0x0100, 0x906612b5, 7 | BRF_GRA },	       // 25
+	{ "g-06.14a", 	  0x0100, 0x4a9da18b, 7 | BRF_GRA },	       // 26
+	{ "g-07.15a", 	  0x0100, 0xcb9394fc, 7 | BRF_GRA },	       // 27
+	{ "g-09.09f", 	  0x0100, 0x3cee181e, 7 | BRF_GRA },	       // 28
+	{ "g-08.08f", 	  0x0100, 0xef91cdd2, 7 | BRF_GRA },	       // 29
+
+	{ "g-10.02j", 	  0x0100, 0x0eaf5158, 0 | BRF_OPT },	       // 30 Video Timing
+	{ "g-05.01f", 	  0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
+};
+
+STD_ROM_PICK(gunsmokeg)
+STD_ROM_FN(gunsmokeg)
+
+struct BurnDriver BurnDrvGunsmokeg = {
+	"gunsmokeg", "gunsmoke", NULL, NULL, "1986",
+	"Gun.Smoke (Germany, censored)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, gunsmokegRomInfo, gunsmokegRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
+	224, 256, 3, 4
+};

@@ -84,6 +84,7 @@ extern bool bNeoEnableGraphics;
 extern bool bDisableNeoWatchdog;
 
 extern INT32 s1945pmode;
+extern INT32 cphdmode;
 extern INT32 fatfury2mode;
 extern INT32 vlinermode;
 
@@ -104,6 +105,7 @@ extern INT32 nNeoPaletteBank;
 extern UINT32* NeoPalette;
 
 extern UINT8 NeoRecalcPalette;
+extern INT32 bNeoDarkenPalette;
 
 INT32 NeoInitPalette();
 void NeoExitPalette();

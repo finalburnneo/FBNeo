@@ -37,7 +37,8 @@ static UINT16 scrolly;
 static UINT8 flipscreen;
 static UINT8 soundlatch;
 static UINT8 bankdata;
-static UINT8 display_disable;
+static UINT8 display_bg_disable;
+static UINT8 display_tx_disable;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -134,11 +135,11 @@ static struct BurnDIPInfo GalivanDIPList[]=
 	{0x14, 0x01, 0x20, 0x00, "Upright"		},
 	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
 
-	{0   , 0xfe, 0   ,    2, "Power Invulnerability"},
+	{0   , 0xfe, 0   ,    2, "Power Invulnerability (Cheat)"},
 	{0x14, 0x01, 0x40, 0x40, "Off"			},
 	{0x14, 0x01, 0x40, 0x00, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "Life Invulnerability"	},
+	{0   , 0xfe, 0   ,    2, "Life Invulnerability (Cheat)"	},
 	{0x14, 0x01, 0x80, 0x80, "Off"			},
 	{0x14, 0x01, 0x80, 0x00, "On"			},
 
@@ -232,6 +233,71 @@ static struct BurnDIPInfo DangarDIPList[]=
 
 STDDIPINFO(Dangar)
 
+static struct BurnDIPInfo DangarbDIPList[] =
+{
+	{0x14, 0xff, 0xff, 0x9f, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
+	{0x16, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x03, 0x00, "2"			},
+	{0x14, 0x01, 0x03, 0x03, "3"			},
+	{0x14, 0x01, 0x03, 0x02, "4"			},
+	{0x14, 0x01, 0x03, 0x01, "5"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x0c, 0x0c, "20k and every 60k"	},
+	{0x14, 0x01, 0x0c, 0x08, "50k and every 60k"	},
+	{0x14, 0x01, 0x0c, 0x04, "20k and every 90k"	},
+	{0x14, 0x01, 0x0c, 0x00, "50k and every 90k"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x14, 0x01, 0x10, 0x00, "Off"			},
+	{0x14, 0x01, 0x10, 0x10, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x14, 0x01, 0x20, 0x00, "Upright"		},
+	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Alternate Enemies"	},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x15, 0x01, 0x03, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
+	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x15, 0x01, 0x0c, 0x00, "2 Coins 3 Credits"	},
+	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x15, 0x01, 0x10, 0x10, "Easy"			},
+	{0x15, 0x01, 0x10, 0x00, "Hard"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x15, 0x01, 0x20, 0x20, "Off"			},
+	{0x15, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Complete Invulnerability (Cheat)"		},
+	{0x15, 0x01, 0x40, 0x40, "Off"			},
+	{0x15, 0x01, 0x40, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Base Ship Invulnerability (Cheat)"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0x15, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x01, 0x00, "Off"			},
+	{0x16, 0x01, 0x01, 0x01, "On"			},
+};
+
+STDDIPINFO(Dangarb)
+
 static struct BurnDIPInfo NinjemakDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL			},
@@ -291,6 +357,59 @@ static struct BurnDIPInfo NinjemakDIPList[]=
 
 STDDIPINFO(Ninjemak)
 
+static struct BurnDIPInfo YoumaDIPList[] =
+{
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0x7c, NULL			},
+	{0x16, 0xff, 0xff, 0x02, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x03, 0x03, "3"			},
+	{0x14, 0x01, 0x03, 0x02, "4"			},
+	{0x14, 0x01, 0x03, 0x01, "5"			},
+	{0x14, 0x01, 0x03, 0x00, "6"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x0c, 0x0c, "20k and every 60k"	},
+	{0x14, 0x01, 0x0c, 0x08, "50k and every 60k"	},
+	{0x14, 0x01, 0x0c, 0x04, "20k and every 90k"	},
+	{0x14, 0x01, 0x0c, 0x00, "50k and every 90k"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x14, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x30, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x14, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x14, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x15, 0x01, 0x01, 0x01, "Off"			},
+	{0x15, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x15, 0x01, 0x02, 0x00, "Upright"		},
+	{0x15, 0x01, 0x02, 0x02, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x15, 0x01, 0x04, 0x04, "Easy"			},
+	{0x15, 0x01, 0x04, 0x00, "Hard"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x15, 0x01, 0x20, 0x20, "Off"			},
+	{0x15, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x02, 0x02, "Off"			},
+	{0x16, 0x01, 0x02, 0x00, "On"			},
+};
+
+STDDIPINFO(Youma)
+
 static void bankswitch(INT32 data)
 {
 	bankdata = data;
@@ -317,10 +436,11 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 			if ((data & 0x80) == 0 && scrollx & 0x8000)
 			{
 				scrollx &= 0x7fff;
-				sprite_priority = data & 0x20;
-				display_disable = data & 0x40;
 			}
 
+			sprite_priority = data & 0x20;
+			display_bg_disable = data & 0x40;
+			display_tx_disable = data & 0x80;
 			scrollx = (scrollx & 0x00ff) | (data << 8);
 		}
 		return;
@@ -341,7 +461,7 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 		case 0x80:
 			// coin counter = data & 0x03
 			flipscreen = data & 0x04;
-			display_disable = data & 0x10;
+			display_bg_disable = data & 0x10;
 			bankswitch((data & 0xc0) >> 6);
 		return;
 
@@ -452,7 +572,10 @@ static INT32 DrvDoReset()
 	scrolly = 0;
 	flipscreen = 0;
 	soundlatch = 0;
-	display_disable = 0;
+	display_bg_disable = 0;
+	display_tx_disable = 0;
+
+	nb_1414m4_init8b();
 
 	return 0;
 }
@@ -475,9 +598,9 @@ static INT32 MemIndex()
 
 	nb1414_blit_data8b	= Next; Next += 0x004000;
 
-	DrvColTable		= Next; Next += 0x001180;
+	DrvColTable		= Next; Next += 0x001200;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x1180 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x1200 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -493,14 +616,23 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvPaletteTable()
+static void DrvPaletteTable(INT32 mode)
 {
-	for (INT32 i = 0; i < 0x80; i++) {
-		DrvColTable[i] = i;
+	if (mode == 0)
+	{
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColTable[i] = (i & 0x0f) | ((i >> ((i & 0x08) ? 2 : 0)) & 0x30);
+		}
+	}
+	else
+	{
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColTable[i] = i & 0x7f;
+		}
 	}
 
 	for (INT32 i = 0; i < 0x100; i++) {
-		DrvColTable[i+0x80] = 0xc0 | ((i >> ((i&8)>>2)) & 0x30) | (i & 0x0f);
+		DrvColTable[i+0x100] = 0xc0 | ((i >> ((i&8)>>2)) & 0x30) | (i & 0x0f);
 	}
 
 	for (INT32 i = 0; i < 0x1000; i++) {
@@ -513,7 +645,7 @@ static void DrvPaletteTable()
 		else
 			ctabentry = 0x80 | (DrvColPROM[0x300 + (i >> 4)] & 0x0f) | ((i & 0x03) << 4);
 
-		DrvColTable[0x180 + i_swapped] = ctabentry;
+		DrvColTable[0x200 + i_swapped] = ctabentry;
 	}
 }
 
@@ -533,6 +665,8 @@ static INT32 DrvInit(INT32 game)
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
+
+	BurnSetRefreshRate(59.94);
 
 	game_mode = game;
 
@@ -605,7 +739,7 @@ static INT32 DrvInit(INT32 game)
 	DrvNibbleExpand(DrvGfxROM0, 0x08000);
 	DrvNibbleExpand(DrvGfxROM1, 0x20000);
 	DrvNibbleExpand(DrvGfxROM2, 0x20000);
-	DrvPaletteTable();
+	DrvPaletteTable(game);
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -632,8 +766,8 @@ static INT32 DrvInit(INT32 game)
 
 	DACInit(0, 0, 0, DrvSyncDAC);
 	DACInit(1, 0, 0, DrvSyncDAC);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 
 	// #0 takes dac #0,1 and highpasses it a little to get rid of the dc offset.
 	filter_rc_init(0, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310), 0);
@@ -680,24 +814,26 @@ static void DrvPaletteInit()
 		tab[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
 	}
 
-	for (INT32 i = 0; i < 0x1180; i++) {
+	for (INT32 i = 0; i < 0x1200; i++) {
 		DrvPalette[i] = tab[DrvColTable[i]];
 	}
 }
 
 static void draw_fg_layer(INT32 mode)
 {
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
+	for (INT32 i = 0; i < 32 * 32; i++)
 	{
-		INT32 sy = (offs & 0x1f) * 8;
-		INT32 sx = (offs / 0x20) * 8;
+		INT32 sy = (i & 0x1f) * 8;
+		INT32 sx = (i / 0x20) * 8;
 
+		INT32 offs = i;
+		if (offs < 0x12 && mode)
+		{
+			offs = 0x12;
+		}
 		INT32 attr  = DrvVidRAM[offs + 0x400];
 		INT32 code  = DrvVidRAM[offs] | ((attr & 0x03) << 8);
-		INT32 color = (attr >> ((mode) ? 2 : 5)) & 7;
-
-		if(offs < 0x12 && mode)
-			code = attr = 0x01;
+		INT32 color = (mode) ? (attr >> 2) & 7 : (attr >> 3) & 15;
 
 	//	necessary??
 	//	INT32 category = -1;
@@ -734,7 +870,7 @@ static void draw_bg_layer(INT32 mode)
 		INT32 code = DrvMapROM[offs] + ((attr & 0x03) << 8);
 		INT32 color = ((attr & 0x60) >> 3) | ((mode) ? ((attr & 0x0c) >> 2) : ((attr & 0x18) >> 3));
 
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy, ((0x80/0x10)+color), 4, 0, DrvGfxROM1);
+		Render16x16Tile_Clip(pTransDraw, code, sx, sy, ((0x100/0x10)+color), 4, 0, DrvGfxROM1);
 	}
 }
 
@@ -762,15 +898,15 @@ static void draw_sprites(INT32 mode)
 
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color+(0x180/0x10), 4, 0xf, 0, DrvGfxROM2);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color+(0x200/0x10), 4, 0xf, 0, DrvGfxROM2);
 			}
 		}
 	}
@@ -783,14 +919,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	if (display_disable || (nBurnLayer & 1) == 0) {
+	if (display_bg_disable || (nBurnLayer & 1) == 0) {
 		BurnTransferClear(); // 0 should fill black
 	} else {
 		draw_bg_layer(game_mode);
 	}
 
 	if ((nBurnLayer & 2) && sprite_priority == 0) draw_sprites(game_mode);
-	if (nBurnLayer & 4) draw_fg_layer(game_mode);
+	if (nBurnLayer & 4 && display_tx_disable == 0) draw_fg_layer(game_mode);
 	if ((nBurnLayer & 8) && sprite_priority != 0) draw_sprites(game_mode);
 
 	BurnTransferCopy(DrvPalette);
@@ -805,7 +941,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetNewFrame();
-	nb1414_frame8b++;
 
 	{
 		DrvInputs[0] = 0xff;
@@ -889,7 +1024,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(bankdata);
-		SCAN_VAR(display_disable);
+		SCAN_VAR(display_bg_disable);
+		SCAN_VAR(display_tx_disable);
+
+		nb_1414m4_scan8b();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1172,7 +1310,7 @@ struct BurnDriver BurnDrvDangarb = {
 	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarbDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1209,8 +1347,7 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 	{ "82s129.7f",		0x0100, 0x29bc6216, 8 | BRF_GRA },           // 18 Sprite LUT
 
 	{ "dg-3.ic7.2764",	0x2000, 0x84a56d26, 9 | BRF_GRA },           // 19 user2
-	
-	{ "22.15b",			0x4000, 0x1d484f68, 2 | BRF_OPT },
+		
 };
 
 STD_ROM_PICK(dangarj)
@@ -1221,7 +1358,7 @@ struct BurnDriver BurnDrvDangarj = {
 	"Ufo Robo Dangar (9/26/1986, Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarjRomInfo, dangarjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarjRomInfo, dangarjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarbDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1266,7 +1403,7 @@ struct BurnDriver BurnDrvDangarbt = {
 	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarDIPInfo, // Dangar2
+	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DangarbDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1369,7 +1506,7 @@ struct BurnDriver BurnDrvYouma = {
 	"Youma Ninpou Chou (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmaRomInfo, youmaRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmaRomInfo, youmaRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, YoumaDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1418,7 +1555,7 @@ struct BurnDriver BurnDrvYouma2 = {
 	"Youma Ninpou Chou (Japan, alt)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youma2RomInfo, youma2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youma2RomInfo, youma2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, YoumaDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1465,7 +1602,7 @@ struct BurnDriverD BurnDrvYoumab = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmabRomInfo, youmabRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmabRomInfo, youmabRomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, YoumaDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1512,7 +1649,7 @@ struct BurnDriverD BurnDrvYoumab2 = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
+	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, NULL, NULL, ninjemakInputInfo, YoumaDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };

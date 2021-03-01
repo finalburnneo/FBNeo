@@ -9,6 +9,9 @@
 #include <math.h>
 #include <assert.h>
 #include <ctype.h>
+#include <vector>
+#include <map>
+#include <string>
 
 #include "tchar.h"
 
@@ -40,7 +43,9 @@ typedef struct tagIMAGE {
 
 #if defined (BUILD_WIN32)
  #include "burner_win32.h"
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_MACOS)
+ #include "burner_macos.h"
+#elif defined (BUILD_SDL) || defined (BUILD_SDL2)
  #include "burner_sdl.h"
 #elif defined (_XBOX) && !defined(__LIBRETRO__)
  #include "burner_xbox.h"
@@ -59,6 +64,7 @@ typedef struct tagIMAGE {
 
 #ifndef __LIBRETRO__
 #include "interface.h"
+#include "luaengine.h"
 #endif
 
 #define IMG_FREE		(1 << 0)
@@ -115,12 +121,13 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 extern INT32 nAutoFireRate;
 
 // Player Default Controls
-extern INT32 nPlayerDefaultControls[4];
-extern TCHAR szPlayerDefaultIni[4][MAX_PATH];
+extern INT32 nPlayerDefaultControls[5];
+extern TCHAR szPlayerDefaultIni[5][MAX_PATH];
 
 // mappable System Macros for the Input Dialogue
 extern UINT8 macroSystemPause;
 extern UINT8 macroSystemFFWD;
+extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;
@@ -180,6 +187,8 @@ void ComputeGammaLUT();
 #define DAT_MSX_ONLY        9
 #define DAT_SPECTRUM_ONLY   10
 #define DAT_NEOGEO_ONLY		11
+#define DAT_NES_ONLY        12
+#define DAT_FDS_ONLY        13
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

@@ -6,6 +6,7 @@
 #include "z80_intf.h"
 #include "burn_ym2151.h"
 #include "burn_ym3526.h"
+#include "sn76496.h"
 #include "dac.h"
 
 static UINT8 *AllMem;
@@ -320,8 +321,11 @@ static void __fastcall wheelrun_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xb000:
+			SN76496Write(0, data);
+			return;
 		case 0xc000:
-		return;
+			SN76496Write(1, data);
+			return;
 	}
 }
 
@@ -388,6 +392,7 @@ static INT32 DrvDoReset()
 		ZetReset();
 		BurnYM3526Reset();
 		ZetClose();
+		SN76496Reset();
 	}
 
 	soundlatch = 0;
@@ -670,6 +675,12 @@ static INT32 WheelrunInit()
 	BurnTimerAttachYM3526(&ZetConfig, 9000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
+	SN76489AInit(0, 3500000, 1);
+	SN76496SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+
+	SN76489AInit(1, 3500000, 1);
+	SN76496SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -689,6 +700,7 @@ static INT32 DrvExit()
 	} else if (game_select == 2) {
 		ZetExit();
 		BurnYM3526Exit();
+		SN76496Exit();
 	}
 
 	BurnFree(AllMem);
@@ -926,6 +938,7 @@ static INT32 WheelrunFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+        SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -971,6 +984,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetOpen(0);
 			BurnYM3526Scan(nAction, pnMin);
 			ZetClose();
+
+			SN76496Scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(soundlatch);

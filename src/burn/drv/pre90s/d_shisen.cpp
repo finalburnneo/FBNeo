@@ -621,32 +621,36 @@ struct BurnDriver BurnDrvMatchit = {
 // Sichuan II (hack, set 1)
 
 static struct BurnRomInfo sichuan2RomDesc[] = {
-	{ "ic06.06",	0x10000, 0x98a2459b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "ic07.03",	0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "6.11d",		0x10000, 0x98a2459b, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
+	{ "7.11c",		0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, 	 //  1
 
-	{ "ic01.01",	0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "1.2c",		0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, 	 //  2 Z80 #1 Code
 
-	{ "ic08.04",	0x10000, 0x1c0e221c, 3 | BRF_GRA },           //  3 Graphics
-	{ "ic09.05",	0x10000, 0x8a7d8284, 3 | BRF_GRA },           //  4
-	{ "ic12.08",	0x10000, 0x48e1d043, 3 | BRF_GRA },           //  5
-	{ "ic13.09",	0x10000, 0x3feff3f2, 3 | BRF_GRA },           //  6
-	{ "ic14.10",	0x10000, 0xb76a517d, 3 | BRF_GRA },           //  7
-	{ "ic15.11",	0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           //  8
-	{ "ic16.12",	0x10000, 0x64e5d837, 3 | BRF_GRA },           //  9
-	{ "ic17.13",	0x10000, 0x02c1b2c4, 3 | BRF_GRA },           // 10
-	{ "ic18.14",	0x10000, 0xf5a8370e, 3 | BRF_GRA },           // 11
-	{ "ic19.15",	0x10000, 0x7a9b7671, 3 | BRF_GRA },           // 12
-	{ "ic20.16",	0x10000, 0x7fb396ad, 3 | BRF_GRA },           // 13
-	{ "ic21.17",	0x10000, 0xfb83c652, 3 | BRF_GRA },           // 14
-	{ "ic22.18",	0x10000, 0xd8b689e9, 3 | BRF_GRA },           // 15
-	{ "ic23.19",	0x10000, 0xe6611947, 3 | BRF_GRA },           // 16
-	{ "ic10.06",	0x10000, 0x473b349a, 3 | BRF_GRA },           // 17
-	{ "ic11.07",	0x10000, 0xd9a60285, 3 | BRF_GRA },           // 18
+	{ "8.3j",		0x10000, 0x1c0e221c, 3 | BRF_GRA },           	 //  3 Graphics
+	{ "9.4j",		0x10000, 0x8a7d8284, 3 | BRF_GRA },           	 //  4
+	{ "12.1l",		0x10000, 0x48e1d043, 3 | BRF_GRA },           	 //  5
+	{ "13.2l",		0x10000, 0x3feff3f2, 3 | BRF_GRA },           	 //  6
+	{ "14.3l",		0x10000, 0xb76a517d, 3 | BRF_GRA },           	 //  7
+	{ "15.5l",		0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           	 //  8
+	{ "16.6l",		0x10000, 0x64e5d837, 3 | BRF_GRA },           	 //  9
+	{ "17.7l",		0x10000, 0x02c1b2c4, 3 | BRF_GRA },           	 // 10
+	{ "18.8l",		0x10000, 0xf5a8370e, 3 | BRF_GRA },           	 // 11
+	{ "19.10l",		0x10000, 0x7a9b7671, 3 | BRF_GRA },           	 // 12
+	{ "20.11l",		0x10000, 0x7fb396ad, 3 | BRF_GRA },           	 // 13
+	{ "21.12l",		0x10000, 0xfb83c652, 3 | BRF_GRA },           	 // 14
+	{ "22.13l",		0x10000, 0xd8b689e9, 3 | BRF_GRA },           	 // 15
+	{ "23.14l",		0x10000, 0xe6611947, 3 | BRF_GRA },           	 // 16
+	{ "11.6j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
+	{ "10.5j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
 
-	{ "ic02.02",	0x10000, 0x92f0093d, 4 | BRF_SND },           // 19 Samples
-	{ "ic03.03",	0x10000, 0x116a049c, 4 | BRF_SND },           // 20
-	{ "ic04.04",	0x10000, 0x6840692b, 4 | BRF_SND },           // 21
-	{ "ic05.05",	0x10000, 0x92ffe22a, 4 | BRF_SND },           // 22
+	{ "2.7b",		0x10000, 0x92f0093d, 4 | BRF_SND },           	 // 19 Samples
+	{ "3.6c",		0x10000, 0x116a049c, 4 | BRF_SND },           	 // 20
+	{ "4.7c",		0x10000, 0x6840692b, 4 | BRF_SND },           	 // 21
+	{ "5.9c",		0x10000, 0x92ffe22a, 4 | BRF_SND },           	 // 22
+	
+	{ "1.1f",		0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 23 plds
+	{ "2.6e",		0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "3.14f",		0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 25
 };
 
 STD_ROM_PICK(sichuan2)

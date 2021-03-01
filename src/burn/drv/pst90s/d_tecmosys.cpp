@@ -77,6 +77,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 4"	},
 
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 8,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Up",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},

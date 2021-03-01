@@ -203,9 +203,9 @@ STDINPUTINFO(mschamp)
 
 static struct BurnInputInfo eyesInputList[] = {
 	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
 	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 7, 	"p2 start"},
+	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
@@ -255,7 +255,7 @@ static struct BurnInputInfo theglobpInputList[] = {
 
 STDINPUTINFO(theglobp)
 
-static struct BurnInputInfo EeekkInputList[] = {
+static struct BurnInputInfo EeekkpInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
@@ -276,7 +276,7 @@ static struct BurnInputInfo EeekkInputList[] = {
 	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Eeekk)
+STDINPUTINFO(Eeekkp)
 
 static struct BurnInputInfo ponpokoInputList[] = {
 	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5, "p1 coin"},
@@ -1710,7 +1710,7 @@ static struct BurnDIPInfo shootbulDIPList[]=
 
 STDDIPINFO(shootbul)
 
-static struct BurnDIPInfo EeekkDIPList[]=
+static struct BurnDIPInfo EeekkpDIPList[]=
 {
 	{0x0d, 0xff, 0xff, 0xff, NULL			},
 	{0x0e, 0xff, 0xff, 0xff, NULL			},
@@ -1741,7 +1741,7 @@ static struct BurnDIPInfo EeekkDIPList[]=
 	{0x0f, 0x01, 0x20, 0x20, "Off"			},
 };
 
-STDDIPINFO(Eeekk)
+STDDIPINFO(Eeekkp)
 
 //------------------------------------------------------------------------------------------------------
 
@@ -1919,6 +1919,8 @@ void __fastcall pacman_write(UINT16 a, UINT8 d)
 				interrupt_mask = d;
 				return;
 			}
+
+			if (a == 0x50c1) *flipscreen = d & 1;
 
 			if ((a & 0xfff0) == 0x5040) {
 				NamcoSoundWrite((a & 0x0f) | 0x00, d);
@@ -2251,7 +2253,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	{
 		case EPOS:
 			epos_hardware_counter = 0x0A + acitya;
-			if (strcmp(BurnDrvGetTextA(DRV_NAME), "eeekk") == 0) epos_hardware_counter = 0x09;
+			if (strcmp(BurnDrvGetTextA(DRV_NAME), "eeekkp") == 0) epos_hardware_counter = 0x09;
 			epos_hardware_set_bank(epos_hardware_counter);
 		break;
 
@@ -2720,7 +2722,7 @@ static void DrawBackground()
 		INT32 code  = (charbank << 8) | DrvVidRAM[ofst];
 		INT32 color = (DrvColRAM[ofst] & 0x1f) | (colortablebank << 5) | (palettebank << 6);
 
-		if (*flipscreen) {
+		if (game_select == BIRDIY && *flipscreen) {
 			Render8x8Tile_FlipXY_Clip(pTransDraw, code, (272 - (sx * 8)) + 8, (224 - (sy * 8)) - 8, color, 2, 0, DrvGfxROM);
 		} else {
 			Render8x8Tile_Clip(pTransDraw, code, sx * 8, sy * 8, color, 2, 0, DrvGfxROM);
@@ -2740,15 +2742,17 @@ static void DrawSprites()
 		INT32 flipx  = DrvSprRAM [offs] & 1;
 		INT32 flipy  = DrvSprRAM [offs] & 2;
 
-		if (game_select == VANVAN)
-			sx += 2*8;
-		
-		if (*flipscreen) {
-			sy = (240 - sy) - 8;
-			sx += 8;
+		if (*flipscreen) { // unflip the sprites
+			if (game_select == VANVAN) {
+				sx -= 2*8;
+			}
+			sy = (240 - sy) - 1;
 			flipy = !flipy;
 			flipx = !flipx;
 		} else {
+			if (game_select == VANVAN) {
+				sx += 2*8;
+			}
 			sx = 272 - sx;
 			sy = sy - 31;
 		}
@@ -2775,7 +2779,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	watchdog++;
-	if (watchdog >= 16) {
+	if (watchdog >= 60) {
 		DrvDoReset(0);
 	}
 
@@ -5735,7 +5739,7 @@ static struct BurnRomInfo pacmanugRomDesc[] = {
 	{ "4p.6j",     		0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "8p.6p",     		0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "p9bfz.5e", 		0x0800, 0x7a7b48b3, 2 | BRF_GRA },				//  8 Graphics
+	{ "p9bfz.5e", 		0x0800, 0xdc9f2a7b, 2 | BRF_GRA },				//  8 Graphics
 	{ "11p.5h",     	0x0800, 0x3591b89d, 2 | BRF_GRA },				//  9
 	{ "10p.5f", 		0x0800, 0x9e39323a, 2 | BRF_GRA },				// 10
 	{ "12p.5j", 		0x0800, 0x1b1d9096, 2 | BRF_GRA },				// 11
@@ -5968,7 +5972,7 @@ static INT32 cannonbpInit()
 }
 
 struct BurnDriver BurnDrvcannonbp = {
-	"cannonbp", NULL, NULL, NULL, "198?",
+	"cannonbp", NULL, NULL, NULL, "1985",
 	"Cannon Ball (Pacman Hardware)\0", "wrong colors", "Novomatic", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_BREAKOUT, 0,
@@ -6347,7 +6351,7 @@ struct BurnDriver BurnDrvsprglbpg = {
 };
 
 
-// Beastie Feastie
+// Beastie Feastie (Pac-Man conversion)
 
 static struct BurnRomInfo beastfpRomDesc[] = {
 	{ "bf-u2.bin",    			0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -6370,7 +6374,7 @@ STD_ROM_FN(beastfp)
 
 struct BurnDriver BurnDrvbeastfp = {
 	"beastfp", "suprglob", NULL, NULL, "1984",
-	"Beastie Feastie\0", NULL, "Epos Corporation", "Pac-man",
+	"Beastie Feastie (Pac-Man conversion)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
 	NULL, beastfpRomInfo, beastfpRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
@@ -6381,7 +6385,7 @@ struct BurnDriver BurnDrvbeastfp = {
 
 // Eeekk!
 
-static struct BurnRomInfo eeekkRomDesc[] = {
+static struct BurnRomInfo eeekkpRomDesc[] = {
 	{ "u_2_eeekk_pg03094.u2",	0x2000, 0x701e37f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "u_3_eeekk_pg03094.u3",	0x2000, 0xbcf524ae, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -6398,10 +6402,10 @@ static struct BurnRomInfo eeekkRomDesc[] = {
 	{ "eeekk.ic4",	0x002c, 0xf588ba4e, 0 | BRF_OPT },           //  4 epos_pal10h8
 };
 
-STD_ROM_PICK(eeekk)
-STD_ROM_FN(eeekk)
+STD_ROM_PICK(eeekkp)
+STD_ROM_FN(eeekkp)
 
-static void eeekk_decrypt()
+static void eeekkp_decrypt()
 {
 	for (INT32 i = 0; i < 0x4000; i++) {
 		DrvZ80ROM[0x10000 + i] = BITSWAP08(DrvZ80ROM[i] ^ 0xfd, 7, 6, 1, 3, 0, 4, 2, 5);
@@ -6411,18 +6415,18 @@ static void eeekk_decrypt()
 	}
 }
 
-static INT32 eeekkInit()
+static INT32 eeekkpInit()
 {
-	return DrvInit(StandardMap, eeekk_decrypt, EPOS);
+	return DrvInit(StandardMap, eeekkp_decrypt, EPOS);
 }
 
-struct BurnDriver BurnDrvEeekk = {
-	"eeekk", NULL, NULL, NULL, "1984",
-	"Eeekk!\0", NULL, "Epos Corporation", "Pac-man",
+struct BurnDriver BurnDrvEeekkp = {
+	"eeekkp", NULL, NULL, NULL, "1984",
+	"Eeekk! (Pac-man conversion)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
-	NULL, eeekkRomInfo, eeekkRomName, NULL, NULL, NULL, NULL, EeekkInputInfo, EeekkDIPInfo,
-	eeekkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, eeekkpRomInfo, eeekkpRomName, NULL, NULL, NULL, NULL, EeekkpInputInfo, EeekkpDIPInfo,
+	eeekkpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
@@ -7405,3 +7409,44 @@ struct BurnDriver BurnDrvalienres = {
 	224, 288, 3, 4
 };
 
+
+// Pacman Club / Club Lambada (Argentina)
+
+static struct BurnRomInfo clubpacmRomDesc[] = {
+	{ "prg.6f",        0x8000, 0x9baa78a2, 1 | BRF_ESS | BRF_PRG },	// 0 Z80 Code
+
+	{ "12.5e",         0x0800, 0x93933d1d, 2 | BRF_GRA },			// 1 Graphics
+	{ "14.5h",         0x0800, 0x7409fbec, 2 | BRF_GRA },			// 2
+	{ "13.5f",         0x0800, 0x22b0188a, 2 | BRF_GRA },			// 3
+	{ "15.5j",         0x0800, 0x50c7477d, 2 | BRF_GRA },			// 4
+
+	{ "n82s123n.7f",   0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 5 Color Proms
+	{ "m7611.4a",      0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 6
+
+	{ "m7611.1m",      0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 7 Sound Prom
+	{ "m7611.3m",      0x0100, 0x0e307106, 0 | BRF_SND | BRF_OPT },	// 8 Timing Prom (not used)
+};
+
+STD_ROM_PICK(clubpacm)
+STD_ROM_FN(clubpacm)
+
+static void clubpacm_decode()
+{
+	memcpy(DrvZ80ROM + 0x8000, DrvZ80ROM + 0x4000, 0x4000);
+	memset(DrvZ80ROM + 0x4000, 0, 0x4000);
+}
+
+static INT32 clubpacmInit()
+{
+	return DrvInit(WoodpekMap, clubpacm_decode, PACMAN);
+}
+
+struct BurnDriver BurnDrvclubpacm = {
+	"clubpacm", NULL, NULL, NULL, "1989",
+	"Pacman Club / Club Lambada (Argentina)\0", NULL, "Miky SRL", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, clubpacmRomInfo, clubpacmRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	clubpacmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};

@@ -77,7 +77,6 @@ static INT32 usemcu = 0;
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
 static INT32 Skyrobo = 0;
-static INT32 fiftysevenhertz = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
@@ -105,6 +104,7 @@ static struct BurnInputInfo ArmedfInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Armedf)
@@ -137,6 +137,7 @@ static struct BurnInputInfo Cclimbr2InputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 10,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Cclimbr2)
@@ -243,6 +244,7 @@ static struct BurnDIPInfo ArmedfDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xdf, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
+	{0x17, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -299,14 +301,19 @@ static struct BurnDIPInfo ArmedfDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
 	{0x16, 0x01, 0x40, 0x40, "Off"					},
 	{0x16, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Armedf)
 
 static struct BurnDIPInfo KozureDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xcf, NULL					},
+	{0x15, 0xff, 0xff, 0x4f, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
+	{0x17, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -314,45 +321,59 @@ static struct BurnDIPInfo KozureDIPList[]=
 	{0x15, 0x01, 0x03, 0x01, "5"					},
 	{0x15, 0x01, 0x03, 0x00, "6"					},
 
-	{0   , 0xfe, 0   ,    2, "1st Bonus Life"			},
-	{0x15, 0x01, 0x04, 0x04, "None"					},
-	{0x15, 0x01, 0x04, 0x00, "50k"					},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x15, 0x01, 0x0c, 0x08, "50k then every 60k"	},
+	{0x15, 0x01, 0x0c, 0x00, "50k then every 90k"	},
+	{0x15, 0x01, 0x0c, 0x0c, "Every 60k"			},
+	{0x15, 0x01, 0x0c, 0x04, "Every 90k"			},
 
-	{0   , 0xfe, 0   ,    2, "2nd Bonus Life"			},
-	{0x15, 0x01, 0x08, 0x08, "60k"					},
-	{0x15, 0x01, 0x08, 0x00, "90k"					},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x15, 0x01, 0x10, 0x10, "Off"					},
+	{0x15, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
-	{0x15, 0x01, 0x0c, 0x08, "50k then every 60k"			},
-	{0x15, 0x01, 0x0c, 0x00, "50k then every 90k"			},
-	{0x15, 0x01, 0x0c, 0x0c, "Every 60k"				},
-	{0x15, 0x01, 0x0c, 0x04, "Every 90k"				},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x20, 0x00, "Upright"				},
+	{0x15, 0x01, 0x20, 0x20, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"			},
 	{0x15, 0x01, 0x40, 0x40, "Easy"					},
 	{0x15, 0x01, 0x40, 0x00, "Hard"					},
 
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x15, 0x01, 0x80, 0x00, "Off"					},
+	{0x15, 0x01, 0x80, 0x80, "On"					},
+
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credit"			},
-	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
-	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
-	{0x16, 0x01, 0x03, 0x00, "Free Play"				},
+	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credit"		},
+	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x16, 0x01, 0x03, 0x00, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credit"			},
-	{0x16, 0x01, 0x0c, 0x04, "2 Coins 3 Credits"			},
-	{0x16, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"			},
-	{0x16, 0x01, 0x0c, 0x08, "1 Coin  6 Credits"			},
+	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credit"		},
+	{0x16, 0x01, 0x0c, 0x04, "2 Coins 3 Credits"	},
+	{0x16, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"	},
+	{0x16, 0x01, 0x0c, 0x08, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Allow Continue"			},
-	{0x16, 0x01, 0x30, 0x30, "No"					},
-	{0x16, 0x01, 0x30, 0x20, "3 Times"				},
-	{0x16, 0x01, 0x30, 0x10, "5 Times"				},
-	{0x16, 0x01, 0x30, 0x00, "Yes"					},
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x16, 0x01, 0x10, 0x00, "Off"					},
+	{0x16, 0x01, 0x10, 0x10, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x16, 0x01, 0x20, 0x00, "Off"					},
+	{0x16, 0x01, 0x20, 0x20, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x16, 0x01, 0x40, 0x00, "No"					},
 	{0x16, 0x01, 0x40, 0x40, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Infinite Timer (Cheat)" },
+	{0x16, 0x01, 0x80, 0x80, "No"					},
+	{0x16, 0x01, 0x80, 0x00, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x17, 0x01, 0x02, 0x02, "Off"					},
+	{0x17, 0x01, 0x02, 0x00, "On"					},
 };
 
 STDDIPINFO(Kozure)
@@ -361,6 +382,7 @@ static struct BurnDIPInfo Cclimbr2DIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xcf, NULL					},
 	{0x18, 0xff, 0xff, 0xff, NULL					},
+	{0x19, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x17, 0x01, 0x03, 0x03, "3"					},
@@ -409,6 +431,10 @@ static struct BurnDIPInfo Cclimbr2DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Partial Invulnerability (Cheat)"	},
 	{0x18, 0x01, 0x40, 0x40, "Off"					},
 	{0x18, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x19, 0x01, 0x02, 0x02, "Off"		},
+	{0x19, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Cclimbr2)
@@ -417,6 +443,7 @@ static struct BurnDIPInfo LegionDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xf7, NULL					},
 	{0x16, 0xff, 0xff, 0xff, NULL					},
+	{0x17, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
@@ -467,28 +494,25 @@ static struct BurnDIPInfo LegionDIPList[]=
 	{0   , 0xfe, 0   ,    2, "P2 Invulnerability (Cheat)"		},
 	{0x16, 0x01, 0x80, 0x80, "Off"					},
 	{0x16, 0x01, 0x80, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Legion)
 
 static struct BurnDIPInfo TerrafDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0x0f, NULL					},
+	{0x15, 0xff, 0xff, 0xcf, NULL					},
 	{0x16, 0xff, 0xff, 0x3f, NULL					},
+	{0x17, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x15, 0x01, 0x03, 0x03, "3"					},
 	{0x15, 0x01, 0x03, 0x02, "4"					},
 	{0x15, 0x01, 0x03, 0x01, "5"					},
 	{0x15, 0x01, 0x03, 0x00, "6"					},
-
-	{0   , 0xfe, 0   ,    2, "1st Bonus Life"			},
-	{0x15, 0x01, 0x04, 0x04, "20k"					},
-	{0x15, 0x01, 0x04, 0x00, "50k"					},
-
-	{0   , 0xfe, 0   ,    2, "2nd Bonus Life"			},
-	{0x15, 0x01, 0x08, 0x08, "60k"					},
-	{0x15, 0x01, 0x08, 0x00, "90k"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
 	{0x15, 0x01, 0x0c, 0x0c, "20k then every 60k"			},
@@ -500,7 +524,17 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x15, 0x01, 0x10, 0x10, "Off"					},
 	{0x15, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x15, 0x01, 0x20, 0x00, "Upright"				},
+	{0x15, 0x01, 0x20, 0x20, "Cocktail"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x15, 0x01, 0xc0, 0xc0, "Easy"					},
+	{0x15, 0x01, 0xc0, 0x80, "Normal"				},
+	{0x15, 0x01, 0xc0, 0x40, "Hard"					},
+	{0x15, 0x01, 0xc0, 0x00, "Hardest"				},
+
+{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credits"			},
 	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
 	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
@@ -521,6 +555,10 @@ static struct BurnDIPInfo TerrafDIPList[]=
 	{0x16, 0x01, 0xc0, 0x80, "Only 3 Times"				},
 	{0x16, 0x01, 0xc0, 0x40, "Only 5 Times"				},
 	{0x16, 0x01, 0xc0, 0x00, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Terraf)
@@ -739,7 +777,7 @@ static UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x78002:
-			return DrvInputs[1];
+			return (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
 
 		case 0x78004:
 			return DrvInputs[2];
@@ -846,6 +884,8 @@ static INT32 DrvDoReset()
 	fg_scrollx = 0;
 	waiting_msb = 0;
 	scroll_msb = 0;
+
+	nb_1414m4_init();
 
 	return 0;
 }
@@ -984,8 +1024,8 @@ static void Bigfghtr68KInit()
 	SekSetReadWordHandler(0,	bigfghtr_read_word);
 
 	usemcu = 1;
-	mcs51_program_data = DrvZ80ROM2;
 	mcs51_init ();
+	mcs51_set_program_data(DrvZ80ROM2);
 	mcs51_set_write_handler(mcu_write_data);
 	mcs51_set_read_handler(mcu_read_data);
 
@@ -1056,8 +1096,8 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACInit(1, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1093,9 +1133,8 @@ static INT32 DrvExit()
 	Terrafjb = 0;
 	Kozuremode = 0;
 	Skyrobo = 0;
-	fiftysevenhertz = 0;
 
-	BurnSetRefreshRate(60.00);
+	BurnSetRefreshRate(59.08);
 
 	return 0;
 }
@@ -1135,7 +1174,7 @@ static inline void AssembleInputs()
 	if (scroll_type == 1) {
 		UINT16 *ptr = (UINT16*)Drv68KRAM2;
 		ptr[0] = DrvInputs[0];
-		ptr[1] = DrvInputs[1];
+		ptr[1] = (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
 		ptr[2] = DrvInputs[2];
 		ptr[3] = DrvInputs[3];
 	}
@@ -1238,7 +1277,7 @@ static void draw_sprites(INT32 priority)
 		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
-		code       &= 0xfff;
+		code       &= 0x7ff;
 
 		if (*flipscreen) {
 			sx = 320 - sx + 176;
@@ -1307,12 +1346,12 @@ static INT32 DrvDraw()
 		DrvScroll[3] = fg_scrolly;
 	}
 
-	if ((*DrvMcuCmd & 0x30) == 0x30 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 1);
+	if (*DrvVidRegs & 0x01 && (scroll_type != 3 || (*DrvMcuCmd & 0x30) == 0x30)) draw_txt_layer(txt_transp, 1);
 	if (*DrvVidRegs & 0x08) draw_layer(DrvBgRAM, DrvGfxROM2, DrvScroll[0], DrvScroll[1], 0x600, 0x3ff);
 	if (*DrvVidRegs & 0x02) draw_sprites(2);
 	if (*DrvVidRegs & 0x04) draw_layer(DrvFgRAM, DrvGfxROM1, DrvScroll[2], DrvScroll[3], 0x400, 0x7ff);
 	if (*DrvVidRegs & 0x02) draw_sprites(1);
-	if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 0);
+	if (*DrvVidRegs & 0x01 && (scroll_type != 3 || (*DrvMcuCmd & 0x30) == 0x00)) draw_txt_layer(txt_transp, 0);
 	if (*DrvVidRegs & 0x02) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
@@ -1335,14 +1374,13 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 262;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
+	INT32 nTotalCycles[3] = { 8000000 / (nBurnFPS / 100), 6000000 / (nBurnFPS / 100), 4000000 / (nBurnFPS / 100) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	if (usemcu) nTotalCycles[2] /= 12; // i8751 internal divider (12)
 
 	SekOpen(0);
 	ZetOpen(0);
-	nb1414_frame++;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1418,6 +1456,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fg_scrollx);
 		SCAN_VAR(waiting_msb);
 		SCAN_VAR(scroll_msb);
+
+		nb_1414m4_scan();
 	}
 
 	return 0;
@@ -1508,13 +1548,6 @@ static INT32 ArmedfInit()
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
-
-	if (nRet == 0) {
-		DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
-	}
 
 	return nRet;
 }
@@ -1729,9 +1762,6 @@ static INT32 KozureInit()
 	if (nRet == 0) {
 		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
 		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
-
-		DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 
 	return nRet;
@@ -1983,11 +2013,6 @@ static INT32 TerrafInit()
 
 	if (nRet == 0) {
 		if (BurnLoadRom(nb1414_blit_data,	14, 1)) return 1;
-
-		DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
-		BurnSetRefreshRate(57.00);
-		fiftysevenhertz = 1;
 	}
 
 	return nRet;
@@ -2042,11 +2067,6 @@ static INT32 TerrafbInit()
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
-
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
 
 	return nRet;
 }
@@ -2172,11 +2192,6 @@ static INT32 TerrafjbInit()
 
 	INT32 nRet = DrvInit(TerrafjbLoadRoms, Cclimbr268KInit, 0xf800);
 
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
-
 	return nRet;
 }
 
@@ -2262,11 +2277,6 @@ static INT32 SkyRoboInit()
 	Skyrobo = 1;
 
 	INT32 nRet = DrvInit(SkyroboLoadRoms, Bigfghtr68KInit, 0xf800);
-
-	if (nRet == 0) {
-		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	}
 
 	return nRet;
 }

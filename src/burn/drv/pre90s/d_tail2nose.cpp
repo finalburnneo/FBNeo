@@ -463,7 +463,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	K051316Init(0, DrvZoomRAM, DrvZoomRAMExp, 0x3ff, tail2nos_zoom_callback, 4, 0);
-	K051316SetOffset(0, -89, -24);
+	K051316SetOffset(0, -89, -24+2);
 
 	GenericTilesInit();
 

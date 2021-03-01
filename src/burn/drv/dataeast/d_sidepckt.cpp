@@ -215,46 +215,47 @@ static struct BurnDIPInfo DrvbDIPList[]=
 };
 
 STDDIPINFO(Drvb)
-
+ /* DE-0245-2 */
+ 
 static struct BurnRomInfo DrvRomDesc[] = {
-	{ "dh00",          0x10000, 0x251b316e, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
+	{ "dh00-e.3c",     0x10000, 0x251b316e, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
 	
-	{ "dh04.bin",      0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
+	{ "dh04.3h",       0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
 	
-	{ "i8751.mcu",     0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 MCU
+	{ "dh.6d",     	   0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 microcontroller
 	
-	{ "sp_07.bin",     0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
-	{ "sp_06.bin",     0x08000, 0x580e4e43, BRF_GRA },	     		//  4
-	{ "sp_05.bin",     0x08000, 0x05ab71d2, BRF_GRA },	     		//  5
+	{ "dh07-e.13k",    0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
+	{ "dh06-e.13j",    0x08000, 0x580e4e43, BRF_GRA },	     		//  4
+	{ "dh05-e.13h",    0x08000, 0x05ab71d2, BRF_GRA },	     		//  5
 	
-	{ "dh01.bin",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
-	{ "dh02.bin",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
-	{ "dh03.bin",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
+	{ "dh01.14a",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
+	{ "dh02.15a",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
+	{ "dh03.17a",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
 	
-	{ "dh-09.bpr",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
-	{ "dh-08.bpr",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
+	{ "dh-09.16l",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
+	{ "dh-08.15l",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
 };
 
 STD_ROM_PICK(Drv)
 STD_ROM_FN(Drv)
 
 static struct BurnRomInfo DrvjRomDesc[] = {
-	{ "dh00.bin",      0x10000, 0xa66bc28d, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
+	{ "dh00.3c",       0x10000, 0xa66bc28d, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
 	
-	{ "dh04.bin",      0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
+	{ "dh04.3h",       0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  1	M6502 Program Code
 	
-	{ "i8751.mcu",     0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 MCU
+	{ "dh.6d",         0x01000, 0x00000000, BRF_OPT | BRF_NODUMP }, //  2	I8751 MCU
 	
-	{ "dh07.bin",      0x08000, 0x7d0ce858, BRF_GRA },	    		//  3	Chars
-	{ "dh06.bin",      0x08000, 0xb86ddf72, BRF_GRA },	     		//  4
-	{ "dh05.bin",      0x08000, 0xdf6f94f2, BRF_GRA },	     		//  5
+	{ "dh07.13k",      0x08000, 0x7d0ce858, BRF_GRA },	    		//  3	Chars
+	{ "dh06.13j",      0x08000, 0xb86ddf72, BRF_GRA },	     		//  4
+	{ "dh05.13h",      0x08000, 0xdf6f94f2, BRF_GRA },	     		//  5
 	
-	{ "dh01.bin",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
-	{ "dh02.bin",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
-	{ "dh03.bin",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
+	{ "dh01.14a",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
+	{ "dh02.15a",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
+	{ "dh03.17a",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
 	
-	{ "dh-09.bpr",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
-	{ "dh-08.bpr",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
+	{ "dh-09.16l",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
+	{ "dh-08.15l",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
 };
 
 STD_ROM_PICK(Drvj)
@@ -264,18 +265,18 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "sp_09.bin",     0x04000, 0x3c6fe54b, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
 	{ "sp_08.bin",     0x08000, 0x347f81cd, BRF_ESS | BRF_PRG }, 	//  1
 	
-	{ "dh04.bin",      0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  2	M6502 Program Code
+	{ "dh04.3h",       0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  2	M6502 Program Code
 
-	{ "sp_07.bin",     0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
-	{ "sp_06.bin",     0x08000, 0x580e4e43, BRF_GRA },	     		//  4
-	{ "sp_05.bin",     0x08000, 0x05ab71d2, BRF_GRA },	     		//  5
+	{ "dh07-e.13k",    0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
+	{ "dh06-e.13j",    0x08000, 0x580e4e43, BRF_GRA },	     		//  4
+	{ "dh05-e.13h",    0x08000, 0x05ab71d2, BRF_GRA },	     		//  5
 	
-	{ "dh01.bin",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
-	{ "dh02.bin",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
-	{ "dh03.bin",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
+	{ "dh01.14a",      0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
+	{ "dh02.15a",      0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
+	{ "dh03.17a",      0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
 	
-	{ "dh-09.bpr",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
-	{ "dh-08.bpr",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
+	{ "dh-09.16l",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
+	{ "dh-08.15l",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
 };
 
 STD_ROM_PICK(Drvb)

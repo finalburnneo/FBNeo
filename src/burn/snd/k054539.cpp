@@ -10,11 +10,16 @@
 
 // IRQ handling is disabled (handled in driver) for now...
 
-// Jan 19, 2018: added cubic resampling.
+// Dec 3, 2017: anti-pop/anti-click code added: rampdown, dpcm table symmetricification, check last sample of 4bit dpcm for huge dc offset)
+// Jan 19, 2018: added cubic resampling. -dink
+// Aug 21-24, 2020: added digital delay/echo effect. -dink
+
+#define DELAY_DEBUG 0 // debug the digital delay stuff.
 
 #include "burnint.h"
 #include "math.h"
 #include "k054539.h"
+#include "driver.h"
 
 static INT32 nNumChips = 0;
 
@@ -33,6 +38,7 @@ struct k054539_channel {
 	INT32 pval;
 	double lvol;
 	double rvol;
+	INT32 delay_on;
 };
 
 struct k054539_info {
@@ -45,8 +51,12 @@ struct k054539_info {
 	INT32 k054539_flags;
 
 	UINT8 regs[0x230];
-	UINT8 *ram;
-	INT32 reverb_pos;
+
+	// delay (echo)
+	UINT8 *delay_ram;
+	UINT32 delay_pos;
+	UINT32 delay_size;
+	double delay_decay;
 
 	INT32 cur_ptr;
 	INT32 cur_limit;
@@ -65,6 +75,8 @@ struct k054539_info {
 
 static k054539_info Chips[2];
 static k054539_info *info;
+
+#define DELAYRAM_SIZE	(0x4000 * 2)
 
 // for resampling
 static INT16 *soundbuf[2] = { NULL, NULL };
@@ -202,7 +214,7 @@ void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 
 		case 0x22e:
 			info->cur_zone =
-				data == 0x80 ? info->ram :
+				data == 0x80 ? info->delay_ram :
 				info->rom + 0x20000*data;
 			info->cur_limit = data == 0x80 ? 0x4000 : 0x20000;
 			info->cur_ptr = 0;
@@ -245,6 +257,80 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 	return info->regs[offset];
 }
 
+// direct form II biquadradic filter, needed for delay(echo) effect's filter taps -dink
+enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1 };
+
+struct BIQ {
+	double a0;
+	double a1;
+	double a2;
+	double b1;
+	double b2;
+	double q;
+	double z1;
+	double z2;
+	double frequency;
+	double samplerate;
+	double output;
+};
+
+static BIQ filters[8];
+
+static void init_biquad(INT32 type, INT32 num, INT32 sample_rate, INT32 freqhz, double q)
+{
+	BIQ *f = &filters[num];
+
+	memset(f, 0, sizeof(BIQ));
+
+	f->samplerate = sample_rate;
+	f->frequency = freqhz;
+	f->q = q;
+
+	double k = tan(M_PI * f->frequency / f->samplerate);
+	double norm = 1 / (1 + k / f->q + k * k);
+
+	switch (type) {
+		case FILT_HIGHPASS:
+			{
+				f->a0 = 1 * norm;
+				f->a1 = -2 * f->a0;
+				f->a2 = f->a0;
+				f->b1 = 2 * (k * k - 1) * norm;
+				f->b2 = (1 - k / f->q + k * k) * norm;
+			}
+			break;
+		case FILT_LOWPASS:
+			{
+				f->a0 = k * k * norm;
+				f->a1 = 2 * f->a0;
+				f->a2 = f->a0;
+				f->b1 = 2 * (k * k - 1) * norm;
+				f->b2 = (1 - k / f->q + k * k) * norm;
+			}
+			break;
+	}
+
+#if DELAY_DEBUG
+	bprintf(0, _T("BIQ coefficients\n"));
+	bprintf(0, _T("a0 %g\t  %Lf\n"), f->a0, f->a0);
+	bprintf(0, _T("a1 %g\t  %Lf\n"), f->a1, f->a1);
+	bprintf(0, _T("a2 %g\t  %Lf\n"), f->a2, f->a2);
+	bprintf(0, _T("b1 %g\t  %Lf\n"), f->b1, f->b1);
+	bprintf(0, _T("b2 %g\t  %Lf\n"), f->b2, f->b2);
+#endif
+}
+
+static float biquad_do(INT32 num, float input)
+{
+	BIQ *f = &filters[num];
+
+	f->output = input * f->a0 + f->z1;
+	f->z1 = input * f->a1 + f->z2 - f->b1 * f->output;
+	f->z2 = input * f->a2 - f->b2 * f->output;
+	return (float)f->output;
+}
+// end biquad filter
+
 void K054539Reset(INT32 chip)
 {
 #if defined FBNEO_DEBUG
@@ -254,10 +340,17 @@ void K054539Reset(INT32 chip)
 
 	info = &Chips[chip];
 
-	info->reverb_pos = 0;
+	info->delay_pos = 0;
+	info->delay_size = 0;
+	info->delay_decay = 0.6;
+	memset(info->delay_ram, 0, DELAYRAM_SIZE);
+
+	bprintf(0, _T("*   K054539: init biquad filter for delay taps.\n"));
+	init_biquad(FILT_HIGHPASS, 2*chip + 0, 48000, 500, 1.0);
+	init_biquad(FILT_LOWPASS, 2*chip + 1, 48000, 12000, 1.0);
+
 	info->cur_ptr = 0;
 	info->cur_zone = info->rom;
-	memset(info->ram, 0, 0x4000*2+info->clock/50*2);
 	memset(info->regs, 0, sizeof(info->regs));
 	memset(info->k054539_posreg_latch, 0, sizeof(info->k054539_posreg_latch));
 	memset(info->channels, 0, sizeof(info->channels));
@@ -271,11 +364,13 @@ static void k054539_init_chip(INT32 clock, UINT8 *rom, INT32 nLen)
 	memset(info->k054539_posreg_latch, 0, sizeof(info->k054539_posreg_latch));
 	info->k054539_flags |= K054539_UPDATE_AT_KEYON; // make it default until proven otherwise
 
-	// Real size of 0x4000, the addon is to simplify the reverb buffer computations
-	info->ram = (UINT8*)BurnMalloc(0x4000*2+clock/50*2);
-	info->reverb_pos = 0;
+	info->delay_ram = (UINT8*)BurnMalloc(DELAYRAM_SIZE);
+	info->delay_pos = 0;
+	info->delay_size = 0;
+	info->delay_decay = 0.6;
+	memset(info->delay_ram, 0, DELAYRAM_SIZE);
+
 	info->cur_ptr = 0;
-	memset(info->ram, 0, 0x4000*2+clock/50*2);
 
 	info->rom = rom;
 	info->rom_size = nLen;
@@ -366,7 +461,7 @@ void K054539Exit()
 
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];
-		BurnFree (info->ram);
+		BurnFree (info->delay_ram);
 	}
 	
 	DebugSnd_K054539Initted = 0;
@@ -390,11 +485,14 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 
 	static const INT16 dpcm[16] = {
 		0<<8, 1<<8, 4<<8, 9<<8, 16<<8, 25<<8, 36<<8, 49<<8,
-		0, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
+		0, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8 // make symmetrical -dink
 		//-64<<8, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
 	};
-
-	INT16 *rbase = (INT16 *)(info->ram);
+#if DELAY_DEBUG
+	bprintf(0, _T("-- frame %d --\n"), nCurrentFrame);
+	INT32 once[8] = {0,0,0,0,0,0,0,0};
+#endif
+	INT16 *delay_line = (INT16 *)(info->delay_ram);
 	UINT8 *rom = info->rom;
 	UINT32 rom_mask = info->rom_mask;
 
@@ -411,13 +509,18 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 	for (INT32 sample = 0; sample < (nSamplesNeeded - nPosition[chip]); sample++) {
 		double lval, rval;
 
-		if(!(info->k054539_flags & K054539_DISABLE_REVERB))
-			lval = rval = rbase[info->reverb_pos];
+		if(!(info->k054539_flags & K054539_DISABLE_REVERB) && info->delay_size) {
+			lval = rval = delay_line[info->delay_pos];
+
+			INT16 tap0 = biquad_do(2*chip + 1, delay_line[info->delay_pos]) / 2;
+			delay_line[info->delay_pos] = tap0;
+			delay_line[info->delay_pos] *= info->delay_decay; // delay decay length
+			info->delay_pos = (info->delay_pos + 1) % (info->delay_size);
+		}
 		else
 			lval = rval = 0;
-		rbase[info->reverb_pos] = 0;
 
-		for(INT32 ch=0; ch<8; ch++)
+		for(INT32 ch=0; ch<8; ch++) {
 			if(info->regs[0x22c] & (1<<ch)) {
 				UINT8 *base1 = info->regs + 0x20*ch;
 				UINT8 *base2 = info->regs + 0x200 + 0x2*ch;
@@ -427,9 +530,44 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 
 				INT32 vol = base1[0x03];
 
-				INT32 bval = vol + base1[0x04];
-				if (bval > 255)
-					bval = 255;
+				INT32 delay = base1[0x04]; // delay buffer size -dink
+
+				if (base1[0x04] > 0x4f && base1[0x04] != 0xf2) delay = -1; // yep, it's disabled.
+
+				switch (delay) {
+					case -1:
+						chan->delay_on = 0;
+						break;
+					case 0x00: // shortest delay, needs longer decay to be heard.
+					case 0x1f:
+#if DELAY_DEBUG
+						if (once[ch] == 0) {
+							bprintf(0, _T("ch %x:  %x\n"), ch, delay);
+							once[ch] = 1;
+						}
+#endif
+						info->delay_decay = 0.7;
+						delay = 0x1f; // viostorm st.3.
+						info->delay_size = (delay & 0xf0) << 8;
+						chan->delay_on = 1;
+						break;
+
+					case 0xf2:
+						delay = 0x4f; // wtf? xmen titlescreen. *contradiction*
+					case 0x2f:
+					case 0x3f:
+					case 0x4f:
+#if DELAY_DEBUG
+						if (once[ch] == 0) {
+							bprintf(0, _T("ch %x:  %x\n"), ch, delay);
+							once[ch] = 1;
+						}
+#endif
+						info->delay_decay = 0.6;
+						info->delay_size = (delay & 0xf0) << 8;
+						chan->delay_on = 1;
+						break;
+				}
 
 				INT32 pan = base1[0x05];
 				// DJ Main: 81-87 right, 88 middle, 89-8f left
@@ -449,13 +587,6 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 				double rvol = info->voltab[vol] * info->pantab[0xe - pan] * cur_gain;
 				if (rvol > VOL_CAP)
 					rvol = VOL_CAP;
-
-				double rbvol= info->voltab[bval] * cur_gain / 2;
-				if (rbvol > VOL_CAP)
-					rbvol = VOL_CAP;
-
-				INT32 rdelta = (base1[6] | (base1[7] << 8)) >> 3;
-				rdelta = (rdelta + info->reverb_pos) & 0x3fff;
 
 				INT32 cur_pos = (base1[0x0c] | (base1[0x0d] << 8) | (base1[0x0e] << 16)) & rom_mask;
 
@@ -549,7 +680,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 						if(cur_val == 0x88) {
 							k054539_keyoff(ch);
 							//bprintf(0, _T("4bit dpcm off ch %X. cur_val %X cur_pval %X cur_pval2 %X\n"), ch, cur_val, cur_pval, cur_pval2);
-							// at the end of the sample: if there's a huge jump between pval and pval2, use pval2
+							// at the end of the sample: if there's a huge jump between pval and pval2, use pval2(previous sample).  this is a stupidly weird dc offset -dink
 							if (signdiff(cur_pval, cur_pval2))
 								cur_pval = cur_pval2;
 							cur_val = cur_pval;
@@ -578,7 +709,12 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 				}
 				lval += cur_val * lvol;
 				rval += cur_val * rvol;
-				rbase[(rdelta + info->reverb_pos) & 0x1fff] += INT16(cur_val*rbvol);
+
+				if (chan->delay_on) {
+					double monovol = (lvol + rvol) / 2;
+					INT16 tap = (INT16)(biquad_do(2*chip + 0, cur_val * monovol));
+					delay_line[info->delay_pos & 0x3fff] += tap;
+				}
 
 				chan->lvol = lvol;
 				chan->rvol = rvol;
@@ -593,19 +729,30 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 					base1[0x0d] = cur_pos>> 8 & 0xff;
 					base1[0x0e] = cur_pos>>16 & 0xff;
 				}
-			} else { // get rampy to remove dc offset clicks -dink [Dec. 1, 2017]
+			} else { // channel: off
+				// get rampy to remove dc offset clicks -dink [Dec. 1, 2017]
 				struct k054539_channel *chan = info->channels + ch;
 
 				if (chan->val > 0) {
 					chan->val -= ((chan->val >  4) ? 4 : 1);
-				} else {
+				} else if (chan->val < 0) {
 					chan->val += ((chan->val < -4) ? 4 : 1);
+				}
+
+				if (chan->delay_on) {
+					// click aversion w/delay:
+					// we still have to process delay until we hit a zero crossing.  or else.
+					double monovol = (chan->lvol + chan->rvol) / 2;
+					INT16 tap = (INT16)(biquad_do(2*chip + 0, chan->val * monovol));
+					delay_line[info->delay_pos & 0x3fff] += tap;
+
+					if (tap == 0) chan->delay_on = 0;
 				}
 
 				lval += chan->val * chan->lvol;
 				rval += chan->val * chan->rvol;
 			}
-		info->reverb_pos = (info->reverb_pos + 1) & 0x1fff;
+		}
 
 		if (info->k054539_flags & K054539_REVERSE_STEREO) {
 			double temp = rval;
@@ -708,9 +855,9 @@ void K054539Scan(INT32 nAction, INT32 *)
 		ba.szName	= szName;
 		BurnAcb(&ba);
 
-		sprintf(szName, "K054539 Ram # %d", i);
-		ba.Data		= info->ram;
-		ba.nLen		= 0x4000*2+info->clock/50*2;
+		sprintf(szName, "K054539 DelayRam # %d", i);
+		ba.Data		= info->delay_ram;
+		ba.nLen		= DELAYRAM_SIZE;
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
@@ -722,14 +869,16 @@ void K054539Scan(INT32 nAction, INT32 *)
 		ba.szName	= szName;
 		BurnAcb(&ba);
 
-		SCAN_VAR(info->reverb_pos);
+		SCAN_VAR(info->delay_pos);
+		SCAN_VAR(info->delay_size);
+		SCAN_VAR(info->delay_decay);
 		SCAN_VAR(info->cur_ptr);
 		SCAN_VAR(info->cur_limit);
 
 		if (nAction & ACB_WRITE) {
 			INT32 data = info->regs[0x22e];
 			info->cur_zone =
-				data == 0x80 ? info->ram :
+				data == 0x80 ? info->delay_ram :
 				info->rom + 0x20000*data;
 			info->cur_limit = data == 0x80 ? 0x4000 : 0x20000;
 

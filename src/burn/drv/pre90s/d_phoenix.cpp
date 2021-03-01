@@ -555,7 +555,7 @@ static UINT8 phoenix_main_read(UINT16 address)
 		}
 
 		case 0x7800:
-			return (DrvDips[0] & 0x7f) | (vblank ? 0x80 : 0);
+			return (DrvDips[0] & 0x7f) | (vblank ? 0 : 0x80);
 	}
 
 	return 0;
@@ -833,11 +833,24 @@ static INT32 DrvFrame()
 		}
 	}
 
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { 2750000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+
 	i8080Open(0);
-	vblank = 1;
-	i8080Run(((2750000 / 60)*250)/256);
 	vblank = 0;
-	i8080Run(((2750000 / 60)*  6)/256);
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN(0, i8080);
+
+		if (i == 208) {
+			vblank = 1;
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
+	}
+
 	i8080Close();
 
 	if (pBurnSoundOut) {
@@ -846,10 +859,6 @@ static INT32 DrvFrame()
 
 		if (pleiads)
 			pleiads_sound_update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;

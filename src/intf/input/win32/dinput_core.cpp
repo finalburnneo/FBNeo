@@ -549,54 +549,5 @@ const DIDATAFORMAT c_dfDIKeyboard = {
     (LPDIOBJECTDATAFORMAT)dfDIKeyboard
 };
 
-// DirectInput8Create
-HRESULT (WINAPI* _DirectInput8Create) (HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN);
-HRESULT WINAPI Empty_DirectInput8Create (HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN) { return 0; }
-
 static HINSTANCE	hDICore;
 static BOOL			nDICoreInit = FALSE;
-
-/*
-static void DICore_Exit()
-{
-	FreeLibrary(hDICore);
-}
-*/
-
-// Macro for easy handling of functions
-#define _LOADFN(_rettype, _name, _empty, _params, _hinst, _str )		\
-																		\
-	_name = (_rettype (WINAPI *)_params) GetProcAddress(_hinst, _str);	\
-																		\
-	if(!_name) {														\
-		_name = _empty;													\
-		return 0;														\
-	}
-
-static INT32 DICore_GetFunctions()
-{
-	if(!nDICoreInit) return 0;
-
-	_LOADFN(HRESULT, _DirectInput8Create, Empty_DirectInput8Create, (HINSTANCE, DWORD, REFIID, LPVOID*, LPUNKNOWN), hDICore, "DirectInput8Create");
-
-	return 1;
-}
-
-INT32 DICore_Init()
-{
-	hDICore = LoadLibrary(_T("dinput8.dll"));
-
-	if(!hDICore) {
-		MessageBox(NULL, _T("Loading of DINPUT8.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
-		nDICoreInit = FALSE;
-		return 0;
-	}
-	
-	nDICoreInit = TRUE;
-	if(!DICore_GetFunctions()) {
-		MessageBox(NULL, _T("There was a problem while loading functions from DINPUT8.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
-		return 0;
-	}
-
-	return 1;
-}

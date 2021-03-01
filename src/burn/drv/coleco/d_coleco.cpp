@@ -39,6 +39,8 @@ static INT32 use_SGM = 0;
 static INT32 SGM_map_24k;
 static INT32 SGM_map_8k;
 
+static UINT8 dip_changed;
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -116,6 +118,10 @@ static struct BurnDIPInfo ColecoDIPList[]=
 	{0   , 0xfe, 0,       2, "Bypass bios intro (hack)"	},
 	{0x26, 0x01, 0x10, 0x00, "Off"				},
 	{0x26, 0x01, 0x10, 0x10, "On"				},
+
+	{0   , 0xfe, 0,       2, "Sprite Limit"	},
+	{0x26, 0x01, 0x20, 0x00, "Enabled"				},
+	{0x26, 0x01, 0x20, 0x20, "Disabled (hack)"		},
 };
 
 STDDIPINFO(Coleco)
@@ -375,6 +381,8 @@ static INT32 DrvDoReset()
     SGM_map_24k = 0;
     SGM_map_8k = 0;
 
+	dip_changed = DrvDips[1];
+
 	return 0;
 }
 
@@ -499,6 +507,8 @@ static INT32 DrvInit()
 	ZetClose();
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, coleco_vdp_interrupt);
+	TMS9928ASetSpriteslimit((DrvDips[1] & 0x20) ? 0 : 1);
+	bprintf(0, _T("Sprite Limit: %S\n"), (DrvDips[1] & 0x20) ? "Disabled" : "Enabled");
 
 	SN76489AInit(0, 3579545, 0);
     SN76496SetBuffered(ZetTotalCycles, 3579545);
@@ -556,6 +566,12 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		if ((dip_changed ^ DrvDips[1]) & 0x20) {
+			TMS9928ASetSpriteslimit((DrvDips[1] & 0x20) ? 0 : 1);
+			dip_changed = DrvDips[1];
+		}
+
 	}
 
 	INT32 nInterleave = 256;
@@ -5146,6 +5162,24 @@ struct BurnDriver BurnDrvcv_mecha8 = {
 	272, 228, 4, 3
 };
 
+// Mecha 9
+static struct BurnRomInfo cv_mecha9RomDesc[] = {
+	{ "mecha9_colecovision_sgm.rom",	0x040000, 0xb405591a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mecha9, cv_mecha9, cv_coleco)
+STD_ROM_FN(cv_mecha9)
+
+struct BurnDriver BurnDrvcv_mecha9 = {
+	"cv_mecha9", NULL, "cv_coleco", NULL, "2015",
+	"Mecha-9 Super Game\0", NULL, "Oscar Toledo G.", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_mecha9RomInfo, cv_mecha9RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Zaxxon SuperGame (SGM)
 
 static struct BurnRomInfo cv_zaxxonsgmRomDesc[] = {
@@ -5317,3 +5351,21 @@ struct BurnDriver BurnDrvcv_starfortress = {
 	272, 228, 4, 3
 };
 
+// Pac Man Collection
+
+static struct BurnRomInfo cv_pacmancolRomDesc[] = {
+	{ "pac-man-collection-2008.rom",	0x20000, 0xf3ccacb3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pacmancol, cv_pacmancol, cv_coleco)
+STD_ROM_FN(cv_pacmancol)
+
+struct BurnDriver BurnDrvcv_pacmancol = {
+	"cv_pacmancol", NULL, "cv_coleco", NULL, "2008",
+	"Pac Man Collection\0", NULL, "OPCODE", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_pacmancolRomInfo, cv_pacmancolRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

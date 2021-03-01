@@ -162,6 +162,15 @@ void BurnLEDSetStatus(INT32 led, UINT32 status)
 	led_status[led] = status ? 1 : 0;
 }
 
+void BurnLEDSetColor(INT32 color)
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDSetColor called without init\n"));
+#endif
+
+	led_color = color;
+}
+
 void BurnLEDExit()
 {
 #if defined FBNEO_DEBUG

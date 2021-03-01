@@ -38,17 +38,16 @@ static UINT32 OhmygodScrolly;
 
 static struct BurnInputInfo OhmygodInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , OhmygodInputPort0 + 8, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , OhmygodInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , OhmygodInputPort1 + 8, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , OhmygodInputPort1 + 7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , OhmygodInputPort0 + 8, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , OhmygodInputPort0 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , OhmygodInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , OhmygodInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , OhmygodInputPort0 + 2, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , OhmygodInputPort0 + 3, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , OhmygodInputPort0 + 4, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , OhmygodInputPort1 + 8, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , OhmygodInputPort1 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , OhmygodInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , OhmygodInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , OhmygodInputPort1 + 2, "p2 left"   },

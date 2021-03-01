@@ -33,6 +33,7 @@ Notes:
 
 UINT8 *nb1414_blit_data8b = NULL;
 UINT32 nb1414_frame8b = 0;
+static bool nb1414_in_game8b = false;
 
 static void nichibutsu_1414m4_dma(UINT16 src,UINT16 dst,UINT16 size, UINT8 condition,UINT8 *vram)
 {
@@ -46,7 +47,7 @@ static void nichibutsu_1414m4_dma(UINT16 src,UINT16 dst,UINT16 size, UINT8 condi
 
 		vram[i+dst+0x000] = (condition) ? (data[i+(0)+src] & 0xff) : 0x20;
 
-		vram[i+dst+0x400] = data[i+(size)+src] & 0xff;
+		vram[i+dst+0x400] = (condition) ? (data[i+(size)+src] & 0xff) : data[0x13];
 	}
 }
 
@@ -66,6 +67,11 @@ static void nichibutsu_1414m4_fill(UINT16 dst,UINT8 tile,UINT8 pal,UINT8 *vram)
 
 static void insert_coin_msg(UINT8 *vram)
 {
+	if (nb1414_in_game8b)
+		return;
+
+	nb1414_frame8b++;
+
 	UINT8 * data = nb1414_blit_data8b;
 	int credit_count = (vram[0xf] & 0xff);
 	UINT8 fl_cond = nb1414_frame8b & 0x10; /* for insert coin "flickering" */
@@ -95,10 +101,15 @@ static void credit_msg(UINT8 *vram)
 	dst = ((data[0x023]<<8)|(data[0x024]&0xff)) & 0x3fff;
 	nichibutsu_1414m4_dma(0x0025,dst,0x10,1,vram); /* credit */
 
-	dst = ((data[0x045]<<8)|(data[0x046]&0xff)) & 0x3fff;
-	dst++; // data is 0x5e, needs to be 0x5f ...
-	vram[dst+0x000] = (credit_count + 0x30); /* credit num */
-	vram[dst+0x400] = (data[0x48]);
+	/* credit num */
+	dst = ((data[0x045] << 8) | (data[0x046] & 0xff)) & 0x3fff;
+	vram[dst+0x000] = (credit_count & 0xf0) ? (((credit_count & 0xf0) >> 4) + 0x30) : 0x20;
+	vram[dst+0x400] = (data[0x47]);
+	vram[dst+0x001] = ((credit_count & 0x0f) + 0x30);
+	vram[dst+0x401] = (data[0x48]);
+
+	if (nb1414_in_game8b)
+		return;
 
 	if(credit_count == 1) /* ONE PLAYER ONLY */
 	{
@@ -136,7 +147,7 @@ static void kozure_score_msg(UINT16 dst,UINT8 src_base,UINT8 *vram)
 		vram[i+dst+0x0400] = data[0x10f+(src_base*0x1c)+i];
 	}
 
-	vram[6+dst+0x0000] = 0x30;
+	vram[6+dst+0x0000] = vram[5+dst+0x0000] == 0x20 ? 0x20 : 0x30;
 	vram[6+dst+0x0400] = data[0x10f+(src_base*0x1c)+6];
 	vram[7+dst+0x0000] = 0x30;
 	vram[7+dst+0x0400] = data[0x10f+(src_base*0x1c)+7];
@@ -147,6 +158,10 @@ static void nichibutsu_1414m4_0200( UINT16 mcu_cmd,UINT8 *vram)
 {
 	UINT8 * data = nb1414_blit_data8b;
 	UINT16 dst;
+
+	// In any game, this bit is set when now playing.
+	// If it is set, "INSERT COIN" etc. are not displayed.
+	nb1414_in_game8b = (mcu_cmd & 0x80) != 0;
 
 	dst = (data[0x330+((mcu_cmd & 0xf)*2)]<<8)|(data[0x331+((mcu_cmd & 0xf)*2)]&0xff);
 
@@ -252,28 +267,39 @@ static void nichibutsu_1414m4_0e00(UINT16 mcu_cmd,UINT8 *vram)
 	dst = ((data[0xdf]<<8)|(data[0xe0]&0xff)) & 0x3fff;
 	nichibutsu_1414m4_dma(0x00e1,dst,8,1,vram); /* hi-score */
 
-	if(mcu_cmd & 0x04)
+	dst = ((data[0xfb]<<8)|(data[0xfc]&0xff)) & 0x3fff;
+	nichibutsu_1414m4_dma(0x00fd,dst,8,!(mcu_cmd & 1),vram); /* 1p-msg */
+	dst = ((data[0x10d]<<8)|(data[0x10e]&0xff)) & 0x3fff;
+	kozure_score_msg(dst,0,vram); /* 1p score */
+
+	if(mcu_cmd & 0x80)
 	{
-		dst = ((data[0xfb]<<8)|(data[0xfc]&0xff)) & 0x3fff;
-		nichibutsu_1414m4_dma(0x00fd,dst,8,!(mcu_cmd & 1),vram); /* 1p-msg */
-		dst = ((data[0x10d]<<8)|(data[0x10e]&0xff)) & 0x3fff;
-		kozure_score_msg(dst,0,vram); /* 1p score */
-		if(mcu_cmd & 0x80)
-		{
-			dst = ((data[0x117]<<8)|(data[0x118]&0xff)) & 0x3fff;
-			nichibutsu_1414m4_dma(0x0119,dst,8,!(mcu_cmd & 2),vram); /* 2p-msg */
-			dst = ((data[0x129]<<8)|(data[0x12a]&0xff)) & 0x3fff;
-			kozure_score_msg(dst,1,vram); /* 2p score */
-		}
+		dst = ((data[0x117]<<8)|(data[0x118]&0xff)) & 0x3fff;
+		nichibutsu_1414m4_dma(0x0119,dst,8,!(mcu_cmd & 2),vram); /* 2p-msg */
+		dst = ((data[0x129]<<8)|(data[0x12a]&0xff)) & 0x3fff;
+		kozure_score_msg(dst,1,vram); /* 2p score */
 	}
-	else
+
+	if ((mcu_cmd & 0x04) == 0)
 	{
 		dst = ((data[0x133]<<8)|(data[0x134]&0xff)) & 0x3fff;
-		nichibutsu_1414m4_dma(0x0135,dst,0x10,!(mcu_cmd & 1),vram); /* game over */
+		nichibutsu_1414m4_dma(0x0135,dst,0x10,1,vram); /* game over */
 		insert_coin_msg(vram);
 		if((mcu_cmd & 0x18) == 0) // TODO: either one of these two disables credit display
 			credit_msg(vram);
 	}
+}
+
+void nb_1414m4_init8b()
+{
+	nb1414_frame8b = 0;
+	nb1414_in_game8b = false;
+}
+
+void nb_1414m4_scan8b()
+{
+	SCAN_VAR(nb1414_frame8b);
+	SCAN_VAR(nb1414_in_game8b);
 }
 
 void nb_1414m4_exec8b(UINT16 mcu_cmd,UINT8 *vram,UINT16 *scrollx,UINT16 *scrolly,INT32 emakimode)

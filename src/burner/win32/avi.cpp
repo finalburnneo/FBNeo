@@ -72,10 +72,10 @@
 #include "burner.h"
 #define AVI_DEBUG
 #ifdef _MSC_VER
- #include <vfw.h> // use the headers from MS Platform SDK
+#include <vfw.h> // use the headers from MS Platform SDK
 #endif
 #ifdef __GNUC__
- #include "vfw.h" // use the modified idheaders included in the src
+#include "vfw.h" // use the modified idheaders included in the src
 #endif
 
 // defines
@@ -92,6 +92,7 @@ INT32 nAvi3x = 0;           // set 1 - 3 for 1x - 3x pixel expansion
 INT32 nAviSplit; // number of the split (@2gig) video
 COMPVARS compvarsave;        // compression options, for split
 char szAviFileName[MAX_PATH];
+BOOL bForceFileName = false;
 
 static INT32 nAviFlags = 0;
 
@@ -128,28 +129,29 @@ static INT32 AviCreateFile()
 {
 	HRESULT hRet;
 
-	char szFilePath[MAX_PATH*2];
-    time_t currentTime;
-    tm* tmTime;
+	char szFilePath[MAX_PATH * 2];
+	time_t currentTime;
+	tm* tmTime;
 
 	// Get the time
 	time(&currentTime);
-    tmTime = localtime(&currentTime);
+	tmTime = localtime(&currentTime);
 
 	// construct our filename -> "romname-mm-dd-hms.avi"
-
 	if (nAviSplit == 0) { // Create the filename @ the first file in our set
-		sprintf(szAviFileName, "%s%s-%.2d-%.2d-%.2d%.2d%.2d", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+		if (!bForceFileName) {
+			sprintf(szAviFileName, "%s%s-%.2d-%.2d-%.2d%.2d%.2d", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+		}
 	}
 
 	// add the set# and extension to our file.
 	sprintf(szFilePath, "%s_%X.avi", szAviFileName, nAviSplit);
 
 	hRet = AVIFileOpenA(
-				&FBAvi.pFile,           // returned file pointer
-				szFilePath,             // file path
-				OF_CREATE | OF_WRITE,   // mode
-				NULL);                  // use handler determined from file extension
+		&FBAvi.pFile,           // returned file pointer
+		szFilePath,             // file path
+		OF_CREATE | OF_WRITE,   // mode
+		NULL);                  // use handler determined from file extension
 	if (hRet) {
 #ifdef AVI_DEBUG
 		bprintf(0, _T("    AVI Error: AVIFileOpen() failed.\n"));
@@ -202,15 +204,15 @@ static INT MakeSSBitmap()
 				UINT16 nColour = ((UINT16*)pSShot)[i];
 
 				// Red
-		        *(pTemp + i * 4 + 0) = (UINT8)((nColour & 0x1F) << 3);
-			    *(pTemp + i * 4 + 0) |= *(pTemp + 4 * i + 0) >> 5;
+				*(pTemp + i * 4 + 0) = (UINT8)((nColour & 0x1F) << 3);
+				*(pTemp + i * 4 + 0) |= *(pTemp + 4 * i + 0) >> 5;
 
 				if (nVidImageDepth == 15) {
 					// Green
 					*(pTemp + i * 4 + 1) = (UINT8)(((nColour >> 5) & 0x1F) << 3);
 					*(pTemp + i * 4 + 1) |= *(pTemp + i * 4 + 1) >> 5;
 					// Blue
-					*(pTemp + i * 4 + 2) = (UINT8)(((nColour >> 10)& 0x1F) << 3);
+					*(pTemp + i * 4 + 2) = (UINT8)(((nColour >> 10) & 0x1F) << 3);
 					*(pTemp + i * 4 + 2) |= *(pTemp + i * 4 + 2) >> 5;
 				}
 
@@ -223,14 +225,14 @@ static INT MakeSSBitmap()
 					*(pTemp + i * 4 + 2) |= *(pTemp + i * 4 + 2) >> 5;
 				}
 			}
-        } else { // 24-bit
+		} else { // 24-bit
 			memset(pTemp, 0, w * h * sizeof(INT32));
 			for (INT32 i = 0; i < h * w; i++) {
-		        *(pTemp + i * 4 + 0) = *(pSShot + i * 3 + 0);
-		        *(pTemp + i * 4 + 1) = *(pSShot + i * 3 + 1);
-		        *(pTemp + i * 4 + 2) = *(pSShot + i * 3 + 2);
+				*(pTemp + i * 4 + 0) = *(pSShot + i * 3 + 0);
+				*(pTemp + i * 4 + 1) = *(pSShot + i * 3 + 1);
+				*(pTemp + i * 4 + 2) = *(pSShot + i * 3 + 2);
 			}
-        }
+		}
 
 		pSShot = pTemp;
 		FBAvi.pBitmap = FBAvi.pBitmapBuf1;
@@ -261,7 +263,7 @@ static INT MakeSSBitmap()
 
 		FBAvi.pBitmap = FBAvi.pBitmapBuf2;
 		FBAvi.nLastDest = 2;
-        pSShot = pTemp;
+		pSShot = pTemp;
 	}
 	else if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) { // fixed rotation by regret
 		pTemp = FBAvi.pBitmapBuf2;
@@ -274,7 +276,7 @@ static INT MakeSSBitmap()
 
 		FBAvi.pBitmap = FBAvi.pBitmapBuf2;
 		FBAvi.nLastDest = 2;
-        pSShot = pTemp;
+		pSShot = pTemp;
 	}
 
 	return 0; // success!
@@ -294,7 +296,7 @@ static INT32 MakeBitmapFlippedForEncoder()
 	UINT8 *pxl = pSrc + (nWidth*(nHeight-1)<<2);
 
 	for (INT32 h = nHeight-1; h >- 1; h--) {
-		for (INT32 w = nWidth-1; w>-1; w--) {
+		for (INT32 w = nWidth-1; w >- 1; w--) {
 			memcpy(pDest, pxl, 4);  // just copy 24 bits straight into bitmap
 			pDest += 4;             // next pixel (dest)
 			pxl += 4;               // next pixel (src)
@@ -328,7 +330,7 @@ static INT32 MakeBitmap2x()
 		pDestL2 += aviBPP;
 		memcpy(pDestL2, pSrc, aviBPP);
 		lctr++;
-		if(lctr >= nWidth) {
+		if (lctr >= nWidth) {
 			lctr = 0;
 			pDest += nWidth*(aviBPP * 2);
 		}
@@ -372,7 +374,7 @@ static INT32 MakeBitmap3x()
 		pDestL3 += aviBPP;
 		memcpy(pDestL3, pSrc, aviBPP);
 		lctr++;
-		if(lctr >= nWidth) { // end of line 1
+		if (lctr >= nWidth) { // end of line 1
 			lctr = 0;
 			pDest += nWidth*(aviBPP * 3); // line 2
 			pDest += nWidth*(aviBPP * 3); // line 3
@@ -407,7 +409,7 @@ static void AviSetVidFormat()
 // Sets the format for the audio stream.
 static void AviSetAudFormat()
 {
-	memset(&FBAvi.wfx, 0, sizeof(WAVEFORMATEX));
+	memset(&FBAvi.wfx,0,sizeof(WAVEFORMATEX));
 	FBAvi.wfx.cbSize = sizeof(WAVEFORMATEX);
 	FBAvi.wfx.wFormatTag = WAVE_FORMAT_PCM;
 	FBAvi.wfx.nChannels = 2;                    // stereo
@@ -446,16 +448,18 @@ static INT32 AviCreateVidStream()
 	FBAvi.compvar.fccHandler = 0; // default compressor = uncompressed full frames
 	FBAvi.compvar.lQ = ICQUALITY_DEFAULT;
 
-	if (nAviSplit>0) { // next 2gig chunk, don't ask user for video type.
+	if (bForceFileName) {
+		FBAvi.compvar.fccHandler = MAKEFOURCC('x','2','6','4');
+	} else if (nAviSplit>0) { // next 2gig chunk, don't ask user for video type.
 		memmove(&FBAvi.compvar, &compvarsave, sizeof(COMPVARS));
 	} else {// let user choose the compressor and compression options
 		nRet = ICCompressorChoose(
-								  hScrnWnd,
-								  ICMF_CHOOSE_DATARATE | ICMF_CHOOSE_KEYFRAME,
-								  (LPVOID) &FBAvi.bih, // uncompressed data input format
-								  NULL,                // no preview window
-								  &FBAvi.compvar,      // returned info
-								  "Set video compression option");
+			hScrnWnd,
+			ICMF_CHOOSE_DATARATE | ICMF_CHOOSE_KEYFRAME,
+			(LPVOID)&FBAvi.bih, // uncompressed data input format
+			NULL,                // no preview window
+			&FBAvi.compvar,      // returned info
+			"Set video compression option");
 		if (!nRet) {
 #ifdef AVI_DEBUG
 			bprintf(0, _T("    AVI Error: ICCompressorChoose() failed.\n"));
@@ -470,11 +474,11 @@ static INT32 AviCreateVidStream()
 
 	// fill in the header for the video stream
 	memset(&FBAvi.vidh, 0, sizeof(FBAvi.vidh));
-	FBAvi.vidh.fccType                = streamtypeVIDEO; // stream type
-	FBAvi.vidh.fccHandler             = FBAvi.compvar.fccHandler;
-	FBAvi.vidh.dwScale                = 100;      // scale
-	FBAvi.vidh.dwRate                 = nBurnFPS; // rate, (fps = dwRate/dwScale)
-	FBAvi.vidh.dwSuggestedBufferSize  = FBAvi.bih.biSizeImage;
+	FBAvi.vidh.fccType = streamtypeVIDEO; // stream type
+	FBAvi.vidh.fccHandler = FBAvi.compvar.fccHandler;
+	FBAvi.vidh.dwScale = 100;      // scale
+	FBAvi.vidh.dwRate = nBurnFPS; // rate, (fps = dwRate/dwScale)
+	FBAvi.vidh.dwSuggestedBufferSize = FBAvi.bih.biSizeImage;
 
 	// set rectangle for stream
 	nRet = SetRect(
@@ -574,12 +578,12 @@ static INT32 AviCreateAudStream()
 	//   files (typically 0.75 sec).
 	//
 	memset(&FBAvi.audh, 0, sizeof(FBAvi.audh));
-	FBAvi.audh.fccType                = streamtypeAUDIO;    // stream type
-	FBAvi.audh.dwScale                = FBAvi.wfx.nBlockAlign;
-	FBAvi.audh.dwRate                 = FBAvi.wfx.nAvgBytesPerSec;
-	FBAvi.audh.dwInitialFrames        = 1;                  // audio skew
-	FBAvi.audh.dwSuggestedBufferSize  = nBurnSoundLen<<2;
-	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;
+	FBAvi.audh.fccType = streamtypeAUDIO;    // stream type
+	FBAvi.audh.dwScale = FBAvi.wfx.nBlockAlign;
+	FBAvi.audh.dwRate = FBAvi.wfx.nAvgBytesPerSec;
+	FBAvi.audh.dwInitialFrames = 1;                  // audio skew
+	FBAvi.audh.dwSuggestedBufferSize = nBurnSoundLen<<2;
+	FBAvi.audh.dwSampleSize = FBAvi.wfx.nBlockAlign;
 
 	// create the audio stream
 	hRet = AVIFileCreateStream(
@@ -625,8 +629,8 @@ INT32 AviRecordFrame(INT32 bDraw)
 	is in vid/aud interleaved mode, audio must be recorded
 	every frame regardless of frameskip.
 	*/
-	if(bDraw) {
-		if(MakeSSBitmap()) {
+	if (bDraw) {
+		if (MakeSSBitmap()) {
 #ifdef AVI_DEBUG
 			bprintf(0, _T("    AVI Error: MakeBitmap() failed.\n"));
 #endif
@@ -743,7 +747,7 @@ void AviStop_INT()
 #ifdef AVI_DEBUG
 		if (nAviStatus) {
 			bprintf(0, _T(" ** AVI recording finished.\n"));
-			bprintf(0, _T("    total frames recorded = %u\n"), FBAvi.nFrameNum+1);
+			bprintf(0, _T("    total frames recorded = %u\n"), FBAvi.nFrameNum + 1);
 		}
 #endif
 		nAviStatus = 0;
@@ -766,11 +770,11 @@ void AviStop()
 INT32 AviStart_INT()
 {
 	// initialize local variables
-	memset (&FBAvi, 0, sizeof(FBAVI));
+	memset(&FBAvi, 0, sizeof(FBAVI));
 
 	// initialize avi file library
 	// - we need VFW version 1.1 or greater
-	if (HIWORD(VideoForWindowsVersion()) < 0x010a){
+	if (HIWORD(VideoForWindowsVersion()) < 0x010a) {
 		// VFW verison is too old, disable AVI recording
 		return 1;
 	}
@@ -784,7 +788,7 @@ INT32 AviStart_INT()
 	nAviFlags |= FBAVI_VFW_INIT; // avi file library initialized
 
 	// create the avi file
-	if(AviCreateFile()) {
+	if (AviCreateFile()) {
 		return 1;
 	}
 
@@ -804,7 +808,7 @@ INT32 AviStart_INT()
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
 	// create the video stream
-	if(AviCreateVidStream()) {
+	if (AviCreateVidStream()) {
 		return 1;
 	}
 
@@ -813,13 +817,13 @@ INT32 AviStart_INT()
 		// set audio format
 		AviSetAudFormat();
 		// create the audio stream
-		if(AviCreateAudStream()) {
+		if (AviCreateAudStream()) {
 			return 1;
 		}
 	}
 
 	// record the first frame (at init only, not on splits init)
-	if(nAviSplit == 0 && AviRecordFrame(1)) {
+	if (nAviSplit == 0 && AviRecordFrame(1)) {
 		return 1;
 	}
 
@@ -828,9 +832,13 @@ INT32 AviStart_INT()
 	return 0;
 }
 
-INT32 AviStart()
+INT32 AviStart(const char *filename)
 {
 	nAviSplit = 0;
+	bForceFileName = (filename != NULL);
+	if (filename) {
+		sprintf(szAviFileName, "%s", filename);
+	}
 
 	return AviStart_INT();
 }

@@ -30,7 +30,7 @@ static const bool bPrintDriverInfo = false;
 
 static int AddLine(TCHAR* pszFormat, ...)
 {
-	TCHAR szString[128] = _T("");
+	TCHAR szString[255] = _T("");
 
 	va_list vaFormat;
 	va_start(vaFormat, pszFormat);
@@ -53,7 +53,7 @@ static int AddLine(TCHAR* pszFormat, ...)
 
 static int AddText(TCHAR* pszFormat, ...)
 {
-	TCHAR szString[128] = _T("");
+	TCHAR szString[255] = _T("");
 
 	va_list vaFormat;
 	va_start(vaFormat, pszFormat);

@@ -49,6 +49,7 @@
 #define IDD_GAMEINFO						81
 #define IDD_DOWNLOAD_LOCAL					82
 #define IDD_CHOOSEMONITOR					83
+#define IDD_LUA                         84
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -56,6 +57,9 @@
 #define IDR_MENU_BLITTER_3					112
 #define IDR_MENU_BLITTER_4					113
 #define IDR_MENU_BLITTER_5					114
+#define IDR_MENU_BLITTER_6					114
+#define IDR_MENU_BLITTER_7					114
+#define IDR_MENU_BLITTER_8					114
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
 #define	IDR_MENU_GAMESEL					140
@@ -96,6 +100,13 @@
                                        // 	20021 is used by IDC_INPS_CLEARLOCK.
 #define IDC_INPD_ANSLIDER					20022
 #define IDC_INPD_ANEDIT						20023
+
+#define IDC_INPS_CONTROL_S1					20024
+#define IDC_INPS_CONTROL_S2					20025
+
+#define IDC_INPS_MAPDIG						20026
+#define IDC_INPS_DIGSLIDER					20027
+#define IDC_INPS_DIGLABEL					20028
 
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051
@@ -225,6 +236,36 @@
 #define IDC_STATIC_INFOBOX4					20308
 #define IDC_STATIC_INFOBOX5					20309
 #define IDC_STATIC_INFOBOX6					20310
+
+#define IDC_BUTTON_LUABROWSE            20365
+#define IDC_BUTTON_LUARUN               20366
+#define IDC_BUTTON_LUASTOP              20367
+#define IDC_EDIT_LUAPATH                20368
+#define IDC_LUACONSOLE                  20369
+#define IDC_BUTTON_LUAEDIT              20370
+#define IDC_LUACONSOLE_CLEAR            20371
+#define IDC_LUACONSOLE_CHOOSEFONT       20372
+
+#define IDC_ADDYS                       20374
+#define IDC_C_ADD                       20375
+#define IDC_LESS_THAN                   20376
+#define IDC_GREATER_THAN                20377
+#define IDC_LESS_THAN_EQUAL             20378
+#define IDC_GREATER_THAN_EQUAL          20379
+#define IDC_ENTER_LABEL                 20380
+#define IDC_EQUAL                       20381
+#define IDC_NOT_EQUAL                   20382
+#define IDC_PREV                        20383
+#define IDC_ENTERED                     20384
+#define IDC_ENTEREDADDRESS              20385
+#define IDC_VALUE_ENTER                 20386
+#define IDC_C_REFRESH                   20387
+#define IDC_2_BYTE                      20388
+#define IDC_3_BYTE                      20389
+#define IDC_4_BYTE                      20390
+#define IDC_HKEYSS_STATIC2              20391
+#define IDC_C_WATCH_SEPARATE            20392
+
 
 #define IDC_GFX_VIEWER_HORI_1				20400
 #define IDC_GFX_VIEWER_HORI_2				20401
@@ -476,10 +517,10 @@
 #define MENU_RES_3                      	10133
 #define MENU_RES_4                      	10134
 #define MENU_RES_OTHER                  	10135
-#define MENU_SINGLESIZESCREEN				10136
-#define MENU_DOUBLESIZESCREEN				10137
-#define MENU_TRIPLESIZESCREEN				10138
-#define MENU_QUADSIZESCREEN	  				10139
+#define MENU_1XSIZESCREEN									10136
+#define MENU_2XSIZESCREEN									10137
+#define MENU_3XSIZESCREEN									10138
+#define MENU_4XSIZESCREEN	  							10139
 #define MENU_16                 	        10141
 #define MENU_24                 	        10142
 #define MENU_32                 	        10143
@@ -496,14 +537,15 @@
 #define MENU_SOFTFX_MEMAUTO                	10163
 #define MENU_SOFTFX_VIDEOMEM               	10164
 #define MENU_SOFTFX_SYSMEM                 	10165
-#define MENU_AUTOSIZE						10170
-#define MENU_SINGLESIZEWINDOW				10171
-#define MENU_DOUBLESIZEWINDOW				10172
-#define MENU_TRIPLESIZEWINDOW				10173
-#define MENU_QUADSIZEWINDOW	  				10174
-#define MENU_MAXIMUMSIZEWINDOW				10175
-#define MENU_FORCE60HZ						10176
-#define MENU_AUTOFRAMESKIP					10177
+#define MENU_AUTOSIZE												10170
+#define MENU_1XSIZEWINDOW										10171
+#define MENU_2XSIZEWINDOW										10172
+#define MENU_3XSIZEWINDOW										10173
+#define MENU_4XSIZEWINDOW	  								10174
+#define MENU_5XSIZEWINDOW	  								10175
+#define MENU_MAXIMUMSIZEWINDOW							10176
+#define MENU_FORCE60HZ								10177
+#define MENU_AUTOFRAMESKIP						10178
 #define MENU_ROTATEVERTICAL					10181
 #define MENU_ASPECTNORMAL					10190
 #define MENU_ASPECTLCD						10191
@@ -583,6 +625,7 @@
 #define MENU_WHATSNEW                  		10505
 #define MENU_WWW_NSFORUM					10506
 #define MENU_WWW_GITHUB						10507
+#define MENU_WWW_FIGHTCADE				10508
 #define MENU_WLOGSTART						10606
 #define MENU_WLOGEND						10607
 #define MENU_AUTOSWITCHFULL					10613
@@ -645,10 +688,10 @@
 #define MENU_RES_3_VERTICAL					10703
 #define MENU_RES_4_VERTICAL					10704
 #define MENU_RES_OTHER_VERTICAL				10705
-#define MENU_SINGLESIZESCREEN_VERTICAL		10706
-#define MENU_DOUBLESIZESCREEN_VERTICAL		10707
-#define MENU_TRIPLESIZESCREEN_VERTICAL		10708
-#define MENU_QUADSIZESCREEN_VERTICAL		10709
+#define MENU_1XSIZESCREEN_VERTICAL		10706
+#define MENU_2XSIZESCREEN_VERTICAL		10707
+#define MENU_3XSIZESCREEN_VERTICAL		10708
+#define MENU_4XSIZESCREEN_VERTICAL		10709
 #define MENU_CDIMAGE                    	10710
 #define MENU_START_NEOGEO_MVS				10711
 #define MENU_START_NEOGEO_CD				10712
@@ -673,6 +716,10 @@
 #define MENU_DISABLEPLACEHOLDER				10731
 #define MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY	10732
 #define MENU_AUTOLOADGAMELIST               10733
+#define MENU_AUTOSCANGAMELIST               10734
+#define MENU_CLRMAME_PRO_XML_NES_ONLY       10735
+#define MENU_CLRMAME_PRO_XML_FDS_ONLY       10736
+#define MENU_HIDE_ROM_WARNINGS							10750
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002
@@ -680,6 +727,9 @@
 #define MENU_ENHANCED_NORMAL       	    	11004
 #define MENU_ENHANCED_SCAN       	    	11005
 #define MENU_EXP_SCAN		       	    	11010
+#define MENU_DX9_SCANLINES				11011
+#define MENU_DX9_WIN_FULLSCREEN  11012
+#define MENU_DX9_LEGACY_RENDERER 11013
 
 #define MENU_DISABLEFX						11101
 #define MENU_BILINEAR						11102
@@ -826,43 +876,78 @@
 #define MENU_DX9_ALT_SOFT_4XBR_B			11433
 #define MENU_DX9_ALT_SOFT_4XBR_C			11434
 #define MENU_DX9_ALT_SOFT_DDT3X             11435
+#define MENU_DX9_ALT_HARD_FX_NONE           11450
+#define MENU_DX9_ALT_HARD_FX_CRT_APERTURE   11451
+#define MENU_DX9_ALT_HARD_FX_CRT_CALIGARI   11452
+#define MENU_DX9_ALT_HARD_FX_CRT_CGWG_FAST  11453
+#define MENU_DX9_ALT_HARD_FX_CRT_EASY_MODE  11454
+#define MENU_DX9_ALT_HARD_FX_CRT_STANDARD   11455
+#define MENU_DX9_ALT_HARD_FX_CRT_BICUBIC		11456
 #define MENU_DX9_ALT_SOFT_AUTOSIZE			11490
 #define MENU_DX9_ALT_FORCE_16BIT			11491
 
-#define MENU_DX9_POINT						11601
-#define MENU_DX9_LINEAR						11602
-#define MENU_DX9_CUBIC						11603
+#define MENU_DX9_POINT							11601
+#define MENU_DX9_LINEAR							11602
+#define MENU_DX9_CUBIC							11603
 #define MENU_DX9_CUBIC_LIGHT				11610
-#define MENU_DX9_CUBIC_BSPLINE				11611
+#define MENU_DX9_CUBIC_BSPLINE			11611
 #define MENU_DX9_CUBIC_NOTCH				11612
-#define MENU_DX9_CUBIC_OPTIMAL				11613
-#define MENU_DX9_CUBIC_CATMULL				11614
+#define MENU_DX9_CUBIC_OPTIMAL			11613
+#define MENU_DX9_CUBIC_CATMULL			11614
 #define MENU_DX9_CUBIC_SHARP				11615
 #define MENU_DX9_CUBIC_DUFF					11616
-#define MENU_DX9_CUBIC_MITCHELL				11617
-#define MENU_DX9_CUBIC_CARDINAL				11618
+#define MENU_DX9_CUBIC_MITCHELL			11617
+#define MENU_DX9_CUBIC_CARDINAL			11618
 #define MENU_DX9_CUBIC_CUSTOM				11619
 #define MENU_DX9_FPTERXTURES				11620
 #define MENU_DX9_FORCE_PS14					11621
-#define MENU_DX9_CUBIC0						11622
-#define MENU_DX9_CUBIC1						11623
-#define MENU_DX9_CUBIC2						11624
-#define MENU_DX9_CUBIC3						11625
-#define MENU_DX9_CUBIC4						11626
+#define MENU_DX9_CUBIC0							11622
+#define MENU_DX9_CUBIC1							11623
+#define MENU_DX9_CUBIC2							11624
+#define MENU_DX9_CUBIC3							11625
+#define MENU_DX9_CUBIC4							11626
 
 #define MENU_DX9_ALT_POINT					11701
 #define MENU_DX9_ALT_LINEAR					11702
-#define MENU_DX9_ALT_HARDWAREVERTEX			11703
-#define MENU_DX9_ALT_MOTIONBLUR				11704
+#define MENU_DX9_ALT_HARDWAREVERTEX	11703
+#define MENU_DX9_ALT_MOTIONBLUR			11704
+#define MENU_OVERLAY								11710
+#define MENU_BIG_OVERLAY						11711
+#define MENU_UNRANKED_SCORES				11712
+#define MENU_SAVE_OVERLAY_FILES			11713
+#define MENU_SAVE_CHAT_HISTORY			11714
+#define MENU_MUTE_CHAT							11715
 
-#define MENU_AVISTART					    11827
-#define MENU_AVISTOP					    11828
+#define MENU_RUNAHEAD_DISABLED			11750
+#define MENU_RUNAHEAD_1F						11751
+#define MENU_RUNAHEAD_2F						11752
+
+#define ID_LUA_OPEN                 11812
+#define ID_LUA_CLOSE_ALL            11813
+
+#define MENU_AVISTART								11827
+#define MENU_AVISTOP								11828
 #define MENU_AVIINTAUD					    11829
 
-#define GAMESEL_MENU_PLAY					11900
+#define GAMESEL_MENU_PLAY						11900
 #define GAMESEL_MENU_GAMEINFO				11901
 #define GAMESEL_MENU_VIEWEMMA				11902
 #define GAMESEL_MENU_FAVORITE				11903
+
+#define IDC_LOCAL_AHEAD                     301053
+#define IDC_REMOTE_AHEAD                    301056
+#define IDC_NETWORK_GRAPH                   301058
+#define IDC_FAIRNESS_GRAPH                  301059
+#define IDC_REMOTE_AHEAD2                   301060
+#define IDC_PID                             301061
+#define IDC_CLOSE                           301062
+#define IDC_NETWORK_LAG                     301063
+#define IDC_FRAME_LAG                       301064
+#define IDC_PACKET_LOSS                     301065
+#define IDC_BANDWIDTH                       301066
+#define IDC_LOCAL_CPU                       301067
+#define IDC_REMOTE_CPU                      301068
+#define IDD_PERFMON                         301065
 
 // Next default values for new objects
 //

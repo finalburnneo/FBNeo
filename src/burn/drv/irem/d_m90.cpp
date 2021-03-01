@@ -1460,15 +1460,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Hasamu (Japan)
 
 static struct BurnRomInfo hasamuRomDesc[] = {
-	{ "hasc-p1.bin",	0x20000, 0x53df9834, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "hasc-p0.bin",	0x20000, 0xdff0ba6e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "hasc-p1.ic62",	0x20000, 0x53df9834, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "hasc-p0.ic65",	0x20000, 0xdff0ba6e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "hasc-sp.bin",	0x10000, 0x259b1687, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "hasc-sp.ic23",	0x10000, 0x259b1687, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "hasc-c0.bin",	0x20000, 0xdd5a2174, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "hasc-c1.bin",	0x20000, 0x76b8217c, 3 | BRF_GRA },           //  4
-	{ "hasc-c2.bin",	0x20000, 0xd90f9a68, 3 | BRF_GRA },           //  5
-	{ "hasc-c3.bin",	0x20000, 0x6cfe0d39, 3 | BRF_GRA },           //  6
+	{ "hasc-c0.ic66",	0x20000, 0xdd5a2174, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "hasc-c1.ic67",	0x20000, 0x76b8217c, 3 | BRF_GRA },           //  4
+	{ "hasc-c2.ic68",	0x20000, 0xd90f9a68, 3 | BRF_GRA },           //  5
+	{ "hasc-c3.ic69",	0x20000, 0x6cfe0d39, 3 | BRF_GRA },           //  6
 };
 
 STD_ROM_PICK(hasamu)
@@ -1495,17 +1495,17 @@ struct BurnDriver BurnDrvHasamu = {
 // Dynablaster / Bomber Man
 
 static struct BurnRomInfo dynablstRomDesc[] = {
-	{ "bbm-cp1e.62",	0x20000, 0x27667681, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm-cp0e.65",	0x20000, 0x95db7a67, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm-cp1e.ic62",	0x20000, 0x27667681, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm-cp0e.ic65",	0x20000, 0x95db7a67, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm-sp.23",		0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm-sp.ic23",	0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm-c0.66",		0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm-c1.67",		0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
-	{ "bbm-c2.68",		0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
-	{ "bbm-c3.69",		0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
+	{ "bbm-c0.ic66",	0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm-c1.ic67",	0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
+	{ "bbm-c2.ic68",	0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
+	{ "bbm-c3.ic69",	0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
 
-	{ "bbm-v0.20",		0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
+	{ "bbm-v0.ic20",	0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(dynablst)
@@ -1532,17 +1532,17 @@ struct BurnDriver BurnDrvDynablst = {
 // Bomber Man (Japan)
 
 static struct BurnRomInfo bombrmanRomDesc[] = {
-	{ "bbm-p1.62",		0x20000, 0x982bd166, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm-p0.65",		0x20000, 0x0a20afcc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm-p1.ic62",	0x20000, 0x982bd166, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm-p0.ic65",	0x20000, 0x0a20afcc, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm-sp.23",		0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm-sp.ic23",	0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm-c0.66",		0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm-c1.67",		0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
-	{ "bbm-c2.68",		0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
-	{ "bbm-c3.69",		0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
+	{ "bbm-c0.ic66",	0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm-c1.ic67",	0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
+	{ "bbm-c2.ic68",	0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
+	{ "bbm-c3.ic69",	0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
 
-	{ "bbm-v0.20",		0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
+	{ "bbm-v0.ic20",	0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(bombrman)
@@ -1562,17 +1562,17 @@ struct BurnDriver BurnDrvBombrman = {
 // Atomic Punk (US)
 
 static struct BurnRomInfo atompunkRomDesc[] = {
-	{ "bbm-cp0d.65",	0x20000, 0x860c0479, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm-cp1d.62",	0x20000, 0xbe57bf74, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm-cp0d.ic65",	0x20000, 0x860c0479, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm-cp1d.ic62",	0x20000, 0xbe57bf74, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm-sp.23",		0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm-sp.ic23",	0x10000, 0x251090cd, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm-c0.66",		0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm-c1.67",		0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
-	{ "bbm-c2.68",		0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
-	{ "bbm-c3.69",		0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
+	{ "bbm-c0.ic66",	0x40000, 0x695d2019, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm-c1.ic67",	0x40000, 0x4c7c8bbc, 3 | BRF_GRA },           //  4
+	{ "bbm-c2.ic68",	0x40000, 0x0700d406, 3 | BRF_GRA },           //  5
+	{ "bbm-c3.ic69",	0x40000, 0x3c3613af, 3 | BRF_GRA },           //  6
 
-	{ "bbm-v0.20",		0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
+	{ "bbm-v0.ic20",	0x20000, 0x0fa803fe, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(atompunk)
@@ -1592,17 +1592,17 @@ struct BurnDriver BurnDrvAtompunk = {
 // Bomber Man World / New Dyna Blaster - Global Quest
 
 static struct BurnRomInfo bbmanwRomDesc[] = {
-	{ "bbm2-h0-b.77",	0x40000, 0x567d3709, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm2-l0-b.79",	0x40000, 0xe762c22b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm2-h0-b.ic77",	0x40000, 0x567d3709, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm2-l0-b.ic79",	0x40000, 0xe762c22b, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm2-sp.33",		0x10000, 0x6bc1689e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm2-sp.ic33",	0x10000, 0x6bc1689e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
-	{ "bbm2-c2.83",		0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
-	{ "bbm2-c3.84",		0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
+	{ "bbm2-c0.ic81",	0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm2-c1.ic82",	0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
+	{ "bbm2-c2.ic83",	0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
+	{ "bbm2-c3.ic84",	0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
 
-	{ "bbm2-v0.30",		0x20000, 0x4ad889ed, 4 | BRF_SND },           //  7 Samples
+	{ "bbm2-v0.ic30",	0x20000, 0x4ad889ed, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(bbmanw)
@@ -1629,17 +1629,17 @@ struct BurnDriver BurnDrvBbmanw = {
 // Bomber Man World (Japan)
 
 static struct BurnRomInfo bbmanwjRomDesc[] = {
-	{ "bbm2-h0.77",		0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm2-l0.79",		0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm2-h0.ic77",	0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm2-l0.ic79",	0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm2-sp-a.33",	0x10000, 0xa4b0a66e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm2-sp-a.ic33",	0x10000, 0xa4b0a66e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
-	{ "bbm2-c2.83",		0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
-	{ "bbm2-c3.84",		0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
+	{ "bbm2-c0.ic81",	0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm2-c1.ic82",	0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
+	{ "bbm2-c2.ic83",	0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
+	{ "bbm2-c3.ic84",	0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
 
-	{ "bbm2-v0-b.30",	0x20000, 0x0ae655ff, 4 | BRF_SND },           //  7 Samples
+	{ "bbm2-v0-b.ic30",	0x20000, 0x0ae655ff, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(bbmanwj)
@@ -1659,17 +1659,17 @@ struct BurnDriver BurnDrvBbmanwj = {
 // Bomber Man World (Japan, revised sound hardware)
 
 static struct BurnRomInfo bbmanwjaRomDesc[] = {
-	{ "bbm2-h0.77",		0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm2-l0.79",		0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm2-h0.ic77",	0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm2-l0.ic79",	0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm2-sp-b.33",	0x10000, 0xb8d8108c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm2-sp-b.ic33",	0x10000, 0xb8d8108c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
-	{ "bbm2-c2.83",		0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
-	{ "bbm2-c3.84",		0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
+	{ "bbm2-c0.ic81",	0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm2-c1.ic82",	0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
+	{ "bbm2-c2.ic83",	0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
+	{ "bbm2-c3.ic84",	0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
 
-	{ "bbm2-v0-b.30",	0x20000, 0x0ae655ff, 4 | BRF_SND },           //  7 Samples
+	{ "bbm2-v0-b.ic30",	0x20000, 0x0ae655ff, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(bbmanwja)
@@ -1689,17 +1689,17 @@ struct BurnDriver BurnDrvBbmanwja = {
 // New Atomic Punk - Global Quest (US)
 
 static struct BurnRomInfo newapunkRomDesc[] = {
-	{ "bbm2-h0-a.77",	0x40000, 0x7d858682, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "bbm2-l0-a.79",	0x40000, 0xc7568031, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bbm2-h0-a.ic77",	0x40000, 0x7d858682, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm2-l0-a.ic79",	0x40000, 0xc7568031, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm2-sp.33",		0x10000, 0x6bc1689e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm2-sp.ic33",	0x10000, 0x6bc1689e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
-	{ "bbm2-c2.83",		0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
-	{ "bbm2-c3.84",		0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
+	{ "bbm2-c0.ic81",	0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm2-c1.ic82",	0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
+	{ "bbm2-c2.ic83",	0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
+	{ "bbm2-c3.ic84",	0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
 
-	{ "bbm2-v0.30",		0x20000, 0x4ad889ed, 4 | BRF_SND },           //  7 Samples
+	{ "bbm2-v0.ic30",	0x20000, 0x4ad889ed, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(newapunk)
@@ -1719,17 +1719,17 @@ struct BurnDriver BurnDrvNewapunk = {
 // Quiz F1 1-2 Finish (Japan)
 
 static struct BurnRomInfo quizf1RomDesc[] = {
-	{ "qf1-h0-.77",		0x40000, 0x280e3049, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "qf1-l0-.79",		0x40000, 0x94588a6f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qf1-h0-.ic77",	0x40000, 0x280e3049, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "qf1-l0-.ic79",	0x40000, 0x94588a6f, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "qf1-sp-.33",		0x10000, 0x0664fa9f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "qf1-sp-.ic33",	0x10000, 0x0664fa9f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "qf1-c0-.81",		0x80000, 0xc26b521e, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "qf1-c1-.82",		0x80000, 0xdb9d7394, 3 | BRF_GRA },           //  4
-	{ "qf1-c2-.83",		0x80000, 0x0b1460ae, 3 | BRF_GRA },           //  5
-	{ "qf1-c3-.84",		0x80000, 0x2d32ff37, 3 | BRF_GRA },           //  6
+	{ "qf1-c0-.ic81",	0x80000, 0xc26b521e, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "qf1-c1-.ic82",	0x80000, 0xdb9d7394, 3 | BRF_GRA },           //  4
+	{ "qf1-c2-.ic83",	0x80000, 0x0b1460ae, 3 | BRF_GRA },           //  5
+	{ "qf1-c3-.ic84",	0x80000, 0x2d32ff37, 3 | BRF_GRA },           //  6
 
-	{ "qf1-v0-.30",		0x40000, 0xb8d16e7c, 4 | BRF_SND },           //  7 Samples
+	{ "qf1-v0-.ic30",	0x40000, 0xb8d16e7c, 4 | BRF_SND },           //  7 Samples
 
 	{ "qf1-h1-.78",		0x80000, 0xc6c2eb2b, 5 | BRF_PRG | BRF_ESS }, //  8 V30 banked code
 	{ "qf1-l1-.80",		0x80000, 0x3132c144, 5 | BRF_PRG | BRF_ESS }, //  9
@@ -1764,12 +1764,12 @@ static struct BurnRomInfo riskchalRomDesc[] = {
 
 	{ "l4_a-sp.ic33",	0x10000, 0xbb80094e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "rc_c0.rom",		0x80000, 0x84d0b907, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "rc_c1.rom",		0x80000, 0xcb3784ef, 3 | BRF_GRA },           //  4
-	{ "rc_c2.rom",		0x80000, 0x687164d7, 3 | BRF_GRA },           //  5
-	{ "rc_c3.rom",		0x80000, 0xc86be6af, 3 | BRF_GRA },           //  6
+	{ "rc_c0.ic81",		0x80000, 0x84d0b907, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "rc_c1.ic82",		0x80000, 0xcb3784ef, 3 | BRF_GRA },           //  4
+	{ "rc_c2.ic83",		0x80000, 0x687164d7, 3 | BRF_GRA },           //  5
+	{ "rc_c3.ic84",		0x80000, 0xc86be6af, 3 | BRF_GRA },           //  6
 
-	{ "rc_v0.rom",		0x40000, 0xcddac360, 4 | BRF_SND },           //  7 Samples
+	{ "rc_v0.ic30",		0x40000, 0xcddac360, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(riskchal)
@@ -1802,12 +1802,12 @@ static struct BurnRomInfo gussunRomDesc[] = {
 
 	{ "l4_a-sp.ic33",	0x10000, 0xbb80094e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "rc_c0.rom",		0x80000, 0x84d0b907, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "rc_c1.rom",		0x80000, 0xcb3784ef, 3 | BRF_GRA },           //  4
-	{ "rc_c2.rom",		0x80000, 0x687164d7, 3 | BRF_GRA },           //  5
-	{ "rc_c3.rom",		0x80000, 0xc86be6af, 3 | BRF_GRA },           //  6
+	{ "rc_c0.ic81",		0x80000, 0x84d0b907, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "rc_c1.ic82",		0x80000, 0xcb3784ef, 3 | BRF_GRA },           //  4
+	{ "rc_c2.ic83",		0x80000, 0x687164d7, 3 | BRF_GRA },           //  5
+	{ "rc_c3.ic84",		0x80000, 0xc86be6af, 3 | BRF_GRA },           //  6
 
-	{ "rc_v0.rom",		0x40000, 0xcddac360, 4 | BRF_SND },           //  7 Samples
+	{ "rc_v0.ic30",		0x40000, 0xcddac360, 4 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(gussun)
@@ -1827,15 +1827,15 @@ struct BurnDriver BurnDrvGussun = {
 // Match It II
 
 static struct BurnRomInfo matchit2RomDesc[] = {
-	{ "sis2-h0-b.bin",	0x40000, 0x9a2556ac, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "sis2-l0-b.bin",	0x40000, 0xd35d948a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sis2-h0-b.ic77",	0x40000, 0x9a2556ac, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "sis2-l0-b.ic79",	0x40000, 0xd35d948a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sis2-sp-.rom",	0x10000, 0x6fc0ff3a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "sis2-sp-.ic33",	0x10000, 0x6fc0ff3a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "ic81.rom",		0x80000, 0x5a7cb88f, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "ic82.rom",		0x80000, 0x54a7852c, 3 | BRF_GRA },           //  4
-	{ "ic83.rom",		0x80000, 0x2bd65dc6, 3 | BRF_GRA },           //  5
-	{ "ic84.rom",		0x80000, 0x876d5fdb, 3 | BRF_GRA },           //  6
+	{ "sis2_c0.ic81",	0x80000, 0x5a7cb88f, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "sis2_c1.ic82",	0x80000, 0x54a7852c, 3 | BRF_GRA },           //  4
+	{ "sis2_c2.ic83",	0x80000, 0x2bd65dc6, 3 | BRF_GRA },           //  5
+	{ "sis2_c3.ic84",	0x80000, 0x876d5fdb, 3 | BRF_GRA },           //  6
 };
 
 STD_ROM_PICK(matchit2)
@@ -1867,10 +1867,10 @@ static struct BurnRomInfo shisen2RomDesc[] = {
 
 	{ "sis2-sp-.rom",	0x10000, 0x6fc0ff3a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "ic81.rom",		0x80000, 0x5a7cb88f, 3 | BRF_GRA },           //  3 Tiles and sprites
-	{ "ic82.rom",		0x80000, 0x54a7852c, 3 | BRF_GRA },           //  4
-	{ "ic83.rom",		0x80000, 0x2bd65dc6, 3 | BRF_GRA },           //  5
-	{ "ic84.rom",		0x80000, 0x876d5fdb, 3 | BRF_GRA },           //  6
+	{ "sis2_c0.ic81",	0x80000, 0x5a7cb88f, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "sis2_c1.ic82",	0x80000, 0x54a7852c, 3 | BRF_GRA },           //  4
+	{ "sis2_c2.ic83",	0x80000, 0x2bd65dc6, 3 | BRF_GRA },           //  5
+	{ "sis2_c3.ic84",	0x80000, 0x876d5fdb, 3 | BRF_GRA },           //  6
 };
 
 STD_ROM_PICK(shisen2)

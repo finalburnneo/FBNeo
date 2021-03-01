@@ -210,10 +210,8 @@ STDINPUTINFO(Pkladies)
 
 static struct BurnInputInfo PangInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1  + 7, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1  + 6, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1  + 5, "p1 left"   },
@@ -221,6 +219,8 @@ static struct BurnInputInfo PangInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1  + 3, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2  + 7, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2  + 6, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2  + 5, "p2 left"   },

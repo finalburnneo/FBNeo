@@ -212,6 +212,7 @@ static INT32 nSoundPrevReply;
 #endif
 
 INT32 s1945pmode = 0;
+INT32 cphdmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
 INT32 vlinermode = 0;
 
@@ -439,11 +440,11 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) {
-		nNewBIOS = 34;
+		nNewBIOS = 35;
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
-		nNewBIOS = 35;
+		nNewBIOS = 36;
 	}
 
 	// The most recent MVS models doesn't have a Z80 BIOS
@@ -608,6 +609,7 @@ static INT32 LoadRoms()
 			nSpriteSize[nNeoActiveSlot] *= pInfo->nSpriteNum - 2;
 
 			if (!strcmp("kof97oro", BurnDrvGetTextA(DRV_NAME))) nSpriteSize[nNeoActiveSlot] = 0x2400000;
+			if (!strcmp("neon", BurnDrvGetTextA(DRV_NAME))) nSpriteSize[nNeoActiveSlot] = 0x80000;
 
 			// The final 2 ROMs may have a different size
 			BurnDrvGetRomInfo(&ri, pInfo->nSpriteOffset + pInfo->nSpriteNum - 2);
@@ -1471,6 +1473,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(bNeoEnableGraphics);
 		SCAN_VAR(bNeoEnableSprites);
 		SCAN_VAR(bNeoEnableText);
+		SCAN_VAR(bNeoDarkenPalette);
 
 		SCAN_VAR(nIRQAcknowledge);
 
@@ -1885,7 +1888,8 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	// notes: value too high, and breaks nam1975 voice after coin up
 	// stikers 1945p: goes really slow
 	// pulstar: music/bonus count noise at end of level
-	neogeoSynchroniseZ80(0x24);
+	// cphd: ugh.
+	neogeoSynchroniseZ80((cphdmode) ? 0x64 : 0x24);
 #endif
 }
 
@@ -2106,13 +2110,17 @@ static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 	return;
 }
 
-static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
+static void WriteIO2(INT32 nOffset, UINT8 byteValue)
 {
 	switch (nOffset) {
-		case 0x01:											// Enable display
+		case 0x01:
+		case 0x09:
+		case 0x11:
+		case 0x19: // Screen Brightness
 			if (nNeoSystemType & NEO_SYS_CART) {
-				bNeoEnableGraphics = true;
-//				bprintf(PRINT_NORMAL, _T("  - Display  enabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
+				NeoRecalcPalette = 1;
+				bNeoDarkenPalette = (nOffset == 0x11) ? 1 : 0;
+				//bprintf(PRINT_NORMAL, _T("  - Darken Palette %X (0x%02X, at scanline %i).\n"), bNeoDarkenPalette, byteValue, SekCurrentScanline());
 			}
 			break;
 
@@ -2152,13 +2160,6 @@ static void WriteIO2(INT32 nOffset, UINT8 /*byteValue*/)
 		case 0x0F:											// Select palette bank 1
 //			bprintf(PRINT_NORMAL, _T("  - Palette 1 banked in (0x%02X).\n"), byteValue);
 			MapPalette(1);
-			break;
-
-		case 0x11:											// Disable display
-			if (nNeoSystemType & NEO_SYS_CART) {
-				bNeoEnableGraphics = false;
-//				bprintf(PRINT_NORMAL, _T("  - Display disabled (0x%02X, at scanline %i).\n"), byteValue, SekCurrentScanline());
-			}
 			break;
 
 		case 0x13:											// Select game vector table
@@ -3685,7 +3686,7 @@ static INT32 neogeoReset()
 	if (nNeoSystemType & NEO_SYS_CART) {
 		NeoLoad68KBIOS(NeoSystem & 0x3f);
 
-		if (nBIOS == -1 || nBIOS == 33) {
+		if (nBIOS == -1 || nBIOS == 34) {
 			// Write system type & region code into BIOS ROM
 			*((UINT16*)(Neo68KBIOS + 0x000400)) = BURN_ENDIAN_SWAP_INT16(((NeoSystem & 4) << 13) | (NeoSystem & 0x03));
 		}
@@ -3712,21 +3713,22 @@ static INT32 neogeoReset()
 				case 0x10: { bprintf(PRINT_IMPORTANT, _T("Emulating using AES Asia BIOS\n")); break; }
 				case 0x11: { bprintf(PRINT_IMPORTANT, _T("Emulating using Development Kit BIOS\n")); break; }
 				case 0x12: { bprintf(PRINT_IMPORTANT, _T("Emulating using Deck ver. 6 (Git Ver 1.3) BIOS\n")); break; }
-				case 0x13: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.3 BIOS\n")); break; }
-				case 0x14: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.2 BIOS\n")); break; }
-				case 0x15: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.1 BIOS\n")); break; }
-				case 0x16: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.0 BIOS\n")); break; }
-				case 0x17: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 BIOS\n")); break; }
-				case 0x18: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 (alt) BIOS\n")); break; }
-				case 0x19: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.2 BIOS\n")); break; }
-				case 0x1a: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.1 BIOS\n")); break; }
-				case 0x1b: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.0 BIOS\n")); break; }
-				case 0x1c: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.3 BIOS\n")); break; }
-				case 0x1d: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 BIOS\n")); break; }
-				case 0x1e: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 (alt) BIOS\n")); break; }
-				case 0x1f: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.1 BIOS\n")); break; }
-				case 0x20: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.0 BIOS\n")); break; }
-				case 0x21: { bprintf(PRINT_IMPORTANT, _T("Emulating using NeoOpen BIOS v0.1 beta BIOS\n")); break; }
+				case 0x13: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 4.0 BIOS\n")); break; }
+				case 0x14: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.3 BIOS\n")); break; }
+				case 0x15: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.2 BIOS\n")); break; }
+				case 0x16: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.1 BIOS\n")); break; }
+				case 0x17: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 3.0 BIOS\n")); break; }
+				case 0x18: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 BIOS\n")); break; }
+				case 0x19: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.3 (alt) BIOS\n")); break; }
+				case 0x1a: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.2 BIOS\n")); break; }
+				case 0x1b: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.1 BIOS\n")); break; }
+				case 0x1c: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 2.0 BIOS\n")); break; }
+				case 0x1d: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.3 BIOS\n")); break; }
+				case 0x1e: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 BIOS\n")); break; }
+				case 0x1f: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.2 (alt) BIOS\n")); break; }
+				case 0x20: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.1 BIOS\n")); break; }
+				case 0x21: { bprintf(PRINT_IMPORTANT, _T("Emulating using Universe BIOS ver. 1.0 BIOS\n")); break; }
+				case 0x22: { bprintf(PRINT_IMPORTANT, _T("Emulating using NeoOpen BIOS v0.1 beta BIOS\n")); break; }
 			}
 		}
 
@@ -4290,25 +4292,25 @@ INT32 NeoInit()
 	}
 
 	if (nNeoSystemType & NEO_SYS_PCB) {
-		BurnLoadRom(Neo68KBIOS, 0x00080 +     35, 1);
+		BurnLoadRom(Neo68KBIOS, 0x00080 +     36, 1);
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
-		BurnLoadRom(NeoZ80BIOS,		0x00000 + 36, 1);
-		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 37, 1);
-		BurnLoadRom(NeoZoomROM,		0x00000 + 38, 1);
+		BurnLoadRom(NeoZ80BIOS,		0x00000 + 37, 1);
+		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 38, 1);
+		BurnLoadRom(NeoZoomROM,		0x00000 + 39, 1);
 	} else {
 
 		// Still load the Z80 BIOS & text layer data for AES systems, since it might be switched to MVS later
 
 		if (nNeoSystemType & NEO_SYS_PCB) {
 			bZ80BIOS = false;
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 37, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 38, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 38, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 39, 1);
 		} else {
-			BurnLoadRom(NeoZ80BIOS,		0x00080 + 36, 1);
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 37, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 38, 1);
+			BurnLoadRom(NeoZ80BIOS,		0x00080 + 37, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 38, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 39, 1);
 		}
 	}
 	BurnUpdateProgress(0.0, _T("Preprocessing text layer graphics...")/*, BST_PROCESS_TXT*/, 0);
@@ -4472,6 +4474,7 @@ INT32 NeoExit()
 	NeoCDInfo_Exit();
 
 	s1945pmode = 0;
+	cphdmode = 0;
 	fatfury2mode = 0;
 	vlinermode = 0;
 
@@ -4851,6 +4854,7 @@ INT32 NeoFrame()
 		switch (nGameID) {
 			case 0x0050: bRenderMode = 1; break; // ninjacommando (cd)
 			case 0x0061: bRenderMode = 1; break; // ssideki2 (cd)
+			case 0x0200: bRenderMode = 1; break; // turfmasters (cd)
 		}
 		bRenderLineByLine = (!bNeoCDIRQEnabled) && bRenderMode;
 	}

@@ -2703,12 +2703,11 @@ INLINE void ADPCMA_calc_chan( YM2610 *F2610, ADPCM_CH *ch )
 
 			ch->adpcm_acc += jedi_table[ch->adpcm_step + data];
 
-            /* the 12-bit accumulator wraps on the ym2610 and ym2608 (like the msm5205), it does not saturate (like the msm5218) */
-            ch->adpcm_acc &= 0xfff;
-
-            /* extend 12-bit signed int */
-			if (ch->adpcm_acc & 0x800)
+			/* extend 12-bit signed int */
+			if (ch->adpcm_acc & ~0x7ff)
 				ch->adpcm_acc |= ~0xfff;
+			else
+				ch->adpcm_acc &= 0xfff;
 
 			ch->adpcm_step += step_inc[data & 7];
 			Limit( ch->adpcm_step, 48*16, 0*16 );
@@ -2901,7 +2900,7 @@ static unsigned int YM2608_ADPCM_ROM_addr[2*6] = {
 	It was verified, using real YM2608, that this ADPCM stream produces 100% correct output signal.
 */
 
-static unsigned char *YM2608_ADPCM_ROM = NULL;
+static UINT8 *YM2608_ADPCM_ROM = NULL;
 
 /* flag enable control 0x110 */
 INLINE void YM2608IRQFlagWrite(FM_OPN *OPN, int n, int v)
@@ -3165,7 +3164,7 @@ static void YM2608_deltat_status_reset(UINT8 which, UINT8 changebits)
 }
 /* YM2608(OPNA) */
 int YM2608Init(int num, int clock, int rate,
-               void **pcmrom,int *pcmsize, unsigned char *irom,
+               void **pcmrom,int *pcmsize, UINT8 *irom,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler)
 {
 	int i;

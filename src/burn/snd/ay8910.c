@@ -52,7 +52,7 @@ static INT32 num = 0, ym_num = 0;
 
 static double AY8910Volumes[3 * 6];
 static INT32 AY8910RouteDirs[3 * 6];
-INT16 *pAY8910Buffer[(MAX_8910 + 1) * 3];
+INT16 *pAY8910Buffer[(MAX_8910 + 1) * 3] = { NULL, NULL, NULL,  NULL, NULL, NULL,  NULL, NULL, NULL,  NULL, NULL, NULL,  NULL, NULL, NULL };
 static INT32 nBurnSoundLenSave = 0;
 static INT32 AY8910AddSignal = 0;
 

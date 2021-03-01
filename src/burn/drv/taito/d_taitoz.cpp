@@ -3114,8 +3114,17 @@ static struct BurnRomInfo SciRomDesc[] = {
 	{ "c09-15.29",     0x80000, 0xe63b9095, BRF_SND | TAITO_YM2610B },
 	
 	{ "c09-16.17",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c09-17.24",     0x00400, 0x10728853, BRF_OPT },
+	{ "c09-18.25",     0x00400, 0x643e8bfc, BRF_OPT },
 	{ "c09-20.71",     0x00100, 0xcd8ffd80, BRF_OPT },
 	{ "c09-23.14",     0x00100, 0xfbf81f30, BRF_OPT },
+	
+	{ "c09-19_pal16l8b.ic67",     0x00104, 0xa0608442, BRF_OPT },
+	{ "c09-21_pal20l8b.ic2",      0x00144, 0x583f9214, BRF_OPT },
+	{ "c09-22_pal16l8b.ic3",      0x00104, 0xb506d7a7, BRF_OPT },
+	{ "c09-24_pal20l8b.ic22",     0x00144, 0x2ff83694, BRF_OPT },
+	{ "c09-25_pal20l8b.ic25",     0x00144, 0xc69bf3fc, BRF_OPT },
+	{ "c09-26_pal16l8b.ic26",     0x00104, 0x36a8eb27, BRF_OPT },
 };
 
 STD_ROM_PICK(Sci)
@@ -3150,8 +3159,17 @@ static struct BurnRomInfo SciaRomDesc[] = {
 	{ "c09-15.29",     0x80000, 0xe63b9095, BRF_SND | TAITO_YM2610B },
 	
 	{ "c09-16.17",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c09-17.24",     0x00400, 0x10728853, BRF_OPT },
+	{ "c09-18.25",     0x00400, 0x643e8bfc, BRF_OPT },
 	{ "c09-20.71",     0x00100, 0xcd8ffd80, BRF_OPT },
 	{ "c09-23.14",     0x00100, 0xfbf81f30, BRF_OPT },
+	
+	{ "c09-19_pal16l8b.ic67",     0x00104, 0xa0608442, BRF_OPT },
+	{ "c09-21_pal20l8b.ic2",      0x00144, 0x583f9214, BRF_OPT },
+	{ "c09-22_pal16l8b.ic3",      0x00104, 0xb506d7a7, BRF_OPT },
+	{ "c09-24_pal20l8b.ic22",     0x00144, 0x2ff83694, BRF_OPT },
+	{ "c09-25_pal20l8b.ic25",     0x00144, 0xc69bf3fc, BRF_OPT },
+	{ "c09-26_pal16l8b.ic26",     0x00104, 0x36a8eb27, BRF_OPT },
 };
 
 STD_ROM_PICK(Scia)
@@ -3186,8 +3204,17 @@ static struct BurnRomInfo ScijRomDesc[] = {
 	{ "c09-11.29",     0x80000, 0x6b1a11e1, BRF_SND | TAITO_YM2610B },
 	
 	{ "c09-16.17",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c09-17.24",     0x00400, 0x10728853, BRF_OPT },
+	{ "c09-18.25",     0x00400, 0x643e8bfc, BRF_OPT },
 	{ "c09-20.71",     0x00100, 0xcd8ffd80, BRF_OPT },
 	{ "c09-23.14",     0x00100, 0xfbf81f30, BRF_OPT },
+	
+	{ "c09-19_pal16l8b.ic67",     0x00104, 0xa0608442, BRF_OPT },
+	{ "c09-21_pal20l8b.ic2",      0x00144, 0x583f9214, BRF_OPT },
+	{ "c09-22_pal16l8b.ic3",      0x00104, 0xb506d7a7, BRF_OPT },
+	{ "c09-24_pal20l8b.ic22",     0x00144, 0x2ff83694, BRF_OPT },
+	{ "c09-25_pal20l8b.ic25",     0x00144, 0xc69bf3fc, BRF_OPT },
+	{ "c09-26_pal16l8b.ic26",     0x00104, 0x36a8eb27, BRF_OPT },
 };
 
 STD_ROM_PICK(Scij)
@@ -3222,14 +3249,23 @@ static struct BurnRomInfo SciuRomDesc[] = {
 	{ "c09-15.29",     0x80000, 0xe63b9095, BRF_SND | TAITO_YM2610B },
 	
 	{ "c09-16.17",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c09-17.24",     0x00400, 0x10728853, BRF_OPT },
+	{ "c09-18.25",     0x00400, 0x643e8bfc, BRF_OPT },
 	{ "c09-20.71",     0x00100, 0xcd8ffd80, BRF_OPT },
 	{ "c09-23.14",     0x00100, 0xfbf81f30, BRF_OPT },
+	
+	{ "c09-19_pal16l8b.ic67",     0x00104, 0xa0608442, BRF_OPT },
+	{ "c09-21_pal20l8b.ic2",      0x00144, 0x583f9214, BRF_OPT },
+	{ "c09-22_pal16l8b.ic3",      0x00104, 0xb506d7a7, BRF_OPT },
+	{ "c09-24_pal20l8b.ic22",     0x00144, 0x2ff83694, BRF_OPT },
+	{ "c09-25_pal20l8b.ic25",     0x00144, 0xc69bf3fc, BRF_OPT },
+	{ "c09-26_pal16l8b.ic26",     0x00104, 0x36a8eb27, BRF_OPT },
 };
 
 STD_ROM_PICK(Sciu)
 STD_ROM_FN(Sciu)
 
-static struct BurnRomInfo ScinegroRomDesc[] = {
+static struct BurnRomInfo ScinRomDesc[] = {
 	{ "ic37.37",       0x20000, 0x33fb159c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "ic40.38",       0x20000, 0x657df3f2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "ic38.42",       0x20000, 0x0a09b90b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },	
@@ -3238,7 +3274,7 @@ static struct BurnRomInfo ScinegroRomDesc[] = {
 	{ "c09-33.6",      0x10000, 0xcf4e6c5b, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "c09-32.5",      0x10000, 0xa4713719, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
-	{ "c09-27.31",     0x20000, 0xcd161dca, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "c09-34.31",     0x20000, 0xa21b3151, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
@@ -3251,19 +3287,28 @@ static struct BurnRomInfo ScinegroRomDesc[] = {
 	
 	{ "c09-06.37",     0x80000, 0x12df6d7b, BRF_GRA | TAITO_SPRITEMAP },
 	
-	{ "c09-10.42",     0x80000, 0xad78bf46, BRF_SND | TAITO_YM2610A },
-	{ "c09-09.43",     0x80000, 0x6a655c00, BRF_SND | TAITO_YM2610A },
-	{ "c09-08.44",     0x80000, 0x7ddfc316, BRF_SND | TAITO_YM2610A },
+	{ "c09-14.42",     0x80000, 0xad78bf46, BRF_SND | TAITO_YM2610A },
+	{ "c09-13.43",     0x80000, 0xd57c41d3, BRF_SND | TAITO_YM2610A },
+	{ "c09-12.44",     0x80000, 0x56c99fa5, BRF_SND | TAITO_YM2610A },
 	
-	{ "c09-11.29",     0x80000, 0x6b1a11e1, BRF_SND | TAITO_YM2610B },
+	{ "c09-15.29",     0x80000, 0xe63b9095, BRF_SND | TAITO_YM2610B },
 	
 	{ "c09-16.17",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c09-17.24",     0x00400, 0x10728853, BRF_OPT },
+	{ "c09-18.25",     0x00400, 0x643e8bfc, BRF_OPT },
 	{ "c09-20.71",     0x00100, 0xcd8ffd80, BRF_OPT },
 	{ "c09-23.14",     0x00100, 0xfbf81f30, BRF_OPT },
+	
+	{ "c09-19_pal16l8b.ic67",     0x00104, 0xa0608442, BRF_OPT },
+	{ "c09-21_pal20l8b.ic2",      0x00144, 0x583f9214, BRF_OPT },
+	{ "c09-22_pal16l8b.ic3",      0x00104, 0xb506d7a7, BRF_OPT },
+	{ "c09-24_pal20l8b.ic22",     0x00144, 0x2ff83694, BRF_OPT },
+	{ "c09-25_pal20l8b.ic25",     0x00144, 0xc69bf3fc, BRF_OPT },
+	{ "c09-26_pal16l8b.ic26",     0x00104, 0x36a8eb27, BRF_OPT },
 };
 
-STD_ROM_PICK(Scinegro)
-STD_ROM_FN(Scinegro)
+STD_ROM_PICK(Scin)
+STD_ROM_FN(Scin)
 
 static struct BurnRomInfo SpacegunRomDesc[] = {
 	{ "c57-18.62",         0x020000, 0x19d7d52e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -7306,12 +7351,12 @@ struct BurnDriver BurnDrvSciu = {
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvScinegro = {
-	"scinegro", "sci", NULL, NULL, "1989",
-	"Special Criminal Investigation (Negro bootleg)\0", NULL, "Negro", "Taito Z",
+struct BurnDriver BurnDrvScin = {
+	"scin", "sci", NULL, NULL, "1989",
+	"Super Special Criminal Investigation (Negro Torino hack)\0", NULL, "hack (Negro Torino)", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
-	NULL, ScinegroRomInfo, ScinegroRomName, NULL, NULL, NULL, NULL, SciInputInfo, SciDIPInfo,
+	NULL, ScinRomInfo, ScinRomName, NULL, NULL, NULL, NULL, SciInputInfo, SciDIPInfo,
 	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

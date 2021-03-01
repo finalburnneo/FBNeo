@@ -11,6 +11,7 @@
 //#include <fstream>
 //#include <array>
 #include <cmath>
+#include <stdint.h>
 
 
 namespace tms
@@ -171,8 +172,13 @@ typedef enum {
 
 typedef union {
    struct datavalue {
-        sword x;
-        sword y;
+#ifdef LSB_FIRST
+		sword x;
+		sword y;
+#else
+	   sword y;
+	   sword x;
+#endif
     } datavalue;
     dword value;
 } cpu_register;
@@ -189,7 +195,7 @@ struct cpu_state {
 	sdword cycles_start;
 	i64 total_cycles;
 
-	i64 timer_cyc; // silly cycle timer
+	sdword timer_cyc;
 	sdword timer_active;
 
 	dword convdp;
@@ -221,7 +227,8 @@ struct cpu_state {
         r[15] = &sp;
         r[31] = &sp;
         pc = 0;
-        sp.value = 0U;
+		sp.value = 0U;
+		timer_cb = NULL;
 #ifdef TMS34010_DEBUGGER
         loop_counter = 0;
         history_idx = 0;
@@ -481,6 +488,7 @@ void drav_rs_rd(cpu_state *cpu, word opcode);
 
 void generate_irq(cpu_state *cpu, int num);
 void clear_irq(cpu_state *cpu, int num);
+void check_timer(cpu_state *cpu, int cyc);
 
 struct display_info {
     int rowaddr;
@@ -504,7 +512,8 @@ int run(cpu_state *cpu, int cycles);
 
 #endif
 
-void timer_arm(cpu_state *cpu, i64 cycle, void (*t_cb)());
+void timer_arm(cpu_state *cpu, int cycle);
+void timer_set_cb(cpu_state *cpu, void (*t_cb)());
 void stop(cpu_state *cpu);
 i64 total_cycles(cpu_state *cpu);
 void new_frame(cpu_state *cpu);

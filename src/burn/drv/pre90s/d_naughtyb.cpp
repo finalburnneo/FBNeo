@@ -43,29 +43,29 @@ static INT32 game_select = 0;
 static INT32 vblank;
 
 static struct BurnInputInfo NaughtybInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 right"	},
 	{"P1 Button",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 right"	},
 	{"P2 Button",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Naughtyb)
 
 static struct BurnInputInfo TrvmstrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
@@ -76,76 +76,76 @@ static struct BurnInputInfo TrvmstrInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 4"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Trvmstr)
 
 static struct BurnDIPInfo NaughtybDIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0x15, NULL			},
+	{0x0e, 0xff, 0xff, 0x15, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0e, 0x01, 0x03, 0x00, "2"			},
-	{0x0e, 0x01, 0x03, 0x01, "3"			},
-	{0x0e, 0x01, 0x03, 0x02, "4"			},
-	{0x0e, 0x01, 0x03, 0x03, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x0e, 0x01, 0x03, 0x00, "2"				},
+	{0x0e, 0x01, 0x03, 0x01, "3"				},
+	{0x0e, 0x01, 0x03, 0x02, "4"				},
+	{0x0e, 0x01, 0x03, 0x03, "5"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0e, 0x01, 0x0c, 0x00, "10000"		},
-	{0x0e, 0x01, 0x0c, 0x04, "30000"		},
-	{0x0e, 0x01, 0x0c, 0x08, "50000"		},
-	{0x0e, 0x01, 0x0c, 0x0c, "70000"		},
+	{0x0e, 0x01, 0x0c, 0x00, "10000"			},
+	{0x0e, 0x01, 0x0c, 0x04, "30000"			},
+	{0x0e, 0x01, 0x0c, 0x08, "50000"			},
+	{0x0e, 0x01, 0x0c, 0x0c, "70000"			},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x0e, 0x01, 0x30, 0x00, "2 Coins 1 Credits"	},
-	{0x0e, 0x01, 0x30, 0x10, "1 Coin  1 Credits"	},
-	{0x0e, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
-	{0x0e, 0x01, 0x30, 0x30, "1 Coin  3 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coinage"			},
+	{0x0e, 0x01, 0x30, 0x00, "2 Coins 1 Credits"},
+	{0x0e, 0x01, 0x30, 0x10, "1 Coin  1 Credits"},
+	{0x0e, 0x01, 0x30, 0x20, "1 Coin  2 Credits"},
+	{0x0e, 0x01, 0x30, 0x30, "1 Coin  3 Credits"},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x0e, 0x01, 0x40, 0x00, "Easy"			},
-	{0x0e, 0x01, 0x40, 0x40, "Hard"			},
+	{0x0e, 0x01, 0x40, 0x00, "Easy"				},
+	{0x0e, 0x01, 0x40, 0x40, "Hard"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0e, 0x01, 0x80, 0x00, "Upright"		},
-	{0x0e, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x0e, 0x01, 0x80, 0x00, "Upright"			},
+	{0x0e, 0x01, 0x80, 0x80, "Cocktail"			},
 };
 
 STDDIPINFO(Naughtyb)
 
 static struct BurnDIPInfo TrvmstrDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0x44, NULL			},
+	{0x0a, 0xff, 0xff, 0x44, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Screen Orientation"	},
-	{0x0a, 0x01, 0x03, 0x00, "0'"			},
-	{0x0a, 0x01, 0x03, 0x02, "90'"			},
-	{0x0a, 0x01, 0x03, 0x01, "180'"			},
-	{0x0a, 0x01, 0x03, 0x03, "270'"			},
+	{0x0a, 0x01, 0x03, 0x00, "0'"					},
+	{0x0a, 0x01, 0x03, 0x02, "90'"					},
+	{0x0a, 0x01, 0x03, 0x01, "180'"					},
+	{0x0a, 0x01, 0x03, 0x03, "270'"					},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0a, 0x01, 0x04, 0x04, "Off"			},
-	{0x0a, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x0a, 0x01, 0x04, 0x04, "Off"					},
+	{0x0a, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Show Correct Answer"	},
-	{0x0a, 0x01, 0x08, 0x08, "No"			},
-	{0x0a, 0x01, 0x08, 0x00, "Yes"			},
+	{0x0a, 0x01, 0x08, 0x08, "No"					},
+	{0x0a, 0x01, 0x08, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0   , 0xfe, 0   ,    4, "Coinage"				},
 	{0x0a, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x0a, 0x01, 0x30, 0x00, "1 Coin  1 Credits"	},
 	{0x0a, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
-	{0x0a, 0x01, 0x30, 0x30, "Free Play"		},
+	{0x0a, 0x01, 0x30, 0x30, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    2, "Number of Questions"	},
-	{0x0a, 0x01, 0x40, 0x00, "5"			},
-	{0x0a, 0x01, 0x40, 0x40, "7"			},
+	{0x0a, 0x01, 0x40, 0x00, "5"					},
+	{0x0a, 0x01, 0x40, 0x40, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0a, 0x01, 0x80, 0x00, "Upright"		},
-	{0x0a, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x0a, 0x01, 0x80, 0x00, "Upright"				},
+	{0x0a, 0x01, 0x80, 0x80, "Cocktail"				},
 };
 
 STDDIPINFO(Trvmstr)
@@ -161,10 +161,10 @@ static UINT8 popflame_protection_read()
 
 static void popflame_protection_write(UINT8 data)
 {
-	if ((data & 1) && ((prot_seed & 1) == 0))
+	if ((data & 1) && (~prot_seed & 1))
 		prot_index = 0;
 
-	if ((data & 8) && ((prot_seed & 8) == 0))
+	if ((data & 8) && (~prot_seed & 8))
 		prot_index++;
 
 	prot_seed = (data & 0x10) >> 2;
@@ -182,7 +182,7 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x9000:
 		{
-			pleiads_sound_control_c_w(address, data); // sound - control c
+			pleiads_sound_control_c_w(address, data);
 
 			cocktail = (DrvDips[0] >> 7) & (data & 1);
 			palettereg = (data & 0x06) >> 1;
@@ -195,11 +195,11 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa000:
-			pleiads_sound_control_a_w(address, data); // sound - control a
+			pleiads_sound_control_a_w(address, data);
 		return;
 
 		case 0xa800:
-			pleiads_sound_control_b_w(address, data); // sound - control b  and popflame protection writes
+			pleiads_sound_control_b_w(address, data);
 		return;
 
 		case 0xc000:
@@ -262,15 +262,13 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-static INT32 MemIndex(INT32 select)
+static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM		= Next; Next += 0x004000;
 
-	DrvQuestion		= Next;
-	if (select == 2 || select == 3)
-		                    Next += 0x020000;
+	DrvQuestion		= Next; Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x008000;
@@ -316,105 +314,64 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static INT32 DrvLoadRoms(bool bLoad)
+{
+	char* pRomName;
+	struct BurnRomInfo ri;
+
+	UINT8 *pLoad = DrvZ80ROM;
+	UINT8 *gLoad[2] = { DrvGfxROM0, DrvGfxROM1 };
+	UINT8 *cLoad = DrvColPROM;
+	UINT8 *qLoad = DrvQuestion;
+
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
+	{
+		BurnDrvGetRomInfo(&ri, i);
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 1) {
+			if (bLoad) {
+				if (BurnLoadRom(pLoad, i, 1)) return 1;
+			}
+			pLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & BRF_GRA) && ((ri.nType & 0x0f) == 2 || (ri.nType & 0x0f) == 3)) {
+			INT32 num = ri.nType & 0x01;
+			if (bLoad) {
+				if (BurnLoadRom(gLoad[num], i, 1)) return 1;
+			}
+			gLoad[num] += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 4) {
+			if (bLoad) {
+				if (BurnLoadRom(cLoad, i, 1)) return 1;
+			}
+			cLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 5) {
+			if (bLoad) {
+				if (BurnLoadRom(qLoad, i, 1)) return 1;
+			}
+			qLoad += ri.nLen;
+			continue;
+		}
+	}
+
+	return 0;
+}
+
 static INT32 DrvInit(INT32 select)
 {
-	AllMem = NULL;
-	MemIndex(select);
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex(select);
+	BurnAllocMemIndex();
+
+	if (DrvLoadRoms(true)) return 1;
 
 	game_select = select;
-
-	if (game_select == 0)
-	{ // naughty boy
-		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x0800,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x1800,  3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x2800,  5, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x3000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x3800,  7, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x0800,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x1000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x1800, 11, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x0000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0800, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1800, 15, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x0000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x0100, 17, 1)) return 1;
-	}
-	else if (game_select == 1)
-	{ // pop flamer
-		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x3000,  3, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  5, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1000,  7, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x0000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x0100,  9, 1)) return 1;
-	}
-	else if (game_select == 2)
-	{ // trivia master
-		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  4, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1000,  6, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x0000,  7, 1)) return 1;
-
-		if (BurnLoadRom(DrvQuestion + 0x00000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x04000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x08000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x0c000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x10000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x14000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x18000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x1c000, 15, 1)) return 1;
-	}
-	else if (game_select == 3)
-	{ // trivia genius
-		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  4, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1000,  6, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x0000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x0100,  8, 1)) return 1;
-
-		if (BurnLoadRom(DrvQuestion + 0x00000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x04000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x08000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x0c000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x10000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x14000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x18000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvQuestion + 0x1c000, 16, 1)) return 1;
-		game_select = 2;
-	}
 
 	DrvGfxDecode();
 
@@ -454,19 +411,17 @@ static void DrvPaletteInit()
 {
 	for (INT32 i = 0;i < 0x100; i++)
 	{
-		INT32 bit0, bit1, r, g, b;
-
-		bit0 = (DrvColPROM[i] >> 0) & 0x01;
-		bit1 = (DrvColPROM[i+0x100] >> 0) & 0x01;
-		r = bit0 * 172 + bit1 * 83;
+		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
+		INT32 bit1 = (DrvColPROM[i+0x100] >> 0) & 0x01;
+		INT32 r = bit0 * 172 + bit1 * 83;
 
 		bit0 = (DrvColPROM[i] >> 2) & 0x01;
 		bit1 = (DrvColPROM[i+0x100] >> 2) & 0x01;
-		g = bit0 * 172 + bit1 * 83;
+		INT32 g = bit0 * 172 + bit1 * 83;
 
 		bit0 = (DrvColPROM[i] >> 1) & 0x01;
 		bit1 = (DrvColPROM[i+0x100] >> 1) & 0x01;
-		b = bit0 * 172 + bit1 * 83;
+		INT32 b = bit0 * 172 + bit1 * 83;
 
 		INT32 o = ((i & 0xc0) >> 1) | ((i & 0x27) << 2) | ((i & 0x18) >> 3);
 
@@ -474,7 +429,7 @@ static void DrvPaletteInit()
 	}
 }
 
-static void draw_last_little_bit(INT32 layer)
+static void draw_fixed(INT32 layer) // top & bottom HUD
 {
 	for (INT32 offs = 0x100 - 1; offs >= 0; offs--)
 	{
@@ -493,8 +448,6 @@ static void draw_last_little_bit(INT32 layer)
 			sx += (34 * 8);
 		}
 
-		//if (nBurnLayer & 4) Render8x8Tile_Clip(pTransDraw, code0, sx, sy, color0, 2, 0x80, DrvGfxROM1);
-		//if (nBurnLayer & 8) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, transp, 0x80, DrvGfxROM1);
 		if (nBurnLayer & 1 && layer == 0) Render8x8Tile_Clip(pTransDraw, code1, sx, sy, color1, 2, 0, DrvGfxROM0);
 		if (nBurnLayer & 2 && layer == 1) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, 0, 0x80, DrvGfxROM1);
 	}
@@ -504,61 +457,22 @@ static void draw_layer(INT32 layer)
 {
 	INT32 scrx = (scrollreg - 17) & 0x1ff;
 
-// 121 - 72
-
-	for (INT32 offs = 0x800 - 1; offs >= 0; offs--)
+	for (INT32 offs = 0x700 - 1; offs >= 0; offs--)
 	{
-		INT32 sx, sy;
-
 		INT32 code1  = (DrvVidRAM1[offs] + (bankreg << 8)) & 0x1ff;
 		INT32 color1 = ((DrvVidRAM1[offs] >> 5) + (palettereg << 3)) & 0xff;
 
 		INT32 code0  = (DrvVidRAM0[offs] + (bankreg << 8)) & 0x1ff;
 		INT32 color0 = ((DrvVidRAM0[offs] >> 5) + (palettereg << 3)) & 0xff;
 
-		if (cocktail)
-		{
-			if (offs < 0x700)
-			{
-				sx = (63 - offs) & 0x3f;
-				sy = 27 - offs / 64;
-			}
-			else
-			{
-				sx = 64 + ((3 - (offs - 0x700)) & 3 );
-				sy = 27 - (offs - 0x700) / 4;
-			}
+		INT32 sx = (offs & 0x3f) * 8;
+		INT32 sy = (offs / 64) * 8;
 
-			sx *= 8;
-			sy *= 8;
+		sx -= scrx;
+		if (sx < -7) sx += 512;
 
-
-			if (nBurnLayer & 1 && layer == 0) Render8x8Tile_FlipXY_Clip(pTransDraw, code1, sx, sy, color1, 2, 0, DrvGfxROM0);
-			if (nBurnLayer & 2 && layer == 1) Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code0, sx, sy, color0, 2, 0, 0x80, DrvGfxROM1);
-		}
-		else
-		{
-			INT32 transp = 0;
-
-			if (offs < 0x700)
-			{
-				sx = (offs & 0x3f) * 8;
-				sy = (offs / 64) * 8;
-
-				sx -= scrx;
-				if (sx < -7) sx += 512;
-
-			} else continue;
-		//	else
-		//	{
-		//		sx = (64 + (offs - 0x700) & 3) * 8;
-		//		sy = ((offs - 0x700) / 4) * 8;
-		//		transp = 0xff;
-		//	}
-
-			if (nBurnLayer & 1 && layer == 0) Render8x8Tile_Clip(pTransDraw, code1, sx, sy, color1, 2, 0, DrvGfxROM0);
-			if (nBurnLayer & 2 && layer == 1) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, transp, 0x80, DrvGfxROM1);
-		}
+		if (nBurnLayer & 1 && layer == 0) Render8x8Tile_Clip(pTransDraw, code1, sx, sy, color1, 2, 0, DrvGfxROM0);
+		if (nBurnLayer & 2 && layer == 1) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, 0, 0x80, DrvGfxROM1);
 	}
 }
 
@@ -573,8 +487,8 @@ static INT32 DrvDraw()
 
 	draw_layer(0);
 	draw_layer(1);
-	draw_last_little_bit(0);
-	draw_last_little_bit(1);
+	draw_fixed(0);
+	draw_fixed(1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -609,14 +523,14 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3000000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesTotal[1] = { 3000000 / 60 };
+	INT32 nCyclesDone[1]  = { 0 };
 
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
+		CPU_RUN(0, Zet);
 
 		if (i == 240) vblank = 1;
 	}
@@ -688,8 +602,8 @@ static struct BurnRomInfo naughtybRomDesc[] = {
 	{ "9.50",		0x0800, 0x8c8db764, 3 | BRF_GRA },           // 14
 	{ "10.49",		0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
 
-	{ "6301-1.63",		0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
-	{ "6301-1.64",		0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
+	{ "6301-1.63",	0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
+	{ "6301-1.64",	0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(naughtyb)
@@ -733,8 +647,8 @@ static struct BurnRomInfo naughtybaRomDesc[] = {
 	{ "9.50",		0x0800, 0x8c8db764, 3 | BRF_GRA },           // 14
 	{ "10.49",		0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
 
-	{ "6301-1.63",		0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
-	{ "6301-1.64",		0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
+	{ "6301-1.63",	0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
+	{ "6301-1.64",	0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(naughtyba)
@@ -773,8 +687,8 @@ static struct BurnRomInfo naughtybbRomDesc[] = {
 	{ "99.bin",		0x0800, 0x8c8db764, 3 | BRF_GRA },           // 14
 	{ "100.bin",	0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
 
-	{ "am27s1.2",		0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
-	{ "am27s1.1",		0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
+	{ "am27s1.2",	0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
+	{ "am27s1.1",	0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(naughtybb)
@@ -803,15 +717,15 @@ static struct BurnRomInfo naughtybcRomDesc[] = {
 	{ "nb7ic24",		0x0800, 0x9cc287df, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "nb8ic23",		0x0800, 0x4d84ff2c, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "15.44",		0x0800, 0xd692f9c7, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "16.43",		0x0800, 0xd3ba8b27, 2 | BRF_GRA },           //  9
-	{ "13.46",		0x0800, 0xc1669cd5, 2 | BRF_GRA },           // 10
-	{ "14.45",		0x0800, 0xeef2c8e5, 2 | BRF_GRA },           // 11
+	{ "15.44",			0x0800, 0xd692f9c7, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "16.43",			0x0800, 0xd3ba8b27, 2 | BRF_GRA },           //  9
+	{ "13.46",			0x0800, 0xc1669cd5, 2 | BRF_GRA },           // 10
+	{ "14.45",			0x0800, 0xeef2c8e5, 2 | BRF_GRA },           // 11
 
 	{ "nb11ic48",		0x0800, 0x23271a13, 3 | BRF_GRA },           // 12 Foreground Tiles
-	{ "12.47",		0x0800, 0xef0706c3, 3 | BRF_GRA },           // 13
+	{ "12.47",			0x0800, 0xef0706c3, 3 | BRF_GRA },           // 13
 	{ "nb9ic50",		0x0800, 0xd6949c27, 3 | BRF_GRA },           // 14
-	{ "10.49",		0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
+	{ "10.49",			0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
 
 	{ "6301-1.63",		0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
 	{ "6301-1.64",		0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
@@ -845,8 +759,8 @@ static struct BurnRomInfo popflameRomDesc[] = {
 	{ "ic29.pop",		0x1000, 0x7b54f60f, 3 | BRF_GRA },           //  6 Foreground Tiles
 	{ "ic38.pop",		0x1000, 0xdd2d9601, 3 | BRF_GRA },           //  7
 
-	{ "ic54",		0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
-	{ "ic53",		0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
+	{ "ic54",			0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
+	{ "ic53",			0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(popflame)
@@ -882,8 +796,8 @@ static struct BurnRomInfo popflameaRomDesc[] = {
 	{ "ic29.pop",		0x1000, 0x7b54f60f, 3 | BRF_GRA },           //  6 Foreground Tiles
 	{ "ic38.pop",		0x1000, 0xdd2d9601, 3 | BRF_GRA },           //  7
 
-	{ "ic54",		0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
-	{ "ic53",		0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
+	{ "ic54",			0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
+	{ "ic53",			0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(popflamea)
@@ -914,8 +828,8 @@ static struct BurnRomInfo popflamebRomDesc[] = {
 	{ "ic29.pop",		0x1000, 0x7b54f60f, 3 | BRF_GRA },           //  6 Foreground Tiles
 	{ "ic38.pop",		0x1000, 0xdd2d9601, 3 | BRF_GRA },           //  7
 
-	{ "ic54",		0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
-	{ "ic53",		0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
+	{ "ic54",			0x0100, 0x236bc771, 4 | BRF_GRA },           //  8 Color Proms
+	{ "ic53",			0x0100, 0x6e66057f, 4 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(popflameb)
@@ -930,8 +844,6 @@ struct BurnDriver BurnDrvPopflameb = {
 	popflameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
 };
-
-
 
 
 // Pop Flamer (bootleg on Naughty Boy PCB)
@@ -956,8 +868,8 @@ static struct BurnRomInfo popflamenRomDesc[] = {
 	{ "pfb2-9.bin",		0x0800, 0x32debf48, 3 | BRF_GRA },           // 14
 	{ "pfb2-10.bin",	0x0800, 0x7fe61ed3, 3 | BRF_GRA },           // 15
 
-	{ "ic54",		0x0100, 0x236bc771, 4 | BRF_GRA },           // 16 Color Proms
-	{ "ic53",		0x0100, 0x6e66057f, 4 | BRF_GRA },           // 17
+	{ "ic54",			0x0100, 0x236bc771, 4 | BRF_GRA },           // 16 Color Proms
+	{ "ic53",			0x0100, 0x6e66057f, 4 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(popflamen)
@@ -1138,36 +1050,31 @@ struct BurnDriver BurnDrvTrvmstrc = {
 // Trivia Genius
 
 static struct BurnRomInfo trvgnsRomDesc[] = {
-	{ "trvgns.30",		0x1000, 0xa17f172c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "trvgns.28",		0x1000, 0x681a1bff, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "trvgns.26",		0x1000, 0x5b4068b8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "trvgns.30",			0x1000, 0xa17f172c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "trvgns.28",			0x1000, 0x681a1bff, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "trvgns.26",			0x1000, 0x5b4068b8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "trvgns.44",		0x1000, 0xcd67f2cb, 2 | BRF_GRA },           //  3 Background Tiles
-	{ "trvgns.46",		0x1000, 0xf4021941, 2 | BRF_GRA },           //  4
+	{ "trvgns.44",			0x1000, 0xcd67f2cb, 2 | BRF_GRA },           //  3 Background Tiles
+	{ "trvgns.46",			0x1000, 0xf4021941, 2 | BRF_GRA },           //  4
 
-	{ "trvgns.48",		0x1000, 0x6d05845e, 3 | BRF_GRA },           //  5 Foreground Tiles
-	{ "trvgns.50",		0x1000, 0xac292be8, 3 | BRF_GRA },           //  6
+	{ "trvgns.48",			0x1000, 0x6d05845e, 3 | BRF_GRA },           //  5 Foreground Tiles
+	{ "trvgns.50",			0x1000, 0xac292be8, 3 | BRF_GRA },           //  6
 
 	{ "82s129.ic63.bin",	0x0100, 0x8ab6076a, 4 | BRF_GRA },           //  7 Color Proms
 	{ "82s129.ic64.bin",	0x0100, 0xc766c54a, 4 | BRF_GRA },           //  8
 
-	{ "trvgns.u2",		0x4000, 0x109bd359, 5 | BRF_GRA },           //  9 Question Data
-	{ "trvgns.u1",		0x4000, 0x8e8b5f71, 5 | BRF_GRA },           // 10
-	{ "trvgns.u4",		0x4000, 0xb73f2e31, 5 | BRF_GRA },           // 11
-	{ "trvgns.u3",		0x4000, 0xbf654110, 5 | BRF_GRA },           // 12
-	{ "trvgns.u6",		0x4000, 0x4a2263a7, 5 | BRF_GRA },           // 13
-	{ "trvgns.u5",		0x4000, 0xbd31f382, 5 | BRF_GRA },           // 14
-	{ "trvgns.u8",		0x4000, 0xdbfce45f, 5 | BRF_GRA },           // 15
-	{ "trvgns.u7",		0x4000, 0xc8f5a02d, 5 | BRF_GRA },           // 16
+	{ "trvgns.u2",			0x4000, 0x109bd359, 5 | BRF_GRA },           //  9 Question Data
+	{ "trvgns.u1",			0x4000, 0x8e8b5f71, 5 | BRF_GRA },           // 10
+	{ "trvgns.u4",			0x4000, 0xb73f2e31, 5 | BRF_GRA },           // 11
+	{ "trvgns.u3",			0x4000, 0xbf654110, 5 | BRF_GRA },           // 12
+	{ "trvgns.u6",			0x4000, 0x4a2263a7, 5 | BRF_GRA },           // 13
+	{ "trvgns.u5",			0x4000, 0xbd31f382, 5 | BRF_GRA },           // 14
+	{ "trvgns.u8",			0x4000, 0xdbfce45f, 5 | BRF_GRA },           // 15
+	{ "trvgns.u7",			0x4000, 0xc8f5a02d, 5 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(trvgns)
 STD_ROM_FN(trvgns)
-
-static INT32 trvgnsInit()
-{
-	return DrvInit(3);
-}
 
 struct BurnDriver BurnDrvTrvgns = {
 	"trvgns", "trvmstr", NULL, NULL, "1985",
@@ -1175,7 +1082,6 @@ struct BurnDriver BurnDrvTrvgns = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvgnsRomInfo, trvgnsRomName, NULL, NULL, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
-	trvgnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
 };
-

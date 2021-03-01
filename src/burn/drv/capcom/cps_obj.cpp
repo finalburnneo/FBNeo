@@ -106,7 +106,7 @@ INT32 CpsObjInit()
 		nMax = 0x400;
 	}
 
-	nFrameCount = 2;			// CPS2 sprites lagged by 1 frame and double buffered
+	nFrameCount = 1;			// CPS2 sprites lagged by 1 frame and double buffered
 								// CPS1 sprites lagged by 1 frame
 
 	ObjMem = (UINT8*)BurnMalloc((nMax << 3) * nFrameCount);

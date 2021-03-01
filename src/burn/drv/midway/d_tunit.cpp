@@ -1037,8 +1037,8 @@ struct BurnDriver BurnDrvMk2chal = {
 };
 
 static struct BurnRomInfo mk2uteRomDesc[] = {
-	{ "mk2ute.uj12",	0x080000, 0xa027088c, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "mk2ute.ug12",	0x080000, 0x474cf238, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mk2ute.uj12",	0x080000, 0x82c0ef47, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "mk2ute.ug12",	0x080000, 0xbad41b9f, 1 | BRF_PRG | BRF_ESS }, //  1
 	
 	{ "l1_mortal_kombat_ii_sound_rom_u2.u2",	0x080000, 0x5f23d71d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1_mortal_kombat_ii_sound_rom_u3.u3",	0x080000, 0xd6d92bf9, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -1068,7 +1068,7 @@ STD_ROM_FN(mk2ute)
 
 struct BurnDriver BurnDrvMk2ute = {
 	"mk2ute", "mk2", NULL, NULL, "2014",
-	"Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.052)\0", NULL, "hack", "Midway T-Unit",
+	"Mortal Kombat II Ultimate Tournament Edition (hack, V5.0.053)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, mk2uteRomInfo, mk2uteRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,

@@ -22,7 +22,7 @@ static UINT8 *RamUnknown;
 static UINT8 *RamNV;
 
 static UINT16 *RamSpr;
-static UINT16 *RamSprBak;
+static UINT16 *RamSprPriv;
 static UINT16 *RamPal;
 static UINT32 *CurPal;
 static UINT16 *RamTMP68301;
@@ -41,16 +41,23 @@ static UINT8 DrvAnalogInput[4];
 static UINT8 DrvReset = 0;
 static UINT8 bRecalcPalette = 0;
 
-static UINT32 gfx_code_mask;
 //static UINT8 bMahjong = 0;
 static UINT8 Mahjong_keyboard = 0;
 static UINT8 HasNVRam = 0;
 
-static INT32 yoffset;
-static INT32 sva_x;
-static INT32 sva_y;
+static INT32 nRomGfxLen;
 
-#define M68K_CYCS	50000000 / 3
+static INT32 is_samshoot = 0;
+
+static INT32 nExtraCycles = 0;
+
+static INT32 raster_extra;
+static INT32 raster_latch;
+static INT32 raster_pos;
+static INT32 raster_en;
+static INT32 scanline;
+
+static INT32 M68K_CYCS = 50000000 / 3;
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -1530,6 +1537,88 @@ void __fastcall setaSoundRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	x1_010_chip->reg[offset] = wordValue & 0xff;
 }
 
+void __fastcall setaVideoRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
+{
+	sekAddress &= 0x3f;
+	// for some reason, in samshoot, only the 0 values must be overwritten ?? -barbudreadmon
+	if ((RamVReg[sekAddress >> 1] == 0 && is_samshoot) || !is_samshoot) RamVReg[sekAddress >> 1] = wordValue;
+	switch (sekAddress)
+	{
+		case 0x1c:  // FLIP SCREEN (myangel)    <- this is actually zoom
+			break;
+		case 0x2a:  // FLIP X (pzlbowl)
+			break;
+		case 0x2c:  // FLIP Y (pzlbowl)
+			break;
+		case 0x30:  // BLANK SCREEN (pzlbowl, myangel)
+			break;
+		case 0x24: // funcube3 and staraudi write here instead, why? mirror or different meaning?
+		case 0x26: // something display list related? buffering control?
+			if (wordValue)
+			{
+				/* copy the base spritelist to a private (non-CPU visible buffer)
+				   copy the indexed sprites to 0 in spriteram, adjusting pointers in base sprite list as appropriate
+				   this at least gets the sprite data in the right place for the grdians raster effect to write the
+				   changed scroll values to the correct sprites, but is still nothing more than a guess
+				*/
+				INT32 current_sprite_entry = 0;
+
+				for (INT32 i = 0; i < 0x1000 / 2; i += 4)
+				{
+					UINT16 num = RamSprPriv[i + 0] = RamSpr[(0x3000 / 2) + i + 0];
+					RamSprPriv[i + 1] = RamSpr[(0x3000 / 2) + i + 1];
+					RamSprPriv[i + 2] = RamSpr[(0x3000 / 2) + i + 2];
+
+					INT32 sprite = RamSpr[(0x3000 / 2) + i + 3];
+					RamSprPriv[i + 3] = ((current_sprite_entry / 4) & 0x7fff) | (sprite & 0x8000);
+
+					INT32 list2addr = (sprite & 0x7fff) * 4;
+
+					num &=0xff;
+
+					for (INT32 j = 0; j <= num; j++)
+					{
+						if (current_sprite_entry < 0x3000 / 2)
+						{
+							RamSpr[current_sprite_entry + 0] = RamSpr[(list2addr + (j * 4) + 0) & 0x1ffff];
+							RamSpr[current_sprite_entry + 1] = RamSpr[(list2addr + (j * 4) + 1) & 0x1ffff];
+							RamSpr[current_sprite_entry + 2] = RamSpr[(list2addr + (j * 4) + 2) & 0x1ffff];
+							RamSpr[current_sprite_entry + 3] = RamSpr[(list2addr + (j * 4) + 3) & 0x1ffff];
+							current_sprite_entry += 4;
+						}
+					}
+
+					if (RamSprPriv[i + 0] & 0x8000) // end of list marker, mj4simai must draw the sprite this covers for the company logo, title screen etc.
+					{
+						// HACK: however penbros has a dummy sprite entry there which points to 0x0000 as the tile source, and causes garbage with the rearranged format,
+						// so change it to something that's invalid where we can filter it later.  This strongly indicates that the current approach is incorrect however.
+						if (sprite == 0x00)
+						{
+							RamSprPriv[i + 3] |= 0x4000;
+						}
+
+						break;
+					}
+				}
+
+			}
+			break;
+		case 0x3c: // Raster IRQ enable/arm
+			raster_en = wordValue & 1;
+			raster_extra = 0;
+			raster_pos = raster_latch;
+			if (raster_pos == scanline) {
+				// the first scanline to start the raster chain is weird
+				raster_pos = (scanline + 1);
+				raster_extra = 1;
+			}
+			break;
+		case 0x3e: // Raster IRQ latch
+			raster_latch = wordValue;
+			break;
+	}
+}
+
 void __fastcall grdiansPaletteWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	bprintf(PRINT_NORMAL, _T("Pal to write byte value %x to location %x\n"), byteValue, sekAddress);
@@ -1560,6 +1649,10 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
+	x1010Reset();
+
+	nExtraCycles = 0;
+
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gundamex")) {
 		EEPROMReset(); // gundam
 		if (EEPROMAvailable() == 0) {
@@ -1573,6 +1666,7 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex(INT32 CodeSize, INT32 GfxSize, INT32 PcmSize, INT32 ExtRamSize)
 {
+	nRomGfxLen = GfxSize;
 	UINT8 *Next; Next = Mem;
 	Rom68K 		= Next; Next += CodeSize;			// 68000 ROM
 	RomGfx		= Next; Next += GfxSize;			// GFX Rom
@@ -1584,7 +1678,7 @@ static INT32 MemIndex(INT32 CodeSize, INT32 GfxSize, INT32 PcmSize, INT32 ExtRam
 	RamUnknown	= Next; Next += ExtRamSize;
 	if (HasNVRam) { RamNV = Next; Next += 0x10000; }
 	RamSpr		= (UINT16 *) Next; Next += 0x020000 * sizeof(UINT16);
-	RamSprBak	= (UINT16 *) Next; Next += 0x020000 * sizeof(UINT16);
+	RamSprPriv	= (UINT16 *) Next; Next += 0x1000/2 * sizeof(UINT16);
 	RamPal		= (UINT16 *) Next; Next += 0x008000 * sizeof(UINT16);
 	RamTMP68301	= (UINT16 *) Next; Next += 0x000200 * sizeof(UINT16);
 
@@ -1661,14 +1755,15 @@ static INT32 grdiansInit()
 		SekMapMemory((UINT8 *)RamPal,
 									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xC60000, 0xC6003F, MAP_RAM);	// Video Registers
+									0xC60000, 0xC6003F, MAP_READ | MAP_FETCH);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
 									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
 		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
 		SekMapHandler(3,			0xC50000, 0xC5FFFF, MAP_WRITE);
-		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(4,			0xC60000, 0xC6003F, MAP_WRITE);
+		SekMapHandler(5,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, grdiansReadWord);
 		SekSetReadByteHandler(0, grdiansReadByte);
@@ -1686,8 +1781,10 @@ static INT32 grdiansInit()
 		SekSetWriteWordHandler(3, grdiansClearWriteWord);
 		SekSetWriteByteHandler(3, grdiansClearWriteByte);
 
-		SekSetWriteWordHandler(4, Tmp68301WriteWord);
-		SekSetWriteByteHandler(4, Tmp68301WriteByte);
+		SekSetWriteWordHandler(4, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(5, Tmp68301WriteWord);
+		SekSetWriteByteHandler(5, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -1696,17 +1793,12 @@ static INT32 grdiansInit()
 	
 	GenericTilesInit();
 
-	yoffset = 0;
-	sva_x = 128;
-	sva_y = 128;
-
-	gfx_code_mask = 0x0800000 * 4 / 64;
-
-	x1010_sound_init(50000000 / 3, 0x0000);
+	M68K_CYCS = 32530470 / 2;
+	x1010_sound_init(M68K_CYCS, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -1834,7 +1926,8 @@ static INT32 mj4simaiInit()
 
 		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(3,			0xC60000, 0xC6003F, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, mj4simaiReadWord);
 		SekSetReadByteHandler(0, mj4simaiReadByte);
@@ -1849,8 +1942,10 @@ static INT32 mj4simaiInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -1858,12 +1953,6 @@ static INT32 mj4simaiInit()
 	}
 
 	GenericTilesInit();
-
-	yoffset = 0;
-	sva_x = 64;
-	sva_y = 128;
-
-	gfx_code_mask = 0x0800000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -1986,7 +2075,8 @@ static INT32 myangelInit()
 
 		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(3,			0xC60000, 0xC6003F, MAP_WRITE);	// Palette
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, myangelReadWord);
 		SekSetReadByteHandler(0, myangelReadByte);
@@ -2001,8 +2091,10 @@ static INT32 myangelInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -2010,12 +2102,6 @@ static INT32 myangelInit()
 	}
 
 	GenericTilesInit();
-
-	yoffset = 0x10;
-	sva_x = 0;
-	sva_y = 0;
-
-	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -2136,7 +2222,8 @@ static INT32 myangel2Init()
 
 		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xD40000, 0xD4FFFF, MAP_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(3,			0xD60000, 0xD6003F, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, myangel2ReadWord);
 		SekSetReadByteHandler(0, myangel2ReadByte);
@@ -2151,8 +2238,10 @@ static INT32 myangel2Init()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -2161,17 +2250,11 @@ static INT32 myangel2Init()
 
 	GenericTilesInit();
 
-	yoffset = 0x10;
-	sva_x = 0;
-	sva_y = 0;
-
-	gfx_code_mask = 0x0600000 * 4 / 64;
-
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -2294,7 +2377,8 @@ static INT32 pzlbowlInit()
 
 		SekMapHandler(1,			0x900000, 0x903FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0x840000, 0x84FFFF, MAP_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(3,			0x860000, 0x86003F, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, pzlbowlReadWord);
 		SekSetReadByteHandler(0, pzlbowlReadByte);
@@ -2309,8 +2393,10 @@ static INT32 pzlbowlInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -2318,12 +2404,6 @@ static INT32 pzlbowlInit()
 	}
 
 	GenericTilesInit();
-
-	yoffset = 0;
-	sva_x = 16;
-	sva_y = 256;
-
-	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
@@ -2445,7 +2525,8 @@ static INT32 penbrosInit()
 
 		SekMapHandler(1,			0xA00000, 0xA03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xB40000, 0xB4FFFF, MAP_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(3,			0xB60000, 0xB6003F, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, penbrosReadWord);
 		SekSetReadByteHandler(0, penbrosReadByte);
@@ -2460,8 +2541,10 @@ static INT32 penbrosInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -2469,12 +2552,6 @@ static INT32 penbrosInit()
 	}
 
 	GenericTilesInit();
-
-	yoffset = 0;
-	sva_x = 0;
-	sva_y = 128;
-
-	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -2613,6 +2690,7 @@ static INT32 gundamexInit()
 
 		SekMapHandler(1,			0xb00000, 0xb03FFF, MAP_READ | MAP_WRITE);
 		SekMapHandler(2,			0xc40000, 0xc4FFFF, MAP_WRITE);
+		SekMapHandler(3,			0xc60000, 0xc6003F, MAP_WRITE);
 
 		SekSetReadWordHandler(0, gundamexReadWord);
 		//SekSetReadByteHandler(0, gundamexReadByte);
@@ -2627,6 +2705,8 @@ static INT32 gundamexInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
 		SekClose();
@@ -2634,22 +2714,14 @@ static INT32 gundamexInit()
 
 	GenericTilesInit();
 
-	// Hack to skip black screen on EEPROM failure
-	//*((UINT16*)(Rom68K + 0x00f98)) = 0x4e71;
-
-	yoffset = 0;
-	sva_x = 0;
-	sva_y = 256;
-
-	gfx_code_mask = 0x0800000 * 4 / 64;
-
-	x1010_sound_init(50000000 / 3, 0x0000);
+	M68K_CYCS = 32530470 / 2;
+	x1010_sound_init(M68K_CYCS, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	EEPROMInit(&eeprom_interface_93C46);
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -2704,6 +2776,7 @@ static INT32 samshootInit()
 	INT32 nRet;
 	
 	HasNVRam = 1;
+	is_samshoot = 1;
 
 	Mem = NULL;
 	MemIndex(0x0200000, 0x2000000, 0x0500000, 0x010000);
@@ -2747,8 +2820,9 @@ static INT32 samshootInit()
 		SekMapMemory((UINT8 *)RamTMP68301,	0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
 		SekMapHandler(2,			0x840000, 0x84FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0x860000, 0x86003F, MAP_WRITE);
 		SekMapHandler(1,			0x900000, 0x903FFF, MAP_READ | MAP_WRITE);
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, samshootReadWord);
 		SekSetWriteWordHandler(0, samshootWriteWord);
@@ -2761,8 +2835,10 @@ static INT32 samshootInit()
 		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
 		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
 
-		SekSetWriteWordHandler(3, Tmp68301WriteWord);
-		SekSetWriteByteHandler(3, Tmp68301WriteByte);
+		SekSetWriteWordHandler(3, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(4, Tmp68301WriteWord);
+		SekSetWriteByteHandler(4, Tmp68301WriteByte);
 
 		SekSetIrqCallback( grdiansSekIrqCallback );
 
@@ -2771,19 +2847,13 @@ static INT32 samshootInit()
 
 	GenericTilesInit();
 
-	yoffset = 0;
-	sva_x = 64;
-	sva_y = 64;
-
-	gfx_code_mask = 0x0800000 * 4 / 64;
-
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	BurnGunInit(2, true);
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -2805,337 +2875,406 @@ static INT32 grdiansExit()
 	if (nBurnGunNumPlayers) BurnGunExit();
 	
 	HasNVRam = 0;
+	is_samshoot = 0;
+
+	M68K_CYCS = 50000000 / 3;
 
 //	bMahjong = 0;
 
 	return 0;
 }
 
-
-#define	DRAWGFX( op )												\
-	code %= gfx_code_mask; /* I hate to use a modulo, but myangel2 needs it */	\
-	if (!code) return;												\
-	sx -= sva_x;													\
-	sy -= sva_y;													\
-																	\
-	if (sx <= -8) return;											\
-	if (sx >= nScreenWidth) return;										\
-	if (sy <= -8) return;											\
-	if (sy >= nScreenHeight) return;										\
-																	\
-	UINT16 * pd = pTransDraw;				\
-	UINT8 * ps = RomGfx + (code << 6); 						\
-																	\
-	if (sx < 0 || sx > nScreenWidth - 8 || sy < 0 || sy > nScreenHeight - 8) {		\
-		if ( flipy ) {												\
-			pd += (sy + 7) * nScreenWidth + sx;							\
-			if ( flipx ) {											\
-				for (INT32 i=7;i>=0;i--,pd-=nScreenWidth)					\
-					if ( sy+i < 0 || sy+i >= nScreenHeight )				\
-						ps += 8;									\
-					else											\
-						for (INT32 j=7;j>=0;j--,ps++) {				\
-							UINT8 c = op;					\
-							if ( c && sx+j >= 0 && sx+j < nScreenWidth ) 	\
-								*(pd + j) = c | color;				\
-						}											\
-			} else													\
-				for (INT32 i=7;i>=0;i--,pd-=nScreenWidth)					\
-					if ( sy+i < 0 || sy+i >= nScreenHeight )				\
-						ps += 8;									\
-					else											\
-						for (INT32 j=0;j<8;j++,ps++) {				\
-							UINT8 c = op;					\
-							if ( c && sx+j >= 0 && sx+j < nScreenWidth ) 	\
-								*(pd + j) = c | color;				\
-						}											\
-		} else {													\
-			pd += sy * nScreenWidth + sx;									\
-			if ( flipx ) {											\
-				for (INT32 i=0;i<8;i++,pd+=nScreenWidth)						\
-					if ( sy+i < 0 || sy+i >= nScreenHeight )				\
-						ps += 8;									\
-					else											\
-						for (INT32 j=7;j>=0;j--,ps++) {				\
-							UINT8 c = op;					\
-							if ( c && sx+j >= 0 && sx+j < nScreenWidth ) 	\
-								*(pd + j) = c | color;				\
-						}											\
-			} else													\
-				for (INT32 i=0;i<8;i++,pd+=nScreenWidth)						\
-					if ( sy+i < 0 || sy+i >= nScreenHeight )				\
-						ps += 8;									\
-					else											\
-						for (INT32 j=0;j<8;j++,ps++) {				\
-							UINT8 c = op;					\
-							if ( c && sx+j >= 0 && sx+j < nScreenWidth ) 	\
-								*(pd + j) = c | color;				\
-						}											\
-		}															\
-		return;														\
-	}																\
-																	\
-																	\
-	if ( flipy ) {													\
-		pd += (sy + 7) * nScreenWidth + sx;								\
-		if ( flipx ) 												\
-			for (INT32 i=0;i<8;i++,pd-=nScreenWidth)							\
-				for (INT32 j=7;j>=0;j--,ps++) {						\
-					UINT8 c = op;							\
-					if ( c ) *(pd + j) = c | color;					\
-				}													\
-		else														\
-			for (INT32 i=0;i<8;i++,pd-=nScreenWidth)							\
-				for (INT32 j=0;j<8;j++,ps++) {						\
-					UINT8 c = op;							\
-					if ( c ) *(pd + j) = c | color;					\
-				}													\
-	} else {														\
-		pd += sy * nScreenWidth + sx;										\
-		if ( flipx ) 												\
-			for (INT32 i=0;i<8;i++,pd+=nScreenWidth)							\
-				for (INT32 j=7;j>=0;j--,ps++) {						\
-					UINT8 c = op;							\
-					if ( c ) *(pd + j) = c | color;					\
-				}													\
-		else														\
-			for (INT32 i=0;i<8;i++,pd+=nScreenWidth)							\
-				for (INT32 j=0;j<8;j++,ps++) {						\
-					UINT8 c = op;							\
-					if ( c ) *(pd + j) = c | color;					\
-				}													\
-	}																\
-
-
-static void drawgfx0(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
+struct rectangle
 {
-	//	4bpp tiles (----3210)
-	DRAWGFX( *ps & 0x0f );
+	INT32 min_x;
+	INT32 max_x;
+	INT32 min_y;
+	INT32 max_y;
+};
+
+inline static void drawgfx_line(const rectangle &cliprect, INT32 which_gfx, INT32 code, const UINT32 realcolor, INT32 flipx, INT32 flipy, INT32 base_sx, INT32 use_shadow, INT32 realline, INT32 line, INT32 opaque)
+{
+	const UINT8 *addr = RomGfx + ((code * 8 * 8) % nRomGfxLen);
+
+	struct drawmodes
+	{
+		INT32 gfx_mask;
+		INT32 gfx_shift;
+		INT32 shadow;
+	};
+
+	// this is the same logic as ssv.cpp, although this has more known cases, but also some bugs with the handling
+	static const drawmodes BPP_MASK_TABLE[8] = {
+		{ 0xff, 0, 4 }, // 0: ultrax, twineag2 text - is there a local / global mixup somewhere, or is this an 'invalid' setting that just enables all planes?
+		{ 0x30, 4, 2 }, // 1: unverified case, mimic old driver behavior of only using lowest bit  (myangel2 question bubble, myangel endgame)
+		{ 0x07, 0, 3 }, // 2: unverified case, mimic old driver behavior of only using lowest bit  (myangel "Graduate Tests")
+		{ 0xff, 0, 0 }, // 3: unverified case, mimic old driver behavior of only using lowest bit  (staraudi question bubble: pen %00011000 with shadow on!)
+		{ 0x0f, 0, 3 }, // 4: eagle shot 4bpp birdie text
+		{ 0xf0, 4, 4 }, // 5: eagle shot 4bpp japanese text
+		{ 0x3f, 0, 5 }, // 6: common 6bpp case + keithlcy (logo), drifto94 (wheels) masking  ) (myangel sliding blocks test)
+		{ 0xff, 0, 8 }, // 7: common 8bpp case
+	};
+
+	INT32 shadow = BPP_MASK_TABLE[(which_gfx & 0x0700)>>8].shadow;
+	INT32 gfx_mask = BPP_MASK_TABLE[(which_gfx & 0x0700)>>8].gfx_mask;
+	INT32 gfx_shift = BPP_MASK_TABLE[(which_gfx & 0x0700)>>8].gfx_shift;
+
+	if (!use_shadow)
+		shadow = 0;
+
+	const UINT8 *const source = flipy ? addr + (7 - line) * 8 : addr + line * 8;
+
+	UINT16* dest = pTransDraw + (realline * nScreenWidth);
+
+	const INT32 x0 = flipx ? (base_sx + 8 - 1) : (base_sx);
+	const INT32 x1 = flipx ? (base_sx - 1) : (x0 + 8);
+	const INT32 dx = flipx ? (-1) : (1);
+
+	INT32 column = 0;
+	for (INT32 sx = x0; sx != x1; sx += dx)
+	{
+		UINT8 pen = (source[column++] & gfx_mask) >> gfx_shift;
+
+		if (sx >= cliprect.min_x && sx <= cliprect.max_x)
+		{
+			if (pen || opaque)
+			{
+				if (!shadow)
+				{
+					dest[sx] = (realcolor + pen) & 0x7fff;
+				}
+				else
+				{
+					INT32 pen_shift = 15 - shadow;
+					INT32 pen_mask = (1 << pen_shift) - 1;
+					dest[sx] = ((dest[sx] & pen_mask) | (pen << pen_shift)) & 0x7fff;
+				}
+			}
+		}
+	}
 }
 
-static void drawgfx1(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
+inline static void get_tile(UINT16 *spriteram, INT32 is_16x16, INT32 x, INT32 y, INT32 page, INT32& code, INT32& attr, INT32& flipx, INT32& flipy, INT32& color)
 {
-	//	4bpp tiles (3210----)
-	DRAWGFX( *ps >> 4 );
+	INT32 xtile = x >> (is_16x16 ? 4 : 3);
+	INT32 ytile = y >> (is_16x16 ? 4 : 3);
+
+	// yes the tilemap in RAM is flipped?!
+	ytile ^= 0x1f;
+
+	//UINT16 *s3 = &spriteram[2 * ((page * 0x2000 / 4) + ((ytile & 0x1f) << 6) + ((xtile) & 0x03f))];
+	UINT16 *s3 = spriteram + ((page * 0x2000 / 4) + ((ytile & 0x1f) << 6) + ((xtile) & 0x03f)) * 2;
+	attr = BURN_ENDIAN_SWAP_INT16(s3[0]);
+	code = BURN_ENDIAN_SWAP_INT16(s3[1]) + ((attr & 0x0007) << 16);
+	flipx = (attr & 0x0010);
+	flipy = (attr & 0x0008);
+	color = (attr & 0xffe0) >> 5;
+	if (is_16x16)
+	{
+		code &= ~3;
+
+		if (!flipx)
+		{
+			if (x & 8)
+			{
+				code += 1;
+			}
+		}
+		else
+		{
+			if (!(x & 8))
+			{
+				code += 1;
+			}
+		}
+
+		if (!flipy)
+		{
+			if (y & 8)
+			{
+				code += 2;
+			}
+		}
+		else
+		{
+			if (!(y & 8))
+			{
+				code += 2;
+			}
+		}
+	}
 }
 
-static void drawgfx2(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
+static void draw_sprites(const rectangle &cliprect)
 {
-	// 6bpp tiles (--543210)
-	DRAWGFX( *ps & 0x3f );
-}
+	// Sprites list
+	UINT16 *spriteram = RamSpr;
 
-static void drawgfx3(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
-{
-	// 8bpp tiles (76543210)
-	DRAWGFX( *ps );
-}
+	INT32 global_yoffset = (BURN_ENDIAN_SWAP_INT16(RamVReg[0x1a/2]) & 0x7ff); // and 0x18/2 for low bits
+	if (global_yoffset & 0x400)
+		global_yoffset -= 0x800;
 
-static void drawgfx4(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
-{
-	// 3bpp tiles?  (-----210)
-	DRAWGFX( *ps & 0x07 );
-}
+	global_yoffset += 1; // +2 for myangel / myangel2?
 
-static void drawgfx5(UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy)
-{
-	// 2bpp tiles??? (--10----)
-	DRAWGFX( (*ps >> 4) & 0x03 );
-}
+	INT32 global_xoffset = (BURN_ENDIAN_SWAP_INT16(RamVReg[0x12/2]) & 0x7ff); // and 0x10/2 for low bits
+	if (global_xoffset & 0x400)
+		global_xoffset -= 0x800;
 
-static void drawgfxN(UINT32,UINT32,INT32,INT32,INT32,INT32)
-{
-	// unknown 
-}
+	// funcube3 sets a global xoffset of -1 causing a single pixel shift, does something else compensate for it?
+	// note, it also writes a different address for the sprite buffering (related?) but doesn't also have the global zoom set to negative like Star Audition which also writes there.
 
-typedef void (*pDrawgfx)(UINT32,UINT32,INT32,INT32,INT32,INT32);
+	INT32 global_xzoom = (BURN_ENDIAN_SWAP_INT16(RamVReg[0x16/2]) & 0x7ff); // and 0x14/2 for low bits
 
-static INT32 DrvDraw()
-{
-	if (bRecalcPalette) {
-		for (INT32 i=0;i<0x08000; i++)
-			CurPal[i] = CalcCol( RamPal[i] );
-		bRecalcPalette = 0;	
+	// HACK: this inverts the zoom on all sprites, thus flipping the screen and altering positions as the origin becomes the right hand side, not left, see star audition (by default) or deer hunting when you turn on horizontal flip
+	// TODO: properly render negative zoom sprites
+	if (global_xzoom & 0x400)
+	{
+		global_xoffset -= 0x14f;
 	}
 
-//	memset(pBurnDraw, 0, nScreenWidth * nScreenHeight * 2);
-	BurnTransferClear();
+	UINT16 *s1  = RamSprPriv;
 
-	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) & 1) { // Blank Screen
-		memcpy(RamSprBak, RamSpr, 0x040000);
-		return 0;
-	}
+	for ( ; s1 < RamSprPriv + 0x1000/2; s1+=4 ) {
+		INT32 num = BURN_ENDIAN_SWAP_INT16(s1[0]);
 
-	UINT16 *s1  = RamSprBak + 0x3000 / 2;
-	UINT16 *end = RamSprBak + 0x040000 / 2;
-
-	for ( ; s1 < end; s1+=4 ) {
-		INT32 num		= BURN_ENDIAN_SWAP_INT16(s1[0]);
-		INT32 xoffs	= BURN_ENDIAN_SWAP_INT16(s1[1]);
-		INT32 yoffs	= BURN_ENDIAN_SWAP_INT16(s1[2]);
-		INT32 sprite	= BURN_ENDIAN_SWAP_INT16(s1[3]);
-		pDrawgfx drawgfx = drawgfxN;
+		INT32 xoffs = BURN_ENDIAN_SWAP_INT16(s1[1]);
+		INT32 yoffs = BURN_ENDIAN_SWAP_INT16(s1[2]);
+		INT32 sprite = BURN_ENDIAN_SWAP_INT16(s1[3]);
 
 		// Single-sprite address
-		UINT16 *s2 = RamSprBak + (sprite & 0x7fff) * 4;
+		UINT16 *s2 = spriteram + (sprite & 0x7fff) * 4;
+		UINT16 *end = spriteram + 0x040000 / 2;
 
 		// Single-sprite tile size
-		INT32 global_sizex = xoffs & 0x0c00;
-		INT32 global_sizey = yoffs & 0x0c00;
+		INT32 global_sizex = xoffs & 0xfc00;
+		INT32 global_sizey = yoffs & 0xfc00;
 
+		INT32 special = num & 0x4000; // ignore various things including global offsets, zoom.  different palette selection too?
+		bool opaque = num & 0x2000;
 		INT32 use_global_size = num & 0x1000;
-
+		INT32 use_shadow = num & 0x0800;
+		INT32 which_gfx = num & 0x0700;
 		xoffs &= 0x3ff;
 		yoffs &= 0x3ff;
 
-		// Color depth
-		switch (num & 0x0700)
+		if (special)
 		{
-			case 0x0700: 	// 8bpp tiles (76543210)
-				drawgfx = drawgfx3; break;
-			case 0x0600:	// 6bpp tiles (--543210) (myangel sliding blocks test)
-				drawgfx = drawgfx2; break;
-			case 0x0500:	// 4bpp tiles (3210----)
-				drawgfx = drawgfx1; break;
-			case 0x0400:	// 4bpp tiles (----3210)
-				drawgfx = drawgfx0; break;
-			case 0x0200:	// 3bpp tiles?  (-----210) (myangel "Graduate Tests")
-				drawgfx = drawgfx4; break;
-			case 0x0100:	// 2bpp tiles??? (--10----) (myangel2 question bubble, myangel endgame)
-				drawgfx = drawgfx5; break;
-			case 0x0000:	// no idea!
-				drawgfx = drawgfx0; break;
-			//default:
-				//bprintf(PRINT_NORMAL, _T("unknown gfxset %x\n"), (num & 0x0700)>>8 );
-			//	drawgfx = drawgfxN;
+			use_shadow = 0;
+		//  which_gfx = 4 << 8;
+			global_yoffset = -0x90;
+			global_xoffset = 0x80;
 		}
 
 		// Number of single-sprites
 		num = (num & 0x00ff) + 1;
 
-		for( ; num > 0; num--,s2+=4 ) {
-			if (s2 >= end)	break;
+		if ((sprite&0x7fff) < 0x3000 / 2 / 4)
+		{
 
-			if (sprite & 0x8000) {
-				// "tilemap" sprite
-				INT32 clip_min_y;
-				INT32 clip_max_y;
-				INT32 clip_min_x;
-				INT32 clip_max_x;
+			for( ; num > 0; num--,s2+=4 ) {
+				if (s2 >= end)	break;
 
-				INT32 dx,x,y;
-				INT32 flipx;
-				INT32 flipy;
-				INT32 sx       = BURN_ENDIAN_SWAP_INT16(s2[0]);
-				INT32 sy       = BURN_ENDIAN_SWAP_INT16(s2[1]);
-				INT32 scrollx  = BURN_ENDIAN_SWAP_INT16(s2[2]);
-				INT32 scrolly  = BURN_ENDIAN_SWAP_INT16(s2[3]);
-				INT32 tilesize = (scrollx & 0x8000) >> 15;
-				INT32 page     = (scrollx & 0x7c00) >> 10;
-				INT32 height   = ((sy & 0xfc00) >> 10) + 1;
+				if (sprite & 0x8000) {
+					INT32 sx       = BURN_ENDIAN_SWAP_INT16(s2[0]);
+					INT32 sy       = BURN_ENDIAN_SWAP_INT16(s2[1]);
+					INT32 scrollx  = BURN_ENDIAN_SWAP_INT16(s2[2]);
+					INT32 scrolly  = BURN_ENDIAN_SWAP_INT16(s2[3]);
+					INT32 is_16x16 = (scrollx & 0x8000) >> 15;
+					INT32 page     = (scrollx & 0x7c00) >> 10;
+					INT32 local_sizex = sx & 0xfc00;
+					INT32 local_sizey = sy & 0xfc00;
+					sx &= 0x3ff;
 
-				sx &= 0x3ff;
-				sy &= 0x1ff;
-				scrollx &= 0x3ff;
-				scrolly &= 0x1ff;
+					sy += global_yoffset;
 
-				clip_min_y = (sy + yoffs) & 0x1ff;
-				clip_max_y = clip_min_y + height * 0x10 - 1;
-				if (clip_min_y > (sva_y + nScreenHeight - 1)) continue;
-				if (clip_max_y < sva_y) continue;
+					sy &= 0x1ff;
 
-				clip_min_x = sva_x;
-				clip_max_x = sva_x + nScreenWidth - 1;
+					if (sy & 0x100)
+						sy -= 0x200;
 
-				if (clip_min_y < sva_y) clip_min_y = sva_y;
-				if (clip_max_y > (sva_y + nScreenHeight - 1)) clip_max_y = sva_y + nScreenHeight - 1;
+					sx -= global_xoffset;
 
-				dx = sx + (scrollx & 0x3ff) + xoffs + 0x10;
+					INT32 width    = use_global_size ? global_sizex : local_sizex;
+					INT32 height   = use_global_size ? global_sizey : local_sizey;
 
-				/* Draw the rows */
-				/* I don't think the following is entirely correct (when using 16x16
-                   tiles x should probably loop from 0 to 0x20) but it seems to work
-                   fine in all the games we have for now. */
-				for (y = 0; y < (0x40 >> tilesize); y++)
-				{
-					INT32 py = ((scrolly - (y+1) * (8 << tilesize) + 0x10) & 0x1ff) - 0x10 - yoffset;
+					height = ((height & 0xfc00) >> 10) + 1;
+					width  = ((width  & 0xfc00) >> 10)/* + 1*/;	// reelquak reels
+					if (!width)
+						continue;
 
-					if (py < clip_min_y - 0x10) continue;
-					if (py > clip_max_y) continue;
+					scrollx &= 0x3ff;
+					scrolly &= 0x1ff;
 
-					for (x = 0; x < 0x40;x++)
+					scrolly += global_yoffset;
+
+					rectangle clip;
+					// sprite clipping region (x)
+					clip.min_x = (sx + xoffs);
+					clip.min_x = (clip.min_x & 0x1ff) - (clip.min_x & 0x200);
+					clip.max_x = clip.min_x + width * 0x10 - 1;
+
+					if (clip.min_x > cliprect.max_x)    continue;
+					if (clip.max_x < cliprect.min_x)    continue;
+					if (clip.min_x < cliprect.min_x)    clip.min_x = cliprect.min_x;
+					if (clip.max_x > cliprect.max_x)    clip.max_x = cliprect.max_x;
+
+					// sprite clipping region (y)
+
+					INT32 basey = (sy + yoffs) & 0x1ff;
+					if (basey & 0x100) basey -= 0x200;
+
+					clip.min_y = basey;
+					clip.max_y = clip.min_y + height * 0x10 - 1;
+
+					if (clip.min_y > cliprect.max_y)    continue;
+					if (clip.max_y < cliprect.min_y)    continue;
+					if (clip.min_y < cliprect.min_y)    clip.min_y = cliprect.min_y;
+					if (clip.max_y > cliprect.max_y)    clip.max_y = cliprect.max_y;
+
+					for (INT32 realline = clip.min_y; realline <= clip.max_y; realline++)
 					{
-						INT32 px = ((dx + x * (8 << tilesize) + 0x10) & 0x3ff) - 0x10;
-						INT32 tx, ty;
-						INT32 attr, code, color;
-						UINT16 *s3;
+						INT32 sourceline = (realline - scrolly) & 0x1ff;
 
-						if (px < clip_min_x - 0x10) continue;
-						if (px > clip_max_x) continue;
+						// we treat 16x16 tiles as 4 8x8 tiles, so while the tilemap is 0x40 tiles wide in memory, that becomes 0x80 tiles in 16x16 mode, with the data wrapping in 8x8 mode
+						for (INT32 x = 0; x < 0x80; x++)
+						{
+							INT32 code, attr, flipx, flipy, color;
+							// tilemap data is NOT buffered?
+							get_tile(spriteram, is_16x16, x * 8, sourceline, page, code, attr, flipx, flipy, color);
 
-						s3 = RamSprBak + 2 * ((page * 0x2000/4) + ((y & 0x1f) << 6) + (x & 0x03f));
+							INT32 tileline = sourceline & 0x07;
+							INT32 dx = sx + (scrollx & 0x3ff) + xoffs + 0x10;
+							INT32 px = (((dx + x * 8) + 0x10) & 0x3ff) - 0x10;
+							INT32 dst_x = px & 0x3ff;
+							dst_x = (dst_x & 0x1ff) - (dst_x & 0x200);
 
-						attr  = BURN_ENDIAN_SWAP_INT16(s3[0]);
-						code  = BURN_ENDIAN_SWAP_INT16(s3[1]) + ((attr & 0x0007) << 16);
-						flipx = (attr & 0x0010);
-						flipy = (attr & 0x0008);
-						color = (attr & 0xffe0) >> 5;
+							if ((dst_x >= clip.min_x - 8) && (dst_x <= clip.max_x))
+							{
+								drawgfx_line(clip, which_gfx, code, color << 4, flipx, flipy, dst_x, use_shadow, realline, tileline, opaque);
+							}
+						}
+					}
 
-						if (tilesize) code &= ~3;
+				} else {
+					// "normal" sprite	
+					INT32 sx    = BURN_ENDIAN_SWAP_INT16(s2[0]);
+					INT32 sy    = BURN_ENDIAN_SWAP_INT16(s2[1]);
+					INT32 attr  = BURN_ENDIAN_SWAP_INT16(s2[2]);
+					INT32 code  = BURN_ENDIAN_SWAP_INT16(s2[3]) + ((attr & 0x0007) << 16);
+					INT32 flipx = (attr & 0x0010);
+					INT32 flipy = (attr & 0x0008);
+					INT32 color = (attr & 0xffe0) >> 5;
 
-						for (ty = 0; ty <= tilesize; ty++)
-							for (tx = 0; tx <= tilesize; tx++)
-								drawgfx(code ^ tx ^ (ty<<1), color << 4, flipx, flipy, px + (flipx ? tilesize-tx : tx) * 8, py + (flipy ? tilesize-ty : ty) * 8 );
+					INT32 sizex = use_global_size ? global_sizex : sx;
+					INT32 sizey = use_global_size ? global_sizey : sy;
+					sizex = (1 << ((sizex & 0x0c00) >> 10)) - 1;
+					sizey = (1 << ((sizey & 0x0c00) >> 10)) - 1;
+
+					sx += xoffs;
+					sx = (sx & 0x1ff) - (sx & 0x200);
+					sx -= global_xoffset;
+
+					sy += yoffs;
+					sy += global_yoffset;
+
+					sy &= 0x1ff;
+
+					if (sy & 0x100)
+						sy -= 0x200;
+
+					INT32 basecode = code &= ~((sizex + 1) * (sizey + 1) - 1);   // see myangel, myangel2 and grdians
+
+					INT32 firstline = sy;
+					INT32 endline = (sy + (sizey + 1) * 8) - 1;
+
+					INT32 realfirstline = firstline;
+
+					if (firstline < cliprect.min_y) realfirstline = cliprect.min_y;
+					if (endline > cliprect.max_y) endline = cliprect.max_y;
+
+					for (INT32 realline = realfirstline; realline <= endline; realline++)
+					{
+						INT32 line = realline - firstline;
+						INT32 y = (line >> 3);
+						line &= 0x7;
+
+						if (special)
+						{
+							// grdians map...
+							color = 0x7ff;
+						}
+
+						for (INT32 x = 0; x <= sizex; x++)
+						{
+							INT32 realcode = (basecode + (flipy ? sizey - y : y)*(sizex + 1)) + (flipx ? sizex - x : x);
+							drawgfx_line(cliprect, which_gfx, realcode, color << 4, flipx, flipy, sx + x * 8, use_shadow, realline, line, opaque);
+						}
 					}
 				}
-
-			} else {
-				// "normal" sprite	
-				INT32 sx    = BURN_ENDIAN_SWAP_INT16(s2[0]);
-				INT32 sy    = BURN_ENDIAN_SWAP_INT16(s2[1]);
-				INT32 attr  = BURN_ENDIAN_SWAP_INT16(s2[2]);
-				INT32 code  = BURN_ENDIAN_SWAP_INT16(s2[3]) + ((attr & 0x0007) << 16);
-				INT32 flipx = (attr & 0x0010);
-				INT32 flipy = (attr & 0x0008);
-				INT32 color = (attr & 0xffe0) >> 5;
-
-				INT32 sizex = use_global_size ? global_sizex : sx;
-				INT32 sizey = use_global_size ? global_sizey : sy;
-				INT32 x,y;
-				sizex = (1 << ((sizex & 0x0c00)>> 10))-1;
-				sizey = (1 << ((sizey & 0x0c00)>> 10))-1;
-
-
-				sx += xoffs;
-				sy += yoffs;
-
-				sx = (sx & 0x1ff) - (sx & 0x200);
-				sy &= 0x1ff;
-				sy -= yoffset;
-
-				code &= ~((sizex+1) * (sizey+1) - 1);	// see myangel, myangel2 and grdians
-
-				for (y = 0; y <= sizey; y++)
-					for (x = 0; x <= sizex; x++)
-						drawgfx( code++, color << 4, flipx, flipy, sx + (flipx ? sizex-x : x) * 8, sy + (flipy ? sizey-y : y) * 8 );
-
 			}
-
 		}
 		if (BURN_ENDIAN_SWAP_INT16(s1[0]) & 0x8000) break;	// end of list marker
 	}
+}
 
-	BurnTransferCopy(CurPal);
+static INT32 lastline = 0;
+static rectangle cliprect, defcliprect;
 
-	memcpy(RamSprBak, RamSpr, 0x040000);
+static INT32 DrvDrawBegin()
+{
+	if (bRecalcPalette) {
+		for (INT32 i=0;i<0x08000; i++)
+			CurPal[i] = CalcCol( RamPal[i] );
+		bRecalcPalette = 0;
+	}
+
+	if (!pBurnDraw) return 0;
+	BurnTransferClear();
+	GenericTilesGetClip(&cliprect.min_x, &cliprect.max_x, &cliprect.min_y, &cliprect.max_y);
+	cliprect.max_x -= 1;
+	cliprect.max_y -= 1;
+	defcliprect = cliprect;
+
+	cliprect.max_y = 0;
+	lastline = 0;
 
 	return 0;
 }
 
+static INT32 DrvDrawScanline(INT32 drawto)
+{
+	if (drawto < 1) return 0;
+	cliprect.max_y = drawto;
+	cliprect.min_y = lastline;
+	lastline = drawto;
+	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) == 0) { // 1 = Blank Screen
+		if (pBurnDraw)
+			draw_sprites(cliprect);
+	}
 
-#define M68K_CYCS_PER_FRAME	(M68K_CYCS / 60)
-#define	SETA2_INTER_LEAVE		32
-#define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / SETA2_INTER_LEAVE)
+	return 0;
+}
+
+static INT32 DrvDrawEnd()
+{
+	DrvDrawScanline(defcliprect.max_y);
+	BurnTransferCopy(CurPal);
+
+	return 0;
+}
+
+static INT32 DrvDraw()
+{
+	DrvDrawBegin();
+
+	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) == 0) { // 1 = Blank Screen
+		draw_sprites(cliprect);
+	}
+
+	DrvDrawEnd();
+
+	return 0;
+}
 
 static INT32 grdiansFrame()
 {
@@ -3158,37 +3297,58 @@ static INT32 grdiansFrame()
 		DrvInput[6] |= (DrvJoy5[i] & 1) << i;
 	}
 
-	INT32 nCyclesDone = 0;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
+	INT32 nCyclesDone = nExtraCycles;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
 
 	SekNewFrame();
 
 	SekOpen(0);
-
-	for(INT32 i=0; i<SETA2_INTER_LEAVE; i++) {
-		nCyclesNext += M68K_CYCS_PER_INTER;
+	DrvDrawBegin();
+	for (INT32 i = 0; i < nInterleave; i++) {
+		nCyclesNext += nCyclesTotal;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
-		for (INT32 j=0;j<3;j++)
-		if (tmp68301_timer[j]) {
-			tmp68301_timer_counter[j] += nCyclesExec;
-			if (tmp68301_timer_counter[j] >= tmp68301_timer[j]) {
-				// timer[j] timeout !
-				tmp68301_timer[j] = 0;
-				tmp68301_timer_counter[j] = 0;
-				tmp68301_timer_callback(j);
+		scanline = i; // this should be _before_ the SekRun() above, but the
+		// raster chain won't kick-off.  probably something I overlooked.. -dink
+
+		if (raster_en && i == raster_pos) {
+			if (raster_extra) { // first raster line is "special"
+				INT32 c = SekRun( nCyclesTotal / 2 ); // run 1/2 line
+				nCyclesExec += c;
+				nCyclesDone += c;
+				raster_extra = 0;
+			}
+			tmp68301_update_irq_state(1);
+			DrvDrawScanline(i);
+		}
+
+		for (INT32 j=0;j<3;j++) {
+			if (tmp68301_timer[j]) {
+				tmp68301_timer_counter[j] += nCyclesExec;
+				if (tmp68301_timer_counter[j] >= tmp68301_timer[j]) {
+					// timer[j] timeout !
+					tmp68301_timer[j] = 0;
+					tmp68301_timer_counter[j] = 0;
+					nCyclesDone += SekRun(1); // avoid masking raster irq
+					tmp68301_timer_callback(j);
+				}
 			}
 		}
-	}
 
-	tmp68301_update_irq_state(0);
+		if (i == 232-1) {
+			if (pBurnDraw)
+				DrvDrawEnd();
+
+			tmp68301_update_irq_state(0);
+		}
+	}
+	nExtraCycles = SekTotalCycles() - (M68K_CYCS / 60);
 
 	SekClose();
-
-	if (pBurnDraw)
-		DrvDraw();
 
 	if (pBurnSoundOut)
 		x1010_sound_update();
@@ -3236,6 +3396,8 @@ static INT32 samshootFrame()
 		DrvAnalogInput[3] = (UINT8)y1 + 22;
 	}
 
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
 	INT32 nCyclesDone = 0;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
@@ -3244,8 +3406,8 @@ static INT32 samshootFrame()
 
 	SekOpen(0);
 
-	for(INT32 i=0; i<SETA2_INTER_LEAVE; i++) {
-		nCyclesNext += M68K_CYCS_PER_INTER;
+	for (INT32 i = 0; i < nInterleave; i++) {
+		nCyclesNext += nCyclesTotal;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
@@ -3306,19 +3468,25 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 		
 		x1010_scan(nAction, pnMin);
 
-		BurnGunScan();
-
-		// Scan Input state
-		SCAN_VAR(DrvInput);
+		if (nBurnGunNumPlayers) BurnGunScan();
 
 		// Scan TMP 68301 Chip state
 		SCAN_VAR(tmp68301_timer);
 		SCAN_VAR(tmp68301_timer_counter);
 		SCAN_VAR(tmp68301_irq_vector);
 
+		// Raster stuff (grdians: fire in intro, heli-crash @ shortly after game start)
+		SCAN_VAR(raster_extra);
+		SCAN_VAR(raster_latch);
+		SCAN_VAR(raster_pos);
+		SCAN_VAR(raster_en);
+
+		// Keep track of cycles between frames
+		SCAN_VAR(nExtraCycles);
+
 		if (nAction & ACB_WRITE) {
 
-			// palette changed 
+			// palette changed
 			bRecalcPalette = 1;
 
 			// x1-010 bank changed

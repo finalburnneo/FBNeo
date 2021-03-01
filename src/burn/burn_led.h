@@ -23,6 +23,7 @@ void BurnLEDInit(INT32 num, INT32 position, INT32 size, INT32 color, INT32 trans
 
 void BurnLEDReset();
 void BurnLEDSetStatus(INT32 led, UINT32 status);
+void BurnLEDSetColor(INT32 color);
 void BurnLEDSetFlipscreen(INT32 flip);
 void BurnLEDRender();
 void BurnLEDExit();

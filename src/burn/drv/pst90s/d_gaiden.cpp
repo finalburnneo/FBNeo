@@ -64,9 +64,7 @@ static INT32 bg_offset_y;
 static INT32 sproffsety;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 0, "p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy2 + 1, "p1 right" },
@@ -76,6 +74,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 6,	"p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p1 fire 3"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, "p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, "p2 right" },
@@ -93,9 +92,7 @@ static struct BurnInputInfo DrvInputList[] = {
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo RaigaInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6, "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 7, "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6, "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 0, "p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 0, "p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy2 + 1, "p1 right" },
@@ -104,6 +101,7 @@ static struct BurnInputInfo RaigaInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4, "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5, "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 7, "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy1 + 1, "p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, "p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, "p2 right" },

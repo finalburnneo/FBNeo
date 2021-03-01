@@ -60,7 +60,7 @@ struct voice_63701x
 struct voice_63701x m_voices[2];
 
 static struct BurnInputInfo CommonInputList[] = {
-	{"P1 coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -87,7 +87,7 @@ static struct BurnInputInfo CommonInputList[] = {
 STDINPUTINFO(Common)
 
 static struct BurnInputInfo HopmappyInputList[] = {
-	{"P1 coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},

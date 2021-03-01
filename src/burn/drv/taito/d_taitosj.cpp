@@ -3131,36 +3131,27 @@ struct BurnDriver BurnDrvWwestern1 = {
 };
 
 
-// Front Line
+// Front Line (set 1)
 
 static struct BurnRomInfo frontlinRomDesc[] = {
-	{ "fl69.u69",			0x1000, 0x93b64599, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "fl68.u68",			0x1000, 0x82dccdfb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "fl67.u67",			0x1000, 0x3fa1ba12, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "fl66.u66",			0x1000, 0x4a3db285, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "fl65.u65",			0x1000, 0xda00ec70, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "fl64.u64",			0x1000, 0x9fc90a20, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "fl55.u55",			0x1000, 0x359242c2, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "fl54.u54",			0x1000, 0xd234c60f, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "fl53.u53",			0x1000, 0x67429975, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "fl52.u52",			0x1000, 0xcb223d34, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "aa1_10.8",			0x1000, 0x2704aa4c, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "aa1_05.ic1",			0x2000, 0x4b7c0d81, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "aa1_06.ic2",			0x2000, 0xcaacdc02, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "aa1_07.ic3",			0x2000, 0xdf2b2691, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "aa1_08.ic6",			0x2000, 0xf9bc3374, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "aa1_09.ic7",			0x2000, 0xe24d1f05, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "aa1_10.ic8",			0x1000, 0x2704aa4c, 1 | BRF_PRG | BRF_ESS }, //  5
+	
+	{ "aa1_11.ic70",		0x1000, 0x15f4ed8c, 2 | BRF_PRG | BRF_ESS }, // 11 Sound Z80 Code
+	{ "aa1_12.ic71",		0x1000, 0xc3eb38e7, 2 | BRF_PRG | BRF_ESS }, // 12
 
-	{ "fl70.u70",			0x1000, 0x15f4ed8c, 2 | BRF_PRG | BRF_ESS }, // 11 Sound Z80 Code
-	{ "fl71.u71",			0x1000, 0xc3eb38e7, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "aa1_01.ic4",			0x2000, 0x724fd755, 3 | BRF_GRA },           // 13 Graphics data
+	{ "aa1_02.ic5",			0x2000, 0xb2d35070, 3 | BRF_GRA },           // 14
+	{ "aa1_03.ic9",			0x2000, 0xd0723026, 3 | BRF_GRA },           // 15
+	{ "aa1_04.ic10",		0x2000, 0xbdc0a4f0, 3 | BRF_GRA },           // 16
+	
+	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 21 Layer Priority
 
-	{ "fl1.u1",				0x1000, 0xe82c9f46, 3 | BRF_GRA },           // 13 Graphics data
-	{ "fl2.u2",				0x1000, 0x123055d3, 3 | BRF_GRA },           // 14
-	{ "fl3.u3",				0x1000, 0x7ea46347, 3 | BRF_GRA },           // 15
-	{ "fl4.u4",				0x1000, 0x9e2cff10, 3 | BRF_GRA },           // 16
-	{ "fl5.u5",				0x1000, 0x630b4be1, 3 | BRF_GRA },           // 17
-	{ "fl6.u6",				0x1000, 0x9e092d58, 3 | BRF_GRA },           // 18
-	{ "fl7.u7",				0x1000, 0x613682a3, 3 | BRF_GRA },           // 19
-	{ "fl8.u8",				0x1000, 0xf73b0d5e, 3 | BRF_GRA },           // 20
-
-	{ "eb16.22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 21 Layer Priority
-
-	{ "aa1.13",				0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
+	{ "aa1.13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
 };
 
 STD_ROM_PICK(frontlin)
@@ -3174,10 +3165,56 @@ static INT32 frontlinInit()
 
 struct BurnDriver BurnDrvFrontlin = {
 	"frontlin", NULL, NULL, NULL, "1982",
-	"Front Line\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Front Line (set 1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, frontlinRomInfo, frontlinRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, FrontlinDIPInfo,
+	frontlinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
+// Front Line (set 2)
+
+static struct BurnRomInfo frontlinaRomDesc[] = {
+	{ "fl69.u69",			0x1000, 0x93b64599, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "fl68.u68",			0x1000, 0x82dccdfb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fl67.u67",			0x1000, 0x3fa1ba12, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "fl66.u66",			0x1000, 0x4a3db285, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "fl65.u65",			0x1000, 0xda00ec70, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "fl64.u64",			0x1000, 0x9fc90a20, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "fl55.u55",			0x1000, 0x359242c2, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "fl54.u54",			0x1000, 0xd234c60f, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "fl53.u53",			0x1000, 0x67429975, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "fl52.u52",			0x1000, 0xcb223d34, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "aa1_10.ic8",			0x1000, 0x2704aa4c, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "fl70.u70",			0x1000, 0x15f4ed8c, 2 | BRF_PRG | BRF_ESS }, // 11 Sound Z80 Code
+	{ "fl71.u71",			0x1000, 0xc3eb38e7, 2 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "fl1.u1",				0x1000, 0xe82c9f46, 3 | BRF_GRA },           // 13 Graphics data
+	{ "fl2.u2",				0x1000, 0x123055d3, 3 | BRF_GRA },           // 14
+	{ "fl3.u3",				0x1000, 0x7ea46347, 3 | BRF_GRA },           // 15
+	{ "fl4.u4",				0x1000, 0x9e2cff10, 3 | BRF_GRA },           // 16
+	{ "fl5.u5",				0x1000, 0x630b4be1, 3 | BRF_GRA },           // 17
+	{ "fl6.u6",				0x1000, 0x9e092d58, 3 | BRF_GRA },           // 18
+	{ "fl7.u7",				0x1000, 0x613682a3, 3 | BRF_GRA },           // 19
+	{ "fl8.u8",				0x1000, 0xf73b0d5e, 3 | BRF_GRA },           // 20
+
+	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 21 Layer Priority
+
+	{ "aa1_13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
+};
+
+STD_ROM_PICK(frontlina)
+STD_ROM_FN(frontlina)
+
+struct BurnDriver BurnDrvFrontlina = {
+	"frontlina", "frontlin", NULL, NULL, "1982",
+	"Front Line (set 2)\0", NULL, "Taito Corporation", "Taito SJ System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	NULL, frontlinaRomInfo, frontlinaRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, FrontlinDIPInfo,
 	frontlinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

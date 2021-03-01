@@ -295,15 +295,14 @@ STDINPUTINFO(Bongo)
 
 static struct BurnInputInfo CalipsoInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
-	{"Coin 2"            , BIT_DIGITAL   , GalInputPort0 + 6, "p2 coin"   },
-
+	{"P1 Coin"           , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
 	{"P1 Up"             , BIT_DIGITAL   , GalInputPort0 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , GalInputPort0 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , GalInputPort0 + 5, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , GalInputPort0 + 4, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , GalInputPort2 + 0, "p1 fire 1" },
 	
+	{"P2 Coin"           , BIT_DIGITAL   , GalInputPort0 + 6, "p2 coin"   },
 	{"P2 Up"             , BIT_DIGITAL   , GalInputPort1 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , GalInputPort1 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , GalInputPort1 + 5, "p2 left"   },
@@ -1072,16 +1071,15 @@ STDINPUTINFO(Ladybugg)
 
 static struct BurnInputInfo LeversInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , GalInputPort1 + 5, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , GalInputPort0 + 7, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , GalInputPort0 + 6, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
 	
+	{"P2 Coin"           , BIT_DIGITAL   , GalInputPort1 + 5, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , GalInputPort1 + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , GalInputPort0 + 1, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , GalInputPort1 + 7, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , GalInputPort1 + 2, "p2 left"   },
@@ -1487,6 +1485,15 @@ static struct BurnInputInfo RockclimInputList[] =
 	{"P1 Rght Stick Left" , BIT_DIGITAL   , GalInputPort0 + 2, "p2 left"   },
 	{"P1 Rght Stick Right", BIT_DIGITAL   , GalInputPort0 + 3, "p2 right"  },
 
+	{"P2 Left Stick Up"   , BIT_DIGITAL   , GalInputPort2 + 6, "p3 up"     },
+	{"P2 Left Stick Down" , BIT_DIGITAL   , GalInputPort2 + 7, "p3 down"   },
+	{"P2 Left Stick Left" , BIT_DIGITAL   , GalInputPort2 + 4, "p3 left"   },
+	{"P2 Left Stick Right", BIT_DIGITAL   , GalInputPort2 + 5, "p3 right"  },
+	{"P2 Rght Stick Up"   , BIT_DIGITAL   , GalInputPort2 + 2, "p4 up"     },
+	{"P2 Rght Stick Down" , BIT_DIGITAL   , GalInputPort2 + 3, "p4 down"   },
+	{"P2 Rght Stick Left" , BIT_DIGITAL   , GalInputPort2 + 0, "p4 left"   },
+	{"P2 Rght Stick Right", BIT_DIGITAL   , GalInputPort2 + 1, "p4 right"  },
+
 	{"Reset"              , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Dip 1"              , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
 	{"Dip 2"              , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
@@ -1663,11 +1670,8 @@ STDINPUTINFO(Scrambler)
 
 static struct BurnInputInfo SfxInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , GalInputPort0 + 6, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 6, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , GalInputPort1 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , GalInputPort2 + 4, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , GalInputPort2 + 6, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , GalInputPort0 + 5, "p1 left"   },
@@ -1675,6 +1679,8 @@ static struct BurnInputInfo SfxInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL   , GalInputPort0 + 3, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , GalInputPort0 + 1, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL   , GalInputPort0 + 6, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , GalInputPort1 + 6, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , GalInputPort0 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , GalInputPort2 + 0, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , GalInputPort1 + 5, "p2 left"   },
@@ -5267,73 +5273,78 @@ static struct BurnDIPInfo RescueDIPList[]=
 	
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x10, 0x01, 0x08, 0x08, "Easy"                   },
-	{0x10, 0x01, 0x08, 0x00, "Hard"                   },	
+	{0x10, 0x01, 0x08, 0x00, "Hard"                   },
 };
 
 STDDIPINFO(Rescue)
 
 static struct BurnDIPInfo RockclimDIPList[]=
 {
+	// Dip Offset
+	{0x15, 0xf0, 0xff, 0xff, NULL                     },
 	// Default Values
-	{0x0d, 0xff, 0xff, 0x40, NULL                     },
-	{0x0e, 0xff, 0xff, 0xc0, NULL                     },
-	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0x40, NULL                     },
+	{0x01, 0xff, 0xff, 0xc0, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
+	{0x03, 0xff, 0xff, 0xff, NULL                     },
 	
 	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x00, 0x01, 0x40, 0x00, "Upright"                },
+	{0x00, 0x01, 0x40, 0x40, "Coctail"                },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0e, 0x01, 0x40, 0x00, "30000"                  },
-	{0x0e, 0x01, 0x40, 0x40, "50000"                  },
+	{0x01, 0x01, 0x40, 0x00, "30000"                  },
+	{0x01, 0x01, 0x40, 0x40, "50000"                  },
 	
 	{0   , 0xfe, 0   , 2   , "Coin Slots"             },
-	{0x0e, 0x01, 0x80, 0x80, "1"                      },
-	{0x0e, 0x01, 0x80, 0x00, "2"                      },
+	{0x01, 0x01, 0x80, 0x80, "1"                      },
+	{0x01, 0x01, 0x80, 0x00, "2"                      },
 	
 	// Dip 3	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x0f, 0x01, 0x03, 0x00, "3"                      },
-	{0x0f, 0x01, 0x03, 0x01, "4"                      },
-	{0x0f, 0x01, 0x03, 0x02, "5"                      },
-	{0x0f, 0x01, 0x03, 0x03, "6"                      },
+	{0x02, 0x01, 0x03, 0x00, "3"                      },
+	{0x02, 0x01, 0x03, 0x01, "4"                      },
+	{0x02, 0x01, 0x03, 0x02, "5"                      },
+	{0x02, 0x01, 0x03, 0x03, "6"                      },
 	
 	// Dip 4
 	{0   , 0xfe, 0   , 16  , "Coin A"                 },
-	{0x10, 0x01, 0x0f, 0x00, "9 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x01, "8 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x02, "7 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x03, "6 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x04, "5 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x05, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x06, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x07, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
-	{0x10, 0x01, 0x0f, 0x0a, "1 Coin  6 Plays"        },
-	{0x10, 0x01, 0x0f, 0x09, "1 Coin  7 Plays"        },
-	{0x10, 0x01, 0x0f, 0x08, "1 Coin  8 Plays"        },
+	{0x03, 0x01, 0x0f, 0x00, "9 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x01, "8 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x02, "7 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x03, "6 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x04, "5 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x05, "4 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x06, "3 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x07, "2 Coins 1 Play"         },
+	{0x03, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
+	{0x03, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
+	{0x03, 0x01, 0x0f, 0x0a, "1 Coin  6 Plays"        },
+	{0x03, 0x01, 0x0f, 0x09, "1 Coin  7 Plays"        },
+	{0x03, 0x01, 0x0f, 0x08, "1 Coin  8 Plays"        },
 	
 	{0   , 0xfe, 0   , 16  , "Coin B"                 },
-	{0x10, 0x01, 0xf0, 0x00, "9 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x10, "8 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x20, "7 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x30, "6 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x40, "5 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x50, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x60, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0x70, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
-	{0x10, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
-	{0x10, 0x01, 0xf0, 0xa0, "1 Coin  6 Plays"        },
-	{0x10, 0x01, 0xf0, 0x90, "1 Coin  7 Plays"        },
-	{0x10, 0x01, 0xf0, 0x80, "1 Coin  8 Plays"        },
+	{0x03, 0x01, 0xf0, 0x00, "9 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x10, "8 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x20, "7 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x30, "6 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x40, "5 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x50, "4 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x60, "3 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0x70, "2 Coins 1 Play"         },
+	{0x03, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x03, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
+	{0x03, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
+	{0x03, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
+	{0x03, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
+	{0x03, 0x01, 0xf0, 0xa0, "1 Coin  6 Plays"        },
+	{0x03, 0x01, 0xf0, 0x90, "1 Coin  7 Plays"        },
+	{0x03, 0x01, 0xf0, 0x80, "1 Coin  8 Plays"        },
 };
 
 STDDIPINFO(Rockclim)
@@ -6678,6 +6689,22 @@ static struct BurnRomInfo ZerotimeRomDesc[] = {
 STD_ROM_PICK(Zerotime)
 STD_ROM_FN(Zerotime)
 
+static struct BurnRomInfo GalaktronRomDesc[] = {
+	{ "galaktron_g1.bin",   0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g2.bin",   0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g3.bin",   0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g4.bin",   0x00800, 0x786d690a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galaktron_g5.bin",   0x00800, 0x9c1821bb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "galaktron_c2.bin",   0x00800, 0x1b13ca05, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "galaktron_c1.bin",   0x00800, 0x5cd7df03, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "galaktron_pr.bin",   0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaktron)
+STD_ROM_FN(Galaktron)
+
 // Late-to-market bootleg with PCB mods to use a single program rom
 // Datamat is the old name of Datasat, a technical service and distributor of arcade PCB's from the 80's and 90's.
 // A lot of the bootleg PCB's around Spain have Datamat stickers on the roms. It was one of the most important PCB sellers/distributors in the country from the era.
@@ -6754,6 +6781,29 @@ static struct BurnRomInfo GalaxbsfRomDesc[] = {
 STD_ROM_PICK(Galaxbsf)
 STD_ROM_FN(Galaxbsf)
 
+static struct BurnRomInfo Galaxbsf2RomDesc[] = {
+	{ "gal00eg.ic41",  0x00400, 0x7c44510c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal01eg.ic5",   0x00400, 0x2a426500, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal02.ic6",     0x00400, 0x30e28016, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal03.ic7",     0x00400, 0xde7e7770, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal04.ic8",     0x00400, 0xa916c919, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal05.ic9",     0x00400, 0x9175882b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal06.ic10",    0x00400, 0x1237b9da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal07eg.ic11",  0x00400, 0x16144658, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal08.ic12",    0x00400, 0x901894cc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "gal09.ic13",    0x00400, 0x5876f695, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "galaxian.1h",   0x00800, 0x39fb43a4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "galaxian.1k",   0x00800, 0x7e3f56a2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	
+	{ "gal00eg.ic4",   0x00400, 0x1038467f, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Galaxbsf2)
+STD_ROM_FN(Galaxbsf2)
+
 static struct BurnRomInfo GalaxianblRomDesc[] = {
 	{ "gal00eg.ic4",   0x00400, 0x7c44510c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "gal01eg.ic5",   0x00400, 0x2a426500, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6774,6 +6824,40 @@ static struct BurnRomInfo GalaxianblRomDesc[] = {
 
 STD_ROM_PICK(Galaxianbl)
 STD_ROM_FN(Galaxianbl)
+
+static struct BurnRomInfo Galaxianbl2RomDesc[] = {
+	// same program as galaxianbl, but double sized ROMs. GFX ROMs are the same as kamakazi3's.
+	{ "h7.7h",     	   0x00800, 0xd09b9f1a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "j7.7j",         0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "k7.7k",         0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "l7.7l",         0x00800, 0x9471cdd3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "m7.7m",     	   0x00800, 0x5766c95b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "kl1.1kl",       0x00800, 0x977e37cf, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "hj1.1hj",       0x00800, 0xd0ba22c9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6331-1j.6l",    0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianbl2)
+STD_ROM_FN(Galaxianbl2)
+
+static struct BurnRomInfo Galaxianbl3RomDesc[] = {
+	// many similarities with zerotimemc
+	{ "1r.bin",        0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2r.bin",        0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3r.bin",        0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4r.bin",        0x00800, 0x89b76ca0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5r.bin",        0x00800, 0x863a688f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1kl.bin",       0x00800, 0x977e37cf, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "2hj.bin",       0x00800, 0xd0ba22c9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "im8610.6l",     0x00020, 0x4a3c88a5, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianbl3)
+STD_ROM_FN(Galaxianbl3)
 
 static struct BurnRomInfo Kamakazi3RomDesc[] = {
 	{ "f_r_a.bin",     0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6839,6 +6923,38 @@ static struct BurnRomInfo GalaxrfRomDesc[] = {
 
 STD_ROM_PICK(Galaxrf)
 STD_ROM_FN(Galaxrf)
+
+static struct BurnRomInfo GalaxianrpRomDesc[] = {
+	{ "4.7k",    	   0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.7j",    	   0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.7h",    	   0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.7f",    	   0x00800, 0x097d92a2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.7l",    	   0x00800, 0x5341d75a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "2.1j",    	   0x00800, 0xb8629cc6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1.1l",    	   0x00800, 0x6d42351c, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianrp)
+STD_ROM_FN(Galaxianrp)
+
+static struct BurnRomInfo GalaxyxRomDesc[] = {
+	{ "sg1",    	   0x00800, 0xd493cfd1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg2",    	   0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg3",    	   0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg4",    	   0x00800, 0x04329e33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sg5.7l",    	   0x00800, 0x878de26d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "sg6.1h",    	   0x00800, 0x39fb43a4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sg7.1k",    	   0x00800, 0x7e3f56a2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "sgprom.6l",     0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxyx)
+STD_ROM_FN(Galaxyx)
 
 static struct BurnRomInfo GalaxrfggRomDesc[] = {
 	{ "gxrf.7f",       0x01000, 0xc06eeb10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6973,7 +7089,7 @@ struct BurnDriver BurnDrvAstrians = {
 
 struct BurnDriver BurnDrvZerotime = {
 	"zerotime", "galaxian", NULL, NULL, "1979",
-	"Zero Time\0", NULL, "Petaco S.A", "Galaxian",
+	"Zero Time (Petaco S.A.)\0", NULL, "bootleg? (Petaco S.A.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimeRomInfo, ZerotimeRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
@@ -6981,9 +7097,19 @@ struct BurnDriver BurnDrvZerotime = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvGalaktron = {
+	"galaktron", "galaxian", NULL, NULL, "1979",
+	"Galaktron (Petaco S.A.)\0", NULL, "bootleg (Petaco S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaktronRomInfo, GalaktronRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvZerotimed = {
 	"zerotimed", "galaxian", NULL, NULL, "1979",
-	"Zero Time (Datamat)\0", NULL, "Datamat", "Galaxian",
+	"Zero Time (Datamat)\0", NULL, "bootleg (Datamat)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimedRomInfo, ZerotimedRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
@@ -7021,12 +7147,42 @@ struct BurnDriver BurnDrvGalaxbsf = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvGalaxbsf2 = {
+	"galaxbsf2", "galaxian", NULL, NULL, "1979",
+	"Galaxian (bootleg, set 3)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxbsf2RomInfo, Galaxbsf2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvGalaxianbl = {
 	"galaxianbl", "galaxian", NULL, NULL, "1979",
 	"Galaxian (bootleg, set 2)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxianblRomInfo, GalaxianblRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianblDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianbl2 = {
+	"galaxianbl2", "galaxian", NULL, NULL, "1979",
+	"Galaxian (bootleg, set 4)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxianbl2RomInfo, Galaxianbl2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianblDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianbl3 = {
+	"galaxianbl3", "galaxian", NULL, NULL, "1979",
+	"Galaxian (Spanish bootleg)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaxianbl3RomInfo, Galaxianbl3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -7067,6 +7223,26 @@ struct BurnDriver BurnDrvGalaxrf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxrfRomInfo, GalaxrfRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianrp = {
+	"galaxianrp", "galaxian", NULL, NULL, "1979",
+	"Galaxian (Rene Pierre bootleg)\0", NULL, "bootleg (Valadon Automation / Rene Pierre)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxianrpRomInfo, GalaxianrpRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxyx = {
+	"galaxyx", "galaxian", NULL, NULL, "1979",
+	"Galaxy X (bootleg of Galaxian)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxyxRomInfo, GalaxyxRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -10364,6 +10540,27 @@ STD_ROM_PICK(Mooncrstuku)
 STD_ROM_FN(Mooncrstuku)
 
 static struct BurnRomInfo MooncrstuRomDesc[] = {
+	{ "mcue_mc1.bin",  0x00800, 0x2ff840d1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc2.bin",  0x00800, 0x44bb7cfa, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc3.bin",  0x00800, 0x9c412104, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc4.bin",  0x00800, 0x7e9b1ab5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc5.bin",  0x00800, 0x16c759af, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc6.bin",  0x00800, 0x69bcafdb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc7.bin",  0x00800, 0xb50dbc46, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mcue_mc8.bin",  0x00800, 0x414678b4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "mcs_b",         0x00800, 0xfb0f1f81, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_d",         0x00800, 0x13932a15, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_a",         0x00800, 0x631ebb5a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_c",         0x00800, 0x24cfd145, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncrstu)
+STD_ROM_FN(Mooncrstu)
+
+static struct BurnRomInfo MooncrstuuRomDesc[] = {
 	{ "smc1f",         0x00800, 0x389ca0d6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "smc2f",         0x00800, 0x410ab430, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "smc3f",         0x00800, 0xa6b4144b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10381,8 +10578,8 @@ static struct BurnRomInfo MooncrstuRomDesc[] = {
 	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Mooncrstu)
-STD_ROM_FN(Mooncrstu)
+STD_ROM_PICK(Mooncrstuu)
+STD_ROM_FN(Mooncrstuu)
 
 static struct BurnRomInfo MooncrstoRomDesc[] = {
 	{ "mc1.7d",        0x00800, 0x92a86aac, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10500,10 +10697,20 @@ struct BurnDriver BurnDrvMooncrstuku = {
 
 struct BurnDriver BurnDrvMooncrstu = {
 	"mooncrstu", "mooncrst", NULL, NULL, "1980",
-	"Moon Cresta (Nichibutsu USA, unencrypted)\0", NULL, "Nichibutsu USA", "Galaxian",
+	"Moon Cresta (Nichibutsu USA, encrypted)\0", NULL, "Nichibutsu USA", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncrstuRomInfo, MooncrstuRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrstDIPInfo,
+	MooncrstEncryptedInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncrstuu = {
+	"mooncrstuu", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (Nichibutsu USA, unencrypted)\0", NULL, "Nichibutsu USA", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MooncrstuuRomInfo, MooncrstuuRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrstDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -10794,6 +11001,69 @@ static struct BurnRomInfo MooncptcRomDesc[] = {
 
 STD_ROM_PICK(Mooncptc)
 STD_ROM_FN(Mooncptc)
+
+static struct BurnRomInfo Sirio2RomDesc[] = {
+	{ "sirio2_1.bin",  0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_2.bin",  0x00800, 0x0b316f33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_3.bin",  0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_4.bin",  0x00800, 0x092ab94b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_5.bin",  0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_6.bin",  0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_7.bin",  0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_8.bin",  0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "sirio2_f2.bin", 0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f4.bin", 0x00800, 0x8acfabb9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f1.bin", 0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f3.bin", 0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "sirio2_im5610.bin",     0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Sirio2)
+STD_ROM_FN(Sirio2)
+
+static struct BurnRomInfo Sirio2aRomDesc[] = {
+	{ "sirio2_1.bin",  	0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_2.bin",  	0x00800, 0x0b316f33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_3.bin",  	0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2b_4.bin", 	0x00800, 0x73d0b1f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_5.bin",  	0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_6.bin",  	0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_7.bin",  	0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sirio2_8.bin",  	0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "sirio2_f2.bin", 	0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f4b.bin",	0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f1b.bin",	0x00800, 0xb3a10228, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sirio2_f3.bin", 	0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "sirio2_im5610.bin",     0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Sirio2a)
+STD_ROM_FN(Sirio2a)
+
+static struct BurnRomInfo AtaqandrRomDesc[] = {
+	{ "ataque_androide_1.bin",  	0x00800, 0x1e6a4b49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_2.bin",  	0x00800, 0x382f5e37, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_3.bin",  	0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_4.bin", 		0x00800, 0x73d0b1f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_5.bin",  	0x00800, 0x413a836a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_6.bin",  	0x00800, 0x2a9c3f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_7.bin",  	0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ataque_androide_8.bin",  	0x00800, 0x6e614bd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "ataque_androide_d.bin", 		0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_c.bin",		0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_b.bin",		0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ataque_androide_a.bin", 		0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "ataque_androide_p.bin",      0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Ataqandr)
+STD_ROM_FN(Ataqandr)
 
 static struct BurnRomInfo SstarcrsRomDesc[] = {
 	{ "ss1",           0x00800, 0x2ff72897, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11621,6 +11891,36 @@ struct BurnDriver BurnDrvMooncptc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncptcRomInfo, MooncptcRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSirio2 = {
+	"sirio2", "mooncrst", NULL, NULL, "1980?",
+	"Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 1)\0", NULL, "bootleg (Calfesa S.L.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Sirio2RomInfo, Sirio2RomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSirio2a = {
+	"sirio2a", "mooncrst", NULL, NULL, "1980?",
+	"Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg, set 2)\0", NULL, "bootleg (Calfesa S.L.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Sirio2aRomInfo, Sirio2aRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
+	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvAtaqandr = {
+	"ataqandr", "mooncrst", NULL, NULL, "1980?",
+	"Ataque Androide - Moon Cresta (FAR S.A. Spanish bootleg)\0", NULL, "bootleg (FAR S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, AtaqandrRomInfo, AtaqandrRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -12998,6 +13298,10 @@ STD_ROM_FN(Rockclim)
 UINT8 __fastcall RockclimZ80Read(UINT16 a)
 {
 	switch (a) {
+		case 0x5800: {
+			return GalInput[2];
+		}
+
 		case 0x8800: {
 			return GalInput[3] | GalDip[3];
 		}
@@ -13011,11 +13315,16 @@ UINT8 __fastcall RockclimZ80Read(UINT16 a)
 		}
 		
 		case 0xb000: {
-			return GalInput[2] | GalDip[2];
+			return GalDip[2];
 		}
 		
 		case 0xb800: {
 			// watchdog read
+			return 0xff;
+		}
+
+		case 0xffff: {
+			// ????
 			return 0xff;
 		}
 		
@@ -13024,13 +13333,13 @@ UINT8 __fastcall RockclimZ80Read(UINT16 a)
 		}
 	}
 
-	return 0xff;
+	return 0x00;
 }
 
 void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x9800 && a <= 0x98ff) {
-		INT32 Offset = a - 0x9800;
+		INT32 Offset = a & 0xff;
 		
 		GalSpriteRam[Offset] = d;
 		
@@ -13067,7 +13376,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa000:
 		case 0xa001:
 		case 0xa002: {
-			GalGfxBank[a - 0xa000] = d;
+			GalGfxBank[a & 3] = d;
 			return;
 		}
 		
@@ -13080,7 +13389,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa005:
 		case 0xa006:
 		case 0xa007: {
-			GalaxianLfoFreqWrite(a - 0xa004, d);
+			GalaxianLfoFreqWrite(a & 3, d);
 			return;
 		}
 		
@@ -13092,7 +13401,7 @@ void __fastcall RockclimZ80Write(UINT16 a, UINT8 d)
 		case 0xa805:
 		case 0xa806:
 		case 0xa807: {
-			GalaxianSoundWrite(a - 0xa800, d);
+			GalaxianSoundWrite(a & 7, d);
 			return;
 		}
 		
@@ -13137,6 +13446,7 @@ static void RockclimPostLoad()
 	ZetOpen(0);
 	ZetSetReadHandler(RockclimZ80Read);
 	ZetSetWriteHandler(RockclimZ80Write);
+	ZetMapMemory(GalVideoRam, 0x9400, 0x97ff, MAP_READ);
 	ZetMapArea(0x4000, 0x47ff, 0, GalVideoRam2);
 	ZetMapArea(0x4000, 0x47ff, 1, GalVideoRam2);
 	ZetMapArea(0x4000, 0x47ff, 2, GalVideoRam2);
@@ -13145,6 +13455,7 @@ static void RockclimPostLoad()
 	ZetMapArea(0x5000, 0x53ff, 2, GalZ80Ram1 + 0x400);
 	ZetMapArea(0x6000, 0x7fff, 0, GalZ80Rom1 + 0x4000);
 	ZetMapArea(0x6000, 0x7fff, 2, GalZ80Rom1 + 0x4000);
+	ZetUnmapMemory(0x5800, 0x58ff, MAP_RAM);
 	ZetClose();
 }
 
@@ -13156,7 +13467,9 @@ static INT32 RockclimInit()
 	RockclimTiles = (UINT8*)BurnMalloc(0x100 * 8 * 8);
 	
 	nRet = GalInit();
-	
+
+	GalScreenUnflipper = 1; // unflip coctail!
+
 	INT32 RockclimPlaneOffsets[4] = {4, 0, 0x8004, 0x8000};
 	INT32 RockclimCharXOffsets[8] = {3, 2, 1, 0, 11, 10, 9, 8};
 	INT32 RockclimCharYOffsets[8] = {0, 16, 32, 48, 64, 80, 96, 112};
@@ -13359,8 +13672,10 @@ static INT32 JumpbugInit()
 	
 	GalPostLoadCallbackFunction = MapJumpbug;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
-	
+	GalSoundSubType = 1; // diff. AY8910 clock
+
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = JumpbugDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -13393,6 +13708,7 @@ static INT32 LeversInit()
 	
 	GalPostLoadCallbackFunction = LeversPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910;
+	GalSoundSubType = 1; // diff. AY8910 clock
 	
 	nRet = GalInit();
 	
@@ -13442,6 +13758,7 @@ static INT32 BongoInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_BONGOAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
@@ -13888,6 +14205,7 @@ static INT32 CheckmanInit()
 	GalTilesSharedRomSize = 0x1000;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
@@ -13939,6 +14257,7 @@ static INT32 CheckmanjInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
@@ -13966,6 +14285,7 @@ static INT32 DingoInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
 	Dingo = 1;
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -14002,6 +14322,7 @@ static INT32 DingoeInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910;
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -14302,6 +14623,8 @@ static void MShuttleCommonInit()
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 
 	GalIrqType = GAL_IRQ_TYPE_IRQ0;
+
+	GalScreenUnflipper = 0; // coctail unflipping not needed
 }
 
 static INT32 MshuttleInit()
@@ -14664,6 +14987,7 @@ static INT32 KingballInit()
 	GalTilesSharedRomSize = 0x1000;	
 	
 	nRet = GalInit();
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
@@ -15037,8 +15361,10 @@ static INT32 FroggerEncGfxInit()
 
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
-	
-	FroggerAdjust = 1;	
+
+	GalScreenUnflipper = 1; // unflip coctail!
+
+	FroggerAdjust = 1;
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
 	GalDrawBulletsFunction = NULL;
@@ -15071,6 +15397,8 @@ static INT32 FroggermcInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
 	GalDrawBulletsFunction = NULL;
@@ -15089,6 +15417,8 @@ static INT32 FroggersInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	KonamiPPIInit();
 	
@@ -15184,6 +15514,8 @@ static INT32 FroggrsInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	KonamiPPIInit();
 	
@@ -15597,6 +15929,8 @@ static INT32 TurtlesInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
+
+	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = TurtlesDrawBackground;
 	GalDrawBulletsFunction = NULL;
@@ -15782,6 +16116,26 @@ static struct BurnRomInfo TheendsRomDesc[] = {
 
 STD_ROM_PICK(Theends)
 STD_ROM_FN(Theends)
+
+static struct BurnRomInfo TheendssRomDesc[] = {
+	{ "the_end_ss_2.bin",		0x00800, 0x326e1f69, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic14",    	0x00800, 0x950f0a07, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss_1.bin",    	0x00800, 0x93b47650, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic16",    	0x00800, 0x380a0017, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic17",    	0x00800, 0xaf067b7f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "the_end_ss.ic18",    	0x00800, 0xa0411b93, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "the_end_ss.ic56",    	0x00800, 0x7a141f29, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "the_end_ss.ic55",    	0x00800, 0x218497c1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "the_end_ss.ic30",    	0x00800, 0x527fd384, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "the_end_ss.ic31",    	0x00800, 0xaf6d09b6, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "6331-1j.86",    			0x00020, 0x24652bc4, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Theendss)
+STD_ROM_FN(Theendss)
 
 static struct BurnRomInfo ScrambleRomDesc[] = {
 	{ "s1.2d",         0x00800, 0xea35ccaa, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -17802,6 +18156,16 @@ struct BurnDriver BurnDrvTheends = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, TheendsRomInfo, TheendsRomName, NULL, NULL, NULL, NULL, TheendInputInfo, TheendDIPInfo,
+	TheendInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTheendss = {
+	"theendss", "theend", NULL, NULL, "1981",
+	"The End (SegaSA / Sonic)\0", NULL, "bootleg (Sonic)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, TheendssRomInfo, TheendssRomName, NULL, NULL, NULL, NULL, TheendInputInfo, TheendDIPInfo,
 	TheendInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

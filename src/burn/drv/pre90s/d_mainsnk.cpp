@@ -173,7 +173,7 @@ STDINPUTINFO(Canvas)
 
 static struct BurnDIPInfo CanvasDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0xfd, NULL		},
+	{0x10, 0xff, 0xff, 0xff, NULL		},
 	{0x11, 0xff, 0xff, 0x57, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
@@ -591,7 +591,7 @@ static void draw_sprites()
 		INT32 flipy = 0;
 
 		if (sy > 240) sy -= 256;
-
+#if 0
 		if (flipscreen)
 		{
 			sx = 288-16 - sx;
@@ -599,7 +599,7 @@ static void draw_sprites()
 			flipx = !flipx;
 			flipy = !flipy;
 		}
-
+#endif
 		if (flipy) {
 			if (flipx) {
 				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 7, 0, DrvGfxROM1);

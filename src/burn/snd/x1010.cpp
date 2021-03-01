@@ -205,6 +205,21 @@ void x1010_sound_update()
 	}
 }
 
+void x1010Reset()
+{
+	x1_010_chip->sound_enable = 1; // enabled by default?
+	memset (x1_010_chip->reg,         0, 0x2000);
+	memset (x1_010_chip->HI_WORD_BUF, 0, 0x2000);
+	memset (x1_010_chip->smp_offset,  0, SETA_NUM_CHANNELS * sizeof(INT32));
+	memset (x1_010_chip->env_offset,  0, SETA_NUM_CHANNELS * sizeof(INT32));
+	memset (x1_010_chip->sound_banks, 0, SETA_NUM_BANKS * sizeof(INT32));
+}
+
+void x1010Enable(INT32 data)
+{
+	x1_010_chip->sound_enable = data;
+}
+
 void x1010_sound_init(UINT32 base_clock, INT32 address)
 {
 	DebugSnd_X1010Initted = 1;

@@ -20,13 +20,13 @@ INT32 nBurnVer = BURN_VERSION;		// Version number of the library
 UINT32 nBurnDrvCount = 0;		// Count of game drivers
 UINT32 nBurnDrvActive = ~0U;	// Which game driver is selected
 UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which games are selected (i.e. loaded but not necessarily active)
-									
+
 bool bBurnUseMMX;
 #if defined BUILD_A68K
 bool bBurnUseASMCPUEmulation = false;
 #endif
 
-// Just so we can start using FBNEO_DEBUG and keep backwards compatablity should whatever is left of FB Alpha rise from it's grave. 
+// Just so we can start using FBNEO_DEBUG and keep backwards compatablity should whatever is left of FB Alpha rise from it's grave.
 #if defined (FBNEO_DEBUG) && (!defined FBA_DEBUG)
 #define FBA_DEBUG 1
 #endif
@@ -40,10 +40,11 @@ UINT32 nCurrentFrame;			// Framecount for emulated game
 
 UINT32 nFramesEmulated;		// Counters for FPS	display
 UINT32 nFramesRendered;		//
-bool bForce60Hz = false;
-bool bBurnUseBlend = true;
+INT32 bForce60Hz = 0;
+INT32 bBurnUseBlend = 1;
 INT32 nBurnFPS = 6000;
 INT32 nBurnCPUSpeedAdjust = 0x0100;	// CPU speed adjustment (clock * nBurnCPUSpeedAdjust / 0x0100)
+INT32 nBurnCPUSpeedTurbo = 0;	// Enable to boost CPU speed as a toggle option
 
 // Burn Draw:
 UINT8* pBurnDraw = NULL;	// Pointer to correctly sized bitmap
@@ -196,10 +197,10 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
-#ifndef __LIBRETRO__
+#if !defined(__LIBRETRO__) && !defined(BUILD_SDL) && !defined(BUILD_SDL2) && !defined(BUILD_MACOS)
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
-				
+
 				if (i & DRV_NEXTNAME) {
 					if (pszCurrentNameW && pDriver[nBurnDrvActive]->szFullNameW) {
 						pszCurrentNameW += wcslen(pszCurrentNameW) + 1;
@@ -236,7 +237,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 				}
 				break;
-#endif // __LIBRETRO__
+#endif // !defined(__LIBRETRO__) && !defined(BUILD_SDL)
 			case DRV_COMMENT:
 				pszStringW = pDriver[nBurnDrvActive]->szCommentW;
 				break;
@@ -301,6 +302,10 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 	if (i & DRV_UNICODEONLY) {
 		return NULL;
 	}
+
+  if (nBurnDrvActive == -1) {
+		return NULL;
+  }
 
 	switch (i & 0xFF) {
 		case DRV_NAME:
@@ -543,7 +548,7 @@ extern "C" INT32 BurnDrvSetVisibleSize(INT32 pnWidth, INT32 pnHeight)
 		pDriver[nBurnDrvActive]->nWidth = pnWidth;
 		pDriver[nBurnDrvActive]->nHeight = pnHeight;
 	}
-	
+
 	return 0;
 }
 
@@ -552,7 +557,7 @@ extern "C" INT32 BurnDrvSetAspect(INT32 pnXAspect,INT32 pnYAspect)
 	pDriver[nBurnDrvActive]->nXAspect = pnXAspect;
 	pDriver[nBurnDrvActive]->nYAspect = pnYAspect;
 
-	return 0;	
+	return 0;
 }
 
 // Get the hardware code
@@ -690,13 +695,13 @@ extern "C" INT32 BurnDrvExit()
 	CheatExit();
 	CheatSearchExit();
 	BurnStateExit();
-	
+
 	nBurnCPUSpeedAdjust = 0x0100;
-	
-	pBurnDrvPalette = NULL;	
-	
+
+	pBurnDrvPalette = NULL;
+
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
-	
+
 	BurnExitMemoryManager();
 #if defined FBNEO_DEBUG
 	DebugTrackerExit();
@@ -802,6 +807,11 @@ INT32 BurnSetRefreshRate(double dFrameRate)
 {
 	if (!bForce60Hz) {
 		nBurnFPS = (INT32)(100.0 * dFrameRate);
+#ifdef __LIBRETRO__
+		// By design, libretro dislike having nBurnSoundRate > nBurnFPS * 10
+		if (nBurnSoundRate > nBurnFPS * 10)
+			nBurnSoundRate = nBurnFPS * 10;
+#endif
 	}
 
 	nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;
@@ -925,7 +935,11 @@ struct MovieExtInfo
 	UINT32 hour, minute, second;
 };
 
+#if !defined(BUILD_SDL) && !defined(BUILD_SDL2) && !defined(BUILD_MACOS)
 extern struct MovieExtInfo MovieInfo; // from replay.cpp
+#else
+struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0 };
+#endif
 
 void BurnGetLocalTime(tm *nTime)
 {

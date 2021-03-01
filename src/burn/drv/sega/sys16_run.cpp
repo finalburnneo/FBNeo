@@ -1967,8 +1967,8 @@ INT32 System16Init()
 		}
 		
 		if (System16I8751RomNum) {
-			mcs51_program_data = System16I8751Rom;
 			mcs51_init();
+			mcs51_set_program_data(System16I8751Rom);
 			mcs51_set_write_handler(System16A_I8751WritePort);
 			mcs51_set_read_handler(System16A_I8751ReadPort);
 		}
@@ -2025,8 +2025,8 @@ INT32 System16Init()
 		}
 		
 		if (System16I8751RomNum) {
-			mcs51_program_data = System16I8751Rom;
 			mcs51_init();
+			mcs51_set_program_data(System16I8751Rom);
 			mcs51_set_write_handler(sega_315_5195_i8751_write_port);
 			mcs51_set_read_handler(sega_315_5195_i8751_read_port);
 		}
@@ -2098,8 +2098,8 @@ INT32 System16Init()
 		}
 		
 		if (System16I8751RomNum) {
-			mcs51_program_data = System16I8751Rom;
 			mcs51_init();
+			mcs51_set_program_data(System16I8751Rom);
 			mcs51_set_write_handler(sega_315_5195_i8751_write_port);
 			mcs51_set_read_handler(sega_315_5195_i8751_read_port);
 		}

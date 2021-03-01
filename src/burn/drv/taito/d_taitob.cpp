@@ -30,6 +30,8 @@ static INT32 game_config = 0; // for disable opposites
 static INT32 cpu_speed[2];
 static UINT8 nTaitoInputConfig[5] = { 0, 0, 0, 0, 0 };
 
+static INT32 has_trackball = 0; // rambo3/rambo3u
+
 static INT32 spritelag_disable = 0;
 
 static INT32 LastScrollX = 0; // hitice
@@ -392,7 +394,7 @@ STDINPUTINFO(Hitice)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
-static struct BurnInputInfo Rambo3uInputList[] = {
+static struct BurnInputInfo Rambo3InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort1 + 2,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 up"		},
@@ -424,7 +426,7 @@ static struct BurnInputInfo Rambo3uInputList[] = {
 	{"Dip B",		BIT_DIPSWITCH,	TC0220IOCDip + 1,		"dip"		},
 };
 
-STDINPUTINFO(Rambo3u)
+STDINPUTINFO(Rambo3)
 
 #undef A
 
@@ -962,48 +964,6 @@ static struct BurnDIPInfo TetristDIPList[]=
 
 STDDIPINFO(Tetrist)
 
-static struct BurnDIPInfo Rambo3DIPList[]=
-{
-	{0x13, 0xff, 0xff, 0xfe, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x02, 0x02, "Off"			},
-	{0x13, 0x01, 0x02, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"			},
-	{0x13, 0x01, 0x04, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"			},
-	{0x13, 0x01, 0x08, 0x08, "On"			},
-
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0xc0, 0x40, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	},
-
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x03, 0x02, "Easy"			},
-	{0x14, 0x01, 0x03, 0x03, "Medium"		},
-	{0x14, 0x01, 0x03, 0x01, "Hard"			},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
-
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x10, 0x00, "Off"			},
-	{0x14, 0x01, 0x10, 0x10, "On"			},
-};
-
-STDDIPINFO(Rambo3)
-
 static struct BurnDIPInfo MasterwDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xfe, NULL			},
@@ -1468,7 +1428,7 @@ static struct BurnDIPInfo HiticeDIPList[]=
 
 STDDIPINFO(Hitice)
 
-static struct BurnDIPInfo Rambo3uDIPList[]=
+static struct BurnDIPInfo Rambo3DIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xff, NULL			},
 	{0x18, 0xff, 0xff, 0xff, NULL			},
@@ -1503,16 +1463,58 @@ static struct BurnDIPInfo Rambo3uDIPList[]=
 	{0x18, 0x01, 0x03, 0x01, "Hard"			},
 	{0x18, 0x01, 0x03, 0x00, "Hardest"		},
 
-	{0   , 0xfe, 0   ,    1, "Control"		},
+	{0   , 0xfe, 0   ,    2, "Control"		},
 	{0x18, 0x01, 0x08, 0x08, "8 way Joystick"	},
-//	{0x18, 0x01, 0x08, 0x00, "Trackball"		},
+	{0x18, 0x01, 0x08, 0x00, "Trackball"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
 	{0x18, 0x01, 0x10, 0x00, "Off"			},
 	{0x18, 0x01, 0x10, 0x10, "On"			},
 };
 
-STDDIPINFO(Rambo3u)
+STDDIPINFO(Rambo3)
+
+static struct BurnDIPInfo Rambo3pDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xfe, NULL			},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x13, 0x01, 0x02, 0x02, "Off"			},
+	{0x13, 0x01, 0x02, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x13, 0x01, 0x04, 0x04, "Off"			},
+	{0x13, 0x01, 0x04, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x13, 0x01, 0x08, 0x00, "Off"			},
+	{0x13, 0x01, 0x08, 0x08, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
+	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
+	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0xc0, 0x40, "1 Coin  4 Credits"	},
+	{0x13, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0x03, 0x02, "Easy"			},
+	{0x14, 0x01, 0x03, 0x03, "Medium"		},
+	{0x14, 0x01, 0x03, 0x01, "Hard"			},
+	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x14, 0x01, 0x10, 0x00, "Off"			},
+	{0x14, 0x01, 0x10, 0x10, "On"			},
+};
+
+STDDIPINFO(Rambo3p)
 
 static const eeprom_interface taitob_eeprom_intf =
 {
@@ -1686,9 +1688,16 @@ static void DrvMakeInputs()
 		break;
 	}
 
-	// for rambo3a's trackball
-	if (nBurnGunNumPlayers) BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
-	if (nBurnGunNumPlayers) BurnGunMakeInputs(1, (INT16)TaitoAnalogPort2, (INT16)TaitoAnalogPort3);
+	// for rambo3's trackball
+	if (has_trackball) {
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(0, TaitoAnalogPort0, TaitoAnalogPort1, 0x03, 0x0f);
+		BurnTrackballUpdate(0);
+
+		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
+		BurnTrackballFrame(1, TaitoAnalogPort2, TaitoAnalogPort3, 0x03, 0x0f);
+		BurnTrackballUpdate(1);
+	}
 }
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
@@ -1937,6 +1946,11 @@ static INT32 DrvExit()
 
 	memset (nTaitoInputConfig, 0, 5);
 
+	if (has_trackball) {
+		BurnTrackballExit();
+		has_trackball = 0;
+	}
+
 	TaitoExit();
 
 	game_config = 0;
@@ -2113,6 +2127,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(TaitoWatchdog);
+		if (has_trackball) BurnTrackballScan();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2258,28 +2273,20 @@ static UINT8 __fastcall tetrist_read_byte(UINT32 a)
 		case 0x200002: // not used?
 			return TC0140SYTCommRead();
 
-		case 0x600010: { // tracky1_lo_r 
-			INT32 ret = (( TaitoAnalogPort1 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x600010: {
+			return BurnTrackballReadWord(0, 1) & 0xff;
 		}
 
-		case 0x600014: {// trackx1_lo_r
-			INT32 ret = ((~TaitoAnalogPort0 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x600014: {
+			return BurnTrackballReadWord(0, 0) & 0xff;
 		}
 
-		case 0x600018: {// tracky2_lo_r
-			INT32 ret = (( TaitoAnalogPort3 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x600018: {
+			return BurnTrackballReadWord(1, 1) & 0xff;
 		}
 
-		case 0x60001c: {// trackx2_lo_r
-			INT32 ret = ((~TaitoAnalogPort2 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x60001c: {
+			return BurnTrackballReadWord(1, 0) & 0xff;
 		}
 	}
 
@@ -2292,28 +2299,20 @@ static UINT16 __fastcall tetrist_read_word(UINT32 a)
 
 	switch (a)
 	{
-		case 0x600012: {// tracky1_hi_r
-			INT32 ret = (( TaitoAnalogPort1 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x600012: {
+			return BurnTrackballReadWord(0, 1);
 		}
 
-		case 0x600016: {// trackx1_hi_r
-			INT32 ret = ((~TaitoAnalogPort0 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x600016: {
+			return BurnTrackballReadWord(0, 0);
 		}
 
-		case 0x60001a: {// tracky2_hi_r
-			INT32 ret = (( TaitoAnalogPort3 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x60001a: {
+			return BurnTrackballReadWord(1, 1);
 		}
 
-		case 0x60001e: {// trackx2_hi_r
-			INT32 ret = ((~TaitoAnalogPort2 >> 4) & 0xffff);
-			if (ret == 0xffff) return 0;
-			return (ret+1);
+		case 0x60001e: {
+			return BurnTrackballReadWord(1, 0);
 		}
 	}
 
@@ -3269,7 +3268,8 @@ STD_ROM_FN(rambo3)
 static INT32 Rambo3Init()
 {
 	nTaitoInputConfig[1] = 0x30;
-	BurnGunInit(2, false);
+	has_trackball = 1;
+	BurnTrackballInit(2);
 
 	return CommonInit(TetristInitCallback, 0, 2, 0, 1, 6);
 }
@@ -3279,7 +3279,7 @@ struct BurnDriver BurnDrvRambo3 = {
 	"Rambo III (Europe)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
-	NULL, rambo3RomInfo, rambo3RomName, NULL, NULL, NULL, NULL, Rambo3uInputInfo, Rambo3uDIPInfo,
+	NULL, rambo3RomInfo, rambo3RomName, NULL, NULL, NULL, NULL, Rambo3InputInfo, Rambo3DIPInfo,
 	Rambo3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
@@ -3311,7 +3311,7 @@ struct BurnDriver BurnDrvRambo3u = {
 	"Rambo III (US)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
-	NULL, rambo3uRomInfo, rambo3uRomName, NULL, NULL, NULL, NULL, Rambo3uInputInfo, Rambo3uDIPInfo,
+	NULL, rambo3uRomInfo, rambo3uRomName, NULL, NULL, NULL, NULL, Rambo3InputInfo, Rambo3DIPInfo,
 	Rambo3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
@@ -3367,10 +3367,10 @@ static INT32 Rambo3pInit()
 
 struct BurnDriver BurnDrvRambo3p = {
 	"rambo3p", "rambo3", NULL, NULL, "1989",
-	"Rambo III (Europe, Proti?)\0", NULL, "Taito Europe Corporation", "Taito B System",
+	"Rambo III (Europe, Proto?)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
-	NULL, rambo3pRomInfo, rambo3pRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Rambo3DIPInfo,
+	NULL, rambo3pRomInfo, rambo3pRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Rambo3pDIPInfo,
 	Rambo3pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };

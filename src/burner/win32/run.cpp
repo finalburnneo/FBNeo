@@ -12,23 +12,34 @@ static unsigned int nDoFPS = 0;
 static bool bMute = false;
 static int nOldAudVolume;
 
-int kNetGame = 0;							// Non-zero if Kaillera is being used
+int kNetVersion = 0;				// Network version (ggpo related)
+int kNetGame = 0;						// Non-zero if network is being used
+int kNetSpectator = 0;			// Non-zero if network replay is active
+int kNetLua = 1;						// Allow lua in network game
 
 #ifdef FBNEO_DEBUG
 int counter;								// General purpose variable used when debugging
 #endif
 
-static unsigned int nNormalLast = 0;		// Last value of timeGetTime()
-static int nNormalFrac = 0;					// Extra fraction we did
-
+static double nFrameLast = 0;
 static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
-static bool bAppDoFasttoggled = 0;
-static int nFastSpeed = 6;
+static bool bAppDoFastToggled = 0;
+static int nFastSpeed = 10;
+static int nRunQuark = 1;
+
+int bRestartVideo = 0;
+int bDrvExit = 0;
+int bMediaExit = 0;
 
 // For System Macros (below)
-static int prevPause = 0, prevFFWD = 0, prevSState = 0, prevLState = 0, prevUState = 0;
+static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
+
+void EmulatorAppDoFast(bool dofast) {
+	bAppDoFast = dofast;
+	bAppDoFastToggled = 0;
+}
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
@@ -40,12 +51,22 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		}
 	}
 	prevPause = macroSystemPause;
-	// FFWD
 	if (!kNetGame) {
+		// FFWD
 		if (macroSystemFFWD) {
 			bAppDoFast = 1; prevFFWD = 1;
 		} else if (prevFFWD) {
 			bAppDoFast = 0; prevFFWD = 0;
+		}
+		// Frame
+		if (macroSystemFrame) {
+			bRunPause = 1;
+			if (!prevFrame) {
+				bAppDoStep = 1;
+				prevFrame = 1;
+			}
+		} else {
+			prevFrame = 0;
 		}
 	}
 	// Load State
@@ -67,15 +88,19 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 
 static int GetInput(bool bCopy)
 {
-	static unsigned int i = 0;
-	InputMake(bCopy); 						// get input
+	// get input
+	InputMake(bCopy);
 
-	CheckSystemMacros();
+	if (!kNetGame) {
+		CheckSystemMacros();
+	}
 
 	// Update Input dialog every 3rd frame
-	if ((i%3) == 0) {
+	static unsigned int i = 0;
+	if ((i%2) == 0) {
 		InpdUpdate();
 	}
+	i++;
 
 	// Update Input Set dialog
 	InpsUpdate();
@@ -94,15 +119,19 @@ static void DisplayFPSInit()
 
 static void DisplayFPS()
 {
-	TCHAR fpsstring[8];
 	time_t temptime = clock();
 	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 	if (bAppDoFast) {
 		fps *= nFastSpeed+1;
 	}
-	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
-	if (fpstimer && temptime - fpstimer>0) { // avoid strange fps values
-		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
+
+	if (kNetGame) {
+		QuarkUpdateStats(fps);
+	} else {
+		if (fpstimer && (temptime - fpstimer) > 0) { // avoid strange fps values
+			VidSSetStats(fps, 0, 0);
+			VidOverlaySetStats(fps, 0, 0);
+		}
 	}
 
 	fpstimer = temptime;
@@ -117,75 +146,145 @@ void ToggleLayer(unsigned char thisLayer)
 	VidPaint(0);
 }
 
+int bRunaheadFrame = 0;
+int gAcbGameBufferSize = 0;
+char gAcbGameBuffer[16 * 1024 * 1024];
+char *gAcbGameScanPointer;
+
+int RunaheadReadAcb(struct BurnArea* pba)
+{
+	memcpy(gAcbGameScanPointer, pba->Data, pba->nLen);
+	gAcbGameScanPointer += pba->nLen;
+	return 0;
+}
+
+int RunaheadWriteAcb(struct BurnArea* pba)
+{
+	memcpy(pba->Data, gAcbGameScanPointer, pba->nLen);
+	gAcbGameScanPointer += pba->nLen;
+	return 0;
+}
+
+void RunaheadSaveState()
+{
+	bRunaheadFrame = 1;
+	gAcbGameScanPointer = gAcbGameBuffer;
+	BurnAcb = RunaheadReadAcb;
+	BurnAreaScan(ACB_FULLSCANL | ACB_READ, NULL);
+	gAcbGameBufferSize = gAcbGameScanPointer - gAcbGameBuffer;
+	bRunaheadFrame = 0;
+}
+
+void RunaheadLoadState()
+{
+	bRunaheadFrame = 1;
+	gAcbGameScanPointer = gAcbGameBuffer;
+	BurnAcb = RunaheadWriteAcb;
+	BurnAreaScan(ACB_FULLSCANL | ACB_WRITE, NULL);
+	bRunaheadFrame = 0;
+}
+
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
-int RunFrame(int bDraw, int bPause)
+int RunFrame(int bDraw, int bPause, int bInput)
 {
-	static int bPrevPause = 0;
-	static int bPrevDraw = 0;
-
-	if (bPrevDraw && !bPause) {
-		VidPaint(0);							// paint the screen (no need to validate)
-
-		if (!nVidFullscreen && bVidDWMSync)     // Sync to DWM (Win7+, windowed)
-			SuperWaitVBlank();
-	}
-
 	if (!bDrvOkay) {
 		return 1;
 	}
-
-	if (bPause) {
+	
+	if (bPause && !bAppDoFast) {
 		GetInput(false);						// Update burner inputs, but not game inputs
-		if (bPause != bPrevPause) {
-			VidPaint(2);                        // Redraw the screen (to ensure mode indicators are updated)
-		}
 	} else {
-
 		nFramesEmulated++;
 		nCurrentFrame++;
 
 		if (kNetGame) {
-			GetInput(true);						// Update inputs
-			if (KailleraGetInput()) {			// Synchronize input with Kaillera
-				return 0;
+			if (bInput) {
+				GetInput(true);						// Update inputs
+				VidDisplayInputs(0, 0);
+				if (NetworkGetInput()) {	// Synchronize input with Network
+					VidDisplayInputs(1, 1);
+					return 1;
+				}
+				VidDisplayInputs(1, 2);
+			} else {
+				VidDisplayInputs(0, 3);
+				if (NetworkGetInput()) {
+					VidDisplayInputs(1, 1);
+					return 1;
+				}
+				VidDisplayInputs(1, 4);
 			}
 		} else {
 			if (nReplayStatus == 2) {
-				GetInput(false);				// Update burner inputs, but not game inputs
-				if (ReplayInput()) {			// Read input from file
-					SetPauseMode(1);            // Replay has finished
+				GetInput(false);					// Update burner inputs, but not game inputs
+				if (ReplayInput()) {		  // Read input from file
+					SetPauseMode(1);        // Replay has finished
 					bAppDoFast = 0;
-					bAppDoFasttoggled = 0;      // Disable FFWD
+					bAppDoFastToggled = 0;  // Disable FFWD
 					MenuEnableItems();
 					InputSetCooperativeLevel(false, false);
 					return 0;
 				}
 			} else {
-				GetInput(true);					// Update inputs
+				GetInput(true);						// Update inputs
+				VidDisplayInputs(0, 0);
+			}
+		}
+
+		if (kNetLua) {
+			CallRegisteredLuaFunctions(LUACALL_BEFOREEMULATION); //TODO: find proper place
+			if (FBA_LuaUsingJoypad()) {
+				FBA_LuaReadJoypad();
 			}
 		}
 
 		if (nReplayStatus == 1) {
-			RecordInput();						// Write input to file
+			RecordInput();					  	// Write input to file
 		}
 
-		if (bDraw) {                            // Draw Frame
-			nFramesRendered++;
-
-			if (VidFrame()) {					// Do one frame
-				AudBlankSound();
+		// Render frame with video or audio
+		if (bDraw) {
+			if (nVidRunahead > 0 && nVidRunahead <= 3 && !kNetSpectator) {
+				// Runahead frames, first frame is audio only
+				pBurnDraw = NULL;
+				pBurnSoundOut = nAudNextSound; 
+				BurnDrvFrame();
+				// Save state
+				RunaheadSaveState();
+				// Intermediate frames don't have audio or video
+				for (int i = 0; i < (nVidRunahead-1); i++) {
+					pBurnDraw = NULL;
+					pBurnSoundOut = NULL;
+					BurnDrvFrame();
+				}
+				// Last frame is video only
+				pBurnSoundOut = NULL;
+				VidFrame();
+				// Restore state
+				RunaheadLoadState();
+			} else {
+				// Render video and audio
+				pBurnSoundOut = nAudNextSound;
+				VidFrame();
 			}
-		} else {								// frame skipping
-			pBurnDraw = NULL;					// Make sure no image is drawn
+			// add audio from last frame
+			AudSoundFrame();
+		} else {
+			pBurnDraw = NULL;
+			pBurnSoundOut = NULL;
 			BurnDrvFrame();
 		}
 
-		if (bShowFPS) {
-			if (nDoFPS < nFramesRendered) {
-				DisplayFPS();
-				nDoFPS = nFramesRendered + 30;
-			}
+		if (kNetGame) {
+			QuarkIncrementFrame();
+		}
+
+		DetectorUpdate();
+
+		if (kNetLua) {
+			FBA_LuaFrameBoundary();
+			CallRegisteredLuaFunctions(LUACALL_AFTEREMULATION); // TODO: find proper place
 		}
 
 #ifdef INCLUDE_AVI_RECORDING
@@ -197,153 +296,118 @@ int RunFrame(int bDraw, int bPause)
 #endif
 	}
 
-	bPrevPause = bPause;
-	bPrevDraw = bDraw;
-
-	return 0;
-}
-
-// Callback used when DSound needs more sound
-static int RunGetNextSound(int bDraw)
-{
-	if (nAudNextSound == NULL) {
-		return 1;
-	}
-
-	if (bRunPause) {
-		if (bAppDoStep) {
-			RunFrame(bDraw, 0);
-			memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
-		} else {
-			RunFrame(bDraw, 1);
-		}
-
-		bAppDoStep = 0;									// done one step
-		return 0;
-	}
-
-	int bBrokeOutOfFFWD = 0;
-	if (bAppDoFast) {									// do more frames
-		for (int i = 0; i < nFastSpeed; i++) {
-			if (!bAppDoFast) {
-				bBrokeOutOfFFWD = 1; // recording ended, etc.
-				break;
-			}                     // break out if no longer in ffwd
-#ifdef INCLUDE_AVI_RECORDING
-			if (nAviStatus) {
-				// Render frame with sound
-				pBurnSoundOut = nAudNextSound;
-				RunFrame(bDraw, 0);
-			} else {
-				RunFrame(0, 0);
-			}
-#else
-			RunFrame(0, 0);
-#endif
-		}
-	}
-
-	if (!bBrokeOutOfFFWD) {
-		// Render frame with sound
-		pBurnSoundOut = nAudNextSound;
-		RunFrame(bDraw, 0);
-	}
-
-	if (WaveLog != NULL && pBurnSoundOut != NULL) {		// log to the file
-		fwrite(pBurnSoundOut, 1, nBurnSoundLen << 2, WaveLog);
-		pBurnSoundOut = NULL;
-	}
-
-	if (bAppDoStep || (bBrokeOutOfFFWD && bRunPause)) {
-		memset(nAudNextSound, 0, nAudSegLen << 2);		// Write silence into the buffer
-		AudBlankSound();
-	}
-	bAppDoStep = 0;										// done one step
-
 	return 0;
 }
 
 int RunIdle()
 {
-	int nTime, nCount;
-
 	if (bAudPlaying) {
-		// Run with sound
 		AudSoundCheck();
+	}
+
+	// Render loop with sound
+	double nTime = timeGetTime();
+	double nAccTime = nTime - nFrameLast;
+	double nFps = 1000.0 * 100.0 / nAppVirtualFps;
+	double nFpsIdle = nFps - 1.0;
+
+	if (nAccTime < nFps || (kNetGame && nRunQuark)) {
+		// No need to do anything for a bit
+		if (kNetGame) {
+			if (nAccTime < nFpsIdle || nRunQuark) {
+				QuarkRunIdle(1);
+				nRunQuark = 0;
+			}
+		}
+		else {
+			if (nAccTime < nFpsIdle) {
+				Sleep(1);
+			}
+		}
 		return 0;
 	}
+	nRunQuark = 1;
 
-	// Run without sound
-	nTime = timeGetTime() - nNormalLast;
-	nCount = (nTime * nAppVirtualFps - nNormalFrac) / 100000;
-	if (nCount <= 0) {						// No need to do anything for a bit
-		//Sleep(2);
-		return 0;
+	// frame accumulator
+	int nCount = -1;
+	do {
+		nAccTime -= nFps;
+		nFrameLast += nFps;
+		nCount++;
+	} while (nAccTime > nFps);
+
+	if (nCount > 10) {						// Limit frame skipping
+		nCount = 10;
 	}
 
-	nNormalFrac += nCount * 100000;
-	nNormalLast += nNormalFrac / nAppVirtualFps;
-	nNormalFrac %= nAppVirtualFps;
-
-	//if (bAppDoFast){						// Temporarily increase virtual fps
-	//	nCount *= nFastSpeed;
-	//}
-	if (nCount > 100) {						// Limit frame skipping
-		nCount = 100;
-	}
 	if (bRunPause) {
-		if (bAppDoStep) {					// Step one frame
-			nCount = 10;
+		if (bAppDoStep) {					  // Step one frame
+			nCount = 0;
 		} else {
-			RunFrame(1, 1);					// Paused
+			RunFrame(1, 1, 1);				// Paused
+			VidPaint(3);
+			AudBlankSound();
 			return 0;
 		}
 	}
 	bAppDoStep = 0;
 
-	if (bAppDoFast) {									// do more frames
-		for (int i = 0; i < nFastSpeed; i++) {
-#ifdef INCLUDE_AVI_RECORDING
-			if (nAviStatus) {
-				RunFrame(1, 0);
-			} else {
-				RunFrame(0, 0);
-			}
-#else
-			RunFrame(0, 0);
-#endif
+	if (kNetGame)
+	{
+		int skip = bAlwaysDrawFrames ? 0 : nCount;
+		// skip frames (for rift balance or auto frame skip)
+		for (int i = skip; i > 0; i--) {
+			RunFrame(0, 0, 1);
 		}
+		RunFrame(1, 0, 1);					    // End-frame
+	} else {
+		if (bAppDoFast) {				    // do more frames
+			for (int i = 0; i < nFastSpeed; i++) {
+#ifdef INCLUDE_AVI_RECORDING
+				if (nAviStatus) {
+					RunFrame(1, 0, 1);
+				} else {
+					RunFrame(0, 0, 1);
+				}
+#else
+				RunFrame(0, 0, 1);
+#endif
+			}
+		}
+		if (!bAlwaysDrawFrames) {
+			for (int i = nCount; i > 0; i--) {	// Mid-frames
+				RunFrame(0, 0, 1);
+			}
+		}
+		RunFrame(1, 0, 1);					// End-frame
 	}
 
-	if(!bAlwaysDrawFrames) {
-		for (int i = nCount / 10; i > 0; i--) {	// Mid-frames
-			RunFrame(0, 0);
-		}
+	// render
+	nFramesRendered++;
+	VidPaint(3);
+
+	// fps
+	if (nDoFPS < nFramesRendered) {
+		DisplayFPS();
+		nDoFPS = nFramesRendered + 30;
 	}
-	RunFrame(1, 0);							// End-frame
 
 	return 0;
 }
 
 int RunReset()
 {
-	// Reset the speed throttling code
-	nNormalLast = 0; nNormalFrac = 0;
-
 	// Reset FPS display
 	DisplayFPSInit();
 
-	if (!bAudPlaying) {
-		// run without sound
-		nNormalLast = timeGetTime();
-	}
+	// Reset the speed throttling code
+	nFrameLast = timeGetTime();
+
 	return 0;
 }
 
 static int RunInit()
 {
-	// Try to run with sound
-	AudSetCallback(RunGetNextSound);
 	AudSoundPlay();
 
 	RunReset();
@@ -353,12 +417,13 @@ static int RunInit()
 
 static int RunExit()
 {
-	nNormalLast = 0;
 	// Stop sound if it was playing
 	AudSoundStop();
 
+	nFrameLast = 0;
+
 	bAppDoFast = 0;
-	bAppDoFasttoggled = 0;
+	bAppDoFastToggled = 0;
 
 	return 0;
 }
@@ -381,11 +446,11 @@ static void BurnerHandlerKeyCallback(MSG *Msg, INT32 KeyDown, INT32 KeyType)
 // The main message loop
 int RunMessageLoop()
 {
-	int bRestartVideo;
 	MSG Msg;
 
 	do {
 		bRestartVideo = 0;
+		bDrvExit = 0;
 
 		// Remove pending initialisation messages from the queue
 		while (PeekMessage(&Msg, NULL, WM_APP + 0, WM_APP + 0, PM_NOREMOVE)) {
@@ -396,9 +461,8 @@ int RunMessageLoop()
 
 		RunInit();
 
-		ShowWindow(hScrnWnd, nAppShowCmd);												// Show the screen window
+		ShowWindow(hScrnWnd, nAppShowCmd);								// Show the screen window
 		nAppShowCmd = SW_NORMAL;
-
 		SetForegroundWindow(hScrnWnd);
 
 		GameInpCheckLeftAlt();
@@ -409,13 +473,14 @@ int RunMessageLoop()
 			SuperWaitVBlankInit();
 		}
 
-		if (bAutoLoadGameList && !nCmdOptUsed) {
+		/*
+		if (bAutoLoadGameList && !nVidFullscreen) {
 			static INT32 bLoaded = 0; // only do this once (at startup!)
-
 			if (bLoaded == 0)
 				PostMessage(hScrnWnd, WM_KEYDOWN, VK_F6, 0);
 			bLoaded = 1;
 		}
+		*/
 
 		while (1) {
 			if (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
@@ -425,6 +490,19 @@ int RunMessageLoop()
 				}
 				if (Msg.message == (WM_APP + 0)) {										// Restart video
 					bRestartVideo = 1;
+					break;
+				}
+
+				if (bDrvExit)
+				{
+					DrvExit();
+					bDrvExit = 0;
+					continue;
+				}
+
+				if (bMediaExit)
+				{
+					MediaExit(true);
 					break;
 				}
 
@@ -449,8 +527,13 @@ int RunMessageLoop()
 								break;
 							}
 #endif
+							case 'W':
+								if (kNetGame) {
+									QuarkTogglePerfMon();
+								}
+								break;
 
-              				// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
+							// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
 							case 'S': {
 								TCHAR buffer[60];
 								bMute = !bMute;
@@ -474,50 +557,51 @@ int RunMessageLoop()
 							case VK_OEM_PLUS: {
 								if (bMute) break; // if mute, not do this
 								nOldAudVolume = nAudVolume;
-								TCHAR buffer[60];
-
-								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume += 100;
-								} else {
-									nAudVolume += 1000;
-								}
-
+								nAudVolume += 500;
 								if (nAudVolume > 10000) {
 									nAudVolume = 10000;
 								}
+
 								if (AudSoundSetVolume() == 0) {
 									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
 								} else {
+									TCHAR buffer[60];
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
 								}
+								VidOverlayShowVolume(nAudVolume);
 								break;
 							}
 							case VK_OEM_MINUS: {
 								if (bMute) break; // if mute, not do this
-							  	nOldAudVolume = nAudVolume;
-								TCHAR buffer[60];
-
-								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume -= 100;
-								} else {
-									nAudVolume -= 1000;
-								}
-
+								nOldAudVolume = nAudVolume;
+								nAudVolume -= 500;
 								if (nAudVolume < 0) {
 									nAudVolume = 0;
 								}
+
 								if (AudSoundSetVolume() == 0) {
 									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
 								} else {
+									TCHAR buffer[60];
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
 									VidSNewShortMsg(buffer);
 								}
+								VidOverlayShowVolume(nAudVolume);
 								break;
 							}
 							case VK_MENU: {
 								continue;
 							}
+							case '1':
+							case '2':
+							case '3':
+							case '4':
+							case '5':
+								if (kNetLua) {
+									CallRegisteredLuaFunctions((LuaCallID)(LUACALL_HOTKEY_1 + Msg.wParam - '1'));
+								}
+								break;
 						}
 					} else {
 
@@ -526,7 +610,7 @@ int RunMessageLoop()
 
 						switch (Msg.wParam) {
 
-#if defined (FBNEO_DEBUG)
+#if 0	//defined (FBNEO_DEBUG)
 							case 'N':
 								counter--;
 								if (counter < 0) {
@@ -544,23 +628,21 @@ int RunMessageLoop()
 								}
 								break;
 #endif
-							case VK_ESCAPE: {
-								if (hwndChat) {
-									DeActivateChat();
+							case VK_ESCAPE:
+								if (bEditActive) {
+									if (!nVidFullscreen) {
+										DeActivateChat();
+									}
 								} else {
-									if (nCmdOptUsed & 1) {
-										PostQuitMessage(0);
-									} else {
-										if (nVidFullscreen) {
-											nVidFullscreen = 0;
-											POST_INITIALISE_MESSAGE;
-										}
+									if (nVidFullscreen) {
+										nVidFullscreen = 0;
+										POST_INITIALISE_MESSAGE;
 									}
 								}
 								break;
-							}
-							case VK_RETURN: {
-								if (hwndChat) {
+
+							case VK_RETURN:
+								if (bEditActive) {
 									int i = 0;
 									while (EditText[i]) {
 										if (EditText[i++] != 0x20) {
@@ -568,74 +650,92 @@ int RunMessageLoop()
 										}
 									}
 									if (i) {
-										Kaillera_Chat_Send(TCHARToANSI(EditText, NULL, 0));
-										//kailleraChatSend(TCHARToANSI(EditText, NULL, 0));
+										char text[MAX_CHAT_SIZE + 1];
+										TCHARToANSI(EditText, text, MAX_CHAT_SIZE + 1);
+										if (kNetGame) {
+											QuarkSendChatText(text);
+										}
 									}
 									DeActivateChat();
-
 									break;
 								}
+
 								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
 									bMenuEnabled = !bMenuEnabled;
 									POST_INITIALISE_MESSAGE;
-
 									break;
 								}
 
 								break;
-							}
-							case VK_F1: {
-								bool bOldAppDoFast = bAppDoFast;
 
-								if (kNetGame) {
-									break;
-								}
+							case VK_F1:
+								if (!kNetGame) {
+									if (Msg.lParam & 0x20000000) {
+										bool bOldAppDoFast = bAppDoFast;
 
-								if (((GetAsyncKeyState(VK_CONTROL) | GetAsyncKeyState(VK_SHIFT)) & 0x80000000) == 0) {
-									if (bRunPause) {
-										bAppDoStep = 1;
-									} else {
-										bAppDoFast = 1;
+										if (((GetAsyncKeyState(VK_CONTROL) | GetAsyncKeyState(VK_SHIFT)) & 0x80000000) == 0) {
+											if (bRunPause) {
+												bAppDoStep = 1;
+											} else {
+												bAppDoFast = 1;
+											}
+										}
+
+										if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL)) { // Shift-F1: toggles FFWD state
+											bAppDoFast = !bAppDoFast;
+											bAppDoFastToggled = bAppDoFast;
+										}
+
+										if (bOldAppDoFast != bAppDoFast) {
+											DisplayFPSInit(); // resync fps display
+										}
 									}
 								}
-
-								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL)) { // Shift-F1: toggles FFWD state
-									bAppDoFast = !bAppDoFast;
-									bAppDoFasttoggled = bAppDoFast;
-								}
-
-								if (bOldAppDoFast != bAppDoFast) {
-									DisplayFPSInit(); // resync fps display
-								}
 								break;
-							}
-							case VK_BACK: {
+
+							case VK_BACK:
 								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL))
 								{ // Shift-Backspace: toggles recording/replay frame counter
 									bReplayFrameCounterDisplay = !bReplayFrameCounterDisplay;
 									if (!bReplayFrameCounterDisplay) {
 										VidSKillTinyMsg();
 									}
-								} else
-								{ // Backspace: toggles FPS counter
+								} else if (!bEditActive) { // Backspace: toggles FPS counter
 									bShowFPS = !bShowFPS;
-									if (bShowFPS) {
-										DisplayFPSInit();
-									} else {
-										VidSKillShortMsg();
-										VidSKillOSDMsg();
-									}
+									VidSShowStats(bShowFPS);
+									VidOverlayShowStats(bShowFPS);
+									DisplayFPS();
 								}
 								break;
-							}
-							case 'T': {
-								if (kNetGame && hwndChat == NULL) {
+
+							case 'T':
+								if (kNetGame && !bEditActive) {
 									if (AppMessage(&Msg)) {
 										ActivateChat();
 									}
 								}
 								break;
-							}
+
+							case VK_TAB:
+								if (GetAsyncKeyState(VK_SHIFT)) {
+									nVidRunahead = (nVidRunahead + 1) % 3;
+									MenuUpdate();
+								}
+								else if (kNetGame && !bEditActive) {
+									if (!bVidOverlay) {
+										bVidOverlay = !bVidOverlay;
+										bVidBigOverlay = false;
+									}
+									else if (!bVidBigOverlay) {
+										bVidBigOverlay = true;
+									}
+									else {
+										bVidOverlay = false;
+										bVidBigOverlay = false;
+									}
+									MenuUpdate();
+								}
+								break;
 						}
 					}
 				} else {
@@ -647,17 +747,18 @@ int RunMessageLoop()
 						switch (Msg.wParam) {
 							case VK_MENU:
 								continue;
-							case VK_F1: {
-								bool bOldAppDoFast = bAppDoFast;
+							case VK_F1:
+								if (!kNetGame) {
+									bool bOldAppDoFast = bAppDoFast;
 
-								if (!bAppDoFasttoggled)
-									bAppDoFast = 0;
-								bAppDoFasttoggled = 0;
-								if (bOldAppDoFast != bAppDoFast) {
-									DisplayFPSInit(); // resync fps display
+									if (!bAppDoFastToggled)
+										bAppDoFast = 0;
+									bAppDoFastToggled = 0;
+									if (bOldAppDoFast != bAppDoFast) {
+										DisplayFPSInit(); // resync fps display
+									}
 								}
 								break;
-							}
 						}
 					}
 				}
@@ -665,7 +766,7 @@ int RunMessageLoop()
 				// Check for messages for dialogs etc.
 				if (AppMessage(&Msg)) {
 					if (TranslateAccelerator(hScrnWnd, hAccel, &Msg) == 0) {
-						if (hwndChat) {
+						if (bEditActive) {
 							TranslateMessage(&Msg);
 						}
 						DispatchMessage(&Msg);
@@ -679,7 +780,7 @@ int RunMessageLoop()
 		}
 
 		RunExit();
-		MediaExit();
+		MediaExit(true);
 		if (bRestartVideo) {
 			MediaInit();
 			PausedRedraw();
@@ -688,4 +789,3 @@ int RunMessageLoop()
 
 	return 0;
 }
-

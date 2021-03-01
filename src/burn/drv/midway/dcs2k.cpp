@@ -76,11 +76,8 @@ static UINT8 bGenerateIRQ;
 
 static INT32 samples_from; // samples per frame
 static INT32 sample_rate;  // sample rate of dcs
-static INT32 sample_rateadj; // rate adjuster, to match the amount of samples being supplied by dcs with the host rate
 static INT16 *mixer_buffer;
 static INT32 mixer_pos;
-static INT32 last_mixer_pos; // last average mixer buffer size
-static INT32 rate_adjusted;  // wait x frames until adjuster kicks in
 
 void Dcs2kBoot();
 static void SetupMemory();
@@ -180,38 +177,20 @@ void Dcs2kSetVolume(double vol)
 	dcs_volume = vol;
 }
 
-// simple 8-count average-izer, used to calculate the average sample consumption
-#define AVGNUM 8
-static UINT32 avg_cntpos = 0;
-static INT32 avgs[AVGNUM] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-
-static void add_avg(INT32 cnt)
-{
-	avgs[avg_cntpos++ & (AVGNUM-1)] = cnt;
-}
-
-static INT32 get_avg()
-{
-	INT32 a = 0;
-
-	for (INT32 i = 0; i < AVGNUM; i++)
-		a += avgs[i];
-	return a / AVGNUM;
-}
-
-
 void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength)
 {
-	// dcs provides 240 samples every call to DcsIRQ()
-	// getting this to resample to the host rate is tricky :)  we have to
-	// dynamically alter the effective resampling rate to avoid over/underflow
-	// of the sample buffer. - dink dec. 05, 2018
+	// dcs provides 240 samples every call to DcsIRQ__INT()
+	// theory: check 3x a frame w/DcsCheckIRQ(), if mixer_pos gets below
+	// samples_from - run IRQ to get more samples. -dink oct.29, 2020
 
-	INT32 effective_samples_from = samples_from + sample_rateadj;
+	if (mixer_pos == 0) { // nothing to output
+		memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
+		return;
+	}
 
 	for (INT32 j = 0; j < nSegmentLength; j++)
 	{
-		INT32 k = (effective_samples_from * j) / nBurnSoundLen;
+		INT32 k = (samples_from * j) / nBurnSoundLen;
 
 		INT32 l = mixer_buffer[k];
 		INT32 r = mixer_buffer[k]; // dcs 2, 8k is mono :) (saved incase later we add stereo dcs)
@@ -220,29 +199,20 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength)
 		pSoundBuf += 2;
 	}
 
-	if (mixer_pos > effective_samples_from) {
-		memmove(&mixer_buffer[0], &mixer_buffer[effective_samples_from], (mixer_pos - effective_samples_from) * sizeof(INT16));
+	if (mixer_pos >= samples_from) {
+		memmove(&mixer_buffer[0], &mixer_buffer[samples_from], (mixer_pos - samples_from) * sizeof(INT16));
 
-		mixer_pos = mixer_pos - effective_samples_from;
+		mixer_pos = mixer_pos - samples_from;
 
-		if (rate_adjusted) rate_adjusted--;
-
-		add_avg(mixer_pos);
-		if (get_avg() > last_mixer_pos && !rate_adjusted) {
-			sample_rateadj += 1;
-			rate_adjusted = 5;
-		} else if (get_avg() < last_mixer_pos && !rate_adjusted) {
-			sample_rateadj -= 1;
-			rate_adjusted = 5;
-		}
-
-		last_mixer_pos = get_avg();
-		//bprintf(0, _T("dcs2k: samples_from %d  avg %d  extra samples: %d  rateadjuster %d\n"), effective_samples_from, get_avg(), mixer_pos, sample_rateadj);
+		//bprintf(0, _T("dcs2k: samples_from %d  extra samples: %d\n"), samples_from, mixer_pos);
 
 		if (mixer_pos > 10000) {
 			bprintf(0, _T("dcs2k: overrun!\n"));
 			mixer_pos = 0;
 		}
+	} else {
+		//bprintf(0, _T("dcs2k: underrun.  mixer_pos %d  samples %d\n"), mixer_pos, samples_from);
+		mixer_pos = 0;
 	}
 }
 
@@ -401,15 +371,15 @@ void Dcs2kMapSoundROM(void *ptr, INT32 size)
 
 void Dcs2kBoot()
 {
-    UINT8 buffer[0x1000];
-    UINT16 *base;
-    INT32 i;
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x2000); // +0x1000 for adsp paging
+	UINT16 *base = (UINT16*)pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
-    base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
+	for (INT32 i = 0; i < 0x1000; i++)
+		buffer[i] = BURN_ENDIAN_SWAP_INT16(base[i]);
 
-    for (i = 0; i < 0x1000; i++)
-        buffer[i] = base[i];
-    Adsp2100LoadBootROM(buffer, pIntRAM);
+	Adsp2100LoadBootROM(buffer, pIntRAM);
+
+	BurnFree(buffer);
 }
 
 void Dcs2kReset()
@@ -428,6 +398,7 @@ void Dcs2kReset()
     nTotalCycles = 0ULL;
     nNextIRQCycle = ~0ULL;
 
+	nCurrentBank = 0;
     nOutputData = 0;
     nInputData = 0;
     nLatchControl = 0;
@@ -445,9 +416,6 @@ void Dcs2kReset()
 	mixer_pos = 0;
 	sample_rate = 31250; // default
 	samples_from = (INT32)((double)((sample_rate * 100) / nBurnFPS) + 0.5);
-	sample_rateadj = 0;
-	last_mixer_pos = 0;
-	rate_adjusted = 8;
 }
 
 static UINT16 ReadRAMBank(UINT32 address)
@@ -457,7 +425,7 @@ static UINT16 ReadRAMBank(UINT32 address)
 #if LOG_MEMACC
     dcs_log(_T("bank_r[%x] %x - %x\n"), nCurrentBank, address & 0xFFF, p[offset]);
 #endif
-    return p[offset];
+    return BURN_ENDIAN_SWAP_INT16(p[offset]);
 }
 
 static UINT16 ReadRAM(UINT32 address)
@@ -466,7 +434,7 @@ static UINT16 ReadRAM(UINT32 address)
     dcs_log(_T("ram_r %x\n"), address);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM;
-    return p[address & 0x1FF];
+    return BURN_ENDIAN_SWAP_INT16(p[address & 0x1FF]);
 }
 
 static void WriteRAM(UINT32 address, UINT16 value)
@@ -475,7 +443,7 @@ static void WriteRAM(UINT32 address, UINT16 value)
     dcs_log(_T("ram_w %x, %x\n"), address, value);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM;
-    p[address & 0x1FF] = value;
+    p[address & 0x1FF] = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 static UINT16 ReadRAM0(UINT32 address)
@@ -484,7 +452,7 @@ static UINT16 ReadRAM0(UINT32 address)
     dcs_log(_T("ram0_r %x\n"), address);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM0;
-    return p[address & 0x7FF];
+    return BURN_ENDIAN_SWAP_INT16(p[address & 0x7FF]);
 }
 
 static void WriteRAM0(UINT32 address, UINT16 value)
@@ -493,7 +461,7 @@ static void WriteRAM0(UINT32 address, UINT16 value)
     dcs_log(_T("ram0_w %x, %x\n"), address, value);
 #endif
     UINT16 *p = (UINT16 *) pDataRAM0;
-    p[address & 0x7FF] = value;
+    p[address & 0x7FF] = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 static UINT16 ReadData(UINT32 address)
@@ -667,10 +635,7 @@ static void TxCallback(INT32 port, INT32 data)
 			if (sample_rate != sample_rate_old) {
 				bprintf(0, _T("dcs2k: new sample rate %d\n"), sample_rate);
 
-				// reset the rate-consumption adjuster
-				sample_rateadj = 0;
-				rate_adjusted = 8;
-
+				// re-calculate the #samples per frame
 				samples_from = (INT32)((double)((sample_rate * 100) / nBurnFPS) + 0.5);
 			}
 
@@ -684,7 +649,7 @@ static void TxCallback(INT32 port, INT32 data)
     nNextIRQCycle = ~0ULL;
 }
 
-void DcsIRQ()
+static void DcsIRQ__INT()
 {
 	if (!bGenerateIRQ) return;
     adsp2100_state *adsp = Adsp2100GetState();
@@ -713,8 +678,17 @@ void DcsIRQ()
         Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_ACK);
         Adsp2100Run(1);
         Adsp2100SetIRQLine(ADSP2105_IRQ1, CPU_IRQSTATUS_NONE);
-        //nTotalCycles++;
     }
+}
+
+void DcsCheckIRQ()
+{
+	if (pBurnSoundOut == NULL)
+		mixer_pos = 0;
+
+	if (mixer_pos < samples_from) {
+		DcsIRQ__INT();
+	}
 }
 
 static void TimerCallback(INT32 enable)
@@ -754,11 +728,8 @@ INT32 Dcs2kScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(samples_from); // samples per frame
 		SCAN_VAR(sample_rate);  // sample rate of dcs
-		SCAN_VAR(sample_rateadj); // rate adjuster, to match the amount of samples being supplied by dcs with the host rate
 		ScanVar(mixer_buffer, 10000 * sizeof(INT16), "DcsMixerBuffer");
 		SCAN_VAR(mixer_pos);
-		SCAN_VAR(last_mixer_pos); // last average mixer buffer size
-		SCAN_VAR(rate_adjusted);  // wait x frames until adjuster kicks in
 	}
 
 	return 0;

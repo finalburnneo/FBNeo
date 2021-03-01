@@ -3035,10 +3035,10 @@ struct BurnDriver BurnDrvGunforceu = {
 // Undercover Cops (World)
 
 static struct BurnRomInfo uccopsRomDesc[] = {
-	{ "uc_h0.rom",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "uc_l0.rom",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "uc_h1.rom",		0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "uc_l1.rom",		0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "uc_h0.ic28",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "uc_l0.ic39",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "uc_h1.ic27",		0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "uc_l1.ic38",		0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "uc_sh0.rom",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
 	{ "uc_sl0.rom",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -3083,10 +3083,10 @@ struct BurnDriver BurnDrvUccops = {
 // Undercover Cops (US)
 
 static struct BurnRomInfo uccopsuRomDesc[] = {
-	{ "uc_h0.rom",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "uc_l0.rom",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "uc_h1-g.rom",	0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "uc_l1-g.rom",	0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "uc_h0.ic28",		0x040000, 0x240aa5f7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "uc_l0.ic39",		0x040000, 0xdf9a4826, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "uc_h1-g.ic27",	0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "uc_l1-g.ic38",	0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "uc_sh0.rom",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
 	{ "uc_sl0.rom",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -3113,44 +3113,6 @@ struct BurnDriver BurnDrvUccopsu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, uccopsuRomInfo, uccopsuRomName, NULL, NULL, NULL, NULL, p3CommonInputInfo, UccopsDIPInfo,
-	uccopsInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
-	320, 240, 4, 3
-};
-
-
-// Undercover Cops (Alpha Renewal Version)
-
-static struct BurnRomInfo uccopsarRomDesc[] = {
-	{ "uc_h0_a.ic28",	0x040000, 0x9e17cada, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "uc_l0_a.ic39",	0x040000, 0x4a4e3208, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "uc_h1.ic27",		0x020000, 0x79d79742, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "uc_l1.ic38",		0x020000, 0x37211581, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "uc_sh0.ic30",	0x010000, 0xf0ca1b03, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "uc_sl0.ic31",	0x010000, 0xd1661723, 2 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "uc_c0.ic26",		0x080000, 0x6a419a36, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "uc_c1.ic25",		0x080000, 0xd703ecc7, 3 | BRF_GRA },           //  7
-	{ "uc_c2.ic24",		0x080000, 0x96397ac6, 3 | BRF_GRA },           //  8
-	{ "uc_c3.ic23",		0x080000, 0x5d07d10d, 3 | BRF_GRA },           //  9
-
-	{ "uc_030.ic37",	0x100000, 0x97f7775e, 4 | BRF_GRA },           // 10 Sprites
-	{ "uc_020.ic36",	0x100000, 0x5e0b1d65, 4 | BRF_GRA },           // 11
-	{ "uc_010.ic35",	0x100000, 0xbdc224b3, 4 | BRF_GRA },           // 12
-	{ "uc_000.ic34",	0x100000, 0x7526daec, 4 | BRF_GRA },           // 13
-
-	{ "uc_da.bin",		0x080000, 0x0b2855e9, 5 | BRF_SND },           // 14 Irem GA20 Samples
-};
-
-STD_ROM_PICK(uccopsar)
-STD_ROM_FN(uccopsar)
-
-struct BurnDriver BurnDrvUccopsar = {
-	"uccopsar", "uccops", NULL, NULL, "1992",
-	"Undercover Cops (Alpha Renewal Version)\0", NULL, "Irem", "Irem M92",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
-	NULL, uccopsarRomInfo, uccopsarRomName, NULL, NULL, NULL, NULL, p3CommonInputInfo, UccopsDIPInfo,
 	uccopsInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
@@ -3189,6 +3151,82 @@ struct BurnDriver BurnDrvUccopsj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, uccopsjRomInfo, uccopsjRomName, NULL, NULL, NULL, NULL, p3CommonInputInfo, UccopsDIPInfo,
+	uccopsInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Undercover Cops - Alpha Renewal Version (World)
+
+static struct BurnRomInfo uccopsarRomDesc[] = {
+	{ "uc_h0_a.ic28",	0x040000, 0x9e17cada, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "uc_l0_a.ic39",	0x040000, 0x4a4e3208, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "uc_ar_h1.ic27",	0x020000, 0x79d79742, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "uc_ar_l1.ic38",	0x020000, 0x37211581, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "uc_sh0.ic30",	0x010000, 0xf0ca1b03, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "uc_sl0.ic31",	0x010000, 0xd1661723, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "uc_c0.ic26",		0x080000, 0x6a419a36, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "uc_c1.ic25",		0x080000, 0xd703ecc7, 3 | BRF_GRA },           //  7
+	{ "uc_c2.ic24",		0x080000, 0x96397ac6, 3 | BRF_GRA },           //  8
+	{ "uc_c3.ic23",		0x080000, 0x5d07d10d, 3 | BRF_GRA },           //  9
+
+	{ "uc_030.ic37",	0x100000, 0x97f7775e, 4 | BRF_GRA },           // 10 Sprites
+	{ "uc_020.ic36",	0x100000, 0x5e0b1d65, 4 | BRF_GRA },           // 11
+	{ "uc_010.ic35",	0x100000, 0xbdc224b3, 4 | BRF_GRA },           // 12
+	{ "uc_000.ic34",	0x100000, 0x7526daec, 4 | BRF_GRA },           // 13
+
+	{ "uc_da.bin",		0x080000, 0x0b2855e9, 5 | BRF_SND },           // 14 Irem GA20 Samples
+};
+
+STD_ROM_PICK(uccopsar)
+STD_ROM_FN(uccopsar)
+
+struct BurnDriver BurnDrvUccopsar = {
+	"uccopsar", "uccops", NULL, NULL, "1992",
+	"Undercover Cops - Alpha Renewal Version (World)\0", NULL, "Irem", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, uccopsarRomInfo, uccopsarRomName, NULL, NULL, NULL, NULL, p3CommonInputInfo, UccopsDIPInfo,
+	uccopsInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Undercover Cops - Alpha Renewal Version (US)
+
+static struct BurnRomInfo uccopsaruRomDesc[] = {
+	{ "uc_aru_h0.ic28",	0x040000, 0xe9522dc7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "uc_aru_l0.ic39",	0x040000, 0x619b6aee, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "uc_aru_h1.ic27",	0x020000, 0x2130d53b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "uc_aru_l1.ic38",	0x020000, 0xd768b177, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "uc_sh0.ic30",	0x010000, 0xf0ca1b03, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "uc_sl0.ic31",	0x010000, 0xd1661723, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "uc_c0.ic26",		0x080000, 0x6a419a36, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "uc_c1.ic25",		0x080000, 0xd703ecc7, 3 | BRF_GRA },           //  7
+	{ "uc_c2.ic24",		0x080000, 0x96397ac6, 3 | BRF_GRA },           //  8
+	{ "uc_c3.ic23",		0x080000, 0x5d07d10d, 3 | BRF_GRA },           //  9
+
+	{ "uc_030.ic37",	0x100000, 0x97f7775e, 4 | BRF_GRA },           // 10 Sprites
+	{ "uc_020.ic36",	0x100000, 0x5e0b1d65, 4 | BRF_GRA },           // 11
+	{ "uc_010.ic35",	0x100000, 0xbdc224b3, 4 | BRF_GRA },           // 12
+	{ "uc_000.ic34",	0x100000, 0x7526daec, 4 | BRF_GRA },           // 13
+
+	{ "uc_da.bin",		0x080000, 0x0b2855e9, 5 | BRF_SND },           // 14 Irem GA20 Samples
+};
+
+STD_ROM_PICK(uccopsaru)
+STD_ROM_FN(uccopsaru)
+
+struct BurnDriver BurnDrvUccopsaru = {
+	"uccopsaru", "uccops", NULL, NULL, "1992",
+	"Undercover Cops - Alpha Renewal Version (US)\0", NULL, "Irem America", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, uccopsaruRomInfo, uccopsaruRomName, NULL, NULL, NULL, NULL, p3CommonInputInfo, UccopsDIPInfo,
 	uccopsInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

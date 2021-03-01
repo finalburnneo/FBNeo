@@ -658,7 +658,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo skyarmyRomDesc[] = {
 //	ROM_REGION( 0x10000, "maincpu", 0 )
 //	ROM_LOAD( "a1h.bin", 0x0000, 0x2000, CRC(e3fb9d70) SHA1(b8e3a6d7d6ef30c1397f9b741132c5257c16be2d) )
-	{ "a1h.bin",	0x2000, 0xe3fb9d70, 1 }, //  0 maincpu
+	{ "a1h.bin",	0x2000, 0x46507488, 1 }, //  0 maincpu
 //	ROM_LOAD( "a2h.bin", 0x2000, 0x2000, CRC(0417653e) SHA1(4f6ad7335b5b7e85b4e16cce3c127488c02401b2) )
 	{ "a2h.bin",	0x2000, 0x0417653e, 1 }, //  1
 //	ROM_LOAD( "a3h.bin", 0x4000, 0x2000, CRC(95485e56) SHA1(c4cbcd31ba68769d2d0d0875e2a92982265339ae) )

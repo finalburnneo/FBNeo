@@ -40,11 +40,8 @@ static UINT8 DrvReset;
 static INT32 vblank = 0;
 
 static struct BurnInputInfo WwfsstarInputList[] = {
-	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"Start 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 start"	},
-
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"}	,
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
@@ -53,6 +50,7 @@ static struct BurnInputInfo WwfsstarInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},

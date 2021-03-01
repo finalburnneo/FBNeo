@@ -12,13 +12,20 @@
 	extern struct VidOut VidOutDDrawFX;
 	extern struct VidOut VidOutDX9;
 	extern struct VidOut VidOutDX9Alt;
+#elif defined (BUILD_MACOS)
+	extern struct VidOut VidOutMacOS;
+#elif defined (BUILD_PI)
+	extern struct VidOut VidOutPi;
+#elif defined (BUILD_SDL2)
+	extern struct VidOut VidOutSDL2;
+	extern struct VidOut VidOutSDL2Opengl;
 #elif defined (BUILD_SDL)
 	extern struct VidOut VidOutSDLOpenGL;
 	extern struct VidOut VidOutSDLFX;
 #elif defined (_XBOX)
 	extern struct VidOut VidOutD3D;
 #elif defined (BUILD_QT)
-    extern struct VidOut VidOutOGL;
+	extern struct VidOut VidOutOGL;
 #endif
 
 static struct VidOut *pVidOut[] = {
@@ -28,13 +35,20 @@ static struct VidOut *pVidOut[] = {
 	&VidOutDDrawFX,
 	&VidOutDX9,
 	&VidOutDX9Alt,
+#elif defined (BUILD_MACOS)
+	&VidOutMacOS,
+#elif defined (BUILD_PI)
+	&VidOutPi,
+#elif defined (BUILD_SDL2)
+	&VidOutSDL2,
+	&VidOutSDL2Opengl,
 #elif defined (BUILD_SDL)
 	&VidOutSDLOpenGL,
 	&VidOutSDLFX,
 #elif defined (_XBOX)
 	&VidOutD3D,
 #elif defined (BUILD_QT)
-    &VidOutOGL,
+	&VidOutOGL,
 #endif
 };
 
@@ -46,11 +60,10 @@ static InterfaceInfo VidInfo = { NULL, NULL, NULL };
 
 #if defined (BUILD_WIN32)
 #if defined BUILD_X64_EXE
-// set DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
-UINT32 nVidSelect = 0;					// Which video output is selected
+// set SoftFX DDraw blitter as default for 64-bit builds (in case user doesn't have DX redistributable installed)
+UINT32 nVidSelect = 2;					// Which video output is selected
 #else
-// sec D3D7 Enhanced blitter as default
-UINT32 nVidSelect = 1;					// Which video output is selected
+UINT32 nVidSelect = 4;					// Which video output is selected
 #endif
 #else
 UINT32 nVidSelect = 0;					// Which video output is selected
@@ -60,7 +73,7 @@ static UINT32 nVidActive = 0;
 
 bool bVidOkay = false;
 
-INT32 nVidWidth		= 640, nVidHeight		= 480, nVidDepth = 32, nVidRefresh = 0;
+INT32 nVidWidth = 640, nVidHeight = 480, nVidDepth = 32, nVidRefresh = 0;
 
 INT32 nVidHorWidth	= 640, nVidHorHeight	= 480;	// Default Horizontal oritated resolution
 INT32 nVidVerWidth	= 640, nVidVerHeight	= 480;	// Default Vertical oriented resoultion
@@ -70,17 +83,18 @@ INT32 bVidFullStretch = 0;						// 1 = stretch to fill the entire window/screen
 INT32 bVidCorrectAspect = 1;						// 1 = stretch to fill the window/screen while maintaining the correct aspect ratio
 INT32 bVidVSync = 0;								// 1 = sync blits/pageflips/presents to the screen
 INT32 bVidTripleBuffer = 0;						// 1 = use triple buffering
-INT32 bVidBilinear = 1;							// 1 = enable bi-linear filtering (D3D blitter)
+INT32 bVidBilinear = 0;							// 1 = enable bi-linear filtering (D3D blitter)
 INT32 bVidScanlines = 0;							// 1 = draw scanlines
 INT32 bVidScanRotate = 1;							// 1 = rotate scanlines and RGB effects for rotated games
 INT32 bVidScanBilinear = 1;						// 1 = use bi-linear filtering for scanlines (D3D blitter, debug variable)
-INT32 nVidScanIntensity = 0x00BFBFBF;				// The maximum colour-value for the scanlines (D3D blitter)
+INT32 nVidScanIntensity = 0x00606060;			// The maximum colour-value for the scanlines (D3D blitter)
 INT32 bVidScanHalf = 1;							// Draw scanlines at half intensity instead of black (DDraw blitter)
 INT32 bVidScanDelay = 0;							// Blend the previous image with the current one
 INT32 nVidFeedbackIntensity = 0x40;				// Blend factor for previous frame (D3D blitter)
 INT32 nVidFeedbackOverSaturation = 0x00;			// Add this to the current frame blend factor
 INT32 bVidUseHardwareGamma = 1;					// Use the video hardware when correcting gamma
 INT32 bVidAutoSwitchFull = 0;						// 1 = auto switch to fullscreen on loading driver
+INT32 bVidAutoSwitchFullDisable = 0;		// 1 = disable auto switch to fullscreen on loading driver
 INT32 bVidArcaderes = 0;							// Use game resolution for fullscreen modes
 
 INT32 bVidArcaderesHor = 0;
@@ -99,19 +113,30 @@ float fVidScreenCurvature = 0.698132f;			// The angle of the maximum screen curv
 double dVidCubicB = 0.0;						// Paremeters for the cubic filter (default is the CAtmull-Rom spline, DX9 blitter)
 double dVidCubicC = 0.5;						//
 
-INT32 bVidDX9Bilinear = 1;							// 1 = enable bi-linear filtering (D3D9 Alt blitter)
-INT32 bVidHardwareVertex = 0;			// 1 = use hardware vertex processing
-INT32 bVidMotionBlur = 0;				// 1 = motion blur
+INT32 bVidDX9Bilinear = 0;					// 1 = enable bi-linear filtering (D3D9 Alt blitter)
+INT32 bVidHardwareVertex = 1;				// 1 = use hardware vertex processing
+INT32 bVidMotionBlur = 0;						// 1 = motion blur
+INT32 bVidDX9Scanlines = 1;					// 1 = draw scanlines
+INT32 bVidDX9WinFullscreen = 0;			// 0 = borderless windowed for fullscreen
+INT32 bVidDX9LegacyRenderer = 0;		// 0 = legacy directx9 renderer (no Ex)
+INT32 nVidDX9HardFX = 0; 						// index of HardFX effect (0 = None)
+INT32 bVidOverlay = 1;							// 1 = draw overlay
+INT32 bVidBigOverlay = 0;						// 1 = bigger overlay
+INT32 bVidUnrankedScores = 0;				// 1 = show scores in unranked
+INT32 bVidSaveOverlayFiles = 0;			// 1 = save overlay data to obs files
+INT32 bVidSaveChatHistory = 0;			// 1 = save chat history to file
+INT32 bVidMuteChat = 0;							// 1 = mute ingame chat
+INT32 nVidRunahead = 0;							// 0|1|2 = number of run ahead frames
 
 wchar_t HorScreen[32] = L"";
 wchar_t VerScreen[32] = L"";
 
 #ifdef BUILD_WIN32
- HWND hVidWnd = NULL;							// Actual window used for video
+HWND hVidWnd = NULL;							// Actual window used for video
 #endif
 
 #if defined (_XBOX)
-  HWND hVidWnd = NULL;							// Actual window used for video
+HWND hVidWnd = NULL;							// Actual window used for video
 #endif
 
 INT32 nVidScrnWidth = 0, nVidScrnHeight = 0;		// Actual Screen dimensions (0 if in windowed mode)
@@ -127,11 +152,11 @@ INT32 nVidImageLeft = 0, nVidImageTop = 0;		// Memory buffer visible area offset
 INT32 nVidImagePitch = 0, nVidImageBPP = 0;		// Memory buffer pitch and bytes per pixel
 INT32 nVidImageDepth = 0;							// Memory buffer bits per pixel
 
-UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
+UINT32(__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 static bool bVidRecalcPalette;
-												// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
+// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
 static void VidDoFrameCallback();
-void (*pVidTransCallback)(void) = NULL;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
+void(*pVidTransCallback)(void) = NULL;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
 static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
 static INT32 bSkipNextFrame = 0;
@@ -142,7 +167,7 @@ static UINT32 __cdecl HighCol15(INT32 r, INT32 g, INT32 b, INT32  /* i */)
 {
 	UINT32 t;
 
-	t  = (r << 7) & 0x7C00;
+	t = (r << 7) & 0x7C00;
 	t |= (g << 2) & 0x03E0;
 	t |= (b >> 3) & 0x001F;
 
@@ -187,11 +212,11 @@ INT32 VidInit()
 				}
 			}
 		} else {
-			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT, 0);
 		}
-		
-		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
-		
+
+		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT, 0);
+
 		GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 
 		nVidImageWidth = bitmap.bmWidth; nVidImageHeight = bitmap.bmHeight;
@@ -228,7 +253,8 @@ INT32 VidInit()
 	}
 
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
-	if (bVidOkay && hbitmap) {
+	// SPLASH IMAGE
+	if (bVidOkay && hbitmap && pVidImage) {
 		BITMAPINFO bitmapinfo;
 		UINT8* pLineBuffer = (UINT8*)malloc((bitmap.bmWidth + 3) * 4); // add + 3 safetynet
 		HDC hDC = GetDC(hVidWnd);
@@ -242,7 +268,7 @@ INT32 VidInit()
 			bitmapinfo.bmiHeader.biPlanes = 1;
 			bitmapinfo.bmiHeader.biBitCount = 24;
 			bitmapinfo.bmiHeader.biCompression = BI_RGB;
-			
+
 			for (INT32 y = 0; y < nVidImageHeight; y++) {
 				UINT8* pd = pVidImage + y * nVidImagePitch;
 				UINT8* ps = pLineBuffer;
@@ -258,7 +284,7 @@ INT32 VidInit()
 							break;
 						case 3:
 							pd[0] = (nColour >> 16) & 0xFF;
-							ps[1] = (nColour >>  8) & 0xFF;
+							pd[1] = (nColour >>  8) & 0xFF;
 							pd[2] = (nColour >>  0) & 0xFF;
 							pd += 3;
 							break;
@@ -325,36 +351,36 @@ INT32 VidExit()
 
 static void VidDoFrameCallback()
 {
-		UINT16* pSrc = (UINT16*)pVidTransImage;
-		UINT8* pDest = pVidImage;
+	UINT16* pSrc = (UINT16*)pVidTransImage;
+	UINT8* pDest = pVidImage;
 
-		switch (nVidImageBPP) {
-			case 3: {
-				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
-					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						UINT32 c = pVidTransPalette[pSrc[x] & 0x7fff];
-						*(pDest + (x * 3) + 0) = c & 0xFF;
-						*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
-						*(pDest + (x * 3) + 2) = c >> 16;
-					}
+	switch (nVidImageBPP) {
+		case 3: {
+			for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
+				for (INT32 x = 0; x < nVidImageWidth; x++) {
+					UINT32 c = pVidTransPalette[pSrc[x] & 0x7fff];
+					*(pDest + (x * 3) + 0) = c & 0xFF;
+					*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
+					*(pDest + (x * 3) + 2) = c >> 16;
 				}
-				break;
 			}
-			case 4: {
-				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
-					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x] & 0x7fff];
-					}
-				}
-				break;
-			}
+			break;
 		}
+		case 4: {
+			for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
+				for (INT32 x = 0; x < nVidImageWidth; x++) {
+					((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x] & 0x7fff];
+				}
+			}
+			break;
+		}
+	}
 }
 
 static INT32 VidDoFrame(bool bRedraw)
 {
 	INT32 nRet;
-	
+
 	if (pVidTransImage && pVidTransPalette) {
 		if (bVidRecalcPalette) {
 			for (INT32 r = 0; r < 256; r += 8) {
@@ -438,7 +464,13 @@ INT32 VidRecalcPal()
 INT32 VidPaint(INT32 bValidate)
 {
 	if (bVidOkay /* && bDrvOkay */) {
-		return pVidOut[nVidActive]->Paint(bValidate);
+		if (bValidate == 3) {
+			int ret = pVidOut[nVidActive]->Paint(2 | bValidate);
+			return ret;
+		}
+		else {
+			return 0;
+		}
 	} else {
 		return 1;
 	}
@@ -446,7 +478,7 @@ INT32 VidPaint(INT32 bValidate)
 
 INT32 VidImageSize(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight)
 {
- 	if (bVidOkay) {
+	if (bVidOkay) {
 		return pVidOut[nVidActive]->ImageSize(pRect, nGameWidth, nGameHeight);
 	} else {
 		return pVidOut[nVidSelect]->ImageSize(pRect, nGameWidth, nGameHeight);
@@ -489,7 +521,6 @@ InterfaceInfo* VidGetInfo()
 #if defined (BUILD_WIN32)
 		GetClientScreenRect(hVidWnd, &rect);
 		if (nVidFullscreen == 0) {
-			rect.top += nMenuHeight;
 			_sntprintf(szString, MAX_PATH, _T("Running in windowed mode, %ix%i, %ibpp"), rect.right - rect.left, rect.bottom - rect.top, nVidScrnDepth);
 		} else {
 			_sntprintf(szString, MAX_PATH, _T("Running fullscreen, %ix%i, %ibpp"), nVidScrnWidth, nVidScrnHeight, nVidScrnDepth);
@@ -508,7 +539,7 @@ InterfaceInfo* VidGetInfo()
 			IntInfoAddStringInterface(&VidInfo, szString);
 		}
 
-	 	if (pVidOut[nVidActive]->GetPluginSettings) {
+		if (pVidOut[nVidActive]->GetPluginSettings) {
 			pVidOut[nVidActive]->GetPluginSettings(&VidInfo);
 		}
 	} else {
@@ -516,4 +547,4 @@ InterfaceInfo* VidGetInfo()
 	}
 
 	return &VidInfo;
-}
+	}

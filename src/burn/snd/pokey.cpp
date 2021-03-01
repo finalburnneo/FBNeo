@@ -567,7 +567,7 @@ void pokey_update(INT16 *buffer, INT32 length) {
 		pokey_update(i, buffer, length);
 }
 
-void (*update[MAXPOKEYS])(int,INT16*,int) =
+void (*update[MAXPOKEYS])(INT32,INT16*,INT32) =
 	{ pokey_update,pokey_update,pokey_update,pokey_update };
 
 #endif

@@ -612,8 +612,8 @@ static INT32 CommonDrvInit(INT32 game)
 	ZetSetReadHandler(bionicc_sound_read);
 	ZetClose();
 
-	mcs51_program_data = DrvMCUROM;
 	mcs51_init();
+	mcs51_set_program_data(DrvMCUROM);
 	mcs51_set_write_handler(mcu_write_port);
 	mcs51_set_read_handler(mcu_read_port);
 

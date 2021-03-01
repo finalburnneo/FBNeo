@@ -93,6 +93,7 @@ void EEPROMInit(const eeprom_interface *interface)
 	if (intf->cmd_unlock) locked = 1;
 	else locked = 0;
 
+	/* @FC: Disable local save of EEPROM
 	TCHAR output[MAX_PATH];
 	_stprintf (output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 
@@ -106,6 +107,7 @@ void EEPROMInit(const eeprom_interface *interface)
 		fread (eeprom_data, len, 1, fz);
 		fclose (fz);
 	}
+	*/
 }
 
 void EEPROMExit()
@@ -116,6 +118,7 @@ void EEPROMExit()
 
 	if (!DebugDev_EEPROMInitted) return;
 
+	/* @FC: Disable local save of EEPROM
 	TCHAR output[MAX_PATH];
 	_stprintf (output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 
@@ -128,6 +131,7 @@ void EEPROMExit()
 		fwrite (eeprom_data, len, 1, fz);
 		fclose (fz);
 	}
+	*/
 
 	overrun_errmsg_ignore = 0;
 

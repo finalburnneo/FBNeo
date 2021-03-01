@@ -95,15 +95,14 @@ Input Definitions
 ===============================================================================================*/
 
 static struct BurnInputInfo BlockgalInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 6, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort0 + 2, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort0 + 3, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 7, "p2 fire 1" },
@@ -117,15 +116,14 @@ static struct BurnInputInfo BlockgalInputList[] = {
 STDINPUTINFO(Blockgal)
 
 static struct BurnInputInfo FlickyInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
@@ -140,11 +138,8 @@ static struct BurnInputInfo FlickyInputList[] = {
 STDINPUTINFO(Flicky)
 
 static struct BurnInputInfo MyheroInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -152,6 +147,8 @@ static struct BurnInputInfo MyheroInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -168,12 +165,37 @@ static struct BurnInputInfo MyheroInputList[] = {
 
 STDINPUTINFO(Myhero)
 
-static struct BurnInputInfo SeganinjInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+static struct BurnInputInfo RegulusInputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 2" },
+
+	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , System1InputPort2 + 3, "service"   },
+	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Regulus)
+
+static struct BurnInputInfo SeganinjInputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -182,6 +204,8 @@ static struct BurnInputInfo SeganinjInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -200,17 +224,16 @@ static struct BurnInputInfo SeganinjInputList[] = {
 STDINPUTINFO(Seganinj)
 
 static struct BurnInputInfo UpndownInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -227,16 +250,15 @@ static struct BurnInputInfo UpndownInputList[] = {
 STDINPUTINFO(Upndown)
 
 static struct BurnInputInfo WboyInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 1" },
@@ -252,11 +274,8 @@ static struct BurnInputInfo WboyInputList[] = {
 STDINPUTINFO(Wboy)
 
 static struct BurnInputInfo WmatchInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Left Up"        , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Left Down"      , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left Left"      , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -267,6 +286,8 @@ static struct BurnInputInfo WmatchInputList[] = {
 	{"P1 Right Right"    , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 4" },
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 6, "p1 fire 5" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Left Up"        , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Left Down"      , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left Left"      , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -287,11 +308,8 @@ static struct BurnInputInfo WmatchInputList[] = {
 STDINPUTINFO(Wmatch)
 
 static struct BurnInputInfo ChplftbInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
@@ -299,6 +317,8 @@ static struct BurnInputInfo ChplftbInputList[] = {
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
@@ -317,25 +337,24 @@ static struct BurnInputInfo ChplftbInputList[] = {
 STDINPUTINFO(Chplftb)
 
 static struct BurnInputInfo UfosensiInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
-	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
-	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , System1InputPort0 + 0, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
-	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 2" },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 2" },
 	{"P2 Fire 3"         , BIT_DIGITAL  , System1InputPort1 + 0, "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
@@ -391,14 +410,13 @@ static inline void BlockgalMakeInputs()
 }
 
 #define SYSTEM1_COINAGE(dipval)								\
-	{0   , 0xfe, 0   , 16   , "Coin A"                },				\
+	{0   , 0xfe, 0   , 15   , "Coin A"                },				\
 	{dipval, 0x01, 0x0f, 0x07, "4 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x08, "3 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x09, "2 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x05, "2 Coins 1 Credit 4/2 5/3 6/4"},			\
 	{dipval, 0x01, 0x0f, 0x04, "2 Coins 1 Credit 4/3"   },				\
 	{dipval, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"       },				\
-	{dipval, 0x01, 0x0f, 0x00, "1 Coin  1 Credit"       },				\
 	{dipval, 0x01, 0x0f, 0x03, "1 Coin  1 Credit 5/6"   },				\
 	{dipval, 0x01, 0x0f, 0x02, "1 Coin  1 Credit 4/5"   },				\
 	{dipval, 0x01, 0x0f, 0x01, "1 Coin  1 Credit 2/3"   },				\
@@ -409,14 +427,13 @@ static inline void BlockgalMakeInputs()
 	{dipval, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"      },				\
 	{dipval, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"      },				\
 											\
-	{0   , 0xfe, 0   , 16   , "Coin B"                },				\
+	{0   , 0xfe, 0   , 15   , "Coin B"                },				\
 	{dipval, 0x01, 0xf0, 0x70, "4 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x80, "3 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x90, "2 Coins 1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x50, "2 Coins 1 Credit 4/2 5/3 6/4"},			\
 	{dipval, 0x01, 0xf0, 0x40, "2 Coins 1 Credit 4/3"   },				\
 	{dipval, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"       },				\
-	{dipval, 0x01, 0xf0, 0x00, "1 Coin  1 Credit"       },				\
 	{dipval, 0x01, 0xf0, 0x30, "1 Coin  1 Credit 5/6"   },				\
 	{dipval, 0x01, 0xf0, 0x20, "1 Coin  1 Credit 4/5"   },				\
 	{dipval, 0x01, 0xf0, 0x10, "1 Coin  1 Credit 2/3"   },				\
@@ -4829,7 +4846,7 @@ static UINT8 __fastcall System1Z802ProgRead(UINT16 a)
 		}
 	}
 
-	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
+	//bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
 	return 0;
 }
 
@@ -5782,10 +5799,6 @@ static INT32 ChplftbInit()
 		System1RowScroll = 1;
 		ZetOpen(0);
 
-		ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
-		ZetMapArea(0xe7c0, 0xe7ff, 1, System1ScrollXRam);
-		ZetMapArea(0xe7c0, 0xe7ff, 2, System1ScrollXRam);
-
 		ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
 		ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
 		ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
@@ -5991,6 +6004,13 @@ static void DrawSprite(INT32 Num)
 		x = ((SpriteBase[3] & 0x01) << 8) + SpriteBase[2] + System1SpriteXOffset;
 		y = sy + Row;
 
+		if (System1FlipScreen) {
+			// flipped
+			y = Height + (sy - Row);
+			y -= 3; // flipped offsets
+			x += 7; // ""
+		}
+
 		if (!wide_mode) x /= 2;
 
 		while(1) {
@@ -6058,6 +6078,9 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 		System1BgScrollX = ((System1ScrollX[0] | (System1ScrollX[1] << 8)) & 0x1ff) + 28;
 	} else {
 		System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
+		if (System1FlipScreen) {
+			System1BgScrollX -= 19; // flipped offset
+		}
 	}
 	System1BgScrollY = (-System1ScrollY & 0xff);
 
@@ -6272,6 +6295,7 @@ static void System2DrawBgLayer(INT32 trasp)
 {
 	INT32 scrollx = (System1VideoRam[0x7c0] >> 1) + ((System1VideoRam[0x7c1] & 1) << 7) - 256 + 5;
 	INT32 scrolly = -System1VideoRam[0x7ba];
+	if (System1RowScroll) scrollx = 0;
 
 	for (INT32 page = 0; page < 4; page++)
 	{
@@ -6287,13 +6311,11 @@ static void System2DrawBgLayer(INT32 trasp)
 		{
 			for (INT32 col = 0; col < 32 * 8; col += 8)
 			{
-				INT32 x = (startx + col) & 0x1ff;
-				INT32 y = (starty + row) & 0x1ff;
-
 				if (System1RowScroll) {
-					System1BgScrollX = (System1ScrollXRam[((row/8) * 2) & ~1] >> 1) + ((System1ScrollXRam[((row/8) * 2) | 1] & 1) << 7);
-					x += System1BgScrollX;
+					System1BgScrollX = (((System1ScrollXRam[(row/4)] + (System1ScrollXRam[(row/4) + 1] << 8)) & 0x1ff) >> 1) - 256 + 5;
 				}
+				INT32 x = (startx + System1BgScrollX + col) & 0x1ff;
+				INT32 y = (starty + row) & 0x1ff;
 
 				if (x > 256) x -= 512;
 				if (y > 224) y -= 512;
@@ -6752,7 +6774,7 @@ struct BurnDriver BurnDrvRegulus = {
 	"Regulus (315-5033, rev. A)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusDIPInfo,
+	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
@@ -6762,7 +6784,7 @@ struct BurnDriver BurnDrvReguluso = {
 	"Regulus (315-5033)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusoRomInfo, RegulusoRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusoDIPInfo,
+	NULL, RegulusoRomInfo, RegulusoRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusoDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
@@ -6772,7 +6794,7 @@ struct BurnDriver BurnDrvRegulusu = {
 	"Regulus (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
-	NULL, RegulusuRomInfo, RegulusuRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RegulusDIPInfo,
+	NULL, RegulusuRomInfo, RegulusuRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
@@ -6994,7 +7016,7 @@ struct BurnDriver BurnDrvWboyo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyoRomInfo, WboyoRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy2 = {
@@ -7004,7 +7026,7 @@ struct BurnDriver BurnDrvWboy2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2RomInfo, Wboy2RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2Init, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy2u = {
@@ -7014,7 +7036,7 @@ struct BurnDriver BurnDrvWboy2u = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2uRomInfo, Wboy2uRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy3 = {
@@ -7024,7 +7046,7 @@ struct BurnDriver BurnDrvWboy3 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy3RomInfo, Wboy3RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy4 = {
@@ -7034,7 +7056,7 @@ struct BurnDriver BurnDrvWboy4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy4RomInfo, Wboy4RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy4Init, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboy5 = {
@@ -7044,7 +7066,7 @@ struct BurnDriver BurnDrvWboy5 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWboyu = {
@@ -7054,7 +7076,7 @@ struct BurnDriver BurnDrvWboyu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyuRomInfo, WboyuRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyuDIPInfo,
 	WboyuInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWbdeluxe = {
@@ -7064,7 +7086,7 @@ struct BurnDriver BurnDrvWbdeluxe = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WbdeluxeRomInfo, WbdeluxeRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WbdeluxeDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
-	NULL, 0x800, 256, 224, 4, 3
+	NULL, 0x800, 512, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvWmatch = {

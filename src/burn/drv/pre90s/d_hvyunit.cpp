@@ -451,7 +451,8 @@ static INT32 DrvInit(INT32 select)
 			}
 			break;
 
-			case 1: // hvyunitj
+#if 0
+			case 1:
 			{
 				if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x100000,  5, 1)) return 1;
@@ -465,8 +466,9 @@ static INT32 DrvInit(INT32 select)
 				if (BurnLoadRom(DrvGfxROM1 + 0x00000,  12, 1)) return 1;
 			}
 			break;
+#endif
 
-			case 2: // hvyunitu
+			case 2: // hvyunitu, hvyunitj
 			{
 				if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 1)) return 1;
 				if (BurnLoadRom(DrvGfxROM0 + 0x100000,  5, 1)) return 1;
@@ -475,6 +477,21 @@ static INT32 DrvInit(INT32 select)
 				if (BurnLoadRom(DrvGfxROM0 + 0x160000,  8, 1)) return 1;
 
 				if (BurnLoadRom(DrvGfxROM1 + 0x00000,   9, 1)) return 1;
+			}
+			break;
+
+			case 3: // hvyunitja
+			{
+				if (BurnLoadRom(DrvGfxROM0 + 0x100000,  4, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x120000,  5, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x140000,  6, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x160000,  7, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x180000,  8, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x1a0000,  9, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x1c0000, 10, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM0 + 0x1e0000, 11, 1)) return 1;
+
+				if (BurnLoadRom(DrvGfxROM1 + 0x00000,  12, 1)) return 1;
 			}
 			break;
 		}
@@ -773,13 +790,10 @@ static struct BurnRomInfo hvyunitjRomDesc[] = {
 	{ "mermaid.bin",	0x00e00, 0x88c5dd27, 4 | BRF_PRG | BRF_ESS }, //  3 I80C51 (mermaid) Code
 
 	{ "b73_08.2f",		0x80000, 0xf83dd808, 5 | BRF_GRA },           //  4 Sprites
-	{ "b73_07.2c",		0x10000, 0x5cffa42c, 5 | BRF_GRA },           //  5
-	{ "b73_06.2b",		0x10000, 0xa98e4aea, 5 | BRF_GRA },           //  6
-	{ "b73_01.1b",		0x10000, 0x3a8a4489, 5 | BRF_GRA },           //  7
-	{ "b73_02.1c",		0x10000, 0x025c536c, 5 | BRF_GRA },           //  8
-	{ "b73_03.1d",		0x10000, 0xec6020cf, 5 | BRF_GRA },           //  9
-	{ "b73_04.1f",		0x10000, 0xf7badbb2, 5 | BRF_GRA },           // 10
-	{ "b73_05.1h",		0x10000, 0xb8e829d2, 5 | BRF_GRA },           // 11
+	{ "b73_28.2c",		0x20000, 0xa02e08d6, 5 | BRF_GRA },           //  5
+	{ "b73_27.2b",		0x20000, 0x8708f97c, 5 | BRF_GRA },           //  6
+	{ "b73_25.0b",		0x20000, 0x2f13f81e, 5 | BRF_GRA },           //  7
+	{ "b73_26.0c",		0x10000, 0xb8e829d2, 5 | BRF_GRA },           //  8
 
 	{ "b73_09.2p",		0x80000, 0x537c647f, 6 | BRF_GRA },           // 12 Background Tiles
 };
@@ -789,7 +803,7 @@ STD_ROM_FN(hvyunitj)
 
 static INT32 hvyunitjInit()
 {
-	return DrvInit(1);
+	return DrvInit(2);
 }
 
 struct BurnDriver BurnDrvHvyunitj = {
@@ -799,6 +813,48 @@ struct BurnDriver BurnDrvHvyunitj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
 	NULL, hvyunitjRomInfo, hvyunitjRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Heavy Unit (Japan, Alternate ROM format)
+
+static struct BurnRomInfo hvyunitjaRomDesc[] = {
+	{ "b73_24.5c",		0x20000, 0x60122f5a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "b73_14.5p",		0x10000, 0x0dfb51d4, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "b73_12.7e",		0x10000, 0xd1d24fab, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+
+	{ "mermaid.bin",	0x00e00, 0x88c5dd27, 4 | BRF_PRG | BRF_ESS }, //  3 I80C51 (mermaid) Code
+
+	{ "b73_22.2c",		0x20000, 0xa02e08d6, 5 | BRF_GRA },           //  4 Sprites
+	{ "b73_21.2b",		0x20000, 0x8708f97c, 5 | BRF_GRA },           //  5
+	{ "b73_15.0b",		0x20000, 0x2f13f81e, 5 | BRF_GRA },           //  6
+	{ "b73_16.0c",		0x10000, 0xb8e829d2, 5 | BRF_GRA },           //  7
+	{ "b73_17.0d",		0x20000, 0xa8ec5309, 5 | BRF_GRA },           //  8
+	{ "b73_18.0f",		0x20000, 0xdc955a69, 5 | BRF_GRA },           //  9
+	{ "b73_19.0h",		0x20000, 0x2fb1b3e3, 5 | BRF_GRA },           //  10
+	{ "b73_20.0k",		0x20000, 0x0662d0dd, 5 | BRF_GRA },           //  11
+
+	{ "b73_09.2p",		0x80000, 0x537c647f, 6 | BRF_GRA },           //  12 Background Tiles
+};
+
+STD_ROM_PICK(hvyunitja)
+STD_ROM_FN(hvyunitja)
+
+static INT32 hvyunitjaInit()
+{
+	return DrvInit(3);
+}
+
+struct BurnDriver BurnDrvHvyunitja = {
+	"hvyunitja", "hvyunit", NULL, NULL, "1988",
+	"Heavy Unit (Japan, Alternate ROM format)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	NULL, hvyunitjaRomInfo, hvyunitjaRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
+	hvyunitjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

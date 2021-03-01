@@ -168,12 +168,12 @@ static struct BurnInputInfo KnInputList[] = {
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 6"	},
+	{"P1 Weak Punch",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Medium Punch",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+	{"P1 Strong Punch",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+	{"P1 Weak Kick",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 4"	},
+	{"P1 Medium Kick",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 5"	},
+	{"P1 Strong Kick",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 6"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 start"	},
@@ -181,12 +181,12 @@ static struct BurnInputInfo KnInputList[] = {
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 fire 5"	},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 fire 6"	},
+	{"P2 Weak Punch",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
+	{"P2 Medium Punch",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
+	{"P2 Strong Punch",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 3"	},
+	{"P2 Weak Kick",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 fire 4"	},
+	{"P2 Medium Kick",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 fire 5"	},
+	{"P2 Strong Kick",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 fire 6"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"	},
@@ -4532,8 +4532,8 @@ static struct BurnRomInfo twinqixRomDesc[] = {
 	{ "snd-14.b10",		0x80000, 0x26312451, TAITO_ES5505_BYTESWAP },    // 16
 	{ "snd-15.b11",		0x80000, 0x2edaa9dc, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 },       		   // 18 plds
-	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 },       		   // 19
+	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 18 plds
+	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 19
 	{ "pal16l8b.b24",	0x104, 0x0b73a7d1, 0 },                    // 20
 	{ "pal16l8b.b57",	0x104, 0x74b4d8be, 0 },                    // 21
 	{ "pal16l8b.b58",	0x104, 0x17e2c9b8, 0 },                    // 22
@@ -5299,11 +5299,11 @@ static struct BurnRomInfo pbobble3jRomDesc[] = {
 	{ "e29-04.ic39",	0x200000, 0xd1f42457, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e29-05.ic41",	0x200000, 0xe33c1234, TAITO_ES5505_BYTESWAP },    // 13
 	
-	{ "d77-12.ic48.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-14.ic21.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-11.ic37.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-09.ic14.bin", 0x000001, 0x00000000, BRF_OPT },
-	{ "d77-10.ic28.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-12.ic48.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-14.ic21.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-11.ic37.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-09.ic14.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d77-10.ic28.bin", 0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(pbobble3j)

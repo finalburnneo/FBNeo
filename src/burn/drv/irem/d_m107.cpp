@@ -75,137 +75,128 @@ static struct _m107_layer *m107_layers[4];
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, V30_ASSERT, V30_CLEAR };
 
 static struct BurnInputInfo FirebarrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvButton + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvButton + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvButton + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvButton + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
 };
 
 STDINPUTINFO(Firebarr)
 
 static struct BurnInputInfo Dsoccr94InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvButton + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvButton + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	}	,
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 7,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy4 + 5,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 start"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 left"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 2,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 1,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvButton + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvButton + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
 };
 
 STDINPUTINFO(Dsoccr94)
 
 static struct BurnDIPInfo FirebarrDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xfb, NULL						},
-	{0x15, 0xff, 0xff, 0xa3, NULL						},
-	{0x16, 0xff, 0xff, 0xfd, NULL						},
+	{0x14, 0xff, 0xff, 0xfb, NULL							},
+	{0x15, 0xff, 0xff, 0xa3, NULL							},
+	{0x16, 0xff, 0xff, 0xf5, NULL							},
 
 	{0   , 0xfe, 0   ,    4, "Rapid Fire"					},
-	{0x14, 0x01, 0x0c, 0x00, "Button 1 Normal, Button 3 Rapid Fire"		},
+	{0x14, 0x01, 0x0c, 0x00, "Button 1 Normal, Button 3 Rapid Fire"			},
 	{0x14, 0x01, 0x0c, 0x04, "Button 1 Rapid Fire, Button 3 No Function"	},
-	{0x14, 0x01, 0x0c, 0x08, "Off"						},
-	{0x14, 0x01, 0x0c, 0x0c, "Off"						},
+	{0x14, 0x01, 0x0c, 0x08, "Off"							},
+	{0x14, 0x01, 0x0c, 0x0c, "Off"							},
 
 	{0   , 0xfe, 0   ,    2, "Continuous Play"				},
-	{0x14, 0x01, 0x10, 0x10, "Off"						},
-	{0x14, 0x01, 0x10, 0x00, "On"						},
+	{0x14, 0x01, 0x10, 0x10, "Off"							},
+	{0x14, 0x01, 0x10, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"					},
-	{0x15, 0x01, 0x03, 0x00, "2"						},
-	{0x15, 0x01, 0x03, 0x03, "3"						},
-	{0x15, 0x01, 0x03, 0x02, "4"						},
-	{0x15, 0x01, 0x03, 0x01, "5"						},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x15, 0x01, 0x03, 0x00, "2"							},
+	{0x15, 0x01, 0x03, 0x03, "3"							},
+	{0x15, 0x01, 0x03, 0x02, "4"							},
+	{0x15, 0x01, 0x03, 0x01, "5"							},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
-	{0x15, 0x01, 0x20, 0x00, "No"						},
-	{0x15, 0x01, 0x20, 0x20, "Yes"						},
+	{0x15, 0x01, 0x20, 0x00, "No"							},
+	{0x15, 0x01, 0x20, 0x20, "Yes"							},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x15, 0x01, 0x40, 0x40, "Off"						},
-	{0x15, 0x01, 0x40, 0x00, "On"						},
+	{0x15, 0x01, 0x40, 0x40, "Off"							},
+	{0x15, 0x01, 0x40, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x15, 0x01, 0x80, 0x80, "Off"						},
-	{0x15, 0x01, 0x80, 0x00, "On"						},
+	{0x15, 0x01, 0x80, 0x80, "Off"							},
+	{0x15, 0x01, 0x80, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x16, 0x01, 0x01, 0x01, "Off"						},
-	{0x16, 0x01, 0x01, 0x00, "On"						},
+	{0x16, 0x01, 0x01, 0x01, "Off"							},
+	{0x16, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"					},
-	{0x16, 0x01, 0x04, 0x04, "Common"					},
-	{0x16, 0x01, 0x04, 0x00, "Separate"					},
-
-	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
-	{0x16, 0x01, 0x08, 0x08, "1"						},
-	{0x16, 0x01, 0x08, 0x00, "2"						},
-
-
-	{0   , 0xfe, 0   ,    16, "Coinage"					},
+	{0   , 0xfe, 0   ,    16, "Coinage"						},
 	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"				},
 	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"				},
 	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"				},
 	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"				},
 	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"				},
-	{0x16, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"		},
+	{0x16, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"	},
 	{0x16, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"				},
 	{0x16, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"				},
 	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"				},
@@ -215,76 +206,56 @@ static struct BurnDIPInfo FirebarrDIPList[]=
 	{0x16, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"				},
 	{0x16, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"				},
 	{0x16, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"				},
-	{0x16, 0x01, 0xf0, 0x00, "Free Play"					},
-
-	{0   , 0xfe, 0   ,    4, "Coin A"					},
-	{0x16, 0x01, 0x30, 0x00, "5 Coins 1 Credits"				},
-	{0x16, 0x01, 0x30, 0x10, "3 Coins 1 Credits"				},
-	{0x16, 0x01, 0x30, 0x20, "2 Coins 1 Credits"				},
-	{0x16, 0x01, 0x30, 0x30, "1 Coin  1 Credits"				},
-
-	{0   , 0xfe, 0   ,    4, "Coin B"					},
-	{0x16, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"				},
-	{0x16, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"				},
-	{0x16, 0x01, 0xc0, 0x40, "1 Coin  5 Credits"				},
-	{0x16, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"				},
+	{0x16, 0x01, 0xf0, 0x00, "Free Play"						},
 };
 
 STDDIPINFO(Firebarr)
 
 static struct BurnDIPInfo Dsoccr94DIPList[]=
 {
-	{0x24, 0xff, 0xff, 0xff, NULL						},
-	{0x25, 0xff, 0xff, 0xbf, NULL						},
-	{0x26, 0xff, 0xff, 0xfd, NULL						},
+	{0x24, 0xff, 0xff, 0xff, NULL							},
+	{0x25, 0xff, 0xff, 0xbf, NULL							},
+	{0x26, 0xff, 0xff, 0xf5, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Time"						},
-	{0x25, 0x01, 0x03, 0x00, "1:30"						},
-	{0x25, 0x01, 0x03, 0x03, "2:00"						},
-	{0x25, 0x01, 0x03, 0x02, "2:30"						},
-	{0x25, 0x01, 0x03, 0x01, "3:00"						},
+	{0   , 0xfe, 0   ,    4, "Time"							},
+	{0x25, 0x01, 0x03, 0x00, "1:30"							},
+	{0x25, 0x01, 0x03, 0x03, "2:00"							},
+	{0x25, 0x01, 0x03, 0x02, "2:30"							},
+	{0x25, 0x01, 0x03, 0x01, "3:00"							},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
 	{0x25, 0x01, 0x0c, 0x00, "Very Easy"					},
-	{0x25, 0x01, 0x0c, 0x08, "Easy"						},
-	{0x25, 0x01, 0x0c, 0x0c, "Normal"					},
-	{0x25, 0x01, 0x0c, 0x04, "Hard"						},
+	{0x25, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x25, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x25, 0x01, 0x0c, 0x04, "Hard"							},
 
 	{0   , 0xfe, 0   ,    2, "Game Mode"					},
 	{0x25, 0x01, 0x10, 0x10, "Match Mode"					},
 	{0x25, 0x01, 0x10, 0x00, "Power Mode"					},
 
 	{0   , 0xfe, 0   ,    2, "Starting Button"				},
-	{0x25, 0x01, 0x20, 0x00, "Button 1"					},
+	{0x25, 0x01, 0x20, 0x00, "Button 1"						},
 	{0x25, 0x01, 0x20, 0x20, "Start Button"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x25, 0x01, 0x40, 0x40, "Off"						},
-	{0x25, 0x01, 0x40, 0x00, "On"						},
+	{0x25, 0x01, 0x40, 0x40, "Off"							},
+	{0x25, 0x01, 0x40, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x25, 0x01, 0x80, 0x80, "Off"						},
-	{0x25, 0x01, 0x80, 0x00, "On"						},
+	{0x25, 0x01, 0x80, 0x80, "Off"							},
+	{0x25, 0x01, 0x80, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x26, 0x01, 0x01, 0x01, "Off"						},
-	{0x26, 0x01, 0x01, 0x00, "On"						},
+	{0x26, 0x01, 0x01, 0x01, "Off"							},
+	{0x26, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"					},
-	{0x26, 0x01, 0x04, 0x04, "Common"					},
-	{0x26, 0x01, 0x04, 0x00, "Separate"					},
-
-	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
-	{0x26, 0x01, 0x08, 0x08, "1"						},
-	{0x26, 0x01, 0x08, 0x00, "2"						},
-
-	{0   , 0xfe, 0   ,    16, "Coinage"					},
+	{0   , 0xfe, 0   ,    16, "Coinage"						},
 	{0x26, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"				},
 	{0x26, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"				},
 	{0x26, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"				},
 	{0x26, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"				},
 	{0x26, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"				},
-	{0x26, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"		},
+	{0x26, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"	},
 	{0x26, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"				},
 	{0x26, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"				},
 	{0x26, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"				},
@@ -294,19 +265,7 @@ static struct BurnDIPInfo Dsoccr94DIPList[]=
 	{0x26, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"				},
 	{0x26, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"				},
 	{0x26, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"				},
-	{0x26, 0x01, 0xf0, 0x00, "Free Play"					},
-
-	{0   , 0xfe, 0   ,    4, "Coin A"					},
-	{0x26, 0x01, 0x30, 0x00, "5 Coins 1 Credits"				},
-	{0x26, 0x01, 0x30, 0x10, "3 Coins 1 Credits"				},
-	{0x26, 0x01, 0x30, 0x20, "2 Coins 1 Credits"				},
-	{0x26, 0x01, 0x30, 0x30, "1 Coin  1 Credits"				},
-
-	{0   , 0xfe, 0   ,    4, "Coin B"					},
-	{0x26, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"				},
-	{0x26, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"				},
-	{0x26, 0x01, 0xc0, 0x40, "1 Coin  5 Credits"				},
-	{0x26, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"				},
+	{0x26, 0x01, 0xf0, 0x00, "Free Play"						},
 };
 
 STDDIPINFO(Dsoccr94)
@@ -357,14 +316,12 @@ static UINT8 __fastcall m107ReadByte(UINT32 address)
 			return 0x00; // wpksoc
 	}
 
-//	bprintf (0, _T("rb: %5.5x\n"), address);
-
 	return 0;
 }
 
 static void __fastcall m107WriteByte(UINT32 address, UINT8 data)
 {
-	if ((address & 0xff000) == 0xf9000 ) {
+	if ((address & 0xff000) == 0xf9000) {
 		DrvPalRAM[ address - 0xf9000] = data;
 		if (address & 1) {
 			INT32 offs = (address - 0xf9000) >> 1;
@@ -372,22 +329,18 @@ static void __fastcall m107WriteByte(UINT32 address, UINT8 data)
 		}
 		return;
 	}
-
-//	bprintf (0, _T("wb: %5.5x, %2.2x\n"), address, data);
 }
 
 static UINT8 __fastcall m107ReadPort(UINT32 port)
 {
-//	bprintf (0, _T("Rp: %2.2x\n"), port & 0xff);
-
 	switch (port)
 	{
 		case 0x00: return  DrvInput[0];
 		case 0x01: return  DrvInput[1];
 		case 0x02: return (DrvInput[4] & 0x7f) | vblank;
 		case 0x03: return  DrvInput[7];
-		case 0x04: return  DrvInput[5];
-		case 0x05: return  DrvInput[6];
+		case 0x04: return  DrvInput[6];
+		case 0x05: return  DrvInput[5];
 		case 0x06: return  DrvInput[2];
 		case 0x07: return  DrvInput[3];
 
@@ -405,10 +358,8 @@ static UINT8 __fastcall m107ReadPort(UINT32 port)
 		case 0xc2:
 		case 0xc3:
 			return 0x00; // wpksoc
-
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Attempt to read byte value of port %x\n"), port);
 	}
+
 	return 0;
 }
 
@@ -433,8 +384,6 @@ static void set_pf_scroll(INT32 layer)
 
 static void __fastcall m107WritePort(UINT32 port, UINT8 data)
 {
-//	bprintf (0, _T("wp: %2.2x, %2.2x\n"), port & 0xff, data);
-
 	switch (port)
 	{
 		case 0x00:
@@ -451,7 +400,7 @@ static void __fastcall m107WritePort(UINT32 port, UINT8 data)
 
 		case 0x02:
 		case 0x03:
-			//m107_coincounter_w
+			// coin counter
 			return;
 
 		case 0x06:
@@ -516,9 +465,6 @@ static void __fastcall m107WritePort(UINT32 port, UINT8 data)
 			VezClose();
 			VezOpen(0);
 			return;
-
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to port %x\n"), data, port);
 	}
 }
 
@@ -538,9 +484,6 @@ static UINT8 __fastcall m107SndReadByte(UINT32 address)
 
 		case 0xa8045:
 			return 0xff; // soundlatch high bits, always 0xff
-
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("V30 Attempt to read byte value of location %x\n"), address);
 	}
 	return 0;
 }
@@ -574,9 +517,6 @@ static void __fastcall m107SndWriteByte(UINT32 address, UINT8 data)
 			VezClose();
 			VezOpen(1);
 			return;
-
-	//	default:
-	//		bprintf(PRINT_NORMAL, _T("V30 Attempt to write byte value %x to location %x\n"), data, address);
 	}
 }
 
@@ -634,7 +574,7 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 	DrvV30RAM	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x001000;
 
-	sound_status	= Next; Next += 0x000004; // 2
+	sound_status= Next; Next += 0x000004; // 2
 	sound_latch	= Next; Next += 0x000004; // 1
 
 	pf_control[0]	= Next; Next += 0x000008;

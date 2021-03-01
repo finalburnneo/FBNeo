@@ -38,16 +38,6 @@
 #include "arm7core.h"
 #include "arm7_intf.h"
 
-#if defined __GNUC__
-__extension__ typedef unsigned long long	UINT64;
-__extension__ typedef signed long long		INT64;
-#endif
-
-#if defined _MSC_VER
-typedef unsigned long long	UINT64;
-typedef signed long long	INT64;
-#endif
-
 /* Example for showing how Co-Proc functions work */
 #define TEST_COPROC_FUNCS 0
 

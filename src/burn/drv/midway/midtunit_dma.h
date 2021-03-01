@@ -163,9 +163,9 @@ typedef void (*dma_draw_func)(void);
                 if (zero == nonzero)                          \
                 {                                             \
                     if (zero == PIXEL_COLOR)                  \
-                        d[sx] = color;                        \
+                        d[sx] = BURN_ENDIAN_SWAP_INT16(color);                        \
                     else if (zero == PIXEL_COPY)              \
-                        d[sx] = (extractor(mask)) | pal;      \
+                        d[sx] = BURN_ENDIAN_SWAP_INT16((extractor(mask)) | pal);      \
                 }                                             \
                                                               \
                 /* otherwise, read the pixel and look */      \
@@ -177,18 +177,18 @@ typedef void (*dma_draw_func)(void);
                     if (pixel)                                \
                     {                                         \
                         if (nonzero == PIXEL_COLOR)           \
-                            d[sx] = color;                    \
+                            d[sx] = BURN_ENDIAN_SWAP_INT16(color);                    \
                         else if (nonzero == PIXEL_COPY)       \
-                            d[sx] = pixel | pal;              \
+                            d[sx] = BURN_ENDIAN_SWAP_INT16(pixel | pal);              \
                     }                                         \
                                                               \
                     /* zero pixel case */                     \
                     else                                      \
                     {                                         \
                         if (zero == PIXEL_COLOR)              \
-                            d[sx] = color;                    \
+                            d[sx] = BURN_ENDIAN_SWAP_INT16(color);                    \
                         else if (zero == PIXEL_COPY)          \
-                            d[sx] = pal;                      \
+                            d[sx] = BURN_ENDIAN_SWAP_INT16(pal);                      \
                     }                                         \
                 }                                             \
             }                                                 \
@@ -324,10 +324,10 @@ static void TUnitDmaCallback()
 
 static UINT16 TUnitDmaRead(UINT32 address)
 {
-    UINT32 offset = (address >> 4) & 0xF;
-    if (offset == 0)
-        offset = 1;
-    return nDMA[offset];
+	UINT32 offset = (address >> 4) & 0xF;
+	if (offset == 0)
+		offset = 1;
+	return nDMA[offset];
 }
 
 static void TUnitDmaWrite(UINT32 address, UINT16 value)
@@ -436,7 +436,6 @@ static void TUnitDmaWrite(UINT32 address, UINT16 value)
         else
             pixels = 0;
     }
-
 skipdma:
-	TMS34010TimerCB(TMS34010TotalCycles() + ((double)(41*pixels) * 0.0063447), TUnitDmaCallback);
+	TMS34010TimerSet(((double)((double)50000000/8/1000000000) * (41*pixels)));
 }

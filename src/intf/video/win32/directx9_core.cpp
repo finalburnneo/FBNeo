@@ -2,8 +2,8 @@
 #include "directx9_core.h"
 
 // Direct3DCreate9
-LPDIRECT3D9 (WINAPI* _Direct3DCreate9) (UINT);
-LPDIRECT3D9 WINAPI Empty_Direct3DCreate9 (UINT) { return NULL; }
+LPDIRECT3D9EX (WINAPI* _Direct3DCreate9Ex) (UINT);
+LPDIRECT3D9EX WINAPI Empty_Direct3DCreate9Ex (UINT) { return NULL; }
 
 // D3DXFillTextureTX
 HRESULT (WINAPI* _D3DXFillTextureTX) (LPDIRECT3DTEXTURE9, LPD3DXTEXTURESHADER);
@@ -93,8 +93,7 @@ static INT32 Dx9Core_GetFunctions()
 	if(!nDx9CoreInit) return 0;
 
 	// D3D9.DLL
-	_LOADFN(LPDIRECT3D9, _Direct3DCreate9, Empty_Direct3DCreate9, (UINT), hDx9Core_D3D9, "Direct3DCreate9");
-	
+	_LOADFN(LPDIRECT3D9EX, _Direct3DCreate9Ex, Empty_Direct3DCreate9Ex, (UINT), hDx9Core_D3D9, "Direct3DCreate9Ex");
 	// D3DX9.DLL
 	_LOADFN(HRESULT, _D3DXFillTextureTX, Empty_D3DXFillTextureTX, (LPDIRECT3DTEXTURE9, LPD3DXTEXTURESHADER), hDx9Core_D3DX9, "D3DXFillTextureTX");
 
@@ -133,7 +132,6 @@ static INT32 Dx9Core_GetFunctions()
 #else
 	_LOADFN(HRESULT, _D3DXCreateFont, Empty_D3DXCreateFont, (LPDIRECT3DDEVICE9, INT, UINT, UINT, UINT, BOOL, DWORD, DWORD, DWORD, DWORD, LPCTSTR, LPD3DXFONT*), hDx9Core_D3DX9, "D3DXCreateFontA");
 #endif
-	 
 	return 1;
 }
 
@@ -143,14 +141,13 @@ INT32 Dx9Core_Init()
 	hDx9Core_D3DX9 = LoadLibrary(_T("D3DX9_43.dll"));
 
 	if(!hDx9Core_D3D9 || !hDx9Core_D3DX9) {
-		//MessageBox(NULL, _T("Loading of D3D9.DLL and D3DX9_43.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
+		MessageBox(NULL, _T("Loading of D3D9.DLL and D3DX9_43.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
 		nDx9CoreInit = FALSE;
 		return 0;
 	}
-	
 	nDx9CoreInit = TRUE;
 	if(!Dx9Core_GetFunctions()) {
-		//MessageBox(NULL, _T("There was a problem while loading functions from D3D9.DLL and D3DX9_43.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
+		MessageBox(NULL, _T("There was a problem while loading functions from D3D9.DLL and D3DX9_43.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
 		return 0;
 	}
 

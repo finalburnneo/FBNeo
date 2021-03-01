@@ -45,7 +45,7 @@ void scan(cpu_state *cpu, sdword nAction)
 
 void reset(cpu_state *cpu)
 {
-    cpu->pc = rdfield_32(VECT_RESET);
+	cpu->pc = rdfield_32(VECT_RESET);
 	cpu->icounter = 0;
 	cpu->total_cycles = 0;
     cpu->st = 0x00000010;
@@ -54,24 +54,37 @@ void reset(cpu_state *cpu)
         cpu->b[i].value = 0;
     }
     for (int i = 0; i < 32; i++) {
-        cpu->io_regs[i] = 0;
+		cpu->io_regs[i] = 0;
     }
 
 	memset(cpu->shiftreg, 0, 4096*2);
 
 	cpu->timer_active = 0;
-	cpu->timer_cb = NULL;
 	cpu->timer_cyc = 0;
 }
 
 static void check_irq(cpu_state *cpu)
 {
-    int irq = cpu->io_regs[INTPEND] & cpu->io_regs[INTENB];
+	if (cpu->io_regs[HSTCTLH] & 0x0100) {
+		cpu->io_regs[HSTCTLH] &= ~0x0100;
+
+		if (~cpu->io_regs[HSTCTLH] & 0x0200) {
+			_push(_pc);
+			_push(_st);
+		}
+
+		_st = 0x10;
+		_pc = mem_read_d(0xfffffee0);
+		CONSUME_CYCLES(16);
+		return;
+	}
+
+	int irq = cpu->io_regs[INTPEND] & cpu->io_regs[INTENB];
     if (!(_st & ST_IE) || !irq)
         return;
 
     dword trap_addr = 0;
-    if (irq & INTERRUPT_HOST) {
+	if (irq & INTERRUPT_HOST) {
         trap_addr = 0xFFFFFEC0;
     }
     else if (irq & INTERRUPT_DISPLAY) {
@@ -88,16 +101,38 @@ static void check_irq(cpu_state *cpu)
         _push(_st);
         _st = 0x10;
         _pc = mem_read_d(trap_addr) & 0xFFFFFFF0;
+		CONSUME_CYCLES(16);
     }
 }
 
-static void check_timer(cpu_state *cpu)
+void check_timer(cpu_state *cpu, int cyc)
 {
-	if (cpu->timer_active && total_cycles(cpu) >= cpu->timer_cyc) {
-		cpu->timer_active = 0;
-		if (cpu->timer_cb)
-			cpu->timer_cb();
+	if (cpu->timer_active) {
+		cpu->timer_cyc -= cyc;
+		if (cpu->timer_cyc <= 0) {
+			//bprintf(0, _T("timer hit @ %I64d\n"), TMS34010TotalCycles());
+			cpu->timer_active = 0;
+			cpu->timer_cyc = 0;
+
+			if (cpu->timer_cb)
+				cpu->timer_cb();
+		}
 	}
+}
+
+void timer_set_cb(cpu_state *cpu, void (*t_cb)())
+{
+	cpu->timer_cb = t_cb;
+}
+
+void timer_arm(cpu_state *cpu, int cycle)
+{
+	//bprintf(0, _T("timer arm @ %d   time now %I64d\n"), cycle, TMS34010TotalCycles());
+	if (cpu->timer_active) {
+		bprintf(0, _T("TMS34010: timer_arm() arm timer when timer pending!\n"));
+	}
+	cpu->timer_active = 1;
+	cpu->timer_cyc = cycle;
 }
 
 #ifdef TMS34010_DEBUGGER
@@ -127,9 +162,17 @@ void run(cpu_state *cpu, int cycles, bool stepping)
 	cpu->cycles_start = cycles;
 	cpu->icounter = cycles;
 	cpu->stop = 0;
-    while (cpu->icounter > 0 && !cpu->stop) {
 
-		check_timer(cpu);
+	if (cpu->io_regs[HSTCTLH] & 0x8000) {
+		// halt
+		cpu->icounter = 0;
+		cpu->stop = 1;
+	}
+
+	check_timer(cpu, 0);
+
+	while (cpu->icounter > 0 && !cpu->stop) {
+
         check_irq(cpu);
 
         if (!stepping) {
@@ -166,9 +209,16 @@ int run(cpu_state *cpu, int cycles)
 	cpu->cycles_start = cycles;
 	cpu->icounter = cycles;
 	cpu->stop = 0;
-    while (cpu->icounter > 0 && !cpu->stop) {
+	if (cpu->io_regs[HSTCTLH] & 0x8000) {
+		// halt
+		cpu->icounter = 0;
+		cpu->stop = 1;
+	}
 
-		check_timer(cpu);
+	check_timer(cpu, 0);
+
+	while (cpu->icounter > 0 && !cpu->stop) {
+
         check_irq(cpu);
         cpu->pc &= 0xFFFFFFF0;
         word opcode = mem_read(cpu->pc);
@@ -185,13 +235,6 @@ int run(cpu_state *cpu, int cycles)
 }
 #endif
 
-void timer_arm(cpu_state *cpu, i64 cycle, void (*t_cb)())
-{
-	cpu->timer_active = 1;
-	cpu->timer_cyc = cycle;
-	cpu->timer_cb = t_cb;
-}
-
 void stop(cpu_state *cpu)
 {
 	cpu->stop = 1;
@@ -204,9 +247,6 @@ i64 total_cycles(cpu_state *cpu)
 
 void new_frame(cpu_state *cpu)
 {
-	if (cpu->timer_active) {
-		cpu->timer_cyc -= cpu->total_cycles;
-	}
 	cpu->total_cycles = 0;
 }
 
@@ -239,8 +279,10 @@ void write_ioreg(cpu_state *cpu, dword addr, word value)
     case CONVDP: cpu->convdp = 1 << (~value & 0x1F); break;
     case CONVSP: cpu->convsp = 1 << (~value & 0x1F); break;
     case INTPEND:
-        if (!(value & INTERRUPT_DISPLAY))
-            cpu->io_regs[INTPEND] &= ~INTERRUPT_DISPLAY;
+		if (!(value & INTERRUPT_DISPLAY)) {
+			//bprintf(0, _T("clear VBL irq @ %I64d\n"), TMS34010TotalCycles());
+			cpu->io_regs[INTPEND] &= ~INTERRUPT_DISPLAY;
+		}
         break;
     case DPYSTRT:
         break;
@@ -278,7 +320,8 @@ int generate_scanline(cpu_state *cpu, int line, scanline_render_t render)
     cpu->io_regs[VCOUNT] = line;
 
     if (enabled && line == cpu->io_regs[DPYINT]) {
-        generate_irq(cpu, INTERRUPT_DISPLAY);
+		generate_irq(cpu, INTERRUPT_DISPLAY);
+		//bprintf(0, _T("DO VBL irq @ %I64d\n"), TMS34010TotalCycles());
     }
 
     if (line == cpu->io_regs[VSBLNK]) {

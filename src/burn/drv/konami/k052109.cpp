@@ -54,6 +54,10 @@ static void update_scroll_one(INT32 nLayer, INT32 control, INT32 ram_offset)
 		UINT8 *scrollram = &sourceram[0x1a00];
 		INT32 yscroll = sourceram[0x180c];
 
+		if (nLayer == 2 && (control & 0x03) == 0x02 && K052109ScrollCtrl == 0x70) {
+			yscroll = sourceram[0x1823]; // hack for suratk 2nd boss rotating star field
+		}
+
 		for (INT32 offs = 0; offs < 256; offs++)
 		{
 			INT32 xscroll = scrollram[2 * (offs & andval) + 0] + 256 * scrollram[2 * (offs & andval) + 1];
@@ -178,8 +182,6 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 
 	INT32 EnableCategory = Flags & 0x100;
 	INT32 Category = Flags & 0xff;
-
-	Priority = (EnableCategory) ? Category : Priority;
 
 	INT32 Opaque = (Flags >> 16) & 1;
 	INT32 ram_offset = nLayer * 0x800;

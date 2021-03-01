@@ -75,7 +75,8 @@ int ConfigAppLoad()
 #endif
 
 		// Video
-		VAR(nVidDepth); VAR(nVidRefresh);
+		VAR(nVidDepth);
+		VAR(nVidRefresh);
 		VAR(nVidRotationAdjust);
 
 		// horizontal oriented
@@ -151,10 +152,23 @@ int ConfigAppLoad()
 		FLT(dVidCubicC);
 
 		// DirectX Graphics 9 Alt blitter
-		VAR(bVidDX9Bilinear);
 		VAR(bVidHardwareVertex);
 		VAR(bVidMotionBlur);
 		VAR(bVidForce16bitDx9Alt);
+		VAR(bVidDX9Bilinear);
+		VAR(bVidDX9Scanlines);
+		VAR(bVidDX9WinFullscreen);
+		VAR(bVidDX9LegacyRenderer);
+		VAR(nVidDX9HardFX);
+		VAR(bVidOverlay);
+		VAR(bVidBigOverlay);
+		VAR(bVidUnrankedScores);
+		VAR(bVidSaveOverlayFiles);
+		VAR(bVidSaveChatHistory);
+		VAR(bVidMuteChat);
+
+		// Runahead
+		VAR(nVidRunahead);
 
 		// Sound
 		VAR(nAudSelect);
@@ -177,6 +191,7 @@ int ConfigAppLoad()
 		VAR(nMaxChatFontSize);
 
 		VAR(bModelessMenu);
+		VAR(bHideROMWarnings);
 
 		VAR(nSplashTime);
 
@@ -185,7 +200,7 @@ int ConfigAppLoad()
 #endif
 
 		VAR(bDrvSaveAll);
-		VAR(nAppThreadPriority);
+		VAR(nAppProcessPriority);
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
@@ -321,10 +336,6 @@ int ConfigAppSave()
 	TCHAR szConfig[MAX_PATH];
 	FILE *h;
 
-	if (nCmdOptUsed & 1) {
-		return 1;
-	}
-
 #ifdef _UNICODE
 	setlocale(LC_ALL, "");
 #endif
@@ -442,11 +453,11 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// The selected blitter module\n"));
 	VAR(nVidSelect);
 	_ftprintf(h, _T("\n// Options for the blitter modules\n"));
-	VAR(nVidBlitterOpt[0]);
+	VAR64(nVidBlitterOpt[0]);
 	VAR64(nVidBlitterOpt[1]);
-	VAR(nVidBlitterOpt[2]);
-	VAR(nVidBlitterOpt[3]);
-	VAR(nVidBlitterOpt[4]);
+	VAR64(nVidBlitterOpt[2]);
+	VAR64(nVidBlitterOpt[3]);
+	VAR64(nVidBlitterOpt[4]);
 	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));
@@ -493,6 +504,28 @@ int ConfigAppSave()
 	VAR(bVidMotionBlur);
 	_ftprintf(h, _T("\n// If non-zero, force 16 bit emulation even in 32-bit screenmodes\n"));
 	VAR(bVidForce16bitDx9Alt);
+	_ftprintf(h, _T("\n// If non-zero, draw scanlines to simulate a low-res monitor\n"));
+	VAR(bVidDX9Scanlines);
+	_ftprintf(h, _T("\n// If non-zero, use borderless windowed for fullscreen\n"));
+	VAR(bVidDX9WinFullscreen);
+	_ftprintf(h, _T("\n// If non-zero, use legacy DX9 renderer\n"));
+	VAR(bVidDX9LegacyRenderer);
+	_ftprintf(h, _T("\n// Active Dx9Alt shader effect\n"));
+	VAR(nVidDX9HardFX);
+	_ftprintf(h, _T("\n// If non-zero, draw Fightcade overlay\n"));
+	VAR(bVidOverlay);
+	_ftprintf(h, _T("\n// If non-zero, draw bigger Fightcade overlay\n"));
+	VAR(bVidBigOverlay);
+	_ftprintf(h, _T("\n// Show Fightcade scores in unranked mode (only for games with detectors)\n"));
+	VAR(bVidUnrankedScores);
+	_ftprintf(h, _T("\n// Save Fightcade overlay data to files in realtime (for Streaming)\n"));
+	VAR(bVidSaveOverlayFiles);
+	_ftprintf(h, _T("\n// Save Fightcade chat history\n"));
+	VAR(bVidSaveChatHistory);
+	_ftprintf(h, _T("\n// Mute Fightcade chat\n"));
+	VAR(bVidMuteChat);
+	_ftprintf(h, _T("\n// Run ahead frames (0 = disabled, 1, 2)\n"));
+	VAR(nVidRunahead);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
@@ -542,6 +575,9 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// Make the menu modeless\n"));
 	VAR(bModelessMenu);
 
+	_ftprintf(h, _T("\n// If non-zero, DISABLE popups with ROM warnings.\n"));
+	VAR(bHideROMWarnings);
+
 	_ftprintf(h, _T("\n// Minimum length of time to display the splash screen (in milliseconds)\n"));
 	VAR(nSplashTime);
 
@@ -552,8 +588,8 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, load and save all ram (the state)\n"));
 	VAR(bDrvSaveAll);
-	_ftprintf(h, _T("\n// The thread priority for the application. Do *NOT* edit this manually\n"));
-	VAR(nAppThreadPriority);
+	_ftprintf(h, _T("\n// The process priority for the application. Do *NOT* edit this manually\n"));
+	VAR(nAppProcessPriority);
 	_ftprintf(h, _T("\n// If non-zero, process keyboard input even when the application loses focus\n"));
 	VAR(bAlwaysProcessKeyboardInput);
 	_ftprintf(h, _T("\n// If non-zero, pause when the application loses focus\n"));

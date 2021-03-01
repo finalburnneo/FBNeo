@@ -50,9 +50,7 @@ static INT32 sf_active;
 static INT32 sound2_bank;
 
 static struct BurnInputInfo SfInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -65,6 +63,7 @@ static struct BurnInputInfo SfInputList[] = {
 	{"P1 Button 5"  , BIT_DIGITAL  , DrvJoy4 + 9,	"p1 fire 5"},
 	{"P1 Button 6"  , BIT_DIGITAL  , DrvJoy4 + 10,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 11,  "p2 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 10,  "p2 down", },
@@ -89,9 +88,7 @@ static struct BurnInputInfo SfInputList[] = {
 STDINPUTINFO(Sf)
 
 static struct BurnInputInfo SfjInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -104,6 +101,7 @@ static struct BurnInputInfo SfjInputList[] = {
 	{"P1 Button 5"  , BIT_DIGITAL  , DrvJoy3 + 13,	"p1 fire 5"},
 	{"P1 Button 6"  , BIT_DIGITAL  , DrvJoy3 + 14,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy4 + 3,   "p1 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy4 + 2,   "p2 down", },
@@ -128,9 +126,7 @@ static struct BurnInputInfo SfjInputList[] = {
 STDINPUTINFO(Sfj)
 
 static struct BurnInputInfo SfusInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -143,6 +139,7 @@ static struct BurnInputInfo SfusInputList[] = {
 	{"P1 Button 5"  , BIT_DIGITAL  , DrvJoy3 + 7,	"p1 fire 5"},
 	{"P1 Button 6"  , BIT_DIGITAL  , DrvJoy2 + 2,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 11,  "p1 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 10,  "p2 down", },

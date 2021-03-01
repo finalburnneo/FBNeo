@@ -107,12 +107,12 @@ InterfaceInfo* ProfileGetInfo();
 // Audio Output plugin
 struct AudOut {
 	INT32   (*BlankSound)();
-	INT32   (*SoundCheck)();
 	INT32   (*SoundInit)();
-	INT32   (*SetCallback)(INT32 (*pCallback)(INT32));
+	INT32   (*SoundExit)();
+	INT32   (*SoundCheck)();
+	INT32   (*SoundFrame)();
 	INT32   (*SoundPlay)();
 	INT32   (*SoundStop)();
-	INT32   (*SoundExit)();
 	INT32   (*SoundSetVolume)();
 	// Get plugin info
 	INT32   (*GetPluginSettings)(InterfaceInfo* pInfo);
@@ -120,25 +120,25 @@ struct AudOut {
 };
 
 INT32 AudSelect(UINT32 nPlugIn);
+INT32 AudBlankSound();
 INT32 AudSoundInit();
 INT32 AudSoundExit();
-INT32 AudSetCallback(INT32 (*pCallback)(INT32));
+INT32 AudSoundCheck();
+INT32 AudSoundFrame();
 INT32 AudSoundPlay();
 INT32 AudSoundStop();
-INT32 AudBlankSound();
-INT32 AudSoundCheck();
 INT32 AudSoundSetVolume();
 InterfaceInfo* AudGetInfo();
 void AudWriteSilence();
 
-extern INT32 nAudSampleRate[8];          // sample rate
-extern INT32 nAudVolume;				// Sound volume (% * 100)
-extern INT32 nAudSegCount;          	// Segs in the pdsbLoop buffer
-extern INT32 nAudSegLen;            	// Seg length in samples (calculated from Rate/Fps)
+extern INT32 nAudSampleRate[8];     // sample rate
+extern INT32 nAudVolume;						// Sound volume (% * 100)
+extern INT32 nAudSegCount;          // Segs in the pdsbLoop buffer
+extern INT32 nAudSegLen;            // Seg length in samples (calculated from Rate/Fps)
 extern INT32 nAudAllocSegLen;
 extern INT16 *nAudNextSound;       	// The next sound seg we will add to the sample loop
-extern UINT8 bAudOkay;    	// True if DSound was initted okay
-extern UINT8 bAudPlaying;	// True if the Loop buffer is playing
+extern UINT8 bAudOkay;    					// True if DSound was initted okay
+extern UINT8 bAudPlaying;						// True if the Loop buffer is playing
 extern INT32 nAudDSPModule[8];			// DSP module to use: 0 = none, 1 = low-pass filter
 extern UINT32 nAudSelect;
 
@@ -201,6 +201,7 @@ extern INT32 bVidArcaderesVer;
 extern INT32 nVidRotationAdjust;
 extern INT32 bVidUseHardwareGamma;
 extern INT32 bVidAutoSwitchFull;
+extern INT32 bVidAutoSwitchFullDisable;
 extern INT32 bVidForce16bit;
 extern INT32 bVidForce16bitDx9Alt;
 extern INT32 bVidForceFlip;
@@ -216,6 +217,17 @@ extern double dVidCubicC;
 extern INT32 bVidDX9Bilinear;
 extern INT32 bVidHardwareVertex;
 extern INT32 bVidMotionBlur;
+extern INT32 bVidDX9Scanlines;
+extern INT32 bVidDX9WinFullscreen;
+extern INT32 bVidDX9LegacyRenderer;
+extern INT32 nVidDX9HardFX;
+extern INT32 bVidOverlay;
+extern INT32 bVidBigOverlay;
+extern INT32 bVidUnrankedScores;
+extern INT32 bVidSaveOverlayFiles;
+extern INT32 bVidSaveChatHistory;
+extern INT32 bVidMuteChat;
+extern INT32 nVidRunahead;
 extern wchar_t HorScreen[32];
 extern wchar_t VerScreen[32];
 extern INT32 nVidScrnWidth, nVidScrnHeight;
@@ -242,7 +254,14 @@ INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, I
 void VidSKillShortMsg();
 void VidSKillTinyMsg();
 
-INT32 VidSAddChatMsg(const TCHAR* pID, INT32 nIDRGB, const TCHAR* pMain, INT32 nMainRGB);
+INT32 VidSUpdate();
+INT32 VidSSetGameInfo(const TCHAR *p1, const TCHAR *p2, INT32 spectator, INT32 ranked, INT32 player);
+INT32 VidSSetGameScores(INT32 score1, INT32 score2);
+INT32 VidSSetGameSpectators(INT32 num);
+INT32 VidSSetSystemMessage(TCHAR *status);
+INT32 VidSSetStats(double fps, INT32 ping, INT32 delay);
+INT32 VidSShowStats(INT32 show);
+INT32 VidSAddChatLine(const TCHAR* pID, INT32 nIDRGB, const TCHAR* pMain, INT32 nMainRGB);
 
 #define MAX_CHAT_SIZE (128)
 
@@ -257,3 +276,6 @@ extern TCHAR EditText[MAX_CHAT_SIZE + 1];
 extern TCHAR OSDMsg[MAX_PATH];
 extern UINT32 nOSDTimer;
 void VidSKillOSDMsg();
+
+// overlay for dx9Alt
+#include "vid_overlay.h"

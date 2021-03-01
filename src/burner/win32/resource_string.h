@@ -208,6 +208,8 @@
 #define IDS_SEL_MIDWAY					(IDS_STRING +  640)
 #define IDS_SEL_CAPCOM_GRP				(IDS_STRING +  642)
 #define IDS_SEL_SEGA_GRP				(IDS_STRING +  644)
+#define IDS_SEL_NES						(IDS_STRING +  646)
+#define IDS_SEL_FDS						(IDS_STRING +  648)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)
@@ -323,6 +325,7 @@
 #define IDS_HARDWARE					(IDS_STRING + 1422)
 #define IDS_EMPTY						(IDS_STRING + 1424)
 #define IDS_UNIDENTIFIED_CD				(IDS_STRING + 1426)
+#define IDS_RUNAHEAD_WARNING		(IDS_STRING + 1428)
 
 #define IDS_ERR_ERROR					(IDS_ERROR  +    0)
 #define IDS_ERR_WARNING					(IDS_ERROR  +    2)

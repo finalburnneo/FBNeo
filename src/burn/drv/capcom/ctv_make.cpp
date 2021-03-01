@@ -31,8 +31,8 @@ int main()
 			{
               printf ("#define CU_FLIPX (%d)\n",nCuFlipX);
 
-			  if (((nCuRows && (nCuSize != 16)) || (nCuRows && nCuMask))) {
-				  printf("// Invalid combination of capabilities.\n");
+			  if (((nCuRows && (nCuSize != 16)) || (nCuRows && (nCuMask == 1)))) {
+				  printf("// Invalid combination of capabilities. rows %x  size %x  mask %x\n", nCuRows, nCuSize, nCuMask);
 			  }	else {
 				printf ("static INT32 ");
 				printf ("CtvDo");
@@ -96,7 +96,7 @@ int main()
         s=(i&24)+8;
         if (s!=8 && s!=16 && s!=32) { printf ("_______"); goto End; }
 		if ((i&4) && (s!=16)) { printf ("_______"); goto End; }
-		if ((i&4) && nCuMask) { printf ("_______"); goto End; }
+		if ((i&4) && (nCuMask==1)) { printf ("_______"); goto End; }
         printf ("%d",nCuBpp);
         printf ("%.2d",s);
         if (i&4)     printf ("r"); else printf ("_");

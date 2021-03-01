@@ -7,6 +7,7 @@ extern "C" {
 
 void BurnYMF278BSelectRegister(INT32 nRegister, UINT8 nValue);
 void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue);
+void BurnYMF278BWrite(INT32 nRegister, UINT8 nValue);
 UINT8 BurnYMF278BReadStatus();
 UINT8 BurnYMF278BReadData();
 

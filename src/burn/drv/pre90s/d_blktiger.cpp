@@ -523,8 +523,8 @@ static INT32 DrvInit()
 		bprintf(0, _T("Using i8751 Protection MCU.\n"));
 		if (BurnLoadRom(DrvMCUROM + 0x00000, 19, 1)) return 1;
 
-		mcs51_program_data = DrvMCUROM;
 		mcs51_init();
+		mcs51_set_program_data(DrvMCUROM);
 		mcs51_set_write_handler(mcu_write_port);
 		mcs51_set_read_handler(mcu_read_port);
 	}

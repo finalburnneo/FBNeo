@@ -533,7 +533,7 @@ static void DrvRenderBgLayer(INT32 RenderCategory)
 
 				if (DrvIsWatrball) y -= 16;
 
-				Draw16x16MaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, 0, DrvSprites);
+				Draw16x16Tile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, DrvSprites);
 			}
 
 			TileIndex++;

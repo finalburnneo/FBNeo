@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main()
+int main(int argc, char *argv[])
 {
 	printf ("typedef INT32 (*sprite_draw_function)(UINT16 *dest, UINT8 *adata, INT32 pal);\n");
 	printf ("typedef INT32 (*sprite_draw_nozoom_function)(UINT16 *dest, UINT8 *pdest, UINT8 *adata, INT32 pal, INT32 pri);\n\n");

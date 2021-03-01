@@ -16,13 +16,13 @@ static HMENU hAudioPluginMenu[8] = {NULL, };
 
 bool bMenuDisplayed = false;
 bool bModelessMenu = false;
+bool bHideROMWarnings = false;
 int nLastMenu = 0;
 static int nRecursions = -1;
 static HMENU hCurrentMenu;
 static int nCurrentItem;
 static int nCurrentItemFlags;
 
-int nMenuHeight = 0;
 int nWindowSize = 0;
 int nScreenSize = 0;
 int nScreenSizeHor = 0;
@@ -630,8 +630,7 @@ void MenuUpdate()
 
 	CreateStateslotItems();
 
-	CheckMenuItem(hMenu, MENU_PAUSE, bAltPause ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_ALLRAM, bDrvSaveAll ? MF_CHECKED : MF_UNCHECKED);
+	EnableMenuItem(hMenu, ID_LUA_OPEN, kNetLua ? MF_ENABLED | MF_BYCOMMAND : MF_GRAYED | MF_BYCOMMAND);
 
 //	CreateCDItems();
 //	CheckMenuRadioItem(hMenu, MENU_CDIMAGE, MENU_CDIMAGE, MENU_CDIMAGE + nCDEmuSelect, MF_BYCOMMAND);
@@ -683,7 +682,7 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_SOFTFX, nVidBlitterOpt[nVidSelect] & 0x02000000 ? MF_CHECKED : MF_UNCHECKED);
 
 			var = ((unsigned long long)nVidBlitterOpt[nVidSelect] >> 32) + MENU_ENHANCED_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_ENHANCED_SOFT_STRETCH, MENU_ENHANCED_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
+			//CheckMenuRadioItem(hMenu, MENU_ENHANCED_SOFT_STRETCH, MENU_ENHANCED_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_ENHANCED_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x04000000) ? MF_CHECKED : MF_UNCHECKED);
 			if (nVidBlitterOpt[nVidSelect] & 0x00100000) {
 				var = MENU_3DPROJECTION;
@@ -715,7 +714,9 @@ void MenuUpdate()
 		case 3:
 			var = ((nVidBlitterOpt[nVidSelect] >> 24) & 0x03) + MENU_DX9_POINT;
 			CheckMenuRadioItem(hMenu, MENU_DX9_POINT, MENU_DX9_POINT + 2, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_EXP_SCAN, bVidScanlines ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_DX9_SCANLINES, (bVidDX9Scanlines) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_DX9_WIN_FULLSCREEN, (bVidDX9WinFullscreen) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_DX9_LEGACY_RENDERER, (bVidDX9LegacyRenderer) ? MF_CHECKED : MF_UNCHECKED);
 
 			var = MENU_DX9_CUBIC_CUSTOM;
 			if (dVidCubicB > -0.001 && dVidCubicB <  0.001 && dVidCubicC > -0.001 && dVidCubicC <  0.001) {
@@ -749,18 +750,33 @@ void MenuUpdate()
 			break;
 		case 4:
 			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_DX9_ALT_SOFT_STRETCH;
+			CheckMenuItem(hMenu, MENU_DX9_SCANLINES, (bVidDX9Scanlines) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_DX9_WIN_FULLSCREEN, (bVidDX9WinFullscreen) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_DX9_LEGACY_RENDERER, (bVidDX9LegacyRenderer) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_SOFT_STRETCH, MENU_DX9_ALT_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_POINT, MENU_DX9_ALT_POINT + 1, MENU_DX9_ALT_POINT + bVidDX9Bilinear, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_HARDWAREVERTEX, (bVidHardwareVertex) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_MOTIONBLUR, (bVidMotionBlur) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_FORCE_16BIT, bVidForce16bitDx9Alt ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_HARD_FX_NONE, MENU_DX9_ALT_HARD_FX_CRT_BICUBIC, MENU_DX9_ALT_HARD_FX_NONE + nVidDX9HardFX, MF_BYCOMMAND);
 			break;
 	}
 
+	CheckMenuItem(hMenu, MENU_OVERLAY, (bVidOverlay) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_BIG_OVERLAY, (bVidBigOverlay) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_UNRANKED_SCORES, (bVidUnrankedScores) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_SAVE_OVERLAY_FILES, (bVidSaveOverlayFiles) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_SAVE_CHAT_HISTORY, (bVidSaveChatHistory) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_MUTE_CHAT, (bVidMuteChat) ? MF_CHECKED : MF_UNCHECKED);
+
+	CheckMenuItem(hMenu, MENU_RUNAHEAD_DISABLED, (nVidRunahead == 0) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_RUNAHEAD_1F, (nVidRunahead == 1) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_RUNAHEAD_2F, (nVidRunahead == 2) ? MF_CHECKED : MF_UNCHECKED);
+
 	var = 0;
 	if (nScreenSizeHor) {
-		var = MENU_SINGLESIZESCREEN + nScreenSizeHor - 1;
+		var = MENU_1XSIZESCREEN + nScreenSizeHor - 1;
 		CreateOtherresItem(0);
 	} else {
 		for (int n = 0; n < 4; n++) {
@@ -779,11 +795,11 @@ void MenuUpdate()
 			var = MENU_RES_ARCADE;
 		}
 	}
-	CheckMenuRadioItem(hMenu, MENU_RES_1, MENU_QUADSIZESCREEN, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_RES_1, MENU_4XSIZESCREEN, var, MF_BYCOMMAND);
 
 	var = 0;
 	if (nScreenSizeVer) {
-		var = MENU_SINGLESIZESCREEN_VERTICAL + nScreenSizeVer - 1;
+		var = MENU_1XSIZESCREEN_VERTICAL + nScreenSizeVer - 1;
 		CreateOtherresItemVer(0);
 	} else {
 		for (int n = 0; n < 4; n++) {
@@ -802,7 +818,7 @@ void MenuUpdate()
 			var = MENU_RES_ARCADE_VERTICAL;
 		}
 	}
-	CheckMenuRadioItem(hMenu, MENU_RES_1_VERTICAL, MENU_QUADSIZESCREEN_VERTICAL, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_RES_1_VERTICAL, MENU_4XSIZESCREEN_VERTICAL, var, MF_BYCOMMAND);
 
 	if (nVidDepth == 16) {
 		var = MENU_16;
@@ -869,7 +885,7 @@ void MenuUpdate()
 	}
 	CheckMenuRadioItem(hMenu, MENU_SOFTFX_MEMAUTO, MENU_SOFTFX_SYSMEM, var, MF_BYCOMMAND);
 
-	if (nWindowSize <= 4) {
+	if (nWindowSize <= 5) {
 		var = MENU_AUTOSIZE + nWindowSize;
 	} else {
 		var = MENU_MAXIMUMSIZEWINDOW;
@@ -1010,9 +1026,13 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_HIGHRESTIMER, bEnableHighResTimer ? MF_CHECKED : MF_UNCHECKED);
 #if defined (FBNEO_DEBUG)
 	CheckMenuItem(hMenu, MENU_DEBUGCONSOLE, bDisableDebugConsole ? MF_UNCHECKED : MF_CHECKED);
+#else
+	DeleteMenu(hMenu, MENU_DEBUGCONSOLE, MF_BYCOMMAND);
 #endif
 	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST, bAutoLoadGameList ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_AUTOSCANGAMELIST, !bSkipStartupCheck ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_HIDE_ROM_WARNINGS, bHideROMWarnings ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_GEARSHIFT, BurnShiftEnabled ? MF_CHECKED : MF_UNCHECKED);
@@ -1033,28 +1053,26 @@ void MenuUpdate()
 	CheckMenuRadioItem(hMenu, MENU_AVI1X, MENU_AVI3X, var, MF_BYCOMMAND);
 #endif
 
-	if (nAppThreadPriority == THREAD_PRIORITY_TIME_CRITICAL) {
-		var = MENU_PRIORITY_REALTIME;
-	} else {
-		if (nAppThreadPriority == THREAD_PRIORITY_HIGHEST) {
-			var = MENU_PRIORITY_HIGH;
-		} else {
-			if (nAppThreadPriority == THREAD_PRIORITY_ABOVE_NORMAL) {
-				var = MENU_PRIORITY_ABOVE_NORMAL;
-			} else {
-				if (nAppThreadPriority == THREAD_PRIORITY_BELOW_NORMAL) {
-					var = MENU_PRIORITY_BELOW_NORMAL;
-				} else {
-					if (nAppThreadPriority == THREAD_PRIORITY_LOWEST) {
-						var = MENU_PRIORITY_LOW;
-					} else {
-						var = MENU_PRIORITY_NORMAL;
-					}
-				}
-			}
-		}
+	switch (nAppProcessPriority) {
+	case HIGH_PRIORITY_CLASS:
+		break;
+	case ABOVE_NORMAL_PRIORITY_CLASS:
+		var = MENU_PRIORITY_ABOVE_NORMAL;
+		break;
+	case NORMAL_PRIORITY_CLASS:
+		var = MENU_PRIORITY_NORMAL;
+		break;
+	case BELOW_NORMAL_PRIORITY_CLASS:
+		var = MENU_PRIORITY_BELOW_NORMAL;
+		break;
+	case IDLE_PRIORITY_CLASS:
+		var = MENU_PRIORITY_LOW;
+		break;
+	default:
+		var = MENU_PRIORITY_NORMAL;
+		break;
 	}
-	CheckMenuRadioItem(hMenu, MENU_PRIORITY_REALTIME, MENU_PRIORITY_LOW, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_PRIORITY_HIGH, MENU_PRIORITY_LOW, var, MF_BYCOMMAND);
 	CheckMenuItem(hMenu, MENU_SAVEGAMEINPUT, bSaveInputs ? MF_CHECKED : MF_UNCHECKED);
 
 	// Auto-Fire
@@ -1195,35 +1213,40 @@ void MenuEnableItems()
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_ENABLED;
-        	myMenuItemInfo.hSubMenu = GetSubMenu(hBlitterMenu[nVidSelect], 0);
-		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
+		myMenuItemInfo.fState = MFS_ENABLED;
+		myMenuItemInfo.hSubMenu = GetSubMenu(hBlitterMenu[nVidSelect], 0);
+		SetMenuItemInfo(GetSubMenu(hMenu, 1), MENU_BLITTEROPTIONS, FALSE, &myMenuItemInfo);
 	} else {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_GRAYED;
-        	myMenuItemInfo.hSubMenu = NULL;
-		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
+		myMenuItemInfo.fState = MFS_GRAYED;
+		myMenuItemInfo.hSubMenu = NULL;
+		SetMenuItemInfo(GetSubMenu(hMenu, 1), MENU_BLITTEROPTIONS, FALSE, &myMenuItemInfo);
 	}
 
-	if (hBlitterMenu[nAudSelect]) {
+	if (hAudioPluginMenu[nAudSelect]) {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_ENABLED;
-        	myMenuItemInfo.hSubMenu = GetSubMenu(hAudioPluginMenu[nAudSelect], 0);
-		SetMenuItemInfo(GetSubMenu(hMenu, 2), 1, TRUE, &myMenuItemInfo);
+		myMenuItemInfo.fState = MFS_ENABLED;
+		myMenuItemInfo.hSubMenu = GetSubMenu(hAudioPluginMenu[nAudSelect], 0);
+		SetMenuItemInfo(GetSubMenu(hMenu, 2), MENU_AUDIO_OPTIONS, FALSE, &myMenuItemInfo);
 	} else {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_GRAYED;
-        	myMenuItemInfo.hSubMenu = NULL;
-		SetMenuItemInfo(GetSubMenu(hMenu, 2), 1, TRUE, &myMenuItemInfo);
+		myMenuItemInfo.fState = MFS_GRAYED;
+		myMenuItemInfo.hSubMenu = NULL;
+		SetMenuItemInfo(GetSubMenu(hMenu, 2), MENU_AUDIO_OPTIONS, FALSE, &myMenuItemInfo);
 	}
 
-	// Auto-size image when software blitter effects anre enabled
+	// Fightcade: disable old blitters
+	EnableMenuItem(hMenu, MENU_BLITTER_1, MF_GRAYED | MF_BYCOMMAND);
+	EnableMenuItem(hMenu, MENU_BLITTER_2, MF_GRAYED | MF_BYCOMMAND);
+	//EnableMenuItem(hMenu, MENU_BLITTER_4, MF_GRAYED | MF_BYCOMMAND);
+
+	// Auto-size image when software blitter effects are enabled
 	if ((nVidSelect == 1 && (nVidBlitterOpt[1] & 0x07000000) == 0x07000000) || (nVidSelect == 2 && nVidBlitterOpt[2] & 0x0100)) {
 		EnableMenuItem(GetSubMenu(hMenu, 1),  2,	MF_GRAYED | MF_BYPOSITION);
 		EnableMenuItem(GetSubMenu(hMenu, 1),  7,	MF_GRAYED | MF_BYPOSITION);
@@ -1303,7 +1326,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2, MF_GRAYED  | MF_BYCOMMAND);
 
 		BurnDIPInfo bdi;
-		if (BurnDrvGetDIPInfo(&bdi, 0) == 0) {
+		if (BurnDrvGetDIPInfo(&bdi, 0) == 0 && !kNetGame && !kNetSpectator) {
 			EnableMenuItem(hMenu, MENU_DIPSW,			MF_ENABLED | MF_BYCOMMAND);
 		} else {
 			EnableMenuItem(hMenu, MENU_DIPSW,			MF_GRAYED | MF_BYCOMMAND);

@@ -758,13 +758,13 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 			while (Size--) {
 				mem8 = base + Offset;
-                Offset++;
-                if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
-                if (readonly) {
-                    if (!bRLE) fgetc(f);
-                } else {
-                    *mem8 = bRLE ? ch : fgetc(f);
-                }
+        Offset++;
+        if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
+        if (readonly) {
+          if (!bRLE) fgetc(f);
+        } else {
+          *mem8 = bRLE ? ch : fgetc(f);
+        }
 			}
 		}
 	}
@@ -820,7 +820,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 		nIpsSize = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 
-        while (!feof(fp)) {
+    while (!feof(fp)) {
 			if (fgets(s, sizeof(s), fp) != NULL) {
 				p = s;
 
@@ -831,16 +831,16 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 				if (p[0] == '[')	// '['
 					break;
 
-                // Can support linetypes:
-                // "rom name.bin" "patch file.ips" CRC(abcd1234)
-                // romname.bin patchfile CRC(abcd1234)
+        // Can support linetypes:
+        // "rom name.bin" "patch file.ips" CRC(abcd1234)
+        // romname.bin patchfile CRC(abcd1234)
 
-                if (p[0] == '\"') { // "quoted rom name with spaces.bin"
-                    p++;
-                    rom_name = strtok(p, "\"");
-                } else {
-                    rom_name = strtok(p, " \t\r\n");
-                }
+        if (p[0] == '\"') { // "quoted rom name with spaces.bin"
+            p++;
+            rom_name = strtok(p, "\"");
+        } else {
+            rom_name = strtok(p, " \t\r\n");
+        }
 
 				if (!rom_name)
 					continue;
@@ -849,31 +849,31 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 				if (_stricmp(rom_name, game_name))
 					continue;
 
-                ips_name = strtok(NULL, "\r\n");
+        ips_name = strtok(NULL, "\r\n");
 
 				if (!ips_name)
 					continue;
 
-                // remove crc portion, and end quote/spaces from ips name
-                char *c = stristr_int(ips_name, "crc");
-                if (c) {
-                    c--; // "derp.ips" CRC(abcd1234)\n"
-                         //           ^ we're now here.
-                    while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
-                    {
-                        *c = '\0';
-                        c--;
-                    }
-                }
+        // remove crc portion, and end quote/spaces from ips name
+        char *c = stristr_int(ips_name, "crc");
+        if (c) {
+            c--; // "derp.ips" CRC(abcd1234)\n"
+                  //           ^ we're now here.
+            while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
+            {
+                *c = '\0';
+                c--;
+            }
+        }
 
-                // clean-up IPS name beginning (could be quoted or not)
-                while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
-                    ips_name++;
+        // clean-up IPS name beginning (could be quoted or not)
+        while (ips_name && (ips_name[0] == ' ' || ips_name[0] == '\"'))
+            ips_name++;
 
-                char *has_ext = stristr_int(ips_name, ".ips");
+        char *has_ext = stristr_int(ips_name, ".ips");
 
-                bprintf(0, _T("ips name:[%S]\n"), ips_name);
-                bprintf(0, _T("rom name:[%S]\n"), rom_name);
+        bprintf(0, _T("ips name:[%S]\n"), ips_name);
+        bprintf(0, _T("rom name:[%S]\n"), rom_name);
 
 				char ips_path[MAX_PATH*2];
 				char ips_dir[MAX_PATH];
@@ -881,7 +881,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, IN
 
 				if (strchr(ips_name, '\\')) {
 					// ips in parent's folder
-                    sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
+          sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
 				} else {
 					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name, (has_ext) ? "" : IPS_EXT);
 				}

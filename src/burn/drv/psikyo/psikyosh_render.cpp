@@ -62,7 +62,7 @@ static void draw_blendy_tile(INT32 gfx, INT32 code, INT32 color, INT32 sx, INT32
 			src += 0x78;
 		}
 
-		if (sx >= 0 && sx < (nScreenWidth-15) && sy >= 0 && sy <= (nScreenHeight-15)) {
+		if (sx >= 0 && sx < (nScreenWidth-16) && sy >= 0 && sy <= (nScreenHeight-16)) {
 			if (z > 0) {
 				if (fx) {
 					if (alpha == 0xff) {
@@ -154,7 +154,7 @@ static void draw_blendy_tile(INT32 gfx, INT32 code, INT32 color, INT32 sx, INT32
 			src += 0xf0;
 		}
 
-		if (sx >= 0 && sx < (nScreenWidth-15) && sy >= 0 && sy < (nScreenHeight-15)) {
+		if (sx >= 0 && sx < (nScreenWidth-16) && sy >= 0 && sy < (nScreenHeight-16)) {
 			if (z > 0) {
 				if (fx) {
 					if (alpha == 0xff) {

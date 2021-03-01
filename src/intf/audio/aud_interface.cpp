@@ -1,26 +1,34 @@
-// Audio Output
+#// Audio Output
 #include "burner.h"
 
 INT32 nAudSampleRate[8] = { 44100, 44100, 22050, 22050, 22050, 22050, 22050, 22050 };			// sample rate
-INT32 nAudVolume = 10000;				// Sound volume (% * 100)
+INT32 nAudVolume = 10000;			// Sound volume (% * 100)
 INT32 nAudSegCount = 6;				// Segs in the pdsbLoop buffer
 INT32 nAudSegLen = 0;					// Seg length in samples (calculated from Rate/Fps)
-INT32 nAudAllocSegLen = 0;
-UINT8 bAudOkay = 0;			// True if DSound was initted okay
-UINT8 bAudPlaying = 0;		// True if the Loop buffer is playing
+INT32 nAudAllocSegLen = 0;		// Seg length in bytes
+UINT8 bAudOkay = 0;						// True if was initted okay
+UINT8 bAudPlaying = 0;				// True if the Loop buffer is playing
 
-INT32 nAudDSPModule[8] = { 0, };				// DSP module to use: 0 = none, 1 = low-pass filter
+INT32 nAudDSPModule[8] = { 0, };	// DSP module to use: 0 = none, 1 = low-pass filter
 
-INT16* nAudNextSound = NULL;		// The next sound seg we will add to the sample loop
+INT16* nAudNextSound = NULL;	// The next sound seg we will add to the sample loop
 
-UINT32 nAudSelect = 0;		// Which audio plugin is selected
+UINT32 nAudSelect = 1;				// Which audio plugin is selected
 static UINT32 nAudActive = 0;
 
 #if defined (BUILD_WIN32)
 	extern struct AudOut AudOutDx;
 	extern struct AudOut AudOutXAudio2;
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_MACOS)
+    extern struct AudOut AudOutMacOS;
+#elif defined (BUILD_SDL) 
 	extern struct AudOut AudOutSDL;
+#elif defined (BUILD_SDL2)
+	#if defined (FORCE_PULSE_AUDIO)
+		extern struct AudOut AudOutPulseSimple;
+	#else
+		extern struct AudOut AudOutSDL;
+	#endif
 #elif defined (_XBOX)
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_QT)
@@ -35,8 +43,16 @@ static struct AudOut *pAudOut[]=
 #if defined (BUILD_WIN32)
 	&AudOutDx,
 	&AudOutXAudio2,
-#elif defined (BUILD_SDL)
+#elif defined (BUILD_MACOS)
+    &AudOutMacOS,
+#elif defined (BUILD_SDL) 
 	&AudOutSDL,
+#elif defined (BUILD_SDL2)
+	#if defined (FORCE_PULSE_AUDIO)
+		&AudOutPulseSimple,
+	#else
+		&AudOutSDL,
+	#endif
 #elif defined (_XBOX)
 	&AudOutXAudio2,
 #elif defined (BUILD_QT)
@@ -51,21 +67,13 @@ static struct AudOut *pAudOut[]=
 
 static InterfaceInfo AudInfo = { NULL, NULL, NULL };
 
+
 INT32 AudBlankSound()
 {
 	if (!bAudOkay || nAudActive >= AUD_LEN) {
 		return 1;
 	}
 	return pAudOut[nAudActive]->BlankSound();
-}
-
-// This function checks the Sound loop, and if necessary gets some more sound
-INT32 AudSoundCheck()
-{
-	if (!bAudOkay || nAudActive >= AUD_LEN) {
-		return 1;
-	}
-	return pAudOut[nAudActive]->SoundCheck();
 }
 
 INT32 AudSoundInit()
@@ -75,7 +83,7 @@ INT32 AudSoundInit()
 	if (nAudSelect >= AUD_LEN) {
 		return 1;
 	}
-	
+
 	nAudActive = nAudSelect;
 
 	if ((nRet = pAudOut[nAudActive]->SoundInit()) == 0) {
@@ -85,12 +93,36 @@ INT32 AudSoundInit()
 	return nRet;
 }
 
-INT32 AudSetCallback(INT32 (*pCallback)(INT32))
+INT32 AudSoundExit()
+{
+	IntInfoFree(&AudInfo);
+
+	if (!bAudOkay || nAudActive >= AUD_LEN) {
+		return 1;
+	}
+	bAudOkay = false;
+
+	INT32 nRet = pAudOut[nAudActive]->SoundExit();
+
+	nAudActive = 0;
+
+	return nRet;
+}
+
+INT32 AudSoundCheck()
 {
 	if (!bAudOkay || nAudActive >= AUD_LEN) {
 		return 1;
 	}
-	return pAudOut[nAudActive]->SetCallback(pCallback);
+	return pAudOut[nAudActive]->SoundCheck();
+}
+
+INT32 AudSoundFrame()
+{
+	if (!bAudOkay || nAudActive >= AUD_LEN) {
+		return 1;
+	}
+	return pAudOut[nAudActive]->SoundFrame();
 }
 
 INT32 AudSoundPlay()
@@ -98,12 +130,13 @@ INT32 AudSoundPlay()
 	if (!bAudOkay || nAudActive >= AUD_LEN) {
 		return 1;
 	}
-	
+
+	AudBlankSound();
 	INT32 nRet = pAudOut[nAudActive]->SoundPlay();
 	if (!nRet) {
 		bAudPlaying = true;
 	}
-	
+
 	return nRet;
 }
 
@@ -112,26 +145,10 @@ INT32 AudSoundStop()
 	if (nAudActive >= AUD_LEN) {
 		return 1;
 	}
-	
+
 	bAudPlaying = false;
 
 	return pAudOut[nAudActive]->SoundStop();
-}
-
-INT32 AudSoundExit()
-{
-	IntInfoFree(&AudInfo);
-	
-	if (!bAudOkay || nAudActive >= AUD_LEN) {
-		return 1;
-	}
-	bAudOkay = false;
-
-	INT32 nRet = pAudOut[nAudActive]->SoundExit();
-	
-	nAudActive = 0;
-	
-	return nRet;
 }
 
 INT32 AudSoundSetVolume()
@@ -177,13 +194,13 @@ INT32 AudSelect(UINT32 nPlugIn)
 		nAudSelect = nPlugIn;
 		return 0;
 	}
-	
+
 	return 1;
 }
 
 void AudWriteSilence()
 {
-	if (nAudNextSound) {
+	if (nAudNextSound && nAudAllocSegLen) {
 		memset(nAudNextSound, 0, nAudAllocSegLen);
 	}
 }

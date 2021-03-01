@@ -764,7 +764,14 @@ void NamcoSoundExit()
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundExit called without init\n"));
 #endif
 
-	if (!DebugSnd_NamcoSndInitted) return;
+	if (!DebugSnd_NamcoSndInitted) {
+		NamcoSoundProm = NULL; // sometimes drivers set this in MemIndex, if DrvInit fails, this must be cleared.
+		namco_wavedata = NULL; // this is important.
+
+		enable_ram = 0;
+
+		return;
+	}
 
 	BurnFree(chip);
 	BurnFree(namco_soundregs);

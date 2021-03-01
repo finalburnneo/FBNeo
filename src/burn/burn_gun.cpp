@@ -1,5 +1,6 @@
 #include "burnint.h"
 #include "burn_gun.h"
+#include <math.h>
 
 // Generic Light Gun & Trackball (dial, paddle, wheel, trackball) support for FBA
 // written by Barry Harris (Treble Winner) based on the code in Kev's opwolf driver
@@ -145,10 +146,15 @@ void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 }
 
 // Trackball Helpers
-static INT32 TrackA[MAX_GUNS]; // trackball counters
+static INT32 TrackA[MAX_GUNS]; // trackball counters / main accumulator
 static INT32 TrackB[MAX_GUNS];
 
-static INT32 DIAL_INC[MAX_GUNS * 2]; // velocity counter
+static UINT8 CURVE[0x100];
+static INT32 bLogarithmicCurve;
+
+static INT32 DIAL_INC[MAX_GUNS * 2]; // velocity accumulator latch (w/linear / log curve applied)
+static INT32 DIAL_VEL[MAX_GUNS * 2]; // velocity accumulator
+static INT32 DIAL_VELx[MAX_GUNS * 2]; // velocity accumulator half'd
 static UINT8 DrvJoyT[MAX_GUNS * 4];  // direction bytes
 static UINT8 TrackRev[MAX_GUNS * 2]; // normal/reversed config
 static INT32 TrackStart[MAX_GUNS * 2]; // Start / Stop points
@@ -161,6 +167,11 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 	DIAL_INC[(dev*2) + 0] = dial.VelocityMidpoint;		// defaults for digital (UDLR)
 	DIAL_INC[(dev*2) + 1] = dial.VelocityMidpoint;
 
+	DIAL_VEL[(dev*2) + 0] = 0; // testing!
+	DIAL_VEL[(dev*2) + 1] = 0;
+	DIAL_VELx[(dev*2) + 0] = 0; // testing!
+	DIAL_VELx[(dev*2) + 1] = 0;
+
 	memset(&DrvJoyT[dev*4], 0, 4); 						// zero directional bytes
 
 	BurnPaddleMakeInputs(dev, dial, AnalogDeadZone(PortA), AnalogDeadZone(PortB)); // analog -> main accumulators
@@ -169,15 +180,42 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 	if (dial.Backward || dial.Forward) {
 		if (dial.Backward) DrvJoyT[(dev*4) + 0] = 1;
 		if (dial.Forward)  DrvJoyT[(dev*4) + 1] = 1;
-		DIAL_INC[(dev*2) + 0] = dial.Velocity;
+		DIAL_INC[(dev*2) + 0] = CURVE[dial.Velocity];
+		DIAL_VEL[(dev*2) + 0] = dial.Velocity*5;
+		DIAL_VELx[(dev*2) + 0] = (dial.Velocity*5) / 2;
+		//bprintf(0, _T("VELO A: %d\n"), CURVE[dial.Velocity]);
 	}
 
 	BurnPaddleReturn(dial, dev, 1);                     // accumulator -> directional + velocity data PortB
 	if (dial.Backward || dial.Forward) {
 		if (dial.Backward) DrvJoyT[(dev*4) + 2] = 1;
 		if (dial.Forward)  DrvJoyT[(dev*4) + 3] = 1;
-		DIAL_INC[(dev*2) + 1] = dial.Velocity;
+		DIAL_INC[(dev*2) + 1] = CURVE[dial.Velocity];
+		DIAL_VEL[(dev*2) + 1] = dial.Velocity*5;
+		DIAL_VELx[(dev*2) + 1] = (dial.Velocity*5) / 2;
+		//bprintf(0, _T("VELO B: %d\n"), CURVE[dial.Velocity]);
 	}
+}
+
+// Theory of bLogarithmicCurve-mode:
+// For the first half of the velocity accumulator (aka DIAL_VEL) sequence
+// the main accumulator (aka Track[A/B]) is inc'd every call to BurnTrackballUpdate().
+// After which the main accu. is inc'd every second call.
+// The logarithmic curve is only applied to the velocity of the main accumulator's
+// latch (aka DIAL_INC).
+// Usage: "BurnTrackballSetVelocityCurve(1);" after Init
+
+static INT32 attenuate_velocity(INT32 dev)
+{
+	if (bLogarithmicCurve) {
+		if (DIAL_VEL[dev] >= DIAL_VELx[dev]) {
+			return DIAL_INC[dev];
+		}
+
+		return (DIAL_VEL[dev] & 1) ? DIAL_INC[dev] : 0;
+	}
+
+	return DIAL_INC[dev];
 }
 
 void BurnTrackballUpdate(INT32 dev)
@@ -185,15 +223,15 @@ void BurnTrackballUpdate(INT32 dev)
 	// PortA (usually X-Axis)
 	if (DrvJoyT[(dev*4) + 0]) { // Backward
 		if (TrackRev[(dev*2) + 0])
-			TrackA[dev] += DIAL_INC[(dev*2) + 0];
+			TrackA[dev] += attenuate_velocity((dev*2) + 0);
 		else
-			TrackA[dev] -= DIAL_INC[(dev*2) + 0];
+			TrackA[dev] -= attenuate_velocity((dev*2) + 0);
 	}
 	if (DrvJoyT[(dev*4) + 1]) { // Forward
 		if (TrackRev[(dev*2) + 0])
-			TrackA[dev] -= DIAL_INC[(dev*2) + 0];
+			TrackA[dev] -= attenuate_velocity((dev*2) + 0);
 		else
-			TrackA[dev] += DIAL_INC[(dev*2) + 0];
+			TrackA[dev] += attenuate_velocity((dev*2) + 0);
 	}
 
 	// PortA Start / Stop points (if configured)
@@ -206,15 +244,15 @@ void BurnTrackballUpdate(INT32 dev)
 	// PortB (usually Y-Axis)
 	if (DrvJoyT[(dev*4) + 2]) { // Backward
 		if (TrackRev[(dev*2) + 1])
-			TrackB[dev] += DIAL_INC[(dev*2) + 1];
+			TrackB[dev] += attenuate_velocity((dev*2) + 1);
 		else
-			TrackB[dev] -= DIAL_INC[(dev*2) + 1];
+			TrackB[dev] -= attenuate_velocity((dev*2) + 1);
 	}
 	if (DrvJoyT[(dev*4) + 3]) { // Forward
 		if (TrackRev[(dev*2) + 1])
-			TrackB[dev] -= DIAL_INC[(dev*2) + 1];
+			TrackB[dev] -= attenuate_velocity((dev*2) + 1);
 		else
-			TrackB[dev] += DIAL_INC[(dev*2) + 1];
+			TrackB[dev] += attenuate_velocity((dev*2) + 1);
 	}
 
 	// PortB Start / Stop points (if configured)
@@ -223,6 +261,20 @@ void BurnTrackballUpdate(INT32 dev)
 
 	if (TrackStop[(dev*2) + 1] != -1 && TrackB[dev] > TrackStop[(dev*2) + 1])
 		TrackB[dev] = TrackStop[(dev*2) + 1];
+
+	if (bLogarithmicCurve) {
+		if (DIAL_VEL[(dev*2) + 0]) {
+			DIAL_VEL[(dev*2) + 0]--;
+		} else {
+			DIAL_INC[(dev*2) + 0] = 0;
+		}
+
+		if (DIAL_VEL[(dev*2) + 1]) {
+			DIAL_VEL[(dev*2) + 1]--;
+		} else {
+			DIAL_INC[(dev*2) + 1] = 0;
+		}
+	}
 }
 
 void BurnTrackballUpdateSlither(INT32 dev)
@@ -373,9 +425,27 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 		GunTargetUpdate(i);
 }
 
+void BurnTrackballSetVelocityCurve(INT32 bLogarithmic)
+{
+	bLogarithmicCurve = bLogarithmic;
+
+	if (bLogarithmic) {
+		for (INT32 i = 0; i < 0x100; i++) {
+			CURVE[i] = 1 + (log(i) * 1.2);
+		}
+	} else {
+		for (INT32 i = 0; i < 0x100; i++) {
+			CURVE[i] = i;
+		}
+	}
+}
+
 void BurnTrackballInit(INT32 nNumPlayers)
 {
 	Using_Trackball = 1;
+
+	BurnTrackballSetVelocityCurve(0);
+
 	BurnGunInit(nNumPlayers, false);
 }
 

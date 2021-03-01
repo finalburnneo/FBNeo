@@ -9,8 +9,12 @@ static bool bCinpOkay;
 
 #if defined (BUILD_WIN32)
 	extern struct InputInOut InputInOutDInput;
+#elif defined (BUILD_MACOS)
+    extern struct InputInOut InputInOutMacOS;
 #elif defined (BUILD_SDL)
 	extern struct InputInOut InputInOutSDL;
+#elif defined (BUILD_SDL2)
+		extern struct InputInOut InputInOutSDL2;
 #elif defined (_XBOX)
 	extern struct InputInOut InputInOutXInput2;
 #elif defined (BUILD_QT)
@@ -21,6 +25,10 @@ static struct InputInOut *pInputInOut[]=
 {
 #if defined (BUILD_WIN32)
 	&InputInOutDInput,
+#elif defined (BUILD_MACOS)
+    &InputInOutMacOS,
+#elif defined (BUILD_SDL2)
+		&InputInOutSDL2,
 #elif defined (BUILD_SDL)
 	&InputInOutSDL,
 #elif defined (_XBOX)
@@ -75,6 +83,8 @@ static INT32 InputTick()
 
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
 		INT32 nAdd = 0;
+		INT32 bGotKey = 0;
+
 		if ((pgi->nInput &  GIT_GROUP_SLIDER) == 0) {				// not a slider
 			continue;
 		}
@@ -82,9 +92,11 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_KEYSLIDER) {
 			// Get states of the two keys
 			if (CinpState(pgi->Input.Slider.SliderAxis.nSlider[0]))	{
+				bGotKey = 1;
 				nAdd -= 0x100;
 			}
 			if (CinpState(pgi->Input.Slider.SliderAxis.nSlider[1]))	{
+				bGotKey = 1;
 				nAdd += 0x100;
 			}
 		}
@@ -92,6 +104,9 @@ static INT32 InputTick()
 		if (pgi->nInput == GIT_JOYSLIDER) {
 			// Get state of the axis
 			nAdd = CinpJoyAxis(pgi->Input.Slider.JoyAxis.nJoy, pgi->Input.Slider.JoyAxis.nAxis);
+
+			if (nAdd != 0) bGotKey = 1;
+
 			nAdd /= 0x80;
 				// May 30, 2019 -dink
 				// Was "nAdd /= 0x100;" - Current gamepads w/ thumbsticks
@@ -105,21 +120,26 @@ static INT32 InputTick()
 		nAdd *= pgi->Input.Slider.nSliderSpeed;
 		nAdd /= 0x100;
 
-		if (pgi->Input.Slider.nSliderCenter) {						// Attact to center
-			INT32 v = pgi->Input.Slider.nSliderValue - 0x8000;
-			v *= (pgi->Input.Slider.nSliderCenter - 1);
-			v /= pgi->Input.Slider.nSliderCenter;
-			v += 0x8000;
-			pgi->Input.Slider.nSliderValue = v;
+		if (pgi->Input.Slider.nSliderCenter && !bGotKey) {						// Attact to center
+			if (pgi->Input.Slider.nSliderCenter == 1) {
+				// Fastest Auto-Center speed, center immediately when key/button is released
+				pgi->Input.Slider.nSliderValue = 0x8000;
+			} else {
+				INT32 v = pgi->Input.Slider.nSliderValue - 0x8000;
+				v *= (pgi->Input.Slider.nSliderCenter - 1);
+				v /= pgi->Input.Slider.nSliderCenter;
+				v += 0x8000;
+				pgi->Input.Slider.nSliderValue = v;
+			}
 		}
 
 		pgi->Input.Slider.nSliderValue += nAdd;
 		// Limit slider
-		if (pgi->Input.Slider.nSliderValue < 0x0100) {
-			pgi->Input.Slider.nSliderValue = 0x0100;
+		if (pgi->Input.Slider.nSliderValue < 0x0000) {
+			pgi->Input.Slider.nSliderValue = 0x0000;
 		}
-		if (pgi->Input.Slider.nSliderValue > 0xFF00) {
-			pgi->Input.Slider.nSliderValue = 0xFF00;
+		if (pgi->Input.Slider.nSliderValue > 0xFFFF) {
+			pgi->Input.Slider.nSliderValue = 0xFFFF;
 		}
 	}
 	return 0;
@@ -244,6 +264,17 @@ INT32 InputMake(bool bCopy)
 					nSlider >>= 4;
 				}
 
+				nSlider *= nAnalogSpeed;
+				nSlider >>= 8;
+
+				// Clip axis to 16 bits (signed)
+				if (nSlider < -32768) {
+					nSlider = -32768;
+				}
+				if (nSlider >  32767) {
+					nSlider =  32767;
+				}
+
 				pgi->Input.nVal = (UINT16)nSlider;
 				if (bCopy) {
 					*(pgi->Input.pShortVal) = pgi->Input.nVal;
@@ -296,7 +327,6 @@ INT32 InputMake(bool bCopy)
 				if (bCopy) {
 					*(pgi->Input.pShortVal) = pgi->Input.nVal;
 				}
-
 				break;
 			}
 			case GIT_JOYAXIS_NEG:	{				// Joystick axis Lo

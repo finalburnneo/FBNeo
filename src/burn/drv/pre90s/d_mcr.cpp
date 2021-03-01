@@ -112,6 +112,9 @@ static struct BurnInputInfo KickInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4f + 1,	"p1 right"	},
 	A("P1 Dial", 		BIT_ANALOG_REL, &DrvAnalogPortZ,"p1 x-axis"),
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 5,	"tilt"		},
@@ -367,6 +370,9 @@ static struct BurnInputInfo DotronInputList[] = {
 	{"P1 Aim Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 3"	},
 	{"P1 Aim Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 4"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 5,	"tilt"		},
@@ -447,21 +453,21 @@ STDDIPINFO(Demoderb)
 
 static struct BurnDIPInfo DotronDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x80, NULL						},
-	{0x10, 0xff, 0xff, 0xff, NULL						},
 	{0x11, 0xff, 0xff, 0x80, NULL						},
+	{0x12, 0xff, 0xff, 0xff, NULL						},
+	{0x13, 0xff, 0xff, 0x80, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"					},
-	{0x0f, 0x01, 0x80, 0x00, "Environmental"			},
-	{0x0f, 0x01, 0x80, 0x80, "Upright"					},
+	{0x11, 0x01, 0x80, 0x00, "Environmental"			},
+	{0x11, 0x01, 0x80, 0x80, "Upright"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin Meters"				},
-	{0x10, 0x01, 0x01, 0x01, "1"						},
-	{0x10, 0x01, 0x01, 0x00, "2"						},
+	{0x12, 0x01, 0x01, 0x01, "1"						},
+	{0x12, 0x01, 0x01, 0x00, "2"						},
 
     {0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x11, 0x01, 0x80, 0x80, "Off"						},
-	{0x11, 0x01, 0x80, 0x00, "On"						},
+	{0x13, 0x01, 0x80, 0x80, "Off"						},
+	{0x13, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Dotron)
@@ -670,16 +676,16 @@ STDDIPINFO(Solarfox)
 
 static struct BurnDIPInfo KickDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xfe, NULL						},
-	{0x0a, 0xff, 0xff, 0x80, NULL						},
+	{0x0b, 0xff, 0xff, 0xfe, NULL						},
+	{0x0c, 0xff, 0xff, 0x80, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Music"					},
-	{0x09, 0x01, 0x01, 0x01, "Off"						},
-	{0x09, 0x01, 0x01, 0x00, "On"						},
+	{0x0b, 0x01, 0x01, 0x01, "Off"						},
+	{0x0b, 0x01, 0x01, 0x00, "On"						},
 
     {0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x0a, 0x01, 0x80, 0x80, "Off"						},
-	{0x0a, 0x01, 0x80, 0x00, "On"						},
+	{0x0c, 0x01, 0x80, 0x80, "Off"						},
+	{0x0c, 0x01, 0x80, 0x00, "On"						},
 };
 
 STDDIPINFO(Kick)
@@ -1967,14 +1973,14 @@ static struct BurnRomInfo tronRomDesc[] = {
 	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
 	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
 	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
 	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
 	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
 	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
@@ -2033,14 +2039,14 @@ static struct BurnRomInfo tron2RomDesc[] = {
 	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
 	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
 	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
 	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
 	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
 	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
@@ -2076,14 +2082,14 @@ static struct BurnRomInfo tron3RomDesc[] = {
 	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
 	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
 	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
 	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
 	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
 	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
@@ -2119,14 +2125,14 @@ static struct BurnRomInfo tron4RomDesc[] = {
 	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
 	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
 	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
 	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
 	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
 	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
@@ -2140,6 +2146,49 @@ struct BurnDriver BurnDrvTron4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tron4RomInfo, tron4RomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,//, Tron3InputInfo, Tron3DIPInfo,
+	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	480, 512, 3, 4
+};
+
+
+// Tron (5/12)
+
+static struct BurnRomInfo tron5RomDesc[] = {
+	{ "tron_pro-0_5-12.d2",		0x2000, 0xccc4119f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tron_pro-1_5-12.d3",		0x2000, 0x153f148c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tron_pro-2_5-12.d4",		0x2000, 0xe62bb8a1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tron_pro-3_5-12.d5",		0x2000, 0xdbc06c91, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tron_pro-4_5-12.d6",		0x2000, 0x30adb624, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tron_pro-5_5-12.d7",		0x2000, 0x191c72bb, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "ssi_oa.a7",				0x1000, 0x2cbb332b, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "ssi_ob.a8",				0x1000, 0x1355b7e6, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi_oc.a9",				0x1000, 0x6dd4b7c9, 2 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "scpu_bgg.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu_bgh.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+
+	{ "vga.e1",					0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vga.a1",					0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+
+	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
+	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
+	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
+};
+
+STDROMPICKEXT(tron5, tron5, Ssioprom)
+STD_ROM_FN(tron5)
+
+struct BurnDriver BurnDrvTron5 = {
+	"tron5", "tron", "midssio", NULL, "1982",
+	"Tron (5/12)\0", NULL, "Bally Midway", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, tron5RomInfo, tron5RomName, NULL, NULL, NULL, NULL, TronInputInfo, TronDIPInfo,//, Tron3InputInfo, Tron3DIPInfo,
 	TronInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	480, 512, 3, 4
 };
@@ -2162,14 +2211,14 @@ static struct BurnRomInfo trongerRomDesc[] = {
 	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
 	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
 	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
 	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
 	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
 	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };

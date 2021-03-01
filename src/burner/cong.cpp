@@ -6,16 +6,31 @@ const INT32 nConfigMinVersion = 0x020921;
 
 bool bSaveInputs = true;
 
+#ifdef BUILD_SDL2
+static char* szSDLconfigPath = NULL;
+#endif
+
 static TCHAR* GameConfigName()
 {
-	// Return the path of the config file for this game
-	static TCHAR szName[64];
-	if (NeoCDInfo_ID()) {
-		_stprintf(szName, _T("config/games/ngcd_%s.ini"), NeoCDInfo_Text(DRV_NAME));
-	} else {
-		_stprintf(szName, _T("config/games/%s.ini"), BurnDrvGetText(DRV_NAME));
-	}
+	static TCHAR szName[MAX_PATH];
 
+	#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
+	 	if (szSDLconfigPath == NULL) {
+			szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+		}
+		if (NeoCDInfo_ID()) {
+		  snprintf(szName, MAX_PATH, "%sngcd_%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
+		} else {
+			snprintf(szName, MAX_PATH, "%s%s.ini", szSDLconfigPath, BurnDrvGetText(DRV_NAME));
+		}
+	#else
+		// Return the path of the config file for this game
+		if (NeoCDInfo_ID()) {
+			_stprintf(szName, _T("config/games/ngcd_%s.ini"), NeoCDInfo_Text(DRV_NAME));
+		} else {
+			_stprintf(szName, _T("config/games/%s.ini"), BurnDrvGetText(DRV_NAME));
+		}
+	#endif
 	return szName;
 }
 
@@ -121,4 +136,3 @@ INT32 ConfigGameSave(bool bSave)
 	fclose(h);
 	return 0;
 }
-

@@ -5,42 +5,49 @@ int MediaInit()
 {
 	//ScrnInit()			// Init the Scrn Window
 
-	if (!bInputOkay) {
-		InputInit();		// Init Input
+	if (!bInputOkay)
+	{
+		InputInit();                           // Init Input
 	}
 
 	nAppVirtualFps = nBurnFPS;
 
-	if (!bAudOkay) {
-		AudSoundInit();		// Init Sound (not critical if it fails)
+	if (!bAudOkay)
+	{
+		AudSoundInit();                           // Init Sound (not critical if it fails)
 	}
 
-	nBurnSoundRate = 0;		// Assume no sound
+	nBurnSoundRate = 0;              // Assume no sound
 	pBurnSoundOut = NULL;
-	if (bAudOkay) {
+	if (bAudOkay)
+	{
 		nBurnSoundRate = nAudSampleRate[nAudSelect];
 		nBurnSoundLen = nAudSegLen;
 	}
 
-	if (!bVidOkay) {
+	if (!bVidOkay)
+	{
 		// Reinit the video plugin
 		VidInit();
-		if (!bVidOkay && nVidFullscreen) {
-
+		if (!bVidOkay && nVidFullscreen)
+		{
 			nVidFullscreen = 0;
 
 			MediaExit();
-			return (MediaInit());
+			return MediaInit();
 		}
-		if (!nVidFullscreen) {
+		if (!nVidFullscreen)
+		{
 			//ScrnSize();
 		}
 
-		if (!bVidOkay) {
+		if (!bVidOkay)
+		{
 			printf("Initialized video: %s\n", VidGetModuleName());
 		}
 
-		if (bVidOkay && (bRunPause || !bDrvOkay)) {
+		if (bVidOkay && (bRunPause || !bDrvOkay))
+		{
 			VidRedraw();
 		}
 	}
@@ -50,11 +57,11 @@ int MediaInit()
 
 int MediaExit()
 {
-	nBurnSoundRate = 0;		// Blank sound
+	nBurnSoundRate = 0;              // Blank sound
 	pBurnSoundOut = NULL;
 
-	AudSoundExit();			// Exit sound
-
+	AudSoundExit();                  // Exit sound
+	bAudOkay = 0;
 	VidExit();
 
 	InputExit();
@@ -63,4 +70,3 @@ int MediaExit()
 
 	return 0;
 }
- 

@@ -1,5 +1,6 @@
 // Driver Save State module
 #include "burner.h"
+#include "luaengine.h"
 
 // from dynhuff.cpp
 INT32 FreezeDecode(UINT8 **buffer, INT32 *size);
@@ -20,12 +21,15 @@ extern UINT32 nStartFrame;
 // If bAll=0 save/load all non-volatile ram to .fs
 // If bAll=1 save/load all ram to .fs
 
+int nAcbLoadState = 0;
+
 // ------------ State len --------------------
-static INT32 nTotalLen = 0;
+int nAcbVersion = 0;
+INT32 nAcbTotalLen = 0;
 
 static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
 {
-	nTotalLen += pba->nLen;
+	nAcbTotalLen += pba->nLen;
 
 	return 0;
 }
@@ -33,7 +37,7 @@ static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
 static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll)
 {
 	INT32 nMin = 0;
-	nTotalLen = 0;
+	nAcbTotalLen = 0;
 	BurnAcb = StateLenAcb;
 
 	BurnAreaScan(ACB_NVRAM, &nMin);						// Scan nvram
@@ -48,7 +52,7 @@ static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll)
 			nMin = m;
 		}
 	}
-	*pnLen = nTotalLen;
+	*pnLen = nAcbTotalLen;
 	*pnMinVer = nMin;
 
 	return 0;
@@ -93,6 +97,7 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	INT32 nChunkData = ftell(fp);
 
 	fread(&nFileVer, 1, 4, fp);							// Version of FB that this file was saved from
+	nAcbVersion = nFileVer;
 
 	fread(&t1, 1, 4, fp);								// Min version of FB that NV  data will work with
 	fread(&t2, 1, 4, fp);								// Min version of FB that All data will work with
@@ -180,7 +185,7 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 
 	fseek(fp, nChunkData + nChunkSize, SEEK_SET);
 
-	if (nRet == 0) { // Force the palette to recalculate on state load
+	if (!kNetGame && nRet == 0) { // Force the palette to recalculate on state load
 		BurnRecalcPal();
 	}
 
@@ -203,10 +208,15 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 		return 1;
 	}
 
+	nAcbLoadState = 1;
+
 	fread(szReadHeader, 1, 4, fp);						// Read identifier
 	if (memcmp(szReadHeader, szHeader, 4) == 0) {		// Check filetype
 		nRet = BurnStateLoadEmbed(fp, -1, bAll, pLoadGame);
+		nAcbVersion = nBurnVer;
 	}
+
+	nAcbLoadState = 0;
 
 	// load movie extra info
 	if(nReplayStatus)
@@ -235,7 +245,7 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 			if(nReplayStatus == 1)
 			{
 				ret = UnfreezeEncode(buf, nChunkSize);
-				++nReplayUndoCount;
+				if (!FBA_LuaRerecordCountSkip()) { ++nReplayUndoCount; }
 			}
 			else if(nReplayStatus == 2)
 			{
@@ -263,6 +273,13 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 	}
 
 	fclose(fp);
+
+	luasav_load(_TtoA(szName));
+
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sfiii3nr1")) {
+		if (ReadValueAtHardwareAddress(0x638FC63, 1, 0) == 0x0A)
+			WriteValueAtHardwareAddress(0x638FC63, 0x0B, 1, 0);
+	}
 
 	if (nRet < 0) {
 		return -nRet;
@@ -315,6 +332,7 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 	INT32 nSizeOffset = ftell(fp);						// Reserve space to write the size of this chunk
 	fwrite(&nZero, 1, 4, fp);							//
 
+	nAcbVersion = nBurnVer;
 	fwrite(&nBurnVer, 1, 4, fp);						// Version of FB this was saved from
 	fwrite(&nNvMin, 1, 4, fp);							// Min version of FB NV  data will work with
 	fwrite(&nAMin, 1, 4, fp);							// Min version of FB All data will work with
@@ -536,6 +554,8 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 	}
 
 	fclose(fp);
+
+	luasav_save(_TtoA(szName));
 
 	if (nRet < 0) {
 		return 1;

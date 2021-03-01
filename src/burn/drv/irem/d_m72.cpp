@@ -2458,7 +2458,7 @@ struct BurnDriver BurnDrvRtypeb = {
 };
 
 
-// X Multiply (World, M81)
+// X Multiply (World, M81 PCB version)
 
 static struct BurnRomInfo xmultiplRomDesc[] = {
 	{ "xm-a-h1-.ic58",	0x20000, 0x449048cf, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -2489,8 +2489,8 @@ static struct BurnRomInfo xmultiplRomDesc[] = {
 
 	{ "t52.v0",		0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 21 DAC Samples
 
-	{ "m81_a-9l-.ic72",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 22 Proms
-	{ "m81_a-9p-.ic74",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 23
+	{ "m81_a-9l-.ic72",	0x00100, 0xb460c438, 0x00 | BRF_OPT },       // 22 Proms
+	{ "m81_a-9p-.ic74",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },       // 23
 };
 
 STD_ROM_PICK(xmultipl)
@@ -2503,7 +2503,7 @@ static INT32 xmultiplInit()
 
 struct BurnDriver BurnDrvXmultipl = {
 	"xmultipl", NULL, NULL, NULL, "1989",
-	"X Multiply (World, M81)\0", NULL, "Irem", "Irem M81",
+	"X Multiply (World, M81 PCB version)\0", NULL, "Irem", "Irem M81",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplRomInfo, xmultiplRomName, NULL, NULL, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
@@ -2512,36 +2512,36 @@ struct BurnDriver BurnDrvXmultipl = {
 };
 
 
-// X Multiply (Japan, M72)
+// X Multiply (Japan, M72 PCB version)
 
 static struct BurnRomInfo xmultiplm72RomDesc[] = {
-	{ "ch3.h3",		0x20000, 0x20685021, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "cl3.l3",		0x20000, 0x93fdd200, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ch0.h0",		0x10000, 0x9438dd8a, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "cl0.l0",		0x10000, 0x06a9e213, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "xm_c-h3-.ic43",	0x20000, 0x20685021, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "xm_c-l3-.ic34",	0x20000, 0x93fdd200, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "xm_c-h0-.ic40",	0x10000, 0x9438dd8a, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "xm_c-10-.ic37",	0x10000, 0x06a9e213, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "t44.00",		0x20000, 0xdb45186e, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "t45.01",		0x20000, 0x4d0764d4, 0x02 | BRF_GRA },           //  5
-	{ "t46.10",		0x20000, 0xf0c465a4, 0x02 | BRF_GRA },           //  6
-	{ "t47.11",		0x20000, 0x1263b24b, 0x02 | BRF_GRA },           //  7
-	{ "t48.20",		0x20000, 0x4129944f, 0x02 | BRF_GRA },           //  8
-	{ "t49.21",		0x20000, 0x2346e6f9, 0x02 | BRF_GRA },           //  9
-	{ "t50.30",		0x20000, 0xe322543e, 0x02 | BRF_GRA },           // 10
-	{ "t51.31",		0x20000, 0x229bf7b1, 0x02 | BRF_GRA },           // 11
+	{ "t44.00.ic53",	0x20000, 0xdb45186e, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "t45.01.ic52",	0x20000, 0x4d0764d4, 0x02 | BRF_GRA },           //  5
+	{ "t46.10.ic51",	0x20000, 0xf0c465a4, 0x02 | BRF_GRA },           //  6
+	{ "t47.11.ic50",	0x20000, 0x1263b24b, 0x02 | BRF_GRA },           //  7
+	{ "t48.20.ic49",	0x20000, 0x4129944f, 0x02 | BRF_GRA },           //  8
+	{ "t49.21.ic48",	0x20000, 0x2346e6f9, 0x02 | BRF_GRA },           //  9
+	{ "t50.30.ic47",	0x20000, 0xe322543e, 0x02 | BRF_GRA },           // 10
+	{ "t51.31.ic46",	0x20000, 0x229bf7b1, 0x02 | BRF_GRA },           // 11
 
-	{ "t53.a0",		0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 12 Foreground Tiles
-	{ "t54.a1",		0x20000, 0x076c16c5, 0x03 | BRF_GRA },           // 13
-	{ "t55.a2",		0x20000, 0x25d877a5, 0x03 | BRF_GRA },           // 14
-	{ "t56.a3",		0x20000, 0x5b1213f5, 0x03 | BRF_GRA },           // 15
+	{ "t53.a0",			0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 12 Foreground Tiles
+	{ "t54.a1",			0x20000, 0x076c16c5, 0x03 | BRF_GRA },           // 13
+	{ "t55.a2",			0x20000, 0x25d877a5, 0x03 | BRF_GRA },           // 14
+	{ "t56.a3",			0x20000, 0x5b1213f5, 0x03 | BRF_GRA },           // 15
 
-	{ "t57.b0",		0x20000, 0x0a84e0c7, 0x04 | BRF_GRA },           // 16 Background Tiles
-	{ "t58.b1",		0x20000, 0xa874121d, 0x04 | BRF_GRA },           // 17
-	{ "t59.b2",		0x20000, 0x69deb990, 0x04 | BRF_GRA },           // 18
-	{ "t60.b3",		0x20000, 0x14c69f99, 0x04 | BRF_GRA },           // 19
+	{ "t57.b0",			0x20000, 0x0a84e0c7, 0x04 | BRF_GRA },           // 16 Background Tiles
+	{ "t58.b1",			0x20000, 0xa874121d, 0x04 | BRF_GRA },           // 17
+	{ "t59.b2",			0x20000, 0x69deb990, 0x04 | BRF_GRA },           // 18
+	{ "t60.b3",			0x20000, 0x14c69f99, 0x04 | BRF_GRA },           // 19
 
-	{ "t52.v0",		0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 20 DAC Samples
+	{ "t52.v0.ic44",	0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "xmultipl_i8751h.bin",0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 // 21 i8751 Code
+	{ "xm_c-pr-.mcu",	0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 	 // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(xmultiplm72)
@@ -2556,7 +2556,7 @@ static INT32 xmultiplm72Init()
 
 struct BurnDriver BurnDrvXmultiplm72 = {
 	"xmultiplm72", "xmultipl", NULL, NULL, "1989",
-	"X Multiply (Japan, M72)\0", NULL, "Irem", "Irem M72",
+	"X Multiply (Japan, M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplm72RomInfo, xmultiplm72RomName, NULL, NULL, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
@@ -2565,7 +2565,7 @@ struct BurnDriver BurnDrvXmultiplm72 = {
 };
 
 
-// Dragon Breed (M81 PCB version)
+// Dragon Breed (World, M81 PCB version)
 
 static struct BurnRomInfo dbreedRomDesc[] = {
 	{ "db-a-h0-.59",	0x20000, 0xe1177267, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -2603,7 +2603,7 @@ static INT32 dbreedInit()
 
 struct BurnDriver BurnDrvDbreed = {
 	"dbreed", NULL, NULL, NULL, "1989",
-	"Dragon Breed (M81 PCB version)\0", NULL, "Irem", "Irem M81",
+	"Dragon Breed (World, M81 PCB version)\0", NULL, "Irem", "Irem M81",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedRomInfo, dbreedRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
@@ -2612,13 +2612,13 @@ struct BurnDriver BurnDrvDbreed = {
 };
 
 
-// Dragon Breed (M72 PCB version)
+// Dragon Breed (World, M72 PCB version)
 
 static struct BurnRomInfo dbreedm72RomDesc[] = {
-	{ "db_c-h3.rom",	0x20000, 0x4bf3063c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "db_c-l3.rom",	0x20000, 0xe4b89b79, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "db_c-h0.rom",	0x10000, 0x5aa79fb2, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "db_c-l0.rom",	0x10000, 0xed0f5e06, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "db_c-h3-b.ic43",	0x20000, 0x4bf3063c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "db_c-l3-b.ic34",	0x20000, 0xe4b89b79, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "db_c-h0.ic40",	0x10000, 0x5aa79fb2, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "db_c-l0.ic37",	0x10000, 0xed0f5e06, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "db_k800m.00",	0x20000, 0xc027a8cf, 0x02 | BRF_GRA },           //  4 Sprites
 	{ "db_k801m.10",	0x20000, 0x093faf33, 0x02 | BRF_GRA },           //  5
@@ -2635,9 +2635,10 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 	{ "db_k806m.b2",	0x20000, 0x5117f114, 0x04 | BRF_GRA },           // 14
 	{ "db_k807m.b3",	0x20000, 0x8eb0c978, 0x04 | BRF_GRA },           // 15
 
-	{ "db_c-v0.rom",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "db_c-v0.ic44",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "dbreedm72_i8751.mcu",0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	// Requires different currently undumped MCU code - i8751 MCU labeled  DB C-PR-B??
+	{ "db_c-pr-b.ic1",  0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedm72)
@@ -2659,7 +2660,7 @@ static INT32 dbreedm72Init()
 
 struct BurnDriver BurnDrvDbreedm72 = {
 	"dbreedm72", "dbreed", NULL, NULL, "1989",
-	"Dragon Breed (M72 PCB version)\0", NULL, "Irem", "Irem M72",
+	"Dragon Breed (World, M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedm72RomInfo, dbreedm72RomName, NULL, NULL, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
@@ -2668,38 +2669,81 @@ struct BurnDriver BurnDrvDbreedm72 = {
 };
 
 
-// Battle Chopper
+// Dragon Breed (Japan, M72 PCB version)
+// with matching i8751 this set boots with a Japanese warning screen
+
+static struct BurnRomInfo dbreedm72jRomDesc[] = {
+	{ "db_c-h3.ic43",	0x20000, 0x43425d67, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "db_c-l3.ic34",	0x20000, 0x9c1abc85, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "db_c-h0.ic40",	0x10000, 0x5aa79fb2, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "db_c-l0.ic37",	0x10000, 0xed0f5e06, 0x01 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "db_k800m.00",	0x20000, 0xc027a8cf, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "db_k801m.10",	0x20000, 0x093faf33, 0x02 | BRF_GRA },           //  5
+	{ "db_k802m.20",	0x20000, 0x055b4c59, 0x02 | BRF_GRA },           //  6
+	{ "db_k803m.30",	0x20000, 0x8ed63922, 0x02 | BRF_GRA },           //  7
+
+	{ "db_k804m.a0",	0x20000, 0x4c83e92e, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "db_k805m.a1",	0x20000, 0x835ef268, 0x03 | BRF_GRA },           //  9
+	{ "db_k806m.a2",	0x20000, 0x5117f114, 0x03 | BRF_GRA },           // 10
+	{ "db_k807m.a3",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },           // 11
+
+	{ "db_k804m.b0",	0x20000, 0x4c83e92e, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "db_k805m.b1",	0x20000, 0x835ef268, 0x04 | BRF_GRA },           // 13
+	{ "db_k806m.b2",	0x20000, 0x5117f114, 0x04 | BRF_GRA },           // 14
+	{ "db_k807m.b3",	0x20000, 0x8eb0c978, 0x04 | BRF_GRA },           // 15
+
+	{ "db_c-v0.ic44",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
+
+	{ "db_c-pr-.mcu",	0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
+};
+
+STD_ROM_PICK(dbreedm72j)
+STD_ROM_FN(dbreedm72j)
+
+struct BurnDriver BurnDrvDbreedm72j = {
+	"dbreedm72j", "dbreed", NULL, NULL, "1989",
+	"Dragon Breed (Japan, M72 PCB version)\0", NULL, "Irem", "Irem M72",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
+	NULL, dbreedm72jRomInfo, dbreedm72jRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
+	dbreedm72Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	384, 256, 4, 3
+};
+
+
+// Battle Chopper (World)
 
 static struct BurnRomInfo bchopperRomDesc[] = {
-	{ "c-h0-b.rom",		0x10000, 0xf2feab16, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "c-l0-b.rom",		0x10000, 0x9f887096, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "c-h1-b.rom",		0x10000, 0xa995d64f, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "c-l1-b.rom",		0x10000, 0x41dda999, 0x01 | BRF_PRG | BRF_ESS }, //  3
-	{ "c-h3-b.rom",		0x10000, 0xab9451ca, 0x01 | BRF_PRG | BRF_ESS }, //  4
-	{ "c-l3-b.rom",		0x10000, 0x11562221, 0x01 | BRF_PRG | BRF_ESS }, //  5
+	{ "mh_c-h0-b.ic40",		0x10000, 0xf2feab16, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "mh_c-l0-b.ic37",		0x10000, 0x9f887096, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "mh_c-h1-b.ic41",		0x10000, 0xa995d64f, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "mh_c-l1-b.ic36",		0x10000, 0x41dda999, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "mh_c-h3-b.ic43",		0x10000, 0xab9451ca, 0x01 | BRF_PRG | BRF_ESS }, //  4
+	{ "mh_c-l3-b.ic34",		0x10000, 0x11562221, 0x01 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "c-00-a.rom",		0x10000, 0xf6e6e660, 0x02 | BRF_GRA },           //  6 Sprites
-	{ "c-01-b.rom",		0x10000, 0x708cdd37, 0x02 | BRF_GRA },           //  7
-	{ "c-10-a.rom",		0x10000, 0x292c8520, 0x02 | BRF_GRA },           //  8
-	{ "c-11-b.rom",		0x10000, 0x20904cf3, 0x02 | BRF_GRA },           //  9
-	{ "c-20-a.rom",		0x10000, 0x1ab50c23, 0x02 | BRF_GRA },           // 10
-	{ "c-21-b.rom",		0x10000, 0xc823d34c, 0x02 | BRF_GRA },           // 11
-	{ "c-30-a.rom",		0x10000, 0x11f6c56b, 0x02 | BRF_GRA },           // 12
-	{ "c-31-b.rom",		0x10000, 0x23134ec5, 0x02 | BRF_GRA },           // 13
+	{ "mh_c-00-a.ic53",		0x10000, 0xf6e6e660, 0x02 | BRF_GRA },           //  6 Sprites
+	{ "mh_c-01-b.ic52",		0x10000, 0x708cdd37, 0x02 | BRF_GRA },           //  7
+	{ "mh_c-10-a.ic51",		0x10000, 0x292c8520, 0x02 | BRF_GRA },           //  8
+	{ "mh_c-11-b.ic50",		0x10000, 0x20904cf3, 0x02 | BRF_GRA },           //  9
+	{ "mh_c-20-a.ic49",		0x10000, 0x1ab50c23, 0x02 | BRF_GRA },           // 10
+	{ "mh_c-21-b.ic48",		0x10000, 0xc823d34c, 0x02 | BRF_GRA },           // 11
+	{ "mh_c-30-a.ic47",		0x10000, 0x11f6c56b, 0x02 | BRF_GRA },           // 12
+	{ "mh_c-31-b.ic46",		0x10000, 0x23134ec5, 0x02 | BRF_GRA },           // 13
 
-	{ "b-a0-b.rom",		0x10000, 0xe46ed7bf, 0x03 | BRF_GRA },           // 14 Foreground Tiles
-	{ "b-a1-b.rom",		0x10000, 0x590605ff, 0x03 | BRF_GRA },           // 15
-	{ "b-a2-b.rom",		0x10000, 0xf8158226, 0x03 | BRF_GRA },           // 16
-	{ "b-a3-b.rom",		0x10000, 0x0f07b9b7, 0x03 | BRF_GRA },           // 17
+	{ "mh_b-a0-b.ic21",		0x10000, 0xe46ed7bf, 0x03 | BRF_GRA },           // 14 Foreground Tiles
+	{ "mh_b-a1-b.ic22",		0x10000, 0x590605ff, 0x03 | BRF_GRA },           // 15
+	{ "mh_b-a2-b.ic20",		0x10000, 0xf8158226, 0x03 | BRF_GRA },           // 16
+	{ "mh_b-a3-b.ic23",		0x10000, 0x0f07b9b7, 0x03 | BRF_GRA },           // 17
 
-	{ "b-b0-.rom",		0x10000, 0xb5b95776, 0x04 | BRF_GRA },           // 18 Background Tiles
-	{ "b-b1-.rom",		0x10000, 0x74ca16ee, 0x04 | BRF_GRA },           // 19
-	{ "b-b2-.rom",		0x10000, 0xb82cca04, 0x04 | BRF_GRA },           // 20
-	{ "b-b3-.rom",		0x10000, 0xa7afc920, 0x04 | BRF_GRA },           // 21
+	{ "mh_b-b0-.ic26",		0x10000, 0xb5b95776, 0x04 | BRF_GRA },           // 18 Background Tiles
+	{ "mh_b-b1-.ic27",		0x10000, 0x74ca16ee, 0x04 | BRF_GRA },           // 19
+	{ "mh_b-b2-.ic25",		0x10000, 0xb82cca04, 0x04 | BRF_GRA },           // 20
+	{ "mh_b-b3-.ic24",		0x10000, 0xa7afc920, 0x04 | BRF_GRA },           // 21
 
-	{ "c-v0-b.rom",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 22 DAC Samples
+	{ "mh_c-v0-b.ic44",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 22 DAC Samples
 
-	{ "bchopper_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 i8751 Code
+	{ "mh_c-pr-b.ic1",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 23 i8751 Code
 };
 
 STD_ROM_PICK(bchopper)
@@ -2714,7 +2758,7 @@ static INT32 bchopperInit()
 
 struct BurnDriver BurnDrvBchopper = {
 	"bchopper", NULL, NULL, NULL, "1987",
-	"Battle Chopper\0", NULL, "Irem", "Irem M72",
+	"Battle Chopper (World)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, bchopperRomInfo, bchopperRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BchopperDIPInfo,
@@ -2726,31 +2770,31 @@ struct BurnDriver BurnDrvBchopper = {
 // Mr. HELI no Dai-Bouken
 
 static struct BurnRomInfo mrheliRomDesc[] = {
-	{ "mh-c-h0.bin",	0x10000, 0xe2ca5646, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "mh-c-l0.bin",	0x10000, 0x643e23cd, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "mh-c-h1.bin",	0x10000, 0x8974e84d, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "mh-c-l1.bin",	0x10000, 0x5f8bda69, 0x01 | BRF_PRG | BRF_ESS }, //  3
-	{ "mh-c-h3.bin",	0x10000, 0x143f596e, 0x01 | BRF_PRG | BRF_ESS }, //  4
-	{ "mh-c-l3.bin",	0x10000, 0xc0982536, 0x01 | BRF_PRG | BRF_ESS }, //  5
+	{ "mh_c-h0-.ic40",	0x10000, 0xe2ca5646, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "mh_c-l0-.ic37",	0x10000, 0x643e23cd, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "mh_c-h1-.ic41",	0x10000, 0x8974e84d, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "mh_c-l1-.ic36",	0x10000, 0x5f8bda69, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "mh_c-h3-.ic43",	0x10000, 0x143f596e, 0x01 | BRF_PRG | BRF_ESS }, //  4
+	{ "mh_c-l3-.ic34",	0x10000, 0xc0982536, 0x01 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "mh-c-00.bin",	0x20000, 0xdec4e121, 0x02 | BRF_GRA },           //  6 Sprites
-	{ "mh-c-10.bin",	0x20000, 0x7aaa151e, 0x02 | BRF_GRA },           //  7
-	{ "mh-c-20.bin",	0x20000, 0xeae0de74, 0x02 | BRF_GRA },           //  8
-	{ "mh-c-30.bin",	0x20000, 0x01d5052f, 0x02 | BRF_GRA },           //  9
+	{ "mh_c-00.ic53",	0x20000, 0xdec4e121, 0x02 | BRF_GRA },           //  6 Sprites
+	{ "mh_c-10.ic51",	0x20000, 0x7aaa151e, 0x02 | BRF_GRA },           //  7
+	{ "mh_c-20.ic49",	0x20000, 0xeae0de74, 0x02 | BRF_GRA },           //  8
+	{ "mh_c-30.ic47",	0x20000, 0x01d5052f, 0x02 | BRF_GRA },           //  9
 
-	{ "mh-b-a0.bin",	0x10000, 0x6a0db256, 0x03 | BRF_GRA },           // 10 Foreground Tiles
-	{ "mh-b-a1.bin",	0x10000, 0x14ec9795, 0x03 | BRF_GRA },           // 11
-	{ "mh-b-a2.bin",	0x10000, 0xdfcb510e, 0x03 | BRF_GRA },           // 12
-	{ "mh-b-a3.bin",	0x10000, 0x957e329b, 0x03 | BRF_GRA },           // 13
+	{ "mh_b-a0.ic21",	0x10000, 0x6a0db256, 0x03 | BRF_GRA },           // 10 Foreground Tiles
+	{ "mh_b-a1.ic22",	0x10000, 0x14ec9795, 0x03 | BRF_GRA },           // 11
+	{ "mh_b-a2.ic20",	0x10000, 0xdfcb510e, 0x03 | BRF_GRA },           // 12
+	{ "mh_b-a3.ic23",	0x10000, 0x957e329b, 0x03 | BRF_GRA },           // 13
 
-	{ "b-b0-.rom",		0x10000, 0xb5b95776, 0x04 | BRF_GRA },           // 14 Background Tiles
-	{ "b-b1-.rom",		0x10000, 0x74ca16ee, 0x04 | BRF_GRA },           // 15
-	{ "b-b2-.rom",		0x10000, 0xb82cca04, 0x04 | BRF_GRA },           // 16
-	{ "b-b3-.rom",		0x10000, 0xa7afc920, 0x04 | BRF_GRA },           // 17
+	{ "mh_b-b0-.ic26",		0x10000, 0xb5b95776, 0x04 | BRF_GRA },           // 14 Background Tiles
+	{ "mh_b-b1-.ic27",		0x10000, 0x74ca16ee, 0x04 | BRF_GRA },           // 15
+	{ "mh_b-b2-.ic25",		0x10000, 0xb82cca04, 0x04 | BRF_GRA },           // 16
+	{ "mh_b-b3-.ic24",		0x10000, 0xa7afc920, 0x04 | BRF_GRA },           // 17
 
-	{ "c-v0-b.rom",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 18 DAC Samples
+	{ "mh_c-v0-b.ic44",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 18 DAC Samples
 
-	{ "mh-c-pr.bin",	0x01000, 0x897dc4ee, 0x00 | BRF_OPT }, // 19 i8751 Code
+	{ "mh_c-pr-.ic1",	0x01000, 0x897dc4ee, 0x00 | BRF_OPT }, 			 // 19 i8751 microcontroller
 };
 
 STD_ROM_PICK(mrheli)
@@ -2774,17 +2818,18 @@ struct BurnDriver BurnDrvMrheli = {
 };
 
 
-// Ninja Spirit
+// Ninja Spirit (World)
+// doesn't wait / check for japan warning string.. fails rom check if used with japanese mcu rom (World version?)
 
 static struct BurnRomInfo nspiritRomDesc[] = {
-	{ "nin_c-h0.6h",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "nin_c-l0.6d",	0x10000, 0x9a405898, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "nin_c-h0-b.6h",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "nin_c-l0-b.6d",	0x10000, 0x9a405898, 0x01 | BRF_PRG | BRF_ESS }, //  1
 	{ "nin_c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
 	{ "nin_c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
 	{ "nin_c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
 	{ "nin_c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
-	{ "nin_c-h3.6m",	0x10000, 0x501104ef, 0x01 | BRF_PRG | BRF_ESS }, //  6
-	{ "nin_c-l3.6a",	0x10000, 0xfd7408b8, 0x01 | BRF_PRG | BRF_ESS }, //  7
+	{ "nin_c-h3-b.6m",	0x10000, 0x501104ef, 0x01 | BRF_PRG | BRF_ESS }, //  6
+	{ "nin_c-l3-b.6a",	0x10000, 0xfd7408b8, 0x01 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "nin-r00.7m",		0x20000, 0x5f61d30b, 0x02 | BRF_GRA },           //  8 Sprites
 	{ "nin-r10.7j",		0x20000, 0x0caad107, 0x02 | BRF_GRA },           //  9
@@ -2803,7 +2848,7 @@ static struct BurnRomInfo nspiritRomDesc[] = {
 
 	{ "nin-v0.7a",		0x10000, 0xa32e8caf, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "nin_c-pr.1c",	0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 21 i8751 Code
+	{ "nin_c-pr-b.ic1",	0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 21 i8751 microcontroller
 	
 	{ "m72_a-8l.8l",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 22 Proms
 	{ "m72_a-9l.9l",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 23
@@ -2825,7 +2870,7 @@ static INT32 nspiritInit()
 
 struct BurnDriver BurnDrvNspirit = {
 	"nspirit", NULL, NULL, NULL, "1988",
-	"Ninja Spirit\0", NULL, "Irem", "Irem M72",
+	"Ninja Spirit (World)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritRomInfo, nspiritRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
@@ -2837,14 +2882,14 @@ struct BurnDriver BurnDrvNspirit = {
 // Saigo no Nindou (Japan)
 
 static struct BurnRomInfo nspiritjRomDesc[] = {
-	{ "c-h0",			0x10000, 0x8603fab2, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "c-l0",			0x10000, 0xe520fa35, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "nin_c-h0.6h",	0x10000, 0x8603fab2, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "nin_c-l0.6d",	0x10000, 0xe520fa35, 0x01 | BRF_PRG | BRF_ESS }, //  1
 	{ "nin_c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
 	{ "nin_c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
 	{ "nin_c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
 	{ "nin_c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
-	{ "c-h3",			0x10000, 0x95b63a61, 0x01 | BRF_PRG | BRF_ESS }, //  6
-	{ "c-l3",			0x10000, 0xe754a87a, 0x01 | BRF_PRG | BRF_ESS }, //  7
+	{ "nin_c-h3.6m",	0x10000, 0x95b63a61, 0x01 | BRF_PRG | BRF_ESS }, //  6
+	{ "nin_c-l3.6a",	0x10000, 0xe754a87a, 0x01 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "nin-r00.7m",		0x20000, 0x5f61d30b, 0x02 | BRF_GRA },           //  8 Sprites
 	{ "nin-r10.7j",		0x20000, 0x0caad107, 0x02 | BRF_GRA },           //  9
@@ -2863,7 +2908,7 @@ static struct BurnRomInfo nspiritjRomDesc[] = {
 
 	{ "nin-v0.7a",		0x10000, 0xa32e8caf, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "nin_c-pr.1c",	0x01000, 0x802d440a, 0x00 | BRF_OPT },           // 21 i8751 Code
+	{ "nin_c-pr-.ic1",	0x01000, 0x802d440a, 0x00 | BRF_OPT },           // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(nspiritj)
@@ -2887,33 +2932,34 @@ struct BurnDriver BurnDrvNspiritj = {
 };
 
 
-// Image Fight (Japan, revision A)
+// Image Fight (World)
+// doesn't wait / check for japan warning string.. fails rom check if used with japanese mcu rom (World version?)
 
 static struct BurnRomInfo imgfightRomDesc[] = {
-	{ "if-c-h0-a.bin",	0x10000, 0xf5c94464, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "if-c-l0-a.bin",	0x10000, 0x87c534fe, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "if-c-h3.bin",	0x20000, 0xea030541, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "if-c-l3.bin",	0x20000, 0xc66ae348, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "if-c-h0-a.ic40",	0x10000, 0xf5c94464, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "if-c-l0-a.ic37",	0x10000, 0x87c534fe, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "if-c-h3.ic43",	0x20000, 0xea030541, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "if-c-l3.ic34",	0x20000, 0xc66ae348, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "if-c-00.bin",	0x20000, 0x745e6638, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "if-c-10.bin",	0x20000, 0xb7108449, 0x02 | BRF_GRA },           //  5
-	{ "if-c-20.bin",	0x20000, 0xaef33cba, 0x02 | BRF_GRA },           //  6
-	{ "if-c-30.bin",	0x20000, 0x1f98e695, 0x02 | BRF_GRA },           //  7
+	{ "if-c-00.ic53",	0x20000, 0x745e6638, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "if-c-10.ic51",	0x20000, 0xb7108449, 0x02 | BRF_GRA },           //  5
+	{ "if-c-20.ic49",	0x20000, 0xaef33cba, 0x02 | BRF_GRA },           //  6
+	{ "if-c-30.ic47",	0x20000, 0x1f98e695, 0x02 | BRF_GRA },           //  7
 
-	{ "if-a-a0.bin",	0x10000, 0x34ee2d77, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "if-a-a1.bin",	0x10000, 0x6bd2845b, 0x03 | BRF_GRA },           //  9
-	{ "if-a-a2.bin",	0x10000, 0x090d50e5, 0x03 | BRF_GRA },           // 10
-	{ "if-a-a3.bin",	0x10000, 0x3a8e3083, 0x03 | BRF_GRA },           // 11
+	{ "if-a-a0.ic21",	0x10000, 0x34ee2d77, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "if-a-a1.ic22",	0x10000, 0x6bd2845b, 0x03 | BRF_GRA },           //  9
+	{ "if-a-a2.ic20",	0x10000, 0x090d50e5, 0x03 | BRF_GRA },           // 10
+	{ "if-a-a3.ic23",	0x10000, 0x3a8e3083, 0x03 | BRF_GRA },           // 11
 
-	{ "if-a-b0.bin",	0x10000, 0xb425c829, 0x04 | BRF_GRA },           // 12 Background Tiles
-	{ "if-a-b1.bin",	0x10000, 0xe9bfe23e, 0x04 | BRF_GRA },           // 13
-	{ "if-a-b2.bin",	0x10000, 0x256e50f2, 0x04 | BRF_GRA },           // 14
-	{ "if-a-b3.bin",	0x10000, 0x4c682785, 0x04 | BRF_GRA },           // 15
+	{ "if-a-b0.ic26",	0x10000, 0xb425c829, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "if-a-b1.ic27",	0x10000, 0xe9bfe23e, 0x04 | BRF_GRA },           // 13
+	{ "if-a-b2.ic25",	0x10000, 0x256e50f2, 0x04 | BRF_GRA },           // 14
+	{ "if-a-b3.ic24",	0x10000, 0x4c682785, 0x04 | BRF_GRA },           // 15
 
-	{ "if-c-v0.bin",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
-	{ "if-c-v1.bin",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
+	{ "if-c-v0.ic44",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "if-c-v1.ic45",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "imgfight_i8751h.bin",0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 i8751 Code
+	{ "if_c-pr-a.ic1",  0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(imgfight)
@@ -2935,7 +2981,7 @@ static INT32 imgfightInit()
 
 struct BurnDriver BurnDrvImgfight = {
 	"imgfight", NULL, NULL, NULL, "1988",
-	"Image Fight (Japan, revision A)\0", NULL, "Irem", "Irem M72",
+	"Image Fight (World)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, imgfightRomInfo, imgfightRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
@@ -2947,30 +2993,30 @@ struct BurnDriver BurnDrvImgfight = {
 // Image Fight (Japan)
 
 static struct BurnRomInfo imgfightjRomDesc[] = {
-	{ "if-c-h0.bin",	0x10000, 0x592d2d80, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "if-c-l0.bin",	0x10000, 0x61f89056, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "if-c-h3.bin",	0x20000, 0xea030541, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "if-c-l3.bin",	0x20000, 0xc66ae348, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "if-c-h0.ic40",	0x10000, 0x592d2d80, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "if-c-l0.ic37",	0x10000, 0x61f89056, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "if-c-h3.ic43",	0x20000, 0xea030541, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "if-c-l3.ic34",	0x20000, 0xc66ae348, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "if-c-00.bin",	0x20000, 0x745e6638, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "if-c-10.bin",	0x20000, 0xb7108449, 0x02 | BRF_GRA },           //  5
-	{ "if-c-20.bin",	0x20000, 0xaef33cba, 0x02 | BRF_GRA },           //  6
-	{ "if-c-30.bin",	0x20000, 0x1f98e695, 0x02 | BRF_GRA },           //  7
+	{ "if-c-00.ic53",	0x20000, 0x745e6638, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "if-c-10.ic51",	0x20000, 0xb7108449, 0x02 | BRF_GRA },           //  5
+	{ "if-c-20.ic49",	0x20000, 0xaef33cba, 0x02 | BRF_GRA },           //  6
+	{ "if-c-30.ic47",	0x20000, 0x1f98e695, 0x02 | BRF_GRA },           //  7
 
-	{ "if-a-a0.bin",	0x10000, 0x34ee2d77, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "if-a-a1.bin",	0x10000, 0x6bd2845b, 0x03 | BRF_GRA },           //  9
-	{ "if-a-a2.bin",	0x10000, 0x090d50e5, 0x03 | BRF_GRA },           // 10
-	{ "if-a-a3.bin",	0x10000, 0x3a8e3083, 0x03 | BRF_GRA },           // 11
+	{ "if-a-a0.ic21",	0x10000, 0x34ee2d77, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "if-a-a1.ic22",	0x10000, 0x6bd2845b, 0x03 | BRF_GRA },           //  9
+	{ "if-a-a2.ic20",	0x10000, 0x090d50e5, 0x03 | BRF_GRA },           // 10
+	{ "if-a-a3.ic23",	0x10000, 0x3a8e3083, 0x03 | BRF_GRA },           // 11
 
-	{ "if-a-b0.bin",	0x10000, 0xb425c829, 0x04 | BRF_GRA },           // 12 Background Tiles
-	{ "if-a-b1.bin",	0x10000, 0xe9bfe23e, 0x04 | BRF_GRA },           // 13
-	{ "if-a-b2.bin",	0x10000, 0x256e50f2, 0x04 | BRF_GRA },           // 14
-	{ "if-a-b3.bin",	0x10000, 0x4c682785, 0x04 | BRF_GRA },           // 15
+	{ "if-a-b0.ic26",	0x10000, 0xb425c829, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "if-a-b1.ic27",	0x10000, 0xe9bfe23e, 0x04 | BRF_GRA },           // 13
+	{ "if-a-b2.ic25",	0x10000, 0x256e50f2, 0x04 | BRF_GRA },           // 14
+	{ "if-a-b3.ic24",	0x10000, 0x4c682785, 0x04 | BRF_GRA },           // 15
 
-	{ "if-c-v0.bin",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
-	{ "if-c-v1.bin",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
+	{ "if-c-v0.ic44",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "if-c-v1.ic45",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "imgfightj_i8751h.bin",0x01000, 0xef0d5098, 0x00 | BRF_OPT }, // 18 i8751 Code
+	{ "if_c-pr-.ic1",	0x01000, 0xef0d5098, 0x00 | BRF_OPT }, 			 // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(imgfightj)
@@ -3034,7 +3080,7 @@ struct BurnDriver BurnDrvAirduel = {
 };
 
 
-// Air Duel (Japan, M72)
+// Air Duel (Japan, M72 PCB version)
 
 static struct BurnRomInfo airduelm72RomDesc[] = {
 	{ "ad-c-h0.ic40",	0x20000, 0x12140276, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3059,7 +3105,7 @@ static struct BurnRomInfo airduelm72RomDesc[] = {
 
 	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "ad_c_pr.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	{ "ad_c-pr-.ic1",	0x01000, 0x45584e52, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
 	
 	{ "ad-c-3f.ic13",	0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 Pals
 };
@@ -3076,7 +3122,7 @@ static INT32 airduelm72Init()
 
 struct BurnDriver BurnDrvAirduelm72 = {
 	"airduelm72", "airduel", NULL, NULL, "1990",
-	"Air Duel (Japan, M72)\0", NULL, "Irem", "Irem M72",
+	"Air Duel (Japan, M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airduelm72RomInfo, airduelm72RomName, NULL, NULL, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
@@ -3221,7 +3267,7 @@ struct BurnDriver BurnDrvRtype2jc = {
 };
 
 
-// Hammerin' Harry (World)
+// Hammerin' Harry (World, M81 PCB version)
 
 static struct BurnRomInfo hharryRomDesc[] = {
 	{ "a-h0-v.rom",		0x20000, 0xc52802a5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3254,7 +3300,7 @@ static INT32 hharryInit()
 
 struct BurnDriver BurnDrvHharry = {
 	"hharry", NULL, NULL, NULL, "1990",
-	"Hammerin' Harry (World)\0", NULL, "Irem", "Irem M82",
+	"Hammerin' Harry (World, M81 PCB version))\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryRomInfo, hharryRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3263,7 +3309,7 @@ struct BurnDriver BurnDrvHharry = {
 };
 
 
-// Hammerin' Harry (US)
+// Hammerin' Harry (US, M84 PCB version)
 
 static struct BurnRomInfo hharryuRomDesc[] = {
 	{ "a-ho-u.8d",		0x20000, 0xede7f755, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3296,7 +3342,7 @@ static INT32 hharryuInit()
 
 struct BurnDriver BurnDrvHharryu = {
 	"hharryu", "hharry", NULL, NULL, "1990",
-	"Hammerin' Harry (US)\0", NULL, "Irem America", "Irem M82",
+	"Hammerin' Harry (US, M84 PCB version)\0", NULL, "Irem America", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryuRomInfo, hharryuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3305,7 +3351,7 @@ struct BurnDriver BurnDrvHharryu = {
 };
 
 
-// Daiku no Gensan (Japan, M82)
+// Daiku no Gensan (Japan, M84 PCB version)
 
 static struct BurnRomInfo dkgensanRomDesc[] = {
 	{ "gen-a-h0.bin",	0x20000, 0x07a45f6d, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3333,7 +3379,7 @@ STD_ROM_FN(dkgensan)
 
 struct BurnDriver BurnDrvDkgensan = {
 	"dkgensan", "hharry", NULL, NULL, "1990",
-	"Daiku no Gensan (Japan, M82)\0", NULL, "Irem", "Irem M82",
+	"Daiku no Gensan (Japan, M84 PCB version)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanRomInfo, dkgensanRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3342,7 +3388,7 @@ struct BurnDriver BurnDrvDkgensan = {
 };
 
 
-// Daiku no Gensan (Japan, M72)
+// Daiku no Gensan (Japan, M72 PCB version)
 
 static struct BurnRomInfo dkgensanm72RomDesc[] = {
 	{ "ge72-h0.bin",	0x20000, 0xa0ad992c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3367,7 +3413,7 @@ static struct BurnRomInfo dkgensanm72RomDesc[] = {
 
 	{ "gen-vo.bin",		0x20000, 0xd8595c66, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "dkgenm72_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	{ "dkgenm72_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dkgensanm72)
@@ -3382,7 +3428,7 @@ static INT32 dkgensanm72Init()
 
 struct BurnDriver BurnDrvDkgensanm72 = {
 	"dkgensanm72", "hharry", NULL, NULL, "1990",
-	"Daiku no Gensan (Japan, M72)\0", NULL, "Irem", "Irem M72",
+	"Daiku no Gensan (Japan, M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanm72RomInfo, dkgensanm72RomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3561,32 +3607,32 @@ struct BurnDriver BurnDrvCosmccop = {
 };
 
 
-// Gallop - Armed police Unit (Japan)
+// Gallop - Armed police Unit (Japan, M72 PCB version)
 
 static struct BurnRomInfo gallopRomDesc[] = {
-	{ "cc-c-h0.bin",	0x20000, 0x2217dcd0, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "cc-c-l0.bin",	0x20000, 0xff39d7fb, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "cc-c-h3.bin",	0x20000, 0x9b2bbab9, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "cc-c-l3.bin",	0x20000, 0xacd3278e, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "cc-c-h0.ic40",	0x20000, 0x2217dcd0, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "cc-c-l0.ic37",	0x20000, 0xff39d7fb, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc-c-h3.ic43",	0x20000, 0x9b2bbab9, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc-c-l3.ic34",	0x20000, 0xacd3278e, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cc-c-00.bin",	0x20000, 0x9d99deaa, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "cc-c-10.bin",	0x20000, 0x7eb083ed, 0x02 | BRF_GRA },           //  5
-	{ "cc-c-20.bin",	0x20000, 0x9421489e, 0x02 | BRF_GRA },           //  6
-	{ "cc-c-30.bin",	0x20000, 0x920ec735, 0x02 | BRF_GRA },           //  7
+	{ "cc-c-00.ic53",	0x20000, 0x9d99deaa, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "cc-c-10.ic51",	0x20000, 0x7eb083ed, 0x02 | BRF_GRA },           //  5
+	{ "cc-c-20.ic49",	0x20000, 0x9421489e, 0x02 | BRF_GRA },           //  6
+	{ "cc-c-30.ic47",	0x20000, 0x920ec735, 0x02 | BRF_GRA },           //  7
 
-	{ "cc-b-a0.bin",	0x10000, 0xa33472bd, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "cc-b-a1.bin",	0x10000, 0x118b1f2d, 0x03 | BRF_GRA },           //  9
-	{ "cc-b-a2.bin",	0x10000, 0x83cebf48, 0x03 | BRF_GRA },           // 10
-	{ "cc-b-a3.bin",	0x10000, 0x572903fc, 0x03 | BRF_GRA },           // 11
+	{ "cc-b-a0.ic21",	0x10000, 0xa33472bd, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "cc-b-a1.ic22",	0x10000, 0x118b1f2d, 0x03 | BRF_GRA },           //  9
+	{ "cc-b-a2.ic20",	0x10000, 0x83cebf48, 0x03 | BRF_GRA },           // 10
+	{ "cc-b-a3.ic23",	0x10000, 0x572903fc, 0x03 | BRF_GRA },           // 11
 
-	{ "cc-b-b0.bin",	0x10000, 0x0df5b439, 0x04 | BRF_GRA },           // 12 Background Tiles
-	{ "cc-b-b1.bin",	0x10000, 0x010b778f, 0x04 | BRF_GRA },           // 13
-	{ "cc-b-b2.bin",	0x10000, 0xbda9f6fb, 0x04 | BRF_GRA },           // 14
-	{ "cc-b-b3.bin",	0x10000, 0xd361ba3f, 0x04 | BRF_GRA },           // 15
+	{ "cc-b-b0.ic26",	0x10000, 0x0df5b439, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "cc-b-b1.ic27",	0x10000, 0x010b778f, 0x04 | BRF_GRA },           // 13
+	{ "cc-b-b2.ic25",	0x10000, 0xbda9f6fb, 0x04 | BRF_GRA },           // 14
+	{ "cc-b-b3.ic24",	0x10000, 0xd361ba3f, 0x04 | BRF_GRA },           // 15
 
-	{ "cc-c-v0.bin",	0x20000, 0x6247bade, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "cc-c-v0.ic44",	0x20000, 0x6247bade, 0x05 | BRF_SND },           // 16 DAC Samples
 	
-	{ "gallop_i8751.mcu", 0x10000, 0x00000000, BRF_NODUMP | BRF_OPT },
+	{ "cc_c-pr-.ic1", 	0x10000, 0x00000000, BRF_NODUMP | BRF_OPT },	 // i8751 microcontroller
 };
 
 STD_ROM_PICK(gallop)
@@ -3602,7 +3648,7 @@ static INT32 gallopInit()
 
 struct BurnDriver BurnDrvGallop = {
 	"gallop", "cosmccop", NULL, NULL, "1991",
-	"Gallop - Armed police Unit (Japan)\0", NULL, "Irem", "Irem M72",
+	"Gallop - Armed police Unit (Japan, M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, gallopRomInfo, gallopRomName, NULL, NULL, NULL, NULL, CommonInputInfo, GallopDIPInfo,
@@ -3615,29 +3661,29 @@ struct BurnDriver BurnDrvGallop = {
 // Legend of Hero Tonma
 
 static struct BurnRomInfo lohtRomDesc[] = {
-	{ "tom_c-h0.rom",	0x20000, 0xa63204b6, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "tom_c-l0.rom",	0x20000, 0xe788002f, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "tom_c-h3-",		0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "tom_c-l3-",		0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "tom_c-h0-b.ic40",	0x20000, 0xa63204b6, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "tom_c-l0-b.ic37",	0x20000, 0xe788002f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "tom_c-h3-.ic43",		0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "tom_c-l3-.ic34",		0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tom_m53.rom",	0x20000, 0x0b83265f, 0x02 | BRF_GRA },           //  4 Sprites
-	{ "tom_m51.rom",	0x20000, 0x8ec5f6f3, 0x02 | BRF_GRA },           //  5
-	{ "tom_m49.rom",	0x20000, 0xa41d3bfd, 0x02 | BRF_GRA },           //  6
-	{ "tom_m47.rom",	0x20000, 0x9d81a25b, 0x02 | BRF_GRA },           //  7
+	{ "tom_m53.ic53",	0x20000, 0x0b83265f, 0x02 | BRF_GRA },           //  4 Sprites
+	{ "tom_m51.ic51",	0x20000, 0x8ec5f6f3, 0x02 | BRF_GRA },           //  5
+	{ "tom_m49.ic49",	0x20000, 0xa41d3bfd, 0x02 | BRF_GRA },           //  6
+	{ "tom_m47.ic47",	0x20000, 0x9d81a25b, 0x02 | BRF_GRA },           //  7
 
-	{ "tom_m21.rom",	0x10000, 0x3ca3e771, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "tom_m22.rom",	0x10000, 0x7a05ee2f, 0x03 | BRF_GRA },           //  9
-	{ "tom_m20.rom",	0x10000, 0x79aa2335, 0x03 | BRF_GRA },           // 10
-	{ "tom_m23.rom",	0x10000, 0x789e8b24, 0x03 | BRF_GRA },           // 11
+	{ "tom_m21.ic21",	0x10000, 0x3ca3e771, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "tom_m22.ic22",	0x10000, 0x7a05ee2f, 0x03 | BRF_GRA },           //  9
+	{ "tom_m20.ic20",	0x10000, 0x79aa2335, 0x03 | BRF_GRA },           // 10
+	{ "tom_m23.ic23",	0x10000, 0x789e8b24, 0x03 | BRF_GRA },           // 11
 
-	{ "tom_m26.rom",	0x10000, 0x44626bf6, 0x04 | BRF_GRA },           // 12 Background Tiles
-	{ "tom_m27.rom",	0x10000, 0x464952cf, 0x04 | BRF_GRA },           // 13
-	{ "tom_m25.rom",	0x10000, 0x3db9b2c7, 0x04 | BRF_GRA },           // 14
-	{ "tom_m24.rom",	0x10000, 0xf01fe899, 0x04 | BRF_GRA },           // 15
+	{ "tom_m26.ic26",	0x10000, 0x44626bf6, 0x04 | BRF_GRA },           // 12 Background Tiles
+	{ "tom_m27.ic27",	0x10000, 0x464952cf, 0x04 | BRF_GRA },           // 13
+	{ "tom_m25.ic25",	0x10000, 0x3db9b2c7, 0x04 | BRF_GRA },           // 14
+	{ "tom_m24.ic24",	0x10000, 0xf01fe899, 0x04 | BRF_GRA },           // 15
 
-	{ "tom_m44.rom",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
+	{ "tom_m44.ic44",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "loht_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
+	{ "tom_c-pr-b.ic1",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(loht)
@@ -3686,7 +3732,7 @@ static struct BurnRomInfo lohtjRomDesc[] = {
 
 	{ "082",		0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "tom_c-pr.bin",	0x01000, 0x9fa9b496, 0x00 | BRF_OPT },           // 17 i8751 Code
+	{ "tom_c-pr-.ic1",	0x01000, 0x9fa9b496, 0x00 | BRF_OPT },       // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(lohtj)
@@ -3881,7 +3927,7 @@ static struct BurnRomInfo lohtb2RomDesc[] = {
 
 	{ "loht-a1.bin",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 24 DAC Samples
 
-	{ "loht-a26.bin",	0x02000, 0xac901e17, 0x00 | BRF_OPT },           // 25 i8751 Code
+	{ "loht-a26.bin",	0x02000, 0xac901e17, 0x00 | BRF_OPT },           // 25 i8751 microcontroller
 };
 
 STD_ROM_PICK(lohtb2)

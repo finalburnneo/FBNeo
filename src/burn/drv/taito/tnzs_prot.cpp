@@ -309,7 +309,7 @@ static UINT8 mcu_tnzs_r(INT32 offset)
 					else return mcu_credits;
 				}
 				else
-					return ~((tnzs_mcu_inputs[0] & 0xf0) | (tnzs_mcu_inputs[1] & 0x0f));
+					return ~((tnzs_mcu_inputs[0] & 0xf0) | ((tnzs_mcu_inputs[1] >> 4) & 0x0f));
 
 			default:
 				return 0xff;

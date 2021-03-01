@@ -3,17 +3,17 @@
 
 #include "mips3/mips3_common.h"
 
-typedef unsigned char (*pMips3ReadByteHandler)(unsigned int a);
-typedef void (*pMips3WriteByteHandler)(unsigned int a, unsigned char d);
+typedef UINT8 (*pMips3ReadByteHandler)(UINT32 a);
+typedef void (*pMips3WriteByteHandler)(UINT32 a, UINT8 d);
 
-typedef unsigned short (*pMips3ReadHalfHandler)(unsigned int a);
-typedef void (*pMips3WriteHalfHandler)(unsigned int a, unsigned short d);
+typedef UINT16 (*pMips3ReadHalfHandler)(UINT32 a);
+typedef void (*pMips3WriteHalfHandler)(UINT32 a, UINT16 d);
 
-typedef unsigned int (*pMips3ReadWordHandler)(unsigned int a);
-typedef void (*pMips3WriteWordHandler)(unsigned int a, unsigned int d);
+typedef UINT32 (*pMips3ReadWordHandler)(UINT32 a);
+typedef void (*pMips3WriteWordHandler)(UINT32 a, UINT32 d);
 
-typedef unsigned long long (*pMips3ReadDoubleHandler)(unsigned int a);
-typedef void (*pMips3WriteDoubleHandler)(unsigned int a, unsigned long long d);
+typedef UINT64 (*pMips3ReadDoubleHandler)(UINT32 a);
+typedef void (*pMips3WriteDoubleHandler)(UINT32 a, UINT64 d);
 
 int Mips3Init();
 int Mips3UseRecompiler(bool use);

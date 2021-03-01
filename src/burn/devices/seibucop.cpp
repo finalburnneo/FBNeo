@@ -1,3 +1,107 @@
+// license:LGPL-2.1+
+// copyright-holders:Olivier Galibert, Angelo Salese, David Haywood, Tomasz Slanina
+/***************************************************************************
+
+    Seibu Cop (Co-Processor) device emulation
+    a.k.a. known as Toshiba gate array TC25SC rebadged as:
+    SEI300 - Legionnaire PCB
+    [...]
+    There's also a ROM labeled COP-Dx, which is probably used for some in-game maths:
+    COP-D1 - Seibu Cup Soccer PCBs
+    COP-D2 - legionna.cpp and raiden2.cpp, latter might use another component too
+    COP-D3 - New Zero Team / Raiden 2 V33 HWs
+    Raiden 2 first boss arms is known to behave strangely without this ROM on a real PCB
+
+    TODO:
+    - improve documentation, ffs!
+    - split into files, still needed:
+        - BCD;
+        - collision detection;
+        - command parser -> to cmd file;
+        - sd gundam sprite dma -> to dma file;
+    - convert to internal memory map, remove trampolines along the way.
+    - DMA mode needs to be cleaned up;
+    - improve class OO public/protected/private;
+    - nuke legacy command implementations;
+    - assert for something that needs actual playtesting is bad.
+    - add better debug facilities in a new sub-class, including but not limited to:
+        - disable collision detection;
+        - printing facilities;
+        - debugger break on pre-setted commands;
+        - ...
+
+    per-game TODO:
+    Legionnaire
+    - (fixed) player walks on spot on stage clear;
+    - (fixed) several if not all enemies definitely wants some sort of "axis aligned bounding box" in order to stop from going out of range
+        (when i.e. first boss goes to bottom of the screen and become unreachable)
+    - (btanb) Throw is made by quickly double jumping (!)
+    - (btanb) seldomly enemies thrown animates weirdly (bounces to the left when thrown to the right).
+      Culprit is with command 0x905 param +0x28, but it looks like this parameter is coming
+      from program ROM itself. Also a PCB recording video shows the same phenomenon, it's just sloppy
+      programming basically.
+    Heated Barrel
+    - (btanb) if player moves in diagonal a bogus projectile is fired.
+    - gives random value to hi-score if you continue (only the first time, not a bug?);
+    - (fixed) throws random address exceptions at level 3 and above, a RAM address arrives corrupt in the snippet at 0x136a;
+    - (fixed) some corrupt sprites, probably a non-fatal version of the one above;
+    - (fixed) stage 2 boss attacks only in vertical (regressed with the 130e / 3b30 / 42c2 command merge);
+    - (fixed) level 3+ boss movements looks wrong;
+    - stage 3 "homing" missiles doesn't seem to like our 6200 hookup here, except it's NOT 6200!?
+    - (fixed) barrels seen in later levels seems to fail an axis aligned bounding box, not unlike Legionnaire.
+    Godzilla
+    - few elements doesn't collide properly (i.e. Super X missiles, Tokyo's tower in stage 1),
+      Z axis check makes no sense whatsoever. Kludged to work in per-game driver_init.
+    SD Gundam
+    - stage 3: mid-boss still has the sprite garbage bug;
+    - stage 4: has sprite stuck on bottom-left of screen;
+    Seibu Cup Soccer
+    - Handles collision detection via the 130e/3bb0 macros
+      130e version in this makes a sub instead of an add as last opcode, which in turn reflects with
+      the distance (which we do know that is internally loaded somehow).
+          d104 macro is called before this, it likely sets the range for the 130e snippets.
+          Example snippet (note: there are multiple calls to 130e)
+013F3C: 3D7C 130E 0100             move.w  #$130e, ($100,A6)    // angle macro
+013F42: 302E 01B4                  move.w  ($1b4,A6), D0        // take the angle
+013F46: 082E 000F 01B0             btst    #$f, ($1b0,A6)       // is status exception flag raised?
+013F4C: 6712                       beq     $13f60
+013F4E: 2228 0004                  move.l  ($4,A0), D1
+013F52: B2A8 0044                  cmp.l   ($44,A0), D1         // compares Y value against the next object (yes, cop_regs[1] + 0x40 = cop_regs[0])
+013F56: 6708                       beq     $13f60               // if equal then check the distance
+013F58: 6E04                       bgt     $13f5e
+013F5A: 7040                       moveq   #$40, D0             // set angle direction left ...
+013F5C: 6002                       bra     $13f60
+013F5E: 70C0                       moveq   #-$40, D0            // ... or right
+013F60: 3D7C 3BB0 0100             move.w  #$3bb0, ($100,A6)    // dist macro
+013F66: 1140 003D                  move.b  D0, ($3d,A0)         // move angle value to [0x3d]
+013F6A: 4E75                       rts
+    Zero Team
+    - Some faulty collision detection, e.g. crate in front of aquarium in stage 1
+    - Bird Boss jumps to wrong direction
+      the sequence called is:
+      write to reg 4 then execute 0xfc84 and 0xf790, finally reads the distance.
+
+    Tech notes (to move into own file with doxy mainpage):
+    -----------
+    [0x6fc] DMA mode bit scheme:
+    ---1 ---1 ---- ---- fill op if true, else transfer
+    ---- ---- x--- ---- palette brightness
+    ---- ---- ---x ---- internal buffer selector
+    ---- ---- ---- x--- size modifier? Bus transfer size actually?
+    ---- ---- ---- -xxx select channel
+
+    work RAM object structure (in seibu cup soccer)
+    all object have a [0x40] boundary
+    [0x04-0x07] Y position
+    [0x08-0x0b] X position
+    [0x10-0x13] Y offset (a.k.a. calculated sine)
+    [0x14-0x17] X offset (a.k.a. calculated cosine)
+    [0x37] angle direction
+    TOC
+    [0x11381c] ball object
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "nec_intf.h"

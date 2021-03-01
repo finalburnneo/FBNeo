@@ -2019,6 +2019,46 @@ struct BurnDriver BurnDrvVanguardc = {
 };
 
 
+// Vanguard (Germany)
+
+static struct BurnRomInfo vanguardgRomDesc[] = {
+	{ "vg1.bin",		0x1000, 0x6a29e354, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 code
+	{ "vg2.bin",		0x1000, 0x302bba54, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "vg3.bin",		0x1000, 0x424755f6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "vg4g.bin",		0x1000, 0x4a82306a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "vg5.bin",		0x1000, 0xfde157d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "vg6.bin",		0x1000, 0x0d5b47d0, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "vg7.bin",		0x1000, 0x8549b8f8, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "vg8s.bin",		0x1000, 0xabe5fa3f, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "sk5_ic50.bin",	0x0800, 0xe7d4315b, 2 | BRF_GRA },           //  8 Background tiles
+	{ "sk5_ic51.bin",	0x0800, 0x96e87858, 2 | BRF_GRA },           //  9
+
+	{ "sk5_ic7.bin",	0x0020, 0xad782a73, 3 | BRF_GRA },           // 10 Color data
+	{ "sk5_ic6.bin",	0x0020, 0x7dc9d450, 3 | BRF_GRA },           // 11
+
+	{ "sk4_ic51.bin",	0x0800, 0xd2a64006, 4 | BRF_SND },           // 12 Custom sound data
+	{ "sk4_ic52.bin",	0x0800, 0xcc4a0b6f, 4 | BRF_SND },           // 13
+
+	{ "sk6_ic07.bin",	0x0800, 0x2b7cbae9, 5 | BRF_SND },           // 14 Custom speech data
+	{ "sk6_ic08.bin",	0x0800, 0x3b7e9d7c, 5 | BRF_SND },           // 15
+	{ "sk6_ic11.bin",	0x0800, 0xc36df041, 5 | BRF_SND },           // 16
+};
+
+STD_ROM_PICK(vanguardg)
+STD_ROM_FN(vanguardg)
+
+struct BurnDriver BurnDrvVanguardg = {
+	"vanguardg", "vanguard", NULL, "vanguard", "1981",
+	"Vanguard (Germany)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, vanguardgRomInfo, vanguardgRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, VanguardInputInfo, VanguardDIPInfo,
+	VanguardInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	224, 256, 3, 4
+};
+
+
 // Vanguard (Japan)
 
 static struct BurnRomInfo vanguardjRomDesc[] = {

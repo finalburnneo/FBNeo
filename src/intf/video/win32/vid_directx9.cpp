@@ -1,22 +1,22 @@
 // DirectX9 Enhanced video output
 #include "burner.h"
 #include "vid_softfx.h"
+#include "vid_overlay.h"
+#include "vid_effect.h"
 
 //#ifdef _MSC_VER
-//#pragma comment(lib, "d3d9")
-//#pragma comment(lib, "d3dx9")
+#pragma comment(lib, "d3d9")
+#pragma comment(lib, "d3dx9")
 
-
-// #define ENABLE_PROFILING FBNEO_DEBUG
-// #define LOAD_EFFECT_FROM_FILE
+//#define PRINT_DEBUG_INFO
+//#define ENABLE_PROFILING FBNEO_DEBUG
+//#define LOAD_EFFECT_FROM_FILE
 
 #include <InitGuid.h>
 #define DIRECT3D_VERSION 0x0900							// Use this Direct3D version
 #define D3D_OVERLOADS
 #include <d3d9.h>
 #include <d3dx9effect.h>
-
-#include "directx9_core.h"
 
 const float PI = 3.14159265358979323846f;
 
@@ -31,7 +31,7 @@ typedef struct _D3DLVERTEX2 {
 	union { FLOAT tu1; FLOAT dvTU1; };
 	union { FLOAT tv1; FLOAT dvTV1; };
 #if(DIRECT3D_VERSION >= 0x0500)
- #if (defined __cplusplus) && (defined D3D_OVERLOADS)
+#if (defined __cplusplus) && (defined D3D_OVERLOADS)
 	_D3DLVERTEX2() { }
 	_D3DLVERTEX2(FLOAT _x, FLOAT _y, FLOAT _z, D3DCOLOR _color, D3DCOLOR _specular, FLOAT _tu, FLOAT _tv, FLOAT _tu1, FLOAT _tv1)
 	{
@@ -40,7 +40,7 @@ typedef struct _D3DLVERTEX2 {
 		tu = _tu; tv = _tv;
 		tu1 = _tu1; tv1 = _tv1;
 	}
- #endif
+#endif
 #endif
 } D3DLVERTEX2, *LPD3DLVERTEX2;
 
@@ -53,9 +53,9 @@ typedef struct _D3DLVERTEX2 {
 #define DX9_USE_PS20		 ( nVidBlitterOpt[nVidSelect] & (1 <<  9))
 #define DX9_USE_FPTEXTURE    ( nVidBlitterOpt[nVidSelect] & (1 <<  8))
 
-static IDirect3D9* pD3D = NULL;							// Direct3D interface
+static IDirect3D9Ex* pD3D = NULL;							// Direct3D interface
 static D3DPRESENT_PARAMETERS d3dpp;
-static IDirect3DDevice9* pD3DDevice = NULL;
+static IDirect3DDevice9Ex* pD3DDevice = NULL;
 static IDirect3DVertexBuffer9* pVB[RENDER_STRIPS] = { NULL, };
 static IDirect3DTexture9* pTexture = NULL;
 static IDirect3DTexture9* pScanlineTexture[2] = { NULL, };
@@ -71,9 +71,8 @@ static ID3DXTextureShader* pEffectShader = NULL;
 static D3DXHANDLE hTechnique = NULL;
 //static D3DXHANDLE hScanIntensity = NULL;
 static IDirect3DTexture9* pEffectTexture = NULL;
-
-static ID3DXFont* pFont = NULL;							// OSD font
-static D3DCOLOR osdColor = D3DCOLOR_ARGB(0xFF, 0xFF, 0xFF, 0xFF);
+static VidEffect* pVidEffect = NULL;
+static int nDX9HardFX = -1;
 
 static double dPrevCubicB, dPrevCubicC;
 
@@ -88,6 +87,43 @@ static int nImageWidth, nImageHeight/*, nImageZoom*/;
 static RECT Dest;
 
 static unsigned int nD3DAdapter;
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+bool LoadD3DTextureFromFile(IDirect3DDevice9* device, const char* filename, IDirect3DTexture9*& texture, int& width, int& height)
+{
+	bool res = false;
+	int comp;
+
+	if (unsigned char* image = stbi_load(filename, &width, &height, &comp, 4))
+	{
+		device->CreateTexture(width, height, 1, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &texture, 0);
+		if (texture)
+		{
+			D3DLOCKED_RECT rect;
+			texture->LockRect(0, &rect, 0, D3DLOCK_DISCARD);
+			unsigned char* dst = static_cast<unsigned char*>(rect.pBits);
+			unsigned char* src = image;
+			for (int i = 0; i < height; i++)
+			{
+				for (int j = 0; j < width; j++)
+				{
+					*dst++ = src[2];
+					*dst++ = src[1];
+					*dst++ = src[0];
+					*dst++ = src[3];
+					src+= 4;
+				}
+				dst+= (rect.Pitch)-width*4;
+			}
+			texture->UnlockRect(0);
+			res = true;
+		}
+		stbi_image_free(image);
+	}
+	return res;
+}
 
 // ----------------------------------------------------------------------------
 #ifdef PRINT_DEBUG_INFO
@@ -159,7 +195,6 @@ static UINT dx9GetAdapter(wchar_t* name)
 		D3DADAPTER_IDENTIFIER9 identifier;
 
 		pD3D->GetAdapterIdentifier(a, 0, &identifier);
-		
 		if (identifier.DeviceName[11] == name[11]) {
 			return a;
 		}
@@ -244,7 +279,7 @@ static void FillEffectTexture()
 		pEffectShader->SetFloat("B", B);
 		pEffectShader->SetFloat("C", C);
 
-		_D3DXFillTextureTX(pEffectTexture, pEffectShader);
+		D3DXFillTextureTX(pEffectTexture, pEffectShader);
 	}
 
 	pEffect->SetFloat("B", B);
@@ -276,9 +311,9 @@ static int dx9Exit()
 {
 	dx9ReleaseResources();
 
+	VidOverlayEnd();
 	VidSFreeVidImage();
 
-	RELEASE(pFont);
 	RELEASE(pD3DDevice);
 	RELEASE(pD3D);
 
@@ -307,6 +342,9 @@ static int dx9SurfaceInit()
 	} else {
 		nVidImageDepth = nVidScrnDepth;
 	}
+
+	// wtf
+	nVidImageDepth = nVidScrnDepth;
 
 	switch (nVidImageDepth) {
 		case 32:
@@ -389,7 +427,7 @@ static int dx9EffectSurfaceInit()
 
 		if (FAILED(pD3DDevice->CreateTexture(1024, 1, 1, D3DUSAGE_RENDERTARGET, nFormat, D3DPOOL_DEFAULT, &pEffectTexture, NULL))) {
 #ifdef PRINT_DEBUG_INFO
-   			dprintf(_T("  * Error: Couldn't create effects texture.\n"));
+			dprintf(_T("  * Error: Couldn't create effects texture.\n"));
 #endif
 			return 1;
 		}
@@ -398,10 +436,11 @@ static int dx9EffectSurfaceInit()
 #endif
 	}
 
-	if ((DX9_FILTER == 1 && bVidScanlines) || (DX9_FILTER == 2 && (bUsePS14 || DX9_SHADERPRECISION >= 2 || bVidScanlines))) {
+	if ((DX9_FILTER == 2 && (bUsePS14 || DX9_SHADERPRECISION >= 2))) {
 		if (nVidFullscreen) {
 			nIntermediateTextureWidth = GetTextureSize(nRotateGame ? nVidScrnHeight : nVidScrnWidth);
-		} else {
+		}
+		else {
 			nIntermediateTextureWidth = GetTextureSize(nRotateGame ? SystemWorkArea.bottom - SystemWorkArea.top : SystemWorkArea.right - SystemWorkArea.left);
 		}
 		nIntermediateTextureHeight = nTextureHeight;
@@ -409,9 +448,10 @@ static int dx9EffectSurfaceInit()
 		nFormat = D3DFMT_A8R8G8B8;
 		if ((DX9_FILTER == 2) && !bUsePS14 && DX9_USE_FPTEXTURE) {
 #if 0
-			if ((DX9_SHADERPRECISION == 0 || DX9_SHADERPRECISION == 2) && !bVidScanlines) {
+			if ((DX9_SHADERPRECISION == 0 || DX9_SHADERPRECISION == 2)) {
 				nFormat = D3DFMT_A32B32G32R32F;
-			} else {
+			}
+			else {
 				nFormat = D3DFMT_A16B16G16R16F;
 			}
 #else
@@ -454,10 +494,10 @@ static int dx9EffectSurfaceInit()
 		RECT rect = { 0, 0, nSize, nSize };
 		IDirect3DSurface9* pSurf = NULL;
 
-		unsigned int scan2x2[] =  { 0xFFFFFF, 0xFFFFFF,
+		unsigned int scan2x2[] = { 0xFFFFFF, 0xFFFFFF,
 									0x000000, 0x000000 };
 
-		unsigned int scan4x4[] =  { 0x9F9F9F, 0x9F9F9F, 0x9F9F9F, 0x9F9F9F,
+		unsigned int scan4x4[] = { 0x9F9F9F, 0x9F9F9F, 0x9F9F9F, 0x9F9F9F,
 									0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF,
 									0x9F9F9F, 0x9F9F9F, 0x9F9F9F, 0x9F9F9F,
 									0x000000, 0x000000, 0x000000, 0x000000 };
@@ -476,7 +516,7 @@ static int dx9EffectSurfaceInit()
 #endif
 		}
 
-		if (FAILED(_D3DXLoadSurfaceFromMemory(pSurf, NULL, &rect, scandata[i], D3DFMT_X8R8G8B8, nSize * sizeof(int), NULL, &rect, D3DX_FILTER_NONE, 0))) {
+		if (FAILED(D3DXLoadSurfaceFromMemory(pSurf, NULL, &rect, scandata[i], D3DFMT_X8R8G8B8, nSize * sizeof(int), NULL, &rect, D3DX_FILTER_NONE, 0))) {
 #ifdef PRINT_DEBUG_INFO
 			dprintf(_T("  * Error: D3DXLoadSurfaceFromMemory failed.\n"));
 #endif
@@ -496,33 +536,33 @@ int dx9GeometryInit()
 
 		// The polygons for the emulator image on the screen
 		{
-			int nWidth =     pIntermediateTexture ? nImageWidth : nGameImageWidth;
-			int nHeight =    nGameImageHeight;
-			int nTexWidth =  pIntermediateTexture ? nIntermediateTextureWidth : nTextureWidth;
+			int nWidth = pIntermediateTexture ? nImageWidth : nGameImageWidth;
+			int nHeight = nGameImageHeight;
+			int nTexWidth = pIntermediateTexture ? nIntermediateTextureWidth : nTextureWidth;
 			int nTexHeight = nTextureHeight;
 
 			// Add 0.0000001 to ensure consistent rounding
-			double dTexCoordXl =  																			0.0000001;
-			double dTexCoordXr = (double)nWidth					   / (double)nTexWidth                    + 0.0000001;
+			double dTexCoordXl = 0.0000001;
+			double dTexCoordXr = (double)nWidth / (double)nTexWidth + 0.0000001;
 			double dTexCoordYt = (double)nHeight * (double)(y + 0) / (double)(nTexHeight * RENDER_STRIPS) + 0.0000001;
 			double dTexCoordYb = (double)nHeight * (double)(y + 1) / (double)(nTexHeight * RENDER_STRIPS) + 0.0000001;
 
-			double dLeft   = 1.0 - 2.0;
-			double dRight  = 1.0 - 0.0;
-			double dTop    = 1.0 - (((double)((nRotateGame & 1) ? (RENDER_STRIPS - y - 0) : (y + 0))) * 2.0 / RENDER_STRIPS);
+			double dLeft = 1.0 - 2.0;
+			double dRight = 1.0 - 0.0;
+			double dTop = 1.0 - (((double)((nRotateGame & 1) ? (RENDER_STRIPS - y - 0) : (y + 0))) * 2.0 / RENDER_STRIPS);
 			double dBottom = 1.0 - (((double)((nRotateGame & 1) ? (RENDER_STRIPS - y - 1) : (y + 1))) * 2.0 / RENDER_STRIPS);
 
 			// ugly fix for flipped game, modified by regret
 			if ((nRotateGame & 1) && (nRotateGame & 2)) {
-				dTop    = 1.0 - (((double)(y + 0)) * 2.0 / RENDER_STRIPS);
+				dTop = 1.0 - (((double)(y + 0)) * 2.0 / RENDER_STRIPS);
 				dBottom = 1.0 - (((double)(y + 1)) * 2.0 / RENDER_STRIPS);
 			}
 			else if (nRotateGame & 2) {
-				dTop    = 1.0 - (((double)(RENDER_STRIPS - y - 0)) * 2.0 / RENDER_STRIPS);
+				dTop = 1.0 - (((double)(RENDER_STRIPS - y - 0)) * 2.0 / RENDER_STRIPS);
 				dBottom = 1.0 - (((double)(RENDER_STRIPS - y - 1)) * 2.0 / RENDER_STRIPS);
 			}
 
-			if (pIntermediateTexture && bVidScanlines) {
+			if (pIntermediateTexture) {
 				dTexCoordXl += 0.5 / (double)nIntermediateTextureWidth;
 				dTexCoordXr += 0.5 / (double)nIntermediateTextureWidth;
 				dTexCoordYt += 1.0 / (double)nIntermediateTextureHeight;
@@ -545,40 +585,34 @@ int dx9GeometryInit()
 			// Set up the vertices for the game image, including the texture coordinates for the game image only
 			// ugly fix for flipped game, modified by regret
 			if (nRotateGame & 1) {
-				vScreen[(nRotateGame & 2) ? 3 : 0] = D3DLVERTEX2(dTop,    dLeft,  0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYt, 0, 0);
-				vScreen[(nRotateGame & 2) ? 2 : 1] = D3DLVERTEX2(dTop,    dRight, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYt, 0, 0);
-				vScreen[(nRotateGame & 2) ? 1 : 2] = D3DLVERTEX2(dBottom, dLeft,  0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYb, 0, 0);
+				vScreen[(nRotateGame & 2) ? 3 : 0] = D3DLVERTEX2(dTop, dLeft, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYt, 0, 0);
+				vScreen[(nRotateGame & 2) ? 2 : 1] = D3DLVERTEX2(dTop, dRight, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYt, 0, 0);
+				vScreen[(nRotateGame & 2) ? 1 : 2] = D3DLVERTEX2(dBottom, dLeft, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYb, 0, 0);
 				vScreen[(nRotateGame & 2) ? 0 : 3] = D3DLVERTEX2(dBottom, dRight, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYb, 0, 0);
-			} else {
-				vScreen[(nRotateGame & 2) ? 3 : 0] = D3DLVERTEX2(dLeft,  dTop,    0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYt, 0, 0);
-				vScreen[(nRotateGame & 2) ? 2 : 1] = D3DLVERTEX2(dRight, dTop,    0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYt, 0, 0);
-				vScreen[(nRotateGame & 2) ? 1 : 2] = D3DLVERTEX2(dLeft,  dBottom, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYb, 0, 0);
+			}
+			else {
+				vScreen[(nRotateGame & 2) ? 3 : 0] = D3DLVERTEX2(dLeft, dTop, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYt, 0, 0);
+				vScreen[(nRotateGame & 2) ? 2 : 1] = D3DLVERTEX2(dRight, dTop, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYt, 0, 0);
+				vScreen[(nRotateGame & 2) ? 1 : 2] = D3DLVERTEX2(dLeft, dBottom, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXr : dTexCoordXl, dTexCoordYb, 0, 0);
 				vScreen[(nRotateGame & 2) ? 0 : 3] = D3DLVERTEX2(dRight, dBottom, 0.0, 0xFFFFFFFF, 0, (nRotateGame & 2) ? dTexCoordXl : dTexCoordXr, dTexCoordYb, 0, 0);
 			}
 
 			{
 				// Set up the 2nd pair of texture coordinates, used for scanlines or the high performance version of the cubic filter
-
 				double dScanOffset = nGameImageHeight / -2.0;
 
-				if (bVidScanlines) {
-					int s, z = nImageHeight / nGameImageHeight;
-
-					for (s = 2; s < z; s <<= 1) { }
-					dScanOffset += 0.5 / s;
-				} else {
-					dScanOffset += 0.5;
-				}
+				dScanOffset += 0.5;
 
 				// Set the texture coordinates for the scanlines
 				if (nRotateGame & 1) {
-					vScreen[nRotateGame & 2 ? 3 : 0].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 3 : 0].tv1 = dScanOffset + 0.0								+ 0.0000001;
-					vScreen[nRotateGame & 2 ? 2 : 1].tu1 = dScanOffset + (double)nGameHeight;	vScreen[nRotateGame & 2 ? 2 : 1].tv1 = dScanOffset + 0.0								+ 0.0000001;
+					vScreen[nRotateGame & 2 ? 3 : 0].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 3 : 0].tv1 = dScanOffset + 0.0 + 0.0000001;
+					vScreen[nRotateGame & 2 ? 2 : 1].tu1 = dScanOffset + (double)nGameHeight;	vScreen[nRotateGame & 2 ? 2 : 1].tv1 = dScanOffset + 0.0 + 0.0000001;
 					vScreen[nRotateGame & 2 ? 1 : 2].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 1 : 2].tv1 = dScanOffset + (double)nGameWidth / RENDER_STRIPS + 0.0000001;
 					vScreen[nRotateGame & 2 ? 0 : 3].tu1 = dScanOffset + (double)nGameHeight;	vScreen[nRotateGame & 2 ? 0 : 3].tv1 = dScanOffset + (double)nGameWidth / RENDER_STRIPS + 0.0000001;
-				} else {
-					vScreen[nRotateGame & 2 ? 3 : 0].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 3 : 0].tv1 = dScanOffset + 0.0								 + 0.0000001;
-					vScreen[nRotateGame & 2 ? 2 : 1].tu1 = dScanOffset + (double)nGameWidth;	vScreen[nRotateGame & 2 ? 2 : 1].tv1 = dScanOffset + 0.0								 + 0.0000001;
+				}
+				else {
+					vScreen[nRotateGame & 2 ? 3 : 0].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 3 : 0].tv1 = dScanOffset + 0.0 + 0.0000001;
+					vScreen[nRotateGame & 2 ? 2 : 1].tu1 = dScanOffset + (double)nGameWidth;	vScreen[nRotateGame & 2 ? 2 : 1].tv1 = dScanOffset + 0.0 + 0.0000001;
 					vScreen[nRotateGame & 2 ? 1 : 2].tu1 = dScanOffset + 0.0;					vScreen[nRotateGame & 2 ? 1 : 2].tv1 = dScanOffset + (double)nGameHeight / RENDER_STRIPS + 0.0000001;
 					vScreen[nRotateGame & 2 ? 0 : 3].tu1 = dScanOffset + (double)nGameWidth;	vScreen[nRotateGame & 2 ? 0 : 3].tv1 = dScanOffset + (double)nGameHeight / RENDER_STRIPS + 0.0000001;
 				}
@@ -599,10 +633,6 @@ int dx9GeometryInit()
 		}
 	}
 
-	if (bVidScanlines) {
-		pEffect->SetTexture("scanTexture", pScanlineTexture[(nImageHeight / nGameImageHeight >= 4) ? 1 : 0]);
-	}
-
 	if (pIntermediateTexture) {
 		D3DLVERTEX2* pVertexData;
 		D3DLVERTEX2 vTemp[4];
@@ -617,10 +647,10 @@ int dx9GeometryInit()
 			dTexCoordYb -= 0.5 / nTextureHeight;
 		}
 
-		vTemp[0] = D3DLVERTEX2(-1.0,  1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXl, dTexCoordYt, 0.5 ,					0.5);
-		vTemp[1] = D3DLVERTEX2( 1.0,  1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXr, dTexCoordYt, 0.5 + nGameImageWidth, 0.5);
-		vTemp[2] = D3DLVERTEX2(-1.0, -1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXl, dTexCoordYb, 0.5,					0.5 + nGameImageHeight);
-		vTemp[3] = D3DLVERTEX2( 1.0, -1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXr, dTexCoordYb, 0.5 + nGameImageWidth, 0.5 + nGameImageHeight);
+		vTemp[0] = D3DLVERTEX2(-1.0, 1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXl, dTexCoordYt, 0.5, 0.5);
+		vTemp[1] = D3DLVERTEX2(1.0, 1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXr, dTexCoordYt, 0.5 + nGameImageWidth, 0.5);
+		vTemp[2] = D3DLVERTEX2(-1.0, -1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXl, dTexCoordYb, 0.5, 0.5 + nGameImageHeight);
+		vTemp[3] = D3DLVERTEX2(1.0, -1.0, 0.0, 0xFFFFFFFF, 0, dTexCoordXr, dTexCoordYb, 0.5 + nGameImageWidth, 0.5 + nGameImageHeight);
 
 		if (FAILED(pIntermediateVB->Lock(0, 4 * sizeof(D3DLVERTEX2), (void**)&pVertexData, 0))) {
 #ifdef PRINT_DEBUG_INFO
@@ -638,11 +668,11 @@ int dx9GeometryInit()
 
 int dx9EffectInit()
 {
-//	Set up the bicubic filter
+	//	Set up the bicubic filter
 
-//	char szB[MAX_PATH] = "(1.0)";
-//	char szC[MAX_PATH] = "(0.0)";
-//	D3DXMACRO d3dxm[] = {{ "USE_BC_MACRO", "1", }, { "B", szB, }, { "C", szC, }, { NULL, NULL, }};
+	//	char szB[MAX_PATH] = "(1.0)";
+	//	char szC[MAX_PATH] = "(0.0)";
+	//	D3DXMACRO d3dxm[] = {{ "USE_BC_MACRO", "1", }, { "B", szB, }, { "C", szC, }, { NULL, NULL, }};
 
 	char* pszTechniqueOpt[] = { "ScanBilinear", "Bilinear", "ScanPoint", "Point" };
 	char* pszTechnique = NULL;
@@ -653,12 +683,12 @@ int dx9EffectInit()
 	pEffect = NULL;
 	pEffectShader = NULL;
 
-	_D3DXCreateBuffer(0x10000, &pErrorBuffer);
+	D3DXCreateBuffer(0x10000, &pErrorBuffer);
 
 #ifdef LOAD_EFFECT_FROM_FILE
-	if (FAILED(_D3DXCreateEffectFromFile(pD3DDevice, _T("bicubic.fx"), NULL /* d3dxm */, NULL, D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY, NULL, &pEffect, &pErrorBuffer))) {
+	if (FAILED(D3DXCreateEffectFromFile(pD3DDevice, _T("bicubic.fx"), NULL /* d3dxm */, NULL, D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY, NULL, &pEffect, &pErrorBuffer))) {
 #else
-	if (FAILED(_D3DXCreateEffectFromResource(pD3DDevice, NULL, MAKEINTRESOURCE(ID_DX9EFFECT), NULL /* d3dxm */, NULL, D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY, NULL, &pEffect, &pErrorBuffer))) {
+	if (FAILED(D3DXCreateEffectFromResource(pD3DDevice, NULL, MAKEINTRESOURCE(ID_DX9EFFECT), NULL /* d3dxm */, NULL, D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY, NULL, &pEffect, &pErrorBuffer))) {
 #endif
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't compile effect.\n"));
@@ -678,24 +708,19 @@ int dx9EffectInit()
 	}
 
 	switch (DX9_FILTER) {
-		case 1: {
-			pszTechnique = bVidScanlines ? pszTechniqueOpt[0] : pszTechniqueOpt[1];
-			break;
-		}
-		case 2: {
-			if (bVidScanlines) {
-				char* pszFunction[8] = { "ScanHQBicubic",  "ScanBicubic", "ScanHQBicubic",  "ScanBicubic", "ScanHP20Bicubic", "ScanHP14Bicubic", "ScanHP14Bicubic", "ScanHP14Bicubic" };
-				pszTechnique = pszFunction[bUsePS14 ? 7 : DX9_SHADERPRECISION];
-			} else {
-				char* pszFunction[8] = { "SinglePassHQBicubic", "SinglePassBicubic", "MultiPassHQBicubic", "MultiPassBicubic", "MultiPassHP20Bicubic", "MultiPassHP14Bicubic", "MultiPassHP14Bicubic", "MultiPassHP14Bicubic" };
-				pszTechnique = pszFunction[bUsePS14 ? 7 : DX9_SHADERPRECISION];
-			}
-			break;
-		}
-		default: {
-			pszTechnique = bVidScanlines ? pszTechniqueOpt[2] : pszTechniqueOpt[3];
-			break;
-		}
+	case 1: {
+		pszTechnique = pszTechniqueOpt[0];
+		break;
+	}
+	case 2: {
+		char* pszFunction[8] = { "SinglePassHQBicubic", "SinglePassBicubic", "MultiPassHQBicubic", "MultiPassBicubic", "MultiPassHP20Bicubic", "MultiPassHP14Bicubic", "MultiPassHP14Bicubic", "MultiPassHP14Bicubic" };
+		pszTechnique = pszFunction[bUsePS14 ? 7 : DX9_SHADERPRECISION];
+		break;
+	}
+	default: {
+		pszTechnique = pszTechniqueOpt[3];
+		break;
+	}
 	}
 
 	pEffect->SetTexture("imageTexture", pTexture);
@@ -707,16 +732,16 @@ int dx9EffectInit()
 	pFloatArray[0] = 1.0 / nTextureWidth; pFloatArray[1] = 1.0 / nTextureHeight;
 	pEffect->SetFloatArray("texelSize", pFloatArray, 2);
 
-/*
-	{
-		FLOAT fScanIntensity[4] = { (float)((nVidScanIntensity >> 16) & 255) / 255.0,
-									(float)((nVidScanIntensity >>  8) & 255) / 255.0,
-									(float)((nVidScanIntensity >>  0) & 255) / 255.0,
-									(float)((nVidScanIntensity >> 24) & 255) / 255.0 };
+	/*
+		{
+			FLOAT fScanIntensity[4] = { (float)((nVidScanIntensity >> 16) & 255) / 255.0,
+										(float)((nVidScanIntensity >>  8) & 255) / 255.0,
+										(float)((nVidScanIntensity >>  0) & 255) / 255.0,
+										(float)((nVidScanIntensity >> 24) & 255) / 255.0 };
 
-		pEffect->SetFloatArray("scanIntensity", fScanIntensity, 4);
-	}
-*/
+			pEffect->SetFloatArray("scanIntensity", fScanIntensity, 4);
+		}
+	*/
 	hTechnique = pEffect->GetTechniqueByName(pszTechnique);
 	if (FAILED(pEffect->SetTechnique(hTechnique))) {
 #ifdef PRINT_DEBUG_INFO
@@ -729,12 +754,12 @@ int dx9EffectInit()
 
 	{
 		ID3DXBuffer* pEffectShaderBuffer = NULL;
-		_D3DXCreateBuffer(0x10000, &pEffectShaderBuffer);
+		D3DXCreateBuffer(0x10000, &pEffectShaderBuffer);
 
 #ifdef LOAD_EFFECT_FROM_FILE
-		if (FAILED(_D3DXCompileShaderFromFile(_T("bicubic.fx"), NULL, NULL, (DX9_SHADERPRECISION < 4 && !bUsePS14) ? "genWeightTex20" : "genWeightTex14", "tx_1_0", 0, &pEffectShaderBuffer, &pErrorBuffer, NULL))) {
+		if (FAILED(D3DXCompileShaderFromFile(_T("bicubic.fx"), NULL, NULL, (DX9_SHADERPRECISION < 4 && !bUsePS14) ? "genWeightTex20" : "genWeightTex14", "tx_1_0", 0, &pEffectShaderBuffer, &pErrorBuffer, NULL))) {
 #else
-		if (FAILED(_D3DXCompileShaderFromResource(NULL, MAKEINTRESOURCE(ID_DX9EFFECT), NULL, NULL, (DX9_SHADERPRECISION < 4 && !bUsePS14) ? "genWeightTex20" : "genWeightTex14", "tx_1_0", 0, &pEffectShaderBuffer, &pErrorBuffer, NULL))) {
+		if (FAILED(D3DXCompileShaderFromResource(NULL, MAKEINTRESOURCE(ID_DX9EFFECT), NULL, NULL, (DX9_SHADERPRECISION < 4 && !bUsePS14) ? "genWeightTex20" : "genWeightTex14", "tx_1_0", 0, &pEffectShaderBuffer, &pErrorBuffer, NULL))) {
 #endif
 #ifdef PRINT_DEBUG_INFO
 			dprintf(_T("  * Error: Couldn't compile shader.\n"));
@@ -743,7 +768,7 @@ int dx9EffectInit()
 			goto HANDLE_ERROR;
 		}
 
-		if (FAILED(_D3DXCreateTextureShader((DWORD*)(pEffectShaderBuffer->GetBufferPointer()), &pEffectShader))) {
+		if (FAILED(D3DXCreateTextureShader((DWORD*)(pEffectShaderBuffer->GetBufferPointer()), &pEffectShader))) {
 #ifdef PRINT_DEBUG_INFO
 			dprintf(_T("  * Error: Couldn't create texture shader.\n"));
 #endif
@@ -768,52 +793,15 @@ HANDLE_ERROR:
 	return 1;
 }
 
-// ==> osd for dx9 video output (ugly), added by regret
-static int dx9CreateFont()
+static void dx9DrawOSD()
 {
-	if (pFont) {
-		return 0;
+	extern bool bEditActive;
+	if (bEditActive) {
+		VidOverlaySetChatInput(EditText);
 	}
 
-	HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 18,
-		0, FW_DEMIBOLD, 1, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
-		DEFAULT_PITCH || FF_DONTCARE,
-		_T("Arial"), &pFont);
-
-	if (FAILED(hr)) {
-		return 1;
-	}
-	return 0;
+	VidOverlayRender(Dest, nGameWidth, nGameHeight, 0); // bVidDX9Scanlines ? (nVidScanIntensity & 0xFF) : 0.f);
 }
-
-static void dx9DrawText()
-{
-	if (nVidSDisplayStatus == 0 || nOSDTimer == 0) {
-		return;
-	}
-
-	if (nFramesEmulated > nOSDTimer) {
-		VidSKillShortMsg();
-		VidSKillOSDMsg();
-	}
-
-	RECT osdRect;
-	if (nVidFullscreen) {
-		osdRect.left = Dest.left;
-		osdRect.top = Dest.top;
-		osdRect.right = Dest.right - 1;
-		osdRect.bottom = Dest.bottom - 1;
-	} else {
-		osdRect.left = 0;
-		osdRect.top = 0;
-		osdRect.right = Dest.right - Dest.left - 1;
-		osdRect.bottom = Dest.bottom - Dest.top - 1;
-	}
-
-	pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
-}
-// <== osd for dx9 video output (ugly)
 
 static int dx9Init()
 {
@@ -832,20 +820,27 @@ static int dx9Init()
 	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 	// Get pointer to Direct3D
-	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
+	if (bVidDX9LegacyRenderer) {
+		pD3D = (IDirect3D9Ex *)Direct3DCreate9(D3D_SDK_VERSION);
+	}
+	else {
+		Direct3DCreate9Ex(D3D_SDK_VERSION, &pD3D);
+	}
+	if (pD3D == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't initialise Direct3D.\n"));
 #endif
 		dx9Exit();
 		return 1;
 	}
-	
+
 	nRotateGame = 0;
 	if (bDrvOkay) {
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 			if (nVidRotationAdjust & 1) {
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else {
 				nRotateGame |= 1;
 			}
 		}
@@ -854,57 +849,78 @@ static int dx9Init()
 			nRotateGame ^= 2;
 		}
 	}
-	
+
 	nD3DAdapter = D3DADAPTER_DEFAULT;
 	if (nRotateGame & 1 && VerScreen[0]) {
 		nD3DAdapter = dx9GetAdapter(VerScreen);
-	} else {
+	}
+	else {
 		if (HorScreen[0]) {
 			nD3DAdapter = dx9GetAdapter(HorScreen);
 		}
 	}
+
+	// check selected adapter
+	D3DDISPLAYMODE dm;
+	pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
 
 	memset(&d3dpp, 0, sizeof(d3dpp));
 	if (nVidFullscreen) {
 		VidSDisplayScoreInfo ScoreInfo;
 		if (dx9SelectFullscreenMode(&ScoreInfo)) {
 			dx9Exit();
-#ifdef PRINT_DEBUG_INFO
-			dprintf(_T("  * Error: Couldn't determine display mode.\n"));
-#endif
 			return 1;
 		}
-
-		d3dpp.BackBufferWidth				= ScoreInfo.nBestWidth;
-		d3dpp.BackBufferHeight				= ScoreInfo.nBestHeight;
-		d3dpp.BackBufferFormat				= (nVidDepth == 16) ? D3DFMT_R5G6B5 : D3DFMT_X8R8G8B8;
-		d3dpp.SwapEffect					= D3DSWAPEFFECT_FLIP;
-		d3dpp.BackBufferCount				= bVidTripleBuffer ? 2 : 1;
-		d3dpp.hDeviceWindow					= hVidWnd;
-		d3dpp.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
-		d3dpp.PresentationInterval			= D3DPRESENT_INTERVAL_DEFAULT;
+		d3dpp.BackBufferWidth = ScoreInfo.nBestWidth;
+		d3dpp.BackBufferHeight = ScoreInfo.nBestHeight;
+		d3dpp.BackBufferFormat = (nVidDepth == 16) ? D3DFMT_R5G6B5 : D3DFMT_X8R8G8B8;
+		d3dpp.SwapEffect = D3DSWAPEFFECT_FLIP;
+		d3dpp.BackBufferCount = bVidTripleBuffer ? 2 : 1;
+		d3dpp.hDeviceWindow = hVidWnd;
+		d3dpp.Windowed = bVidDX9WinFullscreen;
+		d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
+		d3dpp.PresentationInterval = bVidVSync ? D3DPRESENT_INTERVAL_DEFAULT : D3DPRESENT_INTERVAL_IMMEDIATE;
+		if (bVidDX9WinFullscreen) {
+			d3dpp.SwapEffect = bVidVSync || bVidDX9LegacyRenderer ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_FLIPEX;
+			MoveWindow(hScrnWnd, 0, 0, d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, TRUE);
+		}
 	} else {
-		d3dpp.BackBufferFormat				= D3DFMT_UNKNOWN;
-		d3dpp.SwapEffect					= D3DSWAPEFFECT_COPY;
-		d3dpp.hDeviceWindow					= hVidWnd;
-		d3dpp.Windowed						= TRUE;
-		d3dpp.PresentationInterval			= bVidVSync ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;
+		RECT rect;
+		GetClientRect(hVidWnd, &rect);
+		d3dpp.BackBufferWidth = rect.right - rect.left;
+		d3dpp.BackBufferHeight = rect.bottom - rect.top;
+		d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+		d3dpp.SwapEffect = bVidVSync || bVidDX9LegacyRenderer ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_FLIPEX;
+		d3dpp.BackBufferCount = 1;
+		d3dpp.hDeviceWindow = hVidWnd;
+		d3dpp.Windowed = TRUE;
+		d3dpp.PresentationInterval = bVidVSync ? D3DPRESENT_INTERVAL_DEFAULT : D3DPRESENT_INTERVAL_IMMEDIATE;
 	}
 
-	DWORD dwBehaviorFlags  = bVidVSync ? (D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_FPU_PRESERVE | D3DCREATE_MULTITHREADED) : (D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_FPU_PRESERVE);
+	D3DDISPLAYMODEEX dmex;
+	dmex.Format = d3dpp.BackBufferFormat;
+	dmex.Width = d3dpp.BackBufferWidth;
+	dmex.Height = d3dpp.BackBufferHeight;
+	dmex.RefreshRate = d3dpp.FullScreen_RefreshRateInHz;
+	dmex.ScanLineOrdering = D3DSCANLINEORDERING_UNKNOWN;
+	dmex.Size = sizeof(D3DDISPLAYMODEEX);
+
+	DWORD dwBehaviorFlags = D3DCREATE_FPU_PRESERVE;
+	dwBehaviorFlags |= bVidHardwareVertex ? D3DCREATE_HARDWARE_VERTEXPROCESSING : D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 #ifdef _DEBUG
 	dwBehaviorFlags |= D3DCREATE_DISABLE_DRIVER_MANAGEMENT;
 #endif
 
-	if (FAILED(pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
-//	if (FAILED(pD3D->CreateDevice(pD3D->GetAdapterCount() - 1, D3DDEVTYPE_REF, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
+	HRESULT hRet;
+	if (bVidDX9LegacyRenderer) {
+		hRet = pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, (IDirect3DDevice9 **)&pD3DDevice);
+	} else {
+		hRet = pD3D->CreateDeviceEx(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, d3dpp.Windowed ? NULL : &dmex, &pD3DDevice);
+	}
 
-#ifdef PRINT_DEBUG_INFO
-		dprintf(_T("  * Error: Couldn't create Direct3D device.\n"));
-#endif
-
+	if (FAILED(hRet)) {
 		if (nVidFullscreen) {
-			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM));
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, d3dpp.BackBufferFormat, d3dpp.FullScreen_RefreshRateInHz);
 			if (bVidArcaderes && (d3dpp.BackBufferWidth != 320 && d3dpp.BackBufferHeight != 240)) {
 				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_CUSTRES));
 			}
@@ -935,7 +951,8 @@ static int dx9Init()
 				nGameWidth = nGameHeight;
 				nGameHeight = n;
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else {
 				nRotateGame |= 1;
 			}
 		}
@@ -945,9 +962,9 @@ static int dx9Init()
 		}
 	}
 
-//	VidSSetupGamma(BlitFXPrim);
+	//	VidSSetupGamma(BlitFXPrim);
 
-	// Initialize the buffer surfaces
+		// Initialize the buffer surfaces
 	if (dx9SurfaceInit()) {
 		dx9Exit();
 		return 1;
@@ -968,31 +985,18 @@ static int dx9Init()
 		return 1;
 	}
 
-	nImageWidth = 0; nImageHeight = 0;
+	nImageWidth = 0;
+	nImageHeight = 0;
 
 	dPrevCubicB = dPrevCubicC = -999;
 
+	pD3DDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	// Clear the swapchain's buffers
-	if (nVidFullscreen) {
-		for (int i = 0; i < 3; i++) {
-			pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-			pD3DDevice->Present(NULL, NULL, NULL, NULL);
-		}
-	} else {
-		RECT rect;
-
-		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += nMenuHeight; rect.bottom += nMenuHeight;
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
-	}
-
-	// Create osd font
-	dx9CreateFont();
+	// Overlay
+	VidOverlayInit(pD3DDevice);
 
 #ifdef PRINT_DEBUG_INFO
 	{
@@ -1001,7 +1005,8 @@ static int dx9Init()
 		if (nVidFullscreen) {
 			dprintf(_T("    Running in fullscreen mode (%i x %i), "), nVidScrnWidth, nVidScrnHeight);
 			dprintf(_T("using a %s buffer.\n"), bVidTripleBuffer ? _T("triple") : _T("double"));
-		} else {
+		}
+		else {
 			dprintf(_T("    Running in windowed mode, using D3DSWAPEFFECT_COPY to present the image.\n"));
 		}
 	}
@@ -1012,22 +1017,10 @@ static int dx9Init()
 
 static int dx9Reset()
 {
-#ifdef PRINT_DEBUG_INFO
-	dprintf(_T("*** Resestting Direct3D device.\n"));
-#endif
-
-	if (pFont) {
-		pFont->OnLostDevice();
-	}
-
 	dx9ReleaseResources();
 
 	if (FAILED(pD3DDevice->Reset(&d3dpp))) {
 		return 1;
-	}
-
-	if (pFont) {
-		pFont->OnResetDevice();
 	}
 
 	dx9SurfaceInit();
@@ -1049,21 +1042,20 @@ static int dx9Reset()
 	return 0;
 }
 
-static int dx9Scale(RECT* pRect, int nWidth, int nHeight)
+static int dx9Scale(RECT* rect, int nWidth, int nHeight)
 {
-	return VidSScaleImage(pRect, nWidth, nHeight, bVidScanRotate);
+	return VidSScaleImage(rect, nWidth, nHeight, bVidScanRotate);
 }
 
 // Copy BlitFXsMem to pddsBlitFX
-static int dx9MemToSurf()
+static int dx9Render()
 {
 	GetClientRect(hVidWnd, &Dest);
 
-	if (nVidFullscreen == 0) {
-		Dest.top += nMenuHeight;
-	}
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
 
-	if (bVidArcaderes && nVidFullscreen) {
+	if (bVidArcaderes) {
 		Dest.left = (Dest.right + Dest.left) / 2;
 		Dest.left -= nGameWidth / 2;
 		Dest.right = Dest.left + nGameWidth;
@@ -1071,16 +1063,17 @@ static int dx9MemToSurf()
 		Dest.top = (Dest.top + Dest.bottom) / 2;
 		Dest.top -= nGameHeight / 2;
 		Dest.bottom = Dest.top + nGameHeight;
-	} else {
+	}
+	else {
 		dx9Scale(&Dest, nGameWidth, nGameHeight);
 	}
 
 	{
-		int nNewImageWidth  = nRotateGame ? (Dest.bottom - Dest.top) : (Dest.right - Dest.left);
+		int nNewImageWidth = nRotateGame ? (Dest.bottom - Dest.top) : (Dest.right - Dest.left);
 		int nNewImageHeight = nRotateGame ? (Dest.right - Dest.left) : (Dest.bottom - Dest.top);
 
 		if (nImageWidth != nNewImageWidth || nImageHeight != nNewImageHeight) {
-			nImageWidth  = nNewImageWidth;
+			nImageWidth = nNewImageWidth;
 			nImageHeight = nNewImageHeight;
 			dx9GeometryInit();
 		}
@@ -1115,6 +1108,10 @@ static int dx9MemToSurf()
 			memcpy(pd, ps, s);
 		}
 
+		if (kNetLua) {
+			FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, p);
+		}
+
 		pSurface->UnlockRect();
 	}
 
@@ -1127,7 +1124,7 @@ static int dx9MemToSurf()
 		if (FAILED(pTexture->GetSurfaceLevel(0, &pDest))) {
 #ifdef PRINT_DEBUG_INFO
 			dprintf(_T("  * Error: Couldn't get texture surface.\n"));
-		   	return 1;
+			return 1;
 #endif
 		}
 
@@ -1154,7 +1151,7 @@ static int dx9MemToSurf()
 	}
 #endif
 
-	pD3DDevice->SetRenderState(D3DRS_TEXTUREFACTOR, nVidScanIntensity);
+	//pD3DDevice->SetRenderState(D3DRS_TEXTUREFACTOR, nVidScanIntensity);
 
 	UINT nTotalPasses, nPass = 0;
 	pEffect->Begin(&nTotalPasses, D3DXFX_DONOTSAVESTATE);
@@ -1162,19 +1159,19 @@ static int dx9MemToSurf()
 	if (nTotalPasses > 1) {
 		IDirect3DSurface9* pPreviousTarget;
 		IDirect3DSurface9* pNewTarget;
-		D3DVIEWPORT9 vp;
 
 		pD3DDevice->GetRenderTarget(0, &pPreviousTarget);
 		pIntermediateTexture->GetSurfaceLevel(0, &pNewTarget);
 		pD3DDevice->SetRenderTarget(0, pNewTarget);
 
+		D3DVIEWPORT9 vp;
+		// Set the size of the image on the PC screen
 		vp.X = 0;
 		vp.Y = 0;
 		vp.Width = nImageWidth;
 		vp.Height = nTextureHeight;
 		vp.MinZ = 0.0f;
 		vp.MaxZ = 1.0f;
-
 		pD3DDevice->SetViewport(&vp);
 
 		pD3DDevice->BeginScene();
@@ -1238,31 +1235,22 @@ static int dx9MemToSurf()
 
 	{
 		D3DVIEWPORT9 vp;
-
-		// Set the size of the image on the PC screen
-		if (nVidFullscreen) {
-			vp.X = Dest.left;
-			vp.Y = Dest.top;
-			vp.Width = Dest.right - Dest.left;
-			vp.Height = Dest.bottom - Dest.top;
-			vp.MinZ = 0.0f;
-			vp.MaxZ = 1.0f;
-		} else {
-			vp.X = 0;
-			vp.Y = 0;
-			vp.Width = Dest.right - Dest.left;
-			vp.Height = Dest.bottom - Dest.top;
-			vp.MinZ = 0.0f;
-			vp.MaxZ = 1.0f;
-		}
+		vp.X = Dest.left;
+		vp.Y = Dest.top;
+		vp.Width = Dest.right - Dest.left;
+		vp.Height = Dest.bottom - Dest.top;
+		vp.MinZ = 0.0f;
+		vp.MaxZ = 1.0f;
 
 		pD3DDevice->SetViewport(&vp);
+
+		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
 
 		pD3DDevice->BeginScene();
 
 		pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
 
-//		pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		//	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 
 		pEffect->BeginPass(nPass);
 		pEffect->CommitChanges();
@@ -1273,8 +1261,11 @@ static int dx9MemToSurf()
 		}
 		pEffect->EndPass();
 
+		pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+		pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+
 		// draw osd text
-		dx9DrawText();
+		dx9DrawOSD();
 
 		pD3DDevice->EndScene();
 	}
@@ -1319,7 +1310,7 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 	}
 
 #ifdef ENABLE_PROFILING
-//	ProfileProfileStart(0);
+	//	ProfileProfileStart(0);
 #endif
 
 	if (bDrvOkay) {
@@ -1327,7 +1318,8 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 			if (BurnDrvRedraw()) {
 				BurnDrvFrame();						// No redraw function provided, advance one frame
 			}
-		} else {
+		}
+		else {
 			BurnDrvFrame();							// Run one frame and draw the screen
 		}
 
@@ -1335,82 +1327,23 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 			pVidTransCallback();
 	}
 
-#ifdef ENABLE_PROFILING
-//	ProfileProfileEnd(0);
-	ProfileProfileStart(1);
-#endif
-
-	dx9MemToSurf();									// Copy the memory buffer to the directdraw buffer for later blitting
-
-#ifdef ENABLE_PROFILING
-	ProfileProfileEnd(1);
-
-	dprintf(_T("    blit %3.2lf (effect p1 %3.2lf - effect p2 %3.2lf)\n"), ProfileProfileReadAverage(1), ProfileProfileReadAverage(2), ProfileProfileReadAverage(0));
-#endif
-
 	return 0;
 }
 
 // Paint the BlitFX surface onto the primary surface
 static int dx9Paint(int bValidate)
 {
+	if (!bDrvOkay) {
+		return 0;
+	}
+
 	if (pD3DDevice->TestCooperativeLevel()) {		// We've lost control of the screen
 		return 1;
 	}
 
-	RECT rect = { 0, 0, 0, 0 };
+	dx9Render();									// Copy the memory buffer to the directdraw buffer for later blitting
 
-	if (!nVidFullscreen) {
-		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += nMenuHeight;
-
-		dx9Scale(&rect, nGameWidth, nGameHeight);
-
-		if ((rect.right - rect.left) != (Dest.right - Dest.left) || (rect.bottom - rect.top ) != (Dest.bottom - Dest.top)) {
-			bValidate |= 2;
-		}
-	}
-
-	if (bValidate & 2) {
-		dx9MemToSurf();								// Copy the memory buffer to the directdraw buffer for later blitting
-	}
-
-	// Display OSD text message
-//	VidSDisplayOSD(pddsBlitFX[nUseSys], &rect, 0);
-
-	if (nVidFullscreen) {
-		pD3DDevice->Present(NULL, NULL, NULL, NULL);
-	} else {
-		RECT src = { 0, 0, Dest.right - Dest.left, Dest.bottom - Dest.top };
-
-		POINT c = { 0, 0 };
-		ClientToScreen(hVidWnd, &c);
-		RECT dst = { rect.left - c.x, rect.top - c.y, rect.right - c.x, rect.bottom - c.y };
-
-		/*
-		if (bVidVSync) {
-			D3DRASTER_STATUS rs;
-			RECT window;
-
-			GetWindowRect(hVidWnd, &window);
-
-			while (1) {
-				pD3DDevice->GetRasterStatus(0, &rs);
-				if (rs.InVBlank || rs.ScanLine >= window.bottom) {
-					break;
-				}
-				Sleep(1);
-			}
-		}
-		*/
-
-		pD3DDevice->Present(&src, &dst, NULL, NULL);
-
-		// Validate the rectangle we just drew
-		if (bValidate & 1) {
-			ValidateRect(hVidWnd, &dst);
-		}
-	}
+	pD3DDevice->PresentEx(NULL, NULL, NULL, NULL, 0);
 
 	return 0;
 }
@@ -1424,10 +1357,12 @@ static int dx9GetSettings(InterfaceInfo* pInfo)
 	if (nVidFullscreen) {
 		if (bVidTripleBuffer) {
 			IntInfoAddStringModule(pInfo, _T("Using a triple buffer"));
-		} else {
+		}
+		else {
 			IntInfoAddStringModule(pInfo, _T("Using a double buffer"));
 		}
-	} else {
+	}
+	else {
 		IntInfoAddStringModule(pInfo, _T("Using D3DSWAPEFFECT_COPY to present the image"));
 	}
 	switch (DX9_FILTER) {
@@ -1444,39 +1379,24 @@ static int dx9GetSettings(InterfaceInfo* pInfo)
 				break;
 			}
 
-			if (bVidScanlines) {
-				switch (DX9_SHADERPRECISION) {
-					case 0:
-					case 2:
-						IntInfoAddStringModule(pInfo, _T("Using reference implementation"));
-						break;
-					case 1:
-					case 3:
-						IntInfoAddStringModule(pInfo, _T("Using partial precision implementation"));
-						break;
-					case 4:
-						IntInfoAddStringModule(pInfo, _T("Using high-performance implementation"));
-						break;
-				}
-			} else {
-				switch (DX9_SHADERPRECISION) {
-					case 0:
-						IntInfoAddStringModule(pInfo, _T("Using single-pass reference implementation"));
-						break;
-					case 1:
-						IntInfoAddStringModule(pInfo, _T("Using partial precision single-pass implementation"));
-						break;
-					case 2:
-						IntInfoAddStringModule(pInfo, _T("Using full precision multi-pass implementation"));
-						break;
-					case 3:
-						IntInfoAddStringModule(pInfo, _T("Using partial precision multi-pass implementation"));
-						break;
-					case 4:
-						IntInfoAddStringModule(pInfo, _T("Using high-performance multi-pass implementation"));
-						break;
-				}
+			switch (DX9_SHADERPRECISION) {
+			case 0:
+				IntInfoAddStringModule(pInfo, _T("Using single-pass reference implementation"));
+				break;
+			case 1:
+				IntInfoAddStringModule(pInfo, _T("Using partial precision single-pass implementation"));
+				break;
+			case 2:
+				IntInfoAddStringModule(pInfo, _T("Using full precision multi-pass implementation"));
+				break;
+			case 3:
+				IntInfoAddStringModule(pInfo, _T("Using partial precision multi-pass implementation"));
+				break;
+			case 4:
+				IntInfoAddStringModule(pInfo, _T("Using high-performance multi-pass implementation"));
+				break;
 			}
+
 			if (DX9_USE_FPTEXTURE) {
 				_sntprintf(szString, MAX_PATH, _T("Using floating-point textures where applicable"));
 				IntInfoAddStringModule(pInfo, szString);
@@ -1486,10 +1406,6 @@ static int dx9GetSettings(InterfaceInfo* pInfo)
 		default: {
 			IntInfoAddStringModule(pInfo, _T("Applying point filter"));
 		}
-	}
-	if (bVidScanlines) {
-		_sntprintf(szString, MAX_PATH, _T("Applying scanlines at %.1lf%% brightness"), (double)(nVidScanIntensity & 255) / 2.55);
-		IntInfoAddStringModule(pInfo, szString);
 	}
 
 	return 0;
@@ -1525,12 +1441,19 @@ struct transp_vertex {
 	float u, v;
 };
 
+char *HardFXFilenames[] = {
+	"ui/shaders/crt_aperture.fx",
+	"ui/shaders/crt_caligari.fx",
+	"ui/shaders/crt_cgwg_fast.fx",
+	"ui/shaders/crt_easymode.fx",
+	"ui/shaders/crt_standard.fx",
+	"ui/shaders/crt_bicubic.fx"
+};
+
 #undef D3DFVF_LVERTEX2
 #define D3DFVF_LVERTEX2 (D3DFVF_XYZRHW | D3DFVF_TEX1)
 
-IDirect3DTexture9* emuTexture[2];
-static unsigned char mbCurrentTexture = 0;	// current texture for motion blur
-static bool mbTextureEmpty = true;
+IDirect3DTexture9* emuTexture;
 static d3dvertex vertex[4];
 static transp_vertex transpVertex[4];
 
@@ -1540,6 +1463,8 @@ static int nPreScale = 0;
 static int nPreScaleZoom = 0;
 static int nPreScaleEffect = 0;
 
+static int dx9AltScale(RECT* rect, int width, int height);
+
 // Select optimal full-screen resolution
 static int dx9AltSelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 {
@@ -1547,7 +1472,8 @@ static int dx9AltSelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 		if (!VidSGetArcaderes((int*)&(pScoreInfo->nBestWidth), (int*)&(pScoreInfo->nBestHeight))) {
 			return 1;
 		}
-	} else {
+	}
+	else {
 		pScoreInfo->nBestWidth = nVidWidth;
 		pScoreInfo->nBestHeight = nVidHeight;
 	}
@@ -1561,9 +1487,7 @@ static int dx9AltSelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 
 static void dx9AltReleaseTexture()
 {
-	RELEASE(pTexture)
-	RELEASE(emuTexture[0])
-	RELEASE(emuTexture[1])
+	RELEASE(emuTexture)
 }
 
 static int dx9AltExit()
@@ -1572,37 +1496,29 @@ static int dx9AltExit()
 
 	dx9AltReleaseTexture();
 
+	VidOverlayEnd();
 	VidSFreeVidImage();
 
-	RELEASE(pFont)
+	if (pVidEffect) {
+		delete pVidEffect;
+		pVidEffect = NULL;
+	}
+
+	RELEASE(pEffect)
 	RELEASE(pD3DDevice)
 	RELEASE(pD3D)
 
 	nRotateGame = 0;
-
-	VidSKillShortMsg();
-	VidSKillOSDMsg();
 
 	return 0;
 }
 
 static int dx9AltResize(int width, int height)
 {
-	if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_SYSTEMMEM, &pTexture, NULL))) {
-		return 1;
-	}
-
-	if (!emuTexture[0]) {
-		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_DEFAULT, &emuTexture[0], NULL))) {
+	if (!emuTexture) {
+		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, D3DUSAGE_DYNAMIC, textureFormat, D3DPOOL_DEFAULT, &emuTexture, NULL))) {
 			return 1;
 		}
-	}
-
-	if (!emuTexture[1] && bVidMotionBlur) {
-		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_DEFAULT, &emuTexture[1], NULL))) {
-			return 1;
-		}
-		mbTextureEmpty = true;
 	}
 
 	return 0;
@@ -1613,7 +1529,8 @@ static int dx9AltTextureInit()
 	if (nRotateGame & 1) {
 		nVidImageWidth = nGameHeight;
 		nVidImageHeight = nGameWidth;
-	} else {
+	}
+	else {
 		nVidImageWidth = nGameWidth;
 		nVidImageHeight = nGameHeight;
 	}
@@ -1621,7 +1538,8 @@ static int dx9AltTextureInit()
 	nGameImageWidth = nVidImageWidth;
 	nGameImageHeight = nVidImageHeight;
 
-	nVidImageDepth = nVidScrnDepth;
+	//nVidImageDepth = nVidScrnDepth;
+	nVidImageDepth = 16;
 
 	// Determine if we should use a texture format different from the screen format
 	if ((bDrvOkay && VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32) || (bDrvOkay && bVidForce16bitDx9Alt)) {
@@ -1629,18 +1547,18 @@ static int dx9AltTextureInit()
 	}
 
 	switch (nVidImageDepth) {
-		case 32:
-			textureFormat = D3DFMT_X8R8G8B8;
-			break;
-		case 24:
-			textureFormat = D3DFMT_R8G8B8;
-			break;
-		case 16:
-			textureFormat = D3DFMT_R5G6B5;
-			break;
-		case 15:
-			textureFormat = D3DFMT_X1R5G5B5;
-			break;
+	case 32:
+		textureFormat = D3DFMT_X8R8G8B8;
+		break;
+	case 24:
+		textureFormat = D3DFMT_R8G8B8;
+		break;
+	case 16:
+		textureFormat = D3DFMT_R5G6B5;
+		break;
+	case 15:
+		textureFormat = D3DFMT_X1R5G5B5;
+		break;
 	}
 
 	nVidImageBPP = (nVidImageDepth + 7) >> 3;
@@ -1684,36 +1602,37 @@ static int dx9AltSetVertex(unsigned int px, unsigned int py, unsigned int pw, un
 	float diff = -0.5f;
 	if (nRotateGame & 1) {
 		if (nRotateGame & 2) {
-			vertex[2].x = vertex[3].x = (double)(y    ) + diff;
-			vertex[0].x = vertex[1].x = (double)(y + h) + diff;
-			vertex[1].y = vertex[3].y = (double)(x + w) + diff;
-			vertex[0].y = vertex[2].y = (double)(x    ) + diff;
+			vertex[2].x = vertex[3].x = (float)(y)+diff;
+			vertex[0].x = vertex[1].x = (float)(y + h) + diff;
+			vertex[1].y = vertex[3].y = (float)(x + w) + diff;
+			vertex[0].y = vertex[2].y = (float)(x)+diff;
 		} else {
-			vertex[0].x = vertex[1].x = (double)(y    ) + diff;
-			vertex[2].x = vertex[3].x = (double)(y + h) + diff;
-			vertex[1].y = vertex[3].y = (double)(x    ) + diff;
-			vertex[0].y = vertex[2].y = (double)(x + w) + diff;
+			vertex[0].x = vertex[1].x = (float)(y)+diff;
+			vertex[2].x = vertex[3].x = (float)(y + h) + diff;
+			vertex[1].y = vertex[3].y = (float)(x)+diff;
+			vertex[0].y = vertex[2].y = (float)(x + w) + diff;
 		}
-	} else {
+	}
+	else {
 		if (nRotateGame & 2) {
-			vertex[1].x = vertex[3].x = (double)(y    ) + diff;
-			vertex[0].x = vertex[2].x = (double)(y + h) + diff;
-			vertex[2].y = vertex[3].y = (double)(x    ) + diff;
-			vertex[0].y = vertex[1].y = (double)(x + w) + diff;
+			vertex[1].x = vertex[3].x = (float)(y)+diff;
+			vertex[0].x = vertex[2].x = (float)(y + h) + diff;
+			vertex[2].y = vertex[3].y = (float)(x)+diff;
+			vertex[0].y = vertex[1].y = (float)(x + w) + diff;
 		} else {
-			vertex[0].x = vertex[2].x = (double)(x    ) + diff;
-			vertex[1].x = vertex[3].x = (double)(x + w) + diff;
-			vertex[0].y = vertex[1].y = (double)(y    ) + diff;
-			vertex[2].y = vertex[3].y = (double)(y + h) + diff;
+			vertex[0].x = vertex[2].x = (float)(x)+diff;
+			vertex[1].x = vertex[3].x = (float)(x + w) + diff;
+			vertex[0].y = vertex[1].y = (float)(y)+diff;
+			vertex[2].y = vertex[3].y = (float)(y + h) + diff;
 		}
 	}
 
-	double rw = (double)w / (double)pw * (double)tw;
-	double rh = (double)h / (double)ph * (double)th;
-	vertex[0].u = vertex[2].u = (double)(px    ) / rw;
-	vertex[1].u = vertex[3].u = (double)(px + w) / rw;
-	vertex[0].v = vertex[1].v = (double)(py    ) / rh;
-	vertex[2].v = vertex[3].v = (double)(py + h) / rh;
+	float rw = (float)w / (float)pw * (float)tw;
+	float rh = (float)h / (float)ph * (float)th;
+	vertex[0].u = vertex[2].u = (float)(px) / rw;
+	vertex[1].u = vertex[3].u = (float)(px + w) / rw;
+	vertex[0].v = vertex[1].v = (float)(py) / rh;
+	vertex[2].v = vertex[3].v = (float)(py + h) / rh;
 
 	// Z-buffer and RHW are unused for 2D blit, set to normal values
 	vertex[0].z = vertex[1].z = vertex[2].z = vertex[3].z = 0.0f;
@@ -1755,51 +1674,49 @@ static int dx9AltSetVertex(unsigned int px, unsigned int py, unsigned int pw, un
 	return 0;
 }
 
-// ==> osd for dx9 video output (ugly), added by regret
-static int dx9AltCreateFont()
+static void dx9AltDrawOSD()
 {
-	if (pFont) {
+	extern bool bEditActive;
+	if (bEditActive) {
+		VidOverlaySetChatInput(EditText);
+	}
+
+	VidOverlayRender(Dest, nGameWidth, nGameHeight, bVidDX9Scanlines ? (nVidScanIntensity & 0xFF) : 0.f);
+}
+
+static int dx9AltSetHardFX(int nHardFX)
+{
+	if (nHardFX == nDX9HardFX)
+	{
 		return 0;
 	}
 
-	HRESULT hr = _D3DXCreateFont(pD3DDevice, d3dpp.BackBufferHeight / 40, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH || FF_DONTCARE, _T("Arial"), &pFont);
+	nDX9HardFX = nHardFX;
 
-	if (FAILED(hr)) {
-		return 1;
+	if (pVidEffect) {
+		delete pVidEffect;
+		pVidEffect = NULL;
+	}
+	
+	if (nDX9HardFX == 0)
+	{
+		return 0;
 	}
 
-	return 0;
+	// HardFX
+	pVidEffect = new VidEffect(pD3DDevice);
+	int r = pVidEffect->Load(HardFXFilenames[nHardFX - 1]);
+
+	if (r == 0)
+	{
+		// common parameters
+		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
+		pVidEffect->SetParamFloat2("video_size", nGameWidth + 0.5f, nGameHeight + 0.5f);
+	}
+
+	return r;
 }
 
-static void dx9AltDrawText()
-{
-	if (!nOSDTimer) {
-		return;
-	}
-
-	if (nFramesEmulated > nOSDTimer) {
-		VidSKillShortMsg();
-		VidSKillOSDMsg();
-	}
-
-	RECT osdRect;
-	if (nVidFullscreen) {
-		osdRect.left = Dest.left;
-		osdRect.top = Dest.top;
-		osdRect.right = Dest.right - 1;
-		osdRect.bottom = Dest.bottom - 1;
-	} else {
-		osdRect.left = 0;
-		osdRect.top = 0;
-		osdRect.right = Dest.right - Dest.left - 1;
-		osdRect.bottom = Dest.bottom - Dest.top - 1;
-	}
-
-	if (nOSDTimer) {
-		pFont->DrawText(NULL, OSDMsg, -1, &osdRect, DT_RIGHT | DT_TOP, osdColor);
-	}
-}
-// <== osd for dx9 video output (ugly)
 
 static int dx9AltInit()
 {
@@ -1810,17 +1727,26 @@ static int dx9AltInit()
 	hVidWnd = hScrnWnd;
 
 	// Get pointer to Direct3D
-	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
+	if (bVidDX9LegacyRenderer) {
+		pD3D = (IDirect3D9Ex *)Direct3DCreate9(D3D_SDK_VERSION);
+	}
+	else {
+		Direct3DCreate9Ex(D3D_SDK_VERSION, &pD3D);
+	}
+	if (pD3D == NULL) {
 		dx9AltExit();
 		return 1;
 	}
-	
+
 	nRotateGame = 0;
+	nGameWidth = 640;
+	nGameHeight = 480;
 	if (bDrvOkay) {
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 			if (nVidRotationAdjust & 1) {
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else {
 				nRotateGame |= 1;
 			}
 		}
@@ -1828,63 +1754,83 @@ static int dx9AltInit()
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
 			nRotateGame ^= 2;
 		}
+
+		// Get the game screen size
+		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 	}
-	
+	else {
+		return 0;
+	}
+
 	nD3DAdapter = D3DADAPTER_DEFAULT;
 	if (nRotateGame & 1 && VerScreen[0]) {
 		nD3DAdapter = dx9GetAdapter(VerScreen);
-	} else {
+	}
+	else {
 		if (HorScreen[0]) {
 			nD3DAdapter = dx9GetAdapter(HorScreen);
 		}
 	}
 
-	// check selected atapter
+	// check selected adapter
 	D3DDISPLAYMODE dm;
 	pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
 
 	memset(&d3dpp, 0, sizeof(d3dpp));
 	if (nVidFullscreen) {
 		VidSDisplayScoreInfo ScoreInfo;
-		memset(&ScoreInfo, 0, sizeof(VidSDisplayScoreInfo));
-
 		if (dx9AltSelectFullscreenMode(&ScoreInfo)) {
 			dx9AltExit();
 			return 1;
 		}
-
-		bool sizefit = true;
-		if (ScoreInfo.nBestWidth > dm.Width || ScoreInfo.nBestHeight > dm.Height) {
-			sizefit = false;
-		}
-
-		d3dpp.BackBufferWidth = sizefit ? ScoreInfo.nBestWidth : dm.Width;
-		d3dpp.BackBufferHeight = sizefit ? ScoreInfo.nBestHeight : dm.Height;
+		d3dpp.BackBufferWidth = ScoreInfo.nBestWidth;
+		d3dpp.BackBufferHeight = ScoreInfo.nBestHeight;
 		d3dpp.BackBufferFormat = (nVidDepth == 16) ? D3DFMT_R5G6B5 : D3DFMT_X8R8G8B8;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_FLIP;
 		d3dpp.BackBufferCount = bVidTripleBuffer ? 2 : 1;
 		d3dpp.hDeviceWindow = hVidWnd;
-		d3dpp.FullScreen_RefreshRateInHz = dm.RefreshRate;
-		d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+		d3dpp.Windowed = bVidDX9WinFullscreen;
+		d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
+		d3dpp.PresentationInterval = bVidVSync ? D3DPRESENT_INTERVAL_DEFAULT : D3DPRESENT_INTERVAL_IMMEDIATE;
+		if (bVidDX9WinFullscreen) {
+			d3dpp.SwapEffect = bVidVSync || bVidDX9LegacyRenderer ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_FLIPEX;
+			MoveWindow(hScrnWnd, 0, 0, d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, TRUE);
+		}
 	} else {
-		d3dpp.BackBufferWidth = dm.Width;
-		d3dpp.BackBufferHeight = dm.Height;
+		RECT rect;
+		GetClientRect(hVidWnd, &rect);
+		d3dpp.BackBufferWidth = rect.right - rect.left;
+		d3dpp.BackBufferHeight = rect.bottom - rect.top;
 		d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
-		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+		d3dpp.SwapEffect = bVidVSync || bVidDX9LegacyRenderer ? D3DSWAPEFFECT_COPY : D3DSWAPEFFECT_FLIPEX;
 		d3dpp.BackBufferCount = 1;
 		d3dpp.hDeviceWindow = hVidWnd;
 		d3dpp.Windowed = TRUE;
-		d3dpp.PresentationInterval = bVidVSync ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;
+		d3dpp.PresentationInterval = bVidVSync ? D3DPRESENT_INTERVAL_DEFAULT : D3DPRESENT_INTERVAL_IMMEDIATE;
 	}
+
+	D3DDISPLAYMODEEX dmex;
+	dmex.Format = d3dpp.BackBufferFormat;
+	dmex.Width = d3dpp.BackBufferWidth;
+	dmex.Height = d3dpp.BackBufferHeight;
+	dmex.RefreshRate = d3dpp.FullScreen_RefreshRateInHz;
+	dmex.ScanLineOrdering = D3DSCANLINEORDERING_UNKNOWN;
+	dmex.Size = sizeof(D3DDISPLAYMODEEX);
 
 	DWORD dwBehaviorFlags = D3DCREATE_FPU_PRESERVE;
-	if (bVidHardwareVertex) {
-		dwBehaviorFlags |= D3DCREATE_HARDWARE_VERTEXPROCESSING;
+	dwBehaviorFlags |= bVidHardwareVertex ? D3DCREATE_HARDWARE_VERTEXPROCESSING : D3DCREATE_SOFTWARE_VERTEXPROCESSING;
+#ifdef _DEBUG
+	dwBehaviorFlags |= D3DCREATE_DISABLE_DRIVER_MANAGEMENT;
+#endif
+
+	HRESULT hRet;
+	if (bVidDX9LegacyRenderer) {
+		hRet = pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, (IDirect3DDevice9 **)&pD3DDevice);
 	} else {
-		dwBehaviorFlags |= D3DCREATE_SOFTWARE_VERTEXPROCESSING;
+		hRet = pD3D->CreateDeviceEx(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, d3dpp.Windowed ? NULL : &dmex, &pD3DDevice);
 	}
 
-	if (FAILED(pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
+	if (FAILED(hRet)) {
 		if (nVidFullscreen) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, d3dpp.BackBufferFormat, d3dpp.FullScreen_RefreshRateInHz);
 			if (bVidArcaderes && (d3dpp.BackBufferWidth != 320 && d3dpp.BackBufferHeight != 240)) {
@@ -1898,13 +1844,13 @@ static int dx9AltInit()
 	}
 
 	{
-		nVidScrnWidth = dm.Width; nVidScrnHeight = dm.Height;
+		nVidScrnWidth = d3dpp.BackBufferWidth;
+		nVidScrnHeight = d3dpp.BackBufferHeight;
 		nVidScrnDepth = (dm.Format == D3DFMT_R5G6B5) ? 16 : 32;
 	}
 
-	nGameWidth = nVidImageWidth;
-	nGameHeight = nVidImageHeight;
 	nRotateGame = 0;
+	nDX9HardFX = -1;
 
 	if (bDrvOkay) {
 		// Get the game screen size
@@ -1916,7 +1862,8 @@ static int dx9AltInit()
 				nGameWidth = nGameHeight;
 				nGameHeight = n;
 				nRotateGame |= (nVidRotationAdjust & 2);
-			} else {
+			}
+			else {
 				nRotateGame |= 1;
 			}
 		}
@@ -1927,12 +1874,7 @@ static int dx9AltInit()
 	}
 
 	// enable vertex alpha blending
-	if (bVidMotionBlur) {
-		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	} else {
-		mbCurrentTexture = 0;
-		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	}
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
 	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -1961,53 +1903,29 @@ static int dx9AltInit()
 		}
 	}
 
-	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
-	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+	nImageWidth = 0;
+	nImageHeight = 0;
 
-	nImageWidth = 0; nImageHeight = 0;
+	pD3DDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	// Clear the swapchain's buffers
-	if (nVidFullscreen) {
-		for (int i = 0; i < 3; i++) {
-			pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-			pD3DDevice->Present(NULL, NULL, NULL, NULL);
-		}
-	} else {
-		RECT rect;
-		GetClientScreenRect(hVidWnd, &rect);
-
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
-	}
-
-	// Create osd font
-	dx9AltCreateFont();
+	// Overlay
+	VidOverlayInit(pD3DDevice);
 
 	return 0;
 }
 
 static int dx9AltReset()
 {
-	if (pFont) {
-		pFont->OnLostDevice();
-	}
-
 	dx9AltReleaseTexture();
 
 	if (FAILED(pD3DDevice->Reset(&d3dpp))) {
 		return 1;
 	}
 
-	if (pFont) {
-		pFont->OnResetDevice();
-	}
-
-	if (bVidMotionBlur) {
-		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	} else {
-		mbCurrentTexture = 0;
-		pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	}
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
 	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -2016,7 +1934,8 @@ static int dx9AltReset()
 
 	dx9AltTextureInit();
 
-	nImageWidth = 0; nImageHeight = 0;
+	nImageWidth = 0;
+	nImageHeight = 0;
 
 	return 0;
 }
@@ -2059,7 +1978,7 @@ static int dx9AltRender()
 {
 	GetClientRect(hVidWnd, &Dest);
 
-	if (bVidArcaderes && nVidFullscreen) {
+	if (bVidArcaderes) {
 		Dest.left = (Dest.right + Dest.left) / 2;
 		Dest.left -= nGameWidth / 2;
 		Dest.right = Dest.left + nGameWidth;
@@ -2067,7 +1986,8 @@ static int dx9AltRender()
 		Dest.top = (Dest.top + Dest.bottom) / 2;
 		Dest.top -= nGameHeight / 2;
 		Dest.bottom = Dest.top + nGameHeight;
-	} else {
+	}
+	else {
 		dx9AltScale(&Dest, nGameWidth, nGameHeight);
 	}
 
@@ -2091,96 +2011,69 @@ static int dx9AltRender()
 				}
 			}
 
-			if (nVidFullscreen) {
-				dx9AltSetVertex(0, 0, nWidth, nHeight, nTextureWidth, nTextureHeight, nRotateGame ? Dest.top : Dest.left, nRotateGame ? Dest.left : Dest.top, nImageWidth, nImageHeight);
-			} else {
-				dx9AltSetVertex(0, 0, nWidth, nHeight, nTextureWidth, nTextureHeight, 0, 0, nImageWidth, nImageHeight);
-			}
+			dx9AltSetVertex(0, 0, nWidth, nHeight, nTextureWidth, nTextureHeight, nRotateGame ? Dest.top : Dest.left, nRotateGame ? Dest.left : Dest.top, nImageWidth, nImageHeight);
 
-			D3DVIEWPORT9 vp;
-
-			// Set the size of the image on the PC screen
-			if (nVidFullscreen) {
-				vp.X = Dest.left;
-				vp.Y = Dest.top;
-				vp.Width = Dest.right - Dest.left;
-				vp.Height = Dest.bottom - Dest.top;
-				vp.MinZ = 0.0f;
-				vp.MaxZ = 1.0f;
-			} else {
-				vp.X = 0;
-				vp.Y = 0;
-				vp.Width = Dest.right - Dest.left;
-				vp.Height = Dest.bottom - Dest.top;
-				vp.MinZ = 0.0f;
-				vp.MaxZ = 1.0f;
-			}
-
-			pD3DDevice->SetViewport(&vp);
+			if (pVidEffect && pVidEffect->IsValid())
+				pVidEffect->SetParamFloat2("output_size", nImageWidth, nImageHeight);
 		}
 	}
-
-	pD3DDevice->BeginScene();
 
 	{
 		// Copy the game image onto a texture for rendering
 		D3DLOCKED_RECT d3dlr;
-		pTexture->LockRect(0, &d3dlr, 0, 0);
+		emuTexture->LockRect(0, &d3dlr, 0, 0);
+		if (d3dlr.pBits) {
+			int pitch = d3dlr.Pitch;
+			unsigned char* pd = (unsigned char*)d3dlr.pBits;
 
-		int pitch = d3dlr.Pitch;
-		unsigned char* pd = (unsigned char*)d3dlr.pBits;
+			if (nPreScaleEffect) {
+				VidFilterApplyEffect(pd, pitch);
+			}
+			else {
+				unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
+				int s = nVidImageWidth * nVidImageBPP;
 
-		if (nPreScaleEffect) {
-			VidFilterApplyEffect(pd, pitch);
-		} else {
-			unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
-			int s = nVidImageWidth * nVidImageBPP;
-
-			switch (nVidImageDepth) {
+				switch (nVidImageDepth) {
 				case 32:
 					VidSCpyImg32(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
 					break;
 				case 16:
 					VidSCpyImg16(pd, pitch, ps, s, nVidImageWidth, nVidImageHeight);
 					break;
+				}
 			}
-		}
 
-		pTexture->UnlockRect(0);
+			if (kNetLua) {
+				FBA_LuaGui(pd, nVidImageWidth, nVidImageHeight, nVidImageBPP, pitch);
+			}
+
+			emuTexture->UnlockRect(0);
+		}
 	}
 
-	pD3DDevice->UpdateTexture(pTexture, emuTexture[mbCurrentTexture]);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
 
-	if (bVidMotionBlur) {
-		// Motion Blur enabled
-		if (!mbTextureEmpty) {
-			// draw previous frame to the screen
-			pD3DDevice->SetTexture( 0, emuTexture[mbCurrentTexture ^ 1]);
-			pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
-			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
-			// draw the current frame with transparency to the screen
-			pD3DDevice->SetTexture(0, emuTexture[mbCurrentTexture]);
-			pD3DDevice->SetFVF(D3DFVF_LVERTEX2 | D3DFVF_DIFFUSE);
-			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, transpVertex, sizeof(transp_vertex));
-		} else {
-			mbTextureEmpty = false;
-			// draw the current frame to the screen
-			pD3DDevice->SetTexture(0, emuTexture[ mbCurrentTexture]);
-			pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
-			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
-		}
-		mbCurrentTexture ^= 1;	// switch current texture
-	} else {
-		// draw the current frame to the screen
-		pD3DDevice->SetTexture( 0, emuTexture[mbCurrentTexture] );
+	// draw the current frame to the screen
+	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+
+	pD3DDevice->BeginScene();
+	{
+		pD3DDevice->SetTexture(0, emuTexture);
 		pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
-		pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+		if (pVidEffect && pVidEffect->IsValid()) {
+			pVidEffect->Begin();
+			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+			pVidEffect->End();
+		}
+		else {
+			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
+		}
+		dx9AltDrawOSD();
 	}
-
-	// draw osd text
-	dx9AltDrawText();
-
 	pD3DDevice->EndScene();
+
+	dx9AltSetHardFX(nVidDX9HardFX);
 
 	return 0;
 }
@@ -2202,8 +2095,7 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 			return 1;
 		}
 
-		return 1;                    // Skip this frame, pBurnDraw pointer not valid (dx9AltReset() -> dx9AltTextureInit() -> VidSAllocVidImage())
-
+		return 1;            // Skip this frame, pBurnDraw pointer not valid (dx9AltReset() -> dx9AltTextureInit() -> VidSAllocVidImage())
 	}
 
 	if (bDrvOkay) {
@@ -2211,7 +2103,8 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 			if (BurnDrvRedraw()) {
 				BurnDrvFrame();		// No redraw function provided, advance one frame
 			}
-		} else {
+		}
+		else {
 			BurnDrvFrame();			// Run one frame and draw the screen
 		}
 
@@ -2219,50 +2112,23 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 			pVidTransCallback();
 	}
 
-	dx9AltRender();
-
 	return 0;
 }
 
 // Paint the BlitFX surface onto the primary surface
 static int dx9AltPaint(int bValidate)
 {
+	if (!bDrvOkay) {
+		return 0;
+	}
+
 	if (pD3DDevice->TestCooperativeLevel()) {	// We've lost control of the screen
 		return 1;
 	}
 
-	RECT rect = { 0, 0, 0, 0 };
+	dx9AltRender();
 
-	if (!nVidFullscreen) {
-		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += nMenuHeight;
-
-		dx9AltScale(&rect, nGameWidth, nGameHeight);
-
-		if ((rect.right - rect.left) != (Dest.right - Dest.left) || (rect.bottom - rect.top ) != (Dest.bottom - Dest.top)) {
-			bValidate |= 2;
-		}
-	}
-
-	if (bValidate & 2) {
-		dx9AltRender();
-	}
-
-	if (nVidFullscreen) {
-		pD3DDevice->Present(NULL, NULL, NULL, NULL);
-	} else {
-		RECT src = { 0, 0, Dest.right - Dest.left, Dest.bottom - Dest.top };
-		POINT c = { 0, 0 };
-		ClientToScreen(hVidWnd, &c);
-		RECT dst = { rect.left - c.x, rect.top - c.y, rect.right - c.x, rect.bottom - c.y };
-
-		pD3DDevice->Present(&src, &dst, NULL, NULL);
-
-		// Validate the rectangle we just drew
-		if (bValidate & 1) {
-			ValidateRect(hVidWnd, &dst);
-		}
-	}
+	pD3DDevice->Present(NULL, NULL, NULL, NULL);
 
 	return 0;
 }
@@ -2272,7 +2138,8 @@ static int dx9AltGetSettings(InterfaceInfo* pInfo)
 	if (nVidFullscreen) {
 		if (bVidTripleBuffer) {
 			IntInfoAddStringModule(pInfo, _T("Using a triple buffer"));
-		} else {
+		}
+		else {
 			IntInfoAddStringModule(pInfo, _T("Using a double buffer"));
 		}
 	}
@@ -2286,7 +2153,8 @@ static int dx9AltGetSettings(InterfaceInfo* pInfo)
 
 	if (bVidDX9Bilinear) {
 		IntInfoAddStringModule(pInfo, _T("Applying linear filter"));
-	} else {
+	}
+	else {
 		IntInfoAddStringModule(pInfo, _T("Applying point filter"));
 	}
 
@@ -2294,14 +2162,12 @@ static int dx9AltGetSettings(InterfaceInfo* pInfo)
 		IntInfoAddStringModule(pInfo, _T("Applying motion blur effect"));
 	}
 
+	if (bVidDX9Scanlines) {
+		IntInfoAddStringModule(pInfo, _T("Drawing scanlines"));
+	}
+
 	return 0;
 }
 
 // The Video Output plugin:
 struct VidOut VidOutDX9Alt = { dx9AltInit, dx9AltExit, dx9AltFrame, dx9AltPaint, dx9AltScale, dx9AltGetSettings, _T("DirectX9 Alternate video output") };
-
-
-
-
-
-

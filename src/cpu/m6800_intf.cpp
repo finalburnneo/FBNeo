@@ -534,7 +534,7 @@ void NSC8105SetIRQLine(INT32 vector, INT32 status)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called when no CPU open\n"));
-	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called with invalid CPU Type\n"));
+	if (M6800CPUContext[nActiveCPU].nCpuType != CPU_TYPE_NSC8105) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called with invalid CPU Type\n"));
 #endif
 
 	if (status == CPU_IRQSTATUS_NONE) {

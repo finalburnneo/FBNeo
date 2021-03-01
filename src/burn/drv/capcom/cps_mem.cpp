@@ -101,8 +101,6 @@ void CpsDoMapObjectBanks(INT32 nBank)
 void CpsMapObjectBanks(INT32 nBank)
 {
 	if (nBank != nCpsObjectBank) {
-		nCpsObjectBank = nBank;
-
 		CpsDoMapObjectBanks(nBank);
 	}
 }

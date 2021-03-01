@@ -697,29 +697,31 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Moon Patrol
 
 static struct BurnRomInfo mpatrolRomDesc[] = {
-	{ "mpa-1.3m",	0x1000, 0x5873a860, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "mpa-2.3l",	0x1000, 0xf4b85974, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mpa-3.3k",	0x1000, 0x2e1a598c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mpa-4.3j",	0x1000, 0xdd05b587, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mpa-1.3m",		0x1000, 0x5873a860, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "mpa-2.3l",		0x1000, 0xf4b85974, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mpa-3.3k",		0x1000, 0x2e1a598c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mpa-4.3j",		0x1000, 0xdd05b587, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mp-s1.1a",	0x1000, 0x561d3108, 2 | BRF_GRA },           //  4 M6803 Code
+	{ "mp-s1.1a",		0x1000, 0x561d3108, 2 | BRF_GRA },           //  4 M6803 Code
 
-	{ "mpe-5.3e",	0x1000, 0xe3ee7f75, 3 | BRF_GRA },           //  5 Characters
-	{ "mpe-4.3f",	0x1000, 0xcca6d023, 3 | BRF_GRA },           //  6
+	{ "mpe-5.3e",		0x1000, 0xe3ee7f75, 3 | BRF_GRA },           //  5 Characters
+	{ "mpe-4.3f",		0x1000, 0xcca6d023, 3 | BRF_GRA },           //  6
 
-	{ "mpb-2.3m",	0x1000, 0x707ace5e, 4 | BRF_GRA },           //  7 Sprites
-	{ "mpb-1.3n",	0x1000, 0x9b72133a, 4 | BRF_GRA },           //  8
+	{ "mpb-2.3m",		0x1000, 0x707ace5e, 4 | BRF_GRA },           //  7 Sprites
+	{ "mpb-1.3n",		0x1000, 0x9b72133a, 4 | BRF_GRA },           //  8
 
-	{ "mpe-1.3l",	0x1000, 0xc46a7f72, 5 | BRF_GRA },           //  9 Mountain Layer
+	{ "mpe-1.3l",		0x1000, 0xc46a7f72, 5 | BRF_GRA },           //  9 Mountain Layer
 
-	{ "mpe-2.3k",	0x1000, 0xc7aa1fb0, 6 | BRF_GRA },           // 10 Hill Layer
+	{ "mpe-2.3k",		0x1000, 0xc7aa1fb0, 6 | BRF_GRA },           // 10 Hill Layer
 
-	{ "mpe-3.3h",	0x1000, 0xa0919392, 7 | BRF_GRA },           // 11 Cityscape Layer
+	{ "mpe-3.3h",		0x1000, 0xa0919392, 7 | BRF_GRA },           // 11 Cityscape Layer
 
-	{ "mpc-4.2a",	0x0200, 0x07f99284, 8 | BRF_GRA },           // 12 Color Data
-	{ "mpc-3.1m",	0x0020, 0x6a57eff2, 8 | BRF_GRA },           // 13
-	{ "mpc-1.1f",	0x0020, 0x26979b13, 8 | BRF_GRA },           // 14
-	{ "mpc-2.2h",	0x0100, 0x7ae4cd97, 8 | BRF_GRA },           // 15
+	{ "mpc-4.2a",		0x0200, 0x07f99284, 8 | BRF_GRA },           // 12 Color Data
+	{ "mpc-3.1m",		0x0020, 0x6a57eff2, 8 | BRF_GRA },           // 13
+	{ "mpc-1.1f",		0x0020, 0x26979b13, 8 | BRF_GRA },           // 14
+	{ "mpc-2.2h",		0x0100, 0x7ae4cd97, 8 | BRF_GRA },           // 15
+	
+	{ "mp_7621-5.7h",	0x0200, 0xcf1fd9d0, 0 | BRF_OPT },			 // 16 unkprom
 };
 
 STD_ROM_PICK(mpatrol)
@@ -739,29 +741,31 @@ struct BurnDriver BurnDrvMpatrol = {
 // Moon Patrol (Williams)
 
 static struct BurnRomInfo mpatrolwRomDesc[] = {
-	{ "mpa-1w.3m",	0x1000, 0xbaa1a1d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "mpa-2w.3l",	0x1000, 0x52459e51, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mpa-3w.3k",	0x1000, 0x9b249fe5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mpa-4w.3j",	0x1000, 0xfee76972, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mpa-1w.3m",		0x1000, 0xbaa1a1d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "mpa-2w.3l",		0x1000, 0x52459e51, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mpa-3w.3k",		0x1000, 0x9b249fe5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mpa-4w.3j",		0x1000, 0xfee76972, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mp-s1.1a",	0x1000, 0x561d3108, 2 | BRF_GRA },           //  4 M6803 Code
+	{ "mp-s1.1a",		0x1000, 0x561d3108, 2 | BRF_GRA },           //  4 M6803 Code
 
-	{ "mpe-5w.3e",	0x1000, 0xf56e01fe, 3 | BRF_GRA },           //  5 Characters
-	{ "mpe-4w.3f",	0x1000, 0xcaaba2d9, 3 | BRF_GRA },           //  6
+	{ "mpe-5w.3e",		0x1000, 0xf56e01fe, 3 | BRF_GRA },           //  5 Characters
+	{ "mpe-4w.3f",		0x1000, 0xcaaba2d9, 3 | BRF_GRA },           //  6
 
-	{ "mpb-2.3m",	0x1000, 0x707ace5e, 4 | BRF_GRA },           //  7 Sprites
-	{ "mpb-1.3n",	0x1000, 0x9b72133a, 4 | BRF_GRA },           //  8
+	{ "mpb-2.3m",		0x1000, 0x707ace5e, 4 | BRF_GRA },           //  7 Sprites
+	{ "mpb-1.3n",		0x1000, 0x9b72133a, 4 | BRF_GRA },           //  8
 
-	{ "mpe-1.3l",	0x1000, 0xc46a7f72, 5 | BRF_GRA },           //  9 Mountain Layer
+	{ "mpe-1.3l",		0x1000, 0xc46a7f72, 5 | BRF_GRA },           //  9 Mountain Layer
 
-	{ "mpe-2.3k",	0x1000, 0xc7aa1fb0, 6 | BRF_GRA },           // 10 Hill Layer
+	{ "mpe-2.3k",		0x1000, 0xc7aa1fb0, 6 | BRF_GRA },           // 10 Hill Layer
 
-	{ "mpe-3.3h",	0x1000, 0xa0919392, 7 | BRF_GRA },           // 11 Cityscape Layer
+	{ "mpe-3.3h",		0x1000, 0xa0919392, 7 | BRF_GRA },           // 11 Cityscape Layer
 
-	{ "mpc-4a.2a",	0x0200, 0xcb0a5ff3, 8 | BRF_GRA },           // 12 Color Data
-	{ "mpc-3.1m",	0x0020, 0x6a57eff2, 8 | BRF_GRA },           // 13
-	{ "mpc-1.1f",	0x0020, 0x26979b13, 8 | BRF_GRA },           // 14
-	{ "mpc-2.2h",	0x0100, 0x7ae4cd97, 8 | BRF_GRA },           // 15
+	{ "mpc-4a.2a",		0x0200, 0xcb0a5ff3, 8 | BRF_GRA },           // 12 Color Data
+	{ "mpc-3.1m",		0x0020, 0x6a57eff2, 8 | BRF_GRA },           // 13
+	{ "mpc-1.1f",		0x0020, 0x26979b13, 8 | BRF_GRA },           // 14
+	{ "mpc-2.2h",		0x0100, 0x7ae4cd97, 8 | BRF_GRA },           // 15
+	
+	{ "mp_7621-5.7h",	0x0200, 0xcf1fd9d0, 0 | BRF_OPT },			 // 16 unkprom
 };
 
 STD_ROM_PICK(mpatrolw)

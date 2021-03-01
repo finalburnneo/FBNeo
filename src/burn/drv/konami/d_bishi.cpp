@@ -26,67 +26,62 @@ static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 
 static UINT16 control_data = 0;
 static UINT16 control_data2 = 0;
 
 static struct BurnInputInfo BishiInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 11,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 1"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 3"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 3"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 start"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 3"	},
 
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 start"	},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 fire 1"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 fire 2"	},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 fire 3"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 6,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Bishi)
 
 static struct BurnInputInfo Bishi2pInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 11,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 1"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 3"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 3"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 3"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 6,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Bishi2p)
 
 static struct BurnDIPInfo BishiDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x40, NULL			},
 	{0x10, 0xff, 0xff, 0xec, NULL			},
 	{0x11, 0xff, 0xff, 0x3f, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0f, 0x01, 0x40, 0x40, "Off"			},
-	{0x0f, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"		},
 	{0x10, 0x01, 0x07, 0x07, "Easiest"		},
@@ -153,13 +148,8 @@ STDDIPINFO(Bishi)
 
 static struct BurnDIPInfo Bishi2pDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x40, NULL			},
 	{0x0c, 0xff, 0xff, 0xec, NULL			},
 	{0x0d, 0xff, 0xff, 0x3f, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0b, 0x01, 0x40, 0x40, "Off"			},
-	{0x0b, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"		},
 	{0x0c, 0x01, 0x07, 0x07, "Easiest"		},
@@ -329,7 +319,7 @@ static UINT16 __fastcall bishi_read_word(UINT32 address)
 
 		case 0x800004:
 		case 0x800005:
-			return (DrvDips[2] << 8) + DrvDips[1];
+			return (DrvDips[1] << 8) + DrvDips[0];
 
 		case 0x800006:
 		case 0x800007:
@@ -361,7 +351,7 @@ static UINT8 __fastcall bishi_read_byte(UINT32 address)
 
 		case 0x800004:
 		case 0x800005:
-			return DrvDips[(address & 1)+1];
+			return DrvDips[(address & 1)];
 
 		case 0x800006:
 			return DrvInputs[0] >> 8;

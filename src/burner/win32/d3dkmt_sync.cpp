@@ -37,7 +37,7 @@ static int SuperWaitVBlank_DLLsLoaded = 0;
 static HINSTANCE hGdi32;
 static D3DKMT_WAITFORVERTICALBLANKEVENT we = { 0, 0, 0 };
 
-bool bVidDWMSync = true;
+bool bVidDWMSync = false;
 
 void LoadGDIFunctions() {
 

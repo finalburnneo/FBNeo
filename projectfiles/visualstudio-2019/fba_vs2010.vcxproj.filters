@@ -4316,6 +4316,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp">
       <Filter>Burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

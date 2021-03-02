@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16372 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16373 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7951,6 +7951,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_megaga1	|  	| Mega Games I (Euro)					| 		| 1992	| Sega		| Sega Megadrive| 					|
 | gg_megaman	|  	| Mega Man (Euro, USA)					| 		| 1995	| U.S. Gold	| Sega Game Gear| 					|
 | nes_megaman	|  	| Mega Man (USA)					| 		| 1987	| Capcom	| Miscellaneous	| 					|
+| mmancp2ur2	|  	| Mega Man - The Power Battle (950925 USA, SAMPLE Versio| megaman	| 1995	| Capcom	| CPS2		| 					|
 | mmancp2ur1	|  	| Mega Man - The Power Battle (950926 USA, SAMPLE Versio| megaman	| 1995	| Capcom	| CPS2		| 					|
 | megamana	|  	| Mega Man - the power battle (951006 Asia)		| megaman	| 1995	| Capcom	| CPS1		| 					|
 | megaman	|  	| Mega Man - the power battle (951006 USA)		| 		| 1995	| Capcom	| CPS1		| 					|

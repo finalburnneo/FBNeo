@@ -62,7 +62,7 @@ The following "device type" also exist, but they won't be compatible with every 
 ## Frequently asked questions
 
 ### Where can i find the XXX roms ?
-We don't provide links for roms. Google is your friend.
+As far as we are concerned, you are supposed to dump your own games, so we can't help you with acquiring romsets.
 
 ### Game XXX is not launching, why ?
 It is either not supported or you have a bad rom, your logs will give you more details. Build a valid romset with clrmamepro as said above.

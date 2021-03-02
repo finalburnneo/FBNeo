@@ -866,19 +866,19 @@ struct BurnDriver BurnDrvPaddlema = {
 // The Next Space (set 1)
 
 static struct BurnRomInfo tnextspcRomDesc[] = {
-	{ "ns_4.bin",		0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ns_3.bin",		0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_4.4",			0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "ns_3.4",			0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ns_1.bin",		0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "ns_1.1",			0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "ns_5678.bin",	0x80000, 0x22756451, 3 | BRF_GRA },           //  3 Graphics
 
-	{ "2.p2",		0x00100, 0x1f388d48, 4 | BRF_GRA },           //  4 Palette Data
-	{ "3.p3",		0x00100, 0x0254533a, 4 | BRF_GRA },           //  5
-	{ "1.p1",		0x00100, 0x488fd0e9, 4 | BRF_GRA },           //  6
+	{ "2.p2",			0x00100, 0x1f388d48, 4 | BRF_GRA },           //  4 Palette Data
+	{ "3.p3",			0x00100, 0x0254533a, 4 | BRF_GRA },           //  5
+	{ "1.p1",			0x00100, 0x488fd0e9, 4 | BRF_GRA },           //  6
 
-	{ "5.p5",		0x00400, 0x9c8527bf, 5 | BRF_GRA },           //  7 Palette Look-up Data
-	{ "4.p4",		0x00400, 0xcc9ff769, 5 | BRF_GRA },           //  8
+	{ "5.p5",			0x00400, 0x9c8527bf, 5 | BRF_GRA },           //  7 Palette Look-up Data
+	{ "4.p4",			0x00400, 0xcc9ff769, 5 | BRF_GRA },           //  8
 
 	{ "ns_2.bin",		0x08000, 0x05771d48, 6 | BRF_GRA },           //  9 Color Look-up Data
 };
@@ -900,19 +900,19 @@ struct BurnDriver BurnDrvTnextspc = {
 // The Next Space (set 2)
 
 static struct BurnRomInfo tnextspc2RomDesc[] = {
-	{ "ns_4.bin",		0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ns_3.bin",		0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_4.4",		0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "ns_3.3",		0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ns_1.bin",		0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "ns_1.1",		0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b3.ic49",		0x10000, 0x2bddf94d, 3 | BRF_GRA },           //  3 Graphics
-	{ "b7.ic53",		0x10000, 0xa8b13a9a, 3 | BRF_GRA },           //  4
-	{ "b4.ic50",		0x10000, 0x80c6c841, 3 | BRF_GRA },           //  5
-	{ "b8.ic54",		0x10000, 0xbf0762a0, 3 | BRF_GRA },           //  6
-	{ "b5.ic51",		0x10000, 0xe487750b, 3 | BRF_GRA },           //  7
-	{ "b9.ic55",		0x10000, 0x45d730b9, 3 | BRF_GRA },           //  8
-	{ "b6.ic52",		0x10000, 0x0618cf49, 3 | BRF_GRA },           //  9
-	{ "b10.ic56",		0x10000, 0xf48819df, 3 | BRF_GRA },           // 10
+	{ "b3.ic49",	0x10000, 0x2bddf94d, 3 | BRF_GRA },           //  3 Graphics
+	{ "b7.ic53",	0x10000, 0xa8b13a9a, 3 | BRF_GRA },           //  4
+	{ "b4.ic50",	0x10000, 0x80c6c841, 3 | BRF_GRA },           //  5
+	{ "b8.ic54",	0x10000, 0xbf0762a0, 3 | BRF_GRA },           //  6
+	{ "b5.ic51",	0x10000, 0xe487750b, 3 | BRF_GRA },           //  7
+	{ "b9.ic55",	0x10000, 0x45d730b9, 3 | BRF_GRA },           //  8
+	{ "b6.ic52",	0x10000, 0x0618cf49, 3 | BRF_GRA },           //  9
+	{ "b10.ic56",	0x10000, 0xf48819df, 3 | BRF_GRA },           // 10
 
 	{ "2.p2",		0x00100, 0x1f388d48, 4 | BRF_GRA },           // 11 Palette Data
 	{ "3.p3",		0x00100, 0x0254533a, 4 | BRF_GRA },           // 12
@@ -921,7 +921,7 @@ static struct BurnRomInfo tnextspc2RomDesc[] = {
 	{ "5.p5",		0x00400, 0x9c8527bf, 5 | BRF_GRA },           // 14 Palette Look-up Data
 	{ "4.p4",		0x00400, 0xcc9ff769, 5 | BRF_GRA },           // 15
 
-	{ "ns_2.bin",		0x08000, 0x05771d48, 6 | BRF_GRA },           // 16 Color Look-up Data
+	{ "ns_2.bin",	0x08000, 0x05771d48, 6 | BRF_GRA },           // 16 Color Look-up Data
 };
 
 STD_ROM_PICK(tnextspc2)
@@ -941,19 +941,19 @@ struct BurnDriver BurnDrvTnextspc2 = {
 // The Next Space (Japan)
 
 static struct BurnRomInfo tnextspcjRomDesc[] = {
-	{ "ns_ver1_j4.bin",	0x20000, 0x5cdf710d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ns_ver1_j3.bin",	0x20000, 0xcd9532d0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_ver1_j4.4",	0x20000, 0x5cdf710d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "ns_ver1_j3.3",	0x20000, 0xcd9532d0, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ns_1.bin",		0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "ns_1.1",			0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "ns_5678.bin",	0x80000, 0x22756451, 3 | BRF_GRA },           //  3 Graphics
 
-	{ "2.p2",		0x00100, 0x1f388d48, 4 | BRF_GRA },           //  4 Palette Data
-	{ "3.p3",		0x00100, 0x0254533a, 4 | BRF_GRA },           //  5
-	{ "1.p1",		0x00100, 0x488fd0e9, 4 | BRF_GRA },           //  6
+	{ "2.p2",			0x00100, 0x1f388d48, 4 | BRF_GRA },           //  4 Palette Data
+	{ "3.p3",			0x00100, 0x0254533a, 4 | BRF_GRA },           //  5
+	{ "1.p1",			0x00100, 0x488fd0e9, 4 | BRF_GRA },           //  6
 
-	{ "5.p5",		0x00400, 0x9c8527bf, 5 | BRF_GRA },           //  7 Palette Look-up Data
-	{ "4.p4",		0x00400, 0xcc9ff769, 5 | BRF_GRA },           //  8
+	{ "5.p5",			0x00400, 0x9c8527bf, 5 | BRF_GRA },           //  7 Palette Look-up Data
+	{ "4.p4",			0x00400, 0xcc9ff769, 5 | BRF_GRA },           //  8
 
 	{ "ns_2.bin",		0x08000, 0x05771d48, 6 | BRF_GRA },           //  9 Color Look-up Data
 };

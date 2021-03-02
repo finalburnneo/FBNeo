@@ -621,6 +621,13 @@
 		<rom name="Argus (Japan).nes" size="49168" crc="d6396aa7"/>
 		<driver status="good"/>
 	</game>
+	<game name="arkaderush">
+		<description>Arkade Rush (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Nathan Tolbert</manufacturer>
+		<rom name="Arkade Rush (HB)(2021)(Nathan Tolbert).nes" size="32784" crc="d40c212e"/>
+		<driver status="good"/>
+	</game>
 	<game name="arkanoid">
 		<description>Arkanoid (USA)</description>
 		<year>1987</year>
@@ -1312,6 +1319,13 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Blob Man (Unl).nes" size="40976" crc="eef9db4b"/>
+		<driver status="good"/>
+	</game>
+	<game name="blobquest">
+		<description>Blob Quest (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Tom Livak</manufacturer>
+		<rom name="Blob Quest (HB)(2021)(Tom Livak).nes" size="32784" crc="e3ac2b6d"/>
 		<driver status="good"/>
 	</game>
 	<game name="blockout">
@@ -10099,6 +10113,13 @@
 		<rom name="Space Invaders (Japan).nes" size="24592" crc="525c0dab"/>
 		<driver status="good"/>
 	</game>
+	<game name="spacegulls">
+		<description>Spacegulls (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>miau</manufacturer>
+		<rom name="Spacegulls (HB)(2021)(Miau).nes" size="65552" crc="35fdd434"/>
+		<driver status="good"/>
+	</game>
 	<game name="spartanx">
 		<description>Spartan X (Japan)</description>
 		<year>1985</year>
@@ -11003,7 +11024,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tapewpuzdis">
-		<description>Tapeworm Puzzle Disco (HB)(Demo 8)</description>
+		<description>Tapeworm Puzzle Disco (HB)(Demo 8) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>LowtekGames</manufacturer>
 		<rom name="Tapeworm Puzzle Disco (HB)(Demo 8).nes" size="65552" crc="30e0689f"/>
@@ -12151,7 +12172,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="whatremains">
-		<description>What Remains (HB)</description>
+		<description>What Remains (HB) [Homebrew]</description>
 		<year>2019</year>
 		<manufacturer>Iodine Dynamics</manufacturer>
 		<rom name="What Remains (HB).nes" size="524304" crc="2f2d03e5"/>
@@ -12234,6 +12255,13 @@
 		<rom name="Wit's (Japan).nes" size="131088" crc="82b8b8be"/>
 		<driver status="good"/>
 	</game>
+	<game name="witchnwiz">
+		<description>Witch n' Wiz (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Matt Hughson</manufacturer>
+		<rom name="Witch n' Wiz (HB)(2021)(Matt Hughson).nes" size="65552" crc="bddd6cba"/>
+		<driver status="good"/>
+	</game>
 	<game name="wizarwar">
 		<description>Wizards &amp; Warriors (USA)</description>
 		<year>1987</year>
@@ -12260,6 +12288,13 @@
 		<year>2016</year>
 		<manufacturer>Xin Xin</manufacturer>
 		<rom name="Wo Xiang Niao Niao (2016)(Xin Xin).nes" size="40976" crc="7063779c"/>
+		<driver status="good"/>
+	</game>
+	<game name="wolfspirit">
+		<description>Wolf Spirit (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Valdir Salgueiro</manufacturer>
+		<rom name="Wolf Spirit (HB)(2021)(Valdir Salgueiro).nes" size="65552" crc="74574809"/>
 		<driver status="good"/>
 	</game>
 	<game name="wolfling">

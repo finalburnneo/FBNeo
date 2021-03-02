@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16366 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16372 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -676,6 +676,7 @@ This list contains all games supported by FinalBurn Neo.
 | argus		|  	| Argus							| 		| 1986	| NMK (Jaleco li| Miscellaneous	| 					|
 | arian		|  	| Arian Mission						| aso		| 1985	| SNK		| Miscellaneous	| 					|
 | arkarea	|  	| Ark Area						| 		| 1988	| UPL		| Miscellaneous	| 					|
+| nes_arkaderush|  	| Arkade Rush (HB)					| 		| 2021	| Nathan Tolbert| Miscellaneous	| 					|
 | md_arkagisr	|  	| Arkagis Revolution (HB)				| 		| 2019	| Sik		| Sega Megadrive| 					|
 | spec_arkanoid	|  	| Arkanoid (48K)					| 		| 1987	| Imagine Softwa| ZX Spectrum	| 					|
 | arkgcbl	|  	| Arkanoid (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -1471,6 +1472,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_blinkys	|  	| Blinky's Scary School (48K)				| 		| 1990	| Zeppelin Games| ZX Spectrum	| 					|
 | spec_blizzardsrift|  	| Blizzard's Rift (HB)					| 		| 2007	| Jonathan Cauld| ZX Spectrum	| 					|
 | nes_blobman	|  	| Blob Man (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| nes_blobquest	|  	| Blob Quest (HB)					| 		| 2021	| Tom Livak	| Miscellaneous	| 					|
 | spec_blobthecop|  	| Blob the Cop						| 		| 1989	| Players Softwa| ZX Spectrum	| 					|
 | arkblock	|  	| Block (Game Corporation bootleg, set 1)		| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
 | arkbloc2	|  	| Block (Game Corporation bootleg, set 2)		| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -3207,9 +3209,9 @@ This list contains all games supported by FinalBurn Neo.
 | md_demomanp	|   NW	| Demolition Man (USA, Prototype)			| md_demoman	| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | msx_demoncrystl|  	| Demon Crystal, The					| 		| 1986	| Radio Wave New| MSX		| 					|
 | nes_demondistrict|  	| Demon District (HB)					| 		| 2019	| Klonoa	| Miscellaneous	| 					|
-| dmnfrnt102	|  	| Demon Front (VM102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrnt103	|  	| Demon Front (VM103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
-| dmnfrnt	|  	| Demon Front (VM105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt102	|  	| Demon Front (M102XX, S101XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt103	|  	| Demon Front (M103XX, S103XX)				| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
+| dmnfrnt	|  	| Demon Front (M105XX, S105XX)				| 		| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcba	|  	| Demon Front (VM105XX, S105XX, China, Single PCB Versio| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | dmnfrntpcb	|  	| Demon Front (VM107KR, S106KR, S101KR, Korea, Single PC| dmnfrnt	| 2002	| IGS		| PolyGameMaster| 					|
 | nes_demonsword|  	| Demon Sword (USA)					| 		| 1990	| Taito		| Miscellaneous	| 					|
@@ -3772,14 +3774,14 @@ This list contains all games supported by FinalBurn Neo.
 | nes_dragowarivc|  	| Dragon Warrior IV (USA) - Castellano v1.0		| nes_dragowariv| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_dragowariv|  	| Dragon Warrior IV (USA)				| 		| 1992	| Enix		| Miscellaneous	| 					|
 | dw2001	|  	| Dragon World 2001 (V100, Japan)			| 		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
-| drgw3105	| D	| Dragon World 3 (V105)					| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
+| drgw3105	|  	| Dragon World 3 (V105)					| drgw3		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw3		|  	| Dragon World 3 (V106, China)				| 		| 1998	| IGS		| PolyGameMaster| 					|
 | dwex		|  	| Dragon World 3 EX (V100, World)			| 		| 1998	| IGS		| PolyGameMaster| 					|
 | dwex101cn	|  	| Dragon World 3 EX (V101, China)			| dwex		| 1998	| IGS		| PolyGameMaster| 					|
 | drgw2100hk	|  	| Dragon World II (V100, Hong Kong)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2100x	|  	| Dragon World II (V100X, World)			| drgw2		| 1997	| IGS		| PolyGameMaster| 					|
 | drgw2		|  	| Dragon World II (V110X, World)			| 		| 1997	| IGS		| PolyGameMaster| 					|
-| dwpc101	|  	| Dragon World Pretty Chance (V101, Japan)		| dwpc		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
+| dwpc101j	|  	| Dragon World Pretty Chance (V101, Japan)		| dwpc		| 2001	| IGS (Alta Co.,| PolyGameMaster| Bad sound?				|
 | dwpc		|  	| Dragon World Pretty Chance (V110, China)		| 		| 2001	| IGS		| PolyGameMaster| Bad sound?				|
 | tg_dragcrse	|  	| Dragon's Curse					| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | md_shangh3	|  	| Dragon's Eye Plus - Shanghai III (Jpn)		| 		| 1991	| Home Data	| Sega Megadrive| 					|
@@ -12309,6 +12311,7 @@ This list contains all games supported by FinalBurn Neo.
 | spctrek	|  	| Space Trek (Video Game S.A., Spanish bootleg of Scramb| scramble	| 1981	| bootleg (Video| Galaxian	| 					|
 | msx_spacetrb	|  	| Space Trouble (Jpn)					| 		| 1984	| HAL Kenkyuujo	| MSX		| 					|
 | msx_spacewlk	|  	| Space Walk (Euro)					| 		| 1985	| Mastertronic	| MSX		| 					|
+| nes_spacegulls|  	| Spacegulls (HB)					| 		| 2021	| miau		| Miscellaneous	| 					|
 | sparkman	|  	| Spark Man (v2.0, set 1)				| 		| 1989	| SunA		| Miscellaneous	| 					|
 | msx_sparkie	|  	| Sparkie (Jpn)						| 		| 1983	| Sony		| MSX		| 					|
 | md_sparkstr	|  	| Sparkster (Euro)					| 		| 1994	| Konami	| Sega Megadrive| 					|
@@ -15520,6 +15523,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_wardners	|  	| Wardner (Hack, Spanish)				| md_wardner	| 2018	| Mentrix Softwa| Sega Megadrive| 					|
 | md_wardner	|  	| Wardner (USA)						| 		| 1991	| Mentrix Softwa| Sega Megadrive| 					|
 | wardner	|  	| Wardner (World)					| 		| 1987	| Toaplan / Tait| Miscellaneous	| 					|
+| wardnerb	|  	| Wardner (World, bootleg)				| wardner	| 1987	| bootleg	| Miscellaneous	| 					|
 | fds_wardnernomori|  	| Wardner no Mori (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | wardnerj	|  	| Wardner no Mori (Japan)				| wardner	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | md_wardnerj	|  	| Wardner no Mori Special (Jpn)				| md_wardner	| 1991	| Visco		| Sega Megadrive| 					|
@@ -15671,6 +15675,7 @@ This list contains all games supported by FinalBurn Neo.
 | wiping	|  	| Wiping						| 		| 1982	| Nichibutsu	| Miscellaneous	| 					|
 | nes_wits	|  	| Wit's (Japan)						| 		| 1990	| Athena	| Miscellaneous	| 					|
 | wits		|  	| Wit's (Japan)						| 		| 1989	| Athena (Visco | Seta		| 					|
+| nes_witchnwiz	|  	| Witch n' Wiz (HB)					| 		| 2021	| Matt Hughson	| Miscellaneous	| 					|
 | msx_witches	|  	| Witches (HB)						| 		| 2019	| Cobinee	| MSX		| 					|
 | wivernwg	|  	| Wivern Wings						| 		| 2001	| SemiCom	| Miscellaneous	| 					|
 | wizt		|  	| Wiz (Taito, set 1)					| wiz		| 1985	| [Seibu] (Taito| Miscellaneous	| 					|
@@ -15696,6 +15701,7 @@ This list contains all games supported by FinalBurn Neo.
 | wizzquiza	|   NW	| Wizz Quiz (version 4)					| wizzquiz	| 1985	| Zilec-Zenitone| Miscellaneous	| 					|
 | nes_wxniao	|  	| Wo Xiang Niao Niao (HB)				| 		| 2016	| Xin Xin	| Miscellaneous	| 					|
 | wolffang	|  	| Wolf Fang -Kuhga 2001- (Japan)			| rohga		| 1991	| Data East Corp| DECO IC16	| 					|
+| nes_wolfspirit|  	| Wolf Spirit (HB)					| 		| 2021	| Valdir Salguei| Miscellaneous	| 					|
 | gg_wolfchld	|  	| Wolfchild (Euro)					| 		| 1993	| Virgin Interac| Sega Game Gear| 					|
 | sms_wolfchld	|  	| Wolfchild (Euro, Bra)					| 		| 1993	| Virgin Interac| Sega Master Sy| 					|
 | md_wolfchlds	|  	| Wolfchild (Hack,Spanish)				| md_wolfchld	| 2018	| Published	| Sega Megadrive| 					|

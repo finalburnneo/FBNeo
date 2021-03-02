@@ -684,6 +684,7 @@ DRV		BurnDrvRygarj;
 DRV		BurnDrvArgus;
 DRV		BurnDrvArian;
 DRV		BurnDrvArkarea;
+DRV		BurnDrvnes_arkaderush;
 DRV		BurnDrvmd_arkagisr;
 DRV		BurnSpecarkanoid;
 DRV		BurnDrvarkgcbl;
@@ -1489,6 +1490,7 @@ DRV		BurnDrvBlzntrnd;
 DRV		BurnSpecblinkys;
 DRV		BurnSpecBlizzardsrift;
 DRV		BurnDrvnes_blobman;
+DRV		BurnDrvnes_blobquest;
 DRV		BurnSpecBlobthecop;
 DRV		BurnDrvarkblock;
 DRV		BurnDrvarkbloc2;
@@ -3826,16 +3828,14 @@ DRV		BurnDrvnes_dragowariii;
 DRV		BurnDrvnes_dragowarivc;
 DRV		BurnDrvnes_dragowariv;
 DRV		BurnDrvDw2001;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvDrgw3105;		// no comment
-#endif
+DRV		BurnDrvDrgw3105;
 DRV		BurnDrvDrgw3;
 DRV		BurnDrvDwex;
 DRV		BurnDrvDwex101cn;
 DRV		BurnDrvDrgw2100hk;
 DRV		BurnDrvDrgw2100x;
 DRV		BurnDrvDrgw2;
-DRV		BurnDrvdwpc101;
+DRV		BurnDrvdwpc101j;
 DRV		BurnDrvdwpc;
 DRV		BurnDrvtg_dragcrse;
 DRV		BurnDrvmd_shangh3;
@@ -12489,6 +12489,7 @@ DRV		BurnDrvSpacetrk;		// No sound
 DRV		BurnDrvSpctrek;
 DRV		BurnDrvMSX_spacetrb;
 DRV		BurnDrvMSX_spacewlk;
+DRV		BurnDrvnes_spacegulls;
 DRV		BurnDrvSparkman;
 DRV		BurnDrvMSX_sparkie;
 DRV		BurnDrvmd_sparkstr;
@@ -15746,6 +15747,7 @@ DRV		BurnDrvWarzard;
 DRV		BurnDrvmd_wardners;
 DRV		BurnDrvmd_wardner;
 DRV		BurnDrvWardner;
+DRV		BurnDrvWardnerb;
 DRV		BurnDrvfds_wardnernomori;
 DRV		BurnDrvWardnerj;
 DRV		BurnDrvmd_wardnerj;
@@ -15903,6 +15905,7 @@ DRV		BurnDrvmd_winx3d;
 DRV		BurnDrvWiping;
 DRV		BurnDrvnes_wits;
 DRV		BurnDrvWits;
+DRV		BurnDrvnes_witchnwiz;
 DRV		BurnDrvMSX_witches;
 DRV		BurnDrvWivernwg;
 DRV		BurnDrvWizt;
@@ -15928,6 +15931,7 @@ DRV		BurnDrvWizzquiz;
 DRV		BurnDrvWizzquiza;
 DRV		BurnDrvnes_wxniao;
 DRV		BurnDrvWolffang;
+DRV		BurnDrvnes_wolfspirit;
 DRV		BurnDrvgg_wolfchld;
 DRV		BurnDrvsms_wolfchld;
 DRV		BurnDrvmd_wolfchlds;
@@ -17305,6 +17309,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArgus,				// Argus
 	&BurnDrvArian,				// Arian Mission
 	&BurnDrvArkarea,			// Ark Area
+	&BurnDrvnes_arkaderush,		// Arkade Rush (HB)
 	&BurnDrvmd_arkagisr,		// Arkagis Revolution (HB)
 	&BurnSpecarkanoid,			// Arkanoid (48K)
 	&BurnDrvarkgcbl,			// Arkanoid (bootleg on Block hardware)
@@ -18110,6 +18115,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecblinkys,			// Blinky's Scary School (48K)
 	&BurnSpecBlizzardsrift,		// Blizzard's Rift (HB)
 	&BurnDrvnes_blobman,		// Blob Man (Unl)
+	&BurnDrvnes_blobquest,		// Blob Quest (HB)
 	&BurnSpecBlobthecop,		// Blob the Cop
 	&BurnDrvarkblock,			// Block (Game Corporation bootleg, set 1)
 	&BurnDrvarkbloc2,			// Block (Game Corporation bootleg, set 2)
@@ -19870,9 +19876,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_demomanp,		// Demolition Man (USA, Prototype) [no comment, NOT WORKING]
 	&BurnDrvMSX_demoncrystl,	// Demon Crystal, The
 	&BurnDrvnes_demondistrict,	// Demon District (HB)
-	&BurnDrvdmnfrnta,			// Demon Front (VM102XX, S101XX)
-	&BurnDrvdmnfrnt103,			// Demon Front (VM103XX, S103XX)
-	&BurnDrvDmnfrnt,			// Demon Front (VM105XX, S105XX)
+	&BurnDrvdmnfrnta,			// Demon Front (M102XX, S101XX)
+	&BurnDrvdmnfrnt103,			// Demon Front (M103XX, S103XX)
+	&BurnDrvDmnfrnt,			// Demon Front (M105XX, S105XX)
 	&BurnDrvDmnfrntpcba,		// Demon Front (VM105XX, S105XX, China, Single PCB Version)
 	&BurnDrvDmnfrntpcb,			// Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)
 	&BurnDrvnes_demonsword,		// Demon Sword (USA)
@@ -20447,16 +20453,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_dragowarivc,	// Dragon Warrior IV (USA) - Castellano v1.0
 	&BurnDrvnes_dragowariv,		// Dragon Warrior IV (USA)
 	&BurnDrvDw2001,				// Dragon World 2001 (V100, Japan)
-#if defined FBNEO_DEBUG
-	&BurnDrvDrgw3105,			// Dragon World 3 (V105) [no comment]
-#endif
+	&BurnDrvDrgw3105,			// Dragon World 3 (V105)
 	&BurnDrvDrgw3,				// Dragon World 3 (V106, China)
 	&BurnDrvDwex,				// Dragon World 3 EX (V100, World)
 	&BurnDrvDwex101cn,			// Dragon World 3 EX (V101, China)
 	&BurnDrvDrgw2100hk,			// Dragon World II (V100, Hong Kong)
 	&BurnDrvDrgw2100x,			// Dragon World II (V100X, World)
 	&BurnDrvDrgw2,				// Dragon World II (V110X, World)
-	&BurnDrvdwpc101,			// Dragon World Pretty Chance (V101, Japan)
+	&BurnDrvdwpc101j,			// Dragon World Pretty Chance (V101, Japan)
 	&BurnDrvdwpc,				// Dragon World Pretty Chance (V110, China)
 	&BurnDrvtg_dragcrse,		// Dragon's Curse
 	&BurnDrvmd_shangh3,			// Dragon's Eye Plus - Shanghai III (Jpn)
@@ -29110,6 +29114,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpctrek,			// Space Trek (Video Game S.A., Spanish bootleg of Scramble)
 	&BurnDrvMSX_spacetrb,		// Space Trouble (Jpn)
 	&BurnDrvMSX_spacewlk,		// Space Walk (Euro)
+	&BurnDrvnes_spacegulls,		// Spacegulls (HB)
 	&BurnDrvSparkman,			// Spark Man (v2.0, set 1)
 	&BurnDrvMSX_sparkie,		// Sparkie (Jpn)
 	&BurnDrvmd_sparkstr,		// Sparkster (Euro)
@@ -32367,6 +32372,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wardners,		// Wardner (Hack, Spanish)
 	&BurnDrvmd_wardner,			// Wardner (USA)
 	&BurnDrvWardner,			// Wardner (World)
+	&BurnDrvWardnerb,			// Wardner (World, bootleg)
 	&BurnDrvfds_wardnernomori,	// Wardner no Mori (Japan)
 	&BurnDrvWardnerj,			// Wardner no Mori (Japan)
 	&BurnDrvmd_wardnerj,		// Wardner no Mori Special (Jpn)
@@ -32524,6 +32530,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWiping,				// Wiping
 	&BurnDrvnes_wits,			// Wit's (Japan)
 	&BurnDrvWits,				// Wit's (Japan)
+	&BurnDrvnes_witchnwiz,		// Witch n' Wiz (HB)
 	&BurnDrvMSX_witches,		// Witches (HB)
 	&BurnDrvWivernwg,			// Wivern Wings
 	&BurnDrvWizt,				// Wiz (Taito, set 1)
@@ -32549,6 +32556,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWizzquiza,			// Wizz Quiz (version 4) [no comment, NOT WORKING]
 	&BurnDrvnes_wxniao,			// Wo Xiang Niao Niao (HB)
 	&BurnDrvWolffang,			// Wolf Fang -Kuhga 2001- (Japan)
+	&BurnDrvnes_wolfspirit,		// Wolf Spirit (HB)
 	&BurnDrvgg_wolfchld,		// Wolfchild (Euro)
 	&BurnDrvsms_wolfchld,		// Wolfchild (Euro, Bra)
 	&BurnDrvmd_wolfchlds,		// Wolfchild (Hack,Spanish)

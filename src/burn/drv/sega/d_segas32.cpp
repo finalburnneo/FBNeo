@@ -4378,16 +4378,16 @@ static INT32 DrvFrame()
 
 			if (system32_prot_vblank)
 				system32_prot_vblank();
-
-			if (pBurnDraw) {
-				BurnDrvRedraw();
-			}
 		}
 
 		if (i == 261) {
 			signal_v60_irq(MAIN_IRQ_VBSTOP);
 			update_sprites();
 		}
+	}
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[2]);

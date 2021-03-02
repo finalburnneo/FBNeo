@@ -17437,7 +17437,7 @@ struct BurnDriver BurnDrvnes_arkaderush = {
 	"nes_arkaderush", NULL, NULL, NULL, "2021",
 	"Arkade Rush (HB)\0", NULL, "Nathan Tolbert", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_arkaderushRomInfo, nes_arkaderushRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17454,8 +17454,25 @@ struct BurnDriver BurnDrvnes_blobquest = {
 	"nes_blobquest", NULL, NULL, NULL, "2021",
 	"Blob Quest (HB)\0", NULL, "Tom Livak", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_blobquestRomInfo, nes_blobquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spacegullsRomDesc[] = {
+	{ "Spacegulls (HB)(2021)(Miau).nes",          65552, 0x35fdd434, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spacegulls)
+STD_ROM_FN(nes_spacegulls)
+
+struct BurnDriver BurnDrvnes_spacegulls = {
+	"nes_spacegulls", NULL, NULL, NULL, "2021",
+	"Spacegulls (HB)\0", NULL, "miau", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_spacegullsRomInfo, nes_spacegullsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -17471,7 +17488,7 @@ struct BurnDriver BurnDrvnes_witchnwiz = {
 	"nes_witchnwiz", NULL, NULL, NULL, "2021",
 	"Witch n' Wiz (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_witchnwizRomInfo, nes_witchnwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17488,7 +17505,7 @@ struct BurnDriver BurnDrvnes_wolfspirit = {
 	"nes_wolfspirit", NULL, NULL, NULL, "2021",
 	"Wolf Spirit (HB)\0", NULL, "Valdir Salgueiro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_wolfspiritRomInfo, nes_wolfspiritRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17505,7 +17522,7 @@ struct BurnDriver BurnDrvnes_tapewpuzdis = {
 	"nes_tapewpuzdis", NULL, NULL, NULL, "2020",
 	"Tapeworm Puzzle Disco (HB)(Demo 8)\0", NULL, "LowtekGames", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_tapewpuzdisRomInfo, nes_tapewpuzdisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17522,7 +17539,7 @@ struct BurnDriver BurnDrvnes_whatremains = {
 	"nes_whatremains", NULL, NULL, NULL, "2019",
 	"What Remains (HB)\0", NULL, "Iodine Dynamics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_whatremainsRomInfo, nes_whatremainsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

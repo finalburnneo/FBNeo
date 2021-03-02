@@ -8,6 +8,7 @@ extern char videofiltering[3];
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, decocass, midssio, cchip, fdsbios, ngp, bubsys)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
 #define REDUCE_TOTAL_SETS_BIOS		16
+#define MAX_STRING_SIZE 300
 // Limit CPU usage
 #define maxfps 20
 static Uint32 starting_stick;
@@ -15,7 +16,7 @@ static Uint32 starting_stick;
 static SDL_Renderer* sdlRenderer = NULL;
 
 static SDL_Texture* titleTexture = NULL;
-static SDL_Surface *miscImage=NULL;
+
 
 static int nVidGuiWidth = 1024;
 static int nVidGuiHeight = 600;
@@ -41,8 +42,8 @@ static char* gameAv = NULL;
 static unsigned int *filterGames = NULL;
 static int filterGamesCount = 0;
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
-static char systemName[MAX_PATH] = { 0 };
-static char genre[MAX_PATH] = { 0 };
+static char systemName[MAX_STRING_SIZE] = { 0 };
+static char genre[MAX_STRING_SIZE] = { 0 };
 static char searchLetters[27] = {'1','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 static UINT8 currentLetterCount = 0;
 
@@ -60,13 +61,6 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	snprintf(titlePath, MAX_PATH, "support\\titles\\%s.png", BurnDrvGetTextA(0));
 #endif
 	loadedTexture = IMG_LoadTexture(renderer, titlePath);
-	if (loadedTexture == NULL)
-	{
-		//miscImage = IMG_ReadXPMFromArray(misc_image);
-		//titleTexture = SDL_CreateTextureFromSurface(sdlRenderer, miscImage);
-		//SDL_FreeSurface(miscImage);
-	}
-	
 	SDL_QueryTexture(loadedTexture, NULL, NULL, &w, &h);
 
 	title_texture_rect.x = 0; //the x coordinate
@@ -74,10 +68,12 @@ SDL_Texture* LoadTitleImage(SDL_Renderer* renderer, SDL_Texture* loadedTexture)
 	title_texture_rect.w = w; //the width of the texture
 	title_texture_rect.h = h; //the height of the texture
 
-	dest_title_texture_rect.x = 0; //the x coordinate
-	dest_title_texture_rect.y = 0; // the y coordinate
-	dest_title_texture_rect.w = nVidGuiWidth;
+
+	dest_title_texture_rect.w = nVidGuiHeight * 1.33;
 	dest_title_texture_rect.h = nVidGuiHeight;
+
+	dest_title_texture_rect.x = (nVidGuiWidth - dest_title_texture_rect.w);   //the x coordinate
+	dest_title_texture_rect.y = 0; // the y coordinate
 
 	nBurnDrvActive = currentSelected;
 	return loadedTexture;
@@ -290,7 +286,7 @@ static void DoFilterGames()
 
 	filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
 	filterGamesCount = 0;
-	
+
 	if (bShowAvailableOnly)
 	{
 		for(UINT32 i = 0; i < nBurnDrvCount; i++)
@@ -367,97 +363,97 @@ static void SystemToCheck()
 	switch(nSystemToCheckMask)
 	{
 		case HARDWARE_PREFIX_CAPCOM:
-			snprintf(systemName, MAX_PATH, "CAPCOM CPS1/2/3");
+			snprintf(systemName, MAX_STRING_SIZE, "CAPCOM CPS1/2/3");
 			break;
 		case HARDWARE_MISC_PRE90S:
-			snprintf(systemName, MAX_PATH, "Pre 1990s");
+			snprintf(systemName, MAX_STRING_SIZE, "Pre 1990s");
 			break;
 		case HARDWARE_MISC_POST90S:
-			snprintf(systemName, MAX_PATH, "Post 1990s");
+			snprintf(systemName, MAX_STRING_SIZE, "Post 1990s");
 			break;
 		case HARDWARE_PREFIX_MIDWAY:
-			snprintf(systemName, MAX_PATH, "Midway");
+			snprintf(systemName, MAX_STRING_SIZE, "Midway");
 			break;
 		case HARDWARE_PREFIX_SEGA:
-			snprintf(systemName, MAX_PATH, "SEGA");
+			snprintf(systemName, MAX_STRING_SIZE, "SEGA");
 			break;
 		case HARDWARE_PREFIX_KONAMI:
-			snprintf(systemName, MAX_PATH, "Konami");
+			snprintf(systemName, MAX_STRING_SIZE, "Konami");
 			break;
 		case HARDWARE_PREFIX_TOAPLAN:
-			snprintf(systemName, MAX_PATH, "Toaplan");
+			snprintf(systemName, MAX_STRING_SIZE, "Toaplan");
 			break;
 		case HARDWARE_SNK_NEOGEO:
-			snprintf(systemName, MAX_PATH, "SNK NeoGeo");
+			snprintf(systemName, MAX_STRING_SIZE, "SNK NeoGeo");
 			break;
 		case HARDWARE_PREFIX_NGP:
-			snprintf(systemName, MAX_PATH, "SNK NeoGeo Pocket");
-			break;			
+			snprintf(systemName, MAX_STRING_SIZE, "SNK NeoGeo Pocket");
+			break;
 		case HARDWARE_PREFIX_CAVE:
-			snprintf(systemName, MAX_PATH, "CAVE");
+			snprintf(systemName, MAX_STRING_SIZE, "CAVE");
 			break;
 		case HARDWARE_PREFIX_IGS_PGM:
-			snprintf(systemName, MAX_PATH, "IGS PGM");
+			snprintf(systemName, MAX_STRING_SIZE, "IGS PGM");
 			break;
 		case HARDWARE_PREFIX_TAITO:
-			snprintf(systemName, MAX_PATH, "Taito");
+			snprintf(systemName, MAX_STRING_SIZE, "Taito");
 			break;
 		case HARDWARE_PREFIX_PSIKYO:
-			snprintf(systemName, MAX_PATH, "Psikyo");
+			snprintf(systemName, MAX_STRING_SIZE, "Psikyo");
 			break;
 		case HARDWARE_PREFIX_KANEKO:
-			snprintf(systemName, MAX_PATH, "Kaneko");
+			snprintf(systemName, MAX_STRING_SIZE, "Kaneko");
 			break;
 		case HARDWARE_PREFIX_IREM:
-			snprintf(systemName, MAX_PATH, "IREM");
+			snprintf(systemName, MAX_STRING_SIZE, "IREM");
 			break;
 		case HARDWARE_PREFIX_DATAEAST:
-			snprintf(systemName, MAX_PATH, "Data East");
+			snprintf(systemName, MAX_STRING_SIZE, "Data East");
 			break;
 		case HARDWARE_PREFIX_SETA:
-			snprintf(systemName, MAX_PATH, "Seta");
+			snprintf(systemName, MAX_STRING_SIZE, "Seta");
 			break;
 		case HARDWARE_PREFIX_TECHNOS:
-			snprintf(systemName, MAX_PATH, "Technos");
+			snprintf(systemName, MAX_STRING_SIZE, "Technos");
 			break;
 		case HARDWARE_SEGA_MEGADRIVE:
-			snprintf(systemName, MAX_PATH, "Sega Megadrive / Genesis");
+			snprintf(systemName, MAX_STRING_SIZE, "Sega Megadrive / Genesis");
 			break;
 		case HARDWARE_PCENGINE_PCENGINE:
-			snprintf(systemName, MAX_PATH, "NEC PC Engine");
+			snprintf(systemName, MAX_STRING_SIZE, "NEC PC Engine");
 			break;
 		case HARDWARE_PCENGINE_TG16:
-			snprintf(systemName, MAX_PATH, "NEC Turbographx 16");
+			snprintf(systemName, MAX_STRING_SIZE, "NEC Turbographx 16");
 			break;
 		case HARDWARE_PCENGINE_SGX:
-			snprintf(systemName, MAX_PATH, "NEC SGX");
+			snprintf(systemName, MAX_STRING_SIZE, "NEC SGX");
 			break;
 		case HARDWARE_SEGA_SG1000:
-			snprintf(systemName, MAX_PATH, "Sega SG-1000");
+			snprintf(systemName, MAX_STRING_SIZE, "Sega SG-1000");
 			break;
 		case HARDWARE_COLECO:
-			snprintf(systemName, MAX_PATH, "ColecoVision");
+			snprintf(systemName, MAX_STRING_SIZE, "ColecoVision");
 			break;
 		case HARDWARE_SEGA_MASTER_SYSTEM:
-			snprintf(systemName, MAX_PATH, "Sega Master System");
+			snprintf(systemName, MAX_STRING_SIZE, "Sega Master System");
 			break;
 		case HARDWARE_SEGA_GAME_GEAR:
-			snprintf(systemName, MAX_PATH, "Sega Game Gear");
+			snprintf(systemName, MAX_STRING_SIZE, "Sega Game Gear");
 			break;
 		case HARDWARE_MSX:
-			snprintf(systemName, MAX_PATH, "MSX");
+			snprintf(systemName, MAX_STRING_SIZE, "MSX");
 			break;
 		case HARDWARE_SPECTRUM:
-			snprintf(systemName, MAX_PATH, "Sinclar Spectrum");
+			snprintf(systemName, MAX_STRING_SIZE, "Sinclar Spectrum");
 			break;
 		case HARDWARE_NES:
-			snprintf(systemName, MAX_PATH, "Nintendo Entertainment System / Famicom");
+			snprintf(systemName, MAX_STRING_SIZE, "Nintendo Entertainment System / Famicom");
 			break;
 		case HARDWARE_FDS:
-			snprintf(systemName, MAX_PATH, "Nintendo Famicom Disk System");
+			snprintf(systemName, MAX_STRING_SIZE, "Nintendo Famicom Disk System");
 			break;
 		default:
-			snprintf(systemName, MAX_PATH, "Everything");
+			snprintf(systemName, MAX_STRING_SIZE, "Everything");
 			break;
 	}
 }
@@ -474,7 +470,7 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_PREFIX_CAVE;
 			break;
 		case HARDWARE_PREFIX_CAVE:
-			nSystemToCheckMask = HARDWARE_MISC_PRE90S;	
+			nSystemToCheckMask = HARDWARE_MISC_PRE90S;
 			break;
 		case HARDWARE_MISC_PRE90S:
 			nSystemToCheckMask = HARDWARE_MISC_POST90S;
@@ -499,7 +495,7 @@ static void SwapSystemToCheck()
 			break;
 		case HARDWARE_PREFIX_NGP:
 			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
-			break;			
+			break;
 		case HARDWARE_PREFIX_IGS_PGM:
 			nSystemToCheckMask = HARDWARE_PREFIX_TAITO;
 			break;
@@ -746,7 +742,7 @@ void RefreshRomList(bool force_rescan)
 		return;
 	}
 
-	for (INT32 i = 0; i < nBurnDrvCount; i++)
+	for (UINT32 i = 0; i < nBurnDrvCount; i++)
 	{
 		nBurnDrvActive = i;
 		switch (BzipOpen(true))
@@ -781,13 +777,13 @@ void RefreshRomList(bool force_rescan)
 
 			inprint(sdlRenderer, "Scanning for ROM:", 10, 40);
 			inprint(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), 10, 50);
-			
+
 			incolor(unavailable_color, /* unused */ 0);
-			char newLine[MAX_PATH];
-			snprintf(newLine, MAX_PATH, "%d%", (int)(x));
+			char newLine[MAX_STRING_SIZE];
+			snprintf(newLine, MAX_STRING_SIZE, "%d", (int)(x));
 			inprint(sdlRenderer, newLine, (int)((x * screenpercentage) - 30), 110);
 			// TODO : Progress %
-			
+
 			SDL_RenderPresent(sdlRenderer);
 			SDL_PollEvent(&e); // poll some events so OS doesn't think it's crashed
 		}
@@ -821,7 +817,7 @@ void gui_exit()
 
 void gui_init()
 {
-	
+
 	gameAv = (char*)malloc(nBurnDrvCount);
 	memset(gameAv, 0, nBurnDrvCount);
 
@@ -830,7 +826,7 @@ void gui_init()
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
 		return;
 	}
-	
+
 	if( SDL_NumJoysticks() < 1 )
 	{
 		printf( "Warning: No joysticks connected!\n" );
@@ -889,7 +885,7 @@ void gui_init()
 	if (sdlRenderer == NULL)
 	{
 		// failed back to SOFTWARE renderer
-		sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_SOFTWARE);	
+		sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_SOFTWARE);
 		if (sdlRenderer == NULL)
 		{
 			// In the case that the window could not be made...
@@ -915,12 +911,12 @@ void gui_init()
 	//gamesperscreen = (thirdscreenheight * 2) / 11;
 	gamesperscreen = (nVidGuiHeight-55) / 11;
 	gamesperscreen_halfway = gamesperscreen / 2;
-	
-	listoffsetY = thirdscreenwidth / 2;
+
+	listoffsetY = 0;
 	listwidthY = thirdscreenwidth * 2;
 
 	RefreshRomList(false);
-	
+
 	nSystemToCheckMask = nFilterSelect;
 	nBurnDrvActive = nGameSelect;
 
@@ -935,42 +931,42 @@ void gui_init()
 	{
 		startGame = nBurnDrvActive - gamesperscreen_halfway;
 	}
-	
+
 	DoFilterGames();
 }
 
 void getGenre()
 {
-	if (BurnDrvGetGenreFlags() & GBF_HORSHOOT)			snprintf(genre, MAX_PATH, "Shooter / Horizontal / Sh'mup");
-	if (BurnDrvGetGenreFlags() & GBF_VERSHOOT)			snprintf(genre, MAX_PATH, "Shooter / Vertical / Sh'mup");
-	if (BurnDrvGetGenreFlags() & GBF_SCRFIGHT)			snprintf(genre, MAX_PATH, "Fighting / Beat 'em Up");
-	if (BurnDrvGetGenreFlags() & GBF_VSFIGHT)			snprintf(genre, MAX_PATH, "Fighting / Versus");
-	if (BurnDrvGetGenreFlags() & GBF_BIOS)				snprintf(genre, MAX_PATH, "BIOS");
-	if (BurnDrvGetGenreFlags() & GBF_BREAKOUT)			snprintf(genre, MAX_PATH, "Breakout");
-	if (BurnDrvGetGenreFlags() & GBF_CASINO)			snprintf(genre, MAX_PATH, "Casino");
-	if (BurnDrvGetGenreFlags() & GBF_BALLPADDLE)		snprintf(genre, MAX_PATH, "Ball & Paddle");
-	if (BurnDrvGetGenreFlags() & GBF_MAZE)				snprintf(genre, MAX_PATH, "Maze");
-	if (BurnDrvGetGenreFlags() & GBF_MINIGAMES)			snprintf(genre, MAX_PATH, "Mini-Games");
-	if (BurnDrvGetGenreFlags() & GBF_PINBALL)			snprintf(genre, MAX_PATH, "Pinball");
-	if (BurnDrvGetGenreFlags() & GBF_PLATFORM)			snprintf(genre, MAX_PATH, "Platformer");
-	if (BurnDrvGetGenreFlags() & GBF_PUZZLE)			snprintf(genre, MAX_PATH, "Puzzle");
-	if (BurnDrvGetGenreFlags() & GBF_QUIZ)				snprintf(genre, MAX_PATH, "Quiz");
-	if (BurnDrvGetGenreFlags() & GBF_SPORTSMISC)		snprintf(genre, MAX_PATH, "Sports");
-	if (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL)	snprintf(genre, MAX_PATH, "Sports / Football");
-	if (BurnDrvGetGenreFlags() & GBF_MISC)				snprintf(genre, MAX_PATH, "Misc");
-	if (BurnDrvGetGenreFlags() & GBF_MAHJONG)			snprintf(genre, MAX_PATH, "Mahjong");
-	if (BurnDrvGetGenreFlags() & GBF_RACING)			snprintf(genre, MAX_PATH, "Racing");
-	if (BurnDrvGetGenreFlags() & GBF_SHOOT)				snprintf(genre, MAX_PATH, "Shooter");
-	if (BurnDrvGetGenreFlags() & GBF_ACTION)			snprintf(genre, MAX_PATH, "Run 'n Gun (Shooter)");
-	if (BurnDrvGetGenreFlags() & GBF_RUNGUN)			snprintf(genre, MAX_PATH, "Strategy");
-	if (BurnDrvGetGenreFlags() & GBF_STRATEGY)			snprintf(genre, MAX_PATH, "Action (Classic)");
-	if (BurnDrvGetGenreFlags() & GBF_RPG)				snprintf(genre, MAX_PATH, "RPG");
-	if (BurnDrvGetGenreFlags() & GBF_SIM)				snprintf(genre, MAX_PATH, "Simulator");
+	if (BurnDrvGetGenreFlags() & GBF_HORSHOOT)			snprintf(genre, MAX_STRING_SIZE, "Shooter / Horizontal / Sh'mup");
+	if (BurnDrvGetGenreFlags() & GBF_VERSHOOT)			snprintf(genre, MAX_STRING_SIZE, "Shooter / Vertical / Sh'mup");
+	if (BurnDrvGetGenreFlags() & GBF_SCRFIGHT)			snprintf(genre, MAX_STRING_SIZE, "Fighting / Beat 'em Up");
+	if (BurnDrvGetGenreFlags() & GBF_VSFIGHT)			snprintf(genre, MAX_STRING_SIZE, "Fighting / Versus");
+	if (BurnDrvGetGenreFlags() & GBF_BIOS)				snprintf(genre, MAX_STRING_SIZE, "BIOS");
+	if (BurnDrvGetGenreFlags() & GBF_BREAKOUT)			snprintf(genre, MAX_STRING_SIZE, "Breakout");
+	if (BurnDrvGetGenreFlags() & GBF_CASINO)			snprintf(genre, MAX_STRING_SIZE, "Casino");
+	if (BurnDrvGetGenreFlags() & GBF_BALLPADDLE)		snprintf(genre, MAX_STRING_SIZE, "Ball & Paddle");
+	if (BurnDrvGetGenreFlags() & GBF_MAZE)				snprintf(genre, MAX_STRING_SIZE, "Maze");
+	if (BurnDrvGetGenreFlags() & GBF_MINIGAMES)			snprintf(genre, MAX_STRING_SIZE, "Mini-Games");
+	if (BurnDrvGetGenreFlags() & GBF_PINBALL)			snprintf(genre, MAX_STRING_SIZE, "Pinball");
+	if (BurnDrvGetGenreFlags() & GBF_PLATFORM)			snprintf(genre, MAX_STRING_SIZE, "Platformer");
+	if (BurnDrvGetGenreFlags() & GBF_PUZZLE)			snprintf(genre, MAX_STRING_SIZE, "Puzzle");
+	if (BurnDrvGetGenreFlags() & GBF_QUIZ)				snprintf(genre, MAX_STRING_SIZE, "Quiz");
+	if (BurnDrvGetGenreFlags() & GBF_SPORTSMISC)		snprintf(genre, MAX_STRING_SIZE, "Sports");
+	if (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL)	snprintf(genre, MAX_STRING_SIZE, "Sports / Football");
+	if (BurnDrvGetGenreFlags() & GBF_MISC)				snprintf(genre, MAX_STRING_SIZE, "Misc");
+	if (BurnDrvGetGenreFlags() & GBF_MAHJONG)			snprintf(genre, MAX_STRING_SIZE, "Mahjong");
+	if (BurnDrvGetGenreFlags() & GBF_RACING)			snprintf(genre, MAX_STRING_SIZE, "Racing");
+	if (BurnDrvGetGenreFlags() & GBF_SHOOT)				snprintf(genre, MAX_STRING_SIZE, "Shooter");
+	if (BurnDrvGetGenreFlags() & GBF_ACTION)			snprintf(genre, MAX_STRING_SIZE, "Run 'n Gun (Shooter)");
+	if (BurnDrvGetGenreFlags() & GBF_RUNGUN)			snprintf(genre, MAX_STRING_SIZE, "Strategy");
+	if (BurnDrvGetGenreFlags() & GBF_STRATEGY)			snprintf(genre, MAX_STRING_SIZE, "Action (Classic)");
+	if (BurnDrvGetGenreFlags() & GBF_RPG)				snprintf(genre, MAX_STRING_SIZE, "RPG");
+	if (BurnDrvGetGenreFlags() & GBF_SIM)				snprintf(genre, MAX_STRING_SIZE, "Simulator");
 }
 
 void gui_render()
 {
-	char newLine[MAX_PATH];
+	char newLine[MAX_STRING_SIZE];
 
 	SDL_SetRenderDrawColor(sdlRenderer, 0x1a, 0x1e, 0x1d, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(sdlRenderer);
@@ -978,25 +974,25 @@ void gui_render()
 	{
 		SDL_RenderCopy(sdlRenderer, titleTexture, &title_texture_rect, &dest_title_texture_rect);
 	}
-	
+
 	// header
 	renderPanel(sdlRenderer, 0,  0, nVidGuiWidth, 28,  0x00, 0x00, 0x00);
 
 	// Game List
 //	renderPanel(sdlRenderer, listoffsetY, 28, listwidthY, (thirdscreenheight*2)-28,  0x40, 0x20, 0x0b);
-	renderPanel(sdlRenderer, listoffsetY, 28, listwidthY, nVidGuiHeight-28-65,  0x40, 0x20, 0x0b);
+	renderPanel(sdlRenderer, listoffsetY, 28, listwidthY, nVidGuiHeight-28-65,  0x20, 0x10, 0x00);
 
-	
+
 	// Selected game background
 	renderPanel(sdlRenderer, 0,  28 + (gamesperscreen_halfway * 10), nVidGuiWidth, 12,  0x41, 0x1d, 0x62);
-	
+
 	// game info
 	renderPanel(sdlRenderer,  0, nVidGuiHeight - 65, nVidGuiWidth, nVidGuiHeight,  0x41, 0x1d, 0xf2);
 
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FinalBurn Neo  ** F1 - Rescan / F2 - Filter Missing / F3 - System Filter / F4 - Filter Clones / F5 - Reset / F12 - Quit **", 10, 5);
 	if (strlen(systemName) != 0) {
-		snprintf(newLine, MAX_PATH, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount + 1 - REDUCE_TOTAL_SETS_BIOS));
+		snprintf(newLine, MAX_STRING_SIZE, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount + 1 - REDUCE_TOTAL_SETS_BIOS));
 		inprint(sdlRenderer, newLine, 10, 15);
 	}
 	incolor(normal_color, /* unused */ 0);
@@ -1007,45 +1003,45 @@ void gui_render()
 			nBurnDrvActive = filterGames[i];
 			if (game_counter == gamesperscreen_halfway)
 			{
-				
+
 				calcSelectedItemColor();
 				//incolor(select_color, /* unused */ 0);
-	
+
 				inprint_shadowed(sdlRenderer, BurnDrvGetTextA(DRV_FULLNAME), listoffsetY, 30 + (gamesperscreen_halfway * 10));
 				gametoplay = filterGames[i];
 				gameSelectedFromFilter = i;
 
 				incolor(info_color, /* unused */ 0);
-								
-				snprintf(newLine, MAX_PATH, "Game: %s",  BurnDrvGetTextA(DRV_FULLNAME));
+
+				snprintf(newLine, MAX_STRING_SIZE, "Game: %s",  BurnDrvGetTextA(DRV_FULLNAME));
 				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 60);
-				
-				if (!BurnDrvGetTextA(DRV_PARENT)) { 
-					snprintf(newLine, MAX_PATH, "Rom: %s", BurnDrvGetTextA(DRV_NAME));	
+
+				if (!BurnDrvGetTextA(DRV_PARENT)) {
+					snprintf(newLine, MAX_STRING_SIZE, "Rom: %s", BurnDrvGetTextA(DRV_NAME));
 				}else{
-					snprintf(newLine, MAX_PATH, "Rom: %s (Clone: %s)", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
+					snprintf(newLine, MAX_STRING_SIZE, "Rom: %s (Clone: %s)", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT));
 				}
 				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 50);
-				
+
 				if (BurnDrvGetMaxPlayers() == 1) {
-					snprintf(newLine, MAX_PATH, "Info: 1 Player");
+					snprintf(newLine, MAX_STRING_SIZE, "Info: 1 Player");
 				}else{
-					snprintf(newLine, MAX_PATH, "Info: %d Players Max", BurnDrvGetMaxPlayers());
+					snprintf(newLine, MAX_STRING_SIZE, "Info: %d Players Max", BurnDrvGetMaxPlayers());
 				}
 				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 40);
 
-				snprintf(newLine, MAX_PATH, "Release: %s (%s, %s Hardware)", BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_SYSTEM));
+				snprintf(newLine, MAX_STRING_SIZE, "Release: %s (%s, %s Hardware)", BurnDrvGetTextA(DRV_MANUFACTURER), BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_SYSTEM));
 				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 30);
-				
+
 				getGenre();
-				snprintf(newLine, MAX_PATH, "Genre: %s", genre);
+				snprintf(newLine, MAX_STRING_SIZE, "Genre: %s", genre);
 				inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 20);
-				
+
 				if (BurnDrvGetTextA(DRV_COMMENT)) {
-					snprintf(newLine, MAX_PATH, "Note: %s", BurnDrvGetTextA(DRV_COMMENT));
+					snprintf(newLine, MAX_STRING_SIZE, "Note: %s", BurnDrvGetTextA(DRV_COMMENT));
 					inprint_shadowed(sdlRenderer, newLine, listoffsetY, nVidGuiHeight - 10);
 				}
-				
+
 			}
 			else
 			{
@@ -1073,13 +1069,13 @@ int gui_process()
 {
 	SDL_Event e;
 	bool quit = false;
-	
-	static UINT32 previousSelected = -1;
-		
+
+	static UINT32 previousSelected = 0;
+
 	while (!quit)
 	{
 		starting_stick = SDL_GetTicks();
-		
+
 		//TODO: probably move this down inside the while (SDL_pollevent) bit...
 		SDL_GameControllerUpdate();
 		if (SDL_GameControllerGetAxis(gGameController, SDL_CONTROLLER_AXIS_LEFTY)<= -JOYSTICK_DEAD_ZONE)
@@ -1092,7 +1088,7 @@ int gui_process()
 		}
 		if (SDL_GameControllerGetButton(gGameController, SDL_CONTROLLER_BUTTON_A))
 		{
-			previousSelected = -1;
+			previousSelected = 0;
 			nBurnDrvActive = gametoplay;
 			if (gameAv[nBurnDrvActive])
 			{
@@ -1133,7 +1129,7 @@ int gui_process()
 				switch (e.button.button)
 				{
 				case SDL_BUTTON_LEFT:
-					previousSelected = -1;
+					previousSelected = 0;
 					nBurnDrvActive = gametoplay;
 					if (gameAv[nBurnDrvActive])
 					{
@@ -1190,14 +1186,14 @@ int gui_process()
 					break;
 				case SDLK_KP_ENTER:
 				case SDLK_RETURN:
-					if (e.key.keysym.mod & KMOD_ALT) 
+					if (e.key.keysym.mod & KMOD_ALT)
 					{
 						SetFullscreen(!GetFullscreen());
-					} 
-					else 
+					}
+					else
 					{
 						nBurnDrvActive = gametoplay;
-						previousSelected = -1;
+						previousSelected = 0;
 						if (gameAv[nBurnDrvActive])
 						{
 							return gametoplay;
@@ -1246,7 +1242,7 @@ int gui_process()
 			startGame = filterGamesCount - gamesperscreen_halfway - 1;
 		}
 
-		if (previousSelected != gametoplay || previousSelected == -1)
+		if (previousSelected != gametoplay || previousSelected == 0)
 		{
 			if (titleTexture != NULL) SDL_DestroyTexture(titleTexture);
 			titleTexture = LoadTitleImage(sdlRenderer, titleTexture);
@@ -1256,12 +1252,12 @@ int gui_process()
 		previousSelected = gametoplay;
 
 		gui_render();
-		
+
 		if ( ( 1000 / maxfps ) > SDL_GetTicks() - starting_stick) {
 			SDL_Delay( 1000 / maxfps - ( SDL_GetTicks() - starting_stick ) );
 		}
 	}
-	
+
 	// save config (game and filters selection)
 	ConfigAppSave();
 

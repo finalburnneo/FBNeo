@@ -67,6 +67,7 @@ static INT16 Analog[1];
 static INT32 analog_target;
 static INT32 analog_adder;
 static INT32 analog_clock;
+static INT32 analog_starttimer;
 
 static INT32 is_wpksocv2 = 0;
 
@@ -1106,14 +1107,19 @@ static UINT32 inputs_read()
 			analog_clock = 0;
 			if (analog_adder < analog_target) analog_adder++;
 			if (analog_adder > analog_target) analog_adder--;
+
+			if (analog_starttimer > 0) analog_starttimer--;
 		}
 
 		// Notes:
 		// Bit 0: starts "ready to kick" (mapped to Select and Start)
 		// Bit 0-7: ball impact counter
 		// Need to see a video of the machine in-use to better understand Bit 0. -dink feb24 2021
+		if (DrvJoy1[20] || DrvJoy1[21]) {
+			analog_starttimer = 250; // bit0 needs to be held for "a little bit"
+		}
 
-		return (DrvInputs[0] & ~0xf) | analog_adder | (DrvJoy1[20] || DrvJoy1[21]);
+		return (DrvInputs[0] & ~0xf) | analog_adder | ((analog_starttimer > 0) ? 1 : 0);
 	}
 
 	return DrvInputs[0];
@@ -2009,6 +2015,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(analog_target);
 		SCAN_VAR(analog_adder);
 		SCAN_VAR(analog_clock);
+		SCAN_VAR(analog_starttimer);
 	}
 
 	if (nAction & ACB_NVRAM) {

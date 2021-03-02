@@ -12978,7 +12978,7 @@ static struct BurnRomInfo Sf2mkotRomDesc[] = {
 	{ "voice.u210",        	0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	{ "moon-1.c173.u30",   	0x0040000, 0x7e36ec84, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 }, 
-	{ "moon-c.c132.u29",   	0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 },
+	{ "moon-2.c132.u29",   	0x0040000, 0x66403570, BRF_GRA | CPS1_EXTRA_TILES_SF2MKOT_400000 },
 
 	{ "u133.bin",          	0x0010000, 0x13ea1c44, BRF_OPT }, // unknown (bootleg prority?)
 	

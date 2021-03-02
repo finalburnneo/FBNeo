@@ -39,7 +39,7 @@ void renderPanel(SDL_Renderer* sdlRenderer, int x, int y, int w, int h, UINT8 r,
 {
 	SDL_Rect fillRect = { x, y, w, h };
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 180);
+	SDL_SetRenderDrawColor(sdlRenderer, r, g, b, 220);
 	SDL_RenderFillRect(sdlRenderer, &fillRect);
 	SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_NONE);
 }

@@ -1832,6 +1832,8 @@ static INT32 M62DoReset()
 	KidnikiBackgroundBank = 0;
 	SpelunkrPaletteBank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4751,7 +4753,7 @@ struct BurnDriver BurnDrvKungfum = {
 	"kungfum", NULL, NULL, NULL, "1984",
 	"Kung-Fu Master\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumRomInfo, KungfumRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4761,7 +4763,7 @@ struct BurnDriver BurnDrvKungfumd = {
 	"kungfumd", "kungfum", NULL, NULL, "1984",
 	"Kung-Fu Master (Data East)\0", NULL, "Irem (Data East License)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfumdRomInfo, KungfumdRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumdInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4771,7 +4773,7 @@ struct BurnDriver BurnDrvSpartanx = {
 	"spartanx", "kungfum", NULL, NULL, "1984",
 	"Spartan X (Japan)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, SpartanxRomInfo, SpartanxRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4781,7 +4783,7 @@ struct BurnDriver BurnDrvKungfub = {
 	"kungfub", "kungfum", NULL, NULL, "1984",
 	"Kung-Fu Master (bootleg set 1)\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, KungfubRomInfo, KungfubRomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4791,7 +4793,7 @@ struct BurnDriver BurnDrvKungfub2 = {
 	"kungfub2", "kungfum", NULL, NULL, "1984",
 	"Kung-Fu Master (bootleg set 2)\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub2RomInfo, Kungfub2RomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	KungfumInit, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4801,7 +4803,7 @@ struct BurnDriver BurnDrvKungfub3 = {
 	"kungfub3", "kungfum", NULL, NULL, "1984",
 	"Kung-Fu Master (bootleg set 3)\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, Kungfub3RomInfo, Kungfub3RomName, NULL, NULL, NULL, NULL, M62InputInfo, KungfumDIPInfo,
 	Kungfub3Init, M62Exit, M62Frame, KungfumDraw, M62Scan,
 	NULL, 0x200, 256, 246, 4, 3
@@ -4811,7 +4813,7 @@ struct BurnDriver BurnDrvBattroad = {
 	"battroad", NULL, NULL, "tr606drumkit", "1984",
 	"The Battle-Road\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
 	NULL, BattroadRomInfo, BattroadRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, BattroadDIPInfo,
 	BattroadInit, M62Exit, M62Frame, BattroadDraw, M62Scan,
 	NULL, 0x220, 256, 256, 3, 4
@@ -4821,7 +4823,7 @@ struct BurnDriver BurnDrvLdrun = {
 	"ldrun", NULL, NULL, NULL, "1984",
 	"Lode Runner (set 1)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, LdrunRomInfo, LdrunRomName, NULL, NULL, NULL, NULL, M62InputInfo, LdrunDIPInfo,
 	LdrunInit, M62Exit, M62Frame, LdrunDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4831,7 +4833,7 @@ struct BurnDriver BurnDrvLdruna = {
 	"ldruna", "ldrun", NULL, NULL, "1984",
 	"Lode Runner (set 2)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, LdrunaRomInfo, LdrunaRomName, NULL, NULL, NULL, NULL, M62InputInfo, LdrunDIPInfo,
 	LdrunInit, M62Exit, M62Frame, LdrunDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4841,7 +4843,7 @@ struct BurnDriver BurnDrvLdrun2 = {
 	"ldrun2", NULL, NULL, NULL, "1984",
 	"Lode Runner II - The Bungeling Strikes Back\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun2RomInfo, Ldrun2RomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun2DIPInfo,
 	Ldrun2Init, M62Exit, M62Frame, LdrunDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4851,7 +4853,7 @@ struct BurnDriver BurnDrvLdrun3 = {
 	"ldrun3", NULL, NULL, NULL, "1985",
 	"Lode Runner III - The Golden Labyrinth\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun3RomInfo, Ldrun3RomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun2DIPInfo,
 	Ldrun3Init, M62Exit, M62Frame, Ldrun3Draw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4861,7 +4863,7 @@ struct BurnDriver BurnDrvLdrun3j = {
 	"ldrun3j", "ldrun3", NULL, NULL, "1985",
 	"Lode Runner III - Majin No Fukkatsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun3jRomInfo, Ldrun3jRomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun2DIPInfo,
 	Ldrun3jInit, M62Exit, M62Frame, Ldrun3Draw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4871,7 +4873,7 @@ struct BurnDriver BurnDrvLdrun4 = {
 	"ldrun4", NULL, NULL, NULL, "1986",
 	"Lode Runner IV - Teikoku Karano Dasshutsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun4RomInfo, Ldrun4RomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun4DIPInfo,
 	Ldrun4Init, M62Exit, M62Frame, Ldrun4Draw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4881,7 +4883,7 @@ struct BurnDriver BurnDrvLotlot = {
 	"lotlot", NULL, NULL, NULL, "1985",
 	"Lot Lot\0", NULL, "Irem (licensed from Tokuma Shoten)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PUZZLE, 0,
 	NULL, LotlotRomInfo, LotlotRomName, NULL, NULL, NULL, NULL, M62InputInfo, LotlotDIPInfo,
 	LotlotInit, M62Exit, M62Frame, LotlotDraw, M62Scan,
 	NULL, 0x300, 384, 256, 4, 3
@@ -4891,7 +4893,7 @@ struct BurnDriver BurnDrvKidniki = {
 	"kidniki", NULL, NULL, "tr606drumkit", "1986",
 	"Kid Niki - Radical Ninja (World)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, KidnikiRomInfo, KidnikiRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, KidnikiDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4901,7 +4903,7 @@ struct BurnDriver BurnDrvKidnikiu = {
 	"kidnikiu", "kidniki", NULL, "tr606drumkit", "1986",
 	"Kid Niki - Radical Ninja (US)\0", NULL, "Irem (Data East USA license)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, KidnikiuRomInfo, KidnikiuRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, KidnikiDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4911,7 +4913,7 @@ struct BurnDriver BurnDrvYanchamr = {
 	"yanchamr", "kidniki", NULL, "tr606drumkit", "1986",
 	"Kaiketsu Yanchamaru (Japan)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, YanchamrRomInfo, YanchamrRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, KidnikiDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4921,7 +4923,7 @@ struct BurnDriver BurnDrvLithero = {
 	"lithero", "kidniki", NULL, "tr606drumkit", "1987",
 	"Little Hero\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, LitheroRomInfo, LitheroRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	LitheroInit, M62Exit, M62Frame, KidnikiDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4931,7 +4933,7 @@ struct BurnDriver BurnDrvSpelunkr = {
 	"spelunkr", NULL, NULL, "tr606drumkit", "1985",
 	"Spelunker\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, SpelunkrRomInfo, SpelunkrRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, SpelunkrDIPInfo,
 	SpelunkrInit, M62Exit, M62Frame, SpelunkrDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4941,7 +4943,7 @@ struct BurnDriver BurnDrvSpelunkrj = {
 	"spelunkrj", "spelunkr", NULL, "tr606drumkit", "1985",
 	"Spelunker (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, SpelunkrjRomInfo, SpelunkrjRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, SpelunkrDIPInfo,
 	SpelunkrInit, M62Exit, M62Frame, SpelunkrDraw, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
@@ -4951,7 +4953,7 @@ struct BurnDriver BurnDrvSpelunk2 = {
 	"spelunk2", NULL, NULL, "tr606drumkit", "1986",
 	"Spelunker II - 23 no Kagi (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Spelunk2RomInfo, Spelunk2RomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, Spelunk2DIPInfo,
 	Spelunk2Init, M62Exit, M62Frame, Spelunk2Draw, M62Scan,
 	NULL, 0x300, 384, 256, 4, 3
@@ -4961,7 +4963,7 @@ struct BurnDriver BurnDrvYoujyudn = {
 	"youjyudn", NULL, NULL, NULL, "1986",
 	"Youjyuden (Japan)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M62, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_RUNGUN, 0,
 	NULL, YoujyudnRomInfo, YoujyudnRomName, NULL, NULL, NULL, NULL, M62InputInfo, YoujyudnDIPInfo,
 	YoujyudnInit, M62Exit, M62Frame, YoujyudnDraw, M62Scan,
 	NULL, 0x200, 256, 256, 3, 4
@@ -4971,7 +4973,7 @@ struct BurnDriver BurnDrvHorizon = {
 	"horizon", NULL, NULL, "tr606drumkit", "1985",
 	"Horizon\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, HorizonRomInfo, HorizonRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, HorizonDIPInfo,
 	HorizonInit, M62Exit, M62Frame, HorizonDraw, M62Scan,
 	NULL, 0x200, 256, 248, 4, 3

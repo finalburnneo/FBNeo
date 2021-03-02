@@ -392,6 +392,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -722,7 +724,7 @@ struct BurnDriver BurnDrvJunofrst = {
 	"junofrst", NULL, NULL, NULL, "1983",
 	"Juno First\0", NULL, "Konami", "GX310",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, junofrstRomInfo, junofrstRomName, NULL, NULL, NULL, NULL, JunofrstInputInfo, JunofrstDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	224, 256, 3, 4
@@ -758,7 +760,7 @@ struct BurnDriver BurnDrvJunofrstg = {
 	"junofrstg", "junofrst", NULL, NULL, "1983",
 	"Juno First (Gottlieb)\0", NULL, "Konami (Gottlieb license)", "GX310",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, junofrstgRomInfo, junofrstgRomName, NULL, NULL, NULL, NULL, JunofrstInputInfo, JunofrstDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	224, 256, 3, 4

@@ -557,7 +557,7 @@ static struct BurnDIPInfo happy6hkDIPList[] = {
 };
 
 static struct BurnDIPInfo drgw3DIPList[] = {
-    {0x2E,  0xFF, 0xFF, 0x05, NULL                              },
+    {0x2E,  0xFF, 0xFF, 0x06, NULL                              },
 
     {0,     0xFE, 0,    7,    "Region (Fake)"                   },
     {0x2E,  0x01, 0x0F, 0x01, "Japan (Alta License)"            },
@@ -4517,7 +4517,7 @@ static INT32 pgm3in1Init()
 
 struct BurnDriver BurnDrvPgm3in1 = {
 	"pgm3in1", NULL, "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1, V102, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
+	"Photo Y2K 2 (3-in-1, V102, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -4554,7 +4554,7 @@ STD_ROM_FN(pgm3in1c100)
 
 struct BurnDriver BurnDrvPgm3in1c100 = {
 	"pgm3in1c100", "pgm3in1", "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1, V100, China)\0", "Sound issues, video issues", "IGS", "PolyGameMaster",
+	"Photo Y2K 2 (3-in-1, V100, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,

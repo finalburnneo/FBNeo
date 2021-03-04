@@ -40,4 +40,4 @@ extern cpu_core_config konamiCPUConfig;
 
 // depreciate this and use BurnTimerAttach directly!
 #define BurnTimerAttachKonami(clock)	\
-	BurnTimerAttach(&KonamiCPUConfig, clock)
+	BurnTimerAttach(&konamiCPUConfig, clock)

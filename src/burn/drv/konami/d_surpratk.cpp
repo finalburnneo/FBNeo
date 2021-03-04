@@ -271,7 +271,7 @@ static void supratk_set_lines(INT32 lines)
 
 static void DrvYM2151IRQHandler(INT32 nStatus)
 {
-	konamiSetIrqLine(KONAMI_FIRQ_LINE, (nStatus) ? CPU_IRQSTATUS_HOLD : CPU_IRQSTATUS_NONE);
+	konamiSetIrqLine(KONAMI_FIRQ_LINE, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()

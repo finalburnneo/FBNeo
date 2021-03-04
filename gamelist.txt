@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16373 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16378 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -117,6 +117,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_3ninja	|  	| 3 Ninjas Kick Back (USA)				| 		| 1994	| Psygnosis	| Sega Megadrive| 					|
 | 3on3dunk	|  	| 3 On 3 Dunk Madness (US, prototype? 1997/02/04)	| 		| 1996	| Video System C| Miscellaneous	| 					|
 | nes_3dbatworru|  	| 3-D Battles of World Runner, The (USA)		| 		| 1987	| Acclaim	| Miscellaneous	| 					|
+| nes_3dblock	|  	| 3D Block (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_3dstarfighter|  	| 3D Starfighter					| 		| 1988	| Codemasters	| ZX Spectrum	| 					|
 | spec_3dtetris	|  	| 3D-Tetris						| 		| 1989	| Antic		| ZX Spectrum	| 					|
 | 3x3puzzl	|  	| 3X3 Puzzle (Enterprise)				| 		| 1998	| Ace Enterprise| Miscellaneous	| 					|
@@ -5971,6 +5972,10 @@ This list contains all games supported by FinalBurn Neo.
 | nes_hinothouhen|  	| Hinotori Houou Hen - Gaou no Bouken (T-Eng)		| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | hipoly	|   NW	| Hipoly (bootleg of Hyper Olympic)			| trackfld	| 1983	| bootleg	| Miscellaneous	| 					|
 | hippodrm	|  	| Hippodrome (US)					| 		| 1989	| Data East USA	| DEC0		| 					|
+| nes_hiryunoken|  	| Hiryuu no Ken - Ougi no Sho (Japan)			| 		| 1987	| Culture Brain	| Miscellaneous	| 					|
+| nes_hiryunokenii|  	| Hiryuu no Ken II - Dragon no Tsubasa (Japan)		| 		| 1988	| Culture Brain	| Miscellaneous	| 					|
+| nes_hiryunokeniii|  	| Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan)	| 		| 1990	| Culture Brain	| Miscellaneous	| 					|
+| nes_hiryunokenspe|  	| Hiryuu no Ken Special - Fighting Wars (Japan)		| 		| 1991	| Culture Brain	| Miscellaneous	| 					|
 | hishouza	|  	| Hishou Zame (Japan)					| fshark	| 1987	| Toaplan / Tait| Miscellaneous	| 					|
 | pce_xserd	| D NW	| Hisou Kihei - Xserd					| 		| 1990	| Masiya	| PC Engine	| 					|
 | buraiken	|  	| Hissatsu Buraiken (Japan)				| avengers	| 1987	| Capcom	| Miscellaneous	| 					|
@@ -9854,8 +9859,8 @@ This list contains all games supported by FinalBurn Neo.
 | photoy2k103j	|  	| Photo Y2K / Real and Fake (V103, Japan)		| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k104	|  	| Photo Y2K / Real and Fake (V104)			| photoy2k	| 1999	| IGS		| PolyGameMaster| 					|
 | photoy2k	|  	| Photo Y2K / Real and Fake (V105, China)		| 		| 1999	| IGS		| PolyGameMaster| 					|
-| pgm3in1c100	|  	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
-| pgm3in1	|  	| Photo Y2K 2 (3-in-1, V102, China)			| 		| 2001	| IGS		| PolyGameMaster| Sound issues, video issues		|
+| pgm3in1c100	|  	| Photo Y2K 2 (3-in-1, V100, China)			| pgm3in1	| 2001	| IGS		| PolyGameMaster| 					|
+| pgm3in1	|  	| Photo Y2K 2 (3-in-1, V102, China)			| 		| 2001	| IGS		| PolyGameMaster| 					|
 | py2k2100	|  	| Photo Y2K 2 (V100, japan)				| py2k2		| 2001	| IGS Alta Co., | PolyGameMaster| 					|
 | py2k2		|  	| Photo Y2K 2 (VM101XX, China)				| 		| 2001	| IGS		| PolyGameMaster| 					|
 | phozon	|  	| Phozon (Japan)					| 		| 1983	| Namco		| Miscellaneous	| 					|

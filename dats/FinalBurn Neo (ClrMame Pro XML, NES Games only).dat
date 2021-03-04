@@ -47,6 +47,13 @@
 		<rom name="3-D Battles of World Runner, The (USA).nes" size="131088" crc="d5ada486"/>
 		<driver status="good"/>
 	</game>
+	<game name="3dblock">
+		<description>3D Block (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="3D Block (Unl).nes" size="32784" crc="a760eeeb"/>
+		<driver status="good"/>
+	</game>
 	<game name="720degrees">
 		<description>720 Degrees (USA)</description>
 		<year>1989</year>
@@ -5134,6 +5141,34 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hinotori Houou Hen - Gaou no Bouken (T-Eng).nes" size="262160" crc="5f228691"/>
+		<driver status="good"/>
+	</game>
+	<game name="hiryunoken">
+		<description>Hiryuu no Ken - Ougi no Sho (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Hiryuu no Ken - Ougi no Sho (Japan).nes" size="131088" crc="3887557d"/>
+		<driver status="good"/>
+	</game>
+	<game name="hiryunokenii">
+		<description>Hiryuu no Ken II - Dragon no Tsubasa (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Hiryuu no Ken II - Dragon no Tsubasa (Japan).nes" size="262160" crc="19d51349"/>
+		<driver status="good"/>
+	</game>
+	<game name="hiryunokeniii">
+		<description>Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan).nes" size="262160" crc="a5f185c3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hiryunokenspe">
+		<description>Hiryuu no Ken Special - Fighting Wars (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Culture Brain</manufacturer>
+		<rom name="Hiryuu no Ken Special - Fighting Wars (Japan).nes" size="262160" crc="6a2450a8"/>
 		<driver status="good"/>
 	</game>
 	<game name="hitlenofukc" cloneof="bioniccommando" romof="bioniccommando">

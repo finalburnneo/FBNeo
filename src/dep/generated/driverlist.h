@@ -119,6 +119,7 @@ DRV		BurnDrvmd_3ninjass;
 DRV		BurnDrvmd_3ninja;
 DRV		BurnDrvDunk3on3;
 DRV		BurnDrvnes_3dbatworru;
+DRV		BurnDrvnes_3dblock;
 DRV		BurnSpec3dstarfighter;
 DRV		BurnSpec3dtetris;
 DRV		BurnDrvPuzzl3x3;
@@ -6053,6 +6054,10 @@ DRV		BurnDrvnes_hinothouhenj;
 DRV		BurnDrvnes_hinothouhen;
 DRV		BurnDrvHipoly;
 DRV		BurnDrvHippodrm;
+DRV		BurnDrvnes_hiryunoken;
+DRV		BurnDrvnes_hiryunokenii;
+DRV		BurnDrvnes_hiryunokeniii;
+DRV		BurnDrvnes_hiryunokenspe;
 DRV		BurnDrvHishouza;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvpce_xserd;		// no comment [NOT WORKING]
@@ -16745,6 +16750,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_3ninja,			// 3 Ninjas Kick Back (USA)
 	&BurnDrvDunk3on3,			// 3 On 3 Dunk Madness (US, prototype? 1997/02/04)
 	&BurnDrvnes_3dbatworru,		// 3-D Battles of World Runner, The (USA)
+	&BurnDrvnes_3dblock,		// 3D Block (Unl)
 	&BurnSpec3dstarfighter,		// 3D Starfighter
 	&BurnSpec3dtetris,			// 3D-Tetris
 	&BurnDrvPuzzl3x3,			// 3X3 Puzzle (Enterprise)
@@ -22679,6 +22685,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hinothouhen,	// Hinotori Houou Hen - Gaou no Bouken (T-Eng)
 	&BurnDrvHipoly,				// Hipoly (bootleg of Hyper Olympic) [no comment, NOT WORKING]
 	&BurnDrvHippodrm,			// Hippodrome (US)
+	&BurnDrvnes_hiryunoken,		// Hiryuu no Ken - Ougi no Sho (Japan)
+	&BurnDrvnes_hiryunokenii,	// Hiryuu no Ken II - Dragon no Tsubasa (Japan)
+	&BurnDrvnes_hiryunokeniii,	// Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan)
+	&BurnDrvnes_hiryunokenspe,	// Hiryuu no Ken Special - Fighting Wars (Japan)
 	&BurnDrvHishouza,			// Hishou Zame (Japan)
 #if defined FBNEO_DEBUG
 	&BurnDrvpce_xserd,			// Hisou Kihei - Xserd [no comment, NOT WORKING]

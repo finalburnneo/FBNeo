@@ -1115,6 +1115,9 @@ static UINT32 inputs_read()
 		// Bit 0: starts "ready to kick" (mapped to Select and Start)
 		// Bit 0-7: ball impact counter
 		// Need to see a video of the machine in-use to better understand Bit 0. -dink feb24 2021
+		// I think Bit0 might be a sensor for the solenoid, to make sure the ball is fully
+		// extended before starting the kick sequence.
+		// TODO: find the solenoid register and make this nicer. -dink
 		if (DrvJoy1[20] || DrvJoy1[21]) {
 			analog_starttimer = 250; // bit0 needs to be held for "a little bit"
 		}

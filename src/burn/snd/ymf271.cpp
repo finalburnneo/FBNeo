@@ -168,6 +168,9 @@ static UINT32 m_ext_address;
 static UINT8 m_ext_rw;
 static UINT8 m_ext_readlatch;
 
+static void (*external_write_handler)(UINT32 address, UINT8 data) = NULL;
+static UINT8 (*external_read_handler)(UINT32 address) = NULL;
+
 static UINT32 m_master_clock;
 
 static UINT8 *m_rom;
@@ -552,12 +555,16 @@ static INT64 calculate_slot_volume(YMF271Slot *slot)
 
 static UINT8 ymf271_read_memory(UINT32 offset)
 {
-	offset &= 0x7fffff;
-	if (offset < m_rom_size) {
-		return m_rom[offset];
+	if (external_read_handler) {
+		return external_read_handler(offset);
+	} else {
+		offset &= 0x7fffff;
+		if (offset < m_rom_size) {
+			return m_rom[offset];
+		}
 	}
-
-	return 0;
+	
+	return 0xff;
 }
 
 
@@ -1553,8 +1560,9 @@ static void ymf271_write_timer(UINT8 address, UINT8 data)
 
 			case 0x17:
 				m_ext_address = (m_ext_address + 1) & 0x7fffff;
-				//if (!m_ext_rw)
-				//	space(0).write_byte(m_ext_address, data);
+				if (external_write_handler && !m_ext_rw) {
+					external_write_handler(m_ext_address, data);
+				}
 				break;
 
 			case 0x20:
@@ -1787,6 +1795,12 @@ void ymf271_init(int clock, UINT8 *rom, INT32 romsize, void (*irq_cb)(INT32, INT
 	m_mix_buffer = (INT32*)BurnMalloc((m_master_clock / 384) * sizeof(INT32));
 }
 
+void ymf271_set_external_handlers(UINT8 (*read)(UINT32), void (*write)(UINT32, UINT8))
+{
+	external_write_handler = write;
+	external_read_handler = read;
+}
+
 //-------------------------------------------------
 //  device_reset - device-specific reset
 //-------------------------------------------------
@@ -1806,6 +1820,9 @@ void ymf271_exit()
 			BurnFree(m_lut_alfo[i]);
 
 	}
+	
+	external_write_handler = NULL;
+	external_read_handler = NULL;
 }
 
 void ymf271_scan(INT32 nAction)

@@ -141,7 +141,7 @@ static int nCyclesToDo = 0;
 		PCD = RM16(0xfff6); 											\
 		change_pc(PC);					/* TS 971002 */ 				\
 	    if (konami.hold_irq == (1 << KONAMI_FIRQ_LINE)) {               \
-		    konami.hold_irq = 0;                                        \
+		    konami.hold_irq &= ~(1 << KONAMI_FIRQ_LINE);                \
 		    konami.irq_state[KONAMI_FIRQ_LINE] = 0;                     \
 	    }                                                               \
         (void)(*konami.irq_callback)(KONAMI_FIRQ_LINE);					\
@@ -173,7 +173,7 @@ static int nCyclesToDo = 0;
 		PCD = RM16(0xfff8); 											\
 		change_pc(PC);					/* TS 971002 */ 				\
 	    if (konami.hold_irq == (1 << KONAMI_IRQ_LINE)) {                \
-		    konami.hold_irq = 0;                                        \
+		    konami.hold_irq &= ~(1 << KONAMI_IRQ_LINE);                 \
 		    konami.irq_state[KONAMI_IRQ_LINE] = 0;                      \
 	    }                                                               \
 		(void)(*konami.irq_callback)(KONAMI_IRQ_LINE);					\

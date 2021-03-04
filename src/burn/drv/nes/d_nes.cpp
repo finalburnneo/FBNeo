@@ -19965,6 +19965,23 @@ struct BurnDriver BurnDrvnes_3dbatworru = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_3dblockRomDesc[] = {
+	{ "3D Block (Unl).nes",          32784, 0xa760eeeb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_3dblock)
+STD_ROM_FN(nes_3dblock)
+
+struct BurnDriver BurnDrvnes_3dblock = {
+	"nes_3dblock", NULL, NULL, NULL, "1989?",
+	"3D Block (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_3dblockRomInfo, nes_3dblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_720degreesRomDesc[] = {
 	{ "720 Degrees (USA).nes",          131088, 0x6bc968af, BRF_ESS | BRF_PRG },
 };
@@ -29804,6 +29821,73 @@ struct BurnDriver BurnDrvnes_hinothouhen = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_hinothouhenRomInfo, nes_hinothouhenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+static struct BurnRomInfo nes_hiryunokenRomDesc[] = {
+	{ "Hiryuu no Ken - Ougi no Sho (Japan).nes",          131088, 0x3887557d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hiryunoken)
+STD_ROM_FN(nes_hiryunoken)
+
+struct BurnDriver BurnDrvnes_hiryunoken = {
+	"nes_hiryunoken", NULL, NULL, NULL, "1987",
+	"Hiryuu no Ken - Ougi no Sho (Japan)\0", NULL, "Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hiryunokenRomInfo, nes_hiryunokenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hiryunokeniiRomDesc[] = {
+	{ "Hiryuu no Ken II - Dragon no Tsubasa (Japan).nes",          262160, 0x19d51349, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hiryunokenii)
+STD_ROM_FN(nes_hiryunokenii)
+
+struct BurnDriver BurnDrvnes_hiryunokenii = {
+	"nes_hiryunokenii", NULL, NULL, NULL, "1988",
+	"Hiryuu no Ken II - Dragon no Tsubasa (Japan)\0", NULL, "Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hiryunokeniiRomInfo, nes_hiryunokeniiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hiryunokeniiiRomDesc[] = {
+	{ "Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan).nes",          262160, 0xa5f185c3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hiryunokeniii)
+STD_ROM_FN(nes_hiryunokeniii)
+
+struct BurnDriver BurnDrvnes_hiryunokeniii = {
+	"nes_hiryunokeniii", NULL, NULL, NULL, "1990",
+	"Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan)\0", NULL, "Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hiryunokeniiiRomInfo, nes_hiryunokeniiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hiryunokenspeRomDesc[] = {
+	{ "Hiryuu no Ken Special - Fighting Wars (Japan).nes",          262160, 0x6a2450a8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hiryunokenspe)
+STD_ROM_FN(nes_hiryunokenspe)
+
+struct BurnDriver BurnDrvnes_hiryunokenspe = {
+	"nes_hiryunokenspe", NULL, NULL, NULL, "1991",
+	"Hiryuu no Ken Special - Fighting Wars (Japan)\0", NULL, "Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_hiryunokenspeRomInfo, nes_hiryunokenspeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -4602,7 +4602,7 @@ struct BurnDriver BurnDrvArescue = {
 	"arescue", NULL, NULL, NULL, "1992",
 	"Air Rescue (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescueRomInfo, arescueRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4670,7 +4670,7 @@ struct BurnDriver BurnDrvArescueu = {
 	"arescueu", "arescue", NULL, NULL, "1992",
 	"Air Rescue (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescueuRomInfo, arescueuRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4738,7 +4738,7 @@ struct BurnDriver BurnDrvArescuej = {
 	"arescuej", "arescue", NULL, NULL, "1992",
 	"Air Rescue (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescuejRomInfo, arescuejRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -7321,7 +7321,7 @@ struct BurnDriver BurnDrvHarddunk = {
 	"harddunk", NULL, NULL, NULL, "1994",
 	"Hard Dunk (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 6, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
 	NULL, harddunkRomInfo, harddunkRomName, NULL, NULL, NULL, NULL, HarddunkInputInfo, HarddunkDIPInfo,
 	HarddunkInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3

@@ -19,6 +19,9 @@ M37710 CPU Emulator v0.1
    Do not alter this order!
 */
 
+#define M37702 (1 << 0)
+#define M37710 (1 << 1)
+
 enum
 {
 	// these interrupts are maskable
@@ -34,10 +37,10 @@ enum
 	M37710_LINE_TIMERA3,
 	M37710_LINE_TIMERA2,
 	M37710_LINE_TIMERA1,
-	M37710_LINE_TIMERA0,
+	M37710_LINE_TIMERA0,  // 12 / 0xC
 	M37710_LINE_IRQ2,
 	M37710_LINE_IRQ1,
-	M37710_LINE_IRQ0,
+	M37710_LINE_IRQ0,     // 15 / 0xf
 	// these interrupts are non-maskable
 	M37710_LINE_WATCHDOG,
 	M37710_LINE_DEBUG,

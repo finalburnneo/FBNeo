@@ -50,7 +50,7 @@ Unmapped registers:
 #include "c140.h"
 
 // --- Future NOTE: if asic219 DOES NOT WORK, this is why!! (line below) -dink
-#define BYTE_XOR_BE(x) (x)
+#define BYTE_XOR_BE(x) (x^1)
 
 struct voice_registers
 {
@@ -77,7 +77,7 @@ static INT16 *m_mixer_buffer_left;
 static INT16 *m_mixer_buffer_right;
 
 // for resampling
-static UINT32 nSampleSize;
+static double nSampleSize;
 static INT32 nFractionalPosition;
 static INT32 nPosition;
 
@@ -88,6 +88,42 @@ static UINT8 m_REG[0x200];
 static INT16 m_pcmtbl[8];        //2000.06.26 CAB
 
 static C140_VOICE m_voi[C140_MAX_VOICE];
+
+// stream sync
+static INT32 (*pTotalCyclesCB)();
+static INT32 nCpuMHZ;
+
+static INT32 SyncUPD(INT32 cycles)
+{
+	return (INT32)((double)cycles * ((double)(pTotalCyclesCB()) / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
+}
+
+static INT32 samples_to_source(INT32 samples) {
+	return (INT32)((double)((double)nSampleSize * samples) / (1 << 16));
+}
+
+void c140_update_INT(INT32 samples_len); //forward
+
+static void UpdateStream(INT32 end)
+{
+	INT32 framelen = samples_to_source(nBurnSoundLen);
+	INT32 position = (end) ? framelen : SyncUPD(framelen);
+
+	INT32 samples = position - nPosition;
+
+	if (samples < 1) return;
+
+	c140_update_INT(samples);
+
+	nPosition += samples;
+	//bprintf(0, _T("%d  c140:  updating  pos %d\t%d\tof\t%d\n"), nCurrentFrame, nPosition, samples, framelen);
+}
+
+void c140_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
+{
+	pTotalCyclesCB = pCPUCyclesCB;
+	nCpuMHZ = nCPUMhz;
+}
 
 //**************************************************************************
 //  LIVE DEVICE
@@ -178,7 +214,7 @@ void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom)
 	memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
 
 	// for resampling
-	nSampleSize = (UINT32)m_sample_rate * (1 << 16) / nBurnSoundRate;
+	nSampleSize = (double)m_sample_rate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nPosition = 0;
 }
@@ -217,7 +253,7 @@ void c140_scan(INT32 nAction, INT32 *)
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-void c140_update(INT16 *outputs, INT32 samples_len)
+void c140_update_INT(INT32 samples_len)
 {
 	INT32   rvol,lvol;
 	INT32   dt;
@@ -232,13 +268,15 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 
 	INT16   *lmix, *rmix;
 
-	if (samples_len != nBurnSoundLen) {
+/*	if (samples_len != nBurnSoundLen) {
 		bprintf(0, _T("c140_update(): once per frame, please!\n"));
 		return;
-	}
+	}*/
 
-	INT32 nSamplesNeeded = ((((((m_sample_rate * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
-	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+//	INT32 nSamplesNeeded = ((((((m_sample_rate * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
+//	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+
+	INT32 nSamplesNeeded = samples_len;
 
 	lmix = m_mixer_buffer_left  + 5 + nPosition;
 	rmix = m_mixer_buffer_right + 5 + nPosition;
@@ -294,7 +332,7 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 			{
 				//compressed PCM (maybe correct...)
 				/* Loop for enough to fill sample buffer as requested */
-				for(INT32 j=0;j<(nSamplesNeeded - nPosition);j++)
+				for(INT32 j=0;j<(nSamplesNeeded);j++)
 				{
 					offset += delta;
 					cnt = (offset>>16)&0x7fff;
@@ -341,7 +379,7 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 			else
 			{
 				/* linear 8bit signed PCM */
-				for(INT32 j=0;j<(nSamplesNeeded - nPosition);j++)
+				for(INT32 j=0;j<(nSamplesNeeded);j++)
 				{
 					offset += delta;
 					cnt = (offset>>16)&0x7fff;
@@ -403,6 +441,11 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 			v->dltdt=dltdt;
 		}
 	}
+}
+
+void c140_update(INT16 *outputs, INT32 samples_len)
+{
+	UpdateStream(1);
 
 	INT16 *pBufL = m_mixer_buffer_left  + 5;
 	INT16 *pBufR = m_mixer_buffer_right + 5;
@@ -433,7 +476,7 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 	}
 
 	if (samples_len >= nBurnSoundLen) {
-		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
+		INT32 nExtraSamples = samples_to_source(nBurnSoundLen) - (nFractionalPosition >> 16);
 
 		for (INT32 i = -4; i < nExtraSamples; i++) {
 			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
@@ -443,12 +486,14 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 		nFractionalPosition &= 0xFFFF;
 
 		nPosition = nExtraSamples;
+		//bprintf(0, _T("--end  extra samples: %d\n"), nPosition);
 	}
 }
 
 
 UINT8 c140_read(UINT16 offset)
 {
+	UpdateStream(0);
 	offset &= 0x1ff;
 	return m_REG[offset];
 }
@@ -456,6 +501,7 @@ UINT8 c140_read(UINT16 offset)
 
 void c140_write(UINT16 offset, UINT8 data)
 {
+	UpdateStream(0);
 	offset &= 0x1ff;
 
 	// mirror the bank registers on the 219, fixes bkrtmaq (and probably xday2 based on notes in the HLE)

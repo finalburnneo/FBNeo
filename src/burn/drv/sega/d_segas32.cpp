@@ -170,6 +170,7 @@ static INT32 Radm_analog_target = 0;
 // forwards
 static void RadmAnalogTick();
 static INT32 MultiScreenCheck();
+static INT32 SingleScreenModeChangeCheck();
 
 static INT32 has_gun = 0;
 static INT32 clr_opposites = 0;
@@ -2006,6 +2007,8 @@ static INT32 DrvDoReset()
 
 	if (is_multi32) {
 		MultiScreenCheck();
+	} else {
+		SingleScreenModeChangeCheck();
 	}
 
 	BurnRandomSetSeed(0xbeef1eaf);
@@ -4105,15 +4108,8 @@ static void draw_screen(INT32 which)
 	mix_all_layers(which, 0, cliprect, enablemask);
 }
 
-static INT32 DrvDraw()
+static INT32 SingleScreenModeChangeCheck()
 {
-	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x8000; i++) {
-			DrvPalette[i] = BurnHighCol(pal5bit(i >> 10), pal5bit(i >> 5), pal5bit(i), 0);
-		}
-		DrvRecalc = 0;
-	}
-
 	// widescreen (416px) mode is used to display the disclaimer as the game
 	// boots up (sonic, dbzvrvs + orunnersj), after the disclaimer, it switches
 	// to 320px and stays there until switched off and restarted again. To
@@ -4137,6 +4133,22 @@ static INT32 DrvDraw()
 		}
 
 		return 1; // don't draw this time around
+	}
+
+	return 0;
+}
+
+static INT32 DrvDraw()
+{
+	if (DrvRecalc) {
+		for (INT32 i = 0; i < 0x8000; i++) {
+			DrvPalette[i] = BurnHighCol(pal5bit(i >> 10), pal5bit(i >> 5), pal5bit(i), 0);
+		}
+		DrvRecalc = 0;
+	}
+
+	if (SingleScreenModeChangeCheck()) {
+		return 1; // if mode changed, don't draw this time around
 	}
 
 	draw_screen(0);
@@ -4602,7 +4614,7 @@ struct BurnDriver BurnDrvArescue = {
 	"arescue", NULL, NULL, NULL, "1992",
 	"Air Rescue (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescueRomInfo, arescueRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4670,7 +4682,7 @@ struct BurnDriver BurnDrvArescueu = {
 	"arescueu", "arescue", NULL, NULL, "1992",
 	"Air Rescue (US)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescueuRomInfo, arescueuRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -4738,7 +4750,7 @@ struct BurnDriver BurnDrvArescuej = {
 	"arescuej", "arescue", NULL, NULL, "1992",
 	"Air Rescue (Japan)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, arescuejRomInfo, arescuejRomName, NULL, NULL, NULL, NULL, ArescueInputInfo, ArescueDIPInfo,
 	ArescueInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -7321,7 +7333,7 @@ struct BurnDriver BurnDrvHarddunk = {
 	"harddunk", NULL, NULL, NULL, "1994",
 	"Hard Dunk (World)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 6, HARDWARE_SEGA_MISC, GBF_SPORTSMISC, 0,
 	NULL, harddunkRomInfo, harddunkRomName, NULL, NULL, NULL, NULL, HarddunkInputInfo, HarddunkDIPInfo,
 	HarddunkInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
 	640, 224, 8, 3

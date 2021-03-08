@@ -66,46 +66,31 @@ static void m37710_set_irq_line(int line, int state);
 static void m37710i_update_irqs();
 static void m37710_internal_w(int offset, UINT8 data);
 static UINT8 m37710_internal_r(int offset);
+void m37710i_set_reg_p(UINT32 value);
 
 // FBNeo notes:
-// Auto-mapped by the core:
+// Regs & Internal RAM are auto-mapped by this core @ init.
+//
+// M37710
 // Internal regs mapped @ 0x000000 - 0x00007f
 // Internal RAM  mapped @ 0x000080 - 0x00087f
-// always maps 0x800 @ 0x80 to handle all chip variants.
-
-#if 0
-// On-board RAM, ROM, and peripherals
-
-// M37702M2: 512 bytes internal RAM, 16K internal mask ROM
-// (M37702E2: same with EPROM instead of mask ROM)
-DEVICE_ADDRESS_MAP_START( map, 16, m37702m2_device )
-	AM_RANGE(0x000000, 0x00007f) AM_READWRITE(m37710_internal_word_r, m37710_internal_word_w)
-	AM_RANGE(0x000080, 0x00027f) AM_RAM
-	AM_RANGE(0x00c000, 0x00ffff) AM_ROM AM_REGION(M37710_INTERNAL_ROM_REGION, 0)
-ADDRESS_MAP_END
-
-
-// M37702S1: 512 bytes internal RAM, no internal ROM
-DEVICE_ADDRESS_MAP_START( map, 16, m37702s1_device )
-	AM_RANGE(0x000000, 0x00007f) AM_READWRITE(m37710_internal_word_r, m37710_internal_word_w)
-	AM_RANGE(0x000080, 0x00027f) AM_RAM
-ADDRESS_MAP_END
-
-
-// M37710S4: 2048 bytes internal RAM, no internal ROM
-DEVICE_ADDRESS_MAP_START( map, 16, m37710s4_device )
-	AM_RANGE(0x000000, 0x00007f) AM_READWRITE(m37710_internal_word_r, m37710_internal_word_w)
-	AM_RANGE(0x000080, 0x00087f) AM_RAM
-ADDRESS_MAP_END
-
-#endif
+//
+// M37702
+// Internal regs mapped @ 0x000000 - 0x00007f
+// Internal RAM  mapped @ 0x000080 - 0x00027f
+//
+// Can be mapped externally using M377MapMemory():
+// Internal ROM resides @ 0x00c000 - 0x00ffff
 
 #define page_size	0x80
 #define page_mask	0x7f
 #define address_mask 0xffffff
 
 static UINT8 **mem[3];
+static UINT8 *mem_flags;
 static UINT8 *internal_ram = NULL;
+
+#define MEM_ENDISWAP    1  // mem_flags
 
 static UINT8  (*M377_read8)(UINT32) = NULL;
 static UINT16 (*M377_read16)(UINT32) = NULL;
@@ -145,13 +130,14 @@ void M377SetReadWordHandler(UINT16 (*read)(UINT32))
 	M377_read16 = read;
 }
 
-void M377MapMemory(UINT8 *ptr, UINT64 start, UINT64 end, UINT32 flags)
+void M377MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags)
 {
-	for (UINT64 i = start; i < end; i+= page_size)
+	for (UINT32 i = start; i < end; i+= page_size)
 	{
 		if (flags & 1) mem[0][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
 		if (flags & 2) mem[1][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
 		if (flags & 4) mem[2][i/page_size] = (ptr == NULL) ? NULL : (ptr + (i - start));
+		mem_flags[i/page_size] = (flags & 0x8000) ? MEM_ENDISWAP : 0;
 	}
 }
 
@@ -171,65 +157,87 @@ static void io_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
+#define ENDISWAP16(x) (((x >> 8) & 0xff) | ((x << 8) & 0xff00))
+
 static UINT16 program_read_word_16le(UINT32 a)
 {
 	a &= address_mask;
 
+	// Internal Registers
+	if (a < 0x80) {
+		UINT16 ret;
+		ret  = (m37710_internal_r(a + 0) << 0) & 0x00ff;
+		ret |= (m37710_internal_r(a + 1) << 8) & 0xff00;
+		return ret;
+	}
+
 	UINT8 *p = mem[0][a / page_size];
 
 	if (p) {
+		if (a & 1) { // not word-aligned, let M377ReadByte() handle the ENDI swapping
+			UINT16 rv;
+			rv  = (M377ReadByte(a + 0) << 0) & 0x00ff;
+			rv |= (M377ReadByte(a + 1) << 8) & 0xff00;
+			return rv;
+		}
+
+		UINT8 flag = mem_flags[a / page_size];
+
 		UINT16 *z = (UINT16*)(p + (a & page_mask));
 #ifdef LOG_MEM
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, *z);
 #endif
 
-		return BURN_ENDIAN_SWAP_INT16(*z);
+		return (flag & MEM_ENDISWAP) ? ENDISWAP16(*z) : *z;
 	}
 
 	if (M377_read16) {
 #ifdef LOG_MEM
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, M377_read16(a));
 #endif
-		if (a < 0x80) {
-			UINT16 offset = a >> 1;
-			UINT16 ret = m37710_internal_r(offset * 2 + 0);
-			ret |= m37710_internal_r(offset * 2 + 1) << 8;
-			return ret;
-		}
-
 		return M377_read16(a);
 	}
 
-	return 0;
+	return 0xffff;
 }
 
 static UINT8 program_read_byte_16le(UINT32 a)
 {
 	a &= address_mask;
 
+	// Internal Registers
+	if (a < 0x80) {
+		return m37710_internal_r(a);
+	}
+
 #ifdef LOG_MEM
 	bprintf (0, _T("PRB: %6.6x\n"), a);
 #endif
 
 	if (mem[0][a / page_size]) {
-		return mem[0][a / page_size][a & page_mask];
+		UINT8 flag = mem_flags[a / page_size] & MEM_ENDISWAP;
+
+		return mem[0][a / page_size][(a ^ flag) & page_mask];
 	}
 
 	if (M377_read8) {
-
-		if (a < 0x80) {
-			return m37710_internal_r(a);
-		}
-
 		return M377_read8(a);
 	}
 
-	return 0;
+	return 0xff;
 }
 
 static void program_write_word_16le(UINT32 a, UINT16 d)
 {
 	a &= address_mask;
+
+	// Internal Registers
+	if (a < 0x80) {
+		m37710_internal_w(a + 0, (d >> 0) & 0xff);
+		m37710_internal_w(a + 1, (d >> 8) & 0xff);
+		return;
+	}
+
 #ifdef LOG_MEM
 	bprintf (0, _T("PWW: %6.6x %4.4x\n"), a,d);
 #endif
@@ -237,20 +245,18 @@ static void program_write_word_16le(UINT32 a, UINT16 d)
 	UINT8 *p = mem[1][a / page_size];
 
 	if (p) {
+		if (a & 1) {
+			M377WriteByte(a + 0, (d >> 0) & 0xff);
+			M377WriteByte(a + 1, (d >> 8) & 0xff);
+			return;
+		}
+		UINT8 flag = mem_flags[a / page_size];
 		UINT16 *z = (UINT16*)(p + (a & page_mask));
-		*z = BURN_ENDIAN_SWAP_INT16(d);
+		*z = (flag & MEM_ENDISWAP) ? ENDISWAP16(d) : d;
 		return;
 	}
 
 	if (M377_write16) {
-
-		if (a < 0x80) {
-			UINT16 offset = a >> 1;
-			m37710_internal_w(offset * 2 + 0, d & 0xff);
-			m37710_internal_w(offset * 2 + 1, d >> 8);
-			return;
-		}
-
 		M377_write16(a,d);
 		return;
 	}
@@ -259,22 +265,24 @@ static void program_write_word_16le(UINT32 a, UINT16 d)
 static void program_write_byte_16le(UINT32 a, UINT8 d)
 {
 	a &= address_mask;
+
+	// Internal Registers
+	if (a < 0x80) {
+		m37710_internal_w(a, d);
+		return;
+	}
+
 #ifdef LOG_MEM
 	bprintf (0, _T("PWB: %6.6x %2.2x\n"), a,d);
 #endif
 
 	if (mem[1][a / page_size]) {
-		mem[1][a / page_size][a & page_mask] = d;
+		UINT8 flag = mem_flags[a / page_size] & MEM_ENDISWAP;
+		mem[1][a / page_size][(a ^ flag) & page_mask] = d;
 		return;
 	}
 
 	if (M377_write8) {
-
-		if (a < 0x80) {
-			m37710_internal_w(a, d);
-			return;
-		}
-
 		return M377_write8(a,d);
 	}
 }
@@ -309,7 +317,7 @@ cpu_core_config M377Config =
 	"M377xx",
 	M377Open,
 	M377Close,
-	M377ReadByte,  //M377CheatRead,
+	M377ReadByte,
 	M377WriteByte, //M377WriteROM,
 	M377GetActive,
 	M377TotalCycles,
@@ -363,8 +371,8 @@ struct m377_struct {
 
 	// on-board peripheral stuff
 	UINT8 m37710_regs[128];
-	INT32 reload[8];
-	INT32 timers[8];
+	INT32 reload[8+1]; // reload[8] / timers[8] = adc
+	INT32 timers[8+1];
 
 	// for debugger
 	UINT32 debugger_pc;
@@ -378,6 +386,7 @@ struct m377_struct {
 	INT32 end_run;
 	INT32 total_cycles;
 	INT32 segment_cycles;
+	INT32 subtype; // M37710 / M37702 (defined in m377_intf.h)
 };
 
 static m377_struct m377; // cpu!
@@ -388,6 +397,7 @@ typedef UINT32 (*get_reg_func)(int regnum);
 typedef void (*set_reg_func)(int regnum, UINT32 val);
 typedef void (*set_line_func)(int line, int state);
 typedef int  (*execute_func)(int cycles);
+typedef void (*set_flag_func)(UINT32 value);
 
 static const opcode_func *m_opcodes;    /* opcodes with no prefix */
 static const opcode_func *m_opcodes42;  /* opcodes with 0x42 prefix */
@@ -396,7 +406,7 @@ static get_reg_func m_get_reg;
 static set_reg_func m_set_reg;
 static set_line_func m_set_line;
 static execute_func m_execute;
-
+static set_flag_func m_setflag;
 
 /* interrupt control mapping */
 
@@ -597,6 +607,7 @@ static const char *const m37710_tnames[8] =
 
 #include "m37710cm.h"
 #include "m37710il.h"
+
 #define EXECUTION_MODE EXECUTION_MODE_M0X0
 #include "m37710op.h"
 #undef EXECUTION_MODE
@@ -608,6 +619,7 @@ static const char *const m37710_tnames[8] =
 #undef EXECUTION_MODE
 #define EXECUTION_MODE EXECUTION_MODE_M1X1
 #include "m37710op.h"
+#undef EXECUTION_MODE
 
 
 static void m37710_timer_cb(INT32 param)
@@ -683,7 +695,7 @@ static void m37710_recalc_timer(int timer)
 					#if M37710_DEBUG
 					logerror("Timer %d in timer mode, %f Hz\n", timer, 1.0 / time.as_double());
 					#endif
-
+					//bprintf(0, _T("Timer %d in timer mode, %d Hz\n"), timer, time);
 					//m377.timers[timer]->adjust(time, timer);
 					m377.timers[timer] = time;
 					m377.reload[timer] = time;
@@ -719,6 +731,7 @@ static void m37710_recalc_timer(int timer)
 					#if M37710_DEBUG
 					logerror("Timer %d in timer mode, %f Hz\n", timer, 1.0 / time.as_double());
 					#endif
+					//bprintf(0, _T("Timer %d in timer mode, %d Hz\n"), timer, 1.0 / time);
 
 					m377.timers[timer] = time;
 					m377.reload[timer] = time;
@@ -746,6 +759,22 @@ static void m37710_recalc_timer(int timer)
 	}
 }
 
+static void m37710_adc_cb()
+{
+	INT32 line = m377.m37710_regs[0x1e] & 0x07;
+	if (m377.m37710_regs[0x1e] & 0x10) {
+		m377.m37710_regs[0x1e] = (m377.m37710_regs[0x1e] & 0xf8) | ((line + 1) & 0x07);
+	}
+
+	if (m377.m37710_regs[0x1e] & 0x08 || ((m377.m37710_regs[0x1e] & 0x10) && line != (m377.m37710_regs[0x1f] & 0x03) * 2 + 1)) {
+		m377.timers[8] = 0x72 * ((m377.m37710_regs[0x1e] & 0x80) ? 2 : 4);
+	} else {
+		M377SetIRQLine(M37710_LINE_ADC, CPU_IRQSTATUS_HOLD);
+		m377.m37710_regs[0x1e] &= 0xbf;
+	}
+}
+
+
 static UINT8 m37710_internal_r(int offset)
 {
 	UINT8 d;
@@ -754,6 +783,8 @@ static UINT8 m37710_internal_r(int offset)
 	if (offset > 1)
 	logerror("m37710_internal_r from %02x: %s (PC=%x)\n", (int)offset, m37710_rnames[(int)offset], REG_PB<<16 | REG_PC);
 	#endif
+	//if (offset > 1)
+	//	bprintf(0, _T("m37710_internal_r from %02x: %S (PC=%x)\n"), (int)offset, m37710_rnames[(int)offset], REG_PB<<16 | REG_PC);
 
 	switch (offset)
 	{
@@ -865,6 +896,8 @@ static void m37710_internal_w(int offset, UINT8 data)
 	if (offset != 0x60) // filter out watchdog
 	logerror("m37710_internal_w %x to %02x: %s = %x\n", data, (int)offset, m37710_rnames[(int)offset], m377.m37710_regs[offset]);
 	#endif
+	//if (offset != 0x60) // filter out watchdog
+	//	bprintf(0, _T("m37710_internal_w %x to %02x: %S = %x\n"), data, (int)offset, m37710_rnames[(int)offset], m377.m37710_regs[offset]);
 
 	prevdata = m377.m37710_regs[offset];
 	m377.m37710_regs[offset] = data;
@@ -918,6 +951,18 @@ static void m37710_internal_w(int offset, UINT8 data)
 				io_write_byte(M37710_PORT8, data&d);
 			break;
 
+		case 0x1e: // adc timer
+			if (data & 0x40 && ~prevdata & 0x40) {
+				m377.timers[8] = 0x72 * ((data & 0x80) ? 2 : 4);
+				if (data & 0x10) {
+					m377.m37710_regs[offset] &= 0xf8;
+				}
+			} else if (~data & 0x40) {
+				m377.timers[8] = -1; // adc timer OFF
+			}
+			break;
+
+
 		case 0x40:  // count start
 			for (i = 0; i < 8; i++)
 			{
@@ -929,22 +974,133 @@ static void m37710_internal_w(int offset, UINT8 data)
 		// internal interrupt control
 		case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75:
 		case 0x76: case 0x77: case 0x78: case 0x79: case 0x7a: case 0x7b: case 0x7c:
-			m37710_set_irq_line(offset, (data & 8) ? HOLD_LINE : CLEAR_LINE);
-			m37710i_update_irqs();
+			//bprintf(0, _T("Internal Interrupt Control %x\n"), offset);
+			//m37710_set_irq_line(offset, (data & 8) ? HOLD_LINE : CLEAR_LINE);
+			//m37710i_update_irqs();
 			break;
 
 		// external interrupt control
 		case 0x7d: case 0x7e: case 0x7f:
-			m37710_set_irq_line(offset, (data & 8) ? HOLD_LINE : CLEAR_LINE);
-			m37710i_update_irqs();
+			//bprintf(0, _T("External Interrupt Control %x\n"), offset);
+			//m37710_set_irq_line(offset, (data & 8) ? HOLD_LINE : CLEAR_LINE);
+			//m37710i_update_irqs();
 
 			// level-sense interrupts are not implemented yet
-			if (data & 0x20) logerror("error M37710: INT%d level-sense\n",offset-0x7d);
+			//if (data & 0x20) logerror("error M37710: INT%d level-sense\n",offset-0x7d);
 			break;
 
 		default:
 			break;
 	}
+}
+
+void m37710i_set_flag_m0x0(UINT32 value)
+{
+	if(value & FLAGPOS_M)
+	{
+		REG_B = REG_A & 0xff00;
+		REG_A = MAKE_UINT_8(REG_A);
+		REG_BB = REG_BA & 0xff00;
+		REG_BA = MAKE_UINT_8(REG_BA);
+		FLAG_M = MFLAG_SET;
+		//bprintf(0, _T("CPU M flag set M\n"));
+	}
+	if(value & FLAGPOS_X)
+	{
+		REG_XH = REG_X & 0xff00;
+		REG_X = MAKE_UINT_8(REG_X);
+		REG_YH = REG_Y & 0xff00;
+		REG_Y = MAKE_UINT_8(REG_Y);
+		FLAG_X = XFLAG_SET;
+		//bprintf(0, _T("CPU X flag set X\n"));
+	}
+
+	m37710i_set_execution_mode((FLAG_M>>4) | (FLAG_X>>4));
+}
+
+void m37710i_set_flag_m0x1(UINT32 value)
+{
+	if(value & FLAGPOS_M)
+	{
+		REG_B = REG_A & 0xff00;
+		REG_A = MAKE_UINT_8(REG_A);
+		REG_BB = REG_BA & 0xff00;
+		REG_BA = MAKE_UINT_8(REG_BA);
+		FLAG_M = MFLAG_SET;
+		//bprintf(0, _T("CPU M flag set M\n"));
+	}
+	if(!(value & FLAGPOS_X))
+	{
+		REG_X |= REG_XH;
+		REG_XH = 0;
+		REG_Y |= REG_YH;
+		REG_YH = 0;
+		FLAG_X = XFLAG_CLEAR;
+		//bprintf(0, _T("CPU X flag clear X\n"));
+	}
+
+	m37710i_set_execution_mode((FLAG_M>>4) | (FLAG_X>>4));
+}
+
+void m37710i_set_flag_m1x0(UINT32 value)
+{
+	if(!(value & FLAGPOS_M))
+	{
+		REG_A |= REG_B;
+		REG_B = 0;
+		REG_BA |= REG_BB;
+		REG_BB = 0;
+		FLAG_M = MFLAG_CLEAR;
+		//bprintf(0, _T("CPU M flag clear M\n"));
+	}
+
+	if(value & FLAGPOS_X)
+	{
+		REG_XH = REG_X & 0xff00;
+		REG_X = MAKE_UINT_8(REG_X);
+		REG_YH = REG_Y & 0xff00;
+		REG_Y = MAKE_UINT_8(REG_Y);
+		FLAG_X = XFLAG_SET;
+		//bprintf(0, _T("CPU X flag set X\n"));
+	}
+
+	m37710i_set_execution_mode((FLAG_M>>4) | (FLAG_X>>4));
+}
+
+void m37710i_set_flag_m1x1(UINT32 value)
+{
+	if(!(value & FLAGPOS_M))
+	{
+		REG_A |= REG_B;
+		REG_B = 0;
+		REG_BA |= REG_BB;
+		REG_BB = 0;
+		FLAG_M = MFLAG_CLEAR;
+		//bprintf(0, _T("CPU M flag clear M\n"));
+	}
+	if(!(value & FLAGPOS_X))
+	{
+		REG_X |= REG_XH;
+		REG_XH = 0;
+		REG_Y |= REG_YH;
+		REG_YH = 0;
+		FLAG_X = XFLAG_CLEAR;
+		//bprintf(0, _T("CPU X flag clear X\n"));
+	}
+
+	m37710i_set_execution_mode((FLAG_M>>4) | (FLAG_X>>4));
+}
+
+
+void m37710i_set_reg_p(UINT32 value)
+{
+	FLAG_N = value;
+	FLAG_V = value << 1;
+	FLAG_D = value & FLAGPOS_D;
+	FLAG_Z = !(value & FLAGPOS_Z);
+	FLAG_C = value << 8;
+	m_setflag(value);
+	FLAG_I = value & FLAGPOS_I;
 }
 
 const opcode_func *m37710i_opcodes[4] =
@@ -1003,6 +1159,15 @@ const execute_func m37710i_execute[4] =
 	&m37710i_execute_M1X1,
 };
 
+const set_flag_func m37710i_setflag[4] =
+{
+	&m37710i_set_flag_m0x0,
+	&m37710i_set_flag_m0x1,
+	&m37710i_set_flag_m1x0,
+	&m37710i_set_flag_m1x1,
+};
+
+
 /* internal functions */
 
 static void m37710i_update_irqs()
@@ -1052,7 +1217,7 @@ static void m37710i_update_irqs()
 		// let's do it...
 		// push PB, then PC, then status
 		CLK(13);
-//      osd_printf_debug("taking IRQ %d: PC = %06x, SP = %04x, IPL %d\n", wantedIRQ, REG_PB | REG_PC, REG_S, m377.ipl);
+		//bprintf(0, _T("taking IRQ %d: PC = %06x, SP = %04x, IPL %d\n"), wantedIRQ, REG_PB | REG_PC, REG_S, m377.ipl);
 		m37710i_push_8(REG_PB>>16);
 		m37710i_push_16(REG_PC);
 		m37710i_push_8(m377.ipl);
@@ -1064,7 +1229,7 @@ static void m37710i_update_irqs()
 		// then PB=0, PC=(vector)
 		REG_PB = 0;
 		REG_PC = m37710_read_16(m37710_irq_vectors[wantedIRQ]);
-//      logerror("IRQ @ %06x\n", REG_PB | REG_PC);
+		//      logerror("IRQ @ %06x\n", REG_PB | REG_PC);
 	}
 }
 
@@ -1075,7 +1240,7 @@ void M377Reset()
 	int i;
 
 	/* Reset DINK timers */
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < (8 + 1); i++) // #8 is ADC timer! -dink
 	{
 		m377.timers[i] = -1;
 		m377.reload[i] = -1;
@@ -1157,13 +1322,17 @@ void M377Reset()
 static void m37710_clock_timers(INT32 clkcnt)
 {
 	for (INT32 c = 0; c < clkcnt; c++) {
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < (8 + 1); i++) {
 			if (m377.timers[i] > 0) { // active
 				m377.timers[i]--;
 				if (m377.timers[i] <= 0) { // timer hits!
 					m377.timers[i] = -1; // disable this timer
-
-					m37710_timer_cb(i);
+					//bprintf(0, _T("timer %x hits!\n"), i);
+					if (i == 8) {
+						m37710_adc_cb();
+					} else {
+						m37710_timer_cb(i);
+					}
 				}
 			}
 		}
@@ -1199,10 +1368,22 @@ INT32 M377Idle(INT32 cycles)
 	return cycles;
 }
 
+INT32 M377GetPC()
+{
+	return REG_PB | REG_PC;
+}
+
+INT32 M377GetPPC()
+{
+	return REG_PB | REG_PPC;
+}
+
 /* Execute some instructions */
 INT32 M377Run(INT32 cycles)
 {
 	m377.end_run = 0;
+	m377.ICount = cycles;
+	m377.segment_cycles = cycles;
 
 	m37710i_update_irqs();
 
@@ -1277,7 +1458,7 @@ INT32 M377Scan(INT32 nAction)
 		return 1;
 	}
 
-	ScanVar(internal_ram, 0x800, "M377xx Int.RAM");
+	ScanVar(internal_ram, (m377.subtype == M37710) ? 0x800 : 0x200, "M377xx Int.RAM");
 
 	SCAN_VAR(m377);
 
@@ -1288,7 +1469,7 @@ INT32 M377Scan(INT32 nAction)
 	return 0;
 }
 
-void M377Init(INT32 cpunum)
+void M377Init(INT32 cpunum, INT32 cputype)
 {
 	cpunum = cpunum; // dummy
 
@@ -1296,15 +1477,28 @@ void M377Init(INT32 cpunum)
 		mem[i] = (UINT8**)BurnMalloc(((address_mask / page_size) + 1) * sizeof(UINT8**));
 		memset (mem[i], 0, ((address_mask / page_size) + 1) * sizeof(UINT8**));
 	}
+	mem_flags = (UINT8*)BurnMalloc(((address_mask / page_size) + 1) * sizeof(UINT8));
+	memset(mem_flags, 0, ((address_mask / page_size) + 1) * sizeof(UINT8));
 
 	internal_ram = (UINT8*)BurnMalloc(0x800);
 
-	M377MapMemory(internal_ram, 0x80, 0x87f, MAP_RAM);
+	switch (cputype) {
+		case M37702:
+			M377MapMemory(internal_ram, 0x80, 0x27f, MAP_RAM);
+			break;
+		case M37710:
+			M377MapMemory(internal_ram, 0x80, 0x87f, MAP_RAM);
+			break;
+		default:
+			bprintf(0, _T("M377Init(%d, %d): Invalid CPUtype (2nd parameter)!\n"), cpunum, cputype);
+	}
 
 	memset(&m377, 0, sizeof(m377));
 	memset(internal_ram, 0, 0x800);
 
-	for (int i = 0; i < 8; i++)
+	m377.subtype = cputype;
+
+	for (int i = 0; i < (8 + 1); i++)
 	{
 		m377.timers[i] = -1;
 		m377.reload[i] = -1;
@@ -1320,6 +1514,7 @@ void M377Exit()
 	}
 
 	BurnFree(internal_ram);
+	BurnFree(mem_flags);
 }
 
 void M377SetIRQLine(INT32 inputnum, INT32 state)
@@ -1349,6 +1544,7 @@ void M377SetIRQLine(INT32 inputnum, INT32 state)
 
 static void m37710i_set_execution_mode(UINT32 mode)
 {
+	//bprintf(0, _T("** M377xx: set execution mode %x   PC: %x\n"), mode, M377GetPC());
 	m_opcodes = m37710i_opcodes[mode];
 	m_opcodes42 = m37710i_opcodes2[mode];
 	m_opcodes89 = m37710i_opcodes3[mode];
@@ -1356,6 +1552,7 @@ static void m37710i_set_execution_mode(UINT32 mode)
 	m_set_reg = m37710i_set_reg[mode];
 	m_set_line = m37710i_set_line[mode];
 	m_execute = m37710i_execute[mode];
+	m_setflag = m37710i_setflag[mode];
 }
 
 

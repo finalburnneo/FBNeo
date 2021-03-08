@@ -39,6 +39,7 @@ struct C140_VOICE
 // ======================> c140_device
 
 void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom);
+void c140_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz);
 void c140_exit();
 void c140_reset();
 void c140_scan(INT32 nAction, INT32 *pnMin);

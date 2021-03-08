@@ -1396,6 +1396,7 @@ static void namcos2_sound_init()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	c140_init(21333, C140_TYPE_SYSTEM2, DrvSndROM);
+	c140_set_sync(M6809TotalCycles, 2048000);
 }
 
 static void namcos2_mcu_init()

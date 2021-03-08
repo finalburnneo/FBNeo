@@ -266,6 +266,7 @@ static struct BurnInputInfo HiimpactInputList[] = {
 	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",					BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
 	{"P2 Up",					BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
 	{"P2 Down",					BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
 	{"P2 Left",					BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
@@ -273,6 +274,7 @@ static struct BurnInputInfo HiimpactInputList[] = {
 	{"P2 Button 1",				BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 
 	{"P3 Coin",					BIT_DIGITAL,	DrvJoy2 + 7,	"p3 coin"	},
+	{"P3 Start",				BIT_DIGITAL,	DrvJoy2 + 9,	"p3 start"	},
 	{"P3 Up",					BIT_DIGITAL,	DrvJoy2 + 11,	"p3 up"		},
 	{"P3 Down",					BIT_DIGITAL,	DrvJoy2 + 12,	"p3 down"	},
 	{"P3 Left",					BIT_DIGITAL,	DrvJoy2 + 13,	"p3 left"	},
@@ -280,6 +282,7 @@ static struct BurnInputInfo HiimpactInputList[] = {
 	{"P3 Button 1",				BIT_DIGITAL,	DrvJoy2 + 15,	"p3 fire 1"	},
 
 	{"P4 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p4 coin"	},
+	{"P4 Start",				BIT_DIGITAL,	DrvJoy2 + 10,	"p4 start"	},
 	{"P4 Up",					BIT_DIGITAL,	DrvJoy3 + 0,	"p4 up"		},
 	{"P4 Down",					BIT_DIGITAL,	DrvJoy3 + 1,	"p4 down"	},
 	{"P4 Left",					BIT_DIGITAL,	DrvJoy3 + 2,	"p4 left"	},
@@ -515,7 +518,7 @@ STDDIPINFO(Trog)
 
 static struct BurnDIPInfo HiimpactDIPList[]=
 {
-	DIP_OFFSET(0x1d)
+	DIP_OFFSET(0x20)
 	{0x00, 0xff, 0xff, 0xf8, NULL					},
 	{0x01, 0xff, 0xff, 0xf1, NULL					},
 
@@ -564,7 +567,7 @@ STDDIPINFO(Hiimpact)
 
 static struct BurnDIPInfo ShimpactDIPList[]=
 {
-	DIP_OFFSET(0x1d)
+	DIP_OFFSET(0x20)
 	{0x00, 0xff, 0xff, 0xf8, NULL					},
 	{0x01, 0xff, 0xff, 0xf1, NULL					},
 

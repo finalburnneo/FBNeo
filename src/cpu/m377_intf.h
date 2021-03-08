@@ -2,7 +2,11 @@
 
 #include "m37710.h"
 
-void M377Init(INT32 cpunum);
+// cpu types:
+//#define M37702 (1 << 0)  // from m37710.h
+//#define M37710 (1 << 1)
+
+void M377Init(INT32 cpunum, INT32 cputype);
 void M377Exit();
 void M377Open(INT32 cpunum);
 void M377Close();
@@ -14,7 +18,9 @@ void M377SetWriteByteHandler(void (*write)(UINT32,UINT8));
 void M377SetWriteWordHandler(void (*write)(UINT32,UINT16));
 void M377SetReadByteHandler(UINT8  (*read)(UINT32));
 void M377SetReadWordHandler(UINT16 (*read)(UINT32));
-void M377MapMemory(UINT8 *ptr, UINT64 start, UINT64 end, UINT32 flags);
+void M377MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
+
+#define M377_MEM_ENDISWAP 0x8000 // M377MapMemory() flag
 
 void M377Reset();
 void M377NewFrame();
@@ -24,6 +30,8 @@ INT32 M377Idle(INT32 cycles);
 void M377RunEnd();
 void M377SetIRQLine(INT32 inputnum, INT32 state);
 INT32 M377GetActive();
+INT32 M377GetPC();
+INT32 M377GetPPC();
 
 void M377WriteWord(UINT32 address, UINT16 data);
 void M377WriteByte(UINT32 address, UINT8 data);

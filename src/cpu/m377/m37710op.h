@@ -4,29 +4,19 @@
 
 #undef FLAG_SET_M
 #undef FLAG_SET_X
-#undef m37710i_set_flag_mx
-#undef m37710i_set_reg_p
 
 #if EXECUTION_MODE == EXECUTION_MODE_M0X0
 #define FLAG_SET_M 0
 #define FLAG_SET_X 0
-#define m37710i_set_flag_mx m37710i_set_flag_m0x0
-#define m37710i_set_reg_p m37710i_set_reg_p_m0x0
 #elif EXECUTION_MODE == EXECUTION_MODE_M0X1
 #define FLAG_SET_M 0
 #define FLAG_SET_X 1
-#define m37710i_set_flag_mx m37710i_set_flag_m0x1
-#define m37710i_set_reg_p m37710i_set_reg_p_m0x1
 #elif EXECUTION_MODE == EXECUTION_MODE_M1X0
 #define FLAG_SET_M 1
 #define FLAG_SET_X 0
-#define m37710i_set_flag_mx m37710i_set_flag_m1x0
-#define m37710i_set_reg_p m37710i_set_reg_p_m1x0
 #elif EXECUTION_MODE == EXECUTION_MODE_M1X1
 #define FLAG_SET_M 1
 #define FLAG_SET_X 1
-#define m37710i_set_flag_mx m37710i_set_flag_m1x1
-#define m37710i_set_reg_p m37710i_set_reg_p_m1x1
 #endif
 
 /* ======================================================================== */
@@ -35,61 +25,6 @@
 
 /* note: difference from 65816.  when switching to 8-bit X/Y, X and Y are *not* truncated
    to 8 bits! */
-
-void m37710i_set_flag_mx(UINT32 value)
-{
-#if FLAG_SET_M
-	if(!(value & FLAGPOS_M))
-	{
-		REG_A |= REG_B;
-		REG_B = 0;
-		REG_BA |= REG_BB;
-		REG_BB = 0;
-		FLAG_M = MFLAG_CLEAR;
-	}
-#else
-	if(value & FLAGPOS_M)
-	{
-		REG_B = REG_A & 0xff00;
-		REG_A = MAKE_UINT_8(REG_A);
-		REG_BB = REG_BA & 0xff00;
-		REG_BA = MAKE_UINT_8(REG_BA);
-		FLAG_M = MFLAG_SET;
-	}
-#endif
-#if FLAG_SET_X
-	if(!(value & FLAGPOS_X))
-	{
-		REG_X |= REG_XH;
-		REG_XH = 0;
-		REG_Y |= REG_YH;
-		REG_YH = 0;
-		FLAG_X = XFLAG_CLEAR;
-	}
-#else
-	if(value & FLAGPOS_X)
-	{
-		REG_XH = REG_X & 0xff00;
-		REG_X = MAKE_UINT_8(REG_X);
-		REG_YH = REG_Y & 0xff00;
-		REG_Y = MAKE_UINT_8(REG_Y);
-		FLAG_X = XFLAG_SET;
-	}
-#endif
-	m37710i_set_execution_mode((FLAG_M>>4) | (FLAG_X>>4));
-}
-
-
-void m37710i_set_reg_p(UINT32 value)
-{
-	FLAG_N = value;
-	FLAG_V = value << 1;
-	FLAG_D = value & FLAGPOS_D;
-	FLAG_Z = !(value & FLAGPOS_Z);
-	FLAG_C = value << 8;
-	m37710i_set_flag_mx(value);
-	FLAG_I = value & FLAGPOS_I;
-}
 
 
 /* ======================================================================== */
@@ -1886,7 +1821,7 @@ void m37710i_set_reg_p(UINT32 value)
 /* M37710 unimplemented opcode */
 #undef OP_UNIMP
 #define OP_UNIMP()                                                          \
-	logerror("error M37710: UNIMPLEMENTED OPCODE!  K=%x PC=%x\n", REG_PB, REG_PPC);
+	bprintf(0, _T("error M37710: UNIMPLEMENTED OPCODE!  K=%x  PC=%x  PPC=%x\n"), REG_PB, REG_PC, REG_PPC);
 
 /* ======================================================================== */
 /* ======================== OPCODE & FUNCTION TABLES ====================== */
@@ -1895,6 +1830,8 @@ void m37710i_set_reg_p(UINT32 value)
 #undef OP
 #undef O
 #undef TABLE_OPCODES
+#undef TABLE_OPCODES2
+#undef TABLE_OPCODES3
 #undef TABLE_FUNCTION
 
 #if !FLAG_SET_M && !FLAG_SET_X
@@ -2519,6 +2456,7 @@ TABLE_FUNCTION(void, set_line, (int line, int state))
 				case ASSERT_LINE:
 				case PULSE_LINE:
 				case HOLD_LINE:
+				case CPU_IRQSTATUS_HOLD:
 					LINE_IRQ |= (1 << line);
 					if (m37710_irq_levels[line])
 					{
@@ -2586,14 +2524,16 @@ TABLE_FUNCTION(int, execute, (int clocks))
 {
 	if(!CPU_STOPPED)
 	{
-		CLOCKS = clocks;
+		//extern int counter;
 		do
 		{
+			m37710i_update_irqs();
 			REG_PPC = REG_PC;
 			//M37710_CALL_DEBUGGER(REG_PB | REG_PC);
 			REG_PC++;
 			REG_IR = read_8_IMM(REG_PB | REG_PPC);
 			(*m_opcodes[REG_IR])();
+			//if (counter) bprintf(0, _T("pc:  %x\tppc:  %x\n"),REG_PB | REG_PC, REG_PB | REG_PPC);
 		} while(CLOCKS > 0 && !m377.end_run);
 		return CLOCKS; // CLOCKS is m377.ICount
 	}
@@ -2605,5 +2545,3 @@ TABLE_FUNCTION(int, execute, (int clocks))
 /* ======================================================================== */
 /* ================================== EOF ================================= */
 /* ======================================================================== */
-#undef TABLE_OPCODES2
-#undef TABLE_OPCODES3

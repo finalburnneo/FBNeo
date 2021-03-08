@@ -691,6 +691,7 @@ static void m37710_recalc_timer(int timer)
 					//time = attotime::from_hz(unscaled_clock()) * tscales[m377.m37710_regs[0x56+timer]>>6];
 					time = tscales[m377.m37710_regs[0x56+timer]>>6];
 					time *= (tval + 1);
+					time /= 2; // cpu internal divider
 
 					#if M37710_DEBUG
 					logerror("Timer %d in timer mode, %f Hz\n", timer, 1.0 / time.as_double());
@@ -727,6 +728,7 @@ static void m37710_recalc_timer(int timer)
 				case 0:         // timer mode
 					time = tscales[m377.m37710_regs[0x56+timer]>>6];
 					time *= (tval + 1);
+					time /= 2; // cpu internal divider
 
 					#if M37710_DEBUG
 					logerror("Timer %d in timer mode, %f Hz\n", timer, 1.0 / time.as_double());

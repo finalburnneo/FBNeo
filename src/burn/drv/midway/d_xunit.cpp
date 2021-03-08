@@ -946,7 +946,7 @@ struct BurnDriver BurnDrvRevx = {
 	BDF_GAME_WORKING, 3, HARDWARE_PREFIX_MIDWAY, GBF_SHOOT, 0,
 	NULL, revxRomInfo, revxRomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
-	400, 256, 4, 3
+	400, 254, 4, 3
 };
 
 
@@ -1017,5 +1017,5 @@ struct BurnDriver BurnDrvRevxp5 = {
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_MIDWAY, GBF_SHOOT, 0,
 	NULL, revxp5RomInfo, revxp5RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
-	400, 256, 4, 3
+	400, 254, 4, 3
 };

@@ -1,5 +1,7 @@
 // fb neo m37710 / m37702 cpu intf
 
+// Internal Divider / 2!
+
 #include "m37710.h"
 
 // cpu types:

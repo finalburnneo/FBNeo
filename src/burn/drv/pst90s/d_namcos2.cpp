@@ -155,6 +155,7 @@ static INT16 DrvGun3 = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
 static INT32 is_metlhawk = 0;
+static INT32 is_phelios = 0;
 
 static INT32 weird_vbl = 0;
 
@@ -2201,6 +2202,7 @@ static INT32 Namcos2Exit()
 	is_dirtfoxj = 0;
 	is_luckywld = 0;
 	is_metlhawk = 0;
+	is_phelios = 0;
 
 	weird_vbl = 0;
 
@@ -3067,7 +3069,8 @@ static INT32 DrvDraw()
 
 		apply_clip();
 
-		INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
+		INT32 roz_enable = ((gfx_ctrl & 0x7000) || is_phelios) ? 1 : 0;
+		// roz speed-up N/A for phelios (st.3)
 
 		if (roz_enable) predraw_roz_layer();
 
@@ -4361,6 +4364,8 @@ static UINT16 phelios_key_read(UINT8 offset)
 
 static INT32 PheliosInit()
 {
+	is_phelios = 1;
+
 	return Namcos2Init(NULL, phelios_key_read);
 }
 

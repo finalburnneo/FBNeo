@@ -67,6 +67,8 @@ static struct BurnInputInfo RevxInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy3 + 4,	"diag"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
+	{"Volume Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p1 fire 7"	},
+	{"Volume Up",		BIT_DIGITAL,	DrvJoy3 + 12,	"p1 fire 8"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
@@ -76,7 +78,7 @@ STDINPUTINFO(Revx)
 
 static struct BurnDIPInfo RevxDIPList[]=
 {
-	DIP_OFFSET(0x16)
+	DIP_OFFSET(0x18)
 	{0x00, 0xff, 0xff, 0x7c, NULL					},
 	{0x01, 0xff, 0xff, 0xff, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},

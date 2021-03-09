@@ -599,7 +599,7 @@ static INT32 DrvCached = 0;
 
 static void BurnCacheSizeAspect_Internal()
 {
-	BurnDrvGetVisibleSize(&DrvX, &DrvY);
+	BurnDrvGetFullSize(&DrvX, &DrvY);
 	BurnDrvGetAspect(&DrvAspectX, &DrvAspectY);
 	DrvCached = 1;
 }

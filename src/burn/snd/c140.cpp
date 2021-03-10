@@ -92,20 +92,23 @@ static C140_VOICE m_voi[C140_MAX_VOICE];
 // stream sync
 static INT32 (*pTotalCyclesCB)();
 static INT32 nCpuMHZ;
+static INT32 uses_sync;
 
 static INT32 SyncUPD(INT32 cycles)
 {
-	return (INT32)((double)cycles * ((double)(pTotalCyclesCB()) / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
+	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
 }
 
 static INT32 samples_to_source(INT32 samples) {
-	return (INT32)((double)((double)nSampleSize * samples) / (1 << 16));
+	return (INT32)((double)((double)((double)nSampleSize * samples) / (1 << 16)) + 0.5);
 }
 
 void c140_update_INT(INT32 samples_len); //forward
 
 static void UpdateStream(INT32 end)
 {
+	if (end == 0 && uses_sync == 0) return;
+
 	INT32 framelen = samples_to_source(nBurnSoundLen);
 	INT32 position = (end) ? framelen : SyncUPD(framelen);
 
@@ -116,13 +119,13 @@ static void UpdateStream(INT32 end)
 	c140_update_INT(samples);
 
 	nPosition += samples;
-	//bprintf(0, _T("%d  c140:  updating  pos %d\t%d\tof\t%d\n"), nCurrentFrame, nPosition, samples, framelen);
 }
 
 void c140_set_sync(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
 {
 	pTotalCyclesCB = pCPUCyclesCB;
 	nCpuMHZ = nCPUMhz;
+	uses_sync = 1;
 }
 
 //**************************************************************************
@@ -217,6 +220,8 @@ void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom)
 	nSampleSize = (double)m_sample_rate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nPosition = 0;
+
+	uses_sync = 0;
 }
 
 void c140_exit()
@@ -267,14 +272,6 @@ void c140_update_INT(INT32 samples_len)
 	float   pbase=(float)m_baserate*2.0 / (float)m_sample_rate;
 
 	INT16   *lmix, *rmix;
-
-/*	if (samples_len != nBurnSoundLen) {
-		bprintf(0, _T("c140_update(): once per frame, please!\n"));
-		return;
-	}*/
-
-//	INT32 nSamplesNeeded = ((((((m_sample_rate * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
-//	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
 
 	INT32 nSamplesNeeded = samples_len;
 
@@ -445,6 +442,11 @@ void c140_update_INT(INT32 samples_len)
 
 void c140_update(INT16 *outputs, INT32 samples_len)
 {
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("c140_update(): once per frame, please!\n"));
+		return;
+	}
+
 	UpdateStream(1);
 
 	INT16 *pBufL = m_mixer_buffer_left  + 5;
@@ -486,7 +488,6 @@ void c140_update(INT16 *outputs, INT32 samples_len)
 		nFractionalPosition &= 0xFFFF;
 
 		nPosition = nExtraSamples;
-		//bprintf(0, _T("--end  extra samples: %d\n"), nPosition);
 	}
 }
 

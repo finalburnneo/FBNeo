@@ -1031,6 +1031,7 @@ DRV		BurnDrvgg_bakubakuu;
 DRV		BurnDrvgg_bakubakuj;
 DRV		BurnDrvngpc_bakumats;
 DRV		BurnDrvBakubrkr;
+DRV		BurnDrvBkrtmaq;
 DRV		BurnDrvBakutotu;
 DRV		BurnDrvfds_bakutpatkun;
 DRV		BurnDrvBalcube;
@@ -2773,6 +2774,8 @@ DRV		BurnDrvmd_cosmic;
 DRV		BurnSpecCosmicwartoad;
 DRV		BurnDrvMSX_cosmo;
 DRV		BurnDrvMSX_cosmoa;
+DRV		BurnDrvCgangpzlj;
+DRV		BurnDrvCgangpzl;
 DRV		BurnDrvCosmogng;
 DRV		BurnDrvnes_cosmogenesis;
 DRV		BurnDrvGalivan3;
@@ -4156,6 +4159,9 @@ DRV		BurnDrvmd_elit96;
 DRV		BurnDrvnes_elnarknozaihou;
 DRV		BurnSpecElstompo;
 DRV		BurnSpecelvewarr;
+DRV		BurnDrvEmeraldaj;
+DRV		BurnDrvEmeraldaja;
+DRV		BurnDrvEmeralda;
 DRV		BurnSpecemilbutrafutbol;
 DRV		BurnSpecemilsanchgslam;
 DRV		BurnDrvnes_empircit;
@@ -4304,6 +4310,8 @@ DRV		BurnDrvExtrmatn;
 DRV		BurnDrvMSX_extermin;
 DRV		BurnDrvExterm;
 DRV		BurnDrvExtdwnhl;
+DRV		BurnDrvExvaniaj;
+DRV		BurnDrvExvania;
 DRV		BurnDrvExzisusa;
 DRV		BurnDrvExzisus;
 DRV		BurnDrvExzisust;
@@ -4352,6 +4360,7 @@ DRV		BurnDrvmd_f22;
 DRV		BurnDrvmd_f22p;
 DRV		BurnDrvmd_f22j;
 DRV		BurnDrvFx;
+DRV		BurnDrvFa;
 DRV		BurnDrvmd_f1;
 DRV		BurnDrvsms_f1;
 DRV		BurnDrvgg_f1;
@@ -4562,6 +4571,7 @@ DRV		BurnDrvmd_fifa2k10;
 DRV		BurnDrvmd_fifa2k2;
 DRV		BurnDrvfightfev;
 DRV		BurnDrvfightfeva;
+DRV		BurnDrvFghtatck;
 DRV		BurnDrvFghthistjb;
 DRV		BurnDrvFghthistja;
 DRV		BurnDrvFghthistj;
@@ -7126,6 +7136,9 @@ DRV		BurnDrvKnockout;
 DRV		BurnDrvKBashk;
 DRV		BurnDrvKbash2;
 DRV		BurnDrvKBash;
+DRV		BurnDrvKnckheadj;
+DRV		BurnDrvKnckheadjp;
+DRV		BurnDrvKnckhead;
 DRV		BurnDrvMSX_knucklej;
 DRV		BurnDrvKncljoe;
 DRV		BurnDrvKncljoea;
@@ -9104,6 +9117,7 @@ DRV		BurnDrvnes_nescape;
 DRV		BurnDrvMSX_nkoshien;
 DRV		BurnDrvNetwars;
 DRV		BurnSpecnetherworld;
+DRV		BurnDrvQuiztou;
 DRV		BurnDrvpce_neutopi2;
 DRV		BurnDrvtg_neutopi2;
 DRV		BurnDrvpce_neutopia;
@@ -9397,6 +9411,8 @@ DRV		BurnDrvNova2001u;
 DRV		BurnDrvcv_novablst;
 DRV		BurnDrvnes_novasqu;
 DRV		BurnDrvMSX_Nuclearbowls;
+DRV		BurnDrvNumanathj;
+DRV		BurnDrvNumanath;
 DRV		BurnDrvcv_numbump;
 DRV		BurnDrvNunchaku;
 DRV		BurnDrvnes_nutsmilk;
@@ -13685,6 +13701,9 @@ DRV		BurnDrvpce_svolley;
 DRV		BurnDrvtg_svolley;
 DRV		BurnDrvsms_wboymlndj;
 DRV		BurnSpecSuperwonderboy;
+DRV		BurnDrvSwcourtj;
+DRV		BurnDrvSwcourt;
+DRV		BurnDrvSwcourtb;
 DRV		BurnDrvSws92;
 DRV		BurnDrvSws92g;
 DRV		BurnDrvSws93;
@@ -14879,6 +14898,7 @@ DRV		BurnDrvnes_tinasadvisl;
 DRV		BurnDrvnes_tinasadvislii;
 DRV		BurnDrvmd_tinheads;
 DRV		BurnDrvmd_tinhead;
+DRV		BurnDrvTinklpit;
 DRV		BurnDrvmd_tintin;
 DRV		BurnDrvgg_tintin;
 DRV		BurnSpectintmoon;
@@ -16243,6 +16263,7 @@ DRV		BurnDrvXmultipl;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvXsedae;			// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvXday2;
 DRV		BurnDrvXmen2pa;
 DRV		BurnDrvXmen2pe;
 DRV		BurnDrvXmen2pj;
@@ -17662,6 +17683,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_bakubakuj,		// Baku Baku Animal - Sekai Shiikugakari Senshu-ken (Jpn)
 	&BurnDrvngpc_bakumats,		// Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Jpn)
 	&BurnDrvBakubrkr,			// Bakuretsu Breaker (Japan)
+	&BurnDrvBkrtmaq,			// Bakuretsu Quiz Ma-Q Dai Bouken (Japan)
 	&BurnDrvBakutotu,			// Bakutotsu Kijuutei
 	&BurnDrvfds_bakutpatkun,	// Bakutoushi Patton-kun (Japan)
 	&BurnDrvBalcube,			// Bal Cube
@@ -19404,6 +19426,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCosmicwartoad,		// Cosmic Wartoad
 	&BurnDrvMSX_cosmo,			// Cosmo (Jpn)
 	&BurnDrvMSX_cosmoa,			// Cosmo (Jpn, Alt)
+	&BurnDrvCgangpzlj,			// Cosmo Gang the Puzzle (Japan)
+	&BurnDrvCgangpzl,			// Cosmo Gang the Puzzle (US)
 	&BurnDrvCosmogng,			// Cosmo Gang the Video (US)
 	&BurnDrvnes_cosmogenesis,	// Cosmo Genesis (Japan)
 	&BurnDrvGalivan3,			// Cosmo Police Galivan (12/11/1985)
@@ -20787,6 +20811,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_elnarknozaihou,	// Elnark no Zaihou (Japan)
 	&BurnSpecElstompo,			// ElStompo (HB)
 	&BurnSpecelvewarr,			// Elven Warrior (48K)
+	&BurnDrvEmeraldaj,			// Emeraldia (Japan Version B)
+	&BurnDrvEmeraldaja,			// Emeraldia (Japan)
+	&BurnDrvEmeralda,			// Emeraldia (World)
 	&BurnSpecemilbutrafutbol,	// Emilio Butragueno Futbol (Spanish) (128K)
 	&BurnSpecemilsanchgslam,	// Emilio Sanchez Vicario Grand Slam (Spanish) (128K)
 	&BurnDrvnes_empircit,		// Empire City - 1931 (Japan)
@@ -20935,6 +20962,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_extermin,		// Exterminator (Euro)
 	&BurnDrvExterm,				// Exterminator
 	&BurnDrvExtdwnhl,			// Extreme Downhill (v1.5)
+	&BurnDrvExvaniaj,			// Exvania (Japan)
+	&BurnDrvExvania,			// Exvania (World)
 	&BurnDrvExzisusa,			// Exzisus (Japan, conversion)
 	&BurnDrvExzisus,			// Exzisus (Japan, dedicated)
 	&BurnDrvExzisust,			// Exzisus (TAD license)
@@ -20983,6 +21012,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_f22p,			// F-22 Interceptor (Euro, USA, Prototype)
 	&BurnDrvmd_f22j,			// F-22 Interceptor (Jpn)
 	&BurnDrvFx,					// F-X (bootleg of S.R.D. Mission)
+	&BurnDrvFa,					// F/A (Japan)
 	&BurnDrvmd_f1,				// F1 (Euro)
 	&BurnDrvsms_f1,				// F1 (Euro, Bra)
 	&BurnDrvgg_f1,				// F1 (Euro, USA)
@@ -21193,6 +21223,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_fifa2k2,			// FIFA World Cup 2002 (Rus)
 	&BurnDrvfightfev,			// Fight Fever (set 1)
 	&BurnDrvfightfeva,			// Fight Fever (set 2)
+	&BurnDrvFghtatck,			// Fighter & Attacker (US)
 	&BurnDrvFghthistjb,			// Fighter's History (Japan ver 41-04, DE-0380-1 PCB)
 	&BurnDrvFghthistja,			// Fighter's History (Japan ver 41-05, DE-0380-2 PCB)
 	&BurnDrvFghthistj,			// Fighter's History (Japan ver 41-07, DE-0395-1 PCB)
@@ -23757,6 +23788,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKBashk,				// Knuckle Bash (Korean PCB)
 	&BurnDrvKbash2,				// Knuckle Bash 2 (bootleg)
 	&BurnDrvKBash,				// Knuckle Bash
+	&BurnDrvKnckheadj,			// Knuckle Heads (Japan)
+	&BurnDrvKnckheadjp,			// Knuckle Heads (Japan, Prototype?)
+	&BurnDrvKnckhead,			// Knuckle Heads (World)
 	&BurnDrvMSX_knucklej,		// Knuckle Joe (Kor)
 	&BurnDrvKncljoe,			// Knuckle Joe (set 1)
 	&BurnDrvKncljoea,			// Knuckle Joe (set 2)
@@ -25735,6 +25769,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_nkoshien,		// Nessen Koushien (Jpn)
 	&BurnDrvNetwars,			// Net Wars
 	&BurnSpecnetherworld,		// Netherworld
+	&BurnDrvQuiztou,			// Nettou! Gekitou! Quiztou!! (Japan)
 	&BurnDrvpce_neutopi2,		// Neutopia II
 	&BurnDrvtg_neutopi2,		// Neutopia II
 	&BurnDrvpce_neutopia,		// Neutopia
@@ -26028,6 +26063,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_novablst,		// Nova Blast
 	&BurnDrvnes_novasqu,		// Nova the Squirrel (HB)
 	&BurnDrvMSX_Nuclearbowls,	// Nuclear Bowls
+	&BurnDrvNumanathj,			// Numan Athletics (Japan)
+	&BurnDrvNumanath,			// Numan Athletics (World)
 	&BurnDrvcv_numbump,			// Number Bumper
 	&BurnDrvNunchaku,			// Nunchackun
 	&BurnDrvnes_nutsmilk,		// Nuts & Milk (Japan)
@@ -30316,6 +30353,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_svolley,			// Super Volleyball
 	&BurnDrvsms_wboymlndj,		// Super Wonder Boy - Monster World (Jpn)
 	&BurnSpecSuperwonderboy,	// Super Wonder Boy
+	&BurnDrvSwcourtj,			// Super World Court (Japan)
+	&BurnDrvSwcourt,			// Super World Court (World)
+	&BurnDrvSwcourtb,			// Super World Court (World, bootleg)
 	&BurnDrvSws92,				// Super World Stadium '92 (Japan)
 	&BurnDrvSws92g,				// Super World Stadium '92 Gekitouban (Japan)
 	&BurnDrvSws93,				// Super World Stadium '93 (Japan)
@@ -31510,6 +31550,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tinasadvislii,	// Tina's Adventure Island II (USA)
 	&BurnDrvmd_tinheads,		// TinHead (Hack, Spanish)
 	&BurnDrvmd_tinhead,			// TinHead (USA)
+	&BurnDrvTinklpit,			// Tinkle Pit (Japan)
 	&BurnDrvmd_tintin,			// Tintin au Tibet (Euro)
 	&BurnDrvgg_tintin,			// Tintin in Tibet (Euro)
 	&BurnSpectintmoon,			// Tintin on the Moon
@@ -32874,6 +32915,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvXsedae,				// X Se Dae Quiz (Korea) [no comment, NOT WORKING]
 #endif
+	&BurnDrvXday2,				// X-Day 2 (Japan)
 	&BurnDrvXmen2pa,			// X-Men (2 Players ver AAA)
 	&BurnDrvXmen2pe,			// X-Men (2 Players ver EAA)
 	&BurnDrvXmen2pj,			// X-Men (2 Players ver JAA)

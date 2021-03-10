@@ -1166,7 +1166,7 @@ static void ViewEmma()
 	unsigned ThreadID = 0;
 	TCHAR szShellExURL[MAX_PATH];
 
-	_stprintf(szShellExURL, _T("http://www.progettoemma.net/gioco.php?&game=%s"), BurnDrvGetText(DRV_NAME));
+	_stprintf(szShellExURL, _T("http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=%s"), BurnDrvGetText(DRV_NAME));
 
 	hThread = (HANDLE)_beginthreadex(NULL, 0, DoShellExThread, (void*)szShellExURL, 0, &ThreadID);
 	Sleep(150); // allow arguments to pass to ShellExecute() in new thread before they get disposed.

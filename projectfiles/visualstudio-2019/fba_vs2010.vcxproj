@@ -568,6 +568,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />

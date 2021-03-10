@@ -4319,6 +4319,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

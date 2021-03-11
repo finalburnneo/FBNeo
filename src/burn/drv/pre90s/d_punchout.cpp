@@ -450,10 +450,10 @@ static UINT8 __fastcall punchout_read_port(UINT16 port)
 			return DrvInputs[1];
 
 		case 0x02:
-			return DrvDips[0];
+			return DrvDips[1];
 
 		case 0x03:
-			return (DrvDips[1] & 0xef) | ((vlm5030_bsy(0)) ? 0x00 : 0x10);
+			return (DrvDips[0] & 0xef) | ((vlm5030_bsy(0)) ? 0x00 : 0x10);
 	}
 
 	if ((port & 0x0f) == 0x07) return spunchout_prot_read(port);

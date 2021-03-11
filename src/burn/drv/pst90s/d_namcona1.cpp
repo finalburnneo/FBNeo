@@ -1517,7 +1517,7 @@ struct BurnDriver BurnDrvExvania = {
 	"exvania", NULL, NULL, NULL, "1992",
 	"Exvania (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, exvaniaRomInfo, exvaniaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	ExvaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1547,7 +1547,7 @@ struct BurnDriver BurnDrvExvaniaj = {
 	"exvaniaj", "exvania", NULL, NULL, "1992",
 	"Exvania (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, exvaniajRomInfo, exvaniajRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	ExvaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1661,7 +1661,7 @@ struct BurnDriver BurnDrvSwcourt = {
 	"swcourt", NULL, NULL, NULL, "1992",
 	"Super World Court (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtRomInfo, swcourtRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	SwcourtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1691,7 +1691,7 @@ struct BurnDriver BurnDrvSwcourtj = {
 	"swcourtj", "swcourt", NULL, NULL, "1992",
 	"Super World Court (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtjRomInfo, swcourtjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	SwcourtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1725,7 +1725,7 @@ struct BurnDriver BurnDrvSwcourtb = {
 	"swcourtb", "swcourt", NULL, NULL, "1994",
 	"Super World Court (World, bootleg)\0", NULL, "bootleg (Playmark?)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtbRomInfo, swcourtbRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	SwcourtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1855,7 +1855,7 @@ struct BurnDriver BurnDrvKnckhead = {
 	"knckhead", NULL, NULL, NULL, "1992",
 	"Knuckle Heads (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadRomInfo, knckheadRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	KnckheadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1889,7 +1889,7 @@ struct BurnDriver BurnDrvKnckheadj = {
 	"knckheadj", "knckhead", NULL, NULL, "1992",
 	"Knuckle Heads (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadjRomInfo, knckheadjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	KnckheadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1925,7 +1925,7 @@ struct BurnDriver BurnDrvKnckheadjp = {
 	"knckheadjp", "knckhead", NULL, NULL, "1992",
 	"Knuckle Heads (Japan, Prototype?)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadjpRomInfo, knckheadjpRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	KnckheadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -1972,7 +1972,7 @@ struct BurnDriver BurnDrvNumanath = {
 	"numanath", NULL, NULL, NULL, "1993",
 	"Numan Athletics (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, numanathRomInfo, numanathRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	NumanathInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
@@ -2006,7 +2006,7 @@ struct BurnDriver BurnDrvNumanathj = {
 	"numanathj", "numanath", NULL, NULL, "1993",
 	"Numan Athletics (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, numanathjRomInfo, numanathjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	NumanathInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3

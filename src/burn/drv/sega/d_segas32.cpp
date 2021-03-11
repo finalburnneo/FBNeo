@@ -1667,7 +1667,7 @@ static UINT16 system32_main_read_word(UINT32 address)
 		return sprite_control_read(offset);
 	}
 
-	if ((address & 0xf10000) == 0x600000) {
+	if ((address & 0xff0000) == 0x600000) {
 		INT32 offset = (address & 0xfffe) / 2;
 		return paletteram_read(0, offset);
 	}

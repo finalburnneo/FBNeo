@@ -2368,13 +2368,13 @@ struct BurnDriver BurnDrvNarc2 = {
 // Narc (rev 1.80)
 
 static struct BurnRomInfo narc1RomDesc[] = {
-	{ "rev2_narc_sound_rom_u4.u4",						0x10000, 0x450a591a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code (Sound)
-	{ "rev2_narc_sound_rom_u5.u5",						0x10000, 0xe551e5e3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rev1_narc_sound_rom_u4.u4",						0x10000, 0x345b5b0b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code (Sound)
+	{ "rev1_narc_sound_rom_u5.u5",						0x10000, 0xbfa112b7, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rev2_narc_sound_rom_u35.u35",					0x10000, 0x81295892, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 #1 Code (Sound)
-	{ "rev2_narc_sound_rom_u36.u36",					0x10000, 0x16cdbb13, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "rev1_narc_sound_rom_u35.u35",					0x10000, 0xc932e69f, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 #1 Code (Sound)
+	{ "rev1_narc_sound_rom_u36.u36",					0x10000, 0x974ad9f4, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rev1_narc_sound_rom_u37.u37",					0x10000, 0xb6469f79, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "rev1_narc_sound_rom_u38.u38",					0x10000, 0xc535d11c, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "rev1_narc_game_rom_u42.u42",						0x20000, 0x145e1346, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
 	{ "rev1_narc_game_rom_u24.u24",						0x20000, 0x6ac3ba9a, 3 | BRF_PRG | BRF_ESS }, //  7

@@ -1101,6 +1101,25 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 			fp = OpenPreview(nIndex, szPath);
 		}
 		if (fp) {
+			if (ax > 4) {
+				// Check if title/preview image is captured from 1 monitor on a
+				// multi-monitor game, then make the proper adjustments so it
+				// looks correct.
+				IMAGE img;
+				INT32 game_x, game_y;
+
+				PNGGetInfo(&img, fp);
+				rewind(fp);
+
+				BurnDrvGetFullSize(&game_x, &game_y);
+
+				if (img.width <= game_x / 2) {
+					ax = 4;
+					ay = 3;
+					x = 213;
+					y = x * ay / ax;
+				}
+			}
 			hNewImage = PNGLoadBitmap(hSelDlg, fp, x, y, 3);
 		}
 	}

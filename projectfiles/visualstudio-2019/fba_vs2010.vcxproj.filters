@@ -1060,6 +1060,9 @@
     <ClInclude Include="..\..\src\burn\snd\ymf271.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\cpu\m377\m37710.h">
+      <Filter>cpus\m377</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4319,6 +4322,12 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\m377\m37710.cpp">
+      <Filter>cpus\m377</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4560,6 +4569,9 @@
     </Filter>
     <Filter Include="cpus\tlcs900">
       <UniqueIdentifier>{f99a460c-59bd-4aa3-9fcd-4dabb2165835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\m377">
+      <UniqueIdentifier>{3ca2d32a-c268-4ec6-8dfc-ae6c73bcbc80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16399 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16402 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -834,6 +834,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_amc	|  	| Astro Marine Corps (Spa)				| 		| 1989	| Dinamic Softwa| MSX		| Uses joyport #2. Press 'M' for Grenade|
 | spec_astmarcs	|  	| Astro Marine Corps (Spanish) (Part 1 of 2)		| 		| 1989	| Dinamic Softwa| ZX Spectrum	| 					|
 | spec_astmarcs2|  	| Astro Marine Corps (Spanish) (Part 2 of 2)		| 		| 1989	| Dinamic Softwa| ZX Spectrum	| 					|
+| nes_astronm	|  	| Astro Ninja Man (HB)					| 		| 2020	| RiKi		| Miscellaneous	| 					|
 | msx_astroplm	|  	| Astro Plumber (Euro)					| 		| 1986	| Blue Ribbon So| MSX		| 					|
 | nes_astrorobosasa|  	| Astro Robo Sasa (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
 | sms_astrow	|  	| Astro Warrior (Jpn, USA, Bra)				| 		| 1986	| Sega		| Sega Master Sy| 					|
@@ -10119,6 +10120,7 @@ This list contains all games supported by FinalBurn Neo.
 | porter	|  	| Port Man (bootleg on Moon Cresta hardware)		| dockman	| 19??	| Nova Games Ltd| Galaxian	| 					|
 | portmanj	|  	| Port Man (Japan)					| dockman	| 1982	| Taito Corporat| Miscellaneous	| 					|
 | portman	|  	| Port Man						| dockman	| 1982	| Taito Corporat| Miscellaneous	| 					|
+| nes_porunchan	|  	| Porun-chan No Onigiri Daisuki (HB, v1.1)		| 		| 2019	| Mook-TV	| Miscellaneous	| 					|
 | sms_poseidon	|  	| Poseidon Wars 3-D (Euro, USA, Bra)			| 		| 1988	| Sega		| Sega Master Sy| 					|
 | poundforj	|  	| Pound for Pound (Japan)				| poundfor	| 1990	| Irem		| Irem M85	| 					|
 | poundforu	|  	| Pound for Pound (US)					| poundfor	| 1990	| Irem America	| Irem M85	| 					|
@@ -14970,6 +14972,7 @@ This list contains all games supported by FinalBurn Neo.
 | tron		|  	| Tron (8/9)						| 		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | tronger	|  	| Tron (Germany)					| tron		| 1982	| Bally Midway	| Miscellaneous	| 					|
 | spec_trooperpoint5|  	| Trooper Point 5 (HB)					| 		| 2010	| The Bog Brothe| ZX Spectrum	| 					|
+| nes_trophy	|  	| Trophy (HB)						| 		| 2020	| the 6502 colle| Miscellaneous	| 					|
 | trophyh	|  	| Trophy Hunting - Bear & Moose V1.00			| 		| 2002	| Sammy USA Corp| Newer Seta	| Hangs are normal, just wait it out.	|
 | troangel	|  	| Tropical Angel					| 		| 1983	| Irem		| Miscellaneous	| 					|
 | md_troubshts	|  	| Trouble Shooter (Hack, Spanish)			| md_troubsht	| 2018	| Vic Tokai	| Sega Megadrive| 					|

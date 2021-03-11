@@ -842,6 +842,7 @@ DRV		BurnDrvcv_astroinv;
 DRV		BurnDrvMSX_amc;
 DRV		BurnSpecastmarcs;
 DRV		BurnSpecastmarcs2;
+DRV		BurnDrvnes_astronm;
 DRV		BurnDrvMSX_astroplm;
 DRV		BurnDrvnes_astrorobosasa;
 DRV		BurnDrvsms_astrow;
@@ -10261,6 +10262,7 @@ DRV		BurnDrvPorky;
 DRV		BurnDrvPorter;
 DRV		BurnDrvPortmanj;
 DRV		BurnDrvPortman;
+DRV		BurnDrvnes_porunchan;
 DRV		BurnDrvsms_poseidon;
 DRV		BurnDrvPoundforj;
 DRV		BurnDrvPoundforu;
@@ -15180,6 +15182,7 @@ DRV		BurnDrvTron2;
 DRV		BurnDrvTron;
 DRV		BurnDrvTronger;
 DRV		BurnSpecTrooperpoint5;
+DRV		BurnDrvnes_trophy;
 DRV		BurnDrvTrophyh;
 DRV		BurnDrvTroangel;
 DRV		BurnDrvmd_troubshts;
@@ -17494,6 +17497,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_amc,			// Astro Marine Corps (Spa)
 	&BurnSpecastmarcs,			// Astro Marine Corps (Spanish) (Part 1 of 2)
 	&BurnSpecastmarcs2,			// Astro Marine Corps (Spanish) (Part 2 of 2)
+	&BurnDrvnes_astronm,		// Astro Ninja Man (HB)
 	&BurnDrvMSX_astroplm,		// Astro Plumber (Euro)
 	&BurnDrvnes_astrorobosasa,	// Astro Robo Sasa (Japan)
 	&BurnDrvsms_astrow,			// Astro Warrior (Jpn, USA, Bra)
@@ -26913,6 +26917,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPorter,				// Port Man (bootleg on Moon Cresta hardware)
 	&BurnDrvPortmanj,			// Port Man (Japan)
 	&BurnDrvPortman,			// Port Man
+	&BurnDrvnes_porunchan,		// Porun-chan No Onigiri Daisuki (HB, v1.1)
 	&BurnDrvsms_poseidon,		// Poseidon Wars 3-D (Euro, USA, Bra)
 	&BurnDrvPoundforj,			// Pound for Pound (Japan)
 	&BurnDrvPoundforu,			// Pound for Pound (US)
@@ -31832,6 +31837,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTron,				// Tron (8/9)
 	&BurnDrvTronger,			// Tron (Germany)
 	&BurnSpecTrooperpoint5,		// Trooper Point 5 (HB)
+	&BurnDrvnes_trophy,			// Trophy (HB)
 	&BurnDrvTrophyh,			// Trophy Hunting - Bear & Moose V1.00
 	&BurnDrvTroangel,			// Tropical Angel
 	&BurnDrvmd_troubshts,		// Trouble Shooter (Hack, Spanish)

@@ -726,6 +726,13 @@
 		<rom name="Astro Fang - Super Machine (T-eng).nes" size="262160" crc="cfdb30c9"/>
 		<driver status="good"/>
 	</game>
+	<game name="astronm">
+		<description>Astro Ninja Man (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>RiKi</manufacturer>
+		<rom name="Astro Ninja Man (2020)(RiKi).nes" size="786448" crc="f709e1e0"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrorobosasa">
 		<description>Astro Robo Sasa (Japan)</description>
 		<year>1985</year>
@@ -8622,6 +8629,13 @@
 		<rom name="Popeye (World) (Rev A).nes" size="24592" crc="fb1a91d0"/>
 		<driver status="good"/>
 	</game>
+	<game name="porunchan">
+		<description>Porun-chan No Onigiri Daisuki (HB, v1.1) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Mook-TV</manufacturer>
+		<rom name="Porun-chan no onigiri daisuki (v1.1-2019)(mook-tv).nes" size="262160" crc="e15026cd"/>
+		<driver status="good"/>
+	</game>
 	<game name="powerblade">
 		<description>Power Blade (USA)</description>
 		<year>1991</year>
@@ -11770,6 +11784,13 @@
 		<year>1987</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Trojan (USA).nes" size="131088" crc="cf378fb2"/>
+		<driver status="good"/>
+	</game>
+	<game name="trophy">
+		<description>Trophy (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>the 6502 collective</manufacturer>
+		<rom name="Trophy (2020)(the 6502 collective).nes" size="786448" crc="94c16bfc"/>
 		<driver status="good"/>
 	</game>
 	<game name="tsupparioozumou">

@@ -6168,6 +6168,13 @@
 		<rom name="mpr-15208.bin" size="524288" crc="8c2670de"/>
 		<driver status="good"/>
 	</game>
+	<game name="gravibots">
+		<description>GraviBots (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="gravibots (2021)(retrosouls).bin" size="1441792" crc="0d66d022"/>
+		<driver status="good"/>
+	</game>
 	<game name="greatcirj" cloneof="mickeycm" romof="mickeycm">
 		<description>Great Circus Mystery - Mickey to Minnie Magical Adventure 2 (Jpn)</description>
 		<year>1994</year>

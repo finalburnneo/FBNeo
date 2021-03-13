@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16402 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16403 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5539,6 +5539,7 @@ This list contains all games supported by FinalBurn Neo.
 | grasspin	|  	| Grasspin						| 		| 1983	| [Zilec Electro| Miscellaneous	| 					|
 | gratiaa	|  	| Gratia - Second Earth (ver 1.0, 91022-10 version)	| gratia	| 1996	| Jaleco	| MegaSystem 32	| 					|
 | gratia	|  	| Gratia - Second Earth (ver 1.0, 92047-01 version)	| 		| 1996	| Jaleco	| MegaSystem 32	| 					|
+| md_gravibots	|  	| GraviBots (HB)					| 		| 2021	| RetroSouls	| Sega Megadrive| 					|
 | spec_gravibots|  	| GraviBots (HB)					| 		| 2014	| RetroSouls	| ZX Spectrum	| 					|
 | gravitar1	|  	| Gravitar (version 1)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|
 | gravitar2	|  	| Gravitar (version 2)					| gravitar	| 1982	| Atari		| Miscellaneous	| 					|

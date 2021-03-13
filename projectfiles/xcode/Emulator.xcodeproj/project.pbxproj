@@ -996,6 +996,7 @@
 		FE556118258E95B600A19F2D /* palette_neon_intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */; };
 		FE55611C2590698100A19F2D /* d_lsasquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE55611B2590698100A19F2D /* d_lsasquad.cpp */; };
 		FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE65925223EFE87200CA92B2 /* d_stuntair.cpp */; };
+		FE68567C25FCB99800AF5DD4 /* d_namcona1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */; };
 		FE6BB4BD25AECE9A007AED57 /* tlc34076.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */; };
 		FE6BB4BF25AECEBE007AED57 /* d_btoads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE6BB4BE25AECEBE007AED57 /* d_btoads.cpp */; };
 		FE811005236B73BD000B5F73 /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = FE811004236B73BD000B5F73 /* m68kops.c */; };
@@ -2566,6 +2567,7 @@
 		FE55611B2590698100A19F2D /* d_lsasquad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_lsasquad.cpp; sourceTree = "<group>"; };
 		FE55611D25906B4E00A19F2D /* FinalBurn NeoDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FinalBurn NeoDebug.entitlements"; sourceTree = "<group>"; };
 		FE65925223EFE87200CA92B2 /* d_stuntair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stuntair.cpp; sourceTree = "<group>"; };
+		FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_namcona1.cpp; sourceTree = "<group>"; };
 		FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlc34076.cpp; sourceTree = "<group>"; };
 		FE6BB4BC25AECE99007AED57 /* tlc34076.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlc34076.h; sourceTree = "<group>"; };
 		FE6BB4BE25AECEBE007AED57 /* d_btoads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_btoads.cpp; sourceTree = "<group>"; };
@@ -3767,6 +3769,7 @@
 				FEDF04CB25EB476700F3EDD9 /* d_ms32.cpp */,
 				FE1B1F5B23561A680065200C /* d_mugsmash.cpp */,
 				FE1B1F3123561A680065200C /* d_mwarr.cpp */,
+				FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */,
 				FE1B1F6523561A680065200C /* d_namcos2.cpp */,
 				FE1B1F7A23561A690065200C /* d_news.cpp */,
 				FEECE408247AC896007724A2 /* d_ngp.cpp */,
@@ -5985,6 +5988,7 @@
 				FE1B264E23561A770065200C /* d_taitoh.cpp in Sources */,
 				FE1B25F423561A760065200C /* midwayic.cpp in Sources */,
 				FEFB2E7925A9A0A0005D9281 /* tms34010.cpp in Sources */,
+				FE68567C25FCB99800AF5DD4 /* d_namcona1.cpp in Sources */,
 				FE2E61282401030D00B7A8D2 /* i5000.cpp in Sources */,
 				FE1B244023561A750065200C /* 7zStream.c in Sources */,
 				FE1B256C23561A760065200C /* sys16_gfx.cpp in Sources */,

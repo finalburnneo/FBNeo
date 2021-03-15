@@ -25,6 +25,7 @@ MIPS3_X64_DYNAREC_DIR	:= $(FBNEO_CPU_DIR)/mips3/x64
 TMS34010_DIR			:= $(FBNEO_CPU_DIR)/tms34
 ADSP2100_DIR			:= $(FBNEO_CPU_DIR)/adsp2100
 M377_DIR				:= $(FBNEO_CPU_DIR)/m377
+I386_DIR				:= $(FBNEO_CPU_DIR)/i386
 
 BURN_BLACKLIST := $(FBNEO_CPU_DIR)/arm7/arm7exec.c \
 	$(FBNEO_CPU_DIR)/arm7/arm7core.c \
@@ -43,6 +44,13 @@ BURN_BLACKLIST := $(FBNEO_CPU_DIR)/arm7/arm7exec.c \
 	$(FBNEO_CPU_DIR)/sh2/mksh2-x86.cpp \
 	$(FBNEO_CPU_DIR)/m68k/m68kmake.c \
 	$(FBNEO_CPU_DIR)/m68k/m68kfpu.c \
+	$(I386_DIR)/i386dasm.c \
+	$(I386_DIR)/i386op16.c \
+	$(I386_DIR)/i386op32.c \
+	$(I386_DIR)/i386ops.c \
+	$(I386_DIR)/i486ops.c \
+	$(I386_DIR)/pentops.c \
+	$(I386_DIR)/x87ops.c \
 	$(FBNEO_BURNER_DIR)/wave_writer.cpp \
 	$(FBNEO_CPU_DIR)/m68k/m68kdasm.c \
 	$(FBNEO_LIBRETRO_DIR)/menu.cpp \
@@ -174,6 +182,7 @@ FBNEO_CPU_DIRS := $(FBNEO_CPU_DIR) \
 	$(FBNEO_CPU_DIR)/m6805 \
 	$(FBNEO_CPU_DIR)/m6809 \
 	$(M377_DIR) \
+	$(I386_DIR) \
 	$(M68K_DIR) \
 	$(MIPS3_DIR) \
 	$(FBNEO_CPU_DIR)/nec \

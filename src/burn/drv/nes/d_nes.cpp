@@ -24419,6 +24419,74 @@ struct BurnDriver BurnDrvnes_daoshuai = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_darklordRomDesc[] = {
+	{ "Dark Lord (Japan).nes",          393232, 0x1be8483a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_darklord)
+STD_ROM_FN(nes_darklord)
+
+struct BurnDriver BurnDrvnes_darklord = {
+	"nes_darklord", NULL, NULL, NULL, "1989?",
+	"Dark Lord (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_darklordRomInfo, nes_darklordRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_doublmoodenjRomDesc[] = {
+	{ "Double Moon Densetsu (Japan).nes",          524304, 0xe6ecf970, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doublmoodenj)
+STD_ROM_FN(nes_doublmoodenj)
+
+struct BurnDriver BurnDrvnes_doublmoodenj = {
+	"nes_doublmoodenj", "nes_doublmooden", NULL, NULL, "1992",
+	"Double Moon Densetsu (Japan)\0", NULL, "Masaya", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_doublmoodenjRomInfo, nes_doublmoodenjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_doublmoodenRomDesc[] = {
+	{ "Double Moon Densetsu (T-Eng).nes",          524304, 0x2c2c43a4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doublmooden)
+STD_ROM_FN(nes_doublmooden)
+
+struct BurnDriver BurnDrvnes_doublmooden = {
+	"nes_doublmooden", NULL, NULL, NULL, "1992",
+	"Double Moon Densetsu (T-Eng)\0", NULL, "Masaya", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_doublmoodenRomInfo, nes_doublmoodenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_jumpjumpRomDesc[] = {
+	{ "Jump-Jump (Unl).nes",          40976, 0x3fe43784, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jumpjump)
+STD_ROM_FN(nes_jumpjump)
+
+struct BurnDriver BurnDrvnes_jumpjump = {
+	"nes_jumpjump", NULL, NULL, NULL, "1989?",
+	"Jump-Jump (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_jumpjumpRomInfo, nes_jumpjumpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_darkmanRomDesc[] = {
 	{ "Darkman (USA).nes",          262160, 0x5438a0ac, BRF_ESS | BRF_PRG },
 };

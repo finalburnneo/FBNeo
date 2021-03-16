@@ -225,6 +225,21 @@ UINT32 intelflash_read(int chip, UINT32 address)
 	return data;
 }
 
+void intelflash_write_raw( int chip, UINT32 address, UINT8 value )
+{
+	struct flash_chip *c;
+	if( chip >= FLASH_CHIPS_MAX )
+	{
+		logerror( "intelflash_write: invalid chip %d\n", chip );
+		return;
+	}
+	c = &chips[ chip ];
+
+	UINT8 *flash_memory = (UINT8*)c->flash_memory;
+
+	flash_memory[address] = value;
+}
+
 void intelflash_write(int chip, UINT32 address, UINT32 data)
 {
 	struct flash_chip *c;

@@ -554,6 +554,11 @@ static void i386_check_irq_line(void)
 	if ( I.irq_line && I.IF )
 	{
 		i386_trap(I.irq_callback(0), 1);
+
+		if (I.irq_hold) {
+			I.irq_hold = 0;
+			I.irq_line = 0;
+		}
 	}
 }
 
@@ -905,6 +910,8 @@ INT32 i386Run(INT32 num_cycles)
 
 	while( I.cycles > 0 && cpu_running )
 	{
+		i386_check_irq_line();
+
 		I.operand_size = I.sreg[CS].d;
 		I.address_size = I.sreg[CS].d;
 		I.segment_prefix = 0;
@@ -938,11 +945,10 @@ void i386SetIRQLine(INT32 irqline, INT32 state)
 	}
 	else
 	{
-		if (state == CPU_IRQSTATUS_AUTO)
+		if (state == CPU_IRQSTATUS_AUTO || state == CPU_IRQSTATUS_HOLD)
 		{
 			I.irq_line = 1;
-			i386_check_irq_line();
-			I.irq_line = 0;
+			I.irq_hold = 1;
 		}
 		else
 		{

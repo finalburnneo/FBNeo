@@ -34,14 +34,14 @@ RETRO_BEGIN_DECLS
 
 struct item_file
 {
+   void *userdata;
+   void *actiondata;
    char *path;
    char *label;
    char *alt;
-   unsigned type;
    size_t directory_ptr;
    size_t entry_idx;
-   void *userdata;
-   void *actiondata;
+   unsigned type;
 };
 
 typedef struct file_list
@@ -69,6 +69,10 @@ void *file_list_get_actiondata_at_offset(const file_list_t *list,
  * @param list
  */
 void file_list_free(file_list_t *list);
+
+bool file_list_deinitialize(file_list_t *list);
+
+bool file_list_initialize(file_list_t *list);
 
 /**
  * @brief makes the list big enough to contain at least nitems

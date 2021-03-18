@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#ifdef WIN32
+#ifdef _WIN32
 #include <io.h>
 #endif
 #include <fcntl.h>
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     *  For each filename passed in on the command line, calculate the
     *  SHA-1 value and display it.
     */
-   for(i = 0; i < argc; i++)
+   for (i = 0; i < argc; i++)
    {
       /*
        *  We start the counter at 0 to guarantee entry into the for

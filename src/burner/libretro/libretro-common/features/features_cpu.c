@@ -45,6 +45,10 @@
 
 #if defined(_XBOX360)
 #include <PPCIntrinsics.h>
+#elif !defined(__MACH__) && (defined(__POWERPC__) || defined(__powerpc__) || defined(__ppc__) || defined(__PPC64__) || defined(__powerpc64__))
+#ifndef _PPU_INTRINSICS_H	
+#include <ppu_intrinsics.h>	
+#endif
 #elif defined(_POSIX_MONOTONIC_CLOCK) || defined(ANDROID) || defined(__QNX__) || defined(DJGPP)
 /* POSIX_MONOTONIC_CLOCK is not being defined in Android headers despite support being present. */
 #include <time.h>
@@ -56,7 +60,13 @@
 
 #if defined(PSP)
 #include <pspkernel.h>
+#endif
+
+#if defined(PSP) || defined(__PSL1GHT__)
 #include <sys/time.h>
+#endif
+
+#if defined(PSP)
 #include <psprtc.h>
 #endif
 
@@ -69,8 +79,8 @@
 #include <ps2sdkapi.h>
 #endif
 
-#if defined(__PSL1GHT__)
-#include <sys/time.h>
+#if !defined(__PSL1GHT__) && defined(__PS3__)
+#include <sys/sys_time.h>
 #endif
 
 #ifdef GEKKO
@@ -163,6 +173,10 @@ retro_perf_tick_t cpu_features_get_perf_counter(void)
    tv_sec     = (long)((ularge.QuadPart - epoch) / 10000000L);
    tv_usec    = (long)(system_time.wMilliseconds * 1000);
    time_ticks = (1000000 * tv_sec + tv_usec);
+#elif defined(GEKKO)
+   time_ticks = gettime();
+#elif !defined(__MACH__) && (defined(_XBOX360) || defined(__powerpc__) || defined(__ppc__) || defined(__POWERPC__) || defined(__PSL1GHT__) || defined(__PPC64__) || defined(__powerpc64__))
+   time_ticks = __mftb();
 #elif defined(_POSIX_MONOTONIC_CLOCK) || defined(__QNX__) || defined(ANDROID) || defined(__MACH__)
    struct timespec tv = {0};
    if (ra_clock_gettime(CLOCK_MONOTONIC, &tv) == 0)
@@ -177,10 +191,6 @@ retro_perf_tick_t cpu_features_get_perf_counter(void)
    time_ticks = (retro_perf_tick_t)a | ((retro_perf_tick_t)d << 32);
 #elif defined(__ARM_ARCH_6__)
    __asm__ volatile( "mrc p15, 0, %0, c9, c13, 0" : "=r"(time_ticks) );
-#elif defined(_XBOX360) || defined(__powerpc__) || defined(__ppc__) || defined(__POWERPC__) || defined(__PSL1GHT__)
-   time_ticks = __mftb();
-#elif defined(GEKKO)
-   time_ticks = gettime();
 #elif defined(PSP) || defined(VITA)
    time_ticks = sceKernelGetSystemTimeWide();
 #elif defined(PS2)
@@ -220,12 +230,16 @@ retro_time_t cpu_features_get_time_usec(void)
    return (count.QuadPart / freq.QuadPart * 1000000) + (count.QuadPart % freq.QuadPart * 1000000 / freq.QuadPart);
 #elif defined(__PSL1GHT__)
    return sysGetSystemTime();
+#elif !defined(__PSL1GHT__) && defined(__PS3__)
+   return sys_time_get_system_time();
 #elif defined(GEKKO)
    return ticks_to_microsecs(gettime());
 #elif defined(WIIU)
    return ticks_to_us(OSGetSystemTime());
 #elif defined(SWITCH) || defined(HAVE_LIBNX)
    return (svcGetSystemTick() * 10) / 192;
+#elif defined(_3DS)
+   return osGetTime() * 1000;
 #elif defined(_POSIX_MONOTONIC_CLOCK) || defined(__QNX__) || defined(ANDROID) || defined(__MACH__) || defined(DJGPP)
    struct timespec tv = {0};
    if (ra_clock_gettime(CLOCK_MONOTONIC, &tv) < 0)
@@ -237,8 +251,6 @@ retro_time_t cpu_features_get_time_usec(void)
    return ps2_clock() / PS2_CLOCKS_PER_MSEC * 1000;
 #elif defined(VITA) || defined(PSP)
    return sceKernelGetSystemTimeWide();
-#elif defined(_3DS)
-   return osGetTime() * 1000;
 #else
 #error "Your platform does not have a timer function implemented in cpu_features_get_time_usec(). Cannot continue."
 #endif
@@ -434,7 +446,7 @@ static void cpulist_parse(CpuList* list, char **buf, ssize_t length)
       for (val = start_value; val <= end_value; val++)
       {
          if ((unsigned)val < 32)
-            list->mask |= (uint32_t)(1U << val);
+            list->mask |= (uint32_t)(UINT32_C(1) << val);
       }
 
       /* Jump to next item */
@@ -486,6 +498,8 @@ unsigned cpu_features_get_core_amount(void)
    return 1;
 #elif defined(PSP) || defined(PS2)
    return 1;
+#elif defined(__PSL1GHT__) || !defined(__PSL1GHT__) && defined(__PS3__)
+   return 1; /* Only one PPU, SPUs don't really count */
 #elif defined(VITA)
    return 4;
 #elif defined(HAVE_LIBNX) || defined(SWITCH)

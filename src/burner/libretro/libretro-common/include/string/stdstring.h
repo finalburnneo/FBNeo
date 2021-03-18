@@ -35,6 +35,33 @@
 
 RETRO_BEGIN_DECLS
 
+#define STRLEN_CONST(x)                   ((sizeof((x))-1))
+
+#define strcpy_literal(a, b)              strcpy(a, b)
+
+#define string_is_not_equal(a, b)         !string_is_equal((a), (b))
+
+#define string_is_not_equal_fast(a, b, size) (memcmp(a, b, size) != 0)
+#define string_is_equal_fast(a, b, size)     (memcmp(a, b, size) == 0)
+
+#define TOLOWER(c)   ((c) |  (lr_char_props[(unsigned char)(c)] & 0x20))
+#define TOUPPER(c)   ((c) & ~(lr_char_props[(unsigned char)(c)] & 0x20))
+
+/* C standard says \f \v are space, but this one disagrees */
+#define ISSPACE(c)   (lr_char_props[(unsigned char)(c)] & 0x80) 
+
+#define ISDIGIT(c)   (lr_char_props[(unsigned char)(c)] & 0x40)
+#define ISALPHA(c)   (lr_char_props[(unsigned char)(c)] & 0x20)
+#define ISLOWER(c)   (lr_char_props[(unsigned char)(c)] & 0x04)
+#define ISUPPER(c)   (lr_char_props[(unsigned char)(c)] & 0x02)
+#define ISALNUM(c)   (lr_char_props[(unsigned char)(c)] & 0x60)
+#define ISUALPHA(c)  (lr_char_props[(unsigned char)(c)] & 0x28)
+#define ISUALNUM(c)  (lr_char_props[(unsigned char)(c)] & 0x68)
+#define IS_XDIGIT(c) (lr_char_props[(unsigned char)(c)] & 0x01)
+
+/* Deprecated alias, all callers should use string_is_equal_case_insensitive instead */
+#define string_is_equal_noncase string_is_equal_case_insensitive
+
 static INLINE bool string_is_empty(const char *data)
 {
    return !data || (*data == '\0');
@@ -45,32 +72,44 @@ static INLINE bool string_is_equal(const char *a, const char *b)
    return (a && b) ? !strcmp(a, b) : false;
 }
 
+static INLINE bool string_starts_with_size(const char *str, const char *prefix,
+      size_t size)
+{
+   return (str && prefix) ? !strncmp(prefix, str, size) : false;
+}
+
 static INLINE bool string_starts_with(const char *str, const char *prefix)
 {
    return (str && prefix) ? !strncmp(prefix, str, strlen(prefix)) : false;
 }
 
-static INLINE bool string_ends_with(const char *str, const char *suffix)
+static INLINE bool string_ends_with_size(const char *str, const char *suffix,
+      size_t str_len, size_t suffix_len)
 {
-   size_t str_len;
-   size_t suffix_len;
-
-   if (!str || !suffix)
-      return false;
-
-   str_len    = strlen(str);
-   suffix_len = strlen(suffix);
-
    return (str_len < suffix_len) ? false :
          !memcmp(suffix, str + (str_len - suffix_len), suffix_len);
 }
 
-#define STRLEN_CONST(x)                   ((sizeof((x))-1))
+static INLINE bool string_ends_with(const char *str, const char *suffix)
+{
+   if (!str || !suffix)
+      return false;
+   return string_ends_with_size(str, suffix, strlen(str), strlen(suffix));
+}
 
-#define string_is_not_equal(a, b)         !string_is_equal((a), (b))
+/* Returns the length of 'str' (c.f. strlen()), but only
+ * checks the first 'size' characters
+ * - If 'str' is NULL, returns 0
+ * - If 'str' is not NULL and no '\0' character is found
+ *   in the first 'size' characters, returns 'size' */
+static INLINE size_t strlen_size(const char *str, size_t size)
+{
+   size_t i = 0;
+   if (str)
+      while (i < size && str[i]) i++;
+   return i;
+}
 
-#define string_is_not_equal_fast(a, b, size) (memcmp(a, b, size) != 0)
-#define string_is_equal_fast(a, b, size)     (memcmp(a, b, size) == 0)
 
 static INLINE bool string_is_equal_case_insensitive(const char *a,
       const char *b)
@@ -83,24 +122,6 @@ static INLINE bool string_is_equal_case_insensitive(const char *a,
       return false;
    if (p1 == p2)
       return true;
-
-   while ((result = tolower (*p1) - tolower (*p2++)) == 0)
-      if (*p1++ == '\0')
-         break;
-
-   return (result == 0);
-}
-
-static INLINE bool string_is_equal_noncase(const char *a, const char *b)
-{
-   int result              = 0;
-   const unsigned char *p1 = (const unsigned char*)a;
-   const unsigned char *p2 = (const unsigned char*)b;
-
-   if (!a || !b)
-      return false;
-   if (p1 == p2)
-      return false;
 
    while ((result = tolower (*p1) - tolower (*p2++)) == 0)
       if (*p1++ == '\0')
@@ -141,7 +162,7 @@ char *word_wrap(char *buffer, const char *string,
  *    char *str      = "1,2,3,4,5,6,7,,,10,";
  *    char **str_ptr = &str;
  *    char *token    = NULL;
- *    while((token = string_tokenize(str_ptr, ",")))
+ *    while ((token = string_tokenize(str_ptr, ",")))
  *    {
  *        printf("%s\n", token);
  *        free(token);
@@ -169,6 +190,8 @@ unsigned string_hex_to_unsigned(const char *str);
 char *string_init(const char *src);
 
 void string_set(char **string, const char *src);
+
+extern const unsigned char lr_char_props[256];
 
 RETRO_END_DECLS
 

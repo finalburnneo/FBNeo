@@ -174,6 +174,10 @@ chd_error zlib_codec_init(void *codec, uint32_t hunkbytes)
 	else
 		err = CHDERR_NONE;
 
+   /* handle an error */
+   if (err != CHDERR_NONE)
+      free(data);
+
 	return err;
 }
 
@@ -225,7 +229,7 @@ chd_error zlib_codec_decompress(void *codec, const uint8_t *src, uint32_t comple
 
 	/* do it */
 	zerr = inflate(&data->inflater, Z_FINISH);
-    (void)zerr;
+   (void)zerr;
 	if (data->inflater.total_out != destlen)
 		return CHDERR_DECOMPRESSION_ERROR;
 
@@ -237,9 +241,14 @@ chd_error zlib_codec_decompress(void *codec, const uint8_t *src, uint32_t comple
     allocates and frees memory frequently
 -------------------------------------------------*/
 
+/* Huge alignment values for possible SIMD optimization by compiler (NEON, SSE, AVX) */
+#define ZLIB_MIN_ALIGNMENT_BITS 512
+#define ZLIB_MIN_ALIGNMENT_BYTES (ZLIB_MIN_ALIGNMENT_BITS / 8)
+
 voidpf zlib_fast_alloc(voidpf opaque, uInt items, uInt size)
 {
 	zlib_allocator *alloc = (zlib_allocator *)opaque;
+	uintptr_t paddr = 0;
 	UINT32 *ptr;
 	int i;
 
@@ -254,12 +263,14 @@ voidpf zlib_fast_alloc(voidpf opaque, uInt items, uInt size)
 		{
 			/* set the low bit of the size so we don't match next time */
 			*ptr |= 1;
-			return ptr + 1;
+
+			/* return aligned block address */
+			return (voidpf)(alloc->allocptr2[i]);
 		}
 	}
 
 	/* alloc a new one */
-	ptr = (UINT32 *)malloc(size + sizeof(UINT32));
+    ptr = (UINT32 *)malloc(size + sizeof(UINT32) + ZLIB_MIN_ALIGNMENT_BYTES);
 	if (!ptr)
 		return NULL;
 
@@ -268,12 +279,16 @@ voidpf zlib_fast_alloc(voidpf opaque, uInt items, uInt size)
 		if (!alloc->allocptr[i])
 		{
 			alloc->allocptr[i] = ptr;
+			paddr = (((uintptr_t)ptr) + sizeof(UINT32) + (ZLIB_MIN_ALIGNMENT_BYTES-1)) & (~(ZLIB_MIN_ALIGNMENT_BYTES-1));
+			alloc->allocptr2[i] = (uint32_t*)paddr;
 			break;
 		}
 
 	/* set the low bit of the size so we don't match next time */
 	*ptr = size | 1;
-	return ptr + 1;
+
+	/* return aligned block address */
+	return (voidpf)paddr;
 }
 
 /*-------------------------------------------------
@@ -284,15 +299,15 @@ voidpf zlib_fast_alloc(voidpf opaque, uInt items, uInt size)
 void zlib_fast_free(voidpf opaque, voidpf address)
 {
 	zlib_allocator *alloc = (zlib_allocator *)opaque;
-	UINT32 *ptr = (UINT32 *)address - 1;
+	UINT32 *ptr = (UINT32 *)address;
 	int i;
 
 	/* find the hunk */
 	for (i = 0; i < MAX_ZLIB_ALLOCS; i++)
-		if (ptr == alloc->allocptr[i])
+		if (ptr == alloc->allocptr2[i])
 		{
 			/* clear the low bit of the size to allow matches */
-			*ptr &= ~1;
+			*(alloc->allocptr[i]) &= ~1;
 			return;
 		}
 }

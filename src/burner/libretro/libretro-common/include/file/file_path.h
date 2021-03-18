@@ -442,6 +442,12 @@ void fill_pathname_expand_special(char *out_path,
 void fill_pathname_abbreviate_special(char *out_path,
       const char *in_path, size_t size);
 
+void fill_pathname_abbreviated_or_relative(char *out_path, const char *in_refpath, const char *in_path, size_t size);
+
+void pathname_conform_slashes_to_os(char *path);
+
+void pathname_make_slashes_portable(char *path);
+
 /**
  * path_basedir:
  * @path               : path
@@ -460,9 +466,9 @@ void path_basedir_wrapper(char *path);
  * Returns: true (1) if character is a slash, otherwise false (0).
  */
 #ifdef _WIN32
-#define path_char_is_slash(c) (((c) == '/') || ((c) == '\\'))
+#define PATH_CHAR_IS_SLASH(c) (((c) == '/') || ((c) == '\\'))
 #else
-#define path_char_is_slash(c) ((c) == '/')
+#define PATH_CHAR_IS_SLASH(c) ((c) == '/')
 #endif
 
 /**
@@ -473,11 +479,11 @@ void path_basedir_wrapper(char *path);
  * Returns: default slash separator.
  */
 #ifdef _WIN32
-#define path_default_slash() "\\"
-#define path_default_slash_c() '\\'
+#define PATH_DEFAULT_SLASH() "\\"
+#define PATH_DEFAULT_SLASH_C() '\\'
 #else
-#define path_default_slash() "/"
-#define path_default_slash_c() '/'
+#define PATH_DEFAULT_SLASH() "/"
+#define PATH_DEFAULT_SLASH_C() '/'
 #endif
 
 /**

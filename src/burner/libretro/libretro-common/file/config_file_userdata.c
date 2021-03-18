@@ -61,6 +61,24 @@ int config_userdata_get_int(void *userdata, const char *key_str,
    return got;
 }
 
+int config_userdata_get_hex(void *userdata, const char *key_str,
+      unsigned *value, unsigned default_value)
+{
+   bool got;
+   char key[2][256];
+   struct config_file_userdata *usr = (struct config_file_userdata*)userdata;
+
+   fill_pathname_join_delim(key[0], usr->prefix[0], key_str, '_', sizeof(key[0]));
+   fill_pathname_join_delim(key[1], usr->prefix[1], key_str, '_', sizeof(key[1]));
+
+   got = config_get_hex(usr->conf, key[0], value);
+   got = got || config_get_hex(usr->conf, key[1], value);
+
+   if (!got)
+      *value = default_value;
+   return got;
+}
+
 int config_userdata_get_float_array(void *userdata, const char *key_str,
       float **values, unsigned *out_num_values,
       const float *default_values, unsigned num_default_values)
@@ -76,12 +94,14 @@ int config_userdata_get_float_array(void *userdata, const char *key_str,
          config_get_string(usr->conf, key[1], &str))
    {
       unsigned i;
-      struct string_list *list = string_split(str, " ");
-      *values = (float*)calloc(list->size, sizeof(float));
-      for (i = 0; i < list->size; i++)
-         (*values)[i] = (float)strtod(list->elems[i].data, NULL);
-      *out_num_values = (unsigned)list->size;
-      string_list_free(list);
+      struct string_list list = {0};
+      string_list_initialize(&list);
+      string_split_noalloc(&list, str, " ");
+      *values = (float*)calloc(list.size, sizeof(float));
+      for (i = 0; i < list.size; i++)
+         (*values)[i] = (float)strtod(list.elems[i].data, NULL);
+      *out_num_values = (unsigned)list.size;
+      string_list_deinitialize(&list);
       free(str);
       return true;
    }
@@ -106,12 +126,14 @@ int config_userdata_get_int_array(void *userdata, const char *key_str,
          config_get_string(usr->conf, key[1], &str))
    {
       unsigned i;
-      struct string_list *list = string_split(str, " ");
-      *values = (int*)calloc(list->size, sizeof(int));
-      for (i = 0; i < list->size; i++)
-         (*values)[i] = (int)strtod(list->elems[i].data, NULL);
-      *out_num_values = (unsigned)list->size;
-      string_list_free(list);
+      struct string_list list = {0};
+      string_list_initialize(&list);
+      string_split_noalloc(&list, str, " ");
+      *values = (int*)calloc(list.size, sizeof(int));
+      for (i = 0; i < list.size; i++)
+         (*values)[i] = (int)strtod(list.elems[i].data, NULL);
+      *out_num_values = (unsigned)list.size;
+      string_list_deinitialize(&list);
       free(str);
       return true;
    }

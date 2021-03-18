@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <compat/strl.h>
+#include <compat/strcasestr.h>
 #include <retro_math.h>
 #include <retro_timers.h>
 #include <streams/file_stream.h>
@@ -1342,7 +1343,8 @@ struct string_list* cdrom_get_available_drives(void)
 
    for (i = 0; i < (int)dir_list->size; i++)
    {
-      if (string_starts_with(dir_list->elems[i].data, "/dev/sg"))
+      if (string_starts_with_size(dir_list->elems[i].data, "/dev/sg",
+               STRLEN_CONST("/dev/sg")))
       {
          libretro_vfs_implementation_file *stream;
          char drive_model[32]             = {0};
@@ -1371,7 +1373,8 @@ struct string_list* cdrom_get_available_drives(void)
          if (!is_cdrom)
             continue;
 
-         sscanf(dir_list->elems[i].data + strlen("/dev/sg"), "%d", &dev_index);
+         sscanf(dir_list->elems[i].data + STRLEN_CONST("/dev/sg"),
+               "%d", &dev_index);
 
          dev_index = '0' + dev_index;
          attr.i    = dev_index;
@@ -1393,15 +1396,17 @@ struct string_list* cdrom_get_available_drives(void)
       if (filestream_read_file("/proc/modules", (void**)&buf, &len))
       {
 #ifdef CDROM_DEBUG
-         bool found = false;
+         bool found              = false;
 #endif
-         struct string_list *mods = string_split(buf, "\n");
+         struct string_list mods = {0};
 
-         if (mods)
+         string_list_initialize(&mods);
+         
+         if (string_split_noalloc(&mods, buf, "\n"))
          {
-            for (i = 0; i < mods->size; i++)
+            for (i = 0; i < mods.size; i++)
             {
-               if (strcasestr(mods->elems[i].data, "sg "))
+               if (strcasestr(mods.elems[i].data, "sg "))
                {
 #ifdef CDROM_DEBUG
                   found = true;
@@ -1409,9 +1414,8 @@ struct string_list* cdrom_get_available_drives(void)
                   break;
                }
             }
-
-            string_list_free(mods);
          }
+         string_list_deinitialize(&mods);
 
 #ifdef CDROM_DEBUG
          if (found)

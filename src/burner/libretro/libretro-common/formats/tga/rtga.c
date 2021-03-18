@@ -45,15 +45,13 @@ struct rtga
 
 typedef struct
 {
-   uint32_t img_x, img_y;
-   int img_n, img_out_n;
-
-   int buflen;
-   uint8_t buffer_start[128];
-
    uint8_t *img_buffer;
    uint8_t *img_buffer_end;
    uint8_t *img_buffer_original;
+   int buflen;
+   int img_n, img_out_n;
+   uint32_t img_x, img_y;
+   uint8_t buffer_start[128];
 } rtga_context;
 
 static INLINE uint8_t rtga_get8(rtga_context *s)
@@ -102,40 +100,40 @@ static unsigned char *rtga_convert_format(
       switch (((img_n)*8+(req_comp)))
       {
          case ((1)*8+(2)):
-            for(i=x-1; i >= 0; --i, src += 1, dest += 2)
+            for (i=x-1; i >= 0; --i, src += 1, dest += 2)
             {
                dest[0]=src[0];
                dest[1]=255;
             }
             break;
          case ((1)*8+(3)):
-            for(i=x-1; i >= 0; --i, src += 1, dest += 3)
+            for (i=x-1; i >= 0; --i, src += 1, dest += 3)
                dest[0]=dest[1]=dest[2]=src[0];
             break;
          case ((1)*8+(4)):
-            for(i=x-1; i >= 0; --i, src += 1, dest += 4)
+            for (i=x-1; i >= 0; --i, src += 1, dest += 4)
             {
                dest[0]=dest[1]=dest[2]=src[0];
                dest[3]=255;
             }
             break;
          case ((2)*8+(1)):
-            for(i=x-1; i >= 0; --i, src += 2, dest += 1)
+            for (i=x-1; i >= 0; --i, src += 2, dest += 1)
                dest[0]=src[0];
             break;
          case ((2)*8+(3)):
-            for(i=x-1; i >= 0; --i, src += 2, dest += 3)
+            for (i=x-1; i >= 0; --i, src += 2, dest += 3)
                dest[0]=dest[1]=dest[2]=src[0];
             break;
          case ((2)*8+(4)):
-            for(i=x-1; i >= 0; --i, src += 2, dest += 4)
+            for (i=x-1; i >= 0; --i, src += 2, dest += 4)
             {
                dest[0]=dest[1]=dest[2]=src[0];
                dest[3]=src[1];
             }
             break;
          case ((3)*8+(4)):
-            for(i=x-1; i >= 0; --i, src += 3, dest += 4)
+            for (i=x-1; i >= 0; --i, src += 3, dest += 4)
             {
                dest[0]=src[0];
                dest[1]=src[1];
@@ -144,29 +142,29 @@ static unsigned char *rtga_convert_format(
             }
             break;
          case ((3)*8+(1)):
-            for(i=x-1; i >= 0; --i, src += 3, dest += 1)
+            for (i=x-1; i >= 0; --i, src += 3, dest += 1)
                dest[0] = RTGA_COMPUTE_Y(src[0],src[1],src[2]);
             break;
          case ((3)*8+(2)):
-            for(i=x-1; i >= 0; --i, src += 3, dest += 2)
+            for (i=x-1; i >= 0; --i, src += 3, dest += 2)
             {
                dest[0] = RTGA_COMPUTE_Y(src[0],src[1],src[2]);
                dest[1] = 255;
             }
             break;
          case ((4)*8+(1)):
-            for(i=x-1; i >= 0; --i, src += 4, dest += 1)
+            for (i=x-1; i >= 0; --i, src += 4, dest += 1)
                dest[0] = RTGA_COMPUTE_Y(src[0],src[1],src[2]);
             break;
          case ((4)*8+(2)):
-            for(i=x-1; i >= 0; --i, src += 4, dest += 2)
+            for (i=x-1; i >= 0; --i, src += 4, dest += 2)
             {
                dest[0] = RTGA_COMPUTE_Y(src[0],src[1],src[2]);
                dest[1] = src[3];
             }
             break;
          case ((4)*8+(3)):
-            for(i=x-1; i >= 0; --i, src += 4, dest += 3)
+            for (i=x-1; i >= 0; --i, src += 4, dest += 3)
             {
                dest[0]=src[0];
                dest[1]=src[1];
@@ -268,7 +266,9 @@ static uint8_t *rtga_tga_load(rtga_context *s,
       int RLE_repeating          = 0;
       int RLE_count              = 0;
       int read_next_pixel        = 1;
-      unsigned char raw_data[4]  = {0};
+      /* Needs to be at least 18 bytes to silence a GCC warning,
+       * only 4 are actually used */
+      unsigned char raw_data[18] = {0};
       unsigned char *tga_palette = NULL;
 
       /*   Do I need to load a palette? */
@@ -357,18 +357,21 @@ static uint8_t *rtga_tga_load(rtga_context *s,
       /*   do I need to invert the image? */
       if (tga_inverted)
       {
-         for (j = 0; j*2 < tga_height; ++j)
+         if (tga_data)
          {
-            int index1 = j * tga_width * tga_comp;
-            int index2 = (tga_height - 1 - j) * tga_width * tga_comp;
-
-            for (i = tga_width * tga_comp; i > 0; --i)
+            for (j = 0; j*2 < tga_height; ++j)
             {
-               unsigned char temp = tga_data[index1];
-               tga_data[index1] = tga_data[index2];
-               tga_data[index2] = temp;
-               ++index1;
-               ++index2;
+               int index1 = j * tga_width * tga_comp;
+               int index2 = (tga_height - 1 - j) * tga_width * tga_comp;
+
+               for (i = tga_width * tga_comp; i > 0; --i)
+               {
+                  unsigned char temp = tga_data[index1];
+                  tga_data[index1]   = tga_data[index2];
+                  tga_data[index2]   = temp;
+                  ++index1;
+                  ++index2;
+               }
             }
          }
       }
@@ -431,7 +434,7 @@ int rtga_process_image(rtga_t *rtga, void **buf_data,
    size_tex              = (*width) * (*height);
 
    /* Convert RGBA to ARGB */
-   while(size_tex--)
+   while (size_tex--)
    {
       unsigned int texel = rtga->output_image[size_tex];
       unsigned int A     = texel & 0xFF000000;

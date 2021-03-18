@@ -1742,8 +1742,9 @@ uint32_t adler32 (uint32_t adler, const uint8_t *buf, size_t len);
  const char   *  zError           (int);
  int             inflateSyncPoint (z_streamp);
 
-const uint32_t * get_crc_table(void);
+ const uint32_t * get_crc_table(void);
  int             inflateUndermine (z_streamp, int);
+ int             inflateValidate  (z_streamp, int);
  int             inflateResetKeep (z_streamp);
  int             deflateResetKeep (z_streamp);
 #if defined(_WIN32) && !defined(Z_SOLO)

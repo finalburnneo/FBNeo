@@ -29,8 +29,17 @@
 
 #include <retro_common_api.h>
 #include <retro_inline.h>
+#include <boolean.h>
 
 RETRO_BEGIN_DECLS
+
+#define FIFO_READ_AVAIL(buffer) (((buffer)->end + (((buffer)->end < (buffer)->first) ? (buffer)->size : 0)) - (buffer)->first)
+
+#define FIFO_WRITE_AVAIL(buffer) (((buffer)->size - 1) - (((buffer)->end + (((buffer)->end < (buffer)->first) ? (buffer)->size : 0)) - (buffer)->first))
+
+#define FIFO_READ_AVAIL_NONPTR(buffer) (((buffer).end + (((buffer).end < (buffer).first) ? (buffer).size : 0)) - (buffer).first)
+
+#define FIFO_WRITE_AVAIL_NONPTR(buffer) (((buffer).size - 1) - (((buffer).end + (((buffer).end < (buffer).first) ? (buffer).size : 0)) - (buffer).first))
 
 struct fifo_buffer
 {
@@ -44,6 +53,8 @@ typedef struct fifo_buffer fifo_buffer_t;
 
 fifo_buffer_t *fifo_new(size_t size);
 
+bool fifo_initialize(fifo_buffer_t *buf, size_t size);
+
 static INLINE void fifo_clear(fifo_buffer_t *buffer)
 {
    buffer->first = 0;
@@ -54,24 +65,10 @@ void fifo_write(fifo_buffer_t *buffer, const void *in_buf, size_t size);
 
 void fifo_read(fifo_buffer_t *buffer, void *in_buf, size_t size);
 
-static INLINE void fifo_free(fifo_buffer_t *buffer)
-{
-   if (!buffer)
-      return;
+void fifo_free(fifo_buffer_t *buffer);
 
-   free(buffer->buffer);
-   free(buffer);
-}
+bool fifo_deinitialize(fifo_buffer_t *buffer);
 
-static INLINE size_t fifo_read_avail(fifo_buffer_t *buffer)
-{
-   return (buffer->end + ((buffer->end < buffer->first) ? buffer->size : 0)) - buffer->first;
-}
-
-static INLINE size_t fifo_write_avail(fifo_buffer_t *buffer)
-{
-   return (buffer->size - 1) - ((buffer->end + ((buffer->end < buffer->first) ? buffer->size : 0)) - buffer->first);
-}
 
 RETRO_END_DECLS
 

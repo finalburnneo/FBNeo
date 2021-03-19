@@ -53,10 +53,12 @@
     <ClInclude Include="..\..\src\burn\devices\bsmt2000.h" />
     <ClInclude Include="..\..\src\burn\devices\c169.h" />
     <ClInclude Include="..\..\src\burn\devices\decobsmt.h" />
+    <ClInclude Include="..\..\src\burn\devices\ds2404.h" />
     <ClInclude Include="..\..\src\burn\devices\earom.h" />
     <ClInclude Include="..\..\src\burn\devices\eeprom.h" />
     <ClInclude Include="..\..\src\burn\devices\gaelco_crypt.h" />
     <ClInclude Include="..\..\src\burn\devices\i4x00.h" />
+    <ClInclude Include="..\..\src\burn\devices\intelfsh.h" />
     <ClInclude Include="..\..\src\burn\devices\joyprocess.h" />
     <ClInclude Include="..\..\src\burn\devices\k1ge.h" />
     <ClInclude Include="..\..\src\burn\devices\kaneko_tmap.h" />
@@ -457,10 +459,12 @@
     <ClCompile Include="..\..\src\burn\devices\bsmt2000.cpp" />
     <ClCompile Include="..\..\src\burn\devices\c169.cpp" />
     <ClCompile Include="..\..\src\burn\devices\decobsmt.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\ds2404.cpp" />
     <ClCompile Include="..\..\src\burn\devices\earom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\eeprom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\gaelco_crypt.cpp" />
     <ClCompile Include="..\..\src\burn\devices\i4x00.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\intelfsh.cpp" />
     <ClCompile Include="..\..\src\burn\devices\joyprocess.cpp" />
     <ClCompile Include="..\..\src\burn\devices\k1ge.cpp" />
     <ClCompile Include="..\..\src\burn\devices\kaneko_tmap.cpp" />
@@ -573,6 +577,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_seibuspi.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_shangha3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
@@ -598,6 +603,7 @@
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf271.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
+    <ClCompile Include="..\..\src\cpu\i386\i386.cpp" />
     <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp" />
     <ClCompile Include="..\..\src\cpu\m377\m37710.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">

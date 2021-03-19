@@ -1174,6 +1174,12 @@ DRV		BurnDrvBattleBkraidj;
 DRV		BurnDrvBattleBkraidc;
 DRV		BurnDrvBattleBkraiduj;
 DRV		BurnDrvBattleBkraidu;
+DRV		BurnDrvBatlballo;
+DRV		BurnDrvBatlball;
+DRV		BurnDrvBatlballa;
+DRV		BurnDrvBatlballe;
+DRV		BurnDrvBatlballpt;
+DRV		BurnDrvBatlballu;
 DRV		BurnDrvnes_battlebaseball;
 DRV		BurnDrvBatlbubl;
 DRV		BurnDrvnes_battlechess;
@@ -3120,6 +3126,7 @@ DRV		BurnDrvmd_darkcasts;
 DRV		BurnDrvDarkedgej;
 DRV		BurnDrvDarkedge;
 DRV		BurnSpecdarkfusion;
+DRV		BurnDrvnes_darklord;
 DRV		BurnDrvDarkplnt;
 DRV		BurnSpecDarkredux;
 DRV		BurnDrvDarkseaj;
@@ -3698,6 +3705,8 @@ DRV		BurnDrvtg_ddungw;
 DRV		BurnDrvsms_doublhwk;
 DRV		BurnDrvsms_doublhwkp;
 DRV		BurnDrvsms_doublhwkfm;
+DRV		BurnDrvnes_doublmoodenj;
+DRV		BurnDrvnes_doublmooden;
 DRV		BurnDrvDblpoind;
 DRV		BurnDrvDblpoint;
 DRV		BurnDrvnes_doublestrike;
@@ -4031,6 +4040,9 @@ DRV		BurnDrvCpsDynwar;
 DRV		BurnDrvCpsDynwara;
 DRV		BurnDrvmd_dynoblaz;
 DRV		BurnDrvnes_dynow;
+DRV		BurnDrvEjanhs;
+DRV		BurnDrvEjsakura12;
+DRV		BurnDrvEjsakura;
 DRV		BurnDrvsms_eswatc1;
 DRV		BurnDrvsms_eswatc;
 DRV		BurnDrvEswatbl;
@@ -4882,6 +4894,7 @@ DRV		BurnDrvgg_bighurt;
 DRV		BurnDrvnes_frank;
 DRV		BurnSpecFrankensteinjr;
 DRV		BurnDrvcv_ffreddy;
+DRV		BurnSpecfp128k;
 DRV		BurnDrvgg_fray;
 DRV		BurnSpecfred;
 DRV		BurnDrvgg_fredcoupj;
@@ -6689,6 +6702,7 @@ DRV		BurnDrvJumpkun;
 DRV		BurnDrvMSX_jumpland;
 DRV		BurnDrvjumpshotp;
 DRV		BurnDrvjumpshot;
+DRV		BurnDrvnes_jumpjump;
 DRV		BurnSpecjumpjupiter;
 DRV		BurnDrvnes_jumpikid;
 DRV		BurnDrvMSX_jumping;
@@ -8410,6 +8424,8 @@ DRV		BurnDrvnes_miraisenj;
 DRV		BurnDrvnes_miraisen;
 DRV		BurnDrvMirax;
 DRV		BurnDrvMiraxa;
+DRV		BurnSpecmisifucga;
+DRV		BurnSpecmisifucolor;
 DRV		BurnDrvmd_misplaced;
 DRV		BurnDrvmd_misplacedr;
 DRV		BurnDrvMsbingo;
@@ -10824,6 +10840,42 @@ DRV		BurnDrvRaidendxk;
 DRV		BurnDrvRaidendxpt;
 DRV		BurnDrvRaidendx;
 DRV		BurnDrvRaidendxu;
+DRV		BurnDrvRdfta;
+DRV		BurnDrvRdftau;
+DRV		BurnDrvRdftauge;
+DRV		BurnDrvRdft;
+DRV		BurnDrvRdftgb;
+DRV		BurnDrvRdftgr;
+DRV		BurnDrvRdftam;
+DRV		BurnDrvRdftit;
+DRV		BurnDrvRdftj;
+DRV		BurnDrvRdftja;
+DRV		BurnDrvRdftjb;
+DRV		BurnDrvRdftadi;
+DRV		BurnDrvRdfts;
+DRV		BurnDrvRdftu;
+DRV		BurnDrvRdftua;
+DRV		BurnDrvRdft2;
+DRV		BurnDrvRdft2a;
+DRV		BurnDrvRdft2it;
+DRV		BurnDrvRdft2j;
+DRV		BurnDrvRdft2ja;
+DRV		BurnDrvRdft2jb;
+DRV		BurnDrvRdft2jc;
+DRV		BurnDrvRdft2aa;
+DRV		BurnDrvRdft2s;
+DRV		BurnDrvRdft2t;
+DRV		BurnDrvRdft2u;
+DRV		BurnDrvRdft2us;
+DRV		BurnDrvRdft22kc;
+DRV		BurnDrvRfjet;
+DRV		BurnDrvRfjetj;
+DRV		BurnDrvRfjeta;
+DRV		BurnDrvRfjett;
+DRV		BurnDrvRfjetu;
+DRV		BurnDrvRfjets;
+DRV		BurnDrvRfjetsa;
+DRV		BurnDrvRfjet2kc;
 DRV		BurnDrvRaiden2eup;
 DRV		BurnDrvRaiden2eg;
 DRV		BurnDrvRaiden2ea;
@@ -11731,6 +11783,8 @@ DRV		BurnDrvCommandoj;
 DRV		BurnDrvMSX_senjyo;
 DRV		BurnDrvMSX_senjyoa;
 DRV		BurnDrvSenjyo;
+DRV		BurnDrvSenkyua;
+DRV		BurnDrvSenkyu;
 DRV		BurnDrvgg_sensible;
 DRV		BurnDrvmd_sensible;
 DRV		BurnDrvsms_sensible;
@@ -14197,6 +14251,7 @@ DRV		BurnDrvMSX_tetsumana;
 DRV		BurnDrvnes_tetsuwanatom;
 DRV		BurnDrvThoop2;
 DRV		BurnDrvThoop2a;
+DRV		BurnSpectsfeeling;
 DRV		BurnDrvsms_sn_ateam;
 DRV		BurnDrvsms_addfamc;
 DRV		BurnDrvsms_addfam;
@@ -14747,6 +14802,9 @@ DRV		BurnDrvTodruagas;
 DRV		BurnDrvpce_druaga;
 DRV		BurnDrvSsideki4;
 DRV		BurnDrvWintbob;
+DRV		BurnSpecthewitch;
+DRV		BurnSpecthewitchen;
+DRV		BurnSpecthewitches;
 DRV		BurnDrvMSX_wreck;
 DRV		BurnDrvcv_yolk;
 DRV		BurnDrvmd_youngind;
@@ -15647,6 +15705,18 @@ DRV		BurnDrvViostorm;
 DRV		BurnDrvViostormj;
 DRV		BurnDrvViostormub;
 DRV		BurnDrvViostormu;
+DRV		BurnDrvViprp1ot;
+DRV		BurnDrvViprp1hk;
+DRV		BurnDrvViprp1oj;
+DRV		BurnDrvViprp1t;
+DRV		BurnDrvViprp1h;
+DRV		BurnDrvViprp1j;
+DRV		BurnDrvViprp1k;
+DRV		BurnDrvViprp1pt;
+DRV		BurnDrvViprp1s;
+DRV		BurnDrvViprp1u;
+DRV		BurnDrvViprp1ua;
+DRV		BurnDrvViprp1;
 DRV		BurnDrvmd_vf2;
 DRV		BurnDrvmd_vf2s;
 DRV		BurnDrvmd_vf2k;
@@ -17830,6 +17900,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBattleBkraidc,		// Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999)
 	&BurnDrvBattleBkraiduj,		// Battle Bakraid - Unlimited Version (Japan) (Tue Jun 8 1999)
 	&BurnDrvBattleBkraidu,		// Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8 1999)
+	&BurnDrvBatlballo,			// Battle Balls (Germany, earlier)
+	&BurnDrvBatlball,			// Battle Balls (Germany, newer)
+	&BurnDrvBatlballa,			// Battle Balls (Hong Kong)
+	&BurnDrvBatlballe,			// Battle Balls (Hong Kong, earlier)
+	&BurnDrvBatlballpt,			// Battle Balls (Portugal)
+	&BurnDrvBatlballu,			// Battle Balls (US)
 	&BurnDrvnes_battlebaseball,	// Battle Baseball (Japan)
 	&BurnDrvBatlbubl,			// Battle Bubble (v2.00)
 	&BurnDrvnes_battlechess,	// Battle Chess (USA)
@@ -19776,6 +19852,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDarkedgej,			// Dark Edge (Japan)
 	&BurnDrvDarkedge,			// Dark Edge (World)
 	&BurnSpecdarkfusion,		// Dark Fusion
+	&BurnDrvnes_darklord,		// Dark Lord (Japan)
 	&BurnDrvDarkplnt,			// Dark Planet
 	&BurnSpecDarkredux,			// Dark Redux, The
 	&BurnDrvDarkseaj,			// Dark Seal (Japan)
@@ -20354,6 +20431,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_doublhwk,		// Double Hawk (Euro)
 	&BurnDrvsms_doublhwkp,		// Double Hawk (Euro, Prototype)
 	&BurnDrvsms_doublhwkfm,		// Double Hawk (FM Mod)
+	&BurnDrvnes_doublmoodenj,	// Double Moon Densetsu (Japan)
+	&BurnDrvnes_doublmooden,	// Double Moon Densetsu (T-Eng)
 	&BurnDrvDblpoind,			// Double Point (Dong Bang Electron, bootleg?)
 	&BurnDrvDblpoint,			// Double Point
 	&BurnDrvnes_doublestrike,	// Double Strike (Unl)
@@ -20687,6 +20766,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDynwara,			// Dynasty Wars (US set 2)
 	&BurnDrvmd_dynoblaz,		// Dyno Blaze (Early Prototype)
 	&BurnDrvnes_dynow,			// Dynowarz - Destruction of Spondylus (USA)
+	&BurnDrvEjanhs,				// E Jong High School (Japan)
+	&BurnDrvEjsakura12,			// E-Jan Sakurasou (Japan, SYS386F V1.2)
+	&BurnDrvEjsakura,			// E-Jan Sakurasou (Japan, SYS386F V2.0)
 	&BurnDrvsms_eswatc1,		// E-SWAT - City Under Siege (Euro, USA, Bra, Hard Version)
 	&BurnDrvsms_eswatc,			// E-SWAT - City Under Siege (Euro, USA, Easy Version)
 	&BurnDrvEswatbl,			// E-Swat - Cyber Police (bootleg)
@@ -21538,6 +21620,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_frank,			// Frankenstein - The Monster Returns (USA)
 	&BurnSpecFrankensteinjr,	// Frankenstein Jnr
 	&BurnDrvcv_ffreddy,			// Frantic Freddy
+	&BurnSpecfp128k,			// Frantic Pengo 128K (HB)
 	&BurnDrvgg_fray,			// Fray - Shugyou Hen (Jpn)
 	&BurnSpecfred,				// Fred (48K)
 	&BurnDrvgg_fredcoupj,		// Fred Couples' Golf (Jpn)
@@ -23345,6 +23428,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_jumpland,		// Jump Land
 	&BurnDrvjumpshotp,			// Jump Shot Engineering Sample
 	&BurnDrvjumpshot,			// Jump Shot
+	&BurnDrvnes_jumpjump,		// Jump-Jump (Unl)
 	&BurnSpecjumpjupiter,		// Jumpin' Jupiter (HB)
 	&BurnDrvnes_jumpikid,		// Jumpin' Kid - Jack to Mame no Ki Monogatari (Japan)
 	&BurnDrvMSX_jumping,		// JumpinG (HB)
@@ -25066,6 +25150,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_miraisen,		// Mirai Senshi - Lios (T-Eng)
 	&BurnDrvMirax,				// Mirax (set 1)
 	&BurnDrvMiraxa,				// Mirax (set 2)
+	&BurnSpecmisifucga,			// Misifu Remeow CGA (HB, v1.4.1)
+	&BurnSpecmisifucolor,		// Misifu Remeow Color (HB, v1.4.1)
 	&BurnDrvmd_misplaced,		// Misplaced (HB, English)
 	&BurnDrvmd_misplacedr,		// Misplaced (HB, Russian)
 	&BurnDrvMsbingo,			// Miss Bingo
@@ -27480,6 +27566,42 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRaidendxpt,			// Raiden DX (Portugal)
 	&BurnDrvRaidendx,			// Raiden DX (UK)
 	&BurnDrvRaidendxu,			// Raiden DX (US)
+	&BurnDrvRdfta,				// Raiden Fighters (Evaluation Software For Show, Germany)
+	&BurnDrvRdftau,				// Raiden Fighters (Evaluation Software For Show, Germany)
+	&BurnDrvRdftauge,			// Raiden Fighters (Evaluation Software For Show, Germany)
+	&BurnDrvRdft,				// Raiden Fighters (Germany)
+	&BurnDrvRdftgb,				// Raiden Fighters (Great Britain)
+	&BurnDrvRdftgr,				// Raiden Fighters (Greece)
+	&BurnDrvRdftam,				// Raiden Fighters (Hong Kong)
+	&BurnDrvRdftit,				// Raiden Fighters (Italy)
+	&BurnDrvRdftj,				// Raiden Fighters (Japan, earlier)
+	&BurnDrvRdftja,				// Raiden Fighters (Japan, earliest)
+	&BurnDrvRdftjb,				// Raiden Fighters (Japan, newer)
+	&BurnDrvRdftadi,			// Raiden Fighters (Korea)
+	&BurnDrvRdfts,				// Raiden Fighters (Taiwan, single board)
+	&BurnDrvRdftu,				// Raiden Fighters (US, earlier)
+	&BurnDrvRdftua,				// Raiden Fighters (US, newer)
+	&BurnDrvRdft2,				// Raiden Fighters 2 - Operation Hell Dive (Germany)
+	&BurnDrvRdft2a,				// Raiden Fighters 2 - Operation Hell Dive (Hong Kong)
+	&BurnDrvRdft2it,			// Raiden Fighters 2 - Operation Hell Dive (Italy)
+	&BurnDrvRdft2j,				// Raiden Fighters 2 - Operation Hell Dive (Japan set 1)
+	&BurnDrvRdft2ja,			// Raiden Fighters 2 - Operation Hell Dive (Japan set 2)
+	&BurnDrvRdft2jb,			// Raiden Fighters 2 - Operation Hell Dive (Japan set 3)
+	&BurnDrvRdft2jc,			// Raiden Fighters 2 - Operation Hell Dive (Japan set 4)
+	&BurnDrvRdft2aa,			// Raiden Fighters 2 - Operation Hell Dive (Korea)
+	&BurnDrvRdft2s,				// Raiden Fighters 2 - Operation Hell Dive (Switzerland)
+	&BurnDrvRdft2t,				// Raiden Fighters 2 - Operation Hell Dive (Taiwan)
+	&BurnDrvRdft2u,				// Raiden Fighters 2 - Operation Hell Dive (US)
+	&BurnDrvRdft2us,			// Raiden Fighters 2 - Operation Hell Dive (US, single board)
+	&BurnDrvRdft22kc,			// Raiden Fighters 2 - Operation Hell Dive 2000 (China, SYS386I)
+	&BurnDrvRfjet,				// Raiden Fighters Jet (Germany)
+	&BurnDrvRfjetj,				// Raiden Fighters Jet (Japan)
+	&BurnDrvRfjeta,				// Raiden Fighters Jet (Korea)
+	&BurnDrvRfjett,				// Raiden Fighters Jet (Taiwan)
+	&BurnDrvRfjetu,				// Raiden Fighters Jet (US)
+	&BurnDrvRfjets,				// Raiden Fighters Jet (US, single board)
+	&BurnDrvRfjetsa,			// Raiden Fighters Jet (US, single board, test version?)
+	&BurnDrvRfjet2kc,			// Raiden Fighters Jet 2000 (China, SYS386I)
 	&BurnDrvRaiden2eup,			// Raiden II (easier, US, prototype? 11-16)
 	&BurnDrvRaiden2eg,			// Raiden II (Easy Version, Germany)
 	&BurnDrvRaiden2ea,			// Raiden II (Easy Version, Japan?)
@@ -28387,6 +28509,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_senjyo,			// Senjyo (Jpn)
 	&BurnDrvMSX_senjyoa,		// Senjyo (Jpn, Alt)
 	&BurnDrvSenjyo,				// Senjyo
+	&BurnDrvSenkyua,			// Senkyu (Japan, earlier)
+	&BurnDrvSenkyu,				// Senkyu (Japan, newer)
 	&BurnDrvgg_sensible,		// Sensible Soccer (Euro)
 	&BurnDrvmd_sensible,		// Sensible Soccer (Euro)
 	&BurnDrvsms_sensible,		// Sensible Soccer (Euro)
@@ -30853,6 +30977,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tetsuwanatom,	// Tetsuwan Atom (Japan)
 	&BurnDrvThoop2,				// TH Strikes Back (Non North America, Version 1.0, Checksum 020E0867)
 	&BurnDrvThoop2a,			// TH Strikes Back (Non North America, Version 1.0, Checksum 020EB356)
+	&BurnSpectsfeeling,			// That Sinking Feeling (HB)
 	&BurnDrvsms_sn_ateam,		// The A-Team (Music prototype)
 	&BurnDrvsms_addfamc,		// The Addams Family (Euro) - Castellano v1.0
 	&BurnDrvsms_addfam,			// The Addams Family (Euro)
@@ -31403,6 +31528,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_druaga,			// The Tower of Druaga
 	&BurnDrvSsideki4,			// The Ultimate 11 - The SNK Football Championship / Tokuten Ou - Honoo no Libero
 	&BurnDrvWintbob,			// The Winter Bobble (bootleg)
+	&BurnSpecthewitch,			// The Witch (HB, v1.0.1)
+	&BurnSpecthewitchen,		// The Witch ending eng-version (HB, v1.0.1)
+	&BurnSpecthewitches,		// The Witch ending esp-version (HB, v1.0.1)
 	&BurnDrvMSX_wreck,			// The Wreck (Euro)
 	&BurnDrvcv_yolk,			// The Yolks on You (Prototype)
 	&BurnDrvmd_youngind,		// The Young Indiana Jones Chronicles (USA, Prototype)
@@ -32303,6 +32431,18 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvViostormj,			// Violent Storm (ver JAC)
 	&BurnDrvViostormub,			// Violent Storm (ver UAB)
 	&BurnDrvViostormu,			// Violent Storm (ver UAC)
+	&BurnDrvViprp1ot,			// Viper Phase 1 (Germany)
+	&BurnDrvViprp1hk,			// Viper Phase 1 (Hong Kong)
+	&BurnDrvViprp1oj,			// Viper Phase 1 (Japan)
+	&BurnDrvViprp1t,			// Viper Phase 1 (New Version, Germany)
+	&BurnDrvViprp1h,			// Viper Phase 1 (New Version, Holland)
+	&BurnDrvViprp1j,			// Viper Phase 1 (New Version, Japan)
+	&BurnDrvViprp1k,			// Viper Phase 1 (New Version, Korea)
+	&BurnDrvViprp1pt,			// Viper Phase 1 (New Version, Portugal)
+	&BurnDrvViprp1s,			// Viper Phase 1 (New Version, Switzerland)
+	&BurnDrvViprp1u,			// Viper Phase 1 (New Version, US set 1)
+	&BurnDrvViprp1ua,			// Viper Phase 1 (New Version, US set 2)
+	&BurnDrvViprp1,				// Viper Phase 1 (New Version, World)
 	&BurnDrvmd_vf2,				// Virtua Fighter 2 - Genesis (Euro, USA)
 	&BurnDrvmd_vf2s,			// Virtua Fighter 2 - Genesis (Hack, Spanish)
 	&BurnDrvmd_vf2k,			// Virtua Fighter 2 - Genesis (Kor)

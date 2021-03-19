@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16403 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16473 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1162,6 +1162,12 @@ This list contains all games supported by FinalBurn Neo.
 | bbakraidc	|  	| Battle Bakraid - Unlimited Version (China) (Tue Jun 8 | bbakraid	| 1999	| Eighting	| Toaplan GP9001| 					|
 | bbakraidj	|  	| Battle Bakraid - Unlimited Version (Japan) (Tue Jun 8 | bbakraid	| 1999	| Eighting	| Toaplan GP9001| 					|
 | bbakraid	|  	| Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8| 		| 1999	| Eighting	| Toaplan GP9001| 					|
+| batlballo	|  	| Battle Balls (Germany, earlier)			| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| batlball	|  	| Battle Balls (Germany, newer)				| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| batlballa	|  	| Battle Balls (Hong Kong)				| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| batlballe	|  	| Battle Balls (Hong Kong, earlier)			| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| batlballpt	|  	| Battle Balls (Portugal)				| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| batlballu	|  	| Battle Balls (US)					| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
 | nes_battlebaseball|  	| Battle Baseball (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | batlbubl	|  	| Battle Bubble (v2.00)					| bangball	| 1999	| Banpresto (Lim| Miscellaneous	| 					|
 | nes_battlechess|  	| Battle Chess (USA)					| 		| 1990	| Data East	| Miscellaneous	| 					|
@@ -3080,6 +3086,7 @@ This list contains all games supported by FinalBurn Neo.
 | darkedgej	|  	| Dark Edge (Japan)					| darkedge	| 1992	| Sega		| System 32	| 					|
 | darkedge	|  	| Dark Edge (World)					| 		| 1992	| Sega		| System 32	| Background GFX Issues			|
 | spec_darkfusion|  	| Dark Fusion						| 		| 1988	| Gremlin Graphi| ZX Spectrum	| 					|
+| nes_darklord	|  	| Dark Lord (Japan)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | darkplnt	|  	| Dark Planet						| 		| 1982	| Stern		| Galaxian	| 					|
 | spec_darkredux|  	| Dark Redux, The					| 		| 2021	| Zosya Entertai| ZX Spectrum	| 					|
 | darksealj	|  	| Dark Seal (Japan)					| darkseal	| 1990	| Data East Corp| DECO IC16	| 					|
@@ -3644,6 +3651,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_doublhwk	|  	| Double Hawk (Euro)					| 		| 1990	| Sega		| Sega Master Sy| 					|
 | sms_doublhwkp	|  	| Double Hawk (Euro, Prototype)				| sms_doublhwk	| 1990	| Sega		| Sega Master Sy| 					|
 | sms_doublhwkfm|  	| Double Hawk (FM Mod)					| sms_doublhwk	| 1990	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
+| nes_doublmoodenj|  	| Double Moon Densetsu (Japan)				| nes_doublmooden| 1992	| Masaya	| Miscellaneous	| 					|
+| nes_doublmooden|  	| Double Moon Densetsu (T-Eng)				| 		| 1992	| Masaya	| Miscellaneous	| 					|
 | dblpointd	|  	| Double Point (Dong Bang Electron, bootleg?)		| dblpoint	| 1995	| Dong Bang Elec| Miscellaneous	| 					|
 | dblpoint	|  	| Double Point						| 		| 1995	| Min Corp.	| Miscellaneous	| 					|
 | nes_doublestrike|  	| Double Strike (Unl)					| 		| 1990	| AVE		| Miscellaneous	| 					|
@@ -3973,6 +3982,9 @@ This list contains all games supported by FinalBurn Neo.
 | dynwara	|  	| Dynasty Wars (US set 2)				| dynwar	| 1989	| Capcom	| CPS1		| 					|
 | md_dynoblaz	|  	| Dyno Blaze (Early Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_dynow	|  	| Dynowarz - Destruction of Spondylus (USA)		| 		| 1990	| Bandai	| Miscellaneous	| 					|
+| ejanhs	|  	| E Jong High School (Japan)				| 		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| ejsakura12	|  	| E-Jan Sakurasou (Japan, SYS386F V1.2)			| ejsakura	| 1999	| Seibu Kaihatsu| SYS386F	| 					|
+| ejsakura	|  	| E-Jan Sakurasou (Japan, SYS386F V2.0)			| 		| 1999	| Seibu Kaihatsu| SYS386F	| 					|
 | sms_eswatc1	|  	| E-SWAT - City Under Siege (Euro, USA, Bra, Hard Versio| sms_eswatc	| 1990	| Sega		| Sega Master Sy| 					|
 | sms_eswatc	|  	| E-SWAT - City Under Siege (Euro, USA, Easy Version)	| 		| 1990	| Sega		| Sega Master Sy| 					|
 | eswatbl	|  	| E-Swat - Cyber Police (bootleg)			| eswat		| 1989	| bootleg	| System 16B	| 					|
@@ -4816,6 +4828,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_frank	|  	| Frankenstein - The Monster Returns (USA)		| 		| 1991	| Bandai	| Miscellaneous	| 					|
 | spec_frankensteinjr|  	| Frankenstein Jnr					| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | cv_ffreddy	|  	| Frantic Freddy					| 		| 1983	| Spectravideo	| ColecoVision	| 					|
+| spec_fp128k	|  	| Frantic Pengo 128K (HB)				| 		| 2020	| Gabriele Amore| ZX Spectrum	| 					|
 | gg_fray	|  	| Fray - Shugyou Hen (Jpn)				| 		| 1991	| Micro Cabin	| Sega Game Gear| 					|
 | spec_fred	|  	| Fred (48K)						| 		| 1984	| Quicksilva	| ZX Spectrum	| 					|
 | gg_fredcoupj	|  	| Fred Couples' Golf (Jpn)				| gg_fredcoup	| 1994	| Sega		| Sega Game Gear| 					|
@@ -6593,6 +6606,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_jumpland	|  	| Jump Land						| 		| 1985	| Nippon Columbi| MSX		| 					|
 | jumpshotp	|  	| Jump Shot Engineering Sample				| jumpshot	| 1985	| Bally Midway	| Pac-man	| 					|
 | jumpshot	|  	| Jump Shot						| 		| 1985	| Bally Midway	| Pac-man	| 					|
+| nes_jumpjump	|  	| Jump-Jump (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_jumpjupiter|  	| Jumpin' Jupiter (HB)					| 		| 2020	| Quantum Sheep	| ZX Spectrum	| 					|
 | nes_jumpikid	|  	| Jumpin' Kid - Jack to Mame no Ki Monogatari (Japan)	| 		| 1990	| Asmik		| Miscellaneous	| 					|
 | msx_jumping	|  	| JumpinG (HB)						| 		| 2011	| DimensionZ	| MSX		| 					|
@@ -8296,6 +8310,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_miraisen	|  	| Mirai Senshi - Lios (T-Eng)				| 		| 1989	| Pack-In-Video	| Miscellaneous	| 					|
 | mirax		|  	| Mirax (set 1)						| 		| 1985	| Current Techno| Miscellaneous	| 					|
 | miraxa	|  	| Mirax (set 2)						| mirax		| 1985	| Current Techno| Miscellaneous	| 					|
+| spec_misifucga|  	| Misifu Remeow CGA (HB, v1.4.1)			| spec_misifucolor| 2021	| JSM Soft	| ZX Spectrum	| Alley Cat demake for ZX Spectrum	|
+| spec_misifucolor|  	| Misifu Remeow Color (HB, v1.4.1)			| 		| 2021	| JSM Soft	| ZX Spectrum	| Alley Cat demake for ZX Spectrum	|
 | md_misplaced	|  	| Misplaced (HB, English)				| 		| 2019	| RetroSouls	| Sega Megadrive| 					|
 | md_misplacedr	|  	| Misplaced (HB, Russian)				| md_misplaced	| 2019	| RetroSouls	| Sega Megadrive| 					|
 | msbingo	|  	| Miss Bingo						| 		| 1994	| Min Corp.	| Miscellaneous	| 					|
@@ -10674,6 +10690,42 @@ This list contains all games supported by FinalBurn Neo.
 | raidendxpt	|  	| Raiden DX (Portugal)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendx	|  	| Raiden DX (UK)					| 		| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendxu	|  	| Raiden DX (US)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
+| rdfta		|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftau	|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftauge	|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdft		|  	| Raiden Fighters (Germany)				| 		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftgb	|  	| Raiden Fighters (Great Britain)			| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftgr	|  	| Raiden Fighters (Greece)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftam	|  	| Raiden Fighters (Hong Kong)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftit	|  	| Raiden Fighters (Italy)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftj		|  	| Raiden Fighters (Japan, earlier)			| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftja	|  	| Raiden Fighters (Japan, earliest)			| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftjb	|  	| Raiden Fighters (Japan, newer)			| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftadi	|  	| Raiden Fighters (Korea)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdfts		|  	| Raiden Fighters (Taiwan, single board)		| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftu		|  	| Raiden Fighters (US, earlier)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftua	|  	| Raiden Fighters (US, newer)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdft2		|  	| Raiden Fighters 2 - Operation Hell Dive (Germany)	| 		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2a	|  	| Raiden Fighters 2 - Operation Hell Dive (Hong Kong)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2it	|  	| Raiden Fighters 2 - Operation Hell Dive (Italy)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2j	|  	| Raiden Fighters 2 - Operation Hell Dive (Japan set 1)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2ja	|  	| Raiden Fighters 2 - Operation Hell Dive (Japan set 2)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2jb	|  	| Raiden Fighters 2 - Operation Hell Dive (Japan set 3)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2jc	|  	| Raiden Fighters 2 - Operation Hell Dive (Japan set 4)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2aa	|  	| Raiden Fighters 2 - Operation Hell Dive (Korea)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2s	|  	| Raiden Fighters 2 - Operation Hell Dive (Switzerland)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2t	|  	| Raiden Fighters 2 - Operation Hell Dive (Taiwan)	| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2u	|  	| Raiden Fighters 2 - Operation Hell Dive (US)		| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft2us	|  	| Raiden Fighters 2 - Operation Hell Dive (US, single bo| rdft2		| 1997	| Seibu Kaihatsu| SPI		| 					|
+| rdft22kc	|  	| Raiden Fighters 2 - Operation Hell Dive 2000 (China, S| rdft2		| 2000	| Seibu Kaihatsu| SYS386I	| 					|
+| rfjet		|  	| Raiden Fighters Jet (Germany)				| 		| 1998	| Seibu Kaihatsu| SPI		| 					|
+| rfjetj	|  	| Raiden Fighters Jet (Japan)				| rfjet		| 1998	| Seibu Kaihatsu| SPI		| 					|
+| rfjeta	|  	| Raiden Fighters Jet (Korea)				| rfjet		| 1998	| Seibu Kaihatsu| SPI		| 					|
+| rfjett	|  	| Raiden Fighters Jet (Taiwan)				| rfjet		| 1998	| Seibu Kaihatsu| SPI		| 					|
+| rfjetu	|  	| Raiden Fighters Jet (US)				| rfjet		| 1998	| Seibu Kaihatsu| SPI		| 					|
+| rfjets	|  	| Raiden Fighters Jet (US, single board)		| rfjet		| 1999	| Seibu Kaihatsu| SPI		| 					|
+| rfjetsa	|  	| Raiden Fighters Jet (US, single board, test version?)	| rfjet		| 1999	| Seibu Kaihatsu| SPI		| 					|
+| rfjet2kc	|  	| Raiden Fighters Jet 2000 (China, SYS386I)		| rfjet		| 2000	| Seibu Kaihatsu| SYS386I	| 					|
 | raiden2eup	|  	| Raiden II (easier, US, prototype? 11-16)		| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2eg	|  	| Raiden II (Easy Version, Germany)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2ea	|  	| Raiden II (Easy Version, Japan?)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
@@ -11565,6 +11617,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_senjyo	|  	| Senjyo (Jpn)						| 		| 1984	| Sony		| MSX		| 					|
 | msx_senjyoa	|  	| Senjyo (Jpn, Alt)					| msx_senjyo	| 1984	| Sony		| MSX		| 					|
 | senjyo	|  	| Senjyo						| 		| 1983	| Tehkan	| Miscellaneous	| 					|
+| senkyua	|  	| Senkyu (Japan, earlier)				| senkyu	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| senkyu	|  	| Senkyu (Japan, newer)					| 		| 1995	| Seibu Kaihatsu| SPI		| 					|
 | gg_sensible	|  	| Sensible Soccer (Euro)				| 		| 1994	| Sony Imagesoft| Sega Game Gear| 					|
 | md_sensible	|  	| Sensible Soccer (Euro)				| 		| 1993	| Renegade	| Sega Megadrive| 					|
 | sms_sensible	|  	| Sensible Soccer (Euro)				| 		| 1993	| Sony Imagesoft| Sega Master Sy| 					|
@@ -13997,6 +14051,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_tetsuwanatom|  	| Tetsuwan Atom (Japan)					| 		| 1988	| Konami	| Miscellaneous	| 					|
 | thoop2	|  	| TH Strikes Back (Non North America, Version 1.0, Check| 		| 1994	| Gaelco	| Miscellaneous	| 					|
 | thoop2a	|  	| TH Strikes Back (Non North America, Version 1.0, Check| thoop2	| 1994	| Gaelco	| Miscellaneous	| 					|
+| spec_tsfeeling|  	| That Sinking Feeling (HB)				| 		| 2017	| Sunteam	| ZX Spectrum	| 					|
 | sms_sn_ateam	|  	| The A-Team (Music prototype)				| 		| 1992	| Probe		| Sega Master Sy| 					|
 | sms_addfamc	|  	| The Addams Family (Euro) - Castellano v1.0		| sms_addfam	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_addfam	|  	| The Addams Family (Euro)				| 		| 1993	| Flying Edge	| Sega Master Sy| 					|
@@ -14545,6 +14600,9 @@ This list contains all games supported by FinalBurn Neo.
 | pce_druaga	|  	| The Tower of Druaga					| 		| 1992	| Namcot	| PC Engine	| 					|
 | ssideki4	|  	| The Ultimate 11 - The SNK Football Championship / Toku| 		| 1996	| SNK		| Neo Geo MVS	| 					|
 | wintbob	|  	| The Winter Bobble (bootleg)				| snowbros	| 1990	| bootleg	| Kaneko Pandora| 					|
+| spec_thewitch	|  	| The Witch (HB, v1.0.1)				| 		| 2020	| Serranito Onli| ZX Spectrum	| The remake of classic game Cauldron	|
+| spec_thewitchen|  	| The Witch ending eng-version (HB, v1.0.1)		| spec_thewitch	| 2020	| Serranito Onli| ZX Spectrum	| The remake of classic game Cauldron	|
+| spec_thewitches|  	| The Witch ending esp-version (HB, v1.0.1)		| spec_thewitch	| 2020	| Serranito Onli| ZX Spectrum	| The remake of classic game Cauldron	|
 | msx_wreck	|  	| The Wreck (Euro)					| 		| 1984	| Electric Softw| MSX		| 					|
 | cv_yolk	|  	| The Yolks on You (Prototype)				| 		| 1983	| Fox Video Game| ColecoVision	| 					|
 | md_youngind	|  	| The Young Indiana Jones Chronicles (USA, Prototype)	| 		| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -15429,6 +15487,18 @@ This list contains all games supported by FinalBurn Neo.
 | viostormj	|  	| Violent Storm (ver JAC)				| viostorm	| 1993	| Konami	| GX168		| 					|
 | viostormub	|  	| Violent Storm (ver UAB)				| viostorm	| 1993	| Konami	| GX168		| 					|
 | viostormu	|  	| Violent Storm (ver UAC)				| viostorm	| 1993	| Konami	| GX168		| 					|
+| viprp1ot	|  	| Viper Phase 1 (Germany)				| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1hk	|  	| Viper Phase 1 (Hong Kong)				| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1oj	|  	| Viper Phase 1 (Japan)					| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1t	|  	| Viper Phase 1 (New Version, Germany)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1h	|  	| Viper Phase 1 (New Version, Holland)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1j	|  	| Viper Phase 1 (New Version, Japan)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1k	|  	| Viper Phase 1 (New Version, Korea)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1pt	|  	| Viper Phase 1 (New Version, Portugal)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1s	|  	| Viper Phase 1 (New Version, Switzerland)		| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1u	|  	| Viper Phase 1 (New Version, US set 1)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1ua	|  	| Viper Phase 1 (New Version, US set 2)			| viprp1	| 1995	| Seibu Kaihatsu| SPI		| 					|
+| viprp1	|  	| Viper Phase 1 (New Version, World)			| 		| 1995	| Seibu Kaihatsu| SPI		| 					|
 | md_vf2	|  	| Virtua Fighter 2 - Genesis (Euro, USA)		| 		| 1997	| Sega		| Sega Megadrive| 					|
 | md_vf2s	|  	| Virtua Fighter 2 - Genesis (Hack, Spanish)		| md_vf2	| 2020	| Sega		| Sega Megadrive| 					|
 | md_vf2k	|  	| Virtua Fighter 2 - Genesis (Kor)			| md_vf2	| 1997	| Sega		| Sega Megadrive| 					|

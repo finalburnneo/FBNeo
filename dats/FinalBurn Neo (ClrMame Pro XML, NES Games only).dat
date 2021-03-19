@@ -2455,6 +2455,13 @@
 		<rom name="Dao Shuai (Asia) (Unl).nes" size="65552" crc="00951874"/>
 		<driver status="good"/>
 	</game>
+	<game name="darklord">
+		<description>Dark Lord (Japan)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Dark Lord (Japan).nes" size="393232" crc="1be8483a"/>
+		<driver status="good"/>
+	</game>
 	<game name="darkmanc" cloneof="darkman" romof="darkman">
 		<description>Darkman (USA) - Castellano v1.0</description>
 		<year>1989 ?</year>
@@ -2929,6 +2936,20 @@
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Double Dribble (USA).nes" size="131088" crc="7077a85d"/>
+		<driver status="good"/>
+	</game>
+	<game name="doublmoodenj" cloneof="doublmooden" romof="doublmooden">
+		<description>Double Moon Densetsu (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Masaya</manufacturer>
+		<rom name="Double Moon Densetsu (Japan).nes" size="524304" crc="e6ecf970"/>
+		<driver status="good"/>
+	</game>
+	<game name="doublmooden">
+		<description>Double Moon Densetsu (T-Eng)</description>
+		<year>1992</year>
+		<manufacturer>Masaya</manufacturer>
+		<rom name="Double Moon Densetsu (T-Eng).nes" size="524304" crc="2c2c43a4"/>
 		<driver status="good"/>
 	</game>
 	<game name="doublestrike">
@@ -5764,6 +5785,13 @@
 		<year>1988</year>
 		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Jumbo Ozaki no Hole in One Professional (Japan).nes" size="163856" crc="00f48ae5"/>
+		<driver status="good"/>
+	</game>
+	<game name="jumpjump">
+		<description>Jump-Jump (Unl)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Jump-Jump (Unl).nes" size="40976" crc="3fe43784"/>
 		<driver status="good"/>
 	</game>
 	<game name="jumpikid">

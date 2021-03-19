@@ -3196,6 +3196,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="fp128k" romof="spec128">
+		<description>Frantic Pengo 128K (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="frantic pengo 128k (2020)(gabam).tap" size="45927" crc="66c3790a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="fred" romof="spectrum">
 		<description>Fred (48K)</description>
 		<year>1984</year>
@@ -5016,6 +5025,24 @@
 		<year>1985</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Mikie (1985)(Imagine Software).tap" size="48249" crc="45203b87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="misifucga" cloneof="misifucolor" romof="misifucolor">
+		<description>Misifu Remeow CGA (HB, v1.4.1) [Homebrew, Alley Cat demake for ZX Spectrum]</description>
+		<year>2021</year>
+		<manufacturer>JSM Soft</manufacturer>
+		<rom name="misifu_CGA(2021)(JSM Soft).tap" size="73469" crc="84550b57"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="misifucolor" romof="spec128">
+		<description>Misifu Remeow Color (HB, v1.4.1) [Homebrew, Alley Cat demake for ZX Spectrum]</description>
+		<year>2021</year>
+		<manufacturer>JSM Soft</manufacturer>
+		<rom name="misifu_COLOR(2021)(JSM Soft).tap" size="73610" crc="387dd30a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
@@ -8092,6 +8119,15 @@
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>
 	</game>
+	<game name="tsfeeling" romof="spec128">
+		<description>That Sinking Feeling (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="That Sinking Feeling(2017)(Sunteam).tap" size="34567" crc="e7822c33"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
 	<game name="thebiz" romof="spec128">
 		<description>The Biz</description>
 		<year>1984</year>
@@ -8142,6 +8178,33 @@
 		<year>2012</year>
 		<manufacturer>Stonechat Productions</manufacturer>
 		<rom name="The Lost Tapes of Albion (2012)(Stonechat Productions).tap" size="25472" crc="0f3caf6e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thewitch" romof="spec128">
+		<description>The Witch (HB, v1.0.1) [Homebrew, The remake of classic game Cauldron]</description>
+		<year>2020</year>
+		<manufacturer>Serranito Online</manufacturer>
+		<rom name="The Witch (v1.0.1)(2020)(Serranito Online).tap" size="48970" crc="4dacc7d8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thewitchen" cloneof="thewitch" romof="thewitch">
+		<description>The Witch ending eng-version (HB, v1.0.1) [Homebrew, The remake of classic game Cauldron]</description>
+		<year>2020</year>
+		<manufacturer>Serranito Online</manufacturer>
+		<rom name="The Witch (ending EN)(2020)(Serranito Online).tap" size="36161" crc="1d18f64a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<driver status="good"/>
+	</game>
+	<game name="thewitches" cloneof="thewitch" romof="thewitch">
+		<description>The Witch ending esp-version (HB, v1.0.1) [Homebrew, The remake of classic game Cauldron]</description>
+		<year>2020</year>
+		<manufacturer>Serranito Online</manufacturer>
+		<rom name="The Witch (ending ES)(2020)(Serranito Online).tap" size="36165" crc="3c916134"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<driver status="good"/>

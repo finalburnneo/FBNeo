@@ -22,7 +22,7 @@ struct GenericTilemap {
 	INT32 xoffset[2]; // not flipscreen, flipscreen
 	INT32 yoffset[2]; // not flipscreen, flipscreen
 	UINT32 flags;
-	UINT8 *transparent[256];	// 0 draw, 1 skip
+	UINT8 *transparent[257];	// 0 draw, 1 skip
 	INT32 transcolor;
 	UINT8 *dirty_tiles;			// 1 skip, 0 draw
 	INT32 dirty_tiles_enable;
@@ -88,6 +88,8 @@ void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void 
 	cur_map->yoffset[0] = cur_map->yoffset[1] = 0;
 
 	cur_map->transparent[0] = (UINT8*)BurnMalloc(0x100); // allocate 0 by default
+	cur_map->transparent[0x100] = (UINT8*)BurnMalloc(0x100);
+	memset (cur_map->transparent[0x100], 0, 0x100); // opaque table!
 
 	cur_map->priority = -1;
 	cur_map->flags = 0;
@@ -156,7 +158,9 @@ void GenericTilemapExit()
 		cur_map = &maps[i];
 		if (cur_map->scrolly_table) BurnFree(cur_map->scrolly_table);
 		if (cur_map->scrollx_table) BurnFree(cur_map->scrollx_table);
-		if (cur_map->transparent[0]) BurnFree(cur_map->transparent[0]);
+		for (INT32 j = 0; j < 257; j++) {
+			if (cur_map->transparent[j]) BurnFree(cur_map->transparent[j]);
+		}
 		if (cur_map->dirty_tiles) BurnFree(cur_map->dirty_tiles);
 
 		for (INT32 j = 0; j < MAX_GFX; j++) {
@@ -1002,7 +1006,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 				UINT8 *gfxsrc = gfx->gfxbase + (sTileData.code * cur_map->twidth * cur_map->theight) + goffs;
 
-				UINT8 *trans_ptr = cur_map->transparent[category];
+				UINT8 *trans_ptr = cur_map->transparent[(opaque||opaque2) ? 0x100 : category];
 
 				if (trans_ptr[*gfxsrc] == 0)
 				{
@@ -1121,7 +1125,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				}
 
 				UINT8 *gfxsrc = gfx->gfxbase + (sTileData.code * cur_map->twidth * cur_map->theight) + (scy * cur_map->twidth);
-				UINT8 *trans_ptr = cur_map->transparent[category];
+				UINT8 *trans_ptr = cur_map->transparent[(opaque||opaque2) ? 0x100 : category];
 
 				if (flipx)
 				{

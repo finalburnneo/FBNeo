@@ -277,12 +277,18 @@ void ds2404_timer_update() // 256hz
 
 void ds2404Init(UINT8 *rawData, int ref_year, int ref_month, int ref_day)
 {
-	//time_t realtime;
-	//time (&realtime);
-	//struct tm *timeinfo = localtime(&realtime);
 
-//	time( &current_time );
-	UINT32 current_time = 0; //-= ref_time; // iq_132
+	struct tm ref_tm;
+	memset(&ref_tm, 0, sizeof(ref_tm));
+	ref_tm.tm_year = ref_year - 1900;
+	ref_tm.tm_mon = ref_month - 1;
+	ref_tm.tm_mday = ref_day;
+	time_t ref_time = mktime(&ref_tm);
+
+	tm tmLocalTime;
+	BurnGetLocalTime(&tmLocalTime);
+	time_t current_time = mktime(&tmLocalTime);
+	current_time -= ref_time;
 
 	ds2404.rtc[ 0 ] = 0x0;
 	ds2404.rtc[ 1 ] = ( current_time >> 0 ) & 0xff;

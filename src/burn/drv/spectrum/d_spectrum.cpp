@@ -17756,6 +17756,25 @@ struct BurnDriver BurnSpecefmb = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Frantic Pengo 128K (HB)
+
+static struct BurnRomInfo Specfp128kRomDesc[] = {
+	{ "frantic pengo 128k (2020)(gabam).tap", 45927, 0x66c3790a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specfp128k, Specfp128k, Spec128)
+STD_ROM_FN(Specfp128k)
+
+struct BurnDriver BurnSpecfp128k = {
+	"spec_fp128k", NULL, "spec_spec128", NULL, "2020",
+	"Frantic Pengo 128K (HB)\0", NULL, "Gabriele Amore", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, Specfp128kRomInfo, Specfp128kRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Gluf (RetroSouls)
 
 static struct BurnRomInfo SpecglufRomDesc[] = {
@@ -17828,6 +17847,45 @@ struct BurnDriver BurnSpeclostulum = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpeclostulumRomInfo, SpeclostulumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Misifu Remeow Color (JSM Soft)
+
+static struct BurnRomInfo SpecmisifucolorRomDesc[] = {
+	{ "misifu_COLOR(2021)(JSM Soft).tap",  73610, 0x387dd30a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmisifucolor, Specmisifucolor, Spec128)
+STD_ROM_FN(Specmisifucolor)
+
+struct BurnDriver BurnSpecmisifucolor = {
+	"spec_misifucolor", NULL, "spec_spec128", NULL, "2021",
+	"Misifu Remeow Color (HB, v1.4.1)\0", "Alley Cat demake for ZX Spectrum", "JSM Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecmisifucolorRomInfo, SpecmisifucolorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+
+};
+
+// Misifu Remeow CGA (JSM Soft)
+
+static struct BurnRomInfo SpecmisifucgaRomDesc[] = {
+	{ "misifu_CGA(2021)(JSM Soft).tap", 73469, 0x84550b57, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specmisifucga, Specmisifucga, Spec128)
+STD_ROM_FN(Specmisifucga)
+
+struct BurnDriver BurnSpecmisifucga = {
+	"spec_misifucga", "spec_misifucolor", "spec_spec128", NULL, "2021",
+	"Misifu Remeow CGA (HB, v1.4.1)\0", "Alley Cat demake for ZX Spectrum", "JSM Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecmisifucgaRomInfo, SpecmisifucgaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -17923,6 +17981,83 @@ struct BurnDriver BurnSpecsirababoldx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecsirababoldxRomInfo, SpecsirababoldxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// That Sinking Feeling
+
+static struct BurnRomInfo SpectsfeelingRomDesc[] = {
+	{ "That Sinking Feeling(2017)(Sunteam).tap", 34567, 0xe7822c33, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spectsfeeling, Spectsfeeling, Spec128)
+STD_ROM_FN(Spectsfeeling)
+
+struct BurnDriver BurnSpectsfeeling = {
+	"spec_tsfeeling", NULL, "spec_spec128", NULL, "2017",
+	"That Sinking Feeling (HB)\0", NULL, "Sunteam", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpectsfeelingRomInfo, SpectsfeelingRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// The Witch v1.0.1 (Serranito Online)
+
+static struct BurnRomInfo SpecthewitchRomDesc[] = {
+	{ "The Witch (v1.0.1)(2020)(Serranito Online).tap",  48970, 0x4dacc7d8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specthewitch, Specthewitch, Spec128)
+STD_ROM_FN(Specthewitch)
+
+struct BurnDriver BurnSpecthewitch = {
+	"spec_thewitch", NULL, "spec_spec128", NULL, "2020",
+	"The Witch (HB, v1.0.1)\0", "The remake of classic game Cauldron", "Serranito Online", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecthewitchRomInfo, SpecthewitchRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+
+};
+
+// The Witch ending english version (Serranito Online)
+
+static struct BurnRomInfo SpecthewitchenRomDesc[] = {
+	{ "The Witch (ending EN)(2020)(Serranito Online).tap", 36161, 0x1d18f64a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specthewitchen, Specthewitchen, Spec128)
+STD_ROM_FN(Specthewitchen)
+
+struct BurnDriver BurnSpecthewitchen = {
+	"spec_thewitchen", "spec_thewitch", "spec_spec128", NULL, "2020",
+	"The Witch ending eng-version (HB, v1.0.1)\0", "The remake of classic game Cauldron", "Serranito Online", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecthewitchenRomInfo, SpecthewitchenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// The Witch ending espanish version (Serranito Online)
+
+static struct BurnRomInfo SpecthewitchesRomDesc[] = {
+	{ "The Witch (ending ES)(2020)(Serranito Online).tap", 36165, 0x3c916134, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specthewitches, Specthewitches, Spec128)
+STD_ROM_FN(Specthewitches)
+
+struct BurnDriver BurnSpecthewitches = {
+	"spec_thewitches", "spec_thewitch", "spec_spec128", NULL, "2020",
+	"The Witch ending esp-version (HB, v1.0.1)\0", "The remake of classic game Cauldron", "Serranito Online", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecthewitchesRomInfo, SpecthewitchesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

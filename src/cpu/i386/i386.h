@@ -183,6 +183,7 @@ typedef struct {
 	UINT8 opcode;
 
 	int irq_line;
+	int irq_hold;
 	UINT32 a20_mask;
 
 	int cpuid_max_input_value_eax;

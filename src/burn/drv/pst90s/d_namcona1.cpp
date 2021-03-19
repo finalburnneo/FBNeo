@@ -1219,7 +1219,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		CPU_RUN(0, M377);
+		CPU_RUN_SYNCINT(0, M377);
 
 		CPU_RUN(1, Sek);
 

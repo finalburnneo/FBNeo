@@ -210,13 +210,18 @@ else ifeq ($(platform), qnx)
 	USE_CYCLONE = 1
 
 # PS3
-else ifneq (,$(filter $(platform), psl1ght))
-	TARGET := $(TARGET_NAME)_libretro_ps3.a
+else ifneq (,$(filter $(platform), ps3 psl1ght))
+	TARGET := $(TARGET_NAME)_libretro_$(platform).a
 	ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
-	PLATFORM_DEFINES += -D__PSL1GHT__
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 
+	ifneq ($(platdef),)
+        PLATFORM_DEFINES += -D$(platdef)
+    else
+        PLATFORM_DEFINES += -D__PSL1GHT__
+    endif
+	
 	# sncps3
 	ifneq (,$(findstring sncps3,$(platform)))
 		PLATFORM_DEFINES += -DSN_TARGET_PS3
@@ -232,7 +237,6 @@ else ifneq (,$(filter $(platform), psl1ght))
 
 	# Lightweight PS3 Homebrew SDK
 	else ifneq (,$(findstring psl1ght,$(platform)))
-		TARGET := $(TARGET_NAME)_libretro_$(platform).a
 		CC = $(PS3DEV)/ppu/bin/ppu-gcc$(EXE_EXT)
 		CXX = $(PS3DEV)/ppu/bin/ppu-g++$(EXE_EXT)
 		AR = $(PS3DEV)/ppu/bin/ppu-ar$(EXE_EXT)

@@ -3442,7 +3442,7 @@ struct BurnDriver BurnDrvRdftja = {
 };
 
 
-// Raiden Fighters (Evaluation Software For Show, Germany)
+// Raiden Fighters (Australia)
 
 static struct BurnRomInfo rdftauRomDesc[] = {
 	{ "1.u0211",						0x080000, 0x6339c60d, 1 | BRF_PRG | BRF_ESS }, //  0 i386 Code
@@ -3479,7 +3479,7 @@ static INT32 RdftauInit()
 
 struct BurnDriver BurnDrvRdftau = {
 	"rdftau", "rdft", NULL, NULL, "1996",
-	"Raiden Fighters (Evaluation Software For Show, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
+	"Raiden Fighters (Australia)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftauRomInfo, rdftauRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
@@ -3534,7 +3534,7 @@ struct BurnDriver BurnDrvRdftauge = {
 };
 
 
-// Raiden Fighters (Evaluation Software For Show, Germany)
+// Raiden Fighters (Austria)
 
 static struct BurnRomInfo rdftaRomDesc[] = {
 	{ "seibu_1.u0211",					0x080000, 0xc3bb2e58, 1 | BRF_PRG | BRF_ESS }, //  0 i386 Code
@@ -3571,7 +3571,7 @@ static INT32 RdftaInit()
 
 struct BurnDriver BurnDrvRdfta = {
 	"rdfta", "rdft", NULL, NULL, "1996",
-	"Raiden Fighters (Evaluation Software For Show, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
+	"Raiden Fighters (Austria)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftaRomInfo, rdftaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,

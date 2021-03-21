@@ -349,9 +349,10 @@ static void sprite_dma_start_write()
 
 static void oki_bankswitch(INT32 data)
 {
-	oki_bank = data & 0x0400;
+	oki_bank = data & 0x04;
 
-	MSM6295SetBank(1, DrvSndROM[1] + (oki_bank ? 0x40000 : 0), 0, 0x3ffff);
+	MSM6295SetBank(0, DrvSndROM[0], 0, 0x3ffff);
+	MSM6295SetBank(1, DrvSndROM[1] + ((oki_bank) ? 0x40000 : 0), 0, 0x3ffff);
 }
 
 static void layerbanks_eeprom_write(UINT16 data)
@@ -2211,8 +2212,7 @@ static INT32 Sys386Frame()
 	}
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

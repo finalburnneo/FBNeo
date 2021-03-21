@@ -1952,33 +1952,33 @@ struct BurnDriver BurnDrvShollow2 = {
 };
 
 
-// Tron (8/9)
+// Tron (8/9), program ROMs stamped as "AUG 9"
 
 static struct BurnRomInfo tronRomDesc[] = {
-	{ "pro0.d2",		0x2000, 0x0de0471a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "scpu_pgb.d3",	0x2000, 0x8ddf8717, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "scpu_pgc.d4",	0x2000, 0x4241e3a0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "scpu_pgd.d5",	0x2000, 0x035d2fe7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "scpu_pge.d6",	0x2000, 0x24c185d8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "scpu_pgf.d7",	0x2000, 0x38c4bbaf, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "scpu-pga_lctn-c2_tron_aug_9.c2",		0x2000, 0x0de0471a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "scpu-pgb_lctn-c3_tron_aug_9.c3",		0x2000, 0x8ddf8717, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "scpu-pgc_lctn-c4_tron_aug_9.c4",		0x2000, 0x4241e3a0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "scpu-pgd_lctn-c5_tron_aug_9.c5",		0x2000, 0x035d2fe7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "scpu-pge_lctn-c6_tron_aug_9.c6",		0x2000, 0x24c185d8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "scpu-pgf_lctn-c7_tron_aug_9.c7",		0x2000, 0x38c4bbaf, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_0a.a7",		0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_0b.a8",		0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_0c.a9",		0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "ssi-0a_lctn-a7_tron.a7",				0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "ssi-0b_lctn-a8_tron.a8",				0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi-0c_lctn-a9_tron.a9",				0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",				0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",				0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
-	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
-	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
-	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
-	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
+	{ "0066-313bx-xxqx.a12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
+	{ "0066-315bx-xxqx.b12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
+	{ "0066-322bx-xx0x.e3.bin",				0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-316bx-xxqx.g11.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
+	{ "0066-314bx-xxqx.g12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
 
 STDROMPICKEXT(tron, tron, Ssioprom)
@@ -2018,33 +2018,33 @@ struct BurnDriver BurnDrvTron = {
 };
 
 
-// Tron (6/25)
+// Tron (6/25), program ROMs stamped as "JUN 25" - also known to be stamped 6 25 or handwritten 6-25
 
 static struct BurnRomInfo tron2RomDesc[] = {
-	{ "scpu_pga.d2",	0x2000, 0x5151770b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "scpu_pgb.d3",	0x2000, 0x8ddf8717, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "scpu_pgc.d4",	0x2000, 0x4241e3a0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "scpu_pgd.d5",	0x2000, 0x035d2fe7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "scpu_pge.d6",	0x2000, 0x24c185d8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "scpu_pgf.d7",	0x2000, 0x38c4bbaf, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "scpu-pga_lctn-c2_tron_jun_25.c2",	0x2000, 0x5151770b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "scpu-pgb_lctn-c3_tron_jun_25.c3",	0x2000, 0x8ddf8717, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "scpu-pgc_lctn-c4_tron_jun_25.c4",	0x2000, 0x4241e3a0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "scpu-pgd_lctn-c5_tron_jun_25.c5",	0x2000, 0x035d2fe7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "scpu-pge_lctn-c6_tron_jun_25.c6",	0x2000, 0x24c185d8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "scpu-pgf_lctn-c7_tron_jun_25.c7",	0x2000, 0x38c4bbaf, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_0a.a7",		0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_0b.a8",		0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_0c.a9",		0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "ssi-0a_lctn-a7_tron.a7",				0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "ssi-0b_lctn-a8_tron.a8",				0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi-0c_lctn-a9_tron.a9",				0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",				0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",				0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
-	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
-	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
-	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
-	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
+	{ "0066-313bx-xxqx.a12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
+	{ "0066-315bx-xxqx.b12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
+	{ "0066-322bx-xx0x.e3.bin",				0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-316bx-xxqx.g11.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
+	{ "0066-314bx-xxqx.g12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
 
 STDROMPICKEXT(tron2, tron2, Ssioprom)
@@ -2061,33 +2061,33 @@ struct BurnDriver BurnDrvTron2 = {
 };
 
 
-// Tron (6/17)
+// Tron (6/17), program ROMs stamped as "JUN 17" - also known to be stamped 6 17 or handwritten 6-17
 
 static struct BurnRomInfo tron3RomDesc[] = {
-	{ "scpu_pga.d2",	0x2000, 0xfc33afd7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "scpu_pgb.d3",	0x2000, 0x7d9e22ac, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "scpu_pgc.d4",	0x2000, 0x902011c6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "scpu_pgd.d5",	0x2000, 0x86477e89, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "scpu_pge.d6",	0x2000, 0xea198fa8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "scpu_pgf.d7",	0x2000, 0x4325fb08, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "scpu-pga_lctn-c2_tron_jun_17.c2",	0x2000, 0xfc33afd7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "scpu-pgb_lctn-c3_tron_jun_17.c3",	0x2000, 0x7d9e22ac, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "scpu-pgc_lctn-c4_tron_jun_17.c4",	0x2000, 0x902011c6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "scpu-pgd_lctn-c5_tron_jun_17.c5",	0x2000, 0x86477e89, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "scpu-pge_lctn-c6_tron_jun_17.c6",	0x2000, 0xea198fa8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "scpu-pgf_lctn-c7_tron_jun_17.c7",	0x2000, 0x4325fb08, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_0a.a7",		0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_0b.a8",		0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_0c.a9",		0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "ssi-0a_lctn-a7_tron.a7",				0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "ssi-0b_lctn-a8_tron.a8",				0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi-0c_lctn-a9_tron.a9",				0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",				0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",				0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
-	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
-	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
-	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
-	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
+	{ "0066-313bx-xxqx.a12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
+	{ "0066-315bx-xxqx.b12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
+	{ "0066-322bx-xx0x.e3.bin",				0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-316bx-xxqx.g11.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
+	{ "0066-314bx-xxqx.g12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
 
 STDROMPICKEXT(tron3, tron3, Ssioprom)
@@ -2104,33 +2104,33 @@ struct BurnDriver BurnDrvTron3 = {
 };
 
 
-// Tron (6/15)
+// Tron (6/15), program ROMs stamped as "JUN 15" - also known to be stamped 6 15 or handwritten 6-15
 
 static struct BurnRomInfo tron4RomDesc[] = {
-	{ "pga-615.d2",		0x2000, 0x09d7a95a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "pgb-615.d3",		0x2000, 0xb454337d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pgc-615.d4",		0x2000, 0xac1836ff, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pgd-615.d5",		0x2000, 0x1a7bec6d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "pge-615.d6",		0x2000, 0xea198fa8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "pgf-615.d7",		0x2000, 0x790ee743, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "scpu-pga_lctn-c2_tron_jun_15.c2",	0x2000, 0x09d7a95a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "scpu-pgb_lctn-c3_tron_jun_15.c3",	0x2000, 0xb454337d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "scpu-pgc_lctn-c4_tron_jun_15.c4",	0x2000, 0xac1836ff, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "scpu-pgd_lctn-c5_tron_jun_15.c5",	0x2000, 0x1a7bec6d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "scpu-pge_lctn-c6_tron_jun_15.c6",	0x2000, 0xea198fa8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "scpu-pgf_lctn-c7_tron_jun_15.c7",	0x2000, 0x790ee743, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_oa.a7",		0x1000, 0x2cbb332b, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_ob.a8",		0x1000, 0x1355b7e6, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_oc.a9",		0x1000, 0x6dd4b7c9, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "tron_snd-0_may_10_82.a7",			0x1000, 0x2cbb332b, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "tron_snd-1_may_10_82.a8",			0x1000, 0x1355b7e6, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "tron_snd-2_may_10_82.a9",			0x1000, 0x6dd4b7c9, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",				0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",				0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
-	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
-	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
-	{ "0066-322bx-xx0x.e3.bin",		0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
-	{ "0066-316bx-xxqx.g11.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
-	{ "0066-314bx-xxqx.g12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
+	{ "0066-313bx-xxqx.a12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
+	{ "0066-315bx-xxqx.b12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
+	{ "0066-322bx-xx0x.e3.bin",				0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 17
+	{ "0066-316bx-xxqx.g11.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 18
+	{ "0066-314bx-xxqx.g12.bin",			0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 19
 };
 
 STDROMPICKEXT(tron4, tron4, Ssioprom)
@@ -2147,27 +2147,27 @@ struct BurnDriver BurnDrvTron4 = {
 };
 
 
-// Tron (5/12)
+// Tron (5/12), handwritten labels for program & sound ROMs (though the sound ROMs were stamped MAY 10 '82)
 
 static struct BurnRomInfo tron5RomDesc[] = {
-	{ "tron_pro-0_5-12.d2",		0x2000, 0xccc4119f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "tron_pro-1_5-12.d3",		0x2000, 0x153f148c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tron_pro-2_5-12.d4",		0x2000, 0xe62bb8a1, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tron_pro-3_5-12.d5",		0x2000, 0xdbc06c91, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "tron_pro-4_5-12.d6",		0x2000, 0x30adb624, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "tron_pro-5_5-12.d7",		0x2000, 0x191c72bb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "tron_pro-0_5-12.c2",			0x2000, 0xccc4119f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tron_pro-1_5-12.c3",			0x2000, 0x153f148c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tron_pro-2_5-12.c4",			0x2000, 0xe62bb8a1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tron_pro-3_5-12.c5",			0x2000, 0xdbc06c91, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tron_pro-4_5-12.c6",			0x2000, 0x30adb624, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tron_pro-5_5-12.c7",			0x2000, 0x191c72bb, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_oa.a7",				0x1000, 0x2cbb332b, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_ob.a8",				0x1000, 0x1355b7e6, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_oc.a9",				0x1000, 0x6dd4b7c9, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "tron_snd-0_may_10_82.a7",	0x1000, 0x2cbb332b, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "tron_snd-1_may_10_82.a8",	0x1000, 0x1355b7e6, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "tron_snd-2_may_10_82.a9",	0x1000, 0x6dd4b7c9, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",			0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",			0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",					0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",				0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",				0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",					0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
@@ -2193,24 +2193,24 @@ struct BurnDriver BurnDrvTron5 = {
 // Tron (Germany)
 
 static struct BurnRomInfo trongerRomDesc[] = {
-	{ "pro0.d2",		0x2000, 0xba14603d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "scpu_pgb.d3",	0x2000, 0x063a748f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "scpu_pgc.d4",	0x2000, 0x6ca50365, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "scpu_pgd.d5",	0x2000, 0xb5b241c9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "scpu_pge.d6",	0x2000, 0x04597abe, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "scpu_pgf.d7",	0x2000, 0x3908e404, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "scpu_pga.c2",				0x2000, 0xba14603d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "scpu_pgb.c3",				0x2000, 0x063a748f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "scpu_pgc.c4",				0x2000, 0x6ca50365, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "scpu_pgd.c5",				0x2000, 0xb5b241c9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "scpu_pge.c6",				0x2000, 0x04597abe, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "scpu_pgf.c7",				0x2000, 0x3908e404, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ssi_0a.a7",		0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
-	{ "ssi_0b.a8",		0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "ssi_0c.a9",		0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "ssi-0a_lctn-a7_tron.a7",		0x1000, 0x765e6eba, 2 | BRF_PRG | BRF_ESS }, //  6 ssio:cpu
+	{ "ssi-0b_lctn-a8_tron.a8",		0x1000, 0x1b90ccdd, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi-0c_lctn-a9_tron.a9",		0x1000, 0x3a4bc629, 2 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "scpu_bgg.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
-	{ "scpu_bgh.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
+	{ "scpu-bgg_lctn-g3_tron.g3",	0x2000, 0x1a9ed2f5, 3 | BRF_GRA },           //  9 gfx1
+	{ "scpu-bgh_lctn-g4_tron.g4",	0x2000, 0x3220f974, 3 | BRF_GRA },           // 10
 
-	{ "vga.e1",			0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
-	{ "vgb.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
-	{ "vgc.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
-	{ "vga.a1",			0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
+	{ "vga_lctn-e1_tron.e1",		0x2000, 0xbc036d1d, 4 | BRF_GRA },           // 11 gfx2
+	{ "vgb_lctn-dc1_tron.dc1",		0x2000, 0x58ee14d3, 4 | BRF_GRA },           // 12
+	{ "vgc_lctn-cb1_tron.cb1",		0x2000, 0x3329f9d4, 4 | BRF_GRA },           // 13
+	{ "vgd_lctn-a1_tron.a1",		0x2000, 0x9743f873, 4 | BRF_GRA },           // 14
 
 	{ "0066-313bx-xxqx.a12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 15 scpu_pals
 	{ "0066-315bx-xxqx.b12.bin",	0x0001, 0x00000000, 5 | BRF_NODUMP | BRF_PRG | BRF_ESS }, // 16
@@ -2347,10 +2347,10 @@ struct BurnDriver BurnDrvWacko = {
 // Two Tigers (dedicated)
 
 static struct BurnRomInfo twotigerRomDesc[] = {
-	{ "cpu_d2",		0x2000, 0xa682ed24, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "cpu_d3",		0x2000, 0x5b48fde9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cpu_d4",		0x2000, 0xf1ab8c4d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cpu_d5",		0x2000, 0xd7129900, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cpu_d2",			0x2000, 0xa682ed24, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "cpu_d3",			0x2000, 0x5b48fde9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cpu_d4",			0x2000, 0xf1ab8c4d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cpu_d5",			0x2000, 0xd7129900, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "ssio_a7",		0x1000, 0x64ddc16c, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "ssio_a8",		0x1000, 0xc3467612, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -2359,10 +2359,10 @@ static struct BurnRomInfo twotigerRomDesc[] = {
 	{ "2tgrbg0.bin",	0x2000, 0x52f69068, 3 | BRF_GRA },           //  7 gfx1
 	{ "2tgrbg1.bin",	0x2000, 0x758d4f7d, 3 | BRF_GRA },           //  8
 
-	{ "vid_d1",		0x2000, 0xda5f49da, 4 | BRF_GRA },           //  9 gfx2
-	{ "vid_c1",		0x2000, 0x62ed737b, 4 | BRF_GRA },           // 10
-	{ "vid_b1",		0x2000, 0x0939921e, 4 | BRF_GRA },           // 11
-	{ "vid_a1",		0x2000, 0xef515824, 4 | BRF_GRA },           // 12
+	{ "vid_d1",			0x2000, 0xda5f49da, 4 | BRF_GRA },           //  9 gfx2
+	{ "vid_c1",			0x2000, 0x62ed737b, 4 | BRF_GRA },           // 10
+	{ "vid_b1",			0x2000, 0x0939921e, 4 | BRF_GRA },           // 11
+	{ "vid_a1",			0x2000, 0xef515824, 4 | BRF_GRA },           // 12
 };
 
 STDROMPICKEXT(twotiger, twotiger, Ssioprom)
@@ -2525,14 +2525,14 @@ static struct BurnRomInfo tappergRomDesc[] = {
 	{ "tapper_c.p.u._bg_1_6f_12-7-83.6f",	0x4000, 0x2a30238c, 3 | BRF_GRA },           //  8 gfx1
 	{ "tapper_c.p.u._bg_0_5f_12-7-83.5f",	0x4000, 0x394ab576, 3 | BRF_GRA },           //  9
 
-	{ "fg1_a7.128",		0x4000, 0xbac70b69, 4 | BRF_GRA },           // 10 gfx2
-	{ "fg0_a8.128",		0x4000, 0xc300925d, 4 | BRF_GRA },           // 11
-	{ "fg3_a5.128",		0x4000, 0xecff6c23, 4 | BRF_GRA },           // 12
-	{ "fg2_a6.128",		0x4000, 0xa4f2d1be, 4 | BRF_GRA },           // 13
-	{ "fg5_a3.128",		0x4000, 0x16ce38cb, 4 | BRF_GRA },           // 14
-	{ "fg4_a4.128",		0x4000, 0x082a4059, 4 | BRF_GRA },           // 15
-	{ "fg7_a1.128",		0x4000, 0x3b476abe, 4 | BRF_GRA },           // 16
-	{ "fg6_a2.128",		0x4000, 0x6717264c, 4 | BRF_GRA },           // 17
+	{ "fg1_a7.128",							0x4000, 0xbac70b69, 4 | BRF_GRA },           // 10 gfx2
+	{ "fg0_a8.128",							0x4000, 0xc300925d, 4 | BRF_GRA },           // 11
+	{ "fg3_a5.128",							0x4000, 0xecff6c23, 4 | BRF_GRA },           // 12
+	{ "fg2_a6.128",							0x4000, 0xa4f2d1be, 4 | BRF_GRA },           // 13
+	{ "fg5_a3.128",							0x4000, 0x16ce38cb, 4 | BRF_GRA },           // 14
+	{ "fg4_a4.128",							0x4000, 0x082a4059, 4 | BRF_GRA },           // 15
+	{ "fg7_a1.128",							0x4000, 0x3b476abe, 4 | BRF_GRA },           // 16
+	{ "fg6_a2.128",							0x4000, 0x6717264c, 4 | BRF_GRA },           // 17
 };
 
 STDROMPICKEXT(tapperg, tapperg, Ssioprom)
@@ -2592,10 +2592,10 @@ struct BurnDriver BurnDrvTappera = {
 // Tapper (Budweiser, Date Unknown)
 
 static struct BurnRomInfo tapperbRomDesc[] = {
-	{ "tapper_c.p.u._pg_0_1c.1c",	0x4000, 0x127171d1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "tapper_c.p.u._pg_1_2c.1c",	0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tapper_c.p.u._pg_2_3c.3c",	0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tapper_c.p.u._pg_3_4c.4c",	0x2000, 0xe8dcdaa4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tapper_c.p.u._pg_0_1c.1c",			0x4000, 0x127171d1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tapper_c.p.u._pg_1_2c.1c",			0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tapper_c.p.u._pg_2_3c.3c",			0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tapper_c.p.u._pg_3_4c.4c",			0x2000, 0xe8dcdaa4, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "tapper_sound_snd_0_a7_12-7-83.a7",	0x1000, 0x0e8bb9d5, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "tapper_sound_snd_1_a8_12-7-83.a8",	0x1000, 0x0cf0e29b, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -2632,27 +2632,27 @@ struct BurnDriver BurnDrvTapperb = {
 // Tapper (Suntory)
 
 static struct BurnRomInfo sutapperRomDesc[] = {
-	{ "epr-5791",		0x4000, 0x87119cc4, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "epr-5792",		0x4000, 0x4c23ad89, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "epr-5793",		0x4000, 0xfecbf683, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "epr-5794",		0x2000, 0x5bdc1916, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "epr-5791",			0x4000, 0x87119cc4, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "epr-5792",			0x4000, 0x4c23ad89, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-5793",			0x4000, 0xfecbf683, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-5794",			0x2000, 0x5bdc1916, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "epr-5788.h11.ic8",	0x1000, 0x5c1d0982, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "epr-5787.h10.ic6",	0x1000, 0x09e74ed8, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "epr-5786.h9.ic5",	0x1000, 0xc3e98284, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "epr-5785.h7.ic4",	0x1000, 0xced2fd47, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "epr-5790",		0x4000, 0xac1558c1, 3 | BRF_GRA },           //  8 gfx1
-	{ "epr-5789",		0x4000, 0xfa66cab5, 3 | BRF_GRA },           //  9
+	{ "epr-5790",			0x4000, 0xac1558c1, 3 | BRF_GRA },           //  8 gfx1
+	{ "epr-5789",			0x4000, 0xfa66cab5, 3 | BRF_GRA },           //  9
 
-	{ "epr-5795",		0x4000, 0x5d987c92, 4 | BRF_GRA },           // 10 gfx2
-	{ "epr-5796",		0x4000, 0xde5700b4, 4 | BRF_GRA },           // 11
-	{ "epr-5797",		0x4000, 0xf10a1d05, 4 | BRF_GRA },           // 12
-	{ "epr-5798",		0x4000, 0x614990cd, 4 | BRF_GRA },           // 13
-	{ "epr-5799",		0x4000, 0x02c69432, 4 | BRF_GRA },           // 14
-	{ "epr-5800",		0x4000, 0xebf1f948, 4 | BRF_GRA },           // 15
-	{ "epr-5801",		0x4000, 0xd70defa7, 4 | BRF_GRA },           // 16
-	{ "epr-5802",		0x4000, 0xd4f114b9, 4 | BRF_GRA },           // 17
+	{ "epr-5795",			0x4000, 0x5d987c92, 4 | BRF_GRA },           // 10 gfx2
+	{ "epr-5796",			0x4000, 0xde5700b4, 4 | BRF_GRA },           // 11
+	{ "epr-5797",			0x4000, 0xf10a1d05, 4 | BRF_GRA },           // 12
+	{ "epr-5798",			0x4000, 0x614990cd, 4 | BRF_GRA },           // 13
+	{ "epr-5799",			0x4000, 0x02c69432, 4 | BRF_GRA },           // 14
+	{ "epr-5800",			0x4000, 0xebf1f948, 4 | BRF_GRA },           // 15
+	{ "epr-5801",			0x4000, 0xd70defa7, 4 | BRF_GRA },           // 16
+	{ "epr-5802",			0x4000, 0xd4f114b9, 4 | BRF_GRA },           // 17
 };
 
 STDROMPICKEXT(sutapper, sutapper, Ssioprom)
@@ -2677,10 +2677,10 @@ static struct BurnRomInfo rbtapperRomDesc[] = {
 	{ "rbtpg2.bin",	0x4000, 0x0b332c97, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "rbtpg3.bin",	0x2000, 0x698c06f2, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "5788",	0x1000, 0x5c1d0982, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
-	{ "5787",	0x1000, 0x09e74ed8, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "5786",	0x1000, 0xc3e98284, 2 | BRF_PRG | BRF_ESS }, //  6
-	{ "5785",	0x1000, 0xced2fd47, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "5788",		0x1000, 0x5c1d0982, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "5787",		0x1000, 0x09e74ed8, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "5786",		0x1000, 0xc3e98284, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "5785",		0x1000, 0xced2fd47, 2 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "rbtbg1.bin",	0x4000, 0x44dfa483, 3 | BRF_GRA },           //  8 gfx1
 	{ "rbtbg0.bin",	0x4000, 0x510b13de, 3 | BRF_GRA },           //  9
@@ -2874,30 +2874,36 @@ struct BurnDriver BurnDrvTimber = {
 };
 
 
-// Discs of Tron (Upright)
+// Discs of Tron (Upright, 10/4/83)
 
+/* Disc of TRON 10/4/83
+referred to as version 2, known differences:
+	shows "DEREZZ A RING    2000" in score table
+	Sound Test menu shows sounds 1 through 16 (though the other sounds are still in the game)
+	Player Input screen shows "UPRIGHT   ACTIVATE ALL DEVICES   TILT TO EXIT" 
+*/
 static struct BurnRomInfo dotronRomDesc[] = {
-	{ "loc-pg0.1c",	0x4000, 0xba0da15f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "loc-pg1.2c",	0x4000, 0xdc300191, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "loc-pg2.3c",	0x4000, 0xab0b3800, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "loc-pg1.4c",	0x2000, 0xf98c9f8e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "disc_tron_uprt_pg0_10-4-83.1c",		0x4000, 0x40d00195, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "disc_tron_uprt_pg1_10-4-83.2c",		0x4000, 0x5a7d1300, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "disc_tron_uprt_pg2_10-4-83.3c",		0x4000, 0xcb89c9be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "disc_tron_uprt_pg3_10-4-83.4c",		0x2000, 0x5098faf4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "sound0.a7",	0x1000, 0x6d39bf19, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
-	{ "sound1.a8",	0x1000, 0xac872e1d, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "sound2.a9",	0x1000, 0xe8ef6519, 2 | BRF_PRG | BRF_ESS }, //  6
-	{ "sound3.a10",	0x1000, 0x6b5aeb02, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "disc_tron_uprt_snd0_10-4-83.a7",		0x1000, 0x7fb54293, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "disc_tron_uprt_snd1_10-4-83.a8",		0x1000, 0xedef7326, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "disc_tron_uprt_snd2_9-22-83.a9",		0x1000, 0xe8ef6519, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "disc_tron_uprt_snd3_9-22-83.a10",	0x1000, 0x6b5aeb02, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "loc-bg2.6f",	0x2000, 0x40167124, 3 | BRF_GRA },           //  8 gfx1
-	{ "loc-bg1.5f",	0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           //  9
+	{ "loc-bg2.6f",							0x2000, 0x40167124, 3 | BRF_GRA },           //  8 gfx1
+	{ "loc-bg1.5f",							0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           //  9
 
-	{ "loc-g.cp4",	0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 10 gfx2
-	{ "loc-h.cp3",	0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 11
-	{ "loc-e.cp6",	0x2000, 0xce957f1a, 4 | BRF_GRA },           // 12
-	{ "loc-f.cp5",	0x2000, 0xd26053ce, 4 | BRF_GRA },           // 13
-	{ "loc-c.cp8",	0x2000, 0xef45d146, 4 | BRF_GRA },           // 14
-	{ "loc-d.cp7",	0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 15
-	{ "loc-a.cp0",	0x2000, 0xb35f5374, 4 | BRF_GRA },           // 16
-	{ "loc-b.cp9",	0x2000, 0x565a5c48, 4 | BRF_GRA },           // 17
+	{ "loc-g.cp4",							0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 10 gfx2
+	{ "loc-h.cp3",							0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 11
+	{ "loc-e.cp6",							0x2000, 0xce957f1a, 4 | BRF_GRA },           // 12
+	{ "loc-f.cp5",							0x2000, 0xd26053ce, 4 | BRF_GRA },           // 13
+	{ "loc-c.cp8",							0x2000, 0xef45d146, 4 | BRF_GRA },           // 14
+	{ "loc-d.cp7",							0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 15
+	{ "loc-a.cp0",							0x2000, 0xb35f5374, 4 | BRF_GRA },           // 16
+	{ "loc-b.cp9",							0x2000, 0x565a5c48, 4 | BRF_GRA },           // 17
 };
 
 STDROMPICKEXT(dotron, dotron, Ssioprom)
@@ -2949,7 +2955,7 @@ static INT32 DotroneInit()
 
 struct BurnDriver BurnDrvDotron = {
 	"dotron", NULL, "midssio", NULL, "1983",
-	"Discs of Tron (Upright)\0", NULL, "Bally Midway", "Miscellaneous",
+	"Discs of Tron (Upright, 10/4/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, dotronRomInfo, dotronRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotronDIPInfo,
@@ -2958,30 +2964,36 @@ struct BurnDriver BurnDrvDotron = {
 };
 
 
-// Discs of Tron (Upright alternate)
+// Discs of Tron (Upright, 9/22/83)
 
+/* Disc of TRON 9/22/83
+referred to as version 1, known differences:
+	Missing "DEREZZ A RING    2000" in score table
+	Sound Test menu shows sounds 1 through 19
+	Player Input screen shows "UPRIGHT   ACTIVATE ALL PLAYER INPUT   SWITCHES AND DEVICES   HIT TILT TO EXIT"
+*/
 static struct BurnRomInfo dotronaRomDesc[] = {
-	{ "aloc-pg0.1c",	0x4000, 0x40d00195, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "aloc-pg1.2c",	0x4000, 0x5a7d1300, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "aloc-pg2.3c",	0x4000, 0xcb89c9be, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "aloc-pg1.4c",	0x2000, 0x5098faf4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "disc_tron_uprt_pg0_9-22-83.1c",		0x4000, 0xba0da15f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "disc_tron_uprt_pg1_9-22-83.2c",		0x4000, 0xdc300191, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "disc_tron_uprt_pg2_9-22-83.3c",		0x4000, 0xab0b3800, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "disc_tron_uprt_pg3_9-22-83.4c",		0x2000, 0xf98c9f8e, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "asound0.a7",		0x1000, 0x7fb54293, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
-	{ "asound1.a8",		0x1000, 0xedef7326, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "sound2.a9",		0x1000, 0xe8ef6519, 2 | BRF_PRG | BRF_ESS }, //  6
-	{ "sound3.a10",		0x1000, 0x6b5aeb02, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "disc_tron_uprt_snd0_9-22-83.a7",		0x1000, 0x6d39bf19, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "disc_tron_uprt_snd1_9-22-83.a8",		0x1000, 0xac872e1d, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "disc_tron_uprt_snd2_9-22-83.a9",		0x1000, 0xe8ef6519, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "disc_tron_uprt_snd3_9-22-83.a10",	0x1000, 0x6b5aeb02, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "loc-bg2.6f",		0x2000, 0x40167124, 3 | BRF_GRA },           //  8 gfx1
-	{ "loc-bg1.5f",		0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           //  9
+	{ "loc-bg2.6f",							0x2000, 0x40167124, 3 | BRF_GRA },           //  8 gfx1
+	{ "loc-bg1.5f",							0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           //  9
 
-	{ "loc-g.cp4",		0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 10 gfx2
-	{ "loc-h.cp3",		0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 11
-	{ "loc-e.cp6",		0x2000, 0xce957f1a, 4 | BRF_GRA },           // 12
-	{ "loc-f.cp5",		0x2000, 0xd26053ce, 4 | BRF_GRA },           // 13
-	{ "loc-c.cp8",		0x2000, 0xef45d146, 4 | BRF_GRA },           // 14
-	{ "loc-d.cp7",		0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 15
-	{ "loc-a.cp0",		0x2000, 0xb35f5374, 4 | BRF_GRA },           // 16
-	{ "loc-b.cp9",		0x2000, 0x565a5c48, 4 | BRF_GRA },           // 17
+	{ "loc-g.cp4",							0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 10 gfx2
+	{ "loc-h.cp3",							0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 11
+	{ "loc-e.cp6",							0x2000, 0xce957f1a, 4 | BRF_GRA },           // 12
+	{ "loc-f.cp5",							0x2000, 0xd26053ce, 4 | BRF_GRA },           // 13
+	{ "loc-c.cp8",							0x2000, 0xef45d146, 4 | BRF_GRA },           // 14
+	{ "loc-d.cp7",							0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 15
+	{ "loc-a.cp0",							0x2000, 0xb35f5374, 4 | BRF_GRA },           // 16
+	{ "loc-b.cp9",							0x2000, 0x565a5c48, 4 | BRF_GRA },           // 17
 };
 
 STDROMPICKEXT(dotrona, dotrona, Ssioprom)
@@ -2989,7 +3001,7 @@ STD_ROM_FN(dotrona)
 
 struct BurnDriver BurnDrvDotrona = {
 	"dotrona", "dotron", "midssio", NULL, "1983",
-	"Discs of Tron (Upright alternate)\0", NULL, "Bally Midway", "Miscellaneous",
+	"Discs of Tron (Upright, 9/22/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, dotronaRomInfo, dotronaRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotronDIPInfo,
@@ -3001,33 +3013,33 @@ struct BurnDriver BurnDrvDotrona = {
 // Discs of Tron (Environmental)
 
 static struct BurnRomInfo dotroneRomDesc[] = {
-	{ "loc-cpu1",		0x4000, 0xeee31b8c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "loc-cpu2",		0x4000, 0x75ba6ad3, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "loc-cpu3",		0x4000, 0x94bb1a0e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "loc-cpu4",		0x2000, 0xc137383c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "loc-cpu1",							0x4000, 0xeee31b8c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "loc-cpu2",							0x4000, 0x75ba6ad3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "loc-cpu3",							0x4000, 0x94bb1a0e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "loc-cpu4",							0x2000, 0xc137383c, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "loc-a",		0x1000, 0x2de6a8a8, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
-	{ "loc-b",		0x1000, 0x4097663e, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "loc-c",		0x1000, 0xf576b9e7, 2 | BRF_PRG | BRF_ESS }, //  6
-	{ "loc-d",		0x1000, 0x74b0059e, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "ssi_o_loc-a_disc_of_tron_aug_19",	0x1000, 0x2de6a8a8, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "ssi_o_loc-b_disc_of_tron_aug_19",	0x1000, 0x4097663e, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ssi_o_loc-c_disc_of_tron_aug_19",	0x1000, 0xf576b9e7, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "ssi_o_loc-d_disc_of_tron_aug_19",	0x1000, 0x74b0059e, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pre.u3",		0x1000, 0xc3d0f762, 3 | BRF_PRG | BRF_ESS }, //  8 snt:cpu
-	{ "pre.u4",		0x1000, 0x7ca79b43, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "pre.u5",		0x1000, 0x24e9618e, 3 | BRF_PRG | BRF_ESS }, // 10
+	{ "pre.u3",								0x1000, 0xc3d0f762, 3 | BRF_PRG | BRF_ESS }, //  8 snt:cpu
+	{ "pre.u4",								0x1000, 0x7ca79b43, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "pre.u5",								0x1000, 0x24e9618e, 3 | BRF_PRG | BRF_ESS }, // 10
 
-	{ "loc-bg2.6f",		0x2000, 0x40167124, 3 | BRF_GRA },           // 11 gfx1
-	{ "loc-bg1.5f",		0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           // 12
+	{ "loc-bg2.6f",							0x2000, 0x40167124, 3 | BRF_GRA },           // 11 gfx1
+	{ "loc-bg1.5f",							0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           // 12
 
-	{ "loc-g.cp4",		0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 13 gfx2
-	{ "loc-h.cp3",		0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 14
-	{ "loc-e.cp6",		0x2000, 0xce957f1a, 4 | BRF_GRA },           // 15
-	{ "loc-f.cp5",		0x2000, 0xd26053ce, 4 | BRF_GRA },           // 16
-	{ "loc-c.cp8",		0x2000, 0xef45d146, 4 | BRF_GRA },           // 17
-	{ "loc-d.cp7",		0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 18
-	{ "loc-a.cp0",		0x2000, 0xb35f5374, 4 | BRF_GRA },           // 19
-	{ "loc-b.cp9",		0x2000, 0x565a5c48, 4 | BRF_GRA },           // 20
+	{ "loc-g.cp4",							0x2000, 0x57a2b1ff, 4 | BRF_GRA },           // 13 gfx2
+	{ "loc-h.cp3",							0x2000, 0x3bb4d475, 4 | BRF_GRA },           // 14
+	{ "loc-e.cp6",							0x2000, 0xce957f1a, 4 | BRF_GRA },           // 15
+	{ "loc-f.cp5",							0x2000, 0xd26053ce, 4 | BRF_GRA },           // 16
+	{ "loc-c.cp8",							0x2000, 0xef45d146, 4 | BRF_GRA },           // 17
+	{ "loc-d.cp7",							0x2000, 0x5e8a3ef3, 4 | BRF_GRA },           // 18
+	{ "loc-a.cp0",							0x2000, 0xb35f5374, 4 | BRF_GRA },           // 19
+	{ "loc-b.cp9",							0x2000, 0x565a5c48, 4 | BRF_GRA },           // 20
 
-//	{ "edotlamp.u2",	0x0020, 0xfb58b867, 6 | BRF_GRA },           // 21 proms
+	{ "edotlamp.u2",						0x0020, 0xfb58b867, 0 | BRF_GRA },           // 21 lamp sequencer PROM
 };
 
 STDROMPICKEXT(dotrone, dotrone, Ssioprom)
@@ -3047,25 +3059,25 @@ struct BurnDriver BurnDrvDotrone = {
 // Demolition Derby
 
 static struct BurnRomInfo demoderbRomDesc[] = {
-	{ "demo_drby_pro_0",							0x4000, 0xbe7da2f3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "demo_drby_pro_1",							0x4000, 0xc6f6604c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "demo_drby_pro_2",							0x4000, 0xfa93b9d9, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "demo_drby_pro_3",							0x4000, 0x4e964883, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "demo_drby_pro_0",			0x4000, 0xbe7da2f3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "demo_drby_pro_1",			0x4000, 0xc6f6604c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "demo_drby_pro_2",			0x4000, 0xfa93b9d9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "demo_drby_pro_3",			0x4000, 0x4e964883, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tcs_u5.bin",									0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
-	{ "tcs_u4.bin",									0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "tcs_u5.bin",					0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "tcs_u4.bin",					0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "demo_derby_bg_06f.6f",						0x2000, 0xcf80be19, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "demo_derby_bg_15f.5f",						0x2000, 0x4e173e52, 3 | BRF_GRA },           //  7
+	{ "demo_derby_bg_06f.6f",		0x2000, 0xcf80be19, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "demo_derby_bg_15f.5f",		0x2000, 0x4e173e52, 3 | BRF_GRA },           //  7
 
-	{ "demo_derby_fg0_a4.a4",						0x4000, 0xe57a4de6, 4 | BRF_GRA },           //  8 Sprites
-	{ "demo_derby_fg4_a3.a3",						0x4000, 0x55aa667f, 4 | BRF_GRA },           //  9
-	{ "demo_derby_fg1_a6.a6",						0x4000, 0x70259651, 4 | BRF_GRA },           // 10
-	{ "demo_derby_fg5_a5.a5",						0x4000, 0x5fe99007, 4 | BRF_GRA },           // 11
-	{ "demo_derby_fg2_a8.a8",						0x4000, 0x6cab7b95, 4 | BRF_GRA },           // 12
-	{ "demo_derby_fg6_a7.a7",						0x4000, 0xabfb9a8b, 4 | BRF_GRA },           // 13
-	{ "demo_derby_fg3_a10.a10",						0x4000, 0x801d9b86, 4 | BRF_GRA },           // 14
-	{ "demo_derby_fg7_a9.a9",						0x4000, 0x0ec3f60a, 4 | BRF_GRA },           // 15
+	{ "demo_derby_fg0_a4.a4",		0x4000, 0xe57a4de6, 4 | BRF_GRA },           //  8 Sprites
+	{ "demo_derby_fg4_a3.a3",		0x4000, 0x55aa667f, 4 | BRF_GRA },           //  9
+	{ "demo_derby_fg1_a6.a6",		0x4000, 0x70259651, 4 | BRF_GRA },           // 10
+	{ "demo_derby_fg5_a5.a5",		0x4000, 0x5fe99007, 4 | BRF_GRA },           // 11
+	{ "demo_derby_fg2_a8.a8",		0x4000, 0x6cab7b95, 4 | BRF_GRA },           // 12
+	{ "demo_derby_fg6_a7.a7",		0x4000, 0xabfb9a8b, 4 | BRF_GRA },           // 13
+	{ "demo_derby_fg3_a10.a10",		0x4000, 0x801d9b86, 4 | BRF_GRA },           // 14
+	{ "demo_derby_fg7_a9.a9",		0x4000, 0x0ec3f60a, 4 | BRF_GRA },           // 15
 };
 
 STD_ROM_PICK(demoderb)
@@ -3134,12 +3146,12 @@ struct BurnDriver BurnDrvDemoderb = {
 // Demolition Derby (cocktail)
 
 static struct BurnRomInfo demoderbcRomDesc[] = {
-	{ "dd_pro0",		0x4000, 0x8781b367, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "dd_pro1",		0x4000, 0x4c713bfe, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dd_pro2",		0x4000, 0xc2cbd2a4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dd_pro0",				0x4000, 0x8781b367, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dd_pro1",				0x4000, 0x4c713bfe, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dd_pro2",				0x4000, 0xc2cbd2a4, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "tcs_u5.bin",		0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  3 tcs:cpu
-	{ "tcs_u4.bin",		0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "tcs_u5.bin",				0x2000, 0xeca33b2c, 3 | BRF_PRG | BRF_ESS }, //  3 tcs:cpu
+	{ "tcs_u4.bin",				0x2000, 0x3490289a, 3 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "demo_derby_bg_06f.6f",	0x2000, 0xcf80be19, 3 | BRF_GRA },           //  5 gfx1
 	{ "demo_derby_bg_15f.5f",	0x2000, 0x4e173e52, 3 | BRF_GRA },           //  6
@@ -3171,33 +3183,33 @@ struct BurnDriver BurnDrvDemoderbc = {
 // NFL Football
 
 static struct BurnRomInfo nflfootRomDesc[] = {
-	{ "nflcpupg.1c",	0x4000, 0xd76a7a41, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "nflcpupg.2c",	0x4000, 0x2aa76168, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "nflcpupg.3c",	0x4000, 0x5ec01e09, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "nflcpupg.1c",			0x4000, 0xd76a7a41, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "nflcpupg.2c",			0x4000, 0x2aa76168, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "nflcpupg.3c",			0x4000, 0x5ec01e09, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "nflsnd.a7",		0x1000, 0x1339be2e, 2 | BRF_PRG | BRF_ESS }, //  3 ssio:cpu
-	{ "nflsnd.a8",		0x1000, 0x8630b560, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "nflsnd.a9",		0x1000, 0x1e0fe4c8, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "nflsnd.a7",				0x1000, 0x1339be2e, 2 | BRF_PRG | BRF_ESS }, //  3 ssio:cpu
+	{ "nflsnd.a8",				0x1000, 0x8630b560, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "nflsnd.a9",				0x1000, 0x1e0fe4c8, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "nfl-sqtk-11-15-83.u2",	0x1000, 0xaeddda31, 3 | BRF_PRG | BRF_ESS }, //  6 snt:cpu
 	{ "nfl-sqtk-11-15-83.u3",	0x1000, 0x36229d13, 3 | BRF_PRG | BRF_ESS }, //  7
 	{ "nfl-sqtk-11-15-83.u4",	0x1000, 0xb202439b, 3 | BRF_PRG | BRF_ESS }, //  8
 	{ "nfl-sqtk-11-15-83.u5",	0x1000, 0xbbfe4d39, 3 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "ipu-7-9.a2",		0x2000, 0x0e083adb, 4 | BRF_GRA },           // 10 ipu
-	{ "ipu-7-9.a4",		0x2000, 0x5c9c4764, 4 | BRF_GRA },           // 11
+	{ "ipu-7-9.a2",				0x2000, 0x0e083adb, 4 | BRF_GRA },           // 10 ipu
+	{ "ipu-7-9.a4",				0x2000, 0x5c9c4764, 4 | BRF_GRA },           // 11
 
-	{ "nflcpubg.6f",	0x2000, 0x6d116cd9, 5 | BRF_GRA },           // 12 gfx1
-	{ "nflcpubg.5f",	0x2000, 0x5f1b0b67, 5 | BRF_GRA },           // 13
+	{ "nflcpubg.6f",			0x2000, 0x6d116cd9, 5 | BRF_GRA },           // 12 gfx1
+	{ "nflcpubg.5f",			0x2000, 0x5f1b0b67, 5 | BRF_GRA },           // 13
 
-	{ "nflvidfg.cp4",	0x2000, 0xeb6b808d, 6 | BRF_GRA },           // 14 gfx2
-	{ "nflvidfg.cp3",	0x2000, 0xbe21580a, 6 | BRF_GRA },           // 15
-	{ "nflvidfg.cp6",	0x2000, 0x54a0bff8, 6 | BRF_GRA },           // 16
-	{ "nflvidfg.cp5",	0x2000, 0x6aeba0ab, 6 | BRF_GRA },           // 17
-	{ "nflvidfg.cp8",	0x2000, 0x112ee67b, 6 | BRF_GRA },           // 18
-	{ "nflvidfg.cp7",	0x2000, 0x73f62392, 6 | BRF_GRA },           // 19
-	{ "nflvidfg.c10",	0x2000, 0x1766dcc7, 6 | BRF_GRA },           // 20
-	{ "nflvidfg.cp9",	0x2000, 0x46558146, 6 | BRF_GRA },           // 21
+	{ "nflvidfg.cp4",			0x2000, 0xeb6b808d, 6 | BRF_GRA },           // 14 gfx2
+	{ "nflvidfg.cp3",			0x2000, 0xbe21580a, 6 | BRF_GRA },           // 15
+	{ "nflvidfg.cp6",			0x2000, 0x54a0bff8, 6 | BRF_GRA },           // 16
+	{ "nflvidfg.cp5",			0x2000, 0x6aeba0ab, 6 | BRF_GRA },           // 17
+	{ "nflvidfg.cp8",			0x2000, 0x112ee67b, 6 | BRF_GRA },           // 18
+	{ "nflvidfg.cp7",			0x2000, 0x73f62392, 6 | BRF_GRA },           // 19
+	{ "nflvidfg.c10",			0x2000, 0x1766dcc7, 6 | BRF_GRA },           // 20
+	{ "nflvidfg.cp9",			0x2000, 0x46558146, 6 | BRF_GRA },           // 21
 };
 
 STDROMPICKEXT(nflfoot, nflfoot, Ssioprom)

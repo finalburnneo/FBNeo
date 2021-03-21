@@ -1031,6 +1031,9 @@
 		FEDF04BB25E3786E00F3EDD9 /* ymf271.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04B825E3786E00F3EDD9 /* ymf271.cpp */; };
 		FEDF04CA25EB473C00F3EDD9 /* m37710.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04C525EB472400F3EDD9 /* m37710.cpp */; };
 		FEDF04CC25EB476700F3EDD9 /* d_ms32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF04CB25EB476700F3EDD9 /* d_ms32.cpp */; };
+		FEDF17F526072DB80082732C /* ds2404.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF17F126072DB70082732C /* ds2404.cpp */; };
+		FEDF17F626072DB80082732C /* intelfsh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF17F226072DB70082732C /* intelfsh.cpp */; };
+		FEDF180A26072DE90082732C /* i386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF180026072DE80082732C /* i386.cpp */; };
 		FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */; };
 		FEE7CC3E242285DC00B311BC /* d_sshangha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */; };
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
@@ -2629,6 +2632,23 @@
 		FEDF04C825EB472400F3EDD9 /* m37710op.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = m37710op.h; sourceTree = "<group>"; };
 		FEDF04C925EB472400F3EDD9 /* m377_intf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = m377_intf.h; sourceTree = "<group>"; };
 		FEDF04CB25EB476700F3EDD9 /* d_ms32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_ms32.cpp; sourceTree = "<group>"; };
+		FEDF17F126072DB70082732C /* ds2404.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ds2404.cpp; sourceTree = "<group>"; };
+		FEDF17F226072DB70082732C /* intelfsh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = intelfsh.cpp; sourceTree = "<group>"; };
+		FEDF17F326072DB70082732C /* ds2404.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ds2404.h; sourceTree = "<group>"; };
+		FEDF17F426072DB80082732C /* intelfsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intelfsh.h; sourceTree = "<group>"; };
+		FEDF17F726072DE80082732C /* i386_intf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386_intf.h; sourceTree = "<group>"; };
+		FEDF17F926072DE80082732C /* i386intf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386intf.h; sourceTree = "<group>"; };
+		FEDF17FA26072DE80082732C /* pentops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pentops.c; sourceTree = "<group>"; };
+		FEDF17FB26072DE80082732C /* i386ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i386ops.c; sourceTree = "<group>"; };
+		FEDF17FC26072DE80082732C /* x87ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x87ops.c; sourceTree = "<group>"; };
+		FEDF17FD26072DE80082732C /* cycles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cycles.h; sourceTree = "<group>"; };
+		FEDF17FE26072DE80082732C /* i386op16.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i386op16.c; sourceTree = "<group>"; };
+		FEDF17FF26072DE80082732C /* i386dasm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i386dasm.c; sourceTree = "<group>"; };
+		FEDF180026072DE80082732C /* i386.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i386.cpp; sourceTree = "<group>"; };
+		FEDF180126072DE80082732C /* i386op32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i386op32.c; sourceTree = "<group>"; };
+		FEDF180226072DE80082732C /* i386ops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386ops.h; sourceTree = "<group>"; };
+		FEDF180326072DE80082732C /* i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386.h; sourceTree = "<group>"; };
+		FEDF180426072DE80082732C /* i486ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i486ops.c; sourceTree = "<group>"; };
 		FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_x2222.cpp; sourceTree = "<group>"; };
 		FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_sshangha.cpp; sourceTree = "<group>"; };
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
@@ -2777,6 +2797,7 @@
 				FE8329142439A3E000059993 /* e132xs */,
 				FE1B1CC423561A620065200C /* h6280 */,
 				FE1B1D7323561A630065200C /* hd6309 */,
+				FEDF17F826072DE80082732C /* i386 */,
 				FE1B1CA423561A610065200C /* i8x41 */,
 				FE1B1CDA23561A620065200C /* i8039 */,
 				FE1B1D7C23561A630065200C /* i8051 */,
@@ -2813,6 +2834,7 @@
 				FE1B1CCB23561A620065200C /* h6280_intf.h */,
 				FE1B1D8B23561A640065200C /* hd6309_intf.cpp */,
 				FE1B1CD923561A620065200C /* hd6309_intf.h */,
+				FEDF17F726072DE80082732C /* i386_intf.h */,
 				FE1B1D5423561A630065200C /* konami_intf.cpp */,
 				FE1B1D8023561A630065200C /* konami_intf.h */,
 				FEDF04C925EB472400F3EDD9 /* m377_intf.h */,
@@ -4730,6 +4752,8 @@
 				FE1B228623561A710065200C /* c169.h */,
 				FE1B22D423561A720065200C /* decobsmt.cpp */,
 				FE1B22BF23561A710065200C /* decobsmt.h */,
+				FEDF17F126072DB70082732C /* ds2404.cpp */,
+				FEDF17F326072DB70082732C /* ds2404.h */,
 				FE1B229923561A710065200C /* earom.cpp */,
 				FE1B228C23561A710065200C /* earom.h */,
 				FE1B22D323561A720065200C /* eeprom.cpp */,
@@ -4738,6 +4762,8 @@
 				FE1B22B923561A710065200C /* gaelco_crypt.h */,
 				FE1E0C7C245333E500C774C3 /* i4x00.cpp */,
 				FE1E0C7D245333E500C774C3 /* i4x00.h */,
+				FEDF17F226072DB70082732C /* intelfsh.cpp */,
+				FEDF17F426072DB80082732C /* intelfsh.h */,
 				FE1B22B423561A710065200C /* joyprocess.cpp */,
 				FE1B22D623561A720065200C /* joyprocess.h */,
 				FEECE40A247AC8C4007724A2 /* k1ge.cpp */,
@@ -4984,6 +5010,25 @@
 				FEDF04C825EB472400F3EDD9 /* m37710op.h */,
 			);
 			path = m377;
+			sourceTree = "<group>";
+		};
+		FEDF17F826072DE80082732C /* i386 */ = {
+			isa = PBXGroup;
+			children = (
+				FEDF17F926072DE80082732C /* i386intf.h */,
+				FEDF17FA26072DE80082732C /* pentops.c */,
+				FEDF17FB26072DE80082732C /* i386ops.c */,
+				FEDF17FC26072DE80082732C /* x87ops.c */,
+				FEDF17FD26072DE80082732C /* cycles.h */,
+				FEDF17FE26072DE80082732C /* i386op16.c */,
+				FEDF17FF26072DE80082732C /* i386dasm.c */,
+				FEDF180026072DE80082732C /* i386.cpp */,
+				FEDF180126072DE80082732C /* i386op32.c */,
+				FEDF180226072DE80082732C /* i386ops.h */,
+				FEDF180326072DE80082732C /* i386.h */,
+				FEDF180426072DE80082732C /* i486ops.c */,
+			);
+			path = i386;
 			sourceTree = "<group>";
 		};
 		FEECE3FE247AC7BE007724A2 /* tlcs900 */ = {
@@ -5289,6 +5334,7 @@
 				FE43A42125CF20E0004EACE7 /* d_xunit.cpp in Sources */,
 				FE1B25E823561A760065200C /* d_lethal.cpp in Sources */,
 				FE1B27A323561A790065200C /* ay8910.c in Sources */,
+				FEDF17F626072DB80082732C /* intelfsh.cpp in Sources */,
 				FE1B263923561A770065200C /* cps_draw.cpp in Sources */,
 				FE34742623696151006646E7 /* SDLAudioEngine.m in Sources */,
 				FE1B247F23561A750065200C /* ddt3x.cpp in Sources */,
@@ -6055,6 +6101,7 @@
 				FE1B253823561A760065200C /* d_pushman.cpp in Sources */,
 				FE1B23B023561A750065200C /* z80pio.cpp in Sources */,
 				FE1B242B23561A750065200C /* XzDec.c in Sources */,
+				FEDF180A26072DE90082732C /* i386.cpp in Sources */,
 				FE1B258623561A760065200C /* d_dassault.cpp in Sources */,
 				FE1B26EC23561A780065200C /* d_kncljoe.cpp in Sources */,
 				FE1B277F23561A790065200C /* ym2151.c in Sources */,
@@ -6267,6 +6314,7 @@
 				FE1B25DE23561A760065200C /* d_rollerg.cpp in Sources */,
 				FE1B283D23561A7A0065200C /* statec.cpp in Sources */,
 				FE1B24E223561A760065200C /* d_batman.cpp in Sources */,
+				FEDF17F526072DB80082732C /* ds2404.cpp in Sources */,
 				FEED9E0A23576E3800B7AF83 /* replay.cpp in Sources */,
 				FE1B24BB23561A750065200C /* irem_cpu.cpp in Sources */,
 				FE1B24CA23561A750065200C /* cave.cpp in Sources */,

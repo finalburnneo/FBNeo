@@ -1063,6 +1063,12 @@
     <ClInclude Include="..\..\src\cpu\m377\m37710.h">
       <Filter>cpus\m377</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\ds2404.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\intelfsh.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4328,6 +4334,18 @@
     <ClCompile Include="..\..\src\cpu\m377\m37710.cpp">
       <Filter>cpus\m377</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\ds2404.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\intelfsh.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_seibuspi.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\i386\i386.cpp">
+      <Filter>cpus\i386</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -4572,6 +4590,9 @@
     </Filter>
     <Filter Include="cpus\m377">
       <UniqueIdentifier>{3ca2d32a-c268-4ec6-8dfc-ae6c73bcbc80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\i386">
+      <UniqueIdentifier>{008dfd61-894d-4efe-b43d-a6d7db1d9bb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

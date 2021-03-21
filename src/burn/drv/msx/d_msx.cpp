@@ -25680,10 +25680,10 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 };
 
 
-// Menace from Triton (HB, v1.1)
+// Menace from Triton, the (HB, v1.2)
 
 static struct BurnRomInfo MSX_mtritonRomDesc[] = {
-	{ "menace from triton v1.1 (2020)(brain games).rom",	49152, 0x02b38a95, BRF_PRG | BRF_ESS },
+	{ "menace from triton v1.2 (2021)(brain games).rom",	49152, 0xf7a83771, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
@@ -25691,10 +25691,50 @@ STD_ROM_FN(MSX_mtriton)
 
 struct BurnDriver BurnDrvMSX_mtriton = {
 	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
-	"Menace from Triton (HB, v1.1)\0", NULL, "Brain Games", "MSX",
+	"Menace from Triton, the (HB, v1.2)\0", NULL, "Brain Games", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Duckstroma (HB)
+
+static struct BurnRomInfo MSX_duckstromaRomDesc[] = {
+	{ "duckstroma (2020)(ultranarwhal).rom",	32768, 0x80e31215, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_duckstroma, MSX_duckstroma, msx_msx)
+STD_ROM_FN(MSX_duckstroma)
+
+struct BurnDriver BurnDrvMSX_duckstroma = {
+	"msx_duckstroma", NULL, "msx_msx", NULL, "2020",
+	"Duckstroma (HB)\0", NULL, "UltraNarwhal", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_duckstromaRomInfo, MSX_duckstromaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Zombie Calavera Prologue (HB)
+
+static struct BurnRomInfo MSX_zcalaveraRomDesc[] = {
+	{ "zombie calavera (2021)(nanochess).rom",	32768, 0x254e500c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_zcalavera, MSX_zcalavera, msx_msx)
+STD_ROM_FN(MSX_zcalavera)
+
+struct BurnDriver BurnDrvMSX_zcalavera = {
+	"msx_zcalavera", NULL, "msx_msx", NULL, "2021",
+	"Zombie Calavera Prologue (HB)\0", "Original game by Mojon Twins", "Nanochess", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
+	MSXGetZipName, MSX_zcalaveraRomInfo, MSX_zcalaveraRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

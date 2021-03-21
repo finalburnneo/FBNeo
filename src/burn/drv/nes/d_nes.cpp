@@ -17494,6 +17494,23 @@ struct BurnDriver BurnDrvnes_arkaderush = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_bmetal2RomDesc[] = {
+	{ "bare metal 2.0(2021)(scarduadev).nes",          49168, 0xe37e0c59, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bmetal2)
+STD_ROM_FN(nes_bmetal2)
+
+struct BurnDriver BurnDrvnes_bmetal2 = {
+	"nes_bmetal2", NULL, NULL, NULL, "2021",
+	"Bare Metal 2.0 (HB)\0", "NesDev Competition build", "ScarduaDev", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	NESGetZipName, nes_bmetal2RomInfo, nes_bmetal2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_blobquestRomDesc[] = {
 	{ "Blob Quest (HB)(2021)(Tom Livak).nes",          32784, 0xe3ac2b6d, BRF_ESS | BRF_PRG },
 };

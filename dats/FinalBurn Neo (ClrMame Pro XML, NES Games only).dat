@@ -936,6 +936,13 @@
 		<rom name="Bandit Kings of Ancient China (USA).nes" size="393232" crc="a9e2bf31"/>
 		<driver status="good"/>
 	</game>
+	<game name="bmetal2">
+		<description>Bare Metal 2.0 (HB) [Homebrew, NesDev Competition build]</description>
+		<year>2021</year>
+		<manufacturer>ScarduaDev</manufacturer>
+		<rom name="bare metal 2.0(2021)(scarduadev).nes" size="49168" crc="e37e0c59"/>
+		<driver status="good"/>
+	</game>
 	<game name="barkebilstrish">
 		<description>Barker Bill's Trick Shooting (USA)</description>
 		<year>1990</year>

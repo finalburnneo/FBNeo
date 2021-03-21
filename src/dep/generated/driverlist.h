@@ -1101,6 +1101,7 @@ DRV		BurnDrvmd_bk3s;
 DRV		BurnDrvmd_bk3;
 DRV		BurnDrvmd_bk3p;
 DRV		BurnDrvmd_bk3pro;
+DRV		BurnDrvnes_bmetal2;
 DRV		BurnDrvpce_baribari;
 DRV		BurnDrvnes_barkebilstrish;
 DRV		BurnDrvmd_barkley;
@@ -3924,6 +3925,7 @@ DRV		BurnDrvnes_duckmaze;
 DRV		BurnDrvducki;
 DRV		BurnDrvnes_ducktalesc;
 DRV		BurnDrvnes_ducktales2cast;
+DRV		BurnDrvMSX_duckstroma;
 DRV		BurnSpecDuckstroma;
 DRV		BurnDrvnes_ducktales;
 DRV		BurnDrvnes_ducktales2c;
@@ -10840,8 +10842,8 @@ DRV		BurnDrvRaidendxk;
 DRV		BurnDrvRaidendxpt;
 DRV		BurnDrvRaidendx;
 DRV		BurnDrvRaidendxu;
-DRV		BurnDrvRdfta;
 DRV		BurnDrvRdftau;
+DRV		BurnDrvRdfta;
 DRV		BurnDrvRdftauge;
 DRV		BurnDrvRdft;
 DRV		BurnDrvRdftgb;
@@ -16677,6 +16679,7 @@ DRV		BurnDrvsg1k_zippyract;
 DRV		BurnDrvZoar;
 DRV		BurnDrvZodiack;
 DRV		BurnDrvnes_zombiecalavera;
+DRV		BurnDrvMSX_zcalavera;
 DRV		BurnSpeczcalavera;
 DRV		BurnDrvmd_zombhigh;
 DRV		BurnDrvnes_zombiehunter;
@@ -17827,6 +17830,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bk3,				// Bare Knuckle III (Jpn)
 	&BurnDrvmd_bk3p,			// Bare Knuckle III (Jpn, Prototype)
 	&BurnDrvmd_bk3pro,			// Bare Knuckle III Project (Japan) (Hack, 0.3)
+	&BurnDrvnes_bmetal2,		// Bare Metal 2.0 (HB)
 	&BurnDrvpce_baribari,		// Bari Bari Densetsu
 	&BurnDrvnes_barkebilstrish,	// Barker Bill's Trick Shooting (USA)
 	&BurnDrvmd_barkley,			// Barkley Shut Up and Jam! (Euro, USA)
@@ -20650,6 +20654,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvducki,				// Duck Tales (Intro demo)
 	&BurnDrvnes_ducktalesc,		// Duck Tales (USA) - Castellano v1.1
 	&BurnDrvnes_ducktales2cast,	// Duck Tales 2 (USA) - Castellano v1.1
+	&BurnDrvMSX_duckstroma,		// Duckstroma (HB)
 	&BurnSpecDuckstroma,		// Duckstroma (HB)
 	&BurnDrvnes_ducktales,		// DuckTales (USA)
 	&BurnDrvnes_ducktales2c,	// DuckTales 2 (T-Chi, v1.1)
@@ -24897,7 +24902,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_memmanor,		// Memory Manor
 	&BurnDrvMSX_menace,			// Menace (HB)
 	&BurnDrvnes_menacebeach,	// Menace Beach (USA) (Unl)
-	&BurnDrvMSX_mtriton,		// Menace from Triton (HB, v1.1)
+	&BurnDrvMSX_mtriton,		// Menace from Triton, the (HB, v1.2)
 	&BurnDrvmd_menacer,			// Menacer 6-Game Cartridge (Euro, USA)
 	&BurnDrvnes_mendelpalace,	// Mendel Palace (USA)
 	&BurnDrvmd_menghu,			// Meng Huan Shui Guo Pan - 777 Casino (Chi)
@@ -27566,8 +27571,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRaidendxpt,			// Raiden DX (Portugal)
 	&BurnDrvRaidendx,			// Raiden DX (UK)
 	&BurnDrvRaidendxu,			// Raiden DX (US)
-	&BurnDrvRdfta,				// Raiden Fighters (Evaluation Software For Show, Germany)
-	&BurnDrvRdftau,				// Raiden Fighters (Evaluation Software For Show, Germany)
+	&BurnDrvRdftau,				// Raiden Fighters (Australia)
+	&BurnDrvRdfta,				// Raiden Fighters (Austria)
 	&BurnDrvRdftauge,			// Raiden Fighters (Evaluation Software For Show, Germany)
 	&BurnDrvRdft,				// Raiden Fighters (Germany)
 	&BurnDrvRdftgb,				// Raiden Fighters (Great Britain)
@@ -33403,6 +33408,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvZoar,				// Zoar
 	&BurnDrvZodiack,			// Zodiack
 	&BurnDrvnes_zombiecalavera,	// Zombie Calavera (HB)
+	&BurnDrvMSX_zcalavera,		// Zombie Calavera Prologue (HB)
 	&BurnSpeczcalavera,			// Zombie Calavera Prologue (HB)
 	&BurnDrvmd_zombhigh,		// Zombie High (USA, Prototype)
 	&BurnDrvnes_zombiehunter,	// Zombie Hunter (Japan)

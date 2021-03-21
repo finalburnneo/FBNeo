@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16473 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16476 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1089,6 +1089,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_bk3	|  	| Bare Knuckle III (Jpn)				| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_bk3p	|  	| Bare Knuckle III (Jpn, Prototype)			| md_sor3	| 1994	| Sega		| Sega Megadrive| 					|
 | md_bk3pro	|  	| Bare Knuckle III Project (Japan) (Hack, 0.3)		| md_sor3	| 1994	| 2018 Gsaurus	| Sega Megadrive| 					|
+| nes_bmetal2	|  	| Bare Metal 2.0 (HB)					| 		| 2021	| ScarduaDev	| Miscellaneous	| NesDev Competition build		|
 | pce_baribari	|  	| Bari Bari Densetsu					| 		| 1989	| Taito		| PC Engine	| 					|
 | nes_barkebilstrish|  	| Barker Bill's Trick Shooting (USA)			| 		| 1990	| Nintendo	| Miscellaneous	| 					|
 | md_barkley	|  	| Barkley Shut Up and Jam! (Euro, USA)			| 		| 1993	| Accolade	| Sega Megadrive| 					|
@@ -3868,6 +3869,7 @@ This list contains all games supported by FinalBurn Neo.
 | ducki		|  	| Duck Tales (Intro demo)				| 		| 2009	| Sergi		| Neo Geo MVS	| You must use the Universe BIOS and set|
 | nes_ducktalesc|  	| Duck Tales (USA) - Castellano v1.1			| nes_ducktales	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_ducktales2cast|  	| Duck Tales 2 (USA) - Castellano v1.1			| nes_ducktales2| 1989 ?| Nintendo	| Miscellaneous	| 					|
+| msx_duckstroma|  	| Duckstroma (HB)					| 		| 2020	| UltraNarwhal	| MSX		| 					|
 | spec_duckstroma|  	| Duckstroma (HB)					| 		| 2020	| UltraNarwhal	| ZX Spectrum	| 					|
 | nes_ducktales	|  	| DuckTales (USA)					| 		| 1989	| Capcom	| Miscellaneous	| 					|
 | nes_ducktales2c|  	| DuckTales 2 (T-Chi, v1.1)				| nes_ducktales2| 2019-06-01| Capcom	| Miscellaneous	| 					|
@@ -8059,7 +8061,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_memmanor	|  	| Memory Manor						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | msx_menace	|  	| Menace (HB)						| 		| 2009	| The New Image	| MSX		| 					|
 | nes_menacebeach|  	| Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
-| msx_mtriton	|  	| Menace from Triton (HB, v1.1)				| 		| 2020	| Brain Games	| MSX		| 					|
+| msx_mtriton	|  	| Menace from Triton, the (HB, v1.2)			| 		| 2020	| Brain Games	| MSX		| 					|
 | md_menacer	|  	| Menacer 6-Game Cartridge (Euro, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_mendelpalace|  	| Mendel Palace (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | md_menghu	|  	| Meng Huan Shui Guo Pan - 777 Casino (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|
@@ -10690,8 +10692,8 @@ This list contains all games supported by FinalBurn Neo.
 | raidendxpt	|  	| Raiden DX (Portugal)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendx	|  	| Raiden DX (UK)					| 		| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raidendxu	|  	| Raiden DX (US)					| raidendx	| 1994	| Seibu Kaihatsu| Miscellaneous	| 					|
-| rdfta		|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
-| rdftau	|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdftau	|  	| Raiden Fighters (Australia)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
+| rdfta		|  	| Raiden Fighters (Austria)				| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
 | rdftauge	|  	| Raiden Fighters (Evaluation Software For Show, Germany| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
 | rdft		|  	| Raiden Fighters (Germany)				| 		| 1996	| Seibu Kaihatsu| SPI		| 					|
 | rdftgb	|  	| Raiden Fighters (Great Britain)			| rdft		| 1996	| Seibu Kaihatsu| SPI		| 					|
@@ -16431,6 +16433,7 @@ This list contains all games supported by FinalBurn Neo.
 | zoar		|  	| Zoar							| 		| 1982	| Data East USA	| Miscellaneous	| 					|
 | zodiack	|  	| Zodiack						| 		| 1983	| Orca (Esco Tra| Miscellaneous	| 					|
 | nes_zombiecalavera|  	| Zombie Calavera (HB)					| 		| 2016	| Mojon Twins	| Miscellaneous	| 					|
+| msx_zcalavera	|  	| Zombie Calavera Prologue (HB)				| 		| 2021	| Nanochess	| MSX		| Original game by Mojon Twins		|
 | spec_zcalavera|  	| Zombie Calavera Prologue (HB)				| 		| 2010	| Mojon Twins	| ZX Spectrum	| 					|
 | md_zombhigh	|  	| Zombie High (USA, Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | nes_zombiehunter|  	| Zombie Hunter (Japan)					| 		| 1987	| Hi-Score Softw| Miscellaneous	| 					|

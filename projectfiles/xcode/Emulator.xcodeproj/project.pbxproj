@@ -1034,6 +1034,7 @@
 		FEDF17F526072DB80082732C /* ds2404.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF17F126072DB70082732C /* ds2404.cpp */; };
 		FEDF17F626072DB80082732C /* intelfsh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF17F226072DB70082732C /* intelfsh.cpp */; };
 		FEDF180A26072DE90082732C /* i386.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF180026072DE80082732C /* i386.cpp */; };
+		FEDF18102607B5990082732C /* d_seibuspi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEDF180F2607B5990082732C /* d_seibuspi.cpp */; };
 		FEE347C424CC0E3E00DD28E6 /* d_x2222.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */; };
 		FEE7CC3E242285DC00B311BC /* d_sshangha.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */; };
 		FEE7CC40242285EE00B311BC /* d_mjkjidai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */; };
@@ -2649,6 +2650,7 @@
 		FEDF180226072DE80082732C /* i386ops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386ops.h; sourceTree = "<group>"; };
 		FEDF180326072DE80082732C /* i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i386.h; sourceTree = "<group>"; };
 		FEDF180426072DE80082732C /* i486ops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i486ops.c; sourceTree = "<group>"; };
+		FEDF180F2607B5990082732C /* d_seibuspi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_seibuspi.cpp; sourceTree = "<group>"; };
 		FEE347C324CC0E3D00DD28E6 /* d_x2222.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_x2222.cpp; sourceTree = "<group>"; };
 		FEE7CC3D242285DC00B311BC /* d_sshangha.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_sshangha.cpp; sourceTree = "<group>"; };
 		FEE7CC3F242285ED00B311BC /* d_mjkjidai.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_mjkjidai.cpp; sourceTree = "<group>"; };
@@ -3814,6 +3816,7 @@
 				FE1B1F5A23561A680065200C /* d_raiden.cpp */,
 				FE1B1F3B23561A680065200C /* d_raiden2.cpp */,
 				FE1B1F5323561A680065200C /* d_sandscrp.cpp */,
+				FEDF180F2607B5990082732C /* d_seibuspi.cpp */,
 				FE1B1F7523561A680065200C /* d_seta.cpp */,
 				FE1B1F6123561A680065200C /* d_seta2.cpp */,
 				FE1B1F3223561A680065200C /* d_shadfrce.cpp */,
@@ -5637,6 +5640,7 @@
 				FE1B25A723561A760065200C /* d_scotrsht.cpp in Sources */,
 				FE1B256523561A760065200C /* d_appoooh.cpp in Sources */,
 				FE1B265923561A770065200C /* taito.cpp in Sources */,
+				FEDF18102607B5990082732C /* d_seibuspi.cpp in Sources */,
 				FE1B24BE23561A750065200C /* smssound.cpp in Sources */,
 				FE1B24F423561A760065200C /* d_funybubl.cpp in Sources */,
 				FE1B25EB23561A760065200C /* d_divebomb.cpp in Sources */,

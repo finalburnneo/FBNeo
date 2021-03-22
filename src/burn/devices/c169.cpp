@@ -123,10 +123,10 @@ static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 
 		if ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x8000) == 0)
 		{
+			c169_roz_unpack_params(source);
+
 			if (pri == priority)
 			{
-				c169_roz_unpack_params(source);
-
 				INT32 oldmin = clip_min_y;
 				INT32 oldmax = clip_max_y;
 

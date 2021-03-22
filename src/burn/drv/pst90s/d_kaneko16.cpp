@@ -1167,7 +1167,8 @@ static struct BurnRomInfo BloodwarRomDesc[] = {
 STD_ROM_PICK(Bloodwar)
 STD_ROM_FN(Bloodwar)
 
-static struct BurnRomInfo OedfightRomDesc[] = {
+static struct BurnRomInfo OedfightRomDesc[] = { 					   
+	// Bloodshed version
 	{ "ofp0j3.514",        	0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "ofp1j3.513",        	0x080000, 0xcc59de49, BRF_ESS | BRF_PRG }, //  1
 
@@ -1207,6 +1208,48 @@ static struct BurnRomInfo OedfightRomDesc[] = {
 
 STD_ROM_PICK(Oedfight)
 STD_ROM_FN(Oedfight)
+
+static struct BurnRomInfo OedfightaRomDesc[] = { 					   
+	// original Bloodless version
+	{ "ofp0j3_u514.u514",   0x080000, 0xb5146417, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "ofp1j3_u513.u513",   0x080000, 0xafe42a8a, BRF_ESS | BRF_PRG }, //  1
+
+	{ "ofd0x3.124",        	0x020000, 0x399f2005, BRF_PRG | BRF_OPT }, //  2 MCU Code
+
+	{ "of-200-0201.8",     	0x200000, 0xbba63025, BRF_GRA },	   	   //  3 Sprites
+	{ "of-201-0202.9",     	0x200000, 0x4ffd9ddc, BRF_GRA },	   	   //  4
+	{ "of-202-0203.10",    	0x200000, 0xfbcc5363, BRF_GRA },	       //  5
+	{ "of-203-0204.11",    	0x200000, 0x8e818ce9, BRF_GRA },	       //  6
+	{ "of-204-0205.12",    	0x200000, 0x70c4a76b, BRF_GRA },	       //  7
+	{ "of-205-0206.13",    	0x200000, 0x80c667bb, BRF_GRA },	       //  8
+	{ "of-206-0207.14",    	0x200000, 0xc2028c97, BRF_GRA },	       //  9
+	{ "of-207-0208.15",    	0x200000, 0xb1f30c61, BRF_GRA },	       // 10
+	{ "of-208-0209.28",    	0x200000, 0xa8f29545, BRF_GRA },	       // 11
+	{ "of-209e-0210.16",   	0x100000, 0x93018468, BRF_GRA },	       // 12
+	{ "of-2090-2011.17",   	0x100000, 0x3fb226a1, BRF_GRA },	       // 13
+	{ "of-210e-0212.18",   	0x100000, 0x80f3fa1b, BRF_GRA },	       // 14
+	{ "of-2100-0213.19",   	0x100000, 0x8ca3a3d6, BRF_GRA },	       // 15
+	{ "of-211e-0214.20",   	0x100000, 0x8d3d96f7, BRF_GRA },	       // 16
+	{ "of-2110-0215.21",   	0x100000, 0x78268230, BRF_GRA },	       // 17
+	{ "of-212e-0216.22",   	0x100000, 0x5a013d99, BRF_GRA },	       // 18
+	{ "of-2120-0217.23",   	0x100000, 0x84ed25bd, BRF_GRA },	       // 19
+	{ "of-213e-0218.24",   	0x100000, 0x861bc5b1, BRF_GRA },	       // 20
+	{ "of-2130-0219.25",   	0x100000, 0xa79b8119, BRF_GRA },	       // 21
+	{ "of-214e-0220.26",   	0x100000, 0x43c622de, BRF_GRA },	       // 22
+	{ "of-2140-0221.27",   	0x100000, 0xd10bf03c, BRF_GRA },	       // 23
+
+	{ "of-300-0225.51",    	0x100000, 0xfbc3c08a, BRF_GRA },	       // 24 Tiles (scrambled)
+
+	{ "of-301-0226.55",    	0x100000, 0xfcf215de, BRF_GRA },	       // 25 Tiles (scrambled) (Layers 2 & 3)
+
+	{ "of-101-j-0224.101", 	0x100000, 0x83a1f826, BRF_SND },	       // 26 Samples, plus room for expansion
+
+	{ "of-100-0222.99",    	0x100000, 0x42b12269, BRF_SND },	       // 27 Samples
+};
+
+
+STD_ROM_PICK(Oedfighta)
+STD_ROM_FN(Oedfighta)
 
 static struct BurnRomInfo BonkadvRomDesc[] = {
 	{ "prg.8",             	0x080000, 0xaf2e60f8, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -7627,10 +7670,20 @@ struct BurnDriver BurnDrvBloodwar = {
 
 struct BurnDriver BurnDrvOedfight = {
 	"oedfight", "bloodwar", NULL, NULL, "1994",
-	"Oedo Fight (Japan Bloodshed Ver.)\0", NULL, "Kaneko", "Kaneko16",
+	"Oedo Fight (Japan, Bloodshed version)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_VSFIGHT, 0,
 	NULL, OedfightRomInfo, OedfightRomName, NULL, NULL, NULL, NULL, BloodwarInputInfo, BloodwarDIPInfo,
+	BloodwarInit, GtmrMachineExit, GtmrFrame, BloodwarFrameRender, GtmrScan,
+	NULL, 0x10000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvOedfighta = {
+	"oedfighta", "bloodwar", NULL, NULL, "1994",
+	"Oedo Fight (Japan, Bloodless version)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_VSFIGHT, 0,
+	NULL, OedfightaRomInfo, OedfightaRomName, NULL, NULL, NULL, NULL, BloodwarInputInfo, BloodwarDIPInfo,
 	BloodwarInit, GtmrMachineExit, GtmrFrame, BloodwarFrameRender, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };

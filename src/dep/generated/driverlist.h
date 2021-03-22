@@ -3426,8 +3426,8 @@ DRV		BurnDrvCdiscon1;
 DRV		BurnDrvDiscof;
 DRV		BurnDrvDisco;
 DRV		BurnDrvDotrone;
-DRV		BurnDrvDotrona;
 DRV		BurnDrvDotron;
+DRV		BurnDrvDotrona;
 DRV		BurnDrvmd_aladdin;
 DRV		BurnDrvsms_aladdinc;
 DRV		BurnDrvsms_aladdin;
@@ -9446,6 +9446,7 @@ DRV		BurnDrvpce_oboccha;
 DRV		BurnDrvCocean1a;
 DRV		BurnDrvCocean6b;
 DRV		BurnSpecOctuKtty;
+DRV		BurnDrvOedfighta;
 DRV		BurnDrvOedfight;
 DRV		BurnDrvngpc_oekakip;
 #if defined FBNEO_DEBUG
@@ -20155,8 +20156,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDiscof,				// Disco No.1 (Rev.F)
 	&BurnDrvDisco,				// Disco No.1
 	&BurnDrvDotrone,			// Discs of Tron (Environmental)
-	&BurnDrvDotrona,			// Discs of Tron (Upright alternate)
-	&BurnDrvDotron,				// Discs of Tron (Upright)
+	&BurnDrvDotron,				// Discs of Tron (Upright, 10/4/83)
+	&BurnDrvDotrona,			// Discs of Tron (Upright, 9/22/83)
 	&BurnDrvmd_aladdin,			// Disney's Aladdin (Euro)
 	&BurnDrvsms_aladdinc,		// Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0
 	&BurnDrvsms_aladdin,		// Disney's Aladdin (Euro, Bra, Kor)
@@ -26175,7 +26176,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCocean1a,			// Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)
 	&BurnDrvCocean6b,			// Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)
 	&BurnSpecOctuKtty,			// OctuKtty (HB)
-	&BurnDrvOedfight,			// Oedo Fight (Japan Bloodshed Ver.)
+	&BurnDrvOedfighta,			// Oedo Fight (Japan, Bloodless version)
+	&BurnDrvOedfight,			// Oedo Fight (Japan, Bloodshed version)
 	&BurnDrvngpc_oekakip,		// Oekaki Puzzle (Jpn)
 #if defined FBNEO_DEBUG
 	&BurnDrvOfftwallc,			// Off the Wall (2-player cocktail) [no comment, NOT WORKING]

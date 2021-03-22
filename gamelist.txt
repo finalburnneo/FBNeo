@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16476 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16477 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3378,8 +3378,8 @@ This list contains all games supported by FinalBurn Neo.
 | discof	|  	| Disco No.1 (Rev.F)					| disco		| 1982	| Data East	| Miscellaneous	| 					|
 | disco		|  	| Disco No.1						| 		| 1982	| Data East	| Miscellaneous	| 					|
 | dotrone	|  	| Discs of Tron (Environmental)				| dotron	| 1983	| Bally Midway	| Miscellaneous	| 					|
-| dotrona	|  	| Discs of Tron (Upright alternate)			| dotron	| 1983	| Bally Midway	| Miscellaneous	| 					|
-| dotron	|  	| Discs of Tron (Upright)				| 		| 1983	| Bally Midway	| Miscellaneous	| 					|
+| dotron	|  	| Discs of Tron (Upright, 10/4/83)			| 		| 1983	| Bally Midway	| Miscellaneous	| 					|
+| dotrona	|  	| Discs of Tron (Upright, 9/22/83)			| dotron	| 1983	| Bally Midway	| Miscellaneous	| 					|
 | md_aladdin	|  	| Disney's Aladdin (Euro)				| 		| 1993	| Sega		| Sega Megadrive| 					|
 | sms_aladdinc	|  	| Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0	| sms_aladdin	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_aladdin	|  	| Disney's Aladdin (Euro, Bra, Kor)			| 		| 1994	| Sega		| Sega Master Sy| 					|
@@ -9316,7 +9316,8 @@ This list contains all games supported by FinalBurn Neo.
 | cocean1a	|  	| Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1| 		| 1981	| Data East Corp| Cassette Syste| 					|
 | cocean6b	|  	| Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6| cocean1a	| 1981	| Data East Corp| Cassette Syste| 					|
 | spec_octuKtty	|  	| OctuKtty (HB)						| 		| 2018	| UltraNarwhal	| ZX Spectrum	| 					|
-| oedfight	|  	| Oedo Fight (Japan Bloodshed Ver.)			| bloodwar	| 1994	| Kaneko	| Kaneko16	| 					|
+| oedfighta	|  	| Oedo Fight (Japan, Bloodless version)			| bloodwar	| 1994	| Kaneko	| Kaneko16	| 					|
+| oedfight	|  	| Oedo Fight (Japan, Bloodshed version)			| bloodwar	| 1994	| Kaneko	| Kaneko16	| 					|
 | ngp_oekakip	|  	| Oekaki Puzzle (Jpn)					| ngp_picturep	| 2000	| Success	| NeoGeo Pocket | 					|
 | offtwallc	| D NW	| Off the Wall (2-player cocktail)			| offtwall	| 1991	| Atari Games	| Miscellaneous	| 					|
 | offtwall	| D NW	| Off the Wall (2/3-player upright)			| 		| 1991	| Atari Games	| Miscellaneous	| 					|

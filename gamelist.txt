@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16477 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16495 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -147,6 +147,9 @@ This list contains all games supported by FinalBurn Neo.
 | nes_720degrees|  	| 720 Degrees (USA)					| 		| 1989	| Mindscape	| Miscellaneous	| 					|
 | spec_750cc	|  	| 750cc Grand Prix					| 		| 1991	| Code Masters	| ZX Spectrum	| 					|
 | nes_8eyes	|  	| 8 Eyes (USA)						| 		| 1990	| Taxan		| Miscellaneous	| 					|
+| nes_8bitpics	|  	| 8-bit Illustrations (HB)				| 		| 2015	| RiKi		| Miscellaneous	| 					|
+| nes_8bitmusic	|  	| 8-bit Music Power (HB)				| 		| 2017	| RiKi		| Miscellaneous	| 					|
+| nes_8bitmusice|  	| 8-bit Music Power ENCORE (HB)				| nes_8bitmusic	| 2017	| RiKi		| Miscellaneous	| 					|
 | nes_8bitrhylan|  	| 8-Bit Rhythm Land (HB)				| 		| 2018	| Columbus Circl| Miscellaneous	| 					|
 | 800fatha	|  	| 800 Fathoms (older)					| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
 | 800fath	|  	| 800 Fathoms						| mariner	| 1981	| Amenip (US Bil| Galaxian	| 					|
@@ -1224,6 +1227,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_battleships|  	| Battle Ships						| 		| 1987	| Hit-Pak	| ZX Spectrum	| 					|
 | md_battlesq	|  	| Battle Squadron (Euro, USA)				| 		| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_battlesqs	|  	| Battle Squadron (Hack, Spanish)			| md_battlesq	| 2018	| Electronic Art| Sega Megadrive| 					|
+| md_battlesqp	|  	| Battle Squadron (Prototype, 19910118)			| md_battlesq	| 1990	| Electronic Art| Sega Megadrive| 					|
 | nes_battletank|  	| Battle Tank (USA)					| 		| 1990	| Absolute	| Miscellaneous	| 					|
 | batlzone	|  	| Battle Zone (bootleg of Mayday)			| mayday	| 1980	| bootleg (Video| 6809 System	| 					|
 | bzonec	|  	| Battle Zone (cocktail)				| bzone		| 1980	| Atari		| Miscellaneous	| GFX/Sound Issues			|
@@ -1838,6 +1842,7 @@ This list contains all games supported by FinalBurn Neo.
 | buckyuab	|  	| Bucky O'Hare (ver UAB)				| bucky		| 1992	| Konami	| GX173		| 					|
 | msx_bdg110	|  	| Buddhagillie (HB, v1.1)				| 		| 2018	| GW's Workshop	| MSX		| 					|
 | md_budokan	|  	| Budokan - The Martial Spirit (Euro)			| 		| 1990	| Electronic Art| Sega Megadrive| 					|
+| md_budokanp	|  	| Budokan - The Martial Spirit (Prototype, 19900925)	| md_budokan	| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_budokanu	|  	| Budokan - The Martial Spirit (USA)			| md_budokan	| 1990	| Electronic Art| Sega Megadrive| 					|
 | md_bughunt	|  	| Bug Hunt (HB)						| 		| 2015	| The Afromonkey| Sega Megadrive| 					|
 | buggychlt	|  	| Buggy Challenge (Tecfri)				| buggychl	| 1984	| Taito Corporat| Miscellaneous	| 					|
@@ -2193,6 +2198,7 @@ This list contains all games supported by FinalBurn Neo.
 | chaknpop	|  	| Chack'n Pop						| 		| 1983	| Taito Corporat| Miscellaneous	| 					|
 | chainrec	|  	| Chain Reaction (World, Version 2.2, 1995.09.25)	| 		| 1995	| Data East	| Simple 156	| 					|
 | spec_chainreaction|  	| Chain Reaction					| 		| 1987	| Durell	| ZX Spectrum	| 					|
+| md_chakanp	|  	| Chakan (19921006 Build)				| md_chakan	| 1992	| Sega		| Sega Megadrive| 					|
 | gg_chakan	|  	| Chakan (Euro, USA)					| 		| 1992	| Sega		| Sega Game Gear| 					|
 | md_chakan	|  	| Chakan (Euro, USA)					| 		| 1992	| Sega		| Sega Megadrive| 					|
 | md_chakans	|  	| Chakan (Hack, Spanish)				| md_chakan	| 2019	| Sega		| Sega Megadrive| 					|
@@ -2421,6 +2427,7 @@ This list contains all games supported by FinalBurn Neo.
 | ironclado	|  	| Choutetsu Brikin'ger - Iron clad (Prototype, older)	| ironclad	| 1996	| Saurus	| Neo Geo MVS	| 					|
 | pce_bravoman	|  	| Chouzetsu Rinjin - Bravoman				| 		| 1990	| Namcot	| PC Engine	| 					|
 | spec_clfkfw	|  	| Choy-Lee-Fut Kung-Fu Warrior (Spanish)		| 		| 1990	| Positive	| ZX Spectrum	| 					|
+| nes_chknight	|  	| Chrono Knight (HB)					| 		| 2020	| Artix Games	| Miscellaneous	| 					|
 | spec_chronos	|  	| Chronos - A Tapestry of Time (128K)			| 		| 1987	| Mastertronic	| ZX Spectrum	| 					|
 | nes_chubbycherub|  	| Chubby Cherub (USA)					| 		| 1986	| Bandai	| Miscellaneous	| 					|
 | msx_chubbygristle|  	| Chubby Gristle					| 		| 1988	| Grandslam Ente| MSX		| 					|
@@ -2449,6 +2456,7 @@ This list contains all games supported by FinalBurn Neo.
 | chukataiu	|  	| Chuka Taisen (US) (P0-028-A PCB)			| chukatai	| 1988	| Taito America | Miscellaneous	| 					|
 | chukatai	|  	| Chuka Taisen (World) (P0-028-A PCB)			| 		| 1988	| Taito Corporat| Miscellaneous	| 					|
 | ddaydoo	|  	| Chulgyeok D-Day (Korea)				| lastday	| 1990	| Dooyong	| Miscellaneous	| 					|
+| nes_chumleeadv|  	| Chumlee's Adventure - the quest for Pinky (HB)	| 		| 2020	| Khan Games	| Miscellaneous	| 					|
 | msx_chuheib1	|  	| Chuugaku Hisshuu Eibunpou 1 (Jpn)			| 		| 1984	| Stratford Comp| MSX		| 					|
 | drgw3100	|  	| Chuugokuryuu 3 Special (ver. 100, Japan)		| drgw3		| 1998	| IGS (Alta Co.,| PolyGameMaster| 					|
 | drgw3103	|  	| Chuugokuryuu 3 Special (ver. 103, japan)		| drgw3		| 1998	| IGS (Alta Co.,| PolyGameMaster| 					|
@@ -3304,6 +3312,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_devilishj	|  	| Devilish (Jpn)					| gg_devilish	| 1991	| Genki		| Sega Game Gear| 					|
 | gg_devilishu	|  	| Devilish (USA)					| gg_devilish	| 1991	| Sage's Creatio| Sega Game Gear| 					|
 | md_devilishs	|  	| Devilish - The Next Possession (Hack, Spanish)	| md_devilish	| 2018	| Sage's Creatio| Sega Megadrive| 					|
+| md_devilishp	|  	| Devilish - The Next Possession (Prototype, 19920116)	| md_devilish	| 1992	| Sage's Creatio| Sega Megadrive| 					|
 | md_devilish	|  	| Devilish - The Next Possession (USA)			| 		| 1992	| Sage's Creatio| Sega Megadrive| 					|
 | md_devwilltoo	|  	| Devwill Too (HB)					| 		| 2020	| Mega Cat Studi| Sega Megadrive| 					|
 | dharmag	|  	| Dharma Doujou (Germany)				| dharma	| 1994	| Metro		| Miscellaneous	| 					|
@@ -4850,6 +4859,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_frenzya	|  	| Frenzy (Alt 1)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
 | cv_frenzya2	|  	| Frenzy (Alt 2)					| cv_frenzy	| 1983	| Coleco	| ColecoVision	| 					|
 | frenzy	|  	| Frenzy (revision RA1)					| 		| 1981	| Stern Electron| Miscellaneous	| 					|
+| nes_frenzy	|  	| Frenzy A7800 (HB)					| 		| 2016	| Bob Decrescenz| Miscellaneous	| The Atari 7800 Frenzy on NES (conversi|
 | cv_frenzy	|  	| Frenzy						| 		| 1983	| Coleco	| ColecoVision	| 					|
 | nes_fridaythe13thc|  	| Friday the 13th (USA) - Castellano v1.1		| nes_fridaythe13th| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_fridaythe13th|  	| Friday the 13th (USA)					| 		| 1989	| LJN		| Miscellaneous	| 					|
@@ -6498,6 +6508,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_jikuuyuu	|  	| Jikuu Yuuden - Debias (Japan)				| 		| 1987	| Namco		| Miscellaneous	| 					|
 | spec_jillysfarm1|  	| Jilly's Farm Volume 1 - SokoBAArn (HB)		| 		| 2018	| Bob Smith	| ZX Spectrum	| 					|
 | md_jimpower	|  	| Jim Power - The Arcade Game (USA, Prototype)		| 		| 199?	| Loriciel	| Sega Megadrive| imperfect graphics			|
+| nes_jimpower	|  	| Jim Power - The Lost Dimension (HB)			| 		| 2020	| Piko Interacti| Miscellaneous	| 					|
 | nes_jimmyconten|  	| Jimmy Connors Tennis (USA)				| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
 | md_jimmywws	|  	| Jimmy White's Whirlwind Snooker (Euro)		| 		| 1991	| Virgin Games	| Sega Megadrive| 					|
 | sg1k_jingwumn	|  	| Jing Wu Men (Tw)					| sg1k_dragwang	| 1985?	| Aaronix	| Sega SG-1000	| 					|
@@ -7346,6 +7357,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_legendk	|  	| Legendly Knight - Daemaseong (Kor)			| 		| 1988	| Topia		| MSX		| 					|
 | msx_legendka	|  	| Legendly Knight - Daemaseong (Kor, Alt)		| msx_legendk	| 1988	| Topia		| MSX		| 					|
 | nes_legendsofowlia|  	| Legends of Owlia (HB)					| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
+| nes_leglutliv	|  	| Leggite Luta Livre (HB)				| 		| 2021	| John Vanderhoe| Miscellaneous	| 					|
 | legendb	|  	| Legion (bootleg of Legend)				| legend	| 1986	| bootleg	| Miscellaneous	| 					|
 | legion	|  	| Legion - Spinner-87 (World ver 2.03)			| 		| 1987	| Nichibutsu	| Miscellaneous	| 					|
 | legionnaj	|  	| Legionnaire (Japan)					| legionna	| 1992	| TAD Corporatio| Miscellaneous	| 					|
@@ -8015,6 +8027,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_megaswivs	|  	| Mega SWIV (Hack, Spanish)				| md_megaswiv	| 2019	| Time Warner In| Sega Megadrive| 					|
 | md_megaturr	|  	| Mega Turrican (Euro)					| 		| 1994	| Sony Imagesoft| Sega Megadrive| 					|
 | md_megaturrs	|  	| Mega Turrican (Hack, Spanish)				| md_megaturr	| 2019	| Data East	| Sega Megadrive| 					|
+| md_megaturrp	|  	| Mega Turrican (Prototype, 19930518)			| md_megaturr	| 1993	| Factor 5	| Sega Megadrive| 					|
 | md_megaturru	|  	| Mega Turrican (USA)					| md_megaturr	| 1994	| Data East	| Sega Megadrive| 					|
 | mtwins	|  	| Mega Twins (chiki chiki boys 900619 etc)		| 		| 1990	| Capcom	| CPS1		| 					|
 | megazoneh	|  	| Mega Zone (program code H)				| megazone	| 1983	| Konami (Kosuka| GX319		| 					|
@@ -8165,6 +8178,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_mwalks	|  	| Michael Jackson's Moonwalker (Hack, Spanish)		| md_mwalk	| 2019	| Sega		| Sega Megadrive| 					|
 | mwalkjd	|  	| Michael Jackson's Moonwalker (Japan) (bootleg of FD109| mwalk		| 1990	| bootleg	| System 18	| 					|
 | mwalkj	|  	| Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-| mwalk		| 1990	| Sega		| System 18	| 					|
+| md_mwalkp	|  	| Michael Jackson's Moonwalker (Prototype, 19900424)	| md_mwalk	| 1990	| Sega		| Sega Megadrive| 					|
 | mwalk		|  	| Michael Jackson's Moonwalker (set 3, World, FD1094/875| 		| 1990	| Sega		| System 18	| 					|
 | mwalkud	|  	| Michael Jackson's Moonwalker (US) (bootleg of FD1094/8| mwalk		| 1990	| bootleg	| System 18	| 					|
 | mwalku	|  	| Michael Jackson's Moonwalker (US) (FD1094/8751 317-015| mwalk		| 1990	| Sega		| System 18	| 					|
@@ -9225,6 +9239,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_ninjamassacre|  	| Ninja Massacre					| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
 | ninjamasha	|  	| Ninja Master's - haoh-ninpo-cho (Plus)		| ninjamas	| 1996	| 007325	| Neo Geo MVS	| 					|
 | ninjamas	|  	| Ninja Master's - haoh-ninpo-cho			| 		| 1996	| ADK / SNK	| Neo Geo MVS	| 					|
+| nes_ninja4s	|  	| Ninja of the 4 Seasons (HB)				| 		| 2021	| Kool Doob	| Miscellaneous	| 					|
 | spec_ninjapoison1|  	| Ninja Poison - Part 1					| 		| 2021	| TokuSoft	| ZX Spectrum	| 					|
 | spec_ninjapoison2|  	| Ninja Poison - Part 2					| 		| 2021	| TokuSoft	| ZX Spectrum	| 					|
 | nprinces	|  	| Ninja Princess (315-5051, 64k Ver. bootleg?)		| seganinj	| 1985	| bootleg?	| System 1	| 					|
@@ -10010,6 +10025,7 @@ This list contains all games supported by FinalBurn Neo.
 | pleiadsn	|  	| Pleiads (Niemer S.A.)					| pleiads	| 1981	| Niemer S.A.	| Miscellaneous	| 					|
 | pleiadss	|  	| Pleiads (Spanish bootleg)				| pleiads	| 1981	| bootleg	| Miscellaneous	| 					|
 | pleiads	|  	| Pleiads (Tehkan)					| 		| 1981	| Tehkan	| Miscellaneous	| 					|
+| nes_ploid	|  	| Ploid (HB)						| 		| 2020	| NAPE Games	| Miscellaneous	| 					|
 | spec_plotthe	|  	| Plot, The						| 		| 1988	| Firebird Softw| ZX Spectrum	| 					|
 | spec_plotting	|  	| Plotting (128K)					| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | spec_plotting_48|  	| Plotting (48K)					| spec_plotting	| 1990	| Ocean		| ZX Spectrum	| 					|
@@ -11653,6 +11669,7 @@ This list contains all games supported by FinalBurn Neo.
 | shdancerj	|  	| Shadow Dancer (set 2, Japan)				| shdancer	| 1989	| Sega		| System 18	| 					|
 | shdancer	|  	| Shadow Dancer (set 3, US)				| 		| 1989	| Sega		| System 18	| 					|
 | md_shdancers	|  	| Shadow Dancer - The Secret of Shinobi (Hack, Spanish)	| md_shdancer	| 2017	| Sega		| Sega Megadrive| 					|
+| md_shdancerp	|  	| Shadow Dancer - The Secret of Shinobi (Prototype, 1990| md_shdancer	| 1990	| Sega		| Sega Megadrive| 					|
 | md_shdancer	|  	| Shadow Dancer - The Secret of Shinobi (World)		| 		| 1990	| Sega		| Sega Megadrive| 					|
 | spec_shaddancer|  	| Shadow Dancer						| 		| 1991	| U.S. Gold	| ZX Spectrum	| 					|
 | shadfrcej	|  	| Shadow Force (Japan, Version 2)			| shadfrce	| 1993	| Technos Japan	| Miscellaneous	| 					|
@@ -13251,9 +13268,9 @@ This list contains all games supported by FinalBurn Neo.
 | cv_sprcross	|  	| Super Cross Force					| 		| 1983	| Spectravideo	| ColecoVision	| 					|
 | sprcros2	|  	| Super Cross II (Japan, set 1)				| 		| 1986	| GM Shoji	| Miscellaneous	| 					|
 | sprcros2a	|  	| Super Cross II (Japan, set 2)				| sprcros2	| 1986	| GM Shoji	| Miscellaneous	| 					|
-| scfinalsoc	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
-| scfinalso	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
-| scfinals	|  	| Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)	| 		| 1993	| Taito Corporat| Taito F3 Syste| Use service coin! (game has issues)	|
+| scfinalsoc	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| 					|
+| scfinalso	|  	| Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)	| scfinals	| 1993	| Taito Corporat| Taito F3 Syste| 					|
+| scfinals	|  	| Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)	| 		| 1993	| Taito Corporat| Taito F3 Syste| 					|
 | md_supdaisna	|  	| Super Daisenryaku (Jpn)				| md_supdaisn	| 1989	| Sega		| Sega Megadrive| 					|
 | md_supdaisn	|  	| Super Daisenryaku (Jpn, Rev. 02)			| 		| 1989	| Sega		| Sega Megadrive| 					|
 | cv_superdk	|  	| Super DK! (Prototype)					| 		| 1982	| Nintendo	| ColecoVision	| 					|
@@ -14665,6 +14682,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_tf2j	|  	| Thunder Force II MD (Jpn)				| md_tf2	| 1989	| Technosoft	| Sega Megadrive| 					|
 | md_tf3s	|  	| Thunder Force III (Hack, Spanish)			| md_tf3	| 2018	| TechnoSoft	| Sega Megadrive| 					|
 | md_tf3	|  	| Thunder Force III (Jpn, USA)				| 		| 1990	| Technosoft	| Sega Megadrive| 					|
+| md_tf3p	|  	| Thunder Force III (Prototype, 19900801)		| md_tf3	| 1990	| Technosoft	| Sega Megadrive| 					|
 | md_tf4	|  	| Thunder Force IV (Euro)				| 		| 1993	| Technosoft	| Sega Megadrive| 					|
 | md_tf4s	|  	| Thunder Force IV (Hack, Spanish)			| md_tf4	| 2020	| Technosoft	| Sega Megadrive| 					|
 | md_tf4j	|  	| Thunder Force IV (Jpn)				| md_tf4	| 1992	| Technosoft	| Sega Megadrive| 					|

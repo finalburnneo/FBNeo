@@ -68,6 +68,27 @@
 		<rom name="8 Eyes (USA).nes" size="262160" crc="18f9bb24"/>
 		<driver status="good"/>
 	</game>
+	<game name="8bitpics">
+		<description>8-bit Illustrations (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>RiKi</manufacturer>
+		<rom name="8bit Illustrations (2015)(RIKI).nes" size="524304" crc="19ca739b"/>
+		<driver status="good"/>
+	</game>
+	<game name="8bitmusic">
+		<description>8-bit Music Power (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>RiKi</manufacturer>
+		<rom name="8bit Music Power (2017)(RIKI).nes" size="786448" crc="351426ab"/>
+		<driver status="good"/>
+	</game>
+	<game name="8bitmusice" cloneof="8bitmusic" romof="8bitmusic">
+		<description>8-bit Music Power ENCORE (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>RiKi</manufacturer>
+		<rom name="8bit Music Power ENCORE (2017)(RIKI).nes" size="524304" crc="8b381de2"/>
+		<driver status="good"/>
+	</game>
 	<game name="8bitrhylan">
 		<description>8-Bit Rhythm Land (HB) [Homebrew]</description>
 		<year>2018</year>
@@ -2014,11 +2035,25 @@
 		<rom name="Choujinrou Senki Warwolf (Japan).nes" size="262160" crc="58e8c244"/>
 		<driver status="good"/>
 	</game>
+	<game name="chknight">
+		<description>Chrono Knight (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Artix Games</manufacturer>
+		<rom name="Chrono Knight (2020)(Artix Games).nes" size="524304" crc="88a47918"/>
+		<driver status="good"/>
+	</game>
 	<game name="chubbycherub">
 		<description>Chubby Cherub (USA)</description>
 		<year>1986</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Chubby Cherub (USA).nes" size="40976" crc="90f12ac8"/>
+		<driver status="good"/>
+	</game>
+	<game name="chumleeadv">
+		<description>Chumlee's Adventure - the quest for Pinky (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Khan Games</manufacturer>
+		<rom name="Chumlee Adventure (2020)(Khan Games).nes" size="131088" crc="0f81f876"/>
 		<driver status="good"/>
 	</game>
 	<game name="chuukataisen">
@@ -4240,6 +4275,13 @@
 		<rom name="Freedom Force (USA).nes" size="262160" crc="53eb8950"/>
 		<driver status="good"/>
 	</game>
+	<game name="frenzy">
+		<description>Frenzy A7800 (HB) [Homebrew, The Atari 7800 Frenzy on NES (conversion)]</description>
+		<year>2016</year>
+		<manufacturer>Bob Decrescenzo</manufacturer>
+		<rom name="Frenzy A7800 (2016)(Bob Decrescenzo).nes" size="40976" crc="82b0f8f4"/>
+		<driver status="good"/>
+	</game>
 	<game name="fridaythe13thc" cloneof="fridaythe13th" romof="fridaythe13th">
 		<description>Friday the 13th (USA) - Castellano v1.1</description>
 		<year>1989 ?</year>
@@ -5689,6 +5731,13 @@
 		<rom name="Jikuu Yuuden - Debias (Japan).nes" size="196624" crc="0f40cdc2"/>
 		<driver status="good"/>
 	</game>
+	<game name="jimpower">
+		<description>Jim Power - The Lost Dimension (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Jim Power - The Lost Dimension (2020)(Piko).nes" size="524304" crc="3f088114"/>
+		<driver status="good"/>
+	</game>
 	<game name="jimmyconten">
 		<description>Jimmy Connors Tennis (USA)</description>
 		<year>1993</year>
@@ -6583,6 +6632,13 @@
 		<year>2014</year>
 		<manufacturer>Gradual Games</manufacturer>
 		<rom name="Legends of Owlia (HB).nes" size="524304" crc="26858010"/>
+		<driver status="good"/>
+	</game>
+	<game name="leglutliv">
+		<description>Leggite Luta Livre (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Leggite Luta Livre (2021)(John Vanderhoef).nes" size="524304" crc="bcbc972c"/>
 		<driver status="good"/>
 	</game>
 	<game name="leidiahuabikaqiuchs">
@@ -8146,6 +8202,13 @@
 		<rom name="Ninja Kid (USA).nes" size="65552" crc="4de7236f"/>
 		<driver status="good"/>
 	</game>
+	<game name="ninja4s">
+		<description>Ninja of the 4 Seasons (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Kool Doob</manufacturer>
+		<rom name="Ninja of the 4 Seasons (2021)(Kool Doob).nes" size="524304" crc="3943cf5f"/>
+		<driver status="good"/>
+	</game>
 	<game name="ninjaryuden" cloneof="ninjagaiden" romof="ninjagaiden">
 		<description>Ninja Ryuuken Den (Japan)</description>
 		<year>1988</year>
@@ -8627,6 +8690,13 @@
 		<year>1988</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Platoon (USA).nes" size="262160" crc="dec5bb7f"/>
+		<driver status="good"/>
+	</game>
+	<game name="ploid">
+		<description>Ploid (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>NAPE Games</manufacturer>
+		<rom name="Ploid (2020)(NAPE Games).nes" size="524304" crc="c7567823"/>
 		<driver status="good"/>
 	</game>
 	<game name="popoteam">

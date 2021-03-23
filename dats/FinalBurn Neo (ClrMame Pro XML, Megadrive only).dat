@@ -1357,6 +1357,13 @@
 		<rom name="battle squadron (hack, spanish).bin" size="524288" crc="cde81fbc"/>
 		<driver status="good"/>
 	</game>
+	<game name="battlesqp" cloneof="battlesq" romof="battlesq">
+		<description>Battle Squadron (Prototype, 19910118)</description>
+		<year>1990</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="battle squadron (prototype - jan 18, 1991).bin" size="524288" crc="43a76b45"/>
+		<driver status="good"/>
+	</game>
 	<game name="battlems">
 		<description>Battlemaster (USA)</description>
 		<year>1991</year>
@@ -1987,6 +1994,13 @@
 		<rom name="budokan - the martial spirit (euro).bin" size="524288" crc="97add5bd"/>
 		<driver status="good"/>
 	</game>
+	<game name="budokanp" cloneof="budokan" romof="budokan">
+		<description>Budokan - The Martial Spirit (Prototype, 19900925)</description>
+		<year>1990</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="budokan - the martial spirit (prototype - sep 25, 1990).bin" size="524288" crc="43532e3d"/>
+		<driver status="good"/>
+	</game>
 	<game name="budokanu" cloneof="budokan" romof="budokan">
 		<description>Budokan - The Martial Spirit (USA)</description>
 		<year>1990</year>
@@ -2286,6 +2300,13 @@
 		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="centurion - defender of rome (euro, usa).bin" size="786432" crc="21283b14"/>
+		<driver status="good"/>
+	</game>
+	<game name="chakanp" cloneof="chakan" romof="chakan">
+		<description>Chakan (19921006 Build)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="chakan (oct 6, 1992 build).bin" size="1048576" crc="77b7e85f"/>
 		<driver status="good"/>
 	</game>
 	<game name="chakan">
@@ -3777,6 +3798,13 @@
 		<year>2018</year>
 		<manufacturer>Sage's Creation</manufacturer>
 		<rom name="devilish - the next possession (hack, spanish).bin" size="524288" crc="83aa9530"/>
+		<driver status="good"/>
+	</game>
+	<game name="devilishp" cloneof="devilish" romof="devilish">
+		<description>Devilish - The Next Possession (Prototype, 19920116)</description>
+		<year>1992</year>
+		<manufacturer>Sage's Creation</manufacturer>
+		<rom name="devilish - the next possession (prototype - jan 16, 1992).bin" size="524288" crc="6c8eb5a2"/>
 		<driver status="good"/>
 	</game>
 	<game name="devilish">
@@ -8583,6 +8611,13 @@
 		<rom name="mega turrican (hack, spanish).bin" size="1048576" crc="b2901f8e"/>
 		<driver status="good"/>
 	</game>
+	<game name="megaturrp" cloneof="megaturr" romof="megaturr">
+		<description>Mega Turrican (Prototype, 19930518)</description>
+		<year>1993</year>
+		<manufacturer>Factor 5</manufacturer>
+		<rom name="mega turrican (prototype - may 18, 1993).bin" size="1048576" crc="3ba35acd"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaturru" cloneof="megaturr" romof="megaturr">
 		<description>Mega Turrican (USA)</description>
 		<year>1994</year>
@@ -8707,6 +8742,13 @@
 		<year>2019</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="michael jackson's moonwalker (hack, spanish).bin" size="524288" crc="6d849e61"/>
+		<driver status="good"/>
+	</game>
+	<game name="mwalkp" cloneof="mwalk" romof="mwalk">
+		<description>Michael Jackson's Moonwalker (Prototype, 19900424)</description>
+		<year>1990</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="michael jackson's moonwalker (prototype - apr 24, 1990).bin" size="524288" crc="dc7ed8c1"/>
 		<driver status="good"/>
 	</game>
 	<game name="mwalk1" cloneof="mwalk" romof="mwalk">
@@ -12842,6 +12884,13 @@
 		<year>2017</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shadow dancer - the secret of shinobi (hack, spanish).bin" size="524288" crc="dd156a80"/>
+		<driver status="good"/>
+	</game>
+	<game name="shdancerp" cloneof="shdancer" romof="shdancer">
+		<description>Shadow Dancer - The Secret of Shinobi (Prototype, 19901002)</description>
+		<year>1990</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="shadow dancer - the secret of shinobi (prototype - oct 2, 1990).bin" size="524288" crc="8497cd8d"/>
 		<driver status="good"/>
 	</game>
 	<game name="shdancer">
@@ -17203,6 +17252,13 @@
 		<year>1990</year>
 		<manufacturer>Technosoft</manufacturer>
 		<rom name="thunder force iii (usa, jpn).bin" size="524288" crc="1b3f399a"/>
+		<driver status="good"/>
+	</game>
+	<game name="tf3p" cloneof="tf3" romof="tf3">
+		<description>Thunder Force III (Prototype, 19900801)</description>
+		<year>1990</year>
+		<manufacturer>Technosoft</manufacturer>
+		<rom name="thunder force iii (prototype - aug 1, 1990).bin" size="524288" crc="2b5c2063"/>
 		<driver status="good"/>
 	</game>
 	<game name="tf4">

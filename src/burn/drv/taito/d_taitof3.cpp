@@ -44,7 +44,6 @@ static INT32 sound_cpu_in_reset = 0;
 static INT32 watchdog;
 
 INT32 f3_game = 0;
-static INT32 supercupkludge = 0;
 
 static struct BurnInputInfo F3InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"	},
@@ -505,13 +504,13 @@ static void DrvPivotExpand(UINT16 offset)
 static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT32*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
+		*((UINT32*)(TaitoVideoRam + (a & 0x1ffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT32*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
+		*((UINT32*)(DrvVRAMRAM + (a & 0x1ffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -520,13 +519,13 @@ static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT16*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
+		*((UINT16*)(TaitoVideoRam + (a & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(d);
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT16*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
+		*((UINT16*)(DrvVRAMRAM + (a & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(d);
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -1382,7 +1381,6 @@ static INT32 DrvExit()
 	BurnTrackballExit();
 
 	pPaletteUpdateCallback = NULL;
-	supercupkludge = 0;
 
 	return 0;
 }
@@ -1507,13 +1505,9 @@ static INT32 DrvFrame()
 
 		INT32 cur_coin = ((DrvJoy5[4] & 1) << 4) | ((DrvJoy5[5] & 1) << 5) | ((DrvJoy5[6] & 1) << 6) | ((DrvJoy5[7] & 1) << 7);
 
-		if (supercupkludge) {
-			if (cur_coin) DrvInputs[0] = 0xffff & ~0x200;
-		} else {
-			for (INT32 i = 0x10; i < 0x100; i <<= 1) {
-				if ((cur_coin & i) == i && (previous_coin & i) == 0) {
-					DrvInputs[4] &= ~i;
-				}
+		for (INT32 i = 0x10; i < 0x100; i <<= 1) {
+			if ((cur_coin & i) == i && (previous_coin & i) == 0) {
+				DrvInputs[4] &= ~i;
 			}
 		}
 
@@ -2768,8 +2762,6 @@ static INT32 scfinalsCallback()
 	ROM[0x5af0/4] = BURN_ENDIAN_SWAP_INT32(0x4e754e71);
 	ROM[0xdd0/4] = BURN_ENDIAN_SWAP_INT32(0x4e714e75);
 
-	supercupkludge = 1;
-
 	return 0;
 }
 
@@ -2780,7 +2772,7 @@ static INT32 scfinalsInit()
 
 struct BurnDriver BurnDrvScfinals = {
 	"scfinals", NULL, NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+	"Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
@@ -2823,7 +2815,7 @@ STD_ROM_FN(scfinalso)
 
 struct BurnDriver BurnDrvScfinalso = {
 	"scfinalso", "scfinals", NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+	"Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsoRomInfo, scfinalsoRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
@@ -2866,7 +2858,7 @@ STD_ROM_FN(scfinalsoc)
 
 struct BurnDriver BurnDrvScfinalsoc = {
 	"scfinalsoc", "scfinals", NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
+	"Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsocRomInfo, scfinalsocRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,

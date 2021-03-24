@@ -1,4 +1,4 @@
-// FinalBurn Neo Namco System NA-1/NB-1 driver module
+// FinalBurn Neo Namco System NA-1/NA-2 driver module
 // Based on MAME (0.103) driver by Phil Stroffolino
 
 #include "tiles_generic.h"
@@ -1352,7 +1352,7 @@ static INT32 BkrtmaqInit()
 
 struct BurnDriver BurnDrvBkrtmaq = {
 	"bkrtmaq", NULL, NULL, NULL, "1992",
-	"Bakuretsu Quiz Ma-Q Dai Bouken (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Bakuretsu Quiz Ma-Q Dai Bouken (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, bkrtmaqRomInfo, bkrtmaqRomName, NULL, NULL, NULL, NULL, Namcona1_quizInputInfo, Namcona1_quizDIPInfo,
@@ -1388,7 +1388,7 @@ static INT32 CgangpzlInit()
 
 struct BurnDriver BurnDrvCgangpzl = {
 	"cgangpzl", NULL, NULL, NULL, "1992",
-	"Cosmo Gang the Puzzle (US)\0", NULL, "Namco", "Miscellaneous",
+	"Cosmo Gang the Puzzle (US)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, cgangpzlRomInfo, cgangpzlRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1413,7 +1413,7 @@ STD_ROM_FN(cgangpzlj)
 
 struct BurnDriver BurnDrvCgangpzlj = {
 	"cgangpzlj", "cgangpzl", NULL, NULL, "1992",
-	"Cosmo Gang the Puzzle (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Cosmo Gang the Puzzle (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, cgangpzljRomInfo, cgangpzljRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1449,7 +1449,7 @@ static INT32 EmeraldaInit()
 
 struct BurnDriver BurnDrvEmeraldaj = {
 	"emeraldaj", "emeralda", NULL, NULL, "1993",
-	"Emeraldia (Japan Version B)\0", "Slight GFX Issues", "Namco", "Miscellaneous",
+	"Emeraldia (Japan Version B)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, emeraldajRomInfo, emeraldajRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1474,7 +1474,7 @@ STD_ROM_FN(emeraldaja)
 
 struct BurnDriver BurnDrvEmeraldaja = {
 	"emeraldaja", "emeralda", NULL, NULL, "1993",
-	"Emeraldia (Japan)\0", "Slight GFX Issues", "Namco", "Miscellaneous",
+	"Emeraldia (Japan)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, emeraldajaRomInfo, emeraldajaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1515,7 +1515,7 @@ static INT32 ExvaniaInit()
 
 struct BurnDriver BurnDrvExvania = {
 	"exvania", NULL, NULL, NULL, "1992",
-	"Exvania (World)\0", NULL, "Namco", "Miscellaneous",
+	"Exvania (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, exvaniaRomInfo, exvaniaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1545,7 +1545,7 @@ STD_ROM_FN(exvaniaj)
 
 struct BurnDriver BurnDrvExvaniaj = {
 	"exvaniaj", "exvania", NULL, NULL, "1992",
-	"Exvania (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Exvania (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, exvaniajRomInfo, exvaniajRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1588,7 +1588,7 @@ static INT32 FghtatckInit()
 
 struct BurnDriver BurnDrvFghtatck = {
 	"fghtatck", NULL, NULL, NULL, "1992",
-	"Fighter & Attacker (US)\0", NULL, "Namco", "Miscellaneous",
+	"Fighter & Attacker (US)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, fghtatckRomInfo, fghtatckRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1618,7 +1618,7 @@ STD_ROM_FN(fa)
 
 struct BurnDriver BurnDrvFa = {
 	"fa", "fghtatck", NULL, NULL, "1992",
-	"F/A (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"F/A (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, faRomInfo, faRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1659,7 +1659,7 @@ static INT32 SwcourtInit()
 
 struct BurnDriver BurnDrvSwcourt = {
 	"swcourt", NULL, NULL, NULL, "1992",
-	"Super World Court (World)\0", NULL, "Namco", "Miscellaneous",
+	"Super World Court (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtRomInfo, swcourtRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1689,7 +1689,7 @@ STD_ROM_FN(swcourtj)
 
 struct BurnDriver BurnDrvSwcourtj = {
 	"swcourtj", "swcourt", NULL, NULL, "1992",
-	"Super World Court (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Super World Court (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtjRomInfo, swcourtjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1723,7 +1723,7 @@ STD_ROM_FN(swcourtb)
 
 struct BurnDriver BurnDrvSwcourtb = {
 	"swcourtb", "swcourt", NULL, NULL, "1994",
-	"Super World Court (World, bootleg)\0", NULL, "bootleg (Playmark?)", "Miscellaneous",
+	"Super World Court (World, bootleg)\0", NULL, "bootleg (Playmark?)", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtbRomInfo, swcourtbRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1780,7 +1780,7 @@ static INT32 TinklpitInit()
 
 struct BurnDriver BurnDrvTinklpit = {
 	"tinklpit", NULL, NULL, NULL, "1993",
-	"Tinkle Pit (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Tinkle Pit (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, tinklpitRomInfo, tinklpitRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1805,7 +1805,7 @@ STD_ROM_FN(emeralda)
 
 struct BurnDriver BurnDrvEmeralda = {
 	"emeralda", NULL, NULL, NULL, "1993",
-	"Emeraldia (World)\0", "Slight GFX Issues", "Namco", "Miscellaneous",
+	"Emeraldia (World)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, emeraldaRomInfo, emeraldaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1853,7 +1853,7 @@ static INT32 KnckheadInit()
 
 struct BurnDriver BurnDrvKnckhead = {
 	"knckhead", NULL, NULL, NULL, "1992",
-	"Knuckle Heads (World)\0", NULL, "Namco", "Miscellaneous",
+	"Knuckle Heads (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadRomInfo, knckheadRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1887,7 +1887,7 @@ STD_ROM_FN(knckheadj)
 
 struct BurnDriver BurnDrvKnckheadj = {
 	"knckheadj", "knckhead", NULL, NULL, "1992",
-	"Knuckle Heads (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Knuckle Heads (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadjRomInfo, knckheadjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1923,7 +1923,7 @@ STD_ROM_FN(knckheadjp)
 
 struct BurnDriver BurnDrvKnckheadjp = {
 	"knckheadjp", "knckhead", NULL, NULL, "1992",
-	"Knuckle Heads (Japan, Prototype?)\0", NULL, "Namco", "Miscellaneous",
+	"Knuckle Heads (Japan, Prototype?)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadjpRomInfo, knckheadjpRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -1970,7 +1970,7 @@ static INT32 NumanathInit()
 
 struct BurnDriver BurnDrvNumanath = {
 	"numanath", NULL, NULL, NULL, "1993",
-	"Numan Athletics (World)\0", NULL, "Namco", "Miscellaneous",
+	"Numan Athletics (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, numanathRomInfo, numanathRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -2004,7 +2004,7 @@ STD_ROM_FN(numanathj)
 
 struct BurnDriver BurnDrvNumanathj = {
 	"numanathj", "numanath", NULL, NULL, "1993",
-	"Numan Athletics (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Numan Athletics (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, numanathjRomInfo, numanathjRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
@@ -2051,7 +2051,7 @@ static INT32 QuiztouInit()
 
 struct BurnDriver BurnDrvQuiztou = {
 	"quiztou", NULL, NULL, NULL, "1993",
-	"Nettou! Gekitou! Quiztou!! (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"Nettou! Gekitou! Quiztou!! (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, quiztouRomInfo, quiztouRomName, NULL, NULL, NULL, NULL, Namcona1_quizInputInfo, Namcona1_quizDIPInfo,
@@ -2092,7 +2092,7 @@ static INT32 Xday2Init()
 
 struct BurnDriver BurnDrvXday2 = {
 	"xday2", NULL, NULL, NULL, "1995",
-	"X-Day 2 (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"X-Day 2 (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, xday2RomInfo, xday2RomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,

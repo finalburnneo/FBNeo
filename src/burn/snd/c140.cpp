@@ -112,6 +112,8 @@ static void UpdateStream(INT32 end)
 	INT32 framelen = samples_to_source(nBurnSoundLen);
 	INT32 position = (end) ? framelen : SyncUPD(framelen);
 
+	if (position > framelen) position = framelen;
+
 	INT32 samples = position - nPosition;
 
 	if (samples < 1) return;

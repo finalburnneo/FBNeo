@@ -25,6 +25,7 @@ INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nS
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX], nSekRESETLine[SEK_MAX], nSekHALT[SEK_MAX];
 INT32 nSekCyclesToDoCache[SEK_MAX], nSekm68k_ICount[SEK_MAX];
+INT32 nSekCPUOffsetAddress[SEK_MAX];
 
 static UINT32 nSekAddressMask[SEK_MAX], nSekAddressMaskActive;
 
@@ -242,7 +243,14 @@ inline static UINT16 FetchWord(UINT32 a)
 
 	pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
+		if (a & 1)
+		{
+			return (ReadByte(a + 0) * 256) + ReadByte(a + 1);
+		}
+		else
+		{
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
+		}
 	}
 
 	return pSekExt->ReadWord[(uintptr_t)pr](a);
@@ -294,8 +302,9 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
 }
 
+// [x] byte #
 // be [3210] -> (r >> 16) | (r << 16) -> [1032] -> UINT32(le) = -> [0123]
-// le [0123]
+// mem [0123]
 
 inline static UINT32 ReadLong(UINT32 a)
 {
@@ -310,7 +319,7 @@ inline static UINT32 ReadLong(UINT32 a)
 	{
 		UINT32 r = 0;
 
-		if (a & 1)
+		if (a & nSekCPUOffsetAddress[nSekActive])
 		{
 			r  = ReadByte((a + 0)) * 0x1000000;
 			r += ReadByte((a + 1)) * 0x10000;
@@ -339,11 +348,28 @@ inline static UINT32 FetchLong(UINT32 a)
 
 //	bprintf(PRINT_NORMAL, _T("fetch32 0x%08X\n"), a);
 
+	//if (a&3) bprintf(0, _T("fetchlong offset-read @ %x\n"), a);
+
 	pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		UINT32 r = *((UINT32*)(pr + (a & SEK_PAGEM)));
-		r = (r >> 16) | (r << 16);
-		return BURN_ENDIAN_SWAP_INT32(r);
+		UINT32 r = 0;
+
+		if (a & nSekCPUOffsetAddress[nSekActive])
+		{
+			r  = ReadByte((a + 0)) * 0x1000000;
+			r += ReadByte((a + 1)) * 0x10000;
+			r += ReadByte((a + 2)) * 0x100;
+			r += ReadByte((a + 3));
+
+			return r;
+		}
+		else
+		{
+			r = *((UINT32*)(pr + (a & SEK_PAGEM)));
+			r = (r >> 16) | (r << 16);
+
+			return BURN_ENDIAN_SWAP_INT32(r);
+		}
 	}
 	return pSekExt->ReadLong[(uintptr_t)pr](a);
 }
@@ -359,7 +385,7 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 	pr = FIND_W(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER)
 	{
-		if (a & 1)
+		if (a & nSekCPUOffsetAddress[nSekActive])
 		{
 		//	bprintf(PRINT_NORMAL, _T("write32 0x%08X 0x%8.8x\n"), a,d);
 
@@ -625,6 +651,8 @@ static INT32 SekInitCPUC68K(INT32 nCount, INT32 nCPUType)
 
 	nSekCPUType[nCount] = nCPUType;
 
+	nSekCPUOffsetAddress[nCount] = 1;
+
 	if (!bCycloneInited) {
 #if defined (FBNEO_DEBUG)
 		bprintf(PRINT_NORMAL, _T("EMU_C68K: CycloneInit\n"));
@@ -653,12 +681,15 @@ static INT32 SekInitCPUM68K(INT32 nCount, INT32 nCPUType)
 #endif
 	nSekCPUType[nCount] = nCPUType;
 
+	nSekCPUOffsetAddress[nCount] = 1; // 3 for 020!
+
 	switch (nCPUType) {
 		case 0x68000:
 			m68k_set_cpu_type(M68K_CPU_TYPE_68000);
 			break;
 		case 0x68010:
 			m68k_set_cpu_type(M68K_CPU_TYPE_68010);
+			nSekCPUOffsetAddress[nCount] = 3;
 			break;
 		case 0x68EC020:
 			m68k_set_cpu_type(M68K_CPU_TYPE_68EC020);
@@ -911,6 +942,8 @@ INT32 SekExit()
 			free(SekExt[i]);
 			SekExt[i] = NULL;
 		}
+
+		nSekCPUOffsetAddress[i] = 0;
 	}
 
 	pSekExt = NULL;

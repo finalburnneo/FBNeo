@@ -85,7 +85,7 @@ static void c169_roz_draw_helper()
 	UINT32 hstarty = starty + clip_min_x * incxy + clip_min_y * incyy;
 	INT32 sx = clip_min_x;
 	INT32 sy = clip_min_y;
-	while (sy < clip_max_y) // clip_max_y could be 1 greater than nScreenHeight on the last visible line
+	while (sy <= clip_max_y)
 	{
 		INT32 x = sx;
 		UINT32 cx = hstartx;
@@ -98,7 +98,7 @@ static void c169_roz_draw_helper()
 			UINT32 ypos = (((cy >> 16) & size_mask) + top) & 0xfff;
 			INT32 pxl = BURN_ENDIAN_SWAP_INT16(srcbitmap[(ypos * 0x1000) + xpos]);
 			if ((pxl & 0x8000) == 0) {
-				*dest = BURN_ENDIAN_SWAP_INT16(srcbitmap[(ypos * 0x1000) + xpos]) + color;
+				*dest = pxl + color;
 				*prio = global_priority;
 			}
 			cx += incxx;
@@ -115,7 +115,7 @@ static void c169_roz_draw_helper()
 
 static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 {
-	if (line >= 0 && line <= clip_max_y) // namco's clipping is 1 less for max_*
+	if (line >= clip_min_y && line <= clip_max_y) // namco's clipping is 1 less for max_*
 	{
 		INT32 row = line / 8;
 		INT32 offs = row * 0x100 + (line & 7) * 0x10 + 0xe080;
@@ -127,16 +127,7 @@ static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 
 			if (pri == priority)
 			{
-				INT32 oldmin = clip_min_y;
-				INT32 oldmax = clip_max_y;
-
-				clip_min_y = line;
-				clip_max_y = line+1;
-
 				c169_roz_draw_helper();
-
-				clip_min_y = oldmin;
-				clip_max_y = oldmax;
 			}
 		}
 	}
@@ -149,7 +140,7 @@ void c169_roz_draw(INT32 pri, INT32 line)
 	if (line != -1) {
 		if (line >= clip_min_y && line <= clip_max_y) {
 			clip_min_y = line;
-			clip_max_y = line+1;
+			clip_max_y = line;
 		} else {
 			return; // nothing to draw due to clipping
 		}

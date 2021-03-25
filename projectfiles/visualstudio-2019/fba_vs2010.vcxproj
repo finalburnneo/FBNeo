@@ -181,6 +181,7 @@
     <ClInclude Include="..\..\src\burn\snd\burn_ymf278b.h" />
     <ClInclude Include="..\..\src\burn\snd\bzone.h" />
     <ClInclude Include="..\..\src\burn\snd\c140.h" />
+    <ClInclude Include="..\..\src\burn\snd\c352.h" />
     <ClInclude Include="..\..\src\burn\snd\c6280.h" />
     <ClInclude Include="..\..\src\burn\snd\dac.h" />
     <ClInclude Include="..\..\src\burn\snd\downsample.h" />
@@ -574,6 +575,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_namconb1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
@@ -596,6 +598,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf271.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\c352.cpp" />
     <ClCompile Include="..\..\src\burn\snd\i5000.cpp" />
     <ClCompile Include="..\..\src\burn\snd\multipcm.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />

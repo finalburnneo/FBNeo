@@ -5666,6 +5666,9 @@ DRV		BurnDrvsms_greatglk;
 DRV		BurnDrvsms_greatglfp;
 DRV		BurnDrvsms_greatice;
 DRV		BurnDrvCpsGreatMahouDaiJ;
+DRV		BurnDrvGslgr94j;
+DRV		BurnDrvGslgr94u;
+DRV		BurnDrvGslugrsj;
 DRV		BurnDrvsms_greatscr;
 DRV		BurnDrvsms_greatscrc;
 DRV		BurnDrvsms_greatscrj;
@@ -5761,6 +5764,8 @@ DRV		BurnDrvGumbo;
 DRV		BurnDrvnes_gumshoe;
 DRV		BurnDrvGunfront;
 DRV		BurnDrvGunball;
+DRV		BurnDrvGunbuletj;
+DRV		BurnDrvGunbuletw;
 DRV		BurnDrvGundl94;
 DRV		BurnDrvMSX_gunfrght;
 DRV		BurnDrvMSX_gunfrghta;
@@ -6453,6 +6458,7 @@ DRV		BurnSpecironman;
 DRV		BurnSpecironman_48;
 DRV		BurnDrvIxion;
 DRV		BurnDrvmd_izzyqst;
+DRV		BurnDrvVshoot;
 DRV		BurnDrvJjsquawkb;
 DRV		BurnDrvJjsquawkb2;
 DRV		BurnDrvJjsquawko;
@@ -7691,6 +7697,8 @@ DRV		BurnDrvnes_muscle;
 DRV		BurnDrvmd_majian;
 DRV		BurnDrvmd_majiana;
 DRV		BurnDrvmd_maqiao;
+DRV		BurnDrvMachbrkr;
+DRV		BurnDrvMachbrkrj;
 DRV		BurnDrvnes_machrider;
 DRV		BurnDrvmach9;
 DRV		BurnDrvnes_machinecave;
@@ -8931,6 +8939,7 @@ DRV		BurnDrvmd_nakaf1sl;
 DRV		BurnDrvnes_nalleland;
 DRV		BurnDrvNam1975;
 DRV		BurnDrvMSX_namake;
+DRV		BurnDrvnamcoc75;
 DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
 DRV		BurnDrvNaname;
@@ -9084,6 +9093,8 @@ DRV		BurnDrvmd_nbashowp;
 DRV		BurnDrvmd_ncaabask;
 DRV		BurnDrvmd_ncaafoot;
 DRV		BurnDrvnes_nebsanddebs;
+DRV		BurnDrvNebulrayj;
+DRV		BurnDrvNebulray;
 DRV		BurnDrvNebulbee;
 DRV		BurnSpecnebulus;
 DRV		BurnSpecNecrisdome;
@@ -10226,6 +10237,8 @@ DRV		BurnDrvngp_ptennis;
 DRV		BurnDrvnes_pockezau;
 DRV		BurnDrvMSX_podero;
 DRV		BurnDrvnes_pogocats;
+DRV		BurnDrvPtblank;
+DRV		BurnDrvPtblanka;
 DRV		BurnDrvPoittoc;
 DRV		BurnDrvPoitto;
 DRV		BurnDrvmd_pokecda;
@@ -13784,6 +13797,9 @@ DRV		BurnDrvSwcourtb;
 DRV		BurnDrvSws92;
 DRV		BurnDrvSws92g;
 DRV		BurnDrvSws93;
+DRV		BurnDrvSws95;
+DRV		BurnDrvSws96;
+DRV		BurnDrvSws97;
 DRV		BurnDrvSws;
 DRV		BurnDrvSxevious;
 DRV		BurnDrvnes_superxev;
@@ -14705,6 +14721,9 @@ DRV		BurnDrvgg_ottifant;
 DRV		BurnDrvmd_ottifant;
 DRV		BurnDrvsms_ottifant;
 DRV		BurnDrvmd_ottifantg;
+DRV		BurnDrvOutfxiesj;
+DRV		BurnDrvOutfxiesa;
+DRV		BurnDrvOutfxies;
 DRV		BurnDrvmd_pagemstr;
 DRV		BurnDrvmd_pagemstru;
 DRV		BurnDrvmd_pagemstrup;
@@ -22414,6 +22433,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_greatglfp,		// Great Golf (Prototype)
 	&BurnDrvsms_greatice,		// Great Ice Hockey (Jpn, USA)
 	&BurnDrvCpsGreatMahouDaiJ,	// Great Mahou Daisakusen (000121 Japan)
+	&BurnDrvGslgr94j,			// Great Sluggers '94 (Japan)
+	&BurnDrvGslgr94u,			// Great Sluggers '94
+	&BurnDrvGslugrsj,			// Great Sluggers (Japan)
 	&BurnDrvsms_greatscr,		// Great Soccer (Euro)
 	&BurnDrvsms_greatscrc,		// Great Soccer (Euro, Sega Card)
 	&BurnDrvsms_greatscrj,		// Great Soccer (Jpn, MyCard)
@@ -22509,6 +22531,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_gumshoe,		// Gumshoe (USA)
 	&BurnDrvGunfront,			// Gun & Frontier (World)
 	&BurnDrvGunball,			// Gun Ball (Japan)
+	&BurnDrvGunbuletj,			// Gun Bullet (Japan, GN1)
+	&BurnDrvGunbuletw,			// Gun Bullet (World, GN3 Rev B)
 	&BurnDrvGundl94,			// Gun Dealer '94
 	&BurnDrvMSX_gunfrght,		// Gun Fright (Jpn)
 	&BurnDrvMSX_gunfrghta,		// Gun Fright (Jpn, Hacked?)
@@ -23201,6 +23225,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecironman_48,		// Ivan 'Ironman' Stewart's Super Off Road Racer (48K)
 	&BurnDrvIxion,				// Ixion (prototype) [no comment, NOT WORKING]
 	&BurnDrvmd_izzyqst,			// Izzy's Quest for the Olympic Rings (Euro, USA)
+	&BurnDrvVshoot,				// J-League Soccer V-Shoot (Japan)
 	&BurnDrvJjsquawkb,			// J. J. Squawkers (bootleg)
 	&BurnDrvJjsquawkb2,			// J. J. Squawkers (bootleg, Blandia conversion)
 	&BurnDrvJjsquawko,			// J. J. Squawkers (older)
@@ -24439,6 +24464,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_majian,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi)
 	&BurnDrvmd_majiana,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt)
 	&BurnDrvmd_maqiao,			// Ma Qiao E Mo Ta - Devilish Mahjong Tower (Chi)
+	&BurnDrvMachbrkr,			// Mach Breakers (World, MB2)
+	&BurnDrvMachbrkrj,			// Mach Breakers - Numan Athletics 2 (Japan, MB1)
 	&BurnDrvnes_machrider,		// Mach Rider (USA)
 	&BurnDrvmach9,				// Mach-9 (bootleg of Vulgus)
 	&BurnDrvnes_machinecave,	// Machine Cave (HB, v1.9)
@@ -25679,6 +25706,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nalleland,		// Nalle Land (HB, v040)
 	&BurnDrvNam1975,			// NAM-1975 (NGM-001)(NGH-001)
 	&BurnDrvMSX_namake,			// Namake's Bridgedrome (HB)
+	&BurnDrvnamcoc75,			// Namco C75 (M37702) (Bios) [BIOS only, NOT WORKING]
 	&BurnDrvnes_namcoclassic,	// Namco Classic (Japan)
 	&BurnDrvnes_namcoclassicii,	// Namco Classic II (Japan)
 	&BurnDrvNaname,				// Naname de Magic!
@@ -25832,6 +25860,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ncaabask,		// NCAA Final Four Basketball (USA)
 	&BurnDrvmd_ncaafoot,		// NCAA Football (USA)
 	&BurnDrvnes_nebsanddebs,	// Nebs and Debs (HB)
+	&BurnDrvNebulrayj,			// Nebulas Ray (Japan, NR1)
+	&BurnDrvNebulray,			// Nebulas Ray (World, NR2)
 	&BurnDrvNebulbee,			// Nebulous Bee
 	&BurnSpecnebulus,			// Nebulus (48K)
 	&BurnSpecNecrisdome,		// Necris Dome
@@ -26974,6 +27004,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_pockezau,		// Pocket Zaurus - Juu Ouken no Nazo (Japan)
 	&BurnDrvMSX_podero,			// Poder Oscuro, El (Spa)
 	&BurnDrvnes_pogocats,		// Pogo Cats (HB)
+	&BurnDrvPtblank,			// Point Blank (World, GN2 Rev B, set 1)
+	&BurnDrvPtblanka,			// Point Blank (World, GN2 Rev B, set 2)
 	&BurnDrvPoittoc,			// Poitto! (revision C) [no comment, NOT WORKING]
 	&BurnDrvPoitto,				// Poitto!
 	&BurnDrvmd_pokecda,			// Pokemon Crazy Drummer (Alt)
@@ -30532,6 +30564,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSws92,				// Super World Stadium '92 (Japan)
 	&BurnDrvSws92g,				// Super World Stadium '92 Gekitouban (Japan)
 	&BurnDrvSws93,				// Super World Stadium '93 (Japan)
+	&BurnDrvSws95,				// Super World Stadium '95 (Japan)
+	&BurnDrvSws96,				// Super World Stadium '96 (Japan)
+	&BurnDrvSws97,				// Super World Stadium '97 (Japan)
 	&BurnDrvSws,				// Super World Stadium (Japan)
 	&BurnDrvSxevious,			// Super Xevious (Namco)
 	&BurnDrvnes_superxev,		// Super Xevious - Gump no Nazo (Japan)
@@ -31453,6 +31488,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ottifant,		// The Ottifants (Euro)
 	&BurnDrvsms_ottifant,		// The Ottifants (Euro, Bra)
 	&BurnDrvmd_ottifantg,		// The Ottifants (Ger, Prototype)
+	&BurnDrvOutfxiesj,			// The Outfoxies (Japan, OU1)
+	&BurnDrvOutfxiesa,			// The Outfoxies (Korea?)
+	&BurnDrvOutfxies,			// The Outfoxies (World, OU2)
 	&BurnDrvmd_pagemstr,		// The Pagemaster (Euro)
 	&BurnDrvmd_pagemstru,		// The Pagemaster (USA)
 	&BurnDrvmd_pagemstrup,		// The Pagemaster (USA, Prototype)

@@ -2541,7 +2541,9 @@ static INT32 TmntDoReset()
 	UPD7759StartWrite(0, 0); // First sample is cut w/o this hack. ("Fire!" after coin-up/select character)
 	UPD7759ResetWrite(0, 1);
 	ZetClose();
-	
+
+	HiscoreReset();
+
 	return nRet;
 }
 
@@ -6558,7 +6560,7 @@ struct BurnDriver BurnDrvTmnt = {
 	"tmnt", NULL, NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (World 4 Players, version X)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntRomInfo, TmntRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6568,7 +6570,7 @@ struct BurnDriver BurnDrvTmntu = {
 	"tmntu", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (US 4 Players, version R)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntuRomInfo, TmntuRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6578,7 +6580,7 @@ struct BurnDriver BurnDrvTmntua = {
 	"tmntua", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (US 4 Players, version N)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntuaRomInfo, TmntuaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6588,7 +6590,7 @@ struct BurnDriver BurnDrvTmntub = {
 	"tmntub", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (US 4 Players, version J)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntubRomInfo, TmntubRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6598,7 +6600,7 @@ struct BurnDriver BurnDrvTmntuc = {
 	"tmntuc", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (US 4 Players, version H)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntucRomInfo, TmntucRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6608,7 +6610,7 @@ struct BurnDriver BurnDrvTmht = {
 	"tmht", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Hero Turtles (UK 4 Players, version F)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmhtRomInfo, TmhtRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6618,7 +6620,7 @@ struct BurnDriver BurnDrvTmhta = {
 	"tmhta", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Hero Turtles (UK 4 Players, version S)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmhtaRomInfo, TmhtaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6628,7 +6630,7 @@ struct BurnDriver BurnDrvTmhtb = {
 	"tmhtb", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Hero Turtles (UK 4 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmhtbRomInfo, TmhtbRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6638,7 +6640,7 @@ struct BurnDriver BurnDrvTmntj = {
 	"tmntj", "tmnt", NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles (Japan 4 Players, version 2)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntjRomInfo, TmntjRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6648,7 +6650,7 @@ struct BurnDriver BurnDrvTmnta = {
 	"tmnta", "tmnt", NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles (Asia 4 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntaRomInfo, TmntaRomName, NULL, NULL, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6658,7 +6660,7 @@ struct BurnDriver BurnDrvTmht2p = {
 	"tmht2p", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Hero Turtles (UK 2 Players, version U)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, Tmht2pRomInfo, Tmht2pRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6668,7 +6670,7 @@ struct BurnDriver BurnDrvTmht2pa = {
 	"tmht2pa", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Hero Turtles (UK 2 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, Tmht2paRomInfo, Tmht2paRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6678,7 +6680,7 @@ struct BurnDriver BurnDrvTmht2pj = {
 	"tmnt2pj", "tmnt", NULL, NULL, "1990",
 	"Teenage Mutant Ninja Turtles (Japan 2 Players, version 1)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, Tmnt2pjRomInfo, Tmnt2pjRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
@@ -6688,7 +6690,7 @@ struct BurnDriver BurnDrvTmht2po = {
 	"tmnt2po", "tmnt", NULL, NULL, "1989",
 	"Teenage Mutant Ninja Turtles (Oceania 2 Players, version ?)\0", NULL, "Konami", "GX963",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, Tmnt2poRomInfo, Tmnt2poRomName, NULL, NULL, NULL, NULL, Tmnt2pInputInfo, Tmnt2pDIPInfo,
 	TmntInit, TmntExit, TmntFrame, TmntDraw, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16514 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16516 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8815,6 +8815,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_nalleland	|  	| Nalle Land (HB, v040)					| 		| 2020	| Benjamin Larss| Miscellaneous	| 					|
 | nam1975	|  	| NAM-1975 (NGM-001)(NGH-001)				| 		| 1990	| SNK		| Neo Geo MVS	| 					|
 | msx_namake	|  	| Namake's Bridgedrome (HB)				| 		| 2005	| Buresto Faiya	| MSX		| Uses joyport #2			|
+| namcoc69	|   NW	| Namco C69 (M37702) (Bios)				| 		| 1994	| Namco		| NA-1 / NA-2	| BIOS only				|
+| namcoc70	|   NW	| Namco C70 (M37702) (Bios)				| 		| 1994	| Namco		| NA-1 / NA-2	| BIOS only				|
 | namcoc75	|   NW	| Namco C75 (M37702) (Bios)				| 		| 1994	| Namco		| NB-1 / NB-2	| BIOS only				|
 | nes_namcoclassic|  	| Namco Classic (Japan)					| 		| 1988	| Namco		| Miscellaneous	| 					|
 | nes_namcoclassicii|  	| Namco Classic II (Japan)				| 		| 1992	| Namco		| Miscellaneous	| 					|

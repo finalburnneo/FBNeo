@@ -8939,6 +8939,8 @@ DRV		BurnDrvmd_nakaf1sl;
 DRV		BurnDrvnes_nalleland;
 DRV		BurnDrvNam1975;
 DRV		BurnDrvMSX_namake;
+DRV		BurnDrvnamcoc69;
+DRV		BurnDrvnamcoc70;
 DRV		BurnDrvnamcoc75;
 DRV		BurnDrvnes_namcoclassic;
 DRV		BurnDrvnes_namcoclassicii;
@@ -25706,6 +25708,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nalleland,		// Nalle Land (HB, v040)
 	&BurnDrvNam1975,			// NAM-1975 (NGM-001)(NGH-001)
 	&BurnDrvMSX_namake,			// Namake's Bridgedrome (HB)
+	&BurnDrvnamcoc69,			// Namco C69 (M37702) (Bios) [BIOS only, NOT WORKING]
+	&BurnDrvnamcoc70,			// Namco C70 (M37702) (Bios) [BIOS only, NOT WORKING]
 	&BurnDrvnamcoc75,			// Namco C75 (M37702) (Bios) [BIOS only, NOT WORKING]
 	&BurnDrvnes_namcoclassic,	// Namco Classic (Japan)
 	&BurnDrvnes_namcoclassicii,	// Namco Classic II (Japan)

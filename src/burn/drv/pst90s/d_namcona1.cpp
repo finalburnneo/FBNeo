@@ -27,6 +27,8 @@ static UINT16 *DrvVRegs;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static INT32 interrupt_enable;
 
 static INT32 namcona1_gametype = 0;
@@ -595,6 +597,8 @@ static INT32 DrvDoReset()
 	BurnRandomSetSeed(0x313808303ULL);
 	last_rand = 0;
 	tinklpit_key = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -1210,10 +1214,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12528250 / 2 / 60, 12528250 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 	M377Open(0);
+	M377Idle(nExtraCycles[0]); // since we use CPU_RUN_SYNCINT
 
 	DrvDrawBegin();
 
@@ -1251,6 +1256,9 @@ static INT32 DrvFrame()
 		BurnSoundClear();
 	    c140_update(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles[0] = M377TotalCycles() - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	SekClose();
 	M377Close();
@@ -1299,6 +1307,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(interrupt_enable);
 		SCAN_VAR(tinklpit_key);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1320,6 +1330,46 @@ static UINT16 guaranteed_rand()
 	return trand;
 }
 
+static struct BurnRomInfo emptyRomDesc[] = { { "", 0, 0, 0 }, }; // for bios handling
+
+static struct BurnRomInfo namcoc69RomDesc[] = {
+	{ "c69.bin",		0x004000, 0x349134D9, 4 | BRF_BIOS | BRF_PRG | BRF_ESS }, // C69 Internal ROM
+};
+
+STD_ROM_PICK(namcoc69)
+STD_ROM_FN(namcoc69)
+
+static INT32 namcocInit() {
+	return 1;
+}
+
+struct BurnDriver BurnDrvnamcoc69 = {
+	"namcoc69", NULL, NULL, NULL, "1994",
+	"Namco C69 (M37702) (Bios)\0", "BIOS only", "Namco", "NA-1 / NA-2",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 0, HARDWARE_MISC_POST90S, GBF_BIOS, 0,
+	NULL, namcoc69RomInfo, namcoc69RomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	namcocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	224, 288, 3, 4
+};
+
+static struct BurnRomInfo namcoc70RomDesc[] = {
+	{ "c70.bin",		0x004000, 0xB4015F23, 4 | BRF_BIOS | BRF_PRG | BRF_ESS }, // C70 Internal ROM
+};
+
+STD_ROM_PICK(namcoc70)
+STD_ROM_FN(namcoc70)
+
+struct BurnDriver BurnDrvnamcoc70 = {
+	"namcoc70", NULL, NULL, NULL, "1994",
+	"Namco C70 (M37702) (Bios)\0", "BIOS only", "Namco", "NA-1 / NA-2",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 0, HARDWARE_MISC_POST90S, GBF_BIOS, 0,
+	NULL, namcoc70RomInfo, namcoc70RomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	namcocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	224, 288, 3, 4
+};
+
 // Bakuretsu Quiz Ma-Q Dai Bouken (Japan)
 
 static struct BurnRomInfo bkrtmaqRomDesc[] = {
@@ -1332,11 +1382,9 @@ static struct BurnRomInfo bkrtmaqRomDesc[] = {
 	{ "mq1-ma0u.bin",			0x100000, 0x23442ac0, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "mq1-ma1l.bin",			0x100000, 0xfe82205f, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "mq1-ma1u.bin",			0x100000, 0x0cdb6bd0, 2 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(bkrtmaq)
+STDROMPICKEXT(bkrtmaq, bkrtmaq, namcoc69)
 STD_ROM_FN(bkrtmaq)
 
 static INT32 bkrtmaq_keycus_read(INT32 offset)
@@ -1351,7 +1399,7 @@ static INT32 BkrtmaqInit()
 }
 
 struct BurnDriver BurnDrvBkrtmaq = {
-	"bkrtmaq", NULL, NULL, NULL, "1992",
+	"bkrtmaq", NULL, "namcoc69", NULL, "1992",
 	"Bakuretsu Quiz Ma-Q Dai Bouken (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
@@ -1368,11 +1416,9 @@ static struct BurnRomInfo cgangpzlRomDesc[] = {
 	{ "cp2-ep0u.4f",			0x080000, 0x3a816140, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "eeprom_cgangpzl",		0x000800, 0x5f8dfe9e, 3 | BRF_PRG | BRF_ESS }, //  2 Default NV RAM
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(cgangpzl)
+STDROMPICKEXT(cgangpzl, cgangpzl, namcoc69)
 STD_ROM_FN(cgangpzl)
 
 static INT32 cgangpzl_keycus_read(INT32 offset)
@@ -1387,7 +1433,7 @@ static INT32 CgangpzlInit()
 }
 
 struct BurnDriver BurnDrvCgangpzl = {
-	"cgangpzl", NULL, NULL, NULL, "1992",
+	"cgangpzl", NULL, "namcoc69", NULL, "1992",
 	"Cosmo Gang the Puzzle (US)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
@@ -1404,15 +1450,13 @@ static struct BurnRomInfo cgangpzljRomDesc[] = {
 	{ "cp1-ep0u.4f",			0x080000, 0x94d7d6fc, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "eeprom_cgangpzlj",		0x000800, 0xef5ddff2, 3 | BRF_PRG | BRF_ESS }, //  2 Default NV RAM
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(cgangpzlj)
+STDROMPICKEXT(cgangpzlj, cgangpzlj, namcoc69)
 STD_ROM_FN(cgangpzlj)
 
 struct BurnDriver BurnDrvCgangpzlj = {
-	"cgangpzlj", "cgangpzl", NULL, NULL, "1992",
+	"cgangpzlj", "cgangpzl", "namcoc69", NULL, "1992",
 	"Cosmo Gang the Puzzle (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
@@ -1429,11 +1473,9 @@ static struct BurnRomInfo emeraldajRomDesc[] = {
 	{ "em1-ep0ub.6f",			0x080000, 0xa52f00d5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "em1-ep1u.7f",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(emeraldaj)
+STDROMPICKEXT(emeraldaj, emeraldaj, namcoc69)
 STD_ROM_FN(emeraldaj)
 
 static INT32 emeralda_keycus_read(INT32 offset)
@@ -1448,7 +1490,7 @@ static INT32 EmeraldaInit()
 }
 
 struct BurnDriver BurnDrvEmeraldaj = {
-	"emeraldaj", "emeralda", NULL, NULL, "1993",
+	"emeraldaj", "emeralda", "namcoc69", NULL, "1993",
 	"Emeraldia (Japan Version B)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
@@ -1465,15 +1507,13 @@ static struct BurnRomInfo emeraldajaRomDesc[] = {
 	{ "em1-ep0u.6f",			0x080000, 0x484a2a81, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "em1-ep1u.7c",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(emeraldaja)
+STDROMPICKEXT(emeraldaja, emeraldaja, namcoc69)
 STD_ROM_FN(emeraldaja)
 
 struct BurnDriver BurnDrvEmeraldaja = {
-	"emeraldaja", "emeralda", NULL, NULL, "1993",
+	"emeraldaja", "emeralda", "namcoc69", NULL, "1993",
 	"Emeraldia (Japan)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
@@ -1495,11 +1535,9 @@ static struct BurnRomInfo exvaniaRomDesc[] = {
 	{ "ex1-ma1u.3f",			0x100000, 0x04e7c4b0, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "eeprom",					0x000800, 0x0f46389d, 3 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(exvania)
+STDROMPICKEXT(exvania, exvania, namcoc69)
 STD_ROM_FN(exvania)
 
 static INT32 exvania_keycus_read(INT32 offset)
@@ -1514,7 +1552,7 @@ static INT32 ExvaniaInit()
 }
 
 struct BurnDriver BurnDrvExvania = {
-	"exvania", NULL, NULL, NULL, "1992",
+	"exvania", NULL, "namcoc69", NULL, "1992",
 	"Exvania (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
@@ -1536,15 +1574,13 @@ static struct BurnRomInfo exvaniajRomDesc[] = {
 	{ "ex1-ma1u.3f",			0x100000, 0x04e7c4b0, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "eeprom",					0x000800, 0x0f46389d, 3 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(exvaniaj)
+STDROMPICKEXT(exvaniaj, exvaniaj, namcoc69)
 STD_ROM_FN(exvaniaj)
 
 struct BurnDriver BurnDrvExvaniaj = {
-	"exvaniaj", "exvania", NULL, NULL, "1992",
+	"exvaniaj", "exvania", "namcoc69", NULL, "1992",
 	"Exvania (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
@@ -1566,11 +1602,9 @@ static struct BurnRomInfo fghtatckRomDesc[] = {
 	{ "fa1-ma0u.2f",			0x100000, 0x1d0135bd, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "fa1-ma1l.3c",			0x100000, 0xc4adf0a2, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "fa1-ma1u.3f",			0x100000, 0x900297be, 2 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(fghtatck)
+STDROMPICKEXT(fghtatck, fghtatck, namcoc69)
 STD_ROM_FN(fghtatck)
 
 static INT32 fghtatck_keycus_read(INT32 offset)
@@ -1587,7 +1621,7 @@ static INT32 FghtatckInit()
 }
 
 struct BurnDriver BurnDrvFghtatck = {
-	"fghtatck", NULL, NULL, NULL, "1992",
+	"fghtatck", NULL, "namcoc69", NULL, "1992",
 	"Fighter & Attacker (US)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
@@ -1609,15 +1643,13 @@ static struct BurnRomInfo faRomDesc[] = {
 	{ "fa1-ma0u.2f",			0x100000, 0x1d0135bd, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "fa1-ma1l.3c",			0x100000, 0xc4adf0a2, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "fa1-ma1u.3f",			0x100000, 0x900297be, 2 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(fa)
+STDROMPICKEXT(fa, fa, namcoc69)
 STD_ROM_FN(fa)
 
 struct BurnDriver BurnDrvFa = {
-	"fa", "fghtatck", NULL, NULL, "1992",
+	"fa", "fghtatck", "namcoc69", NULL, "1992",
 	"F/A (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
@@ -1639,11 +1671,9 @@ static struct BurnRomInfo swcourtRomDesc[] = {
 	{ "sc1-ma0u.2f",			0x100000, 0x31e76a45, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "sc1-ma1l.3c",			0x100000, 0x8ba3a4ec, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "sc1-ma1u.3f",			0x100000, 0x252dc4b7, 2 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(swcourt)
+STDROMPICKEXT(swcourt, swcourt, namcoc69)
 STD_ROM_FN(swcourt)
 
 static INT32 swcourt_keycus_read(INT32 offset)
@@ -1658,7 +1688,7 @@ static INT32 SwcourtInit()
 }
 
 struct BurnDriver BurnDrvSwcourt = {
-	"swcourt", NULL, NULL, NULL, "1992",
+	"swcourt", NULL, "namcoc69", NULL, "1992",
 	"Super World Court (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -1680,15 +1710,13 @@ static struct BurnRomInfo swcourtjRomDesc[] = {
 	{ "sc1-ma0u.2f",			0x100000, 0x31e76a45, 2 | BRF_PRG | BRF_ESS }, //  5
 	{ "sc1-ma1l.3c",			0x100000, 0x8ba3a4ec, 2 | BRF_PRG | BRF_ESS }, //  6
 	{ "sc1-ma1u.3f",			0x100000, 0x252dc4b7, 2 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(swcourtj)
+STDROMPICKEXT(swcourtj, swcourtj, namcoc69)
 STD_ROM_FN(swcourtj)
 
 struct BurnDriver BurnDrvSwcourtj = {
-	"swcourtj", "swcourt", NULL, NULL, "1992",
+	"swcourtj", "swcourt", "namcoc69", NULL, "1992",
 	"Super World Court (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -1714,20 +1742,29 @@ static struct BurnRomInfo swcourtbRomDesc[] = {
 	{ "1ul.1u.3f",				0x080000, 0x5f03c51a, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "1lh.1l.3c",				0x080000, 0x6531236e, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "1uh.1u.3f",				0x080000, 0xacae6746, 2 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(swcourtb)
+STDROMPICKEXT(swcourtb, swcourtb, namcoc69)
 STD_ROM_FN(swcourtb)
 
+static INT32 swcourtb_keycus_read(INT32 offset)
+{
+	if (offset == 1) return 0x8061;
+	return guaranteed_rand();
+}
+
+static INT32 SwcourtbInit()
+{
+	return DrvInit(swcourtb_keycus_read);
+}
+
 struct BurnDriver BurnDrvSwcourtb = {
-	"swcourtb", "swcourt", NULL, NULL, "1994",
+	"swcourtb", "swcourt", "namcoc69", NULL, "1994",
 	"Super World Court (World, bootleg)\0", NULL, "bootleg (Playmark?)", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, swcourtbRomInfo, swcourtbRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
-	SwcourtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	SwcourtbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
 };
 
@@ -1746,11 +1783,9 @@ static struct BurnRomInfo tinklpitRomDesc[] = {
 	{ "tk1-ma1u.3f",			0x100000, 0x54b77816, 2 | BRF_PRG | BRF_ESS }, //  7
 	{ "tk1-ma2l.4c",			0x100000, 0x087311d2, 2 | BRF_PRG | BRF_ESS }, //  8
 	{ "tk1-ma2u.4f",			0x100000, 0x5ce20c2c, 2 | BRF_PRG | BRF_ESS }, //  9
-
-	{ "c69.bin",				0x004000, 0x349134D9, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(tinklpit)
+STDROMPICKEXT(tinklpit, tinklpit, namcoc69)
 STD_ROM_FN(tinklpit)
 
 static INT32 tinklpit_keycus_read(INT32 offset)
@@ -1779,7 +1814,7 @@ static INT32 TinklpitInit()
 }
 
 struct BurnDriver BurnDrvTinklpit = {
-	"tinklpit", NULL, NULL, NULL, "1993",
+	"tinklpit", NULL, "namcoc69", NULL, "1993",
 	"Tinkle Pit (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
@@ -1796,15 +1831,13 @@ static struct BurnRomInfo emeraldaRomDesc[] = {
 	{ "em2-ep0u.6f",			0x080000, 0xffe750a2, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em2-ep1l.7c",			0x080000, 0x6c3e5b53, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "em2-ep1u.7f",			0x080000, 0xdee15a81, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(emeralda)
+STDROMPICKEXT(emeralda, emeralda, namcoc70)
 STD_ROM_FN(emeralda)
 
 struct BurnDriver BurnDrvEmeralda = {
-	"emeralda", NULL, NULL, NULL, "1993",
+	"emeralda", NULL, "namcoc70", NULL, "1993",
 	"Emeraldia (World)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
@@ -1830,11 +1863,9 @@ static struct BurnRomInfo knckheadRomDesc[] = {
 	{ "kh1-ma2u.4f",			0x100000, 0x17fe8c3d, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "kh1-ma3l.5c",			0x100000, 0xad9a7807, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "kh1-ma3u.5f",			0x100000, 0xefeb768d, 2 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(knckhead)
+STDROMPICKEXT(knckhead, knckhead, namcoc70)
 STD_ROM_FN(knckhead)
 
 static INT32 knckhead_keycus_read(INT32 offset)
@@ -1852,7 +1883,7 @@ static INT32 KnckheadInit()
 }
 
 struct BurnDriver BurnDrvKnckhead = {
-	"knckhead", NULL, NULL, NULL, "1992",
+	"knckhead", NULL, "namcoc70", NULL, "1992",
 	"Knuckle Heads (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
@@ -1878,15 +1909,13 @@ static struct BurnRomInfo knckheadjRomDesc[] = {
 	{ "kh1-ma2u.4f",			0x100000, 0x17fe8c3d, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "kh1-ma3l.5c",			0x100000, 0xad9a7807, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "kh1-ma3u.5f",			0x100000, 0xefeb768d, 2 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(knckheadj)
+STDROMPICKEXT(knckheadj, knckheadj, namcoc70)
 STD_ROM_FN(knckheadj)
 
 struct BurnDriver BurnDrvKnckheadj = {
-	"knckheadj", "knckhead", NULL, NULL, "1992",
+	"knckheadj", "knckhead", "namcoc70", NULL, "1992",
 	"Knuckle Heads (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
@@ -1914,15 +1943,13 @@ static struct BurnRomInfo knckheadjpRomDesc[] = {
 	{ "kh1-ma3u.5f",			0x100000, 0xefeb768d, 2 | BRF_PRG | BRF_ESS }, // 11
 
 	{ "eeprom",					0x000800, 0x98875a23, 3 | BRF_PRG | BRF_ESS }, // 12 Default NV RAM
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(knckheadjp)
+STDROMPICKEXT(knckheadjp, knckheadjp, namcoc70)
 STD_ROM_FN(knckheadjp)
 
 struct BurnDriver BurnDrvKnckheadjp = {
-	"knckheadjp", "knckhead", NULL, NULL, "1992",
+	"knckheadjp", "knckhead", "namcoc70", NULL, "1992",
 	"Knuckle Heads (Japan, Prototype?)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
@@ -1948,11 +1975,9 @@ static struct BurnRomInfo numanathRomDesc[] = {
 	{ "nm1-ma2u.4f",			0x100000, 0x03a3f204, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "nm1-ma3l.5c",			0x100000, 0x42a539e9, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "nm1-ma3u.5f",			0x100000, 0xf79e2112, 2 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(numanath)
+STDROMPICKEXT(numanath, numanath, namcoc70)
 STD_ROM_FN(numanath)
 
 static INT32 numanath_keycus_read(INT32 offset)
@@ -1969,7 +1994,7 @@ static INT32 NumanathInit()
 }
 
 struct BurnDriver BurnDrvNumanath = {
-	"numanath", NULL, NULL, NULL, "1993",
+	"numanath", NULL, "namcoc70", NULL, "1993",
 	"Numan Athletics (World)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -1995,15 +2020,13 @@ static struct BurnRomInfo numanathjRomDesc[] = {
 	{ "nm1-ma2u.4f",			0x100000, 0x03a3f204, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "nm1-ma3l.5c",			0x100000, 0x42a539e9, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "nm1-ma3u.5f",			0x100000, 0xf79e2112, 2 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(numanathj)
+STDROMPICKEXT(numanathj, numanathj, namcoc70)
 STD_ROM_FN(numanathj)
 
 struct BurnDriver BurnDrvNumanathj = {
-	"numanathj", "numanath", NULL, NULL, "1993",
+	"numanathj", "numanath", "namcoc70", NULL, "1993",
 	"Numan Athletics (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -2031,11 +2054,9 @@ static struct BurnRomInfo quiztouRomDesc[] = {
 	{ "qt1ma3u.5f",				0x100000, 0x14a5a163, 2 | BRF_PRG | BRF_ESS }, // 11
 
 	{ "eeprom",					0x000800, 0x57a478a6, 3 | BRF_PRG | BRF_ESS }, // 12 Default NV RAM
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(quiztou)
+STDROMPICKEXT(quiztou, quiztou, namcoc70)
 STD_ROM_FN(quiztou)
 
 static INT32 quiztou_keycus_read(INT32 offset)
@@ -2050,7 +2071,7 @@ static INT32 QuiztouInit()
 }
 
 struct BurnDriver BurnDrvQuiztou = {
-	"quiztou", NULL, NULL, NULL, "1993",
+	"quiztou", NULL, "namcoc70", NULL, "1993",
 	"Nettou! Gekitou! Quiztou!! (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
@@ -2070,11 +2091,9 @@ static struct BurnRomInfo xday2RomDesc[] = {
 	{ "xds1-dat1.8b",			0x200000, 0xd250b7e8, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "xds1-dat2.4c",			0x200000, 0x99d72a08, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "xds1-dat3.8c",			0x200000, 0x8980acc4, 2 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "c70.bin",				0x004000, 0xB4015F23, 4 | BRF_PRG | BRF_ESS }, //  6 Default NV RAM
 };
 
-STD_ROM_PICK(xday2)
+STDROMPICKEXT(xday2, xday2, namcoc70)
 STD_ROM_FN(xday2)
 
 static INT32 xday2_keycus_read(INT32 offset)
@@ -2091,7 +2110,7 @@ static INT32 Xday2Init()
 }
 
 struct BurnDriver BurnDrvXday2 = {
-	"xday2", NULL, NULL, NULL, "1995",
+	"xday2", NULL, "namcoc70", NULL, "1995",
 	"X-Day 2 (Japan)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,

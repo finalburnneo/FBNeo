@@ -398,6 +398,63 @@ static struct BurnDIPInfo RaidendxDIPList[]=
 
 STDDIPINFO(Raidendx)
 
+static struct BurnDIPInfo RaidendxuDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
+	{0x16, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x14, 0x01, 0x07, 0x01, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x04, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x07, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x14, 0x01, 0x38, 0x08, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x10, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x20, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x38, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
+	{0x14, 0x01, 0x40, 0x40, "Normal"		},
+	{0x14, 0x01, 0x40, 0x00, "X 2"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x15, 0x01, 0x03, 0x03, "Normal"		},
+	{0x15, 0x01, 0x03, 0x01, "Easy"			},
+	{0x15, 0x01, 0x03, 0x02, "Hard"			},
+	{0x15, 0x01, 0x03, 0x00, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x15, 0x01, 0x0c, 0x00, "1"			},
+	{0x15, 0x01, 0x0c, 0x04, "4"			},
+	{0x15, 0x01, 0x0c, 0x08, "2"			},
+	{0x15, 0x01, 0x0c, 0x0c, "3"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sound"		},
+	{0x15, 0x01, 0x40, 0x00, "Off"			},
+	{0x15, 0x01, 0x40, 0x40, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0x15, 0x01, 0x80, 0x00, "On"			},
+};
+
+STDDIPINFO(Raidendxu)
+
 static struct BurnDIPInfo XsedaeDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
@@ -4588,7 +4645,7 @@ struct BurnDriver BurnDrvRaidendxk = {
 	"Raiden DX (Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxkRomInfo, raidendxkRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
+	NULL, raidendxkRomInfo, raidendxkRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxuDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -4629,7 +4686,7 @@ struct BurnDriver BurnDrvRaidendxu = {
 	"Raiden DX (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
+	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxuDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -4794,7 +4851,7 @@ struct BurnDriver BurnDrvRaidendxch = {
 	"Raiden DX (China)\0", NULL, "Seibu Kaihatsu (Ideal International Development Corp license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxchRomInfo, raidendxchRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
+	NULL, raidendxchRomInfo, raidendxchRomName, NULL, NULL, NULL, NULL, RaidendxInputInfo, RaidendxuDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

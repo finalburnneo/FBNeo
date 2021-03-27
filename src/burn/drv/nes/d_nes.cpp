@@ -36794,6 +36794,23 @@ struct BurnDriver BurnDrvnes_platoon = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_policemanRomDesc[] = {
+	{ "Policeman (Unl).nes",          131088, 0x6b1ddc17, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_policeman)
+STD_ROM_FN(nes_policeman)
+
+struct BurnDriver BurnDrvnes_policeman = {
+	"nes_policeman", NULL, NULL, NULL, "1989?",
+	"Policeman (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_policemanRomInfo, nes_policemanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_popoteamRomDesc[] = {
 	{ "Po Po Team (Taiwan).nes",          196624, 0x1b461169, BRF_ESS | BRF_PRG },
 };

@@ -531,10 +531,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			}
 		}
 
-		if (BurnDrvGetFlags() & BDF_GAME_WORKING)
-			fprintf(fDat, "\t\t<driver status=\"good\"/>\n");
-		else
-			fprintf(fDat, "\t\t<driver status=\"preliminary\"/>\n");
+		INT32 nGameWidth, nGameHeight, nGameAspectX, nGameAspectY;
+		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
+		BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
+		fprintf(fDat, "\t\t<video orientation=\"%s\" width=\"%d\" height=\"%d\" aspectx=\"%d\" aspecty=\"%d\"/>\n", (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL ? "vertical" : "horizontal"), nGameWidth, nGameHeight, nGameAspectX, nGameAspectY);
+		fprintf(fDat, "\t\t<driver status=\"%s\"/>\n", (BurnDrvGetFlags() & BDF_GAME_WORKING ? "good" : "preliminary"));
 
 		fprintf(fDat, "\t</game>\n");
 	}

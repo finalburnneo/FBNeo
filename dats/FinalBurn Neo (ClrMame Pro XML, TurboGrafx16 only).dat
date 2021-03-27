@@ -17,6 +17,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="aero blasters (usa).pce" size="524288" crc="b03e0b32"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="acrush">
@@ -24,6 +25,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="alien crush (usa).pce" size="262144" crc="ea488494"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ballistx">
@@ -31,6 +33,7 @@
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="ballistix (usa).pce" size="262144" crc="420fa189"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="batlroyl">
@@ -38,6 +41,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="battle royale (usa).pce" size="524288" crc="e70b01af"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="blazlazr">
@@ -45,6 +49,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="blazing lazers (usa).pce" size="393216" crc="b4a1b0f6"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="blodwolf">
@@ -52,6 +57,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bloody wolf (usa).pce" size="524288" crc="37baf6bc"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bombmn93">
@@ -59,6 +65,7 @@
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman '93 (usa).pce" size="524288" crc="56171c1c"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bombman">
@@ -66,6 +73,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bomberman (usa).pce" size="262144" crc="5f6f3c2a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bonk3">
@@ -73,6 +81,7 @@
 		<year>1993</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="bonk iii - bonk's big adventure (usa).pce" size="1048576" crc="5a3f76d8"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bonk">
@@ -80,6 +89,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bonk's adventure (usa).pce" size="393216" crc="599ead9b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bonk2">
@@ -87,6 +97,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bonk's revenge (usa).pce" size="524288" crc="14250f9a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="boxyboy">
@@ -94,6 +105,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="boxyboy (usa).pce" size="131072" crc="605be213"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bravoman">
@@ -101,6 +113,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bravoman (usa).pce" size="524288" crc="cca08b02"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="cadash">
@@ -108,6 +121,7 @@
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
 		<rom name="cadash (usa).pce" size="524288" crc="bb0b3aef"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="forevbox">
@@ -115,6 +129,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="champions forever boxing (usa).pce" size="524288" crc="15ee889a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="chewman">
@@ -122,6 +137,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="chew man fu (usa).pce" size="262144" crc="8cd13e9a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="chinawar">
@@ -129,6 +145,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="china warrior (usa).pce" size="262144" crc="a2ee361d"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="cratermz">
@@ -136,6 +153,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="cratermaze (usa).pce" size="262144" crc="9033e83a"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="cybrcore">
@@ -143,6 +161,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="cyber core (usa).pce" size="393216" crc="4cfb6e3e"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="darkwing">
@@ -150,6 +169,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="darkwing duck (usa).pce" size="524288" crc="4ac97606"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="daviscup">
@@ -157,6 +177,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="davis cup tennis (usa).pce" size="524288" crc="9edab596"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="deadmoon">
@@ -164,6 +185,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="dead moon (usa).pce" size="524288" crc="f5d98b0b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="deepblue">
@@ -171,6 +193,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="deep blue (usa).pce" size="262144" crc="16b40b44"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="devlcrsh">
@@ -178,6 +201,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="devil's crush - naxat pinball (usa).pce" size="393216" crc="157b4492"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ddungw">
@@ -185,6 +209,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="double dungeons - w (usa).pce" size="262144" crc="4a1a8c60"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dspirit">
@@ -192,6 +217,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dragon spirit (usa).pce" size="262144" crc="086f148c"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dragcrse">
@@ -199,6 +225,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dragon's curse (usa).pce" size="262144" crc="7d2c4b09"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dropoff">
@@ -206,6 +233,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="drop.off (usa).pce" size="262144" crc="fea27b32"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="dungexpl">
@@ -213,6 +241,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dungeon explorer (usa).pce" size="393216" crc="4ff01515"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="falcon">
@@ -220,6 +249,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="falcon (usa).pce" size="524288" crc="0bc0a12b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="fantzone">
@@ -227,6 +257,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="fantasy zone (usa).pce" size="262144" crc="e8c3573d"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="finallap">
@@ -234,6 +265,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="final lap twin (usa).pce" size="393216" crc="26408ea3"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="galaga90">
@@ -241,6 +273,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="galaga '90 (usa).pce" size="262144" crc="2909dec6"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ghostman">
@@ -248,6 +281,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="ghost manor (usa).pce" size="524288" crc="2db4c1fd"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
 	<game name="gunboat">
@@ -255,6 +289,7 @@
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="gunboat (usa).pce" size="524288" crc="f370b58e"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="hitice">
@@ -262,6 +297,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="hit the ice - vhl the official video hockey league (usa).pce" size="393216" crc="8b29c3aa"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="impossam">
@@ -269,6 +305,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="impossamole (usa).pce" size="524288" crc="e2470f5f"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jjnjeff">
@@ -276,6 +313,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="j.j. &amp; jeff (usa).pce" size="262144" crc="e01c5127"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nicklaus">
@@ -283,6 +321,7 @@
 		<year>1990</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="jack nicklaus' turbo golf (usa).pce" size="262144" crc="83384572"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jchan">
@@ -290,6 +329,7 @@
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="jackie chan's action kung fu (usa).pce" size="524288" crc="9d2f6193"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="keithcor">
@@ -297,6 +337,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="keith courage in alpha zones (usa).pce" size="262144" crc="474d7a72"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="kingcasn">
@@ -304,6 +345,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="king of casino (usa).pce" size="262144" crc="2f2e2240"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="klax">
@@ -311,6 +353,7 @@
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="klax (usa).pce" size="262144" crc="0f1b59b4"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="loht">
@@ -318,6 +361,7 @@
 		<year>1991</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="legend of hero tonma (usa).pce" size="524288" crc="3c131486"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="magchase">
@@ -325,6 +369,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="magical chase (usa).pce" size="524288" crc="95cd2979"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="miltrymd">
@@ -332,6 +377,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="military madness (usa).pce" size="393216" crc="93f316f7"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="motoroad">
@@ -339,6 +385,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="moto roader (usa).pce" size="262144" crc="e2b0d544"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="neutopi2">
@@ -346,6 +393,7 @@
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="neutopia ii (usa).pce" size="786432" crc="c4ed4307"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="neutopia">
@@ -353,6 +401,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="neutopia (usa).pce" size="393216" crc="a9a94e1b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="advislnd">
@@ -360,6 +409,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="new adventure island (usa).pce" size="524288" crc="756a1802"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nightcr">
@@ -367,6 +417,7 @@
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="night creatures (usa).pce" size="524288" crc="c159761b"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nspirit">
@@ -374,6 +425,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="ninja spirit (usa).pce" size="524288" crc="de8af1c1"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="griffon">
@@ -381,6 +433,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="order of the griffon (usa).pce" size="524288" crc="fae0fc60"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="ordyne">
@@ -388,6 +441,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="ordyne (usa).pce" size="524288" crc="e7bf2a74"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pacland">
@@ -395,6 +449,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="pac-land (usa).pce" size="262144" crc="d6e30ccd"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="panzakb">
@@ -402,6 +457,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="panza kick boxing (usa).pce" size="524288" crc="a980e0e9"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="parasol">
@@ -409,6 +465,7 @@
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
 		<rom name="parasol stars - the story of bubble bobble iii (usa).pce" size="393216" crc="e6458212"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pgolf">
@@ -416,6 +473,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="power golf (usa).pce" size="393216" crc="ed1d3843"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="psychos">
@@ -423,6 +481,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="psychosis (usa).pce" size="262144" crc="6cc10824"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="rtype">
@@ -430,6 +489,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="r-type (usa).pce" size="524288" crc="91ce5156"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="raiden">
@@ -437,6 +497,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="raiden (usa).pce" size="786432" crc="bc59c31e"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="samuraig">
@@ -444,6 +505,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="samurai-ghost (usa).pce" size="524288" crc="77a924b7"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="shockman">
@@ -451,6 +513,7 @@
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="shockman (usa).pce" size="524288" crc="2774462c"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sidearms">
@@ -458,6 +521,7 @@
 		<year>1989</year>
 		<manufacturer>Radiance Software</manufacturer>
 		<rom name="sidearms - hyper dyne (usa).pce" size="262144" crc="d1993c9f"/>
+		<video orientation="horizontal" width="512" height="242" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="silentd">
@@ -465,6 +529,7 @@
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="silent debuggers (usa).pce" size="524288" crc="fa7e5d66"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sinistrn">
@@ -472,6 +537,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="sinistron (usa).pce" size="393216" crc="4f6e2dbd"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="soldblad">
@@ -479,6 +545,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="soldier blade (usa).pce" size="524288" crc="4bb68b13"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
 	<game name="somerass">
@@ -486,6 +553,7 @@
 		<year>1992</year>
 		<manufacturer>Atlus</manufacturer>
 		<rom name="somer assault (usa).pce" size="524288" crc="8fcaf2e9"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="wbeach">
@@ -493,6 +561,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="sonic spike - world championship beach volleyball (usa).pce" size="262144" crc="f74e5eb3"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sharrier">
@@ -500,6 +569,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="space harrier (usa).pce" size="524288" crc="43b05eb8"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="splatth">
@@ -507,6 +577,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="splatterhouse (usa).pce" size="524288" crc="d00ca74f"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="sssoldr">
@@ -514,6 +585,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="super star soldier (usa).pce" size="524288" crc="db29486f"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="svolley">
@@ -521,6 +593,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="super volleyball (usa).pce" size="262144" crc="245040b3"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="chasehq">
@@ -528,6 +601,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="taito chase h.q. (usa).pce" size="393216" crc="9298254c"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="taknhoop">
@@ -535,6 +609,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="takin' it to the hoop (usa).pce" size="262144" crc="e9d51797"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="talespin">
@@ -542,6 +617,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="talespin (usa).pce" size="524288" crc="bae9cecc"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="legaxe2">
@@ -549,6 +625,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="legendary axe ii, the (usa).pce" size="262144" crc="220ebf91"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="legaxe">
@@ -556,6 +633,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="legendary axe, the (usa).pce" size="262144" crc="2d211007"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tigerrod">
@@ -563,6 +641,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tiger road (usa).pce" size="393216" crc="985d492d"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="timcrus">
@@ -570,6 +649,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="time cruise (usa).pce" size="524288" crc="02c39660"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="timeball">
@@ -577,6 +657,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="timeball (usa).pce" size="131072" crc="5d395019"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tricky">
@@ -584,6 +665,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tricky kick (usa).pce" size="262144" crc="48e6fd34"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="turrican">
@@ -591,6 +673,7 @@
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="turrican (usa).pce" size="262144" crc="eb045edf"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tvbasket">
@@ -598,6 +681,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports basketball (usa).pce" size="524288" crc="ea54d653"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tvfootbl">
@@ -605,6 +689,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports football (usa).pce" size="393216" crc="5e25b557"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tvhockey">
@@ -612,6 +697,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports hockey (usa).pce" size="393216" crc="97fe5bcf"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="veigues">
@@ -619,6 +705,7 @@
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="veigues - tactical gladiator (usa).pce" size="393216" crc="99d14fb7"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="victoryr">
@@ -626,6 +713,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="victory run (usa).pce" size="262144" crc="85cbd045"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="vigilant">
@@ -633,6 +721,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="vigilante (usa).pce" size="393216" crc="79d49a0d"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="wcbasebl">
@@ -640,6 +729,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="world class baseball (usa).pce" size="262144" crc="4186d0c0"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="wctennis">
@@ -647,6 +737,7 @@
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="world court tennis (usa).pce" size="262144" crc="a4457df0"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="wscomp">
@@ -654,6 +745,7 @@
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="world sports competition (usa).pce" size="524288" crc="4b93f0ac"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="yobro">
@@ -661,6 +753,7 @@
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="yo, bro (usa).pce" size="524288" crc="3ca7db48"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 </datafile>

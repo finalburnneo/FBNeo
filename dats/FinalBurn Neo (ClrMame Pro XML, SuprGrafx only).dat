@@ -17,6 +17,7 @@
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="1941 - counter attack (japan).pce" size="1048576" crc="8c4588e2"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="aldynes">
@@ -24,6 +25,7 @@
 		<year>1991</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="aldynes (japan).pce" size="1048576" crc="4c2126b0"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="battlace">
@@ -31,6 +33,7 @@
 		<year>1989</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="battle ace (japan).pce" size="524288" crc="3b13af61"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="daimakai1" cloneof="daimakai" romof="daimakai">
@@ -38,6 +41,7 @@
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
 		<rom name="daimakai mura (japan)[a].pce" size="1049088" crc="8e961f63"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="daimakaid" cloneof="daimakai" romof="daimakai">
@@ -45,6 +49,7 @@
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
 		<rom name="daimakai mura (japan)[debug].pce" size="1048576" crc="d6722c04"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="daimakai">
@@ -52,6 +57,7 @@
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
 		<rom name="daimakai mura (japan).pce" size="1048576" crc="b486a8ed"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="granzort">
@@ -59,6 +65,7 @@
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="madou ou granzort (japan).pce" size="524288" crc="1f041166"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="rtypeuh">
@@ -66,6 +73,7 @@
 		<year>2019</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="r-type (unfinished hack).sgx" size="524288" crc="cdc9bb74"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="rta2">
@@ -73,6 +81,7 @@
 		<year>2016</year>
 		<manufacturer>REVIVAL GAMES</manufacturer>
 		<rom name="rta2.sgx" size="164352" crc="4a4db3da"/>
+		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 </datafile>

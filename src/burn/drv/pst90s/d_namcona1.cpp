@@ -2065,7 +2065,7 @@ STD_ROM_FN(quiztou)
 
 static INT32 quiztou_keycus_read(INT32 offset)
 {
-	if (offset == 1) return 0x16d;
+	if (offset == 2) return 0x16d;
 	return guaranteed_rand();
 }
 

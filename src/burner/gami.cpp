@@ -947,7 +947,6 @@ static void GameInpInitMacros()
 				pgi->Macro.pVal[j] = bii.pVal;
 				pgi->Macro.nVal[j] = 1;
 			}
-
 			nMacroCount++;
 			pgi++;
 
@@ -958,11 +957,10 @@ static void GameInpInitMacros()
 
 				sprintf(pgi->Macro.szName, "P%i Buttons XYZ", nPlayer + 1);
 				for (INT32 j = 0; j < 3; j++) {
-					BurnDrvGetInputInfo(&bii, nPgmButtons[nPlayer][j]);
+					BurnDrvGetInputInfo(&bii, nPgmButtons[nPlayer][j+3]);
 					pgi->Macro.pVal[j] = bii.pVal;
 					pgi->Macro.nVal[j] = 1;
 				}
-
 				nMacroCount++;
 				pgi++;
 			}

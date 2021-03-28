@@ -2640,9 +2640,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					POST_INITIALISE_MESSAGE;
 					break;
 				case MENU_RGBEFFECTS:
-					nVidBlitterOpt[nVidSelect] &= ~0x00100000;
+					//nVidBlitterOpt[nVidSelect] &= ~0x00100000;
 					nVidBlitterOpt[nVidSelect] |= 0x00010000;
-					bVidScanlines = 0;
+					//bVidScanlines = 0;
 					ScrnSize();
 					VidInit();
 					if (bVidScanlines) {
@@ -2654,7 +2654,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					}
 					break;
 				case MENU_3DPROJECTION:
-					nVidBlitterOpt[nVidSelect] &= ~0x00010000;
+					//nVidBlitterOpt[nVidSelect] &= ~0x00010000;
 					nVidBlitterOpt[nVidSelect] |= 0x00100000;
 					POST_INITIALISE_MESSAGE;
 					break;
@@ -2763,6 +2763,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 						}
 						if (nVidBlitterOpt[nVidSelect] & 0x00010000) {
 							nVidBlitterOpt[nVidSelect] &= ~0x00010000;
+
 							ScrnSize();
 							VidInit();
 							VidRedraw();
@@ -3371,6 +3372,7 @@ int ScrnSize()
 	}
 
 	if ((bVidCorrectAspect || bVidFullStretch) && !(nVidSelect == 2 && (nVidBlitterOpt[2] & 0x0100) == 0)) {
+
 		int ww = w;
 		int hh = h;
 

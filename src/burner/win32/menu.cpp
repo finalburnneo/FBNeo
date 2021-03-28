@@ -687,15 +687,21 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_ENHANCED_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x04000000) ? MF_CHECKED : MF_UNCHECKED);
 			if (nVidBlitterOpt[nVidSelect] & 0x00100000) {
 				var = MENU_3DPROJECTION;
-			} else {
-				if (nVidBlitterOpt[nVidSelect] & 0x00010000) {
-					var = MENU_RGBEFFECTS;
-				} else {
-   					var = MENU_ENHANCED_NORMAL;
-				}
 			}
-			CheckMenuRadioItem(hMenu, MENU_ENHANCED_NORMAL, MENU_ENHANCED_NORMAL, var, MF_BYCOMMAND);
-			CheckMenuRadioItem(hMenu, MENU_RGBEFFECTS, MENU_3DPROJECTION, var, MF_BYCOMMAND);
+			
+			if (nVidBlitterOpt[nVidSelect] & 0x00010000) {
+				var = MENU_RGBEFFECTS;
+			}
+			else {
+				var = MENU_ENHANCED_NORMAL;
+			}
+
+		
+			//CheckMenuRadioItem(hMenu, MENU_ENHANCED_NORMAL, MENU_ENHANCED_NORMAL, var, MF_BYCOMMAND);
+			//CheckMenuRadioItem(hMenu, MENU_RGBEFFECTS, MENU_3DPROJECTION, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_ENHANCED_NORMAL, (!(nVidBlitterOpt[nVidSelect] & 0x00010000)) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_RGBEFFECTS, (nVidBlitterOpt[nVidSelect] & 0x00010000) ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_3DPROJECTION, (nVidBlitterOpt[nVidSelect] & 0x00100000) ? MF_CHECKED : MF_UNCHECKED);
 
 			CheckMenuItem(hMenu, MENU_EFFECT_AUTO, (nVidBlitterOpt[nVidSelect] & 0x00020000) ? MF_CHECKED : MF_UNCHECKED);
 			var = MENU_EFFECT_01 + (nVidBlitterOpt[nVidSelect] & 0x000000FF) - 8;

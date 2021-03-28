@@ -435,6 +435,7 @@ static inline void palette_update_entry(INT32 i)
 
 	DrvPalette[0x0000 + i] = BurnHighCol(r,g,b,0);
 	DrvPalette[0x2000 + i] = BurnHighCol(r/2,g/2,b/2,0); // shadow
+	DrvPalette[0x4000] = 0; // black
 }
 
 static void __fastcall namcona1_palette_write_word(UINT32 address, UINT16 data)
@@ -610,7 +611,7 @@ static INT32 MemIndex()
 	Drv68KROM		= Next; Next += 0xa00000;
 	DrvMCUROM		= Next; Next += 0x004000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x4000 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x4001 * sizeof(UINT32);
 
 	DrvNVRAM		= Next; Next += 0x000800;
 
@@ -1127,14 +1128,17 @@ static void DrvDrawBegin()
 	if (clip.nMiny < 32) clip.nMiny = 32;
 	if (clip.nMaxy > (nScreenHeight + 32)) clip.nMaxy = nScreenHeight + 32;
 
-	BurnTransferClear((DrvVRegs[0xba / 2] & 0xf) << 8);
+	if (namcona1_gametype == 2) { // xday2
+		BurnTransferClear((DrvVRegs[0xba / 2] & 0xf) << 8);
+	} else { // everyone else
+		BurnTransferClear(0x4000);
+	}
 
 	drawn = 0;
 }
 
 static void DrvDrawTo(INT32 lineto)
 {
-   // if (lineto < drawn) return;
 	clip.nMiny = DrvVRegs[0x84/2];
 	clip.nMaxy = DrvVRegs[0x86/2];
 	if (clip.nMiny < 32) clip.nMiny = 32;

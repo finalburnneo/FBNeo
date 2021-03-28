@@ -135,10 +135,12 @@ void nesapu_runclock(INT32 cycle)
 {
 	struct nesapu_info *info = &nesapu_chips[0];
 
-	dmc_buffer[cycle] = apu_dpcm(info, &info->APU.dpcm);
+	dmc_buffer[cycle] = dmc_buffer[cycle + 1] = apu_dpcm(info, &info->APU.dpcm);
+	// [cycle + 1] = get around a bug in the mixer, evident when pausing ninja gaiden 1 or 2.
+	// a proper fix would need to move the mixing into nesapuUpdate() (TBA). -dink
 
 	if (nes_ext_sound_cb && nes_ext_buffer) {
-		nes_ext_buffer[cycle] = nes_ext_sound_cb();
+		nes_ext_buffer[cycle] = nes_ext_buffer[cycle + 1] = nes_ext_sound_cb();
 	}
 
 	// Frame-IRQ: we only emulate the frame-irq mode which is used by a few

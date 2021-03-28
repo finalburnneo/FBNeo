@@ -453,7 +453,7 @@ bool VidSGetArcaderes(int* pWidth, int* pHeight)
 // - The window size
 int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanlines)
 {
-	int xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
+	float xm, ym;											// The multiple of nScrnWidth and nScrnHeight we can fit in
 	int nScrnWidth, nScrnHeight;
 	int nScrnAspectX, nScrnAspectY;
 
@@ -483,8 +483,10 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 		}
 	}
 
-	xm = nWidth / nGameWidth;
-	ym = nHeight / nGameHeight;
+	//xm = (nWidth / nGameWidth) + (nWidth / nGameWidth) * 0.166666667;
+	//ym = (nHeight / nGameHeight) + (nWidth / nGameWidth) * 0.166666667;
+	xm = (float)nWidth / nGameWidth;
+	ym = (float)nHeight / nGameHeight;
 
 	if (nVidFullscreen) {
 		nScrnWidth = nVidScrnWidth;
@@ -495,9 +497,9 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 	}
 
 	if (bVidCorrectAspect && bVidScanlines && ((ym >= 2 && xm) || (ym && xm >= 2 && bVertScanlines))) {	// Correct aspect ratio with scanlines
-		int nWidthScratch, nHeightScratch;
+		float nWidthScratch, nHeightScratch;
 		if (nGameWidth < nGameHeight && bVertScanlines) {
-			int xmScratch = xm;
+			float xmScratch = xm;
 			do {
 				nWidthScratch = nGameWidth * xmScratch;
 				nHeightScratch = (INT64)nWidthScratch * nScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nScrnAspectY * nGameAspectX);
@@ -514,7 +516,7 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 				nHeight = nHeightScratch;
 			}
 		} else {
-			int ymScratch = ym;
+			float ymScratch = ym;
 			do {
 				nHeightScratch = nGameHeight * ymScratch;
 				nWidthScratch = (INT64)nHeightScratch * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
@@ -533,7 +535,7 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 		}
 	} else {
 		if (bVidCorrectAspect) {					// Correct aspect ratio
-			int nWidthScratch;
+			float nWidthScratch;
 			nWidthScratch = (INT64)nHeight * nScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nScrnAspectX * nGameAspectY);
 			if (nWidthScratch > nWidth) {			// The image is too wide
 				if (nGameWidth < nGameHeight) {		// Vertical games

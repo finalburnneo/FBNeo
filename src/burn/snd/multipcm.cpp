@@ -326,9 +326,28 @@ static void WriteSlot(SLOT *slot,int reg,unsigned char data)
 			break;
 		case 1: //Sample
 			//according to YMF278 sample write causes some base params written to the regs (envelope+lfos)
-			//the game should never change the sample while playing.
+			//the game should never change the sample while playing.  "sure about that?" -dink
 			{
 				Sample_t *Sample=chip.Samples+slot->Regs[1];
+
+				slot->Sample=chip.Samples+slot->Regs[1];
+				slot->Base=slot->Sample->Start;
+				slot->offset=0;
+				slot->Prev=0;
+				slot->TL=slot->DstTL<<SHIFT;
+
+				EG_Calc(slot);
+				slot->EG.state=ATTACK;
+				slot->EG.volume=0;
+
+				if(slot->Base>=0x100000)
+				{
+					if(slot->Pan&8)
+						slot->Base=(slot->Base&0xfffff)|(chip.BankL);
+					else
+						slot->Base=(slot->Base&0xfffff)|(chip.BankR);
+				}
+
 				WriteSlot(slot,6,Sample->LFOVIB);
 				WriteSlot(slot,7,Sample->AM);
 			}
@@ -350,25 +369,7 @@ static void WriteSlot(SLOT *slot,int reg,unsigned char data)
 			{
 				if(data&0x80)       //KeyOn
 				{
-					slot->Sample=chip.Samples+slot->Regs[1];
 					slot->Playing=1;
-					slot->Base=slot->Sample->Start;
-					slot->offset=0;
-					slot->Prev=0;
-					slot->TL=slot->DstTL<<SHIFT;
-
-					EG_Calc(slot);
-					slot->EG.state=ATTACK;
-					slot->EG.volume=0;
-
-					if(slot->Base>=0x100000)
-					{
-						if(slot->Pan&8)
-							slot->Base=(slot->Base&0xfffff)|(chip.BankL);
-						else
-							slot->Base=(slot->Base&0xfffff)|(chip.BankR);
-					}
-
 				}
 				else
 				{
@@ -429,6 +430,7 @@ void MultiPCMWrite(INT32 offset, UINT8 data)
 		case 0:     //Data write
 			WriteSlot(chip.Slots+chip.CurSlot,chip.Address,data);
 			break;
+
 		case 1:
 			chip.CurSlot=val2chan[data&0x1f];
 			break;

@@ -689,10 +689,10 @@ static INT32 SekInitCPUM68K(INT32 nCount, INT32 nCPUType)
 			break;
 		case 0x68010:
 			m68k_set_cpu_type(M68K_CPU_TYPE_68010);
-			nSekCPUOffsetAddress[nCount] = 3;
 			break;
 		case 0x68EC020:
 			m68k_set_cpu_type(M68K_CPU_TYPE_68EC020);
+			nSekCPUOffsetAddress[nCount] = 3;
 			break;
 		default:
 			return 1;

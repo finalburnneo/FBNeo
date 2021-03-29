@@ -3669,6 +3669,7 @@ DRV		BurnDrvnes_doubledare;
 DRV		BurnDrvDdragonb;
 DRV		BurnDrvDdragnba;
 DRV		BurnDrvDdragob2;
+DRV		BurnDrvdoubledrbh;
 DRV		BurnDrvgg_ddragon;
 DRV		BurnDrvmd_ddragon;
 DRV		BurnDrvgg_ddragonp;
@@ -11845,8 +11846,8 @@ DRV		BurnDrvmd_sesame;
 DRV		BurnDrvMSX_sewersam;
 DRV		BurnDrvcv_sewersam;
 DRV		BurnDrvfds_sexyinvaders;
+DRV		BurnSpecSeymmovi;
 DRV		BurnSpecseymmovi;
-DRV		BurnSpecSeymouratthemovies;
 DRV		BurnSpecseytakon;
 DRV		BurnDrvmd_opensea;
 DRV		BurnDrvmd_opensea3;
@@ -15840,8 +15841,8 @@ DRV		BurnDrvvulgus;
 DRV		BurnDrvvulgusa;
 DRV		BurnDrvpce_wring;
 DRV		BurnDrvWacko;
-DRV		BurnSpecwackdart;
 DRV		BurnSpecWackydarts;
+DRV		BurnSpecwackdart_48;
 DRV		BurnSpecwackracestd;
 DRV		BurnSpecwackrace;
 DRV		BurnDrvnes_wackyraces;
@@ -18546,7 +18547,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_breakoutt,		// Break Out!
 	&BurnDrvBrkthru,			// Break Thru (US)
 	&BurnDrvMSX_breaker,		// Breaker Breaker (Euro)
-	&BurnDrvbreakrevbh,			// Breakers Revenge - Boss Hack (Bai-Hu)
+	&BurnDrvbreakrevbh,			// Breakers Revenge (Boss Hack)
 	&BurnDrvbrkrevext,			// Breakers Revenge - Extra Mode (Hack)
 	&BurnDrvbreakrev,			// Breakers Revenge
 	&BurnDrvbreakers,			// Breakers
@@ -20452,6 +20453,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDdragonb,			// Double Dragon (bootleg with HD6309)
 	&BurnDrvDdragnba,			// Double Dragon (bootleg with M6803)
 	&BurnDrvDdragob2,			// Double Dragon (bootleg)
+	&BurnDrvdoubledrbh,			// Double Dragon (Boss hack)
 	&BurnDrvgg_ddragon,			// Double Dragon (Euro, USA)
 	&BurnDrvmd_ddragon,			// Double Dragon (Euro, USA)
 	&BurnDrvgg_ddragonp,		// Double Dragon (Euro, USA, Prototype)
@@ -25019,7 +25021,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mgs,				// Metal Gear Solid (Rus)
 	&BurnDrvMetlhawkj,			// Metal Hawk (Japan, Rev F)
 	&BurnDrvMetlhawk,			// Metal Hawk (Rev C)
-	&BurnSpecMetalman,			// Metal Man (HB)
+	&BurnSpecMetalman,			// Metal Man (HB, russian)
 	&BurnDrvnes_metalmaxj,		// Metal Max (Japan)
 	&BurnDrvnes_metalmax,		// Metal Max (T-Eng)
 	&BurnDrvnes_metalmec,		// Metal Mech - Man & Machine (USA)
@@ -28628,8 +28630,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sewersam,		// Sewer Sam (Jpn)
 	&BurnDrvcv_sewersam,		// Sewer Sam
 	&BurnDrvfds_sexyinvaders,	// Sexy Invaders (Japan)
+	&BurnSpecSeymmovi,			// Seymour At The Movies (128K)
 	&BurnSpecseymmovi,			// Seymour at the Movies (48K)
-	&BurnSpecSeymouratthemovies,// Seymour at the Movies
 	&BurnSpecseytakon,			// Seymour Take One (48K)
 	&BurnDrvmd_opensea,			// Sezon Ohoty (Rus)
 	&BurnDrvmd_opensea3,		// Sezon Ohoty 3 (Rus)
@@ -32623,8 +32625,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvvulgusa,			// Vulgus (set 2)
 	&BurnDrvpce_wring,			// W-ring - The Double Rings
 	&BurnDrvWacko,				// Wacko
-	&BurnSpecwackdart,			// Wacky Darts (48K)
-	&BurnSpecWackydarts,		// Wacky Darts
+	&BurnSpecWackydarts,		// Wacky Darts (128K)
+	&BurnSpecwackdart_48,		// Wacky Darts (48K)
 	&BurnSpecwackracestd,		// Wacky Races (Standard)(128K)
 	&BurnSpecwackrace,			// Wacky Races (Trainer)(128K)
 	&BurnDrvnes_wackyraces,		// Wacky Races (USA)

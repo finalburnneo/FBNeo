@@ -5570,7 +5570,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="metalman" romof="spec128">
-		<description>Metal Man (HB) [Homebrew]</description>
+		<description>Metal Man (HB, russian) [Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>Oleg Origin</manufacturer>
 		<rom name="Metal Man (2014)(Oleg Origin).tap" size="48298" crc="ef74d54b"/>
@@ -6038,7 +6038,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="navymoves2" romof="spec128">
+	<game name="navymoves2" cloneof="navymoves1" romof="navymoves1">
 		<description>Navy Moves (Part 2 of 2) (128K)</description>
 		<year>1988</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -6671,7 +6671,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gameover22" romof="spec128">
+	<game name="gameover22" cloneof="gameover21" romof="gameover21">
 		<description>Phantis (Game Over II) (Part 2 of 2) (128K)</description>
 		<year>1987</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -7812,22 +7812,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="seymmovi" cloneof="seymouratthemovies" romof="seymouratthemovies">
-		<description>Seymour at the Movies (48K)</description>
+	<game name="seymmovi" romof="spec128">
+		<description>Seymour At The Movies (128K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Seymour At The Movies (1991)(Codemasters).z80" size="46023" crc="c91a5fa5"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Seymour At the Movies (1991)(Codemasters)(128K).z80" size="79527" crc="d1a72ae0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="seymouratthemovies" romof="spec128">
-		<description>Seymour at the Movies</description>
+	<game name="seymmovi_48" cloneof="seymmovi" romof="seymmovi">
+		<description>Seymour at the Movies (48K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Seymour at the Movies (1991)(Codemasters).z80" size="79527" crc="d1a72ae0"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Seymour At The Movies (1991)(Codemasters)(48K).z80" size="46023" crc="c91a5fa5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9783,22 +9783,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wackdart" cloneof="wackydarts" romof="wackydarts">
-		<description>Wacky Darts (48K)</description>
+	<game name="wackydarts" romof="spec128">
+		<description>Wacky Darts (128K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Wacky Darts (1991)(Codemasters).z80" size="44701" crc="6214a4ce"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="Wacky Darts (1991)(Codemasters)(128K).z80" size="58652" crc="6790db75"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wackydarts" romof="spec128">
-		<description>Wacky Darts</description>
+	<game name="wackdarts_48" cloneof="wackydarts" romof="wackydarts">
+		<description>Wacky Darts (48K)</description>
 		<year>1991</year>
 		<manufacturer>Codemasters</manufacturer>
-		<rom name="Wacky Darts (1991)(Codemasters).z80" size="58652" crc="6790db75"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="Wacky Darts (1991)(Codemasters)(48K).z80" size="44701" crc="6214a4ce"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

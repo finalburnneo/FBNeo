@@ -353,7 +353,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="afterthewar1" romof="spec128">
-		<description>After the War (Part 1 of 2) (128K)</description>
+		<description>After the War (Part 1 of 2) [Select keyboard to play - game inputs set on QAOP-M]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="After the War (1989)(Dinamic Software)(Part 1 of 2)(128k).z80" size="37812" crc="9550b0f4"/>
@@ -362,8 +362,8 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="afterthewar2" romof="spec128">
-		<description>After the War (Part 2 of 2) (128K)</description>
+	<game name="afterthewar2" cloneof="afterthewar1" romof="afterthewar1">
+		<description>After the War (Part 2 of 2) [Select keyboard to play - game inputs set on QAOP-M]</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="After the War (1989)(Dinamic Software)(Part 2 of 2)(128k).z80" size="37479" crc="8a306e01"/>
@@ -372,22 +372,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aburner" romof="spectrum">
-		<description>Afterburner (48K)</description>
-		<year>1988</year>
-		<manufacturer>Activision</manufacturer>
-		<rom name="Afterburner (1988)(Activision).z80" size="43825" crc="1d647b67"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="afterburner" romof="spec128">
-		<description>Afterburner</description>
+		<description>Afterburner (128K)</description>
 		<year>1989</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Afterburner (1989)(Activision).tap" size="102813" crc="b40696fb"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aburner" cloneof="afterburner" romof="afterburner">
+		<description>Afterburner (48K)</description>
+		<year>1988</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Afterburner (1988)(Activision).z80" size="43825" crc="1d647b67"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -735,7 +735,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="astmarcs2" romof="spec128">
+	<game name="astmarcs2" cloneof="astmarcs" romof="astmarcs">
 		<description>Astro Marine Corps (Spanish) (Part 2 of 2)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -986,20 +986,20 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barbply1" romof="spectrum">
-		<description>Barbarian: The Ultimate Warrior - 1 Player (48K)</description>
+	<game name="barbply2" romof="spectrum">
+		<description>Barbarian: The Ultimate Warrior Part 1 - 2 Players (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
-		<rom name="Barbarian - 1 Player (1987)(Palace Software).z80" size="42390" crc="5f06bc26"/>
+		<rom name="Barbarian - 2 Players (1987)(Palace Software).z80" size="41650" crc="a856967f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barbply2" romof="spectrum">
-		<description>Barbarian: The Ultimate Warrior - 2 Players (48K)</description>
+	<game name="barbply1" cloneof="barbply2" romof="barbply2">
+		<description>Barbarian: The Ultimate Warrior Part 2 - 1 Player (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
-		<rom name="Barbarian - 2 Players (1987)(Palace Software).z80" size="41650" crc="a856967f"/>
+		<rom name="Barbarian - 1 Player (1987)(Palace Software).z80" size="42390" crc="5f06bc26"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1424,7 +1424,7 @@
 	</game>
 	<game name="bonnieclyde" romof="spec128">
 		<description>Bonnie and Clyde (HB) [Homebrew]</description>
-		<year>1986</year>
+		<year>2020</year>
 		<manufacturer>Zosya</manufacturer>
 		<rom name="Bonnie and Clyde (1986)(Zosya).tap" size="47115" crc="f075ba62"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
@@ -1738,7 +1738,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="captrueno2" romof="spec128">
+	<game name="captrueno2" cloneof="captrueno1" romof="captrueno1">
 		<description>Capitan Trueno (Spanish) (Part 2 of 2) (128K)</description>
 		<year>1989</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -1838,7 +1838,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlevania" romof="spec128">
-		<description>Castlevania - Spectral Interlude (128K)</description>
+		<description>Castlevania - Spectral Interlude (128K)(HB) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
 		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team).tap" size="126394" crc="c100bb38"/>
@@ -1848,7 +1848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlevanrus" cloneof="castlevania" romof="castlevania">
-		<description>Castlevania - Spectral Interlude (Russian)(128K)</description>
+		<description>Castlevania - Spectral Interlude (128k)(HB, Russian) [Homebrew]</description>
 		<year>2015</year>
 		<manufacturer>Rewind Team</manufacturer>
 		<rom name="Castlevania - Spectral Interlude (2015)(Rewind Team)(Rus).tap" size="127054" crc="45561b70"/>
@@ -2232,7 +2232,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="corsarios1" romof="spec128">
-		<description>Corsarios (Part 1 of 2) (128K)</description>
+		<description>Corsarios (Part 1 of 2)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Corsarios (Part 1 of 2) (1989)(Opera Soft)(128k).z80" size="40366" crc="b7d7624e"/>
@@ -2241,8 +2241,8 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="corsarios2" romof="spec128">
-		<description>Corsarios (Part 2 of 2) (128K)</description>
+	<game name="corsarios2" cloneof="corsarios1" romof="corsarios1">
+		<description>Corsarios (Part 2 of 2)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
 		<rom name="Corsarios (Part 2 of 2) (1989)(Opera Soft)(128k).z80" size="40867" crc="ceb25c2a"/>
@@ -3651,7 +3651,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fredhard2_128" romof="spec128">
+	<game name="fredhard2_128" cloneof="fredhard_128" romof="fredhard_128">
 		<description>Freddy Hardest (Part 2 of 2) (128k)</description>
 		<year>1987</year>
 		<manufacturer>Imagine Software</manufacturer>
@@ -3827,7 +3827,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="generdigital" romof="spec128">
-		<description>Generacio Digital (HB) [Homebrew]</description>
+		<description>Generacio Digital (HB) [Homebrew, Select keyboard to play - game inputs set on QAOP-SPACE]</description>
 		<year>2019</year>
 		<manufacturer>Catalunya Radio</manufacturer>
 		<rom name="Generacio Digital (2019)(Catalunya Radio).tap" size="39117" crc="76ec9f7d"/>
@@ -4117,7 +4117,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hammerboy2" romof="spec128">
+	<game name="hammerboy2" cloneof="hammerboy1" romof="hammerboy1">
 		<description>Hammer Boy (Part 2 of 2) (128K)</description>
 		<year>1991</year>
 		<manufacturer>Dinamic Software</manufacturer>
@@ -5018,7 +5018,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kongsrevenge2" romof="spec128">
+	<game name="kongsrevenge2" cloneof="kongsrevenge1" romof="kongsrevenge1">
 		<description>Kong's Revenge (Part 2)</description>
 		<year>1991</year>
 		<manufacturer>Zigurat Software</manufacturer>
@@ -5213,7 +5213,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="livipres22" romof="spec128">
+	<game name="livipres22" cloneof="livipres21" romof="livipres21">
 		<description>Livingstone, I Presume II (Part 2 of 2) (128K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>

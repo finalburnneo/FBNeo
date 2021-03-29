@@ -313,8 +313,8 @@ DRV		BurnDrvpce_aburner2;
 DRV		BurnDrvAburner;
 DRV		BurnSpecafterthewar1;
 DRV		BurnSpecafterthewar2;
-DRV		BurnSpecaburner;
 DRV		BurnSpecAfterburner;
+DRV		BurnSpecaburner;
 DRV		BurnDrvMSX_afteroids;
 DRV		BurnSpecafteroids;
 DRV		BurnDrvAoh;
@@ -1092,8 +1092,8 @@ DRV		BurnDrvmd_barbarianc64;
 DRV		BurnDrvmd_barbarianzxs;
 DRV		BurnSpecbarbarn2;
 DRV		BurnDrvMSX_barb2;
-DRV		BurnSpecbarbply1;
 DRV		BurnSpecbarbply2;
+DRV		BurnSpecbarbply1;
 DRV		BurnDrvgg_barbie;
 DRV		BurnDrvmd_barbiesm;
 DRV		BurnDrvmd_barbvac;
@@ -8189,6 +8189,7 @@ DRV		BurnSpecMegaphoenix;
 DRV		BurnDrvmd_megatrax;
 DRV		BurnDrvsms_megumi;
 DRV		BurnDrvMeijinsn;
+DRV		BurnDrvMeijinsna;
 DRV		BurnDrvKikcubic;
 DRV		BurnDrvMeikyuh;
 DRV		BurnDrvMeikyuha;
@@ -10814,9 +10815,10 @@ DRV		BurnDrvsms_rcgpp;
 DRV		BurnDrvgg_rcgp;
 DRV		BurnDrvnes_rcproam;
 DRV		BurnDrvnes_rcproamii;
+DRV		BurnDrvRabbita;
 DRV		BurnDrvRabbit;
-DRV		BurnDrvRabbitj;
 DRV		BurnDrvRabbitjt;
+DRV		BurnDrvRabbitj;
 DRV		BurnSpecRabbitinn;
 DRV		BurnDrvRpunch;
 DRV		BurnDrvRabiolep;
@@ -11573,6 +11575,7 @@ DRV		BurnDrvsamsho5x;
 DRV		BurnDrvsamsho5h;
 DRV		BurnDrvsamsho5;
 DRV		BurnDrvsamsho5a;
+DRV		BurnDrvsamsh5pf;
 DRV		BurnDrvsamsh5spho;
 DRV		BurnDrvsamsh5sph;
 DRV		BurnDrvsamsh5fe;
@@ -17091,10 +17094,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAburner2,			// After Burner II
 	&BurnDrvpce_aburner2,		// After Burner II
 	&BurnDrvAburner,			// After Burner
-	&BurnSpecafterthewar1,		// After the War (Part 1 of 2) (128K)
-	&BurnSpecafterthewar2,		// After the War (Part 2 of 2) (128K)
+	&BurnSpecafterthewar1,		// After the War (Part 1 of 2)
+	&BurnSpecafterthewar2,		// After the War (Part 2 of 2)
+	&BurnSpecAfterburner,		// Afterburner (128K)
 	&BurnSpecaburner,			// Afterburner (48K)
-	&BurnSpecAfterburner,		// Afterburner
 	&BurnDrvMSX_afteroids,		// Afteroids (Spa)
 	&BurnSpecafteroids,			// Afteroids (Spanish)
 	&BurnDrvAoh,				// Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)
@@ -17872,8 +17875,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_barbarianzxs,	// Barbarian - ZX Spectrum (HB)
 	&BurnSpecbarbarn2,			// Barbarian II - The Dungeon of Drax (128K)
 	&BurnDrvMSX_barb2,			// Barbarian II - The Dungeon of Drax (Spa)
-	&BurnSpecbarbply1,			// Barbarian: The Ultimate Warrior - 1 Player (48K)
-	&BurnSpecbarbply2,			// Barbarian: The Ultimate Warrior - 2 Players (48K)
+	&BurnSpecbarbply2,			// Barbarian: The Ultimate Warrior Part 1 - 2 Players (48K)
+	&BurnSpecbarbply1,			// Barbarian: The Ultimate Warrior Part 2 - 1 Player (48K)
 	&BurnDrvgg_barbie,			// Barbie Super Model (Prototype)
 	&BurnDrvmd_barbiesm,		// Barbie Super Model (USA)
 	&BurnDrvmd_barbvac,			// Barbie Vacation Adventure (USA, Prototype)
@@ -18963,8 +18966,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_cvaniaec,		// Castlevania - Bloodlines (Hack, Enhanced Colors)
 	&BurnDrvmd_cvanias,			// Castlevania - Bloodlines (Hack, Spanish)
 	&BurnDrvmd_cvaniau,			// Castlevania - Bloodlines (USA)
-	&BurnSpeccastlevania,		// Castlevania - Spectral Interlude (128K)
-	&BurnSpeccastlevanrus,		// Castlevania - Spectral Interlude (Russian)(128K)
+	&BurnSpeccastlevania,		// Castlevania - Spectral Interlude (128K)(HB)
+	&BurnSpeccastlevanrus,		// Castlevania - Spectral Interlude (128k)(HB, Russian)
 	&BurnDrvmd_cvania,			// Castlevania - The New Generation (Euro)
 	&BurnDrvmd_cvaniap,			// Castlevania - The New Generation (Euro, Prototype)
 	&BurnDrvnes_castliih,		// Castlevania II - Simon's Quest (Hack, ReTrans+Map)
@@ -19553,8 +19556,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCoreycb,			// Corey Coolbrew (HB)
 	&BurnDrvmd_corporat,		// Corporation (Euro)
 	&BurnDrvnes_correbenny,		// Corre Benny (Spain)
-	&BurnSpeccorsarios1,		// Corsarios (Part 1 of 2) (128K)
-	&BurnSpeccorsarios2,		// Corsarios (Part 2 of 2) (128K)
+	&BurnSpeccorsarios1,		// Corsarios (Part 1 of 2)
+	&BurnSpeccorsarios2,		// Corsarios (Part 2 of 2)
 	&BurnDrvMSX_corsarios,		// Corsarios (Spa)
 	&BurnDrvpce_coryoon1,		// Coryoon - Child of Dragon (Alt)
 	&BurnDrvpce_coryoon,		// Coryoon - Child of Dragon
@@ -24968,7 +24971,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMegaphoenix,		// Megaphoenix
 	&BurnDrvmd_megatrax,		// MegaTrax (Jpn)
 	&BurnDrvsms_megumi,			// Megumi Rescue (Jpn)
-	&BurnDrvMeijinsn,			// Meijinsen
+	&BurnDrvMeijinsn,			// Meijinsen (set 1)
+	&BurnDrvMeijinsna,			// Meijinsen (set 2)
 	&BurnDrvKikcubic,			// Meikyu Jima (Japan)
 	&BurnDrvMeikyuh,			// Meikyuu Hunter G (Japan, set 1)
 	&BurnDrvMeikyuha,			// Meikyuu Hunter G (Japan, set 2)
@@ -27594,9 +27598,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_rcgp,			// R.C. Grand Prix (USA, SMS Mode)
 	&BurnDrvnes_rcproam,		// R.C. Pro-Am (USA) (Rev A)
 	&BurnDrvnes_rcproamii,		// R.C. Pro-Am II (USA)
+	&BurnDrvRabbita,			// Rabbit (Asia 1/28?)
 	&BurnDrvRabbit,				// Rabbit (Asia 3/6)
+	&BurnDrvRabbitjt,			// Rabbit (Japan 1/28, location test)
 	&BurnDrvRabbitj,			// Rabbit (Japan 3/6?)
-	&BurnDrvRabbitjt,			// Rabbit (Japan, location test)
 	&BurnSpecRabbitinn,			// Rabbit in Nightmareland (HB)
 	&BurnDrvRpunch,				// Rabbit Punch (US)
 	&BurnDrvRabiolep,			// Rabio Lepus (Japan)
@@ -28353,6 +28358,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsamsho5h,			// Samurai Shodown V / Samurai Spirits Zero (NGH-2700)
 	&BurnDrvsamsho5,			// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)
 	&BurnDrvsamsho5a,			// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)
+	&BurnDrvsamsh5pf,			// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)
 	&BurnDrvsamsh5spho,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (1st release, censored)
 	&BurnDrvsamsh5sph,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (2nd release, less censored)
 	&BurnDrvsamsh5fe,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)

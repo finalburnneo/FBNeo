@@ -8842,40 +8842,40 @@ struct BurnDriver BurnSpecseadragon = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Seymour at the Movies (48K)
+// Seymour At The Movies (48K)
 
-static struct BurnRomInfo SpecseymmoviRomDesc[] = {
-	{ "Seymour At The Movies (1991)(Codemasters).z80", 0x0b3c7, 0xc91a5fa5, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Specseymmovi_48RomDesc[] = {
+	{ "Seymour At The Movies (1991)(Codemasters)(48K).z80", 0x0b3c7, 0xc91a5fa5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specseymmovi, Specseymmovi, Spectrum)
-STD_ROM_FN(Specseymmovi)
+STDROMPICKEXT(Specseymmovi_48, Specseymmovi_48, Spectrum)
+STD_ROM_FN(Specseymmovi_48)
 
 struct BurnDriver BurnSpecseymmovi = {
-	"spec_seymmovi", "spec_seymouratthemovies", "spec_spectrum", NULL, "1991",
+	"spec_seymmovi_48", "spec_seymmovi", "spec_spectrum", NULL, "1991",
 	"Seymour at the Movies (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecseymmoviRomInfo, SpecseymmoviRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, Specseymmovi_48RomInfo, Specseymmovi_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Seymour at the Movies
+// Seymour At The Movies (128K)
 
-static struct BurnRomInfo SpecSeymouratthemoviesRomDesc[] = {
-	{ "Seymour at the Movies (1991)(Codemasters).z80", 79527, 0xd1a72ae0, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecSeymmoviRomDesc[] = {
+	{ "Seymour At the Movies (1991)(Codemasters)(128K).z80", 79527, 0xd1a72ae0, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSeymouratthemovies, SpecSeymouratthemovies, Spec128)
-STD_ROM_FN(SpecSeymouratthemovies)
+STDROMPICKEXT(SpecSeymmovi, SpecSeymmovi, Spec128)
+STD_ROM_FN(SpecSeymmovi)
 
-struct BurnDriver BurnSpecSeymouratthemovies = {
-	"spec_seymouratthemovies", NULL, "spec_spec128", NULL, "1991",
-	"Seymour at the Movies\0", NULL, "Codemasters", "ZX Spectrum",
+struct BurnDriver BurnSpecSeymmovi = {
+	"spec_seymmovi", NULL, "spec_spec128", NULL, "1991",
+	"Seymour At The Movies (128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecSeymouratthemoviesRomInfo, SpecSeymouratthemoviesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecSeymmoviRomInfo, SpecSeymmoviRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -10250,19 +10250,19 @@ struct BurnDriver BurnSpecvindicat = {
 
 // Wacky Darts (48K)
 
-static struct BurnRomInfo SpecwackdartRomDesc[] = {
-	{ "Wacky Darts (1991)(Codemasters).z80", 0x0ae9d, 0x6214a4ce, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Specwackdarts_48RomDesc[] = {
+	{ "Wacky Darts (1991)(Codemasters)(48K).z80", 0x0ae9d, 0x6214a4ce, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specwackdart, Specwackdart, Spectrum)
-STD_ROM_FN(Specwackdart)
+STDROMPICKEXT(Specwackdarts_48, Specwackdarts_48, Spectrum)
+STD_ROM_FN(Specwackdarts_48)
 
-struct BurnDriver BurnSpecwackdart = {
-	"spec_wackdart", "spec_wackydarts", "spec_spectrum", NULL, "1991",
+struct BurnDriver BurnSpecwackdart_48 = {
+	"spec_wackdarts_48", "spec_wackydarts", "spec_spectrum", NULL, "1991",
 	"Wacky Darts (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecwackdartRomInfo, SpecwackdartRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpectrumGetZipName, Specwackdarts_48RomInfo, Specwackdarts_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -17449,10 +17449,10 @@ struct BurnDriver BurnSpecVixen3 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Wacky Darts
+// Wacky Darts (128K)
 
 static struct BurnRomInfo SpecWackydartsRomDesc[] = {
-	{ "Wacky Darts (1991)(Codemasters).z80", 58652, 0x6790db75, BRF_ESS | BRF_PRG },
+	{ "Wacky Darts (1991)(Codemasters)(128K).z80", 58652, 0x6790db75, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecWackydarts, SpecWackydarts, Spec128)
@@ -17460,7 +17460,7 @@ STD_ROM_FN(SpecWackydarts)
 
 struct BurnDriver BurnSpecWackydarts = {
 	"spec_wackydarts", NULL, "spec_spec128", NULL, "1991",
-	"Wacky Darts\0", NULL, "Codemasters", "ZX Spectrum",
+	"Wacky Darts (128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecWackydartsRomInfo, SpecWackydartsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

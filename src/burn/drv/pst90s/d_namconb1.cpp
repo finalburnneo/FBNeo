@@ -1419,7 +1419,6 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 
 	if (!max_x && !max_y) return; //nothing to draw (zdrawgfxzoom draws a 1x1 pixel at 0,0 if max_x and max_y are 0)
 
-	INT32 shadow_offset = (1)?0x2000:0;
 	const UINT8 *source_base = gfx + (code * tile_size * tile_size);
 	INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
 	INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;
@@ -1491,14 +1490,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 				INT32 c = source[x_index>>16];
 				if (c != 0xff)
 				{
-					if (color == 0xf00 && c==0xfe)
-					{
-						dest[x] |= shadow_offset;
-					}
-					else
-					{
-						dest[x] = c | color;
-					}
+					dest[x] = c | color;
 
 					pri2[x] = priority;
 				}
@@ -1680,7 +1672,13 @@ static void c355_draw_sprite_line(INT32 line, INT32 priority)
 		if (x < min_x || x > max_x) continue;
 
 		if (pri[x] == priority && src[x] != 0xffff) {
-			dest[x] = src[x];
+			if ((src[x] & 0xff) != 0xff) {
+				if (src[x] == 0xffe) {
+					dest[x] |= 0x2000; // apply shadow palette
+				} else {
+					dest[x] = src[x];
+				}
+			}
 		}
 	}
 }

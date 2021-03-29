@@ -14417,21 +14417,21 @@ static struct BurnRomInfo samsh5feRomDesc[] = {
 	{ "272-p1.bin",  0x400000, 0x9e72cc83, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "272-p2.bin",  0x400000, 0x1f5469bc, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "272-s1.bin",  0x020000, 0xc297f973, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "272-s1.bin",  0x020000, 0xc297f973, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "272-c1d.bin", 0x800000, 0xec9fda8d, 3 | BRF_GRA },           //  2 Sprite data
-	{ "272-c2d.bin", 0x800000, 0xd2fc888d, 3 | BRF_GRA },           //  3
-	{ "272-c3d.bin", 0x800000, 0xb0ea781b, 3 | BRF_GRA },           //  4
-	{ "272-c4d.bin", 0x800000, 0xd34ac591, 3 | BRF_GRA },           //  5
-	{ "272-c5d.bin", 0x800000, 0x1b5c1ea2, 3 | BRF_GRA },           //  6
-	{ "272-c6d.bin", 0x800000, 0xdeeaad58, 3 | BRF_GRA },           //  7
-	{ "272-c7d.bin", 0x800000, 0xdce0119f, 3 | BRF_GRA },           //  8
-	{ "272-c8d.bin", 0x800000, 0x3bf256c5, 3 | BRF_GRA },           //  9
+	{ "272-c1d.bin", 0x800000, 0xec9fda8d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "272-c2d.bin", 0x800000, 0xd2fc888d, 3 | BRF_GRA },           //  4
+	{ "272-c3d.bin", 0x800000, 0xb0ea781b, 3 | BRF_GRA },           //  5
+	{ "272-c4d.bin", 0x800000, 0xd34ac591, 3 | BRF_GRA },           //  6
+	{ "272-c5d.bin", 0x800000, 0x1b5c1ea2, 3 | BRF_GRA },           //  7
+	{ "272-c6d.bin", 0x800000, 0xdeeaad58, 3 | BRF_GRA },           //  8
+	{ "272-c7d.bin", 0x800000, 0xdce0119f, 3 | BRF_GRA },           //  9
+	{ "272-c8d.bin", 0x800000, 0x3bf256c5, 3 | BRF_GRA },           // 10
 
-	{ "272-m1d.bin", 0x080000, 0x203d744e, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "272-m1d.bin", 0x080000, 0x203d744e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "272-v1d.bin", 0x800000, 0x3bf61586, 5 | BRF_SND },           // 11 Sound data
-	{ "272-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 12
+	{ "272-v1d.bin", 0x800000, 0x3bf61586, 5 | BRF_SND },           // 12 Sound data
+	{ "272-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(samsh5fe, samsh5fe, neogeo)
@@ -15530,6 +15530,42 @@ struct BurnDriver BurnDrvsamsho5x = {
 	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (hack of XBOX version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho5xRomInfo, samsho5xRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)
+
+static struct BurnRomInfo samsh5pfRomDesc[] = {
+	{ "273-p1.bin",  0x800000, 0xe3d18d3a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
+	{ "273-s1.bin",  0x020000, 0xabb3baf9, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "273-c1d.bin", 0x800000, 0xec9fda8d, 3 | BRF_GRA },           //  2 Sprite data
+	{ "273-c2d.bin", 0x800000, 0xd2fc888d, 3 | BRF_GRA },           //  3
+	{ "273-c3d.bin", 0x800000, 0xb0ea781b, 3 | BRF_GRA },           //  4
+	{ "273-c4d.bin", 0x800000, 0xd34ac591, 3 | BRF_GRA },           //  5
+	{ "273-c5d.bin", 0x800000, 0x1b5c1ea2, 3 | BRF_GRA },           //  6
+	{ "273-c6d.bin", 0x800000, 0xdeeaad58, 3 | BRF_GRA },           //  7
+	{ "273-c7d.bin", 0x800000, 0xaf90afc8, 3 | BRF_GRA },           //  8
+	{ "273-c8d.bin", 0x800000, 0xb14872da, 3 | BRF_GRA },           //  9
+
+	{ "273-m1.bin",  0x020000, 0x654e9236, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "273-v1d.bin", 0x800000, 0x3bf61586, 5 | BRF_SND },           // 11 Sound data
+	{ "273-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(samsh5pf, samsh5pf, neogeo)
+STD_ROM_FN(samsh5pf)
+
+struct BurnDriver BurnDrvsamsh5pf = {
+	"samsh5pf", "samsh5sp", "neogeo", NULL, "2020",
+	"Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)\0", NULL, "bootleg", "Neo Geo MVS",
+	L"Samurai Shodown V Perfect\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Perfect (bootleg, hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsh5pfRomInfo, samsh5pfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

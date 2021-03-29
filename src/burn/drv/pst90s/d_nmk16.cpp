@@ -7757,24 +7757,24 @@ struct BurnDriver BurnDrvBubl2000a = {
 /* Korean release - Nude images of women for backgrounds */
 
 static struct BurnRomInfo hotbublRomDesc[] = {
-	{ "c2.uc9",			0x040000, 0x7917b95d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "c1.uc1",			0x040000, 0x7bb240e9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "afega9.c2.uc9",		0x020000, 0x4537c6d9, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega8.c1.uc1",		0x020000, 0xd1e72a31, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "s1.uc14",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "afega8.s1.uc14",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "t1.uc2",			0x010000, 0xce683a93, 3 | BRF_GRA },           //  3 Characters
+	{ "afega9.t1.uc2",		0x010000, 0xce683a93, 3 | BRF_GRA },           //  3 Characters
 
-	{ "cr5.uc15",		0x080000, 0x65bd5159, 4 | BRF_GRA },           //  4 Tiles
-	{ "cr7.uc19",		0x080000, 0xa89d9ce4, 4 | BRF_GRA },           //  5
-	{ "cr6.uc16",		0x080000, 0x99d6523c, 4 | BRF_GRA },           //  6
-	{ "cr1.uc6",		0x080000, 0xfc9101d2, 4 | BRF_GRA },           //  7
-	{ "cr3.uc12",		0x080000, 0xc841a4f6, 4 | BRF_GRA },           //  8
-	{ "cr2.uc7",		0x080000, 0x27ad6fc8, 4 | BRF_GRA },           //  9
+	{ "afega10.cr5.uc15",	0x080000, 0x65bd5159, 4 | BRF_GRA },           //  4 Tiles
+	{ "afega10.cr7.uc19",	0x080000, 0xa89d9ce4, 4 | BRF_GRA },           //  5
+	{ "afega9.cr6.uc16",	0x080000, 0x99d6523c, 4 | BRF_GRA },           //  6
+	{ "afega9.cr1.uc6",		0x080000, 0xfc9101d2, 4 | BRF_GRA },           //  7
+	{ "afega9.cr3.uc12",	0x080000, 0xc841a4f6, 4 | BRF_GRA },           //  8
+	{ "afega9.cr2.uc7",		0x080000, 0x27ad6fc8, 4 | BRF_GRA },           //  9
 
-	{ "br1.uc3",		0x080000, 0x6fc18de4, 5 | BRF_GRA },           // 10 Sprites
-	{ "br3.uc10",		0x080000, 0xbb677240, 5 | BRF_GRA },           // 11
+	{ "afega10.br1.uc3",	0x040000, 0x7e132eff, 5 | BRF_GRA },           // 10 Sprites
+	{ "afega8.br3.uc10",	0x040000, 0x22707728, 5 | BRF_GRA },           // 11
 
-	{ "s2.uc18",		0x040000, 0x401c980f, 6 | BRF_SND },           // 12 OKI1 Samples
+	{ "afega8.s2.uc18",		0x040000, 0x401c980f, 6 | BRF_SND },           // 12 OKI1 Samples
 };
 
 STD_ROM_PICK(hotbubl)

@@ -101,28 +101,28 @@ static struct BurnInputInfo Namcona1InputList[] = {
 STDINPUTINFO(Namcona1)
 
 static struct BurnInputInfo Namcona1_quizInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 4"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 3"	},
 	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 4"	},
 
-	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 1,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p3 start"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 fire 3"	},
 	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 fire 4"	},
 
-	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 0,	"p4 coin"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 start"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 fire 2"	},

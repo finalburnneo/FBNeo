@@ -13419,41 +13419,6 @@ struct BurnDriver BurnDrvbreakrev = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Breakers Revenge Boss Hack by Yumeji, Enable Bai-Hu, with portrait.
-/* MVS ONLY RELEASE */
-
-static struct BurnRomInfo breakrevbhRomDesc[] = {
-	{ "245-p1bh.p1",  0x200000, 0x52c978b5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-
-	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
-
-	/* The chip labels and sizes are correct */
-	{ "245-c1.c1",    0x400000, 0x68d4ae76, 3 | BRF_GRA },           //  2 Sprite data
-	{ "245-c2.c2",    0x400000, 0xfdee05cd, 3 | BRF_GRA },           //  3
-	{ "245-c3.c3",    0x400000, 0x645077f3, 3 | BRF_GRA },           //  4
-	{ "245-c4.c4",    0x400000, 0x63aeb74c, 3 | BRF_GRA },           //  5
-	{ "245-c5.c5",    0x400000, 0xb5f40e7f, 3 | BRF_GRA },           //  6
-	{ "245-c6.c6",    0x400000, 0xd0337328, 3 | BRF_GRA },           //  7
-
-	{ "245-m1.m1",    0x020000, 0x00f31c66, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
-
-	{ "245-v1.v1",    0x400000, 0xe255446c, 5 | BRF_SND },           //  9 Sound data
-	{ "245-v2.v2",    0x400000, 0x9068198a, 5 | BRF_SND },           // 10
-};
-
-STDROMPICKEXT(breakrevbh, breakrevbh, neogeo)
-STD_ROM_FN(breakrevbh)
-
-struct BurnDriver BurnDrvbreakrevbh = {
-	"breakrevbh", "breakrev", "neogeo", NULL, "1998",
-	"Breakers Revenge - Boss Hack (Bai-Hu)\0", NULL, "hack", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
-	NULL, breakrevbhRomInfo, breakrevbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	320, 224, 4, 3
-};
-
 // Battle Flip Shot
 /* MVS ONLY RELEASE */
 
@@ -14564,6 +14529,41 @@ struct BurnDriver BurnDrvwh2ja = {
 // -----------------------------------------------------------------------------
 // Bootlegs, hacks & decrypted sets
 
+// Breakers Revenge (Boss Hack)
+// Enable Bai-Hu, with portrait - Hack by yumeji1768 [2ch]
+
+static struct BurnRomInfo breakrevbhRomDesc[] = {
+	{ "245-p1bh.p1",  0x200000, 0x52c978b5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "245-s1.s1",    0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	/* The chip labels and sizes are correct */
+	{ "245-c1.c1",    0x400000, 0x68d4ae76, 3 | BRF_GRA },           //  2 Sprite data
+	{ "245-c2.c2",    0x400000, 0xfdee05cd, 3 | BRF_GRA },           //  3
+	{ "245-c3.c3",    0x400000, 0x645077f3, 3 | BRF_GRA },           //  4
+	{ "245-c4.c4",    0x400000, 0x63aeb74c, 3 | BRF_GRA },           //  5
+	{ "245-c5.c5",    0x400000, 0xb5f40e7f, 3 | BRF_GRA },           //  6
+	{ "245-c6.c6",    0x400000, 0xd0337328, 3 | BRF_GRA },           //  7
+
+	{ "245-m1.m1",    0x020000, 0x00f31c66, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "245-v1.v1",    0x400000, 0xe255446c, 5 | BRF_SND },           //  9 Sound data
+	{ "245-v2.v2",    0x400000, 0x9068198a, 5 | BRF_SND },           // 10
+};
+
+STDROMPICKEXT(breakrevbh, breakrevbh, neogeo)
+STD_ROM_FN(breakrevbh)
+
+struct BurnDriver BurnDrvbreakrevbh = {
+	"breakrevbh", "breakrev", "neogeo", NULL, "1998",
+	"Breakers Revenge (Boss Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, breakrevbhRomInfo, breakrevbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 // Crossed Swords 2 (bootleg CD to cartridge conversion)
 
 static struct BurnRomInfo crswd2blRomDesc[] = {
@@ -14673,6 +14673,42 @@ struct BurnDriver BurnDrvcthd2k3a = {
 	NULL, cthd2k3aRomInfo, cthd2k3aRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	cthd2k3aInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// Double Dragon (Boss hack)
+// Enable 2 bosses: Duke & Shuko - hack by yumeji1768
+
+static struct BurnRomInfo doubledrbhRomDesc[] = {
+	{ "082-p1bh.p1",  0x200000, 0x92826c06, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
+
+	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "082-c5.c5",    0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "082-c6.c6",    0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9 					/ TC538200
+
+	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
+
+	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12 					/ TC5316200
+};
+
+STDROMPICKEXT(doubledrbh, doubledrbh, neogeo)
+STD_ROM_FN(doubledrbh)
+
+struct BurnDriver BurnDrvdoubledrbh = {
+	"doubledrbh", "doubledr", "neogeo", NULL, "1995",
+	"Double Dragon (Boss hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, doubledrbhRomInfo, doubledrbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
 };
 
 // Double Dragon (Special 2017, hack)

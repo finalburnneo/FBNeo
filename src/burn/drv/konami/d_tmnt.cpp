@@ -6975,7 +6975,7 @@ struct BurnDriver BurnDrvTmnt2 = {
 	"tmnt2", NULL, NULL, NULL, "1991",
 	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UAA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmnt2RomInfo, tmnt2RomName, NULL, NULL, NULL, NULL, Ssriders4pInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
@@ -6985,7 +6985,7 @@ struct BurnDriver BurnDrvTmnt22pu = {
 	"tmnt22pu", "tmnt2", NULL, NULL, "1991",
 	"Teenage Mutant Ninja Turtles - Turtles in Time (2 Players ver. UDA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmnt22puRomInfo, tmnt22puRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
@@ -6995,7 +6995,7 @@ struct BurnDriver BurnDrvTmnt24pu = {
 	"tmnt24pu", "tmnt2", NULL, NULL, "1991",
 	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. UEA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmnt24puRomInfo, tmnt24puRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
@@ -7005,7 +7005,7 @@ struct BurnDriver BurnDrvTmht22pe = {
 	"tmht22pe", "tmnt2", NULL, NULL, "1991",
 	"Teenage Mutant Hero Turtles - Turtles in Time (2 Players ver. EBA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmht22peRomInfo, tmht22peRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
@@ -7015,7 +7015,7 @@ struct BurnDriver BurnDrvTmht24pe = {
 	"tmht24pe", "tmnt2", NULL, NULL, "1991",
 	"Teenage Mutant Hero Turtles - Turtles in Time (4 Players ver. EAA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmht24peRomInfo, tmht24peRomName, NULL, NULL, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
@@ -7025,7 +7025,7 @@ struct BurnDriver BurnDrvTmnt2a = {
 	"tmnt2a", "tmnt2", NULL, NULL, "1991",
 	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver. ADA)\0", NULL, "Konami", "GX063",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmnt2aRomInfo, tmnt2aRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3

@@ -262,7 +262,7 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 				// MAME filenames are always lowercase so be case insensitive
 				if ((zn>=0x41) && (zn<=0x5a)) zn+=0x20;
 
-				if (sn != zn) break;
+				if (sn != zn && tolower(sn) != zn) break;
 			}
 			if (j==search_filename_length) namematch = true;
 		}

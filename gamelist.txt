@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16531 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16539 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -187,6 +187,7 @@ This list contains all games supported by FinalBurn Neo.
 | aceattac	|  	| Ace Attacker (FD1094 317-0059)			| 		| 1988	| Sega		| System 16B	| 					|
 | aceattaca	|  	| Ace Attacker (Japan, System 16A, FD1094 317-0060)	| aceattac	| 1986	| Sega		| System 16A	| 					|
 | msx_acegun	|  	| Ace Gun (HB)						| 		| 2020	| Cobinee	| MSX		| 					|
+| spec_aceofaces|  	| Ace of Aces (128K)					| 		| 1986	| U.S. Gold	| ZX Spectrum	| 					|
 | sms_aceoface	|  	| Ace of Aces (Euro)					| 		| 1991	| Sega		| Sega Master Sy| 					|
 | acrobatm	|  	| Acrobat Mission					| 		| 1991	| UPL (Taito lic| NMK16		| 					|
 | dogfgtu	|  	| Acrobatic Dog-Fight (USA)				| dogfgt	| 1985	| Technos Japan | Miscellaneous	| 					|
@@ -922,6 +923,7 @@ This list contains all games supported by FinalBurn Neo.
 | avefenix	|  	| Ave Fenix (Electrogame, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg (Video| Miscellaneous	| 					|
 | avefenixl	|  	| Ave Fenix (Laguna, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg	| Miscellaneous	| 					|
 | avefenixrf	|  	| Ave Fenix (Recreativos Franco, Spanish bootleg of Phoe| phoenix	| 1981	| bootleg (Recre| Miscellaneous	| 					|
+| spec_avenger	|  	| Avenger (128K)					| 		| 1986	| Gremlin Graphi| ZX Spectrum	| 					|
 | msx_avenger	|  	| Avenger (Euro)					| 		| 1986	| Gremlin Graphi| MSX		| 					|
 | avengers	|  	| Avengers (US set 1)					| 		| 1987	| Capcom	| Miscellaneous	| 					|
 | avengers2	|  	| Avengers (US set 2)					| avengers	| 1987	| Capcom	| Miscellaneous	| 					|
@@ -1115,6 +1117,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_basesloaded|  	| Bases Loaded (USA)					| 		| 1988	| Jaleco	| Miscellaneous	| 					|
 | nes_basesloaii|  	| Bases Loaded II - Second Season (USA)			| 		| 1990	| Jaleco	| Miscellaneous	| 					|
 | nes_bashibaz	|  	| Bashi Bazook - Morphoid Masher (USA) (Proto)		| 		| 0000	| Jaleco	| Miscellaneous	| 					|
+| spec_basilmouse|  	| Basil the Great Mouse Detective (48K)			| 		| 1987	| Gremlin Graphi| ZX Spectrum	| 					|
 | sms_basketn	|  	| Basket Ball Nightmare (Euro, Bra)			| 		| 1989	| Sega		| Sega Master Sy| 					|
 | md_bassmc	|  	| BASS Masters Classic (USA)				| 		| 1995	| Black Pearl	| Sega Megadrive| 					|
 | md_bassmpro	|  	| BASS Masters Classic - Pro Edition (USA)		| 		| 1996	| THQ		| Sega Megadrive| 					|
@@ -1830,6 +1833,7 @@ This list contains all games supported by FinalBurn Neo.
 | buccanrsa	|  	| Buccaneers (set 2)					| buccanrs	| 1989	| Duintronic	| Miscellaneous	| 					|
 | buccanrsb	|  	| Buccaneers (set 3, harder)				| buccanrs	| 1989	| Duintronic	| Miscellaneous	| 					|
 | md_buckrog	|  	| Buck Rogers - Countdown to Doomsday (Euro, USA)	| 		| 1991	| Electronic Art| Sega Megadrive| 					|
+| spec_buckrogers|  	| Buck Rogers - Planet of Zoom (48K)			| 		| 1984	| U.S. Gold	| ZX Spectrum	| 					|
 | msx_buckrog	|  	| Buck Rogers - Planet of Zoom				| 		| 1983	| Sega		| MSX		| 					|
 | cv_buckrogsgm	|  	| Buck Rogers Super Game (HB)				| 		| 2013	| Coleco	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | buckrogn	|  	| Buck Rogers: Planet of Zoom (not encrypted, set 1)	| buckrog	| 1982	| Sega		| Z80-3D	| 					|
@@ -2003,6 +2007,7 @@ This list contains all games supported by FinalBurn Neo.
 | calorie	|  	| Calorie Kun vs Moguranian				| 		| 1986	| Sega		| Miscellaneous	| 					|
 | nes_caltron6in1|  	| Caltron 6-in-1 (USA)					| 		| 1992	| Caltron	| Miscellaneous	| 					|
 | nes_caltron9in1|  	| Caltron 9-in-1 (USA)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
+| spec_camelotw	|  	| Camelot Warriors (48K)				| 		| 1986	| Dinamic Softwa| ZX Spectrum	| 					|
 | msx_camelotw	|  	| Camelot Warriors (Spa)				| 		| 1986	| Dinamic Softwa| MSX		| 					|
 | cameltryj	|  	| Cameltry (Japan, YM2610)				| cameltry	| 1989	| Taito Corporat| Taito F2	| 					|
 | cameltrya	|  	| Cameltry (US, YM2203 + M6295)				| cameltry	| 1989	| Taito America | Taito F2	| 					|
@@ -7853,6 +7858,7 @@ This list contains all games supported by FinalBurn Neo.
 | mario		|  	| Mario Bros. (US, Revision G)				| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | nes_mariobros	|  	| Mario Bros. (World)					| 		| 1983	| Nintendo	| Miscellaneous	| 					|
 | md_mariolh	|  	| Mario Lemieux Hockey (Euro, USA)			| 		| 1991	| Sega		| Sega Megadrive| 					|
+| spec_maritrini|  	| Maritrini Freelance MonsterSlayer (HB)		| 		| 2011	| The Mojon Twin| ZX Spectrum	| 					|
 | markham	|  	| Markham						| 		| 1983	| Sun Electronic| Miscellaneous	| 					|
 | md_markou	|  	| Marko (USA)						| md_marko	| 1994	| Domark	| Sega Megadrive| 					|
 | gg_marko	|  	| Marko's Magic Football (Euro)				| 		| 1993	| Domark	| Sega Game Gear| 					|
@@ -8605,8 +8611,8 @@ This list contains all games supported by FinalBurn Neo.
 | mosaica	|  	| Mosaic (Fuuki)					| mosaic	| 1990	| Space (Fuuki l| Miscellaneous	| 					|
 | mosaic	|  	| Mosaic						| 		| 1990	| Space		| Miscellaneous	| 					|
 | spec_motopera1|  	| Mot (Part 1 of 3) (128K)				| 		| 1989	| Opera Soft	| ZX Spectrum	| 					|
-| spec_motopera2|  	| Mot (Part 2 of 3) (128K)				| 		| 1989	| Opera Soft	| ZX Spectrum	| 					|
-| spec_motopera3|  	| Mot (Part 3 of 3) (128K)				| 		| 1989	| Opera Soft	| ZX Spectrum	| 					|
+| spec_motopera2|  	| Mot (Part 2 of 3) (128K)				| spec_motopera1| 1989	| Opera Soft	| ZX Spectrum	| 					|
+| spec_motopera3|  	| Mot (Part 3 of 3) (128K)				| spec_motopera1| 1989	| Opera Soft	| ZX Spectrum	| 					|
 | nes_mother	|  	| Mother (Japan)					| nes_earthbound| 1989	| Nintendo	| Miscellaneous	| 					|
 | nes_mothe25tannedi|  	| Mother - 25th Anniversay Edition (Hack)		| nes_earthbound| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_motocrosssim|  	| Moto Cross Simulator					| 		| 1989	| Codemasters	| ZX Spectrum	| 					|
@@ -11317,6 +11323,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_sasoperationthunderflash|  	| S.A.S. Operation Thunderflash			| 		| 1986	| Sparklers	| ZX Spectrum	| 					|
 | nes_scat	|  	| S.C.A.T. - Special Cybernetic Attack Team (USA)	| 		| 1991	| Natsume	| Miscellaneous	| 					|
 | spec_sdisdi	|  	| S.D.I. - Strategic Defence Initiative (48K)		| 		| 1988	| Activision	| ZX Spectrum	| 					|
+| spec_soloen	|  	| S.o.L.o. (HB, En)					| 		| 2021	| Roolandoo	| ZX Spectrum	| 					|
+| spec_soloes	|  	| S.o.L.o. (HB, Es)					| spec_soloen	| 2021	| Roolandoo	| ZX Spectrum	| 					|
 | sms_saposos	|  	| S.O.S Lagoa Poluida (Bra)				| sms_astrow	| 1995	| Tec Toy	| Sega Master Sy| 					|
 | spyu		|  	| S.P.Y. - Special Project Y (US ver. M)		| spy		| 1989	| Konami	| GX857		| 					|
 | spy		|  	| S.P.Y. - Special Project Y (World ver. N)		| 		| 1989	| Konami	| GX857		| 					|
@@ -14738,9 +14746,9 @@ This list contains all games supported by FinalBurn Neo.
 | thndzone	|  	| Thunder Zone (World, Rev 1)				| 		| 1991	| Data East Corp| DECO IC16	| 					|
 | nes_thunderbirds|  	| Thunderbirds (USA)					| 		| 1990	| Activision	| Miscellaneous	| 					|
 | spec_thundbirds1|  	| Thunderbirds - Part 1					| 		| 1989	| Grandslam Ente| ZX Spectrum	| 					|
-| spec_thundbirds2|  	| Thunderbirds - Part 2					| 		| 1989	| Grandslam Ente| ZX Spectrum	| 					|
-| spec_thundbirds3|  	| Thunderbirds - Part 3					| 		| 1989	| Grandslam Ente| ZX Spectrum	| 					|
-| spec_thundbirds4|  	| Thunderbirds - Part 4					| 		| 1989	| Grandslam Ente| ZX Spectrum	| 					|
+| spec_thundbirds2|  	| Thunderbirds - Part 2					| spec_thundbirds1| 1989	| Grandslam Ente| ZX Spectrum	| 					|
+| spec_thundbirds3|  	| Thunderbirds - Part 3					| spec_thundbirds1| 1989	| Grandslam Ente| ZX Spectrum	| 					|
+| spec_thundbirds4|  	| Thunderbirds - Part 4					| spec_thundbirds1| 1989	| Grandslam Ente| ZX Spectrum	| 					|
 | msx_tbirds1a	|  	| Thunderbirds Tape 1 Side A (Euro)			| 		| 1989	| Grandslam Ente| MSX		| 					|
 | msx_tbirdst1b	|  	| Thunderbirds Tape 1 Side B (Euro)			| msx_tbirds1a	| 1989	| Grandslam Ente| MSX		| 					|
 | msx_tbirdst2a	|  	| Thunderbirds Tape 2 Side A (Euro)			| msx_tbirds1a	| 1989	| Grandslam Ente| MSX		| 					|
@@ -14838,7 +14846,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_titanwarriors|  	| Titan Warriors (USA) (Proto)				| 		| 0000	| Capcom	| Miscellaneous	| 					|
 | msx_titanic	|  	| Titanic (Spa)						| 		| 1988	| Topo Soft	| MSX		| 					|
 | spec_titanictopo1|  	| Titanic (Topo Soft) (Part 1 of 2) (128K)		| 		| 1988	| Topo Soft	| ZX Spectrum	| 					|
-| spec_titanictopo2|  	| Titanic (Topo Soft) (Part 2 of 2) (128K)		| 		| 1988	| Topo Soft	| ZX Spectrum	| 					|
+| spec_titanictopo2|  	| Titanic (Topo Soft) (Part 2 of 2) (128K)		| spec_titanictopo1| 1988	| Topo Soft	| ZX Spectrum	| 					|
 | pce_titan	|  	| Titan							| 		| 1991	| Naxat		| PC Engine	| 					|
 | titlefj	|  	| Title Fight (Japan)					| titlef	| 1992	| Sega		| System 32	| Background GFX Issues			|
 | titlefu	|  	| Title Fight (US)					| titlef	| 1992	| Sega		| System 32	| Background GFX Issues			|

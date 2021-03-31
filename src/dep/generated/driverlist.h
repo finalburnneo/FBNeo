@@ -189,6 +189,7 @@ DRV		BurnDrvMSX_abusimbel;
 DRV		BurnDrvAceattac;
 DRV		BurnDrvAceattaca;
 DRV		BurnDrvMSX_acegun;
+DRV		BurnSpecaceofaces;
 DRV		BurnDrvsms_aceoface;
 DRV		BurnDrvAcrobatm;
 DRV		BurnDrvDogfgtu;
@@ -930,6 +931,7 @@ DRV		BurnDrvmd_avatar;
 DRV		BurnDrvAvefenix;
 DRV		BurnDrvAvefenixl;
 DRV		BurnDrvAvefenixrf;
+DRV		BurnSpecavenger;
 DRV		BurnDrvMSX_avenger;
 DRV		BurnDrvAvengers;
 DRV		BurnDrvAvenger2;
@@ -1127,6 +1129,7 @@ DRV		BurnDrvBstars;
 DRV		BurnDrvnes_basesloaded;
 DRV		BurnDrvnes_basesloaii;
 DRV		BurnDrvnes_bashibaz;
+DRV		BurnSpecbasilmouse;
 DRV		BurnDrvsms_basketn;
 DRV		BurnDrvmd_bassmc;
 DRV		BurnDrvmd_bassmpro;
@@ -1852,6 +1855,7 @@ DRV		BurnDrvBuccanrs;
 DRV		BurnDrvBuccanrsa;
 DRV		BurnDrvBuccanrsb;
 DRV		BurnDrvmd_buckrog;
+DRV		BurnSpecbuckrogers;
 DRV		BurnDrvMSX_buckrog;
 DRV		BurnDrvcv_buckrogsgm;
 DRV		BurnDrvBuckrogn;
@@ -2025,6 +2029,7 @@ DRV		BurnDrvCalorieb;
 DRV		BurnDrvCalorie;
 DRV		BurnDrvnes_caltron6in1;
 DRV		BurnDrvnes_caltron9in1;
+DRV		BurnSpeccamelotw;
 DRV		BurnDrvMSX_camelotw;
 DRV		BurnDrvCameltryj;
 DRV		BurnDrvCameltrya;
@@ -7965,6 +7970,7 @@ DRV		BurnDrvMariof;
 DRV		BurnDrvMario;
 DRV		BurnDrvnes_mariobros;
 DRV		BurnDrvmd_mariolh;
+DRV		BurnSpecmaritrini;
 DRV		BurnDrvMarkham;
 DRV		BurnDrvmd_markou;
 DRV		BurnDrvgg_marko;
@@ -11475,6 +11481,8 @@ DRV		BurnSpecSascombatsim;
 DRV		BurnSpecSasoperationthunderflash;
 DRV		BurnDrvnes_scat;
 DRV		BurnSpecsdisdi;
+DRV		BurnSpecsoloen;
+DRV		BurnSpecsoloes;
 DRV		BurnDrvsms_saposos;
 DRV		BurnDrvSpyu;
 DRV		BurnDrvSpy;
@@ -16973,6 +16981,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAceattac,			// Ace Attacker (FD1094 317-0059)
 	&BurnDrvAceattaca,			// Ace Attacker (Japan, System 16A, FD1094 317-0060)
 	&BurnDrvMSX_acegun,			// Ace Gun (HB)
+	&BurnSpecaceofaces,			// Ace of Aces (128K)
 	&BurnDrvsms_aceoface,		// Ace of Aces (Euro)
 	&BurnDrvAcrobatm,			// Acrobat Mission
 	&BurnDrvDogfgtu,			// Acrobatic Dog-Fight (USA)
@@ -17714,6 +17723,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAvefenix,			// Ave Fenix (Electrogame, Spanish bootleg of Phoenix)
 	&BurnDrvAvefenixl,			// Ave Fenix (Laguna, Spanish bootleg of Phoenix)
 	&BurnDrvAvefenixrf,			// Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)
+	&BurnSpecavenger,			// Avenger (128K)
 	&BurnDrvMSX_avenger,		// Avenger (Euro)
 	&BurnDrvAvengers,			// Avengers (US set 1)
 	&BurnDrvAvenger2,			// Avengers (US set 2)
@@ -17911,6 +17921,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_basesloaded,	// Bases Loaded (USA)
 	&BurnDrvnes_basesloaii,		// Bases Loaded II - Second Season (USA)
 	&BurnDrvnes_bashibaz,		// Bashi Bazook - Morphoid Masher (USA) (Proto)
+	&BurnSpecbasilmouse,		// Basil the Great Mouse Detective (48K)
 	&BurnDrvsms_basketn,		// Basket Ball Nightmare (Euro, Bra)
 	&BurnDrvmd_bassmc,			// BASS Masters Classic (USA)
 	&BurnDrvmd_bassmpro,		// BASS Masters Classic - Pro Edition (USA)
@@ -18636,6 +18647,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBuccanrsa,			// Buccaneers (set 2)
 	&BurnDrvBuccanrsb,			// Buccaneers (set 3, harder)
 	&BurnDrvmd_buckrog,			// Buck Rogers - Countdown to Doomsday (Euro, USA)
+	&BurnSpecbuckrogers,		// Buck Rogers - Planet of Zoom (48K)
 	&BurnDrvMSX_buckrog,		// Buck Rogers - Planet of Zoom
 	&BurnDrvcv_buckrogsgm,		// Buck Rogers Super Game (HB)
 	&BurnDrvBuckrogn,			// Buck Rogers: Planet of Zoom (not encrypted, set 1)
@@ -18809,6 +18821,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCalorie,			// Calorie Kun vs Moguranian
 	&BurnDrvnes_caltron6in1,	// Caltron 6-in-1 (USA)
 	&BurnDrvnes_caltron9in1,	// Caltron 9-in-1 (USA)
+	&BurnSpeccamelotw,			// Camelot Warriors (48K)
 	&BurnDrvMSX_camelotw,		// Camelot Warriors (Spa)
 	&BurnDrvCameltryj,			// Cameltry (Japan, YM2610)
 	&BurnDrvCameltrya,			// Cameltry (US, YM2203 + M6295)
@@ -24749,6 +24762,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMario,				// Mario Bros. (US, Revision G)
 	&BurnDrvnes_mariobros,		// Mario Bros. (World)
 	&BurnDrvmd_mariolh,			// Mario Lemieux Hockey (Euro, USA)
+	&BurnSpecmaritrini,			// Maritrini Freelance MonsterSlayer (HB)
 	&BurnDrvMarkham,			// Markham
 	&BurnDrvmd_markou,			// Marko (USA)
 	&BurnDrvgg_marko,			// Marko's Magic Football (Euro)
@@ -28259,6 +28273,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSasoperationthunderflash,// S.A.S. Operation Thunderflash
 	&BurnDrvnes_scat,			// S.C.A.T. - Special Cybernetic Attack Team (USA)
 	&BurnSpecsdisdi,			// S.D.I. - Strategic Defence Initiative (48K)
+	&BurnSpecsoloen,			// S.o.L.o. (HB, En)
+	&BurnSpecsoloes,			// S.o.L.o. (HB, Es)
 	&BurnDrvsms_saposos,		// S.O.S Lagoa Poluida (Bra)
 	&BurnDrvSpyu,				// S.P.Y. - Special Project Y (US ver. M)
 	&BurnDrvSpy,				// S.P.Y. - Special Project Y (World ver. N)

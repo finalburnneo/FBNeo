@@ -1005,6 +1005,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	nExtraCycles = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2781,7 +2783,7 @@ struct BurnDriver BurnDrvViprp1 = {
 	"viprp1", NULL, NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, World)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1RomInfo, viprp1RomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -2825,7 +2827,7 @@ struct BurnDriver BurnDrvViprp1k = {
 	"viprp1k", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Korea)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1kRomInfo, viprp1kRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -2864,7 +2866,7 @@ struct BurnDriver BurnDrvViprp1u = {
 	"viprp1u", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1uRomInfo, viprp1uRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -2903,7 +2905,7 @@ struct BurnDriver BurnDrvViprp1ua = {
 	"viprp1ua", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1uaRomInfo, viprp1uaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -2942,7 +2944,7 @@ struct BurnDriver BurnDrvViprp1j = {
 	"viprp1j", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Japan)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1jRomInfo, viprp1jRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -2981,7 +2983,7 @@ struct BurnDriver BurnDrvViprp1s = {
 	"viprp1s", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Switzerland)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1sRomInfo, viprp1sRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3020,7 +3022,7 @@ struct BurnDriver BurnDrvViprp1h = {
 	"viprp1h", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Holland)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1hRomInfo, viprp1hRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3059,7 +3061,7 @@ struct BurnDriver BurnDrvViprp1t = {
 	"viprp1t", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1tRomInfo, viprp1tRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3098,7 +3100,7 @@ struct BurnDriver BurnDrvViprp1pt = {
 	"viprp1pt", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (New Version, Portugal)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1ptRomInfo, viprp1ptRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3137,7 +3139,7 @@ struct BurnDriver BurnDrvViprp1hk = {
 	"viprp1hk", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (Hong Kong)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1hkRomInfo, viprp1hkRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3176,7 +3178,7 @@ struct BurnDriver BurnDrvViprp1oj = {
 	"viprp1oj", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (Japan)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1ojRomInfo, viprp1ojRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3215,7 +3217,7 @@ struct BurnDriver BurnDrvViprp1ot = {
 	"viprp1ot", "viprp1", NULL, NULL, "1995",
 	"Viper Phase 1 (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, viprp1otRomInfo, viprp1otRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	Viprp1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3297,7 +3299,7 @@ struct BurnDriver BurnDrvRdft = {
 	"rdft", NULL, NULL, NULL, "1996",
 	"Raiden Fighters (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftRomInfo, rdftRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3343,7 +3345,7 @@ struct BurnDriver BurnDrvRdftu = {
 	"rdftu", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (US, earlier)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftuRomInfo, rdftuRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3389,7 +3391,7 @@ struct BurnDriver BurnDrvRdftj = {
 	"rdftj", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Japan, earlier)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftjRomInfo, rdftjRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3435,7 +3437,7 @@ struct BurnDriver BurnDrvRdftja = {
 	"rdftja", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Japan, earliest)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftjaRomInfo, rdftjaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3481,7 +3483,7 @@ struct BurnDriver BurnDrvRdftau = {
 	"rdftau", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Australia)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftauRomInfo, rdftauRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftauInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3527,7 +3529,7 @@ struct BurnDriver BurnDrvRdftauge = {
 	"rdftauge", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Evaluation Software For Show, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftaugeRomInfo, rdftaugeRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftaugeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3573,7 +3575,7 @@ struct BurnDriver BurnDrvRdfta = {
 	"rdfta", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Austria)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftaRomInfo, rdftaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3619,7 +3621,7 @@ struct BurnDriver BurnDrvRdftit = {
 	"rdftit", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Italy)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftitRomInfo, rdftitRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3665,7 +3667,7 @@ struct BurnDriver BurnDrvRdftgb = {
 	"rdftgb", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Great Britain)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftgbRomInfo, rdftgbRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftgbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3711,7 +3713,7 @@ struct BurnDriver BurnDrvRdftgr = {
 	"rdftgr", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Greece)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftgrRomInfo, rdftgrRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftgrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3754,7 +3756,7 @@ struct BurnDriver BurnDrvRdftjb = {
 	"rdftjb", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Japan, newer)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftjbRomInfo, rdftjbRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3797,7 +3799,7 @@ struct BurnDriver BurnDrvRdftua = {
 	"rdftua", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (US, newer)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftuaRomInfo, rdftuaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftuaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3840,7 +3842,7 @@ struct BurnDriver BurnDrvRdftadi = {
 	"rdftadi", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Korea)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftadiRomInfo, rdftadiRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftadiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3883,7 +3885,7 @@ struct BurnDriver BurnDrvRdftam = {
 	"rdftam", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Hong Kong)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftamRomInfo, rdftamRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3939,7 +3941,7 @@ struct BurnDriver BurnDrvRdft2 = {
 	"rdft2", NULL, NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2RomInfo, rdft2RomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -3990,7 +3992,7 @@ struct BurnDriver BurnDrvRdft2u = {
 	"rdft2u", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2uRomInfo, rdft2uRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2uInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4034,7 +4036,7 @@ struct BurnDriver BurnDrvRdft2j = {
 	"rdft2j", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Japan set 1)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2jRomInfo, rdft2jRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4078,7 +4080,7 @@ struct BurnDriver BurnDrvRdft2ja = {
 	"rdft2ja", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Japan set 2)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2jaRomInfo, rdft2jaRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4122,7 +4124,7 @@ struct BurnDriver BurnDrvRdft2jb = {
 	"rdft2jb", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Japan set 3)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2jbRomInfo, rdft2jbRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4166,7 +4168,7 @@ struct BurnDriver BurnDrvRdft2jc = {
 	"rdft2jc", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Japan set 4)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2jcRomInfo, rdft2jcRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4210,7 +4212,7 @@ struct BurnDriver BurnDrvRdft2it = {
 	"rdft2it", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Italy)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2itRomInfo, rdft2itRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4261,7 +4263,7 @@ struct BurnDriver BurnDrvRdft2a = {
 	"rdft2a", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Hong Kong)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2aRomInfo, rdft2aRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4305,7 +4307,7 @@ struct BurnDriver BurnDrvRdft2aa = {
 	"rdft2aa", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Korea)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2aaRomInfo, rdft2aaRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4349,7 +4351,7 @@ struct BurnDriver BurnDrvRdft2t = {
 	"rdft2t", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Taiwan)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2tRomInfo, rdft2tRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4393,7 +4395,7 @@ struct BurnDriver BurnDrvRdft2s = {
 	"rdft2s", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (Switzerland)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2sRomInfo, rdft2sRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	Rdft2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4439,7 +4441,7 @@ struct BurnDriver BurnDrvRfjet = {
 	"rfjet", NULL, NULL, NULL, "1998",
 	"Raiden Fighters Jet (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetRomInfo, rfjetRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	RfjetInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4485,7 +4487,7 @@ struct BurnDriver BurnDrvRfjetj = {
 	"rfjetj", "rfjet", NULL, NULL, "1998",
 	"Raiden Fighters Jet (Japan)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetjRomInfo, rfjetjRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	RfjetjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4531,7 +4533,7 @@ struct BurnDriver BurnDrvRfjetu = {
 	"rfjetu", "rfjet", NULL, NULL, "1998",
 	"Raiden Fighters Jet (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetuRomInfo, rfjetuRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	RfjetuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4577,7 +4579,7 @@ struct BurnDriver BurnDrvRfjeta = {
 	"rfjeta", "rfjet", NULL, NULL, "1998",
 	"Raiden Fighters Jet (Korea)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetaRomInfo, rfjetaRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	RfjetaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4623,7 +4625,7 @@ struct BurnDriver BurnDrvRfjett = {
 	"rfjett", "rfjet", NULL, NULL, "1998",
 	"Raiden Fighters Jet (Taiwan)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjettRomInfo, rfjettRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, Spi_2buttonDIPInfo,
 	RfjettInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4666,7 +4668,7 @@ struct BurnDriver BurnDrvRdfts = {
 	"rdfts", "rdft", NULL, NULL, "1996",
 	"Raiden Fighters (Taiwan, single board)\0", NULL, "Seibu Kaihatsu (Explorer System Corp. license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftsRomInfo, rdftsRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, NULL,
 	RdftsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4728,7 +4730,7 @@ struct BurnDriver BurnDrvRdft2us = {
 	"rdft2us", "rdft2", NULL, NULL, "1997",
 	"Raiden Fighters 2 - Operation Hell Dive (US, single board)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft2usRomInfo, rdft2usRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, NULL,
 	Rdft2usInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4779,7 +4781,7 @@ struct BurnDriver BurnDrvRfjets = {
 	"rfjets", "rfjet", NULL, NULL, "1999",
 	"Raiden Fighters Jet (US, single board)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetsRomInfo, rfjetsRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, NULL,
 	RfjetsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4820,7 +4822,7 @@ struct BurnDriver BurnDrvRfjetsa = {
 	"rfjetsa", "rfjet", NULL, NULL, "1999",
 	"Raiden Fighters Jet (US, single board, test version?)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjetsaRomInfo, rfjetsaRomName, NULL, NULL, NULL, NULL, Spi_2buttonInputInfo, NULL,
 	RfjetsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4876,7 +4878,7 @@ struct BurnDriver BurnDrvRdft22kc = {
 	"rdft22kc", "rdft2", NULL, NULL, "2000",
 	"Raiden Fighters 2 - Operation Hell Dive 2000 (China, SYS386I)\0", NULL, "Seibu Kaihatsu", "SYS386I",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdft22kcRomInfo, rdft22kcRomName, NULL, NULL, NULL, NULL, Sys386iInputInfo, NULL,
 	Rdft22kcInit, DrvExit, Sys386Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
@@ -4919,7 +4921,7 @@ struct BurnDriver BurnDrvRfjet2kc = {
 	"rfjet2kc", "rfjet", NULL, NULL, "2000",
 	"Raiden Fighters Jet 2000 (China, SYS386I)\0", NULL, "Seibu Kaihatsu", "SYS386I",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rfjet2kcRomInfo, rfjet2kcRomName, NULL, NULL, NULL, NULL, Sys386iInputInfo, NULL,
 	Rfjet2kcInit, DrvExit, Sys386Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4

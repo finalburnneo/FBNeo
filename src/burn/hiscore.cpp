@@ -5,7 +5,7 @@
 
 #define MAX_CONFIG_LINE_SIZE 		48
 
-#define HISCORE_MAX_RANGES		20
+#define HISCORE_MAX_RANGES		64
 
 UINT32 nHiscoreNumRanges;
 

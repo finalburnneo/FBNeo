@@ -16,6 +16,7 @@ HAVE_NEON = 0
 USE_EXPERIMENTAL_FLAGS = 0
 USE_CYCLONE = 0
 HAVE_UWP = 0
+LIGHT = 0
 SPLIT_UP_LINK ?= 0
 
 SPACE :=
@@ -371,18 +372,10 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 	# Nintendo Wii
 	else ifneq (,$(findstring wii,$(platform)))
 		PLATFORM_DEFINES += -DGEKKO -DHW_RVL -mrvl -mcpu=750 -meabi -mhard-float
-		NO_MD = 1
-		NO_CAPCOM = 1
-		NO_NEOGEO = 1
-		NO_PCE = 1
 
 	# Nintendo Game Cube
 	else ifneq (,$(findstring ngc,$(platform)))
 		PLATFORM_DEFINES += -DGEKKO -DHW_DOL -mrvl -mcpu=750 -meabi -mhard-float
-		NO_MD = 1
-		NO_CAPCOM = 1
-		NO_NEOGEO = 1
-		NO_PCE = 1
 	endif
 
 # Emscripten
@@ -619,7 +612,11 @@ generate-files:
 	@mkdir -p $(FBNEO_GENERATED_DIR) 2>/dev/null || /bin/true
 	@echo "Generating $(FBNEO_GENERATED_DIR)/driverlist.h..."
 	@echo ""
+ifeq ($(LIGHT), 0)
 	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(FBNEO_BURN_DRIVERS_DIRS)
+else
+	$(PERL) $(FBNEO_SCRIPTS_DIR)/gamelist.pl -o $(FBNEO_GENERATED_DIR)/driverlist.h -l $(MAIN_FBNEO_DIR)/../gamelist.txt $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBNEO_BURN_DRIVERS_DIRS),$(wildcard $(dir)/*.cpp)))
+endif
 	@echo ""
 	@echo "Generating $(FBNEO_GENERATED_DIR)/neo_sprite_func.h..."
 	@echo ""

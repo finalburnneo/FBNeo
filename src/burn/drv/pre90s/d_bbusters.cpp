@@ -1,6 +1,17 @@
 // FB Alpha Beast Busters and Mechanized Attack driver module
 // Based on MAME driver by Bryan McPhail
 
+// Problem:
+// Mechanized Attack, music lost on savestate load
+// I _think_ it's something to do with the ymdeltat part of the ym2608
+// fighting over the fm status register w/the ym2608 itself.  First and
+// second attempt to fix it failed.  Game marked w/state issues.     - dink apr.1.2021
+
+// Note:
+// This problem also affects Hatris in pst90s/d_pipedrm.cpp, but has a different
+// issue: the deltat samples stop playing on state load, yet the music continues
+// to play.
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -33,6 +44,8 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvPfScroll0;
 static UINT8 *DrvPfScroll1;
+
+static UINT16 *SpriteBitmap[2];
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -374,6 +387,14 @@ static UINT16 mechatt_gun_r(UINT16 offset)
 	return x | (y << 8);
 }
 
+static void sound_sync()
+{
+	INT32 cyc = ((SekTotalCycles() * 4) / 12) - ZetTotalCycles();
+	if (cyc > 0) {
+		BurnTimerUpdate(ZetTotalCycles() + cyc);
+	}
+}
+
 static UINT16 __fastcall bbusters_main_read_word(UINT32 address)
 {
 	if ((address & 0xffff00) == 0x0f8000) {
@@ -398,6 +419,7 @@ static UINT16 __fastcall bbusters_main_read_word(UINT32 address)
 			return DrvDips[1];
 
 		case 0x0e0018:
+			sound_sync();
 			return sound_status;
 
 		case 0x0e8000:
@@ -449,6 +471,7 @@ static void __fastcall bbusters_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x0f0018: {
+			sound_sync();
 			soundlatch = data;
 			ZetNmi();
 		}
@@ -478,6 +501,7 @@ static UINT16 __fastcall mechatt_main_read_word(UINT32 address)
 			return mechatt_gun_r(address - 0xe0004);
 
 		case 0x0e8000:
+			sound_sync();
 			return sound_status;
 	}
 
@@ -512,6 +536,7 @@ static void __fastcall mechatt_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x0e8000: {
+			sound_sync();
 			soundlatch = data;
 			ZetNmi();
 		}
@@ -571,9 +596,9 @@ static UINT8 __fastcall bbusters_sound_read_port(UINT16 port)
 		case 0x02:
 		case 0x03:
 		if (game_select) {
-			return BurnYM2608Read(port & 2);
+			return BurnYM2608Read(port & 3);
 		} else {
-			return BurnYM2610Read(port & 2);
+			return BurnYM2610Read(port & 3);
 		}
 	}
 
@@ -582,20 +607,7 @@ static UINT8 __fastcall bbusters_sound_read_port(UINT16 port)
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	// Sometimes loading a savestate needs to kick off an irq, but since this
-	// happens outside of DrvScan(), we have to handle opening of the cpu here.
-	INT32 fromFMPostLoad = (ZetGetActive() == -1);
-
-	if (fromFMPostLoad) {
-		bprintf(0, _T("FM-PostLoad kicking irq!!! %X\n"), nStatus);
-		ZetOpen(0);
-	}
-
-	ZetSetIRQLine(0, (nStatus) ?  CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-
-	if (fromFMPostLoad)
-		ZetClose();
-
+	ZetSetIRQLine(0, 0, (nStatus) ?  CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -662,6 +674,9 @@ static INT32 MemIndex()
 	DrvPfScroll1	= Next; Next += 0x000004;
 
 	RamEnd			= Next;
+
+	SpriteBitmap[0] = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	SpriteBitmap[1] = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
 
 	MemEnd			= Next;
 
@@ -1089,7 +1104,7 @@ inline const UINT8 *get_source_ptr(UINT8 *gfx, UINT32 sprite, INT32 dx, INT32 dy
 	return gfx + (((sprite + code) & 0x3fff) * 0x100) + ((dy & 0xf) * 0x10);
 }
 
-static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32 x,INT32 y,INT32 size,INT32 flipx,INT32 flipy,UINT32 sprite,INT32 color,INT32 bank,INT32 block)
+static void draw_block(INT32 chip, const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32 x,INT32 y,INT32 size,INT32 flipx,INT32 flipy,UINT32 sprite,INT32 color,INT32 bank,INT32 block)
 {
 	UINT8 *gfx = (bank == 2) ? DrvGfxROM2 : DrvGfxROM1;
 	INT32 pen_base = ((bank == 2) ? 0x200 : 0x100) + ((color & 0xf) << 4);
@@ -1101,7 +1116,7 @@ static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32
 
 	while (scale_line_count) {
 		if (dy>=16 && dy<240) {
-			UINT16 *destline = pTransDraw + (dy - 16) * nScreenWidth;
+			UINT16 *destline = SpriteBitmap[chip] + (dy - 16) * nScreenWidth;
 			UINT8 srcline=*scale_table_ptr;
 			const UINT8 *srcptr=NULL;
 
@@ -1134,7 +1149,7 @@ static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32
 	}
 }
 
-static void draw_sprites(UINT8 *source8, INT32 bank, INT32 pass)
+static void draw_sprites(INT32 chip, UINT8 *source8, INT32 bank)
 {
 	UINT16 *source = (UINT16*)source8;
 	const UINT8 *scale_table=DrvZoomTab;
@@ -1161,42 +1176,65 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 pass)
 		INT32 fx=BURN_ENDIAN_SWAP_INT16(source[offs+0])&0x800;
 		sprite&=0x3fff;
 
-		// Palettes 0xc-0xf confirmed to be behind tilemap on Beast Busters
-		if (pass == 1 && (colour & 0xc) != 0xc)
-			continue;
-		if (pass == 0 && (colour & 0xc) == 0xc)
-			continue;
-
 		switch ((BURN_ENDIAN_SWAP_INT16(source[offs+0])>>8)&0x3)
 		{
 			case 0: {
 				scale=BURN_ENDIAN_SWAP_INT16(source[offs+0])&0x7;
 				const UINT8 *scale_table_ptr = scale_table+0x387f+(0x80*scale);
 				INT32 scale_line_count = 0x10-scale;
-				draw_block(scale_table_ptr,scale_line_count,x,y,16,fx,fy,sprite,colour,bank,block);
+				draw_block(chip, scale_table_ptr,scale_line_count,x,y,16,fx,fy,sprite,colour,bank,block);
 			}
 			break;
 			case 1: { // 2 x 2
 				scale=BURN_ENDIAN_SWAP_INT16(source[offs+0])&0xf;
 				const UINT8 *scale_table_ptr = scale_table+0x707f+(0x80*scale);
 				INT32 scale_line_count = 0x20-scale;
-				draw_block(scale_table_ptr,scale_line_count,x,y,32,fx,fy,sprite,colour,bank,block);
+				draw_block(chip, scale_table_ptr,scale_line_count,x,y,32,fx,fy,sprite,colour,bank,block);
 			}
 			break;
 			case 2: { // 64 by 64 block (2 x 2) x 2
 				scale=BURN_ENDIAN_SWAP_INT16(source[offs+0])&0x1f;
 				const UINT8 *scale_table_ptr = scale_table+0xa07f+(0x80*scale);
 				INT32 scale_line_count = 0x40-scale;
-				draw_block(scale_table_ptr,scale_line_count,x,y,64,fx,fy,sprite,colour,bank,block);
+				draw_block(chip, scale_table_ptr,scale_line_count,x,y,64,fx,fy,sprite,colour,bank,block);
 			}
 			break;
 			case 3: { // 2 x 2 x 2 x 2
 				scale=BURN_ENDIAN_SWAP_INT16(source[offs+0])&0x3f;
 				const UINT8 *scale_table_ptr = scale_table+0xc07f+(0x80*scale);
 				INT32 scale_line_count = 0x80-scale;
-				draw_block(scale_table_ptr,scale_line_count,x,y,128,fx,fy,sprite,colour,bank,block);
+				draw_block(chip, scale_table_ptr,scale_line_count,x,y,128,fx,fy,sprite,colour,bank,block);
 			}
 			break;
+		}
+	}
+}
+
+static void mix_sprites(INT32 chip, INT32 pass)
+{
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		UINT16 *src = SpriteBitmap[chip] + y * nScreenWidth;
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
+
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			if (src[x] != 0xffff) {
+				switch (pass) {
+					case 0: {
+						if ((src[x] & 0xc0) != 0xc0)
+							dest[x] = src[x];
+						break;
+					}
+					case 1: {
+						if ((src[x] & 0xc0) == 0xc0)
+							dest[x] = src[x];
+						break;
+					}
+					case -1: {
+						dest[x] = src[x];
+						break;
+					}
+				}
+			}
 		}
 	}
 }
@@ -1210,11 +1248,17 @@ static INT32 BbustersDraw()
 
 	BurnTransferClear();
 
+	// sprites -> sprite bitmaps
+	memset(SpriteBitmap[0], 0xff, 256 * 256 * sizeof(UINT16));
+	memset(SpriteBitmap[1], 0xff, 256 * 256 * sizeof(UINT16));
+	draw_sprites(1, DrvSprBuf + 0x1000, 2);
+	draw_sprites(0, DrvSprBuf + 0x0000, 1);
+
 	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x500, 0, DrvPfScroll1, 0);
-	if (nSpriteEnable & 1) draw_sprites(DrvSprBuf + 0x1000, 2, 1);
+	if (nSpriteEnable & 1) mix_sprites(1, 1);
 	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x300, 1, DrvPfScroll0, 0);
-	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x1000, 2, 0);
-	if (nSpriteEnable & 4) draw_sprites(DrvSprBuf + 0x0000, 1, -1);
+	if (nSpriteEnable & 2) mix_sprites(1, 0);
+	if (nSpriteEnable & 4) mix_sprites(0, -1);
 	if (nBurnLayer & 4) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);
@@ -1233,9 +1277,14 @@ static INT32 MechattDraw()
 
 	BurnTransferClear();
 
+	// sprites -> sprite bitmaps
+	memset(SpriteBitmap[0], 0xff, 256 * 256 * sizeof(UINT16));
+	draw_sprites(0, DrvSprBuf + 0x0000, 1);
+
 	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x300, 0, DrvPfScroll1, 1);
+	if (nSpriteEnable & 1) mix_sprites(0, 1);
 	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x200, 1, DrvPfScroll0, 1);
-	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x0000, 1, -1);
+	if (nSpriteEnable & 2) mix_sprites(0, 0);
 	if (nBurnLayer & 4) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);
@@ -1307,32 +1356,29 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
-	if (pnMin != NULL) {
-		*pnMin = 0x029719;
+
+	if (pnMin) {
+		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
+
 		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd-AllRam;
+		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-	}
-	
-	if (nAction & ACB_DRIVER_DATA) {
+
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		BurnGunScan();
-
-		ZetOpen(0);
 		if (game_select) {
 			BurnYM2608Scan(nAction, pnMin);
 		} else {
 			BurnYM2610Scan(nAction, pnMin);
 		}
-		ZetClose();
+
+		BurnGunScan();
 
 		SCAN_VAR(sound_status);
 		SCAN_VAR(soundlatch);
@@ -1651,7 +1697,7 @@ STD_ROM_FN(mechatt)
 
 struct BurnDriver BurnDrvMechatt = {
 	"mechatt", NULL, "ym2608", NULL, "1989",
-	"Mechanized Attack (World)\0", NULL, "SNK", "Miscellaneous",
+	"Mechanized Attack (World)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattRomInfo, mechattRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
@@ -1709,7 +1755,7 @@ STD_ROM_FN(mechattj)
 
 struct BurnDriver BurnDrvMechattj = {
 	"mechattj", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (Japan)\0", NULL, "SNK", "Miscellaneous",
+	"Mechanized Attack (Japan)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattjRomInfo, mechattjRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattDIPInfo,
@@ -1749,7 +1795,7 @@ STD_ROM_FN(mechattu)
 
 struct BurnDriver BurnDrvMechattu = {
 	"mechattu", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (US)\0", NULL, "SNK", "Miscellaneous",
+	"Mechanized Attack (US)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattuRomInfo, mechattuRomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
@@ -1807,7 +1853,7 @@ STD_ROM_FN(mechattu1)
 
 struct BurnDriver BurnDrvMechattu1 = {
 	"mechattu1", "mechatt", "ym2608", NULL, "1989",
-	"Mechanized Attack (US, Version 1, Single Player)\0", NULL, "SNK", "Miscellaneous",
+	"Mechanized Attack (US, Version 1, Single Player)\0", "Music occasionally breaks w/savestates", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattu1RomInfo, mechattu1RomName, NULL, NULL, NULL, NULL, MechattInputInfo, MechattuDIPInfo,

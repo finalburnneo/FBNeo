@@ -182,6 +182,7 @@ libretro-build-tvos-arm64:
 # Nintendo 3DS
 deps:ctr:
   extends:
+    - .libretro-ctr-static
     - .build-deps-fbneo
   variables:
     PLATFORM_TARGET: ctr

@@ -4513,8 +4513,14 @@ INT32 NeoRender()
 
 inline static void NeoClearOpposites(UINT8* nJoystickInputs)
 {
+	// Must Debug to Check what's going on
+	// 0x03 to Binary = 00000011 (Up and Down)
+	// 0x0C to Binary = 00001100 (Left and Right)
+	// I would add a SOCD Here lol
+	bool SOCD = true;
 	if ((*nJoystickInputs & 0x03) == 0x03) {
 		*nJoystickInputs &= ~0x03;
+		if (SOCD) *nJoystickInputs |= 0x01;
 	}
 	if ((*nJoystickInputs & 0x0C) == 0x0C) {
 		*nJoystickInputs &= ~0x0C;
@@ -4523,7 +4529,7 @@ inline static void NeoClearOpposites(UINT8* nJoystickInputs)
 
 static void NeoStandardInputs(INT32 nBank)
 {
-	if (nBank) {
+	if (nBank) { 													// Four Player?
 		NeoInput[ 8] = 0x00;					   					// Player 1
 		NeoInput[ 9] = 0x00;				   						// Player 2
 		NeoInput[10] = 0x00;				   						// Buttons
@@ -4540,7 +4546,7 @@ static void NeoStandardInputs(INT32 nBank)
 		if (NeoDiag[1]) {
 			NeoInput[13] |= 0x80;
 		}
-	} else {
+	} else {														// Two Players (Fighting Gaemz) most of the time this is used
 		NeoInput[ 0] = 0x00;					   					// Player 1
 		NeoInput[ 1] = 0x00;					   					// Player 2
 		NeoInput[ 2] = 0x00;					   					// Buttons

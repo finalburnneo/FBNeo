@@ -4519,10 +4519,10 @@ INT32 NeoRender()
 
 inline static void NeoClearOpposites(UINT8* nJoystickInputs)
 {
-	// Must Debug to Check what's going on
-	// 0x03 to Binary = 00000011 (Up and Down)
-	// 0x0C to Binary = 00001100 (Left and Right)
-	// I would add a SOCD Here lol
+	// 0x03 to Binary = 00000011 (Up and Down enabled)
+	// 0x0C to Binary = 00001100 (Left and Right enabled)
+	// SOCD Option in Inputs config would be appreciated.
+	// Standard SOCD Config is Up + Down = Up, Left+Right = Neutral
 	bool SOCD = false;
 	if ((*nJoystickInputs & 0x03) == 0x03) {
 		*nJoystickInputs &= ~0x03;
@@ -4535,7 +4535,7 @@ inline static void NeoClearOpposites(UINT8* nJoystickInputs)
 
 static void NeoStandardInputs(INT32 nBank)
 {
-	if (nBank) { 													// Four Player?
+	if (nBank) { 													// Four Player? HARDWARE_SNK_4_JOYSTICKS
 		NeoInput[ 8] = 0x00;					   					// Player 1
 		NeoInput[ 9] = 0x00;				   						// Player 2
 		NeoInput[10] = 0x00;				   						// Buttons

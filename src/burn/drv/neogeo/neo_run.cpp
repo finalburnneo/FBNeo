@@ -4552,7 +4552,7 @@ static void NeoStandardInputs(INT32 nBank)
 		if (NeoDiag[1]) {
 			NeoInput[13] |= 0x80;
 		}
-	} else {														// Two Players (Fighting Gaemz) most of the time this is used
+	} else {														// Two Players (most of the time this is used)
 		NeoInput[ 0] = 0x00;					   					// Player 1
 		NeoInput[ 1] = 0x00;					   					// Player 2
 		NeoInput[ 2] = 0x00;					   					// Buttons

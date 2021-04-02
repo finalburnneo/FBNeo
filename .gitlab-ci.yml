@@ -85,6 +85,10 @@ stages:
   extends:
     - .core-defs
   stage: build-deps-fbneo
+  artifacts:
+    paths:
+      - src/dep/generated/
+    expire_in: 1 hour
   script:
     - make -C ${MAKEFILE_PATH} platform=${PLATFORM_TARGET} generate-files
 

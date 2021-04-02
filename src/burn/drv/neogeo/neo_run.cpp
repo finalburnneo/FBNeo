@@ -2096,7 +2096,8 @@ static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 
 		case 0xE1:
 //			bprintf(PRINT_NORMAL, _T("  - Chute 2 coin lockout -> Low / Input bank 1 selected (0x%02X).\n"), byteValue);
-			NeoInputBank = NeoInput + 8;
+// 			This was previously + 8, fixes MVS Fighting Games coin issue!
+			NeoInputBank = NeoInput + 0;
 			break;
 		case 0xE3:
 //			bprintf(PRINT_NORMAL, _T("  - Chute 2 coin lockout -> Low (0x%02X).\n"), byteValue);

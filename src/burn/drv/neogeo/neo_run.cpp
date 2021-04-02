@@ -4518,7 +4518,7 @@ inline static void NeoClearOpposites(UINT8* nJoystickInputs)
 	// 0x03 to Binary = 00000011 (Up and Down)
 	// 0x0C to Binary = 00001100 (Left and Right)
 	// I would add a SOCD Here lol
-	bool SOCD = true;
+	bool SOCD = false;
 	if ((*nJoystickInputs & 0x03) == 0x03) {
 		*nJoystickInputs &= ~0x03;
 		if (SOCD) *nJoystickInputs |= 0x01;

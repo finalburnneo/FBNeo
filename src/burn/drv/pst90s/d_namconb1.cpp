@@ -342,18 +342,16 @@ static void namco_c116_write(UINT16 offset, UINT8 data)
 		}
 	}
 
-	int color = ((offset & 0x6000) >> 2) | (offset & 0x7ff);
+	INT32 color = ((offset & 0x6000) >> 2) | (offset & 0x7ff);
 	RAM[color] = data;
 
 	DrvPalette[color] = BurnHighCol(DrvPalRAMR[color], DrvPalRAMG[color], DrvPalRAMB[color], 0);
-	DrvPalette[color + 0x2000] = BurnHighCol(DrvPalRAMR[color] / 2, DrvPalRAMG[color] / 2, DrvPalRAMB[color] / 2, 0); // shadow
 }
 
 static void TotalReCarl()
 {
 	for (INT32 color = 0; color < 0x2000; color++) {
 		DrvPalette[color] = BurnHighCol(DrvPalRAMR[color], DrvPalRAMG[color], DrvPalRAMB[color], 0);
-		DrvPalette[color + 0x2000] = BurnHighCol(DrvPalRAMR[color] / 2, DrvPalRAMG[color] / 2, DrvPalRAMB[color] / 2, 0); // shadow
 	}
 }
 
@@ -809,7 +807,7 @@ static INT32 MemIndex()
 
 	DrvNVRAM		= Next; Next += 0x000800;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x4001 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x2001 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -1744,7 +1742,7 @@ static void DrvDrawBegin()
 
 	apply_clip();
 
-	BurnTransferClear(0x4000);
+	BurnTransferClear(0x2000);
 
 	if (nBurnLayer & 1) c355_predraw_sprites();
 }
@@ -1770,6 +1768,7 @@ static void DrvDrawLine(INT32 line)
 static void DrvDrawEnd()
 {
 	BurnTransferCopy(DrvPalette);
+
 	if (has_gun) BurnGunDrawTargets();
 }
 

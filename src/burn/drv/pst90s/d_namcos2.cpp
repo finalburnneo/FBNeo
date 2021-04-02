@@ -2508,7 +2508,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 
 	if (!max_x && !max_y) return; //nothing to draw (zdrawgfxzoom draws a 1x1 pixel at 0,0 if max_x and max_y are 0)
 
-	INT32 shadow_offset = (1)?0x2000:0;
+	const INT32 shadow_offset = 0x800;
 	const UINT8 *source_base = gfx + (code * tile_size * tile_size);
 	INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
 	INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;

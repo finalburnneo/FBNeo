@@ -214,6 +214,10 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	for (INT32 i = 0; i < 0x40; i++) {
+		DrvPalRAM[i] = ((i & 0xf) ^ 0x11) * 0x1b;
+	}
+
 	M6809Open(0);
 	M6809Reset();
 	M6809Close();

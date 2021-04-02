@@ -77,8 +77,16 @@ include:
 # Stages for building
 stages:
   - build-prepare
+  - build-deps-fbneo
   - build-shared
   - build-static
+
+.build-deps-fbneo:
+  extends:
+    - .core-defs
+  stage: build-deps-fbneo
+  script:
+    - make -C ${MAKEFILE_PATH} generate-files
 
 ################################### DESKTOPS #################################
 # Windows 64-bit

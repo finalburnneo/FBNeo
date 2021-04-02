@@ -86,7 +86,7 @@ stages:
     - .core-defs
   stage: build-deps-fbneo
   script:
-    - make -C ${MAKEFILE_PATH} generate-files
+    - make -C ${MAKEFILE_PATH} platform=${PLATFORM_TARGET} generate-files
 
 ################################### DESKTOPS #################################
 # Windows 64-bit
@@ -180,11 +180,22 @@ libretro-build-tvos-arm64:
 
 ################################### CONSOLES #################################
 # Nintendo 3DS
+deps:ctr:
+  extends:
+    - .libretro-ctr
+    - .build-deps-fbneo
+  variables:
+    PLATFORM_TARGET: ctr
+
 libretro-build-ctr:
   extends:
     - .libretro-ctr-static-retroarch-master
     - .core-defs
-    
+  dependencies:
+    - deps:ctr
+  needs:
+    - deps:ctr
+
 # Nintendo WiiU
 libretro-build-wiiu:
   extends:

@@ -24149,10 +24149,10 @@ struct BurnDriver BurnDrvCpsDinods = {
 
 // Cadillacs and Dinosaurs (28th-Anniversary, Hack)
 // Hacked by GeYu
-// GOTVG 20210225
+// GOTVG 20210325
 
 static struct BurnRomInfo DinosynRomDesc[] = {
-	{ "dinosyn.bin",	0x200000, 0x67ac07df, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinosyn.bin",	0x200000, 0x775151A3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd_01.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd_02.4a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -24177,7 +24177,7 @@ STD_ROM_PICK(Dinosyn)
 STD_ROM_FN(Dinosyn)
 
 struct BurnDriver BurnDrvCpsDinosyn = {
-	"dinosyn", "dino", NULL, NULL, "2021-02-25",
+	"dinosyn", "dino", NULL, NULL, "2021-03-25",
 	"Cadillacs and Dinosaurs (28th-Anniversary, Hack)\0", NULL, "Hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,

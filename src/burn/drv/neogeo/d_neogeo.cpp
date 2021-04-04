@@ -17078,7 +17078,7 @@ struct BurnDriver BurnDrvKof98mix = {
 
 static struct BurnRomInfo kof98pfeRomDesc[] = {
 	{ "242pfe.p1",  0x100000, 0x23876d95, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
-	{ "242pfe.p2",  0x400000, 0xadbaa852, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "242pfe.p2",  0x400000, 0xdfa686e9, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 	{ "242pfe.p3",  0x020000, 0x930ea34e, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
 	{ "242pfe.s1",  0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
@@ -17148,7 +17148,7 @@ static INT32 kof98pfeExit()
 }
 
 struct BurnDriver BurnDrvkof98pfe = {
-	"kof98pfe", "kof98", "neogeo", NULL, "2017",
+	"kof98pfe", "kof98", "neogeo", NULL, "2019-09-10",
 	"The King of Fighters '98 (Plus Final Edition 2017-07-23)\0", NULL, "GSC2007", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,

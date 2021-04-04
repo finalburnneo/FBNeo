@@ -17932,10 +17932,10 @@
 	</game>
 	<game name="kof98pfe" cloneof="kof98" romof="kof98">
 		<description>The King of Fighters '98 (Plus Final Edition 2017-07-23) [Hack]</description>
-		<year>2017</year>
+		<year>2019-09-10</year>
 		<manufacturer>GSC2007</manufacturer>
 		<rom name="242pfe.p1" size="1048576" crc="23876d95"/>
-		<rom name="242pfe.p2" size="4194304" crc="adbaa852"/>
+		<rom name="242pfe.p2" size="4194304" crc="dfa686e9"/>
 		<rom name="242pfe.p3" size="131072" crc="930ea34e"/>
 		<rom name="242pfe.s1" size="131072" crc="7f4dbf23"/>
 		<rom name="242hx73.c1" size="8388608" crc="379654a5"/>

@@ -722,6 +722,7 @@ void reset_filters()
 	bShowAvailableOnly = true;
 	nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
  	nFilterSelect = HARDWARE_PUBLIC_MASK;
+
 	startGame = -gamesperscreen_halfway;
 }
 
@@ -736,7 +737,7 @@ void RefreshRomList(bool force_rescan)
 
 	tempgame = nBurnDrvActive;
 	nBurnDrvActive = 0;
-
+	filterGamesCount = 0;
 	if (!CheckGameAvb() && !force_rescan)
 	{
 		return;
@@ -791,6 +792,7 @@ void RefreshRomList(bool force_rescan)
 	WriteGameAvb();
 	nBurnDrvActive = tempgame;
 	reset_filters(); // reset filterss after a full rescan
+	DoFilterGames();
 }
 
 void gui_exit()

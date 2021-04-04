@@ -91,6 +91,7 @@ static INT32 m65c02_mode = 0;
 static INT32 m65c02_bank = 0;
 static INT32 sub_ctrl_data = 0;
 static INT32 has_2203 = 0;
+static INT32 has_z80 = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -1140,15 +1141,15 @@ static struct BurnInputInfo TwineaglInputList[] = {
 STDINPUTINFO(Twineagl)
 
 static struct BurnInputInfo CrazyfgtInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 top-center",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
-	{"P1 bottom-center",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
-	{"P1 top-left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 top-left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"	},
+	{"P1 top-center",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"P1 top-right",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
 	{"P1 bottom-left",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 4"	},
-	{"P1 top-right",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 5"	},
+	{"P1 bottom-center",BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 5"	},
 	{"P1 bottom-right",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -3942,7 +3943,7 @@ static void set_pcm_bank(INT32 data)
 	if (new_bank != seta_samples_bank)
 	{
 		INT32 samples_len = DrvROMLen[3];
-//		bprintf(0, _T("seta_samples_bank[%X] new_bank[%X]\n"), seta_samples_bank, new_bank);
+		//bprintf(0, _T("seta_samples_bank[%X] new_bank[%X] samples_len[%x]\n"), seta_samples_bank, new_bank, samples_len);
 		seta_samples_bank = new_bank;
 
 		if (samples_len == 0x240000 || samples_len == 0x1c0000 || samples_len == 0x80000) // eightfrc, blandia
@@ -5526,9 +5527,9 @@ void __fastcall crazyfgt_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0x650000:
 		case 0x650001:
-			BurnYM3812Write(0, 0, data);
+		case 0x650003:
+			BurnYM3812Write(0, (address & 2) >> 1, data);
 		return;
 
 		case 0x658000:
@@ -5546,13 +5547,16 @@ void __fastcall crazyfgt_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x650000:
-		case 0x650001:
-			BurnYM3812Write(0, 0, data);
+		case 0x650002:
+			BurnYM3812Write(0, (address & 2) >> 1, data);
 		return;
 
 		case 0x658000:
 		case 0x658001:
 			MSM6295Write(0, data);
+		return;
+
+		case 0x620002: // nop
 		return;
 	}
 }
@@ -5783,7 +5787,7 @@ static void madshark68kInit()
 		memcpy (DrvGfxROM2 + 0x000000, DrvGfxROM1 + 0x100000, 0x100000);
 		memcpy (DrvGfxROM2 + 0x100000, DrvGfxROM1 + 0x300000, 0x100000);
 		memcpy (DrvGfxROM1 + 0x100000, DrvGfxROM1 + 0x200000, 0x100000);
-	}	
+	}
 }
 
 static void thunderl68kInit()
@@ -6175,6 +6179,8 @@ static void utoukond68kInit()
 	SekSetWriteByteHandler(1,		wiggie_sound_write_byte);
 	SekClose();
 
+	has_z80 = 1;
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xdfff, 0, DrvSubROM);
 	ZetMapArea(0x0000, 0xdfff, 2, DrvSubROM);
@@ -6216,6 +6222,8 @@ static void wiggie68kInit()
 
 	Wiggie68kDecode();
 
+	has_z80 = 1;
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvSubROM);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvSubROM);
@@ -6561,6 +6569,11 @@ static void crazyfgt68kInit()
 	SekSetReadByteHandler(0,		crazyfgt_read_byte);
 	SekClose();
 
+	MSM6295Exit(0);
+	MSM6295Init(0, 4433619 / 4 / MSM6295_PIN7_HIGH, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetBank(0, DrvSndROM, 0, 0x3ffff);
+
 	// Patch protection
 	*((UINT16*)(Drv68KROM + 0x1078)) = 0x4e71;
 
@@ -6860,9 +6873,11 @@ static INT32 DrvDoReset(INT32 ram)
 	SekReset();
 	SekClose();
 
-	ZetOpen(0); // wiggie, utoukond, superbar
-	ZetReset();
-	ZetClose();
+	if (has_z80) {
+		ZetOpen(0); // wiggie, utoukond, superbar
+		ZetReset();
+		ZetClose();
+	}
 
 	if (m65c02_mode) {
 		M6502Open(0);
@@ -7031,12 +7046,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		DrvLoadRoms(0);
 	}
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pRomLoadCallback) {
 		if (pRomLoadCallback(1)) return 1;
@@ -7045,7 +7055,6 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	}
 
 	// make sure these are initialized so that we can use common routines
-	ZetInit(0);
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -7075,22 +7084,24 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid") || strstr(BurnDrvGetTextA(DRV_NAME), "wrofaero") || strstr(BurnDrvGetTextA(DRV_NAME), "sokonuke"))
 		x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&SekConfig, 16000000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-
-	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, 1);
-	BurnTimerAttach(&ZetConfig, 4000000);
-	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
-	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
-
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "tndrcade"))
 		has_2203 = 1;
+
+	BurnYM3812Init(1, 4000000, NULL, 0);
+	BurnTimerAttachYM3812(&SekConfig, 16000000);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, (has_2203) ? 2.00 : 1.00, BURN_SND_ROUTE_BOTH); // tndrcade (has_2203) needs louder fm3812
+
+	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, 1);
+	if (has_z80) {
+		BurnTimerAttach(&ZetConfig, 4000000);
+	}
+	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
+	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
 	if (has_2203) {
 		BurnYM2203Init(1,  4000000, NULL, 1);
 		BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
-		BurnYM2203SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(0, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnTimerAttach(&M6502Config, 2000000);
 	}
 
@@ -7124,7 +7135,10 @@ static INT32 DrvExit()
 	DrvSetVideoOffsets(0, 0, 0, 0);
 
 	SekExit();
-	ZetExit();
+
+	if (has_z80) {
+		ZetExit();
+	}
 
 	if (m65c02_mode) {
 		M6502Exit();
@@ -7143,7 +7157,7 @@ static INT32 DrvExit()
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	oisipuzl_hack = 0;
 	twineagle = 0;
@@ -7153,6 +7167,7 @@ static INT32 DrvExit()
 	game_rotates = 0;
 	clear_opposites = 0;
 	has_2203 = 0;
+	has_z80 = 0;
 	trackball_mode = 0;
 	usclssic = 0;
 
@@ -7693,7 +7708,7 @@ static void Drv68kmsgundam()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if (i == 4 && nCurrentFrame & 2)
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
@@ -7719,7 +7734,7 @@ static void Drv68kNoSubFrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		irq_generator(i);
 	}
@@ -7752,12 +7767,12 @@ static void Drv68k_Calibr50_FrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if (usclssic) {
 			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		} else {// calibr50
@@ -7783,7 +7798,7 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if (i & 1 && i == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
@@ -7811,12 +7826,12 @@ static void Drv68k_Twineagl_FrameCallback()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		irq_generator(i);
 		SekClose();
 
 		M6502Open(0);
-		M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		if (i == 9) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		M6502Close();
@@ -7836,12 +7851,12 @@ static void Drv68k_Downtown_FrameCallback()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		irq_generator(i);
 		SekClose();
 
 		M6502Open(0);
-		M6502Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, M6502);
 		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		if (i == 9) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		M6502Close();
@@ -7923,7 +7938,7 @@ static void Drv68kNoSubM6295FrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		irq_generator(i);
 	}
@@ -7951,8 +7966,9 @@ static void Drv68kZ80M6295FrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, Zet);
+
 		irq_generator(i);
 	}
 
@@ -7983,13 +7999,11 @@ static void Drv68kZ80YM3438FrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
+
 		irq_generator(i);
 	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		x1010_sound_update();
@@ -8006,29 +8020,33 @@ static INT32 Drv68kZ80YM3438Frame()
 	return DrvCommonFrame(Drv68kZ80YM3438FrameCallback);
 }
 
-static void CrzyfghtFrameCallback()
+static void CrazyfghtFrameCallback()
 {
-	INT32 nInterleave = 6;
+	SekNewFrame();
+
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
 
 	SekOpen(0);
 
-	INT32 irq[6] = { 2, 2, 2, 2, 2, 1 };
-
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		//BurnTimerUpdateYM3812(nCyclesTotal[0] / nInterleave);
+		BurnTimerUpdateYM3812((i+1) * (nCyclesTotal[0] / nInterleave));
 
-		SekRun(nCyclesTotal[0] / nInterleave);
+		if ((i % 48) == 0) {
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		}
 
-		SekSetIRQLine(irq[i], CPU_IRQSTATUS_AUTO);
+		if (i == 240) {
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		}
 	}
 
-	BurnTimerUpdateEndYM3812();
+	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-	//	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
@@ -8036,7 +8054,7 @@ static void CrzyfghtFrameCallback()
 
 static INT32 CrazyfgtFrame()
 {
-	return DrvCommonFrame(CrzyfghtFrameCallback);
+	return DrvCommonFrame(CrazyfghtFrameCallback);
 }
 
 
@@ -8066,7 +8084,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		ZetScan(nAction);
+
+		if (has_z80) {
+			ZetScan(nAction);
+		}
+
 		if (m65c02_mode) {
 			M6502Scan(nAction);
 		}
@@ -11298,7 +11320,7 @@ static void jockeycFrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		SekSetIRQLine(irqs[9-i], CPU_IRQSTATUS_AUTO); // ?
 	}

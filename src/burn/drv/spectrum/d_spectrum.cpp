@@ -18000,6 +18000,25 @@ struct BurnDriver BurnSpecRoadwile = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Road Runner and Wile E. Coyote 128K
+
+static struct BurnRomInfo SpecRoadwile128kRomDesc[] = {
+	{ "Road Runner and Wile E. Coyote 128K (1991)(Hi-Tec).tap", 50312, 0x766bd6a4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRoadwile128k, SpecRoadwile128k, Spec128)
+STD_ROM_FN(SpecRoadwile128k)
+
+struct BurnDriver BurnSpecRoadwile128k = {
+	"spec_roadwile128k", NULL, "spec_spec128", NULL, "1991",
+	"Road Runner and Wile E. Coyote 128K\0", NULL, "Hi-Tec", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecRoadwile128kRomInfo, SpecRoadwile128kRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Samurai Warrior - Usagi Yojimbo (48K)
 
 static struct BurnRomInfo SpecSamwarriorRomDesc[] = {
@@ -18016,6 +18035,25 @@ struct BurnDriver BurnSpecSamwarrior = {
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
 	SpectrumGetZipName, SpecSamwarriorRomInfo, SpecSamwarriorRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Samurai Warrior - Usagi Yojimbo 128K
+
+static struct BurnRomInfo SpecSamwarrior128kRomDesc[] = {
+	{ "Samurai Warrior - Usagi Yojimbo 128k (1988)(Firebird).tap", 53473, 0x989e9ffd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSamwarrior128k, SpecSamwarrior128k, Spec128)
+STD_ROM_FN(SpecSamwarrior128k)
+
+struct BurnDriver BurnSpecSamwarrior128k = {
+	"spec_samwarrior128k", NULL, "spec_spec128", NULL, "1988",
+	"Samurai Warrior - Usagi Yojimbo 128K\0", NULL, "Firebird", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecSamwarrior128kRomInfo, SpecSamwarrior128kRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

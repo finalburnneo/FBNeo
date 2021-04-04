@@ -265,30 +265,30 @@ void HiscoreSearch(FILE *fp, const char *name)
 void HiscoreInit()
 {
 	Debug_HiscoreInitted = 1;
-	
+
 	if (!CheckHiscoreAllowed()) return;
-	
+
 	HiscoresInUse = 0;
-	
+
 	TCHAR szDatFilename[MAX_PATH];
 	_stprintf(szDatFilename, _T("%shiscore.dat"), szAppHiscorePath);
 
 	FILE *fp = _tfopen(szDatFilename, _T("r"));
 	if (fp) {
 		HiscoreSearch(fp, BurnDrvGetTextA(DRV_NAME));
+		if (nHiscoreNumRanges) HiscoresInUse = 1;
 
 		// no hiscore entry for this game in hiscore.dat, and the game is a clone (probably a hack)
 		// let's try using parent entry as a fallback, the success rate seems reasonably good
 		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetTextA(DRV_PARENT) && HiscoresInUse == 0) {
 			fseek(fp, 0, SEEK_SET);
 			HiscoreSearch(fp, BurnDrvGetTextA(DRV_PARENT));
+			if (nHiscoreNumRanges) HiscoresInUse = 1;
 		}
 
 		fclose(fp);
 	}
-	
-	if (nHiscoreNumRanges) HiscoresInUse = 1;
-	
+
 	TCHAR szFilename[MAX_PATH];
 #ifndef __LIBRETRO__
  	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));

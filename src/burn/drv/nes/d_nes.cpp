@@ -17511,6 +17511,23 @@ struct BurnDriver BurnDrvnes_chumleeadv = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_doodleworldRomDesc[] = {
+	{ "Doodle World (2020)(Nate Peters).nes",          524304, 0x6c71a681, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doodleworld)
+STD_ROM_FN(nes_doodleworld)
+
+struct BurnDriver BurnDrvnes_doodleworld = {
+	"nes_doodleworld", NULL, NULL, NULL, "2020",
+	"Doodle World (HB)\0", NULL, "Nate Peters", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_doodleworldRomInfo, nes_doodleworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_frenzyRomDesc[] = {
 	{ "Frenzy A7800 (2016)(Bob Decrescenzo).nes",          40976, 0x82b0f8f4, BRF_ESS | BRF_PRG },
 };

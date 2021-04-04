@@ -3300,6 +3300,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="doodleworld">
+		<description>Doodle World (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Nate Peters</manufacturer>
+		<rom name="Doodle World (2020)(Nate Peters).nes" size="524304" crc="6c71a681"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="doolybravoland">
 		<description>Dooly Bravo Land (Korea)</description>
 		<year>1989?</year>

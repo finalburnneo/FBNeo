@@ -7727,6 +7727,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="roadwile128k" romof="spec128">
+		<description>Road Runner and Wile E. Coyote 128K</description>
+		<year>1991</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Road Runner and Wile E. Coyote 128K (1991)(Hi-Tec).tap" size="50312" crc="766bd6a4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="robinhoodlegendquest" romof="spec128">
 		<description>Robin Hood - Legend Quest</description>
 		<year>1993</year>
@@ -8030,6 +8040,16 @@
 		<manufacturer>Firebird</manufacturer>
 		<rom name="Samurai Warrior - Usagi Yojimbo (1988)(Firebird).z80" size="44210" crc="0b36f4a1"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="samwarrior128k" romof="spec128">
+		<description>Samurai Warrior - Usagi Yojimbo 128K</description>
+		<year>1988</year>
+		<manufacturer>Firebird</manufacturer>
+		<rom name="Samurai Warrior - Usagi Yojimbo 128k (1988)(Firebird).tap" size="53473" crc="989e9ffd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

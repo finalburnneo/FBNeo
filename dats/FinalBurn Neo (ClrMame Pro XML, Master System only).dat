@@ -156,11 +156,19 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alexkidd3">
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4) [Homebrew]</description>
+	<game name="alexkidd3" cloneof="alexkidd3f" romof="alexkidd3f">
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4) [Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexkidd3f">
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Yeti</manufacturer>
+		<rom name="alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms" size="524288" crc="2096b9f1"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

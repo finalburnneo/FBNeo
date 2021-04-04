@@ -418,6 +418,7 @@ DRV		BurnDrvsms_alexhitw;
 DRV		BurnDrvsms_alexlostc;
 DRV		BurnDrvsms_alexlost;
 DRV		BurnDrvsms_alexkidd3;
+DRV		BurnDrvsms_alexkidd3f;
 DRV		BurnDrvsms_alexbmxc;
 DRV		BurnDrvsms_alexbmx;
 DRV		BurnDrvsms_alexkiddb;
@@ -1562,6 +1563,7 @@ DRV		BurnDrvmd_bloodsht;
 DRV		BurnDrvMSX_bloody;
 DRV		BurnDrvtg_blodwolf;
 DRV		BurnDrvMSX_blowup;
+DRV		BurnDrvmd_blowemout;
 DRV		BurnDrvnes_blowemout;
 DRV		BurnDrvBloxeedd;
 DRV		BurnDrvBloxeed;
@@ -3647,6 +3649,7 @@ DRV		BurnDrvDonpachijs;
 DRV		BurnDrvDonpachij;
 DRV		BurnDrvDonpachikr;
 DRV		BurnDrvDonpachi;
+DRV		BurnDrvnes_doodleworld;
 DRV		BurnDrvnes_doolybravoland;
 DRV		BurnSpecdoomdemo;
 DRV		BurnDrvmd_doomtrop;
@@ -11272,6 +11275,7 @@ DRV		BurnDrvmd_rrash2s;
 DRV		BurnDrvmd_rrash2j;
 DRV		BurnDrvnes_roadrunner;
 DRV		BurnSpecRoadwile;
+DRV		BurnSpecRoadwile128k;
 DRV		BurnDrvnes_roadworker;
 DRV		BurnDrvmd_roadblstj;
 DRV		BurnDrvmd_roadblstp;
@@ -11622,6 +11626,7 @@ DRV		BurnDrvmd_samspir;
 DRV		BurnDrvnes_samuraispirits;
 DRV		Burnmd_Samsho2;
 DRV		BurnSpecSamwarrior;
+DRV		BurnSpecSamwarrior128k;
 DRV		BurnDrvtg_samuraig;
 DRV		Burnmd_Sanguoyan;
 DRV		BurnDrvmd_sanguo;
@@ -17241,7 +17246,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_alexhitw,		// Alex Kidd - High-Tech World (Euro, USA)
 	&BurnDrvsms_alexlostc,		// Alex Kidd - The Lost Stars (World) - Castellano v1.0
 	&BurnDrvsms_alexlost,		// Alex Kidd - The Lost Stars (World)
-	&BurnDrvsms_alexkidd3,		// Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4)
+	&BurnDrvsms_alexkidd3,		// Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4)
+	&BurnDrvsms_alexkidd3f,		// Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)
 	&BurnDrvsms_alexbmxc,		// Alex Kidd BMX Trial (Jpn) - Castellano v1.1
 	&BurnDrvsms_alexbmx,		// Alex Kidd BMX Trial (Jpn)
 	&BurnDrvsms_alexkiddb,		// Alex Kidd in Miracle World (Bra, v1, Pirate)
@@ -18386,6 +18392,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_bloody,			// Bloody (Spa)
 	&BurnDrvtg_blodwolf,		// Bloody Wolf
 	&BurnDrvMSX_blowup,			// Blow Up
+	&BurnDrvmd_blowemout,		// Blow'em Out (HB)
 	&BurnDrvnes_blowemout,		// Blow'Em Out! (HB)
 	&BurnDrvBloxeedd,			// Bloxeed (Japan, FD1094 317-0139 decrypted)
 	&BurnDrvBloxeed,			// Bloxeed (Japan, FD1094 317-0139)
@@ -20471,6 +20478,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDonpachij,			// DonPachi (Japan, ver. 1.01, 95/05/11)
 	&BurnDrvDonpachikr,			// DonPachi (Korea, ver. 1.12, 95/05/2x)
 	&BurnDrvDonpachi,			// DonPachi (USA, ver. 1.12, 95/05/2x)
+	&BurnDrvnes_doodleworld,	// Doodle World (HB)
 	&BurnDrvnes_doolybravoland,	// Dooly Bravo Land (Korea)
 	&BurnSpecdoomdemo,			// Doom (demo) (128K)
 	&BurnDrvmd_doomtrop,		// Doom Troopers - The Mutant Chronicles (USA)
@@ -28096,6 +28104,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rrash2j,			// Road Rash II (Jpn)
 	&BurnDrvnes_roadrunner,		// Road Runner (USA) (Unl)
 	&BurnSpecRoadwile,			// Road Runner and Wile E. Coyote (48K)
+	&BurnSpecRoadwile128k,		// Road Runner and Wile E. Coyote 128K
 	&BurnDrvnes_roadworker,		// Road Worker (Unl)
 	&BurnDrvmd_roadblstj,		// RoadBlasters (Jpn)
 	&BurnDrvmd_roadblstp,		// RoadBlasters (Prototype, 19910627)
@@ -28446,6 +28455,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_samuraispirits,	// Samurai Spirits (Unl)
 	&Burnmd_Samsho2,			// Samurai Spirits II
 	&BurnSpecSamwarrior,		// Samurai Warrior - Usagi Yojimbo (48K)
+	&BurnSpecSamwarrior128k,	// Samurai Warrior - Usagi Yojimbo 128K
 	&BurnDrvtg_samuraig,		// Samurai-Ghost
 	&Burnmd_Sanguoyan,			// San Guo Yan Yi - Huo Shao Chi Bi
 	&BurnDrvmd_sanguo,			// San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)

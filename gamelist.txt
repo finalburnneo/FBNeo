@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16571 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16576 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -413,7 +413,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_alexhitw	|  	| Alex Kidd - High-Tech World (Euro, USA)		| 		| 1989	| Sega		| Sega Master Sy| 					|
 | sms_alexlostc	|  	| Alex Kidd - The Lost Stars (World) - Castellano v1.0	| sms_alexlost	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_alexlost	|  	| Alex Kidd - The Lost Stars (World)			| 		| 1988	| Sega		| Sega Master Sy| 					|
-| sms_alexkidd3	|  	| Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo4)	| 		| 2016	| Yeti		| Sega Master Sy| 					|
+| sms_alexkidd3	|  	| Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4)| sms_alexkidd3f| 2016	| Yeti		| Sega Master Sy| 					|
+| sms_alexkidd3f|  	| Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)	| 		| 2021	| Yeti		| Sega Master Sy| 					|
 | sms_alexbmxc	|  	| Alex Kidd BMX Trial (Jpn) - Castellano v1.1		| sms_alexbmx	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_alexbmx	|  	| Alex Kidd BMX Trial (Jpn)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | sms_alexkiddb	|  	| Alex Kidd in Miracle World (Bra, v1, Pirate)		| sms_alexkidd	| 1986	| pirate	| Sega Master Sy| 					|
@@ -1544,6 +1545,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_bloody	|  	| Bloody (Spa)						| 		| 1987	| P.J. Software	| MSX		| 					|
 | tg_blodwolf	|  	| Bloody Wolf						| 		| 1990	| NEC		| TurboGrafx 16	| 					|
 | msx_blowup	|  	| Blow Up						| 		| 1988	| Eurosoft	| MSX		| 					|
+| md_blowemout	|  	| Blow'em Out (HB)					| 		| 2017	| 2nd Dimension	| Sega Megadrive| 					|
 | nes_blowemout	|  	| Blow'Em Out! (HB)					| 		| 2018	| Second Dimensi| Miscellaneous	| 					|
 | bloxeedd	|  	| Bloxeed (Japan, FD1094 317-0139 decrypted)		| bloxeed	| 1990	| Sega		| System 18	| 					|
 | bloxeed	|  	| Bloxeed (Japan, FD1094 317-0139)			| 		| 1990	| Sega		| System 18	| 					|
@@ -3595,6 +3597,7 @@ This list contains all games supported by FinalBurn Neo.
 | donpachij	|  	| DonPachi (Japan, ver. 1.01, 95/05/11)			| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|
 | donpachikr	|  	| DonPachi (Korea, ver. 1.12, 95/05/2x)			| donpachi	| 1995	| Atlus / Cave	| Cave		| 					|
 | donpachi	|  	| DonPachi (USA, ver. 1.12, 95/05/2x)			| 		| 1995	| Atlus / Cave	| Cave		| 					|
+| nes_doodleworld|  	| Doodle World (HB)					| 		| 2020	| Nate Peters	| Miscellaneous	| 					|
 | nes_doolybravoland|  	| Dooly Bravo Land (Korea)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_doomdemo	|  	| Doom (demo) (128K)					| 		| 1996	| Digital Realit| ZX Spectrum	| 					|
 | md_doomtrop	|  	| Doom Troopers - The Mutant Chronicles (USA)		| 		| 1995	| Playmates Inte| Sega Megadrive| 					|
@@ -11118,6 +11121,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_rrash2j	|  	| Road Rash II (Jpn)					| md_rrash2	| 1993	| Electronic Art| Sega Megadrive| 					|
 | nes_roadrunner|  	| Road Runner (USA) (Unl)				| 		| 1989	| Tengen	| Miscellaneous	| 					|
 | spec_roadwile	|  	| Road Runner and Wile E. Coyote (48K)			| 		| 1991	| Hi-Tec	| ZX Spectrum	| 					|
+| spec_roadwile128k|  	| Road Runner and Wile E. Coyote 128K			| 		| 1991	| Hi-Tec	| ZX Spectrum	| 					|
 | nes_roadworker|  	| Road Worker (Unl)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_roadblstj	|  	| RoadBlasters (Jpn)					| md_roadblst	| 1992	| Tengen	| Sega Megadrive| 					|
 | md_roadblstp	|  	| RoadBlasters (Prototype, 19910627)			| md_roadblst	| 1991	| Tengen	| Sega Megadrive| 					|
@@ -11458,6 +11462,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_samuraispirits|  	| Samurai Spirits (Unl)					| 		| 199x	| Rex Soft	| Miscellaneous	| 					|
 | md_samsho2	|  	| Samurai Spirits II					| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | spec_samwarrior|  	| Samurai Warrior - Usagi Yojimbo (48K)			| 		| 1988	| Firebird	| ZX Spectrum	| 					|
+| spec_samwarrior128k|  	| Samurai Warrior - Usagi Yojimbo 128K			| 		| 1988	| Firebird	| ZX Spectrum	| 					|
 | tg_samuraig	|  	| Samurai-Ghost						| 		| 1992	| TTI		| TurboGrafx 16	| 					|
 | md_sanguoyan	|  	| San Guo Yan Yi - Huo Shao Chi Bi			| 		| 199?	| Unlicensed	| Sega Megadrive| 					|
 | md_sanguo	|  	| San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)	| md_sangoret	| 199?	| <unknown>	| Sega Megadrive| 					|

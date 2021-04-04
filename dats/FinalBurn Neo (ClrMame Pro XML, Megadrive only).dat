@@ -1885,6 +1885,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="blowemout">
+		<description>Blow'em Out (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="Blow'em Out (2017)(2nd Dimension).bin" size="227136" crc="26f26c34"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bluealma">
 		<description>Blue Almanac (Jpn)</description>
 		<year>1991</year>

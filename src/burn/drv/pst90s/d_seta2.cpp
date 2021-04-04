@@ -944,11 +944,11 @@ STD_ROM_FN(grdianssy)
 
 // Denjin Makai II (LBS Edition, Hack)
 // Hack by Bindi
-// GOTVG 20210211
+// GOTVG 20210331
 
 static struct BurnRomInfo grdianslbsRomDesc[] = {
-	{ "grdianslbs_u2.bin",	0x080000, 0xe5cd1894, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianslbs_u3.bin",	0x080000, 0x12715e50, BRF_ESS | BRF_PRG },
+	{ "grdianslbs_u2.bin",	0x080000, 0x3edaca8a, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianslbs_u3.bin",	0x080000, 0x42c20d61, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -970,11 +970,11 @@ STD_ROM_FN(grdianslbs)
 
 // Denjin Makai II (LBS Super Edition, Hack)
 // Hack by Bindi
-// GOTVG 20201201
+// GOTVG 20210304
 
 static struct BurnRomInfo grdianslbssRomDesc[] = {
-	{ "grdianslbss_u2.bin",	0x080000, 0x04b90809, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianslbss_u3.bin",	0x080000, 0xb6602bfc, BRF_ESS | BRF_PRG },
+	{ "grdianslbss_u2.bin",	0x080000, 0x293a45ee, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianslbss_u3.bin",	0x080000, 0x5a24b456, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -3845,7 +3845,7 @@ struct BurnDriver BurnDrvGrdianssy = {
 };
 
 struct BurnDriver BurnDrvGrdianslbs = {
-	"grdianslbs", "grdians", NULL, NULL, "2021-02-11",
+	"grdianslbs", "grdians", NULL, NULL, "2021-03-31",
 	"Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3855,7 +3855,7 @@ struct BurnDriver BurnDrvGrdianslbs = {
 };
 
 struct BurnDriver BurnDrvGrdianslbss = {
-	"grdianslbss", "grdians", NULL, NULL, "2020-12-01",
+	"grdianslbss", "grdians", NULL, NULL, "2021-03-04",
 	"Guardians (LBS Super Edition, Hack)\0Denjin Makai II (LBS Super Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,

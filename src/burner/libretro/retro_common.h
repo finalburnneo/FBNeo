@@ -129,6 +129,7 @@ extern bool bAllowDepth32;
 extern bool bLightgunHideCrosshairEnabled;
 extern bool bPatchedRomsetsEnabled;
 extern bool bLibretroSupportsAudioBuffStatus;
+extern bool bLowPassFilterEnabled;
 extern UINT32 nVerticalMode;
 extern UINT32 nFrameskip;
 extern UINT32 nFrameskipType;

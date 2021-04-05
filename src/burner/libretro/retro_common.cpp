@@ -60,6 +60,7 @@ bool bAllowDepth32 = false;
 bool bLightgunHideCrosshairEnabled = true;
 bool bPatchedRomsetsEnabled = true;
 bool bLibretroSupportsAudioBuffStatus = false;
+bool bLowPassFilterEnabled = false;
 UINT32 nVerticalMode = 0;
 UINT32 nFrameskip = 1;
 INT32 g_audio_samplerate = 48000;
@@ -244,6 +245,17 @@ static const struct retro_core_option_definition var_fbneo_fm_interpolation = {
 		{ NULL, NULL },
 	},
 	"4-point 3rd order"
+};
+static const struct retro_core_option_definition var_fbneo_lowpass_filter = {
+	"fbneo-lowpass-filter",
+	"LowPass Filter",
+	"Enable LowPass Filter",
+	{
+		{ "disabled", NULL },
+		{ "enabled", NULL },
+		{ NULL, NULL },
+	},
+	"disabled"
 };
 static const struct retro_core_option_definition var_fbneo_analog_speed = {
 	"fbneo-analog-speed",
@@ -593,6 +605,7 @@ void set_environment()
 		vars_systems.push_back(&var_fbneo_samplerate);
 	vars_systems.push_back(&var_fbneo_sample_interpolation);
 	vars_systems.push_back(&var_fbneo_fm_interpolation);
+	vars_systems.push_back(&var_fbneo_lowpass_filter);
 	vars_systems.push_back(&var_fbneo_analog_speed);
 	vars_systems.push_back(&var_fbneo_lightgun_hide_crosshair);
 #ifdef USE_CYCLONE
@@ -1098,6 +1111,15 @@ void check_variables(void)
 			nFMInterpolation = 0;
 		else
 			nFMInterpolation = 3;
+	}
+
+	var.key = var_fbneo_lowpass_filter.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var))
+	{
+		if (strcmp(var.value, "enabled") == 0)
+			bLowPassFilterEnabled = true;
+		else
+			bLowPassFilterEnabled = false;
 	}
 
 	var.key = var_fbneo_analog_speed.key;

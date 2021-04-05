@@ -6,6 +6,7 @@
 #include "libretro.h"
 #include "burner.h"
 #include "burnint.h"
+#include "aud_dsp.h"
 
 #include "retro_common.h"
 #include "retro_cdemu.h"
@@ -1058,12 +1059,15 @@ void retro_init()
 	retro_audio_buff_occupancy = 0;
 	retro_audio_buff_underrun  = false;
 
+	DspInit();
+
 	// Check RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK support
 	bLibretroSupportsAudioBuffStatus = environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, NULL);
 }
 
 void retro_deinit()
 {
+	DspExit();
 	BurnLibExit();
 	bLibretroSupportsBitmasks = false;
 }
@@ -1144,6 +1148,8 @@ void retro_run()
 
 	ForceFrameStep(bSkipFrame);
 
+	if (bLowPassFilterEnabled)
+		DspDo(g_audio_buf, nBurnSoundLen);
 	audio_batch_cb(g_audio_buf, nBurnSoundLen);
 	bool updated = false;
 

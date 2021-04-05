@@ -54,13 +54,9 @@ static INT32 bDisableSerialize = 0;
 
 extern INT32 EnableHiscores;
 
-struct ROMFIND
-{
-	unsigned int nState;
-	int nArchive;
-	int nPos;
-	BurnRomInfo ri;
-};
+struct RomFind { int nState; int nZip; int nPos; };
+static struct RomFind* pRomFind = NULL;
+static unsigned nRomCount;
 
 struct located_archive
 {
@@ -71,8 +67,6 @@ static std::vector<located_archive> g_find_list_path;
 
 std::vector<cheat_core_option> cheat_core_options;
 
-static ROMFIND g_find_list[1024];
-static unsigned g_rom_count;
 
 INT32 nAudSegLen = 0;
 
@@ -703,10 +697,10 @@ static void free_archive_list(ZipEntry *list, unsigned count)
 
 static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 {
-	if (i < 0 || i >= g_rom_count)
+	if (i < 0 || i >= nRomCount)
 		return 1;
 
-	int archive = g_find_list[i].nArchive;
+	int archive = pRomFind[i].nZip;
 
 	if (ZipOpen((char*)g_find_list_path[archive].path.c_str()) != 0)
 		return 1;
@@ -716,7 +710,7 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 
 	if (!(ri.nType & BRF_NODUMP))
 	{
-		if (ZipLoadFile(dest, ri.nLen, wrote, g_find_list[i].nPos) != 0)
+		if (ZipLoadFile(dest, ri.nLen, wrote, pRomFind[i].nPos) != 0)
 		{
 			ZipClose();
 			return 1;
@@ -791,19 +785,32 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 // This code is very confusing. The original code is even more confusing :(
 static bool open_archive()
 {
-	memset(g_find_list, 0, sizeof(g_find_list));
+	int nMemLen;														// Zip name number
 
-	// FBNeo wants some roms ... Figure out how many.
-	g_rom_count = 0;
-	while (!BurnDrvGetRomInfo(&g_find_list[g_rom_count].ri, g_rom_count))
-		g_rom_count++;
+	// Count the number of roms needed
+	for (nRomCount = 0; ; nRomCount++) {
+		if (BurnDrvGetRomInfo(NULL, nRomCount)) {
+			break;
+		}
+	}
+	if (nRomCount <= 0) {
+		return false;
+	}
+
+	// Create an array for holding lookups for each rom -> zip entries
+	nMemLen = nRomCount * sizeof(struct RomFind);
+	pRomFind = (struct RomFind*)malloc(nMemLen);
+	if (pRomFind == NULL) {
+		return false;
+	}
+	memset(pRomFind, 0, nMemLen);
 
 	g_find_list_path.clear();
 
-	// Check if we have said archives.
-	// Check if archives are found. These are relative to g_rom_dir.
+	// List all locations for archives, max number of differently named archives involved should be 3 (romset, parent, bios)
+	// with each of those having 4 potential locations (see locate_archive)
 	char *rom_name;
-	for (unsigned index = 0; index < 32; index++)
+	for (unsigned index = 0; index < 3; index++)
 	{
 		if (BurnDrvGetZipName(&rom_name, index))
 			continue;
@@ -826,18 +833,22 @@ static bool open_archive()
 		ZipGetList(&list, &count);
 
 		// Try to map the ROMs FBNeo wants to ROMs we find inside our pretty archives ...
-		for (unsigned i = 0; i < g_rom_count; i++)
+		for (unsigned i = 0; i < nRomCount; i++)
 		{
-			if (g_find_list[i].nState == STAT_OK)
+			if (pRomFind[i].nState == STAT_OK)
 				continue;
 
-			if (g_find_list[i].ri.nType == 0 || g_find_list[i].ri.nLen == 0 || g_find_list[i].ri.nCrc == 0)
+			struct BurnRomInfo ri;
+			memset(&ri, 0, sizeof(ri));
+			BurnDrvGetRomInfo(&ri, i);
+
+			if (ri.nType == 0 || ri.nLen == 0 || ri.nCrc == 0)
 			{
-				g_find_list[i].nState = STAT_OK;
+				pRomFind[i].nState = STAT_OK;
 				continue;
 			}
 
-			int index = find_rom_by_crc(g_find_list[i].ri.nCrc, list, count);
+			int index = find_rom_by_crc(ri.nCrc, list, count);
 
 			BurnDrvGetRomName(&rom_name, i, 0);
 
@@ -904,14 +915,14 @@ static bool open_archive()
 			}
 
 			// Yay, we found it!
-			g_find_list[i].nArchive = z;
-			g_find_list[i].nPos = index;
-			g_find_list[i].nState = STAT_OK;
+			pRomFind[i].nZip = z;
+			pRomFind[i].nPos = index;
+			pRomFind[i].nState = STAT_OK;
 
-			if (list[index].nLen < g_find_list[i].ri.nLen)
-				g_find_list[i].nState = STAT_SMALL;
-			else if (list[index].nLen > g_find_list[i].ri.nLen)
-				g_find_list[i].nState = STAT_LARGE;
+			if (list[index].nLen < ri.nLen)
+				pRomFind[i].nState = STAT_SMALL;
+			else if (list[index].nLen > ri.nLen)
+				pRomFind[i].nState = STAT_LARGE;
 		}
 
 		free_archive_list(list, count);
@@ -932,18 +943,21 @@ static bool open_archive()
 	}
 
 	// Going over every rom to see if they are properly loaded before we continue ...
-	for (unsigned i = 0; i < g_rom_count; i++)
+	for (unsigned i = 0; i < nRomCount; i++)
 	{
-		if (g_find_list[i].nState != STAT_OK)
+		if (pRomFind[i].nState != STAT_OK)
 		{
-			if(!(g_find_list[i].ri.nType & BRF_OPT))
+			struct BurnRomInfo ri;
+			memset(&ri, 0, sizeof(ri));
+			BurnDrvGetRomInfo(&ri, i);
+			if(!(ri.nType & BRF_OPT))
 			{
 				// make the asia-s3.rom [0x91B64BE3] (mvs_bioses[0]) optional if we have another bios available
-				if (is_neogeo_game && g_find_list[i].ri.nCrc == mvs_bioses[0].crc && is_neogeo_bios_available)
+				if (is_neogeo_game && ri.nCrc == mvs_bioses[0].crc && is_neogeo_bios_available)
 					continue;
 
 				BurnDrvGetRomName(&rom_name, i, 0);
-				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required ...\n", i, rom_name, g_find_list[i].ri.nCrc);
+				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required ...\n", i, rom_name, ri.nCrc);
 				return false;
 			}
 		}

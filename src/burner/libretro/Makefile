@@ -16,6 +16,7 @@ HAVE_NEON = 0
 USE_EXPERIMENTAL_FLAGS = 0
 USE_CYCLONE = 0
 HAVE_UWP = 0
+# make the core smaller by removing some demanding drivers and using -Os
 LIGHT = 0
 SPLIT_UP_LINK ?= 0
 
@@ -271,6 +272,7 @@ else ifeq ($(platform), ctr)
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
+	LIGHT = 1
 	INCLUDE_7Z_SUPPORT = 0
 
 # Xbox 360
@@ -372,10 +374,12 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 	# Nintendo Wii
 	else ifneq (,$(findstring wii,$(platform)))
 		PLATFORM_DEFINES += -DGEKKO -DHW_RVL -mrvl -mcpu=750 -meabi -mhard-float
+		LIGHT = 1
 
 	# Nintendo Game Cube
 	else ifneq (,$(findstring ngc,$(platform)))
 		PLATFORM_DEFINES += -DGEKKO -DHW_DOL -mrvl -mcpu=750 -meabi -mhard-float
+		LIGHT = 1
 	endif
 
 # Emscripten
@@ -555,12 +559,17 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -O0 -g -DFBNEO_DEBUG
 	CXXFLAGS += -O0 -g -DFBNEO_DEBUG
 else
-	ifeq (,$(findstring msvc,$(platform)))
-		CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
-		CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+	ifeq ($(LIGHT), 0)
+		ifeq (,$(findstring msvc,$(platform)))
+			CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+			CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+		else
+			CFLAGS += -O2 -DNDEBUG
+			CXXFLAGS += -O2 -DNDEBUG
+		endif
 	else
-		CFLAGS += -O2 -DNDEBUG
-		CXXFLAGS += -O2 -DNDEBUG
+		CFLAGS += -Os -DNDEBUG -fomit-frame-pointer
+		CXXFLAGS += -Os -DNDEBUG -fomit-frame-pointer
 	endif
 endif
 

@@ -784,6 +784,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="attack4" romof="msx">
+		<description>Attack 4 Women Volleyball (Jpn)</description>
+		<year>1986</year>
+		<manufacturer>Pax Softonica</manufacturer>
+		<rom name="attack 4 women volleyball (1986)(pax softonica).rom" size="32768" crc="7fdf81e9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mosquiton" romof="msx">
 		<description>Attack Mosquiton</description>
 		<year>1986</year>
@@ -2716,6 +2727,17 @@
 		<year>1986</year>
 		<manufacturer>Sony</manufacturer>
 		<rom name="coaster race (japan) (alt 1).rom" size="32768" crc="a48acff7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocoamsx" romof="msx">
+		<description>Cocoa and the Time Machine (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="cocoa and the time machine (2020)(minilop).rom" size="753664" crc="22d55a91"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7216,10 +7238,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="labbaye" romof="msx">
-		<description>L'Abbaye des Morts (HB, v1.1) [Homebrew]</description>
+		<description>L'Abbaye des Morts (HB, v1.2) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Retro Deluxe</manufacturer>
-		<rom name="abbaye des morts v1.1 (2020)(retrodeluxe).rom" size="262144" crc="38e9bdb2"/>
+		<rom name="abbaye des morts v1.2 (2020)(retrodeluxe).rom" size="262144" crc="c5aef269"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7242,6 +7264,17 @@
 		<year>2009</year>
 		<manufacturer>Karoshi</manufacturer>
 		<rom name="RLV901_La_Corona_Encantada.rom" size="49152" crc="71e4252e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="reliquia" romof="msx">
+		<description>La Reliquia (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="la reliquia (2020)(roolando).rom" size="32768" crc="8a251dba"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12318,6 +12351,17 @@
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="protector, the (japan).rom" size="16384" crc="5747e69d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="relic" cloneof="reliquia" romof="reliquia">
+		<description>The Relic (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="the relic (2020)(roolandoo).rom" size="32768" crc="4ff53c97"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

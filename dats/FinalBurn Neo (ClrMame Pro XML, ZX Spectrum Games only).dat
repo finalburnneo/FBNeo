@@ -1140,7 +1140,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bcquesttires" romof="spec128">
-		<description>BC's Quest for Tires</description>
+		<description>BC's Quest for Tires [Press P to game inputs menu]</description>
 		<year>1985</year>
 		<manufacturer>Software Projects</manufacturer>
 		<rom name="BC's Quest for Tires (1985)(Software Projects).tap" size="43450" crc="fcb53b87"/>
@@ -1267,7 +1267,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blacklamp" romof="spec128">
-		<description>Black Lamp</description>
+		<description>Black Lamp (128K)</description>
 		<year>1988</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Black Lamp (1988)(Firebird Software).tap" size="47656" crc="affec634"/>
@@ -1364,7 +1364,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bloodbrothers2" romof="spec128">
+	<game name="bloodbrothers2" cloneof="bloodbrothers1" romof="bloodbrothers1">
 		<description>Blood Brothers (Module 2)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
@@ -1374,7 +1374,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bloodbrothers3" romof="spec128">
+	<game name="bloodbrothers3" cloneof="bloodbrothers1" romof="bloodbrothers1">
 		<description>Blood Brothers (Module 3)</description>
 		<year>1988</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
@@ -1556,7 +1556,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bountyhunter" romof="spec128">
-		<description>Bounty Hunter</description>
+		<description>Bounty Hunter (128K)</description>
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Bounty Hunter (1989)(Codemasters).tap" size="47005" crc="91c9c3ba"/>
@@ -2048,7 +2048,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chickinchase" romof="spectrum">
-		<description>Chickin Chase</description>
+		<description>Chickin Chase (Il Galletto)</description>
 		<year>1985</year>
 		<manufacturer>Firebird</manufacturer>
 		<rom name="Chickin Chase (1985)(Firebird).tap" size="50446" crc="5762f239"/>
@@ -2154,7 +2154,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cobra" romof="spectrum">
-		<description>Cobra</description>
+		<description>Cobra (48K)</description>
 		<year>1986</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Cobra (1986)(Ocean).tap" size="47827" crc="5b2ab724"/>
@@ -2279,7 +2279,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cookie" romof="spec128">
-		<description>Cookie</description>
+		<description>Cookie (16K)</description>
 		<year>1983</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Cookie (1983)(Ultimate Play The Game)(16K).tap" size="15646" crc="fffe62ca"/>
@@ -2388,7 +2388,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dizzy7remake" romof="spec128">
-		<description>Crystal Kindom Dizzy - Remake</description>
+		<description>Crystal Kingdom Dizzy - Remake (HB) [Homebrew]</description>
 		<year>2017</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Crystal Kindom Dizzy - Remake (2017)(Codemasters).tap" size="95390" crc="65df9186"/>
@@ -4374,21 +4374,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="heroquestwitchlord" romof="spec128">
-		<description>Hero Quest - Return of the Witch Lord</description>
+	<game name="heroquest" romof="spec128">
+		<description>Hero Quest (128K)</description>
 		<year>1991</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Hero Quest - Return of the Witch Lord (1991)(Gremlin Graphics).tap" size="131173" crc="65141180"/>
+		<rom name="Hero Quest (1991)(Gremlin Graphics).tap" size="111870" crc="76faec29"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="heroquest" romof="spec128">
-		<description>Hero Quest</description>
+	<game name="heroquestwitchlord" romof="spec128">
+		<description>Hero Quest - Return of the Witch Lord (128K)</description>
 		<year>1991</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Hero Quest (1991)(Gremlin Graphics).tap" size="111870" crc="76faec29"/>
+		<rom name="Hero Quest - Return of the Witch Lord (1991)(Gremlin Graphics).tap" size="131173" crc="65141180"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7718,22 +7718,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="roadwile" romof="spectrum">
-		<description>Road Runner and Wile E. Coyote (48K)</description>
-		<year>1991</year>
-		<manufacturer>Hi-Tec</manufacturer>
-		<rom name="Road Runner and Wile E. Coyote 48K (1991)(Hi-Tec).z80" size="32844" crc="68c9c307"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="roadwile128k" romof="spec128">
-		<description>Road Runner and Wile E. Coyote 128K</description>
+		<description>Road Runner and Wile E. Coyote (128K)</description>
 		<year>1991</year>
 		<manufacturer>Hi-Tec</manufacturer>
 		<rom name="Road Runner and Wile E. Coyote 128K (1991)(Hi-Tec).tap" size="50312" crc="766bd6a4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadwile" cloneof="roadwile128k" romof="roadwile128k">
+		<description>Road Runner and Wile E. Coyote (48K)</description>
+		<year>1991</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Road Runner and Wile E. Coyote 48K (1991)(Hi-Tec).z80" size="32844" crc="68c9c307"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7827,7 +7827,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rodland" romof="spec128">
-		<description>Rod-Land</description>
+		<description>Rod-Land (128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm</manufacturer>
 		<rom name="Rod-Land (1991)(Storm).tap" size="117150" crc="cd3ecd05"/>
@@ -8034,22 +8034,22 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="samwarrior" romof="spectrum">
-		<description>Samurai Warrior - Usagi Yojimbo (48K)</description>
-		<year>1988</year>
-		<manufacturer>Firebird</manufacturer>
-		<rom name="Samurai Warrior - Usagi Yojimbo (1988)(Firebird).z80" size="44210" crc="0b36f4a1"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
-		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="samwarrior128k" romof="spec128">
-		<description>Samurai Warrior - Usagi Yojimbo 128K</description>
+		<description>Samurai Warrior - Usagi Yojimbo (128K)</description>
 		<year>1988</year>
 		<manufacturer>Firebird</manufacturer>
 		<rom name="Samurai Warrior - Usagi Yojimbo 128k (1988)(Firebird).tap" size="53473" crc="989e9ffd"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="samwarrior" cloneof="samwarrior128k" romof="samwarrior128k">
+		<description>Samurai Warrior - Usagi Yojimbo (48K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird</manufacturer>
+		<rom name="Samurai Warrior - Usagi Yojimbo (1988)(Firebird).z80" size="44210" crc="0b36f4a1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8618,7 +8618,7 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sovietpart2" romof="spec128">
+	<game name="sovietpart2" cloneof="sovietpart1" romof="sovietpart1">
 		<description>Soviet (Part 2 of 2)</description>
 		<year>1990</year>
 		<manufacturer>Opera Soft</manufacturer>
@@ -8839,7 +8839,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starpaws" romof="spec128">
-		<description>Star Paws</description>
+		<description>Star Paws (128K)</description>
 		<year>1988</year>
 		<manufacturer>Software Projects</manufacturer>
 		<rom name="Star Paws (1988)(Software Projects).z80" size="50264" crc="14d2c355"/>
@@ -8858,13 +8858,12 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starwars" romof="spec128">
-		<description>Star Wars</description>
+	<game name="starwars" romof="spectrum">
+		<description>Star Wars (48K)</description>
 		<year>1987</year>
 		<manufacturer>Domark Ltd (UK)</manufacturer>
 		<rom name="Star Wars.tap" size="41763" crc="14f2595f"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8878,7 +8877,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="steg" romof="spec128">
-		<description>Steg</description>
+		<description>Steg the Slug (128K)</description>
 		<year>1992</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Steg (1992)(Codemasters).tap" size="51271" crc="15a4d49e"/>
@@ -8897,7 +8896,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stormbringer" romof="spec128">
-		<description>Stormbringer</description>
+		<description>Stormbringer (128K)</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Stormbringer (1987)(Mastertronic).tap" size="102898" crc="8819d367"/>
@@ -8936,7 +8935,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stormlord21" romof="spec128">
-		<description>Stormlord II: Deliverance (Part 1 of 3)</description>
+		<description>Stormlord II: Deliverance (Part 1 of 3)(128K)</description>
 		<year>1990</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Stormlord II Deliverance (1990)(Hewson Consultants)(Part 1 of 3).z80" size="35070" crc="1aae8085"/>
@@ -8945,8 +8944,8 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stormlord22" romof="spec128">
-		<description>Stormlord II: Deliverance (Part 2 of 3)</description>
+	<game name="stormlord22" cloneof="stormlord21" romof="stormlord21">
+		<description>Stormlord II: Deliverance (Part 2 of 3)(128K)</description>
 		<year>1990</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Stormlord II Deliverance (1990)(Hewson Consultants)(Part 2 of 3).z80" size="37044" crc="fabc3ae4"/>
@@ -8955,8 +8954,8 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stormlord23" romof="spec128">
-		<description>Stormlord II: Deliverance (Part 3 of 3)</description>
+	<game name="stormlord23" cloneof="stormlord21" romof="stormlord21">
+		<description>Stormlord II: Deliverance (Part 3 of 3)(128K)</description>
 		<year>1990</year>
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Stormlord II Deliverance (1990)(Hewson Consultants)(Part 3 of 3).z80" size="36532" crc="115a02d9"/>
@@ -9227,7 +9226,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superscramblesim" romof="spec128">
-		<description>Super Scramble Simulator</description>
+		<description>Super Scramble Simulator (128K)</description>
 		<year>1989</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Super Scramble Simulator (1989)(Gremlin Graphics).tap" size="56996" crc="1454d1d7"/>
@@ -9314,21 +9313,21 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="swivblk1" cloneof="swiv" romof="swiv">
-		<description>SWIV (Block1)(128K)</description>
+	<game name="swiv" romof="spec128">
+		<description>SWIV (128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
-		<rom name="SWIV (1991)(Storm Software)(Block1)(128k).z80" size="104051" crc="92a3c4e7"/>
+		<rom name="SWIV (1991)(Storm Software).tap" size="145294" crc="baf9be65"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="swiv" romof="spec128">
-		<description>SWIV</description>
+	<game name="swivblk1" cloneof="swiv" romof="swiv">
+		<description>SWIV (Block1)(128K)</description>
 		<year>1991</year>
 		<manufacturer>Storm Software</manufacturer>
-		<rom name="SWIV (1991)(Storm Software).tap" size="145294" crc="baf9be65"/>
+		<rom name="SWIV (1991)(Storm Software)(Block1)(128k).z80" size="104051" crc="92a3c4e7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10374,7 +10373,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wizardwilly" romof="spec128">
-		<description>Wizard Willy</description>
+		<description>Wizard Willy (128K)</description>
 		<year>1990</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Wizard Willy (1990)(Codemasters).tap" size="45968" crc="42cd6c9d"/>
@@ -10384,7 +10383,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wizball" romof="spec128">
-		<description>Wizball</description>
+		<description>Wizball (128K)</description>
 		<year>1987</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Wizball (1987)(Ocean).tap" size="34256" crc="70cf4de6"/>
@@ -10414,7 +10413,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wrestlingsuperstars" romof="spec128">
-		<description>Wrestling Superstars</description>
+		<description>Wrestling Superstars (128K)</description>
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Wrestling Superstars (1993)(Codemasters).z80" size="41173" crc="0b21ab8e"/>
@@ -10434,7 +10433,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wwfwresmania" romof="spec128">
-		<description>WWF WrestleMania</description>
+		<description>WWF WrestleMania (128K)</description>
 		<year>1991</year>
 		<manufacturer>Ocean Software</manufacturer>
 		<rom name="WWF WrestleMania (1991)(Ocean Software).tap" size="209329" crc="b377350f"/>
@@ -10589,7 +10588,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zub" romof="spec128">
-		<description>Zub</description>
+		<description>Zub (128K)</description>
 		<year>1986</year>
 		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Zub (1986)(Mastertronic Added Dimension).tap" size="62034" crc="e48404af"/>

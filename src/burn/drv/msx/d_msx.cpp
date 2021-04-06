@@ -25940,10 +25940,10 @@ struct BurnDriver BurnDrvMSX_blpuzzle = {
 };
 
 
-// L'Abbaye des Morts (HB, v1.1)
+// L'Abbaye des Morts (HB, v1.2)
 
 static struct BurnRomInfo MSX_labbayeRomDesc[] = {
-	{ "abbaye des morts v1.1 (2020)(retrodeluxe).rom",	262144, 0x38e9bdb2, BRF_PRG | BRF_ESS },
+	{ "abbaye des morts v1.2 (2020)(retrodeluxe).rom",	262144, 0xc5aef269, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_labbaye, MSX_labbaye, msx_msx)
@@ -25951,10 +25951,10 @@ STD_ROM_FN(MSX_labbaye)
 
 struct BurnDriver BurnDrvMSX_labbaye = {
 	"msx_labbaye", NULL, "msx_msx", NULL, "2020",
-	"L'Abbaye des Morts (HB, v1.1)\0", NULL, "Retro Deluxe", "MSX",
+	"L'Abbaye des Morts (HB, v1.2)\0", NULL, "Retro Deluxe", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
-	MSXGetZipName, MSX_labbayeRomInfo, MSX_labbayeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_labbayeRomInfo, MSX_labbayeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -26439,5 +26439,81 @@ struct BurnDriver BurnDrvMSX_Ole = {
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_OleRomInfo, MSX_OleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Attack 4 Women Volleyball
+
+static struct BurnRomInfo MSX_attack4RomDesc[] = {
+	{ "attack 4 women volleyball (1986)(pax softonica).rom",	32768, 0x7fdf81e9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_attack4, MSX_attack4, msx_msx)
+STD_ROM_FN(MSX_attack4)
+
+struct BurnDriver BurnDrvMSX_attack4 = {
+	"msx_attack4", NULL, "msx_msx", NULL, "1986",
+	"Attack 4 Women Volleyball (Jpn)\0", NULL, "Pax Softonica", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_attack4RomInfo, MSX_attack4RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Cocoa and the Time Machine (HB)
+
+static struct BurnRomInfo MSX_cocoamsxRomDesc[] = {
+	{ "cocoa and the time machine (2020)(minilop).rom",	753664, 0x22d55a91, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_cocoamsx, MSX_cocoamsx, msx_msx)
+STD_ROM_FN(MSX_cocoamsx)
+
+struct BurnDriver BurnDrvMSX_cocoamsx = {
+	"msx_cocoamsx", NULL, "msx_msx", NULL, "2020",
+	"Cocoa and the Time Machine (HB)\0", NULL, "Minilop", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_cocoamsxRomInfo, MSX_cocoamsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// La Reliquia (HB)
+
+static struct BurnRomInfo MSX_reliquiaRomDesc[] = {
+	{ "la reliquia (2020)(roolando).rom",	32768, 0x8a251dba, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_reliquia, MSX_reliquia, msx_msx)
+STD_ROM_FN(MSX_reliquia)
+
+struct BurnDriver BurnDrvMSX_reliquia = {
+	"msx_reliquia", NULL, "msx_msx", NULL, "2020",
+	"La Reliquia (HB)\0", NULL, "Roolandoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_reliquiaRomInfo, MSX_reliquiaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// The Relic (HB)
+
+static struct BurnRomInfo MSX_relicRomDesc[] = {
+	{ "the relic (2020)(roolandoo).rom",	32768, 0x4ff53c97, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_relic, MSX_relic, msx_msx)
+STD_ROM_FN(MSX_relic)
+
+struct BurnDriver BurnDrvMSX_relic = {
+	"msx_relic", "msx_reliquia", "msx_msx", NULL, "2020",
+	"The Relic (HB)\0", NULL, "Roolandoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_relicRomInfo, MSX_relicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

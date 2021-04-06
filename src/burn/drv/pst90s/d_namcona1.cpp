@@ -259,6 +259,10 @@ static void blit()
 	if (num_bytes & 1) num_bytes++;
 	if (dst_baseaddr < 0xf00000) dst_baseaddr += 0xf40000;
 
+	if (dst_baseaddr >= 0x1e00000 && dst_baseaddr < 0x1e04000) {
+		dst_baseaddr = 0xf00000 | (dst_baseaddr & 0x3fff); // palette mirror
+	}
+
 	dest_offset		= 0;
 	source_offset	= 0;
 

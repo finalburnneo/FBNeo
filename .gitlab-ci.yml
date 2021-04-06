@@ -77,25 +77,8 @@ include:
 # Stages for building
 stages:
   - build-prepare
-  - build-deps-fbneo
   - build-shared
   - build-static
-
-# Rebuild headers, allowing a smaller version for platforms with heavy memory constraints (3ds, wii, gc ?)
-.build-deps-fbneo:
-  extends:
-    - .core-defs
-  stage: build-deps-fbneo
-  cache:
-    key: "fbneo-deps-$PLATFORM_TARGET"
-    paths:
-      - src/dep/generated/
-  artifacts:
-    paths:
-      - src/dep/generated/
-    expire_in: 1 hour
-  script:
-    - make -C ${MAKEFILE_PATH} platform=${PLATFORM_TARGET} generate-files
 
 ################################### DESKTOPS #################################
 # Windows 64-bit
@@ -188,23 +171,6 @@ libretro-build-tvos-arm64:
     - .core-defs
 
 ################################### CONSOLES #################################
-# Nintendo 3DS
-deps:ctr:
-  extends:
-    - .libretro-ctr-static
-    - .build-deps-fbneo
-  variables:
-    PLATFORM_TARGET: ctr
-
-libretro-build-ctr:
-  extends:
-    - .libretro-ctr-static-retroarch-master
-    - .core-defs
-  dependencies:
-    - deps:ctr
-  needs:
-    - deps:ctr
-
 # Nintendo WiiU
 libretro-build-wiiu:
   extends:

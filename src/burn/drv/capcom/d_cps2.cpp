@@ -3613,6 +3613,31 @@ static struct BurnRomInfo MmatrixRomDesc[] = {
 STD_ROM_PICK(Mmatrix)
 STD_ROM_FN(Mmatrix)
 
+static struct BurnRomInfo MmatrixaRomDesc[] = {
+	{ "mmxa.03",       0x080000, 0x1d670ed7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mmxa.04",       0x080000, 0x43be66d2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mmxa.05",       0x080000, 0x9bfe3082, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mmx.13m",       0x400000, 0x04748718, CPS2_GFX | BRF_GRA },
+	{ "mmx.15m",       0x400000, 0x38074f44, CPS2_GFX | BRF_GRA },
+	{ "mmx.17m",       0x400000, 0xe4635e35, CPS2_GFX | BRF_GRA },
+	{ "mmx.19m",       0x400000, 0x4400a3f2, CPS2_GFX | BRF_GRA },
+	{ "mmx.14m",       0x400000, 0xd52bf491, CPS2_GFX | BRF_GRA },
+	{ "mmx.16m",       0x400000, 0x23f70780, CPS2_GFX | BRF_GRA },
+	{ "mmx.18m",       0x400000, 0x2562c9d5, CPS2_GFX | BRF_GRA },
+	{ "mmx.20m",       0x400000, 0x583a9687, CPS2_GFX | BRF_GRA },
+
+	{ "mmx.01",        0x020000, 0xc57e8171, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mmx.11m",       0x400000, 0x4180b39f, CPS2_QSND | BRF_SND },
+	{ "mmx.12m",       0x400000, 0x95e22a59, CPS2_QSND | BRF_SND },
+	
+	{ "mmatrixa.key",  0x000014, 0xf6a944b4, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mmatrixa)
+STD_ROM_FN(Mmatrixa)
+
 static struct BurnRomInfo MmatrixjRomDesc[] = {
 	{ "mmxj.03",       0x080000, 0x1d5de213, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mmxj.04",       0x080000, 0xd943a339, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9704,7 +9729,7 @@ struct BurnDriver BurnDrvCpsUecology = {
 
 struct BurnDriver BurnDrvCpsGigawing = {
 	"gigawing", NULL, NULL, NULL, "1999",
-	"Giga Wing (990222 USA)\0", NULL, "Capcom", "CPS2",
+	"Giga Wing (990222 USA)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, GigawingRomInfo, GigawingRomName, NULL, NULL, NULL, NULL, GigawingInputInfo, NULL,
@@ -9714,7 +9739,7 @@ struct BurnDriver BurnDrvCpsGigawing = {
 
 struct BurnDriver BurnDrvCpsGigawinga = {
 	"gigawinga", "gigawing", NULL, NULL, "1999",
-	"Giga Wing (990222 Asia)\0", NULL, "Capcom", "CPS2",
+	"Giga Wing (990222 Asia)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, GigawingaRomInfo, GigawingaRomName, NULL, NULL, NULL, NULL, GigawingInputInfo, NULL,
@@ -9724,7 +9749,7 @@ struct BurnDriver BurnDrvCpsGigawinga = {
 
 struct BurnDriver BurnDrvCpsGigawingb = {
 	"gigawingb", "gigawing", NULL, NULL, "1999",
-	"Giga Wing (990222 Brazil)\0", NULL, "Capcom", "CPS2",
+	"Giga Wing (990222 Brazil)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, GigawingbRomInfo, GigawingbRomName, NULL, NULL, NULL, NULL, GigawingInputInfo, NULL,
@@ -9734,7 +9759,7 @@ struct BurnDriver BurnDrvCpsGigawingb = {
 
 struct BurnDriver BurnDrvCpsGigawingh = {
 	"gigawingh", "gigawing", NULL, NULL, "1999",
-	"Giga Wing (990222 Hispanic)\0", NULL, "Capcom", "CPS2",
+	"Giga Wing (990222 Hispanic)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, GigawinghRomInfo, GigawinghRomName, NULL, NULL, NULL, NULL, GigawingInputInfo, NULL,
@@ -9744,7 +9769,7 @@ struct BurnDriver BurnDrvCpsGigawingh = {
 
 struct BurnDriver BurnDrvCpsGigawingj = {
 	"gigawingj", "gigawing", NULL, NULL, "1999",
-	"Giga Wing (990223 Japan)\0", NULL, "Capcom", "CPS2",
+	"Giga Wing (990223 Japan)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, GigawingjRomInfo, GigawingjRomName, NULL, NULL, NULL, NULL, GigawingInputInfo, NULL,
@@ -9884,7 +9909,7 @@ struct BurnDriver BurnDrvCpsRmancp2j = {
 
 struct BurnDriver BurnDrvCpsMarsMatrix = {
 	"mmatrix", NULL, NULL, NULL, "2000",
-	"Mars Matrix (000412 USA)\0", NULL, "Capcom / Takumi", "CPS2",
+	"Mars Matrix (000412 USA)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixRomInfo, MmatrixRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,
@@ -9892,9 +9917,19 @@ struct BurnDriver BurnDrvCpsMarsMatrix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsMarsMatrixJ = {
+struct BurnDriver BurnDrvCpsMarsMatrixa = {
+	"mmatrixa", "mmatrix", NULL, NULL, "2000",
+	"Mars Matrix (000412 Asia)\0", NULL, "Takumi (Capcom license)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	NULL, MmatrixaRomInfo, MmatrixaRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMarsMatrixj = {
 	"mmatrixj", "mmatrix", NULL, NULL, "2000",
-	"Mars Matrix (000412 Japan)\0", NULL, "Capcom / Takumi", "CPS2",
+	"Mars Matrix (000412 Japan)\0", NULL, "Takumi (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixjRomInfo, MmatrixjRomName, NULL, NULL, NULL, NULL, MmatrixInputInfo, NULL,

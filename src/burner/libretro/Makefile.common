@@ -17,6 +17,7 @@ GALAXIAN_DIR			:= $(FBNEO_BURN_DRIVERS_DIR)/galaxian
 MD_DIR					:= $(FBNEO_BURN_DRIVERS_DIR)/megadrive
 MIDWAY_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/midway
 NEOGEO_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/neogeo
+NES_DIR					:= $(FBNEO_BURN_DRIVERS_DIR)/nes
 PCE_DIR					:= $(FBNEO_BURN_DRIVERS_DIR)/pce
 PGM_DIR					:= $(FBNEO_BURN_DRIVERS_DIR)/pgm
 PRE90S_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/pre90s
@@ -123,6 +124,8 @@ BURN_BLACKLIST := $(ADSP2100_CPU_DIR)/2100ops.c \
 	$(ATARI_DIR)/WHATSNEW.txt.cpp
 
 ifeq ($(LIGHT), 1)
+	# those drivers won't run well on those memory-constrained systems (3ds/wii/gc),
+	# so don't bother keeping them, we'll save memory
 	BURN_BLACKLIST += $(FBNEO_CPU_DIR)/adsp2100_intf.cpp \
 		$(FBNEO_CPU_DIR)/arm_intf.cpp \
 		$(FBNEO_CPU_DIR)/arm7_intf.cpp \
@@ -165,6 +168,7 @@ ifeq ($(LIGHT), 1)
 		$(MIDWAY_DIR)/williams_adpcm.cpp \
 		$(MIDWAY_DIR)/williams_cvsd.cpp \
 		$(MIDWAY_DIR)/yawdim_sound.cpp \
+		$(NES_DIR)/d_nes.cpp \
 		$(PGM_DIR)/d_pgm.cpp \
 		$(PGM_DIR)/pgm_asic25.cpp \
 		$(PGM_DIR)/pgm_asic27a_type1.cpp \
@@ -205,6 +209,7 @@ ifeq ($(LIGHT), 1)
 		$(PST90S_DIR)/d_dreamwld.cpp \
 		$(PST90S_DIR)/d_macrossp.cpp \
 		$(SEGA_DIR)/d_segas32.cpp \
+		$(SEGA_DIR)/d_sys24.cpp \
 		$(TAITO_DIR)/d_superchs.cpp \
 		$(TAITO_DIR)/d_taitof3.cpp \
 		$(TAITO_DIR)/taitof3_snd.cpp \

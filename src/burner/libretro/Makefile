@@ -16,7 +16,7 @@ HAVE_NEON = 0
 USE_EXPERIMENTAL_FLAGS = 0
 USE_CYCLONE = 0
 HAVE_UWP = 0
-# make the core smaller by removing some demanding drivers and using -Os
+# make the core smaller by removing some demanding drivers
 LIGHT = 0
 SPLIT_UP_LINK ?= 0
 
@@ -559,17 +559,13 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -O0 -g -DFBNEO_DEBUG
 	CXXFLAGS += -O0 -g -DFBNEO_DEBUG
 else
-	ifeq ($(LIGHT), 0)
-		ifeq (,$(findstring msvc,$(platform)))
-			CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
-			CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
-		else
-			CFLAGS += -O2 -DNDEBUG
-			CXXFLAGS += -O2 -DNDEBUG
-		endif
+	ifeq (,$(findstring msvc,$(platform)))
+		# sadly, we can't use -Os for memory constrained systems here, the performance impact is too big
+		CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+		CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
 	else
-		CFLAGS += -Os -DNDEBUG -fomit-frame-pointer
-		CXXFLAGS += -Os -DNDEBUG -fomit-frame-pointer
+		CFLAGS += -O2 -DNDEBUG
+		CXXFLAGS += -O2 -DNDEBUG
 	endif
 endif
 

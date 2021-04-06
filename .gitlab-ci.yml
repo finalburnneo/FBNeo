@@ -194,6 +194,7 @@ deps:ctr:
     - .libretro-ctr-static
     - .build-deps-fbneo
   needs: []
+  allow_failure: true
   variables:
     PLATFORM_TARGET: ctr
 

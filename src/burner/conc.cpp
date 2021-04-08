@@ -495,7 +495,7 @@ static INT32 ConfigParseMAMEFile()
 
 		//was x7f00
 		//was 7c00 (breaks riot starting level cheat)
-		if (flags & 0x80004c00) continue;			// skip various cheats (unhandled methods at this time)
+		if (flags & 0x00004c00) continue;			// skip various cheats (unhandled methods at this time)
 
 		if ( flags & 0x00008000 || (flags & 0x00010000 && !menu)) { // Linked cheat "(2/2) etc.."
 			if (nCurrentAddress < CHEAT_MAX_ADDRESS) {
@@ -549,6 +549,11 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x800000) {
 					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 				}
+				if ((flags & 0xf0000000) == 0x80000000) {
+					pCurrentCheat->bRelAddress = 1; // relative address (pointer)
+					pCurrentCheat->nRelAddressOffset = nAttrib;
+					pCurrentCheat->nRelAddressBits = (flags & 0x3000000) >> 24;
+				}
 				if ((flags & 0x6) == 0x6) {
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
@@ -587,11 +592,16 @@ static INT32 ConfigParseMAMEFile()
 			if (flags & 0x2) {
 				pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
 			}
-			if ((flags & 0x6) == 0x6) {
-				pCurrentCheat->bWatchMode = 1; // display value @ address
-			}
 			if (flags & 0x800000) {
 				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
+			}
+			if ((flags & 0xf0000000) == 0x80000000) {
+				pCurrentCheat->bRelAddress = 1; // relative address (pointer)
+				pCurrentCheat->nRelAddressOffset = nAttrib;
+				pCurrentCheat->nRelAddressBits = (flags & 0x3000000) >> 24;
+			}
+			if ((flags & 0x6) == 0x6) {
+				pCurrentCheat->bWatchMode = 1; // display value @ address
 			}
 
 			OptionName(tmp);

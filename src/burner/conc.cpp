@@ -35,6 +35,20 @@ static void CheatError(TCHAR* pszFilename, INT32 nLineNumber, CheatInfo* pCheat,
 	}
 
 	FBAPopupDisplay(PUF_TYPE_ERROR);
+#elseif defined(BUILD_SDL2)
+	printf("Cheat file %s is malformed.\nPlease remove or repair the file.\n\n", pszFilename);
+	if (pCheat) {
+		printf("Parse error at line %i, in cheat \"%s\".\n", nLineNumber, pCheat->szCheatName);
+	} else {
+		printf("Parse error at line %i.\n", nLineNumber);
+	}
+
+	if (pszInfo) {
+		printf("Problem:\t%s.\n", pszInfo);
+	}
+	if (pszLine) {
+		printf("Text:\t%s\n", pszLine);
+	}
 #endif
 }
 
@@ -671,5 +685,3 @@ INT32 ConfigCheatLoad()
 
 	return 0;
 }
-
-

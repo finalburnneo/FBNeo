@@ -239,15 +239,15 @@ void ingame_gui_start(SDL_Renderer* renderer)
 
   while (!finished)
   {
-	starting_stick = SDL_GetTicks();  
-	  
+		starting_stick = SDL_GetTicks();  
+
     finished = ingame_gui_process();
     ingame_gui_render();
-	  
-	// limit 5 FPS (free CPU usage)		
-	if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick) {
-		SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
-	}
+	// limit 5 FPS (free CPU usage)
+		if ( ( 1000 / 5 ) > SDL_GetTicks() - starting_stick)
+		{
+			SDL_Delay( 1000 / 5 - ( SDL_GetTicks() - starting_stick ) );
+		}
   }
 
   ingame_gui_exit();

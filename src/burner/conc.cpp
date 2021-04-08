@@ -402,16 +402,17 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 	}
 
 	fclose (fp);
-#endif
+
 	return 0;
+#else
+	return 1;
+#endif
 }
 
 
 //TODO: make cross platform
 static INT32 ConfigParseMAMEFile()
 {
-#if defined (BUILD_WIN32)
-
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\
 	for (INT32 i = 0; i < k+1; i++) {	\
@@ -467,7 +468,11 @@ static INT32 ConfigParseMAMEFile()
 
 		if (szLine[0] == ';') continue;
 
+#ifdef BUILD_WIN32
 		if (_tcsncmp (szLine, gName, lstrlen(gName))) {
+#else
+		if (_tcsncmp (szLine, gName, strlen(gName))) {
+#endif
 			if (nFound) break;
 			else continue;
 		}
@@ -480,16 +485,32 @@ static INT32 ConfigParseMAMEFile()
 				c0[c1++] = i;
 
 		tmpcpy(1);						// control flags
+#ifdef UNICODE
 		_stscanf (tmp, _T("%x"), &flags);
+#else
+		sscanf (tmp, _T("%x"), &flags);
+#endif
 
 		tmpcpy(2);						// cheat address
+#ifdef UNICODE
 		_stscanf (tmp, _T("%x"), &nAddress);
+#else
+		sscanf (tmp, _T("%x"), &nAddress);
+#endif
 
 		tmpcpy(3);						// cheat value
+#ifdef UNICODE
 		_stscanf (tmp, _T("%x"), &nValue);
+#else
+		sscanf (tmp, _T("%x"), &nValue);
+#endif
 
 		tmpcpy(4);						// cheat attribute
+#ifdef UNICODE
 		_stscanf (tmp, _T("%x"), &nAttrib);
+#else
+		sscanf (tmp, _T("%x"), &nAttrib);
+#endif
 
 		tmpcpy(5);						// cheat name
 
@@ -532,7 +553,11 @@ static INT32 ConfigParseMAMEFile()
 
 			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
 
+#ifdef BUILD_WIN32
 			if (lstrlen(tmp) <= 0 || flags == 0x60000000) {
+#else
+			if (strlen(tmp) <= 0 || flags == 0x60000000) {
+#endif
 				n++;
 				continue;
 			}
@@ -564,7 +589,11 @@ static INT32 ConfigParseMAMEFile()
 					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
 					if (nTotal > 0xff) continue; // bad entry (roughrac has this)
 					for (nValue = 0; nValue < nTotal; nValue++) {
+#ifdef UNICODE
 						swprintf(tmp2, L"# %d.", nValue + nPlus1);
+#else
+						sprintf(tmp2, _T("# %d."), nValue + nPlus1);
+#endif
 						n++;
 						nCurrentAddress = 0;
 						OptionName(tmp2);
@@ -612,7 +641,7 @@ static INT32 ConfigParseMAMEFile()
 	}
 
 	fclose (fz);
-#endif
+
 	return 0;
 }
 

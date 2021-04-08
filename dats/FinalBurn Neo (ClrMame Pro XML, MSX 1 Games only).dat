@@ -7952,9 +7952,20 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mtriton" romof="msx">
-		<description>Menace from Triton, the (HB, v1.2) [Homebrew]</description>
+	<game name="mtriton" cloneof="mtritonc" romof="mtritonc">
+		<description>Menace from Triton, the (HB, v1.1) [Homebrew]</description>
 		<year>2020</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="menace from triton v1.1 (2020)(brain games).rom" size="49152" crc="f7a83771"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mtritonc" romof="msx">
+		<description>Menace from Triton, the (HB, v1.2) [Homebrew, cartridge version]</description>
+		<year>2021</year>
 		<manufacturer>Brain Games</manufacturer>
 		<rom name="menace from triton v1.2 (2021)(brain games).rom" size="49152" crc="f7a83771"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>

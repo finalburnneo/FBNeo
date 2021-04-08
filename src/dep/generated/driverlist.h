@@ -8234,6 +8234,7 @@ DRV		BurnDrvcv_memmanor;
 DRV		BurnDrvMSX_menace;
 DRV		BurnDrvnes_menacebeach;
 DRV		BurnDrvMSX_mtriton;
+DRV		BurnDrvMSX_mtritonc;
 DRV		BurnDrvmd_menacer;
 DRV		BurnDrvnes_mendelpalace;
 DRV		BurnDrvmd_menghu;
@@ -25067,7 +25068,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_memmanor,		// Memory Manor
 	&BurnDrvMSX_menace,			// Menace (HB)
 	&BurnDrvnes_menacebeach,	// Menace Beach (USA) (Unl)
-	&BurnDrvMSX_mtriton,		// Menace from Triton, the (HB, v1.2)
+	&BurnDrvMSX_mtriton,		// Menace from Triton, the (HB, v1.1)
+	&BurnDrvMSX_mtritonc,		// Menace from Triton, the (HB, v1.2)
 	&BurnDrvmd_menacer,			// Menacer 6-Game Cartridge (Euro, USA)
 	&BurnDrvnes_mendelpalace,	// Mendel Palace (USA)
 	&BurnDrvmd_menghu,			// Meng Huan Shui Guo Pan - 777 Casino (Chi)

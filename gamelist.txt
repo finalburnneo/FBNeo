@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16581 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16582 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8121,7 +8121,8 @@ This list contains all games supported by FinalBurn Neo.
 | cv_memmanor	|  	| Memory Manor						| 		| 1984	| Fisher-Price	| ColecoVision	| 					|
 | msx_menace	|  	| Menace (HB)						| 		| 2009	| The New Image	| MSX		| 					|
 | nes_menacebeach|  	| Menace Beach (USA) (Unl)				| 		| 1990	| Color Dreams	| Miscellaneous	| 					|
-| msx_mtriton	|  	| Menace from Triton, the (HB, v1.2)			| 		| 2020	| Brain Games	| MSX		| 					|
+| msx_mtriton	|  	| Menace from Triton, the (HB, v1.1)			| msx_mtritonc	| 2020	| Brain Games	| MSX		| 					|
+| msx_mtritonc	|  	| Menace from Triton, the (HB, v1.2)			| 		| 2021	| Brain Games	| MSX		| cartridge version			|
 | md_menacer	|  	| Menacer 6-Game Cartridge (Euro, USA)			| 		| 1992	| Sega		| Sega Megadrive| 					|
 | nes_mendelpalace|  	| Mendel Palace (USA)					| 		| 1990	| Hudson Soft	| Miscellaneous	| 					|
 | md_menghu	|  	| Meng Huan Shui Guo Pan - 777 Casino (Chi)		| 		| 199?	| <unlicensed>	| Sega Megadrive| 					|

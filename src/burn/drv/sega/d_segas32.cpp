@@ -2987,9 +2987,9 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 
 			/* apply row scroll/select */
 			if (rowscroll)
-				srcx += table[0x000 + 0x100 * (bgnum - 2) + y] & 0x3ff;
+				srcx += BURN_ENDIAN_SWAP_INT16(table[0x000 + 0x100 * (bgnum - 2) + y]) & 0x3ff;
 			if (rowselect)
-				srcy = (yscroll + table[0x200 + 0x100 * (bgnum - 2) + y]) & 0x1ff;
+				srcy = (yscroll + BURN_ENDIAN_SWAP_INT16(table[0x200 + 0x100 * (bgnum - 2) + y])) & 0x1ff;
 
 			/* look up the pages and get their source pixmaps */
 			UINT16 const *tm0 = BurnBitmapGetBitmap(((srcy >> 7) & 2) + 0 + 1);
@@ -3004,7 +3004,7 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 				{
 					for (INT32 x = extents[0]; x < extents[1]; x++, srcx += srcxstep)
 					{
-						UINT16 pix = BURN_ENDIAN_SWAP_INT16(src[(srcx >> 9) & 1][srcx & 0x1ff]);
+						UINT16 pix = src[(srcx >> 9) & 1][srcx & 0x1ff];
 						if ((pix & 0x0f) == 0 && !opaque)
 							pix = 0, transparent++;
 						dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
@@ -3477,7 +3477,7 @@ INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_s
 	{
 		UINT16 const *src = indlocal ? &data[8] : &m_spriteram[8 * (BURN_ENDIAN_SWAP_INT16(data[7]) & 0x1fff)];
 		for (INT32 x = 0; x < 16; x++)
-			indtable[x] = (src[x] & (bpp8 ? 0xfff0 : 0xffff)) | ((sprite_control_latched[0x0a/2] & 1) ? 0x8000 : 0x0000);
+			indtable[x] = (BURN_ENDIAN_SWAP_INT16(src[x]) & (bpp8 ? 0xfff0 : 0xffff)) | ((sprite_control_latched[0x0a/2] & 1) ? 0x8000 : 0x0000);
 	}
 
 	/* clamp to within the memory region size */
@@ -4007,7 +4007,7 @@ static void mix_all_layers(INT32 which, INT32 xoffs, const clip_struct cliprect,
 					/* non-sprite layers are treated similarly */
 					if (laynum != MIXER_LAYER_SPRITES)
 					{
-						secondpix = layerbase[laynum][x] & 0x1fff;
+						secondpix = BURN_ENDIAN_SWAP_INT16(layerbase[laynum][x]) & 0x1fff;
 						if (secondpix != 0 || laynum == MIXER_LAYER_BACKGROUND)
 							break;
 					}

@@ -5107,7 +5107,7 @@ static struct BurnRomInfo shufshotRomDesc[] = {
 	{ "shot_prom2_v1.40.prom2",				0x020000, 0xea10ada8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "shot_prom3_v1.40.prom3",				0x020000, 0x4b28f28b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "shotsnd_u88_v1.1.u88",				0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
@@ -5161,7 +5161,7 @@ static struct BurnRomInfo shufshot139RomDesc[] = {
 	{ "shot_prom2_v1.39.prom2",				0x020000, 0x9f12414d, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "shot_prom3_v1.39.prom3",				0x020000, 0x108a69be, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "shotsnd_u88_v1.1.u88",				0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
@@ -5207,7 +5207,7 @@ static struct BurnRomInfo shufshot138RomDesc[] = {
 	{ "shot_prom2_v1.38.prom2",				0x020000, 0x92008e13, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "shot_prom3_v1.38.prom3",				0x020000, 0x723cb9a5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "shotsnd_u88_v1.1.u88",				0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
@@ -5253,7 +5253,7 @@ static struct BurnRomInfo shufshot137RomDesc[] = {
 	{ "shot_prom2_v1.37.prom2",				0x020000, 0xe0df3025, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "shot_prom3_v1.37.prom3",				0x020000, 0xefa66ad8, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "shotsnd_u88_v1.1.u88",				0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6
@@ -5299,7 +5299,7 @@ static struct BurnRomInfo shufshot135RomDesc[] = {
 	{ "shot_prom2_v1.35.prom2",				0x020000, 0x6f27b111, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "shot_prom3_v1.35.prom3",				0x020000, 0xbf6fabbb, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "shotsnd.u88",						0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "shotsnd_u88_v1.1.u88",				0x020000, 0xe37d599d, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "shf_grom0_0.grm0_0",					0x080000, 0x832a3d6a, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "shf_grom0_1.grm0_1",					0x080000, 0x155e48a2, 3 | BRF_GRA },           //  6

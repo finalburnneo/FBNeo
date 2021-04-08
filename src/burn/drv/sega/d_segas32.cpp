@@ -1292,20 +1292,20 @@ static void paletteram_write(INT32 which, UINT32 offset, UINT16 data, UINT16 mem
 
 	UINT16 *ram = (UINT16*)DrvPalRAM[which];
 
-	UINT16 value = ram[offset];
+	UINT16 value = BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	if (convert) value = xBBBBBGGGGGRRRRR_to_xBGRBBBBGGGGRRRR(value);
 	value = (value & ~mem_mask) | (data & mem_mask);
 	if (convert) value = xBGRBBBBGGGGRRRR_to_xBBBBBGGGGGRRRRR(value);
-	ram[offset] = value;
+	ram[offset] = BURN_ENDIAN_SWAP_INT16(value);
 
 	if (mixer_control[which][0x4e/2] & 0x0880)
 	{
 		offset ^= 0x2000;
-		value = ram[offset];
+		value = BURN_ENDIAN_SWAP_INT16(ram[offset]);
 		if (convert) value = xBBBBBGGGGGRRRRR_to_xBGRBBBBGGGGRRRR(value);
 		value = (value & ~mem_mask) | (data & mem_mask);
 		if (convert) value = xBGRBBBBGGGGRRRR_to_xBBBBBGGGGGRRRRR(value);
-		ram[offset] = value;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(value);
 	}
 }
 
@@ -1317,9 +1317,9 @@ static UINT16 paletteram_read(INT32 which, UINT32 offset)
 	UINT16 *ram = (UINT16*)DrvPalRAM[which];
 
 	if (!convert)
-		return ram[offset];
+		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	else
-		return xBBBBBGGGGGRRRRR_to_xBGRBBBBGGGGRRRR(ram[offset]);
+		return xBBBBBGGGGGRRRRR_to_xBGRBBBBGGGGRRRR(BURN_ENDIAN_SWAP_INT16(ram[offset]));
 }
 
 static UINT8 sprite_control_read(UINT32 offset)
@@ -1435,7 +1435,7 @@ static void system32_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xff0000) == 0x200000) {
 		INT32 offset = (address & 0xfffe) / 2;
 		UINT16 *ram = (UINT16*)DrvV60RAM;
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 		if (memory_protection_write) {
 			memory_protection_write(offset, data, 0xffff);
 		}
@@ -1445,8 +1445,8 @@ static void system32_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xfe0000) == 0x400000) {
 		INT32 offset = (address & 0x1fffe) / 2;
 		UINT16 *ram = (UINT16*)DrvSprRAM;
-		ram[offset] = data;
-		DrvSprRAM32[(address >> 2) & 0x7fff] = (ram[offset|1] >> 8) | ((ram[offset|1] << 8) & 0xff00) | ((ram[offset & ~1] << 8) & 0xff0000) | (ram[offset & ~1] << 24);
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
+		DrvSprRAM32[(address >> 2) & 0x7fff] = BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT16(ram[offset|1]) >> 8) | ((BURN_ENDIAN_SWAP_INT16(ram[offset|1]) << 8) & 0xff00) | ((BURN_ENDIAN_SWAP_INT16(ram[offset & ~1]) << 8) & 0xff0000) | (BURN_ENDIAN_SWAP_INT16(ram[offset & ~1]) << 24));
 		return;
 	}
 
@@ -1490,7 +1490,7 @@ static void system32_main_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xfff000) == 0x810000) {
 		INT32 offset = (address & 0xffe) / 2;
 		UINT16 *ram = (UINT16*)DrvCommsRAM;
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -1559,7 +1559,7 @@ static void system32_main_write_byte(UINT32 address, UINT8 data)
 		DrvSprRAM[offset] = data;
 		offset /= 2;
 		UINT16 *ram = (UINT16*)DrvSprRAM;
-		DrvSprRAM32[offset / 2] = (ram[offset | 1] >> 8) | ((ram[offset | 1] << 8) & 0xff00) | ((ram[offset & ~1] << 8) & 0xff0000) | (ram[offset & ~1] << 24);
+		DrvSprRAM32[offset / 2] = BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT16(ram[offset | 1]) >> 8) | ((BURN_ENDIAN_SWAP_INT16(ram[offset | 1]) << 8) & 0xff00) | ((BURN_ENDIAN_SWAP_INT16(ram[offset & ~1]) << 8) & 0xff0000) | (BURN_ENDIAN_SWAP_INT16(ram[offset & ~1]) << 24));
 		return;
 	}
 
@@ -1659,7 +1659,7 @@ static UINT16 system32_main_read_word(UINT32 address)
 		if (memory_protection_read) {
 			return memory_protection_read(offset, 0xffff);
 		}
-		return ram[offset];
+		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	}
 
 	if ((address & 0xf00000) == 0x500000) {
@@ -1698,7 +1698,7 @@ static UINT16 system32_main_read_word(UINT32 address)
 		UINT16 *ram = (UINT16*)DrvCommsRAM;
 		if (offset == 0) return 0;
 		if (offset == 7) return 0x0100; // ?
-		return ram[offset];
+		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	}
 
 	if ((address & 0xfffffc) == 0x818000) {
@@ -1888,7 +1888,7 @@ static UINT8 __fastcall multi32_sound_read_port(UINT16 port)
 static tilemap_callback( layer )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
-	UINT16 data = ram[((tilemap_cache->page & 0x7f) << 9) | offs];
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[((tilemap_cache->page & 0x7f) << 9) | offs]);
 
 	TILE_SET_INFO(0, (tilemap_cache->bank << 13) | (data & 0x1fff), (data >> 4) & 0x1ff, (data >> 14) & 3);
 }
@@ -2616,7 +2616,7 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 {
 	UINT16 *m_videoram = (UINT16*)DrvVidRAM;
 
-	INT32 flip = (m_videoram[0x1ff00/2] >> 9) & 1;
+	INT32 flip = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff00/2]) >> 9) & 1;
 	clip_struct tempclip;
 	clip_struct clips[5];
 	INT32 sorted[5];
@@ -2643,10 +2643,10 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 	{
 		if (!flip)
 		{
-			clips[i].nMinx = m_videoram[0x1ff60/2 + i * 4] & 0x1ff;
-			clips[i].nMiny = m_videoram[0x1ff62/2 + i * 4] & 0x0ff;
-			clips[i].nMaxx = (m_videoram[0x1ff64/2 + i * 4] & 0x1ff) + 1;
-			clips[i].nMaxy = (m_videoram[0x1ff66/2 + i * 4] & 0x0ff) + 1;
+			clips[i].nMinx = BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff60/2 + i * 4]) & 0x1ff;
+			clips[i].nMiny = BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff62/2 + i * 4]) & 0x0ff;
+			clips[i].nMaxx = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff64/2 + i * 4]) & 0x1ff) + 1;
+			clips[i].nMaxy = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff66/2 + i * 4]) & 0x0ff) + 1;
 		}
 		else
 		{
@@ -2656,10 +2656,10 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 			visarea.nMiny = 0;
 			visarea.nMaxy = ((nScreenHeight) - 1);
 
-			clips[i].nMaxx = (visarea.nMaxx + 1) - (m_videoram[0x1ff60/2 + i * 4] & 0x1ff);
-			clips[i].nMaxy = (visarea.nMaxy + 1) - (m_videoram[0x1ff62/2 + i * 4] & 0x0ff);
-			clips[i].nMinx = (visarea.nMaxx + 1) - ((m_videoram[0x1ff64/2 + i * 4] & 0x1ff) + 1);
-			clips[i].nMiny = (visarea.nMaxy + 1) - ((m_videoram[0x1ff66/2 + i * 4] & 0x0ff) + 1);
+			clips[i].nMaxx = (visarea.nMaxx + 1) - (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff60/2 + i * 4]) & 0x1ff);
+			clips[i].nMaxy = (visarea.nMaxy + 1) - (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff62/2 + i * 4]) & 0x0ff);
+			clips[i].nMinx = (visarea.nMaxx + 1) - ((BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff64/2 + i * 4]) & 0x1ff) + 1);
+			clips[i].nMiny = (visarea.nMaxy + 1) - ((BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff66/2 + i * 4]) & 0x0ff) + 1);
 		}
 
 		if (clips[i].nMiny < tempclip.nMiny) clips[i].nMiny = tempclip.nMiny;
@@ -2763,17 +2763,17 @@ static void compute_tilemap_flips(INT32 bgnum, INT32 &flipx, INT32 &flipy)
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
 
-	INT32 global_flip = (ram[0x1ff00 / 2] >> 9)&1;
+	INT32 global_flip = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 9)&1;
 
 	flipx = global_flip;
 	flipy = global_flip;
 
-	INT32 layer_flip = (ram[0x1ff00 / 2] >> bgnum) & 1;
+	INT32 layer_flip = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> bgnum) & 1;
 
 	flipy ^= layer_flip;
 	flipx ^= layer_flip;
 
-	if ((ram[0x1ff00 / 2] >> 8) & 1) flipy = 0;
+	if ((BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 8) & 1) flipy = 0;
 }
 
 static void get_tilemaps(INT32 bgnum, INT32 *tilemaps)
@@ -2786,18 +2786,18 @@ static void get_tilemaps(INT32 bgnum, INT32 *tilemaps)
 	if (is_multi32)
 		tilebank = (system32_tilebank_external >> (2*bgnum)) & 3;
 	else
-		tilebank = ((system32_tilebank_external & 1) << 1) | ((ram[0x1ff00/2] & 0x400) >> 10);
+		tilebank = ((system32_tilebank_external & 1) << 1) | ((BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) & 0x400) >> 10);
 
-	page = (ram[0x1ff40/2 + 2 * bgnum + 0] >> 0) & 0x7f;
+	page = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff40/2 + 2 * bgnum + 0]) >> 0) & 0x7f;
 	tilemaps[0] = find_cache_entry(page, tilebank);
 
-	page = (ram[0x1ff40/2 + 2 * bgnum + 0] >> 8) & 0x7f;
+	page = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff40/2 + 2 * bgnum + 0]) >> 8) & 0x7f;
 	tilemaps[1] = find_cache_entry(page, tilebank);
 
-	page = (ram[0x1ff40/2 + 2 * bgnum + 1] >> 0) & 0x7f;
+	page = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff40/2 + 2 * bgnum + 1]) >> 0) & 0x7f;
 	tilemaps[2] = find_cache_entry(page, tilebank);
 
-	page = (ram[0x1ff40/2 + 2 * bgnum + 1] >> 8) & 0x7f;
+	page = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff40/2 + 2 * bgnum + 1]) >> 8) & 0x7f;
 	tilemaps[3] = find_cache_entry(page, tilebank);
 }
 
@@ -2819,16 +2819,16 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	// todo determine flipping
 	compute_tilemap_flips(bgnum, flipx, flipy);
 
-	INT32 clipenable = (ram[0x1ff02/2] >> (11 + bgnum)) & 1;
-	INT32 clipout = (ram[0x1ff02/2] >> (6 + bgnum)) & 1;
-	INT32 clips = (ram[0x1ff06/2] >> (4 * bgnum)) & 0x0f;
+	INT32 clipenable = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) >> (11 + bgnum)) & 1;
+	INT32 clipout = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) >> (6 + bgnum)) & 1;
+	INT32 clips = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff06/2]) >> (4 * bgnum)) & 0x0f;
 	extents_list clip_extents;
 	INT32 clipdraw_start = compute_clipping_extents(clipenable, clipout, clips, cliprect, &clip_extents);
 
-	INT32 dstxstep = ram[0x1ff50/2 + 2 * bgnum] & 0xfff;
+	INT32 dstxstep = BURN_ENDIAN_SWAP_INT16(ram[0x1ff50/2 + 2 * bgnum]) & 0xfff;
 	INT32 dstystep;
-	if (ram[0x1ff00/2] & 0x4000)
-		dstystep = ram[0x1ff52/2 + 2 * bgnum] & 0xfff;
+	if (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) & 0x4000)
+		dstystep = BURN_ENDIAN_SWAP_INT16(ram[0x1ff52/2 + 2 * bgnum]) & 0xfff;
 	else
 		dstystep = dstxstep;
 
@@ -2841,13 +2841,13 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	UINT32 srcxstep = (0x200 << 20) / dstxstep;
 	UINT32 srcystep = (0x200 << 20) / dstystep;
 
-	UINT32 srcx_start = (ram[0x1ff12/2 + 4 * bgnum] & 0x3ff) << 20;
-	srcx_start += (ram[0x1ff10/2 + 4 * bgnum] & 0xff00) << 4;
-	UINT32 srcy = (ram[0x1ff16/2 + 4 * bgnum] & 0x1ff) << 20;
-	srcy += (ram[0x1ff14/2 + 4 * bgnum] & 0xfe00) << 4;
+	UINT32 srcx_start = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff12/2 + 4 * bgnum]) & 0x3ff) << 20;
+	srcx_start += (BURN_ENDIAN_SWAP_INT16(ram[0x1ff10/2 + 4 * bgnum]) & 0xff00) << 4;
+	UINT32 srcy = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff16/2 + 4 * bgnum]) & 0x1ff) << 20;
+	srcy += (BURN_ENDIAN_SWAP_INT16(ram[0x1ff14/2 + 4 * bgnum]) & 0xfe00) << 4;
 
-	srcx_start -= ((INT16)(ram[0x1ff30/2 + 2 * bgnum] << 6) >> 6) * srcxstep;
-	srcy -= ((INT16)(ram[0x1ff32/2 + 2 * bgnum] << 7) >> 7) * srcystep;
+	srcx_start -= ((INT16)(BURN_ENDIAN_SWAP_INT16(ram[0x1ff30/2 + 2 * bgnum]) << 6) >> 6) * srcxstep;
+	srcy -= ((INT16)(BURN_ENDIAN_SWAP_INT16(ram[0x1ff32/2 + 2 * bgnum]) << 7) >> 7) * srcystep;
 
 	srcx_start += cliprect.nMinx * srcxstep;
 	srcy += cliprect.nMiny * srcystep;
@@ -2893,7 +2893,7 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 						srcx += srcxstep;
 						if ((pix & 0x0f) == 0 && !opaque)
 							pix = 0, transparent++;
-						dst[x] = pix;
+						dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
 					}
 				}
 				else
@@ -2934,21 +2934,21 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 
 	compute_tilemap_flips(bgnum, flipx, flipy);
 
-	INT32 clipenable = (m_videoram[0x1ff02/2] >> (11 + bgnum)) & 1;
-	INT32 clipout = (m_videoram[0x1ff02/2] >> (6 + bgnum)) & 1;
-	INT32 clips = (m_videoram[0x1ff06/2] >> (4 * bgnum)) & 0x0f;
+	INT32 clipenable = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff02/2]) >> (11 + bgnum)) & 1;
+	INT32 clipout = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff02/2]) >> (6 + bgnum)) & 1;
+	INT32 clips = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff06/2]) >> (4 * bgnum)) & 0x0f;
 	extents_list clip_extents;
 	INT32 clipdraw_start = compute_clipping_extents(clipenable, clipout, clips, cliprect, &clip_extents);
 
-	INT32 rowscroll = (m_videoram[0x1ff04/2] >> (bgnum - 2)) & 1;
-	INT32 rowselect = (m_videoram[0x1ff04/2] >> bgnum) & 1;
-	if ((m_videoram[0x1ff04/2] >> (bgnum + 2)) & 1)
+	INT32 rowscroll = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04/2]) >> (bgnum - 2)) & 1;
+	INT32 rowselect = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04/2]) >> bgnum) & 1;
+	if ((BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04/2]) >> (bgnum + 2)) & 1)
 		rowscroll = rowselect = 0;
 
-	UINT16 const *const table = &m_videoram[(m_videoram[0x1ff04/2] >> 10) * 0x400];
+	UINT16 const *const table = &m_videoram[(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04/2]) >> 10) * 0x400];
 
-	INT32 xscroll = (m_videoram[0x1ff12/2 + 4 * bgnum] & 0x3ff) - (m_videoram[0x1ff30/2 + 2 * bgnum] & 0x1ff);
-	INT32 yscroll = (m_videoram[0x1ff16/2 + 4 * bgnum] & 0x1ff);
+	INT32 xscroll = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff12/2 + 4 * bgnum]) & 0x3ff) - (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff30/2 + 2 * bgnum]) & 0x1ff);
+	INT32 yscroll = (BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff16/2 + 4 * bgnum]) & 0x1ff);
 
 	for (INT32 y = cliprect.nMiny; y <= cliprect.nMaxy; y++)
 	{
@@ -3004,10 +3004,10 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 				{
 					for (INT32 x = extents[0]; x < extents[1]; x++, srcx += srcxstep)
 					{
-						UINT16 pix = src[(srcx >> 9) & 1][srcx & 0x1ff];
+						UINT16 pix = BURN_ENDIAN_SWAP_INT16(src[(srcx >> 9) & 1][srcx & 0x1ff]);
 						if ((pix & 0x0f) == 0 && !opaque)
 							pix = 0, transparent++;
-						dst[x] = pix;
+						dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
 					}
 				}
 
@@ -3040,10 +3040,10 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 {
 	INT32 width, height;
 
-	INT32 flip = (ram[0x1ff00/2] >> 9) & 1;
+	INT32 flip = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) >> 9) & 1;
 
-	UINT16 const *const tilebase = &ram[((ram[0x1ff5c/2] >> 4) & 0x1f) * 0x800];
-	UINT16 const *const gfxbase = &ram[(ram[0x1ff5c/2] & 7) * 0x2000];
+	UINT16 const *const tilebase = &ram[((BURN_ENDIAN_SWAP_INT16(ram[0x1ff5c/2]) >> 4) & 0x1f) * 0x800];
+	UINT16 const *const gfxbase = &ram[(BURN_ENDIAN_SWAP_INT16(ram[0x1ff5c/2]) & 7) * 0x2000];
 
 	BurnBitmapGetDimensions(destbmp+5, &width, &height);
 
@@ -3061,7 +3061,7 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	for (INT32 y = starty; y <= endy; y++)
 		for (INT32 x = startx; x <= endx; x++)
 		{
-			INT32 tile = tilebase[y * 64 + (x + wide_offs)];
+			INT32 tile = BURN_ENDIAN_SWAP_INT16(tilebase[y * 64 + (x + wide_offs)]);
 			UINT16 const *src = &gfxbase[(tile & 0x1ff) * 16];
 			INT32 color = (tile & 0xfe00) >> 5;
 
@@ -3073,50 +3073,50 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 				/* loop over rows */
 				for (INT32 iy = 0; iy < 8; iy++)
 				{
-					INT32 pixels = *src++;
+					INT32 pixels = BURN_ENDIAN_SWAP_INT16(*src++);
 					INT32 pix;
 
 					pix = (pixels >> 4) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[0] = pix;
+					dst[0] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 0) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[1] = pix;
+					dst[1] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 12) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[2] = pix;
+					dst[2] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 8) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[3] = pix;
+					dst[3] = BURN_ENDIAN_SWAP_INT16(pix);
 
-					pixels = *src++;
+					pixels = BURN_ENDIAN_SWAP_INT16(*src++);
 
 					pix = (pixels >> 4) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[4] = pix;
+					dst[4] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 0) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[5] = pix;
+					dst[5] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 12) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[6] = pix;
+					dst[6] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 8) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[7] = pix;
+					dst[7] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					dst += width;
 				}
@@ -3132,50 +3132,50 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 				/* loop over rows */
 				for (INT32 iy = 0; iy < 8; iy++)
 				{
-					INT32 pixels = *src++;
+					INT32 pixels = BURN_ENDIAN_SWAP_INT16(*src++);
 					INT32 pix;
 
 					pix = (pixels >> 4) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[0] = pix;
+					dst[0] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 0) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-1] = pix;
+					dst[-1] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 12) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-2] = pix;
+					dst[-2] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 8) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-3] = pix;
+					dst[-3] = BURN_ENDIAN_SWAP_INT16(pix);
 
-					pix = *src++;
+					pix = BURN_ENDIAN_SWAP_INT16(*src++);
 
 					pix = (pixels >> 4) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-4] = pix;
+					dst[-4] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 0) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-5] = pix;
+					dst[-5] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 12) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-6] = pix;
+					dst[-6] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					pix = (pixels >> 8) & 0x0f;
 					if (pix)
 						pix |= color;
-					dst[-7] = pix;
+					dst[-7] = BURN_ENDIAN_SWAP_INT16(pix);
 
 					dst -= width;
 				}
@@ -3191,20 +3191,20 @@ static void update_background(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 		INT32 color;
 
 		/* determine the color */
-		if (ram[0x1ff5e/2] & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(ram[0x1ff5e/2]) & 0x8000)
 		{
 			// line color select (bank wraps at 511, confirmed by arabfgt and kokoroj2)
-			INT32 yoffset = (ram[0x1ff5e/2] + y) & 0x1ff;
-			color = (ram[0x1ff5e/2] & 0x1e00) + yoffset;
+			INT32 yoffset = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff5e/2]) + y) & 0x1ff;
+			color = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff5e/2]) & 0x1e00) + yoffset;
 		}
 		else
-			color = ram[0x1ff5e/2] & 0x1e00;
+			color = BURN_ENDIAN_SWAP_INT16(ram[0x1ff5e/2]) & 0x1e00;
 
 		/* if the color doesn't match, fill */
 		if ((m_bgcolor_line[y & 0x1ff] != color) || (m_prev_bgstartx[y & 0x1ff] != cliprect.nMinx) || (m_prev_bgendx[y & 0x1ff] != cliprect.nMaxx))
 		{
 			for (INT32 x = cliprect.nMinx; x <= cliprect.nMaxx; x++)
-				dst[x] = color;
+				dst[x] = BURN_ENDIAN_SWAP_INT16(color);
 
 			m_prev_bgstartx[y & 0x1ff] = cliprect.nMinx;
 			m_prev_bgendx[y & 0x1ff] = cliprect.nMaxx;
@@ -3215,19 +3215,19 @@ static void update_background(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 
 static void update_bitmap(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 {
-	INT32 bpp = (ram[0x1ff00/2] & 0x0800) ? 8 : 4;
+	INT32 bpp = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) & 0x0800) ? 8 : 4;
 
 	/* determine the clipping */
-	INT32 clipenable = (ram[0x1ff02/2] >> 15) & 1;
-	INT32 clipout = (ram[0x1ff02/2] >> 10) & 1;
+	INT32 clipenable = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) >> 15) & 1;
+	INT32 clipout = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) >> 10) & 1;
 	INT32 clips = 0x10;
 	extents_list clip_extents;
 	INT32 clipdraw_start = compute_clipping_extents(clipenable, clipout, clips, cliprect, &clip_extents);
 
 	/* determine x/y scroll */
-	INT32 xscroll = ram[0x1ff88/2] & 0x1ff;
-	INT32 yscroll = ram[0x1ff8a/2] & 0x1ff;
-	INT32 color = (ram[0x1ff8c/2] << 4) & 0x1fff0 & ~((1 << bpp) - 1);
+	INT32 xscroll = BURN_ENDIAN_SWAP_INT16(ram[0x1ff88/2]) & 0x1ff;
+	INT32 yscroll = BURN_ENDIAN_SWAP_INT16(ram[0x1ff8a/2]) & 0x1ff;
+	INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff8c/2]) << 4) & 0x1fff0 & ~((1 << bpp) - 1);
 
 	/* loop over target rows */
 	for (INT32 y = cliprect.nMiny; y <= cliprect.nMaxy; y++)
@@ -3253,10 +3253,10 @@ static void update_bitmap(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 						for (INT32 x = extents[0]; x < extents[1]; x++)
 						{
 							INT32 effx = (x + xscroll) & 0x1ff;
-							INT32 pix = src[(effx)] + color;
+							INT32 pix = BURN_ENDIAN_SWAP_INT16(src[(effx)]) + color;
 							if ((pix & 0xff) == 0)
 								pix = 0, transparent++;
-							dst[x] = pix;
+							dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
 						}
 					}
 
@@ -3267,10 +3267,10 @@ static void update_bitmap(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 						for (INT32 x = extents[0]; x < extents[1]; x++)
 						{
 							INT32 effx = (x + xscroll) & 0x1ff;
-							INT32 pix = ((src[effx / 4] >> (4 * (effx & 3))) & 0x0f) + color;
+							INT32 pix = ((BURN_ENDIAN_SWAP_INT16(src[effx / 4]) >> (4 * (effx & 3))) & 0x0f) + color;
 							if ((pix & 0x0f) == 0)
 								pix = 0, transparent++;
-							dst[x] = pix;
+							dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
 						}
 					}
 				}
@@ -3303,12 +3303,12 @@ static UINT8 update_tilemaps(clip_struct cliprect)
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
 
-	INT32 enable0 = !(ram[0x1ff02/2] & 0x0001) && !(ram[0x1ff8e/2] & 0x0002);
-	INT32 enable1 = !(ram[0x1ff02/2] & 0x0002) && !(ram[0x1ff8e/2] & 0x0004);
-	INT32 enable2 = !(ram[0x1ff02/2] & 0x0004) && !(ram[0x1ff8e/2] & 0x0008) && !(ram[0x1ff00/2] & 0x1000);
-	INT32 enable3 = !(ram[0x1ff02/2] & 0x0008) && !(ram[0x1ff8e/2] & 0x0010) && !(ram[0x1ff00/2] & 0x2000);
-	INT32 enablet = !(ram[0x1ff02/2] & 0x0010) && !(ram[0x1ff8e/2] & 0x0001);
-	INT32 enableb = !(ram[0x1ff02/2] & 0x0020) && !(ram[0x1ff8e/2] & 0x0020);
+	INT32 enable0 = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0001) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0002);
+	INT32 enable1 = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0002) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0004);
+	INT32 enable2 = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0004) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0008) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) & 0x1000);
+	INT32 enable3 = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0008) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0010) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff00/2]) & 0x2000);
+	INT32 enablet = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0010) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0001);
+	INT32 enableb = !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff02/2]) & 0x0020) && !(BURN_ENDIAN_SWAP_INT16(ram[0x1ff8e/2]) & 0x0020);
 
 	if (enable0) update_tilemap_zoom(cliprect, ram, 		MIXER_LAYER_NBG0, 0);		// MIXER_LAYER_NBG0
 	if (enable1) update_tilemap_zoom(cliprect, ram, 		MIXER_LAYER_NBG1, 1);		// MIXER_LAYER_NBG1
@@ -3428,34 +3428,34 @@ INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_s
 	};
 
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
-	INT32 select = (!is_multi32 || !(data[3] & 0x0800)) ? MIXER_LAYER_SPRITES_2 : MIXER_LAYER_MULTISPR_2;
+	INT32 select = (!is_multi32 || !(BURN_ENDIAN_SWAP_INT16(data[3]) & 0x0800)) ? MIXER_LAYER_SPRITES_2 : MIXER_LAYER_MULTISPR_2;
 
 	UINT16 *bitmap = BurnBitmapGetPosition(5 + select, 0, 0);
 	UINT8 numbanks = (graphics_length[1] / 4) >> 20; // size in 32bit dwords, not bytes! -dink
 
-	INT32 indirect = data[0] & 0x2000;
-	INT32 indlocal = data[0] & 0x1000;
-	INT32 shadow   = (data[0] & 0x0800) && (sprite_control_latched[0x0a/2] & 1);
-	INT32 fromram  = data[0] & 0x0400;
-	INT32 bpp8     = data[0] & 0x0200;
-	INT32 transp   = (data[0] & 0x0100) ? 0 : (bpp8 ? 0xff : 0x0f);
-	INT32 flipy    = data[0] & 0x0080;
-	INT32 flipx    = data[0] & 0x0040;
-	INT32 offsety  = data[0] & 0x0020;
-	INT32 offsetx  = data[0] & 0x0010;
-	INT32 adjusty  = (data[0] >> 2) & 3;
-	INT32 adjustx  = (data[0] >> 0) & 3;
-	INT32 srch     = (data[1] >> 8);
-	INT32 srcw     = bpp8 ? (data[1] & 0x3f) : ((data[1] >> 1) & 0x3f);
+	INT32 indirect = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x2000;
+	INT32 indlocal = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x1000;
+	INT32 shadow   = (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0800) && (sprite_control_latched[0x0a/2] & 1);
+	INT32 fromram  = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0400;
+	INT32 bpp8     = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0200;
+	INT32 transp   = (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0100) ? 0 : (bpp8 ? 0xff : 0x0f);
+	INT32 flipy    = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0080;
+	INT32 flipx    = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0040;
+	INT32 offsety  = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0020;
+	INT32 offsetx  = BURN_ENDIAN_SWAP_INT16(data[0]) & 0x0010;
+	INT32 adjusty  = (BURN_ENDIAN_SWAP_INT16(data[0]) >> 2) & 3;
+	INT32 adjustx  = (BURN_ENDIAN_SWAP_INT16(data[0]) >> 0) & 3;
+	INT32 srch     = (BURN_ENDIAN_SWAP_INT16(data[1]) >> 8);
+	INT32 srcw     = bpp8 ? (BURN_ENDIAN_SWAP_INT16(data[1]) & 0x3f) : ((BURN_ENDIAN_SWAP_INT16(data[1]) >> 1) & 0x3f);
 	INT32 bank     = is_multi32 ?
-					((data[3] & 0x2000) >> 13) | ((data[3] & 0x8000) >> 14) :
-					((data[3] & 0x0800) >> 11) | ((data[3] & 0x4000) >> 13);
-	INT32 dsth     = data[2] & 0x3ff;
-	INT32 dstw     = data[3] & 0x3ff;
-	INT32 ypos     = (INT16)(data[4] << 4) >> 4;
-	INT32 xpos     = (INT16)(data[5] << 4) >> 4;
-	UINT32 addr  = data[6] | ((data[2] & 0xf000) << 4);
-	INT32 color    = 0x8000 | (data[7] & (bpp8 ? 0x7f00 : 0x7ff0));
+					((BURN_ENDIAN_SWAP_INT16(data[3]) & 0x2000) >> 13) | ((BURN_ENDIAN_SWAP_INT16(data[3]) & 0x8000) >> 14) :
+					((BURN_ENDIAN_SWAP_INT16(data[3]) & 0x0800) >> 11) | ((BURN_ENDIAN_SWAP_INT16(data[3]) & 0x4000) >> 13);
+	INT32 dsth     = BURN_ENDIAN_SWAP_INT16(data[2]) & 0x3ff;
+	INT32 dstw     = BURN_ENDIAN_SWAP_INT16(data[3]) & 0x3ff;
+	INT32 ypos     = (INT16)(BURN_ENDIAN_SWAP_INT16(data[4]) << 4) >> 4;
+	INT32 xpos     = (INT16)(BURN_ENDIAN_SWAP_INT16(data[5]) << 4) >> 4;
+	UINT32 addr  = BURN_ENDIAN_SWAP_INT16(data[6]) | ((BURN_ENDIAN_SWAP_INT16(data[2]) & 0xf000) << 4);
+	INT32 color    = 0x8000 | (BURN_ENDIAN_SWAP_INT16(data[7]) & (bpp8 ? 0x7f00 : 0x7ff0));
 	INT32 hzoom, vzoom;
 	INT32 xdelta = 1, ydelta = 1;
 	INT32 xtarget, ytarget, yacc = 0, pix, transmask;
@@ -3475,7 +3475,7 @@ INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_s
 	/* create the local palette for the indirect case */
 	if (indirect)
 	{
-		UINT16 const *src = indlocal ? &data[8] : &m_spriteram[8 * (data[7] & 0x1fff)];
+		UINT16 const *src = indlocal ? &data[8] : &m_spriteram[8 * (BURN_ENDIAN_SWAP_INT16(data[7]) & 0x1fff)];
 		for (INT32 x = 0; x < 16; x++)
 			indtable[x] = (src[x] & (bpp8 ? 0xfff0 : 0xffff)) | ((sprite_control_latched[0x0a/2] & 1) ? 0x8000 : 0x0000);
 	}
@@ -3568,7 +3568,7 @@ INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_s
 				UINT32 curaddr = addr - 1;
 				for (INT32 x = xpos; x != xtarget; )
 				{
-					UINT32 pixels = spritedata[++curaddr & addrmask];
+					UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[++curaddr & addrmask]);
 
 					/* draw four pixels */
 					pix = (pixels >> 28) & 0xf; while (xacc < 0x10000 && x != xtarget) { sprite_draw_pixel_16(transp)  x += xdelta; xacc += hzoom; } xacc -= 0x10000;
@@ -3593,7 +3593,7 @@ INT32 draw_one_sprite(UINT16 const *data, INT32 xoffs, INT32 yoffs, const clip_s
 				UINT32 curaddr = addr - 1;
 				for (INT32 x = xpos; x != xtarget; )
 				{
-					UINT32 pixels = spritedata[++curaddr & addrmask];
+					UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[++curaddr & addrmask]);
 
 					/* draw four pixels */
 					pix = (pixels >> 24) & 0xff; while (xacc < 0x10000 && x != xtarget) { sprite_draw_pixel_256(transp); x += xdelta; xacc += hzoom; } xacc -= 0x10000;
@@ -3641,7 +3641,7 @@ static void sprite_render_list()
 	{
 		/* top two bits are a command */
 		UINT16 const *const sprite = &m_spriteram[8 * (spritenum & 0x1fff)];
-		switch (sprite[0] >> 14)
+		switch (BURN_ENDIAN_SWAP_INT16(sprite[0]) >> 14)
 		{
 			/* command 0 = draw sprite */
 			case 0:
@@ -3652,12 +3652,12 @@ static void sprite_render_list()
 			case 1:
 
 				/* set the inclusive cliprect */
-				if (sprite[0] & 0x1000)
+				if (BURN_ENDIAN_SWAP_INT16(sprite[0]) & 0x1000)
 				{
-					clipin.nMiny = (INT16)(sprite[0] << 4) >> 4;
-					clipin.nMaxy = (INT16)(sprite[1] << 4) >> 4;
-					clipin.nMinx = (INT16)(sprite[2] << 4) >> 4;
-					clipin.nMaxx = (INT16)(sprite[3] << 4) >> 4;
+					clipin.nMiny = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[0]) << 4) >> 4;
+					clipin.nMaxy = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[1]) << 4) >> 4;
+					clipin.nMinx = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[2]) << 4) >> 4;
+					clipin.nMaxx = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[3]) << 4) >> 4;
 
 					if (clipin.nMiny < outerclip.nMiny) clipin.nMiny = outerclip.nMiny;
 					if (clipin.nMinx < outerclip.nMinx) clipin.nMinx = outerclip.nMinx;
@@ -3666,12 +3666,12 @@ static void sprite_render_list()
 				}
 
 				/* set the exclusive cliprect */
-				if (sprite[0] & 0x2000)
+				if (BURN_ENDIAN_SWAP_INT16(sprite[0]) & 0x2000)
 				{
-					clipout.nMiny = (INT16)(sprite[4] << 4) >> 4;
-					clipout.nMaxy = (INT16)(sprite[5] << 4) >> 4;
-					clipout.nMinx = (INT16)(sprite[6] << 4) >> 4;
-					clipout.nMaxx = (INT16)(sprite[7] << 4) >> 4;
+					clipout.nMiny = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[4]) << 4) >> 4;
+					clipout.nMaxy = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[5]) << 4) >> 4;
+					clipout.nMinx = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[6]) << 4) >> 4;
+					clipout.nMaxx = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[7]) << 4) >> 4;
 				}
 
 				/* advance to the next entry */
@@ -3682,12 +3682,12 @@ static void sprite_render_list()
 			case 2:
 
 				/* set the global offset */
-				if (sprite[0] & 0x2000)
+				if (BURN_ENDIAN_SWAP_INT16(sprite[0]) & 0x2000)
 				{
-					yoffs = (INT16)(sprite[1] << 4) >> 4;
-					xoffs = (INT16)(sprite[2] << 4) >> 4;
+					yoffs = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[1]) << 4) >> 4;
+					xoffs = (INT16)(BURN_ENDIAN_SWAP_INT16(sprite[2]) << 4) >> 4;
 				}
-				spritenum = sprite[0] & 0x1fff;
+				spritenum = BURN_ENDIAN_SWAP_INT16(sprite[0]) & 0x1fff;
 				break;
 
 			/* command 3 = done */
@@ -3964,7 +3964,7 @@ static void mix_all_layers(INT32 which, INT32 xoffs, const clip_struct cliprect,
 				/* non-sprite layers are treated similarly */
 				if (laynum != MIXER_LAYER_SPRITES)
 				{
-					firstpix = layerbase[laynum][x] & 0x1fff;
+					firstpix = BURN_ENDIAN_SWAP_INT16(layerbase[laynum][x]) & 0x1fff;
 					if (firstpix != 0 || laynum == MIXER_LAYER_BACKGROUND)
 						break;
 				}
@@ -3985,7 +3985,7 @@ static void mix_all_layers(INT32 which, INT32 xoffs, const clip_struct cliprect,
 			}
 
 			/* adjust the first pixel */
-			firstpix = m_paletteram[(first->palbase + ((firstpix >> first->mixshift) & 0xfff0) + (firstpix & 0x0f)) & 0x3fff];
+			firstpix = BURN_ENDIAN_SWAP_INT16(m_paletteram[(first->palbase + ((firstpix >> first->mixshift) & 0xfff0) + (firstpix & 0x0f)) & 0x3fff]);
 
 			/* compute R, G, B */
 			INT32 const *rgbdelta = &rgboffs[first->coloroffs][0];
@@ -4032,7 +4032,7 @@ static void mix_all_layers(INT32 which, INT32 xoffs, const clip_struct cliprect,
 					(laynum != MIXER_LAYER_SPRITES || (first->sprblendmask & (1 << sprgroup))))
 				{
 					/* adjust the second pixel */
-					secondpix = m_paletteram[(second->palbase + ((secondpix >> second->mixshift) & 0xfff0) + (secondpix & 0x0f)) & 0x3fff];
+					secondpix = BURN_ENDIAN_SWAP_INT16(m_paletteram[(second->palbase + ((secondpix >> second->mixshift) & 0xfff0) + (secondpix & 0x0f)) & 0x3fff]);
 
 					/* compute first RGB */
 					r *= 7 - blendfactor;
@@ -4116,8 +4116,8 @@ static INT32 SingleScreenModeChangeCheck()
 	// avoid having change modes, we center the disclaimer text on the 320px
 	// screen.  ref. fake_wide_screen & notes in update_tilemap_text().
 	UINT16 *vidram = (UINT16*)DrvVidRAM;
-	INT32 screensize = (vidram[0x1ff00/2] & 0x8000) ? 416 : 320;
-	fake_wide_screen = (vidram[0x1ff00/2] & 0x8000 && nScreenWidth != 416 && !can_modechange) ? 1 : 0;
+	INT32 screensize = (BURN_ENDIAN_SWAP_INT16(vidram[0x1ff00/2]) & 0x8000) ? 416 : 320;
+	fake_wide_screen = (BURN_ENDIAN_SWAP_INT16(vidram[0x1ff00/2]) & 0x8000 && nScreenWidth != 416 && !can_modechange) ? 1 : 0;
 
 	// Rad Rally and Slip Stream actually need to change resolutions
 	if (can_modechange && screensize != nScreenWidth)
@@ -4206,7 +4206,7 @@ static INT32 MultiDraw()
 
 	// orunnersj uses wide-mode for disclaimer
 	UINT16 *vidram = (UINT16*)DrvVidRAM;
-	fake_wide_screen = (vidram[0x1ff00/2] & 0x8000) ? 2 : 0;
+	fake_wide_screen = (BURN_ENDIAN_SWAP_INT16(vidram[0x1ff00/2]) & 0x8000) ? 2 : 0;
 
 	if (~DrvDips[1] & 1) {
 		draw_screen(1);
@@ -4561,27 +4561,27 @@ static UINT16 arescue_dsp_read(UINT32 offset)
 
 	if (offset == 2)
 	{
-		switch (dsp_io[0])
+		switch (BURN_ENDIAN_SWAP_INT16(dsp_io[0]))
 		{
 			case 3:
-				dsp_io[0] = 0x8000;
-				dsp_io[1] = 0x0001;
+				dsp_io[0] = BURN_ENDIAN_SWAP_INT16(0x8000);
+				dsp_io[1] = BURN_ENDIAN_SWAP_INT16(0x0001);
 			break;
 
 			case 6:
-				dsp_io[0] = dsp_io[1] << 2;
+				dsp_io[0] = BURN_ENDIAN_SWAP_INT16(BURN_ENDIAN_SWAP_INT16(dsp_io[1]) << 2);
 			break;
 		}
 	}
 
-	return dsp_io[offset];
+	return BURN_ENDIAN_SWAP_INT16(dsp_io[offset]);
 }
 
 static void arescue_dsp_write(UINT32 offset, UINT32 data, UINT32 mem_mask)
 {
 	UINT16 *dsp_io = (UINT16*)DrvV25RAM; // re-use v25 ram
 
-	dsp_io[offset] = (dsp_io[offset] & ~mem_mask) | (data & mem_mask);
+	dsp_io[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(dsp_io[offset]) & ~mem_mask) | (data & mem_mask));
 }
 
 static INT32 ArescueInit()
@@ -5547,7 +5547,7 @@ static void sonic_custom_io_write(UINT32 offset, UINT16, UINT16)
 static void sonic_prot_write(UINT32 offset, UINT32 data, UINT32 mask)
 {
 	UINT16 *ram = (UINT16*)DrvV60RAM;
-	ram[offset] = (ram[offset] & ~mask) | (data & mask);
+	ram[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(ram[offset]) & ~mask) | (data & mask));
 
 	if (offset == (0xe5c4/2))
 	{
@@ -5558,10 +5558,10 @@ static void sonic_prot_write(UINT32 offset, UINT32 data, UINT32 mask)
 		}
 		else
 		{
-			level =  *((DrvV60ROM + 0x263a) + (ram[0xE5C4 / 2] * 2) - 1);
-			level |= *((DrvV60ROM + 0x263a) + (ram[0xE5C4 / 2] * 2) - 2) << 8;
+			level =  *((DrvV60ROM + 0x263a) + (BURN_ENDIAN_SWAP_INT16(ram[0xE5C4 / 2]) * 2) - 1);
+			level |= *((DrvV60ROM + 0x263a) + (BURN_ENDIAN_SWAP_INT16(ram[0xE5C4 / 2]) * 2) - 2) << 8;
 		}
-		ram[0xF06E/2] = level;
+		ram[0xF06E/2] = BURN_ENDIAN_SWAP_INT16(level);
 		ram[0xf0bc/2] = 0;
 		ram[0xf0be/2] = 0;
 	}
@@ -5860,7 +5860,7 @@ static UINT32 brival_protection_read(UINT32 offset, UINT32 mem_mask)
 		}
 	}
 
-	return *((UINT16*)(DrvV60RAM + offset * 2));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvV60RAM + offset * 2)));
 }
 
 // really weird... mame has this function, it copies strings to 'protram', but never maps the protram anywhere to read it?
@@ -6393,8 +6393,8 @@ static void jpark_hack()
 {
 	UINT16 *mem = (UINT16*)DrvV60ROM;
 
-	mem[0xC15A8/2] = 0xCD70;
-	mem[0xC15AA/2] = 0xD8CD;
+	mem[0xC15A8/2] = BURN_ENDIAN_SWAP_INT16(0xCD70);
+	mem[0xC15AA/2] = BURN_ENDIAN_SWAP_INT16(0xD8CD);
 }
 
 static INT32 JparkInit()
@@ -7095,7 +7095,7 @@ static void jleague_protection_write(UINT32 offset, UINT32 data, UINT32 mem_mask
 {
 	UINT16 *ram = (UINT16*)DrvV60RAM;
 
-	ram[offset] = (ram[offset] & ~mem_mask) | (data & mem_mask);
+	ram[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(ram[offset]) & ~mem_mask) | (data & mem_mask));
 
 	switch (offset)
 	{

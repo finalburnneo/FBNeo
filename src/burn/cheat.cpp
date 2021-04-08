@@ -1,4 +1,5 @@
 // Cheat module
+// Cheat file parser @ burner/conc.cpp
 
 #include "burnint.h"
 
@@ -157,7 +158,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (pCurrentCheat->bRestoreOnDisable) {
+						if (pCurrentCheat->bRestoreOnDisable && !pCurrentCheat->bRelAddress) {
 							// Write back original values to memory
 							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
 							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
@@ -195,12 +196,18 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 						bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Before 0x%X - One-Shot mode)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 						pCurrentCheat->bOneShot = 3; // re-load the one-shot frame counter
 					} else {
-						bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
+						if (pCurrentCheat->bRelAddress) {
+							const TCHAR nBits[4][8] = { { _T("8-bit") }, { _T("16-bit") }, { _T("24-bit") }, { _T("32-bit") } };
+							bprintf(0, _T("Apply cheat @ %s pointer ([0x%X] + 0x%x) -> 0x%X.\n"), nBits[pCurrentCheat->nRelAddressBits & 3], pAddressInfo->nAddress, pCurrentCheat->nRelAddressOffset, pAddressInfo->nValue);
+						} else {
+							// normal cheat
+							bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
+						}
 					}
 					if (pCurrentCheat->bWaitForModification)
 						bprintf(0, _T(" - Triggered by: Waiting for modification!\n"));
 
-					if (pCurrentCheat->nType != 0) {
+					if (pCurrentCheat->nType != 0) { // not cheat.dat
 						if (pAddressInfo->nCPU != nOpenCPU) {
 							if (nOpenCPU != -1) {
 								cheat_subptr->close();
@@ -212,7 +219,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (!pCurrentCheat->bWatchMode && !pCurrentCheat->bWaitForModification) {
+						if (!pCurrentCheat->bWatchMode && !pCurrentCheat->bWaitForModification && !pCurrentCheat->bRelAddress) {
 							// Activate the cheat
 							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
@@ -294,7 +301,7 @@ INT32 CheatApply()
 #endif
 				} else {
 					// update the cheat
-					if (pCurrentCheat->bWaitForModification) {
+					if (pCurrentCheat->bWaitForModification && !pCurrentCheat->bRelAddress) {
 						UINT32 nValNow = cheat_subptr->read(pAddressInfo->nAddress);
 						if (nValNow != pAddressInfo->nOriginalValue) {
 							bprintf(0, _T(" - Address modified! old = %X new = %X\n"),pAddressInfo->nOriginalValue, nValNow);
@@ -304,7 +311,23 @@ INT32 CheatApply()
 						}
 					} else {
 						// Write the value.
-						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+						if (pCurrentCheat->bRelAddress) {
+							// Cheat with relative address (pointer @ address + offset)  see cheat.dat entries ":rdft2:" or ":dreamwld:")
+							UINT32 addr = 0;
+
+							for (INT32 i = 0; i < (pCurrentCheat->nRelAddressBits + 1); i++) {
+								if (cheat_subptr->nAddressXor) { // big endian
+									addr |= cheat_subptr->read(pAddressInfo->nAddress + (pCurrentCheat->nRelAddressBits - i)) << (i * 8);
+								} else {
+									addr |= cheat_subptr->read(pAddressInfo->nAddress + i) << (i * 8);
+								}
+							}
+
+							cheat_subptr->write(addr + pCurrentCheat->nRelAddressOffset, pAddressInfo->nValue);
+						} else {
+							// Normal cheat write
+							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+						}
 						pCurrentCheat->bModified = 1;
 					}
 				}

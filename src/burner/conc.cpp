@@ -35,7 +35,9 @@ static void CheatError(TCHAR* pszFilename, INT32 nLineNumber, CheatInfo* pCheat,
 	}
 
 	FBAPopupDisplay(PUF_TYPE_ERROR);
-#elseif defined(BUILD_SDL2)
+#endif
+
+#if defined(BUILD_SDL2)
 	printf("Cheat file %s is malformed.\nPlease remove or repair the file.\n\n", pszFilename);
 	if (pCheat) {
 		printf("Parse error at line %i, in cheat \"%s\".\n", nLineNumber, pCheat->szCheatName);

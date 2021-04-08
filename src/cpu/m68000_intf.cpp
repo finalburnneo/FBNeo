@@ -62,7 +62,7 @@ cpu_core_config SekConfig =
 	SekRunEnd,
 	SekReset,
 	0x1000000,
-	0
+	1 // big endian
 };
 
 #if defined (FBNEO_DEBUG)

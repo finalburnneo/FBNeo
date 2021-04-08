@@ -25682,23 +25682,41 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 
 // Menace from Triton, the (HB, v1.2)
 
-static struct BurnRomInfo MSX_mtritonRomDesc[] = {
+static struct BurnRomInfo MSX_mtritoncRomDesc[] = {
 	{ "menace from triton v1.2 (2021)(brain games).rom",	49152, 0xf7a83771, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mtritonc, MSX_mtritonc, msx_msx)
+STD_ROM_FN(MSX_mtritonc)
+
+struct BurnDriver BurnDrvMSX_mtritonc = {
+	"msx_mtritonc", NULL, "msx_msx", NULL, "2021",
+	"Menace from Triton, the (HB, v1.2)\0", "cartridge version", "Brain Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_mtritoncRomInfo, MSX_mtritoncRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Menace from Triton, the (HB, v1.1)
+
+static struct BurnRomInfo MSX_mtritonRomDesc[] = {
+	{ "menace from triton v1.1 (2020)(brain games).rom",	49152, 0xf7a83771, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mtriton, MSX_mtriton, msx_msx)
 STD_ROM_FN(MSX_mtriton)
 
 struct BurnDriver BurnDrvMSX_mtriton = {
-	"msx_mtriton", NULL, "msx_msx", NULL, "2020",
-	"Menace from Triton, the (HB, v1.2)\0", NULL, "Brain Games", "MSX",
+	"msx_mtriton", "msx_mtritonc", "msx_msx", NULL, "2020",
+	"Menace from Triton, the (HB, v1.1)\0", NULL, "Brain Games", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_mtritonRomInfo, MSX_mtritonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Duckstroma (HB)
 
@@ -25958,7 +25976,6 @@ struct BurnDriver BurnDrvMSX_labbaye = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Molecule Man
 

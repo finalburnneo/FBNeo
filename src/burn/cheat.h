@@ -28,6 +28,11 @@ struct CheatInfo {
 	INT32 bWatchMode;                           // Display value on screen
 	INT32 bWaitForModification;                 // Wait for Modification before changing
 	INT32 bModified;                            // Wrote cheat?
+
+	INT32 bRelAddress;                          // Relative address (pointer offset) cheat, see :rdft2: or :dreamwld: in cheat.dat
+	INT32 nRelAddressOffset;                    // The offset
+	INT32 nRelAddressBits;                      // 0, 1, 2, 3 = 8, 16, 24, 32bit
+
 	TCHAR szCheatName[CHEAT_MAX_NAME];
 	struct CheatOption* pOption[CHEAT_MAX_OPTIONS];
 };

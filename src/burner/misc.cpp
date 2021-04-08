@@ -319,6 +319,11 @@ TCHAR* DecorateGenreInfo()
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
+		if (nGenre & GBF_ADV) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_ADV, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
 		szDecoratedGenre[_tcslen(szDecoratedGenre) - 2] = _T('\0');
 	}
 

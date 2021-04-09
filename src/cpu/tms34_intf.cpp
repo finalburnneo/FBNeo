@@ -91,7 +91,7 @@ INT32 TMS34010GetActive()
 	return active_cpu;
 }
 
-void TMS34010WriteROM(UINT32 address, UINT8 value);
+void TMS34010WriteCheat(UINT32 address, UINT8 value);
 UINT8 TMS34010ReadByte(UINT32 address);
 
 INT32 TMS34010TotalCyclesi32()
@@ -110,7 +110,7 @@ cpu_core_config TMS34010Config =
 	TMS34010Open,
 	TMS34010Close,
 	TMS34010ReadByte,
-	TMS34010WriteROM,
+	TMS34010WriteCheat,
 	TMS34010GetActive,
 	TMS34010TotalCyclesi32,
 	TMS34010NewFrame,
@@ -369,8 +369,11 @@ void TMS34010WriteWord(UINT32 address, UINT16 value)
     }
 }
 
-void TMS34010WriteROM(UINT32 address, UINT8 value) // for cheat-engine
+void TMS34010WriteCheat(UINT32 address, UINT8 value) // for cheat-engine
 {
+	if ((address & 0xfff000000) == 0)
+		address <<= 3; // cheat.dat format is not in bit-address. *kludge*
+
     UINT8 *pr = g_mmap->map[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MAXHANDLER) {
         // address is bit-address

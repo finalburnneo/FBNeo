@@ -536,7 +536,8 @@ static INT32 DrvInit(INT32 type)
 	GenericTilemapSetTransparent(0, 7);
 	GenericTilemapSetTransparent(1, 7);
 	GenericTilemapSetTransparent(2, 3);
-
+	GenericTilemapSetOffsets(0, 0, -16);
+	GenericTilemapSetOffsets(1, 0, -16);
 	DrvDoReset(1);
 
 	return 0;
@@ -590,7 +591,7 @@ static void draw_sprites(INT32 prio)
 {
 	UINT8 *src = DrvSprRAM + 0x1800;
 	INT32 sprite_xoffs = src[0x07f5] - ((src[0x07f4] & 0x01) << 8);
-	INT32 sprite_yoffs = src[0x07f7];
+	INT32 sprite_yoffs = src[0x07f7] + 16;
 
 	for (INT32 offs = 0; offs < 0x800 - 16; offs += 16, src += 16)
 	{

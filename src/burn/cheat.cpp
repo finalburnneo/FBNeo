@@ -158,7 +158,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (pCurrentCheat->bRestoreOnDisable && !pCurrentCheat->bRelAddress) {
+						if (pCurrentCheat->bRestoreOnDisable && !pAddressInfo->bRelAddress) {
 							// Write back original values to memory
 							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
 							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
@@ -196,9 +196,13 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 						bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Before 0x%X - One-Shot mode)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 						pCurrentCheat->bOneShot = 3; // re-load the one-shot frame counter
 					} else {
-						if (pCurrentCheat->bRelAddress) {
+						if (pAddressInfo->bRelAddress) {
 							const TCHAR nBits[4][8] = { { _T("8-bit") }, { _T("16-bit") }, { _T("24-bit") }, { _T("32-bit") } };
-							bprintf(0, _T("Apply cheat @ %s pointer ([0x%X] + 0x%x) -> 0x%X.\n"), nBits[pCurrentCheat->nRelAddressBits & 3], pAddressInfo->nAddress, pCurrentCheat->nRelAddressOffset, pAddressInfo->nValue);
+							if (pAddressInfo->nMultiByte) {
+								bprintf(0, _T("Apply cheat @ %s pointer ([0x%X] + 0x%x + %x) -> 0x%X.\n"), nBits[pAddressInfo->nRelAddressBits & 3], pAddressInfo->nAddress, pAddressInfo->nRelAddressOffset, pAddressInfo->nMultiByte, pAddressInfo->nValue);
+							} else {
+								bprintf(0, _T("Apply cheat @ %s pointer ([0x%X] + 0x%x) -> 0x%X.\n"), nBits[pAddressInfo->nRelAddressBits & 3], pAddressInfo->nAddress, pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
+							}
 						} else {
 							// normal cheat
 							bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
@@ -219,7 +223,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (!pCurrentCheat->bWatchMode && !pCurrentCheat->bWaitForModification && !pCurrentCheat->bRelAddress) {
+						if (!pCurrentCheat->bWatchMode && !pCurrentCheat->bWaitForModification && !pAddressInfo->bRelAddress) {
 							// Activate the cheat
 							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
@@ -301,7 +305,7 @@ INT32 CheatApply()
 #endif
 				} else {
 					// update the cheat
-					if (pCurrentCheat->bWaitForModification && !pCurrentCheat->bRelAddress) {
+					if (pCurrentCheat->bWaitForModification && !pAddressInfo->bRelAddress) {
 						UINT32 nValNow = cheat_subptr->read(pAddressInfo->nAddress);
 						if (nValNow != pAddressInfo->nOriginalValue) {
 							bprintf(0, _T(" - Address modified! old = %X new = %X\n"),pAddressInfo->nOriginalValue, nValNow);
@@ -311,19 +315,19 @@ INT32 CheatApply()
 						}
 					} else {
 						// Write the value.
-						if (pCurrentCheat->bRelAddress) {
+						if (pAddressInfo->bRelAddress) {
 							// Cheat with relative address (pointer @ address + offset)  see cheat.dat entries ":rdft2:" or ":dreamwld:")
 							UINT32 addr = 0;
 
-							for (INT32 i = 0; i < (pCurrentCheat->nRelAddressBits + 1); i++) {
+							for (INT32 i = 0; i < (pAddressInfo->nRelAddressBits + 1); i++) {
 								if (cheat_subptr->nAddressXor) { // big endian
-									addr |= cheat_subptr->read(pAddressInfo->nAddress + (pCurrentCheat->nRelAddressBits - i)) << (i * 8);
+									addr |= cheat_subptr->read(pAddressInfo->nAddress + (pAddressInfo->nRelAddressBits - i)) << (i * 8);
 								} else {
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + i) << (i * 8);
 								}
 							}
-
-							cheat_subptr->write(addr + pCurrentCheat->nRelAddressOffset, pAddressInfo->nValue);
+							//bprintf(0, _T("cw %x -> %x\n"), addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
+							cheat_subptr->write(addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
 						} else {
 							// Normal cheat write
 							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);

@@ -1878,6 +1878,7 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 
 static inline void SendSoundCommand(const UINT8 nCommand)
 {
+	if (ZetGetActive() == -1) return;
 //	bprintf(PRINT_NORMAL, _T("  - Sound command sent (0x%02X).\n"), nCommand);
 
 	neogeoSynchroniseZ80(0);

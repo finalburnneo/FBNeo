@@ -20,6 +20,7 @@ enum e132xs_types
 void E132XSInit(INT32 cpu, INT32 type, INT32 clock);
 void E132XSOpen(INT32 cpu);
 void E132XSClose();
+INT32 E132XSGetActive();
 INT32 E132XSRun(INT32);
 INT32 E132XSIdle(INT32);
 void E132XSReset();
@@ -48,3 +49,4 @@ void E132XSRunEnd();
 void E132XSRunEndBurnAllCycles();
 INT32 E132XSBurnCycles(INT32 cycles);
 INT64 E132XSTotalCycles();
+INT32 E132XSTotalCycles32();

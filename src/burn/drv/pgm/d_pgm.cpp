@@ -1963,10 +1963,16 @@ struct BurnDriver BurnDrvOlds103t = {
 };
 
 
-// Knights of Valour / Sangoku Senki (V117)
+// Knights of Valour / Sangoku Senki (V117, Hong Kong)
 
+/* IGS PCB NO-0212-2 MADE IN TAIWAN
+   IGS PCB NO-0213T MADE IN TAIWAN 
+   SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
+   ROM TYPES: U1 ST M27C322
+   CREDITS TO: "XeD" */
+   
 static struct BurnRomInfo kovRomDesc[] = {
-	{ "p0600.117",     				0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "pgm_p0601_v117.u1",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t0600.u11",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 	
@@ -1996,8 +2002,8 @@ static INT32 kovInit()
 
 struct BurnDriver BurnDrvKov = {
 	"kov", NULL, "pgm", NULL, "1999",
-	"Knights of Valour - Sangoku Senki (V117)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour\0\u4E09\u56FD\u6226\u7D00\0\u4E09\u56FD\u6218\u7EAA (V117)\0", NULL, NULL, NULL,
+	"Knights of Valour - Sangoku Senki (V117, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour\0\u4E09\u56FD\u6226\u7D00\0\u4E09\u56FD\u6218\u7EAA (V117, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovRomInfo, kovRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -2041,6 +2047,13 @@ struct BurnDriver BurnDrvKov115 = {
 
 // Knights of Valour Plus / Sangoku Senki (V114, Hong Kong)
 
+/* IGS PCB NO-0212-1 MADE IN TAIWAN
+   IGS PCB NO-0213T MADE IN TAIWAN 
+   SCREEN VER PIC: THE ROM DOES NOT DISPLAY ITS VERSION ON SCREEN.
+   ROM TYPES: U4 U5 U7 U8 ALL TI TMS27C040
+   ROM TYPES: U10 TI TMS27C240
+   CREDITS TO: "XeD" */
+   
 static struct BurnRomInfo kov114RomDesc[] = {
 	{ "sav114_u4.u4",     			0x0080000, 0x4db3d4d3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "sav114_u7.u7",     			0x0080000, 0xb8d12b0c, 1 | BRF_PRG | BRF_ESS }, //  1

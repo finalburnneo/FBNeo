@@ -9,7 +9,7 @@ static char* szSDLconfigPath = NULL;
 
 static void CreateConfigName(char* szConfig)
 {
-#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	char cfgdir[MAX_PATH] = { 0 };
 
 	if (szSDLconfigPath == NULL)
@@ -19,7 +19,7 @@ static void CreateConfigName(char* szConfig)
 
 	snprintf(cfgdir, MAX_PATH, "%sfbneo.ini", szSDLconfigPath);
 	memcpy(szConfig, cfgdir, sizeof(cfgdir));
-#else 
+#else
 	_stprintf(szConfig, _T("fbneo.ini"));
 
 #endif
@@ -64,9 +64,9 @@ int ConfigAppLoad()
 		VAR(nVidSelect);                           // video mode select
 		VAR(bVidFullStretch);
 		VAR(nAutoFireRate);
-		VAR(bAlwaysMenu);	
-		VAR(nGameSelect); 	
-		VAR(nFilterSelect);		
+		VAR(bAlwaysMenu);
+		VAR(nGameSelect);
+		VAR(nFilterSelect);
 		VAR(bShowAvailableOnly);
 		VAR(bShowClones);
 		VAR(gameSelectedFromFilter);
@@ -125,7 +125,7 @@ int ConfigAppLoad()
 		STR(szAppListsPath);
 		STR(szAppDatListsPath);
 		STR(szAppArchivesPath);
-	
+
 #undef STR
 #undef FLT
 #undef VAR
@@ -219,7 +219,7 @@ int ConfigAppSave()
 	STR(szAppPreviewsPath);
 	fprintf(f, "\n// Path to titlescreen images for use on the menu (include trailing slash)\n");
 	STR(szAppTitlesPath);
-	fprintf(f, "\n// UNUSED CURRENTLY (include trailing slash)\n");
+	fprintf(f, "\n// Cheat files path (include trailing slash)\n");
 	STR(szAppCheatsPath);
 	fprintf(f, "\n// Hiscore save path (include trailing slash)\n");
 	STR(szAppHiscorePath);

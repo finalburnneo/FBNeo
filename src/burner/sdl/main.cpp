@@ -36,7 +36,7 @@ char videofiltering[3];
 
 #ifdef BUILD_SDL2
 SDL_Window* sdlWindow = NULL;
- 
+
 static char* szSDLeepromPath = NULL;
 static char* szSDLhiscorePath = NULL;
 static char* szSDLHDDPath = NULL;
@@ -64,7 +64,7 @@ int parseSwitches(int argc, char* argv[])
 		if (strcmp(argv[i] + 1, "menu") == 0)
 		{
 			set_commandline_option_not_config(usemenu, 1)
-			
+
 		}
 
 		if (strcmp(argv[i] + 1, "novsync") == 0)
@@ -225,6 +225,7 @@ void generateDats()
 
 void DoGame(int gameToRun)
 {
+
 	if (!DrvInit(gameToRun, 0))
 	{
 		MediaInit();
@@ -332,7 +333,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Do these bits before override via ConfigAppLoad
-	bCheatsAllowed = false;
+	bCheatsAllowed = 1;
 	nAudDSPModule[0] = 0;
 	EnableHiscores = 1;
 

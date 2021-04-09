@@ -433,8 +433,14 @@ static INT32 ConfigParseMAMEFile()
 	INT32 k = (flags >> 20) & 3;	\
 	for (INT32 i = 0; i < k+1; i++) {	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0;	\
-		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress + i;	\
+		if ((flags & 0xf0000000) == 0x80000000) { \
+			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress = 1; \
+			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nRelAddressOffset = nAttrib; \
+			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nRelAddressBits = (flags & 0x3000000) >> 24; \
+		} \
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = (pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress) ? nAddress : nAddress + i;	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nMultiByte = i;	\
 		nCurrentAddress++;	\
 	}	\
 
@@ -483,6 +489,19 @@ static INT32 ConfigParseMAMEFile()
 		nLen = _tcslen (szLine);
 
 		if (szLine[0] == ';') continue;
+
+		/*
+		 // find the cheat flags & 0x80000000 cheats (for debugging) -dink
+		 int derpy = 0;
+		 for (INT32 i = 0; i < nLen; i++) {
+		 	if (szLine[i] == ':') {
+		 		derpy++;
+		 		if (derpy == 2 && szLine[i+1] == '8') {
+					bprintf(0, _T("%s\n"), szLine);
+				}
+			}
+		}
+		*/
 
 #ifdef BUILD_WIN32
 		if (_tcsncmp (szLine, gName, lstrlen(gName))) {
@@ -590,11 +609,6 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x800000) {
 					pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
 				}
-				if ((flags & 0xf0000000) == 0x80000000) {
-					pCurrentCheat->bRelAddress = 1; // relative address (pointer)
-					pCurrentCheat->nRelAddressOffset = nAttrib;
-					pCurrentCheat->nRelAddressBits = (flags & 0x3000000) >> 24;
-				}
 				if ((flags & 0x6) == 0x6) {
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
@@ -639,11 +653,6 @@ static INT32 ConfigParseMAMEFile()
 			}
 			if (flags & 0x800000) {
 				pCurrentCheat->bRestoreOnDisable = 1; // restore previous value on disable
-			}
-			if ((flags & 0xf0000000) == 0x80000000) {
-				pCurrentCheat->bRelAddress = 1; // relative address (pointer)
-				pCurrentCheat->nRelAddressOffset = nAttrib;
-				pCurrentCheat->nRelAddressBits = (flags & 0x3000000) >> 24;
 			}
 			if ((flags & 0x6) == 0x6) {
 				pCurrentCheat->bWatchMode = 1; // display value @ address

@@ -4625,6 +4625,29 @@ static void hyperstone_trap(struct regs_decode *)
 
 #include "e132xsop.inc"
 
+static void core_set_irq_line(INT32, INT32 line, INT32 state)
+{
+	E132XSSetIRQLine(line, state);
+}
+
+cpu_core_config E132XSConfig =
+{
+	"e132xs",
+	E132XSOpen,
+	E132XSClose,
+	program_read_byte_16be,
+	program_write_byte_16be,
+	E132XSGetActive,
+	E132XSTotalCycles32,
+	E132XSNewFrame,
+	E132XSIdle,
+	core_set_irq_line,
+	E132XSRun,
+	E132XSRunEnd,
+	E132XSReset,
+	0xffffffff,
+	1
+};
 
 static void map_internal_ram(UINT32 size)
 {
@@ -4675,6 +4698,8 @@ void E132XSInit(INT32 , INT32 type, INT32 )
 	read_dword_handler = NULL;
 	io_write_dword_handler = NULL;
 	io_read_dword_handler = NULL;
+
+	CpuCheatRegister(0, &E132XSConfig);
 
 	switch (type)
 	{
@@ -4786,6 +4811,11 @@ void E132XSReset()
 	sleep_until_int = 0;
 }
 
+INT32 E132XSGetActive()
+{
+	return 0;
+}
+
 void E132XSOpen(INT32 nCpu)
 {
 	if (nCpu){}
@@ -4803,6 +4833,11 @@ void E132XSExit()
 INT64 E132XSTotalCycles()
 {
 	return utotal_cycles + (n_cycles - m_icount);
+}
+
+INT32 E132XSTotalCycles32()
+{
+	return E132XSTotalCycles();
 }
 
 void E132XSNewFrame()

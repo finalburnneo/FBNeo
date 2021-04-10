@@ -663,6 +663,7 @@ static INT32 DrvFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 		}
+		BurnSoundTweakVolume(pBurnSoundOut, nBurnSoundLen, 0.65);
 	}
 
 	VezClose();

@@ -570,7 +570,7 @@ static INT32 DrvInit()
 	Z180Close();
 
 	BurnYM2151Init(27000000 / 8);
-	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 
 	BurnTrackballInit(2);
 

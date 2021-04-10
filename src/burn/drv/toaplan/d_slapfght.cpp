@@ -894,8 +894,8 @@ static void sound_init(INT32 sound_clock)
 	AY8910Init(1, sound_clock, 0);
 	AY8910SetPorts(0, &read_input0, &read_input1, NULL, NULL);
 	AY8910SetPorts(1, &read_dip0, &read_dip1, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, cpu_clock / 2);
 }
 

@@ -307,8 +307,6 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 //TODO: make cross platform
 static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 {
-
-#if defined (BUILD_WIN32)
 	FILE *fp = _tfopen(pszFilename, _T("rt"));
 	if (fp == NULL) {
 		return 1;
@@ -362,7 +360,11 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		{
 			_tcsncpy (tmp, szLine + 8, nLen-9);
 			tmp[nLen-9] = '\0';
+#if defined(BUILD_WIN32)
 			_stscanf (tmp, _T("%d"), &(pCurrentCheat->nDefault));
+#else
+			sscanf (tmp, _T("%d"), &(pCurrentCheat->nDefault));
+#endif
 			continue;
 		}
 
@@ -398,9 +400,17 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 				tmp[i-j] = '\0';
 
 				if (nAddress == -1) {
+#if defined(BUILD_WIN32)
 					_stscanf (tmp, _T("%x"), &nAddress);
+#else
+					sscanf (tmp, _T("%x"), &nAddress);
+#endif
 				} else {
+#if defined(BUILD_WIN32)
 					_stscanf (tmp, _T("%x"), &nValue);
+#else
+					sscanf (tmp, _T("%x"), &nValue);
+#endif
 
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0; 	// Always
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress ^ 1;
@@ -420,9 +430,6 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 	fclose (fp);
 
 	return 0;
-#else
-	return 1;
-#endif
 }
 
 
@@ -503,7 +510,7 @@ static INT32 ConfigParseMAMEFile()
 		}
 		*/
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32)
 		if (_tcsncmp (szLine, gName, lstrlen(gName))) {
 #else
 		if (_tcsncmp (szLine, gName, strlen(gName))) {
@@ -520,28 +527,28 @@ static INT32 ConfigParseMAMEFile()
 				c0[c1++] = i;
 
 		tmpcpy(1);						// control flags
-#ifdef UNICODE
+#if defined(BUILD_WIN32)
 		_stscanf (tmp, _T("%x"), &flags);
 #else
 		sscanf (tmp, _T("%x"), &flags);
 #endif
 
 		tmpcpy(2);						// cheat address
-#ifdef UNICODE
+#if defined(BUILD_WIN32)
 		_stscanf (tmp, _T("%x"), &nAddress);
 #else
 		sscanf (tmp, _T("%x"), &nAddress);
 #endif
 
 		tmpcpy(3);						// cheat value
-#ifdef UNICODE
+#if defined(BUILD_WIN32)
 		_stscanf (tmp, _T("%x"), &nValue);
 #else
 		sscanf (tmp, _T("%x"), &nValue);
 #endif
 
 		tmpcpy(4);						// cheat attribute
-#ifdef UNICODE
+#if defined(BUILD_WIN32)
 		_stscanf (tmp, _T("%x"), &nAttrib);
 #else
 		sscanf (tmp, _T("%x"), &nAttrib);
@@ -588,7 +595,7 @@ static INT32 ConfigParseMAMEFile()
 
 			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32)
 			if (lstrlen(tmp) <= 0 || flags == 0x60000000) {
 #else
 			if (strlen(tmp) <= 0 || flags == 0x60000000) {
@@ -619,7 +626,7 @@ static INT32 ConfigParseMAMEFile()
 					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
 					if (nTotal > 0xff) continue; // bad entry (roughrac has this)
 					for (nValue = 0; nValue < nTotal; nValue++) {
-#ifdef UNICODE
+#if defined(UNICODE)
 						swprintf(tmp2, L"# %d.", nValue + nPlus1);
 #else
 						sprintf(tmp2, _T("# %d."), nValue + nPlus1);

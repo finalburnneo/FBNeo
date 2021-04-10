@@ -4811,6 +4811,38 @@ static struct BurnRomInfo HwchampRomDesc[] = {
 STD_ROM_PICK(Hwchamp)
 STD_ROM_FN(Hwchamp)
 
+static struct BurnRomInfo HwchampaRomDesc[] = {
+	{ "epr-11239.a7",   0x20000, 0x42d59e4b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11238.a5",   0x20000, 0x25180124, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-11241.a14",  0x20000, 0xfc586a86, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11166.b14",  0x20000, 0xaeaaa9d8, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11242.a15",  0x20000, 0x7715a742, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11167.b15",  0x20000, 0x63a82afa, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11243.a16",  0x20000, 0xf30cd5fd, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11168.b16",  0x20000, 0x5b8494a8, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-11158.b1",   0x20000, 0xfc098a13, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11162.b5",   0x20000, 0x5db934a8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11159.b2",   0x20000, 0x1f27ee74, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11163.b6",   0x20000, 0x8a6a5cf1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11160.b3",   0x20000, 0xc0b2ba82, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11164.b7",   0x20000, 0xd6c7917b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11161.b4",   0x20000, 0x35c9e44b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11165.b8",   0x20000, 0x57e8f9d2, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-11240.a10",  0x08000, 0x96a12d9d, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-11244.a11",  0x20000, 0x4191c03d, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "mpr-11245.a12",  0x20000, 0xa4d53f7b, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
+};
+
+
+STD_ROM_PICK(Hwchampa)
+STD_ROM_FN(Hwchampa)
+
 static struct BurnRomInfo HwchampjRomDesc[] = {
 	{ "epr-11152.a7",   0x20000, 0x8ab0ce62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11153.a5",   0x20000, 0x84a743de, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -10117,10 +10149,20 @@ struct BurnDriver BurnDrvGoldnaxeud = {
 
 struct BurnDriver BurnDrvHwchamp = {
 	"hwchamp", NULL, NULL, NULL, "1987",
-	"Heavyweight Champ\0", NULL, "Sega", "System 16B",
+	"Heavyweight Champ (set 1)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
 	NULL, HwchampRomInfo, HwchampRomName, NULL, NULL, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
+	HwchampInit, HwchampExit, System16BFrame, System16BRender, HwchampScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvHwchampa = {
+	"hwchampa", "hwchamp", NULL, NULL, "1987",
+	"Heavyweight Champ (set 2)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	NULL, HwchampaRomInfo, HwchampaRomName, NULL, NULL, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
 	HwchampInit, HwchampExit, System16BFrame, System16BRender, HwchampScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

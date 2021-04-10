@@ -508,7 +508,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alienstorm" romof="spec128">
-		<description>Alien Storm</description>
+		<description>Alien Storm (128K)</description>
 		<year>1991</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Alien Storm (1991)(U.S. Gold).tap" size="252760" crc="8aa6b74d"/>
@@ -4269,7 +4269,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="guerrillawar" romof="spec128">
-		<description>Guerrilla War</description>
+		<description>Guerrilla War (128K)</description>
 		<year>1988</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Guerrilla War (1988)(Imagine Software).z80" size="91016" crc="af3aabbe"/>
@@ -6959,7 +6959,7 @@
 		<description>Pentagram (48K)</description>
 		<year>1986</year>
 		<manufacturer>Ultimate</manufacturer>
-		<rom name="Pentagram 48K (1986)(Ultimate).z80" size="38565" crc="3cc52cd2"/>
+		<rom name="Pentagram 48K (1986)(Ultimate).tap" size="38524" crc="4d43b15a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

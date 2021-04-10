@@ -472,6 +472,7 @@ DRV		BurnDrvmd_aliensol;
 DRV		BurnDrvmd_aliensoli;
 DRV		BurnDrvmd_aliensols;
 DRV		BurnDrvmd_aliensolj;
+DRV		BurnSpecAlienstorm;
 DRV		BurnDrvsms_astorm;
 DRV		BurnDrvmd_astorms;
 DRV		BurnDrvAstormjd;
@@ -482,7 +483,6 @@ DRV		BurnDrvAstorm3d;
 DRV		BurnDrvAstorm3;
 DRV		BurnDrvAstorm;
 DRV		BurnDrvmd_astorm;
-DRV		BurnSpecAlienstorm;
 DRV		BurnSpecaliensyn;
 DRV		BurnDrvgg_aliensyn;
 DRV		BurnDrvsms_aliensyn;
@@ -5773,12 +5773,12 @@ DRV		BurnDrvMSX_guardic;
 DRV		BurnDrvMSX_guardica;
 DRV		BurnDrvnes_guardicgaiden;
 DRV		BurnDrvnes_guardicgaidenc;
+DRV		BurnSpecGuerrillawar;
 DRV		BurnDrvGwarb;
 DRV		BurnDrvGwar;
 DRV		BurnDrvnes_guerrillawar;
 DRV		BurnDrvGwara;
 DRV		BurnDrvGwarab;
-DRV		BurnSpecGuerrillawar;
 DRV		BurnDrvGwarj;
 DRV		BurnDrvnes_guevara;
 DRV		BurnDrvGulfstrmk;
@@ -17330,6 +17330,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_aliensoli,		// Alien Soldier (Hack, Italian)
 	&BurnDrvmd_aliensols,		// Alien Soldier (Hack, Spanish)
 	&BurnDrvmd_aliensolj,		// Alien Soldier (Jpn)
+	&BurnSpecAlienstorm,		// Alien Storm (128K)
 	&BurnDrvsms_astorm,			// Alien Storm (Euro, Bra)
 	&BurnDrvmd_astorms,			// Alien Storm (Hack, Spanish)
 	&BurnDrvAstormjd,			// Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317-0146 decrypted)
@@ -17340,7 +17341,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAstorm3,			// Alien Storm (set 3, World, 3 Players, FD1094 317-0148)
 	&BurnDrvAstorm,				// Alien Storm (set 4, World, 2 Players, FD1094 317-0154)
 	&BurnDrvmd_astorm,			// Alien Storm (World)
-	&BurnSpecAlienstorm,		// Alien Storm
 	&BurnSpecaliensyn,			// Alien Syndrome (128K)
 	&BurnDrvgg_aliensyn,		// Alien Syndrome (Euro, USA)
 	&BurnDrvsms_aliensyn,		// Alien Syndrome (Euro, USA, Bra)
@@ -22631,12 +22631,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_guardica,		// Guardic (Jpn, Alt)
 	&BurnDrvnes_guardicgaiden,	// Guardic Gaiden (Japan)
 	&BurnDrvnes_guardicgaidenc,	// Guardic Gaiden (T-Chi, v1.1)
+	&BurnSpecGuerrillawar,		// Guerrilla War (128K)
 	&BurnDrvGwarb,				// Guerrilla War (Joystick hack bootleg)
 	&BurnDrvGwar,				// Guerrilla War (US)
 	&BurnDrvnes_guerrillawar,	// Guerrilla War (USA)
 	&BurnDrvGwara,				// Guerrilla War (Version 1)
 	&BurnDrvGwarab,				// Guerrilla War (Version 1, set 2)
-	&BurnSpecGuerrillawar,		// Guerrilla War
 	&BurnDrvGwarj,				// Guevara (Japan)
 	&BurnDrvnes_guevara,		// Guevara (Japan)
 	&BurnDrvGulfstrmk,			// Gulf Storm (Korea)
@@ -24017,7 +24017,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKov111,				// Knights of Valour - Sangoku Senki (V111, Japan)
 	&BurnDrvKov114,				// Knights of Valour - Sangoku Senki (V114, Hong Kong)
 	&BurnDrvKov115,				// Knights of Valour - Sangoku Senki (V115)
-	&BurnDrvKov,				// Knights of Valour - Sangoku Senki (V117)
+	&BurnDrvKov,				// Knights of Valour - Sangoku Senki (V117, Hong Kong)
 	&BurnDrvKov2100,			// Knights of Valour 2 (V100, Hong Kong)
 	&BurnDrvKov2101,			// Knights of Valour 2 (V101, Hong Kong)
 	&BurnDrvKov2102,			// Knights of Valour 2 (V102, Hong Kong)

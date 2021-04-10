@@ -468,6 +468,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_aliensoli	|  	| Alien Soldier (Hack, Italian)				| md_aliensol	| 2002	| Sega		| Sega Megadrive| 					|
 | md_aliensols	|  	| Alien Soldier (Hack, Spanish)				| md_aliensol	| 2020	| Treasure	| Sega Megadrive| 					|
 | md_aliensolj	|  	| Alien Soldier (Jpn)					| md_aliensol	| 1995	| Sega		| Sega Megadrive| 					|
+| spec_alienstorm|  	| Alien Storm (128K)					| 		| 1991	| U.S. Gold	| ZX Spectrum	| 					|
 | sms_astorm	|  	| Alien Storm (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
 | md_astorms	|  	| Alien Storm (Hack, Spanish)				| md_astorm	| 2020	| Sega		| Sega Megadrive| 					|
 | astormjd	|  	| Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317| astorm	| 1990	| Sega		| System 18	| 					|
@@ -478,7 +479,6 @@ This list contains all games supported by FinalBurn Neo.
 | astorm3	|  	| Alien Storm (set 3, World, 3 Players, FD1094 317-0148)| astorm	| 1990	| Sega		| System 18	| 					|
 | astorm	|  	| Alien Storm (set 4, World, 2 Players, FD1094 317-0154)| 		| 1990	| Sega		| System 18	| 					|
 | md_astorm	|  	| Alien Storm (World)					| 		| 1991	| Sega		| Sega Megadrive| 					|
-| spec_alienstorm|  	| Alien Storm						| 		| 1991	| U.S. Gold	| ZX Spectrum	| 					|
 | spec_aliensyn	|  	| Alien Syndrome (128K)					| 		| 1987	| ACE Software	| ZX Spectrum	| 					|
 | gg_aliensyn	|  	| Alien Syndrome (Euro, USA)				| 		| 1992	| Sega		| Sega Game Gear| 					|
 | sms_aliensyn	|  	| Alien Syndrome (Euro, USA, Bra)			| 		| 1987	| Sega		| Sega Master Sy| 					|
@@ -5695,12 +5695,12 @@ This list contains all games supported by FinalBurn Neo.
 | msx_guardica	|  	| Guardic (Jpn, Alt)					| msx_guardic	| 1986	| Compile	| MSX		| 					|
 | nes_guardicgaiden|  	| Guardic Gaiden (Japan)				| nes_guardleg	| 1987	| Irem		| Miscellaneous	| 					|
 | nes_guardicgaidenc|  	| Guardic Gaiden (T-Chi, v1.1)				| nes_guardleg	| 2017-07-07| Irem		| Miscellaneous	| 					|
+| spec_guerrillawar|  	| Guerrilla War (128K)					| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | gwarb		|  	| Guerrilla War (Joystick hack bootleg)			| gwar		| 1987	| bootleg	| Miscellaneous	| 					|
 | gwar		|  	| Guerrilla War (US)					| 		| 1987	| SNK		| Miscellaneous	| 					|
 | nes_guerrillawar|  	| Guerrilla War (USA)					| 		| 1989	| SNK		| Miscellaneous	| 					|
 | gwara		|  	| Guerrilla War (Version 1)				| gwar		| 1987	| SNK		| Miscellaneous	| 					|
 | gwarab	|  	| Guerrilla War (Version 1, set 2)			| gwar		| 1987	| SNK		| Miscellaneous	| 					|
-| spec_guerrillawar|  	| Guerrilla War						| 		| 1988	| Imagine Softwa| ZX Spectrum	| 					|
 | gwarj		|  	| Guevara (Japan)					| gwar		| 1987	| SNK		| Miscellaneous	| 					|
 | nes_guevara	|  	| Guevara (Japan)					| nes_guerrillawar| 1988	| SNK		| Miscellaneous	| 					|
 | gulfstrmk	|  	| Gulf Storm (Korea)					| gulfstrm	| 1991	| Dooyong	| Miscellaneous	| 					|
@@ -7055,7 +7055,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov111	|  	| Knights of Valour - Sangoku Senki (V111, Japan)	| kov		| 1999	| IGS (Alta Co.,| PolyGameMaster| 					|
 | kov114	|  	| Knights of Valour - Sangoku Senki (V114, Hong Kong)	| kov		| 1999	| IGS		| PolyGameMaster| 					|
 | kov115	|  	| Knights of Valour - Sangoku Senki (V115)		| kov		| 1999	| IGS		| PolyGameMaster| 					|
-| kov		|  	| Knights of Valour - Sangoku Senki (V117)		| 		| 1999	| IGS		| PolyGameMaster| 					|
+| kov		|  	| Knights of Valour - Sangoku Senki (V117, Hong Kong)	| 		| 1999	| IGS		| PolyGameMaster| 					|
 | kov2100	|  	| Knights of Valour 2 (V100, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2101	|  	| Knights of Valour 2 (V101, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2102	|  	| Knights of Valour 2 (V102, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|

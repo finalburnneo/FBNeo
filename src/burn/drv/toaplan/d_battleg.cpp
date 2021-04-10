@@ -852,7 +852,7 @@ static INT32 battlegInit()
 	DrvZ80Init();												// Initialize Z80
 
 	BurnYM2151Init(32000000 / 8);
-	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 32000000 / 16 / 132, 1);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1017,6 +1017,7 @@ static INT32 DrvFrame()
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 				MSM6295Render(0, pSoundBuf, nSegmentLength);
 			}
+			BurnSoundTweakVolume(pBurnSoundOut, nBurnSoundLen, 0.65);
 		}
 	}
 	

@@ -501,7 +501,7 @@ static INT32 DrvInit()
 	}
 
 	BurnYM2151Init(3375000);
-	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.55, BURN_SND_ROUTE_BOTH);
 
 	nSpriteYOffset = 0x0001;
 

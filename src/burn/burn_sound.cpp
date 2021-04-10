@@ -54,6 +54,19 @@ void BurnSoundDCFilter()
 	}
 }
 
+void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume)
+{
+	INT32 clip = 0;
+
+	for (INT32 i = 0; i < (len * 2); i++) {
+		INT32 sample = sndout[i] * volume;
+		if (sample > 0x7fff) clip = 1;
+		if (sample < -0x7fff) clip = 1;
+		sndout[i] = BURN_SND_CLIP(sample);
+	}
+	if (clip) bprintf(0, _T("BurnSoundTweakVolume(): CLIPPING @ frame %x\n"), nCurrentFrame);
+}
+
 void BurnSoundClear()
 {
 	if (pBurnSoundOut)

@@ -608,9 +608,9 @@ static INT32 DrvInit()
 	}
 
 	BurnYM2151Init(3375000);
-	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 1041667 / 132, 1);
-	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	nSpriteXOffset = 0x0024;
 	nSpriteYOffset = 0x0001;

@@ -388,8 +388,8 @@ static INT32 CommonInit(INT32 (*pRomLoad)(INT32 *, INT32 *), void (*pMap)(), INT
 
 	MSM6295Init(0, 1006875 / 132, 0);
 	MSM6295Init(1, 2013750 / 132 / msm, 1);
-	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.45, BURN_SND_ROUTE_BOTH);
 
 	deco16Init(1, 0, 1);
 	deco16_set_bank_callback(0, simpl156_bank_callback);

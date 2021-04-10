@@ -405,10 +405,10 @@ static INT32 DrvInit()
 		SekClose();
 	}
 
-	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295Init(1, 1000000 / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.70, BURN_SND_ROUTE_BOTH);
 
 	nSpriteYOffset = 0x0011;
 
@@ -512,7 +512,6 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	

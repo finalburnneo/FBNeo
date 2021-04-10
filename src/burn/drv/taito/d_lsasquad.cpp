@@ -947,7 +947,7 @@ static struct BurnRomInfo stormingaRomDesc[] = {
 	{ "2.ic3.1c",		0x8000, 0x1c7fe5d5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.ic2.1b",		0x8000, 0x159f23a6, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "a64-04.44",		0x8000, 0xc238406a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "4.ic44.5g",		0x8000, 0xc238406a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
 	{ "5.ic29.2c",		0x8000, 0xbb4f1b37, 3 | BRF_GRA },           //  4 Layer Tiles
 	{ "7.ic30.3c",		0x8000, 0x8ee2443b, 3 | BRF_GRA },           //  5

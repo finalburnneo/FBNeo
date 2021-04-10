@@ -11159,7 +11159,7 @@ static struct BurnRomInfo MouncrstRomDesc[] = {
 	{ "w.7f",          0x01000, 0xb8ef3a6b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "x.7h",          0x01000, 0xb878f354, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "y.7j",          0x01000, 0x021762f4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "z.7k",          0x01000, 0x714330e5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "z.7k",          0x01000, 0xf249ae30, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "k.1h",          0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "m.1h",          0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },

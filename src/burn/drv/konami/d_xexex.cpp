@@ -782,6 +782,8 @@ static INT32 DrvFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 		}
 		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
+
+		BurnSoundTweakVolume(pBurnSoundOut, nBurnSoundLen, 0.65);
 	}
 
 	ZetClose();

@@ -1557,7 +1557,8 @@ static INT32 DrvFrame()
         }
         if (has_tcs) {
             DACUpdate(pBurnSoundOut, nBurnSoundLen);
-        }
+		}
+		BurnSoundTweakVolume(pBurnSoundOut, nBurnSoundLen, 0.55);
     }
 
 	if (pBurnDraw) {
@@ -2495,7 +2496,13 @@ STD_ROM_FN(tapper)
 
 static INT32 TapperInit()
 {
-    return DrvInit(91490);
+    INT32 nRet = DrvInit(91490);
+
+    if (!nRet) {
+        ssio_basevolume(0.00);
+    }
+
+    return nRet;
 }
 
 struct BurnDriver BurnDrvTapper = {

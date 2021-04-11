@@ -3393,6 +3393,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dcraider" romof="msx">
+		<description>Deep Core Raider (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="Deep Core Raider (2020)(Paul Jenkinson).rom" size="32768" crc="1306a8b3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="deepdng" romof="msx">
 		<description>Deep Dungeon (Jpn)</description>
 		<year>1988</year>
@@ -4720,6 +4731,17 @@
 		<year>1984</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="funky mouse (japan).rom" size="16384" crc="b5c0dace"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gmonkey" romof="msx">
+		<description>G-Monkey (HB) [Homebrew, No single player mode]</description>
+		<year>2008</year>
+		<manufacturer>Karoshi Corporation</manufacturer>
+		<rom name="G-Monkey (2008)(Karoshi Corporation).rom" size="8192" crc="7854cfc4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6120,6 +6142,17 @@
 		<year>2019</year>
 		<manufacturer>N.I</manufacturer>
 		<rom name="isitar 7 (2019)(n.i).rom" size="32768" crc="d7795487"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="isopong" romof="msx">
+		<description>Isometric Pong (HB) [Homebrew, No single player mode]</description>
+		<year>2020</year>
+		<manufacturer>Fabento D.C.</manufacturer>
+		<rom name="Isometric Pong (2020)(Fabento).rom" size="32768" crc="419eaaa0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9043,6 +9076,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nohzdyve" romof="msx">
+		<description>Nohzdyve (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Giovanni Nunes</manufacturer>
+		<rom name="Nohzdyve (2019)(Giovanni Nunes).rom" size="8192" crc="4e6fb8ea"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nuclearbowls" romof="msx">
 		<description>Nuclear Bowls</description>
 		<year>1986</year>
@@ -9296,6 +9340,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacobomb" romof="msx">
+		<description>Paco el Bombas REDUX (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Paco el Bombas REDUX (2021)(Physical Dreams).rom" size="32768" crc="5c34c76e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="paipanic" romof="msx">
 		<description>Pai Panic (Jpn)</description>
 		<year>1983</year>
@@ -9455,6 +9510,17 @@
 		<year>2007</year>
 		<manufacturer>MSX Cafe</manufacturer>
 		<rom name="PENGMIND.ROM" size="65536" crc="d2de6ec4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pengrace" romof="msx">
+		<description>Penguin Race (HB) [Homebrew]</description>
+		<year>2003</year>
+		<manufacturer>Dioniso</manufacturer>
+		<rom name="Penguin Race (2003)(Dioniso).rom" size="16384" crc="ac456cfa"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10898,6 +10964,17 @@
 		<year>1986</year>
 		<manufacturer>Eaglesoft</manufacturer>
 		<rom name="smack wacker (1986)(eaglesoft)(nl)[run'cas-'].cas" size="67128" crc="b1ff3d49"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="snake" romof="msx">
+		<description>Snake (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Snake (2021)(Under4Mhz).rom" size="14287" crc="cea10bd9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13067,6 +13144,17 @@
 		<year>1986</year>
 		<manufacturer>Players Software</manufacturer>
 		<rom name="vestron (1986)(players software)(gb)[bload'cas-',r].cas" size="19999" crc="f5e9984d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vexed" romof="msx">
+		<description>Vexed (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Vexed (2020)(Under4Mhz).rom" size="32768" crc="1ae7d805"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

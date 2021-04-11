@@ -4349,8 +4349,8 @@
 	<game name="hammerfist" romof="spectrum">
 		<description>Hammerfist (48K)</description>
 		<year>1990</year>
-		<manufacturer>Activision - Vivid Image</manufacturer>
-		<rom name="Hammerfist 48K (1990)(Activision).z80" size="40374" crc="6ca21398"/>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Hammerfist (1990)(Activision).tap" size="188831" crc="c6ad835b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4828,11 +4828,20 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="intkarate" romof="spectrum">
-		<description>International Karate (48K) [Press Space to options menu]</description>
+	<game name="intkarates1" romof="spectrum">
+		<description>International Karate (48K) - Side 1</description>
 		<year>1985</year>
 		<manufacturer>System 3</manufacturer>
-		<rom name="International Karate 48K (1985)(System 3).z80" size="35409" crc="3be2fd6b"/>
+		<rom name="International Karate 48K - Side 1 (1985)(System 3).z80" size="34724" crc="344134a1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="intkarates2" cloneof="intkarates1" romof="intkarates1">
+		<description>International Karate (48K) - Side 2</description>
+		<year>1985</year>
+		<manufacturer>System 3</manufacturer>
+		<rom name="International Karate 48K - Side 2 (1985)(System 3).z80" size="34746" crc="28eac074"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

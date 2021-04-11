@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16605 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16615 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -3200,6 +3200,7 @@ This list contains all games supported by FinalBurn Neo.
 | decomult	|  	| Deco Cassette System Multigame (ROM based)		| 		| 2008	| bootleg (David| Cassette Syste| 					|
 | pce_deepblue	|  	| Deep Blue - Kaitei Shinwa				| 		| 1989	| Pack-In-Video	| PC Engine	| 					|
 | tg_deepblue	|  	| Deep Blue						| 		| 1989	| NEC		| TurboGrafx 16	| 					|
+| msx_dcraider	|  	| Deep Core Raider (HB)					| 		| 2020	| Paul Jenkinson| MSX		| 					|
 | sms_deepduckc	|  	| Deep Duck Trouble Starring Donald Duck (Euro, Bra) - C| sms_deepduck	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_deepduck	|  	| Deep Duck Trouble Starring Donald Duck (Euro, Bra)	| 		| 1993	| Sega		| Sega Master Sy| 					|
 | gg_deepduck	|  	| Deep Duck Trouble Starring Donald Duck (Euro, USA)	| 		| 1994	| Sega		| Sega Game Gear| 					|
@@ -4985,6 +4986,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_glocp	|  	| G-LOC Air Battle (World, Prototype)			| md_gloc	| 1993	| Sega		| Sega Megadrive| 					|
 | glocr360j	|  	| G-LOC R360 (Japan)					| gloc		| 1990	| Sega		| Y-Board	| 					|
 | glocr360	|  	| G-LOC R360 (World)					| gloc		| 1990	| Sega		| Y-Board	| 					|
+| msx_gmonkey	|  	| G-Monkey (HB)						| 		| 2008	| Karoshi Corpor| MSX		| No single player mode			|
 | gstream	|  	| G-Stream G2020					| 		| 2002	| Oriental Soft | Miscellaneous	| 					|
 | gijoea	|  	| G.I. Joe (Asia, AA)					| gijoe		| 1992	| Konami	| GX069		| 					|
 | gijoej	|  	| G.I. Joe (Japan, JAA)					| gijoe		| 1992	| Konami	| GX069		| 					|
@@ -5839,7 +5841,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_hammerboy1|  	| Hammer Boy (Part 1 of 2) (128K)			| 		| 1991	| Dinamic Softwa| ZX Spectrum	| 					|
 | spec_hammerboy2|  	| Hammer Boy (Part 2 of 2) (128K)			| spec_hammerboy1| 1991	| Dinamic Softwa| ZX Spectrum	| 					|
 | msx_hammboy	|  	| Hammer Boy (Spa)					| 		| 1991	| Dinamic Softwa| MSX		| Keyboard control only.		|
-| spec_hammerfist|  	| Hammerfist (48K)					| 		| 1990	| Activision - V| ZX Spectrum	| 					|
+| spec_hammerfist|  	| Hammerfist (48K)					| 		| 1990	| Activision	| ZX Spectrum	| 					|
 | hharryu	|  	| Hammerin' Harry (US, M84 hardware)			| hharry	| 1990	| Irem America	| Irem M82	| 					|
 | hharry	|  	| Hammerin' Harry (World, M81 hardware))		| 		| 1990	| Irem		| Irem M82	| 					|
 | hharryb	|  	| Hammerin' Harry (World, M84 hardware bootleg)		| hharry	| 1990	| bootleg	| Irem M82	| 					|
@@ -5968,7 +5970,8 @@ This list contains all games supported by FinalBurn Neo.
 | sms_heavyw	|  	| Heavyweight Champ (Euro)				| sms_georgeko	| 1991	| Sega		| Sega Master Sy| 					|
 | hwchampjd	|  	| Heavyweight Champ (Japan, FD1094 317-0046 decrypted)	| hwchamp	| 1987	| Sega		| System 16B	| 					|
 | hwchampj	|  	| Heavyweight Champ (Japan, FD1094 317-0046)		| hwchamp	| 1987	| Sega		| System 16B	| 					|
-| hwchamp	|  	| Heavyweight Champ					| 		| 1987	| Sega		| System 16B	| 					|
+| hwchamp	|  	| Heavyweight Champ (set 1)				| 		| 1987	| Sega		| System 16B	| 					|
+| hwchampa	|  	| Heavyweight Champ (set 2)				| hwchamp	| 1987	| Sega		| System 16B	| 					|
 | nes_heberekej	|  	| Hebereke (Japan)					| nes_ufouria	| 1991	| Sunsoft	| Miscellaneous	| 					|
 | nes_heberekec	|  	| Hebereke (T-Chi, v1.2)				| nes_ufouria	| 2019-07-23| Sunsoft	| Miscellaneous	| 					|
 | nes_hebereke	|  	| Hebereke (T-Eng)					| nes_ufouria	| 1991	| Sunsoft	| Miscellaneous	| 					|
@@ -6358,7 +6361,8 @@ This list contains all games supported by FinalBurn Neo.
 | spec_int3dtennis|  	| International 3D Tennis (128K)			| 		| 1990	| Palace	| ZX Spectrum	| 					|
 | nes_intercri	|  	| International Cricket (Australia)			| 		| 1992	| Beam Software	| Miscellaneous	| 					|
 | intcup94	|  	| International Cup '94 (Ver 2.2O 1994/05/26)		| 		| 1994	| Taito Corporat| Taito F3 Syste| 					|
-| spec_intkarate|  	| International Karate (48K)				| 		| 1985	| System 3	| ZX Spectrum	| Press Space to options menu		|
+| spec_intkarates1|  	| International Karate (48K) - Side 1			| 		| 1985	| System 3	| ZX Spectrum	| 					|
+| spec_intkarates2|  	| International Karate (48K) - Side 2			| spec_intkarates1| 1985	| System 3	| ZX Spectrum	| 					|
 | msx_ik	|  	| International Karate (Euro)				| 		| 1986	| Endurance Game| MSX		| 					|
 | spec_intkarateplus|  	| International Karate+ (128K)				| 		| 1987	| System 3 Softw| ZX Spectrum	| 					|
 | md_intrugby	|  	| International Rugby (Euro)				| 		| 1993	| Domark	| Sega Megadrive| 					|
@@ -6397,6 +6401,7 @@ This list contains all games supported by FinalBurn Neo.
 | fds_ishidou	|  	| Ishidou (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | msx_isitar7	|  	| Isitar 7 (HB)						| 		| 2019	| N.I		| MSX		| 					|
 | nes_isolatedwarrior|  	| Isolated Warrior (USA)				| 		| 1991	| NTVIC		| Miscellaneous	| 					|
+| msx_isopong	|  	| Isometric Pong (HB)					| 		| 2020	| Fabento D.C.	| MSX		| No single player mode			|
 | msx_issun	|  	| Issunboushi no Donnamondai (Jpn)			| 		| 1987	| Casio		| MSX		| 					|
 | msx_issuna	|  	| Issunboushi no Donnamondai (Jpn, Alt)			| msx_issun	| 1987	| Casio		| MSX		| 					|
 | msx_issunh	|  	| Issunboushi no Donnamondai (Jpn, Hacked?)		| msx_issun	| 1987	| Angel?	| MSX		| 					|
@@ -9365,6 +9370,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_nobuamb	|  	| Nobunaga's Ambition (USA)				| 		| 1993	| Koei		| Sega Megadrive| 					|
 | spec_nodesofyesod|  	| Nodes of Yesod					| 		| 1985	| Odin Computer | ZX Spectrum	| 					|
 | msx_nogalsdemo|  	| Nogalious Demo (HB)					| 		| 2018	| LuegoLu3go	| MSX		| 					|
+| msx_nohzdyve	|  	| Nohzdyve (HB)						| 		| 2019	| Giovanni Nunes| MSX		| 					|
 | gg_nomowsb	|  	| Nomo's World Series Baseball (Jpn)			| 		| 1995	| Sega		| Sega Game Gear| 					|
 | nes_nomolos	|  	| Nomolos (HB)						| 		| 2014	| Gradual Games	| Miscellaneous	| 					|
 | md_normy	|  	| Normy's Beach Babe-O-Rama (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -9677,6 +9683,7 @@ This list contains all games supported by FinalBurn Neo.
 | packbang	|  	| Pack'n Bang Bang (Prototype)				| 		| 1994	| Kaneko	| Kaneko16	| 					|
 | packetman	|  	| Packetman (bootleg)					| puckman	| 1980	| bootleg	| Pac-man	| 					|
 | clubpacm	|  	| Pacman Club / Club Lambada (Argentina)		| 		| 1989	| Miky SRL	| Pac-man	| 					|
+| msx_pacobomb	|  	| Paco el Bombas REDUX (HB)				| 		| 2021	| Physical Dream| MSX		| 					|
 | pacominv	| D	| Pacom Invader						| beaminv	| 1979	| Pacom Corporat| Miscellaneous	| No sound				|
 | pacuman	|  	| Pacu-Man (Spanish bootleg of Puck Man)		| puckman	| 1980	| bootleg (Recre| Pac-man	| 					|
 | paddle2	|  	| Paddle 2 (bootleg on Block hardware)			| arkanoid	| 1986	| bootleg	| Arkanoid	| 					|
@@ -9843,6 +9850,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_penguincafe|  	| Penguin Cafe (HB)					| 		| 2006	| MSX Cafe	| MSX		| 					|
 | sms_pengland	|  	| Penguin Land (Euro, USA)				| 		| 1987	| Sega		| Sega Master Sy| 					|
 | msx_pengmind	|  	| Penguin Mind (HB)					| 		| 2007	| MSX Cafe	| MSX		| 					|
+| msx_pengrace	|  	| Penguin Race (HB)					| 		| 2003	| Dioniso	| MSX		| 					|
 | nes_penguinkunwars|  	| Penguin-kun Wars (Japan)				| 		| 1985	| ASCII		| Miscellaneous	| 					|
 | pkunwarj	|  	| Penguin-Kun Wars (Japan)				| pkunwar	| 1985	| UPL		| Miscellaneous	| 					|
 | msx_penguinw	|  	| Penguin-kun Wars (Jpn)				| 		| 1985	| ASCII		| MSX		| 					|
@@ -12132,6 +12140,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfply	|  	| Smurf Play and Learn (Prototype)			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
+| msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
 | spec_snakeescape|  	| Snake Escape (HB)					| 		| 2016	| Einar Saukas	| ZX Spectrum	| 					|
 | msx_snakeit	|  	| Snake It (Euro)					| 		| 1986?	| Eaglesoft	| MSX		| 					|
 | nes_snakeratnrol|  	| Snake Rattle n Roll (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
@@ -15556,6 +15565,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_verytex	|  	| Verytex (Jpn)						| 		| 1991	| Asmik Ace	| Sega Megadrive| 					|
 | msx_vesikauhu	|  	| Vesikauhu (HB, Tech-demo)				| 		| 2000	| Bandwagon	| MSX		| 					|
 | msx_vestron	|  	| Vestron (Euro)					| 		| 1986	| Players Softwa| MSX		| 					|
+| msx_vexed	|  	| Vexed (HB)						| 		| 2020	| Under4Mhz	| MSX		| 					|
 | hangonvf	|  	| VF (bootleg of Hang-On)				| hangon	| 1985	| bootleg	| Hang-On	| 					|
 | spec_viajecentterra|  	| Viaje al Centro de la Tierra				| 		| 1989	| Topo Soft	| ZX Spectrum	| 					|
 | nes_vice	|  	| Vice - Project Doom (USA)				| 		| 1991	| Sammy		| Miscellaneous	| 					|

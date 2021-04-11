@@ -3240,6 +3240,7 @@ DRV		BurnDrvDecocass;
 DRV		BurnDrvDecomult;
 DRV		BurnDrvpce_deepblue;
 DRV		BurnDrvtg_deepblue;
+DRV		BurnDrvMSX_dcraider;
 DRV		BurnDrvsms_deepduckc;
 DRV		BurnDrvsms_deepduck;
 DRV		BurnDrvgg_deepduck;
@@ -5055,6 +5056,7 @@ DRV		BurnDrvmd_gloc;
 DRV		BurnDrvmd_glocp;
 DRV		BurnDrvGlocr360j;
 DRV		BurnDrvGlocr360;
+DRV		BurnDrvMSX_gmonkey;
 DRV		BurnDrvGstream;
 DRV		BurnDrvGijoea;
 DRV		BurnDrvGijoej;
@@ -6049,6 +6051,7 @@ DRV		BurnDrvsms_heavyw;
 DRV		BurnDrvHwchampjd;
 DRV		BurnDrvHwchampj;
 DRV		BurnDrvHwchamp;
+DRV		BurnDrvHwchampa;
 DRV		BurnDrvnes_heberekej;
 DRV		BurnDrvnes_heberekecc;
 DRV		BurnDrvnes_hebereke;
@@ -6444,7 +6447,8 @@ DRV		BurnDrvmd_instch;
 DRV		BurnSpecInt3dtennis;
 DRV		BurnDrvnes_intercri;
 DRV		BurnDrvIntcup94;
-DRV		BurnSpecIntkarate;
+DRV		BurnSpecIntkarates1;
+DRV		BurnSpecIntkarates2;
 DRV		BurnDrvMSX_ik;
 DRV		BurnSpecintkarateplus;
 DRV		BurnDrvmd_intrugby;
@@ -6487,6 +6491,7 @@ DRV		BurnDrvfds_ishidouj;
 DRV		BurnDrvfds_ishidou;
 DRV		BurnDrvMSX_isitar7;
 DRV		BurnDrvnes_isolatedwarrior;
+DRV		BurnDrvMSX_isopong;
 DRV		BurnDrvMSX_issun;
 DRV		BurnDrvMSX_issuna;
 DRV		BurnDrvMSX_issunh;
@@ -9495,6 +9500,7 @@ DRV		BurnDrvmd_nobuzenk;
 DRV		BurnDrvmd_nobuamb;
 DRV		BurnSpecnodesofyesod;
 DRV		BurnDrvMSX_nogalsdemo;
+DRV		BurnDrvMSX_nohzdyve;
 DRV		BurnDrvgg_nomowsb;
 DRV		BurnDrvnes_nomolos;
 DRV		BurnDrvmd_normy;
@@ -9809,6 +9815,7 @@ DRV		BurnDrvpce_pachikun;
 DRV		BurnDrvPackbang;
 DRV		BurnDrvpacketman;
 DRV		BurnDrvclubpacm;
+DRV		BurnDrvMSX_pacobomb;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvPacominv;		// No sound
 #endif
@@ -9983,6 +9990,7 @@ DRV		BurnDrvPenbros;
 DRV		BurnDrvMSX_penguincafe;
 DRV		BurnDrvsms_pengland;
 DRV		BurnDrvMSX_pengmind;
+DRV		BurnDrvMSX_pengrace;
 DRV		BurnDrvnes_penguinkunwars;
 DRV		BurnDrvpkunwarj;
 DRV		BurnDrvMSX_penguinw;
@@ -12306,6 +12314,7 @@ DRV		BurnDrvcv_smurfpnt;
 DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
+DRV		BurnDrvMSX_snake;
 DRV		BurnSpecSnakeescape;
 DRV		BurnDrvMSX_snakeit;
 DRV		BurnDrvnes_snakeratnrol;
@@ -15772,6 +15781,7 @@ DRV		BurnDrvmd_vermilj;
 DRV		BurnDrvmd_verytex;
 DRV		BurnDrvMSX_vesikauhu;
 DRV		BurnDrvMSX_vestron;
+DRV		BurnDrvMSX_vexed;
 DRV		BurnDrvHangonvf;
 DRV		BurnSpecviajecentterra;
 DRV		BurnDrvnes_vice;
@@ -20098,6 +20108,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDecomult,			// Deco Cassette System Multigame (ROM based)
 	&BurnDrvpce_deepblue,		// Deep Blue - Kaitei Shinwa
 	&BurnDrvtg_deepblue,		// Deep Blue
+	&BurnDrvMSX_dcraider,		// Deep Core Raider (HB)
 	&BurnDrvsms_deepduckc,		// Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0
 	&BurnDrvsms_deepduck,		// Deep Duck Trouble Starring Donald Duck (Euro, Bra)
 	&BurnDrvgg_deepduck,		// Deep Duck Trouble Starring Donald Duck (Euro, USA)
@@ -21913,6 +21924,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_glocp,			// G-LOC Air Battle (World, Prototype)
 	&BurnDrvGlocr360j,			// G-LOC R360 (Japan)
 	&BurnDrvGlocr360,			// G-LOC R360 (World)
+	&BurnDrvMSX_gmonkey,		// G-Monkey (HB)
 	&BurnDrvGstream,			// G-Stream G2020
 	&BurnDrvGijoea,				// G.I. Joe (Asia, AA)
 	&BurnDrvGijoej,				// G.I. Joe (Japan, JAA)
@@ -22906,7 +22918,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_heavyw,			// Heavyweight Champ (Euro)
 	&BurnDrvHwchampjd,			// Heavyweight Champ (Japan, FD1094 317-0046 decrypted)
 	&BurnDrvHwchampj,			// Heavyweight Champ (Japan, FD1094 317-0046)
-	&BurnDrvHwchamp,			// Heavyweight Champ
+	&BurnDrvHwchamp,			// Heavyweight Champ (set 1)
+	&BurnDrvHwchampa,			// Heavyweight Champ (set 2)
 	&BurnDrvnes_heberekej,		// Hebereke (Japan)
 	&BurnDrvnes_heberekecc,		// Hebereke (T-Chi, v1.2)
 	&BurnDrvnes_hebereke,		// Hebereke (T-Eng)
@@ -23302,7 +23315,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecInt3dtennis,		// International 3D Tennis (128K)
 	&BurnDrvnes_intercri,		// International Cricket (Australia)
 	&BurnDrvIntcup94,			// International Cup '94 (Ver 2.2O 1994/05/26)
-	&BurnSpecIntkarate,			// International Karate (48K)
+	&BurnSpecIntkarates1,		// International Karate (48K) - Side 1
+	&BurnSpecIntkarates2,		// International Karate (48K) - Side 2
 	&BurnDrvMSX_ik,				// International Karate (Euro)
 	&BurnSpecintkarateplus,		// International Karate+ (128K)
 	&BurnDrvmd_intrugby,		// International Rugby (Euro)
@@ -23345,6 +23359,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_ishidou,		// Ishidou (T-Eng)
 	&BurnDrvMSX_isitar7,		// Isitar 7 (HB)
 	&BurnDrvnes_isolatedwarrior,// Isolated Warrior (USA)
+	&BurnDrvMSX_isopong,		// Isometric Pong (HB)
 	&BurnDrvMSX_issun,			// Issunboushi no Donnamondai (Jpn)
 	&BurnDrvMSX_issuna,			// Issunboushi no Donnamondai (Jpn, Alt)
 	&BurnDrvMSX_issunh,			// Issunboushi no Donnamondai (Jpn, Hacked?)
@@ -26353,6 +26368,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nobuamb,			// Nobunaga's Ambition (USA)
 	&BurnSpecnodesofyesod,		// Nodes of Yesod
 	&BurnDrvMSX_nogalsdemo,		// Nogalious Demo (HB)
+	&BurnDrvMSX_nohzdyve,		// Nohzdyve (HB)
 	&BurnDrvgg_nomowsb,			// Nomo's World Series Baseball (Jpn)
 	&BurnDrvnes_nomolos,		// Nomolos (HB)
 	&BurnDrvmd_normy,			// Normy's Beach Babe-O-Rama (Euro, USA)
@@ -26667,6 +26683,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPackbang,			// Pack'n Bang Bang (Prototype)
 	&BurnDrvpacketman,			// Packetman (bootleg)
 	&BurnDrvclubpacm,			// Pacman Club / Club Lambada (Argentina)
+	&BurnDrvMSX_pacobomb,		// Paco el Bombas REDUX (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvPacominv,			// Pacom Invader [No sound]
 #endif
@@ -26841,6 +26858,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_penguincafe,	// Penguin Cafe (HB)
 	&BurnDrvsms_pengland,		// Penguin Land (Euro, USA)
 	&BurnDrvMSX_pengmind,		// Penguin Mind (HB)
+	&BurnDrvMSX_pengrace,		// Penguin Race (HB)
 	&BurnDrvnes_penguinkunwars,	// Penguin-kun Wars (Japan)
 	&BurnDrvpkunwarj,			// Penguin-Kun Wars (Japan)
 	&BurnDrvMSX_penguinw,		// Penguin-kun Wars (Jpn)
@@ -29164,6 +29182,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfply,		// Smurf Play and Learn (Prototype)
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
+	&BurnDrvMSX_snake,			// Snake (HB)
 	&BurnSpecSnakeescape,		// Snake Escape (HB)
 	&BurnDrvMSX_snakeit,		// Snake It (Euro)
 	&BurnDrvnes_snakeratnrol,	// Snake Rattle n Roll (USA)
@@ -32630,6 +32649,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_verytex,			// Verytex (Jpn)
 	&BurnDrvMSX_vesikauhu,		// Vesikauhu (HB, Tech-demo)
 	&BurnDrvMSX_vestron,		// Vestron (Euro)
+	&BurnDrvMSX_vexed,			// Vexed (HB)
 	&BurnDrvHangonvf,			// VF (bootleg of Hang-On)
 	&BurnSpecviajecentterra,	// Viaje al Centro de la Tierra
 	&BurnDrvnes_vice,			// Vice - Project Doom (USA)

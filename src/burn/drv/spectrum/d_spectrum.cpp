@@ -18133,21 +18133,40 @@ struct BurnDriver BurnSpecHysteria = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// International Karate (48K)
+// International Karate (48K) - Side 1
 
-static struct BurnRomInfo SpecIntkarateRomDesc[] = {
-	{ "International Karate 48K (1985)(System 3).z80", 35409, 0x3be2fd6b, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecIntkarates1RomDesc[] = {
+	{ "International Karate 48K - Side 1 (1985)(System 3).z80", 34724, 0x344134a1, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecIntkarate, SpecIntkarate, Spectrum)
-STD_ROM_FN(SpecIntkarate)
+STDROMPICKEXT(SpecIntkarates1, SpecIntkarates1, Spectrum)
+STD_ROM_FN(SpecIntkarates1)
 
-struct BurnDriver BurnSpecIntkarate = {
-	"spec_intkarate", NULL, "spec_spectrum", NULL, "1985",
-	"International Karate (48K)\0", "Press Space to options menu", "System 3", "ZX Spectrum",
+struct BurnDriver BurnSpecIntkarates1 = {
+	"spec_intkarates1", NULL, "spec_spectrum", NULL, "1985",
+	"International Karate (48K) - Side 1\0", NULL, "System 3", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_VSFIGHT, 0,
-	SpectrumGetZipName, SpecIntkarateRomInfo, SpecIntkarateRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecIntkarates1RomInfo, SpecIntkarates1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// International Karate (48K) - Side 2
+
+static struct BurnRomInfo SpecIntkarates2RomDesc[] = {
+	{ "International Karate 48K - Side 2 (1985)(System 3).z80", 34746, 0x28eac074, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecIntkarates2, SpecIntkarates2, Spectrum)
+STD_ROM_FN(SpecIntkarates2)
+
+struct BurnDriver BurnSpecIntkarates2 = {
+	"spec_intkarates2", "spec_intkarates1", "spec_spectrum", NULL, "1985",
+	"International Karate (48K) - Side 2\0", NULL, "System 3", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SPECTRUM, GBF_VSFIGHT, 0,
+	SpectrumGetZipName, SpecIntkarates2RomInfo, SpecIntkarates2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

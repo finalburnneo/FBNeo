@@ -26635,25 +26635,6 @@ struct BurnDriver BurnDrvMSX_pacobomb = {
 	272, 228, 4, 3
 };
 
-// Pegged (HB)
-
-static struct BurnRomInfo MSX_peggedRomDesc[] = {
-	{ "Pegged (2021)(Under4Mhz).rom",	32768, 0xd6f7a336, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_pegged, MSX_pegged, msx_msx)
-STD_ROM_FN(MSX_pegged)
-
-struct BurnDriver BurnDrvMSX_pegged = {
-	"msx_pegged", NULL, "msx_msx", NULL, "2021",
-	"Pegged (HB)\0", NULL, "Under4Mhz", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
-	MSXGetZipName, MSX_peggedRomInfo, MSX_peggedRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
 // Penguin Race (HB)
 
 static struct BurnRomInfo MSX_pengraceRomDesc[] = {

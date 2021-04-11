@@ -1024,6 +1024,11 @@ static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 
 	if (nSlot >= MAXSLOTS) return 0;
 
+	if (cartsize > 0x2000 && cartsize < 0x4000) {
+		// fix for Snake by under4mhz (oddly sized rom)
+		cartsize = 0x4000;
+	}
+
 	Len = cartsize >> 13; // Len, in 8k pages
 
 	for (Pages = 1; Pages < Len; Pages <<= 1); // Calculate nearest power of 2 of len
@@ -26531,6 +26536,177 @@ struct BurnDriver BurnDrvMSX_relic = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_relicRomInfo, MSX_relicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Deep Core Raider (HB)
+
+static struct BurnRomInfo MSX_dcraiderRomDesc[] = {
+	{ "Deep Core Raider (2020)(Paul Jenkinson).rom",	32768, 0x1306a8b3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dcraider, MSX_dcraider, msx_msx)
+STD_ROM_FN(MSX_dcraider)
+
+struct BurnDriver BurnDrvMSX_dcraider = {
+	"msx_dcraider", NULL, "msx_msx", NULL, "2020",
+	"Deep Core Raider (HB)\0", NULL, "Paul Jenkinson", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_dcraiderRomInfo, MSX_dcraiderRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// G-Monkey (HB)
+
+static struct BurnRomInfo MSX_gmonkeyRomDesc[] = {
+	{ "G-Monkey (2008)(Karoshi Corporation).rom",	8192, 0x7854cfc4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gmonkey, MSX_gmonkey, msx_msx)
+STD_ROM_FN(MSX_gmonkey)
+
+struct BurnDriver BurnDrvMSX_gmonkey = {
+	"msx_gmonkey", NULL, "msx_msx", NULL, "2008",
+	"G-Monkey (HB)\0", "No single player mode", "Karoshi Corporation", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gmonkeyRomInfo, MSX_gmonkeyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Isometric Pong (HB)
+
+static struct BurnRomInfo MSX_isopongRomDesc[] = {
+	{ "Isometric Pong (2020)(Fabento).rom",	32768, 0x419eaaa0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_isopong, MSX_isopong, msx_msx)
+STD_ROM_FN(MSX_isopong)
+
+struct BurnDriver BurnDrvMSX_isopong = {
+	"msx_isopong", NULL, "msx_msx", NULL, "2020",
+	"Isometric Pong (HB)\0", "No single player mode", "Fabento D.C.", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_BALLPADDLE, 0,
+	MSXGetZipName, MSX_isopongRomInfo, MSX_isopongRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Nohzdyve (HB)
+
+static struct BurnRomInfo MSX_nohzdyveRomDesc[] = {
+	{ "Nohzdyve (2019)(Giovanni Nunes).rom",	8192, 0x4e6fb8ea, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_nohzdyve, MSX_nohzdyve, msx_msx)
+STD_ROM_FN(MSX_nohzdyve)
+
+struct BurnDriver BurnDrvMSX_nohzdyve = {
+	"msx_nohzdyve", NULL, "msx_msx", NULL, "2019",
+	"Nohzdyve (HB)\0", NULL, "Giovanni Nunes", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_nohzdyveRomInfo, MSX_nohzdyveRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Paco al Bombas REDUX (HB)
+
+static struct BurnRomInfo MSX_pacobombRomDesc[] = {
+	{ "Paco el Bombas REDUX (2021)(Physical Dreams).rom",	32768, 0x5c34c76e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pacobomb, MSX_pacobomb, msx_msx)
+STD_ROM_FN(MSX_pacobomb)
+
+struct BurnDriver BurnDrvMSX_pacobomb = {
+	"msx_pacobomb", NULL, "msx_msx", NULL, "2021",
+	"Paco el Bombas REDUX (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_pacobombRomInfo, MSX_pacobombRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pegged (HB)
+
+static struct BurnRomInfo MSX_peggedRomDesc[] = {
+	{ "Pegged (2021)(Under4Mhz).rom",	32768, 0xd6f7a336, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pegged, MSX_pegged, msx_msx)
+STD_ROM_FN(MSX_pegged)
+
+struct BurnDriver BurnDrvMSX_pegged = {
+	"msx_pegged", NULL, "msx_msx", NULL, "2021",
+	"Pegged (HB)\0", NULL, "Under4Mhz", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_peggedRomInfo, MSX_peggedRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Penguin Race (HB)
+
+static struct BurnRomInfo MSX_pengraceRomDesc[] = {
+	{ "Penguin Race (2003)(Dioniso).rom",	16384, 0xac456cfa, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pengrace, MSX_pengrace, msx_msx)
+STD_ROM_FN(MSX_pengrace)
+
+struct BurnDriver BurnDrvMSX_pengrace = {
+	"msx_pengrace", NULL, "msx_msx", NULL, "2003",
+	"Penguin Race (HB)\0", NULL, "Dioniso", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_QUIZ, 0,
+	MSXGetZipName, MSX_pengraceRomInfo, MSX_pengraceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Snake (HB)
+
+static struct BurnRomInfo MSX_snakeRomDesc[] = {
+	{ "Snake (2021)(Under4Mhz).rom",	14287, 0xcea10bd9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_snake, MSX_snake, msx_msx)
+STD_ROM_FN(MSX_snake)
+
+struct BurnDriver BurnDrvMSX_snake = {
+	"msx_snake", NULL, "msx_msx", NULL, "2021",
+	"Snake (HB)\0", NULL, "Under4Mhz", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_snakeRomInfo, MSX_snakeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Vexed (HB)
+
+static struct BurnRomInfo MSX_vexedRomDesc[] = {
+	{ "Vexed (2020)(Under4Mhz).rom",	32768, 0x1ae7d805, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_vexed, MSX_vexed, msx_msx)
+STD_ROM_FN(MSX_vexed)
+
+struct BurnDriver BurnDrvMSX_vexed = {
+	"msx_vexed", NULL, "msx_msx", NULL, "2020",
+	"Vexed (HB)\0", NULL, "Under4Mhz", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_vexedRomInfo, MSX_vexedRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

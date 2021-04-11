@@ -18079,7 +18079,7 @@ struct BurnDriver BurnSpecTcats48k = {
 // Hammerfist (48K)
 
 static struct BurnRomInfo SpecHammerfistRomDesc[] = {
-	{ "Hammerfist 48K (1990)(Activision).z80", 40374, 0x6ca21398, BRF_ESS | BRF_PRG },
+	{ "Hammerfist (1990)(Activision).tap", 188831, 0xc6ad835b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecHammerfist, SpecHammerfist, Spectrum)
@@ -18087,7 +18087,7 @@ STD_ROM_FN(SpecHammerfist)
 
 struct BurnDriver BurnSpecHammerfist = {
 	"spec_hammerfist", NULL, "spec_spectrum", NULL, "1990",
-	"Hammerfist (48K)\0", NULL, "Activision - Vivid Image", "ZX Spectrum",
+	"Hammerfist (48K)\0", NULL, "Activision", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecHammerfistRomInfo, SpecHammerfistRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

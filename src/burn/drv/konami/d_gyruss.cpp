@@ -963,6 +963,7 @@ static INT32 DrvFrame()
 		filter_rc_update(6, pAY8910Buffer[14], pBurnSoundOut, nBurnSoundLen);
 
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundTweakVolume(pBurnSoundOut, nBurnSoundLen, 0.55);
 	}
 
 	I8039Close();

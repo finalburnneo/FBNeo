@@ -281,7 +281,7 @@ INT32 narc_sound_scan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = ram;
+		ba.Data	  = ram[0];
 		ba.nLen	  = 0x4000;
 		ba.szName = "Sound Ram";
 		BurnAcb(&ba);

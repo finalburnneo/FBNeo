@@ -1522,10 +1522,20 @@ static INT32 DrvLoadRoms(INT32 gfxbpp)
 			continue;
 		}
 
-		if ((ri.nType & BRF_PRG) && (ri.nType & 7) == 3) { // TMS34010 Code
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0xf) == 3) { // TMS34010 Code
 			memmove (DrvMainROM, DrvMainROM + (ri.nLen * 2), 0x100000 - (ri.nLen * 2));
 			if (BurnLoadRom(DrvMainROM + 0x100000 + 0 - (ri.nLen * 2), i+0, 2)) return 1;
 			if (BurnLoadRom(DrvMainROM + 0x100000 + 1 - (ri.nLen * 2), i+1, 2)) return 1;
+			i++;
+			continue;
+		}
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0xf) == (3|8)) { // TMS34010 Code, staggered
+			memmove (DrvMainROM, DrvMainROM + (ri.nLen * 4), 0x100000 - (ri.nLen * 4));
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0 - (ri.nLen * 4), i+0, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 1 - (ri.nLen * 4), i+1, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0x20000 + 0 - (ri.nLen * 4), i+0, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0x20000 + 1 - (ri.nLen * 4), i+1, 2)) return 1;
 			i++;
 			continue;
 		}
@@ -2088,14 +2098,14 @@ static struct BurnRomInfo narc6RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev6_narc_game_rom_u78.u78",						0x10000, 0x2c9e799b, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev6_narc_game_rom_u60.u60",						0x10000, 0x5f6b0429, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev6_narc_game_rom_u77.u77",						0x10000, 0x508cfa38, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev6_narc_game_rom_u59.u59",						0x10000, 0x84bc91fc, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xee8ae9d4, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev6_narc_game_rom_u24.u24",						0x10000, 0x4fbe2ff5, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev6_narc_game_rom_u41.u41",						0x10000, 0x43a1bbbc, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev6_narc_game_rom_u23.u23",						0x10000, 0xed0d149d, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev6_narc_game_rom_u78.u78",						0x10000, 0x2c9e799b, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev6_narc_game_rom_u60.u60",						0x10000, 0x5f6b0429, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev6_narc_game_rom_u77.u77",						0x10000, 0x508cfa38, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev6_narc_game_rom_u59.u59",						0x10000, 0x84bc91fc, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xee8ae9d4, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev6_narc_game_rom_u24.u24",						0x10000, 0x4fbe2ff5, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev6_narc_game_rom_u41.u41",						0x10000, 0x43a1bbbc, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev6_narc_game_rom_u23.u23",						0x10000, 0xed0d149d, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -2184,14 +2194,14 @@ static struct BurnRomInfo narc4RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev4_narc_game_rom_u78.u78",						0x10000, 0x99bbd587, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev4_narc_game_rom_u60.u60",						0x10000, 0xbeec5f1a, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev4_narc_game_rom_u77.u77",						0x10000, 0x0b9bdd76, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev4_narc_game_rom_u59.u59",						0x10000, 0x0169e4c3, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xa7b0347d, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev4_narc_game_rom_u24.u24",						0x10000, 0x613c9f54, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev4_narc_game_rom_u41.u41",						0x10000, 0x80e83440, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev4_narc_game_rom_u23.u23",						0x10000, 0x425a3f8f, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev4_narc_game_rom_u78.u78",						0x10000, 0x99bbd587, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev4_narc_game_rom_u60.u60",						0x10000, 0xbeec5f1a, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev4_narc_game_rom_u77.u77",						0x10000, 0x0b9bdd76, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev4_narc_game_rom_u59.u59",						0x10000, 0x0169e4c3, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xa7b0347d, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev4_narc_game_rom_u24.u24",						0x10000, 0x613c9f54, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev4_narc_game_rom_u41.u41",						0x10000, 0x80e83440, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev4_narc_game_rom_u23.u23",						0x10000, 0x425a3f8f, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -2280,14 +2290,14 @@ static struct BurnRomInfo narc3RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev3_narc_game_rom_u78.u78",						0x10000, 0x388581b0, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev3_narc_game_rom_u60.u60",						0x10000, 0xf273bc04, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev3_narc_game_rom_u77.u77",						0x10000, 0xbdafaccc, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev3_narc_game_rom_u59.u59",						0x10000, 0x96314a99, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev3_narc_game_rom_u42.u42",						0x10000, 0x56aebc81, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev3_narc_game_rom_u24.u24",						0x10000, 0x11d7e143, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev3_narc_game_rom_u41.u41",						0x10000, 0x6142fab7, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev3_narc_game_rom_u23.u23",						0x10000, 0x98cdd178, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev3_narc_game_rom_u78.u78",						0x10000, 0x388581b0, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev3_narc_game_rom_u60.u60",						0x10000, 0xf273bc04, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev3_narc_game_rom_u77.u77",						0x10000, 0xbdafaccc, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev3_narc_game_rom_u59.u59",						0x10000, 0x96314a99, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev3_narc_game_rom_u42.u42",						0x10000, 0x56aebc81, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev3_narc_game_rom_u24.u24",						0x10000, 0x11d7e143, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev3_narc_game_rom_u41.u41",						0x10000, 0x6142fab7, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev3_narc_game_rom_u23.u23",						0x10000, 0x98cdd178, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -2376,14 +2386,14 @@ static struct BurnRomInfo narc2RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev2_narc_game_rom_u78.u78",						0x10000, 0x150c2dc4, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev2_narc_game_rom_u60.u60",						0x10000, 0x9720ddea, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev2_narc_game_rom_u77.u77",						0x10000, 0x75ba4c74, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev2_narc_game_rom_u59.u59",						0x10000, 0xf7c6c104, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev2_narc_game_rom_u42.u42",						0x10000, 0x3db20bb8, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev2_narc_game_rom_u24.u24",						0x10000, 0x91bae451, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev2_narc_game_rom_u41.u41",						0x10000, 0xb0d463e1, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev2_narc_game_rom_u23.u23",						0x10000, 0xa9eb4825, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev2_narc_game_rom_u78.u78",						0x10000, 0x150c2dc4, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev2_narc_game_rom_u60.u60",						0x10000, 0x9720ddea, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev2_narc_game_rom_u77.u77",						0x10000, 0x75ba4c74, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev2_narc_game_rom_u59.u59",						0x10000, 0xf7c6c104, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev2_narc_game_rom_u42.u42",						0x10000, 0x3db20bb8, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev2_narc_game_rom_u24.u24",						0x10000, 0x91bae451, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev2_narc_game_rom_u41.u41",						0x10000, 0xb0d463e1, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev2_narc_game_rom_u23.u23",						0x10000, 0xa9eb4825, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15

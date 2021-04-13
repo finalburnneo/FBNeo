@@ -44,6 +44,11 @@ static UINT8 DrvReset;
 static UINT8 soundlatch;
 static UINT8 nBankData;
 
+static UINT32 math_reg[6];
+static UINT16 multiply_result;
+static UINT16 divide_quotient;
+static UINT16 divide_remainder;
+
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"P1 Coin"           , BIT_DIGITAL  , DrvJoy1 + 0, "p1 coin"   },
@@ -203,10 +208,66 @@ void contra_bankswitch_w(INT32 data)
 	}
 }
 
+static UINT8 contra_K007452_r(UINT16 address)
+{
+	switch (address)
+	{
+		case 0:
+			return multiply_result & 0xFF;
+			break;
+		case 1:
+			return (multiply_result >> 8) & 0xFF;
+			break;
+		case 2:
+			return divide_remainder & 0xFF;
+			break;
+		case 3:
+			return (divide_remainder >> 8) & 0xFF;
+			break;
+		case 4:
+			return divide_quotient & 0xFF;
+			break;
+		case 5:
+			return (divide_quotient >> 8) & 0xFF;
+			break;
+		default:
+			return 0;
+	}
+}
+
+static void contra_K007452_w(UINT16 address, UINT8 data)
+{
+	math_reg[address] = data;
+
+	if (address == 1)
+	{
+		// Starts multiplication process
+		multiply_result = math_reg[0] * math_reg[1];
+	}
+	else if (address == 5)
+	{
+		// Starts division process
+		UINT16 divisor = (math_reg[2]<<8) + math_reg[3];
+		if (divisor != 0)
+		{
+			UINT16 dividend = (math_reg[4]<<8) + math_reg[5];
+			divide_quotient = dividend / divisor;
+			divide_remainder = dividend % divisor;
+		}
+	}
+}
+
 UINT8 DrvContraHD6309ReadByte(UINT16 address)
 {
 	switch (address)
 	{
+		case 0x0008:
+		case 0x0009:
+		case 0x000A:
+		case 0x000B:
+		case 0x000C:
+		case 0x000D:
+			return contra_K007452_r(address & 5);
 		case 0x0010:
 		case 0x0011:
 		case 0x0012:
@@ -260,6 +321,14 @@ void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 		case 0x0006:
 		case 0x0007:
 			contra_K007121_ctrl_0_w(address & 7, data);
+		return;
+		case 0x0008:
+		case 0x0009:
+		case 0x000A:
+		case 0x000B:
+		case 0x000C:
+		case 0x000D:
+			contra_K007452_w(address & 7, data);
 		return;
 
 		case 0x0018:
@@ -835,6 +904,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(nBankData);
+		SCAN_VAR(multiply_result);
+		SCAN_VAR(divide_quotient);
+		SCAN_VAR(divide_remainder);
 
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);

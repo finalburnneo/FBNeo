@@ -881,9 +881,9 @@ static void palette_write(INT32 i)
 {
 	UINT16 *ram = (UINT16*)DrvPalRAM;
 
-	UINT8 r = ram[i * 4] >> 8;
-	UINT8 g = ram[i * 4];
-	UINT8 b = ram[i * 4 + 2];
+	UINT8 r = BURN_ENDIAN_SWAP_INT16(ram[i * 4]) >> 8;
+	UINT8 g = BURN_ENDIAN_SWAP_INT16(ram[i * 4]);
+	UINT8 b = BURN_ENDIAN_SWAP_INT16(ram[i * 4 + 2]);
 
 	if (i < 0x4000) {
 		INT32 br = 0x100 - (bright[0] >> 8);
@@ -903,45 +903,45 @@ static void ms32_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffc0000) == 0xfd400000) {
 		UINT16 *ram = (UINT16*)DrvPalRAM;
-		ram[(address / 2) & 0x1ffff] = data;
+		ram[(address / 2) & 0x1ffff] = BURN_ENDIAN_SWAP_INT16(data);
 		if ((address & 2) == 0) palette_write((address / 8) & 0x7fff);
 		return;
 	}
 
 	if ((address & 0xffffff80) == 0xfce00000) {
 		UINT16 *ram = (UINT16*)DrvSysCtrl;
-		ram[(address / 4) & 0x1f] = data;
+		ram[(address / 4) & 0x1f] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & ~0x7f) == 0xfce00200) {
 		UINT16 *ram = (UINT16*)DrvSprCtrl;
-		ram[(address / 2) & 0x3f] = data;
+		ram[(address / 2) & 0x3f] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & ~0x7f) == 0xfce00600) {
 		UINT16 *ram = (UINT16*)DrvRozCtrl;
-		ram[(address / 2) & 0x3f] = data;
+		ram[(address / 2) & 0x3f] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & ~0x1f) == 0xfce00a00) {
 		UINT16 *ram = (UINT16*)DrvTxCtrl;
-		ram[(address / 2) & 0x0f] = data;
+		ram[(address / 2) & 0x0f] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & ~0x1f) == 0xfce00a20) {
 		UINT16 *ram = (UINT16*)DrvBgCtrl;
-		ram[(address / 2) & 0x0f] = data;
+		ram[(address / 2) & 0x0f] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & 0xffffe000) == 0xfe200000) {
 		if ((address & 2) == 0) {
 			UINT16 *ram = (UINT16*)DrvLineRAM;
-			ram[(address / 4) & 0x7fff] = data;
+			ram[(address / 4) & 0x7fff] = BURN_ENDIAN_SWAP_INT16(data);
 		}
 		return;
 	}
@@ -1058,7 +1058,7 @@ static void ms32_main_write_byte(UINT32 address, UINT8 data)
 		UINT16 mask = 0xff << ((address & 1) * 8);
 		INT32 offset = (address / 2) & 7;
 		UINT16 *ram = (UINT16*)DrvRozCtrl;
-		ram[offset] = (ram[offset] & ~mask) | (value & mask);
+		ram[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(ram[offset]) & ~mask) | (value & mask));
 		return;
 	}
 
@@ -1132,12 +1132,12 @@ static UINT16 ms32_main_read_word(UINT32 address)
 {
 	if ((address & 0xffffe000) == 0xfe200000) {
 		UINT16 *ram = (UINT16*)DrvLineRAM;
-		return ram[(address / 4) & 0x7fff];
+		return BURN_ENDIAN_SWAP_INT16(ram[(address / 4) & 0x7fff]);
 	}
 
 	if ((address & 0xffffff80) == 0xfce00000) {
 		UINT16 *ram = (UINT16*)DrvSysCtrl;
-		return ram[(address / 4) & 0x1f];
+		return BURN_ENDIAN_SWAP_INT16(ram[(address / 4) & 0x1f]);
 	}
 
 	switch (address)
@@ -1230,21 +1230,21 @@ static tilemap_callback( tx )
 {
 	UINT16 *ram = (UINT16*)DrvTxRAM;
 
-	TILE_SET_INFO(3, ram[offs * 4], ram[offs * 4 + 2], 0);
+	TILE_SET_INFO(3, BURN_ENDIAN_SWAP_INT16(ram[offs * 4]), BURN_ENDIAN_SWAP_INT16(ram[offs * 4 + 2]), 0);
 }
 
 static tilemap_callback( roz )
 {
 	UINT16 *ram = (UINT16*)DrvRozRAM;
 
-	TILE_SET_INFO(1, ram[offs * 4], ram[offs * 4 + 2], 0);
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs * 4]), BURN_ENDIAN_SWAP_INT16(ram[offs * 4 + 2]), 0);
 }
 
 static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	TILE_SET_INFO(2, ram[offs * 4], ram[offs * 4 + 2], 0);
+	TILE_SET_INFO(2, BURN_ENDIAN_SWAP_INT16(ram[offs * 4]), BURN_ENDIAN_SWAP_INT16(ram[offs * 4 + 2]), 0);
 }
 
 static INT32 DrvDoReset()
@@ -1276,7 +1276,7 @@ static INT32 DrvDoReset()
 	// mame says to do this
 	memset (bright, 0xff, sizeof(bright));
 	UINT32 *sprite_ctrl = (UINT32*)DrvSprCtrl;
-	sprite_ctrl[0x10/4] = 0x8000;
+	sprite_ctrl[0x10/4] = BURN_ENDIAN_SWAP_INT32(0x8000);
 
 	return 0;
 }
@@ -1602,9 +1602,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x8000; i++)
 	{
-		UINT8 r = ram[i * 4] >> 8;
-		UINT8 g = ram[i * 4];
-		UINT8 b = ram[i * 4 + 2];
+		UINT8 r = BURN_ENDIAN_SWAP_INT16(ram[i * 4]) >> 8;
+		UINT8 g = BURN_ENDIAN_SWAP_INT16(ram[i * 4]);
+		UINT8 b = BURN_ENDIAN_SWAP_INT16(ram[i * 4 + 2]);
 
 		if (i < 0x4000) {
 			r = (r * br) / 0x100;
@@ -1635,7 +1635,7 @@ static inline void copy_roz(INT32 sty, INT32 ey, UINT32 startx, UINT32 starty, I
 		{
 			for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
 			{
-				INT32 p = BURN_ENDIAN_SWAP_INT16(src[((cy >> 5) & 0x3ff800) + ((cx >> 16) & 0x7ff)]); // wrap
+				INT32 p = src[((cy >> 5) & 0x3ff800) + ((cx >> 16) & 0x7ff)]; // wrap
 
 				if (p & 0xff) {
 					*dst = p;
@@ -1651,7 +1651,7 @@ static inline void copy_roz(INT32 sty, INT32 ey, UINT32 startx, UINT32 starty, I
 				UINT16 cyy = cy >> 16;
 				if (cxx >= 0x800 || cyy >= 0x800) continue;
 
-				INT32 p = BURN_ENDIAN_SWAP_INT16(src[((cy >> 5) & 0x3ff800) + ((cx >> 16) & 0x7ff)]); // wrap
+				INT32 p = src[((cy >> 5) & 0x3ff800) + ((cx >> 16) & 0x7ff)]; // wrap
 
 				if (p & 0xff) {
 					*dst = p;
@@ -1683,23 +1683,23 @@ static void draw_roz_layer(INT32 priority)
 	UINT16 *roz_ctrl = (UINT16*)DrvRozCtrl;
 	UINT16 *lineram = (UINT16*)DrvLineRAM;
 
-	if (roz_ctrl[0x5c/2] & 1)
+	if (BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x5c/2]) & 1)
 	{
 		for (INT32 y = 0; y < nScreenHeight; y++)
 		{
 			UINT16 *lineaddr = lineram + 8 * (y & 0xff);
 
-			INT32 start2x = lineaddr[0x00/4] | ((lineaddr[0x04/4] & 3) << 16);
-			INT32 start2y = lineaddr[0x08/4] | ((lineaddr[0x0c/4] & 3) << 16);
-			INT32 incxx   = lineaddr[0x10/4] | ((lineaddr[0x14/4] & 1) << 16);
-			INT32 incxy   = lineaddr[0x18/4] | ((lineaddr[0x1c/4] & 1) << 16);
-			INT32 startx  = roz_ctrl[0x00/2] | ((roz_ctrl[0x04/2] & 3) << 16);
-			INT32 starty  = roz_ctrl[0x08/2] | ((roz_ctrl[0x0c/2] & 3) << 16);
-			INT32 offsx   = roz_ctrl[0x30/2];
-			INT32 offsy   = roz_ctrl[0x34/2];
+			INT32 start2x = BURN_ENDIAN_SWAP_INT16(lineaddr[0x00/4]) | ((BURN_ENDIAN_SWAP_INT16(lineaddr[0x04/4]) & 3) << 16);
+			INT32 start2y = BURN_ENDIAN_SWAP_INT16(lineaddr[0x08/4]) | ((BURN_ENDIAN_SWAP_INT16(lineaddr[0x0c/4]) & 3) << 16);
+			INT32 incxx   = BURN_ENDIAN_SWAP_INT16(lineaddr[0x10/4]) | ((BURN_ENDIAN_SWAP_INT16(lineaddr[0x14/4]) & 1) << 16);
+			INT32 incxy   = BURN_ENDIAN_SWAP_INT16(lineaddr[0x18/4]) | ((BURN_ENDIAN_SWAP_INT16(lineaddr[0x1c/4]) & 1) << 16);
+			INT32 startx  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x00/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x04/2]) & 3) << 16);
+			INT32 starty  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x08/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x0c/2]) & 3) << 16);
+			INT32 offsx   = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x30/2]);
+			INT32 offsy   = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x34/2]);
 
-			offsx += (roz_ctrl[0x38/2] & 1) * 0x400;
-			offsy += (roz_ctrl[0x3c/2] & 1) * 0x400;
+			offsx += (BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x38/2]) & 1) * 0x400;
+			offsy += (BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x3c/2]) & 1) * 0x400;
 
 			if (start2x & 0x20000) start2x |= ~0x3ffff;
 			if (start2y & 0x20000) start2y |= ~0x3ffff;
@@ -1713,17 +1713,17 @@ static void draw_roz_layer(INT32 priority)
 	}
 	else    // "simple" mode
 	{
-		INT32 startx = roz_ctrl[0x00/2] | ((roz_ctrl[0x04/2] & 3) << 16);
-		INT32 starty = roz_ctrl[0x08/2] | ((roz_ctrl[0x0c/2] & 3) << 16);
-		INT32 incxx  = roz_ctrl[0x10/2] | ((roz_ctrl[0x14/2] & 1) << 16);
-		INT32 incxy  = roz_ctrl[0x18/2] | ((roz_ctrl[0x1c/2] & 1) << 16);
-		INT32 incyy  = roz_ctrl[0x20/2] | ((roz_ctrl[0x24/2] & 1) << 16);
-		INT32 incyx  = roz_ctrl[0x28/2] | ((roz_ctrl[0x2c/2] & 1) << 16);
-		INT32 offsx  = roz_ctrl[0x30/2];
-		INT32 offsy  = roz_ctrl[0x34/2];
+		INT32 startx = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x00/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x04/2]) & 3) << 16);
+		INT32 starty = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x08/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x0c/2]) & 3) << 16);
+		INT32 incxx  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x10/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x14/2]) & 1) << 16);
+		INT32 incxy  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x18/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x1c/2]) & 1) << 16);
+		INT32 incyy  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x20/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x24/2]) & 1) << 16);
+		INT32 incyx  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x28/2]) | ((BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x2c/2]) & 1) << 16);
+		INT32 offsx  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x30/2]);
+		INT32 offsy  = BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x34/2]);
 
-		offsx += (roz_ctrl[0x38/2] & 1) * 0x400;
-		offsy += (roz_ctrl[0x3c/2] & 1) * 0x400;
+		offsx += (BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x38/2]) & 1) * 0x400;
+		offsy += (BURN_ENDIAN_SWAP_INT16(roz_ctrl[0x3c/2]) & 1) * 0x400;
 
 		if (startx & 0x20000) startx |= ~0x3ffff;
 		if (starty & 0x20000) starty |= ~0x3ffff;
@@ -1757,7 +1757,7 @@ static void draw_sprites(UINT16 *sprram_top, UINT32 sprram_size)
 	UINT16 *source = sprram_top;
 	UINT16 *finish = sprram_top + (sprram_size - 0x10);
 
-	INT32 reverseorder = (sprite_ctrl[0x10/2] & 0x8000) >> 15;
+	INT32 reverseorder = (BURN_ENDIAN_SWAP_INT16(sprite_ctrl[0x10/2]) & 0x8000) >> 15;
 
 	if (reverseorder)
 	{
@@ -1767,23 +1767,23 @@ static void draw_sprites(UINT16 *sprram_top, UINT32 sprram_size)
 
 	for (;reverseorder ? (source>=finish) : (source<finish); reverseorder ? (source-=16) : (source+=16))
 	{
-		INT32 attr  = source[0];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(source[0]);
 		if ((attr & 0x0004) == 0) continue;
 
 		INT32 pri   = attr & 0x00f0;
 		INT32 flipx = attr & 1;
 		INT32 flipy = attr & 2;
-		INT32 code  = source[2];
-		INT32 color = source[4];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(source[2]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(source[4]);
 		INT32 tx    = code & 0xff;
 		INT32 ty    = code >> 8;
-		INT32 size  = source[6];
+		INT32 size  = BURN_ENDIAN_SWAP_INT16(source[6]);
 		INT32 xsize = (size & 0xff) + 1;
 		INT32 ysize = (size >> 8) + 1;
-		INT32 sx    = (source[10] & 0x3ff) - (source[10] & 0x400);
-		INT32 sy    = (source[8] & 0x1ff) - (source[8] & 0x200);
-		INT32 xzoom = source[12];
-		INT32 yzoom = source[14];
+		INT32 sx    = (BURN_ENDIAN_SWAP_INT16(source[10]) & 0x3ff) - (BURN_ENDIAN_SWAP_INT16(source[10]) & 0x400);
+		INT32 sy    = (BURN_ENDIAN_SWAP_INT16(source[8]) & 0x1ff) - (BURN_ENDIAN_SWAP_INT16(source[8]) & 0x200);
+		INT32 xzoom = BURN_ENDIAN_SWAP_INT16(source[12]);
+		INT32 yzoom = BURN_ENDIAN_SWAP_INT16(source[14]);
 		code        = (color & 0x0fff);
 		color       = color >> 12;
 
@@ -1811,10 +1811,10 @@ static void draw_layers()
 
 	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? (TMAP_FLIPX|TMAP_FLIPY) : 0);
 
-	GenericTilemapSetScrollX(0, tx_scroll[0x00/4] + tx_scroll[0x08/4] + 0x18);
-	GenericTilemapSetScrollY(0, tx_scroll[0x0c/4] + tx_scroll[0x14/4]);
-	GenericTilemapSetScrollX(1 + (tilemaplayoutcontrol & 1), bg_scroll[0x00/4] + bg_scroll[0x08/4] + 0x10);
-	GenericTilemapSetScrollY(1 + (tilemaplayoutcontrol & 1), bg_scroll[0x0c/4] + bg_scroll[0x14/4]);
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT32(tx_scroll[0x00/4]) + BURN_ENDIAN_SWAP_INT32(tx_scroll[0x08/4]) + 0x18);
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT32(tx_scroll[0x0c/4]) + BURN_ENDIAN_SWAP_INT32(tx_scroll[0x14/4]));
+	GenericTilemapSetScrollX(1 + (tilemaplayoutcontrol & 1), BURN_ENDIAN_SWAP_INT32(bg_scroll[0x00/4]) + BURN_ENDIAN_SWAP_INT32(bg_scroll[0x08/4]) + 0x10);
+	GenericTilemapSetScrollY(1 + (tilemaplayoutcontrol & 1), BURN_ENDIAN_SWAP_INT32(bg_scroll[0x0c/4]) + BURN_ENDIAN_SWAP_INT32(bg_scroll[0x14/4]));
 
 	BurnBitmapPrimapClear(0);
 	BurnBitmapFill(0, 0);

@@ -1522,10 +1522,20 @@ static INT32 DrvLoadRoms(INT32 gfxbpp)
 			continue;
 		}
 
-		if ((ri.nType & BRF_PRG) && (ri.nType & 7) == 3) { // TMS34010 Code
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0xf) == 3) { // TMS34010 Code
 			memmove (DrvMainROM, DrvMainROM + (ri.nLen * 2), 0x100000 - (ri.nLen * 2));
 			if (BurnLoadRom(DrvMainROM + 0x100000 + 0 - (ri.nLen * 2), i+0, 2)) return 1;
 			if (BurnLoadRom(DrvMainROM + 0x100000 + 1 - (ri.nLen * 2), i+1, 2)) return 1;
+			i++;
+			continue;
+		}
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0xf) == (3|8)) { // TMS34010 Code, staggered
+			memmove (DrvMainROM, DrvMainROM + (ri.nLen * 4), 0x100000 - (ri.nLen * 4));
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0 - (ri.nLen * 4), i+0, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 1 - (ri.nLen * 4), i+1, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0x20000 + 0 - (ri.nLen * 4), i+0, 2)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x100000 + 0x20000 + 1 - (ri.nLen * 4), i+1, 2)) return 1;
 			i++;
 			continue;
 		}
@@ -2077,6 +2087,102 @@ struct BurnDriver BurnDrvNarc = {
 };
 
 
+// Narc (rev 6.00)
+
+static struct BurnRomInfo narc6RomDesc[] = {
+	{ "rev2_narc_sound_rom_u4.u4",						0x10000, 0x450a591a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code (Sound)
+	{ "rev2_narc_sound_rom_u5.u5",						0x10000, 0xe551e5e3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "rev2_narc_sound_rom_u35.u35",					0x10000, 0x81295892, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 #1 Code (Sound)
+	{ "rev2_narc_sound_rom_u36.u36",					0x10000, 0x16cdbb13, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "rev6_narc_game_rom_u78.u78",						0x10000, 0x2c9e799b, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev6_narc_game_rom_u60.u60",						0x10000, 0x5f6b0429, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev6_narc_game_rom_u77.u77",						0x10000, 0x508cfa38, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev6_narc_game_rom_u59.u59",						0x10000, 0x84bc91fc, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xee8ae9d4, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev6_narc_game_rom_u24.u24",						0x10000, 0x4fbe2ff5, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev6_narc_game_rom_u41.u41",						0x10000, 0x43a1bbbc, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev6_narc_game_rom_u23.u23",						0x10000, 0xed0d149d, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
+
+	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
+	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
+	{ "rev2_narc_image_rom_u92.u92",					0x10000, 0x40d2fc66, 4 | BRF_GRA },           // 16
+	{ "rev2_narc_image_rom_u91.u91",					0x10000, 0xf39325e0, 4 | BRF_GRA },           // 17
+	{ "rev2_narc_image_rom_u90.u90",					0x10000, 0x0132aefa, 4 | BRF_GRA },           // 18
+	{ "rev2_narc_image_rom_u89.u89",					0x10000, 0xf7260c9e, 4 | BRF_GRA },           // 19
+	{ "rev2_narc_image_rom_u88.u88",					0x10000, 0xedc19f42, 4 | BRF_GRA },           // 20
+	{ "rev2_narc_image_rom_u87.u87",					0x10000, 0xd9b42ff9, 4 | BRF_GRA },           // 21
+	{ "rev2_narc_image_rom_u86.u86",					0x10000, 0xaf7daad3, 4 | BRF_GRA },           // 22
+	{ "rev2_narc_image_rom_u85.u85",					0x10000, 0x095fae6b, 4 | BRF_GRA },           // 23
+	{ "rev2_narc_image_rom_u84.u84",					0x10000, 0x3fdf2057, 4 | BRF_GRA },           // 24
+	{ "rev2_narc_image_rom_u83.u83",					0x10000, 0xf2d27c9f, 4 | BRF_GRA },           // 25
+	{ "rev2_narc_image_rom_u82.u82",					0x10000, 0x962ce47c, 4 | BRF_GRA },           // 26
+	{ "rev2_narc_image_rom_u81.u81",					0x10000, 0x00fe59ec, 4 | BRF_GRA },           // 27
+	{ "rev2_narc_image_rom_u80.u80",					0x10000, 0x147ba8e9, 4 | BRF_GRA },           // 28
+	{ "rev2_narc_image_rom_u76.u76",					0x10000, 0x1cd897f4, 4 | BRF_GRA },           // 29
+	{ "rev2_narc_image_rom_u75.u75",					0x10000, 0x78abfa01, 4 | BRF_GRA },           // 30
+	{ "rev2_narc_image_rom_u74.u74",					0x10000, 0x66d2a234, 4 | BRF_GRA },           // 31
+	{ "rev2_narc_image_rom_u73.u73",					0x10000, 0xefa5cd4e, 4 | BRF_GRA },           // 32
+	{ "rev2_narc_image_rom_u72.u72",					0x10000, 0x70638eb5, 4 | BRF_GRA },           // 33
+	{ "rev2_narc_image_rom_u71.u71",					0x10000, 0x61226883, 4 | BRF_GRA },           // 34
+	{ "rev2_narc_image_rom_u70.u70",					0x10000, 0xc808849f, 4 | BRF_GRA },           // 35
+	{ "rev2_narc_image_rom_u69.u69",					0x10000, 0xe7f9c34f, 4 | BRF_GRA },           // 36
+	{ "rev2_narc_image_rom_u68.u68",					0x10000, 0x88a634d5, 4 | BRF_GRA },           // 37
+	{ "rev2_narc_image_rom_u67.u67",					0x10000, 0x4ab8b69e, 4 | BRF_GRA },           // 38
+	{ "rev2_narc_image_rom_u66.u66",					0x10000, 0xe1da4b25, 4 | BRF_GRA },           // 39
+	{ "rev2_narc_image_rom_u65.u65",					0x10000, 0x6df0d125, 4 | BRF_GRA },           // 40
+	{ "rev2_narc_image_rom_u64.u64",					0x10000, 0xabab1b16, 4 | BRF_GRA },           // 41
+	{ "rev2_narc_image_rom_u63.u63",					0x10000, 0x80602f31, 4 | BRF_GRA },           // 42
+	{ "rev2_narc_image_rom_u62.u62",					0x10000, 0xc2a476d1, 4 | BRF_GRA },           // 43
+	{ "rev2_narc_image_rom_u58.u58",					0x10000, 0x8a7501e3, 4 | BRF_GRA },           // 44
+	{ "rev2_narc_image_rom_u57.u57",					0x10000, 0xa504735f, 4 | BRF_GRA },           // 45
+	{ "rev2_narc_image_rom_u56.u56",					0x10000, 0x55f8cca7, 4 | BRF_GRA },           // 46
+	{ "rev2_narc_image_rom_u55.u55",					0x10000, 0xd3c932c1, 4 | BRF_GRA },           // 47
+	{ "rev2_narc_image_rom_u54.u54",					0x10000, 0xc7f4134b, 4 | BRF_GRA },           // 48
+	{ "rev2_narc_image_rom_u53.u53",					0x10000, 0x6be4da56, 4 | BRF_GRA },           // 49
+	{ "rev2_narc_image_rom_u52.u52",					0x10000, 0x1ea36a4a, 4 | BRF_GRA },           // 50
+	{ "rev2_narc_image_rom_u51.u51",					0x10000, 0x9d4b0324, 4 | BRF_GRA },           // 51
+	{ "rev2_narc_image_rom_u50.u50",					0x10000, 0x6f9f0c26, 4 | BRF_GRA },           // 52
+	{ "rev2_narc_image_rom_u49.u49",					0x10000, 0x80386fce, 4 | BRF_GRA },           // 53
+	{ "rev2_narc_image_rom_u48.u48",					0x10000, 0x05c16185, 4 | BRF_GRA },           // 54
+	{ "rev2_narc_image_rom_u47.u47",					0x10000, 0x4c0151f1, 4 | BRF_GRA },           // 55
+	{ "rev2_narc_image_rom_u46.u46",					0x10000, 0x5670bfcb, 4 | BRF_GRA },           // 56
+	{ "rev2_narc_image_rom_u45.u45",					0x10000, 0x27f10d98, 4 | BRF_GRA },           // 57
+	{ "rev2_narc_image_rom_u44.u44",					0x10000, 0x93b8eaa4, 4 | BRF_GRA },           // 58
+	{ "rev2_narc_image_rom_u40.u40",					0x10000, 0x7fcaebc7, 4 | BRF_GRA },           // 59
+	{ "rev2_narc_image_rom_u39.u39",					0x10000, 0x7db5cf52, 4 | BRF_GRA },           // 60
+	{ "rev2_narc_image_rom_u38.u38",					0x10000, 0x3f9f3ef7, 4 | BRF_GRA },           // 61
+	{ "rev2_narc_image_rom_u37.u37",					0x10000, 0xed81826c, 4 | BRF_GRA },           // 62
+	{ "rev2_narc_image_rom_u36.u36",					0x10000, 0xe5d855c0, 4 | BRF_GRA },           // 63
+	{ "rev2_narc_image_rom_u35.u35",					0x10000, 0x3a7b1329, 4 | BRF_GRA },           // 64
+	{ "rev2_narc_image_rom_u34.u34",					0x10000, 0xfe982b0e, 4 | BRF_GRA },           // 65
+	{ "rev2_narc_image_rom_u33.u33",					0x10000, 0x6bc7eb0f, 4 | BRF_GRA },           // 66
+	{ "rev2_narc_image_rom_u32.u32",					0x10000, 0x5875a6d3, 4 | BRF_GRA },           // 67
+	{ "rev2_narc_image_rom_u31.u31",					0x10000, 0x2fa4b8e5, 4 | BRF_GRA },           // 68
+	{ "rev2_narc_image_rom_u30.u30",					0x10000, 0x7e4bb8ee, 4 | BRF_GRA },           // 69
+	{ "rev2_narc_image_rom_u29.u29",					0x10000, 0x45136fd9, 4 | BRF_GRA },           // 70
+	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 71
+	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 72
+	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 73
+};
+
+STD_ROM_PICK(narc6)
+STD_ROM_FN(narc6)
+
+struct BurnDriver BurnDrvNarc6 = {
+	"narc6", "narc", NULL, NULL, "1988",
+	"Narc (rev 6.00)\0", NULL, "Williams", "Z Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, narc6RomInfo, narc6RomName, NULL, NULL, NULL, NULL, NarcInputInfo, NarcDIPInfo,
+	NarcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 8192,
+	512, 400, 4, 3
+};
+
+
 // Narc (rev 4.00)
 
 static struct BurnRomInfo narc4RomDesc[] = {
@@ -2088,14 +2194,14 @@ static struct BurnRomInfo narc4RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev4_narc_game_rom_u78.u78",						0x10000, 0x99bbd587, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev4_narc_game_rom_u60.u60",						0x10000, 0xbeec5f1a, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev4_narc_game_rom_u77.u77",						0x10000, 0x0b9bdd76, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev4_narc_game_rom_u59.u59",						0x10000, 0x0169e4c3, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xa7b0347d, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev4_narc_game_rom_u24.u24",						0x10000, 0x613c9f54, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev4_narc_game_rom_u41.u41",						0x10000, 0x80e83440, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev4_narc_game_rom_u23.u23",						0x10000, 0x425a3f8f, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev4_narc_game_rom_u78.u78",						0x10000, 0x99bbd587, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev4_narc_game_rom_u60.u60",						0x10000, 0xbeec5f1a, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev4_narc_game_rom_u77.u77",						0x10000, 0x0b9bdd76, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev4_narc_game_rom_u59.u59",						0x10000, 0x0169e4c3, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xa7b0347d, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev4_narc_game_rom_u24.u24",						0x10000, 0x613c9f54, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev4_narc_game_rom_u41.u41",						0x10000, 0x80e83440, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev4_narc_game_rom_u23.u23",						0x10000, 0x425a3f8f, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -2184,14 +2290,14 @@ static struct BurnRomInfo narc3RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev3_narc_game_rom_u78.u78",						0x10000, 0x388581b0, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev3_narc_game_rom_u60.u60",						0x10000, 0xf273bc04, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev3_narc_game_rom_u77.u77",						0x10000, 0xbdafaccc, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev3_narc_game_rom_u59.u59",						0x10000, 0x96314a99, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev3_narc_game_rom_u42.u42",						0x10000, 0x56aebc81, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev3_narc_game_rom_u24.u24",						0x10000, 0x11d7e143, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev3_narc_game_rom_u41.u41",						0x10000, 0x6142fab7, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev3_narc_game_rom_u23.u23",						0x10000, 0x98cdd178, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev3_narc_game_rom_u78.u78",						0x10000, 0x388581b0, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev3_narc_game_rom_u60.u60",						0x10000, 0xf273bc04, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev3_narc_game_rom_u77.u77",						0x10000, 0xbdafaccc, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev3_narc_game_rom_u59.u59",						0x10000, 0x96314a99, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev3_narc_game_rom_u42.u42",						0x10000, 0x56aebc81, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev3_narc_game_rom_u24.u24",						0x10000, 0x11d7e143, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev3_narc_game_rom_u41.u41",						0x10000, 0x6142fab7, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev3_narc_game_rom_u23.u23",						0x10000, 0x98cdd178, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -2280,14 +2386,14 @@ static struct BurnRomInfo narc2RomDesc[] = {
 	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rev2_narc_game_rom_u78.u78",						0x10000, 0x150c2dc4, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "rev2_narc_game_rom_u60.u60",						0x10000, 0x9720ddea, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "rev2_narc_game_rom_u77.u77",						0x10000, 0x75ba4c74, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "rev2_narc_game_rom_u59.u59",						0x10000, 0xf7c6c104, 3 | BRF_PRG | BRF_ESS }, //  9
-	{ "rev2_narc_game_rom_u42.u42",						0x10000, 0x3db20bb8, 3 | BRF_PRG | BRF_ESS }, // 10
-	{ "rev2_narc_game_rom_u24.u24",						0x10000, 0x91bae451, 3 | BRF_PRG | BRF_ESS }, // 11
-	{ "rev2_narc_game_rom_u41.u41",						0x10000, 0xb0d463e1, 3 | BRF_PRG | BRF_ESS }, // 12
-	{ "rev2_narc_game_rom_u23.u23",						0x10000, 0xa9eb4825, 3 | BRF_PRG | BRF_ESS }, // 13
+	{ "rev2_narc_game_rom_u78.u78",						0x10000, 0x150c2dc4, (3 | 8) | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev2_narc_game_rom_u60.u60",						0x10000, 0x9720ddea, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
+	{ "rev2_narc_game_rom_u77.u77",						0x10000, 0x75ba4c74, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
+	{ "rev2_narc_game_rom_u59.u59",						0x10000, 0xf7c6c104, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
+	{ "rev2_narc_game_rom_u42.u42",						0x10000, 0x3db20bb8, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev2_narc_game_rom_u24.u24",						0x10000, 0x91bae451, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
+	{ "rev2_narc_game_rom_u41.u41",						0x10000, 0xb0d463e1, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
+	{ "rev2_narc_game_rom_u23.u23",						0x10000, 0xa9eb4825, (3 | 8) | BRF_PRG | BRF_ESS }, // 13
 
 	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 14 Graphics (Blitter data)
 	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 15
@@ -3197,7 +3303,7 @@ struct BurnDriver BurnDrvMkyawdim4 = {
 };
 
 
-// Trog (rev LA5 03/29/91)
+// Trog (rev LA5 3/29/91)
 
 static struct BurnRomInfo trogRomDesc[] = {
 	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (sound)
@@ -3243,7 +3349,7 @@ static INT32 TrogInit()
 
 struct BurnDriver BurnDrvTrog = {
 	"trog", NULL, NULL, NULL, "1990",
-	"Trog (rev LA5 03/29/91)\0", NULL, "Midway", "Y Unit",
+	"Trog (rev LA5 3/29/91)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
 	NULL, trogRomInfo, trogRomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
@@ -3252,7 +3358,7 @@ struct BurnDriver BurnDrvTrog = {
 };
 
 
-// Trog (rev LA4 03/11/91)
+// Trog (rev LA4 3/11/91)
 
 static struct BurnRomInfo trog4RomDesc[] = {
 	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -3279,7 +3385,7 @@ STD_ROM_FN(trog4)
 
 struct BurnDriver BurnDrvTrog4 = {
 	"trog4", "trog", NULL, NULL, "1990",
-	"Trog (rev LA4 03/11/91)\0", NULL, "Midway", "Y Unit",
+	"Trog (rev LA4 3/11/91)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
 	NULL, trog4RomInfo, trog4RomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
@@ -3288,7 +3394,7 @@ struct BurnDriver BurnDrvTrog4 = {
 };
 
 
-// Trog (rev LA3 02/14/91)
+// Trog (rev LA3 2/14/91)
 
 static struct BurnRomInfo trog3RomDesc[] = {
 	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -3315,7 +3421,7 @@ STD_ROM_FN(trog3)
 
 struct BurnDriver BurnDrvTrog3 = {
 	"trog3", "trog", NULL, NULL, "1990",
-	"Trog (rev LA3 02/14/91)\0", NULL, "Midway", "Y Unit",
+	"Trog (rev LA3 2/14/91)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
 	NULL, trog3RomInfo, trog3RomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
@@ -3324,7 +3430,43 @@ struct BurnDriver BurnDrvTrog3 = {
 };
 
 
-// Trog (prototype, rev PA6-PAC 09/09/90)
+// Trog (rev LA3 2/10/91)
+
+static struct BurnRomInfo trog3aRomDesc[] = {
+	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "trog_ii_u-19_sl_1.u19",							0x10000, 0x960c333d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "trog_ii_u-20_sl_1.u20",							0x10000, 0x67f1658a, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "trog_ii_u-105_la-3.u105",						0x20000, 0x9b3841dd, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "trog_ii_u-89_la-3.u89",							0x20000, 0x9c0e6542, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "trog_ii_u-111_la-1.u111",						0x20000, 0x9ded08c1, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "trog_ii_u-112_la-1.u112",						0x20000, 0x42293843, 4 | BRF_GRA },           //  6
+	{ "trog_ii_u-113_la-1.u113",						0x20000, 0x77f50cbb, 4 | BRF_GRA },           //  7
+	{ "trog_ii_u-106_la-1.u106",						0x20000, 0xaf2eb0d8, 4 | BRF_GRA },           //  8
+	{ "trog_ii_u-107_la-1.u107",						0x20000, 0x88a7b3f6, 4 | BRF_GRA },           //  9
+	{ "trog_ii_u-95_la-1.u95",							0x20000, 0xf3ba2838, 4 | BRF_GRA },           // 10
+	{ "trog_ii_u-96_la-1.u96",							0x20000, 0xcfed2e77, 4 | BRF_GRA },           // 11
+	{ "trog_ii_u-97_la-1.u97",							0x20000, 0x3262d1f8, 4 | BRF_GRA },           // 12
+	{ "trog_ii_u-90_la-1.u90",							0x20000, 0x16e06753, 4 | BRF_GRA },           // 13
+	{ "trog_ii_u-91_la-1.u91",							0x20000, 0x880a02c7, 4 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(trog3a)
+STD_ROM_FN(trog3a)
+
+struct BurnDriver BurnDrvTrog3a = {
+	"trog3a", "trog", NULL, NULL, "1990",
+	"Trog (rev LA3 2/10/91)\0", NULL, "Midway", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
+	NULL, trog3aRomInfo, trog3aRomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
+	TrogInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	396, 256, 4, 3
+};
+
+
+// Trog (prototype, rev PA6-PAC 9/09/90)
 
 static struct BurnRomInfo trogpa6RomDesc[] = {
 	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -3336,12 +3478,12 @@ static struct BurnRomInfo trogpa6RomDesc[] = {
 
 	{ "trog_ii_u-111_la-1.u111",						0x20000, 0x9ded08c1, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "trog_ii_u-112_la-1.u112",						0x20000, 0x42293843, 4 | BRF_GRA },           //  6
-	{ "trog_ii_u-113_rev.6.u113",						0x20000, 0xae50e5ea, 4 | BRF_GRA },           //  7
+	{ "trog_ii_u-113_rev.5.u113",						0x20000, 0xae50e5ea, 4 | BRF_GRA },           //  7
 	{ "trog_ii_u-106_la-1.u106",						0x20000, 0xaf2eb0d8, 4 | BRF_GRA },           //  8
 	{ "trog_ii_u-107_la-1.u107",						0x20000, 0x88a7b3f6, 4 | BRF_GRA },           //  9
 	{ "trog_ii_u-95_la-1.u95",							0x20000, 0xf3ba2838, 4 | BRF_GRA },           // 10
 	{ "trog_ii_u-96_la-1.u96",							0x20000, 0xcfed2e77, 4 | BRF_GRA },           // 11
-	{ "trog_ii_u-97_rev.6.u97",							0x20000, 0x354b1cb3, 4 | BRF_GRA },           // 12
+	{ "trog_ii_u-97_rev.5.u97",							0x20000, 0x354b1cb3, 4 | BRF_GRA },           // 12
 	{ "trog_ii_u-90_la-1.u90",							0x20000, 0x16e06753, 4 | BRF_GRA },           // 13
 	{ "trog_ii_u-91_la-1.u91",							0x20000, 0x880a02c7, 4 | BRF_GRA },           // 14
 };
@@ -3351,7 +3493,7 @@ STD_ROM_FN(trogpa6)
 
 struct BurnDriver BurnDrvTrogpa6 = {
 	"trogpa6", "trog", NULL, NULL, "1990",
-	"Trog (prototype, rev PA6-PAC 09/09/90)\0", NULL, "Midway", "Y Unit",
+	"Trog (prototype, rev PA6-PAC 9/09/90)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
 	NULL, trogpa6RomInfo, trogpa6RomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
@@ -3360,7 +3502,43 @@ struct BurnDriver BurnDrvTrogpa6 = {
 };
 
 
-// Trog (prototype, rev 4.00 07/27/90)
+// Trog (prototype, rev PA5-PAC 8/28/90)
+
+static struct BurnRomInfo trogpa5RomDesc[] = {
+	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "trog_ii_u-19_sl_1.u19",							0x10000, 0x960c333d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "trog_ii_u-20_sl_1.u20",							0x10000, 0x67f1658a, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "trog_ii_u-105_rev.5.u105",						0x20000, 0xda645900, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "trog_ii_u-89_rev.5.u89",							0x20000, 0xd42d0f71, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "trog_ii_u-111_la-1.u111",						0x20000, 0x9ded08c1, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "trog_ii_u-112_la-1.u112",						0x20000, 0x42293843, 4 | BRF_GRA },           //  6
+	{ "trog_ii_u-113_rev.5.u113",						0x20000, 0xae50e5ea, 4 | BRF_GRA },           //  7
+	{ "trog_ii_u-106_la-1.u106",						0x20000, 0xaf2eb0d8, 4 | BRF_GRA },           //  8
+	{ "trog_ii_u-107_la-1.u107",						0x20000, 0x88a7b3f6, 4 | BRF_GRA },           //  9
+	{ "trog_ii_u-95_la-1.u95",							0x20000, 0xf3ba2838, 4 | BRF_GRA },           // 10
+	{ "trog_ii_u-96_la-1.u96",							0x20000, 0xcfed2e77, 4 | BRF_GRA },           // 11
+	{ "trog_ii_u-97_rev.5.u97",							0x20000, 0x354b1cb3, 4 | BRF_GRA },           // 12
+	{ "trog_ii_u-90_la-1.u90",							0x20000, 0x16e06753, 4 | BRF_GRA },           // 13
+	{ "trog_ii_u-91_la-1.u91",							0x20000, 0x880a02c7, 4 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(trogpa5)
+STD_ROM_FN(trogpa5)
+
+struct BurnDriver BurnDrvTrogpa5 = {
+	"trogpa5", "trog", NULL, NULL, "1990",
+	"Trog (prototype, rev PA5-PAC 8/28/90)\0", NULL, "Midway", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
+	NULL, trogpa5RomInfo, trogpa5RomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
+	TrogInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	396, 256, 4, 3
+};
+
+
+// Trog (prototype, rev 4.00 7/27/90)
 
 static struct BurnRomInfo trogpa4RomDesc[] = {
 	{ "trog_ii_u-4_sl_1.u4",							0x10000, 0x759d0bf4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -3387,7 +3565,7 @@ STD_ROM_FN(trogpa4)
 
 struct BurnDriver BurnDrvTrogpa4 = {
 	"trogpa4", "trog", NULL, NULL, "1990",
-	"Trog (prototype, rev 4.00 07/27/90)\0", NULL, "Midway", "Y Unit",
+	"Trog (prototype, rev 4.00 7/27/90)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_MAZE, 0,
 	NULL, trogpa4RomInfo, trogpa4RomName, NULL, NULL, NULL, NULL, TrogInputInfo, TrogDIPInfo,
@@ -3509,6 +3687,7 @@ struct BurnDriver BurnDrvSmashtv5 = {
 
 
 // Smash T.V. (rev 4.00)
+// source docs states Smash TV Rev 4.00 released 5/4/90 to production.
 
 static struct BurnRomInfo smashtv4RomDesc[] = {
 	{ "sl2_smash_tv_sound_rom_u4.u4",					0x10000, 0x29d3f6c8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -4123,7 +4302,7 @@ struct BurnDriver BurnDrvTotcarn = {
 };
 
 
-// Total Carnage (prototype, proto v1.0 01/25/92)
+// Total Carnage (prototype, proto v 1.0 01/25/92)
 
 static struct BurnRomInfo totcarnpRomDesc[] = {
 	{ "sl1_total_carnage_sound_rom_u3.u3",				0x20000, 0x5bdb4665, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
@@ -4153,7 +4332,7 @@ STD_ROM_FN(totcarnp)
 
 struct BurnDriver BurnDrvTotcarnp = {
 	"totcarnp", "totcarn", NULL, NULL, "1992",
-	"Total Carnage (prototype, proto v1.0 01/25/92)\0", NULL, "Midway", "Y Unit",
+	"Total Carnage (prototype, proto v 1.0 01/25/92)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_RUNGUN, 0,
 	NULL, totcarnpRomInfo, totcarnpRomName, NULL, NULL, NULL, NULL, TotcarnInputInfo, TotcarnDIPInfo,

@@ -884,7 +884,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Revolution X (rev 1.0 6/16/94)
 
 static struct BurnRomInfo revxRomDesc[] = {
-	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0x4ed9e803, 1 | BRF_SND },           //  0 DCS Sound Data
+	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0xd2ed9f5e, 1 | BRF_SND },           //  0 DCS Sound Data
 	{ "l1_revolution_x_sound_rom_u3.u3",	0x80000, 0xaf8f253b, 1 | BRF_SND },           //  1
 	{ "l1_revolution_x_sound_rom_u4.u4",	0x80000, 0x3ccce59c, 1 | BRF_SND },           //  2
 	{ "l1_revolution_x_sound_rom_u5.u5",	0x80000, 0xa0438006, 1 | BRF_SND },           //  3
@@ -893,10 +893,10 @@ static struct BurnRomInfo revxRomDesc[] = {
 	{ "l1_revolution_x_sound_rom_u8.u8",	0x80000, 0x793a7eb5, 1 | BRF_SND },           //  6
 	{ "l1_revolution_x_sound_rom_u9.u9",	0x80000, 0x14ddbea1, 1 | BRF_SND },           //  7
 
-	{ "revx.u51",							0x80000, 0x9960ac7c, 2 | BRF_PRG | BRF_ESS }, //  8 TMS34020 Code
-	{ "revx.u52",							0x80000, 0xfbf55510, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "revx.u53",							0x80000, 0xa045b265, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "revx.u54",							0x80000, 0x24471269, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "l1_revolution_x_game_rom_u51.u51",	0x80000, 0x9960ac7c, 2 | BRF_PRG | BRF_ESS }, //  8 TMS34020 Code
+	{ "l1_revolution_x_game_rom_u52.u52",	0x80000, 0xfbf55510, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "l1_revolution_x_game_rom_u53.u53",	0x80000, 0xa045b265, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "l1_revolution_x_game_rom_u54.u54",	0x80000, 0x24471269, 2 | BRF_PRG | BRF_ESS }, // 11
 
 	{ "419_revolution-x_u444.u444",			0x02000, 0x517e0110, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
 
@@ -955,7 +955,7 @@ struct BurnDriver BurnDrvRevx = {
 // Revolution X (prototype, rev 5.0 5/23/94)
 
 static struct BurnRomInfo revxp5RomDesc[] = {
-	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0x4ed9e803, 1 | BRF_SND },           //  0 DCS Sound Data
+	{ "p5_revolution_x_sound_rom_u2.u2",	0x80000, 0x4ed9e803, 1 | BRF_SND },           //  0 DCS Sound Data
 	{ "l1_revolution_x_sound_rom_u3.u3",	0x80000, 0xaf8f253b, 1 | BRF_SND },           //  1
 	{ "l1_revolution_x_sound_rom_u4.u4",	0x80000, 0x3ccce59c, 1 | BRF_SND },           //  2
 	{ "l1_revolution_x_sound_rom_u5.u5",	0x80000, 0xa0438006, 1 | BRF_SND },           //  3

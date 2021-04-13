@@ -17,6 +17,9 @@ static INT32 sound_int_state;
 static INT32 sound_in_reset;
 static UINT8 audio_sync;
 
+static INT32 if_clk;
+static INT32 if_seq;
+
 static void bankswitch(INT32 cpu, INT32 data)
 {
 	INT32 bank = 0x10000 + 0x8000 * (data & 1) + 0x10000 * ((data >> 3) & 1) + 0x20000 * ((data >> 1) & 3);
@@ -134,17 +137,14 @@ static INT32 hc_idlefilter_check(UINT8 in)
 {
 	const UINT8 crap[8] = { 0x01, 0x00, 0x55, 0x2a, 0x15, 0x0a, 0x05, 0x02 };
 
-	static INT32 clk = 0;
-	static INT32 seq = 0;
-
-	if (in == crap[clk]) {
-		clk = (clk + 1) & 7;
-		seq++;
+	if (in == crap[if_clk]) {
+		if_clk = (if_clk + 1) & 7;
+		if_seq++;
 	} else {
-		seq = 0;
+		if_seq = 0;
 	}
 
-	return (seq > 2);
+	return (if_seq > 2);
 }
 
 static void narc_sound1_write(UINT16 address, UINT8 data)
@@ -213,6 +213,9 @@ void narc_sound_reset()
 
 	sound_int_state = 0;
 	sound_in_reset = 0;
+
+	if_clk = 0;
+	if_seq = 0;
 }
 
 void narc_sound_init(UINT8 *rom0, UINT8 *rom1)
@@ -246,6 +249,7 @@ void narc_sound_init(UINT8 *rom0, UINT8 *rom1)
 	BurnTimerAttachM6809(2000000);
 
 	hc55516_init(M6809TotalCycles, 2000000);
+	hc55516_volume(0.60);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 	DACInit(1, 0, 1, M6809TotalCycles, 2000000);
@@ -281,7 +285,7 @@ INT32 narc_sound_scan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = ram;
+		ba.Data	  = ram[0];
 		ba.nLen	  = 0x4000;
 		ba.szName = "Sound Ram";
 		BurnAcb(&ba);
@@ -305,6 +309,9 @@ INT32 narc_sound_scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bankdata);
 		SCAN_VAR(sound_int_state);
 		SCAN_VAR(sound_in_reset);
+
+		SCAN_VAR(if_clk);
+		SCAN_VAR(if_seq);
 	}
 
 	if (nAction & ACB_WRITE)

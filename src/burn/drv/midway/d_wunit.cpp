@@ -1121,11 +1121,11 @@ struct BurnDriver BurnDrvOpenicea = {
 };
 
 
-// NBA Hangtime (rev L1.1 04/16/96)
+// NBA Hangtime (ver L1.3 10/10/96)
 
 static struct BurnRomInfo nbahangtRomDesc[] = {
-	{ "l1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc2875d98, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "l1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x6f4728c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "l1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xfd9ccca2, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x57de886f, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -1165,7 +1165,7 @@ STD_ROM_FN(nbahangt)
 
 struct BurnDriver BurnDrvNbahangt = {
 	"nbahangt", NULL, NULL, NULL, "1996",
-	"NBA Hangtime (rev L1.1 04/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"NBA Hangtime (ver L1.3 10/10/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, nbahangtRomInfo, nbahangtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
@@ -1174,18 +1174,11 @@ struct BurnDriver BurnDrvNbahangt = {
 };
 
 
-// NBA Maximum Hangtime (rev L1.03 06/09/97)
-/*
-The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.  The MAX sets use all the same Music/SPCH ROMs,
-  Image ROMs and even the same security PIC chip.
-The new MAX sets boast a 1997 player line up and during the atrack mode state: "All NBA team Rosters accurate as of 11/1/96"
-There are known "M" versions (EX: MAX HANGTIME - VER M1.0 11/08/96 ), but it's not known what the differences are between
-  those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
-*/
+// NBA Hangtime (ver M1.3 10/10/96)
 
-static struct BurnRomInfo nbamhtRomDesc[] = {
-	{ "l1.03_maximum_hangtime_u54_l_version.u54",	0x080000, 0x21b0d9e1, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "l1.03_maximum_hangtime_u63_l_version.u63",	0x080000, 0xc6fdbb97, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo nbahangtm13RomDesc[] = {
+	{ "m1.3_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3ee3a9f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "m1.3_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x42e6aeca, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
@@ -1220,30 +1213,30 @@ static struct BurnRomInfo nbamhtRomDesc[] = {
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 };
 
-STD_ROM_PICK(nbamht)
-STD_ROM_FN(nbamht)
+STD_ROM_PICK(nbahangtm13)
+STD_ROM_FN(nbahangtm13)
 
-struct BurnDriver BurnDrvNbamht = {
-	"nbamht", NULL, NULL, NULL, "1996",
-	"NBA Maximum Hangtime (rev L1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+struct BurnDriver BurnDrvNbahangtm13 = {
+	"nbahangtm13", "nbahangt", NULL, NULL, "1996",
+	"NBA Hangtime (ver M1.3 10/10/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
-	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbahangtm13RomInfo, nbahangtm13RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };
 
 
-// NBA Maximum Hangtime (rev L1.0 11/08/96)
+// NBA Hangtime (ver L1.2 8/29/96)
 
-static struct BurnRomInfo nbamht1RomDesc[] = {
-	{ "l1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xdfb6b3ae, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "l1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x78da472c, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo nbahangtl12RomDesc[] = {
+	{ "l1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc90dc3cd, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x1883c461, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "l1.0_nba_hangtime_u_4_music_spch.u4",	0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",	0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "l1.0_nba_hangtime_u_133_image_rom.u133",	0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
 	{ "l1.0_nba_hangtime_u_132_image_rom.u132",	0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
@@ -1273,15 +1266,393 @@ static struct BurnRomInfo nbamht1RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 };
 
-STD_ROM_PICK(nbamht1)
-STD_ROM_FN(nbamht1)
+STD_ROM_PICK(nbahangtl12)
+STD_ROM_FN(nbahangtl12)
 
-struct BurnDriver BurnDrvNbamht1 = {
-	"nbamht1", "nbamht", NULL, NULL, "1996",
-	"NBA Maximum Hangtime (rev L1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+struct BurnDriver BurnDrvNbahangtl12 = {
+	"nbahangtl12", "nbahangt", NULL, NULL, "1996",
+	"NBA Hangtime (ver L1.2 8/29/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
-	NULL, nbamht1RomInfo, nbamht1RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+	NULL, nbahangtl12RomInfo, nbahangtl12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Hangtime (ver M1.2 8/29/96)
+
+static struct BurnRomInfo nbahangtm12RomDesc[] = {
+	{ "m1.2_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x3be47f64, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "m1.2_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xba4344ae, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",	0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",	0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",	0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",	0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",	0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",	0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",	0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",	0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",	0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",	0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",	0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",	0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",	0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",	0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",	0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",	0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",	0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",	0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",	0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbahangtm12)
+STD_ROM_FN(nbahangtm12)
+
+struct BurnDriver BurnDrvNbahangtm12 = {
+	"nbahangtm12", "nbahangt", NULL, NULL, "1996",
+	"NBA Hangtime (ver M1.2 8/29/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbahangtm12RomInfo, nbahangtm12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Hangtime (ver L1.1 4/16/96)
+
+static struct BurnRomInfo nbahangtl11RomDesc[] = {
+	{ "l1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0xc2875d98, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0x6f4728c3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",	0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",	0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",	0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",	0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",	0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",	0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",	0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",	0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",	0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",	0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",	0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",	0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",	0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",	0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",	0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",	0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",	0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",	0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",	0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbahangtl11)
+STD_ROM_FN(nbahangtl11)
+
+struct BurnDriver BurnDrvNbahangtl11 = {
+	"nbahangtl11", "nbahangt", NULL, NULL, "1996",
+	"NBA Hangtime (ver L1.1 4/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbahangtl11RomInfo, nbahangtl11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Hangtime (ver M1.1 4/16/96)
+
+static struct BurnRomInfo nbahangtm11RomDesc[] = {
+	{ "m1.1_nba_hangtime_u_54_game_rom.u54",	0x080000, 0x113b37f4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "m1.1_nba_hangtime_u_63_game_rom.u63",	0x080000, 0xbeaa3e92, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",	0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",	0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",	0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",	0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",	0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",	0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",	0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",	0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",	0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",	0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",	0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",	0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",	0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",	0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",	0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",	0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",	0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",	0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",	0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",	0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",	0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbahangtm11)
+STD_ROM_FN(nbahangtm11)
+
+struct BurnDriver BurnDrvNbahangtm11 = {
+	"nbahangtm11", "nbahangt", NULL, NULL, "1996",
+	"NBA Hangtime (ver M1.1 4/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbahangtm11RomInfo, nbahangtm11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Maximum Hangtime (ver L1.03 06/09/97)
+/*
+The NBA Maximum Hangtime sets are a program ROM update for NBA Hangtime.  The MAX sets use all the same Music/SPCH ROMs,
+  Image ROMs and even the same security PIC chip.
+The new MAX sets boast a 1997 player line up and during the atrack mode state: "All NBA team Rosters accurate as of 11/1/96"
+There are known "M" versions (EX: MAX HANGTIME - VER M1.0 11/08/96 ), but it's not known what the differences are between
+  those and a standard "L" version.  In fact the ROM labels specifically state they are "L" Version ROMs
+*/
+
+static struct BurnRomInfo nbamhtRomDesc[] = {
+	{ "l1.03_maximum_hangtime_u54_l_version.u54",	0x080000, 0x21b0d9e1, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.03_maximum_hangtime_u63_l_version.u63",	0x080000, 0xc6fdbb97, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",		0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",		0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",		0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",		0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",		0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",		0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",		0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",		0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",		0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",		0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",		0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",		0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",		0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",		0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",		0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",		0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",		0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",		0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbamht)
+STD_ROM_FN(nbamht)
+
+struct BurnDriver BurnDrvNbamht = {
+	"nbamht", NULL, NULL, NULL, "1996",
+	"NBA Maximum Hangtime (ver L1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Maximum Hangtime (ver L1.0 11/08/96)
+
+static struct BurnRomInfo nbamhtl10RomDesc[] = {
+	{ "l1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xdfb6b3ae, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x78da472c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",		0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",		0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",		0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",		0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",		0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",		0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",		0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",		0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",		0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",		0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",		0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",		0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",		0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",		0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",		0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",		0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",		0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",		0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbamhtl10)
+STD_ROM_FN(nbamhtl10)
+
+struct BurnDriver BurnDrvNbamhtl10 = {
+	"nbamhtl10", "nbamht", NULL, NULL, "1996",
+	"NBA Maximum Hangtime (ver L1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbamhtl10RomInfo, nbamhtl10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Maximum Hangtime (ver M1.0 11/08/96)
+
+static struct BurnRomInfo nbamhtm10RomDesc[] = {
+	{ "m1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xe4e665d5, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "m1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x51cfda55, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",		0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",		0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",		0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",		0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",		0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",		0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",		0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",		0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",		0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",		0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",		0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",		0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",		0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",		0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",		0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",		0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",		0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",		0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbamhtm10)
+STD_ROM_FN(nbamhtm10)
+
+struct BurnDriver BurnDrvNbamhtm10 = {
+	"nbamhtm10", "nbamht", NULL, NULL, "1996",
+	"NBA Maximum Hangtime (ver M1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbamhtm10RomInfo, nbamhtm10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+    400, 256, 4, 3
+};
+
+
+// NBA Maximum Hangtime (ver L0.9 10/30/96)
+
+static struct BurnRomInfo nbamhtpRomDesc[] = {
+	{ "l0.9_maximum_hangtime_u54_l_version.u54",	0x080000, 0x0fbed60e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "l0.9_maximum_hangtime_u63_l_version.u63",	0x080000, 0xa064645a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",		0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",		0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",		0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",		0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",		0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",		0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",		0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",		0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",		0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",		0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",		0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",		0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",		0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",		0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",		0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",		0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",		0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	// U114 through U117 sockets not populated
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",		0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 22
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+};
+
+STD_ROM_PICK(nbamhtp)
+STD_ROM_FN(nbamhtp)
+
+struct BurnDriver BurnDrvNbamhtp = {
+	"nbamhtp", "nbamht", NULL, NULL, "1996",
+	"NBA Maximum Hangtime (ver L0.9 10/30/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	NULL, nbamhtpRomInfo, nbamhtpRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
 };

@@ -2981,6 +2981,7 @@ DRV		BurnDrvMSX_cuncuna;
 DRV		BurnDrvMSX_Currojimenez;
 DRV		BurnDrvmd_curse;
 DRV		BurnDrvmd_cursep;
+DRV		BurnDrvmd_curseibay;
 DRV		BurnDrvCurvebal;
 DRV		BurnDrvmd_custodian;
 DRV		BurnDrvCutefght;
@@ -9019,6 +9020,7 @@ DRV		BurnDrvNarc1;
 DRV		BurnDrvNarc2;
 DRV		BurnDrvNarc3;
 DRV		BurnDrvNarc4;
+DRV		BurnDrvNarc6;
 DRV		BurnDrvNarc;
 DRV		BurnDrvnes_narc;
 DRV		BurnSpecNarcopol;
@@ -9119,7 +9121,12 @@ DRV		BurnDrvgg_nbaact;
 DRV		BurnDrvmd_nbaallst;
 DRV		BurnDrvmd_nbahang;
 DRV		BurnDrvmd_nbahangu;
+DRV		BurnDrvNbahangtl11;
+DRV		BurnDrvNbahangtl12;
 DRV		BurnDrvNbahangt;
+DRV		BurnDrvNbahangtm11;
+DRV		BurnDrvNbahangtm12;
+DRV		BurnDrvNbahangtm13;
 DRV		BurnDrvsms_nbajam;
 DRV		BurnDrvgg_nbajam1;
 DRV		BurnDrvmd_nbajam1;
@@ -9133,8 +9140,11 @@ DRV		BurnDrvNbajam;
 DRV		BurnDrvgg_nbajam;
 DRV		BurnDrvNbajamten;
 DRV		BurnDrvNbajamte1;
+DRV		BurnDrvNbajamte2a;
 DRV		BurnDrvNbajamte2;
+DRV		BurnDrvNbajamte3a;
 DRV		BurnDrvNbajamte3;
+DRV		BurnDrvNbajamte4;
 DRV		BurnDrvNbajamte;
 DRV		BurnDrvgg_nbajamte;
 DRV		BurnDrvmd_nbajamte;
@@ -9144,8 +9154,10 @@ DRV		BurnDrvmd_nbaliv95k;
 DRV		BurnDrvmd_nbaliv96;
 DRV		BurnDrvmd_nbaliv97;
 DRV		BurnDrvmd_nbaliv98;
-DRV		BurnDrvNbamht1;
+DRV		BurnDrvNbamhtp;
+DRV		BurnDrvNbamhtl10;
 DRV		BurnDrvNbamht;
+DRV		BurnDrvNbamhtm10;
 DRV		BurnDrvmd_bullvsblj;
 DRV		BurnDrvmd_bullvsblj1;
 DRV		BurnDrvmd_nbapro94;
@@ -15363,7 +15375,9 @@ DRV		BurnDrvTrvmstrc;
 DRV		BurnDrvsms_trivial;
 DRV		BurnDrvmd_tronow;
 DRV		BurnDrvTrogpa4;
+DRV		BurnDrvTrogpa5;
 DRV		BurnDrvTrogpa6;
+DRV		BurnDrvTrog3a;
 DRV		BurnDrvTrog3;
 DRV		BurnDrvTrog4;
 DRV		BurnDrvTrog;
@@ -19849,6 +19863,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_Currojimenez,	// Curro Jimenez
 	&BurnDrvmd_curse,			// Curse (Jpn)
 	&BurnDrvmd_cursep,			// Curse (Prototype, 19900626)
+	&BurnDrvmd_curseibay,		// Curse of Illmoore Bay, the (HB)
 	&BurnDrvCurvebal,			// Curve Ball
 	&BurnDrvmd_custodian,		// Custodian MD (HB)
 	&BurnDrvCutefght,			// Cute Fighter
@@ -25887,6 +25902,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNarc2,				// Narc (rev 2.00)
 	&BurnDrvNarc3,				// Narc (rev 3.20)
 	&BurnDrvNarc4,				// Narc (rev 4.00)
+	&BurnDrvNarc6,				// Narc (rev 6.00)
 	&BurnDrvNarc,				// Narc (rev 7.00)
 	&BurnDrvnes_narc,			// NARC (USA)
 	&BurnSpecNarcopol,			// Narco Police (128K)
@@ -25987,7 +26003,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbaallst,		// NBA All-Star Challenge (Euro, USA)
 	&BurnDrvmd_nbahang,			// NBA Hang Time (Euro)
 	&BurnDrvmd_nbahangu,		// NBA Hang Time (USA)
-	&BurnDrvNbahangt,			// NBA Hangtime (rev L1.1 04/16/96)
+	&BurnDrvNbahangtl11,		// NBA Hangtime (ver L1.1 4/16/96)
+	&BurnDrvNbahangtl12,		// NBA Hangtime (ver L1.2 8/29/96)
+	&BurnDrvNbahangt,			// NBA Hangtime (ver L1.3 10/10/96)
+	&BurnDrvNbahangtm11,		// NBA Hangtime (ver M1.1 4/16/96)
+	&BurnDrvNbahangtm12,		// NBA Hangtime (ver M1.2 8/29/96)
+	&BurnDrvNbahangtm13,		// NBA Hangtime (ver M1.3 10/10/96)
 	&BurnDrvsms_nbajam,			// NBA Jam (Euro, Prototype)
 	&BurnDrvgg_nbajam1,			// NBA Jam (Euro, USA)
 	&BurnDrvmd_nbajam1,			// NBA Jam (Euro, USA)
@@ -25995,15 +26016,18 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_nbajamj,			// NBA Jam (Jpn)
 	&BurnDrvmd_nbajamj,			// NBA Jam (Jpn)
 	&BurnDrvmd_nbajamjp,		// NBA Jam (Jpn, Prototype)
-	&BurnDrvNbajamr1,			// NBA Jam (rev 1.00 02/1/93)
-	&BurnDrvNbajamr2,			// NBA Jam (rev 2.00 02/10/93)
-	&BurnDrvNbajam,				// NBA Jam (rev 3.01 04/07/93)
+	&BurnDrvNbajamr1,			// NBA Jam (rev 1.00 2/1/93)
+	&BurnDrvNbajamr2,			// NBA Jam (rev 2.00 2/10/93)
+	&BurnDrvNbajam,				// NBA Jam (rev 3.01 4/07/93)
 	&BurnDrvgg_nbajam,			// NBA Jam (USA, v1.1)
 	&BurnDrvNbajamten,			// NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)
-	&BurnDrvNbajamte1,			// NBA Jam TE (rev 1.0 01/17/94)
-	&BurnDrvNbajamte2,			// NBA Jam TE (rev 2.0 01/28/94)
-	&BurnDrvNbajamte3,			// NBA Jam TE (rev 3.0 03/04/94)
-	&BurnDrvNbajamte,			// NBA Jam TE (rev 4.0 03/23/94)
+	&BurnDrvNbajamte1,			// NBA Jam TE (rev 1.0 1/17/94)
+	&BurnDrvNbajamte2a,			// NBA Jam TE (rev 2.0 1/28/94)
+	&BurnDrvNbajamte2,			// NBA Jam TE (rev 2.1 2/06/94)
+	&BurnDrvNbajamte3a,			// NBA Jam TE (rev 3.0 2/26/94)
+	&BurnDrvNbajamte3,			// NBA Jam TE (rev 3.0 3/04/94)
+	&BurnDrvNbajamte4,			// NBA Jam TE (rev 4.0 3/03/94)
+	&BurnDrvNbajamte,			// NBA Jam TE (rev 4.0 3/23/94)
 	&BurnDrvgg_nbajamte,		// NBA Jam Tournament Edition (World)
 	&BurnDrvmd_nbajamte,		// NBA Jam Tournament Edition (World)
 	&BurnDrvmd_nbajamtef,		// NBA Jam Tournament Edition (World, 2002 Fix Release)
@@ -26012,8 +26036,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nbaliv96,		// NBA Live 96 (Euro, USA)
 	&BurnDrvmd_nbaliv97,		// NBA Live 97 (Euro, USA)
 	&BurnDrvmd_nbaliv98,		// NBA Live 98 (USA)
-	&BurnDrvNbamht1,			// NBA Maximum Hangtime (rev L1.0 11/08/96)
-	&BurnDrvNbamht,				// NBA Maximum Hangtime (rev L1.03 06/09/97)
+	&BurnDrvNbamhtp,			// NBA Maximum Hangtime (ver L0.9 10/30/96)
+	&BurnDrvNbamhtl10,			// NBA Maximum Hangtime (ver L1.0 11/08/96)
+	&BurnDrvNbamht,				// NBA Maximum Hangtime (ver L1.03 06/09/97)
+	&BurnDrvNbamhtm10,			// NBA Maximum Hangtime (ver M1.0 11/08/96)
 	&BurnDrvmd_bullvsblj,		// NBA Playoffs - Bulls Vs Blazers (Jpn)
 	&BurnDrvmd_bullvsblj1,		// NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)
 	&BurnDrvmd_nbapro94,		// NBA Pro Basketball '94 (Jpn)
@@ -32113,7 +32139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTornadoecr,		// Tornado ECR
 	&BurnDrvToryumon,			// Toryumon
 	&BurnDrvpce_etercity,		// Toshi Tensou Keikaku - Eternal City
-	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v1.0 01/25/92)
+	&BurnDrvTotcarnp,			// Total Carnage (prototype, proto v 1.0 01/25/92)
 	&BurnDrvTotcarn,			// Total Carnage (rev LA1 03/10/92)
 	&BurnSpecTeclipse,			// Total Eclipse (48K)
 	&BurnDrvmd_totlfoot,		// Total Football (Euro)
@@ -32230,11 +32256,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTrvmstrc,			// Trivia Master (set 4)
 	&BurnDrvsms_trivial,		// Trivial Pursuit - Genus Edition (Euro)
 	&BurnDrvmd_tronow,			// Tro-Now (HB)
-	&BurnDrvTrogpa4,			// Trog (prototype, rev 4.00 07/27/90)
-	&BurnDrvTrogpa6,			// Trog (prototype, rev PA6-PAC 09/09/90)
-	&BurnDrvTrog3,				// Trog (rev LA3 02/14/91)
-	&BurnDrvTrog4,				// Trog (rev LA4 03/11/91)
-	&BurnDrvTrog,				// Trog (rev LA5 03/29/91)
+	&BurnDrvTrogpa4,			// Trog (prototype, rev 4.00 7/27/90)
+	&BurnDrvTrogpa5,			// Trog (prototype, rev PA5-PAC 8/28/90)
+	&BurnDrvTrogpa6,			// Trog (prototype, rev PA6-PAC 9/09/90)
+	&BurnDrvTrog3a,				// Trog (rev LA3 2/10/91)
+	&BurnDrvTrog3,				// Trog (rev LA3 2/14/91)
+	&BurnDrvTrog4,				// Trog (rev LA4 3/11/91)
+	&BurnDrvTrog,				// Trog (rev LA5 3/29/91)
 	&BurnDrvnes_trog,			// Trog (USA)
 	&BurnDrvTrojanb,			// Trojan (bootleg)
 	&BurnDrvTrojanr,			// Trojan (Romstar)

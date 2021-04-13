@@ -3821,6 +3821,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="curseibay">
+		<description>Curse of Illmoore Bay, the (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="Curse of Illmoore Bay, the (2021)(2nd Dimension).bin" size="4189440" crc="7ad106c0"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="custodian">
 		<description>Custodian MD (HB) [Homebrew]</description>
 		<year>2018</year>

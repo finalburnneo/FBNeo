@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16615 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16629 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2943,6 +2943,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_currojimenez|  	| Curro Jimenez						| 		| 1989	| Zigurat Softwa| MSX		| 					|
 | md_curse	|  	| Curse (Jpn)						| 		| 1989	| Micronet	| Sega Megadrive| 					|
 | md_cursep	|  	| Curse (Prototype, 19900626)				| md_curse	| 1989	| U.S. License I| Sega Megadrive| 					|
+| md_curseibay	|  	| Curse of Illmoore Bay, the (HB)			| 		| 2021	| 2nd Dimension	| Sega Megadrive| 					|
 | curvebal	|  	| Curve Ball						| 		| 1984	| Mylstar	| Miscellaneous	| 					|
 | md_custodian	|  	| Custodian MD (HB)					| 		| 2018	| Piko Interacti| Sega Megadrive| 					|
 | cutefght	|  	| Cute Fighter						| 		| 1998	| SemiCom	| Miscellaneous	| 					|
@@ -8893,6 +8894,7 @@ This list contains all games supported by FinalBurn Neo.
 | narc2		|  	| Narc (rev 2.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
 | narc3		|  	| Narc (rev 3.20)					| narc		| 1988	| Williams	| Z Unit	| 					|
 | narc4		|  	| Narc (rev 4.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
+| narc6		|  	| Narc (rev 6.00)					| narc		| 1988	| Williams	| Z Unit	| 					|
 | narc		|  	| Narc (rev 7.00)					| 		| 1988	| Williams	| Z Unit	| 					|
 | nes_narc	|  	| NARC (USA)						| 		| 1990	| Acclaim	| Miscellaneous	| 					|
 | spec_narcopol	|  	| Narco Police (128K)					| 		| 1991	| Rajsoft	| ZX Spectrum	| 					|
@@ -8993,7 +8995,12 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaallst	|  	| NBA All-Star Challenge (Euro, USA)			| 		| 1992	| Flying Edge	| Sega Megadrive| 					|
 | md_nbahang	|  	| NBA Hang Time (Euro)					| 		| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
 | md_nbahangu	|  	| NBA Hang Time (USA)					| md_nbahang	| 1996	| Midway	| Sega Megadrive| Press P3 start for 2nd team		|
-| nbahangt	|  	| NBA Hangtime (rev L1.1 04/16/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangtl11	|  	| NBA Hangtime (ver L1.1 4/16/96)			| nbahangt	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangtl12	|  	| NBA Hangtime (ver L1.2 8/29/96)			| nbahangt	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangt	|  	| NBA Hangtime (ver L1.3 10/10/96)			| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangtm11	|  	| NBA Hangtime (ver M1.1 4/16/96)			| nbahangt	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangtm12	|  	| NBA Hangtime (ver M1.2 8/29/96)			| nbahangt	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbahangtm13	|  	| NBA Hangtime (ver M1.3 10/10/96)			| nbahangt	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | sms_nbajam	|  	| NBA Jam (Euro, Prototype)				| 		| 1994	| Acclaim	| Sega Master Sy| 					|
 | gg_nbajam1	|  	| NBA Jam (Euro, USA)					| gg_nbajam	| 1993	| Arena		| Sega Game Gear| 					|
 | md_nbajam1	|  	| NBA Jam (Euro, USA)					| md_nbajam	| 1993	| Arena		| Sega Megadrive| 					|
@@ -9001,15 +9008,18 @@ This list contains all games supported by FinalBurn Neo.
 | gg_nbajamj	|  	| NBA Jam (Jpn)						| gg_nbajam	| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | md_nbajamj	|  	| NBA Jam (Jpn)						| md_nbajam	| 1994	| Acclaim Japan	| Sega Megadrive| 					|
 | md_nbajamjp	|  	| NBA Jam (Jpn, Prototype)				| md_nbajam	| 1994	| Acclaim Japan	| Sega Megadrive| 					|
-| nbajamr1	|  	| NBA Jam (rev 1.00 02/1/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
-| nbajamr2	|  	| NBA Jam (rev 2.00 02/10/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
-| nbajam	|  	| NBA Jam (rev 3.01 04/07/93)				| 		| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajamr1	|  	| NBA Jam (rev 1.00 2/1/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajamr2	|  	| NBA Jam (rev 2.00 2/10/93)				| nbajam	| 1993	| Midway	| Midway T-Unit	| 					|
+| nbajam	|  	| NBA Jam (rev 3.01 4/07/93)				| 		| 1993	| Midway	| Midway T-Unit	| 					|
 | gg_nbajam	|  	| NBA Jam (USA, v1.1)					| 		| 1993	| Arena		| Sega Game Gear| 					|
 | nbajamten	|  	| NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)| nbajamte	| 1995	| Midway	| Midway T-Unit	| 					|
-| nbajamte1	|  	| NBA Jam TE (rev 1.0 01/17/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte2	|  	| NBA Jam TE (rev 2.0 01/28/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte3	|  	| NBA Jam TE (rev 3.0 03/04/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
-| nbajamte	|  	| NBA Jam TE (rev 4.0 03/23/94)				| 		| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte1	|  	| NBA Jam TE (rev 1.0 1/17/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte2a	|  	| NBA Jam TE (rev 2.0 1/28/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte2	|  	| NBA Jam TE (rev 2.1 2/06/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte3a	|  	| NBA Jam TE (rev 3.0 2/26/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte3	|  	| NBA Jam TE (rev 3.0 3/04/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte4	|  	| NBA Jam TE (rev 4.0 3/03/94)				| nbajamte	| 1994	| Midway	| Midway T-Unit	| 					|
+| nbajamte	|  	| NBA Jam TE (rev 4.0 3/23/94)				| 		| 1994	| Midway	| Midway T-Unit	| 					|
 | gg_nbajamte	|  	| NBA Jam Tournament Edition (World)			| 		| 1994	| Acclaim Entert| Sega Game Gear| 					|
 | md_nbajamte	|  	| NBA Jam Tournament Edition (World)			| 		| 1995	| Acclaim Entert| Sega Megadrive| 					|
 | md_nbajamtef	|  	| NBA Jam Tournament Edition (World, 2002 Fix Release)	| md_nbajamte	| 2002?	| Acclaim Entert| Sega Megadrive| 					|
@@ -9018,8 +9028,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_nbaliv96	|  	| NBA Live 96 (Euro, USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv97	|  	| NBA Live 97 (Euro, USA)				| 		| 1996	| Electronic Art| Sega Megadrive| 					|
 | md_nbaliv98	|  	| NBA Live 98 (USA)					| 		| 1997	| Electronic Art| Sega Megadrive| 					|
-| nbamht1	|  	| NBA Maximum Hangtime (rev L1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
-| nbamht	|  	| NBA Maximum Hangtime (rev L1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamhtp	|  	| NBA Maximum Hangtime (ver L0.9 10/30/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamhtl10	|  	| NBA Maximum Hangtime (ver L1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamht	|  	| NBA Maximum Hangtime (ver L1.03 06/09/97)		| 		| 1996	| Midway	| MIDWAY Wolf-Un| 					|
+| nbamhtm10	|  	| NBA Maximum Hangtime (ver M1.0 11/08/96)		| nbamht	| 1996	| Midway	| MIDWAY Wolf-Un| 					|
 | md_bullvsblj	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn)			| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_bullvsblj1	|  	| NBA Playoffs - Bulls Vs Blazers (Jpn, Alt)		| md_bullvsbl	| 1993	| Electronic Art| Sega Megadrive| 					|
 | md_nbapro94	|  	| NBA Pro Basketball '94 (Jpn)				| 		| 1994	| Electronic Art| Sega Megadrive| 					|
@@ -15037,7 +15049,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_tornadoecr|  	| Tornado ECR						| 		| 1991	| Codemasters	| ZX Spectrum	| 					|
 | toryumon	|  	| Toryumon						| 		| 1994	| Sega / Westone| System 16B	| 					|
 | pce_etercity	|  	| Toshi Tensou Keikaku - Eternal City			| 		| 1991	| Naxat		| PC Engine	| 					|
-| totcarnp	|  	| Total Carnage (prototype, proto v1.0 01/25/92)	| totcarn	| 1992	| Midway	| Y Unit	| 					|
+| totcarnp	|  	| Total Carnage (prototype, proto v 1.0 01/25/92)	| totcarn	| 1992	| Midway	| Y Unit	| 					|
 | totcarn	|  	| Total Carnage (rev LA1 03/10/92)			| 		| 1992	| Midway	| Y Unit	| 					|
 | spec_teclipse	|  	| Total Eclipse (48K)					| 		| 1988	| Incentive	| ZX Spectrum	| 					|
 | md_totlfoot	|  	| Total Football (Euro)					| 		| 1995	| Domark	| Sega Megadrive| 					|
@@ -15152,11 +15164,13 @@ This list contains all games supported by FinalBurn Neo.
 | trvmstrc	|  	| Trivia Master (set 4)					| trvmstr	| 1985	| Enerdyne Techn| Miscellaneous	| 					|
 | sms_trivial	|  	| Trivial Pursuit - Genus Edition (Euro)		| 		| 1992	| Domark	| Sega Master Sy| 					|
 | md_tronow	|  	| Tro-Now (HB)						| 		| 2015	| 1985 - bitbitJ| Sega Megadrive| 					|
-| trogpa4	|  	| Trog (prototype, rev 4.00 07/27/90)			| trog		| 1990	| Midway	| Y Unit	| 					|
-| trogpa6	|  	| Trog (prototype, rev PA6-PAC 09/09/90)		| trog		| 1990	| Midway	| Y Unit	| 					|
-| trog3		|  	| Trog (rev LA3 02/14/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
-| trog4		|  	| Trog (rev LA4 03/11/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
-| trog		|  	| Trog (rev LA5 03/29/91)				| 		| 1990	| Midway	| Y Unit	| 					|
+| trogpa4	|  	| Trog (prototype, rev 4.00 7/27/90)			| trog		| 1990	| Midway	| Y Unit	| 					|
+| trogpa5	|  	| Trog (prototype, rev PA5-PAC 8/28/90)			| trog		| 1990	| Midway	| Y Unit	| 					|
+| trogpa6	|  	| Trog (prototype, rev PA6-PAC 9/09/90)			| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog3a	|  	| Trog (rev LA3 2/10/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog3		|  	| Trog (rev LA3 2/14/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog4		|  	| Trog (rev LA4 3/11/91)				| trog		| 1990	| Midway	| Y Unit	| 					|
+| trog		|  	| Trog (rev LA5 3/29/91)				| 		| 1990	| Midway	| Y Unit	| 					|
 | nes_trog	|  	| Trog (USA)						| 		| 1991	| Acclaim	| Miscellaneous	| 					|
 | trojanb	|  	| Trojan (bootleg)					| trojan	| 1986	| bootleg	| Miscellaneous	| 					|
 | trojanr	|  	| Trojan (Romstar)					| trojan	| 1986	| Capcom (Romsta| Miscellaneous	| 					|

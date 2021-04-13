@@ -267,7 +267,7 @@ UINT8 DrvContraHD6309ReadByte(UINT16 address)
 		case 0x000B:
 		case 0x000C:
 		case 0x000D:
-			return contra_K007452_r(address & 5);
+			return contra_K007452_r(address & 7);
 		case 0x0010:
 		case 0x0011:
 		case 0x0012:

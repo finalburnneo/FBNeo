@@ -44,6 +44,8 @@ static double  m_leak;
 
 static INT32   m_clock = 0; // always 0 for sw-driven clock
 
+static double  volume = 1.0;
+
 static INT16  *m_mixer_buffer; // re-sampler
 
 static INT32 (*pCPUTotalCycles)() = NULL;
@@ -135,6 +137,11 @@ void hc55516_reset()
 	samples_from = (SAMPLE_RATE * 100 + (nBurnFPS >> 1)) / nBurnFPS;
 }
 
+void hc55516_volume(double vol)
+{
+	volume = vol;
+}
+
 void hc55516_scan(INT32 nAction, INT32 *)
 {
 	SCAN_VAR(m_last_clock_state);
@@ -166,6 +173,8 @@ static void start_common(UINT8 _shiftreg_mask, INT32 _active_clock_hi)
 	m_active_clock_hi = _active_clock_hi;
 
 	m_mixer_buffer = (INT16*)BurnMalloc(2 * sizeof(INT16) * SAMPLE_RATE);
+
+	volume = 1.0;
 }
 
 static inline INT32 is_external_oscillator()
@@ -359,10 +368,11 @@ void hc55516_update(INT16 *inputs, INT32 sample_len)
 	{
 		INT32 k = (samples_from * j) / nBurnSoundLen;
 
-		INT32 rlmono = m_mixer_buffer[k];
+		INT32 rlmono = m_mixer_buffer[k] * volume;
+		rlmono = BURN_SND_CLIP(rlmono);
 
-		inputs[0] = BURN_SND_CLIP(inputs[0] + BURN_SND_CLIP(rlmono));
-		inputs[1] = BURN_SND_CLIP(inputs[1] + BURN_SND_CLIP(rlmono));
+		inputs[0] = BURN_SND_CLIP(inputs[0] + rlmono);
+		inputs[1] = BURN_SND_CLIP(inputs[1] + rlmono);
 		inputs += 2;
 	}
 

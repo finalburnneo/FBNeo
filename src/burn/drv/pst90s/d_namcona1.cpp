@@ -239,15 +239,15 @@ static void blit()
 {
 	UINT16 *namcona1_vreg = DrvVRegs;
 
-	int src1 = namcona1_vreg[0x1];
-	int dst1 = namcona1_vreg[0x4];
+	int src1 = BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x1]);
+	int dst1 = BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x4]);
 
-	int gfxbank = namcona1_vreg[0x6];
+	int gfxbank = BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x6]);
 
-	UINT32 src_baseaddr	= 2*((namcona1_vreg[0x7]<<16)|namcona1_vreg[0x8]);
-	UINT32 dst_baseaddr	= 2*((namcona1_vreg[0x9]<<16)|namcona1_vreg[0xa]);
+	UINT32 src_baseaddr	= 2*((BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x7])<<16)|BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x8]));
+	UINT32 dst_baseaddr	= 2*((BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0x9])<<16)|BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0xa]));
 
-	int num_bytes = namcona1_vreg[0xb];
+	int num_bytes = BURN_ENDIAN_SWAP_INT16(namcona1_vreg[0xb]);
 
 	int dest_offset, source_offset;
 	int dest_bytes_per_row, dst_pitch;
@@ -291,7 +291,7 @@ static void blit()
 
 static void bankswitch()
 {
-	INT32 bank = DrvVRegs[0x0c/2];
+	INT32 bank = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x0c/2]);
 
 	SekMapHandler(0,					0xf40000, 0xf7ffff, MAP_RAM);
 
@@ -318,7 +318,7 @@ static void __fastcall namcona1_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xffff00) == 0xefff00) {
-		DrvVRegs[((address & 0xff) / 2) & 0x7f] = data;
+		DrvVRegs[((address & 0xff) / 2) & 0x7f] = BURN_ENDIAN_SWAP_INT16(data);
 		switch (address & 0xfe) {
 			case 0x0c: bankswitch(); break;
 			case 0x18: blit(); break;
@@ -339,11 +339,11 @@ static void __fastcall namcona1_write_word(UINT32 address, UINT16 data)
 
 		// numan and knckhead fail to write sequence to shared ram.
 		UINT16 *ram = (UINT16*)Drv68KRAM;
-		if ((ram[0xf72/2] & 0xff00) == 0x0700 && namcona1_gametype == 0xed) {
+		if ((BURN_ENDIAN_SWAP_INT16(ram[0xf72/2]) & 0xff00) == 0x0700 && namcona1_gametype == 0xed) {
 			const UINT16 source[0x8] = { 0x534e, 0x2d41, 0x4942, 0x534f, 0x7620, 0x7265, 0x2e31, 0x3133 };
 
 			for (INT32 i = 0; i < 8; i++) {
-				ram[0x1000/2+i] = source[i];
+				ram[0x1000/2+i] = BURN_ENDIAN_SWAP_INT16(source[i]);
 			}
 		}
 
@@ -386,7 +386,7 @@ static UINT16 __fastcall namcona1_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffff00) == 0xefff00) {
-		return DrvVRegs[((address & 0xff) / 2) & 0x7f];
+		return BURN_ENDIAN_SWAP_INT16(DrvVRegs[((address & 0xff) / 2) & 0x7f]);
 	}
 
 	if (address >= 0x3f8000 && address <= 0x3fffff) {
@@ -425,7 +425,7 @@ static inline void palette_update_entry(INT32 i)
 {
 	UINT16 *ram = (UINT16*)DrvPaletteRAM;
 
-	UINT16 c = ram[i];
+	UINT16 c = BURN_ENDIAN_SWAP_INT16(ram[i]);
 	int r = (((c & 0x00e0) >> 5) + ((c & 0xe000) >> 13) * 2) * 0xff / (0x7 * 3);
 	int g = (((c & 0x001c) >> 2) + ((c & 0x1c00) >> 10) * 2) * 0xff / (0x7 * 3);
 	int b = (((c & 0x0003) >> 0) + ((c & 0x0300) >>  8) * 2) * 0xff / (0x3 * 3);
@@ -445,7 +445,7 @@ static inline void palette_update_entry(INT32 i)
 static void __fastcall namcona1_palette_write_word(UINT32 address, UINT16 data)
 {
 	address = address & 0x1ffe;
-	*((UINT16*)(DrvPaletteRAM + address)) = data;
+	*((UINT16*)(DrvPaletteRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 	palette_update_entry(address/2);
 }
 
@@ -864,16 +864,16 @@ static void draw_sprites(clip_struct clip)
 {
 	const UINT16 *source = (UINT16*)DrvSpriteRAM;
 
-	const UINT16 sprite_control = DrvVRegs[0x22 / 2];
+	const UINT16 sprite_control = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x22 / 2]);
 	if (sprite_control & 1) source += 0x400;
 
 	for (INT32 which = 0; which < 0x100; which++)
 	{
 		int bpp4,palbase;
-		const UINT16 ypos  = source[0];
-		const UINT16 tile  = source[1];
-		const UINT16 color = source[2];
-		const UINT16 xpos  = source[3];
+		const UINT16 ypos  = BURN_ENDIAN_SWAP_INT16(source[0]);
+		const UINT16 tile  = BURN_ENDIAN_SWAP_INT16(source[1]);
+		const UINT16 color = BURN_ENDIAN_SWAP_INT16(source[2]);
+		const UINT16 xpos  = BURN_ENDIAN_SWAP_INT16(source[3]);
 
 		const UINT8 priority = color & 0x7;
 		const UINT16 width = ((color >> 12) & 0x3) + 1;
@@ -955,10 +955,10 @@ static void draw_layer(clip_struct clip, INT32 layer, INT32 priority)
 	UINT16 *ram = vram + (layer * 0x1000);
 	UINT16 *scroll = (UINT16*)(DrvScrollRAM + (layer * 0x0400));
 
-	INT32 depth = (DrvVRegs[0xbc/2] >> layer) & 1;
+	INT32 depth = (BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xbc/2]) >> layer) & 1;
 	INT32 pixel_mask = depth ? 0xf : 0xff;
 	INT32 color_mask = depth ? 0x7000 : 0;
-	INT32 color_bank = (DrvVRegs[(0xb0/2)+layer] & 0xf) << 8;
+	INT32 color_bank = (BURN_ENDIAN_SWAP_INT16(DrvVRegs[(0xb0/2)+layer]) & 0xf) << 8;
 
 	INT32 xadjust = 0x3a - layer * 2;
 	INT32 scrollx = xadjust;
@@ -966,8 +966,8 @@ static void draw_layer(clip_struct clip, INT32 layer, INT32 priority)
 
 	for (INT32 y = 0; y < 256; y++)
 	{
-		INT32 xdata = scroll[y];
-		INT32 ydata = scroll[y + 0x100];
+		INT32 xdata = BURN_ENDIAN_SWAP_INT16(scroll[y]);
+		INT32 ydata = BURN_ENDIAN_SWAP_INT16(scroll[y + 0x100]);
 
 		scrollx = (xdata & 0x4000) ? (xadjust + xdata) : (scrollx + (xdata & 0x1ff));
 		if (ydata & 0x4000) scrolly = (ydata - y) & 0x1ff;
@@ -987,7 +987,7 @@ static void draw_layer(clip_struct clip, INT32 layer, INT32 priority)
 		for (INT32 x = clip.nMinx; x < clip.nMaxx + 7; x+=8)
 		{
 			INT32 sx = (scrollx + x) & 0x1ff;
-			INT32 data = ram[(sx >> 3) | ((sy >> 3) << 6)];
+			INT32 data = BURN_ENDIAN_SWAP_INT16(ram[(sx >> 3) | ((sy >> 3) << 6)]);
 			INT32 color = ((data & color_mask) >> 8) + color_bank;
 
 			UINT8 *pgfx = DrvGfxRAM + ((data & 0xfff) * 0x40) + ((sy & 7) * 8);
@@ -1010,17 +1010,17 @@ static void draw_layer(clip_struct clip, INT32 layer, INT32 priority)
 
 static void predraw_roz()
 {
-	INT32 depth = (DrvVRegs[0xbc/2] >> 4) & 1;
+	INT32 depth = (BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xbc/2]) >> 4) & 1;
 	UINT16 *ram = (UINT16*)(DrvVideoRAM + 0x8000);
 	INT32 pixel_mask = depth ? 0xf : 0xff;
 	INT32 color_mask = depth ? 0x7000 : 0;
-	INT32 color_bank = (DrvVRegs[(0xba/2)] & 0xf) << 8;
+	INT32 color_bank = (BURN_ENDIAN_SWAP_INT16(DrvVRegs[(0xba/2)]) & 0xf) << 8;
 
 	for (INT32 sy = 0; sy < 64; sy++)
 	{
 		for (INT32 sx = 0; sx < 64; sx++)
 		{
-			UINT16 data = ram[((sy >> 2) << 6) + (sx >> 2)];
+			UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[((sy >> 2) << 6) + (sx >> 2)]);
 			UINT32 tile = (data & 0xfbf) + (sx & 3) + ((sy & 3) << 6);
 			UINT16 color = ((data & color_mask) >> 8) + color_bank;
 
@@ -1079,12 +1079,12 @@ static void draw_background(clip_struct clip, INT32 which, INT32 primask)
 {
 	if (which == 4)
 	{
-		INT32 incxx = ((INT16)DrvVRegs[0xc0 / 2])<<8;
-		INT32 incxy = ((INT16)DrvVRegs[0xc2 / 2])<<8;
-		INT32 incyx = ((INT16)DrvVRegs[0xc4 / 2])<<8;
-		INT32 incyy = ((INT16)DrvVRegs[0xc6 / 2])<<8;
-		INT16 xoffset = DrvVRegs[0xc8 / 2];
-		INT16 yoffset = DrvVRegs[0xca / 2];
+		INT32 incxx = ((INT16)BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xc0 / 2]))<<8;
+		INT32 incxy = ((INT16)BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xc2 / 2]))<<8;
+		INT32 incyx = ((INT16)BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xc4 / 2]))<<8;
+		INT32 incyy = ((INT16)BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xc6 / 2]))<<8;
+		INT16 xoffset = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xc8 / 2]);
+		INT16 yoffset = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xca / 2]);
 		INT32 dx = 46; // horizontal adjust
 		INT32 dy = -8; // vertical adjust
 		UINT32 startx = (xoffset<<12) + incxx * dx + incyx * dy;
@@ -1119,13 +1119,13 @@ static void DrvDrawBegin()
 		DrvRecalc = 0;
 	}
 
-	clip.nMinx = DrvVRegs[0x80/2] - 0x48;
-	clip.nMaxx = DrvVRegs[0x82/2] - 0x48;
+	clip.nMinx = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x80/2]) - 0x48;
+	clip.nMaxx = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x82/2]) - 0x48;
 	if (namcona1_gametype == 0xfa) {
 		clip.nMaxx += 2; // fix clipping in Fighter & Attacker
 	}
-	clip.nMiny = DrvVRegs[0x84/2];
-	clip.nMaxy = DrvVRegs[0x86/2];
+	clip.nMiny = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x84/2]);
+	clip.nMaxy = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x86/2]);
 
 	if (clip.nMinx < 0) clip.nMinx = 0;
 	if (clip.nMaxx > nScreenWidth) clip.nMaxx = nScreenWidth;
@@ -1133,7 +1133,7 @@ static void DrvDrawBegin()
 	if (clip.nMaxy > (nScreenHeight + 32)) clip.nMaxy = nScreenHeight + 32;
 
 	if (namcona1_gametype == 2) { // xday2
-		BurnTransferClear((DrvVRegs[0xba / 2] & 0xf) << 8);
+		BurnTransferClear((BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xba / 2]) & 0xf) << 8);
 	} else { // everyone else
 		BurnTransferClear(0x4000);
 	}
@@ -1143,8 +1143,8 @@ static void DrvDrawBegin()
 
 static void DrvDrawTo(INT32 lineto)
 {
-	clip.nMiny = DrvVRegs[0x84/2];
-	clip.nMaxy = DrvVRegs[0x86/2];
+	clip.nMiny = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x84/2]);
+	clip.nMaxy = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x86/2]);
 	if (clip.nMiny < 32) clip.nMiny = 32;
 	if (clip.nMaxy > (nScreenHeight + 32)) clip.nMaxy = nScreenHeight + 32;
 
@@ -1155,7 +1155,7 @@ static void DrvDrawTo(INT32 lineto)
 
 	drawn = lineto;
 
-	if (DrvVRegs[0x8e / 2] && enable_screen_clipped(clip))
+	if (BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x8e / 2]) && enable_screen_clipped(clip))
 	{
 		for (INT32 priority = 0; priority < 8; priority++)
 		{
@@ -1164,11 +1164,11 @@ static void DrvDrawTo(INT32 lineto)
 				INT32 pri;
 				if (which == 4)
 				{
-					pri = DrvVRegs[0xa0 / 2 + 5] & 0x7;
+					pri = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xa0 / 2 + 5]) & 0x7;
 				}
 				else
 				{
-					pri = DrvVRegs[0xa0 / 2 + which] & 0x7;
+					pri = BURN_ENDIAN_SWAP_INT16(DrvVRegs[0xa0 / 2 + which]) & 0x7;
 				}
 
 				if (pri == priority)
@@ -1237,9 +1237,9 @@ static INT32 DrvFrame()
 		CPU_RUN(1, Sek);
 
 		{
-			INT32 i_en = (interrupt_enable) ? (~DrvVRegs[0x1a/2]) : 0;
+			INT32 i_en = (interrupt_enable) ? (~BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x1a/2])) : 0;
 
-			if (i_en & 4 && i == (DrvVRegs[0x8a/2] & 0xff)) {
+			if (i_en & 4 && i == (BURN_ENDIAN_SWAP_INT16(DrvVRegs[0x8a/2]) & 0xff)) {
 				DrvDrawTo(i);
 				SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 			}

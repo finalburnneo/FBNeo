@@ -188,7 +188,12 @@ static UINT16 program_read_word_16le(UINT32 a)
 		bprintf (0, _T("PRW: %6.6x %4.4x\n"), a, *z);
 #endif
 
+#ifdef LSB_FIRST
 		return (flag & MEM_ENDISWAP) ? ENDISWAP16(*z) : *z;
+#else
+		//printf("C 0x%x - flag: %d\n", (flag & MEM_ENDISWAP) ? *z : BURN_ENDIAN_SWAP_INT16(*z), flag);
+		return (flag & MEM_ENDISWAP) ? *z : BURN_ENDIAN_SWAP_INT16(*z);
+#endif
 	}
 
 	if (M377_read16) {
@@ -252,7 +257,11 @@ static void program_write_word_16le(UINT32 a, UINT16 d)
 		}
 		UINT8 flag = mem_flags[a / page_size];
 		UINT16 *z = (UINT16*)(p + (a & page_mask));
+#ifdef LSB_FIRST
 		*z = (flag & MEM_ENDISWAP) ? ENDISWAP16(d) : d;
+#else
+		* z = (flag & MEM_ENDISWAP) ? d : BURN_ENDIAN_SWAP_INT16(d);
+#endif
 		return;
 	}
 

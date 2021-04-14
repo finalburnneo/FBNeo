@@ -451,6 +451,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_NES                             (0x1E000000)
 #define HARDWARE_PREFIX_FDS                             (0x1F000000)
 #define HARDWARE_PREFIX_NGP                             (0x20000000)
+#define HARDWARE_PREFIX_CHANNELF                        (0x21000000)
 
 #define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_NGP | 0x00000000)
 #define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_NGP | 0x00000001)
@@ -682,6 +683,8 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 
 #define HARDWARE_NES									(HARDWARE_PREFIX_NES)
 #define HARDWARE_FDS									(HARDWARE_PREFIX_FDS)
+
+#define HARDWARE_CHANNELF                               (HARDWARE_PREFIX_CHANNELF)
 
 // flags for the genre member
 #define GBF_HORSHOOT									(1 << 0)

@@ -1926,6 +1926,7 @@ tIniStruct gamehw_cfg[] = {
 	{_T("Sega Master System hardware"),	_T("config/presets/sms.ini"),		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 } },
 	{_T("Sega Game Gear hardware"),		_T("config/presets/gg.ini"),		{ HARDWARE_SEGA_GAME_GEAR, 0 } },
 	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	{ HARDWARE_SPECTRUM, 0 } },
+	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	{ HARDWARE_CHANNELF, 0 } },
 	{_T("\0"), _T("\0"), { 0 } } // END of list
 };
 

@@ -183,21 +183,22 @@ TCHAR* DecorateGenreInfo();
 void ComputeGammaLUT();
 
 // dat.cpp
-#define DAT_ARCADE_ONLY		0
-#define DAT_MEGADRIVE_ONLY	1
-#define DAT_PCENGINE_ONLY	2
-#define DAT_TG16_ONLY		3
-#define DAT_SGX_ONLY		4
-#define DAT_SG1000_ONLY		5
-#define DAT_COLECO_ONLY		6
-#define DAT_MASTERSYSTEM_ONLY		7
+#define DAT_ARCADE_ONLY			0
+#define DAT_MEGADRIVE_ONLY		1
+#define DAT_PCENGINE_ONLY		2
+#define DAT_TG16_ONLY			3
+#define DAT_SGX_ONLY			4
+#define DAT_SG1000_ONLY			5
+#define DAT_COLECO_ONLY			6
+#define DAT_MASTERSYSTEM_ONLY	7
 #define DAT_GAMEGEAR_ONLY		8
-#define DAT_MSX_ONLY        9
-#define DAT_SPECTRUM_ONLY   10
-#define DAT_NEOGEO_ONLY		11
-#define DAT_NES_ONLY        12
-#define DAT_FDS_ONLY        13
-#define DAT_NGP_ONLY        14
+#define DAT_MSX_ONLY			9
+#define DAT_SPECTRUM_ONLY		10
+#define DAT_NEOGEO_ONLY			11
+#define DAT_NES_ONLY			12
+#define DAT_FDS_ONLY			13
+#define DAT_NGP_ONLY			14
+#define DAT_CHANNELF_ONLY		15
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

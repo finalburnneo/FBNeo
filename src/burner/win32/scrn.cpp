@@ -334,6 +334,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_NES_ONLY) _sntprintf(szConsoleString, 64, _T(", NES Games only"));
 	if (bType == DAT_FDS_ONLY) _sntprintf(szConsoleString, 64, _T(", FDS Games only"));
 	if (bType == DAT_NGP_ONLY) _sntprintf(szConsoleString, 64, _T(", NeoGeo Pocket Games only"));
+	if (bType == DAT_CHANNELF_ONLY) _sntprintf(szConsoleString, 64, _T(", Fairchild Channel F Games only"));
 
 	TCHAR szProgramString[25];
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
@@ -448,6 +449,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Neo Geo Pocket Games only"));
 	create_datfile(szFilename, DAT_NGP_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Fairchild Channel F Games only"));
+	create_datfile(szFilename, DAT_CHANNELF_ONLY);
 
 	return nRet;
 }
@@ -2332,6 +2336,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_NGP_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_NGP_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_CHANNELF_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_CHANNELF_ONLY);
 			}
 			break;
 

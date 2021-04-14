@@ -971,6 +971,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfochannelfonly")) == 0) {
+			write_datfile(DAT_CHANNELF_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;
@@ -1173,6 +1178,7 @@ static void CreateSupportFolders()
 		{_T("roms/nes/")},
 		{_T("roms/fds/")},
 		{_T("roms/ngp/")},
+		{_T("roms/channelf/")},
 		{_T("\0")} // END of list
 	};
 

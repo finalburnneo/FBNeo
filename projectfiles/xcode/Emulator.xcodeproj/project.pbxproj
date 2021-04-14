@@ -995,6 +995,8 @@
 		FE556117258E95B600A19F2D /* arm_init.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556113258E95B600A19F2D /* arm_init.c */; };
 		FE556118258E95B600A19F2D /* palette_neon_intrinsics.c in Sources */ = {isa = PBXBuildFile; fileRef = FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */; };
 		FE55611C2590698100A19F2D /* d_lsasquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE55611B2590698100A19F2D /* d_lsasquad.cpp */; };
+		FE5757222627406900FDFEA2 /* f8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5757202627406900FDFEA2 /* f8.cpp */; };
+		FE5757252627409A00FDFEA2 /* d_channelf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE5757242627409A00FDFEA2 /* d_channelf.cpp */; };
 		FE65925323EFE87200CA92B2 /* d_stuntair.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE65925223EFE87200CA92B2 /* d_stuntair.cpp */; };
 		FE68567C25FCB99800AF5DD4 /* d_namcona1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */; };
 		FE6BB4BD25AECE9A007AED57 /* tlc34076.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */; };
@@ -2572,6 +2574,9 @@
 		FE556114258E95B600A19F2D /* palette_neon_intrinsics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = palette_neon_intrinsics.c; sourceTree = "<group>"; };
 		FE55611B2590698100A19F2D /* d_lsasquad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_lsasquad.cpp; sourceTree = "<group>"; };
 		FE55611D25906B4E00A19F2D /* FinalBurn NeoDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FinalBurn NeoDebug.entitlements"; sourceTree = "<group>"; };
+		FE5757202627406900FDFEA2 /* f8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = f8.cpp; sourceTree = "<group>"; };
+		FE5757212627406900FDFEA2 /* f8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = f8.h; sourceTree = "<group>"; };
+		FE5757242627409A00FDFEA2 /* d_channelf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_channelf.cpp; sourceTree = "<group>"; };
 		FE65925223EFE87200CA92B2 /* d_stuntair.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_stuntair.cpp; sourceTree = "<group>"; };
 		FE68567B25FCB99800AF5DD4 /* d_namcona1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_namcona1.cpp; sourceTree = "<group>"; };
 		FE6BB4BB25AECE99007AED57 /* tlc34076.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlc34076.cpp; sourceTree = "<group>"; };
@@ -2802,6 +2807,7 @@
 				FE1B1D7123561A630065200C /* arm */,
 				FE1B1D5823561A630065200C /* arm7 */,
 				FE8329142439A3E000059993 /* e132xs */,
+				FE57571F2627406900FDFEA2 /* f8 */,
 				FE1B1CC423561A620065200C /* h6280 */,
 				FE1B1D7323561A630065200C /* hd6309 */,
 				FEDF17F826072DE80082732C /* i386 */,
@@ -3586,6 +3592,7 @@
 				FE1B1EFF23561A670065200C /* atari */,
 				FE1B208923561A6C0065200C /* capcom */,
 				FE1B1EE823561A670065200C /* cave */,
+				FE5757232627409A00FDFEA2 /* channelf */,
 				FE1B204423561A6B0065200C /* coleco */,
 				FE1B207323561A6B0065200C /* cps3 */,
 				FE1B1F1D23561A670065200C /* d_parent.cpp */,
@@ -4963,6 +4970,23 @@
 			path = arm;
 			sourceTree = "<group>";
 		};
+		FE57571F2627406900FDFEA2 /* f8 */ = {
+			isa = PBXGroup;
+			children = (
+				FE5757202627406900FDFEA2 /* f8.cpp */,
+				FE5757212627406900FDFEA2 /* f8.h */,
+			);
+			path = f8;
+			sourceTree = "<group>";
+		};
+		FE5757232627409A00FDFEA2 /* channelf */ = {
+			isa = PBXGroup;
+			children = (
+				FE5757242627409A00FDFEA2 /* d_channelf.cpp */,
+			);
+			path = channelf;
+			sourceTree = "<group>";
+		};
 		FE811001236B6B29000B5F73 /* generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -5902,6 +5926,7 @@
 				FE1B25B423561A760065200C /* k054338.cpp in Sources */,
 				FE1B24BC23561A750065200C /* d_sms.cpp in Sources */,
 				FE1B23E023561A750065200C /* z180.cpp in Sources */,
+				FE5757222627406900FDFEA2 /* f8.cpp in Sources */,
 				FE1B27BE23561A790065200C /* nb1414m4.cpp in Sources */,
 				FE1B26CB23561A780065200C /* d_gng.cpp in Sources */,
 				FE1B277823561A790065200C /* burn_ym2608.cpp in Sources */,
@@ -6034,6 +6059,7 @@
 				FE1B26D023561A780065200C /* d_route16.cpp in Sources */,
 				FE1B258423561A760065200C /* d_boogwing.cpp in Sources */,
 				FE1B24A723561A750065200C /* aud_interface.cpp in Sources */,
+				FE5757252627409A00FDFEA2 /* d_channelf.cpp in Sources */,
 				FE1B26A823561A770065200C /* d_pac2650.cpp in Sources */,
 				FE1B242423561A750065200C /* pngset.c in Sources */,
 				FE1B253A23561A760065200C /* d_f1gp.cpp in Sources */,

@@ -246,6 +246,7 @@ void retro_set_environment(retro_environment_t cb)
 	};
 	static const struct retro_subsystem_info subsystems[] = {
 		{ "CBS ColecoVision", "cv", subsystem_rom, 1, RETRO_GAME_TYPE_CV },
+		{ "Fairchild ChannelF", "chf", subsystem_rom, 1, RETRO_GAME_TYPE_CHF },
 		{ "MSX 1", "msx", subsystem_rom, 1, RETRO_GAME_TYPE_MSX },
 		{ "Nec PC-Engine", "pce", subsystem_rom, 1, RETRO_GAME_TYPE_PCE },
 		{ "Nec SuperGrafX", "sgx", subsystem_rom, 1, RETRO_GAME_TYPE_SGX },
@@ -1038,6 +1039,9 @@ int CreateAllDatfiles()
 
 	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, NeoGeo Pocket Games only");
 	create_datfile(szFilename, DAT_NGP_ONLY);
+
+	snprintf_nowarn(szFilename, sizeof(szFilename), "%s%c%s (%s).dat", "dats", PATH_DEFAULT_SLASH_C(), APP_TITLE, "ClrMame Pro XML, Fairchild Channel F Games only");
+	create_datfile(szFilename, DAT_CHANNELF_ONLY);
 
 	return nRet;
 }
@@ -1876,6 +1880,10 @@ bool retro_load_game(const struct retro_game_info *info)
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem ngp identified from parent folder\n");
 		if (strncmp(g_driver_name, "ngp_", 4) != 0) prefix = "ngp_";
 	}
+	if(strcmp(g_rom_parent_dir, "chf")==0 || strcmp(g_rom_parent_dir, "channelf")==0) {
+		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem chf identified from parent folder\n");
+		if (strncmp(g_driver_name, "chf_", 4) != 0) prefix = "chf_";
+	}
 	if(strcmp(g_rom_parent_dir, "neocd")==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem neocd identified from parent folder\n");
 		prefix = "";
@@ -1936,6 +1944,9 @@ bool retro_load_game_special(unsigned game_type, const struct retro_game_info *i
 			break;
 		case RETRO_GAME_TYPE_NGP:
 			prefix = "ngp_";
+			break;
+		case RETRO_GAME_TYPE_CHF:
+			prefix = "chf_";
 			break;
 		case RETRO_GAME_TYPE_NEOCD:
 			prefix = "";

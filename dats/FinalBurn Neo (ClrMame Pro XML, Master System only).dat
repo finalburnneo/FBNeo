@@ -3340,6 +3340,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rbislando" cloneof="rbisland" romof="rbisland">
+		<description>Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow Hack) [Hack]</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="rainbow islands - the story of bubble bobble 2 (over the rainbow hack).bin" size="262144" crc="62af2901"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rambo2" cloneof="secret" romof="secret">
 		<description>Rambo - First Blood Part II (USA)</description>
 		<year>1986</year>

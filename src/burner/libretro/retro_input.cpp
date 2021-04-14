@@ -1629,6 +1629,22 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szi, ch
 		}
 	}
 
+	// channelf reorder buttons
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
+		if (strcmp("Push Down", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
+		}
+		if (strcmp("Pull Up", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
+		}
+		if (strcmp("Twist Right", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_A, description);
+		}
+		if (strcmp("Twist Left", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
+		}
+	}
+
 	// Handle Twin stick games
 	if ((strcmp("Up 2", description) == 0) ||
 		(strcmp("Up (right)", description) == 0) ||
@@ -2014,6 +2030,22 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 			GameInpDigital2RetroInpKey(pgi, 2, RETROK_PERIOD, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("keyb_comma", szi) == 0)
 			GameInpDigital2RetroInpKey(pgi, 2, RETROK_COMMA, szn, RETRO_DEVICE_KEYBOARD);
+	}
+
+	// channelf console buttons
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
+		if (strcmp("Time (1)", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R, szn);
+		}
+		if (strcmp("Hold (2)", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L, szn);
+		}
+		if (strcmp("Mode (3)", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_SELECT, szn);
+		}
+		if (strcmp("Start (4)", szn) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_START, szn);
+		}
 	}
 
 	// FDS disk buttons

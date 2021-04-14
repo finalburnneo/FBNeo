@@ -14,6 +14,7 @@ Also, i don't provide a "parent-only" dat file, because i don't recommend using 
 
 You can emulate consoles (with specific romsets, dats are also in the [dats](/dats/) directory) by prefixing the name of the roms with `XXX_` and removing the `zip|7z` extension, or using the `--subsystem XXX` argument in the command line, here is the list of available prefixes :
 * CBS ColecoVision : `cv`
+* Fairchild ChannelF : `chf`
 * MSX 1 : `msx`
 * Nec PC-Engine : `pce`
 * Nec SuperGrafX : `sgx`
@@ -28,19 +29,20 @@ You can emulate consoles (with specific romsets, dats are also in the [dats](/da
 * ZX Spectrum : `spec`
 
 It's also possible to use folder's name for detection (this second method was added because some devices aren't compatible with subsystems) :
-* CBS ColecoVision : `coleco`
-* MSX 1 : `msx`
-* Nec PC-Engine : `pce`
-* Nec SuperGrafX : `sgx`
+* CBS ColecoVision : `coleco` | `colecovision`
+* Fairchild ChannelF : `chf` | `channelf`
+* MSX 1 : `msx` | `msx1`
+* Nec PC-Engine : `pce` | `pcengine`
+* Nec SuperGrafX : `sgx` | `supergrafx`
 * Nec TurboGrafx-16 : `tg16`
 * Nintendo Entertainment System : `nes`
 * Nintendo Family Disk System : `fds`
 * Sega GameGear : `gamegear`
-* Sega Master System : `sms`
-* Sega Megadrive : `megadriv`
+* Sega Master System : `sms` | `mastersystem`
+* Sega Megadrive : `megadriv` | `megadrive` | `genesis`
 * Sega SG-1000 : `sg1000`
 * SNK Neo-Geo Pocket : `ngp`
-* ZX Spectrum : `spectrum`
+* ZX Spectrum : `spectrum` | `zxspectrum`
 
 ## Samples
 
@@ -111,6 +113,7 @@ You can convert your unsupported isos by following this tutorial :
 
 ### Killer instinct won't work, why ?
 That driver was disabled for now, it doesn't meet our quality criteria.
+
 ~~There are several things to know :~~
 * ~~It is only running at playable speed on x86_64 (other arch will basically need a cpu at 4Ghz because they lack a mips3 dynarec), and the core needs to be built like this to enable this dynarec : `make -j5 -C src/burner/libretro USE_X64_DRC=1`~~
 * ~~If your rom is at `ROM_DIRECTORY/kinst.zip`, you'll need the uncompressed disc image at `ROM_DIRECTORY/kinst/kinst.img`~~
@@ -120,4 +123,4 @@ That driver was disabled for now, it doesn't meet our quality criteria.
 You need to copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and to have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores (or hiscore.dat might not be listing the romset). You can request support in the issue tracker as long as the request is reasonable (avoid making a list of several dozens/hundreds of games if you don't want to be ignored). There are also some cases where libretro features will prevent hiscores from working properly, runahead is a well-known case but there might be other savestates-related features causing issues.
 
 ### On my android device, game XXX is closing my app at launch, why ?
-Android OS has one of the worst features ever created : it kills an app if it considers it's taking too long to display something, no question asked ! Furthermore 2 devices will have 2 different time limit (how the time limit is calculated is a mystery). That's called ANR and that's something you can supposedly workaround by enabling some option about ANR (Application Not Responding) inside Android's hidden developper menu. Some people also reported that those ANR issues would disappear after changing from a controller to another.
+Android OS has one of the worst features ever created : it kills an app if it considers it's not responding fast enough, no question asked ! Furthermore the criteria to decide it's not fast enough is different from a device to another. That's called ANR and that's something you can supposedly workaround by enabling some option about ANR (Application Not Responding) inside Android's hidden developper menu. Some people also reported that those ANR issues would disappear after changing from a controller to another, or after switching from a version of retroarch to another. Some games like `kof2003`, `svc` and `mslug5` are known for being affected by this issue on some android devices, and we can't do anything about it since it's not an internal program error.

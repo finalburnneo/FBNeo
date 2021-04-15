@@ -220,6 +220,7 @@ DRV		BurnDrvAFightera;
 DRV		BurnDrvAFighterb;
 DRV		BurnDrvAFighter;
 DRV		BurnSpecactionforce2;
+DRV		BurnSpecActionforce;
 DRV		BurnDrvActionhw;
 DRV		BurnDrvnes_actioinnewyor;
 DRV		BurnSpecactionreflex;
@@ -4274,6 +4275,8 @@ DRV		BurnDrvEnmadaio;
 DRV		BurnDrvgg_ernieeg;
 DRV		BurnDrvmd_escape2042;
 DRV		BurnDrvnes_escapfroatl;
+DRV		BurnSpecEscapemonjasen;
+DRV		BurnSpecEscapemonjases;
 DRV		BurnDrvmd_tazmars;
 DRV		BurnDrvmd_tazmarss;
 DRV		BurnDrvmd_tazmarsp11;
@@ -8174,12 +8177,12 @@ DRV		BurnDrvMayday;
 DRV		BurnDrvMaydaya;
 DRV		BurnDrvMaydayb;
 DRV		BurnDrvMSX_mayhem;
+DRV		BurnDrvCHF_mazea;
+DRV		BurnDrvCHF_maze;
 DRV		BurnDrvsms_mazehunt;
 DRV		BurnDrvMSX_Mazemax;
 DRV		BurnDrvMofflott;
 DRV		BurnDrvsms_mazewalk;
-DRV		BurnDrvCHF_maze;
-DRV		BurnDrvCHF_mazea;
 DRV		BurnDrvcv_mazezam;
 DRV		BurnDrvcv_mazezamch;
 DRV		BurnDrvmd_mazinsaga;
@@ -16752,8 +16755,10 @@ DRV		BurnDrvYm2608;
 DRV		BurnDrvnes_yonoid;
 DRV		BurnDrvtg_yobro;
 DRV		BurnSpecYogibear;
+DRV		BurnSpecYogigreedmonster;
 DRV		BurnDrvgg_yogibear;
 DRV		BurnDrvmd_yogibear;
+DRV		BurnSpecYogigreatescape;
 DRV		BurnDrvYoukaidk2;
 DRV		BurnDrvYoukaidk1;
 DRV		BurnDrvsg1k_homemjt;
@@ -17184,6 +17189,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAFighterb,			// Action Fighter (unprotected, analog controls)
 	&BurnDrvAFighter,			// Action Fighter, FD1089A 317-0018
 	&BurnSpecactionforce2,		// Action Force II
+	&BurnSpecActionforce,		// Action Force
 	&BurnDrvActionhw,			// Action Hollywood
 	&BurnDrvnes_actioinnewyor,	// Action in New York (Europe)
 	&BurnSpecactionreflex,		// Action Reflex
@@ -17977,7 +17983,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvBackfirea,			// Backfire! (set 2) [Set inputs to \"Joystick\" in test mode, NOT WORKING]
 #endif
-	&BurnDrvCHF_backgamm,		// Backgammon
+	&BurnDrvCHF_backgamm,		// Backgammon / Acey-Deucey
 	&BurnDrvmd_badapple,		// Bad Apple (HB, Tech-Demo)
 	&BurnDrvnes_badapple,		// Bad Apple (HB, Tech-Demo)
 	&BurnDrvsms_badapple,		// Bad Apple (HB, Tech-Demo)
@@ -20319,7 +20325,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_desrtdemp3,		// Desert Demolition (Prototype, 19941215)
 	&BurnDrvmd_desrtdemp2,		// Desert Demolition (Prototype, 19941216)
 	&BurnDrvmd_desrtdemp1,		// Desert Demolition (Prototype, 19941219)
-	&BurnDrvCHF_dsrtfox,		// Desert Fox
+	&BurnDrvCHF_dsrtfox,		// Desert Fox / Shooting Gallery
 	&BurnDrvgg_desert,			// Desert Speedtrap Starring Road Runner and Wile E. Coyote (Euro)
 	&BurnDrvsms_desert,			// Desert Speedtrap Starring Road Runner and Wile E. Coyote (Euro, Bra)
 	&BurnDrvgg_desertu,			// Desert Speedtrap Starring Road Runner and Wile E. Coyote (USA)
@@ -21238,6 +21244,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
 	&BurnDrvmd_escape2042,		// Escape 2042 (HB)
 	&BurnDrvnes_escapfroatl,	// Escape From Atlantis, The (Prototype)
+	&BurnSpecEscapemonjasen,	// Escape from M.O.N.J.A.S. EN (HB)
+	&BurnSpecEscapemonjases,	// Escape from M.O.N.J.A.S. SP (HB)
 	&BurnDrvmd_tazmars,			// Escape from Mars Starring Taz (Euro)
 	&BurnDrvmd_tazmarss,		// Escape from Mars Starring Taz (Hack, Spanish)
 	&BurnDrvmd_tazmarsp11,		// Escape from Mars Starring Taz (Prototype, 19940309)
@@ -22085,7 +22093,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_galaccru,		// Galactic Crusader (USA) (Unl)
 	&BurnDrvsms_galactpr,		// Galactic Protector (Jpn)
 	&BurnDrvCHF_galacticp,		// Galactic Space Wars (Prototype)
-	&BurnDrvCHF_galactic,		// Galactic Space Wars
+	&BurnDrvCHF_galactic,		// Galactic Space Wars / Lunar Lander
 	&BurnDrvGalastrm,			// Galactic Storm (Japan)
 	&BurnDrvGwarrior,			// Galactic Warriors
 	&BurnDrvGalaga88a,			// Galaga '88 (02-03-88)
@@ -24829,7 +24837,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_magickidgoogoo,	// Magic Kid GooGoo (Unl)
 	&BurnDrvgg_rayearth,		// Magic Knight Rayearth (Jpn)
 	&BurnDrvgg_rayeart2,		// Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)
-	&BurnDrvCHF_magicnum,		// Magic Numbers
+	&BurnDrvCHF_magicnum,		// Magic Numbers / Mind Reader / Nim
 	&BurnDrvnes_magicschc,		// Magic of Scheherazade, The (USA) - Castellano v0.99
 	&BurnDrvnes_magicsch,		// Magic of Scheherazade, The (USA)
 	&BurnDrvmd_magicpockets,	// Magic Pockets (HB)
@@ -25138,12 +25146,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMaydaya,			// Mayday (set 2)
 	&BurnDrvMaydayb,			// Mayday (set 3)
 	&BurnDrvMSX_mayhem,			// Mayhem
+	&BurnDrvCHF_mazea,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)
+	&BurnDrvCHF_maze,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer
 	&BurnDrvsms_mazehunt,		// Maze Hunter 3-D (Euro, USA, Bra)
 	&BurnDrvMSX_Mazemax,		// Maze Max
 	&BurnDrvMofflott,			// Maze of Flott (Japan)
 	&BurnDrvsms_mazewalk,		// Maze Walker (Jpn)
-	&BurnDrvCHF_maze,			// Maze
-	&BurnDrvCHF_mazea,			// Maze
 	&BurnDrvcv_mazezam,			// MazezaM (HB)
 	&BurnDrvcv_mazezamch,		// MazezaM Challenge (HB)
 	&BurnDrvmd_mazinsaga,		// Mazin Saga (Asia)
@@ -25908,7 +25916,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_unleashed,		// MSX Unleashed (HB, Tech-demo)
 	&BurnDrvmsx_msx,			// MSX1 System BIOS [BIOS only, NOT WORKING]
 	&BurnDrvrocktrv2,			// MTV Rock-N-Roll Trivia (Part 2)
-	&BurnDrvCHF_muehle,			// Muehle
+	&BurnDrvCHF_muehle,			// Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)
 	&BurnDrvMugsmash,			// Mug Smashers
 	&BurnDrvmd_valisj,			// Mugen Senshi Valis (Jpn)
 	&BurnDrvMSX_valis,			// Mugen Senshi Valis (Jpn)
@@ -26659,7 +26667,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrbitron,			// Orbitron
 	&BurnDrvOrbs,				// Orbs (10/7/94 prototype?)
 	&BurnDrvtg_griffon,			// Order of the Griffon
-	&BurnDrvCHF_ordtvlng,		// Ordtävling (Swe)
+	&BurnDrvCHF_ordtvlng,		// Ordtavling (Swe)
 	&BurnDrvOrdynej,			// Ordyne (Japan)
 	&BurnDrvOrdyneje,			// Ordyne (Japan, English Version)
 	&BurnDrvOrdyne,				// Ordyne (World)
@@ -28058,7 +28066,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecrbisland_48,		// Rainbow Islands - The Story of Bubble Bobble 2 (48K)
 	&BurnDrvsms_rbislandb,		// Rainbow Islands - The Story of Bubble Bobble 2 (Bra)
 	&BurnDrvsms_rbisland,		// Rainbow Islands - The Story of Bubble Bobble 2 (Euro)
-	&BurnDrvsms_rbislando,		// Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow Hack)
+	&BurnDrvsms_rbislando,		// Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)
 	&BurnDrvmd_rbislands,		// Rainbow Islands Extra (Hack, Spanish)
 	&BurnDrvmd_rbisland,		// Rainbow Islands Extra (Jpn)
 	&BurnDrvnes_rallybike,		// Rally Bike (USA)
@@ -28400,7 +28408,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_robofroga,		// Robofrog (Jpn, Alt)
 	&BurnDrvmd_robotbat,		// Robot Battler (Jpn, SegaNet)
 	&BurnDrvCHF_robotwarp,		// Robot War (Prototype)
-	&BurnDrvCHF_robotwar,		// Robot War
+	&BurnDrvCHF_robotwar,		// Robot War / Torpedo Alley
 	&BurnDrvMSX_robotwar,		// Robot Wars (Euro)
 	&BurnDrvmd_robowrek,		// Robot Wreckage (USA, Prototype)
 	&BurnDrvRobotron87,			// Robotron: 2084 (1987 'shot-in-the-corner' bugfix)
@@ -32090,7 +32098,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvThunderja,			// ThunderJaws (rev 2)
 	&BurnDrvThunderj,			// ThunderJaws (rev 3)
 	&BurnDrvMSX_titipang,		// Ti Ti! Pang Pang! (Kor)
-	&BurnDrvCHF_tctactoe,		// Tic-Tac-Toe
+	&BurnDrvCHF_tctactoe,		// Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle
 	&BurnDrvTigerhb1,			// Tiger Heli (bootleg set 1)
 	&BurnDrvTigerhb2,			// Tiger Heli (bootleg set 2)
 	&BurnDrvTigerhb3,			// Tiger Heli (bootleg set 3)
@@ -33716,8 +33724,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_yonoid,			// Yo! Noid (USA)
 	&BurnDrvtg_yobro,			// Yo, Bro
 	&BurnSpecYogibear,			// Yogi Bear (48K)
+	&BurnSpecYogigreedmonster,	// Yogi Bear and Friends - The Greed Monster
 	&BurnDrvgg_yogibear,		// Yogi Bear in Yogi Bear's Goldrush (Prototype)
 	&BurnDrvmd_yogibear,		// Yogi Bear's Cartoon Capers (Euro)
+	&BurnSpecYogigreatescape,	// Yogi's Great Escape
 	&BurnDrvYoukaidk2,			// Yokai Douchuuki (Japan, new version (YD2, Rev B))
 	&BurnDrvYoukaidk1,			// Yokai Douchuuki (Japan, old version (YD1))
 	&BurnDrvsg1k_homemjt,		// Yon-nin Mahjong (Tw)

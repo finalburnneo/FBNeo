@@ -24,7 +24,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="backgamm" romof="channelf">
-		<description>Backgammon</description>
+		<description>Backgammon / Acey-Deucey</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="backgmmn.bin" size="2048" crc="a1731b52"/>
@@ -134,7 +134,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dsrtfox" romof="channelf">
-		<description>Desert Fox</description>
+		<description>Desert Fox / Shooting Gallery</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="dsrtfox.bin" size="2048" crc="1570934b"/>
@@ -200,7 +200,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galactic" romof="channelf">
-		<description>Galactic Space Wars</description>
+		<description>Galactic Space Wars / Lunar Lander</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
 		<rom name="galactic.bin" size="2048" crc="c8ef3410"/>
@@ -222,7 +222,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magicnum" romof="channelf">
-		<description>Magic Numbers</description>
+		<description>Magic Numbers / Mind Reader / Nim</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="magicnum.bin" size="2048" crc="24da0529"/>
@@ -254,22 +254,22 @@
 		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="maze" romof="channelf">
-		<description>Maze</description>
+	<game name="mazea" cloneof="maze" romof="maze">
+		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
-		<rom name="maze.bin" size="2048" crc="4d42b296"/>
+		<rom name="mazealt.bin" size="2048" crc="0a948b61"/>
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
 		<video orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazea" cloneof="maze" romof="maze">
-		<description>Maze</description>
+	<game name="maze" romof="channelf">
+		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
-		<rom name="mazealt.bin" size="2048" crc="0a948b61"/>
+		<rom name="maze.bin" size="2048" crc="4d42b296"/>
 		<rom name="sl31254.rom" merge="sl31254.rom" size="1024" crc="9c047ba3"/>
 		<rom name="sl31253.rom" merge="sl31253.rom" size="1024" crc="04694ed9"/>
 		<rom name="sl90025.rom" merge="sl90025.rom" size="1024" crc="015c1e38"/>
@@ -288,7 +288,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="muehle" cloneof="tctactoe" romof="tctactoe">
-		<description>Muehle</description>
+		<description>Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)</description>
 		<year>1978</year>
 		<manufacturer>SABA</manufacturer>
 		<rom name="muehle.bin" size="2048" crc="7124dc59"/>
@@ -299,7 +299,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ordtvlng" cloneof="hangman" romof="hangman">
-		<description>Ordtävling (Swe)</description>
+		<description>Ordtavling (Swe)</description>
 		<year>1978</year>
 		<manufacturer>Luxor</manufacturer>
 		<rom name="ordtvlng.bin" size="3072" crc="3a386e79"/>
@@ -365,7 +365,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="robotwar" romof="channelf">
-		<description>Robot War</description>
+		<description>Robot War / Torpedo Alley</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="robotwar.bin" size="2048" crc="38241e4f"/>
@@ -442,7 +442,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tctactoe" romof="channelf">
-		<description>Tic-Tac-Toe</description>
+		<description>Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
 		<rom name="tctactoe.bin" size="2048" crc="ff4768b0"/>

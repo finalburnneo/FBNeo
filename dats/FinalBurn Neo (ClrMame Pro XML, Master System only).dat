@@ -3341,10 +3341,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbislando" cloneof="rbisland" romof="rbisland">
-		<description>Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow Hack) [Hack]</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="rainbow islands - the story of bubble bobble 2 (over the rainbow hack).bin" size="262144" crc="62af2901"/>
+		<description>Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack) [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Tom, BcnAbel76</manufacturer>
+		<rom name="rainbow islands - the story of bubble bobble 2 (over the rainbow + color hack).bin" size="262144" crc="7e43bed5"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4548,7 +4548,7 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="excdizzy" cloneof="xcdizzy" romof="xcdizzy">
+	<game name="excdizzy">
 		<description>The Excellent Dizzy Collection (Euro, USA, Prototype) [unfinished proto, play 'gg_excdizzy' instead!]</description>
 		<year>1994</year>
 		<manufacturer>Codemasters</manufacturer>

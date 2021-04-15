@@ -312,6 +312,16 @@
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="actionforce" romof="spec128">
+		<description>Action Force</description>
+		<year>1987</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Action Force (1987)(Virgin Games).tap" size="47303" crc="3ed87428"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="actionreflex" romof="spec128">
 		<description>Action Reflex</description>
 		<year>1986</year>
@@ -3536,6 +3546,26 @@
 		<year>2020</year>
 		<manufacturer>IADVD</manufacturer>
 		<rom name="Enigmatik (2020)(IADVD).tap" size="45841" crc="c02dcd01"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="escapemonjasen" romof="spec128">
+		<description>Escape from M.O.N.J.A.S. EN (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Rastersoft</manufacturer>
+		<rom name="Escape from M.O.N.J.A.S. EN (2021)(Rastersoft).tap" size="48592" crc="4a03ef89"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="escapemonjases" cloneof="escapemonjasen" romof="escapemonjasen">
+		<description>Escape from M.O.N.J.A.S. SP (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Rastersoft</manufacturer>
+		<rom name="Escape from M.O.N.J.A.S. ES (2021)(Rastersoft).tap" size="48592" crc="6ef28d8a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11116,6 +11146,26 @@
 		<manufacturer>Piranha</manufacturer>
 		<rom name="Yogi Bear 48K (1987)(Piranha).z80" size="43670" crc="437fa194"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yogigreedmonster" romof="spec128">
+		<description>Yogi Bear and Friends - The Greed Monster</description>
+		<year>1990</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Yogi Bear and Friends - The Greed Monster (1990)(Hi-Tec).tap" size="56556" crc="601b7f1f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yogigreatescape" romof="spec128">
+		<description>Yogi's Great Escape</description>
+		<year>1990</year>
+		<manufacturer>Hi-Tec</manufacturer>
+		<rom name="Yogi's Great Escape (1990)(Hi-Tec).tap" size="54731" crc="d6afad15"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

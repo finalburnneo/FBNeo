@@ -8,6 +8,7 @@
 #include "burn_ym2151.h"
 #include "k007232.h"
 #include "watchdog.h"
+#include "k007452.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -27,7 +28,6 @@ static UINT8 *DrvSprRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 multiply_register[2];
 static UINT8 main_bank;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
@@ -226,10 +226,13 @@ static void __fastcall flkatck_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0x9000:
 		case 0x9001:
-			multiply_register[address & 1] = data;
-		return;
-
+		case 0x9002:
+		case 0x9003:
+		case 0x9004:
+		case 0x9005:
 		case 0x9006:
+		case 0x9007:
+			K007452Write(address & 7, data);
 		return;
 
 		case 0xb000:
@@ -261,11 +264,14 @@ static UINT8 __fastcall flkatck_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9000:
-			return (multiply_register[0] * multiply_register[1]) & 0xff;
-
 		case 0x9001:
+		case 0x9002:
+		case 0x9003:
 		case 0x9004:
-			return 0;
+		case 0x9005:
+		case 0x9006:
+		case 0x9007:
+			return K007452Read(address & 7);
 
 		case 0xa000:
 			return soundlatch;
@@ -353,11 +359,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	k007232_set_bank(0, 0, 1);
 
 	k007121_reset();
+	K007452Reset();
 
 	BurnWatchdogReset();
 
-	multiply_register[0] = 0;
-	multiply_register[1] = 0;
 	flipscreen = 0;
 	soundlatch = 0;
 
@@ -632,10 +637,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		K007232Scan(nAction, pnMin);
+		K007452Scan(nAction);
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(multiply_register);
 		SCAN_VAR(main_bank);
 		SCAN_VAR(nExtraCycles);
 	}

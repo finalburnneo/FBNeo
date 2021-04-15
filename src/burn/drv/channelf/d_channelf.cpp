@@ -595,7 +595,7 @@ struct BurnDriver BurnDrvCHF_democrt2 = {
 };
 
 
-// Tic-Tac-Toe
+// Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle
 
 static struct BurnRomInfo CHF_tctactoeRomDesc[] = {
 	{ "tctactoe.bin",	0x00800, 0xff4768b0, BRF_PRG | BRF_ESS },
@@ -606,7 +606,7 @@ STD_ROM_FN(CHF_tctactoe)
 
 struct BurnDriver BurnDrvCHF_tctactoe = {
 	"chf_tctactoe", NULL, "chf_channelf", NULL, "1976",
-	"Tic-Tac-Toe\0", NULL, "Fairchild", "Channel F",
+	"Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_tctactoeRomInfo, CHF_tctactoeRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -615,7 +615,7 @@ struct BurnDriver BurnDrvCHF_tctactoe = {
 };
 
 
-// Muehle
+// Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)
 
 static struct BurnRomInfo CHF_muehleRomDesc[] = {
 	{ "muehle.bin",	0x00800, 0x7124dc59, BRF_PRG | BRF_ESS },
@@ -626,7 +626,7 @@ STD_ROM_FN(CHF_muehle)
 
 struct BurnDriver BurnDrvCHF_muehle = {
 	"chf_muehle", "chf_tctactoe", "chf_channelf", NULL, "1978",
-	"Muehle\0", NULL, "SABA", "Channel F",
+	"Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)\0", NULL, "SABA", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_muehleRomInfo, CHF_muehleRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -635,7 +635,7 @@ struct BurnDriver BurnDrvCHF_muehle = {
 };
 
 
-// Desert Fox
+// Desert Fox / Shooting Gallery
 
 static struct BurnRomInfo CHF_dsrtfoxRomDesc[] = {
 	{ "dsrtfox.bin",	0x00800, 0x1570934b, BRF_PRG | BRF_ESS },
@@ -646,7 +646,7 @@ STD_ROM_FN(CHF_dsrtfox)
 
 struct BurnDriver BurnDrvCHF_dsrtfox = {
 	"chf_dsrtfox", NULL, "chf_channelf", NULL, "1976",
-	"Desert Fox\0", NULL, "Fairchild", "Channel F",
+	"Desert Fox / Shooting Gallery\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_dsrtfoxRomInfo, CHF_dsrtfoxRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -775,7 +775,7 @@ struct BurnDriver BurnDrvCHF_mthquiz2 = {
 };
 
 
-// Magic Numbers
+// Magic Numbers / Mind Reader / Nim
 
 static struct BurnRomInfo CHF_magicnumRomDesc[] = {
 	{ "magicnum.bin",	0x00800, 0x24da0529, BRF_PRG | BRF_ESS },
@@ -786,7 +786,7 @@ STD_ROM_FN(CHF_magicnum)
 
 struct BurnDriver BurnDrvCHF_magicnum = {
 	"chf_magicnum", NULL, "chf_channelf", NULL, "1977",
-	"Magic Numbers\0", NULL, "Fairchild", "Channel F",
+	"Magic Numbers / Mind Reader / Nim\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_magicnumRomInfo, CHF_magicnumRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -815,7 +815,7 @@ struct BurnDriver BurnDrvCHF_dragrace = {
 };
 
 
-// Maze
+// Maze / Jailbreak / Blind-man's-bluff / Trailblazer
 
 static struct BurnRomInfo CHF_mazeRomDesc[] = {
 	{ "maze.bin",	0x00800, 0x4d42b296, BRF_PRG | BRF_ESS },
@@ -826,7 +826,7 @@ STD_ROM_FN(CHF_maze)
 
 struct BurnDriver BurnDrvCHF_maze = {
 	"chf_maze", NULL, "chf_channelf", NULL, "1977",
-	"Maze\0", NULL, "Fairchild", "Channel F",
+	"Maze / Jailbreak / Blind-man's-bluff / Trailblazer\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_mazeRomInfo, CHF_mazeRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -835,7 +835,7 @@ struct BurnDriver BurnDrvCHF_maze = {
 };
 
 
-// Maze
+// Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)
 
 static struct BurnRomInfo CHF_mazeaRomDesc[] = {
 	{ "mazealt.bin",	0x00800, 0x0a948b61, BRF_PRG | BRF_ESS },
@@ -846,7 +846,7 @@ STD_ROM_FN(CHF_mazea)
 
 struct BurnDriver BurnDrvCHF_mazea = {
 	"chf_mazea", "chf_maze", "chf_channelf", NULL, "1977",
-	"Maze\0", NULL, "Fairchild", "Channel F",
+	"Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_mazeaRomInfo, CHF_mazeaRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -855,7 +855,7 @@ struct BurnDriver BurnDrvCHF_mazea = {
 };
 
 
-// Backgammon
+// Backgammon / Acey-Deucey
 
 static struct BurnRomInfo CHF_backgammRomDesc[] = {
 	{ "backgmmn.bin",	0x00800, 0xa1731b52, BRF_PRG | BRF_ESS },
@@ -866,7 +866,7 @@ STD_ROM_FN(CHF_backgamm)
 
 struct BurnDriver BurnDrvCHF_backgamm = {
 	"chf_backgamm", NULL, "chf_channelf", NULL, "1977",
-	"Backgammon\0", NULL, "Fairchild", "Channel F",
+	"Backgammon / Acey-Deucey\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_backgammRomInfo, CHF_backgammRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -895,7 +895,7 @@ struct BurnDriver BurnDrvCHF_baseball = {
 };
 
 
-// Robot War
+// Robot War / Torpedo Alley
 
 static struct BurnRomInfo CHF_robotwarRomDesc[] = {
 	{ "robotwar.bin",	0x00800, 0x38241e4f, BRF_PRG | BRF_ESS },
@@ -906,7 +906,7 @@ STD_ROM_FN(CHF_robotwar)
 
 struct BurnDriver BurnDrvCHF_robotwar = {
 	"chf_robotwar", NULL, "chf_channelf", NULL, "1977",
-	"Robot War\0", NULL, "Fairchild", "Channel F",
+	"Robot War / Torpedo Alley\0", NULL, "Fairchild", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_robotwarRomInfo, CHF_robotwarRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -1066,7 +1066,7 @@ STD_ROM_FN(CHF_ordtvlng)
 
 struct BurnDriver BurnDrvCHF_ordtvlng = {
 	"chf_ordtvlng", "chf_hangman", "chf_channelf", NULL, "1978",
-	"Ordtävling (Swe)\0", NULL, "Luxor", "Channel F",
+	"Ordtavling (Swe)\0", NULL, "Luxor", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_ordtvlngRomInfo, CHF_ordtvlngRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
@@ -1195,7 +1195,7 @@ struct BurnDriver BurnDrvCHF_slotmchn = {
 };
 
 
-// Galactic Space Wars
+// Galactic Space Wars / Lunar Lander
 
 static struct BurnRomInfo CHF_galacticRomDesc[] = {
 	{ "galactic.bin",	0x00800, 0xc8ef3410, BRF_PRG | BRF_ESS },
@@ -1206,7 +1206,7 @@ STD_ROM_FN(CHF_galactic)
 
 struct BurnDriver BurnDrvCHF_galactic = {
 	"chf_galactic", NULL, "chf_channelf", NULL, "1980",
-	"Galactic Space Wars\0", NULL, "Zircon", "Channel F",
+	"Galactic Space Wars / Lunar Lander\0", NULL, "Zircon", "Channel F",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_galacticRomInfo, CHF_galacticRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,

@@ -8,6 +8,7 @@
 #include "upd7759.h"
 #include "konamiic.h"
 #include "k007121.h"
+#include "k007452.h"
 #include "watchdog.h"
 
 static UINT8 *AllMem;
@@ -31,7 +32,6 @@ static UINT8 *color_table;
 static UINT32 *DrvPalette;
 //static UINT8 DrvRecalc;
 
-static UINT8 multiply_data[2];
 static UINT8 soundlatch;
 static UINT8 video_reg;
 static UINT8 bank_data;
@@ -202,11 +202,13 @@ static void combatsc_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x0200:
 		case 0x0201:
-			multiply_data[address & 1] = data;
-		return;
-
+		case 0x0202:
+		case 0x0203:
+		case 0x0204:
+		case 0x0205:
 		case 0x0206:
-			// protection clock (unemulated)
+		case 0x0207:
+			K007452Write(address & 7, data);
 		return;
 
 		case 0x0408:
@@ -248,10 +250,14 @@ static UINT8 combatsc_main_read(UINT16 address)
 			return 0; // unk??
 
 		case 0x0200:
-			return (multiply_data[0] * multiply_data[1]);
-
 		case 0x0201:
-			return (multiply_data[0] * multiply_data[1]) >> 8;
+		case 0x0202:
+		case 0x0203:
+		case 0x0204:
+		case 0x0205:
+		case 0x0206:
+		case 0x0207:
+			return K007452Read(address & 7);
 
 		case 0x0400:
 			return DrvInputs[0];
@@ -379,9 +385,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	k007121_reset();
 
+	K007452Reset();
+
 	soundlatch = 0;
-	multiply_data[0] = 0;
-	multiply_data[1] = 0;
 	video_reg = 0;
 
 	nExtraCycles = 0;
@@ -776,10 +782,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		k007121_scan(nAction);
 
+		K007452Scan(nAction);
+
 		BurnYM2203Scan(nAction, pnMin);
 		UPD7759Scan(nAction, pnMin);
 
-		SCAN_VAR(multiply_data);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(video_reg);
 		SCAN_VAR(bank_data);

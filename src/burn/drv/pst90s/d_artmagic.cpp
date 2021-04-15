@@ -708,7 +708,7 @@ static void execute_blit()
 				}
 				else    /* following lines */
 				{
-					INT32 val = blitter_base[offset & blitter_mask];
+					INT32 val = BURN_ENDIAN_SWAP_INT16(blitter_base[offset & blitter_mask]);
 
 					/* ultennis, stonebal */
 					last ^= 4;
@@ -723,7 +723,7 @@ static void execute_blit()
 
 				for (j = 0; j < w; j += 4)
 				{
-					UINT16 val = blitter_base[(offset + j/4) & blitter_mask];
+					UINT16 val = BURN_ENDIAN_SWAP_INT16(blitter_base[(offset + j/4) & blitter_mask]);
 					if (sx < 508)
 					{
 						if (h == 1 && is_stonebal)

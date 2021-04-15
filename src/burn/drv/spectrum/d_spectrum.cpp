@@ -11882,6 +11882,25 @@ struct BurnDriver BurnSpecStarwars = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Action Force
+
+static struct BurnRomInfo SpecActionforceRomDesc[] = {
+	{ "Action Force (1987)(Virgin Games).tap", 47303, 0x3ed87428, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecActionforce, SpecActionforce, Spec128)
+STD_ROM_FN(SpecActionforce)
+
+struct BurnDriver BurnSpecActionforce = {
+	"spec_actionforce", NULL, "spec_spec128", NULL, "1987",
+	"Action Force\0", NULL, "Virgin Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecActionforceRomInfo, SpecActionforceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Action Force II
 
 static struct BurnRomInfo Specactionforce2RomDesc[] = {
@@ -18513,6 +18532,44 @@ struct BurnDriver BurnSpecYogibear = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Yogi's Great Escape
+
+static struct BurnRomInfo SpecYogigreatescapeRomDesc[] = {
+	{ "Yogi's Great Escape (1990)(Hi-Tec).tap", 54731, 0xd6afad15, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecYogigreatescape, SpecYogigreatescape, Spec128)
+STD_ROM_FN(SpecYogigreatescape)
+
+struct BurnDriver BurnSpecYogigreatescape = {
+	"spec_yogigreatescape", NULL, "spec_spec128", NULL, "1990",
+	"Yogi's Great Escape\0", NULL, "Hi-Tec", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecYogigreatescapeRomInfo, SpecYogigreatescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Yogi Bear and Friends - The Greed Monster
+
+static struct BurnRomInfo SpecYogigreedmonsterRomDesc[] = {
+	{ "Yogi Bear and Friends - The Greed Monster (1990)(Hi-Tec).tap", 56556, 0x601b7f1f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecYogigreedmonster, SpecYogigreedmonster, Spec128)
+STD_ROM_FN(SpecYogigreedmonster)
+
+struct BurnDriver BurnSpecYogigreedmonster = {
+	"spec_yogigreedmonster", NULL, "spec_spec128", NULL, "1990",
+	"Yogi Bear and Friends - The Greed Monster\0", NULL, "Hi-Tec", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecYogigreedmonsterRomInfo, SpecYogigreedmonsterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
@@ -23473,6 +23530,44 @@ struct BurnDriver BurnSpecTwinlight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecTwinlightRomInfo, SpecTwinlightRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Escape from M.O.N.J.A.S. EN (HB)
+
+static struct BurnRomInfo SpecEscapemonjasenRomDesc[] = {
+	{ "Escape from M.O.N.J.A.S. EN (2021)(Rastersoft).tap", 48592, 0x4a03ef89, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecEscapemonjasen, SpecEscapemonjasen, Spec128)
+STD_ROM_FN(SpecEscapemonjasen)
+
+struct BurnDriver BurnSpecEscapemonjasen = {
+	"spec_escapemonjasen", NULL, "spec_spec128", NULL, "2021",
+	"Escape from M.O.N.J.A.S. EN (HB)\0", NULL, "Rastersoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecEscapemonjasenRomInfo, SpecEscapemonjasenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Escape from M.O.N.J.A.S. SP (HB)
+
+static struct BurnRomInfo SpecEscapemonjasesRomDesc[] = {
+	{ "Escape from M.O.N.J.A.S. ES (2021)(Rastersoft).tap", 48592, 0x6ef28d8a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecEscapemonjases, SpecEscapemonjases, Spec128)
+STD_ROM_FN(SpecEscapemonjases)
+
+struct BurnDriver BurnSpecEscapemonjases = {
+	"spec_escapemonjases", "spec_escapemonjasen", "spec_spec128", NULL, "2021",
+	"Escape from M.O.N.J.A.S. SP (HB)\0", NULL, "Rastersoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecEscapemonjasesRomInfo, SpecEscapemonjasesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

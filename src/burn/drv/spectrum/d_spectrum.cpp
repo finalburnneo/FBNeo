@@ -13947,7 +13947,7 @@ struct BurnDriver BurnSpec100stolnik = {
 	"spec_100stolnik", NULL, "spec_spec128", NULL, "1995",
 	"100 - Stolnik\0", NULL, "Power Of Sound", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, Spec100stolnikRomInfo, Spec100stolnikRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -13966,7 +13966,7 @@ struct BurnDriver BurnSpec10thframe = {
 	"spec_10thframe", NULL, "spec_spec128", NULL, "1987",
 	"10th Frame\0", NULL, "U.S. Gold", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
 	SpectrumGetZipName, Spec10thframeRomInfo, Spec10thframeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -14105,7 +14105,7 @@ struct BurnDriver BurnSpec911ts = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Advanced Pinball Simulator
+// Advanced Pinball Simulator (128K)
 
 static struct BurnRomInfo SpecAdvancedpinballsimRomDesc[] = {
 	{ "Advanced Pinball Simulator (1990)(Codemasters).tap", 51760, 0xfca7d79b, BRF_ESS | BRF_PRG },
@@ -14116,9 +14116,9 @@ STD_ROM_FN(SpecAdvancedpinballsim)
 
 struct BurnDriver BurnSpecAdvancedpinballsim = {
 	"spec_advancedpinballsim", NULL, "spec_spec128", NULL, "1990",
-	"Advanced Pinball Simulator\0", NULL, "Codemasters", "ZX Spectrum",
+	"Advanced Pinball Simulator (128K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_SPECTRUM, GBF_PINBALL, 0,
 	SpectrumGetZipName, SpecAdvancedpinballsimRomInfo, SpecAdvancedpinballsimRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -14143,7 +14143,7 @@ struct BurnDriver BurnSpecAfterburner = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Alien 8
+// Alien 8 (48K)
 
 static struct BurnRomInfo SpecAlien8RomDesc[] = {
 	{ "Alien 8 (1985)(Ultimate Play The Game).tap", 47264, 0x043d8dae, BRF_ESS | BRF_PRG },
@@ -14154,9 +14154,9 @@ STD_ROM_FN(SpecAlien8)
 
 struct BurnDriver BurnSpecAlien8 = {
 	"spec_alien8", NULL, "spec_spectrum", NULL, "1985",
-	"Alien 8\0", NULL, "Ultimate Play The Game", "ZX Spectrum",
+	"Alien 8 (48K)\0", NULL, "Ultimate Play The Game", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecAlien8RomInfo, SpecAlien8RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -14175,7 +14175,7 @@ struct BurnDriver BurnSpecArcadeflightsim = {
 	"spec_arcadeflightsim", NULL, "spec_spec128", NULL, "1989",
 	"Arcade Flight Simulator\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecArcadeflightsimRomInfo, SpecArcadeflightsimRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -14194,7 +14194,7 @@ struct BurnDriver BurnSpecBattleships = {
 	"spec_battleships", NULL, "spec_spec128", NULL, "1987",
 	"Battle Ships\0", NULL, "Hit-Pak", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_STRATEGY, 0,
 	SpectrumGetZipName, SpecBattleshipsRomInfo, SpecBattleshipsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -18334,7 +18334,7 @@ STD_ROM_FN(SpecFlashgordon)
 
 struct BurnDriver BurnSpecFlashgordon = {
 	"spec_flashgordon", NULL, "spec_spec128", NULL, "Mastertronic",
-	"Flash Gordon (128K)\0", NULL, ".z80", "ZX Spectrum",
+	"Flash Gordon (128K)\0", NULL, "1987", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecFlashgordonRomInfo, SpecFlashgordonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

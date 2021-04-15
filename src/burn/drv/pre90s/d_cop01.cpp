@@ -45,6 +45,7 @@ static UINT16 prot_dac_current_address;
 static UINT16 prot_dac_freq;
 static UINT8  prot_dac_playing;
 static UINT8  prot_const90;
+static UINT8  prot_timer_rate;
 
 static UINT8 *dac_intrl_table; // dac freq table
 
@@ -313,7 +314,7 @@ static void mightguy_prot_dac_clk()
 	if (prot_dac_playing) {
 		UINT8 data = DrvProtData[prot_dac_current_address++];
 		DACSignedWrite(0, data);
-		prot_dac_current_address &= 0x1fff;
+		prot_dac_current_address &= 0xffff;
 		if (data == 0x80) prot_dac_playing = 0;
 	}
 }
@@ -342,7 +343,7 @@ static void mightguy_prot_data_write(UINT8 data)
 		case 0x32: {
 			prot_rom_op = data;
 			if (data == 2) {
-				prot_dac_current_address = prot_dac_start_address & 0x1fff;
+				prot_dac_current_address = prot_dac_start_address & 0xffff;
 				prot_dac_playing = 1;
 			};
 			break;
@@ -351,11 +352,16 @@ static void mightguy_prot_data_write(UINT8 data)
 		case 0x34: prot_rom_address &= 0xff00; prot_rom_address |= data; break;
 		case 0x35: prot_adj_address &= 0x00ff; prot_adj_address |= data << 8; break;
 		case 0x36: prot_adj_address &= 0xff00; prot_adj_address |= data; break;
-		case 0x40: prot_mgtimer = 0x17*160; prot_mgtimer_count = 0; break;
+		case 0x40: prot_mgtimer = 9350/prot_timer_rate; prot_mgtimer_count = 0; break;
 		case 0x41: prot_mgtimer = 0; prot_timer_reg = 0; break;
 		case 0x51: prot_dac_start_address &= 0x00ff; prot_dac_start_address |= data << 8; break;
 		case 0x52: prot_dac_start_address &= 0xff00; prot_dac_start_address |= data; break;
-		case 0x18: prot_dac_freq = data*18; dac_recalc_freq(); break;
+		case 0x11:
+			if (data == 0) {
+				prot_dac_playing = 0;
+			}
+			break;
+		case 0x18: prot_timer_rate = (data >> 4)-11; prot_dac_freq = (prot_timer_rate*71)*18; dac_recalc_freq(); break;
 		case 0x90: prot_const90 = data; break;
 #if 0
 		case 0x42: break;
@@ -475,6 +481,7 @@ static INT32 DrvDoReset()
 	prot_dac_freq = 4000;
 	prot_dac_playing = 0;
 	prot_timer_reg = 0;
+	prot_timer_rate = 2;
 
 	memset (video_registers, 0, 4);
 

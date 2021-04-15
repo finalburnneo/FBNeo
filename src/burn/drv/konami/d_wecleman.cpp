@@ -7,6 +7,7 @@
 #include "m6809_intf.h"
 #include "burn_ym2151.h"
 #include "k007232.h"
+#include "k007452.h"
 #include "bitswap.h"
 #include "konamiic.h"
 #include "burn_pal.h"
@@ -40,7 +41,6 @@ static UINT16 irq_control;
 static UINT16 protection_state;
 static UINT16 protection_ram[3];
 static UINT16 blitter_regs[16];
-static UINT8 multiply_reg[2];
 static UINT8 soundbank;
 static UINT8 soundlatch;
 static UINT8 sound_status;
@@ -558,11 +558,14 @@ static void __fastcall wecleman_sound_write(UINT16 address, UINT8 data)
 
 		case 0x9000:
 		case 0x9001:
-			multiply_reg[address & 1] = data;
-		return;
-
+		case 0x9002:
+		case 0x9003:
+		case 0x9004:
+		case 0x9005:
 		case 0x9006:
-		return; // nop
+		case 0x9007:
+			K007452Write(address & 7, data);
+		return;
 
 		case 0xc000:
 		case 0xc001:
@@ -584,7 +587,14 @@ static UINT8 __fastcall wecleman_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9000:
-			return multiply_reg[0] * multiply_reg[1];
+		case 0x9001:
+		case 0x9002:
+		case 0x9003:
+		case 0x9004:
+		case 0x9005:
+		case 0x9006:
+		case 0x9007:
+			return K007452Read(address & 7);
 
 		case 0xa000:
 			if (soundlatch == 0) {
@@ -723,12 +733,13 @@ static INT32 DrvDoReset()
 		K007232Reset(0);
 	}
 
+	K007452Reset();
+
 	BurnLEDReset();
 	BurnShiftReset();
 
 	memset (protection_ram, 0, sizeof(protection_ram));
 	memset (blitter_regs, 0, sizeof(blitter_regs));
-	memset (multiply_reg, 0, sizeof(multiply_reg));
 
 	soundbank = 0;
 	selected_ip = 0;
@@ -1859,7 +1870,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetScan(nAction);
 			BurnYM2151Scan(nAction, pnMin);
 		}
+
 		K007232Scan(nAction, pnMin);
+		K007452Scan(nAction);
 
 		KonamiICScan(nAction);
 
@@ -1868,7 +1881,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(protection_ram);
 		SCAN_VAR(blitter_regs);
-		SCAN_VAR(multiply_reg);
 
 		SCAN_VAR(soundbank);
 		SCAN_VAR(selected_ip);

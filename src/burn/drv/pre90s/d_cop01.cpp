@@ -966,6 +966,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(prot_dac_freq);
 		SCAN_VAR(prot_dac_playing);
 		SCAN_VAR(prot_const90);
+		SCAN_VAR(prot_timer_rate);
 	}
 
 	return 0;

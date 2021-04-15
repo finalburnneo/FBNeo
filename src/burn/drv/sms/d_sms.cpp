@@ -3734,10 +3734,10 @@ STD_ROM_PICK(sms_excdizzy)
 STD_ROM_FN(sms_excdizzy)
 
 struct BurnDriver BurnDrvsms_excdizzy = {
-	"sms_excdizzy", "gg_excdizzy", NULL, NULL, "1994",
+	"sms_excdizzy", NULL, NULL, NULL, "1994",
 	"The Excellent Dizzy Collection (Euro, USA, Prototype)\0", "unfinished proto, play 'gg_excdizzy' instead!", "Codemasters", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_excdizzyRomInfo, sms_excdizzyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
@@ -7943,18 +7943,19 @@ struct BurnDriver BurnDrvsms_rbislandb = {
 	256, 192, 4, 3
 };
 
-// Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow Hack)
+// Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)
+// by Tom and BcnAbel76
 
 static struct BurnRomInfo sms_rbislandoRomDesc[] = {
-	{ "rainbow islands - the story of bubble bobble 2 (over the rainbow hack).bin",	0x40000, 0x62AF2901, BRF_PRG | BRF_ESS },
+	{ "rainbow islands - the story of bubble bobble 2 (over the rainbow + color hack).bin",	0x40000, 0x7E43BED5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_rbislando)
 STD_ROM_FN(sms_rbislando)
 
 struct BurnDriver BurnDrvsms_rbislando = {
-	"sms_rbislando", "sms_rbisland", NULL, NULL, "1993",
-	"Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow Hack)\0", NULL, "Sega", "Sega Master System",
+	"sms_rbislando", "sms_rbisland", NULL, NULL, "2021",
+	"Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)\0", NULL, "Tom, BcnAbel76", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_rbislandoRomInfo, sms_rbislandoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

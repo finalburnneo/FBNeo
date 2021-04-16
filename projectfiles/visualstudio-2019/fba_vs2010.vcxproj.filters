@@ -1075,6 +1075,9 @@
     <ClInclude Include="..\..\src\cpu\f8\f8.h">
       <Filter>cpus</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\konami\k007452.h">
+      <Filter>Burn\drv\konami</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4363,6 +4366,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\f8\f8.cpp">
       <Filter>cpus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\konami\k007452.cpp">
+      <Filter>Burn\drv\konami</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

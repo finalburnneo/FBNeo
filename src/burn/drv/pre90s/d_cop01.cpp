@@ -80,7 +80,6 @@ static struct BurnInputInfo Cop01InputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	//{"Service Mode",BIT_DIGITAL,	DrvJoy3 + 5,	"diag"      },
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
@@ -253,7 +252,7 @@ static UINT8 __fastcall cop01_main_read_port(UINT16 port)
 
 		case 0x03:
 		case 0x04:
-			return DrvDips[(port - 3) & 0xff];
+			return DrvDips[(port & 4) >> 2];
 	}
 
 	return 0;
@@ -492,31 +491,31 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0		= Next; Next += 0x00c0000;
-	DrvZ80ROM1		= Next; Next += 0x0080000;
+	DrvZ80ROM0		= Next; Next += 0x00c000;
+	DrvZ80ROM1		= Next; Next += 0x008000;
 
-	DrvProtData		= Next; Next += 0x0080000;
+	DrvProtData		= Next; Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x0080000;
-	DrvGfxROM1		= Next; Next += 0x0100000;
-	DrvGfxROM2		= Next; Next += 0x0400000;
+	DrvGfxROM0		= Next; Next += 0x008000;
+	DrvGfxROM1		= Next; Next += 0x010000;
+	DrvGfxROM2		= Next; Next += 0x040000;
 
-	DrvColPROM		= Next; Next += 0x0005000;
+	DrvColPROM		= Next; Next += 0x000500;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x300 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvZ80RAM0		= Next; Next += 0x0010000;
-	DrvZ80RAM1		= Next; Next += 0x0008000;
-	DrvBgRAM		= Next; Next += 0x0010000;
-	DrvFgRAM		= Next; Next += 0x0004000;
-	DrvSprRAM		= Next; Next += 0x0001000;
-	DrvProtRAM      = Next; Next += 0x0000100;
+	DrvZ80RAM0		= Next; Next += 0x001000;
+	DrvZ80RAM1		= Next; Next += 0x000800;
+	DrvBgRAM		= Next; Next += 0x001000;
+	DrvFgRAM		= Next; Next += 0x000400;
+	DrvSprRAM		= Next; Next += 0x000100;
+	DrvProtRAM      = Next; Next += 0x000100;
 
 	RamEnd			= Next;
 
-	dac_intrl_table = Next; Next += 0x0000100;
+	dac_intrl_table = Next; Next += 0x000100;
 
 	MemEnd			= Next;
 
@@ -533,12 +532,7 @@ static void DrvGfxExpand(UINT8 *rom, UINT32 len)
 
 static INT32 Cop01Init()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -625,12 +619,7 @@ static INT32 MightguyInit()
 {
 	mightguy = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -732,7 +721,7 @@ static INT32 DrvExit()
 		BurnYM3526Exit();
 	}
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	mightguy = 0;
 
@@ -800,8 +789,10 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? TMAP_FLIPXY : 0);
 
+	BurnTransferClear();
+
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_FORCEOPAQUE);
-	draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
 
@@ -837,12 +828,12 @@ static INT32 Cop01Frame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 
@@ -882,7 +873,7 @@ static INT32 MightguyFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
@@ -1099,7 +1090,7 @@ STD_ROM_FN(mightguy)
 
 struct BurnDriver BurnDrvMightguy = {
 	"mightguy", NULL, NULL, NULL, "1986",
-	"Mighty Guy\0", "Sound issues", "Nichibutsu", "Miscellaneous",
+	"Mighty Guy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mightguyRomInfo, mightguyRomName, NULL, NULL, NULL, NULL, Cop01InputInfo, MightguyDIPInfo,

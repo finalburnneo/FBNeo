@@ -918,11 +918,11 @@ STD_ROM_FN(grdians)
 
 // Denjin Makai II (Shen Yue Edition, Hack)
 // Hacked by Gu Shen Gan Yue
-// GOTVG 20201228
+// GOTVG 20210402
 
 static struct BurnRomInfo grdianssyRomDesc[] = {
-	{ "grdianssy_u2.bin",	0x080000, 0x7b149a1d, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianssy_u3.bin",	0x080000, 0x0a908a5f, BRF_ESS | BRF_PRG },
+	{ "grdianssy_u2.bin",	0x080000, 0xfbf79fbd, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianssy_u3.bin",	0x080000, 0xf64b4a06, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -944,11 +944,11 @@ STD_ROM_FN(grdianssy)
 
 // Denjin Makai II (LBS Edition, Hack)
 // Hack by Bindi
-// GOTVG 20210331
+// GOTVG 20210404
 
 static struct BurnRomInfo grdianslbsRomDesc[] = {
 	{ "grdianslbs_u2.bin",	0x080000, 0x3edaca8a, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianslbs_u3.bin",	0x080000, 0x42c20d61, BRF_ESS | BRF_PRG },
+	{ "grdianslbs_u3.bin",	0x080000, 0xc3bc27da, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -968,13 +968,13 @@ static struct BurnRomInfo grdianslbsRomDesc[] = {
 STD_ROM_PICK(grdianslbs)
 STD_ROM_FN(grdianslbs)
 
-// Denjin Makai II (LBS Super Edition, Hack)
+// Denjin Makai II (Field Edition, Hack)
 // Hack by Bindi
-// GOTVG 20210304
+// GOTVG 20210412
 
 static struct BurnRomInfo grdianslbssRomDesc[] = {
-	{ "grdianslbss_u2.bin",	0x080000, 0x293a45ee, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "grdianslbss_u3.bin",	0x080000, 0x5a24b456, BRF_ESS | BRF_PRG },
+	{ "grdianslbss_u2.bin",	0x080000, 0x6971d2a2, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianslbss_u3.bin",	0x080000, 0xdfd042e0, BRF_ESS | BRF_PRG },
 	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -993,6 +993,32 @@ static struct BurnRomInfo grdianslbssRomDesc[] = {
 
 STD_ROM_PICK(grdianslbss)
 STD_ROM_FN(grdianslbss)
+
+// Denjin Makai II (Kerron Edition, Hack)
+// Hack by Bindi
+// GOTVG 20210412
+
+static struct BurnRomInfo grdianskeRomDesc[] = {
+	{ "grdianske_u2.bin",	0x080000, 0x0100e4cc, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "grdianske_u3.bin",	0x080000, 0xfca6c50b, BRF_ESS | BRF_PRG },
+	{ "u4.bin",				0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",				0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
+
+	{ "u16.bin",			0x400000, 0x6a65f265,	BRF_GRA },			// GFX
+	{ "u20.bin",			0x400000, 0xa7226ab7,	BRF_GRA },
+	{ "u15.bin",			0x400000, 0x01672dcd,	BRF_GRA },
+	{ "u19.bin",			0x400000, 0xc0c998a0,	BRF_GRA },
+	{ "u18.bin",			0x400000, 0x967babf4,	BRF_GRA },
+	{ "u22.bin",			0x400000, 0x6239997a,	BRF_GRA },
+	{ "u17.bin",			0x400000, 0x0fad0629,	BRF_GRA },
+	{ "u21.bin",			0x400000, 0x6f95e466,	BRF_GRA },
+
+	{ "u32.bin",			0x100000, 0xcf0f3017, BRF_SND },			// PCM
+
+};
+
+STD_ROM_PICK(grdianske)
+STD_ROM_FN(grdianske)
 
 static struct BurnRomInfo mj4simaiRomDesc[] = {
 	{ "ll.u2",		  0x080000, 0x7be9c781, BRF_ESS | BRF_PRG },	// 68000 code
@@ -3835,7 +3861,7 @@ struct BurnDriver BurnDrvGrdians = {
 };
 
 struct BurnDriver BurnDrvGrdianssy = {
-	"grdianssy", "grdians", NULL, NULL, "2020-12-28",
+	"grdianssy", "grdians", NULL, NULL, "2021-04-02",
 	"Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3845,7 +3871,7 @@ struct BurnDriver BurnDrvGrdianssy = {
 };
 
 struct BurnDriver BurnDrvGrdianslbs = {
-	"grdianslbs", "grdians", NULL, NULL, "2021-03-31",
+	"grdianslbs", "grdians", NULL, NULL, "2021-04-04",
 	"Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -3855,11 +3881,21 @@ struct BurnDriver BurnDrvGrdianslbs = {
 };
 
 struct BurnDriver BurnDrvGrdianslbss = {
-	"grdianslbss", "grdians", NULL, NULL, "2021-03-04",
-	"Guardians (LBS Super Edition, Hack)\0Denjin Makai II (LBS Super Edition, Hack)\0", NULL, "Hack", "Newer Seta",
+	"grdianslbss", "grdians", NULL, NULL, "2021-04-12",
+	"Guardians (Field Edition, Hack)\0Denjin Makai II (Field Edition, Hack)\0", NULL, "Hack", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdianslbssRomInfo, grdianslbssRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
+	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	304, 232, 4, 3
+};
+
+struct BurnDriver BurnDrvGrdianske = {
+	"grdianske", "grdians", NULL, NULL, "2021-04-12",
+	"Guardians (Kerron Edition, Hack)\0Denjin Makai II (Kerron Edition, Hack)\0", NULL, "Hack", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
+	NULL, grdianskeRomInfo, grdianskeRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	304, 232, 4, 3
 };

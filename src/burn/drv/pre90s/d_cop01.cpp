@@ -590,9 +590,9 @@ static INT32 Cop01Init()
 	AY8910Init(0, 1250000, 0);
 	AY8910Init(1, 1250000, 1);
 	AY8910Init(2, 1250000, 1);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(2, 0.12, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
@@ -608,11 +608,6 @@ static INT32 Cop01Init()
 	DrvDoReset();
 
 	return 0;
-}
-
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 MightguyInit()
@@ -673,10 +668,10 @@ static INT32 MightguyInit()
 
 	BurnYM3526Init(4000000, NULL, 0);
 	BurnTimerAttachYM3526(&ZetConfig, 4000000);
-	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
+	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);

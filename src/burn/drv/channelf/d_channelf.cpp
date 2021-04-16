@@ -1395,7 +1395,7 @@ struct BurnDriver BurnDrvCHF_multicrt = {
 	"chf_multicrt", NULL, "chf_channelf", NULL, "2004",
 	"Channel F Multi-Cart (Final)\0", NULL, "homebrew", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_multicrtRomInfo, CHF_multicrtRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	multicrtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
@@ -1420,8 +1420,103 @@ struct BurnDriver BurnDrvCHF_multicrto = {
 	"chf_multicrto", "chf_multicrt", "chf_channelf", NULL, "2004",
 	"Channel F Multi-Cart (Older)\0", NULL, "homebrew", "Channel F",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_MISC, 0,
 	ChannelfGetZipName, CHF_multicrtoRomInfo, CHF_multicrtoRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
 	multicrtoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Hockey + Tennis (bios rip)
+
+static struct BurnRomInfo CHF_builtinRomDesc[] = {
+	{ "Hockey + Tennis (1976)(Fairchild).bin",	0x00800, 0xabdd6d62, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_builtin, CHF_builtin, CHF_channelf)
+STD_ROM_FN(CHF_builtin)
+
+struct BurnDriver BurnDrvCHF_builtin = {
+	"chf_builtin", NULL, "chf_channelf", NULL, "1976",
+	"Hockey + Tennis\0", "Channel F built-in games", "Fairchild", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_CHANNELF, GBF_BALLPADDLE, 0,
+	ChannelfGetZipName, CHF_builtinRomInfo, CHF_builtinRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Lights Out (HB)
+
+static struct BurnRomInfo CHF_lightsoutRomDesc[] = {
+	{ "Lights Out (2004)(Riddle, Sean).bin",	0x00800, 0x666c0b4a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_lightsout, CHF_lightsout, CHF_channelf)
+STD_ROM_FN(CHF_lightsout)
+
+struct BurnDriver BurnDrvCHF_lightsout = {
+	"chf_lightsout", NULL, "chf_channelf", NULL, "2004",
+	"Lights Out (HB)\0", NULL, "Sean Riddle", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
+	ChannelfGetZipName, CHF_lightsoutRomInfo, CHF_lightsoutRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Pac-Man (HB)
+
+static struct BurnRomInfo CHF_pacmanRomDesc[] = {
+	{ "Pac-Man (2004)(Blackbird - e5frog).bin",	0x01000, 0x172f5770, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_pacman, CHF_pacman, CHF_channelf)
+STD_ROM_FN(CHF_pacman)
+
+struct BurnDriver BurnDrvCHF_pacman = {
+	"chf_pacman", NULL, "chf_channelf", NULL, "2004",
+	"Pac-Man (HB)\0", NULL, "Blackbird - e5frog", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_CHANNELF, GBF_MAZE, 0,
+	ChannelfGetZipName, CHF_pacmanRomInfo, CHF_pacmanRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Pac-Man (HB, v2)
+
+static struct BurnRomInfo CHF_pacmanv2RomDesc[] = {
+	{ "Pac-Man v2 (2004)(Blackbird - e5frog).bin",	0x02000, 0xa22dbf73, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_pacmanv2, CHF_pacmanv2, CHF_channelf)
+STD_ROM_FN(CHF_pacmanv2)
+
+struct BurnDriver BurnDrvCHF_pacmanv2 = {
+	"chf_pacmanv2", "chf_pacman", "chf_channelf", NULL, "2004",
+	"Pac-Man (HB, v2)\0", NULL, "Blackbird - e5frog", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_MAZE, 0,
+	ChannelfGetZipName, CHF_pacmanv2RomInfo, CHF_pacmanv2RomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
+	102*SM, 58*SM, 4, 3
+};
+
+// Tetris (HB)
+
+static struct BurnRomInfo CHF_tetrisRomDesc[] = {
+	{ "Tetris (2004)(Trauner, Peter).bin",	0x00DFF, 0x2b900e96, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(CHF_tetris, CHF_tetris, CHF_channelf)
+STD_ROM_FN(CHF_tetris)
+
+struct BurnDriver BurnDrvCHF_tetris = {
+	"chf_tetris", NULL, "chf_channelf", NULL, "2004",
+	"Tetris (HB)\0", NULL, "Peter Trauner", "Channel F",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CHANNELF, GBF_PUZZLE, 0,
+	ChannelfGetZipName, CHF_tetrisRomInfo, CHF_tetrisRomName, NULL, NULL, NULL, NULL, ChannelfInputInfo, ChannelfDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 16,
 	102*SM, 58*SM, 4, 3
 };

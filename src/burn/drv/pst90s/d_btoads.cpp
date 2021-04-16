@@ -144,21 +144,21 @@ static void vram_bg0_write(UINT32 offset, UINT16 data)
 {
 	offset &= 0x3fffff;
 	UINT16 *vram = (UINT16*)DrvVidRAM[0];
-	vram[TOWORD(offset) & 0x3fcff] = data;
+	vram[TOWORD(offset) & 0x3fcff] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static void vram_bg1_write(UINT32 offset, UINT16 data)
 {
 	offset &= 0x3fffff;
 	UINT16 *vram = (UINT16*)DrvVidRAM[1];
-	vram[TOWORD(offset) & 0x3fcff] = data;
+	vram[TOWORD(offset) & 0x3fcff] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static UINT16 vram_bg0_read(UINT32 offset)
 {
 	offset &= 0x3fffff;
 	UINT16 *vram = (UINT16*)DrvVidRAM[0];
-	return vram[TOWORD(offset) & 0x3fcff];
+	return BURN_ENDIAN_SWAP_INT16(vram[TOWORD(offset) & 0x3fcff]);
 }
 
 static UINT16 vram_bg1_read(UINT32 offset)
@@ -217,7 +217,7 @@ static void control_write(UINT32 address, UINT16 data)
 		case 0x01:
 		{
 			UINT16 *ram = (UINT16*)DrvSprScale;
-			ram[(address >> 7) & 1] = data;
+			ram[(address >> 7) & 1] = BURN_ENDIAN_SWAP_INT16(data);
 		}
 		return;
 
@@ -388,15 +388,15 @@ void render_sprite_row(void *spr_source, UINT32 address)
 	int color = (~sprite_control >> 8) & 0xf0;
 	int srcoffs = sprite_source_offs << 8;
 	int srcend = srcoffs + (width << 8);
-	int srcstep = 0x100 - sprite_scale[0];
-	int dststep = 0x100 - sprite_scale[1];
+	int srcstep = 0x100 - BURN_ENDIAN_SWAP_INT16(sprite_scale[0]);
+	int dststep = 0x100 - BURN_ENDIAN_SWAP_INT16(sprite_scale[1]);
 	int dstoffs = sprite_dest_offs << 8;
 
 	if (!(misc_control_data & 0x10))
 	{
 		for ( ; srcoffs < srcend; srcoffs += srcstep, dstoffs += dststep)
 		{
-			UINT16 src = sprite_source[(srcoffs >> 10) & 0x1ff];
+			UINT16 src = BURN_ENDIAN_SWAP_INT16(sprite_source[(srcoffs >> 10) & 0x1ff]);
 			if (src)
 			{
 				src = (src >> (((srcoffs ^ flipxor) >> 6) & 0x0c)) & 0x0f;
@@ -409,7 +409,7 @@ void render_sprite_row(void *spr_source, UINT32 address)
 	{
 		for ( ; srcoffs < srcend; srcoffs += srcstep, dstoffs += dststep)
 		{
-			UINT16 src = sprite_source[(srcoffs >> 10) & 0x1ff];
+			UINT16 src = BURN_ENDIAN_SWAP_INT16(sprite_source[(srcoffs >> 10) & 0x1ff]);
 			if (src)
 			{
 				src = (src >> (((srcoffs ^ flipxor) >> 6) & 0x0c)) & 0x0f;
@@ -509,8 +509,8 @@ static INT32 ScanlineRender(INT32 scanline, TMS34010Display *info)
 				}
 				else
 				{
-					UINT16 bg0pix = bg0_base[(coladdr + scrollx[0]) & 0xff];
-					UINT16 bg1pix = bg1_base[(coladdr + scrollx[1]) & 0xff];
+					UINT16 bg0pix = BURN_ENDIAN_SWAP_INT16(bg0_base[(coladdr + scrollx[0]) & 0xff]);
+					UINT16 bg1pix = BURN_ENDIAN_SWAP_INT16(bg1_base[(coladdr + scrollx[1]) & 0xff]);
 					sprpix = spr_base[coladdr & 0xff];
 
 					if (bg1pix & 0x80)
@@ -547,8 +547,8 @@ static INT32 ScanlineRender(INT32 scanline, TMS34010Display *info)
 				}
 				else
 				{
-					UINT16 bg0pix = bg0_base[(coladdr + scrollx[0]) & 0xff];
-					UINT16 bg1pix = bg1_base[(coladdr + scrollx[1]) & 0xff];
+					UINT16 bg0pix = BURN_ENDIAN_SWAP_INT16(bg0_base[(coladdr + scrollx[0]) & 0xff]);
+					UINT16 bg1pix = BURN_ENDIAN_SWAP_INT16(bg1_base[(coladdr + scrollx[1]) & 0xff]);
 
 					if (bg0pix & 0xff)
 						dst[ex + 0] = bg0pix & 0xff;
@@ -584,8 +584,8 @@ static INT32 ScanlineRender(INT32 scanline, TMS34010Display *info)
 				}
 				else
 				{
-					UINT16 bg0pix = bg0_base[(coladdr + scrollx[0]) & 0xff];
-					UINT16 bg1pix = bg1_base[(coladdr + scrollx[1]) & 0xff];
+					UINT16 bg0pix = BURN_ENDIAN_SWAP_INT16(bg0_base[(coladdr + scrollx[0]) & 0xff]);
+					UINT16 bg1pix = BURN_ENDIAN_SWAP_INT16(bg1_base[(coladdr + scrollx[1]) & 0xff]);
 
 					if (bg1pix & 0xff)
 						dst[ex + 0] = bg1pix & 0xff;
@@ -604,8 +604,8 @@ static INT32 ScanlineRender(INT32 scanline, TMS34010Display *info)
 			for (INT32 x = info->heblnk; x < info->hsblnk; x += 2, coladdr++)
 			{
 				INT32 ex = x - info->heblnk;
-				UINT16 bg0pix = bg0_base[(coladdr + scrollx[0]) & 0xff];
-				UINT16 bg1pix = bg1_base[(coladdr + scrollx[1]) & 0xff];
+				UINT16 bg0pix = BURN_ENDIAN_SWAP_INT16(bg0_base[(coladdr + scrollx[0]) & 0xff]);
+				UINT16 bg1pix = BURN_ENDIAN_SWAP_INT16(bg1_base[(coladdr + scrollx[1]) & 0xff]);
 				UINT8 sprpix = spr_base[coladdr & 0xff];
 
 				if (bg1pix & 0x80)

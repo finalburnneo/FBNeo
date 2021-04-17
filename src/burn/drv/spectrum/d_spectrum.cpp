@@ -11882,26 +11882,26 @@ struct BurnDriver BurnSpecStarwars = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Action Force
+// Action Force (48K)
 
 static struct BurnRomInfo SpecActionforceRomDesc[] = {
 	{ "Action Force (1987)(Virgin Games).tap", 47303, 0x3ed87428, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecActionforce, SpecActionforce, Spec128)
+STDROMPICKEXT(SpecActionforce, SpecActionforce, Spectrum)
 STD_ROM_FN(SpecActionforce)
 
 struct BurnDriver BurnSpecActionforce = {
-	"spec_actionforce", NULL, "spec_spec128", NULL, "1987",
-	"Action Force\0", NULL, "Virgin Games", "ZX Spectrum",
+	"spec_actionforce", NULL, "spec_spectrum", NULL, "1987",
+	"Action Force (48K)\0", NULL, "Virgin Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecActionforceRomInfo, SpecActionforceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Action Force II
+// Action Force II (128K)
 
 static struct BurnRomInfo Specactionforce2RomDesc[] = {
 	{ "Action Force II (1988)(Virgin Games).tap", 46813, 0x3d4139b7, BRF_ESS | BRF_PRG },
@@ -11912,9 +11912,9 @@ STD_ROM_FN(Specactionforce2)
 
 struct BurnDriver BurnSpecactionforce2 = {
 	"spec_actionforce2", NULL, "spec_spec128", NULL, "1988",
-	"Action Force II\0", NULL, "Virgin Games", "ZX Spectrum",
+	"Action Force II (128K)\0", "On black screen press SPACE to begin", "Virgin Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, Specactionforce2RomInfo, Specactionforce2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -11971,7 +11971,7 @@ struct BurnDriver BurnSpecranarama = {
 	"spec_ranarama", NULL, "spec_spectrum", NULL, "1987",
 	"Ranarama (48K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecranaramaRomInfo, SpecranaramaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -11990,7 +11990,7 @@ struct BurnDriver BurnSpeczynaps = {
 	"spec_zynaps", NULL, "spec_spec128", NULL, "1987",
 	"Zynaps\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
 	SpectrumGetZipName, SpeczynapsRomInfo, SpeczynapsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -12009,13 +12009,13 @@ struct BurnDriver BurnSpecuridium = {
 	"spec_uridium", NULL, "spec_spec128", NULL, "1986",
 	"Uridium\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
 	SpectrumGetZipName, SpecuridiumRomInfo, SpecuridiumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Netherworld
+// Netherworld (128K)
 
 static struct BurnRomInfo SpecnetherworldRomDesc[] = {
 	{ "Netherworld (1988)(Hewson Consultants).tap", 44343, 0x48db7496, BRF_ESS | BRF_PRG },
@@ -12026,15 +12026,15 @@ STD_ROM_FN(Specnetherworld)
 
 struct BurnDriver BurnSpecnetherworld = {
 	"spec_netherworld", NULL, "spec_spec128", NULL, "1988",
-	"Netherworld\0", NULL, "Hewson Consultants", "ZX Spectrum",
+	"Netherworld (128K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, SpecnetherworldRomInfo, SpecnetherworldRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecnetherworldRomInfo, SpecnetherworldRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Marauder
+// Marauder (128K)
 
 static struct BurnRomInfo SpecmarauderRomDesc[] = {
 	{ "Marauder (1988)(Hewson Consultants).tap", 54339, 0xcbd7f723, BRF_ESS | BRF_PRG },
@@ -12045,9 +12045,9 @@ STD_ROM_FN(Specmarauder)
 
 struct BurnDriver BurnSpecmarauder = {
 	"spec_marauder", NULL, "spec_spec128", NULL, "1988",
-	"Marauder\0", NULL, "Hewson Consultants", "ZX Spectrum",
+	"Marauder (128K)\0", NULL, "Hewson Consultants", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecmarauderRomInfo, SpecmarauderRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -13421,7 +13421,7 @@ struct BurnDriver BurnSpecHumankillmachine = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Hypsys - Part 1
+// Hypsys (48K) - Part 1
 
 static struct BurnRomInfo SpecHypsys1RomDesc[] = {
 	{ "Hypsys - Part 1 (1989)(Dro Soft).tap", 49162, 0x0d76e3f1, BRF_ESS | BRF_PRG },
@@ -13440,22 +13440,22 @@ struct BurnDriver BurnSpecHypsys1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Hypsys - Part 2
+// Hypsys (48K) - Part 2
 
 static struct BurnRomInfo SpecHypsys2RomDesc[] = {
 	{ "Hypsys - Part 2 (1989)(Dro Soft).tap", 49809, 0x97b3d2d9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecHypsys2, SpecHypsys2, Spec128)
+STDROMPICKEXT(SpecHypsys2, SpecHypsys2, Spectrum)
 STD_ROM_FN(SpecHypsys2)
 
 struct BurnDriver BurnSpecHypsys2 = {
-	"spec_hypsys2", "spec_hypsys1", "spec_spec128", NULL, "1989",
+	"spec_hypsys2", "spec_hypsys1", "spec_spectrum", NULL, "1989",
 	"Hypsys (48K) - Part 2\0", NULL, "Dro Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecHypsys2RomInfo, SpecHypsys2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -18532,26 +18532,26 @@ struct BurnDriver BurnSpecYogibear = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Yogi's Great Escape
+// Yogi's Great Escape (48K)
 
 static struct BurnRomInfo SpecYogigreatescapeRomDesc[] = {
 	{ "Yogi's Great Escape (1990)(Hi-Tec).tap", 54731, 0xd6afad15, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecYogigreatescape, SpecYogigreatescape, Spec128)
+STDROMPICKEXT(SpecYogigreatescape, SpecYogigreatescape, Spectrum)
 STD_ROM_FN(SpecYogigreatescape)
 
 struct BurnDriver BurnSpecYogigreatescape = {
-	"spec_yogigreatescape", NULL, "spec_spec128", NULL, "1990",
-	"Yogi's Great Escape\0", NULL, "Hi-Tec", "ZX Spectrum",
+	"spec_yogigreatescape", NULL, "spec_spectrum", NULL, "1990",
+	"Yogi's Great Escape (48K)\0", NULL, "Hi-Tec", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecYogigreatescapeRomInfo, SpecYogigreatescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Yogi Bear and Friends - The Greed Monster
+// Yogi Bear and Friends - The Greed Monster (128K)
 
 static struct BurnRomInfo SpecYogigreedmonsterRomDesc[] = {
 	{ "Yogi Bear and Friends - The Greed Monster (1990)(Hi-Tec).tap", 56556, 0x601b7f1f, BRF_ESS | BRF_PRG },
@@ -18562,7 +18562,7 @@ STD_ROM_FN(SpecYogigreedmonster)
 
 struct BurnDriver BurnSpecYogigreedmonster = {
 	"spec_yogigreedmonster", NULL, "spec_spec128", NULL, "1990",
-	"Yogi Bear and Friends - The Greed Monster\0", NULL, "Hi-Tec", "ZX Spectrum",
+	"Yogi Bear and Friends - The Greed Monster (128K)\0", NULL, "Hi-Tec", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecYogigreedmonsterRomInfo, SpecYogigreedmonsterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

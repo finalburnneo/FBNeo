@@ -24,9 +24,7 @@ FBNEO_DEFINES :=
 
 include $(LOCAL_PATH)/../Makefile.common
 
-# 2021-04-16 : i believe filestream is trolling again, and might be playing its part with this android
-#              (ANR?) nightmare issue with kof2003/svc/mslug5, so let's see if disabling it would help
-COMMON_FLAGS := -DUSE_SPEEDHACKS -D__LIBRETRO__ -DANDROID -DSKIP_STDIO_REDEFINES -Wno-write-strings -DLSB_FIRST $(FBNEO_DEFINES)
+COMMON_FLAGS := -DUSE_SPEEDHACKS -D__LIBRETRO__ -DANDROID -Wno-write-strings -DLSB_FIRST $(FBNEO_DEFINES)
 
 # Build shared library including static C module
 include $(CLEAR_VARS)

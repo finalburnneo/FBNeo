@@ -3860,8 +3860,17 @@ static void __fastcall OpwolfZ80Write(UINT16 a, UINT8 d)
 			return;
 		}
 
-		case 0xd000:
+		case 0xd000: {
+			MSM5205SetLeftVolume(0, (double)((double)d / 256) - 0.10);
+			MSM5205SetLeftVolume(1, (double)((double)d / 256) - 0.10);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, (double)((double)d / 256), BURN_SND_ROUTE_LEFT);
+			return;
+		}
+
 		case 0xe000: {
+			MSM5205SetRightVolume(0, (double)((double)d / 256) - 0.10);
+			MSM5205SetRightVolume(1, (double)((double)d / 256) - 0.10);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, (double)((double)d / 256), BURN_SND_ROUTE_RIGHT);
 			return;
 		}
 	}
@@ -4643,13 +4652,14 @@ static INT32 OpwolfInit()
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
-	MSM5205SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
+	MSM5205SetSeperateVolumes(0, 1);
+	MSM5205SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -4763,13 +4773,14 @@ static INT32 OpwolfbInit()
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
-	MSM5205SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
+	MSM5205SetSeperateVolumes(0, 1);
+	MSM5205SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

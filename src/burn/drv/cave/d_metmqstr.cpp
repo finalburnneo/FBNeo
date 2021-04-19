@@ -276,8 +276,8 @@ void __fastcall metmqstrZOut(UINT16 nAddress, UINT8 nValue)
 			DrvOkiBank1_1 = (nValue >> 0) & 0x07;
 			DrvOkiBank1_2 = (nValue >> 4) & 0x07;
 			
-			memcpy(MSM6295ROM + 0x000000, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_1, 0x20000);
-			memcpy(MSM6295ROM + 0x020000, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_2, 0x20000);
+			MSM6295SetBank(0, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_1, 0x00000, 0x1ffff);
+			MSM6295SetBank(0, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_2, 0x20000, 0x3ffff);
 			return;
 		}
 		
@@ -290,8 +290,8 @@ void __fastcall metmqstrZOut(UINT16 nAddress, UINT8 nValue)
 			DrvOkiBank2_1 = (nValue >> 0) & 0x07;
 			DrvOkiBank2_2 = (nValue >> 4) & 0x07;
 			
-			memcpy(MSM6295ROM + 0x100000, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_1, 0x20000);
-			memcpy(MSM6295ROM + 0x120000, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_2, 0x20000);
+			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_1, 0x00000, 0x1ffff);
+			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_2, 0x20000, 0x3ffff);
 			return;
 		}
 
@@ -361,6 +361,8 @@ static INT32 DrvDoReset()
 	
 	BurnYM2151Reset();
 	MSM6295Reset();
+	MSM6295SetBank(0, MSM6295ROMSrc1, 0x00000, 0x3ffff);
+	MSM6295SetBank(1, MSM6295ROMSrc2, 0x00000, 0x3ffff);
 
 	EEPROMReset();
 	
@@ -525,9 +527,8 @@ static INT32 MemIndex()
 	CaveTileROM[0]	= Next; Next += 0x400000;		// Tile layer 0
 	CaveTileROM[1]	= Next; Next += 0x400000;		// Tile layer 1
 	CaveTileROM[2]	= Next; Next += 0x400000;		// Tile layer 2
-	MSM6295ROM		= Next; Next += 0x140000;
-	MSM6295ROMSrc1		= Next; Next += 0x200000;
-	MSM6295ROMSrc2		= Next; Next += 0x200000;
+	MSM6295ROMSrc1	= Next; Next += 0x200000;
+	MSM6295ROMSrc2	= Next; Next += 0x200000;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x018000;		// CPU #0 work RAM
 	RamZ80			= Next; Next += 0x002000;
@@ -643,11 +644,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetMapArea(0x4000, 0x7FFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
 			ZetClose();
 			
-			memcpy(MSM6295ROM + 0x000000, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_1, 0x20000);
-			memcpy(MSM6295ROM + 0x020000, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_2, 0x20000);
-			
-			memcpy(MSM6295ROM + 0x100000, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_1, 0x20000);
-			memcpy(MSM6295ROM + 0x120000, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_2, 0x20000);
+			MSM6295SetBank(0, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_1, 0x00000, 0x1ffff);
+			MSM6295SetBank(0, MSM6295ROMSrc1 + 0x20000 * DrvOkiBank1_2, 0x20000, 0x3ffff);
+			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_1, 0x00000, 0x1ffff);
+			MSM6295SetBank(1, MSM6295ROMSrc2 + 0x20000 * DrvOkiBank2_2, 0x20000, 0x3ffff);
 
 			CaveRecalcPalette = 1;
 		}
@@ -749,16 +749,14 @@ static INT32 DrvInit()
 	
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.20, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.20, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 	
-	memcpy(MSM6295ROM, MSM6295ROMSrc1, 0x40000);
-	memcpy(MSM6295ROM + 0x100000, MSM6295ROMSrc2, 0x40000);
 	MSM6295Init(0, 2000000 / 132, 1);
 	MSM6295Init(1, 2000000 / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
-	
+	MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.25, BURN_SND_ROUTE_BOTH);
+
 	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine

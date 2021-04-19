@@ -2794,8 +2794,8 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
     AY8910SetBuffered(M6502TotalCycles, 510000);
 
 	GenericTilesInit();

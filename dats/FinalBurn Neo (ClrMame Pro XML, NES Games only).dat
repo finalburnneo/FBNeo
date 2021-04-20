@@ -11751,8 +11751,8 @@
 	<game name="spacegulls">
 		<description>Spacegulls (HB) [Homebrew]</description>
 		<year>2021</year>
-		<manufacturer>miau</manufacturer>
-		<rom name="Spacegulls (HB)(2021)(Miau).nes" size="65552" crc="35fdd434"/>
+		<manufacturer>Morphcat Games</manufacturer>
+		<rom name="Spacegulls (HB)(2021)(Morphcat Games).nes" size="65552" crc="539f87d4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

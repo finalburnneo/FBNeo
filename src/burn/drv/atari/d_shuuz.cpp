@@ -97,7 +97,7 @@ STDDIPINFO(Shuuz2)
 static void __fastcall shuuz_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffc00) == 0x3fd000) {
-		*((UINT16*)(DrvSprRAM + (address & 0x3fe))) = data;
+		*((UINT16*)(DrvSprRAM + (address & 0x3fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0x1ff, data);
 		return;
 	}
@@ -123,7 +123,7 @@ static void __fastcall shuuz_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffc00) == 0x3fd000) {
 		DrvSprRAM[(address & 0x3ff) ^ 1] = data;
-		AtariMoWrite(0, (address / 2) & 0x1ff, *((UINT16*)(DrvSprRAM + (address & 0x3fe))));
+		AtariMoWrite(0, (address / 2) & 0x1ff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvSprRAM + (address & 0x3fe)))));
 		return;
 	}
 
@@ -539,8 +539,8 @@ static INT32 DrvFrame()
 
 		if (i == 261) {
 			for (INT32 e = 0; e < 0x80; e+=2) {
-				DrvEOFData[e/2] = SekReadWord(0x3f5f00 + e);
-				atarimo_0_slipram[e/2] = SekReadWord(0x3f5f80 + e);
+				DrvEOFData[e/2] = BURN_ENDIAN_SWAP_INT16(SekReadWord(0x3f5f00 + e));
+				atarimo_0_slipram[e/2] = BURN_ENDIAN_SWAP_INT16(SekReadWord(0x3f5f80 + e));
 			}
 			AtariVADEOFUpdate(DrvEOFData);
 		}

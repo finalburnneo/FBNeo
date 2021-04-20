@@ -144,7 +144,7 @@ static void __fastcall atarig1_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0xff0000 && address <= 0xff3000) {
-		*((UINT16*)(DrvRLERAM + (address & 0x3ffe))) = data;
+		*((UINT16*)(DrvRLERAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		INT32 moaddress = (address & 0x3fff) / 2;
 		if (moaddress < 0x800)
 			atarirle_0_spriteram_w(moaddress);
@@ -324,7 +324,7 @@ static UINT8 __fastcall atarig1_main_read_byte(UINT32 address)
 
 static tilemap_callback( bg )
 {
-	UINT16 data = *((UINT16*)(DrvPfRAM + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM + (offs * 2))));
 
 	INT32 code = (pf_tile_bank << 12) | (data & 0xfff);
 
@@ -333,7 +333,7 @@ static tilemap_callback( bg )
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + (offs * 2))));
 
 	TILE_SET_INFO(1, data, data >> 12, (data >> 15) ? TILE_OPAQUE : 0);
 }
@@ -657,8 +657,8 @@ static void draw_background()
 	{
 		INT32 offs = ((i / 8) * 64) + 48 + ((i & 7) * 2);
 
-		UINT16 word0 = alpha[offs+0];
-		UINT16 word1 = alpha[offs+1];
+		UINT16 word0 = BURN_ENDIAN_SWAP_INT16(alpha[offs+0]);
+		UINT16 word1 = BURN_ENDIAN_SWAP_INT16(alpha[offs+1]);
 
 		if (word0 & 0x8000)
 		{
@@ -693,10 +693,10 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0xc00/2; i++)
 	{
-		INT32 n = p[i] >> 15;
-		UINT8 r = ((p[i] >> 9) & 0x3e) | n;
-		UINT8 g = ((p[i] >> 4) & 0x3e) | n;
-		UINT8 b = ((p[i] << 1) & 0x3e) | n;
+		INT32 n = BURN_ENDIAN_SWAP_INT16(p[i]) >> 15;
+		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 9) & 0x3e) | n;
+		UINT8 g = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0x3e) | n;
+		UINT8 b = ((BURN_ENDIAN_SWAP_INT16(p[i]) << 1) & 0x3e) | n;
 
 		r = (r << 2) | (r >> 4);
 		g = (g << 2) | (g >> 4);

@@ -145,7 +145,7 @@ static void latch_write(UINT16 data)
 static void __fastcall eprom_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffe000) == 0x3f2000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address & 0x1fff) >> 1, data);
 		return;
 	}
@@ -157,10 +157,10 @@ static void __fastcall eprom_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xfffc00) == 0x16cc00) {
 		UINT16 *ram = (UINT16*)DrvShareRAM;
-		if ((ram[(address & 0xfffe)/2] & 0xff00) != (data & 0xff00) && address == 0x16cc00) {
+		if ((BURN_ENDIAN_SWAP_INT16(ram[(address & 0xfffe)/2]) & 0xff00) != (data & 0xff00) && address == 0x16cc00) {
 			SekRunEnd();
 		}
-		ram[(address & 0xfffe)/2] = data;
+		ram[(address & 0xfffe)/2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -194,7 +194,7 @@ static void __fastcall eprom_main_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0xffe000) == 0x3f2000) {
 		DrvMobRAM[(address & 0x1fff)^1] = data;
 		if (address&1)
-			AtariMoWrite(0, (address & 0x1fff) >> 1, *((UINT16*)(DrvMobRAM + (address & 0x1ffe))));
+			AtariMoWrite(0, (address & 0x1fff) >> 1, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x1ffe)))));
 		return;
 	}
 
@@ -301,7 +301,7 @@ static UINT8 __fastcall eprom_main_read_byte(UINT32 address)
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + offs * 2));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + offs * 2)));
 
 	INT32 color = ((data >> 10) & 0xf) | ((data >> 9) & 0x20);
 
@@ -310,8 +310,8 @@ static tilemap_callback( alpha )
 
 static tilemap_callback( eprbg )
 {
-	UINT16 data0 = *((UINT16*)(DrvPfRAM0 + offs * 2));
-	UINT16 data1 = *((UINT16*)(DrvPfRAM1 + offs * 2));
+	UINT16 data0 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM0 + offs * 2)));
+	UINT16 data1 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM1 + offs * 2)));
 
 	TILE_SET_INFO(0, data0, data1 >> 8, TILE_FLIPYX(data0 >> 15)); // color += 0x10, 
 }
@@ -559,7 +559,7 @@ static void DrvPaletteUpdate()
 
 	for (INT32 c = 0; c < 0x1000/2; c++)
 	{
-		INT32 data = p[c];
+		INT32 data = BURN_ENDIAN_SWAP_INT16(p[c]);
 
 		INT32 i = (((data >> 12) & 15) + 1) * (4 - screen_intensity);
 		if (i < 0) i = 0;
@@ -729,10 +729,10 @@ static inline void video_update()
 {
 	UINT16 *scr = (UINT16*)(DrvAlphaRAM + 0xf00);
 
-	GenericTilemapSetScrollX(0, (scr[0] >> 7) & 0x1ff);
-	GenericTilemapSetScrollY(0, (scr[1] >> 7) & 0x1ff);
-	atarimo_set_xscroll(0, (scr[0] >> 7) & 0x1ff);
-	atarimo_set_yscroll(0, (scr[1] >> 7) & 0x1ff);
+	GenericTilemapSetScrollX(0, (BURN_ENDIAN_SWAP_INT16(scr[0]) >> 7) & 0x1ff);
+	GenericTilemapSetScrollY(0, (BURN_ENDIAN_SWAP_INT16(scr[1]) >> 7) & 0x1ff);
+	atarimo_set_xscroll(0, (BURN_ENDIAN_SWAP_INT16(scr[0]) >> 7) & 0x1ff);
+	atarimo_set_yscroll(0, (BURN_ENDIAN_SWAP_INT16(scr[1]) >> 7) & 0x1ff);
 }
 
 static INT32 DrvFrame()

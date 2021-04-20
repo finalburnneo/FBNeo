@@ -168,6 +168,9 @@ void generateDats()
 	sprintf(filename, "%sFBNeo_-_Neo_Geo_Pocket.dat", SDL_GetPrefPath("fbneo", "dats"));
 	create_datfile(filename, DAT_NGP_ONLY);
 
+	sprintf(filename, "%sFBNeo_-_Fairchild_Channel_F.dat", SDL_GetPrefPath("fbneo", "dats"));
+	create_datfile(filename, DAT_CHANNELF_ONLY);
+
 #else
 	printf("Creating fbneo dats\n");
 
@@ -219,6 +222,9 @@ void generateDats()
 
 	sprintf(filename, "FBNeo_-_Neo_Geo_Pocket.dat");
 	create_datfile(filename, DAT_NGP_ONLY);
+
+	sprintf(filename, "FBNeo_-_Fairchild_Channel_F.dat");
+	create_datfile(filename, DAT_CHANNELF_ONLY);
 #endif
 }
 

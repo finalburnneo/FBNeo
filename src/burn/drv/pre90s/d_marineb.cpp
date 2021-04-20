@@ -400,12 +400,12 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM	= Next; Next += 0x10000;
-	DrvColPROM    	= Next; Next += 0x200;
-	DrvGfxROM0    	= Next; Next += 1024 * 8 * 8;
-	DrvGfxROM1   	= Next; Next += 64*2 * 16 * 16;
-	DrvGfxROM2    	= Next; Next += 64*2 * 32 * 32;
+	DrvColPROM	= Next; Next += 0x200;
+	DrvGfxROM0	= Next; Next += 1024 * 8 * 8;
+	DrvGfxROM1	= Next; Next += 64*2 * 16 * 16;
+	DrvGfxROM2	= Next; Next += 64*2 * 32 * 32;
 
-	DrvPalette  	= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
 
 	RamStart	= Next;
 
@@ -795,14 +795,24 @@ static INT32 HopproboLoadRoms()
 	return 0;
 }
 
+static void w0(UINT32, UINT32 data)
+{
+	//bprintf(0, _T("w0 %x\n"));
+}
+
+static void w2(UINT32, UINT32 data)
+{
+	// bcruzm12
+	// explosion:
+	// 2 - enemy
+	// 6 - player (louder + delay/feedback?)
+	//bprintf(0, _T("w2 %x\n"));
+}
+
+
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	switch(hardware) {
 		case MARINEB:
@@ -862,7 +872,8 @@ static INT32 DrvInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-
+	AY8910SetPorts(0, NULL, NULL, w0, NULL);
+	AY8910SetPorts(1, NULL, NULL, w2, NULL);
 	GenericTilesInit();
 	DrvDoReset();
 
@@ -876,7 +887,7 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	CleanAndInitStuff();
 
@@ -1580,34 +1591,33 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	DrvInput[0] = DrvInput[1] = 0;
-	if (hardware != WANTED && hardware != BCRUZM12)
-		 DrvInput[2] = 0;
+	memset(DrvInput, 0, (hardware != WANTED && hardware != BCRUZM12) ? 3 : 2);
 
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] |= (DrvInputPort1[i] & 1) << i;
-		if (hardware != WANTED && hardware != BCRUZM12)
-			DrvInput[2] |= (DrvInputPort2[i] & 1) << i;
+		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
+		if (hardware != WANTED && hardware != BCRUZM12) { // used as dip2
+			DrvInput[2] ^= (DrvInputPort2[i] & 1) << i;
+		}
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[1] = { 3072000 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(3072000 / 60 / nInterleave);
+		CPU_RUN(0, Zet);
 
-		if (i == nInterleave - 1) {
-			if (DrvInterruptEnable) {
-				switch (hardware) {
-					case WANTED:
-					case BCRUZM12:
-						ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-						break;
-					default:
-						ZetNmi();
-						break;
-				}
+		if (i == nInterleave - 1 && DrvInterruptEnable) {
+			switch (hardware) {
+				case WANTED:
+				case BCRUZM12:
+					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+					break;
+				default:
+					ZetNmi();
+					break;
 			}
 		}
 	}

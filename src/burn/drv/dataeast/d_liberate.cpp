@@ -572,8 +572,8 @@ static void DrvCommonInit(INT32 gfxsize, INT32 bgsplit)
 
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 1);
-	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.16, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.08, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.12, BURN_SND_ROUTE_BOTH);
     AY8910SetBuffered(M6502TotalCycles, 1500000);
 
 	GenericTilesInit();

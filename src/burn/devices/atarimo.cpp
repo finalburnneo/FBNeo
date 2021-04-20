@@ -722,7 +722,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 		/* otherwise, grab the SLIP and compute the bandrect */
 		if (mo->slipshift != 0)
 		{
-			link = (mo->slipram[band & mo->sliprammask] >> mo->linkmask.shift) & mo->linkmask.mask;
+			link = (BURN_ENDIAN_SWAP_INT16(mo->slipram[band & mo->sliprammask]) >> mo->linkmask.shift) & mo->linkmask.mask;
 
 			/* compute minimum Y and wrap around if necessary */
 			bandclip.min_y = ((band << mo->slipshift) - mo->yscroll + mo->slipoffset) & mo->bitmapymask;

@@ -173,7 +173,7 @@ static inline void soundcpuSync()
 static void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffe000) == 0x902000) {
-		*((UINT16*)(DrvMOSpriteRam + (a & 0x1ffe))) = d;
+		*((UINT16*)(DrvMOSpriteRam + (a & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(d);
 		AtariMoWrite(0, (a / 2) & 0xfff, d);
 		return;
 	}
@@ -234,7 +234,7 @@ static void __fastcall Gauntlet68KWriteByte(UINT32 a, UINT8 d)
 {
 	if ((a & 0xffe000) == 0x902000) {
 		DrvMOSpriteRam[(a & 0x1fff) ^ 1] = d;
-		AtariMoWrite(0, (a / 2) & 0xfff, *((UINT16*)(DrvMOSpriteRam + (a & 0x1ffe))));
+		AtariMoWrite(0, (a / 2) & 0xfff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMOSpriteRam + (a & 0x1ffe)))));
 		return;
 	}
 
@@ -422,7 +422,7 @@ static void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 
 static tilemap_callback( tx )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRam + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRam + (offs * 2))));
 
 	INT32 color = ((data >> 10) & 0xf) | ((data >> 9) & 0x20);
 
@@ -431,7 +431,7 @@ static tilemap_callback( tx )
 
 static tilemap_callback( bg )
 {
-	UINT16 data = *((UINT16*)(DrvPlayfieldRam + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPlayfieldRam + (offs * 2))));
 
 	INT32 code = (DrvTileBank * 0x1000) + (data & 0xfff);
 

@@ -121,9 +121,12 @@ struct tIniStruct {
 	TCHAR system[80];
 	TCHAR ini[MAX_PATH];
 	INT32 hw[8];
+	char gameinfotoken[80];
 };
 
 extern tIniStruct gamehw_cfg[];
+
+void GetHistoryDatHardwareToken(char *to_string);
 
 // inp_interface.cpp
 extern INT32 nAutoFireRate;

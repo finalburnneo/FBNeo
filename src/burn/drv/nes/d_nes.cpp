@@ -17716,7 +17716,7 @@ struct BurnDriver BurnDrvnes_blobquest = {
 };
 
 static struct BurnRomInfo nes_spacegullsRomDesc[] = {
-	{ "Spacegulls (HB)(2021)(Miau).nes",          65552, 0x35fdd434, BRF_ESS | BRF_PRG },
+	{ "Spacegulls (HB)(2021)(Morphcat Games).nes",          65552, 0x539f87d4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spacegulls)
@@ -17724,7 +17724,7 @@ STD_ROM_FN(nes_spacegulls)
 
 struct BurnDriver BurnDrvnes_spacegulls = {
 	"nes_spacegulls", NULL, NULL, NULL, "2021",
-	"Spacegulls (HB)\0", NULL, "miau", "Miscellaneous",
+	"Spacegulls (HB)\0", NULL, "Morphcat Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_spacegullsRomInfo, nes_spacegullsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

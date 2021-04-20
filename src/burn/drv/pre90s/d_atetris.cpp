@@ -328,14 +328,14 @@ static INT32 CommonInit(INT32 boot)
 	master_clock = boot ? (14745600 / 8) : (14318180 / 8);
 
 	if (is_Bootleg) { // Bootleg set 2 sound system
-		SN76496Init(0, master_clock, 0);
-		SN76496Init(1, master_clock, 1);
-		SN76496Init(2, master_clock, 1);
+		SN76496Init(0, master_clock / 2, 0);
+		SN76496Init(1, master_clock / 2, 1);
+		SN76496Init(2, master_clock / 2, 1);
 		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
 	} else {
-        PokeyInit(master_clock, 2, 1.00, 0);
+        PokeyInit(master_clock, 2, 0.45, 0);
         PokeyAllPotCallback(0, allpot0);
         PokeyAllPotCallback(1, allpot1);
 	}

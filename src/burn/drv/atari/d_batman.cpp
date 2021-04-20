@@ -106,7 +106,7 @@ static void __fastcall batman_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xefe000) == 0x2f6000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0xfff, data);
 		return;
 	}
@@ -141,7 +141,7 @@ static void __fastcall batman_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xefe000) == 0x2f6000 ) {
 		DrvMobRAM[(address & 0x1fff)^1] = data;
-		AtariMoWrite(0, (address / 2) & 0xfff, *((UINT16*)(DrvMobRAM + (address & 0x1ffe))));
+		AtariMoWrite(0, (address / 2) & 0xfff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x1ffe)))));
 		return;
 	}
 
@@ -259,7 +259,7 @@ static void palette_write(INT32 offset, UINT16 data)
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + offs * 2));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + offs * 2)));
 	int code = (data & 0x3ff);
 	if (data & 0x400) code += alpha_tile_bank * 0x400;
 

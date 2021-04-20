@@ -96,7 +96,7 @@ static void __fastcall xybots_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffc00) == 0xffac00) {
 		address = 0x1c00 + (address & 0x3fe);
-		*((UINT16*)(Drv68KRAM + address)) = data;
+		*((UINT16*)(Drv68KRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		if (address >= 0x1e00) {
 			AtariMoWrite(0, (address / 2) & 0xff, data);
 		}
@@ -134,7 +134,7 @@ static void __fastcall xybots_main_write_byte(UINT32 address, UINT8 data)
 		address = 0x1c00 + (address & 0x3ff);
 		Drv68KRAM[address^1] = data;
 		if (address >= 0x1e00) {
-			AtariMoWrite(0, (address / 2) & 0xff, *((UINT16*)(Drv68KRAM + (address & ~1))));
+			AtariMoWrite(0, (address / 2) & 0xff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KRAM + (address & ~1)))));
 		}
 		return;
 	}
@@ -212,14 +212,14 @@ static UINT8 __fastcall xybots_main_read_byte(UINT32 address)
 
 static tilemap_callback( alpha )
 {
-	INT32 data = *((UINT16*)(DrvAlphaRAM + offs * 2));
+	INT32 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + offs * 2)));
 
 	TILE_SET_INFO(2, data, data >> 12, (data & 0x8000) ? TILE_OPAQUE : 0);
 }
 
 static tilemap_callback( bg )
 {
-	INT32 data = *((UINT16*)(DrvPfRAM + offs * 2));
+	INT32 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM + offs * 2)));
 
 	TILE_SET_INFO(0, data, data >> 11, TILE_FLIPYX(data >> 15));
 }

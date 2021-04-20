@@ -105,7 +105,7 @@ static void latch_write(UINT16 data)
 static void __fastcall thunderj_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffe000) == 0x3f6000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0xfff, data);
 		return;
 	}
@@ -140,7 +140,7 @@ static void __fastcall thunderj_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xffe000) == 0x3f6000) {
 		DrvMobRAM[(address & 0x1fff)^1] = data;
-		AtariMoWrite(0, (address / 2) & 0xfff, *((UINT16*)(DrvMobRAM + (address & 0x1ffe))));
+		AtariMoWrite(0, (address / 2) & 0xfff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x1ffe)))));
 		return;
 	}
 
@@ -237,7 +237,7 @@ static UINT8 __fastcall thunderj_main_read_byte(UINT32 address)
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + offs * 2));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + offs * 2)));
 	INT32 code = (data & 0x1ff);
 	if (data & 0x200) code += alpha_tile_bank * 0x200;
 	INT32 color = ((data >> 10) & 0xf) | ((data >> 9) & 0x20);

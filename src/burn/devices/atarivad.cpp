@@ -31,16 +31,16 @@ static void (*atari_palette_write)(INT32 offset, UINT16 data) = NULL;
 
 static tilemap_callback( bg ) // offtwall // shuuz
 {
-	UINT16 code = pf_data[0][offs];
-	UINT16 color = pf_data[2][offs] >> 8;
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(pf_data[0][offs]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(pf_data[2][offs]) >> 8;
 
 	TILE_SET_INFO(0, code, color, TILE_FLIPYX(code >> 15));
 }
 
 static tilemap_callback( bg0 )
 {
-	UINT16 code = pf_data[0][offs];
-	UINT16 color = pf_data[2][offs];
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(pf_data[0][offs]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(pf_data[2][offs]);
 
 	TILE_SET_INFO(0, code, color, TILE_FLIPYX(code >> 15) | TILE_GROUP((color >> 4) & 3));
 //	*category = (color >> 4) & 3;
@@ -48,8 +48,8 @@ static tilemap_callback( bg0 )
 
 static tilemap_callback( bg1 )
 {
-	UINT16 code = pf_data[1][offs];
-	UINT16 color = pf_data[2][offs] >> 8;
+	UINT16 code = BURN_ENDIAN_SWAP_INT16(pf_data[1][offs]);
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(pf_data[2][offs]) >> 8;
 
 	TILE_SET_INFO(1, code, color, TILE_FLIPYX(code >> 15) | TILE_GROUP((color >> 4) & 3));
 //	*category = (color >> 4) & 3;
@@ -95,7 +95,7 @@ void AtariVADRecalcPalette()
 {
 	if (atari_palette_write) {
 		for (INT32 i = 0; i < 0x7ff; i++) {
-			UINT16 pal = *((UINT16*)(palette_ram + (i << 1)));
+			UINT16 pal = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(palette_ram + (i << 1))));
 			atari_palette_write(i, pal);
 		}
 	}
@@ -108,7 +108,7 @@ static void __fastcall atari_vad_write_word(UINT32 address, UINT16 data)
 //	bprintf (0, _T("VAD,WW: %5.5x, %4.4x\n"), address, data);
 
 	if ((address & 0xff000) == 0x00000) {
-		*((UINT16*)(palette_ram + address)) = data;
+		*((UINT16*)(palette_ram + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		if (atari_palette_write) {
 			atari_palette_write(address / 2, data);
 		}
@@ -166,27 +166,27 @@ static void __fastcall atari_vad_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xfe000) == 0x10000) { // playfield2_latched_msb_w
 		address = (address & 0x1ffe) / 2;
-		pf_data[1][address] = data;
+		pf_data[1][address] = BURN_ENDIAN_SWAP_INT16(data);
 		if (playfield_latched) {
-			pf_data[2][address] = (pf_data[2][address] & 0x00ff) | (control_data[0x1c] & 0xff00);
+			pf_data[2][address] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(pf_data[2][address]) & 0x00ff) | (control_data[0x1c] & 0xff00));
 		}
 		return;
 	}
 
 	if ((address & 0xfe000) == 0x12000) { // playfield_latched_lsb_w
 		address = (address & 0x1ffe) / 2;
-		pf_data[0][address] = data;
+		pf_data[0][address] = BURN_ENDIAN_SWAP_INT16(data);
 		if (playfield_latched) {
-			pf_data[2][address] = (pf_data[2][address] & 0xff00) | (control_data[0x1d] & 0x00ff);
+			pf_data[2][address] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(pf_data[2][address]) & 0xff00) | (control_data[0x1d] & 0x00ff));
 		}
 		return;
 	}
 
 	if ((address & 0xfe000) == 0x14000) { // playfield_latched_msb_w
 		address = (address & 0x1ffe) / 2;
-		pf_data[0][address] = data;
+		pf_data[0][address] = BURN_ENDIAN_SWAP_INT16(data);
 		if (playfield_latched) {
-			pf_data[2][address] = (pf_data[2][address] & 0x00ff) | (control_data[0x1c] & 0xff00);
+			pf_data[2][address] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(pf_data[2][address]) & 0x00ff) | (control_data[0x1c] & 0xff00));
 		}
 		return;
 	}
@@ -337,7 +337,7 @@ void AtariVADEOFUpdate(UINT16 *eof_data)
 {
 	for (INT32 i = 0; i < 0x1f; i++) {
 		if (eof_data[i]) {
-			atari_vad_write_word(0x0ffc0 + (i*2), eof_data[i]);
+			atari_vad_write_word(0x0ffc0 + (i*2), BURN_ENDIAN_SWAP_INT16(eof_data[i]));
 		}
 	}
 
@@ -360,8 +360,8 @@ void AtariVADTileRowUpdate(INT32 scanline, UINT16 *alphamap_ram)
 	if ((scanline < nScreenHeight) && (control_data[0x0a] & 0x2000))
 	{
 		INT32 offset = ((scanline / 8) * 64) + 48 + (2 * (scanline & 7));
-		INT32 data0 = alphamap_ram[offset];
-		INT32 data1 = alphamap_ram[offset+1];
+		INT32 data0 = BURN_ENDIAN_SWAP_INT16(alphamap_ram[offset]);
+		INT32 data1 = BURN_ENDIAN_SWAP_INT16(alphamap_ram[offset+1]);
 
 		if (scanline > 0 && ((data0 | data1) & 0xf) && pBurnDraw)
 		{

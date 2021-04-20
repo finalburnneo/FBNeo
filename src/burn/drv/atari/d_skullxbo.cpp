@@ -111,14 +111,14 @@ static void update_interrupts()
 static void __fastcall skullxbo_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0xffd000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x0ffe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x0ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address & 0xfff) >> 1, data);
 		return;
 	}
 
 	if ((address & 0xffe000) == 0xff8000) {
-		*((UINT16*)(DrvPfRAM0 + (address & 0x1ffe))) = data;
-		*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) = (*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) & 0xff00) | (playfield_latch);
+		*((UINT16*)(DrvPfRAM0 + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
+		*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe)))) & 0xff00) | (playfield_latch));
 		return;
 	}
 
@@ -211,13 +211,13 @@ static void __fastcall skullxbo_main_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0xfff000) == 0xffd000) {
 		DrvMobRAM[(address & 0x0fff)^1] = data;
 		if (address&1)
-			AtariMoWrite(0, (address & 0xfff) >> 1, *((UINT16*)(DrvMobRAM + (address & 0x0ffe))));
+			AtariMoWrite(0, (address & 0xfff) >> 1, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x0ffe)))));
 		return;
 	}
 
 	if ((address & 0xffe000) == 0xff8000) {
 		DrvPfRAM0[(address & 0x1fff)^1] = data;
-		*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) = (*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) & 0xff00) | (playfield_latch);
+		*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM1 + (address & 0x1ffe)))) & 0xff00) | (playfield_latch));
 		return;
 	}
 
@@ -351,15 +351,15 @@ static UINT8 __fastcall skullxbo_main_read_byte(UINT32 address)
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + (offs * 2))));
 
 	TILE_SET_INFO(2, data ^ 0x400, data >> 11, (data >> 15) ? TILE_OPAQUE : 0);
 }
 
 static tilemap_callback( bg )
 {
-	UINT16 data1 = *((UINT16*)(DrvPfRAM0 + (offs * 2)));
-	UINT16 data2 = *((UINT16*)(DrvPfRAM1 + (offs * 2)));
+	UINT16 data1 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM0 + (offs * 2))));
+	UINT16 data2 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM1 + (offs * 2))));
 
 	TILE_SET_INFO(1, data1, data2, TILE_FLIPYX(data1 >> 15));
 }
@@ -729,7 +729,7 @@ static void skullxbo_scanline_update()
 
 	for (INT32 x = 42; x < 64; x++)
 	{
-		UINT16 data = *base++;
+		UINT16 data = BURN_ENDIAN_SWAP_INT16(*base++);
 		UINT16 command = data & 0x000f;
 
 		if (command == 0x0d)
@@ -753,7 +753,7 @@ static void skullxbo_scanline_update()
 static void scanline_callback()
 {
 	INT32 offset = (scanline / 8) * 64 + 42;
-	UINT16 check = *((UINT16*)(DrvAlphaRAM + offset * 2));
+	UINT16 check = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + offset * 2)));
 
 	if (offset < 0x7c0 && (check & 0x8000))
 	{

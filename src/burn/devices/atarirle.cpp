@@ -328,7 +328,7 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 		const UINT16 *csbase = &mo->rombase[0x10000 * i];
 		int cursum = 0, j;
 		for (j = 0; j < 0x10000; j++) {
-			cursum += ((*csbase) & 0xff00) | ((*csbase) & 0x00ff);
+			cursum += BURN_ENDIAN_SWAP_INT16(((*csbase) & 0xff00) | ((*csbase) & 0x00ff));
 			csbase++;
 		}
 		mo->checksums[i] = cursum;
@@ -545,7 +545,7 @@ void atarirle_0_spriteram_w(UINT32 offset)
 //	COMBINE_DATA(&atarirle_0_spriteram[offset]);
 
 	/* store a copy in our local spriteram */
-	atarirle[0].spriteram[entry].data[idx] = atarirle_0_spriteram[offset];
+	atarirle[0].spriteram[entry].data[idx] = BURN_ENDIAN_SWAP_INT16(atarirle_0_spriteram[offset]);
 	atarirle[0].is32bit = 0;
 }
 
@@ -660,7 +660,7 @@ int count_objects(const UINT16 *base, int length)
 	/* first determine the lowest address of all objects */
 	for (i = 0; i < lowest_address; i += 4)
 	{
-		int offset = ((base[i + 2] & 0xff) << 16) | base[i + 3];
+		int offset = ((BURN_ENDIAN_SWAP_INT16(base[i + 2]) & 0xff) << 16) | BURN_ENDIAN_SWAP_INT16(base[i + 3]);
 		//logerror("count_objects: i=%d offset=%08X\n", i, offset);
 		if (offset > i && offset < lowest_address)
 			lowest_address = offset;
@@ -688,16 +688,16 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 	const UINT16 *table;
 
 	/* look up the offset */
-	rledata->xoffs = (INT16)base[0];
-	rledata->yoffs = (INT16)base[1];
+	rledata->xoffs = BURN_ENDIAN_SWAP_INT16((INT16)base[0]);
+	rledata->yoffs = BURN_ENDIAN_SWAP_INT16((INT16)base[1]);
 
 	/* determine the depth and table */
-	flags = base[2];
+	flags = BURN_ENDIAN_SWAP_INT16(base[2]);
 	rledata->bpp = rle_bpp[(flags >> 8) & 7];
 	table = rledata->table = rle_table[(flags >> 8) & 7];
 
 	/* determine the starting offset */
-	offset = ((base[2] & 0xff) << 16) | base[3];
+	offset = ((BURN_ENDIAN_SWAP_INT16(base[2]) & 0xff) << 16) | BURN_ENDIAN_SWAP_INT16(base[3]);
 	rledata->data = base = (UINT16 *)&mo->rombase[offset];
 
 	/* make sure it's valid */
@@ -711,7 +711,7 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 	for (height = 0; height < 1024 && base < end; height++)
 	{
 		int tempwidth = 0;
-		int entry_count = *base++;
+		int entry_count = BURN_ENDIAN_SWAP_INT16(*base++);
 
 		/* if the high bit is set, assume we're inverted */
 		if (entry_count & 0x8000)
@@ -729,7 +729,7 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 		/* track the width */
 		while (entry_count-- && base < end)
 		{
-			int word = *base++;
+			int word = BURN_ENDIAN_SWAP_INT16(*base++);
 			int count, value;
 
 			/* decode the low byte first */
@@ -774,7 +774,7 @@ static void compute_checksum(struct atarirle_data *mo)
 	if (!mo->is32bit)
 	{
 		for (i = 0; i < reqsums; i++)
-			atarirle_0_spriteram[i] = mo->checksums[i];
+			atarirle_0_spriteram[i] = BURN_ENDIAN_SWAP_INT16(mo->checksums[i]);
 	}
 	else
 	{
@@ -1086,11 +1086,11 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 
 		/* loop until we hit the row we're on */
 		for ( ; current_row != (sourcey >> 16); current_row++)
-			row_start += 1 + *row_start;
+			row_start += 1 + BURN_ENDIAN_SWAP_INT16(*row_start);
 
 		/* grab our starting parameters from this row */
 		base = row_start;
-		entry_count = *base++;
+		entry_count = BURN_ENDIAN_SWAP_INT16(*base++);
 
 		/* non-clipped case */
 		if (!xclipped)
@@ -1098,7 +1098,7 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 			/* decode the pixels */
 			for (j = 0; j < entry_count; j++)
 			{
-				int word = *base++;
+				int word = BURN_ENDIAN_SWAP_INT16(*base++);
 				int count, value;
 
 				/* decode the low byte first */
@@ -1148,7 +1148,7 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 			/* decode the pixels */
 			for (j = 0; j < entry_count && dest <= end; j++)
 			{
-				int word = *base++;
+				int word = BURN_ENDIAN_SWAP_INT16(*base++);
 				int count, value;
 
 				/* decode the low byte first */
@@ -1275,11 +1275,11 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 
 		/* loop until we hit the row we're on */
 		for ( ; current_row != (sourcey >> 16); current_row++)
-			row_start += 1 + *row_start;
+			row_start += 1 + BURN_ENDIAN_SWAP_INT16(*row_start);
 
 		/* grab our starting parameters from this row */
 		base = row_start;
-		entry_count = *base++;
+		entry_count = BURN_ENDIAN_SWAP_INT16(*base++);
 
 		/* non-clipped case */
 		if (!xclipped)
@@ -1287,7 +1287,7 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 			/* decode the pixels */
 			for (j = 0; j < entry_count; j++)
 			{
-				int word = *base++;
+				int word = BURN_ENDIAN_SWAP_INT16(*base++);
 				int count, value;
 
 				/* decode the low byte first */
@@ -1337,7 +1337,7 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 			/* decode the pixels */
 			for (j = 0; j < entry_count && dest >= start; j++)
 			{
-				int word = *base++;
+				int word = BURN_ENDIAN_SWAP_INT16(*base++);
 				int count, value;
 
 				/* decode the low byte first */

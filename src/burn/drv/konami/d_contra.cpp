@@ -32,6 +32,9 @@ static UINT8 *DrvSprRAM;
 static UINT32 *DrvPalette;
 static UINT32 *Palette;
 static UINT8  DrvRecalc;
+
+static INT32 nExtraCycles;
+
 static UINT8 *pDrvSprRAM0;
 static UINT8 *pDrvSprRAM1;
 
@@ -204,6 +207,14 @@ void contra_bankswitch_w(INT32 data)
 	}
 }
 
+static void sound_sync()
+{
+	INT32 cyc = HD6309TotalCycles() - M6809TotalCycles();
+	if (cyc > 0) {
+		BurnTimerUpdate(M6809TotalCycles() + cyc);
+	}
+}
+
 UINT8 DrvContraHD6309ReadByte(UINT16 address)
 {
 	switch (address)
@@ -289,10 +300,12 @@ void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 		return;
 
 		case 0x001a:
-			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			sound_sync();
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x001c:
+			sound_sync();
 			soundlatch = data;
 		return;
 
@@ -334,6 +347,10 @@ void DrvContraM6809SoundWriteByte(UINT16 address, UINT8 data)
 		case 0x2000:
 		case 0x2001:
 			BurnYM2151Write(address & 1, data);
+		return;
+
+		case 0x4000:
+			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -432,6 +449,7 @@ static INT32 DrvDoReset()
 
 	soundlatch = 0;
 	nBankData = 0;
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -484,9 +502,10 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	M6809SetWriteHandler(DrvContraM6809SoundWriteByte);
 	M6809Close();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151Init(3579545, 1);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachM6809(3000000);
 
 	DrvDoReset();
 
@@ -758,11 +777,12 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 256;
-	
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	HD6309NewFrame();
+	M6809NewFrame();
 
 	{
 		DrvInputs[0] = DrvInputs[1] = DrvInputs[2] = 0xff;
@@ -780,29 +800,24 @@ static INT32 DrvFrame()
 		if ((DrvInputs[2] & 0x0c) == 0) DrvInputs[2] |= 0x0c;
 	}
 
-	INT32 nCyclesSegment = 0;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] =  { 12000000 / 60, 3000000 / 60 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] =  { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	HD6309Open(0);
 	M6809Open(0);
 
+	HD6309Idle(nExtraCycles);
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-		
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
+		CPU_RUN_SYNCINT(0, HD6309); // using _SYNCINT because we have to use _AUTO for vbl irq (_AUTO runs the cpu)
+
 		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02)) {
-			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO); // HOLD doesn't work (breaks title music), weird? -dink
 		}
 
-		nCurrentCPU = 1;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
+		CPU_RUN_TIMER(1);
 
 		if (pBurnSoundOut && i%16 == 15) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 16);
@@ -811,6 +826,8 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
+
+	nExtraCycles = HD6309TotalCycles() - nCyclesTotal[0];
 
 	M6809Close();
 	HD6309Close();
@@ -860,6 +877,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(nBankData);
+		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);

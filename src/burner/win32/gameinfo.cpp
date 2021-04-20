@@ -569,19 +569,29 @@ static int GameInfoInit()
 
 	FILE *fp = fopen(szFileName, "rt");
 	char Temp[10000];
+	char rom_token[255];
+	char DRIVER_NAME[255];
 	int inGame = 0;
 
 	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
+
+	GetHistoryDatHardwareToken(&rom_token[0]);
+	strcpy(DRIVER_NAME, BurnDrvGetTextA(DRV_NAME));
+
+	if (strncmp("$info=", rom_token, 6)) { // non-arcade game detected. (token not "$info=" !)
+		char *p = strchr(DRIVER_NAME, '_');
+		if (p) strcpy(DRIVER_NAME, p + 1); // change "nes_smb" -> "smb"
+	}
 
 	if (fp) {
 		while (!feof(fp)) {
 			char *Tokens;
 
 			fgets(Temp, 10000, fp);
-			if (!strncmp("$info=", Temp, 6)) {
+			if (!strncmp(rom_token, Temp, strlen(rom_token))) {
 				Tokens = strtok(Temp, "=,");
 				while (Tokens != NULL) {
-					if (!strcmp(Tokens, BurnDrvGetTextA(DRV_NAME))) {
+					if (!strcmp(Tokens, DRIVER_NAME)) {
 						inGame = 1;
 						break;
 					}

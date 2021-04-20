@@ -105,13 +105,13 @@ static void __fastcall blstroid_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfff000) == 0x805000) {
-		*((UINT16*)(DrvMobRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0x7ff, data);
 		return;
 	}
 
 	if ((address & 0xfffe00) == 0x800800) {
-		*((UINT16*)(DrvPriRAM + (address & 0x1fe))) = data;
+		*((UINT16*)(DrvPriRAM + (address & 0x1fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 	
@@ -161,7 +161,7 @@ static void __fastcall blstroid_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfff000) == 0x805000) {
 		DrvMobRAM[(address & 0xfff)^1] = data;
-		AtariMoWrite(0, (address / 2) & 0x7ff, *((UINT16*)(DrvMobRAM + (address & 0xffe))));
+		AtariMoWrite(0, (address / 2) & 0x7ff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0xffe)))));
 		return;
 	}
 
@@ -289,7 +289,7 @@ static UINT8 __fastcall blstroid_main_read_byte(UINT32 address)
 
 static tilemap_callback( bg )
 {
-	UINT16 data = *((UINT16*)(DrvPfRAM + offs * 2));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM + offs * 2)));
 
 	TILE_SET_INFO(0, data, data >> 13, 0);
 }
@@ -523,7 +523,7 @@ static void copy_sprites()
 			if (mo[x] != 0xffff)
 			{
 				INT32 priaddr = ((pf[x] & 8) << 4) | (pf[x] & 0x70) | ((mo[x] & 0xf0) >> 4);
-				if (pri[priaddr] & 1)
+				if (BURN_ENDIAN_SWAP_INT16(pri[priaddr]) & 1)
 					pf[x] = mo[x];
 				mo[x] = 0xffff; // clear
 			}

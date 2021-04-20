@@ -682,7 +682,8 @@ struct BurnDriver BurnDrvDogfgtu = {
 };
 
 
-// Dog-Fight (Japan)
+// But-ten Ohara's Suit-Cha Luck-a Dog-Fight (Japan)
+// 『バッテン・オハラのスチャラカ空中戦』//
 
 static struct BurnRomInfo dogfgtjRomDesc[] = {
 	{ "bx00.52",	0x2000, 0xe602a21c, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
@@ -718,7 +719,7 @@ STD_ROM_FN(dogfgtj)
 
 struct BurnDriver BurnDrvDogfgtj = {
 	"dogfgtj", "dogfgt", NULL, NULL, "1984",
-	"Dog-Fight (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	"But-ten Ohara's Suit-Cha Luck-a Dog-Fight (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, dogfgtjRomInfo, dogfgtjRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,

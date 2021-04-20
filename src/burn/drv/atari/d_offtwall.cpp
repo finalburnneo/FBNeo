@@ -119,7 +119,7 @@ static void __fastcall offtwall_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfff800) == 0x7fd000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address & 0x7fe)/2, data);
 		return;
 	}
@@ -158,7 +158,7 @@ static void __fastcall offtwall_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfff800) == 0x7fd000) {
 		DrvMobRAM[(address & 0x7ff)^1] = data;
-		AtariMoWrite(0, (address & 0x7fe)/2, *((UINT16*)(DrvMobRAM + (address & 0x7fe))));
+		AtariMoWrite(0, (address & 0x7fe)/2, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x7fe)))));
 		return;
 	}
 
@@ -207,7 +207,7 @@ static inline UINT16 checksum_read(INT32 offset)
 static inline UINT16 spritecache_count_read()
 {
 	INT32 prevpc = SekGetPC(-1);
-	INT32 oldword = *((UINT16*)(DrvMobRAM + 0xe42));
+	INT32 oldword = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + 0xe42)));
 
 	if (prevpc == 0x99f8 || prevpc == 0x9992)
 	{
@@ -216,20 +216,20 @@ static inline UINT16 spritecache_count_read()
 		INT32 width = 0;
 
 		for (INT32 i = 0; i < count; i++)
-			width += 1 + ((data[i * 4 + 1] >> 4) & 7);
+			width += 1 + ((BURN_ENDIAN_SWAP_INT16(data[i * 4 + 1]) >> 4) & 7);
 
 		if (width <= 38)
 		{
 			while (width <= 38)
 			{
-				data[count * 4 + 0] = (42 * 8) << 7;
-				data[count * 4 + 1] = ((30 * 8) << 7) | (7 << 4);
+				data[count * 4 + 0] = BURN_ENDIAN_SWAP_INT16((42 * 8) << 7);
+				data[count * 4 + 1] = BURN_ENDIAN_SWAP_INT16(((30 * 8) << 7) | (7 << 4));
 				data[count * 4 + 2] = 0;
 				width += 8;
 				count++;
 			}
 
-			*((UINT16*)(DrvMobRAM + 0xe42)) = (count << 8) | (oldword & 0xff);
+			*((UINT16*)(DrvMobRAM + 0xe42)) = BURN_ENDIAN_SWAP_INT16((count << 8) | (oldword & 0xff));
 		}
 	}
 
@@ -243,7 +243,7 @@ static UINT16 __fastcall offtwall_read_word(UINT32 address)
 			bank_offset = ((address - bankswitch_address_lo) / 2) & 3;
 		}
 
-		return *((UINT16*)(Drv68KROM + (address & 0x3fffe)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KROM + (address & 0x3fffe))));
 	}
 
 	if ((address & 0xff8000) == 0x038000) {
@@ -251,7 +251,7 @@ static UINT16 __fastcall offtwall_read_word(UINT32 address)
 			return checksum_read(address & 2);
 		}
 		INT32 offset = (bank_offset * 0x2000) + (address & 0x1ffe);
-		return *((UINT16*)(Drv68KROM + offset));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KROM + offset)));
 	}
 
 	if ((address & ~1) == unknown_prot_address) {

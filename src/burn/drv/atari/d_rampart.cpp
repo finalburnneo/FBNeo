@@ -166,7 +166,7 @@ static void __fastcall rampart_write_word(UINT32 address, UINT16 data)
 	if (address >= 0x220000 && address < 0x3e0000) return; // 220000-3bffff & 3c0800-3dffff NOP
 
 	if ((address & 0xfff800) == 0x3e0000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address & 0x7fe)/2, data);
 		return;
 	}
@@ -208,7 +208,7 @@ static void __fastcall rampart_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfff800) == 0x3e0000) {
 		DrvMobRAM[(address & 0x7ff)^1] = data;
-		AtariMoWrite(0, (address & 0x7fe)/2, *((UINT16*)(DrvMobRAM + (address & 0xffe))));
+		AtariMoWrite(0, (address & 0x7fe)/2, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0xffe)))));
 		return;
 	}
 
@@ -520,7 +520,7 @@ static void DrvPaletteUpdate()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 offs = 0; offs < 0x800/2; offs+=2)
 	{
-		UINT16 d = (p[offs] & 0xff00) | (p[offs+1] >> 8);
+		UINT16 d = BURN_ENDIAN_SWAP_INT16((p[offs] & 0xff00) | (p[offs+1] >> 8));
 		UINT8 i = d >> 15;
 		UINT8 r = ((d >> 9) & 0x3e) | i;
 		UINT8 g = ((d >> 4) & 0x3e) | i;

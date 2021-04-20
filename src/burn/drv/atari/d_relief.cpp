@@ -162,7 +162,7 @@ static void __fastcall relief_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfff800) == 0x3f6000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0x3ff, data);
 		return;
 	}
@@ -205,7 +205,7 @@ static void __fastcall relief_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfff800) == 0x3f6000) {
 		DrvMobRAM[(address & 0x7ff) ^ 1] = data;
-		AtariMoWrite(0, (address / 2) & 0x3ff, *((UINT16*)(DrvMobRAM + (address & 0x7fe))));
+		AtariMoWrite(0, (address / 2) & 0x3ff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x7fe)))));
 		return;
 	}
 

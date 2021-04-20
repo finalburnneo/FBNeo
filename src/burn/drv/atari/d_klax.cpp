@@ -78,7 +78,7 @@ static void update_interrupts()
 static void __fastcall klax_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff800) == 0x3f2000) {
-		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvMobRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address / 2) & 0x3ff, data);
 		return;
 	}
@@ -119,7 +119,7 @@ static void __fastcall klax_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfff800) == 0x3f2000) {
 		DrvMobRAM[(address & 0x7ff) ^ 1] = data;
-		AtariMoWrite(0, (address / 2) & 0x3ff, *((UINT16*)(DrvMobRAM + (address & 0x7fe))));
+		AtariMoWrite(0, (address / 2) & 0x3ff, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMobRAM + (address & 0x7fe)))));
 		return;
 	}
 
@@ -208,8 +208,8 @@ static UINT8 __fastcall klax_main_read_byte(UINT32 address)
 
 static tilemap_callback( bg )
 {
-	UINT16 code  = *((UINT16*)(DrvVidRAM0 + offs * 2));
-	UINT16 color = *((UINT16*)(DrvVidRAM1 + offs * 2)) >> 8;
+	UINT16 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM0 + offs * 2)));
+	UINT16 color = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM1 + offs * 2))) >> 8;
 
 	TILE_SET_INFO(0, code, color, TILE_FLIPYX(code >> 15));
 }
@@ -414,7 +414,7 @@ static void DrvRecalcPalette()
 
 	for (INT32 i = 0; i < 0x400/2; i++)
 	{
-		UINT16 p0 = (p[i] << 8) | (p[i] >> 8);
+		UINT16 p0 = BURN_ENDIAN_SWAP_INT16((p[i] << 8) | (p[i] >> 8));
 		INT32 intensity = (p0 >> 15) & 1;
 
 		UINT8 r = ((p0 >> 9) & 0x3e) | intensity;

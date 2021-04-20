@@ -95,6 +95,13 @@ static struct BurnInputInfo MlcInputList[] = {
 
 STDINPUTINFO(Mlc)
 
+static UINT8 hilite(INT32 col)
+{
+	col += 0x22;
+	if (col > 0xff) col = 0xff;
+	return col;
+}
+
 static inline void palette_write(INT32 offset)
 {
 	offset &= 0x7ffc;
@@ -114,6 +121,8 @@ static inline void palette_write(INT32 offset)
 	b = (b << 3) | (b >> 2);
 
 	DrvPalette[offset] = BurnHighCol(r,g,b,0);
+
+	DrvPalette[0x1000+offset] = BurnHighCol(hilite(r),hilite(g),hilite(b),0);
 
 	b = (b * 0x7f) >> 8;
 	g = (g * 0x7f) >> 8;
@@ -431,7 +440,7 @@ static INT32 MemIndex()
 
 	DrvEEPROM		= Next; Next += 0x0000080;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x800 * 2 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x800 * 3 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -470,11 +479,18 @@ static void decode_sound()
 	BurnFree(tmp);
 }
 
+static INT32 shadow_mask;
+static INT32 shadow_shift;
+
 static void set_sprite_config(INT32 len, INT32 bpp)
 {
 	sprite_depth = bpp;
 	sprite_color_mask = 0x7f >> (bpp - 4);
 	sprite_mask = (((len * 8) / ((bpp + 1) & 6)) / (16 * 16));
+
+	INT32 ncol = 0x800 / (1<<bpp);
+	shadow_mask = ncol | (ncol << 1);
+	shadow_shift = 11 - bpp;
 
 	for (INT32 i = 1; i < (1 << 31); i<=1) {
 		if (i >= sprite_mask) {
@@ -718,11 +734,13 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void mlc_drawgfxzoomline(UINT16 *dest, INT32 *clip, UINT32 code1, UINT32 code2, UINT32 color, INT32 flipx, INT32 sx,
-		INT32 transparent_color, INT32 use8bpp, INT32 scalex, INT32 alpha, INT32 srcline)
+static void mlc_drawgfxzoomline(UINT16 *dest, UINT8 *pri, INT32 *clip, UINT32 code1, UINT32 code2, UINT32 color, INT32 flipx, INT32 sx,
+		INT32 transparent_color, INT32 use8bpp, INT32 scalex, INT32 alpha, INT32 srcline, INT32 shadowMode)
 {
 	if (!scalex) return;
 
+	UINT32 *m_irq_ram = (UINT32*)DrvIRQRAM;
+	const UINT32 alphaMode = m_irq_ram[0x04 / 4] & 0xc0;
 	INT32 sprite_screen_width = (scalex*16+(sx&0xffff))>>16;
 
 	sx>>=16;
@@ -759,35 +777,44 @@ static void mlc_drawgfxzoomline(UINT16 *dest, INT32 *clip, UINT32 code1, UINT32 
 		{
 			color = (color & sprite_color_mask) << sprite_depth;
 			const UINT8 *code_base1 = DrvGfxROM0 + ((code1 % sprite_mask) * 0x100);
+			const UINT8 *code_base2 = DrvGfxROM0 + ((code2 % sprite_mask) * 0x100);
+			const UINT8 *source1 = code_base1 + (srcline) * 16;
+			const UINT8 *source2 = code_base2 + (srcline) * 16;
 
-			if (alpha == 0xff)
+			if (shadowMode && (alphaMode & 0xc0))
 			{
-				const UINT8 *code_base2 = DrvGfxROM0 + ((code2 % sprite_mask) * 0x100);
-				const UINT8 *source1 = code_base1 + (srcline) * 16;
-				const UINT8 *source2 = code_base2 + (srcline) * 16;
-
-				INT32 x_index = x_index_base;
-
-				for (INT32 x=sx; x<ex; x++ )
+				INT32 x, x_index = x_index_base;
+				for (x = sx; x < ex; x++)
 				{
-					INT32 c = source1[x_index>>16];
+					if (!(pri[x] & 0x80))
+					{
+						INT32 c = source1[x_index >> 16];
+						if (use8bpp)
+							c = (c << 4) | source2[x_index >> 16];
 
-					if (use8bpp) c = (c << 4) | source2[x_index >> 16];
-
-					if (c != transparent_color) dest[x] = c + color;
-
+						if (c != transparent_color)
+							pri[x] |= shadowMode;
+					}
 					x_index += dx;
 				}
 			}
 			else
 			{
-				const UINT8 *source = code_base1 + (srcline) * 16;
-
-				INT32 x_index = x_index_base;
-				for(INT32 x=sx; x<ex; x++ )
+				INT32 x, x_index = x_index_base;
+				for (x = sx; x < ex; x++)
 				{
-					INT32 c = source[x_index>>16];
-					if (c != transparent_color) dest[x] |= 0x800;
+					if (!(pri[x] & 0x80))
+					{
+						INT32 c = source1[x_index >> 16];
+						if (use8bpp)
+							c = (c << 4) | source2[x_index >> 16];
+
+						if (c != transparent_color)
+						{
+							dest[x] = c + color;
+							pri[x] |= 0x80 | shadowMode; // Mark it drawn
+						}
+					}
 					x_index += dx;
 				}
 			}
@@ -803,7 +830,7 @@ static void draw_sprites(INT32 scanline)
 	UINT8 *rom = DrvGfxROM1 + 0x20000, *index_ptr8;
 	UINT8 *rawrom = DrvGfxROM1;
 	INT32 blockIsTilemapIndex=0;
-	INT32 sprite2=0,indx2=0,use8bppMode=0;
+	INT32 sprite2=0,use8bppMode=0;
 	INT32 yscale,xscale;
 	INT32 alpha;
 	INT32 useIndicesInRom=0;
@@ -814,6 +841,7 @@ static void draw_sprites(INT32 scanline)
 	INT32 clipper=0;
 
 	UINT16 *dest = pTransDraw + ((scanline - 8) * nScreenWidth);
+	UINT8 *pri = pPrioDraw + ((scanline - 8) * nScreenWidth);
 
 	INT32 clip[4];
 	UINT16* mlc_spriteram=(UINT16*)DrvSprBuf;
@@ -821,8 +849,12 @@ static void draw_sprites(INT32 scanline)
 	UINT32 *m_mlc_vram = (UINT32*)DrvVRAM;
 	UINT32 *m_irq_ram = (UINT32*)DrvIRQRAM;
 
-	for (offs = (0x3000/4)-8; offs>=0; offs-=8)
+	for (offs = 0; offs < (0x3000 / 4); offs += 8)
 	{
+		use8bppMode = (offs + 8 < (0x3000 / 4)) && (mlc_spriteram[offs + 8 + 1] & 0x1000) && (mlc_spriteram[offs + 8 + 0] & 0x8000);
+		if (use8bppMode)
+			offs += 8;
+
 		if ((mlc_spriteram[offs+0]&0x8000)==0)
 			continue;
 		if ((mlc_spriteram[offs+1]&0x2000) && (nCurrentFrame & 1))
@@ -865,28 +897,20 @@ static void draw_sprites(INT32 scanline)
 		clip[0]=m_mlc_clip_ram[(clipper*4)+2];
 		clip[1]=m_mlc_clip_ram[(clipper*4)+3];
 
-		// Any colours out of range (for the bpp value) trigger 'shadow' mode
-		if (color & (sprite_color_mask+1))
-			alpha=0x80;
-		else
-			alpha=0xff;
-
+		INT32 shadowMode = (color & shadow_mask) >> shadow_shift; // shadow mode (OK for skullfng)
 		color&=sprite_color_mask;
 
-		// If this bit is set, combine this block with the next one
-		if (mlc_spriteram[offs+1]&0x1000) {
-			use8bppMode=1;
-			// In 8bpp the palette base is stored in the next block
-			if (offs-8>=0) {
-				color = (mlc_spriteram[offs+1-8]&0x7f);
-				indx2 = mlc_spriteram[offs+0-8]&0x3fff;
-			}
-		} else
-			use8bppMode=0;
+		if (use8bppMode) {
+			color = (mlc_spriteram[offs + 1 - 8] & 0x7f);
+		}
 
 		// Lookup tiles/size in sprite index ram OR in the lookup rom
 		if (mlc_spriteram[offs+0]&0x4000) {
 			index_ptr8=rom + indx*8; // Byte ptr
+
+			if (index_ptr8[5] & 0x01 && nCurrentFrame & 1)
+				continue;
+
 			h=(index_ptr8[1]>>0)&0xf;
 			w=(index_ptr8[3]>>0)&0xf;
 
@@ -895,11 +919,6 @@ static void draw_sprites(INT32 scanline)
 
 			sprite = (index_ptr8[7]<<8)|index_ptr8[6];
 			sprite |= (index_ptr8[4]&3)<<16;
-
-			if (use8bppMode) {
-				UINT8* index_ptr28=rom + indx2*8;
-				sprite2=(index_ptr28[7]<<8)|index_ptr28[6];
-			}
 
 			yoffs=index_ptr8[0]&0xff;
 			xoffs=index_ptr8[2]&0xff;
@@ -918,16 +937,15 @@ static void draw_sprites(INT32 scanline)
 		} else {
 			indx&=0x1fff;
 			index_ptr=m_mlc_vram + indx*4;
+
+			if (index_ptr[2] & 0x0100 && nCurrentFrame & 1)
+				continue;
+
 			h=(index_ptr[0]>>8)&0xf;
 			w=(index_ptr[1]>>8)&0xf;
 
 			if (!h) h=16;
 			if (!w) w=16;
-
-			if (use8bppMode) {
-				UINT32* index_ptr2=m_mlc_vram + ((indx2*4)&0x7fff);
-				sprite2=((index_ptr2[2]&0x3)<<16) | (index_ptr2[3]&0xffff);
-			}
 
 			sprite = ((index_ptr[2]&0x3)<<16) | (index_ptr[3]&0xffff);
 			if (index_ptr[2]&0xc0)
@@ -945,6 +963,22 @@ static void draw_sprites(INT32 scanline)
 
 			fy1=(index_ptr[0]&0x1000)>>12;
 			fx1=(index_ptr[1]&0x1000)>>12;
+		}
+
+		if (use8bppMode)
+		{
+			indx = mlc_spriteram[offs + 0 - 8] & 0x7fff;
+			if (indx & 0x4000)
+			{
+				index_ptr8 = rom + indx * 8;
+				sprite2 = (index_ptr8[7] << 8) | index_ptr8[6];
+			}
+			else
+			{
+				indx &= 0x1fff;
+				index_ptr = m_mlc_vram + indx * 4;
+				sprite2 = ((index_ptr[2] & 0x3) << 16) | (index_ptr[3] & 0xffff);
+			}
 		}
 
 		if(fx1) fx^=0x8000;
@@ -973,15 +1007,18 @@ static void draw_sprites(INT32 scanline)
 			}
 		}
 
+		const INT32 yscale_frac = (yscale << 8);
+		const INT32 real_h = h * 16;
+
 		xscale *= extra_x_scale;
 
 		INT32 ybase=y<<16;
-		INT32 yinc=(yscale<<8)*16;
+		INT32 yinc=yscale_frac*16;
 
 		if (fy)
-			ybase+=(yoffs-15) * (yscale<<8) - ((h-1)*yinc);
+			ybase+=(yoffs-15) * yscale_frac - ((h-1)*yinc);
 		else
-			ybase-=yoffs * (yscale<<8);
+			ybase-=yoffs * yscale_frac;
 
 		INT32 xbase=x<<16;
 		INT32 xinc=(xscale)*16;
@@ -991,10 +1028,9 @@ static void draw_sprites(INT32 scanline)
 		else
 			xbase-=xoffs * (xscale);
 
-
 		INT32 full_realybase = ybase;
-		INT32 full_sprite_screen_height = ((yscale<<8)*(h*16)+(0));
-		INT32 full_sprite_screen_height_unscaled = ((1)*(h*16)+(0));
+		INT32 full_sprite_screen_height = ((yscale<<8)*real_h+(0));
+		INT32 full_sprite_screen_height_unscaled = ((1)*real_h+(0));
 
 		if (!full_sprite_screen_height_unscaled)
 			continue;
@@ -1015,6 +1051,9 @@ static void draw_sprites(INT32 scanline)
 		INT32 srcline = ((bby<<16) / ratio);
 
 		by = srcline >> 4;
+
+		if (by >= h)
+			continue;
 
 		srcline &=0xf;
 		if( fy )
@@ -1091,11 +1130,17 @@ static void draw_sprites(INT32 scanline)
 				}
 			}
 
-			mlc_drawgfxzoomline(dest,clip,tile,tile2,color + colorOffset,fx,realxbase,0,use8bppMode,(xscale),alpha, srcline);
+			mlc_drawgfxzoomline(dest,pri,clip,tile,tile2,color + colorOffset,fx,realxbase,0,use8bppMode,(xscale),alpha, srcline, shadowMode);
 		}
+	}
 
-		if (use8bppMode)
-			offs-=8;
+	// if needed, apply shadow/hilite to this line
+
+	for (x = 0; x < nScreenWidth; x++) {
+		switch (pri[x] & 3) {
+			case 1: dest[x] |= 0x800; break;	// shadow
+			case 2: dest[x] |= 0x1000; break;	// hilite
+		}
 	}
 }
 

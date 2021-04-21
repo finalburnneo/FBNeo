@@ -620,7 +620,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chprowres" romof="coleco">
-		<description>Champion Pro Wrestling [Homebrew, Published by Team Pixelboy]</description>
+		<description>Champion Pro Wrestling (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="champion_pro_wrestling_cv_sgm.rom" size="32768" crc="045c54d6"/>
@@ -632,9 +632,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cotn" romof="coleco">
-		<description>Children of the Night (HB) [Homebrew]</description>
+		<description>Children of the Night (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>Team Pixelboy</manufacturer>
+		<manufacturer>Hikaru Games</manufacturer>
 		<rom name="Children of the Night (2017) (Team Pixelboy).rom" size="131072" crc="55b36d53"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -984,6 +984,18 @@
 		<manufacturer>Imagic</manufacturer>
 		<rom name="drgnfire.1" size="8192" crc="4272d250"/>
 		<rom name="drgnfire.2" size="8192" crc="e68e9e70"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="datrolls" romof="coleco">
+		<description>Dungeons and Trolls (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Dungeons and Trolls (2014)(CollectorVision).col" size="30187" crc="a227fdaa"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1848,9 +1860,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="mario" romof="coleco">
-		<description>Mario Bros. (HB) [Homebrew]</description>
+		<description>Mario Bros. (HB) [Homebrew, Published by CollectorVision]</description>
 		<year>2008</year>
-		<manufacturer>CollectorVision</manufacturer>
+		<manufacturer>Nintendo</manufacturer>
 		<rom name="MarioBros (2008) (CollectorVision).rom" size="131072" crc="2e09af0a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2819,9 +2831,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="moai" romof="coleco">
-		<description>Secret of Moai (HB) [Homebrew]</description>
+		<description>Secret of Moai (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
 		<year>2017</year>
-		<manufacturer>Team Pixelboy</manufacturer>
+		<manufacturer>Casio</manufacturer>
 		<rom name="Secret of Moai (2017) (Team Pixelboy).rom" size="131072" crc="b753a8ca"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -3157,9 +3169,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="starforce" romof="coleco">
-		<description>Star Force (SGM) [Homebrew]</description>
+		<description>Star Force (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2011</year>
-		<manufacturer>Team Pixelboy</manufacturer>
+		<manufacturer>Sega</manufacturer>
 		<rom name="Star Force (2011) (Team Pixelboy).rom" size="32768" crc="cbc58796"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -3233,9 +3245,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="stonew" romof="coleco">
-		<description>Stone of Wisdom (HB) [Homebrew]</description>
+		<description>Stone of Wisdom, The (HB) [Homebrew, SGM - Published by Team Pixelboy]</description>
 		<year>2015</year>
-		<manufacturer>Team Pixelboy</manufacturer>
+		<manufacturer>Casio</manufacturer>
 		<rom name="Stone of Wisdom (2015) (Team Pixelboy).rom" size="131072" crc="ba2e3fea"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -3501,6 +3513,18 @@
 		<manufacturer>Coleco</manufacturer>
 		<rom name="sword-chip1-a176.bin" size="8192" crc="a1548994"/>
 		<rom name="sword-chip2-d5ba.bin" size="8192" crc="1d03dfae"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tankchal" romof="coleco">
+		<description>Tank Challenge (HB) [Homebrew, No one player mode]</description>
+		<year>2016</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Tank Challenge (2016)(Todd Spangler).col" size="32538" crc="f8eb77d8"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3992,7 +4016,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wow" romof="coleco">
-		<description>Wizard of Wor (HB) [Homebrew]</description>
+		<description>Wizard of Wor (HB) [Homebrew, SGM - Super Game Module]</description>
 		<year>2017</year>
 		<manufacturer>Team Pixelboy</manufacturer>
 		<rom name="Wizard of Wor (2017) (Team Pixelboy).rom" size="524288" crc="d9207f30"/>
@@ -4072,6 +4096,18 @@
 		<year>2018</year>
 		<manufacturer>Team Pixelboy - NeneFranz</manufacturer>
 		<rom name="Zombie Incident (2018)(Team Pixelboy).rom" size="131072" crc="8027dad7"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombnear" romof="coleco">
+		<description>Zombie Near (HB) [Homebrew]</description>
+		<year>2012</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Zombie Near (2012)(CollectorVision).col" size="32768" crc="c36c017e"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

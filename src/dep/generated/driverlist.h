@@ -2287,11 +2287,11 @@ DRV		BurnDrvsg1k_champicek;
 DRV		BurnDrvMSX_champken;
 DRV		BurnDrvsg1k_champken;
 DRV		BurnDrvMSX_champkena;
+DRV		BurnDrvcv_chprowres;
 DRV		BurnDrvMSX_champpwr;
 DRV		BurnDrvsg1k_champpwr;
 DRV		BurnDrvMSX_champpwrb;
 DRV		BurnDrvMSX_champpwra;
-DRV		BurnDrvcv_chprowres;
 DRV		BurnDrvMSX_champscr;
 DRV		BurnDrvsg1k_champscr;
 DRV		BurnDrvsg1k_champscrt;
@@ -4049,6 +4049,7 @@ DRV		BurnDrvCpsDdtod;
 DRV		BurnDrvCpsDdtodh;
 DRV		BurnDrvCpsDdtodj;
 DRV		BurnDrvmd_ddwares;
+DRV		BurnDrvcv_datrolls;
 DRV		BurnSpecGomilandia;
 DRV		BurnDrvDdream95;
 DRV		BurnDrvgg_dunkkids;
@@ -13025,10 +13026,10 @@ DRV		BurnSpecStarfirebirds;
 DRV		BurnDrvStarforcb;
 DRV		BurnDrvStarforce;
 DRV		BurnDrvStarforca;
+DRV		BurnDrvcv_starforce;
 DRV		BurnDrvMSX_starfrce;
 DRV		BurnDrvsg1k_starfrce;
 DRV		BurnDrvMSX_starfrcea;
-DRV		BurnDrvcv_starforce;
 DRV		BurnDrvsg1k_starfrcet;
 DRV		BurnDrvsg1k_starfrceta;
 DRV		BurnDrvnes_starforce;
@@ -14180,6 +14181,7 @@ DRV		BurnDrvmd_tnglwdd;
 DRV		BurnDrvmd_tnglwd;
 DRV		BurnDrvMSX_tankbatt;
 DRV		BurnDrvTankbust;
+DRV		BurnDrvcv_tankchal;
 DRV		BurnDrvTankfrcej;
 DRV		BurnDrvTankfrce;
 DRV		BurnDrvTankfrce4;
@@ -16960,6 +16962,7 @@ DRV		BurnDrvnes_zombiehunter;
 DRV		BurnDrvcv_zombieinc;
 DRV		BurnDrvMSX_zombieinc;
 DRV		BurnDrvnes_zombienation;
+DRV		BurnDrvcv_zombnear;
 DRV		BurnDrvMSX_zombienear;
 DRV		BurnDrvZombraidpj;
 DRV		BurnDrvZombraid;
@@ -19291,11 +19294,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_champken,		// Champion Kendou (Jpn)
 	&BurnDrvsg1k_champken,		// Champion Kendou (Jpn)
 	&BurnDrvMSX_champkena,		// Champion Kendou (Jpn, Alt)
+	&BurnDrvcv_chprowres,		// Champion Pro Wrestling (HB)
 	&BurnDrvMSX_champpwr,		// Champion Pro Wrestling (Jpn)
 	&BurnDrvsg1k_champpwr,		// Champion Pro Wrestling (Jpn)
 	&BurnDrvMSX_champpwrb,		// Champion Pro Wrestling (Jpn, Alt 2)
 	&BurnDrvMSX_champpwra,		// Champion Pro Wrestling (Jpn, Alt)
-	&BurnDrvcv_chprowres,		// Champion Pro Wrestling
 	&BurnDrvMSX_champscr,		// Champion Soccer (Jpn)
 	&BurnDrvsg1k_champscr,		// Champion Soccer (Jpn)
 	&BurnDrvsg1k_champscrt,		// Champion Soccer (Tw)
@@ -21053,6 +21056,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDdtodh,			// Dungeons & Dragons - tower of doom (940412 Hispanic)
 	&BurnDrvCpsDdtodj,			// Dungeons & Dragons - tower of doom (940412 Japan)
 	&BurnDrvmd_ddwares,			// Dungeons & Dragons - Warriors of the Eternal Sun (Euro, USA)
+	&BurnDrvcv_datrolls,		// Dungeons and Trolls (HB)
 	&BurnSpecGomilandia,		// Dungeons of Gomilandia (HB)
 	&BurnDrvDdream95,			// Dunk Dream '95 (Japan 1.4, EAM)
 	&BurnDrvgg_dunkkids,		// Dunk Kids (Jpn)
@@ -30029,10 +30033,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStarforcb,			// Star Force (encrypted, bootleg) [no comment, NOT WORKING]
 	&BurnDrvStarforce,			// Star Force (encrypted, set 1)
 	&BurnDrvStarforca,			// Star Force (encrypted, set 2)
+	&BurnDrvcv_starforce,		// Star Force (HB)
 	&BurnDrvMSX_starfrce,		// Star Force (Jpn)
 	&BurnDrvsg1k_starfrce,		// Star Force (Jpn)
 	&BurnDrvMSX_starfrcea,		// Star Force (Jpn, Alt)
-	&BurnDrvcv_starforce,		// Star Force (SGM)
 	&BurnDrvsg1k_starfrcet,		// Star Force (Tw)
 	&BurnDrvsg1k_starfrceta,	// Star Force (Tw, Alt)
 	&BurnDrvnes_starforce,		// Star Force (USA)
@@ -30143,7 +30147,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStonebal2o,			// Stone Ball (2 Players, v1-20 21/10/1994)
 	&BurnDrvStonebal2,			// Stone Ball (2 Players, v1-20 7/11/1994)
 	&BurnDrvStonebal,			// Stone Ball (4 Players, v1-20 13/12/1994)
-	&BurnDrvcv_stonew,			// Stone of Wisdom (HB)
+	&BurnDrvcv_stonew,			// Stone of Wisdom, The (HB)
 	&BurnDrvmd_stonprot,		// Stone Protectors (USA, Prototype)
 	&BurnDrvStoneage,			// Stoneage (bootleg of Caveman Ninja)
 	&BurnSpecstopexpr,			// Stop the Express (48K)
@@ -31184,6 +31188,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tnglwd,			// Tanglewood (HB, v1.0)
 	&BurnDrvMSX_tankbatt,		// Tank Battalion (Jpn)
 	&BurnDrvTankbust,			// Tank Busters
+	&BurnDrvcv_tankchal,		// Tank Challenge (HB)
 	&BurnDrvTankfrcej,			// Tank Force (Japan)
 	&BurnDrvTankfrce,			// Tank Force (US, 2 Players)
 	&BurnDrvTankfrce4,			// Tank Force (US, 4 Players)
@@ -33964,6 +33969,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_zombieinc,		// Zombie Incident (HB)
 	&BurnDrvMSX_zombieinc,		// Zombie Incident (HB, v1.2)
 	&BurnDrvnes_zombienation,	// Zombie Nation (USA)
+	&BurnDrvcv_zombnear,		// Zombie Near (HB)
 	&BurnDrvMSX_zombienear,		// Zombie Near (HB)
 	&BurnDrvZombraidpj,			// Zombie Raid (9/28/95, Japan, prototype PCB)
 	&BurnDrvZombraid,			// Zombie Raid (9/28/95, US)

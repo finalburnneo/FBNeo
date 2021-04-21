@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16751 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16754 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2255,11 +2255,11 @@ This list contains all games supported by FinalBurn Neo.
 | msx_champken	|  	| Champion Kendou (Jpn)					| 		| 1986	| Pony Canyon	| MSX		| 					|
 | sg1k_champken	|  	| Champion Kendou (Jpn)					| 		| 1986	| Sega		| Sega SG-1000	| 					|
 | msx_champkena	|  	| Champion Kendou (Jpn, Alt)				| msx_champken	| 1986	| Pony Canyon	| MSX		| 					|
+| cv_chprowres	|  	| Champion Pro Wrestling (HB)				| 		| 1985	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_champpwr	|  	| Champion Pro Wrestling (Jpn)				| 		| 1985	| Pony Canyon	| MSX		| 					|
 | sg1k_champpwr	|  	| Champion Pro Wrestling (Jpn)				| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_champpwrb	|  	| Champion Pro Wrestling (Jpn, Alt 2)			| msx_champpwr	| 1985	| Pony Canyon	| MSX		| 					|
 | msx_champpwra	|  	| Champion Pro Wrestling (Jpn, Alt)			| msx_champpwr	| 1985	| Pony Canyon	| MSX		| 					|
-| cv_chprowres	|  	| Champion Pro Wrestling				| 		| 1985	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_champscr	|  	| Champion Soccer (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| 					|
 | sg1k_champscr	|  	| Champion Soccer (Jpn)					| 		| 1984	| Sega		| Sega SG-1000	| 					|
 | sg1k_champscrt|  	| Champion Soccer (Tw)					| sg1k_champscr	| 1984?	| Aaronix	| Sega SG-1000	| 					|
@@ -2394,7 +2394,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_chikichimacmoura|  	| Chiki Chiki Machine Mou Race (Japan)			| nes_wackyraces| 1989?	| Nintendo	| Miscellaneous	| 					|
 | pce_chikuden1	|  	| Chikudenya Toubei - Kubikiri Yakata Yori (Alt)	| pce_chikuden	| 1990	| Naxat		| PC Engine	| 					|
 | pce_chikuden	|  	| Chikudenya Toubei - Kubikiri Yakata Yori		| 		| 1990	| Naxat		| PC Engine	| 					|
-| cv_cotn	|  	| Children of the Night (HB)				| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
+| cv_cotn	|  	| Children of the Night (HB)				| 		| 2017	| Hikaru Games	| ColecoVision	| SGM - Published by Team Pixelboy	|
 | msx_chiller	|  	| Chiller (Euro)					| 		| 1985	| Mastertronic	| MSX		| 					|
 | nes_chiller	|  	| Chiller (USA)						| 		| 1990	| AGCI		| Miscellaneous	| 					|
 | chimerab	|  	| Chimera Beast (prototype)				| 		| 1993	| Jaleco	| Mega System 1	| 					|
@@ -3991,6 +3991,7 @@ This list contains all games supported by FinalBurn Neo.
 | ddtodh	|  	| Dungeons & Dragons - tower of doom (940412 Hispanic)	| ddtod		| 1994	| Capcom	| CPS2		| 					|
 | ddtodj	|  	| Dungeons & Dragons - tower of doom (940412 Japan)	| ddtod		| 1994	| Capcom	| CPS2		| 					|
 | md_ddwares	|  	| Dungeons & Dragons - Warriors of the Eternal Sun (Euro| 		| 1992	| Sega		| Sega Megadrive| 					|
+| cv_datrolls	|  	| Dungeons and Trolls (HB)				| 		| 2014	| CollectorVisio| ColecoVision	| 					|
 | spec_gomilandia|  	| Dungeons of Gomilandia (HB)				| 		| 2020	| RetroWorks	| ZX Spectrum	| 					|
 | ddream95	|  	| Dunk Dream '95 (Japan 1.4, EAM)			| hoops96	| 1995	| Data East Corp| DECO MLC	| 					|
 | gg_dunkkids	|  	| Dunk Kids (Jpn)					| 		| 1994	| Sega		| Sega Game Gear| 					|
@@ -7954,7 +7955,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_marioadventure|  	| Mario Adventure (Hack)				| nes_smb3	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_andretti	|  	| Mario Andretti Racing (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | spec_maribros	|  	| Mario Bros (48K)					| 		| 1987	| Ocean		| ZX Spectrum	| 					|
-| cv_mario	|  	| Mario Bros. (HB)					| 		| 2008	| CollectorVisio| ColecoVision	| 					|
+| cv_mario	|  	| Mario Bros. (HB)					| 		| 2008	| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | marioj	|  	| Mario Bros. (Japan)					| mario		| 1983	| Nintendo	| Miscellaneous	| 					|
 | marioe	|  	| Mario Bros. (US, Revision E)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | mariof	|  	| Mario Bros. (US, Revision F)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
@@ -11782,7 +11783,7 @@ This list contains all games supported by FinalBurn Neo.
 | secretagj	|  	| Secret Agent (Japan revision 2)			| secretag	| 1989	| Data East Corp| DEC0		| 					|
 | secretag	|  	| Secret Agent (World revision 3)			| 		| 1989	| Data East Corp| DEC0		| 					|
 | sms_secret	|  	| Secret Command (Euro)					| 		| 1986	| Sega		| Sega Master Sy| 					|
-| cv_moai	|  	| Secret of Moai (HB)					| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
+| cv_moai	|  	| Secret of Moai (HB)					| 		| 2017	| Casio		| ColecoVision	| SGM - Published by Team Pixelboy	|
 | nes_secretties|  	| Secret Ties (USA) (Proto)				| 		| 0000	| Vic Tokai	| Miscellaneous	| 					|
 | sectionz	|  	| Section Z (set 1)					| 		| 1985	| Capcom	| Miscellaneous	| 					|
 | sectionza	|  	| Section Z (set 2)					| sectionz	| 1985	| Capcom	| Miscellaneous	| 					|
@@ -12847,10 +12848,10 @@ This list contains all games supported by FinalBurn Neo.
 | starforcb	|   NW	| Star Force (encrypted, bootleg)			| starforc	| 1984	| bootleg	| Miscellaneous	| 					|
 | starforce	|  	| Star Force (encrypted, set 1)				| starforc	| 1984	| Tehkan	| Miscellaneous	| 					|
 | starforca	|  	| Star Force (encrypted, set 2)				| starforc	| 1984	| Tehkan	| Miscellaneous	| 					|
+| cv_starforce	|  	| Star Force (HB)					| 		| 2011	| Sega		| ColecoVision	| Published by Team Pixelboy		|
 | msx_starfrce	|  	| Star Force (Jpn)					| 		| 1985	| Hudson Soft	| MSX		| 					|
 | sg1k_starfrce	|  	| Star Force (Jpn)					| 		| 1985	| Sega		| Sega SG-1000	| 					|
 | msx_starfrcea	|  	| Star Force (Jpn, Alt)					| msx_starfrce	| 1985	| Hudson Soft	| MSX		| 					|
-| cv_starforce	|  	| Star Force (SGM)					| 		| 2011	| Team Pixelboy	| ColecoVision	| 					|
 | sg1k_starfrcet|  	| Star Force (Tw)					| sg1k_starfrce	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | sg1k_starfrceta|  	| Star Force (Tw, Alt)					| sg1k_starfrce	| 1985?	| Aaronix	| Sega SG-1000	| 					|
 | nes_starforce	|  	| Star Force (USA)					| 		| 1987	| Tecmo		| Miscellaneous	| 					|
@@ -12959,7 +12960,7 @@ This list contains all games supported by FinalBurn Neo.
 | stonebal2o	|  	| Stone Ball (2 Players, v1-20 21/10/1994)		| stonebal	| 1994	| Art & Magic	| Miscellaneous	| 					|
 | stonebal2	|  	| Stone Ball (2 Players, v1-20 7/11/1994)		| stonebal	| 1994	| Art & Magic	| Miscellaneous	| 					|
 | stonebal	|  	| Stone Ball (4 Players, v1-20 13/12/1994)		| 		| 1994	| Art & Magic	| Miscellaneous	| 					|
-| cv_stonew	|  	| Stone of Wisdom (HB)					| 		| 2015	| Team Pixelboy	| ColecoVision	| 					|
+| cv_stonew	|  	| Stone of Wisdom, The (HB)				| 		| 2015	| Casio		| ColecoVision	| SGM - Published by Team Pixelboy	|
 | md_stonprot	|  	| Stone Protectors (USA, Prototype)			| 		| 1994	| Vic Tokai	| Sega Megadrive| 					|
 | stoneage	|  	| Stoneage (bootleg of Caveman Ninja)			| cninja	| 1991	| bootleg	| DECO IC16	| 					|
 | spec_stopexpr	|  	| Stop the Express (48K)				| 		| 1983	| Sinclair Resea| ZX Spectrum	| 					|
@@ -13982,6 +13983,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_tnglwd	|  	| Tanglewood (HB, v1.0)					| 		| 2018	| Big Evil Corp.| Sega Megadrive| 					|
 | msx_tankbatt	|  	| Tank Battalion (Jpn)					| 		| 1984	| Namcot	| MSX		| 					|
 | tankbust	|  	| Tank Busters						| 		| 1985	| Valadon Automa| Miscellaneous	| Graphics and stuck sprite issues	|
+| cv_tankchal	|  	| Tank Challenge (HB)					| 		| 2016	| CollectorVisio| ColecoVision	| No one player mode			|
 | tankfrcej	|  	| Tank Force (Japan)					| tankfrce	| 1991	| Namco		| System 1	| 					|
 | tankfrce	|  	| Tank Force (US, 2 Players)				| 		| 1991	| Namco		| System 1	| 					|
 | tankfrce4	|  	| Tank Force (US, 4 Players)				| tankfrce	| 1991	| Namco		| System 1	| 					|
@@ -16059,7 +16061,7 @@ This list contains all games supported by FinalBurn Neo.
 | wizdfireu	|  	| Wizard Fire (US v1.1)					| wizdfire	| 1992	| Data East Corp| DECO IC16	| 					|
 | cv_wizmath	|  	| Wizard of Id's Wizmath				| 		| 1984	| Sierra On-Line| ColecoVision	| 					|
 | md_immortalj	|  	| Wizard of the Immortal (Jpn)				| md_immortal	| 1993	| Electronic Art| Sega Megadrive| 					|
-| cv_wow	|  	| Wizard of Wor (HB)					| 		| 2017	| Team Pixelboy	| ColecoVision	| 					|
+| cv_wow	|  	| Wizard of Wor (HB)					| 		| 2017	| Team Pixelboy	| ColecoVision	| SGM - Super Game Module		|
 | gg_wizard	|  	| Wizard Pinball (Euro)					| 		| 1995	| Domark	| Sega Game Gear| 					|
 | spec_wizardwilly|  	| Wizard Willy (128K)					| 		| 1990	| Codemasters	| ZX Spectrum	| 					|
 | msx_wizlair	|  	| Wizard's Lair (Euro)					| 		| 1986	| Bubble Bus Sof| MSX		| 					|
@@ -16714,6 +16716,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_zombieinc	|  	| Zombie Incident (HB)					| 		| 2018	| Team Pixelboy | ColecoVision	| SGM - Super Game Module		|
 | msx_zombieinc12|  	| Zombie Incident (HB, v1.2)				| 		| 2013	| NENEFRANZ	| MSX		| 					|
 | nes_zombienation|  	| Zombie Nation (USA)					| 		| 1991	| Meldac	| Miscellaneous	| 					|
+| cv_zombnear	|  	| Zombie Near (HB)					| 		| 2012	| CollectorVisio| ColecoVision	| 					|
 | msx_zombienear11|  	| Zombie Near (HB)					| 		| 2011	| Oscar Toledo G| MSX		| 					|
 | zombraidpj	|  	| Zombie Raid (9/28/95, Japan, prototype PCB)		| zombraid	| 1995	| Sammy Industri| Seta		| 					|
 | zombraid	|  	| Zombie Raid (9/28/95, US)				| 		| 1995	| American Sammy| Seta		| 					|

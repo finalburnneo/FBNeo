@@ -20,6 +20,8 @@ static bool bGrewDialog = false;
 
 static bool bOldLeftAltkeyMapped;
 
+extern int bClearInputIgnoreCheckboxMessage; // inpd.cpp
+
 static int InpsInit()
 {
 	TCHAR szTitle[128];
@@ -179,8 +181,12 @@ static int SetInput(int nCode)
 		}
 	} else {
 		pgi->Macro.nMode = 0x01;										// Mark macro as in use
-		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0;			// Clear Input button pressed (for Macros)
+		if (nCode == 0) {												// "Clear Input" button
+			if (!bClearLock) pgi->Macro.nMode = 0;						// Clear Input button pressed (for Macros)
+			if (pgi->Macro.nSysMacro == 15) pgi->Macro.nSysMacro = 0;   // Clear Auto-Fire
+		}
 		pgi->Macro.Switch.nCode = (unsigned short)nCode;				// Assign switch
+		bClearInputIgnoreCheckboxMessage = 1;
 	}
 
 	OldInp = *pgi;

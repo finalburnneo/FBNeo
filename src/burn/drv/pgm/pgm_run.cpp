@@ -895,6 +895,7 @@ INT32 pgmFrame()
 		// region hacks
 		if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
 			PGMARMShareRAM[0x158] = PgmInput[7];
+			PGMARMShareRAM2[0x158] = PgmInput[7];
 
 			// dmnfrntpcb - requires this - set internal rom version
 			PGMARMShareRAM[0x164] = '1'; // S101KR (101 Korea) - $69be8 in ROM

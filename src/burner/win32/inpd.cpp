@@ -8,6 +8,8 @@ static int bLastValDefined = 0;					//
 
 static HWND hInpdGi = NULL, hInpdPci = NULL, hInpdAnalog = NULL;	// Combo boxes
 
+int bClearInputIgnoreCheckboxMessage = 0;		// For clear input on afire macro.
+
 // Update which input is using which PC input
 static int InpdUseUpdate()
 {
@@ -253,8 +255,10 @@ int InpdListMake(int bBuild)
 
 			SendMessage(hInpdList, bBuild ? LVM_INSERTITEM : LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-			// When Marco is auto-fire, the checkbox is checked.
-			if (pgi->Macro.nSysMacro == 15 && pgi->Input.pVal) ListView_SetCheckState(hInpdList, j, TRUE);
+			// When Macro is auto-fire, the checkbox is checked.
+			if (pgi->Macro.nSysMacro != 1) { // only non-system Macros!
+				ListView_SetCheckState(hInpdList, j, (pgi->Macro.nSysMacro == 15 && pgi->Input.pVal) ? TRUE : FALSE);
+			}
 		}
 
 		j++;
@@ -312,6 +316,8 @@ static int InpdInit()
 	int nMemLen;
 
 	hInpdList = GetDlgItem(hInpdDlg, IDC_INPD_LIST);
+
+	bClearInputIgnoreCheckboxMessage = 0;
 
 	// Allocate a last val array for the last input values
 	nMemLen = nGameInpCount * sizeof(char);
@@ -1061,7 +1067,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				// Check that the checkbox is properly checked
 				if (ListView_GetCheckState(hInpdList, pNMListView->iItem)){
 					ListView_SetCheckState(hInpdList, pNMListView->iItem, 0);
-					MessageBox(hInpdDlg, FBALoadStringEx(hAppInst, IDS_ERR_MACRO_NOT_MAPPING, true), NULL, MB_ICONWARNING);
+					if (bClearInputIgnoreCheckboxMessage == 0) {
+						MessageBox(hInpdDlg, FBALoadStringEx(hAppInst, IDS_ERR_MACRO_NOT_MAPPING, true), NULL, MB_ICONWARNING);
+					}
+					bClearInputIgnoreCheckboxMessage = 0;
 				}
 		}
 		if (Id == IDC_INPD_LIST && pnm->code == NM_CUSTOMDRAW) {

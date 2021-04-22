@@ -946,7 +946,7 @@ struct BurnDriver BurnDrvsms_alexkiddj = {
 };
 
 
-// Alex Kidd in Radaxian Rumble 1.5
+// Alex Kidd in Radaxian Rumble 1.5 (Hack)
 
 static struct BurnRomInfo sms_alexkiddrrRomDesc[] = {
 	{ "Alex Kidd in Radaxian Rumble 1.5.sms",	0x80000, 0x02760e17, BRF_PRG | BRF_ESS },
@@ -959,7 +959,7 @@ struct BurnDriver BurnDrvsms_alexkiddrr = {
 	"sms_alexkiddrr", "sms_alexkidd", NULL, NULL, "2015",
 	"Alex Kidd in Radaxian Rumble (ver. 1.5)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkiddrrRomInfo, sms_alexkiddrrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -7537,7 +7537,7 @@ struct BurnDriver BurnDrvsms_ppersia = {
 	"sms_ppersia", NULL, NULL, NULL, "1992",
 	"Prince of Persia (Euro, Bra)\0", NULL, "Domark", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_ppersiaRomInfo, sms_ppersiaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -9584,7 +9584,7 @@ struct BurnDriver BurnDrvsms_sportssc = {
 };
 
 
-// Spy vs. Spy (Euro, USA, Bra)
+// Spy vs Spy (Euro, USA, Bra)
 
 static struct BurnRomInfo sms_spyvsspyRomDesc[] = {
 	{ "spy vs. spy (usa, europe).bin",	0x08000, 0x78d7faab, BRF_PRG | BRF_ESS },
@@ -9595,7 +9595,7 @@ STD_ROM_FN(sms_spyvsspy)
 
 struct BurnDriver BurnDrvsms_spyvsspy = {
 	"sms_spyvsspy", NULL, NULL, NULL, "1986",
-	"Spy vs. Spy (Euro, USA, Bra)\0", NULL, "Sega", "Sega Master System",
+	"Spy vs Spy (Euro, USA, Bra)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspyRomInfo, sms_spyvsspyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -9624,7 +9624,7 @@ struct BurnDriver BurnDrvsms_spyvsspyk = {
 };
 
 
-// Spy vs. Spy (Jpn, Pirate?)
+// Spy vs Spy (Jpn, Pirate?)
 
 static struct BurnRomInfo sms_spyvsspyj1RomDesc[] = {
 	{ "spy vs. spy (j) [hack].bin",	0x08000, 0xa71bc542, BRF_PRG | BRF_ESS },
@@ -9635,7 +9635,7 @@ STD_ROM_FN(sms_spyvsspyj1)
 
 struct BurnDriver BurnDrvsms_spyvsspyj1 = {
 	"sms_spyvsspyj1", "sms_spyvsspy", NULL, NULL, "1986",
-	"Spy vs. Spy (Jpn, Pirate?)\0", NULL, "pirate", "Sega Master System",
+	"Spy vs Spy (Jpn, Pirate?)\0", NULL, "pirate", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspyj1RomInfo, sms_spyvsspyj1RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -9664,7 +9664,7 @@ struct BurnDriver BurnDrvsms_spyvsspytw = {
 };
 
 
-// Spy vs. Spy (USA, Display Unit Sample)
+// Spy vs Spy (USA, Display Unit Sample)
 
 static struct BurnRomInfo sms_spyvsspysRomDesc[] = {
 	{ "spy vs. spy (u) (display-unit cart) [!].bin",	0x40000, 0xb87e1b2b, BRF_PRG | BRF_ESS },
@@ -9675,7 +9675,7 @@ STD_ROM_FN(sms_spyvsspys)
 
 struct BurnDriver BurnDrvsms_spyvsspys = {
 	"sms_spyvsspys", "sms_spyvsspy", NULL, NULL, "1986",
-	"Spy vs. Spy (USA, Display Unit Sample)\0", NULL, "Sega", "Sega Master System",
+	"Spy vs Spy (USA, Display Unit Sample)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspysRomInfo, sms_spyvsspysRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -12124,7 +12124,7 @@ struct BurnDriver BurnDrvsms_seishun = {
 };
 
 
-// Spy vs. Spy (Euro, USA, Bra, Sega Card)
+// Spy vs Spy (Euro, USA, Bra, Sega Card)
 
 static struct BurnRomInfo sms_spyvsspycRomDesc[] = {
 	{ "spy vs. spy (usa, europe).bin",	0x08000, 0x78d7faab, BRF_PRG | BRF_ESS },
@@ -12135,7 +12135,7 @@ STD_ROM_FN(sms_spyvsspyc)
 
 struct BurnDriver BurnDrvsms_spyvsspyc = {
 	"sms_spyvsspyc", "sms_spyvsspy", NULL, NULL, "1986",
-	"Spy vs. Spy (Euro, USA, Bra, Sega Card)\0", NULL, "Sega", "Sega Master System",
+	"Spy vs Spy (Euro, USA, Bra, Sega Card)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspycRomInfo, sms_spyvsspycRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -21681,7 +21681,7 @@ struct BurnDriver BurnDrvgg_ppersia = {
 	"gg_ppersia", NULL, NULL, NULL, "1992",
 	"Prince of Persia (Euro, SMS Mode)\0", NULL, "Domark", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE, GBF_PLATFORM | GBF_ADV, 0,
 	GGGetZipName, gg_ppersiaRomInfo, gg_ppersiaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -21701,7 +21701,7 @@ struct BurnDriver BurnDrvgg_ppersiau = {
 	"gg_ppersiau", "gg_ppersia", NULL, NULL, "1992",
 	"Prince of Persia (USA, SMS Mode)\0", NULL, "Domark", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE, GBF_PLATFORM | GBF_ADV, 0,
 	GGGetZipName, gg_ppersiauRomInfo, gg_ppersiauRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27673,7 +27673,7 @@ struct BurnDriver BurnDrvsms_alexkidd2 = {
 	"sms_alexkidd2", NULL, NULL, NULL, "2016",
 	"Alex Kidd in Miracle World 2 (HB, Hack)\0", NULL, "Ian Wall", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd2RomInfo, sms_alexkidd2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28040,7 +28040,7 @@ struct BurnDriver BurnDrvsms_battleorfm = {
 	"sms_battleorfm", "sms_battleor", NULL, NULL, "2018",
 	"Battle Out Run (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
 	SMSGetZipName, sms_battleorfmRomInfo, sms_battleorfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28060,7 +28060,7 @@ struct BurnDriver BurnDrvsms_wboy3fm = {
 	"sms_wboy3fm", "sms_wboy3", NULL, NULL, "1999",
 	"Wonder Boy III - The Dragon's Trap (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - Bock", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RPG, 0,
 	SMSGetZipName, sms_wboy3fmRomInfo, sms_wboy3fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28080,7 +28080,7 @@ struct BurnDriver BurnDrvsms_ysfm = {
 	"sms_ysfm", "sms_ys", NULL, NULL, "2009",
 	"Ys - The Vanished Omens (FM Mod, v1.2)\0", "YM2413 FM sound chip supported", "Sega - SSTranslations", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_ysfmRomInfo, sms_ysfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28298,7 +28298,7 @@ struct BurnDriver BurnDrvsms_alexkidd3f = {
 	"sms_alexkidd3f", NULL, NULL, NULL, "2021",
 	"Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)\0", NULL, "Yeti", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3fRomInfo, sms_alexkidd3fRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28317,13 +28317,13 @@ struct BurnDriver BurnDrvsms_alexkidd3 = {
 	"sms_alexkidd3", "sms_alexkidd3f", NULL, NULL, "2016",
 	"Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4)\0", NULL, "Yeti", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3RomInfo, sms_alexkidd3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
-// Duke Nukem (Hack)
+// Duke Nukem (HB, Hack)
 
 static struct BurnRomInfo sms_dnukemRomDesc[] = {
 	{ "duke nukem (2017)(revo-tibone-calindro).sms",	524288, 0xa16dba3b, BRF_PRG | BRF_ESS },
@@ -28355,13 +28355,13 @@ struct BurnDriver BurnDrvsms_dduxfm = {
 	"sms_dduxfm", "sms_ddux", NULL, NULL, "2018",
 	"Dynamite Dux (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - fatnick", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_dduxfmRomInfo, sms_dduxfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
-// Papi Commando in CPP Land (Hack)
+// Papi Commando in CPP Land (HB, Hack)
 
 static struct BurnRomInfo sms_papicomRomDesc[] = {
 	{ "papi commando in cpp land v1.01 (2019)(studio vetea).sms",	1048576, 0xbd531375, BRF_PRG | BRF_ESS },
@@ -28393,7 +28393,7 @@ struct BurnDriver BurnDrvsms_rambo3fm = {
 	"sms_rambo3fm", "sms_rambo3", NULL, NULL, "2018",
 	"Rambo III (FM Mod)\0", "Light Phaser game - YM2413 FM support", "Sega - fatnick", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
 	SMSGetZipName, sms_rambo3fmRomInfo, sms_rambo3fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28412,7 +28412,7 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	"sms_sumgamesfm", "sms_sumgames", NULL, NULL, "2018",
 	"Summer Games (FM Mod)\0", "YM2413 FM sound chip supported", "Sega - fatnick", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
 	SMSGetZipName, sms_sumgamesfmRomInfo, sms_sumgamesfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28431,7 +28431,7 @@ struct BurnDriver BurnDrvsms_addfamc = {
 	"sms_addfamc", "sms_addfam", NULL, NULL, "2021",
 	"The Addams Family (Euro) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_addfamcRomInfo, sms_addfamcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28450,7 +28450,7 @@ struct BurnDriver BurnDrvsms_aladdinc = {
 	"sms_aladdinc", "sms_aladdin", NULL, NULL, "2021",
 	"Disney's Aladdin (Euro, Bra, Kor) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_aladdincRomInfo, sms_aladdincRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28469,7 +28469,7 @@ struct BurnDriver BurnDrvsms_alexhitwc = {
 	"sms_alexhitwc", "sms_alexhitw", NULL, NULL, "2021",
 	"Alex Kidd - High-Tech World (Euro, USA) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexhitwcRomInfo, sms_alexhitwcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28488,7 +28488,7 @@ struct BurnDriver BurnDrvsms_alexlostc = {
 	"sms_alexlostc", "sms_alexlost", NULL, NULL, "2021",
 	"Alex Kidd - The Lost Stars (World) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexlostcRomInfo, sms_alexlostcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28507,7 +28507,7 @@ struct BurnDriver BurnDrvsms_alexkiddc = {
 	"sms_alexkiddc", "sms_alexkidd", NULL, NULL, "2021",
 	"Alex Kidd in Miracle World (Euro, USA, v1) - Castellano v1.1\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkiddcRomInfo, sms_alexkiddcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28526,7 +28526,7 @@ struct BurnDriver BurnDrvsms_alexshinc = {
 	"sms_alexshinc", "sms_alexshin", NULL, NULL, "2021",
 	"Alex Kidd in Shinobi World (Euro, USA, Bra) - Castellano v1.1\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexshincRomInfo, sms_alexshincRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28545,7 +28545,7 @@ struct BurnDriver BurnDrvsms_alien3c = {
 	"sms_alien3c", "sms_alien3", NULL, NULL, "2021",
 	"Alien 3 (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SMSGetZipName, sms_alien3cRomInfo, sms_alien3cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28583,7 +28583,7 @@ struct BurnDriver BurnDrvsms_backtof2c = {
 	"sms_backtof2c", "sms_backtof2", NULL, NULL, "2021",
 	"Back to the Future Part II (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN, 0,
 	SMSGetZipName, sms_backtof2cRomInfo, sms_backtof2cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28602,7 +28602,7 @@ struct BurnDriver BurnDrvsms_backtof3c = {
 	"sms_backtof3c", "sms_backtof3", NULL, NULL, "2021",
 	"Back to the Future Part III (Euro) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_RUNGUN, 0,
 	SMSGetZipName, sms_backtof3cRomInfo, sms_backtof3cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28621,7 +28621,7 @@ struct BurnDriver BurnDrvsms_bakubakuc = {
 	"sms_bakubakuc", "sms_bakubaku", NULL, NULL, "2021",
 	"Baku Baku Animal (Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_bakubakucRomInfo, sms_bakubakucRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28640,7 +28640,7 @@ struct BurnDriver BurnDrvsms_alexbmxc = {
 	"sms_alexbmxc", "sms_alexbmx", NULL, NULL, "2021",
 	"Alex Kidd BMX Trial (Jpn) - Castellano v1.1\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
 	SMSGetZipName, sms_alexbmxcRomInfo, sms_alexbmxcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28659,7 +28659,7 @@ struct BurnDriver BurnDrvsms_bnzabrosc = {
 	"sms_bnzabrosc", "sms_bnzabros", NULL, NULL, "2021",
 	"Bonanza Bros. (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_bnzabroscRomInfo, sms_bnzabroscRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28678,7 +28678,7 @@ struct BurnDriver BurnDrvsms_casinoc = {
 	"sms_casinoc", "sms_casino", NULL, NULL, "2021",
 	"Casino Games (Euro, USA) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_CASINO, 0,
 	SMSGetZipName, sms_casinocRomInfo, sms_casinocRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28697,7 +28697,7 @@ struct BurnDriver BurnDrvsms_castlillc = {
 	"sms_castlillc", "sms_castlill", NULL, NULL, "2021",
 	"Castle of Illusion Starring Mickey Mouse (Euro, Bra) - Castellano v1.1\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_castlillcRomInfo, sms_castlillcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28716,7 +28716,7 @@ struct BurnDriver BurnDrvsms_columnsc = {
 	"sms_columnsc", "sms_columns", NULL, NULL, "2021",
 	"Columns (Euro, USA, Bra, Kor) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_columnscRomInfo, sms_columnscRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28735,7 +28735,7 @@ struct BurnDriver BurnDrvsms_deepduckc = {
 	"sms_deepduckc", "sms_deepduck", NULL, NULL, "2021",
 	"Deep Duck Trouble Starring Donald Duck (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_deepduckcRomInfo, sms_deepduckcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28754,7 +28754,7 @@ struct BurnDriver BurnDrvsms_dcrystalc = {
 	"sms_dcrystalc", "sms_dcrystal", NULL, NULL, "2021",
 	"Dragon Crystal (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_dcrystalcRomInfo, sms_dcrystalcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28773,7 +28773,7 @@ struct BurnDriver BurnDrvsms_gaxewarrc = {
 	"sms_gaxewarrc", "sms_gaxewarr", NULL, NULL, "2021",
 	"Golden Axe Warrior (Euro, USA, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_gaxewarrcRomInfo, sms_gaxewarrcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28792,7 +28792,7 @@ struct BurnDriver BurnDrvsms_golvellc = {
 	"sms_golvellc", "sms_golvell", NULL, NULL, "2021",
 	"Golvellius (Euro, USA) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_golvellcRomInfo, sms_golvellcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28811,7 +28811,7 @@ struct BurnDriver BurnDrvsms_herolancc = {
 	"sms_herolancc", "sms_herolanc", NULL, NULL, "2021",
 	"Advanced Dungeons and Dragons - Heroes of the Lance (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_herolanccRomInfo, sms_herolanccRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28849,7 +28849,7 @@ struct BurnDriver BurnDrvsms_indycrusc = {
 	"sms_indycrusc", "sms_indycrus", NULL, NULL, "2021",
 	"Indiana Jones and the Last Crusade (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_indycruscRomInfo, sms_indycruscRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28868,7 +28868,7 @@ struct BurnDriver BurnDrvsms_junglec = {
 	"sms_junglec", "sms_jungle", NULL, NULL, "2021",
 	"The Jungle Book (Euro, Bra)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_junglecRomInfo, sms_junglecRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28887,7 +28887,7 @@ struct BurnDriver BurnDrvsms_krustyfhc = {
 	"sms_krustyfhc", "sms_krustyfh", NULL, NULL, "2021",
 	"Krusty's Fun House (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_krustyfhcRomInfo, sms_krustyfhcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28906,7 +28906,7 @@ struct BurnDriver BurnDrvsms_legndillc = {
 	"sms_legndillc", "sms_legndill", NULL, NULL, "2021",
 	"Legend of Illusion Starring Mickey Mouse (Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_legndillcRomInfo, sms_legndillcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28925,7 +28925,7 @@ struct BurnDriver BurnDrvsms_lionkingc = {
 	"sms_lionkingc", "sms_lionking", NULL, NULL, "2021",
 	"Disney's The Lion King (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_lionkingcRomInfo, sms_lionkingcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28944,7 +28944,7 @@ struct BurnDriver BurnDrvsms_luckydimc = {
 	"sms_luckydimc", "sms_luckydim", NULL, NULL, "2021",
 	"The Lucky Dime Caper Starring Donald Duck (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_luckydimcRomInfo, sms_luckydimcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28963,7 +28963,7 @@ struct BurnDriver BurnDrvsms_mastdarkc = {
 	"sms_mastdarkc", "sms_mastdark", NULL, NULL, "2021",
 	"Master of Darkness (Euro, Bra) - Castellano v1.2\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SMSGetZipName, sms_mastdarkcRomInfo, sms_mastdarkcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28982,7 +28982,7 @@ struct BurnDriver BurnDrvsms_miraclec = {
 	"sms_miraclec", "sms_miracle", NULL, NULL, "2021",
 	"Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_miraclecRomInfo, sms_miraclecRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29001,7 +29001,7 @@ struct BurnDriver BurnDrvsms_ppersiac = {
 	"sms_ppersiac", "sms_ppersia", NULL, NULL, "2021",
 	"Prince of Persia (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_ppersiacRomInfo, sms_ppersiacRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29020,7 +29020,7 @@ struct BurnDriver BurnDrvsms_beastc = {
 	"sms_beastc", "sms_beast", NULL, NULL, "2021",
 	"Shadow of the Beast (Euro, Bra) - Castellano v1.12a\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN, 0,
 	SMSGetZipName, sms_beastcRomInfo, sms_beastcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29039,7 +29039,7 @@ struct BurnDriver BurnDrvsms_bartvssmc = {
 	"sms_bartvssmc", "sms_bartvssm", NULL, NULL, "2021",
 	"The Simpsons - Bart vs. The Space Mutants (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_bartvssmcRomInfo, sms_bartvssmcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29058,7 +29058,7 @@ struct BurnDriver BurnDrvsms_bartvswc = {
 	"sms_bartvswc", "sms_bartvsw", NULL, NULL, "2021",
 	"The Simpsons - Bart vs. The World (Euro, Bra) - Castellano v1.0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_bartvswcRomInfo, sms_bartvswcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29077,13 +29077,13 @@ struct BurnDriver BurnDrvsms_spellcstc = {
 	"sms_spellcstc", "sms_spellcst", NULL, NULL, "2021",
 	"SpellCaster (Euro, USA, Bra) - Castellano v0,99\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SMSGetZipName, sms_spellcstcRomInfo, sms_spellcstcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
-// Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0
+// Spy vs Spy (Euro, USA, Bra) - Castellano v1,0
 // https://www.romhacking.net/
 static struct BurnRomInfo sms_spyvsspycastRomDesc[] = {
 	{ "spy vs. spy (euro, usa, bra) - castellano v1,0.sms",          32768, 0xacc2eea4, BRF_ESS | BRF_PRG },
@@ -29094,9 +29094,9 @@ STD_ROM_FN(sms_spyvsspycast)
 
 struct BurnDriver BurnDrvsms_spyvsspycast = {
 	"sms_spyvsspycast", "sms_spyvsspy", NULL, NULL, "2021",
-	"Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
+	"Spy vs Spy (Euro, USA, Bra) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspycastRomInfo, sms_spyvsspycastRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29115,7 +29115,7 @@ struct BurnDriver BurnDrvsms_term2c = {
 	"sms_term2c", "sms_term2", NULL, NULL, "2021",
 	"Terminator 2 - Judgment Day (Euro) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_term2cRomInfo, sms_term2cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29134,7 +29134,7 @@ struct BurnDriver BurnDrvsms_termntrc = {
 	"sms_termntrc", "sms_termntr", NULL, NULL, "2021",
 	"The Terminator (Euro) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_RUNGUN, 0,
 	SMSGetZipName, sms_termntrcRomInfo, sms_termntrcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29153,7 +29153,7 @@ struct BurnDriver BurnDrvsms_tomjermvc = {
 	"sms_tomjermvc", "sms_tomjermv", NULL, NULL, "2021",
 	"Tom and Jerry - The Movie (Euro, Bra) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_tomjermvcRomInfo, sms_tomjermvcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29172,7 +29172,7 @@ struct BurnDriver BurnDrvsms_wboyc = {
 	"sms_wboyc", "sms_wboy", NULL, NULL, "2021",
 	"Wonder Boy (Euro, USA, Bra, v1) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_wboycRomInfo, sms_wboycRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29191,7 +29191,7 @@ struct BurnDriver BurnDrvsms_wboy3c = {
 	"sms_wboy3c", "sms_wboy3", NULL, NULL, "2021",
 	"Wonder Boy III - The Dragon's Trap (Euro, USA, Kor) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_wboy3cRomInfo, sms_wboy3cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -29210,9 +29210,103 @@ struct BurnDriver BurnDrvsms_wboymwldc = {
 	"sms_wboymwldc", "sms_wboymwld", NULL, NULL, "2021",
 	"Wonder Boy in Monster World (Euro, Kor) - Castellano v1,0\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_wboymwldcRomInfo, sms_wboymwldcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
+// MiniMSX (HB)
+
+static struct BurnRomInfo sms_minimsxRomDesc[] = {
+	{ "MiniMSX (2021)(MikGames).sms",	131072, 0xeb6c0944, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_minimsx)
+STD_ROM_FN(sms_minimsx)
+
+struct BurnDriver BurnDrvsms_minimsx = {
+	"sms_minimsx", NULL, NULL, NULL, "2021",
+	"MiniMSX (HB)\0", NULL, "MIKGAMES", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MINIGAMES, 0,
+	SMSGetZipName, sms_minimsxRomInfo, sms_minimsxRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Pegged (HB, v1.02)
+
+static struct BurnRomInfo sms_peggedRomDesc[] = {
+	{ "Pegged v1.02 (2021)(Under4Mhz).sms",	32768, 0xac08cf7e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_pegged)
+STD_ROM_FN(sms_pegged)
+
+struct BurnDriver BurnDrvsms_pegged = {
+	"sms_pegged", NULL, NULL, NULL, "2021",
+	"Pegged (HB, v1.02)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_peggedRomInfo, sms_peggedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Snake (HB, v1.04)
+
+static struct BurnRomInfo sms_snakeRomDesc[] = {
+	{ "Snake v1.04 (2021)(Under4Mhz).sms",	32768, 0x995f8fd2, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_snake)
+STD_ROM_FN(sms_snake)
+
+struct BurnDriver BurnDrvsms_snake = {
+	"sms_snake", NULL, NULL, NULL, "2021",
+	"Snake (HB, v1.04)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_snakeRomInfo, sms_snakeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Vexed (HB, v1.03)
+
+static struct BurnRomInfo sms_vexedRomDesc[] = {
+	{ "Vexed v1.03 (2021)(Under4Mhz).sms",	32768, 0xbd34d592, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_vexed)
+STD_ROM_FN(sms_vexed)
+
+struct BurnDriver BurnDrvsms_vexed = {
+	"sms_vexed", NULL, NULL, NULL, "2021",
+	"Vexed (HB, v1.03)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_vexedRomInfo, sms_vexedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Ze Legende of Oliv (HB)
+
+static struct BurnRomInfo sms_zelolivRomDesc[] = {
+	{ "Ze Legende of Oliv (2019)(OscarB).sms",	1048576, 0x388b8eee, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_zeloliv)
+STD_ROM_FN(sms_zeloliv)
+
+struct BurnDriver BurnDrvsms_zeloliv = {
+	"sms_zeloliv", NULL, NULL, NULL, "2019",
+	"Ze Legende of Oliv (HB)\0", NULL, "OscarB", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
+	SMSGetZipName, sms_zelolivRomInfo, sms_zelolivRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

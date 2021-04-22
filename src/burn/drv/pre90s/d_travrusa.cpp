@@ -586,8 +586,12 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		switch (i) {
+			case  0: ZetSetIRQLine(0, CPU_IRQSTATUS_ACK); break;
+			case 14: ZetSetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+		}
+
 		CPU_RUN(0, Zet);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		CPU_RUN(1, M6803);
 		MSM5205Update(); // adpcm update samples

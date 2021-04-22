@@ -2209,6 +2209,18 @@ INLINE void advance_eg(void)
 		i = 32;
 		do
 		{
+			// ability for instrument to skip over attack and decay stages
+			// Fix idea: Aaron Giles, April 22, 2021
+			if (op->state == EG_ATT && op->volume <= MIN_ATT_INDEX)
+			{
+				op->volume = MIN_ATT_INDEX;
+				op->state = EG_DEC;
+			}
+
+			if (op->state == EG_DEC && op->volume >= op->d1l ) {
+				op->state = EG_SUS;
+			}
+
 			switch(op->state)
 			{
 			case EG_ATT:	/* attack phase */

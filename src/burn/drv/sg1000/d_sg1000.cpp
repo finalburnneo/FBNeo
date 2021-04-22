@@ -4472,8 +4472,65 @@ struct BurnDriver BurnDrvsg1k_palikat = {
 	"sg1k_palikat", NULL, NULL, NULL, "2020",
 	"Palikat (HB)\0", NULL, "helmha", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_palikatRomInfo, sg1k_palikatRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Pegged (HB)
+
+static struct BurnRomInfo sg1k_peggedRomDesc[] = {
+	{ "Pegged v1.02 (2021)(Under4Mhz).sg",	32768, 0x21e891f0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_pegged)
+STD_ROM_FN(sg1k_pegged)
+
+struct BurnDriver BurnDrvsg1k_pegged = {
+	"sg1k_pegged", NULL, NULL, NULL, "2021",
+	"Pegged (HB, v1.02)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_peggedRomInfo, sg1k_peggedRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Snake (HB, v1.04)
+
+static struct BurnRomInfo sg1k_snakeRomDesc[] = {
+	{ "Snake v1.04 (2021)(Under4Mhz).sg",	32768, 0xb9ab9d0c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_snake)
+STD_ROM_FN(sg1k_snake)
+
+struct BurnDriver BurnDrvsg1k_snake = {
+	"sg1k_snake", NULL, NULL, NULL, "2021",
+	"Snake (HB, v1.04)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_snakeRomInfo, sg1k_snakeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Vexed (HB, v1.03)
+
+static struct BurnRomInfo sg1k_vexedRomDesc[] = {
+	{ "Vexed v1.03 (2020)(Under4Mhz).sg",	32768, 0x6159a842, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_vexed)
+STD_ROM_FN(sg1k_vexed)
+
+struct BurnDriver BurnDrvsg1k_vexed = {
+	"sg1k_vexed", NULL, NULL, NULL, "2020",
+	"Vexed (HB, v1.03)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_vexedRomInfo, sg1k_vexedRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

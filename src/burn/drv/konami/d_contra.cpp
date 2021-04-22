@@ -301,7 +301,7 @@ void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 
 		case 0x001a:
 			sound_sync();
-			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0x001c:
@@ -350,7 +350,7 @@ void DrvContraM6809SoundWriteByte(UINT16 address, UINT8 data)
 		return;
 
 		case 0x4000:
-			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			// nop
 		return;
 	}
 }
@@ -802,19 +802,17 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 3000000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2] =  { 0, 0 };
+	INT32 nCyclesDone[2] =  { nExtraCycles, 0 };
 	INT32 nSoundBufferPos = 0;
 
 	HD6309Open(0);
 	M6809Open(0);
 
-	HD6309Idle(nExtraCycles);
-
 	for (INT32 i = 0; i < nInterleave; i++) {
-		CPU_RUN_SYNCINT(0, HD6309); // using _SYNCINT because we have to use _AUTO for vbl irq (_AUTO runs the cpu)
+		CPU_RUN(0, HD6309);
 
 		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02)) {
-			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO); // HOLD doesn't work (breaks title music), weird? -dink
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 
 		CPU_RUN_TIMER(1);
@@ -827,7 +825,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	nExtraCycles = HD6309TotalCycles() - nCyclesTotal[0];
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	M6809Close();
 	HD6309Close();
@@ -883,7 +881,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			HD6309Open(0);
 			contra_bankswitch_w(nBankData);
 			HD6309Close();
-			DrvRecalc = 1;
 		}
 	}
 

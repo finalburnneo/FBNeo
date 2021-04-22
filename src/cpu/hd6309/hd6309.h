@@ -22,6 +22,7 @@ typedef struct
 {
 	PAIR	pc; 		/* Program counter */
 	PAIR	ppc;		/* Previous program counter */
+	PAIR    ea;         /* effective address */
 	PAIR	d,w;		/* Accumlator d and w (ab = d, ef = w, abef = q) */
 	PAIR	dp; 		/* Direct Page register (page in MSB) */
 	PAIR	u, s;		/* Stack pointers */
@@ -33,6 +34,12 @@ typedef struct
 	UINT8	irq_state[2];
 	UINT8	irq_hold[2];
 	INT32 	extra_cycles; /* cycles used up by interrupts */
+
+	INT32   ICount;
+	INT32   segmentcycles;
+
+	INT32   end_run;
+
 	UINT8	int_state;	/* SYNC and CWAI flags */
 	UINT8	nmi_state;
 } hd6309_Regs;

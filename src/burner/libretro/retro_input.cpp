@@ -27,6 +27,10 @@ static bool bVolumeIsFireButton = false;
 static bool bInputInitialized = false;
 static char* pDirections[MAX_PLAYERS][6];
 
+// Macros
+UINT32 nMacroCount = 0;
+UINT32 nMaxMacro = 0;
+
 void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
 
@@ -70,15 +74,19 @@ INT32 GameInpBlank(INT32 bDipSwitch)
 
 static void AnalyzeGameLayout()
 {
+	struct GameInp* pgi;
 	struct BurnInputInfo bii;
 
-	INT32 nPunchx3[4] = {0, 0, 0, 0};
-	INT32 nKickx3[4] = {0, 0, 0, 0};
+	INT32 nPunchx3[MAX_PLAYERS] = {0, };
+	INT32 nPunchInputs[MAX_PLAYERS][3];
+	INT32 nKickx3[MAX_PLAYERS] = {0, };
+	INT32 nKickInputs[MAX_PLAYERS][3];
 
 	bStreetFighterLayout = false;
 	nMahjongKeyboards = 0;
 	bVolumeIsFireButton = false;
 	nFireButtons = 0;
+	nMacroCount = 0;
 
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		bii.szName = NULL;
@@ -87,8 +95,8 @@ static void AnalyzeGameLayout()
 			bii.szName = "";
 		}
 
-		bool bPlayerInInfo = (toupper(bii.szInfo[0]) == 'P' && bii.szInfo[1] >= '1' && bii.szInfo[1] <= '4'); // Because some of the older drivers don't use the standard input naming.
-		bool bPlayerInName = (bii.szName[0] == 'P' && bii.szName[1] >= '1' && bii.szName[1] <= '4');
+		bool bPlayerInInfo = (toupper(bii.szInfo[0]) == 'P' && bii.szInfo[1] >= '1' && bii.szInfo[1] <= '6'); // Because some of the older drivers don't use the standard input naming.
+		bool bPlayerInName = (bii.szName[0] == 'P' && bii.szName[1] >= '1' && bii.szName[1] <= '6');
 
 		if (bPlayerInInfo || bPlayerInName) {
 			INT32 nPlayer = 0;
@@ -115,22 +123,62 @@ static void AnalyzeGameLayout()
 			}
 			if (_stricmp(" Weak Punch", bii.szName + 2) == 0) {
 				nPunchx3[nPlayer] |= 1;
+				nPunchInputs[nPlayer][0] = i;
 			}
 			if (_stricmp(" Medium Punch", bii.szName + 2) == 0) {
 				nPunchx3[nPlayer] |= 2;
+				nPunchInputs[nPlayer][1] = i;
 			}
 			if (_stricmp(" Strong Punch", bii.szName + 2) == 0) {
 				nPunchx3[nPlayer] |= 4;
+				nPunchInputs[nPlayer][2] = i;
 			}
 			if (_stricmp(" Weak Kick", bii.szName + 2) == 0) {
 				nKickx3[nPlayer] |= 1;
+				nKickInputs[nPlayer][0] = i;
 			}
 			if (_stricmp(" Medium Kick", bii.szName + 2) == 0) {
 				nKickx3[nPlayer] |= 2;
+				nKickInputs[nPlayer][1] = i;
 			}
 			if (_stricmp(" Strong Kick", bii.szName + 2) == 0) {
 				nKickx3[nPlayer] |= 4;
+				nKickInputs[nPlayer][2] = i;
 			}
+		}
+	}
+
+	pgi = GameInp + nGameInpCount;
+
+	// We only support 3xPunch & 3xKick for now
+	for (UINT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
+		if (nPunchx3[nPlayer] == 7) {		// Create a 3x punch macro
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons 3x Punch", nPlayer + 1);
+			for (INT32 j = 0; j < 3; j++) {
+				BurnDrvGetInputInfo(&bii, nPunchInputs[nPlayer][j]);
+				pgi->Macro.pVal[j] = bii.pVal;
+				pgi->Macro.nVal[j] = 1;
+			}
+
+			nMacroCount++;
+			pgi++;
+		}
+		if (nKickx3[nPlayer] == 7) {		// Create a 3x kick macro
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+
+			sprintf(pgi->Macro.szName, "P%i Buttons 3x Kick", nPlayer + 1);
+			for (INT32 j = 0; j < 3; j++) {
+				BurnDrvGetInputInfo(&bii, nKickInputs[nPlayer][j]);
+				pgi->Macro.pVal[j] = bii.pVal;
+				pgi->Macro.nVal[j] = 1;
+			}
+
+			nMacroCount++;
+			pgi++;
 		}
 	}
 
@@ -146,11 +194,16 @@ INT32 GameInpInit()
 {
 	// Count the number of inputs
 	nGameInpCount = 0;
+	nMacroCount = 0;
+
+	// We only support 3xPunch & 3xKick for now
+	nMaxMacro = nMaxPlayers * 2;
+
 	while (BurnDrvGetInputInfo(NULL,nGameInpCount) == 0)
 		nGameInpCount++;
 
 	// Allocate space for all the inputs
-	GameInp = (struct GameInp*)calloc(nGameInpCount, sizeof(struct GameInp));
+	GameInp = (struct GameInp*)calloc(nGameInpCount + nMaxMacro, sizeof(struct GameInp));
 	if (GameInp == NULL) {
 		return 1;
 	}
@@ -351,17 +404,30 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 }
 
 // Digital to digital mapping
-static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsigned id, char *szn, unsigned device = RETRO_DEVICE_JOYPAD)
+static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsigned id, char *szn, unsigned device = RETRO_DEVICE_JOYPAD, unsigned nInput = GIT_SWITCH)
 {
 	if(bButtonMapped) return 0;
-	pgi->nInput = GIT_SWITCH;
-	if (!bInputInitialized)
-		pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-	if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
-	sKeyBinds[pgi->Input.Switch.nCode].id = id;
-	sKeyBinds[pgi->Input.Switch.nCode].port = port;
-	sKeyBinds[pgi->Input.Switch.nCode].device = device;
-	sKeyBinds[pgi->Input.Switch.nCode].index = -1;
+	pgi->nInput = nInput;
+	if(nInput == GIT_SWITCH)
+	{
+		if (!bInputInitialized)
+			pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
+		if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+		sKeyBinds[pgi->Input.Switch.nCode].id = id;
+		sKeyBinds[pgi->Input.Switch.nCode].port = port;
+		sKeyBinds[pgi->Input.Switch.nCode].device = device;
+		sKeyBinds[pgi->Input.Switch.nCode].index = -1;
+	}
+	if(nInput == GIT_MACRO_AUTO)
+	{
+		if (!bInputInitialized)
+			pgi->Macro.Switch.nCode = (UINT16)(nSwitchCode++);
+		if (nDeviceType[port] == RETRO_DEVICE_NONE) return 0;
+		sKeyBinds[pgi->Macro.Switch.nCode].id = id;
+		sKeyBinds[pgi->Macro.Switch.nCode].port = port;
+		sKeyBinds[pgi->Macro.Switch.nCode].device = device;
+		sKeyBinds[pgi->Macro.Switch.nCode].index = -1;
+	}
 	retro_input_descriptor descriptor;
 	descriptor.port = port;
 	descriptor.device = device;
@@ -1857,6 +1923,13 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 			}
 		}
 
+		if (bStreetFighterLayout) {
+			if (strncmp("Buttons 3x Punch", description, 16) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L : RETRO_DEVICE_ID_JOYPAD_L2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+			if (strncmp("Buttons 3x Kick", description, 15) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L2 : RETRO_DEVICE_ID_JOYPAD_R2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+		}
+
 		// assign per player mahjong controls (require 1 keyboard per player, does the frontend actually support this ?)
 		if (nMahjongKeyboards > 0)
 		{
@@ -2134,6 +2207,11 @@ static INT32 GameInpReassign()
 		GameInpAutoOne(pgi, bii.szInfo, bii.szName);
 	}
 
+	// Fill in macros still undefined
+	for (i = 0; i < nMacroCount; i++, pgi++) {
+		GameInpAutoOne(pgi, pgi->Macro.szName, pgi->Macro.szName);
+	}
+
 	return 0;
 }
 
@@ -2170,6 +2248,11 @@ INT32 GameInpDefault()
 		}
 
 		GameInpAutoOne(pgi, bii.szInfo, bii.szName);
+	}
+
+	// Fill in macros still undefined
+	for (i = 0; i < nMacroCount; i++, pgi++) {
+		GameInpAutoOne(pgi, pgi->Macro.szName, pgi->Macro.szName);
 	}
 
 	return 0;
@@ -2518,6 +2601,16 @@ void InputMake(void)
 				*(pgi->Input.pShortVal) = pgi->Input.nVal;
 
 				break;
+			}
+		}
+	}
+
+	for (i = 0; i < nMacroCount; i++, pgi++) {
+		if (CinpState(pgi->Macro.Switch.nCode)) {
+			for (INT32 j = 0; j < 4; j++) {
+				if (pgi->Macro.pVal[j]) {
+					*(pgi->Macro.pVal[j]) = pgi->Macro.nVal[j];
+				}
 			}
 		}
 	}

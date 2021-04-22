@@ -957,16 +957,16 @@ static UINT16 alpha_II_trigger_r(INT32 offset)
 	UINT16 *m_shared_ram = (UINT16*)DrvShareRAM;
 	static const UINT8 coinage1[8][2] = {{1,1}, {1,2}, {1,3}, {1,4}, {1,5}, {1,6}, {2,3}, {3,2}};
 	static const UINT8 coinage2[8][2] = {{1,1}, {2,1}, {3,1}, {4,1}, {5,1}, {6,1}, {7,1}, {8,1}};
-	UINT16 source = m_shared_ram[offset];
+	UINT16 source = BURN_ENDIAN_SWAP_INT16(m_shared_ram[offset]);
 
 	switch (offset)
 	{
 		case 0: /* Dipswitch 2 */
-			m_shared_ram[0] = (source & 0xff00) | DrvDips[1];
+			m_shared_ram[0] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | DrvDips[1]);
 			return 0;
 
 		case 0x22: /* Coin value */
-			m_shared_ram[0x22] = (source & 0xff00) | (credits & 0x00ff);
+			m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (credits & 0x00ff));
 			return 0;
 
 		case 0x29: /* Query microcontroller for coin insert */
@@ -974,8 +974,8 @@ static UINT16 alpha_II_trigger_r(INT32 offset)
 				coin_latch = 0;
 			if ((DrvInputs[2] & 0x1) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x29] = (source & 0xff00) | (coin_id & 0xff);    // coinA
-				m_shared_ram[0x22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id & 0xff));    // coinA
+				m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id & 0xff) == 0x22)
@@ -997,8 +997,8 @@ static UINT16 alpha_II_trigger_r(INT32 offset)
 			}
 			else if ((DrvInputs[2] & 0x2) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x29] = (source & 0xff00) | (coin_id >> 8);  // coinB
-				m_shared_ram[0x22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id >> 8));  // coinB
+				m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id >> 8) == 0x22)
@@ -1024,16 +1024,16 @@ static UINT16 alpha_II_trigger_r(INT32 offset)
 					microcontroller_data = 0x21;              // timer
 				else
 					microcontroller_data = 0x00;
-				m_shared_ram[0x29] = (source & 0xff00) | microcontroller_data;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | microcontroller_data);
 			}
 			return 0;
 
 		case 0xfe:  /* Custom ID check, same for all games */
-			m_shared_ram[0xfe] = (source & 0xff00) | 0x87;
+			m_shared_ram[0xfe] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x87);
 			break;
 
 		case 0xff:  /* Custom ID check, same for all games */
-			m_shared_ram[0xff] = (source & 0xff00) | 0x13;
+			m_shared_ram[0xff] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x13);
 			break;
 	}
 
@@ -1047,23 +1047,23 @@ static INT32 alpha_V_trigger_r(UINT16 offset)
 
 	static const UINT8 coinage1[8][2] = {{1,1}, {1,5}, {1,3}, {2,3}, {1,2}, {1,6}, {1,4}, {3,2}};
 	static const UINT8 coinage2[8][2] = {{1,1}, {5,1}, {3,1}, {7,1}, {2,1}, {6,1}, {4,1}, {8,1}};
-	int source = m_shared_ram[offset];
+	int source = BURN_ENDIAN_SWAP_INT16(m_shared_ram[offset]);
 
 	switch (offset)
 	{
 		case 0: /* Dipswitch 1 */
-			m_shared_ram[0] = (source & 0xff00) | DrvDips[1];
+			m_shared_ram[0] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | DrvDips[1]);
 			return 0;
 		case 0x22: /* Coin value */
-			m_shared_ram[0x22] = (source & 0xff00) | (credits & 0x00ff);
+			m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (credits & 0x00ff));
 			return 0;
 		case 0x29: /* Query microcontroller for coin insert */
 			if ((DrvInputs[2] & 0x3) == 3)
 				coin_latch = 0;
 			if ((DrvInputs[2] & 0x1) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x29] = (source & 0xff00) | (coin_id & 0xff);    // coinA
-				m_shared_ram[0x22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id & 0xff));    // coinA
+				m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id & 0xff) == 0x22)
@@ -1081,8 +1081,8 @@ static INT32 alpha_V_trigger_r(UINT16 offset)
 			}
 			else if ((DrvInputs[2] & 0x2) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x29] = (source & 0xff00) | (coin_id>>8);    // coinB
-				m_shared_ram[0x22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id>>8));    // coinB
+				m_shared_ram[0x22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id >> 8) == 0x22)
@@ -1101,27 +1101,27 @@ static INT32 alpha_V_trigger_r(UINT16 offset)
 			else
 			{
 				microcontroller_data = 0x00;
-				m_shared_ram[0x29] = (source & 0xff00) | microcontroller_data;
+				m_shared_ram[0x29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | microcontroller_data);
 			}
 
 			return 0;
 		case 0xfe:  /* Custom ID check */
-			m_shared_ram[0xfe] = (source & 0xff00) | (microcontroller_id >> 8);
+			m_shared_ram[0xfe] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (microcontroller_id >> 8));
 			break;
 		case 0xff:  /* Custom ID check */
-			m_shared_ram[0xff] = (source & 0xff00) | (microcontroller_id & 0xff);
+			m_shared_ram[0xff] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (microcontroller_id & 0xff));
 			break;
 
 		case 0x1f00: /* Dipswitch 1 */
-			m_shared_ram[0x1f00] = (source & 0xff00) | DrvDips[1];
+			m_shared_ram[0x1f00] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | DrvDips[1]);
 			return 0;
 		case 0x1f29: /* Query microcontroller for coin insert */
 			if ((DrvInputs[2] & 0x3) == 3)
 				coin_latch = 0;
 			if ((DrvInputs[2] & 0x1) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x1f29] = (source & 0xff00) | (coin_id & 0xff);  // coinA
-				m_shared_ram[0x1f22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x1f29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id & 0xff));  // coinA
+				m_shared_ram[0x1f22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id & 0xff) == 0x22)
@@ -1139,8 +1139,8 @@ static INT32 alpha_V_trigger_r(UINT16 offset)
 			}
 			else if ((DrvInputs[2] & 0x2) == 0 && !coin_latch)
 			{
-				m_shared_ram[0x1f29] = (source & 0xff00) | (coin_id >> 8);    // coinB
-				m_shared_ram[0x1f22] = (source & 0xff00) | 0x0;
+				m_shared_ram[0x1f29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (coin_id >> 8));    // coinB
+				m_shared_ram[0x1f22] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | 0x0);
 				coin_latch = 1;
 
 				if ((coin_id >> 8) == 0x22)
@@ -1159,18 +1159,18 @@ static INT32 alpha_V_trigger_r(UINT16 offset)
 			else
 			{
 				microcontroller_data = 0x00;
-				m_shared_ram[0x1f29] = (source & 0xff00) | microcontroller_data;
+				m_shared_ram[0x1f29] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | microcontroller_data);
 			}
 
-			source = m_shared_ram[0x0163];
-			m_shared_ram[0x0163] = (source & 0x00ff) | (DrvDips[1] << 8);
+			source = BURN_ENDIAN_SWAP_INT16(m_shared_ram[0x0163]);
+			m_shared_ram[0x0163] = BURN_ENDIAN_SWAP_INT16((source & 0x00ff) | (DrvDips[1] << 8));
 
 			return 0;
 		case 0x1ffe:  /* Custom ID check */
-			m_shared_ram[0x1ffe] = (source & 0xff00) | (microcontroller_id >> 8);
+			m_shared_ram[0x1ffe] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (microcontroller_id >> 8));
 			break;
 		case 0x1fff:  /* Custom ID check */
-			m_shared_ram[0x1fff] = (source & 0xff00) | (microcontroller_id & 0xff);
+			m_shared_ram[0x1fff] = BURN_ENDIAN_SWAP_INT16((source & 0xff00) | (microcontroller_id & 0xff));
 			break;
 	}
 
@@ -1775,7 +1775,7 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++)
 	{
-		UINT16 p = pal[i];
+		UINT16 p = BURN_ENDIAN_SWAP_INT16(pal[i]);
 		UINT8 r = pal5bit(((p >> 7) & 0x1e) | ((p >> 14) & 0x01));
 		UINT8 g = pal5bit(((p >> 3) & 0x1e) | ((p >> 13) & 0x01));
 		UINT8 b = pal5bit(((p << 1) & 0x1e) | ((p >> 12) & 0x01));
@@ -1790,8 +1790,8 @@ static void draw_sprites(INT32 j, INT32 s, INT32 e, INT32 fx_mask, INT32 fy_mask
 
 	for (INT32 offs = s; offs < e; offs += 0x40)
 	{
-		INT32 my = spriteram[offs + 3 + (j << 1)];
-		INT32 mx =(spriteram[offs + 2 + (j << 1)] << 1) | (my >> 15);
+		INT32 my = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 3 + (j << 1)]);
+		INT32 mx =(BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2 + (j << 1)]) << 1) | (my >> 15);
 		my = -my & 0x1ff;
 		mx = ((mx + 0x100) & 0x1ff) - 0x100;
 		if (j == 0 && s == 0x7c0)
@@ -1805,8 +1805,8 @@ static void draw_sprites(INT32 j, INT32 s, INT32 e, INT32 fx_mask, INT32 fy_mask
 
 		for (INT32 i = 0; i < 0x40; i += 2)
 		{
-			INT32 tile = spriteram[offs + 1 + i + (0x800 * j) + 0x800];
-			INT32 color = spriteram[offs + i + (0x800 * j) + 0x800] & color_mask;
+			INT32 tile = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1 + i + (0x800 * j) + 0x800]);
+			INT32 color = BURN_ENDIAN_SWAP_INT16(spriteram[offs + i + (0x800 * j) + 0x800]) & color_mask;
 
 			INT32 fx = tile & fx_mask;
 			INT32 fy = tile & fy_mask;
@@ -1909,7 +1909,7 @@ static INT32 SkyadvntDraw()
 		draw_sprites(0, 0x07c0, 0x0800, 0, 0x8000, 0x7fff, 0xff);
 		draw_sprites(1, 0x0000, 0x0800, 0, 0x8000, 0x7fff, 0xff);
 
-		if (spriteram[0x1bde] == 0x24 && (spriteram[0x1bdf] >> 8) == 0x3b)
+		if (spriteram[0x1bde] == BURN_ENDIAN_SWAP_INT16(0x24) && (BURN_ENDIAN_SWAP_INT16(spriteram[0x1bdf]) >> 8) == 0x3b)
 		{
 			draw_sprites(2, 0x03c0, 0x0800, 0, 0x8000, 0x7fff, 0xff);
 			draw_sprites(2, 0x0000, 0x03c0, 0, 0x8000, 0x7fff, 0xff);
@@ -3339,11 +3339,11 @@ static INT32 SbasebalInit()
 	INT32 rc = Drv5Init(SbasebalRomCb, 0, 0x8512, 0x2423, 5);
 	if (!rc) {
 		UINT16 *rom = (UINT16*)Drv68KROM;
-		rom[0xb672/2] = 0x4e71;
-		rom[0x44e/2] = 0x4e71;
-		rom[0x450/2] = 0x4e71;
-		rom[0x458/2] = 0x4e71;
-		rom[0x45a/2] = 0x4e71;
+		rom[0xb672/2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		rom[0x44e/2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		rom[0x450/2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		rom[0x458/2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		rom[0x45a/2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	}
 	return rc;
 }

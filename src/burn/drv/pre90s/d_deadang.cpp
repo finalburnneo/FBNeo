@@ -547,10 +547,10 @@ static void draw_sprites(INT32 /*flipscreen*/)
 
 	for (INT32 offs = 0; offs < 0x800/2; offs+=4)
 	{
-		if ((ram[offs+3] & 0xff00) != 0xf00) continue;
+		if ((BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0xff00) != 0xf00) continue;
 
 		INT32 pri = 0;
-		switch (ram[offs+2] & 0xc000)
+		switch (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0xc000)
 		{
 			case 0xc000: pri = 0; break;	// Unknown
 			case 0x8000: pri = 0; break;	// Over all playfields
@@ -558,14 +558,14 @@ static void draw_sprites(INT32 /*flipscreen*/)
 			case 0x0000: pri = 0xfc; break;	// Under middle playfield
 		}
 
-		INT32 flipx = ram[offs+0] & 0x2000;
-		INT32 flipy =~ram[offs+0] & 0x4000;
-		INT32 sy    = ram[offs+0] & 0x00ff;
-		INT32 sx    = ram[offs+2] & 0x00ff;
-		if (ram[offs + 2] & 0x100) sx = 0 - (0xff - sx);
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x2000;
+		INT32 flipy =~BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x4000;
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x00ff;
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x00ff;
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) & 0x100) sx = 0 - (0xff - sx);
 
-		INT32 color = ram[offs+1] >> 12;
-		INT32 code  = ram[offs+1] & 0xfff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) >> 12;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0xfff;
 
 		if (0) { //flipscreen) {
 			sx = 240 - sx;
@@ -587,15 +587,15 @@ static INT32 DrvDraw()
 
 	UINT16 *scroll_ram = (UINT16*)DrvScrollRAM;
 
-	INT32 layer_enable = scroll_ram[0x34] ^ 0xff;
+	INT32 layer_enable = BURN_ENDIAN_SWAP_INT16(scroll_ram[0x34]) ^ 0xff;
 	INT32 flipscreen = (layer_enable & 0x40) ? 0 : TMAP_FLIPXY;
 
-	GenericTilemapSetScrollY(3, ((scroll_ram[0x01]&0xf0)<<4)+((scroll_ram[0x02]&0x7f)<<1)+((scroll_ram[0x02]&0x80)>>7) );
-	GenericTilemapSetScrollX(3, ((scroll_ram[0x09]&0xf0)<<4)+((scroll_ram[0x0a]&0x7f)<<1)+((scroll_ram[0x0a]&0x80)>>7) );
-	GenericTilemapSetScrollY(1, ((scroll_ram[0x11]&0x10)<<4)+((scroll_ram[0x12]&0x7f)<<1)+((scroll_ram[0x12]&0x80)>>7) );
-	GenericTilemapSetScrollX(1, ((scroll_ram[0x19]&0x10)<<4)+((scroll_ram[0x1a]&0x7f)<<1)+((scroll_ram[0x1a]&0x80)>>7) );
-	GenericTilemapSetScrollY(2, ((scroll_ram[0x21]&0xf0)<<4)+((scroll_ram[0x22]&0x7f)<<1)+((scroll_ram[0x22]&0x80)>>7) );
-	GenericTilemapSetScrollX(2, ((scroll_ram[0x29]&0xf0)<<4)+((scroll_ram[0x2a]&0x7f)<<1)+((scroll_ram[0x2a]&0x80)>>7) );
+	GenericTilemapSetScrollY(3, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x01])&0xf0)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x02])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x02])&0x80)>>7) );
+	GenericTilemapSetScrollX(3, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x09])&0xf0)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x0a])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x0a])&0x80)>>7) );
+	GenericTilemapSetScrollY(1, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x11])&0x10)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x12])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x12])&0x80)>>7) );
+	GenericTilemapSetScrollX(1, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x19])&0x10)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x1a])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x1a])&0x80)>>7) );
+	GenericTilemapSetScrollY(2, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x21])&0xf0)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x22])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x22])&0x80)>>7) );
+	GenericTilemapSetScrollX(2, ((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x29])&0xf0)<<4)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x2a])&0x7f)<<1)+((BURN_ENDIAN_SWAP_INT16(scroll_ram[0x2a])&0x80)>>7) );
 
 	GenericTilemapSetEnable(3, layer_enable & 0x01);
 	GenericTilemapSetEnable(1, layer_enable & 0x02);

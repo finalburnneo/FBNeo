@@ -140,7 +140,7 @@ STDDIPINFO(Drv)
 
 static inline void bionicc_palette_write(INT32 offset)
 {
-	INT32 data = *((UINT16*)(DrvPalRAM + (offset & 0x7fe)));
+	INT32 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (offset & 0x7fe))));
 
 	INT32 bright = data & 0x0f;
 
@@ -199,7 +199,7 @@ static void __fastcall bionicc_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xff800) == 0xf8000) {
 		address &= 0x7fe;
-		*((UINT16*)(DrvPalRAM + address)) = data;
+		*((UINT16*)(DrvPalRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		bionicc_palette_write(address);
 		return;
 	}
@@ -388,8 +388,8 @@ static tilemap_callback( background )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM1;
 
-	INT32 attr  = ram[(offs * 2) + 1];
-	INT32 code  = (ram[offs * 2] & 0xff) | ((attr & 0x07) * 256);
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[(offs * 2) + 1]);
+	INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs * 2]) & 0xff) | ((attr & 0x07) * 256);
 
 	TILE_SET_INFO(0, code, attr >> 3, TILE_FLIPXY(attr >> 6));
 }
@@ -398,8 +398,8 @@ static tilemap_callback( foreground )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM0;
 
-	INT32 attr  = ram[(offs * 2) + 1];
-	INT32 code  = (ram[offs * 2] & 0xff) | ((attr & 0x07) * 256);
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[(offs * 2) + 1]);
+	INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs * 2]) & 0xff) | ((attr & 0x07) * 256);
 
 	INT32 flags = TILE_FLIPXY(attr >> 6);
 	INT32 group = (attr >> 5) & 1;
@@ -416,8 +416,8 @@ static tilemap_callback( text )
 {
 	UINT16 *ram = (UINT16*)DrvTextRAM;
 
-	INT32 attr  = ram[offs + 0x400];
-	INT32 code  = (ram[offs] & 0xff) | ((attr & 0xc0) << 2);
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs + 0x400]);
+	INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xff) | ((attr & 0xc0) << 2);
 
 	TILE_SET_INFO(2, code, attr, 0);
 }
@@ -666,16 +666,16 @@ static void draw_sprites()
 
 	for (INT32 offs = (0x500-8)/2; offs >= 0; offs -= 4)
 	{
-		INT32 code = ram[offs] & 0x7ff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x7ff;
 
 		if (code == 0x7ff) continue;
 
-		INT32 attr = ram[offs+1];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
 		INT32 color = (attr & 0x3c) >> 2;
 		INT32 flipx = attr & 0x02;
 		INT32 flipy = 0;
-		INT32 sx = (INT16)ram[offs+3];
-		INT32 sy = (INT16)ram[offs+2];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16((INT16)ram[offs+3]);
+		INT32 sy = BURN_ENDIAN_SWAP_INT16((INT16)ram[offs+2]);
 		if (sy > 496) sy -= 512;
 
 		if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;

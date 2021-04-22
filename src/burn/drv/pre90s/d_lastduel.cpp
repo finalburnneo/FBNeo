@@ -1351,7 +1351,7 @@ static void DrvCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x800; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -1430,8 +1430,8 @@ static void DrvRenderBgLayer(INT32 nTransparent)
 	for (mx = 0; mx < 32; mx++) {
 		for (my = 0; my < 64; my++) {
 			TileIndex = (my * 32) + mx;
-			Code = VideoRam[TileIndex] & 0x1fff;
-			Colour = VideoRam[TileIndex + 0x800];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]) & 0x1fff;
+			Colour = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x800]);
 			Flip = (Colour & 0x60) >> 5;
 			xFlip = (Flip >> 0) & 0x01;
 			yFlip = (Flip >> 1) & 0x01;
@@ -1458,8 +1458,8 @@ static void LastduelRenderBgLayer(INT32 nTransparent)
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = VideoRam[2 * TileIndex] & 0x1fff;
-			Colour = VideoRam[2 * TileIndex + 1];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex]) & 0x1fff;
+			Colour = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex + 1]);
 			Flip = (Colour & 0x60) >> 5;
 			xFlip = (Flip >> 0) & 0x01;
 			yFlip = (Flip >> 1) & 0x01;
@@ -1488,15 +1488,15 @@ static void DrvRenderSprites(INT32 Priority)
 	for (Offset = 0x400 - 4; Offset >= 0; Offset -= 4) {
 		INT32 Attr, sy, sx, xFlip, yFlip, Code, Colour;
 
-		Attr = SpriteRam[Offset + 1];
+		Attr = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		if (DrvSpritePriMask) {
 			if (Priority == 1 && (Attr & DrvSpritePriMask)) continue;
 			if (Priority == 0 && !(Attr & DrvSpritePriMask)) continue;
 		}
 
-		Code = SpriteRam[Offset] & 0xfff;
-		sx = SpriteRam[Offset + 3] & 0x1ff;
-		sy = SpriteRam[Offset + 2] & 0x1ff;
+		Code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]) & 0xfff;
+		sx = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]) & 0x1ff;
+		sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]) & 0x1ff;
 		if (sy > 0x100) sy -= 0x200;
 
 		xFlip = Attr & 0x20;
@@ -1516,7 +1516,7 @@ static void DrvRenderCharLayer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			yFlip = 0;
-			Code = VideoRam[TileIndex];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Colour = Code >> 12;
 			if (Code & 0x800) yFlip = 1;
 			Code &= 0x7ff;
@@ -1556,8 +1556,8 @@ static void LastduelRenderFgLayer(INT32 BackLayer)
 
 	for (mx = 0; mx < 64; mx++) {
 		for (my = 0; my < 64; my++) {
-			INT32 code = VideoRam[2 * TileIndex] & 0xfff;
-			INT32 color = VideoRam[2 * TileIndex + 1];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex]) & 0xfff;
+			INT32 color = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex + 1]);
 			INT32 flip = ((color & 0x40) ? 0xf0 : 0) + ((color & 0x20) ? 0x0f : 0);
 			INT32 group = (color & 0x80) >> 7;
 			color &= 0x0f;
@@ -1613,8 +1613,8 @@ static void DrvRenderFgLayer(INT32 BackLayer)
 	for (mx = 0; mx < 32; mx++) {
 		for (my = 0; my < 64; my++) {
 			TileIndex = (my * 32) + mx;
-			INT32 code = VideoRam[TileIndex] & 0x1fff;
-			INT32 color = VideoRam[TileIndex + 0x800];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]) & 0x1fff;
+			INT32 color = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x800]);
 			INT32 flip = ((color & 0x40) ? 0xf0 : 0) + ((color & 0x20) ? 0x0f : 0);
 			INT32 group = (color & 0x10) >> 4;
 			color &= 0x0f;

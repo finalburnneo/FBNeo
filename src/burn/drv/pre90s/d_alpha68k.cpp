@@ -364,13 +364,13 @@ static UINT16 kyros_alpha_trigger_r(UINT32 Offset)
 	static const UINT8 coinage1[8][2] = {{1,1}, {1,5}, {1,3}, {2,3}, {1,2}, {1,6}, {1,4}, {3,2}};
 	static const UINT8 coinage2[8][2] = {{1,1}, {5,1}, {3,1}, {7,1}, {2,1}, {6,1}, {4,1}, {8,1}};
 	UINT16 * RAM = (UINT16*)DrvSharedRam;
-	INT32 Source = RAM[Offset];
+	INT32 Source = BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	
 //	bprintf(PRINT_NORMAL, _T("kyros_alpha_trigger_r %x\n"), Offset);
 
 	switch (Offset)	{
 		case 0x22: {
-			RAM[0x22] = (Source & 0xff00) | (DrvCredits & 0x00ff);
+			RAM[0x22] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | (DrvCredits & 0x00ff));
 			return 0;
 		}
 	
@@ -379,8 +379,8 @@ static UINT16 kyros_alpha_trigger_r(UINT32 Offset)
 			if ((DrvInput[2] & 0x03) == 0x03) DrvLatch = 0;
 			
 			if ((DrvInput[2] & 0x01) == 0x00 && !DrvLatch)	{
-				RAM[0x29] = (Source & 0xff00) | (DrvCoinID & 0xff);
-				RAM[0x22] = (Source & 0xff00) | 0x00;
+				RAM[0x29] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | (DrvCoinID & 0xff));
+				RAM[0x22] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | 0x00);
 				DrvLatch = 1;
 
 				DrvCoinValue = (~DrvDip[0] >> 1) & 0x07;
@@ -392,8 +392,8 @@ static UINT16 kyros_alpha_trigger_r(UINT32 Offset)
 					DrvCredits = 0;
 				}
 			} else if ((DrvInput[2] & 0x02) == 0x00 && !DrvLatch) {
-				RAM[0x29] = (Source & 0xff00) | (DrvCoinID >> 8);
-				RAM[0x22] = (Source & 0xff00) | 0x0;
+				RAM[0x29] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | (DrvCoinID >> 8));
+				RAM[0x22] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | 0x0);
 				DrvLatch = 1;
 
 				DrvCoinValue = (~DrvDip[0] >> 1) & 0x07;
@@ -416,13 +416,13 @@ static UINT16 kyros_alpha_trigger_r(UINT32 Offset)
 					DrvMicroControllerData = 0x00;
 				}
 
-				RAM[0x29] = (Source & 0xff00) | DrvMicroControllerData;
+				RAM[0x29] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | DrvMicroControllerData);
 			}
 			return 0;
 		}
 		
 		case 0xff: {
-			RAM[0xff] = (Source & 0xff00) | DrvMicroControllerID;
+			RAM[0xff] = BURN_ENDIAN_SWAP_INT16((Source & 0xff00) | DrvMicroControllerID);
 			break;
 		}
 	}
@@ -922,7 +922,7 @@ static void KyrosCalcPalette()
 	}
 	
 	UINT16 *RAM = (UINT16*)DrvVideoRam;
-	DrvPalette[0x100] = Palette[RAM[0] & 0xff];
+	DrvPalette[0x100] = Palette[BURN_ENDIAN_SWAP_INT16(RAM[0]) & 0xff];
 }
 
 static void SstingryDrawSprites(INT32 c, INT32 d)
@@ -931,7 +931,7 @@ static void SstingryDrawSprites(INT32 c, INT32 d)
 	INT32 Data, Offs, mx, my, Colour, Tile, i, Bank, yFlip, xFlip;
 	
 	for (Offs = 0; Offs < 0x400; Offs += 0x20) {
-		mx = RAM[Offs + c];
+		mx = BURN_ENDIAN_SWAP_INT16(RAM[Offs + c]);
 		my = -(mx >> 8) & 0xff;
 		mx &= 0xff;
 		if (mx > 0xf8) mx -= 0x100;
@@ -939,7 +939,7 @@ static void SstingryDrawSprites(INT32 c, INT32 d)
 		if (DrvFlipScreen) my = 249 - my;
 		
 		for (i = 0; i < 0x20; i++) {
-			Data = RAM[Offs + d + i];
+			Data = BURN_ENDIAN_SWAP_INT16(RAM[Offs + d + i]);
 			if (Data != 0x40) {
 				yFlip = Data & 0x1000;
 				xFlip = 0;
@@ -980,14 +980,14 @@ static void KyrosDrawSprites(INT32 c, INT32 d)
 	INT32 Data, Offs, mx, my, Colour, Tile, i, Bank, yFlip, xFlip;
 	
 	for (Offs = 0; Offs < 0x400; Offs += 0x20) {
-		mx = RAM[Offs + c];
+		mx = BURN_ENDIAN_SWAP_INT16(RAM[Offs + c]);
 		my = -(mx >> 8) & 0xff;
 		mx &= 0xff;
 
 		if (DrvFlipScreen) my = 249 - my;
 
 		for (i = 0; i < 0x20; i++) {
-			Data = RAM[Offs + d + i];
+			Data = BURN_ENDIAN_SWAP_INT16(RAM[Offs + d + i]);
 			if (Data != 0x20)	{
 				Colour = DrvColourProm[(Data >> 1 & 0x1000) | (Data & 0xffc) | (Data >> 14 & 3)];
 				if (Colour != 0xff)	{

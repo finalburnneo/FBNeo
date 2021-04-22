@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16754 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16762 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -8450,6 +8450,7 @@ This list contains all games supported by FinalBurn Neo.
 | mineswpr	|  	| Minesweeper						| 		| 1977	| Amutech	| Miscellaneous	| 					|
 | md_miniplanets|  	| Mini Planets (HB, Rev2)				| 		| 2016	| Sik		| Sega Megadrive| 					|
 | nes_miniputt	|  	| Mini Putt (Japan)					| 		| 1991	| A Wave	| Miscellaneous	| 					|
+| sms_minimsx	|  	| MiniMSX (HB)						| 		| 2021	| MIKGAMES	| Sega Master Sy| 					|
 | minivadr	|  	| Minivader						| 		| 1990	| Taito Corporat| Minivader	| 					|
 | mmonkeyj	|  	| Minky Monkey (Japan)					| mmonkey	| 1982	| Technos Japan | Miscellaneous	| 					|
 | mmonkey	|  	| Minky Monkey						| 		| 1982	| Technos Japan | Miscellaneous	| 					|
@@ -9925,6 +9926,8 @@ This list contains all games supported by FinalBurn Neo.
 | nes_peepartime|  	| Peepar Time (Japan)					| 		| 1990	| Sanritsu	| Miscellaneous	| 					|
 | msx_peetan	|  	| Peetan (Jpn)						| 		| 1984	| Nihon Columbia| MSX		| 					|
 | msx_pegasus	|  	| Pegasus (Jpn)						| 		| 1986	| Victor	| MSX		| 					|
+| sg1k_pegged	|  	| Pegged (HB, v1.02)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
+| sms_pegged	|  	| Pegged (HB, v1.02)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | md_pele	|  	| Pele! (Euro, USA)					| 		| 1993	| Accolade	| Sega Megadrive| 					|
 | md_pele2	|  	| Pele's World Tournament Soccer (Euro, USA)		| 		| 1994	| Accolade	| Sega Megadrive| 					|
 | penfan	|  	| Penfan Girls - Step1. Mild Mind (set 1)		| 		| 1999	| Eolith	| Miscellaneous	| 					|
@@ -12253,6 +12256,8 @@ This list contains all games supported by FinalBurn Neo.
 | cv_smurfa	|  	| Smurf Rescue in Gargamel's Castle (Alt)		| cv_smurf	| 1982	| Coleco	| ColecoVision	| 					|
 | cv_smurf	|  	| Smurf Rescue in Gargamel's Castle			| 		| 1982	| Coleco	| ColecoVision	| 					|
 | msx_snake	|  	| Snake (HB)						| 		| 2021	| Under4Mhz	| MSX		| 					|
+| sg1k_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega SG-1000	| 					|
+| sms_snake	|  	| Snake (HB, v1.04)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | spec_snakeescape|  	| Snake Escape (HB)					| 		| 2016	| Einar Saukas	| ZX Spectrum	| 					|
 | msx_snakeit	|  	| Snake It (Euro)					| 		| 1986?	| Eaglesoft	| MSX		| 					|
 | nes_snakeratnrol|  	| Snake Rattle n Roll (USA)				| 		| 1990	| Nintendo	| Miscellaneous	| 					|
@@ -12788,21 +12793,21 @@ This list contains all games supported by FinalBurn Neo.
 | spyhunt	|  	| Spy Hunter						| 		| 1983	| Bally Midway	| MCR3		| 					|
 | md_spykids4	|  	| Spy Kids 4 - All The Time In The World (Rus)		| md_dinotale	| 199?	| <unlicensed>	| Sega Megadrive| 					|
 | spec_spyvspy	|  	| Spy vs Spy (48K)					| 		| 1985	| Beyond Softwar| ZX Spectrum	| 					|
+| sms_spyvsspycast|  	| Spy vs Spy (Euro, USA, Bra) - Castellano v1,0		| sms_spyvsspy	| 2021	| Sega		| Sega Master Sy| 					|
+| sms_spyvsspy	|  	| Spy vs Spy (Euro, USA, Bra)				| 		| 1986	| Sega		| Sega Master Sy| 					|
+| sms_spyvsspyc	|  	| Spy vs Spy (Euro, USA, Bra, Sega Card)		| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
 | sms_spyvsspyj	|  	| Spy vs Spy (Jpn, MyCard)				| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
+| sms_spyvsspyj1|  	| Spy vs Spy (Jpn, Pirate?)				| sms_spyvsspy	| 1986	| pirate	| Sega Master Sy| 					|
 | sms_spyvsspyk	|  	| Spy vs Spy (Kor)					| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
 | sms_spyvsspytw|  	| Spy vs Spy (Tw)					| sms_spyvsspy	| 1986?	| Aaronix	| Sega Master Sy| 					|
 | nes_spyvsspyc	|  	| Spy Vs Spy (USA) - Castellano v1.0			| nes_spyvsspy	| 1989 ?| Nintendo	| Miscellaneous	| 					|
 | nes_spyvsspy	|  	| Spy vs Spy (USA)					| 		| 1988	| Kemco		| Miscellaneous	| 					|
+| sms_spyvsspys	|  	| Spy vs Spy (USA, Display Unit Sample)			| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
 | nes_spyvsspyislcaj|  	| Spy vs Spy - The Island Caper (Japan)			| nes_spyvsspyislca| 1987	| Kemco		| Miscellaneous	| 					|
 | nes_spyvsspyislca|  	| Spy vs Spy - The Island Caper (T-Eng)			| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_spyvspy2	|  	| Spy vs Spy II - The Island Caper (48K)		| 		| 1987	| Databyte	| ZX Spectrum	| 					|
 | msx_spyvssp2	|  	| Spy vs Spy II - The Island Caper (Euro)		| 		| 1987	| Databyte	| MSX		| 					|
 | spec_spyvspy3	|  	| Spy vs Spy III - Arctic Antics (48K)			| 		| 1988	| Databyte	| ZX Spectrum	| 					|
-| sms_spyvsspycast|  	| Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0	| sms_spyvsspy	| 2021	| Sega		| Sega Master Sy| 					|
-| sms_spyvsspy	|  	| Spy vs. Spy (Euro, USA, Bra)				| 		| 1986	| Sega		| Sega Master Sy| 					|
-| sms_spyvsspyc	|  	| Spy vs. Spy (Euro, USA, Bra, Sega Card)		| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
-| sms_spyvsspyj1|  	| Spy vs. Spy (Jpn, Pirate?)				| sms_spyvsspy	| 1986	| pirate	| Sega Master Sy| 					|
-| sms_spyvsspys	|  	| Spy vs. Spy (USA, Display Unit Sample)		| sms_spyvsspy	| 1986	| Sega		| Sega Master Sy| 					|
 | nes_sqoon	|  	| Sqoon (USA)						| 		| 1987	| Irem		| Miscellaneous	| 					|
 | msx_squardan	|  	| Square Dancer (Jpn)					| 		| 1984	| Toshiba EMI	| MSX		| Use keys 'Z', '/' and Enter		|
 | spec_squares	|  	| Squares (HB)						| 		| 2017	| Kas29		| ZX Spectrum	| 					|
@@ -15695,6 +15700,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_vesikauhu	|  	| Vesikauhu (HB, Tech-demo)				| 		| 2000	| Bandwagon	| MSX		| 					|
 | msx_vestron	|  	| Vestron (Euro)					| 		| 1986	| Players Softwa| MSX		| 					|
 | msx_vexed	|  	| Vexed (HB)						| 		| 2020	| Under4Mhz	| MSX		| 					|
+| sg1k_vexed	|  	| Vexed (HB, v1.03)					| 		| 2020	| Under4Mhz	| Sega SG-1000	| 					|
+| sms_vexed	|  	| Vexed (HB, v1.03)					| 		| 2021	| Under4Mhz	| Sega Master Sy| 					|
 | hangonvf	|  	| VF (bootleg of Hang-On)				| hangon	| 1985	| bootleg	| Hang-On	| 					|
 | spec_viajecentterra|  	| Viaje al Centro de la Tierra				| 		| 1989	| Topo Soft	| ZX Spectrum	| 					|
 | nes_vice	|  	| Vice - Project Doom (USA)				| 		| 1991	| Sammy		| Miscellaneous	| 					|
@@ -16640,6 +16647,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_zaxxon3dp	|  	| Zaxxon 3-D (World, Prototype)				| sms_zaxxon3d	| 1987	| Sega		| Sega Master Sy| 					|
 | cv_zaxxonsgm	|  	| Zaxxon Super Game					| 		| 2012	| Coleco	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | cv_zaxxon	|  	| Zaxxon						| 		| 1982	| Coleco	| ColecoVision	| 					|
+| sms_zeloliv	|  	| Ze Legende of Oliv (HB)				| 		| 2019	| OscarB	| Sega Master Sy| 					|
 | zedblade	|  	| Zed Blade / Operation Ragnarok			| 		| 1994	| NMK		| Neo Geo MVS	| 					|
 | zektor	|  	| Zektor (revision B)					| 		| 1982	| Sega		| G80 Vector	| 					|
 | nes_zeldaiic	|  	| Zelda II - The Adventure of Link (Europe) (Rev 2) - Ca| nes_zeldaii	| 1989 ?| Nintendo	| Miscellaneous	| 					|

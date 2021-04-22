@@ -157,7 +157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd3" cloneof="alexkidd3f" romof="alexkidd3f">
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4) [Homebrew]</description>
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4) [Hack, Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
@@ -165,7 +165,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd3f">
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0) [Homebrew]</description>
+		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0) [Hack, Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms" size="524288" crc="2096b9f1"/>
@@ -221,7 +221,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd2">
-		<description>Alex Kidd in Miracle World 2 (HB, Hack) [Homebrew]</description>
+		<description>Alex Kidd in Miracle World 2 (HB, Hack) [Hack, Homebrew]</description>
 		<year>2016</year>
 		<manufacturer>Ian Wall</manufacturer>
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
@@ -229,7 +229,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkiddrr" cloneof="alexkidd" romof="alexkidd">
-		<description>Alex Kidd in Radaxian Rumble (ver. 1.5)</description>
+		<description>Alex Kidd in Radaxian Rumble (ver. 1.5) [Hack]</description>
 		<year>2015</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Alex Kidd in Radaxian Rumble 1.5.sms" size="524288" crc="02760e17"/>
@@ -621,7 +621,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="battleorfm" cloneof="battleor" romof="battleor">
-		<description>Battle Out Run (FM Mod) [YM2413 FM sound chip supported]</description>
+		<description>Battle Out Run (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2018</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="battle out run (fm mod).sms" size="262144" crc="7c849999"/>
@@ -1325,7 +1325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dduxfm" cloneof="ddux" romof="ddux">
-		<description>Dynamite Dux (FM Mod) [YM2413 FM sound chip supported]</description>
+		<description>Dynamite Dux (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="dynamite dux (fm-mod).sms" size="262144" crc="26dfc995"/>
@@ -2724,6 +2724,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="minimsx">
+		<description>MiniMSX (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>MIKGAMES</manufacturer>
+		<rom name="MiniMSX (2021)(MikGames).sms" size="131072" crc="eb6c0944"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="miraclec" cloneof="miracle" romof="miracle">
 		<description>Miracle Warriors - Seal of the Dark Lord (Euro, USA, Bra) - Castellano v1.0 [Hack]</description>
 		<year>2021</year>
@@ -3041,6 +3049,14 @@
 		<year>19??</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pat riley basketball (usa) (proto).bin" size="262144" crc="9aefe664"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pegged">
+		<description>Pegged (HB, v1.02) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pegged v1.02 (2021)(Under4Mhz).sms" size="32768" crc="ac08cf7e"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3365,7 +3381,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rambo3fm" cloneof="rambo3" romof="rambo3">
-		<description>Rambo III (FM Mod) [Light Phaser game - YM2413 FM support]</description>
+		<description>Rambo III (FM Mod) [Hack, Light Phaser game - YM2413 FM support]</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="rambo iii (fm-mod).sms" size="262144" crc="c2073674"/>
@@ -3732,6 +3748,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snake">
+		<description>Snake (HB, v1.04) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Snake v1.04 (2021)(Under4Mhz).sms" size="32768" crc="995f8fd2"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="solomon">
 		<description>Solomon no Kagi - Oujo Rihita no Namida (Jpn)</description>
 		<year>1988</year>
@@ -3940,11 +3964,43 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
+		<description>Spy vs Spy (Euro, USA, Bra) - Castellano v1,0 [Hack]</description>
+		<year>2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspy">
+		<description>Spy vs Spy (Euro, USA, Bra)</description>
+		<year>1986</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="spy vs. spy (usa, europe).bin" size="32768" crc="78d7faab"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspyc" cloneof="spyvsspy" romof="spyvsspy">
+		<description>Spy vs Spy (Euro, USA, Bra, Sega Card)</description>
+		<year>1986</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="spy vs. spy (usa, europe).bin" merge="spy vs. spy (usa, europe).bin" size="32768" crc="78d7faab"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spyvsspyj" cloneof="spyvsspy" romof="spyvsspy">
 		<description>Spy vs Spy (Jpn, MyCard)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="spy vs spy (japan).bin" size="32768" crc="d41b9a08"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spyvsspyj1" cloneof="spyvsspy" romof="spyvsspy">
+		<description>Spy vs Spy (Jpn, Pirate?)</description>
+		<year>1986</year>
+		<manufacturer>pirate</manufacturer>
+		<rom name="spy vs. spy (j) [hack].bin" size="32768" crc="a71bc542"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3964,40 +4020,8 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spyvsspycast" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0 [Hack]</description>
-		<year>2021</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="spy vs. spy (euro, usa, bra) - castellano v1,0.sms" size="32768" crc="acc2eea4"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="spyvsspy">
-		<description>Spy vs. Spy (Euro, USA, Bra)</description>
-		<year>1986</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="spy vs. spy (usa, europe).bin" size="32768" crc="78d7faab"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="spyvsspyc" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy vs. Spy (Euro, USA, Bra, Sega Card)</description>
-		<year>1986</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="spy vs. spy (usa, europe).bin" merge="spy vs. spy (usa, europe).bin" size="32768" crc="78d7faab"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="spyvsspyj1" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy vs. Spy (Jpn, Pirate?)</description>
-		<year>1986</year>
-		<manufacturer>pirate</manufacturer>
-		<rom name="spy vs. spy (j) [hack].bin" size="32768" crc="a71bc542"/>
-		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="spyvsspys" cloneof="spyvsspy" romof="spyvsspy">
-		<description>Spy vs. Spy (USA, Display Unit Sample)</description>
+		<description>Spy vs Spy (USA, Display Unit Sample)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="spy vs. spy (u) (display-unit cart) [!].bin" size="262144" crc="b87e1b2b"/>
@@ -4109,7 +4133,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sumgamesfm" cloneof="sumgames" romof="sumgames">
-		<description>Summer Games (FM Mod) [YM2413 FM sound chip supported]</description>
+		<description>Summer Games (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="summer games (fm-mod).sms" size="131072" crc="bbae488d"/>
@@ -4916,6 +4940,14 @@
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="vexed">
+		<description>Vexed (HB, v1.03) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Vexed v1.03 (2021)(Under4Mhz).sms" size="32768" crc="bd34d592"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="vigilant">
 		<description>Vigilante (Euro, USA, Bra)</description>
 		<year>1989</year>
@@ -5077,7 +5109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboy3fm" cloneof="wboy3" romof="wboy3">
-		<description>Wonder Boy III - The Dragon's Trap (FM Mod) [YM2413 FM sound chip supported]</description>
+		<description>Wonder Boy III - The Dragon's Trap (FM Mod) [Hack, YM2413 FM sound chip supported]</description>
 		<year>1999</year>
 		<manufacturer>Sega - Bock</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
@@ -5293,7 +5325,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ysfm" cloneof="ys" romof="ys">
-		<description>Ys - The Vanished Omens (FM Mod, v1.2) [YM2413 FM sound chip supported]</description>
+		<description>Ys - The Vanished Omens (FM Mod, v1.2) [Hack, YM2413 FM sound chip supported]</description>
 		<year>2009</year>
 		<manufacturer>Sega - SSTranslations</manufacturer>
 		<rom name="ys - the vanished omens (fm patch).sms" size="262144" crc="7ed5dca2"/>
@@ -5313,6 +5345,14 @@
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zaxxon 3-d (world) (beta).bin" size="262144" crc="bba74147"/>
+		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zeloliv">
+		<description>Ze Legende of Oliv (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>OscarB</manufacturer>
+		<rom name="Ze Legende of Oliv (2019)(OscarB).sms" size="1048576" crc="388b8eee"/>
 		<video orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -8564,6 +8564,7 @@ DRV		BurnDrvMineswpr4;
 DRV		BurnDrvMineswpr;
 DRV		BurnDrvmd_miniplanets;
 DRV		BurnDrvnes_miniputt;
+DRV		BurnDrvsms_minimsx;
 DRV		BurnDrvminivadr;
 DRV		BurnDrvMmonkeyj;
 DRV		BurnDrvMmonkey;
@@ -10065,6 +10066,8 @@ DRV		BurnDrvPeekaboo;
 DRV		BurnDrvnes_peepartime;
 DRV		BurnDrvMSX_peetan;
 DRV		BurnDrvMSX_pegasus;
+DRV		BurnDrvsg1k_pegged;
+DRV		BurnDrvsms_pegged;
 DRV		BurnDrvmd_pele;
 DRV		BurnDrvmd_pele2;
 DRV		BurnDrvPenfan;
@@ -12427,6 +12430,8 @@ DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
 DRV		BurnDrvcv_smurf;
 DRV		BurnDrvMSX_snake;
+DRV		BurnDrvsg1k_snake;
+DRV		BurnDrvsms_snake;
 DRV		BurnSpecSnakeescape;
 DRV		BurnDrvMSX_snakeit;
 DRV		BurnDrvnes_snakeratnrol;
@@ -12966,21 +12971,21 @@ DRV		BurnDrvcv_spyhunt;
 DRV		BurnDrvSpyhunt;
 DRV		BurnDrvmd_spykids4;
 DRV		BurnSpecspyvspy;
+DRV		BurnDrvsms_spyvsspycast;
+DRV		BurnDrvsms_spyvsspy;
+DRV		BurnDrvsms_spyvsspyc;
 DRV		BurnDrvsms_spyvsspyj;
+DRV		BurnDrvsms_spyvsspyj1;
 DRV		BurnDrvsms_spyvsspyk;
 DRV		BurnDrvsms_spyvsspytw;
 DRV		BurnDrvnes_spyvsspyc;
 DRV		BurnDrvnes_spyvsspy;
+DRV		BurnDrvsms_spyvsspys;
 DRV		BurnDrvnes_spyvsspyislcaj;
 DRV		BurnDrvnes_spyvsspyislca;
 DRV		BurnSpecspyvspy2;
 DRV		BurnDrvMSX_spyvssp2;
 DRV		BurnSpecspyvspy3;
-DRV		BurnDrvsms_spyvsspycast;
-DRV		BurnDrvsms_spyvsspy;
-DRV		BurnDrvsms_spyvsspyc;
-DRV		BurnDrvsms_spyvsspyj1;
-DRV		BurnDrvsms_spyvsspys;
 DRV		BurnDrvnes_sqoon;
 DRV		BurnDrvMSX_squardan;
 DRV		BurnSpecSquares;
@@ -15911,6 +15916,8 @@ DRV		BurnDrvmd_verytex;
 DRV		BurnDrvMSX_vesikauhu;
 DRV		BurnDrvMSX_vestron;
 DRV		BurnDrvMSX_vexed;
+DRV		BurnDrvsg1k_vexed;
+DRV		BurnDrvsms_vexed;
 DRV		BurnDrvHangonvf;
 DRV		BurnSpecviajecentterra;
 DRV		BurnDrvnes_vice;
@@ -16884,6 +16891,7 @@ DRV		BurnDrvsms_zaxxon3d;
 DRV		BurnDrvsms_zaxxon3dp;
 DRV		BurnDrvcv_zaxxonsgm;
 DRV		BurnDrvcv_zaxxon;
+DRV		BurnDrvsms_zeloliv;
 DRV		BurnDrvzedblade;
 DRV		BurnDrvZektor;
 DRV		BurnDrvnes_zeldaiic;
@@ -25571,6 +25579,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMineswpr,			// Minesweeper
 	&BurnDrvmd_miniplanets,		// Mini Planets (HB, Rev2)
 	&BurnDrvnes_miniputt,		// Mini Putt (Japan)
+	&BurnDrvsms_minimsx,		// MiniMSX (HB)
 	&BurnDrvminivadr,			// Minivader
 	&BurnDrvMmonkeyj,			// Minky Monkey (Japan)
 	&BurnDrvMmonkey,			// Minky Monkey
@@ -27072,6 +27081,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_peepartime,		// Peepar Time (Japan)
 	&BurnDrvMSX_peetan,			// Peetan (Jpn)
 	&BurnDrvMSX_pegasus,		// Pegasus (Jpn)
+	&BurnDrvsg1k_pegged,		// Pegged (HB, v1.02)
+	&BurnDrvsms_pegged,			// Pegged (HB, v1.02)
 	&BurnDrvmd_pele,			// Pele! (Euro, USA)
 	&BurnDrvmd_pele2,			// Pele's World Tournament Soccer (Euro, USA)
 	&BurnDrvPenfan,				// Penfan Girls - Step1. Mild Mind (set 1)
@@ -29434,6 +29445,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)
 	&BurnDrvcv_smurf,			// Smurf Rescue in Gargamel's Castle
 	&BurnDrvMSX_snake,			// Snake (HB)
+	&BurnDrvsg1k_snake,			// Snake (HB, v1.04)
+	&BurnDrvsms_snake,			// Snake (HB, v1.04)
 	&BurnSpecSnakeescape,		// Snake Escape (HB)
 	&BurnDrvMSX_snakeit,		// Snake It (Euro)
 	&BurnDrvnes_snakeratnrol,	// Snake Rattle n Roll (USA)
@@ -29973,21 +29986,21 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpyhunt,			// Spy Hunter
 	&BurnDrvmd_spykids4,		// Spy Kids 4 - All The Time In The World (Rus)
 	&BurnSpecspyvspy,			// Spy vs Spy (48K)
+	&BurnDrvsms_spyvsspycast,	// Spy vs Spy (Euro, USA, Bra) - Castellano v1,0
+	&BurnDrvsms_spyvsspy,		// Spy vs Spy (Euro, USA, Bra)
+	&BurnDrvsms_spyvsspyc,		// Spy vs Spy (Euro, USA, Bra, Sega Card)
 	&BurnDrvsms_spyvsspyj,		// Spy vs Spy (Jpn, MyCard)
+	&BurnDrvsms_spyvsspyj1,		// Spy vs Spy (Jpn, Pirate?)
 	&BurnDrvsms_spyvsspyk,		// Spy vs Spy (Kor)
 	&BurnDrvsms_spyvsspytw,		// Spy vs Spy (Tw)
 	&BurnDrvnes_spyvsspyc,		// Spy Vs Spy (USA) - Castellano v1.0
 	&BurnDrvnes_spyvsspy,		// Spy vs Spy (USA)
+	&BurnDrvsms_spyvsspys,		// Spy vs Spy (USA, Display Unit Sample)
 	&BurnDrvnes_spyvsspyislcaj,	// Spy vs Spy - The Island Caper (Japan)
 	&BurnDrvnes_spyvsspyislca,	// Spy vs Spy - The Island Caper (T-Eng)
 	&BurnSpecspyvspy2,			// Spy vs Spy II - The Island Caper (48K)
 	&BurnDrvMSX_spyvssp2,		// Spy vs Spy II - The Island Caper (Euro)
 	&BurnSpecspyvspy3,			// Spy vs Spy III - Arctic Antics (48K)
-	&BurnDrvsms_spyvsspycast,	// Spy vs. Spy (Euro, USA, Bra) - Castellano v1,0
-	&BurnDrvsms_spyvsspy,		// Spy vs. Spy (Euro, USA, Bra)
-	&BurnDrvsms_spyvsspyc,		// Spy vs. Spy (Euro, USA, Bra, Sega Card)
-	&BurnDrvsms_spyvsspyj1,		// Spy vs. Spy (Jpn, Pirate?)
-	&BurnDrvsms_spyvsspys,		// Spy vs. Spy (USA, Display Unit Sample)
 	&BurnDrvnes_sqoon,			// Sqoon (USA)
 	&BurnDrvMSX_squardan,		// Square Dancer (Jpn)
 	&BurnSpecSquares,			// Squares (HB)
@@ -32918,6 +32931,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_vesikauhu,		// Vesikauhu (HB, Tech-demo)
 	&BurnDrvMSX_vestron,		// Vestron (Euro)
 	&BurnDrvMSX_vexed,			// Vexed (HB)
+	&BurnDrvsg1k_vexed,			// Vexed (HB, v1.03)
+	&BurnDrvsms_vexed,			// Vexed (HB, v1.03)
 	&BurnDrvHangonvf,			// VF (bootleg of Hang-On)
 	&BurnSpecviajecentterra,	// Viaje al Centro de la Tierra
 	&BurnDrvnes_vice,			// Vice - Project Doom (USA)
@@ -33891,6 +33906,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_zaxxon3dp,		// Zaxxon 3-D (World, Prototype)
 	&BurnDrvcv_zaxxonsgm,		// Zaxxon Super Game
 	&BurnDrvcv_zaxxon,			// Zaxxon
+	&BurnDrvsms_zeloliv,		// Ze Legende of Oliv (HB)
 	&BurnDrvzedblade,			// Zed Blade / Operation Ragnarok
 	&BurnDrvZektor,				// Zektor (revision B)
 	&BurnDrvnes_zeldaiic,		// Zelda II - The Adventure of Link (Europe) (Rev 2) - Castellano v1.0

@@ -1076,6 +1076,14 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pegged">
+		<description>Pegged (HB, v1.02) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pegged v1.02 (2021)(Under4Mhz).sg" size="32768" crc="21e891f0"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pingpong">
 		<description>Ping Pong (Tw)</description>
 		<year>1985?</year>
@@ -1324,6 +1332,14 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snake">
+		<description>Snake (HB, v1.04) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Snake v1.04 (2021)(Under4Mhz).sg" size="32768" crc="b9ab9d0c"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sokoban">
 		<description>Soukoban (Jpn)</description>
 		<year>1985</year>
@@ -1521,6 +1537,14 @@
 		<year>1986?</year>
 		<manufacturer>Jumbo</manufacturer>
 		<rom name="twinbee [jumbo] (tw).bin" size="49152" crc="c550b4f0"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vexed">
+		<description>Vexed (HB, v1.03) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Vexed v1.03 (2020)(Under4Mhz).sg" size="32768" crc="6159a842"/>
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

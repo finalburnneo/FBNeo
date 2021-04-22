@@ -699,13 +699,13 @@ static void draw_sprites(INT32 c, INT32 d, INT32 yshift)
 
 	for (INT32 offs = 0; offs < 0x400; offs += 0x20)
 	{
-		INT32 sx = ram[offs + c];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(ram[offs + c]);
 		INT32 sy = (yshift - (sx >> 8)) & 0xff;
 		sx &= 0xff;
 
 		for (INT32 i = 0; i < 0x20; i++)
 		{
-			UINT16 attr  = ram[offs + d + i];
+			UINT16 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs + d + i]);
 			UINT16 code  = attr & 0x3fff;
 			UINT16 flipy = attr & 0x4000;
 			UINT8 color  = color_prom[(code << 1) | (attr >> 15)];

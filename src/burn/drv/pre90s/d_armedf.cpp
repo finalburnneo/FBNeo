@@ -706,7 +706,7 @@ static void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 				if (nb1414_blit_data) {
 					if(data & 0x4000 && ((*DrvVidRegs & 0x40) == 0)) { //0 -> 1 transition
 						UINT16 *ram = (UINT16*)DrvTxRAM;
-						nb_1414m4_exec((ram[0] << 8) | (ram[1] & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
+						nb_1414m4_exec(BURN_ENDIAN_SWAP_INT16((ram[0] << 8) | (ram[1] & 0xff)),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
 					}
 				}
 
@@ -1144,7 +1144,7 @@ static inline void DrvPaletteRecalc()
 	UINT8 r,g,b;
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x1000 / 2; i++) {
-		INT32 d = pal[i];
+		INT32 d = BURN_ENDIAN_SWAP_INT16(pal[i]);
 
 		r = (d >> 4) & 0xf0;
 		g = (d & 0xf0);
@@ -1173,10 +1173,10 @@ static inline void AssembleInputs()
 
 	if (scroll_type == 1) {
 		UINT16 *ptr = (UINT16*)Drv68KRAM2;
-		ptr[0] = DrvInputs[0];
-		ptr[1] = (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
-		ptr[2] = DrvInputs[2];
-		ptr[3] = DrvInputs[3];
+		ptr[0] = BURN_ENDIAN_SWAP_INT16(DrvInputs[0]);
+		ptr[1] = BURN_ENDIAN_SWAP_INT16((DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200));
+		ptr[2] = BURN_ENDIAN_SWAP_INT16(DrvInputs[2]);
+		ptr[3] = BURN_ENDIAN_SWAP_INT16(DrvInputs[3]);
 	}
 }
 
@@ -1195,8 +1195,8 @@ static void draw_layer(UINT8 *ram, UINT8 *gfxbase, INT32 scrollx, INT32 scrolly,
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 code = vram[offs] & code_and;
-		INT32 color = vram[offs] >> 11;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & code_and;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 11;
 
 		if (*flipscreen) {
 			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, (nScreenWidth - 16) - sx, (nScreenHeight - 16) - sy, color, 4, 15, coloff, gfxbase);
@@ -1235,9 +1235,9 @@ static void draw_txt_layer(INT32 transp, INT32 priority)
 
 		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 attr = vram[ofst+ofsta] & 0xff;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst+ofsta]) & 0xff;
 		INT32 category = (attr & 0x8) >> 3;
-		INT32 code = (vram[ofst] & 0xff) | ((attr & 3) << 8);
+		INT32 code = (BURN_ENDIAN_SWAP_INT16(vram[ofst]) & 0xff) | ((attr & 3) << 8);
 		if (scroll_type == 3 && ofst < 0x12) continue; // ignore nb1414m4 params/fix text-garbage at the bottom of legion
 		if (category != priority) continue;
 
@@ -1267,15 +1267,15 @@ static void draw_sprites(INT32 priority)
 
 	for (INT32 offs = 0; offs < sprlen / 2; offs+=4)
 	{
-		INT32 attr  = spr[offs + 0];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(spr[offs + 0]);
 		if (((attr & 0x3000) >> 12) != priority) continue;
 
-		INT32 code  = spr[offs + 1];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(spr[offs + 1]);
 		INT32 flipx = code & 0x2000;
 		INT32 flipy = code & 0x1000;
-		INT32 color =(spr[offs + 2] >> 8) & 0x1f;
-		INT32 clut  = spr[offs + 2] & 0x7f;
-		INT32 sx    = spr[offs + 3];
+		INT32 color =(BURN_ENDIAN_SWAP_INT16(spr[offs + 2]) >> 8) & 0x1f;
+		INT32 clut  = BURN_ENDIAN_SWAP_INT16(spr[offs + 2]) & 0x7f;
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(spr[offs + 3]);
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
 		code       &= 0x7ff;
 
@@ -1308,7 +1308,7 @@ static void draw_sprites(INT32 priority)
 				//INT32 pxl = src[((y^flipy << 4) | x^flipx)]; <- neat mosaic effect, save/use for tshingen & p-47 (dink)
 				INT32 pxl = src[(((y^flipy) << 4) | (x^flipx))];
 				UINT32 nColor = (color << 4) | 0x200;
-				UINT32 clutpxl = (pxl & ~0xf) | ((DrvSprClut[clut*0x10+(pxl & 0xf)]) & 0xf);
+				UINT32 clutpxl = (pxl & ~0xf) | ((BURN_ENDIAN_SWAP_INT16(DrvSprClut[clut*0x10+(pxl & 0xf)])) & 0xf);
 				if (mask == clutpxl) continue;
 				dst[sx] = clutpxl | nColor;
 			}
@@ -1337,8 +1337,8 @@ static INT32 DrvDraw()
 		UINT16 *ram = (UINT16*)DrvTxRAM;
 		if (scroll_type == 0 || scroll_type == 6) ram = DrvMcuCmd;
 
-		DrvScroll[2] = (ram[13] & 0xff) | ((ram[14] & 3) << 8);
-		DrvScroll[3] = (ram[11] & 0xff) | ((ram[12] & 1) << 8);
+		DrvScroll[2] = (BURN_ENDIAN_SWAP_INT16(ram[13]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[14]) & 3) << 8);
+		DrvScroll[3] = (BURN_ENDIAN_SWAP_INT16(ram[11]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[12]) & 1) << 8);
 	}
 
 	if (scroll_type == 0) { // terraf
@@ -1760,8 +1760,8 @@ static INT32 KozureInit()
 	INT32 nRet = DrvInit(KozureLoadRoms, Cclimbr268KInit, 0xf800);
 
 	if (nRet == 0) {
-		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
-		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
+		*((UINT16*)(Drv68KROM + 0x1016c)) = BURN_ENDIAN_SWAP_INT16(0x4e71); // patch "time over" bug.
+		*((UINT16*)(Drv68KROM + 0x04fc6)) = BURN_ENDIAN_SWAP_INT16(0x4e71); // ROM check at POST.
 	}
 
 	return nRet;
@@ -1839,8 +1839,8 @@ static INT32 LegionInit()
 
 	if (nRet == 0) { // hack
 		if (BurnLoadRom(nb1414_blit_data,	11, 1)) return 1;
-		*((UINT16*)(Drv68KROM + 0x001d6)) = 0x0001;
-		*((UINT16*)(Drv68KROM + 0x00488)) = 0x4e71;
+		*((UINT16*)(Drv68KROM + 0x001d6)) = BURN_ENDIAN_SWAP_INT16(0x0001);
+		*((UINT16*)(Drv68KROM + 0x00488)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	}
 
 	return nRet;
@@ -1955,7 +1955,7 @@ static INT32 LegionjbInit()
 	INT32 nRet = DrvInit(LegionjbLoadRoms, Cclimbr268KInit, 0xc000);
 
 	if (nRet == 0) { // hack
-		*((UINT16*)(Drv68KROM + 0x001d6)) = 0x0001;
+		*((UINT16*)(Drv68KROM + 0x001d6)) = BURN_ENDIAN_SWAP_INT16(0x0001);
 	}
 
 	return nRet;

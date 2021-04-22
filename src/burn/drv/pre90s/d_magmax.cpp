@@ -572,21 +572,21 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x100 - 4; offs >= 0; offs -= 4)
 	{
-		INT32 sy = ram[offs] & 0xff;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xff;
 		if (sy == 0) continue;
 
-		INT32 code = ram[offs + 1] & 0xff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0xff;
 
 		if (code & 0x80) {
 			code += (vreg & 0x30) * 0x8;
 		}
 
-		INT32 attr = ram[offs + 2] & 0xff;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) & 0xff;
 		INT32 color = (attr & 0xf0) >> 4;
 		INT32 flipx = attr & 0x04;
 		INT32 flipy = attr & 0x08;
 
-		INT32 sx = (ram[offs + 3] & 0xff) - 0x80 + 0x100 * (attr & 0x01);
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) & 0xff) - 0x80 + 0x100 * (attr & 0x01);
 		sy = 239 - sy;
 
 		if (flipscreen)

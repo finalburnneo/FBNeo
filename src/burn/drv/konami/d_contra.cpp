@@ -502,7 +502,7 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	M6809SetWriteHandler(DrvContraM6809SoundWriteByte);
 	M6809Close();
 
-	BurnYM2151Init(3579545, 1);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachM6809(3000000);
@@ -803,7 +803,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { nExtraCycles, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	HD6309Open(0);
 	M6809Open(0);
@@ -816,13 +815,6 @@ static INT32 DrvFrame()
 		}
 
 		CPU_RUN_TIMER(1);
-
-		if (pBurnSoundOut && i%16 == 15) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 16);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
@@ -831,14 +823,9 @@ static INT32 DrvFrame()
 	HD6309Close();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			M6809Open(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			M6809Close();
-		}
+		M6809Open(0);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		M6809Close();
 	}
 
 	if (pBurnDraw) {

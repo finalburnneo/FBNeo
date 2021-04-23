@@ -540,14 +540,14 @@ static INT32 HyprduelInit()
 
 	int_num = 0x02;
 
-	BurnYM2151Init(4000000, 1);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnTimerAttachSek(10000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(0, 2062500 / MSM6295_PIN7_HIGH, 1);
-	MSM6295SetRoute(0, 0.47, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.37, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -679,9 +679,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 256 * 2;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 10000000 / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
@@ -713,17 +711,10 @@ static INT32 DrvFrame()
 
 		SekOpen(1);
 		if (game_select == 0) {
-			BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
+			CPU_RUN_TIMER(1);
 		} else {
 			CPU_RUN(1, Sek);
 			if ((i & 0x1f) == 0x1f) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		}
-
-		if (pBurnSoundOut && (i & 3) == 3 && game_select == 0) {
-			nSegment = nBurnSoundLen / (nInterleave / 4);
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			nSoundBufferPos += nSegment;
 		}
 		SekClose();
 
@@ -736,21 +727,15 @@ static INT32 DrvFrame()
 	i4x00_draw_end();
 
 	SekOpen(1);
-	if (game_select == 0) {
-		BurnTimerEndFrame(nCyclesTotal[1]);
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen - nSoundBufferPos;
-			if (nSegment > 0) {
-				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-				MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			}
+	if (pBurnSoundOut) {
+		if (game_select == 0) {
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		}
-	}
-	if (pBurnSoundOut && game_select == 1) {
-		BurnYM2413Render(pBurnSoundOut, nBurnSoundLen);
+		if (game_select == 1) {
+			BurnYM2413Render(pBurnSoundOut, nBurnSoundLen);
+		}
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-	
 	SekClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];

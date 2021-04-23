@@ -111,7 +111,6 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s);
 static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s);
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nSoundBufferPos;
 
 static INT32 Kaneko16Watchdog;
 
@@ -4807,9 +4806,10 @@ static INT32 BlazeonInit()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	// Reset the driver
 	BlazeonDoReset();
@@ -4915,9 +4915,10 @@ static INT32 WingforcInit()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.40, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (16000000 / 16) / 132, 1);
@@ -7239,13 +7240,14 @@ static INT32 BlazeonFrame()
 {
 	if (Kaneko16Reset) BlazeonDoReset();
 
+	ZetNewFrame();
+
 	Kaneko16MakeInputs();
 
 	INT32 nInterleave = 10;
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-	nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7256,30 +7258,14 @@ static INT32 BlazeonFrame()
 		SekClose();
 
 		ZetOpen(0);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
+		ZetOpen(0);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();
@@ -7291,6 +7277,8 @@ static INT32 WingforcFrame()
 {
 	if (Kaneko16Reset) WingforcDoReset();
 
+	ZetNewFrame();
+
 	Kaneko16MakeInputs();
 
 	INT32 nInterleave = 256;
@@ -7298,41 +7286,24 @@ static INT32 WingforcFrame()
 	nCyclesTotal[1] = (INT32)(4000000 / 59.1854);
 
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-	nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
 		CPU_RUN(0, Sek);
 		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 64)  SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		ZetOpen(0);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 		ZetClose();
-
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
+		ZetOpen(0);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

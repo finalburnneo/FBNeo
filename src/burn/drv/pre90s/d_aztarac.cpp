@@ -152,7 +152,7 @@ static inline void sync_cpu()
 static void __fastcall aztarac_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff00) == 0x022000) {
-		*((UINT16*)(DrvNVRAM + (address & 0xfe))) = data | 0xfff0;
+		*((UINT16*)(DrvNVRAM + (address & 0xfe))) = BURN_ENDIAN_SWAP_INT16(data | 0xfff0);
 		return;
 	}
 

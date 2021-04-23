@@ -684,8 +684,8 @@ static void draw_bg_layer()
 
 		sy -= 16;
 
-		INT32 code  = ram[offs] & 0xfff;
-		INT32 color = ram[offs] >> 12;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
 
 		Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x200, DrvGfxROM1);
 	}
@@ -702,8 +702,8 @@ static void draw_tx_layer()
 
 		sy -= 16;
 
-		INT32 code  = ram[offs] & 0x3ff;
-		INT32 color = ram[offs] >> 10;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x3ff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 10;
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 3, 0, DrvGfxROM0);
 	}
@@ -715,9 +715,9 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x800/2 - 4; offs >= 0; offs -= 4)
 	{
-		INT32 data0 = ram[offs+0];
-		INT32 data1 = ram[offs+1];
-		INT32 data2 = ram[offs+2];
+		INT32 data0 = BURN_ENDIAN_SWAP_INT16(ram[offs+0]);
+		INT32 data1 = BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
+		INT32 data2 = BURN_ENDIAN_SWAP_INT16(ram[offs+2]);
 
 		if (data0 & 0x0100)
 		{

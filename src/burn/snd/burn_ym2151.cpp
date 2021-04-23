@@ -7,14 +7,16 @@
 // should not be called more than ~65 times per frame.  See DrvFrame() in
 // drv/konami/d_surpratk.cpp for a simple and effective work-around.
 
-UINT32 nBurnCurrentYM2151Register;
+static UINT32 nBurnCurrentYM2151Register;
 
 static INT32 nBurnYM2151SoundRate;
 
 static INT16* pBuffer;
 static INT16* pYM2151Buffer[2];
 
-static INT32 nBurnPosition;
+static INT32 bYM2151AddSignal;
+
+static INT32 nYM2151Position;
 static UINT32 nSampleSize;
 static UINT32 nFractionalPosition;
 static UINT32 nSamplesRendered;
@@ -24,16 +26,150 @@ static INT32 YM2151RouteDirs[2];
 
 static INT32 YM2151BurnTimer = 0;
 
-void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength)
+static INT32 bBurnYM2151IsBuffered = 0;
+static INT32 (*BurnYM2151StreamCallback)(INT32 nSoundRate) = NULL;
+
+
+//  Buffered Zone
+static void YM2151RenderBuffered(INT32 nSegmentLength)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151Render called without init\n"));
 #endif
-	
-	nBurnPosition += nSegmentLength;
 
-	if (nBurnPosition >= nBurnSoundRate) {
-		nBurnPosition = nSegmentLength;
+	if (nYM2151Position >= nSegmentLength) {
+		return;
+	}
+
+//	bprintf(PRINT_NORMAL, _T("    YM2151 render %6i -> %6i\n"), nYM2151Position, nSegmentLength);
+
+	nSegmentLength -= nYM2151Position;
+	pYM2151Buffer[0] = pBuffer + 0 * 4096 + 4 + nYM2151Position;
+	pYM2151Buffer[1] = pBuffer + 1 * 4096 + 4 + nYM2151Position;
+
+	YM2151UpdateOne(0, pYM2151Buffer, nSegmentLength);
+
+	nYM2151Position += nSegmentLength;
+}
+
+void BurnYM2151UpdateRequest() // _not_ static because of inlined funcs in .h
+{
+	if (bBurnYM2151IsBuffered) {
+		YM2151RenderBuffered(BurnYM2151StreamCallback(nBurnYM2151SoundRate));
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Update the sound buffer
+
+#define INTERPOLATE_ADD_SOUND_LEFT(route, buffer)																	\
+	if ((YM2151RouteDirs[route] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {									\
+		nLeftSample[0] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 3]/* * YM2151Volumes[route]*/);	\
+		nLeftSample[1] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 2]/* * YM2151Volumes[route]*/);	\
+		nLeftSample[2] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 1]/* * YM2151Volumes[route]*/);	\
+		nLeftSample[3] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 0]/* * YM2151Volumes[route]*/);	\
+	}
+
+#define INTERPOLATE_ADD_SOUND_RIGHT(route, buffer)																	\
+	if ((YM2151RouteDirs[route] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {									\
+		nRightSample[0] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 3]/* * YM2151Volumes[route]*/);	\
+		nRightSample[1] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 2]/* * YM2151Volumes[route]*/);	\
+		nRightSample[2] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 1]/* * YM2151Volumes[route]*/);	\
+		nRightSample[3] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 0]/* * YM2151Volumes[route]*/);	\
+	}
+
+void BurnYM2151RenderBuffered(INT32 nSegmentEnd)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Update called without init\n"));
+#endif
+
+	INT16* pSoundBuf = pBurnSoundOut;
+
+	if (nBurnSoundRate == 0 || pBurnSoundOut == NULL) {
+		return;
+	}
+
+	if (nSegmentEnd != nBurnSoundLen) {
+		bprintf(0, _T("BurnYM2151RenderBuffered() - once per frame, please!\n"));
+		return;
+	}
+
+//	bprintf(PRINT_NORMAL, _T("    YM2151 render %6i -> %6i\n"), nYM2151Position, nSegmentEnd);
+
+	INT32 nSegmentLength = nSegmentEnd;
+	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM2151SoundRate / nBurnSoundRate + 1;
+
+	if (nSamplesNeeded < nYM2151Position) {
+		nSamplesNeeded = nYM2151Position;
+	}
+
+	if (nSegmentLength > nBurnSoundLen) {
+		nSegmentLength = nBurnSoundLen;
+	}
+	nSegmentLength <<= 1;
+
+	YM2151RenderBuffered(nSamplesNeeded);
+
+	pYM2151Buffer[0] = pBuffer + 0 * 4096 + 4;
+	pYM2151Buffer[1] = pBuffer + 1 * 4096 + 4;
+
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nRightSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample, nTotalRightSample;
+
+		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2151_YM2151_ROUTE_1, 0)
+		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2151_YM2151_ROUTE_1, 0)
+		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2151_YM2151_ROUTE_2, 1)
+		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2151_YM2151_ROUTE_2, 1)
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
+
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
+		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
+
+		if (bYM2151AddSignal) {
+			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
+			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
+		} else {
+			pSoundBuf[i + 0] = nTotalLeftSample;
+			pSoundBuf[i + 1] = nTotalRightSample;
+		}
+	}
+
+	if (nSegmentEnd >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pYM2151Buffer[0][i] = pYM2151Buffer[0][(nFractionalPosition >> 16) + i];
+			pYM2151Buffer[1][i] = pYM2151Buffer[1][(nFractionalPosition >> 16) + i];
+		}
+
+		nFractionalPosition &= 0xFFFF;
+
+		nYM2151Position = nExtraSamples;
+	}
+}
+
+
+
+void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Render called without init\n"));
+#endif
+
+	if (bBurnYM2151IsBuffered) {
+		BurnYM2151RenderBuffered(nSegmentLength);
+		return;
+	}
+
+	nYM2151Position += nSegmentLength;
+
+	if (nYM2151Position >= nBurnSoundRate) {
+		nYM2151Position = nSegmentLength;
 
 		pYM2151Buffer[0][1] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 3];
 		pYM2151Buffer[0][2] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 2];
@@ -57,8 +193,8 @@ void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength)
 	pYM2151Buffer[0] = pBuffer + 4 + nSamplesRendered;
 	pYM2151Buffer[1] = pBuffer + 4 + nSamplesRendered + 65536;
 
-	YM2151UpdateOne(0, pYM2151Buffer, (UINT32)(nBurnPosition + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered);
-	nSamplesRendered += (UINT32)(nBurnPosition + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered;
+	YM2151UpdateOne(0, pYM2151Buffer, (UINT32)(nYM2151Position + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered);
+	nSamplesRendered += (UINT32)(nYM2151Position + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered;
 
 	pYM2151Buffer[0] = pBuffer;
 	pYM2151Buffer[1] = pBuffer + 65536;
@@ -138,8 +274,30 @@ void BurnYM2151Exit()
 	}
 
 	BurnFree(pBuffer);
-	
+
+	bBurnYM2151IsBuffered = 0;
+	BurnYM2151StreamCallback = NULL;
+	bYM2151AddSignal = 0;
+
 	DebugSnd_YM2151Initted = 0;
+}
+
+void BurnYM2151InitBuffered(INT32 nClockFrequency, INT32 use_timer, INT32 (*StreamCallback)(INT32), INT32 bAdd)
+{
+	BurnYM2151Init(nClockFrequency, use_timer);
+
+	if (use_timer && StreamCallback == NULL) {
+		StreamCallback = BurnSynchroniseStream; // BurnTimer has us covered!
+	}
+
+	bBurnYM2151IsBuffered = (StreamCallback != NULL);
+	BurnYM2151StreamCallback = StreamCallback;
+
+	if (bBurnYM2151IsBuffered) {
+		bprintf(0, _T("YM2151: Using Buffered-mode.\n"));
+	}
+
+	bYM2151AddSignal = bAdd;
 }
 
 INT32 BurnYM2151Init(INT32 nClockFrequency)
@@ -150,7 +308,11 @@ INT32 BurnYM2151Init(INT32 nClockFrequency)
 INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 {
 	DebugSnd_YM2151Initted = 1;
-	
+
+	bBurnYM2151IsBuffered = 0; // Can I recommend BurnYM2151InitBuffered()? :)
+	BurnYM2151StreamCallback = NULL; // ""
+	bYM2151AddSignal = 0; // ""
+
 	if (nBurnSoundRate <= 0) {
 		YM2151Init(1, nClockFrequency, 11025, NULL);
 		return 0;
@@ -178,7 +340,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 	nSampleSize = (UINT32)nBurnYM2151SoundRate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 4 << 16;
 	nSamplesRendered = 0;
-	nBurnPosition = 0;
+	nYM2151Position = 0;
 
 	// default routes
 	YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1] = 1.00;
@@ -229,3 +391,43 @@ void BurnYM2151Scan(INT32 nAction, INT32 *pnMin)
 	if (YM2151BurnTimer)
 		BurnTimerScan(nAction, pnMin);
 }
+
+void BurnYM2151Write(INT32 offset, const UINT8 nData)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Write called without init\n"));
+#endif
+
+	if (offset & 1) {
+		BurnYM2151UpdateRequest();
+		YM2151WriteReg(0, nBurnCurrentYM2151Register, nData);
+	} else {
+		nBurnCurrentYM2151Register = nData;
+	}
+}
+
+void BurnYM2151SelectRegister(const UINT8 nRegister)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SelectRegister called without init\n"));
+#endif
+
+	nBurnCurrentYM2151Register = nRegister;
+}
+
+void BurnYM2151WriteRegister(const UINT8 nValue)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151WriteRegister called without init\n"));
+#endif
+
+	BurnYM2151UpdateRequest();
+	YM2151WriteReg(0, nBurnCurrentYM2151Register, nValue);
+}
+
+UINT8 BurnYM2151Read()
+{
+	BurnYM2151UpdateRequest();
+	return YM2151ReadStatus(0);
+}
+

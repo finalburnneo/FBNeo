@@ -168,7 +168,7 @@ STDDIPINFO(Agress)
 
 static void palette_write(INT32 offset)
 {
-	UINT16 rgb = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 rgb = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 bit0,bit1,bit2,bit3;
 	INT32 r,g,b;
@@ -207,8 +207,8 @@ static void update_pixels(INT32 offset)
 	UINT16 *src = (UINT16*)DrvVidRAM0 + ((y << 8) | x);
 	UINT16 *dst = DrvTmpBmp + (y-y_offs) * 320 + x * 2;
 
-	INT32 front = src[0x00000];
-	INT32 back  = src[0x10000];
+	INT32 front = BURN_ENDIAN_SWAP_INT16(src[0x00000]);
+	INT32 back  = BURN_ENDIAN_SWAP_INT16(src[0x10000]);
 
 	if (front >> 8)   dst[0] = front >> 8;
 	else              dst[0] = (back >> 8) | 0x100;
@@ -240,14 +240,14 @@ static void __fastcall blockout_write_byte(UINT32 address, UINT8 data)
 static void __fastcall blockout_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x280200 && address <= 0x2805ff) {
-		*((UINT16*)(DrvPalRAM + (address - 0x280200))) = data;
+		*((UINT16*)(DrvPalRAM + (address - 0x280200))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x3fe);
 		return;
 	}
 
 	if (address >= 0x180000 && address <= 0x1bffff) {
 		address &= 0x3fffe;
-		*((UINT16*)(DrvVidRAM0 + address)) = data;
+		*((UINT16*)(DrvVidRAM0 + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		update_pixels(address>>1);
 		return;
 	}
@@ -260,7 +260,7 @@ static void __fastcall blockout_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x280002: // front color
-			*((UINT16*)(DrvPalRAM + 0x400)) = data;
+			*((UINT16*)(DrvPalRAM + 0x400)) = BURN_ENDIAN_SWAP_INT16(data);
 			palette_write(0x400);
 		return;
 	}
@@ -507,7 +507,7 @@ static INT32 DrvDraw()
 		{
 			for (INT32 x = 0; x < nScreenWidth; x+=8)
 			{
-				INT32 d = vram[(y << 6) + (x >> 3)];
+				INT32 d = BURN_ENDIAN_SWAP_INT16(vram[(y << 6) + (x >> 3)]);
 
 				for (INT32 xi = 0; xi < 8; xi++)
 				{

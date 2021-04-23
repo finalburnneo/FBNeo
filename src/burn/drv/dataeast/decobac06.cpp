@@ -44,20 +44,20 @@ void bac06_draw_layer(UINT8 *vram, UINT16 control[2][4], UINT8 *rsram, UINT8 *cs
 		for (INT32 sy = 0; sy < nScreenHeight; sy++)
 		{
 			INT32 syy = (sy + scrolly) & mheight;
-			if (csenable) syy = (syy + scry[syy]) & mheight;
+			if (csenable) syy = (syy + BURN_ENDIAN_SWAP_INT16(scry[syy])) & mheight;
 			INT32 row = syy / tsize;
 			INT32 zy = syy & (tsize - 1);
 
 			for (INT32 sx = 0; sx < nScreenWidth; sx++)
 			{
 				INT32 sxx = (sx + scrollx) & mwidth;
-				if (rsenable) sxx = (sxx + scrx[syy]) & mwidth;
+				if (rsenable) sxx = (sxx + BURN_ENDIAN_SWAP_INT16(scrx[syy])) & mwidth;
 				INT32 col = sxx / tsize;
 				INT32 zx = sxx & (tsize - 1);
 
 				INT32 offs = (col & (bsize - 1)) + (row * bsize) + ((col & ~(bsize - 1)) * high);
 
-				INT32 code  = ram[offs];
+				INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 				INT32 color = ((code >> 12) << bac06_depth) | colbase;
 
 				code = (((code & 0xfff) + bank) & gfxmask) * (tsize * tsize);
@@ -85,7 +85,7 @@ void bac06_draw_layer(UINT8 *vram, UINT16 control[2][4], UINT8 *rsram, UINT8 *cs
 
 				INT32 offs = (col & (bsize - 1)) + (row * bsize) + ((col & ~(bsize - 1)) * high);
 
-				INT32 code  = ram[offs];
+				INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 				INT32 color = (code >> 12);	
 				code = (code & 0xfff) + bank;
 

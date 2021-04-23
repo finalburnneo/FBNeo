@@ -8,6 +8,7 @@ extern "C" {
 
 INT32 BurnYM2151Init(INT32 nClockFrequency);
 INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer);
+void BurnYM2151InitBuffered(INT32 nClockFrequency, INT32 use_timer, INT32 (*StreamCallback)(INT32), INT32 bAdd);
 void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2151Reset();
 void BurnYM2151Exit();
@@ -15,48 +16,15 @@ void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength);
 void BurnYM2151Scan(INT32 nAction, INT32 *pnMin);
 void BurnYM2151SetInterleave(INT32 nInterleave);
 
-inline static void BurnYM2151Write(INT32 offset, const UINT8 nData)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Write called without init\n"));
-#endif
+void BurnYM2151Write(INT32 offset, const UINT8 nData);
+void BurnYM2151SelectRegister(const UINT8 nRegister);
+void BurnYM2151WriteRegister(const UINT8 nValue);
+UINT8 BurnYM2151Read();
 
-	extern UINT32 nBurnCurrentYM2151Register;
-
-	if (offset & 1) {
-		YM2151WriteReg(0, nBurnCurrentYM2151Register, nData);
-	} else {
-		nBurnCurrentYM2151Register = nData;
-	}
-}
-
-static inline void BurnYM2151SelectRegister(const UINT8 nRegister)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SelectRegister called without init\n"));
-#endif
-
-	extern UINT32 nBurnCurrentYM2151Register;
-
-	nBurnCurrentYM2151Register = nRegister;
-}
-
-static inline void BurnYM2151WriteRegister(const UINT8 nValue)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151WriteRegister called without init\n"));
-#endif
-
-	extern UINT32 nBurnCurrentYM2151Register;
-
-	YM2151WriteReg(0, nBurnCurrentYM2151Register, nValue);
-}
-
-#define BurnYM2151Read() YM2151ReadStatus(0)
 
 #if defined FBNEO_DEBUG
-	#define BurnYM2151SetIrqHandler(h) if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetIrqHandler called without init\n")); YM2151SetIrqHandler(0, h)
-	#define BurnYM2151SetPortHandler(h) if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetPortHandler called without init\n")); YM2151SetPortWriteHandler(0, h)
+	#define BurnYM2151SetIrqHandler(h) do { if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetIrqHandler called without init\n")); YM2151SetIrqHandler(0, h); } while (0);
+	#define BurnYM2151SetPortHandler(h) do { if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetPortHandler called without init\n")); YM2151SetPortWriteHandler(0, h); } while (0);
 #else
 	#define BurnYM2151SetIrqHandler(h) YM2151SetIrqHandler(0, h)
 	#define BurnYM2151SetPortHandler(h) YM2151SetPortWriteHandler(0, h)

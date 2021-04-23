@@ -424,9 +424,9 @@ static void DrvRecalcPalette()
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x800 / 2; i++)
 	{
-		INT32 r = (pal[i] >> 12) & 0x0f;
-		INT32 g = (pal[i] >>  8) & 0x0f;
-		INT32 b = (pal[i] >>  4) & 0x0f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(pal[i]) >> 12) & 0x0f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(pal[i]) >>  8) & 0x0f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(pal[i]) >>  4) & 0x0f;
 
 		DrvPalette[i] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
 	}
@@ -446,7 +446,7 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 wide, I
 		INT32 sy    = ((offs & 0xf) << 4) - (scrolly & 0x0f);
 		INT32 sx    = ((offs >> 4) << 4) - (scrollx & 0x0f);
 
-		INT32 attr  = vram[ofst];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
 
 		if (*flipscreen) {
 			if (transparent) {
@@ -475,7 +475,7 @@ static void draw_txt_layer()
 
 		if (sy < 16 || sy > 240) continue;
 
-		INT32 attr = vram[offs];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 
 		if (*flipscreen) {
 			Render8x8Tile_Mask_FlipXY(pTransDraw, attr & 0x1ff, sx ^ 0xf8, (sy ^ 0xf8) - 16, attr >> 12, 4, 0x0f, 0x000, DrvGfxROM2);
@@ -491,10 +491,10 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x800 / 2; offs += 4)
 	{
-		INT32 sy    = vram[offs + 0];
-		INT32 sx    = vram[offs + 1];
-		INT32 code  = vram[offs + 2];
-		INT32 color = vram[offs + 3] >> 12;
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(vram[offs + 0]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(vram[offs + 1]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs + 2]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs + 3]) >> 12;
 		INT32 flipx = code & 0x4000;
 		INT32 flipy = code & 0x8000;
 

@@ -622,10 +622,11 @@ static INT32 ConfigParseMAMEFile()
 				if (flags & 0x100) { // add options
 					INT32 nTotal = nValue + 1;
 					INT32 nPlus1 = (flags & 0x200) ? 1 : 0; // displayed value +1?
+					INT32 nStartValue = (flags & 0x400) ? 1 : 0; // starting value
 
 					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
 					if (nTotal > 0xff) continue; // bad entry (roughrac has this)
-					for (nValue = 0; nValue < nTotal; nValue++) {
+					for (nValue = nStartValue; nValue < nTotal; nValue++) {
 #if defined(UNICODE)
 						swprintf(tmp2, L"# %d.", nValue + nPlus1);
 #else

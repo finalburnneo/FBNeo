@@ -309,7 +309,9 @@ inline static void WriteByteROM(UINT32 a, UINT8 d)
 
 	a &= nSekAddressMaskActive;
 
-	pr = FIND_R(a);
+	// changed from FIND_R to allow for encrypted games (fd1094 etc) to work -dink apr. 23, 2021
+	// (on non-encrypted games, Fetch is mapped to Read)
+	pr = FIND_F(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
 		a ^= 1;
 		pr[a & SEK_PAGEM] = (UINT8)d;

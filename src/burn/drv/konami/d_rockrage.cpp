@@ -40,48 +40,48 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 
 static struct BurnInputInfo RockrageInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"}	,
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"}	,
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Rockrage)
 
 static struct BurnDIPInfo RockrageDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xe0, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0x5d, NULL			},
+	{0x12, 0xff, 0xff, 0xe0, NULL					},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0x5d, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x12, 0x01, 0x20, 0x20, "Off"			},
-	{0x12, 0x01, 0x20, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x12, 0x01, 0x20, 0x20, "Off"					},
+	{0x12, 0x01, 0x20, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x80, 0x80, "Off"			},
-	{0x12, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x12, 0x01, 0x80, 0x80, "Off"					},
+	{0x12, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,   16, "Coin A"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"				},
 	{0x13, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x13, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -97,9 +97,9 @@ static struct BurnDIPInfo RockrageDIPList[]=
 	{0x13, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
 	{0x13, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
 	{0x13, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x13, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x13, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"				},
 	{0x13, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x13, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x13, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -115,31 +115,31 @@ static struct BurnDIPInfo RockrageDIPList[]=
 	{0x13, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
 	{0x13, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x13, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x13, 0x01, 0xf0, 0x00, "Invalid"		},
+	{0x13, 0x01, 0xf0, 0x00, "Invalid"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0x03, 0x03, "1"			},
-	{0x14, 0x01, 0x03, 0x02, "2"			},
-	{0x14, 0x01, 0x03, 0x01, "3"			},
-	{0x14, 0x01, 0x03, 0x00, "5"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x14, 0x01, 0x03, 0x03, "1"					},
+	{0x14, 0x01, 0x03, 0x02, "2"					},
+	{0x14, 0x01, 0x03, 0x01, "3"					},
+	{0x14, 0x01, 0x03, 0x00, "5"					},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x14, 0x01, 0x08, 0x08, "30k & Every 70k"	},
-	{0x14, 0x01, 0x08, 0x00, "40k & Every 80k"	},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
+	{0x14, 0x01, 0x08, 0x08, "30k & Every 70k"		},
+	{0x14, 0x01, 0x08, 0x00, "40k & Every 80k"		},
 
-	{0   , 0xfe, 0   ,    2, "Freeze Screen"	},
-	{0x14, 0x01, 0x10, 0x10, "Off"			},
-	{0x14, 0x01, 0x10, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Freeze Screen"		},
+	{0x14, 0x01, 0x10, 0x10, "Off"					},
+	{0x14, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x60, 0x60, "Easy"			},
-	{0x14, 0x01, 0x60, 0x40, "Medium"		},
-	{0x14, 0x01, 0x60, 0x20, "Hard"			},
-	{0x14, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x14, 0x01, 0x60, 0x60, "Easy"					},
+	{0x14, 0x01, 0x60, 0x40, "Medium"				},
+	{0x14, 0x01, 0x60, 0x20, "Hard"					},
+	{0x14, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"			},
-	{0x14, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x80, 0x80, "Off"					},
+	{0x14, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Rockrage)
@@ -295,30 +295,30 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvHD6309ROM		= Next; Next += 0x020000;
-	DrvM6809ROM		= Next; Next += 0x010000;
+	DrvM6809ROM			= Next; Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x080000;
-	DrvGfxROM1		= Next; Next += 0x080000;
+	DrvGfxROM0			= Next; Next += 0x080000;
+	DrvGfxROM1			= Next; Next += 0x080000;
 
-	DrvVLMROM		= Next; Next += 0x008000;
+	DrvVLMROM			= Next; Next += 0x008000;
 
-	DrvLutPROM		= Next; Next += 0x000300;
+	DrvLutPROM			= Next; Next += 0x000300;
 ;
-	DrvPalette		= (UINT32*)Next; Next += 0x300 * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += 0x300 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam				= Next;
 
 	DrvHD6309RAM		= Next; Next += 0x002000;
-	DrvM6809RAM		= Next; Next += 0x000800;
-	DrvPalRAM		= Next; Next += 0x000100;
+	DrvM6809RAM			= Next; Next += 0x000800;
+	DrvPalRAM			= Next; Next += 0x000100;
 
 	K007342VidRAM[0]	= Next; Next += 0x002000;
 	K007342ScrRAM[0]	= Next; Next += 0x000200;
 
 	K007420RAM[0]		= Next; Next += 0x000200;
 
-	RamEnd			= Next;
-	MemEnd			= Next;
+	RamEnd				= Next;
+	MemEnd				= Next;
 
 	return 0;
 }
@@ -358,22 +358,22 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM1   + 0x10000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1   + 0x20000,  9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1   + 0x30000, 10, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvLutPROM   + 0x00000, 11, 1)) return 1;
 			if (BurnLoadRom(DrvLutPROM   + 0x00100, 12, 1)) return 1;
 			if (BurnLoadRom(DrvLutPROM   + 0x00200, 13, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvVLMROM    + 0x00000, 14, 1)) return 1;
 		}
 		else
 		{
 			if (BurnLoadRom(DrvGfxROM1   + 0x00000,  5, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1   + 0x20000,  6, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvLutPROM   + 0x00000,  7, 1)) return 1;
 			if (BurnLoadRom(DrvLutPROM   + 0x00100,  8, 1)) return 1;
 			if (BurnLoadRom(DrvLutPROM   + 0x00200,  9, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvVLMROM    + 0x00000, 10, 1)) return 1;
 		}
 
@@ -401,7 +401,8 @@ static INT32 DrvInit()
 	M6809SetReadHandler(rockrage_sound_read);
 	M6809Close();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnTimerAttachM6809(1500000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
@@ -503,36 +504,24 @@ static INT32 DrvFrame()
 		DrvInputs[0] = (DrvInputs[0] & 0x1f) | (DrvDips[0] & 0xe0);
 	}
 
-	INT32 nInterleave = ((nBurnSoundLen) ? nBurnSoundLen : 1);
+	INT32 nInterleave = 120;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 1500000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	HD6309Open(0);
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += HD6309Run(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, HD6309);
 
-		nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -546,7 +535,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

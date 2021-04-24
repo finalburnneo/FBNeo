@@ -1005,12 +1005,13 @@ static INT32 WeclemanInit()
 	ZetSetReadHandler(wecleman_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnTimerAttachZet(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.15, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.15, BURN_SND_ROUTE_RIGHT);
 
 	K007232Init(0, 3579545, DrvSndROM[0], 0x40000);
-	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	K007232PCMSetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 128, 64);
@@ -1758,6 +1759,7 @@ static INT32 DrvFrame()
 	}
 
 	SekNewFrame(); // cpu sync
+	ZetNewFrame(); // timer
 
 	{
 		DrvInputs[0] = (game_select) ? 0xff : 0;
@@ -1776,10 +1778,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 MULT = 8;
 	INT32 nInterleave = 262*MULT;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 10000000 / 60, 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -1806,14 +1806,8 @@ static INT32 DrvFrame()
 		if (game_select == 0)
 		{
 			ZetOpen(0);
-			CPU_RUN(2, Zet);
+			CPU_RUN_TIMER(2);
 			ZetClose();
-
-			if (pBurnSoundOut && (i&0xf) == 0xf) {
-				nSegment = nBurnSoundLen / (nInterleave / (MULT*2));
-				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-				nSoundBufferPos += nSegment;
-			}
 		}
 		else
 		{
@@ -1829,10 +1823,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		if (game_select == 0)
 		{
-			nSegment = nBurnSoundLen - nSoundBufferPos;
-			if (nSegment > 0) {
-				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			}
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 			K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		}
 		else

@@ -52,7 +52,7 @@ static void YM2151RenderBuffered(INT32 nSegmentLength)
 	nYM2151Position += nSegmentLength;
 }
 
-void BurnYM2151UpdateRequest() // _not_ static because of inlined funcs in .h
+void BurnYM2151UpdateRequest()
 {
 	if (bBurnYM2151IsBuffered) {
 		YM2151RenderBuffered(BurnYM2151StreamCallback(nBurnYM2151SoundRate));
@@ -427,7 +427,11 @@ void BurnYM2151WriteRegister(const UINT8 nValue)
 
 UINT8 BurnYM2151Read()
 {
-	BurnYM2151UpdateRequest();
+	//  status contains: chip busy status (not emulated) and timer state.
+	//  when using BurnTimer, this timer state is asynchronous to rendering
+	//  state; therefore, updaterequest here is not needed.  Most games poll
+	//  status this 800x+ per frame!
+	//	BurnYM2151UpdateRequest();
 	return YM2151ReadStatus(0);
 }
 

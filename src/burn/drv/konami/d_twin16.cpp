@@ -1024,7 +1024,8 @@ static INT32 DrvInit(INT32 (pLoadCallback)())
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.12, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnTimerAttachZet(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
@@ -1391,7 +1392,6 @@ static INT32 DrvFrame()
 		if ((DrvInputs[3] & 0x03) == 0) DrvInputs[3] |= 0x03;
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 264;
 	if (twin16_custom_video == 0 && is_vulcan == 0) nInterleave = 600; // devilw
 	INT32 nCyclesTotal[3] = { 9216000 / 60, 9216000 / 60, 3579545 / 60 };
@@ -1413,26 +1413,14 @@ static INT32 DrvFrame()
 			SekClose();
 		}
 
-		CPU_RUN(2, Zet);
-
-		if (pBurnSoundOut && (i%4)==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN_TIMER(2);
 
 		if (sprite_timer > 0) sprite_timer--;
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

@@ -491,7 +491,7 @@ static INT32 DrvInit()
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, DrvK053247Callback, 0x03 /* shadows & highlights */);
 	K053247SetSpriteOffset(-59, -39);
 
-	BurnYM2151Init(3579545, 1);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnTimerAttachZet(3579545*2); // *2 = better sync maggie & sax
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.00, BURN_SND_ROUTE_BOTH); // not connected
@@ -616,7 +616,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { (INT32)(3000000 / 59.18), (INT32)((3579545*2) / 59.18) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -632,33 +631,21 @@ static INT32 DrvFrame()
 
 		K053246Irq = K053246_is_IRQ_enabled();
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		if (fa00_timer) {
 			BurnTimerUpdate(ZetTotalCycles() + 89);
 			ZetNmi();
 			fa00_timer = 0;
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K053260Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	BurnTimerEndFrame(nCyclesTotal[1]);
+
 	if (K053246Irq) simpsons_objdma();
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K053260Update(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K053260Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	konamiClose();

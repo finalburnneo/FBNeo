@@ -1022,7 +1022,8 @@ static INT32 MooInit()
 
 	EEPROMInit(&moo_eeprom_interface);
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
+	BurnTimerAttachZet(8000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
@@ -1115,7 +1116,8 @@ static INT32 BuckyInit()
 
 	EEPROMInit(&moo_eeprom_interface);
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
+	BurnTimerAttachZet(8000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
@@ -1263,7 +1265,6 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 120;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	if (moomesabl) nCyclesTotal[0] = 16100000 / 60;  // weird
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1301,25 +1302,13 @@ static INT32 DrvFrame()
 		}
 
 		if (!moomesabl) {
-			INT32 nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
-			if (nCyclesSegment > 0) nCyclesDone[1] += ZetRun(nCyclesSegment); // sync sound cpu to main cpu
-
-			if (pBurnSoundOut) {
-				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				nSoundBufferPos += nSegmentLength;
-			}
+			CPU_RUN_TIMER(1);
 		}
 	}
 
 	if (pBurnSoundOut) {
 		if (!moomesabl) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (nSegmentLength) {
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-			}
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 			K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 		} else {
 			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);

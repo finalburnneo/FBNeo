@@ -665,7 +665,7 @@ STD_ROM_FN(funkyjet)
 
 struct BurnDriver BurnDrvFunkyjet = {
 	"funkyjet", NULL, NULL, NULL, "1992",
-	"Funky Jet (World, rev 1)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
+	"Funky Jet (World, rev 1)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
@@ -695,10 +695,40 @@ STD_ROM_FN(funkyjeta)
 
 struct BurnDriver BurnDrvFunkyjeta = {
 	"funkyjeta", "funkyjet", NULL, NULL, "1992",
-	"Funky Jet (World)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
+	"Funky Jet (World)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetaRomInfo, funkyjetaRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Funky Jet (World, alternate demo)
+
+static struct BurnRomInfo funkyjeta2RomDesc[] = {
+	{ "jk00-1.12f",		0x40000, 0xa18de697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jk01-1.13f",		0x40000, 0x695a27cd, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jk02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "mat02",			0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "mat01",			0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
+	{ "mat00",			0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
+
+	{ "jk03.15h",		0x20000, 0xd7c0f0fe, 5 | BRF_SND },           //  6 OKI M6295 Samples
+};
+
+STD_ROM_PICK(funkyjeta2)
+STD_ROM_FN(funkyjeta2)
+
+struct BurnDriver BurnDrvFunkyjeta2 = {
+	"funkyjeta2", "funkyjet", NULL, NULL, "1992",
+	"Funky Jet (World, alternate demo)\0", NULL, "Mitchell", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, funkyjeta2RomInfo, funkyjeta2RomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -725,7 +755,7 @@ STD_ROM_FN(funkyjetj)
 
 struct BurnDriver BurnDrvFunkyjetj = {
 	"funkyjetj", "funkyjet", NULL, NULL, "1992",
-	"Funky Jet (Japan, rev 2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Funky Jet (Japan, rev 2)\0", NULL, "Mitchell (Data East Corporation license)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,

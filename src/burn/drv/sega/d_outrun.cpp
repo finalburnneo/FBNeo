@@ -606,6 +606,50 @@ static struct BurnRomInfo OutrunehaRomDesc[] = {
 STD_ROM_PICK(Outruneha)
 STD_ROM_FN(Outruneha)
 
+static struct BurnRomInfo OutrunehbRomDesc[] = {
+	{ "enhanced_202_epr-10380b.133",   0x10000, 0xdb563a0f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10382b.118",   0x10000, 0xca324a4e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10381b.132",   0x10000, 0xd60be71f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_202_epr-10383b.117",   0x10000, 0xcc1f2f75, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10327a.76",    			   0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10329a.58",    			   0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328a.75",    			   0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330a.57",    			   0x10000, 0xba9ec82a, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-10268.99",     			   0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",   			   0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10267.100",    			   0x08000, 0xa85bb823, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",    			   0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10266.101",    			   0x08000, 0x9f6f1a74, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",    			   0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10371.9",      			   0x20000, 0x7cc86208, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10373.10",    			   0x20000, 0xb0d26ac9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10375.11",     			   0x20000, 0x59b60bd7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10377.12",     			   0x20000, 0x17a1b04a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10372.13",     			   0x20000, 0xb557078c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10374.14",     			   0x20000, 0x8051e517, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10376.15",     			   0x20000, 0xf3b8f318, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10378.16",     			   0x20000, 0xa1062984, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",     			   0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",     			   0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-10187.88",     			   0x08000, 0xa10abaa9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",     			   0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",     			   0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",     			   0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",     			   0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",     			   0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "enhanced_202_opr-10188.71",     0x08000, 0x57d5c867, SYS16_ROM_PCMDATA | BRF_SND }, // unofficial replacement for factory defective opr-10188
+};
+
+
+STD_ROM_PICK(Outrunehb)
+STD_ROM_FN(Outrunehb)
+
 static struct BurnRomInfo OutrundxRomDesc[] = {
 	{ "epr-10380.133",    0x10000, 0xe339e87a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10382.118",    0x10000, 0x65248dd5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2335,6 +2379,16 @@ struct BurnDriver BurnDrvOutruneha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrunehaRomInfo, OutrunehaRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunehDIPInfo,
+	OutrunInit, System16Exit, OutrunFrame, OutrunRender, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOutrunehb = {
+	"outrunehb", "outrun", NULL, NULL, "2017",
+	"Out Run (sitdown/upright, Rev B) (Enhanced Edition v2.0.2)\0", NULL, "hack (Chris White)", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrunehbRomInfo, OutrunehbRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunehDIPInfo,
 	OutrunInit, System16Exit, OutrunFrame, OutrunRender, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

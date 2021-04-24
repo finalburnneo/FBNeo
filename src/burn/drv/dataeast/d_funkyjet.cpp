@@ -792,7 +792,7 @@ struct BurnDriver BurnDrvFunkyjeta2 = {
 	"Funky Jet (Korea, prototype?)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, funkyjeta2RomInfo, funkyjeta2RomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
+	NULL, funkyjeta2RomInfo, funkyjeta2RomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, Funkyjeta2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

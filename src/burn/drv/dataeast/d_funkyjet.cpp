@@ -128,6 +128,70 @@ static struct BurnDIPInfo FunkyjetDIPList[]=
 
 STDDIPINFO(Funkyjet)
 
+static struct BurnDIPInfo Funkyjeta2DIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x14, 0x01, 0x01, 0x01, "Off"			},
+	{0x14, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x14, 0x01, 0x02, 0x02, "Off"			},
+	{0x14, 0x01, 0x02, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x14, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
+	{0x14, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x14, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
+	{0x14, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x15, 0x01, 0x01, 0x01, "Off"			},
+	{0x15, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x15, 0x01, 0x02, 0x00, "No"			},
+	{0x15, 0x01, 0x02, 0x02, "Yes"			},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x15, 0x01, 0x04, 0x04, "Off"			},
+	{0x15, 0x01, 0x04, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x15, 0x01, 0x08, 0x08, "Off"			},
+	{0x15, 0x01, 0x08, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x15, 0x01, 0x30, 0x10, "Easy"			},
+	{0x15, 0x01, 0x30, 0x30, "Normal"		},
+	{0x15, 0x01, 0x30, 0x20, "Hard"			},
+	{0x15, 0x01, 0x30, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x15, 0x01, 0xc0, 0x00, "0"			},
+	{0x15, 0x01, 0xc0, 0x80, "1"			},
+	{0x15, 0x01, 0xc0, 0xc0, "2"			},
+	{0x15, 0x01, 0xc0, 0x40, "3"			},
+};
+
+STDDIPINFO(Funkyjeta2)
+
 static struct BurnDIPInfo FunkyjetjDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL			},
@@ -704,20 +768,20 @@ struct BurnDriver BurnDrvFunkyjeta = {
 };
 
 
-// Funky Jet (World, alternate demo)
+// Funky Jet (Korea, prototype?)
 
 static struct BurnRomInfo funkyjeta2RomDesc[] = {
-	{ "jk00-1.12f",		0x40000, 0xa18de697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jk01-1.13f",		0x40000, 0x695a27cd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12f",			0x40000, 0xa18de697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "13f",			0x40000, 0x695a27cd, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jk02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "16f",			0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
 	{ "mat02",			0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
 	{ "mat01",			0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
 	{ "mat00",			0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
 
-	{ "jk03.15h",		0x20000, 0xd7c0f0fe, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "15h",			0x20000, 0xd7c0f0fe, 5 | BRF_SND },           //  6 OKI M6295 Samples
 };
 
 STD_ROM_PICK(funkyjeta2)
@@ -725,7 +789,7 @@ STD_ROM_FN(funkyjeta2)
 
 struct BurnDriver BurnDrvFunkyjeta2 = {
 	"funkyjeta2", "funkyjet", NULL, NULL, "1992",
-	"Funky Jet (World, alternate demo)\0", NULL, "Mitchell", "DECO IC16",
+	"Funky Jet (Korea, prototype?)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjeta2RomInfo, funkyjeta2RomName, NULL, NULL, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,

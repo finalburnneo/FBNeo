@@ -456,6 +456,10 @@ static INT32 DrvInit()
 	deco16_set_color_base(0, 256);
 	deco16_set_color_base(1, 512);
 	deco16_set_global_offsets(0, 8);
+	deco16_set_scroll_offs(0, 0, -1, 0);
+	deco16_set_scroll_offs(0, 1, -1, 0);
+	deco16_set_scroll_offs(1, 0, -1, 0);
+	deco16_set_scroll_offs(1, 1, -1, 0);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

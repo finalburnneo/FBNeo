@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16782 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16794 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -67,6 +67,7 @@ This list contains all games supported by FinalBurn Neo.
 | 1943bj	|  	| 1943: Midway Kaisen (bootleg)				| 1943		| 1987	| bootleg	| Miscellaneous	| 					|
 | 1943ja	|  	| 1943: Midway Kaisen (Japan)				| 1943		| 1987	| Capcom	| Miscellaneous	| 					|
 | 1943jah	|  	| 1943: Midway Kaisen (Japan, no protection hack)	| 1943		| 1987	| Capcom	| Miscellaneous	| 					|
+| 1943jaha	|  	| 1943: Midway Kaisen (Japan, no protection hack, alt)	| 1943		| 1987	| Capcom	| Miscellaneous	| 					|
 | 1943j		|  	| 1943: Midway Kaisen (Japan, Rev B)			| 1943		| 1987	| Capcom	| Miscellaneous	| 					|
 | 1943b		|  	| 1943: The Battle of Midway (bootleg set 1, hack of Jap| 1943		| 1987	| bootleg	| Miscellaneous	| 					|
 | 1943b2	|  	| 1943: The Battle of Midway (bootleg set 2, hack of Jap| 1943		| 1987	| bootleg	| Miscellaneous	| 					|
@@ -929,7 +930,7 @@ This list contains all games supported by FinalBurn Neo.
 | pce_avpoker	|  	| AV Poker						| 		| 1992	| Games Express	| PC Engine	| 					|
 | nes_avpregirfig|  	| AV Pretty Girl Fight (Unl)				| 		| 1994	| Someri Team	| Miscellaneous	| 					|
 | spec_avalon	|  	| Avalon (48K)						| 		| 1984	| Hewson Consult| ZX Spectrum	| 					|
-| md_avatar	|  	| Avatar (Rus)						| md_jimpower	| 199?	| <unknown>	| Sega Megadrive| 					|
+| md_avatar	|  	| Avatar (Rus)						| md_jimpowerpiko| 199?	| <unknown>	| Sega Megadrive| 					|
 | avefenix	|  	| Ave Fenix (Electrogame, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg (Video| Miscellaneous	| 					|
 | avefenixl	|  	| Ave Fenix (Laguna, Spanish bootleg of Phoenix)	| phoenix	| 1980	| bootleg	| Miscellaneous	| 					|
 | avefenixrf	|  	| Ave Fenix (Recreativos Franco, Spanish bootleg of Phoe| phoenix	| 1981	| bootleg (Recre| Miscellaneous	| 					|
@@ -1086,13 +1087,14 @@ This list contains all games supported by FinalBurn Neo.
 | msx_barb	|  	| Barbarian (Euro)					| 		| 1988	| Mastertronic	| MSX		| 					|
 | spec_barbarn	|  	| Barbarian (Psygnosis) (128K)				| 		| 1988	| Melbourne Hous| ZX Spectrum	| 					|
 | spec_barbarn_48|  	| Barbarian (Psygnosis) (48K)				| spec_barbarn	| 1988	| Melbourne Hous| ZX Spectrum	| 					|
-| md_barbarianami|  	| Barbarian - Amiga (HB)				| 		| 2017	| F.L		| Sega Megadrive| raw conversion - no improvements	|
-| md_barbariancpc|  	| Barbarian - Amstrad CPC (HB)				| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
-| md_barbarianst|  	| Barbarian - Atari ST (HB)				| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
-| md_barbarianc64|  	| Barbarian - C64 (HB)					| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
-| md_barbarianzxs|  	| Barbarian - ZX Spectrum (HB)				| md_barbarianami| 2015	| F.L		| Sega Megadrive| raw conversion - no improvements	|
 | spec_barbarn2	|  	| Barbarian II - The Dungeon of Drax (128K)		| 		| 1988	| Palace Softwar| ZX Spectrum	| 					|
 | msx_barb2	|  	| Barbarian II - The Dungeon of Drax (Spa)		| 		| 1988	| Erbe Software	| MSX		| 					|
+| md_barbarianrk|  	| Barbarian Remake (HB)					| 		| 2019	| Z-Team	| Sega Megadrive| Remake from Amiga-Atari ST game	|
+| md_barbarianami|  	| Barbarian the Ultimate Warrior - Amiga (HB)		| 		| 2017	| F.L		| Sega Megadrive| raw conversion - no improvements	|
+| md_barbariancpc|  	| Barbarian the Ultimate Warrior - Amstrad CPC (HB)	| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
+| md_barbarianst|  	| Barbarian the Ultimate Warrior - Atari ST (HB)	| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
+| md_barbarianc64|  	| Barbarian the Ultimate Warrior - C64 (HB)		| md_barbarianami| 2014	| F.L		| Sega Megadrive| raw conversion - no improvements	|
+| md_barbarianzxs|  	| Barbarian the Ultimate Warrior - ZX Spectrum (HB)	| md_barbarianami| 2015	| F.L		| Sega Megadrive| raw conversion - no improvements	|
 | spec_barbply2	|  	| Barbarian: The Ultimate Warrior Part 1 - 2 Players (48| 		| 1987	| Palace Softwar| ZX Spectrum	| 					|
 | spec_barbply1	|  	| Barbarian: The Ultimate Warrior Part 2 - 1 Player (48K| spec_barbply2	| 1987	| Palace Softwar| ZX Spectrum	| 					|
 | gg_barbie	|  	| Barbie Super Model (Prototype)			| 		| 199?	| Unknown	| Sega Game Gear| 					|
@@ -5004,9 +5006,10 @@ This list contains all games supported by FinalBurn Neo.
 | funkybeeb	|  	| Funky Bee (bootleg, harder)				| funkybee	| 1982	| bootleg	| Miscellaneous	| 					|
 | funkybee	|  	| Funky Bee						| 		| 1982	| Orca		| Miscellaneous	| 					|
 | fnkyfish	|  	| Funky Fish						| 		| 1981	| Sun Electronic| Miscellaneous	| 					|
-| funkyjetj	|  	| Funky Jet (Japan, rev 2)				| funkyjet	| 1992	| Data East Corp| DECO IC16	| 					|
-| funkyjeta	|  	| Funky Jet (World)					| funkyjet	| 1992	| [Data East] (M| DECO IC16	| 					|
-| funkyjet	|  	| Funky Jet (World, rev 1)				| 		| 1992	| [Data East] (M| DECO IC16	| 					|
+| funkyjetj	|  	| Funky Jet (Japan, rev 2)				| funkyjet	| 1992	| Mitchell (Data| DECO IC16	| 					|
+| funkyjeta2	|  	| Funky Jet (Korea, prototype?)				| funkyjet	| 1992	| Mitchell	| DECO IC16	| 					|
+| funkyjeta	|  	| Funky Jet (World)					| funkyjet	| 1992	| Mitchell	| DECO IC16	| 					|
+| funkyjet	|  	| Funky Jet (World, rev 1)				| 		| 1992	| Mitchell	| DECO IC16	| 					|
 | msx_funmouse	|  	| Funky Mouse (Jpn)					| 		| 1984	| ASCII		| MSX		| 					|
 | funybublc	|  	| Funny Bubble (Comad version)				| funybubl	| 1999	| Comad Industry| misc		| 					|
 | funybubl	|  	| Funny Bubble						| 		| 1999	| In Chang Elect| misc		| 					|
@@ -5906,6 +5909,7 @@ This list contains all games supported by FinalBurn Neo.
 | hharry	|  	| Hammerin' Harry (World, M81 hardware))		| 		| 1990	| Irem		| Irem M82	| 					|
 | hharryb	|  	| Hammerin' Harry (World, M84 hardware bootleg)		| hharry	| 1990	| bootleg	| Irem M82	| 					|
 | pce_hanataka	|  	| Hana Taaka Daka!?					| 		| 1991	| Taito		| PC Engine	| 					|
+| md_handyharvy	|  	| Handy Harvy (HB)					| 		| 2018	| 2nd Dimension	| Sega Megadrive| 					|
 | sms_hangon	|  	| Hang-On (Euro, Bra, Aus)				| 		| 1985	| Sega		| Sega Master Sy| 					|
 | sms_hangonc	|  	| Hang-On (Euro, Bra, Aus, Sega Card)			| sms_hangon	| 1985	| Sega		| Sega Master Sy| 					|
 | msx_hangon	|  	| Hang-On (Jpn)						| 		| 1986	| Pony Canyon	| MSX		| 					|
@@ -6429,6 +6433,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_intkarates1|  	| International Karate (48K) - Side 1			| 		| 1985	| System 3	| ZX Spectrum	| 					|
 | spec_intkarates2|  	| International Karate (48K) - Side 2			| spec_intkarates1| 1985	| System 3	| ZX Spectrum	| 					|
 | msx_ik	|  	| International Karate (Euro)				| 		| 1986	| Endurance Game| MSX		| 					|
+| md_ikplusdx	|  	| International Karate plus Deluxe (HB)			| 		| 2019	| Z-Team	| Sega Megadrive| Improved version of Amiga-Atari ST gam|
 | spec_intkarateplus|  	| International Karate+ (128K)				| 		| 1987	| System 3 Softw| ZX Spectrum	| 					|
 | md_intrugby	|  	| International Rugby (Euro)				| 		| 1993	| Domark	| Sega Megadrive| 					|
 | spec_intrugby	|  	| International Rugby					| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
@@ -6627,8 +6632,9 @@ This list contains all games supported by FinalBurn Neo.
 | fds_jikaishometmag|  	| Jikai Shounen Met Mag (Japan)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | nes_jikuuyuu	|  	| Jikuu Yuuden - Debias (Japan)				| 		| 1987	| Namco		| Miscellaneous	| 					|
 | spec_jillysfarm1|  	| Jilly's Farm Volume 1 - SokoBAArn (HB)		| 		| 2018	| Bob Smith	| ZX Spectrum	| 					|
-| md_jimpower	|  	| Jim Power - The Arcade Game (USA, Prototype)		| 		| 199?	| Loriciel	| Sega Megadrive| imperfect graphics			|
+| md_jimpower	|  	| Jim Power - The Arcade Game (USA, Prototype)		| md_jimpowerpiko| 199?	| Loriciel	| Sega Megadrive| imperfect graphics			|
 | nes_jimpower	|  	| Jim Power - The Lost Dimension (HB)			| 		| 2020	| Piko Interacti| Miscellaneous	| 					|
+| md_jimpowerpiko|  	| Jim Power - The Lost Dimension in 3D (HB)		| 		| 2014	| Piko Interacti| Sega Megadrive| Original title by Loricel		|
 | nes_jimmyconten|  	| Jimmy Connors Tennis (USA)				| 		| 1993	| UBI Soft	| Miscellaneous	| 					|
 | md_jimmywws	|  	| Jimmy White's Whirlwind Snooker (Euro)		| 		| 1991	| Virgin Games	| Sega Megadrive| 					|
 | sg1k_jingwumn	|  	| Jing Wu Men (Tw)					| sg1k_dragwang	| 1985?	| Aaronix	| Sega SG-1000	| 					|
@@ -7266,6 +7272,7 @@ This list contains all games supported by FinalBurn Neo.
 | krzybowl	|  	| Krazy Bowl						| 		| 1994	| American Sammy| Seta		| 					|
 | nes_krazykreatures|  	| Krazy Kreatures (USA) (Unl)				| 		| 1990	| AVE		| Miscellaneous	| 					|
 | nes_krioncon	|  	| Krion Conquest, The (USA)				| 		| 1991	| Vic Tokai	| Miscellaneous	| 					|
+| md_kromasphere|  	| Kromasphere (HB)					| 		| 2019	| 2nd Dimension	| Sega Megadrive| Copyright 2017 CMC			|
 | spec_krpat	|  	| Krpat (HB)						| 		| 2020	| Bizard	| ZX Spectrum	| 					|
 | krull		|  	| Krull							| 		| 1983	| Gottlieb	| Miscellaneous	| 					|
 | sms_krustyfhc	|  	| Krusty's Fun House (Euro, Bra) - Castellano v1.0	| sms_krustyfh	| 2021	| Sega		| Sega Master Sy| 					|
@@ -8203,6 +8210,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_megapanl	|  	| MegaPanel (Jpn)					| 		| 1990	| Namcot	| Sega Megadrive| 					|
 | spec_megaphoenix|  	| Megaphoenix						| 		| 1991	| Dinamic	| ZX Spectrum	| 					|
 | md_megatrax	|  	| MegaTrax (Jpn)					| md_quadchal	| 1991	| Namcot	| Sega Megadrive| 					|
+| md_megaxmas	|  	| MegaXmas (HB)						| 		| 2020	| Nekojita	| Sega Megadrive| 					|
 | sms_megumi	|  	| Megumi Rescue (Jpn)					| 		| 1988	| Sega		| Sega Master Sy| 					|
 | meijinsn	|  	| Meijinsen (set 1)					| 		| 1986	| SNK Electronic| Miscellaneous	| 					|
 | meijinsna	|  	| Meijinsen (set 2)					| meijinsn	| 1986	| SNK Electronic| Miscellaneous	| 					|
@@ -9650,6 +9658,7 @@ This list contains all games supported by FinalBurn Neo.
 | gg_outrunj	|  	| Out Run (Jpn)						| gg_outrun	| 1991	| Sega		| Sega Game Gear| 					|
 | outrunra	|  	| Out Run (sitdown/upright, Rev A)			| outrun	| 1986	| Sega		| Out Run	| 					|
 | outruneha	|  	| Out Run (sitdown/upright, Rev B) (Enhanced Edition v1.| outrun	| 2017	| hack (Chris Wh| Out Run	| 					|
+| outrunehb	|  	| Out Run (sitdown/upright, Rev B) (Enhanced Edition v2.| outrun	| 2017	| hack (Chris Wh| Out Run	| 					|
 | outruneh	|  	| Out Run (sitdown/upright, Rev B) (Enhanced Edition v2.| outrun	| 2017	| hack (Chris Wh| Out Run	| 					|
 | outrun	|  	| Out Run (sitdown/upright, Rev B)			| 		| 1986	| Sega		| Out Run	| 					|
 | sms_outrun	|  	| Out Run (World)					| 		| 1987	| Sega		| Sega Master Sy| 					|
@@ -11483,6 +11492,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_rungaunt	|  	| Run the Gauntlet (128K)				| 		| 1989	| Ocean		| ZX Spectrum	| Control Keys = Q, W, P, L, Space	|
 | runark	|  	| Runark (Japan)					| growl		| 1990	| Taito Corporat| Taito F2	| 					|
 | md_runark	|  	| Runark (Jpn, Kor)					| md_growl	| 1991	| Taito		| Sega Megadrive| 					|
+| md_runes	|  	| Runes (HB)						| 		| 2020	| Cannibal Cat	| Sega Megadrive| 					|
 | msx_runner	|  	| Runner (Fra)						| 		| 1986	| Loriciels	| MSX		| 					|
 | sms_running	|  	| Running Battle (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
 | rushcrsh	|  	| Rush & Crash (Japan)					| srumbler	| 1986	| Capcom	| Miscellaneous	| 					|
@@ -13204,6 +13214,7 @@ This list contains all games supported by FinalBurn Neo.
 | sfiii3n	|  	| Street Fighter III 3rd Strike: Fight for the Future (J| sfiii3	| 1999	| Capcom	| CPS-3		| 					|
 | sfiii3ur1	|  	| Street Fighter III 3rd Strike: Fight for the Future (U| sfiii3	| 1999	| Capcom	| CPS-3		| 					|
 | sfiii3u	|  	| Street Fighter III 3rd Strike: Fight for the Future (U| sfiii3	| 1999	| Capcom	| CPS-3		| 					|
+| sfiii3th	|  	| Street Fighter III 3rd Strike: Fight for the Future | | sfiii3	| 2021	| hack		| CPS-3		| 					|
 | sfiiia	|  	| Street Fighter III: New Generation (Asia 970204)	| sfiii		| 1997	| Capcom	| CPS-3		| 					|
 | sfiiin	|  	| Street Fighter III: New Generation (Asia 970204, NO CD| sfiii		| 1997	| Capcom	| CPS-3		| 					|
 | sfiiina	|  	| Street Fighter III: New Generation (Asia 970204, NO CD| sfiii		| 1997	| Capcom	| CPS-3		| 					|
@@ -13391,6 +13402,7 @@ This list contains all games supported by FinalBurn Neo.
 | sms_sumgamesfm|  	| Summer Games (FM Mod)					| sms_sumgames	| 2018	| Sega - fatnick| Sega Master Sy| YM2413 FM sound chip supported	|
 | spec_summergames2|  	| Summer Games II					| 		| 1988	| U.S. Gold	| ZX Spectrum	| 					|
 | spec_summergames|  	| Summer Games						| 		| 1988	| U.S. Gold	| ZX Spectrum	| 					|
+| md_sumoslam	|  	| Sumo Slam (HB)					| 		| 2013	| Segaman Produc| Sega Megadrive| 					|
 | spec_sunbucket|  	| Sun Bucket (HB)					| 		| 2014	| Stonechat	| ZX Spectrum	| 					|
 | sunaq		|  	| SunA Quiz 6000 Academy (940620-6)			| 		| 1994	| SunA		| Miscellaneous	| 					|
 | nes_sundafun	|  	| Sunday Funday - The Ride (USA) (Unl)			| nes_menacebeach| 1995	| Wisdom Tree	| Miscellaneous	| 					|

@@ -260,8 +260,24 @@ static bool CheckIfSystem(INT32 gameTocheck)
 					break;
 			}
 			break;
+		
+		case HARDWARE_PREFIX_FDS:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{	
+				case HARDWARE_FDS:
+					bRet = true;
+					break;
+			}
+			break;
 
-
+		case HARDWARE_PREFIX_CHANNELF:
+			switch (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)
+			{
+				case HARDWARE_CHANNELF:
+					bRet = true;
+					break;
+			}
+			break;
 
 		case HARDWARE_PUBLIC_MASK:
 			bRet = true;
@@ -452,6 +468,9 @@ static void SystemToCheck()
 		case HARDWARE_FDS:
 			snprintf(systemName, MAX_STRING_SIZE, "Nintendo Famicom Disk System");
 			break;
+		case HARDWARE_PREFIX_CHANNELF:
+			snprintf(systemName, MAX_STRING_SIZE, "Fairchild Channel F");
+			break;
 		default:
 			snprintf(systemName, MAX_STRING_SIZE, "Everything");
 			break;
@@ -497,6 +516,9 @@ static void SwapSystemToCheck()
 			nSystemToCheckMask = HARDWARE_PREFIX_IGS_PGM;
 			break;
 		case HARDWARE_PREFIX_IGS_PGM:
+			nSystemToCheckMask = HARDWARE_PREFIX_CHANNELF;
+			break;			
+		case HARDWARE_PREFIX_CHANNELF:
 			nSystemToCheckMask = HARDWARE_PREFIX_TAITO;
 			break;
 		case HARDWARE_PREFIX_TAITO:
@@ -964,6 +986,7 @@ void getGenre()
 	if (BurnDrvGetGenreFlags() & GBF_STRATEGY)			snprintf(genre, MAX_STRING_SIZE, "Action (Classic)");
 	if (BurnDrvGetGenreFlags() & GBF_RPG)				snprintf(genre, MAX_STRING_SIZE, "RPG");
 	if (BurnDrvGetGenreFlags() & GBF_SIM)				snprintf(genre, MAX_STRING_SIZE, "Simulator");
+	if (BurnDrvGetGenreFlags() & GBF_ADV)				snprintf(genre, MAX_STRING_SIZE, "Adventure");	
 }
 
 void gui_render()

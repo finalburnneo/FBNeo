@@ -55,6 +55,13 @@ int StateGetMainRamAcb(BurnArea *pba)
 				bMainRamFound = true;
 			}
 			return 0;
+		case HARDWARE_SEGA_MEGADRIVE:
+			if ((strcmp(pba->szName, "RAM") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
+			return 0;
 		default:
 			// For all other systems (?), main ram seems to be identified by either "All Ram" or "All RAM"
 			if ((strcmp(pba->szName, "All Ram") == 0) || (strcmp(pba->szName, "All RAM") == 0)) {

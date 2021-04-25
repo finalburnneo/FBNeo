@@ -62,6 +62,29 @@ int StateGetMainRamAcb(BurnArea *pba)
 				bMainRamFound = true;
 			}
 			return 0;
+		case HARDWARE_SEGA_MASTER_SYSTEM:
+		case HARDWARE_SEGA_GAME_GEAR:
+			if ((strcmp(pba->szName, "sms") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
+			return 0;
+		case HARDWARE_NES:
+		case HARDWARE_FDS:
+			if ((strcmp(pba->szName, "Work Ram") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
+			return 0;
+		case HARDWARE_SNK_NGPC:
+			if ((strcmp(pba->szName, "Main Ram") == 0)) {
+				MainRamData = pba->Data;
+				MainRamSize = pba->nLen;
+				bMainRamFound = true;
+			}
+			return 0;
 		default:
 			// For all other systems (?), main ram seems to be identified by either "All Ram" or "All RAM"
 			if ((strcmp(pba->szName, "All Ram") == 0) || (strcmp(pba->szName, "All RAM") == 0)) {

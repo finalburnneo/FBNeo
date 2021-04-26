@@ -1650,7 +1650,7 @@ static unsigned int BurnDrvGetIndexByName(const char* name)
 	return ret;
 }
 
-static void SetError(const char* error)
+static void SetUguiError(const char* error)
 {
 	gui_set_message(error);
 	gui_show = true;
@@ -1716,15 +1716,15 @@ static bool retro_load_game_common()
 
 		// If the game is marked as not working, let's stop here
 		if (!(BurnDrvIsWorking())) {
-			SetError("This romset is known but marked as not working\nOne of its clones might work so give it a try");
-			HandleMessage(RETRO_LOG_ERROR, "This romset is known but marked as not working, one of its clones might work so give it a try\n");
+			SetUguiError("This romset is known but marked as not working\nOne of its clones might work so give it a try");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] This romset is known but marked as not working, one of its clones might work so give it a try\n");
 			goto end;
 		}
 
 		// If the game is a bios, let's stop here
 		if ((BurnDrvGetFlags() & BDF_BOARDROM)) {
-			SetError("Bioses aren't meant to be launched this way");
-			HandleMessage(RETRO_LOG_ERROR, "Bioses aren't meant to be launched this way\n");
+			SetUguiError("Bioses aren't meant to be launched this way");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Bioses aren't meant to be launched this way\n");
 			goto end;
 		}
 
@@ -1760,8 +1760,8 @@ static bool retro_load_game_common()
 #endif
 
 		if (!open_archive()) {
-			SetError("Wrong romset\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
-			HandleMessage(RETRO_LOG_ERROR, "Wrong romset, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
+			SetUguiError("Wrong romset\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Wrong romset, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
 			goto end;
 		}
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] No missing files, proceeding\n");
@@ -1788,8 +1788,8 @@ static bool retro_load_game_common()
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initialized driver for %s\n", g_driver_name);
 		else
 		{
-			SetError("Failed initializing driver\nThis is unexpected, you should probably report it.");
-			HandleMessage(RETRO_LOG_ERROR, "Failed initializing driver, this is unexpected, you should probably report it.\n");
+			SetUguiError("Failed initializing driver\nThis is unexpected, you should probably report it.");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed initializing driver, this is unexpected, you should probably report it.\n");
 			goto end;
 		}
 
@@ -1845,7 +1845,7 @@ static bool retro_load_game_common()
 	}
 	else
 	{
-		SetError("Romset is unknown\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+		SetUguiError("Romset is unknown\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
 		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Romset is unknown, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
 		goto end;
 	}

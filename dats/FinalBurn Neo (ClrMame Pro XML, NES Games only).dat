@@ -1172,6 +1172,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="batlizard">
+		<description>Bat Lizard Bonanza (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Bat Lizard Bonanza (2020)(John Vanderhoef).nes" size="524304" crc="4418f0f3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="batmaretjok">
 		<description>Batman - Return of the Joker (USA)</description>
 		<year>1991</year>
@@ -4196,6 +4204,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="eyra">
+		<description>Eyra - The Crow Maiden (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>2nd Dimension</manufacturer>
+		<rom name="Eyra - The Crow Maiden (2020)(2nd Dimension).nes" size="40976" crc="e03ea9f9"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="f1hero">
 		<description>F-1 Hero (Japan)</description>
 		<year>1988</year>
@@ -5297,6 +5313,14 @@
 		<year>1990</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Ghostbusters II (USA).nes" size="262160" crc="8d4e6fa3"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ghostbrm">
+		<description>Ghostbusters Remastered (HB, v1.1) [Hack, Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>NesRocks</manufacturer>
+		<rom name="Ghostbusters Remastered v1.1 (2019)(Nesrocks).nes" size="98320" crc="29c2e0d0"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7549,7 +7573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legenzeldx" cloneof="legenzel" romof="legenzel">
-		<description>Legend of Zelda DX, The (HB) [Homebrew]</description>
+		<description>Legend of Zelda DX, The (HB) [Hack, Homebrew]</description>
 		<year>2014</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="legend of zelda dx (2014)(pacnsacdave).nes" size="131088" crc="0698579d"/>
@@ -7666,6 +7690,14 @@
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="Lion King, The (Europe).nes" size="262160" crc="149e367f"/>
 		<video orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
+		<driver status="good"/>
+	</game>
+	<game name="littlelanc">
+		<description>Little Lancelot (HB) [Homebrew, Developed by Ocean]</description>
+		<year>2019</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Little Lancelot (2019)(Piko Int).nes" size="262160" crc="65e1bc64"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="littlemedusa">
@@ -9477,10 +9509,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="nixrelic">
-		<description>Nix: the Paradox Relic (HB, v1.8) [Homebrew]</description>
+		<description>Nix: the Paradox Relic (HB, v1.9) [Homebrew]</description>
 		<year>2020</year>
 		<manufacturer>Dustin Huddleston</manufacturer>
-		<rom name="Nix Paradox Relic v1.8(2020)(Dustin Huddleston).nes" size="524304" crc="e4428754"/>
+		<rom name="Nix Paradox Relic v1.9(2020)(Dustin Huddleston).nes" size="524304" crc="c85e7bcd"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10289,6 +10321,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Pyramid II (Unl).nes" size="81936" crc="36f1ad35"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="pyramidsra">
+		<description>Pyramids of Ra (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Piko Interactive</manufacturer>
+		<rom name="Pyramids of Ra (2019)(Piko Int.).nes" size="393232" crc="0bcee664"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11317,8 +11357,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sharkshark">
-		<description>Shark! Shark! (HB)</description>
-		<year>1982</year>
+		<description>Shark! Shark! (HB) [Original title developed for Intellivision in 1982]</description>
+		<year>2014</year>
 		<manufacturer>Mattel Electronics</manufacturer>
 		<rom name="Shark! Shark! (HB).nes" size="24592" crc="5f33e5b4"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -11749,7 +11789,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spacegulls">
-		<description>Spacegulls (HB) [Homebrew]</description>
+		<description>Spacegulls (HB, v1.1) [Homebrew]</description>
 		<year>2021</year>
 		<manufacturer>Morphcat Games</manufacturer>
 		<rom name="Spacegulls (HB)(2021)(Morphcat Games).nes" size="65552" crc="539f87d4"/>
@@ -11953,6 +11993,14 @@
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Star Trek V - The Final Frontier (Prototype).nes" size="262160" crc="49365548"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="starversus">
+		<description>Star Versus (HB) [Homebrew]</description>
+		<year>2015</year>
+		<manufacturer>Dustmop</manufacturer>
+		<rom name="Star Versus (2015)(Dustmop).nes" size="196624" crc="33e83fa5"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12309,7 +12357,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
-		<description>Super Mario Bros DX (HB, v3.4) [Homebrew]</description>
+		<description>Super Mario Bros DX (HB, v3.4) [Hack, Homebrew]</description>
 		<year>2018</year>
 		<manufacturer>Flamephanter</manufacturer>
 		<rom name="super mario bros dx (2018)(flamephanter) v3.4.nes" size="40978" crc="004768e4"/>
@@ -14245,7 +14293,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wolfspirit">
-		<description>Wolf Spirit (HB) [Homebrew]</description>
+		<description>Wolf Spirit (HB) [Homebrew, Demo version]</description>
 		<year>2021</year>
 		<manufacturer>Valdir Salgueiro</manufacturer>
 		<rom name="Wolf Spirit (HB)(2021)(Valdir Salgueiro).nes" size="65552" crc="74574809"/>

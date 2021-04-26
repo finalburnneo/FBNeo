@@ -1471,7 +1471,7 @@ static UINT16 __fastcall mcu_prot_read_word(UINT32 address)
 		return mcu_config[2];
 	}
 
-	return *((UINT16*)(Drv68KROM0 + (address & 0x3fffe)));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KROM0 + (address & 0x3fffe))));
 }
 
 static void __fastcall mcu_prot_write_word(UINT32 address, UINT16 data)
@@ -1504,7 +1504,7 @@ static inline void megasys_palette_write(INT32 offset)
 {
 	INT32 r,g,b,p;
 
-	p = *((UINT16*)(DrvPalRAM + (offset & 0x7fe)));
+	p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (offset & 0x7fe))));
 
 	if (system_select == 0xD)	// system D
 	{
@@ -1545,7 +1545,7 @@ static inline void megasys_palette_write(INT32 offset)
 
 static void __fastcall megasys_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 	megasys_palette_write(address);
 }
 
@@ -1559,7 +1559,7 @@ static void update_video_regs(INT32 offset)
 {
 	offset &= 0x3fe;
 
-	UINT16 data = *((UINT16*)(DrvVidRegs + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + offset)));
 
 	switch (offset)
 	{
@@ -1639,7 +1639,7 @@ static void update_video_regs2(INT32 offset)
 {
 	offset &= 0xfffe;
 
-	UINT16 data = *((UINT16*)(DrvVidRegs + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + offset)));
 
 	switch (offset)
 	{
@@ -1809,7 +1809,7 @@ static void __fastcall megasys1A_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xffc00) == 0x084000) {
-		*((UINT16*)(DrvVidRegs + (address & 0x3fe))) = data;
+		*((UINT16*)(DrvVidRegs + (address & 0x3fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		update_video_regs(address);
 		return;
 	}
@@ -1915,7 +1915,7 @@ static void __fastcall megasys1B_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xffc00) == 0x044000) {
-		*((UINT16*)(DrvVidRegs + (address & 0x3fe))) = data;
+		*((UINT16*)(DrvVidRegs + (address & 0x3fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		update_video_regs(address);
 		return;
 	}
@@ -2008,7 +2008,7 @@ static void __fastcall megasys1C_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0x1f0000) == 0x0c0000) {
-		*((UINT16*)(DrvVidRegs + (address & 0xfffe))) = data;
+		*((UINT16*)(DrvVidRegs + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		update_video_regs2(address);
 		return;
 	}
@@ -2058,7 +2058,7 @@ static void peekaboo_prot_write(INT32 data)
 static void __fastcall megasys1D_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0x1f0000) == 0x0c0000) {
-		*((UINT16*)(DrvVidRegs + (address & 0xfffe))) = data;
+		*((UINT16*)(DrvVidRegs + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		update_video_regs2(address);
 		return;
 	}
@@ -2206,7 +2206,7 @@ static void __fastcall megasys_sound_write_word(UINT32 address, UINT16 data)
 		case 0x040000:
 		case 0x060000:
 			soundlatch2 = data;
-			*((UINT16*)(DrvVidRegs + 0x8000)) = data;
+			*((UINT16*)(DrvVidRegs + 0x8000)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x080000:
@@ -2600,7 +2600,7 @@ static void rodland_rom_decode()
 	{
 		UINT16 x,y;
 
-		x = prg[i];
+		x = BURN_ENDIAN_SWAP_INT16(prg[i]);
 
 		if      (i < 0x08000/2) { if ((i | (0x248/2)) != i) { y = BITSWAP_0; } else { y = BITSWAP_1; } }
 		else if (i < 0x10000/2) { if ((i | (0x248/2)) != i) { y = BITSWAP_2; } else { y = BITSWAP_3; } }
@@ -2608,7 +2608,7 @@ static void rodland_rom_decode()
 		else if (i < 0x20000/2) { y = BITSWAP_1; }
 		else                    { y = BITSWAP_3; }
 
-		prg[i] = y;
+		prg[i] = BURN_ENDIAN_SWAP_INT16(y);
 	}
 
 #undef BITSWAP_0
@@ -3008,18 +3008,18 @@ static void System1A_draw_sprites()
 		for (INT32 sprite = 0; sprite < 4 ; sprite ++)
 		{
 			UINT16 *objectdata = &objectram[offs + (0x800/2) * sprite];
-			UINT16 *spritedata = &spriteram[(objectdata[0] & 0x7f) * 8];
+			UINT16 *spritedata = &spriteram[(BURN_ENDIAN_SWAP_INT16(objectdata[0]) & 0x7f) * 8];
 
-			INT32 attr = spritedata[4];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(spritedata[4]);
 			if (((attr & 0xc0) >> 6) != sprite) continue;
 
-			INT32 sx = (spritedata[5] + objectdata[1]) & 0x1ff;
-			INT32 sy = (spritedata[6] + objectdata[2]) & 0x1ff;
+			INT32 sx = (BURN_ENDIAN_SWAP_INT16(spritedata[5]) + BURN_ENDIAN_SWAP_INT16(objectdata[1])) & 0x1ff;
+			INT32 sy = (BURN_ENDIAN_SWAP_INT16(spritedata[6]) + BURN_ENDIAN_SWAP_INT16(objectdata[2])) & 0x1ff;
 
 			if (sx > 255) sx -= 512;
 			if (sy > 255) sy -= 512;
 
-			INT32 code  = spritedata[7] + objectdata[3];
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(spritedata[7]) + BURN_ENDIAN_SWAP_INT16(objectdata[3]);
 			INT32 color = attr & color_mask;
 
 			INT32 flipx = attr & 0x40;
@@ -3052,15 +3052,15 @@ static void System1Z_draw_sprites()
 	{
 		UINT16 *spritedata = &spriteram16[sprite * 8];
 
-		INT32 attr = spritedata[4];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(spritedata[4]);
 
-		INT32 sx = spritedata[5] & 0x1ff;
-		INT32 sy = spritedata[6] & 0x1ff;
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spritedata[5]) & 0x1ff;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spritedata[6]) & 0x1ff;
 
 		if (sx > 255) sx -= 512;
 		if (sy > 255) sy -= 512;
 
-		INT32 code  = spritedata[7] & 0x3ff;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(spritedata[7]) & 0x3ff;
 		if (DrvTransTab[3][code]) continue;
 
 		INT32 color = attr & 0x0f;
@@ -3116,15 +3116,15 @@ static void draw_layer(INT32 tmap, INT32 flags, INT32 priority)
 
 			if (size) {
 				ofst = (col * 32) + (row / 32) * 1024 * columns + (row & 0x1f);
-				code = (vidram[ofst] & 0x0fff) * scroll_factor_8x8[tmap];
+				code = (BURN_ENDIAN_SWAP_INT16(vidram[ofst]) & 0x0fff) * scroll_factor_8x8[tmap];
 			} else {
 				ofst = (((col / 2) * 16) + (row / 32) * 256 * columns + ((row / 2) & 0x0f));
-				code = (vidram[ofst] & 0xfff) * 4 + ((row & 1) + (col & 1) * 2);
+				code = (BURN_ENDIAN_SWAP_INT16(vidram[ofst]) & 0xfff) * 4 + ((row & 1) + (col & 1) * 2);
 			}
 
 			if (flags == 0 && DrvTransTab[tmap][code]) continue;
 
-			INT32 color = ((vidram[ofst] >> 12) * 16) + color_base;
+			INT32 color = ((BURN_ENDIAN_SWAP_INT16(vidram[ofst]) >> 12) * 16) + color_base;
 
 			{
 				UINT8 *gfx = gfxbase + code * 0x40;
@@ -3910,7 +3910,7 @@ static INT32 kazanInit()
 
 	if (nRet == 0)
 	{
-		*((UINT16*)(Drv68KROM0 + 0x000410)) = 0x4e73;	// hack - kill level 3 irq
+		*((UINT16*)(Drv68KROM0 + 0x000410)) = BURN_ENDIAN_SWAP_INT16(0x4e73);	// hack - kill level 3 irq
 
 		install_mcu_protection(mcu_config_type2, 0x2f000);
 	}
@@ -5097,7 +5097,7 @@ static UINT8 __fastcall monkelf_read_byte(UINT32 address)
 
 static void monkelfCallback()
 {
-	*((UINT16*)(Drv68KROM0 + 0x0744)) = 0x4e71;	// bypass trap - very strange
+	*((UINT16*)(Drv68KROM0 + 0x0744)) = BURN_ENDIAN_SWAP_INT16(0x4e71);	// bypass trap - very strange
 
 	// convert bootleg priority prom to standard format
 	for (INT32 i = 0x1fe; i >= 0; i -= 2) {

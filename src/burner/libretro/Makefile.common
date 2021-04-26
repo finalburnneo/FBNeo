@@ -8,6 +8,7 @@ FBNEO_LIB_DIR			:= $(MAIN_FBNEO_DIR)/dep/libs
 FBNEO_SCRIPTS_DIR		:= $(MAIN_FBNEO_DIR)/dep/scripts
 LIBRETRO_DIR			:= $(FBNEO_BURNER_DIR)/libretro
 LIBRETRO_COMM_DIR		:= $(LIBRETRO_DIR)/libretro-common
+UGUI_DIR				:= $(LIBRETRO_DIR)/deps/ugui
 
 ATARI_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/atari
 CAPCOM_DIR				:= $(FBNEO_BURN_DRIVERS_DIR)/capcom
@@ -363,7 +364,8 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(TAITO_DIR) \
 	$(FBNEO_BURN_DIR)/drv/irem \
 	$(FBNEO_GENERATED_DIR) \
-	$(FBNEO_LIB_DIR)
+	$(FBNEO_LIB_DIR) \
+	$(UGUI_DIR)
 
 ARM_FLAGS =
 
@@ -440,7 +442,10 @@ SOURCES_CXX += $(LIBRETRO_DIR)/libretro.cpp \
 	$(LIBRETRO_DIR)/retro_cdemu.cpp \
 	$(LIBRETRO_DIR)/retro_common.cpp \
 	$(LIBRETRO_DIR)/retro_input.cpp \
-	$(LIBRETRO_DIR)/retro_memory.cpp
+	$(LIBRETRO_DIR)/retro_memory.cpp \
+	$(LIBRETRO_DIR)/ugui_tools.cpp
+
+SOURCES_C += $(UGUI_DIR)/ugui.c
 
 ifeq (,$(findstring msvc,$(platform)))
 	CFLAGS += -std=gnu99

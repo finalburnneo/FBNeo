@@ -12,6 +12,7 @@
 #include "retro_cdemu.h"
 #include "retro_input.h"
 #include "retro_memory.h"
+#include "ugui_tools.h"
 
 #include <file/file_path.h>
 
@@ -48,7 +49,9 @@ int kNetGame = 0;
 INT32 nReplayStatus = 0;
 INT32 nIpsMaxFileLen = 0;
 unsigned nGameType = 0;
-static INT32 nGameWidth, nGameHeight, nGameMaximumGeometry;
+static INT32 nGameWidth = 640;
+static INT32 nGameHeight = 480;
+static INT32 nGameMaximumGeometry;
 static INT32 nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
 static INT32 bDisableSerialize = 0;
 
@@ -66,7 +69,6 @@ struct located_archive
 static std::vector<located_archive> g_find_list_path;
 
 std::vector<cheat_core_option> cheat_core_options;
-
 
 INT32 nAudSegLen = 0;
 
@@ -113,6 +115,9 @@ static int nMinVersion;
 static bool bMemCardFC1Format;
 
 static bool driver_inited;
+
+// UGUI
+static bool gui_show = false;
 
 // FBNEO stubs
 unsigned ArcadeJoystick;
@@ -1116,6 +1121,13 @@ void retro_run()
 	bDisableSerialize = 0;
 	bool bSkipFrame = false;
 
+	if (gui_show && nGameWidth > 0 && nGameHeight > 0)
+	{
+		gui_draw();
+		video_cb(gui_get_framebuffer(), nGameWidth, nGameHeight, nGameWidth * sizeof(unsigned));
+		return;
+	}
+
 	InputMake();
 
 	// Check whether current frame should be skipped
@@ -1331,7 +1343,13 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 {
 	int game_aspect_x, game_aspect_y;
 	bVidImageNeedRealloc = true;
-	BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
+	if (driver_inited)
+		BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
+	else
+	{
+		game_aspect_x = 4;
+		game_aspect_y = 3;
+	}
 
 	INT32 oldMax = nGameMaximumGeometry;
 	nGameMaximumGeometry = nGameWidth > nGameHeight ? nGameWidth : nGameHeight;
@@ -1632,6 +1650,16 @@ static unsigned int BurnDrvGetIndexByName(const char* name)
 	return ret;
 }
 
+static void SetError(const char* error)
+{
+	gui_set_message(error);
+	gui_show = true;
+	enum retro_pixel_format fmt = RETRO_PIXEL_FORMAT_XRGB8888;
+	environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt);
+	gui_init(nGameWidth, nGameHeight, sizeof(unsigned));
+	gui_set_window_title("FBNeo Error");
+}
+
 static bool retro_load_game_common()
 {
 	const char *dir = NULL;
@@ -1685,16 +1713,19 @@ static bool retro_load_game_common()
 
 	nBurnDrvActive = BurnDrvGetIndexByName(g_driver_name);
 	if (nBurnDrvActive < nBurnDrvCount) {
+
 		// If the game is marked as not working, let's stop here
 		if (!(BurnDrvIsWorking())) {
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] This romset is known but marked as not working, aborting\n");
-			return false;
+			SetError("This romset is known but marked as not working\nOne of its clones might work so give it a try");
+			HandleMessage(RETRO_LOG_ERROR, "This romset is known but marked as not working, one of its clones might work so give it a try\n");
+			goto end;
 		}
 
 		// If the game is a bios, let's stop here
 		if ((BurnDrvGetFlags() & BDF_BOARDROM)) {
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Bioses aren't meant to be launched this way, aborting\n");
-			return false;
+			SetError("Bioses aren't meant to be launched this way");
+			HandleMessage(RETRO_LOG_ERROR, "Bioses aren't meant to be launched this way\n");
+			goto end;
 		}
 
 		is_neogeo_game = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
@@ -1729,8 +1760,9 @@ static bool retro_load_game_common()
 #endif
 
 		if (!open_archive()) {
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Missing files for this romset, please check it against the dat file, aborting.\n");
-			return false;
+			SetError("Wrong romset\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+			HandleMessage(RETRO_LOG_ERROR, "Wrong romset, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
+			goto end;
 		}
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] No missing files, proceeding\n");
 
@@ -1756,8 +1788,9 @@ static bool retro_load_game_common()
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initialized driver for %s\n", g_driver_name);
 		else
 		{
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed initializing driver for %s\n", g_driver_name);
-			return false;
+			SetError("Failed initializing driver\nThis is unexpected, you should probably report it.");
+			HandleMessage(RETRO_LOG_ERROR, "Failed initializing driver, this is unexpected, you should probably report it.\n");
+			goto end;
 		}
 
 		// MemCard has to be inserted after emulation is started
@@ -1809,14 +1842,16 @@ static bool retro_load_game_common()
 		// Initialization done
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
 		driver_inited = true;
-
-		return true;
 	}
 	else
 	{
-		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Romset %s is unknown, aborting\n", g_driver_name);
-		return false;
+		SetError("Romset is unknown\nRead https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo");
+		HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Romset is unknown, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo\n");
+		goto end;
 	}
+
+end:
+	return true;
 }
 
 bool retro_load_game(const struct retro_game_info *info)

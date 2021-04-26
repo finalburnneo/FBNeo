@@ -1702,7 +1702,8 @@ static INT32 BigrunInit()
 
 	SekInit(4, 0x68000); // not on this hardware
 
-	BurnYM2151Init(3500000);
+	BurnYM2151InitBuffered(3500000, 1, NULL, 0);
+	BurnTimerAttachSek(6000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
@@ -1791,7 +1792,8 @@ static INT32 CischeatInit()
 
 	SekInit(4, 0x68000); // not on this hardware
 
-	BurnYM2151Init(3500000);
+	BurnYM2151InitBuffered(3500000, 1, NULL, 0);
+	BurnTimerAttachSek(6000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
@@ -1882,7 +1884,8 @@ static INT32 F1gpstarInit()
 	SekSetWriteByteHandler(0,				f1gpstar2_io_write_byte);
 	SekClose();
 
-	BurnYM2151Init(3500000);
+	BurnYM2151InitBuffered(3500000, 1, NULL, 0);
+	BurnTimerAttachSek(6000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
@@ -1973,7 +1976,8 @@ static INT32 WildpltInit()
 	SekSetWriteByteHandler(0,				f1gpstar2_io_write_byte);
 	SekClose();
 
-	BurnYM2151Init(3500000);
+	BurnYM2151InitBuffered(3500000, 1, NULL, 0);
+	BurnTimerAttachSek(6000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
@@ -2699,7 +2703,7 @@ static INT32 BigrunFrame()
 		DrvDoReset();
 	}
 
-//	SekNewFrame();
+	SekNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
@@ -2732,7 +2736,6 @@ static INT32 BigrunFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[5] = { sek_clock / 60, sek_clock / 60, sek_clock / 60, 6000000 / 60, 10000000 / 60 };
 	INT32 nCyclesDone[5] = { 0, 0, 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2753,13 +2756,7 @@ static INT32 BigrunFrame()
 		SekClose();
 
 		SekOpen(3);
-		CPU_RUN(3, Sek);
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSoundSegment = nBurnSoundLen / (nInterleave / 2);
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSoundSegment);
-			nSoundBufferPos += nSoundSegment;
-		}
+		CPU_RUN_TIMER(3);
 		SekClose();
 
 		if (nDrv68KROMLen[4])
@@ -2776,12 +2773,9 @@ static INT32 BigrunFrame()
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSoundSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSoundSegment > 0) {
-			SekOpen(3);
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSoundSegment);
-			SekClose();
-		}
+		SekOpen(3);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		SekClose();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 

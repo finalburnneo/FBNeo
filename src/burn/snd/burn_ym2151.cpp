@@ -44,6 +44,9 @@ static void YM2151RenderBuffered(INT32 nSegmentLength)
 //	bprintf(PRINT_NORMAL, _T("    YM2151 render %6i -> %6i\n"), nYM2151Position, nSegmentLength);
 
 	nSegmentLength -= nYM2151Position;
+
+	if (nSegmentLength < 1) return;
+
 	pYM2151Buffer[0] = pBuffer + 0 * 4096 + 4 + nYM2151Position;
 	pYM2151Buffer[1] = pBuffer + 1 * 4096 + 4 + nYM2151Position;
 

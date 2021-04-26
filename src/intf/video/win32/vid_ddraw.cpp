@@ -26,6 +26,9 @@ static DDBLTFX* DtoBltFx = NULL;				// We use mirrored blits for flipped games
 static IDirectDrawSurface7* pddsDtos = NULL;	// The screen surface
 static int nGameWidth = 0, nGameHeight = 0;		// screen size
 
+static bool bNoHWFlip = 0;                      // no HW Flipping available, and we need to flip
+static UINT8* pVidImage2 = NULL;				// Video Memory buffer for soft-flipping -dink
+
 static bool bDtosScan;
 
 static RECT Src = { 0, 0, 0, 0 };
@@ -164,6 +167,13 @@ static int DtosExit()
 
 	VidSFreeVidImage();
 
+	if (bNoHWFlip && nRotateGame & 2) { // dink
+		free(pVidImage2);
+		bNoHWFlip = 0;
+	}
+
+	pVidImage2 = NULL;
+
 	VidSExitOSD();
 
 	return 0;
@@ -207,6 +217,13 @@ static int DtosInit()
 	if (VidSAllocVidImage()) {
 		DtosExit();
 		return 1;
+	}
+
+	if (bNoHWFlip && nRotateGame & 2) { // dink
+		// Make second memory buffer, for soft-flipping
+		pVidImage2 = (UINT8*)malloc(pVidImageSize);
+	} else {
+		pVidImage2 = pVidImage;
 	}
 
 	// Make the DirectDraw secondary surface
@@ -300,6 +317,7 @@ static int vidInit()
 	nGameWidth = nVidImageWidth; nGameHeight = nVidImageHeight;
 
 	nRotateGame = 0;
+
 	if (bDrvOkay) {
 		DtoBltFx = NULL;
 
@@ -321,6 +339,13 @@ static int vidInit()
 		}
 
 		if (nRotateGame & 2) {
+			// GetCaps() can't be trusted for DDFXCAPS_BLTMIRROR*!!!
+			// Some drivers report having them, but they don't flip.
+			// Some drivers report NOT having them, but they will flip.
+			// The last time it worked reliably was in WinXP.  -dink April 25, 2021
+			// Solution: software flipping.
+			bNoHWFlip = 1;
+#if 0
 			DDCAPS ddcaps;
 
 			// Disable flipping until we've checked the hardware supports it
@@ -330,8 +355,7 @@ static int vidInit()
 			ddcaps.dwSize = sizeof(ddcaps);
 
 			DtoDD->GetCaps(&ddcaps, NULL);
-			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) || bVidForceFlip) {
-
+			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) /*|| bVidForceFlip */) {
 				DtoBltFx = (DDBLTFX*)malloc(sizeof(DDBLTFX));
 				if (DtoBltFx == NULL) {
 					vidExit();
@@ -346,6 +370,7 @@ static int vidInit()
 				// Enable flipping now
 				nRotateGame |= 2;
 			}
+#endif
 		}
 	}
 
@@ -381,7 +406,7 @@ static int vidInit()
 		if (bDrvOkay) {
 			if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
 				if (nRotateGame & 2) {
-					dprintf(_T("  * Using graphics hardware to rotate the image 180 degrees.\n"));
+					dprintf(_T("  * Using software to rotate the image 180 degrees.\n"));
 				} else {
 					dprintf(_T("  * Warning: Graphics hardware does not support mirroring blits.\n    Image orientation will be incorrect.\n"));
 				}
@@ -480,7 +505,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					case 4: {
 						int t;
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 4;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 4;
 							pdd = pd;
 							for (int x = 0; x < nGameWidth; x++) {
 								t = *(int*)ps;
@@ -495,7 +520,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					}
 					case 3: {
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 3;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 3;
 							pdd = pd;
 							for (int x = 0; x < nGameWidth; x++) {
 								pdd[0] = ps[0];
@@ -513,7 +538,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					case 2: {
 						short t;
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 2;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 2;
 							pdd = pd;
 							for (int x = 0; x < nGameWidth; x++) {
 								t = *(short*)ps;
@@ -536,7 +561,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					case 4: {
 						int t;
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 4;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 4;
 							pdd = pd;
 							pd2 = pBuffer;
 							for (int x = 0; x < nGameWidth; x++) {
@@ -557,7 +582,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					}
 					case 3: {
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 3;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 3;
 							pdd = pd;
 							pd2 = pBuffer;
 							for (int x = 0; x < nGameWidth; x++) {
@@ -584,7 +609,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 					case 2: {
 						short t;
 						for (int y = 0; y < nGameHeight; y++, pd += nPitch * 2) {
-							ps = pVidImage + (nGameHeight - 1 - y) * 2;
+							ps = pVidImage2 + (nGameHeight - 1 - y) * 2;
 							pdd = pd;
 							pd2 = pBuffer;
 							for (int x = 0; x < nGameWidth; x++) {
@@ -620,7 +645,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 			switch (nVidImageBPP) {
 				case 4: {
 					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-						ps = pVidImage + (nGameHeight - 1 - y) * 4;
+						ps = pVidImage2 + (nGameHeight - 1 - y) * 4;
 						pdd = pd;
 						for (int x = 0; x < nGameWidth; x++) {
 							*(int*)pdd = *(int*)ps;
@@ -632,7 +657,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 				}
 				case 3: {
 					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-						ps = pVidImage + (nGameHeight - 1 - y) * 3;
+						ps = pVidImage2 + (nGameHeight - 1 - y) * 3;
 						pdd = pd;
 						for (int x = 0; x < nGameWidth; x++) {
 							pdd[0] = ps[0];
@@ -646,7 +671,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 				}
 				case 2: {
 					for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-						ps = pVidImage + (nGameHeight - 1 - y) * 2;
+						ps = pVidImage2 + (nGameHeight - 1 - y) * 2;
 						pdd = pd;
 						for (int x = 0; x < nGameWidth; x++) {
 							*(short*)pdd = *(short*)ps;
@@ -662,7 +687,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 		switch (nVidImageBPP) {
 			case 4: {
 				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-					ps = pVidImage + (nGameHeight - 1 - y) * 4;
+					ps = pVidImage2 + (nGameHeight - 1 - y) * 4;
 					pdd = pd;
 					for (int x = 0; x < nGameWidth; x++) {
 						*(int*)pdd = *(int*)ps;
@@ -674,7 +699,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 			}
 			case 3: {
 				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-					ps = pVidImage + (nGameHeight - 1 - y) * 3;
+					ps = pVidImage2 + (nGameHeight - 1 - y) * 3;
 					pdd = pd;
 					for (int x = 0; x < nGameWidth; x++) {
 						pdd[0] = ps[0];
@@ -688,7 +713,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 			}
 			case 2:	{
 				for (int y = 0; y < nGameHeight; y++, pd += nPitch) {
-					ps = pVidImage + (nGameHeight - 1 - y) * 2;
+					ps = pVidImage2 + (nGameHeight - 1 - y) * 2;
 					pdd = pd;
 					for (int x = 0; x < nGameWidth; x++) {
 						*(short*)pdd = *(short*)ps;
@@ -704,7 +729,7 @@ static int vidRenderRotate(DDSURFACEDESC2* ddsd)
 	return 0;
 }
 
-// Copy pVidImage to pddsDtos, don't rotate, add scanlines in odd lines if needed
+// Copy pVidImage2 to pddsDtos, don't rotate, add scanlines in odd lines if needed
 static int vidRenderNoRotateHorScanlines(DDSURFACEDESC2* ddsd, int nField, int nHalf)
 {
 	unsigned char *pd, *ps;
@@ -718,7 +743,7 @@ static int vidRenderNoRotateHorScanlines(DDSURFACEDESC2* ddsd, int nField, int n
 		nPitch <<= 1;
 	}
 
-	pd = Surf; ps = pVidImage;
+	pd = Surf; ps = pVidImage2;
 	for (int y = 0; y < nVidImageHeight; y++, pd += nPitch, ps += nVidImagePitch) {
 		if (nHalf == 0) {
 			memcpy(pd, ps, nVidImagePitch);
@@ -742,7 +767,7 @@ static int vidRenderNoRotateHorScanlines(DDSURFACEDESC2* ddsd, int nField, int n
 	return 0;
 }
 
-// Copy pVidImage to pddsDtos, don't rotate, add rotated scanlines
+// Copy pVidImage2 to pddsDtos, don't rotate, add rotated scanlines
 static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 {
 	unsigned char *pd, *ps;
@@ -750,7 +775,7 @@ static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 	int nPitch = ddsd->lPitch;
 
 	if (bVidScanHalf) {
-		pd = Surf; ps = pVidImage;
+		pd = Surf; ps = pVidImage2;
 		switch (nVidImageBPP) {
 			case 4: {
 				unsigned char* pdp;
@@ -815,7 +840,7 @@ static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 		}
 
 	} else {
-		pd = Surf; ps = pVidImage;
+		pd = Surf; ps = pVidImage2;
 		switch (nVidImageBPP) {
 			case 4: {
 				unsigned char* pdp;
@@ -874,6 +899,55 @@ static int vidRenderNoRotateVertScanlines(DDSURFACEDESC2* ddsd)
 	}
 
 	return 0;
+}
+
+static void vidSoftFlip()
+{
+	// DirectDraw HW flipping is not supported in most newer video drivers
+	// (Windows 7+).  Sometimes GetCaps() even says the driver can flip when
+	// it can't.  Let's do it manually.  -dink
+
+	unsigned char* ps;
+	unsigned char* pd = pVidImage2;
+	pd += nVidImageHeight * nVidImagePitch - nVidImageBPP;
+
+	switch (nVidImageBPP) {
+		case 4: {
+			for (int y = 0; y < nVidImageHeight; y++) {
+				ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 2;
+				for (int x = 0; x < nVidImageWidth; x++) {
+					*(int*)pd = *(int*)ps;
+					ps += 4;
+					pd -= 4;
+				}
+			}
+			break;
+		}
+		case 3: {
+			for (int y = 0; y < nVidImageHeight; y++) {
+				ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 3;
+				for (int x = 0; x < nVidImageWidth; x++) {
+					pd[0] = ps[0];
+					pd[1] = ps[2];
+					pd[2] = ps[2];
+					ps += 3;
+					pd -= 3;
+				}
+			}
+			break;
+		}
+		case 2: {
+			for (int y = 0; y < nVidImageHeight; y++) {
+				ps = pVidImage + y * nVidImagePitch + nVidImageLeft * 2;
+				for (int x = 0; x < nVidImageWidth; x++) {
+					*(short*)pd = *(short*)ps;
+					ps += 2;
+					pd -= 2;
+				}
+			}
+			break;
+		}
+	}
 }
 
 static int vidBurnToSurf()
@@ -939,6 +1013,10 @@ static int vidBurnToSurf()
 	}
 
 	bDtosScan = bScan;
+
+	if (nRotateGame & 2 && bNoHWFlip) {
+		vidSoftFlip();
+	}
 
 	if (nRotateGame & 1) {
 		vidRenderRotate(&ddsd);

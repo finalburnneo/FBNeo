@@ -30,9 +30,11 @@ INT32 VidSAllocVidImage()
 	if (pVidSFullImage) {
 		memset(pVidSFullImage, 0, nMemLen);
 		pVidImage = pVidSFullImage + nVidImagePitch;
+		pVidImageSize = nMemLen;
 		return 0;
 	} else {
 		pVidImage = NULL;
+		pVidImageSize = 0;
 		return 1;
 	}
 }

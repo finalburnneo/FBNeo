@@ -18,7 +18,7 @@ static INT32 bYM2151AddSignal;
 
 static INT32 nYM2151Position;
 static UINT32 nSampleSize;
-static UINT32 nFractionalPosition;
+static INT32 nFractionalPosition;
 static UINT32 nSamplesRendered;
 
 static double YM2151Volumes[2];

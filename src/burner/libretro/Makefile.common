@@ -442,10 +442,10 @@ SOURCES_CXX += $(LIBRETRO_DIR)/libretro.cpp \
 	$(LIBRETRO_DIR)/retro_cdemu.cpp \
 	$(LIBRETRO_DIR)/retro_common.cpp \
 	$(LIBRETRO_DIR)/retro_input.cpp \
-	$(LIBRETRO_DIR)/retro_memory.cpp \
-	$(LIBRETRO_DIR)/ugui_tools.cpp
+	$(LIBRETRO_DIR)/retro_memory.cpp
 
-SOURCES_C += $(UGUI_DIR)/ugui.c
+SOURCES_C += $(UGUI_DIR)/ugui.c \
+	$(LIBRETRO_DIR)/ugui_tools.c
 
 ifeq (,$(findstring msvc,$(platform)))
 	CFLAGS += -std=gnu99

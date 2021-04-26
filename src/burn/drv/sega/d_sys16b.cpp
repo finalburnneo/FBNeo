@@ -9194,12 +9194,12 @@ void Wb3_Sim8751()
 {
 	// Sound command
 	UINT16 temp = (System16Ram[0x0008 + 1] << 8) | System16Ram[0x0008 + 0];
-	if ((temp & 0xff00) != 0x0000) {
+	if ((temp & 0x00ff) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x0008)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
+		*((UINT16*)(System16Ram + 0x0008)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff00));
 	}
 }
 

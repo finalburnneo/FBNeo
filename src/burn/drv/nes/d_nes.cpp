@@ -15796,7 +15796,7 @@ struct BurnDriver BurnDrvnes_maniacmansionj = {
 
 //Maniac Mansion (Spain)
 static struct BurnRomInfo nes_maniacmansionsRomDesc[] = {
-	{ "maniac mansion (spain).nes",          262160, 0xd0978e2d, BRF_ESS | BRF_PRG },
+	{ "maniac mansion (spain).nes",          262160, 0xcd0978e2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_maniacmansions)
@@ -28772,7 +28772,7 @@ struct BurnDriver BurnDrvnes_gansosai = {
 };
 
 static struct BurnRomInfo nes_gardenwarRomDesc[] = {
-	{ "Garden War (Unl).nes",          65552, 0x819ce329, BRF_ESS | BRF_PRG },
+	{ "Garden War (Unl).nes",          40976, 0x819ce329, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_gardenwar)
@@ -31695,7 +31695,7 @@ struct BurnDriver BurnDrvnes_juveiquest = {
 };
 
 static struct BurnRomInfo nes_jy45in1RomDesc[] = {
-	{ "JY 45-in-1 (Unl).nes",          4194320, 0x24b1c159, BRF_ESS | BRF_PRG },
+	{ "JY 45-in-1 (Unl).nes",          4186128, 0x24b1c159, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_jy45in1)
@@ -37730,7 +37730,7 @@ struct BurnDriver BurnDrvnes_racketsrivals = {
 };
 
 static struct BurnRomInfo nes_radracerRomDesc[] = {
-	{ "Rad Racer (USA).nes",          131088, 0x7fefc937, BRF_ESS | BRF_PRG },
+	{ "Rad Racer (USA).nes",          131088, 0x595daa35, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_radracer)
@@ -37764,7 +37764,7 @@ struct BurnDriver BurnDrvnes_radracerii = {
 };
 
 static struct BurnRomInfo nes_radracRomDesc[] = {
-	{ "Rad Racket - Deluxe Tennis II (USA).nes",          65552, 0xdb37c5b2, BRF_ESS | BRF_PRG },
+	{ "Rad Racket - Deluxe Tennis II (USA).nes",          65552, 0x7fefc937, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_radrac)
@@ -44292,7 +44292,7 @@ struct BurnDriver BurnDrvnes_youkaiclub = {
 };
 
 static struct BurnRomInfo nes_youkaidouchuukiRomDesc[] = {
-	{ "Youkai Douchuuki (Japan).nes",          262160, 0x390210b2, BRF_ESS | BRF_PRG },
+	{ "Youkai Douchuuki (Japan).nes",          262160, 0xce99d36f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_youkaidouchuuki)

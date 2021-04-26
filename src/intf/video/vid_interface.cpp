@@ -134,7 +134,8 @@ INT32 nVidScrnDepth = 0;							// Actual screen depth
 INT32 nVidScrnAspectX = 4, nVidScrnAspectY = 3;	        // Aspect ratio of the horizontally orientated display screen
 INT32 nVidVerScrnAspectX = 4, nVidVerScrnAspectY = 3;   // Aspect ratio of the vertically orientated display screen
 
-UINT8* pVidImage = NULL;				// Memory buffer
+UINT8* pVidImage = NULL;						// Video Memory buffer
+INT32 pVidImageSize = 0;                        // Size in bytes
 INT32 nVidImageWidth = DEFAULT_IMAGE_WIDTH;		// Memory buffer size
 INT32 nVidImageHeight = DEFAULT_IMAGE_HEIGHT;		//
 INT32 nVidImageLeft = 0, nVidImageTop = 0;		// Memory buffer visible area offsets

@@ -735,7 +735,7 @@ static INT32 DrvExit()
 }
 
 static void mlc_drawgfxzoomline(UINT16 *dest, UINT8 *pri, INT32 *clip, UINT32 code1, UINT32 code2, UINT32 color, INT32 flipx, INT32 sx,
-		INT32 transparent_color, INT32 use8bpp, INT32 scalex, INT32 alpha, INT32 srcline, INT32 shadowMode)
+		INT32 transparent_color, INT32 use8bpp, INT32 scalex, INT32 srcline, INT32 shadowMode)
 {
 	if (!scalex) return;
 
@@ -832,7 +832,6 @@ static void draw_sprites(INT32 scanline)
 	INT32 blockIsTilemapIndex=0;
 	INT32 sprite2=0,use8bppMode=0;
 	INT32 yscale,xscale;
-	INT32 alpha;
 	INT32 useIndicesInRom=0;
 	INT32 hibits=0;
 	INT32 tileFormat=0;
@@ -1130,7 +1129,7 @@ static void draw_sprites(INT32 scanline)
 				}
 			}
 
-			mlc_drawgfxzoomline(dest,pri,clip,tile,tile2,color + colorOffset,fx,realxbase,0,use8bppMode,(xscale),alpha, srcline, shadowMode);
+			mlc_drawgfxzoomline(dest,pri,clip,tile,tile2,color + colorOffset,fx,realxbase,0,use8bppMode,(xscale), srcline, shadowMode);
 		}
 	}
 

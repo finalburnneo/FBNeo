@@ -66,6 +66,7 @@ static INT32 Wlstar = 0;
 static INT32 Wondl96 = 0;
 static INT32 Bcstry = 0;
 static INT32 Semibase = 0;
+static INT32 Jumppop = 0;
 static INT32 SemicomSoundCommand;
 static INT32 Pf1XOffset;
 static INT32 Pf1YOffset;
@@ -3593,6 +3594,7 @@ static INT32 JumppopInit()
 	
 	DrvHasZ80 = 1;
 	DrvHasYM3812 = 1;
+	Jumppop = 1;
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -3748,6 +3750,7 @@ static INT32 DrvExit()
 	Wondl96 = 0;
 	Bcstry = 0;
 	Semibase = 0;
+	Jumppop = 0;
 	SemicomSoundCommand = 0;
 	Pf1XOffset = 0;
 	Pf1YOffset = 0;
@@ -4665,16 +4668,18 @@ static INT32 JumppopFrame()
 		// Run Z80
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		ZetNmi();
 		ZetClose();
 	}
-	
+
 	ZetOpen(0);
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
-	MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	
 	if (pBurnDraw) JumppopDraw();
 
@@ -4720,15 +4725,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_WRITE) {
-		if (DrvOkiBank) {
-			if (Jumpkids) {
-				memcpy(MSM6295ROM + 0x20000, DrvMSM6295ROMSrc + (DrvOkiBank * 0x20000), 0x20000);
-			} else {
-				memcpy(MSM6295ROM + 0x30000, DrvMSM6295ROMSrc + 0x30000 + (DrvOkiBank * 0x10000), 0x10000);
-			}
+		if (Jumpkids) {
+			memcpy(MSM6295ROM + 0x20000, DrvMSM6295ROMSrc + (DrvOkiBank * 0x20000), 0x20000);
+		} else if (SemicomSoundCommand) {
+			memcpy(MSM6295ROM + 0x30000, DrvMSM6295ROMSrc + 0x30000 + (DrvOkiBank * 0x10000), 0x10000);
 		}
-		
-		if (DrvZ80Bank) {
+
+		if (Jumppop) {
 			ZetOpen(0);
 			ZetMapMemory(DrvZ80Rom + (DrvZ80Bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 			ZetClose();

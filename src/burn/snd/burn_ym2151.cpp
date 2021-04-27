@@ -171,7 +171,7 @@ void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength)
 
 	nYM2151Position += nSegmentLength;
 
-	if (nYM2151Position >= nBurnSoundRate) {
+	if (nYM2151Position >= nBurnSoundLen) {
 		nYM2151Position = nSegmentLength;
 
 		pYM2151Buffer[0][1] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 3];

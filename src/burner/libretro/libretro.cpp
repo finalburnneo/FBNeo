@@ -1729,6 +1729,12 @@ static bool retro_load_game_common()
 			goto end;
 		}
 
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD && CDEmuImage[0] == '\0') {
+			SetUguiError("You need a disc image to launch neogeo CD\n");
+			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] You need a disc image to launch neogeo CD\n");
+			goto end;
+		}
+
 		is_neogeo_game = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO);
 
 		// Define nMaxPlayers early;

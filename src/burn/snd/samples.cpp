@@ -69,7 +69,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 	if ((len - (ptr - src)) < data_length) data_length = len - (ptr - src);
 
 	UINT32 converted_len = (UINT32)((float)(data_length * (nBurnSoundRate * 1.00000 / sample_rate) / (bytes * channels)));
-	if (converted_len == 0) return; 
+	if (converted_len == 0) return;
 
 	sample_ptr->data = (UINT8*)BurnMalloc(converted_len * 4);
 
@@ -147,6 +147,13 @@ static void make_raw(UINT8 *src, UINT32 len)
 				buffer_l[0] = buffer_l[1]; buffer_r[0] = buffer_r[1];
 				buffer_l[1] = buffer_l[2]; buffer_r[1] = buffer_r[2];
 				buffer_l[2] = buffer_l[3]; buffer_r[2] = buffer_r[3];
+
+				if (prev_offs * channels + (channels / 2) >= data_length)
+				{
+					//bprintf(0, _T("uhoh: %I64x, "), prev_offs);
+					buffer_l[3] = buffer_r[3] = 0;
+					break;
+				}
 
 				if (bytes == 2)										// signed 16 bit, stereo & mono
 				{

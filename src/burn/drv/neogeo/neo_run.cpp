@@ -3432,8 +3432,7 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 			NeoCDCommsWrite(byteValue);
 			break;
 		case 0x0165:
-			if (CDEmuImage[0] != '\0')
-				NeoCDCommsControl(byteValue & 1, byteValue & 2);
+			NeoCDCommsControl(byteValue & 1, byteValue & 2);
 			break;
 
 		case 0x016D:

@@ -1426,8 +1426,8 @@ static INT32 DrvFrame()
 		CPU_RUN(1, Zet);
 
 		if (is_bbmanw) {
-			if (DrvSndROM[sample_address]) {
-				DACSignedWrite(0, DrvSndROM[sample_address]);
+			if (DrvSndROM[sample_address & 0x3ffff]) {
+				DACSignedWrite(0, DrvSndROM[sample_address & 0x3ffff]);
 				sample_address = (sample_address + 1) & 0x3ffff;
 			}
 		} else {
@@ -1648,6 +1648,14 @@ static INT32 bbmanwInit()
 	return DrvInit(0x80000, 0x100000, 0x20000, 0, 0, dynablaster_decryption_table);
 }
 
+static INT32 bbmanwjaInit()
+{
+	video_offsets[0] = 80;
+	video_offsets[1] = 136;
+
+	return DrvInit(0x80000, 0x100000, 0x20000, 0, 0, dynablaster_decryption_table);
+}
+
 struct BurnDriver BurnDrvBbmanw = {
 	"bbmanw", NULL, NULL, NULL, "1992",
 	"Bomber Man World / New Dyna Blaster - Global Quest\0", NULL, "Irem", "Irem M90",
@@ -1714,7 +1722,7 @@ struct BurnDriver BurnDrvBbmanwja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
-	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	bbmanwjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 

@@ -130,7 +130,7 @@ void sp0256_scan(INT32 nAction, INT32* pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		ScanVar(&m_scratch, SCBUF_SIZE * sizeof(INT16), "sp0256 ScratchRam");
+		ScanVar(m_scratch, SCBUF_SIZE * sizeof(INT16), "sp0256 ScratchRam");
 
 		SCAN_VAR(m_sby_line);
 		SCAN_VAR(m_silent);

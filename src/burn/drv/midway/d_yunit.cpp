@@ -1516,8 +1516,8 @@ static INT32 DrvLoadRoms(INT32 gfxbpp)
 
 		if ((ri.nType & BRF_SND) && (ri.nType & 7) == 2) { // MSM6295 Samples
 			if (BurnLoadRom(pDest[(ri.nType - 1) & 7], i, 1)) return 1;
-			if (ri.nLen < 0x40000) memcpy (pDest[(ri.nType - 1) & 7] + ri.nLen, pDest[(ri.nType - 1) & 7], 0x20000);
-			if (ri.nLen < 0x80000) memcpy (pDest[(ri.nType - 1) & 7] + ri.nLen, pDest[(ri.nType - 1) & 7], 0x40000);
+			if (ri.nLen < 0x40000) memmove (pDest[(ri.nType - 1) & 7] + ri.nLen, pDest[(ri.nType - 1) & 7], 0x20000);
+			if (ri.nLen < 0x80000) memmove (pDest[(ri.nType - 1) & 7] + ri.nLen, pDest[(ri.nType - 1) & 7], 0x40000);
 			pDest[(ri.nType - 1) & 7] += 0x80000;
 			continue;
 		}

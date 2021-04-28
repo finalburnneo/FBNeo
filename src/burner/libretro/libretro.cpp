@@ -1711,6 +1711,8 @@ static bool retro_load_game_common()
 	state_sizes[0] = 0;
 	state_sizes[1] = 0;
 
+	gui_show = false;
+
 	nBurnDrvActive = BurnDrvGetIndexByName(g_driver_name);
 	if (nBurnDrvActive < nBurnDrvCount) {
 

@@ -26863,7 +26863,7 @@ struct BurnDriver BurnDrvMSX_reflexion = {
 	272, 228, 4, 3
 };
 
-// Rodman (HB)
+// Rodman (HB, v1.2)
 
 static struct BurnRomInfo MSX_rodmanRomDesc[] = {
 	{ "Rodman (2018)(TFW8bit).cas",	17028, 0x01bd8757, BRF_PRG | BRF_ESS },
@@ -26874,11 +26874,30 @@ STD_ROM_FN(MSX_rodman)
 
 struct BurnDriver BurnDrvMSX_rodman = {
 	"msx_rodman", NULL, "msx_msx", NULL, "2018",
-	"Robman (HB)\0", NULL, "The Future Was 8-bit", "MSX",
+	"Rodman (HB, v1.2)\0", NULL, "The Future Was 8-bit", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MAZE, 0,
 	MSXGetZipName, MSX_rodmanRomInfo, MSX_rodmanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sekaikei Girl (HB)
+
+static struct BurnRomInfo MSX_sekaikeiRomDesc[] = {
+	{ "Sekaikei Girl (2020)(Tensei Kobo).rom",	753664, 0xe9ea045a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sekaikei, MSX_sekaikei, msx_msx)
+STD_ROM_FN(MSX_sekaikei)
+
+struct BurnDriver BurnDrvMSX_sekaikei = {
+	"msx_sekaikei", NULL, "msx_msx", NULL, "2020",
+	"Sekaikei Girl (HB)\0", NULL, "Tensei Kobo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_sekaikeiRomInfo, MSX_sekaikeiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -27009,7 +27028,7 @@ struct BurnDriver BurnDrvMSX_mole = {
 	"msx_mole", NULL, "msx_msx", NULL, "1983",
 	"Mole (Jpn)\0", NULL, "ASCII Corp.", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_moleRomInfo, MSX_moleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -27028,7 +27047,7 @@ struct BurnDriver BurnDrvMSX_scopeon = {
 	"msx_scopeon", NULL, "msx_msx", NULL, "1983",
 	"Scope On - Fight in Space (Jpn)\0", NULL, "ASCII Corp.", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_scopeonRomInfo, MSX_scopeonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3

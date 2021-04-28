@@ -2575,7 +2575,8 @@ void System16A_I8751WritePort(INT32 port, UINT8 data)
 				}
 
 				if ((System16MCUData ^ data) & 0x40 && System1668KEnable) {
-					nSystem16CyclesDone[0] += SekRun(20);
+					//nSystem16CyclesDone[0] += SekRun(20);
+					mcs51RunEnd();
 				}
 			}
 

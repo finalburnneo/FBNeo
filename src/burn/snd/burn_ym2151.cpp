@@ -2,10 +2,11 @@
 #include "burnint.h"
 #include "burn_ym2151.h"
 
-// Irq Callback timing notes..
+// Irq Callback timing notes.. (when not using BurnTimer!)
 // Due to the way the internal timing of the ym2151 works, BurnYM2151Render()
 // should not be called more than ~65 times per frame.  See DrvFrame() in
 // drv/konami/d_surpratk.cpp for a simple and effective work-around.
+// Note: using BurnTimer mode avoids this mess completely.
 
 static UINT32 nBurnCurrentYM2151Register;
 
@@ -19,7 +20,6 @@ static INT32 bYM2151AddSignal;
 static INT32 nYM2151Position;
 static UINT32 nSampleSize;
 static INT32 nFractionalPosition;
-static UINT32 nSamplesRendered;
 
 static double YM2151Volumes[2];
 static INT32 YM2151RouteDirs[2];
@@ -29,9 +29,7 @@ static INT32 YM2151BurnTimer = 0;
 static INT32 bBurnYM2151IsBuffered = 0;
 static INT32 (*BurnYM2151StreamCallback)(INT32 nSoundRate) = NULL;
 
-
-//  Buffered Zone
-static void YM2151RenderBuffered(INT32 nSegmentLength)
+static void YM2151Render(INT32 nSegmentLength)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151Render called without init\n"));
@@ -41,7 +39,7 @@ static void YM2151RenderBuffered(INT32 nSegmentLength)
 		return;
 	}
 
-//	bprintf(PRINT_NORMAL, _T("    YM2151 render %6i -> %6i\n"), nYM2151Position, nSegmentLength);
+	//bprintf(PRINT_NORMAL, _T("    YM2151 render %6i -> %6i\n"), nYM2151Position, nSegmentLength);
 
 	nSegmentLength -= nYM2151Position;
 
@@ -58,7 +56,7 @@ static void YM2151RenderBuffered(INT32 nSegmentLength)
 void BurnYM2151UpdateRequest()
 {
 	if (bBurnYM2151IsBuffered) {
-		YM2151RenderBuffered(BurnYM2151StreamCallback(nBurnYM2151SoundRate));
+		YM2151Render(BurnYM2151StreamCallback(nBurnYM2151SoundRate));
 	}
 }
 
@@ -81,20 +79,18 @@ void BurnYM2151UpdateRequest()
 		nRightSample[3] += (INT32)(pYM2151Buffer[buffer][(nFractionalPosition >> 16) - 0]/* * YM2151Volumes[route]*/);	\
 	}
 
-void BurnYM2151RenderBuffered(INT32 nSegmentEnd)
+void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Update called without init\n"));
 #endif
 
-	INT16* pSoundBuf = pBurnSoundOut;
-
 	if (nBurnSoundRate == 0 || pBurnSoundOut == NULL) {
 		return;
 	}
 
-	if (nSegmentEnd != nBurnSoundLen) {
-		bprintf(0, _T("BurnYM2151RenderBuffered() - once per frame, please!\n"));
+	if (bBurnYM2151IsBuffered && nSegmentEnd != nBurnSoundLen) {
+		bprintf(0, _T("BurnYM2151Render() - once per frame, please!\n"));
 		return;
 	}
 
@@ -112,7 +108,7 @@ void BurnYM2151RenderBuffered(INT32 nSegmentEnd)
 	}
 	nSegmentLength <<= 1;
 
-	YM2151RenderBuffered(nSamplesNeeded);
+	YM2151Render(nSamplesNeeded);
 
 	pYM2151Buffer[0] = pBuffer + 0 * 4096 + 4;
 	pYM2151Buffer[1] = pBuffer + 1 * 4096 + 4;
@@ -142,9 +138,10 @@ void BurnYM2151RenderBuffered(INT32 nSegmentEnd)
 		}
 	}
 
-	if (nSegmentEnd >= nBurnSoundLen) {
+	if (!bBurnYM2151IsBuffered || (bBurnYM2151IsBuffered && nSegmentEnd >= nBurnSoundLen)) {
 		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
-
+		//if (nExtraSamples !=0 && nExtraSamples !=1)
+		//	bprintf(0, _T("nSegmentEnd   %d    nExtraSamples   %d\n"),nSegmentEnd,nExtraSamples);
 		for (INT32 i = -4; i < nExtraSamples; i++) {
 			pYM2151Buffer[0][i] = pYM2151Buffer[0][(nFractionalPosition >> 16) + i];
 			pYM2151Buffer[1][i] = pYM2151Buffer[1][(nFractionalPosition >> 16) + i];
@@ -153,96 +150,6 @@ void BurnYM2151RenderBuffered(INT32 nSegmentEnd)
 		nFractionalPosition &= 0xFFFF;
 
 		nYM2151Position = nExtraSamples;
-	}
-}
-
-
-
-void BurnYM2151Render(INT16* pSoundBuf, INT32 nSegmentLength)
-{
-#if defined FBNEO_DEBUG
-	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Render called without init\n"));
-#endif
-
-	if (bBurnYM2151IsBuffered) {
-		BurnYM2151RenderBuffered(nSegmentLength);
-		return;
-	}
-
-	nYM2151Position += nSegmentLength;
-
-	if (nYM2151Position >= nBurnSoundLen) {
-		nYM2151Position = nSegmentLength;
-
-		pYM2151Buffer[0][1] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 3];
-		pYM2151Buffer[0][2] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 2];
-		pYM2151Buffer[0][3] = pYM2151Buffer[0][(nFractionalPosition >> 16) - 1];
-
-		pYM2151Buffer[1][1] = pYM2151Buffer[1][(nFractionalPosition >> 16) - 3];
-		pYM2151Buffer[1][2] = pYM2151Buffer[1][(nFractionalPosition >> 16) - 2];
-		pYM2151Buffer[1][3] = pYM2151Buffer[1][(nFractionalPosition >> 16) - 1];
-
-		nSamplesRendered -= (nFractionalPosition >> 16) - 4;
-
-		for (UINT32 i = 0; i <= nSamplesRendered; i++) {
-			pYM2151Buffer[0][4 + i] = pYM2151Buffer[0][(nFractionalPosition >> 16) + i];
-			pYM2151Buffer[1][4 + i] = pYM2151Buffer[1][(nFractionalPosition >> 16) + i];
-		}
-
-		nFractionalPosition &= 0x0000FFFF;
-		nFractionalPosition |= 4 << 16;
-	}
-
-	pYM2151Buffer[0] = pBuffer + 4 + nSamplesRendered;
-	pYM2151Buffer[1] = pBuffer + 4 + nSamplesRendered + 65536;
-
-	YM2151UpdateOne(0, pYM2151Buffer, (UINT32)(nYM2151Position + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered);
-	nSamplesRendered += (UINT32)(nYM2151Position + 1) * nBurnYM2151SoundRate / nBurnSoundRate - nSamplesRendered;
-
-	pYM2151Buffer[0] = pBuffer;
-	pYM2151Buffer[1] = pBuffer + 65536;
-
-	nSegmentLength <<= 1;
-	
-	for (INT32 i = 0; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {
-		INT32 nLeftSample[4] = {0, 0, 0, 0};
-		INT32 nRightSample[4] = {0, 0, 0, 0};
-		INT32 nTotalLeftSample, nTotalRightSample;
-		
-		if ((YM2151RouteDirs[BURN_SND_YM2151_YM2151_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 3] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nLeftSample[1] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 2] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nLeftSample[2] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 1] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nLeftSample[3] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 0] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-		}
-		if ((YM2151RouteDirs[BURN_SND_YM2151_YM2151_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 3] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nRightSample[1] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 2] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nRightSample[2] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 1] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-			nRightSample[3] += (INT32)(pYM2151Buffer[0][(nFractionalPosition >> 16) - 0] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1]);
-		}
-		
-		if ((YM2151RouteDirs[BURN_SND_YM2151_YM2151_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 3] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nLeftSample[1] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 2] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nLeftSample[2] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 1] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nLeftSample[3] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 0] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-		}
-		if ((YM2151RouteDirs[BURN_SND_YM2151_YM2151_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 3] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nRightSample[1] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 2] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nRightSample[2] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 1] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-			nRightSample[3] += (INT32)(pYM2151Buffer[1][(nFractionalPosition >> 16) - 0] * YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2]);
-		}
-		
-		nTotalLeftSample = INTERPOLATE4PS_CUSTOM((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3], 16384.0);
-		nTotalRightSample = INTERPOLATE4PS_CUSTOM((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3], 16384.0);
-		
-		nTotalLeftSample = BURN_SND_CLIP(nTotalLeftSample);
-		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
-			
-		pSoundBuf[i + 0] = nTotalLeftSample;
-		pSoundBuf[i + 1] = nTotalRightSample;
 	}
 }
 
@@ -341,8 +248,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 	memset(pBuffer, 0, 65536 * 2 * sizeof(INT16));
 
 	nSampleSize = (UINT32)nBurnYM2151SoundRate * (1 << 16) / nBurnSoundRate;
-	nFractionalPosition = 4 << 16;
-	nSamplesRendered = 0;
+	nFractionalPosition = 0;
 	nYM2151Position = 0;
 
 	// default routes
@@ -433,7 +339,7 @@ UINT8 BurnYM2151Read()
 	//  status contains: chip busy status (not emulated) and timer state.
 	//  when using BurnTimer, this timer state is asynchronous to rendering
 	//  state; therefore, updaterequest here is not needed.  Most games poll
-	//  status this 800x+ per frame!
+	//  this status 800x+ per frame!
 	//	BurnYM2151UpdateRequest();
 	return YM2151ReadStatus(0);
 }

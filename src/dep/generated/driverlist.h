@@ -7814,6 +7814,7 @@ DRV		BurnDrvkovlsyxqxzlp;
 DRV		BurnDrvkovshpd3dw;
 DRV		BurnDrvLuckywldj;
 DRV		BurnDrvLuckywld;
+DRV		BurnDrvnes_luckypenguin;
 DRV		BurnDrvsms_luckypeng;
 DRV		BurnDrvCluckypo;
 DRV		BurnDrvLuctoday;
@@ -24899,6 +24900,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovshpd3dw,			// Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Edition (Hack, ver. 500)
 	&BurnDrvLuckywldj,			// Lucky & Wild (Japan)
 	&BurnDrvLuckywld,			// Lucky & Wild
+	&BurnDrvnes_luckypenguin,	// Lucky Penguin (HB)
 	&BurnDrvsms_luckypeng,		// Lucky Penguin (HB, v1.1)
 	&BurnDrvCluckypo,			// Lucky Poker (DECO Cassette) (US)
 	&BurnDrvLuctoday,			// Lucky Today

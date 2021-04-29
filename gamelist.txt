@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16832 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16833 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7706,6 +7706,7 @@ This list contains all games supported by FinalBurn Neo.
 | kovshpd3dw	|  	| Luan Shi Ying Xiong - Qun Xiong Zhu Lu Wu Shuang Editi| kovshp	| 2020-12-18| Hack		| PolyGameMaster| Imperfect Protection Emulation	|
 | luckywldj	|  	| Lucky & Wild (Japan)					| luckywld	| 1992	| Namco		| System 2	| 					|
 | luckywld	|  	| Lucky & Wild						| 		| 1992	| Namco		| System 2	| 					|
+| nes_luckypenguin|  	| Lucky Penguin (HB)					| 		| 2019	| Mega Cat Studi| Miscellaneous	| 					|
 | sms_luckypeng	|  	| Lucky Penguin (HB, v1.1)				| 		| 2020	| Denine	| Sega Master Sy| 					|
 | cluckypo	|  	| Lucky Poker (DECO Cassette) (US)			| 		| 1981	| Data East Corp| Cassette Syste| 					|
 | luctoday	|  	| Lucky Today						| 		| 1980	| Sigma		| Galaxian	| Bad colours				|

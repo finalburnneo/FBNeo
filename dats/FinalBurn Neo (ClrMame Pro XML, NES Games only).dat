@@ -7812,6 +7812,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="luckypenguin">
+		<description>Lucky Penguin (HB) [Homebrew]</description>
+		<year>2019</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Lucky Penguin (2019)(Mega Cat Studios).nes" size="65552" crc="2a4c310b"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lunarlimit">
 		<description>Lunar Limit (HB) [Homebrew]</description>
 		<year>2017</year>

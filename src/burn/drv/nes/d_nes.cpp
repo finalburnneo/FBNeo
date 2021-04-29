@@ -17426,6 +17426,23 @@ STD_ROM_FN(nes_atrainj)
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_luckypenguinRomDesc[] = {
+	{ "Lucky Penguin (2019)(Mega Cat Studios).nes",          65552, 0x2a4c310b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_luckypenguin)
+STD_ROM_FN(nes_luckypenguin)
+
+struct BurnDriver BurnDrvnes_luckypenguin = {
+	"nes_luckypenguin", NULL, NULL, NULL, "2019",
+	"Lucky Penguin (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_luckypenguinRomInfo, nes_luckypenguinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_batlizardRomDesc[] = {
 	{ "Bat Lizard Bonanza (2020)(John Vanderhoef).nes",          524304, 0x4418f0f3, BRF_ESS | BRF_PRG },
 };

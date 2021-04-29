@@ -4,13 +4,12 @@
 // CPS1 sound Mixing
 
 INT32 bPsmOkay = 0;										// 1 if the module is okay
-static INT16* WaveBuf = NULL;
 
 static INT32 nPos;
 
 INT32 PsmInit()
 {
-	INT32 nMemLen, nRate, nRet;
+	INT32 nRate, nRet;
 	bPsmOkay = 0;										// not OK yet
 
 	if (nBurnSoundRate > 0) {
@@ -19,29 +18,18 @@ INT32 PsmInit()
 		nRate = 11025;
 	}
 
-	if (BurnYM2151Init(3579540)) {				// Init FM sound chip
-		return 1;
-	}
+	BurnYM2151InitBuffered(3579540, 1, NULL, 1);		// Init FM sound chip
 
 	//BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.35, BURN_SND_ROUTE_RIGHT);
 
-	// Allocate a buffer for the intermediate sound (between YM2151 and pBurnSoundOut)
-	nMemLen = nBurnSoundLen * 2 * sizeof(INT16);
-	WaveBuf = (INT16*)BurnMalloc(nMemLen);
-	if (WaveBuf == NULL) {
-		PsmExit();
-		return 1;
-	}
-	memset(WaveBuf, 0, nMemLen);						// Init to silence
-
 	// Init ADPCM
 	MSM6295ROM = CpsAd;
 	if (Forgottn) {
-		nRet = MSM6295Init(0, 6061, 1);
+		nRet = MSM6295Init(0, 6061, 0);
 	} else {
-		nRet = MSM6295Init(0, 7576, 1);
+		nRet = MSM6295Init(0, 7576, 0);
 	}
 	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -59,8 +47,6 @@ INT32 PsmExit()
 	bPsmOkay = 0;
 
 	MSM6295Exit(0);
-
-	BurnFree(WaveBuf);
 
 	BurnYM2151Exit();									// Exit FM sound chip
 	return 0;
@@ -85,12 +71,24 @@ INT32 PsmUpdate(INT32 nEnd)
 	}
 
 	// Render FM
-	BurnYM2151Render(pBurnSoundOut + (nPos << 1), nEnd - nPos);
+	//BurnYM2151Render(pBurnSoundOut + (nPos << 1), nEnd - nPos);
 
 	// Render ADPCM
-	MSM6295Render(0, pBurnSoundOut + (nPos << 1), nEnd - nPos);
+	//MSM6295Render(0, pBurnSoundOut + (nPos << 1), nEnd - nPos);
 
 	nPos = nEnd;
+
+	return 0;
+}
+
+INT32 PsmUpdateEnd()
+{
+	if (bPsmOkay == 0 || pBurnSoundOut == NULL) {
+		return 1;
+	}
+
+	MSM6295Render(pBurnSoundOut, nBurnSoundLen);
+	BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 
 	return 0;
 }

@@ -476,7 +476,7 @@ static struct BurnRomInfo DrvjahaRomDesc[] = {
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm05.4k",       0x08000, 0x06ea3878, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program
+	{ "005.bin",       0x08000, 0x06ea3878, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program
 
 	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
@@ -496,7 +496,7 @@ static struct BurnRomInfo DrvjahaRomDesc[] = {
 	{ "bm07.11a",      0x08000, 0xd78f7197, BRF_GRA },	     	 //  16
 	{ "bm08.12a",      0x08000, 0x1a626608, BRF_GRA },	     	 //  17
 	{ "bm09.14a",      0x08000, 0x92408400, BRF_GRA },	     	 //  18
-	{ "bm10.10c",      0x08000, 0x1b072548, BRF_GRA },	     	 //  19
+	{ "013.bin",       0x08000, 0x1b072548, BRF_GRA },	     	 //  19
 	{ "bm11.11c",      0x08000, 0x6c69351d, BRF_GRA },	     	 //  20
 	{ "bm12.12c",      0x08000, 0x5e7efdb7, BRF_GRA },	     	 //  21
 	{ "bm13.14c",      0x08000, 0x1143829a, BRF_GRA },	     	 //  22

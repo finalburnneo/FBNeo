@@ -463,6 +463,8 @@ INT32 PsmInit();
 INT32 PsmExit();
 void PsmNewFrame();
 INT32 PsmUpdate(INT32 nEnd);
+INT32 PsmUpdateEnd();
+void PsndEndFrame();
 
 // kabuki.cpp
 void wof_decode();

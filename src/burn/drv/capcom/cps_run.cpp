@@ -358,8 +358,9 @@ INT32 Cps1Frame()
 		QsndEndFrame();
 	} else {
 		if (!Cps1DisablePSnd) {
-			PsndSyncZ80(nCpsZ80Cycles);
-			PsmUpdate(nBurnSoundLen);
+			PsndSyncZ80(nCpsZ80Cycles); // sync z80
+			PsndEndFrame();             // end frame (BurnTimer: z80)
+			PsmUpdateEnd();             // render msm6295, ym2151
 			ZetClose();
 		}
 	}

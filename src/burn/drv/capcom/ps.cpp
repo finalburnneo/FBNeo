@@ -7,25 +7,16 @@ extern "C" {
 
 UINT8 PsndCode, PsndFade;						// Sound code/fade sent to the z80 program
 
-static INT32 nSyncPeriod;
-static INT32 nSyncNext;
-
-static INT32 nCyclesDone;
+static INT32 nPsndCyclesExtra;
 
 static void drvYM2151IRQHandler(INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-		ZetRun(0x0800);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 INT32 PsndInit()
 {
 	nCpsZ80Cycles = 4000000 * 100 / nBurnFPS;
-	nSyncPeriod = nCpsZ80Cycles / 32;
 
 	// Init PSound z80
 	if (PsndZInit()!= 0) {
@@ -37,9 +28,11 @@ INT32 PsndInit()
 
 	YM2151SetIrqHandler(0, &drvYM2151IRQHandler);
 
+	BurnTimerAttachZet(4000000);
+
 	PsndCode = 0; PsndFade = 0;
 
-	nCyclesDone = 0;
+	nPsndCyclesExtra = 0;
 
 	return 0;
 }
@@ -55,7 +48,7 @@ INT32 PsndExit()
 INT32 PsndScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(nCyclesDone); SCAN_VAR(nSyncNext);
+		SCAN_VAR(nPsndCyclesExtra);
 		PsndZScan(nAction, pnMin);							// Scan Z80
 		SCAN_VAR(PsndCode); SCAN_VAR(PsndFade);		// Scan sound info
 	}
@@ -66,21 +59,26 @@ void PsndNewFrame()
 {
 	ZetNewFrame();
 	PsmNewFrame();
-	nSyncNext = nSyncPeriod;
 
-	ZetIdle(nCyclesDone % nCpsZ80Cycles);
-	nCyclesDone = 0;
+	ZetIdle(nPsndCyclesExtra % nCpsZ80Cycles);
+	nPsndCyclesExtra = 0;
 }
 
-INT32 PsndSyncZ80(INT32 nCycles)
+void PsndEndFrame()
 {
-	while (nSyncNext < nCycles) {
-		PsmUpdate(nSyncNext * nBurnSoundLen / nCpsZ80Cycles);
-		ZetRun(nSyncNext - ZetTotalCycles());
-		nSyncNext += nSyncPeriod;
+	BurnTimerEndFrame(nCpsZ80Cycles);
+	nPsndCyclesExtra = ZetTotalCycles() - nCpsZ80Cycles;
+}
+
+INT32 PsndSyncZ80(INT32 /*nCycles*/)
+{
+	INT32 nCycles = (INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles;
+
+	if (nCycles <= ZetTotalCycles()) {
+		return 0;
 	}
 
-	nCyclesDone = ZetRun(nCycles - ZetTotalCycles());
+	BurnTimerUpdate(nCycles);
 
 	return 0;
 }

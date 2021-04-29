@@ -2900,7 +2900,7 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		SekClose();
 
 		// not in system D
-		BurnYM2151Init(3500000, 1);
+		BurnYM2151InitBuffered(3500000, 1, NULL, 0);
 		BurnTimerAttachSek(7000000);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
@@ -3316,7 +3316,6 @@ static INT32 System1AFrame()
 	}
 
 	INT32 nInterleave = 263 * 8;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { (INT32)(((tshingen) ? 8000000 : 6000000) / 56.19), (INT32)(7000000 / 56.19) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
@@ -3336,29 +3335,15 @@ static INT32 System1AFrame()
 		SekClose();
 
 		SekOpen(1);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-		if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
-
-		if (pBurnSoundOut && i%64 == 63) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 64);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
+		CPU_RUN_TIMER(1);
 		SekClose();
 	}
 
 	SekOpen(1);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	nCyclesDone[1] = SekTotalCycles();
 
@@ -3394,7 +3379,6 @@ static INT32 System1B_1CFrame(INT32 maincpu)
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { maincpu, 7000000 / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
@@ -3404,33 +3388,25 @@ static INT32 System1B_1CFrame(INT32 maincpu)
 		CPU_RUN(0, Sek);
 		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == 128) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 240) {
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 		SekClose();
 
 		SekOpen(1);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-		if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[1]);
-
-		if (pBurnSoundOut && i%8 == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-
+		CPU_RUN_TIMER(1);
 		SekClose();
 	}
 
 	SekOpen(1);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength > 0) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	nCyclesDone[1] = SekTotalCycles();
 
@@ -3438,10 +3414,6 @@ static INT32 System1B_1CFrame(INT32 maincpu)
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	DrvBufferSprites();
 

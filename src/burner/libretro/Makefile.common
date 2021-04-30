@@ -422,16 +422,18 @@ endif
 
 ifeq ($(INCLUDE_7Z_SUPPORT), 1)
 	FBNEO_DEFINES += -DINCLUDE_7Z_SUPPORT -D_7ZIP_PPMD_SUPPPORT
-	FBNEO_SRC_DIRS += $(FBNEO_LIB_DIR)/lib7z
-	BURN_BLACKLIST += $(FBNEO_LIB_DIR)/lib7z/LzFindMt.c \
-		$(FBNEO_LIB_DIR)/lib7z/LzmaEnc.c \
-		$(FBNEO_LIB_DIR)/lib7z/MtCoder.c \
-		$(FBNEO_LIB_DIR)/lib7z/Lzma2Enc.c \
-		$(FBNEO_LIB_DIR)/lib7z/Bcj2Enc.c \
-		$(FBNEO_LIB_DIR)/lib7z/Threads.c \
-		$(FBNEO_LIB_DIR)/lib7z/Lzma86Enc.c \
-		$(FBNEO_LIB_DIR)/lib7z/LzmaLib.c \
-		$(FBNEO_LIB_DIR)/lib7z/XzEnc.c
+	ifneq ($(STATIC_LINKING), 1)
+		FBNEO_SRC_DIRS += $(FBNEO_LIB_DIR)/lib7z
+		BURN_BLACKLIST += $(FBNEO_LIB_DIR)/lib7z/LzFindMt.c \
+			$(FBNEO_LIB_DIR)/lib7z/LzmaEnc.c \
+			$(FBNEO_LIB_DIR)/lib7z/MtCoder.c \
+			$(FBNEO_LIB_DIR)/lib7z/Lzma2Enc.c \
+			$(FBNEO_LIB_DIR)/lib7z/Bcj2Enc.c \
+			$(FBNEO_LIB_DIR)/lib7z/Threads.c \
+			$(FBNEO_LIB_DIR)/lib7z/Lzma86Enc.c \
+			$(FBNEO_LIB_DIR)/lib7z/LzmaLib.c \
+			$(FBNEO_LIB_DIR)/lib7z/XzEnc.c
+	endif
 else
 	BURN_BLACKLIST += $(FBNEO_BURNER_DIR)/un7z.cpp
 endif

@@ -258,7 +258,6 @@ else ifeq ($(platform), vita)
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
-	INCLUDE_7Z_SUPPORT = 0
 
 # CTR (3DS)
 else ifeq ($(platform), ctr)
@@ -274,7 +273,6 @@ else ifeq ($(platform), ctr)
 	STATIC_LINKING = 1
 	USE_CYCLONE = 1
 	LIGHT = 1
-	INCLUDE_7Z_SUPPORT = 0
 
 # Xbox 360
 else ifeq ($(platform), xenon)
@@ -367,7 +365,6 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 	PLATFORM_DEFINES := -U__INT32_TYPE__ -U __UINT32_TYPE__ -D__INT32_TYPE__=int -UPPC
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
-	INCLUDE_7Z_SUPPORT = 0
 
 	# Nintendo WiiU
 	ifneq (,$(findstring wiiu,$(platform)))

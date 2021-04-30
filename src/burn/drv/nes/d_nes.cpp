@@ -9189,6 +9189,114 @@ static void prg_ram_write(UINT16 address, UINT8 data)
 	Cart.WorkRAM[address & Cart.WorkRAMMask] = data;
 }
 
+// cheat system
+static UINT8 gg_bit(UINT8 g)
+{
+	const UINT8 gg_str[0x11] = "APZLGITYEOXUKSVN";
+
+	for (UINT8 i = 0; i < 0x10; i++) {
+		if (g == gg_str[i]) {
+			return i;
+		}
+	}
+	return 0;
+}
+
+static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &compare)
+{
+	INT32 type = strlen(gg_code);
+
+	if (type != 6 && type != 8) {
+		// bad code!
+		return 1;
+	}
+
+	UINT8 str_bits[8];
+
+	for (UINT8 i = 0; i < type; i++) {
+		str_bits[i] = gg_bit(gg_code[i]);
+	}
+
+	address = 0x8000 | ((str_bits[1] & 8) << 4) | ((str_bits[2] & 7) << 4) | ((str_bits[3] & 7) << 12) | ((str_bits[3] & 8) << 0) | ((str_bits[4] & 7) << 0) | ((str_bits[4] & 8) << 8) | ((str_bits[5] & 7) << 8);
+	value = ((str_bits[0] & 7) << 0) | ((str_bits[0] & 8) << 4) | ((str_bits[1] & 7) << 4);
+	compare = -1;
+
+	switch (type) {
+		case 6: {
+			value |= ((str_bits[5] & 8) << 0);
+			break;
+		}
+		case 8: {
+			value |= ((str_bits[7] & 8) << 0);
+			compare = ((str_bits[5] & 8) << 0) | ((str_bits[6] & 7) << 0) | ((str_bits[6] & 8) << 4) | ((str_bits[7] & 7) << 4);
+			break;
+		}
+	}
+
+	return 0;
+}
+
+const INT32 cheat_MAX = 0x10;
+static INT32 cheats_active = 0;
+
+struct cheat_struct {
+	char code[0x10]; // gamegenie code
+	UINT16 address;
+	UINT8 value;
+	INT32 compare; // -1, compare disabled.
+};
+
+static cheat_struct cheats[cheat_MAX];
+
+void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
+{
+	UINT16 address;
+	UINT8 value;
+	INT32 compare;
+
+	if (!gg_decode(code, address, value, compare)) {
+		strncpy(cheats[cheats_active].code, code, 9);
+		cheats[cheats_active].address = address;
+		cheats[cheats_active].value = value;
+		cheats[cheats_active].compare = compare;
+		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x, %d)\n"), cheats_active, cheats[cheats_active].code, address, value, compare);
+		cheats_active++;
+	} else {
+		bprintf(0, _T("nes cheat engine: bad GameGenie code %S\n"), code);
+	}
+}
+
+void nes_remove_cheat(char *code)
+{
+	cheat_struct cheat_temp[cheat_MAX];
+	INT32 temp_num = 0;
+
+	for (INT32 i = 0; i < cheats_active; i++) {
+		if (strcmp(code, cheats[i].code) != 0) {
+			memcpy(&cheat_temp[temp_num], &cheats[i], sizeof(cheat_struct));
+			temp_num++;
+		} else {
+			bprintf(0, _T("cheat %S disabled.\n"), cheats[i].code);
+		}
+	}
+
+	memcpy(cheats, cheat_temp, sizeof(cheats));
+	cheats_active = temp_num;
+}
+
+static inline UINT8 cheat_check(UINT16 address, UINT8 value)
+{
+	for (INT32 i = 0; i < cheats_active; i++) {
+		if (cheats[i].address == address && (cheats[i].compare == -1 || cheats[i].compare == value)) {
+		 //   bprintf(0, _T("."));
+			return cheats[i].value;
+		}
+	}
+
+	return value;
+}
+
+
 static UINT8 cpu_bus_read(UINT16 address)
 {
 	UINT8 ret = 0;
@@ -9205,6 +9313,8 @@ static UINT8 cpu_bus_read(UINT16 address)
 		default:      // 8000 - ffff
 			ret = mapper_prg_read(address); break;
 	}
+
+	ret = cheat_check(address, ret);
 
 	cpu_open_bus = ret;
 
@@ -9295,6 +9405,11 @@ static INT32 DrvDoReset()
 			}
 		}
 	}
+
+	//contra-test-nescheatengine
+	//nes_add_cheat("IPVGZGZE"); // 30 lives
+	//nes_add_cheat("AAVGTGZA"); // 1p2p 30 lives
+	//nes_add_cheat("SLAIUZ"); // invincible
 
 	return 0;
 }

@@ -1277,6 +1277,12 @@ bool retro_serialize(void *data, size_t size)
 {
 	if (bDisableSerialize == 1)
 		return false;
+#if 0
+	// Used to convert a standalone savestate into something usable by the libretro port
+	char convert_save_path[MAX_PATH];
+	snprintf_nowarn (convert_save_path, sizeof(convert_save_path), "%s%cfbneo%c%s.save", g_save_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), BurnDrvGetTextA(DRV_NAME));
+	BurnStateLoad(convert_save_path, 1, NULL);
+#endif
 	int result = -1;
 	environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &result);
 	kNetGame = result & 4 ? 1 : 0;
@@ -1337,7 +1343,16 @@ bool retro_unserialize(const void *data, size_t size)
 }
 
 void retro_cheat_reset() {}
-void retro_cheat_set(unsigned, bool, const char*) {}
+void retro_cheat_set(unsigned index, bool enabled, const char *code)
+{
+#if 0
+	int nHardwareCode = BurnDrvGetHardwareCode();
+	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
+	{
+		(enabled ? nes_add_cheat(code) : nes_remove_cheat(code));
+	}
+#endif
+}
 
 void retro_get_system_av_info(struct retro_system_av_info *info)
 {

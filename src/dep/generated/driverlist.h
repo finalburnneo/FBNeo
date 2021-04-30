@@ -11135,6 +11135,7 @@ DRV		BurnDrvRfjetu;
 DRV		BurnDrvRfjets;
 DRV		BurnDrvRfjetsa;
 DRV		BurnDrvRfjet2kc;
+DRV		BurnDrvRaiden2eub;
 DRV		BurnDrvRaiden2eup;
 DRV		BurnDrvRaiden2eg;
 DRV		BurnDrvRaiden2ea;
@@ -28221,6 +28222,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRfjets,				// Raiden Fighters Jet (US, single board)
 	&BurnDrvRfjetsa,			// Raiden Fighters Jet (US, single board, test version?)
 	&BurnDrvRfjet2kc,			// Raiden Fighters Jet 2000 (China, SYS386I)
+	&BurnDrvRaiden2eub,			// Raiden II (easier, US set 3)
 	&BurnDrvRaiden2eup,			// Raiden II (easier, US, prototype? 11-16)
 	&BurnDrvRaiden2eg,			// Raiden II (Easy Version, Germany)
 	&BurnDrvRaiden2ea,			// Raiden II (Easy Version, Japan?)

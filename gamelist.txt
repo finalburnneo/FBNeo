@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16833 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16834 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10985,6 +10985,7 @@ This list contains all games supported by FinalBurn Neo.
 | rfjets	|  	| Raiden Fighters Jet (US, single board)		| rfjet		| 1999	| Seibu Kaihatsu| SPI		| 					|
 | rfjetsa	|  	| Raiden Fighters Jet (US, single board, test version?)	| rfjet		| 1999	| Seibu Kaihatsu| SPI		| 					|
 | rfjet2kc	|  	| Raiden Fighters Jet 2000 (China, SYS386I)		| rfjet		| 2000	| Seibu Kaihatsu| SYS386I	| 					|
+| raiden2eub	|  	| Raiden II (easier, US set 3)				| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2eup	|  	| Raiden II (easier, US, prototype? 11-16)		| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2eg	|  	| Raiden II (Easy Version, Germany)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|
 | raiden2ea	|  	| Raiden II (Easy Version, Japan?)			| raiden2	| 1993	| Seibu Kaihatsu| Miscellaneous	| 					|

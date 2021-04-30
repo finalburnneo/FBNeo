@@ -257,6 +257,7 @@ else ifeq ($(platform), vita)
 	CXXFLAGS += -mfloat-abi=hard -fsingle-precision-constant -fpermissive -fno-rtti -fno-exceptions
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
+	INCLUDE_7Z_SUPPORT = 0
 	USE_CYCLONE = 1
 
 # CTR (3DS)
@@ -271,6 +272,7 @@ else ifeq ($(platform), ctr)
 	CXXFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard -fpermissive -fno-rtti -fno-exceptions
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
+	INCLUDE_7Z_SUPPORT = 0
 	USE_CYCLONE = 1
 	LIGHT = 1
 
@@ -307,6 +309,7 @@ else ifeq ($(platform), libnx)
 	CXXFLAGS := $(ASFLAGS) $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 	CFLAGS += -std=gnu11
 	STATIC_LINKING = 1
+	INCLUDE_7Z_SUPPORT = 0
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 
 # Classic Platforms ####################
@@ -365,6 +368,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 	PLATFORM_DEFINES := -U__INT32_TYPE__ -U __UINT32_TYPE__ -D__INT32_TYPE__=int -UPPC
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
+	INCLUDE_7Z_SUPPORT = 0
 
 	# Nintendo WiiU
 	ifneq (,$(findstring wiiu,$(platform)))

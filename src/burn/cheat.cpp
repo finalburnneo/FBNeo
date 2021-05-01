@@ -109,6 +109,21 @@ INT32 CheatUpdate()
 	return 0;
 }
 
+static void NESCheatDisable(CheatInfo* pCurrentCheat, INT32 nCheat)
+{
+	// Deactivate old option (if any)
+	CheatAddressInfo* pAddressInfo = pCurrentCheat->pOption[pCurrentCheat->nCurrent]->AddressInfo;
+
+	while (pAddressInfo->nAddress) {
+		if (HW_NES) {
+			// Disable Game Genie code
+			bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, pCurrentCheat->nCurrent);
+			nes_remove_cheat(pAddressInfo->szGenieCode);
+		}
+		pAddressInfo++;
+	}
+}
+
 INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 {
 	INT32 nCurrentCheat = 0;
@@ -141,6 +156,12 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 				return 0;
 			}
 
+			if (HW_NES && pCurrentCheat->nCurrent != nOption) {
+				// NES: going from one option to the next in a list, must deactivate
+				// previous option before selecting the next, unless we're coming from default.
+				NESCheatDisable(pCurrentCheat, nCheat);
+			}
+
 			if (deactivate) { // disable cheat option
 				if (pCurrentCheat->nType != 1) {
 					nOption = 1; // Set to the first option as there is no addressinfo associated with default (disabled) cheat entry. -dink
@@ -161,18 +182,11 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (HW_NES) {
+						if (pCurrentCheat->bRestoreOnDisable && !pAddressInfo->bRelAddress) {
 							// Write back original values to memory
-							bprintf(0, _T("NES-Cheat #%d, option #%d. action: "), nCheat, nOption);
-							bprintf(0, _T("Disable Game Genie Code (%S)\n"), pAddressInfo->szGenieCode);
-							nes_remove_cheat(pAddressInfo->szGenieCode);
-						} else {
-							if (pCurrentCheat->bRestoreOnDisable && !pAddressInfo->bRelAddress) {
-								// Write back original values to memory
-								bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
-								bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
-								cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
-							}
+							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
+							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						}
 						pAddressInfo++;
 					}
@@ -196,8 +210,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 					pCurrentCheat->bModified = 0;
 
 					if (HW_NES) {
-						bprintf(0, _T("NES-Cheat #%d, option #%d. action: "), nCheat, nOption);
-						bprintf(0, _T("Game Genie Code (%S)\n"), pAddressInfo->szGenieCode);
+						bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, nOption);
 						nes_add_cheat(pAddressInfo->szGenieCode);
 					} else {
 						// Copy the original values

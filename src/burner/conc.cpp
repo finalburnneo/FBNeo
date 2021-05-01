@@ -238,15 +238,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 								s++;
 								if (*s == _T(',')) break;
 							}
-							if (n-1 == 0) {
-								// copy gamegenie codes to the "disable" slot
-								// so cheat engine can tell nes which gg codes to
-								// disable.
-								memcpy(pCurrentCheat->pOption[n-1]->AddressInfo,
-									   pCurrentCheat->pOption[n]->AddressInfo,
-									   sizeof(pCurrentCheat->pOption[n]->AddressInfo));
-							}
-							nAddress = 0xffff; // address not used, but needs to be nonzero (nes)
+							nAddress = 0xffff; // nAddress not used, but needs to be nonzero (NES/Game Genie)
 						} else {
 							nCPU = _tcstol(s, &t, 0);		// CPU number
 							if (t == s) {

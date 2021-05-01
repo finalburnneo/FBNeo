@@ -231,7 +231,11 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 						if (HW_NES) {
 							t = s;
 							INT32 newlen = 0;
+#if defined(BUILD_WIN32)
 							for (INT32 z = 0; z < lstrlen(t); z++) {
+#else
+							for (INT32 z = 0; z < strlen(t); z++) {
+#endif
 								char c = toupper((char)*s);
 								if (c >= 'A' && c <= 'Z' && newlen < 10)
 									pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode[newlen++] = c;

@@ -12947,6 +12947,7 @@ DRV		BurnSpecSpikeintransylvania;
 DRV		BurnDrvspinmast;
 DRV		BurnDrvpce_spinpair;
 DRV		BurnDrvSpinlbrj;
+DRV		BurnDrvSpinlbrjp;
 DRV		BurnDrvSpinlbru;
 DRV		BurnDrvSpinlbrk;
 DRV		BurnSpecspindizzy;
@@ -30034,6 +30035,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvspinmast,			// Spin Master / Miracle Adventure
 	&BurnDrvpce_spinpair,		// Spin Pair
 	&BurnDrvSpinlbrj,			// Spinal Breakers (Japan)
+	&BurnDrvSpinlbrjp,			// Spinal Breakers (Japan, prototype 11/14 15:00)
 	&BurnDrvSpinlbru,			// Spinal Breakers (US)
 	&BurnDrvSpinlbrk,			// Spinal Breakers (World)
 	&BurnSpecspindizzy,			// Spindizzy (48K)

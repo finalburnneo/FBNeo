@@ -398,7 +398,7 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(12096000/8, 2, 2.40, 0);
+	PokeyInit(12096000/8, 2, 1.40, 0);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyPotCallback(0, 0, port1_read);
 	PokeyPotCallback(0, 1, port1_read);

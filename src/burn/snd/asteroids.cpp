@@ -560,8 +560,8 @@ void astdelux_sound_update(INT16 *buffer, INT32 length)
 	{
 		INT32 sum = 0;
 
-		sum += explosion(samplerate) / 2;
-		sum += thrust(samplerate) / 2;
+		sum += explosion(samplerate) / 7;
+		sum += thrust(samplerate) / 7;
 
 		*buffer++ = sum;
 		*buffer++ = sum;

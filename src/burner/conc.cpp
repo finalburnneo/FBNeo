@@ -1,5 +1,7 @@
 #include "burner.h"
 
+#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
+
 static bool SkipComma(TCHAR** s)
 {
 	while (**s && **s != _T(',')) {
@@ -226,29 +228,46 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 					INT32 nCPU = 0, nAddress = 0, nValue = 0;
 
 					if (SkipComma(&s)) {
-						nCPU = _tcstol(s, &t, 0);		// CPU number
-						if (t == s) {
-							CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU number omitted"), szLine);
-							bOK = false;
-							break;
-						}
-						s = t;
+						if (HW_NES) {
+							t = s;
+							INT32 newlen = 0;
+#if defined(BUILD_WIN32)
+							for (INT32 z = 0; z < lstrlen(t); z++) {
+#else
+							for (INT32 z = 0; z < strlen(t); z++) {
+#endif
+								char c = toupper((char)*s);
+								if (c >= 'A' && c <= 'Z' && newlen < 10)
+									pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode[newlen++] = c;
+								s++;
+								if (*s == _T(',')) break;
+							}
+							nAddress = 0xffff; // nAddress not used, but needs to be nonzero (NES/Game Genie)
+						} else {
+							nCPU = _tcstol(s, &t, 0);		// CPU number
+							if (t == s) {
+								CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU number omitted"), szLine);
+								bOK = false;
+								break;
+							}
+							s = t;
 
-						SkipComma(&s);
-						nAddress = _tcstol(s, &t, 0);	// Address
-						if (t == s) {
-							bOK = false;
-							CheatError(pszFilename, nLine, pCurrentCheat, _T("address omitted"), szLine);
-							break;
-						}
-						s = t;
+							SkipComma(&s);
+							nAddress = _tcstol(s, &t, 0);	// Address
+							if (t == s) {
+								bOK = false;
+								CheatError(pszFilename, nLine, pCurrentCheat, _T("address omitted"), szLine);
+								break;
+							}
+							s = t;
 
-						SkipComma(&s);
-						nValue = _tcstol(s, &t, 0);		// Value
-						if (t == s) {
-							bOK = false;
-							CheatError(pszFilename, nLine, pCurrentCheat, _T("value omitted"), szLine);
-							break;
+							SkipComma(&s);
+							nValue = _tcstol(s, &t, 0);		// Value
+							if (t == s) {
+								bOK = false;
+								CheatError(pszFilename, nLine, pCurrentCheat, _T("value omitted"), szLine);
+								break;
+							}
 						}
 					} else {
 						if (nCurrentAddress) {			// Only the first option is allowed no address

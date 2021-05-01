@@ -1343,16 +1343,7 @@ bool retro_unserialize(const void *data, size_t size)
 }
 
 void retro_cheat_reset() {}
-void retro_cheat_set(unsigned index, bool enabled, const char *code)
-{
-#if 0
-	int nHardwareCode = BurnDrvGetHardwareCode();
-	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
-	{
-		(enabled ? nes_add_cheat(code) : nes_remove_cheat(code));
-	}
-#endif
-}
+void retro_cheat_set(unsigned, bool, const char *) {}
 
 void retro_get_system_av_info(struct retro_system_av_info *info)
 {

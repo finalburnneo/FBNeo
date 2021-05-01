@@ -218,6 +218,7 @@ void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 s
 	BurnTimerAttachM6809(2000000);
 
 	hc55516_init(M6809TotalCycles, 2000000);
+	hc55516_volume(0.35);
 
 	DACInit(0, 0, 1, M6809TotalCycles, 2000000);
 	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);

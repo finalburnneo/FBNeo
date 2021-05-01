@@ -1555,8 +1555,8 @@ struct BurnDriver BurnDrvNbamhtl10 = {
 // NBA Maximum Hangtime (ver M1.0 11/08/96)
 
 static struct BurnRomInfo nbamhtm10RomDesc[] = {
-	{ "m1.0_maximum_hangtime_u54_l_version.u54",	0x080000, 0xe4e665d5, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "m1.0_maximum_hangtime_u63_l_version.u63",	0x080000, 0x51cfda55, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "m1.0_maximum_hangtime_u54_m_version.u54",	0x080000, 0xe4e665d5, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "m1.0_maximum_hangtime_u63_m_version.u63",	0x080000, 0x51cfda55, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3

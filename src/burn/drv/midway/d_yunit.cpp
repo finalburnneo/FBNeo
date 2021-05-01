@@ -2102,7 +2102,7 @@ static struct BurnRomInfo narc6RomDesc[] = {
 	{ "rev6_narc_game_rom_u60.u60",						0x10000, 0x5f6b0429, (3 | 8) | BRF_PRG | BRF_ESS }, //  7
 	{ "rev6_narc_game_rom_u77.u77",						0x10000, 0x508cfa38, (3 | 8) | BRF_PRG | BRF_ESS }, //  8
 	{ "rev6_narc_game_rom_u59.u59",						0x10000, 0x84bc91fc, (3 | 8) | BRF_PRG | BRF_ESS }, //  9
-	{ "rev4_narc_game_rom_u42.u42",						0x10000, 0xee8ae9d4, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
+	{ "rev6_narc_game_rom_u42.u42",						0x10000, 0xee8ae9d4, (3 | 8) | BRF_PRG | BRF_ESS }, // 10
 	{ "rev6_narc_game_rom_u24.u24",						0x10000, 0x4fbe2ff5, (3 | 8) | BRF_PRG | BRF_ESS }, // 11
 	{ "rev6_narc_game_rom_u41.u41",						0x10000, 0x43a1bbbc, (3 | 8) | BRF_PRG | BRF_ESS }, // 12
 	{ "rev6_narc_game_rom_u23.u23",						0x10000, 0xed0d149d, (3 | 8) | BRF_PRG | BRF_ESS }, // 13

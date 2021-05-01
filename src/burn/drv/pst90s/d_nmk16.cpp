@@ -7767,7 +7767,7 @@ static struct BurnRomInfo hotbublRomDesc[] = {
 	{ "afega10.cr5.uc15",	0x080000, 0x65bd5159, 4 | BRF_GRA },           //  4 Tiles
 	{ "afega10.cr7.uc19",	0x080000, 0xa89d9ce4, 4 | BRF_GRA },           //  5
 	{ "afega9.cr6.uc16",	0x080000, 0x99d6523c, 4 | BRF_GRA },           //  6
-	{ "afega9.cr1.uc6",		0x080000, 0xfc9101d2, 4 | BRF_GRA },           //  7
+	{ "afega8.cr1.uc6",		0x080000, 0xfc9101d2, 4 | BRF_GRA },           //  7
 	{ "afega9.cr3.uc12",	0x080000, 0xc841a4f6, 4 | BRF_GRA },           //  8
 	{ "afega9.cr2.uc7",		0x080000, 0x27ad6fc8, 4 | BRF_GRA },           //  9
 

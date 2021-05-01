@@ -9406,11 +9406,6 @@ static INT32 DrvDoReset()
 		}
 	}
 
-	//contra-test-nescheatengine
-	//nes_add_cheat("IPVGZGZE"); // 30 lives
-	//nes_add_cheat("AAVGTGZA"); // 1p2p 30 lives
-	//nes_add_cheat("SLAIUZ"); // invincible
-
 	return 0;
 }
 
@@ -9419,6 +9414,8 @@ static INT32 NESInit()
 	GenericTilesInit();
 
 	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800);
+
+	cheats_active = 0;
 
 	struct BurnRomInfo ri;
 	char *romname = NULL;

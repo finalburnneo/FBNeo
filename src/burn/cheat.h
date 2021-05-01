@@ -14,6 +14,7 @@ struct CheatAddressInfo {
 	INT32 bRelAddress;                          // Relative address (pointer offset) cheat, see :rdft2: or :dreamwld: in cheat.dat
 	INT32 nRelAddressOffset;                    // The offset
 	INT32 nRelAddressBits;                      // 0, 1, 2, 3 = 8, 16, 24, 32bit
+	char szGenieCode[0x10];                     // Game Genie Code (NES)
 };
 
 struct CheatOption {

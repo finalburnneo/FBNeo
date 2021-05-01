@@ -930,7 +930,7 @@ static INT32 AstdeluxInit()
 
 	earom_init();
 
-	PokeyInit(12096000/8, 1, 2.40, 1);
+	PokeyInit(12096000/8, 1, 1.40, 1);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, allpot_read);
 

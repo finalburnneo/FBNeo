@@ -1333,6 +1333,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ghostbst" romof="coleco">
+		<description>Ghostbusters (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2018</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Ghostbusters (2018)(Team Pixelboy).rom" size="65536" crc="fc935cdd"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ggarden" romof="coleco">
 		<description>Girl's Garden (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2010</year>
@@ -1859,11 +1871,23 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mario" romof="coleco">
-		<description>Mario Bros. (HB) [Homebrew, Published by CollectorVision]</description>
-		<year>2008</year>
+	<game name="mariob" cloneof="mario" romof="mario">
+		<description>Mario Brothers (HB) [Homebrew, Published by CollectorVision]</description>
+		<year>2009</year>
 		<manufacturer>Nintendo</manufacturer>
-		<rom name="MarioBros (2008) (CollectorVision).rom" size="131072" crc="2e09af0a"/>
+		<rom name="Mario Brothers (2009) (CollectorVision).rom" size="65536" crc="11777b27"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mario" romof="coleco">
+		<description>Mario Brothers Final Edition (Rev D) (HB) [Homebrew, Published by CollectorVision]</description>
+		<year>2009</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mario Brothers Final Edition (2009) (Rev D) (CollectorVision).rom" size="131072" crc="2e09af0a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3651,7 +3675,7 @@
 		<description>The Black Onyx (HB) [Homebrew, Published by Team Pixelboy]</description>
 		<year>2013</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="Black Onyx, the (2013)(Team Pixelboy).rom" size="32768" crc="bbf5ec4d"/>
+		<rom name="Black Onyx, the (2013)(Team Pixelboy).rom" size="65536" crc="dddd1396"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

@@ -5465,6 +5465,7 @@ DRV		BurnSpecghostb;
 DRV		BurnSpecghostb_48;
 DRV		BurnDrvsms_ghostbst;
 DRV		BurnDrvmd_ghostbsts;
+DRV		BurnDrvcv_ghostbst;
 DRV		BurnDrvMSX_ghostbst;
 DRV		BurnDrvnes_ghostbusters;
 DRV		BurnDrvmd_ghostbst1;
@@ -8110,12 +8111,13 @@ DRV		BurnDrvmd_mario4;
 DRV		BurnDrvnes_marioadventure;
 DRV		BurnDrvmd_andretti;
 DRV		BurnSpecmaribros;
-DRV		BurnDrvcv_mario;
 DRV		BurnDrvMarioj;
 DRV		BurnDrvMarioe;
 DRV		BurnDrvMariof;
 DRV		BurnDrvMario;
 DRV		BurnDrvnes_mariobros;
+DRV		BurnDrvcv_mariob;
+DRV		BurnDrvcv_mario;
 DRV		BurnDrvmd_mariolh;
 DRV		BurnSpecmaritrini;
 DRV		BurnDrvMarkham;
@@ -22555,6 +22557,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecghostb_48,			// Ghostbusters (48K)
 	&BurnDrvsms_ghostbst,		// Ghostbusters (Euro, USA, Kor)
 	&BurnDrvmd_ghostbsts,		// Ghostbusters (Hack, Spanish)
+	&BurnDrvcv_ghostbst,		// Ghostbusters (HB)
 	&BurnDrvMSX_ghostbst,		// Ghostbusters (Jpn)
 	&BurnDrvnes_ghostbusters,	// Ghostbusters (USA)
 	&BurnDrvmd_ghostbst1,		// Ghostbusters (World)
@@ -25200,12 +25203,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_marioadventure,	// Mario Adventure (Hack)
 	&BurnDrvmd_andretti,		// Mario Andretti Racing (Euro, USA)
 	&BurnSpecmaribros,			// Mario Bros (48K)
-	&BurnDrvcv_mario,			// Mario Bros. (HB)
 	&BurnDrvMarioj,				// Mario Bros. (Japan)
 	&BurnDrvMarioe,				// Mario Bros. (US, Revision E)
 	&BurnDrvMariof,				// Mario Bros. (US, Revision F)
 	&BurnDrvMario,				// Mario Bros. (US, Revision G)
 	&BurnDrvnes_mariobros,		// Mario Bros. (World)
+	&BurnDrvcv_mariob,			// Mario Brothers (HB)
+	&BurnDrvcv_mario,			// Mario Brothers Final Edition (Rev D) (HB)
 	&BurnDrvmd_mariolh,			// Mario Lemieux Hockey (Euro, USA)
 	&BurnSpecmaritrini,			// Maritrini Freelance MonsterSlayer (HB)
 	&BurnDrvMarkham,			// Markham

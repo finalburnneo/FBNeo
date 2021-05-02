@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16837 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16839 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5389,6 +5389,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_ghostb_48|  	| Ghostbusters (48K)					| spec_ghostb	| 1984	| Activision	| ZX Spectrum	| 					|
 | sms_ghostbst	|  	| Ghostbusters (Euro, USA, Kor)				| 		| 1989	| Sega		| Sega Master Sy| 					|
 | md_ghostbsts	|  	| Ghostbusters (Hack, Spanish)				| md_ghostbst	| 2018	| Sega		| Sega Megadrive| 					|
+| cv_ghostbst	|  	| Ghostbusters (HB)					| 		| 2018	| Activision	| ColecoVision	| Published by Team Pixelboy		|
 | msx_ghostbst	|  	| Ghostbusters (Jpn)					| 		| 1984	| Pony Canyon	| MSX		| 					|
 | nes_ghostbusters|  	| Ghostbusters (USA)					| 		| 1988	| Activision	| Miscellaneous	| 					|
 | md_ghostbst1	|  	| Ghostbusters (World)					| md_ghostbst	| 1990	| Sega		| Sega Megadrive| 					|
@@ -7998,12 +7999,13 @@ This list contains all games supported by FinalBurn Neo.
 | nes_marioadventure|  	| Mario Adventure (Hack)				| nes_smb3	| 1989?	| Nintendo	| Miscellaneous	| 					|
 | md_andretti	|  	| Mario Andretti Racing (Euro, USA)			| 		| 1994	| Electronic Art| Sega Megadrive| 					|
 | spec_maribros	|  	| Mario Bros (48K)					| 		| 1987	| Ocean		| ZX Spectrum	| 					|
-| cv_mario	|  	| Mario Bros. (HB)					| 		| 2008	| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | marioj	|  	| Mario Bros. (Japan)					| mario		| 1983	| Nintendo	| Miscellaneous	| 					|
 | marioe	|  	| Mario Bros. (US, Revision E)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | mariof	|  	| Mario Bros. (US, Revision F)				| mario		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | mario		|  	| Mario Bros. (US, Revision G)				| 		| 1983	| Nintendo of Am| Miscellaneous	| 					|
 | nes_mariobros	|  	| Mario Bros. (World)					| 		| 1983	| Nintendo	| Miscellaneous	| 					|
+| cv_mariob	|  	| Mario Brothers (HB)					| cv_mario	| 2009	| Nintendo	| ColecoVision	| Published by CollectorVision		|
+| cv_mario	|  	| Mario Brothers Final Edition (Rev D) (HB)		| 		| 2009	| Nintendo	| ColecoVision	| Published by CollectorVision		|
 | md_mariolh	|  	| Mario Lemieux Hockey (Euro, USA)			| 		| 1991	| Sega		| Sega Megadrive| 					|
 | spec_maritrini|  	| Maritrini Freelance MonsterSlayer (HB)		| 		| 2011	| The Mojon Twin| ZX Spectrum	| 					|
 | markham	|  	| Markham						| 		| 1983	| Sun Electronic| Miscellaneous	| 					|

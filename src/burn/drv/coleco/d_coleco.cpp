@@ -6303,10 +6303,10 @@ struct BurnDriver BurnDrvcv_bofhoth = {
     272, 228, 4, 3
 };
 
-// Black Honyx, the (HB)
+// Black Onyx, the (HB)
 
 static struct BurnRomInfo cv_blackonyxRomDesc[] = {
-    { "Black Onyx, the (2013)(Team Pixelboy).rom",	0x8000, 0xbbf5ec4d, BRF_PRG | BRF_ESS },
+    { "Black Onyx, the (2013)(Team Pixelboy).rom",	0x10000, 0xdddd1396, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_blackonyx, cv_blackonyx, cv_coleco)
@@ -6318,7 +6318,7 @@ struct BurnDriver BurnDrvcv_blackonyx = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RPG | GBF_MAZE, 0,
     CVGetZipName, cv_blackonyxRomInfo, cv_blackonyxRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    DrvInitEEPROM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 

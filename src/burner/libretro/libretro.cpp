@@ -2450,3 +2450,9 @@ char* DecorateGameName(UINT32 nBurnDrv)
 	nBurnDrvActive = nOldBurnDrv;
 	return szDecoratedName;
 }
+
+#ifdef LIGHT
+// stub those functions
+void nes_add_cheat(char *code) {}
+void nes_remove_cheat(char *code) {}
+#endif

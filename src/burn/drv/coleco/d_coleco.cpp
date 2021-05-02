@@ -6759,6 +6759,44 @@ struct BurnDriver BurnDrvcv_zombieinc = {
     272, 228, 4, 3
 };
 
+// Spelunker (HB)
+
+static struct BurnRomInfo cv_spelunkerRomDesc[] = {
+    { "Spelunker (2015)(Team Pixelboy).rom",	0x20000, 0x75f84889, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spelunker, cv_spelunker, cv_coleco)
+STD_ROM_FN(cv_spelunker)
+
+struct BurnDriver BurnDrvcv_spelunker = {
+    "cv_spelunker", NULL, "cv_coleco", NULL, "2015",
+    "Spelunker (HB)\0", "Published by Team Pixelboy", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_spelunkerRomInfo, cv_spelunkerRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Super Space Acer (HB)
+
+static struct BurnRomInfo cv_suprspacRomDesc[] = {
+    { "Super Space Acer (2011)(Mike Brent).rom",	0x20000, 0xae209065, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_suprspac, cv_suprspac, cv_coleco)
+STD_ROM_FN(cv_suprspac)
+
+struct BurnDriver BurnDrvcv_suprspac = {
+    "cv_suprspac", NULL, "cv_coleco", NULL, "2011",
+    "Super Space Acer (HB)\0", NULL, "Mike Brent", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_suprspacRomInfo, cv_suprspacRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Moon Patrol Prototype
 
 static struct BurnRomInfo cv_mpatrolpRomDesc[] = {

@@ -6,8 +6,8 @@
 #define CHEAT_MAXCPU	8 // enough?
 
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
-void nes_add_cheat(char *code); // from drv/nes/d_nes.cpp
-void nes_remove_cheat(char *code);
+extern void nes_add_cheat(char *code); // from drv/nes/d_nes.cpp
+extern void nes_remove_cheat(char *code);
 
 bool bCheatsAllowed;
 CheatInfo* pCheatInfo = NULL;

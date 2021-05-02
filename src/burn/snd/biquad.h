@@ -1,6 +1,6 @@
 // (also appears in k054539.cpp, d_spectrum.cpp c/o dink)
 // direct form II(transposed) biquadradic filter, needed for delay(echo) effect's filter taps -dink
-enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3, FILT_PEAK = 4, FILT_NOTCH = 5 };
+enum { FILT_HIGHPASS = 0, FILT_LOWPASS = 1, FILT_LOWSHELF = 2, FILT_HIGHSHELF = 3, FILT_PEAK = 4, FILT_NOTCH = 5, FILT_BANDPASS };
 
 struct BIQ {
 	double a0;
@@ -56,6 +56,16 @@ struct BIQ {
 					a0 = k * k * norm;
 					a1 = 2 * a0;
 					a2 = a0;
+					b1 = 2 * (k * k - 1) * norm;
+					b2 = (1 - k / q + k * k) * norm;
+				}
+				break;
+			case FILT_BANDPASS:
+				{
+					norm = 1 / (1 + k / q + k * k);
+					a0 = k / q * norm;
+					a1 = 0;
+					a2 = -a0;
 					b1 = 2 * (k * k - 1) * norm;
 					b2 = (1 - k / q + k * k) * norm;
 				}

@@ -4,9 +4,9 @@
 <datafile>
 	<header>
 		<name>FinalBurn Neo - ColecoVision Games</name>
-		<description>FinalBurn Neo v1.0.0.02 ColecoVision Games</description>
+		<description>FinalBurn Neo v1.0.0.03 ColecoVision Games</description>
 		<category>Standard DatFile</category>
-		<version>1.0.0.02</version>
+		<version>1.0.0.03</version>
 		<author>FinalBurn Neo</author>
 		<homepage>https://neo-source.com/</homepage>
 		<url>https://neo-source.com/</url>
@@ -3110,6 +3110,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spelunker" romof="coleco">
+		<description>Spelunker (HB) [Homebrew, Published by Team Pixelboy]</description>
+		<year>2015</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Spelunker (2015)(Team Pixelboy).rom" size="131072" crc="75f84889"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt">
 		<description>Spy Hunter (Prototype, v13)</description>
 		<year>1984</year>
@@ -3488,6 +3500,18 @@
 		<year>1984</year>
 		<manufacturer>Personal Peripherals</manufacturer>
 		<rom name="ssketch.bin" size="8192" crc="8627300a"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="suprspac" romof="coleco">
+		<description>Super Space Acer (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>Mike Brent</manufacturer>
+		<rom name="Super Space Acer (2011)(Mike Brent).rom" size="131072" crc="ae209065"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

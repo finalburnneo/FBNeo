@@ -12915,6 +12915,7 @@ DRV		BurnDrvMSX_sbracer;
 DRV		BurnSpecspellbound;
 DRV		BurnDrvsms_spellcstc;
 DRV		BurnDrvsms_spellcst;
+DRV		BurnDrvcv_spelunker;
 DRV		BurnDrvSpelunkrj;
 DRV		BurnDrvMSX_spelunkr;
 DRV		BurnDrvMSX_spelunkra;
@@ -13977,6 +13978,7 @@ DRV		BurnDrvMSX_supsnake;
 DRV		BurnDrvMSX_supsnakeb;
 DRV		BurnDrvMSX_supsnakea;
 DRV		BurnDrvMSX_supsoccr;
+DRV		BurnDrvcv_suprspac;
 DRV		BurnDrvSsia;
 DRV		BurnDrvSsib;
 DRV		BurnDrvSsi;
@@ -30003,6 +30005,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecspellbound,		// Spellbound
 	&BurnDrvsms_spellcstc,		// SpellCaster (Euro, USA, Bra) - Castellano v0,99
 	&BurnDrvsms_spellcst,		// SpellCaster (Euro, USA, Bra)
+	&BurnDrvcv_spelunker,		// Spelunker (HB)
 	&BurnDrvSpelunkrj,			// Spelunker (Japan)
 	&BurnDrvMSX_spelunkr,		// Spelunker (Jpn)
 	&BurnDrvMSX_spelunkra,		// Spelunker (Jpn, Alt)
@@ -31065,6 +31068,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_supsnakeb,		// Super Snake (Jpn, Alt 2)
 	&BurnDrvMSX_supsnakea,		// Super Snake (Jpn, Alt)
 	&BurnDrvMSX_supsoccr,		// Super Soccer (Jpn)
+	&BurnDrvcv_suprspac,		// Super Space Acer (HB)
 	&BurnDrvSsia,				// Super Space Invaders '91 (World)
 	&BurnDrvSsib,				// Super Space Invaders '91 (World, earlier?)
 	&BurnDrvSsi,				// Super Space Invaders '91 (World, Rev 1)

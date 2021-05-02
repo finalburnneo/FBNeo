@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16835 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16837 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -12737,6 +12737,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_spellbound|  	| Spellbound						| 		| 1985	| Mastertronic	| ZX Spectrum	| 					|
 | sms_spellcstc	|  	| SpellCaster (Euro, USA, Bra) - Castellano v0,99	| sms_spellcst	| 2021	| Sega		| Sega Master Sy| 					|
 | sms_spellcst	|  	| SpellCaster (Euro, USA, Bra)				| 		| 1988	| Sega		| Sega Master Sy| 					|
+| cv_spelunker	|  	| Spelunker (HB)					| 		| 2015	| Nintendo	| ColecoVision	| Published by Team Pixelboy		|
 | spelunkrj	|  	| Spelunker (Japan)					| spelunkr	| 1985	| Irem (licensed| Irem M62	| 					|
 | msx_spelunkr	|  	| Spelunker (Jpn)					| 		| 1986	| Irem		| MSX		| 					|
 | msx_spelunkra	|  	| Spelunker (Jpn, Alt)					| msx_spelunkr	| 1986	| Irem		| MSX		| 					|
@@ -13783,6 +13784,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_supsnakeb	|  	| Super Snake (Jpn, Alt 2)				| msx_supsnake	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_supsnakea	|  	| Super Snake (Jpn, Alt)				| msx_supsnake	| 1983	| HAL Kenkyuujo	| MSX		| 					|
 | msx_supsoccr	|  	| Super Soccer (Jpn)					| 		| 1985	| Sony		| MSX		| 					|
+| cv_suprspac	|  	| Super Space Acer (HB)					| 		| 2011	| Mike Brent	| ColecoVision	| 					|
 | ssia		|  	| Super Space Invaders '91 (World)			| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
 | ssib		|  	| Super Space Invaders '91 (World, earlier?)		| ssi		| 1990	| Taito Corporat| Taito F2	| 					|
 | ssi		|  	| Super Space Invaders '91 (World, Rev 1)		| 		| 1990	| Taito Corporat| Taito F2	| 					|

@@ -115,11 +115,11 @@ static void MSM5205_playmode(INT32 , INT32 select)
 	// check MSM5205 every 4000000 / 8000 -> 500 cycles
 }
 
-static void MSM5205StreamUpdate(INT32 chip)
+static void MSM5205StreamUpdate(INT32 chip, INT32 end)
 {
 	voice = &chips[chip];
 
-	UINT32 len = voice->stream_sync((nBurnSoundLen * nBurnFPS) / 100);
+	UINT32 len = (end) ? nBurnSoundLen : voice->stream_sync((nBurnSoundLen * nBurnFPS) / 100);
 	if (len > (UINT32)nBurnSoundLen) len = nBurnSoundLen;
 	UINT32 pos = voice->streampos;
 
@@ -179,7 +179,7 @@ static void MSM5205_vclk_callback(INT32 chip)
 	/* update when signal changed */
 	if( voice->signal != new_signal)
 	{
-		MSM5205StreamUpdate(chip);
+		MSM5205StreamUpdate(chip, 0);
 		voice->signal = new_signal;
 	}
 }
@@ -194,7 +194,7 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 	voice = &chips[chip];
 	INT16 *source = stream[chip];
 
-	MSM5205StreamUpdate(chip);
+	MSM5205StreamUpdate(chip, 1);
 
 	voice->streampos = 0;
 	
@@ -458,7 +458,7 @@ void MSM5205Update()
 			MSM5205_vclk_callback(chip);
 		} else {
 			if (stream[chip]) {
-				MSM5205StreamUpdate(chip);
+				MSM5205StreamUpdate(chip, 0);
 			}
 		}
 	}

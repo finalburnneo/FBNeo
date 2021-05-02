@@ -6113,21 +6113,40 @@ struct BurnDriver BurnDrvcv_cotn = {
     272, 228, 4, 3
 };
 
-// Mario Bros. (HB)
+// Mario Brothers Final Edition (Rev D) (HB)
 
 static struct BurnRomInfo cv_marioRomDesc[] = {
-    { "MarioBros (2008) (CollectorVision).rom",	0x20000, 0x2e09af0a, BRF_PRG | BRF_ESS },
+    { "Mario Brothers Final Edition (2009) (Rev D) (CollectorVision).rom",	0x20000, 0x2e09af0a, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_mario, cv_mario, cv_coleco)
 STD_ROM_FN(cv_mario)
 
 struct BurnDriver BurnDrvcv_mario = {
-    "cv_mario", NULL, "cv_coleco", NULL, "2008",
-    "Mario Bros. (HB)\0", "Published by CollectorVision", "Nintendo", "ColecoVision",
+    "cv_mario", NULL, "cv_coleco", NULL, "2009",
+    "Mario Brothers Final Edition (Rev D) (HB)\0", "Published by CollectorVision", "Nintendo", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_marioRomInfo, cv_marioRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Mario Brothers (HB)
+
+static struct BurnRomInfo cv_mariobRomDesc[] = {
+    { "Mario Brothers (2009) (CollectorVision).rom",	0x10000, 0x11777b27, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mariob, cv_mariob, cv_coleco)
+STD_ROM_FN(cv_mariob)
+
+struct BurnDriver BurnDrvcv_mariob = {
+    "cv_mariob", "cv_mario", "cv_coleco", NULL, "2009",
+    "Mario Brothers (HB)\0", "Published by CollectorVision", "Nintendo", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_mariobRomInfo, cv_mariobRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
@@ -6303,10 +6322,10 @@ struct BurnDriver BurnDrvcv_bofhoth = {
     272, 228, 4, 3
 };
 
-// Black Honyx, the (HB)
+// Black Onyx, the (HB)
 
 static struct BurnRomInfo cv_blackonyxRomDesc[] = {
-    { "Black Onyx, the (2013)(Team Pixelboy).rom",	0x8000, 0xbbf5ec4d, BRF_PRG | BRF_ESS },
+    { "Black Onyx, the (2013)(Team Pixelboy).rom",	0x10000, 0xdddd1396, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_blackonyx, cv_blackonyx, cv_coleco)
@@ -6318,7 +6337,7 @@ struct BurnDriver BurnDrvcv_blackonyx = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_RPG | GBF_MAZE, 0,
     CVGetZipName, cv_blackonyxRomInfo, cv_blackonyxRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    DrvInitEEPROM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 
@@ -6774,6 +6793,25 @@ struct BurnDriver BurnDrvcv_spelunker = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_spelunkerRomInfo, cv_spelunkerRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Ghostbusters (HB)
+
+static struct BurnRomInfo cv_ghostbstRomDesc[] = {
+    { "Ghostbusters (2018)(Team Pixelboy).rom",	0x10000, 0xfc935cdd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_ghostbst, cv_ghostbst, cv_coleco)
+STD_ROM_FN(cv_ghostbst)
+
+struct BurnDriver BurnDrvcv_ghostbst = {
+    "cv_ghostbst", NULL, "cv_coleco", NULL, "2018",
+    "Ghostbusters (HB)\0", "Published by Team Pixelboy", "Activision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_ghostbstRomInfo, cv_ghostbstRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

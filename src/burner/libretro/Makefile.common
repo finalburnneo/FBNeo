@@ -172,7 +172,6 @@ ifeq ($(LIGHT), 1)
 		$(MIDWAY_DIR)/williams_adpcm.cpp \
 		$(MIDWAY_DIR)/williams_cvsd.cpp \
 		$(MIDWAY_DIR)/yawdim_sound.cpp \
-		$(NES_DIR)/d_nes.cpp \
 		$(PGM_DIR)/d_pgm.cpp \
 		$(PGM_DIR)/pgm_asic25.cpp \
 		$(PGM_DIR)/pgm_asic27a_type1.cpp \

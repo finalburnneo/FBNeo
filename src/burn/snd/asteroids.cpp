@@ -23,6 +23,7 @@
 #include <math.h>
 #include "burnint.h"
 #include "asteroids.h"
+#include "biquad.h"
 
 #define VMAX    32767
 #define VMIN	0
@@ -87,8 +88,12 @@ struct asteroid_sound {
 };
 
 static asteroid_sound asound;
+static BIQ biquad_thrust;
+static BIQ biquad_thump;
+static BIQ biquad_saucer;
+static BIQ biquad_explosion;
 
-INLINE INT32 explosion(INT32 samplerate)
+INLINE INT32 explosion_INT(INT32 samplerate)
 {
 	//static INT32 counter, sample_counter;
 	//static INT32 out;
@@ -121,18 +126,29 @@ INLINE INT32 explosion(INT32 samplerate)
     return 0;
 }
 
-INLINE INT32 thrust(INT32 samplerate)
+INLINE INT32 explosion(INT32 samplerate)
+{
+	return biquad_explosion.filter(explosion_INT(samplerate) * 3);
+}
+
+INLINE INT32 thrust_INT(INT32 samplerate)
 {
 	//static INT32 counter, out, amp;
 
     if( sound_latch[THRUSTEN] )
 	{
+		asound.thrust_out = 1;
+
 		/* SHPSND filter */
-		asound.thrust_counter -= 110;
+		asound.thrust_counter -= (110);
 		while( asound.thrust_counter <= 0 )
 		{
+			if( ((polynome & 0x4000) == 0) == ((polynome & 0x0040) == 0) )
+				polynome = (polynome << 1) | 1;
+			else
+				polynome <<= 1;
 			asound.thrust_counter += samplerate;
-			asound.thrust_out = polynome & 1;
+//			asound.thrust_out = polynome & 1;
 		}
 		if( asound.thrust_out )
 		{
@@ -144,16 +160,23 @@ INLINE INT32 thrust(INT32 samplerate)
 			if( asound.thrust_amp > VMIN )
 				asound.thrust_amp -= asound.thrust_amp * 32768 / 32 / samplerate + 1;
 		}
-		return asound.thrust_amp;
+		return asound.thrust_amp * (polynome & 1);
 	} else {
+		asound.thrust_out = 0;
+
 		// decay thrust amp for no clicks -dink
 		asound.thrust_amp *= (double)0.997;
-		return asound.thrust_amp;
+		return asound.thrust_amp * (polynome & 1);
 	}
 	return 0;
 }
 
-INLINE INT32 thump(INT32 samplerate)
+INLINE INT32 thrust(INT32 samplerate)
+{
+	return biquad_thrust.filter(thrust_INT(samplerate) * 3.0);
+}
+
+INLINE INT32 thump_INT(INT32 samplerate)
 {
 	//static INT32 counter, out;
 
@@ -171,8 +194,12 @@ INLINE INT32 thump(INT32 samplerate)
 	return 0;
 }
 
+INLINE INT32 thump(INT32 samplerate)
+{
+	return biquad_thump.filter(thump_INT(samplerate) * 1.0);
+}
 
-INLINE INT32 saucer(INT32 samplerate)
+INLINE INT32 saucer_INT(INT32 samplerate)
 {
 	//static INT32 vco, vco_charge, vco_counter;  asound.saucer_
     //static INT32 out, counter;
@@ -239,6 +266,11 @@ INLINE INT32 saucer(INT32 samplerate)
 			return VMAX;
 	}
 	return 0;
+}
+
+INLINE INT32 saucer(INT32 samplerate)
+{
+	return biquad_saucer.filter(saucer_INT(samplerate) * 1.0);
 }
 
 INLINE INT32 saucerfire(INT32 samplerate)
@@ -343,28 +375,29 @@ INLINE INT32 shipfire(INT32 samplerate)
 			 */
 			if( asound.shipfire_out )
 			{
-				#define C48_DISCHARGE_TIME (VMAX * 3)
+				#define C48_DISCHARGE_TIME (VMAX * 5)
 				asound.shipfire_amp_counter -= C48_DISCHARGE_TIME;
 				while( asound.shipfire_amp_counter <= 0 )
 				{
 					asound.shipfire_amp_counter += samplerate;
+					//bprintf(0, _T("amp: %d\n"), asound.shipfire_amp);
 					if( --asound.shipfire_amp == VMIN )
 						break;
 				}
 			}
 		}
 
-		if( asound.shipfire_out )
+		if( !asound.shipfire_out )
 		{
 			/* C50 = 1u, Ra = 3.3k, Rb = 680
 			 * discharge = 0.693 * 680 * 1e-6 = 4.7124e-4 -> 2122 Hz
 			 */
-			asound.shipfire_counter -= 2122;
+			asound.shipfire_counter -= (820.0-110.0)/0.28;
 			if( asound.shipfire_counter <= 0 )
 			{
 				INT32 n = -asound.shipfire_counter / samplerate + 1;
 				asound.shipfire_counter += n * samplerate;
-				asound.shipfire_out = 0;
+				asound.shipfire_out = 1;
 			}
 		}
 		else
@@ -372,12 +405,12 @@ INLINE INT32 shipfire(INT32 samplerate)
 			/* C50 = 1u, Ra = R65 (3.3k), Rb = R61 (680)
 			 * charge = 0.693 * (3300+680) * 1e-6) = 2.75814e-3 -> 363Hz
 			 */
-			asound.shipfire_counter -= 363 * 2 * (VMAX*12/5-asound.shipfire_vco) / 32768;
+			asound.shipfire_counter -= 820 * 1 * (VMAX*12/5-asound.shipfire_vco) / 32768;
 			if( asound.shipfire_counter <= 0 )
 			{
 				INT32 n = -asound.shipfire_counter / samplerate + 1;
 				asound.shipfire_counter += n * samplerate;
-				asound.shipfire_out = 1;
+				asound.shipfire_out = 0;
 			}
 		}
 		if( asound.shipfire_out )
@@ -418,15 +451,16 @@ void asteroid_sound_update(INT16 *buffer, INT32 length)
 	{
 		INT32 sum = 0;
 
-		sum += explosion(samplerate) / 7;
-		sum += thrust(samplerate) / 7;
-		sum += thump(samplerate) / 7;
-		sum += saucer(samplerate) / 7;
-		sum += saucerfire(samplerate) / 7;
-		sum += shipfire(samplerate) / 7;
-		sum += life(samplerate) / 7;
+		sum += explosion(samplerate) / 8;
+		sum += thrust(samplerate) / 8;
+		sum += thump(samplerate) / 8;
+		sum += saucer(samplerate) / 8;
+		sum += saucerfire(samplerate) / 8;
+		sum += shipfire(samplerate) / 8;
+		sum += life(samplerate) / 8;
+		sum = BURN_SND_CLIP(sum * 0.55);
 
-        *buffer++ = sum;
+		*buffer++ = sum;
         *buffer++ = sum;
 	}
 }
@@ -479,7 +513,12 @@ void asteroid_sound_init()
 	/* initialize explosion volume lookup table */
 	explosion_init();
 
-    return;
+	biquad_thrust.init(FILT_LOWPASS, nBurnSoundRate, 100.00, 2.317, 0);
+	biquad_thump.init(FILT_LOWPASS, nBurnSoundRate, 3000.00, 1.00, 0);
+	biquad_saucer.init(FILT_LOWPASS, nBurnSoundRate, 2400.00, 1.00, 0);
+	biquad_explosion.init(FILT_BANDPASS, nBurnSoundRate, 60.00, 0.823, 0);
+
+	return;
 }
 
 void asteroid_sound_exit()
@@ -487,6 +526,11 @@ void asteroid_sound_exit()
 	if( discharge )
 		BurnFree(discharge);
 	discharge = NULL;
+
+	biquad_thrust.exit();
+	biquad_thump.exit();
+	biquad_saucer.exit();
+	biquad_explosion.exit();
 }
 
 void asteroid_sound_reset()
@@ -498,6 +542,11 @@ void asteroid_sound_reset()
 	thump_frequency = 0;
 
 	memset(&asound, 0, sizeof(asound));
+
+	biquad_thrust.reset();
+	biquad_thump.reset();
+	biquad_saucer.reset();
+	biquad_explosion.reset();
 }
 
 void asteroid_explode_w(UINT8 data)
@@ -538,7 +587,8 @@ void asteroid_thump_w(UINT8 data)
 	 * C = 0.22u, Ra = 22k...???, Rb = 18k
 	 * frequency = 1.44 / ((22k + 2*18k) * 0.22n) = 56Hz .. huh?
 	 */
-	thump_frequency = 56 + 56 * r0 / (r0 + r1);
+	// 0x23, magic number pulled out of a cloud
+	thump_frequency = (56+0x23) + (56+0x23) * r0 / (r0 + r1);
 }
 
 
@@ -560,8 +610,9 @@ void astdelux_sound_update(INT16 *buffer, INT32 length)
 	{
 		INT32 sum = 0;
 
-		sum += explosion(samplerate) / 7;
-		sum += thrust(samplerate) / 7;
+		sum += explosion(samplerate) / 8;
+		sum += thrust(samplerate) / 8;
+		sum = BURN_SND_CLIP(sum * 0.55);
 
 		*buffer++ = sum;
 		*buffer++ = sum;

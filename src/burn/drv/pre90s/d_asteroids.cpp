@@ -930,7 +930,7 @@ static INT32 AstdeluxInit()
 
 	earom_init();
 
-	PokeyInit(12096000/8, 1, 1.40, 1);
+	PokeyInit(12096000/8, 1, 0.65, 1);
 	PokeySetTotalCyclesCB(M6502TotalCycles);
 	PokeyAllPotCallback(0, allpot_read);
 
@@ -1151,6 +1151,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(avgOK);
 		SCAN_VAR(bankdata);
+		SCAN_VAR(nThrust);
 
 		if (astdelux)
 			pokey_scan(nAction, pnMin);
@@ -1163,10 +1164,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6502Open(0);
 		bankswitch(bankdata);
 		M6502Close();
-
-		if (avgOK) {
-			avgdvg_go();
-		}
 	}
 
 	return 0;

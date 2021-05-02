@@ -2545,10 +2545,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_CONTENTS: {
 			if (!nVidFullscreen) {
-				FILE* fp = _tfopen(_T("fba.chm"), _T("r"));
+				FILE* fp = _tfopen(_T("fbneo.chm"), _T("r"));
 				if (fp) {
 					fclose(fp);
-					ShellExecute(NULL, _T("open"), _T("fba.chm"), NULL, NULL, SW_SHOWNORMAL);
+					ShellExecute(NULL, _T("open"), _T("fbneo.chm"), NULL, NULL, SW_SHOWNORMAL);
 				}
 			}
 			break;

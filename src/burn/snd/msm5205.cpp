@@ -44,6 +44,12 @@ struct _MSM5205_state
 	double left_volume;
 	double right_volume;
 
+	INT32 dcblock;
+	INT16 lastin_r;
+	INT16 lastout_r;
+	INT16 lastin_l;
+	INT16 lastout_l;
+
 	INT32 clock;		  /* clock rate */
 
 	void (*vclk_callback)();  /* VCLK callback              */
@@ -184,6 +190,33 @@ static void MSM5205_vclk_callback(INT32 chip)
 	}
 }
 
+void MSM5205DCBlock(INT32 chip, INT32 enable)
+{
+	voice = &chips[chip];
+
+    voice->dcblock = enable;
+}
+
+static inline INT16 dc_blockR(INT16 sam)
+{
+    if (!voice->dcblock) return sam;
+    INT16 outr = sam - voice->lastin_r + 0.998 * voice->lastout_r;
+    voice->lastin_r = sam;
+    voice->lastout_r = outr;
+
+    return outr;
+}
+
+static inline INT16 dc_blockL(INT16 sam)
+{
+    if (!voice->dcblock) return sam;
+    INT16 outl = sam - voice->lastin_l + 0.998 * voice->lastout_l;
+    voice->lastin_l = sam;
+    voice->lastout_l = outl;
+
+    return outl;
+}
+
 void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 {
 #if defined FBNEO_DEBUG
@@ -217,6 +250,9 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
+
+		nLeftSample = dc_blockL(nLeftSample);
+		nRightSample = dc_blockR(nRightSample);
 
 		if (voice->bAdd) {
 			buffer[0] = BURN_SND_CLIP(buffer[0] + nLeftSample);
@@ -508,9 +544,15 @@ void MSM5205Scan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(voice->signal);
 			SCAN_VAR(voice->step);
 			SCAN_VAR(voice->volume);
+			SCAN_VAR(voice->left_volume);
+			SCAN_VAR(voice->right_volume);
 			SCAN_VAR(voice->clock);
 			SCAN_VAR(voice->select);
 			SCAN_VAR(voice->streampos);
+			SCAN_VAR(voice->lastin_r);
+			SCAN_VAR(voice->lastout_r);
+			SCAN_VAR(voice->lastin_l);
+			SCAN_VAR(voice->lastout_l);
 		}
 	}
 }

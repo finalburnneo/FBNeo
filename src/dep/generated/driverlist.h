@@ -17048,6 +17048,7 @@ DRV		BurnDrvMSX_zombieinc;
 DRV		BurnDrvnes_zombienation;
 DRV		BurnDrvcv_zombnear;
 DRV		BurnDrvMSX_zombienear;
+DRV		BurnDrvcv_zombnearb;
 DRV		BurnDrvZombraidpj;
 DRV		BurnDrvZombraid;
 DRV		BurnDrvZombraidp;
@@ -34141,6 +34142,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_zombienation,	// Zombie Nation (USA)
 	&BurnDrvcv_zombnear,		// Zombie Near (HB)
 	&BurnDrvMSX_zombienear,		// Zombie Near (HB)
+	&BurnDrvcv_zombnearb,		// Zombie Near (older) (HB)
 	&BurnDrvZombraidpj,			// Zombie Raid (9/28/95, Japan, prototype PCB)
 	&BurnDrvZombraid,			// Zombie Raid (9/28/95, US)
 	&BurnDrvZombraidp,			// Zombie Raid (9/28/95, US, prototype PCB)

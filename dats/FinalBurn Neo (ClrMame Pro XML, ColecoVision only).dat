@@ -4163,6 +4163,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="zombnearb" cloneof="zombnear" romof="zombnear">
+		<description>Zombie Near (older) (HB) [Homebrew]</description>
+		<year>2011</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Zombie Near (2011)(CollectorVision).col" size="131072" crc="c89d281d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game isbios="yes" name="coleco">
 		<description>ColecoVision System BIOS [BIOS only]</description>
 		<year>1982</year>

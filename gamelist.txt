@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16840 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16841 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -16802,6 +16802,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_zombienation|  	| Zombie Nation (USA)					| 		| 1991	| Meldac	| Miscellaneous	| 					|
 | cv_zombnear	|  	| Zombie Near (HB)					| 		| 2012	| CollectorVisio| ColecoVision	| 					|
 | msx_zombienear11|  	| Zombie Near (HB)					| 		| 2011	| Oscar Toledo G| MSX		| 					|
+| cv_zombnearb	|  	| Zombie Near (older) (HB)				| cv_zombnear	| 2011	| CollectorVisio| ColecoVision	| 					|
 | zombraidpj	|  	| Zombie Raid (9/28/95, Japan, prototype PCB)		| zombraid	| 1995	| Sammy Industri| Seta		| 					|
 | zombraid	|  	| Zombie Raid (9/28/95, US)				| 		| 1995	| American Sammy| Seta		| 					|
 | zombraidp	|  	| Zombie Raid (9/28/95, US, prototype PCB)		| zombraid	| 1995	| American Sammy| Seta		| 					|

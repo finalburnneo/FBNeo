@@ -7465,7 +7465,7 @@ struct BurnDriver BurnDrvcv_tankchal = {
 // Zombie Near (HB)
 
 static struct BurnRomInfo cv_zombnearRomDesc[] = {
-    { "Zombie Near (2012)(CollectorVision).col",	32768, 0xc36c017e, BRF_PRG | BRF_ESS },
+    { "Zombie Near (2012)(CollectorVision).col",	0x8000, 0xc36c017e, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_zombnear, cv_zombnear, cv_coleco)
@@ -7477,6 +7477,27 @@ struct BurnDriver BurnDrvcv_zombnear = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_RUNGUN, 0,
     CVGetZipName, cv_zombnearRomInfo, cv_zombnearRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Zombie Near (older) (HB)
+// see year and http://www.colecovision.dk/oscar-toledo.htm
+// different title screen, different palette, character is faster ?
+
+static struct BurnRomInfo cv_zombnearbRomDesc[] = {
+    { "Zombie Near (2011)(CollectorVision).col",	0x20000, 0xc89d281d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_zombnearb, cv_zombnearb, cv_coleco)
+STD_ROM_FN(cv_zombnearb)
+
+struct BurnDriver BurnDrvcv_zombnearb = {
+    "cv_zombnearb", "cv_zombnear", "cv_coleco", NULL, "2011",
+    "Zombie Near (older) (HB)\0", NULL, "CollectorVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_RUNGUN, 0,
+    CVGetZipName, cv_zombnearbRomInfo, cv_zombnearbRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

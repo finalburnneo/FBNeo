@@ -10843,6 +10843,7 @@ DRV		BurnDrvpce_puzzlboy;
 DRV		BurnDrvfds_puzzleboysj;
 DRV		BurnDrvfds_puzzleboys;
 DRV		BurnDrvPzlbreak;
+DRV		BurnDrvPzlbreaka;
 DRV		BurnDrvPuzlclub;
 DRV		BurnDrvPclubys;
 DRV		BurnDrvPclubysa;
@@ -12950,8 +12951,8 @@ DRV		BurnSpecSpikeintransylvania;
 DRV		BurnDrvspinmast;
 DRV		BurnDrvpce_spinpair;
 DRV		BurnDrvSpinlbrj;
-DRV		BurnDrvSpinlbrjp;
 DRV		BurnDrvSpinlbru;
+DRV		BurnDrvSpinlbrup;
 DRV		BurnDrvSpinlbrk;
 DRV		BurnSpecspindizzy;
 DRV		BurnDrvpce_spirwave;
@@ -27934,7 +27935,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_puzzlboy,		// Puzzle Boy
 	&BurnDrvfds_puzzleboysj,	// Puzzle Boys (Japan)
 	&BurnDrvfds_puzzleboys,		// Puzzle Boys (T-Eng)
-	&BurnDrvPzlbreak,			// Puzzle Break
+	&BurnDrvPzlbreak,			// Puzzle Break (set 1)
+	&BurnDrvPzlbreaka,			// Puzzle Break (set 2)
 	&BurnDrvPuzlclub,			// Puzzle Club (Japan prototype)
 	&BurnDrvPclubys,			// Puzzle Club (Yun Sung, set 1)
 	&BurnDrvPclubysa,			// Puzzle Club (Yun Sung, set 2)
@@ -30042,8 +30044,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvspinmast,			// Spin Master / Miracle Adventure
 	&BurnDrvpce_spinpair,		// Spin Pair
 	&BurnDrvSpinlbrj,			// Spinal Breakers (Japan)
-	&BurnDrvSpinlbrjp,			// Spinal Breakers (Japan, prototype 11/14 15:00)
 	&BurnDrvSpinlbru,			// Spinal Breakers (US)
+	&BurnDrvSpinlbrup,			// Spinal Breakers (US, prototype)
 	&BurnDrvSpinlbrk,			// Spinal Breakers (World)
 	&BurnSpecspindizzy,			// Spindizzy (48K)
 	&BurnDrvpce_spirwave,		// Spiral Wave

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16839 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16840 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -10694,7 +10694,8 @@ This list contains all games supported by FinalBurn Neo.
 | pce_puzzlboy	|  	| Puzzle Boy						| 		| 1991	| Nihon Telenet	| PC Engine	| 					|
 | fds_puzzleboysj|  	| Puzzle Boys (Japan)					| fds_puzzleboys| 1989?	| Nintendo	| Miscellaneous	| 					|
 | fds_puzzleboys|  	| Puzzle Boys (T-Eng)					| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
-| pzlbreak	|  	| Puzzle Break						| 		| 1997	| SemiCom	| Kaneko Pandora| 					|
+| pzlbreak	|  	| Puzzle Break (set 1)					| 		| 1997	| SemiCom / Tira| Kaneko Pandora| 					|
+| pzlbreaka	|  	| Puzzle Break (set 2)					| pzlbreak	| 1997	| SemiCom / Tira| Kaneko Pandora| 					|
 | puzlclub	|  	| Puzzle Club (Japan prototype)				| 		| 1990	| Namco		| System 1	| 					|
 | pclubys	|  	| Puzzle Club (Yun Sung, set 1)				| 		| 2000	| Yun Sung	| Miscellaneous	| 					|
 | pclubysa	|  	| Puzzle Club (Yun Sung, set 2)				| pclubys	| 2000	| Yun Sung	| Miscellaneous	| 					|
@@ -12772,8 +12773,8 @@ This list contains all games supported by FinalBurn Neo.
 | spinmast	|  	| Spin Master / Miracle Adventure			| 		| 1993	| Data East Corp| Neo Geo MVS	| 					|
 | pce_spinpair	|  	| Spin Pair						| 		| 1990	| Media Rings Co| PC Engine	| 					|
 | spinlbrkj	|  	| Spinal Breakers (Japan)				| spinlbrk	| 1990	| V-System Co.	| V-System	| 					|
-| spinlbrkjp	|  	| Spinal Breakers (Japan, prototype 11/14 15:00)	| spinlbrk	| 1990	| V-System Co.	| V-System	| 					|
 | spinlbrku	|  	| Spinal Breakers (US)					| spinlbrk	| 1990	| V-System Co.	| V-System	| 					|
+| spinlbrkup	|  	| Spinal Breakers (US, prototype)			| spinlbrk	| 1990	| V-System Co.	| V-System	| 					|
 | spinlbrk	|  	| Spinal Breakers (World)				| 		| 1990	| V-System Co.	| V-System	| 					|
 | spec_spindizzy|  	| Spindizzy (48K)					| 		| 1986	| Electric Dream| ZX Spectrum	| 					|
 | pce_spirwave	|  	| Spiral Wave						| 		| 1991	| Media Rings Co| PC Engine	| 					|

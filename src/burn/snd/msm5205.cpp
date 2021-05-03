@@ -21,6 +21,7 @@
 #include "burnint.h"
 #include "msm5205.h"
 #include "math.h"
+#include "biquad.h"
 
 #define MAX_MSM5205	2
 
@@ -44,6 +45,7 @@ struct _MSM5205_state
 	double left_volume;
 	double right_volume;
 
+	INT32 lpfilter;
 	INT32 dcblock;
 	INT16 lastin_r;
 	INT16 lastout_r;
@@ -70,6 +72,8 @@ static void MSM5205_playmode(INT32 chip, INT32 select);
 static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 
 static UINT8 *scanline_table = NULL;
+
+static BIQ biquad;
 
 static void ComputeTables(INT32 chip)
 {
@@ -190,6 +194,13 @@ static void MSM5205_vclk_callback(INT32 chip)
 	}
 }
 
+void MSM5205LPFilter(INT32 chip, INT32 enable)
+{
+	voice = &chips[chip];
+
+    voice->lpfilter = enable;
+}
+
 void MSM5205DCBlock(INT32 chip, INT32 enable)
 {
 	voice = &chips[chip];
@@ -233,16 +244,17 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 	
 	for (INT32 i = 0; i < len; i++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
-		
+		INT32 source_sample = (voice->lpfilter) ? biquad.filter(source[i]) : source[i];
+
 		if (voice->use_seperate_vols) {
-			nLeftSample += (INT32)(source[i] * voice->left_volume);
-			nRightSample += (INT32)(source[i] * voice->right_volume);
+			nLeftSample += (INT32)(source_sample * voice->left_volume);
+			nRightSample += (INT32)(source_sample * voice->right_volume);
 		} else {
 			if ((voice->output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += source[i];
+				nLeftSample += source_sample;
 			}
 			if ((voice->output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += source[i];
+				nRightSample += source_sample;
 			}
 		}
 
@@ -285,6 +297,8 @@ void MSM5205Reset()
 
 		MSM5205_playmode(chip,voice->select);
 		voice->streampos = 0;
+
+		if (chip == 0) biquad.reset();
 	}
 }
 
@@ -318,6 +332,8 @@ void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vc
 	ComputeTables (chip);
 	
 	nNumChips = chip;
+
+	biquad.init(FILT_LOWPASS, nBurnSoundRate, 2000.00, 0.929, 0);
 }
 
 void MSM5205SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
@@ -382,6 +398,8 @@ void MSM5205Exit()
 		memset (voice, 0, sizeof(_MSM5205_state));
 
 		BurnFree (stream[chip]);
+
+		if (chip == 0) biquad.exit();
 	}
 
 	BurnFree(scanline_table);

@@ -766,6 +766,7 @@ static INT32 RygarInit()
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	MSM5205DCBlock(0, 1);
+	MSM5205LPFilter(0, 1);
 
 	GenericTilesInit();
 

@@ -962,6 +962,26 @@ static struct BurnRomInfo PzlbreakRomDesc[] = {
 STD_ROM_PICK(Pzlbreak)
 STD_ROM_FN(Pzlbreak)
 
+static struct BurnRomInfo PzlbreakaRomDesc[] = {
+	{ "uh12",          0x20000, 0xc8a82ca8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12",          0x20000, 0x2f66c4ce, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "ua4",           0x80000, 0xd211705a, BRF_GRA },			 //  2	Sprites
+	{ "ua5",           0x80000, 0xeb3044bc, BRF_GRA },			 //  3
+
+	{ "u1",            0x10000, 0x1ad646b7, BRF_SND },			 //  4	Z80 Program Code
+
+	{ "uj15",          0x20000, 0x5cdffcc5, BRF_SND },			 //  5	Samples
+
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
+
+	{ "protdata.bin",  0x00200, 0x092cb794, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Pzlbreaka)
+STD_ROM_FN(Pzlbreaka)
+
 static struct BurnRomInfo Fourin1bootRomDesc[] = {
 	{ "u52",           0x80000, 0x71815878, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "u74",           0x80000, 0xe22d3fa2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -4185,10 +4205,20 @@ struct BurnDriver BurnDrvTwinklea = {
 
 struct BurnDriver BurnDrvPzlbreak = {
 	"pzlbreak", NULL, NULL, NULL, "1997",
-	"Puzzle Break\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Puzzle Break (set 1)\0", NULL, "SemiCom / Tirano", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, PzlbreakRomInfo, PzlbreakRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
+	PzlbreakInit, HyperpacExit, PzlbreakFrame, PzlbreakRender, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPzlbreaka = {
+	"pzlbreaka", "pzlbreak", NULL, NULL, "1997",
+	"Puzzle Break (set 2)\0", NULL, "SemiCom / Tirano", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, PzlbreakaRomInfo, PzlbreakaRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
 	PzlbreakInit, HyperpacExit, PzlbreakFrame, PzlbreakRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

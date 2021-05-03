@@ -548,7 +548,7 @@ static void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 		case 0xc800:
 		case 0xe000:
 			if (DrvHasADPCM) {
-				MSM5205SetRoute(0, (double)(data & 0x0f) / 31, BURN_SND_ROUTE_BOTH);
+				MSM5205SetRoute(0, (double)(data & 0x0f) / 0x2f, BURN_SND_ROUTE_BOTH);
 			}
 		return;
 
@@ -764,7 +764,8 @@ static INT32 RygarInit()
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+	MSM5205DCBlock(0, 1);
 
 	GenericTilesInit();
 

@@ -7128,16 +7128,16 @@ DRV		BurnSpeckikstrt2;
 DRV		BurnDrvMSX_killmice;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvKinstp47;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst13;			// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst14;			// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst15ai;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst;			// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst210;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst211;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst213;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst214ai;		// Works best in 64-bit build [NOT WORKING]
+DRV		BurnDrvKinst2;			// Works best in 64-bit build [NOT WORKING]
 #endif
-DRV		BurnDrvKinst13;
-DRV		BurnDrvKinst14;
-DRV		BurnDrvKinst15ai;
-DRV		BurnDrvKinst;
-DRV		BurnDrvKinst210;
-DRV		BurnDrvKinst211;
-DRV		BurnDrvKinst213;
-DRV		BurnDrvKinst214ai;
-DRV		BurnDrvKinst2;
 DRV		BurnDrvgg_kineticc;
 DRV		BurnSpecKinetik;
 DRV		BurnDrvcv_kingball;
@@ -24222,7 +24222,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_killmice,		// Kill Mice (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvKinstp47,			// Killer Instinct (ROM proto ver. 4.7) [Works best in 64-bit build, NOT WORKING]
-#endif
 	&BurnDrvKinst13,			// Killer Instinct (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
 	&BurnDrvKinst14,			// Killer Instinct (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
 	&BurnDrvKinst15ai,			// Killer Instinct (ROM ver. 1.5 AnyIDE) [Works best in 64-bit build, NOT WORKING]
@@ -24232,6 +24231,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKinst213,			// Killer Instinct II (ROM ver. 1.3) [Works best in 64-bit build, NOT WORKING]
 	&BurnDrvKinst214ai,			// Killer Instinct II (ROM ver. 1.4 AnyIDE) [Works best in 64-bit build, NOT WORKING]
 	&BurnDrvKinst2,				// Killer Instinct II (ROM ver. 1.4) [Works best in 64-bit build, NOT WORKING]
+#endif
 	&BurnDrvgg_kineticc,		// Kinetic Connection (Jpn)
 	&BurnSpecKinetik,			// Kinetik (48K)
 	&BurnDrvcv_kingball,		// King & Balloon (HB)

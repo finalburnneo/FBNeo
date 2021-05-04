@@ -7027,15 +7027,15 @@ This list contains all games supported by FinalBurn Neo.
 | spec_kikstrt2	|  	| Kikstart 2 (48K)					| 		| 1988	| Mastertronic	| ZX Spectrum	| 					|
 | msx_killmice	|  	| Kill Mice (HB)					| 		| 2011	| Gamecast Enter| MSX		| 					|
 | kinstp47	| D NW	| Killer Instinct (ROM proto ver. 4.7)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst13	|   NW	| Killer Instinct (ROM ver. 1.3)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst14	|   NW	| Killer Instinct (ROM ver. 1.4)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst15ai	|   NW	| Killer Instinct (ROM ver. 1.5 AnyIDE)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst		|   NW	| Killer Instinct (ROM ver. 1.5d)			| 		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst210	|   NW	| Killer Instinct II (ROM ver. 1.0)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst211	|   NW	| Killer Instinct II (ROM ver. 1.1)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst213	|   NW	| Killer Instinct II (ROM ver. 1.3)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst214ai	|   NW	| Killer Instinct II (ROM ver. 1.4 AnyIDE)		| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
-| kinst2	|   NW	| Killer Instinct II (ROM ver. 1.4)			| 		| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst13	| D NW	| Killer Instinct (ROM ver. 1.3)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst14	| D NW	| Killer Instinct (ROM ver. 1.4)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst15ai	| D NW	| Killer Instinct (ROM ver. 1.5 AnyIDE)			| kinst		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst		| D NW	| Killer Instinct (ROM ver. 1.5d)			| 		| 1994	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst210	| D NW	| Killer Instinct II (ROM ver. 1.0)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst211	| D NW	| Killer Instinct II (ROM ver. 1.1)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst213	| D NW	| Killer Instinct II (ROM ver. 1.3)			| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst214ai	| D NW	| Killer Instinct II (ROM ver. 1.4 AnyIDE)		| kinst2	| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
+| kinst2	| D NW	| Killer Instinct II (ROM ver. 1.4)			| 		| 1995	| Rare/Nintendo	| MIDWAY	| Works best in 64-bit build		|
 | gg_kineticc	|  	| Kinetic Connection (Jpn)				| 		| 1991	| Sega		| Sega Game Gear| 					|
 | spec_kinetik	|  	| Kinetik (48K)						| 		| 1987	| Firebird	| ZX Spectrum	| 					|
 | cv_kingball	|  	| King & Balloon (HB)					| 		| 2018	| Namco		| ColecoVision	| SGM - Published by Team Pixelboy	|

@@ -53,7 +53,7 @@ static INT32 thump_frequency;
 
 static INT16 *discharge;        // look up table
 static INT16 vol_explosion[16]; // look up table
-#define EXP(charge,n) (charge ? 0x7fff - discharge[0x7fff-((n)&0x7fff)] : discharge[(n)&0x7fff])
+#define EXP(charge,n) (charge ? 0x7fff - discharge[0x7fff-n] : discharge[n])
 
 #ifdef INLINE
 #undef INLINE
@@ -72,7 +72,6 @@ struct asteroid_sound {
 
 	INT32 thump_counter;
 	INT32 thump_out;
-	INT32 thump_amp;
 
 	INT32 saucer_vco, saucer_vco_charge, saucer_vco_counter;
     INT32 saucer_out, saucer_counter;
@@ -189,14 +188,8 @@ INLINE INT32 thump_INT(INT32 samplerate)
 			asound.thump_counter += samplerate;
 			asound.thump_out ^= 1;
 		}
-		if( asound.thump_out ) {
-			asound.thump_amp = VMAX;
-			return asound.thump_amp;
-		}
-	} else {
-		// decay thrust amp for no clicks -dink
-		asound.thump_amp *= (double)0.997;
-		return asound.thump_amp;
+		if( asound.thump_out )
+			return VMAX;
 	}
 	return 0;
 }
@@ -211,7 +204,6 @@ INLINE INT32 saucer_INT(INT32 samplerate)
 	//static INT32 vco, vco_charge, vco_counter;  asound.saucer_
     //static INT32 out, counter;
 	double v5;
-		extern int counter;
 
     /* saucer sound enabled ? */
 	if( sound_latch[SAUCEREN] )
@@ -224,16 +216,16 @@ INLINE INT32 saucer_INT(INT32 samplerate)
 		if( asound.saucer_vco_charge )
 		{
 			if( sound_latch[SAUCERSEL] )
-				asound.saucer_vco_counter -= NE555_T1(5600,10000,10e-6) / 2;
+				asound.saucer_vco_counter -= NE555_T1(5600,10000,10e-6);
 			else
-				asound.saucer_vco_counter -= NE555_T1(5600,6000,10e-6) / 2;
+				asound.saucer_vco_counter -= NE555_T1(5600,6000,10e-6);
 			if( asound.saucer_vco_counter <= 0 )
 			{
 				INT32 steps = (-asound.saucer_vco_counter / samplerate) + 1;
 				asound.saucer_vco_counter += steps * samplerate;
-				if( (asound.saucer_vco += steps) >= VMAX*3/3 )
+				if( (asound.saucer_vco += steps) >= VMAX*2/3 )
 				{
-					asound.saucer_vco = VMAX*3/3;
+					asound.saucer_vco = VMAX*2/3;
 					asound.saucer_vco_charge = 0;
 				}
 			}
@@ -241,16 +233,16 @@ INLINE INT32 saucer_INT(INT32 samplerate)
 		else
 		{
 			if( sound_latch[SAUCERSEL] )
-				asound.saucer_vco_counter -= NE555_T2(5600,10000,10e-6) / 2;
+				asound.saucer_vco_counter -= NE555_T2(5600,10000,10e-6);
 			else
-				asound.saucer_vco_counter -= NE555_T2(5600,6000,10e-6) / 2;
+				asound.saucer_vco_counter -= NE555_T2(5600,6000,10e-6);
 			if( asound.saucer_vco_counter <= 0 )
 			{
 				INT32 steps = (-asound.saucer_vco_counter / samplerate) + 1;
 				asound.saucer_vco_counter += steps * samplerate;
-				if ( (asound.saucer_vco -= steps) <= VMAX*2/3)
+				if( (asound.saucer_vco -= steps) <= VMAX*1/3 )
 				{
-				    asound.saucer_vco = VMAX*2/3;
+					asound.saucer_vco = VMIN*1/3;
 					asound.saucer_vco_charge = 1;
 				}
 			}
@@ -260,13 +252,10 @@ INLINE INT32 saucer_INT(INT32 samplerate)
 		 * Co = 0.047u, Ro = 10k
 		 * to = 2.4 * (Vcc - V5) / (Ro * Co * Vcc)
 		 */
-
-		INT32 happy_vco = (asound.saucer_vco_charge) ? (asound.saucer_vco + (32768 - VMAX*2/3)) : asound.saucer_vco;
-
 		if( sound_latch[SAUCERSEL] )
-			v5 = 12.0 - 1.66 - 5.0 * EXP(asound.saucer_vco_charge,happy_vco) / 32768;
+			v5 = 12.0 - 1.66 - 5.0 * EXP(asound.saucer_vco_charge,asound.saucer_vco) / 32768;
 		else
-			v5 = 11.3 - 1.66 - 5.0 * EXP(asound.saucer_vco_charge,happy_vco) / 32768;
+			v5 = 11.3 - 1.66 - 5.0 * EXP(asound.saucer_vco_charge,asound.saucer_vco) / 32768;
 		asound.saucer_counter -= floor(2.4 * (12.0 - v5) / (10000 * 0.047e-6 * 12.0));
 		while( asound.saucer_counter <= 0 )
 		{
@@ -370,7 +359,7 @@ INLINE INT32 shipfire(INT32 samplerate)
 		if( asound.shipfire_vco < VMAX*12/5 )
 		{
 			/* charge C47 (1u) through R52 (33K) and Q3 from 5V to 12V */
-			#define C47_CHARGE_TIME (VMAX * 8)
+			#define C47_CHARGE_TIME (VMAX * 3)
 			asound.shipfire_vco_counter -= C47_CHARGE_TIME;
 			while( asound.shipfire_vco_counter <= 0 )
 			{
@@ -386,7 +375,7 @@ INLINE INT32 shipfire(INT32 samplerate)
 			 */
 			if( asound.shipfire_out )
 			{
-				#define C48_DISCHARGE_TIME (VMAX * 3)
+				#define C48_DISCHARGE_TIME (VMAX * 5)
 				asound.shipfire_amp_counter -= C48_DISCHARGE_TIME;
 				while( asound.shipfire_amp_counter <= 0 )
 				{
@@ -398,14 +387,12 @@ INLINE INT32 shipfire(INT32 samplerate)
 			}
 		}
 
-		double duty = ((double)(asound.shipfire_amp) / 4500 * 67);// / 32768;
-
 		if( !asound.shipfire_out )
 		{
 			/* C50 = 1u, Ra = 3.3k, Rb = 680
 			 * discharge = 0.693 * 680 * 1e-6 = 4.7124e-4 -> 2122 Hz
 			 */
-			asound.shipfire_counter -= (duty+110+46)/0.28;
+			asound.shipfire_counter -= (820.0-110.0)/0.28;
 			if( asound.shipfire_counter <= 0 )
 			{
 				INT32 n = -asound.shipfire_counter / samplerate + 1;
@@ -418,17 +405,16 @@ INLINE INT32 shipfire(INT32 samplerate)
 			/* C50 = 1u, Ra = R65 (3.3k), Rb = R61 (680)
 			 * charge = 0.693 * (3300+680) * 1e-6) = 2.75814e-3 -> 363Hz
 			 */
-			asound.shipfire_counter -= 2122 * (VMAX*12/5-asound.shipfire_vco) / 32768;
+			asound.shipfire_counter -= 820 * 1 * (VMAX*12/5-asound.shipfire_vco) / 32768;
 			if( asound.shipfire_counter <= 0 )
 			{
-				//bprintf(0, _T("duty %f\n"), duty);
 				INT32 n = -asound.shipfire_counter / samplerate + 1;
-				asound.shipfire_counter += (EXP(1,n)/4) * samplerate;
+				asound.shipfire_counter += n * samplerate;
 				asound.shipfire_out = 0;
 			}
 		}
 		if( asound.shipfire_out )
-			return EXP(0, asound.shipfire_amp);
+			return asound.shipfire_amp;
 	}
 	else
 	{
@@ -468,7 +454,7 @@ void asteroid_sound_update(INT16 *buffer, INT32 length)
 		sum += explosion(samplerate) / 8;
 		sum += thrust(samplerate) / 8;
 		sum += thump(samplerate) / 8;
-		sum += saucer(samplerate) / 12;
+		sum += saucer(samplerate) / 8;
 		sum += saucerfire(samplerate) / 8;
 		sum += shipfire(samplerate) / 8;
 		sum += life(samplerate) / 8;
@@ -529,7 +515,7 @@ void asteroid_sound_init()
 
 	biquad_thrust.init(FILT_LOWPASS, nBurnSoundRate, 100.00, 2.317, 0);
 	biquad_thump.init(FILT_LOWPASS, nBurnSoundRate, 3000.00, 1.00, 0);
-	biquad_saucer.init(FILT_LOWPASS, nBurnSoundRate, 14400.00, 1.00, 0);
+	biquad_saucer.init(FILT_LOWPASS, nBurnSoundRate, 2400.00, 1.00, 0);
 	biquad_explosion.init(FILT_BANDPASS, nBurnSoundRate, 60.00, 0.823, 0);
 
 	return;
@@ -571,20 +557,9 @@ void asteroid_explode_w(UINT8 data)
 	explosion_latch = data;
 }
 
-#define RC_CHARGE_EXP(rc)                       (1.0 - exp(-(1.0/nBurnSoundRate) / (rc)))
-static double CAP_U(double cap) { return cap * 1e-6; }
-
 void asteroid_thump_w(UINT8 data)
 {
-	double r0 = 1.0/47000; // r44 (47k)
-	double r1 = 1.0/1e12;//47000; //1e12; ???
-	double exponent = 0;
-	//r0 += 1.0/6800; // r49 (6.8k bias)
-	//r1 += 1.0/6800; // r49 (6.8k bias)
-
-	if ((thump_latch & 0x10) == 0 && data & 0x10) {
-		asound.thump_counter = 0; // sync start of waveform
-	}
+	double r0 = 1/47000, r1 = 1/1e12;
 
     if( data == thump_latch )
 		return;
@@ -608,20 +583,12 @@ void asteroid_thump_w(UINT8 data)
 	else
 		r0 += 1.0/22000;
 
-	exponent = RC_CHARGE_EXP(r0 * CAP_U(0.01));
-	//r0 += exponent;
-	//r1=0;
-	//r1 += exponent;
 	/* NE555 setup as voltage controlled astable multivibrator
 	 * C = 0.22u, Ra = 22k...???, Rb = 18k
 	 * frequency = 1.44 / ((22k + 2*18k) * 0.22n) = 56Hz .. huh?
 	 */
 	// 0x23, magic number pulled out of a cloud
-	//#define NE555_F(Ra,Rb,C)	(1.44/(((Ra)+2*(Rb))*(C)))
-
-//	xxxxxx	NE555_F();
-	thump_frequency = (56+0x18) + (56+0x18) * r0 / (r0 + r1);
-	//thump_frequency = 80 + 80 * r0 / (r0 + r1);
+	thump_frequency = (56+0x23) + (56+0x23) * r0 / (r0 + r1);
 }
 
 
@@ -643,8 +610,8 @@ void astdelux_sound_update(INT16 *buffer, INT32 length)
 	{
 		INT32 sum = 0;
 
-		sum += explosion(samplerate) / 5;
-		sum += thrust(samplerate) / 7;
+		sum += explosion(samplerate) / 8;
+		sum += thrust(samplerate) / 8;
 		sum = BURN_SND_CLIP(sum * 0.55);
 
 		*buffer++ = sum;

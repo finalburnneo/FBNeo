@@ -17538,6 +17538,23 @@ STD_ROM_FN(nes_atrainj)
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_mnmayhemRomDesc[] = {
+	{ "Mine Mayhem (2021)(Vectrex28).nes",          65552, 0xc6b47cca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mnmayhem)
+STD_ROM_FN(nes_mnmayhem)
+
+struct BurnDriver BurnDrvnes_mnmayhem = {
+	"nes_mnmayhem", NULL, NULL, NULL, "2021",
+	"Mine Mayhem (HB)\0", NULL, "Vectrex28", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_mnmayhemRomInfo, nes_mnmayhemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_luckypenguinRomDesc[] = {
 	{ "Lucky Penguin (2019)(Mega Cat Studios).nes",          65552, 0x2a4c310b, BRF_ESS | BRF_PRG },
 };

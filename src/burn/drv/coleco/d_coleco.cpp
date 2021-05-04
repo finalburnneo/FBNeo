@@ -7501,3 +7501,22 @@ struct BurnDriver BurnDrvcv_zombnearb = {
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Flapee Byrd (HB)
+
+static struct BurnRomInfo cv_flapbrdRomDesc[] = {
+    { "Flapee Byrd (2014)(CollectorVision).col",	0x7FF4, 0x5ac80811, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_flapbrd, cv_flapbrd, cv_coleco)
+STD_ROM_FN(cv_flapbrd)
+
+struct BurnDriver BurnDrvcv_flapbrd = {
+    "cv_flapbrd", NULL, "cv_coleco", NULL, "2014",
+    "Flapee Byrd (HB)\0", NULL, "CollectorVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_flapbrdRomInfo, cv_flapbrdRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16841 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16846 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -1618,7 +1618,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_bmbjack2	|  	| Bomb Jack II (48K)					| 		| 1987	| Elite Systems	| ZX Spectrum	| 					|
 | bombkick	|  	| Bomb Kick (set 1)					| 		| 1998	| Yun Sung	| Yun Sung 16 Bi| 					|
 | bombkicka	|  	| Bomb Kick (set 2)					| bombkick	| 1998	| Yun Sung	| Yun Sung 16 Bi| 					|
-| md_bobc206	|  	| Bomb on Basic City (HB, v2.06)			| 		| 2016	| Vetea		| Sega Megadrive| 					|
+| md_bobc206	|  	| Bomb on Basic City (HB, v2.06)			| 		| 2016	| Studio Vetea	| Sega Megadrive| 					|
 | nes_bombsweeper|  	| Bomb Sweeper (HB)					| 		| 2002	| SNOWBRO	| Miscellaneous	| 					|
 | cv_bomblast	|  	| Bomb'n Blast (HB)					| 		| 2011	| CollectorVisio| ColecoVision	| 					|
 | bomber	|  	| Bomber (bootleg of Scramble)				| scramble	| 1981	| bootleg	| Galaxian	| 					|
@@ -4801,6 +4801,7 @@ This list contains all games supported by FinalBurn Neo.
 | fixeightut	|  	| FixEight (USA, Taito license)				| fixeight	| 1992	| Toaplan	| Toaplan GP9001| 					|
 | flkatck	|  	| Flak Attack (Japan)					| mx5000	| 1987	| Konami	| GX669		| 					|
 | flkatcka	|  	| Flak Attack (Japan, PWB 450593 sub-board)		| mx5000	| 1987	| Konami	| GX669		| 					|
+| cv_flapbrd	|  	| Flapee Byrd (HB)					| 		| 2014	| CollectorVisio| ColecoVision	| 					|
 | nes_flappy	|  	| Flappy (Japan)					| 		| 1985	| dB-SOFT	| Miscellaneous	| 					|
 | msx_flappy	|  	| Flappy (Jpn)						| 		| 1985	| dB-Soft	| MSX		| 					|
 | msx_flappya	|  	| Flappy (Jpn, Alt)					| msx_flappy	| 1985	| dB-Soft	| MSX		| 					|
@@ -8490,6 +8491,7 @@ This list contains all games supported by FinalBurn Neo.
 | milliped	|  	| Millipede						| 		| 1982	| Atari		| Miscellaneous	| 					|
 | minasan	|  	| Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(M| 		| 1990	| Monolith Corp.| Neo Geo MVS	| 					|
 | md_traysiaj	|  	| Minato no Traysia (Jpn)				| md_traysia	| 1992	| Riot		| Sega Megadrive| 					|
+| nes_mnmayhem	|  	| Mine Mayhem (HB)					| 		| 2021	| Vectrex28	| Miscellaneous	| 					|
 | minefld	|  	| Minefield						| 		| 1983	| Stern		| Galaxian	| 					|
 | nes_minelsagj	|  	| Minelvaton Saga - Ragon no Fukkatsu (Japan)		| nes_minelsag	| 1987	| Taito		| Miscellaneous	| 					|
 | nes_minelsag	|  	| Minelvaton Saga - Ragon no Fukkatsu (T-Eng)		| 		| 1987	| Taito		| Miscellaneous	| 					|
@@ -9039,6 +9041,7 @@ This list contains all games supported by FinalBurn Neo.
 | nmouse	|  	| Naughty Mouse (set 1)					| 		| 1981	| Amenip (Palcom| Pac-man	| 					|
 | nmouseb	|  	| Naughty Mouse (set 2)					| nmouse	| 1981	| Amenip Nova Ga| Pac-man	| 					|
 | msx_nausicaa	|  	| Nausicaa						| 		| 1984	| Technopolis So| MSX		| 					|
+| md_navabarone	|  	| NavaBarone (HB)					| 		| 2017	| neko800 and ku| Sega Megadrive| 					|
 | navarone	|  	| Navarone						| 		| 1980	| Namco		| Miscellaneous	| 					|
 | msx_navymove	|  	| Navy Moves (Euro)					| 		| 1988	| Dinamic Softwa| MSX		| Select Keyboard mode and use Joystick	|
 | spec_navymoves1|  	| Navy Moves (Part 1 of 2) (128K)			| 		| 1988	| Dinamic Softwa| ZX Spectrum	| 					|
@@ -9903,9 +9906,10 @@ This list contains all games supported by FinalBurn Neo.
 | md_paperbo2s	|  	| Paperboy 2 (Hack, Spanish)				| md_paperbo2	| 2018	| Tengen	| Sega Megadrive| 					|
 | nes_paperboy2	|  	| Paperboy 2 (USA)					| 		| 1992	| Mindscape	| Miscellaneous	| 					|
 | gg_paperbo2	|  	| Paperboy II (Euro, USA)				| 		| 1992	| Tengen	| Sega Game Gear| 					|
+| md_papi2	|  	| Papi Commando - Second Blood (HB)			| 		| 2020	| Studio Vetea	| Sega Megadrive| 					|
 | sms_papicom	|  	| Papi Commando in CPP Land (HB, Hack v1.01)		| 		| 2019	| Vetea		| Sega Master Sy| 					|
-| md_papi	|  	| Papi Commando MD (HB)					| 		| 2015	| Vetea		| Sega Megadrive| 					|
-| md_papirmx	|  	| Papi Commando Remix MD (HB)				| md_papi	| 2018	| Vetea		| Sega Megadrive| 					|
+| md_papi	|  	| Papi Commando MD (HB)					| 		| 2015	| Studio Vetea	| Sega Megadrive| 					|
+| md_papirmx	|  	| Papi Commando Remix MD (HB)				| md_papi	| 2018	| Studio Vetea	| Sega Megadrive| 					|
 | nes_papillongals|  	| Papillon Gals (Japan) (Unl)				| 		| 1989?	| Nintendo	| Miscellaneous	| 					|
 | spec_parachute|  	| Parachute (HB)					| 		| 2018	| Miguetelo	| ZX Spectrum	| 					|
 | msx_pjoe	|  	| Parachuteless Joe (HB)				| 		| 2005	| Paxanga Soft	| MSX		| 					|
@@ -13415,6 +13419,7 @@ This list contains all games supported by FinalBurn Neo.
 | msx_subcmdr	|  	| Subcommander (HB, v1.02)				| 		| 2020	| Zoran Majcenic| MSX		| 					|
 | sub		|  	| Submarine (Sigma)					| 		| 1985	| Sigma Enterpri| Miscellaneous	| 					|
 | sms_submarin	|  	| Submarine Attack (Euro)				| 		| 1990	| Sega		| Sega Master Sy| 					|
+| md_subvsaliens|  	| Submarine Canyon Bomber vs Marine Aliens (HB)		| 		| 2017	| Hideki Konishi| Sega Megadrive| 					|
 | cv_subrocsgm	|  	| Subroc (SGM)						| 		| 2014	| Coleco	| ColecoVision	| (SGM) - Published by Team Pixelboy	|
 | subroc3d	|  	| Subroc-3D						| 		| 1982	| Sega		| Z80-3D	| 					|
 | cv_subroc	|  	| Subroc						| 		| 1983	| Coleco	| ColecoVision	| 					|

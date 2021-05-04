@@ -1968,7 +1968,7 @@
 	<game name="bobc206">
 		<description>Bomb on Basic City (HB, v2.06) [Homebrew]</description>
 		<year>2016</year>
-		<manufacturer>Vetea</manufacturer>
+		<manufacturer>Studio Vetea</manufacturer>
 		<rom name="BasicCity206.bin" size="1138854" crc="8f4ac700"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10910,6 +10910,14 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="navabarone">
+		<description>NavaBarone (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>neko800 and kunukunu777</manufacturer>
+		<rom name="NavaBarone (2017)(neko800, kunukunu777).bin" size="524288" crc="a4dc99ac"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nba2k" cloneof="nbaact" romof="nbaact">
 		<description>NBA 2000 (Rus)</description>
 		<year>199?</year>
@@ -12353,10 +12361,18 @@
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="papi2">
+		<description>Papi Commando - Second Blood (HB) [Homebrew]</description>
+		<year>2020</year>
+		<manufacturer>Studio Vetea</manufacturer>
+		<rom name="Papi Commando - Second Blood (2020)(Studio Vetea).bin" size="2898250" crc="be7716af"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="papi">
 		<description>Papi Commando MD (HB) [Homebrew]</description>
 		<year>2015</year>
-		<manufacturer>Vetea</manufacturer>
+		<manufacturer>Studio Vetea</manufacturer>
 		<rom name="PapiCommandoMD.bin" size="3466596" crc="ec16d540"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12364,7 +12380,7 @@
 	<game name="papirmx" cloneof="papi" romof="papi">
 		<description>Papi Commando Remix MD (HB) [Homebrew]</description>
 		<year>2018</year>
-		<manufacturer>Vetea</manufacturer>
+		<manufacturer>Studio Vetea</manufacturer>
 		<rom name="papi commando remix md (2018)(studio vetea).bin" size="3698576" crc="d15c6391"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17198,6 +17214,14 @@
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="striker (euro) (beta).bin" size="2097152" crc="c10b270e"/>
+		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="subvsaliens">
+		<description>Submarine Canyon Bomber vs Marine Aliens (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Hideki Konishi</manufacturer>
+		<rom name="Submarine Canyon Bomber vs Marine Aliens (2017)(Hideki Konishi).bin" size="393216" crc="85b3a408"/>
 		<video orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

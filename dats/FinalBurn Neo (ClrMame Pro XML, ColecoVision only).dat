@@ -1092,6 +1092,18 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="flapbrd" romof="coleco">
+		<description>Flapee Byrd (HB) [Homebrew]</description>
+		<year>2014</year>
+		<manufacturer>CollectorVision</manufacturer>
+		<rom name="Flapee Byrd (2014)(CollectorVision).col" size="32756" crc="5ac80811"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="flipslip" romof="coleco">
 		<description>Flipper Slipper</description>
 		<year>1983</year>

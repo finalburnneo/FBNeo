@@ -8740,6 +8740,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mnmayhem">
+		<description>Mine Mayhem (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Vectrex28</manufacturer>
+		<rom name="Mine Mayhem (2021)(Vectrex28).nes" size="65552" crc="c6b47cca"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="minelsagj" cloneof="minelsag" romof="minelsag">
 		<description>Minelvaton Saga - Ragon no Fukkatsu (Japan)</description>
 		<year>1987</year>

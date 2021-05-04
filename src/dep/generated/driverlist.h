@@ -4865,6 +4865,7 @@ DRV		BurnDrvFixeightu;
 DRV		BurnDrvFixeightut;
 DRV		BurnDrvFlkatck;
 DRV		BurnDrvFlkatcka;
+DRV		BurnDrvcv_flapbrd;
 DRV		BurnDrvnes_flappy;
 DRV		BurnDrvMSX_flappy;
 DRV		BurnDrvMSX_flappya;
@@ -8604,6 +8605,7 @@ DRV		BurnDrvnes_milli;
 DRV		BurnDrvMilliped;
 DRV		BurnDrvminasan;
 DRV		BurnDrvmd_traysiaj;
+DRV		BurnDrvnes_mnmayhem;
 DRV		BurnDrvMinefld;
 DRV		BurnDrvnes_minelsagj;
 DRV		BurnDrvnes_minelsag;
@@ -9165,6 +9167,7 @@ DRV		BurnDrvNaughtyb;
 DRV		BurnDrvnmouse;
 DRV		BurnDrvnmouseb;
 DRV		BurnDrvMSX_nausicaa;
+DRV		BurnDrvmd_navabarone;
 DRV		BurnDrvNavarone;
 DRV		BurnDrvMSX_navymove;
 DRV		BurnSpecnavymoves1;
@@ -10037,6 +10040,7 @@ DRV		BurnDrvmd_paperbo2;
 DRV		BurnDrvmd_paperbo2s;
 DRV		BurnDrvnes_paperboy2;
 DRV		BurnDrvgg_paperbo2;
+DRV		BurnDrvmd_papi2;
 DRV		BurnDrvsms_papicom;
 DRV		BurnDrvmd_papi;
 DRV		BurnDrvmd_papirmx;
@@ -13599,6 +13603,7 @@ DRV		BurnSpecsubbueto_48;
 DRV		BurnDrvMSX_subcmdr;
 DRV		BurnDrvSub;
 DRV		BurnDrvsms_submarin;
+DRV		BurnDrvmd_subvsaliens;
 DRV		BurnDrvcv_subrocsgm;
 DRV		BurnDrvSubroc3d;
 DRV		BurnDrvcv_subroc;
@@ -21959,6 +21964,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFixeightut,			// FixEight (USA, Taito license)
 	&BurnDrvFlkatck,			// Flak Attack (Japan)
 	&BurnDrvFlkatcka,			// Flak Attack (Japan, PWB 450593 sub-board)
+	&BurnDrvcv_flapbrd,			// Flapee Byrd (HB)
 	&BurnDrvnes_flappy,			// Flappy (Japan)
 	&BurnDrvMSX_flappy,			// Flappy (Jpn)
 	&BurnDrvMSX_flappya,		// Flappy (Jpn, Alt)
@@ -25698,6 +25704,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMilliped,			// Millipede
 	&BurnDrvminasan,			// Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(MOH-001)
 	&BurnDrvmd_traysiaj,		// Minato no Traysia (Jpn)
+	&BurnDrvnes_mnmayhem,		// Mine Mayhem (HB)
 	&BurnDrvMinefld,			// Minefield
 	&BurnDrvnes_minelsagj,		// Minelvaton Saga - Ragon no Fukkatsu (Japan)
 	&BurnDrvnes_minelsag,		// Minelvaton Saga - Ragon no Fukkatsu (T-Eng)
@@ -26259,6 +26266,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnmouse,				// Naughty Mouse (set 1)
 	&BurnDrvnmouseb,			// Naughty Mouse (set 2)
 	&BurnDrvMSX_nausicaa,		// Nausicaa
+	&BurnDrvmd_navabarone,		// NavaBarone (HB)
 	&BurnDrvNavarone,			// Navarone
 	&BurnDrvMSX_navymove,		// Navy Moves (Euro)
 	&BurnSpecnavymoves1,		// Navy Moves (Part 1 of 2) (128K)
@@ -27131,6 +27139,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_paperbo2s,		// Paperboy 2 (Hack, Spanish)
 	&BurnDrvnes_paperboy2,		// Paperboy 2 (USA)
 	&BurnDrvgg_paperbo2,		// Paperboy II (Euro, USA)
+	&BurnDrvmd_papi2,			// Papi Commando - Second Blood (HB)
 	&BurnDrvsms_papicom,		// Papi Commando in CPP Land (HB, Hack v1.01)
 	&BurnDrvmd_papi,			// Papi Commando MD (HB)
 	&BurnDrvmd_papirmx,			// Papi Commando Remix MD (HB)
@@ -30693,6 +30702,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_subcmdr,		// Subcommander (HB, v1.02)
 	&BurnDrvSub,				// Submarine (Sigma)
 	&BurnDrvsms_submarin,		// Submarine Attack (Euro)
+	&BurnDrvmd_subvsaliens,		// Submarine Canyon Bomber vs Marine Aliens (HB)
 	&BurnDrvcv_subrocsgm,		// Subroc (SGM)
 	&BurnDrvSubroc3d,			// Subroc-3D
 	&BurnDrvcv_subroc,			// Subroc

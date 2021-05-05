@@ -994,9 +994,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballblzr" romof="msx">
-		<description>Ballblazer [Keyboard control only.]</description>
+		<description>Ballblazer (Jpn) [Keyboard control only]</description>
 		<year>1988</year>
-		<manufacturer>Pony Canyon</manufacturer>
+		<manufacturer>Lucasfilm Games - Pony Canyon</manufacturer>
 		<rom name="Ballblazer (1988)(Pony Canyon)(JP).rom" size="131072" crc="bd307546"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -1875,7 +1875,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="buckrog" romof="msx">
-		<description>Buck Rogers - Planet of Zoom</description>
+		<description>Buck Rogers - Planet of Zoom (Jpn)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Buck Rogers - Planet of Zoom (1983)(Sega)(JP).rom" size="65536" crc="daf045ca"/>
@@ -6808,6 +6808,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ksolitaire" romof="msx">
+		<description>Klondike Solitaire (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Klondike Solitaire (2021)(Under4Mhz).rom" size="32768" crc="dcd00173"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="knightlr" romof="msx">
 		<description>Knight Lore (Jpn)</description>
 		<year>1986</year>
@@ -7748,6 +7759,28 @@
 		<year>2006</year>
 		<manufacturer>Lemonize</manufacturer>
 		<rom name="majikazo (2006)(lemonize).rom" size="49152" crc="39b8f033"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="makethemfall" romof="msx">
+		<description>Make Them Fall (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="Make Them Fall (2021)(Robosoft).rom" size="32768" crc="3ba17b67"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="makethemjump" romof="msx">
+		<description>Make Them Jump (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="Make Them Jump (2021)(Robosoft).rom" size="32768" crc="ff17cd96"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8871,6 +8904,18 @@
 		<year>1984</year>
 		<manufacturer>artic</manufacturer>
 		<rom name="mumonty.rom" size="131072" crc="308b71ae"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mystical" romof="msx">
+		<description>Mystical (Euro)</description>
+		<year>1991</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="Mystical (1991)(Infogrames)(Side A)[RUN'CAS-'].cas" size="61362" crc="af63a556"/>
+		<rom name="Mystical (1991)(Infogrames)(Side B)[RUN'CAS-'].cas" size="118650" crc="9145b23b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10644,6 +10689,17 @@
 		<year>1986</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="runner (1986)(loriciels)(fr)[run'cas-'].cas" size="38632" crc="80a0f4d2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sabotaje" romof="msx">
+		<description>Sabotaje (Spa)</description>
+		<year>1987</year>
+		<manufacturer>Genesis Soft</manufacturer>
+		<rom name="Sabotaje (1988)(P.J. Software)(es)[RUN'CAS-'].cas" size="35367" crc="38af0372"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

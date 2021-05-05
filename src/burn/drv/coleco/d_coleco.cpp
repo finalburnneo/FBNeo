@@ -7520,3 +7520,155 @@ struct BurnDriver BurnDrvcv_flapbrd = {
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// 421 (HB)
+
+static struct BurnRomInfo cv_421RomDesc[] = {
+    { "421 (2002) (Mathieu Proulx).col",	0x6400, 0xb6254fc5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_421, cv_421, cv_coleco)
+STD_ROM_FN(cv_421)
+
+struct BurnDriver BurnDrvcv_421 = {
+    "cv_421", NULL, "cv_coleco", NULL, "2002",
+    "421 (HB)\0", NULL, "Mathieu Proulx", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_421RomInfo, cv_421RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Bejeweled (HB)
+
+static struct BurnRomInfo cv_bejeweledRomDesc[] = {
+    { "Bejeweled (2002) (Daniel Bienvenu).col",	0x6480, 0x39c5a7e9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_bejeweled, cv_bejeweled, cv_coleco)
+STD_ROM_FN(cv_bejeweled)
+
+struct BurnDriver BurnDrvcv_bejeweled = {
+    "cv_bejeweled", NULL, "cv_coleco", NULL, "2002",
+    "Bejeweled (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_bejeweledRomInfo, cv_bejeweledRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Breakout (HB)
+
+static struct BurnRomInfo cv_breakoutRomDesc[] = {
+    { "Breakout (1999) (Daniel Bienvenu).col",	0x3580, 0xb05fb3ec, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_breakout, cv_breakout, cv_coleco)
+STD_ROM_FN(cv_breakout)
+
+struct BurnDriver BurnDrvcv_breakout = {
+    "cv_breakout", NULL, "cv_coleco", NULL, "1999",
+    "Breakout (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_breakoutRomInfo, cv_breakoutRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Canadian Minigames (HB)
+
+static struct BurnRomInfo cv_canaminiRomDesc[] = {
+    { "Canadian Minigames (2008) (Wick-Foster-Bienvenu).col",	0x8000, 0x99f3cbc9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_canamini, cv_canamini, cv_coleco)
+STD_ROM_FN(cv_canamini)
+
+struct BurnDriver BurnDrvcv_canamini = {
+    "cv_canamini", NULL, "cv_coleco", NULL, "2008",
+    "Canadian Minigames (HB)\0", NULL, "Wick-Foster-Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_canaminiRomInfo, cv_canaminiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Deflektor Kollection (HB)
+
+static struct BurnRomInfo cv_deflektorRomDesc[] = {
+    { "Deflektor Kollection (2005) (Daniel Bienvenu).col",	0x7C80, 0x1b3a8639, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_deflektor, cv_deflektor, cv_coleco)
+STD_ROM_FN(cv_deflektor)
+
+struct BurnDriver BurnDrvcv_deflektor = {
+    "cv_deflektor", NULL, "cv_coleco", NULL, "2003",
+    "Deflektor Kollection (HB)\0", "Published by Atariage", "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_deflektorRomInfo, cv_deflektorRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Flicky (HB)
+
+static struct BurnRomInfo cv_flickyRomDesc[] = {
+    { "Flicky (2018) (Team Pixelboy).col",	0x8000, 0x89875c52, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_flicky, cv_flicky, cv_coleco)
+STD_ROM_FN(cv_flicky)
+
+struct BurnDriver BurnDrvcv_flicky = {
+    "cv_flicky", NULL, "cv_coleco", NULL, "2018",
+    "Flicky (HB)\0", "Published by Team Pixelboy", "Sega", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_flickyRomInfo, cv_flickyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Insane Pickin' Sticks VIII (HB)
+
+static struct BurnRomInfo cv_insanepickRomDesc[] = {
+    { "Insane Pickin' Sticks VIII (2010) (Daniel Bienvenu).col",	0x7890, 0x5a6c2d2f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_insanepick, cv_insanepick, cv_coleco)
+STD_ROM_FN(cv_insanepick)
+
+struct BurnDriver BurnDrvcv_insanepick = {
+    "cv_insanepick", NULL, "cv_coleco", NULL, "2010",
+    "Insane Pickin' Sticks (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_insanepickRomInfo, cv_insanepickRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Kevtris (HB)
+
+static struct BurnRomInfo cv_kevtrisRomDesc[] = {
+    { "Kevtris (1996) (Kevin Horton).col",	0x4000, 0x819a06e5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_kevtris, cv_kevtris, cv_coleco)
+STD_ROM_FN(cv_kevtris)
+
+struct BurnDriver BurnDrvcv_kevtris = {
+    "cv_kevtris", NULL, "cv_coleco", NULL, "1996",
+    "Kevtris (HB)\0", NULL, "Kevin Horton", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_kevtrisRomInfo, cv_kevtrisRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};

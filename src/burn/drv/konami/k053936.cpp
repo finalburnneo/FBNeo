@@ -688,7 +688,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				if (srcx < src_minx || srcx > src_maxx || srcy < src_miny || srcy > src_maxy)
 					continue;
 
-				pixel = src_base[offs]|color_base;
+				pixel = BURN_ENDIAN_SWAP_INT16(src_base[offs])|color_base;
 				if (!(pixel & cmask))
 					continue;
 // this one below is borked.
@@ -732,7 +732,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				if (srcx < src_minx || srcx > src_maxx || srcy < src_miny || srcy > src_maxy)
 					continue;
 
-				pixel = src_base[offs]|color_base;
+				pixel = BURN_ENDIAN_SWAP_INT16(src_base[offs])|color_base;
 				if (!(pixel & cmask))
 					continue;
 
@@ -770,7 +770,7 @@ static void K053936GP_zoom_draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, UINT
 	my_clip[2] = 0;
 	my_clip[3] = nScreenHeight - 1;
 
-	if (ctrl[0x07] & 0x0040)    /* "super" mode */
+	if (BURN_ENDIAN_SWAP_INT16(ctrl[0x07]) & 0x0040)    /* "super" mode */
 	{
 		y = 0; //cliprect.min_y;
 		maxy = my_clip[3];
@@ -780,13 +780,13 @@ static void K053936GP_zoom_draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, UINT
 			lineaddr = linectrl + ( ((y - K053936_offset[chip][1]) & 0x1ff) << 2);
 			my_clip[2] = my_clip[3] = y;
 
-			startx = (INT16)(lineaddr[0] + ctrl[0x00]) << 8;
-			starty = (INT16)(lineaddr[1] + ctrl[0x01]) << 8;
-			incxx  = (INT16)(lineaddr[2]);
-			incxy  = (INT16)(lineaddr[3]);
+			startx = (INT16)(BURN_ENDIAN_SWAP_INT16(lineaddr[0]) + BURN_ENDIAN_SWAP_INT16(ctrl[0x00])) << 8;
+			starty = (INT16)(BURN_ENDIAN_SWAP_INT16(lineaddr[1]) + BURN_ENDIAN_SWAP_INT16(ctrl[0x01])) << 8;
+			incxx  = (INT16)(BURN_ENDIAN_SWAP_INT16(lineaddr[2]));
+			incxy  = (INT16)(BURN_ENDIAN_SWAP_INT16(lineaddr[3]));
 
-			if (ctrl[0x06] & 0x8000) incxx <<= 8;
-			if (ctrl[0x06] & 0x0080) incxy <<= 8;
+			if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x8000) incxx <<= 8;
+			if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x0080) incxy <<= 8;
 
 			startx -= K053936_offset[chip][0] * incxx;
 			starty -= K053936_offset[chip][0] * incxy;
@@ -799,15 +799,15 @@ static void K053936GP_zoom_draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, UINT
 	}
 	else    /* "simple" mode */
 	{
-		startx = (INT16)(ctrl[0x00]) << 8;
-		starty = (INT16)(ctrl[0x01]) << 8;
-		incyx  = (INT16)(ctrl[0x02]);
-		incyy  = (INT16)(ctrl[0x03]);
-		incxx  = (INT16)(ctrl[0x04]);
-		incxy  = (INT16)(ctrl[0x05]);
+		startx = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x00])) << 8;
+		starty = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x01])) << 8;
+		incyx = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x02]));
+		incyy = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x03]));
+		incxx = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x04]));
+		incxy = (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x05]));
 
-		if (ctrl[0x06] & 0x4000) { incyx <<= 8; incyy <<= 8; }
-		if (ctrl[0x06] & 0x0040) { incxx <<= 8; incxy <<= 8; }
+		if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x4000) { incyx <<= 8; incyy <<= 8; }
+		if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x0040) { incxx <<= 8; incxy <<= 8; }
 
 		startx -= K053936_offset[chip][1] * incyx;
 		starty -= K053936_offset[chip][1] * incyy;

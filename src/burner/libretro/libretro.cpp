@@ -143,7 +143,7 @@ const int nConfigMinVersion = 0x020921;
 
 static uint8_t *write_state_ptr;
 static const uint8_t *read_state_ptr;
-static unsigned state_sizes[2];
+static unsigned state_size;
 
 int HandleMessage(enum retro_log_level level, TCHAR* szFormat, ...)
 {
@@ -1248,7 +1248,7 @@ static int burn_dummy_state_cb(BurnArea *pba)
 #ifdef FBNEO_DEBUG
 	HandleMessage(RETRO_LOG_INFO, "state debug: name %s, len %d\n", pba->szName, pba->nLen);
 #endif
-	state_sizes[kNetGame] += pba->nLen;
+	state_size += pba->nLen;
 	return 0;
 }
 
@@ -1262,15 +1262,17 @@ size_t retro_serialize_size()
 	// hiscores are causing desync in netplay
 	if (kNetGame == 1)
 		EnableHiscores = false;
-	if (state_sizes[kNetGame])
-		return state_sizes[kNetGame];
 
+	// Don't try to cache state size, it's causing more issues than it solves (ngp)
+	state_size = 0;
 	BurnAcb = burn_dummy_state_cb;
 	// The following value is required in savestates for some games (xmen6p, ...)
 	// On standalone, this value is stored in savestate files headers
 	SCAN_VAR(nCurrentFrame);
-	BurnAreaScan(ACB_FULLSCAN, 0);
-	return state_sizes[kNetGame];
+	// This is the size for retro_serialize, so it wants ACB_FULLSCAN | ACB_READ
+	// retro_unserialize doesn't call this function
+	BurnAreaScan(ACB_FULLSCAN | ACB_READ, 0);
+	return state_size;
 }
 
 bool retro_serialize(void *data, size_t size)
@@ -1289,13 +1291,7 @@ bool retro_serialize(void *data, size_t size)
 	// hiscores are causing desync in netplay
 	if (kNetGame == 1)
 		EnableHiscores = false;
-	if (!state_sizes[kNetGame])
-	{
-		BurnAcb = burn_dummy_state_cb;
-		SCAN_VAR(nCurrentFrame);
-		BurnAreaScan(ACB_FULLSCAN, 0);
-	}
-	if (size != state_sizes[kNetGame])
+	if (size != state_size)
 		return false;
 
 	BurnAcb = burn_write_state_cb;
@@ -1317,13 +1313,7 @@ bool retro_unserialize(const void *data, size_t size)
 	// hiscores are causing desync in netplay
 	if (kNetGame == 1)
 		EnableHiscores = false;
-	if (!state_sizes[kNetGame])
-	{
-		BurnAcb = burn_dummy_state_cb;
-		SCAN_VAR(nCurrentFrame);
-		BurnAreaScan(ACB_FULLSCAN, 0);
-	}
-	if (size != state_sizes[kNetGame])
+	if (size != state_size)
 		return false;
 
 	BurnAcb = burn_read_state_cb;
@@ -1713,9 +1703,8 @@ static bool retro_load_game_common()
 	// Initialize HDD path
 	snprintf_nowarn (szAppHDDPath, sizeof(szAppHDDPath), "%s%c", g_rom_dir, PATH_DEFAULT_SLASH_C());
 
-	// Intialize state_sizes (for serialization)
-	state_sizes[0] = 0;
-	state_sizes[1] = 0;
+	// Intialize state_size (for serialization)
+	state_size = 0;
 
 	gui_show = false;
 

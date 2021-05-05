@@ -162,6 +162,7 @@ int ConfigAppLoad()
 		VAR(nVidDX9HardFX);
 		VAR(bVidOverlay);
 		VAR(bVidBigOverlay);
+		VAR(bVidShowInputs);
 		VAR(bVidUnrankedScores);
 		VAR(bVidSaveOverlayFiles);
 		VAR(bVidSaveChatHistory);
@@ -517,6 +518,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, draw bigger Fightcade overlay\n"));
 	VAR(bVidBigOverlay);
 	_ftprintf(h, _T("\n// Show Fightcade scores in unranked mode (only for games with detectors)\n"));
+	VAR(bVidShowInputs);
+	_ftprintf(h, _T("\n// Show Fightcade overlay inputs\n"));
 	VAR(bVidUnrankedScores);
 	_ftprintf(h, _T("\n// Save Fightcade overlay data to files in realtime (for Streaming)\n"));
 	VAR(bVidSaveOverlayFiles);

@@ -987,6 +987,7 @@ BEGIN
 				BEGIN
 						MENUITEM "Display overlay",										MENU_OVERLAY
 						MENUITEM "Display bigger overlay",						MENU_BIG_OVERLAY
+						MENUITEM "Display inputs",						MENU_SHOW_INPUTS
 						MENUITEM "Show scores in unranked matches",		MENU_UNRANKED_SCORES
 						MENUITEM "Save overlay data to files",				MENU_SAVE_OVERLAY_FILES
 						MENUITEM "Save chat history",									MENU_SAVE_CHAT_HISTORY
@@ -1083,9 +1084,9 @@ BEGIN
         MENUITEM "&Rotate vertically aligned games",			MENU_ROTATEVERTICAL
 		MENUITEM "Enable VSync",													MENU_VIDEOVSYNC
 		MENUITEM "Auto Frameskip",												MENU_AUTOFRAMESKIP
-		/* @FC
         MENUITEM "Force 60Hz refresh rate",						MENU_FORCE60HZ
-        MENUITEM "Enable &Triple Buffering (Fullscreen)",		MENU_TRIPLE
+		/* @FC
+		MENUITEM "Enable &Triple Buffering (Fullscreen)",		MENU_TRIPLE
         MENUITEM "Enable DWM Sync (Windowed)",                  MENU_DWMFIX
         */
     END

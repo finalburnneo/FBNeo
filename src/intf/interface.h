@@ -223,6 +223,7 @@ extern INT32 bVidDX9LegacyRenderer;
 extern INT32 nVidDX9HardFX;
 extern INT32 bVidOverlay;
 extern INT32 bVidBigOverlay;
+extern INT32 bVidShowInputs;
 extern INT32 bVidUnrankedScores;
 extern INT32 bVidSaveOverlayFiles;
 extern INT32 bVidSaveChatHistory;

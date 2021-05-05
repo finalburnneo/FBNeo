@@ -122,6 +122,7 @@ INT32 bVidDX9LegacyRenderer = 0;		// 0 = legacy directx9 renderer (no Ex)
 INT32 nVidDX9HardFX = 0; 						// index of HardFX effect (0 = None)
 INT32 bVidOverlay = 1;							// 1 = draw overlay
 INT32 bVidBigOverlay = 0;						// 1 = bigger overlay
+INT32 bVidShowInputs = 0;						// 1 = show game inputs
 INT32 bVidUnrankedScores = 0;				// 1 = show scores in unranked
 INT32 bVidSaveOverlayFiles = 0;			// 1 = save overlay data to obs files
 INT32 bVidSaveChatHistory = 0;			// 1 = save chat history to file

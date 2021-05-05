@@ -2441,7 +2441,7 @@ INT32 SekScan(INT32 nAction)
 		SCAN_VAR(nSekHALT[i]);
 
 		extern int kNetVersion;
-		if (kNetVersion >= 3) {
+		if (kNetVersion >= NET_VERSION_SEKSCAN_FIX) {
 			if (nAction == (ACB_FULLSCANL | ACB_READ) || nAction == (ACB_FULLSCANL | ACB_WRITE)) {
 				SCAN_VAR(nSekAddressMask[i]);
 				SCAN_VAR(nSekAddressMaskActive);

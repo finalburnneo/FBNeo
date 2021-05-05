@@ -173,6 +173,8 @@ static INT32 nJoyport1[8] = { 0, };
 // ----------------------------------------------------------------------------
 // Variables that need to be included in savestates
 
+extern int kNetVersion;
+
 static INT32 nCyclesExtra[2];
 static INT32 nPrevBurnCPUSpeedAdjust;
 
@@ -2071,7 +2073,9 @@ static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 
 		case 0x61:											// Coin lockout chute 1 & input bank select
 //			bprintf(PRINT_NORMAL, _T("  - %sInput bank 0 selected (0x%02X).\n"), byteValue ? _T("Chute 1 coin lockout -> High / ") : _T(""), byteValue);
-			NeoInputBank = NeoInput + 0;
+			if ((nNeoControlConfig & HARDWARE_SNK_4_JOYSTICKS) == HARDWARE_SNK_4_JOYSTICKS || kNetVersion < NET_VERSION_NEOGEO_INPUTS) {
+				NeoInputBank = NeoInput + 0;
+			}
 			break;
 		case 0x63:											// Coin lockout chute 2
 //			bprintf(PRINT_NORMAL, _T("  - Chute 2 coin lockout -> High (0x%02X).\n"), byteValue);
@@ -2093,7 +2097,9 @@ static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 
 		case 0xE1:
 //			bprintf(PRINT_NORMAL, _T("  - Chute 2 coin lockout -> Low / Input bank 1 selected (0x%02X).\n"), byteValue);
-			NeoInputBank = NeoInput + 8;
+			if ((nNeoControlConfig & HARDWARE_SNK_4_JOYSTICKS) == HARDWARE_SNK_4_JOYSTICKS || kNetVersion < NET_VERSION_NEOGEO_INPUTS) {
+				NeoInputBank = NeoInput + 8;
+			}
 			break;
 		case 0xE3:
 //			bprintf(PRINT_NORMAL, _T("  - Chute 2 coin lockout -> Low (0x%02X).\n"), byteValue);

@@ -2,6 +2,7 @@
 mkdir generated
 cd ..\..\src\dep\scripts
 echo running perl scripts
+md ../../../projectfiles/visualstudio-2019/generated/
 perl cave_sprite_func.pl -o ../../../projectfiles/visualstudio-2019/generated/cave_sprite_func.h
 perl license2rtf.pl -o ../../../projectfiles/visualstudio-2019/generated/license.rtf ../../license.txt
 perl cave_tile_func.pl -o ../../../projectfiles/visualstudio-2019/generated/cave_tile_func.h

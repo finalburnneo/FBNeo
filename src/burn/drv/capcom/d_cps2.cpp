@@ -3327,6 +3327,32 @@ static struct BurnRomInfo Hsf2j1RomDesc[] = {
 STD_ROM_PICK(Hsf2j1)
 STD_ROM_FN(Hsf2j1)
 
+static struct BurnRomInfo Hsf2ppRomDesc[] = {
+	{ "hs2u.03",       0x080000, 0x652728A6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2u.04",       0x080000, 0x7A02D7B6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2.13m",       0x800000, 0xa6ecab17, CPS2_GFX | BRF_GRA },
+	{ "hs2.15m",       0x800000, 0x10a0ae4d, CPS2_GFX | BRF_GRA },
+	{ "hs2.17m",       0x800000, 0xadfa7726, CPS2_GFX | BRF_GRA },
+	{ "hs2.19m",       0x800000, 0xbb3ae322, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+
+	{ "hsf2.key",      0x000014, 0x2CF772B0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Hsf2pp)
+STD_ROM_FN(Hsf2pp)
+
 static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "majj.03",       0x080000, 0x4614a3b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -9724,6 +9750,16 @@ struct BurnDriver BurnDrvCpsHsf2j1 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsHsf2pp = {
+	"hsf2pp", "hsf2", NULL, NULL, "2004",
+	"Hyper Street Fighter II Plus Plus (Hsf2++ Hack)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2ppRomInfo, Hsf2ppRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsJyangoku = {
 	"jyangoku", NULL, NULL, NULL, "1999",
 	"Jyangokushi  -Haoh no Saihai- (990527 Japan)\0", NULL, "Mitchell", "CPS2",
@@ -12955,6 +12991,37 @@ static struct BurnRomInfo VsavdRomDesc[] = {
 STD_ROM_PICK(Vsavd)
 STD_ROM_FN(Vsavd)
 
+static struct BurnRomInfo VsavaeRomDesc[] = {
+	{ "vm3e.03d",      0x080000, 0xA5AE2F72, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3e.04d",      0x080000, 0x21b40ea2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.05a",       0x080000, 0x4118e00f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.06a",       0x080000, 0x2f4fd3a9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.07b",       0x080000, 0xcbda91b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.08a",       0x080000, 0x6ca47259, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.09b",       0x080000, 0xf4a339e3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.10b",       0x080000, 0xADB43778, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "vm3.13m",       0x400000, 0xfd8a11eb, CPS2_GFX | BRF_GRA },
+	{ "vm3.15m",       0x400000, 0xdd1e7d4e, CPS2_GFX | BRF_GRA },
+	{ "vm3.17m",       0x400000, 0x6b89445e, CPS2_GFX | BRF_GRA },
+	{ "vm3.19m",       0x400000, 0x3830fdc7, CPS2_GFX | BRF_GRA },
+	{ "vm3.14m",       0x400000, 0xc1a28e6c, CPS2_GFX | BRF_GRA },
+	{ "vm3.16m",       0x400000, 0x194a7304, CPS2_GFX | BRF_GRA },
+	{ "vm3.18m",       0x400000, 0xdf9a9f47, CPS2_GFX | BRF_GRA },
+	{ "vm3.20m",       0x400000, 0xc22fc3d9, CPS2_GFX | BRF_GRA },
+
+	{ "vm3.01",        0x020000, 0xf778769b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vm3.02",        0x020000, 0xcc09faa1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
+	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+
+	{ "vsav.key",      0x000014, 0xa6e3b164, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsavae)
+STD_ROM_FN(Vsavae)
+
 static struct BurnRomInfo Vhunt2dRomDesc[] = {
 //	{ "vh2j_d.06",     0x080000, 0xf320ea30, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // apparently a bad dump of vh2j.06, originally loaded instead of vh2j.07 which wasn't encrypted, and clearly not correct
 
@@ -13654,6 +13721,16 @@ struct BurnDriver BurnDrvCpsVsavd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, VsavdRomInfo, VsavdRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsVsavae = {
+	"vsavae", "vsav", NULL, NULL, "1997",
+	"Vampire Savior - the lord of vampire (Aesthetic Edition)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, VsavaeRomInfo, VsavaeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

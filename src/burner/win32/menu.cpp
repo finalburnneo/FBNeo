@@ -765,6 +765,7 @@ void MenuUpdate()
 
 	CheckMenuItem(hMenu, MENU_OVERLAY, (bVidOverlay) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_BIG_OVERLAY, (bVidBigOverlay) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_SHOW_INPUTS, (bVidShowInputs) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_UNRANKED_SCORES, (bVidUnrankedScores) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVE_OVERLAY_FILES, (bVidSaveOverlayFiles) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVE_CHAT_HISTORY, (bVidSaveChatHistory) ? MF_CHECKED : MF_UNCHECKED);
@@ -948,7 +949,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_MONITORMIRRORVERT, (nVidRotationAdjust & 2) ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_ROTATEVERTICAL, !(nVidRotationAdjust & 1) ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_FORCE60HZ, bForce60Hz ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_FORCE60HZ, !kNetGame && !kNetSpectator ? (bForce60Hz ? MF_CHECKED : MF_UNCHECKED) : MF_GRAYED);
 	CheckMenuItem(hMenu, MENU_VIDEOVSYNC, bVidVSync ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOFRAMESKIP, !bAlwaysDrawFrames ? MF_CHECKED : MF_UNCHECKED);
 

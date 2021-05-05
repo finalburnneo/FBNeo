@@ -12,7 +12,7 @@ static unsigned int nDoFPS = 0;
 static bool bMute = false;
 static int nOldAudVolume;
 
-int kNetVersion = 0;				// Network version (ggpo related)
+int kNetVersion = NET_VERSION;				// Network version
 int kNetGame = 0;						// Non-zero if network is being used
 int kNetSpectator = 0;			// Non-zero if network replay is active
 int kNetLua = 1;						// Allow lua in network game
@@ -355,7 +355,6 @@ int RunIdle()
 	if (kNetGame)
 	{
 		int skip = bAlwaysDrawFrames ? 0 : nCount;
-		// skip frames (for rift balance or auto frame skip)
 		for (int i = skip; i > 0; i--) {
 			RunFrame(0, 0, 1);
 		}

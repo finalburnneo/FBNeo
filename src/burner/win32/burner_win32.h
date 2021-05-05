@@ -435,8 +435,6 @@ int NetworkGetInputSize();
 int NetworkGetInput();
 
 // fbn_ggpo.cpp
-#define NET_VERSION	4
-
 void QuarkInit(TCHAR *connect);
 void QuarkEnd();
 void QuarkTogglePerfMon();

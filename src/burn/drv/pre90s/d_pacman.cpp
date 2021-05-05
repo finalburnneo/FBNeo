@@ -66,16 +66,15 @@ static UINT32 watchdog;
 //------------------------------------------------------------------------------------------------------
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -93,15 +92,14 @@ static struct BurnInputInfo DrvInputList[] = {
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo AlienresInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, 	"p1 up"		},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, 	"p1 left"	},
 	{"P1 Right",	  BIT_DIGITAL,	DrvJoy1 + 2, 	"p1 right"	},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, 	"p1 down"	},
 	{"P1 Fire",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",	  BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
@@ -120,17 +118,16 @@ static struct BurnInputInfo AlienresInputList[] = {
 STDINPUTINFO(Alienres)
 
 static struct BurnInputInfo lizwizInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",	  BIT_DIGITAL,	DrvJoy2 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -176,22 +173,21 @@ static struct BurnInputInfo PengoInputList[] = {
 STDINPUTINFO(Pengo)
 
 static struct BurnInputInfo mschampInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Coin 3",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p3 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
 	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
 
+	{"P3 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p3 coin"},
 	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
@@ -202,17 +198,16 @@ static struct BurnInputInfo mschampInputList[] = {
 STDINPUTINFO(mschamp)
 
 static struct BurnInputInfo eyesInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy2 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -229,8 +224,7 @@ static struct BurnInputInfo eyesInputList[] = {
 STDINPUTINFO(eyes)
 
 static struct BurnInputInfo theglobpInputList[] = {
-	{"Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
@@ -238,6 +232,7 @@ static struct BurnInputInfo theglobpInputList[] = {
 	{"P1 Button 1",		  BIT_DIGITAL,	DrvJoy2 + 5, "p1 fire 1"},
 	{"P1 Button 2",		  BIT_DIGITAL,	DrvJoy2 + 6, "p1 fire 2"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -279,17 +274,16 @@ static struct BurnInputInfo EeekkpInputList[] = {
 STDINPUTINFO(Eeekkp)
 
 static struct BurnInputInfo ponpokoInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5, "p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6, "p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5, "p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, "p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5, "p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5, "p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 button 1",		  BIT_DIGITAL,  DrvJoy1 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6, "p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, "p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -308,16 +302,16 @@ static struct BurnInputInfo ponpokoInputList[] = {
 STDINPUTINFO(ponpoko)
 
 static struct BurnInputInfo vanvanInputList[] = {
-	{"Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy1 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -335,18 +329,16 @@ static struct BurnInputInfo vanvanInputList[] = {
 STDINPUTINFO(vanvan)
 
 static struct BurnInputInfo vanvankInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy1 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -363,17 +355,16 @@ static struct BurnInputInfo vanvankInputList[] = {
 STDINPUTINFO(vanvank)
 
 static struct BurnInputInfo cannonbpInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",	  	  BIT_DIGITAL,	DrvJoy1 + 7, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -389,16 +380,15 @@ static struct BurnInputInfo cannonbpInputList[] = {
 STDINPUTINFO(cannonbp)
 
 static struct BurnInputInfo rocktrv2InputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -415,14 +405,13 @@ static struct BurnInputInfo rocktrv2InputList[] = {
 STDINPUTINFO(rocktrv2)
 
 static struct BurnInputInfo bigbucksInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -439,17 +428,16 @@ static struct BurnInputInfo bigbucksInputList[] = {
 STDINPUTINFO(bigbucks)
 
 static struct BurnInputInfo woodpekInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy2 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -515,17 +503,16 @@ static struct BurnInputInfo bwcasinoInputList[] = {
 STDINPUTINFO(bwcasino)
 
 static struct BurnInputInfo dremshprInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy1 + 4, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -542,17 +529,16 @@ static struct BurnInputInfo dremshprInputList[] = {
 STDINPUTINFO(dremshpr)
 
 static struct BurnInputInfo alibabaInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy1 + 6, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -569,17 +555,16 @@ static struct BurnInputInfo alibabaInputList[] = {
 STDINPUTINFO(alibaba)
 
 static struct BurnInputInfo jumpshotInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,  DrvJoy2 + 5, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
@@ -597,16 +582,16 @@ static struct BurnInputInfo jumpshotInputList[] = {
 STDINPUTINFO(jumpshot)
 
 static struct BurnInputInfo korosukeInputList[] = {
-	{"Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"},
+	{"P1 Start",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
 	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
 	{"P1 Button 1",		  BIT_DIGITAL,	DrvJoy1 + 7, "p1 fire 1"},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"},
+	{"P2 Start",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},

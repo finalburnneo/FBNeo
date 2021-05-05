@@ -8,24 +8,23 @@
 
 //#define PRINT_DEBUG_INFO
 //#define TEST_OVERLAY
-//#define TEST_INPUTS
-//#define TEST_VERSION					L"RC7 v3"
+//#define TEST_VERSION				L"RC7 v3"
 
 #define MIN(x,y) ((x)<(y)?(x):(y))
 #define MAX(x,y) ((x)>(y)?(x):(y))
 
-#define TEXT_ANIM_FRAMES    	8
-#define NUM_RANKS           	7
-#define INFO_FRAMES			      150
+#define TEXT_ANIM_FRAMES    		8
+#define NUM_RANKS           		7
+#define INFO_FRAMES					150
 #define WARNING_FRAMES				180
-#define CHAT_LINES			      7
-#define CHAT_FRAMES			      200
-#define CHAT_FRAMES_EXT 	    350
-#define START_FRAMES          300
-#define END_FRAMES            500
+#define CHAT_LINES					7
+#define CHAT_FRAMES					200
+#define CHAT_FRAMES_EXT 			350
+#define START_FRAMES				300
+#define END_FRAMES					500
 #define DETECTOR_FRAMES				30
 #define WARNING_THRESHOLD			260
-#define WARNING_MAX						510
+#define WARNING_MAX					510
 #define WARNING_MSGCOUNT			4
 #define MAX_CHARACTERS				32
 
@@ -62,11 +61,10 @@ static int frame_warning_count = 0;
 struct TInput {
 	INT32 frame;
 	INT32 values;
-	int stage;
+	int state;
 };
 
-static TInput inputs_p1[2][INPUT_DISPLAY+1] = {};
-static TInput inputs_p2[2][INPUT_DISPLAY+1] = {};
+static TInput display_inputs[2][2][INPUT_DISPLAY+1] = {};
 
 enum {
 	INPUT_UP,
@@ -83,7 +81,7 @@ enum {
 
 #define FPX(x)	((float)(x) * (float)(frame_dest.right - frame_dest.left) + frame_dest.left * frame_ratio)
 #define FPY(x)	((float)(x) * (float)(frame_dest.right - frame_dest.left) + frame_dest.top * frame_ratio)
-#define FS(x)		((float)(x) * (float)frame_scale)
+#define FS(x)	((float)(x) * (float)frame_scale)
 #define FNT_SEP (FNT_SEPARATION * frame_adjust)
 
 bool LoadD3DTextureFromFile(IDirect3DDevice9* device, const char* filename, IDirect3DTexture9*& texture, int& width, int& height);
@@ -623,7 +621,7 @@ static int __cdecl GetMemoryAcbDetectorUpdate(struct BurnArea* pba)
 	}
 
 	// Stage selector for SFA3, introduced in version 3
-	if (kNetVersion >= 3) {
+	if (kNetVersion >= NET_VERSION_SFA3_STAGE) {
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sfa3")) {
 			const char stages[] = { 0,2,4,6,8,10,12,14,16,18,42,22,24,26,28,30,32,34,0,34,0,42,44,0,48,50,52,54,56,58,42,42 };
 			struct BurnInputInfo bii;
@@ -667,13 +665,13 @@ static int __cdecl GetMemoryAcbDetectorUpdate(struct BurnArea* pba)
 		}
 	}
 
-	// Stage selector for SF2HF, introduced in version 5
-	if (kNetVersion >= 5) {
-		/*
+	// Stage selector for SF2HF
+	/*
+	if (kNetVersion >= ) {
 		0 "Disabled" 1 "Balrog",
 		0, 0xFFDD5F, 0x0A 2 "Blanka", 0, 0xFFDD5F, 0x02 3 "Chun-Li", 0, 0xFFDD5F, 0x05 4 "Dhalsim", 0, 0xFFDD5F, 0x07 5 "E.Honda", 0, 0xFFDD5F, 0x01 6 "Guile", 0, 0xFFDD5F, 0x03 7 "Ken", 0, 0xFFDD5F, 0x04 8 "M.Bison", 0, 0xFFDD5F, 0x08 9 "Ryu", 0, 0xFFDD5F, 0x00 10 "Sagat", 0, 0xFFDD5F, 0x09 11 "Vega", 0, 0xFFDD5F, 0x0B 12 "Zangief", 0, 0xFFDD5F, 0x06
-		*/
 	}
+	*/
 
 	gameDetector.UpdateDetectors(pba, gameDetector2p);
 
@@ -686,7 +684,7 @@ void DetectorLoad(const char *game, bool debug, int seed)
  	gameDetector.Load(game);
 
 	// initial state
-	if (kNetVersion >= 3 && seed) {
+	if (kNetVersion >= NET_VERSION_KOF98_MOOD && seed) {
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "kof98")) {
 			srand(seed);
 			for (int i = 0x001000A1; i <= 0x001000C2; i++) {
@@ -768,7 +766,6 @@ void DetectorGetState(int &state, int &score1, int &score2, int &start1, int &st
 	start1 = (gameDetector.dPlayer1.size() > 0) ? gameDetector.dPlayer1[0].memory_start : 0;
 	start2 = (gameDetector.dPlayer2.size() > 0) ? gameDetector.dPlayer2[0].memory_start : 0;
 }
-
 
 //------------------------------------------------------------------------------------------------------------------------------
 // text helper
@@ -1204,76 +1201,60 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 		show_chat = false;
 	}
 
-#ifdef TEST_INPUTS
-	// inputs P1
-	for (int j = 0; j < 2; j++) {
-		for (int i = 0; i < INPUT_DISPLAY; i++) {
-			static float sep = 0.01f;
-			static float size = 1.f;
-			static float fy = 0.f;
-			static float fx = 0.15f;
-			float x = 0.05f + j * fx;
-			float y = 0.05f + i * sep;
-			INT32 inputs = inputs_p1[j][i].values;
-			wchar_t buf[128];
-			wsprintf(buf, _T("%d"), inputs_p1[j][i].frame);
-			INT32 color;
-			switch (inputs_p1[j][i].stage) {
-				case 0: color = 0xFFFFFFFF; break;
-				case 1: color = 0xFFFF9090; break;
-				case 2: color = 0xFF9090FF; break;
-				case 3: color = 0xFF90FF90; inputs = 0; break;
-				case 4: color = 0xFFFF90FF; break;
+	// read inputs for display
+	if (bVidShowInputs)
+	{
+		// player
+		for (int k = 0; k < 2; k++) {
+			if (kNetGame && !kNetSpectator && k != game_player)
+				continue;
+			// buffer (local = 0, online = 1)
+			for (int j = 0; j < 2; j++) {
+				if (kNetGame && kNetSpectator && j == 1)
+					continue;
+				// input buffer
+				for (int i = 0; i < INPUT_DISPLAY; i++) {
+					const float sep = 0.01f;
+					const float size = 1.f;
+					const float fy = 0.f;
+					const float fx = 0.15f;
+					int player = k;
+					int buffer = j;
+					// get player/buffer depending on netgame
+					if (kNetGame && kNetSpectator && j == 0)
+						buffer = 1;
+					if (kNetGame && !kNetSpectator && j == 0)
+						player = 0;
+					// positions
+					float x = k == 0 ? 0.05f + j * fx : 0.85f - j * fx;
+					float y = 0.05f + i * sep;
+					INT32 values = display_inputs[player][buffer][i].values;
+					wchar_t buf[128];
+					wsprintf(buf, _T("%d"), display_inputs[player][buffer][i].frame);
+					INT32 color;
+					switch (display_inputs[player][buffer][i].state) {
+						case 0: color = 0xFFFFFFFF; break;
+						case 1: color = 0xFFFF9090; break;
+						case 2: color = 0xFF9090FF; break;
+						case 3: color = 0xFF90FF90; values = 0; break;
+						case 4: color = 0xFFFF90FF; break;
+					}
+					fontWrite(buf, x, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
+					x+= sep*2.5f;
+					if (values & (1 << INPUT_LEFT)) { InputRender(x, y, 0); x+= sep; }
+					if (values & (1 << INPUT_RIGHT)) { InputRender(x, y, 1); x+= sep; }
+					if (values & (1 << INPUT_UP)) { InputRender(x, y, 2); x+= sep; }
+					if (values & (1 << INPUT_DOWN)) { InputRender(x, y, 3); x+= sep; }
+					if (values & (1 << INPUT_LP)) { InputRender(x, y, 8); x+= sep; }
+					if (values & (1 << INPUT_MP)) { InputRender(x, y, 9); x+= sep; }
+					if (values & (1 << INPUT_HP)) { InputRender(x, y, 10); x+= sep; }
+					if (values & (1 << INPUT_LK)) { InputRender(x, y, 11); x+= sep; }
+					if (values & (1 << INPUT_MK)) { InputRender(x, y, 12); x+= sep; }
+					if (values & (1 << INPUT_HK)) { InputRender(x, y, 13); x+= sep; }
+				}
 			}
-			fontWrite(buf, x, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
-			x+= sep*2.5f;
-			if (inputs & (1 << INPUT_LEFT)) { InputRender(x, y, 0); x+= sep; }
-			if (inputs & (1 << INPUT_RIGHT)) { InputRender(x, y, 1); x+= sep; }
-			if (inputs & (1 << INPUT_UP)) { InputRender(x, y, 2); x+= sep; }
-			if (inputs & (1 << INPUT_DOWN)) { InputRender(x, y, 3); x+= sep; }
-			if (inputs & (1 << INPUT_LP)) { InputRender(x, y, 8); x+= sep; }
-			if (inputs & (1 << INPUT_MP)) { InputRender(x, y, 9); x+= sep; }
-			if (inputs & (1 << INPUT_HP)) { InputRender(x, y, 10); x+= sep; }
-			if (inputs & (1 << INPUT_LK)) { InputRender(x, y, 11); x+= sep; }
-			if (inputs & (1 << INPUT_MK)) { InputRender(x, y, 12); x+= sep; }
-			if (inputs & (1 << INPUT_HK)) { InputRender(x, y, 13); x+= sep; }
 		}
 	}
-	// inputs P2
-	for (int j = 0; j < 2; j++) {
-		for (int i = 0; i < INPUT_DISPLAY; i++) {
-			static float sep = 0.01f;
-			static float size = 1.f;
-			static float fy = 0.f;
-			static float fx = 0.15f;
-			float x = 0.70f + j * fx;
-			float y = 0.05f + i * sep;
-			INT32 inputs = inputs_p2[j][i].values;
-			wchar_t buf[128];
-			wsprintf(buf, _T("%d"), inputs_p2[j][i].frame);
-			INT32 color;
-			switch (inputs_p2[j][i].stage) {
-			case 0: color = 0xFFFFFFFF; break;
-			case 1: color = 0xFFFF9090; break;
-			case 2: color = 0xFF9090FF; break;
-			case 3: color = 0xFF90FF90; inputs = 0; break;
-			case 4: color = 0xFFFF90FF; break;
-			}
-			fontWrite(buf, x, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
-			x+= sep*2.5f;
-			if (inputs & (1 << INPUT_LEFT)) { InputRender(x, y, 0); x+= sep; }
-			if (inputs & (1 << INPUT_RIGHT)) { InputRender(x, y, 1); x+= sep; }
-			if (inputs & (1 << INPUT_UP)) { InputRender(x, y, 2); x+= sep; }
-			if (inputs & (1 << INPUT_DOWN)) { InputRender(x, y, 3); x+= sep; }
-			if (inputs & (1 << INPUT_LP)) { InputRender(x, y, 8); x+= sep; }
-			if (inputs & (1 << INPUT_MP)) { InputRender(x, y, 9); x+= sep; }
-			if (inputs & (1 << INPUT_HP)) { InputRender(x, y, 10); x+= sep; }
-			if (inputs & (1 << INPUT_LK)) { InputRender(x, y, 11); x+= sep; }
-			if (inputs & (1 << INPUT_MK)) { InputRender(x, y, 12); x+= sep; }
-			if (inputs & (1 << INPUT_HK)) { InputRender(x, y, 13); x+= sep; }
-		}
-	}
-#endif
 
 	gameDetector.Render();
 
@@ -1550,6 +1531,12 @@ void VidOverlaySaveChatHistory(const wchar_t *text)
 	}
 }
 
+bool VidOverlayCanReset()
+{
+	return !game_ranked || gameDetector.state != GameDetector::ST_WAIT_WINNER || kNetVersion < NET_VERSION_RESET_INGAME;
+}
+
+
 void VidDebug(const wchar_t *text, float a, float b)
 {
 #ifdef TEST_VERSION
@@ -1559,61 +1546,55 @@ void VidDebug(const wchar_t *text, float a, float b)
 #endif
 }
 
-void VidDisplayInputs(int slot, int stage)
+void VidDisplayInputs(int slot, int state)
 {
-#ifdef TEST_INPUTS
-	INT32 inputs[2] = {};
+	if (bVidShowInputs)
+	{
+		INT32 inputs[2] = {};
 
-	// read all inputs
-	struct BurnInputInfo bii;
-	memset(&bii, 0, sizeof(bii));
-	for (unsigned int i = 0; i < nGameInpCount; i++) {
-		BurnDrvGetInputInfo(&bii, i);
-		struct GameInp *pgi = &GameInp[i];
+		// read all inputs
+		struct BurnInputInfo bii;
+		memset(&bii, 0, sizeof(bii));
+		for (unsigned int i = 0; i < nGameInpCount; i++) {
+			BurnDrvGetInputInfo(&bii, i);
+			struct GameInp *pgi = &GameInp[i];
+			if (pgi->nInput == GIT_SWITCH && pgi->Input.pVal) {
+				int value = *pgi->Input.pVal;
 
-		if (pgi->nInput == GIT_SWITCH && pgi->Input.pVal) {
-			int value = *pgi->Input.pVal;
+				// P1 inputs
+				if (!strcmp(bii.szInfo, "p1 up")) inputs[0] |= value << INPUT_UP;
+				if (!strcmp(bii.szInfo, "p1 down")) inputs[0] |= value << INPUT_DOWN;
+				if (!strcmp(bii.szInfo, "p1 left")) inputs[0] |= value << INPUT_LEFT;
+				if (!strcmp(bii.szInfo, "p1 right")) inputs[0] |= value << INPUT_RIGHT;
+				if (!strcmp(bii.szInfo, "p1 fire 1")) inputs[0] |= value << INPUT_LP;
+				if (!strcmp(bii.szInfo, "p1 fire 2")) inputs[0] |= value << INPUT_MP;
+				if (!strcmp(bii.szInfo, "p1 fire 3")) inputs[0] |= value << INPUT_HP;
+				if (!strcmp(bii.szInfo, "p1 fire 4")) inputs[0] |= value << INPUT_LK;
+				if (!strcmp(bii.szInfo, "p1 fire 5")) inputs[0] |= value << INPUT_MK;
+				if (!strcmp(bii.szInfo, "p1 fire 6")) inputs[0] |= value << INPUT_HK;
 
-			// P1 inputs
-			if (!strcmp(bii.szInfo, "p1 up")) inputs[0] |= value << INPUT_UP;
-			if (!strcmp(bii.szInfo, "p1 down")) inputs[0] |= value << INPUT_DOWN;
-			if (!strcmp(bii.szInfo, "p1 left")) inputs[0] |= value << INPUT_LEFT;
-			if (!strcmp(bii.szInfo, "p1 right")) inputs[0] |= value << INPUT_RIGHT;
-			if (!strcmp(bii.szInfo, "p1 fire 1")) inputs[0] |= value << INPUT_LP;
-			if (!strcmp(bii.szInfo, "p1 fire 2")) inputs[0] |= value << INPUT_MP;
-			if (!strcmp(bii.szInfo, "p1 fire 3")) inputs[0] |= value << INPUT_HP;
-			if (!strcmp(bii.szInfo, "p1 fire 4")) inputs[0] |= value << INPUT_LK;
-			if (!strcmp(bii.szInfo, "p1 fire 5")) inputs[0] |= value << INPUT_MK;
-			if (!strcmp(bii.szInfo, "p1 fire 6")) inputs[0] |= value << INPUT_HK;
+				// P2 inputs
+				if (!strcmp(bii.szInfo, "p2 up")) inputs[1] |= value << INPUT_UP;
+				if (!strcmp(bii.szInfo, "p2 down")) inputs[1] |= value << INPUT_DOWN;
+				if (!strcmp(bii.szInfo, "p2 left")) inputs[1] |= value << INPUT_LEFT;
+				if (!strcmp(bii.szInfo, "p2 right")) inputs[1] |= value << INPUT_RIGHT;
+				if (!strcmp(bii.szInfo, "p2 fire 1")) inputs[1] |= value << INPUT_LP;
+				if (!strcmp(bii.szInfo, "p2 fire 2")) inputs[1] |= value << INPUT_MP;
+				if (!strcmp(bii.szInfo, "p2 fire 3")) inputs[1] |= value << INPUT_HP;
+				if (!strcmp(bii.szInfo, "p2 fire 4")) inputs[1] |= value << INPUT_LK;
+				if (!strcmp(bii.szInfo, "p2 fire 5")) inputs[1] |= value << INPUT_MK;
+				if (!strcmp(bii.szInfo, "p2 fire 6")) inputs[1] |= value << INPUT_HK;
+			}
+		}
 
-			// P2 inputs
-			if (!strcmp(bii.szInfo, "p2 up")) inputs[1] |= value << INPUT_UP;
-			if (!strcmp(bii.szInfo, "p2 down")) inputs[1] |= value << INPUT_DOWN;
-			if (!strcmp(bii.szInfo, "p2 left")) inputs[1] |= value << INPUT_LEFT;
-			if (!strcmp(bii.szInfo, "p2 right")) inputs[1] |= value << INPUT_RIGHT;
-			if (!strcmp(bii.szInfo, "p2 fire 1")) inputs[1] |= value << INPUT_LP;
-			if (!strcmp(bii.szInfo, "p2 fire 2")) inputs[1] |= value << INPUT_MP;
-			if (!strcmp(bii.szInfo, "p2 fire 3")) inputs[1] |= value << INPUT_HP;
-			if (!strcmp(bii.szInfo, "p2 fire 4")) inputs[1] |= value << INPUT_LK;
-			if (!strcmp(bii.szInfo, "p2 fire 5")) inputs[1] |= value << INPUT_MK;
-			if (!strcmp(bii.szInfo, "p2 fire 6")) inputs[1] |= value << INPUT_HK;
+		// save
+		for (int k = 0; k < 2; k++) {
+			for (int i = 1; i < INPUT_DISPLAY; i++) {
+				display_inputs[k][slot][INPUT_DISPLAY-i] = display_inputs[k][slot][INPUT_DISPLAY-i-1];
+			}
+			display_inputs[k][slot][0].values = inputs[k];
+			display_inputs[k][slot][0].state = state;
+			display_inputs[k][slot][0].frame = nFramesEmulated;
 		}
 	}
-
-	// p1
-	for (int i = 1; i < INPUT_DISPLAY; i++) {
-		inputs_p1[slot][INPUT_DISPLAY-i] = inputs_p1[slot][INPUT_DISPLAY-i-1];
-	}
-	inputs_p1[slot][0].values = inputs[0];
-	inputs_p1[slot][0].stage = stage;
-	inputs_p1[slot][0].frame = nFramesEmulated;
-
-	// p2
-	for (int i = 1; i < INPUT_DISPLAY; i++) {
-		inputs_p2[slot][INPUT_DISPLAY-i] = inputs_p2[slot][INPUT_DISPLAY-i-1];
-	}
-	inputs_p2[slot][0].values = inputs[1];
-	inputs_p2[slot][0].stage = stage;
-	inputs_p2[slot][0].frame = nFramesEmulated;
-#endif
 }

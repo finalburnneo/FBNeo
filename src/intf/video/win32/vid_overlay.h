@@ -24,6 +24,7 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text);
 void VidOverlaySaveFiles(bool save_info, bool save_scores, bool save_characters);
 void VidOverlaySaveInfo();
 void VidOverlaySaveChatHistory(const wchar_t *text);
+bool VidOverlayCanReset();
 
 void VidDebug(const wchar_t *text, float a, float b);
-void VidDisplayInputs(int slot, int stage);
+void VidDisplayInputs(int slot, int state);

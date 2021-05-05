@@ -87,7 +87,9 @@ int NetworkGetInput()
 	}
 	for (i = 0; i < nCommonInputs; i++, j++) {
 		BurnDrvGetInputInfo(&bii, i + nCommonOffset);
-		if (*bii.pVal && _stricmp(bii.szName, "Tilt")) {
+		bool can_tilt = !kNetGame || strcmp(bii.szName, "Tilt");
+		bool can_reset = !kNetGame || VidOverlayCanReset() || (strcmp(bii.szName, "Reset") && strcmp(bii.szName, "Diagnostic") && strcmp(bii.szName, "Service") && strcmp(bii.szName, "Test"));
+		if (*bii.pVal && can_tilt && can_reset) {
 			nControls[j >> 3] |= (1 << (j & 7));
 		}
 	}

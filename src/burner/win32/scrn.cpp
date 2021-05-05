@@ -2373,6 +2373,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidBigOverlay = !bVidBigOverlay;
 			break;
 
+		case MENU_SHOW_INPUTS:
+			bVidShowInputs = !bVidShowInputs;
+			break;
+
 		case MENU_UNRANKED_SCORES:
 			bVidUnrankedScores = !bVidUnrankedScores;
 			break;

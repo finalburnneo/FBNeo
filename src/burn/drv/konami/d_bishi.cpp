@@ -38,6 +38,7 @@ static struct BurnInputInfo BishiInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 3"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
@@ -64,6 +65,7 @@ static struct BurnInputInfo Bishi2pInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 3"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},

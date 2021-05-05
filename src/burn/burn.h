@@ -708,6 +708,19 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define FBF_DONPACHI                                    (1 << 10)
 #define FBF_MAHOU                                       (1 << 11)
 
+enum NetVersion
+{
+	NET_VERSION_60FPS = 2,
+	NET_VERSION_SEKSCAN_FIX = 3,
+	NET_VERSION_SFA3_STAGE = 3,
+	NET_VERSION_KOF98_MOOD = 3,
+	NET_VERSION_MK_FRAMERATE = 5,
+	NET_VERSION_NEOGEO_INPUTS = 5,
+	NET_VERSION_RESET_INGAME = 6,
+	// Current version
+	NET_VERSION	= 6,
+};
+
 #ifdef __cplusplus
  } // End of extern "C"
 #endif

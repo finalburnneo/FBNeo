@@ -1,5 +1,6 @@
 @echo off
 mkdir generated
+md ..\..\..\projectfiles\visualstudio-2015\generated\
 cd ..\..\src\dep\scripts
 echo running perl scripts
 perl cave_sprite_func.pl -o ../../../projectfiles/visualstudio-2015/generated/cave_sprite_func.h

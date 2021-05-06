@@ -1816,7 +1816,13 @@ static bool retro_load_game_common()
 		BurnAcb = StateGetMainRamAcb;
 		BurnAreaScan(ACB_FULLSCAN, &nMin);
 		if (bMainRamFound) {
-			HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", MainRamData, MainRamSize);
+			HandleMessage(RETRO_LOG_INFO, "[Cheevos] System RAM set to %p, size is %zu\n", pMainRamData, nMainRamSize);
+		}
+		if (bMemoryMapFound) {
+			struct retro_memory_map sMemoryMap = {};
+			sMemoryMap.descriptors = sMemoryDescriptors;
+			sMemoryMap.num_descriptors = nMemoryCount;
+			environ_cb(RETRO_ENVIRONMENT_SET_MEMORY_MAPS, &sMemoryMap);
 		}
 
 		// Loading minimal savestate (handle some machine settings)
@@ -2034,6 +2040,14 @@ void retro_unload_game(void)
 	}
 	InputDeInit();
 	driver_inited = false;
+
+	// Reset RetroAchievements stuff
+	pMainRamData = NULL;
+	nMainRamSize = 0;
+	bMainRamFound = false;
+	nMemoryCount = 0;
+	memset(sMemoryDescriptors, 0, sizeof(sMemoryDescriptors));
+	bMemoryMapFound = false;
 }
 
 unsigned retro_get_region() { return RETRO_REGION_NTSC; }

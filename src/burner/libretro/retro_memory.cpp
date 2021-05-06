@@ -76,16 +76,20 @@ int StateGetMainRamAcb(BurnArea *pba)
 		case HARDWARE_NES:
 		case HARDWARE_FDS:
 			if ((strcmp(pba->szName, "CPU Ram") == 0)) {
-				sMemoryDescriptors[nMemoryCount].ptr = pba->Data;
-				sMemoryDescriptors[nMemoryCount].start = 0;
-				sMemoryDescriptors[nMemoryCount].len = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
 				bMemoryMapFound = true;
 				nMemoryCount++;
 			}
 			if ((strcmp(pba->szName, "Work Ram") == 0)) {
-				sMemoryDescriptors[nMemoryCount].ptr = pba->Data;
-				sMemoryDescriptors[nMemoryCount].start = 0x6000;
-				sMemoryDescriptors[nMemoryCount].len = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00006000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
 				bMemoryMapFound = true;
 				nMemoryCount++;
 			}

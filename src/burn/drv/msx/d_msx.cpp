@@ -5347,7 +5347,7 @@ struct BurnDriver BurnDrvMSX_chess = {
 	"msx_chess", NULL, "msx_msx", NULL, "1984",
 	"Chess (Jpn)\0", NULL, "Sony", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_STRATEGY, 0,
 	MSXGetZipName, MSX_chessRomInfo, MSX_chessRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -20411,7 +20411,7 @@ struct BurnDriver BurnDrvMSX_podero = {
 	272, 228, 4, 3
 };
 
-// Sorcery
+// Sorcery (Euro)
 
 static struct BurnRomInfo MSX_sorceryRomDesc[] = {
 	{ "Sorcery (1985)(Virgin Games)(GB).rom",	0x20000, 0x4300eaa9, BRF_PRG | BRF_ESS },
@@ -20422,15 +20422,15 @@ STD_ROM_FN(MSX_sorcery)
 
 struct BurnDriver BurnDrvMSX_sorcery = {
 	"msx_sorcery", NULL, "msx_msx", NULL, "1985",
-	"Sorcery\0", NULL, "Virgin Games", "MSX",
+	"Sorcery (Euro)\0", NULL, "Virgin Games", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_sorceryRomInfo, MSX_sorceryRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Who Dares Wins II
+// Who Dares Wins II (Euro)
 
 static struct BurnRomInfo MSX_whodaresRomDesc[] = {
 	{ "Who Dares Wins II (1986)(Alligata Software)(GB).rom",	0x20000, 0x1d10443f, BRF_PRG | BRF_ESS },
@@ -20441,15 +20441,15 @@ STD_ROM_FN(MSX_whodares)
 
 struct BurnDriver BurnDrvMSX_whodares = {
 	"msx_whodares", NULL, "msx_msx", NULL, "1986",
-	"Who Dares Wins II\0", NULL, "Alligata Software", "MSX",
+	"Who Dares Wins II (Euro)\0", NULL, "Alligata Software", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_whodaresRomInfo, MSX_whodaresRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
-// Manic Miner
+// Manic Miner (Euro)
 
 static struct BurnRomInfo MSX_manicminerRomDesc[] = {
 	{ "Manic Miner (1984)(Software Projects)(GB).rom",	0x10000, 0x4b5cf16a, BRF_PRG | BRF_ESS },
@@ -20460,9 +20460,9 @@ STD_ROM_FN(MSX_manicminer)
 
 struct BurnDriver BurnDrvMSX_manicminer = {
 	"msx_manicminer", NULL, "msx_msx", NULL, "1984",
-	"Manic Miner\0", NULL, "Software Projects", "MSX",
+	"Manic Miner (Euro)\0", NULL, "Software Projects", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_manicminerRomInfo, MSX_manicminerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -27089,6 +27089,25 @@ struct BurnDriver BurnDrvMSX_mystical = {
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_mysticalRomInfo, MSX_mysticalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// No (Jpn)
+
+static struct BurnRomInfo MSX_noRomDesc[] = {
+	{ "No (19--)(Unknown).rom",	16384, 0x54b26edd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_no, MSX_no, msx_msx)
+STD_ROM_FN(MSX_no)
+
+struct BurnDriver BurnDrvMSX_no = {
+	"msx_no", NULL, "msx_msx", NULL, "19??",
+	"No (Jpn)\0", NULL, "Unknown", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_noRomInfo, MSX_noRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

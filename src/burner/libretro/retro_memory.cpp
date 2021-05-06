@@ -60,9 +60,24 @@ int StateGetMainRamAcb(BurnArea *pba)
 			return 0;
 		case HARDWARE_SEGA_MEGADRIVE:
 			if ((strcmp(pba->szName, "RAM") == 0)) {
-				pMainRamData = pba->Data;
-				nMainRamSize = pba->nLen;
-				bMainRamFound = true;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
+				bMemoryMapFound = true;
+				nMemoryCount++;
+			}
+			if ((strcmp(pba->szName, "NV RAM") == 0)) {
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SAVE_RAM;
+				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
+				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
+				sMemoryDescriptors[nMemoryCount].select    = 0;
+				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
+				bMemoryMapFound = true;
+				nMemoryCount++;
 			}
 			return 0;
 		case HARDWARE_SEGA_MASTER_SYSTEM:
@@ -76,6 +91,7 @@ int StateGetMainRamAcb(BurnArea *pba)
 		case HARDWARE_NES:
 		case HARDWARE_FDS:
 			if ((strcmp(pba->szName, "CPU Ram") == 0)) {
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
 				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
@@ -85,6 +101,7 @@ int StateGetMainRamAcb(BurnArea *pba)
 				nMemoryCount++;
 			}
 			if ((strcmp(pba->szName, "Work Ram") == 0)) {
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
 				sMemoryDescriptors[nMemoryCount].start     = 0x00006000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;

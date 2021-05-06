@@ -2738,8 +2738,8 @@ static struct BurnRomInfo galaga88RomDesc[] = {
 	{ "g81_p0.bin",		0x10000, 0x0f0778ca, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
 	{ "g81_p1.bin",		0x10000, 0xe68cb351, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "g81_p5.bin",		0x10000, 0x4fbd3f6c, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "g8x_p6.bin",		0x10000, 0x403d01c1, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "g8x_p7.bin",		0x10000, 0xdf75b7fc, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "g82_p6.bin",		0x10000, 0x403d01c1, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "g82_p7.bin",		0x10000, 0xdf75b7fc, 2 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  7 Internal MCU Code
 

@@ -7843,7 +7843,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="manicminer" romof="msx">
-		<description>Manic Miner</description>
+		<description>Manic Miner (Euro)</description>
 		<year>1984</year>
 		<manufacturer>Software Projects</manufacturer>
 		<rom name="Manic Miner (1984)(Software Projects)(GB).rom" size="65536" crc="4b5cf16a"/>
@@ -9236,6 +9236,17 @@
 		<year>1984</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="ninjya kage (japan) (alt 1).rom" size="16384" crc="56bd8018"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="no" romof="msx">
+		<description>No (Jpn)</description>
+		<year>19??</year>
+		<manufacturer>Unknown</manufacturer>
+		<rom name="No (19--)(Unknown).rom" size="16384" crc="54b26edd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11247,7 +11258,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sorcery" romof="msx">
-		<description>Sorcery</description>
+		<description>Sorcery (Euro)</description>
 		<year>1985</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="Sorcery (1985)(Virgin Games)(GB).rom" size="131072" crc="4300eaa9"/>
@@ -13603,7 +13614,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="whodares" romof="msx">
-		<description>Who Dares Wins II</description>
+		<description>Who Dares Wins II (Euro)</description>
 		<year>1986</year>
 		<manufacturer>Alligata Software</manufacturer>
 		<rom name="Who Dares Wins II (1986)(Alligata Software)(GB).rom" size="131072" crc="1d10443f"/>

@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16859 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16861 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -7975,9 +7975,9 @@ This list contains all games supported by FinalBurn Neo.
 | maniacsp	|  	| Maniac Square (prototype)				| maniacsq	| 1996	| Gaelco	| Miscellaneous	| 					|
 | maniacsqu	|  	| Maniac Square (unprotected, Version 1.0, Checksum BB73| maniacsq	| 1996	| Gaelco	| Miscellaneous	| 					|
 | spec_mminer	|  	| Manic Miner (Bug-Byte Software) (48K)			| 		| 1983	| Bug-Byte Softw| ZX Spectrum	| 					|
+| msx_manicminer|  	| Manic Miner (Euro)					| 		| 1984	| Software Proje| MSX		| 					|
 | spec_mminersp	|  	| Manic Miner (Software Projects) (48K)			| 		| 1983	| Software Proje| ZX Spectrum	| 					|
 | spec_mminrelb	|  	| Manic Miner - Eugene - Lord of the Bathroom (48K)	| 		| 1999	| Manic Miner Te| ZX Spectrum	| 					|
-| msx_manicminer|  	| Manic Miner						| 		| 1984	| Software Proje| MSX		| 					|
 | manybloc	|  	| Many Block						| 		| 1991	| Bee-Oh	| NMK16		| 					|
 | sms_maougolv	|  	| Maou Golvellius (Jpn)					| sms_golvell	| 1988	| Sega		| Sega Master Sy| 					|
 | sms_maougolvp	|  	| Maou Golvellius (Jpn, Prototype)			| sms_golvell	| 1988	| Sega		| Sega Master Sy| 					|
@@ -9514,6 +9514,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_nixyseedsofd|  	| Nixy and the Seeds of Doom 128k (HB)			| 		| 2019	| Bubblesoft	| ZX Spectrum	| 					|
 | spec_nixyglaspri|  	| Nixy the Glade Sprite 128k (HB)			| 		| 2018	| Bubblesoft	| ZX Spectrum	| 					|
 | nmk004	|   NW	| NMK004 Internal ROM					| 		| 1990	| N M K Corporat| NMK16		| internal rom				|
+| msx_no	|  	| No (Jpn)						| 		| 19??	| Unknown	| MSX		| 					|
 | md_noescape	|  	| No Escape (USA)					| 		| 1994	| Psygnosis	| Sega Megadrive| 					|
 | nes_noahsark	|  	| Noah's Ark (Europe)					| 		| 1992	| Konami	| Miscellaneous	| 					|
 | nob		|   NW	| Noboranka (Japan)					| 		| 1986	| Data East Corp| System 1	| 					|
@@ -12582,7 +12583,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_sorcerk1	|  	| Sorcerer's Kingdom (USA)				| md_sorcerk	| 1992	| Treco		| Sega Megadrive| 					|
 | md_sorcerk	|  	| Sorcerer's Kingdom (USA, v1.1)			| 		| 1992	| Treco		| Sega Megadrive| 					|
 | md_sorcer	|  	| Sorcerian (Jpn)					| 		| 1990	| Sega		| Sega Megadrive| 					|
-| msx_sorcery	|  	| Sorcery						| 		| 1985	| Virgin Games	| MSX		| 					|
+| msx_sorcery	|  	| Sorcery (Euro)					| 		| 1985	| Virgin Games	| MSX		| 					|
 | kokoroj	|  	| Soreike Kokology (Rev A)				| 		| 1992	| Sega		| System 32	| 					|
 | kokoroj2	|  	| Soreike Kokology Vol. 2 - Kokoro no Tanteikyoku	| 		| 1993	| Sega		| System 32	| 					|
 | ngp_hanadojo	|  	| Soreike!! Hanafuda Doujou (Jpn)			| 		| 1999	| Dyna		| NeoGeo Pocket | 					|
@@ -15080,6 +15081,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_timekill	|  	| Time Killers (Euro)					| 		| 1996	| Black Pearl	| Sega Megadrive| 					|
 | md_timekillu	|  	| Time Killers (USA)					| md_timekill	| 1996	| Black Pearl	| Sega Megadrive| 					|
 | timekill100	|  	| Time Killers (v1.00)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
+| timekill120	|  	| Time Killers (v1.20)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill121	|  	| Time Killers (v1.21)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill121a	|  	| Time Killers (v1.21, alternate ROM board)		| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
 | timekill131	|  	| Time Killers (v1.31)					| timekill	| 1992	| Strata/Incredi| Miscellaneous	| 					|
@@ -16079,7 +16081,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_whiteheat|  	| White Heat						| 		| 1987	| Codemasters	| ZX Spectrum	| 					|
 | spec_whitejaguar|  	| White Jaguar (HB)					| 		| 2020	| Romancha	| ZX Spectrum	| 					|
 | whizz		|  	| Whizz							| twinfalc	| 1989	| Philko	| Miscellaneous	| 					|
-| msx_whodares	|  	| Who Dares Wins II					| 		| 1986	| Alligata Softw| MSX		| 					|
+| msx_whodares	|  	| Who Dares Wins II (Euro)				| 		| 1986	| Alligata Softw| MSX		| 					|
 | spec_whodareswinsii|  	| Who Dares Wins II					| 		| 1986	| Alligata	| ZX Spectrum	| 					|
 | nes_whofrarograb|  	| Who Framed Roger Rabbit (USA)				| 		| 1989	| LJN		| Miscellaneous	| 					|
 | nes_whompem	|  	| Whomp 'Em (USA)					| 		| 1991	| Jaleco	| Miscellaneous	| 					|

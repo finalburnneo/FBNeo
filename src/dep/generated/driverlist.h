@@ -8087,9 +8087,9 @@ DRV		BurnDrvManiacsq;
 DRV		BurnDrvManiacsp;
 DRV		BurnDrvManiacsqu;
 DRV		BurnSpecmminer;
+DRV		BurnDrvMSX_manicminer;
 DRV		BurnSpecmminersp;
 DRV		BurnSpecmminrelb;
-DRV		BurnDrvMSX_manicminer;
 DRV		BurnDrvManybloc;
 DRV		BurnDrvsms_maougolv;
 DRV		BurnDrvsms_maougolvp;
@@ -9644,6 +9644,7 @@ DRV		BurnDrvnes_nixrelic;
 DRV		BurnSpecnixyseedsofd;
 DRV		BurnSpecnixyglaspri;
 DRV		BurnDrvnmk004;
+DRV		BurnDrvMSX_no;
 DRV		BurnDrvmd_noescape;
 DRV		BurnDrvnes_noahsark;
 DRV		BurnDrvNob;
@@ -15282,6 +15283,7 @@ DRV		BurnDrvTimefgtr;
 DRV		BurnDrvmd_timekill;
 DRV		BurnDrvmd_timekillu;
 DRV		BurnDrvTimekill100;
+DRV		BurnDrvTimekill120;
 DRV		BurnDrvTimekill121;
 DRV		BurnDrvTimekill121a;
 DRV		BurnDrvTimekill131;
@@ -25199,9 +25201,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvManiacsp,			// Maniac Square (prototype)
 	&BurnDrvManiacsqu,			// Maniac Square (unprotected, Version 1.0, Checksum BB73)
 	&BurnSpecmminer,			// Manic Miner (Bug-Byte Software) (48K)
+	&BurnDrvMSX_manicminer,		// Manic Miner (Euro)
 	&BurnSpecmminersp,			// Manic Miner (Software Projects) (48K)
 	&BurnSpecmminrelb,			// Manic Miner - Eugene - Lord of the Bathroom (48K)
-	&BurnDrvMSX_manicminer,		// Manic Miner
 	&BurnDrvManybloc,			// Many Block
 	&BurnDrvsms_maougolv,		// Maou Golvellius (Jpn)
 	&BurnDrvsms_maougolvp,		// Maou Golvellius (Jpn, Prototype)
@@ -26756,6 +26758,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecnixyseedsofd,		// Nixy and the Seeds of Doom 128k (HB)
 	&BurnSpecnixyglaspri,		// Nixy the Glade Sprite 128k (HB)
 	&BurnDrvnmk004,				// NMK004 Internal ROM [internal rom, NOT WORKING]
+	&BurnDrvMSX_no,				// No (Jpn)
 	&BurnDrvmd_noescape,		// No Escape (USA)
 	&BurnDrvnes_noahsark,		// Noah's Ark (Europe)
 	&BurnDrvNob,				// Noboranka (Japan) [no comment, NOT WORKING]
@@ -29868,7 +29871,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_sorcerk1,		// Sorcerer's Kingdom (USA)
 	&BurnDrvmd_sorcerk,			// Sorcerer's Kingdom (USA, v1.1)
 	&BurnDrvmd_sorcer,			// Sorcerian (Jpn)
-	&BurnDrvMSX_sorcery,		// Sorcery
+	&BurnDrvMSX_sorcery,		// Sorcery (Euro)
 	&BurnDrvKokoroj,			// Soreike Kokology (Rev A)
 	&BurnDrvKokoroj2,			// Soreike Kokology Vol. 2 - Kokoro no Tanteikyoku
 	&BurnDrvngpc_hanadojo,		// Soreike!! Hanafuda Doujou (Jpn)
@@ -32394,6 +32397,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_timekill,		// Time Killers (Euro)
 	&BurnDrvmd_timekillu,		// Time Killers (USA)
 	&BurnDrvTimekill100,		// Time Killers (v1.00)
+	&BurnDrvTimekill120,		// Time Killers (v1.20)
 	&BurnDrvTimekill121,		// Time Killers (v1.21)
 	&BurnDrvTimekill121a,		// Time Killers (v1.21, alternate ROM board)
 	&BurnDrvTimekill131,		// Time Killers (v1.31)
@@ -33419,7 +33423,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecWhiteheat,			// White Heat
 	&BurnSpecWhitejaguar,		// White Jaguar (HB)
 	&BurnDrvWhizz,				// Whizz
-	&BurnDrvMSX_whodares,		// Who Dares Wins II
+	&BurnDrvMSX_whodares,		// Who Dares Wins II (Euro)
 	&BurnSpecWhodareswinsii,	// Who Dares Wins II
 	&BurnDrvnes_whofrarograb,	// Who Framed Roger Rabbit (USA)
 	&BurnDrvnes_whompem,		// Whomp 'Em (USA)

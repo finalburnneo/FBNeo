@@ -60,9 +60,9 @@ int StateGetMainRamAcb(BurnArea *pba)
 			return 0;
 		case HARDWARE_SEGA_MEGADRIVE:
 			if ((strcmp(pba->szName, "RAM") == 0)) {
-				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SYSTEM_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
-				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
+				sMemoryDescriptors[nMemoryCount].start     = 0x00FF0000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
 				sMemoryDescriptors[nMemoryCount].select    = 0;
 				sMemoryDescriptors[nMemoryCount].addrspace = pba->szName;
@@ -70,7 +70,7 @@ int StateGetMainRamAcb(BurnArea *pba)
 				nMemoryCount++;
 			}
 			if ((strcmp(pba->szName, "NV RAM") == 0)) {
-				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SAVE_RAM;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SAVE_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
 				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
@@ -91,7 +91,7 @@ int StateGetMainRamAcb(BurnArea *pba)
 		case HARDWARE_NES:
 		case HARDWARE_FDS:
 			if ((strcmp(pba->szName, "CPU Ram") == 0)) {
-				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SYSTEM_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
 				sMemoryDescriptors[nMemoryCount].start     = 0x00000000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;
@@ -101,7 +101,7 @@ int StateGetMainRamAcb(BurnArea *pba)
 				nMemoryCount++;
 			}
 			if ((strcmp(pba->szName, "Work Ram") == 0)) {
-				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMORY_SYSTEM_RAM;
+				sMemoryDescriptors[nMemoryCount].flags     = RETRO_MEMDESC_SYSTEM_RAM;
 				sMemoryDescriptors[nMemoryCount].ptr       = pba->Data;
 				sMemoryDescriptors[nMemoryCount].start     = 0x00006000;
 				sMemoryDescriptors[nMemoryCount].len       = pba->nLen;

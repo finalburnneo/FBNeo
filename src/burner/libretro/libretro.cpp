@@ -1291,8 +1291,6 @@ bool retro_serialize(void *data, size_t size)
 	// hiscores are causing desync in netplay
 	if (kNetGame == 1)
 		EnableHiscores = false;
-	if (size != state_size)
-		return false;
 
 	BurnAcb = burn_write_state_cb;
 	write_state_ptr = (uint8_t*)data;
@@ -1313,8 +1311,6 @@ bool retro_unserialize(const void *data, size_t size)
 	// hiscores are causing desync in netplay
 	if (kNetGame == 1)
 		EnableHiscores = false;
-	if (size != state_size)
-		return false;
 
 	BurnAcb = burn_read_state_cb;
 	read_state_ptr = (const uint8_t*)data;

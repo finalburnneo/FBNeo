@@ -81,12 +81,14 @@ static void AnalyzeGameLayout()
 	INT32 nPunchInputs[MAX_PLAYERS][3];
 	INT32 nKickx3[MAX_PLAYERS] = {0, };
 	INT32 nKickInputs[MAX_PLAYERS][3];
+	INT32 nNeogeoButtons[MAX_PLAYERS][4];
 
 	bStreetFighterLayout = false;
 	nMahjongKeyboards = 0;
 	bVolumeIsFireButton = false;
 	nFireButtons = 0;
 	nMacroCount = 0;
+	memset(&nNeogeoButtons, 0, sizeof(nNeogeoButtons));
 
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		bii.szName = NULL;
@@ -145,12 +147,27 @@ static void AnalyzeGameLayout()
 				nKickx3[nPlayer] |= 4;
 				nKickInputs[nPlayer][2] = i;
 			}
+
+			if (is_neogeo_game) {
+				if (_stricmp(" Button A", bii.szName + 2) == 0) {
+					nNeogeoButtons[nPlayer][0] = i;
+				}
+				if (_stricmp(" Button B", bii.szName + 2) == 0) {
+					nNeogeoButtons[nPlayer][1] = i;
+				}
+				if (_stricmp(" Button C", bii.szName + 2) == 0) {
+					nNeogeoButtons[nPlayer][2] = i;
+				}
+				if (_stricmp(" Button D", bii.szName + 2) == 0) {
+					nNeogeoButtons[nPlayer][3] = i;
+				}
+			}
 		}
 	}
 
 	pgi = GameInp + nGameInpCount;
 
-	// We only support 3xPunch & 3xKick for now
+	// We only support macros deemed "most useful" for now
 	for (UINT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
 		if (nPunchx3[nPlayer] == 7) {		// Create a 3x punch macro
 			pgi->nInput = GIT_MACRO_AUTO;
@@ -180,6 +197,66 @@ static void AnalyzeGameLayout()
 			nMacroCount++;
 			pgi++;
 		}
+		// supposedly, those are the 4 most useful neogeo macros
+		if (is_neogeo_game) {
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			sprintf(pgi->Macro.szName, "P%i Buttons AB", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][0]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][1]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			sprintf(pgi->Macro.szName, "P%i Buttons CD", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][2]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][3]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			sprintf(pgi->Macro.szName, "P%i Buttons ABC", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][0]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][1]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][2]);
+			pgi->Macro.pVal[2] = bii.pVal;
+			pgi->Macro.nVal[2] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			sprintf(pgi->Macro.szName, "P%i Buttons BCD", nPlayer + 1);
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][1]);
+			pgi->Macro.pVal[0] = bii.pVal;
+			pgi->Macro.nVal[0] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][2]);
+			pgi->Macro.pVal[1] = bii.pVal;
+			pgi->Macro.nVal[1] = 1;
+			BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][3]);
+			pgi->Macro.pVal[2] = bii.pVal;
+			pgi->Macro.nVal[2] = 1;
+			nMacroCount++;
+			pgi++;
+		}
 	}
 
 	if ((nPunchx3[0] == 7) && (nKickx3[0] == 7)) {
@@ -196,8 +273,8 @@ INT32 GameInpInit()
 	nGameInpCount = 0;
 	nMacroCount = 0;
 
-	// We only support 3xPunch & 3xKick for now
-	nMaxMacro = nMaxPlayers * 2;
+	// We only support up to 4 macros for now
+	nMaxMacro = nMaxPlayers * 4;
 
 	while (BurnDrvGetInputInfo(NULL,nGameInpCount) == 0)
 		nGameInpCount++;
@@ -1928,6 +2005,16 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L : RETRO_DEVICE_ID_JOYPAD_L2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
 			if (strncmp("Buttons 3x Kick", description, 15) == 0)
 				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L2 : RETRO_DEVICE_ID_JOYPAD_R2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+		}
+		if (is_neogeo_game) {
+			if (strncmp("Buttons ABC", description, 11) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L2 : RETRO_DEVICE_ID_JOYPAD_R2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+			if (strncmp("Buttons BCD", description, 11) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_L : RETRO_DEVICE_ID_JOYPAD_L2), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+			if (strncmp("Buttons AB", description, 10) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R2 : RETRO_DEVICE_ID_JOYPAD_R), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
+			if (strncmp("Buttons CD", description, 10) == 0)
+				GameInpDigital2RetroInpKey(pgi, nPlayer, (nDeviceType[nPlayer] == RETROPAD_MODERN ? RETRO_DEVICE_ID_JOYPAD_R : RETRO_DEVICE_ID_JOYPAD_L), description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
 		}
 
 		// assign per player mahjong controls (require 1 keyboard per player, does the frontend actually support this ?)

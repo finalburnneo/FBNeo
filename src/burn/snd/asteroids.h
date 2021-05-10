@@ -1,6 +1,7 @@
 void asteroid_sound_init();
 void asteroid_sound_exit();
 void asteroid_sound_reset();
+void asteroid_sound_scan();
 void asteroid_sound_update(INT16 *buffer, INT32 length);
 void asteroid_explode_w(UINT8 data);
 void asteroid_thump_w(UINT8 data);

@@ -3,9 +3,11 @@
   Lunar Lander Specific Sound Code
 
 ***************************************************************************/
+// + dink refinements may 2021
 
 #include <math.h>
 #include "burnint.h"
+#include "biquad.h"
 #include "llander.h"
 
 /* Variables for the lander custom sound support */
@@ -34,6 +36,10 @@ static INT32 volume;
 static INT32 tone_6khz;
 static INT32 tone_3khz;
 static INT32 llander_explosion;
+
+static BIQ biquad_explode;
+static BIQ biquad_thrust;
+static BIQ biquad_thrust_bp;
 
 void llander_sound_init()
 {
@@ -85,17 +91,18 @@ void llander_sound_init()
 //		logerror("LFSR Buffer: %04x    Next=%04x\n",loop, lfsr_buffer[loop]);
 	}
 
-	/* Allocate channel and buffer */
-
-//	sample_buffer = (INT16*)BurnMalloc(sizeof(INT16)*buffer_len);
-//	memset(sample_buffer,0,sizeof(INT16)*buffer_len);
+	biquad_explode.init(FILT_LOWPASS, nBurnSoundRate, 1160.00, 1.00, 0);
+	biquad_thrust.init(FILT_LOWPASS, nBurnSoundRate, 560.00, 1.00, 0);
+	biquad_thrust_bp.init(FILT_BANDPASS, nBurnSoundRate, 89.50, 7.600, 0);
 }
 
 void llander_sound_exit()
 {
 	BurnFree(lfsr_buffer);
-  //  BurnFree(sample_buffer);
 
+	biquad_explode.exit();
+	biquad_thrust.exit();
+	biquad_thrust_bp.exit();
 }
 
 
@@ -169,11 +176,26 @@ void llander_sound_exit()
 
 ***************************************************************************/
 
+static INT16 dac_lastin_r  = 0;
+static INT16 dac_lastout_r = 0;
+
+static INT32 dcfilter(INT32 sam) // for llander!
+{
+	// dc-blocking filter
+	INT16 outr = sam - dac_lastin_r + 0.997 * dac_lastout_r;
+
+	dac_lastin_r = sam;
+	dac_lastout_r = outr;
+
+	return outr;
+}
+
+static INT32 sampnum=0;
+static INT32 noisetarg=0,noisecurrent=0;
+static INT32 lastoversampnum=0;
+
 void llander_sound_update(INT16 *buffer, INT32 n)
 {
-	static INT32 sampnum=0;
-	static INT32 noisetarg=0,noisecurrent=0;
-	static INT32 lastoversampnum=0;
 	INT32 loop,sample;
 	INT32 oversampnum,loop2;
 
@@ -201,7 +223,10 @@ void llander_sound_update(INT16 *buffer, INT32 n)
 		}
 
 		sample=(int)(noisecurrent>>16);
-		sample<<=1;	/* Gain = 2 */
+		sample<<=1+5;	/* Gain = 2 */
+		INT32 thrustsample = biquad_thrust.filter(biquad_thrust_bp.filter(sample));
+		INT32 explodesample = 0;
+		sample = 0;
 
 		if(tone_3khz)
 		{
@@ -213,13 +238,15 @@ void llander_sound_update(INT16 *buffer, INT32 n)
 		}
 		if(llander_explosion)
 		{
-			sample+=(int)(noisecurrent>>(16-2));	/* Gain of 4 */
+			explodesample=(int)(noisecurrent>>16);
+			explodesample = dcfilter(explodesample<<2); /* Gain of 4 */
+			explodesample = biquad_explode.filter(explodesample) + explodesample;
 		}
 
 		/* Scale ouput down to buffer */
-		INT16 psample = AUDIO_CONV16(sample<<5);
-		buffer[loop*2+0] = psample;
-		buffer[loop*2+1] = psample;
+		INT32 psample = (sample<<5) + (thrustsample<<2) + (explodesample<<4);
+		buffer[loop*2+0] = BURN_SND_CLIP(psample);
+		buffer[loop*2+1] = BURN_SND_CLIP(psample);
 
 		sampnum++;
 		lastoversampnum=oversampnum;
@@ -231,12 +258,37 @@ void llander_sound_lfsr_reset()
 	lfsr_index=0;
 }
 
+void llander_sound_scan()
+{
+	SCAN_VAR(volume);
+	SCAN_VAR(tone_3khz);
+	SCAN_VAR(tone_6khz);
+	SCAN_VAR(llander_explosion);
+	SCAN_VAR(sampnum);
+	SCAN_VAR(noisetarg);
+	SCAN_VAR(noisecurrent);
+	SCAN_VAR(lastoversampnum);
+	SCAN_VAR(dac_lastin_r);
+	SCAN_VAR(dac_lastout_r);
+}
+
 void llander_sound_reset()
 {
 	volume = 0;
 	tone_3khz = 0;
 	tone_6khz = 0;
 	llander_explosion = 0;
+
+	sampnum = 0;
+	noisetarg = 0;
+	noisecurrent = 0;
+	lastoversampnum = 0;
+	dac_lastin_r = 0;
+	dac_lastout_r = 0;
+
+	biquad_explode.reset();
+	biquad_thrust.reset();
+	biquad_thrust_bp.reset();
 }
 
 void llander_sound_write(UINT8 data)

@@ -5,3 +5,4 @@ void llander_sound_update(INT16 *buffer, INT32 n);
 void llander_sound_lfsr_reset();
 void llander_sound_reset();
 void llander_sound_write(UINT8 data);
+void llander_sound_scan();

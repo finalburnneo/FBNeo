@@ -31,6 +31,11 @@
  #include <cmath>
 #endif
 
+// Play Gaiapolis w/o the ROZ layer (for low-memory systems)
+// Monster Maulers is unplayable with this enabled, as most of the bosses are
+// made from this missing layer.
+#define NO_ROZLAYER 0
+
 static UINT8 *AllMem;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvZ80ROM;
@@ -2398,7 +2403,9 @@ static void GaiapolisRozTilemapdraw()
 	UINT8 *dat1 = DrvGfxROM3;
 	UINT8 *dat2 = DrvGfxROM3 + 0x20000;
 	UINT8 *dat3 = DrvGfxROM3 + 0x60000;
-
+#if NO_ROZLAYER
+	return;
+#endif
 	K053936_external_bitmap = pMystwarrRozBitmap;
 
 	for (INT32 offs = 0; offs < 512 * 512; offs++)
@@ -2517,6 +2524,7 @@ static INT32 GaiapolisInit()
 	EEPROMInit(&gaiapolis_eeprom_interface);
 
 	{
+#if NO_ROZLAYER == 0
 		DrvGfxExpand(DrvGfxROM2	, 0x180000);
 		if ((pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16) * 2)) == NULL) return 1;
 		GaiapolisRozTilemapdraw();
@@ -2524,6 +2532,7 @@ static INT32 GaiapolisInit()
 		m_k053936_0_ctrl = (UINT16*)DrvK053936Ctrl;
 		m_k053936_0_linectrl = (UINT16*)DrvK053936RAM;
 		K053936GP_set_offset(0, -44, -17);
+#endif
 	}
 
 	K054539Init(0, 48000, DrvSndROM, 0x400000);
@@ -2560,7 +2569,9 @@ static void DadandrnRozTilemapdraw()
 {
 	UINT8 *dat1 = DrvGfxROM3;
 	UINT8 *dat2 = DrvGfxROM3 + 0x40000;
-
+#if NO_ROZLAYER
+	return;
+#endif
 	K053936_external_bitmap = pMystwarrRozBitmap;
 
 	for (INT32 offs = 0; offs < 512 * 512; offs++)
@@ -2675,12 +2686,14 @@ static INT32 DadandrnInit()
 	EEPROMInit(&mystwarr_eeprom_interface);
 
 	{
+#if NO_ROZLAYER == 0
 		if ((pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16) * 2)) == NULL) return 1;
 		DadandrnRozTilemapdraw();
 
 		m_k053936_0_ctrl = (UINT16*)DrvK053936Ctrl;
 		m_k053936_0_linectrl = (UINT16*)DrvK053936RAM;
 		K053936GP_set_offset(0, -24-8, -17);
+#endif
 	}
 
 	K054539Init(0, 48000, DrvSndROM, 0x400000);

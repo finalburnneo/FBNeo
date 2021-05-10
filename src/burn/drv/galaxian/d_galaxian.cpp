@@ -16577,11 +16577,11 @@ static struct BurnRomInfo OffensivRomDesc[] = {
 	{ "2716-9j.bin",   0x00800, 0xfa4f1a70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2716-9l.bin",   0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2716-9m.bin",   0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9p.bin",   0x00800, 0xfe2866f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9p.bin",   0x00800, 0x015e580f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "2716-5c.bin",   0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 	{ "2716-5d.bin",   0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "2716-5e.bin",   0x00800, 0xad833f7e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5e.bin",   0x00800, 0xba2fa933, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
 	{ "2716-6f.bin",   0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "2716-6h.bin",   0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },

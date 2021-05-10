@@ -7204,6 +7204,14 @@
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kingsbea">
+		<description>Kings of the Beach (USA)</description>
+		<year>1990</year>
+		<manufacturer>Ultra Games</manufacturer>
+		<rom name="Kings of the Beach (USA).nes" size="65552" crc="ba602ea1"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kinni">
 		<description>Kinnikuman - Muscle Tag Match (Japan)</description>
 		<year>1985</year>
@@ -8809,6 +8817,22 @@
 		<year>1990</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Mission Impossible (USA).nes" size="262160" crc="c956b3af"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="missisatjikj" cloneof="missisatjik" romof="missisatjik">
+		<description>Mississippi Satsujin Jiken (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Mississippi Satsujin Jiken (Japan).nes" size="163856" crc="5d003ead"/>
+		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="missisatjik">
+		<description>Mississippi Satsujin Jiken (T-Eng)</description>
+		<year>1989?</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Mississippi Satsujin Jiken (T-Eng).nes" size="163856" crc="f698e872"/>
 		<video orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

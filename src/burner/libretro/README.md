@@ -2,7 +2,11 @@
 
 ## How to build
 
-From the root of the repository, run `make -j5 -C src/burner/libretro`
+From the root of the repository, run 
+```
+make -j5 -C src/burner/libretro generate-files
+make -j5 -C src/burner/libretro
+```
 
 ## Roms
 
@@ -92,7 +96,7 @@ Most likely for the same reason as above.
 
 ### Game XXX runs faster in MAME2003/MAME2010, why ?
 Overall, FBNeo is slower than old MAME version because it's more accurate (meaning less bugs).
-This libretro port also support various features which are usually buggy or absent in MAME cores (runahead, netplay, rewind, retroachievements, ...). It might use additional resources.
+This libretro port also support various features which are usually buggy or absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), so it might use additional resources.
 
 ### How do i use cheat code ?
 From a libretro point of view, there should be partial support through the API relying on main ram exposition. 

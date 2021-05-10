@@ -168,7 +168,7 @@
 		<description>Be Ball</description>
 		<year>1990</year>
 		<manufacturer>Hudson</manufacturer>
-		<rom name="be ball (japan).pce" size="262144" crc="e439f299"/>
+		<rom name="be ball (japan).pce" size="262144" crc="261f1013"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -856,7 +856,7 @@
 		<description>Gomola Speed</description>
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
-		<rom name="gomola speed (japan).pce" size="393216" crc="9a353afd"/>
+		<rom name="gomola speed (japan).pce" size="393216" crc="4bd38f17"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2544,7 +2544,7 @@
 		<description>Youkai Douchuuki</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
-		<rom name="youkai douchuuki (japan).pce" size="262144" crc="f131b706"/>
+		<rom name="youkai douchuuki (japan).pce" size="262144" crc="80c3f824"/>
 		<video orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

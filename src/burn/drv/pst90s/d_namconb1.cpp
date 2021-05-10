@@ -2008,7 +2008,7 @@ static struct BurnRomInfo nebulrayjRomDesc[] = {
 
 	{ "nr1-spr0",		0x020000, 0x1cc2b44b, 3 | BRF_PRG | BRF_ESS }, //  2 c75data
 
-	{ "nr1-voi0",		0x200000, 0x332d5e26, 3 | BRF_SND },           //  3 c352
+	{ "nr1-voi0",		0x200000, 0x332d5e26, 1 | BRF_SND },           //  3 c352
 
 	{ "nr1obj0l",		0x200000, 0x0e99ef46, 1 | BRF_GRA },           //  4 c355spr
 	{ "nr1obj0u",		0x200000, 0xfb82a881, 1 | BRF_GRA },           //  5

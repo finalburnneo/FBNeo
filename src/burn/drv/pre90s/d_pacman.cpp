@@ -9,6 +9,7 @@
 #include "sn76496.h"
 #include "namco_snd.h"
 #include "ay8910.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -38,7 +39,7 @@ static INT16 DrvAxis[2] = { 0, 0 };
 static INT16 nAnalogAxis[2] = {0,0};
 static UINT8 nCharAxis[2] = {0,0};
 
-enum { PACMAN=0, MSPACMAN, CANNONBP, MAKETRAX, PIRANHA, VANVAN, NMOUSE, DREMSHPR, 
+enum { PACMAN=0, MSPACMAN, MSPACTWIN, CANNONBP, MAKETRAX, PIRANHA, VANVAN, NMOUSE, DREMSHPR,
        MSCHAMP, BIGBUCKS, ROCKTRV2, ALIBABA, CRUSHS, SHOOTBUL, BIRDIY, EPOS, PENGO, JUMPSHOT };
 
 static INT32 game_select;
@@ -54,6 +55,7 @@ static UINT8 palettebank;
 static UINT8 spritebank;
 static UINT8 charbank;
 static INT32 nPacBank;
+static UINT8 sublatch;
 
 static INT32 alibaba_mystery;
 static UINT8 *rocktrv2_prot_data;
@@ -895,6 +897,42 @@ static struct BurnDIPInfo mspacmanDIPList[]=
 };
 
 STDDIPINFO(mspacman)
+
+static struct BurnDIPInfo mspactwinDIPList[]=
+{
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0xc9, NULL                     	},
+	{0x01, 0xff, 0xff, 0xff, NULL                     	},
+	{0x02, 0xff, 0xff, 0xff, NULL                     	},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"					},
+	{0x00, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x03, 0x00, "Free Play (Invalid)"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x00, 0x01, 0x0c, 0x00, "1"						},
+	{0x00, 0x01, 0x0c, 0x04, "2"						},
+	{0x00, 0x01, 0x0c, 0x08, "3"						},
+	{0x00, 0x01, 0x0c, 0x0c, "5"						},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"				},
+	{0x00, 0x01, 0x30, 0x00, "10000"					},
+	{0x00, 0x01, 0x30, 0x10, "15000"					},
+	{0x00, 0x01, 0x30, 0x20, "20000"					},
+	{0x00, 0x01, 0x30, 0x30, "None"						},
+
+	{0   , 0xfe, 0   , 2   , "Jama (Speed)"	          	},
+	{0x01, 0x01, 0x10, 0x10, "Slow"     		  		},
+	{0x01, 0x01, 0x10, 0x00, "Fast"    		  			},
+
+	{0   , 0xfe, 0   , 2   , "Skip Screen (Level Skip)"	},
+	{0x02, 0x01, 0x80, 0x80, "Off"     		  			},
+	{0x02, 0x01, 0x80, 0x00, "On"    		  			},
+};
+
+STDDIPINFO(mspactwin)
 
 static struct BurnDIPInfo mschampDIPList[]=
 {
@@ -2095,6 +2133,80 @@ void __fastcall pacman_out_port(UINT16 a, UINT8 d)
 	}
 }
 
+UINT8 __fastcall mspactwin_read(UINT16 a)
+{
+	if ((a & ~0xafff) == 0x4000) { // handle 4000-4fff mirror
+		a &= ~0xa000;
+		if (a >= 0x4800 && a <= 0x4bff) return 0xbf;
+		return ZetReadByte(a);
+	}
+
+	if ((a & ~0xafff) == 0x5000) a &= ~0xaf00;
+	if ((a & 0xff80) == 0x5080) a &= ~0x003f;
+
+	switch (a)
+	{
+		case 0x5000: return DrvInputs[0];
+		case 0x5040: return DrvInputs[1];
+		case 0x5080: return DrvDips[2];
+		case 0x50c0: return sublatch;
+	}
+
+	return 0xff;
+}
+
+void __fastcall mspactwin_write(UINT16 a, UINT8 d)
+{
+	if ((a & ~0xafff) == 0x4000) {
+		a &= ~0xa000;
+		if (a >= 0x4800 && a <= 0x4bff) return;
+		ZetWriteByte(a, d);
+		return;
+	}
+	if ((a & ~0xafff) == 0x5000) a &= ~0xaf00;
+	if ((a & 0xff80) == 0x5080) a &= ~0x003f;
+
+	if ((a & 0xffe0) == 0x5040) {
+		NamcoSoundWrite(a & 0x1f, d);
+		return;
+	}
+
+	if ((a & 0xfff0) == 0x5060) {
+		DrvSprRAM2[a & 0x0f] = d;
+		return;
+	}
+
+	switch (a)
+	{
+		case 0x5000:
+			interrupt_mask = d & 1;
+		break;
+
+		case 0x5001:
+			// pacman_sound_enable_w
+		break;
+
+		case 0x5003:
+			*flipscreen = d & 1;
+		break;
+
+		case 0x5002: // nop
+		case 0x5004:
+		case 0x5005: // leds
+		case 0x5006: // coin lockout
+		case 0x5007: // coin counter
+		return;
+
+		case 0x5080:
+			sublatch = d;
+			return;
+
+		case 0x50c0:
+			watchdog = 0;
+		break;
+	}
+}
+
 UINT8 __fastcall mspacman_read(UINT16 a)
 {
 	if ((a < 0x4000) || (a >= 0x8000 && a <= 0xbfff))
@@ -2290,6 +2402,7 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	palettebank = 0;
 	spritebank = 0;	
 	charbank = 0;
+	sublatch = 0;
 
 	return 0;
 }
@@ -2771,17 +2884,47 @@ static void DrawSprites()
 	}
 }
 
-static INT32 DrvDraw()
+static INT32 lastline = 0;
+
+static void DrvDrawBegin()
 {
 	if (DrvRecalc) {
 		pacman_palette_init();
 		DrvRecalc = 0;
 	}
 
+	lastline = 0;
+}
+
+static void partial_update(INT32 todraw)
+{
+	if (!pBurnDraw) return;
+
+	if (todraw < 0 || todraw > nScreenHeight || todraw == lastline || lastline > todraw) return;
+
+	GenericTilesSetClip(0, nScreenWidth, lastline, todraw);
 	DrawBackground();
+	GenericTilesClearClip();
+
+	lastline = todraw;
+}
+
+static void DrvDrawEnd()
+{
+	if (!pBurnDraw) return;
+
 	DrawSprites();
 
 	BurnTransferCopy(Palette);
+}
+
+static INT32 DrvDraw()
+{
+	DrvDrawBegin();
+
+	DrawBackground();
+
+	DrvDrawEnd();
 
 	return 0;
 }
@@ -2831,11 +2974,19 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	INT32 nInterleave = 264;
-	INT32 nCyclesTotal[1] = { 3072000 / 60 };
+	INT32 nCyclesTotal[1] = { (INT32)((double)3072000 / 60.606061) };
 	INT32 nCyclesDone[1] = { 0 };
+
+	if (game_select == MSPACTWIN) {
+		DrvDrawBegin();
+	}
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Zet);
+
+		if (game_select == MSPACTWIN) {
+			partial_update(i + 8);
+		}
 
 		if (game_select == BIGBUCKS) {
 			INT32 nInterleaveIRQFire = nInterleave / 20;
@@ -2868,7 +3019,11 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnDraw) {
-		DrvDraw();
+		if (game_select == MSPACTWIN) {
+			DrvDrawEnd();
+		} else {
+			DrvDraw();
+		}
 	}
 
 	return 0;
@@ -2911,6 +3066,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(epos_hardware_counter);
 		SCAN_VAR(mschamp_counter);
 		SCAN_VAR(cannonb_bit_to_read);
+
+		SCAN_VAR(sublatch);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -4069,6 +4226,102 @@ struct BurnDriver BurnDrvmspacman = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmanRomInfo, mspacmanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+static void MspactwinMap()
+{
+	ZetMapMemory(DrvZ80ROM + 0x00000, 0x0000, 0x3fff, MAP_READ | MAP_FETCHARG);
+	ZetMapMemory(DrvZ80ROM + 0x10000, 0x0000, 0x3fff, MAP_FETCHOP);
+
+	ZetMapMemory(DrvZ80ROM + 0x06000, 0x6000, 0x7fff, MAP_READ | MAP_FETCHARG);
+	ZetMapMemory(DrvZ80ROM + 0x16000, 0x6000, 0x7fff, MAP_FETCHOP);
+
+	ZetMapMemory(DrvZ80ROM + 0x08000, 0x8000, 0xbfff, MAP_READ | MAP_FETCHARG);
+	ZetMapMemory(DrvZ80ROM + 0x18000, 0x8000, 0xbfff, MAP_FETCHOP);
+
+	ZetMapArea(0x4000, 0x43ff, 0, DrvVidRAM);
+	ZetMapArea(0x4000, 0x43ff, 1, DrvVidRAM);
+	ZetMapArea(0x4000, 0x43ff, 2, DrvVidRAM);
+
+	ZetMapArea(0x4400, 0x47ff, 0, DrvColRAM);
+	ZetMapArea(0x4400, 0x47ff, 1, DrvColRAM);
+	ZetMapArea(0x4400, 0x47ff, 2, DrvColRAM);
+
+	ZetMapArea(0x4c00, 0x4fff, 0, DrvZ80RAM + 0x0400);
+	ZetMapArea(0x4c00, 0x4fff, 1, DrvZ80RAM + 0x0400);
+	ZetMapArea(0x4c00, 0x4fff, 2, DrvZ80RAM + 0x0400);
+
+	ZetSetWriteHandler(mspactwin_write);
+	ZetSetReadHandler(mspactwin_read);
+	ZetSetOutHandler(pacman_out_port);
+}
+
+static void MspactwinDecode()
+{
+	UINT8 *rom = DrvZ80ROM;
+	int A;
+
+	memcpy (DrvZ80ROM + 0x8000, DrvZ80ROM + 0x4000, 0x4000);
+	memset (DrvZ80ROM + 0x4000, 0, 0x4000);
+
+	UINT8 *decrypted_opcodes = DrvZ80ROM + 0x10000;
+
+	for (A = 0x0000; A < 0x4000; A+=2) {
+
+		/* decode opcode */
+		decrypted_opcodes		[A  ] = BITSWAP08(rom[       A  ]       , 4, 5, 6, 7, 0, 1, 2, 3);
+		decrypted_opcodes		[A+1] = BITSWAP08(rom[       A+1] ^ 0x9A, 6, 4, 5, 7, 2, 0, 3, 1);
+		decrypted_opcodes[0x8000+A  ] = BITSWAP08(rom[0x8000+A  ]       , 4, 5, 6, 7, 0, 1, 2, 3);
+		decrypted_opcodes[0x8000+A+1] = BITSWAP08(rom[0x8000+A+1] ^ 0x9A, 6, 4, 5, 7, 2, 0, 3, 1);
+
+		/* decode operand */
+		rom[       A  ] = BITSWAP08(rom[       A  ]       , 0, 1, 2, 3, 4, 5, 6, 7);
+		rom[       A+1] = BITSWAP08(rom[       A+1] ^ 0xA3, 2, 4, 6, 3, 7, 0, 5, 1);
+		rom[0x8000+A  ] = BITSWAP08(rom[0x8000+A  ]       , 0, 1, 2, 3, 4, 5, 6, 7);
+		rom[0x8000+A+1] = BITSWAP08(rom[0x8000+A+1] ^ 0xA3, 2, 4, 6, 3, 7, 0, 5, 1);
+	}
+
+	for (A = 0x0000; A < 0x2000; A++) {
+		decrypted_opcodes[0x6000+A] = decrypted_opcodes[A+0x2000];
+		rom[0x6000+A] 				= rom[A+0x2000];
+	}
+}
+
+static INT32 mspactwinInit()
+{
+	INT32 rc = DrvInit(MspactwinMap, MspactwinDecode, MSPACTWIN);
+
+	return rc;
+}
+
+// Ms PacMan Twin (Argentina)
+
+static struct BurnRomInfo mspactwinRomDesc[] = {
+	{ "m27256.bin",	0x8000, 0x77a99184, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+
+	{ "4__2716.5d",	0x0800, 0x483c1d1c, 2 | BRF_GRA },           //  1 gfx1
+	{ "2__2716.5g",	0x0800, 0xc08d73a2, 2 | BRF_GRA },           //  2
+	{ "3__2516.5f",	0x0800, 0x22b0188a, 2 | BRF_GRA },           //  3
+	{ "1__2516.5j",	0x0800, 0x0a8c46a0, 2 | BRF_GRA },           //  4
+
+	{ "mb7051.8h",	0x0020, 0xff344446, 3 | BRF_GRA },           //  5 proms
+	{ "82s129.4a",	0x0100, 0xa8202d0d, 3 | BRF_GRA },           //  6
+
+	{ "mb7052.1k",	0x0100, 0xa9cc86bf, 4 | BRF_SND },           //  7 namco
+	{ "82s129.3k",	0x0100, 0x77245b66, 4 | BRF_GRA },           //  8
+};
+
+STD_ROM_PICK(mspactwin)
+STD_ROM_FN(mspactwin)
+
+struct BurnDriver BurnDrvMspactwin = {
+	"mspactwin", NULL, NULL, NULL, "1992",
+	"Ms PacMan Twin (Argentina)\0", NULL, "SUSILU", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspactwinRomInfo, mspactwinRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspactwinDIPInfo,
+	mspactwinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

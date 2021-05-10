@@ -472,7 +472,7 @@ struct BurnDriver BurnDrvpce_batloder = {
 // Be Ball
 
 static struct BurnRomInfo pce_beballRomDesc[] = {
-	{ "be ball (japan).pce", 0x040000, 0xe439f299, BRF_PRG | BRF_ESS },
+	{ "be ball (japan).pce", 0x040000, 0x261f1013, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_beball)
@@ -2192,7 +2192,7 @@ struct BurnDriver BurnDrvpce_chukatai = {
 // Gomola Speed
 
 static struct BurnRomInfo pce_gomolaRomDesc[] = {
-	{ "gomola speed (japan).pce", 0x060000, 0x9a353afd, BRF_PRG | BRF_ESS },
+	{ "gomola speed (japan).pce", 0x060000, 0x4bd38f17, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_gomola)
@@ -6392,7 +6392,7 @@ struct BurnDriver BurnDrvpce_xevious = {
 // Youkai Douchuuki
 
 static struct BurnRomInfo pce_youkaidRomDesc[] = {
-	{ "youkai douchuuki (japan).pce", 0x040000, 0xf131b706, BRF_PRG | BRF_ESS },
+	{ "youkai douchuuki (japan).pce", 0x040000, 0x80c3f824, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_youkaid)

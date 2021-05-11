@@ -7440,10 +7440,10 @@ struct BurnDriver BurnDrvkovytzyws = {
 
 // Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)
 // Hacked by XIAOFAN
-// GOTVG 2021-04-07
+// GOTVG 2021-05-10
 
 static struct BurnRomInfo kov2pfwllRomDesc[] = {
-	{ "kov2pfwll_32m.u8",			0x0600000, 0x5ec1399c, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "kov2pfwll_32m.u8",			0x0400000, 0x92de1852, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "kov2pfwll_t1200.u21",		0x0800000, 0x279a2f9e, 2 | BRF_GRA },			//  1 Tile data
 
@@ -7460,7 +7460,7 @@ static struct BurnRomInfo kov2pfwllRomDesc[] = {
 
 	{ "kov2p_igs027a_china.bin",	0x0004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },	// 10 Internal ARM7 Rom
 
-	{ "kov2pfwll_16m.u23",			0x0200000, 0x5ebb2cd8, 8 | BRF_PRG | BRF_ESS },	// 11 External ARM7 Rom
+	{ "kov2pfwll_16m.u23",			0x0200000, 0x672f2d48, 8 | BRF_PRG | BRF_ESS },	// 11 External ARM7 Rom
 };
 
 STDROMPICKEXT(kov2pfwll, kov2pfwll, pgm)
@@ -7477,7 +7477,7 @@ static INT32 kov2pfwllInit()
 }
 
 struct BurnDriver BurnDrvkov2pfwll = {
-	"kov2pfwll", "kov2p", "pgm", NULL, "2021-04-07",
+	"kov2pfwll", "kov2p", "pgm", NULL, "2021-05-10",
 	"Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)\0", NULL, "Hack", "PolyGameMaster",
 	L"Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)\0\u4e09\u570b\u6230\u7d00 2 - \u9cf3\u821e\u9f8d\u541f (\u7248\u672c 205S, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,

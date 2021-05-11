@@ -16,14 +16,16 @@
 INT32 BurnAreaScan(INT32 nAction, INT32* pnMin);
 
 /* flags to use for nAction */
-#define ACB_READ		 ( 1)
-#define ACB_WRITE		 ( 2)
+#define ACB_READ		 (1<<0)
+#define ACB_WRITE		 (1<<1)
 
-#define ACB_MEMORY_ROM	 ( 4)
-#define ACB_NVRAM		 ( 8)
-#define ACB_MEMCARD		 (16)
-#define ACB_MEMORY_RAM	 (32)
-#define ACB_DRIVER_DATA	 (64)
+#define ACB_MEMORY_ROM	 (1<<2)
+#define ACB_NVRAM		 (1<<3)
+#define ACB_MEMCARD		 (1<<4)
+#define ACB_MEMORY_RAM	 (1<<5)
+#define ACB_DRIVER_DATA	 (1<<6)
+
+#define ACB_NET_OPT		 (1<<7)
 
 #define ACB_FULLSCAN	(ACB_NVRAM | ACB_MEMCARD | ACB_MEMORY_RAM | ACB_DRIVER_DATA)
 

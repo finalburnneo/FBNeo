@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16896 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16904 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -2601,6 +2601,7 @@ This list contains all games supported by FinalBurn Neo.
 | cv_sgmtest	|  	| ColecoVision SuperGame Module (SGM) Test		| 		| 200x	| Coleco	| ColecoVision	| 					|
 | cv_coleco	|   NW	| ColecoVision System BIOS				| 		| 1982	| Coleco	| ColecoVision	| BIOS only				|
 | spec_coliseum	|  	| Coliseum (128K)					| 		| 1988	| Kixx		| ZX Spectrum	| 					|
+| msx_coliseum	|  	| Coliseum (Spa)					| 		| 1988	| Topo Soft	| MSX		| 					|
 | md_colleg96	|  	| College Football USA 96 (USA)				| 		| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_colleg96p	|  	| College Football USA 96 (USA, Prototype 19950621)	| md_colleg96	| 1995	| Electronic Art| Sega Megadrive| 					|
 | md_colleg97	|  	| College Football USA 97 (USA)				| 		| 1996	| Electronic Art| Sega Megadrive| 					|
@@ -7186,7 +7187,7 @@ This list contains all games supported by FinalBurn Neo.
 | kov2106	|  	| Knights of Valour 2 (V106, Hong Kong)			| kov2		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2		|  	| Knights of Valour 2 (V107, Hong Kong)			| 		| 2000	| IGS		| PolyGameMaster| 					|
 | kov2pemp	|  	| Knights of Valour 2 Plus - Extend Magic Plus (Hack)	| kov2p		| 2020-09-07| Hack		| PolyGameMaster| 					|
-| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S| kov2p		| 2021-04-07| Hack		| PolyGameMaster| 					|
+| kov2pfwll	|  	| Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S| kov2p		| 2021-05-10| Hack		| PolyGameMaster| 					|
 | kov2p200	|  	| Knights of Valour 2 Plus - Nine Dragons (VM200XX)	| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p202	|  	| Knights of Valour 2 Plus - Nine Dragons (VM202XX, Japa| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
 | kov2p203	|  	| Knights of Valour 2 Plus - Nine Dragons (VM203XX, Kore| kov2p		| 2001	| IGS		| PolyGameMaster| 					|
@@ -7848,6 +7849,7 @@ This list contains all games supported by FinalBurn Neo.
 | mswordr1	|  	| Magic Sword - heroic fantasy (23.06.1990 other country| msword	| 1990	| Capcom	| CPS1		| 					|
 | msword	|  	| Magic Sword - heroic fantasy (25.07.1990 other country| 		| 1990	| Capcom	| CPS1		| 					|
 | mswordu	|  	| Magic Sword - heroic fantasy (25.07.1990 USA)		| msword	| 1990	| Capcom	| CPS1		| 					|
+| msx_magtower	|  	| Magic Tower Adventure (HB)				| 		| 2017	| Timmy		| MSX		| 					|
 | spec_magicable|  	| MagicAble (HB)					| 		| 2020	| Packobilly	| ZX Spectrum	| Select keyboard as game inputs	|
 | mcatadvj	|  	| Magical Cat Adventure (Japan)				| mcatadv	| 1993	| Wintechno	| LINDA		| 					|
 | mcatadv	|  	| Magical Cat Adventure					| 		| 1993	| Wintechno	| LINDA		| 					|
@@ -9416,6 +9418,7 @@ This list contains all games supported by FinalBurn Neo.
 | spec_nbreed	|  	| Night Breed						| 		| 1990	| Ocean		| ZX Spectrum	| 					|
 | msx_nightcity	|  	| Night City (HB)					| 		| 2006	| German Gomez H| MSX		| 					|
 | tg_nightcr	|  	| Night Creatures					| 		| 1992	| NEC		| TurboGrafx 16	| 					|
+| msx_nightdriver|  	| Night Driver (HB)					| 		| 2007	| Karoshi Corpor| MSX		| 					|
 | nitedrvr	|  	| Night Driver						| 		| 1976	| Atari		| Miscellaneous	| 					|
 | msx_nightflight|  	| Night Flight						| 		| 1982	| Nippon Columbi| MSX		| 					|
 | msx_nightknight|  	| Night Knight (HB, v1.0.3)				| 		| 2019	| Juan J. Martin| MSX		| 					|
@@ -10186,6 +10189,8 @@ This list contains all games supported by FinalBurn Neo.
 | msx_picopico	|  	| Pico Pico (Jpn)					| 		| 1983	| Microcabin	| MSX		| 					|
 | nes_pictionary|  	| Pictionary (USA)					| 		| 1990	| LJN		| Miscellaneous	| 					|
 | ngp_picturep	|  	| Picture Puzzle (Euro, USA)				| 		| 2000	| SNK		| NeoGeo Pocket | 					|
+| msx_picpuzzle	|  	| Picture Puzzle (Jpn)					| 		| 1983	| HAL Laboratory| MSX		| 					|
+| msx_picpuzzle2|  	| Picture Puzzle 2nd version (HB)			| 		| 2004	| Karoshi Corpor| MSX		| 					|
 | md_psolar	|  	| Pier Solar and the Great Architects (World) (En,Es,Pt)| 		| 2010	| WaterMelon	| Sega Megadrive| 64 Mbit (8MB) cartridge		|
 | msx_pillbox	|  	| Pillbox (Jpn)						| 		| 1983	| Magicsoft	| MSX		| 					|
 | msx_pillboxa	|  	| Pillbox (Jpn, Alt)					| msx_pillbox	| 1983	| Magicsoft	| MSX		| 					|
@@ -11430,9 +11435,9 @@ This list contains all games supported by FinalBurn Neo.
 | rocnrope	|  	| Roc'n Rope						| 		| 1983	| Konami	| GX364		| 					|
 | cv_rockbolta	|  	| Rock 'n Bolt (Alt)					| cv_rockbolt	| 1984	| Telegames	| ColecoVision	| 					|
 | cv_rockbolt	|  	| Rock 'n Bolt						| 		| 1984	| Telegames	| ColecoVision	| 					|
+| msx_rocknroller|  	| Rock 'n Roller (Jpn)					| 		| 1988	| RCC		| MSX		| 					|
 | msx_rockroll	|  	| Rock 'n Roller (Spa)					| 		| 1988	| Topo Soft	| MSX		| 					|
 | spec_rocknroller|  	| Rock 'n Roller (Spanish) (128K)			| 		| 1990	| Topo Soft	| ZX Spectrum	| 					|
-| msx_rocknroller|  	| Rock 'n Roller					| 		| 1988	| RCC		| MSX		| 					|
 | nes_rocknball	|  	| Rock 'n' Ball (USA)					| 		| 1990	| NTVIC		| Miscellaneous	| 					|
 | rockclim	|  	| Rock Climber						| 		| 1981	| Taito		| Galaxian	| 					|
 | rockduck	|  	| Rock Duck (prototype?)				| 		| 1983	| Datel SAS	| Miscellaneous	| incorrect colors			|
@@ -11445,7 +11450,7 @@ This list contains all games supported by FinalBurn Neo.
 | rocktris	|  	| Rock Tris						| 		| 1994	| Yun Sung	| Miscellaneous	| 					|
 | rockn3	|  	| Rock'n 3 (Japan)					| 		| 1999	| Jaleco	| Miscellaneous	| 					|
 | rockn4	|  	| Rock'n 4 (Japan, prototype)				| 		| 2000	| Jaleco / PCCWJ| Miscellaneous	| 					|
-| msx_rockbolt	|  	| Rock'n Bolt (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| 					|
+| msx_rockbolt	|  	| Rock'n Bolt (Jpn)					| 		| 1985	| Pony Canyon	| MSX		| Set Function Keys to play		|
 | rockragea	|  	| Rock'n Rage (prototype?)				| rockrage	| 1986	| Konami	| GX620		| 					|
 | rockrage	|  	| Rock'n Rage (World)					| 		| 1986	| Konami	| GX620		| 					|
 | rockn		|  	| Rock'n Tread (Japan)					| 		| 1999	| Jaleco	| Miscellaneous	| 					|
@@ -11573,6 +11578,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_runes	|  	| Runes (HB)						| 		| 2020	| Cannibal Cat	| Sega Megadrive| 					|
 | msx_runner	|  	| Runner (Fra)						| 		| 1986	| Loriciels	| MSX		| 					|
 | sms_running	|  	| Running Battle (Euro, Bra)				| 		| 1991	| Sega		| Sega Master Sy| 					|
+| msx_rnff	|  	| Running Naked in a Field of Flowers (HB)		| 		| 2006	| Infinite	| MSX		| 					|
 | rushcrsh	|  	| Rush & Crash (Japan)					| srumbler	| 1986	| Capcom	| Miscellaneous	| 					|
 | rushatck	|  	| Rush'n Attack (US)					| gberet	| 1985	| Konami	| GX577		| 					|
 | nes_rushnattackc|  	| Rush'n Attack (USA) - Castellano v1.1			| nes_rushnattack| 1989 ?| Nintendo	| Miscellaneous	| 					|
@@ -13684,7 +13690,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_suphydl	|  	| Super Hydlide (Euro)					| 		| 1991	| Sega		| Sega Megadrive| 					|
 | md_suphydlj	|  	| Super Hydlide (Jpn)					| md_suphydl	| 1989	| Asmik Ace	| Sega Megadrive| 					|
 | md_suphydlu	|  	| Super Hydlide (USA)					| md_suphydl	| 1989	| Seismic	| Sega Megadrive| 					|
-| msx_ilevan	|  	| Super Ilevan						| 		| 1987	| Koichi Nishida| MSX		| 					|
+| msx_ilevan	|  	| Super Ilevan (Jpn)					| 		| 1987	| Koichi Nishida| MSX		| 					|
 | skns		|   NW	| Super Kaneko Nova System BIOS				| 		| 1996	| Kaneko	| Super Kaneko N| BIOS only				|
 | md_skickoff	|  	| Super Kick Off (Euro)					| 		| 1992	| U.S. Gold	| Sega Megadrive| 					|
 | sms_skickoff	|  	| Super Kick Off (Euro, Bra)				| 		| 1991	| U.S. Gold	| Sega Master Sy| 					|
@@ -15494,6 +15500,7 @@ This list contains all games supported by FinalBurn Neo.
 | turkhunt	|  	| Turkey Hunting USA V1.00				| 		| 2001	| Sammy USA Corp| Newer Seta	| 					|
 | sms_turmamon	|  	| Turma da Monica em O Resgate (Bra)			| sms_wboy3	| 1993	| Tec Toy	| Sega Master Sy| 					|
 | md_turmamon	|  	| Turma da Monica na Terra dos Monstros (Bra)		| md_wboymw	| 1996	| Tec Toy	| Sega Megadrive| 					|
+| msx_turmoilbb	|  	| Turmoil (Bug-Byte Soft.)				| 		| 1984-86| Bug-Byte Softw| MSX		| 					|
 | msx_turmoil	|  	| Turmoil (Jpn)						| 		| 1984	| ASCII		| MSX		| 					|
 | msx_turmoilk	|  	| Turmoil (Kor)						| msx_turmoil	| 1984?	| Qnix		| MSX		| 					|
 | turpins	|  	| Turpin (bootleg on Scramble hardware)			| turtles	| 1981	| bootleg	| Galaxian	| No Sound				|
@@ -16105,6 +16112,7 @@ This list contains all games supported by FinalBurn Neo.
 | nes_whereintimiscasa|  	| Where in Time is Carmen Sandiego (USA)		| 		| 1991	| Konami	| Miscellaneous	| 					|
 | md_carmntimb	|  	| Where in Time Is Carmen Sandiego? (Bra)		| md_carmntim	| 199?	| Tec Toy	| Sega Megadrive| 					|
 | md_carmntim	|  	| Where in Time Is Carmen Sandiego? (Euro, USA)		| 		| 1992	| Electronic Art| Sega Megadrive| 					|
+| msx_whereisit	|  	| Where Is it - The Quest For the 10th Island (HB)	| 		| 2021	| Eric Mendel	| MSX		| 					|
 | spec_wheretimestoodstill|  	| Where Time Stood Still			| 		| 1988	| Ocean		| ZX Spectrum	| 					|
 | nes_whereswaldo|  	| Where's Waldo (USA)					| 		| 1991	| THQ		| Miscellaneous	| 					|
 | md_whiprushs	|  	| Whip Rush (Hack, Spanish)				| md_whiprush	| 2020	| Sega		| Sega Megadrive| 					|

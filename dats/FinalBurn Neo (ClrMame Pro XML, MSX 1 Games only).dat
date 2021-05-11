@@ -2766,6 +2766,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="coliseum" romof="msx">
+		<description>Coliseum (Spa)</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Coliseum (1988)(Topo Soft)(es)[RUN'CAS-'].cas" size="53090" crc="7cc9c63c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="colony" romof="msx">
 		<description>Colony (Euro)</description>
 		<year>1987</year>
@@ -7655,6 +7666,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magtower" romof="msx">
+		<description>Magic Tower Adventure (HB) [Homebrew]</description>
+		<year>2017</year>
+		<manufacturer>Timmy</manufacturer>
+		<rom name="Magic Tower Adventure (2017)[Timmy] [BLOAD'CAS-',R].cas" size="33685" crc="c2d82fca"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mkidwiz" romof="msx">
 		<description>Magical Kid Wiz (Jpn)</description>
 		<year>1986</year>
@@ -9099,6 +9121,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nightdriver" romof="msx">
+		<description>Night Driver (HB) [Homebrew]</description>
+		<year>2007</year>
+		<manufacturer>Karoshi Corporation</manufacturer>
+		<rom name="Night Driver (2007)(Karoshi Corporation).rom" size="8192" crc="28610b8a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nightflight" romof="msx">
 		<description>Night Flight</description>
 		<year>1982</year>
@@ -9786,6 +9819,28 @@
 		<year>1983</year>
 		<manufacturer>Microcabin</manufacturer>
 		<rom name="pico pico (japan).rom" size="8192" crc="ba3e62d3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="picpuzzle" romof="msx">
+		<description>Picture Puzzle (Jpn)</description>
+		<year>1983</year>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Picture Puzzle (1983)(HAL Laboratory).rom" size="16384" crc="d7eacc0a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="picpuzzle2" romof="msx">
+		<description>Picture Puzzle 2nd version (HB) [Homebrew]</description>
+		<year>2004</year>
+		<manufacturer>Karoshi Corporation</manufacturer>
+		<rom name="Picture Puzzle 2nd version (2004)(Karoshi Corporation).rom" size="8192" crc="01b3239f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10585,6 +10640,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rocknroller" romof="msx">
+		<description>Rock 'n Roller (Jpn)</description>
+		<year>1988</year>
+		<manufacturer>RCC</manufacturer>
+		<rom name="Rock'nRoller.rom" size="65536" crc="b0c0e46d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rockroll" romof="msx">
 		<description>Rock 'n Roller (Spa)</description>
 		<year>1988</year>
@@ -10596,19 +10662,8 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rocknroller" romof="msx">
-		<description>Rock 'n Roller</description>
-		<year>1988</year>
-		<manufacturer>RCC</manufacturer>
-		<rom name="Rock'nRoller.rom" size="65536" crc="b0c0e46d"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="rockbolt" romof="msx">
-		<description>Rock'n Bolt (Jpn)</description>
+		<description>Rock'n Bolt (Jpn) [Set Function Keys to play]</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
 		<rom name="rock'n bolt (japan).rom" size="16384" crc="430e5789"/>
@@ -10700,6 +10755,17 @@
 		<year>1986</year>
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="runner (1986)(loriciels)(fr)[run'cas-'].cas" size="38632" crc="80a0f4d2"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rnff" romof="msx">
+		<description>Running Naked in a Field of Flowers (HB) [Homebrew]</description>
+		<year>2006</year>
+		<manufacturer>Infinite</manufacturer>
+		<rom name="Running Naked in a Field of Flowers (2006)(Infinite).rom" size="32768" crc="16fb200f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11996,7 +12062,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ilevan" romof="msx">
-		<description>Super Ilevan</description>
+		<description>Super Ilevan (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>Koichi Nishida</manufacturer>
 		<rom name="Super Ilevan (Koichi Nishida, 1987).cas" size="22950" crc="87157a8d"/>
@@ -13217,6 +13283,17 @@
 		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="turmoilbb" romof="msx">
+		<description>Turmoil (Bug-Byte Soft.)</description>
+		<year>1984-86</year>
+		<manufacturer>Bug-Byte Software</manufacturer>
+		<rom name="Turmoil (1986)(Bug-Byte Software)[RUN'CAS-'].cas" size="45342" crc="107bd596"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="turmoil" romof="msx">
 		<description>Turmoil (Jpn)</description>
 		<year>1984</year>
@@ -13607,6 +13684,17 @@
 		<year>1984</year>
 		<manufacturer>Nihon Columbia</manufacturer>
 		<rom name="wedding bells (1984)(nippon columbia - colpax - universal)[a].rom" size="16384" crc="c41c55cb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="whereisit" romof="msx">
+		<description>Where Is it - The Quest For the 10th Island (HB) [Homebrew]</description>
+		<year>2021</year>
+		<manufacturer>Eric Mendel</manufacturer>
+		<rom name="Where Is it - The Quest For the 10th Island (2021)(Eric Mendel).rom" size="32768" crc="e1abcfb8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

@@ -2633,6 +2633,7 @@ DRV		BurnDrvcv_cvjoytest;
 DRV		BurnDrvcv_sgmtest;
 DRV		BurnDrvcv_Coleco;
 DRV		BurnSpeccoliseum;
+DRV		BurnDrvMSX_coliseum;
 DRV		BurnDrvmd_colleg96;
 DRV		BurnDrvmd_colleg96p;
 DRV		BurnDrvmd_colleg97;
@@ -7960,6 +7961,7 @@ DRV		BurnDrvCpsMswordj;
 DRV		BurnDrvCpsMswordr1;
 DRV		BurnDrvCpsMsword;
 DRV		BurnDrvCpsMswordu;
+DRV		BurnDrvMSX_magtower;
 DRV		BurnSpecMagicable;
 DRV		BurnDrvMcatadvj;
 DRV		BurnDrvMcatadv;
@@ -9544,6 +9546,7 @@ DRV		BurnDrvmd_mansellu;
 DRV		BurnSpecnbreed;
 DRV		BurnDrvMSX_nightcity;
 DRV		BurnDrvtg_nightcr;
+DRV		BurnDrvMSX_nightdriver;
 DRV		BurnDrvNitedrvr;
 DRV		BurnDrvMSX_Nightflight;
 DRV		BurnDrvMSX_nightknight;
@@ -10326,6 +10329,8 @@ DRV		BurnDrvPickin;
 DRV		BurnDrvMSX_picopico;
 DRV		BurnDrvnes_pictionary;
 DRV		BurnDrvngpc_picturep;
+DRV		BurnDrvMSX_picpuzzle;
+DRV		BurnDrvMSX_picpuzzle2;
 DRV		BurnDrvmd_psolar;
 DRV		BurnDrvMSX_pillbox;
 DRV		BurnDrvMSX_pillboxa;
@@ -11584,9 +11589,9 @@ DRV		BurnDrvRocnropek;
 DRV		BurnDrvRocnrope;
 DRV		BurnDrvcv_rockbolta;
 DRV		BurnDrvcv_rockbolt;
+DRV		BurnDrvMSX_rocknroller;
 DRV		BurnDrvMSX_rockroll;
 DRV		BurnSpecrocknroller;
-DRV		BurnDrvMSX_rocknroller;
 DRV		BurnDrvnes_rocknball;
 DRV		BurnDrvRockclim;
 DRV		BurnDrvrockduck;
@@ -11731,6 +11736,7 @@ DRV		BurnDrvmd_runark;
 DRV		BurnDrvmd_runes;
 DRV		BurnDrvMSX_runner;
 DRV		BurnDrvsms_running;
+DRV		BurnDrvMSX_rnff;
 DRV		BurnDrvRushcrsh;
 DRV		BurnDrvRushatck;
 DRV		BurnDrvnes_rushnattackc;
@@ -15708,6 +15714,7 @@ DRV		BurnDrvtg_cdsys;		// no comment [NOT WORKING]
 DRV		BurnDrvTurkhunt;
 DRV		BurnDrvsms_turmamon;
 DRV		BurnDrvmd_turmamon;
+DRV		BurnDrvMSX_turmoilbb;
 DRV		BurnDrvMSX_turmoil;
 DRV		BurnDrvMSX_turmoilk;
 DRV		BurnDrvTurpins;
@@ -16333,6 +16340,7 @@ DRV		BurnDrvsms_carmnwld;
 DRV		BurnDrvnes_whereintimiscasa;
 DRV		BurnDrvmd_carmntimb;
 DRV		BurnDrvmd_carmntim;
+DRV		BurnDrvMSX_whereisit;
 DRV		BurnSpecWheretimestoodstill;
 DRV		BurnDrvnes_whereswaldo;
 DRV		BurnDrvmd_whiprushs;
@@ -19782,6 +19790,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_sgmtest,			// ColecoVision SuperGame Module (SGM) Test
 	&BurnDrvcv_Coleco,			// ColecoVision System BIOS [BIOS only, NOT WORKING]
 	&BurnSpeccoliseum,			// Coliseum (128K)
+	&BurnDrvMSX_coliseum,		// Coliseum (Spa)
 	&BurnDrvmd_colleg96,		// College Football USA 96 (USA)
 	&BurnDrvmd_colleg96p,		// College Football USA 96 (USA, Prototype 19950621)
 	&BurnDrvmd_colleg97,		// College Football USA 97 (USA)
@@ -25109,6 +25118,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMswordr1,		// Magic Sword - heroic fantasy (23.06.1990 other country)
 	&BurnDrvCpsMsword,			// Magic Sword - heroic fantasy (25.07.1990 other country)
 	&BurnDrvCpsMswordu,			// Magic Sword - heroic fantasy (25.07.1990 USA)
+	&BurnDrvMSX_magtower,		// Magic Tower Adventure (HB)
 	&BurnSpecMagicable,			// MagicAble (HB)
 	&BurnDrvMcatadvj,			// Magical Cat Adventure (Japan)
 	&BurnDrvMcatadv,			// Magical Cat Adventure
@@ -26693,6 +26703,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecnbreed,			// Night Breed
 	&BurnDrvMSX_nightcity,		// Night City (HB)
 	&BurnDrvtg_nightcr,			// Night Creatures
+	&BurnDrvMSX_nightdriver,	// Night Driver (HB)
 	&BurnDrvNitedrvr,			// Night Driver
 	&BurnDrvMSX_Nightflight,	// Night Flight
 	&BurnDrvMSX_nightknight,	// Night Knight (HB, v1.0.3)
@@ -27475,6 +27486,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_picopico,		// Pico Pico (Jpn)
 	&BurnDrvnes_pictionary,		// Pictionary (USA)
 	&BurnDrvngpc_picturep,		// Picture Puzzle (Euro, USA)
+	&BurnDrvMSX_picpuzzle,		// Picture Puzzle (Jpn)
+	&BurnDrvMSX_picpuzzle2,		// Picture Puzzle 2nd version (HB)
 	&BurnDrvmd_psolar,			// Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (HB)
 	&BurnDrvMSX_pillbox,		// Pillbox (Jpn)
 	&BurnDrvMSX_pillboxa,		// Pillbox (Jpn, Alt)
@@ -28733,9 +28746,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRocnrope,			// Roc'n Rope
 	&BurnDrvcv_rockbolta,		// Rock 'n Bolt (Alt)
 	&BurnDrvcv_rockbolt,		// Rock 'n Bolt
+	&BurnDrvMSX_rocknroller,	// Rock 'n Roller (Jpn)
 	&BurnDrvMSX_rockroll,		// Rock 'n Roller (Spa)
 	&BurnSpecrocknroller,		// Rock 'n Roller (Spanish) (128K)
-	&BurnDrvMSX_rocknroller,	// Rock 'n Roller
 	&BurnDrvnes_rocknball,		// Rock 'n' Ball (USA)
 	&BurnDrvRockclim,			// Rock Climber
 	&BurnDrvrockduck,			// Rock Duck (prototype?)
@@ -28880,6 +28893,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_runes,			// Runes (HB)
 	&BurnDrvMSX_runner,			// Runner (Fra)
 	&BurnDrvsms_running,		// Running Battle (Euro, Bra)
+	&BurnDrvMSX_rnff,			// Running Naked in a Field of Flowers (HB)
 	&BurnDrvRushcrsh,			// Rush & Crash (Japan)
 	&BurnDrvRushatck,			// Rush'n Attack (US)
 	&BurnDrvnes_rushnattackc,	// Rush'n Attack (USA) - Castellano v1.1
@@ -31027,7 +31041,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_suphydl,			// Super Hydlide (Euro)
 	&BurnDrvmd_suphydlj,		// Super Hydlide (Jpn)
 	&BurnDrvmd_suphydlu,		// Super Hydlide (USA)
-	&BurnDrvMSX_ilevan,			// Super Ilevan
+	&BurnDrvMSX_ilevan,			// Super Ilevan (Jpn)
 	&BurnDrvSkns,				// Super Kaneko Nova System BIOS [BIOS only, NOT WORKING]
 	&BurnDrvmd_skickoff,		// Super Kick Off (Euro)
 	&BurnDrvsms_skickoff,		// Super Kick Off (Euro, Bra)
@@ -32857,6 +32871,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTurkhunt,			// Turkey Hunting USA V1.00
 	&BurnDrvsms_turmamon,		// Turma da Monica em O Resgate (Bra)
 	&BurnDrvmd_turmamon,		// Turma da Monica na Terra dos Monstros (Bra)
+	&BurnDrvMSX_turmoilbb,		// Turmoil (Bug-Byte Soft.)
 	&BurnDrvMSX_turmoil,		// Turmoil (Jpn)
 	&BurnDrvMSX_turmoilk,		// Turmoil (Kor)
 	&BurnDrvTurpins,			// Turpin (bootleg on Scramble hardware)
@@ -33482,6 +33497,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_whereintimiscasa,// Where in Time is Carmen Sandiego (USA)
 	&BurnDrvmd_carmntimb,		// Where in Time Is Carmen Sandiego? (Bra)
 	&BurnDrvmd_carmntim,		// Where in Time Is Carmen Sandiego? (Euro, USA)
+	&BurnDrvMSX_whereisit,		// Where Is it - The Quest For the 10th Island (HB)
 	&BurnSpecWheretimestoodstill,// Where Time Stood Still
 	&BurnDrvnes_whereswaldo,	// Where's Waldo (USA)
 	&BurnDrvmd_whiprushs,		// Whip Rush (Hack, Spanish)

@@ -7,6 +7,7 @@
 #include "sn76496.h"
 #include "flt_rc.h"
 #include "ay8910.h"
+#include "digitalk.h"
 
 // ROM types
 #define GAL_ROM_Z80_PROG1				1
@@ -70,6 +71,7 @@ extern UINT8 GalSpriteClipStart;
 extern UINT8 GalSpriteClipEnd;
 extern UINT8 FroggerAdjust;
 extern UINT8 Dingo;
+extern UINT8 Harem;
 extern UINT8 GalBackgroundRed;
 extern UINT8 GalBackgroundGreen;
 extern UINT8 GalBackgroundBlue;
@@ -137,6 +139,7 @@ void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
 void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32);
 void Ad2083ExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8*, UINT16 *Code, UINT8*);
 void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
+void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
 void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
 void BagmanmcExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void HardCodeGalaxianPROM();
@@ -209,6 +212,8 @@ extern UINT8 *GalProm;
 extern UINT8 *GalChars;
 extern UINT8 *GalSprites;
 extern UINT8 *GalTempRom;
+extern UINT8 *digitalk_rom;
+extern INT32 GalSndROMSize;
 extern UINT32 *GalPalette;
 extern UINT32 GalZ80Rom1Size;
 extern UINT32 GalZ80Rom1Num;
@@ -266,8 +271,13 @@ void MapJumpbug();
 void MapFrogger();
 void KonamiPPIInit();
 void MapTheend();
+void MapHarem();
 void MapTurtles();
 void MapScobra();
+void harem_decrypt_bit_write(UINT8 data);
+void harem_decrypt_clk_write(UINT8 data);
+void harem_decrypt_rst_write(UINT8 data);
+UINT8 harem_digitalker_intr_read(); // sound
 INT32 GalExit();
 INT32 KonamiExit();
 INT32 GalFrame();

@@ -135,6 +135,12 @@ void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
 	*Code |= Bank << 8;
 }
 
+void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x)
+{
+	UINT8 Bank = (GalGfxBank[1] >> (x / 4)) & 1;
+	*Code |= Bank * 0x200;
+}
+
 void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32)
 {
 	*Code |= GalGfxBank[0] << 9;
@@ -856,7 +862,7 @@ static void GalRenderBgLayer(UINT8 *pVideoRam)
 					if (GalFlipScreenY) c = GalChars[(Code * 64) + ((7 - py) * 8) + px];
 					if (GalFlipScreenX && GalFlipScreenY) c = GalChars[(Code * 64) + ((7 - py) * 8) + (7 - px)];
 				
-					if (c) {
+					if (c || Harem) {
 						INT32 xPos = x + px;
 						INT32 yPos = y + py;
 					

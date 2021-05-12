@@ -32,6 +32,8 @@ UINT8 *GalProm               = NULL;
 UINT8 *GalChars              = NULL;
 UINT8 *GalSprites            = NULL;
 UINT8 *GalTempRom            = NULL;
+UINT8 *digitalk_rom          = NULL;
+
 UINT32  *GalPalette            = NULL;
 
 UINT32   GalZ80Rom1Size        = 0;
@@ -52,6 +54,9 @@ UINT32   GalTilesSpriteRomNum  = 0;
 UINT32   GalNumSprites         = 0;
 UINT32   GalPromRomSize        = 0;
 UINT32   GalPromRomNum         = 0;
+INT32 GalSndROMSize			   = 0;
+INT32 GalSndROMOffset 		   = -1;
+INT32 GalSndROMNum			   = 0;
 
 GalPostLoadCallback GalPostLoadCallbackFunction;
 
@@ -81,7 +86,8 @@ UINT8 GameIsBagmanmc;
 UINT8 GameIsMoonwar = 0;
 UINT8 CavelonBankSwitch;
 UINT8 GalVBlank;
-UINT8 Dingo;
+UINT8 Dingo = 0;
+UINT8 Harem = 0;
 
 static inline void GalMakeInputs()
 {
@@ -123,7 +129,15 @@ static INT32 GalMemIndex()
 	if (GalZ80Rom3Size) {
 		GalZ80Ram3     = Next; Next += 0x00400;
 	}
-	
+
+	if (Harem) {
+		GalZ80Ram3     = Next; Next += 0x00800;
+	}
+
+	if (GalSndROMSize) {
+		digitalk_rom   = Next; Next += GalSndROMSize;
+	}
+
 	GalRamEnd              = Next;
 
 	GalChars               = Next; Next += GalNumChars * 8 * 8;
@@ -202,12 +216,24 @@ static INT32 GalLoadRoms(bool bLoad)
 	INT32 nOffset = -1;
 	UINT32 i;
 	INT32 nRet = 0;
-	
+
 	if (!bLoad) {
+		GalSndROMOffset = -1;
+		GalSndROMNum = 0;
+		GalSndROMSize = 0;
+
 		do {
 			ri.nLen = 0;
 			ri.nType = 0;
 			BurnDrvGetRomInfo(&ri, ++nOffset);
+
+			if (ri.nType & BRF_SND) { // used for Scorpion, Harem
+				if (GalSndROMOffset == -1) {
+					GalSndROMOffset = nOffset;
+				}
+				GalSndROMNum++;
+				GalSndROMSize += ri.nLen;
+			}
 			if ((ri.nType & 0xff) == GAL_ROM_Z80_PROG1) {
 				GalZ80Rom1Size += ri.nLen;
 				GalZ80Rom1Num++;
@@ -268,6 +294,7 @@ static INT32 GalLoadRoms(bool bLoad)
 		if (GalTilesCharRomSize) bprintf(PRINT_NORMAL, _T("Char Rom Size: 0x%X (%i roms, 0x%X Chars)\n"), GalTilesCharRomSize, GalTilesCharRomNum, GalNumChars);
 		if (GalTilesSpriteRomSize) bprintf(PRINT_NORMAL, _T("Sprite Rom Size: 0x%X (%i roms, 0x%X Sprites)\n"), GalTilesSpriteRomSize, GalTilesSpriteRomNum, GalNumSprites);
 		if (GalPromRomSize) bprintf(PRINT_NORMAL, _T("PROM Rom Size: 0x%X (%i roms)\n"), GalPromRomSize, GalPromRomNum);
+		if (GalSndROMOffset != -1) bprintf(PRINT_NORMAL, _T("Sound Data Size: 0x%x (%i roms) @ offset %d\n"), GalSndROMSize, GalSndROMNum, GalSndROMOffset);
 #endif
 	}
 
@@ -365,6 +392,17 @@ static INT32 GalLoadRoms(bool bLoad)
 			for (i = GAL_ROM_OFFSET_S2650_PROG1; i < GAL_ROM_OFFSET_S2650_PROG1 + GalS2650Rom1Num; i++) {
 				nRet = BurnLoadRom(GalS2650Rom1 + Offset, i, 1); if (nRet) return 1;
 			
+				BurnDrvGetRomInfo(&ri, i + 0);
+				Offset += ri.nLen;
+			}
+		}
+
+		// Scorpion, Harem Digitalker Roms
+		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
+			Offset = 0;
+			for (i = GalSndROMOffset; i < GalSndROMOffset + GalSndROMNum; i++) {
+				nRet = BurnLoadRom(digitalk_rom + Offset, i, 1); if (nRet) return 1;
+
 				BurnDrvGetRomInfo(&ri, i + 0);
 				Offset += ri.nLen;
 			}
@@ -1089,6 +1127,110 @@ void MapFrogger()
 	ZetClose();
 }
 
+// Harem Memory Map
+UINT8 __fastcall HaremZ80Read(UINT16 a)
+{
+	if ((a & 0xfc0c) == 0x6000) {
+		switch (a & 0x300) {
+			case 0x100: return ppi8255_r(0, a & 3);
+			case 0x200: return ppi8255_r(1, a & 3);
+		}
+	}
+
+	switch (a) {
+		case 0x5000: {
+			return GalGfxBank[0];
+		}
+
+		case 0x5800: {
+			// watchdog read
+			return 0xff;
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("harem Z80 #1 Read => %04X\n"), a);
+		}
+	}
+
+	return 0xff;
+}
+
+void __fastcall HaremZ80Write(UINT16 a, UINT8 d)
+{
+	if (a >= 0x4000 && a <= 0x40ff) {
+		INT32 Offset = a & 0xff;
+
+		GalSpriteRam[Offset] = d;
+
+		if (Offset < 0x40) {
+			if ((Offset & 0x01) == 0) {
+				GalScrollVals[Offset >> 1] = d;
+			}
+		}
+
+		return;
+	}
+
+	if ((a & 0xfc0c) == 0x6000) {
+		switch (a & 0x300) {
+			case 0x100: ppi8255_w(0, a & 3, d); return;
+			case 0x200: ppi8255_w(1, a & 3, d); return;
+		}
+		return;
+	}
+
+	switch (a) {
+		case 0x5000: {
+			GalGfxBank[1] = d; // tiles
+		}
+		case 0x5805: {
+			GalGfxBank[0] = d; // sprites
+		}
+
+		case 0x5801: {
+			harem_decrypt_clk_write(d);
+			return;
+		}
+		case 0x5802: {
+			harem_decrypt_bit_write(d);
+			return;
+		}
+		case 0x5803: {
+			harem_decrypt_rst_write(d);
+			return;
+		}
+
+		case 0x5800: {
+			GalIrqFire = d & 1;
+			return;
+		}
+
+		case 0x5804: {
+			GalStarsEnable = d & 0x01;
+			if (!GalStarsEnable) GalStarsScrollPos = -1;
+			return;
+		}
+
+		case 0x5806: {
+			GalFlipScreenX = d & 1;
+			return;
+		}
+
+		case 0x5807: {
+			GalFlipScreenY = d & 1;
+			return;
+		}
+
+		case 0x7005: {
+			return; // NOP
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("harem Z80 #1 Write => %04X, %02X\n"), a, d);
+		}
+	}
+}
+
 // The End Memory Map
 UINT8 __fastcall TheendZ80Read(UINT16 a)
 {
@@ -1116,8 +1258,8 @@ UINT8 __fastcall TheendZ80Read(UINT16 a)
 
 void __fastcall TheendZ80Write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x5000 && a <= 0x50ff) {
-		INT32 Offset = a - 0x5000;
+	if (a >= 0x5000 && a <= 0x57ff) {
+		INT32 Offset = a & 0xff;
 		
 		GalSpriteRam[Offset] = d;
 		
@@ -1201,6 +1343,36 @@ void __fastcall TheendZ80PortWrite(UINT16 a, UINT8 d)
 			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
 		}
 	}
+}
+
+void MapHarem()
+{
+	ZetOpen(0);
+	ZetMemCallback(0x0000, 0xffff, 0);
+	ZetMemCallback(0x0000, 0xffff, 1);
+	ZetMemCallback(0x0000, 0xffff, 2);
+	ZetSetReadHandler(HaremZ80Read);
+	ZetSetWriteHandler(HaremZ80Write);
+	ZetSetInHandler(TheendZ80PortRead);
+	ZetSetOutHandler(TheendZ80PortWrite);
+	ZetMapArea(0x0000, 0x1fff, 0, GalZ80Rom1);
+	ZetMapArea(0x0000, 0x1fff, 2, GalZ80Rom1);
+
+	ZetMapArea(0x4000, 0x40ff, 0, GalSpriteRam);
+	ZetMapArea(0x4000, 0x40ff, 2, GalSpriteRam);
+
+	ZetMapMemory(GalZ80Ram3, 0x2000, 0x27ff, MAP_RAM);
+
+	ZetMapArea(0x4100, 0x47ff, 0, GalZ80Ram1);
+	ZetMapArea(0x4100, 0x47ff, 1, GalZ80Ram1);
+	ZetMapArea(0x4100, 0x47ff, 2, GalZ80Ram1);
+	ZetMapArea(0x4800, 0x4bff, 0, GalVideoRam);
+	ZetMapArea(0x4800, 0x4bff, 1, GalVideoRam);
+	ZetMapArea(0x4800, 0x4bff, 2, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 0, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 1, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
+	ZetClose();
 }
 
 void MapTheend()
@@ -1568,7 +1740,8 @@ INT32 GalExit()
 	ScrambleProtectionState = 0;
 	ScrambleProtectionResult = 0;
 	Dingo = 0;
-	
+	Harem = 0;
+
 	GalZ80Rom1Size = 0;
 	GalZ80Rom1Num = 0;
 	GalZ80Rom2Size = 0;
@@ -1587,6 +1760,9 @@ INT32 GalExit()
 	GalNumSprites = 0;
 	GalPromRomSize = 0;
 	GalPromRomNum = 0;
+	GalSndROMSize = 0;
+	GalSndROMOffset = -1;
+	GalSndROMNum = 0;
 	
 	GalPostLoadCallbackFunction = NULL;
 	GalRenderBackgroundFunction = NULL;
@@ -1764,7 +1940,7 @@ INT32 GalFrame()
 			}
 		}
 		
-		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) {
+		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1782,7 +1958,6 @@ INT32 GalFrame()
 				if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910) {
 					AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
 				}
-				
 				filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 				filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
 				filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
@@ -1791,7 +1966,7 @@ INT32 GalFrame()
 					filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
 					filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 				}
-				
+
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -1833,7 +2008,7 @@ INT32 GalFrame()
 		}
 	}
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1841,6 +2016,12 @@ INT32 GalFrame()
 				AY8910Render(pSoundBuf, nSegmentLength);
  			}
 		}
+	}
+
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
+		ZetOpen(1);
+		digitalker_update(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
@@ -1856,10 +2037,11 @@ INT32 GalFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
 				AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+
 				if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910) {
 					AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
 				}
-				
+
 				filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 				filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
 				filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);

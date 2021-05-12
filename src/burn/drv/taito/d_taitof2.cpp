@@ -480,26 +480,26 @@ static struct BurnInputInfo MjnquestInputList[] =
 	{"Start 1"            , BIT_DIGITAL   , TaitoInputPort0 + 5, "p1 start"  },
 	{"Coin 2"             , BIT_DIGITAL   , TaitoInputPort4 + 1, "p2 coin"   },
 
-	{"Mahjong A"          , BIT_DIGITAL   , TaitoInputPort0 + 0, "mah a"     },
-	{"Mahjong B"          , BIT_DIGITAL   , TaitoInputPort1 + 0, "mah b"     },
-	{"Mahjong C"          , BIT_DIGITAL   , TaitoInputPort2 + 0, "mah c"     },
-	{"Mahjong D"          , BIT_DIGITAL   , TaitoInputPort3 + 0, "mah d"     },
-	{"Mahjong E"          , BIT_DIGITAL   , TaitoInputPort0 + 1, "mah e"     },
-	{"Mahjong F"          , BIT_DIGITAL   , TaitoInputPort1 + 1, "mah f"     },
-	{"Mahjong G"          , BIT_DIGITAL   , TaitoInputPort2 + 1, "mah g"     },
-	{"Mahjong H"          , BIT_DIGITAL   , TaitoInputPort3 + 1, "mah h"     },
-	{"Mahjong I"          , BIT_DIGITAL   , TaitoInputPort0 + 2, "mah i"     },
-	{"Mahjong J"          , BIT_DIGITAL   , TaitoInputPort1 + 2, "mah j"     },
-	{"Mahjong K"          , BIT_DIGITAL   , TaitoInputPort2 + 2, "mah k"     },
-	{"Mahjong L"          , BIT_DIGITAL   , TaitoInputPort3 + 2, "mah l"     },
-	{"Mahjong M"          , BIT_DIGITAL   , TaitoInputPort0 + 3, "mah m"     },
-	{"Mahjong N"          , BIT_DIGITAL   , TaitoInputPort1 + 3, "mah n"     },		
-	{"Mahjong Kan"        , BIT_DIGITAL   , TaitoInputPort0 + 4, "mah kan"   },
-	{"Mahjong Pon"        , BIT_DIGITAL   , TaitoInputPort3 + 3, "mah pon"   },
-	{"Mahjong Chi"        , BIT_DIGITAL   , TaitoInputPort2 + 3, "mah chi"   },	
-	{"Mahjong Reach"      , BIT_DIGITAL   , TaitoInputPort1 + 4, "mah reach" },
-	{"Mahjong Ron"        , BIT_DIGITAL   , TaitoInputPort2 + 4, "mah ron"   },
-	
+	{"P1 A"               , BIT_DIGITAL   , TaitoInputPort0 + 0, "mah a"     },
+	{"P1 B"               , BIT_DIGITAL   , TaitoInputPort1 + 0, "mah b"     },
+	{"P1 C"               , BIT_DIGITAL   , TaitoInputPort2 + 0, "mah c"     },
+	{"P1 D"               , BIT_DIGITAL   , TaitoInputPort3 + 0, "mah d"     },
+	{"P1 E"               , BIT_DIGITAL   , TaitoInputPort0 + 1, "mah e"     },
+	{"P1 F"               , BIT_DIGITAL   , TaitoInputPort1 + 1, "mah f"     },
+	{"P1 G"               , BIT_DIGITAL   , TaitoInputPort2 + 1, "mah g"     },
+	{"P1 H"               , BIT_DIGITAL   , TaitoInputPort3 + 1, "mah h"     },
+	{"P1 I"               , BIT_DIGITAL   , TaitoInputPort0 + 2, "mah i"     },
+	{"P1 J"               , BIT_DIGITAL   , TaitoInputPort1 + 2, "mah j"     },
+	{"P1 K"               , BIT_DIGITAL   , TaitoInputPort2 + 2, "mah k"     },
+	{"P1 L"               , BIT_DIGITAL   , TaitoInputPort3 + 2, "mah l"     },
+	{"P1 M"               , BIT_DIGITAL   , TaitoInputPort0 + 3, "mah m"     },
+	{"P1 N"               , BIT_DIGITAL   , TaitoInputPort1 + 3, "mah n"     },		
+	{"P1 Kan"             , BIT_DIGITAL   , TaitoInputPort0 + 4, "mah kan"   },
+	{"P1 Pon"             , BIT_DIGITAL   , TaitoInputPort3 + 3, "mah pon"   },
+	{"P1 Chi"             , BIT_DIGITAL   , TaitoInputPort2 + 3, "mah chi"   },	
+	{"P1 Reach"           , BIT_DIGITAL   , TaitoInputPort1 + 4, "mah reach" },
+	{"P1 Ron"             , BIT_DIGITAL   , TaitoInputPort2 + 4, "mah ron"   },
+
 	{"Reset"              , BIT_DIGITAL   , &TaitoReset        , "reset"     },
 	{"Service"            , BIT_DIGITAL   , TaitoInputPort5 + 0, "service"   },
 	{"Tilt"               , BIT_DIGITAL   , TaitoInputPort4 + 0, "tilt"      },
@@ -508,7 +508,7 @@ static struct BurnInputInfo MjnquestInputList[] =
 };
 
 STDINPUTINFO(Mjnquest)
-	
+
 static struct BurnInputInfo NinjakInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort2 + 4, "p1 coin"   },

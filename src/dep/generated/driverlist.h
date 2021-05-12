@@ -6070,6 +6070,7 @@ DRV		BurnDrvmd_hardbl94;
 DRV		BurnDrvmd_hardbl95;
 DRV		BurnDrvmd_hardbal3;
 DRV		BurnDrvmd_hardball;
+DRV		BurnDrvHarem;
 DRV		BurnDrvnes_harleglo;
 DRV		BurnDrvmd_hpotter;
 DRV		BurnDrvmd_hpotter2;
@@ -23233,6 +23234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_hardbl95,		// HardBall '95 (USA)
 	&BurnDrvmd_hardbal3,		// HardBall III (USA)
 	&BurnDrvmd_hardball,		// HardBall! (USA)
+	&BurnDrvHarem,				// Harem
 	&BurnDrvnes_harleglo,		// Harlem Globetrotters (USA)
 	&BurnDrvmd_hpotter,			// Harry Potter (Rus)
 	&BurnDrvmd_hpotter2,		// Harry Potter and the Chamber of Secrets (Rus)

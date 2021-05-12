@@ -1,6 +1,6 @@
 This list contains all games supported by FinalBurn Neo.
 
-16910 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
+16911 games supported in total; X = excluded from build; D = included in debug build only; NW = not working
 
   name		  status  full name						  parent	  year	  company	  hardware	  remarks
 +---------------+-------+-------------------------------------------------------+---------------+-------+---------------+---------------+---------------------------------------+
@@ -5992,6 +5992,7 @@ This list contains all games supported by FinalBurn Neo.
 | md_hardbl95	|  	| HardBall '95 (USA)					| 		| 1995	| Accolade	| Sega Megadrive| 					|
 | md_hardbal3	|  	| HardBall III (USA)					| 		| 1993	| Accolade	| Sega Megadrive| 					|
 | md_hardball	|  	| HardBall! (USA)					| 		| 1991	| Ballistic	| Sega Megadrive| 					|
+| harem		|  	| Harem							| 		| 1983	| I.G.R.	| Galaxian	| 					|
 | nes_harleglo	|  	| Harlem Globetrotters (USA)				| 		| 1991	| GameTek	| Miscellaneous	| 					|
 | md_hpotter	|  	| Harry Potter (Rus)					| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | md_hpotter2	|  	| Harry Potter and the Chamber of Secrets (Rus)		| md_mickmack	| 199?	| <unknown>	| Sega Megadrive| 					|
@@ -11826,9 +11827,9 @@ This list contains all games supported by FinalBurn Neo.
 | scotrsht	|  	| Scooter Shooter					| 		| 1985	| Konami	| Miscellaneous	| 					|
 | msx_scopeon	|  	| Scope On - Fight in Space (Jpn)			| 		| 1983	| ASCII Corp.	| MSX		| 					|
 | scorpionmc	|  	| Scorpion (Moon Cresta hardware)			| scorpion	| 19??	| Dorneer	| Galaxian	| 					|
-| scorpion	|  	| Scorpion (set 1)					| 		| 1982	| Zaccaria	| Galaxian	| Incomplete Sound			|
-| scorpiona	|  	| Scorpion (set 2)					| scorpion	| 1982	| Zaccaria	| Galaxian	| Incomplete Sound			|
-| scorpionb	|  	| Scorpion (set 3)					| scorpion	| 1982	| Zaccaria	| Galaxian	| Incomplete Sound			|
+| scorpion	|  	| Scorpion (set 1)					| 		| 1982	| Zaccaria	| Galaxian	| 					|
+| scorpiona	|  	| Scorpion (set 2)					| scorpion	| 1982	| Zaccaria	| Galaxian	| 					|
+| scorpionb	|  	| Scorpion (set 3)					| scorpion	| 1982	| Zaccaria	| Galaxian	| 					|
 | md_scrabble	|  	| Scrabble (Euro, Prototype)				| 		| 199?	| <unknown>	| Sega Megadrive| 					|
 | scramblb	|  	| Scramble (bootleg on Galaxian hardware)		| scramble	| 1981	| bootleg	| Galaxian	| 					|
 | scramb2	|  	| Scramble (bootleg)					| scramble	| 1981	| bootleg	| Galaxian	| 					|

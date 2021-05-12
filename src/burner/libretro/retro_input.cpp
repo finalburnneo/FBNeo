@@ -12,6 +12,7 @@ static unsigned nDiagInputComboStartFrame = 0;
 static unsigned nDiagInputHoldFrameDelay = 0;
 static unsigned nSwitchCode = 0;
 static unsigned nMahjongKeyboards = 0;
+static unsigned nMaxControllers = 0;
 static int nDeviceType[MAX_PLAYERS] = { -1,  };
 static int nLibretroInputBitmask[MAX_PLAYERS] = { -1, };
 static std::vector<retro_input_descriptor> normal_input_descriptors;
@@ -114,11 +115,9 @@ static void AnalyzeGameLayout()
 				}
 			}
 
-			// guess if there are mahjong controls, and for how many players
-			// TOFIX : some mahjong games are missing player number in their szName 
+			// look for mahjong controls, if found set a number of mahjong keyboards equal to the number of players
 			if ((strncmp("mah ", bii.szInfo, 4) == 0)) {
-				if (nMahjongKeyboards < nPlayer)
-					nMahjongKeyboards = nPlayer;
+				nMahjongKeyboards = nMaxPlayers;
 			}
 			if ((strncmp("Volume", bii.szName, 6) == 0) && (strncmp(" fire", bii.szInfo + 2, 5) == 0)) {
 				bVolumeIsFireButton = true;
@@ -2018,9 +2017,10 @@ INT32 GameInpAutoOne(struct GameInp* pgi, char* szi, char *szn)
 		}
 
 		// assign per player mahjong controls (require 1 keyboard per player, does the frontend actually support this ?)
+		// note : some games need to be fixed for this to work (player number must be set in szName)
 		if (nMahjongKeyboards > 0)
 		{
-			int mahjongKeyboardPort = nMaxPlayers-nMahjongKeyboards+nPlayer+1;
+			int mahjongKeyboardPort = nMaxPlayers+nPlayer;
 			if (strcmp("mah a", szi) == 0)
 				GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
 			if (strcmp("mah b", szi) == 0)
@@ -2423,6 +2423,9 @@ void SetControllerInfo()
 			{ NULL, 0 }
 		};
 
+		// So the number of controllers is fixed to 3 for zx spectrum
+		nMaxControllers = 3;
+
 		environ_cb(RETRO_ENVIRONMENT_SET_CONTROLLER_INFO, (void*)controller_infos);
 	} else {
 		// For anything else, let's use standard device handling for now
@@ -2435,11 +2438,10 @@ void SetControllerInfo()
 			{ "Lightgun", RETRO_DEVICE_LIGHTGUN }
 		};
 
-		// prepare additional devices for mahjong games
-		if (nMahjongKeyboards > 0)
-			nMaxPlayers += nMahjongKeyboards;
+		// Prepare enough controllers for everything
+		nMaxControllers = nMaxPlayers + nMahjongKeyboards;
 
-		struct retro_controller_info *controller_infos = (struct retro_controller_info*)calloc(nMaxPlayers+1, sizeof(struct retro_controller_info));
+		struct retro_controller_info *controller_infos = (struct retro_controller_info*)calloc(nMaxControllers+1, sizeof(struct retro_controller_info));
 
 		for (int i = 0; i < nMaxPlayers; i++)
 		{
@@ -2453,10 +2455,10 @@ void SetControllerInfo()
 			static const struct retro_controller_description keyboard_description[] = {
 				{ "Keyboard", RETRO_DEVICE_KEYBOARD }
 			};
-			for (int i = 1; i <= nMahjongKeyboards; i++)
+			for (int i = nMaxPlayers; i < nMaxControllers; i++)
 			{
-				controller_infos[nMaxPlayers-i].types = keyboard_description;
-				controller_infos[nMaxPlayers-i].num_types = 1;
+				controller_infos[i].types = keyboard_description;
+				controller_infos[i].num_types = 1;
 			}
 		}
 
@@ -2705,11 +2707,11 @@ void InputMake(void)
 
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
-	if (port < nMaxPlayers && nDeviceType[port] != device)
+	if (port < nMaxControllers && nDeviceType[port] != device)
 	{
 		nDeviceType[port] = device;
 		bool bAllDevicesReady = true;
-		for (int i = 0; i < nMaxPlayers; i++)
+		for (int i = 0; i < nMaxControllers; i++)
 		{
 			if (nDeviceType[i] == -1)
 				bAllDevicesReady = false;

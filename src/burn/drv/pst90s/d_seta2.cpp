@@ -163,45 +163,45 @@ static struct BurnDIPInfo grdiansDIPList[] = {
 STDDIPINFO(grdians)
 
 static struct BurnInputInfo mj4simaiInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 0,	"p1 coin"},
-	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 1,	"p2 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 0,	"p1 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 1,	"p2 coin"},
 
-	{"A",			BIT_DIGITAL,	DrvJoy1 + 0,	"mah a"},
-	{"E",			BIT_DIGITAL,	DrvJoy1 + 1,	"mah e"},
-	{"I",			BIT_DIGITAL,	DrvJoy1 + 2,	"mah i"},
-	{"M",			BIT_DIGITAL,	DrvJoy1 + 3,	"mah m"},
-	{"Kan",			BIT_DIGITAL,	DrvJoy1 + 4,	"mah kan"},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
+	{"P1 A",			BIT_DIGITAL,	DrvJoy1 + 0,	"mah a"},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy1 + 1,	"mah e"},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy1 + 2,	"mah i"},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy1 + 3,	"mah m"},
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy1 + 4,	"mah kan"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
 
-	{"B",			BIT_DIGITAL,	DrvJoy2 + 0,	"mah b"},
-	{"F",			BIT_DIGITAL,	DrvJoy2 + 1,	"mah f"},
-	{"J",			BIT_DIGITAL,	DrvJoy2 + 2,	"mah j"},
-	{"N",			BIT_DIGITAL,	DrvJoy2 + 3,	"mah n"},
-	{"Reach",		BIT_DIGITAL,	DrvJoy2 + 4,	"mah reach"},
-	{"Bet",			BIT_DIGITAL,	DrvJoy2 + 5,	"mah bet"},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy2 + 0,	"mah b"},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy2 + 1,	"mah f"},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy2 + 2,	"mah j"},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy2 + 3,	"mah n"},
+	{"P1 Reach",		BIT_DIGITAL,	DrvJoy2 + 4,	"mah reach"},
+	{"P1 Bet",			BIT_DIGITAL,	DrvJoy2 + 5,	"mah bet"},
 
-	{"C",			BIT_DIGITAL,	DrvJoy3 + 0,	"mah c"},
-	{"G",			BIT_DIGITAL,	DrvJoy3 + 1,	"mah g"},
-	{"K",			BIT_DIGITAL,	DrvJoy3 + 2,	"mah k"},
-	{"Chi",			BIT_DIGITAL,	DrvJoy3 + 3,	"mah chi"},
-	{"Ron",			BIT_DIGITAL,	DrvJoy3 + 4,	"mah ron"},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy3 + 0,	"mah c"},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy3 + 1,	"mah g"},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy3 + 2,	"mah k"},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy3 + 3,	"mah chi"},
+	{"P1 Ron",			BIT_DIGITAL,	DrvJoy3 + 4,	"mah ron"},
 
-	{"D",			BIT_DIGITAL,	DrvJoy4 + 0,	"mah d"},
-	{"H",			BIT_DIGITAL,	DrvJoy4 + 1,	"mah h"},
-	{"L",			BIT_DIGITAL,	DrvJoy4 + 2,	"mah l"},
-	{"Pon",			BIT_DIGITAL,	DrvJoy4 + 3,	"mah pon"},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy4 + 0,	"mah d"},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy4 + 1,	"mah h"},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy4 + 2,	"mah l"},
+	{"P1 Pon",			BIT_DIGITAL,	DrvJoy4 + 3,	"mah pon"},
 
-	{"LastChange",	BIT_DIGITAL,	DrvJoy5 + 0,	"mah lc"},
-	{"Score",		BIT_DIGITAL,	DrvJoy5 + 1,	"mah score"},
-	{"DoubleUp",	BIT_DIGITAL,	DrvJoy5 + 2,	"mah du"},		// ????
-	{"FlipFlop",	BIT_DIGITAL,	DrvJoy5 + 3,	"mah ff"},
-	{"Big",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah big"},		// ????
-	{"Smaill",		BIT_DIGITAL,	DrvJoy5 + 5,	"mah small"},	// ????
+	{"P1 LastChange",	BIT_DIGITAL,	DrvJoy5 + 0,	"mah lc"},
+	{"P1 Score",		BIT_DIGITAL,	DrvJoy5 + 1,	"mah score"},
+	{"P1 DoubleUp",		BIT_DIGITAL,	DrvJoy5 + 2,	"mah du"},		// ????
+	{"P1 FlipFlop",		BIT_DIGITAL,	DrvJoy5 + 3,	"mah ff"},
+	{"P1 Big",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah big"},		// ????
+	{"P1 Smaill",		BIT_DIGITAL,	DrvJoy5 + 5,	"mah small"},	// ????
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"},
-	{"Service",		BIT_DIGITAL, DrvButton + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 3,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 4,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",			BIT_DIGITAL, DrvButton + 2,	"service"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 3,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 4,	"dip"},
 };
 
 STDINPUTINFO(mj4simai)

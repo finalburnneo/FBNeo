@@ -253,11 +253,19 @@ static const short pcm_levels[8][8] = {
 	{ 4095, 8190, 12285, 16380, 20475, 24570, 28665, 32760 },
 };
 
+<<<<<<< HEAD
 static const INT32 delta1[16] = { -4, -4, -1, -1, -2, -2, 0, 0, 0, 0, 2, 2, 1, 1, 4, 4 };
 static const INT32 delta2[16] = { 0, -1, -2, -3, 1, 0, -1, -2, 2, 1, 0, -1, 3, 2, 1, 0 };
 
 // Frequency quantizations, values are in units of 128us.
 static const INT32 pitch_vals[32] = {
+=======
+static const int delta1[16] = { -4, -4, -1, -1, -2, -2, 0, 0, 0, 0, 2, 2, 1, 1, 4, 4 };
+static const int delta2[16] = { 0, -1, -2, -3, 1, 0, -1, -2, 2, 1, 0, -1, 3, 2, 1, 0 };
+
+// Frequency quantizations, values are in units of 128us.
+static const int pitch_vals[32] = {
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 	97, 95, 92, 89, 87, 84, 82, 80, 77, 75, 73, 71, 69, 67, 65, 63,
 	61, 60, 58, 56, 55, 53, 52, 50, 49, 48, 46, 45, 43, 42, 41, 40
 };
@@ -316,7 +324,11 @@ static INT32 SyncUPD(INT32 cycles)
 	return (INT32)((double)cycles * ((double)pTotalCyclesCB() / ((double)nCpuMHZ / (nBurnFPS / 100.0000))));
 }
 
+<<<<<<< HEAD
 static void digitalker_update_INT(INT32 samples); // forward
+=======
+static void digitalker_update_INT(int samples); // forward
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 
 static void UpdateStream(INT32 end)
 {
@@ -357,9 +369,15 @@ static void digitalker_write(UINT8 *adr, UINT8 vol, INT8 dac)
 	m_dac[(*adr)++] = v;
 }
 
+<<<<<<< HEAD
 static UINT8 digitalker_pitch_next(UINT8 val, UINT8 prev, INT32 step)
 {
 	INT32 delta, nv;
+=======
+static UINT8 digitalker_pitch_next(UINT8 val, UINT8 prev, int step)
+{
+	int delta, nv;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 
 	delta = val & 0xf;
 	if(delta > step + 1)
@@ -392,7 +410,11 @@ static void digitalker_start_command(UINT8 cmd)
 static void digitalker_step_mode_0()
 {
 	INT8 dac = 0;
+<<<<<<< HEAD
 	INT32 i, k, l;
+=======
+	int i, k, l;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 	UINT8 wpos = 0;
 	UINT8 h = read_rom(m_apos);
 	UINT16 bits = 0x80;
@@ -445,7 +467,11 @@ static void digitalker_step_mode_1()
 static void digitalker_step_mode_2()
 {
 	INT8 dac = 0;
+<<<<<<< HEAD
 	INT32 k, l;
+=======
+	int k, l;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 	UINT8 wpos=0;
 	UINT8 h = read_rom(m_apos);
 	UINT16 bits = 0x80;
@@ -466,7 +492,11 @@ static void digitalker_step_mode_2()
 	digitalker_write(&wpos, vol, dac);
 
 	for(k=7; k >= 0; k--) {
+<<<<<<< HEAD
 		INT32 limit = k ? 0 : 1;
+=======
+		int limit = k ? 0 : 1;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 		bits = (bits << 8) | (k ? read_rom(m_apos+k) : 0x80);
 		for(l=3; l>=limit; l--) {
 			dac -= delta1[(bits >> (6+2*l)) & 15];
@@ -477,7 +507,11 @@ static void digitalker_step_mode_2()
 	digitalker_write(&wpos, vol, dac);
 
 	for(k=1; k != 9; k++) {
+<<<<<<< HEAD
 		INT32 start = k == 1 ? 1 : 0;
+=======
+		int start = k == 1 ? 1 : 0;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 		bits |= read_rom(m_apos+k) << 8;
 		for(l=start; l<4; l++) {
 			dac += delta1[(bits >> (6+2*l)) & 15];
@@ -489,7 +523,11 @@ static void digitalker_step_mode_2()
 	digitalker_write(&wpos, vol, dac);
 
 	for(k=7; k >= 0; k--) {
+<<<<<<< HEAD
 		INT32 limit = k ? 0 : 1;
+=======
+		int limit = k ? 0 : 1;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 		bits = (bits << 8) | (k ? read_rom(m_apos+k) : 0x80);
 		for(l=3; l>=limit; l--) {
 			dac -= delta1[(bits >> (6+2*l)) & 15];
@@ -512,7 +550,11 @@ static void digitalker_step_mode_3()
 	UINT8 vol = h >> 5;
 	UINT16 bits;
 	UINT8 dac, apos, wpos;
+<<<<<<< HEAD
 	INT32 k, l;
+=======
+	int k, l;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 
 	m_pitch = pitch_vals[h & 0x1f];
 	if(m_cur_segment == 0 && m_cur_repeat == 0) {
@@ -596,18 +638,31 @@ static void digitalker_step()
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
+<<<<<<< HEAD
 static void digitalker_update_INT(INT32 samples)
 {
 	INT16 *sout = m_mixer_buffer + nPosition;
 
 	INT32 cpos = 0;
+=======
+static void digitalker_update_INT(int samples)
+{
+	INT16 *sout = m_mixer_buffer + nPosition;
+
+	int cpos = 0;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 	while(cpos != samples) {
 		if(m_zero_count == 0 && m_dac_index == 128)
 			digitalker_step();
 
 		if(m_zero_count) {
+<<<<<<< HEAD
 			INT32 n = samples - cpos;
 			INT32 i;
+=======
+			int n = samples - cpos;
+			int i;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 			if(n > m_zero_count)
 				n = m_zero_count;
 			for(i=0; i != n; i++)
@@ -617,7 +672,11 @@ static void digitalker_update_INT(INT32 samples)
 		} else if(m_dac_index != 128) {
 			while(cpos != samples && m_dac_index != 128) {
 				short v = m_dac[m_dac_index];
+<<<<<<< HEAD
 				INT32 pp = m_pitch_pos;
+=======
+				int pp = m_pitch_pos;
+>>>>>>> 970e2bb80f84cf99f8a3e6330143d65a12ab0662
 				while(cpos != samples && pp != m_pitch) {
 					sout[cpos++] = v;
 					pp++;

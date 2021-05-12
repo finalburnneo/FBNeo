@@ -2393,6 +2393,7 @@ DRV		BurnDrvMSX_chess;
 DRV		BurnDrvmd_chess;
 DRV		BurnDrvmd_chessa;
 DRV		BurnDrvmd_chessb;
+DRV		BurnDrvcv_chesschal;
 DRV		BurnDrvmd_chester;
 DRV		BurnDrvmd_chesterws;
 DRV		BurnDrvmd_chesterw;
@@ -4850,8 +4851,8 @@ DRV		BurnSpecFirefly;
 DRV		BurnDrvMSX_firehawk;
 DRV		BurnDrvnes_firehouserescue;
 DRV		BurnSpecFirelord;
-DRV		BurnSpecFireman;
 DRV		BurnDrvcv_fireman;
+DRV		BurnSpecFireman;
 DRV		BurnDrvnes_fishstory;
 DRV		BurnDrvCfishing;
 DRV		BurnDrvnes_fistnorsta;
@@ -5013,6 +5014,7 @@ DRV		BurnDrvmd_bighurt;
 DRV		BurnDrvgg_bighurt;
 DRV		BurnDrvnes_frank;
 DRV		BurnSpecFrankensteinjr;
+DRV		BurnDrvcv_frantic;
 DRV		BurnDrvcv_ffreddy;
 DRV		BurnSpecfp128k;
 DRV		BurnDrvgg_fray;
@@ -7244,6 +7246,7 @@ DRV		BurnDrvKlax5bl;			// no comment [NOT WORKING]
 DRV		BurnDrvKlax;
 DRV		BurnDrvpce_klax;
 DRV		BurnDrvtg_klax;
+DRV		BurnDrvcv_ksolitaire;
 DRV		BurnDrvMSX_ksolitaire;
 DRV		BurnDrvKlondkp;
 DRV		BurnDrvKnightb;
@@ -11521,6 +11524,7 @@ DRV		BurnDrvmd_roadblstj;
 DRV		BurnDrvmd_roadblstp;
 DRV		BurnDrvmd_roadblst;
 DRV		BurnDrvnes_roadblasters;
+DRV		BurnDrvcv_robeeblr;
 DRV		BurnDrvcv_robinha;
 DRV		BurnSpecRobinhoodlegendquest;
 DRV		BurnDrvnes_robinhoo;
@@ -13109,6 +13113,7 @@ DRV		BurnSpecspyvspy3;
 DRV		BurnDrvnes_sqoon;
 DRV		BurnDrvMSX_squardan;
 DRV		BurnSpecSquares;
+DRV		BurnDrvcv_squares;
 DRV		BurnDrvSquaitsa;
 DRV		BurnDrvSquash;
 DRV		BurnDrvnes_squashed;
@@ -14565,6 +14570,7 @@ DRV		BurnDrvnes_termi2c;
 DRV		BurnDrvnes_termi2;
 DRV		BurnDrvnes_terminatorthe;
 DRV		BurnDrvMSX_terminus;
+DRV		BurnDrvcv_terrattak;
 DRV		BurnSpecTerracognita;
 DRV		BurnSpecterracrs_48;
 DRV		BurnDrvnes_terracresta;
@@ -19550,6 +19556,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_chess,			// Chess (Rus) [no comment, NOT WORKING]
 	&BurnDrvmd_chessa,			// Chess (Rus, Alt)
 	&BurnDrvmd_chessb,			// Chess (Rus, v1.05) [no comment, NOT WORKING]
+	&BurnDrvcv_chesschal,		// Chess Challenge (HB)
 	&BurnDrvmd_chester,			// Chester Cheetah - Too Cool to Fool (USA)
 	&BurnDrvmd_chesterws,		// Chester Cheetah - Wild Wild Quest (Hack, Spanish)
 	&BurnDrvmd_chesterw,		// Chester Cheetah - Wild Wild Quest (USA)
@@ -22007,8 +22014,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_firehawk,		// Firehawk (Euro)
 	&BurnDrvnes_firehouserescue,// Firehouse Rescue (USA)
 	&BurnSpecFirelord,			// Firelord (48K)
+	&BurnDrvcv_fireman,			// Fireman (HB)
 	&BurnSpecFireman,			// Fireman (HB)
-	&BurnDrvcv_fireman,			// Fireman
 	&BurnDrvnes_fishstory,		// Fish Story (Unl)
 	&BurnDrvCfishing,			// Fishing (DECO Cassette) (Japan)
 	&BurnDrvnes_fistnorsta,		// Fist of the North Star (USA)
@@ -22170,6 +22177,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_bighurt,			// Frank Thomas Big Hurt Baseball (USA)
 	&BurnDrvnes_frank,			// Frankenstein - The Monster Returns (USA)
 	&BurnSpecFrankensteinjr,	// Frankenstein Jnr (48K)
+	&BurnDrvcv_frantic,			// Frantic (HB)
 	&BurnDrvcv_ffreddy,			// Frantic Freddy
 	&BurnSpecfp128k,			// Frantic Pengo 128K (HB)
 	&BurnDrvgg_fray,			// Fray - Shugyou Hen (Jpn)
@@ -23318,7 +23326,7 @@ static struct BurnDriver* pDriver[] = {
 #endif
 	&BurnDrvnes_heisetenbakj,	// Heisei Tensai Bakabon (Japan)
 	&BurnDrvnes_heisetenbak,	// Heisei Tensai Bakabon (T-Eng)
-	&BurnDrvcv_helifire,		// HeliFire
+	&BurnDrvcv_helifire,		// HeliFire (HB)
 	&BurnDrvMSX_helitank,		// Helitank (Jpn)
 	&BurnDrvnes_hellfighter,	// Hell Fighter (Asia) (PAL) (Unl)
 	&BurnSpecHellyeah,			// HELL YEAH! (HB)
@@ -24401,6 +24409,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKlax,				// Klax (version 6)
 	&BurnDrvpce_klax,			// Klax
 	&BurnDrvtg_klax,			// Klax
+	&BurnDrvcv_ksolitaire,		// Klondike Solitaire (HB)
 	&BurnDrvMSX_ksolitaire,		// Klondike Solitaire (HB)
 	&BurnDrvKlondkp,			// KlonDike+
 	&BurnDrvKnightb,			// Knight Boy
@@ -28106,7 +28115,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvQbertqub,			// Q*bert's Qubes
 	&BurnDrvcv_qbert,			// Q*bert
 	&BurnDrvnes_qbert,			// Q-bert (USA)
-	&BurnDrvcv_qbiqs,			// QBIQS (HB)
+	&BurnDrvcv_qbiqs,			// qbIqS (HB)
 	&BurnDrvMSX_qbiqs,			// QBIQS (HB)
 	&BurnDrvsg1k_qie,			// Qi E (Tw)
 	&BurnDrvnes_qiwan,			// Qi Wang - Chinese Chess (China, MGC-001)
@@ -28678,6 +28687,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_roadblstp,		// RoadBlasters (Prototype, 19910627)
 	&BurnDrvmd_roadblst,		// RoadBlasters (USA)
 	&BurnDrvnes_roadblasters,	// RoadBlasters (USA)
+	&BurnDrvcv_robeeblr,		// Robee Blaster (HB)
 	&BurnDrvcv_robinha,			// Robin Hood (Alt)
 	&BurnSpecRobinhoodlegendquest,// Robin Hood - Legend Quest (128K)
 	&BurnDrvnes_robinhoo,		// Robin Hood - Prince of Thieves (USA)
@@ -30266,6 +30276,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_sqoon,			// Sqoon (USA)
 	&BurnDrvMSX_squardan,		// Square Dancer (Jpn)
 	&BurnSpecSquares,			// Squares (HB)
+	&BurnDrvcv_squares,			// Squares! (HB)
 	&BurnDrvSquaitsa,			// Squash (Itisa)
 	&BurnDrvSquash,				// Squash (Ver. 1.0)
 	&BurnDrvnes_squashed,		// Squashed (USA) (Proto)
@@ -31722,6 +31733,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_termi2,			// Terminator 2 - Judgment Day (USA)
 	&BurnDrvnes_terminatorthe,	// Terminator, The (USA)
 	&BurnDrvMSX_terminus,		// Terminus - Prison Planet (Euro)
+	&BurnDrvcv_terrattak,		// Terra Attack (HB)
 	&BurnSpecTerracognita,		// Terra Cognita
 	&BurnSpecterracrs_48,		// Terra Cresta (48K)
 	&BurnDrvnes_terracresta,	// Terra Cresta (USA)

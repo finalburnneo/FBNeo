@@ -1010,6 +1010,7 @@
 		FE8329192439A3E000059993 /* e132xs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE8329172439A3E000059993 /* e132xs.cpp */; };
 		FE83291C2439A41300059993 /* qs1000.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE83291B2439A41200059993 /* qs1000.cpp */; };
 		FE8868352410D54D0022BEE6 /* d_nes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE8868342410D54D0022BEE6 /* d_nes.cpp */; };
+		FE911186264D90A800CCB0FF /* digitalk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE911184264D90A800CCB0FF /* digitalk.cpp */; };
 		FE92E3FA2458859600693C0C /* d_f-32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F72458859500693C0C /* d_f-32.cpp */; };
 		FE92E3FB2458859600693C0C /* d_eolith16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F82458859500693C0C /* d_eolith16.cpp */; };
 		FE92E3FC2458859600693C0C /* d_goori.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE92E3F92458859600693C0C /* d_goori.cpp */; };
@@ -2597,6 +2598,8 @@
 		FE83291A2439A41200059993 /* qs1000.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qs1000.h; sourceTree = "<group>"; };
 		FE83291B2439A41200059993 /* qs1000.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = qs1000.cpp; sourceTree = "<group>"; };
 		FE8868342410D54D0022BEE6 /* d_nes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_nes.cpp; sourceTree = "<group>"; };
+		FE911184264D90A800CCB0FF /* digitalk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = digitalk.cpp; sourceTree = "<group>"; };
+		FE911185264D90A800CCB0FF /* digitalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digitalk.h; sourceTree = "<group>"; };
 		FE92E3F72458859500693C0C /* d_f-32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "d_f-32.cpp"; sourceTree = "<group>"; };
 		FE92E3F82458859500693C0C /* d_eolith16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_eolith16.cpp; sourceTree = "<group>"; };
 		FE92E3F92458859600693C0C /* d_goori.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_goori.cpp; sourceTree = "<group>"; };
@@ -4633,6 +4636,8 @@
 				FE1B222523561A700065200C /* c6280.h */,
 				FE1B220E23561A700065200C /* dac.cpp */,
 				FE1B21FC23561A700065200C /* dac.h */,
+				FE911184264D90A800CCB0FF /* digitalk.cpp */,
+				FE911185264D90A800CCB0FF /* digitalk.h */,
 				FEB8081A25A0F6AB0065DE86 /* downsample.h */,
 				FE1B220323561A700065200C /* es5506.cpp */,
 				FE1B222C23561A700065200C /* es5506.h */,
@@ -6198,6 +6203,7 @@
 				FE1B25A623561A760065200C /* d_gyruss.cpp in Sources */,
 				FE1B260123561A760065200C /* d_neogeo.cpp in Sources */,
 				FE1B26F823561A780065200C /* d_mmagic.cpp in Sources */,
+				FE911186264D90A800CCB0FF /* digitalk.cpp in Sources */,
 				FE1B269823561A770065200C /* d_galaga.cpp in Sources */,
 				FE1B27BF23561A790065200C /* slapstic.cpp in Sources */,
 				FE1B25FD23561A760065200C /* neo_text.cpp in Sources */,

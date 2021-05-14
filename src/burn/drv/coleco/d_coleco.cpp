@@ -7786,3 +7786,193 @@ struct BurnDriver BurnDrvcv_terrattak = {
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Magical Tree (HB)
+
+static struct BurnRomInfo cv_magtreeRomDesc[] = {
+    { "Magical Tree (2006) (Opcode Games).col",	32768, 0xf4314bb1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_magtree, cv_magtree, cv_coleco)
+STD_ROM_FN(cv_magtree)
+
+struct BurnDriver BurnDrvcv_magtree = {
+    "cv_magtree", NULL, "cv_coleco", NULL, "2006",
+    "Magical Tree (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_magtreeRomInfo, cv_magtreeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Mopiranger (HB)
+
+static struct BurnRomInfo cv_mopirangRomDesc[] = {
+    { "Mopiranger (2012) (Team Pixelboy).col",	32768, 0xa60be082, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mopirang, cv_mopirang, cv_coleco)
+STD_ROM_FN(cv_mopirang)
+
+struct BurnDriver BurnDrvcv_mopirang = {
+    "cv_mopirang", NULL, "cv_coleco", NULL, "2012",
+    "Mopiranger (HB)\0", "Published by Team Pixelboy", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_mopirangRomInfo, cv_mopirangRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Pacar (HB)
+
+static struct BurnRomInfo cv_pacarRomDesc[] = {
+    { "Pacar (2017) (Team Pixelboy).col",	32768, 0xa82c9593, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pacar, cv_pacar, cv_coleco)
+STD_ROM_FN(cv_pacar)
+
+struct BurnDriver BurnDrvcv_pacar = {
+    "cv_pacar", NULL, "cv_coleco", NULL, "2017",
+    "Pacar (HB)\0", "Published by Team Pixelboy", "Sega", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+    CVGetZipName, cv_pacarRomInfo, cv_pacarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Purple Dinosaur Massacre (HB)
+
+static struct BurnRomInfo cv_purpdinoRomDesc[] = {
+    { "Purple Dinosaur Massacre (1996) (John Dondzilla).col",	9494, 0x137d6c4c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_purpdino, cv_purpdino, cv_coleco)
+STD_ROM_FN(cv_purpdino)
+
+struct BurnDriver BurnDrvcv_purpdino = {
+    "cv_purpdino", NULL, "cv_coleco", NULL, "1996",
+    "Purple Dinosaur Massacre (HB)\0", NULL, "John Dondzilla", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
+    CVGetZipName, cv_purpdinoRomInfo, cv_purpdinoRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Pyramid Warp & Battleship Clapton 2 (HB)
+
+static struct BurnRomInfo cv_pyrawbc2RomDesc[] = {
+    { "Pyramid Warp & Battle Ship Clapton II (2009) (Collectorvision Games).col",	32768, 0xf7052b06, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pyrawbc2, cv_pyrawbc2, cv_coleco)
+STD_ROM_FN(cv_pyrawbc2)
+
+struct BurnDriver BurnDrvcv_pyrawbc2 = {
+    "cv_pyrawbc2", NULL, "cv_coleco", NULL, "2009",
+    "Pyramid Warp & Battleship Clapton 2 (HB)\0", "Published by Collectorvision Games", "T&E Soft", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_pyrawbc2RomInfo, cv_pyrawbc2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Reversi and Diamond Dash (HB)
+
+static struct BurnRomInfo cv_reversddRomDesc[] = {
+    { "Reversi and Diamond Dash (2004) (Daniel Bienvenu).col",	29184, 0x2331b6f6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_reversdd, cv_reversdd, cv_coleco)
+STD_ROM_FN(cv_reversdd)
+
+struct BurnDriver BurnDrvcv_reversdd = {
+    "cv_reversdd", NULL, "cv_coleco", NULL, "2004",
+    "Reversi and Diamond Dash (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_reversddRomInfo, cv_reversddRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Road Fighter (HB)
+
+static struct BurnRomInfo cv_roadfghtRomDesc[] = {
+    { "Road Fighter (2007) (Opcode Games).col",	32768, 0x570b9935, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_roadfght, cv_roadfght, cv_coleco)
+STD_ROM_FN(cv_roadfght)
+
+struct BurnDriver BurnDrvcv_roadfght = {
+    "cv_roadfght", NULL, "cv_coleco", NULL, "2007",
+    "Road Fighter (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_RACING, 0,
+    CVGetZipName, cv_roadfghtRomInfo, cv_roadfghtRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Search For The Stolen Crown Jewels (HB)
+
+static struct BurnRomInfo cv_sftscjRomDesc[] = {
+    { "Search For The Stolen Crown Jewels (2006) (Good Deal Games).col",	28849, 0xad1ba6ed, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sftscj, cv_sftscj, cv_coleco)
+STD_ROM_FN(cv_sftscj)
+
+struct BurnDriver BurnDrvcv_sftscj = {
+    "cv_sftscj", NULL, "cv_coleco", NULL, "2006",
+    "Search For The Stolen Crown Jewels (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_sftscjRomInfo, cv_sftscjRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Search For The Stolen Crown Jewels 2 (HB)
+
+static struct BurnRomInfo cv_sftscj2RomDesc[] = {
+    { "Search For The Stolen Crown Jewels 2 (2007) (Good Deal Games).col",	29256, 0xeaf7d6dc, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sftscj2, cv_sftscj2, cv_coleco)
+STD_ROM_FN(cv_sftscj2)
+
+struct BurnDriver BurnDrvcv_sftscj2 = {
+    "cv_sftscj2", NULL, "cv_coleco", NULL, "2007",
+    "Search For The Stolen Crown Jewels 2 (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_sftscj2RomInfo, cv_sftscj2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Search For The Stolen Crown Jewels 3 (HB)
+
+static struct BurnRomInfo cv_sftscj3RomDesc[] = {
+    { "Search For The Stolen Crown Jewels 3 (2013) (Good Deal Games).col",	31303, 0x23988ef9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sftscj3, cv_sftscj3, cv_coleco)
+STD_ROM_FN(cv_sftscj3)
+
+struct BurnDriver BurnDrvcv_sftscj3 = {
+    "cv_sftscj3", NULL, "cv_coleco", NULL, "2013",
+    "Search For The Stolen Crown Jewels 3 (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_COLECO, GBF_MISC, 0,
+    CVGetZipName, cv_sftscj3RomInfo, cv_sftscj3RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
